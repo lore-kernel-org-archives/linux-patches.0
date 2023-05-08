@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F4511C8F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CA7C433EF;
-	Mon,  8 May 2023 11:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4E311C8F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40756C433EF;
+	Mon,  8 May 2023 11:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545770;
-	bh=f8O+nUPFTjUY30SfcybyhLUk9Rj7yK7Kk5rWpe5jRJI=;
+	s=korg; t=1683545773;
+	bh=uje9Esf9xKpavAc4uxJjWN1K+RaKMOwIpvS/+VvVVBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vh5adMx65ttTuWnwYuyJv9Ii9wU1k5LE8NkeHPLYNMY1bkk3Fyy66Fm32lUgMnK6x
-	 G1zP4N5vQ4wtPJHpyAJ6l4aMb49jlTbM4Gbs+w4WFO3FSLwa2Z+PAjebjoUhiuHC4c
-	 0fZU1zXuHx5Z2vmyxDnUAzZ1KmNyf9hwgFCTcpN8=
+	b=EfC5YWsFt2V80quIfLnX5TtUTFnbaaSTZZpXiEx6dL+Aj0cqHtjUw1T3w5mJKIBj7
+	 JtaY3jdBthon1RPX1j6p2QFij0fpOT9ELBdMKLkM2Ac062avYTQdY/OWxQy32GKViE
+	 bqU3FBbm5MEoZhnLQG5dC4iUL1ImTYM69jJe2B/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gusenleitner Klaus <gus@keba.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Sanjay Chandrashekara <sanjayc@nvidia.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 147/371] tick/common: Align tick period with the HZ tick.
-Date: Mon,  8 May 2023 11:45:48 +0200
-Message-Id: <20230508094817.908999108@linuxfoundation.org>
+Subject: [PATCH 5.15 148/371] cpufreq: use correct unit when verify cur freq
+Date: Mon,  8 May 2023 11:45:49 +0200
+Message-Id: <20230508094817.945693810@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,65 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Sanjay Chandrashekara <sanjayc@nvidia.com>
 
-[ Upstream commit e9523a0d81899361214d118ad60ef76f0e92f71d ]
+[ Upstream commit 44295af5019f1997d038ad2611086a2d1e2af167 ]
 
-With HIGHRES enabled tick_sched_timer() is programmed every jiffy to
-expire the timer_list timers. This timer is programmed accurate in
-respect to CLOCK_MONOTONIC so that 0 seconds and nanoseconds is the
-first tick and the next one is 1000/CONFIG_HZ ms later. For HZ=250 it is
-every 4 ms and so based on the current time the next tick can be
-computed.
+cpufreq_verify_current_freq checks() if the frequency returned by
+the hardware has a slight delta with the valid frequency value
+last set and returns "policy->cur" if the delta is within "1 MHz".
+In the comparison, "policy->cur" is in "kHz" but it's compared
+against HZ_PER_MHZ. So, the comparison range becomes "1 GHz".
 
-This accuracy broke since the commit mentioned below because the jiffy
-based clocksource is initialized with higher accuracy in
-read_persistent_wall_and_boot_offset(). This higher accuracy is
-inherited during the setup in tick_setup_device(). The timer still fires
-every 4ms with HZ=250 but timer is no longer aligned with
-CLOCK_MONOTONIC with 0 as it origin but has an offset in the us/ns part
-of the timestamp. The offset differs with every boot and makes it
-impossible for user land to align with the tick.
+Fix this by comparing against KHZ_PER_MHZ instead of HZ_PER_MHZ.
 
-Align the tick period with CLOCK_MONOTONIC ensuring that it is always a
-multiple of 1000/CONFIG_HZ ms.
-
-Fixes: 857baa87b6422 ("sched/clock: Enable sched clock early")
-Reported-by: Gusenleitner Klaus <gus@keba.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/20230406095735.0_14edn3@linutronix.de
-Link: https://lore.kernel.org/r/20230418122639.ikgfvu3f@linutronix.de
+Fixes: f55ae08c8987 ("cpufreq: Avoid unnecessary frequency updates due to mismatch")
+Signed-off-by: Sanjay Chandrashekara <sanjayc@nvidia.com>
+[ sumit gupta: Commit message update ]
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-common.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/cpufreq/cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/time/tick-common.c b/kernel/time/tick-common.c
-index 46789356f856e..65b8658da829e 100644
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -218,9 +218,19 @@ static void tick_setup_device(struct tick_device *td,
- 		 * this cpu:
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index b998b50839534..ae7b95e15ac7e 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1709,7 +1709,7 @@ static unsigned int cpufreq_verify_current_freq(struct cpufreq_policy *policy, b
+ 		 * MHz. In such cases it is better to avoid getting into
+ 		 * unnecessary frequency updates.
  		 */
- 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
-+			ktime_t next_p;
-+			u32 rem;
-+
- 			tick_do_timer_cpu = cpu;
+-		if (abs(policy->cur - new_freq) < HZ_PER_MHZ)
++		if (abs(policy->cur - new_freq) < KHZ_PER_MHZ)
+ 			return policy->cur;
  
--			tick_next_period = ktime_get();
-+			next_p = ktime_get();
-+			div_u64_rem(next_p, TICK_NSEC, &rem);
-+			if (rem) {
-+				next_p -= rem;
-+				next_p += TICK_NSEC;
-+			}
-+
-+			tick_next_period = next_p;
- #ifdef CONFIG_NO_HZ_FULL
- 			/*
- 			 * The boot CPU may be nohz_full, in which case set
+ 		cpufreq_out_of_sync(policy, new_freq);
 -- 
 2.39.2
 
