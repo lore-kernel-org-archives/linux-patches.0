@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65AF0168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:40:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF81C433EF;
-	Mon,  8 May 2023 10:40:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF5A168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:40:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8127C433EF;
+	Mon,  8 May 2023 10:40:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542415;
-	bh=emNMdWt3FAv3Z0+lFpCvz7Ly2tt9NTbxZP+6Hybqlfc=;
+	s=korg; t=1683542418;
+	bh=ohtPrPbBx1teYiN+2X59fO06LCtZZNKB4bWuzUze5No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tAnQwu69tYrLsA42VKv1tGqhKfHu9OWawF21NcllAi6WmuM4qlNS/OXH0isbeLIhP
-	 sBq/NvRP437aO0STI/ADX6fjXuF32YTFPtlNKdUhLbAUVi6ykr4f+iCTPSnz/xOySu
-	 4lHjNSBiRprcb5jFVu4FWOA2Le3vCUR5ICOlVN88=
+	b=DGs2OK7xeQfFU1TDwHVQkfA0OLzrj3e5jb2Y02ibI008sxrykJkjFfLykTmn69+yr
+	 /8UYUgUf7se2MLiTg8LINFR4AMBqp1tQNGMu4KXe0/NBWHjoV1WUnUewyce5AJHlqB
+	 DKJfN9LiDi8T9aE1edxm4/S2ki78OGu5Be5CXNyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 428/663] net/sched: sch_fq: fix integer overflow of "credit"
-Date: Mon,  8 May 2023 11:44:14 +0200
-Message-Id: <20230508094441.952898796@linuxfoundation.org>
+Subject: [PATCH 6.2 429/663] ipv4: Fix potential uninit variable access bug in __ip_make_skb()
+Date: Mon,  8 May 2023 11:44:15 +0200
+Message-Id: <20230508094441.982022302@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,90 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 7041101ff6c3073fd8f2e99920f535b111c929cb ]
+[ Upstream commit 99e5acae193e369b71217efe6f1dad42f3f18815 ]
 
-if sch_fq is configured with "initial quantum" having values greater than
-INT_MAX, the first assignment of "credit" does signed integer overflow to
-a very negative value.
-In this situation, the syzkaller script provided by Cristoph triggers the
-CPU soft-lockup warning even with few sockets. It's not an infinite loop,
-but "credit" wasn't probably meant to be minus 2Gb for each new flow.
-Capping "initial quantum" to INT_MAX proved to fix the issue.
+Like commit ea30388baebc ("ipv6: Fix an uninit variable access bug in
+__ip6_make_skb()"). icmphdr does not in skb linear region under the
+scenario of SOCK_RAW socket. Access icmp_hdr(skb)->type directly will
+trigger the uninit variable access bug.
 
-v2: validation of "initial quantum" is done in fq_policy, instead of open
-    coding in fq_change() _ suggested by Jakub Kicinski
+Use a local variable icmp_type to carry the correct value in different
+scenarios.
 
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/377
-Fixes: afe4fd062416 ("pkt_sched: fq: Fair Queue packet scheduler")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://lore.kernel.org/r/7b3a3c7e36d03068707a021760a194a8eb5ad41a.1682002300.git.dcaratti@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 96793b482540 ("[IPV4]: Add ICMPMsgStats MIB (RFC 4293)")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c                            |  6 ++++-
- .../tc-testing/tc-tests/qdiscs/fq.json        | 22 +++++++++++++++++++
- 2 files changed, 27 insertions(+), 1 deletion(-)
+ net/ipv4/ip_output.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 48d14fb90ba02..f59a2cb2c803d 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -779,13 +779,17 @@ static int fq_resize(struct Qdisc *sch, u32 log)
- 	return 0;
- }
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index 922c87ef1ab58..2a07588265c70 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -1570,9 +1570,19 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
+ 	cork->dst = NULL;
+ 	skb_dst_set(skb, &rt->dst);
  
-+static struct netlink_range_validation iq_range = {
-+	.max = INT_MAX,
-+};
+-	if (iph->protocol == IPPROTO_ICMP)
+-		icmp_out_count(net, ((struct icmphdr *)
+-			skb_transport_header(skb))->type);
++	if (iph->protocol == IPPROTO_ICMP) {
++		u8 icmp_type;
 +
- static const struct nla_policy fq_policy[TCA_FQ_MAX + 1] = {
- 	[TCA_FQ_UNSPEC]			= { .strict_start_type = TCA_FQ_TIMER_SLACK },
++		/* For such sockets, transhdrlen is zero when do ip_append_data(),
++		 * so icmphdr does not in skb linear region and can not get icmp_type
++		 * by icmp_hdr(skb)->type.
++		 */
++		if (sk->sk_type == SOCK_RAW && !inet_sk(sk)->hdrincl)
++			icmp_type = fl4->fl4_icmp_type;
++		else
++			icmp_type = icmp_hdr(skb)->type;
++		icmp_out_count(net, icmp_type);
++	}
  
- 	[TCA_FQ_PLIMIT]			= { .type = NLA_U32 },
- 	[TCA_FQ_FLOW_PLIMIT]		= { .type = NLA_U32 },
- 	[TCA_FQ_QUANTUM]		= { .type = NLA_U32 },
--	[TCA_FQ_INITIAL_QUANTUM]	= { .type = NLA_U32 },
-+	[TCA_FQ_INITIAL_QUANTUM]	= NLA_POLICY_FULL_RANGE(NLA_U32, &iq_range),
- 	[TCA_FQ_RATE_ENABLE]		= { .type = NLA_U32 },
- 	[TCA_FQ_FLOW_DEFAULT_RATE]	= { .type = NLA_U32 },
- 	[TCA_FQ_FLOW_MAX_RATE]		= { .type = NLA_U32 },
-diff --git a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/fq.json b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/fq.json
-index 8acb904d14193..3593fb8f79ad3 100644
---- a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/fq.json
-+++ b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/fq.json
-@@ -114,6 +114,28 @@
-             "$IP link del dev $DUMMY type dummy"
-         ]
-     },
-+    {
-+        "id": "10f7",
-+        "name": "Create FQ with invalid initial_quantum setting",
-+        "category": [
-+            "qdisc",
-+            "fq"
-+        ],
-+        "plugins": {
-+            "requires": "nsPlugin"
-+        },
-+        "setup": [
-+            "$IP link add dev $DUMMY type dummy || /bin/true"
-+        ],
-+        "cmdUnderTest": "$TC qdisc add dev $DUMMY handle 1: root fq initial_quantum 0x80000000",
-+        "expExitCode": "2",
-+        "verifyCmd": "$TC qdisc show dev $DUMMY",
-+        "matchPattern": "qdisc fq 1: root.*initial_quantum 2048Mb",
-+        "matchCount": "0",
-+        "teardown": [
-+            "$IP link del dev $DUMMY type dummy"
-+        ]
-+    },
-     {
-         "id": "9398",
-         "name": "Create FQ with maxrate setting",
+ 	ip_cork_release(cork);
+ out:
 -- 
 2.39.2
 
