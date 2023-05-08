@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5CE168A2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:33:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30CCC433D2;
-	Mon,  8 May 2023 10:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97E44168A2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:33:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005D1C433D2;
+	Mon,  8 May 2023 10:33:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541989;
-	bh=NW6FrHLmme65xti4Hb/O87HIVxewUIrQhqySMwRDKSc=;
+	s=korg; t=1683541992;
+	bh=JFeMi7UbGEXelyc10S/ujGQi39GPv1UwZz3tMcwkSLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fbcQ8sXCWZZv7YqPiiKDm9qdE+g0NYtoDjV3GCLTRqccoJbG8DUXTxkFQuCh5X8SR
-	 UXf9Ix7xkqmdr2OpH7WsGlTi7KEljWQ7fXu3vb2POGRCCu19xPFP5AEPG6zbcwp3qs
-	 ANbpZXxdCuKwDCnBeGkNcTCUL629O+LITXauU99E=
+	b=kcvi3HkGFCc94q1hTwQuN36NBUEsFG9YT7c8HUxYHVph8FvihQH9ydOFUGkahY7jC
+	 QZqCn6jIvy1+/ZheRJVcTrT8UogbdIzmkaRg+m3bRY7LxS+ddR9ELOikEapI9jDlUa
+	 56Zb0F9wNkxaOVaBNYhMBbeUnPatHH7nNe3xCJzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 291/663] wifi: rtw88: mac: Return the original error from rtw_mac_power_switch()
-Date: Mon,  8 May 2023 11:41:57 +0200
-Message-Id: <20230508094437.641449579@linuxfoundation.org>
+Subject: [PATCH 6.2 292/663] bpf: take into account liveness when propagating precision
+Date: Mon,  8 May 2023 11:41:58 +0200
+Message-Id: <20230508094437.669927879@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,48 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 15c8e267dfa62f207ee1db666c822324e3362b84 ]
+[ Upstream commit 52c2b005a3c18c565fc70cfd0ca49375f301e952 ]
 
-rtw_mac_power_switch() calls rtw_pwr_seq_parser() which can return
--EINVAL, -EBUSY or 0. Propagate the original error code instead of
-unconditionally returning -EINVAL in case of an error.
+When doing state comparison, if old state has register that is not
+marked as REG_LIVE_READ, then we just skip comparison, regardless what's
+the state of corresponing register in current state. This is because not
+REG_LIVE_READ register is irrelevant for further program execution and
+correctness. All good here.
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230226221004.138331-3-martin.blumenstingl@googlemail.com
+But when we get to precision propagation, after two states were declared
+equivalent, we don't take into account old register's liveness, and thus
+attempt to propagate precision for register in current state even if
+that register in old state was not REG_LIVE_READ anymore. This is bad,
+because register in current state could be anything at all and this
+could cause -EFAULT due to internal logic bugs.
+
+Fix by taking into account REG_LIVE_READ liveness mark to keep the logic
+in state comparison in sync with precision propagation.
+
+Fixes: a3ce685dd01a ("bpf: fix precision tracking")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20230309224131.57449-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/mac.c | 6 ++++--
+ kernel/bpf/verifier.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/mac.c b/drivers/net/wireless/realtek/rtw88/mac.c
-index a4afef14e18d6..8625a0a1430ac 100644
---- a/drivers/net/wireless/realtek/rtw88/mac.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -247,6 +247,7 @@ static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
- 	const struct rtw_pwr_seq_cmd **pwr_seq;
- 	u8 rpwm;
- 	bool cur_pwr;
-+	int ret;
- 
- 	if (rtw_chip_wcpu_11ac(rtwdev)) {
- 		rpwm = rtw_read8(rtwdev, rtwdev->hci.rpwm_addr);
-@@ -270,8 +271,9 @@ static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
- 		return -EALREADY;
- 
- 	pwr_seq = pwr_on ? chip->pwr_on_seq : chip->pwr_off_seq;
--	if (rtw_pwr_seq_parser(rtwdev, pwr_seq))
--		return -EINVAL;
-+	ret = rtw_pwr_seq_parser(rtwdev, pwr_seq);
-+	if (ret)
-+		return ret;
- 
- 	if (pwr_on)
- 		set_bit(RTW_FLAG_POWERON, rtwdev->flags);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 9db6afc86733b..a53ba87a1cd2a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -13674,7 +13674,8 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ 		state_reg = state->regs;
+ 		for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
+ 			if (state_reg->type != SCALAR_VALUE ||
+-			    !state_reg->precise)
++			    !state_reg->precise ||
++			    !(state_reg->live & REG_LIVE_READ))
+ 				continue;
+ 			if (env->log.level & BPF_LOG_LEVEL2)
+ 				verbose(env, "frame %d: propagating r%d\n", i, fr);
+@@ -13688,7 +13689,8 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ 				continue;
+ 			state_reg = &state->stack[i].spilled_ptr;
+ 			if (state_reg->type != SCALAR_VALUE ||
+-			    !state_reg->precise)
++			    !state_reg->precise ||
++			    !(state_reg->live & REG_LIVE_READ))
+ 				continue;
+ 			if (env->log.level & BPF_LOG_LEVEL2)
+ 				verbose(env, "frame %d: propagating fp%d\n",
 -- 
 2.39.2
 
