@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A657168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C134BC433D2;
-	Mon,  8 May 2023 11:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4EFC168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C7EC433EF;
+	Mon,  8 May 2023 11:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544384;
-	bh=FVABn5f25HUJh9U67nAaOefoQMgYz+isnmo0axEU4eQ=;
+	s=korg; t=1683544387;
+	bh=yc1Hp8cYyXdd5SoDRitAXNyMurPSPbbua4dV9aOc2IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNDJCK5wrRd/IEdNgLI72+95fhYVj4DCzF0r31ZVWe8jXtC81BkiZd7tHuSTf6aa8
-	 00Fgt5eWidxf7RNTVSTGg7fLbwu1hqj9c84pA6MZDmH7szrZ1lS0j5mcbBo+2kMxo9
-	 Y0nex/B9smNYPz5QRBTq5yXPIlnwJaCgWpele1xQ=
+	b=zYw7KdZ4Pjits9P7M1FN0QpZhX6Jtl19IcpVh6b4QT3KNo+Ju9rVLIJy/1D24rprV
+	 aAUBU6L4fs5rD8CVLoKI3PVNKUQUVY8f/Y6z+EuiClEnGy7Tvd+vFjaUniW/wBdB9G
+	 jkHr1slxKVtuXeXoAOpsquWMIwXfGTH+dPFp/txw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 393/694] f2fs: fix to avoid use-after-free for cached IPU bio
-Date: Mon,  8 May 2023 11:43:48 +0200
-Message-Id: <20230508094445.813626926@linuxfoundation.org>
+Subject: [PATCH 6.3 394/694] wifi: iwlwifi: fix duplicate entry in iwl_dev_info_table
+Date: Mon,  8 May 2023 11:43:49 +0200
+Message-Id: <20230508094445.857641603@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,74 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Gregory Greenman <gregory.greenman@intel.com>
 
-[ Upstream commit 5cdb422c839134273866208dad5360835ddb9794 ]
+[ Upstream commit fc3c2f0ed86b65dff4b6844c59c597b977cae533 ]
 
-xfstest generic/019 reports a bug:
+There're two identical entries for ax1650 device in
+iwl_dev_info_table. Remove one of the duplicate entries.
 
-kernel BUG at mm/filemap.c:1619!
-RIP: 0010:folio_end_writeback+0x8a/0x90
-Call Trace:
- end_page_writeback+0x1c/0x60
- f2fs_write_end_io+0x199/0x420
- bio_endio+0x104/0x180
- submit_bio_noacct+0xa5/0x510
- submit_bio+0x48/0x80
- f2fs_submit_write_bio+0x35/0x300
- f2fs_submit_merged_ipu_write+0x2a0/0x2b0
- f2fs_write_single_data_page+0x838/0x8b0
- f2fs_write_cache_pages+0x379/0xa30
- f2fs_write_data_pages+0x30c/0x340
- do_writepages+0xd8/0x1b0
- __writeback_single_inode+0x44/0x370
- writeback_sb_inodes+0x233/0x4d0
- __writeback_inodes_wb+0x56/0xf0
- wb_writeback+0x1dd/0x2d0
- wb_workfn+0x367/0x4a0
- process_one_work+0x21d/0x430
- worker_thread+0x4e/0x3c0
- kthread+0x103/0x130
- ret_from_fork+0x2c/0x50
-
-The root cause is: after cp_error is set, f2fs_submit_merged_ipu_write()
-in f2fs_write_single_data_page() tries to flush IPU bio in cache, however
-f2fs_submit_merged_ipu_write() missed to check validity of @bio parameter,
-result in submitting random cached bio which belong to other IO context,
-then it will cause use-after-free issue, fix it by adding additional
-validity check.
-
-Fixes: 0b20fcec8651 ("f2fs: cache global IPU bio")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 953e66a7238b ("iwlwifi: add new ax1650 killer device")
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230410140721.897683-2-gregory.greenman@intel.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 06b552a0aba23..1034912a61b30 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -874,6 +874,8 @@ void f2fs_submit_merged_ipu_write(struct f2fs_sb_info *sbi,
- 	bool found = false;
- 	struct bio *target = bio ? *bio : NULL;
- 
-+	f2fs_bug_on(sbi, !target && !page);
-+
- 	for (temp = HOT; temp < NR_TEMP_TYPE && !found; temp++) {
- 		struct f2fs_bio_info *io = sbi->write_io[DATA] + temp;
- 		struct list_head *head = &io->bio_list;
-@@ -2898,7 +2900,8 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
- 
- 	if (unlikely(f2fs_cp_error(sbi))) {
- 		f2fs_submit_merged_write(sbi, DATA);
--		f2fs_submit_merged_ipu_write(sbi, bio, NULL);
-+		if (bio && *bio)
-+			f2fs_submit_merged_ipu_write(sbi, bio, NULL);
- 		submitted = NULL;
- 	}
- 
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index 99768d6a60322..a0bf19b18635c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -565,7 +565,6 @@ static const struct iwl_dev_info iwl_dev_info_table[] = {
+ 	IWL_DEV_INFO(0x43F0, 0x1652, killer1650i_2ax_cfg_qu_b0_hr_b0, iwl_ax201_killer_1650i_name),
+ 	IWL_DEV_INFO(0x43F0, 0x2074, iwl_ax201_cfg_qu_hr, NULL),
+ 	IWL_DEV_INFO(0x43F0, 0x4070, iwl_ax201_cfg_qu_hr, NULL),
+-	IWL_DEV_INFO(0x43F0, 0x1651, killer1650s_2ax_cfg_qu_b0_hr_b0, iwl_ax201_killer_1650s_name),
+ 	IWL_DEV_INFO(0xA0F0, 0x0070, iwl_ax201_cfg_qu_hr, NULL),
+ 	IWL_DEV_INFO(0xA0F0, 0x0074, iwl_ax201_cfg_qu_hr, NULL),
+ 	IWL_DEV_INFO(0xA0F0, 0x0078, iwl_ax201_cfg_qu_hr, NULL),
 -- 
 2.39.2
 
