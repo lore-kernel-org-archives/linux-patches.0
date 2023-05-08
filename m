@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9609A13AE0
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4CEC433D2;
-	Mon,  8 May 2023 11:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADB213AE0
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F71FC433D2;
+	Mon,  8 May 2023 11:00:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543622;
-	bh=TcG9egfCML5p5qHU9oBwGFlNahDoqoIMbUNpE41ESlo=;
+	s=korg; t=1683543625;
+	bh=/psOibmtnnkcz1+tirmhsBiDgkCvd5+0ZG4x9ICNoaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGdCFO4Mg+C0LyNNQFAy9iVFnr4XdDBDc7+34uHFrc12ui+T0pnWxXcYhCu5s51DW
-	 aUcxAth3VtgqOrjKDW2dkueOgAVsUl8+PKL4x1Yxt1B7CwLyN3NbIacc+uWubVcIXq
-	 FuZ17MmTo7Y3mIbDCJFk85Xkrd2XC6GyH+zWi9z8=
+	b=wCfKCX9jIHEdnpvZtTnlhsbfkoAeaz6Q/Ni0d1MchosZKQsJfay4ewDMC0597syln
+	 4naKJjJ5qW8ay+zBmyPjdUpWUfqr4rrKLuSmgTQ1xnr+jkryQFK+lrlJQpRpEzbVRI
+	 DZozJ+cCaMKHn4FD689Ae3NQbElA75yd3OczrsVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 6.3 118/694] mtd: spi-nor: core: Update flashs current address mode when changing address mode
-Date: Mon,  8 May 2023 11:39:13 +0200
-Message-Id: <20230508094436.309120810@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 109/694] nilfs2: fix infinite loop in nilfs_mdt_get_block()
+Date: Mon,  8 May 2023 11:39:04 +0200
+Message-Id: <20230508094436.008414760@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -33,46 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 37513c56139b79dd43c1774513c28f8ab2b05224 upstream.
+commit a6a491c048882e7e424d407d32cba0b52d9ef2bf upstream.
 
-The bug was obswerved while reading code. There are not many users of
-addr_mode_nbytes. Anyway, we should update the flash's current address
-mode when changing the address mode, fix it. We don't care for now about
-the set_4byte_addr_mode(nor, false) from spi_nor_restore(), as it is
-used at driver remove and shutdown.
+If the disk image that nilfs2 mounts is corrupted and a virtual block
+address obtained by block lookup for a metadata file is invalid,
+nilfs_bmap_lookup_at_level() may return the same internal return code as
+-ENOENT, meaning the block does not exist in the metadata file.
 
-Fixes: d7931a215063 ("mtd: spi-nor: core: Track flash's internal address mode")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230331074606.3559258-9-tudor.ambarus@linaro.org
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+This duplication of return codes confuses nilfs_mdt_get_block(), causing
+it to read and create a metadata block indefinitely.
+
+In particular, if this happens to the inode metadata file, ifile,
+semaphore i_rwsem can be left held, causing task hangs in lock_mount.
+
+Fix this issue by making nilfs_bmap_lookup_at_level() treat virtual block
+address translation failures with -ENOENT as metadata corruption instead
+of returning the error code.
+
+Link: https://lkml.kernel.org/r/20230430193046.6769-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=221d75710bde87fa0e97
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/core.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nilfs2/bmap.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -2732,6 +2732,7 @@ static int spi_nor_quad_enable(struct sp
+--- a/fs/nilfs2/bmap.c
++++ b/fs/nilfs2/bmap.c
+@@ -67,20 +67,28 @@ int nilfs_bmap_lookup_at_level(struct ni
  
- static int spi_nor_init(struct spi_nor *nor)
- {
-+	struct spi_nor_flash_parameter *params = nor->params;
- 	int err;
- 
- 	err = spi_nor_octal_dtr_enable(nor, true);
-@@ -2773,9 +2774,10 @@ static int spi_nor_init(struct spi_nor *
- 		 */
- 		WARN_ONCE(nor->flags & SNOR_F_BROKEN_RESET,
- 			  "enabling reset hack; may not recover from unexpected reboots\n");
--		err = nor->params->set_4byte_addr_mode(nor, true);
-+		err = params->set_4byte_addr_mode(nor, true);
- 		if (err && err != -ENOTSUPP)
- 			return err;
-+		params->addr_mode_nbytes = 4;
+ 	down_read(&bmap->b_sem);
+ 	ret = bmap->b_ops->bop_lookup(bmap, key, level, ptrp);
+-	if (ret < 0) {
+-		ret = nilfs_bmap_convert_error(bmap, __func__, ret);
++	if (ret < 0)
+ 		goto out;
+-	}
++
+ 	if (NILFS_BMAP_USE_VBN(bmap)) {
+ 		ret = nilfs_dat_translate(nilfs_bmap_get_dat(bmap), *ptrp,
+ 					  &blocknr);
+ 		if (!ret)
+ 			*ptrp = blocknr;
++		else if (ret == -ENOENT) {
++			/*
++			 * If there was no valid entry in DAT for the block
++			 * address obtained by b_ops->bop_lookup, then pass
++			 * internal code -EINVAL to nilfs_bmap_convert_error
++			 * to treat it as metadata corruption.
++			 */
++			ret = -EINVAL;
++		}
  	}
  
- 	return 0;
+  out:
+ 	up_read(&bmap->b_sem);
+-	return ret;
++	return nilfs_bmap_convert_error(bmap, __func__, ret);
+ }
+ 
+ int nilfs_bmap_lookup_contig(struct nilfs_bmap *bmap, __u64 key, __u64 *ptrp,
 
 
