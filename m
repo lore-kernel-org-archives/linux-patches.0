@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645DE168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7AC2C433EF;
-	Mon,  8 May 2023 11:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7DD168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:04:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA66EC43442;
+	Mon,  8 May 2023 11:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543837;
-	bh=oo+mgKjtrMb1Vi08fabsduXLpZhxuZyzQg9XKNt2FCM=;
+	s=korg; t=1683543840;
+	bh=TvUAxuWbao7k+bB6sKnmccFmKkfMmiDkF6W9Fq77OFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0AGnv0FKuKcmLuC9H4vLj0t3y/OV4iyq8esSb29nprCz0qe142M0iUC31GV4mbgq3
-	 SsqPUPq1g74J1Zb+qbtcg3lY9TUgu15iZgSK97qhsCitf5Vl4WsuNftp4jiBcAoPQo
-	 PYuovNPDk1iZA9Ju4L9gNRsfrb0PUtep/AggfFAM=
+	b=NjRf/kAKbZ2cViP1AkTENnrtfcfbYmobxEhsFdAKBQvlcvC7cXwtgtfb/kM5rUr66
+	 i1uFX01EIcdizrR0ApbL0jNYEqr4SPAbqelZ+BpnVCVTzYz2wLJjubn+eHYjkf5JkC
+	 VUErKTKGd0duVr1izvZ6PAvLGTigWzghw16W/nJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Robert Foss <rfoss@kernel.org>,
+	Adam Ford <aford173@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 176/694] arm64: dts: broadcom: bcmbca: bcm4908: fix LED nodenames
-Date: Mon,  8 May 2023 11:40:11 +0200
-Message-Id: <20230508094438.122088397@linuxfoundation.org>
+Subject: [PATCH 6.3 211/694] drm/bridge: adv7533: Fix adv7533_mode_valid for adv7533 and adv7535
+Date: Mon,  8 May 2023 11:40:46 +0200
+Message-Id: <20230508094439.219001986@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,71 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 23be9f68f933adee8163b8efc9c6bff71410cc7c ]
+[ Upstream commit ee0285e13455fdbce5de315bdbe91b5f198a2a06 ]
 
-This fixes:
-arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dtb: leds@800: 'led-lan@19', 'led-power@11', 'led-wan-red@12', 'led-wan-white@15', 'led-wps@14' do not match any of the regexes: '^led@[a-f0-9]+$', 'pinctrl-[0-9]+'
-        From schema: Documentation/devicetree/bindings/leds/leds-bcm63138.yaml
+When dynamically switching lanes was removed, the intent of the code
+was to check to make sure that higher speed items used 4 lanes, but
+it had the unintended consequence of removing the slower speeds for
+4-lane users.
 
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Link: https://lore.kernel.org/all/20230228144400.21689-2-zajec5@gmail.com/
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+This attempts to remedy this by doing a check to see that the
+max frequency doesn't exceed the chip limit, and a second
+check to make sure that the max bit-rate doesn't exceed the
+number of lanes * max bit rate / lane.
+
+Fixes: 9a0cdcd6649b ("drm/bridge: adv7533: remove dynamic lane switching from adv7533 bridge")
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230319125524.58803-1-aford173@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts     | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/bridge/adv7511/adv7533.c | 25 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts
-index 839ca33178b01..d94a53d68320b 100644
---- a/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts
-+++ b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts
-@@ -120,7 +120,7 @@
- };
+diff --git a/drivers/gpu/drm/bridge/adv7511/adv7533.c b/drivers/gpu/drm/bridge/adv7511/adv7533.c
+index fdfeadcefe805..7e3e56441aedc 100644
+--- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
++++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
+@@ -103,22 +103,19 @@ void adv7533_dsi_power_off(struct adv7511 *adv)
+ enum drm_mode_status adv7533_mode_valid(struct adv7511 *adv,
+ 					const struct drm_display_mode *mode)
+ {
+-	int lanes;
++	unsigned long max_lane_freq;
+ 	struct mipi_dsi_device *dsi = adv->dsi;
++	u8 bpp = mipi_dsi_pixel_format_to_bpp(dsi->format);
  
- &leds {
--	led-power@11 {
-+	led@11 {
- 		reg = <0x11>;
- 		function = LED_FUNCTION_POWER;
- 		color = <LED_COLOR_ID_WHITE>;
-@@ -130,7 +130,7 @@
- 		pinctrl-0 = <&pins_led_17_a>;
- 	};
+-	if (mode->clock > 80000)
+-		lanes = 4;
+-	else
+-		lanes = 3;
+-
+-	/*
+-	 * TODO: add support for dynamic switching of lanes
+-	 * by using the bridge pre_enable() op . Till then filter
+-	 * out the modes which shall need different number of lanes
+-	 * than what was configured in the device tree.
+-	 */
+-	if (lanes != dsi->lanes)
+-		return MODE_BAD;
++	/* Check max clock for either 7533 or 7535 */
++	if (mode->clock > (adv->type == ADV7533 ? 80000 : 148500))
++		return MODE_CLOCK_HIGH;
++
++	/* Check max clock for each lane */
++	max_lane_freq = (adv->type == ADV7533 ? 800000 : 891000);
++
++	if (mode->clock * bpp > max_lane_freq * adv->num_dsi_lanes)
++		return MODE_CLOCK_HIGH;
  
--	led-wan-red@12 {
-+	led@12 {
- 		reg = <0x12>;
- 		function = LED_FUNCTION_WAN;
- 		color = <LED_COLOR_ID_RED>;
-@@ -139,7 +139,7 @@
- 		pinctrl-0 = <&pins_led_18_a>;
- 	};
- 
--	led-wps@14 {
-+	led@14 {
- 		reg = <0x14>;
- 		function = LED_FUNCTION_WPS;
- 		color = <LED_COLOR_ID_WHITE>;
-@@ -148,7 +148,7 @@
- 		pinctrl-0 = <&pins_led_20_a>;
- 	};
- 
--	led-wan-white@15 {
-+	led@15 {
- 		reg = <0x15>;
- 		function = LED_FUNCTION_WAN;
- 		color = <LED_COLOR_ID_WHITE>;
-@@ -157,7 +157,7 @@
- 		pinctrl-0 = <&pins_led_21_a>;
- 	};
- 
--	led-lan@19 {
-+	led@19 {
- 		reg = <0x19>;
- 		function = LED_FUNCTION_LAN;
- 		color = <LED_COLOR_ID_WHITE>;
+ 	return MODE_OK;
+ }
 -- 
 2.39.2
 
