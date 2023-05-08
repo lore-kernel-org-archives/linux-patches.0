@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BBB1549A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:48:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA077C433EF;
-	Mon,  8 May 2023 10:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7394D13AF4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:48:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2F7C433EF;
+	Mon,  8 May 2023 10:48:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542899;
-	bh=UeXl1Vk2bKZnsjJPIvlDDqzSKUSh7JLVbWH4w93ejDE=;
+	s=korg; t=1683542902;
+	bh=hfEhiAuaVlMG4xQxmFS9RLPXYYi4UgQiJ+eh70j6rnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EfbDqA/DPkKL0I5Nkndh7iLrYSBfCvSKvANyVq7j5Ht5tmjl4TdEoZsD+4oN/W/J/
-	 rGsYKQpoTQQXO3PScpcaVBlkhywqxWVYfTTjBRoH8UWWVzJ83qjuWz/ftMokJRyQHM
-	 nUMrqU0rmIWTQqAs1Rq7ds8xkDiaKNFfXbbIIKoA=
+	b=lfXDy9OuwCTdMruk+yH3TOAAt3fBCv8P+UltXqytcHWNwIclHv3jfunuw4qGwwOBG
+	 qOyq+FS/99MED+TQW9CQzQobvO1G18tKqn0I0Omwb/Dp1Q3PUSuYUJEH+cZG8Ea3lj
+	 ZUugDUivvPHW/tf2ePkTuO+Dl+EOPWH+IrYuA7gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 584/663] pinctrl: ralink: reintroduce ralink,rt2880-pinmux compatible string
-Date: Mon,  8 May 2023 11:46:50 +0200
-Message-Id: <20230508094448.302215081@linuxfoundation.org>
+Subject: [PATCH 6.2 558/663] clk: qcom: gcc-sm8350: fix PCIe PIPE clocks handling
+Date: Mon,  8 May 2023 11:46:24 +0200
+Message-Id: <20230508094447.244282864@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,87 +35,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 7c19147d9cfc0f9328049d2e278279150d7de9ca ]
+[ Upstream commit 1a500e0bc97b6cb3c0d9859e81973b8dd07d1b7b ]
 
-There have been stable releases with the ralink,rt2880-pinmux compatible
-string included. Having it removed breaks the ABI. Reintroduce it.
+On SM8350 platform the PCIe PIPE clocks require additional handling to
+function correctly. They are to be switched to the tcxo source before
+turning PCIe GDSCs off and should be switched to PHY PIPE source once
+they are working. Switch PCIe PHY clocks to use clk_regmap_phy_mux_ops,
+which provide support for this dance.
 
-Fixes: e5981cd46183 ("pinctrl: ralink: add new compatible strings for each pinctrl subdriver")
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Reviewed-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Link: https://lore.kernel.org/r/20230317213011.13656-2-arinc.unal@arinc9.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 44c20c9ed37f ("clk: qcom: gcc: Add clock driver for SM8350")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230412134829.3686467-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/ralink/pinctrl-mt7620.c | 1 +
- drivers/pinctrl/ralink/pinctrl-mt7621.c | 1 +
- drivers/pinctrl/ralink/pinctrl-rt2880.c | 1 +
- drivers/pinctrl/ralink/pinctrl-rt305x.c | 1 +
- drivers/pinctrl/ralink/pinctrl-rt3883.c | 1 +
- 5 files changed, 5 insertions(+)
+ drivers/clk/qcom/gcc-sm8350.c | 47 ++++++++++-------------------------
+ 1 file changed, 13 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/pinctrl/ralink/pinctrl-mt7620.c b/drivers/pinctrl/ralink/pinctrl-mt7620.c
-index 22ff16eff02ff..929a1ace56aeb 100644
---- a/drivers/pinctrl/ralink/pinctrl-mt7620.c
-+++ b/drivers/pinctrl/ralink/pinctrl-mt7620.c
-@@ -372,6 +372,7 @@ static int mt7620_pinctrl_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/qcom/gcc-sm8350.c b/drivers/clk/qcom/gcc-sm8350.c
+index c3731f96c8e6b..430ef407a8341 100644
+--- a/drivers/clk/qcom/gcc-sm8350.c
++++ b/drivers/clk/qcom/gcc-sm8350.c
+@@ -17,6 +17,7 @@
+ #include "clk-regmap.h"
+ #include "clk-regmap-divider.h"
+ #include "clk-regmap-mux.h"
++#include "clk-regmap-phy-mux.h"
+ #include "gdsc.h"
+ #include "reset.h"
  
- static const struct of_device_id mt7620_pinctrl_match[] = {
- 	{ .compatible = "ralink,mt7620-pinctrl" },
-+	{ .compatible = "ralink,rt2880-pinmux" },
- 	{}
+@@ -167,26 +168,6 @@ static const struct clk_parent_data gcc_parent_data_3[] = {
+ 	{ .fw_name = "core_bi_pll_test_se" },
  };
- MODULE_DEVICE_TABLE(of, mt7620_pinctrl_match);
-diff --git a/drivers/pinctrl/ralink/pinctrl-mt7621.c b/drivers/pinctrl/ralink/pinctrl-mt7621.c
-index b47968f40e0c2..0297cf455b3a0 100644
---- a/drivers/pinctrl/ralink/pinctrl-mt7621.c
-+++ b/drivers/pinctrl/ralink/pinctrl-mt7621.c
-@@ -97,6 +97,7 @@ static int mt7621_pinctrl_probe(struct platform_device *pdev)
  
- static const struct of_device_id mt7621_pinctrl_match[] = {
- 	{ .compatible = "ralink,mt7621-pinctrl" },
-+	{ .compatible = "ralink,rt2880-pinmux" },
- 	{}
+-static const struct parent_map gcc_parent_map_4[] = {
+-	{ P_PCIE_0_PIPE_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_4[] = {
+-	{ .fw_name = "pcie_0_pipe_clk", },
+-	{ .fw_name = "bi_tcxo" },
+-};
+-
+-static const struct parent_map gcc_parent_map_5[] = {
+-	{ P_PCIE_1_PIPE_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_5[] = {
+-	{ .fw_name = "pcie_1_pipe_clk" },
+-	{ .fw_name = "bi_tcxo" },
+-};
+-
+ static const struct parent_map gcc_parent_map_6[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GCC_GPLL0_OUT_MAIN, 1 },
+@@ -289,32 +270,30 @@ static const struct clk_parent_data gcc_parent_data_14[] = {
+ 	{ .fw_name = "bi_tcxo" },
  };
- MODULE_DEVICE_TABLE(of, mt7621_pinctrl_match);
-diff --git a/drivers/pinctrl/ralink/pinctrl-rt2880.c b/drivers/pinctrl/ralink/pinctrl-rt2880.c
-index 811e12df11331..fd9af7c2ffd0e 100644
---- a/drivers/pinctrl/ralink/pinctrl-rt2880.c
-+++ b/drivers/pinctrl/ralink/pinctrl-rt2880.c
-@@ -41,6 +41,7 @@ static int rt2880_pinctrl_probe(struct platform_device *pdev)
  
- static const struct of_device_id rt2880_pinctrl_match[] = {
- 	{ .compatible = "ralink,rt2880-pinctrl" },
-+	{ .compatible = "ralink,rt2880-pinmux" },
- 	{}
+-static struct clk_regmap_mux gcc_pcie_0_pipe_clk_src = {
++static struct clk_regmap_phy_mux gcc_pcie_0_pipe_clk_src = {
+ 	.reg = 0x6b054,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_4,
+ 	.clkr = {
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pcie_0_pipe_clk_src",
+-			.parent_data = gcc_parent_data_4,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_4),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "pcie_0_pipe_clk",
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
  };
- MODULE_DEVICE_TABLE(of, rt2880_pinctrl_match);
-diff --git a/drivers/pinctrl/ralink/pinctrl-rt305x.c b/drivers/pinctrl/ralink/pinctrl-rt305x.c
-index 5b204b7ca1f3c..13a012a65d1d8 100644
---- a/drivers/pinctrl/ralink/pinctrl-rt305x.c
-+++ b/drivers/pinctrl/ralink/pinctrl-rt305x.c
-@@ -118,6 +118,7 @@ static int rt305x_pinctrl_probe(struct platform_device *pdev)
  
- static const struct of_device_id rt305x_pinctrl_match[] = {
- 	{ .compatible = "ralink,rt305x-pinctrl" },
-+	{ .compatible = "ralink,rt2880-pinmux" },
- 	{}
+-static struct clk_regmap_mux gcc_pcie_1_pipe_clk_src = {
++static struct clk_regmap_phy_mux gcc_pcie_1_pipe_clk_src = {
+ 	.reg = 0x8d054,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_5,
+ 	.clkr = {
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pcie_1_pipe_clk_src",
+-			.parent_data = gcc_parent_data_5,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_5),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "pcie_1_pipe_clk",
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
  };
- MODULE_DEVICE_TABLE(of, rt305x_pinctrl_match);
-diff --git a/drivers/pinctrl/ralink/pinctrl-rt3883.c b/drivers/pinctrl/ralink/pinctrl-rt3883.c
-index 44a66c3d2d2a1..b263764011e76 100644
---- a/drivers/pinctrl/ralink/pinctrl-rt3883.c
-+++ b/drivers/pinctrl/ralink/pinctrl-rt3883.c
-@@ -88,6 +88,7 @@ static int rt3883_pinctrl_probe(struct platform_device *pdev)
- 
- static const struct of_device_id rt3883_pinctrl_match[] = {
- 	{ .compatible = "ralink,rt3883-pinctrl" },
-+	{ .compatible = "ralink,rt2880-pinmux" },
- 	{}
- };
- MODULE_DEVICE_TABLE(of, rt3883_pinctrl_match);
 -- 
 2.39.2
 
