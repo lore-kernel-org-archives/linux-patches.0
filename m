@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCD7168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538C0C433EF;
-	Mon,  8 May 2023 10:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296EA168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F201C4339C;
+	Mon,  8 May 2023 10:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542808;
-	bh=jRNIkVtKvGrZssZSHSeZNmvKqaR2UN3O51TcKqNOvSg=;
+	s=korg; t=1683542812;
+	bh=1gHjVbiwzno4iGhhE6/DY9gqDFfRJvPcx5ZnRCQCNOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ALkI119/pGJ0sk0Jfo7RsM7kHfMnRBlabfQ9C6mxNvIVKmi7CdQvOBjcaUa7tov9s
-	 gIiUeIeW5cfHt5jMNOOfTYtKKBvzg2t6+jD9g0npwWzoYf7/ljqYBDeffUBpkszMz5
-	 bVZmODvTYGsyti6jzWUHpCknWT0Vp1mmoDIf/4JY=
+	b=lahsqGiDou42lfqXKzt97HpjVJYmRfJoeH/v7Se7d0TCRbFpiMm328LhBVriIb3yW
+	 M/cYdaj3MvspKj/arBHSPwHW3bfpOqQlQvyxtP3A7HpduDZMoruJgcmpKlMLAEuFiw
+	 fetmoKNrSJDxpDyXKAtAOBkjrUuItb5A9UcwxhKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Joerg Roedel <joro@8bytes.org>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Natalia Petrova <n.petrova@fintech.ru>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 554/663] iommu/amd: Set page size bitmap during V2 domain allocation
-Date: Mon,  8 May 2023 11:46:20 +0200
-Message-Id: <20230508094447.071168326@linuxfoundation.org>
+Subject: [PATCH 6.2 524/663] RDMA/rdmavt: Delete unnecessary NULL check
+Date: Mon,  8 May 2023 11:45:50 +0200
+Message-Id: <20230508094445.850307077@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -40,82 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Snitselaar <jsnitsel@redhat.com>
+From: Natalia Petrova <n.petrova@fintech.ru>
 
-[ Upstream commit 8f880d19e6ad645a4b8066d5ff091c980b3231e7 ]
+[ Upstream commit b73a0b80c69de77d8d4942abb37066531c0169b2 ]
 
-With the addition of the V2 page table support, the domain page size
-bitmap needs to be set prior to iommu core setting up direct mappings
-for reserved regions. When reserved regions are mapped, if this is not
-done, it will be looking at the V1 page size bitmap when determining
-the page size to use in iommu_pgsize(). When it gets into the actual
-amd mapping code, a check of see if the page size is supported can
-fail, because at that point it is checking it against the V2 page size
-bitmap which only supports 4K, 2M, and 1G.
+There is no need to check 'rdi->qp_dev' for NULL. The field 'qp_dev'
+is created in rvt_register_device() which will fail if the 'qp_dev'
+allocation fails in rvt_driver_qp_init(). Overwise this pointer
+doesn't changed and passed to rvt_qp_exit() by the next step.
 
-Add a check to __iommu_domain_alloc() to not override the
-bitmap if it was already set by the iommu ops domain_alloc() code path.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Cc: Vasant Hegde <vasant.hegde@amd.com>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Joerg Roedel <joro@8bytes.org>
-Fixes: 4db6c41f0946 ("iommu/amd: Add support for using AMD IOMMU v2 page table for DMA-API")
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20230404072742.1895252-1-jsnitsel@redhat.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 0acb0cc7ecc1 ("IB/rdmavt: Initialize and teardown of qpn table")
+Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
+Link: https://lore.kernel.org/r/20230303124408.16685-1-n.petrova@fintech.ru
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 6 ++----
- drivers/iommu/iommu.c     | 9 +++++++--
- 2 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/infiniband/sw/rdmavt/qp.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index ff4f3d4da3402..e108280fdaa0e 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1656,10 +1656,6 @@ static void do_attach(struct iommu_dev_data *dev_data,
- 	domain->dev_iommu[iommu->index] += 1;
- 	domain->dev_cnt                 += 1;
+diff --git a/drivers/infiniband/sw/rdmavt/qp.c b/drivers/infiniband/sw/rdmavt/qp.c
+index 3acab569fbb94..2bdc4486c3daa 100644
+--- a/drivers/infiniband/sw/rdmavt/qp.c
++++ b/drivers/infiniband/sw/rdmavt/qp.c
+@@ -464,8 +464,6 @@ void rvt_qp_exit(struct rvt_dev_info *rdi)
+ 	if (qps_inuse)
+ 		rvt_pr_err(rdi, "QP memory leak! %u still in use\n",
+ 			   qps_inuse);
+-	if (!rdi->qp_dev)
+-		return;
  
--	/* Override supported page sizes */
--	if (domain->flags & PD_GIOV_MASK)
--		domain->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
--
- 	/* Update device table */
- 	set_dte_entry(iommu, dev_data->devid, domain,
- 		      ats, dev_data->iommu_v2);
-@@ -2038,6 +2034,8 @@ static int protection_domain_init_v2(struct protection_domain *domain)
- 
- 	domain->flags |= PD_GIOV_MASK;
- 
-+	domain->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
-+
- 	if (domain_enable_v2(domain, 1)) {
- 		domain_id_free(domain->id);
- 		return -ENOMEM;
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index f8100067502fb..e6f2a0bc9f0be 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -1940,8 +1940,13 @@ static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
- 		return NULL;
- 
- 	domain->type = type;
--	/* Assume all sizes by default; the driver may override this later */
--	domain->pgsize_bitmap = bus->iommu_ops->pgsize_bitmap;
-+	/*
-+	 * If not already set, assume all sizes by default; the driver
-+	 * may override this later
-+	 */
-+	if (!domain->pgsize_bitmap)
-+		domain->pgsize_bitmap = bus->iommu_ops->pgsize_bitmap;
-+
- 	if (!domain->ops)
- 		domain->ops = bus->iommu_ops->default_domain_ops;
- 
+ 	kfree(rdi->qp_dev->qp_table);
+ 	free_qpn_table(&rdi->qp_dev->qpn_table);
 -- 
 2.39.2
 
