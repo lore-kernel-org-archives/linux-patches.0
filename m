@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A3E168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F3C7C433D2;
-	Mon,  8 May 2023 11:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6879168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC9AC433D2;
+	Mon,  8 May 2023 11:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545227;
-	bh=kjsn8EC8znD3UmGWKTTvGFe8CixJgsskO6DqxniylZs=;
+	s=korg; t=1683545230;
+	bh=j4uS4KE5pxGfuHogMe3HeMd/YIK2+mS/kKBnvpskTAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mf8L1HKMrfOAf0pyyerkbbxvR5GKkqJO7VDPTRCTXYR247s8poRVgOAxWTbic35/+
-	 maCyY40ocypxp0kuycaY74jwt/mNTkqWz68NAM4lQwv0GChHtXpiGCjG+Ln9PCs5Eh
-	 BU5dA1otwn5XKjwzcC0MoOM7kSk78eaof3MRb3BU=
+	b=GGf7lzQeUOKQUPqOeWK5bntD8s4q4pp7za0z3QIZKWKe5gmnkTjhmwI6CFxiFYuK0
+	 XhregWhmmNlgPUyt+OPQCrOI9BeUsHbfMWgAPajFbjR8d/RSg8snt5ssBl7cdLhuUr
+	 DV7gaElVCzy9jkkiDKIIrDBFbcHP4TWRDGqcgQng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=A9=20Koerkamp?= <ge.koerkamp@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+	Chen Yu <yu.c.chen@intel.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 666/694] ACPI: PM: Do not turn of unused power resources on the Toshiba Click Mini
-Date: Mon,  8 May 2023 11:48:21 +0200
-Message-Id: <20230508094457.690318901@linuxfoundation.org>
+Subject: [PATCH 6.3 667/694] PM: hibernate: Turn snapshot_test into global variable
+Date: Mon,  8 May 2023 11:48:22 +0200
+Message-Id: <20230508094457.740010496@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,85 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Chen Yu <yu.c.chen@intel.com>
 
-[ Upstream commit 9b04d99788cf475cbd277f30ec66230ccb7e99f4 ]
+[ Upstream commit 08169a162f97819d3e5b4a342bb9cf5137787154 ]
 
-The CPR3 power resource on the Toshiba Click Mini toggles a GPIO
-which is called SISP (for SIS touchscreen power?) on/off.
+There is need to check snapshot_test and open block device
+in different mode, so as to avoid the race condition.
 
-This CPR3 power resource is not listed in any _PR? lists, let alone
-in a _PR0 list for the SIS0817 touchscreen ACPI device which needs it.
+No functional changes intended.
 
-Before commit a1224f34d72a ("ACPI: PM: Check states of power resources
-during initialization") this was not an issue because since nothing
-referenced the CPR3 power resource its state was always
-ACPI_POWER_RESOURCE_STATE_UNKNOWN and power resources with this state
-get ignored by acpi_turn_off_unused_power_resources().
-
-This clearly is a bug in the DSDT of this device. Add a DMI quirk
-to make acpi_turn_off_unused_power_resources() a no-op on this
-model to fix the touchscreen no longer working since kernel 5.16 .
-
-This quirk also causes 2 other power resources to not get turned
-off, but the _OFF method on these already was a no-op, so this makes
-no difference for the other 2 power resources.
-
-Fixes: a1224f34d72a ("ACPI: PM: Check states of power resources during initialization")
-Reported-by: Gé Koerkamp <ge.koerkamp@gmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216946
-Link: https://lore.kernel.org/regressions/32a14a8a-9795-4c8c-7e00-da9012f548f8@leemhuis.info/
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Suggested-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 5904de0d735b ("PM: hibernate: Do not get block device exclusively in test_resume mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/power.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ kernel/power/hibernate.c | 7 ++++++-
+ kernel/power/power.h     | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
-index 23507d29f0006..c2c70139c4f1d 100644
---- a/drivers/acpi/power.c
-+++ b/drivers/acpi/power.c
-@@ -23,6 +23,7 @@
+diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
+index 793c55a2becba..aa551b093c3f6 100644
+--- a/kernel/power/hibernate.c
++++ b/kernel/power/hibernate.c
+@@ -64,6 +64,7 @@ enum {
+ static int hibernation_mode = HIBERNATION_SHUTDOWN;
  
- #define pr_fmt(fmt) "ACPI: PM: " fmt
+ bool freezer_test_done;
++bool snapshot_test;
  
-+#include <linux/dmi.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/init.h>
-@@ -1022,6 +1023,21 @@ void acpi_resume_power_resources(void)
- }
- #endif
+ static const struct platform_hibernation_ops *hibernation_ops;
  
-+static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
-+	{
-+		/*
-+		 * The Toshiba Click Mini has a CPR3 power-resource which must
-+		 * be on for the touchscreen to work, but which is not in any
-+		 * _PR? lists. The other 2 affected power-resources are no-ops.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "TOSHIBA"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "SATELLITE Click Mini L9W-B"),
-+		},
-+	},
-+	{}
-+};
-+
- /**
-  * acpi_turn_off_unused_power_resources - Turn off power resources not in use.
+@@ -716,7 +717,6 @@ static int load_image_and_restore(void)
   */
-@@ -1029,6 +1045,9 @@ void acpi_turn_off_unused_power_resources(void)
+ int hibernate(void)
  {
- 	struct acpi_power_resource *resource;
+-	bool snapshot_test = false;
+ 	unsigned int sleep_flags;
+ 	int error;
  
-+	if (dmi_check_system(dmi_leave_unused_power_resources_on))
-+		return;
+@@ -744,6 +744,9 @@ int hibernate(void)
+ 	if (error)
+ 		goto Exit;
+ 
++	/* protected by system_transition_mutex */
++	snapshot_test = false;
 +
- 	mutex_lock(&power_resource_list_lock);
+ 	lock_device_hotplug();
+ 	/* Allocate memory management structures */
+ 	error = create_basic_memory_bitmaps();
+@@ -940,6 +943,8 @@ static int software_resume(void)
+ 	 */
+ 	mutex_lock_nested(&system_transition_mutex, SINGLE_DEPTH_NESTING);
  
- 	list_for_each_entry_reverse(resource, &acpi_power_resource_list, list_node) {
++	snapshot_test = false;
++
+ 	if (swsusp_resume_device)
+ 		goto Check_image;
+ 
+diff --git a/kernel/power/power.h b/kernel/power/power.h
+index b4f4339432096..b83c8d5e188de 100644
+--- a/kernel/power/power.h
++++ b/kernel/power/power.h
+@@ -59,6 +59,7 @@ asmlinkage int swsusp_save(void);
+ 
+ /* kernel/power/hibernate.c */
+ extern bool freezer_test_done;
++extern bool snapshot_test;
+ 
+ extern int hibernation_snapshot(int platform_mode);
+ extern int hibernation_restore(int platform_mode);
 -- 
 2.39.2
 
