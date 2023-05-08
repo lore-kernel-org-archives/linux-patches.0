@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE72168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:57:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7887EC433D2;
-	Mon,  8 May 2023 10:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E8E168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:57:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9763C433EF;
+	Mon,  8 May 2023 10:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543420;
-	bh=Zhw3seNwclcY1xsjtNPI1K+SbmYITXkLX6uOEZnocbs=;
+	s=korg; t=1683543424;
+	bh=oWUxFGWUGp1tUky7lt2pEBZRL81RZORgAxCRAKAofUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1fZCDuGQfziX7oW83QE7VKRlqrt8Jog6hHclT7rUFsc6VYe0su6s8cnN4icz4THgx
-	 PgnBhpu7Tt1TpgZKfVorjQtrun379m27IiFl0vz7uLW7x5lo5I890G2NH3VuBWLuU/
-	 MDzzvKHX2Q44rjomEjxRMEYt8BQJaasNBanVhTjM=
+	b=0YaSIS2hAjV+VbpbIiCxq3Ce2I2qfamX5t/jPcQ3EtE8XOms7M1cff9RDYsGkaC9M
+	 NpbIxs5vxe37ZqCqoXI8YO79ocOYN7UYtaDqgyy+o1yeYXwX/CB65gkxcQHJ2pxiAF
+	 9l9az+nl9IYvfxARjWzhHcOkrzK0dvRlchMNSHpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 6.3 055/694] cpufreq: qcom-cpufreq-hw: fix double IO unmap and resource release on exit
-Date: Mon,  8 May 2023 11:38:10 +0200
-Message-Id: <20230508094434.381543755@linuxfoundation.org>
+	mhiramat@kernel.org,
+	npiggin@gmail.com,
+	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.3 046/694] ring-buffer: Ensure proper resetting of atomic variables in ring_buffer_reset_online_cpus
+Date: Mon,  8 May 2023 11:38:01 +0200
+Message-Id: <20230508094434.114280579@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,101 +37,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
 
-commit ba5e770c9698782bc203bbf5cf3b36a77720bdbe upstream.
+commit 7c339fb4d8577792378136c15fde773cfb863cb8 upstream.
 
-Commit 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data
-during probe") moved getting memory resource and iomap from
-qcom_cpufreq_hw_cpu_init() to the probe function, however it left
-untouched cleanup in qcom_cpufreq_hw_cpu_exit().
+In ring_buffer_reset_online_cpus, the buffer_size_kb write operation
+may permanently fail if the cpu_online_mask changes between two
+for_each_online_buffer_cpu loops. The number of increases and decreases
+on both cpu_buffer->resize_disabled and cpu_buffer->record_disabled may be
+inconsistent, causing some CPUs to have non-zero values for these atomic
+variables after the function returns.
 
-During device unbind this will lead to doule release of resource and
-double iounmap(), first by qcom_cpufreq_hw_cpu_exit() and second via
-managed resources:
+This issue can be reproduced by "echo 0 > trace" while hotplugging cpu.
+After reproducing success, we can find out buffer_size_kb will not be
+functional anymore.
 
-  resource: Trying to free nonexistent resource <0x0000000018593000-0x0000000018593fff>
-  Trying to vunmap() nonexistent vm area (0000000088a7d4dc)
-  ...
-  vunmap (mm/vmalloc.c:2771 (discriminator 1))
-  iounmap (mm/ioremap.c:60)
-  devm_ioremap_release (lib/devres.c:19)
-  devres_release_all (drivers/base/devres.c:506 drivers/base/devres.c:535)
-  device_unbind_cleanup (drivers/base/dd.c:523)
-  device_release_driver_internal (drivers/base/dd.c:1248 drivers/base/dd.c:1263)
-  device_driver_detach (drivers/base/dd.c:1300)
-  unbind_store (drivers/base/bus.c:243)
-  drv_attr_store (drivers/base/bus.c:127)
-  sysfs_kf_write (fs/sysfs/file.c:137)
-  kernfs_fop_write_iter (fs/kernfs/file.c:334)
-  vfs_write (include/linux/fs.h:1851 fs/read_write.c:491 fs/read_write.c:584)
-  ksys_write (fs/read_write.c:637)
-  __arm64_sys_write (fs/read_write.c:646)
-  invoke_syscall (arch/arm64/include/asm/current.h:19 arch/arm64/kernel/syscall.c:57)
-  el0_svc_common.constprop.0 (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/syscall.c:150)
-  do_el0_svc (arch/arm64/kernel/syscall.c:194)
-  el0_svc (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/entry-common.c:133 arch/arm64/kernel/entry-common.c:142 arch/arm64/kernel/entry-common.c:638)
-  el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:656)
-  el0t_64_sync (arch/arm64/kernel/entry.S:591)
+To prevent leaving 'resize_disabled' and 'record_disabled' non-zero after
+ring_buffer_reset_online_cpus returns, we ensure that each atomic variable
+has been set up before atomic_sub() to it.
 
-Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
-Cc: <stable@vger.kernel.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Link: https://lore.kernel.org/linux-trace-kernel/20230426062027.17451-1-Tze-nan.Wu@mediatek.com
+
+Cc: stable@vger.kernel.org
+Cc: <mhiramat@kernel.org>
+Cc: npiggin@gmail.com
+Fixes: b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
+Reviewed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
+Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c |   11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ kernel/trace/ring_buffer.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -43,7 +43,6 @@ struct qcom_cpufreq_soc_data {
- 
- struct qcom_cpufreq_data {
- 	void __iomem *base;
--	struct resource *res;
- 
- 	/*
- 	 * Mutex to synchronize between de-init sequence and re-starting LMh
-@@ -590,16 +589,12 @@ static int qcom_cpufreq_hw_cpu_exit(stru
- {
- 	struct device *cpu_dev = get_cpu_device(policy->cpu);
- 	struct qcom_cpufreq_data *data = policy->driver_data;
--	struct resource *res = data->res;
--	void __iomem *base = data->base;
- 
- 	dev_pm_opp_remove_all_dynamic(cpu_dev);
- 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
- 	qcom_cpufreq_hw_lmh_exit(data);
- 	kfree(policy->freq_table);
- 	kfree(data);
--	iounmap(base);
--	release_mem_region(res->start, resource_size(res));
- 
- 	return 0;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5345,6 +5345,9 @@ void ring_buffer_reset_cpu(struct trace_
  }
-@@ -718,17 +713,15 @@ static int qcom_cpufreq_hw_driver_probe(
- 	for (i = 0; i < num_domains; i++) {
- 		struct qcom_cpufreq_data *data = &qcom_cpufreq.data[i];
- 		struct clk_init_data clk_init = {};
--		struct resource *res;
- 		void __iomem *base;
+ EXPORT_SYMBOL_GPL(ring_buffer_reset_cpu);
  
--		base = devm_platform_get_and_ioremap_resource(pdev, i, &res);
-+		base = devm_platform_ioremap_resource(pdev, i);
- 		if (IS_ERR(base)) {
--			dev_err(dev, "Failed to map resource %pR\n", res);
-+			dev_err(dev, "Failed to map resource index %d\n", i);
- 			return PTR_ERR(base);
- 		}
++/* Flag to ensure proper resetting of atomic variables */
++#define RESET_BIT	(1 << 30)
++
+ /**
+  * ring_buffer_reset_online_cpus - reset a ring buffer per CPU buffer
+  * @buffer: The ring buffer to reset a per cpu buffer of
+@@ -5361,20 +5364,27 @@ void ring_buffer_reset_online_cpus(struc
+ 	for_each_online_buffer_cpu(buffer, cpu) {
+ 		cpu_buffer = buffer->buffers[cpu];
  
- 		data->base = base;
--		data->res = res;
+-		atomic_inc(&cpu_buffer->resize_disabled);
++		atomic_add(RESET_BIT, &cpu_buffer->resize_disabled);
+ 		atomic_inc(&cpu_buffer->record_disabled);
+ 	}
  
- 		/* Register CPU clock for each frequency domain */
- 		clk_init.name = kasprintf(GFP_KERNEL, "qcom_cpufreq%d", i);
+ 	/* Make sure all commits have finished */
+ 	synchronize_rcu();
+ 
+-	for_each_online_buffer_cpu(buffer, cpu) {
++	for_each_buffer_cpu(buffer, cpu) {
+ 		cpu_buffer = buffer->buffers[cpu];
+ 
++		/*
++		 * If a CPU came online during the synchronize_rcu(), then
++		 * ignore it.
++		 */
++		if (!(atomic_read(&cpu_buffer->resize_disabled) & RESET_BIT))
++			continue;
++
+ 		reset_disabled_cpu_buffer(cpu_buffer);
+ 
+ 		atomic_dec(&cpu_buffer->record_disabled);
+-		atomic_dec(&cpu_buffer->resize_disabled);
++		atomic_sub(RESET_BIT, &cpu_buffer->resize_disabled);
+ 	}
+ 
+ 	mutex_unlock(&buffer->mutex);
 
 
