@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1993168DC
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:30:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D80CC433EF;
-	Mon,  8 May 2023 10:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD158168D7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:30:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 431ACC433D2;
+	Mon,  8 May 2023 10:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541809;
-	bh=uRG1Lne9p8ZLST3S39Ylke+Vn6pqUOoaaTR6c4xgeEs=;
+	s=korg; t=1683541812;
+	bh=P3W5YrNDzx5SS2ocMteFdnJlj3b6PdNMkOPFR6PYjVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwzmlKfVDOPv4fwNQgN15Lf6M3eTpmngTEwhX2hV1gc8E0YfXtmIltC57cr/r1An7
-	 rHm3VT9uCLoQwkyjp0NUTEWj+kNhcILZtIipw5JT4GlNe6qbYXE3RVg/w3bNkX9KSn
-	 ha2Tkc8H2L/WPWI/MjWA8AMYWldePXj0Hu9nyJ7Q=
+	b=wEpwMrGQA3gEYNtvC7Ix7gH82uAp1xQIeYizz6lPeUAgYhvLEGAFfPaBavp53U5Fy
+	 d394zgDBYS0bGFdGivYyNGEoNJtVaR0zQOMaVSh6iudpTPfWcixgckBQT6KNJpHYc+
+	 X96rp7QuOd3SnlHDQiETzGXy5e7E/mj73JOmpWiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kyrie wu <kyrie.wu@mediatek.com>,
-	irui wang <irui.wang@mediatek.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 233/663] media: mtk-jpeg: Fixes jpeg enc&dec worker sw flow
-Date: Mon,  8 May 2023 11:40:59 +0200
-Message-Id: <20230508094435.852418215@linuxfoundation.org>
+Subject: [PATCH 6.2 207/663] ACPI: VIOT: Initialize the correct IOMMU fwspec
+Date: Mon,  8 May 2023 11:40:33 +0200
+Message-Id: <20230508094435.081657460@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,97 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: kyrie wu <kyrie.wu@mediatek.com>
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-[ Upstream commit 86379bd9d399e2c5fd638a869af223d4910725c3 ]
+[ Upstream commit 47d26684185d09e083669bbbd0c465ab3493a51f ]
 
-1. Move removing buffer after sw setting and before hw setting
-in enc&dec worker to prevents the operation of removing
-the buffer twice if the sw setting fails.
-2. Remove the redundant operation of queue work in the
-jpegenc irq handler because the jpegenc worker has called
-v4l2_m2m_job_finish to do it.
+When setting up DMA for a PCI device, we need to initialize its
+iommu_fwspec with all possible alias RIDs (such as PCI bridges). To do
+this we use pci_for_each_dma_alias() which calls
+viot_pci_dev_iommu_init(). This function incorrectly initializes the
+fwspec of the bridge instead of the device being configured. Fix it by
+passing the original device as context to pci_for_each_dma_alias().
 
-Fixes: 5fb1c2361e56 ("mtk-jpegenc: add jpeg encode worker interface")
-Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
-Signed-off-by: kyrie wu <kyrie.wu@mediatek.com>
-Signed-off-by: irui wang <irui.wang@mediatek.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 3cf485540e7b ("ACPI: Add driver for the VIOT table")
+Link: https://lore.kernel.org/all/Y8qzOKm6kvhGWG1T@myrica
+Reported-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/mediatek/jpeg/mtk_jpeg_core.c   | 14 +++++++-------
- .../media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c |  4 ----
- 2 files changed, 7 insertions(+), 11 deletions(-)
+ drivers/acpi/viot.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index 6d052747a15e8..d9584fe5033eb 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1025,9 +1025,6 @@ static void mtk_jpegenc_worker(struct work_struct *work)
- 	if (!dst_buf)
- 		goto getbuf_fail;
+diff --git a/drivers/acpi/viot.c b/drivers/acpi/viot.c
+index ed752cbbe6362..c8025921c129b 100644
+--- a/drivers/acpi/viot.c
++++ b/drivers/acpi/viot.c
+@@ -328,6 +328,7 @@ static int viot_pci_dev_iommu_init(struct pci_dev *pdev, u16 dev_id, void *data)
+ {
+ 	u32 epid;
+ 	struct viot_endpoint *ep;
++	struct device *aliased_dev = data;
+ 	u32 domain_nr = pci_domain_nr(pdev->bus);
  
--	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
--	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
--
- 	v4l2_m2m_buf_copy_metadata(src_buf, dst_buf, true);
+ 	list_for_each_entry(ep, &viot_pci_ranges, list) {
+@@ -338,7 +339,7 @@ static int viot_pci_dev_iommu_init(struct pci_dev *pdev, u16 dev_id, void *data)
+ 			epid = ((domain_nr - ep->segment_start) << 16) +
+ 				dev_id - ep->bdf_start + ep->endpoint_id;
  
- 	mtk_jpegenc_set_hw_param(ctx, hw_id, src_buf, dst_buf);
-@@ -1045,6 +1042,9 @@ static void mtk_jpegenc_worker(struct work_struct *work)
- 		goto enc_end;
+-			return viot_dev_iommu_init(&pdev->dev, ep->viommu,
++			return viot_dev_iommu_init(aliased_dev, ep->viommu,
+ 						   epid);
+ 		}
  	}
- 
-+	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
-+	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
-+
- 	schedule_delayed_work(&comp_jpeg[hw_id]->job_timeout_work,
- 			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
- 
-@@ -1220,9 +1220,6 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 	if (!dst_buf)
- 		goto getbuf_fail;
- 
--	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
--	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
--
- 	v4l2_m2m_buf_copy_metadata(src_buf, dst_buf, true);
- 	jpeg_src_buf = mtk_jpeg_vb2_to_srcbuf(&src_buf->vb2_buf);
- 	jpeg_dst_buf = mtk_jpeg_vb2_to_srcbuf(&dst_buf->vb2_buf);
-@@ -1231,7 +1228,7 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 					     &jpeg_src_buf->dec_param)) {
- 		mtk_jpeg_queue_src_chg_event(ctx);
- 		ctx->state = MTK_JPEG_SOURCE_CHANGE;
--		goto dec_end;
-+		goto getbuf_fail;
- 	}
- 
- 	jpeg_src_buf->curr_ctx = ctx;
-@@ -1254,6 +1251,9 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 		goto clk_end;
- 	}
- 
-+	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
-+	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
-+
- 	schedule_delayed_work(&comp_jpeg[hw_id]->job_timeout_work,
- 			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
- 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
-index 1bbb712d78d0e..867f4c1a09fa6 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
-@@ -286,10 +286,6 @@ static irqreturn_t mtk_jpegenc_hw_irq_handler(int irq, void *priv)
- 	mtk_jpegenc_put_buf(jpeg);
- 	pm_runtime_put(ctx->jpeg->dev);
- 	clk_disable_unprepare(jpeg->venc_clk.clks->clk);
--	if (!list_empty(&ctx->fh.m2m_ctx->out_q_ctx.rdy_queue) ||
--	    !list_empty(&ctx->fh.m2m_ctx->cap_q_ctx.rdy_queue)) {
--		queue_work(master_jpeg->workqueue, &ctx->jpeg_work);
--	}
- 
- 	jpeg->hw_state = MTK_JPEG_HW_IDLE;
- 	wake_up(&master_jpeg->enc_hw_wq);
+@@ -372,7 +373,7 @@ int viot_iommu_configure(struct device *dev)
+ {
+ 	if (dev_is_pci(dev))
+ 		return pci_for_each_dma_alias(to_pci_dev(dev),
+-					      viot_pci_dev_iommu_init, NULL);
++					      viot_pci_dev_iommu_init, dev);
+ 	else if (dev_is_platform(dev))
+ 		return viot_mmio_dev_iommu_init(to_platform_device(dev));
+ 	return -ENODEV;
 -- 
 2.39.2
 
