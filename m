@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE997168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5841BC4339B;
-	Mon,  8 May 2023 10:46:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCD7168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538C0C433EF;
+	Mon,  8 May 2023 10:46:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542805;
-	bh=8ReGRq1adGKUUyB8juqq1nJifdoW3oGiCnVhPoV2Zzg=;
+	s=korg; t=1683542808;
+	bh=jRNIkVtKvGrZssZSHSeZNmvKqaR2UN3O51TcKqNOvSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=waDBkbacylhziFJT15xyAYbQs8791lxLA4oJAV3qVTHe3eEgZZGQbMXbRVLJyKx62
-	 s9mS4uicM439XtMwkwNng4ePbNjKMD1uz/u/SejBMCoZXFi+Q1IsE61eOZWmszOiNT
-	 QCkQtuTvINdX0CilYlk+cXKtJjJbRS2+4z2ls0XQ=
+	b=ALkI119/pGJ0sk0Jfo7RsM7kHfMnRBlabfQ9C6mxNvIVKmi7CdQvOBjcaUa7tov9s
+	 gIiUeIeW5cfHt5jMNOOfTYtKKBvzg2t6+jD9g0npwWzoYf7/ljqYBDeffUBpkszMz5
+	 bVZmODvTYGsyti6jzWUHpCknWT0Vp1mmoDIf/4JY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Joerg Roedel <joro@8bytes.org>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 553/663] NFSv4.1: Always send a RECLAIM_COMPLETE after establishing lease
-Date: Mon,  8 May 2023 11:46:19 +0200
-Message-Id: <20230508094447.031014851@linuxfoundation.org>
+Subject: [PATCH 6.2 554/663] iommu/amd: Set page size bitmap during V2 domain allocation
+Date: Mon,  8 May 2023 11:46:20 +0200
+Message-Id: <20230508094447.071168326@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,43 +40,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-[ Upstream commit 40882deb83c29d8df4470d4e5e7f137b6acf7ad1 ]
+[ Upstream commit 8f880d19e6ad645a4b8066d5ff091c980b3231e7 ]
 
-The spec requires that we always at least send a RECLAIM_COMPLETE when
-we're done establishing the lease and recovering any state.
+With the addition of the V2 page table support, the domain page size
+bitmap needs to be set prior to iommu core setting up direct mappings
+for reserved regions. When reserved regions are mapped, if this is not
+done, it will be looking at the V1 page size bitmap when determining
+the page size to use in iommu_pgsize(). When it gets into the actual
+amd mapping code, a check of see if the page size is supported can
+fail, because at that point it is checking it against the V2 page size
+bitmap which only supports 4K, 2M, and 1G.
 
-Fixes: fce5c838e133 ("nfs41: RECLAIM_COMPLETE functionality")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Add a check to __iommu_domain_alloc() to not override the
+bitmap if it was already set by the iommu ops domain_alloc() code path.
+
+Cc: Vasant Hegde <vasant.hegde@amd.com>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Joerg Roedel <joro@8bytes.org>
+Fixes: 4db6c41f0946 ("iommu/amd: Add support for using AMD IOMMU v2 page table for DMA-API")
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Link: https://lore.kernel.org/r/20230404072742.1895252-1-jsnitsel@redhat.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iommu/amd/iommu.c | 6 ++----
+ drivers/iommu/iommu.c     | 9 +++++++--
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 2a0ca5c7f082a..660ccfaf463e4 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -67,6 +67,8 @@
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index ff4f3d4da3402..e108280fdaa0e 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -1656,10 +1656,6 @@ static void do_attach(struct iommu_dev_data *dev_data,
+ 	domain->dev_iommu[iommu->index] += 1;
+ 	domain->dev_cnt                 += 1;
  
- #define OPENOWNER_POOL_SIZE	8
+-	/* Override supported page sizes */
+-	if (domain->flags & PD_GIOV_MASK)
+-		domain->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
+-
+ 	/* Update device table */
+ 	set_dte_entry(iommu, dev_data->devid, domain,
+ 		      ats, dev_data->iommu_v2);
+@@ -2038,6 +2034,8 @@ static int protection_domain_init_v2(struct protection_domain *domain)
  
-+static void nfs4_state_start_reclaim_reboot(struct nfs_client *clp);
+ 	domain->flags |= PD_GIOV_MASK;
+ 
++	domain->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
 +
- const nfs4_stateid zero_stateid = {
- 	{ .data = { 0 } },
- 	.type = NFS4_SPECIAL_STATEID_TYPE,
-@@ -330,6 +332,8 @@ int nfs41_init_clientid(struct nfs_client *clp, const struct cred *cred)
- 	status = nfs4_proc_create_session(clp, cred);
- 	if (status != 0)
- 		goto out;
-+	if (!(clp->cl_exchange_flags & EXCHGID4_FLAG_CONFIRMED_R))
-+		nfs4_state_start_reclaim_reboot(clp);
- 	nfs41_finish_session_reset(clp);
- 	nfs_mark_client_ready(clp, NFS_CS_READY);
- out:
+ 	if (domain_enable_v2(domain, 1)) {
+ 		domain_id_free(domain->id);
+ 		return -ENOMEM;
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index f8100067502fb..e6f2a0bc9f0be 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -1940,8 +1940,13 @@ static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
+ 		return NULL;
+ 
+ 	domain->type = type;
+-	/* Assume all sizes by default; the driver may override this later */
+-	domain->pgsize_bitmap = bus->iommu_ops->pgsize_bitmap;
++	/*
++	 * If not already set, assume all sizes by default; the driver
++	 * may override this later
++	 */
++	if (!domain->pgsize_bitmap)
++		domain->pgsize_bitmap = bus->iommu_ops->pgsize_bitmap;
++
+ 	if (!domain->ops)
+ 		domain->ops = bus->iommu_ops->default_domain_ops;
+ 
 -- 
 2.39.2
 
