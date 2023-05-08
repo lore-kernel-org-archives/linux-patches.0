@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7073E168DE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9205C433D2;
-	Mon,  8 May 2023 11:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A2C1168DE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180C8C433EF;
+	Mon,  8 May 2023 11:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545887;
-	bh=fNQUM8mloAiXocNpUDlvoPuIEKa4SGjq6YEsCRj7HHk=;
+	s=korg; t=1683545890;
+	bh=5Xz6DNewh+6cg6nd7xwBDceSdpGCKhYyujgZh2gky+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFgHQY0GH6hVK266WDomW8GewdyfrwYOlSZ2c5cE50DeozHeBY8elkQW1YX24ezwd
-	 AtnVdp4YTJW+mNX+LrEDHVTPFbgYAlpMsnbV3TLIB1JBL53lr11cqjmqNZRTHYlTo6
-	 sY4T2VOTwn0Y4T1m8Q1Jj7I50GhF0UvUN3IBycWI=
+	b=yv6gNBQcVc0vMZxD17I6vyKa/NoZN29drdJ2vWswdGb1r1LzrNxP96bCBoKtZuxcu
+	 g0KEGd9hBUMMZfiRShUch2au507KKHyLRe0WoNGt/kU+OZ7Bf/mC25CtP9u22oPNOe
+	 Z5JV41bx7ZGXCAfxPjojIaKZLIbUKBY8wTFLb/kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kal Conley <kal.conley@dectris.com>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 186/371] xsk: Fix unaligned descriptor validation
-Date: Mon,  8 May 2023 11:46:27 +0200
-Message-Id: <20230508094819.513904787@linuxfoundation.org>
+Subject: [PATCH 5.15 160/371] scm: fix MSG_CTRUNC setting condition for SO_PASSSEC
+Date: Mon,  8 May 2023 11:46:01 +0200
+Message-Id: <20230508094818.448145336@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,63 +40,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kal Conley <kal.conley@dectris.com>
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
 
-[ Upstream commit d769ccaf957fe7391f357c0a923de71f594b8a2b ]
+[ Upstream commit a02d83f9947d8f71904eda4de046630c3eb6802c ]
 
-Make sure unaligned descriptors that straddle the end of the UMEM are
-considered invalid. Currently, descriptor validation is broken for
-zero-copy mode which only checks descriptors at page granularity.
-For example, descriptors in zero-copy mode that overrun the end of the
-UMEM but not a page boundary are (incorrectly) considered valid. The
-UMEM boundary check needs to happen before the page boundary and
-contiguity checks in xp_desc_crosses_non_contig_pg(). Do this check in
-xp_unaligned_validate_desc() instead like xp_check_unaligned() already
-does.
+Currently, kernel would set MSG_CTRUNC flag if msg_control buffer
+wasn't provided and SO_PASSCRED was set or if there was pending SCM_RIGHTS.
 
-Fixes: 2b43470add8c ("xsk: Introduce AF_XDP buffer allocation API")
-Signed-off-by: Kal Conley <kal.conley@dectris.com>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://lore.kernel.org/r/20230405235920.7305-2-kal.conley@dectris.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+For some reason we have no corresponding check for SO_PASSSEC.
+
+In the recvmsg(2) doc we have:
+       MSG_CTRUNC
+              indicates that some control data was discarded due to lack
+              of space in the buffer for ancillary data.
+
+So, we need to set MSG_CTRUNC flag for all types of SCM.
+
+This change can break applications those don't check MSG_CTRUNC flag.
+
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+
+v2:
+- commit message was rewritten according to Eric's suggestion
+Acked-by: Paul Moore <paul@paul-moore.com>
+
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xsk_buff_pool.h | 9 ++-------
- net/xdp/xsk_queue.h         | 1 +
- 2 files changed, 3 insertions(+), 7 deletions(-)
+ include/net/scm.h | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
-index 7517f4faf6b32..ebd1f43578d65 100644
---- a/include/net/xsk_buff_pool.h
-+++ b/include/net/xsk_buff_pool.h
-@@ -152,13 +152,8 @@ static inline bool xp_desc_crosses_non_contig_pg(struct xsk_buff_pool *pool,
- 	if (likely(!cross_pg))
- 		return false;
- 
--	if (pool->dma_pages_cnt) {
--		return !(pool->dma_pages[addr >> PAGE_SHIFT] &
--			 XSK_NEXT_PG_CONTIG_MASK);
--	}
--
--	/* skb path */
--	return addr + len > pool->addrs_cnt;
-+	return pool->dma_pages_cnt &&
-+	       !(pool->dma_pages[addr >> PAGE_SHIFT] & XSK_NEXT_PG_CONTIG_MASK);
+diff --git a/include/net/scm.h b/include/net/scm.h
+index 1ce365f4c2560..585adc1346bd0 100644
+--- a/include/net/scm.h
++++ b/include/net/scm.h
+@@ -105,16 +105,27 @@ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct sc
+ 		}
+ 	}
  }
++
++static inline bool scm_has_secdata(struct socket *sock)
++{
++	return test_bit(SOCK_PASSSEC, &sock->flags);
++}
+ #else
+ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct scm_cookie *scm)
+ { }
++
++static inline bool scm_has_secdata(struct socket *sock)
++{
++	return false;
++}
+ #endif /* CONFIG_SECURITY_NETWORK */
  
- static inline u64 xp_aligned_extract_addr(struct xsk_buff_pool *pool, u64 addr)
-diff --git a/net/xdp/xsk_queue.h b/net/xdp/xsk_queue.h
-index cca1fce8035cb..6b4df83aa28f6 100644
---- a/net/xdp/xsk_queue.h
-+++ b/net/xdp/xsk_queue.h
-@@ -157,6 +157,7 @@ static inline bool xp_unaligned_validate_desc(struct xsk_buff_pool *pool,
- 		return false;
- 
- 	if (base_addr >= pool->addrs_cnt || addr >= pool->addrs_cnt ||
-+	    addr + desc->len > pool->addrs_cnt ||
- 	    xp_desc_crosses_non_contig_pg(pool, addr, desc->len))
- 		return false;
- 
+ static __inline__ void scm_recv(struct socket *sock, struct msghdr *msg,
+ 				struct scm_cookie *scm, int flags)
+ {
+ 	if (!msg->msg_control) {
+-		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp)
++		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp ||
++		    scm_has_secdata(sock))
+ 			msg->msg_flags |= MSG_CTRUNC;
+ 		scm_destroy(scm);
+ 		return;
 -- 
 2.39.2
 
