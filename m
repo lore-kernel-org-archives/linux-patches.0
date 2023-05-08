@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53049168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56A4C433EF;
-	Mon,  8 May 2023 11:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE04C168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDE4C433EF;
+	Mon,  8 May 2023 11:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545278;
-	bh=PkJ+5BJhzEjPTSOB48zmeeYHqUYXCXNwn1ITOyAztkU=;
+	s=korg; t=1683545280;
+	bh=ejZU+TywqRMZyglDQurYcz11UInfWEFzAjV+rxE1pQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LG4oIyNgrYsul2C6K7S9AVSz/E491FhvZz459tsODz5fsfAYKeGLFSycPW/Y9Un6g
-	 zohz5cqJkQMxleYFX3LigsQS9UrHfVNTcbZCCh1wWFMbCyygsoypeVx47degxDcQ01
-	 B/f5uYO3K2K6IVI5gJrtn3SElowvEtX/NnCagDT0=
+	b=P80Lm/Por1hrjQ2ANNSULXrnjaJ+XQPdOdH5yBsGuRSntnrQKpmhjGqgux7Bl9ubF
+	 3rfxFwGrzNOm+0KixlnchpttcEl0f3dkiiAwjA/hMTz2NeYMz0wSRmPBzgfNso8sNv
+	 4vp5c83n0Eciepqawtl10S3MJUfaTIMhv3WQXny0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 642/694] dmaengine: mv_xor_v2: Fix an error code.
-Date: Mon,  8 May 2023 11:47:57 +0200
-Message-Id: <20230508094456.631564850@linuxfoundation.org>
+	Lorenzo Stoakes <lstoakes@gmail.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 676/694] mm/mempolicy: correctly update prev when policy is equal on mbind
+Date: Mon,  8 May 2023 11:48:31 +0200
+Message-Id: <20230508094458.157724198@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,37 +37,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Lorenzo Stoakes <lstoakes@gmail.com>
 
-[ Upstream commit 827026ae2e56ec05ef1155661079badbbfc0b038 ]
+commit 00ca0f2e86bf40b016a646e6323a8941a09cf106 upstream.
 
-If the probe is deferred, -EPROBE_DEFER should be returned, not
-+EPROBE_DEFER.
+The refactoring in commit f4e9e0e69468 ("mm/mempolicy: fix use-after-free
+of VMA iterator") introduces a subtle bug which arises when attempting to
+apply a new NUMA policy across a range of VMAs in mbind_range().
 
-Fixes: 3cd2c313f1d6 ("dmaengine: mv_xor_v2: Fix clock resource by adding a register clock")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/201170dff832a3c496d125772e10070cd834ebf2.1679814350.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The refactoring passes a **prev pointer to keep track of the previous VMA
+in order to reduce duplication, and in all but one case it keeps this
+correctly updated.
+
+The bug arises when a VMA within the specified range has an equivalent
+policy as determined by mpol_equal() - which unlike other cases, does not
+update prev.
+
+This can result in a situation where, later in the iteration, a VMA is
+found whose policy does need to change.  At this point, vma_merge() is
+invoked with prev pointing to a VMA which is before the previous VMA.
+
+Since vma_merge() discovers the curr VMA by looking for the one
+immediately after prev, it will now be in a situation where this VMA is
+incorrect and the merge will not proceed correctly.
+
+This is checked in the VM_WARN_ON() invariant case with end >
+curr->vm_end, which, if a merge is possible, results in a warning (if
+CONFIG_DEBUG_VM is specified).
+
+I note that vma_merge() performs these invariant checks only after
+merge_prev/merge_next are checked, which is debatable as it hides this
+issue if no merge is possible even though a buggy situation has arisen.
+
+The solution is simply to update the prev pointer even when policies are
+equal.
+
+This caused a bug to arise in the 6.2.y stable tree, and this patch
+resolves this bug.
+
+Link: https://lkml.kernel.org/r/83f1d612acb519d777bebf7f3359317c4e7f4265.1682866629.git.lstoakes@gmail.com
+Fixes: f4e9e0e69468 ("mm/mempolicy: fix use-after-free of VMA iterator")
+Signed-off-by: Lorenzo Stoakes <lstoakes@gmail.com>
+Reported-by: kernel test robot <oliver.sang@intel.com>
+  Link: https://lore.kernel.org/oe-lkp/202304292203.44ddeff6-oliver.sang@intel.com
+Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/mv_xor_v2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/mempolicy.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
-index 89790beba3052..0991b82658296 100644
---- a/drivers/dma/mv_xor_v2.c
-+++ b/drivers/dma/mv_xor_v2.c
-@@ -752,7 +752,7 @@ static int mv_xor_v2_probe(struct platform_device *pdev)
- 
- 	xor_dev->clk = devm_clk_get(&pdev->dev, NULL);
- 	if (PTR_ERR(xor_dev->clk) == -EPROBE_DEFER) {
--		ret = EPROBE_DEFER;
-+		ret = -EPROBE_DEFER;
- 		goto disable_reg_clk;
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -808,8 +808,10 @@ static int mbind_range(struct vma_iterat
+ 		vmstart = vma->vm_start;
  	}
- 	if (!IS_ERR(xor_dev->clk)) {
--- 
-2.39.2
-
+ 
+-	if (mpol_equal(vma_policy(vma), new_pol))
++	if (mpol_equal(vma_policy(vma), new_pol)) {
++		*prev = vma;
+ 		return 0;
++	}
+ 
+ 	pgoff = vma->vm_pgoff + ((vmstart - vma->vm_start) >> PAGE_SHIFT);
+ 	merged = vma_merge(vmi, vma->vm_mm, *prev, vmstart, vmend, vma->vm_flags,
 
 
