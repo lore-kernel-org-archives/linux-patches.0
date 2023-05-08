@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFBF168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95541C433EF;
-	Mon,  8 May 2023 11:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556AA168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8761C433EF;
+	Mon,  8 May 2023 11:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545210;
-	bh=yyXvubOl0Lqw6wg/6U4TJZLynShHOBkAUwmQ0uv7Q0U=;
+	s=korg; t=1683545213;
+	bh=7X98Q68tdnKC7dbExgak/ZRmpRf41AcaFLYx8neyNDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gRNngRd5StiIxLYc0C/YrokMh+LQDqkY66HmIe4VcnVSTHIJn7yL4j7TcMPaqBfTm
-	 qH1J/U6hqqGhGyro3nBNXhyBm6psPrrI7GV4UptjoWTqHV9/tLdIgI7agKdfLq0o0P
-	 T3TxcOfZYVrCybCpkhbXDXBqksRUtZ+jsD/vkgj0=
+	b=o31T9IQm2fXB5GTLEO07dbt4NNubZktS2n7l7c5JTnv8+VYeClZirDrNWqNTZQbQc
+	 rA3ktvugeTlqX5l0CUJJHnK0PIG5oueG/LQYYuPj7oZvDOtPAyM0FaPguci5FBLHXH
+	 9jMsZmGaAHZphpqvZh8lrfSJoSZBAgQC7xHgHFVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Lee Jones <lee@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 661/694] mfd: tqmx86: Correct board names for TQMxE39x
-Date: Mon,  8 May 2023 11:48:16 +0200
-Message-Id: <20230508094457.473840801@linuxfoundation.org>
+Subject: [PATCH 6.3 644/694] pwm: mtk-disp: Disable shadow registers before setting backlight values
+Date: Mon,  8 May 2023 11:47:59 +0200
+Message-Id: <20230508094456.705105690@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,117 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit f376c479668557bcc2fd9e9fbc0f53e7819a11cd ]
+[ Upstream commit 36dd7f530ae7d9ce9e853ffb8aa337de65c6600b ]
 
-It seems that this driver was developed based on preliminary documentation.
-Report the correct names for all TQMxE39x variants, as they are used by
-the released hardware revisions:
+If shadow registers usage is not desired, disable that before performing
+any write to CON0/1 registers in the .apply() callback, otherwise we may
+lose clkdiv or period/width updates.
 
-- Fix names for TQMxE39C1/C2 board IDs
-- Distinguish TQMxE39M and TQMxE39S, which use the same board ID
-
-The TQMxE39M/S are distinguished using the SAUC (Sanctioned Alternate
-Uses Configuration) register of the GPIO controller. This also prepares
-for the correct handling of the differences between the GPIO controllers
-of our COMe and SMARC modules.
-
-Fixes: 2f17dd34ffed ("mfd: tqmx86: IO controller with I2C, Wachdog and GPIO")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/aca9a7cb42a85181bcb456c437554d2728e708ec.1676892223.git.matthias.schiffer@ew.tq-group.com
+Fixes: cd4b45ac449a ("pwm: Add MediaTek MT2701 display PWM driver support")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Tested-by: Alexandre Mergnat <amergnat@baylibre.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tqmx86.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ drivers/pwm/pwm-mtk-disp.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/mfd/tqmx86.c b/drivers/mfd/tqmx86.c
-index 958334f14eb00..fac02875fe7d9 100644
---- a/drivers/mfd/tqmx86.c
-+++ b/drivers/mfd/tqmx86.c
-@@ -30,9 +30,9 @@
- #define TQMX86_REG_BOARD_ID_50UC	2
- #define TQMX86_REG_BOARD_ID_E38C	3
- #define TQMX86_REG_BOARD_ID_60EB	4
--#define TQMX86_REG_BOARD_ID_E39M	5
--#define TQMX86_REG_BOARD_ID_E39C	6
--#define TQMX86_REG_BOARD_ID_E39x	7
-+#define TQMX86_REG_BOARD_ID_E39MS	5
-+#define TQMX86_REG_BOARD_ID_E39C1	6
-+#define TQMX86_REG_BOARD_ID_E39C2	7
- #define TQMX86_REG_BOARD_ID_70EB	8
- #define TQMX86_REG_BOARD_ID_80UC	9
- #define TQMX86_REG_BOARD_ID_110EB	11
-@@ -48,6 +48,7 @@
- #define TQMX86_REG_IO_EXT_INT_12		3
- #define TQMX86_REG_IO_EXT_INT_MASK		0x3
- #define TQMX86_REG_IO_EXT_INT_GPIO_SHIFT	4
-+#define TQMX86_REG_SAUC		0x17
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index 692a06121b286..82b430d881a20 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -138,6 +138,19 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	high_width = mul_u64_u64_div_u64(state->duty_cycle, rate, div);
+ 	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
  
- #define TQMX86_REG_I2C_DETECT	0x1a7
- #define TQMX86_REG_I2C_DETECT_SOFT		0xa5
-@@ -110,7 +111,7 @@ static const struct mfd_cell tqmx86_devs[] = {
- 	},
- };
++	if (mdp->data->bls_debug && !mdp->data->has_commit) {
++		/*
++		 * For MT2701, disable double buffer before writing register
++		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
++		 */
++		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
++					 mdp->data->bls_debug_mask,
++					 mdp->data->bls_debug_mask);
++		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
++					 mdp->data->con0_sel,
++					 mdp->data->con0_sel);
++	}
++
+ 	mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
+ 				 PWM_CLKDIV_MASK,
+ 				 clk_div << PWM_CLKDIV_SHIFT);
+@@ -152,17 +165,6 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+ 		mtk_disp_pwm_update_bits(mdp, mdp->data->commit,
+ 					 mdp->data->commit_mask,
+ 					 0x0);
+-	} else {
+-		/*
+-		 * For MT2701, disable double buffer before writing register
+-		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
+-		 */
+-		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
+-					 mdp->data->bls_debug_mask,
+-					 mdp->data->bls_debug_mask);
+-		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
+-					 mdp->data->con0_sel,
+-					 mdp->data->con0_sel);
+ 	}
  
--static const char *tqmx86_board_id_to_name(u8 board_id)
-+static const char *tqmx86_board_id_to_name(u8 board_id, u8 sauc)
- {
- 	switch (board_id) {
- 	case TQMX86_REG_BOARD_ID_E38M:
-@@ -121,12 +122,12 @@ static const char *tqmx86_board_id_to_name(u8 board_id)
- 		return "TQMxE38C";
- 	case TQMX86_REG_BOARD_ID_60EB:
- 		return "TQMx60EB";
--	case TQMX86_REG_BOARD_ID_E39M:
--		return "TQMxE39M";
--	case TQMX86_REG_BOARD_ID_E39C:
--		return "TQMxE39C";
--	case TQMX86_REG_BOARD_ID_E39x:
--		return "TQMxE39x";
-+	case TQMX86_REG_BOARD_ID_E39MS:
-+		return (sauc == 0xff) ? "TQMxE39M" : "TQMxE39S";
-+	case TQMX86_REG_BOARD_ID_E39C1:
-+		return "TQMxE39C1";
-+	case TQMX86_REG_BOARD_ID_E39C2:
-+		return "TQMxE39C2";
- 	case TQMX86_REG_BOARD_ID_70EB:
- 		return "TQMx70EB";
- 	case TQMX86_REG_BOARD_ID_80UC:
-@@ -159,9 +160,9 @@ static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
- 	case TQMX86_REG_BOARD_ID_E40C1:
- 	case TQMX86_REG_BOARD_ID_E40C2:
- 		return 24000;
--	case TQMX86_REG_BOARD_ID_E39M:
--	case TQMX86_REG_BOARD_ID_E39C:
--	case TQMX86_REG_BOARD_ID_E39x:
-+	case TQMX86_REG_BOARD_ID_E39MS:
-+	case TQMX86_REG_BOARD_ID_E39C1:
-+	case TQMX86_REG_BOARD_ID_E39C2:
- 		return 25000;
- 	case TQMX86_REG_BOARD_ID_E38M:
- 	case TQMX86_REG_BOARD_ID_E38C:
-@@ -175,7 +176,7 @@ static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
- 
- static int tqmx86_probe(struct platform_device *pdev)
- {
--	u8 board_id, rev, i2c_det, io_ext_int_val;
-+	u8 board_id, sauc, rev, i2c_det, io_ext_int_val;
- 	struct device *dev = &pdev->dev;
- 	u8 gpio_irq_cfg, readback;
- 	const char *board_name;
-@@ -205,7 +206,8 @@ static int tqmx86_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	board_id = ioread8(io_base + TQMX86_REG_BOARD_ID);
--	board_name = tqmx86_board_id_to_name(board_id);
-+	sauc = ioread8(io_base + TQMX86_REG_SAUC);
-+	board_name = tqmx86_board_id_to_name(board_id, sauc);
- 	rev = ioread8(io_base + TQMX86_REG_BOARD_REV);
- 
- 	dev_info(dev,
+ 	mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
 -- 
 2.39.2
 
