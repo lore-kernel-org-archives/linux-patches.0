@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE11168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9240C4339B;
-	Mon,  8 May 2023 10:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE2A168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D5BC433D2;
+	Mon,  8 May 2023 10:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540977;
-	bh=eCFHU+S1dsdT4iPuQcKU2ajIAJsaOfZZkJqUsGVtogE=;
+	s=korg; t=1683540979;
+	bh=qOvvJq924e06I7uIyJbU8v/xPMYZ86zr0saVYma7EO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3iOIcOn8Ru6TSLf9eBm5XMGQUMlRccyQLSBo3xPBbxCKq7CAmq7qMFzjliPf7KJs
-	 FTVHE3JGZZ8gLRN3KH3YbHoVmdnb+KvPnxa5T18rzjijkZn9BIO9e4zjE36FB8gMDM
-	 acaYHCXVCJxJrr7W3OBahLXN2wDDEKzUc6wQwGfc=
+	b=M/mBL5oWiBFe18eVsSzy8paLwikWUksCqjIFSbkR/UKqYKk8I1GTIbEps26dUGExi
+	 MSwiBsuT0Wgnr/9olmcEUnf/uTKn/R1mroTkmAoezQyIq/GuuQZHkrpi5nrVh9ItAc
+	 eFVjqyRa4g1T3vlWPbDETogs/YbMwqrk06hZMM3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.1 570/611] md/raid10: fix null-ptr-deref in raid10_sync_request
-Date: Mon,  8 May 2023 11:46:52 +0200
-Message-Id: <20230508094440.474267741@linuxfoundation.org>
+	=?UTF-8?q?G=C3=A9=20Koerkamp?= <ge.koerkamp@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 553/611] ACPI: PM: Do not turn of unused power resources on the Toshiba Click Mini
+Date: Mon,  8 May 2023 11:46:35 +0200
+Message-Id: <20230508094439.972753037@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,64 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit a405c6f0229526160aa3f177f65e20c86fce84c5 upstream.
+[ Upstream commit 9b04d99788cf475cbd277f30ec66230ccb7e99f4 ]
 
-init_resync() inits mempool and sets conf->have_replacemnt at the beginning
-of sync, close_sync() frees the mempool when sync is completed.
+The CPR3 power resource on the Toshiba Click Mini toggles a GPIO
+which is called SISP (for SIS touchscreen power?) on/off.
 
-After [1] recovery might be skipped and init_resync() is called but
-close_sync() is not. null-ptr-deref occurs with r10bio->dev[i].repl_bio.
+This CPR3 power resource is not listed in any _PR? lists, let alone
+in a _PR0 list for the SIS0817 touchscreen ACPI device which needs it.
 
-The following is one way to reproduce the issue.
+Before commit a1224f34d72a ("ACPI: PM: Check states of power resources
+during initialization") this was not an issue because since nothing
+referenced the CPR3 power resource its state was always
+ACPI_POWER_RESOURCE_STATE_UNKNOWN and power resources with this state
+get ignored by acpi_turn_off_unused_power_resources().
 
-  1) create a array, wait for resync to complete, mddev->recovery_cp is set
-     to MaxSector.
-  2) recovery is woken and it is skipped. conf->have_replacement is set to
-     0 in init_resync(). close_sync() not called.
-  3) some io errors and rdev A is set to WantReplacement.
-  4) a new device is added and set to A's replacement.
-  5) recovery is woken, A have replacement, but conf->have_replacemnt is
-     0. r10bio->dev[i].repl_bio will not be alloced and null-ptr-deref
-     occurs.
+This clearly is a bug in the DSDT of this device. Add a DMI quirk
+to make acpi_turn_off_unused_power_resources() a no-op on this
+model to fix the touchscreen no longer working since kernel 5.16 .
 
-Fix it by not calling init_resync() if recovery skipped.
+This quirk also causes 2 other power resources to not get turned
+off, but the _OFF method on these already was a no-op, so this makes
+no difference for the other 2 power resources.
 
-[1] commit 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
-Fixes: 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230222041000.3341651-3-linan666@huaweicloud.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a1224f34d72a ("ACPI: PM: Check states of power resources during initialization")
+Reported-by: Gé Koerkamp <ge.koerkamp@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216946
+Link: https://lore.kernel.org/regressions/32a14a8a-9795-4c8c-7e00-da9012f548f8@leemhuis.info/
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/acpi/power.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -3302,10 +3302,6 @@ static sector_t raid10_sync_request(stru
- 	sector_t chunk_mask = conf->geo.chunk_mask;
- 	int page_idx = 0;
+diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
+index f2588aba8421e..aea8c994caeac 100644
+--- a/drivers/acpi/power.c
++++ b/drivers/acpi/power.c
+@@ -23,6 +23,7 @@
  
--	if (!mempool_initialized(&conf->r10buf_pool))
--		if (init_resync(conf))
--			return 0;
--
- 	/*
- 	 * Allow skipping a full rebuild for incremental assembly
- 	 * of a clean array, like RAID1 does.
-@@ -3321,6 +3317,10 @@ static sector_t raid10_sync_request(stru
- 		return mddev->dev_sectors - sector_nr;
- 	}
+ #define pr_fmt(fmt) "ACPI: PM: " fmt
  
-+	if (!mempool_initialized(&conf->r10buf_pool))
-+		if (init_resync(conf))
-+			return 0;
++#include <linux/dmi.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/init.h>
+@@ -1022,6 +1023,21 @@ void acpi_resume_power_resources(void)
+ }
+ #endif
+ 
++static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
++	{
++		/*
++		 * The Toshiba Click Mini has a CPR3 power-resource which must
++		 * be on for the touchscreen to work, but which is not in any
++		 * _PR? lists. The other 2 affected power-resources are no-ops.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "TOSHIBA"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "SATELLITE Click Mini L9W-B"),
++		},
++	},
++	{}
++};
 +
-  skipped:
- 	max_sector = mddev->dev_sectors;
- 	if (test_bit(MD_RECOVERY_SYNC, &mddev->recovery) ||
+ /**
+  * acpi_turn_off_unused_power_resources - Turn off power resources not in use.
+  */
+@@ -1029,6 +1045,9 @@ void acpi_turn_off_unused_power_resources(void)
+ {
+ 	struct acpi_power_resource *resource;
+ 
++	if (dmi_check_system(dmi_leave_unused_power_resources_on))
++		return;
++
+ 	mutex_lock(&power_resource_list_lock);
+ 
+ 	list_for_each_entry_reverse(resource, &acpi_power_resource_list, list_node) {
+-- 
+2.39.2
+
 
 
