@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88D01549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:52:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE95C433D2;
-	Mon,  8 May 2023 09:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40FC1549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:53:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A581C433EF;
+	Mon,  8 May 2023 09:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539579;
-	bh=duRt4LgUNl++PHPCMA9gvR2w1QMev+j6ur1tOjUHma0=;
+	s=korg; t=1683539582;
+	bh=AXJkpZ9JRhjiJl1jigINIdJrv4oj98063XQaj7pNkds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNq8ubyvQ0ayrEeNOmSUJyUeTZqRXjen4DCsF8ZBsLKxFJZIZC2+/zdy7TOZpXeJ3
-	 PLf0X9xzWEIb4VAd2N/CaY/38Ks93Xw9ybkbfH9w+ztHhPvRmAv+gmkzWP8ZwNlxNS
-	 Qs9DahEGUk6jWWMiqn4YlO2PuH0NOXswfMiIOVFU=
+	b=LQxoACYgV+w80+npVR99nOwLu9WotM29q0E4znBXJHHZG+0H2SV18sWv2ZixbGqLy
+	 mWExpsP4EJrpZJfIp8b+v06/I+bONeeWEeby3xOijIc/rpT0CDtd7z7orgKG53dpqr
+	 eQaksU/D86mPV+TCx0F7+1vXz8chG0zP0uNCD62w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 068/611] ring-buffer: Sync IRQ works before buffer destruction
-Date: Mon,  8 May 2023 11:38:30 +0200
-Message-Id: <20230508094424.202561642@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.1 039/611] media: ov8856: Do not check for for module version
+Date: Mon,  8 May 2023 11:38:01 +0200
+Message-Id: <20230508094423.089371143@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,94 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 675751bb20634f981498c7d66161584080cc061e upstream.
+commit 5a4e1b5aed2a36a10d6a3b30fafb6b3bf41c3186 upstream.
 
-If something was written to the buffer just before destruction,
-it may be possible (maybe not in a real system, but it did
-happen in ARCH=um with time-travel) to destroy the ringbuffer
-before the IRQ work ran, leading this KASAN report (or a crash
-without KASAN):
+It the device is probed in non-zero ACPI D state, the module
+identification is delayed until the first streamon.
 
-    BUG: KASAN: slab-use-after-free in irq_work_run_list+0x11a/0x13a
-    Read of size 8 at addr 000000006d640a48 by task swapper/0
+The module identification has two parts: deviceID and version. To rea
+the version we have to enable OTP read. This cannot be done during
+streamon, becase it modifies REG_MODE_SELECT.
 
-    CPU: 0 PID: 0 Comm: swapper Tainted: G        W  O       6.3.0-rc1 #7
-    Stack:
-     60c4f20f 0c203d48 41b58ab3 60f224fc
-     600477fa 60f35687 60c4f20f 601273dd
-     00000008 6101eb00 6101eab0 615be548
-    Call Trace:
-     [<60047a58>] show_stack+0x25e/0x282
-     [<60c609e0>] dump_stack_lvl+0x96/0xfd
-     [<60c50d4c>] print_report+0x1a7/0x5a8
-     [<603078d3>] kasan_report+0xc1/0xe9
-     [<60308950>] __asan_report_load8_noabort+0x1b/0x1d
-     [<60232844>] irq_work_run_list+0x11a/0x13a
-     [<602328b4>] irq_work_tick+0x24/0x34
-     [<6017f9dc>] update_process_times+0x162/0x196
-     [<6019f335>] tick_sched_handle+0x1a4/0x1c3
-     [<6019fd9e>] tick_sched_timer+0x79/0x10c
-     [<601812b9>] __hrtimer_run_queues.constprop.0+0x425/0x695
-     [<60182913>] hrtimer_interrupt+0x16c/0x2c4
-     [<600486a3>] um_timer+0x164/0x183
-     [...]
-
-    Allocated by task 411:
-     save_stack_trace+0x99/0xb5
-     stack_trace_save+0x81/0x9b
-     kasan_save_stack+0x2d/0x54
-     kasan_set_track+0x34/0x3e
-     kasan_save_alloc_info+0x25/0x28
-     ____kasan_kmalloc+0x8b/0x97
-     __kasan_kmalloc+0x10/0x12
-     __kmalloc+0xb2/0xe8
-     load_elf_phdrs+0xee/0x182
-     [...]
-
-    The buggy address belongs to the object at 000000006d640800
-     which belongs to the cache kmalloc-1k of size 1024
-    The buggy address is located 584 bytes inside of
-     freed 1024-byte region [000000006d640800, 000000006d640c00)
-
-Add the appropriate irq_work_sync() so the work finishes before
-the buffers are destroyed.
-
-Prior to the commit in the Fixes tag below, there was only a
-single global IRQ work, so this issue didn't exist.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230427175920.a76159263122.I8295e405c44362a86c995e9c2c37e3e03810aa56@changeid
+Since the driver has the same behaviour for all the module versions, do
+not read the module version from the sensor's OTP.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Fixes: 15693458c4bc ("tracing/ring-buffer: Move poll wake ups into ring buffer code")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 0e014f1a8d54 ("media: ov8856: support device probe in non-zero ACPI D state")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/media/i2c/ov8856.c |   40 ----------------------------------------
+ 1 file changed, 40 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -1778,6 +1778,8 @@ static void rb_free_cpu_buffer(struct ri
- 	struct list_head *head = cpu_buffer->pages;
- 	struct buffer_page *bpage, *tmp;
+--- a/drivers/media/i2c/ov8856.c
++++ b/drivers/media/i2c/ov8856.c
+@@ -1709,46 +1709,6 @@ static int ov8856_identify_module(struct
+ 		return -ENXIO;
+ 	}
  
-+	irq_work_sync(&cpu_buffer->irq_work.work);
-+
- 	free_buffer_page(cpu_buffer->reader_page);
+-	ret = ov8856_write_reg(ov8856, OV8856_REG_MODE_SELECT,
+-			       OV8856_REG_VALUE_08BIT, OV8856_MODE_STREAMING);
+-	if (ret)
+-		return ret;
+-
+-	ret = ov8856_write_reg(ov8856, OV8856_OTP_MODE_CTRL,
+-			       OV8856_REG_VALUE_08BIT, OV8856_OTP_MODE_AUTO);
+-	if (ret) {
+-		dev_err(&client->dev, "failed to set otp mode");
+-		return ret;
+-	}
+-
+-	ret = ov8856_write_reg(ov8856, OV8856_OTP_LOAD_CTRL,
+-			       OV8856_REG_VALUE_08BIT,
+-			       OV8856_OTP_LOAD_CTRL_ENABLE);
+-	if (ret) {
+-		dev_err(&client->dev, "failed to enable load control");
+-		return ret;
+-	}
+-
+-	ret = ov8856_read_reg(ov8856, OV8856_MODULE_REVISION,
+-			      OV8856_REG_VALUE_08BIT, &val);
+-	if (ret) {
+-		dev_err(&client->dev, "failed to read module revision");
+-		return ret;
+-	}
+-
+-	dev_info(&client->dev, "OV8856 revision %x (%s) at address 0x%02x\n",
+-		 val,
+-		 val == OV8856_2A_MODULE ? "2A" :
+-		 val == OV8856_1B_MODULE ? "1B" : "unknown revision",
+-		 client->addr);
+-
+-	ret = ov8856_write_reg(ov8856, OV8856_REG_MODE_SELECT,
+-			       OV8856_REG_VALUE_08BIT, OV8856_MODE_STANDBY);
+-	if (ret) {
+-		dev_err(&client->dev, "failed to exit streaming mode");
+-		return ret;
+-	}
+-
+ 	ov8856->identified = true;
  
- 	if (head) {
-@@ -1884,6 +1886,8 @@ ring_buffer_free(struct trace_buffer *bu
- 
- 	cpuhp_state_remove_instance(CPUHP_TRACE_RB_PREPARE, &buffer->node);
- 
-+	irq_work_sync(&buffer->irq_work.work);
-+
- 	for_each_buffer_cpu(buffer, cpu)
- 		rb_free_cpu_buffer(buffer->buffers[cpu]);
- 
+ 	return 0;
 
 
