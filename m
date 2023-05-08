@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C916168CB
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21CDC4339C;
-	Mon,  8 May 2023 11:19:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E29168CB
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED524C433D2;
+	Mon,  8 May 2023 11:19:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544777;
-	bh=22/0GyGstKxSi5WyUg/SfzoRo+KeW+wvMb1rDRutY3g=;
+	s=korg; t=1683544780;
+	bh=hmdACvyceHtfwG6iZa0TlefPkqSpVkF36kkn55rWHqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glZP0kUIGMHzNLiEmWSUOknHSq3lMFZM3AGZ/NRwny0GzoBz2U6ZnPEnLUJV3v8oP
-	 GWg3m3mNXd/jIvb7JLov+MvUufDuSk75qHCIoMU2GUlR0Q/xT1Ld3YVACWgpQ3pnpu
-	 LtJdH0XncBekXzLw7wcipdr51FMLuK1DLtom0os0=
+	b=OdOkiAHUD9QquvWOqmKHix9Cc332AIPg/mXAQm2ObPKP1VEl9GyVyR+EE5DigJYi3
+	 S7dAghArEOkn9ZmfgGg6V6tjRwevK1wNHMTC/C1H2BMTOFNveDhntn17p/F3vyYjjP
+	 Rt3l+dOtD7P56VwURfyEuyiAQPRd4Z85JxAi7gBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 521/694] scripts/gdb: bail early if there are no clocks
-Date: Mon,  8 May 2023 11:45:56 +0200
-Message-Id: <20230508094451.168128542@linuxfoundation.org>
+Subject: [PATCH 6.3 522/694] scripts/gdb: bail early if there are no generic PD
+Date: Mon,  8 May 2023 11:45:57 +0200
+Message-Id: <20230508094451.207429244@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -41,20 +41,23 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 1d7adbc74c009057ed9dc3112f388e91a9c79acc ]
+[ Upstream commit f19c3c2959e465209ade1a7a699e6cbf4359ce78 ]
 
-Avoid generating an exception if there are no clocks registered:
+Avoid generating an exception if there are no generic power domain(s)
+registered:
 
-(gdb) lx-clk-summary
-                                 enable  prepare  protect
-   clock                          count    count    count        rate
-------------------------------------------------------------------------
-Python Exception <class 'gdb.error'>: No symbol "clk_root_list" in
-current context.
-Error occurred in Python: No symbol "clk_root_list" in current context.
+(gdb) lx-genpd-summary
+domain                          status          children
+    /device                                             runtime status
+----------------------------------------------------------------------
+Python Exception <class 'gdb.error'>: No symbol "gpd_list" in current context.
+Error occurred in Python: No symbol "gpd_list" in current context.
+(gdb) quit
 
-Link: https://lkml.kernel.org/r/20230323225246.3302977-1-f.fainelli@gmail.com
-Fixes: d1e9710b63d8 ("scripts/gdb: initial clk support: lx-clk-summary")
+[f.fainelli@gmail.com: correctly invoke gdb_eval_or_none]
+  Link: https://lkml.kernel.org/r/20230327185746.3856407-1-f.fainelli@gmail.com
+Link: https://lkml.kernel.org/r/20230323231659.3319941-1-f.fainelli@gmail.com
+Fixes: 8207d4a88e1e ("scripts/gdb: add lx-genpd-summary command")
 Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Cc: Jan Kiszka <jan.kiszka@siemens.com>
 Cc: Kieran Bingham <kbingham@kernel.org>
@@ -63,22 +66,31 @@ Cc: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/clk.py | 2 ++
- 1 file changed, 2 insertions(+)
+ scripts/gdb/linux/genpd.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/scripts/gdb/linux/clk.py b/scripts/gdb/linux/clk.py
-index 061aecfa294e6..7a01fdc3e8446 100644
---- a/scripts/gdb/linux/clk.py
-+++ b/scripts/gdb/linux/clk.py
-@@ -41,6 +41,8 @@ are cached and potentially out of date"""
-             self.show_subtree(child, level + 1)
+diff --git a/scripts/gdb/linux/genpd.py b/scripts/gdb/linux/genpd.py
+index 39cd1abd85590..b53649c0a77a6 100644
+--- a/scripts/gdb/linux/genpd.py
++++ b/scripts/gdb/linux/genpd.py
+@@ -5,7 +5,7 @@
+ import gdb
+ import sys
+ 
+-from linux.utils import CachedType
++from linux.utils import CachedType, gdb_eval_or_none
+ from linux.lists import list_for_each_entry
+ 
+ generic_pm_domain_type = CachedType('struct generic_pm_domain')
+@@ -70,6 +70,8 @@ Output is similar to /sys/kernel/debug/pm_genpd/pm_genpd_summary'''
+             gdb.write('    %-50s  %s\n' % (kobj_path, rtpm_status_str(dev)))
  
      def invoke(self, arg, from_tty):
-+        if utils.gdb_eval_or_none("clk_root_list") is None:
-+            raise gdb.GdbError("No clocks registered")
-         gdb.write("                                 enable  prepare  protect               \n")
-         gdb.write("   clock                          count    count    count        rate   \n")
-         gdb.write("------------------------------------------------------------------------\n")
++        if gdb_eval_or_none("&gpd_list") is None:
++            raise gdb.GdbError("No power domain(s) registered")
+         gdb.write('domain                          status          children\n');
+         gdb.write('    /device                                             runtime status\n');
+         gdb.write('----------------------------------------------------------------------\n');
 -- 
 2.39.2
 
