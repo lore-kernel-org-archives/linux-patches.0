@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD23F210C
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:19:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11939C433D2;
-	Mon,  8 May 2023 10:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C3B210C
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:19:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F43C433D2;
+	Mon,  8 May 2023 10:19:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541142;
-	bh=/yFPLacZ5zD4cyBBeXXj/glDEj/Gpj3zZaG5dwMznfI=;
+	s=korg; t=1683541145;
+	bh=DdcAoN2JalWl6Zg8G0USnl3BPFjwyeQ2m3T6BjxTn5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WxDb/YXE6Lg6eESGKeKx/vBDwJpD8j1TbpXytDVT64pWxoSo+/men6Dbm3BOZenZM
-	 lFWNRqcfPDf36bjBo7pb7Rv6y5k/vNP3vr/vb3ONvpB6MsTlmfV3/gVWw+B8vFtRuO
-	 jXksHxgSqOghd+76/UKpDr0PSid6S+/1FDJWjjCE=
+	b=bfuTbeOkT2EBIAbFdhDCMIunHgezcVnYYDn6xc4Xtjm/OupLpZVU5acqPXM0bSsoh
+	 /PbAImSeNybF0Bj60ehEKoTBcsq+kkAkf2zMX6tuC+ytuDwA0cQMmAo+FYmZv5cF02
+	 svqhtcfZT/6rxAPvLDPtoXgNJKtbAmiAFbqJgHKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugene Huang <eugene.huang99@gmail.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 002/663] ASoC: Intel: soc-acpi: add table for Intel Rooks County NUC M15
-Date: Mon,  8 May 2023 11:37:08 +0200
-Message-Id: <20230508094428.482469668@linuxfoundation.org>
+	Anson Tsao <anson.tsao@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.2 020/663] wifi: mt76: mt7921e: Set memory space enable in PCI_COMMAND if unset
+Date: Mon,  8 May 2023 11:37:26 +0200
+Message-Id: <20230508094429.088843581@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,65 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eugene Huang <eugene.huang99@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 9c691a42b8926c8966561265cdae3ddc7464d3a2 ]
+commit 09d4d6da1b65d09414e7bce61459593f3c80ead1 upstream.
 
-Same topology as the HP Omen 16-k0005TX, except with the rt1316 amp
-on link2.
+When the BIOS has been configured for Fast Boot, systems with mt7921e
+have non-functional wifi.  Turning on Fast boot caused both bus master
+enable and memory space enable bits in PCI_COMMAND not to get configured.
 
-Link: https://github.com/thesofproject/linux/issues/4088
-Signed-off-by: Eugene Huang <eugene.huang99@gmail.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20230314090553.498664-3-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The mt7921 driver already sets bus master enable, but explicitly check
+and set memory access enable as well to fix this problem.
+
+Tested-by: Anson Tsao <anson.tsao@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../intel/common/soc-acpi-intel-adl-match.c   | 20 +++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/pci.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-adl-match.c b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
-index 28dd2046e4ac5..d8c80041388a7 100644
---- a/sound/soc/intel/common/soc-acpi-intel-adl-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
-@@ -354,6 +354,20 @@ static const struct snd_soc_acpi_link_adr adl_sdw_rt711_link0_rt1316_link3[] = {
- 	{}
- };
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+@@ -263,6 +263,7 @@ static int mt7921_pci_probe(struct pci_d
+ 	struct mt76_dev *mdev;
+ 	u8 features;
+ 	int ret;
++	u16 cmd;
  
-+static const struct snd_soc_acpi_link_adr adl_sdw_rt711_link0_rt1316_link2[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(rt711_sdca_0_adr),
-+		.adr_d = rt711_sdca_0_adr,
-+	},
-+	{
-+		.mask = BIT(2),
-+		.num_adr = ARRAY_SIZE(rt1316_2_single_adr),
-+		.adr_d = rt1316_2_single_adr,
-+	},
-+	{}
-+};
-+
- static const struct snd_soc_acpi_adr_device mx8373_2_adr[] = {
- 	{
- 		.adr = 0x000223019F837300ull,
-@@ -624,6 +638,12 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_sdw_machines[] = {
- 		.drv_name = "sof_sdw",
- 		.sof_tplg_filename = "sof-adl-rt711-l0-rt1316-l3.tplg",
- 	},
-+	{
-+		.link_mask = 0x5, /* 2 active links required */
-+		.links = adl_sdw_rt711_link0_rt1316_link2,
-+		.drv_name = "sof_sdw",
-+		.sof_tplg_filename = "sof-adl-rt711-l0-rt1316-l2.tplg",
-+	},
- 	{
- 		.link_mask = 0x1, /* link0 required */
- 		.links = adl_rvp,
--- 
-2.39.2
-
+ 	ret = pcim_enable_device(pdev);
+ 	if (ret)
+@@ -272,6 +273,11 @@ static int mt7921_pci_probe(struct pci_d
+ 	if (ret)
+ 		return ret;
+ 
++	pci_read_config_word(pdev, PCI_COMMAND, &cmd);
++	if (!(cmd & PCI_COMMAND_MEMORY)) {
++		cmd |= PCI_COMMAND_MEMORY;
++		pci_write_config_word(pdev, PCI_COMMAND, cmd);
++	}
+ 	pci_set_master(pdev);
+ 
+ 	ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
 
 
