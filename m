@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C0B08BF9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:40:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851A9C433D2;
-	Mon,  8 May 2023 10:40:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B14E2915
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:40:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFD1C433EF;
+	Mon,  8 May 2023 10:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542454;
-	bh=fI1mcV4a/Jpfj5PwrHfeeZHCk7Bp7x/rMICOqK3oL5o=;
+	s=korg; t=1683542457;
+	bh=YRtekFD1fJYZv8cLHGBXYh3Yexq3SGOSJR9mz7lg5rE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZaZ2uGJBc67luzlrx/BG9ZYS19TXcCVPCGpqLjge5sKt1OkFnNZMrGLkbus79HwN
-	 hJYRJThyktNrvugmQfAhBctN41vUbmwi17yNV9QDNLn4/jUXtjcztuqAguaIAfFRfG
-	 1y6Fp3A7uhpzlkF6Ki2EKwQErHYFyLe4ON4CmTHQ=
+	b=iMSz4aOFo5kdaqU3gZgFCZtN9+WihovVUgalcNula2T5Sh22yRkL3n3TbPeyOTfLA
+	 LsgFS+VeJhjzVdu/vASdn6H1tQ3zh6uNgyiPpKPITXEFuldbC2vOcxhBdrJ7ak7MEw
+	 Q5Ogdqd7DQrLSXJV5GpQtdqI+6jEKrpqCupmWUGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Prashanth K <quic_prashk@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 440/663] usb: host: xhci-rcar: remove leftover quirk handling
-Date: Mon,  8 May 2023 11:44:26 +0200
-Message-Id: <20230508094442.347652835@linuxfoundation.org>
+Subject: [PATCH 6.2 441/663] usb: dwc3: gadget: Change condition for processing suspend event
+Date: Mon,  8 May 2023 11:44:27 +0200
+Message-Id: <20230508094442.385137520@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,44 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-[ Upstream commit 5d67f4861884762ebc2bddb5d667444e45f25782 ]
+[ Upstream commit 4decf4060ecfee1f7a710999fcd421645ac0c419 ]
 
-Loading V3 firmware does not need a quirk anymore, remove the leftover
-code.
+Currently we process the suspend interrupt event only if the
+device is in configured state. Consider a case where device
+is not configured and got suspend interrupt, in that case our
+gadget will still use 100mA as composite_suspend didn't happen.
+But battery charging specification (BC1.2) expects a downstream
+device to draw less than 2.5mA when unconnected OR suspended.
 
-Fixes: ed8603e11124 ("usb: host: xhci-rcar: Simplify getting the firmware name for R-Car Gen3")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20230307163041.3815-10-wsa+renesas@sang-engineering.com
+Fix this by removing the condition for processing suspend event,
+and thus composite_resume would set vbus draw to 2.
+
+Fixes: 72704f876f50 ("dwc3: gadget: Implement the suspend entry event handler")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/1677217619-10261-2-git-send-email-quic_prashk@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-rcar.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/usb/dwc3/gadget.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-rcar.c b/drivers/usb/host/xhci-rcar.c
-index aef0258a7160d..98525704be9d4 100644
---- a/drivers/usb/host/xhci-rcar.c
-+++ b/drivers/usb/host/xhci-rcar.c
-@@ -75,7 +75,6 @@ MODULE_FIRMWARE(XHCI_RCAR_FIRMWARE_NAME_V3);
- 
- /* For soc_device_attribute */
- #define RCAR_XHCI_FIRMWARE_V2   BIT(0) /* FIRMWARE V2 */
--#define RCAR_XHCI_FIRMWARE_V3   BIT(1) /* FIRMWARE V3 */
- 
- static const struct soc_device_attribute rcar_quirks_match[]  = {
- 	{
-@@ -147,8 +146,6 @@ static int xhci_rcar_download_firmware(struct usb_hcd *hcd)
- 
- 	if (quirks & RCAR_XHCI_FIRMWARE_V2)
- 		firmware_name = XHCI_RCAR_FIRMWARE_NAME_V2;
--	else if (quirks & RCAR_XHCI_FIRMWARE_V3)
--		firmware_name = XHCI_RCAR_FIRMWARE_NAME_V3;
- 	else
- 		firmware_name = priv->firmware_name;
- 
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index 743186c26e01b..3faac3244c7db 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4262,15 +4262,8 @@ static void dwc3_gadget_interrupt(struct dwc3 *dwc,
+ 		break;
+ 	case DWC3_DEVICE_EVENT_SUSPEND:
+ 		/* It changed to be suspend event for version 2.30a and above */
+-		if (!DWC3_VER_IS_PRIOR(DWC3, 230A)) {
+-			/*
+-			 * Ignore suspend event until the gadget enters into
+-			 * USB_STATE_CONFIGURED state.
+-			 */
+-			if (dwc->gadget->state >= USB_STATE_CONFIGURED)
+-				dwc3_gadget_suspend_interrupt(dwc,
+-						event->event_info);
+-		}
++		if (!DWC3_VER_IS_PRIOR(DWC3, 230A))
++			dwc3_gadget_suspend_interrupt(dwc, event->event_info);
+ 		break;
+ 	case DWC3_DEVICE_EVENT_SOF:
+ 	case DWC3_DEVICE_EVENT_ERRATIC_ERROR:
 -- 
 2.39.2
 
