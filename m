@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2B3168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5643C433D2;
-	Mon,  8 May 2023 11:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB714168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71404C433D2;
+	Mon,  8 May 2023 11:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544588;
-	bh=0PcHXLp9bDHjsHHPNsX83q5ZvsKF1ez8kbkO7ipjVJY=;
+	s=korg; t=1683544590;
+	bh=NKF0MQBzLvyeOxwP5PYmDqBAOaLtLG9/Xy2Q1qMmrD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHHS8nC/3d6DgHaTUxlAI8bfn+sKpYVakL7w0gDiMG+bKGGjm0NyM98gkN9tJSUc6
-	 k4pFyhSNos3bXwpWdZR31rw2IOeLIlefgmacXA64aLgFvwch7jwRAhgHW/LaAkOz8l
-	 dIDUoOXUwecxitF9WPm0Jz44iwIuz1LqGaW58Uf4=
+	b=i+UwQ6whA74BDOyepAee92RXutfwJvsHBDXh3YWTbdcQbWr1LvtVdQ6qIKCxn9Xq9
+	 Yq1wOJu5NV1faRRAj0TlVhBF/jqIsr1wacy9C0mifB+91wxoy7hk3CEAHzQYi0JIPI
+	 4V7lcwNbVTaSaDGv1ZhLGYnCCsdeoYWjqmwTk/bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <jdamato@fastly.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.3 459/694] ixgbe: Enable setting RSS table to default values
-Date: Mon,  8 May 2023 11:44:54 +0200
-Message-Id: <20230508094448.548935918@linuxfoundation.org>
+	Vlad Buslov <vladbu@nvidia.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 460/694] net/mlx5e: Dont clone flow post action attributes second time
+Date: Mon,  8 May 2023 11:44:55 +0200
+Message-Id: <20230508094448.598277965@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,145 +36,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Damato <jdamato@fastly.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit e85d3d55875f7a1079edfbc4e4e98d6f8aea9ac7 ]
+[ Upstream commit e9fce818fe003b6c527f25517b9ac08eb4661b5d ]
 
-ethtool uses `ETHTOOL_GRXRINGS` to compute how many queues are supported
-by RSS. The driver should return the smaller of either:
-  - The maximum number of RSS queues the device supports, OR
-  - The number of RX queues configured
+The code already clones post action attributes in
+mlx5e_clone_flow_attr_for_post_act(). Creating another copy in
+mlx5e_tc_post_act_add() is a erroneous leftover from original
+implementation. Instead, assign handle->attribute to post_attr provided by
+the caller. Note that cloning the attribute second time is not just
+wasteful but also causes issues like second copy not being properly updated
+in neigh update code which leads to following use-after-free:
 
-Prior to this change, running `ethtool -X $iface default` fails if the
-number of queues configured is larger than the number supported by RSS,
-even though changing the queue count correctly resets the flowhash to
-use all supported queues.
+Feb 21 09:02:00 c-237-177-40-045 kernel: BUG: KASAN: use-after-free in mlx5_cmd_set_fte+0x200d/0x24c0 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_report+0xbb/0x1a0
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_save_stack+0x1e/0x40
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_set_track+0x21/0x30
+Feb 21 09:02:00 c-237-177-40-045 kernel:  __kasan_kmalloc+0x7a/0x90
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_save_stack+0x1e/0x40
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_set_track+0x21/0x30
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_save_free_info+0x2a/0x40
+Feb 21 09:02:00 c-237-177-40-045 kernel:  ____kasan_slab_free+0x11a/0x1b0
+Feb 21 09:02:00 c-237-177-40-045 kernel: page dumped because: kasan: bad access detected
+Feb 21 09:02:00 c-237-177-40-045 kernel: mlx5_core 0000:08:00.0: mlx5_cmd_out_err:803:(pid 8833): SET_FLOW_TABLE_ENTRY(0x936) op_mod(0x0) failed, status bad resource state(0x9), syndrome (0xf2ff71), err(-22)
+Feb 21 09:02:00 c-237-177-40-045 kernel: mlx5_core 0000:08:00.0 enp8s0f0: Failed to add post action rule
+Feb 21 09:02:00 c-237-177-40-045 kernel: mlx5_core 0000:08:00.0: mlx5e_tc_encap_flows_add:190:(pid 8833): Failed to update flow post acts, -22
+Feb 21 09:02:00 c-237-177-40-045 kernel: Call Trace:
+Feb 21 09:02:00 c-237-177-40-045 kernel:  <TASK>
+Feb 21 09:02:00 c-237-177-40-045 kernel:  dump_stack_lvl+0x57/0x7d
+Feb 21 09:02:00 c-237-177-40-045 kernel:  print_report+0x170/0x471
+Feb 21 09:02:00 c-237-177-40-045 kernel:  ? mlx5_cmd_set_fte+0x200d/0x24c0 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_report+0xbb/0x1a0
+Feb 21 09:02:00 c-237-177-40-045 kernel:  ? mlx5_cmd_set_fte+0x200d/0x24c0 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5_cmd_set_fte+0x200d/0x24c0 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  ? __module_address.part.0+0x62/0x200
+Feb 21 09:02:00 c-237-177-40-045 kernel:  ? mlx5_cmd_stub_create_flow_table+0xd0/0xd0 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  ? __raw_spin_lock_init+0x3b/0x110
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5_cmd_create_fte+0x80/0xb0 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  add_rule_fg+0xe80/0x19c0 [mlx5_core]
+--
+Feb 21 09:02:00 c-237-177-40-045 kernel: Allocated by task 13476:
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_save_stack+0x1e/0x40
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_set_track+0x21/0x30
+Feb 21 09:02:00 c-237-177-40-045 kernel:  __kasan_kmalloc+0x7a/0x90
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5_packet_reformat_alloc+0x7b/0x230 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5e_tc_tun_create_header_ipv4+0x977/0xf10 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5e_attach_encap+0x15b4/0x1e10 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  post_process_attr+0x305/0xa30 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5e_tc_add_fdb_flow+0x4c0/0xcf0 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  __mlx5e_add_fdb_flow+0x7cf/0xe90 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5e_configure_flower+0xcaa/0x4b90 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5e_rep_setup_tc_cls_flower+0x99/0x1b0 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5e_rep_setup_tc_cb+0x133/0x1e0 [mlx5_core]
+--
+Feb 21 09:02:00 c-237-177-40-045 kernel: Freed by task 8833:
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_save_stack+0x1e/0x40
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_set_track+0x21/0x30
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kasan_save_free_info+0x2a/0x40
+Feb 21 09:02:00 c-237-177-40-045 kernel:  ____kasan_slab_free+0x11a/0x1b0
+Feb 21 09:02:00 c-237-177-40-045 kernel:  __kmem_cache_free+0x1de/0x400
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5_packet_reformat_dealloc+0xad/0x100 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5e_tc_encap_flows_del+0x3c0/0x500 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5e_rep_update_flows+0x40c/0xa80 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  mlx5e_rep_neigh_update+0x473/0x7a0 [mlx5_core]
+Feb 21 09:02:00 c-237-177-40-045 kernel:  process_one_work+0x7c2/0x1310
+Feb 21 09:02:00 c-237-177-40-045 kernel:  worker_thread+0x59d/0xec0
+Feb 21 09:02:00 c-237-177-40-045 kernel:  kthread+0x28f/0x330
 
-Other drivers (for example, i40e) will succeed but the flow hash will
-reset to support the maximum number of queues supported by RSS, even if
-that amount is smaller than the configured amount.
-
-Prior to this change:
-
-$ sudo ethtool -L eth1 combined 20
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 20 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9    10    11    12    13    14    15
-   16:      0     1     2     3     4     5     6     7
-   24:      8     9    10    11    12    13    14    15
-   32:      0     1     2     3     4     5     6     7
-...
-
-You can see that the flowhash was correctly set to use the maximum
-number of queues supported by the driver (16).
-
-However, asking the NIC to reset to "default" fails:
-
-$ sudo ethtool -X eth1 default
-Cannot set RX flow hash configuration: Invalid argument
-
-After this change, the flowhash can be reset to default which will use
-all of the available RSS queues (16) or the configured queue count,
-whichever is smaller.
-
-Starting with eth1 which has 10 queues and a flowhash distributing to
-all 10 queues:
-
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 10 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9     0     1     2     3     4     5
-   16:      6     7     8     9     0     1     2     3
-...
-
-Increasing the queue count to 48 resets the flowhash to distribute to 16
-queues, as it did before this patch:
-
-$ sudo ethtool -L eth1 combined 48
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 16 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9    10    11    12    13    14    15
-   16:      0     1     2     3     4     5     6     7
-...
-
-Due to the other bugfix in this series, the flowhash can be set to use
-queues 0-5:
-
-$ sudo ethtool -X eth1 equal 5
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 16 RX ring(s):
-    0:      0     1     2     3     4     0     1     2
-    8:      3     4     0     1     2     3     4     0
-   16:      1     2     3     4     0     1     2     3
-...
-
-Due to this bugfix, the flowhash can be reset to default and use 16
-queues:
-
-$ sudo ethtool -X eth1 default
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 16 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9    10    11    12    13    14    15
-   16:      0     1     2     3     4     5     6     7
-...
-
-Fixes: 91cd94bfe4f0 ("ixgbe: add basic support for setting and getting nfc controls")
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 8300f225268b ("net/mlx5e: Create new flow attr for multi table actions")
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Reviewed-by: Roi Dayan <roid@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/ixgbe/ixgbe_ethtool.c  | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en/tc/post_act.c  | 11 ++---------
+ .../net/ethernet/mellanox/mlx5/core/en/tc/post_act.h  |  2 +-
+ 2 files changed, 3 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-index 821dfd323fa9a..0bbad4a5cc2f5 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-@@ -2665,6 +2665,14 @@ static int ixgbe_get_rss_hash_opts(struct ixgbe_adapter *adapter,
- 	return 0;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.c
+index 4e48946c4c2ac..0290e0dea5390 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.c
+@@ -106,22 +106,17 @@ mlx5e_tc_post_act_offload(struct mlx5e_post_act *post_act,
  }
  
-+static int ixgbe_rss_indir_tbl_max(struct ixgbe_adapter *adapter)
-+{
-+	if (adapter->hw.mac.type < ixgbe_mac_X550)
-+		return 16;
-+	else
-+		return 64;
-+}
-+
- static int ixgbe_get_rxnfc(struct net_device *dev, struct ethtool_rxnfc *cmd,
- 			   u32 *rule_locs)
+ struct mlx5e_post_act_handle *
+-mlx5e_tc_post_act_add(struct mlx5e_post_act *post_act, struct mlx5_flow_attr *attr)
++mlx5e_tc_post_act_add(struct mlx5e_post_act *post_act, struct mlx5_flow_attr *post_attr)
  {
-@@ -2673,7 +2681,8 @@ static int ixgbe_get_rxnfc(struct net_device *dev, struct ethtool_rxnfc *cmd,
+-	u32 attr_sz = ns_to_attr_sz(post_act->ns_type);
+ 	struct mlx5e_post_act_handle *handle;
+-	struct mlx5_flow_attr *post_attr;
+ 	int err;
  
- 	switch (cmd->cmd) {
- 	case ETHTOOL_GRXRINGS:
--		cmd->data = adapter->num_rx_queues;
-+		cmd->data = min_t(int, adapter->num_rx_queues,
-+				  ixgbe_rss_indir_tbl_max(adapter));
- 		ret = 0;
- 		break;
- 	case ETHTOOL_GRXCLSRLCNT:
-@@ -3075,14 +3084,6 @@ static int ixgbe_set_rxnfc(struct net_device *dev, struct ethtool_rxnfc *cmd)
- 	return ret;
+ 	handle = kzalloc(sizeof(*handle), GFP_KERNEL);
+-	post_attr = mlx5_alloc_flow_attr(post_act->ns_type);
+-	if (!handle || !post_attr) {
+-		kfree(post_attr);
++	if (!handle) {
+ 		kfree(handle);
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 
+-	memcpy(post_attr, attr, attr_sz);
+ 	post_attr->chain = 0;
+ 	post_attr->prio = 0;
+ 	post_attr->ft = post_act->ft;
+@@ -145,7 +140,6 @@ mlx5e_tc_post_act_add(struct mlx5e_post_act *post_act, struct mlx5_flow_attr *at
+ 	return handle;
+ 
+ err_xarray:
+-	kfree(post_attr);
+ 	kfree(handle);
+ 	return ERR_PTR(err);
+ }
+@@ -164,7 +158,6 @@ mlx5e_tc_post_act_del(struct mlx5e_post_act *post_act, struct mlx5e_post_act_han
+ 	if (!IS_ERR_OR_NULL(handle->rule))
+ 		mlx5e_tc_post_act_unoffload(post_act, handle);
+ 	xa_erase(&post_act->ids, handle->id);
+-	kfree(handle->attr);
+ 	kfree(handle);
  }
  
--static int ixgbe_rss_indir_tbl_max(struct ixgbe_adapter *adapter)
--{
--	if (adapter->hw.mac.type < ixgbe_mac_X550)
--		return 16;
--	else
--		return 64;
--}
--
- static u32 ixgbe_get_rxfh_key_size(struct net_device *netdev)
- {
- 	return IXGBE_RSS_KEY_SIZE;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.h b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.h
+index f476774c0b75d..40b8df184af51 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc/post_act.h
+@@ -19,7 +19,7 @@ void
+ mlx5e_tc_post_act_destroy(struct mlx5e_post_act *post_act);
+ 
+ struct mlx5e_post_act_handle *
+-mlx5e_tc_post_act_add(struct mlx5e_post_act *post_act, struct mlx5_flow_attr *attr);
++mlx5e_tc_post_act_add(struct mlx5e_post_act *post_act, struct mlx5_flow_attr *post_attr);
+ 
+ void
+ mlx5e_tc_post_act_del(struct mlx5e_post_act *post_act, struct mlx5e_post_act_handle *handle);
 -- 
 2.39.2
 
