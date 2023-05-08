@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BD2168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F74C433EF;
-	Mon,  8 May 2023 10:20:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBFB168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94DCC433EF;
+	Mon,  8 May 2023 10:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541236;
-	bh=GRAUdwK3g0uB6qbs4mc8HpcNgecEEAsCozKvvrhm46g=;
+	s=korg; t=1683541240;
+	bh=bTownw0lLmAEW9KKrhaRE6LyTWM03ryZNH3lvWjfgeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loBuuxzFJ2MyjTAEMSI0kUXAOy2yCEPg0dnxJqOzB+WJLU9SFfB+uLyPBOYq3/CpM
-	 HT9pHzCslcZi8uRGmnyFkvWryz5oaeiFFFAkcIkQqYtw6RsxAAWQXYURkCaTPd8zyu
-	 LDD4GK8rITgEfAGSdi2qNkZnyWgQfSVZxsrcuEwU=
+	b=Bo8XEpcIRMc8WaREGiOJEgORgrfldTRj2levlP4iAn0uU49WMsX7oKB1Lp58FpVya
+	 rwI/DAC6HnrfhGnmSVKVY8mxU5IREbgytpkO6uDhbf9WFKzjvWZzKAAxlpaKxoa7WA
+	 DOW19dzD+oxCGEVrt+g8+psChYQPjwO+m/Bv5OT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.2 050/663] serial: fix TIOCSRS485 locking
-Date: Mon,  8 May 2023 11:37:56 +0200
-Message-Id: <20230508094430.105895877@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>
+Subject: [PATCH 6.2 033/663] usb: gadget: udc: core: Prevent redundant calls to pullup
+Date: Mon,  8 May 2023 11:37:39 +0200
+Message-Id: <20230508094429.534513106@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -34,47 +33,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan@kernel.org>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit 9e4f2a8004213339e9d837d891a59cc80e082966 upstream.
+commit a3afbf5cc887fc3401f012fe629810998ed61859 upstream.
 
-The RS485 multipoint addressing support for some reason added a new
-ADDRB termios cflag which is (only!) updated from one of the RS485
-ioctls.
+usb_gadget_connect calls gadget->ops->pullup without checking whether
+gadget->connected was previously set. Make this symmetric to
+usb_gadget_disconnect by returning early if gadget->connected is
+already set.
 
-Make sure to take the termios rw semaphore for the right ioctl (i.e.
-set, not get).
-
-Fixes: ae50bb275283 ("serial: take termios_rwsem for ->rs485_config() & pass termios as param")
-Cc: stable@vger.kernel.org	# 6.0
-Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://lore.kernel.org/r/20230412124811.11217-1-johan@kernel.org
+Fixes: 5a1da544e572 ("usb: gadget: core: do not try to disconnect gadget if it is not connected")
+Cc: stable@vger.kernel.org
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Link: https://lore.kernel.org/r/20230407030741.3163220-2-badhri@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/udc/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -1552,7 +1552,7 @@ uart_ioctl(struct tty_struct *tty, unsig
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -676,6 +676,9 @@ static int usb_gadget_connect_locked(str
  		goto out;
- 
- 	/* rs485_config requires more locking than others */
--	if (cmd == TIOCGRS485)
-+	if (cmd == TIOCSRS485)
- 		down_write(&tty->termios_rwsem);
- 
- 	mutex_lock(&port->mutex);
-@@ -1595,7 +1595,7 @@ uart_ioctl(struct tty_struct *tty, unsig
  	}
- out_up:
- 	mutex_unlock(&port->mutex);
--	if (cmd == TIOCGRS485)
-+	if (cmd == TIOCSRS485)
- 		up_write(&tty->termios_rwsem);
- out:
- 	return ret;
+ 
++	if (gadget->connected)
++		goto out;
++
+ 	if (gadget->deactivated || !gadget->udc->started) {
+ 		/*
+ 		 * If gadget is deactivated we only save new state.
 
 
