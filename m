@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637FE168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE60C433D2;
-	Mon,  8 May 2023 11:12:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C406168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50BCC433D2;
+	Mon,  8 May 2023 11:13:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544378;
-	bh=JJC5MjBV8lpgp/Q8c9FLB/NnPE+kU9YVY1zWbSiuN+M=;
+	s=korg; t=1683544381;
+	bh=4BiHR3hB1YoPleLHf1FQeCEQHaDGuu20vKxU55AJZuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5gIsOArm9JcztlxnX+Zx3RZU0bwoRdIOJkgU8Na2QhJ/ACI6xuQfpoZWhKY7//Mp
-	 Z8CnViGYHG7n2Wub7dpkL7DrWl+iuS5DpgGiXOrFp9xfTJFbtNmoWVGlmqYX9dHNL2
-	 5Wo3GWtujHbjl573yUvvbStD0qq3vUZluHqoHtVM=
+	b=k2NC/EUuS1r38C8IX3uGc7K4Tqci2M1gcNO9OVwp3skM3IobFP9wJRl4qfey3KwWH
+	 e8YotF2Khc7WMGK8ppimGUHfZ/ile6iYJwtOC2LmF7twyGt99pHgN5KfIPLe+t1bVl
+	 R0T8tGHvis47QzFbY098698n2+ungeOX4QpK7/DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Stephan Mueller <smueller@chronox.de>,
+	Kal Conley <kal.conley@dectris.com>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 391/694] crypto: drbg - Only fail when jent is unavailable in FIPS mode
-Date: Mon,  8 May 2023 11:43:46 +0200
-Message-Id: <20230508094445.743983949@linuxfoundation.org>
+Subject: [PATCH 6.3 392/694] xsk: Fix unaligned descriptor validation
+Date: Mon,  8 May 2023 11:43:47 +0200
+Message-Id: <20230508094445.782654175@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,39 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Kal Conley <kal.conley@dectris.com>
 
-[ Upstream commit 686cd976b6ddedeeb1a1fb09ba53a891d3cc9a03 ]
+[ Upstream commit d769ccaf957fe7391f357c0a923de71f594b8a2b ]
 
-When jent initialisation fails for any reason other than ENOENT,
-the entire drbg fails to initialise, even when we're not in FIPS
-mode.  This is wrong because we can still use the kernel RNG when
-we're not in FIPS mode.
+Make sure unaligned descriptors that straddle the end of the UMEM are
+considered invalid. Currently, descriptor validation is broken for
+zero-copy mode which only checks descriptors at page granularity.
+For example, descriptors in zero-copy mode that overrun the end of the
+UMEM but not a page boundary are (incorrectly) considered valid. The
+UMEM boundary check needs to happen before the page boundary and
+contiguity checks in xp_desc_crosses_non_contig_pg(). Do this check in
+xp_unaligned_validate_desc() instead like xp_check_unaligned() already
+does.
 
-Change it so that it only fails when we are in FIPS mode.
-
-Fixes: 57225e679788 ("crypto: drbg - Use callback API for random readiness")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Reviewed-by: Stephan Mueller <smueller@chronox.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 2b43470add8c ("xsk: Introduce AF_XDP buffer allocation API")
+Signed-off-by: Kal Conley <kal.conley@dectris.com>
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Link: https://lore.kernel.org/r/20230405235920.7305-2-kal.conley@dectris.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/drbg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/xsk_buff_pool.h | 9 ++-------
+ net/xdp/xsk_queue.h         | 1 +
+ 2 files changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/crypto/drbg.c b/crypto/drbg.c
-index 982d4ca4526d8..ff4ebbc68efab 100644
---- a/crypto/drbg.c
-+++ b/crypto/drbg.c
-@@ -1546,7 +1546,7 @@ static int drbg_prepare_hrng(struct drbg_state *drbg)
- 		const int err = PTR_ERR(drbg->jent);
+diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
+index 3e952e5694188..d318c769b4454 100644
+--- a/include/net/xsk_buff_pool.h
++++ b/include/net/xsk_buff_pool.h
+@@ -180,13 +180,8 @@ static inline bool xp_desc_crosses_non_contig_pg(struct xsk_buff_pool *pool,
+ 	if (likely(!cross_pg))
+ 		return false;
  
- 		drbg->jent = NULL;
--		if (fips_enabled || err != -ENOENT)
-+		if (fips_enabled)
- 			return err;
- 		pr_info("DRBG: Continuing without Jitter RNG\n");
- 	}
+-	if (pool->dma_pages_cnt) {
+-		return !(pool->dma_pages[addr >> PAGE_SHIFT] &
+-			 XSK_NEXT_PG_CONTIG_MASK);
+-	}
+-
+-	/* skb path */
+-	return addr + len > pool->addrs_cnt;
++	return pool->dma_pages_cnt &&
++	       !(pool->dma_pages[addr >> PAGE_SHIFT] & XSK_NEXT_PG_CONTIG_MASK);
+ }
+ 
+ static inline u64 xp_aligned_extract_addr(struct xsk_buff_pool *pool, u64 addr)
+diff --git a/net/xdp/xsk_queue.h b/net/xdp/xsk_queue.h
+index bfb2a7e50c261..66c6f57c9c447 100644
+--- a/net/xdp/xsk_queue.h
++++ b/net/xdp/xsk_queue.h
+@@ -162,6 +162,7 @@ static inline bool xp_unaligned_validate_desc(struct xsk_buff_pool *pool,
+ 		return false;
+ 
+ 	if (base_addr >= pool->addrs_cnt || addr >= pool->addrs_cnt ||
++	    addr + desc->len > pool->addrs_cnt ||
+ 	    xp_desc_crosses_non_contig_pg(pool, addr, desc->len))
+ 		return false;
+ 
 -- 
 2.39.2
 
