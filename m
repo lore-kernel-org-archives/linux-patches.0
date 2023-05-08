@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2367C168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7F9C433EF;
-	Mon,  8 May 2023 11:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0350F168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F69FC433D2;
+	Mon,  8 May 2023 11:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544603;
-	bh=TDiau+zfBxFbKvVSuhNND9OxJa3qdwFgDMrE057EEFk=;
+	s=korg; t=1683544605;
+	bh=TYdkKJtk8KHRsS8WwudwpLdKAq+ymgp9oX96xCy6G9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ap12QYBGHd/4QSzQ5dVoYls21d2jaifR/IeBIN59G9x7CviEbMthBs11sSxyYbsdX
-	 Du4iHIqxoiT2cHDFYOSaEJ9Z1o/75qNLOeiZNOHsaKbULzTxnKrFtfCy1n8NqKMCpS
-	 lUkZAW6KLhKKGfseMd25JVPBMUcq6u0NfnjKl11o=
+	b=IHezt/q+XZ5nNKdZux1LURjp3e6kBGXWyshCM5McyBMFPI2r50ogYBMzN43QekkkI
+	 2lKVQ6AViimCP8+24OQdJHle/O+VbfnFaHAlsrH634FnTjvdcDPVAE6lRufXokd4gO
+	 QNylqIUwvR0XYUxrVhYKHxcJ0Dbgyvvc3RsLwXw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiefeng Li <jiefeng_li@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Chris Mi <cmi@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 446/694] wifi: mt76: mt7921: fix missing unwind goto in `mt7921u_probe`
-Date: Mon,  8 May 2023 11:44:41 +0200
-Message-Id: <20230508094448.012281431@linuxfoundation.org>
+Subject: [PATCH 6.3 464/694] net/mlx5: Release tunnel device after tc update skb
+Date: Mon,  8 May 2023 11:44:59 +0200
+Message-Id: <20230508094448.770807297@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,37 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiefeng Li <jiefeng_li@hust.edu.cn>
+From: Chris Mi <cmi@nvidia.com>
 
-[ Upstream commit 5c47cdebbaeb7724df6f9f46917c93e53f791547 ]
+[ Upstream commit 4fbef0f8ea6350eaea89b1e3175f9325252913ac ]
 
-`mt7921u_dma_init` can only return zero or negative number according to its
-definition. When it returns non-zero number, there exists an error and this
-function should handle this error rather than return directly.
+The cited commit causes a regression. Tunnel device is not released
+after tc update skb if skb needs to be freed. The following error
+message will be printed:
 
-Fixes: 0d2afe09fad5 ("mt76: mt7921: add mt7921u driver")
-Signed-off-by: Jiefeng Li <jiefeng_li@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+  unregister_netdevice: waiting for vxlan1 to become free. Usage count = 11
+
+Fix it by releasing tunnel device if skb needs to be freed.
+
+Fixes: 93a1ab2c545b ("net/mlx5: Refactor tc miss handling to a single function")
+Signed-off-by: Chris Mi <cmi@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/usb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/rep/tc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-index 8fef09ed29c91..70c9bbdbf60e9 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-@@ -272,7 +272,7 @@ static int mt7921u_probe(struct usb_interface *usb_intf,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/tc.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/tc.c
+index 8f7452dc00ee3..668fdee9cf057 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/tc.c
+@@ -715,5 +715,6 @@ void mlx5e_rep_tc_receive(struct mlx5_cqe64 *cqe, struct mlx5e_rq *rq,
+ 	return;
  
- 	ret = mt7921u_dma_init(dev, false);
- 	if (ret)
--		return ret;
-+		goto error;
- 
- 	hw = mt76_hw(dev);
- 	/* check hw sg support in order to enable AMSDU */
+ free_skb:
++	dev_put(tc_priv.fwd_dev);
+ 	dev_kfree_skb_any(skb);
+ }
 -- 
 2.39.2
 
