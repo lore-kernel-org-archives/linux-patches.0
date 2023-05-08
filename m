@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DE0168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:43:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DA9C4339B;
-	Mon,  8 May 2023 10:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E55168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:43:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A93C433EF;
+	Mon,  8 May 2023 10:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542581;
-	bh=m2MAVz1sFRRcDP0NOl/MARcnCO2Q+y+I1t5a6wLEScU=;
+	s=korg; t=1683542584;
+	bh=v9afTyW3/It3xsLFqOYgFOVO16EMHGvQZU9rOkueRQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTjLfUo3OvTFdv9Sqb8NKg8/YfEjz5rigsuxoXznPBMYrzPULWOl2Jbb03nkUKzXq
-	 TMvR5LI0Kem0DIoMQYygRmqZqbasxKVPshD+Zdbh4LMznYuzyJSKOh+wP+jYhLDVsY
-	 /QUXPUMzDCPHOL8L+E/dvDiFG77+REDEfyHDqPsk=
+	b=olzhJfAeskBOXHIGYL7sU3JNoLwpaSOcixFZesoT/Z3F5OZ5SaLcha8AktxU9rwam
+	 8SHmvypiRgp9736W9mVtE9NHWzxSKo7NdhhAobI1q8vyTf/jYVRwSSSUHSojB2reF3
+	 NvG0uZmTiKoXIOJIDlxvwlmnPED0SolIGZCShMes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Liliang Ye <yll@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 454/663] usb: gadget: udc: renesas_usb3: Fix use after free bug in renesas_usb3_remove due to race condition
-Date: Mon,  8 May 2023 11:44:40 +0200
-Message-Id: <20230508094442.841711004@linuxfoundation.org>
+Subject: [PATCH 6.2 481/663] ASoC: fsl_mqs: move of_node_put() to the correct location
+Date: Mon,  8 May 2023 11:45:07 +0200
+Message-Id: <20230508094443.943157671@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,59 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Liliang Ye <yll@hust.edu.cn>
 
-[ Upstream commit 2b947f8769be8b8181dc795fd292d3e7120f5204 ]
+[ Upstream commit 1c34890273a020d61d6127ade3f68ed1cb21c16a ]
 
-In renesas_usb3_probe, role_work is bound with renesas_usb3_role_work.
-renesas_usb3_start will be called to start the work.
+of_node_put() should have been done directly after
+mqs_priv->regmap = syscon_node_to_regmap(gpr_np);
+otherwise it creates a reference leak on the success path.
 
-If we remove the driver which will call usbhs_remove, there may be
-an unfinished work. The possible sequence is as follows:
+To fix this, of_node_put() is moved to the correct location, and change
+all the gotos to direct returns.
 
-CPU0                  			CPU1
-
-                    			 renesas_usb3_role_work
-renesas_usb3_remove
-usb_role_switch_unregister
-device_unregister
-kfree(sw)
-//free usb3->role_sw
-                    			 usb_role_switch_set_role
-                    			 //use usb3->role_sw
-
-The usb3->role_sw could be freed under such circumstance and then
-used in usb_role_switch_set_role.
-
-This bug was found by static analysis. And note that removing a
-driver is a root-only operation, and should never happen in normal
-case. But the root user may directly remove the device which
-will also trigger the remove function.
-
-Fix it by canceling the work before cleanup in the renesas_usb3_remove.
-
-Fixes: 39facfa01c9f ("usb: gadget: udc: renesas_usb3: Add register of usb role switch")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20230320062931.505170-1-zyytlz.wz@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a9d273671440 ("ASoC: fsl_mqs: Fix error handling in probe")
+Signed-off-by: Liliang Ye <yll@hust.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/20230403152647.17638-1-yll@hust.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/renesas_usb3.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/fsl/fsl_mqs.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/renesas_usb3.c b/drivers/usb/gadget/udc/renesas_usb3.c
-index 615ba0a6fbee1..32c9e369216c9 100644
---- a/drivers/usb/gadget/udc/renesas_usb3.c
-+++ b/drivers/usb/gadget/udc/renesas_usb3.c
-@@ -2596,6 +2596,7 @@ static int renesas_usb3_remove(struct platform_device *pdev)
- 	debugfs_remove_recursive(usb3->dentry);
- 	device_remove_file(&pdev->dev, &dev_attr_role);
+diff --git a/sound/soc/fsl/fsl_mqs.c b/sound/soc/fsl/fsl_mqs.c
+index 4922e6795b73f..32d20d351bbf7 100644
+--- a/sound/soc/fsl/fsl_mqs.c
++++ b/sound/soc/fsl/fsl_mqs.c
+@@ -210,10 +210,10 @@ static int fsl_mqs_probe(struct platform_device *pdev)
+ 		}
  
-+	cancel_work_sync(&usb3->role_work);
- 	usb_role_switch_unregister(usb3->role_sw);
+ 		mqs_priv->regmap = syscon_node_to_regmap(gpr_np);
++		of_node_put(gpr_np);
+ 		if (IS_ERR(mqs_priv->regmap)) {
+ 			dev_err(&pdev->dev, "failed to get gpr regmap\n");
+-			ret = PTR_ERR(mqs_priv->regmap);
+-			goto err_free_gpr_np;
++			return PTR_ERR(mqs_priv->regmap);
+ 		}
+ 	} else {
+ 		regs = devm_platform_ioremap_resource(pdev, 0);
+@@ -242,8 +242,7 @@ static int fsl_mqs_probe(struct platform_device *pdev)
+ 	if (IS_ERR(mqs_priv->mclk)) {
+ 		dev_err(&pdev->dev, "failed to get the clock: %ld\n",
+ 			PTR_ERR(mqs_priv->mclk));
+-		ret = PTR_ERR(mqs_priv->mclk);
+-		goto err_free_gpr_np;
++		return PTR_ERR(mqs_priv->mclk);
+ 	}
  
- 	usb_del_gadget_udc(&usb3->gadget);
+ 	dev_set_drvdata(&pdev->dev, mqs_priv);
+@@ -252,13 +251,9 @@ static int fsl_mqs_probe(struct platform_device *pdev)
+ 	ret = devm_snd_soc_register_component(&pdev->dev, &soc_codec_fsl_mqs,
+ 			&fsl_mqs_dai, 1);
+ 	if (ret)
+-		goto err_free_gpr_np;
+-	return 0;
+-
+-err_free_gpr_np:
+-	of_node_put(gpr_np);
++		return ret;
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static int fsl_mqs_remove(struct platform_device *pdev)
 -- 
 2.39.2
 
