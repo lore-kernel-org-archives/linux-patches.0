@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBB4168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6875C433D2;
-	Mon,  8 May 2023 10:05:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECCF168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FDDBC433EF;
+	Mon,  8 May 2023 10:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540348;
-	bh=Q4hK5ySrl0IdJQJGzuJjLmbGEyNHig5J6jA3LEntiys=;
+	s=korg; t=1683540350;
+	bh=A/UpFEPYNtp+YIDKx+tIV1W6vTnpKPjti+M6GBhGB0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KYdfur3Id1Y4GZI6GNgpIfBZkZOfnci2hcC7qByHnq09ZQ90bGuFeZRwlJn3O3cjw
-	 6v4u+G9uOxYezio7VAybA4F6lahp5oEzjWX1MqTccn/yf1AjHvwoZlyBcfPynSWd28
-	 5KMr0kmD2D8FhdNP0tRRR/mQDbEozZ1ggmXaGr1s=
+	b=hBfsPH0CSXRtqmxVKwWAzTMBdJZq2ueo+fakpzuZjqRVXpJgpBk420PumU+WE9GGq
+	 6/a2sJqpInbNvmklqdBqPovQZ6PMhDe7tv70y6R2FAqfYwuj3PdThJklhn/KZ97xW5
+	 XR5Qmb8XaVkyw7oX5kTEKDfM8zWJGE6ogqa86wPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hsin-Wei Hung <hsinweih@uci.edu>,
+	Xin Liu <liuxin350@huawei.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 313/611] scsi: hisi_sas: Handle NCQ error when IPTT is valid
-Date: Mon,  8 May 2023 11:42:35 +0200
-Message-Id: <20230508094432.606526880@linuxfoundation.org>
+Subject: [PATCH 6.1 331/611] bpf, sockmap: fix deadlocks in the sockhash and sockmap
+Date: Mon,  8 May 2023 11:42:53 +0200
+Message-Id: <20230508094433.182702005@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,87 +37,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Xin Liu <liuxin350@huawei.com>
 
-[ Upstream commit bb544224da77b96b2c11a13872bf91ede1e015be ]
+[ Upstream commit ed17aa92dc56b6d8883e4b7a8f1c6fbf5ed6cd29 ]
 
-If an NCQ error occurs when the IPTT is valid and slot->abort flag is set
-in completion path, sas_task_abort() will be called to abort only one NCQ
-command now, and the host would be set to SHOST_RECOVERY state. But this
-may not kick-off EH Immediately until other outstanding QCs timeouts. As a
-result, the host may remain in the SHOST_RECOVERY state for up to 30
-seconds, such as follows:
+When huang uses sched_switch tracepoint, the tracepoint
+does only one thing in the mounted ebpf program, which
+deletes the fixed elements in sockhash ([0])
 
-[7972317.645234] hisi_sas_v3_hw 0000:74:04.0: erroneous completion iptt=3264 task=00000000466116b8 dev id=2 sas_addr=0x5000000000000502 CQ hdr: 0x1883 0x20cc0 0x40000 0x20420000 Error info: 0x0 0x0 0x200000 0x0
-[7972341.508264] sas: Enter sas_scsi_recover_host busy: 32 failed: 32
-[7972341.984731] sas: --- Exit sas_scsi_recover_host: busy: 0 failed: 32 tries: 1
+It seems that elements in sockhash are rarely actively
+deleted by users or ebpf program. Therefore, we do not
+pay much attention to their deletion. Compared with hash
+maps, sockhash only provides spin_lock_bh protection.
+This causes it to appear to have self-locking behavior
+in the interrupt context.
 
-All NCQ commands that are in the queue should be aborted when an NCQ error
-occurs in this scenario.
+  [0]:https://lore.kernel.org/all/CABcoxUayum5oOqFMMqAeWuS8+EzojquSOSyDA3J_2omY=2EeAg@mail.gmail.com/
 
-Fixes: 05d91b557af9 ("scsi: hisi_sas: Directly trigger SCSI error handling for completion errors")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1679283265-115066-3-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: Hsin-Wei Hung <hsinweih@uci.edu>
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Xin Liu <liuxin350@huawei.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20230406122622.109978-1-liuxin350@huawei.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v1_hw.c | 6 +++++-
- drivers/scsi/hisi_sas/hisi_sas_v2_hw.c | 6 +++++-
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 6 +++++-
- 3 files changed, 15 insertions(+), 3 deletions(-)
+ net/core/sock_map.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-index d643c5a49aa94..70c24377c6a19 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-@@ -1258,7 +1258,11 @@ static void slot_complete_v1_hw(struct hisi_hba *hisi_hba,
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index a68a7290a3b2b..2408965e5c7b6 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -414,8 +414,9 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+ {
+ 	struct sock *sk;
+ 	int err = 0;
++	unsigned long flags;
  
- 		slot_err_v1_hw(hisi_hba, task, slot);
- 		if (unlikely(slot->abort)) {
--			sas_task_abort(task);
-+			if (dev_is_sata(device) && task->ata_task.use_ncq)
-+				sas_ata_device_link_abort(device, true);
-+			else
-+				sas_task_abort(task);
-+
- 			return;
- 		}
- 		goto out;
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-index cded42f4ca445..02575d81afca2 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-@@ -2404,7 +2404,11 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
- 				 error_info[2], error_info[3]);
+-	raw_spin_lock_bh(&stab->lock);
++	raw_spin_lock_irqsave(&stab->lock, flags);
+ 	sk = *psk;
+ 	if (!sk_test || sk_test == sk)
+ 		sk = xchg(psk, NULL);
+@@ -425,7 +426,7 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+ 	else
+ 		err = -EINVAL;
  
- 		if (unlikely(slot->abort)) {
--			sas_task_abort(task);
-+			if (dev_is_sata(device) && task->ata_task.use_ncq)
-+				sas_ata_device_link_abort(device, true);
-+			else
-+				sas_task_abort(task);
-+
- 			return;
- 		}
- 		goto out;
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index 620dcefe7b6f4..e8a3511040af2 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -2293,7 +2293,11 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
- 					error_info[0], error_info[1],
- 					error_info[2], error_info[3]);
- 			if (unlikely(slot->abort)) {
--				sas_task_abort(task);
-+				if (dev_is_sata(device) && task->ata_task.use_ncq)
-+					sas_ata_device_link_abort(device, true);
-+				else
-+					sas_task_abort(task);
-+
- 				return;
- 			}
- 			goto out;
+-	raw_spin_unlock_bh(&stab->lock);
++	raw_spin_unlock_irqrestore(&stab->lock, flags);
+ 	return err;
+ }
+ 
+@@ -923,11 +924,12 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
+ 	struct bpf_shtab_bucket *bucket;
+ 	struct bpf_shtab_elem *elem;
+ 	int ret = -ENOENT;
++	unsigned long flags;
+ 
+ 	hash = sock_hash_bucket_hash(key, key_size);
+ 	bucket = sock_hash_select_bucket(htab, hash);
+ 
+-	raw_spin_lock_bh(&bucket->lock);
++	raw_spin_lock_irqsave(&bucket->lock, flags);
+ 	elem = sock_hash_lookup_elem_raw(&bucket->head, hash, key, key_size);
+ 	if (elem) {
+ 		hlist_del_rcu(&elem->node);
+@@ -935,7 +937,7 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
+ 		sock_hash_free_elem(htab, elem);
+ 		ret = 0;
+ 	}
+-	raw_spin_unlock_bh(&bucket->lock);
++	raw_spin_unlock_irqrestore(&bucket->lock, flags);
+ 	return ret;
+ }
+ 
 -- 
 2.39.2
 
