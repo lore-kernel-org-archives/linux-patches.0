@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A441094C
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:58:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F994C433D2;
-	Mon,  8 May 2023 10:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937881094C
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:58:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0704CC433D2;
+	Mon,  8 May 2023 10:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543520;
-	bh=vaDW+pMskZ06wVM0nSA+WW0HTIbPuEn+CC9mZ315wMY=;
+	s=korg; t=1683543523;
+	bh=+uZluaaaaoZ+DSV5sPOWtZ6+LxXBnTnY5XqWT6HOrjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ECfYZHkJmH7IOQ/AsohVeffMnCRaIxPW515e58Jsvee7A51gEGomRORzk/LDFRgBz
-	 HGhXBH5ikCxUO7YLGlrSdqr2H18hVhEEMa+NNN0aAy9XJrYMkUesTLxQNmlHNANgdj
-	 yrAil4tgKuGItAnRk61ypIqGUiIQuPh++K/8ELxY=
+	b=PwKrZHR6YvpgdNyK6IazNnl0cZ1F8NqFE2Ov4Bsm0ACTbRd440OH+DAiR1GneiIET
+	 eTPUtj2kc7EvjS1GyLNGhDzQ/YRhj8Fy8bF+zPhIXOcDB1V2nsqGWmZbTft4IJSQ4J
+	 c1f0fwhAHOiffaFkWuAVstorLMHuUdvyJD1wSoMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reid Tonking <reidt@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.3 078/694] i2c: omap: Fix standard mode false ACK readings
-Date: Mon,  8 May 2023 11:38:33 +0200
-Message-Id: <20230508094435.068507067@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Lorenzo Stoakes <lstoakes@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	John Hubbard <jhubbard@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Peter Xu <peterx@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 110/694] mm: do not reclaim private data from pinned page
+Date: Mon,  8 May 2023 11:39:05 +0200
+Message-Id: <20230508094436.047635121@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,37 +40,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reid Tonking <reidt@ti.com>
+From: Jan Kara <jack@suse.cz>
 
-commit c770657bd2611b077ec1e7b1fe6aa92f249399bd upstream.
+commit d824ec2a154677f63c56cc71ffe4578274f6e32e upstream.
 
-Using standard mode, rare false ACK responses were appearing with
-i2cdetect tool. This was happening due to NACK interrupt triggering
-ISR thread before register access interrupt was ready. Removing the
-NACK interrupt's ability to trigger ISR thread lets register access
-ready interrupt do this instead.
+If the page is pinned, there's no point in trying to reclaim it.
+Furthermore if the page is from the page cache we don't want to reclaim
+fs-private data from the page because the pinning process may be writing
+to the page at any time and reclaiming fs private info on a dirty page can
+upset the filesystem (see link below).
 
-Cc: <stable@vger.kernel.org> # v3.7+
-Fixes: 3b2f8f82dad7 ("i2c: omap: switch to threaded IRQ support")
-Signed-off-by: Reid Tonking <reidt@ti.com>
-Acked-by: Vignesh Raghavendra <vigneshr@ti.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Link: https://lore.kernel.org/linux-mm/20180103100430.GE4911@quack2.suse.cz
+Link: https://lkml.kernel.org/r/20230428124140.30166-1-jack@suse.cz
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Lorenzo Stoakes <lstoakes@gmail.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: John Hubbard <jhubbard@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-omap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/vmscan.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/i2c/busses/i2c-omap.c
-+++ b/drivers/i2c/busses/i2c-omap.c
-@@ -1058,7 +1058,7 @@ omap_i2c_isr(int irq, void *dev_id)
- 	u16 stat;
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -1911,6 +1911,16 @@ retry:
+ 			}
+ 		}
  
- 	stat = omap_i2c_read_reg(omap, OMAP_I2C_STAT_REG);
--	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG);
-+	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG) & ~OMAP_I2C_STAT_NACK;
- 
- 	if (stat & mask)
- 		ret = IRQ_WAKE_THREAD;
++		/*
++		 * Folio is unmapped now so it cannot be newly pinned anymore.
++		 * No point in trying to reclaim folio if it is pinned.
++		 * Furthermore we don't want to reclaim underlying fs metadata
++		 * if the folio is pinned and thus potentially modified by the
++		 * pinning process as that may upset the filesystem.
++		 */
++		if (folio_maybe_dma_pinned(folio))
++			goto activate_locked;
++
+ 		mapping = folio_mapping(folio);
+ 		if (folio_test_dirty(folio)) {
+ 			/*
 
 
