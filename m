@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DFF2168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:28:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15A5C433D2;
-	Mon,  8 May 2023 10:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DD5168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:28:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8816DC433A1;
+	Mon,  8 May 2023 10:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541714;
-	bh=MkBSir096ixF+SGKwT4r3tz493K1/jDeIupkG2T4ODk=;
+	s=korg; t=1683541717;
+	bh=7yAbatqgq7LIvEWfrKnftoaGmhpPFDRJmzZFO4NpaqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpyaliBYpQHdo0dc+riajnXjhqW4uSYCsuMNwomnUtnU+FPZbXeNG9CrXN461gRbc
-	 r3JXY+w06/Whh4SP9CGA2MCV0HmcYsDwhIdxHgTIGaNw5byviw99KXpBQaTSm1P/Vi
-	 y3L4jMAa8uX/hVllXf6yvx4kKAms++RKZv6+SVTM=
+	b=fccpckBKh9A6Uy1GVsNak8hoAziL+XMl7ICsXsZz3tK2yGOw87tF/DdS+derLZPn5
+	 CjBLV7qEytb7BajVPMXaMw6pPR7ukCQQFuQICGEYMABTnT8kzUSRqqKHMCrJ/YH61T
+	 +K5dPZiZxDtKQlSUh8XKMgnyRXmfR2x3+pYlUM5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jia-Wei Chang <jia-wei.chang@mediatek.com>,
+	Nick Hainke <vincent@systemli.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Dan Carpenter <error27@gmail.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 202/663] cpufreq: mediatek: fix KP caused by handler usage after regulator_put/clk_put
-Date: Mon,  8 May 2023 11:40:28 +0200
-Message-Id: <20230508094434.933057852@linuxfoundation.org>
+Subject: [PATCH 6.2 203/663] cpufreq: mediatek: raise proc/sram max voltage for MT8516
+Date: Mon,  8 May 2023 11:40:29 +0200
+Message-Id: <20230508094434.961707372@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -39,154 +39,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Jia-Wei Chang <jia-wei.chang@mediatek.com>
 
-[ Upstream commit d51e106240bc755cbe59634b70d567c192b045b2 ]
+[ Upstream commit d3296bb4cafd4bad4a5cf2eeab9d19cc94f9e30e ]
 
-Any kind of failure in mtk_cpu_dvfs_info_init() will lead to calling
-regulator_put() or clk_put() and the KP will occur since the regulator/clk
-handlers are used after released in mtk_cpu_dvfs_info_release().
-
-To prevent the usage after regulator_put()/clk_put(), the regulator/clk
-handlers are addressed in a way of "Free the Last Thing Style".
+Since the upper boundary of proc/sram voltage of MT8516 is 1300 mV,
+which is greater than the value of MT2701 1150 mV, we fix it by adding
+the corresponding platform data and specify proc/sram_max_volt to
+support MT8516.
 
 Signed-off-by: Jia-Wei Chang <jia-wei.chang@mediatek.com>
-Fixes: 4b9ceb757bbb ("cpufreq: mediatek: Enable clocks and regulators")
-Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Suggested-by: Dan Carpenter <error27@gmail.com>
+Fixes: ead858bd128d ("cpufreq: mediatek: Move voltage limits to platform data")
+Fixes: 6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
+Reported-by: Nick Hainke <vincent@systemli.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/mediatek-cpufreq.c | 62 +++++++++++++++---------------
- 1 file changed, 30 insertions(+), 32 deletions(-)
+ drivers/cpufreq/mediatek-cpufreq.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
-index 01d949707c373..6dc225546a8d6 100644
+index 6dc225546a8d6..764e4fbdd536c 100644
 --- a/drivers/cpufreq/mediatek-cpufreq.c
 +++ b/drivers/cpufreq/mediatek-cpufreq.c
-@@ -420,7 +420,7 @@ static int mtk_cpu_dvfs_info_init(struct mtk_cpu_dvfs_info *info, int cpu)
- 		ret = PTR_ERR(info->inter_clk);
- 		dev_err_probe(cpu_dev, ret,
- 			      "cpu%d: failed to get intermediate clk\n", cpu);
--		goto out_free_resources;
-+		goto out_free_mux_clock;
- 	}
+@@ -711,20 +711,29 @@ static const struct mtk_cpufreq_platform_data mt8186_platform_data = {
+ 	.ccifreq_supported = true,
+ };
  
- 	info->proc_reg = regulator_get_optional(cpu_dev, "proc");
-@@ -428,13 +428,13 @@ static int mtk_cpu_dvfs_info_init(struct mtk_cpu_dvfs_info *info, int cpu)
- 		ret = PTR_ERR(info->proc_reg);
- 		dev_err_probe(cpu_dev, ret,
- 			      "cpu%d: failed to get proc regulator\n", cpu);
--		goto out_free_resources;
-+		goto out_free_inter_clock;
- 	}
- 
- 	ret = regulator_enable(info->proc_reg);
- 	if (ret) {
- 		dev_warn(cpu_dev, "cpu%d: failed to enable vproc\n", cpu);
--		goto out_free_resources;
-+		goto out_free_proc_reg;
- 	}
- 
- 	/* Both presence and absence of sram regulator are valid cases. */
-@@ -442,14 +442,14 @@ static int mtk_cpu_dvfs_info_init(struct mtk_cpu_dvfs_info *info, int cpu)
- 	if (IS_ERR(info->sram_reg)) {
- 		ret = PTR_ERR(info->sram_reg);
- 		if (ret == -EPROBE_DEFER)
--			goto out_free_resources;
-+			goto out_disable_proc_reg;
- 
- 		info->sram_reg = NULL;
- 	} else {
- 		ret = regulator_enable(info->sram_reg);
- 		if (ret) {
- 			dev_warn(cpu_dev, "cpu%d: failed to enable vsram\n", cpu);
--			goto out_free_resources;
-+			goto out_free_sram_reg;
- 		}
- 	}
- 
-@@ -458,13 +458,13 @@ static int mtk_cpu_dvfs_info_init(struct mtk_cpu_dvfs_info *info, int cpu)
- 	if (ret) {
- 		dev_err(cpu_dev,
- 			"cpu%d: failed to get OPP-sharing information\n", cpu);
--		goto out_free_resources;
-+		goto out_disable_sram_reg;
- 	}
- 
- 	ret = dev_pm_opp_of_cpumask_add_table(&info->cpus);
- 	if (ret) {
- 		dev_warn(cpu_dev, "cpu%d: no OPP table\n", cpu);
--		goto out_free_resources;
-+		goto out_disable_sram_reg;
- 	}
- 
- 	ret = clk_prepare_enable(info->cpu_clk);
-@@ -533,43 +533,41 @@ static int mtk_cpu_dvfs_info_init(struct mtk_cpu_dvfs_info *info, int cpu)
- out_free_opp_table:
- 	dev_pm_opp_of_cpumask_remove_table(&info->cpus);
- 
--out_free_resources:
--	if (regulator_is_enabled(info->proc_reg))
--		regulator_disable(info->proc_reg);
--	if (info->sram_reg && regulator_is_enabled(info->sram_reg))
-+out_disable_sram_reg:
-+	if (info->sram_reg)
- 		regulator_disable(info->sram_reg);
- 
--	if (!IS_ERR(info->proc_reg))
--		regulator_put(info->proc_reg);
--	if (!IS_ERR(info->sram_reg))
-+out_free_sram_reg:
-+	if (info->sram_reg)
- 		regulator_put(info->sram_reg);
--	if (!IS_ERR(info->cpu_clk))
--		clk_put(info->cpu_clk);
--	if (!IS_ERR(info->inter_clk))
--		clk_put(info->inter_clk);
++static const struct mtk_cpufreq_platform_data mt8516_platform_data = {
++	.min_volt_shift = 100000,
++	.max_volt_shift = 200000,
++	.proc_max_volt = 1310000,
++	.sram_min_volt = 0,
++	.sram_max_volt = 1310000,
++	.ccifreq_supported = false,
++};
 +
-+out_disable_proc_reg:
-+	regulator_disable(info->proc_reg);
-+
-+out_free_proc_reg:
-+	regulator_put(info->proc_reg);
-+
-+out_free_inter_clock:
-+	clk_put(info->inter_clk);
-+
-+out_free_mux_clock:
-+	clk_put(info->cpu_clk);
- 
- 	return ret;
- }
- 
- static void mtk_cpu_dvfs_info_release(struct mtk_cpu_dvfs_info *info)
- {
--	if (!IS_ERR(info->proc_reg)) {
--		regulator_disable(info->proc_reg);
--		regulator_put(info->proc_reg);
--	}
--	if (!IS_ERR(info->sram_reg)) {
-+	regulator_disable(info->proc_reg);
-+	regulator_put(info->proc_reg);
-+	if (info->sram_reg) {
- 		regulator_disable(info->sram_reg);
- 		regulator_put(info->sram_reg);
- 	}
--	if (!IS_ERR(info->cpu_clk)) {
--		clk_disable_unprepare(info->cpu_clk);
--		clk_put(info->cpu_clk);
--	}
--	if (!IS_ERR(info->inter_clk)) {
--		clk_disable_unprepare(info->inter_clk);
--		clk_put(info->inter_clk);
--	}
--
-+	clk_disable_unprepare(info->cpu_clk);
-+	clk_put(info->cpu_clk);
-+	clk_disable_unprepare(info->inter_clk);
-+	clk_put(info->inter_clk);
- 	dev_pm_opp_of_cpumask_remove_table(&info->cpus);
- 	dev_pm_opp_unregister_notifier(info->cpu_dev, &info->opp_nb);
- }
+ /* List of machines supported by this driver */
+ static const struct of_device_id mtk_cpufreq_machines[] __initconst = {
+ 	{ .compatible = "mediatek,mt2701", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt2712", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt7622", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt7623", .data = &mt2701_platform_data },
+-	{ .compatible = "mediatek,mt8167", .data = &mt2701_platform_data },
++	{ .compatible = "mediatek,mt8167", .data = &mt8516_platform_data },
+ 	{ .compatible = "mediatek,mt817x", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt8173", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt8176", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt8183", .data = &mt8183_platform_data },
+ 	{ .compatible = "mediatek,mt8186", .data = &mt8186_platform_data },
+ 	{ .compatible = "mediatek,mt8365", .data = &mt2701_platform_data },
+-	{ .compatible = "mediatek,mt8516", .data = &mt2701_platform_data },
++	{ .compatible = "mediatek,mt8516", .data = &mt8516_platform_data },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, mtk_cpufreq_machines);
 -- 
 2.39.2
 
