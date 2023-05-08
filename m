@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D8F1549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:52:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C542BC433EF;
-	Mon,  8 May 2023 09:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88D01549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:52:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE95C433D2;
+	Mon,  8 May 2023 09:52:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539577;
-	bh=0XdxmtLdzJfK/oXFkgB111YNCkRNHNAZ3NovdjO1dfM=;
+	s=korg; t=1683539579;
+	bh=duRt4LgUNl++PHPCMA9gvR2w1QMev+j6ur1tOjUHma0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rWzzp4+1jsjRnG4xxd/Hq4gjER+W784jphIn25oMxLLPcgvKTI40aXW56BJYUc7e8
-	 dbxRGDNQOW+GpcxqXIhVGv3lc82WkHyF/UJShjCa3Jmc7VXmzUtESW1AKxjrOTUBbp
-	 1AurVdFb1VwXFhIxGi4gYqXUXIIuW10f6UL8pZAE=
+	b=uNq8ubyvQ0ayrEeNOmSUJyUeTZqRXjen4DCsF8ZBsLKxFJZIZC2+/zdy7TOZpXeJ3
+	 PLf0X9xzWEIb4VAd2N/CaY/38Ks93Xw9ybkbfH9w+ztHhPvRmAv+gmkzWP8ZwNlxNS
+	 Qs9DahEGUk6jWWMiqn4YlO2PuH0NOXswfMiIOVFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	npiggin@gmail.com,
-	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
-	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 067/611] ring-buffer: Ensure proper resetting of atomic variables in ring_buffer_reset_online_cpus
-Date: Mon,  8 May 2023 11:38:29 +0200
-Message-Id: <20230508094424.171781538@linuxfoundation.org>
+Subject: [PATCH 6.1 068/611] ring-buffer: Sync IRQ works before buffer destruction
+Date: Mon,  8 May 2023 11:38:30 +0200
+Message-Id: <20230508094424.202561642@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,81 +35,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 7c339fb4d8577792378136c15fde773cfb863cb8 upstream.
+commit 675751bb20634f981498c7d66161584080cc061e upstream.
 
-In ring_buffer_reset_online_cpus, the buffer_size_kb write operation
-may permanently fail if the cpu_online_mask changes between two
-for_each_online_buffer_cpu loops. The number of increases and decreases
-on both cpu_buffer->resize_disabled and cpu_buffer->record_disabled may be
-inconsistent, causing some CPUs to have non-zero values for these atomic
-variables after the function returns.
+If something was written to the buffer just before destruction,
+it may be possible (maybe not in a real system, but it did
+happen in ARCH=um with time-travel) to destroy the ringbuffer
+before the IRQ work ran, leading this KASAN report (or a crash
+without KASAN):
 
-This issue can be reproduced by "echo 0 > trace" while hotplugging cpu.
-After reproducing success, we can find out buffer_size_kb will not be
-functional anymore.
+    BUG: KASAN: slab-use-after-free in irq_work_run_list+0x11a/0x13a
+    Read of size 8 at addr 000000006d640a48 by task swapper/0
 
-To prevent leaving 'resize_disabled' and 'record_disabled' non-zero after
-ring_buffer_reset_online_cpus returns, we ensure that each atomic variable
-has been set up before atomic_sub() to it.
+    CPU: 0 PID: 0 Comm: swapper Tainted: G        W  O       6.3.0-rc1 #7
+    Stack:
+     60c4f20f 0c203d48 41b58ab3 60f224fc
+     600477fa 60f35687 60c4f20f 601273dd
+     00000008 6101eb00 6101eab0 615be548
+    Call Trace:
+     [<60047a58>] show_stack+0x25e/0x282
+     [<60c609e0>] dump_stack_lvl+0x96/0xfd
+     [<60c50d4c>] print_report+0x1a7/0x5a8
+     [<603078d3>] kasan_report+0xc1/0xe9
+     [<60308950>] __asan_report_load8_noabort+0x1b/0x1d
+     [<60232844>] irq_work_run_list+0x11a/0x13a
+     [<602328b4>] irq_work_tick+0x24/0x34
+     [<6017f9dc>] update_process_times+0x162/0x196
+     [<6019f335>] tick_sched_handle+0x1a4/0x1c3
+     [<6019fd9e>] tick_sched_timer+0x79/0x10c
+     [<601812b9>] __hrtimer_run_queues.constprop.0+0x425/0x695
+     [<60182913>] hrtimer_interrupt+0x16c/0x2c4
+     [<600486a3>] um_timer+0x164/0x183
+     [...]
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230426062027.17451-1-Tze-nan.Wu@mediatek.com
+    Allocated by task 411:
+     save_stack_trace+0x99/0xb5
+     stack_trace_save+0x81/0x9b
+     kasan_save_stack+0x2d/0x54
+     kasan_set_track+0x34/0x3e
+     kasan_save_alloc_info+0x25/0x28
+     ____kasan_kmalloc+0x8b/0x97
+     __kasan_kmalloc+0x10/0x12
+     __kmalloc+0xb2/0xe8
+     load_elf_phdrs+0xee/0x182
+     [...]
+
+    The buggy address belongs to the object at 000000006d640800
+     which belongs to the cache kmalloc-1k of size 1024
+    The buggy address is located 584 bytes inside of
+     freed 1024-byte region [000000006d640800, 000000006d640c00)
+
+Add the appropriate irq_work_sync() so the work finishes before
+the buffers are destroyed.
+
+Prior to the commit in the Fixes tag below, there was only a
+single global IRQ work, so this issue didn't exist.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230427175920.a76159263122.I8295e405c44362a86c995e9c2c37e3e03810aa56@changeid
 
 Cc: stable@vger.kernel.org
-Cc: <mhiramat@kernel.org>
-Cc: npiggin@gmail.com
-Fixes: b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
-Reviewed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Fixes: 15693458c4bc ("tracing/ring-buffer: Move poll wake ups into ring buffer code")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ kernel/trace/ring_buffer.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/kernel/trace/ring_buffer.c
 +++ b/kernel/trace/ring_buffer.c
-@@ -5333,6 +5333,9 @@ void ring_buffer_reset_cpu(struct trace_
- }
- EXPORT_SYMBOL_GPL(ring_buffer_reset_cpu);
+@@ -1778,6 +1778,8 @@ static void rb_free_cpu_buffer(struct ri
+ 	struct list_head *head = cpu_buffer->pages;
+ 	struct buffer_page *bpage, *tmp;
  
-+/* Flag to ensure proper resetting of atomic variables */
-+#define RESET_BIT	(1 << 30)
++	irq_work_sync(&cpu_buffer->irq_work.work);
 +
- /**
-  * ring_buffer_reset_online_cpus - reset a ring buffer per CPU buffer
-  * @buffer: The ring buffer to reset a per cpu buffer of
-@@ -5349,20 +5352,27 @@ void ring_buffer_reset_online_cpus(struc
- 	for_each_online_buffer_cpu(buffer, cpu) {
- 		cpu_buffer = buffer->buffers[cpu];
+ 	free_buffer_page(cpu_buffer->reader_page);
  
--		atomic_inc(&cpu_buffer->resize_disabled);
-+		atomic_add(RESET_BIT, &cpu_buffer->resize_disabled);
- 		atomic_inc(&cpu_buffer->record_disabled);
- 	}
+ 	if (head) {
+@@ -1884,6 +1886,8 @@ ring_buffer_free(struct trace_buffer *bu
  
- 	/* Make sure all commits have finished */
- 	synchronize_rcu();
+ 	cpuhp_state_remove_instance(CPUHP_TRACE_RB_PREPARE, &buffer->node);
  
--	for_each_online_buffer_cpu(buffer, cpu) {
-+	for_each_buffer_cpu(buffer, cpu) {
- 		cpu_buffer = buffer->buffers[cpu];
- 
-+		/*
-+		 * If a CPU came online during the synchronize_rcu(), then
-+		 * ignore it.
-+		 */
-+		if (!(atomic_read(&cpu_buffer->resize_disabled) & RESET_BIT))
-+			continue;
++	irq_work_sync(&buffer->irq_work.work);
 +
- 		reset_disabled_cpu_buffer(cpu_buffer);
+ 	for_each_buffer_cpu(buffer, cpu)
+ 		rb_free_cpu_buffer(buffer->buffers[cpu]);
  
- 		atomic_dec(&cpu_buffer->record_disabled);
--		atomic_dec(&cpu_buffer->resize_disabled);
-+		atomic_sub(RESET_BIT, &cpu_buffer->resize_disabled);
- 	}
- 
- 	mutex_unlock(&buffer->mutex);
 
 
