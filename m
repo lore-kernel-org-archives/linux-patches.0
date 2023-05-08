@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77707168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:35:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0E35C433D2;
-	Mon,  8 May 2023 11:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875E7168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:35:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2124C433EF;
+	Mon,  8 May 2023 11:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545739;
-	bh=pv8PHLFE6jTWcyVkXvvPDQxNrBloMri4nCUmzYjHdvo=;
+	s=korg; t=1683545742;
+	bh=WzWAzHvTGXftM/Na0mbEJilRuprC+2cr+0X5UsabOd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jCV5JGGtEAH1GV0KHFIpNiheGB7fRKeUvMW9Fk/+ot58Txr5wpHm0sdXzKclR+kkd
-	 4SpUdnw33qNYKSyZiUOE5I2WqSIRAFzDRlrmijlbf1o3lR+AmABNGDG3SbobvlV1QS
-	 88FJG7AYAm9vdlhrSWYVqVPawTnwGzMOAG7qtOOI=
+	b=GgD0fYQx4HgtoRRGpNgjkQuBGJxraeNUp1+hXyUROdF0yGzmRSnFHz24yv7LyurFI
+	 dxEpdf1AC8xO2w6uEjg5Q1MVPUwptjBWUeyR0sLCb7qUy6v+aJRstf1sDqOWq8zvLY
+	 ucSNjqk7q1lOZeX7mk5W5QtAMCvxyQebH5tuFnfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/371] media: rcar_fdp1: Fix refcount leak in probe and remove function
-Date: Mon,  8 May 2023 11:45:39 +0200
-Message-Id: <20230508094817.516371843@linuxfoundation.org>
+Subject: [PATCH 5.15 139/371] drm/amd/display: Fix potential null dereference
+Date: Mon,  8 May 2023 11:45:40 +0200
+Message-Id: <20230508094817.561136305@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,68 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
 
-[ Upstream commit c766c90faf93897b77c9c5daa603cffab85ba907 ]
+[ Upstream commit 52f1783ff4146344342422c1cd94fcb4ce39b6fe ]
 
-rcar_fcp_get() take reference, which should be balanced with
-rcar_fcp_put(). Add missing rcar_fcp_put() in fdp1_remove and
-the error paths of fdp1_probe() to fix this.
+The adev->dm.dc pointer can be NULL and dereferenced in amdgpu_dm_fini()
+without checking.
 
-Fixes: 4710b752e029 ("[media] v4l: Add Renesas R-Car FDP1 Driver")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-[hverkuil: resolve merge conflict, remove() is now void]
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Add a NULL pointer check before calling dc_dmub_srv_destroy().
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 9a71c7d31734 ("drm/amd/display: Register DMUB service with DC")
+Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rcar_fdp1.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/rcar_fdp1.c b/drivers/media/platform/rcar_fdp1.c
-index d80b3214dfae1..c548cb01957b0 100644
---- a/drivers/media/platform/rcar_fdp1.c
-+++ b/drivers/media/platform/rcar_fdp1.c
-@@ -2313,8 +2313,10 @@ static int fdp1_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 68c98e30fee71..1e0ddf7722cd4 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1707,7 +1707,8 @@ static void amdgpu_dm_fini(struct amdgpu_device *adev)
+ 		dc_deinit_callbacks(adev->dm.dc);
+ #endif
  
- 	/* Determine our clock rate */
- 	clk = clk_get(&pdev->dev, NULL);
--	if (IS_ERR(clk))
--		return PTR_ERR(clk);
-+	if (IS_ERR(clk)) {
-+		ret = PTR_ERR(clk);
-+		goto put_dev;
-+	}
+-	dc_dmub_srv_destroy(&adev->dm.dc->ctx->dmub_srv);
++	if (adev->dm.dc)
++		dc_dmub_srv_destroy(&adev->dm.dc->ctx->dmub_srv);
  
- 	fdp1->clk_rate = clk_get_rate(clk);
- 	clk_put(clk);
-@@ -2323,7 +2325,7 @@ static int fdp1_probe(struct platform_device *pdev)
- 	ret = v4l2_device_register(&pdev->dev, &fdp1->v4l2_dev);
- 	if (ret) {
- 		v4l2_err(&fdp1->v4l2_dev, "Failed to register video device\n");
--		return ret;
-+		goto put_dev;
- 	}
- 
- 	/* M2M registration */
-@@ -2393,6 +2395,8 @@ static int fdp1_probe(struct platform_device *pdev)
- unreg_dev:
- 	v4l2_device_unregister(&fdp1->v4l2_dev);
- 
-+put_dev:
-+	rcar_fcp_put(fdp1->fcp);
- 	return ret;
- }
- 
-@@ -2404,6 +2408,7 @@ static void fdp1_remove(struct platform_device *pdev)
- 	video_unregister_device(&fdp1->vfd);
- 	v4l2_device_unregister(&fdp1->v4l2_dev);
- 	pm_runtime_disable(&pdev->dev);
-+	rcar_fcp_put(fdp1->fcp);
- }
- 
- static int __maybe_unused fdp1_pm_runtime_suspend(struct device *dev)
+ 	if (dc_enable_dmub_notifications(adev->dm.dc)) {
+ 		kfree(adev->dm.dmub_notify);
 -- 
 2.39.2
 
