@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B301094C
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56573C433D2;
-	Mon,  8 May 2023 11:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBA4168D5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66145C4339B;
+	Mon,  8 May 2023 11:24:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545073;
-	bh=qsGsqDNzEEAAuLw5D7pi2FKVSXaQPg5MW2RmfWFuMPU=;
+	s=korg; t=1683545076;
+	bh=TqNMd/yfqXAPuDwKNDOC/T8ginQj1+uCuWTIMOtBa3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BTMjAhQQLHeL9IEugJU3HqcCvE3iuiF8/6reJrSYS2cKEsPO1nXHl79mfna3EASrQ
-	 UWG43gHUt8Z0o9HCV2U+uo75ZhOqz74184zx6hwI1oslREk4Obk7ShZeaDeC1PybxQ
-	 3fSTdZJM2Dn3ZBTMFv5fEXsJDFo66UR90ER5J86o=
+	b=1LzSmE4mwR3oWlAmZOAQvXHZjYQNFmw8fftUq/rDxNUdBlfBYulUptvpvhmq0BJKC
+	 dijBeKWfGgDKuriFtUKui91iXnK3RdkicQ9sidHb1YtOnfmuLaRIsqeRUa9CEkWosa
+	 0Lds7KbuPym9tNHZQjUSrJlRxwDomhF/+3BHlVQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Kang Chen <void0red@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 584/694] workqueue: Fix hung time report of worker pools
-Date: Mon,  8 May 2023 11:46:59 +0200
-Message-Id: <20230508094453.963193325@linuxfoundation.org>
+Subject: [PATCH 6.3 575/694] IB/hifi1: add a null check of kzalloc_node in hfi1_ipoib_txreq_init
+Date: Mon,  8 May 2023 11:46:50 +0200
+Message-Id: <20230508094453.544862060@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,69 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Mladek <pmladek@suse.com>
+From: Kang Chen <void0red@gmail.com>
 
-[ Upstream commit 335a42ebb0ca8ee9997a1731aaaae6dcd704c113 ]
+[ Upstream commit c874ad879c2f29ebe040a34b974389875c0d81eb ]
 
-The workqueue watchdog prints a warning when there is no progress in
-a worker pool. Where the progress means that the pool started processing
-a pending work item.
+kzalloc_node may fails, check it and do the cleanup.
 
-Note that it is perfectly fine to process work items much longer.
-The progress should be guaranteed by waking up or creating idle
-workers.
-
-show_one_worker_pool() prints state of non-idle worker pool. It shows
-a delay since the last pool->watchdog_ts.
-
-The timestamp is updated when a first pending work is queued in
-__queue_work(). Also it is updated when a work is dequeued for
-processing in worker_thread() and rescuer_thread().
-
-The delay is misleading when there is no pending work item. In this
-case it shows how long the last work item is being proceed. Show
-zero instead. There is no stall if there is no pending work.
-
-Fixes: 82607adcf9cdf40fb7b ("workqueue: implement lockup detector")
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: b1151b74ff68 ("IB/hfi1: Fix alloc failure with larger txqueuelen")
+Signed-off-by: Kang Chen <void0red@gmail.com>
+Link: https://lore.kernel.org/r/20230227100212.910820-1-void0red@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hfi1/ipoib_tx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index b8b541caed485..2be9b0ecf22ce 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -5002,10 +5002,16 @@ static void show_one_worker_pool(struct worker_pool *pool)
- 	struct worker *worker;
- 	bool first = true;
- 	unsigned long flags;
-+	unsigned long hung = 0;
+diff --git a/drivers/infiniband/hw/hfi1/ipoib_tx.c b/drivers/infiniband/hw/hfi1/ipoib_tx.c
+index 5d9a7b09ca37e..349eb41391368 100644
+--- a/drivers/infiniband/hw/hfi1/ipoib_tx.c
++++ b/drivers/infiniband/hw/hfi1/ipoib_tx.c
+@@ -737,10 +737,13 @@ int hfi1_ipoib_txreq_init(struct hfi1_ipoib_dev_priv *priv)
+ 		txq->tx_ring.shift = ilog2(tx_item_size);
+ 		txq->tx_ring.avail = hfi1_ipoib_ring_hwat(txq);
+ 		tx_ring = &txq->tx_ring;
+-		for (j = 0; j < tx_ring_size; j++)
++		for (j = 0; j < tx_ring_size; j++) {
+ 			hfi1_txreq_from_idx(tx_ring, j)->sdma_hdr =
+ 				kzalloc_node(sizeof(*tx->sdma_hdr),
+ 					     GFP_KERNEL, priv->dd->node);
++			if (!hfi1_txreq_from_idx(tx_ring, j)->sdma_hdr)
++				goto free_txqs;
++		}
  
- 	raw_spin_lock_irqsave(&pool->lock, flags);
- 	if (pool->nr_workers == pool->nr_idle)
- 		goto next_pool;
-+
-+	/* How long the first pending work is waiting for a worker. */
-+	if (!list_empty(&pool->worklist))
-+		hung = jiffies_to_msecs(jiffies - pool->watchdog_ts) / 1000;
-+
- 	/*
- 	 * Defer printing to avoid deadlocks in console drivers that
- 	 * queue work while holding locks also taken in their write
-@@ -5014,9 +5020,7 @@ static void show_one_worker_pool(struct worker_pool *pool)
- 	printk_deferred_enter();
- 	pr_info("pool %d:", pool->id);
- 	pr_cont_pool_info(pool);
--	pr_cont(" hung=%us workers=%d",
--		jiffies_to_msecs(jiffies - pool->watchdog_ts) / 1000,
--		pool->nr_workers);
-+	pr_cont(" hung=%lus workers=%d", hung, pool->nr_workers);
- 	if (pool->manager)
- 		pr_cont(" manager: %d",
- 			task_pid_nr(pool->manager->task));
+ 		netif_napi_add_tx(dev, &txq->napi, hfi1_ipoib_poll_tx_ring);
+ 	}
 -- 
 2.39.2
 
