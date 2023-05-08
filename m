@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88BF168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:21:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3EEC433EF;
-	Mon,  8 May 2023 10:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D55168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:21:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAEAC433D2;
+	Mon,  8 May 2023 10:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541316;
-	bh=Zhw3seNwclcY1xsjtNPI1K+SbmYITXkLX6uOEZnocbs=;
+	s=korg; t=1683541319;
+	bh=Dn7/AtU8ESNkh3jYjBIKfJ+iDq7Jl5vSm61UxFUFu5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a1PyLf7I0Ibz+yB+UJN6eqQWNLDVd51BAmih6up7mGUPcU8DWJvMEuwt+Do5uSrVJ
-	 TO0zVevMEM3HW3GoXxXzB2RFl0NKAHTYFaYxz3VrTxXUX3dXYlkzhYjBhHgZGvv/eK
-	 YvdGcV1ZLUXLhHDB5wBcapDQ9B0R/AMUCCk/n9wQ=
+	b=0Cffz6XRPAPOB0OsfusyW9fiHZB7c4mbRRBr80e3Ts/8cY5AMZXSna2lH5VsNBwnm
+	 ok7VfVNfT60s9uEqyVZFkuH1Yo/wYW9Zils75cDI08xHIQwQHt4779tuHwGXJ+/az4
+	 3wIxxNxQafXcw+H/Ag3xg6QquhUx8IzCp/S/960Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>
-Subject: [PATCH 6.2 076/663] cpufreq: qcom-cpufreq-hw: fix double IO unmap and resource release on exit
-Date: Mon,  8 May 2023 11:38:22 +0200
-Message-Id: <20230508094430.924465040@linuxfoundation.org>
+	Yang Weijiang <weijiang.yang@intel.com>,
+	Like Xu <like.xu.linux@gmail.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Like Xu <likexu@tencent.com>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.2 077/663] KVM: x86/pmu: Disallow legacy LBRs if architectural LBRs are available
+Date: Mon,  8 May 2023 11:38:23 +0200
+Message-Id: <20230508094430.953849065@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,101 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Sean Christopherson <seanjc@google.com>
 
-commit ba5e770c9698782bc203bbf5cf3b36a77720bdbe upstream.
+commit 098f4c061ea10b777033b71c10bd9fd706820ee9 upstream.
 
-Commit 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data
-during probe") moved getting memory resource and iomap from
-qcom_cpufreq_hw_cpu_init() to the probe function, however it left
-untouched cleanup in qcom_cpufreq_hw_cpu_exit().
+Disallow enabling LBR support if the CPU supports architectural LBRs.
+Traditional LBR support is absent on CPU models that have architectural
+LBRs, and KVM doesn't yet support arch LBRs, i.e. KVM will pass through
+non-existent MSRs if userspace enables LBRs for the guest.
 
-During device unbind this will lead to doule release of resource and
-double iounmap(), first by qcom_cpufreq_hw_cpu_exit() and second via
-managed resources:
-
-  resource: Trying to free nonexistent resource <0x0000000018593000-0x0000000018593fff>
-  Trying to vunmap() nonexistent vm area (0000000088a7d4dc)
-  ...
-  vunmap (mm/vmalloc.c:2771 (discriminator 1))
-  iounmap (mm/ioremap.c:60)
-  devm_ioremap_release (lib/devres.c:19)
-  devres_release_all (drivers/base/devres.c:506 drivers/base/devres.c:535)
-  device_unbind_cleanup (drivers/base/dd.c:523)
-  device_release_driver_internal (drivers/base/dd.c:1248 drivers/base/dd.c:1263)
-  device_driver_detach (drivers/base/dd.c:1300)
-  unbind_store (drivers/base/bus.c:243)
-  drv_attr_store (drivers/base/bus.c:127)
-  sysfs_kf_write (fs/sysfs/file.c:137)
-  kernfs_fop_write_iter (fs/kernfs/file.c:334)
-  vfs_write (include/linux/fs.h:1851 fs/read_write.c:491 fs/read_write.c:584)
-  ksys_write (fs/read_write.c:637)
-  __arm64_sys_write (fs/read_write.c:646)
-  invoke_syscall (arch/arm64/include/asm/current.h:19 arch/arm64/kernel/syscall.c:57)
-  el0_svc_common.constprop.0 (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/syscall.c:150)
-  do_el0_svc (arch/arm64/kernel/syscall.c:194)
-  el0_svc (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/entry-common.c:133 arch/arm64/kernel/entry-common.c:142 arch/arm64/kernel/entry-common.c:638)
-  el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:656)
-  el0t_64_sync (arch/arm64/kernel/entry.S:591)
-
-Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
-Cc: <stable@vger.kernel.org>
-Cc: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: stable@vger.kernel.org
+Cc: Yang Weijiang <weijiang.yang@intel.com>
+Cc: Like Xu <like.xu.linux@gmail.com>
+Reported-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: be635e34c284 ("KVM: vmx/pmu: Expose LBR_FMT in the MSR_IA32_PERF_CAPABILITIES")
+Tested-by: Like Xu <likexu@tencent.com>
+Link: https://lore.kernel.org/r/20230128001427.2548858-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c |   11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -43,7 +43,6 @@ struct qcom_cpufreq_soc_data {
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -7749,9 +7749,11 @@ static u64 vmx_get_perf_capabilities(voi
+ 	if (boot_cpu_has(X86_FEATURE_PDCM))
+ 		rdmsrl(MSR_IA32_PERF_CAPABILITIES, host_perf_cap);
  
- struct qcom_cpufreq_data {
- 	void __iomem *base;
--	struct resource *res;
+-	x86_perf_get_lbr(&lbr);
+-	if (lbr.nr)
+-		perf_cap |= host_perf_cap & PMU_CAP_LBR_FMT;
++	if (!cpu_feature_enabled(X86_FEATURE_ARCH_LBR)) {
++		x86_perf_get_lbr(&lbr);
++		if (lbr.nr)
++			perf_cap |= host_perf_cap & PMU_CAP_LBR_FMT;
++	}
  
- 	/*
- 	 * Mutex to synchronize between de-init sequence and re-starting LMh
-@@ -590,16 +589,12 @@ static int qcom_cpufreq_hw_cpu_exit(stru
- {
- 	struct device *cpu_dev = get_cpu_device(policy->cpu);
- 	struct qcom_cpufreq_data *data = policy->driver_data;
--	struct resource *res = data->res;
--	void __iomem *base = data->base;
- 
- 	dev_pm_opp_remove_all_dynamic(cpu_dev);
- 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
- 	qcom_cpufreq_hw_lmh_exit(data);
- 	kfree(policy->freq_table);
- 	kfree(data);
--	iounmap(base);
--	release_mem_region(res->start, resource_size(res));
- 
- 	return 0;
- }
-@@ -718,17 +713,15 @@ static int qcom_cpufreq_hw_driver_probe(
- 	for (i = 0; i < num_domains; i++) {
- 		struct qcom_cpufreq_data *data = &qcom_cpufreq.data[i];
- 		struct clk_init_data clk_init = {};
--		struct resource *res;
- 		void __iomem *base;
- 
--		base = devm_platform_get_and_ioremap_resource(pdev, i, &res);
-+		base = devm_platform_ioremap_resource(pdev, i);
- 		if (IS_ERR(base)) {
--			dev_err(dev, "Failed to map resource %pR\n", res);
-+			dev_err(dev, "Failed to map resource index %d\n", i);
- 			return PTR_ERR(base);
- 		}
- 
- 		data->base = base;
--		data->res = res;
- 
- 		/* Register CPU clock for each frequency domain */
- 		clk_init.name = kasprintf(GFP_KERNEL, "qcom_cpufreq%d", i);
+ 	if (vmx_pebs_supported()) {
+ 		perf_cap |= host_perf_cap & PERF_CAP_PEBS_MASK;
 
 
