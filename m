@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10097168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:04:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89789C4339B;
-	Mon,  8 May 2023 11:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C32E168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:04:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A5DC433EF;
+	Mon,  8 May 2023 11:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543893;
-	bh=7yAbatqgq7LIvEWfrKnftoaGmhpPFDRJmzZFO4NpaqQ=;
+	s=korg; t=1683543897;
+	bh=6QHdSxgOiOqKxFvZzYeaWNF3IttFGI+xjhYuVopaj3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mr/7Bp3ZZg05F88UjFoR7nzcRyql2G2A9/DTyQ5t/J6WuKQI/Ws5383iAp3AZ+0Bj
-	 kKO1GwfwiDIAoCFTwKp39dux6c+ShgXyHaghDn/c0XKr1CuF2AOR4gUHKolD0Ehewc
-	 Ge5hQHi7u0fFaHvsHcuXU0FFE5ROMvQy5gMhZ0Wg=
+	b=Pz34KEVF7od6x8u9j6a5dXSNo43I+WWycNEUXXUrKPWFdt24bpL/mr0ihIpgw+neH
+	 sDQg6MSe74cj5Uf9khMkBCf504ooKQeWmWJQufywMSg342BXXS3c8Ai6hzMaS9WQVm
+	 SKagOxkeVHDBQchNTiljibPIVHybXLD7Istlj5Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia-Wei Chang <jia-wei.chang@mediatek.com>,
-	Nick Hainke <vincent@systemli.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jia-Wei Chang <jia-wei.chang@mediatek.com>,
 	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 235/694] cpufreq: mediatek: raise proc/sram max voltage for MT8516
-Date: Mon,  8 May 2023 11:41:10 +0200
-Message-Id: <20230508094439.977708850@linuxfoundation.org>
+Subject: [PATCH 6.3 236/694] cpufreq: mediatek: Raise proc and sram max voltage for MT7622/7623
+Date: Mon,  8 May 2023 11:41:11 +0200
+Message-Id: <20230508094440.006638048@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,20 +36,28 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jia-Wei Chang <jia-wei.chang@mediatek.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit d3296bb4cafd4bad4a5cf2eeab9d19cc94f9e30e ]
+[ Upstream commit 0883426fd07e39355362e3f2eb9aee1a154dcaf6 ]
 
-Since the upper boundary of proc/sram voltage of MT8516 is 1300 mV,
-which is greater than the value of MT2701 1150 mV, we fix it by adding
-the corresponding platform data and specify proc/sram_max_volt to
-support MT8516.
+During the addition of SRAM voltage tracking for CCI scaling, this
+driver got some voltage limits set for the vtrack algorithm: these
+were moved to platform data first, then enforced in a later commit
+6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
+using these as max values for the regulator_set_voltage() calls.
 
-Signed-off-by: Jia-Wei Chang <jia-wei.chang@mediatek.com>
+In this case, the vsram/vproc constraints for MT7622 and MT7623
+were supposed to be the same as MT2701 (and a number of other SoCs),
+but that turned out to be a mistake because the aforementioned two
+SoCs' maximum voltage for both VPROC and VPROC_SRAM is 1.36V.
+
+Fix that by adding new platform data for MT7622/7623 declaring the
+right {proc,sram}_max_volt parameter.
+
 Fixes: ead858bd128d ("cpufreq: mediatek: Move voltage limits to platform data")
 Fixes: 6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
-Reported-by: Nick Hainke <vincent@systemli.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Jia-Wei Chang <jia-wei.chang@mediatek.com>
 Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
@@ -58,41 +65,36 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 11 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
-index 6dc225546a8d6..764e4fbdd536c 100644
+index 764e4fbdd536c..9a39a7ccfae96 100644
 --- a/drivers/cpufreq/mediatek-cpufreq.c
 +++ b/drivers/cpufreq/mediatek-cpufreq.c
-@@ -711,20 +711,29 @@ static const struct mtk_cpufreq_platform_data mt8186_platform_data = {
- 	.ccifreq_supported = true,
+@@ -693,6 +693,15 @@ static const struct mtk_cpufreq_platform_data mt2701_platform_data = {
+ 	.ccifreq_supported = false,
  };
  
-+static const struct mtk_cpufreq_platform_data mt8516_platform_data = {
++static const struct mtk_cpufreq_platform_data mt7622_platform_data = {
 +	.min_volt_shift = 100000,
 +	.max_volt_shift = 200000,
-+	.proc_max_volt = 1310000,
++	.proc_max_volt = 1360000,
 +	.sram_min_volt = 0,
-+	.sram_max_volt = 1310000,
++	.sram_max_volt = 1360000,
 +	.ccifreq_supported = false,
 +};
 +
- /* List of machines supported by this driver */
+ static const struct mtk_cpufreq_platform_data mt8183_platform_data = {
+ 	.min_volt_shift = 100000,
+ 	.max_volt_shift = 200000,
+@@ -724,8 +733,8 @@ static const struct mtk_cpufreq_platform_data mt8516_platform_data = {
  static const struct of_device_id mtk_cpufreq_machines[] __initconst = {
  	{ .compatible = "mediatek,mt2701", .data = &mt2701_platform_data },
  	{ .compatible = "mediatek,mt2712", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt7622", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt7623", .data = &mt2701_platform_data },
--	{ .compatible = "mediatek,mt8167", .data = &mt2701_platform_data },
-+	{ .compatible = "mediatek,mt8167", .data = &mt8516_platform_data },
+-	{ .compatible = "mediatek,mt7622", .data = &mt2701_platform_data },
+-	{ .compatible = "mediatek,mt7623", .data = &mt2701_platform_data },
++	{ .compatible = "mediatek,mt7622", .data = &mt7622_platform_data },
++	{ .compatible = "mediatek,mt7623", .data = &mt7622_platform_data },
+ 	{ .compatible = "mediatek,mt8167", .data = &mt8516_platform_data },
  	{ .compatible = "mediatek,mt817x", .data = &mt2701_platform_data },
  	{ .compatible = "mediatek,mt8173", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt8176", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt8183", .data = &mt8183_platform_data },
- 	{ .compatible = "mediatek,mt8186", .data = &mt8186_platform_data },
- 	{ .compatible = "mediatek,mt8365", .data = &mt2701_platform_data },
--	{ .compatible = "mediatek,mt8516", .data = &mt2701_platform_data },
-+	{ .compatible = "mediatek,mt8516", .data = &mt8516_platform_data },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, mtk_cpufreq_machines);
 -- 
 2.39.2
 
