@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65466168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:21:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB622C433EF;
-	Mon,  8 May 2023 11:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBA1168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:21:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1754C433EF;
+	Mon,  8 May 2023 11:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544905;
-	bh=fquWWUTh7y+Gdg76M90XUq7d3ZEihN4eT4T7TfhaCoc=;
+	s=korg; t=1683544908;
+	bh=SxUftKJw/GKVYCHQuGZfbtFRx+0YwclD867MgIK+Cfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZX+1qkiyU0FFwpI0K80DVgk3tVfGD9ZVNm5jtCNQuevP/wQHyCAcMUEj1BM0GKK0
-	 EH4Edl9xelo108SRLIV90GOrXDqvy1qxJhMLQCZFgkn0FezLiqMhYn4WE72VDLp051
-	 9c43hMHXIzmK45CZwym/LpfKiRF+7rXfcsZIN/Vk=
+	b=gnFS/V4dAOlgLRYSHuoEhnI/UVk8RGwJgBuA/tvRzKixHZyVjknu3giZ5UkjE8Fl2
+	 7fF6MLwXhFODZzbOeDgD2n333kZmdv3yopaDO8LX/BsLR8ZiH/q9UjyW2vkG2v4len
+	 2PDTz4qVr8/vphiUXb+9M9Kj1j34fsy0t0KtVaSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 544/694] usb: gadget: tegra-xudc: Fix crash in vbus_draw
-Date: Mon,  8 May 2023 11:46:19 +0200
-Message-Id: <20230508094452.137579119@linuxfoundation.org>
+Subject: [PATCH 6.3 562/694] powerpc/sysdev/tsi108: fix resource printk format warnings
+Date: Mon,  8 May 2023 11:46:37 +0200
+Message-Id: <20230508094452.945347075@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,41 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 5629d31955297ca47b9283c64fff70f2f34aa528 ]
+[ Upstream commit 55d8bd02cc1b9f1063993b5c42c9cabf4af67dea ]
 
-Commit ac82b56bda5f ("usb: gadget: tegra-xudc: Add vbus_draw support")
-populated the vbus_draw callback for the Tegra XUDC driver. The function
-tegra_xudc_gadget_vbus_draw(), that was added by this commit, assumes
-that the pointer 'curr_usbphy' has been initialised, which is not always
-the case because this is only initialised when the USB role is updated.
-Fix this crash, by checking that the 'curr_usbphy' is valid before
-dereferencing.
+Use "%pa" format specifier for resource_size_t to avoid a compiler
+printk format warning.
 
-Fixes: ac82b56bda5f ("usb: gadget: tegra-xudc: Add vbus_draw support")
-Reviewed-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20230405181854.42355-1-jonathanh@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  arch/powerpc/sysdev/tsi108_pci.c: In function 'tsi108_setup_pci':
+  include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'resource_size_t'
+
+Fixes: c4342ff92bed ("[POWERPC] Update mpc7448hpc2 board irq support using device tree")
+Fixes: 2b9d7467a6db ("[POWERPC] Add tsi108 pci and platform device data register function")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+[mpe: Use pr_info() and unsplit string]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230223070116.660-5-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/sysdev/tsi108_pci.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 2b71b33725f17..5bccd64847ff7 100644
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -2167,7 +2167,7 @@ static int tegra_xudc_gadget_vbus_draw(struct usb_gadget *gadget,
+diff --git a/arch/powerpc/sysdev/tsi108_pci.c b/arch/powerpc/sysdev/tsi108_pci.c
+index 5af4c35ff5842..0e42f7bad7db1 100644
+--- a/arch/powerpc/sysdev/tsi108_pci.c
++++ b/arch/powerpc/sysdev/tsi108_pci.c
+@@ -217,9 +217,8 @@ int __init tsi108_setup_pci(struct device_node *dev, u32 cfg_phys, int primary)
  
- 	dev_dbg(xudc->dev, "%s: %u mA\n", __func__, m_a);
+ 	(hose)->ops = &tsi108_direct_pci_ops;
  
--	if (xudc->curr_usbphy->chg_type == SDP_TYPE)
-+	if (xudc->curr_usbphy && xudc->curr_usbphy->chg_type == SDP_TYPE)
- 		ret = usb_phy_set_power(xudc->curr_usbphy, m_a);
+-	printk(KERN_INFO "Found tsi108 PCI host bridge at 0x%08x. "
+-	       "Firmware bus number: %d->%d\n",
+-	       rsrc.start, hose->first_busno, hose->last_busno);
++	pr_info("Found tsi108 PCI host bridge at 0x%pa. Firmware bus number: %d->%d\n",
++		&rsrc.start, hose->first_busno, hose->last_busno);
  
- 	return ret;
+ 	/* Interpret the "ranges" property */
+ 	/* This also maps the I/O region and sets isa_io/mem_base */
 -- 
 2.39.2
 
