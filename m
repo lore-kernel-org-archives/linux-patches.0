@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55384168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB14BC4339B;
-	Mon,  8 May 2023 11:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40B51168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ACDC433EF;
+	Mon,  8 May 2023 11:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545319;
-	bh=pLLPCupZUWaX2m89C4O5brHMDqEPzEPD7ayhsNckI9c=;
+	s=korg; t=1683545322;
+	bh=LlewI8dkrNw3589kcc+UjHEp6UWMsze3NWoM4juGPmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0x4VXSCJ6LmG5FIl9MxKKfZD4bC6vp0TwvFiJBc15vaY2C1yUY5ejnLaiaVxuz7W0
-	 Zk+hiC4zI6ncw0sZj4sNQJ2/iDIZXvn0LAN+gZJhtBgakjJQ9oWUdIHsQ7204DBQvF
-	 XA1iNR4kTDdgq5Ja/NuwwC5ShjwSPubWMHGlrDsI=
+	b=wywE0NwCob1KC3inYnv0ADy2mwt1zCJhyVqIw9R2rTv6CnOVPaXO5nuMsAriisPkm
+	 1X/0CTI1nJ0cIi+7Ql2pSjUsrtysdS+BQg75D5sf7S6GSEGc1oLfL1DL+IabFcW6LF
+	 EmGztGvCKnOUxLnMEjOwDLWr1l9bSBq3xkV8NK+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cindy Lu <lulu@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 6.3 678/694] vhost_vdpa: fix unmap process in no-batch mode
-Date: Mon,  8 May 2023 11:48:33 +0200
-Message-Id: <20230508094458.254306648@linuxfoundation.org>
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Yeongjin Gil <youngjin.gil@samsung.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.3 679/694] dm verity: fix error handling for check_at_most_once on FEC
+Date: Mon,  8 May 2023 11:48:34 +0200
+Message-Id: <20230508094458.303632995@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,61 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cindy Lu <lulu@redhat.com>
+From: Yeongjin Gil <youngjin.gil@samsung.com>
 
-commit c82729e06644f4e087f5ff0f91b8fb15e03b8890 upstream.
+commit e8c5d45f82ce0c238a4817739892fe8897a3dcc3 upstream.
 
-While using the vdpa device with vIOMMU enabled
-in the guest VM, when the vdpa device bind to vfio-pci and run testpmd
-then system will fail to unmap.
-The test process is
-Load guest VM --> attach to virtio driver--> bind to vfio-pci driver
-So the mapping process is
-1)batched mode map to normal MR
-2)batched mode unmapped the normal MR
-3)unmapped all the memory
-4)mapped to iommu MR
+In verity_end_io(), if bi_status is not BLK_STS_OK, it can be return
+directly. But if FEC configured, it is desired to correct the data page
+through verity_verify_io. And the return value will be converted to
+blk_status and passed to verity_finish_io().
 
-This error happened in step 3). The iotlb was freed in step 2)
-and the function vhost_vdpa_process_iotlb_msg will return fail
-Which causes failure.
+BTW, when a bit is set in v->validated_blocks, verity_verify_io() skips
+verification regardless of I/O error for the corresponding bio. In this
+case, the I/O error could not be returned properly, and as a result,
+there is a problem that abnormal data could be read for the
+corresponding block.
 
-To fix this, we will not remove the AS while the iotlb->nmaps is 0.
-This will free in the vhost_vdpa_clean
+To fix this problem, when an I/O error occurs, do not skip verification
+even if the bit related is set in v->validated_blocks.
 
+Fixes: 843f38d382b1 ("dm verity: add 'check_at_most_once' option to only validate hashes once")
 Cc: stable@vger.kernel.org
-Fixes: aaca8373c4b1 ("vhost-vdpa: support ASID based IOTLB API")
-Signed-off-by: Cindy Lu <lulu@redhat.com>
-Message-Id: <20230420151734.860168-1-lulu@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Yeongjin Gil <youngjin.gil@samsung.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/vhost/vdpa.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/md/dm-verity-target.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -851,11 +851,7 @@ static void vhost_vdpa_unmap(struct vhos
- 		if (!v->in_batch)
- 			ops->set_map(vdpa, asid, iotlb);
- 	}
--	/* If we are in the middle of batch processing, delay the free
--	 * of AS until BATCH_END.
--	 */
--	if (!v->in_batch && !iotlb->nmaps)
--		vhost_vdpa_remove_as(v, asid);
-+
- }
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -523,7 +523,7 @@ static int verity_verify_io(struct dm_ve
+ 		sector_t cur_block = io->block + b;
+ 		struct ahash_request *req = verity_io_hash_req(v, io);
  
- static int vhost_vdpa_va_map(struct vhost_vdpa *v,
-@@ -1112,8 +1108,6 @@ static int vhost_vdpa_process_iotlb_msg(
- 		if (v->in_batch && ops->set_map)
- 			ops->set_map(vdpa, asid, iotlb);
- 		v->in_batch = false;
--		if (!iotlb->nmaps)
--			vhost_vdpa_remove_as(v, asid);
- 		break;
- 	default:
- 		r = -EINVAL;
+-		if (v->validated_blocks &&
++		if (v->validated_blocks && bio->bi_status == BLK_STS_OK &&
+ 		    likely(test_bit(cur_block, v->validated_blocks))) {
+ 			verity_bv_skip_block(v, io, iter);
+ 			continue;
 
 
