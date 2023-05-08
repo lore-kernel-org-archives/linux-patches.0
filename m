@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2485633E3
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F10AC433EF;
-	Mon,  8 May 2023 11:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9C533E3
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:29:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89624C433D2;
+	Mon,  8 May 2023 11:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545337;
-	bh=Gm1/s7Zl5MslWRcJNc8+F0xJArdL/bJ8G64hTFCr3eo=;
+	s=korg; t=1683545340;
+	bh=eW60ZPeDAo2K/gdp1icDzLlbYiLJ1t0cpuJ8cKZtxXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVTbrv/hCsyL/xl7RQlo3Zc+uy/1JwfeZTmHlhsMdYfZvRmmyQxZnEI93Q2wqzVhc
-	 crotaBjq6eS/GZSFzTy9PqfEeTRtaDusMKdg7VJHMCzBL+/NZqi2z1cj0mG52FOQyU
-	 /Qgj/TYeFDyNtxIPXTUfNLmwred7d0tP2rKzUSGo=
+	b=i1Zif/NmBlRRmzeWM4YSliLOdrED1Yax7010xlVAO5xld3WyqFa/4RFRls94KcVuu
+	 sG/2+Xol7rDnkM9CQsLMKa1HqQuE46e693iT1pbkwrV+g8JwxoJOWGzcqG0NGFFgK0
+	 pDoI/xkhJFdIXJySqjr0SBsUx0uz2HHucOm1OVI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Lingfeng <lilingfeng3@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.3 684/694] dm: dont lock fs when the map is NULL in process of resume
-Date: Mon,  8 May 2023 11:48:39 +0200
-Message-Id: <20230508094458.534910026@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 675/694] ia64: fix an addr to taddr in huge_pte_offset()
+Date: Mon,  8 May 2023 11:48:30 +0200
+Message-Id: <20230508094458.104684496@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,81 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Lingfeng <lilingfeng3@huawei.com>
+From: Hugh Dickins <hughd@google.com>
 
-commit 38d11da522aacaa05898c734a1cec86f1e611129 upstream.
+commit 3647ebcfbfca384840231fe13fae665453238a61 upstream.
 
-Commit fa247089de99 ("dm: requeue IO if mapping table not yet available")
-added a detection of whether the mapping table is available in the IO
-submission process. If the mapping table is unavailable, it returns
-BLK_STS_RESOURCE and requeues the IO.
-This can lead to the following deadlock problem:
+I know nothing of ia64 htlbpage_to_page(), but guess that the p4d
+line should be using taddr rather than addr, like everywhere else.
 
-dm create                                      mount
-ioctl(DM_DEV_CREATE_CMD)
-ioctl(DM_TABLE_LOAD_CMD)
-                               do_mount
-                                vfs_get_tree
-                                 ext4_get_tree
-                                  get_tree_bdev
-                                   sget_fc
-                                    alloc_super
-                                     // got &s->s_umount
-                                     down_write_nested(&s->s_umount, ...);
-                                   ext4_fill_super
-                                    ext4_load_super
-                                     ext4_read_bh
-                                      submit_bio
-                                      // submit and wait io end
-ioctl(DM_DEV_SUSPEND_CMD)
-dev_suspend
- do_resume
-  dm_suspend
-   __dm_suspend
-    lock_fs
-     freeze_bdev
-      get_active_super
-       grab_super
-        // wait for &s->s_umount
-        down_write(&s->s_umount);
-  dm_swap_table
-   __bind
-    // set md->map(can't get here)
-
-IO will be continuously requeued while holding the lock since mapping
-table is NULL. At the same time, mapping table won't be set since the
-lock is not available.
-Like request-based DM, bio-based DM also has the same problem.
-
-It's not proper to just abort IO if the mapping table not available.
-So clear DM_SKIP_LOCKFS_FLAG when the mapping table is NULL, this
-allows the DM table to be loaded and the IO submitted upon resume.
-
-Fixes: fa247089de99 ("dm: requeue IO if mapping table not yet available")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lkml.kernel.org/r/732eae88-3beb-246-2c72-281de786740@google.com
+Fixes: c03ab9e32a2c ("ia64: add support for folded p4d page tables")
+Signed-off-by: Hugh Dickins <hughd@google.com
+Acked-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/ia64/mm/hugetlbpage.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1168,10 +1168,13 @@ static int do_resume(struct dm_ioctl *pa
- 	/* Do we need to load a new map ? */
- 	if (new_map) {
- 		sector_t old_size, new_size;
-+		int srcu_idx;
+--- a/arch/ia64/mm/hugetlbpage.c
++++ b/arch/ia64/mm/hugetlbpage.c
+@@ -58,7 +58,7 @@ huge_pte_offset (struct mm_struct *mm, u
  
- 		/* Suspend if it isn't already suspended */
--		if (param->flags & DM_SKIP_LOCKFS_FLAG)
-+		old_map = dm_get_live_table(md, &srcu_idx);
-+		if ((param->flags & DM_SKIP_LOCKFS_FLAG) || !old_map)
- 			suspend_flags &= ~DM_SUSPEND_LOCKFS_FLAG;
-+		dm_put_live_table(md, srcu_idx);
- 		if (param->flags & DM_NOFLUSH_FLAG)
- 			suspend_flags |= DM_SUSPEND_NOFLUSH_FLAG;
- 		if (!dm_suspended_md(md))
+ 	pgd = pgd_offset(mm, taddr);
+ 	if (pgd_present(*pgd)) {
+-		p4d = p4d_offset(pgd, addr);
++		p4d = p4d_offset(pgd, taddr);
+ 		if (p4d_present(*p4d)) {
+ 			pud = pud_offset(p4d, taddr);
+ 			if (pud_present(*pud)) {
 
 
