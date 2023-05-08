@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BA1168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:56:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F2AC433D2;
-	Mon,  8 May 2023 10:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C322168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:56:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27F9C433EF;
+	Mon,  8 May 2023 10:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543399;
-	bh=EBEywgEIhoeOxvsNWvtzN+uz/IExK8Z6aQeleH6WRII=;
+	s=korg; t=1683543402;
+	bh=4imctYczb9p249Q8WRjxClCsUt2v++otxE90BbSoSHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BH6vjPBdbmNH0DclsfIx79zmVxBaNg2VKsfLahx55mFAwA7pIpu7iXt+I7VW/X1t6
-	 Ute/u+I2u8ROOlf4FPKH+f7myBcvmE+8Mj8a1Vv/TpdZPF/MQtwD0JhIcZYyuo+otQ
-	 rVD4oEGHjE2yarhSeJenvCkV5RLugZDyShoO0cGU=
+	b=0Jv5Atk2FxpdLX9GCJm2HRzpn23B7CYHutLl+0AMR9upniizY3eaNOqjSO3yI5VAa
+	 7XfEf7TAOS5rFkWqcdS25eHBVsXk0xIWFPZaqarPI9k8XNEQmYRdN7JBEK9cfAtz5t
+	 cw9smh0ADSpY4qq0TG0HmfErjsRVa5YSB+/VJLuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=D0=A0=D1=83=D1=81=D0=B5=D0=B2=20=D0=9F=D1=83=D1=82=D0=B8=D0=BD?= <rockeraliexpress@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.3 076/694] ACPI: video: Remove acpi_backlight=video quirk for Lenovo ThinkPad W530
-Date: Mon,  8 May 2023 11:38:31 +0200
-Message-Id: <20230508094435.005020093@linuxfoundation.org>
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jesper Dangaard Brouer <brouer@redhat.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.3 077/694] igc: read before write to SRRCTL register
+Date: Mon,  8 May 2023 11:38:32 +0200
+Message-Id: <20230508094435.034375287@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,56 +39,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Song Yoong Siang <yoong.siang.song@intel.com>
 
-commit 3db66620ea90b0fd4134b31eabfec16d7b07d7e3 upstream.
+commit 3ce29c17dc847bf4245e16aad78a7617afa96297 upstream.
 
-Remove the acpi_backlight=video quirk for Lenovo ThinkPad W530.
+igc_configure_rx_ring() function will be called as part of XDP program
+setup. If Rx hardware timestamp is enabled prio to XDP program setup,
+this timestamp enablement will be overwritten when buffer size is
+written into SRRCTL register.
 
-This was intended to help users of the (unsupported) Nvidia binary driver,
-but this has been reported to cause backlight control issues for users
-who have the gfx configured in hybrid (dual-GPU) mode, so drop this.
+Thus, this commit read the register value before write to SRRCTL
+register. This commit is tested by using xdp_hw_metadata bpf selftest
+tool. The tool enables Rx hardware timestamp and then attach XDP program
+to igc driver. It will display hardware timestamp of UDP packet with
+port number 9092. Below are detail of test steps and results.
 
-The Nvidia binary driver should call acpi_video_register_backlight()
-when necessary and this has been reported to Nvidia.
+Command on DUT:
+  sudo ./xdp_hw_metadata <interface name>
 
-Until this is fixed Nvidia binary driver users can work around this by
-passing "acpi_backlight=video" on the kernel commandline (with the latest
-6.1.y or newer stable series, kernels < 6.1.y don't need this).
+Command on Link Partner:
+  echo -n skb | nc -u -q1 <destination IPv4 addr> 9092
 
-Fixes: a5b2781dcab2 ("ACPI: video: Add acpi_backlight=video quirk for Lenovo ThinkPad W530")
-Reported-by: Русев Путин <rockeraliexpress@gmail.com>
-Link: https://lore.kernel.org/linux-acpi/CAK4BXn0ngZRmzx1bodAF8nmYj0PWdUXzPGHofRrsyZj8MBpcVA@mail.gmail.com/
-Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Result before this patch:
+  skb hwtstamp is not found!
+
+Result after this patch:
+  found skb hwtstamp = 1677800973.642836757
+
+Optionally, read PHC to confirm the values obtained are almost the same:
+Command:
+  sudo ./testptp -d /dev/ptp0 -g
+Result:
+  clock time: 1677800973.913598978 or Fri Mar  3 07:49:33 2023
+
+Fixes: fc9df2a0b520 ("igc: Enable RX via AF_XDP zero-copy")
+Cc: <stable@vger.kernel.org> # 5.14+
+Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Tested-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |   14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_base.h |   11 ++++++++---
+ drivers/net/ethernet/intel/igc/igc_main.c |    7 +++++--
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -300,20 +300,6 @@ static const struct dmi_system_id video_
- 	},
+--- a/drivers/net/ethernet/intel/igc/igc_base.h
++++ b/drivers/net/ethernet/intel/igc/igc_base.h
+@@ -87,8 +87,13 @@ union igc_adv_rx_desc {
+ #define IGC_RXDCTL_SWFLUSH		0x04000000 /* Receive Software Flush */
  
- 	/*
--	 * Older models with nvidia GPU which need acpi_video backlight
--	 * control and where the old nvidia binary driver series does not
--	 * call acpi_video_register_backlight().
--	 */
--	{
--	 .callback = video_detect_force_video,
--	 /* ThinkPad W530 */
--	 .matches = {
--		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
--		DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad W530"),
--		},
--	},
--
--	/*
- 	 * These models have a working acpi_video backlight control, and using
- 	 * native backlight causes a regression where backlight does not work
- 	 * when userspace is not handling brightness key events. Disable
+ /* SRRCTL bit definitions */
+-#define IGC_SRRCTL_BSIZEPKT_SHIFT		10 /* Shift _right_ */
+-#define IGC_SRRCTL_BSIZEHDRSIZE_SHIFT		2  /* Shift _left_ */
+-#define IGC_SRRCTL_DESCTYPE_ADV_ONEBUF	0x02000000
++#define IGC_SRRCTL_BSIZEPKT_MASK	GENMASK(6, 0)
++#define IGC_SRRCTL_BSIZEPKT(x)		FIELD_PREP(IGC_SRRCTL_BSIZEPKT_MASK, \
++					(x) / 1024) /* in 1 KB resolution */
++#define IGC_SRRCTL_BSIZEHDR_MASK	GENMASK(13, 8)
++#define IGC_SRRCTL_BSIZEHDR(x)		FIELD_PREP(IGC_SRRCTL_BSIZEHDR_MASK, \
++					(x) / 64) /* in 64 bytes resolution */
++#define IGC_SRRCTL_DESCTYPE_MASK	GENMASK(27, 25)
++#define IGC_SRRCTL_DESCTYPE_ADV_ONEBUF	FIELD_PREP(IGC_SRRCTL_DESCTYPE_MASK, 1)
+ 
+ #endif /* _IGC_BASE_H */
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -641,8 +641,11 @@ static void igc_configure_rx_ring(struct
+ 	else
+ 		buf_size = IGC_RXBUFFER_2048;
+ 
+-	srrctl = IGC_RX_HDR_LEN << IGC_SRRCTL_BSIZEHDRSIZE_SHIFT;
+-	srrctl |= buf_size >> IGC_SRRCTL_BSIZEPKT_SHIFT;
++	srrctl = rd32(IGC_SRRCTL(reg_idx));
++	srrctl &= ~(IGC_SRRCTL_BSIZEPKT_MASK | IGC_SRRCTL_BSIZEHDR_MASK |
++		    IGC_SRRCTL_DESCTYPE_MASK);
++	srrctl |= IGC_SRRCTL_BSIZEHDR(IGC_RX_HDR_LEN);
++	srrctl |= IGC_SRRCTL_BSIZEPKT(buf_size);
+ 	srrctl |= IGC_SRRCTL_DESCTYPE_ADV_ONEBUF;
+ 
+ 	wr32(IGC_SRRCTL(reg_idx), srrctl);
 
 
