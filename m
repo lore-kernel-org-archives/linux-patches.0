@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F77171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:33:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC92AC433D2;
-	Mon,  8 May 2023 11:33:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF791171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:33:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D4CC433D2;
+	Mon,  8 May 2023 11:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545620;
-	bh=zNLmtlvE92e+a6GUH7QTXZjn1URMTLYoWikuSwWheO8=;
+	s=korg; t=1683545623;
+	bh=889NDf79AbqXnuCtmyh5OT2hpA5pDC6+jpAvhV7SOgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqXciFoW/IdiHLzQxKcnd5ZCj2M6UEEShqBnWoPnDmORC5saTBrQb7+G5Wq1M9FdV
-	 EVzUS8/pGfaDHWqa2hzkP1Qe1Cpk7+yp7DfH5L7dxRKlrR0Cc/a64TRe/e2Ouxt8Se
-	 hDnELTeZBi5iHQGAPP9fPu5UtsDoRuMwmMi10OWg=
+	b=YlK6ErOdADRssUkwXJDusPMljQWu8giiItMWPnTOa4TL9z7cL35F+lU4M6LtxV6gk
+	 WWLl72CrufA4GwX4JMfuHYeEfdyhrc06XV/Ydyk4QG9vOy9FuFOfiPajV30sYO/V+i
+	 IMbXxNqAitPaGWbeGKg0dHEr+fwhX7TfXK4n8bl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/371] tpm, tpm_tis: Claim locality before writing interrupt registers
-Date: Mon,  8 May 2023 11:44:31 +0200
-Message-Id: <20230508094814.897191675@linuxfoundation.org>
+Subject: [PATCH 5.15 071/371] tpm, tpm: Implement usage counter for locality
+Date: Mon,  8 May 2023 11:44:32 +0200
+Message-Id: <20230508094814.937451462@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -37,81 +38,228 @@ Content-Transfer-Encoding: 8bit
 
 From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit 15d7aa4e46eba87242a320f39773aa16faddadee ]
+[ Upstream commit 7a2f55d0be296c4e81fd782f3d6c43ed4ec7e265 ]
 
-In tpm_tis_probe_single_irq() interrupt registers TPM_INT_VECTOR,
-TPM_INT_STATUS and TPM_INT_ENABLE are modified to setup the interrupts.
-Currently these modifications are done without holding a locality thus they
-have no effect. Fix this by claiming the (default) locality before the
-registers are written.
+Implement a usage counter for the (default) locality used by the TPM TIS
+driver:
+Request the locality from the TPM if it has not been claimed yet, otherwise
+only increment the counter. Also release the locality if the counter is 0
+otherwise only decrement the counter. Since in case of SPI the register
+accesses are locked by means of the SPI bus mutex use a sleepable lock
+(i.e. also a mutex) to ensure thread-safety of the counter which may be
+accessed by both a userspace thread and the interrupt handler.
 
-Since now tpm_tis_gen_interrupt() is called with the locality already
-claimed remove locality request and release from this function.
+By doing this refactor the names of the amended functions to use a more
+appropriate prefix.
 
 Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Michael Niewöhner <linux@mniewoehner.de>
 Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Stable-dep-of: 955df4f87760 ("tpm, tpm_tis: Claim locality when interrupts are reenabled on resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 63 +++++++++++++++++++++++----------
+ drivers/char/tpm/tpm_tis_core.h |  2 ++
+ 2 files changed, 47 insertions(+), 18 deletions(-)
 
 diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 99cbf6fb062ce..52826a7edf800 100644
+index 52826a7edf800..3ea0fff30273e 100644
 --- a/drivers/char/tpm/tpm_tis_core.c
 +++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -721,16 +721,10 @@ static void tpm_tis_gen_interrupt(struct tpm_chip *chip)
- 	cap_t cap;
- 	int ret;
- 
--	ret = request_locality(chip, 0);
--	if (ret < 0)
--		return;
--
- 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
- 		ret = tpm2_get_tpm_pt(chip, 0x100, &cap2, desc);
- 	else
- 		ret = tpm1_getcap(chip, TPM_CAP_PROP_TIS_TIMEOUT, &cap, desc, 0);
--
--	release_locality(chip, 0);
+@@ -136,16 +136,27 @@ static bool check_locality(struct tpm_chip *chip, int l)
+ 	return false;
  }
  
- /* Register the IRQ and issue a command that will cause an interrupt. If an
-@@ -753,10 +747,16 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+-static int release_locality(struct tpm_chip *chip, int l)
++static int __tpm_tis_relinquish_locality(struct tpm_tis_data *priv, int l)
++{
++	tpm_tis_write8(priv, TPM_ACCESS(l), TPM_ACCESS_ACTIVE_LOCALITY);
++
++	return 0;
++}
++
++static int tpm_tis_relinquish_locality(struct tpm_chip *chip, int l)
+ {
+ 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
+ 
+-	tpm_tis_write8(priv, TPM_ACCESS(l), TPM_ACCESS_ACTIVE_LOCALITY);
++	mutex_lock(&priv->locality_count_mutex);
++	priv->locality_count--;
++	if (priv->locality_count == 0)
++		__tpm_tis_relinquish_locality(priv, l);
++	mutex_unlock(&priv->locality_count_mutex);
+ 
+ 	return 0;
+ }
+ 
+-static int request_locality(struct tpm_chip *chip, int l)
++static int __tpm_tis_request_locality(struct tpm_chip *chip, int l)
+ {
+ 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
+ 	unsigned long stop, timeout;
+@@ -186,6 +197,20 @@ static int request_locality(struct tpm_chip *chip, int l)
+ 	return -1;
+ }
+ 
++static int tpm_tis_request_locality(struct tpm_chip *chip, int l)
++{
++	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
++	int ret = 0;
++
++	mutex_lock(&priv->locality_count_mutex);
++	if (priv->locality_count == 0)
++		ret = __tpm_tis_request_locality(chip, l);
++	if (!ret)
++		priv->locality_count++;
++	mutex_unlock(&priv->locality_count_mutex);
++	return ret;
++}
++
+ static u8 tpm_tis_status(struct tpm_chip *chip)
+ {
+ 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
+@@ -638,7 +663,7 @@ static int probe_itpm(struct tpm_chip *chip)
+ 	if (vendor != TPM_VID_INTEL)
+ 		return 0;
+ 
+-	if (request_locality(chip, 0) != 0)
++	if (tpm_tis_request_locality(chip, 0) != 0)
+ 		return -EBUSY;
+ 
+ 	rc = tpm_tis_send_data(chip, cmd_getticks, len);
+@@ -659,7 +684,7 @@ static int probe_itpm(struct tpm_chip *chip)
+ 
+ out:
+ 	tpm_tis_ready(chip);
+-	release_locality(chip, priv->locality);
++	tpm_tis_relinquish_locality(chip, priv->locality);
+ 
+ 	return rc;
+ }
+@@ -747,14 +772,14 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
  	}
  	priv->irq = irq;
  
-+	rc = request_locality(chip, 0);
-+	if (rc < 0)
-+		return rc;
-+
+-	rc = request_locality(chip, 0);
++	rc = tpm_tis_request_locality(chip, 0);
+ 	if (rc < 0)
+ 		return rc;
+ 
  	rc = tpm_tis_read8(priv, TPM_INT_VECTOR(priv->locality),
  			   &original_int_vec);
--	if (rc < 0)
-+	if (rc < 0) {
-+		release_locality(chip, priv->locality);
+ 	if (rc < 0) {
+-		release_locality(chip, priv->locality);
++		tpm_tis_relinquish_locality(chip, priv->locality);
  		return rc;
-+	}
- 
- 	rc = tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality), irq);
- 	if (rc < 0)
-@@ -790,10 +790,12 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
- 	if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
- 		tpm_tis_write8(priv, original_int_vec,
- 			       TPM_INT_VECTOR(priv->locality));
--		return -1;
-+		rc = -1;
  	}
  
--	return 0;
-+	release_locality(chip, priv->locality);
-+
-+	return rc;
- }
+@@ -793,7 +818,7 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 		rc = -1;
+ 	}
  
- /* Try to find the IRQ the TPM is using. This is for legacy x86 systems that
+-	release_locality(chip, priv->locality);
++	tpm_tis_relinquish_locality(chip, priv->locality);
+ 
+ 	return rc;
+ }
+@@ -909,8 +934,8 @@ static const struct tpm_class_ops tpm_tis = {
+ 	.req_complete_mask = TPM_STS_DATA_AVAIL | TPM_STS_VALID,
+ 	.req_complete_val = TPM_STS_DATA_AVAIL | TPM_STS_VALID,
+ 	.req_canceled = tpm_tis_req_canceled,
+-	.request_locality = request_locality,
+-	.relinquish_locality = release_locality,
++	.request_locality = tpm_tis_request_locality,
++	.relinquish_locality = tpm_tis_relinquish_locality,
+ 	.clk_enable = tpm_tis_clkrun_enable,
+ };
+ 
+@@ -944,6 +969,8 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 	priv->timeout_min = TPM_TIMEOUT_USECS_MIN;
+ 	priv->timeout_max = TPM_TIMEOUT_USECS_MAX;
+ 	priv->phy_ops = phy_ops;
++	priv->locality_count = 0;
++	mutex_init(&priv->locality_count_mutex);
+ 
+ 	dev_set_drvdata(&chip->dev, priv);
+ 
+@@ -990,14 +1017,14 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 		   TPM_INTF_DATA_AVAIL_INT | TPM_INTF_STS_VALID_INT;
+ 	intmask &= ~TPM_GLOBAL_INT_ENABLE;
+ 
+-	rc = request_locality(chip, 0);
++	rc = tpm_tis_request_locality(chip, 0);
+ 	if (rc < 0) {
+ 		rc = -ENODEV;
+ 		goto out_err;
+ 	}
+ 
+ 	tpm_tis_write32(priv, TPM_INT_ENABLE(priv->locality), intmask);
+-	release_locality(chip, 0);
++	tpm_tis_relinquish_locality(chip, 0);
+ 
+ 	rc = tpm_chip_start(chip);
+ 	if (rc)
+@@ -1057,13 +1084,13 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 		 * proper timeouts for the driver.
+ 		 */
+ 
+-		rc = request_locality(chip, 0);
++		rc = tpm_tis_request_locality(chip, 0);
+ 		if (rc < 0)
+ 			goto out_err;
+ 
+ 		rc = tpm_get_timeouts(chip);
+ 
+-		release_locality(chip, 0);
++		tpm_tis_relinquish_locality(chip, 0);
+ 
+ 		if (rc) {
+ 			dev_err(dev, "Could not get TPM timeouts and durations\n");
+@@ -1081,11 +1108,11 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 			dev_err(&chip->dev, FW_BUG
+ 					"TPM interrupt not working, polling instead\n");
+ 
+-			rc = request_locality(chip, 0);
++			rc = tpm_tis_request_locality(chip, 0);
+ 			if (rc < 0)
+ 				goto out_err;
+ 			disable_interrupts(chip);
+-			release_locality(chip, 0);
++			tpm_tis_relinquish_locality(chip, 0);
+ 		}
+ 	}
+ 
+@@ -1158,13 +1185,13 @@ int tpm_tis_resume(struct device *dev)
+ 	 * an error code but for unknown reason it isn't handled.
+ 	 */
+ 	if (!(chip->flags & TPM_CHIP_FLAG_TPM2)) {
+-		ret = request_locality(chip, 0);
++		ret = tpm_tis_request_locality(chip, 0);
+ 		if (ret < 0)
+ 			return ret;
+ 
+ 		tpm1_do_selftest(chip);
+ 
+-		release_locality(chip, 0);
++		tpm_tis_relinquish_locality(chip, 0);
+ 	}
+ 
+ 	return 0;
+diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
+index 3be24f221e32a..464ed352ab2e8 100644
+--- a/drivers/char/tpm/tpm_tis_core.h
++++ b/drivers/char/tpm/tpm_tis_core.h
+@@ -90,6 +90,8 @@ enum tpm_tis_flags {
+ 
+ struct tpm_tis_data {
+ 	u16 manufacturer_id;
++	struct mutex locality_count_mutex;
++	unsigned int locality_count;
+ 	int locality;
+ 	int irq;
+ 	bool irq_tested;
 -- 
 2.39.2
 
