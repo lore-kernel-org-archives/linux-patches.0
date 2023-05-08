@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E07168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:12:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED5B4C433EF;
-	Mon,  8 May 2023 10:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B08168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:12:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9137BC433D2;
+	Mon,  8 May 2023 10:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540766;
-	bh=pDdmsu5ZjSXezq895JcYOi7Dqz1tJtBcR0O+CujJIUc=;
+	s=korg; t=1683540768;
+	bh=cJXSh2oG0AHWA3Sz+HsPAnGVsnWPwY7DHpd4hkI3Z54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMR/nxeeaBIkWg9pZIvvt9v2M81wITZN1pu8HaPjFhWv821mq91oNZmntFlZdMNBZ
-	 UVbsXxHu8QJzF1cH8oZVOCvbh4UdXBVQjLkzrwls5m8LCBtoF67XbhDMoR8R1h1lPN
-	 1GTEkbTfLHxr8ccTfS3gR99hlQhbLTK+FcdZAyWY=
+	b=KbQMmoibI97QDJOdQT3L4PcqeMu6MymY54PxL1/RUXRVLtLlyCgIjuDEbGXZ7hC7p
+	 rGLpsyJMC9NYA6SRfBCJ/PNyFWPB6yRP7ZQkQLLGW/oVO6664oAI8w+cyNXBrZmsuP
+	 SI0FkRWpCvTvM1pX1xHB7R+T9BVdkByHm32xLAx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Binderman <dcb314@hotmail.com>,
-	Kajol Jain <kjain@linux.ibm.com>,
+	Liang He <windhl@126.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 457/611] selftests/powerpc/pmu: Fix sample field check in the mmcra_thresh_marked_sample_test
-Date: Mon,  8 May 2023 11:44:59 +0200
-Message-Id: <20230508094437.002582884@linuxfoundation.org>
+Subject: [PATCH 6.1 458/611] macintosh/windfarm_smu_sat: Add missing of_node_put()
+Date: Mon,  8 May 2023 11:45:00 +0200
+Message-Id: <20230508094437.031130924@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,44 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 8a32341cf04ba05974931b4664683c2c9fb84e56 ]
+[ Upstream commit 631cf002826007ab7415258ee647dcaf8845ad5a ]
 
-The testcase verifies the setting of different fields in Monitor Mode
-Control Register A (MMCRA). In the current code, EV_CODE_EXTRACT macro
-is used to extract the "sample" field, which then needs to be further
-processed to fetch rand_samp_elig and rand_samp_mode bits. But the
-current code is not passing valid sample field to EV_CODE_EXTRACT
-macro. Patch addresses this by fixing the input for EV_CODE_EXTRACT.
+We call of_node_get() in wf_sat_probe() after sat is created,
+so we need the of_node_put() before *kfree(sat)*.
 
-Fixes: 29cf373c5766 ("selftests/powerpc/pmu: Add interface test for mmcra register fields")
-Reported-by: David Binderman <dcb314@hotmail.com>
-Link: https://lore.kernel.org/r/DB6P189MB0568CF002762C6C43AF6DF169CA89@DB6P189MB0568.EURP189.PROD.OUTLOOK.COM
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Fixes: ac171c46667c ("[PATCH] powerpc: Thermal control for dual core G5s")
+Signed-off-by: Liang He <windhl@126.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230301170918.69176-1-kjain@linux.ibm.com
+Link: https://msgid.link/20230330033558.2562778-1-windhl@126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pmu/sampling_tests/mmcra_thresh_marked_sample_test.c      | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/macintosh/windfarm_smu_sat.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_thresh_marked_sample_test.c b/tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_thresh_marked_sample_test.c
-index 022cc1655eb52..75527876ad3c1 100644
---- a/tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_thresh_marked_sample_test.c
-+++ b/tools/testing/selftests/powerpc/pmu/sampling_tests/mmcra_thresh_marked_sample_test.c
-@@ -63,9 +63,9 @@ static int mmcra_thresh_marked_sample(void)
- 			get_mmcra_thd_stop(get_reg_value(intr_regs, "MMCRA"), 4));
- 	FAIL_IF(EV_CODE_EXTRACT(event.attr.config, marked) !=
- 			get_mmcra_marked(get_reg_value(intr_regs, "MMCRA"), 4));
--	FAIL_IF(EV_CODE_EXTRACT(event.attr.config, sample >> 2) !=
-+	FAIL_IF((EV_CODE_EXTRACT(event.attr.config, sample) >> 2) !=
- 			get_mmcra_rand_samp_elig(get_reg_value(intr_regs, "MMCRA"), 4));
--	FAIL_IF(EV_CODE_EXTRACT(event.attr.config, sample & 0x3) !=
-+	FAIL_IF((EV_CODE_EXTRACT(event.attr.config, sample) & 0x3) !=
- 			get_mmcra_sample_mode(get_reg_value(intr_regs, "MMCRA"), 4));
- 	FAIL_IF(EV_CODE_EXTRACT(event.attr.config, sm) !=
- 			get_mmcra_sm(get_reg_value(intr_regs, "MMCRA"), 4));
+diff --git a/drivers/macintosh/windfarm_smu_sat.c b/drivers/macintosh/windfarm_smu_sat.c
+index be5d4593db93e..98fb31e00e203 100644
+--- a/drivers/macintosh/windfarm_smu_sat.c
++++ b/drivers/macintosh/windfarm_smu_sat.c
+@@ -171,6 +171,7 @@ static void wf_sat_release(struct kref *ref)
+ 
+ 	if (sat->nr >= 0)
+ 		sats[sat->nr] = NULL;
++	of_node_put(sat->node);
+ 	kfree(sat);
+ }
+ 
 -- 
 2.39.2
 
