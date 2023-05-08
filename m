@@ -1,88 +1,83 @@
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94151DDA7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 21:30:02 +0000 (UTC)
-Received: by mail-io1-f49.google.com with SMTP id ca18e2360f4ac-76c56d0e265so1533839f.0
-        for <patches@lists.linux.dev>; Mon, 08 May 2023 14:30:02 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8205711CBD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 21:49:12 +0000 (UTC)
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-38e7ce73ca0so2496263b6e.2
+        for <patches@lists.linux.dev>; Mon, 08 May 2023 14:49:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1683581401; x=1686173401;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4aWrgKo0KCjqs44bpXAfvA4ZqQoaxuHBLhlatswZ7io=;
-        b=bh94yh6SgENk3JX/j5hSR2YoTFILkcgMWznMypE2g+k1ZmURDVX+2Its+1G434XqcQ
-         z9M88J8Q6kXsfJBKgbQNB5TGLVDk8NEQpX5PXJ32RO2ftGo7xkAmixc0YFtFTTRvOvhN
-         9vUtJ4xgRMq+kc+htuQ6HgFusR+OsXK7w1EeQ=
+        d=linuxtx.org; s=google; t=1683582551; x=1686174551;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fehA/P0nQb9AOIPJIL+h5u2kmPqGkpBLIR0S5RMmSKI=;
+        b=JFgseqpeK7kU17cYODycdW5zMKCclYUit04E0+ylKKwaMoR9PROe3bQ7HM7L38PXns
+         a902OkAH0fPnD4P/9Z4t7BvqN8A/Q04woEy3McO/b/NIMTL1Q1CAaGyCMFv4HlXMi8xj
+         QjvlLsOUcG4q9nT6ebGMv99tTCzTXFvHbvfkU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683581401; x=1686173401;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4aWrgKo0KCjqs44bpXAfvA4ZqQoaxuHBLhlatswZ7io=;
-        b=VuBNSEVysyeir9+cGnzSIjISxSroqS0hje9/wpML3tGBWYA0AXlSqDzqa1YnWzbxvB
-         qmBxwe4m38kOh1RSqaer7utuUW6AyNYMkF2S6YZ/bvjowUd7PuP2R6ReNcl0A0gf3isF
-         wW3uhQv5x5plIcupcHn7prodLOEyIEENACJW/xJ2g4k1IcV0XQzr9lV+aH4+Ds9sm3jT
-         IqZx1wdw6pq2m5yn9ZR9Fwb/6FrKDaOQdujlGrSww4OC8aimRLT+T8jLmaM565K7J9K1
-         u4OxPDyY4Ogjq8J62nY88C9mSEquW7UpCR0G9eisok5gV9WVwrtvii2uY7kbQQ1PcGz1
-         52gg==
-X-Gm-Message-State: AC+VfDx5ffrhyuR/vzJ4RrAW4Yy4QpF39U/W8WsP9Pn03kBo4lt1Vj6j
-	kN8VIboq/tqxYLEoCwHMlWWxKQ==
-X-Google-Smtp-Source: ACHHUZ5wg5Glntzt6FEJOgeM9pJxKb98jumhL21u83nHb2Qz7T8eZzlRBm0MyFziU9TYc1r9rfDrUw==
-X-Received: by 2002:a05:6e02:1541:b0:32a:a8d7:f099 with SMTP id j1-20020a056e02154100b0032aa8d7f099mr5773464ilu.3.1683581401679;
-        Mon, 08 May 2023 14:30:01 -0700 (PDT)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id x14-20020a02948e000000b0040fa3029857sm2308720jah.128.2023.05.08.14.30.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 May 2023 14:30:01 -0700 (PDT)
-Message-ID: <b23432a1-593d-73d5-6bcf-bacd16f0bc10@linuxfoundation.org>
-Date: Mon, 8 May 2023 15:30:00 -0600
+        d=1e100.net; s=20221208; t=1683582551; x=1686174551;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fehA/P0nQb9AOIPJIL+h5u2kmPqGkpBLIR0S5RMmSKI=;
+        b=cieOp48/Hf11/DdJPu6kcy6XlWDjZlHtwDfj+rygmjb2xftjS7vl4HtreKVkDZMUi8
+         hqzQqbo5Zyl2HeD4g/GBjwdcreZYE+9wYOvTlmZcfUK62L6cj6of0stDUR06/gR+h71N
+         YI20kusgWsDuGYR3yT6gYNuqFRtLhXCGjrZ0bYVz6Izqt9Mk2XCKoNjeKYMHxEtQWsWM
+         fXhAAy9hpDjm/YZFQa5QGtbrdYqkyoFEoemyKenknTXhp79Mr7gLuceD4UCY+b28i9hh
+         D8rLlBbV3Mb4RH4ErtVpdMJSky3xLyVdSZi9+8teEDuvD6z39J75tseeJ3sy2Zb1OJRy
+         qXGA==
+X-Gm-Message-State: AC+VfDx8v0X9tr0a42FQV45zpG2WAEFyJw3Uwg3d+TVpYmhyYENhvDqP
+	kqahbx/ONBXnuN1wlD/iCqA9Zg==
+X-Google-Smtp-Source: ACHHUZ6GXb//BsLxdDYdHqYWGIQYHQX09BeAL9X247lAM3+D6OTn9XN2RfPNoqJoB1J7oHi7q/8WLw==
+X-Received: by 2002:a54:4499:0:b0:387:4984:ea81 with SMTP id v25-20020a544499000000b003874984ea81mr278633oiv.17.1683582551378;
+        Mon, 08 May 2023 14:49:11 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id s11-20020acac20b000000b003895430852dsm466559oif.54.2023.05.08.14.49.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 May 2023 14:49:10 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Mon, 8 May 2023 16:49:09 -0500
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.2 000/663] 6.2.15-rc1 review
+Message-ID: <ZFluVYBfjfyS8eLd@fedora64.linuxtx.org>
+References: <20230508094428.384831245@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 5.15 000/371] 5.15.111-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
-References: <20230508094811.912279944@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 
-On 5/8/23 03:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.111 release.
-> There are 371 patches in this series, all will be posted as a response
+On Mon, May 08, 2023 at 11:37:06AM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.2.15 release.
+> There are 663 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Wed, 10 May 2023 09:47:07 +0000.
+> Responses should be made by Wed, 10 May 2023 09:42:40 +0000.
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.111-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.15-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
+Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
+s390x, x86_64), and boot tested x86_64. No regressions noted.
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
-
-thanks,
--- Shuah
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
