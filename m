@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 149B8168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:56:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6320BC433EF;
-	Mon,  8 May 2023 09:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2627F168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:56:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D222C433D2;
+	Mon,  8 May 2023 09:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539804;
-	bh=YEbyfyFrAeyV80itqiLsFEALqdSLwVWnzum9QBSKmM0=;
+	s=korg; t=1683539807;
+	bh=BeaBmBFLMhn6wR0QhlMdNixRueD2HU3RQaKSeAdF75M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDyLboRv6SdChJ3qEh3NBuTM6CdwYkeUufIcalyEsEFIFqcROypAX3MuaVsEoBMc1
-	 SVfwrLkeXhtIJU8L9JWSC403/YqjZX161rjdc8Gga9UMOwcLnsK5wQ/T2TDN1rnGJr
-	 y8QVVOUamtz3TnKjdrBmC0THS/IvOe3boS16bq8I=
+	b=iEztkvYxEtUzLJU4WJC4JI/a2OjloEAe0IXjEbi/nBKLrCUF4leEhAjoZ2MFd+v/S
+	 mC2LLu9sJbMjJxgD3b6rX8rNXK1QYcUaNJeaZeTPylHtVQAAGgTnc4egK1BV4TLQ+c
+	 J0O7Pah8E8rX6fiPar9B3X8Jkojk0kHEHsg7rIS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 112/611] ASoC: dt-bindings: qcom,lpass-rx-macro: correct minItems for clocks
-Date: Mon,  8 May 2023 11:39:14 +0200
-Message-Id: <20230508094425.908873142@linuxfoundation.org>
+	Wang YanQing <udknight@gmail.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.1 103/611] ubi: Fix return value overwrite issue in try_write_vid_and_data()
+Date: Mon,  8 May 2023 11:39:05 +0200
+Message-Id: <20230508094425.573721345@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,36 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Wang YanQing <udknight@gmail.com>
 
-commit 59257015ac8813d2430988aa01c2f4609a60e8e7 upstream.
+commit 31a149d5c13c4cbcf97de3435817263a2d8c9d6e upstream.
 
-The RX macro codec comes on some platforms in two variants - ADSP
-and ADSP bypassed - thus the clock-names varies from 3 to 5.  The clocks
-must vary as well:
+The commit 2d78aee426d8 ("UBI: simplify LEB write and atomic LEB change code")
+adds helper function, try_write_vid_and_data(), to simplify the code, but this
+helper function has bug, it will return 0 (success) when ubi_io_write_vid_hdr()
+or the ubi_io_write_data() return error number (-EIO, etc), because the return
+value of ubi_wl_put_peb() will overwrite the original return value.
 
-  sc7280-idp.dtb: codec@3200000: clocks: [[202, 8], [202, 7], [203]] is too short
+This issue will cause unexpected data loss issue, because the caller of this
+function and UBIFS willn't know the data is lost.
 
-Fixes: 852fda58d99a ("ASoC: qcom: dt-bindings: Update bindings for clocks in lpass digital codes")
-Cc: <stable@vger.kernel.org>
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230330071333.24308-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2d78aee426d8 ("UBI: simplify LEB write and atomic LEB change code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wang YanQing <udknight@gmail.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/ubi/eba.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-+++ b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
-@@ -27,6 +27,7 @@ properties:
-     const: 0
+--- a/drivers/mtd/ubi/eba.c
++++ b/drivers/mtd/ubi/eba.c
+@@ -946,7 +946,7 @@ static int try_write_vid_and_data(struct
+ 				  int offset, int len)
+ {
+ 	struct ubi_device *ubi = vol->ubi;
+-	int pnum, opnum, err, vol_id = vol->vol_id;
++	int pnum, opnum, err, err2, vol_id = vol->vol_id;
  
-   clocks:
-+    minItems: 3
-     maxItems: 5
+ 	pnum = ubi_wl_get_peb(ubi);
+ 	if (pnum < 0) {
+@@ -981,10 +981,19 @@ static int try_write_vid_and_data(struct
+ out_put:
+ 	up_read(&ubi->fm_eba_sem);
  
-   clock-names:
+-	if (err && pnum >= 0)
+-		err = ubi_wl_put_peb(ubi, vol_id, lnum, pnum, 1);
+-	else if (!err && opnum >= 0)
+-		err = ubi_wl_put_peb(ubi, vol_id, lnum, opnum, 0);
++	if (err && pnum >= 0) {
++		err2 = ubi_wl_put_peb(ubi, vol_id, lnum, pnum, 1);
++		if (err2) {
++			ubi_warn(ubi, "failed to return physical eraseblock %d, error %d",
++				 pnum, err2);
++		}
++	} else if (!err && opnum >= 0) {
++		err2 = ubi_wl_put_peb(ubi, vol_id, lnum, opnum, 0);
++		if (err2) {
++			ubi_warn(ubi, "failed to return physical eraseblock %d, error %d",
++				 opnum, err2);
++		}
++	}
+ 
+ 	return err;
+ }
 
 
