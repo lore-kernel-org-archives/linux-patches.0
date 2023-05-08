@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4838C168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:07:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDC70C433D2;
-	Mon,  8 May 2023 10:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE78A168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:07:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575D2C433D2;
+	Mon,  8 May 2023 10:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540464;
-	bh=HYG0zAPTt7XmBrbwIywNUL5DsNgcETV14du3TNuch+w=;
+	s=korg; t=1683540466;
+	bh=+hu4KO2XEvv7lPiuVlx3oYrOe8T2h5j3Smu7paDNRkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m5pw8PpW26ygo0TKynh0of64hXOep+b/C0vdFP4AdCUtNBMpjCcBcEN5s8Vdw6S/+
-	 wqDljGDOCGcH5FxLKldA3UKfEiajqXxSLxW+BfM5aZD4n3J6YhGfphaK37MwwDzf+I
-	 nGI9xW2+lPiypYWrgcIvaX0xbZARF+v1LiqSJZ/Y=
+	b=qUoT4Afa0hZiklHVPgLYJ45lSIaxLALLMUCLOUKKygHZQzaUd1QPs7bb9zfCL5p7O
+	 FvDZPrw6BAAxfLk8MCJi0JULXnIBwt/dEPF8vqyg3N//H5i4oUORsZF2AvzMBBrtzS
+	 DQDuJ2bHWaColodrTe+rmJ8vBorGUNMPD4m2ts/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Li Nan <linan122@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 374/611] wifi: iwlwifi: fw: fix memory leak in debugfs
-Date: Mon,  8 May 2023 11:43:36 +0200
-Message-Id: <20230508094434.508124645@linuxfoundation.org>
+Subject: [PATCH 6.1 348/611] md/raid10: fix task hung in raid10d
+Date: Mon,  8 May 2023 11:43:10 +0200
+Message-Id: <20230508094433.713592854@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,40 +35,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 3d90d2f4a018fe8cfd65068bc6350b6222be4852 ]
+[ Upstream commit 72c215ed8731c88b2d7e09afc51fffc207ae47b8 ]
 
-Fix a memory leak that occurs when reading the fw_info
-file all the way, since we return NULL indicating no
-more data, but don't free the status tracking object.
+commit fe630de009d0 ("md/raid10: avoid deadlock on recovery.") allowed
+normal io and sync io to exist at the same time. Task hung will occur as
+below:
 
-Fixes: 36dfe9ac6e8b ("iwlwifi: dump api version in yaml format")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230418122405.239e501b3b8d.I4268f87809ef91209cbcd748eee0863195e70fa2@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+T1                      T2		T3		T4
+raid10d
+ handle_read_error
+  allow_barrier
+   conf->nr_pending--
+    -> 0
+                        //submit sync io
+                        raid10_sync_request
+                         raise_barrier
+			  ->will not be blocked
+			  ...
+			//submit to drivers
+  raid10_read_request
+   wait_barrier
+    conf->nr_pending++
+     -> 1
+					//retry read fail
+					raid10_end_read_request
+					 reschedule_retry
+					  add to retry_list
+					  conf->nr_queued++
+					   -> 1
+							//sync io fail
+							end_sync_read
+							 __end_sync_read
+							  reschedule_retry
+							   add to retry_list
+					                    conf->nr_queued++
+							     -> 2
+ ...
+ handle_read_error
+ get form retry_list
+ conf->nr_queued--
+  freeze_array
+   wait nr_pending == nr_queued+1
+        ->1	      ->2
+   //task hung
+
+retry read and sync io will be added to retry_list(nr_queued->2) if they
+fails. raid10d() called handle_read_error() and hung in freeze_array().
+nr_queued will not decrease because raid10d is blocked, nr_pending will
+not increase because conf->barrier is not released.
+
+Fix it by moving allow_barrier() after raid10_read_request().
+raise_barrier() will wait for nr_waiting to become 0. Therefore, sync io
+and regular io will not be issued at the same time.
+
+Also remove the check of nr_queued in stop_waiting_barrier. It can be 0
+but don't need to be blocking. Remove the check for MD_RECOVERY_RUNNING as
+the check is redundent.
+
+Fixes: fe630de009d0 ("md/raid10: avoid deadlock on recovery.")
+Signed-off-by: Li Nan <linan122@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230222041000.3341651-2-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/debugfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/raid10.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
-index 43e997283db0f..607e07ed2477c 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
-@@ -317,8 +317,10 @@ static void *iwl_dbgfs_fw_info_seq_next(struct seq_file *seq,
- 	const struct iwl_fw *fw = priv->fwrt->fw;
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 9a6503f5cb982..ab0eef8634b14 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -995,11 +995,15 @@ static bool stop_waiting_barrier(struct r10conf *conf)
+ 	    (!bio_list_empty(&bio_list[0]) || !bio_list_empty(&bio_list[1])))
+ 		return true;
  
- 	*pos = ++state->pos;
--	if (*pos >= fw->ucode_capa.n_cmd_versions)
-+	if (*pos >= fw->ucode_capa.n_cmd_versions) {
-+		kfree(state);
- 		return NULL;
+-	/* move on if recovery thread is blocked by us */
+-	if (conf->mddev->thread->tsk == current &&
+-	    test_bit(MD_RECOVERY_RUNNING, &conf->mddev->recovery) &&
+-	    conf->nr_queued > 0)
++	/*
++	 * move on if io is issued from raid10d(), nr_pending is not released
++	 * from original io(see handle_read_error()). All raise barrier is
++	 * blocked until this io is done.
++	 */
++	if (conf->mddev->thread->tsk == current) {
++		WARN_ON_ONCE(atomic_read(&conf->nr_pending) == 0);
+ 		return true;
 +	}
  
- 	return state;
+ 	return false;
  }
+@@ -2978,9 +2982,13 @@ static void handle_read_error(struct mddev *mddev, struct r10bio *r10_bio)
+ 		md_error(mddev, rdev);
+ 
+ 	rdev_dec_pending(rdev, mddev);
+-	allow_barrier(conf);
+ 	r10_bio->state = 0;
+ 	raid10_read_request(mddev, r10_bio->master_bio, r10_bio);
++	/*
++	 * allow_barrier after re-submit to ensure no sync io
++	 * can be issued while regular io pending.
++	 */
++	allow_barrier(conf);
+ }
+ 
+ static void handle_write_completed(struct r10conf *conf, struct r10bio *r10_bio)
 -- 
 2.39.2
 
