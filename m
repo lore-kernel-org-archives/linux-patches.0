@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E5F168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3109C433EF;
-	Mon,  8 May 2023 10:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964DE168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED1EC433D2;
+	Mon,  8 May 2023 10:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542858;
-	bh=Jc8Mdawx3aHNq1LRGryHP7p+OBu3CO0SNO7/bQfcUPg=;
+	s=korg; t=1683542861;
+	bh=H/ZfZ1hzS2PyQpHjDFi1/dr4Nj22bcyPiNs0EuTLeEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YktfDHdnEl+DA6Aytqzwri9rBf1Ymmkedphlfzg5L47O4+4qVobuA8VdvuN1y+Da/
-	 j28o9f+DCtsBoJHio2lXWH8Snk54bQXYxOrYLP8LPAVXzzOvQG7oQyKLkT1vhOvEAa
-	 /QB9/y3zRLNI7wwvxeQgjNuHXGemgw1WfEVVHH1g=
+	b=ZBwlZsrZy4Kx2T1HRWYo6hSmnWjUZkv06nSeEHUvFhsS7N+U68RS1n44XwKqiusYQ
+	 9nv0Vvj9oPQ/PYahLrNibTeQ+Ctyin+QdzRtSUVeBXoAdcRs5vgEVQZXoqedladDK2
+	 1WTQUVEObJtonoGhH3n7RvJy9pHK1Z7dkPBpqyFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stafford Horne <shorne@gmail.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 572/663] openrisc: Properly store r31 to pt_regs on unhandled exceptions
-Date: Mon,  8 May 2023 11:46:38 +0200
-Message-Id: <20230508094447.807941852@linuxfoundation.org>
+Subject: [PATCH 6.2 573/663] timekeeping: Fix references to nonexistent ktime_get_fast_ns()
+Date: Mon,  8 May 2023 11:46:39 +0200
+Message-Id: <20230508094447.840798151@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -34,54 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stafford Horne <shorne@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 812489ac4dd91144a74ce65ecf232252a2e406fb ]
+[ Upstream commit 158009f1b4a33bc0f354b994eea361362bd83226 ]
 
-In commit 91993c8c2ed5 ("openrisc: use shadow registers to save regs on
-exception") the unhandled exception path was changed to do an early
-store of r30 instead of r31.  The entry code was not updated and r31 is
-not getting stored to pt_regs.
+There was never a function named ktime_get_fast_ns().
+Presumably these should refer to ktime_get_mono_fast_ns() instead.
 
-This patch updates the entry handler to store r31 instead of r30.  We
-also remove some misleading commented out store r30 and r31
-instructrions.
-
-I noticed this while working on adding floating point exception
-handling,  This issue probably would never impact anything since we kill
-the process or Oops right away on unhandled exceptions.
-
-Fixes: 91993c8c2ed5 ("openrisc: use shadow registers to save regs on exception")
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Fixes: c1ce406e80fb15fa ("timekeeping: Fix up function documentation for the NMI safe accessors")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://lore.kernel.org/r/06df7b3cbd94f016403bbf6cd2b38e4368e7468f.1682516546.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/openrisc/kernel/entry.S | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ kernel/time/timekeeping.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/openrisc/kernel/entry.S b/arch/openrisc/kernel/entry.S
-index 54a87bba35caa..a130c4dac48d3 100644
---- a/arch/openrisc/kernel/entry.S
-+++ b/arch/openrisc/kernel/entry.S
-@@ -173,7 +173,6 @@ handler:							;\
- 	l.sw    PT_GPR28(r1),r28					;\
- 	l.sw    PT_GPR29(r1),r29					;\
- 	/* r30 already save */					;\
--/*        l.sw    PT_GPR30(r1),r30*/					;\
- 	l.sw    PT_GPR31(r1),r31					;\
- 	TRACE_IRQS_OFF_ENTRY						;\
- 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
-@@ -211,9 +210,8 @@ handler:							;\
- 	l.sw    PT_GPR27(r1),r27					;\
- 	l.sw    PT_GPR28(r1),r28					;\
- 	l.sw    PT_GPR29(r1),r29					;\
--	/* r31 already saved */					;\
--	l.sw    PT_GPR30(r1),r30					;\
--/*        l.sw    PT_GPR31(r1),r31	*/				;\
-+	/* r30 already saved */						;\
-+	l.sw    PT_GPR31(r1),r31					;\
- 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
- 	l.addi	r30,r0,-1					;\
- 	l.sw	PT_ORIG_GPR11(r1),r30				;\
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index 5579ead449f25..09d594900ee0b 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -526,7 +526,7 @@ EXPORT_SYMBOL_GPL(ktime_get_raw_fast_ns);
+  * partially updated.  Since the tk->offs_boot update is a rare event, this
+  * should be a rare occurrence which postprocessing should be able to handle.
+  *
+- * The caveats vs. timestamp ordering as documented for ktime_get_fast_ns()
++ * The caveats vs. timestamp ordering as documented for ktime_get_mono_fast_ns()
+  * apply as well.
+  */
+ u64 notrace ktime_get_boot_fast_ns(void)
+@@ -576,7 +576,7 @@ static __always_inline u64 __ktime_get_real_fast(struct tk_fast *tkf, u64 *mono)
+ /**
+  * ktime_get_real_fast_ns: - NMI safe and fast access to clock realtime.
+  *
+- * See ktime_get_fast_ns() for documentation of the time stamp ordering.
++ * See ktime_get_mono_fast_ns() for documentation of the time stamp ordering.
+  */
+ u64 ktime_get_real_fast_ns(void)
+ {
 -- 
 2.39.2
 
