@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1285B168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:57:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62BE2C433D2;
-	Mon,  8 May 2023 10:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EC4168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:58:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9265DC433EF;
+	Mon,  8 May 2023 10:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543476;
-	bh=xGAMcCnHDbRWVOogbJQae0UOmzlwX5hiD4oh9pluxW8=;
+	s=korg; t=1683543480;
+	bh=W9NoJiVh+l92EWH2uvdP7TDt5ze0DbnrYZ9sc7V56Mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FcZfPx0JZ+/yBuzHjvr4hiU9svdWSngMveLdU4ssrGCWr3n9VMGAHFDVJgSyM2jLd
-	 EUzklcJw7fQi8CqKwEeTmodf4gw/iYr02yXR1FTsydwUVAQ0iC+awCbASpF1XdQAj8
-	 xV3Dcxej0wP13unARSjJJFuJoAAdmKfoo1ojl/tc=
+	b=VMcfzJqoJz+enipJi5ZnrwSw2QIqTLIIq2O9Ff37JiYMy6UOtYPZh8P4aPKIBg479
+	 tRqGOEUvr4urfNQeOz6/URYcaip6XYqrvykmIFpGlzMMRRYmBhTE92lhpdBTs5e6mX
+	 dgQ2EWMKMiY9l/q7HRF/85hoDi1xZ6HpMX+N6F0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	=?UTF-8?q?Gr=C3=A9gory=20Desor?= <gregory.desor@free.fr>,
+	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.3 102/694] ALSA: usb-audio: Add quirk for Pioneer DDJ-800
-Date: Mon,  8 May 2023 11:38:57 +0200
-Message-Id: <20230508094435.802960930@linuxfoundation.org>
+Subject: [PATCH 6.3 103/694] ALSA: hda/realtek: Add quirk for ThinkPad P1 Gen 6
+Date: Mon,  8 May 2023 11:38:58 +0200
+Message-Id: <20230508094435.832143255@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,89 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geraldo Nascimento <geraldogabriel@gmail.com>
+From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
 
-commit 7501f472977df233d039d86c6981e0641708e1ca upstream.
+commit 067eb084592819ad59d07afcb5de3e61cee2757c upstream.
 
-One more Pioneer quirk, this time for DDJ-800, which is quite similar like
-other DJ DDJ models but with slightly different EPs or channels.
+Lenovo ThinkPad P1 Gen 6 laptop has 2 CS35L41 amplifies
+on I2C bus connected to Realtek codec.
 
-Signed-off-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Tested-by: Grégory Desor <gregory.desor@free.fr>
+Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/ZFLLzgEcsSF5aIHG@geday
+Link: https://lore.kernel.org/r/20230427110452.13787-1-vitalyr@opensource.cirrus.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks-table.h |   58 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ sound/pci/hda/patch_realtek.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -3884,6 +3884,64 @@ YAMAHA_DEVICE(0x7010, "UB99"),
- 	}
- },
- 
-+{
-+	/*
-+	 * PIONEER DJ DDJ-800
-+	 * PCM is 6 channels out, 6 channels in @ 44.1 fixed
-+	 * The Feedback for the output is the input
-+	 */
-+	USB_DEVICE_VENDOR_SPEC(0x2b73, 0x0029),
-+		.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
-+		.ifnum = QUIRK_ANY_INTERFACE,
-+		.type = QUIRK_COMPOSITE,
-+		.data = (const struct snd_usb_audio_quirk[]) {
-+			{
-+				.ifnum = 0,
-+				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
-+				.data = &(const struct audioformat) {
-+					.formats = SNDRV_PCM_FMTBIT_S24_3LE,
-+					.channels = 6,
-+					.iface = 0,
-+					.altsetting = 1,
-+					.altset_idx = 1,
-+					.endpoint = 0x01,
-+					.ep_attr = USB_ENDPOINT_XFER_ISOC|
-+						USB_ENDPOINT_SYNC_ASYNC,
-+					.rates = SNDRV_PCM_RATE_44100,
-+					.rate_min = 44100,
-+					.rate_max = 44100,
-+					.nr_rates = 1,
-+					.rate_table = (unsigned int[]) { 44100 }
-+				}
-+			},
-+			{
-+				.ifnum = 0,
-+				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
-+				.data = &(const struct audioformat) {
-+					.formats = SNDRV_PCM_FMTBIT_S24_3LE,
-+					.channels = 6,
-+					.iface = 0,
-+					.altsetting = 1,
-+					.altset_idx = 1,
-+					.endpoint = 0x82,
-+					.ep_idx = 1,
-+					.ep_attr = USB_ENDPOINT_XFER_ISOC|
-+						USB_ENDPOINT_SYNC_ASYNC|
-+					USB_ENDPOINT_USAGE_IMPLICIT_FB,
-+					.rates = SNDRV_PCM_RATE_44100,
-+					.rate_min = 44100,
-+					.rate_max = 44100,
-+					.nr_rates = 1,
-+					.rate_table = (unsigned int[]) { 44100 }
-+				}
-+			},
-+			{
-+				.ifnum = -1
-+			}
-+		}
-+	}
-+},
-+
- /*
-  * MacroSilicon MS2100/MS2106 based AV capture cards
-  *
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9689,6 +9689,8 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x17aa, 0x22f1, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x22f2, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x22f3, "Thinkpad", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x17aa, 0x2316, "Thinkpad P1 Gen 6", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x17aa, 0x2317, "Thinkpad P1 Gen 6", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x2318, "Thinkpad Z13 Gen2", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x2319, "Thinkpad Z16 Gen2", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x231a, "Thinkpad Z16 Gen2", ALC287_FIXUP_CS35L41_I2C_2),
 
 
