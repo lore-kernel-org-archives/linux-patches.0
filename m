@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCA0168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01CA9C433EF;
-	Mon,  8 May 2023 10:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944BB168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF05CC433D2;
+	Mon,  8 May 2023 10:23:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541408;
-	bh=iqzJxMCoDWFS2cMLhNtb4ZYORu0PCokX+vciUYk5c4c=;
+	s=korg; t=1683541411;
+	bh=RT7JMNLVIVZFoyk9MkqvppZ5D3T+QHCHLlgkN2MaAuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VfnRZhHLbo6hscW7hQpFaNyQnlmDFzFHKYZNHR/XGEzAeW9T/h8AVbVOhJiK18/Am
-	 iQDbBkpCDw+mNyMA9a/umGG9FULXHByv5WNvOhKJgc8+jap+DugYxzo0vtCy4wkkv0
-	 4jo5Xd+FzDcrpPlDINcpXD0R5OyJvcf9u9WxspGo=
+	b=samgdPvFNcn7gBmgRs9gQSQikj8MtXOEJSrQnbRyXUr5fo2iwV4EWJ40tiuUc80wj
+	 rZAOFP7QIoNEm1ER93spgqq7X+Gmk15hZ/DTLVZyZi79bjzr1f6WocPVTAvGBKgYrl
+	 0QxQgh7ATZ0M2R+Ut5bO3VZRof8x4q5LAocCzDiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
+	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
 	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.2 106/663] ubifs: Free memory for tmpfile name
-Date: Mon,  8 May 2023 11:38:52 +0200
-Message-Id: <20230508094431.924265063@linuxfoundation.org>
+Subject: [PATCH 6.2 107/663] ubifs: Fix memory leak in do_rename
+Date: Mon,  8 May 2023 11:38:53 +0200
+Message-Id: <20230508094431.960543707@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,47 +37,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Mårten Lindahl <marten.lindahl@axis.com>
 
-commit 1fb815b38bb31d6af9bd0540b8652a0d6fe6cfd3 upstream.
+commit 3a36d20e012903f45714df2731261fdefac900cb upstream.
 
-When opening a ubifs tmpfile on an encrypted directory, function
-fscrypt_setup_filename allocates memory for the name that is to be
-stored in the directory entry, but after the name has been copied to the
-directory entry inode, the memory is not freed.
+If renaming a file in an encrypted directory, function
+fscrypt_setup_filename allocates memory for a file name. This name is
+never used, and before returning to the caller the memory for it is not
+freed.
 
 When running kmemleak on it we see that it is registered as a leak. The
-report below is triggered by a simple program 'tmpfile' just opening a
-tmpfile:
+report below is triggered by a simple program 'rename' that renames a
+file in an encrypted directory:
 
-  unreferenced object 0xffff88810178f380 (size 32):
-    comm "tmpfile", pid 509, jiffies 4294934744 (age 1524.742s)
+  unreferenced object 0xffff888101502840 (size 32):
+    comm "rename", pid 9404, jiffies 4302582475 (age 435.735s)
     backtrace:
       __kmem_cache_alloc_node
       __kmalloc
       fscrypt_setup_filename
-      ubifs_tmpfile
-      vfs_tmpfile
-      path_openat
+      do_rename
+      ubifs_rename
+      vfs_rename
+      do_renameat2
 
-Free this memory after it has been copied to the inode.
+To fix this we can remove the call to fscrypt_setup_filename as it's not
+needed.
 
+Fixes: 278d9a243635f26 ("ubifs: Rename whiteout atomically")
+Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
 Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ubifs/dir.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ubifs/dir.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
 --- a/fs/ubifs/dir.c
 +++ b/fs/ubifs/dir.c
-@@ -492,6 +492,7 @@ static int ubifs_tmpfile(struct user_nam
- 	unlock_2_inodes(dir, inode);
+@@ -358,7 +358,6 @@ static struct inode *create_whiteout(str
+ 	umode_t mode = S_IFCHR | WHITEOUT_MODE;
+ 	struct inode *inode;
+ 	struct ubifs_info *c = dir->i_sb->s_fs_info;
+-	struct fscrypt_name nm;
  
- 	ubifs_release_budget(c, &req);
-+	fscrypt_free_filename(&nm);
+ 	/*
+ 	 * Create an inode('nlink = 1') for whiteout without updating journal,
+@@ -369,10 +368,6 @@ static struct inode *create_whiteout(str
+ 	dbg_gen("dent '%pd', mode %#hx in dir ino %lu",
+ 		dentry, mode, dir->i_ino);
  
- 	return finish_open_simple(file, 0);
- 
+-	err = fscrypt_setup_filename(dir, &dentry->d_name, 0, &nm);
+-	if (err)
+-		return ERR_PTR(err);
+-
+ 	inode = ubifs_new_inode(c, dir, mode, false);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+@@ -395,7 +390,6 @@ out_inode:
+ 	make_bad_inode(inode);
+ 	iput(inode);
+ out_free:
+-	fscrypt_free_filename(&nm);
+ 	ubifs_err(c, "cannot create whiteout file, error %d", err);
+ 	return ERR_PTR(err);
+ }
 
 
