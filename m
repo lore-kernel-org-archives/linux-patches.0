@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481A9171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BD0C433EF;
-	Mon,  8 May 2023 11:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42526171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0654C4339B;
+	Mon,  8 May 2023 11:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546379;
-	bh=/psOibmtnnkcz1+tirmhsBiDgkCvd5+0ZG4x9ICNoaM=;
+	s=korg; t=1683546382;
+	bh=5Hf/zrkDlgQ8x1uMzczu400VDlt1sa3r3elD1v6TEns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jk6KLo+/24x/WAyDYyyIuncR604N2sRdoCfc3QS/TlAChoHt08GAMkjbM8Ew5xOSj
-	 a0QUCQ289sbY0vSd8SHFeylHXroG0UWY0rcQ1lGBCkEYi8Y5rqtY1IM1Df/sbpW946
-	 jZFhYkn3JL7BPOwrYqpC/0ji9hBXvF1QDLJToCKQ=
+	b=uCo48MOrr/EDvkuZoA9heD1P2m2rB8xu6p61GCiCN9asptLILqsw/MnDuAvajiEY3
+	 g1s5DuY5zejM1tWoo6T0VJFiIP1KvceKEDSUTlNBvUIiGyEKrfZnvIzuLJssXnsWF9
+	 xMlixNA1k5L3hPaqK8VAFdGnNwFKK1LjYFf8+Ock=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 348/371] nilfs2: fix infinite loop in nilfs_mdt_get_block()
-Date: Mon,  8 May 2023 11:49:09 +0200
-Message-Id: <20230508094825.944932170@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Stultz <jstultz@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 322/371] timekeeping: Fix references to nonexistent ktime_get_fast_ns()
+Date: Mon,  8 May 2023 11:48:43 +0200
+Message-Id: <20230508094824.864076920@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,71 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit a6a491c048882e7e424d407d32cba0b52d9ef2bf upstream.
+[ Upstream commit 158009f1b4a33bc0f354b994eea361362bd83226 ]
 
-If the disk image that nilfs2 mounts is corrupted and a virtual block
-address obtained by block lookup for a metadata file is invalid,
-nilfs_bmap_lookup_at_level() may return the same internal return code as
--ENOENT, meaning the block does not exist in the metadata file.
+There was never a function named ktime_get_fast_ns().
+Presumably these should refer to ktime_get_mono_fast_ns() instead.
 
-This duplication of return codes confuses nilfs_mdt_get_block(), causing
-it to read and create a metadata block indefinitely.
-
-In particular, if this happens to the inode metadata file, ifile,
-semaphore i_rwsem can be left held, causing task hangs in lock_mount.
-
-Fix this issue by making nilfs_bmap_lookup_at_level() treat virtual block
-address translation failures with -ENOENT as metadata corruption instead
-of returning the error code.
-
-Link: https://lkml.kernel.org/r/20230430193046.6769-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=221d75710bde87fa0e97
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c1ce406e80fb15fa ("timekeeping: Fix up function documentation for the NMI safe accessors")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://lore.kernel.org/r/06df7b3cbd94f016403bbf6cd2b38e4368e7468f.1682516546.git.geert+renesas@glider.be
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/bmap.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ kernel/time/timekeeping.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/bmap.c
-+++ b/fs/nilfs2/bmap.c
-@@ -67,20 +67,28 @@ int nilfs_bmap_lookup_at_level(struct ni
- 
- 	down_read(&bmap->b_sem);
- 	ret = bmap->b_ops->bop_lookup(bmap, key, level, ptrp);
--	if (ret < 0) {
--		ret = nilfs_bmap_convert_error(bmap, __func__, ret);
-+	if (ret < 0)
- 		goto out;
--	}
-+
- 	if (NILFS_BMAP_USE_VBN(bmap)) {
- 		ret = nilfs_dat_translate(nilfs_bmap_get_dat(bmap), *ptrp,
- 					  &blocknr);
- 		if (!ret)
- 			*ptrp = blocknr;
-+		else if (ret == -ENOENT) {
-+			/*
-+			 * If there was no valid entry in DAT for the block
-+			 * address obtained by b_ops->bop_lookup, then pass
-+			 * internal code -EINVAL to nilfs_bmap_convert_error
-+			 * to treat it as metadata corruption.
-+			 */
-+			ret = -EINVAL;
-+		}
- 	}
- 
-  out:
- 	up_read(&bmap->b_sem);
--	return ret;
-+	return nilfs_bmap_convert_error(bmap, __func__, ret);
- }
- 
- int nilfs_bmap_lookup_contig(struct nilfs_bmap *bmap, __u64 key, __u64 *ptrp,
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index d6a0ff68df410..d921c1b256cf5 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -523,7 +523,7 @@ EXPORT_SYMBOL_GPL(ktime_get_raw_fast_ns);
+  * partially updated.  Since the tk->offs_boot update is a rare event, this
+  * should be a rare occurrence which postprocessing should be able to handle.
+  *
+- * The caveats vs. timestamp ordering as documented for ktime_get_fast_ns()
++ * The caveats vs. timestamp ordering as documented for ktime_get_mono_fast_ns()
+  * apply as well.
+  */
+ u64 notrace ktime_get_boot_fast_ns(void)
+@@ -559,7 +559,7 @@ static __always_inline u64 __ktime_get_real_fast(struct tk_fast *tkf, u64 *mono)
+ /**
+  * ktime_get_real_fast_ns: - NMI safe and fast access to clock realtime.
+  *
+- * See ktime_get_fast_ns() for documentation of the time stamp ordering.
++ * See ktime_get_mono_fast_ns() for documentation of the time stamp ordering.
+  */
+ u64 ktime_get_real_fast_ns(void)
+ {
+-- 
+2.39.2
+
 
 
