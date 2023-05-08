@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B79168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:54:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10086C433EF;
-	Mon,  8 May 2023 10:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C7E168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:54:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F25C433EF;
+	Mon,  8 May 2023 10:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543257;
-	bh=u2ifpftMhKqpEYDiTOHYOLI0gumrbaP0Xx5/Ggt+uT4=;
+	s=korg; t=1683543260;
+	bh=4X+Yt74hW4Yahx8M+BRknd55Hcf+V+qJWaBd31aFh8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lRi6Tdat+W9hB+Oy9obFHgEUtys0vs/LKxDevDAWgySMzOruwlxJociNqndn7uDFt
-	 YnvYW2Qd8l4wZs+XOfhSeMtnhUaXt+ApRowDwvUWcfkis28DNHFvNX8fGJ+5BJACK4
-	 kU4wdPfx5DX1vhJY7PvX7WnYXxs+pQ/SpkXjE6L0=
+	b=MMiPBzc2tER1zuhuTAT8Gv2wnuzfx7TLkvG35cZvG8tGrqxDarjEIDg4jlOhALRg7
+	 p5E1Ep3Pq3cepNL1zN+rLqOVrOmjRQ2lvW/HDqPLQRqELPOrnHSWAp5m7mOLHGA86K
+	 zJV8aSHWwub6N1zrsLybLEMjLo0dczvPMzXg6CPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <jun.li@nxp.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 6.3 015/694] USB: dwc3: fix runtime pm imbalance on unbind
-Date: Mon,  8 May 2023 11:37:30 +0200
-Message-Id: <20230508094433.119004603@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 6.3 033/694] fs: fix sysctls.c built
+Date: Mon,  8 May 2023 11:37:48 +0200
+Message-Id: <20230508094433.714390888@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,34 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Kefeng Wang <wangkefeng.wang@huawei.com>
 
-commit 44d257e9012ee8040e41d224d0e5bfb5ef5427ea upstream.
+commit e3184de9d46c2eebdb776face2e2662c6733331d upstream.
 
-Make sure to balance the runtime PM usage count on driver unbind by
-adding back the pm_runtime_allow() call that had been erroneously
-removed.
+'obj-$(CONFIG_SYSCTL) += sysctls.o' must be moved after "obj-y :=",
+or it won't be built as it is overwrited.
 
-Fixes: 266d0493900a ("usb: dwc3: core: don't trigger runtime pm when remove driver")
-Cc: stable@vger.kernel.org	# 5.9
-Cc: Li Jun <jun.li@nxp.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230404072524.19014-3-johan+linaro@kernel.org
+Note that there is nothing that is going to break by linking
+sysctl.o later, we were just being way to cautious and patches
+have been updated to reflect these considerations and sent for
+stable as well with the whole "base" stuff needing to be linked
+prior to child sysctl tables that use that directory. All of
+the kernel sysctl APIs always share the same directory, and races
+against using it should end up re-using the same single created
+directory.
+
+And so something we can do eventually is do away with all the base stuff.
+For now it's fine, it's not creating an issue. It is just a bit pedantic
+and careful.
+
+Fixes: ab171b952c6e ("fs: move namespace sysctls and declare fs base directory")
+Cc: stable@vger.kernel.org # v5.17
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+[mcgrof: enhanced commit log for stable criteria and clarify base stuff ]
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/Makefile |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1979,6 +1979,7 @@ static int dwc3_remove(struct platform_d
- 	dwc3_core_exit(dwc);
- 	dwc3_ulpi_exit(dwc);
+--- a/fs/Makefile
++++ b/fs/Makefile
+@@ -6,7 +6,6 @@
+ # Rewritten to use lists instead of if-statements.
+ # 
  
-+	pm_runtime_allow(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
+-obj-$(CONFIG_SYSCTL)		+= sysctls.o
+ 
+ obj-y :=	open.o read_write.o file_table.o super.o \
+ 		char_dev.o stat.o exec.o pipe.o namei.o fcntl.o \
+@@ -50,7 +49,7 @@ obj-$(CONFIG_FS_MBCACHE)	+= mbcache.o
+ obj-$(CONFIG_FS_POSIX_ACL)	+= posix_acl.o
+ obj-$(CONFIG_NFS_COMMON)	+= nfs_common/
+ obj-$(CONFIG_COREDUMP)		+= coredump.o
+-obj-$(CONFIG_SYSCTL)		+= drop_caches.o
++obj-$(CONFIG_SYSCTL)		+= drop_caches.o sysctls.o
+ 
+ obj-$(CONFIG_FHANDLE)		+= fhandle.o
+ obj-y				+= iomap/
 
 
