@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BF73168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:52:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE020C433EF;
-	Mon,  8 May 2023 10:52:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B01E168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:52:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A342C433EF;
+	Mon,  8 May 2023 10:52:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543141;
-	bh=UEz0h3yOFYBbqlGA/Sp6Ce54htzfm8kA5QfvhS62AKI=;
+	s=korg; t=1683543144;
+	bh=V3le+qVrWxpVBhfvah3fhqSvZ1G7EY9kYVojJjE3teE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UK11YESAjN7fhNZrTlGkROJPtPThGtNHqMsG/eznlLkRP+5Z8ZWngxYHOvJTZokD9
-	 munmMZGtrLR70XL+YqcXTf/EFrMJWkIREV5X/qbH6H4taFd8cK41fOqNX+N9nLXBoI
-	 oVk36p8agCfbMLm2HzGWpKIrqMMoTMe0FcvOhaMw=
+	b=YJM65lOdqgdJvsH3kww+NRw+HDTsiuaSzX/BjdvQLTnmvMZwxLBUT8xcHLBYiML+C
+	 WO+bgdkI3Nrwtq2hMla1D0teyE6OD393VI1Sm1ab1KfjTcH3HKIhm/Di1LhzMlGruB
+	 mFFUP3v6g9Ir0XErhWUkuNB8s6IxqiRKUAVGsOsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.2 659/663] perf intel-pt: Fix CYC timestamps after standalone CBR
-Date: Mon,  8 May 2023 11:48:05 +0200
-Message-Id: <20230508094451.572793229@linuxfoundation.org>
+	Jan Sokolowski <jan.sokolowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Gurucharan G <gurucharanx.g@intel.com>
+Subject: [PATCH 6.2 660/663] i40e: Remove unused i40e status codes
+Date: Mon,  8 May 2023 11:48:06 +0200
+Message-Id: <20230508094451.613124793@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,38 +35,214 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Jan Sokolowski <jan.sokolowski@intel.com>
 
-commit 430635a0ef1ce958b7b4311f172694ece2c692b8 upstream.
+commit 9d135352bb5d885a7b21417103423301a40c1b8b upstream.
 
-After a standalone CBR (not associated with TSC), update the cycles
-reference timestamp and reset the cycle count, so that CYC timestamps
-are calculated relative to that point with the new frequency.
+In an effort to remove i40e status codes and replace them
+with standard kernel errornums, unused values of i40e_status_code
+were removed.
 
-Fixes: cc33618619cefc6d ("perf tools: Add Intel PT support for decoding CYC packets")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230403154831.8651-2-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Jan Sokolowski <jan.sokolowski@intel.com>
+Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/intel-pt-decoder/intel-pt-decoder.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_common.c |   70 --------------------------
+ drivers/net/ethernet/intel/i40e/i40e_status.h |   35 -------------
+ 2 files changed, 105 deletions(-)
 
---- a/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c
-+++ b/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c
-@@ -1998,6 +1998,8 @@ static void intel_pt_calc_cbr(struct int
- 
- 	decoder->cbr = cbr;
- 	decoder->cbr_cyc_to_tsc = decoder->max_non_turbo_ratio_fp / cbr;
-+	decoder->cyc_ref_timestamp = decoder->timestamp;
-+	decoder->cycle_cnt = 0;
- 
- 	intel_pt_mtc_cyc_cnt_cbr(decoder);
- }
+--- a/drivers/net/ethernet/intel/i40e/i40e_common.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_common.c
+@@ -138,106 +138,40 @@ const char *i40e_stat_str(struct i40e_hw
+ 		return "I40E_ERR_NVM";
+ 	case I40E_ERR_NVM_CHECKSUM:
+ 		return "I40E_ERR_NVM_CHECKSUM";
+-	case I40E_ERR_PHY:
+-		return "I40E_ERR_PHY";
+ 	case I40E_ERR_CONFIG:
+ 		return "I40E_ERR_CONFIG";
+ 	case I40E_ERR_PARAM:
+ 		return "I40E_ERR_PARAM";
+-	case I40E_ERR_MAC_TYPE:
+-		return "I40E_ERR_MAC_TYPE";
+ 	case I40E_ERR_UNKNOWN_PHY:
+ 		return "I40E_ERR_UNKNOWN_PHY";
+-	case I40E_ERR_LINK_SETUP:
+-		return "I40E_ERR_LINK_SETUP";
+-	case I40E_ERR_ADAPTER_STOPPED:
+-		return "I40E_ERR_ADAPTER_STOPPED";
+ 	case I40E_ERR_INVALID_MAC_ADDR:
+ 		return "I40E_ERR_INVALID_MAC_ADDR";
+ 	case I40E_ERR_DEVICE_NOT_SUPPORTED:
+ 		return "I40E_ERR_DEVICE_NOT_SUPPORTED";
+-	case I40E_ERR_PRIMARY_REQUESTS_PENDING:
+-		return "I40E_ERR_PRIMARY_REQUESTS_PENDING";
+-	case I40E_ERR_INVALID_LINK_SETTINGS:
+-		return "I40E_ERR_INVALID_LINK_SETTINGS";
+-	case I40E_ERR_AUTONEG_NOT_COMPLETE:
+-		return "I40E_ERR_AUTONEG_NOT_COMPLETE";
+ 	case I40E_ERR_RESET_FAILED:
+ 		return "I40E_ERR_RESET_FAILED";
+-	case I40E_ERR_SWFW_SYNC:
+-		return "I40E_ERR_SWFW_SYNC";
+ 	case I40E_ERR_NO_AVAILABLE_VSI:
+ 		return "I40E_ERR_NO_AVAILABLE_VSI";
+ 	case I40E_ERR_NO_MEMORY:
+ 		return "I40E_ERR_NO_MEMORY";
+ 	case I40E_ERR_BAD_PTR:
+ 		return "I40E_ERR_BAD_PTR";
+-	case I40E_ERR_RING_FULL:
+-		return "I40E_ERR_RING_FULL";
+-	case I40E_ERR_INVALID_PD_ID:
+-		return "I40E_ERR_INVALID_PD_ID";
+-	case I40E_ERR_INVALID_QP_ID:
+-		return "I40E_ERR_INVALID_QP_ID";
+-	case I40E_ERR_INVALID_CQ_ID:
+-		return "I40E_ERR_INVALID_CQ_ID";
+-	case I40E_ERR_INVALID_CEQ_ID:
+-		return "I40E_ERR_INVALID_CEQ_ID";
+-	case I40E_ERR_INVALID_AEQ_ID:
+-		return "I40E_ERR_INVALID_AEQ_ID";
+ 	case I40E_ERR_INVALID_SIZE:
+ 		return "I40E_ERR_INVALID_SIZE";
+-	case I40E_ERR_INVALID_ARP_INDEX:
+-		return "I40E_ERR_INVALID_ARP_INDEX";
+-	case I40E_ERR_INVALID_FPM_FUNC_ID:
+-		return "I40E_ERR_INVALID_FPM_FUNC_ID";
+-	case I40E_ERR_QP_INVALID_MSG_SIZE:
+-		return "I40E_ERR_QP_INVALID_MSG_SIZE";
+-	case I40E_ERR_QP_TOOMANY_WRS_POSTED:
+-		return "I40E_ERR_QP_TOOMANY_WRS_POSTED";
+-	case I40E_ERR_INVALID_FRAG_COUNT:
+-		return "I40E_ERR_INVALID_FRAG_COUNT";
+ 	case I40E_ERR_QUEUE_EMPTY:
+ 		return "I40E_ERR_QUEUE_EMPTY";
+-	case I40E_ERR_INVALID_ALIGNMENT:
+-		return "I40E_ERR_INVALID_ALIGNMENT";
+-	case I40E_ERR_FLUSHED_QUEUE:
+-		return "I40E_ERR_FLUSHED_QUEUE";
+-	case I40E_ERR_INVALID_PUSH_PAGE_INDEX:
+-		return "I40E_ERR_INVALID_PUSH_PAGE_INDEX";
+-	case I40E_ERR_INVALID_IMM_DATA_SIZE:
+-		return "I40E_ERR_INVALID_IMM_DATA_SIZE";
+ 	case I40E_ERR_TIMEOUT:
+ 		return "I40E_ERR_TIMEOUT";
+-	case I40E_ERR_OPCODE_MISMATCH:
+-		return "I40E_ERR_OPCODE_MISMATCH";
+-	case I40E_ERR_CQP_COMPL_ERROR:
+-		return "I40E_ERR_CQP_COMPL_ERROR";
+-	case I40E_ERR_INVALID_VF_ID:
+-		return "I40E_ERR_INVALID_VF_ID";
+-	case I40E_ERR_INVALID_HMCFN_ID:
+-		return "I40E_ERR_INVALID_HMCFN_ID";
+-	case I40E_ERR_BACKING_PAGE_ERROR:
+-		return "I40E_ERR_BACKING_PAGE_ERROR";
+-	case I40E_ERR_NO_PBLCHUNKS_AVAILABLE:
+-		return "I40E_ERR_NO_PBLCHUNKS_AVAILABLE";
+-	case I40E_ERR_INVALID_PBLE_INDEX:
+-		return "I40E_ERR_INVALID_PBLE_INDEX";
+ 	case I40E_ERR_INVALID_SD_INDEX:
+ 		return "I40E_ERR_INVALID_SD_INDEX";
+ 	case I40E_ERR_INVALID_PAGE_DESC_INDEX:
+ 		return "I40E_ERR_INVALID_PAGE_DESC_INDEX";
+ 	case I40E_ERR_INVALID_SD_TYPE:
+ 		return "I40E_ERR_INVALID_SD_TYPE";
+-	case I40E_ERR_MEMCPY_FAILED:
+-		return "I40E_ERR_MEMCPY_FAILED";
+ 	case I40E_ERR_INVALID_HMC_OBJ_INDEX:
+ 		return "I40E_ERR_INVALID_HMC_OBJ_INDEX";
+ 	case I40E_ERR_INVALID_HMC_OBJ_COUNT:
+ 		return "I40E_ERR_INVALID_HMC_OBJ_COUNT";
+-	case I40E_ERR_INVALID_SRQ_ARM_LIMIT:
+-		return "I40E_ERR_INVALID_SRQ_ARM_LIMIT";
+-	case I40E_ERR_SRQ_ENABLED:
+-		return "I40E_ERR_SRQ_ENABLED";
+ 	case I40E_ERR_ADMIN_QUEUE_ERROR:
+ 		return "I40E_ERR_ADMIN_QUEUE_ERROR";
+ 	case I40E_ERR_ADMIN_QUEUE_TIMEOUT:
+@@ -248,14 +182,10 @@ const char *i40e_stat_str(struct i40e_hw
+ 		return "I40E_ERR_ADMIN_QUEUE_FULL";
+ 	case I40E_ERR_ADMIN_QUEUE_NO_WORK:
+ 		return "I40E_ERR_ADMIN_QUEUE_NO_WORK";
+-	case I40E_ERR_BAD_IWARP_CQE:
+-		return "I40E_ERR_BAD_IWARP_CQE";
+ 	case I40E_ERR_NVM_BLANK_MODE:
+ 		return "I40E_ERR_NVM_BLANK_MODE";
+ 	case I40E_ERR_NOT_IMPLEMENTED:
+ 		return "I40E_ERR_NOT_IMPLEMENTED";
+-	case I40E_ERR_PE_DOORBELL_NOT_ENABLED:
+-		return "I40E_ERR_PE_DOORBELL_NOT_ENABLED";
+ 	case I40E_ERR_DIAG_TEST_FAILED:
+ 		return "I40E_ERR_DIAG_TEST_FAILED";
+ 	case I40E_ERR_NOT_READY:
+--- a/drivers/net/ethernet/intel/i40e/i40e_status.h
++++ b/drivers/net/ethernet/intel/i40e/i40e_status.h
+@@ -9,65 +9,30 @@ enum i40e_status_code {
+ 	I40E_SUCCESS				= 0,
+ 	I40E_ERR_NVM				= -1,
+ 	I40E_ERR_NVM_CHECKSUM			= -2,
+-	I40E_ERR_PHY				= -3,
+ 	I40E_ERR_CONFIG				= -4,
+ 	I40E_ERR_PARAM				= -5,
+-	I40E_ERR_MAC_TYPE			= -6,
+ 	I40E_ERR_UNKNOWN_PHY			= -7,
+-	I40E_ERR_LINK_SETUP			= -8,
+-	I40E_ERR_ADAPTER_STOPPED		= -9,
+ 	I40E_ERR_INVALID_MAC_ADDR		= -10,
+ 	I40E_ERR_DEVICE_NOT_SUPPORTED		= -11,
+-	I40E_ERR_PRIMARY_REQUESTS_PENDING	= -12,
+-	I40E_ERR_INVALID_LINK_SETTINGS		= -13,
+-	I40E_ERR_AUTONEG_NOT_COMPLETE		= -14,
+ 	I40E_ERR_RESET_FAILED			= -15,
+-	I40E_ERR_SWFW_SYNC			= -16,
+ 	I40E_ERR_NO_AVAILABLE_VSI		= -17,
+ 	I40E_ERR_NO_MEMORY			= -18,
+ 	I40E_ERR_BAD_PTR			= -19,
+-	I40E_ERR_RING_FULL			= -20,
+-	I40E_ERR_INVALID_PD_ID			= -21,
+-	I40E_ERR_INVALID_QP_ID			= -22,
+-	I40E_ERR_INVALID_CQ_ID			= -23,
+-	I40E_ERR_INVALID_CEQ_ID			= -24,
+-	I40E_ERR_INVALID_AEQ_ID			= -25,
+ 	I40E_ERR_INVALID_SIZE			= -26,
+-	I40E_ERR_INVALID_ARP_INDEX		= -27,
+-	I40E_ERR_INVALID_FPM_FUNC_ID		= -28,
+-	I40E_ERR_QP_INVALID_MSG_SIZE		= -29,
+-	I40E_ERR_QP_TOOMANY_WRS_POSTED		= -30,
+-	I40E_ERR_INVALID_FRAG_COUNT		= -31,
+ 	I40E_ERR_QUEUE_EMPTY			= -32,
+-	I40E_ERR_INVALID_ALIGNMENT		= -33,
+-	I40E_ERR_FLUSHED_QUEUE			= -34,
+-	I40E_ERR_INVALID_PUSH_PAGE_INDEX	= -35,
+-	I40E_ERR_INVALID_IMM_DATA_SIZE		= -36,
+ 	I40E_ERR_TIMEOUT			= -37,
+-	I40E_ERR_OPCODE_MISMATCH		= -38,
+-	I40E_ERR_CQP_COMPL_ERROR		= -39,
+-	I40E_ERR_INVALID_VF_ID			= -40,
+-	I40E_ERR_INVALID_HMCFN_ID		= -41,
+-	I40E_ERR_BACKING_PAGE_ERROR		= -42,
+-	I40E_ERR_NO_PBLCHUNKS_AVAILABLE		= -43,
+-	I40E_ERR_INVALID_PBLE_INDEX		= -44,
+ 	I40E_ERR_INVALID_SD_INDEX		= -45,
+ 	I40E_ERR_INVALID_PAGE_DESC_INDEX	= -46,
+ 	I40E_ERR_INVALID_SD_TYPE		= -47,
+-	I40E_ERR_MEMCPY_FAILED			= -48,
+ 	I40E_ERR_INVALID_HMC_OBJ_INDEX		= -49,
+ 	I40E_ERR_INVALID_HMC_OBJ_COUNT		= -50,
+-	I40E_ERR_INVALID_SRQ_ARM_LIMIT		= -51,
+-	I40E_ERR_SRQ_ENABLED			= -52,
+ 	I40E_ERR_ADMIN_QUEUE_ERROR		= -53,
+ 	I40E_ERR_ADMIN_QUEUE_TIMEOUT		= -54,
+ 	I40E_ERR_BUF_TOO_SHORT			= -55,
+ 	I40E_ERR_ADMIN_QUEUE_FULL		= -56,
+ 	I40E_ERR_ADMIN_QUEUE_NO_WORK		= -57,
+-	I40E_ERR_BAD_IWARP_CQE			= -58,
+ 	I40E_ERR_NVM_BLANK_MODE			= -59,
+ 	I40E_ERR_NOT_IMPLEMENTED		= -60,
+-	I40E_ERR_PE_DOORBELL_NOT_ENABLED	= -61,
+ 	I40E_ERR_DIAG_TEST_FAILED		= -62,
+ 	I40E_ERR_NOT_READY			= -63,
+ 	I40E_NOT_SUPPORTED			= -64,
 
 
