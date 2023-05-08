@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE25168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:54:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C749EC433D2;
-	Mon,  8 May 2023 10:54:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E055168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:54:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0E8C433EF;
+	Mon,  8 May 2023 10:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543251;
-	bh=rScqst/nCEVWLixqZoV2+i0fSkF07RYZe1EtVKdBnXI=;
+	s=korg; t=1683543254;
+	bh=1VLtWorznBeU1tpSMfDyMu736GfaHITHQgU5okOsPW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V/xIOrTQFuhWXwF8oU/5gnTJL1MFuxs8cH8IDkNm94APFiws5lR5MgEACsF5sRSDV
-	 umwzphBKtlnUu5TCoswHa1SsH/Xs+1cNCOJdWovMQm4a57G8OV8vX/p9HypJMvWrp3
-	 jXVsXFqI0Bibz8qUT8nGxz8XTgUDUYrUifLGfV2I=
+	b=EmtR1s+A8TWFwmO5MYhsmRQwTP0sgXweah+FaIp8KYz5lfGbBtu42Dcd2wlfjWv/Q
+	 Z50Yw4rbDAsnh1rpHPYH279wta2AnjDpNSfauZxYRugoay2wnubjFexGPcD48Esoe7
+	 X2FiiRN8nugGRCmNrO1aKjEtVxwEJtMnwvTdcSIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	=?UTF-8?q?Jan=20Kundr=C3=A1t?= <jan.kundrat@cesnet.cz>
-Subject: [PATCH 6.3 031/694] serial: max310x: fix IO data corruption in batched operations
-Date: Mon,  8 May 2023 11:37:46 +0200
-Message-Id: <20230508094433.655627849@linuxfoundation.org>
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Zhouyi Zhou <zhouzhouyi@gmail.com>,
+	Will Deacon <will@kernel.org>,
+	Marc Zyngier <maz@kernel.org>,
+	rcu <rcu@vger.kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>
+Subject: [PATCH 6.3 032/694] tick/nohz: Fix cpu_is_hotpluggable() by checking with nohz subsystem
+Date: Mon,  8 May 2023 11:37:47 +0200
+Message-Id: <20230508094433.685261512@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,90 +39,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kundrát <jan.kundrat@cesnet.cz>
+From: Joel Fernandes (Google) <joel@joelfernandes.org>
 
-commit 3f42b142ea1171967e40e10e4b0241c0d6d28d41 upstream.
+commit 58d7668242647e661a20efe065519abd6454287e upstream.
 
-After upgrading from 5.16 to 6.1, our board with a MAX14830 started
-producing lots of garbage data over UART. Bisection pointed out commit
-285e76fc049c as the culprit. That patch tried to replace hand-written
-code which I added in 2b4bac48c1084 ("serial: max310x: Use batched reads
-when reasonably safe") with the generic regmap infrastructure for
-batched operations.
+For CONFIG_NO_HZ_FULL systems, the tick_do_timer_cpu cannot be offlined.
+However, cpu_is_hotpluggable() still returns true for those CPUs. This causes
+torture tests that do offlining to end up trying to offline this CPU causing
+test failures. Such failure happens on all architectures.
 
-Unfortunately, the `regmap_raw_read` and `regmap_raw_write` which were
-used are actually functions which perform IO over *multiple* registers.
-That's not what is needed for accessing these Tx/Rx FIFOs; the
-appropriate functions are the `_noinc_` versions, not the `_raw_` ones.
+Fix the repeated error messages thrown by this (even if the hotplug errors are
+harmless) by asking the opinion of the nohz subsystem on whether the CPU can be
+hotplugged.
 
-Fix this regression by using `regmap_noinc_read()` and
-`regmap_noinc_write()` along with the necessary `regmap_config` setup;
-with this patch in place, our board communicates happily again. Since
-our board uses SPI for talking to this chip, the I2C part is completely
-untested.
+[ Apply Frederic Weisbecker feedback on refactoring tick_nohz_cpu_down(). ]
 
-Fixes: 285e76fc049c ("serial: max310x: use regmap methods for SPI batch operations")
+For drivers/base/ portion:
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Cc: Frederic Weisbecker <frederic@kernel.org>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Zhouyi Zhou <zhouzhouyi@gmail.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: rcu <rcu@vger.kernel.org>
 Cc: stable@vger.kernel.org
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Jan Kundrát <jan.kundrat@cesnet.cz>
-Link: https://lore.kernel.org/r/79db8e82aadb0e174bc82b9996423c3503c8fb37.1680732084.git.jan.kundrat@cesnet.cz
+Fixes: 2987557f52b9 ("driver-core/cpu: Expose hotpluggability to the rest of the kernel")
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/max310x.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/base/cpu.c       |    3 ++-
+ include/linux/tick.h     |    2 ++
+ kernel/time/tick-sched.c |   11 ++++++++---
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/max310x.c
-+++ b/drivers/tty/serial/max310x.c
-@@ -525,6 +525,11 @@ static bool max310x_reg_precious(struct
- 	return false;
+--- a/drivers/base/cpu.c
++++ b/drivers/base/cpu.c
+@@ -487,7 +487,8 @@ static const struct attribute_group *cpu
+ bool cpu_is_hotpluggable(unsigned int cpu)
+ {
+ 	struct device *dev = get_cpu_device(cpu);
+-	return dev && container_of(dev, struct cpu, dev)->hotpluggable;
++	return dev && container_of(dev, struct cpu, dev)->hotpluggable
++		&& tick_nohz_cpu_hotpluggable(cpu);
+ }
+ EXPORT_SYMBOL_GPL(cpu_is_hotpluggable);
+ 
+--- a/include/linux/tick.h
++++ b/include/linux/tick.h
+@@ -216,6 +216,7 @@ extern void tick_nohz_dep_set_signal(str
+ 				     enum tick_dep_bits bit);
+ extern void tick_nohz_dep_clear_signal(struct signal_struct *signal,
+ 				       enum tick_dep_bits bit);
++extern bool tick_nohz_cpu_hotpluggable(unsigned int cpu);
+ 
+ /*
+  * The below are tick_nohz_[set,clear]_dep() wrappers that optimize off-cases
+@@ -280,6 +281,7 @@ static inline void tick_nohz_full_add_cp
+ 
+ static inline void tick_nohz_dep_set_cpu(int cpu, enum tick_dep_bits bit) { }
+ static inline void tick_nohz_dep_clear_cpu(int cpu, enum tick_dep_bits bit) { }
++static inline bool tick_nohz_cpu_hotpluggable(unsigned int cpu) { return true; }
+ 
+ static inline void tick_dep_set(enum tick_dep_bits bit) { }
+ static inline void tick_dep_clear(enum tick_dep_bits bit) { }
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -527,7 +527,7 @@ void __init tick_nohz_full_setup(cpumask
+ 	tick_nohz_full_running = true;
  }
  
-+static bool max310x_reg_noinc(struct device *dev, unsigned int reg)
-+{
-+	return reg == MAX310X_RHR_REG;
+-static int tick_nohz_cpu_down(unsigned int cpu)
++bool tick_nohz_cpu_hotpluggable(unsigned int cpu)
+ {
+ 	/*
+ 	 * The tick_do_timer_cpu CPU handles housekeeping duty (unbound
+@@ -535,8 +535,13 @@ static int tick_nohz_cpu_down(unsigned i
+ 	 * CPUs. It must remain online when nohz full is enabled.
+ 	 */
+ 	if (tick_nohz_full_running && tick_do_timer_cpu == cpu)
+-		return -EBUSY;
+-	return 0;
++		return false;
++	return true;
 +}
 +
- static int max310x_set_baud(struct uart_port *port, int baud)
- {
- 	unsigned int mode = 0, div = 0, frac = 0, c = 0, F = 0;
-@@ -651,14 +656,14 @@ static void max310x_batch_write(struct u
- {
- 	struct max310x_one *one = to_max310x_port(port);
- 
--	regmap_raw_write(one->regmap, MAX310X_THR_REG, txbuf, len);
-+	regmap_noinc_write(one->regmap, MAX310X_THR_REG, txbuf, len);
++static int tick_nohz_cpu_down(unsigned int cpu)
++{
++	return tick_nohz_cpu_hotpluggable(cpu) ? 0 : -EBUSY;
  }
  
- static void max310x_batch_read(struct uart_port *port, u8 *rxbuf, unsigned int len)
- {
- 	struct max310x_one *one = to_max310x_port(port);
- 
--	regmap_raw_read(one->regmap, MAX310X_RHR_REG, rxbuf, len);
-+	regmap_noinc_read(one->regmap, MAX310X_RHR_REG, rxbuf, len);
- }
- 
- static void max310x_handle_rx(struct uart_port *port, unsigned int rxlen)
-@@ -1468,6 +1473,10 @@ static struct regmap_config regcfg = {
- 	.writeable_reg = max310x_reg_writeable,
- 	.volatile_reg = max310x_reg_volatile,
- 	.precious_reg = max310x_reg_precious,
-+	.writeable_noinc_reg = max310x_reg_noinc,
-+	.readable_noinc_reg = max310x_reg_noinc,
-+	.max_raw_read = MAX310X_FIFO_SIZE,
-+	.max_raw_write = MAX310X_FIFO_SIZE,
- };
- 
- #ifdef CONFIG_SPI_MASTER
-@@ -1553,6 +1562,10 @@ static struct regmap_config regcfg_i2c =
- 	.volatile_reg = max310x_reg_volatile,
- 	.precious_reg = max310x_reg_precious,
- 	.max_register = MAX310X_I2C_REVID_EXTREG,
-+	.writeable_noinc_reg = max310x_reg_noinc,
-+	.readable_noinc_reg = max310x_reg_noinc,
-+	.max_raw_read = MAX310X_FIFO_SIZE,
-+	.max_raw_write = MAX310X_FIFO_SIZE,
- };
- 
- static const struct max310x_if_cfg max310x_i2c_if_cfg = {
+ void __init tick_nohz_init(void)
 
 
