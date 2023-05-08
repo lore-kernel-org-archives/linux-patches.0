@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E29311C8F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C76C433D2;
-	Mon,  8 May 2023 11:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E1DA11C8F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2CFC433D2;
+	Mon,  8 May 2023 11:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543708;
-	bh=LVOjEFI63TDCa+H6RehajV3mSb3+qUqefeYeby0skB8=;
+	s=korg; t=1683543711;
+	bh=N7Otzb3vKDEs95nXGMMYN1FSpF+JLCgN5hMTbGsyMqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nO6N89AUusIGkWTZ8AkD7pbDT7wySW88wsocqbch0/qx9A1oal787KAkX0o3+mqAI
-	 2yPZK3YYraaqH6Vedsi4wyCt7yWFk/9Fj9LLrEcHDXJxPAp/ohur2QEyeLccT2HL1L
-	 LM3ObQnzXTAypeNlKKRGqMWyOodFhIbG+Cbf5yD0=
+	b=MnnSxApDJEttBSbteEBRJdh7NZ6pRcYVADcfrRs4PwlaOhCe0vWIYea8v4ItKZ9uB
+	 PDo5hhM6oAVKqpg55XUEDNrulP91Xcv/sGKTkFFR0AGaKzzwbSov9wzLzTgSNsjYM8
+	 eQBHOVaAE1qP21TFsJbKejTbNzkESRcCqIWvdSgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Nishanth Menon <nm@ti.com>,
-	Kamlesh Gurudasani <kamlesh@ti.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 174/694] arm64: dts: ti: k3-j784s4-*: Add ti,sci-dev-id for NAVSS nodes
-Date: Mon,  8 May 2023 11:40:09 +0200
-Message-Id: <20230508094438.052511308@linuxfoundation.org>
+Subject: [PATCH 6.3 175/694] arm64: dts: broadcom: bcmbca: bcm4908: fix NAND interrupt name
+Date: Mon,  8 May 2023 11:40:10 +0200
+Message-Id: <20230508094438.086746427@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,48 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit 436b288687176bf4d2c1cd25b86173e5a1649a60 ]
+[ Upstream commit 5cca02449490e767289bda38db1577e2c375c084 ]
 
-TISCI device ID for main_navss and mcu_navss nodes are missing in
-the device tree. Add them.
+This fixes:
+arch/arm64/boot/dts/broadcom/bcmbca/bcm94908.dtb: nand-controller@1800: interrupt-names:0: 'nand_ctlrdy' was expected
+        From schema: Documentation/devicetree/bindings/mtd/brcm,brcmnand.yaml
+arch/arm64/boot/dts/broadcom/bcmbca/bcm94908.dtb: nand-controller@1800: Unevaluated properties are not allowed ('interrupt-names' was unexpected)
+        From schema: Documentation/devicetree/bindings/mtd/brcm,brcmnand.yaml
 
-Fixes: 4664ebd8346a ("arm64: dts: ti: Add initial support for J784S4 SoC")
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Kamlesh Gurudasani <kamlesh@ti.com>
-Link: https://lore.kernel.org/r/20230314152611.140969-2-j-choudhary@ti.com
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/all/20230228144400.21689-1-zajec5@gmail.com/
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi       | 1 +
- arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi | 1 +
- 2 files changed, 2 insertions(+)
+ arch/arm64/boot/dts/broadcom/bcmbca/bcm4908.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi
-index 7edf324ac159b..80a1b08c51a84 100644
---- a/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi
-@@ -398,6 +398,7 @@
- 		#address-cells = <2>;
- 		#size-cells = <2>;
- 		ranges = <0x00 0x30000000 0x00 0x30000000 0x00 0x0c400000>;
-+		ti,sci-dev-id = <280>;
- 		dma-coherent;
- 		dma-ranges;
+diff --git a/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908.dtsi b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908.dtsi
+index eb2a78f4e0332..af5dc04aa1878 100644
+--- a/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908.dtsi
++++ b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908.dtsi
+@@ -538,7 +538,7 @@
+ 			reg = <0x1800 0x600>, <0x2000 0x10>;
+ 			reg-names = "nand", "nand-int-base";
+ 			interrupts = <GIC_SPI 37 IRQ_TYPE_LEVEL_HIGH>;
+-			interrupt-names = "nand";
++			interrupt-names = "nand_ctlrdy";
+ 			status = "okay";
  
-diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi
-index 93952af618f65..64bd3dee14aa6 100644
---- a/arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi
-@@ -209,6 +209,7 @@
- 		#address-cells = <2>;
- 		#size-cells = <2>;
- 		ranges = <0x00 0x28380000 0x00 0x28380000 0x00 0x03880000>;
-+		ti,sci-dev-id = <323>;
- 		dma-coherent;
- 		dma-ranges;
- 
+ 			nandcs: nand@0 {
 -- 
 2.39.2
 
