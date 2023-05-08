@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FAB168C7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A94C433A8;
-	Mon,  8 May 2023 11:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F9B168C7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2965AC433EF;
+	Mon,  8 May 2023 11:01:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543689;
-	bh=wVodvFsR1kIHZhS5o0/bBT7hFgxysWTzBkcLHeeNmDM=;
+	s=korg; t=1683543692;
+	bh=DbehqFpPLI+9YZ3LaxS6xSXjmrG5B6cXeVi4Hx1uqeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f424GsMFNCfPzew00RZ30vP6cxQBOUW3gR2oFRmf43uyJ2c8uIsJdfk0Qemavza26
-	 LPqfumP12LTVqxzOZxYM1RU6BDhWsPUPZ8mAqYiD3JeALLioDVcTf2WIFHqQ6Shnfr
-	 c95UGWBpb46GvNZsfTe2FQfzZww66HmM1fjqHWdY=
+	b=caTtIb0acJtrCvYRTJU1q5S4J3sO/VSIHD2YUOX/Wl2UaA+VkZRsR9sO2qSYPk3FE
+	 izNKsaW+VNCuKoFYq0OvntMOwrbhpG/XY/+lpnEZ6MZVigw/Nw9DeuENYrdIJfSTFR
+	 1Wid9yGBH2XV8EMf5VQU9aC32AZwfpHzdsPApZ0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Liu Ying <victor.liu@nxp.com>,
-	Marek Vasut <marex@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	=?UTF-8?q?Christian=20Kohlsch=C3=BCtter?= <christian@kohlschutter.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 169/694] arm64: dts: imx8mp: Drop simple-bus from fsl,imx8mp-media-blk-ctrl
-Date: Mon,  8 May 2023 11:40:04 +0200
-Message-Id: <20230508094437.900924742@linuxfoundation.org>
+Subject: [PATCH 6.3 170/694] regulator: core: Shorten off-on-delay-us for always-on/boot-on by time since booted
+Date: Mon,  8 May 2023 11:40:05 +0200
+Message-Id: <20230508094437.929767340@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,37 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 5a51e1f2b083423f75145c512ee284862ab33854 ]
+[ Upstream commit 691c1fcda5351ed98a44610b7dccc0e3ee920020 ]
 
-This block should not be compatible with simple-bus and misuse it that way.
-Instead, the driver should scan its subnodes and bind drivers to them.
+This is very close to a straight revert of commit 218320fec294
+("regulator: core: Fix off-on-delay-us for always-on/boot-on
+regulators"). We've identified that patch as causing a boot speed
+regression on sc7180-trogdor boards. While boot speed certainly isn't
+more important than making sure that power sequencing is correct,
+looking closely at the original change it doesn't seem to have been
+fully justified. It mentions "cycling issues" without describing
+exactly what the issues were. That means it's possible that the
+cycling issues were really a problem that should be fixed in a
+different way.
 
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Reviewed-by: Liu Ying <victor.liu@nxp.com>
-Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Fixes: 94e6197dadc9 ("arm64: dts: imx8mp: Add LCDIF2 & LDB nodes")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Let's take a careful look at how we should handle regulators that have
+an off-on-delay and that are boot-on or always-on. Linux currently
+doesn't have any way to identify whether a GPIO regulator was already
+on when the kernel booted. That means that when the kernel boots we
+probe a regulator, see that it wants boot-on / always-on we, and then
+turn the regulator on. We could be in one of two cases when we do
+this:
+
+a) The regulator might have been left on by the bootloader and we're
+   ensuring that it stays on.
+b) The regulator might have been left off by the bootloader and we're
+   just now turning it on.
+
+For case a) we definitely don't need any sort of delay. For case b) we
+_might_ need some delay in case the bootloader turned the regulator
+off _right_ before booting the kernel. To get the proper delay for
+case b) then we can just assume a `last_off` of 0, which is what it
+gets initialized to by default.
+
+As per above, we can't tell whether we're in case a) or case b) so
+we'll assume the longer delay (case b). This basically puts the code
+to how it was before commit 218320fec294 ("regulator: core: Fix
+off-on-delay-us for always-on/boot-on regulators"). However, we add
+one important change: we make sure that the delay is actually honored
+if `last_off` is 0. Though the original "cycling issues" cited were
+vague, I'm hopeful that this important extra change will be enough to
+fix the issues that the initial commit mentioned.
+
+With this fix, I've confined that on a sc7180-trogdor board the delay
+at boot goes down from 500 ms to ~250 ms. That's not as good as the 0
+ms that we had prior to commit 218320fec294 ("regulator: core: Fix
+off-on-delay-us for always-on/boot-on regulators"), but it's probably
+safer because we don't know if the bootloader turned the regulator off
+right before booting.
+
+One note is that it's possible that we could be in a state that's not
+a) or b) if there are other issues in the kernel. The only one I can
+think of is related to pinctrl. If the pinctrl driver being used on a
+board isn't careful about avoiding glitches when setting up a pin then
+it's possible that setting up a pin could cause the regulator to "turn
+off" briefly immediately before the regulator probes. If this is
+indeed causing problems then the pinctrl driver should be fixed,
+perhaps in a similar way to what was done in commit d21f4b7ffc22
+("pinctrl: qcom: Avoid glitching lines when we first mux to output")
+
+Fixes: 218320fec294 ("regulator: core: Fix off-on-delay-us for always-on/boot-on regulators")
+Cc: Christian Kohlschütter <christian@kohlschutter.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230313111806.1.I2eaad872be0932a805c239a7c7a102233fb0b03b@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/core.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-index a237275ee0179..3f9d67341484b 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-@@ -1151,7 +1151,7 @@
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 4fcd36055b025..1490eb40c973a 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1583,9 +1583,6 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 			rdev->constraints->always_on = true;
+ 	}
  
- 			media_blk_ctrl: blk-ctrl@32ec0000 {
- 				compatible = "fsl,imx8mp-media-blk-ctrl",
--					     "simple-bus", "syscon";
-+					     "syscon";
- 				reg = <0x32ec0000 0x10000>;
- 				#address-cells = <1>;
- 				#size-cells = <1>;
+-	if (rdev->desc->off_on_delay)
+-		rdev->last_off = ktime_get_boottime();
+-
+ 	/* If the constraints say the regulator should be on at this point
+ 	 * and we have control then make sure it is enabled.
+ 	 */
+@@ -1619,6 +1616,8 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 
+ 		if (rdev->constraints->always_on)
+ 			rdev->use_count++;
++	} else if (rdev->desc->off_on_delay) {
++		rdev->last_off = ktime_get();
+ 	}
+ 
+ 	print_constraints(rdev);
+@@ -2668,7 +2667,7 @@ static int _regulator_do_enable(struct regulator_dev *rdev)
+ 
+ 	trace_regulator_enable(rdev_get_name(rdev));
+ 
+-	if (rdev->desc->off_on_delay && rdev->last_off) {
++	if (rdev->desc->off_on_delay) {
+ 		/* if needed, keep a distance of off_on_delay from last time
+ 		 * this regulator was disabled.
+ 		 */
 -- 
 2.39.2
 
