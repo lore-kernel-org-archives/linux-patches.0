@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA3B168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820B4C433D2;
-	Mon,  8 May 2023 11:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9549168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AE8C433EF;
+	Mon,  8 May 2023 11:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544412;
-	bh=gNrtc+XhzCCjjFI9r4JGYySjN8hN6xfvcEvs1ukL+9I=;
+	s=korg; t=1683544415;
+	bh=xE4/oRYpbwAn/LZJYp3jbPGMA1md4L+74SheDqoDdtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b5HbD/g0VYzHnrOnYm6NwiVRsFWheiEZ6MoMmMwNiLeeDNtdEN2M/tNwQvxGzlbpN
-	 jf29VxgnmCw9EXgkbrnI5nxFeHfspcLhHm+qM8dYv2CPvrpi5QyeSPuO7KLFsSSREB
-	 txWZBRvSj2ZVn7hOqc8zaziKuqgH+LvIrTw4PKCA=
+	b=2QhmlGJuG8aUyTk/dnQVlcD4VBr9affO5R0MtGy7f8P8UgHGPHtbhv4mbCbRRVwwp
+	 COihx4F1bRmq37iIKCfrVnGTID+vcLvwbGxEw3ailNhYOHpYE53Cn5WbcHATm/M8Ek
+	 tAbKoU+cGm1resCmlCL84/mm6wjAeq5Gwx0olWxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 401/694] nvmet: fix error handling in nvmet_execute_identify_cns_cs_ns()
-Date: Mon,  8 May 2023 11:43:56 +0200
-Message-Id: <20230508094446.162678112@linuxfoundation.org>
+Subject: [PATCH 6.3 402/694] nvmet: fix Identify Namespace handling
+Date: Mon,  8 May 2023 11:43:57 +0200
+Message-Id: <20230508094446.214022984@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -40,82 +38,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit ab76e7206b672b2e8818cb121a04506956d6b223 ]
+[ Upstream commit 8c098aa00118c35108f0c19bd3cdc45e11574948 ]
 
-Nvme specifications state that:
+The identify command with cns set to NVME_ID_CNS_NS does not directly
+depend on the command set. The NVMe specifications is rather confusing
+here as it appears that this command only applies to the NVM command
+set. However, footnote 8 of Figure 273 in the NVMe 2.0 base
+specifications clearly state that this command applies to NVM command
+sets that support logical blocks, that is, NVM and ZNS. Both the NVM and
+ZNS command set specifications also list this identify as mandatory.
 
-If the I/O Command Set associated with the namespace identified by the
-NSID field does not support the Identify Namespace data structure
-specified by the CSI field, the controller shall abort the command with
-a status code of Invalid Field in Command.
+The command handling should thus not look at the csi field since it is
+defined as unused for this command. Given that we do not support the
+KV command set, simply remove the csi switch-case for that command
+handling and call directly nvmet_execute_identify_ns() in
+nvmet_execute_identify().
 
-In other words, if nvmet_execute_identify_cns_cs_ns() is called for a
-target with a block device that is not zoned, we should not return any
-data and set the status to NVME_SC_INVALID_FIELD.
-
-While at it, it is also better to revalidate the ns block devie *before*
-checking if the block device is zoned, to ensure that
-nvmet_execute_identify_cns_cs_ns() operates against updated device
-characteristics.
-
-Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
+Fixes: ab5d0b38c047 ("nvmet: add Command Set Identifier support")
 Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
 Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Tested-by: Chaitanya Kulkarni <kch@nvidia.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/zns.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/nvme/target/admin-cmd.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
-index 7e4292d88016c..77ef0a86ff61f 100644
---- a/drivers/nvme/target/zns.c
-+++ b/drivers/nvme/target/zns.c
-@@ -97,7 +97,7 @@ void nvmet_execute_identify_cns_cs_ctrl(struct nvmet_req *req)
+diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
+index 80099df37314a..a982f925dfcef 100644
+--- a/drivers/nvme/target/admin-cmd.c
++++ b/drivers/nvme/target/admin-cmd.c
+@@ -692,13 +692,8 @@ static void nvmet_execute_identify(struct nvmet_req *req)
  
- void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req)
- {
--	struct nvme_id_ns_zns *id_zns;
-+	struct nvme_id_ns_zns *id_zns = NULL;
- 	u64 zsze;
- 	u16 status;
- 	u32 mar, mor;
-@@ -118,16 +118,18 @@ void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req)
- 	if (status)
- 		goto done;
- 
--	if (!bdev_is_zoned(req->ns->bdev)) {
--		req->error_loc = offsetof(struct nvme_identify, nsid);
--		goto done;
--	}
--
- 	if (nvmet_ns_revalidate(req->ns)) {
- 		mutex_lock(&req->ns->subsys->lock);
- 		nvmet_ns_changed(req->ns->subsys, req->ns->nsid);
- 		mutex_unlock(&req->ns->subsys->lock);
- 	}
-+
-+	if (!bdev_is_zoned(req->ns->bdev)) {
-+		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
-+		req->error_loc = offsetof(struct nvme_identify, nsid);
-+		goto out;
-+	}
-+
- 	zsze = (bdev_zone_sectors(req->ns->bdev) << 9) >>
- 					req->ns->blksize_shift;
- 	id_zns->lbafe[0].zsze = cpu_to_le64(zsze);
-@@ -148,8 +150,8 @@ void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req)
- 
- done:
- 	status = nvmet_copy_to_sgl(req, 0, id_zns, sizeof(*id_zns));
--	kfree(id_zns);
- out:
-+	kfree(id_zns);
- 	nvmet_req_complete(req, status);
- }
- 
+ 	switch (req->cmd->identify.cns) {
+ 	case NVME_ID_CNS_NS:
+-		switch (req->cmd->identify.csi) {
+-		case NVME_CSI_NVM:
+-			return nvmet_execute_identify_ns(req);
+-		default:
+-			break;
+-		}
+-		break;
++		nvmet_execute_identify_ns(req);
++		return;
+ 	case NVME_ID_CNS_CS_NS:
+ 		if (IS_ENABLED(CONFIG_BLK_DEV_ZONED)) {
+ 			switch (req->cmd->identify.csi) {
 -- 
 2.39.2
 
