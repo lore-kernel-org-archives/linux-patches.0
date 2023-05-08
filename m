@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3760E1549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C08C433D2;
-	Mon,  8 May 2023 10:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929181549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6DBC433EF;
+	Mon,  8 May 2023 10:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540025;
-	bh=uFdnm6oDQNvJJlSMqWdEciZCwq9VWtlp2q1WAeJTGCE=;
+	s=korg; t=1683540028;
+	bh=eif0l6Oc7RHhKo5VfKLLCLzztKYPWDVwYpvsyQDvLs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Rv7QtpS1OctDydfVooWFBPUZYWJ2AeHimFh2+OOAgUHBMzV8nGWhw1E/YX0L7qXt
-	 u+mTkKVNJX2GYqSIujhRn6OyTMAqKG49yItDQjzzGl357LQcbT51jyrFiuE9odvwlF
-	 EdGrw9dJFIWGhQ/YguOAl1ZFljv5MYJ4ivkpQqSE=
+	b=oeNYKPIeMKAnhv1BxVeW+sqepYTSOax1V/wl6ZQOMVPRtTeUqzmT4N7pH4Ap4dNfj
+	 X3TFJN4svTIxPtrybJfvHdVaIT8Cq2cbtRrOt0TGh35ObuI3YUKZdsH79rEZIDpYca
+	 6DqvGNZEJci4JRnNHtPeQFt6qakK8PvfrpZl9UVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 207/611] gpu: host1x: Fix memory leak of device names
-Date: Mon,  8 May 2023 11:40:49 +0200
-Message-Id: <20230508094429.109932336@linuxfoundation.org>
+Subject: [PATCH 6.1 216/611] regulator: core: Consistently set mutex_owner when using ww_mutex_lock_slow()
+Date: Mon,  8 May 2023 11:40:58 +0200
+Message-Id: <20230508094429.413501375@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,111 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 55879dad0f3ae8468444b42f785ad79eac05fe5b ]
+[ Upstream commit b83a1772be854f87602de14726737d3e5b06e1f4 ]
 
-The device names allocated by dev_set_name() need be freed
-before module unloading, but they can not be freed because
-the kobject's refcount which was set in device_initialize()
-has not be decreased to 0.
+When a codepath locks a rdev using ww_mutex_lock_slow() directly then
+that codepath is responsible for incrementing the "ref_cnt" and also
+setting the "mutex_owner" to "current".
 
-As comment of device_add() says, if it fails, use only
-put_device() drop the refcount, then the name will be
-freed in kobejct_cleanup().
+The regulator core consistently got that right for "ref_cnt" but
+didn't always get it right for "mutex_owner". Let's fix this.
 
-device_del() and put_device() can be replaced with
-device_unregister(), so call it to unregister the added
-successfully devices, and just call put_device() to the
-not added device.
+It's unlikely that this truly matters because the "mutex_owner" is
+only needed if we're going to do subsequent locking of the same
+rdev. However, even though it's not truly needed it seems less
+surprising if we consistently set "mutex_owner" properly.
 
-Add a release() function to device to avoid null release()
-function WARNING in device_release(), it's empty, because
-the context devices are freed together in
-host1x_memory_context_list_free().
-
-Fixes: 8aa5bcb61612 ("gpu: host1x: Add context device management code")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: f8702f9e4aa7 ("regulator: core: Use ww_mutex for regulators locking")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230329143317.RFC.v2.1.I4e9d433ea26360c06dd1381d091c82bb1a4ce843@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/context.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/regulator/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/host1x/context.c b/drivers/gpu/host1x/context.c
-index 291f34562e2e6..047696432eb21 100644
---- a/drivers/gpu/host1x/context.c
-+++ b/drivers/gpu/host1x/context.c
-@@ -13,6 +13,11 @@
- #include "context.h"
- #include "dev.h"
- 
-+static void host1x_memory_context_release(struct device *dev)
-+{
-+	/* context device is freed in host1x_memory_context_list_free() */
-+}
-+
- int host1x_memory_context_list_init(struct host1x *host1x)
- {
- 	struct host1x_memory_context_list *cdl = &host1x->context_list;
-@@ -53,28 +58,30 @@ int host1x_memory_context_list_init(struct host1x *host1x)
- 		dev_set_name(&ctx->dev, "host1x-ctx.%d", i);
- 		ctx->dev.bus = &host1x_context_device_bus_type;
- 		ctx->dev.parent = host1x->dev;
-+		ctx->dev.release = host1x_memory_context_release;
- 
- 		dma_set_max_seg_size(&ctx->dev, UINT_MAX);
- 
- 		err = device_add(&ctx->dev);
- 		if (err) {
- 			dev_err(host1x->dev, "could not add context device %d: %d\n", i, err);
--			goto del_devices;
-+			put_device(&ctx->dev);
-+			goto unreg_devices;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 075b8504290ee..da929bef22c64 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -334,6 +334,7 @@ static void regulator_lock_dependent(struct regulator_dev *rdev,
+ 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
+ 			old_contended_rdev = new_contended_rdev;
+ 			old_contended_rdev->ref_cnt++;
++			old_contended_rdev->mutex_owner = current;
  		}
  
- 		err = of_dma_configure_id(&ctx->dev, node, true, &i);
- 		if (err) {
- 			dev_err(host1x->dev, "IOMMU configuration failed for context device %d: %d\n",
- 				i, err);
--			device_del(&ctx->dev);
--			goto del_devices;
-+			device_unregister(&ctx->dev);
-+			goto unreg_devices;
+ 		err = regulator_lock_recursive(rdev,
+@@ -6042,6 +6043,7 @@ static void regulator_summary_lock(struct ww_acquire_ctx *ww_ctx)
+ 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
+ 			old_contended_rdev = new_contended_rdev;
+ 			old_contended_rdev->ref_cnt++;
++			old_contended_rdev->mutex_owner = current;
  		}
  
- 		fwspec = dev_iommu_fwspec_get(&ctx->dev);
- 		if (!fwspec || !device_iommu_mapped(&ctx->dev)) {
- 			dev_err(host1x->dev, "Context device %d has no IOMMU!\n", i);
--			device_del(&ctx->dev);
--			goto del_devices;
-+			device_unregister(&ctx->dev);
-+			goto unreg_devices;
- 		}
- 
- 		ctx->stream_id = fwspec->ids[0] & 0xffff;
-@@ -82,9 +89,9 @@ int host1x_memory_context_list_init(struct host1x *host1x)
- 
- 	return 0;
- 
--del_devices:
-+unreg_devices:
- 	while (i--)
--		device_del(&cdl->devs[i].dev);
-+		device_unregister(&cdl->devs[i].dev);
- 
- 	kfree(cdl->devs);
- 	cdl->devs = NULL;
-@@ -98,7 +105,7 @@ void host1x_memory_context_list_free(struct host1x_memory_context_list *cdl)
- 	unsigned int i;
- 
- 	for (i = 0; i < cdl->len; i++)
--		device_del(&cdl->devs[i].dev);
-+		device_unregister(&cdl->devs[i].dev);
- 
- 	kfree(cdl->devs);
- 	cdl->len = 0;
+ 		err = regulator_summary_lock_all(ww_ctx,
 -- 
 2.39.2
 
