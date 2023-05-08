@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FEF168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB250C433D2;
-	Mon,  8 May 2023 10:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15633168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870B5C433D2;
+	Mon,  8 May 2023 10:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543095;
-	bh=ZEvsQuva0xNOrYGykGwpQjElS5A1ix7RmXvxqguUFJQ=;
+	s=korg; t=1683543097;
+	bh=sFrfPY7EMkBSX+YimTIkq9AjymcaZRkC1tl3CcGmGv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vcCyUZUowl4kt0riuqN5vKqHLnkhmTSxUPUiMeKrdY0PH4Z6sYtuRpkIwDWr/F1XE
-	 qtqPbw/47HJ9YsBm+KG0Ero5ZiK6VcKkojs3A5LELsnITwMZuwSpFZco1p8YQIhtq7
-	 AMe002VJTNW71KFP6N9Y6/3thfeSsQk7MHG4ew3g=
+	b=NSM1gZD87w99ZNztqSQ0+Vz6sEkzJ7XbnrRCHNk7bAtjGyHhIkH5TfPtzkHFBR6CB
+	 rTVKOecFCwtIOMXUiT7LlIooNDaXGmkk0qapnBTt+1ZOncS9r7CXRLIu2Q4PrAFV1q
+	 S3ESEftSaASoXRV3EWckPc6ZsSCZn1fq870ahwr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanmay Shah <tanmay.shah@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.2 630/663] mailbox: zynqmp: Fix IPI isr handling
-Date: Mon,  8 May 2023 11:47:36 +0200
-Message-Id: <20230508094450.314812592@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.2 648/663] dm flakey: fix a crash with invalid table line
+Date: Mon,  8 May 2023 11:47:54 +0200
+Message-Id: <20230508094451.101466923@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,50 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tanmay Shah <tanmay.shah@amd.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 74ad37a30ffee3643bc34f9ca7225b20a66abaaf upstream.
+commit 98dba02d9a93eec11bffbb93c7c51624290702d2 upstream.
 
-Multiple IPI channels are mapped to same interrupt handler.
-Current isr implementation handles only one channel per isr.
-Fix this behavior by checking isr status bit of all child
-mailbox nodes.
+This command will crash with NULL pointer dereference:
+ dmsetup create flakey --table \
+  "0 `blockdev --getsize /dev/ram0` flakey /dev/ram0 0 0 1 2 corrupt_bio_byte 512"
 
-Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
-Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
+Fix the crash by checking if arg_name is non-NULL before comparing it.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230311012407.1292118-3-tanmay.shah@amd.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/zynqmp-ipi-mailbox.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/dm-flakey.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/mailbox/zynqmp-ipi-mailbox.c
-+++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
-@@ -152,7 +152,7 @@ static irqreturn_t zynqmp_ipi_interrupt(
- 	struct zynqmp_ipi_message *msg;
- 	u64 arg0, arg3;
- 	struct arm_smccc_res res;
--	int ret, i;
-+	int ret, i, status = IRQ_NONE;
- 
- 	(void)irq;
- 	arg0 = SMC_IPI_MAILBOX_STATUS_ENQUIRY;
-@@ -170,11 +170,11 @@ static irqreturn_t zynqmp_ipi_interrupt(
- 				memcpy_fromio(msg->data, mchan->req_buf,
- 					      msg->len);
- 				mbox_chan_received_data(chan, (void *)msg);
--				return IRQ_HANDLED;
-+				status = IRQ_HANDLED;
- 			}
- 		}
- 	}
--	return IRQ_NONE;
-+	return status;
- }
- 
- /**
+--- a/drivers/md/dm-flakey.c
++++ b/drivers/md/dm-flakey.c
+@@ -124,9 +124,9 @@ static int parse_features(struct dm_arg_
+ 			 * Direction r or w?
+ 			 */
+ 			arg_name = dm_shift_arg(as);
+-			if (!strcasecmp(arg_name, "w"))
++			if (arg_name && !strcasecmp(arg_name, "w"))
+ 				fc->corrupt_bio_rw = WRITE;
+-			else if (!strcasecmp(arg_name, "r"))
++			else if (arg_name && !strcasecmp(arg_name, "r"))
+ 				fc->corrupt_bio_rw = READ;
+ 			else {
+ 				ti->error = "Invalid corrupt bio direction (r or w)";
 
 
