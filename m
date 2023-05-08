@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F41168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8832C433D2;
-	Mon,  8 May 2023 10:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FEF168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB250C433D2;
+	Mon,  8 May 2023 10:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543091;
-	bh=451OV9ifogt7wDFt9BzvP2BHmSTuTByjJzj3wIUr2Sk=;
+	s=korg; t=1683543095;
+	bh=ZEvsQuva0xNOrYGykGwpQjElS5A1ix7RmXvxqguUFJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PJGpD2gpGlP4F9r3wm9ANd5IMQMKsOlK4NXPVbcAByVpuelw/5uh9mU7+EnPjopy/
-	 Y3UL/8lxuc9WIvDQdY+SLZg3j5aKN2BiogVs4q3jlUC3Pmz0ikMRBEeEyJLCnLksuU
-	 OrrnRcmxY3l3ibYafiuyTK1hfiIe58eoiAzkrMqg=
+	b=vcCyUZUowl4kt0riuqN5vKqHLnkhmTSxUPUiMeKrdY0PH4Z6sYtuRpkIwDWr/F1XE
+	 qtqPbw/47HJ9YsBm+KG0Ero5ZiK6VcKkojs3A5LELsnITwMZuwSpFZco1p8YQIhtq7
+	 AMe002VJTNW71KFP6N9Y6/3thfeSsQk7MHG4ew3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.2 647/663] dm integrity: call kmem_cache_destroy() in dm_integrity_init() error path
-Date: Mon,  8 May 2023 11:47:53 +0200
-Message-Id: <20230508094451.061784684@linuxfoundation.org>
+	Tanmay Shah <tanmay.shah@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.2 630/663] mailbox: zynqmp: Fix IPI isr handling
+Date: Mon,  8 May 2023 11:47:36 +0200
+Message-Id: <20230508094450.314812592@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -33,37 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Tanmay Shah <tanmay.shah@amd.com>
 
-commit 6b79a428c02769f2a11f8ae76bf866226d134887 upstream.
+commit 74ad37a30ffee3643bc34f9ca7225b20a66abaaf upstream.
 
-Otherwise the journal_io_cache will leak if dm_register_target() fails.
+Multiple IPI channels are mapped to same interrupt handler.
+Current isr implementation handles only one channel per isr.
+Fix this behavior by checking isr status bit of all child
+mailbox nodes.
 
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20230311012407.1292118-3-tanmay.shah@amd.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -4646,11 +4646,13 @@ static int __init dm_integrity_init(void
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -152,7 +152,7 @@ static irqreturn_t zynqmp_ipi_interrupt(
+ 	struct zynqmp_ipi_message *msg;
+ 	u64 arg0, arg3;
+ 	struct arm_smccc_res res;
+-	int ret, i;
++	int ret, i, status = IRQ_NONE;
+ 
+ 	(void)irq;
+ 	arg0 = SMC_IPI_MAILBOX_STATUS_ENQUIRY;
+@@ -170,11 +170,11 @@ static irqreturn_t zynqmp_ipi_interrupt(
+ 				memcpy_fromio(msg->data, mchan->req_buf,
+ 					      msg->len);
+ 				mbox_chan_received_data(chan, (void *)msg);
+-				return IRQ_HANDLED;
++				status = IRQ_HANDLED;
+ 			}
+ 		}
  	}
- 
- 	r = dm_register_target(&integrity_target);
--
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		kmem_cache_destroy(journal_io_cache);
-+		return r;
-+	}
- 
--	return r;
-+	return 0;
+-	return IRQ_NONE;
++	return status;
  }
  
- static void __exit dm_integrity_exit(void)
+ /**
 
 
