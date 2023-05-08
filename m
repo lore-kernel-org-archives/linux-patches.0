@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1AD168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1060EC433D2;
-	Mon,  8 May 2023 11:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB41168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5635C433D2;
+	Mon,  8 May 2023 11:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544105;
-	bh=ReMk9k9BAMMiNNvcJsUxr8zjyOSiRzDZGDRXvL53JeU=;
+	s=korg; t=1683544109;
+	bh=dFo8+hQ+MPyxL2bFbcdotG2r2BdsFswtxkQEm50Bspw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbMKERrSRjVhIWMVbRAF7KUPHPNuoVENIqsQuMdQymu15rI+iKyJ/qHJoaslj7KvP
-	 3kbGHRIkW1IOpxqdDy2CDgTM7WruV3+zJ70KkMQmv4ksFWenwyMzdWuf0sgXnMQ+ie
-	 6e6K2dCiXaeNR4uj5oH5v7hFkW1TsInthThkzFOA=
+	b=m3G09Ezx+JfC5CZ01oqxNvYqTP4eGrzu1Kx8P9OmldBq5cM29mrnDhRyvT+fnDNhL
+	 gOGZjCnqRZc9YSLZJa7ITLFv3mRvHEzIlVPJDFXDMf0eEx3cS9tVHqv2qK4jPyV/EB
+	 l0NISYkQzOR7B/GmFNBiU1le5WngU4xqhE40/THQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Lear <matthew.lear@broadcom.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Sean Young <sean@mess.org>,
+	=?UTF-8?q?Micha=C5=82=20Krawczyk?= <mk@semihalf.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 303/694] media: rc: gpio-ir-recv: Fix support for wake-up
-Date: Mon,  8 May 2023 11:42:18 +0200
-Message-Id: <20230508094442.117850594@linuxfoundation.org>
+Subject: [PATCH 6.3 304/694] media: venus: dec: Fix handling of the start cmd
+Date: Mon,  8 May 2023 11:42:19 +0200
+Message-Id: <20230508094442.154654014@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,41 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Michał Krawczyk <mk@semihalf.com>
 
-[ Upstream commit 9c592f8ab114875fdb3b2040f01818e53de44991 ]
+[ Upstream commit 50248ad9f190d527cbd578190ca769729518b703 ]
 
-The driver was intended from the start to be a wake-up source for the
-system, however due to the absence of a suitable call to
-device_set_wakeup_capable(), the device_may_wakeup() call used to decide
-whether to enable the GPIO interrupt as a wake-up source would never
-happen. Lookup the DT standard "wakeup-source" property and call
-device_init_wakeup() to ensure the device is flagged as being wakeup
-capable.
+The decoder driver should clear the last_buffer_dequeued flag of the
+capture queue upon receiving V4L2_DEC_CMD_START.
 
-Reported-by: Matthew Lear <matthew.lear@broadcom.com>
-Fixes: fd0f6851eb46 ("[media] rc: Add support for GPIO based IR Receiver driver")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+The last_buffer_dequeued flag is set upon receiving EOS (which always
+happens upon receiving V4L2_DEC_CMD_STOP).
+
+Without this patch, after issuing the V4L2_DEC_CMD_STOP and
+V4L2_DEC_CMD_START, the vb2_dqbuf() function will always fail, even if
+the buffers are completed by the hardware.
+
+Fixes: beac82904a87 ("media: venus: make decoder compliant with stateful codec API")
+
+Signed-off-by: Michał Krawczyk <mk@semihalf.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/gpio-ir-recv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/qcom/venus/vdec.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/media/rc/gpio-ir-recv.c b/drivers/media/rc/gpio-ir-recv.c
-index 8dbe780dae4e7..41ef8cdba28c4 100644
---- a/drivers/media/rc/gpio-ir-recv.c
-+++ b/drivers/media/rc/gpio-ir-recv.c
-@@ -103,6 +103,8 @@ static int gpio_ir_recv_probe(struct platform_device *pdev)
- 		rcdev->map_name = RC_MAP_EMPTY;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 4ceaba37e2e57..9d26587716bf6 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -526,6 +526,7 @@ static int
+ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
+ {
+ 	struct venus_inst *inst = to_inst(file);
++	struct vb2_queue *dst_vq;
+ 	struct hfi_frame_data fdata = {0};
+ 	int ret;
  
- 	gpio_dev->rcdev = rcdev;
-+	if (of_property_read_bool(np, "wakeup-source"))
-+		device_init_wakeup(dev, true);
+@@ -556,6 +557,13 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
+ 			inst->codec_state = VENUS_DEC_STATE_DRAIN;
+ 			inst->drain_active = true;
+ 		}
++	} else if (cmd->cmd == V4L2_DEC_CMD_START &&
++		   inst->codec_state == VENUS_DEC_STATE_STOPPED) {
++		dst_vq = v4l2_m2m_get_vq(inst->fh.m2m_ctx,
++					 V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
++		vb2_clear_last_buffer_dequeued(dst_vq);
++
++		inst->codec_state = VENUS_DEC_STATE_DECODING;
+ 	}
  
- 	rc = devm_rc_register_device(dev, rcdev);
- 	if (rc < 0) {
+ unlock:
 -- 
 2.39.2
 
