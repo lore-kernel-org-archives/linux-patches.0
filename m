@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF10171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:39:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E10DC4339B;
-	Mon,  8 May 2023 11:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAC5171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:39:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2872C433D2;
+	Mon,  8 May 2023 11:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545991;
-	bh=9Roao6TAfTctYaLY4I/EIahhSDAY6Oz3Jec1ARSSLlM=;
+	s=korg; t=1683545994;
+	bh=b0FrlGF1a+aJFH9542i3LIWGJVG6grAvQHI6xZWtmEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2tKJcvl5tUPUwFjqeI+UP2ni3yWP2lNarcf+2JLkBLwcisWVk89p0Tsi1UZTFM2R
-	 xzjObZO9z/dMNdmGdrpprZ9v6GijC3N/fAxvofDqGF6xaLPa0qH06xnNzlH7wcxxD0
-	 Bu1mZ4n2lbfK1qnpherUuiny+L5zDrOBfFu9rigk=
+	b=C2FKDa44qTtIBSQa3hBag+oOiXh68Zy/qgG7XYx/S4oGIz9DAqKFhxMPhY8XYU78U
+	 TW7trEyIoW8Y2tDkkXRSF7YvqETYhdFfblzMduXoykANvBH2gPVrmfQXAb/m9Zw2jE
+	 ZKO0Cuj4zxhgaCTnCiRQk6p/gtKY+Tb2MAk59a9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Ben Greear <greearb@candelatech.com>,
+	Isaac Konikoff <konikofi@candelatech.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 193/371] nvmet: fix error handling in nvmet_execute_identify_cns_cs_ns()
-Date: Mon,  8 May 2023 11:46:34 +0200
-Message-Id: <20230508094819.777879143@linuxfoundation.org>
+Subject: [PATCH 5.15 220/371] wifi: mt76: fix 6GHz high channel not be scanned
+Date: Mon,  8 May 2023 11:47:01 +0200
+Message-Id: <20230508094820.799380040@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -38,84 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit ab76e7206b672b2e8818cb121a04506956d6b223 ]
+[ Upstream commit 23792cedaff02351b57bddd8957fc917fa88f2e0 ]
 
-Nvme specifications state that:
+mt76 scan command only support 64 channels currently. If the
+channel count is larger than 64(for 2+5+6GHz), some channels will
+not be scanned. Hence change the scan type to full channel scan
+in case of the command cannot include proper list for chip.
 
-If the I/O Command Set associated with the namespace identified by the
-NSID field does not support the Identify Namespace data structure
-specified by the CSI field, the controller shall abort the command with
-a status code of Invalid Field in Command.
-
-In other words, if nvmet_execute_identify_cns_cs_ns() is called for a
-target with a block device that is not zoned, we should not return any
-data and set the status to NVME_SC_INVALID_FIELD.
-
-While at it, it is also better to revalidate the ns block devie *before*
-checking if the block device is zoned, to ensure that
-nvmet_execute_identify_cns_cs_ns() operates against updated device
-characteristics.
-
-Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 399090ef9605 ("mt76: mt76_connac: move hw_scan and sched_scan routine in mt76_connac_mcu module")
+Reported-by: Ben Greear <greearb@candelatech.com>
+Tested-by: Isaac Konikoff <konikofi@candelatech.com>
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/zns.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ .../net/wireless/mediatek/mt76/mt76_connac_mcu.c    | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
-index ad608bd6515a7..f4f8598cbdc15 100644
---- a/drivers/nvme/target/zns.c
-+++ b/drivers/nvme/target/zns.c
-@@ -97,7 +97,7 @@ void nvmet_execute_identify_cns_cs_ctrl(struct nvmet_req *req)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+index 017bd59c4ea80..98f651fec3bf3 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+@@ -1446,8 +1446,16 @@ int mt76_connac_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
+ 	req->channel_min_dwell_time = cpu_to_le16(duration);
+ 	req->channel_dwell_time = cpu_to_le16(duration);
  
- void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req)
- {
--	struct nvme_id_ns_zns *id_zns;
-+	struct nvme_id_ns_zns *id_zns = NULL;
- 	u64 zsze;
- 	u16 status;
- 	u32 mar, mor;
-@@ -118,16 +118,18 @@ void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req)
- 	if (status)
- 		goto done;
- 
--	if (!bdev_is_zoned(req->ns->bdev)) {
--		req->error_loc = offsetof(struct nvme_identify, nsid);
--		goto done;
--	}
--
- 	if (nvmet_ns_revalidate(req->ns)) {
- 		mutex_lock(&req->ns->subsys->lock);
- 		nvmet_ns_changed(req->ns->subsys, req->ns->nsid);
- 		mutex_unlock(&req->ns->subsys->lock);
- 	}
-+
-+	if (!bdev_is_zoned(req->ns->bdev)) {
-+		status = NVME_SC_INVALID_FIELD | NVME_SC_DNR;
-+		req->error_loc = offsetof(struct nvme_identify, nsid);
-+		goto out;
+-	req->channels_num = min_t(u8, sreq->n_channels, 32);
+-	req->ext_channels_num = min_t(u8, ext_channels_num, 32);
++	if (sreq->n_channels == 0 || sreq->n_channels > 64) {
++		req->channel_type = 0;
++		req->channels_num = 0;
++		req->ext_channels_num = 0;
++	} else {
++		req->channel_type = 4;
++		req->channels_num = min_t(u8, sreq->n_channels, 32);
++		req->ext_channels_num = min_t(u8, ext_channels_num, 32);
 +	}
 +
- 	zsze = (bdev_zone_sectors(req->ns->bdev) << 9) >>
- 					req->ns->blksize_shift;
- 	id_zns->lbafe[0].zsze = cpu_to_le64(zsze);
-@@ -148,8 +150,8 @@ void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req)
+ 	for (i = 0; i < req->channels_num + req->ext_channels_num; i++) {
+ 		if (i >= 32)
+ 			chan = &req->ext_channels[i - 32];
+@@ -1457,7 +1465,6 @@ int mt76_connac_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
+ 		chan->band = scan_list[i]->band == NL80211_BAND_2GHZ ? 1 : 2;
+ 		chan->channel_num = scan_list[i]->hw_value;
+ 	}
+-	req->channel_type = sreq->n_channels ? 4 : 0;
  
- done:
- 	status = nvmet_copy_to_sgl(req, 0, id_zns, sizeof(*id_zns));
--	kfree(id_zns);
- out:
-+	kfree(id_zns);
- 	nvmet_req_complete(req, status);
- }
- 
+ 	if (sreq->ie_len > 0) {
+ 		memcpy(req->ies, sreq->ie, sreq->ie_len);
 -- 
 2.39.2
 
