@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09085168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62865C433D2;
-	Mon,  8 May 2023 11:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8305168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BFFC433EF;
+	Mon,  8 May 2023 11:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543992;
-	bh=azGbbQEulxIH67EX9WHACidebc1MNeevVtf+OG9YJdQ=;
+	s=korg; t=1683543995;
+	bh=EcHEW2fxCkX8xvjdikGQmUSKlrbCfFMawQG2r9OCvjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CQaBljmTNnOc5LbIzVLZOVMuqVwTqFVcT1qevzRb8Pz8/4Vf1CgrB4ZrFUgJQEbi1
-	 Oyy70YoSiGy2f872AYT3wsWXb0ROT7HTQ6Zdy28538cH+FmdkdCnhn0EJMEpx3WklG
-	 Yj5DSrdp7HdIfvYTIR10EzZeN8+XocVeEAH8F5XQ=
+	b=WhjgUvWddrWFA7Mn+Y++vyu6TVibVR6otvz81i4XtyX9BqkBT3IQ2qpumNy6lio0W
+	 fd6evC3wJU84/1MaQnN0yaD526vv8DaBTrAl3uqx4lSetBMkfqTbflZLrxyeuZuzji
+	 FldKinTX0Jqycq+tyJLZacGOheD74BA+fogSAXNw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tushar Nimkar <quic_tnimkar@quicinc.com>,
+	Petr Vorel <pvorel@suse.cz>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 267/694] soc: qcom: rpmh-rsc: Support RSC v3 minor versions
-Date: Mon,  8 May 2023 11:41:42 +0200
-Message-Id: <20230508094440.934689039@linuxfoundation.org>
+Subject: [PATCH 6.3 268/694] arm64: dts: qcom: msm8994-angler: Fix cont_splash_mem mapping
+Date: Mon,  8 May 2023 11:41:43 +0200
+Message-Id: <20230508094440.964198271@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,35 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tushar Nimkar <quic_tnimkar@quicinc.com>
+From: Petr Vorel <pvorel@suse.cz>
 
-[ Upstream commit 88704a0cd71909c3107561261412a5d5beb23358 ]
+[ Upstream commit fe88480a6be92ecbf6f205ff3a7d7e5ded0562dd ]
 
-RSC v3 register offsets are same for all minor versions of v3. Fix a
-minor version check to pick correct offsets for all v3 minor versions.
+Angler's cont_splash_mem mapping is shorter in downstream [1],
+therefore 380cd3a34b7f was wrong. Obviously also 0e5ded926f2a was wrong
+(workaround which fixed booting at the time).
 
-Fixes: 40482e4f7364 ("soc: qcom: rpmh-rsc: Add support for RSC v3 register offsets")
-Signed-off-by: Tushar Nimkar <quic_tnimkar@quicinc.com>
+This fixes error:
+[    0.000000] memory@3401000 (0x0000000003401000--0x0000000005601000) overlaps with tzapp@4800000 (0x0000000004800000--0x0000000006100000)
+
+[1] https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-angler-3.10-marshmallow-mr1/arch/arm64/boot/dts/huawei/huawei_msm8994_angler_row_vn1/huawei-fingerprint.dtsi#16
+
+Fixes: 380cd3a34b7f ("arm64: dts: msm8994-angler: fix the memory map")
+Fixes: 0e5ded926f2a ("arm64: dts: qcom: msm8994-angler: Disable cont_splash_mem")
+
+Signed-off-by: Petr Vorel <pvorel@suse.cz>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230406115732.9293-1-quic_tnimkar@quicinc.com
+Link: https://lore.kernel.org/r/20230131200414.24373-2-pvorel@suse.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index 0f8b2249f8894..f93544f6d7961 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -1073,7 +1073,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
- 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
- 	drv->ver.minor >>= MINOR_VER_SHIFT;
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
+index 7b0f62144c3ee..59b9ed78cf0cb 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
+@@ -2,7 +2,7 @@
+ /*
+  * Copyright (c) 2015, Huawei Inc. All rights reserved.
+  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022, Petr Vorel <petr.vorel@gmail.com>
++ * Copyright (c) 2021-2023, Petr Vorel <petr.vorel@gmail.com>
+  */
  
--	if (drv->ver.major == 3 && drv->ver.minor == 0)
-+	if (drv->ver.major == 3 && drv->ver.minor >= 0)
- 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
- 	else
- 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
+ /dts-v1/;
+@@ -31,6 +31,11 @@
+ 		#size-cells = <2>;
+ 		ranges;
+ 
++		cont_splash_mem: memory@3401000 {
++			reg = <0 0x03401000 0 0x1000000>;
++			no-map;
++		};
++
+ 		tzapp_mem: tzapp@4800000 {
+ 			reg = <0 0x04800000 0 0x1900000>;
+ 			no-map;
 -- 
 2.39.2
 
