@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D561A168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:57:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 034D1C4339B;
-	Mon,  8 May 2023 09:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAAE168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:57:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B0BC433D2;
+	Mon,  8 May 2023 09:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539847;
-	bh=6wYXNBTZ4x0jV1UClvCRWnfr1suepy1nKzQn5N5Aa8g=;
+	s=korg; t=1683539851;
+	bh=ass+HNus0kMbsEHV1E7gZFvxkTn0LKsGEy/ecRrj1cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gnjgpuFm4JJakR5X2aCKErDyLA5dHVIzpXwjyzhpvA5TGQxfUVFIe71VFytVmCl6k
-	 jlTOIQ0Qe5V6XUbLNHK/zRtpu92usQ5CCbiukyIuCNXbkDNtKCb6EpVKf67UUIbgvT
-	 fFwRrsiuEzq7AOuwEAJZH6YvekSLeg7JWKBdwLkw=
+	b=W63K2a7cj+TyA8/x+FCkRs4iRjHoHAFq/mGU2q9ijE2J9nlW89md3OPpX7rV7cIGj
+	 G8VpLzaoN+5JKoO4+YVFdo6j27vc+CEzMCd+n1o3PovtB4810lGZ1fl0416ZjnN9tt
+	 +bePajKiknffNIPLor22Emc3H28BwoKC/0ilrNWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 156/611] arm64: dts: qcom: sc7280: fix EUD port properties
-Date: Mon,  8 May 2023 11:39:58 +0200
-Message-Id: <20230508094427.371450553@linuxfoundation.org>
+Subject: [PATCH 6.1 157/611] arm64: dts: qcom: sdm845: correct dynamic power coefficients
+Date: Mon,  8 May 2023 11:39:59 +0200
+Message-Id: <20230508094427.411545648@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,59 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit a369c74243ca4ad60b9de0ac5c2207fb4c4117b8 ]
+[ Upstream commit 44750f153699b6e4f851a399287e5c8df208d696 ]
 
-Nodes with unit addresses must have also 'reg' property:
+While stressing EAS on my dragonboard RB3, I have noticed that LITTLE cores
+where never selected as the most energy efficient CPU whatever the
+utilization level of waking task.
 
-  sc7280-herobrine-crd.dtb: eud@88e0000: ports:port@0: 'reg' is a required property
+energy model framework uses its cost field to estimate the energy with
+the formula:
 
-Fixes: 0b059979090d ("arm64: dts: qcom: sc7280: Add EUD dt node and dwc3 connector")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+  nrg = cost of the selected OPP * utilization / CPU's max capacity
+
+which ends up selecting the CPU with lowest cost / max capacity ration
+as long as the utilization fits in the OPP's capacity.
+
+If we compare the cost of a little OPP with similar capacity of a big OPP
+like :
+       OPP(kHz)   OPP capacity    cost     max capacity   cost/max capacity
+LITTLE 1766400    407             351114   407            863
+big    1056000    408             520267   1024           508
+
+This can be interpreted as the LITTLE core consumes 70% more than big core
+for the same compute capacity.
+
+According to [1], LITTLE consumes 10% less than big core for Coremark
+benchmark at those OPPs. If we consider that everything else stays
+unchanged, the dynamic-power-coefficient of LITTLE core should be
+only 53% of the current value: 290 * 53% = 154
+
+Set the dynamic-power-coefficient of CPU0-3 to 154 to fix the energy model.
+
+[1] https://github.com/kdrag0n/freqbench/tree/master/results/sdm845/main
+
+Fixes: 0e0a8e35d725 ("arm64: dts: qcom: sdm845: correct dynamic power coefficients")
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230308125906.236885-10-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230106164618.1845281-1-vincent.guittot@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 346da6af51ac9..023ce83f88dce 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -3590,12 +3590,17 @@
- 			      <0 0x88e2000 0 0x1000>;
- 			interrupts-extended = <&pdc 11 IRQ_TYPE_LEVEL_HIGH>;
- 			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
- 				port@0 {
-+					reg = <0>;
- 					eud_ep: endpoint {
- 						remote-endpoint = <&usb2_role_switch>;
- 					};
- 				};
- 				port@1 {
-+					reg = <1>;
- 					eud_con: endpoint {
- 						remote-endpoint = <&con_eud>;
- 					};
-@@ -3606,7 +3611,11 @@
- 		eud_typec: connector {
- 			compatible = "usb-c-connector";
- 			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
- 				port@0 {
-+					reg = <0>;
- 					con_eud: endpoint {
- 						remote-endpoint = <&eud_con>;
- 					};
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index d761da47220dd..3ca3e16e28038 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -198,7 +198,7 @@
+ 			reg = <0x0 0x0>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <611>;
+-			dynamic-power-coefficient = <290>;
++			dynamic-power-coefficient = <154>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -222,7 +222,7 @@
+ 			reg = <0x0 0x100>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <611>;
+-			dynamic-power-coefficient = <290>;
++			dynamic-power-coefficient = <154>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -243,7 +243,7 @@
+ 			reg = <0x0 0x200>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <611>;
+-			dynamic-power-coefficient = <290>;
++			dynamic-power-coefficient = <154>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -264,7 +264,7 @@
+ 			reg = <0x0 0x300>;
+ 			enable-method = "psci";
+ 			capacity-dmips-mhz = <611>;
+-			dynamic-power-coefficient = <290>;
++			dynamic-power-coefficient = <154>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
 -- 
 2.39.2
 
