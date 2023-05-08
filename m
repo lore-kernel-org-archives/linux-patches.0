@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B8D168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466A6C4339B;
-	Mon,  8 May 2023 09:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615E1168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC743C433EF;
+	Mon,  8 May 2023 09:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539471;
-	bh=bhEfNfN8nBoB/iND5CXyt4qQCAF2xhVWGaAS+01+Rdw=;
+	s=korg; t=1683539474;
+	bh=8r1z6+zlLX5kZZjRsnVMbks8vuLgQJO5hKGKMtuVvsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4BpnYPhBgGEOiQYiXNuhc+rGsb+sA1Ep2eY3sI3lReYX8cWJHert1Rw9OFvvS9hp
-	 p7P36l85jiRahTMHflWy2I+pGEkBPW2xwQxwLOEDQlCS8rIGt54mwNhJky26Hn+lSr
-	 8j8A73Kj6cj0AAHUiEP06V8VRfGMQZDGu+h4FZ9s=
+	b=ShLJpGOZExj2gGh9Gm4x/L0REDvp02hLntO8W8P1RH6/a3cvfnY8PzQefMyVqEXn+
+	 32KEvkkuRoXm/+481biBAFXl7sA85C5MmADhbh3gmn1aW5oASmFv7qm58EUvzHuv9A
+	 bc8BbPYsjKc5JGumdRNRhySm6b3ftprOeo7fjOo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Koul <vkoul@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.1 028/611] phy: qcom-qmp-pcie: sc8180x PCIe PHY has 2 lanes
-Date: Mon,  8 May 2023 11:37:50 +0200
-Message-Id: <20230508094422.660083829@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Fabio Estevam <festevam@gmail.com>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-um@lists.infradead.org,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.1 029/611] IMA: allow/fix UML builds
+Date: Mon,  8 May 2023 11:37:51 +0200
+Message-Id: <20230508094422.701491705@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,33 +39,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 1db6b0a4246ce708b89f5136571130b9987741d1 upstream.
+commit 644f17412f5acf01a19af9d04a921937a2bc86c6 upstream.
 
-All PCIe PHYs on sc8180x platform have 2 lanes, so change the number of
-lanes to 2.
+UML supports HAS_IOMEM since 0bbadafdc49d (um: allow disabling
+NO_IOMEM).
 
-Fixes: f839f14e24f2 ("phy: qcom-qmp: Add sc8180x PCIe support")
-Cc: stable@vger.kernel.org # 5.15
-Sgned-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230331151250.4049-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Current IMA build on UML fails on allmodconfig (with TCG_TPM=m):
+
+ld: security/integrity/ima/ima_queue.o: in function `ima_add_template_entry':
+ima_queue.c:(.text+0x2d9): undefined reference to `tpm_pcr_extend'
+ld: security/integrity/ima/ima_init.o: in function `ima_init':
+ima_init.c:(.init.text+0x43f): undefined reference to `tpm_default_chip'
+ld: security/integrity/ima/ima_crypto.o: in function `ima_calc_boot_aggregate_tfm':
+ima_crypto.c:(.text+0x1044): undefined reference to `tpm_pcr_read'
+ld: ima_crypto.c:(.text+0x10d8): undefined reference to `tpm_pcr_read'
+
+Modify the IMA Kconfig entry so that it selects TCG_TPM if HAS_IOMEM
+is set, regardless of the UML Kconfig setting.
+This updates TCG_TPM from =m to =y and fixes the linker errors.
+
+Fixes: f4a0391dfa91 ("ima: fix Kconfig dependencies")
+Cc: Stable <stable@vger.kernel.org> # v5.14+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-um@lists.infradead.org
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c |    2 +-
+ security/integrity/ima/Kconfig |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1738,7 +1738,7 @@ static const struct qmp_phy_cfg msm8998_
- };
- 
- static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
--	.lanes			= 1,
-+	.lanes			= 2,
- 
- 	.tables = {
- 		.serdes		= sc8180x_qmp_pcie_serdes_tbl,
+--- a/security/integrity/ima/Kconfig
++++ b/security/integrity/ima/Kconfig
+@@ -8,7 +8,7 @@ config IMA
+ 	select CRYPTO_HMAC
+ 	select CRYPTO_SHA1
+ 	select CRYPTO_HASH_INFO
+-	select TCG_TPM if HAS_IOMEM && !UML
++	select TCG_TPM if HAS_IOMEM
+ 	select TCG_TIS if TCG_TPM && X86
+ 	select TCG_CRB if TCG_TPM && ACPI
+ 	select TCG_IBMVTPM if TCG_TPM && PPC_PSERIES
 
 
