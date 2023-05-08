@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0E8168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:35:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30FBAC433EF;
-	Mon,  8 May 2023 10:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6FE168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:35:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF45C433D2;
+	Mon,  8 May 2023 10:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542141;
-	bh=WzX49OhwakmUby6LoSKSVcP9ojRGrNGMXs2Kok2j3oQ=;
+	s=korg; t=1683542144;
+	bh=01HT2Vu2RkuSh4AlBUrK4mqZtGYJTus76ElQYCsqg+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sd/fIfWACOEQKcFQlJt8xlOz7oWXJt2KHtqWLhl5S8nsetIrTNkVcGK6RZ7mx+APg
-	 2qh/PRSuzFBL+M5d/SceptPxSg89wkj9R1NBiXiFmyZqxMEyhwH1WLwtMTwQIJX8at
-	 LYVDeDiwYJ20sjyw0pbW6/4UKpWmAs0lEDC57SN0=
+	b=nEAlDJrHa6X2M4aciv8XkYYUBxibfxvFZ7cO621N8cawmcKmiy/MzIy44o8tQX24i
+	 YjYqOzMJQTDetPIup6TDv09bNz+ELm0VXqDgkXkN4dn58nqHRC5GcFb3MjVljaw5CH
+	 DPi9TXdoicCc/DIfroeE/6M8GDgRAWV9TZsSgpkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kal Conley <kal.conley@dectris.com>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 339/663] net: qrtr: correct types of trace event parameters
-Date: Mon,  8 May 2023 11:42:45 +0200
-Message-Id: <20230508094439.158647119@linuxfoundation.org>
+Subject: [PATCH 6.2 340/663] selftests: xsk: Use correct UMEM size in testapp_invalid_desc
+Date: Mon,  8 May 2023 11:42:46 +0200
+Message-Id: <20230508094439.188275262@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,106 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Horman <horms@kernel.org>
+From: Kal Conley <kal.conley@dectris.com>
 
-[ Upstream commit 054fbf7ff8143d35ca7d3bb5414bb44ee1574194 ]
+[ Upstream commit 7a2050df244e2c9a4e90882052b7907450ad10ed ]
 
-The arguments passed to the trace events are of type unsigned int,
-however the signature of the events used __le32 parameters.
+Avoid UMEM_SIZE macro in testapp_invalid_desc which is incorrect when
+the frame size is not XSK_UMEM__DEFAULT_FRAME_SIZE. Also remove the
+macro since it's no longer being used.
 
-I may be missing the point here, but sparse flagged this and it
-does seem incorrect to me.
-
-  net/qrtr/ns.c: note: in included file (through include/trace/trace_events.h, include/trace/define_trace.h, include/trace/events/qrtr.h):
-  ./include/trace/events/qrtr.h:11:1: warning: cast to restricted __le32
-  ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
-  ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
-  ... (a lot more similar warnings)
-  net/qrtr/ns.c:115:47:    expected restricted __le32 [usertype] service
-  net/qrtr/ns.c:115:47:    got unsigned int service
-  net/qrtr/ns.c:115:61: warning: incorrect type in argument 2 (different base types)
-  ... (a lot more similar warnings)
-
-Fixes: dfddb54043f0 ("net: qrtr: Add tracepoint support")
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230402-qrtr-trace-types-v1-1-92ad55008dd3@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 909f0e28207c ("selftests: xsk: Add tests for 2K frame size")
+Signed-off-by: Kal Conley <kal.conley@dectris.com>
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Link: https://lore.kernel.org/r/20230403145047.33065-2-kal.conley@dectris.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/qrtr.h | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ tools/testing/selftests/bpf/xskxceiver.c | 9 +++++----
+ tools/testing/selftests/bpf/xskxceiver.h | 1 -
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/trace/events/qrtr.h b/include/trace/events/qrtr.h
-index b1de14c3bb934..441132c67133f 100644
---- a/include/trace/events/qrtr.h
-+++ b/include/trace/events/qrtr.h
-@@ -10,15 +10,16 @@
+diff --git a/tools/testing/selftests/bpf/xskxceiver.c b/tools/testing/selftests/bpf/xskxceiver.c
+index 1b9f48daa2257..2290982758961 100644
+--- a/tools/testing/selftests/bpf/xskxceiver.c
++++ b/tools/testing/selftests/bpf/xskxceiver.c
+@@ -1662,6 +1662,7 @@ static void testapp_single_pkt(struct test_spec *test)
  
- TRACE_EVENT(qrtr_ns_service_announce_new,
+ static void testapp_invalid_desc(struct test_spec *test)
+ {
++	u64 umem_size = test->ifobj_tx->umem->num_frames * test->ifobj_tx->umem->frame_size;
+ 	struct pkt pkts[] = {
+ 		/* Zero packet address allowed */
+ 		{0, PKT_SIZE, 0, true},
+@@ -1672,9 +1673,9 @@ static void testapp_invalid_desc(struct test_spec *test)
+ 		/* Packet too large */
+ 		{0x2000, XSK_UMEM__INVALID_FRAME_SIZE, 0, false},
+ 		/* After umem ends */
+-		{UMEM_SIZE, PKT_SIZE, 0, false},
++		{umem_size, PKT_SIZE, 0, false},
+ 		/* Straddle the end of umem */
+-		{UMEM_SIZE - PKT_SIZE / 2, PKT_SIZE, 0, false},
++		{umem_size - PKT_SIZE / 2, PKT_SIZE, 0, false},
+ 		/* Straddle a page boundrary */
+ 		{0x3000 - PKT_SIZE / 2, PKT_SIZE, 0, false},
+ 		/* Straddle a 2K boundrary */
+@@ -1692,8 +1693,8 @@ static void testapp_invalid_desc(struct test_spec *test)
+ 	}
  
--	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-+	TP_PROTO(unsigned int service, unsigned int instance,
-+		 unsigned int node, unsigned int port),
+ 	if (test->ifobj_tx->shared_umem) {
+-		pkts[4].addr += UMEM_SIZE;
+-		pkts[5].addr += UMEM_SIZE;
++		pkts[4].addr += umem_size;
++		pkts[5].addr += umem_size;
+ 	}
  
- 	TP_ARGS(service, instance, node, port),
- 
- 	TP_STRUCT__entry(
--		__field(__le32, service)
--		__field(__le32, instance)
--		__field(__le32, node)
--		__field(__le32, port)
-+		__field(unsigned int, service)
-+		__field(unsigned int, instance)
-+		__field(unsigned int, node)
-+		__field(unsigned int, port)
- 	),
- 
- 	TP_fast_assign(
-@@ -36,15 +37,16 @@ TRACE_EVENT(qrtr_ns_service_announce_new,
- 
- TRACE_EVENT(qrtr_ns_service_announce_del,
- 
--	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-+	TP_PROTO(unsigned int service, unsigned int instance,
-+		 unsigned int node, unsigned int port),
- 
- 	TP_ARGS(service, instance, node, port),
- 
- 	TP_STRUCT__entry(
--		__field(__le32, service)
--		__field(__le32, instance)
--		__field(__le32, node)
--		__field(__le32, port)
-+		__field(unsigned int, service)
-+		__field(unsigned int, instance)
-+		__field(unsigned int, node)
-+		__field(unsigned int, port)
- 	),
- 
- 	TP_fast_assign(
-@@ -62,15 +64,16 @@ TRACE_EVENT(qrtr_ns_service_announce_del,
- 
- TRACE_EVENT(qrtr_ns_server_add,
- 
--	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-+	TP_PROTO(unsigned int service, unsigned int instance,
-+		 unsigned int node, unsigned int port),
- 
- 	TP_ARGS(service, instance, node, port),
- 
- 	TP_STRUCT__entry(
--		__field(__le32, service)
--		__field(__le32, instance)
--		__field(__le32, node)
--		__field(__le32, port)
-+		__field(unsigned int, service)
-+		__field(unsigned int, instance)
-+		__field(unsigned int, node)
-+		__field(unsigned int, port)
- 	),
- 
- 	TP_fast_assign(
+ 	pkt_stream_generate_custom(test, pkts, ARRAY_SIZE(pkts));
+diff --git a/tools/testing/selftests/bpf/xskxceiver.h b/tools/testing/selftests/bpf/xskxceiver.h
+index edb76d2def9fe..292fc943b8fdf 100644
+--- a/tools/testing/selftests/bpf/xskxceiver.h
++++ b/tools/testing/selftests/bpf/xskxceiver.h
+@@ -52,7 +52,6 @@
+ #define THREAD_TMOUT 3
+ #define DEFAULT_PKT_CNT (4 * 1024)
+ #define DEFAULT_UMEM_BUFFERS (DEFAULT_PKT_CNT / 4)
+-#define UMEM_SIZE (DEFAULT_UMEM_BUFFERS * XSK_UMEM__DEFAULT_FRAME_SIZE)
+ #define RX_FULL_RXQSIZE 32
+ #define UMEM_HEADROOM_TEST_SIZE 128
+ #define XSK_UMEM__INVALID_FRAME_SIZE (XSK_UMEM__DEFAULT_FRAME_SIZE + 1)
 -- 
 2.39.2
 
