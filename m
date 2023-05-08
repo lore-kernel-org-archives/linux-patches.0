@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A505168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC24C433EF;
-	Mon,  8 May 2023 10:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B76168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DB73C433D2;
+	Mon,  8 May 2023 10:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540395;
-	bh=n0HTgBL9cRy6fQ6IF0COm9+nb+fCjJwlLgh7gz45bDc=;
+	s=korg; t=1683540397;
+	bh=gDTVm/JJ7hmNhnciOg2BWW2goZ3lZsZfHmMKMNckHog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1KbSkOeectUM+r5xISkG0klHeYZwF5BFeWLokKN6xyyFBxG4Oa607j5VMglI3GgAU
-	 OF8DDG0GVoLUxxJQeWotcCJ79qy23imfGN0CW0Mz79j5yYMmz0pL4UXY7AiRloBthC
-	 JUy7BAjFbib5Wq/SvOo5ai9pIIQpnqDSO8po0cAg=
+	b=Tm4i6vhgAPSfuEAUWOcIO+xnVQvWZUnZdu+NemXo792SXxPHM81/75qQFwRSxwvN5
+	 dM3rCLbeEqB1vi87VSxQNQuo+k2C3a3MzLi+annDbbU3E2jLbprdfYg3RZY5uSS3Pz
+	 BAnhWE5DJC7akjwH4tXwrVHeo1RFQV8x2IN86k6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kal Conley <kal.conley@dectris.com>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 317/611] selftests: xsk: Use correct UMEM size in testapp_invalid_desc
-Date: Mon,  8 May 2023 11:42:39 +0200
-Message-Id: <20230508094432.750047034@linuxfoundation.org>
+Subject: [PATCH 6.1 318/611] selftests: xsk: Disable IPv6 on VETH1
+Date: Mon,  8 May 2023 11:42:40 +0200
+Message-Id: <20230508094432.780037945@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -38,70 +37,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Kal Conley <kal.conley@dectris.com>
 
-[ Upstream commit 7a2050df244e2c9a4e90882052b7907450ad10ed ]
+[ Upstream commit f2b50f17268390567bc0e95642170d88f336c8f4 ]
 
-Avoid UMEM_SIZE macro in testapp_invalid_desc which is incorrect when
-the frame size is not XSK_UMEM__DEFAULT_FRAME_SIZE. Also remove the
-macro since it's no longer being used.
+This change fixes flakiness in the BIDIRECTIONAL test:
 
-Fixes: 909f0e28207c ("selftests: xsk: Add tests for 2K frame size")
+    # [is_pkt_valid] expected length [60], got length [90]
+    not ok 1 FAIL: SKB BUSY-POLL BIDIRECTIONAL
+
+When IPv6 is enabled, the interface will periodically send MLDv1 and
+MLDv2 packets. These packets can cause the BIDIRECTIONAL test to fail
+since it uses VETH0 for RX.
+
+For other tests, this was not a problem since they only receive on VETH1
+and IPv6 was already disabled on VETH0.
+
+Fixes: a89052572ebb ("selftests/bpf: Xsk selftests framework")
 Signed-off-by: Kal Conley <kal.conley@dectris.com>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://lore.kernel.org/r/20230403145047.33065-2-kal.conley@dectris.com
+Link: https://lore.kernel.org/r/20230405082905.6303-1-kal.conley@dectris.com
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/xskxceiver.c | 9 +++++----
- tools/testing/selftests/bpf/xskxceiver.h | 1 -
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ tools/testing/selftests/bpf/test_xsk.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/xskxceiver.c b/tools/testing/selftests/bpf/xskxceiver.c
-index 8d5d9b94b020b..44ca500ec6b4f 100644
---- a/tools/testing/selftests/bpf/xskxceiver.c
-+++ b/tools/testing/selftests/bpf/xskxceiver.c
-@@ -1661,6 +1661,7 @@ static void testapp_single_pkt(struct test_spec *test)
- 
- static void testapp_invalid_desc(struct test_spec *test)
- {
-+	u64 umem_size = test->ifobj_tx->umem->num_frames * test->ifobj_tx->umem->frame_size;
- 	struct pkt pkts[] = {
- 		/* Zero packet address allowed */
- 		{0, PKT_SIZE, 0, true},
-@@ -1671,9 +1672,9 @@ static void testapp_invalid_desc(struct test_spec *test)
- 		/* Packet too large */
- 		{0x2000, XSK_UMEM__INVALID_FRAME_SIZE, 0, false},
- 		/* After umem ends */
--		{UMEM_SIZE, PKT_SIZE, 0, false},
-+		{umem_size, PKT_SIZE, 0, false},
- 		/* Straddle the end of umem */
--		{UMEM_SIZE - PKT_SIZE / 2, PKT_SIZE, 0, false},
-+		{umem_size - PKT_SIZE / 2, PKT_SIZE, 0, false},
- 		/* Straddle a page boundrary */
- 		{0x3000 - PKT_SIZE / 2, PKT_SIZE, 0, false},
- 		/* Straddle a 2K boundrary */
-@@ -1691,8 +1692,8 @@ static void testapp_invalid_desc(struct test_spec *test)
- 	}
- 
- 	if (test->ifobj_tx->shared_umem) {
--		pkts[4].addr += UMEM_SIZE;
--		pkts[5].addr += UMEM_SIZE;
-+		pkts[4].addr += umem_size;
-+		pkts[5].addr += umem_size;
- 	}
- 
- 	pkt_stream_generate_custom(test, pkts, ARRAY_SIZE(pkts));
-diff --git a/tools/testing/selftests/bpf/xskxceiver.h b/tools/testing/selftests/bpf/xskxceiver.h
-index edb76d2def9fe..292fc943b8fdf 100644
---- a/tools/testing/selftests/bpf/xskxceiver.h
-+++ b/tools/testing/selftests/bpf/xskxceiver.h
-@@ -52,7 +52,6 @@
- #define THREAD_TMOUT 3
- #define DEFAULT_PKT_CNT (4 * 1024)
- #define DEFAULT_UMEM_BUFFERS (DEFAULT_PKT_CNT / 4)
--#define UMEM_SIZE (DEFAULT_UMEM_BUFFERS * XSK_UMEM__DEFAULT_FRAME_SIZE)
- #define RX_FULL_RXQSIZE 32
- #define UMEM_HEADROOM_TEST_SIZE 128
- #define XSK_UMEM__INVALID_FRAME_SIZE (XSK_UMEM__DEFAULT_FRAME_SIZE + 1)
+diff --git a/tools/testing/selftests/bpf/test_xsk.sh b/tools/testing/selftests/bpf/test_xsk.sh
+index d821fd0985049..4e3ec38cbe68c 100755
+--- a/tools/testing/selftests/bpf/test_xsk.sh
++++ b/tools/testing/selftests/bpf/test_xsk.sh
+@@ -118,6 +118,7 @@ setup_vethPairs() {
+ 	ip link add ${VETH0} numtxqueues 4 numrxqueues 4 type veth peer name ${VETH1} numtxqueues 4 numrxqueues 4
+ 	if [ -f /proc/net/if_inet6 ]; then
+ 		echo 1 > /proc/sys/net/ipv6/conf/${VETH0}/disable_ipv6
++		echo 1 > /proc/sys/net/ipv6/conf/${VETH1}/disable_ipv6
+ 	fi
+ 	if [[ $verbose -eq 1 ]]; then
+ 	        echo "setting up ${VETH1}: namespace: ${NS1}"
 -- 
 2.39.2
 
