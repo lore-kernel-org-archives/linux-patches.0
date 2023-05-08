@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683F6168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:43:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1558C433D2;
-	Mon,  8 May 2023 10:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6B1168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:43:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42F6C433EF;
+	Mon,  8 May 2023 10:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542606;
-	bh=BNxcnzdLJZHgu7qjYslyIlNkhJkx2msTwNhABDfQ5eU=;
+	s=korg; t=1683542609;
+	bh=GnuTKGySGlfr07daI7HAiFk0boCdBF/4zjHSMFSEV+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9VKXTAG0+FEsTEvpI/WCCoMCYiotVc3yEkeqyvuaCg0laMTtDiin2udu6VDAzhQ2
-	 NqAjRAFo3/1dZo41+LqFLsdhsuK7NQ0mqeBr0vo9RVsOmCChceEXUH+v/zXh3k68KI
-	 W5E04j7aC+JHjZkimhkvNQD/qfEJEVgsebIBb2zw=
+	b=h3/LHtu1ozRR7W7tnEZitWUqWZpJf74bOPkgUT9iSPHOcDARrOV+E4yD6mcmsqVm0
+	 /2aLkT8ip9mfyYUAodd1n2wEH5FB8ZfySCtT6pUuRKg3Bzo0R4HMxH0EZ5MIxMgmJP
+	 iRIOthgNqzJqrkxnBDmXe+lM7UMVIMGaOe0NbxF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	dri-devel@lists.freedesktop.org,
+	linux-fbdev@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 457/663] ASoC: es8316: Handle optional IRQ assignment
-Date: Mon,  8 May 2023 11:44:43 +0200
-Message-Id: <20230508094442.949647821@linuxfoundation.org>
+Subject: [PATCH 6.2 458/663] linux/vt_buffer.h: allow either builtin or modular for macros
+Date: Mon,  8 May 2023 11:44:44 +0200
+Message-Id: <20230508094442.979541492@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,60 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 39db65a0a17b54915b269d3685f253a4731f344c ]
+[ Upstream commit 2b76ffe81e32afd6d318dc4547e2ba8c46207b77 ]
 
-The driver is able to work fine without relying on a mandatory interrupt
-being assigned to the I2C device. This is only needed when making use of
-the jack-detect support.
+Fix build errors on ARCH=alpha when CONFIG_MDA_CONSOLE=m.
+This allows the ARCH macros to be the only ones defined.
 
-However, the following warning message is always emitted when there is
-no such interrupt available:
+In file included from ../drivers/video/console/mdacon.c:37:
+../arch/alpha/include/asm/vga.h:17:40: error: expected identifier or '(' before 'volatile'
+   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
+      |                                        ^~~~~~~~
+../include/linux/vt_buffer.h:24:34: note: in definition of macro 'scr_writew'
+   24 | #define scr_writew(val, addr) (*(addr) = (val))
+      |                                  ^~~~
+../include/linux/vt_buffer.h:24:40: error: expected ')' before '=' token
+   24 | #define scr_writew(val, addr) (*(addr) = (val))
+      |                                        ^
+../arch/alpha/include/asm/vga.h:17:20: note: in expansion of macro 'scr_writew'
+   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
+      |                    ^~~~~~~~~~
+../arch/alpha/include/asm/vga.h:25:29: error: expected identifier or '(' before 'volatile'
+   25 | static inline u16 scr_readw(volatile const u16 *addr)
+      |                             ^~~~~~~~
 
-  es8316 0-0011: Failed to get IRQ 0: -22
-
-Do not attempt to request an IRQ if it is not available/valid. This also
-ensures the rather misleading message is not displayed anymore.
-
-Also note the IRQ validation relies on commit dab472eb931bc291 ("i2c /
-ACPI: Use 0 to indicate that device does not have interrupt assigned").
-
-Fixes: 822257661031 ("ASoC: es8316: Add jack-detect support")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230328094901.50763-1-cristian.ciocaltea@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-fbdev@vger.kernel.org
+Link: https://lore.kernel.org/r/20230329021529.16188-1-rdunlap@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/es8316.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ include/linux/vt_buffer.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
-index 056c3082fe02c..f7d7a9c91e04c 100644
---- a/sound/soc/codecs/es8316.c
-+++ b/sound/soc/codecs/es8316.c
-@@ -842,12 +842,14 @@ static int es8316_i2c_probe(struct i2c_client *i2c_client)
- 	es8316->irq = i2c_client->irq;
- 	mutex_init(&es8316->lock);
+diff --git a/include/linux/vt_buffer.h b/include/linux/vt_buffer.h
+index 848db1b1569ff..919d999a8c1db 100644
+--- a/include/linux/vt_buffer.h
++++ b/include/linux/vt_buffer.h
+@@ -16,7 +16,7 @@
  
--	ret = devm_request_threaded_irq(dev, es8316->irq, NULL, es8316_irq,
--					IRQF_TRIGGER_HIGH | IRQF_ONESHOT | IRQF_NO_AUTOEN,
--					"es8316", es8316);
--	if (ret) {
--		dev_warn(dev, "Failed to get IRQ %d: %d\n", es8316->irq, ret);
--		es8316->irq = -ENXIO;
-+	if (es8316->irq > 0) {
-+		ret = devm_request_threaded_irq(dev, es8316->irq, NULL, es8316_irq,
-+						IRQF_TRIGGER_HIGH | IRQF_ONESHOT | IRQF_NO_AUTOEN,
-+						"es8316", es8316);
-+		if (ret) {
-+			dev_warn(dev, "Failed to get IRQ %d: %d\n", es8316->irq, ret);
-+			es8316->irq = -ENXIO;
-+		}
- 	}
+ #include <linux/string.h>
  
- 	return devm_snd_soc_register_component(&i2c_client->dev,
+-#if defined(CONFIG_VGA_CONSOLE) || defined(CONFIG_MDA_CONSOLE)
++#if IS_ENABLED(CONFIG_VGA_CONSOLE) || IS_ENABLED(CONFIG_MDA_CONSOLE)
+ #include <asm/vga.h>
+ #endif
+ 
 -- 
 2.39.2
 
