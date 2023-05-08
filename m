@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D552B168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472C0C433D2;
-	Mon,  8 May 2023 11:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09085168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62865C433D2;
+	Mon,  8 May 2023 11:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543989;
-	bh=FQ4RXhpkFVs41CfM9/NcWSkQv64XAOnCsjEuvHUgI2Q=;
+	s=korg; t=1683543992;
+	bh=azGbbQEulxIH67EX9WHACidebc1MNeevVtf+OG9YJdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8YWUNKqgBXQjDZOt2TzbnnfGLHFPtmax/nxCXEO1x+/LrFuhVKPhlTwRjF4Jgck4
-	 dffRrt3hU8kF6+unus6S7GHwuFo85NoTMGLlyeaQ1b0VG4mQv15syq6sVEELY0Ivd6
-	 8TGdxLYZuDlrQUJvIuY0wjSLTdnies5vhHAhcqzs=
+	b=CQaBljmTNnOc5LbIzVLZOVMuqVwTqFVcT1qevzRb8Pz8/4Vf1CgrB4ZrFUgJQEbi1
+	 Oyy70YoSiGy2f872AYT3wsWXb0ROT7HTQ6Zdy28538cH+FmdkdCnhn0EJMEpx3WklG
+	 Yj5DSrdp7HdIfvYTIR10EzZeN8+XocVeEAH8F5XQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tushar Nimkar <quic_tnimkar@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 266/694] x86/apic: Fix atomic update of offset in reserve_eilvt_offset()
-Date: Mon,  8 May 2023 11:41:41 +0200
-Message-Id: <20230508094440.905293965@linuxfoundation.org>
+Subject: [PATCH 6.3 267/694] soc: qcom: rpmh-rsc: Support RSC v3 minor versions
+Date: Mon,  8 May 2023 11:41:42 +0200
+Message-Id: <20230508094440.934689039@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,47 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Tushar Nimkar <quic_tnimkar@quicinc.com>
 
-[ Upstream commit f96fb2df3eb31ede1b34b0521560967310267750 ]
+[ Upstream commit 88704a0cd71909c3107561261412a5d5beb23358 ]
 
-The detection of atomic update failure in reserve_eilvt_offset() is
-not correct. The value returned by atomic_cmpxchg() should be compared
-to the old value from the location to be updated.
+RSC v3 register offsets are same for all minor versions of v3. Fix a
+minor version check to pick correct offsets for all v3 minor versions.
 
-If these two are the same, then atomic update succeeded and
-"eilvt_offsets[offset]" location is updated to "new" in an atomic way.
-
-Otherwise, the atomic update failed and it should be retried with the
-value from "eilvt_offsets[offset]" - exactly what atomic_try_cmpxchg()
-does in a correct and more optimal way.
-
-Fixes: a68c439b1966c ("apic, x86: Check if EILVT APIC registers are available (AMD only)")
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230227160917.107820-1-ubizjak@gmail.com
+Fixes: 40482e4f7364 ("soc: qcom: rpmh-rsc: Add support for RSC v3 register offsets")
+Signed-off-by: Tushar Nimkar <quic_tnimkar@quicinc.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230406115732.9293-1-quic_tnimkar@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/apic/apic.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/soc/qcom/rpmh-rsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/apic/apic.c b/arch/x86/kernel/apic/apic.c
-index 20d9a604da7c4..7705571100518 100644
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -422,10 +422,9 @@ static unsigned int reserve_eilvt_offset(int offset, unsigned int new)
- 		if (vector && !eilvt_entry_is_changeable(vector, new))
- 			/* may not change if vectors are different */
- 			return rsvd;
--		rsvd = atomic_cmpxchg(&eilvt_offsets[offset], rsvd, new);
--	} while (rsvd != new);
-+	} while (!atomic_try_cmpxchg(&eilvt_offsets[offset], &rsvd, new));
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index 0f8b2249f8894..f93544f6d7961 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -1073,7 +1073,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
+ 	drv->ver.minor >>= MINOR_VER_SHIFT;
  
--	rsvd &= ~APIC_EILVT_MASKED;
-+	rsvd = new & ~APIC_EILVT_MASKED;
- 	if (rsvd && rsvd != vector)
- 		pr_info("LVT offset %d assigned for vector 0x%02x\n",
- 			offset, rsvd);
+-	if (drv->ver.major == 3 && drv->ver.minor == 0)
++	if (drv->ver.major == 3 && drv->ver.minor >= 0)
+ 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
+ 	else
+ 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
 -- 
 2.39.2
 
