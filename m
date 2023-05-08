@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A1B168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:48:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAEAFC433D2;
-	Mon,  8 May 2023 10:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322F4168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34D3C433D2;
+	Mon,  8 May 2023 10:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542939;
-	bh=aMuloELqDfs/yzYvSNuRVKzKFQclGYtm8wluZ9kMYbA=;
+	s=korg; t=1683542942;
+	bh=m6hWB4ZdwqCUjX/JEb+H73QfA1xko8i3kGsZiDlrHak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11KlKukAEcoqWBhcmeTTORhxp9VMVyZmZiMr0WDDl5yZg18KPdVLN0QqB1IBE/ofM
-	 /tQz7y7XVBX9J2gmRRiH3nvlAKtN/q/YaD5GjoGYUomVCWqnehSls5859/RaLbWkdG
-	 8dmWlTVi2NuJe/dFmNvVsh4JZNlX0vft61uLqRYg=
+	b=kDmFrJHc4FIin1rhS0h42Rbh5i7f8UgH4BQ8cfmmiwpfQf2XMNLUjDFqCjDnR8qWh
+	 KkBjqWaEdgZqhjj/7GvZ5qndc+Fv06DdMDu6zHgF+igrpCfZEqcS9dDAYp977QJJA5
+	 ClD4ossH45muanoMdsoXRtKzCpwyGsquIYTb0iTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Michael Kelley <mikelley@microsoft.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 562/663] swiotlb: relocate PageHighMem test away from rmem_swiotlb_setup
-Date: Mon,  8 May 2023 11:46:28 +0200
-Message-Id: <20230508094447.402095425@linuxfoundation.org>
+Subject: [PATCH 6.2 563/663] swiotlb: fix debugfs reporting of reserved memory pools
+Date: Mon,  8 May 2023 11:46:29 +0200
+Message-Id: <20230508094447.442237720@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,63 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Doug Berger <opendmb@gmail.com>
+From: Michael Kelley <mikelley@microsoft.com>
 
-[ Upstream commit a90922fa25370902322e9de6640e58737d459a50 ]
+[ Upstream commit 5499d01c029069044a3b3e50501c77b474c96178 ]
 
-The reservedmem_of_init_fn's are invoked very early at boot before the
-memory zones have even been defined. This makes it inappropriate to test
-whether the page corresponding to a PFN is in ZONE_HIGHMEM from within
-one.
+For io_tlb_nslabs, the debugfs code reports the correct value for a
+specific reserved memory pool.  But for io_tlb_used, the value reported
+is always for the default pool, not the specific reserved pool. Fix this.
 
-Removing the check allows an ARM 32-bit kernel with SPARSEMEM enabled to
-boot properly since otherwise we would be de-referencing an
-uninitialized sparsemem map to perform pfn_to_page() check.
-
-The arm64 architecture happens to work (and also has no high memory) but
-other 32-bit architectures could also be having similar issues.
-
-While it would be nice to provide early feedback about a reserved DMA
-pool residing in highmem, it is not possible to do that until the first
-time we try to use it, which is where the check is moved to.
-
-Fixes: 0b84e4f8b793 ("swiotlb: Add restricted DMA pool initialization")
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Fixes: 5c850d31880e ("swiotlb: fix passing local variable to debugfs_create_ulong()")
+Signed-off-by: Michael Kelley <mikelley@microsoft.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/swiotlb.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ kernel/dma/swiotlb.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index ef3bc3a5bbed3..465cd2b5481f1 100644
+index 465cd2b5481f1..81f40821084ec 100644
 --- a/kernel/dma/swiotlb.c
 +++ b/kernel/dma/swiotlb.c
-@@ -1003,6 +1003,11 @@ static int rmem_swiotlb_device_init(struct reserved_mem *rmem,
- 	/* Set Per-device io tlb area to one */
- 	unsigned int nareas = 1;
+@@ -935,7 +935,9 @@ EXPORT_SYMBOL_GPL(is_swiotlb_active);
  
-+	if (PageHighMem(pfn_to_page(PHYS_PFN(rmem->base)))) {
-+		dev_err(dev, "Restricted DMA pool must be accessible within the linear mapping.");
-+		return -EINVAL;
-+	}
+ static int io_tlb_used_get(void *data, u64 *val)
+ {
+-	*val = mem_used(&io_tlb_default_mem);
++	struct io_tlb_mem *mem = data;
 +
- 	/*
- 	 * Since multiple devices can share the same pool, the private data,
- 	 * io_tlb_mem struct, will be initialized by the first device attached
-@@ -1064,11 +1069,6 @@ static int __init rmem_swiotlb_setup(struct reserved_mem *rmem)
- 	    of_get_flat_dt_prop(node, "no-map", NULL))
- 		return -EINVAL;
++	*val = mem_used(mem);
+ 	return 0;
+ }
+ DEFINE_DEBUGFS_ATTRIBUTE(fops_io_tlb_used, io_tlb_used_get, NULL, "%llu\n");
+@@ -948,7 +950,7 @@ static void swiotlb_create_debugfs_files(struct io_tlb_mem *mem,
+ 		return;
  
--	if (PageHighMem(pfn_to_page(PHYS_PFN(rmem->base)))) {
--		pr_err("Restricted DMA pool must be accessible within the linear mapping.");
--		return -EINVAL;
--	}
--
- 	rmem->ops = &rmem_swiotlb_ops;
- 	pr_info("Reserved memory: created restricted DMA pool at %pa, size %ld MiB\n",
- 		&rmem->base, (unsigned long)rmem->size / SZ_1M);
+ 	debugfs_create_ulong("io_tlb_nslabs", 0400, mem->debugfs, &mem->nslabs);
+-	debugfs_create_file("io_tlb_used", 0400, mem->debugfs, NULL,
++	debugfs_create_file("io_tlb_used", 0400, mem->debugfs, mem,
+ 			&fops_io_tlb_used);
+ }
+ 
 -- 
 2.39.2
 
