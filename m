@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557B0168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC42FC433EF;
-	Mon,  8 May 2023 10:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88F8168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8CFC433D2;
+	Mon,  8 May 2023 10:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540235;
-	bh=N5cg4xg4TXvGmiM8zZ1rPQxesSqESlI2VXTGh8tODvA=;
+	s=korg; t=1683540237;
+	bh=QNvySg/455ZPe+JjSomXiDEzlDkxlTK3w57SdW4oILs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ORvnsL3iqde5GS79FD9oZA3UgSJ7ErnyANBAfJJGUFLB9a3mRQpjCCS5r3BWAxcVc
-	 Y6JGW+d1LVhwpfN+T4gipqGMZRjYvY+ZnFGESHjHrfIvft4HFfIDXBESo7AqgyY56N
-	 xF4HG6yF961q1nb1fSAaKQcfyp8ZQWyLDHd+abaA=
+	b=QtX78b8DwNJDA5g5clD9eu6DLANWiYZkpHwR0BYZRwWcC9r38AQ+mE0hai/9dbVXu
+	 Jtl3M/nEXd5FdDuKppWzzYvvKbAvNncvPueQsraX9IJEBTCfaT4B975Dr1fBlYBfI2
+	 VbQJJNzEqLPX9isM+ryhJVQJe9ClBnOxNlXIL8C8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 288/611] net/packet: convert po->auxdata to an atomic flag
-Date: Mon,  8 May 2023 11:42:10 +0200
-Message-Id: <20230508094431.753056351@linuxfoundation.org>
+Subject: [PATCH 6.1 289/611] libbpf: Fix ld_imm64 copy logic for ksym in light skeleton.
+Date: Mon,  8 May 2023 11:42:11 +0200
+Message-Id: <20230508094431.787505518@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,93 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Alexei Starovoitov <ast@kernel.org>
 
-[ Upstream commit fd53c297aa7b077ae98a3d3d2d3aa278a1686ba6 ]
+[ Upstream commit a506d6ce1dd184051037dc9d26c3eb187c9fe625 ]
 
-po->auxdata can be read while another thread
-is changing its value, potentially raising KCSAN splat.
+Unlike normal libbpf the light skeleton 'loader' program is doing
+btf_find_by_name_kind() call at run-time to find ksym in the kernel and
+populate its {btf_id, btf_obj_fd} pair in ld_imm64 insn. To avoid doing the
+search multiple times for the same ksym it remembers the first patched ld_imm64
+insn and copies {btf_id, btf_obj_fd} from it into subsequent ld_imm64 insn.
+Fix a bug in copying logic, since it may incorrectly clear BPF_PSEUDO_BTF_ID flag.
 
-Convert it to PACKET_SOCK_AUXDATA flag.
+Also replace always true if (btf_obj_fd >= 0) check with unconditional JMP_JA
+to clarify the code.
 
-Fixes: 8dc419447415 ("[PACKET]: Add optional checksum computation for recvmsg")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d995816b77eb ("libbpf: Avoid reload of imm for weak, unresolved, repeating ksym")
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20230319203014.55866-1-alexei.starovoitov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 8 +++-----
- net/packet/diag.c      | 2 +-
- net/packet/internal.h  | 4 ++--
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ tools/lib/bpf/gen_loader.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 6c572fcbb4bc5..ac9335d76fb73 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3515,7 +3515,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 		memcpy(msg->msg_name, &PACKET_SKB_CB(skb)->sa, copy_len);
+diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
+index 23f5c46708f8f..b74c82bb831e6 100644
+--- a/tools/lib/bpf/gen_loader.c
++++ b/tools/lib/bpf/gen_loader.c
+@@ -804,11 +804,13 @@ static void emit_relo_ksym_btf(struct bpf_gen *gen, struct ksym_relo_desc *relo,
+ 		return;
+ 	/* try to copy from existing ldimm64 insn */
+ 	if (kdesc->ref > 1) {
+-		move_blob2blob(gen, insn + offsetof(struct bpf_insn, imm), 4,
+-			       kdesc->insn + offsetof(struct bpf_insn, imm));
+ 		move_blob2blob(gen, insn + sizeof(struct bpf_insn) + offsetof(struct bpf_insn, imm), 4,
+ 			       kdesc->insn + sizeof(struct bpf_insn) + offsetof(struct bpf_insn, imm));
+-		/* jump over src_reg adjustment if imm is not 0, reuse BPF_REG_0 from move_blob2blob */
++		move_blob2blob(gen, insn + offsetof(struct bpf_insn, imm), 4,
++			       kdesc->insn + offsetof(struct bpf_insn, imm));
++		/* jump over src_reg adjustment if imm (btf_id) is not 0, reuse BPF_REG_0 from move_blob2blob
++		 * If btf_id is zero, clear BPF_PSEUDO_BTF_ID flag in src_reg of ld_imm64 insn
++		 */
+ 		emit(gen, BPF_JMP_IMM(BPF_JNE, BPF_REG_0, 0, 3));
+ 		goto clear_src_reg;
  	}
- 
--	if (pkt_sk(sk)->auxdata) {
-+	if (packet_sock_flag(pkt_sk(sk), PACKET_SOCK_AUXDATA)) {
- 		struct tpacket_auxdata aux;
- 
- 		aux.tp_status = TP_STATUS_USER;
-@@ -3899,9 +3899,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, sockptr_t optval,
- 		if (copy_from_sockptr(&val, optval, sizeof(val)))
- 			return -EFAULT;
- 
--		lock_sock(sk);
--		po->auxdata = !!val;
--		release_sock(sk);
-+		packet_sock_flag_set(po, PACKET_SOCK_AUXDATA, val);
- 		return 0;
- 	}
- 	case PACKET_ORIGDEV:
-@@ -4059,7 +4057,7 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
- 
- 		break;
- 	case PACKET_AUXDATA:
--		val = po->auxdata;
-+		val = packet_sock_flag(po, PACKET_SOCK_AUXDATA);
- 		break;
- 	case PACKET_ORIGDEV:
- 		val = packet_sock_flag(po, PACKET_SOCK_ORIGDEV);
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index e1ac9bb375b31..d704c7bf51b20 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -23,7 +23,7 @@ static int pdiag_put_info(const struct packet_sock *po, struct sk_buff *nlskb)
- 	pinfo.pdi_flags = 0;
- 	if (po->running)
- 		pinfo.pdi_flags |= PDI_RUNNING;
--	if (po->auxdata)
-+	if (packet_sock_flag(po, PACKET_SOCK_AUXDATA))
- 		pinfo.pdi_flags |= PDI_AUXDATA;
- 	if (packet_sock_flag(po, PACKET_SOCK_ORIGDEV))
- 		pinfo.pdi_flags |= PDI_ORIGDEV;
-diff --git a/net/packet/internal.h b/net/packet/internal.h
-index 178cd1852238d..3bae8ea7a36f5 100644
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -118,8 +118,7 @@ struct packet_sock {
- 	struct mutex		pg_vec_lock;
- 	unsigned long		flags;
- 	unsigned int		running;	/* bind_lock must be held */
--	unsigned int		auxdata:1,	/* writer must hold sock lock */
--				has_vnet_hdr:1,
-+	unsigned int		has_vnet_hdr:1, /* writer must hold sock lock */
- 				tp_loss:1,
- 				tp_tx_has_off:1;
- 	int			pressure;
-@@ -146,6 +145,7 @@ static inline struct packet_sock *pkt_sk(struct sock *sk)
- 
- enum packet_sock_flags {
- 	PACKET_SOCK_ORIGDEV,
-+	PACKET_SOCK_AUXDATA,
- };
- 
- static inline void packet_sock_flag_set(struct packet_sock *po,
+@@ -831,7 +833,7 @@ static void emit_relo_ksym_btf(struct bpf_gen *gen, struct ksym_relo_desc *relo,
+ 	emit(gen, BPF_STX_MEM(BPF_W, BPF_REG_8, BPF_REG_7,
+ 			      sizeof(struct bpf_insn) + offsetof(struct bpf_insn, imm)));
+ 	/* skip src_reg adjustment */
+-	emit(gen, BPF_JMP_IMM(BPF_JSGE, BPF_REG_7, 0, 3));
++	emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, 3));
+ clear_src_reg:
+ 	/* clear bpf_object__relocate_data's src_reg assignment, otherwise we get a verifier failure */
+ 	reg_mask = src_reg_mask();
 -- 
 2.39.2
 
