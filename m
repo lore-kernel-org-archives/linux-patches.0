@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E638A168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4844CC433D2;
-	Mon,  8 May 2023 10:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603B2168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D886DC433D2;
+	Mon,  8 May 2023 10:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540405;
-	bh=WEAmJZGfFKqctGT2vUqWC3klLrFDB7+B8pLgO0w/uAk=;
+	s=korg; t=1683540408;
+	bh=e01+gcwdG4N45HXJDBUPMPX8zwUPS1pxJKmxPNJLWPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NBS/eBLuRONddjCIIox6FGbNWox3hD4h4obHNe/nzMvN6DjkcT0k/Z0eClzVbd0l0
-	 4aAI8su1qg+Ca0Jad7UQLIHTHRQm2SZUVv0c43XFk04KTHQRafeEuje6QgstSfCL7S
-	 s1/6MqFF+/SygTQMHG/xz9HL1QVmgftvah1a/Gno=
+	b=kb7nbsO32Zr+kzdqIQAILOv3CFGc9N18v7580/OA+Uw+JH/+fWdoHzBGovQw1wOWF
+	 R1zZMVDVuAIMsd7wUeEjdMjUf4wT+ui4CMZkIdHGvCMYqlfFTtQ8pl+RrYybl0XYwD
+	 NhjR++awJckQ/piPS7uBYR77c+JD+PRXr5uV6Lbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 311/611] wifi: rtlwifi: fix incorrect error codes in rtl_debugfs_set_write_reg()
-Date: Mon,  8 May 2023 11:42:33 +0200
-Message-Id: <20230508094432.547134556@linuxfoundation.org>
+Subject: [PATCH 6.1 346/611] f2fs: fix to check return value of f2fs_do_truncate_blocks()
+Date: Mon,  8 May 2023 11:43:08 +0200
+Message-Id: <20230508094433.655804488@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,51 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 5dbe1f8eb8c5ac69394400a5b86fd81775e96c43 ]
+[ Upstream commit b851ee6ba3cc212641e622ebcf92b950c7bafa07 ]
 
-If there is a failure during copy_from_user or user-provided data buffer is
-invalid, rtl_debugfs_set_write_reg should return negative error code instead
-of a positive value count.
+Otherwise, if truncation on cow_inode failed, remained data may
+pollute current transaction of atomic write.
 
-Fix this bug by returning correct error code. Moreover, the check of buffer
-against null is removed since it will be handled by copy_from_user.
-
-Fixes: 610247f46feb ("rtlwifi: Improve debugging by using debugfs")
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230326054217.93492-1-harperchen1110@gmail.com
+Cc: Daeho Jeong <daehojeong@google.com>
+Fixes: a46bebd502fe ("f2fs: synchronize atomic write aborts")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/debug.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/f2fs/file.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/debug.c b/drivers/net/wireless/realtek/rtlwifi/debug.c
-index 602717928887d..9eb26dfe4ca92 100644
---- a/drivers/net/wireless/realtek/rtlwifi/debug.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/debug.c
-@@ -278,8 +278,8 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index c1e24da4dfec3..bf37983304a33 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2115,7 +2115,11 @@ static int f2fs_ioc_start_atomic_write(struct file *filp)
+ 		clear_inode_flag(fi->cow_inode, FI_INLINE_DATA);
+ 	} else {
+ 		/* Reuse the already created COW inode */
+-		f2fs_do_truncate_blocks(fi->cow_inode, 0, true);
++		ret = f2fs_do_truncate_blocks(fi->cow_inode, 0, true);
++		if (ret) {
++			f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
++			goto out;
++		}
+ 	}
  
- 	tmp_len = (count > sizeof(tmp) - 1 ? sizeof(tmp) - 1 : count);
- 
--	if (!buffer || copy_from_user(tmp, buffer, tmp_len))
--		return count;
-+	if (copy_from_user(tmp, buffer, tmp_len))
-+		return -EFAULT;
- 
- 	tmp[tmp_len] = '\0';
- 
-@@ -287,7 +287,7 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
- 	num = sscanf(tmp, "%x %x %x", &addr, &val, &len);
- 
- 	if (num !=  3)
--		return count;
-+		return -EINVAL;
- 
- 	switch (len) {
- 	case 1:
+ 	f2fs_write_inode(inode, NULL);
 -- 
 2.39.2
 
