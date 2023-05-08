@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F9C168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8121C433EF;
-	Mon,  8 May 2023 11:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B4D168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAF6C4339B;
+	Mon,  8 May 2023 11:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545249;
-	bh=3gPY6mgdbqwYvtS6J5cD9ALHeONzHHLbq2YO+VLUE7k=;
+	s=korg; t=1683545252;
+	bh=waDFfIHy/ZYPdPN43yqrx8264cK4LKIH/bf+CLizo/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tRcpQJEMtT0rjNitsAj3ttDJfNuhM1gnxGWQRXot7ctCGNcvu4BKAM3svJPfUBgz3
-	 kqtLTQxLr1XtCI/c8LQizbLFDt3peFAUhpHHCAiPoCMgV/vMsC1NolMVbyYwB+27NN
-	 suX4T6yzHEDXJ8YiPgLo0MqHH8lAVThPHIUU0d3Q=
+	b=o/fHgO1LwyniCAexYqRrLb9K6ebiC/Gu/xcEJpY+SpxooX26Qt+Dn5wZTKlvtuahh
+	 mAlajACB3FkiPauFJQE21qxbCo7waXxHHkyci5AjXFHI2glNg+WMJdeFGlNAsXFLjm
+	 Mk6y0eoArraK3Ren8yRCwTSXkbureeQ33DaIL21M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Liu <liupeng17@lenovo.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 672/694] scripts/gdb: fix lx-timerlist for Python3
-Date: Mon,  8 May 2023 11:48:27 +0200
-Message-Id: <20230508094457.975811293@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.3 673/694] btrfs: scrub: reject unsupported scrub flags
+Date: Mon,  8 May 2023 11:48:28 +0200
+Message-Id: <20230508094458.015603911@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,67 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Liu <liupeng17@lenovo.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 7362042f3556528e9e9b1eb5ce8d7a3a6331476b upstream.
+commit 604e6681e114d05a2e384c4d1e8ef81918037ef5 upstream.
 
-Below incompatibilities between Python2 and Python3 made lx-timerlist fail
-to run under Python3.
+Since the introduction of scrub interface, the only flag that we support
+is BTRFS_SCRUB_READONLY.  Thus there is no sanity checks, if there are
+some undefined flags passed in, we just ignore them.
 
-o xrange() is replaced by range() in Python3
-o bytes and str are different types in Python3
-o the return value of Inferior.read_memory() is memoryview object in
-  Python3
+This is problematic if we want to introduce new scrub flags, as we have
+no way to determine if such flags are supported.
 
-akpm: cc stable so that older kernels are properly debuggable under newer
-Python.
+Address the problem by introducing a check for the flags, and if
+unsupported flags are set, return -EOPNOTSUPP to inform the user space.
 
-Link: https://lkml.kernel.org/r/TYCP286MB2146EE1180A4D5176CBA8AB2C6819@TYCP286MB2146.JPNP286.PROD.OUTLOOK.COM
-Signed-off-by: Peng Liu <liupeng17@lenovo.com>
-Reviewed-by: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+This check should be backported for all supported kernels before any new
+scrub flags are introduced.
+
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/gdb/linux/timerlist.py |    4 +++-
- scripts/gdb/linux/utils.py     |    5 ++++-
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ fs/btrfs/ioctl.c           |    5 +++++
+ include/uapi/linux/btrfs.h |    1 +
+ 2 files changed, 6 insertions(+)
 
---- a/scripts/gdb/linux/timerlist.py
-+++ b/scripts/gdb/linux/timerlist.py
-@@ -73,7 +73,7 @@ def print_cpu(hrtimer_bases, cpu, max_cl
-     ts = cpus.per_cpu(tick_sched_ptr, cpu)
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3161,6 +3161,11 @@ static long btrfs_ioctl_scrub(struct fil
+ 	if (IS_ERR(sa))
+ 		return PTR_ERR(sa);
  
-     text = "cpu: {}\n".format(cpu)
--    for i in xrange(max_clock_bases):
-+    for i in range(max_clock_bases):
-         text += " clock {}:\n".format(i)
-         text += print_base(cpu_base['clock_base'][i])
++	if (sa->flags & ~BTRFS_SCRUB_SUPPORTED_FLAGS) {
++		ret = -EOPNOTSUPP;
++		goto out;
++	}
++
+ 	if (!(sa->flags & BTRFS_SCRUB_READONLY)) {
+ 		ret = mnt_want_write_file(file);
+ 		if (ret)
+--- a/include/uapi/linux/btrfs.h
++++ b/include/uapi/linux/btrfs.h
+@@ -187,6 +187,7 @@ struct btrfs_scrub_progress {
+ };
  
-@@ -158,6 +158,8 @@ def pr_cpumask(mask):
-     num_bytes = (nr_cpu_ids + 7) / 8
-     buf = utils.read_memoryview(inf, bits, num_bytes).tobytes()
-     buf = binascii.b2a_hex(buf)
-+    if type(buf) is not str:
-+        buf=buf.decode()
- 
-     chunks = []
-     i = num_bytes
---- a/scripts/gdb/linux/utils.py
-+++ b/scripts/gdb/linux/utils.py
-@@ -88,7 +88,10 @@ def get_target_endianness():
- 
- 
- def read_memoryview(inf, start, length):
--    return memoryview(inf.read_memory(start, length))
-+    m = inf.read_memory(start, length)
-+    if type(m) is memoryview:
-+        return m
-+    return memoryview(m)
- 
- 
- def read_u16(buffer, offset):
+ #define BTRFS_SCRUB_READONLY	1
++#define BTRFS_SCRUB_SUPPORTED_FLAGS	(BTRFS_SCRUB_READONLY)
+ struct btrfs_ioctl_scrub_args {
+ 	__u64 devid;				/* in */
+ 	__u64 start;				/* in */
 
 
