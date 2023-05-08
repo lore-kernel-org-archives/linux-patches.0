@@ -1,31 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326D2210C
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4C7C433EF;
-	Mon,  8 May 2023 10:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC311125DF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43643C433EF;
+	Mon,  8 May 2023 10:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541110;
-	bh=vtOXrtT8NvQiWM1K+mpr/rrs3zk0qSQx4ul15BPLhY4=;
+	s=korg; t=1683541112;
+	bh=vxYpiowukmD12f1AvqoxGgUi+Xl6hpB2XU99StdEHIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9g3WOZk6Huidj2TECYPQO70y3MqDaFPclGiDJVPU7JYtB7kWIl/rgtkC6WUO9VOB
-	 zld3JJu8YWVIVIKHBTbs0l3+ihL1tvv3Y+9F6Ip5nRIAuRsY1OuqSFeFNd13RW8Ro/
-	 S6JdsKGUE6GwMpNeBieASJ2C8TJTW7aZTGf03TJ0=
+	b=mYxtEjFhcXW6Vza3WqOhg4FG3Y68Kt3C+w1g0SAklh+WyOeqNWnZ4Q+09FaZkqnpo
+	 stefhqRg11qEd2JzUn5dirwydtZgAe+LScfVzlw+m93xRx+z3oW1jdezlOuAny0/Dp
+	 YWXmnNy+ZgkopWuvcjnhjYi7ZddmioA/hsD1ID7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 585/611] btrfs: scrub: reject unsupported scrub flags
-Date: Mon,  8 May 2023 11:47:07 +0200
-Message-Id: <20230508094440.927051334@linuxfoundation.org>
+	Eugene Huang <eugene.huang99@gmail.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 001/663] ASOC: Intel: sof_sdw: add quirk for Intel Rooks County NUC M15
+Date: Mon,  8 May 2023 11:37:07 +0200
+Message-Id: <20230508094428.447996321@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
-References: <20230508094421.513073170@linuxfoundation.org>
+In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
+References: <20230508094428.384831245@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,57 +40,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Eugene Huang <eugene.huang99@gmail.com>
 
-commit 604e6681e114d05a2e384c4d1e8ef81918037ef5 upstream.
+[ Upstream commit 3c728b1bc5b99c5275ac5c7788ef814c0e51ef54 ]
 
-Since the introduction of scrub interface, the only flag that we support
-is BTRFS_SCRUB_READONLY.  Thus there is no sanity checks, if there are
-some undefined flags passed in, we just ignore them.
+Same quirks as the 'Bishop County' NUC M15, except the rt711 is in the
+'JD2 100K' jack detection mode.
 
-This is problematic if we want to introduce new scrub flags, as we have
-no way to determine if such flags are supported.
-
-Address the problem by introducing a check for the flags, and if
-unsupported flags are set, return -EOPNOTSUPP to inform the user space.
-
-This check should be backported for all supported kernels before any new
-scrub flags are introduced.
-
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://github.com/thesofproject/linux/issues/4088
+Signed-off-by: Eugene Huang <eugene.huang99@gmail.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20230314090553.498664-2-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c           |    5 +++++
- include/uapi/linux/btrfs.h |    1 +
- 2 files changed, 6 insertions(+)
+ sound/soc/intel/boards/sof_sdw.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -4050,6 +4050,11 @@ static long btrfs_ioctl_scrub(struct fil
- 	if (IS_ERR(sa))
- 		return PTR_ERR(sa);
- 
-+	if (sa->flags & ~BTRFS_SCRUB_SUPPORTED_FLAGS) {
-+		ret = -EOPNOTSUPP;
-+		goto out;
-+	}
-+
- 	if (!(sa->flags & BTRFS_SCRUB_READONLY)) {
- 		ret = mnt_want_write_file(file);
- 		if (ret)
---- a/include/uapi/linux/btrfs.h
-+++ b/include/uapi/linux/btrfs.h
-@@ -181,6 +181,7 @@ struct btrfs_scrub_progress {
- };
- 
- #define BTRFS_SCRUB_READONLY	1
-+#define BTRFS_SCRUB_SUPPORTED_FLAGS	(BTRFS_SCRUB_READONLY)
- struct btrfs_ioctl_scrub_args {
- 	__u64 devid;				/* in */
- 	__u64 start;				/* in */
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index d2ed807abde95..767fa89d08708 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -213,6 +213,17 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
+ 					SOF_SDW_PCH_DMIC |
+ 					RT711_JD1),
+ 	},
++	{
++		/* NUC15 'Rooks County' LAPRC510 and LAPRC710 skews */
++		.callback = sof_sdw_quirk_cb,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Intel(R) Client Systems"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "LAPRC"),
++		},
++		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
++					SOF_SDW_PCH_DMIC |
++					RT711_JD2_100K),
++	},
+ 	/* TigerLake-SDCA devices */
+ 	{
+ 		.callback = sof_sdw_quirk_cb,
+-- 
+2.39.2
+
 
 
