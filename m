@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360CC171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:40:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBC4C4339B;
-	Mon,  8 May 2023 11:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43DB3171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:40:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B76CC433D2;
+	Mon,  8 May 2023 11:40:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546054;
-	bh=38TSVG4EbbNrH0Ts/3UO5GGPJ2rOy+vUboqdHWyieUY=;
+	s=korg; t=1683546057;
+	bh=4TKXIcYv+nEbW51CdgHkvfVkvDfIpmy7mzNDqq/8gK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxVrOOnXOTBJ5mGbe3fh2KRJuYnatsVtczdbzujlbht8lTZDrGeBBnE0Grf61rTHn
-	 nl3rXxWAy7MQeoy9HQSudHN/egI3aNvCxLfES+j1Ow3XMQB5qHhDLsNm9RASatMKJJ
-	 B6tA9p4OmsfV+O+LI+l5eQPGjhQfHYs3eqmyMJ5I=
+	b=UJAfE9Bcl37L6etWhIciwWPtQfbVfg2B8raEE19dONe29NS12tApwHhfb7ZBdpSPP
+	 6V9M1hYeYnOpA92C9hKYc3A5sZibbI9JEsNLH1z44/SSju7sxPGI43mRFGj3IWnazE
+	 Y0XRy+tgPGC87CNoCLD5RL6WW2MTxHArkfkGks80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Erwan Le Ray <erwan.leray@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 241/371] usb: dwc3: gadget: Change condition for processing suspend event
-Date: Mon,  8 May 2023 11:47:22 +0200
-Message-Id: <20230508094821.641513521@linuxfoundation.org>
+Subject: [PATCH 5.15 242/371] serial: stm32: re-introduce an irq flag condition in usart_receive_chars
+Date: Mon,  8 May 2023 11:47:23 +0200
+Message-Id: <20230508094821.672749995@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,52 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Erwan Le Ray <erwan.leray@foss.st.com>
 
-[ Upstream commit 4decf4060ecfee1f7a710999fcd421645ac0c419 ]
+[ Upstream commit cc58d0a3f0a4755b9c808e065d9227c6e984e7db ]
 
-Currently we process the suspend interrupt event only if the
-device is in configured state. Consider a case where device
-is not configured and got suspend interrupt, in that case our
-gadget will still use 100mA as composite_suspend didn't happen.
-But battery charging specification (BC1.2) expects a downstream
-device to draw less than 2.5mA when unconnected OR suspended.
+Re-introduce an irq flag condition in usart_receive_chars.
+This condition has been deleted by commit 75f4e830fa9c ("serial: do not
+restore interrupt state in sysrq helper").
+This code was present to handle threaded case, and has been removed
+because it is no more needed in this case. Nevertheless an irq safe lock
+is still needed in some cases, when DMA should be stopped to receive errors
+or breaks in PIO mode.
+This patch is a precursor to the complete rework or stm32 serial driver
+DMA implementation.
 
-Fix this by removing the condition for processing suspend event,
-and thus composite_resume would set vbus draw to 2.
-
-Fixes: 72704f876f50 ("dwc3: gadget: Implement the suspend entry event handler")
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/1677217619-10261-2-git-send-email-quic_prashk@quicinc.com
+Signed-off-by: Erwan Le Ray <erwan.leray@foss.st.com>
+Link: https://lore.kernel.org/r/20211020150332.10214-2-erwan.leray@foss.st.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c47527cbcc3c ("serial: stm32: Re-assert RTS/DE GPIO in RS485 mode only if more data are transmitted")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/tty/serial/stm32-usart.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index eaf64f33fe077..7ff77a0de5152 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -4092,15 +4092,8 @@ static void dwc3_gadget_interrupt(struct dwc3 *dwc,
- 		break;
- 	case DWC3_DEVICE_EVENT_SUSPEND:
- 		/* It changed to be suspend event for version 2.30a and above */
--		if (!DWC3_VER_IS_PRIOR(DWC3, 230A)) {
--			/*
--			 * Ignore suspend event until the gadget enters into
--			 * USB_STATE_CONFIGURED state.
--			 */
--			if (dwc->gadget->state >= USB_STATE_CONFIGURED)
--				dwc3_gadget_suspend_interrupt(dwc,
--						event->event_info);
--		}
-+		if (!DWC3_VER_IS_PRIOR(DWC3, 230A))
-+			dwc3_gadget_suspend_interrupt(dwc, event->event_info);
- 		break;
- 	case DWC3_DEVICE_EVENT_SOF:
- 	case DWC3_DEVICE_EVENT_ERRATIC_ERROR:
+diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
+index 5c60960e185d2..0e8158cfaf0f9 100644
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -264,19 +264,22 @@ static unsigned long stm32_usart_get_char(struct uart_port *port, u32 *sr,
+ 	return c;
+ }
+ 
+-static void stm32_usart_receive_chars(struct uart_port *port, bool threaded)
++static void stm32_usart_receive_chars(struct uart_port *port, bool irqflag)
+ {
+ 	struct tty_port *tport = &port->state->port;
+ 	struct stm32_port *stm32_port = to_stm32_port(port);
+ 	const struct stm32_usart_offsets *ofs = &stm32_port->info->ofs;
+-	unsigned long c;
++	unsigned long c, flags;
+ 	u32 sr;
+ 	char flag;
+ 
+-	spin_lock(&port->lock);
++	if (irqflag)
++		spin_lock_irqsave(&port->lock, flags);
++	else
++		spin_lock(&port->lock);
+ 
+ 	while (stm32_usart_pending_rx(port, &sr, &stm32_port->last_res,
+-				      threaded)) {
++				      irqflag)) {
+ 		sr |= USART_SR_DUMMY_RX;
+ 		flag = TTY_NORMAL;
+ 
+@@ -330,7 +333,10 @@ static void stm32_usart_receive_chars(struct uart_port *port, bool threaded)
+ 		uart_insert_char(port, sr, USART_SR_ORE, c, flag);
+ 	}
+ 
+-	uart_unlock_and_check_sysrq(port);
++	if (irqflag)
++		uart_unlock_and_check_sysrq_irqrestore(port, irqflag);
++	else
++		uart_unlock_and_check_sysrq(port);
+ 
+ 	tty_flip_buffer_push(tport);
+ }
+@@ -599,10 +605,9 @@ static irqreturn_t stm32_usart_interrupt(int irq, void *ptr)
+ static irqreturn_t stm32_usart_threaded_interrupt(int irq, void *ptr)
+ {
+ 	struct uart_port *port = ptr;
+-	struct stm32_port *stm32_port = to_stm32_port(port);
+ 
+-	if (stm32_port->rx_ch)
+-		stm32_usart_receive_chars(port, true);
++	/* Receiver timeout irq for DMA RX */
++	stm32_usart_receive_chars(port, false);
+ 
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.39.2
 
