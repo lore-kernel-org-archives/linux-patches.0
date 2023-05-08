@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCA5168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:56:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C866CC433EF;
-	Mon,  8 May 2023 10:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BA1168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:56:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F2AC433D2;
+	Mon,  8 May 2023 10:56:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543396;
-	bh=Zv9Gzg+vLq82EOQnONDEtniCU0Ryf8DKjAz9FGPNHpU=;
+	s=korg; t=1683543399;
+	bh=EBEywgEIhoeOxvsNWvtzN+uz/IExK8Z6aQeleH6WRII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p/Mc9Asp0G9+3UNeAEpsSbkqNuuT/iiA3jQ7t0bU0AfC/zt9MsBpkbbTS7P63hpgX
-	 RgDEwNxRr6PBBFzamYy2QpFTxqVHAch5Fma4fpGlgBnRWa8wdWl/MtUECJkcPPT6o+
-	 HwmPwCWbbph/T8NjvhBOgY5ZbJITbin9h/f+zFl8=
+	b=BH6vjPBdbmNH0DclsfIx79zmVxBaNg2VKsfLahx55mFAwA7pIpu7iXt+I7VW/X1t6
+	 Ute/u+I2u8ROOlf4FPKH+f7myBcvmE+8Mj8a1Vv/TpdZPF/MQtwD0JhIcZYyuo+otQ
+	 rVD4oEGHjE2yarhSeJenvCkV5RLugZDyShoO0cGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan McDowell <noodles@earth.li>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.3 049/694] crypto: safexcel - Cleanup ring IRQ workqueues on load failure
-Date: Mon,  8 May 2023 11:38:04 +0200
-Message-Id: <20230508094434.200435516@linuxfoundation.org>
+	=?UTF-8?q?=D0=A0=D1=83=D1=81=D0=B5=D0=B2=20=D0=9F=D1=83=D1=82=D0=B8=D0=BD?= <rockeraliexpress@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.3 076/694] ACPI: video: Remove acpi_backlight=video quirk for Lenovo ThinkPad W530
+Date: Mon,  8 May 2023 11:38:31 +0200
+Message-Id: <20230508094435.005020093@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,154 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan McDowell <noodles@earth.li>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit ca25c00ccbc5f942c63897ed23584cfc66e8ec81 upstream.
+commit 3db66620ea90b0fd4134b31eabfec16d7b07d7e3 upstream.
 
-A failure loading the safexcel driver results in the following warning
-on boot, because the IRQ affinity has not been correctly cleaned up.
-Ensure we clean up the affinity and workqueues on a failure to load the
-driver.
+Remove the acpi_backlight=video quirk for Lenovo ThinkPad W530.
 
-crypto-safexcel: probe of f2800000.crypto failed with error -2
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 232 at kernel/irq/manage.c:1913 free_irq+0x300/0x340
-Modules linked in: hwmon mdio_i2c crypto_safexcel(+) md5 sha256_generic libsha256 authenc libdes omap_rng rng_core nft_masq nft_nat nft_chain_nat nf_nat nft_ct nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nf_tables libcrc32c nfnetlink fuse autofs4
-CPU: 1 PID: 232 Comm: systemd-udevd Tainted: G        W          6.1.6-00002-g9d4898824677 #3
-Hardware name: MikroTik RB5009 (DT)
-pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : free_irq+0x300/0x340
-lr : free_irq+0x2e0/0x340
-sp : ffff800008fa3890
-x29: ffff800008fa3890 x28: 0000000000000000 x27: 0000000000000000
-x26: ffff8000008e6dc0 x25: ffff000009034cac x24: ffff000009034d50
-x23: 0000000000000000 x22: 000000000000004a x21: ffff0000093e0d80
-x20: ffff000009034c00 x19: ffff00000615fc00 x18: 0000000000000000
-x17: 0000000000000000 x16: 0000000000000000 x15: 000075f5c1584c5e
-x14: 0000000000000017 x13: 0000000000000000 x12: 0000000000000040
-x11: ffff000000579b60 x10: ffff000000579b62 x9 : ffff800008bbe370
-x8 : ffff000000579dd0 x7 : 0000000000000000 x6 : ffff000000579e18
-x5 : ffff000000579da8 x4 : ffff800008ca0000 x3 : ffff800008ca0188
-x2 : 0000000013033204 x1 : ffff000009034c00 x0 : ffff8000087eadf0
-Call trace:
- free_irq+0x300/0x340
- devm_irq_release+0x14/0x20
- devres_release_all+0xa0/0x100
- device_unbind_cleanup+0x14/0x60
- really_probe+0x198/0x2d4
- __driver_probe_device+0x74/0xdc
- driver_probe_device+0x3c/0x110
- __driver_attach+0x8c/0x190
- bus_for_each_dev+0x6c/0xc0
- driver_attach+0x20/0x30
- bus_add_driver+0x148/0x1fc
- driver_register+0x74/0x120
- __platform_driver_register+0x24/0x30
- safexcel_init+0x48/0x1000 [crypto_safexcel]
- do_one_initcall+0x4c/0x1b0
- do_init_module+0x44/0x1cc
- load_module+0x1724/0x1be4
- __do_sys_finit_module+0xbc/0x110
- __arm64_sys_finit_module+0x1c/0x24
- invoke_syscall+0x44/0x110
- el0_svc_common.constprop.0+0xc0/0xe0
- do_el0_svc+0x20/0x80
- el0_svc+0x14/0x4c
- el0t_64_sync_handler+0xb0/0xb4
- el0t_64_sync+0x148/0x14c
----[ end trace 0000000000000000 ]---
+This was intended to help users of the (unsupported) Nvidia binary driver,
+but this has been reported to cause backlight control issues for users
+who have the gfx configured in hybrid (dual-GPU) mode, so drop this.
 
-Fixes: 1b44c5a60c13 ("inside-secure - add SafeXcel EIP197 crypto engine driver")
-Signed-off-by: Jonathan McDowell <noodles@earth.li>
-Cc: stable@vger.kernel.org
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The Nvidia binary driver should call acpi_video_register_backlight()
+when necessary and this has been reported to Nvidia.
+
+Until this is fixed Nvidia binary driver users can work around this by
+passing "acpi_backlight=video" on the kernel commandline (with the latest
+6.1.y or newer stable series, kernels < 6.1.y don't need this).
+
+Fixes: a5b2781dcab2 ("ACPI: video: Add acpi_backlight=video quirk for Lenovo ThinkPad W530")
+Reported-by: Русев Путин <rockeraliexpress@gmail.com>
+Link: https://lore.kernel.org/linux-acpi/CAK4BXn0ngZRmzx1bodAF8nmYj0PWdUXzPGHofRrsyZj8MBpcVA@mail.gmail.com/
+Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/inside-secure/safexcel.c |   37 +++++++++++++++++++++++---------
- 1 file changed, 27 insertions(+), 10 deletions(-)
+ drivers/acpi/video_detect.c |   14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/drivers/crypto/inside-secure/safexcel.c
-+++ b/drivers/crypto/inside-secure/safexcel.c
-@@ -1628,19 +1628,23 @@ static int safexcel_probe_generic(void *
- 						     &priv->ring[i].rdr);
- 		if (ret) {
- 			dev_err(dev, "Failed to initialize rings\n");
--			return ret;
-+			goto err_cleanup_rings;
- 		}
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -300,20 +300,6 @@ static const struct dmi_system_id video_
+ 	},
  
- 		priv->ring[i].rdr_req = devm_kcalloc(dev,
- 			EIP197_DEFAULT_RING_SIZE,
- 			sizeof(*priv->ring[i].rdr_req),
- 			GFP_KERNEL);
--		if (!priv->ring[i].rdr_req)
--			return -ENOMEM;
-+		if (!priv->ring[i].rdr_req) {
-+			ret = -ENOMEM;
-+			goto err_cleanup_rings;
-+		}
- 
- 		ring_irq = devm_kzalloc(dev, sizeof(*ring_irq), GFP_KERNEL);
--		if (!ring_irq)
--			return -ENOMEM;
-+		if (!ring_irq) {
-+			ret = -ENOMEM;
-+			goto err_cleanup_rings;
-+		}
- 
- 		ring_irq->priv = priv;
- 		ring_irq->ring = i;
-@@ -1654,7 +1658,8 @@ static int safexcel_probe_generic(void *
- 						ring_irq);
- 		if (irq < 0) {
- 			dev_err(dev, "Failed to get IRQ ID for ring %d\n", i);
--			return irq;
-+			ret = irq;
-+			goto err_cleanup_rings;
- 		}
- 
- 		priv->ring[i].irq = irq;
-@@ -1666,8 +1671,10 @@ static int safexcel_probe_generic(void *
- 		snprintf(wq_name, 9, "wq_ring%d", i);
- 		priv->ring[i].workqueue =
- 			create_singlethread_workqueue(wq_name);
--		if (!priv->ring[i].workqueue)
--			return -ENOMEM;
-+		if (!priv->ring[i].workqueue) {
-+			ret = -ENOMEM;
-+			goto err_cleanup_rings;
-+		}
- 
- 		priv->ring[i].requests = 0;
- 		priv->ring[i].busy = false;
-@@ -1684,16 +1691,26 @@ static int safexcel_probe_generic(void *
- 	ret = safexcel_hw_init(priv);
- 	if (ret) {
- 		dev_err(dev, "HW init failed (%d)\n", ret);
--		return ret;
-+		goto err_cleanup_rings;
- 	}
- 
- 	ret = safexcel_register_algorithms(priv);
- 	if (ret) {
- 		dev_err(dev, "Failed to register algorithms (%d)\n", ret);
--		return ret;
-+		goto err_cleanup_rings;
- 	}
- 
- 	return 0;
-+
-+err_cleanup_rings:
-+	for (i = 0; i < priv->config.rings; i++) {
-+		if (priv->ring[i].irq)
-+			irq_set_affinity_hint(priv->ring[i].irq, NULL);
-+		if (priv->ring[i].workqueue)
-+			destroy_workqueue(priv->ring[i].workqueue);
-+	}
-+
-+	return ret;
- }
- 
- static void safexcel_hw_reset_rings(struct safexcel_crypto_priv *priv)
+ 	/*
+-	 * Older models with nvidia GPU which need acpi_video backlight
+-	 * control and where the old nvidia binary driver series does not
+-	 * call acpi_video_register_backlight().
+-	 */
+-	{
+-	 .callback = video_detect_force_video,
+-	 /* ThinkPad W530 */
+-	 .matches = {
+-		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+-		DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad W530"),
+-		},
+-	},
+-
+-	/*
+ 	 * These models have a working acpi_video backlight control, and using
+ 	 * native backlight causes a regression where backlight does not work
+ 	 * when userspace is not handling brightness key events. Disable
 
 
