@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945B3168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:44:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC24C4339B;
-	Mon,  8 May 2023 10:44:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4961168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:44:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D4AC4339B;
+	Mon,  8 May 2023 10:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542656;
-	bh=gbsgF0jUZQHzoprFJRgaCygFbigEFv3rZN2HwzN1HcM=;
+	s=korg; t=1683542659;
+	bh=xdAFWYR/RXqH8ok1Y1aPIX+9ysIpKlGcch10JaOzDf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snVO7s8U76SonmRME50hJbtYj/RPI0bdImgCotliBwn5k1ZLaAJcMRvGZ2aMHkuqs
-	 IHV/NB0d4lIhlFpNBUWN9Vdcwn8aVlAHDBOPne/kJCmXrohuMemvRlUfmOr8ayl895
-	 JXlugs0MvIGe4TItWuO3orQbQJLSJXGP7DAie2kY=
+	b=C3yIXvBhKE9ibSPRSm/dcpNi5DO7A/ySw13oNpjNiCCS5MUKWkBrWaOiZde0plgx6
+	 BfY2rkTi6mp/tfhUleOB0MoNDZpSi29R5/LKIrGJ+OvWtRwE+lZ4jrkOvQ90Wzk6T+
+	 ogIFjSfug/JiZ2cYiAaUV5CdSW00mIGmZeR4V8xY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>,
-	Petr Vorel <pvorel@suse.cz>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 488/663] uapi/linux/const.h: prefer ISO-friendly __typeof__
-Date: Mon,  8 May 2023 11:45:14 +0200
-Message-Id: <20230508094444.238448701@linuxfoundation.org>
+Subject: [PATCH 6.2 506/663] powerpc/wii: fix resource printk format warnings
+Date: Mon,  8 May 2023 11:45:32 +0200
+Message-Id: <20230508094445.051351478@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -39,63 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kevin Brodsky <kevin.brodsky@arm.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 31088f6f7906253ef4577f6a9b84e2d42447dba0 ]
+[ Upstream commit 7b69600d4da0049244e9be2f5ef5a2f8e04fcd9a ]
 
-typeof is (still) a GNU extension, which means that it cannot be used when
-building ISO C (e.g.  -std=c99).  It should therefore be avoided in uapi
-headers in favour of the ISO-friendly __typeof__.
+Use "%pa" format specifier for resource_size_t to avoid compiler
+printk format warnings.
 
-Unfortunately this issue could not be detected by
-CONFIG_UAPI_HEADER_TEST=y as the __ALIGN_KERNEL() macro is not expanded in
-any uapi header.
+../arch/powerpc/platforms/embedded6xx/flipper-pic.c: In function 'flipper_pic_init':
+../include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
+../arch/powerpc/platforms/embedded6xx/flipper-pic.c:148:9: note: in expansion of macro 'pr_info'
+  148 |         pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
+      |         ^~~~~~~
 
-This matters from a userspace perspective, not a kernel one. uapi
-headers and their contents are expected to be usable in a variety of
-situations, and in particular when building ISO C applications (with
--std=c99 or similar).
+../arch/powerpc/platforms/embedded6xx/hlwd-pic.c: In function 'hlwd_pic_init':
+../include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
+../arch/powerpc/platforms/embedded6xx/hlwd-pic.c:174:9: note: in expansion of macro 'pr_info'
+  174 |         pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
+      |         ^~~~~~~
 
-This particular problem can be reproduced by trying to use the
-__ALIGN_KERNEL macro directly in application code, say:
+../arch/powerpc/platforms/embedded6xx/wii.c: In function 'wii_ioremap_hw_regs':
+../include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 3 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
+../arch/powerpc/platforms/embedded6xx/wii.c:77:17: note: in expansion of macro 'pr_info'
+   77 |                 pr_info("%s at 0x%08x mapped to 0x%p\n", name,
+      |                 ^~~~~~~
 
-#include <linux/const.h>
-
-int align(int x, int a)
-{
-	return __KERNEL_ALIGN(x, a);
-}
-
-and trying to build that with -std=c99.
-
-Link: https://lkml.kernel.org/r/20230411092747.3759032-1-kevin.brodsky@arm.com
-Fixes: a79ff731a1b2 ("netfilter: xtables: make XT_ALIGN() usable in exported headers by exporting __ALIGN_KERNEL()")
-Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Reported-by: Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>
-Tested-by: Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Tested-by: Petr Vorel <pvorel@suse.cz>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 028ee972f032 ("powerpc: gamecube/wii: flipper interrupt controller support")
+Fixes: 9c21025c7845 ("powerpc: wii: hollywood interrupt controller support")
+Fixes: 5a7ee3198dfa ("powerpc: wii: platform support")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230223070116.660-3-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/const.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/embedded6xx/flipper-pic.c | 2 +-
+ arch/powerpc/platforms/embedded6xx/hlwd-pic.c    | 2 +-
+ arch/powerpc/platforms/embedded6xx/wii.c         | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/uapi/linux/const.h b/include/uapi/linux/const.h
-index af2a44c08683d..a429381e7ca50 100644
---- a/include/uapi/linux/const.h
-+++ b/include/uapi/linux/const.h
-@@ -28,7 +28,7 @@
- #define _BITUL(x)	(_UL(1) << (x))
- #define _BITULL(x)	(_ULL(1) << (x))
+diff --git a/arch/powerpc/platforms/embedded6xx/flipper-pic.c b/arch/powerpc/platforms/embedded6xx/flipper-pic.c
+index 609bda2ad5dd2..4d9200bdba78c 100644
+--- a/arch/powerpc/platforms/embedded6xx/flipper-pic.c
++++ b/arch/powerpc/platforms/embedded6xx/flipper-pic.c
+@@ -145,7 +145,7 @@ static struct irq_domain * __init flipper_pic_init(struct device_node *np)
+ 	}
+ 	io_base = ioremap(res.start, resource_size(&res));
  
--#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (typeof(x))(a) - 1)
-+#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (__typeof__(x))(a) - 1)
- #define __ALIGN_KERNEL_MASK(x, mask)	(((x) + (mask)) & ~(mask))
+-	pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
++	pr_info("controller at 0x%pa mapped to 0x%p\n", &res.start, io_base);
  
- #define __KERNEL_DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
+ 	__flipper_quiesce(io_base);
+ 
+diff --git a/arch/powerpc/platforms/embedded6xx/hlwd-pic.c b/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
+index 380b4285cce47..4d2d92de30afd 100644
+--- a/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
++++ b/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
+@@ -171,7 +171,7 @@ static struct irq_domain *__init hlwd_pic_init(struct device_node *np)
+ 		return NULL;
+ 	}
+ 
+-	pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
++	pr_info("controller at 0x%pa mapped to 0x%p\n", &res.start, io_base);
+ 
+ 	__hlwd_quiesce(io_base);
+ 
+diff --git a/arch/powerpc/platforms/embedded6xx/wii.c b/arch/powerpc/platforms/embedded6xx/wii.c
+index f4e654a9d4ff6..219659f2ede06 100644
+--- a/arch/powerpc/platforms/embedded6xx/wii.c
++++ b/arch/powerpc/platforms/embedded6xx/wii.c
+@@ -74,8 +74,8 @@ static void __iomem *__init wii_ioremap_hw_regs(char *name, char *compatible)
+ 
+ 	hw_regs = ioremap(res.start, resource_size(&res));
+ 	if (hw_regs) {
+-		pr_info("%s at 0x%08x mapped to 0x%p\n", name,
+-			res.start, hw_regs);
++		pr_info("%s at 0x%pa mapped to 0x%p\n", name,
++			&res.start, hw_regs);
+ 	}
+ 
+ out_put:
 -- 
 2.39.2
 
