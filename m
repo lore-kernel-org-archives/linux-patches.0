@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77E07168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:37:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED51C433EF;
-	Mon,  8 May 2023 10:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CCD168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:37:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78C6C433D2;
+	Mon,  8 May 2023 10:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542233;
-	bh=sSBWeJwLWcLTi38iTnA8Z4DlUtp4Xh/JlC6gz+NGJWk=;
+	s=korg; t=1683542236;
+	bh=5OwhriKLAN/fkY8AB9fk04gRwc5KZGXUiaa2PNQe5Pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQMu7YkPIK06scByW5GknA0jOy5bmenV/nDljBxDWoj8XMUpiit/WmXBBjUUv+HqC
-	 2v+UnMOqlhNX13k22609ACLmyb79f20wMVVY/e7gB1XFesj/V6uxcvX8cVuu/hDtnx
-	 FtDlZUButILLSP8xiASbcDvcB1/L5R7kal9T+rVA=
+	b=N3+byGee35FniUrkoN6kznitMzhxhN8+1+KNe28CE5jK/sF/QXC7urJx6IghGQZRy
+	 zoaucjlGN3/Ti5t7BZcqS1w2ypi0KZdOmUjMl07DG9RD5EwdaiU/OIHDOHLr2nGGK3
+	 NDkNz227OpAV6hXYUK4pO3Jye7zy4ibV66fH7KTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com,
-	Hsin-Wei Hung <hsinweih@uci.edu>,
-	Xin Liu <liuxin350@huawei.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 369/663] bpf, sockmap: Revert buggy deadlock fix in the sockhash and sockmap
-Date: Mon,  8 May 2023 11:43:15 +0200
-Message-Id: <20230508094440.106828731@linuxfoundation.org>
+Subject: [PATCH 6.2 370/663] f2fs: fix to check return value of f2fs_do_truncate_blocks()
+Date: Mon,  8 May 2023 11:43:16 +0200
+Message-Id: <20230508094440.136100767@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,99 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 8c5c2a4898e3d6bad86e29d471e023c8a19ba799 ]
+[ Upstream commit b851ee6ba3cc212641e622ebcf92b950c7bafa07 ]
 
-syzbot reported a splat and bisected it to recent commit ed17aa92dc56 ("bpf,
-sockmap: fix deadlocks in the sockhash and sockmap"):
+Otherwise, if truncation on cow_inode failed, remained data may
+pollute current transaction of atomic write.
 
-  [...]
-  WARNING: CPU: 1 PID: 9280 at kernel/softirq.c:376 __local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
-  Modules linked in:
-  CPU: 1 PID: 9280 Comm: syz-executor.1 Not tainted 6.2.0-syzkaller-13249-gd319f344561d #0
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
-  RIP: 0010:__local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
-  [...]
-  Call Trace:
-  <TASK>
-  spin_unlock_bh include/linux/spinlock.h:395 [inline]
-  sock_map_del_link+0x2ea/0x510 net/core/sock_map.c:165
-  sock_map_unref+0xb0/0x1d0 net/core/sock_map.c:184
-  sock_hash_delete_elem+0x1ec/0x2a0 net/core/sock_map.c:945
-  map_delete_elem kernel/bpf/syscall.c:1536 [inline]
-  __sys_bpf+0x2edc/0x53e0 kernel/bpf/syscall.c:5053
-  __do_sys_bpf kernel/bpf/syscall.c:5166 [inline]
-  __se_sys_bpf kernel/bpf/syscall.c:5164 [inline]
-  __x64_sys_bpf+0x79/0xc0 kernel/bpf/syscall.c:5164
-  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-  do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  RIP: 0033:0x7fe8f7c8c169
-  </TASK>
-  [...]
-
-Revert for now until we have a proper solution.
-
-Fixes: ed17aa92dc56 ("bpf, sockmap: fix deadlocks in the sockhash and sockmap")
-Reported-by: syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com
-Cc: Hsin-Wei Hung <hsinweih@uci.edu>
-Cc: Xin Liu <liuxin350@huawei.com>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/000000000000f1db9605f939720e@google.com/
+Cc: Daeho Jeong <daehojeong@google.com>
+Fixes: a46bebd502fe ("f2fs: synchronize atomic write aborts")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ fs/f2fs/file.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index dd5d7b1fa3580..a055139f410e2 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -414,9 +414,8 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
- {
- 	struct sock *sk;
- 	int err = 0;
--	unsigned long flags;
- 
--	raw_spin_lock_irqsave(&stab->lock, flags);
-+	raw_spin_lock_bh(&stab->lock);
- 	sk = *psk;
- 	if (!sk_test || sk_test == sk)
- 		sk = xchg(psk, NULL);
-@@ -426,7 +425,7 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
- 	else
- 		err = -EINVAL;
- 
--	raw_spin_unlock_irqrestore(&stab->lock, flags);
-+	raw_spin_unlock_bh(&stab->lock);
- 	return err;
- }
- 
-@@ -924,12 +923,11 @@ static long sock_hash_delete_elem(struct bpf_map *map, void *key)
- 	struct bpf_shtab_bucket *bucket;
- 	struct bpf_shtab_elem *elem;
- 	int ret = -ENOENT;
--	unsigned long flags;
- 
- 	hash = sock_hash_bucket_hash(key, key_size);
- 	bucket = sock_hash_select_bucket(htab, hash);
- 
--	raw_spin_lock_irqsave(&bucket->lock, flags);
-+	raw_spin_lock_bh(&bucket->lock);
- 	elem = sock_hash_lookup_elem_raw(&bucket->head, hash, key, key_size);
- 	if (elem) {
- 		hlist_del_rcu(&elem->node);
-@@ -937,7 +935,7 @@ static long sock_hash_delete_elem(struct bpf_map *map, void *key)
- 		sock_hash_free_elem(htab, elem);
- 		ret = 0;
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 23fb9861dba40..de92279a80020 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -2117,7 +2117,11 @@ static int f2fs_ioc_start_atomic_write(struct file *filp, bool truncate)
+ 		clear_inode_flag(fi->cow_inode, FI_INLINE_DATA);
+ 	} else {
+ 		/* Reuse the already created COW inode */
+-		f2fs_do_truncate_blocks(fi->cow_inode, 0, true);
++		ret = f2fs_do_truncate_blocks(fi->cow_inode, 0, true);
++		if (ret) {
++			f2fs_up_write(&fi->i_gc_rwsem[WRITE]);
++			goto out;
++		}
  	}
--	raw_spin_unlock_irqrestore(&bucket->lock, flags);
-+	raw_spin_unlock_bh(&bucket->lock);
- 	return ret;
- }
  
+ 	f2fs_write_inode(inode, NULL);
 -- 
 2.39.2
 
