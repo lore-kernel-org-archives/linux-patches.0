@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C01168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B77C433D2;
-	Mon,  8 May 2023 10:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDEEA168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B32C433D2;
+	Mon,  8 May 2023 10:15:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540928;
-	bh=+HBhPyas3qgnFIzGUyho7JggeuDIy9lpNXuOlBjEDb4=;
+	s=korg; t=1683540931;
+	bh=ftWWElOnL/oMVd6/TR1RbBiXJoodE2EhuMa1gDAAdPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYEMIU8CC9QdF+NmlzqfhdVbfc8pxS9CeI3cLkQBc78zvnwu3L3euxVTLiQwJnz+x
-	 nIv76fBb1MlnshE+Hsp9A8fIaDSVwN8d0EF2L3742skfmKaSWBVBlUx++VB/Hs6Wck
-	 KysQJdm35n/KlNKT+taYw/YJ3VNfMNdhwE29j7vY=
+	b=pV2/rXkwUHPxfTWIgP70g6LDoaBSVlrHfQzQ8XCoY3mHee/19jxEmqzRFG1172lrn
+	 bVAHBMsudasL0VQh2JAkHBaM2bpOhunrwhPIdgHsXCjw5EsXYMXQcLYqQ+RgHptUlK
+	 H+iskI7qI/MY0PFdx5LbGlFSrFdP3j6yDlyBX90E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 550/611] mfd: arizona-spi: Add missing MODULE_DEVICE_TABLE
-Date: Mon,  8 May 2023 11:46:32 +0200
-Message-Id: <20230508094439.882775188@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Paulo Alcantara <pc@manguebit.com>
+Subject: [PATCH 6.1 521/611] SMB3: Add missing locks to protect deferred close file list
+Date: Mon,  8 May 2023 11:46:03 +0200
+Message-Id: <20230508094438.958311552@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,35 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Bharath SM <bharathsm@microsoft.com>
 
-[ Upstream commit 972c91fd7beddc3f19c8c855f6e60e7dbd435cbd ]
+[ Upstream commit ab9ddc87a9055c4bebd6524d5d761d605d52e557 ]
 
-This patch adds missing MODULE_DEVICE_TABLE definition
-which generates correct modalias for automatic loading
-of this driver when it is built as a module.
+cifs_del_deferred_close function has a critical section which modifies
+the deferred close file list. We must acquire deferred_lock before
+calling cifs_del_deferred_close function.
 
-Fixes: 3f65555c417c ("mfd: arizona: Split of_match table into I2C and SPI versions")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230323134138.834369-1-ckeepax@opensource.cirrus.com
+Fixes: ca08d0eac020 ("cifs: Fix memory leak on the deferred close")
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Acked-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Acked-by: Ronnie Sahlberg <lsahlber@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/arizona-spi.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/cifs/misc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/mfd/arizona-spi.c b/drivers/mfd/arizona-spi.c
-index 941b0267d09d4..5c4af05ed0440 100644
---- a/drivers/mfd/arizona-spi.c
-+++ b/drivers/mfd/arizona-spi.c
-@@ -277,6 +277,7 @@ static const struct of_device_id arizona_spi_of_match[] = {
- 	{ .compatible = "cirrus,cs47l24", .data = (void *)CS47L24 },
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, arizona_spi_of_match);
- #endif
+diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
+index cf19e6a81ed99..f3903ae0cc6b8 100644
+--- a/fs/cifs/misc.c
++++ b/fs/cifs/misc.c
+@@ -742,7 +742,9 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+ 	list_for_each_entry(cfile, &cifs_inode->openFileList, flist) {
+ 		if (delayed_work_pending(&cfile->deferred)) {
+ 			if (cancel_delayed_work(&cfile->deferred)) {
++				spin_lock(&cifs_inode->deferred_lock);
+ 				cifs_del_deferred_close(cfile);
++				spin_unlock(&cifs_inode->deferred_lock);
  
- static struct spi_driver arizona_spi_driver = {
+ 				tmp_list = kmalloc(sizeof(struct file_list), GFP_ATOMIC);
+ 				if (tmp_list == NULL)
+@@ -773,7 +775,9 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
+ 	list_for_each_entry(cfile, &tcon->openFileList, tlist) {
+ 		if (delayed_work_pending(&cfile->deferred)) {
+ 			if (cancel_delayed_work(&cfile->deferred)) {
++				spin_lock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
+ 				cifs_del_deferred_close(cfile);
++				spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
+ 
+ 				tmp_list = kmalloc(sizeof(struct file_list), GFP_ATOMIC);
+ 				if (tmp_list == NULL)
+@@ -808,7 +812,9 @@ cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
+ 		if (strstr(full_path, path)) {
+ 			if (delayed_work_pending(&cfile->deferred)) {
+ 				if (cancel_delayed_work(&cfile->deferred)) {
++					spin_lock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
+ 					cifs_del_deferred_close(cfile);
++					spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
+ 
+ 					tmp_list = kmalloc(sizeof(struct file_list), GFP_ATOMIC);
+ 					if (tmp_list == NULL)
 -- 
 2.39.2
 
