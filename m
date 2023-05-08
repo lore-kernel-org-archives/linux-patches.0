@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A075E171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06558C433EF;
-	Mon,  8 May 2023 11:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 832BB171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00AAFC433EF;
+	Mon,  8 May 2023 11:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545516;
-	bh=UXqE0aF+Dgzy9JzQ6TuSK4YCephGJml1toDoiacqo0E=;
+	s=korg; t=1683545519;
+	bh=088rvVM9AtJmY7X9z4w+ylwDXfpyP6nQeWbozy4Nn6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ridc6MTOk4R71lp3Jy67frxD1wm3K2l6Tnaute1Q0IaYfExUE39Osm62/Ylsrx2GU
-	 hmset/k1ELw0t0ZeC0u1pH2kzvMGjfwAqvezxG8FS9uFsWgY7vHW/MCMebSedq7FYV
-	 qFLVPn3/zul6N7wwArEVJA6wRpCOzwrY05gD6iCg=
+	b=vLoZrDDUIWYuc1gWTaF0fLJqEN577Q4K8Xdz7AIqTricjMb218OlhVRKq14n8gMDO
+	 HQIPtrNbb9CBzjk6Zksk9iBVlDfe/WUO7c+kameBOyXD3YMC4dlENd5BqMt+woCBLa
+	 v5X1K6Gs/H1YBT08DroyzaiJjulW9dD1rA8eSsOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 036/371] soundwire: qcom: correct setting ignore bit on v1.5.1
-Date: Mon,  8 May 2023 11:43:57 +0200
-Message-Id: <20230508094813.521074650@linuxfoundation.org>
+	Linus Walleij <linus.walleij@linaro.org>
+Subject: [PATCH 5.15 037/371] pinctrl: qcom: lpass-lpi: set output value before enabling output
+Date: Mon,  8 May 2023 11:43:58 +0200
+Message-Id: <20230508094813.549721884@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -37,33 +37,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit bd934f77eeac377e81ddac8673803e7334b82d3d upstream.
+commit 163bfb0cb1f6fbf961cf912cbde57399ea1ae0e8 upstream.
 
-According to the comment and to downstream sources, the
-SWRM_CONTINUE_EXEC_ON_CMD_IGNORE in SWRM_CMD_FIFO_CFG_ADDR register
-should be set for v1.5.1 and newer, so fix the >= operator.
+As per Hardware Programming Guide, when configuring pin as output,
+set the pin value before setting output-enable (OE).  Similar approach
+is in main SoC TLMM pin controller.
 
-Fixes: 542d3491cdd7 ("soundwire: qcom: set continue execution flag for ignored commands")
 Cc: <stable@vger.kernel.org>
+Fixes: 6e261d1090d6 ("pinctrl: qcom: Add sm8250 lpass lpi pinctrl driver")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230222140343.188691-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20230309154949.658380-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soundwire/qcom.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -640,7 +640,7 @@ static int qcom_swrm_init(struct qcom_sw
+--- a/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
++++ b/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c
+@@ -452,6 +452,15 @@ static int lpi_config_set(struct pinctrl
+ 		}
+ 	}
  
- 	ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL, SWRM_MCP_BUS_CLK_START);
- 	/* Configure number of retries of a read/write cmd */
--	if (ctrl->version > 0x01050001) {
-+	if (ctrl->version >= 0x01050001) {
- 		/* Only for versions >= 1.5.1 */
- 		ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CFG_ADDR,
- 				SWRM_RD_WR_CMD_RETRIES |
++	/*
++	 * As per Hardware Programming Guide, when configuring pin as output,
++	 * set the pin value before setting output-enable (OE).
++	 */
++	if (output_enabled) {
++		val = u32_encode_bits(value ? 1 : 0, LPI_GPIO_VALUE_OUT_MASK);
++		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
++	}
++
+ 	val = lpi_gpio_read(pctrl, group, LPI_GPIO_CFG_REG);
+ 
+ 	u32p_replace_bits(&val, pullup, LPI_GPIO_PULL_MASK);
+@@ -461,11 +470,6 @@ static int lpi_config_set(struct pinctrl
+ 
+ 	lpi_gpio_write(pctrl, group, LPI_GPIO_CFG_REG, val);
+ 
+-	if (output_enabled) {
+-		val = u32_encode_bits(value ? 1 : 0, LPI_GPIO_VALUE_OUT_MASK);
+-		lpi_gpio_write(pctrl, group, LPI_GPIO_VALUE_REG, val);
+-	}
+-
+ 	return 0;
+ }
+ 
 
 
