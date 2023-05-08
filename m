@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC9E168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180F0C433EF;
-	Mon,  8 May 2023 10:16:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AE11168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9240C4339B;
+	Mon,  8 May 2023 10:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540974;
-	bh=Qohn91KaOLWs5l0mLrmpftzfefNpFAlogI1T9/Am4dQ=;
+	s=korg; t=1683540977;
+	bh=eCFHU+S1dsdT4iPuQcKU2ajIAJsaOfZZkJqUsGVtogE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SdaWW8c9rt3twECxogTG2rh8+5RsdywGfus3aSO4U57DFQjvhlcguKzY0hl8Drlyh
-	 FFJgBusJbLc64l8/D8uvs6ogHvzbt+S1PA7T0hR6rvVpo/ZXZUA9B2xWbnjTKXl5D7
-	 ZkMlSY0pBRM6ukUE+VTm9FHUqxYnGIX+dRCssfy8=
+	b=U3iOIcOn8Ru6TSLf9eBm5XMGQUMlRccyQLSBo3xPBbxCKq7CAmq7qMFzjliPf7KJs
+	 FTVHE3JGZZ8gLRN3KH3YbHoVmdnb+KvPnxa5T18rzjijkZn9BIO9e4zjE36FB8gMDM
+	 acaYHCXVCJxJrr7W3OBahLXN2wDDEKzUc6wQwGfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	Thomas Voegtle <tv@lio96.de>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 569/611] drbd: correctly submit flush bio on barrier
-Date: Mon,  8 May 2023 11:46:51 +0200
-Message-Id: <20230508094440.444957097@linuxfoundation.org>
+	Li Nan <linan122@huawei.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.1 570/611] md/raid10: fix null-ptr-deref in raid10_sync_request
+Date: Mon,  8 May 2023 11:46:52 +0200
+Message-Id: <20230508094440.474267741@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,45 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+From: Li Nan <linan122@huawei.com>
 
-commit 3899d94e3831ee07ea6821c032dc297aec80586a upstream.
+commit a405c6f0229526160aa3f177f65e20c86fce84c5 upstream.
 
-When we receive a flush command (or "barrier" in DRBD), we currently use
-a REQ_OP_FLUSH with the REQ_PREFLUSH flag set.
+init_resync() inits mempool and sets conf->have_replacemnt at the beginning
+of sync, close_sync() frees the mempool when sync is completed.
 
-The correct way to submit a flush bio is by using a REQ_OP_WRITE without
-any data, and set the REQ_PREFLUSH flag.
+After [1] recovery might be skipped and init_resync() is called but
+close_sync() is not. null-ptr-deref occurs with r10bio->dev[i].repl_bio.
 
-Since commit b4a6bb3a67aa ("block: add a sanity check for non-write
-flush/fua bios"), this triggers a warning in the block layer, but this
-has been broken for quite some time before that.
+The following is one way to reproduce the issue.
 
-So use the correct set of flags to actually make the flush happen.
+  1) create a array, wait for resync to complete, mddev->recovery_cp is set
+     to MaxSector.
+  2) recovery is woken and it is skipped. conf->have_replacement is set to
+     0 in init_resync(). close_sync() not called.
+  3) some io errors and rdev A is set to WantReplacement.
+  4) a new device is added and set to A's replacement.
+  5) recovery is woken, A have replacement, but conf->have_replacemnt is
+     0. r10bio->dev[i].repl_bio will not be alloced and null-ptr-deref
+     occurs.
 
-Cc: Christoph Hellwig <hch@infradead.org>
+Fix it by not calling init_resync() if recovery skipped.
+
+[1] commit 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
+Fixes: 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
 Cc: stable@vger.kernel.org
-Fixes: f9ff0da56437 ("drbd: allow parallel flushes for multi-volume resources")
-Reported-by: Thomas Voegtle <tv@lio96.de>
-Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230503121937.17232-1-christoph.boehmwalder@linbit.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Li Nan <linan122@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230222041000.3341651-3-linan666@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/drbd/drbd_receiver.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid10.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/block/drbd/drbd_receiver.c
-+++ b/drivers/block/drbd/drbd_receiver.c
-@@ -1280,7 +1280,7 @@ static void one_flush_endio(struct bio *
- static void submit_one_flush(struct drbd_device *device, struct issue_flush_context *ctx)
- {
- 	struct bio *bio = bio_alloc(device->ldev->backing_bdev, 0,
--				    REQ_OP_FLUSH | REQ_PREFLUSH, GFP_NOIO);
-+				    REQ_OP_WRITE | REQ_PREFLUSH, GFP_NOIO);
- 	struct one_flush_context *octx = kmalloc(sizeof(*octx), GFP_NOIO);
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3302,10 +3302,6 @@ static sector_t raid10_sync_request(stru
+ 	sector_t chunk_mask = conf->geo.chunk_mask;
+ 	int page_idx = 0;
  
- 	if (!octx) {
+-	if (!mempool_initialized(&conf->r10buf_pool))
+-		if (init_resync(conf))
+-			return 0;
+-
+ 	/*
+ 	 * Allow skipping a full rebuild for incremental assembly
+ 	 * of a clean array, like RAID1 does.
+@@ -3321,6 +3317,10 @@ static sector_t raid10_sync_request(stru
+ 		return mddev->dev_sectors - sector_nr;
+ 	}
+ 
++	if (!mempool_initialized(&conf->r10buf_pool))
++		if (init_resync(conf))
++			return 0;
++
+  skipped:
+ 	max_sector = mddev->dev_sectors;
+ 	if (test_bit(MD_RECOVERY_SYNC, &mddev->recovery) ||
 
 
