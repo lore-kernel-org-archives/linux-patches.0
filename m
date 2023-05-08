@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E7D1549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:12:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2E4CC433D2;
-	Mon,  8 May 2023 10:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF225168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:12:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CC7C433EF;
+	Mon,  8 May 2023 10:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540753;
-	bh=mtk1jRQLs5sLc7mjQpW/vR5jAzlhjbDn5pGZ7T+l0dE=;
+	s=korg; t=1683540755;
+	bh=i3y76EWp5NGs1WkLc1DvpsMEnYO7+/5ydEuK5KyTw/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6E707GC66/yf9E4Ebyht5VrkjitP9u1KuoPoQWzhmZLvyu3pkfs9CwMj4y6BdHro
-	 Y4/S8E47s4U1IcbVs0sWHy2yL0HJf/ZeasQj4YtGrQZ0VyRsSdp4AzEn38T7L1Igqp
-	 K43YXbcSpEn1Ni7UWau5Nf+PENjoRpi2QP5ZrvaE=
+	b=pkwG/lew6+Quv1XexAp+5mBa8hpJkMChGZMyXt8zlIMubxME+OnPt6idl813QKVAC
+	 kw36PaOR3lfUjhPxHZ2B2WfsUFYz1RvByRoVPLZtjL0k1Qb6c8cJyEOjIswIFmljmd
+	 eUbPYULLT4zsdK06mJdTqMRfQ1z4YaCg1JfbXRto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jishnu Prakash <quic_jprakash@quicinc.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 483/611] rtc: meson-vrtc: Use ktime_get_real_ts64() to get the current time
-Date: Mon,  8 May 2023 11:45:25 +0200
-Message-Id: <20230508094437.779013867@linuxfoundation.org>
+Subject: [PATCH 6.1 453/611] spmi: Add a check for remove callback when removing a SPMI driver
+Date: Mon,  8 May 2023 11:44:55 +0200
+Message-Id: <20230508094436.881772102@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,58 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
 
-[ Upstream commit 0e6255fa3f649170da6bd1a544680589cfae1131 ]
+[ Upstream commit b56eef3e16d888883fefab47425036de80dd38fc ]
 
-The VRTC alarm register can be programmed with an amount of seconds
-after which the SoC will be woken up by the VRTC timer again. We are
-already converting the alarm time from meson_vrtc_set_alarm() to
-"seconds since 1970". This means we also need to use "seconds since
-1970" for the current time.
+When removing a SPMI driver, there can be a crash due to NULL pointer
+dereference if it does not have a remove callback defined. This is
+one such call trace observed when removing the QCOM SPMI PMIC driver:
 
-This fixes a problem where setting the alarm to one minute in the future
-results in the firmware (which handles wakeup) to output (on the serial
-console) that the system will be woken up in billions of seconds.
-ktime_get_raw_ts64() returns the time since boot, not since 1970. Switch
-to ktime_get_real_ts64() to fix the calculation of the alarm time and to
-make the SoC wake up at the specified date/time. Also the firmware
-(which manages suspend) now prints either 59 or 60 seconds until wakeup
-(depending on how long it takes for the system to enter suspend).
+ dump_backtrace.cfi_jt+0x0/0x8
+ dump_stack_lvl+0xd8/0x16c
+ panic+0x188/0x498
+ __cfi_slowpath+0x0/0x214
+ __cfi_slowpath+0x1dc/0x214
+ spmi_drv_remove+0x16c/0x1e0
+ device_release_driver_internal+0x468/0x79c
+ driver_detach+0x11c/0x1a0
+ bus_remove_driver+0xc4/0x124
+ driver_unregister+0x58/0x84
+ cleanup_module+0x1c/0xc24 [qcom_spmi_pmic]
+ __do_sys_delete_module+0x3ec/0x53c
+ __arm64_sys_delete_module+0x18/0x28
+ el0_svc_common+0xdc/0x294
+ el0_svc+0x38/0x9c
+ el0_sync_handler+0x8c/0xf0
+ el0_sync+0x1b4/0x1c0
 
-Fixes: 6ef35398e827 ("rtc: Add Amlogic Virtual Wake RTC")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Link: https://lore.kernel.org/r/20230320212142.2355062-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+If a driver has all its resources allocated through devm_() APIs and
+does not need any other explicit cleanup, it would not require a
+remove callback to be defined. Hence, add a check for remove callback
+presence before calling it when removing a SPMI driver.
+
+Link: https://lore.kernel.org/r/1671601032-18397-2-git-send-email-quic_jprakash@quicinc.com
+Fixes: 6f00f8c8635f ("mfd: qcom-spmi-pmic: Use devm_of_platform_populate()")
+Fixes: 5a86bf343976 ("spmi: Linux driver framework for SPMI")
+Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20230413223834.4084793-7-sboyd@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-meson-vrtc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spmi/spmi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-meson-vrtc.c b/drivers/rtc/rtc-meson-vrtc.c
-index 1463c86215615..648fa362ec447 100644
---- a/drivers/rtc/rtc-meson-vrtc.c
-+++ b/drivers/rtc/rtc-meson-vrtc.c
-@@ -23,7 +23,7 @@ static int meson_vrtc_read_time(struct device *dev, struct rtc_time *tm)
- 	struct timespec64 time;
+diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+index 55381592bb5a6..e73d3017863cb 100644
+--- a/drivers/spmi/spmi.c
++++ b/drivers/spmi/spmi.c
+@@ -350,7 +350,8 @@ static void spmi_drv_remove(struct device *dev)
+ 	const struct spmi_driver *sdrv = to_spmi_driver(dev->driver);
  
- 	dev_dbg(dev, "%s\n", __func__);
--	ktime_get_raw_ts64(&time);
-+	ktime_get_real_ts64(&time);
- 	rtc_time64_to_tm(time.tv_sec, tm);
+ 	pm_runtime_get_sync(dev);
+-	sdrv->remove(to_spmi_device(dev));
++	if (sdrv->remove)
++		sdrv->remove(to_spmi_device(dev));
+ 	pm_runtime_put_noidle(dev);
  
- 	return 0;
-@@ -96,7 +96,7 @@ static int __maybe_unused meson_vrtc_suspend(struct device *dev)
- 		long alarm_secs;
- 		struct timespec64 time;
- 
--		ktime_get_raw_ts64(&time);
-+		ktime_get_real_ts64(&time);
- 		local_time = time.tv_sec;
- 
- 		dev_dbg(dev, "alarm_time = %lus, local_time=%lus\n",
+ 	pm_runtime_disable(dev);
 -- 
 2.39.2
 
