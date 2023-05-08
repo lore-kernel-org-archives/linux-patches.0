@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4196A15496
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:29:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A984C433D2;
-	Mon,  8 May 2023 11:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5530315496
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:29:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6122C433D2;
+	Mon,  8 May 2023 11:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545380;
-	bh=4fdgyOWkeDLDtYKMk3dFu+FPoPgD3JN6zMRg/+QQ7UY=;
+	s=korg; t=1683545383;
+	bh=cdQDKMx3xzAvZDRBdIgPeQRwjsXvpW8TqrCESkJ8bv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aoe07zHI45vmI+rrDJZsuDA1UAR9Ub3qu2zwpse6KMxfOT+CoeZ7av38WlJG+VwiJ
-	 sAP8OfTfnze51U7Y+kXloraoyAtACX+rx9EiAzWpgwNnEnUjNLaPymYBeFS5nqn2Dq
-	 hdArDKFQfBtFr53svJNhjJ5e4isHGENWpbj9aXJ0=
+	b=j4ESLaxFol1+v0WFJYz3iiq8ieQHvnpsFFk6m1l6RQVFQKn5SSrwSlO3VdzMdqsDC
+	 9dmhmYHQRCmyHbcfALMzb3sGDOhT0DVJcYI2Q8J+fL1I25Bau/xUOwbbYm5c2XgVdx
+	 8fVckKwQfo9keWPLYCsbd5F3k7OqtE9+7uuMTEYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>
-Subject: [PATCH 5.15 020/371] posix-cpu-timers: Implement the missing timer_wait_running callback
-Date: Mon,  8 May 2023 11:43:41 +0200
-Message-Id: <20230508094812.911434086@linuxfoundation.org>
+	Nathan Huckleberry <nhuck@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Eric Biggers <ebiggers@google.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 021/371] blk-mq: release crypto keyslot before reporting I/O complete
+Date: Mon,  8 May 2023 11:43:42 +0200
+Message-Id: <20230508094812.960332066@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,268 +36,183 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Eric Biggers <ebiggers@google.com>
 
-commit f7abf14f0001a5a47539d9f60bbdca649e43536b upstream.
+commit 9cd1e566676bbcb8a126acd921e4e194e6339603 upstream.
 
-For some unknown reason the introduction of the timer_wait_running callback
-missed to fixup posix CPU timers, which went unnoticed for almost four years.
-Marco reported recently that the WARN_ON() in timer_wait_running()
-triggers with a posix CPU timer test case.
+Once all I/O using a blk_crypto_key has completed, filesystems can call
+blk_crypto_evict_key().  However, the block layer currently doesn't call
+blk_crypto_put_keyslot() until the request is being freed, which happens
+after upper layers have been told (via bio_endio()) the I/O has
+completed.  This causes a race condition where blk_crypto_evict_key()
+can see 'slot_refs != 0' without there being an actual bug.
 
-Posix CPU timers have two execution models for expiring timers depending on
-CONFIG_POSIX_CPU_TIMERS_TASK_WORK:
+This makes __blk_crypto_evict_key() hit the
+'WARN_ON_ONCE(atomic_read(&slot->slot_refs) != 0)' and return without
+doing anything, eventually causing a use-after-free in
+blk_crypto_reprogram_all_keys().  (This is a very rare bug and has only
+been seen when per-file keys are being used with fscrypt.)
 
-1) If not enabled, the expiry happens in hard interrupt context so
-   spin waiting on the remote CPU is reasonably time bound.
+There are two options to fix this: either release the keyslot before
+bio_endio() is called on the request's last bio, or make
+__blk_crypto_evict_key() ignore slot_refs.  Let's go with the first
+solution, since it preserves the ability to report bugs (via
+WARN_ON_ONCE) where a key is evicted while still in-use.
 
-   Implement an empty stub function for that case.
-
-2) If enabled, the expiry happens in task work before returning to user
-   space or guest mode. The expired timers are marked as firing and moved
-   from the timer queue to a local list head with sighand lock held. Once
-   the timers are moved, sighand lock is dropped and the expiry happens in
-   fully preemptible context. That means the expiring task can be scheduled
-   out, migrated, interrupted etc. So spin waiting on it is more than
-   suboptimal.
-
-   The timer wheel has a timer_wait_running() mechanism for RT, which uses
-   a per CPU timer-base expiry lock which is held by the expiry code and the
-   task waiting for the timer function to complete blocks on that lock.
-
-   This does not work in the same way for posix CPU timers as there is no
-   timer base and expiry for process wide timers can run on any task
-   belonging to that process, but the concept of waiting on an expiry lock
-   can be used too in a slightly different way:
-
-    - Add a mutex to struct posix_cputimers_work. This struct is per task
-      and used to schedule the expiry task work from the timer interrupt.
-
-    - Add a task_struct pointer to struct cpu_timer which is used to store
-      a the task which runs the expiry. That's filled in when the task
-      moves the expired timers to the local expiry list. That's not
-      affecting the size of the k_itimer union as there are bigger union
-      members already
-
-    - Let the task take the expiry mutex around the expiry function
-
-    - Let the waiter acquire a task reference with rcu_read_lock() held and
-      block on the expiry mutex
-
-   This avoids spin-waiting on a task which might not even be on a CPU and
-   works nicely for RT too.
-
-Fixes: ec8f954a40da ("posix-timers: Use a callback for cancel synchronization on PREEMPT_RT")
-Reported-by: Marco Elver <elver@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Marco Elver <elver@google.com>
-Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Fixes: a892c8d52c02 ("block: Inline encryption support for blk-mq")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/87zg764ojw.ffs@tglx
+Reviewed-by: Nathan Huckleberry <nhuck@google.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20230315183907.53675-2-ebiggers@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/posix-timers.h   |   17 +++++---
- kernel/time/posix-cpu-timers.c |   81 +++++++++++++++++++++++++++++++++--------
- kernel/time/posix-timers.c     |    4 ++
- 3 files changed, 82 insertions(+), 20 deletions(-)
+ block/blk-core.c            |    7 +++++++
+ block/blk-crypto-internal.h |   25 +++++++++++++++++++++----
+ block/blk-crypto.c          |   24 ++++++++++++------------
+ block/blk-merge.c           |    2 ++
+ block/blk-mq.c              |    2 +-
+ 5 files changed, 43 insertions(+), 17 deletions(-)
 
---- a/include/linux/posix-timers.h
-+++ b/include/linux/posix-timers.h
-@@ -4,6 +4,7 @@
- 
- #include <linux/spinlock.h>
- #include <linux/list.h>
-+#include <linux/mutex.h>
- #include <linux/alarmtimer.h>
- #include <linux/timerqueue.h>
- #include <linux/task_work.h>
-@@ -63,16 +64,18 @@ static inline int clockid_to_fd(const cl
-  * cpu_timer - Posix CPU timer representation for k_itimer
-  * @node:	timerqueue node to queue in the task/sig
-  * @head:	timerqueue head on which this timer is queued
-- * @task:	Pointer to target task
-+ * @pid:	Pointer to target task PID
-  * @elist:	List head for the expiry list
-  * @firing:	Timer is currently firing
-+ * @handling:	Pointer to the task which handles expiry
-  */
- struct cpu_timer {
--	struct timerqueue_node	node;
--	struct timerqueue_head	*head;
--	struct pid		*pid;
--	struct list_head	elist;
--	int			firing;
-+	struct timerqueue_node		node;
-+	struct timerqueue_head		*head;
-+	struct pid			*pid;
-+	struct list_head		elist;
-+	int				firing;
-+	struct task_struct __rcu	*handling;
- };
- 
- static inline bool cpu_timer_enqueue(struct timerqueue_head *head,
-@@ -136,10 +139,12 @@ struct posix_cputimers {
- /**
-  * posix_cputimers_work - Container for task work based posix CPU timer expiry
-  * @work:	The task work to be scheduled
-+ * @mutex:	Mutex held around expiry in context of this task work
-  * @scheduled:  @work has been scheduled already, no further processing
-  */
- struct posix_cputimers_work {
- 	struct callback_head	work;
-+	struct mutex		mutex;
- 	unsigned int		scheduled;
- };
- 
---- a/kernel/time/posix-cpu-timers.c
-+++ b/kernel/time/posix-cpu-timers.c
-@@ -840,6 +840,8 @@ static u64 collect_timerqueue(struct tim
- 			return expires;
- 
- 		ctmr->firing = 1;
-+		/* See posix_cpu_timer_wait_running() */
-+		rcu_assign_pointer(ctmr->handling, current);
- 		cpu_timer_dequeue(ctmr);
- 		list_add_tail(&ctmr->elist, firing);
- 	}
-@@ -1155,7 +1157,49 @@ static void handle_posix_cpu_timers(stru
- #ifdef CONFIG_POSIX_CPU_TIMERS_TASK_WORK
- static void posix_cpu_timers_work(struct callback_head *work)
- {
-+	struct posix_cputimers_work *cw = container_of(work, typeof(*cw), work);
-+
-+	mutex_lock(&cw->mutex);
- 	handle_posix_cpu_timers(current);
-+	mutex_unlock(&cw->mutex);
-+}
-+
-+/*
-+ * Invoked from the posix-timer core when a cancel operation failed because
-+ * the timer is marked firing. The caller holds rcu_read_lock(), which
-+ * protects the timer and the task which is expiring it from being freed.
-+ */
-+static void posix_cpu_timer_wait_running(struct k_itimer *timr)
-+{
-+	struct task_struct *tsk = rcu_dereference(timr->it.cpu.handling);
-+
-+	/* Has the handling task completed expiry already? */
-+	if (!tsk)
-+		return;
-+
-+	/* Ensure that the task cannot go away */
-+	get_task_struct(tsk);
-+	/* Now drop the RCU protection so the mutex can be locked */
-+	rcu_read_unlock();
-+	/* Wait on the expiry mutex */
-+	mutex_lock(&tsk->posix_cputimers_work.mutex);
-+	/* Release it immediately again. */
-+	mutex_unlock(&tsk->posix_cputimers_work.mutex);
-+	/* Drop the task reference. */
-+	put_task_struct(tsk);
-+	/* Relock RCU so the callsite is balanced */
-+	rcu_read_lock();
-+}
-+
-+static void posix_cpu_timer_wait_running_nsleep(struct k_itimer *timr)
-+{
-+	/* Ensure that timr->it.cpu.handling task cannot go away */
-+	rcu_read_lock();
-+	spin_unlock_irq(&timr->it_lock);
-+	posix_cpu_timer_wait_running(timr);
-+	rcu_read_unlock();
-+	/* @timr is on stack and is valid */
-+	spin_lock_irq(&timr->it_lock);
- }
- 
- /*
-@@ -1171,6 +1215,7 @@ void clear_posix_cputimers_work(struct t
- 	       sizeof(p->posix_cputimers_work.work));
- 	init_task_work(&p->posix_cputimers_work.work,
- 		       posix_cpu_timers_work);
-+	mutex_init(&p->posix_cputimers_work.mutex);
- 	p->posix_cputimers_work.scheduled = false;
- }
- 
-@@ -1249,6 +1294,18 @@ static inline void __run_posix_cpu_timer
- 	lockdep_posixtimer_exit();
- }
- 
-+static void posix_cpu_timer_wait_running(struct k_itimer *timr)
-+{
-+	cpu_relax();
-+}
-+
-+static void posix_cpu_timer_wait_running_nsleep(struct k_itimer *timr)
-+{
-+	spin_unlock_irq(&timr->it_lock);
-+	cpu_relax();
-+	spin_lock_irq(&timr->it_lock);
-+}
-+
- static inline bool posix_cpu_timers_work_scheduled(struct task_struct *tsk)
- {
- 	return false;
-@@ -1357,6 +1414,8 @@ static void handle_posix_cpu_timers(stru
- 		 */
- 		if (likely(cpu_firing >= 0))
- 			cpu_timer_fire(timer);
-+		/* See posix_cpu_timer_wait_running() */
-+		rcu_assign_pointer(timer->it.cpu.handling, NULL);
- 		spin_unlock(&timer->it_lock);
- 	}
- }
-@@ -1491,23 +1550,16 @@ static int do_cpu_nanosleep(const clocki
- 		expires = cpu_timer_getexpires(&timer.it.cpu);
- 		error = posix_cpu_timer_set(&timer, 0, &zero_it, &it);
- 		if (!error) {
--			/*
--			 * Timer is now unarmed, deletion can not fail.
--			 */
-+			/* Timer is now unarmed, deletion can not fail. */
- 			posix_cpu_timer_del(&timer);
-+		} else {
-+			while (error == TIMER_RETRY) {
-+				posix_cpu_timer_wait_running_nsleep(&timer);
-+				error = posix_cpu_timer_del(&timer);
-+			}
- 		}
--		spin_unlock_irq(&timer.it_lock);
- 
--		while (error == TIMER_RETRY) {
--			/*
--			 * We need to handle case when timer was or is in the
--			 * middle of firing. In other cases we already freed
--			 * resources.
--			 */
--			spin_lock_irq(&timer.it_lock);
--			error = posix_cpu_timer_del(&timer);
--			spin_unlock_irq(&timer.it_lock);
--		}
-+		spin_unlock_irq(&timer.it_lock);
- 
- 		if ((it.it_value.tv_sec | it.it_value.tv_nsec) == 0) {
- 			/*
-@@ -1617,6 +1669,7 @@ const struct k_clock clock_posix_cpu = {
- 	.timer_del		= posix_cpu_timer_del,
- 	.timer_get		= posix_cpu_timer_get,
- 	.timer_rearm		= posix_cpu_timer_rearm,
-+	.timer_wait_running	= posix_cpu_timer_wait_running,
- };
- 
- const struct k_clock clock_process = {
---- a/kernel/time/posix-timers.c
-+++ b/kernel/time/posix-timers.c
-@@ -846,6 +846,10 @@ static struct k_itimer *timer_wait_runni
- 	rcu_read_lock();
- 	unlock_timer(timer, *flags);
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -1421,6 +1421,13 @@ bool blk_update_request(struct request *
+ 		req->q->integrity.profile->complete_fn(req, nr_bytes);
+ #endif
  
 +	/*
-+	 * kc->timer_wait_running() might drop RCU lock. So @timer
-+	 * cannot be touched anymore after the function returns!
++	 * Upper layers may call blk_crypto_evict_key() anytime after the last
++	 * bio_endio().  Therefore, the keyslot must be released before that.
 +	 */
- 	if (!WARN_ON_ONCE(!kc->timer_wait_running))
- 		kc->timer_wait_running(timer);
++	if (blk_crypto_rq_has_keyslot(req) && nr_bytes >= blk_rq_bytes(req))
++		__blk_crypto_rq_put_keyslot(req);
++
+ 	if (unlikely(error && !blk_rq_is_passthrough(req) &&
+ 		     !(req->rq_flags & RQF_QUIET)))
+ 		print_req_error(req, error, __func__);
+--- a/block/blk-crypto-internal.h
++++ b/block/blk-crypto-internal.h
+@@ -60,6 +60,11 @@ static inline bool blk_crypto_rq_is_encr
+ 	return rq->crypt_ctx;
+ }
  
++static inline bool blk_crypto_rq_has_keyslot(struct request *rq)
++{
++	return rq->crypt_keyslot;
++}
++
+ #else /* CONFIG_BLK_INLINE_ENCRYPTION */
+ 
+ static inline bool bio_crypt_rq_ctx_compatible(struct request *rq,
+@@ -93,6 +98,11 @@ static inline bool blk_crypto_rq_is_encr
+ 	return false;
+ }
+ 
++static inline bool blk_crypto_rq_has_keyslot(struct request *rq)
++{
++	return false;
++}
++
+ #endif /* CONFIG_BLK_INLINE_ENCRYPTION */
+ 
+ void __bio_crypt_advance(struct bio *bio, unsigned int bytes);
+@@ -127,14 +137,21 @@ static inline bool blk_crypto_bio_prep(s
+ 	return true;
+ }
+ 
+-blk_status_t __blk_crypto_init_request(struct request *rq);
+-static inline blk_status_t blk_crypto_init_request(struct request *rq)
++blk_status_t __blk_crypto_rq_get_keyslot(struct request *rq);
++static inline blk_status_t blk_crypto_rq_get_keyslot(struct request *rq)
+ {
+ 	if (blk_crypto_rq_is_encrypted(rq))
+-		return __blk_crypto_init_request(rq);
++		return __blk_crypto_rq_get_keyslot(rq);
+ 	return BLK_STS_OK;
+ }
+ 
++void __blk_crypto_rq_put_keyslot(struct request *rq);
++static inline void blk_crypto_rq_put_keyslot(struct request *rq)
++{
++	if (blk_crypto_rq_has_keyslot(rq))
++		__blk_crypto_rq_put_keyslot(rq);
++}
++
+ void __blk_crypto_free_request(struct request *rq);
+ static inline void blk_crypto_free_request(struct request *rq)
+ {
+@@ -173,7 +190,7 @@ static inline blk_status_t blk_crypto_in
+ {
+ 
+ 	if (blk_crypto_rq_is_encrypted(rq))
+-		return blk_crypto_init_request(rq);
++		return blk_crypto_rq_get_keyslot(rq);
+ 	return BLK_STS_OK;
+ }
+ 
+--- a/block/blk-crypto.c
++++ b/block/blk-crypto.c
+@@ -216,26 +216,26 @@ static bool bio_crypt_check_alignment(st
+ 	return true;
+ }
+ 
+-blk_status_t __blk_crypto_init_request(struct request *rq)
++blk_status_t __blk_crypto_rq_get_keyslot(struct request *rq)
+ {
+ 	return blk_ksm_get_slot_for_key(rq->q->ksm, rq->crypt_ctx->bc_key,
+ 					&rq->crypt_keyslot);
+ }
+ 
+-/**
+- * __blk_crypto_free_request - Uninitialize the crypto fields of a request.
+- *
+- * @rq: The request whose crypto fields to uninitialize.
+- *
+- * Completely uninitializes the crypto fields of a request. If a keyslot has
+- * been programmed into some inline encryption hardware, that keyslot is
+- * released. The rq->crypt_ctx is also freed.
+- */
+-void __blk_crypto_free_request(struct request *rq)
++void __blk_crypto_rq_put_keyslot(struct request *rq)
+ {
+ 	blk_ksm_put_slot(rq->crypt_keyslot);
++	rq->crypt_keyslot = NULL;
++}
++
++void __blk_crypto_free_request(struct request *rq)
++{
++	/* The keyslot, if one was needed, should have been released earlier. */
++	if (WARN_ON_ONCE(rq->crypt_keyslot))
++		__blk_crypto_rq_put_keyslot(rq);
++
+ 	mempool_free(rq->crypt_ctx, bio_crypt_ctx_pool);
+-	blk_crypto_rq_set_defaults(rq);
++	rq->crypt_ctx = NULL;
+ }
+ 
+ /**
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -818,6 +818,8 @@ static struct request *attempt_merge(str
+ 	if (!blk_discard_mergable(req))
+ 		elv_merge_requests(q, req, next);
+ 
++	blk_crypto_rq_put_keyslot(next);
++
+ 	/*
+ 	 * 'next' is going away, so update stats accordingly
+ 	 */
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -2228,7 +2228,7 @@ blk_qc_t blk_mq_submit_bio(struct bio *b
+ 
+ 	blk_mq_bio_to_request(rq, bio, nr_segs);
+ 
+-	ret = blk_crypto_init_request(rq);
++	ret = blk_crypto_rq_get_keyslot(rq);
+ 	if (ret != BLK_STS_OK) {
+ 		bio->bi_status = ret;
+ 		bio_endio(bio);
 
 
