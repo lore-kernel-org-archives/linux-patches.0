@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FA113AE0
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDC4C433EF;
-	Mon,  8 May 2023 11:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9609A13AE0
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4CEC433D2;
+	Mon,  8 May 2023 11:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543618;
-	bh=C3AoB7DtQo/QbjbHAnqs+f2r+fetCV3OpwI6YDMtKm4=;
+	s=korg; t=1683543622;
+	bh=TcG9egfCML5p5qHU9oBwGFlNahDoqoIMbUNpE41ESlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2pycAON3qWCl/BWAqG09svQGpy+dOz30xWoqPoXqxezgmB9Qe4eiLcScPI5Fbu/wd
-	 W23btd39v3OIhn4GfFnUwRH88jvowW17RJABLohzoCF7p+Yo0Dm6wnsCjC3uM4qBao
-	 /jsgK/wa9VJG6zFEcyo8PoT18nVzXaRGDNTnAQhU=
+	b=AGdCFO4Mg+C0LyNNQFAy9iVFnr4XdDBDc7+34uHFrc12ui+T0pnWxXcYhCu5s51DW
+	 aUcxAth3VtgqOrjKDW2dkueOgAVsUl8+PKL4x1Yxt1B7CwLyN3NbIacc+uWubVcIXq
+	 FuZ17MmTo7Y3mIbDCJFk85Xkrd2XC6GyH+zWi9z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <michael@walle.cc>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.3 117/694] mtd: core: fix error path for nvmem provider
-Date: Mon,  8 May 2023 11:39:12 +0200
-Message-Id: <20230508094436.278575334@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@linaro.org>
+Subject: [PATCH 6.3 118/694] mtd: spi-nor: core: Update flashs current address mode when changing address mode
+Date: Mon,  8 May 2023 11:39:13 +0200
+Message-Id: <20230508094436.309120810@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,60 +33,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <michael@walle.cc>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit e0489f6e221f5ddee6cb3bd51b992b790c5fa4b9 upstream.
+commit 37513c56139b79dd43c1774513c28f8ab2b05224 upstream.
 
-If mtd_otp_nvmem_add() fails, the partitions won't be removed
-because there is simply no call to del_mtd_partitions().
-Unfortunately, add_mtd_partitions() will print all partitions to
-the kernel console. If mtd_otp_nvmem_add() returns -EPROBE_DEFER
-this would print the partitions multiple times to the kernel
-console. Instead move mtd_otp_nvmem_add() to the beginning of the
-function.
+The bug was obswerved while reading code. There are not many users of
+addr_mode_nbytes. Anyway, we should update the flash's current address
+mode when changing the address mode, fix it. We don't care for now about
+the set_4byte_addr_mode(nor, false) from spi_nor_restore(), as it is
+used at driver remove and shutdown.
 
-Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
+Fixes: d7931a215063 ("mtd: spi-nor: core: Track flash's internal address mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20230308082021.870459-3-michael@walle.cc
+Link: https://lore.kernel.org/r/20230331074606.3559258-9-tudor.ambarus@linaro.org
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/mtdcore.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/mtd/spi-nor/core.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -1023,10 +1023,14 @@ int mtd_device_parse_register(struct mtd
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -2732,6 +2732,7 @@ static int spi_nor_quad_enable(struct sp
  
- 	mtd_set_dev_defaults(mtd);
+ static int spi_nor_init(struct spi_nor *nor)
+ {
++	struct spi_nor_flash_parameter *params = nor->params;
+ 	int err;
  
-+	ret = mtd_otp_nvmem_add(mtd);
-+	if (ret)
-+		goto out;
-+
- 	if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER)) {
- 		ret = add_mtd_device(mtd);
- 		if (ret)
--			return ret;
-+			goto out;
+ 	err = spi_nor_octal_dtr_enable(nor, true);
+@@ -2773,9 +2774,10 @@ static int spi_nor_init(struct spi_nor *
+ 		 */
+ 		WARN_ONCE(nor->flags & SNOR_F_BROKEN_RESET,
+ 			  "enabling reset hack; may not recover from unexpected reboots\n");
+-		err = nor->params->set_4byte_addr_mode(nor, true);
++		err = params->set_4byte_addr_mode(nor, true);
+ 		if (err && err != -ENOTSUPP)
+ 			return err;
++		params->addr_mode_nbytes = 4;
  	}
  
- 	/* Prefer parsed partitions over driver-provided fallback */
-@@ -1061,9 +1065,12 @@ int mtd_device_parse_register(struct mtd
- 		register_reboot_notifier(&mtd->reboot_notifier);
- 	}
- 
--	ret = mtd_otp_nvmem_add(mtd);
--
- out:
-+	if (ret) {
-+		nvmem_unregister(mtd->otp_user_nvmem);
-+		nvmem_unregister(mtd->otp_factory_nvmem);
-+	}
-+
- 	if (ret && device_is_registered(&mtd->dev))
- 		del_mtd_device(mtd);
- 
+ 	return 0;
 
 
