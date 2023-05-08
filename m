@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47988168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:02:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEB6EC433D2;
-	Mon,  8 May 2023 10:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E57168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:02:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A31C433D2;
+	Mon,  8 May 2023 10:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540124;
-	bh=qF4ooP43vvUdGUBHEzOExkwJh29qqiYyM5SLxeK2yUY=;
+	s=korg; t=1683540126;
+	bh=Wv30nxnmmr9JBuugpbhj65hrnNe2unOmsDnthNncaic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RWr8vVVbIhIiV47WCpqrV9n+/AYtX7H9TSdQh0kszkUc2/knz9kJWCfVV1WecAh66
-	 qBdRV8tfDdMEPwoSEiMJaPFDUUdnI8GEs67uqV6oZdbeSiAxAIShAvVvscE9BVPQsK
-	 6mv2vhiwxPUU89Xz2DQlvEH5ccZuvAGCYRfn5M5o=
+	b=WqKNMArcDdeOzShnFYXSg1GkH+BOQC+mKVTny/bHmTOqF1p1O+iitxVhn6DA6lBag
+	 hpIprvB/qfpWCHbmisFeha00qfPJHHA7eRbBsRdxXqUAtKbcvTKdNdj4nswLV48Oux
+	 fhAHQiMWPTPqMRy5nMA4RpP0BA1PaJO/AgirSmfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Sanket Goswami <Sanket.Goswami@amd.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/611] gpu: host1x: Fix potential double free if IOMMU is disabled
-Date: Mon,  8 May 2023 11:40:48 +0200
-Message-Id: <20230508094429.074814985@linuxfoundation.org>
+Subject: [PATCH 6.1 241/611] platform/x86/amd: pmc: Move out of BIOS SMN pair for STB init
+Date: Mon,  8 May 2023 11:41:23 +0200
+Message-Id: <20230508094430.246665582@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,38 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 
-[ Upstream commit 8466ff24a37a9a18fb935e90dda64f049131ae28 ]
+[ Upstream commit 8d99129eef8f42377b41c1bacee9f8ce806e9f44 ]
 
-If context device has no IOMMU, the 'cdl->devs' is freed in
-error path, but host1x_memory_context_list_init() doesn't
-return an error code, so the module can be loaded successfully,
-when it's unloading, the host1x_memory_context_list_free() is
-called in host1x_remove(), it will cause double free. Set the
-'cdl->devs' to NULL after freeing it to avoid double free.
+The current SMN index used for the driver probe seems to be meant
+for the BIOS pair and there are potential concurrency problems that can
+occur with an inopportune SMI.
 
-Fixes: 8aa5bcb61612 ("gpu: host1x: Add context device management code")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+It is been advised to use SMN_INDEX_0 instead of SMN_INDEX_6, which is
+what amd_nb.c provides and this function has protections to ensure that
+only one caller can use it at a time.
+
+Fixes: 426c0ff27b83 ("platform/x86: amd-pmc: Add support for AMD Smart Trace Buffer")
+Co-developed-by: Sanket Goswami <Sanket.Goswami@amd.com>
+Signed-off-by: Sanket Goswami <Sanket.Goswami@amd.com>
+Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://lore.kernel.org/r/20230409185348.556161-7-Shyam-sundar.S-k@amd.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/context.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/amd/pmc.c | 26 ++++----------------------
+ 1 file changed, 4 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/host1x/context.c b/drivers/gpu/host1x/context.c
-index b08cf11f9a661..291f34562e2e6 100644
---- a/drivers/gpu/host1x/context.c
-+++ b/drivers/gpu/host1x/context.c
-@@ -87,6 +87,7 @@ int host1x_memory_context_list_init(struct host1x *host1x)
- 		device_del(&cdl->devs[i].dev);
+diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
+index 2ecee810c960a..eb9fc6cb13e33 100644
+--- a/drivers/platform/x86/amd/pmc.c
++++ b/drivers/platform/x86/amd/pmc.c
+@@ -38,8 +38,6 @@
+ #define AMD_PMC_SCRATCH_REG_YC		0xD14
  
- 	kfree(cdl->devs);
-+	cdl->devs = NULL;
- 	cdl->len = 0;
+ /* STB Registers */
+-#define AMD_PMC_STB_INDEX_ADDRESS	0xF8
+-#define AMD_PMC_STB_INDEX_DATA		0xFC
+ #define AMD_PMC_STB_PMI_0		0x03E30600
+ #define AMD_PMC_STB_S2IDLE_PREPARE	0xC6000001
+ #define AMD_PMC_STB_S2IDLE_RESTORE	0xC6000002
+@@ -897,17 +895,9 @@ static int amd_pmc_write_stb(struct amd_pmc_dev *dev, u32 data)
+ {
+ 	int err;
  
- 	return err;
+-	err = pci_write_config_dword(dev->rdev, AMD_PMC_STB_INDEX_ADDRESS, AMD_PMC_STB_PMI_0);
++	err = amd_smn_write(0, AMD_PMC_STB_PMI_0, data);
+ 	if (err) {
+-		dev_err(dev->dev, "failed to write addr in stb: 0x%X\n",
+-			AMD_PMC_STB_INDEX_ADDRESS);
+-		return pcibios_err_to_errno(err);
+-	}
+-
+-	err = pci_write_config_dword(dev->rdev, AMD_PMC_STB_INDEX_DATA, data);
+-	if (err) {
+-		dev_err(dev->dev, "failed to write data in stb: 0x%X\n",
+-			AMD_PMC_STB_INDEX_DATA);
++		dev_err(dev->dev, "failed to write data in stb: 0x%X\n", AMD_PMC_STB_PMI_0);
+ 		return pcibios_err_to_errno(err);
+ 	}
+ 
+@@ -919,18 +909,10 @@ static int amd_pmc_read_stb(struct amd_pmc_dev *dev, u32 *buf)
+ {
+ 	int i, err;
+ 
+-	err = pci_write_config_dword(dev->rdev, AMD_PMC_STB_INDEX_ADDRESS, AMD_PMC_STB_PMI_0);
+-	if (err) {
+-		dev_err(dev->dev, "error writing addr to stb: 0x%X\n",
+-			AMD_PMC_STB_INDEX_ADDRESS);
+-		return pcibios_err_to_errno(err);
+-	}
+-
+ 	for (i = 0; i < FIFO_SIZE; i++) {
+-		err = pci_read_config_dword(dev->rdev, AMD_PMC_STB_INDEX_DATA, buf++);
++		err = amd_smn_read(0, AMD_PMC_STB_PMI_0, buf++);
+ 		if (err) {
+-			dev_err(dev->dev, "error reading data from stb: 0x%X\n",
+-				AMD_PMC_STB_INDEX_DATA);
++			dev_err(dev->dev, "error reading data from stb: 0x%X\n", AMD_PMC_STB_PMI_0);
+ 			return pcibios_err_to_errno(err);
+ 		}
+ 	}
 -- 
 2.39.2
 
