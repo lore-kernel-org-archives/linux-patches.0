@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8F523A4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA9CC433D2;
-	Mon,  8 May 2023 10:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D1BA125DF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58B2C433EF;
+	Mon,  8 May 2023 10:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541877;
-	bh=0PnqQR3puLbGQIJ2V/ZJlPZnXmZ4PlH/vquyP5PugL8=;
+	s=korg; t=1683541880;
+	bh=iSQ0QSC3DzGnIMRRTKfOccPI+S6/B1s3mC+ZJFBhaKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1NMduHHwhDkn0euMFSiKYJeJEkQV/pX627tpwowRb7QPVlfkB63eyFidcj8cN1ByF
-	 MnIexOtgluiu0bps2TMhtm/P9wrJCJB812Dvzjdq3bC8MH9SDs4W7l7mqoQLnJefbz
-	 JSRF39gdxCEqINh1oGf7J9ucD/ngTf5FJzU8spXs=
+	b=qMyDVqtuYxnZ+coJXVddzIFSNiKNfwQh/kd0hg1or9Cc+YuPhsFnXRv3kRzq2tc55
+	 u68Hv/s9bngYIPRYqueeCuU61tfi8HOVT319VfbeGQURJ1t/viEQnFmiL8Ap6RxpcA
+	 iq8G1fj1AOAJXZ7UuSw3t5Ga5llKQos+SM1MQaFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Duy Nguyen <duy.nguyen.rh@renesas.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 256/663] media: vsp1: Replace vb2_is_streaming() with vb2_start_streaming_called()
-Date: Mon,  8 May 2023 11:41:22 +0200
-Message-Id: <20230508094436.565786903@linuxfoundation.org>
+Subject: [PATCH 6.2 257/663] platform: Provide a remove callback that returns no value
+Date: Mon,  8 May 2023 11:41:23 +0200
+Message-Id: <20230508094436.595003518@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,113 +34,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 52d8caca3d533cc499f1255be25576ffd936ec95 ]
+[ Upstream commit 5c5a7680e67ba6fbbb5f4d79fa41485450c1985c ]
 
-The vsp1 driver uses the vb2_is_streaming() function in its .buf_queue()
-handler to check if the .start_streaming() operation has been called,
-and decide whether to just add the buffer to an internal queue, or also
-trigger a hardware run. vb2_is_streaming() relies on the vb2_queue
-structure's streaming field, which used to be set only after calling the
-.start_streaming() operation.
+struct platform_driver::remove returning an integer made driver authors
+expect that returning an error code was proper error handling. However
+the driver core ignores the error and continues to remove the device
+because there is nothing the core could do anyhow and reentering the
+remove callback again is only calling for trouble.
 
-Commit a10b21532574 ("media: vb2: add (un)prepare_streaming queue ops")
-changed this, setting the .streaming field in vb2_core_streamon() before
-enqueuing buffers to the driver and calling .start_streaming(). This
-broke the vsp1 driver which now believes that .start_streaming() has
-been called when it hasn't, leading to a crash:
+So this is an source for errors typically yielding resource leaks in the
+error path.
 
-[  881.058705] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000020
-[  881.067495] Mem abort info:
-[  881.070290]   ESR = 0x0000000096000006
-[  881.074042]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  881.079358]   SET = 0, FnV = 0
-[  881.082414]   EA = 0, S1PTW = 0
-[  881.085558]   FSC = 0x06: level 2 translation fault
-[  881.090439] Data abort info:
-[  881.093320]   ISV = 0, ISS = 0x00000006
-[  881.097157]   CM = 0, WnR = 0
-[  881.100126] user pgtable: 4k pages, 48-bit VAs, pgdp=000000004fa51000
-[  881.106573] [0000000000000020] pgd=080000004f36e003, p4d=080000004f36e003, pud=080000004f7ec003, pmd=0000000000000000
-[  881.117217] Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
-[  881.123494] Modules linked in: rcar_fdp1 v4l2_mem2mem
-[  881.128572] CPU: 0 PID: 1271 Comm: yavta Tainted: G    B              6.2.0-rc1-00023-g6c94e2e99343 #556
-[  881.138061] Hardware name: Renesas Salvator-X 2nd version board based on r8a77965 (DT)
-[  881.145981] pstate: 400000c5 (nZcv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[  881.152951] pc : vsp1_dl_list_add_body+0xa8/0xe0
-[  881.157580] lr : vsp1_dl_list_add_body+0x34/0xe0
-[  881.162206] sp : ffff80000c267710
-[  881.165522] x29: ffff80000c267710 x28: ffff000010938ae8 x27: ffff000013a8dd98
-[  881.172683] x26: ffff000010938098 x25: ffff000013a8dc00 x24: ffff000010ed6ba8
-[  881.179841] x23: ffff00000faa4000 x22: 0000000000000000 x21: 0000000000000020
-[  881.186998] x20: ffff00000faa4000 x19: 0000000000000000 x18: 0000000000000000
-[  881.194154] x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
-[  881.201309] x14: 0000000000000000 x13: 746e696174206c65 x12: ffff70000157043d
-[  881.208465] x11: 1ffff0000157043c x10: ffff70000157043c x9 : dfff800000000000
-[  881.215622] x8 : ffff80000ab821e7 x7 : 00008ffffea8fbc4 x6 : 0000000000000001
-[  881.222779] x5 : ffff80000ab821e0 x4 : ffff70000157043d x3 : 0000000000000020
-[  881.229936] x2 : 0000000000000020 x1 : ffff00000e4f6400 x0 : 0000000000000000
-[  881.237092] Call trace:
-[  881.239542]  vsp1_dl_list_add_body+0xa8/0xe0
-[  881.243822]  vsp1_video_pipeline_run+0x270/0x2a0
-[  881.248449]  vsp1_video_buffer_queue+0x1c0/0x1d0
-[  881.253076]  __enqueue_in_driver+0xbc/0x260
-[  881.257269]  vb2_start_streaming+0x48/0x200
-[  881.261461]  vb2_core_streamon+0x13c/0x280
-[  881.265565]  vb2_streamon+0x3c/0x90
-[  881.269064]  vsp1_video_streamon+0x2fc/0x3e0
-[  881.273344]  v4l_streamon+0x50/0x70
-[  881.276844]  __video_do_ioctl+0x2bc/0x5d0
-[  881.280861]  video_usercopy+0x2a8/0xc80
-[  881.284704]  video_ioctl2+0x20/0x40
-[  881.288201]  v4l2_ioctl+0xa4/0xc0
-[  881.291525]  __arm64_sys_ioctl+0xe8/0x110
-[  881.295543]  invoke_syscall+0x68/0x190
-[  881.299303]  el0_svc_common.constprop.0+0x88/0x170
-[  881.304105]  do_el0_svc+0x4c/0xf0
-[  881.307430]  el0_svc+0x4c/0xa0
-[  881.310494]  el0t_64_sync_handler+0xbc/0x140
-[  881.314773]  el0t_64_sync+0x190/0x194
-[  881.318450] Code: d50323bf d65f03c0 91008263 f9800071 (885f7c60)
-[  881.324551] ---[ end trace 0000000000000000 ]---
-[  881.329173] note: yavta[1271] exited with preempt_count 1
+As there are too many platform drivers to neatly convert them all to
+return void in a single go, do it in several steps after this patch:
 
-A different regression report sent to the linux-media mailing list ([1])
-was answered with a claim that the vb2_is_streaming() function has never
-been meant for this purpose. The document of the function, as well as of
-the struct vb2_queue streaming field, is sparse, so this claim may be
-hard to verify.
+ a) Convert all drivers to implement .remove_new() returning void instead
+    of .remove() returning int;
+ b) Change struct platform_driver::remove() to return void and so make
+    it identical to .remove_new();
+ c) Change all drivers back to .remove() now with the better prototype;
+ d) drop struct platform_driver::remove_new().
 
-The information needed by the vsp1 driver to decide how to process
-queued buffers is also available from the vb2_start_streaming_called()
-function. Use it instead of vb2_is_streaming() to fix the problem.
+While this touches all drivers eventually twice, steps a) and c) can be
+done one driver after another and so reduces coordination efforts
+immensely and simplifies review.
 
-[1] https://lore.kernel.org/linux-media/545610e7-3446-2b82-60dc-7385fea3774f@redhat.com/
-
-Fixes: a10b21532574 ("media: vb2: add (un)prepare_streaming queue ops")
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Tested-by: Duy Nguyen <duy.nguyen.rh@renesas.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20221209150914.3557650-1-u.kleine-koenig@pengutronix.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: c766c90faf93 ("media: rcar_fdp1: Fix refcount leak in probe and remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/renesas/vsp1/vsp1_video.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/platform.c         |  4 +++-
+ include/linux/platform_device.h | 11 +++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/renesas/vsp1/vsp1_video.c b/drivers/media/platform/renesas/vsp1/vsp1_video.c
-index 9d24647c8f324..0cea5e5acf82b 100644
---- a/drivers/media/platform/renesas/vsp1/vsp1_video.c
-+++ b/drivers/media/platform/renesas/vsp1/vsp1_video.c
-@@ -776,7 +776,7 @@ static void vsp1_video_buffer_queue(struct vb2_buffer *vb)
- 	video->rwpf->mem = buf->mem;
- 	pipe->buffers_ready |= 1 << video->pipe_index;
+diff --git a/drivers/base/platform.c b/drivers/base/platform.c
+index 968f3d71eeab2..a4938d1c8fe1d 100644
+--- a/drivers/base/platform.c
++++ b/drivers/base/platform.c
+@@ -1416,7 +1416,9 @@ static void platform_remove(struct device *_dev)
+ 	struct platform_driver *drv = to_platform_driver(_dev->driver);
+ 	struct platform_device *dev = to_platform_device(_dev);
  
--	if (vb2_is_streaming(&video->queue) &&
-+	if (vb2_start_streaming_called(&video->queue) &&
- 	    vsp1_pipeline_ready(pipe))
- 		vsp1_video_pipeline_run(pipe);
+-	if (drv->remove) {
++	if (drv->remove_new) {
++		drv->remove_new(dev);
++	} else if (drv->remove) {
+ 		int ret = drv->remove(dev);
  
+ 		if (ret)
+diff --git a/include/linux/platform_device.h b/include/linux/platform_device.h
+index b0d5a253156ec..b845fd83f429b 100644
+--- a/include/linux/platform_device.h
++++ b/include/linux/platform_device.h
+@@ -207,7 +207,18 @@ extern void platform_device_put(struct platform_device *pdev);
+ 
+ struct platform_driver {
+ 	int (*probe)(struct platform_device *);
++
++	/*
++	 * Traditionally the remove callback returned an int which however is
++	 * ignored by the driver core. This led to wrong expectations by driver
++	 * authors who thought returning an error code was a valid error
++	 * handling strategy. To convert to a callback returning void, new
++	 * drivers should implement .remove_new() until the conversion it done
++	 * that eventually makes .remove() return void.
++	 */
+ 	int (*remove)(struct platform_device *);
++	void (*remove_new)(struct platform_device *);
++
+ 	void (*shutdown)(struct platform_device *);
+ 	int (*suspend)(struct platform_device *, pm_message_t state);
+ 	int (*resume)(struct platform_device *);
 -- 
 2.39.2
 
