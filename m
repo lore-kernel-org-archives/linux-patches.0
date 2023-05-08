@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C2C168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:01:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31749C433EF;
-	Mon,  8 May 2023 10:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACFED168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:01:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF67C433EF;
+	Mon,  8 May 2023 10:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540115;
-	bh=slTunrIV0itmFSwfrGZqPZ+4og0Y9fVyYkUxKCeX2KU=;
+	s=korg; t=1683540118;
+	bh=pjT5jrG7GQGcfsSZRUbSOSt1cFbvKDlhUKPXkhs6Ss0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4SSUSaMFAlc1P+3GdFGFp73bGsjNq1fU6WSuyO0FEV8pa5CgzszN1Onp47Bg+k49
-	 H0fo9J27GocV4qanhhR/6BIEh03ouqSf01B3XJrDWTYLGNy6ShQ7JG4pB7+qWtK5DW
-	 pl4lMWo3Zr+nYg5AnUNMluu8d7lUvEnR5Rggnk/o=
+	b=pnTSWbCvJq3TU2TwVQwsb3LNEW4GDfKMB1w0hByIMXfc216Psh4PdSQkkrUPfXATt
+	 NgKYhOyc8trniPboVQdzatIqmTJhx5qZjOhMvcwKWnUDFJZ4tzR9VMUFkI/yEjFNK/
+	 +T7qkD+lKXqmGtuXAbFsYJ9cLYQ/gWr0MDuo9M4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 213/611] arm64: dts: qcom: apq8096-db820c: drop unit address from PMI8994 regulator
-Date: Mon,  8 May 2023 11:40:55 +0200
-Message-Id: <20230508094429.323328768@linuxfoundation.org>
+Subject: [PATCH 6.1 214/611] drm/ttm: optimize pool allocations a bit v2
+Date: Mon,  8 May 2023 11:40:56 +0200
+Message-Id: <20230508094429.353254878@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,50 +35,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit ec57cbce1a6d9384f8ac1ff966b204dc262f4927 ]
+[ Upstream commit 735c466465eba51deaee3012d8403c10fc7c8c03 ]
 
-The PMIC regulators are not supposed to have unit addresses.
+If we got a page pool use it as much as possible.
 
-Fixes: 2317b87a2a6f ("arm64: dts: qcom: db820c: Add vdd_gfx and tie it into mmcc")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230312183622.460488-8-krzysztof.kozlowski@linaro.org
+If we can't get more pages from the pool allocate as much as possible.
+
+Only if that still doesn't work reduce the order and try again.
+
+v2: minor cleanups
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221107195808.1873-1-christian.koenig@amd.com
+Stable-dep-of: 379989e7cbdc ("drm/ttm/pool: Fix ttm_pool_alloc error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/apq8096-db820c.dts | 3 +--
- arch/arm64/boot/dts/qcom/pmi8994.dtsi       | 2 --
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ drivers/gpu/drm/ttm/ttm_pool.c | 82 ++++++++++++++++++++++++----------
+ 1 file changed, 58 insertions(+), 24 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-index 5cdc7ac1a9c06..c7de5e3b071ef 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-@@ -742,8 +742,7 @@
- &pmi8994_spmi_regulators {
- 	vdd_s2-supply = <&vph_pwr>;
+diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
+index 21b61631f73a1..9f6764bf3b15d 100644
+--- a/drivers/gpu/drm/ttm/ttm_pool.c
++++ b/drivers/gpu/drm/ttm/ttm_pool.c
+@@ -344,6 +344,28 @@ static unsigned int ttm_pool_page_order(struct ttm_pool *pool, struct page *p)
+ 	return p->private;
+ }
  
--	vdd_gfx: s2@1700 {
--		reg = <0x1700 0x100>;
-+	vdd_gfx: s2 {
- 		regulator-name = "VDD_GFX";
- 		regulator-min-microvolt = <980000>;
- 		regulator-max-microvolt = <980000>;
-diff --git a/arch/arm64/boot/dts/qcom/pmi8994.dtsi b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-index 542c215dde107..82b60e988d0f5 100644
---- a/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi8994.dtsi
-@@ -49,8 +49,6 @@
++/* Called when we got a page, either from a pool or newly allocated */
++static int ttm_pool_page_allocated(struct ttm_pool *pool, unsigned int order,
++				   struct page *p, dma_addr_t **dma_addr,
++				   unsigned long *num_pages,
++				   struct page ***pages)
++{
++	unsigned int i;
++	int r;
++
++	if (*dma_addr) {
++		r = ttm_pool_map(pool, order, p, dma_addr);
++		if (r)
++			return r;
++	}
++
++	*num_pages -= 1 << order;
++	for (i = 1 << order; i; --i, ++(*pages), ++p)
++		**pages = p;
++
++	return 0;
++}
++
+ /**
+  * ttm_pool_alloc - Fill a ttm_tt object
+  *
+@@ -385,45 +407,57 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
+ 	for (order = min_t(unsigned int, MAX_ORDER - 1, __fls(num_pages));
+ 	     num_pages;
+ 	     order = min_t(unsigned int, order, __fls(num_pages))) {
+-		bool apply_caching = false;
+ 		struct ttm_pool_type *pt;
  
- 		pmi8994_spmi_regulators: regulators {
- 			compatible = "qcom,pmi8994-regulators";
--			#address-cells = <1>;
--			#size-cells = <1>;
- 		};
+ 		pt = ttm_pool_select_type(pool, tt->caching, order);
+ 		p = pt ? ttm_pool_type_take(pt) : NULL;
+ 		if (p) {
+-			apply_caching = true;
+-		} else {
+-			p = ttm_pool_alloc_page(pool, gfp_flags, order);
+-			if (p && PageHighMem(p))
+-				apply_caching = true;
+-		}
+-
+-		if (!p) {
+-			if (order) {
+-				--order;
+-				continue;
+-			}
+-			r = -ENOMEM;
+-			goto error_free_all;
+-		}
+-
+-		if (apply_caching) {
+ 			r = ttm_pool_apply_caching(caching, pages,
+ 						   tt->caching);
+ 			if (r)
+ 				goto error_free_page;
+-			caching = pages + (1 << order);
++
++			do {
++				r = ttm_pool_page_allocated(pool, order, p,
++							    &dma_addr,
++							    &num_pages,
++							    &pages);
++				if (r)
++					goto error_free_page;
++
++				if (num_pages < (1 << order))
++					break;
++
++				p = ttm_pool_type_take(pt);
++			} while (p);
++			caching = pages;
+ 		}
  
- 		pmi8994_wled: wled@d800 {
+-		if (dma_addr) {
+-			r = ttm_pool_map(pool, order, p, &dma_addr);
++		while (num_pages >= (1 << order) &&
++		       (p = ttm_pool_alloc_page(pool, gfp_flags, order))) {
++
++			if (PageHighMem(p)) {
++				r = ttm_pool_apply_caching(caching, pages,
++							   tt->caching);
++				if (r)
++					goto error_free_page;
++			}
++			r = ttm_pool_page_allocated(pool, order, p, &dma_addr,
++						    &num_pages, &pages);
+ 			if (r)
+ 				goto error_free_page;
++			if (PageHighMem(p))
++				caching = pages;
+ 		}
+ 
+-		num_pages -= 1 << order;
+-		for (i = 1 << order; i; --i)
+-			*(pages++) = p++;
++		if (!p) {
++			if (order) {
++				--order;
++				continue;
++			}
++			r = -ENOMEM;
++			goto error_free_all;
++		}
+ 	}
+ 
+ 	r = ttm_pool_apply_caching(caching, pages, tt->caching);
 -- 
 2.39.2
 
