@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B87168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD87C4339B;
-	Mon,  8 May 2023 10:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4EE168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816FBC433EF;
+	Mon,  8 May 2023 10:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540248;
-	bh=m2+ycONwYLftibyl1TmCy7OlfXeiqTbggTwQzWOtZRI=;
+	s=korg; t=1683540250;
+	bh=ATziV6OWHmLRfEvvoKrrQmSWKwCjGfpeZWmZwgsEBLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C39PBCyCg8vDqWvk2cer1zbI4pOp+aeRZqTkv5LWQwLl/xw4BtnTAH4yYl5aWEgkK
-	 MvRzbLj9ebCgucFrFCdJOEv712xUaxaGi+wNns676ogcvXfHVIsPxAQGWHyGo/A7Rv
-	 hMjrRGzc68Y+PoNb/laGlgtr6C+/ARO7su0trYTU=
+	b=so7X4Yb3GKsGKusaBc5oMF56eHFn47ul9LvR7LRY7dgtU70IjAaV73f/Jb1woqIPy
+	 dGSjDLEeH0Up+B1TZqSkYsnN0j13yyVGDB2gjzXvyAkmsk0l86Qo5H4FtIXTIFNpe+
+	 DQlH4+TWotcs2+VX5Yg4C31OIrq0Bpf1WHsP2zqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Shelekhin <k.shelekhin@yadro.com>,
-	Dmitriy Bogdanov <d.bogdanov@yadro.com>,
-	Anastasia Kovaleva <a.kovaleva@yadro.com>,
 	Mike Christie <michael.christie@oracle.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 293/611] scsi: target: core: Change the way target_xcopy_do_work() sets restiction on max I/O
-Date: Mon,  8 May 2023 11:42:15 +0200
-Message-Id: <20230508094431.934877265@linuxfoundation.org>
+Subject: [PATCH 6.1 294/611] scsi: target: Move sess cmd counter to new struct
+Date: Mon,  8 May 2023 11:42:16 +0200
+Message-Id: <20230508094431.965379521@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -38,237 +36,311 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anastasia Kovaleva <a.kovaleva@yadro.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 689d94ec208cfdf95101d99319cb4bdc5f55774d ]
+[ Upstream commit becd9be6069e7b183c084f460f0eb363e43cc487 ]
 
-To determine how many blocks sends in one command, the minimum value is
-selected from the hw_max_sectors of both devices. In target_xcopy_do_work,
-hw_max_sectors are used as blocks, not sectors; it also ignores the fact
-that sectors can be of different sizes, for example 512 and 4096
-bytes. Because of this, a number of blocks can be transmitted that the
-device will not be able to accept.
+iSCSI needs to wait on outstanding commands like how SRP and the FC/FCoE
+drivers do. It can't use target_stop_session() because for MCS support we
+can't stop the entire session during recovery because if other connections
+are OK then we want to be able to continue to execute I/O on them.
 
-Change the selection of max transmission size into bytes.
+Move the per session cmd counters to a new struct so iSCSI can allocate
+them per connection. The xcopy code can also just not allocate in the
+future since it doesn't need to track commands.
 
-Reviewed-by: Konstantin Shelekhin <k.shelekhin@yadro.com>
-Reviewed-by: Dmitriy Bogdanov <d.bogdanov@yadro.com>
-Signed-off-by: Anastasia Kovaleva <a.kovaleva@yadro.com>
-Link: https://lore.kernel.org/r/20221114102500.88892-4-a.kovaleva@yadro.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-2-michael.christie@oracle.com
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 395cee83d02d ("scsi: target: iscsit: Stop/wait on cmds during conn close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_xcopy.c | 97 ++++++++++++++++--------------
- drivers/target/target_core_xcopy.h |  2 +-
- 2 files changed, 54 insertions(+), 45 deletions(-)
+ drivers/target/target_core_tpg.c         |   2 +-
+ drivers/target/target_core_transport.c   | 135 ++++++++++++++++-------
+ include/target/iscsi/iscsi_target_core.h |   1 +
+ include/target/target_core_base.h        |  13 ++-
+ 4 files changed, 107 insertions(+), 44 deletions(-)
 
-diff --git a/drivers/target/target_core_xcopy.c b/drivers/target/target_core_xcopy.c
-index 8713cda0c2fb5..781f88ca900f0 100644
---- a/drivers/target/target_core_xcopy.c
-+++ b/drivers/target/target_core_xcopy.c
-@@ -582,11 +582,11 @@ static int target_xcopy_read_source(
- 	struct xcopy_op *xop,
- 	struct se_device *src_dev,
- 	sector_t src_lba,
--	u32 src_sectors)
-+	u32 src_bytes)
- {
- 	struct xcopy_pt_cmd xpt_cmd;
- 	struct se_cmd *se_cmd = &xpt_cmd.se_cmd;
--	u32 length = (src_sectors * src_dev->dev_attrib.block_size);
-+	u32 transfer_length_block = src_bytes / src_dev->dev_attrib.block_size;
- 	int rc;
- 	unsigned char cdb[16];
- 	bool remote_port = (xop->op_origin == XCOL_DEST_RECV_OP);
-@@ -597,11 +597,11 @@ static int target_xcopy_read_source(
- 	memset(&cdb[0], 0, 16);
- 	cdb[0] = READ_16;
- 	put_unaligned_be64(src_lba, &cdb[2]);
--	put_unaligned_be32(src_sectors, &cdb[10]);
--	pr_debug("XCOPY: Built READ_16: LBA: %llu Sectors: %u Length: %u\n",
--		(unsigned long long)src_lba, src_sectors, length);
-+	put_unaligned_be32(transfer_length_block, &cdb[10]);
-+	pr_debug("XCOPY: Built READ_16: LBA: %llu Blocks: %u Length: %u\n",
-+		(unsigned long long)src_lba, transfer_length_block, src_bytes);
+diff --git a/drivers/target/target_core_tpg.c b/drivers/target/target_core_tpg.c
+index 736847c933e5c..8ebccdbd94f0e 100644
+--- a/drivers/target/target_core_tpg.c
++++ b/drivers/target/target_core_tpg.c
+@@ -328,7 +328,7 @@ static void target_shutdown_sessions(struct se_node_acl *acl)
+ restart:
+ 	spin_lock_irqsave(&acl->nacl_sess_lock, flags);
+ 	list_for_each_entry(sess, &acl->acl_sess_list, sess_acl_list) {
+-		if (atomic_read(&sess->stopped))
++		if (sess->cmd_cnt && atomic_read(&sess->cmd_cnt->stopped))
+ 			continue;
  
--	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, length,
-+	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, src_bytes,
- 			  DMA_FROM_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
- 
- 	rc = target_xcopy_setup_pt_cmd(&xpt_cmd, xop, src_dev, &cdb[0],
-@@ -627,11 +627,11 @@ static int target_xcopy_write_destination(
- 	struct xcopy_op *xop,
- 	struct se_device *dst_dev,
- 	sector_t dst_lba,
--	u32 dst_sectors)
-+	u32 dst_bytes)
- {
- 	struct xcopy_pt_cmd xpt_cmd;
- 	struct se_cmd *se_cmd = &xpt_cmd.se_cmd;
--	u32 length = (dst_sectors * dst_dev->dev_attrib.block_size);
-+	u32 transfer_length_block = dst_bytes / dst_dev->dev_attrib.block_size;
- 	int rc;
- 	unsigned char cdb[16];
- 	bool remote_port = (xop->op_origin == XCOL_SOURCE_RECV_OP);
-@@ -642,11 +642,11 @@ static int target_xcopy_write_destination(
- 	memset(&cdb[0], 0, 16);
- 	cdb[0] = WRITE_16;
- 	put_unaligned_be64(dst_lba, &cdb[2]);
--	put_unaligned_be32(dst_sectors, &cdb[10]);
--	pr_debug("XCOPY: Built WRITE_16: LBA: %llu Sectors: %u Length: %u\n",
--		(unsigned long long)dst_lba, dst_sectors, length);
-+	put_unaligned_be32(transfer_length_block, &cdb[10]);
-+	pr_debug("XCOPY: Built WRITE_16: LBA: %llu Blocks: %u Length: %u\n",
-+		(unsigned long long)dst_lba, transfer_length_block, dst_bytes);
- 
--	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, length,
-+	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, dst_bytes,
- 			  DMA_TO_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
- 
- 	rc = target_xcopy_setup_pt_cmd(&xpt_cmd, xop, dst_dev, &cdb[0],
-@@ -670,9 +670,10 @@ static void target_xcopy_do_work(struct work_struct *work)
- 	struct se_cmd *ec_cmd = xop->xop_se_cmd;
- 	struct se_device *src_dev, *dst_dev;
- 	sector_t src_lba, dst_lba, end_lba;
--	unsigned int max_sectors;
-+	unsigned long long max_bytes, max_bytes_src, max_bytes_dst, max_blocks;
- 	int rc = 0;
--	unsigned short nolb, max_nolb, copied_nolb = 0;
-+	unsigned short nolb;
-+	unsigned int copied_bytes = 0;
- 	sense_reason_t sense_rc;
- 
- 	sense_rc = target_parse_xcopy_cmd(xop);
-@@ -691,23 +692,31 @@ static void target_xcopy_do_work(struct work_struct *work)
- 	nolb = xop->nolb;
- 	end_lba = src_lba + nolb;
- 	/*
--	 * Break up XCOPY I/O into hw_max_sectors sized I/O based on the
--	 * smallest max_sectors between src_dev + dev_dev, or
-+	 * Break up XCOPY I/O into hw_max_sectors * hw_block_size sized
-+	 * I/O based on the smallest max_bytes between src_dev + dst_dev
- 	 */
--	max_sectors = min(src_dev->dev_attrib.hw_max_sectors,
--			  dst_dev->dev_attrib.hw_max_sectors);
--	max_sectors = min_t(u32, max_sectors, XCOPY_MAX_SECTORS);
-+	max_bytes_src = (unsigned long long) src_dev->dev_attrib.hw_max_sectors *
-+			src_dev->dev_attrib.hw_block_size;
-+	max_bytes_dst = (unsigned long long) dst_dev->dev_attrib.hw_max_sectors *
-+			dst_dev->dev_attrib.hw_block_size;
- 
--	max_nolb = min_t(u16, max_sectors, ((u16)(~0U)));
-+	max_bytes = min_t(u64, max_bytes_src, max_bytes_dst);
-+	max_bytes = min_t(u64, max_bytes, XCOPY_MAX_BYTES);
- 
--	pr_debug("target_xcopy_do_work: nolb: %hu, max_nolb: %hu end_lba: %llu\n",
--			nolb, max_nolb, (unsigned long long)end_lba);
--	pr_debug("target_xcopy_do_work: Starting src_lba: %llu, dst_lba: %llu\n",
-+	/*
-+	 * Using shift instead of the division because otherwise GCC
-+	 * generates __udivdi3 that is missing on i386
-+	 */
-+	max_blocks = max_bytes >> ilog2(src_dev->dev_attrib.block_size);
-+
-+	pr_debug("%s: nolb: %u, max_blocks: %llu end_lba: %llu\n", __func__,
-+			nolb, max_blocks, (unsigned long long)end_lba);
-+	pr_debug("%s: Starting src_lba: %llu, dst_lba: %llu\n", __func__,
- 			(unsigned long long)src_lba, (unsigned long long)dst_lba);
- 
--	while (src_lba < end_lba) {
--		unsigned short cur_nolb = min(nolb, max_nolb);
--		u32 cur_bytes = cur_nolb * src_dev->dev_attrib.block_size;
-+	while (nolb) {
-+		u32 cur_bytes = min_t(u64, max_bytes, nolb * src_dev->dev_attrib.block_size);
-+		unsigned short cur_nolb = cur_bytes / src_dev->dev_attrib.block_size;
- 
- 		if (cur_bytes != xop->xop_data_bytes) {
- 			/*
-@@ -724,43 +733,43 @@ static void target_xcopy_do_work(struct work_struct *work)
- 			xop->xop_data_bytes = cur_bytes;
- 		}
- 
--		pr_debug("target_xcopy_do_work: Calling read src_dev: %p src_lba: %llu,"
--			" cur_nolb: %hu\n", src_dev, (unsigned long long)src_lba, cur_nolb);
-+		pr_debug("%s: Calling read src_dev: %p src_lba: %llu, cur_nolb: %hu\n",
-+				__func__, src_dev, (unsigned long long)src_lba, cur_nolb);
- 
--		rc = target_xcopy_read_source(ec_cmd, xop, src_dev, src_lba, cur_nolb);
-+		rc = target_xcopy_read_source(ec_cmd, xop, src_dev, src_lba, cur_bytes);
- 		if (rc < 0)
- 			goto out;
- 
--		src_lba += cur_nolb;
--		pr_debug("target_xcopy_do_work: Incremented READ src_lba to %llu\n",
-+		src_lba += cur_bytes / src_dev->dev_attrib.block_size;
-+		pr_debug("%s: Incremented READ src_lba to %llu\n", __func__,
- 				(unsigned long long)src_lba);
- 
--		pr_debug("target_xcopy_do_work: Calling write dst_dev: %p dst_lba: %llu,"
--			" cur_nolb: %hu\n", dst_dev, (unsigned long long)dst_lba, cur_nolb);
-+		pr_debug("%s: Calling write dst_dev: %p dst_lba: %llu, cur_nolb: %u\n",
-+				__func__, dst_dev, (unsigned long long)dst_lba, cur_nolb);
- 
- 		rc = target_xcopy_write_destination(ec_cmd, xop, dst_dev,
--						dst_lba, cur_nolb);
-+						dst_lba, cur_bytes);
- 		if (rc < 0)
- 			goto out;
- 
--		dst_lba += cur_nolb;
--		pr_debug("target_xcopy_do_work: Incremented WRITE dst_lba to %llu\n",
-+		dst_lba += cur_bytes / dst_dev->dev_attrib.block_size;
-+		pr_debug("%s: Incremented WRITE dst_lba to %llu\n", __func__,
- 				(unsigned long long)dst_lba);
- 
--		copied_nolb += cur_nolb;
--		nolb -= cur_nolb;
-+		copied_bytes += cur_bytes;
-+		nolb -= cur_bytes / src_dev->dev_attrib.block_size;
- 	}
- 
- 	xcopy_pt_undepend_remotedev(xop);
- 	target_free_sgl(xop->xop_data_sg, xop->xop_data_nents);
- 	kfree(xop);
- 
--	pr_debug("target_xcopy_do_work: Final src_lba: %llu, dst_lba: %llu\n",
-+	pr_debug("%s: Final src_lba: %llu, dst_lba: %llu\n", __func__,
- 		(unsigned long long)src_lba, (unsigned long long)dst_lba);
--	pr_debug("target_xcopy_do_work: Blocks copied: %hu, Bytes Copied: %u\n",
--		copied_nolb, copied_nolb * dst_dev->dev_attrib.block_size);
-+	pr_debug("%s: Blocks copied: %u, Bytes Copied: %u\n", __func__,
-+		copied_bytes / dst_dev->dev_attrib.block_size, copied_bytes);
- 
--	pr_debug("target_xcopy_do_work: Setting X-COPY GOOD status -> sending response\n");
-+	pr_debug("%s: Setting X-COPY GOOD status -> sending response\n", __func__);
- 	target_complete_cmd(ec_cmd, SAM_STAT_GOOD);
- 	return;
- 
-@@ -776,8 +785,8 @@ static void target_xcopy_do_work(struct work_struct *work)
- 
- err_free:
- 	kfree(xop);
--	pr_warn_ratelimited("target_xcopy_do_work: rc: %d, sense: %u, XCOPY operation failed\n",
--			   rc, sense_rc);
-+	pr_warn_ratelimited("%s: rc: %d, sense: %u, XCOPY operation failed\n",
-+			   __func__, rc, sense_rc);
- 	target_complete_cmd_with_sense(ec_cmd, SAM_STAT_CHECK_CONDITION, sense_rc);
+ 		list_del_init(&sess->sess_acl_list);
+diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
+index 5926316252eb9..3d6034f00dcd8 100644
+--- a/drivers/target/target_core_transport.c
++++ b/drivers/target/target_core_transport.c
+@@ -220,11 +220,49 @@ void transport_subsystem_check_init(void)
+ 	sub_api_initialized = 1;
  }
  
-diff --git a/drivers/target/target_core_xcopy.h b/drivers/target/target_core_xcopy.h
-index e5f20005179a8..0aad7dc658955 100644
---- a/drivers/target/target_core_xcopy.h
-+++ b/drivers/target/target_core_xcopy.h
-@@ -5,7 +5,7 @@
- #define XCOPY_TARGET_DESC_LEN		32
- #define XCOPY_SEGMENT_DESC_LEN		28
- #define XCOPY_NAA_IEEE_REGEX_LEN	16
--#define XCOPY_MAX_SECTORS		4096
-+#define XCOPY_MAX_BYTES			16777216 /* 16 MB */
+-static void target_release_sess_cmd_refcnt(struct percpu_ref *ref)
++static void target_release_cmd_refcnt(struct percpu_ref *ref)
+ {
+-	struct se_session *sess = container_of(ref, typeof(*sess), cmd_count);
++	struct target_cmd_counter *cmd_cnt  = container_of(ref,
++							   typeof(*cmd_cnt),
++							   refcnt);
++	wake_up(&cmd_cnt->refcnt_wq);
++}
++
++static struct target_cmd_counter *target_alloc_cmd_counter(void)
++{
++	struct target_cmd_counter *cmd_cnt;
++	int rc;
++
++	cmd_cnt = kzalloc(sizeof(*cmd_cnt), GFP_KERNEL);
++	if (!cmd_cnt)
++		return NULL;
+ 
+-	wake_up(&sess->cmd_count_wq);
++	init_completion(&cmd_cnt->stop_done);
++	init_waitqueue_head(&cmd_cnt->refcnt_wq);
++	atomic_set(&cmd_cnt->stopped, 0);
++
++	rc = percpu_ref_init(&cmd_cnt->refcnt, target_release_cmd_refcnt, 0,
++			     GFP_KERNEL);
++	if (rc)
++		goto free_cmd_cnt;
++
++	return cmd_cnt;
++
++free_cmd_cnt:
++	kfree(cmd_cnt);
++	return NULL;
++}
++
++static void target_free_cmd_counter(struct target_cmd_counter *cmd_cnt)
++{
++	/*
++	 * Drivers like loop do not call target_stop_session during session
++	 * shutdown so we have to drop the ref taken at init time here.
++	 */
++	if (!atomic_read(&cmd_cnt->stopped))
++		percpu_ref_put(&cmd_cnt->refcnt);
++
++	percpu_ref_exit(&cmd_cnt->refcnt);
+ }
+ 
+ /**
+@@ -238,25 +276,17 @@ int transport_init_session(struct se_session *se_sess)
+ 	INIT_LIST_HEAD(&se_sess->sess_list);
+ 	INIT_LIST_HEAD(&se_sess->sess_acl_list);
+ 	spin_lock_init(&se_sess->sess_cmd_lock);
+-	init_waitqueue_head(&se_sess->cmd_count_wq);
+-	init_completion(&se_sess->stop_done);
+-	atomic_set(&se_sess->stopped, 0);
+-	return percpu_ref_init(&se_sess->cmd_count,
+-			       target_release_sess_cmd_refcnt, 0, GFP_KERNEL);
++	se_sess->cmd_cnt = target_alloc_cmd_counter();
++	if (!se_sess->cmd_cnt)
++		return -ENOMEM;
++
++	return  0;
+ }
+ EXPORT_SYMBOL(transport_init_session);
+ 
+ void transport_uninit_session(struct se_session *se_sess)
+ {
+-	/*
+-	 * Drivers like iscsi and loop do not call target_stop_session
+-	 * during session shutdown so we have to drop the ref taken at init
+-	 * time here.
+-	 */
+-	if (!atomic_read(&se_sess->stopped))
+-		percpu_ref_put(&se_sess->cmd_count);
+-
+-	percpu_ref_exit(&se_sess->cmd_count);
++	target_free_cmd_counter(se_sess->cmd_cnt);
+ }
+ 
+ /**
+@@ -2970,9 +3000,16 @@ int target_get_sess_cmd(struct se_cmd *se_cmd, bool ack_kref)
+ 		se_cmd->se_cmd_flags |= SCF_ACK_KREF;
+ 	}
+ 
+-	if (!percpu_ref_tryget_live(&se_sess->cmd_count))
+-		ret = -ESHUTDOWN;
+-
++	/*
++	 * Users like xcopy do not use counters since they never do a stop
++	 * and wait.
++	 */
++	if (se_sess->cmd_cnt) {
++		if (!percpu_ref_tryget_live(&se_sess->cmd_cnt->refcnt))
++			ret = -ESHUTDOWN;
++		else
++			se_cmd->cmd_cnt = se_sess->cmd_cnt;
++	}
+ 	if (ret && ack_kref)
+ 		target_put_sess_cmd(se_cmd);
+ 
+@@ -2993,7 +3030,7 @@ static void target_free_cmd_mem(struct se_cmd *cmd)
+ static void target_release_cmd_kref(struct kref *kref)
+ {
+ 	struct se_cmd *se_cmd = container_of(kref, struct se_cmd, cmd_kref);
+-	struct se_session *se_sess = se_cmd->se_sess;
++	struct target_cmd_counter *cmd_cnt = se_cmd->cmd_cnt;
+ 	struct completion *free_compl = se_cmd->free_compl;
+ 	struct completion *abrt_compl = se_cmd->abrt_compl;
+ 
+@@ -3004,7 +3041,8 @@ static void target_release_cmd_kref(struct kref *kref)
+ 	if (abrt_compl)
+ 		complete(abrt_compl);
+ 
+-	percpu_ref_put(&se_sess->cmd_count);
++	if (cmd_cnt)
++		percpu_ref_put(&cmd_cnt->refcnt);
+ }
+ 
+ /**
+@@ -3123,46 +3161,65 @@ void target_show_cmd(const char *pfx, struct se_cmd *cmd)
+ }
+ EXPORT_SYMBOL(target_show_cmd);
+ 
+-static void target_stop_session_confirm(struct percpu_ref *ref)
++static void target_stop_cmd_counter_confirm(struct percpu_ref *ref)
++{
++	struct target_cmd_counter *cmd_cnt = container_of(ref,
++						struct target_cmd_counter,
++						refcnt);
++	complete_all(&cmd_cnt->stop_done);
++}
++
++/**
++ * target_stop_cmd_counter - Stop new IO from being added to the counter.
++ * @cmd_cnt: counter to stop
++ */
++static void target_stop_cmd_counter(struct target_cmd_counter *cmd_cnt)
+ {
+-	struct se_session *se_sess = container_of(ref, struct se_session,
+-						  cmd_count);
+-	complete_all(&se_sess->stop_done);
++	pr_debug("Stopping command counter.\n");
++	if (!atomic_cmpxchg(&cmd_cnt->stopped, 0, 1))
++		percpu_ref_kill_and_confirm(&cmd_cnt->refcnt,
++					    target_stop_cmd_counter_confirm);
+ }
+ 
+ /**
+  * target_stop_session - Stop new IO from being queued on the session.
+- * @se_sess:    session to stop
++ * @se_sess: session to stop
+  */
+ void target_stop_session(struct se_session *se_sess)
+ {
+-	pr_debug("Stopping session queue.\n");
+-	if (atomic_cmpxchg(&se_sess->stopped, 0, 1) == 0)
+-		percpu_ref_kill_and_confirm(&se_sess->cmd_count,
+-					    target_stop_session_confirm);
++	target_stop_cmd_counter(se_sess->cmd_cnt);
+ }
+ EXPORT_SYMBOL(target_stop_session);
+ 
+ /**
+- * target_wait_for_sess_cmds - Wait for outstanding commands
+- * @se_sess:    session to wait for active I/O
++ * target_wait_for_cmds - Wait for outstanding cmds.
++ * @cmd_cnt: counter to wait for active I/O for.
+  */
+-void target_wait_for_sess_cmds(struct se_session *se_sess)
++static void target_wait_for_cmds(struct target_cmd_counter *cmd_cnt)
+ {
+ 	int ret;
+ 
+-	WARN_ON_ONCE(!atomic_read(&se_sess->stopped));
++	WARN_ON_ONCE(!atomic_read(&cmd_cnt->stopped));
+ 
+ 	do {
+ 		pr_debug("Waiting for running cmds to complete.\n");
+-		ret = wait_event_timeout(se_sess->cmd_count_wq,
+-				percpu_ref_is_zero(&se_sess->cmd_count),
+-				180 * HZ);
++		ret = wait_event_timeout(cmd_cnt->refcnt_wq,
++					 percpu_ref_is_zero(&cmd_cnt->refcnt),
++					 180 * HZ);
+ 	} while (ret <= 0);
+ 
+-	wait_for_completion(&se_sess->stop_done);
++	wait_for_completion(&cmd_cnt->stop_done);
+ 	pr_debug("Waiting for cmds done.\n");
+ }
++
++/**
++ * target_wait_for_sess_cmds - Wait for outstanding commands
++ * @se_sess: session to wait for active I/O
++ */
++void target_wait_for_sess_cmds(struct se_session *se_sess)
++{
++	target_wait_for_cmds(se_sess->cmd_cnt);
++}
+ EXPORT_SYMBOL(target_wait_for_sess_cmds);
  
  /*
-  * SPC4r37 6.4.6.1
+diff --git a/include/target/iscsi/iscsi_target_core.h b/include/target/iscsi/iscsi_target_core.h
+index 94d06ddfd80ad..229118156a1f6 100644
+--- a/include/target/iscsi/iscsi_target_core.h
++++ b/include/target/iscsi/iscsi_target_core.h
+@@ -600,6 +600,7 @@ struct iscsit_conn {
+ 	struct iscsi_tpg_np	*tpg_np;
+ 	/* Pointer to parent session */
+ 	struct iscsit_session	*sess;
++	struct target_cmd_counter *cmd_cnt;
+ 	int			bitmap_id;
+ 	int			rx_thread_active;
+ 	struct task_struct	*rx_thread;
+diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
+index 8c920456edd93..076bf352e17db 100644
+--- a/include/target/target_core_base.h
++++ b/include/target/target_core_base.h
+@@ -492,6 +492,7 @@ struct se_cmd {
+ 	struct se_lun		*se_lun;
+ 	/* Only used for internal passthrough and legacy TCM fabric modules */
+ 	struct se_session	*se_sess;
++	struct target_cmd_counter *cmd_cnt;
+ 	struct se_tmr_req	*se_tmr_req;
+ 	struct llist_node	se_cmd_list;
+ 	struct completion	*free_compl;
+@@ -617,22 +618,26 @@ static inline struct se_node_acl *fabric_stat_to_nacl(struct config_item *item)
+ 			acl_fabric_stat_group);
+ }
+ 
+-struct se_session {
++struct target_cmd_counter {
++	struct percpu_ref	refcnt;
++	wait_queue_head_t	refcnt_wq;
++	struct completion	stop_done;
+ 	atomic_t		stopped;
++};
++
++struct se_session {
+ 	u64			sess_bin_isid;
+ 	enum target_prot_op	sup_prot_ops;
+ 	enum target_prot_type	sess_prot_type;
+ 	struct se_node_acl	*se_node_acl;
+ 	struct se_portal_group *se_tpg;
+ 	void			*fabric_sess_ptr;
+-	struct percpu_ref	cmd_count;
+ 	struct list_head	sess_list;
+ 	struct list_head	sess_acl_list;
+ 	spinlock_t		sess_cmd_lock;
+-	wait_queue_head_t	cmd_count_wq;
+-	struct completion	stop_done;
+ 	void			*sess_cmd_map;
+ 	struct sbitmap_queue	sess_tag_pool;
++	struct target_cmd_counter *cmd_cnt;
+ };
+ 
+ struct se_device;
 -- 
 2.39.2
 
