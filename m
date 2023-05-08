@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133F6168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67279C433D2;
-	Mon,  8 May 2023 10:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897B4168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8C8C433EF;
+	Mon,  8 May 2023 10:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540710;
-	bh=EajPEqyFvL9wvjV/fW0Q+paOkdzrup9PPAX+PJ7F0TA=;
+	s=korg; t=1683540713;
+	bh=nMIuX5qXAZvnjgpRFaxRWDzDh8dI/nReh4lkHazb79k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uu4cQmtA87oBiAwO/yWfVouxcsOj6qnEgXTuc1iDWWmLxF7zcwygGL2LKkuLO16Fu
-	 n0//UhppX6bQXK9zT1meqOmJbZMKp4kHSl1jaLrwBqRLhoHR52AEDyDnesbH5hptdh
-	 ezLZjihNrAGROGTFEpPqH7ZjZAfa8s+6I9oCaxhI=
+	b=WqVqNGuyE0u3fyWFio7DH/gVvkrWASNSx9I5RygN0HDc9mM78FWsSjTA7S25p7fvj
+	 IWhqTrR+iqyF30gl7NoSI5vtc3q08bRNUfbqAy4K8v6ZYUAJ+/odM93X1hZryGBXbs
+	 AzJcghu4FOiTCwG/YroWiYzLi2S8oI8KIIFuQNMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dhruva Gole <d-gole@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Schspa Shi <schspa@gmail.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Dwaine Gonyier <dgonyier@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 451/611] spi: cadence-quadspi: use macro DEFINE_SIMPLE_DEV_PM_OPS
-Date: Mon,  8 May 2023 11:44:53 +0200
-Message-Id: <20230508094436.813995530@linuxfoundation.org>
+Subject: [PATCH 6.1 469/611] sched/rt: Fix bad task migration for rt tasks
+Date: Mon,  8 May 2023 11:45:11 +0200
+Message-Id: <20230508094437.363428452@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,74 +39,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dhruva Gole <d-gole@ti.com>
+From: Schspa Shi <schspa@gmail.com>
 
-[ Upstream commit be3206e8906e7a93df673ab2e96d69304a008edc ]
+[ Upstream commit feffe5bb274dd3442080ef0e4053746091878799 ]
 
-Using this macro makes the code more readable.
-It also inits the members of dev_pm_ops in the following manner
-without us explicitly needing to:
+Commit 95158a89dd50 ("sched,rt: Use the full cpumask for balancing")
+allows find_lock_lowest_rq() to pick a task with migration disabled.
+The purpose of the commit is to push the current running task on the
+CPU that has the migrate_disable() task away.
 
-.suspend = cqspi_suspend, \
-.resume = cqspi_resume, \
-.freeze = cqspi_suspend, \
-.thaw = cqspi_resume, \
-.poweroff = cqspi_suspend, \
-.restore = cqspi_resume
+However, there is a race which allows a migrate_disable() task to be
+migrated. Consider:
 
-Also get rid of conditional compilation based on CONFIG_PM_SLEEP because
-it introduces build issues with certain configs when CQSPI_DEV_PM_OPS is
-just NULL.
+  CPU0                                    CPU1
+  push_rt_task
+    check is_migration_disabled(next_task)
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202304191900.2fARFQW9-lkp@intel.com/
-Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
-Signed-off-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20230420054257.925092-1-d-gole@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+                                          task not running and
+                                          migration_disabled == 0
+
+    find_lock_lowest_rq(next_task, rq);
+      _double_lock_balance(this_rq, busiest);
+        raw_spin_rq_unlock(this_rq);
+        double_rq_lock(this_rq, busiest);
+          <<wait for busiest rq>>
+                                              <wakeup>
+                                          task become running
+                                          migrate_disable();
+                                            <context out>
+    deactivate_task(rq, next_task, 0);
+    set_task_cpu(next_task, lowest_rq->cpu);
+      WARN_ON_ONCE(is_migration_disabled(p));
+
+Fixes: 95158a89dd50 ("sched,rt: Use the full cpumask for balancing")
+Signed-off-by: Schspa Shi <schspa@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Tested-by: Dwaine Gonyier <dgonyier@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ kernel/sched/deadline.c | 1 +
+ kernel/sched/rt.c       | 4 ++++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 4b028d325663f..30fd4bc90580e 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1763,7 +1763,6 @@ static int cqspi_remove(struct platform_device *pdev)
- 	return 0;
- }
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 9ae8f41e3372f..f7d381b6c3133 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -2246,6 +2246,7 @@ static struct rq *find_lock_later_rq(struct task_struct *task, struct rq *rq)
+ 				     !cpumask_test_cpu(later_rq->cpu, &task->cpus_mask) ||
+ 				     task_on_cpu(rq, task) ||
+ 				     !dl_task(task) ||
++				     is_migration_disabled(task) ||
+ 				     !task_on_rq_queued(task))) {
+ 				double_unlock_balance(rq, later_rq);
+ 				later_rq = NULL;
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index 0a11f44adee57..4f5796dd26a56 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -2000,11 +2000,15 @@ static struct rq *find_lock_lowest_rq(struct task_struct *task, struct rq *rq)
+ 			 * the mean time, task could have
+ 			 * migrated already or had its affinity changed.
+ 			 * Also make sure that it wasn't scheduled on its rq.
++			 * It is possible the task was scheduled, set
++			 * "migrate_disabled" and then got preempted, so we must
++			 * check the task migration disable flag here too.
+ 			 */
+ 			if (unlikely(task_rq(task) != rq ||
+ 				     !cpumask_test_cpu(lowest_rq->cpu, &task->cpus_mask) ||
+ 				     task_on_cpu(rq, task) ||
+ 				     !rt_task(task) ||
++				     is_migration_disabled(task) ||
+ 				     !task_on_rq_queued(task))) {
  
--#ifdef CONFIG_PM_SLEEP
- static int cqspi_suspend(struct device *dev)
- {
- 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
-@@ -1793,15 +1792,7 @@ static int cqspi_resume(struct device *dev)
- 	return spi_master_resume(master);
- }
- 
--static const struct dev_pm_ops cqspi__dev_pm_ops = {
--	.suspend = cqspi_suspend,
--	.resume = cqspi_resume,
--};
--
--#define CQSPI_DEV_PM_OPS	(&cqspi__dev_pm_ops)
--#else
--#define CQSPI_DEV_PM_OPS	NULL
--#endif
-+static DEFINE_SIMPLE_DEV_PM_OPS(cqspi_dev_pm_ops, cqspi_suspend, cqspi_resume);
- 
- static const struct cqspi_driver_platdata cdns_qspi = {
- 	.quirks = CQSPI_DISABLE_DAC_MODE,
-@@ -1868,7 +1859,7 @@ static struct platform_driver cqspi_platform_driver = {
- 	.remove = cqspi_remove,
- 	.driver = {
- 		.name = CQSPI_NAME,
--		.pm = CQSPI_DEV_PM_OPS,
-+		.pm = &cqspi_dev_pm_ops,
- 		.of_match_table = cqspi_dt_ids,
- 	},
- };
+ 				double_unlock_balance(rq, lowest_rq);
 -- 
 2.39.2
 
