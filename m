@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E99C168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BCFC4339B;
-	Mon,  8 May 2023 11:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A99168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC96DC433EF;
+	Mon,  8 May 2023 11:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544953;
-	bh=HuVk1l2B0m+JV5hjaJfPHQDnHZ4YtvJoU0wfVCYbGLw=;
+	s=korg; t=1683544956;
+	bh=Rk/rBQbw1VEk0om1RQnQ2alpgvZHjuq3vxNerV11n1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GsoizRUmaOd8rE2TzLTZx0VdGzEzOIBdnHFjszejVftUpMrOkYxAGSGNArl5mO/me
-	 mqVwJWDAtxznpoesoAaJ0lodhwkMQFdrTz/HuRZWemaaIRVyT5A2YX89HLFfQTJu6H
-	 PWOoLNv+sLsRITkXz6ES0RuHQp7oL5cB2hL6bf3w=
+	b=Gxa0V159YTI+4UXuQxB0lk/FMB3vxaUdk02+3D4Ku1DrfKqDdlgSF1BjTOijboKRQ
+	 GUlateD+Xn36u+g9hljXpuDm9qGW38rCGpZnaBqcqdmoAlcj8R6PoBUXF1cHb7ofKZ
+	 U0f5TNJeMnaiLqe8HXzZqNkOp9NwV1p2wfThBIR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 546/694] usb: mtu3: fix kernel panic at qmu transfer done irq handler
-Date: Mon,  8 May 2023 11:46:21 +0200
-Message-Id: <20230508094452.225779801@linuxfoundation.org>
+Subject: [PATCH 6.3 547/694] firmware: stratix10-svc: Fix an NULL vs IS_ERR() bug in probe
+Date: Mon,  8 May 2023 11:46:22 +0200
+Message-Id: <20230508094452.263797311@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,71 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunfeng Yun <chunfeng.yun@mediatek.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit d28f4091ea7ec3510fd6a3c6d433234e7a2bef14 ]
+[ Upstream commit e1d6ca042e62c2a69513235f8629eb6e62ca79c5 ]
 
-When handle qmu transfer irq, it will unlock @mtu->lock before give back
-request, if another thread handle disconnect event at the same time, and
-try to disable ep, it may lock @mtu->lock and free qmu ring, then qmu
-irq hanlder may get a NULL gpd, avoid the KE by checking gpd's value before
-handling it.
+The svc_create_memory_pool() function returns error pointers.  It never
+returns NULL.  Fix the check.
 
-e.g.
-qmu done irq on cpu0                 thread running on cpu1
-
-qmu_done_tx()
-  handle gpd [0]
-    mtu3_requ_complete()        mtu3_gadget_ep_disable()
-      unlock @mtu->lock
-        give back request         lock @mtu->lock
-                                    mtu3_ep_disable()
-                                      mtu3_gpd_ring_free()
-                                   unlock @mtu->lock
-      lock @mtu->lock
-    get next gpd [1]
-
-[1]: goto [0] to handle next gpd, and next gpd may be NULL.
-
-Fixes: 48e0d3735aa5 ("usb: mtu3: supports new QMU format")
-Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-Link: https://lore.kernel.org/r/20230417025203.18097-3-chunfeng.yun@mediatek.com
+Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/5f9a8cb4-5a4f-460b-9cdc-2fae6c5b7922@kili.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/mtu3/mtu3_qmu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/firmware/stratix10-svc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/mtu3/mtu3_qmu.c b/drivers/usb/mtu3/mtu3_qmu.c
-index a2fdab8b63b28..3b68a0a19cc76 100644
---- a/drivers/usb/mtu3/mtu3_qmu.c
-+++ b/drivers/usb/mtu3/mtu3_qmu.c
-@@ -210,6 +210,7 @@ static struct qmu_gpd *advance_enq_gpd(struct mtu3_gpd_ring *ring)
- 	return ring->enqueue;
- }
+diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
+index bde1f543f5298..80f4e2d14e046 100644
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -1133,8 +1133,8 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
+ 		return ret;
  
-+/* @dequeue may be NULL if ring is unallocated or freed */
- static struct qmu_gpd *advance_deq_gpd(struct mtu3_gpd_ring *ring)
- {
- 	if (ring->dequeue < ring->end)
-@@ -491,7 +492,7 @@ static void qmu_done_tx(struct mtu3 *mtu, u8 epnum)
- 	dev_dbg(mtu->dev, "%s EP%d, last=%p, current=%p, enq=%p\n",
- 		__func__, epnum, gpd, gpd_current, ring->enqueue);
+ 	genpool = svc_create_memory_pool(pdev, sh_memory);
+-	if (!genpool)
+-		return -ENOMEM;
++	if (IS_ERR(genpool))
++		return PTR_ERR(genpool);
  
--	while (gpd != gpd_current && !GET_GPD_HWO(gpd)) {
-+	while (gpd && gpd != gpd_current && !GET_GPD_HWO(gpd)) {
- 
- 		mreq = next_request(mep);
- 
-@@ -530,7 +531,7 @@ static void qmu_done_rx(struct mtu3 *mtu, u8 epnum)
- 	dev_dbg(mtu->dev, "%s EP%d, last=%p, current=%p, enq=%p\n",
- 		__func__, epnum, gpd, gpd_current, ring->enqueue);
- 
--	while (gpd != gpd_current && !GET_GPD_HWO(gpd)) {
-+	while (gpd && gpd != gpd_current && !GET_GPD_HWO(gpd)) {
- 
- 		mreq = next_request(mep);
- 
+ 	/* allocate service controller and supporting channel */
+ 	controller = devm_kzalloc(dev, sizeof(*controller), GFP_KERNEL);
 -- 
 2.39.2
 
