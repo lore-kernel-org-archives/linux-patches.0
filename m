@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEAD11CA1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5828C433D2;
-	Mon,  8 May 2023 11:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6534811CA1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68E8C433D2;
+	Mon,  8 May 2023 11:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543791;
-	bh=dlN3lxcHYBqF3hhBJMc0yOwZO6ZMSjMUXymQ5juBmvA=;
+	s=korg; t=1683543794;
+	bh=B/ReKX88RM0PtQZM1w8RndsuF/jF2Qt+kHQrX7M+pEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFEm9rErcL/ogek8wHLL0W8IAGbMKXlnW/oY82BuITmL7LMMeE550tSncXxqoKgKi
-	 b4ua/hX1sQVOEB7kz05YO1OiCs9BoTLaqel3OTFv0ycDSu+VqtIsOykpzqwZtZ6fOa
-	 4d7IFZHjS251WJsvpDwqBeZ7qp3TqVdok73RTceQ=
+	b=hESpOMmErYuvEK+HPmELdbM71vKynjy547VoRfNJ4P+VnuZyeGwmMfRSKCPiT7+ex
+	 Z2RRnCyMSGTUFl7OijfjWUFKpMOB+wczF5+RhA5kGkBel1KxNQZXllMmedaLeygpcJ
+	 dnTBJqvl+TrqulKdqRJtvCp8uZG7hWKxJmCCL+m0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 202/694] arm64: dts: qcom: msm8916: Fix tsens_mode unit address
-Date: Mon,  8 May 2023 11:40:37 +0200
-Message-Id: <20230508094438.948787712@linuxfoundation.org>
+Subject: [PATCH 6.3 203/694] arm64: dts: qcom: sc8280xp: fix external display power domain
+Date: Mon,  8 May 2023 11:40:38 +0200
+Message-Id: <20230508094438.977528680@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,36 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 608465f798bb3eaf6773a49b893902860858e294 ]
+[ Upstream commit cf386126aef92256245adc8be686f2df4b837013 ]
 
-The reg address of the tsens_mode nvmem cell is correct but the unit
-address does not match (0xec vs 0xef). Fix it. No functional change.
+Fix the external display controller nodes which erroneously described
+the controllers as belonging to CX rather than MMCX.
 
-Fixes: 24aafd041fb2 ("arm64: dts: qcom: msm8916: specify per-sensor calibration cells")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Fixes: 19d3bb90754f ("arm64: dts: qcom: sc8280xp: Add USB-C-related DP blocks")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230308123617.101211-1-stephan.gerhold@kernkonzept.com
+Link: https://lore.kernel.org/r/20230316141252.2436-1-johan+linaro@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 0733c2f4f3798..0d5283805f42c 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -503,7 +503,7 @@
- 				bits = <1 7>;
- 			};
+diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+index 60433c810f23f..80401834bb063 100644
+--- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+@@ -3253,7 +3253,7 @@
+ 				#sound-dai-cells = <0>;
  
--			tsens_mode: mode@ec {
-+			tsens_mode: mode@ef {
- 				reg = <0xef 0x1>;
- 				bits = <5 3>;
- 			};
+ 				operating-points-v2 = <&mdss0_dp0_opp_table>;
+-				power-domains = <&rpmhpd SC8280XP_CX>;
++				power-domains = <&rpmhpd SC8280XP_MMCX>;
+ 
+ 				status = "disabled";
+ 
+@@ -3331,7 +3331,7 @@
+ 				#sound-dai-cells = <0>;
+ 
+ 				operating-points-v2 = <&mdss0_dp1_opp_table>;
+-				power-domains = <&rpmhpd SC8280XP_CX>;
++				power-domains = <&rpmhpd SC8280XP_MMCX>;
+ 
+ 				status = "disabled";
+ 
 -- 
 2.39.2
 
