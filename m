@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1B2168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:55:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E4AC433A0;
-	Mon,  8 May 2023 09:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1D5168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:55:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C87C433EF;
+	Mon,  8 May 2023 09:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539748;
-	bh=b6/Ys0tOR2qmW3ze1O136kpJzwLC1eBz7ItdANpdi+I=;
+	s=korg; t=1683539751;
+	bh=E2cQKGIf0Sg7svGkr9tFQQGW4JGX17m45vZK3M2h3HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3gjXPYtLkvO1Dn6SADYtVEv+pPl9/dMt3JPi1J68rq9NLZkTwRkQ/buuWadZAUPr
-	 3FiQtt+lcSc/E2LBljQ2/hbKA6zntNeeHHYyVzZYac1lCMdkbWvYgeSTIRlwIhjkvS
-	 S2iwnGTDn+BmdqwVZZ6Fk2ddKCjuXF8Zv6TB7xYU=
+	b=OuIWTPRhomTpQqmQ9Zz4yIyuyMN7r+z3QGLCO+bGkzxzf6ZSVJYP0k2+00PNfGidC
+	 DqnBo4hGbPlFTxcFcYRAloNkp9QVL+Fr1jkBJsxMvJyDR8SsOyGaLzagD/9HxJXLRM
+	 1iHdInhAxbTv32JvhIoxpRepsWYmVdt45jX7qcE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/611] tpm, tpm_tis: Disable interrupts if tpm_tis_probe_irq() failed
-Date: Mon,  8 May 2023 11:39:26 +0200
-Message-Id: <20230508094426.304855552@linuxfoundation.org>
+Subject: [PATCH 6.1 125/611] tpm, tpm_tis: Claim locality before writing interrupt registers
+Date: Mon,  8 May 2023 11:39:27 +0200
+Message-Id: <20230508094426.334740802@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -38,62 +37,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit 6d789ad726950e612a7f31044260337237c5b490 ]
+[ Upstream commit 15d7aa4e46eba87242a320f39773aa16faddadee ]
 
-Both functions tpm_tis_probe_irq_single() and tpm_tis_probe_irq() may setup
-the interrupts and then return with an error. This case is indicated by a
-missing TPM_CHIP_FLAG_IRQ flag in chip->flags.
-Currently the interrupt setup is only undone if tpm_tis_probe_irq_single()
-fails. Undo the setup also if tpm_tis_probe_irq() fails.
+In tpm_tis_probe_single_irq() interrupt registers TPM_INT_VECTOR,
+TPM_INT_STATUS and TPM_INT_ENABLE are modified to setup the interrupts.
+Currently these modifications are done without holding a locality thus they
+have no effect. Fix this by claiming the (default) locality before the
+registers are written.
+
+Since now tpm_tis_gen_interrupt() is called with the locality already
+claimed remove locality request and release from this function.
 
 Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Tested-by: Michael Niewöhner <linux@mniewoehner.de>
 Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
 Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Stable-dep-of: 955df4f87760 ("tpm, tpm_tis: Claim locality when interrupts are reenabled on resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index a2cbf9b6f4c92..4e6075d4e2643 100644
+index 4e6075d4e2643..39f27edb32879 100644
 --- a/drivers/char/tpm/tpm_tis_core.c
 +++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -1087,21 +1087,21 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 			goto out_err;
- 		}
+@@ -739,16 +739,10 @@ static void tpm_tis_gen_interrupt(struct tpm_chip *chip)
+ 	cap_t cap;
+ 	int ret;
  
--		if (irq) {
-+		if (irq)
- 			tpm_tis_probe_irq_single(chip, intmask, IRQF_SHARED,
- 						 irq);
--			if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
--				dev_err(&chip->dev, FW_BUG
-+		else
-+			tpm_tis_probe_irq(chip, intmask);
+-	ret = request_locality(chip, 0);
+-	if (ret < 0)
+-		return;
+-
+ 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
+ 		ret = tpm2_get_tpm_pt(chip, 0x100, &cap2, desc);
+ 	else
+ 		ret = tpm1_getcap(chip, TPM_CAP_PROP_TIS_TIMEOUT, &cap, desc, 0);
+-
+-	release_locality(chip, 0);
+ }
+ 
+ /* Register the IRQ and issue a command that will cause an interrupt. If an
+@@ -771,10 +765,16 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	}
+ 	priv->irq = irq;
+ 
++	rc = request_locality(chip, 0);
++	if (rc < 0)
++		return rc;
 +
-+		if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
-+			dev_err(&chip->dev, FW_BUG
- 					"TPM interrupt not working, polling instead\n");
+ 	rc = tpm_tis_read8(priv, TPM_INT_VECTOR(priv->locality),
+ 			   &original_int_vec);
+-	if (rc < 0)
++	if (rc < 0) {
++		release_locality(chip, priv->locality);
+ 		return rc;
++	}
  
--				rc = request_locality(chip, 0);
--				if (rc < 0)
--					goto out_err;
--				disable_interrupts(chip);
--				release_locality(chip, 0);
--			}
--		} else {
--			tpm_tis_probe_irq(chip, intmask);
-+			rc = request_locality(chip, 0);
-+			if (rc < 0)
-+				goto out_err;
-+			disable_interrupts(chip);
-+			release_locality(chip, 0);
- 		}
+ 	rc = tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality), irq);
+ 	if (rc < 0)
+@@ -808,10 +808,12 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
+ 		tpm_tis_write8(priv, original_int_vec,
+ 			       TPM_INT_VECTOR(priv->locality));
+-		return -1;
++		rc = -1;
  	}
  
+-	return 0;
++	release_locality(chip, priv->locality);
++
++	return rc;
+ }
+ 
+ /* Try to find the IRQ the TPM is using. This is for legacy x86 systems that
 -- 
 2.39.2
 
