@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0FD1549A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83829C433EF;
-	Mon,  8 May 2023 11:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FB5168CD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C088C433D2;
+	Mon,  8 May 2023 11:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544829;
-	bh=kPlUUA4DjkPa9wuT4S37MyKf4L7fho3IXW1JRMFiZGY=;
+	s=korg; t=1683544832;
+	bh=anD215Zbt0wu9yV4FLpWw8tnntdUTqsuMwEFPPdpUKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+bTT26Ck8yPS6oPE4slY5kgey36T09scYxSF/KLaxVX3zIlyf8+ni4V0Oe2zbDvq
-	 FfopBURQqXbdkAzIti94K5rKm+s9WpiOcm4QRzk8MSIOxX+IWMx5pQsAJAEd8IEwnn
-	 HzEc2F3oBDJkqXGfIJDAtC+D3CR2SdopWb3GiS5Y=
+	b=RG8XDOA9/b3zYYlOeUGdV/zKgxX6iiJmms0xVFRIQ64FVol7Fxa5iYv7upPteiSpz
+	 JPvxpBcUw0aXEmaIRxH4/N1GoMsDJdpiynUimSn5V9IV5FaskLXZ6kdNIkDFLK2i5b
+	 /ym0LuXyjvyWOuOYkGQl36nFZ7FkT7j5iJB+ptmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiyi Guo <zhguo@redhat.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Tarun Gupta <targupta@nvidia.com>,
-	Abhishek Sahu <abhsahu@nvidia.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 536/694] PCI/PM: Extend D3hot delay for NVIDIA HDA controllers
-Date: Mon,  8 May 2023 11:46:11 +0200
-Message-Id: <20230508094451.796392376@linuxfoundation.org>
+Subject: [PATCH 6.3 537/694] drm/panel: novatek-nt35950: Only unregister DSI1 if it exists
+Date: Mon,  8 May 2023 11:46:12 +0200
+Message-Id: <20230508094451.840435022@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,63 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Williamson <alex.williamson@redhat.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit a5a6dd2624698b6e3045c3a1450874d8c790d5d9 ]
+[ Upstream commit a50be876f4fe2349dc8b056a49d87f69c944570f ]
 
-Assignment of NVIDIA Ampere-based GPUs have seen a regression since the
-below referenced commit, where the reduced D3hot transition delay appears
-to introduce a small window where a D3hot->D0 transition followed by a bus
-reset can wedge the device.  The entire device is subsequently unavailable,
-returning -1 on config space read and is unrecoverable without a host
-reset.
+Commit 5dd45b66742a ("drm/panel: novatek-nt35950: Improve error handling")
+introduced logic to unregister DSI1 on any sort of probe failure, as
+that's not done automatically by kernel APIs.
 
-This has been observed with RTX A2000 and A5000 GPU and audio functions
-assigned to a Windows VM, where shutdown of the VM places the devices in
-D3hot prior to vfio-pci performing a bus reset when userspace releases the
-devices.  The issue has roughly a 2-3% chance of occurring per shutdown.
+It did not however account for cases where only one DSI host is used.
+Fix that.
 
-Restoring the HDA controller d3hot_delay to the effective value before the
-below commit has been shown to resolve the issue.  NVIDIA confirms this
-change should be safe for all of their HDA controllers.
-
-Fixes: 3e347969a577 ("PCI/PM: Reduce D3hot delay with usleep_range()")
-Link: https://lore.kernel.org/r/20230413194042.605768-1-alex.williamson@redhat.com
-Reported-by: Zhiyi Guo <zhguo@redhat.com>
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Tarun Gupta <targupta@nvidia.com>
-Cc: Abhishek Sahu <abhsahu@nvidia.com>
-Cc: Tarun Gupta <targupta@nvidia.com>
+Fixes: 5dd45b66742a ("drm/panel: novatek-nt35950: Improve error handling")
+Reported-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230417-topic-maple_panel_fixup-v1-1-07c8db606f5e@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/quirks.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/panel/panel-novatek-nt35950.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
-index 44cab813bf951..f4e2a88729fd1 100644
---- a/drivers/pci/quirks.c
-+++ b/drivers/pci/quirks.c
-@@ -1939,6 +1939,19 @@ static void quirk_radeon_pm(struct pci_dev *dev)
- }
- DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x6741, quirk_radeon_pm);
+diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35950.c b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+index 7498fc6258bb0..8b108ac80b556 100644
+--- a/drivers/gpu/drm/panel/panel-novatek-nt35950.c
++++ b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+@@ -586,7 +586,8 @@ static int nt35950_probe(struct mipi_dsi_device *dsi)
  
-+/*
-+ * NVIDIA Ampere-based HDA controllers can wedge the whole device if a bus
-+ * reset is performed too soon after transition to D0, extend d3hot_delay
-+ * to previous effective default for all NVIDIA HDA controllers.
-+ */
-+static void quirk_nvidia_hda_pm(struct pci_dev *dev)
-+{
-+	quirk_d3hot_delay(dev, 20);
-+}
-+DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
-+			      PCI_CLASS_MULTIMEDIA_HD_AUDIO, 8,
-+			      quirk_nvidia_hda_pm);
-+
- /*
-  * Ryzen5/7 XHCI controllers fail upon resume from runtime suspend or s2idle.
-  * https://bugzilla.kernel.org/show_bug.cgi?id=205587
+ 	ret = drm_panel_of_backlight(&nt->panel);
+ 	if (ret) {
+-		mipi_dsi_device_unregister(nt->dsi[1]);
++		if (num_dsis == 2)
++			mipi_dsi_device_unregister(nt->dsi[1]);
+ 
+ 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
+ 	}
+@@ -606,7 +607,8 @@ static int nt35950_probe(struct mipi_dsi_device *dsi)
+ 		ret = mipi_dsi_attach(nt->dsi[i]);
+ 		if (ret < 0) {
+ 			/* If we fail to attach to either host, we're done */
+-			mipi_dsi_device_unregister(nt->dsi[1]);
++			if (num_dsis == 2)
++				mipi_dsi_device_unregister(nt->dsi[1]);
+ 
+ 			return dev_err_probe(dev, ret,
+ 					     "Cannot attach to DSI%d host.\n", i);
 -- 
 2.39.2
 
