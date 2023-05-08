@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E67168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B09FC433EF;
-	Mon,  8 May 2023 10:06:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E638A168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4844CC433D2;
+	Mon,  8 May 2023 10:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540403;
-	bh=xVWEwo7p5kVaKev6Tr3b2FO0fOqVI04SPm/moheSsMk=;
+	s=korg; t=1683540405;
+	bh=WEAmJZGfFKqctGT2vUqWC3klLrFDB7+B8pLgO0w/uAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/VUnCy0zGMl8Q73S+1qAXjvztX1YYUPe1TP1LgMEuVKqCLEl8i52lPn0lQfGIY6j
-	 8qo4JsPYy6jvMLe8UqMibt1IOH564XwduXHp3Jm5vvY/M+/BCLk7btJjugNYiEtVBN
-	 Mta+qijih9VPeFPmarpfFm0KFJFcr8Uydd3JsyaU=
+	b=NBS/eBLuRONddjCIIox6FGbNWox3hD4h4obHNe/nzMvN6DjkcT0k/Z0eClzVbd0l0
+	 4aAI8su1qg+Ca0Jad7UQLIHTHRQm2SZUVv0c43XFk04KTHQRafeEuje6QgstSfCL7S
+	 s1/6MqFF+/SygTQMHG/xz9HL1QVmgftvah1a/Gno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Stanislav Fomichev <sdf@google.com>,
-	YiFei Zhu <zhuyifei@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 320/611] selftests/bpf: Wait for receive in cg_storage_multi test
-Date: Mon,  8 May 2023 11:42:42 +0200
-Message-Id: <20230508094432.837700820@linuxfoundation.org>
+Subject: [PATCH 6.1 311/611] wifi: rtlwifi: fix incorrect error codes in rtl_debugfs_set_write_reg()
+Date: Mon,  8 May 2023 11:42:33 +0200
+Message-Id: <20230508094432.547134556@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,66 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YiFei Zhu <zhuyifei@google.com>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 5af607a861d43ffff830fc1890033e579ec44799 ]
+[ Upstream commit 5dbe1f8eb8c5ac69394400a5b86fd81775e96c43 ]
 
-In some cases the loopback latency might be large enough, causing
-the assertion on invocations to be run before ingress prog getting
-executed. The assertion would fail and the test would flake.
+If there is a failure during copy_from_user or user-provided data buffer is
+invalid, rtl_debugfs_set_write_reg should return negative error code instead
+of a positive value count.
 
-This can be reliably reproduced by arbitrarily increasing the
-loopback latency (thanks to [1]):
-  tc qdisc add dev lo root handle 1: htb default 12
-  tc class add dev lo parent 1:1 classid 1:12 htb rate 20kbps ceil 20kbps
-  tc qdisc add dev lo parent 1:12 netem delay 100ms
+Fix this bug by returning correct error code. Moreover, the check of buffer
+against null is removed since it will be handled by copy_from_user.
 
-Fix this by waiting on the receive end, instead of instantly
-returning to the assert. The call to read() will wait for the
-default SO_RCVTIMEO timeout of 3 seconds provided by
-start_server().
-
-[1] https://gist.github.com/kstevens715/4598301
-
-Reported-by: Martin KaFai Lau <martin.lau@linux.dev>
-Link: https://lore.kernel.org/bpf/9c5c8b7e-1d89-a3af-5400-14fde81f4429@linux.dev/
-Fixes: 3573f384014f ("selftests/bpf: Test CGROUP_STORAGE behavior on shared egress + ingress")
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: YiFei Zhu <zhuyifei@google.com>
-Link: https://lore.kernel.org/r/20230405193354.1956209-1-zhuyifei@google.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 610247f46feb ("rtlwifi: Improve debugging by using debugfs")
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230326054217.93492-1-harperchen1110@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/debug.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c b/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
-index 621c572221918..63ee892bc7573 100644
---- a/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
-+++ b/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
-@@ -56,8 +56,9 @@ static bool assert_storage_noexist(struct bpf_map *map, const void *key)
+diff --git a/drivers/net/wireless/realtek/rtlwifi/debug.c b/drivers/net/wireless/realtek/rtlwifi/debug.c
+index 602717928887d..9eb26dfe4ca92 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/debug.c
++++ b/drivers/net/wireless/realtek/rtlwifi/debug.c
+@@ -278,8 +278,8 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
  
- static bool connect_send(const char *cgroup_path)
- {
--	bool res = true;
- 	int server_fd = -1, client_fd = -1;
-+	char message[] = "message";
-+	bool res = true;
+ 	tmp_len = (count > sizeof(tmp) - 1 ? sizeof(tmp) - 1 : count);
  
- 	if (join_cgroup(cgroup_path))
- 		goto out_clean;
-@@ -70,7 +71,10 @@ static bool connect_send(const char *cgroup_path)
- 	if (client_fd < 0)
- 		goto out_clean;
+-	if (!buffer || copy_from_user(tmp, buffer, tmp_len))
+-		return count;
++	if (copy_from_user(tmp, buffer, tmp_len))
++		return -EFAULT;
  
--	if (send(client_fd, "message", strlen("message"), 0) < 0)
-+	if (send(client_fd, &message, sizeof(message), 0) < 0)
-+		goto out_clean;
-+
-+	if (read(server_fd, &message, sizeof(message)) < 0)
- 		goto out_clean;
+ 	tmp[tmp_len] = '\0';
  
- 	res = false;
+@@ -287,7 +287,7 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
+ 	num = sscanf(tmp, "%x %x %x", &addr, &val, &len);
+ 
+ 	if (num !=  3)
+-		return count;
++		return -EINVAL;
+ 
+ 	switch (len) {
+ 	case 1:
 -- 
 2.39.2
 
