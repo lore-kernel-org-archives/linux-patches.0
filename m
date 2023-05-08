@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6A90168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:13:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27766C433D2;
-	Mon,  8 May 2023 10:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BAC168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:14:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF037C433EF;
+	Mon,  8 May 2023 10:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540839;
-	bh=e5jtWDxRlffjZF3efv/oSBIxNOwPeDQjzwmAj58iVWk=;
+	s=korg; t=1683540842;
+	bh=u3uetNtMJx3vMZfvf6xWbYWJdP02c3dOHouwG3q0SmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zt1Y5SqelhWKhGH/mKlNUkGPlfbZA/HYE4C28yVLz0fj9ZeN8iI77vk6CDv/2xtBR
-	 qGXUCcgRtF7nyV5jEWRetXWjwXsvTqFnEzGIFAJP2XeMcBnZlisyK/fiQ0Ez2Wa3AN
-	 d8eOp1FK7iyNz/f8BVvXZWBc6mI2C0hzGnwa4X04=
+	b=AZJZQ37LhOCh+Zl0a0nFB94KggNQ3m9d+BDajf4KZUgRQ79F1uR9d1JLfKy/zHl6Z
+	 0PY9x6agO924mGQsE4sgRJ1qjFvxYqnwcHhJuJTqOuVgUNEanAShtKSTvwK9MR58dP
+	 1B4OLDGkA7StZ2bLQpRZ0UOfrgiPzvbVDeBaIY68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helen Chao <helen.chao@oracle.com>,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 516/611] SUNRPC: remove the maximum number of retries in call_bind_status
-Date: Mon,  8 May 2023 11:45:58 +0200
-Message-Id: <20230508094438.808852300@linuxfoundation.org>
+Subject: [PATCH 6.1 488/611] fs/ntfs3: Fix null-ptr-deref on inode->i_op in ntfs_lookup()
+Date: Mon,  8 May 2023 11:45:30 +0200
+Message-Id: <20230508094437.935207090@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,72 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit 691d0b782066a6eeeecbfceb7910a8f6184e6105 ]
+[ Upstream commit 254e69f284d7270e0abdc023ee53b71401c3ba0c ]
 
-Currently call_bind_status places a hard limit of 3 to the number of
-retries on EACCES error. This limit was done to prevent NLM unlock
-requests from being hang forever when the server keeps returning garbage.
-However this change causes problem for cases when NLM service takes
-longer than 9 seconds to register with the port mapper after a restart.
+Syzbot reported a null-ptr-deref bug:
 
-This patch removes this hard coded limit and let the RPC handles
-the retry based on the standard hard/soft task semantics.
+ntfs3: loop0: Different NTFS' sector size (1024) and media sector size
+(512)
+ntfs3: loop0: Mark volume as dirty due to NTFS errors
+general protection fault, probably for non-canonical address
+0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:d_flags_for_inode fs/dcache.c:1980 [inline]
+RIP: 0010:__d_add+0x5ce/0x800 fs/dcache.c:2796
+Call Trace:
+ <TASK>
+ d_splice_alias+0x122/0x3b0 fs/dcache.c:3191
+ lookup_open fs/namei.c:3391 [inline]
+ open_last_lookups fs/namei.c:3481 [inline]
+ path_openat+0x10e6/0x2df0 fs/namei.c:3688
+ do_filp_open+0x264/0x4f0 fs/namei.c:3718
+ do_sys_openat2+0x124/0x4e0 fs/open.c:1310
+ do_sys_open fs/open.c:1326 [inline]
+ __do_sys_open fs/open.c:1334 [inline]
+ __se_sys_open fs/open.c:1330 [inline]
+ __x64_sys_open+0x221/0x270 fs/open.c:1330
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: 0b760113a3a1 ("NLM: Don't hang forever on NLM unlock requests")
-Reported-by: Helen Chao <helen.chao@oracle.com>
-Tested-by: Helen Chao <helen.chao@oracle.com>
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+If the MFT record of ntfs inode is not a base record, inode->i_op can be
+NULL. And a null-ptr-deref may happen:
+
+ntfs_lookup()
+    dir_search_u() # inode->i_op is set to NULL
+    d_splice_alias()
+        __d_add()
+            d_flags_for_inode() # inode->i_op->get_link null-ptr-deref
+
+Fix this by adding a Check on inode->i_op before calling the
+d_splice_alias() function.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/sched.h | 3 +--
- net/sunrpc/clnt.c            | 3 ---
- net/sunrpc/sched.c           | 1 -
- 3 files changed, 1 insertion(+), 6 deletions(-)
+ fs/ntfs3/namei.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/linux/sunrpc/sched.h b/include/linux/sunrpc/sched.h
-index b8ca3ecaf8d76..8ada7dc802d30 100644
---- a/include/linux/sunrpc/sched.h
-+++ b/include/linux/sunrpc/sched.h
-@@ -90,8 +90,7 @@ struct rpc_task {
- #endif
- 	unsigned char		tk_priority : 2,/* Task priority */
- 				tk_garb_retry : 2,
--				tk_cred_retry : 2,
--				tk_rebind_retry : 2;
-+				tk_cred_retry : 2;
- };
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index bc22cc321a74b..7760aedc06728 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -86,6 +86,16 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 		__putname(uni);
+ 	}
  
- typedef void			(*rpc_action)(struct rpc_task *);
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index fd7e1c630493e..d2ee566343083 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2050,9 +2050,6 @@ call_bind_status(struct rpc_task *task)
- 			status = -EOPNOTSUPP;
- 			break;
- 		}
--		if (task->tk_rebind_retry == 0)
--			break;
--		task->tk_rebind_retry--;
- 		rpc_delay(task, 3*HZ);
- 		goto retry_timeout;
- 	case -ENOBUFS:
-diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
-index be587a308e05a..c8321de341eea 100644
---- a/net/sunrpc/sched.c
-+++ b/net/sunrpc/sched.c
-@@ -817,7 +817,6 @@ rpc_init_task_statistics(struct rpc_task *task)
- 	/* Initialize retry counters */
- 	task->tk_garb_retry = 2;
- 	task->tk_cred_retry = 2;
--	task->tk_rebind_retry = 2;
++	/*
++	 * Check for a null pointer
++	 * If the MFT record of ntfs inode is not a base record, inode->i_op can be NULL.
++	 * This causes null pointer dereference in d_splice_alias().
++	 */
++	if (!IS_ERR(inode) && inode->i_op == NULL) {
++		iput(inode);
++		inode = ERR_PTR(-EINVAL);
++	}
++
+ 	return d_splice_alias(inode, dentry);
+ }
  
- 	/* starting timestamp */
- 	task->tk_start = ktime_get();
 -- 
 2.39.2
 
