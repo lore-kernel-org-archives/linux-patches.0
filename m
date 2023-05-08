@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DE8168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEA71C433D2;
-	Mon,  8 May 2023 11:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F407A168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6F6C433D2;
+	Mon,  8 May 2023 11:12:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544346;
-	bh=w2Sd3g6b7ju81ePBnXxDHrPGpcWlK4jU8ptPm8LW3s0=;
+	s=korg; t=1683544349;
+	bh=8lnWZ978QwRBBZIGxqLhZoA+ZvPcf7Mdkoeej4JcQ1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNAP+bq0hF6I8w+CCuCo1pjOYL+gCz3/3MIyiiG5K7QN2YCz7oDYTll+ChyVUwxbS
-	 BNV7h7IT8t4aw3NW/D2ZqhklzzNxDmfPcE+QmTnM1X/WfN8fPUsvrEFFnDw0b+93NA
-	 vP3LZHd4Jp4CHuYQ1xLZB+JYYsZ+o1mbJ/MZdHDc=
+	b=y3HLoiYaadddd6ZK9OMSFdxIAiyiu7NQtCnhBHXBIFwlBlV1yQ5LyKlnS7PPw3uoM
+	 3InmGiBRtaYkcS2EEBP/Q/o4jzYKfLi9FyOYn9fvWKSV9HGrV8saVf0p9ddlhn6NrU
+	 1JNJmfBhyRx2dY0e2li6xgCBiUNotdbELOkHG6pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luis Gerhorst <gerhorst@cs.fau.de>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 350/694] bpf: Remove misleading spec_v1 check on var-offset stack read
-Date: Mon,  8 May 2023 11:43:05 +0200
-Message-Id: <20230508094443.954562367@linuxfoundation.org>
+Subject: [PATCH 6.3 351/694] net: pcs: xpcs: remove double-read of link state when using AN
+Date: Mon,  8 May 2023 11:43:06 +0200
+Message-Id: <20230508094443.995978383@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,91 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luis Gerhorst <gerhorst@cs.fau.de>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit 082cdc69a4651dd2a77539d69416a359ed1214f5 ]
+[ Upstream commit ef63461caf427a77a04620d74ba90035a712af9c ]
 
-For every BPF_ADD/SUB involving a pointer, adjust_ptr_min_max_vals()
-ensures that the resulting pointer has a constant offset if
-bypass_spec_v1 is false. This is ensured by calling sanitize_check_bounds()
-which in turn calls check_stack_access_for_ptr_arithmetic(). There,
--EACCESS is returned if the register's offset is not constant, thereby
-rejecting the program.
+Phylink does not want the current state of the link when reading the
+PCS link state - it wants the latched state. Don't double-read the
+MII status register. Phylink will re-read as necessary to capture
+transient link-down events as of dbae3388ea9c ("net: phylink: Force
+retrigger in case of latched link-fail indicator").
 
-In summary, an unprivileged user must never be able to create stack
-pointers with a variable offset. That is also the case, because a
-respective check in check_stack_write() is missing. If they were able
-to create a variable-offset pointer, users could still use it in a
-stack-write operation to trigger unsafe speculative behavior [1].
+The above referenced commit is a dependency for this change, and thus
+this change should not be backported to any kernel that does not
+contain the above referenced commit.
 
-Because unprivileged users must already be prevented from creating
-variable-offset stack pointers, viable options are to either remove
-this check (replacing it with a clarifying comment), or to turn it
-into a "verifier BUG"-message, also adding a similar check in
-check_stack_write() (for consistency, as a second-level defense).
-This patch implements the first option to reduce verifier bloat.
-
-This check was introduced by commit 01f810ace9ed ("bpf: Allow
-variable-offset stack access") which correctly notes that
-"variable-offset reads and writes are disallowed (they were already
-disallowed for the indirect access case) because the speculative
-execution checking code doesn't support them". However, it does not
-further discuss why the check in check_stack_read() is necessary.
-The code which made this check obsolete was also introduced in this
-commit.
-
-I have compiled ~650 programs from the Linux selftests, Linux samples,
-Cilium, and libbpf/examples projects and confirmed that none of these
-trigger the check in check_stack_read() [2]. Instead, all of these
-programs are, as expected, already rejected when constructing the
-variable-offset pointers. Note that the check in
-check_stack_access_for_ptr_arithmetic() also prints "off=%d" while the
-code removed by this patch does not (the error removed does not appear
-in the "verification_error" values). For reproducibility, the
-repository linked includes the raw data and scripts used to create
-the plot.
-
-  [1] https://arxiv.org/pdf/1807.03757.pdf
-  [2] https://gitlab.cs.fau.de/un65esoq/bpf-spectre/-/raw/53dc19fcf459c186613b1156a81504b39c8d49db/data/plots/23-02-26_23-56_bpftool/bpftool/0004-errors.pdf?inline=false
-
-Fixes: 01f810ace9ed ("bpf: Allow variable-offset stack access")
-Signed-off-by: Luis Gerhorst <gerhorst@cs.fau.de>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230315165358.23701-1-gerhorst@cs.fau.de
+Fixes: fcb26bd2b6ca ("net: phy: Add Synopsys DesignWare XPCS MDIO module")
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 16 ++++++----------
- 1 file changed, 6 insertions(+), 10 deletions(-)
+ drivers/net/pcs/pcs-xpcs.c | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 856e2088289da..672a667b3d760 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -3977,17 +3977,13 @@ static int check_stack_read(struct bpf_verifier_env *env,
- 	}
- 	/* Variable offset is prohibited for unprivileged mode for simplicity
- 	 * since it requires corresponding support in Spectre masking for stack
--	 * ALU. See also retrieve_ptr_limit().
-+	 * ALU. See also retrieve_ptr_limit(). The check in
-+	 * check_stack_access_for_ptr_arithmetic() called by
-+	 * adjust_ptr_min_max_vals() prevents users from creating stack pointers
-+	 * with variable offsets, therefore no check is required here. Further,
-+	 * just checking it here would be insufficient as speculative stack
-+	 * writes could still lead to unsafe speculative behaviour.
- 	 */
--	if (!env->bypass_spec_v1 && var_off) {
--		char tn_buf[48];
+diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
+index bc428a816719d..04a6853530418 100644
+--- a/drivers/net/pcs/pcs-xpcs.c
++++ b/drivers/net/pcs/pcs-xpcs.c
+@@ -321,7 +321,7 @@ static int xpcs_read_fault_c73(struct dw_xpcs *xpcs,
+ 	return 0;
+ }
+ 
+-static int xpcs_read_link_c73(struct dw_xpcs *xpcs, bool an)
++static int xpcs_read_link_c73(struct dw_xpcs *xpcs)
+ {
+ 	bool link = true;
+ 	int ret;
+@@ -333,15 +333,6 @@ static int xpcs_read_link_c73(struct dw_xpcs *xpcs, bool an)
+ 	if (!(ret & MDIO_STAT1_LSTATUS))
+ 		link = false;
+ 
+-	if (an) {
+-		ret = xpcs_read(xpcs, MDIO_MMD_AN, MDIO_STAT1);
+-		if (ret < 0)
+-			return ret;
 -
--		tnum_strn(tn_buf, sizeof(tn_buf), reg->var_off);
--		verbose(env, "R%d variable offset stack access prohibited for !root, var_off=%s\n",
--				ptr_regno, tn_buf);
--		return -EACCES;
+-		if (!(ret & MDIO_STAT1_LSTATUS))
+-			link = false;
 -	}
 -
- 	if (!var_off) {
- 		off += reg->var_off.value;
- 		err = check_stack_read_fixed_off(env, state, off, size,
+ 	return link;
+ }
+ 
+@@ -935,7 +926,7 @@ static int xpcs_get_state_c73(struct dw_xpcs *xpcs,
+ 	int ret;
+ 
+ 	/* Link needs to be read first ... */
+-	state->link = xpcs_read_link_c73(xpcs, state->an_enabled) > 0 ? 1 : 0;
++	state->link = xpcs_read_link_c73(xpcs) > 0 ? 1 : 0;
+ 
+ 	/* ... and then we check the faults. */
+ 	ret = xpcs_read_fault_c73(xpcs, state);
 -- 
 2.39.2
 
