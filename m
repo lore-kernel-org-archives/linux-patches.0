@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D01154A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7E4C433EF;
-	Mon,  8 May 2023 10:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B8C168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F76C433EF;
+	Mon,  8 May 2023 10:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540495;
-	bh=hDe++XOS1xnfE2Ty7geFW3kAx3JIFleArPvdkBMyqfo=;
+	s=korg; t=1683540498;
+	bh=QxPLpj3IIvVwxGZC7PKYRa8TqIGc9bRtmRrvRImNCzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QrtQglyzID+gbYE3GWVVKX6uknL2TnvgK8zmDTBsdLQZ9q2tar5qCJp19hV3XmE8J
-	 uhzjsB94cwfnYZ8wCMrfcmR3ABfQAuRioq5vDkc0HIRLHtnmuvSLNAEeGpDP1TCEHc
-	 ueB3bZTdncAosZokGfefrKQHpuDSWRYsRuQyAeFQ=
+	b=UKeD0o4ug47cyTOpfPf68miaCHx2sXr6f+AoohzLWdIvGY2juyFhw7wDdVxhtiUY9
+	 i/s0zEQ9iwqX/qcB6OOXnR8D+Ps3tOQByRYRq25r73rGi+TfisXxgxZCbqxpWl5gM1
+	 duvp+p021KyT6sVczXpMY4xjbXLYYCwCh4h5VRrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com,
-	Hsin-Wei Hung <hsinweih@uci.edu>,
-	Xin Liu <liuxin350@huawei.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Roi Dayan <roid@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 345/611] bpf, sockmap: Revert buggy deadlock fix in the sockhash and sockmap
-Date: Mon,  8 May 2023 11:43:07 +0200
-Message-Id: <20230508094433.626365535@linuxfoundation.org>
+Subject: [PATCH 6.1 380/611] net/mlx5e: Fix error flow in representor failing to add vport rx rule
+Date: Mon,  8 May 2023 11:43:42 +0200
+Message-Id: <20230508094434.680830015@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -38,97 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Roi Dayan <roid@nvidia.com>
 
-[ Upstream commit 8c5c2a4898e3d6bad86e29d471e023c8a19ba799 ]
+[ Upstream commit 0a6b069cc60d68d33b4f6e7dd7f1adc3ec749766 ]
 
-syzbot reported a splat and bisected it to recent commit ed17aa92dc56 ("bpf,
-sockmap: fix deadlocks in the sockhash and sockmap"):
+On representor init rx error flow the flow steering pointer is being
+released so mlx5e_attach_netdev() doesn't have a valid fs pointer
+in its error flow. Make sure the pointer is nullified when released
+and add a check in mlx5e_fs_cleanup() to verify fs is not null
+as representor cleanup callback would be called anyway.
 
-  [...]
-  WARNING: CPU: 1 PID: 9280 at kernel/softirq.c:376 __local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
-  Modules linked in:
-  CPU: 1 PID: 9280 Comm: syz-executor.1 Not tainted 6.2.0-syzkaller-13249-gd319f344561d #0
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
-  RIP: 0010:__local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
-  [...]
-  Call Trace:
-  <TASK>
-  spin_unlock_bh include/linux/spinlock.h:395 [inline]
-  sock_map_del_link+0x2ea/0x510 net/core/sock_map.c:165
-  sock_map_unref+0xb0/0x1d0 net/core/sock_map.c:184
-  sock_hash_delete_elem+0x1ec/0x2a0 net/core/sock_map.c:945
-  map_delete_elem kernel/bpf/syscall.c:1536 [inline]
-  __sys_bpf+0x2edc/0x53e0 kernel/bpf/syscall.c:5053
-  __do_sys_bpf kernel/bpf/syscall.c:5166 [inline]
-  __se_sys_bpf kernel/bpf/syscall.c:5164 [inline]
-  __x64_sys_bpf+0x79/0xc0 kernel/bpf/syscall.c:5164
-  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-  do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  RIP: 0033:0x7fe8f7c8c169
-  </TASK>
-  [...]
-
-Revert for now until we have a proper solution.
-
-Fixes: ed17aa92dc56 ("bpf, sockmap: fix deadlocks in the sockhash and sockmap")
-Reported-by: syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com
-Cc: Hsin-Wei Hung <hsinweih@uci.edu>
-Cc: Xin Liu <liuxin350@huawei.com>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/000000000000f1db9605f939720e@google.com/
+Fixes: af8bbf730068 ("net/mlx5e: Convert mlx5e_flow_steering member of mlx5e_priv to pointer")
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_fs.c   | 2 ++
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 1 +
+ drivers/net/ethernet/mellanox/mlx5/core/en_rep.c  | 2 ++
+ 3 files changed, 5 insertions(+)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 2408965e5c7b6..a68a7290a3b2b 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -414,9 +414,8 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
+index 7cd36f4ac3efc..edbe22d93c992 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
+@@ -1471,6 +1471,8 @@ struct mlx5e_flow_steering *mlx5e_fs_init(const struct mlx5e_profile *profile,
+ 
+ void mlx5e_fs_cleanup(struct mlx5e_flow_steering *fs)
  {
- 	struct sock *sk;
- 	int err = 0;
--	unsigned long flags;
- 
--	raw_spin_lock_irqsave(&stab->lock, flags);
-+	raw_spin_lock_bh(&stab->lock);
- 	sk = *psk;
- 	if (!sk_test || sk_test == sk)
- 		sk = xchg(psk, NULL);
-@@ -426,7 +425,7 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
- 	else
- 		err = -EINVAL;
- 
--	raw_spin_unlock_irqrestore(&stab->lock, flags);
-+	raw_spin_unlock_bh(&stab->lock);
- 	return err;
++	if (!fs)
++		return;
+ 	mlx5e_fs_ethtool_free(fs);
+ 	mlx5e_fs_tc_free(fs);
+ 	mlx5e_fs_vlan_free(fs);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 5e01de4c32037..94d010e2d5efd 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -5201,6 +5201,7 @@ static void mlx5e_nic_cleanup(struct mlx5e_priv *priv)
+ 	mlx5e_ktls_cleanup(priv);
+ 	mlx5e_ipsec_cleanup(priv);
+ 	mlx5e_fs_cleanup(priv->fs);
++	priv->fs = NULL;
  }
  
-@@ -924,12 +923,11 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
- 	struct bpf_shtab_bucket *bucket;
- 	struct bpf_shtab_elem *elem;
- 	int ret = -ENOENT;
--	unsigned long flags;
+ static int mlx5e_init_nic_rx(struct mlx5e_priv *priv)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+index 0f744131c6869..9bd1a93a512d4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rep.c
+@@ -783,6 +783,7 @@ static void mlx5e_cleanup_rep(struct mlx5e_priv *priv)
+ {
+ 	mlx5e_fs_cleanup(priv->fs);
+ 	mlx5e_ipsec_cleanup(priv);
++	priv->fs = NULL;
+ }
  
- 	hash = sock_hash_bucket_hash(key, key_size);
- 	bucket = sock_hash_select_bucket(htab, hash);
- 
--	raw_spin_lock_irqsave(&bucket->lock, flags);
-+	raw_spin_lock_bh(&bucket->lock);
- 	elem = sock_hash_lookup_elem_raw(&bucket->head, hash, key, key_size);
- 	if (elem) {
- 		hlist_del_rcu(&elem->node);
-@@ -937,7 +935,7 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
- 		sock_hash_free_elem(htab, elem);
- 		ret = 0;
- 	}
--	raw_spin_unlock_irqrestore(&bucket->lock, flags);
-+	raw_spin_unlock_bh(&bucket->lock);
- 	return ret;
+ static int mlx5e_create_rep_ttc_table(struct mlx5e_priv *priv)
+@@ -949,6 +950,7 @@ static int mlx5e_init_rep_rx(struct mlx5e_priv *priv)
+ 	priv->rx_res = NULL;
+ err_free_fs:
+ 	mlx5e_fs_cleanup(priv->fs);
++	priv->fs = NULL;
+ 	return err;
  }
  
 -- 
