@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AE6168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:28:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1A79C433EF;
-	Mon,  8 May 2023 10:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB43168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:28:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC4C8C433D2;
+	Mon,  8 May 2023 10:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541705;
-	bh=kkZ63bzUyIuxGSGDDpFcQzopMT0n9cVo7k3BL5YRyS8=;
+	s=korg; t=1683541708;
+	bh=qTk6e8J0Fp2AA8ygN0geMH0ulaG/Oosu4RqKgMum6fM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIDtac8Ki6AO8yg67d/Z7+TnzGu30pg8skUkzdwBAU2YXbPtqiE0zfcMn3YgxU4Sq
-	 11hNwNK6Mgx8KKD7dEDMDfPCk9H4I2ZrrSUWGVDxqfMCUB/30wwgP2rTvjUp1dy6Vs
-	 oCH5I8XyNOpqK4r+6OGICdOgz7SEIyC7itdSPC98=
+	b=XhKeFOLUZHUMKH8aMQZBTfpOIpPQl5weZO+ZKUvvv3H+omjNwqKGX/3snfHXVblBL
+	 iweuRhlXnfLP/Bz0ENE8mwHDUFhyPcSF4iaBFEsRlgK1LGPJ3YHrkErYoXL6R0NMBM
+	 xdgKJ0Vrsl7rQpupEMHBYGv+y2bsGkwvN+tinCOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Janne Grunau <j@jannau.net>,
+	Sven Peter <sven@svenpeter.dev>,
+	Hector Martin <marcan@marcan.st>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 199/663] ARM: dts: stm32: fix spi1 pin assignment on stm32mp15
-Date: Mon,  8 May 2023 11:40:25 +0200
-Message-Id: <20230508094434.845146108@linuxfoundation.org>
+Subject: [PATCH 6.2 200/663] arm64: dts: apple: t8103: Disable unused PCIe ports
+Date: Mon,  8 May 2023 11:40:26 +0200
+Message-Id: <20230508094434.875274597@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -34,67 +36,199 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Torgue <alexandre.torgue@foss.st.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit 1b9f0ec81af0012aae30aa3b4c711ad71d42e246 ]
+[ Upstream commit a0189fdfb73dac856b8fa9b9f9581e5099c9391f ]
 
-Bank A and B IOs can't be handled by the pin controller 'Z'. This patch
-assign spi1 pin definition to the correct controller.
+The PCIe ports are unused (without devices) so disable them instead of
+removing them.
 
-Fixes: 9ad65d245b7b ("ARM: dts: stm32: stm32mp15-pinctrl: add spi1-1 pinmux group")
-
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: 7c77ab91b33d ("arm64: dts: apple: Add missing M1 (t8103) devices")
+Signed-off-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Sven Peter <sven@svenpeter.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp15-pinctrl.dtsi | 30 ++++++++++++------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ arch/arm64/boot/dts/apple/t8103-j274.dts | 10 ++++++++++
+ arch/arm64/boot/dts/apple/t8103-j293.dts | 15 ---------------
+ arch/arm64/boot/dts/apple/t8103-j313.dts | 15 ---------------
+ arch/arm64/boot/dts/apple/t8103-j456.dts | 10 ++++++++++
+ arch/arm64/boot/dts/apple/t8103-j457.dts | 11 +++--------
+ arch/arm64/boot/dts/apple/t8103.dtsi     |  4 ++++
+ 6 files changed, 27 insertions(+), 38 deletions(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi b/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi
-index a9d2bec990141..e15a3b2a9b399 100644
---- a/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi
-@@ -1880,6 +1880,21 @@
- 		};
- 	};
+diff --git a/arch/arm64/boot/dts/apple/t8103-j274.dts b/arch/arm64/boot/dts/apple/t8103-j274.dts
+index b52ddc4098939..1c3e37f86d46d 100644
+--- a/arch/arm64/boot/dts/apple/t8103-j274.dts
++++ b/arch/arm64/boot/dts/apple/t8103-j274.dts
+@@ -37,10 +37,12 @@
  
-+	spi1_pins_b: spi1-1 {
-+		pins1 {
-+			pinmux = <STM32_PINMUX('A', 5, AF5)>, /* SPI1_SCK */
-+				 <STM32_PINMUX('B', 5, AF5)>; /* SPI1_MOSI */
-+			bias-disable;
-+			drive-push-pull;
-+			slew-rate = <1>;
-+		};
+ &port01 {
+ 	bus-range = <2 2>;
++	status = "okay";
+ };
+ 
+ &port02 {
+ 	bus-range = <3 3>;
++	status = "okay";
+ 	ethernet0: ethernet@0,0 {
+ 		reg = <0x30000 0x0 0x0 0x0 0x0>;
+ 		/* To be filled by the loader */
+@@ -48,6 +50,14 @@
+ 	};
+ };
+ 
++&pcie0_dart_1 {
++	status = "okay";
++};
 +
-+		pins2 {
-+			pinmux = <STM32_PINMUX('A', 6, AF5)>; /* SPI1_MISO */
-+			bias-disable;
-+		};
-+	};
++&pcie0_dart_2 {
++	status = "okay";
++};
 +
- 	spi2_pins_a: spi2-0 {
- 		pins1 {
- 			pinmux = <STM32_PINMUX('B', 10, AF5)>, /* SPI2_SCK */
-@@ -2448,19 +2463,4 @@
- 			bias-disable;
+ &i2c2 {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/apple/t8103-j293.dts b/arch/arm64/boot/dts/apple/t8103-j293.dts
+index 151074109a114..c363dfef80709 100644
+--- a/arch/arm64/boot/dts/apple/t8103-j293.dts
++++ b/arch/arm64/boot/dts/apple/t8103-j293.dts
+@@ -25,21 +25,6 @@
+ 	brcm,board-type = "apple,honshu";
+ };
+ 
+-/*
+- * Remove unused PCIe ports and disable the associated DARTs.
+- */
+-
+-&pcie0_dart_1 {
+-	status = "disabled";
+-};
+-
+-&pcie0_dart_2 {
+-	status = "disabled";
+-};
+-
+-/delete-node/ &port01;
+-/delete-node/ &port02;
+-
+ &i2c2 {
+ 	status = "okay";
+ };
+diff --git a/arch/arm64/boot/dts/apple/t8103-j313.dts b/arch/arm64/boot/dts/apple/t8103-j313.dts
+index bc1f865aa7909..08409be1cf357 100644
+--- a/arch/arm64/boot/dts/apple/t8103-j313.dts
++++ b/arch/arm64/boot/dts/apple/t8103-j313.dts
+@@ -24,18 +24,3 @@
+ &wifi0 {
+ 	brcm,board-type = "apple,shikoku";
+ };
+-
+-/*
+- * Remove unused PCIe ports and disable the associated DARTs.
+- */
+-
+-&pcie0_dart_1 {
+-	status = "disabled";
+-};
+-
+-&pcie0_dart_2 {
+-	status = "disabled";
+-};
+-
+-/delete-node/ &port01;
+-/delete-node/ &port02;
+diff --git a/arch/arm64/boot/dts/apple/t8103-j456.dts b/arch/arm64/boot/dts/apple/t8103-j456.dts
+index 2db425ceb30f6..58c8e43789b48 100644
+--- a/arch/arm64/boot/dts/apple/t8103-j456.dts
++++ b/arch/arm64/boot/dts/apple/t8103-j456.dts
+@@ -55,13 +55,23 @@
+ 
+ &port01 {
+ 	bus-range = <2 2>;
++	status = "okay";
+ };
+ 
+ &port02 {
+ 	bus-range = <3 3>;
++	status = "okay";
+ 	ethernet0: ethernet@0,0 {
+ 		reg = <0x30000 0x0 0x0 0x0 0x0>;
+ 		/* To be filled by the loader */
+ 		local-mac-address = [00 10 18 00 00 00];
+ 	};
+ };
++
++&pcie0_dart_1 {
++	status = "okay";
++};
++
++&pcie0_dart_2 {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/apple/t8103-j457.dts b/arch/arm64/boot/dts/apple/t8103-j457.dts
+index 3821ff146c56b..152f95fd49a21 100644
+--- a/arch/arm64/boot/dts/apple/t8103-j457.dts
++++ b/arch/arm64/boot/dts/apple/t8103-j457.dts
+@@ -37,6 +37,7 @@
+ 
+ &port02 {
+ 	bus-range = <3 3>;
++	status = "okay";
+ 	ethernet0: ethernet@0,0 {
+ 		reg = <0x30000 0x0 0x0 0x0 0x0>;
+ 		/* To be filled by the loader */
+@@ -44,12 +45,6 @@
+ 	};
+ };
+ 
+-/*
+- * Remove unused PCIe port and disable the associated DART.
+- */
+-
+-&pcie0_dart_1 {
+-	status = "disabled";
++&pcie0_dart_2 {
++	status = "okay";
+ };
+-
+-/delete-node/ &port01;
+diff --git a/arch/arm64/boot/dts/apple/t8103.dtsi b/arch/arm64/boot/dts/apple/t8103.dtsi
+index 9859219699f45..87a9c1ba6d0f4 100644
+--- a/arch/arm64/boot/dts/apple/t8103.dtsi
++++ b/arch/arm64/boot/dts/apple/t8103.dtsi
+@@ -724,6 +724,7 @@
+ 			interrupt-parent = <&aic>;
+ 			interrupts = <AIC_IRQ 699 IRQ_TYPE_LEVEL_HIGH>;
+ 			power-domains = <&ps_apcie_gp>;
++			status = "disabled";
+ 		};
+ 
+ 		pcie0_dart_2: iommu@683008000 {
+@@ -733,6 +734,7 @@
+ 			interrupt-parent = <&aic>;
+ 			interrupts = <AIC_IRQ 702 IRQ_TYPE_LEVEL_HIGH>;
+ 			power-domains = <&ps_apcie_gp>;
++			status = "disabled";
+ 		};
+ 
+ 		pcie0: pcie@690000000 {
+@@ -807,6 +809,7 @@
+ 						<0 0 0 2 &port01 0 0 0 1>,
+ 						<0 0 0 3 &port01 0 0 0 2>,
+ 						<0 0 0 4 &port01 0 0 0 3>;
++				status = "disabled";
+ 			};
+ 
+ 			port02: pci@2,0 {
+@@ -826,6 +829,7 @@
+ 						<0 0 0 2 &port02 0 0 0 1>,
+ 						<0 0 0 3 &port02 0 0 0 2>,
+ 						<0 0 0 4 &port02 0 0 0 3>;
++				status = "disabled";
+ 			};
  		};
  	};
--
--	spi1_pins_b: spi1-1 {
--		pins1 {
--			pinmux = <STM32_PINMUX('A', 5, AF5)>, /* SPI1_SCK */
--				 <STM32_PINMUX('B', 5, AF5)>; /* SPI1_MOSI */
--			bias-disable;
--			drive-push-pull;
--			slew-rate = <1>;
--		};
--
--		pins2 {
--			pinmux = <STM32_PINMUX('A', 6, AF5)>; /* SPI1_MISO */
--			bias-disable;
--		};
--	};
- };
 -- 
 2.39.2
 
