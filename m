@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B804E168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EDFFC433D2;
-	Mon,  8 May 2023 10:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F53168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B4CC433EF;
+	Mon,  8 May 2023 10:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540305;
-	bh=YSy9V8mQdM4yFkF4v5ZvF2/EfD/DWjHoRcQO2CMxSao=;
+	s=korg; t=1683540308;
+	bh=BI7D//amZbkogfpVsfNAc+Ecjm7o86VLXCMVLcTN0yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aAfVI4YBwlupRneR8aIAgKW0z56jCJKaXdiVrYaih2onbmN5PEyyUWYEwHujZCs2g
-	 u0IqyOfKM9FnlK1nBzgwanWz7crXNz5jGxAyCRqufH3gLHSf5t5QuUg0k+JwKnKzKM
-	 kzrcipXswjbPZHnOb/Ivg8FOssqc7QxN51gFOmvg=
+	b=EDmlV1Onc9xPXlve0La2iS+HGL+8FQRWz2EohpoJ6aUdicRu9uUpDCjLumu1LSzvk
+	 u2WeH2JywPg+/bbe8qeQYJarrtZO3Wh7izpte8G40m4u6ElKZ/G2sZ/xiBiy8WpFou
+	 IriLWnupqzN3KkJo4iO+0UEUlQZWl9kM+mUqGEZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Kumar Singh <quic_adisi@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yhs@fb.com>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 281/611] wifi: ath11k: fix deinitialization of firmware resources
-Date: Mon,  8 May 2023 11:42:03 +0200
-Message-Id: <20230508094431.517236614@linuxfoundation.org>
+Subject: [PATCH 6.1 282/611] selftests/bpf: Fix a fd leak in an error path in network_helpers.c
+Date: Mon,  8 May 2023 11:42:04 +0200
+Message-Id: <20230508094431.546211982@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,87 +38,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Kumar Singh <quic_adisi@quicinc.com>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit 5a78ac33e3cb8822da64dd1af196e83664b332b0 ]
+[ Upstream commit 226efec2b0efad60d4a6c4b2c3a8710dafc4dc21 ]
 
-Currently, in ath11k_ahb_fw_resources_init(), iommu domain
-mapping is done only for the chipsets having fixed firmware
-memory. Also, for such chipsets, mapping is done only if it
-does not have TrustZone support.
+In __start_server, it leaks a fd when setsockopt(SO_REUSEPORT) fails.
+This patch fixes it.
 
-During deinitialization, only if TrustZone support is not there,
-iommu is unmapped back. However, for non fixed firmware memory
-chipsets, TrustZone support is not there and this makes the
-condition check to true and it tries to unmap the memory which
-was not mapped during initialization.
-
-This leads to the following trace -
-
-[   83.198790] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
-[   83.259537] Modules linked in: ath11k_ahb ath11k qmi_helpers
-.. snip ..
-[   83.280286] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   83.287228] pc : __iommu_unmap+0x30/0x140
-[   83.293907] lr : iommu_unmap+0x5c/0xa4
-[   83.298072] sp : ffff80000b3abad0
-.. snip ..
-[   83.369175] Call trace:
-[   83.376282]  __iommu_unmap+0x30/0x140
-[   83.378541]  iommu_unmap+0x5c/0xa4
-[   83.382360]  ath11k_ahb_fw_resource_deinit.part.12+0x2c/0xac [ath11k_ahb]
-[   83.385666]  ath11k_ahb_free_resources+0x140/0x17c [ath11k_ahb]
-[   83.392521]  ath11k_ahb_shutdown+0x34/0x40 [ath11k_ahb]
-[   83.398248]  platform_shutdown+0x20/0x2c
-[   83.403455]  device_shutdown+0x16c/0x1c4
-[   83.407621]  kernel_restart_prepare+0x34/0x3c
-[   83.411529]  kernel_restart+0x14/0x74
-[   83.415781]  __do_sys_reboot+0x1c4/0x22c
-[   83.419427]  __arm64_sys_reboot+0x1c/0x24
-[   83.423420]  invoke_syscall+0x44/0xfc
-[   83.427326]  el0_svc_common.constprop.3+0xac/0xe8
-[   83.430974]  do_el0_svc+0xa0/0xa8
-[   83.435659]  el0_svc+0x1c/0x44
-[   83.438957]  el0t_64_sync_handler+0x60/0x144
-[   83.441910]  el0t_64_sync+0x15c/0x160
-[   83.446343] Code: aa0103f4 f9400001 f90027a1 d2800001 (f94006a0)
-[   83.449903] ---[ end trace 0000000000000000 ]---
-
-This can be reproduced by probing an AHB chipset which is not
-having a fixed memory region. During reboot (or rmmod) trace
-can be seen.
-
-Fix this issue by adding a condition check on firmware fixed memory
-hw_param as done in the counter initialization function.
-
-Tested-on: IPQ8074 hw2.0 AHB WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Fixes: f9eec4947add ("ath11k: Add support for targets without trustzone")
-Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230309095308.24937-1-quic_adisi@quicinc.com
+Fixes: eed92afdd14c ("bpf: selftest: Test batching and bpf_(get|set)sockopt in bpf tcp iter")
+Reported-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yhs@fb.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/20230316000726.1016773-2-martin.lau@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/ahb.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/testing/selftests/bpf/network_helpers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
-index f70a119bb5c87..76f275ca53e9c 100644
---- a/drivers/net/wireless/ath/ath11k/ahb.c
-+++ b/drivers/net/wireless/ath/ath11k/ahb.c
-@@ -1063,6 +1063,12 @@ static int ath11k_ahb_fw_resource_deinit(struct ath11k_base *ab)
- 	struct iommu_domain *iommu;
- 	size_t unmapped_size;
+diff --git a/tools/testing/selftests/bpf/network_helpers.c b/tools/testing/selftests/bpf/network_helpers.c
+index 1f37adff7632c..1fa4672380a92 100644
+--- a/tools/testing/selftests/bpf/network_helpers.c
++++ b/tools/testing/selftests/bpf/network_helpers.c
+@@ -95,7 +95,7 @@ static int __start_server(int type, int protocol, const struct sockaddr *addr,
+ 	if (reuseport &&
+ 	    setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, &on, sizeof(on))) {
+ 		log_err("Failed to set SO_REUSEPORT");
+-		return -1;
++		goto error_close;
+ 	}
  
-+	/* Chipsets not requiring MSA would have not initialized
-+	 * MSA resources, return success in such cases.
-+	 */
-+	if (!ab->hw_params.fixed_fw_mem)
-+		return 0;
-+
- 	if (ab_ahb->fw.use_tz)
- 		return 0;
- 
+ 	if (bind(fd, addr, addrlen) < 0) {
 -- 
 2.39.2
 
