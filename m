@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C20A168D7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734CAC4339C;
-	Mon,  8 May 2023 11:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E53168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDB9C433D2;
+	Mon,  8 May 2023 11:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544660;
-	bh=LYlmOfJhulus+iBnWCJYT90K8x0aOUuWjfXyng6SEUU=;
+	s=korg; t=1683544663;
+	bh=OT/GsO8F9F43Fsq6NM1YeCyp3LHQpK/kHXQE7Oiyq4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNm+sT5QM4Ih9HUWMymUq+6QX8l7s3H6HgvxrN3EX6ZlDLAX2czAx6QQJeHS6tnr7
-	 aw/BQetmwMa7Pmj92vwInGAbMbnb5QAr2gA3qJKW99BEi7pl1Bp0lFhBLdwIVEow8M
-	 JOlQs4KbjTQReGFqli/gHVqwmrEoFX43rgSbVBGU=
+	b=KaRARAPS7FBqzeXRnnGI9W0uHG7GHNdOrDWl540Yl+ooPmKeVoazLdg3IusuRIxJJ
+	 44b2ALz2cqWgHXqociSUc0Z89Zs8rNZjsf24kGDpHJY8EfT8R271Y3WdbEF3Hd4GVH
+	 hMSbKypBS7/d9Rt9OtS5hWAEi873NJ54FVBoN+jI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ben Greear <greearb@candelatech.com>,
+	Isaac Konikoff <konikofi@candelatech.com>,
+	Ming Yen Hsieh <mingyen.hsieh@mediatek.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 453/694] netfilter: conntrack: fix wrong ct->timeout value
-Date: Mon,  8 May 2023 11:44:48 +0200
-Message-Id: <20230508094448.296956379@linuxfoundation.org>
+Subject: [PATCH 6.3 444/694] wifi: mt76: fix 6GHz high channel not be scanned
+Date: Mon,  8 May 2023 11:44:39 +0200
+Message-Id: <20230508094447.912263236@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,114 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
 
-[ Upstream commit 73db1b8f2bb6725b7391e85aab41fdf592b3c0c1 ]
+[ Upstream commit 23792cedaff02351b57bddd8957fc917fa88f2e0 ]
 
-(struct nf_conn)->timeout is an interval before the conntrack
-confirmed.  After confirmed, it becomes a timestamp.
+mt76 scan command only support 64 channels currently. If the
+channel count is larger than 64(for 2+5+6GHz), some channels will
+not be scanned. Hence change the scan type to full channel scan
+in case of the command cannot include proper list for chip.
 
-It is observed that timeout of an unconfirmed conntrack:
-- Set by calling ctnetlink_change_timeout(). As a result,
-  `nfct_time_stamp` was wrongly added to `ct->timeout` twice.
-- Get by calling ctnetlink_dump_timeout(). As a result,
-  `nfct_time_stamp` was wrongly subtracted.
-
-Call Trace:
- <TASK>
- dump_stack_lvl
- ctnetlink_dump_timeout
- __ctnetlink_glue_build
- ctnetlink_glue_build
- __nfqnl_enqueue_packet
- nf_queue
- nf_hook_slow
- ip_mc_output
- ? __pfx_ip_finish_output
- ip_send_skb
- ? __pfx_dst_output
- udp_send_skb
- udp_sendmsg
- ? __pfx_ip_generic_getfrag
- sock_sendmsg
-
-Separate the 2 cases in:
-- Setting `ct->timeout` in __nf_ct_set_timeout().
-- Getting `ct->timeout` in ctnetlink_dump_timeout().
-
-Pablo appends:
-
-Update ctnetlink to set up the timeout _after_ the IPS_CONFIRMED flag is
-set on, otherwise conntrack creation via ctnetlink breaks.
-
-Note that the problem described in this patch occurs since the
-introduction of the nfnetlink_queue conntrack support, select a
-sufficiently old Fixes: tag for -stable kernel to pick up this fix.
-
-Fixes: a4b4766c3ceb ("netfilter: nfnetlink_queue: rename related to nfqueue attaching conntrack info")
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 399090ef9605 ("mt76: mt76_connac: move hw_scan and sched_scan routine in mt76_connac_mcu module")
+Reported-by: Ben Greear <greearb@candelatech.com>
+Tested-by: Isaac Konikoff <konikofi@candelatech.com>
+Signed-off-by: Ming Yen Hsieh <mingyen.hsieh@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_conntrack_core.h |  6 +++++-
- net/netfilter/nf_conntrack_netlink.c      | 13 +++++++++----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ .../net/wireless/mediatek/mt76/mt76_connac_mcu.c    | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/netfilter/nf_conntrack_core.h b/include/net/netfilter/nf_conntrack_core.h
-index 71d1269fe4d4f..3384859a89210 100644
---- a/include/net/netfilter/nf_conntrack_core.h
-+++ b/include/net/netfilter/nf_conntrack_core.h
-@@ -89,7 +89,11 @@ static inline void __nf_ct_set_timeout(struct nf_conn *ct, u64 timeout)
- {
- 	if (timeout > INT_MAX)
- 		timeout = INT_MAX;
--	WRITE_ONCE(ct->timeout, nfct_time_stamp + (u32)timeout);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+index 008ece1b16f8e..cb27885b5da7c 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+@@ -1678,8 +1678,16 @@ int mt76_connac_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
+ 	req->channel_min_dwell_time = cpu_to_le16(duration);
+ 	req->channel_dwell_time = cpu_to_le16(duration);
+ 
+-	req->channels_num = min_t(u8, sreq->n_channels, 32);
+-	req->ext_channels_num = min_t(u8, ext_channels_num, 32);
++	if (sreq->n_channels == 0 || sreq->n_channels > 64) {
++		req->channel_type = 0;
++		req->channels_num = 0;
++		req->ext_channels_num = 0;
++	} else {
++		req->channel_type = 4;
++		req->channels_num = min_t(u8, sreq->n_channels, 32);
++		req->ext_channels_num = min_t(u8, ext_channels_num, 32);
++	}
 +
-+	if (nf_ct_is_confirmed(ct))
-+		WRITE_ONCE(ct->timeout, nfct_time_stamp + (u32)timeout);
-+	else
-+		ct->timeout = (u32)timeout;
- }
+ 	for (i = 0; i < req->channels_num + req->ext_channels_num; i++) {
+ 		if (i >= 32)
+ 			chan = &req->ext_channels[i - 32];
+@@ -1699,7 +1707,6 @@ int mt76_connac_mcu_hw_scan(struct mt76_phy *phy, struct ieee80211_vif *vif,
+ 		}
+ 		chan->channel_num = scan_list[i]->hw_value;
+ 	}
+-	req->channel_type = sreq->n_channels ? 4 : 0;
  
- int __nf_ct_change_timeout(struct nf_conn *ct, u64 cta_timeout);
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index d3ee188546982..6f3b23a6653cc 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -176,7 +176,12 @@ static int ctnetlink_dump_status(struct sk_buff *skb, const struct nf_conn *ct)
- static int ctnetlink_dump_timeout(struct sk_buff *skb, const struct nf_conn *ct,
- 				  bool skip_zero)
- {
--	long timeout = nf_ct_expires(ct) / HZ;
-+	long timeout;
-+
-+	if (nf_ct_is_confirmed(ct))
-+		timeout = nf_ct_expires(ct) / HZ;
-+	else
-+		timeout = ct->timeout / HZ;
- 
- 	if (skip_zero && timeout == 0)
- 		return 0;
-@@ -2253,9 +2258,6 @@ ctnetlink_create_conntrack(struct net *net,
- 	if (!cda[CTA_TIMEOUT])
- 		goto err1;
- 
--	timeout = (u64)ntohl(nla_get_be32(cda[CTA_TIMEOUT])) * HZ;
--	__nf_ct_set_timeout(ct, timeout);
--
- 	rcu_read_lock();
-  	if (cda[CTA_HELP]) {
- 		char *helpname = NULL;
-@@ -2319,6 +2321,9 @@ ctnetlink_create_conntrack(struct net *net,
- 	/* we must add conntrack extensions before confirmation. */
- 	ct->status |= IPS_CONFIRMED;
- 
-+	timeout = (u64)ntohl(nla_get_be32(cda[CTA_TIMEOUT])) * HZ;
-+	__nf_ct_set_timeout(ct, timeout);
-+
- 	if (cda[CTA_STATUS]) {
- 		err = ctnetlink_change_status(ct, cda);
- 		if (err < 0)
+ 	if (sreq->ie_len > 0) {
+ 		memcpy(req->ies, sreq->ie, sreq->ie_len);
 -- 
 2.39.2
 
