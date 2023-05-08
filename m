@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8DF13AF4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:48:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE702C433D2;
-	Mon,  8 May 2023 10:48:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EDE1549A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:48:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B476C433D2;
+	Mon,  8 May 2023 10:48:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542911;
-	bh=7X98Q68tdnKC7dbExgak/ZRmpRf41AcaFLYx8neyNDA=;
+	s=korg; t=1683542915;
+	bh=4vR5/tlJdEYQUBQJYaJA1qYWOrxXxZyIjX1fCtvUiwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BYWKKY+2pjvHMPwiEUMNHeW4bV+JVH2BjqSyoqus0cX6kNkp4JjF8YovPv8ugEmnW
-	 jdexPouECMwbn+Al2Ruzt/QVR0eRCwv+bo6AQLJzQNDaLFEkfRBkqbzOJRcRHiG3Ao
-	 6h39Caf6xi1MCqJl9ebVvTDfhCppLC30AhW6WEGI=
+	b=dddHR592ED4mRdPpWAnoJ4yVfoctv9tdowCMUkYPU5r3a0XjOX2cHewUhqSzR6ejl
+	 e1+4oVR8U2v8RSdvJwAW1OTUwm8YTJTTEFmv5JTrOhxR9TJCnWc1Mre/GZOhAqAHKF
+	 r4GaHpFMlFBqlaDAfyM/1TeCPSMhXPK7iAOMmJRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexandre Mergnat <amergnat@baylibre.com>,
 	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 587/663] pwm: mtk-disp: Disable shadow registers before setting backlight values
-Date: Mon,  8 May 2023 11:46:53 +0200
-Message-Id: <20230508094448.449565258@linuxfoundation.org>
+Subject: [PATCH 6.2 588/663] pwm: mtk-disp: Configure double buffering before reading in .get_state()
+Date: Mon,  8 May 2023 11:46:54 +0200
+Message-Id: <20230508094448.483335740@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -39,13 +39,33 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 36dd7f530ae7d9ce9e853ffb8aa337de65c6600b ]
+[ Upstream commit b16c310115f2084b8826a35b77ef42bab6786d9f ]
 
-If shadow registers usage is not desired, disable that before performing
-any write to CON0/1 registers in the .apply() callback, otherwise we may
-lose clkdiv or period/width updates.
+The DISP_PWM controller's default behavior is to always use register
+double buffering: all reads/writes are then performed on shadow
+registers instead of working registers and this becomes an issue
+in case our chosen configuration in Linux is different from the
+default (or from the one that was pre-applied by the bootloader).
 
-Fixes: cd4b45ac449a ("pwm: Add MediaTek MT2701 display PWM driver support")
+An example of broken behavior is when the controller is configured
+to use shadow registers, but this driver wants to configure it
+otherwise: what happens is that the .get_state() callback is called
+right after registering the pwmchip and checks whether the PWM is
+enabled by reading the DISP_PWM_EN register;
+At this point, if shadow registers are enabled but their content
+was not committed before booting Linux, we are *not* reading the
+current PWM enablement status, leading to the kernel knowing that
+the hardware is actually enabled when, in reality, it's not.
+
+The aforementioned issue emerged since this driver was fixed with
+commit 0b5ef3429d8f ("pwm: mtk-disp: Fix the parameters calculated
+by the enabled flag of disp_pwm") making it to read the enablement
+status from the right register.
+
+Configure the controller in the .get_state() callback to avoid
+this desync issue and get the backlight properly working again.
+
+Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
 Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
@@ -54,51 +74,30 @@ Tested-by: Alexandre Mergnat <amergnat@baylibre.com>
 Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/pwm/pwm-mtk-disp.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index 692a06121b286..82b430d881a20 100644
+index 82b430d881a20..fe9593f968eeb 100644
 --- a/drivers/pwm/pwm-mtk-disp.c
 +++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -138,6 +138,19 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	high_width = mul_u64_u64_div_u64(state->duty_cycle, rate, div);
- 	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
+@@ -196,6 +196,16 @@ static int mtk_disp_pwm_get_state(struct pwm_chip *chip,
+ 		return err;
+ 	}
  
-+	if (mdp->data->bls_debug && !mdp->data->has_commit) {
-+		/*
-+		 * For MT2701, disable double buffer before writing register
-+		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
-+		 */
++	/*
++	 * Apply DISP_PWM_DEBUG settings to choose whether to enable or disable
++	 * registers double buffer and manual commit to working register before
++	 * performing any read/write operation
++	 */
++	if (mdp->data->bls_debug)
 +		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
 +					 mdp->data->bls_debug_mask,
 +					 mdp->data->bls_debug_mask);
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
-+					 mdp->data->con0_sel,
-+					 mdp->data->con0_sel);
-+	}
 +
- 	mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
- 				 PWM_CLKDIV_MASK,
- 				 clk_div << PWM_CLKDIV_SHIFT);
-@@ -152,17 +165,6 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 		mtk_disp_pwm_update_bits(mdp, mdp->data->commit,
- 					 mdp->data->commit_mask,
- 					 0x0);
--	} else {
--		/*
--		 * For MT2701, disable double buffer before writing register
--		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
--		 */
--		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
--					 mdp->data->bls_debug_mask,
--					 mdp->data->bls_debug_mask);
--		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
--					 mdp->data->con0_sel,
--					 mdp->data->con0_sel);
- 	}
- 
- 	mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
+ 	rate = clk_get_rate(mdp->clk_main);
+ 	con0 = readl(mdp->base + mdp->data->con0);
+ 	con1 = readl(mdp->base + mdp->data->con1);
 -- 
 2.39.2
 
