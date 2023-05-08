@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE2A168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41D5BC433D2;
-	Mon,  8 May 2023 10:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55CFC168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF6E3C433EF;
+	Mon,  8 May 2023 10:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540979;
-	bh=qOvvJq924e06I7uIyJbU8v/xPMYZ86zr0saVYma7EO8=;
+	s=korg; t=1683540982;
+	bh=s/4IFvHmrdFgEa+fsPc5RU1or03Qnzq1K//Nobhwkec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M/mBL5oWiBFe18eVsSzy8paLwikWUksCqjIFSbkR/UKqYKk8I1GTIbEps26dUGExi
-	 MSwiBsuT0Wgnr/9olmcEUnf/uTKn/R1mroTkmAoezQyIq/GuuQZHkrpi5nrVh9ItAc
-	 eFVjqyRa4g1T3vlWPbDETogs/YbMwqrk06hZMM3E=
+	b=DfYl5X3NpgFcg0KVczqUsB67zzQciH856P2rx+7avHECbqN40nhvZabpCz4ygkNrg
+	 GrSDPKqzEBDQ8Oc+oe7tkG5Yzx1fr6KgR5ZTDe4yxZigh5tbyLFoPYh2tsuIixQnGF
+	 SgHKa+aliVUQmAFZt6r4v0Pd6mSnQAo/UgDN+kog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?G=C3=A9=20Koerkamp?= <ge.koerkamp@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 553/611] ACPI: PM: Do not turn of unused power resources on the Toshiba Click Mini
-Date: Mon,  8 May 2023 11:46:35 +0200
-Message-Id: <20230508094439.972753037@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Logan Gunthorpe <logang@deltatee.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.1 571/611] md/raid5: Improve performance for sequential IO
+Date: Mon,  8 May 2023 11:46:53 +0200
+Message-Id: <20230508094440.502469095@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,87 +35,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 9b04d99788cf475cbd277f30ec66230ccb7e99f4 ]
+commit fc05e06e6098ca2c28f7a10da0e00aeea20fa59e upstream.
 
-The CPR3 power resource on the Toshiba Click Mini toggles a GPIO
-which is called SISP (for SIS touchscreen power?) on/off.
+Commit 7e55c60acfbb ("md/raid5: Pivot raid5_make_request()") changed the
+order in which requests for underlying disks are created. Since for
+large sequential IO adding of requests frequently races with md_raid5
+thread submitting bios to underlying disks, this results in a change in
+IO pattern because intermediate states of new order of request creation
+result in more smaller discontiguous requests. For RAID5 on top of three
+rotational disks our performance testing revealed this results in
+regression in write throughput:
 
-This CPR3 power resource is not listed in any _PR? lists, let alone
-in a _PR0 list for the SIS0817 touchscreen ACPI device which needs it.
+iozone -a -s 131072000 -y 4 -q 8 -i 0 -i 1 -R
 
-Before commit a1224f34d72a ("ACPI: PM: Check states of power resources
-during initialization") this was not an issue because since nothing
-referenced the CPR3 power resource its state was always
-ACPI_POWER_RESOURCE_STATE_UNKNOWN and power resources with this state
-get ignored by acpi_turn_off_unused_power_resources().
+before 7e55c60acfbb:
+              KB  reclen   write rewrite    read    reread
+       131072000       4  493670  525964   524575   513384
+       131072000       8  540467  532880   512028   513703
 
-This clearly is a bug in the DSDT of this device. Add a DMI quirk
-to make acpi_turn_off_unused_power_resources() a no-op on this
-model to fix the touchscreen no longer working since kernel 5.16 .
+after 7e55c60acfbb:
+              KB  reclen   write rewrite    read    reread
+       131072000       4  421785  456184   531278   509248
+       131072000       8  459283  456354   528449   543834
 
-This quirk also causes 2 other power resources to not get turned
-off, but the _OFF method on these already was a no-op, so this makes
-no difference for the other 2 power resources.
+To reduce the amount of discontiguous requests we can start generating
+requests with the stripe with the lowest chunk offset as that has the
+best chance of being adjacent to IO queued previously. This improves the
+performance to:
+              KB  reclen   write rewrite    read    reread
+       131072000       4  497682  506317   518043   514559
+       131072000       8  514048  501886   506453   504319
 
-Fixes: a1224f34d72a ("ACPI: PM: Check states of power resources during initialization")
-Reported-by: Gé Koerkamp <ge.koerkamp@gmail.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216946
-Link: https://lore.kernel.org/regressions/32a14a8a-9795-4c8c-7e00-da9012f548f8@leemhuis.info/
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+restoring big part of the regression.
+
+Fixes: 7e55c60acfbb ("md/raid5: Pivot raid5_make_request()")
+Cc: stable@vger.kernel.org # v6.0+
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230417171537.17899-1-jack@suse.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/power.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/md/raid5.c | 45 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 44 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
-index f2588aba8421e..aea8c994caeac 100644
---- a/drivers/acpi/power.c
-+++ b/drivers/acpi/power.c
-@@ -23,6 +23,7 @@
- 
- #define pr_fmt(fmt) "ACPI: PM: " fmt
- 
-+#include <linux/dmi.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/init.h>
-@@ -1022,6 +1023,21 @@ void acpi_resume_power_resources(void)
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 812a12e3e41a..4739ed891e75 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -6079,6 +6079,38 @@ static enum stripe_result make_stripe_request(struct mddev *mddev,
+ 	return ret;
  }
- #endif
  
-+static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
-+	{
-+		/*
-+		 * The Toshiba Click Mini has a CPR3 power-resource which must
-+		 * be on for the touchscreen to work, but which is not in any
-+		 * _PR? lists. The other 2 affected power-resources are no-ops.
-+		 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "TOSHIBA"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "SATELLITE Click Mini L9W-B"),
-+		},
-+	},
-+	{}
-+};
++/*
++ * If the bio covers multiple data disks, find sector within the bio that has
++ * the lowest chunk offset in the first chunk.
++ */
++static sector_t raid5_bio_lowest_chunk_sector(struct r5conf *conf,
++					      struct bio *bi)
++{
++	int sectors_per_chunk = conf->chunk_sectors;
++	int raid_disks = conf->raid_disks;
++	int dd_idx;
++	struct stripe_head sh;
++	unsigned int chunk_offset;
++	sector_t r_sector = bi->bi_iter.bi_sector & ~((sector_t)RAID5_STRIPE_SECTORS(conf)-1);
++	sector_t sector;
 +
- /**
-  * acpi_turn_off_unused_power_resources - Turn off power resources not in use.
-  */
-@@ -1029,6 +1045,9 @@ void acpi_turn_off_unused_power_resources(void)
++	/* We pass in fake stripe_head to get back parity disk numbers */
++	sector = raid5_compute_sector(conf, r_sector, 0, &dd_idx, &sh);
++	chunk_offset = sector_div(sector, sectors_per_chunk);
++	if (sectors_per_chunk - chunk_offset >= bio_sectors(bi))
++		return r_sector;
++	/*
++	 * Bio crosses to the next data disk. Check whether it's in the same
++	 * chunk.
++	 */
++	dd_idx++;
++	while (dd_idx == sh.pd_idx || dd_idx == sh.qd_idx)
++		dd_idx++;
++	if (dd_idx >= raid_disks)
++		return r_sector;
++	return r_sector + sectors_per_chunk - chunk_offset;
++}
++
+ static bool raid5_make_request(struct mddev *mddev, struct bio * bi)
  {
- 	struct acpi_power_resource *resource;
+ 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
+@@ -6150,6 +6182,17 @@ static bool raid5_make_request(struct mddev *mddev, struct bio * bi)
+ 	}
+ 	md_account_bio(mddev, &bi);
  
-+	if (dmi_check_system(dmi_leave_unused_power_resources_on))
-+		return;
++	/*
++	 * Lets start with the stripe with the lowest chunk offset in the first
++	 * chunk. That has the best chances of creating IOs adjacent to
++	 * previous IOs in case of sequential IO and thus creates the most
++	 * sequential IO pattern. We don't bother with the optimization when
++	 * reshaping as the performance benefit is not worth the complexity.
++	 */
++	if (likely(conf->reshape_progress == MaxSector))
++		logical_sector = raid5_bio_lowest_chunk_sector(conf, bi);
++	s = (logical_sector - ctx.first_sector) >> RAID5_STRIPE_SHIFT(conf);
 +
- 	mutex_lock(&power_resource_list_lock);
+ 	add_wait_queue(&conf->wait_for_overlap, &wait);
+ 	while (1) {
+ 		res = make_stripe_request(mddev, conf, &ctx, logical_sector,
+@@ -6178,7 +6221,7 @@ static bool raid5_make_request(struct mddev *mddev, struct bio * bi)
+ 			continue;
+ 		}
  
- 	list_for_each_entry_reverse(resource, &acpi_power_resource_list, list_node) {
+-		s = find_first_bit(ctx.sectors_to_do, stripe_cnt);
++		s = find_next_bit_wrap(ctx.sectors_to_do, stripe_cnt, s);
+ 		if (s == stripe_cnt)
+ 			break;
+ 
 -- 
-2.39.2
+2.40.1
 
 
 
