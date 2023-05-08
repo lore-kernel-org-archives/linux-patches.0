@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1F5168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:44:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EFE6C433D2;
-	Mon,  8 May 2023 10:44:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058E2168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:45:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E7BFC433EF;
+	Mon,  8 May 2023 10:44:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542696;
-	bh=9FIRfJMOI1BrYqC6fBYWT/X7QF+6WNfrvww/JtPUqLM=;
+	s=korg; t=1683542699;
+	bh=TqNMd/yfqXAPuDwKNDOC/T8ginQj1+uCuWTIMOtBa3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XuIaytkz/Uq9CfnIAbdnioyub4XOhRFJ768P8AK6pHY+tqq3f0yHMgzzQrv+tSEXs
-	 SLjgs3BSeXVuDZXJQTIvTxLvwMV9EOZSSYcU/EWvaPSkwykNgDIsrU0Ik1RXe+qTnK
-	 N6B2b/LwbAm0uSxbArYK+6JCBXkgp9wbAJ3tTEvY=
+	b=iHwEd05VgTSpj5IG88lCRhfF6Fyv7llnNZEwljuOmB2BoWc2v1bdnmY/H4ODuTUuA
+	 tTM8zPIeePIVfXrXYw1JNzQKn1fewHKGmZhbgvZNUZ/Ai34yrpBU4lDaffvC62/+PI
+	 yFPJWRIbltke4iZZhXquoKvu4nBrNg+A4cMud2xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Kang Chen <void0red@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 517/663] clk: at91: clk-sam9x60-pll: fix return value check
-Date: Mon,  8 May 2023 11:45:43 +0200
-Message-Id: <20230508094445.567579664@linuxfoundation.org>
+Subject: [PATCH 6.2 518/663] IB/hifi1: add a null check of kzalloc_node in hfi1_ipoib_txreq_init
+Date: Mon,  8 May 2023 11:45:44 +0200
+Message-Id: <20230508094445.616924513@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,36 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Kang Chen <void0red@gmail.com>
 
-[ Upstream commit 1bd8e27fd0db0fe7f489213836dcbab92934f8fa ]
+[ Upstream commit c874ad879c2f29ebe040a34b974389875c0d81eb ]
 
-sam9x60_frac_pll_compute_mul_frac() can't return zero. Remove the check
-against zero to reflect this.
+kzalloc_node may fails, check it and do the cleanup.
 
-Fixes: 43b1bb4a9b3e ("clk: at91: clk-sam9x60-pll: re-factor to support plls with multiple outputs")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230227105931.2812412-1-claudiu.beznea@microchip.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: b1151b74ff68 ("IB/hfi1: Fix alloc failure with larger txqueuelen")
+Signed-off-by: Kang Chen <void0red@gmail.com>
+Link: https://lore.kernel.org/r/20230227100212.910820-1-void0red@gmail.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/clk-sam9x60-pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hfi1/ipoib_tx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/at91/clk-sam9x60-pll.c b/drivers/clk/at91/clk-sam9x60-pll.c
-index d757003004cbb..0882ed01d5c27 100644
---- a/drivers/clk/at91/clk-sam9x60-pll.c
-+++ b/drivers/clk/at91/clk-sam9x60-pll.c
-@@ -668,7 +668,7 @@ sam9x60_clk_register_frac_pll(struct regmap *regmap, spinlock_t *lock,
+diff --git a/drivers/infiniband/hw/hfi1/ipoib_tx.c b/drivers/infiniband/hw/hfi1/ipoib_tx.c
+index 5d9a7b09ca37e..349eb41391368 100644
+--- a/drivers/infiniband/hw/hfi1/ipoib_tx.c
++++ b/drivers/infiniband/hw/hfi1/ipoib_tx.c
+@@ -737,10 +737,13 @@ int hfi1_ipoib_txreq_init(struct hfi1_ipoib_dev_priv *priv)
+ 		txq->tx_ring.shift = ilog2(tx_item_size);
+ 		txq->tx_ring.avail = hfi1_ipoib_ring_hwat(txq);
+ 		tx_ring = &txq->tx_ring;
+-		for (j = 0; j < tx_ring_size; j++)
++		for (j = 0; j < tx_ring_size; j++) {
+ 			hfi1_txreq_from_idx(tx_ring, j)->sdma_hdr =
+ 				kzalloc_node(sizeof(*tx->sdma_hdr),
+ 					     GFP_KERNEL, priv->dd->node);
++			if (!hfi1_txreq_from_idx(tx_ring, j)->sdma_hdr)
++				goto free_txqs;
++		}
  
- 		ret = sam9x60_frac_pll_compute_mul_frac(&frac->core, FCORE_MIN,
- 							parent_rate, true);
--		if (ret <= 0) {
-+		if (ret < 0) {
- 			hw = ERR_PTR(ret);
- 			goto free;
- 		}
+ 		netif_napi_add_tx(dev, &txq->napi, hfi1_ipoib_poll_tx_ring);
+ 	}
 -- 
 2.39.2
 
