@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C873168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:52:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A0FC433EF;
-	Mon,  8 May 2023 10:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E00A168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:52:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989ABC433D2;
+	Mon,  8 May 2023 10:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543131;
-	bh=pGb6w6HtaXDEx24a+2DlEuJmROdO44tRP8LP0Vi4lNI=;
+	s=korg; t=1683543135;
+	bh=vRjU1lKAmaumq8aeGycusT7BuNArQ2TUuSNHNRF4xvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k4OoGyXRhk8czcx1ts0ItT5Z6DA8HZlo1dpfS1KGJXT+pS0q7orjpIc3sN1a/nQPG
-	 QFAXO61TEBJOdE6eBwvt63oRsjNAnzDoT3BoE94ZMuzZM9orkwHiskOWGduwlclbOY
-	 kKLrJKLm91dSNHwKQCHxEoxflnF9DOBzmR5FnbUQ=
+	b=wyjKXZ081bqhRwzdzm8OCiwysXQFAwooLFvW9wlp3uYXgRKLZJn9WI9I3UtWmlrFG
+	 LTi9Vx6Bop24i/b9TjM/zZe2L0G4Z6k8QWEbjzr+49wHLd4Tb5GmGYGafAGXnSS3zp
+	 Yzn3t889qPdtAZjLnAOCzmtSYCn5PU+/gjaLH0mg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.2 657/663] thunderbolt: Use correct type in tb_port_is_clx_enabled() prototype
-Date: Mon,  8 May 2023 11:48:03 +0200
-Message-Id: <20230508094451.484827035@linuxfoundation.org>
+	Haibo Li <haibo.li@mediatek.com>,
+	Marco Elver <elver@google.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>
+Subject: [PATCH 6.2 631/663] kcsan: Avoid READ_ONCE() in read_instrumented_memory()
+Date: Mon,  8 May 2023 11:47:37 +0200
+Message-Id: <20230508094450.360884104@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -34,36 +35,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Marco Elver <elver@google.com>
 
-commit d31137619776f9c173a46a79bc7733a2b106061f upstream.
+commit 8dec88070d964bfeb4198f34cb5956d89dd1f557 upstream.
 
-tb_port_is_clx_enabled() generates a valid warning with gcc-13:
-  drivers/thunderbolt/switch.c:1286:6: error: conflicting types for 'tb_port_is_clx_enabled' due to enum/integer mismatch; have 'bool(struct tb_port *, unsigned int)' ...
-  drivers/thunderbolt/tb.h:1050:6: note: previous declaration of 'tb_port_is_clx_enabled' with type 'bool(struct tb_port *, enum tb_clx)' ...
+Haibo Li reported:
 
-I.e. the type of the 2nd parameter of tb_port_is_clx_enabled() in the
-declaration is unsigned int, while the definition spells enum tb_clx.
-Synchronize them to the former as the parameter is in fact a mask of the
-enum values.
+ | Unable to handle kernel paging request at virtual address
+ |   ffffff802a0d8d7171
+ | Mem abort info:o:
+ |   ESR = 0x9600002121
+ |   EC = 0x25: DABT (current EL), IL = 32 bitsts
+ |   SET = 0, FnV = 0 0
+ |   EA = 0, S1PTW = 0 0
+ |   FSC = 0x21: alignment fault
+ | Data abort info:o:
+ |   ISV = 0, ISS = 0x0000002121
+ |   CM = 0, WnR = 0 0
+ | swapper pgtable: 4k pages, 39-bit VAs, pgdp=000000002835200000
+ | [ffffff802a0d8d71] pgd=180000005fbf9003, p4d=180000005fbf9003,
+ | pud=180000005fbf9003, pmd=180000005fbe8003, pte=006800002a0d8707
+ | Internal error: Oops: 96000021 [#1] PREEMPT SMP
+ | Modules linked in:
+ | CPU: 2 PID: 45 Comm: kworker/u8:2 Not tainted
+ |   5.15.78-android13-8-g63561175bbda-dirty #1
+ | ...
+ | pc : kcsan_setup_watchpoint+0x26c/0x6bc
+ | lr : kcsan_setup_watchpoint+0x88/0x6bc
+ | sp : ffffffc00ab4b7f0
+ | x29: ffffffc00ab4b800 x28: ffffff80294fe588 x27: 0000000000000001
+ | x26: 0000000000000019 x25: 0000000000000001 x24: ffffff80294fdb80
+ | x23: 0000000000000000 x22: ffffffc00a70fb68 x21: ffffff802a0d8d71
+ | x20: 0000000000000002 x19: 0000000000000000 x18: ffffffc00a9bd060
+ | x17: 0000000000000001 x16: 0000000000000000 x15: ffffffc00a59f000
+ | x14: 0000000000000001 x13: 0000000000000000 x12: ffffffc00a70faa0
+ | x11: 00000000aaaaaaab x10: 0000000000000054 x9 : ffffffc00839adf8
+ | x8 : ffffffc009b4cf00 x7 : 0000000000000000 x6 : 0000000000000007
+ | x5 : 0000000000000000 x4 : 0000000000000000 x3 : ffffffc00a70fb70
+ | x2 : 0005ff802a0d8d71 x1 : 0000000000000000 x0 : 0000000000000000
+ | Call trace:
+ |  kcsan_setup_watchpoint+0x26c/0x6bc
+ |  __tsan_read2+0x1f0/0x234
+ |  inflate_fast+0x498/0x750
+ |  zlib_inflate+0x1304/0x2384
+ |  __gunzip+0x3a0/0x45c
+ |  gunzip+0x20/0x30
+ |  unpack_to_rootfs+0x2a8/0x3fc
+ |  do_populate_rootfs+0xe8/0x11c
+ |  async_run_entry_fn+0x58/0x1bc
+ |  process_one_work+0x3ec/0x738
+ |  worker_thread+0x4c4/0x838
+ |  kthread+0x20c/0x258
+ |  ret_from_fork+0x10/0x20
+ | Code: b8bfc2a8 2a0803f7 14000007 d503249f (78bfc2a8) )
+ | ---[ end trace 613a943cb0a572b6 ]-----
 
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+The reason for this is that on certain arm64 configuration since
+e35123d83ee3 ("arm64: lto: Strengthen READ_ONCE() to acquire when
+CONFIG_LTO=y"), READ_ONCE() may be promoted to a full atomic acquire
+instruction which cannot be used on unaligned addresses.
+
+Fix it by avoiding READ_ONCE() in read_instrumented_memory(), and simply
+forcing the compiler to do the required access by casting to the
+appropriate volatile type. In terms of generated code this currently
+only affects architectures that do not use the default READ_ONCE()
+implementation.
+
+The only downside is that we are not guaranteed atomicity of the access
+itself, although on most architectures a plain load up to machine word
+size should still be atomic (a fact the default READ_ONCE() still relies
+on itself).
+
+Reported-by: Haibo Li <haibo.li@mediatek.com>
+Tested-by: Haibo Li <haibo.li@mediatek.com>
+Cc: <stable@vger.kernel.org> # 5.17+
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tb.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/kcsan/core.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
---- a/drivers/thunderbolt/tb.h
-+++ b/drivers/thunderbolt/tb.h
-@@ -1058,7 +1058,7 @@ void tb_port_lane_bonding_disable(struct
- int tb_port_wait_for_link_width(struct tb_port *port, int width,
- 				int timeout_msec);
- int tb_port_update_credits(struct tb_port *port);
--bool tb_port_is_clx_enabled(struct tb_port *port, enum tb_clx clx);
-+bool tb_port_is_clx_enabled(struct tb_port *port, unsigned int clx);
- 
- int tb_switch_find_vse_cap(struct tb_switch *sw, enum tb_switch_vse_cap vsec);
- int tb_switch_find_cap(struct tb_switch *sw, enum tb_switch_cap cap);
+--- a/kernel/kcsan/core.c
++++ b/kernel/kcsan/core.c
+@@ -337,11 +337,20 @@ static void delay_access(int type)
+  */
+ static __always_inline u64 read_instrumented_memory(const volatile void *ptr, size_t size)
+ {
++	/*
++	 * In the below we don't necessarily need the read of the location to
++	 * be atomic, and we don't use READ_ONCE(), since all we need for race
++	 * detection is to observe 2 different values.
++	 *
++	 * Furthermore, on certain architectures (such as arm64), READ_ONCE()
++	 * may turn into more complex instructions than a plain load that cannot
++	 * do unaligned accesses.
++	 */
+ 	switch (size) {
+-	case 1:  return READ_ONCE(*(const u8 *)ptr);
+-	case 2:  return READ_ONCE(*(const u16 *)ptr);
+-	case 4:  return READ_ONCE(*(const u32 *)ptr);
+-	case 8:  return READ_ONCE(*(const u64 *)ptr);
++	case 1:  return *(const volatile u8 *)ptr;
++	case 2:  return *(const volatile u16 *)ptr;
++	case 4:  return *(const volatile u32 *)ptr;
++	case 8:  return *(const volatile u64 *)ptr;
+ 	default: return 0; /* Ignore; we do not diff the values. */
+ 	}
+ }
 
 
