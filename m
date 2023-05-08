@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B9B171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:42:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C294C4339B;
-	Mon,  8 May 2023 11:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8F1171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:42:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F49C433EF;
+	Mon,  8 May 2023 11:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546148;
-	bh=9LJbx+ELuwApZUsSfMPBiPMGyel/4ljM8YpTP5ivLhg=;
+	s=korg; t=1683546151;
+	bh=KR2/uYQ+1QfAByVE3PHzdIKDUM6jQcPwSfiBVoNgAtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NsJ/yYDxCST4Gh2TxHMlyOb2f16/y08pgkJ6EZpTn7pISQbxnO1PdcbZiIMccJgHQ
-	 mx1zrBdbVQDbNYet5nZbJ4Dk36CQLNINn2KmwhToHvV8oyGgp3iIs3GOIGaqtp9AwI
-	 tZIN/OmF/2KWMdWtVNkEvV4seCGvEz5OranTXgX8=
+	b=RntXajWZauHjLbAbl7A6T2vRO1h6URAin8fzD0TJvqrFBxfJ3VuggS9BrhC9zA4W3
+	 xhu7GRML6Iqz6/t8Nh/5xzYFEZ1wGR37Rahf3Kyeke+6GtfAjcYlDLEZc2EsfuBmkR
+	 exVPWVNs4UeDXzYzmYb3yUZ0PV+UpZssgtq72lBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dae R. Jeong" <threeearcat@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 255/371] vmci_host: fix a race condition in vmci_host_poll() causing GPF
-Date: Mon,  8 May 2023 11:47:36 +0200
-Message-Id: <20230508094822.188558780@linuxfoundation.org>
+Subject: [PATCH 5.15 273/371] firmware: stratix10-svc: Fix an NULL vs IS_ERR() bug in probe
+Date: Mon,  8 May 2023 11:47:54 +0200
+Message-Id: <20230508094822.867726373@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -34,93 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dae R. Jeong <threeearcat@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit ae13381da5ff0e8e084c0323c3cc0a945e43e9c7 ]
+[ Upstream commit e1d6ca042e62c2a69513235f8629eb6e62ca79c5 ]
 
-During fuzzing, a general protection fault is observed in
-vmci_host_poll().
+The svc_create_memory_pool() function returns error pointers.  It never
+returns NULL.  Fix the check.
 
-general protection fault, probably for non-canonical address 0xdffffc0000000019: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x00000000000000c8-0x00000000000000cf]
-RIP: 0010:__lock_acquire+0xf3/0x5e00 kernel/locking/lockdep.c:4926
-<- omitting registers ->
-Call Trace:
- <TASK>
- lock_acquire+0x1a4/0x4a0 kernel/locking/lockdep.c:5672
- __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
- _raw_spin_lock_irqsave+0xb3/0x100 kernel/locking/spinlock.c:162
- add_wait_queue+0x3d/0x260 kernel/sched/wait.c:22
- poll_wait include/linux/poll.h:49 [inline]
- vmci_host_poll+0xf8/0x2b0 drivers/misc/vmw_vmci/vmci_host.c:174
- vfs_poll include/linux/poll.h:88 [inline]
- do_pollfd fs/select.c:873 [inline]
- do_poll fs/select.c:921 [inline]
- do_sys_poll+0xc7c/0x1aa0 fs/select.c:1015
- __do_sys_ppoll fs/select.c:1121 [inline]
- __se_sys_ppoll+0x2cc/0x330 fs/select.c:1101
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x4e/0xa0 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Example thread interleaving that causes the general protection fault
-is as follows:
-
-CPU1 (vmci_host_poll)               CPU2 (vmci_host_do_init_context)
------                               -----
-// Read uninitialized context
-context = vmci_host_dev->context;
-                                    // Initialize context
-                                    vmci_host_dev->context = vmci_ctx_create();
-                                    vmci_host_dev->ct_type = VMCIOBJ_CONTEXT;
-
-if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
-    // Dereferencing the wrong pointer
-    poll_wait(..., &context->host_context);
-}
-
-In this scenario, vmci_host_poll() reads vmci_host_dev->context first,
-and then reads vmci_host_dev->ct_type to check that
-vmci_host_dev->context is initialized. However, since these two reads
-are not atomically executed, there is a chance of a race condition as
-described above.
-
-To fix this race condition, read vmci_host_dev->context after checking
-the value of vmci_host_dev->ct_type so that vmci_host_poll() always
-reads an initialized context.
-
-Reported-by: Dae R. Jeong <threeearcat@gmail.com>
-Fixes: 8bf503991f87 ("VMCI: host side driver implementation.")
-Signed-off-by: Dae R. Jeong <threeearcat@gmail.com>
-Link: https://lore.kernel.org/r/ZCGFsdBAU4cYww5l@dragonet
+Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/5f9a8cb4-5a4f-460b-9cdc-2fae6c5b7922@kili.mountain
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/vmw_vmci/vmci_host.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/firmware/stratix10-svc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/vmw_vmci/vmci_host.c b/drivers/misc/vmw_vmci/vmci_host.c
-index 857b9851402a6..abe79f6fd2a79 100644
---- a/drivers/misc/vmw_vmci/vmci_host.c
-+++ b/drivers/misc/vmw_vmci/vmci_host.c
-@@ -165,10 +165,16 @@ static int vmci_host_close(struct inode *inode, struct file *filp)
- static __poll_t vmci_host_poll(struct file *filp, poll_table *wait)
- {
- 	struct vmci_host_dev *vmci_host_dev = filp->private_data;
--	struct vmci_ctx *context = vmci_host_dev->context;
-+	struct vmci_ctx *context;
- 	__poll_t mask = 0;
+diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
+index 4fdd75f1e86ea..2b50dc21fba1e 100644
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -989,8 +989,8 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
+ 		return ret;
  
- 	if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
-+		/*
-+		 * Read context only if ct_type == VMCIOBJ_CONTEXT to make
-+		 * sure that context is initialized
-+		 */
-+		context = vmci_host_dev->context;
-+
- 		/* Check for VMCI calls to this VM context. */
- 		if (wait)
- 			poll_wait(filp, &context->host_context.wait_queue,
+ 	genpool = svc_create_memory_pool(pdev, sh_memory);
+-	if (!genpool)
+-		return -ENOMEM;
++	if (IS_ERR(genpool))
++		return PTR_ERR(genpool);
+ 
+ 	/* allocate service controller and supporting channel */
+ 	controller = devm_kzalloc(dev, sizeof(*controller), GFP_KERNEL);
 -- 
 2.39.2
 
