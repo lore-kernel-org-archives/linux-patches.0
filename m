@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8F9168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B6AC433EF;
-	Mon,  8 May 2023 10:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4ECA168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244D5C433D2;
+	Mon,  8 May 2023 10:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541214;
-	bh=nB9bG0a5cgbvIKW0IeYIsGReD1qGJ8dnKPJie26WJZ4=;
+	s=korg; t=1683541217;
+	bh=R6sqsUONhVMG7YKZMFYSNxzKYjhaBJBxfNQ9ZUDS+aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pSTJ5rACHlVr4hMSB+R/CDnTPexD6EFOB1O7UV+tOtsZ4W1j9U+seoZYvZghJtdAr
-	 sRKcfxxkbkDQXyOZ/Tm+O7DqvAGRvYuPnuhvoHzciMPcCc6K8LlyPx3utGDp/FxM7t
-	 wZn0bIADJX5j5T8/OR1z5r0cpmwuDNslsq74XRHI=
+	b=T8GdrYwc5tnQmNbIpZBJSA73RfneuUBp1LcKVCxJdqBHL+FEqtEgyg2u7D3tP9tOu
+	 DuVT/49v8LGktdlef9oRLqbypK0Qkmi62j9pWZOxHsj/xnUZpbenEn8ZDW0RFM3WJx
+	 4Tfa+Rqe9ed8oVwYPovkkRDPbcNl+hWL0Bb5HV0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Tejun Heo <tj@kernel.org>,
+	Nathan Huckleberry <nhuck@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Eric Biggers <ebiggers@google.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 043/663] blk-stat: fix QUEUE_FLAG_STATS clear
-Date: Mon,  8 May 2023 11:37:49 +0200
-Message-Id: <20230508094429.870018420@linuxfoundation.org>
+Subject: [PATCH 6.2 044/663] blk-mq: release crypto keyslot before reporting I/O complete
+Date: Mon,  8 May 2023 11:37:50 +0200
+Message-Id: <20230508094429.904770744@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,73 +36,194 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengming Zhou <zhouchengming@bytedance.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 20de765f6d9da0c47b756429c60b41063b990a10 upstream.
+commit 9cd1e566676bbcb8a126acd921e4e194e6339603 upstream.
 
-We need to set QUEUE_FLAG_STATS for two cases:
-1. blk_stat_enable_accounting()
-2. blk_stat_add_callback()
+Once all I/O using a blk_crypto_key has completed, filesystems can call
+blk_crypto_evict_key().  However, the block layer currently doesn't call
+blk_crypto_put_keyslot() until the request is being freed, which happens
+after upper layers have been told (via bio_endio()) the I/O has
+completed.  This causes a race condition where blk_crypto_evict_key()
+can see 'slot_refs != 0' without there being an actual bug.
 
-So we should clear it only when ((q->stats->accounting == 0) &&
-list_empty(&q->stats->callbacks)).
+This makes __blk_crypto_evict_key() hit the
+'WARN_ON_ONCE(atomic_read(&slot->slot_refs) != 0)' and return without
+doing anything, eventually causing a use-after-free in
+blk_crypto_reprogram_all_keys().  (This is a very rare bug and has only
+been seen when per-file keys are being used with fscrypt.)
 
-blk_stat_disable_accounting() only check if q->stats->accounting
-is 0 before clear the flag, this patch fix it.
+There are two options to fix this: either release the keyslot before
+bio_endio() is called on the request's last bio, or make
+__blk_crypto_evict_key() ignore slot_refs.  Let's go with the first
+solution, since it preserves the ability to report bugs (via
+WARN_ON_ONCE) where a key is evicted while still in-use.
 
-Also add list_empty(&q->stats->callbacks)) check when enable, or
-the flag is already set.
-
-The bug can be reproduced on kernel without BLK_DEV_THROTTLING
-(since it unconditionally enable accounting, see the next patch).
-
-  # cat /sys/block/sr0/queue/scheduler
-  none mq-deadline [bfq]
-
-  # cat /sys/kernel/debug/block/sr0/state
-  SAME_COMP|IO_STAT|INIT_DONE|STATS|REGISTERED|NOWAIT|30
-
-  # echo none > /sys/block/sr0/queue/scheduler
-
-  # cat /sys/kernel/debug/block/sr0/state
-  SAME_COMP|IO_STAT|INIT_DONE|REGISTERED|NOWAIT
-
-  # cat /sys/block/sr0/queue/wbt_lat_usec
-  75000
-
-We can see that after changing elevator from "bfq" to "none",
-"STATS" flag is lost even though WBT callback still need it.
-
-Fixes: 68497092bde9 ("block: make queue stat accounting a reference")
-Cc: <stable@vger.kernel.org> # v5.17+
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230413062805.2081970-1-chengming.zhou@linux.dev
+Fixes: a892c8d52c02 ("block: Inline encryption support for blk-mq")
+Cc: stable@vger.kernel.org
+Reviewed-by: Nathan Huckleberry <nhuck@google.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20230315183907.53675-2-ebiggers@kernel.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-stat.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/blk-crypto-internal.h |   25 +++++++++++++++++++++----
+ block/blk-crypto.c          |   24 ++++++++++++------------
+ block/blk-merge.c           |    2 ++
+ block/blk-mq.c              |   15 ++++++++++++++-
+ 4 files changed, 49 insertions(+), 17 deletions(-)
 
---- a/block/blk-stat.c
-+++ b/block/blk-stat.c
-@@ -189,7 +189,7 @@ void blk_stat_disable_accounting(struct
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&q->stats->lock, flags);
--	if (!--q->stats->accounting)
-+	if (!--q->stats->accounting && list_empty(&q->stats->callbacks))
- 		blk_queue_flag_clear(QUEUE_FLAG_STATS, q);
- 	spin_unlock_irqrestore(&q->stats->lock, flags);
+--- a/block/blk-crypto-internal.h
++++ b/block/blk-crypto-internal.h
+@@ -65,6 +65,11 @@ static inline bool blk_crypto_rq_is_encr
+ 	return rq->crypt_ctx;
  }
-@@ -200,7 +200,7 @@ void blk_stat_enable_accounting(struct r
- 	unsigned long flags;
  
- 	spin_lock_irqsave(&q->stats->lock, flags);
--	if (!q->stats->accounting++)
-+	if (!q->stats->accounting++ && list_empty(&q->stats->callbacks))
- 		blk_queue_flag_set(QUEUE_FLAG_STATS, q);
- 	spin_unlock_irqrestore(&q->stats->lock, flags);
++static inline bool blk_crypto_rq_has_keyslot(struct request *rq)
++{
++	return rq->crypt_keyslot;
++}
++
+ blk_status_t blk_crypto_get_keyslot(struct blk_crypto_profile *profile,
+ 				    const struct blk_crypto_key *key,
+ 				    struct blk_crypto_keyslot **slot_ptr);
+@@ -119,6 +124,11 @@ static inline bool blk_crypto_rq_is_encr
+ 	return false;
  }
+ 
++static inline bool blk_crypto_rq_has_keyslot(struct request *rq)
++{
++	return false;
++}
++
+ #endif /* CONFIG_BLK_INLINE_ENCRYPTION */
+ 
+ void __bio_crypt_advance(struct bio *bio, unsigned int bytes);
+@@ -153,14 +163,21 @@ static inline bool blk_crypto_bio_prep(s
+ 	return true;
+ }
+ 
+-blk_status_t __blk_crypto_init_request(struct request *rq);
+-static inline blk_status_t blk_crypto_init_request(struct request *rq)
++blk_status_t __blk_crypto_rq_get_keyslot(struct request *rq);
++static inline blk_status_t blk_crypto_rq_get_keyslot(struct request *rq)
+ {
+ 	if (blk_crypto_rq_is_encrypted(rq))
+-		return __blk_crypto_init_request(rq);
++		return __blk_crypto_rq_get_keyslot(rq);
+ 	return BLK_STS_OK;
+ }
+ 
++void __blk_crypto_rq_put_keyslot(struct request *rq);
++static inline void blk_crypto_rq_put_keyslot(struct request *rq)
++{
++	if (blk_crypto_rq_has_keyslot(rq))
++		__blk_crypto_rq_put_keyslot(rq);
++}
++
+ void __blk_crypto_free_request(struct request *rq);
+ static inline void blk_crypto_free_request(struct request *rq)
+ {
+@@ -199,7 +216,7 @@ static inline blk_status_t blk_crypto_in
+ {
+ 
+ 	if (blk_crypto_rq_is_encrypted(rq))
+-		return blk_crypto_init_request(rq);
++		return blk_crypto_rq_get_keyslot(rq);
+ 	return BLK_STS_OK;
+ }
+ 
+--- a/block/blk-crypto.c
++++ b/block/blk-crypto.c
+@@ -224,27 +224,27 @@ static bool bio_crypt_check_alignment(st
+ 	return true;
+ }
+ 
+-blk_status_t __blk_crypto_init_request(struct request *rq)
++blk_status_t __blk_crypto_rq_get_keyslot(struct request *rq)
+ {
+ 	return blk_crypto_get_keyslot(rq->q->crypto_profile,
+ 				      rq->crypt_ctx->bc_key,
+ 				      &rq->crypt_keyslot);
+ }
+ 
+-/**
+- * __blk_crypto_free_request - Uninitialize the crypto fields of a request.
+- *
+- * @rq: The request whose crypto fields to uninitialize.
+- *
+- * Completely uninitializes the crypto fields of a request. If a keyslot has
+- * been programmed into some inline encryption hardware, that keyslot is
+- * released. The rq->crypt_ctx is also freed.
+- */
+-void __blk_crypto_free_request(struct request *rq)
++void __blk_crypto_rq_put_keyslot(struct request *rq)
+ {
+ 	blk_crypto_put_keyslot(rq->crypt_keyslot);
++	rq->crypt_keyslot = NULL;
++}
++
++void __blk_crypto_free_request(struct request *rq)
++{
++	/* The keyslot, if one was needed, should have been released earlier. */
++	if (WARN_ON_ONCE(rq->crypt_keyslot))
++		__blk_crypto_rq_put_keyslot(rq);
++
+ 	mempool_free(rq->crypt_ctx, bio_crypt_ctx_pool);
+-	blk_crypto_rq_set_defaults(rq);
++	rq->crypt_ctx = NULL;
+ }
+ 
+ /**
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -873,6 +873,8 @@ static struct request *attempt_merge(str
+ 	if (!blk_discard_mergable(req))
+ 		elv_merge_requests(q, req, next);
+ 
++	blk_crypto_rq_put_keyslot(next);
++
+ 	/*
+ 	 * 'next' is going away, so update stats accordingly
+ 	 */
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -840,6 +840,12 @@ static void blk_complete_request(struct
+ 		req->q->integrity.profile->complete_fn(req, total_bytes);
+ #endif
+ 
++	/*
++	 * Upper layers may call blk_crypto_evict_key() anytime after the last
++	 * bio_endio().  Therefore, the keyslot must be released before that.
++	 */
++	blk_crypto_rq_put_keyslot(req);
++
+ 	blk_account_io_completion(req, total_bytes);
+ 
+ 	do {
+@@ -905,6 +911,13 @@ bool blk_update_request(struct request *
+ 		req->q->integrity.profile->complete_fn(req, nr_bytes);
+ #endif
+ 
++	/*
++	 * Upper layers may call blk_crypto_evict_key() anytime after the last
++	 * bio_endio().  Therefore, the keyslot must be released before that.
++	 */
++	if (blk_crypto_rq_has_keyslot(req) && nr_bytes >= blk_rq_bytes(req))
++		__blk_crypto_rq_put_keyslot(req);
++
+ 	if (unlikely(error && !blk_rq_is_passthrough(req) &&
+ 		     !(req->rq_flags & RQF_QUIET)) &&
+ 		     !test_bit(GD_DEAD, &req->q->disk->state)) {
+@@ -2987,7 +3000,7 @@ void blk_mq_submit_bio(struct bio *bio)
+ 
+ 	blk_mq_bio_to_request(rq, bio, nr_segs);
+ 
+-	ret = blk_crypto_init_request(rq);
++	ret = blk_crypto_rq_get_keyslot(rq);
+ 	if (ret != BLK_STS_OK) {
+ 		bio->bi_status = ret;
+ 		bio_endio(bio);
 
 
