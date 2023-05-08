@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F568168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D8DC433EF;
-	Mon,  8 May 2023 10:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A88A168C8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AE7C4339B;
+	Mon,  8 May 2023 10:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542969;
-	bh=YksyGS8yB78+EFik0EvampFDW9G5JSdNNIX4pgl8cAU=;
+	s=korg; t=1683542973;
+	bh=z68mJqRInk+pcesD3Pww50pW2B9wZJjCKfYA9GNFuts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Jwrl2xsAs8+gU9TYwOfxn0VPyWuNQkPGXXBqM6pOAYMHOB7PYaC3WQeJucvluaLQ
-	 Z2Zw5h4AV0zBLLlg6UiuZi3jsCHpu45UxRRh6ywL0VcgERaG+wWR0h7/t7CDrNvDFX
-	 OUdPw4OG9LzAHdWqhvONdW1vwN4mhKXAm0nHCZUg=
+	b=WQZrdJJFDfp8pYR6S6rZc0I+GBMfnxIzSGgOTVMCsTDrUQeJl504ObzgnKr+Xob3b
+	 YsLzPH4hq/N3KOXlUvNsRTlJRyMco0xz7LdZA7gNUwl3GXryshoKsjojZ/J3GvWogs
+	 jk48zv8xHBOeSFKUR/PE1FTrNi1hiMec3S2T6NUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
 	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 608/663] afs: Fix updating of i_size with dv jump from server
-Date: Mon,  8 May 2023 11:47:14 +0200
-Message-Id: <20230508094449.368633304@linuxfoundation.org>
+Subject: [PATCH 6.2 609/663] afs: Fix getattr to report server i_size on dirs, not local size
+Date: Mon,  8 May 2023 11:47:15 +0200
+Message-Id: <20230508094449.409584684@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,38 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit d7f74e9a917503ee78f2b603a456d7227cf38919 ]
+[ Upstream commit 45f66fa03ba9943cca5af88d691399332b8bde08 ]
 
-If the data version returned from the server is larger than expected,
-the local data is invalidated, but we may still want to note the remote
-file size.
+Fix afs_getattr() to report the server's idea of the file size of a
+directory rather than the local size.  The local size may differ as we edit
+the local copy to avoid having to redownload it and we may end up with a
+differently structured blob of a different size.
 
-Since we're setting change_size, we have to also set data_changed
-for the i_size to get updated.
+However, if the directory is discarded from the pagecache we then download
+it again and the user may see the directory file size apparently change.
 
-Fixes: 3f4aa9818163 ("afs: Fix EOF corruption")
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
+Fixes: 63a4681ff39c ("afs: Locally edit directory data for mkdir/create/unlink/...")
 Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/inode.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/afs/inode.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
 diff --git a/fs/afs/inode.c b/fs/afs/inode.c
-index 6d3a3dbe49286..52d040ffde35f 100644
+index 52d040ffde35f..5921dd3687e39 100644
 --- a/fs/afs/inode.c
 +++ b/fs/afs/inode.c
-@@ -230,6 +230,7 @@ static void afs_apply_status(struct afs_operation *op,
- 			set_bit(AFS_VNODE_ZAP_DATA, &vnode->flags);
- 		}
- 		change_size = true;
-+		data_changed = true;
- 	} else if (vnode->status.type == AFS_FTYPE_DIR) {
- 		/* Expected directory change is handled elsewhere so
- 		 * that we can locally edit the directory and save on a
+@@ -450,7 +450,7 @@ static void afs_get_inode_cache(struct afs_vnode *vnode)
+ 				    0 : FSCACHE_ADV_SINGLE_CHUNK,
+ 				    &key, sizeof(key),
+ 				    &aux, sizeof(aux),
+-				    vnode->status.size));
++				    i_size_read(&vnode->netfs.inode)));
+ #endif
+ }
+ 
+@@ -766,6 +766,13 @@ int afs_getattr(struct user_namespace *mnt_userns, const struct path *path,
+ 		if (test_bit(AFS_VNODE_SILLY_DELETED, &vnode->flags) &&
+ 		    stat->nlink > 0)
+ 			stat->nlink -= 1;
++
++		/* Lie about the size of directories.  We maintain a locally
++		 * edited copy and may make different allocation decisions on
++		 * it, but we need to give userspace the server's size.
++		 */
++		if (S_ISDIR(inode->i_mode))
++			stat->size = vnode->netfs.remote_i_size;
+ 	} while (need_seqretry(&vnode->cb_lock, seq));
+ 
+ 	done_seqretry(&vnode->cb_lock, seq);
 -- 
 2.39.2
 
