@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C92168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739A7C433EF;
-	Mon,  8 May 2023 10:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A358168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57BAC433EF;
+	Mon,  8 May 2023 10:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542852;
-	bh=vLCJuoym0/SzS2bi6LkyBfnhBr9rtA6CMRGTcY2L4Ts=;
+	s=korg; t=1683542855;
+	bh=V+PBmn6QvuLsy02UVxjONmKs9Drv8w0fXm+jVaYO6cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MddoBUYSWn+nr78cvV0E7bOGfYoi/58p7gqXfm8HHCGgD5gnGED0DX+XvkocgVPvo
-	 7LlxV2o/3ElQtYs7TP9mCpsQptuLiF253laH5wqjbnG8PTBPZ5hoSv6nkEY+33YMow
-	 IOZ1qS5wlwm/0lhONGTAMnwrxBjs9Nt06/gu0Sxo=
+	b=sZYBQxCkk+AvzwZmWabTImakx562oap1WRqg8g+9Dk/i/7HPpgy1wyQUWdiELhrbF
+	 /gqyld+nnxWvwob+EmiHO+dZRz/pP8tENe5aj68B+s//OcT9ss/RiZwmKdNNbM3/LB
+	 Mgz2Mug6BNfvp0F2LXRk1L5eRM65AjqN1n6IL0zM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Qinrun Dai <flno@hust.edu.cn>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 570/663] RDMA/mlx5: Use correct device num_ports when modify DC
-Date: Mon,  8 May 2023 11:46:36 +0200
-Message-Id: <20230508094447.720280296@linuxfoundation.org>
+Subject: [PATCH 6.2 571/663] clocksource/drivers/davinci: Fix memory leak in davinci_timer_register when init fails
+Date: Mon,  8 May 2023 11:46:37 +0200
+Message-Id: <20230508094447.769537025@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,37 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Qinrun Dai <flno@hust.edu.cn>
 
-[ Upstream commit 746aa3c8cb1a650ff2583497ac646e505831b9b9 ]
+[ Upstream commit fb73556386e074e9bee9fa2d253aeaefe4e063e0 ]
 
-Just like other QP types, when modify DC, the port_num should be compared
-with dev->num_ports, instead of HCA_CAP.num_ports.  Otherwise Multi-port
-vHCA on DC may not work.
+Smatch reports:
+drivers/clocksource/timer-davinci.c:332 davinci_timer_register()
+warn: 'base' from ioremap() not released on lines: 274.
 
-Fixes: 776a3906b692 ("IB/mlx5: Add support for DC target QP")
-Link: https://lore.kernel.org/r/20230420013906.1244185-1-markzhang@nvidia.com
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fix this and other potential memory leak problems
+by adding a set of corresponding exit lables.
+
+Fixes: 721154f972aa ("clocksource/drivers/davinci: Add support for clockevents")
+Signed-off-by: Qinrun Dai <flno@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230413135037.1505799-1-flno@hust.edu.cn
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clocksource/timer-davinci.c | 30 +++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index cf953d23d18da..f7d3643b08f50 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -4408,7 +4408,7 @@ static int mlx5_ib_modify_dct(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 			return -EINVAL;
+diff --git a/drivers/clocksource/timer-davinci.c b/drivers/clocksource/timer-davinci.c
+index 9996c05425200..b1c248498be46 100644
+--- a/drivers/clocksource/timer-davinci.c
++++ b/drivers/clocksource/timer-davinci.c
+@@ -257,21 +257,25 @@ int __init davinci_timer_register(struct clk *clk,
+ 				resource_size(&timer_cfg->reg),
+ 				"davinci-timer")) {
+ 		pr_err("Unable to request memory region\n");
+-		return -EBUSY;
++		rv = -EBUSY;
++		goto exit_clk_disable;
+ 	}
  
- 		if (attr->port_num == 0 ||
--		    attr->port_num > MLX5_CAP_GEN(dev->mdev, num_ports)) {
-+		    attr->port_num > dev->num_ports) {
- 			mlx5_ib_dbg(dev, "invalid port number %d. number of ports is %d\n",
- 				    attr->port_num, dev->num_ports);
- 			return -EINVAL;
+ 	base = ioremap(timer_cfg->reg.start, resource_size(&timer_cfg->reg));
+ 	if (!base) {
+ 		pr_err("Unable to map the register range\n");
+-		return -ENOMEM;
++		rv = -ENOMEM;
++		goto exit_mem_region;
+ 	}
+ 
+ 	davinci_timer_init(base);
+ 	tick_rate = clk_get_rate(clk);
+ 
+ 	clockevent = kzalloc(sizeof(*clockevent), GFP_KERNEL);
+-	if (!clockevent)
+-		return -ENOMEM;
++	if (!clockevent) {
++		rv = -ENOMEM;
++		goto exit_iounmap_base;
++	}
+ 
+ 	clockevent->dev.name = "tim12";
+ 	clockevent->dev.features = CLOCK_EVT_FEAT_ONESHOT;
+@@ -296,7 +300,7 @@ int __init davinci_timer_register(struct clk *clk,
+ 			 "clockevent/tim12", clockevent);
+ 	if (rv) {
+ 		pr_err("Unable to request the clockevent interrupt\n");
+-		return rv;
++		goto exit_free_clockevent;
+ 	}
+ 
+ 	davinci_clocksource.dev.rating = 300;
+@@ -323,13 +327,27 @@ int __init davinci_timer_register(struct clk *clk,
+ 	rv = clocksource_register_hz(&davinci_clocksource.dev, tick_rate);
+ 	if (rv) {
+ 		pr_err("Unable to register clocksource\n");
+-		return rv;
++		goto exit_free_irq;
+ 	}
+ 
+ 	sched_clock_register(davinci_timer_read_sched_clock,
+ 			     DAVINCI_TIMER_CLKSRC_BITS, tick_rate);
+ 
+ 	return 0;
++
++exit_free_irq:
++	free_irq(timer_cfg->irq[DAVINCI_TIMER_CLOCKEVENT_IRQ].start,
++			clockevent);
++exit_free_clockevent:
++	kfree(clockevent);
++exit_iounmap_base:
++	iounmap(base);
++exit_mem_region:
++	release_mem_region(timer_cfg->reg.start,
++			   resource_size(&timer_cfg->reg));
++exit_clk_disable:
++	clk_disable_unprepare(clk);
++	return rv;
+ }
+ 
+ static int __init of_davinci_timer_register(struct device_node *np)
 -- 
 2.39.2
 
