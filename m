@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D690E171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:41:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D3F3C433EF;
-	Mon,  8 May 2023 11:41:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BA5171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:41:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3652DC433EF;
+	Mon,  8 May 2023 11:41:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546084;
-	bh=4HQ5E2aYHMlYcGr9oHvMj9F69VoMXfDQBt9CqNqB7b0=;
+	s=korg; t=1683546087;
+	bh=RfvPljLmkoV1njWudkJGe6oSZaR50WqcCdarNs9ehDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=arr+dBGAof+6VH7/iEsoheCVI+6PQvuO81gCTY05bN3Jm09iEF7dpGWihehEz19jY
-	 DFtTXTtanakHmVDxB4QJhn+C/8JpIHuO/aXlxe2jeuefy7y0MxClf80nplXpzTij/E
-	 FyDiwZhJdt8loWY7kgZLLADLS6802dKw59NH1GgA=
+	b=a6+rleDCYwCh1cm7s2pcZkmM3Dyo5ambFeJFE7v6oiQcqZQfLsHOgY2OmAy6K/6c+
+	 CDSCn1fd+XWZbYz8daQJVycEoZxZ1mnPzyJ9pRcubGuYCj0gtsQ4SETtLmRAYoHc22
+	 DmlIW6JPJyWWfTZZNMYtuHpq39iKm1zzxeD3B6No=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <jdamato@fastly.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 5.15 224/371] ixgbe: Allow flow hash to be set via ethtool
-Date: Mon,  8 May 2023 11:47:05 +0200
-Message-Id: <20230508094820.951376672@linuxfoundation.org>
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 251/371] ASoC: es8316: Handle optional IRQ assignment
+Date: Mon,  8 May 2023 11:47:32 +0200
+Message-Id: <20230508094822.031915113@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -37,66 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Damato <jdamato@fastly.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 4f3ed1293feb9502dc254b05802faf1ad3317ac6 ]
+[ Upstream commit 39db65a0a17b54915b269d3685f253a4731f344c ]
 
-ixgbe currently returns `EINVAL` whenever the flowhash it set by ethtool
-because the ethtool code in the kernel passes a non-zero value for hfunc
-that ixgbe should allow.
+The driver is able to work fine without relying on a mandatory interrupt
+being assigned to the I2C device. This is only needed when making use of
+the jack-detect support.
 
-When ethtool is called with `ETHTOOL_SRXFHINDIR`,
-`ethtool_set_rxfh_indir` will call ixgbe's set_rxfh function
-with `ETH_RSS_HASH_NO_CHANGE`. This value should be accepted.
+However, the following warning message is always emitted when there is
+no such interrupt available:
 
-When ethtool is called with `ETHTOOL_SRSSH`, `ethtool_set_rxfh` will
-call ixgbe's set_rxfh function with `rxfh.hfunc`, which appears to be
-hardcoded in ixgbe to always be `ETH_RSS_HASH_TOP`. This value should
-also be accepted.
+  es8316 0-0011: Failed to get IRQ 0: -22
 
-Before this patch:
+Do not attempt to request an IRQ if it is not available/valid. This also
+ensures the rather misleading message is not displayed anymore.
 
-$ sudo ethtool -L eth1 combined 10
-$ sudo ethtool -X eth1 default
-Cannot set RX flow hash configuration: Invalid argument
+Also note the IRQ validation relies on commit dab472eb931bc291 ("i2c /
+ACPI: Use 0 to indicate that device does not have interrupt assigned").
 
-After this patch:
-
-$ sudo ethtool -L eth1 combined 10
-$ sudo ethtool -X eth1 default
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 10 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9     0     1     2     3     4     5
-   16:      6     7     8     9     0     1     2     3
-   24:      4     5     6     7     8     9     0     1
-   ...
-
-Fixes: 1c7cf0784e4d ("ixgbe: support for ethtool set_rxfh")
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 822257661031 ("ASoC: es8316: Add jack-detect support")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230328094901.50763-1-cristian.ciocaltea@collabora.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/es8316.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-index beda8e0ef7d42..37d57cb48071c 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-@@ -3099,8 +3099,8 @@ static int ixgbe_set_rxfh(struct net_device *netdev, const u32 *indir,
- 	int i;
- 	u32 reta_entries = ixgbe_rss_indir_tbl_entries(adapter);
+diff --git a/sound/soc/codecs/es8316.c b/sound/soc/codecs/es8316.c
+index 5fb02635c1406..afd6d401e3d09 100644
+--- a/sound/soc/codecs/es8316.c
++++ b/sound/soc/codecs/es8316.c
+@@ -810,12 +810,14 @@ static int es8316_i2c_probe(struct i2c_client *i2c_client,
+ 	es8316->irq = i2c_client->irq;
+ 	mutex_init(&es8316->lock);
  
--	if (hfunc)
--		return -EINVAL;
-+	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
-+		return -EOPNOTSUPP;
+-	ret = devm_request_threaded_irq(dev, es8316->irq, NULL, es8316_irq,
+-					IRQF_TRIGGER_HIGH | IRQF_ONESHOT | IRQF_NO_AUTOEN,
+-					"es8316", es8316);
+-	if (ret) {
+-		dev_warn(dev, "Failed to get IRQ %d: %d\n", es8316->irq, ret);
+-		es8316->irq = -ENXIO;
++	if (es8316->irq > 0) {
++		ret = devm_request_threaded_irq(dev, es8316->irq, NULL, es8316_irq,
++						IRQF_TRIGGER_HIGH | IRQF_ONESHOT | IRQF_NO_AUTOEN,
++						"es8316", es8316);
++		if (ret) {
++			dev_warn(dev, "Failed to get IRQ %d: %d\n", es8316->irq, ret);
++			es8316->irq = -ENXIO;
++		}
+ 	}
  
- 	/* Fill out the redirection table */
- 	if (indir) {
+ 	return devm_snd_soc_register_component(&i2c_client->dev,
 -- 
 2.39.2
 
