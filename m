@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3941E125B3
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7561C433D2;
-	Mon,  8 May 2023 10:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE31B125B3
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52560C4339B;
+	Mon,  8 May 2023 10:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541097;
-	bh=LlewI8dkrNw3589kcc+UjHEp6UWMsze3NWoM4juGPmE=;
+	s=korg; t=1683541099;
+	bh=twQBlo0z1/wngMaLnICujCMwfJjvC6WMoe/YUvdsOSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtopTinsAombs6IAey8oxMNWUXcM0LQTZO+gKndiprRX4lI5nCLTFOkg765z6HfbE
-	 K6OvxDmEMhuHTwJWvV/Ys8tb7/Cg5aAOukSC6x5qK6DvIJHhEEFuNE8QKMh3353cXn
-	 nclUiKsh4bUItp0XaZjHlJLmRe8OEexr/SzVmUh8=
+	b=TXHr1jsdEx8VzxNhzIfA/28NBeduEIOXzNI89UtFbmB0svD0jQIJLcctRkLVvR5s2
+	 z/CDW2WT/Gp/Z2CUXuR5QAlf/Yfk6zP/7kgXAsi2OSy5FMkiK8/0q0LNvI7IpOSSUh
+	 pvmS3JuoQCjFdKHg9UBYcnFkv0uMEupbHZc21sVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Yeongjin Gil <youngjin.gil@samsung.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 590/611] dm verity: fix error handling for check_at_most_once on FEC
-Date: Mon,  8 May 2023 11:47:12 +0200
-Message-Id: <20230508094441.083188587@linuxfoundation.org>
+Subject: [PATCH 6.1 591/611] dm clone: call kmem_cache_destroy() in dm_clone_init() error path
+Date: Mon,  8 May 2023 11:47:13 +0200
+Message-Id: <20230508094441.111730617@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,44 +33,28 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yeongjin Gil <youngjin.gil@samsung.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit e8c5d45f82ce0c238a4817739892fe8897a3dcc3 upstream.
+commit 6827af4a9a9f5bb664c42abf7c11af4978d72201 upstream.
 
-In verity_end_io(), if bi_status is not BLK_STS_OK, it can be return
-directly. But if FEC configured, it is desired to correct the data page
-through verity_verify_io. And the return value will be converted to
-blk_status and passed to verity_finish_io().
+Otherwise the _hydration_cache will leak if dm_register_target() fails.
 
-BTW, when a bit is set in v->validated_blocks, verity_verify_io() skips
-verification regardless of I/O error for the corresponding bio. In this
-case, the I/O error could not be returned properly, and as a result,
-there is a problem that abnormal data could be read for the
-corresponding block.
-
-To fix this problem, when an I/O error occurs, do not skip verification
-even if the bit related is set in v->validated_blocks.
-
-Fixes: 843f38d382b1 ("dm verity: add 'check_at_most_once' option to only validate hashes once")
 Cc: stable@vger.kernel.org
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Yeongjin Gil <youngjin.gil@samsung.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-clone-target.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -523,7 +523,7 @@ static int verity_verify_io(struct dm_ve
- 		sector_t cur_block = io->block + b;
- 		struct ahash_request *req = verity_io_hash_req(v, io);
+--- a/drivers/md/dm-clone-target.c
++++ b/drivers/md/dm-clone-target.c
+@@ -2205,6 +2205,7 @@ static int __init dm_clone_init(void)
+ 	r = dm_register_target(&clone_target);
+ 	if (r < 0) {
+ 		DMERR("Failed to register clone target");
++		kmem_cache_destroy(_hydration_cache);
+ 		return r;
+ 	}
  
--		if (v->validated_blocks &&
-+		if (v->validated_blocks && bio->bi_status == BLK_STS_OK &&
- 		    likely(test_bit(cur_block, v->validated_blocks))) {
- 			verity_bv_skip_block(v, io, iter);
- 			continue;
 
 
