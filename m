@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189FA168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:02:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D96DC433D2;
-	Mon,  8 May 2023 10:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF548168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:02:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3592EC433EF;
+	Mon,  8 May 2023 10:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540165;
-	bh=JJXEF3sE+EiIAkPBgV37jmCIvWUqRe9SCSfkapufKvE=;
+	s=korg; t=1683540168;
+	bh=CQfW+nljOBd9Vz2opStQ5BkOROaXJGZOYtBCDhJ7duA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nUt0uKGU3sAiGSNpWpPZgG0bbOqo5KNf1Va8xTV9d8d0eJLsJsWYheR56DEWGlObH
-	 HoE6n+GeyCMzBGcPRZhIL+IIQXYFwHu1MsfdvtYedL8ujeoibxxYgAmeEJ8ZPlHcw7
-	 yZug01LhOlAxvuLl/yS5OKvOEjtRClFBQN84UmP4=
+	b=xolo2ys2urYoWToZCIpT1fSf9xRxD+p2sj58rz7BLDj/AHLK7cpdUxNKREoBenvDi
+	 eJyMfNapEw4lSneUwxepl6zA57KZZrVHfhr5/k6ktowtvg3Q9vFmIEW4zL7Jp/gk30
+	 PWrQGME8cKhf0kS7y1WF8Xuox17UXX1kmcfH6hBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sanjay Chandrashekara <sanjayc@nvidia.com>,
+	Sumit Gupta <sumitg@nvidia.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 261/611] ACPI: bus: Ensure that notify handlers are not running after removal
-Date: Mon,  8 May 2023 11:41:43 +0200
-Message-Id: <20230508094430.893910085@linuxfoundation.org>
+Subject: [PATCH 6.1 262/611] cpufreq: use correct unit when verify cur freq
+Date: Mon,  8 May 2023 11:41:44 +0200
+Message-Id: <20230508094430.922788073@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,37 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Sanjay Chandrashekara <sanjayc@nvidia.com>
 
-[ Upstream commit faae443738c6f0dac9b0d3d11d108f6911a989a9 ]
+[ Upstream commit 44295af5019f1997d038ad2611086a2d1e2af167 ]
 
-Currently, acpi_device_remove_notify_handler() may return while the
-notify handler being removed is still running which may allow the
-module holding that handler to be torn down prematurely.
+cpufreq_verify_current_freq checks() if the frequency returned by
+the hardware has a slight delta with the valid frequency value
+last set and returns "policy->cur" if the delta is within "1 MHz".
+In the comparison, "policy->cur" is in "kHz" but it's compared
+against HZ_PER_MHZ. So, the comparison range becomes "1 GHz".
 
-Address this issue by making acpi_device_remove_notify_handler() wait
-for the handling of all the ACPI events in progress to complete before
-returning.
+Fix this by comparing against KHZ_PER_MHZ instead of HZ_PER_MHZ.
 
-Fixes: 5894b0c46e49 ("ACPI / scan: Move bus operations and notification routines to bus.c")
+Fixes: f55ae08c8987 ("cpufreq: Avoid unnecessary frequency updates due to mismatch")
+Signed-off-by: Sanjay Chandrashekara <sanjayc@nvidia.com>
+[ sumit gupta: Commit message update ]
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/bus.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/cpufreq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/bus.c b/drivers/acpi/bus.c
-index 3b6146b1e25cc..a16b7de73d164 100644
---- a/drivers/acpi/bus.c
-+++ b/drivers/acpi/bus.c
-@@ -586,6 +586,7 @@ static void acpi_device_remove_notify_handler(struct acpi_device *device,
- 		acpi_remove_notify_handler(device->handle, type,
- 					   acpi_notify_device);
- 	}
-+	acpi_os_wait_events_complete();
- }
+diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
+index 7e56a42750ea5..285ba51b31f60 100644
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1727,7 +1727,7 @@ static unsigned int cpufreq_verify_current_freq(struct cpufreq_policy *policy, b
+ 		 * MHz. In such cases it is better to avoid getting into
+ 		 * unnecessary frequency updates.
+ 		 */
+-		if (abs(policy->cur - new_freq) < HZ_PER_MHZ)
++		if (abs(policy->cur - new_freq) < KHZ_PER_MHZ)
+ 			return policy->cur;
  
- /* Handle events targeting \_SB device (at present only graceful shutdown) */
+ 		cpufreq_out_of_sync(policy, new_freq);
 -- 
 2.39.2
 
