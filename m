@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD40168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075A8C433D2;
-	Mon,  8 May 2023 10:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B432168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92A21C433D2;
+	Mon,  8 May 2023 10:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540287;
-	bh=JS845e7pqSFJ8qj0kh8EIfVlX1p5VCYyJv9WjrtfEyc=;
+	s=korg; t=1683540289;
+	bh=Iy1VQN3ow+LIWyknszZ6UnibW9+VMfxAZ/o/yMvvmnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2UpIgrHuYX6wL+UqXARVTf6JeOM4cfEspVZgg8oYMYXq9JbX2GlvdKHx9WncJp95
-	 gjmrOk4bTQR3/SufHaHHNn9DBFTWV9EF2mZM2UB87a2RDYmEuK+Etr8Xh2UK3rKrSl
-	 oHO9rM/GDzTMBfWnisV0f2p++Mi5pRrb78IDkOUU=
+	b=YKyY5/rD9TBwHn1pGUT8avQCWYou4VfASI3piQOMB343XH7TxRxq9WwkreJYtjoXj
+	 9H/u+5YcZYlAXPNKqyJ6AXZMTFXWAOEGRvZhFcy120lnjCdGUXK34weD0ZXwPisb0v
+	 mNu1EsjPP3YxBHr1ThRiahnKfpPrAg742HqBHx1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Qi Han <hanqi@vivo.com>,
-	Yangtao Li <frank.li@vivo.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 306/611] f2fs: compress: fix to call f2fs_wait_on_page_writeback() in f2fs_write_raw_pages()
-Date: Mon,  8 May 2023 11:42:28 +0200
-Message-Id: <20230508094432.374580143@linuxfoundation.org>
+Subject: [PATCH 6.1 307/611] f2fs: fix scheduling while atomic in decompression path
+Date: Mon,  8 May 2023 11:42:29 +0200
+Message-Id: <20230508094432.403707820@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -38,96 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit babedcbac164cec970872b8097401ca913a80e61 ]
+[ Upstream commit 1aa161e43106d46ca8e9a86f4aa28d420258134b ]
 
-BUG_ON() will be triggered when writing files concurrently,
-because the same page is writtenback multiple times.
+[   16.945668][    C0] Call trace:
+[   16.945678][    C0]  dump_backtrace+0x110/0x204
+[   16.945706][    C0]  dump_stack_lvl+0x84/0xbc
+[   16.945735][    C0]  __schedule_bug+0xb8/0x1ac
+[   16.945756][    C0]  __schedule+0x724/0xbdc
+[   16.945778][    C0]  schedule+0x154/0x258
+[   16.945793][    C0]  bit_wait_io+0x48/0xa4
+[   16.945808][    C0]  out_of_line_wait_on_bit+0x114/0x198
+[   16.945824][    C0]  __sync_dirty_buffer+0x1f8/0x2e8
+[   16.945853][    C0]  __f2fs_commit_super+0x140/0x1f4
+[   16.945881][    C0]  f2fs_commit_super+0x110/0x28c
+[   16.945898][    C0]  f2fs_handle_error+0x1f4/0x2f4
+[   16.945917][    C0]  f2fs_decompress_cluster+0xc4/0x450
+[   16.945942][    C0]  f2fs_end_read_compressed_page+0xc0/0xfc
+[   16.945959][    C0]  f2fs_handle_step_decompress+0x118/0x1cc
+[   16.945978][    C0]  f2fs_read_end_io+0x168/0x2b0
+[   16.945993][    C0]  bio_endio+0x25c/0x2c8
+[   16.946015][    C0]  dm_io_dec_pending+0x3e8/0x57c
+[   16.946052][    C0]  clone_endio+0x134/0x254
+[   16.946069][    C0]  bio_endio+0x25c/0x2c8
+[   16.946084][    C0]  blk_update_request+0x1d4/0x478
+[   16.946103][    C0]  scsi_end_request+0x38/0x4cc
+[   16.946129][    C0]  scsi_io_completion+0x94/0x184
+[   16.946147][    C0]  scsi_finish_command+0xe8/0x154
+[   16.946164][    C0]  scsi_complete+0x90/0x1d8
+[   16.946181][    C0]  blk_done_softirq+0xa4/0x11c
+[   16.946198][    C0]  _stext+0x184/0x614
+[   16.946214][    C0]  __irq_exit_rcu+0x78/0x144
+[   16.946234][    C0]  handle_domain_irq+0xd4/0x154
+[   16.946260][    C0]  gic_handle_irq.33881+0x5c/0x27c
+[   16.946281][    C0]  call_on_irq_stack+0x40/0x70
+[   16.946298][    C0]  do_interrupt_handler+0x48/0xa4
+[   16.946313][    C0]  el1_interrupt+0x38/0x68
+[   16.946346][    C0]  el1h_64_irq_handler+0x20/0x30
+[   16.946362][    C0]  el1h_64_irq+0x78/0x7c
+[   16.946377][    C0]  finish_task_switch+0xc8/0x3d8
+[   16.946394][    C0]  __schedule+0x600/0xbdc
+[   16.946408][    C0]  preempt_schedule_common+0x34/0x5c
+[   16.946423][    C0]  preempt_schedule+0x44/0x48
+[   16.946438][    C0]  process_one_work+0x30c/0x550
+[   16.946456][    C0]  worker_thread+0x414/0x8bc
+[   16.946472][    C0]  kthread+0x16c/0x1e0
+[   16.946486][    C0]  ret_from_fork+0x10/0x20
 
-1597 void folio_end_writeback(struct folio *folio)
-1598 {
-		......
-1618     if (!__folio_end_writeback(folio))
-1619         BUG();
-		......
-1625 }
-
-kernel BUG at mm/filemap.c:1619!
-Call Trace:
- <TASK>
- f2fs_write_end_io+0x1a0/0x370
- blk_update_request+0x6c/0x410
- blk_mq_end_request+0x15/0x130
- blk_complete_reqs+0x3c/0x50
- __do_softirq+0xb8/0x29b
- ? sort_range+0x20/0x20
- run_ksoftirqd+0x19/0x20
- smpboot_thread_fn+0x10b/0x1d0
- kthread+0xde/0x110
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x22/0x30
- </TASK>
-
-Below is the concurrency scenario:
-
-[Process A]		[Process B]		[Process C]
-f2fs_write_raw_pages()
-  - redirty_page_for_writepage()
-  - unlock page()
-			f2fs_do_write_data_page()
-			  - lock_page()
-			  - clear_page_dirty_for_io()
-			  - set_page_writeback() [1st writeback]
-			    .....
-			    - unlock page()
-
-						generic_perform_write()
-						  - f2fs_write_begin()
-						    - wait_for_stable_page()
-
-						  - f2fs_write_end()
-						    - set_page_dirty()
-
-  - lock_page()
-    - f2fs_do_write_data_page()
-      - set_page_writeback() [2st writeback]
-
-This problem was introduced by the previous commit 7377e853967b ("f2fs:
-compress: fix potential deadlock of compress file"). All pagelocks were
-released in f2fs_write_raw_pages(), but whether the page was
-in the writeback state was ignored in the subsequent writing process.
-Let's fix it by waiting for the page to writeback before writing.
-
-Cc: Christoph Hellwig <hch@lst.de>
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Fixes: 7377e853967b ("f2fs: compress: fix potential deadlock of compress file")
-Signed-off-by: Qi Han <hanqi@vivo.com>
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Fixes: bff139b49d9f ("f2fs: handle decompress only post processing in softirq")
+Fixes: 95fa90c9e5a7 ("f2fs: support recording errors into superblock")
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/f2fs/compress.c | 7 ++++++-
+ fs/f2fs/f2fs.h     | 1 +
+ fs/f2fs/super.c    | 2 +-
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
 diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 74d3f2d2271f3..9ee021e49bced 100644
+index 9ee021e49bced..b160863eca141 100644
 --- a/fs/f2fs/compress.c
 +++ b/fs/f2fs/compress.c
-@@ -1462,6 +1462,12 @@ static int f2fs_write_raw_pages(struct compress_ctx *cc,
- 		if (!PageDirty(cc->rpages[i]))
- 			goto continue_unlock;
+@@ -762,7 +762,12 @@ void f2fs_decompress_cluster(struct decompress_io_ctx *dic, bool in_task)
  
-+		if (PageWriteback(cc->rpages[i])) {
-+			if (wbc->sync_mode == WB_SYNC_NONE)
-+				goto continue_unlock;
-+			f2fs_wait_on_page_writeback(cc->rpages[i], DATA, true, true);
-+		}
+ 	if (dic->clen > PAGE_SIZE * dic->nr_cpages - COMPRESS_HEADER_SIZE) {
+ 		ret = -EFSCORRUPTED;
+-		f2fs_handle_error(sbi, ERROR_FAIL_DECOMPRESSION);
 +
- 		if (!clear_page_dirty_for_io(cc->rpages[i]))
- 			goto continue_unlock;
++		/* Avoid f2fs_commit_super in irq context */
++		if (in_task)
++			f2fs_save_errors(sbi, ERROR_FAIL_DECOMPRESSION);
++		else
++			f2fs_handle_error(sbi, ERROR_FAIL_DECOMPRESSION);
+ 		goto out_release;
+ 	}
  
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index 87664c309b3c8..4b44ca1decdd3 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -3569,6 +3569,7 @@ int f2fs_quota_sync(struct super_block *sb, int type);
+ loff_t max_file_blocks(struct inode *inode);
+ void f2fs_quota_off_umount(struct super_block *sb);
+ void f2fs_handle_stop(struct f2fs_sb_info *sbi, unsigned char reason);
++void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag);
+ void f2fs_handle_error(struct f2fs_sb_info *sbi, unsigned char error);
+ int f2fs_commit_super(struct f2fs_sb_info *sbi, bool recover);
+ int f2fs_sync_fs(struct super_block *sb, int sync);
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 14c87399efea2..5af05411818a5 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -3861,7 +3861,7 @@ void f2fs_handle_stop(struct f2fs_sb_info *sbi, unsigned char reason)
+ 	f2fs_up_write(&sbi->sb_lock);
+ }
+ 
+-static void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag)
++void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag)
+ {
+ 	spin_lock(&sbi->error_lock);
+ 	if (!test_bit(flag, (unsigned long *)sbi->errors)) {
 -- 
 2.39.2
 
