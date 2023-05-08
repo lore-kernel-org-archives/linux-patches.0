@@ -1,37 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C01171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:34:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEC9C4339E;
-	Mon,  8 May 2023 11:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7589B171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:34:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6A7FC433EF;
+	Mon,  8 May 2023 11:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545668;
-	bh=U3AASTqeuFKaMjf51fir0o9dcPQyM3LFthotgOzvu8Y=;
+	s=korg; t=1683545671;
+	bh=wDaNiTmRHD9BLu+xUrlLKNRijVELQCA4075hxw/AU68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhRk6G+iMuWY0VKHW/AMJSzcI5/ZSXkheLWhue/ZLYfwvuT6GTylhfQl8id9b12V1
-	 i0VQ9Esgv/4IL7WtUqziB9ZoA7Xn8cgEDRX6V7PazuVCIye+a0aaNBWxYXp0sCWfEM
-	 GWAKEu0gyN1iBxnsLIobxDOjgNMwQ24BRn7ARM4M=
+	b=OnLJlw+uY6CbTtay4nIPP/zdGrN9+kIck9uXWSOkeyHUpMO6K+mpnrM7WUrNkHnPv
+	 j1hSgg+2UkGDMcHI0YF8sGAqF1cHoJcZ3h9873uCAvIpoyMibVypWy2HZJ0xQFHtO3
+	 aqvsDiLXFgrZbuZuNnIi90mYAvBjNsMfQxcxXjRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Leo Li <sunpeng.li@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	"Pan, Xinhui" <Xinhui.Pan@amd.com>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Mauro Rossi <issor.oruam@gmail.com>,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
-	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Juergen Gross <jgross@suse.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 114/371] drm/amd/display/dc/dce60/Makefile: Fix previous attempt to silence known override-init warnings
-Date: Mon,  8 May 2023 11:45:15 +0200
-Message-Id: <20230508094816.555754628@linuxfoundation.org>
+Subject: [PATCH 5.15 115/371] ACPI: processor: Fix evaluating _PDC method when running as Xen dom0
+Date: Mon,  8 May 2023 11:45:16 +0200
+Message-Id: <20230508094816.587330149@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -45,57 +36,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Roger Pau Monne <roger.pau@citrix.com>
 
-[ Upstream commit 4082b9f5ead4966797dddcfef0905d59e5a83873 ]
+[ Upstream commit 073828e954459b883f23e53999d31e4c55ab9654 ]
 
-Fixes the following W=1 kernel build warning(s):
+In ACPI systems, the OS can direct power management, as opposed to the
+firmware.  This OS-directed Power Management is called OSPM.  Part of
+telling the firmware that the OS going to direct power management is
+making ACPI "_PDC" (Processor Driver Capabilities) calls.  These _PDC
+methods must be evaluated for every processor object.  If these _PDC
+calls are not completed for every processor it can lead to
+inconsistency and later failures in things like the CPU frequency
+driver.
 
- drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:157:21: note: in expansion of macro ‘mmCRTC1_DCFE_MEM_LIGHT_SLEEP_CNTL’
- drivers/gpu/drm/amd/amdgpu/../display/dc/dce/dce_transform.h:170:9: note: in expansion of macro ‘SRI’
- drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:183:17: note: in expansion of macro ‘XFM_COMMON_REG_LIST_DCE60’
- drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:188:17: note: in expansion of macro ‘transform_regs’
- drivers/gpu/drm/amd/amdgpu/../include/asic_reg/dce/dce_6_0_d.h:722:43: warning: initialized field overwritten [-Woverride-init]
- drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:157:21: note: in expansion of macro ‘mmCRTC2_DCFE_MEM_LIGHT_SLEEP_CNTL’
- drivers/gpu/drm/amd/amdgpu/../display/dc/dce/dce_transform.h:170:9: note: in expansion of macro ‘SRI’
- drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:183:17: note: in expansion of macro ‘XFM_COMMON_REG_LIST_DCE60’
- drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:189:17: note: in expansion of macro ‘transform_regs’
- drivers/gpu/drm/amd/amdgpu/../include/asic_reg/dce/dce_6_0_d.h:722:43: note: (near initialization for ‘xfm_regs[2].DCFE_MEM_LIGHT_SLEEP_CN
+In a Xen system, the dom0 kernel is responsible for system-wide power
+management.  The dom0 kernel is in charge of OSPM.  However, the
+number of CPUs available to dom0 can be different than the number of
+CPUs physically present on the system.
 
-[100 lines snipped for brevity]
+This leads to a problem: the dom0 kernel needs to evaluate _PDC for
+all the processors, but it can't always see them.
 
-Fixes: ceb3cf476a441 ("drm/amd/display/dc/dce60/Makefile: Ignore -Woverride-init warning")
-Cc: Harry Wentland <harry.wentland@amd.com>
-Cc: Leo Li <sunpeng.li@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Mauro Rossi <issor.oruam@gmail.com>
-Cc: amd-gfx@lists.freedesktop.org
-Cc: dri-devel@lists.freedesktop.org
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+In dom0 kernels, ignore the existing ACPI method for determining if a
+processor is physically present because it might not be accurate.
+Instead, ask the hypervisor for this information.
+
+Fix this by introducing a custom function to use when running as Xen
+dom0 in order to check whether a processor object matches a CPU that's
+online.  Such checking is done using the existing information fetched
+by the Xen pCPU subsystem, extending it to also store the ACPI ID.
+
+This ensures that _PDC method gets evaluated for all physically online
+CPUs, regardless of the number of CPUs made available to dom0.
+
+Fixes: 5d554a7bb064 ("ACPI: processor: add internal processor_physically_present()")
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce60/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/processor_pdc.c | 11 +++++++++++
+ drivers/xen/pcpu.c           | 20 ++++++++++++++++++++
+ include/xen/xen.h            | 11 +++++++++++
+ 3 files changed, 42 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce60/Makefile b/drivers/gpu/drm/amd/display/dc/dce60/Makefile
-index dda596fa1cd76..fee331accc0e7 100644
---- a/drivers/gpu/drm/amd/display/dc/dce60/Makefile
-+++ b/drivers/gpu/drm/amd/display/dc/dce60/Makefile
-@@ -23,7 +23,7 @@
- # Makefile for the 'controller' sub-component of DAL.
- # It provides the control and status of HW CRTC block.
+diff --git a/drivers/acpi/processor_pdc.c b/drivers/acpi/processor_pdc.c
+index 8c3f82c9fff35..18fb04523f93b 100644
+--- a/drivers/acpi/processor_pdc.c
++++ b/drivers/acpi/processor_pdc.c
+@@ -14,6 +14,8 @@
+ #include <linux/acpi.h>
+ #include <acpi/processor.h>
  
--CFLAGS_AMDDALPATH)/dc/dce60/dce60_resource.o = $(call cc-disable-warning, override-init)
-+CFLAGS_$(AMDDALPATH)/dc/dce60/dce60_resource.o = $(call cc-disable-warning, override-init)
++#include <xen/xen.h>
++
+ #include "internal.h"
  
- DCE60 = dce60_timing_generator.o dce60_hw_sequencer.o \
- 	dce60_resource.o
+ static bool __init processor_physically_present(acpi_handle handle)
+@@ -47,6 +49,15 @@ static bool __init processor_physically_present(acpi_handle handle)
+ 		return false;
+ 	}
+ 
++	if (xen_initial_domain())
++		/*
++		 * When running as a Xen dom0 the number of processors Linux
++		 * sees can be different from the real number of processors on
++		 * the system, and we still need to execute _PDC for all of
++		 * them.
++		 */
++		return xen_processor_present(acpi_id);
++
+ 	type = (acpi_type == ACPI_TYPE_DEVICE) ? 1 : 0;
+ 	cpuid = acpi_get_cpuid(handle, type, acpi_id);
+ 
+diff --git a/drivers/xen/pcpu.c b/drivers/xen/pcpu.c
+index fd3a644b08559..b3e3d1bb37f3e 100644
+--- a/drivers/xen/pcpu.c
++++ b/drivers/xen/pcpu.c
+@@ -58,6 +58,7 @@ struct pcpu {
+ 	struct list_head list;
+ 	struct device dev;
+ 	uint32_t cpu_id;
++	uint32_t acpi_id;
+ 	uint32_t flags;
+ };
+ 
+@@ -249,6 +250,7 @@ static struct pcpu *create_and_register_pcpu(struct xenpf_pcpuinfo *info)
+ 
+ 	INIT_LIST_HEAD(&pcpu->list);
+ 	pcpu->cpu_id = info->xen_cpuid;
++	pcpu->acpi_id = info->acpi_id;
+ 	pcpu->flags = info->flags;
+ 
+ 	/* Need hold on xen_pcpu_lock before pcpu list manipulations */
+@@ -381,3 +383,21 @@ static int __init xen_pcpu_init(void)
+ 	return ret;
+ }
+ arch_initcall(xen_pcpu_init);
++
++#ifdef CONFIG_ACPI
++bool __init xen_processor_present(uint32_t acpi_id)
++{
++	const struct pcpu *pcpu;
++	bool online = false;
++
++	mutex_lock(&xen_pcpu_lock);
++	list_for_each_entry(pcpu, &xen_pcpus, list)
++		if (pcpu->acpi_id == acpi_id) {
++			online = pcpu->flags & XEN_PCPU_FLAGS_ONLINE;
++			break;
++		}
++	mutex_unlock(&xen_pcpu_lock);
++
++	return online;
++}
++#endif
+diff --git a/include/xen/xen.h b/include/xen/xen.h
+index 43efba045acc7..5a6a2ab675bed 100644
+--- a/include/xen/xen.h
++++ b/include/xen/xen.h
+@@ -61,4 +61,15 @@ void xen_free_unpopulated_pages(unsigned int nr_pages, struct page **pages);
+ #include <xen/balloon.h>
+ #endif
+ 
++#if defined(CONFIG_XEN_DOM0) && defined(CONFIG_ACPI) && defined(CONFIG_X86)
++bool __init xen_processor_present(uint32_t acpi_id);
++#else
++#include <linux/bug.h>
++static inline bool xen_processor_present(uint32_t acpi_id)
++{
++	BUG();
++	return false;
++}
++#endif
++
+ #endif	/* _XEN_XEN_H */
 -- 
 2.39.2
 
