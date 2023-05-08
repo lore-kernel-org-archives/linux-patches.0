@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9BD171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C34C4339B;
-	Mon,  8 May 2023 11:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B03DA168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B643C433D2;
+	Mon,  8 May 2023 11:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545478;
-	bh=/1jU58CawqNL+24BzGN3tQTZLKQQ9cGWRu093uBT6ds=;
+	s=korg; t=1683545481;
+	bh=ZheHF2Es9l7dGqTGX453WIo07dJi81f7biRKOVgUASw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hty99L3KxBtPr+8wB3/Ck8lIZ6Wo1/vJvKeaSemApiZ+xPfCzGYm5tm99atJYHBVO
-	 meo2574okHldgjxBlSEVt1e2lOTYKgaxOUeC4GUsuczMEYIq2KaulYEAlGps2es0ma
-	 K18Rw33kBr366wJiSgKmFKC8GV5Q9YHs4In3ub0A=
+	b=KSat6jTvyJcxPbscwc8/lJErpXM9ic/TFp17O3OVYTZwngrHqOr/bFjF60HXUvp9j
+	 9CbhYxxx0diT8Y8l58GeG7jtHd8ssarjFnevueybu8WtPOJv2TnPBaFnLl4BE4DANF
+	 DFMuDc/DGIz3FgeFDW7TUxLA2XcJ9M4/XuW7hPTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Kishon Vijay Abraham I <kvijayab@amd.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 5.15 052/371] iommu/amd: Fix "Guest Virtual APIC Table Root Pointer" configuration in IRTE
-Date: Mon,  8 May 2023 11:44:13 +0200
-Message-Id: <20230508094814.126856384@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 5.15 053/371] Revert "ubifs: dirty_cow_znode: Fix memleak in error handling path"
+Date: Mon,  8 May 2023 11:44:14 +0200
+Message-Id: <20230508094814.166291637@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,50 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kishon Vijay Abraham I <kvijayab@amd.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit ccc62b827775915a9b82db42a29813d04f92df7a upstream.
+commit 7d01cb27f6aebc54efbe28d8961a973b8f795b13 upstream.
 
-commit b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC
-(de-)activation code") while refactoring guest virtual APIC
-activation/de-activation code, stored information for activate/de-activate
-in "struct amd_ir_data". It used 32-bit integer data type for storing the
-"Guest Virtual APIC Table Root Pointer" (ga_root_ptr), though the
-"ga_root_ptr" is actually a 40-bit field in IRTE (Interrupt Remapping
-Table Entry).
+This reverts commit 122deabfe1428 (ubifs: dirty_cow_znode: Fix memleak
+in error handling path).
+After commit 122deabfe1428 applied, if insert_old_idx() failed, old
+index neither exists in TNC nor in old-index tree. Which means that
+old index node could be overwritten in layout_leb_in_gaps(), then
+ubifs image will be corrupted in power-cut.
 
-This causes interrupts from PCIe devices to not reach the guest in the case
-of PCIe passthrough with SME (Secure Memory Encryption) enabled as _SME_
-bit in the "ga_root_ptr" is lost before writing it to the IRTE.
-
-Fix it by using 64-bit data type for storing the "ga_root_ptr". While at
-that also change the data type of "ga_tag" to u32 in order to match
-the IOMMU spec.
-
-Fixes: b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC (de-)activation code")
-Cc: stable@vger.kernel.org # v5.4+
-Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Kishon Vijay Abraham I <kvijayab@amd.com>
-Link: https://lore.kernel.org/r/20230405130317.9351-1-kvijayab@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 122deabfe1428 (ubifs: dirty_cow_znode: Fix memleak ... path)
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/amd_iommu_types.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ubifs/tnc.c |    9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/drivers/iommu/amd/amd_iommu_types.h
-+++ b/drivers/iommu/amd/amd_iommu_types.h
-@@ -918,8 +918,8 @@ struct amd_ir_data {
- 	 */
- 	struct irq_cfg *cfg;
- 	int ga_vector;
--	int ga_root_ptr;
--	int ga_tag;
-+	u64 ga_root_ptr;
-+	u32 ga_tag;
- };
+--- a/fs/ubifs/tnc.c
++++ b/fs/ubifs/tnc.c
+@@ -267,18 +267,11 @@ static struct ubifs_znode *dirty_cow_zno
+ 	if (zbr->len) {
+ 		err = insert_old_idx(c, zbr->lnum, zbr->offs);
+ 		if (unlikely(err))
+-			/*
+-			 * Obsolete znodes will be freed by tnc_destroy_cnext()
+-			 * or free_obsolete_znodes(), copied up znodes should
+-			 * be added back to tnc and freed by
+-			 * ubifs_destroy_tnc_subtree().
+-			 */
+-			goto out;
++			return ERR_PTR(err);
+ 		err = add_idx_dirt(c, zbr->lnum, zbr->len);
+ 	} else
+ 		err = 0;
  
- struct amd_irte_ops {
+-out:
+ 	zbr->znode = zn;
+ 	zbr->lnum = 0;
+ 	zbr->offs = 0;
 
 
