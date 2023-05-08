@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F446320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AC6C433D2;
-	Mon,  8 May 2023 11:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9790B320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DD6C433D2;
+	Mon,  8 May 2023 11:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544142;
-	bh=QpZGSFcUEdxc4V4AwY/r1ackKvIgcNwFVumQaCxvIpk=;
+	s=korg; t=1683544145;
+	bh=3GjaSjRQxYdGyrHhFCH6DoDx3IN1bcdGWGu3+TTMJv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ib+v1FAgay55iK+cPfmXfotsk9l/A1MfzRdkh+5MJEyPbS/Tn5G/mrRmiRGLUSo56
-	 tzjvUN3ErFVFkw2vLmyqn0Yi4Gnq0Fk6b3l4fA3bFpdEKbxY2NPW6YsWBM/2gZM0vb
-	 W8b4NjlZYvjZygndeU3V1f91zjXGyidEnwj7WIwo=
+	b=K5ni3qaASlhNZDCfUrGChYXd84LnoLF5PY/kguImIaZD0XyersWs9IoGXKx1quH0I
+	 lC6HV885v7Wolsq88QCTyuOC+7/LitqqdR6/q35mVNbciNC+yrfDiWNJTs0dUialpG
+	 /TJbrd0K2+gNJ2tTuCXF9FHtRt+dHzybnvdE7PGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 283/694] media: mediatek: vcodec: making sure queue_work successfully
-Date: Mon,  8 May 2023 11:41:58 +0200
-Message-Id: <20230508094441.478591712@linuxfoundation.org>
+Subject: [PATCH 6.3 284/694] media: mediatek: vcodec: change lat thread decode error condition
+Date: Mon,  8 May 2023 11:41:59 +0200
+Message-Id: <20230508094441.510863524@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,115 +39,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 2e0ef56d81cb2569624d288b7e95a8a2734a7c74 ]
+[ Upstream commit 960badda95f10fb0c60f6f64978b19eafa9507a7 ]
 
-Putting core work to work queue using queue_work maybe fail, call
-queue_work again when the count of core work in work queue is less
-than core_list_cnt, making sure all the buffer in core list can be
-scheduled.
+If lat thread can't get lat buffer, it should be that current instance
+don't be schedulded, the driver can't free the src buffer directly.
 
-Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
+Fixes: 7b182b8d9c85 ("media: mediatek: vcodec: Refactor get and put capture buffer flow")
 Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/mediatek/vcodec/vdec_msg_queue.c | 31 ++++++++++++++-----
- .../platform/mediatek/vcodec/vdec_msg_queue.h |  2 ++
- 2 files changed, 25 insertions(+), 8 deletions(-)
+ .../platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c     | 6 ++++--
+ .../platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c  | 2 +-
+ .../platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c     | 2 +-
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-index cdc539a46cb95..f3073d1e7f420 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-@@ -71,6 +71,7 @@ static void vdec_msg_queue_dec(struct vdec_msg_queue *msg_queue, int hardware_in
- int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf *buf)
- {
- 	struct list_head *head;
-+	int status;
- 
- 	head = vdec_get_buf_list(msg_ctx->hardware_index, buf);
- 	if (!head) {
-@@ -83,11 +84,17 @@ int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf
- 	msg_ctx->ready_num++;
- 
- 	vdec_msg_queue_inc(&buf->ctx->msg_queue, msg_ctx->hardware_index);
--	if (msg_ctx->hardware_index != MTK_VDEC_CORE)
-+	if (msg_ctx->hardware_index != MTK_VDEC_CORE) {
- 		wake_up_all(&msg_ctx->ready_to_use);
--	else
--		queue_work(buf->ctx->dev->core_workqueue,
--			   &buf->ctx->msg_queue.core_work);
-+	} else {
-+		if (buf->ctx->msg_queue.core_work_cnt <
-+			atomic_read(&buf->ctx->msg_queue.core_list_cnt)) {
-+			status = queue_work(buf->ctx->dev->core_workqueue,
-+					    &buf->ctx->msg_queue.core_work);
-+			if (status)
-+				buf->ctx->msg_queue.core_work_cnt++;
+diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
+index ab8f642d1e5b0..3000db975e5f5 100644
+--- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
++++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
+@@ -258,8 +258,10 @@ static void mtk_vdec_worker(struct work_struct *work)
+ 		if (src_buf_req)
+ 			v4l2_ctrl_request_complete(src_buf_req, &ctx->ctrl_hdl);
+ 	} else {
+-		v4l2_m2m_src_buf_remove(ctx->m2m_ctx);
+-		v4l2_m2m_buf_done(vb2_v4l2_src, state);
++		if (ret != -EAGAIN) {
++			v4l2_m2m_src_buf_remove(ctx->m2m_ctx);
++			v4l2_m2m_buf_done(vb2_v4l2_src, state);
 +		}
-+	}
- 
- 	mtk_v4l2_debug(3, "enqueue buf type: %d addr: 0x%p num: %d",
- 		       msg_ctx->hardware_index, buf, msg_ctx->ready_num);
-@@ -254,6 +261,7 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
- 		container_of(msg_queue, struct mtk_vcodec_ctx, msg_queue);
- 	struct mtk_vcodec_dev *dev = ctx->dev;
- 	struct vdec_lat_buf *lat_buf;
-+	int status;
- 
- 	lat_buf = vdec_msg_queue_dqbuf(&dev->msg_queue_core_ctx);
- 	if (!lat_buf)
-@@ -270,11 +278,17 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
- 	vdec_msg_queue_qbuf(&ctx->msg_queue.lat_ctx, lat_buf);
- 
- 	wake_up_all(&ctx->msg_queue.core_dec_done);
--	if (atomic_read(&lat_buf->ctx->msg_queue.core_list_cnt)) {
--		mtk_v4l2_debug(3, "re-schedule to decode for core: %d",
--			       dev->msg_queue_core_ctx.ready_num);
--		queue_work(dev->core_workqueue, &msg_queue->core_work);
-+	spin_lock(&dev->msg_queue_core_ctx.ready_lock);
-+	lat_buf->ctx->msg_queue.core_work_cnt--;
-+
-+	if (lat_buf->ctx->msg_queue.core_work_cnt <
-+		atomic_read(&lat_buf->ctx->msg_queue.core_list_cnt)) {
-+		status = queue_work(lat_buf->ctx->dev->core_workqueue,
-+				    &lat_buf->ctx->msg_queue.core_work);
-+		if (status)
-+			lat_buf->ctx->msg_queue.core_work_cnt++;
+ 		v4l2_m2m_job_finish(dev->m2m_dev_dec, ctx->m2m_ctx);
  	}
-+	spin_unlock(&dev->msg_queue_core_ctx.ready_lock);
  }
- 
- int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
-@@ -289,6 +303,7 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
- 		return 0;
- 
- 	msg_queue->ctx = ctx;
-+	msg_queue->core_work_cnt = 0;
- 	vdec_msg_queue_init_ctx(&msg_queue->lat_ctx, MTK_VDEC_LAT0);
- 	INIT_WORK(&msg_queue->core_work, vdec_msg_queue_core_work);
- 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-index a75c04418f52e..a5d44bc97c16b 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-@@ -77,6 +77,7 @@ struct vdec_lat_buf {
-  * @lat_list_cnt: used to record each instance lat list count
-  * @core_list_cnt: used to record each instance core list count
-  * @core_dec_done: core work queue decode done event
-+ * @core_work_cnt: the number of core work in work queue
-  */
- struct vdec_msg_queue {
- 	struct vdec_lat_buf lat_buf[NUM_BUFFER_COUNT];
-@@ -92,6 +93,7 @@ struct vdec_msg_queue {
- 	atomic_t lat_list_cnt;
- 	atomic_t core_list_cnt;
- 	wait_queue_head_t core_dec_done;
-+	int core_work_cnt;
- };
- 
- /**
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
+index 955b2d0c8f53f..999ce7ee5fdc2 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
+@@ -597,7 +597,7 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
+ 	lat_buf = vdec_msg_queue_dqbuf(&inst->ctx->msg_queue.lat_ctx);
+ 	if (!lat_buf) {
+ 		mtk_vcodec_err(inst, "failed to get lat buffer");
+-		return -EINVAL;
++		return -EAGAIN;
+ 	}
+ 	share_info = lat_buf->private_data;
+ 	src_buf_info = container_of(bs, struct mtk_video_dec_buf, bs_buffer);
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+index cbb6728b8a40b..cf16cf2807f07 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+@@ -2070,7 +2070,7 @@ static int vdec_vp9_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
+ 	lat_buf = vdec_msg_queue_dqbuf(&instance->ctx->msg_queue.lat_ctx);
+ 	if (!lat_buf) {
+ 		mtk_vcodec_err(instance, "Failed to get VP9 lat buf\n");
+-		return -EBUSY;
++		return -EAGAIN;
+ 	}
+ 	pfc = (struct vdec_vp9_slice_pfc *)lat_buf->private_data;
+ 	if (!pfc) {
 -- 
 2.39.2
 
