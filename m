@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B8DB168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A32C433EF;
-	Mon,  8 May 2023 11:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55384168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB14BC4339B;
+	Mon,  8 May 2023 11:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545316;
-	bh=JpFETWvbuCTNt476SUVS0+90N9CRfeFecBJn04wOLhY=;
+	s=korg; t=1683545319;
+	bh=pLLPCupZUWaX2m89C4O5brHMDqEPzEPD7ayhsNckI9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WiyVqgQiAX7ldI0Oj2GSR+7Z6T1cF4BdOqZpMZ9vCJlYqAo6Mn8dU4hy9OI6O/M5P
-	 tTbWr/CbA/iP613qjPoX/wUVsq7EP/SnsMnO0gkWV/fgFAEyoscfnHRm+YjJY2vOyS
-	 Mnlld1IzB/wd7qm7it1jCJ+xzXOuAdIslK391U+E=
+	b=0x4VXSCJ6LmG5FIl9MxKKfZD4bC6vp0TwvFiJBc15vaY2C1yUY5ejnLaiaVxuz7W0
+	 Zk+hiC4zI6ncw0sZj4sNQJ2/iDIZXvn0LAN+gZJhtBgakjJQ9oWUdIHsQ7204DBQvF
+	 XA1iNR4kTDdgq5Ja/NuwwC5ShjwSPubWMHGlrDsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	=?UTF-8?q?Mika=20Penttil=C3=A4?= <mpenttil@redhat.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 677/694] mm/hugetlb: fix uffd-wp during fork()
-Date: Mon,  8 May 2023 11:48:32 +0200
-Message-Id: <20230508094458.205673564@linuxfoundation.org>
+	Cindy Lu <lulu@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.3 678/694] vhost_vdpa: fix unmap process in no-batch mode
+Date: Mon,  8 May 2023 11:48:33 +0200
+Message-Id: <20230508094458.254306648@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -40,117 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Xu <peterx@redhat.com>
+From: Cindy Lu <lulu@redhat.com>
 
-commit 5a2f8d22ace4c8ac8798fab836dca7350fa710b1 upstream.
+commit c82729e06644f4e087f5ff0f91b8fb15e03b8890 upstream.
 
-Patch series "mm/hugetlb: More fixes around uffd-wp vs fork() / RO pins",
-v2.
+While using the vdpa device with vIOMMU enabled
+in the guest VM, when the vdpa device bind to vfio-pci and run testpmd
+then system will fail to unmap.
+The test process is
+Load guest VM --> attach to virtio driver--> bind to vfio-pci driver
+So the mapping process is
+1)batched mode map to normal MR
+2)batched mode unmapped the normal MR
+3)unmapped all the memory
+4)mapped to iommu MR
 
+This error happened in step 3). The iotlb was freed in step 2)
+and the function vhost_vdpa_process_iotlb_msg will return fail
+Which causes failure.
 
-This patch (of 6):
+To fix this, we will not remove the AS while the iotlb->nmaps is 0.
+This will free in the vhost_vdpa_clean
 
-There're a bunch of things that were wrong:
-
-  - Reading uffd-wp bit from a swap entry should use pte_swp_uffd_wp()
-    rather than huge_pte_uffd_wp().
-
-  - When copying over a pte, we should drop uffd-wp bit when
-    !EVENT_FORK (aka, when !userfaultfd_wp(dst_vma)).
-
-  - When doing early CoW for private hugetlb (e.g. when the parent page was
-    pinned), uffd-wp bit should be properly carried over if necessary.
-
-No bug reported probably because most people do not even care about these
-corner cases, but they are still bugs and can be exposed by the recent unit
-tests introduced, so fix all of them in one shot.
-
-Link: https://lkml.kernel.org/r/20230417195317.898696-1-peterx@redhat.com
-Link: https://lkml.kernel.org/r/20230417195317.898696-2-peterx@redhat.com
-Fixes: bc70fbf269fd ("mm/hugetlb: handle uffd-wp during fork()")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
-Cc: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Mika Penttilä <mpenttil@redhat.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: aaca8373c4b1 ("vhost-vdpa: support ASID based IOTLB API")
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+Message-Id: <20230420151734.860168-1-lulu@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/vhost/vdpa.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -4949,11 +4949,15 @@ static bool is_hugetlb_entry_hwpoisoned(
- 
- static void
- hugetlb_install_folio(struct vm_area_struct *vma, pte_t *ptep, unsigned long addr,
--		     struct folio *new_folio)
-+		      struct folio *new_folio, pte_t old)
- {
-+	pte_t newpte = make_huge_pte(vma, &new_folio->page, 1);
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -851,11 +851,7 @@ static void vhost_vdpa_unmap(struct vhos
+ 		if (!v->in_batch)
+ 			ops->set_map(vdpa, asid, iotlb);
+ 	}
+-	/* If we are in the middle of batch processing, delay the free
+-	 * of AS until BATCH_END.
+-	 */
+-	if (!v->in_batch && !iotlb->nmaps)
+-		vhost_vdpa_remove_as(v, asid);
 +
- 	__folio_mark_uptodate(new_folio);
- 	hugepage_add_new_anon_rmap(new_folio, vma, addr);
--	set_huge_pte_at(vma->vm_mm, addr, ptep, make_huge_pte(vma, &new_folio->page, 1));
-+	if (userfaultfd_wp(vma) && huge_pte_uffd_wp(old))
-+		newpte = huge_pte_mkuffd_wp(newpte);
-+	set_huge_pte_at(vma->vm_mm, addr, ptep, newpte);
- 	hugetlb_count_add(pages_per_huge_page(hstate_vma(vma)), vma->vm_mm);
- 	folio_set_hugetlb_migratable(new_folio);
  }
-@@ -5028,14 +5032,12 @@ again:
- 			 */
- 			;
- 		} else if (unlikely(is_hugetlb_entry_hwpoisoned(entry))) {
--			bool uffd_wp = huge_pte_uffd_wp(entry);
--
--			if (!userfaultfd_wp(dst_vma) && uffd_wp)
-+			if (!userfaultfd_wp(dst_vma))
- 				entry = huge_pte_clear_uffd_wp(entry);
- 			set_huge_pte_at(dst, addr, dst_pte, entry);
- 		} else if (unlikely(is_hugetlb_entry_migration(entry))) {
- 			swp_entry_t swp_entry = pte_to_swp_entry(entry);
--			bool uffd_wp = huge_pte_uffd_wp(entry);
-+			bool uffd_wp = pte_swp_uffd_wp(entry);
  
- 			if (!is_readable_migration_entry(swp_entry) && cow) {
- 				/*
-@@ -5046,10 +5048,10 @@ again:
- 							swp_offset(swp_entry));
- 				entry = swp_entry_to_pte(swp_entry);
- 				if (userfaultfd_wp(src_vma) && uffd_wp)
--					entry = huge_pte_mkuffd_wp(entry);
-+					entry = pte_swp_mkuffd_wp(entry);
- 				set_huge_pte_at(src, addr, src_pte, entry);
- 			}
--			if (!userfaultfd_wp(dst_vma) && uffd_wp)
-+			if (!userfaultfd_wp(dst_vma))
- 				entry = huge_pte_clear_uffd_wp(entry);
- 			set_huge_pte_at(dst, addr, dst_pte, entry);
- 		} else if (unlikely(is_pte_marker(entry))) {
-@@ -5109,7 +5111,8 @@ again:
- 					/* huge_ptep of dst_pte won't change as in child */
- 					goto again;
- 				}
--				hugetlb_install_folio(dst_vma, dst_pte, addr, new_folio);
-+				hugetlb_install_folio(dst_vma, dst_pte, addr,
-+						      new_folio, src_pte_old);
- 				spin_unlock(src_ptl);
- 				spin_unlock(dst_ptl);
- 				continue;
-@@ -5127,6 +5130,9 @@ again:
- 				entry = huge_pte_wrprotect(entry);
- 			}
- 
-+			if (!userfaultfd_wp(dst_vma))
-+				entry = huge_pte_clear_uffd_wp(entry);
-+
- 			set_huge_pte_at(dst, addr, dst_pte, entry);
- 			hugetlb_count_add(npages, dst);
- 		}
+ static int vhost_vdpa_va_map(struct vhost_vdpa *v,
+@@ -1112,8 +1108,6 @@ static int vhost_vdpa_process_iotlb_msg(
+ 		if (v->in_batch && ops->set_map)
+ 			ops->set_map(vdpa, asid, iotlb);
+ 		v->in_batch = false;
+-		if (!iotlb->nmaps)
+-			vhost_vdpa_remove_as(v, asid);
+ 		break;
+ 	default:
+ 		r = -EINVAL;
 
 
