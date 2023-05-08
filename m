@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4D2171AC
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB04C433D2;
-	Mon,  8 May 2023 11:19:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBD4168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A805CC433EF;
+	Mon,  8 May 2023 11:19:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544794;
-	bh=RSjOxyB5EPvG1Rqoq05Wv2cmDWnbUTTmS3+tHQm/tIw=;
+	s=korg; t=1683544798;
+	bh=nwKkOU7fRPygFwl7dL6Q7xGSBIAmTYHM68+y6GOfCVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUlSRI8PKjijZ1AWQD3uyaRKb5LX83wrcn/iT9nmIBZxMK2hgTtmB1mlFTjFncT18
-	 ue9QXMSjbIKrs9vfqrHIKFSz3crQkUcauiYKLppJW+ilwag1d9U+XG32ZI+7Zh2g02
-	 zAwjFHTeaQcKtK80t1poZ51CNpwY0f0EAj+NtAWY=
+	b=VAVuvEVtLtJlBjy9V6Gut9MWFy/AVDKwZHlIs0+yR7a/TBY13dS/p/lIfWf+t/myG
+	 AdnW91Ja3LbSKmPjW0+07jCOxPJVs0vn46x+QSfhnXFZAiT9xnNJAI+FutCgPOlbwF
+	 ChdQwVRdzdPWm1Npvt6tCV9frtgNqh/turBd91u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 526/694] HID: amd_sfh: Fix illuminance value
-Date: Mon,  8 May 2023 11:46:01 +0200
-Message-Id: <20230508094451.380591962@linuxfoundation.org>
+Subject: [PATCH 6.3 527/694] HID: amd_sfh: Add support for shutdown operation
+Date: Mon,  8 May 2023 11:46:02 +0200
+Message-Id: <20230508094451.419077378@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,47 +37,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit a33e5e393171ae8384d3381db5cd159ba877cfcb ]
+[ Upstream commit 1353ecaf1830d6d1b74f3225378a9498b4e14fdd ]
 
-Illuminance value is actually 32 bits, but is incorrectly trancated to
-16 bits. Hence convert to integer illuminace accordingly to reflect
-correct values.
+As soon as the system is booted after shutdown, the sensors may remain in
+a weird state and fail to initialize. Therefore, all sensors should be
+turned off during shutdown.
 
-Fixes: 93ce5e0231d7 ("HID: amd_sfh: Implement SFH1.1 functionality")
+Fixes: 4f567b9f8141 ("SFH: PCIe driver to add support of AMD sensor fusion hub")
 Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c      | 2 +-
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/amd-sfh-hid/amd_sfh_pcie.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
-index 0609fea581c96..6f0d332ccf51c 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
-@@ -218,7 +218,7 @@ static u8 get_input_rep(u8 current_index, int sensor_idx, int report_id,
- 			     OFFSET_SENSOR_DATA_DEFAULT;
- 		memcpy_fromio(&als_data, sensoraddr, sizeof(struct sfh_als_data));
- 		get_common_inputs(&als_input.common_property, report_id);
--		als_input.illuminance_value = als_data.lux;
-+		als_input.illuminance_value = float_to_int(als_data.lux);
- 		report_size = sizeof(als_input);
- 		memcpy(input_report, &als_input, sizeof(als_input));
- 		break;
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h
-index a3e0ec289e3f9..9d31d5b510eb4 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h
-@@ -133,7 +133,7 @@ struct sfh_mag_data {
+diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
+index 47774b9ab3de0..c936d6a51c0cd 100644
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
+@@ -367,6 +367,14 @@ static int amd_mp2_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
+ 	return devm_add_action_or_reset(&pdev->dev, privdata->mp2_ops->remove, privdata);
+ }
  
- struct sfh_als_data {
- 	struct sfh_common_data commondata;
--	u16 lux;
-+	u32 lux;
++static void amd_sfh_shutdown(struct pci_dev *pdev)
++{
++	struct amd_mp2_dev *mp2 = pci_get_drvdata(pdev);
++
++	if (mp2 && mp2->mp2_ops)
++		mp2->mp2_ops->stop_all(mp2);
++}
++
+ static int __maybe_unused amd_mp2_pci_resume(struct device *dev)
+ {
+ 	struct amd_mp2_dev *mp2 = dev_get_drvdata(dev);
+@@ -401,6 +409,7 @@ static struct pci_driver amd_mp2_pci_driver = {
+ 	.id_table	= amd_mp2_pci_tbl,
+ 	.probe		= amd_mp2_pci_probe,
+ 	.driver.pm	= &amd_mp2_pm_ops,
++	.shutdown	= amd_sfh_shutdown,
  };
+ module_pci_driver(amd_mp2_pci_driver);
  
- struct hpd_status {
 -- 
 2.39.2
 
