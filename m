@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4426168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4850EC433EF;
-	Mon,  8 May 2023 10:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60B87168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD87C4339B;
+	Mon,  8 May 2023 10:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540245;
-	bh=YoVY1tZMegFFFnf0lVS57XTOL8GTnLz9g0yv7rFN2dg=;
+	s=korg; t=1683540248;
+	bh=m2+ycONwYLftibyl1TmCy7OlfXeiqTbggTwQzWOtZRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtkcMJK81/JTlRqMiW6QWtfa+JJ/3x6iVIe4Tm9MSlH38nehmN3pdoXB5M1TPO4Kg
-	 LYQiOuQR0IRhG12kT9pQ/G30QDAXI0ajYee+8xsTsjEuyaWpph7Cj3gGKHDOkW6qmx
-	 hjUnXqnqZMMS/bIHl5rMQ/485K1EwTnVWynjb+H4=
+	b=C39PBCyCg8vDqWvk2cer1zbI4pOp+aeRZqTkv5LWQwLl/xw4BtnTAH4yYl5aWEgkK
+	 MvRzbLj9ebCgucFrFCdJOEv712xUaxaGi+wNns676ogcvXfHVIsPxAQGWHyGo/A7Rv
+	 hMjrRGzc68Y+PoNb/laGlgtr6C+/ARO7su0trYTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huaweicloud.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Konstantin Shelekhin <k.shelekhin@yadro.com>,
+	Dmitriy Bogdanov <d.bogdanov@yadro.com>,
+	Anastasia Kovaleva <a.kovaleva@yadro.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 292/611] bpf: Fix __reg_bound_offset 64->32 var_off subreg propagation
-Date: Mon,  8 May 2023 11:42:14 +0200
-Message-Id: <20230508094431.898575322@linuxfoundation.org>
+Subject: [PATCH 6.1 293/611] scsi: target: core: Change the way target_xcopy_do_work() sets restiction on max I/O
+Date: Mon,  8 May 2023 11:42:15 +0200
+Message-Id: <20230508094431.934877265@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,264 +38,237 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Anastasia Kovaleva <a.kovaleva@yadro.com>
 
-[ Upstream commit 7be14c1c9030f73cc18b4ff23b78a0a081f16188 ]
+[ Upstream commit 689d94ec208cfdf95101d99319cb4bdc5f55774d ]
 
-Xu reports that after commit 3f50f132d840 ("bpf: Verifier, do explicit ALU32
-bounds tracking"), the following BPF program is rejected by the verifier:
+To determine how many blocks sends in one command, the minimum value is
+selected from the hw_max_sectors of both devices. In target_xcopy_do_work,
+hw_max_sectors are used as blocks, not sectors; it also ignores the fact
+that sectors can be of different sizes, for example 512 and 4096
+bytes. Because of this, a number of blocks can be transmitted that the
+device will not be able to accept.
 
-   0: (61) r2 = *(u32 *)(r1 +0)          ; R2_w=pkt(off=0,r=0,imm=0)
-   1: (61) r3 = *(u32 *)(r1 +4)          ; R3_w=pkt_end(off=0,imm=0)
-   2: (bf) r1 = r2
-   3: (07) r1 += 1
-   4: (2d) if r1 > r3 goto pc+8
-   5: (71) r1 = *(u8 *)(r2 +0)           ; R1_w=scalar(umax=255,var_off=(0x0; 0xff))
-   6: (18) r0 = 0x7fffffffffffff10
-   8: (0f) r1 += r0                      ; R1_w=scalar(umin=0x7fffffffffffff10,umax=0x800000000000000f)
-   9: (18) r0 = 0x8000000000000000
-  11: (07) r0 += 1
-  12: (ad) if r0 < r1 goto pc-2
-  13: (b7) r0 = 0
-  14: (95) exit
+Change the selection of max transmission size into bytes.
 
-And the verifier log says:
-
-  func#0 @0
-  0: R1=ctx(off=0,imm=0) R10=fp0
-  0: (61) r2 = *(u32 *)(r1 +0)          ; R1=ctx(off=0,imm=0) R2_w=pkt(off=0,r=0,imm=0)
-  1: (61) r3 = *(u32 *)(r1 +4)          ; R1=ctx(off=0,imm=0) R3_w=pkt_end(off=0,imm=0)
-  2: (bf) r1 = r2                       ; R1_w=pkt(off=0,r=0,imm=0) R2_w=pkt(off=0,r=0,imm=0)
-  3: (07) r1 += 1                       ; R1_w=pkt(off=1,r=0,imm=0)
-  4: (2d) if r1 > r3 goto pc+8          ; R1_w=pkt(off=1,r=1,imm=0) R3_w=pkt_end(off=0,imm=0)
-  5: (71) r1 = *(u8 *)(r2 +0)           ; R1_w=scalar(umax=255,var_off=(0x0; 0xff)) R2_w=pkt(off=0,r=1,imm=0)
-  6: (18) r0 = 0x7fffffffffffff10       ; R0_w=9223372036854775568
-  8: (0f) r1 += r0                      ; R0_w=9223372036854775568 R1_w=scalar(umin=9223372036854775568,umax=9223372036854775823,s32_min=-240,s32_max=15)
-  9: (18) r0 = 0x8000000000000000       ; R0_w=-9223372036854775808
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775807
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775807 R1_w=scalar(umin=9223372036854775568,umax=9223372036854775809)
-  13: (b7) r0 = 0                       ; R0_w=0
-  14: (95) exit
-
-  from 12 to 11: R0_w=-9223372036854775807 R1_w=scalar(umin=9223372036854775810,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff)) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775806
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775806 R1_w=scalar(umin=9223372036854775810,umax=9223372036854775810,var_off=(0x8000000000000000; 0xffffffff))
-  13: safe
-
-  [...]
-
-  from 12 to 11: R0_w=-9223372036854775795 R1=scalar(umin=9223372036854775822,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff)) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775794
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775794 R1=scalar(umin=9223372036854775822,umax=9223372036854775822,var_off=(0x8000000000000000; 0xffffffff))
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775794 R1=scalar(umin=9223372036854775823,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff)) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775793
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775793 R1=scalar(umin=9223372036854775823,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff))
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775793 R1=scalar(umin=9223372036854775824,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff)) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775792
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775792 R1=scalar(umin=9223372036854775824,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff))
-  13: safe
-
-  [...]
-
-The 64bit umin=9223372036854775810 bound continuously bumps by +1 while
-umax=9223372036854775823 stays as-is until the verifier complexity limit
-is reached and the program gets finally rejected. During this simulation,
-the umin also eventually surpasses umax. Looking at the first 'from 12
-to 11' output line from the loop, R1 has the following state:
-
-  R1_w=scalar(umin=0x8000000000000002 (9223372036854775810),
-              umax=0x800000000000000f (9223372036854775823),
-          var_off=(0x8000000000000000;
-                           0xffffffff))
-
-The var_off has technically not an inconsistent state but it's very
-imprecise and far off surpassing 64bit umax bounds whereas the expected
-output with refined known bits in var_off should have been like:
-
-  R1_w=scalar(umin=0x8000000000000002 (9223372036854775810),
-              umax=0x800000000000000f (9223372036854775823),
-          var_off=(0x8000000000000000;
-                                  0xf))
-
-In the above log, var_off stays as var_off=(0x8000000000000000; 0xffffffff)
-and does not converge into a narrower mask where more bits become known,
-eventually transforming R1 into a constant upon umin=9223372036854775823,
-umax=9223372036854775823 case where the verifier would have terminated and
-let the program pass.
-
-The __reg_combine_64_into_32() marks the subregister unknown and propagates
-64bit {s,u}min/{s,u}max bounds to their 32bit equivalents iff they are within
-the 32bit universe. The question came up whether __reg_combine_64_into_32()
-should special case the situation that when 64bit {s,u}min bounds have
-the same value as 64bit {s,u}max bounds to then assign the latter as
-well to the 32bit reg->{s,u}32_{min,max}_value. As can be seen from the
-above example however, that is just /one/ special case and not a /generic/
-solution given above example would still not be addressed this way and
-remain at an imprecise var_off=(0x8000000000000000; 0xffffffff).
-
-The improvement is needed in __reg_bound_offset() to refine var32_off with
-the updated var64_off instead of the prior reg->var_off. The reg_bounds_sync()
-code first refines information about the register's min/max bounds via
-__update_reg_bounds() from the current var_off, then in __reg_deduce_bounds()
-from sign bit and with the potentially learned bits from bounds it'll
-update the var_off tnum in __reg_bound_offset(). For example, intersecting
-with the old var_off might have improved bounds slightly, e.g. if umax
-was 0x7f...f and var_off was (0; 0xf...fc), then new var_off will then
-result in (0; 0x7f...fc). The intersected var64_off holds then the
-universe which is a superset of var32_off. The point for the latter is
-not to broaden, but to further refine known bits based on the intersection
-of var_off with 32 bit bounds, so that we later construct the final var_off
-from upper and lower 32 bits. The final __update_reg_bounds() can then
-potentially still slightly refine bounds if more bits became known from the
-new var_off.
-
-After the improvement, we can see R1 converging successively:
-
-  func#0 @0
-  0: R1=ctx(off=0,imm=0) R10=fp0
-  0: (61) r2 = *(u32 *)(r1 +0)          ; R1=ctx(off=0,imm=0) R2_w=pkt(off=0,r=0,imm=0)
-  1: (61) r3 = *(u32 *)(r1 +4)          ; R1=ctx(off=0,imm=0) R3_w=pkt_end(off=0,imm=0)
-  2: (bf) r1 = r2                       ; R1_w=pkt(off=0,r=0,imm=0) R2_w=pkt(off=0,r=0,imm=0)
-  3: (07) r1 += 1                       ; R1_w=pkt(off=1,r=0,imm=0)
-  4: (2d) if r1 > r3 goto pc+8          ; R1_w=pkt(off=1,r=1,imm=0) R3_w=pkt_end(off=0,imm=0)
-  5: (71) r1 = *(u8 *)(r2 +0)           ; R1_w=scalar(umax=255,var_off=(0x0; 0xff)) R2_w=pkt(off=0,r=1,imm=0)
-  6: (18) r0 = 0x7fffffffffffff10       ; R0_w=9223372036854775568
-  8: (0f) r1 += r0                      ; R0_w=9223372036854775568 R1_w=scalar(umin=9223372036854775568,umax=9223372036854775823,s32_min=-240,s32_max=15)
-  9: (18) r0 = 0x8000000000000000       ; R0_w=-9223372036854775808
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775807
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775807 R1_w=scalar(umin=9223372036854775568,umax=9223372036854775809)
-  13: (b7) r0 = 0                       ; R0_w=0
-  14: (95) exit
-
-  from 12 to 11: R0_w=-9223372036854775807 R1_w=scalar(umin=9223372036854775810,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775806
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775806 R1_w=-9223372036854775806
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775806 R1_w=scalar(umin=9223372036854775811,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775805
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775805 R1_w=-9223372036854775805
-  13: safe
-
-  [...]
-
-  from 12 to 11: R0_w=-9223372036854775798 R1=scalar(umin=9223372036854775819,umax=9223372036854775823,var_off=(0x8000000000000008; 0x7),s32_min=8,s32_max=15,u32_min=8,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775797
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775797 R1=-9223372036854775797
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775797 R1=scalar(umin=9223372036854775820,umax=9223372036854775823,var_off=(0x800000000000000c; 0x3),s32_min=12,s32_max=15,u32_min=12,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775796
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775796 R1=-9223372036854775796
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775796 R1=scalar(umin=9223372036854775821,umax=9223372036854775823,var_off=(0x800000000000000c; 0x3),s32_min=12,s32_max=15,u32_min=12,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775795
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775795 R1=-9223372036854775795
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775795 R1=scalar(umin=9223372036854775822,umax=9223372036854775823,var_off=(0x800000000000000e; 0x1),s32_min=14,s32_max=15,u32_min=14,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775794
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775794 R1=-9223372036854775794
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775794 R1=-9223372036854775793 R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775793
-  12: (ad) if r0 < r1 goto pc-2
-  last_idx 12 first_idx 12
-  parent didn't have regs=1 stack=0 marks: R0_rw=P-9223372036854775801 R1_r=scalar(umin=9223372036854775815,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  last_idx 11 first_idx 11
-  regs=1 stack=0 before 11: (07) r0 += 1
-  parent didn't have regs=1 stack=0 marks: R0_rw=P-9223372036854775805 R1_rw=scalar(umin=9223372036854775812,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  last_idx 12 first_idx 0
-  regs=1 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=1 stack=0 before 11: (07) r0 += 1
-  regs=1 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=1 stack=0 before 11: (07) r0 += 1
-  regs=1 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=1 stack=0 before 11: (07) r0 += 1
-  regs=1 stack=0 before 9: (18) r0 = 0x8000000000000000
-  last_idx 12 first_idx 12
-  parent didn't have regs=2 stack=0 marks: R0_rw=P-9223372036854775801 R1_r=Pscalar(umin=9223372036854775815,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  last_idx 11 first_idx 11
-  regs=2 stack=0 before 11: (07) r0 += 1
-  parent didn't have regs=2 stack=0 marks: R0_rw=P-9223372036854775805 R1_rw=Pscalar(umin=9223372036854775812,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  last_idx 12 first_idx 0
-  regs=2 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=2 stack=0 before 11: (07) r0 += 1
-  regs=2 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=2 stack=0 before 11: (07) r0 += 1
-  regs=2 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=2 stack=0 before 11: (07) r0 += 1
-  regs=2 stack=0 before 9: (18) r0 = 0x8000000000000000
-  regs=2 stack=0 before 8: (0f) r1 += r0
-  regs=3 stack=0 before 6: (18) r0 = 0x7fffffffffffff10
-  regs=2 stack=0 before 5: (71) r1 = *(u8 *)(r2 +0)
-  13: safe
-
-  from 4 to 13: safe
-  verification time 322 usec
-  stack depth 0
-  processed 56 insns (limit 1000000) max_states_per_insn 1 total_states 3 peak_states 3 mark_read 1
-
-This also fixes up a test case along with this improvement where we match
-on the verifier log. The updated log now has a refined var_off, too.
-
-Fixes: 3f50f132d840 ("bpf: Verifier, do explicit ALU32 bounds tracking")
-Reported-by: Xu Kuohai <xukuohai@huaweicloud.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20230314203424.4015351-2-xukuohai@huaweicloud.com
-Link: https://lore.kernel.org/bpf/20230322213056.2470-1-daniel@iogearbox.net
+Reviewed-by: Konstantin Shelekhin <k.shelekhin@yadro.com>
+Reviewed-by: Dmitriy Bogdanov <d.bogdanov@yadro.com>
+Signed-off-by: Anastasia Kovaleva <a.kovaleva@yadro.com>
+Link: https://lore.kernel.org/r/20221114102500.88892-4-a.kovaleva@yadro.com
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 395cee83d02d ("scsi: target: iscsit: Stop/wait on cmds during conn close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                          | 6 +++---
- tools/testing/selftests/bpf/prog_tests/align.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/target/target_core_xcopy.c | 97 ++++++++++++++++--------------
+ drivers/target/target_core_xcopy.h |  2 +-
+ 2 files changed, 54 insertions(+), 45 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 32ea9aaa8b8db..8726161076134 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -1590,9 +1590,9 @@ static void __reg_bound_offset(struct bpf_reg_state *reg)
- 	struct tnum var64_off = tnum_intersect(reg->var_off,
- 					       tnum_range(reg->umin_value,
- 							  reg->umax_value));
--	struct tnum var32_off = tnum_intersect(tnum_subreg(reg->var_off),
--						tnum_range(reg->u32_min_value,
--							   reg->u32_max_value));
-+	struct tnum var32_off = tnum_intersect(tnum_subreg(var64_off),
-+					       tnum_range(reg->u32_min_value,
-+							  reg->u32_max_value));
+diff --git a/drivers/target/target_core_xcopy.c b/drivers/target/target_core_xcopy.c
+index 8713cda0c2fb5..781f88ca900f0 100644
+--- a/drivers/target/target_core_xcopy.c
++++ b/drivers/target/target_core_xcopy.c
+@@ -582,11 +582,11 @@ static int target_xcopy_read_source(
+ 	struct xcopy_op *xop,
+ 	struct se_device *src_dev,
+ 	sector_t src_lba,
+-	u32 src_sectors)
++	u32 src_bytes)
+ {
+ 	struct xcopy_pt_cmd xpt_cmd;
+ 	struct se_cmd *se_cmd = &xpt_cmd.se_cmd;
+-	u32 length = (src_sectors * src_dev->dev_attrib.block_size);
++	u32 transfer_length_block = src_bytes / src_dev->dev_attrib.block_size;
+ 	int rc;
+ 	unsigned char cdb[16];
+ 	bool remote_port = (xop->op_origin == XCOL_DEST_RECV_OP);
+@@ -597,11 +597,11 @@ static int target_xcopy_read_source(
+ 	memset(&cdb[0], 0, 16);
+ 	cdb[0] = READ_16;
+ 	put_unaligned_be64(src_lba, &cdb[2]);
+-	put_unaligned_be32(src_sectors, &cdb[10]);
+-	pr_debug("XCOPY: Built READ_16: LBA: %llu Sectors: %u Length: %u\n",
+-		(unsigned long long)src_lba, src_sectors, length);
++	put_unaligned_be32(transfer_length_block, &cdb[10]);
++	pr_debug("XCOPY: Built READ_16: LBA: %llu Blocks: %u Length: %u\n",
++		(unsigned long long)src_lba, transfer_length_block, src_bytes);
  
- 	reg->var_off = tnum_or(tnum_clear_subreg(var64_off), var32_off);
+-	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, length,
++	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, src_bytes,
+ 			  DMA_FROM_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
+ 
+ 	rc = target_xcopy_setup_pt_cmd(&xpt_cmd, xop, src_dev, &cdb[0],
+@@ -627,11 +627,11 @@ static int target_xcopy_write_destination(
+ 	struct xcopy_op *xop,
+ 	struct se_device *dst_dev,
+ 	sector_t dst_lba,
+-	u32 dst_sectors)
++	u32 dst_bytes)
+ {
+ 	struct xcopy_pt_cmd xpt_cmd;
+ 	struct se_cmd *se_cmd = &xpt_cmd.se_cmd;
+-	u32 length = (dst_sectors * dst_dev->dev_attrib.block_size);
++	u32 transfer_length_block = dst_bytes / dst_dev->dev_attrib.block_size;
+ 	int rc;
+ 	unsigned char cdb[16];
+ 	bool remote_port = (xop->op_origin == XCOL_SOURCE_RECV_OP);
+@@ -642,11 +642,11 @@ static int target_xcopy_write_destination(
+ 	memset(&cdb[0], 0, 16);
+ 	cdb[0] = WRITE_16;
+ 	put_unaligned_be64(dst_lba, &cdb[2]);
+-	put_unaligned_be32(dst_sectors, &cdb[10]);
+-	pr_debug("XCOPY: Built WRITE_16: LBA: %llu Sectors: %u Length: %u\n",
+-		(unsigned long long)dst_lba, dst_sectors, length);
++	put_unaligned_be32(transfer_length_block, &cdb[10]);
++	pr_debug("XCOPY: Built WRITE_16: LBA: %llu Blocks: %u Length: %u\n",
++		(unsigned long long)dst_lba, transfer_length_block, dst_bytes);
+ 
+-	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, length,
++	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, dst_bytes,
+ 			  DMA_TO_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
+ 
+ 	rc = target_xcopy_setup_pt_cmd(&xpt_cmd, xop, dst_dev, &cdb[0],
+@@ -670,9 +670,10 @@ static void target_xcopy_do_work(struct work_struct *work)
+ 	struct se_cmd *ec_cmd = xop->xop_se_cmd;
+ 	struct se_device *src_dev, *dst_dev;
+ 	sector_t src_lba, dst_lba, end_lba;
+-	unsigned int max_sectors;
++	unsigned long long max_bytes, max_bytes_src, max_bytes_dst, max_blocks;
+ 	int rc = 0;
+-	unsigned short nolb, max_nolb, copied_nolb = 0;
++	unsigned short nolb;
++	unsigned int copied_bytes = 0;
+ 	sense_reason_t sense_rc;
+ 
+ 	sense_rc = target_parse_xcopy_cmd(xop);
+@@ -691,23 +692,31 @@ static void target_xcopy_do_work(struct work_struct *work)
+ 	nolb = xop->nolb;
+ 	end_lba = src_lba + nolb;
+ 	/*
+-	 * Break up XCOPY I/O into hw_max_sectors sized I/O based on the
+-	 * smallest max_sectors between src_dev + dev_dev, or
++	 * Break up XCOPY I/O into hw_max_sectors * hw_block_size sized
++	 * I/O based on the smallest max_bytes between src_dev + dst_dev
+ 	 */
+-	max_sectors = min(src_dev->dev_attrib.hw_max_sectors,
+-			  dst_dev->dev_attrib.hw_max_sectors);
+-	max_sectors = min_t(u32, max_sectors, XCOPY_MAX_SECTORS);
++	max_bytes_src = (unsigned long long) src_dev->dev_attrib.hw_max_sectors *
++			src_dev->dev_attrib.hw_block_size;
++	max_bytes_dst = (unsigned long long) dst_dev->dev_attrib.hw_max_sectors *
++			dst_dev->dev_attrib.hw_block_size;
+ 
+-	max_nolb = min_t(u16, max_sectors, ((u16)(~0U)));
++	max_bytes = min_t(u64, max_bytes_src, max_bytes_dst);
++	max_bytes = min_t(u64, max_bytes, XCOPY_MAX_BYTES);
+ 
+-	pr_debug("target_xcopy_do_work: nolb: %hu, max_nolb: %hu end_lba: %llu\n",
+-			nolb, max_nolb, (unsigned long long)end_lba);
+-	pr_debug("target_xcopy_do_work: Starting src_lba: %llu, dst_lba: %llu\n",
++	/*
++	 * Using shift instead of the division because otherwise GCC
++	 * generates __udivdi3 that is missing on i386
++	 */
++	max_blocks = max_bytes >> ilog2(src_dev->dev_attrib.block_size);
++
++	pr_debug("%s: nolb: %u, max_blocks: %llu end_lba: %llu\n", __func__,
++			nolb, max_blocks, (unsigned long long)end_lba);
++	pr_debug("%s: Starting src_lba: %llu, dst_lba: %llu\n", __func__,
+ 			(unsigned long long)src_lba, (unsigned long long)dst_lba);
+ 
+-	while (src_lba < end_lba) {
+-		unsigned short cur_nolb = min(nolb, max_nolb);
+-		u32 cur_bytes = cur_nolb * src_dev->dev_attrib.block_size;
++	while (nolb) {
++		u32 cur_bytes = min_t(u64, max_bytes, nolb * src_dev->dev_attrib.block_size);
++		unsigned short cur_nolb = cur_bytes / src_dev->dev_attrib.block_size;
+ 
+ 		if (cur_bytes != xop->xop_data_bytes) {
+ 			/*
+@@ -724,43 +733,43 @@ static void target_xcopy_do_work(struct work_struct *work)
+ 			xop->xop_data_bytes = cur_bytes;
+ 		}
+ 
+-		pr_debug("target_xcopy_do_work: Calling read src_dev: %p src_lba: %llu,"
+-			" cur_nolb: %hu\n", src_dev, (unsigned long long)src_lba, cur_nolb);
++		pr_debug("%s: Calling read src_dev: %p src_lba: %llu, cur_nolb: %hu\n",
++				__func__, src_dev, (unsigned long long)src_lba, cur_nolb);
+ 
+-		rc = target_xcopy_read_source(ec_cmd, xop, src_dev, src_lba, cur_nolb);
++		rc = target_xcopy_read_source(ec_cmd, xop, src_dev, src_lba, cur_bytes);
+ 		if (rc < 0)
+ 			goto out;
+ 
+-		src_lba += cur_nolb;
+-		pr_debug("target_xcopy_do_work: Incremented READ src_lba to %llu\n",
++		src_lba += cur_bytes / src_dev->dev_attrib.block_size;
++		pr_debug("%s: Incremented READ src_lba to %llu\n", __func__,
+ 				(unsigned long long)src_lba);
+ 
+-		pr_debug("target_xcopy_do_work: Calling write dst_dev: %p dst_lba: %llu,"
+-			" cur_nolb: %hu\n", dst_dev, (unsigned long long)dst_lba, cur_nolb);
++		pr_debug("%s: Calling write dst_dev: %p dst_lba: %llu, cur_nolb: %u\n",
++				__func__, dst_dev, (unsigned long long)dst_lba, cur_nolb);
+ 
+ 		rc = target_xcopy_write_destination(ec_cmd, xop, dst_dev,
+-						dst_lba, cur_nolb);
++						dst_lba, cur_bytes);
+ 		if (rc < 0)
+ 			goto out;
+ 
+-		dst_lba += cur_nolb;
+-		pr_debug("target_xcopy_do_work: Incremented WRITE dst_lba to %llu\n",
++		dst_lba += cur_bytes / dst_dev->dev_attrib.block_size;
++		pr_debug("%s: Incremented WRITE dst_lba to %llu\n", __func__,
+ 				(unsigned long long)dst_lba);
+ 
+-		copied_nolb += cur_nolb;
+-		nolb -= cur_nolb;
++		copied_bytes += cur_bytes;
++		nolb -= cur_bytes / src_dev->dev_attrib.block_size;
+ 	}
+ 
+ 	xcopy_pt_undepend_remotedev(xop);
+ 	target_free_sgl(xop->xop_data_sg, xop->xop_data_nents);
+ 	kfree(xop);
+ 
+-	pr_debug("target_xcopy_do_work: Final src_lba: %llu, dst_lba: %llu\n",
++	pr_debug("%s: Final src_lba: %llu, dst_lba: %llu\n", __func__,
+ 		(unsigned long long)src_lba, (unsigned long long)dst_lba);
+-	pr_debug("target_xcopy_do_work: Blocks copied: %hu, Bytes Copied: %u\n",
+-		copied_nolb, copied_nolb * dst_dev->dev_attrib.block_size);
++	pr_debug("%s: Blocks copied: %u, Bytes Copied: %u\n", __func__,
++		copied_bytes / dst_dev->dev_attrib.block_size, copied_bytes);
+ 
+-	pr_debug("target_xcopy_do_work: Setting X-COPY GOOD status -> sending response\n");
++	pr_debug("%s: Setting X-COPY GOOD status -> sending response\n", __func__);
+ 	target_complete_cmd(ec_cmd, SAM_STAT_GOOD);
+ 	return;
+ 
+@@ -776,8 +785,8 @@ static void target_xcopy_do_work(struct work_struct *work)
+ 
+ err_free:
+ 	kfree(xop);
+-	pr_warn_ratelimited("target_xcopy_do_work: rc: %d, sense: %u, XCOPY operation failed\n",
+-			   rc, sense_rc);
++	pr_warn_ratelimited("%s: rc: %d, sense: %u, XCOPY operation failed\n",
++			   __func__, rc, sense_rc);
+ 	target_complete_cmd_with_sense(ec_cmd, SAM_STAT_CHECK_CONDITION, sense_rc);
  }
-diff --git a/tools/testing/selftests/bpf/prog_tests/align.c b/tools/testing/selftests/bpf/prog_tests/align.c
-index 970f09156eb46..de27a29af2703 100644
---- a/tools/testing/selftests/bpf/prog_tests/align.c
-+++ b/tools/testing/selftests/bpf/prog_tests/align.c
-@@ -565,14 +565,14 @@ static struct bpf_align_test tests[] = {
- 			/* New unknown value in R7 is (4n), >= 76 */
- 			{14, "R7_w=scalar(umin=76,umax=1096,var_off=(0x0; 0x7fc))"},
- 			/* Adding it to packet pointer gives nice bounds again */
--			{16, "R5_w=pkt(id=3,off=0,r=0,umin=2,umax=1082,var_off=(0x2; 0xfffffffc)"},
-+			{16, "R5_w=pkt(id=3,off=0,r=0,umin=2,umax=1082,var_off=(0x2; 0x7fc)"},
- 			/* At the time the word size load is performed from R5,
- 			 * its total fixed offset is NET_IP_ALIGN + reg->off (0)
- 			 * which is 2.  Then the variable offset is (4n+2), so
- 			 * the total offset is 4-byte aligned and meets the
- 			 * load's requirements.
- 			 */
--			{20, "R5=pkt(id=3,off=0,r=4,umin=2,umax=1082,var_off=(0x2; 0xfffffffc)"},
-+			{20, "R5=pkt(id=3,off=0,r=4,umin=2,umax=1082,var_off=(0x2; 0x7fc)"},
- 		},
- 	},
- };
+ 
+diff --git a/drivers/target/target_core_xcopy.h b/drivers/target/target_core_xcopy.h
+index e5f20005179a8..0aad7dc658955 100644
+--- a/drivers/target/target_core_xcopy.h
++++ b/drivers/target/target_core_xcopy.h
+@@ -5,7 +5,7 @@
+ #define XCOPY_TARGET_DESC_LEN		32
+ #define XCOPY_SEGMENT_DESC_LEN		28
+ #define XCOPY_NAA_IEEE_REGEX_LEN	16
+-#define XCOPY_MAX_SECTORS		4096
++#define XCOPY_MAX_BYTES			16777216 /* 16 MB */
+ 
+ /*
+  * SPC4r37 6.4.6.1
 -- 
 2.39.2
 
