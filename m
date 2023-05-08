@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F220171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:40:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E335BC433EF;
-	Mon,  8 May 2023 11:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360CC171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:40:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBC4C4339B;
+	Mon,  8 May 2023 11:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546051;
-	bh=9yrgSzytMt4Da6JiTfxy64+/1fjD6REwiipXktbovRE=;
+	s=korg; t=1683546054;
+	bh=38TSVG4EbbNrH0Ts/3UO5GGPJ2rOy+vUboqdHWyieUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umRGJ59OuE/djcw1qe6ZyibiohG+EPIrblxyFl7nrusE7GvwyKJcGORg9mcjDU6Qz
-	 77AzMm/UaOeNpYiSfOqtM5urJr2oPg+y+KT7Y7h3apU+9Cly3z3uAXTlE81YnS3F+e
-	 bHAYxEtm9QYU2UtRv1+EMUROjXVjBZOq3Ctk0qCw=
+	b=HxVrOOnXOTBJ5mGbe3fh2KRJuYnatsVtczdbzujlbht8lTZDrGeBBnE0Grf61rTHn
+	 nl3rXxWAy7MQeoy9HQSudHN/egI3aNvCxLfES+j1Ow3XMQB5qHhDLsNm9RASatMKJJ
+	 B6tA9p4OmsfV+O+LI+l5eQPGjhQfHYs3eqmyMJ5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Prashanth K <quic_prashk@quicinc.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 223/371] wifi: iwlwifi: fw: fix memory leak in debugfs
-Date: Mon,  8 May 2023 11:47:04 +0200
-Message-Id: <20230508094820.912093289@linuxfoundation.org>
+Subject: [PATCH 5.15 241/371] usb: dwc3: gadget: Change condition for processing suspend event
+Date: Mon,  8 May 2023 11:47:22 +0200
+Message-Id: <20230508094821.641513521@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,40 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Prashanth K <quic_prashk@quicinc.com>
 
-[ Upstream commit 3d90d2f4a018fe8cfd65068bc6350b6222be4852 ]
+[ Upstream commit 4decf4060ecfee1f7a710999fcd421645ac0c419 ]
 
-Fix a memory leak that occurs when reading the fw_info
-file all the way, since we return NULL indicating no
-more data, but don't free the status tracking object.
+Currently we process the suspend interrupt event only if the
+device is in configured state. Consider a case where device
+is not configured and got suspend interrupt, in that case our
+gadget will still use 100mA as composite_suspend didn't happen.
+But battery charging specification (BC1.2) expects a downstream
+device to draw less than 2.5mA when unconnected OR suspended.
 
-Fixes: 36dfe9ac6e8b ("iwlwifi: dump api version in yaml format")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230418122405.239e501b3b8d.I4268f87809ef91209cbcd748eee0863195e70fa2@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix this by removing the condition for processing suspend event,
+and thus composite_resume would set vbus draw to 2.
+
+Fixes: 72704f876f50 ("dwc3: gadget: Implement the suspend entry event handler")
+Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://lore.kernel.org/r/1677217619-10261-2-git-send-email-quic_prashk@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/debugfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
-index a152ce3064759..e372f935f6983 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
-@@ -317,8 +317,10 @@ static void *iwl_dbgfs_fw_info_seq_next(struct seq_file *seq,
- 	const struct iwl_fw *fw = priv->fwrt->fw;
- 
- 	*pos = ++state->pos;
--	if (*pos >= fw->ucode_capa.n_cmd_versions)
-+	if (*pos >= fw->ucode_capa.n_cmd_versions) {
-+		kfree(state);
- 		return NULL;
-+	}
- 
- 	return state;
- }
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index eaf64f33fe077..7ff77a0de5152 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -4092,15 +4092,8 @@ static void dwc3_gadget_interrupt(struct dwc3 *dwc,
+ 		break;
+ 	case DWC3_DEVICE_EVENT_SUSPEND:
+ 		/* It changed to be suspend event for version 2.30a and above */
+-		if (!DWC3_VER_IS_PRIOR(DWC3, 230A)) {
+-			/*
+-			 * Ignore suspend event until the gadget enters into
+-			 * USB_STATE_CONFIGURED state.
+-			 */
+-			if (dwc->gadget->state >= USB_STATE_CONFIGURED)
+-				dwc3_gadget_suspend_interrupt(dwc,
+-						event->event_info);
+-		}
++		if (!DWC3_VER_IS_PRIOR(DWC3, 230A))
++			dwc3_gadget_suspend_interrupt(dwc, event->event_info);
+ 		break;
+ 	case DWC3_DEVICE_EVENT_SOF:
+ 	case DWC3_DEVICE_EVENT_ERRATIC_ERROR:
 -- 
 2.39.2
 
