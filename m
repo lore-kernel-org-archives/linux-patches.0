@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7146168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8D3C433EF;
-	Mon,  8 May 2023 11:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F7B320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25888C433D2;
+	Mon,  8 May 2023 11:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545821;
-	bh=bBHIXVqHrAN4AY/ZiprgnAImdjm4JwtPjflNY0rto2A=;
+	s=korg; t=1683545824;
+	bh=S88wOIt2IOhnBEdUVCQyOQM2UOcf9UrLxZnhgA6RpnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yZhpj+plVVY0umLY9HWHNjCU8Vlwx6I7ako7KCrwaSHbz00qXSdjRLwegGMZxdeHK
-	 usiucDGHyVO01EyrkH1e1iyLpndIV/P3anHBe3ojNaNzDMaSqBpfQms65EhfudKMcH
-	 nLSH1OxB1ZuVhlPmXLb8u5nTjDct7StlsDTFIRng=
+	b=LsMRVdmq90Ay5kq5mTC4R035og9BpJOH2LgxOrKPHdhw/jzbsbQNjq6JxgTqjr73d
+	 bj3I0ldU06e7PZaVQWdVF4GKqVopD6LAPsgPyZKGf3IeqhggnPFYOzjOEz3MtlVlPo
+	 umLeBhLoGUuHi6Y9eGju8pC5tBw7r9u19ti9SXmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/371] drm/ttm: optimize pool allocations a bit v2
-Date: Mon,  8 May 2023 11:45:27 +0200
-Message-Id: <20230508094817.035465435@linuxfoundation.org>
+Subject: [PATCH 5.15 158/371] bpf: take into account liveness when propagating precision
+Date: Mon,  8 May 2023 11:45:59 +0200
+Message-Id: <20230508094818.364890114@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,142 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian König <christian.koenig@amd.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 735c466465eba51deaee3012d8403c10fc7c8c03 ]
+[ Upstream commit 52c2b005a3c18c565fc70cfd0ca49375f301e952 ]
 
-If we got a page pool use it as much as possible.
+When doing state comparison, if old state has register that is not
+marked as REG_LIVE_READ, then we just skip comparison, regardless what's
+the state of corresponing register in current state. This is because not
+REG_LIVE_READ register is irrelevant for further program execution and
+correctness. All good here.
 
-If we can't get more pages from the pool allocate as much as possible.
+But when we get to precision propagation, after two states were declared
+equivalent, we don't take into account old register's liveness, and thus
+attempt to propagate precision for register in current state even if
+that register in old state was not REG_LIVE_READ anymore. This is bad,
+because register in current state could be anything at all and this
+could cause -EFAULT due to internal logic bugs.
 
-Only if that still doesn't work reduce the order and try again.
+Fix by taking into account REG_LIVE_READ liveness mark to keep the logic
+in state comparison in sync with precision propagation.
 
-v2: minor cleanups
-
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221107195808.1873-1-christian.koenig@amd.com
-Stable-dep-of: 379989e7cbdc ("drm/ttm/pool: Fix ttm_pool_alloc error path")
+Fixes: a3ce685dd01a ("bpf: fix precision tracking")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20230309224131.57449-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_pool.c | 82 ++++++++++++++++++++++++----------
- 1 file changed, 58 insertions(+), 24 deletions(-)
+ kernel/bpf/verifier.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
-index 82cbb29a05aa3..603b044833048 100644
---- a/drivers/gpu/drm/ttm/ttm_pool.c
-+++ b/drivers/gpu/drm/ttm/ttm_pool.c
-@@ -345,6 +345,28 @@ static unsigned int ttm_pool_page_order(struct ttm_pool *pool, struct page *p)
- 	return p->private;
- }
- 
-+/* Called when we got a page, either from a pool or newly allocated */
-+static int ttm_pool_page_allocated(struct ttm_pool *pool, unsigned int order,
-+				   struct page *p, dma_addr_t **dma_addr,
-+				   unsigned long *num_pages,
-+				   struct page ***pages)
-+{
-+	unsigned int i;
-+	int r;
-+
-+	if (*dma_addr) {
-+		r = ttm_pool_map(pool, order, p, dma_addr);
-+		if (r)
-+			return r;
-+	}
-+
-+	*num_pages -= 1 << order;
-+	for (i = 1 << order; i; --i, ++(*pages), ++p)
-+		**pages = p;
-+
-+	return 0;
-+}
-+
- /**
-  * ttm_pool_alloc - Fill a ttm_tt object
-  *
-@@ -386,45 +408,57 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
- 	for (order = min_t(unsigned int, MAX_ORDER - 1, __fls(num_pages));
- 	     num_pages;
- 	     order = min_t(unsigned int, order, __fls(num_pages))) {
--		bool apply_caching = false;
- 		struct ttm_pool_type *pt;
- 
- 		pt = ttm_pool_select_type(pool, tt->caching, order);
- 		p = pt ? ttm_pool_type_take(pt) : NULL;
- 		if (p) {
--			apply_caching = true;
--		} else {
--			p = ttm_pool_alloc_page(pool, gfp_flags, order);
--			if (p && PageHighMem(p))
--				apply_caching = true;
--		}
--
--		if (!p) {
--			if (order) {
--				--order;
--				continue;
--			}
--			r = -ENOMEM;
--			goto error_free_all;
--		}
--
--		if (apply_caching) {
- 			r = ttm_pool_apply_caching(caching, pages,
- 						   tt->caching);
- 			if (r)
- 				goto error_free_page;
--			caching = pages + (1 << order);
-+
-+			do {
-+				r = ttm_pool_page_allocated(pool, order, p,
-+							    &dma_addr,
-+							    &num_pages,
-+							    &pages);
-+				if (r)
-+					goto error_free_page;
-+
-+				if (num_pages < (1 << order))
-+					break;
-+
-+				p = ttm_pool_type_take(pt);
-+			} while (p);
-+			caching = pages;
- 		}
- 
--		if (dma_addr) {
--			r = ttm_pool_map(pool, order, p, &dma_addr);
-+		while (num_pages >= (1 << order) &&
-+		       (p = ttm_pool_alloc_page(pool, gfp_flags, order))) {
-+
-+			if (PageHighMem(p)) {
-+				r = ttm_pool_apply_caching(caching, pages,
-+							   tt->caching);
-+				if (r)
-+					goto error_free_page;
-+			}
-+			r = ttm_pool_page_allocated(pool, order, p, &dma_addr,
-+						    &num_pages, &pages);
- 			if (r)
- 				goto error_free_page;
-+			if (PageHighMem(p))
-+				caching = pages;
- 		}
- 
--		num_pages -= 1 << order;
--		for (i = 1 << order; i; --i)
--			*(pages++) = p++;
-+		if (!p) {
-+			if (order) {
-+				--order;
-+				continue;
-+			}
-+			r = -ENOMEM;
-+			goto error_free_all;
-+		}
- 	}
- 
- 	r = ttm_pool_apply_caching(caching, pages, tt->caching);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 37d4b5f5ec0c3..8e6f868d6cb9b 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -10616,7 +10616,8 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ 		state_reg = state->regs;
+ 		for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
+ 			if (state_reg->type != SCALAR_VALUE ||
+-			    !state_reg->precise)
++			    !state_reg->precise ||
++			    !(state_reg->live & REG_LIVE_READ))
+ 				continue;
+ 			if (env->log.level & BPF_LOG_LEVEL2)
+ 				verbose(env, "frame %d: propagating r%d\n", i, fr);
+@@ -10630,7 +10631,8 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ 				continue;
+ 			state_reg = &state->stack[i].spilled_ptr;
+ 			if (state_reg->type != SCALAR_VALUE ||
+-			    !state_reg->precise)
++			    !state_reg->precise ||
++			    !(state_reg->live & REG_LIVE_READ))
+ 				continue;
+ 			if (env->log.level & BPF_LOG_LEVEL2)
+ 				verbose(env, "frame %d: propagating fp%d\n",
 -- 
 2.39.2
 
