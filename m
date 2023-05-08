@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E822168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06487C433EF;
-	Mon,  8 May 2023 11:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE7E168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BF3C433EF;
+	Mon,  8 May 2023 11:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545294;
-	bh=Yzi87WhceUp6FZn+ykAI3vICoqFhonqzZeEy0CkgwnA=;
+	s=korg; t=1683545297;
+	bh=MV2/obIo1SmIrVNPfDMX+Putmo3myiKA/3YBD6AfvVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DNfmYxqay9eRmu0h6jFBMXIOo9Bxtg8xyeVhbsuBfH5KS/vlNwHnGuNTz3S+kDCl2
-	 5B/xzCQRtQwom+ldqJwDmnJe8K9TvwDWn2N9BZRC9KclcGI9MHeFH85G07JYbEUYjr
-	 rznKAdPtbsfuytUiwGnT8ioWO7jcPQsCreUeQLkc=
+	b=1g0Aw52yTO4Ka1KUbqT+vXJJ7LK64I1X7dhC6d1VCi4J/QcSbKqR5Fc1IIkHPU/bD
+	 +5RBnu1iSnjo6GPTAKxDx8LAEw8RaXN5xbhAgcsmPRKMu6wGQhWwM5mt/Y0sro2J/O
+	 LST1QCLQi9gFQ0fuXGCIUzdgSn0BAEN9mKe0AxuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 688/694] cifs: fix potential use-after-free bugs in TCP_Server_Info::hostname
-Date: Mon,  8 May 2023 11:48:43 +0200
-Message-Id: <20230508094458.721938671@linuxfoundation.org>
+Subject: [PATCH 6.3 689/694] cifs: protect session status check in smb2_reconnect()
+Date: Mon,  8 May 2023 11:48:44 +0200
+Message-Id: <20230508094458.763040460@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,151 +36,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-commit 90c49fce1c43e1cc152695e20363ff5087897c09 upstream.
+commit 5bff9f741af60b143a5ae73417a8ec47fd5ff2f4 upstream.
 
-TCP_Server_Info::hostname may be updated once or many times during
-reconnect, so protect its access outside reconnect path as well and
-then prevent any potential use-after-free bugs.
+Use @ses->ses_lock to protect access of @ses->ses_status.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifs_debug.c |    7 ++++++-
- fs/cifs/cifs_debug.h |   12 ++++++------
- fs/cifs/connect.c    |   10 +++++++---
- fs/cifs/sess.c       |    7 ++++---
- 4 files changed, 23 insertions(+), 13 deletions(-)
+ fs/cifs/smb2pdu.c |   15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
---- a/fs/cifs/cifs_debug.c
-+++ b/fs/cifs/cifs_debug.c
-@@ -280,8 +280,10 @@ static int cifs_debug_data_proc_show(str
- 		seq_printf(m, "\n%d) ConnectionId: 0x%llx ",
- 			c, server->conn_id);
- 
-+		spin_lock(&server->srv_lock);
- 		if (server->hostname)
- 			seq_printf(m, "Hostname: %s ", server->hostname);
-+		spin_unlock(&server->srv_lock);
- #ifdef CONFIG_CIFS_SMB_DIRECT
- 		if (!server->rdma)
- 			goto skip_rdma;
-@@ -623,10 +625,13 @@ static int cifs_stats_proc_show(struct s
- 				server->fastest_cmd[j],
- 				server->slowest_cmd[j]);
- 		for (j = 0; j < NUMBER_OF_SMB2_COMMANDS; j++)
--			if (atomic_read(&server->smb2slowcmd[j]))
-+			if (atomic_read(&server->smb2slowcmd[j])) {
-+				spin_lock(&server->srv_lock);
- 				seq_printf(m, "  %d slow responses from %s for command %d\n",
- 					atomic_read(&server->smb2slowcmd[j]),
- 					server->hostname, j);
-+				spin_unlock(&server->srv_lock);
-+			}
- #endif /* STATS2 */
- 		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
- 			list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
---- a/fs/cifs/cifs_debug.h
-+++ b/fs/cifs/cifs_debug.h
-@@ -81,19 +81,19 @@ do {									\
- 
- #define cifs_server_dbg_func(ratefunc, type, fmt, ...)			\
- do {									\
--	const char *sn = "";						\
--	if (server && server->hostname)					\
--		sn = server->hostname;					\
-+	spin_lock(&server->srv_lock);					\
- 	if ((type) & FYI && cifsFYI & CIFS_INFO) {			\
- 		pr_debug_ ## ratefunc("%s: \\\\%s " fmt,		\
--				      __FILE__, sn, ##__VA_ARGS__);	\
-+				      __FILE__, server->hostname,	\
-+				      ##__VA_ARGS__);			\
- 	} else if ((type) & VFS) {					\
- 		pr_err_ ## ratefunc("VFS: \\\\%s " fmt,			\
--				    sn, ##__VA_ARGS__);			\
-+				    server->hostname, ##__VA_ARGS__);	\
- 	} else if ((type) & NOISY && (NOISY != 0)) {			\
- 		pr_debug_ ## ratefunc("\\\\%s " fmt,			\
--				      sn, ##__VA_ARGS__);		\
-+				      server->hostname, ##__VA_ARGS__);	\
- 	}								\
-+	spin_unlock(&server->srv_lock);					\
- } while (0)
- 
- #define cifs_server_dbg(type, fmt, ...)					\
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -403,8 +403,10 @@ static int __reconnect_target_unlocked(s
- 		if (server->hostname != target) {
- 			hostname = extract_hostname(target);
- 			if (!IS_ERR(hostname)) {
-+				spin_lock(&server->srv_lock);
- 				kfree(server->hostname);
- 				server->hostname = hostname;
-+				spin_unlock(&server->srv_lock);
- 			} else {
- 				cifs_dbg(FYI, "%s: couldn't extract hostname or address from dfs target: %ld\n",
- 					 __func__, PTR_ERR(hostname));
-@@ -561,9 +563,7 @@ cifs_echo_request(struct work_struct *wo
- 		goto requeue_echo;
- 
- 	rc = server->ops->echo ? server->ops->echo(server) : -ENOSYS;
--	if (rc)
--		cifs_dbg(FYI, "Unable to send echo request to server: %s\n",
--			 server->hostname);
-+	cifs_server_dbg(FYI, "send echo request: rc = %d\n", rc);
- 
- 	/* Check witness registrations */
- 	cifs_swn_check();
-@@ -1404,6 +1404,8 @@ static int match_server(struct TCP_Serve
- {
- 	struct sockaddr *addr = (struct sockaddr *)&ctx->dstaddr;
- 
-+	lockdep_assert_held(&server->srv_lock);
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -175,8 +175,17 @@ smb2_reconnect(__le16 smb2_command, stru
+ 		}
+ 	}
+ 	spin_unlock(&tcon->tc_lock);
+-	if ((!tcon->ses) || (tcon->ses->ses_status == SES_EXITING) ||
+-	    (!tcon->ses->server) || !server)
 +
- 	if (ctx->nosharesock)
- 		return 0;
++	ses = tcon->ses;
++	if (!ses)
++		return -EIO;
++	spin_lock(&ses->ses_lock);
++	if (ses->ses_status == SES_EXITING) {
++		spin_unlock(&ses->ses_lock);
++		return -EIO;
++	}
++	spin_unlock(&ses->ses_lock);
++	if (!ses->server || !server)
+ 		return -EIO;
  
-@@ -1810,7 +1812,9 @@ cifs_setup_ipc(struct cifs_ses *ses, str
- 	if (tcon == NULL)
- 		return -ENOMEM;
+ 	spin_lock(&server->srv_lock);
+@@ -204,8 +213,6 @@ again:
+ 	if (rc)
+ 		return rc;
  
-+	spin_lock(&server->srv_lock);
- 	scnprintf(unc, sizeof(unc), "\\\\%s\\IPC$", server->hostname);
-+	spin_unlock(&server->srv_lock);
- 
- 	xid = get_xid();
- 	tcon->ses = ses;
---- a/fs/cifs/sess.c
-+++ b/fs/cifs/sess.c
-@@ -159,6 +159,7 @@ cifs_chan_is_iface_active(struct cifs_se
- /* returns number of channels added */
- int cifs_try_adding_channels(struct cifs_sb_info *cifs_sb, struct cifs_ses *ses)
- {
-+	struct TCP_Server_Info *server = ses->server;
- 	int old_chan_count, new_chan_count;
- 	int left;
- 	int rc = 0;
-@@ -178,16 +179,16 @@ int cifs_try_adding_channels(struct cifs
- 		return 0;
- 	}
- 
--	if (ses->server->dialect < SMB30_PROT_ID) {
-+	if (server->dialect < SMB30_PROT_ID) {
+-	ses = tcon->ses;
+-
+ 	spin_lock(&ses->chan_lock);
+ 	if (!cifs_chan_needs_reconnect(ses, server) && !tcon->need_reconnect) {
  		spin_unlock(&ses->chan_lock);
- 		cifs_dbg(VFS, "multichannel is not supported on this protocol version, use 3.0 or above\n");
- 		return 0;
- 	}
- 
--	if (!(ses->server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL)) {
-+	if (!(server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL)) {
- 		ses->chan_max = 1;
- 		spin_unlock(&ses->chan_lock);
--		cifs_dbg(VFS, "server %s does not support multichannel\n", ses->server->hostname);
-+		cifs_server_dbg(VFS, "no multichannel support\n");
- 		return 0;
- 	}
- 	spin_unlock(&ses->chan_lock);
 
 
