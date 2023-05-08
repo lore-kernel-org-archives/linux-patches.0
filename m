@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5951713AF4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:19:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4B3DC4339B;
-	Mon,  8 May 2023 10:19:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DB8210C
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:19:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FFEC4339B;
+	Mon,  8 May 2023 10:19:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541173;
-	bh=FJGBPhD8kC3far5fAYAih91aYmVJMrhZCVgzIxdDpMQ=;
+	s=korg; t=1683541176;
+	bh=0li5shSte6JliYNG2fbsa6AiMwV9Jr69Wb0Kk4pbDis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgUkvDe7AJOZpnUqyJdf3Do8Is+wH2SEX1cz31pZYRxsTvHYVGi+kZ2RmUMq+dtqR
-	 Gvr2a8RYPTDFIsHFWfDMErXD+HDfVPZW09nG4yLak8JGccGCVzvoVSAPoVMHBKPNzJ
-	 dbPsFai3wwuyg6qHr0UZIcZ1PR8utH+YE9GYpybQ=
+	b=JE5dw0BulRFtsijFJLin0323/nKkuAFIkUQKMTGDTLmYp9Yaeb52FbDfghU3EFZnM
+	 byTDk2/ADXBrJi9XjazzV2CxtUNeZagprCaRSPE+LU+IIhWOcsk1vyMuldv47fAsSK
+	 NYGxj4NLXn56SMEh41bTY/cSOO37ACS1vEh0FCTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Koul <vkoul@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 6.2 029/663] phy: qcom-qmp-pcie: sc8180x PCIe PHY has 2 lanes
-Date: Mon,  8 May 2023 11:37:35 +0200
-Message-Id: <20230508094429.390431255@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 003/663] ASoC: soc-pcm: fix hw->formats cleared by soc_pcm_hw_init() for dpcm
+Date: Mon,  8 May 2023 11:37:09 +0200
+Message-Id: <20230508094428.513418060@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -34,33 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit 1db6b0a4246ce708b89f5136571130b9987741d1 upstream.
+[ Upstream commit 083a25b18d6ad9f1f540e629909aa3eaaaf01823 ]
 
-All PCIe PHYs on sc8180x platform have 2 lanes, so change the number of
-lanes to 2.
+The hw->formats may be set by snd_dmaengine_pcm_refine_runtime_hwparams()
+in component's startup()/open(), but soc_pcm_hw_init() will init
+hw->formats in dpcm_runtime_setup_fe() after component's startup()/open(),
+which causes the valuable hw->formats to be cleared.
 
-Fixes: f839f14e24f2 ("phy: qcom-qmp: Add sc8180x PCIe support")
-Cc: stable@vger.kernel.org # 5.15
-Sgned-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230331151250.4049-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+So need to store the hw->formats before initialization, then restore
+it after initialization.
+
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://lore.kernel.org/r/1678346017-3660-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/soc-pcm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -1854,7 +1854,7 @@ static const struct qmp_phy_cfg msm8998_
- };
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 579a44d81d9a3..d409b99af75b2 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -1649,10 +1649,14 @@ static void dpcm_runtime_setup_fe(struct snd_pcm_substream *substream)
+ 	struct snd_pcm_hardware *hw = &runtime->hw;
+ 	struct snd_soc_dai *dai;
+ 	int stream = substream->stream;
++	u64 formats = hw->formats;
+ 	int i;
  
- static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
--	.lanes			= 1,
-+	.lanes			= 2,
+ 	soc_pcm_hw_init(hw);
  
- 	.tbls = {
- 		.serdes		= sc8180x_qmp_pcie_serdes_tbl,
++	if (formats)
++		hw->formats &= formats;
++
+ 	for_each_rtd_cpu_dais(fe, i, dai) {
+ 		struct snd_soc_pcm_stream *cpu_stream;
+ 
+-- 
+2.39.2
+
 
 
