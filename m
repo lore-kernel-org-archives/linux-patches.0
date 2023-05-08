@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D852A168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:17:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A99FC43443;
-	Mon,  8 May 2023 10:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C5B168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:17:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDE7C433EF;
+	Mon,  8 May 2023 10:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541037;
-	bh=SYSH3aCgoCAv0uUDnMzc9nKHtw5VLDWrCEOQIbmsShw=;
+	s=korg; t=1683541040;
+	bh=CL1HLDwUN1mkeYzB5XCFDH+3dVdjRatD5TFejnbijEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xw8iUx4JBf8iWu/EgySaKkMbf9KnHgShdcUZgnJk0qXJ9SnmjynGjdqu2YvzaZcex
-	 YUcYNvUSCx/Rd0e0J+bc7zJmteHtD/zgA8WbK45ZdJbd/XXXUd9dXhAypHWn8gl8KR
-	 M4g982zCdy2vXXIznr+tQSNOxrD5UiKN7KVsw+w4=
+	b=Alwim54Bqr1ekkNFE/07NcbGR1zGHG381cyAqyl0evnPvLoVPvHUfyg0z7peAItXy
+	 jzjaiCslzf21RA7ZUnaNWVhNRqO+zAicXPDb7dm/JOTtRlagjQcFI2eWguMZIvI6AG
+	 yhfQLTH96+1lKewhnfRwCeYjM5cVyhaGjD6L7H3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Dipen Patel <dipenp@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 551/611] hte: tegra: fix struct of_device_id build error
-Date: Mon,  8 May 2023 11:46:33 +0200
-Message-Id: <20230508094439.911862815@linuxfoundation.org>
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 586/611] s390/dasd: fix hanging blockdevice after request requeue
+Date: Mon,  8 May 2023 11:47:08 +0200
+Message-Id: <20230508094440.965848039@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,39 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-[ Upstream commit 6680c835ada1b34e882d0a32612f7294c62e27e0 ]
+commit d8898ee50edecacdf0141f26fd90acf43d7e9cd7 upstream.
 
-Without the extra #include, this driver produces a build failure
-in some configurations.
+The DASD driver does not kick the requeue list when requeuing IO requests
+to the blocklayer. This might lead to hanging blockdevice when there is
+no other trigger for this.
 
-drivers/hte/hte-tegra194-test.c:96:34: error: array type has incomplete element type 'struct of_device_id'
-   96 | static const struct of_device_id tegra_hte_test_of_match[] = {
+Fix by automatically kick the requeue list when requeuing DASD requests
+to the blocklayer.
 
-Fixes: 9a75a7cd03c9 ("hte: Add Tegra HTE test driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Dipen Patel <dipenp@nvidia.com>
-Signed-off-by: Dipen Patel <dipenp@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e443343e509a ("s390/dasd: blk-mq conversion")
+CC: stable@vger.kernel.org # 4.14+
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230405142017.2446986-8-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hte/hte-tegra194-test.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/block/dasd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
-index 5d776a185bd62..ce8c44e792213 100644
---- a/drivers/hte/hte-tegra194-test.c
-+++ b/drivers/hte/hte-tegra194-test.c
-@@ -6,6 +6,7 @@
-  */
+--- a/drivers/s390/block/dasd.c
++++ b/drivers/s390/block/dasd.c
+@@ -2941,7 +2941,7 @@ static int _dasd_requeue_request(struct
+ 		return 0;
+ 	spin_lock_irq(&cqr->dq->lock);
+ 	req = (struct request *) cqr->callback_data;
+-	blk_mq_requeue_request(req, false);
++	blk_mq_requeue_request(req, true);
+ 	spin_unlock_irq(&cqr->dq->lock);
  
- #include <linux/err.h>
-+#include <linux/mod_devicetable.h>
- #include <linux/module.h>
- #include <linux/moduleparam.h>
- #include <linux/interrupt.h>
--- 
-2.39.2
-
+ 	return 0;
 
 
