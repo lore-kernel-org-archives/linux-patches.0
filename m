@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6AF171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:47:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F3FAC433EF;
-	Mon,  8 May 2023 11:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D94B171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:47:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0CFC433D2;
+	Mon,  8 May 2023 11:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546470;
-	bh=cCH+d6E36PZ/RHdH7yDcv7yskLseh/jIg/TJVwwA/N8=;
+	s=korg; t=1683546472;
+	bh=0KXPJlpZ8vVe3/ElnRYE483uEUtFbCe+ZJ/HRT38QMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eXIaoCIFkGfXEeIHvV21zk2YyfFftTMz59cPY9T8cj/RcdW4PGRCdPrZhpInIGSHt
-	 Y1EzSG3T36dwn0pKxbBwoNc3v0anW2g7San7cx9Yo96qouBmab8FzB1AWWCF/cXBCx
-	 NqdVwvm3iQ4JAkYA5Fx+OH4gQbVuQJkNsK14PpHE=
+	b=KePWdg/Jx7RkpdClm3vdJcVbPUACy0+pD++z5UmZAbDCa2hpgdciZtU0bDXRm6xG4
+	 A9RNEvT8L7EHCq3VBKq1UFSmmhkfBQQbN5LcqDgu0H36apWtcGZ83sVyYcj6arQNJA
+	 Ol52ZV2Cx3ZPhDyxzTomfk4FxDBXztMtReFYXrMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Yeongjin Gil <youngjin.gil@samsung.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.15 361/371] dm verity: fix error handling for check_at_most_once on FEC
-Date: Mon,  8 May 2023 11:49:22 +0200
-Message-Id: <20230508094826.423532257@linuxfoundation.org>
+	Michael Walle <michael@walle.cc>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 5.15 352/371] mtd: core: fix error path for nvmem provider
+Date: Mon,  8 May 2023 11:49:13 +0200
+Message-Id: <20230508094826.111367934@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,44 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yeongjin Gil <youngjin.gil@samsung.com>
+From: Michael Walle <michael@walle.cc>
 
-commit e8c5d45f82ce0c238a4817739892fe8897a3dcc3 upstream.
+commit e0489f6e221f5ddee6cb3bd51b992b790c5fa4b9 upstream.
 
-In verity_end_io(), if bi_status is not BLK_STS_OK, it can be return
-directly. But if FEC configured, it is desired to correct the data page
-through verity_verify_io. And the return value will be converted to
-blk_status and passed to verity_finish_io().
+If mtd_otp_nvmem_add() fails, the partitions won't be removed
+because there is simply no call to del_mtd_partitions().
+Unfortunately, add_mtd_partitions() will print all partitions to
+the kernel console. If mtd_otp_nvmem_add() returns -EPROBE_DEFER
+this would print the partitions multiple times to the kernel
+console. Instead move mtd_otp_nvmem_add() to the beginning of the
+function.
 
-BTW, when a bit is set in v->validated_blocks, verity_verify_io() skips
-verification regardless of I/O error for the corresponding bio. In this
-case, the I/O error could not be returned properly, and as a result,
-there is a problem that abnormal data could be read for the
-corresponding block.
-
-To fix this problem, when an I/O error occurs, do not skip verification
-even if the bit related is set in v->validated_blocks.
-
-Fixes: 843f38d382b1 ("dm verity: add 'check_at_most_once' option to only validate hashes once")
+Fixes: 4b361cfa8624 ("mtd: core: add OTP nvmem provider support")
 Cc: stable@vger.kernel.org
-Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Yeongjin Gil <youngjin.gil@samsung.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230308082021.870459-3-michael@walle.cc
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-target.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/mtdcore.c |   13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-verity-target.c
-+++ b/drivers/md/dm-verity-target.c
-@@ -482,7 +482,7 @@ static int verity_verify_io(struct dm_ve
- 		sector_t cur_block = io->block + b;
- 		struct ahash_request *req = verity_io_hash_req(v, io);
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -964,10 +964,14 @@ int mtd_device_parse_register(struct mtd
  
--		if (v->validated_blocks &&
-+		if (v->validated_blocks && bio->bi_status == BLK_STS_OK &&
- 		    likely(test_bit(cur_block, v->validated_blocks))) {
- 			verity_bv_skip_block(v, io, &io->iter);
- 			continue;
+ 	mtd_set_dev_defaults(mtd);
+ 
++	ret = mtd_otp_nvmem_add(mtd);
++	if (ret)
++		goto out;
++
+ 	if (IS_ENABLED(CONFIG_MTD_PARTITIONED_MASTER)) {
+ 		ret = add_mtd_device(mtd);
+ 		if (ret)
+-			return ret;
++			goto out;
+ 	}
+ 
+ 	/* Prefer parsed partitions over driver-provided fallback */
+@@ -1002,9 +1006,12 @@ int mtd_device_parse_register(struct mtd
+ 		register_reboot_notifier(&mtd->reboot_notifier);
+ 	}
+ 
+-	ret = mtd_otp_nvmem_add(mtd);
+-
+ out:
++	if (ret) {
++		nvmem_unregister(mtd->otp_user_nvmem);
++		nvmem_unregister(mtd->otp_factory_nvmem);
++	}
++
+ 	if (ret && device_is_registered(&mtd->dev))
+ 		del_mtd_device(mtd);
+ 
 
 
