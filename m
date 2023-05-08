@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B388168C1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83737C433EF;
-	Mon,  8 May 2023 10:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E304168C1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25070C433EF;
+	Mon,  8 May 2023 10:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541117;
-	bh=3mEJP8tmz/XW5HcFioTquKyOJJLG48D3oWkCAML/yZA=;
+	s=korg; t=1683541120;
+	bh=8XlNvxFe8J9MElTonJQu/vF4gtbvlLAZtiQOh98u3T4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FosHDx8kYdnlNet1bvkbYrzahuBDx6EvS/nF6mNCnoMYQGxu1c1sx4NFVhA/6zzrp
-	 Ev1FzgkWknn+16kU0Uk37LCzTSOOcBEG39a1t5Az1m3qzmPsqILZymaoJnzFLqb6+P
-	 zrVusWKByMSh421qBeRC03e4zpMOIWM94X7binmk=
+	b=kLnbbUv4/C7fNtWXqMFd8tKxDqkeVwOSKbzMflZD+U3spTxFcUZykeSn6GrWS5iMY
+	 s/vYQ6shs3oCLbScrbs9QzZgti9taeJ+kx4aW3K7Ukbhlxy0ErLkk57PO+VilOjQMX
+	 yZwdkI2y0J2I8EDzihPxlK2O0jlI8qYYhfVGD7+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anh Tuan Phan <tuananhlfc@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 011/663] selftests mount: Fix mount_setattr_test builds failed
-Date: Mon,  8 May 2023 11:37:17 +0200
-Message-Id: <20230508094428.778344983@linuxfoundation.org>
+Subject: [PATCH 6.2 012/663] scsi: mpi3mr: Handle soft reset in progress fault code (0xF002)
+Date: Mon,  8 May 2023 11:37:18 +0200
+Message-Id: <20230508094428.817304757@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,38 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anh Tuan Phan <tuananhlfc@gmail.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit f1594bc676579133a3cd906d7d27733289edfb86 ]
+[ Upstream commit a3d27dfdcfc27ac3f46de5391bb6d24f04af7941 ]
 
-When compiling selftests with target mount_setattr I encountered some errors with the below messages:
-mount_setattr_test.c: In function ‘mount_setattr_thread’:
-mount_setattr_test.c:343:16: error: variable ‘attr’ has initializer but incomplete type
-  343 |         struct mount_attr attr = {
-      |                ^~~~~~~~~~
+The driver is exiting from the fault watchdog thread if it sees the 0xF002
+(Soft reset in progress) fault code.
 
-These errors might be because of linux/mount.h is not included. This patch resolves that issue.
+If the driver initiates the soft reset, then the driver restarts the
+watchdog at the end of the soft reset completion.  However, if the soft
+reset is initiated by the firmware asynchronously, then the driver will
+never restart the watchdog and never re-initialize the controller after the
+asynchronous soft reset completion.
 
-Signed-off-by: Anh Tuan Phan <tuananhlfc@gmail.com>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://lore.kernel.org/r/20230331122317.11391-1-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mount_setattr/mount_setattr_test.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/mount_setattr/mount_setattr_test.c b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-index 8c5fea68ae677..969647228817b 100644
---- a/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-+++ b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-@@ -18,6 +18,7 @@
- #include <grp.h>
- #include <stdbool.h>
- #include <stdarg.h>
-+#include <linux/mount.h>
- 
- #include "../kselftest_harness.h"
- 
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index a565817aa56d4..d109a4ceb72b1 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -2526,7 +2526,7 @@ static void mpi3mr_watchdog_work(struct work_struct *work)
+ 		mrioc->unrecoverable = 1;
+ 		goto schedule_work;
+ 	case MPI3_SYSIF_FAULT_CODE_SOFT_RESET_IN_PROGRESS:
+-		return;
++		goto schedule_work;
+ 	case MPI3_SYSIF_FAULT_CODE_CI_ACTIVATION_RESET:
+ 		reset_reason = MPI3MR_RESET_FROM_CIACTIV_FAULT;
+ 		break;
 -- 
 2.39.2
 
