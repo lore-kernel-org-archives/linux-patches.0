@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D238168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF50C433EF;
-	Mon,  8 May 2023 11:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69245168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF23FC433EF;
+	Mon,  8 May 2023 11:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543977;
-	bh=5f4nbK/hrp9CBAgQU0bptYs6wAEMK8Dc/y0MRXxliYw=;
+	s=korg; t=1683543980;
+	bh=x1pjOODMCUuiKQWmap/VWXnW8YJAWpinnYjZV3yR8vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtMQZ11E9X/+sSEY61SXozZIAyEVt2kf4yps9Fiht9fqq0RuGjkVmFsRFzu5HlLaB
-	 dN65wznlGUSf7Jn5eeD2vrrP7pstKYB4nRLNF26rwm9KajSRPdlD7HDNPdAaRD9xI1
-	 pIXs5RKI/uS5Qon2VEUe3OPOhX49ezmDmNqApgGw=
+	b=dDFaW84yupnMN9YkMjE3vly2DF5d+c42bPakS73YOB0Y117lJs49hmHL7g8TMCvqj
+	 lKKSJUhX3TOtLbqEVc3XqsEgrnmB+P65+XbCx0Jdzwv71DdeqaRcRVYCCMTbsqQmNU
+	 4YBgQARlxaOmfHkQfUPqqpErnOGbsCIUNlEQ2+Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 263/694] Revert "drm/msm: Fix failure paths in msm_drm_init()"
-Date: Mon,  8 May 2023 11:41:38 +0200
-Message-Id: <20230508094440.813452029@linuxfoundation.org>
+Subject: [PATCH 6.3 246/694] gpu: host1x: Fix potential double free if IOMMU is disabled
+Date: Mon,  8 May 2023 11:41:21 +0200
+Message-Id: <20230508094440.294859110@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,100 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 652eadfde81031c7b3d8b21bdbcfdd6eb217dec8 ]
+[ Upstream commit 8466ff24a37a9a18fb935e90dda64f049131ae28 ]
 
-This reverts commit 8636500300a01740d92b345c680b036b94555b1b.
+If context device has no IOMMU, the 'cdl->devs' is freed in
+error path, but host1x_memory_context_list_init() doesn't
+return an error code, so the module can be loaded successfully,
+when it's unloading, the host1x_memory_context_list_free() is
+called in host1x_remove(), it will cause double free. Set the
+'cdl->devs' to NULL after freeing it to avoid double free.
 
-A recent commit tried to address a drm device leak in the early
-msm_drm_uninit() error paths but ended up making things worse.
-
-Specifically, it moved the drm device reference put in msm_drm_uninit()
-to msm_drm_init() which means that the drm would now be leaked on normal
-unbind.
-
-For reasons that were never spelled out, it also added kms NULL pointer
-checks to a couple of helper functions that had nothing to do with the
-paths modified by the patch.
-
-Instead of trying to salvage this incrementally, let's revert the bad
-commit so that clean and backportable fixes can be added in its place.
-
-Fixes: 8636500300a0 ("drm/msm: Fix failure paths in msm_drm_init()")
-Cc: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/525092/
-Link: https://lore.kernel.org/r/20230306100722.28485-3-johan+linaro@kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 8aa5bcb61612 ("gpu: host1x: Add context device management code")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/msm_disp_snapshot.c |  3 ---
- drivers/gpu/drm/msm/msm_drv.c                | 11 ++++-------
- 2 files changed, 4 insertions(+), 10 deletions(-)
+ drivers/gpu/host1x/context.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-index b73031cd48e48..e75b97127c0d1 100644
---- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-+++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot.c
-@@ -129,9 +129,6 @@ void msm_disp_snapshot_destroy(struct drm_device *drm_dev)
- 	}
+diff --git a/drivers/gpu/host1x/context.c b/drivers/gpu/host1x/context.c
+index 8beedcf080abd..5ec18315ff9fe 100644
+--- a/drivers/gpu/host1x/context.c
++++ b/drivers/gpu/host1x/context.c
+@@ -83,6 +83,7 @@ int host1x_memory_context_list_init(struct host1x *host1x)
+ 		device_del(&cdl->devs[i].dev);
  
- 	priv = drm_dev->dev_private;
--	if (!priv->kms)
--		return;
--
- 	kms = priv->kms;
+ 	kfree(cdl->devs);
++	cdl->devs = NULL;
+ 	cdl->len = 0;
  
- 	if (kms->dump_worker)
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index b7f5a78eadd4a..9ded384acba46 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -150,9 +150,6 @@ static void msm_irq_uninstall(struct drm_device *dev)
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct msm_kms *kms = priv->kms;
- 
--	if (!priv->kms)
--		return;
--
- 	kms->funcs->irq_uninstall(kms);
- 	if (kms->irq_requested)
- 		free_irq(kms->irq, dev);
-@@ -270,6 +267,8 @@ static int msm_drm_uninit(struct device *dev)
- 	component_unbind_all(dev, ddev);
- 
- 	ddev->dev_private = NULL;
-+	drm_dev_put(ddev);
-+
- 	destroy_workqueue(priv->wq);
- 
- 	return 0;
-@@ -442,12 +441,12 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 
- 	ret = msm_init_vram(ddev);
- 	if (ret)
--		goto err_drm_dev_put;
-+		return ret;
- 
- 	/* Bind all our sub-components: */
- 	ret = component_bind_all(dev, ddev);
- 	if (ret)
--		goto err_drm_dev_put;
-+		return ret;
- 
- 	dma_set_max_seg_size(dev, UINT_MAX);
- 
-@@ -542,8 +541,6 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
- 
- err_msm_uninit:
- 	msm_drm_uninit(dev);
--err_drm_dev_put:
--	drm_dev_put(ddev);
- 	return ret;
- }
- 
+ 	return err;
 -- 
 2.39.2
 
