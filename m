@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1D4168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:21:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0638C433EF;
-	Mon,  8 May 2023 11:21:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EFC168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:21:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92F0C433EF;
+	Mon,  8 May 2023 11:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544872;
-	bh=kbdtTrl2dZzxKYt90qoAzKB9EiZDNKcWO8SfWlaySfo=;
+	s=korg; t=1683544875;
+	bh=71j0VKzSt/+EadfPe26/k+2pdDARW0LuA6gjjgicyDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aUTrqC+cBhOqP4/LyZHEO9q4HIz1TgkJ2z5aH+MhIUxGkpgGvRh7etfoI8iq6ZdQ/
-	 kXeWJNjx5Iof8Y3qHhhqwbDFftrWYWW0HSVPqdQVP961CyL0/DySs+gVTsbMPWnuxD
-	 8h094q/uZ3ZoqJJZkH2c9ERbOhnzWVqoR16P2S1A=
+	b=sBO0Li1FyKtzYNWTwyRsj7TE+FRTy1MD8QwlWWW6Zr2AOkyk756aaCD4MnRKt9Kq7
+	 +H/WUj/2MylrBTGN8cpcwb6InMUNvf2zKKC5IQfyXwyqWxfR7rE7FM+tWKGdyepXKj
+	 YHJ3wA9j+mpgGh1E8ZVv5C1jYnxP5ksy1Y4Ub+PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Jishnu Prakash <quic_jprakash@quicinc.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 543/694] sh: sq: Fix incorrect element size for allocating bitmap buffer
-Date: Mon,  8 May 2023 11:46:18 +0200
-Message-Id: <20230508094452.097443995@linuxfoundation.org>
+Subject: [PATCH 6.3 552/694] spmi: Add a check for remove callback when removing a SPMI driver
+Date: Mon,  8 May 2023 11:46:27 +0200
+Message-Id: <20230508094452.483522928@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,42 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+From: Jishnu Prakash <quic_jprakash@quicinc.com>
 
-[ Upstream commit 80f746e2bd0e1da3fdb49a53570e54a1a225faac ]
+[ Upstream commit b56eef3e16d888883fefab47425036de80dd38fc ]
 
-The Store Queue code allocates a bitmap buffer with the size of
-multiple of sizeof(long) in sq_api_init(). While the buffer size
-is calculated correctly, the code uses the wrong element size to
-allocate the buffer which results in the allocated bitmap buffer
-being too small.
+When removing a SPMI driver, there can be a crash due to NULL pointer
+dereference if it does not have a remove callback defined. This is
+one such call trace observed when removing the QCOM SPMI PMIC driver:
 
-Fix this by allocating the buffer with kcalloc() with element size
-sizeof(long) instead of kzalloc() whose elements size defaults to
-sizeof(char).
+ dump_backtrace.cfi_jt+0x0/0x8
+ dump_stack_lvl+0xd8/0x16c
+ panic+0x188/0x498
+ __cfi_slowpath+0x0/0x214
+ __cfi_slowpath+0x1dc/0x214
+ spmi_drv_remove+0x16c/0x1e0
+ device_release_driver_internal+0x468/0x79c
+ driver_detach+0x11c/0x1a0
+ bus_remove_driver+0xc4/0x124
+ driver_unregister+0x58/0x84
+ cleanup_module+0x1c/0xc24 [qcom_spmi_pmic]
+ __do_sys_delete_module+0x3ec/0x53c
+ __arm64_sys_delete_module+0x18/0x28
+ el0_svc_common+0xdc/0x294
+ el0_svc+0x38/0x9c
+ el0_sync_handler+0x8c/0xf0
+ el0_sync+0x1b4/0x1c0
 
-Fixes: d7c30c682a27 ("sh: Store Queue API rework.")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230419114854.528677-1-glaubitz@physik.fu-berlin.de
+If a driver has all its resources allocated through devm_() APIs and
+does not need any other explicit cleanup, it would not require a
+remove callback to be defined. Hence, add a check for remove callback
+presence before calling it when removing a SPMI driver.
+
+Link: https://lore.kernel.org/r/1671601032-18397-2-git-send-email-quic_jprakash@quicinc.com
+Fixes: 6f00f8c8635f ("mfd: qcom-spmi-pmic: Use devm_of_platform_populate()")
+Fixes: 5a86bf343976 ("spmi: Linux driver framework for SPMI")
+Signed-off-by: Jishnu Prakash <quic_jprakash@quicinc.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20230413223834.4084793-7-sboyd@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/kernel/cpu/sh4/sq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spmi/spmi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/sh/kernel/cpu/sh4/sq.c b/arch/sh/kernel/cpu/sh4/sq.c
-index 27f2e3da5aa22..6e0bb3f47fa5d 100644
---- a/arch/sh/kernel/cpu/sh4/sq.c
-+++ b/arch/sh/kernel/cpu/sh4/sq.c
-@@ -382,7 +382,7 @@ static int __init sq_api_init(void)
- 	if (unlikely(!sq_cache))
- 		return ret;
+diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+index 73551531ed437..dbc8585e8d6d0 100644
+--- a/drivers/spmi/spmi.c
++++ b/drivers/spmi/spmi.c
+@@ -350,7 +350,8 @@ static void spmi_drv_remove(struct device *dev)
+ 	const struct spmi_driver *sdrv = to_spmi_driver(dev->driver);
  
--	sq_bitmap = kzalloc(size, GFP_KERNEL);
-+	sq_bitmap = kcalloc(size, sizeof(long), GFP_KERNEL);
- 	if (unlikely(!sq_bitmap))
- 		goto out;
+ 	pm_runtime_get_sync(dev);
+-	sdrv->remove(to_spmi_device(dev));
++	if (sdrv->remove)
++		sdrv->remove(to_spmi_device(dev));
+ 	pm_runtime_put_noidle(dev);
  
+ 	pm_runtime_disable(dev);
 -- 
 2.39.2
 
