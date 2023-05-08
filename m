@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60FA1171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7821C433EF;
-	Mon,  8 May 2023 11:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723C3171AF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4A1C433EF;
+	Mon,  8 May 2023 11:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546349;
-	bh=F753jiFqFfVCKZ9Q9CF9z7+WQn9M5M9lyQOMkbb8O9k=;
+	s=korg; t=1683546352;
+	bh=1ovJvShgBjYO84Fe5FrWxN2iG65GwYqS3xSFMDHGwxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9I0d46B+nJwbdiLJu7kgc1pz9Vf8Bs/cPiAX73dUR2LJkH1UA9NuWCaWtHq4WBN2
-	 66s1sj9HoKhP0X43MXCMWVjhP+0QnnGDhiInK5A2xM4aXOQOMEOkXGkjhAQ787GXUL
-	 bilKy+w/DTs3FbzEwkH/L2ik4tBcu/IgCPiHllbo=
+	b=Sv0+jGPvb2ok845q3if1bMmmqScse/QrHUjucTIhCFZ9++j1fhU9Lyqq+KminUOos
+	 cuqoOae9i4PyPF4wCutQbpCHe98EAI4Kf0vqBwXxaQydFT8HNT2XQfgcn21SKHPMSm
+	 D9O2abvGvtO+IqTVKItnZSdhDRBTVIvzVkKUWfqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stafford Horne <shorne@gmail.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 321/371] openrisc: Properly store r31 to pt_regs on unhandled exceptions
-Date: Mon,  8 May 2023 11:48:42 +0200
-Message-Id: <20230508094824.817424383@linuxfoundation.org>
+Subject: [PATCH 5.15 339/371] dmaengine: at_xdmac: do not enable all cyclic channels
+Date: Mon,  8 May 2023 11:49:00 +0200
+Message-Id: <20230508094825.581663683@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -34,54 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stafford Horne <shorne@gmail.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 812489ac4dd91144a74ce65ecf232252a2e406fb ]
+[ Upstream commit f8435befd81dd85b7b610598551fadf675849bc1 ]
 
-In commit 91993c8c2ed5 ("openrisc: use shadow registers to save regs on
-exception") the unhandled exception path was changed to do an early
-store of r30 instead of r31.  The entry code was not updated and r31 is
-not getting stored to pt_regs.
+Do not global enable all the cyclic channels in at_xdmac_resume(). Instead
+save the global status in at_xdmac_suspend() and re-enable the cyclic
+channel only if it was active before suspend.
 
-This patch updates the entry handler to store r31 instead of r30.  We
-also remove some misleading commented out store r30 and r31
-instructrions.
-
-I noticed this while working on adding floating point exception
-handling,  This issue probably would never impact anything since we kill
-the process or Oops right away on unhandled exceptions.
-
-Fixes: 91993c8c2ed5 ("openrisc: use shadow registers to save regs on exception")
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230214151827.1050280-6-claudiu.beznea@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/openrisc/kernel/entry.S | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/dma/at_xdmac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/openrisc/kernel/entry.S b/arch/openrisc/kernel/entry.S
-index c68f3349c1741..d32906e89aafd 100644
---- a/arch/openrisc/kernel/entry.S
-+++ b/arch/openrisc/kernel/entry.S
-@@ -173,7 +173,6 @@ handler:							;\
- 	l.sw    PT_GPR28(r1),r28					;\
- 	l.sw    PT_GPR29(r1),r29					;\
- 	/* r30 already save */					;\
--/*        l.sw    PT_GPR30(r1),r30*/					;\
- 	l.sw    PT_GPR31(r1),r31					;\
- 	TRACE_IRQS_OFF_ENTRY						;\
- 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
-@@ -211,9 +210,8 @@ handler:							;\
- 	l.sw    PT_GPR27(r1),r27					;\
- 	l.sw    PT_GPR28(r1),r28					;\
- 	l.sw    PT_GPR29(r1),r29					;\
--	/* r31 already saved */					;\
--	l.sw    PT_GPR30(r1),r30					;\
--/*        l.sw    PT_GPR31(r1),r31	*/				;\
-+	/* r30 already saved */						;\
-+	l.sw    PT_GPR31(r1),r31					;\
- 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
- 	l.addi	r30,r0,-1					;\
- 	l.sw	PT_ORIG_GPR11(r1),r30				;\
+diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+index f7b0de4f4667d..80c609aa2a91c 100644
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -243,6 +243,7 @@ struct at_xdmac {
+ 	int			irq;
+ 	struct clk		*clk;
+ 	u32			save_gim;
++	u32			save_gs;
+ 	struct dma_pool		*at_xdmac_desc_pool;
+ 	const struct at_xdmac_layout	*layout;
+ 	struct at_xdmac_chan	chan[];
+@@ -1984,6 +1985,7 @@ static int atmel_xdmac_suspend(struct device *dev)
+ 		}
+ 	}
+ 	atxdmac->save_gim = at_xdmac_read(atxdmac, AT_XDMAC_GIM);
++	atxdmac->save_gs = at_xdmac_read(atxdmac, AT_XDMAC_GS);
+ 
+ 	at_xdmac_off(atxdmac);
+ 	clk_disable_unprepare(atxdmac->clk);
+@@ -2023,7 +2025,8 @@ static int atmel_xdmac_resume(struct device *dev)
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CNDC, atchan->save_cndc);
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CIE, atchan->save_cim);
+ 			wmb();
+-			at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
++			if (atxdmac->save_gs & atchan->mask)
++				at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
+ 		}
+ 	}
+ 	return 0;
 -- 
 2.39.2
 
