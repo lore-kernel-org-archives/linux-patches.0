@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42436168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5D8C433D2;
-	Mon,  8 May 2023 10:20:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA97168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B099C433D2;
+	Mon,  8 May 2023 10:20:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541243;
-	bh=THqKYMfcM+GzOxOsdQYfi9OYkNukoNDkFI2tOAkOM7s=;
+	s=korg; t=1683541246;
+	bh=xO/u4H4A7lqpazPDLQ3aWh/MOKnOBPoeQ9vwvona0+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TVxafhLU4tnjDCKccE3ZDcoEhddhyrPPz/FdSQARf7RuSdyX9cADwUDTs2IQc6t39
-	 oxsbYCIWhGLdj1p60wcu8mQdsi4KcN1roCQSPcx+zy/4EmRf6a7hifaAsm1jnioMYU
-	 dIp9J9cosVDoV3ydRpvvTZzlqWZMQany7PR9ooRo=
+	b=hpvmOJEqEKvuYR5nYGTKiYixfMPyM2qo8lXpze72jx8x/SGArM6yl5/FYrkmwm2cC
+	 yw9FfjAqlLII6TfkVpoOdBonGJpctAZyKyvYz4KhVUBVxIFHMu8QK01ElX4R9hza1G
+	 f2Z5a0ljIqlLLl5RbV6LzReGia+v/+ZlKFEWlY/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.2 051/663] serial: 8250: Fix serial8250_tx_empty() race with DMA Tx
-Date: Mon,  8 May 2023 11:37:57 +0200
-Message-Id: <20230508094430.139158072@linuxfoundation.org>
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	=?UTF-8?q?Jan=20Kundr=C3=A1t?= <jan.kundrat@cesnet.cz>
+Subject: [PATCH 6.2 052/663] serial: max310x: fix IO data corruption in batched operations
+Date: Mon,  8 May 2023 11:37:58 +0200
+Message-Id: <20230508094430.172351279@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -33,88 +34,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Jan Kundrát <jan.kundrat@cesnet.cz>
 
-commit 146a37e05d620cef4ad430e5d1c9c077fe6fa76f upstream.
+commit 3f42b142ea1171967e40e10e4b0241c0d6d28d41 upstream.
 
-There's a potential race before THRE/TEMT deasserts when DMA Tx is
-starting up (or the next batch of continuous Tx is being submitted).
-This can lead to misdetecting Tx empty condition.
+After upgrading from 5.16 to 6.1, our board with a MAX14830 started
+producing lots of garbage data over UART. Bisection pointed out commit
+285e76fc049c as the culprit. That patch tried to replace hand-written
+code which I added in 2b4bac48c1084 ("serial: max310x: Use batched reads
+when reasonably safe") with the generic regmap infrastructure for
+batched operations.
 
-It is entirely normal for THRE/TEMT to be set for some time after the
-DMA Tx had been setup in serial8250_tx_dma(). As Tx side is definitely
-not empty at that point, it seems incorrect for serial8250_tx_empty()
-claim Tx is empty.
+Unfortunately, the `regmap_raw_read` and `regmap_raw_write` which were
+used are actually functions which perform IO over *multiple* registers.
+That's not what is needed for accessing these Tx/Rx FIFOs; the
+appropriate functions are the `_noinc_` versions, not the `_raw_` ones.
 
-Fix the race by also checking in serial8250_tx_empty() whether there's
-DMA Tx active.
+Fix this regression by using `regmap_noinc_read()` and
+`regmap_noinc_write()` along with the necessary `regmap_config` setup;
+with this patch in place, our board communicates happily again. Since
+our board uses SPI for talking to this chip, the I2C part is completely
+untested.
 
-Note: This fix only addresses in-kernel race mainly to make using
-TCSADRAIN/FLUSH robust. Userspace can still cause other races but they
-seem userspace concurrency control problems.
-
-Fixes: 9ee4b83e51f74 ("serial: 8250: Add support for dmaengine")
+Fixes: 285e76fc049c ("serial: max310x: use regmap methods for SPI batch operations")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230317113318.31327-3-ilpo.jarvinen@linux.intel.com
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Jan Kundrát <jan.kundrat@cesnet.cz>
+Link: https://lore.kernel.org/r/79db8e82aadb0e174bc82b9996423c3503c8fb37.1680732084.git.jan.kundrat@cesnet.cz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250.h      |   12 ++++++++++++
- drivers/tty/serial/8250/8250_port.c |    7 ++++---
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/tty/serial/max310x.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/8250/8250.h
-+++ b/drivers/tty/serial/8250/8250.h
-@@ -365,6 +365,13 @@ static inline void serial8250_do_prepare
- 	if (dma->prepare_rx_dma)
- 		dma->prepare_rx_dma(p);
+--- a/drivers/tty/serial/max310x.c
++++ b/drivers/tty/serial/max310x.c
+@@ -525,6 +525,11 @@ static bool max310x_reg_precious(struct
+ 	return false;
  }
-+
-+static inline bool serial8250_tx_dma_running(struct uart_8250_port *p)
+ 
++static bool max310x_reg_noinc(struct device *dev, unsigned int reg)
 +{
-+	struct uart_8250_dma *dma = p->dma;
-+
-+	return dma && dma->tx_running;
++	return reg == MAX310X_RHR_REG;
 +}
- #else
- static inline int serial8250_tx_dma(struct uart_8250_port *p)
- {
-@@ -380,6 +387,11 @@ static inline int serial8250_request_dma
- 	return -1;
- }
- static inline void serial8250_release_dma(struct uart_8250_port *p) { }
 +
-+static inline bool serial8250_tx_dma_running(struct uart_8250_port *p)
-+{
-+	return false;
-+}
- #endif
- 
- static inline int ns16550a_goto_highspeed(struct uart_8250_port *up)
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2009,18 +2009,19 @@ static int serial8250_tx_threshold_handl
- static unsigned int serial8250_tx_empty(struct uart_port *port)
+ static int max310x_set_baud(struct uart_port *port, int baud)
  {
- 	struct uart_8250_port *up = up_to_u8250p(port);
-+	unsigned int result = 0;
- 	unsigned long flags;
--	u16 lsr;
+ 	unsigned int mode = 0, div = 0, frac = 0, c = 0, F = 0;
+@@ -651,14 +656,14 @@ static void max310x_batch_write(struct u
+ {
+ 	struct max310x_one *one = to_max310x_port(port);
  
- 	serial8250_rpm_get(up);
- 
- 	spin_lock_irqsave(&port->lock, flags);
--	lsr = serial_lsr_in(up);
-+	if (!serial8250_tx_dma_running(up) && uart_lsr_tx_empty(serial_lsr_in(up)))
-+		result = TIOCSER_TEMT;
- 	spin_unlock_irqrestore(&port->lock, flags);
- 
- 	serial8250_rpm_put(up);
- 
--	return uart_lsr_tx_empty(lsr) ? TIOCSER_TEMT : 0;
-+	return result;
+-	regmap_raw_write(one->regmap, MAX310X_THR_REG, txbuf, len);
++	regmap_noinc_write(one->regmap, MAX310X_THR_REG, txbuf, len);
  }
  
- unsigned int serial8250_do_get_mctrl(struct uart_port *port)
+ static void max310x_batch_read(struct uart_port *port, u8 *rxbuf, unsigned int len)
+ {
+ 	struct max310x_one *one = to_max310x_port(port);
+ 
+-	regmap_raw_read(one->regmap, MAX310X_RHR_REG, rxbuf, len);
++	regmap_noinc_read(one->regmap, MAX310X_RHR_REG, rxbuf, len);
+ }
+ 
+ static void max310x_handle_rx(struct uart_port *port, unsigned int rxlen)
+@@ -1469,6 +1474,10 @@ static struct regmap_config regcfg = {
+ 	.writeable_reg = max310x_reg_writeable,
+ 	.volatile_reg = max310x_reg_volatile,
+ 	.precious_reg = max310x_reg_precious,
++	.writeable_noinc_reg = max310x_reg_noinc,
++	.readable_noinc_reg = max310x_reg_noinc,
++	.max_raw_read = MAX310X_FIFO_SIZE,
++	.max_raw_write = MAX310X_FIFO_SIZE,
+ };
+ 
+ #ifdef CONFIG_SPI_MASTER
+@@ -1554,6 +1563,10 @@ static struct regmap_config regcfg_i2c =
+ 	.volatile_reg = max310x_reg_volatile,
+ 	.precious_reg = max310x_reg_precious,
+ 	.max_register = MAX310X_I2C_REVID_EXTREG,
++	.writeable_noinc_reg = max310x_reg_noinc,
++	.readable_noinc_reg = max310x_reg_noinc,
++	.max_raw_read = MAX310X_FIFO_SIZE,
++	.max_raw_write = MAX310X_FIFO_SIZE,
+ };
+ 
+ static const struct max310x_if_cfg max310x_i2c_if_cfg = {
 
 
