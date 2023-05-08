@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E489A13AE0
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F68C433D2;
-	Mon,  8 May 2023 10:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB1813AE8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754A6C4339B;
+	Mon,  8 May 2023 10:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543557;
-	bh=FtV+m2S0jaIWeJiyxNUkr0FhixAtSJNNEoRnu34VeVU=;
+	s=korg; t=1683543560;
+	bh=Jhab4T1IZVUorMxITNTHoSKD2GLUOVE9BUlEJWAVXhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQJQ15408o1QnMcqZxu8/qyCKi73SPI7SktHcp247+niGCUkM6SvaqQOnjsnkXH+a
-	 eX6/CmKFmuCi7JwyMD5ec7h7gvYi/PVFQk2ynlY67o/H/eJvUhBaTsIJJud0L7duZu
-	 B21Xfvu1kKVEiWne2eS8034hofVhFCeIJf6NVJ8Q=
+	b=og9Gdu7t/uhkpuojrhE5z6vzmIv08Bknk2VgtVcWA4SXBrjdMIFYH8457Cj7kwZWf
+	 4dek8uopGy7Tv7cOR6xJ6pOpfM5OkNUUiKbwYJPwCa1yl4NDkm53wtuGQHM+Z1Dtab
+	 DNgf718g6B+StQtAxf1MrJ7DkMCexpwdKN/4Y7wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	Thomas Voegtle <tv@lio96.de>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.3 111/694] drbd: correctly submit flush bio on barrier
-Date: Mon,  8 May 2023 11:39:06 +0200
-Message-Id: <20230508094436.078004848@linuxfoundation.org>
+	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
+	Heiko Stuebner <heiko@sntech.de>
+Subject: [PATCH 6.3 129/694] clk: rockchip: rk3399: allow clk_cifout to force clk_cifout_src to reparent
+Date: Mon,  8 May 2023 11:39:24 +0200
+Message-Id: <20230508094436.663351887@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,45 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
 
-commit 3899d94e3831ee07ea6821c032dc297aec80586a upstream.
+commit 933bf364e152cd60902cf9585c2ba310d593e69f upstream.
 
-When we receive a flush command (or "barrier" in DRBD), we currently use
-a REQ_OP_FLUSH with the REQ_PREFLUSH flag set.
+clk_cifout is derived from clk_cifout_src through an integer divider
+limited to 32. clk_cifout_src is a child of either cpll, gpll or npll
+without any possibility of a divider of any sort. The default clock
+parent is cpll.
 
-The correct way to submit a flush bio is by using a REQ_OP_WRITE without
-any data, and set the REQ_PREFLUSH flag.
+Let's allow clk_cifout to ask its parent clk_cifout_src to reparent in
+order to find the real closest possible rate for clk_cifout and not one
+derived from cpll only.
 
-Since commit b4a6bb3a67aa ("block: add a sanity check for non-write
-flush/fua bios"), this triggers a warning in the block layer, but this
-has been broken for quite some time before that.
-
-So use the correct set of flags to actually make the flush happen.
-
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: stable@vger.kernel.org
-Fixes: f9ff0da56437 ("drbd: allow parallel flushes for multi-volume resources")
-Reported-by: Thomas Voegtle <tv@lio96.de>
-Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230503121937.17232-1-christoph.boehmwalder@linbit.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org # 4.10+
+Fixes: fd8bc829336a ("clk: rockchip: fix the rk3399 cifout clock")
+Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+Link: https://lore.kernel.org/r/20221117-rk3399-cifout-set-rate-parent-v1-0-432548d04081@theobroma-systems.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/drbd/drbd_receiver.c |    2 +-
+ drivers/clk/rockchip/clk-rk3399.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/block/drbd/drbd_receiver.c
-+++ b/drivers/block/drbd/drbd_receiver.c
-@@ -1283,7 +1283,7 @@ static void one_flush_endio(struct bio *
- static void submit_one_flush(struct drbd_device *device, struct issue_flush_context *ctx)
- {
- 	struct bio *bio = bio_alloc(device->ldev->backing_bdev, 0,
--				    REQ_OP_FLUSH | REQ_PREFLUSH, GFP_NOIO);
-+				    REQ_OP_WRITE | REQ_PREFLUSH, GFP_NOIO);
- 	struct one_flush_context *octx = kmalloc(sizeof(*octx), GFP_NOIO);
+--- a/drivers/clk/rockchip/clk-rk3399.c
++++ b/drivers/clk/rockchip/clk-rk3399.c
+@@ -1263,7 +1263,7 @@ static struct rockchip_clk_branch rk3399
+ 			RK3399_CLKSEL_CON(56), 6, 2, MFLAGS,
+ 			RK3399_CLKGATE_CON(10), 7, GFLAGS),
  
- 	if (!octx) {
+-	COMPOSITE_NOGATE(SCLK_CIF_OUT, "clk_cifout", mux_clk_cif_p, 0,
++	COMPOSITE_NOGATE(SCLK_CIF_OUT, "clk_cifout", mux_clk_cif_p, CLK_SET_RATE_PARENT,
+ 			 RK3399_CLKSEL_CON(56), 5, 1, MFLAGS, 0, 5, DFLAGS),
+ 
+ 	/* gic */
 
 
