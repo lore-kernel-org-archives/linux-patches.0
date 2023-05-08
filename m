@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E2C168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:40:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A24BC433EF;
-	Mon,  8 May 2023 10:40:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44A7168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:40:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F48C433EF;
+	Mon,  8 May 2023 10:40:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542405;
-	bh=YnOYlFMzKrTTYBMViw1HQnt6n/9Oz/AD8S1PwTe/MW4=;
+	s=korg; t=1683542408;
+	bh=wKVKdmKR/0Z8ottiA1B12h0ofaD4kKP0I1AvXCm/K5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMDKHQGOQTdibxLXZyoBoiEwe0KHa1lAx1NN/NaYoO2hEVH0LiyCsheppM8OZoscf
-	 To38HU3jmVQQ6Kk8M5b0H+acUytDT3H0msABUKAkGZOzeuMYbxDZOwyUuPlb/JN7W0
-	 wQCJs7Asic1F4SGXA5mJ4VvWX4cD7yS23+mn4rCE=
+	b=SmtCc1QaBPoHQIvRdavoQ2vQLZnAwnQuIE8Z+bqhP3eM7MvzQ43oXWrGMo8/VtH+P
+	 NZ4ZO/XXOKczLZHvS5oZdo+DlyVgrb/99sJFf8IT4XvDdlcZbhB/Ff7qkCQgjbud2f
+	 yptUb5diyo2RJeLHBYsXMIBSyQhri+a7MlGJSVNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 380/663] wifi: iwlwifi: mvm: initialize seq variable
-Date: Mon,  8 May 2023 11:43:26 +0200
-Message-Id: <20230508094440.435462277@linuxfoundation.org>
+Subject: [PATCH 6.2 418/663] net/mlx5: Suspend auxiliary devices only in case of PCI device suspend
+Date: Mon,  8 May 2023 11:44:04 +0200
+Message-Id: <20230508094441.652142496@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,42 +35,219 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Rix <trix@redhat.com>
+From: Jiri Pirko <jiri@nvidia.com>
 
-[ Upstream commit 11e94d2bcd88dea5d9ce99555b6b172f5232d3e2 ]
+[ Upstream commit 72ed5d5624af384eaf74d84915810d54486a75e2 ]
 
-Clang static analysis reports this issue
-d3.c:567:22: warning: The left operand of '>' is
-  a garbage value
-  if (seq.tkip.iv32 > cur_rx_iv32)
-      ~~~~~~~~~~~~~ ^
+The original behavior introduced by commit c6acd629eec7 ("net/mlx5e: Add
+support for devlink-port in non-representors mode") correctly
+re-instantiated uplink devlink port and related netdevice during devlink
+reload. However with migration to auxiliary devices, this behaviour
+changed.
 
-seq is never initialized. Call ieee80211_get_key_rx_seq() to
-initialize seq.
+Restore the original behaviour and tear down auxiliary devices
+completely during devlink reload.
 
-Fixes: 0419e5e672d6 ("iwlwifi: mvm: d3: separate TKIP data from key iteration")
-Signed-off-by: Tom Rix <trix@redhat.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230414130637.6dd372f84f93.If1f708c90e6424a935b4eba3917dfb7582e0dd0a@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Stable-dep-of: dfad99750c0f ("net/mlx5: Use recovery timeout on sync reset flow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/dev.c    |  4 ++--
+ .../net/ethernet/mellanox/mlx5/core/devlink.c    |  4 ++--
+ .../net/ethernet/mellanox/mlx5/core/fw_reset.c   |  4 ++--
+ drivers/net/ethernet/mellanox/mlx5/core/health.c |  2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/main.c   | 16 ++++++++--------
+ .../net/ethernet/mellanox/mlx5/core/mlx5_core.h  |  6 +++---
+ .../ethernet/mellanox/mlx5/core/sf/dev/driver.c  |  2 +-
+ 7 files changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-index c5ad34b063df6..29f75948ab00c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
-@@ -563,6 +563,7 @@ static void iwl_mvm_wowlan_get_tkip_data(struct ieee80211_hw *hw,
- 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/dev.c b/drivers/net/ethernet/mellanox/mlx5/core/dev.c
+index 0571e40c6ee5f..02bb9d43ff9c4 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/dev.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/dev.c
+@@ -396,7 +396,7 @@ int mlx5_attach_device(struct mlx5_core_dev *dev)
+ 	return ret;
+ }
  
- 		for (i = 0; i < IWL_NUM_RSC; i++) {
-+			ieee80211_get_key_rx_seq(key, i, &seq);
- 			/* wrapping isn't allowed, AP must rekey */
- 			if (seq.tkip.iv32 > cur_rx_iv32)
- 				cur_rx_iv32 = seq.tkip.iv32;
+-void mlx5_detach_device(struct mlx5_core_dev *dev)
++void mlx5_detach_device(struct mlx5_core_dev *dev, bool suspend)
+ {
+ 	struct mlx5_priv *priv = &dev->priv;
+ 	struct auxiliary_device *adev;
+@@ -426,7 +426,7 @@ void mlx5_detach_device(struct mlx5_core_dev *dev)
+ 
+ 		adrv = to_auxiliary_drv(adev->dev.driver);
+ 
+-		if (adrv->suspend) {
++		if (adrv->suspend && suspend) {
+ 			adrv->suspend(adev, pm);
+ 			continue;
+ 		}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+index 5bd83c0275f82..31ce591f527fa 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+@@ -104,7 +104,7 @@ static int mlx5_devlink_reload_fw_activate(struct devlink *devlink, struct netli
+ 	if (err)
+ 		return err;
+ 
+-	mlx5_unload_one_devl_locked(dev);
++	mlx5_unload_one_devl_locked(dev, true);
+ 	err = mlx5_health_wait_pci_up(dev);
+ 	if (err)
+ 		NL_SET_ERR_MSG_MOD(extack, "FW activate aborted, PCI reads fail after reset");
+@@ -162,7 +162,7 @@ static int mlx5_devlink_reload_down(struct devlink *devlink, bool netns_change,
+ 
+ 	switch (action) {
+ 	case DEVLINK_RELOAD_ACTION_DRIVER_REINIT:
+-		mlx5_unload_one_devl_locked(dev);
++		mlx5_unload_one_devl_locked(dev, false);
+ 		break;
+ 	case DEVLINK_RELOAD_ACTION_FW_ACTIVATE:
+ 		if (limit == DEVLINK_RELOAD_LIMIT_NO_RESET)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+index a1f460c9d3cde..2ef42d76ac6a3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+@@ -150,7 +150,7 @@ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev)
+ 	if (test_bit(MLX5_FW_RESET_FLAGS_PENDING_COMP, &fw_reset->reset_flags)) {
+ 		complete(&fw_reset->done);
+ 	} else {
+-		mlx5_unload_one(dev);
++		mlx5_unload_one(dev, false);
+ 		if (mlx5_health_wait_pci_up(dev))
+ 			mlx5_core_err(dev, "reset reload flow aborted, PCI reads still not working\n");
+ 		else
+@@ -484,7 +484,7 @@ int mlx5_fw_reset_wait_reset_done(struct mlx5_core_dev *dev)
+ 	}
+ 	err = fw_reset->ret;
+ 	if (test_and_clear_bit(MLX5_FW_RESET_FLAGS_RELOAD_REQUIRED, &fw_reset->reset_flags)) {
+-		mlx5_unload_one_devl_locked(dev);
++		mlx5_unload_one_devl_locked(dev, false);
+ 		mlx5_load_one_devl_locked(dev, false);
+ 	}
+ out:
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/health.c b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+index 879555ba847dd..e42e4ac231c64 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+@@ -699,7 +699,7 @@ static void mlx5_fw_fatal_reporter_err_work(struct work_struct *work)
+ 		 * requests from the kernel.
+ 		 */
+ 		mlx5_core_err(dev, "Driver is in error state. Unloading\n");
+-		mlx5_unload_one(dev);
++		mlx5_unload_one(dev, false);
+ 	}
+ }
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 2772005be741a..d5d4f499a2a15 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1502,12 +1502,12 @@ int mlx5_load_one(struct mlx5_core_dev *dev)
+ 	return ret;
+ }
+ 
+-void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev)
++void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev, bool suspend)
+ {
+ 	devl_assert_locked(priv_to_devlink(dev));
+ 	mutex_lock(&dev->intf_state_mutex);
+ 
+-	mlx5_detach_device(dev);
++	mlx5_detach_device(dev, suspend);
+ 
+ 	if (!test_bit(MLX5_INTERFACE_STATE_UP, &dev->intf_state)) {
+ 		mlx5_core_warn(dev, "%s: interface is down, NOP\n",
+@@ -1522,12 +1522,12 @@ void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev)
+ 	mutex_unlock(&dev->intf_state_mutex);
+ }
+ 
+-void mlx5_unload_one(struct mlx5_core_dev *dev)
++void mlx5_unload_one(struct mlx5_core_dev *dev, bool suspend)
+ {
+ 	struct devlink *devlink = priv_to_devlink(dev);
+ 
+ 	devl_lock(devlink);
+-	mlx5_unload_one_devl_locked(dev);
++	mlx5_unload_one_devl_locked(dev, suspend);
+ 	devl_unlock(devlink);
+ }
+ 
+@@ -1809,7 +1809,7 @@ static pci_ers_result_t mlx5_pci_err_detected(struct pci_dev *pdev,
+ 
+ 	mlx5_enter_error_state(dev, false);
+ 	mlx5_error_sw_reset(dev);
+-	mlx5_unload_one(dev);
++	mlx5_unload_one(dev, true);
+ 	mlx5_drain_health_wq(dev);
+ 	mlx5_pci_disable_device(dev);
+ 
+@@ -1965,7 +1965,7 @@ static void shutdown(struct pci_dev *pdev)
+ 	set_bit(MLX5_BREAK_FW_WAIT, &dev->intf_state);
+ 	err = mlx5_try_fast_unload(dev);
+ 	if (err)
+-		mlx5_unload_one(dev);
++		mlx5_unload_one(dev, false);
+ 	mlx5_pci_disable_device(dev);
+ }
+ 
+@@ -1973,7 +1973,7 @@ static int mlx5_suspend(struct pci_dev *pdev, pm_message_t state)
+ {
+ 	struct mlx5_core_dev *dev = pci_get_drvdata(pdev);
+ 
+-	mlx5_unload_one(dev);
++	mlx5_unload_one(dev, true);
+ 
+ 	return 0;
+ }
+@@ -2016,7 +2016,7 @@ MODULE_DEVICE_TABLE(pci, mlx5_core_pci_table);
+ void mlx5_disable_device(struct mlx5_core_dev *dev)
+ {
+ 	mlx5_error_sw_reset(dev);
+-	mlx5_unload_one_devl_locked(dev);
++	mlx5_unload_one_devl_locked(dev, false);
+ }
+ 
+ int mlx5_recover_device(struct mlx5_core_dev *dev)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index d670b28a73236..be0785f83083a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -236,7 +236,7 @@ void mlx5_adev_cleanup(struct mlx5_core_dev *dev);
+ int mlx5_adev_init(struct mlx5_core_dev *dev);
+ 
+ int mlx5_attach_device(struct mlx5_core_dev *dev);
+-void mlx5_detach_device(struct mlx5_core_dev *dev);
++void mlx5_detach_device(struct mlx5_core_dev *dev, bool suspend);
+ int mlx5_register_device(struct mlx5_core_dev *dev);
+ void mlx5_unregister_device(struct mlx5_core_dev *dev);
+ struct mlx5_core_dev *mlx5_get_next_phys_dev_lag(struct mlx5_core_dev *dev);
+@@ -319,8 +319,8 @@ int mlx5_mdev_init(struct mlx5_core_dev *dev, int profile_idx);
+ void mlx5_mdev_uninit(struct mlx5_core_dev *dev);
+ int mlx5_init_one(struct mlx5_core_dev *dev);
+ void mlx5_uninit_one(struct mlx5_core_dev *dev);
+-void mlx5_unload_one(struct mlx5_core_dev *dev);
+-void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev);
++void mlx5_unload_one(struct mlx5_core_dev *dev, bool suspend);
++void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev, bool suspend);
+ int mlx5_load_one(struct mlx5_core_dev *dev);
+ int mlx5_load_one_devl_locked(struct mlx5_core_dev *dev, bool recovery);
+ 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
+index 7b4783ce213e2..a7377619ba6f2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
+@@ -74,7 +74,7 @@ static void mlx5_sf_dev_shutdown(struct auxiliary_device *adev)
+ {
+ 	struct mlx5_sf_dev *sf_dev = container_of(adev, struct mlx5_sf_dev, adev);
+ 
+-	mlx5_unload_one(sf_dev->mdev);
++	mlx5_unload_one(sf_dev->mdev, false);
+ }
+ 
+ static const struct auxiliary_device_id mlx5_sf_dev_id_table[] = {
 -- 
 2.39.2
 
