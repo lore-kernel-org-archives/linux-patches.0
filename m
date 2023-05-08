@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B55168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:09:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB313C433D2;
-	Mon,  8 May 2023 10:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151C6168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:09:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA17C4339B;
+	Mon,  8 May 2023 10:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540550;
-	bh=fdXHo95mCwwARUnG7mX1iJ1J6jnHDQ7V4JIZS4SAT0k=;
+	s=korg; t=1683540552;
+	bh=GpG8hSh5jrqMumWvj/AK/UdBrWxwNmAJiBHpYRTBAQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NbuqpttdgdQcT2JEbu/s7O9E4jE5HNa9ygjDZ6ArmRJl2sZzffMoCibgC97Z8Do1K
-	 CeXly1GApcfCv5drsr7pAPFyRJqq//kB7VkPTaR3izPi6WYSN+6kdoFXSh1FlG4Ebg
-	 2w6Or5AqoTTkEXhagHRwde4Ivzk16l9tCvTfxY5Y=
+	b=Kw9Fn6/d66uxhCeGN1NfWwR7Ri/+RbkWUGn8SZiAkPc161UdIDrn17MJMzsRFxVcQ
+	 Rtel0reZMkIV2qNIpyQT9D9/INOo3C3SzMcWrr8zr8taPZQwDXcZd+PpVeHh57HKCV
+	 YC1BFTHy2iVCoruQtE0MNoVU7VeTQNx2TrYkVN0Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 407/611] serial: 8250_bcm7271: Fix arbitration handling
-Date: Mon,  8 May 2023 11:44:09 +0200
-Message-Id: <20230508094435.487050021@linuxfoundation.org>
+Subject: [PATCH 6.1 408/611] spi: atmel-quadspi: Dont leak clk enable count in pm resume
+Date: Mon,  8 May 2023 11:44:10 +0200
+Message-Id: <20230508094435.516087827@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,91 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Doug Berger <opendmb@gmail.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 15ac1122fd6d4bf408a03e6f23c7ad4f60b22f9e ]
+[ Upstream commit c18bbac353ffed50be134b0a2a059a2bd540c503 ]
 
-The arbitration of the UART DMA is mishandled for a few
-exceptional cases when probing and releasing the driver.
+The pm resume call is supposed to enable two clocks. If the second enable
+fails the callback reports failure but doesn't undo the first enable.
 
-It is possible that the DMA register spaces are not defined in
-device tree for an instance of the driver, so attempts to access
-the registers in brcmuart_arbitration() would use NULL pointers.
+So call clk_disable() for the first clock when clk_enable() for the second
+one fails.
 
-It is also possible for the probe function to return an error
-while still holding the UART DMA. This would prevent the UART
-DMA from being claimed by an instance that could use it.
-
-These errors are addressed by only releasing the UART DMA if it
-is held by this instance (i.e. priv->dma_enabled == 1) and
-directing early error paths in probe to this common release_dma
-handling.
-
-Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230309190224.687380-1-opendmb@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4a2f83b7f780 ("spi: atmel-quadspi: add runtime pm support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20230317084232.142257-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_bcm7271.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/spi/atmel-quadspi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_bcm7271.c b/drivers/tty/serial/8250/8250_bcm7271.c
-index 89bfcefbea848..36e31b96ef4a5 100644
---- a/drivers/tty/serial/8250/8250_bcm7271.c
-+++ b/drivers/tty/serial/8250/8250_bcm7271.c
-@@ -1016,14 +1016,16 @@ static int brcmuart_probe(struct platform_device *pdev)
- 	/* See if a Baud clock has been specified */
- 	baud_mux_clk = of_clk_get_by_name(np, "sw_baud");
- 	if (IS_ERR(baud_mux_clk)) {
--		if (PTR_ERR(baud_mux_clk) == -EPROBE_DEFER)
--			return -EPROBE_DEFER;
-+		if (PTR_ERR(baud_mux_clk) == -EPROBE_DEFER) {
-+			ret = -EPROBE_DEFER;
-+			goto release_dma;
-+		}
- 		dev_dbg(dev, "BAUD MUX clock not specified\n");
- 	} else {
- 		dev_dbg(dev, "BAUD MUX clock found\n");
- 		ret = clk_prepare_enable(baud_mux_clk);
- 		if (ret)
--			return ret;
-+			goto release_dma;
- 		priv->baud_mux_clk = baud_mux_clk;
- 		init_real_clk_rates(dev, priv);
- 		clk_rate = priv->default_mux_rate;
-@@ -1031,7 +1033,8 @@ static int brcmuart_probe(struct platform_device *pdev)
+diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
+index 976a217e356d5..f480c7ae93fab 100644
+--- a/drivers/spi/atmel-quadspi.c
++++ b/drivers/spi/atmel-quadspi.c
+@@ -752,7 +752,11 @@ static int __maybe_unused atmel_qspi_runtime_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
  
- 	if (clk_rate == 0) {
- 		dev_err(dev, "clock-frequency or clk not defined\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto release_dma;
- 	}
- 
- 	dev_dbg(dev, "DMA is %senabled\n", priv->dma_enabled ? "" : "not ");
-@@ -1118,7 +1121,9 @@ static int brcmuart_probe(struct platform_device *pdev)
- 	serial8250_unregister_port(priv->line);
- err:
- 	brcmuart_free_bufs(dev, priv);
--	brcmuart_arbitration(priv, 0);
-+release_dma:
-+	if (priv->dma_enabled)
-+		brcmuart_arbitration(priv, 0);
- 	return ret;
+-	return clk_enable(aq->qspick);
++	ret = clk_enable(aq->qspick);
++	if (ret)
++		clk_disable(aq->pclk);
++
++	return ret;
  }
  
-@@ -1130,7 +1135,8 @@ static int brcmuart_remove(struct platform_device *pdev)
- 	hrtimer_cancel(&priv->hrt);
- 	serial8250_unregister_port(priv->line);
- 	brcmuart_free_bufs(&pdev->dev, priv);
--	brcmuart_arbitration(priv, 0);
-+	if (priv->dma_enabled)
-+		brcmuart_arbitration(priv, 0);
- 	return 0;
- }
- 
+ static const struct dev_pm_ops __maybe_unused atmel_qspi_pm_ops = {
 -- 
 2.39.2
 
