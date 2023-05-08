@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDD6168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:35:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632F0C4339C;
-	Mon,  8 May 2023 10:35:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D10168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:35:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B79C433D2;
+	Mon,  8 May 2023 10:35:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542100;
-	bh=aSFNXfwWMM7rrn6Wf1sNpsdwGY2Sz1jIh9jWdXjU+sE=;
+	s=korg; t=1683542103;
+	bh=n+MyhvLQuaL6P+rcPk0Nqm7xeI6e3h1ejyiTDBOpUtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DUotUmY+TQuCky+ubHpVXQo5NLr3+DpCxDiCbjzLeO+i8Gipx06a+JM0dAYGl/DFl
-	 NGXLx6uTheBHoiGa0bFhl0NPP2qzPexd7qn4eCDR2drmbEo7OI8KpokAGNqSosjmhu
-	 Uitrdbd1gBcK/awPE3PVWf86y6ADj8avCJIXZxJg=
+	b=F9fL7d63vONb3Gvur+X06GfYoKLtvYQOYKopEiOcjiel+C217McbVc3jbEixn1Gfk
+	 VEUUUwQYwumjf+vWkw8UXEvsZvoa8zTeQD0q8hzMwi2joZ/U526cO09SoPdRwhwb9l
+	 GfLYLoJL0sdG79+uiwOwsb+dpYWUR10Ei8psYHtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Simon Horman <simon.horman@corigine.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 327/663] scsi: hisi_sas: Handle NCQ error when IPTT is valid
-Date: Mon,  8 May 2023 11:42:33 +0200
-Message-Id: <20230508094438.792209302@linuxfoundation.org>
+Subject: [PATCH 6.2 328/663] wifi: rt2x00: Fix memory leak when handling surveys
+Date: Mon,  8 May 2023 11:42:34 +0200
+Message-Id: <20230508094438.830850369@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,87 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit bb544224da77b96b2c11a13872bf91ede1e015be ]
+[ Upstream commit cbef9a83c51dfcb07f77cfa6ac26f53a1ea86f49 ]
 
-If an NCQ error occurs when the IPTT is valid and slot->abort flag is set
-in completion path, sas_task_abort() will be called to abort only one NCQ
-command now, and the host would be set to SHOST_RECOVERY state. But this
-may not kick-off EH Immediately until other outstanding QCs timeouts. As a
-result, the host may remain in the SHOST_RECOVERY state for up to 30
-seconds, such as follows:
+When removing a rt2x00 device, its associated channel surveys
+are not freed, causing a memory leak observable with kmemleak:
 
-[7972317.645234] hisi_sas_v3_hw 0000:74:04.0: erroneous completion iptt=3264 task=00000000466116b8 dev id=2 sas_addr=0x5000000000000502 CQ hdr: 0x1883 0x20cc0 0x40000 0x20420000 Error info: 0x0 0x0 0x200000 0x0
-[7972341.508264] sas: Enter sas_scsi_recover_host busy: 32 failed: 32
-[7972341.984731] sas: --- Exit sas_scsi_recover_host: busy: 0 failed: 32 tries: 1
+unreferenced object 0xffff9620f0881a00 (size 512):
+  comm "systemd-udevd", pid 2290, jiffies 4294906974 (age 33.768s)
+  hex dump (first 32 bytes):
+    70 44 12 00 00 00 00 00 92 8a 00 00 00 00 00 00  pD..............
+    00 00 00 00 00 00 00 00 ab 87 01 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffffb0ed858b>] __kmalloc+0x4b/0x130
+    [<ffffffffc1b0f29b>] rt2800_probe_hw+0xc2b/0x1380 [rt2800lib]
+    [<ffffffffc1a9496e>] rt2800usb_probe_hw+0xe/0x60 [rt2800usb]
+    [<ffffffffc1ae491a>] rt2x00lib_probe_dev+0x21a/0x7d0 [rt2x00lib]
+    [<ffffffffc1b3b83e>] rt2x00usb_probe+0x1be/0x980 [rt2x00usb]
+    [<ffffffffc05981e2>] usb_probe_interface+0xe2/0x310 [usbcore]
+    [<ffffffffb13be2d5>] really_probe+0x1a5/0x410
+    [<ffffffffb13be5c8>] __driver_probe_device+0x78/0x180
+    [<ffffffffb13be6fe>] driver_probe_device+0x1e/0x90
+    [<ffffffffb13be972>] __driver_attach+0xd2/0x1c0
+    [<ffffffffb13bbc57>] bus_for_each_dev+0x77/0xd0
+    [<ffffffffb13bd2a2>] bus_add_driver+0x112/0x210
+    [<ffffffffb13bfc6c>] driver_register+0x5c/0x120
+    [<ffffffffc0596ae8>] usb_register_driver+0x88/0x150 [usbcore]
+    [<ffffffffb0c011c4>] do_one_initcall+0x44/0x220
+    [<ffffffffb0d6134c>] do_init_module+0x4c/0x220
 
-All NCQ commands that are in the queue should be aborted when an NCQ error
-occurs in this scenario.
+Fix this by freeing the channel surveys on device removal.
 
-Fixes: 05d91b557af9 ("scsi: hisi_sas: Directly trigger SCSI error handling for completion errors")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1679283265-115066-3-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Tested with a RT3070 based USB wireless adapter.
+
+Fixes: 5447626910f5 ("rt2x00: save survey for every channel visited")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230330215637.4332-1-W_Armin@gmx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v1_hw.c | 6 +++++-
- drivers/scsi/hisi_sas/hisi_sas_v2_hw.c | 6 +++++-
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 6 +++++-
- 3 files changed, 15 insertions(+), 3 deletions(-)
+ drivers/net/wireless/ralink/rt2x00/rt2x00dev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-index d643c5a49aa94..70c24377c6a19 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-@@ -1258,7 +1258,11 @@ static void slot_complete_v1_hw(struct hisi_hba *hisi_hba,
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+index 3a035afcf7f99..9a9cfd0ce402d 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+@@ -1091,6 +1091,7 @@ static void rt2x00lib_remove_hw(struct rt2x00_dev *rt2x00dev)
+ 	}
  
- 		slot_err_v1_hw(hisi_hba, task, slot);
- 		if (unlikely(slot->abort)) {
--			sas_task_abort(task);
-+			if (dev_is_sata(device) && task->ata_task.use_ncq)
-+				sas_ata_device_link_abort(device, true);
-+			else
-+				sas_task_abort(task);
-+
- 			return;
- 		}
- 		goto out;
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-index cded42f4ca445..02575d81afca2 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-@@ -2404,7 +2404,11 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
- 				 error_info[2], error_info[3]);
+ 	kfree(rt2x00dev->spec.channels_info);
++	kfree(rt2x00dev->chan_survey);
+ }
  
- 		if (unlikely(slot->abort)) {
--			sas_task_abort(task);
-+			if (dev_is_sata(device) && task->ata_task.use_ncq)
-+				sas_ata_device_link_abort(device, true);
-+			else
-+				sas_task_abort(task);
-+
- 			return;
- 		}
- 		goto out;
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index a63279f55d096..9afc23e3a80fc 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -2320,7 +2320,11 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
- 					error_info[0], error_info[1],
- 					error_info[2], error_info[3]);
- 			if (unlikely(slot->abort)) {
--				sas_task_abort(task);
-+				if (dev_is_sata(device) && task->ata_task.use_ncq)
-+					sas_ata_device_link_abort(device, true);
-+				else
-+					sas_task_abort(task);
-+
- 				return;
- 			}
- 			goto out;
+ static const struct ieee80211_tpt_blink rt2x00_tpt_blink[] = {
 -- 
 2.39.2
 
