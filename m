@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D9B168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C91AC433D2;
-	Mon,  8 May 2023 11:01:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 682CB168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:02:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A0CC433D2;
+	Mon,  8 May 2023 11:01:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543717;
-	bh=myoRusOpr7mTY3suWiCDOa1G0693Xmazzk+u7qoqnyc=;
+	s=korg; t=1683543720;
+	bh=TzV7u64l8JUQh+nK3ehWDatwdY/CWmOIyHTQmdu5MOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0TsBTLxG2QbWXaxH10J8PPH2oHWt9VWyzF7KRHCXyMIoV3nGlFhnm0fD4DugPni+K
-	 rbcGrocHa1mzOX2ZUBnfxLhB8stjn5H1d4XbwchFqoBlydpzqzxlhCXLX/Kik/Fr43
-	 FeipNHua1S5/0LPv3gN2uviom6G6Nb+UOlSMrRgY=
+	b=RCoblmv37kQX4Nvs6EJdyTMoE35y1BuKPM9vTYnfKiMyHZYUmjasCynDK5e2agD/C
+	 RB5q4l4IryToZKL9NZt2tDMUxLXYppOrS4ejB4B4cFKOqzh1S3HyW1KsCxYcdgmb88
+	 nWXmVF0o4jyUYVF3SPps+3k/Mj0IWEjkrKUnsrJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Yue Hu <huyue2@coolpad.com>,
 	Gao Xiang <hsiangkao@linux.alibaba.com>,
 	Chao Yu <chao@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+aafb3f37cfeb6534c4ac@syzkaller.appspotmail.com
-Subject: [PATCH 6.3 147/694] erofs: stop parsing non-compact HEAD index if clusterofs is invalid
-Date: Mon,  8 May 2023 11:39:42 +0200
-Message-Id: <20230508094437.219934476@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 148/694] erofs: initialize packed inode after root inode is assigned
+Date: Mon,  8 May 2023 11:39:43 +0200
+Message-Id: <20230508094437.249287581@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,63 +37,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Jingbo Xu <jefflexu@linux.alibaba.com>
 
-[ Upstream commit cc4efd3dd2ac9f89143e5d881609747ecff04164 ]
+[ Upstream commit cb9bce79514392a9a216ff67148e05e2d72c28bd ]
 
-Syzbot generated a crafted image [1] with a non-compact HEAD index of
-clusterofs 33024 while valid numbers should be 0 ~ lclustersize-1,
-which causes the following unexpected behavior as below:
+As commit 8f7acdae2cd4 ("staging: erofs: kill all failure handling in
+fill_super()"), move the initialization of packed inode after root
+inode is assigned, so that the iput() in .put_super() is adequate as
+the failure handling.
 
- BUG: unable to handle page fault for address: fffff52101a3fff9
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 23ffed067 P4D 23ffed067 PUD 0
- Oops: 0000 [#1] PREEMPT SMP KASAN
- CPU: 1 PID: 4398 Comm: kworker/u5:1 Not tainted 6.3.0-rc6-syzkaller-g09a9639e56c0 #0
- Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
- Workqueue: erofs_worker z_erofs_decompressqueue_work
- RIP: 0010:z_erofs_decompress_queue+0xb7e/0x2b40
- ...
- Call Trace:
-  <TASK>
-  z_erofs_decompressqueue_work+0x99/0xe0
-  process_one_work+0x8f6/0x1170
-  worker_thread+0xa63/0x1210
-  kthread+0x270/0x300
-  ret_from_fork+0x1f/0x30
+Otherwise, iput() is also needed in .kill_sb(), in case of the mounting
+fails halfway.
 
-Note that normal images or images using compact indexes are not
-impacted.  Let's fix this now.
-
-[1] https://lore.kernel.org/r/000000000000ec75b005ee97fbaa@google.com
-
-Reported-and-tested-by: syzbot+aafb3f37cfeb6534c4ac@syzkaller.appspotmail.com
-Fixes: 02827e1796b3 ("staging: erofs: add erofs_map_blocks_iter")
-Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
+Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Reviewed-by: Yue Hu <huyue2@coolpad.com>
+Fixes: b15b2e307c3a ("erofs: support on-disk compressed fragments data")
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Acked-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20230407141710.113882-3-jefflexu@linux.alibaba.com
 Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20230410173714.104604-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/erofs/internal.h |  1 +
+ fs/erofs/super.c    | 22 +++++++++++-----------
+ 2 files changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index 655da4d739cb6..b5f4086537548 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -86,6 +86,10 @@ static int legacy_load_cluster_from_disk(struct z_erofs_maprecorder *m,
- 		if (advise & Z_EROFS_VLE_DI_PARTIAL_REF)
- 			m->partialref = true;
- 		m->clusterofs = le16_to_cpu(di->di_clusterofs);
-+		if (m->clusterofs >= 1 << vi->z_logical_clusterbits) {
-+			DBG_BUGON(1);
-+			return -EFSCORRUPTED;
+diff --git a/fs/erofs/internal.h b/fs/erofs/internal.h
+index 1db018f8c2e89..42444b593cf16 100644
+--- a/fs/erofs/internal.h
++++ b/fs/erofs/internal.h
+@@ -156,6 +156,7 @@ struct erofs_sb_info {
+ 
+ 	/* what we really care is nid, rather than ino.. */
+ 	erofs_nid_t root_nid;
++	erofs_nid_t packed_nid;
+ 	/* used for statfs, f_files - f_favail */
+ 	u64 inos;
+ 
+diff --git a/fs/erofs/super.c b/fs/erofs/super.c
+index 19b1ae79cec41..dbe466295d0e0 100644
+--- a/fs/erofs/super.c
++++ b/fs/erofs/super.c
+@@ -380,17 +380,7 @@ static int erofs_read_superblock(struct super_block *sb)
+ #endif
+ 	sbi->islotbits = ilog2(sizeof(struct erofs_inode_compact));
+ 	sbi->root_nid = le16_to_cpu(dsb->root_nid);
+-#ifdef CONFIG_EROFS_FS_ZIP
+-	sbi->packed_inode = NULL;
+-	if (erofs_sb_has_fragments(sbi) && dsb->packed_nid) {
+-		sbi->packed_inode =
+-			erofs_iget(sb, le64_to_cpu(dsb->packed_nid));
+-		if (IS_ERR(sbi->packed_inode)) {
+-			ret = PTR_ERR(sbi->packed_inode);
+-			goto out;
+-		}
+-	}
+-#endif
++	sbi->packed_nid = le64_to_cpu(dsb->packed_nid);
+ 	sbi->inos = le64_to_cpu(dsb->inos);
+ 
+ 	sbi->build_time = le64_to_cpu(dsb->build_time);
+@@ -799,6 +789,16 @@ static int erofs_fc_fill_super(struct super_block *sb, struct fs_context *fc)
+ 
+ 	erofs_shrinker_register(sb);
+ 	/* sb->s_umount is already locked, SB_ACTIVE and SB_BORN are not set */
++#ifdef CONFIG_EROFS_FS_ZIP
++	if (erofs_sb_has_fragments(sbi) && sbi->packed_nid) {
++		sbi->packed_inode = erofs_iget(sb, sbi->packed_nid);
++		if (IS_ERR(sbi->packed_inode)) {
++			err = PTR_ERR(sbi->packed_inode);
++			sbi->packed_inode = NULL;
++			return err;
 +		}
- 		m->pblk = le32_to_cpu(di->di_u.blkaddr);
- 		break;
- 	default:
++	}
++#endif
+ 	err = erofs_init_managed_cache(sb);
+ 	if (err)
+ 		return err;
 -- 
 2.39.2
 
