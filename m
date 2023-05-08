@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94E2168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:52:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C804C433EF;
-	Mon,  8 May 2023 09:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82BCD101FD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:52:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D15B2C433EF;
+	Mon,  8 May 2023 09:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539545;
-	bh=h/ZZrZjIbcp/u86Xg+7tLyYUAglheWMJobuIUAFJ/ow=;
+	s=korg; t=1683539548;
+	bh=Epo1uzKGdNiD4AUI0TNkD2FGg3SC+Mi0pI4Ew4hWAqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ORNckgUDzfurHUIOvSy1N6Ju6//5n9ezzeKa9oH7NEgVKzppH3QesJ/apszyI3gyc
-	 95y/i+KWlkEi6A4y7TRI/ImzIekwcjpw/oeypKxjS8ePoy7MsQh82PAi2YimGyQcDa
-	 O6mrHl7jTfGXtCRDLILH55tkAtAsmIw77emPnhZ4=
+	b=tRqAKRjldEmO9WSDIzpqlUt46Lw69j+/O9JVtMF1nvacoJeH5+UQ0xZNLWTVu8QTq
+	 bHgBeY51xD+fQXvdgEtRxIqoz11VE83Sb0/rh6OuPz2znUGrPvR//PvRdx9OfHUJNo
+	 6sH5LShVunw+FYEGa7B4SjAUCSG0vkn0k1nP8Z9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 056/611] MIPS: fw: Allow firmware to pass a empty env
-Date: Mon,  8 May 2023 11:38:18 +0200
-Message-Id: <20230508094423.750650213@linuxfoundation.org>
+	Pavel Machek <pavel@denx.de>,
+	Corey Minyard <minyard@acm.org>
+Subject: [PATCH 6.1 057/611] ipmi:ssif: Add send_retries increment
+Date: Mon,  8 May 2023 11:38:19 +0200
+Message-Id: <20230508094423.793485659@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,35 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Corey Minyard <minyard@acm.org>
 
-commit ee1809ed7bc456a72dc8410b475b73021a3a68d5 upstream.
+commit 6ce7995a43febe693d4894033c6e29314970646a upstream.
 
-fw_getenv will use env entry to determine style of env,
-however it is legal for firmware to just pass a empty list.
+A recent change removed an increment of send_retries, re-add it.
 
-Check if first entry exist before running strchr to avoid
-null pointer dereference.
-
+Fixes: 95767ed78a18 ipmi:ssif: resend_msg() cannot fail
+Reported-by: Pavel Machek <pavel@denx.de>
 Cc: stable@vger.kernel.org
-Link: https://github.com/clbr/n64bootloader/issues/5
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Corey Minyard <minyard@acm.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/fw/lib/cmdline.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_ssif.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/mips/fw/lib/cmdline.c
-+++ b/arch/mips/fw/lib/cmdline.c
-@@ -53,7 +53,7 @@ char *fw_getenv(char *envname)
- {
- 	char *result = NULL;
+--- a/drivers/char/ipmi/ipmi_ssif.c
++++ b/drivers/char/ipmi/ipmi_ssif.c
+@@ -557,8 +557,10 @@ static void retry_timeout(struct timer_l
  
--	if (_fw_envp != NULL) {
-+	if (_fw_envp != NULL && fw_envp(0) != NULL) {
- 		/*
- 		 * Return a pointer to the given environment variable.
- 		 * YAMON uses "name", "value" pairs, while U-Boot uses
+ 	if (waiting)
+ 		start_get(ssif_info);
+-	if (resend)
++	if (resend) {
+ 		start_resend(ssif_info);
++		ssif_inc_stat(ssif_info, send_retries);
++	}
+ }
+ 
+ static void watch_timeout(struct timer_list *t)
 
 
