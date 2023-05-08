@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CAD168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75A4C433D2;
-	Mon,  8 May 2023 11:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6239F168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAEBC433EF;
+	Mon,  8 May 2023 11:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543962;
-	bh=sAbMWjNHDw8Wx8pEol48dJq5ycLoLpQjHLz8U2qGtqg=;
+	s=korg; t=1683543965;
+	bh=/lGom4PQm//Oe2cxKaS1u1inmDmDEVEx32AYWHfP2NY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n9BY6mAM91i4W2zRkYbce2gClY4onoyMijAy8W/bIuOg8actzJvY8sv5KFhMYxxaJ
-	 krhtZRYHEC6CqVZU7bXNhvQpXp40xauEss6CqcJsC+HW36stQAMt62cjCEO5zNSBy0
-	 5t/YCr/DCDYGcKjNje4/wF4gevcdNEhTLlMRQGWw=
+	b=OZnoOpCenBqxJI2ODijpy26cVubWYJhP+XF2FypfidAfQSkmIUu4lqemjZcgQWrgX
+	 6aEKTxnmkEwzz46aeuXUZtM4xV+zev3KGoBlB9Hd2FWCFQXFB78+XxbyV/uXqBmGsv
+	 e7GGK2IVlILOFlt8FFYx/vf5fqoG02N9XdZdMjfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Huang Rui <ray.huang@amd.com>,
+	dri-devel@lists.freedesktop.org,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 258/694] arm64: dts: rockchip: Assign PLL_PPLL clock rate to 1.1 GHz on rk3588s
-Date: Mon,  8 May 2023 11:41:33 +0200
-Message-Id: <20230508094440.666928116@linuxfoundation.org>
+Subject: [PATCH 6.3 259/694] drm/ttm/pool: Fix ttm_pool_alloc error path
+Date: Mon,  8 May 2023 11:41:34 +0200
+Message-Id: <20230508094440.695664175@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,36 +38,190 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 
-[ Upstream commit b46a22dea7530cf530a45c6b84c03300083b813d ]
+[ Upstream commit 379989e7cbdc7aa7496a00ee286ec146c7599cf0 ]
 
-The clock rate for PLL_PPLL has been wrongly initialized to 100 MHz
-instead of 1.1 GHz. Fix it.
+When hitting an error, the error path forgot to unmap dma mappings and
+could call set_pages_wb() on already uncached pages.
 
-Fixes: c9211fa2602b ("arm64: dts: rockchip: Add base DT for rk3588 SoC")
-Reported-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20230402095054.384739-3-cristian.ciocaltea@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fix this by introducing a common ttm_pool_free_range() function that
+does the right thing.
+
+v2:
+- Simplify that common function (Christian König)
+v3:
+- Rename that common function to ttm_pool_free_range() (Christian König)
+
+Fixes: d099fc8f540a ("drm/ttm: new TT backend allocation pool v3")
+Cc: Christian König <christian.koenig@amd.com>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Christian Koenig <christian.koenig@amd.com>
+Cc: Huang Rui <ray.huang@amd.com>
+Cc: dri-devel@lists.freedesktop.org
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230404200650.11043-2-thomas.hellstrom@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3588s.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/ttm/ttm_pool.c | 81 +++++++++++++++++++++-------------
+ 1 file changed, 51 insertions(+), 30 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3588s.dtsi b/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
-index a506948b5572b..f4eae4dde1751 100644
---- a/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3588s.dtsi
-@@ -423,7 +423,7 @@
- 			<&cru ACLK_BUS_ROOT>, <&cru CLK_150M_SRC>,
- 			<&cru CLK_GPU>;
- 		assigned-clock-rates =
--			<100000000>, <786432000>,
-+			<1100000000>, <786432000>,
- 			<850000000>, <1188000000>,
- 			<702000000>,
- 			<400000000>, <500000000>,
+diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
+index aa116a7bbae3a..dfce896c4baeb 100644
+--- a/drivers/gpu/drm/ttm/ttm_pool.c
++++ b/drivers/gpu/drm/ttm/ttm_pool.c
+@@ -367,6 +367,43 @@ static int ttm_pool_page_allocated(struct ttm_pool *pool, unsigned int order,
+ 	return 0;
+ }
+ 
++/**
++ * ttm_pool_free_range() - Free a range of TTM pages
++ * @pool: The pool used for allocating.
++ * @tt: The struct ttm_tt holding the page pointers.
++ * @caching: The page caching mode used by the range.
++ * @start_page: index for first page to free.
++ * @end_page: index for last page to free + 1.
++ *
++ * During allocation the ttm_tt page-vector may be populated with ranges of
++ * pages with different attributes if allocation hit an error without being
++ * able to completely fulfill the allocation. This function can be used
++ * to free these individual ranges.
++ */
++static void ttm_pool_free_range(struct ttm_pool *pool, struct ttm_tt *tt,
++				enum ttm_caching caching,
++				pgoff_t start_page, pgoff_t end_page)
++{
++	struct page **pages = tt->pages;
++	unsigned int order;
++	pgoff_t i, nr;
++
++	for (i = start_page; i < end_page; i += nr, pages += nr) {
++		struct ttm_pool_type *pt = NULL;
++
++		order = ttm_pool_page_order(pool, *pages);
++		nr = (1UL << order);
++		if (tt->dma_address)
++			ttm_pool_unmap(pool, tt->dma_address[i], nr);
++
++		pt = ttm_pool_select_type(pool, caching, order);
++		if (pt)
++			ttm_pool_type_give(pt, *pages);
++		else
++			ttm_pool_free_page(pool, caching, order, *pages);
++	}
++}
++
+ /**
+  * ttm_pool_alloc - Fill a ttm_tt object
+  *
+@@ -382,12 +419,14 @@ static int ttm_pool_page_allocated(struct ttm_pool *pool, unsigned int order,
+ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
+ 		   struct ttm_operation_ctx *ctx)
+ {
+-	unsigned long num_pages = tt->num_pages;
++	pgoff_t num_pages = tt->num_pages;
+ 	dma_addr_t *dma_addr = tt->dma_address;
+ 	struct page **caching = tt->pages;
+ 	struct page **pages = tt->pages;
++	enum ttm_caching page_caching;
+ 	gfp_t gfp_flags = GFP_USER;
+-	unsigned int i, order;
++	pgoff_t caching_divide;
++	unsigned int order;
+ 	struct page *p;
+ 	int r;
+ 
+@@ -410,6 +449,7 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
+ 	     order = min_t(unsigned int, order, __fls(num_pages))) {
+ 		struct ttm_pool_type *pt;
+ 
++		page_caching = tt->caching;
+ 		pt = ttm_pool_select_type(pool, tt->caching, order);
+ 		p = pt ? ttm_pool_type_take(pt) : NULL;
+ 		if (p) {
+@@ -418,6 +458,7 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
+ 			if (r)
+ 				goto error_free_page;
+ 
++			caching = pages;
+ 			do {
+ 				r = ttm_pool_page_allocated(pool, order, p,
+ 							    &dma_addr,
+@@ -426,14 +467,15 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
+ 				if (r)
+ 					goto error_free_page;
+ 
++				caching = pages;
+ 				if (num_pages < (1 << order))
+ 					break;
+ 
+ 				p = ttm_pool_type_take(pt);
+ 			} while (p);
+-			caching = pages;
+ 		}
+ 
++		page_caching = ttm_cached;
+ 		while (num_pages >= (1 << order) &&
+ 		       (p = ttm_pool_alloc_page(pool, gfp_flags, order))) {
+ 
+@@ -442,6 +484,7 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
+ 							   tt->caching);
+ 				if (r)
+ 					goto error_free_page;
++				caching = pages;
+ 			}
+ 			r = ttm_pool_page_allocated(pool, order, p, &dma_addr,
+ 						    &num_pages, &pages);
+@@ -468,15 +511,13 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
+ 	return 0;
+ 
+ error_free_page:
+-	ttm_pool_free_page(pool, tt->caching, order, p);
++	ttm_pool_free_page(pool, page_caching, order, p);
+ 
+ error_free_all:
+ 	num_pages = tt->num_pages - num_pages;
+-	for (i = 0; i < num_pages; ) {
+-		order = ttm_pool_page_order(pool, tt->pages[i]);
+-		ttm_pool_free_page(pool, tt->caching, order, tt->pages[i]);
+-		i += 1 << order;
+-	}
++	caching_divide = caching - tt->pages;
++	ttm_pool_free_range(pool, tt, tt->caching, 0, caching_divide);
++	ttm_pool_free_range(pool, tt, ttm_cached, caching_divide, num_pages);
+ 
+ 	return r;
+ }
+@@ -492,27 +533,7 @@ EXPORT_SYMBOL(ttm_pool_alloc);
+  */
+ void ttm_pool_free(struct ttm_pool *pool, struct ttm_tt *tt)
+ {
+-	unsigned int i;
+-
+-	for (i = 0; i < tt->num_pages; ) {
+-		struct page *p = tt->pages[i];
+-		unsigned int order, num_pages;
+-		struct ttm_pool_type *pt;
+-
+-		order = ttm_pool_page_order(pool, p);
+-		num_pages = 1ULL << order;
+-		if (tt->dma_address)
+-			ttm_pool_unmap(pool, tt->dma_address[i], num_pages);
+-
+-		pt = ttm_pool_select_type(pool, tt->caching, order);
+-		if (pt)
+-			ttm_pool_type_give(pt, tt->pages[i]);
+-		else
+-			ttm_pool_free_page(pool, tt->caching, order,
+-					   tt->pages[i]);
+-
+-		i += num_pages;
+-	}
++	ttm_pool_free_range(pool, tt, tt->caching, 0, tt->num_pages);
+ 
+ 	while (atomic_long_read(&allocated_pages) > page_pool_size)
+ 		ttm_pool_shrink();
 -- 
 2.39.2
 
