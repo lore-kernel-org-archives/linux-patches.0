@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69245168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF23FC433EF;
-	Mon,  8 May 2023 11:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D122B168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7100C433EF;
+	Mon,  8 May 2023 11:06:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543980;
-	bh=x1pjOODMCUuiKQWmap/VWXnW8YJAWpinnYjZV3yR8vg=;
+	s=korg; t=1683543983;
+	bh=sIFjfpXaToDJy9QADT95WCiqo6fG4/eLfzPBXd22IHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dDFaW84yupnMN9YkMjE3vly2DF5d+c42bPakS73YOB0Y117lJs49hmHL7g8TMCvqj
-	 lKKSJUhX3TOtLbqEVc3XqsEgrnmB+P65+XbCx0Jdzwv71DdeqaRcRVYCCMTbsqQmNU
-	 4YBgQARlxaOmfHkQfUPqqpErnOGbsCIUNlEQ2+Ng=
+	b=ywBgBrIXv0P0MunKsEN6DVmSPSBy25RUOj2n5/eAn3rUPIJXj1c0pe773DAihK4hc
+	 SzwHXP91G41A1ideuw0oyr1ASj/XAiGblST5y58vrUYs7ngehFEQYhubNeYyGx9S1f
+	 R4E4DcOZYZKxUwkShKg6fNX1nZWodN0fGjezg/zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 246/694] gpu: host1x: Fix potential double free if IOMMU is disabled
-Date: Mon,  8 May 2023 11:41:21 +0200
-Message-Id: <20230508094440.294859110@linuxfoundation.org>
+Subject: [PATCH 6.3 264/694] drm/msm/dpu: Fix bit-shifting UB in DPU_HW_VER() macro
+Date: Mon,  8 May 2023 11:41:39 +0200
+Message-Id: <20230508094440.842297248@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,38 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 8466ff24a37a9a18fb935e90dda64f049131ae28 ]
+[ Upstream commit 4760be481dc075cd13f95f4650f5d5b53b4b336d ]
 
-If context device has no IOMMU, the 'cdl->devs' is freed in
-error path, but host1x_memory_context_list_init() doesn't
-return an error code, so the module can be loaded successfully,
-when it's unloading, the host1x_memory_context_list_free() is
-called in host1x_remove(), it will cause double free. Set the
-'cdl->devs' to NULL after freeing it to avoid double free.
+With gcc-5 and CONFIG_UBSAN_SHIFT=y:
 
-Fixes: 8aa5bcb61612 ("gpu: host1x: Add context device management code")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+    drivers/gpu/drm/msm/msm_mdss.c: In function 'msm_mdss_enable':
+    drivers/gpu/drm/msm/msm_mdss.c:296:2: error: case label does not reduce to an integer constant
+      case DPU_HW_VER_800:
+      ^
+    drivers/gpu/drm/msm/msm_mdss.c:299:2: error: case label does not reduce to an integer constant
+      case DPU_HW_VER_810:
+      ^
+    drivers/gpu/drm/msm/msm_mdss.c:300:2: error: case label does not reduce to an integer constant
+      case DPU_HW_VER_900:
+      ^
+
+This happens because for major revisions 8 or greather, the non-sign bit
+of the major revision number is shifted into bit 31 of a signed integer,
+which is undefined behavior.
+
+Fix this by casting the major revision number to unsigned int.
+
+Fixes: efcd0107727c4f04 ("drm/msm/dpu: add support for SM8550")
+Fixes: 4a352c2fc15aec1e ("drm/msm/dpu: Introduce SC8280XP")
+Fixes: 100d7ef6995d1f86 ("drm/msm/dpu: add support for SM8450")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Patchwork: https://patchwork.freedesktop.org/patch/525152/
+Link: https://lore.kernel.org/r/20230306090633.65918-1-geert+renesas@glider.be
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/context.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/host1x/context.c b/drivers/gpu/host1x/context.c
-index 8beedcf080abd..5ec18315ff9fe 100644
---- a/drivers/gpu/host1x/context.c
-+++ b/drivers/gpu/host1x/context.c
-@@ -83,6 +83,7 @@ int host1x_memory_context_list_init(struct host1x *host1x)
- 		device_del(&cdl->devs[i].dev);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+index e6590302b3bfc..2c5bafacd609c 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+@@ -19,8 +19,9 @@
+  */
+ #define MAX_BLOCKS    12
  
- 	kfree(cdl->devs);
-+	cdl->devs = NULL;
- 	cdl->len = 0;
+-#define DPU_HW_VER(MAJOR, MINOR, STEP) (((MAJOR & 0xF) << 28)    |\
+-		((MINOR & 0xFFF) << 16)  |\
++#define DPU_HW_VER(MAJOR, MINOR, STEP)			\
++		((((unsigned int)MAJOR & 0xF) << 28) |	\
++		((MINOR & 0xFFF) << 16) |		\
+ 		(STEP & 0xFFFF))
  
- 	return err;
+ #define DPU_HW_MAJOR(rev)		((rev) >> 28)
 -- 
 2.39.2
 
