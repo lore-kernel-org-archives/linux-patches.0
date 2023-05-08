@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F82A168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7197C433D2;
-	Mon,  8 May 2023 10:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071B3168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC34C4339B;
+	Mon,  8 May 2023 10:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540382;
-	bh=37Et6PbHvCGIsocBUxddF/q1eEzwLg/W60V58U66AO8=;
+	s=korg; t=1683540384;
+	bh=d7N8v1hlFdAttHD5sKZ/0uQ+LpljVB3VX6dWeCfD1NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dv+UAuiSCqJi1U9wJPztQy6pXCzFyPWo1fI2YVELdBxyi46HvsH+gyoSuhMLRCHUn
-	 248dT++eNMqsIkdLBcWcQBMVS7VJUWxevcC33GmQkhV3jYnaxcloFWlZeX73OxtE6E
-	 fzuqMpiHmcVdPhgnmV7/JcPd3ve9q+UwZjcZ6SNc=
+	b=f4dSLDTN49kiurTWOU7mSZuhpUIbUgsXrZo5rzezVuyKXyrtND8mWeW4kTSIeOs4j
+	 dsFHAvxrRt1dkMeqC4KExZkTT3z+EDNSuDfWv1a91BqXTDJGHnrufhkKB7N+LUoGd5
+	 5CD9mKbQPyiKvtH5NhH93x07LSOqa2+zLaxlD8p8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Avraham Stern <avraham.stern@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 342/611] wifi: iwlwifi: debug: fix crash in __iwl_err()
-Date: Mon,  8 May 2023 11:43:04 +0200
-Message-Id: <20230508094433.523922768@linuxfoundation.org>
+Subject: [PATCH 6.1 343/611] wifi: iwlwifi: trans: dont trigger d3 interrupt twice
+Date: Mon,  8 May 2023 11:43:05 +0200
+Message-Id: <20230508094433.557990157@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,49 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 634c7b1bd08ca322537ab389f8cbd7bb543b5e45 ]
+[ Upstream commit 277f56a141fc54ef7f9e09dba65fb2e12021411d ]
 
-In __iwl_err(), if we rate-limit the message away, then
-vaf.va is still NULL-initialized by the time we get to
-the tracing code, which then crashes. When it doesn't
-get rate-limited out, it's still wrong to reuse the old
-args2 that was already printed, which is why we bother
-making a copy in the first place.
+When the IPC registers are used for sleep control, setting
+the IPC sleep bit already triggers an interrupt to the fw, so
+there is no need to also set the doorbell. Setting also the
+doorbell triggers the sleep interrupt twice which lead to
+an assert.
 
-Assign vaf.va properly to fix this.
-
-Fixes: e5f1cc98cc1b ("iwlwifi: allow rate-limited error messages")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: af08571d3925 ("iwlwifi: pcie: support Bz suspend/resume trigger")
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413102635.e27134c6bcd4.Ib3894cd2ba7a5ad5e75912a7634f146ceaa569e2@changeid
+Link: https://lore.kernel.org/r/20230413102635.b5f2f6e44d38.I4cb5b6ad4914db47a714e731c4c8b4db679cabce@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-debug.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-debug.c b/drivers/net/wireless/intel/iwlwifi/iwl-debug.c
-index ae4c2a3d63d5b..3a3c13a41fc61 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-debug.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-debug.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2005-2011, 2021 Intel Corporation
-+ * Copyright (C) 2005-2011, 2021-2022 Intel Corporation
-  */
- #include <linux/device.h>
- #include <linux/interrupt.h>
-@@ -57,6 +57,7 @@ void __iwl_err(struct device *dev, enum iwl_err_mode mode, const char *fmt, ...)
- 	default:
- 		break;
- 	}
-+	vaf.va = &args;
- 	trace_iwlwifi_err(&vaf);
- 	va_end(args);
- }
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+index bd50f52a1aade..1690d7a4bd9c0 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+@@ -1522,19 +1522,16 @@ static int iwl_pcie_d3_handshake(struct iwl_trans *trans, bool suspend)
+ 	struct iwl_trans_pcie *trans_pcie = IWL_TRANS_GET_PCIE_TRANS(trans);
+ 	int ret;
+ 
+-	if (trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_AX210) {
++	if (trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_AX210)
+ 		iwl_write_umac_prph(trans, UREG_DOORBELL_TO_ISR6,
+ 				    suspend ? UREG_DOORBELL_TO_ISR6_SUSPEND :
+ 					      UREG_DOORBELL_TO_ISR6_RESUME);
+-	} else if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
++	else if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ)
+ 		iwl_write32(trans, CSR_IPC_SLEEP_CONTROL,
+ 			    suspend ? CSR_IPC_SLEEP_CONTROL_SUSPEND :
+ 				      CSR_IPC_SLEEP_CONTROL_RESUME);
+-		iwl_write_umac_prph(trans, UREG_DOORBELL_TO_ISR6,
+-				    UREG_DOORBELL_TO_ISR6_SLEEP_CTRL);
+-	} else {
++	else
+ 		return 0;
+-	}
+ 
+ 	ret = wait_event_timeout(trans_pcie->sx_waitq,
+ 				 trans_pcie->sx_complete, 2 * HZ);
 -- 
 2.39.2
 
