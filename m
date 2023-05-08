@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9A5168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3C63C433D2;
-	Mon,  8 May 2023 11:14:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D725168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73F3C433EF;
+	Mon,  8 May 2023 11:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544464;
-	bh=WEAmJZGfFKqctGT2vUqWC3klLrFDB7+B8pLgO0w/uAk=;
+	s=korg; t=1683544467;
+	bh=6YVj0NxgcOJaJWuG7TKnMuyPUoLsBZezOE5j5+cJXWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=whqXfxlvXKu+sNAalRcYOlU5w0eKtSVDmKuv1R0Vh+7TD2Dpga06JNm1+Jnu7Id52
-	 NnGH3jZK9ahBGYKHamJVZ+XWlq47vcPh5EUsACYp3JcLi2/sxtcMyYRqFIpLWTSXod
-	 0z2E3iAi4RDVFcivb/vKguEvXmtRU6qk+bWHu1WA=
+	b=I9IxgXasyHO6D7ssCLaTmBpZ/OKVP0aolUwd7oi4OWbWk3/Bbj/BPsNlp/6VjO8YX
+	 YgrE0Uj+WV+QvfLN9ay6oh/NnzPV61UKHmi8YrXY/4k/mmSZ01fZlgaTmVK3GKAj6Q
+	 nUz//mpD9xPgIEulHvc6I078vf6zDDKdROZTFj2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 379/694] wifi: rtlwifi: fix incorrect error codes in rtl_debugfs_set_write_reg()
-Date: Mon,  8 May 2023 11:43:34 +0200
-Message-Id: <20230508094445.207732968@linuxfoundation.org>
+Subject: [PATCH 6.3 412/694] wifi: iwlwifi: mvm: fix A-MSDU checks
+Date: Mon,  8 May 2023 11:44:07 +0200
+Message-Id: <20230508094446.625082235@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,51 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 5dbe1f8eb8c5ac69394400a5b86fd81775e96c43 ]
+[ Upstream commit d34d11aea2d5d71a66f2f90507c3f7202b964175 ]
 
-If there is a failure during copy_from_user or user-provided data buffer is
-invalid, rtl_debugfs_set_write_reg should return negative error code instead
-of a positive value count.
+Since Gl A-step devices use the old checksum hardware,
+we shouldn't use the Bz code to check for A-MSDU
+combining ability; fix that.
 
-Fix this bug by returning correct error code. Moreover, the check of buffer
-against null is removed since it will be handled by copy_from_user.
-
-Fixes: 610247f46feb ("rtlwifi: Improve debugging by using debugfs")
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230326054217.93492-1-harperchen1110@gmail.com
+Fixes: ec18e7d4d20d ("wifi: iwlwifi: mvm: use old checksum for Bz A-step")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230413102635.8c445b943fee.Ibf772102ca712f59e2ee0cdd4c344011fcf445aa@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/debug.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/debug.c b/drivers/net/wireless/realtek/rtlwifi/debug.c
-index 602717928887d..9eb26dfe4ca92 100644
---- a/drivers/net/wireless/realtek/rtlwifi/debug.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/debug.c
-@@ -278,8 +278,8 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+index b55b1b17f4d19..9fc2d5d8b7d75 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
+@@ -5525,7 +5525,10 @@ static bool iwl_mvm_mac_can_aggregate(struct ieee80211_hw *hw,
+ {
+ 	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
  
- 	tmp_len = (count > sizeof(tmp) - 1 ? sizeof(tmp) - 1 : count);
+-	if (mvm->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ)
++	if (mvm->trans->trans_cfg->device_family > IWL_DEVICE_FAMILY_BZ ||
++	    (mvm->trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_BZ &&
++	     !(CSR_HW_REV_TYPE(mvm->trans->hw_rev) == IWL_CFG_MAC_TYPE_GL &&
++	       mvm->trans->hw_rev_step == SILICON_A_STEP)))
+ 		return iwl_mvm_tx_csum_bz(mvm, head, true) ==
+ 		       iwl_mvm_tx_csum_bz(mvm, skb, true);
  
--	if (!buffer || copy_from_user(tmp, buffer, tmp_len))
--		return count;
-+	if (copy_from_user(tmp, buffer, tmp_len))
-+		return -EFAULT;
- 
- 	tmp[tmp_len] = '\0';
- 
-@@ -287,7 +287,7 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
- 	num = sscanf(tmp, "%x %x %x", &addr, &val, &len);
- 
- 	if (num !=  3)
--		return count;
-+		return -EINVAL;
- 
- 	switch (len) {
- 	case 1:
 -- 
 2.39.2
 
