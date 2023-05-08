@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D0A168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:54:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1942C4339B;
-	Mon,  8 May 2023 09:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A784168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:54:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2FEFC433D2;
+	Mon,  8 May 2023 09:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539669;
-	bh=bKVfZbGQbbaMi1wWv8cFTLl9g6aqz5vdDPmG5B9/lzQ=;
+	s=korg; t=1683539672;
+	bh=nICfqSBDScdouDTdfwcGOgJQe0BPG/KxCOWgkCUdytA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oT3qaTBl3hyoU8/GyrVEM72x1jJSlFRo2pseKk+BAYKH0PPj1G5w12Gkwy5spQsE0
-	 iTcMF1hkLmVkzyb3rr9BbE+GHFAu/4Jp8mvokZGwQi/rTu6OPpx1aWdl4VNklm0vX4
-	 ZEXVChkgfJT1zEgOyR04tt4AWHdi3B3H3IfH16HI=
+	b=hPH2JWBIxYmvU73uR5WuCjBMofVlhqE4h7HMK0KqBqPLRK/dDVhjs/8p5hNQ4PXyp
+	 3VeYIad7NsX99kMF9A7TmM2ec/MGN2fBQzAVZa/Eqk0KUNlnHrxY5u7vJ3tQsKZviH
+	 OWsf/ETJMZqrkqygWKtAXmehgJLQTfjlKmecKNLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 072/611] crypto: ccp - Dont initialize CCP for PSP 0x1649
-Date: Mon,  8 May 2023 11:38:34 +0200
-Message-Id: <20230508094424.364678291@linuxfoundation.org>
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Kishon Vijay Abraham I <kvijayab@amd.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.1 099/611] iommu/amd: Fix "Guest Virtual APIC Table Root Pointer" configuration in IRTE
+Date: Mon,  8 May 2023 11:39:01 +0200
+Message-Id: <20230508094425.430467218@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,37 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Kishon Vijay Abraham I <kvijayab@amd.com>
 
-commit c79a3169b9f3633c215b55857eba5921e5b49217 upstream.
+commit ccc62b827775915a9b82db42a29813d04f92df7a upstream.
 
-A number of platforms are emitting the error:
-```ccp: unable to access the device: you might be running a broken BIOS.```
+commit b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC
+(de-)activation code") while refactoring guest virtual APIC
+activation/de-activation code, stored information for activate/de-activate
+in "struct amd_ir_data". It used 32-bit integer data type for storing the
+"Guest Virtual APIC Table Root Pointer" (ga_root_ptr), though the
+"ga_root_ptr" is actually a 40-bit field in IRTE (Interrupt Remapping
+Table Entry).
 
-This is expected behavior as CCP is no longer accessible from the PSP's
-PCIe BAR so stop trying to probe CCP for 0x1649.
+This causes interrupts from PCIe devices to not reach the guest in the case
+of PCIe passthrough with SME (Secure Memory Encryption) enabled as _SME_
+bit in the "ga_root_ptr" is lost before writing it to the IRTE.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix it by using 64-bit data type for storing the "ga_root_ptr". While at
+that also change the data type of "ga_tag" to u32 in order to match
+the IOMMU spec.
+
+Fixes: b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC (de-)activation code")
+Cc: stable@vger.kernel.org # v5.4+
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Kishon Vijay Abraham I <kvijayab@amd.com>
+Link: https://lore.kernel.org/r/20230405130317.9351-1-kvijayab@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sp-pci.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/amd/amd_iommu_types.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/ccp/sp-pci.c
-+++ b/drivers/crypto/ccp/sp-pci.c
-@@ -451,9 +451,9 @@ static const struct pci_device_id sp_pci
- 	{ PCI_VDEVICE(AMD, 0x1468), (kernel_ulong_t)&dev_vdata[2] },
- 	{ PCI_VDEVICE(AMD, 0x1486), (kernel_ulong_t)&dev_vdata[3] },
- 	{ PCI_VDEVICE(AMD, 0x15DF), (kernel_ulong_t)&dev_vdata[4] },
--	{ PCI_VDEVICE(AMD, 0x1649), (kernel_ulong_t)&dev_vdata[4] },
- 	{ PCI_VDEVICE(AMD, 0x14CA), (kernel_ulong_t)&dev_vdata[5] },
- 	{ PCI_VDEVICE(AMD, 0x15C7), (kernel_ulong_t)&dev_vdata[6] },
-+	{ PCI_VDEVICE(AMD, 0x1649), (kernel_ulong_t)&dev_vdata[6] },
- 	/* Last entry must be zero */
- 	{ 0, }
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -1002,8 +1002,8 @@ struct amd_ir_data {
+ 	 */
+ 	struct irq_cfg *cfg;
+ 	int ga_vector;
+-	int ga_root_ptr;
+-	int ga_tag;
++	u64 ga_root_ptr;
++	u32 ga_tag;
  };
+ 
+ struct amd_irte_ops {
 
 
