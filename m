@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826E2210C
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD79C433EF;
-	Mon,  8 May 2023 10:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD23F210C
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:19:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11939C433D2;
+	Mon,  8 May 2023 10:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541139;
-	bh=VdKTzBskTyx38+rU4JVMnYU3o7mMWRuEms1LFfHxQco=;
+	s=korg; t=1683541142;
+	bh=/yFPLacZ5zD4cyBBeXXj/glDEj/Gpj3zZaG5dwMznfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ox13BGGc0zlZS6TH5FHxVXgI4A/Nu69heZmyEOeHpCw02yLiRTr7/8XbAazV/7Yo2
-	 Kv2vm4sJkFMBixp2Cu9e0ogNMAVIWv1LH9QMW6eIrg3Ltr9eTEASvRC8E2pfb6852l
-	 aUrLwiiWB6ib6eIjOcDHkFO5xH9UbOk6wXuXdwGs=
+	b=WxDb/YXE6Lg6eESGKeKx/vBDwJpD8j1TbpXytDVT64pWxoSo+/men6Dbm3BOZenZM
+	 lFWNRqcfPDf36bjBo7pb7Rv6y5k/vNP3vr/vb3ONvpB6MsTlmfV3/gVWw+B8vFtRuO
+	 jXksHxgSqOghd+76/UKpDr0PSid6S+/1FDJWjjCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Eugene Huang <eugene.huang99@gmail.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 019/663] x86/cpu: Add model number for Intel Arrow Lake processor
-Date: Mon,  8 May 2023 11:37:25 +0200
-Message-Id: <20230508094429.054879801@linuxfoundation.org>
+Subject: [PATCH 6.2 002/663] ASoC: Intel: soc-acpi: add table for Intel Rooks County NUC M15
+Date: Mon,  8 May 2023 11:37:08 +0200
+Message-Id: <20230508094428.482469668@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,30 +38,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Luck <tony.luck@intel.com>
+From: Eugene Huang <eugene.huang99@gmail.com>
 
-[ Upstream commit 81515ecf155a38f3532bf5ddef88d651898df6be ]
+[ Upstream commit 9c691a42b8926c8966561265cdae3ddc7464d3a2 ]
 
-Successor to Lunar Lake.
+Same topology as the HP Omen 16-k0005TX, except with the rt1316 amp
+on link2.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230404174641.426593-1-tony.luck@intel.com
+Link: https://github.com/thesofproject/linux/issues/4088
+Signed-off-by: Eugene Huang <eugene.huang99@gmail.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20230314090553.498664-3-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/intel-family.h |    2 ++
- 1 file changed, 2 insertions(+)
+ .../intel/common/soc-acpi-intel-adl-match.c   | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
---- a/arch/x86/include/asm/intel-family.h
-+++ b/arch/x86/include/asm/intel-family.h
-@@ -125,6 +125,8 @@
+diff --git a/sound/soc/intel/common/soc-acpi-intel-adl-match.c b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
+index 28dd2046e4ac5..d8c80041388a7 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-adl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
+@@ -354,6 +354,20 @@ static const struct snd_soc_acpi_link_adr adl_sdw_rt711_link0_rt1316_link3[] = {
+ 	{}
+ };
  
- #define INTEL_FAM6_LUNARLAKE_M		0xBD
- 
-+#define INTEL_FAM6_ARROWLAKE		0xC6
++static const struct snd_soc_acpi_link_adr adl_sdw_rt711_link0_rt1316_link2[] = {
++	{
++		.mask = BIT(0),
++		.num_adr = ARRAY_SIZE(rt711_sdca_0_adr),
++		.adr_d = rt711_sdca_0_adr,
++	},
++	{
++		.mask = BIT(2),
++		.num_adr = ARRAY_SIZE(rt1316_2_single_adr),
++		.adr_d = rt1316_2_single_adr,
++	},
++	{}
++};
 +
- /* "Small Core" Processors (Atom/E-Core) */
- 
- #define INTEL_FAM6_ATOM_BONNELL		0x1C /* Diamondville, Pineview */
+ static const struct snd_soc_acpi_adr_device mx8373_2_adr[] = {
+ 	{
+ 		.adr = 0x000223019F837300ull,
+@@ -624,6 +638,12 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_sdw_machines[] = {
+ 		.drv_name = "sof_sdw",
+ 		.sof_tplg_filename = "sof-adl-rt711-l0-rt1316-l3.tplg",
+ 	},
++	{
++		.link_mask = 0x5, /* 2 active links required */
++		.links = adl_sdw_rt711_link0_rt1316_link2,
++		.drv_name = "sof_sdw",
++		.sof_tplg_filename = "sof-adl-rt711-l0-rt1316-l2.tplg",
++	},
+ 	{
+ 		.link_mask = 0x1, /* link0 required */
+ 		.links = adl_rvp,
+-- 
+2.39.2
+
 
 
