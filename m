@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A713168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:34:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEF3C433EF;
-	Mon,  8 May 2023 10:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03ED9168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:34:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 780C0C4339B;
+	Mon,  8 May 2023 10:34:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542063;
-	bh=myw4EHW4yCxzBkNrdHkKyaH5ZEzxx8B/PaJDYMdMtoY=;
+	s=korg; t=1683542066;
+	bh=rKxa6za2E3Ax6EuEdZlSGaFfMGzEoKJwAYaUArXmzAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2R1/Ka2u1aeEM0Hys1UAKnbMWE+NwpfCf2VT9Yl2z2DUJ/09KUStqvlHTSHoCQMNn
-	 namumZEF9wRBQuHq+Mj9t/B9ExTywK6r6tsXxl6wFWO7DBmmCknLP9T3CppwHAcCrY
-	 j9IeXab7t3NaFHzzqenfA60dQErU8JQra7dG9QDQ=
+	b=MkNhMj5Te6/myth2khKAQ9BOIjzC8I7ELBcs/TPhJAoK1SLcURV6zdUwNp6VpidUr
+	 qi8vImh929RuSko2EPLOucw3zHb7DTFB8u1hLOzSy01/1uoR8Bcy0z+KZnpCyHsBCI
+	 j0/VB7lfVG3PYBf4oUeQmuPwQY0KdpLjB+rkipxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Douglas Anderson <dianders@chromium.org>,
-	Jun Yu <junyuu@chromium.org>,
 	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 282/663] wifi: ath11k: Use platform_get_irq() to get the interrupt
-Date: Mon,  8 May 2023 11:41:48 +0200
-Message-Id: <20230508094437.374213733@linuxfoundation.org>
+Subject: [PATCH 6.2 283/663] wifi: ath5k: Use platform_get_irq() to get the interrupt
+Date: Mon,  8 May 2023 11:41:49 +0200
+Message-Id: <20230508094437.403272339@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -39,7 +38,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit f117276638b7600b981b3fe28550823cfbe1ef23 ]
+[ Upstream commit 95c95251d0547b46d6571e4fbd51b42865c15a4a ]
 
 As of commit a1a2b7125e10 ("of/platform: Drop static setup of IRQ
 resource from DT core"), we need to use platform_get_irq() instead of
@@ -49,46 +48,42 @@ platform_get_resource() simply won't get them anymore.
 This was already fixed in several other Atheros WiFi drivers,
 apparently in response to Zeal Robot reports. An example of another
 fix is commit 9503a1fc123d ("ath9k: Use platform_get_irq() to get the
-interrupt"). ath11k seems to have been missed in this effort, though.
-
-Without this change, WiFi wasn't coming up on my Qualcomm sc7280-based
-hardware. Specifically, "platform_get_resource(pdev, IORESOURCE_IRQ,
-i)" was failing even for i=0.
-
-Tested-on: WCN6750 hw1.0 AHB WLAN.MSL.1.0.1-00887-QCAMSLSWPLZ-1
+interrupt"). ath5k seems to have been missed in this effort, though.
 
 Fixes: a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from DT core")
-Fixes: 00402f49d26f ("ath11k: Add support for WCN6750 device")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Jun Yu <junyuu@chromium.org>
 Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230201084131.v2.1.I69cf3d56c97098287fe3a70084ee515098390b70@changeid
+Link: https://lore.kernel.org/r/20230201084131.v2.2.Ic4f8542b0588d7eb4bc6e322d4af3d2064e84ff0@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/ahb.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath5k/ahb.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
-index d34a4d6325b2b..f70a119bb5c87 100644
---- a/drivers/net/wireless/ath/ath11k/ahb.c
-+++ b/drivers/net/wireless/ath/ath11k/ahb.c
-@@ -859,11 +859,11 @@ static int ath11k_ahb_setup_msi_resources(struct ath11k_base *ab)
- 	ab->pci.msi.ep_base_data = int_prop + 32;
- 
- 	for (i = 0; i < ab->pci.msi.config->total_vectors; i++) {
--		res = platform_get_resource(pdev, IORESOURCE_IRQ, i);
--		if (!res)
--			return -ENODEV;
-+		ret = platform_get_irq(pdev, i);
-+		if (ret < 0)
-+			return ret;
- 
--		ab->pci.msi.irqs[i] = res->start;
-+		ab->pci.msi.irqs[i] = ret;
+diff --git a/drivers/net/wireless/ath/ath5k/ahb.c b/drivers/net/wireless/ath/ath5k/ahb.c
+index 2c9cec8b53d9e..28a1e5eff204e 100644
+--- a/drivers/net/wireless/ath/ath5k/ahb.c
++++ b/drivers/net/wireless/ath/ath5k/ahb.c
+@@ -113,15 +113,13 @@ static int ath_ahb_probe(struct platform_device *pdev)
+ 		goto err_out;
  	}
  
- 	set_bit(ATH11K_FLAG_MULTI_MSI_VECTORS, &ab->dev_flags);
+-	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
+-	if (res == NULL) {
+-		dev_err(&pdev->dev, "no IRQ resource found\n");
+-		ret = -ENXIO;
++	irq = platform_get_irq(pdev, 0);
++	if (irq < 0) {
++		dev_err(&pdev->dev, "no IRQ resource found: %d\n", irq);
++		ret = irq;
+ 		goto err_iounmap;
+ 	}
+ 
+-	irq = res->start;
+-
+ 	hw = ieee80211_alloc_hw(sizeof(struct ath5k_hw), &ath5k_hw_ops);
+ 	if (hw == NULL) {
+ 		dev_err(&pdev->dev, "no memory for ieee80211_hw\n");
 -- 
 2.39.2
 
