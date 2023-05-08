@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D978C168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE9FC433EF;
-	Mon,  8 May 2023 10:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEAD168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C77C433D2;
+	Mon,  8 May 2023 10:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540207;
-	bh=Z/QWEeChUg/0tX5Wv/oH0TJy2/Dcj2j0rB7GzzZhVIU=;
+	s=korg; t=1683540210;
+	bh=Zl3yB4I7jmLbr4Wjo08xzHw+k2BrZbWVxUBQSp+G6Ig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BC5i5OwL7pLBy2WVaX5TsEn8obeoH3EobMKoPT42EYghUEFnyl+mOB3g6rTbdfZtq
-	 D1dQlgqNS9bCUbMPxpSz8MR3KGvulrtK11H+aeVLxkWDCUA2qOAwiGl/6Jbf8FCH/K
-	 MLSTljHOFe7vbbMK/A+bngrk7wbjUq5UmHa6nj8U=
+	b=2rbzk4anuhPccBEFWh25LSequfYG6fx4gN/zH7rw/HHYWIIWXw5tCSWiLl2MYtPnY
+	 /FmYCYy0M20mlAfqUr1f+uXj3eDlztg/sX70feQGhN92y24rmRdOej49XaJELx8vQI
+	 8UumsXjNtts7lQN07Spuu9bQKxeHzhLWTdsqc5Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 245/611] media: rcar_fdp1: Fix refcount leak in probe and remove function
-Date: Mon,  8 May 2023 11:41:27 +0200
-Message-Id: <20230508094430.380308590@linuxfoundation.org>
+Subject: [PATCH 6.1 246/611] media: v4l: async: Return async sub-devices to subnotifier list
+Date: Mon,  8 May 2023 11:41:28 +0200
+Message-Id: <20230508094430.409653494@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,68 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Sakari Ailus <sakari.ailus@linux.intel.com>
 
-[ Upstream commit c766c90faf93897b77c9c5daa603cffab85ba907 ]
+[ Upstream commit 5276c9df9c2ab9a43b534bfb56bdb10899cd3a22 ]
 
-rcar_fcp_get() take reference, which should be balanced with
-rcar_fcp_put(). Add missing rcar_fcp_put() in fdp1_remove and
-the error paths of fdp1_probe() to fix this.
+When an async notifier is unregistered, the async sub-devices in the
+notifier's done list will disappear with the notifier. However this is
+currently also done to the sub-notifiers that remain registered. Their
+sub-devices only need to be unbound while the async sub-devices themselves
+need to be returned to the sub-notifier's waiting list. Do this now.
 
-Fixes: 4710b752e029 ("[media] v4l: Add Renesas R-Car FDP1 Driver")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-[hverkuil: resolve merge conflict, remove() is now void]
+Fixes: 2cab00bb076b ("media: v4l: async: Allow binding notifiers to sub-devices")
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/renesas/rcar_fdp1.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/media/v4l2-core/v4l2-async.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/renesas/rcar_fdp1.c b/drivers/media/platform/renesas/rcar_fdp1.c
-index 37ecf489d112e..dea22e3579052 100644
---- a/drivers/media/platform/renesas/rcar_fdp1.c
-+++ b/drivers/media/platform/renesas/rcar_fdp1.c
-@@ -2313,8 +2313,10 @@ static int fdp1_probe(struct platform_device *pdev)
+diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
+index 2f1b718a91893..008a2a3e312e0 100644
+--- a/drivers/media/v4l2-core/v4l2-async.c
++++ b/drivers/media/v4l2-core/v4l2-async.c
+@@ -414,7 +414,8 @@ static void v4l2_async_cleanup(struct v4l2_subdev *sd)
  
- 	/* Determine our clock rate */
- 	clk = clk_get(&pdev->dev, NULL);
--	if (IS_ERR(clk))
--		return PTR_ERR(clk);
-+	if (IS_ERR(clk)) {
-+		ret = PTR_ERR(clk);
-+		goto put_dev;
-+	}
+ /* Unbind all sub-devices in the notifier tree. */
+ static void
+-v4l2_async_nf_unbind_all_subdevs(struct v4l2_async_notifier *notifier)
++v4l2_async_nf_unbind_all_subdevs(struct v4l2_async_notifier *notifier,
++				 bool readd)
+ {
+ 	struct v4l2_subdev *sd, *tmp;
  
- 	fdp1->clk_rate = clk_get_rate(clk);
- 	clk_put(clk);
-@@ -2323,7 +2325,7 @@ static int fdp1_probe(struct platform_device *pdev)
- 	ret = v4l2_device_register(&pdev->dev, &fdp1->v4l2_dev);
- 	if (ret) {
- 		v4l2_err(&fdp1->v4l2_dev, "Failed to register video device\n");
--		return ret;
-+		goto put_dev;
- 	}
+@@ -423,9 +424,11 @@ v4l2_async_nf_unbind_all_subdevs(struct v4l2_async_notifier *notifier)
+ 			v4l2_async_find_subdev_notifier(sd);
  
- 	/* M2M registration */
-@@ -2393,6 +2395,8 @@ static int fdp1_probe(struct platform_device *pdev)
- unreg_dev:
- 	v4l2_device_unregister(&fdp1->v4l2_dev);
+ 		if (subdev_notifier)
+-			v4l2_async_nf_unbind_all_subdevs(subdev_notifier);
++			v4l2_async_nf_unbind_all_subdevs(subdev_notifier, true);
  
-+put_dev:
-+	rcar_fcp_put(fdp1->fcp);
- 	return ret;
- }
+ 		v4l2_async_nf_call_unbind(notifier, sd, sd->asd);
++		if (readd)
++			list_add_tail(&sd->asd->list, &notifier->waiting);
+ 		v4l2_async_cleanup(sd);
  
-@@ -2404,6 +2408,7 @@ static int fdp1_remove(struct platform_device *pdev)
- 	video_unregister_device(&fdp1->vfd);
- 	v4l2_device_unregister(&fdp1->v4l2_dev);
- 	pm_runtime_disable(&pdev->dev);
-+	rcar_fcp_put(fdp1->fcp);
+ 		list_move(&sd->async_list, &subdev_list);
+@@ -557,7 +560,7 @@ static int __v4l2_async_nf_register(struct v4l2_async_notifier *notifier)
+ 	/*
+ 	 * On failure, unbind all sub-devices registered through this notifier.
+ 	 */
+-	v4l2_async_nf_unbind_all_subdevs(notifier);
++	v4l2_async_nf_unbind_all_subdevs(notifier, false);
  
- 	return 0;
- }
+ err_unlock:
+ 	mutex_unlock(&list_lock);
+@@ -607,7 +610,7 @@ __v4l2_async_nf_unregister(struct v4l2_async_notifier *notifier)
+ 	if (!notifier || (!notifier->v4l2_dev && !notifier->sd))
+ 		return;
+ 
+-	v4l2_async_nf_unbind_all_subdevs(notifier);
++	v4l2_async_nf_unbind_all_subdevs(notifier, false);
+ 
+ 	notifier->sd = NULL;
+ 	notifier->v4l2_dev = NULL;
+@@ -805,7 +808,7 @@ int v4l2_async_register_subdev(struct v4l2_subdev *sd)
+ 	 */
+ 	subdev_notifier = v4l2_async_find_subdev_notifier(sd);
+ 	if (subdev_notifier)
+-		v4l2_async_nf_unbind_all_subdevs(subdev_notifier);
++		v4l2_async_nf_unbind_all_subdevs(subdev_notifier, false);
+ 
+ 	if (sd->asd)
+ 		v4l2_async_nf_call_unbind(notifier, sd, sd->asd);
 -- 
 2.39.2
 
