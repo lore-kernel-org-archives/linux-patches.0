@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBC5101F4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:21:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D88C4339B;
-	Mon,  8 May 2023 10:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75241101F4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:21:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE530C433EF;
+	Mon,  8 May 2023 10:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541300;
-	bh=cw3OnQkRRzLSZofw1h00fHi3CqqZKFvyxjHDHAz3LDU=;
+	s=korg; t=1683541303;
+	bh=9OEA1UmThmOhHD7k3lMZMT5oujTCs8W7oOtYIeuUm7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Jk9tJbNaHlQVI2IacaPz3KyXWLssR6iQtbQDS0i1MuVP+ma8m9T2yFEMzoLx0fyL
-	 uSjhdB43z7Gipw/CA/Z7obzqh+WjXjRCZK66TfdNPH44YeaOjZu8tQCysJ4P+a4FLK
-	 +A0YS7zW95mfdJz060vetjw49guI5Y23UT945Rh8=
+	b=kYnksnmsYNjRkRQ0zJLccfX03+y4QXNhTi61quRWdeTZ55Gsz7N3JmQpDAJeSGcWx
+	 grGpImif/HKQ0FYyZt+sd3hoAxaCBVVFYkEy/LYHGkP4ZulVDdscwYXjRTHHaJE8jp
+	 Tdi9ENrahrMgVYahMrbfYU0V+X5CFi4Uganos3QQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	ValdikSS <iam@valdikss.org.ru>,
-	Alexandru gagniuc <mr.nuke.me@gmail.com>,
-	Larry Finger <Larry.Finger@lwfinger.net>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.2 031/663] wifi: rtw88: usb: fix priority queue to endpoint mapping
-Date: Mon,  8 May 2023 11:37:37 +0200
-Message-Id: <20230508094429.465189975@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Thierry Reding <thierry.reding@gmail.com>
+Subject: [PATCH 6.2 064/663] pwm: meson: Fix g12a ao clk81 name
+Date: Mon,  8 May 2023 11:38:10 +0200
+Message-Id: <20230508094430.557080911@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,144 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit a6f187f92bcc2b17821538b4a11d61764e68b091 upstream.
+commit 9e4fa80ab7ef9eb4f7b1ea9fc31e0eb040e85e25 upstream.
 
-The RTW88 chipsets have four different priority queues in hardware. For
-the USB type chipsets the packets destined for a specific priority queue
-must be sent through the endpoint corresponding to the queue. This was
-not fully understood when porting from the RTW88 USB out of tree driver
-and thus violated.
+Fix the name of the aoclk81 clock. Apparently name aoclk81 as used by
+the vendor driver was changed when mainlining the g12a clock driver.
 
-This patch implements the qsel to endpoint mapping as in
-get_usb_bulkout_id_88xx() in the downstream driver.
-
-Without this the driver often issues "timed out to flush queue 3"
-warnings and often TX stalls completely.
-
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Tested-by: ValdikSS <iam@valdikss.org.ru>
-Tested-by: Alexandru gagniuc <mr.nuke.me@gmail.com>
-Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
+Fixes: f41efceb46e6 ("pwm: meson: Add clock source configuration for Meson G12A")
 Cc: stable@vger.kernel.org
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230417140358.2240429-2-s.hauer@pengutronix.de
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw88/usb.c |   70 ++++++++++++++++++++-----------
- 1 file changed, 47 insertions(+), 23 deletions(-)
+ drivers/pwm/pwm-meson.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -118,6 +118,22 @@ static void rtw_usb_write32(struct rtw_d
- 	rtw_usb_write(rtwdev, addr, val, 4);
- }
+--- a/drivers/pwm/pwm-meson.c
++++ b/drivers/pwm/pwm-meson.c
+@@ -427,7 +427,7 @@ static const struct meson_pwm_data pwm_a
+ };
  
-+static int dma_mapping_to_ep(enum rtw_dma_mapping dma_mapping)
-+{
-+	switch (dma_mapping) {
-+	case RTW_DMA_MAPPING_HIGH:
-+		return 0;
-+	case RTW_DMA_MAPPING_NORMAL:
-+		return 1;
-+	case RTW_DMA_MAPPING_LOW:
-+		return 2;
-+	case RTW_DMA_MAPPING_EXTRA:
-+		return 3;
-+	default:
-+		return -EINVAL;
-+	}
-+}
-+
- static int rtw_usb_parse(struct rtw_dev *rtwdev,
- 			 struct usb_interface *interface)
- {
-@@ -129,6 +145,8 @@ static int rtw_usb_parse(struct rtw_dev
- 	int num_out_pipes = 0;
- 	int i;
- 	u8 num;
-+	const struct rtw_chip_info *chip = rtwdev->chip;
-+	const struct rtw_rqpn *rqpn;
+ static const char * const pwm_g12a_ao_ab_parent_names[] = {
+-	"xtal", "aoclk81", "fclk_div4", "fclk_div5"
++	"xtal", "g12a_ao_clk81", "fclk_div4", "fclk_div5"
+ };
  
- 	for (i = 0; i < interface_desc->bNumEndpoints; i++) {
- 		endpoint = &host_interface->endpoint[i].desc;
-@@ -183,31 +201,34 @@ static int rtw_usb_parse(struct rtw_dev
+ static const struct meson_pwm_data pwm_g12a_ao_ab_data = {
+@@ -436,7 +436,7 @@ static const struct meson_pwm_data pwm_g
+ };
  
- 	rtwdev->hci.bulkout_num = num_out_pipes;
+ static const char * const pwm_g12a_ao_cd_parent_names[] = {
+-	"xtal", "aoclk81",
++	"xtal", "g12a_ao_clk81",
+ };
  
--	switch (num_out_pipes) {
--	case 4:
--	case 3:
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID0] = 2;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID1] = 2;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID2] = 2;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID3] = 2;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID4] = 1;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID5] = 1;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID6] = 0;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID7] = 0;
--		break;
--	case 2:
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID0] = 1;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID1] = 1;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID2] = 1;
--		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID3] = 1;
--		break;
--	case 1:
--		break;
--	default:
--		rtw_err(rtwdev, "failed to get out_pipes(%d)\n", num_out_pipes);
-+	if (num_out_pipes < 1 || num_out_pipes > 4) {
-+		rtw_err(rtwdev, "invalid number of endpoints %d\n", num_out_pipes);
- 		return -EINVAL;
- 	}
- 
-+	rqpn = &chip->rqpn_table[num_out_pipes];
-+
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID0] = dma_mapping_to_ep(rqpn->dma_map_be);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID1] = dma_mapping_to_ep(rqpn->dma_map_bk);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID2] = dma_mapping_to_ep(rqpn->dma_map_bk);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID3] = dma_mapping_to_ep(rqpn->dma_map_be);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID4] = dma_mapping_to_ep(rqpn->dma_map_vi);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID5] = dma_mapping_to_ep(rqpn->dma_map_vi);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID6] = dma_mapping_to_ep(rqpn->dma_map_vo);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID7] = dma_mapping_to_ep(rqpn->dma_map_vo);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID8] = -EINVAL;
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID9] = -EINVAL;
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID10] = -EINVAL;
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID11] = -EINVAL;
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID12] = -EINVAL;
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID13] = -EINVAL;
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID14] = -EINVAL;
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID15] = -EINVAL;
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_BEACON] = dma_mapping_to_ep(rqpn->dma_map_hi);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_HIGH] = dma_mapping_to_ep(rqpn->dma_map_hi);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_MGMT] = dma_mapping_to_ep(rqpn->dma_map_mg);
-+	rtwusb->qsel_to_ep[TX_DESC_QSEL_H2C] = dma_mapping_to_ep(rqpn->dma_map_hi);
-+
- 	return 0;
- }
- 
-@@ -250,7 +271,7 @@ static void rtw_usb_write_port_tx_comple
- static int qsel_to_ep(struct rtw_usb *rtwusb, unsigned int qsel)
- {
- 	if (qsel >= ARRAY_SIZE(rtwusb->qsel_to_ep))
--		return 0;
-+		return -EINVAL;
- 
- 	return rtwusb->qsel_to_ep[qsel];
- }
-@@ -265,6 +286,9 @@ static int rtw_usb_write_port(struct rtw
- 	int ret;
- 	int ep = qsel_to_ep(rtwusb, qsel);
- 
-+	if (ep < 0)
-+		return ep;
-+
- 	pipe = usb_sndbulkpipe(usbd, rtwusb->out_ep[ep]);
- 	urb = usb_alloc_urb(0, GFP_ATOMIC);
- 	if (!urb)
+ static const struct meson_pwm_data pwm_g12a_ao_cd_data = {
 
 
