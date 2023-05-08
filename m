@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4DF168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:35:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8951BC433D2;
-	Mon,  8 May 2023 10:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A00168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:35:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A4A0C433D2;
+	Mon,  8 May 2023 10:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542110;
-	bh=fBFL9+PIfeCp40C6QPglbMpLJe06EUgkt5DoA5AXVI4=;
+	s=korg; t=1683542113;
+	bh=bv3cQEKRrqQvoSzswDMpHsDUglDuCdGu7wMDyGPuyf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1tJ6SUhdeFVbycD5epNKU4RYcvhCTRK8DCoqIIIXd4v6n0kmH072JbY1XRvjDs7i
-	 YdkRyAQ5L3wFfsYguyLE4R/vWi4XKF5Bj2caoauyhJRVy/m7UT6mt9To9bjvvj4VXl
-	 X4bsTgKLpLxgtBAnGzVWyaZ2PBz/Q0IXk/PSImyQ=
+	b=K2DwAxCGwZSYf2FaqZB+CvNjFoI/UslSNlHaL7qMzvD4DqcOMVXISWems8CraXTxp
+	 nVpUJYKJHW3TAF4kPcZSOm10tZIAgXHaAgYSVWvKOL1jsxKpjbqc+F6wjVy36VyRPK
+	 DZXcADR1p2+1hEg7FfMhDdO4CibzrSJjpq/4pWvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Vernet <void@manifault.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Stanislav Fomichev <sdf@google.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 330/663] bpf: Add __bpf_kfunc tag for marking kernel functions as kfuncs
-Date: Mon,  8 May 2023 11:42:36 +0200
-Message-Id: <20230508094438.888182698@linuxfoundation.org>
+Subject: [PATCH 6.2 313/663] scsi: target: iscsit: Stop/wait on cmds during conn close
+Date: Mon,  8 May 2023 11:42:19 +0200
+Message-Id: <20230508094438.346750996@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,76 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Vernet <void@manifault.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 57e7c169cd6afa093d858b8edfb9bceaf2e1c93b ]
+[ Upstream commit 395cee83d02de3073211b04fc85724f4abc663ad ]
 
-kfuncs are functions defined in the kernel, which may be invoked by BPF
-programs. They may or may not also be used as regular kernel functions,
-implying that they may be static (in which case the compiler could e.g.
-inline it away, or elide one or more arguments), or it could have
-external linkage, but potentially be elided in an LTO build if a
-function is observed to never be used, and is stripped from the final
-kernel binary.
+This fixes a bug added in commit f36199355c64 ("scsi: target: iscsi: Fix
+cmd abort fabric stop race").
 
-This has already resulted in some issues, such as those discussed in [0]
-wherein changes in DWARF that identify when a parameter has been
-optimized out can break BTF encodings (and in general break the kfunc).
+If we have multiple sessions to the same se_device we can hit a race where
+a LUN_RESET on one session cleans up the se_cmds from under another
+session which is being closed. This results in the closing session freeing
+its conn/session structs while they are still in use.
 
-[0]: https://lore.kernel.org/all/1675088985-20300-2-git-send-email-alan.maguire@oracle.com/
+The bug is:
 
-We therefore require some convenience macro that kfunc developers can
-use just add to their kfuncs, and which will prevent all of the above
-issues from happening. This is in contrast with what we have today,
-where some kfunc definitions have "noinline", some have "__used", and
-others are static and have neither.
+ 1. Session1 has IO se_cmd1.
 
-Note that longer term, this mechanism may be replaced by a macro that
-more closely resembles EXPORT_SYMBOL_GPL(), as described in [1]. For
-now, we're going with this shorter-term approach to fix existing issues
-in kfuncs.
+ 2. Session2 can also have se_cmds for I/O and optionally TMRs for ABORTS
+    but then gets a LUN_RESET.
 
-[1]: https://lore.kernel.org/lkml/Y9AFT4pTydKh+PD3@maniforge.lan/
+ 3. The LUN_RESET on session2 sees the se_cmds on session1 and during the
+    drain stages marks them all with CMD_T_ABORTED.
 
-Note as well that checkpatch complains about this patch with the
-following:
+ 4. session1 is now closed so iscsit_release_commands_from_conn() only sees
+    se_cmds with the CMD_T_ABORTED bit set and returns immediately even
+    though we have outstanding commands.
 
-ERROR: Macros with complex values should be enclosed in parentheses
-+#define __bpf_kfunc __used noinline
+ 5. session1's connection and session are freed.
 
-There seems to be a precedent for using this pattern in other places
-such as compiler_types.h (see e.g. __randomize_layout and noinstr), so
-it seems appropriate.
+ 6. The backend request for se_cmd1 completes and it accesses the freed
+    connection/session.
 
-Signed-off-by: David Vernet <void@manifault.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/bpf/20230201173016.342758-2-void@manifault.com
-Stable-dep-of: f6a6a5a97628 ("bpf: Fix struct_meta lookup for bpf_obj_free_fields kfunc call")
+This hooks the iscsit layer into the cmd counter code, so we can wait for
+all outstanding se_cmds before freeing the connection.
+
+Fixes: f36199355c64 ("scsi: target: iscsi: Fix cmd abort fabric stop race")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-6-michael.christie@oracle.com
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/btf.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/target/iscsi/iscsi_target.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/include/linux/btf.h b/include/linux/btf.h
-index 5f628f323442a..ff62fa63dc197 100644
---- a/include/linux/btf.h
-+++ b/include/linux/btf.h
-@@ -72,6 +72,14 @@
- #define KF_DESTRUCTIVE  (1 << 6) /* kfunc performs destructive actions */
- #define KF_RCU          (1 << 7) /* kfunc only takes rcu pointer arguments */
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 11115c2078446..83b0071412294 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4245,6 +4245,16 @@ static void iscsit_release_commands_from_conn(struct iscsit_conn *conn)
+ 		iscsit_free_cmd(cmd, true);
  
-+/*
-+ * Tag marking a kernel function as a kfunc. This is meant to minimize the
-+ * amount of copy-paste that kfunc authors have to include for correctness so
-+ * as to avoid issues such as the compiler inlining or eliding either a static
-+ * kfunc, or a global kfunc in an LTO build.
-+ */
-+#define __bpf_kfunc __used noinline
+ 	}
 +
- /*
-  * Return the name of the passed struct, if exists, or halt the build if for
-  * example the structure gets renamed. In this way, developers have to revisit
++	/*
++	 * Wait on commands that were cleaned up via the aborted_task path.
++	 * LLDs that implement iscsit_wait_conn will already have waited for
++	 * commands.
++	 */
++	if (!conn->conn_transport->iscsit_wait_conn) {
++		target_stop_cmd_counter(conn->cmd_cnt);
++		target_wait_for_cmds(conn->cmd_cnt);
++	}
+ }
+ 
+ static void iscsit_stop_timers_for_cmds(
 -- 
 2.39.2
 
