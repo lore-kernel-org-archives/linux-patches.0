@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E131171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00535C433D2;
-	Mon,  8 May 2023 11:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69B8171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6F5C433EF;
+	Mon,  8 May 2023 11:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545869;
-	bh=WzX49OhwakmUby6LoSKSVcP9ojRGrNGMXs2Kok2j3oQ=;
+	s=korg; t=1683545872;
+	bh=mTtuV/Ql6GroExZ/32vNesA1ayUEF9XzBKMzH+XnVdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jo9JCTLm/3IoouK0+NQhLrGU+EhNatxKb1hMN8UaNIfJ+yCSB96wYb43O0iLym6qh
-	 PYa/392yveRHGKUW+FDMS79HYqGKGLi5Mat1c8l8G0KsBiw3uSMc8StjUFTUFvDo8L
-	 KQJ/UT/JlWesoUv7DK6chkSefVCqY5uC4HUpv9X4=
+	b=DTKKaTQTq0w3wg4p7B5a59ZM1X/w7f+GZxqUdWybOGX6d8INVMQxm/U/ZHILZMYgN
+	 h2RcsCtuwBtno3e0v6szD3NUmmOo7EWAiAc5FpHFiAfa9S7M8X2YZB6B//sHTzlpAe
+	 OarOlCA+dGtplnmukZTWMHn/xq/21ksDkJ+Edhg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Kal Conley <kal.conley@dectris.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 180/371] net: qrtr: correct types of trace event parameters
-Date: Mon,  8 May 2023 11:46:21 +0200
-Message-Id: <20230508094819.286195587@linuxfoundation.org>
+Subject: [PATCH 5.15 181/371] selftests: xsk: Disable IPv6 on VETH1
+Date: Mon,  8 May 2023 11:46:22 +0200
+Message-Id: <20230508094819.329939567@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,106 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Horman <horms@kernel.org>
+From: Kal Conley <kal.conley@dectris.com>
 
-[ Upstream commit 054fbf7ff8143d35ca7d3bb5414bb44ee1574194 ]
+[ Upstream commit f2b50f17268390567bc0e95642170d88f336c8f4 ]
 
-The arguments passed to the trace events are of type unsigned int,
-however the signature of the events used __le32 parameters.
+This change fixes flakiness in the BIDIRECTIONAL test:
 
-I may be missing the point here, but sparse flagged this and it
-does seem incorrect to me.
+    # [is_pkt_valid] expected length [60], got length [90]
+    not ok 1 FAIL: SKB BUSY-POLL BIDIRECTIONAL
 
-  net/qrtr/ns.c: note: in included file (through include/trace/trace_events.h, include/trace/define_trace.h, include/trace/events/qrtr.h):
-  ./include/trace/events/qrtr.h:11:1: warning: cast to restricted __le32
-  ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
-  ./include/trace/events/qrtr.h:11:1: warning: restricted __le32 degrades to integer
-  ... (a lot more similar warnings)
-  net/qrtr/ns.c:115:47:    expected restricted __le32 [usertype] service
-  net/qrtr/ns.c:115:47:    got unsigned int service
-  net/qrtr/ns.c:115:61: warning: incorrect type in argument 2 (different base types)
-  ... (a lot more similar warnings)
+When IPv6 is enabled, the interface will periodically send MLDv1 and
+MLDv2 packets. These packets can cause the BIDIRECTIONAL test to fail
+since it uses VETH0 for RX.
 
-Fixes: dfddb54043f0 ("net: qrtr: Add tracepoint support")
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Simon Horman <horms@kernel.org>
-Link: https://lore.kernel.org/r/20230402-qrtr-trace-types-v1-1-92ad55008dd3@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+For other tests, this was not a problem since they only receive on VETH1
+and IPv6 was already disabled on VETH0.
+
+Fixes: a89052572ebb ("selftests/bpf: Xsk selftests framework")
+Signed-off-by: Kal Conley <kal.conley@dectris.com>
+Link: https://lore.kernel.org/r/20230405082905.6303-1-kal.conley@dectris.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/qrtr.h | 33 ++++++++++++++++++---------------
- 1 file changed, 18 insertions(+), 15 deletions(-)
+ tools/testing/selftests/bpf/test_xsk.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/trace/events/qrtr.h b/include/trace/events/qrtr.h
-index b1de14c3bb934..441132c67133f 100644
---- a/include/trace/events/qrtr.h
-+++ b/include/trace/events/qrtr.h
-@@ -10,15 +10,16 @@
- 
- TRACE_EVENT(qrtr_ns_service_announce_new,
- 
--	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-+	TP_PROTO(unsigned int service, unsigned int instance,
-+		 unsigned int node, unsigned int port),
- 
- 	TP_ARGS(service, instance, node, port),
- 
- 	TP_STRUCT__entry(
--		__field(__le32, service)
--		__field(__le32, instance)
--		__field(__le32, node)
--		__field(__le32, port)
-+		__field(unsigned int, service)
-+		__field(unsigned int, instance)
-+		__field(unsigned int, node)
-+		__field(unsigned int, port)
- 	),
- 
- 	TP_fast_assign(
-@@ -36,15 +37,16 @@ TRACE_EVENT(qrtr_ns_service_announce_new,
- 
- TRACE_EVENT(qrtr_ns_service_announce_del,
- 
--	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-+	TP_PROTO(unsigned int service, unsigned int instance,
-+		 unsigned int node, unsigned int port),
- 
- 	TP_ARGS(service, instance, node, port),
- 
- 	TP_STRUCT__entry(
--		__field(__le32, service)
--		__field(__le32, instance)
--		__field(__le32, node)
--		__field(__le32, port)
-+		__field(unsigned int, service)
-+		__field(unsigned int, instance)
-+		__field(unsigned int, node)
-+		__field(unsigned int, port)
- 	),
- 
- 	TP_fast_assign(
-@@ -62,15 +64,16 @@ TRACE_EVENT(qrtr_ns_service_announce_del,
- 
- TRACE_EVENT(qrtr_ns_server_add,
- 
--	TP_PROTO(__le32 service, __le32 instance, __le32 node, __le32 port),
-+	TP_PROTO(unsigned int service, unsigned int instance,
-+		 unsigned int node, unsigned int port),
- 
- 	TP_ARGS(service, instance, node, port),
- 
- 	TP_STRUCT__entry(
--		__field(__le32, service)
--		__field(__le32, instance)
--		__field(__le32, node)
--		__field(__le32, port)
-+		__field(unsigned int, service)
-+		__field(unsigned int, instance)
-+		__field(unsigned int, node)
-+		__field(unsigned int, port)
- 	),
- 
- 	TP_fast_assign(
+diff --git a/tools/testing/selftests/bpf/test_xsk.sh b/tools/testing/selftests/bpf/test_xsk.sh
+index cd7bf32e6a173..661995af75602 100755
+--- a/tools/testing/selftests/bpf/test_xsk.sh
++++ b/tools/testing/selftests/bpf/test_xsk.sh
+@@ -106,6 +106,7 @@ setup_vethPairs() {
+ 	ip link add ${VETH0} numtxqueues 4 numrxqueues 4 type veth peer name ${VETH1} numtxqueues 4 numrxqueues 4
+ 	if [ -f /proc/net/if_inet6 ]; then
+ 		echo 1 > /proc/sys/net/ipv6/conf/${VETH0}/disable_ipv6
++		echo 1 > /proc/sys/net/ipv6/conf/${VETH1}/disable_ipv6
+ 	fi
+ 	if [[ $verbose -eq 1 ]]; then
+ 	        echo "setting up ${VETH1}: namespace: ${NS1}"
 -- 
 2.39.2
 
