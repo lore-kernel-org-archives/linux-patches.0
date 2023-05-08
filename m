@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA311549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:58:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16745C4339B;
-	Mon,  8 May 2023 09:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D46801549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:58:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6CDC433A0;
+	Mon,  8 May 2023 09:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539893;
-	bh=n3QEz4aGFCKSi/bjyE9BdveUnSgb/cpcPmtwao7juVA=;
+	s=korg; t=1683539896;
+	bh=oI5o8Kh/RF5xGrV+PyG+QEsbQrhPWPV9byIyyka1h0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ubxQ8MH19+6YnG5BIBVHV9IjKl4KHZwxpyp217S/2vXYCXoLb+6FNadBWOLUaXPD9
-	 MdgMCQWYu5XW3l0cxsSBIN7mXmHU02lkSrBUbJ08j9cdg7DefzlBtjn66bFD5VhM0Z
-	 Onh8CN6Ykz4waOb75bdVEFjh0qC0Eybk8Skb8HeA=
+	b=SFLny842r3dmzlPVyBuW32MQ4pd5rUeZd8VXbRhyczvVqm2RBUR9hyAx7VCmyBbgz
+	 plKuQZ9rbcBE54N0zUZ+0imnzX7wt/SaPIG0xGT5NdiPFnAVEvE3fCLT0/UUcVWIHT
+	 z/B1H0UtTzAu2fUTHKBVoRwl9ggJAYmKks0ctfMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muralidhara M K <muralimk@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 170/611] x86/MCE/AMD: Use an u64 for bank_map
-Date: Mon,  8 May 2023 11:40:12 +0200
-Message-Id: <20230508094427.871680097@linuxfoundation.org>
+Subject: [PATCH 6.1 140/611] arm64: dts: renesas: r9a07g044: Update IRQ numbers for SSI channels
+Date: Mon,  8 May 2023 11:39:42 +0200
+Message-Id: <20230508094426.785014432@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,97 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muralidhara M K <muralimk@amd.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 4c1cdec319b9aadb65737c3eb1f5cb74bd6aa156 ]
+[ Upstream commit 5da750ddd96454757a3b467e968e3fb70bb12bc8 ]
 
-Thee maximum number of MCA banks is 64 (MAX_NR_BANKS), see
+>From R01UH0914EJ0120 Rev.1.20 HW manual the interrupt numbers for SSI
+channels have been updated,
 
-  a0bc32b3cacf ("x86/mce: Increase maximum number of banks to 64").
+SPI 329 - SSIF0 is now marked as reserved
+SPI 333 - SSIF1 is now marked as reserved
+SPI 335 - SSIF2 is now marked as reserved
+SPI 336 - SSIF2 is now marked as reserved
+SPI 341 - SSIF3 is now marked as reserved
 
-However, the bank_map which contains a bitfield of which banks to
-initialize is of type unsigned int and that overflows when those bit
-numbers are >= 32, leading to UBSAN complaining correctly:
+This patch drops the above IRQs from SoC DTSI.
 
-  UBSAN: shift-out-of-bounds in arch/x86/kernel/cpu/mce/amd.c:1365:38
-  shift exponent 32 is too large for 32-bit type 'int'
-
-Change the bank_map to a u64 and use the proper BIT_ULL() macro when
-modifying bits in there.
-
-  [ bp: Rewrite commit message. ]
-
-Fixes: a0bc32b3cacf ("x86/mce: Increase maximum number of banks to 64")
-Signed-off-by: Muralidhara M K <muralimk@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230127151601.1068324-1-muralimk@amd.com
+Fixes: 92a341315afc9 ("arm64: dts: renesas: r9a07g044: Add SSI support")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230217185225.43310-4-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mce/amd.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/renesas/r9a07g044.dtsi | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/mce/amd.c b/arch/x86/kernel/cpu/mce/amd.c
-index 10fb5b5c9efa4..5518272061bfb 100644
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -235,10 +235,10 @@ static DEFINE_PER_CPU(struct threshold_bank **, threshold_banks);
-  * A list of the banks enabled on each logical CPU. Controls which respective
-  * descriptors to initialize later in mce_threshold_create_device().
-  */
--static DEFINE_PER_CPU(unsigned int, bank_map);
-+static DEFINE_PER_CPU(u64, bank_map);
- 
- /* Map of banks that have more than MCA_MISC0 available. */
--static DEFINE_PER_CPU(u32, smca_misc_banks_map);
-+static DEFINE_PER_CPU(u64, smca_misc_banks_map);
- 
- static void amd_threshold_interrupt(void);
- static void amd_deferred_error_interrupt(void);
-@@ -267,7 +267,7 @@ static void smca_set_misc_banks_map(unsigned int bank, unsigned int cpu)
- 		return;
- 
- 	if (low & MASK_BLKPTR_LO)
--		per_cpu(smca_misc_banks_map, cpu) |= BIT(bank);
-+		per_cpu(smca_misc_banks_map, cpu) |= BIT_ULL(bank);
- 
- }
- 
-@@ -528,7 +528,7 @@ static u32 smca_get_block_address(unsigned int bank, unsigned int block,
- 	if (!block)
- 		return MSR_AMD64_SMCA_MCx_MISC(bank);
- 
--	if (!(per_cpu(smca_misc_banks_map, cpu) & BIT(bank)))
-+	if (!(per_cpu(smca_misc_banks_map, cpu) & BIT_ULL(bank)))
- 		return 0;
- 
- 	return MSR_AMD64_SMCA_MCx_MISCy(bank, block - 1);
-@@ -572,7 +572,7 @@ prepare_threshold_block(unsigned int bank, unsigned int block, u32 addr,
- 	int new;
- 
- 	if (!block)
--		per_cpu(bank_map, cpu) |= (1 << bank);
-+		per_cpu(bank_map, cpu) |= BIT_ULL(bank);
- 
- 	memset(&b, 0, sizeof(b));
- 	b.cpu			= cpu;
-@@ -884,7 +884,7 @@ static void amd_threshold_interrupt(void)
- 		return;
- 
- 	for (bank = 0; bank < this_cpu_read(mce_num_banks); ++bank) {
--		if (!(per_cpu(bank_map, cpu) & (1 << bank)))
-+		if (!(per_cpu(bank_map, cpu) & BIT_ULL(bank)))
- 			continue;
- 
- 		first_block = bp[bank]->blocks;
-@@ -1362,7 +1362,7 @@ int mce_threshold_create_device(unsigned int cpu)
- 		return -ENOMEM;
- 
- 	for (bank = 0; bank < numbanks; ++bank) {
--		if (!(this_cpu_read(bank_map) & (1 << bank)))
-+		if (!(this_cpu_read(bank_map) & BIT_ULL(bank)))
- 			continue;
- 		err = threshold_create_bank(bp, cpu, bank);
- 		if (err) {
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
+index 2283d4fb87363..7dbf6a6292f49 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
++++ b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
+@@ -174,9 +174,8 @@
+ 			reg = <0 0x10049c00 0 0x400>;
+ 			interrupts = <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 327 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 328 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 329 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++				     <GIC_SPI 328 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "int_req", "dma_rx", "dma_tx";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI0_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI0_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
+@@ -195,9 +194,8 @@
+ 			reg = <0 0x1004a000 0 0x400>;
+ 			interrupts = <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 331 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 332 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 333 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++				     <GIC_SPI 332 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "int_req", "dma_rx", "dma_tx";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI1_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI1_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
+@@ -215,10 +213,8 @@
+ 				     "renesas,rz-ssi";
+ 			reg = <0 0x1004a400 0 0x400>;
+ 			interrupts = <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 335 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 336 IRQ_TYPE_EDGE_RISING>,
+ 				     <GIC_SPI 337 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++			interrupt-names = "int_req", "dma_rt";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI2_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI2_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
+@@ -237,9 +233,8 @@
+ 			reg = <0 0x1004a800 0 0x400>;
+ 			interrupts = <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 339 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 340 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 341 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++				     <GIC_SPI 340 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "int_req", "dma_rx", "dma_tx";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI3_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI3_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
 -- 
 2.39.2
 
