@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B43168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:37:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4ABC433D2;
-	Mon,  8 May 2023 10:37:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D702168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:37:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F835C433EF;
+	Mon,  8 May 2023 10:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542248;
-	bh=KYBPsMv6YoQYLw8l5kU9m+x0DiLVOu0azJ1u/99zPkw=;
+	s=korg; t=1683542251;
+	bh=yc1Hp8cYyXdd5SoDRitAXNyMurPSPbbua4dV9aOc2IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVy/L/EV6KiRpjFsqq1/rNox9+5FwH4oCgqWvgRti1Vuv+o927qN0N/rx00nwaSW4
-	 SVmqJRN1liGGNXAvBbPfH54SpByX4nwZZ+IwWTtxmt31lBw3B4pQe2Z4RhDXrtT7np
-	 CZH7jCyyykEzSBWMTUOrxO3Lo9qGhTL1h7WuBONk=
+	b=RspNA15FxoYfK9lpNdMP53DPKCBqP4m2PNTlneuo89jYOpUbD3QLtpdF8ud5f7cUs
+	 GLiBdBtMKFvWwJj4dxjGU4xWL63ue0cGmsqy6/OvwrVylZ8OtwWI1vtQ9TMad3zEdS
+	 v2d1HlQXiouz1mud2iy6EVPQBsYMdGdUcW+NIXfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 374/663] md/raid10: fix memleak for conf->bio_split
-Date: Mon,  8 May 2023 11:43:20 +0200
-Message-Id: <20230508094440.261477575@linuxfoundation.org>
+Subject: [PATCH 6.2 348/663] wifi: iwlwifi: fix duplicate entry in iwl_dev_info_table
+Date: Mon,  8 May 2023 11:42:54 +0200
+Message-Id: <20230508094439.437006405@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,94 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Gregory Greenman <gregory.greenman@intel.com>
 
-[ Upstream commit c9ac2acde53f5385de185bccf6aaa91cf9ac1541 ]
+[ Upstream commit fc3c2f0ed86b65dff4b6844c59c597b977cae533 ]
 
-In the error path of raid10_run(), 'conf' need be freed, however,
-'conf->bio_split' is missed and memory will be leaked.
+There're two identical entries for ax1650 device in
+iwl_dev_info_table. Remove one of the duplicate entries.
 
-Since there are 3 places to free 'conf', factor out a helper to fix the
-problem.
-
-Fixes: fc9977dd069e ("md/raid10: simplify the splitting of requests.")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230310073855.1337560-6-yukuai1@huaweicloud.com
+Fixes: 953e66a7238b ("iwlwifi: add new ax1650 killer device")
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230410140721.897683-2-gregory.greenman@intel.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 37 +++++++++++++++++--------------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index b1c575859218a..5736ba5932c7f 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -4015,6 +4015,20 @@ static int setup_geo(struct geom *geo, struct mddev *mddev, enum geo_type new)
- 	return nc*fc;
- }
- 
-+static void raid10_free_conf(struct r10conf *conf)
-+{
-+	if (!conf)
-+		return;
-+
-+	mempool_exit(&conf->r10bio_pool);
-+	kfree(conf->mirrors);
-+	kfree(conf->mirrors_old);
-+	kfree(conf->mirrors_new);
-+	safe_put_page(conf->tmppage);
-+	bioset_exit(&conf->bio_split);
-+	kfree(conf);
-+}
-+
- static struct r10conf *setup_conf(struct mddev *mddev)
- {
- 	struct r10conf *conf = NULL;
-@@ -4097,13 +4111,7 @@ static struct r10conf *setup_conf(struct mddev *mddev)
- 	return conf;
- 
-  out:
--	if (conf) {
--		mempool_exit(&conf->r10bio_pool);
--		kfree(conf->mirrors);
--		safe_put_page(conf->tmppage);
--		bioset_exit(&conf->bio_split);
--		kfree(conf);
--	}
-+	raid10_free_conf(conf);
- 	return ERR_PTR(err);
- }
- 
-@@ -4294,10 +4302,7 @@ static int raid10_run(struct mddev *mddev)
- 
- out_free_conf:
- 	md_unregister_thread(&mddev->thread);
--	mempool_exit(&conf->r10bio_pool);
--	safe_put_page(conf->tmppage);
--	kfree(conf->mirrors);
--	kfree(conf);
-+	raid10_free_conf(conf);
- 	mddev->private = NULL;
- out:
- 	return -EIO;
-@@ -4305,15 +4310,7 @@ static int raid10_run(struct mddev *mddev)
- 
- static void raid10_free(struct mddev *mddev, void *priv)
- {
--	struct r10conf *conf = priv;
--
--	mempool_exit(&conf->r10bio_pool);
--	safe_put_page(conf->tmppage);
--	kfree(conf->mirrors);
--	kfree(conf->mirrors_old);
--	kfree(conf->mirrors_new);
--	bioset_exit(&conf->bio_split);
--	kfree(conf);
-+	raid10_free_conf(priv);
- }
- 
- static void raid10_quiesce(struct mddev *mddev, int quiesce)
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index 99768d6a60322..a0bf19b18635c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -565,7 +565,6 @@ static const struct iwl_dev_info iwl_dev_info_table[] = {
+ 	IWL_DEV_INFO(0x43F0, 0x1652, killer1650i_2ax_cfg_qu_b0_hr_b0, iwl_ax201_killer_1650i_name),
+ 	IWL_DEV_INFO(0x43F0, 0x2074, iwl_ax201_cfg_qu_hr, NULL),
+ 	IWL_DEV_INFO(0x43F0, 0x4070, iwl_ax201_cfg_qu_hr, NULL),
+-	IWL_DEV_INFO(0x43F0, 0x1651, killer1650s_2ax_cfg_qu_b0_hr_b0, iwl_ax201_killer_1650s_name),
+ 	IWL_DEV_INFO(0xA0F0, 0x0070, iwl_ax201_cfg_qu_hr, NULL),
+ 	IWL_DEV_INFO(0xA0F0, 0x0074, iwl_ax201_cfg_qu_hr, NULL),
+ 	IWL_DEV_INFO(0xA0F0, 0x0078, iwl_ax201_cfg_qu_hr, NULL),
 -- 
 2.39.2
 
