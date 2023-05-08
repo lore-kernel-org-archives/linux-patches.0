@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04BEA8BF9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7804FC4339B;
-	Mon,  8 May 2023 11:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899CA13AE8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1199DC433D2;
+	Mon,  8 May 2023 11:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544758;
-	bh=GTcoM28+YmVEY1ibPIHCTMBozK+q8C1dPhkwsLNL7l4=;
+	s=korg; t=1683544765;
+	bh=vFyCSdljTu/Y0nlj6oYfKB7YFGtG6OIHEB/8OnmH2r4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/mi6qnOfbNNz2c0K6bmhyTtUuQvj5ijxWHYCAE7RdjwQSB9pYAGFe4pTnlob2SFX
-	 SptfGlJE/G8LEKatyEz0GFgTfBSGRl2iI8l6IZlsHQgNqkvlJkGYEmlQzPha0ZBYBe
-	 NnVC6irFRvcIWRqvGJ+wcFU/YyUcDiWk8T146b4M=
+	b=xCOX+UujM1RnxoJRMZYuXWSA62JaqCl3M2ib9yAJZUspolC83HGvae4wVNKJIQ42x
+	 /MkmxUeVfISFAvbx9S8tX+GBypwZD7b6b3wGjwkNBtBYMDpdbAoNT6LocxPXagOcbb
+	 tY3yxLHGU3kaw8RRliydfB0zHeMy/NXbOIaGuiuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Duoming Zhou <duoming@zju.edu.cn>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 485/694] drivers: staging: rtl8723bs: Fix locking in _rtw_join_timeout_handler()
-Date: Mon,  8 May 2023 11:45:20 +0200
-Message-Id: <20230508094449.658099618@linuxfoundation.org>
+Subject: [PATCH 6.3 476/694] net/sched: cls_api: Initialize miss_cookie_node when action miss is not used
+Date: Mon,  8 May 2023 11:45:11 +0200
+Message-Id: <20230508094449.278615236@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,70 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ivan Vecera <ivecera@redhat.com>
 
-[ Upstream commit 215792eda008f6a1e7ed9d77fa20d582d22bb114 ]
+[ Upstream commit 2cc8a008d62f3c04eeb7ec6fe59e542802bb8df3 ]
 
-Commit 041879b12ddb ("drivers: staging: rtl8192bs: Fix deadlock in
-rtw_joinbss_event_prehandle()") besides fixing the deadlock also
-modified _rtw_join_timeout_handler() to use spin_[un]lock_irq()
-instead of spin_[un]lock_bh().
+Function tcf_exts_init_ex() sets exts->miss_cookie_node ptr only
+when use_action_miss is true so it assumes in other case that
+the field is set to NULL by the caller. If not then the field
+contains garbage and subsequent tcf_exts_destroy() call results
+in a crash.
+Ensure that the field .miss_cookie_node pointer is NULL when
+use_action_miss parameter is false to avoid this potential scenario.
 
-_rtw_join_timeout_handler() calls rtw_do_join() which takes
-pmlmepriv->scanned_queue.lock using spin_[un]lock_bh(). This
-spin_unlock_bh() call re-enables softirqs which triggers an oops in
-kernel/softirq.c: __local_bh_enable_ip() when it calls
-lockdep_assert_irqs_enabled():
-
-[  244.506087] WARNING: CPU: 2 PID: 0 at kernel/softirq.c:376 __local_bh_enable_ip+0xa6/0x100
-...
-[  244.509022] Call Trace:
-[  244.509048]  <IRQ>
-[  244.509100]  _rtw_join_timeout_handler+0x134/0x170 [r8723bs]
-[  244.509468]  ? __pfx__rtw_join_timeout_handler+0x10/0x10 [r8723bs]
-[  244.509772]  ? __pfx__rtw_join_timeout_handler+0x10/0x10 [r8723bs]
-[  244.510076]  call_timer_fn+0x95/0x2a0
-[  244.510200]  __run_timers.part.0+0x1da/0x2d0
-
-This oops is causd by the switch to spin_[un]lock_irq() which disables
-the IRQs for the entire duration of _rtw_join_timeout_handler().
-
-Disabling the IRQs is not necessary since all code taking this lock
-runs from either user contexts or from softirqs, switch back to
-spin_[un]lock_bh() to fix this.
-
-Fixes: 041879b12ddb ("drivers: staging: rtl8192bs: Fix deadlock in rtw_joinbss_event_prehandle()")
-Cc: Duoming Zhou <duoming@zju.edu.cn>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230221145326.7808-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 80cd22c35c90 ("net/sched: cls_api: Support hardware miss to tc action")
+Signed-off-by: Ivan Vecera <ivecera@redhat.com>
+Reviewed-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230420183634.1139391-1-ivecera@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sched/cls_api.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-index c6fd6cf741ef6..ea2a6566e51bf 100644
---- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -1549,7 +1549,7 @@ void _rtw_join_timeout_handler(struct timer_list *t)
- 	if (adapter->bDriverStopped || adapter->bSurpriseRemoved)
- 		return;
- 
--	spin_lock_irq(&pmlmepriv->lock);
-+	spin_lock_bh(&pmlmepriv->lock);
- 
- 	if (rtw_to_roam(adapter) > 0) { /* join timeout caused by roaming */
- 		while (1) {
-@@ -1577,7 +1577,7 @@ void _rtw_join_timeout_handler(struct timer_list *t)
- 
- 	}
- 
--	spin_unlock_irq(&pmlmepriv->lock);
-+	spin_unlock_bh(&pmlmepriv->lock);
- }
- 
- /*
+diff --git a/net/sched/cls_api.c b/net/sched/cls_api.c
+index 35785a36c8029..3c3629c9e7b65 100644
+--- a/net/sched/cls_api.c
++++ b/net/sched/cls_api.c
+@@ -3211,6 +3211,7 @@ int tcf_exts_init_ex(struct tcf_exts *exts, struct net *net, int action,
+ #ifdef CONFIG_NET_CLS_ACT
+ 	exts->type = 0;
+ 	exts->nr_actions = 0;
++	exts->miss_cookie_node = NULL;
+ 	/* Note: we do not own yet a reference on net.
+ 	 * This reference might be taken later from tcf_exts_get_net().
+ 	 */
 -- 
 2.39.2
 
