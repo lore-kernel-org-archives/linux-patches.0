@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EE90171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C42C433EF;
-	Mon,  8 May 2023 11:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481A9171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BD0C433EF;
+	Mon,  8 May 2023 11:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546376;
-	bh=LQpPxz336d3/UAH0yBAQ+cpt6pas4oy/AMZdR09vzSs=;
+	s=korg; t=1683546379;
+	bh=/psOibmtnnkcz1+tirmhsBiDgkCvd5+0ZG4x9ICNoaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LG/JMt/Yc/u4FwP88MY63Hoj6DOInZ2/Q6GHKfhhEgS5RWOSGdoUFBFiJ6y/KDQU1
-	 DffZJE00uWKsv/Eb+HrzUEWfWXzBDXwGZCn/tKVg+EV2F1hCT2tQ48/Fm7GevRPi5v
-	 jmAPQEmxUSdMg3ACk8v8bhnniBKCC6JZ6Ef8c8fE=
+	b=jk6KLo+/24x/WAyDYyyIuncR604N2sRdoCfc3QS/TlAChoHt08GAMkjbM8Ew5xOSj
+	 a0QUCQ289sbY0vSd8SHFeylHXroG0UWY0rcQ1lGBCkEYi8Y5rqtY1IM1Df/sbpW946
+	 jZFhYkn3JL7BPOwrYqpC/0ji9hBXvF1QDLJToCKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com,
+	syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 347/371] nilfs2: do not write dirty data after degenerating to read-only
-Date: Mon,  8 May 2023 11:49:08 +0200
-Message-Id: <20230508094825.911206355@linuxfoundation.org>
+Subject: [PATCH 5.15 348/371] nilfs2: fix infinite loop in nilfs_mdt_get_block()
+Date: Mon,  8 May 2023 11:49:09 +0200
+Message-Id: <20230508094825.944932170@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -37,59 +37,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 28a65b49eb53e172d23567005465019658bfdb4d upstream.
+commit a6a491c048882e7e424d407d32cba0b52d9ef2bf upstream.
 
-According to syzbot's report, mark_buffer_dirty() called from
-nilfs_segctor_do_construct() outputs a warning with some patterns after
-nilfs2 detects metadata corruption and degrades to read-only mode.
+If the disk image that nilfs2 mounts is corrupted and a virtual block
+address obtained by block lookup for a metadata file is invalid,
+nilfs_bmap_lookup_at_level() may return the same internal return code as
+-ENOENT, meaning the block does not exist in the metadata file.
 
-After such read-only degeneration, page cache data may be cleared through
-nilfs_clear_dirty_page() which may also clear the uptodate flag for their
-buffer heads.  However, even after the degeneration, log writes are still
-performed by unmount processing etc., which causes mark_buffer_dirty() to
-be called for buffer heads without the "uptodate" flag and causes the
-warning.
+This duplication of return codes confuses nilfs_mdt_get_block(), causing
+it to read and create a metadata block indefinitely.
 
-Since any writes should not be done to a read-only file system in the
-first place, this fixes the warning in mark_buffer_dirty() by letting
-nilfs_segctor_do_construct() abort early if in read-only mode.
+In particular, if this happens to the inode metadata file, ifile,
+semaphore i_rwsem can be left held, causing task hangs in lock_mount.
 
-This also changes the retry check of nilfs_segctor_write_out() to avoid
-unnecessary log write retries if it detects -EROFS that
-nilfs_segctor_do_construct() returned.
+Fix this issue by making nilfs_bmap_lookup_at_level() treat virtual block
+address translation failures with -ENOENT as metadata corruption instead
+of returning the error code.
 
-Link: https://lkml.kernel.org/r/20230427011526.13457-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20230430193046.6769-1-konishi.ryusuke@gmail.com
 Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=2af3bc9585be7f23f290
+Reported-by: syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=221d75710bde87fa0e97
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/nilfs2/bmap.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2039,6 +2039,9 @@ static int nilfs_segctor_do_construct(st
- 	struct the_nilfs *nilfs = sci->sc_super->s_fs_info;
- 	int err;
+--- a/fs/nilfs2/bmap.c
++++ b/fs/nilfs2/bmap.c
+@@ -67,20 +67,28 @@ int nilfs_bmap_lookup_at_level(struct ni
  
-+	if (sb_rdonly(sci->sc_super))
-+		return -EROFS;
+ 	down_read(&bmap->b_sem);
+ 	ret = bmap->b_ops->bop_lookup(bmap, key, level, ptrp);
+-	if (ret < 0) {
+-		ret = nilfs_bmap_convert_error(bmap, __func__, ret);
++	if (ret < 0)
+ 		goto out;
+-	}
 +
- 	nilfs_sc_cstage_set(sci, NILFS_ST_INIT);
- 	sci->sc_cno = nilfs->ns_cno;
+ 	if (NILFS_BMAP_USE_VBN(bmap)) {
+ 		ret = nilfs_dat_translate(nilfs_bmap_get_dat(bmap), *ptrp,
+ 					  &blocknr);
+ 		if (!ret)
+ 			*ptrp = blocknr;
++		else if (ret == -ENOENT) {
++			/*
++			 * If there was no valid entry in DAT for the block
++			 * address obtained by b_ops->bop_lookup, then pass
++			 * internal code -EINVAL to nilfs_bmap_convert_error
++			 * to treat it as metadata corruption.
++			 */
++			ret = -EINVAL;
++		}
+ 	}
  
-@@ -2724,7 +2727,7 @@ static void nilfs_segctor_write_out(stru
- 
- 		flush_work(&sci->sc_iput_work);
- 
--	} while (ret && retrycount-- > 0);
-+	} while (ret && ret != -EROFS && retrycount-- > 0);
+  out:
+ 	up_read(&bmap->b_sem);
+-	return ret;
++	return nilfs_bmap_convert_error(bmap, __func__, ret);
  }
  
- /**
+ int nilfs_bmap_lookup_contig(struct nilfs_bmap *bmap, __u64 key, __u64 *ptrp,
 
 
