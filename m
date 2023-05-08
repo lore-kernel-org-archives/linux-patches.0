@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B146168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:53:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51346C4339C;
-	Mon,  8 May 2023 09:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2ECD168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:53:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F72C433D2;
+	Mon,  8 May 2023 09:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539610;
-	bh=lE0iVr6vFooUwwIpPU3OVgO1WvMteKCsrak9kTdvJ50=;
+	s=korg; t=1683539613;
+	bh=nxU3sT5KFoKRAkYO2pafruu/aKVV8YLoCO9nIe4toAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qn7HddVzsMfGKvtPe6Je/0TLhg2ZkyO4tPoe3piROS9VksNKo+CjIW4OLcArFnYhi
-	 rO2kh6Tk8lHSmtvgLKn8bBj/1+ylVFAasVdHU3+mgCJpwkakOwTfehL4qCnsdGGf6q
-	 DAYwY4Zo2BThRQPOta+TLZJ0vHNhPbqoAVgHi6gg=
+	b=uNOlOKeIOyoM+pPTiKRMmY32vhfhQzFTG+fliN33ReMje0XC0e56/QPDQ8AtXb1D8
+	 qqQ0iwqY1b5PvFP7+CjodfABWUqE5rQBafdSAaEbG1ZQ9HMG9uQdtGWxvDxbNknW68
+	 K6biNuWsJoyvlnJjzFzZy9cJHoYjSywKEryjRSLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 080/611] KVM: arm64: vgic: Dont acquire its_lock before config_lock
-Date: Mon,  8 May 2023 11:38:42 +0200
-Message-Id: <20230508094424.676793467@linuxfoundation.org>
+	Zhang Zhengming <zhang.zhengming@h3c.com>,
+	Zhao Lei <zhao_lei1@hoperun.com>,
+	Zhou Kete <zhou.kete@h3c.com>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 081/611] relayfs: fix out-of-bounds access in relay_file_read
+Date: Mon,  8 May 2023 11:38:43 +0200
+Message-Id: <20230508094424.721772227@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,78 +38,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Zhang Zhengming <zhang.zhengming@h3c.com>
 
-commit 49e5d16b6fc003407a33a9961b4bcbb970bd1c76 upstream.
+commit 43ec16f1450f4936025a9bdf1a273affdb9732c1 upstream.
 
-commit f00327731131 ("KVM: arm64: Use config_lock to protect vgic
-state") was meant to rectify a longstanding lock ordering issue in KVM
-where the kvm->lock is taken while holding vcpu->mutex. As it so
-happens, the aforementioned commit introduced yet another locking issue
-by acquiring the its_lock before acquiring the config lock.
+There is a crash in relay_file_read, as the var from
+point to the end of last subbuf.
 
-This is obviously wrong, especially considering that the lock ordering
-is well documented in vgic.c. Reshuffle the locks once more to take the
-config_lock before the its_lock. While at it, sprinkle in the lockdep
-hinting that has become popular as of late to keep lockdep apprised of
-our ordering.
+The oops looks something like:
+pc : __arch_copy_to_user+0x180/0x310
+lr : relay_file_read+0x20c/0x2c8
+Call trace:
+ __arch_copy_to_user+0x180/0x310
+ full_proxy_read+0x68/0x98
+ vfs_read+0xb0/0x1d0
+ ksys_read+0x6c/0xf0
+ __arm64_sys_read+0x20/0x28
+ el0_svc_common.constprop.3+0x84/0x108
+ do_el0_svc+0x74/0x90
+ el0_svc+0x1c/0x28
+ el0_sync_handler+0x88/0xb0
+ el0_sync+0x148/0x180
 
-Cc: stable@vger.kernel.org
-Fixes: f00327731131 ("KVM: arm64: Use config_lock to protect vgic state")
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230412062733.988229-1-oliver.upton@linux.dev
+We get the condition by analyzing the vmcore:
+
+1). The last produced byte and last consumed byte
+    both at the end of the last subbuf
+
+2). A softirq calls function(e.g __blk_add_trace)
+    to write relay buffer occurs when an program is calling
+    relay_file_read_avail().
+
+        relay_file_read
+                relay_file_read_avail
+                        relay_file_read_consume(buf, 0, 0);
+                        //interrupted by softirq who will write subbuf
+                        ....
+                        return 1;
+                //read_start point to the end of the last subbuf
+                read_start = relay_file_read_start_pos
+                //avail is equal to subsize
+                avail = relay_file_read_subbuf_avail
+                //from  points to an invalid memory address
+                from = buf->start + read_start
+                //system is crashed
+                copy_to_user(buffer, from, avail)
+
+Link: https://lkml.kernel.org/r/20230419040203.37676-1-zhang.zhengming@h3c.com
+Fixes: 8d62fdebdaf9 ("relay file read: start-pos fix")
+Signed-off-by: Zhang Zhengming <zhang.zhengming@h3c.com>
+Reviewed-by: Zhao Lei <zhao_lei1@hoperun.com>
+Reviewed-by: Zhou Kete <zhou.kete@h3c.com>
+Reviewed-by: Pengcheng Yang <yangpc@wangsu.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-its.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ kernel/relay.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/vgic/vgic-its.c
-+++ b/arch/arm64/kvm/vgic/vgic-its.c
-@@ -1958,6 +1958,16 @@ static int vgic_its_create(struct kvm_de
- 	mutex_init(&its->its_lock);
- 	mutex_init(&its->cmd_lock);
+--- a/kernel/relay.c
++++ b/kernel/relay.c
+@@ -989,7 +989,8 @@ static size_t relay_file_read_start_pos(
+ 	size_t subbuf_size = buf->chan->subbuf_size;
+ 	size_t n_subbufs = buf->chan->n_subbufs;
+ 	size_t consumed = buf->subbufs_consumed % n_subbufs;
+-	size_t read_pos = consumed * subbuf_size + buf->bytes_consumed;
++	size_t read_pos = (consumed * subbuf_size + buf->bytes_consumed)
++			% (n_subbufs * subbuf_size);
  
-+	/* Yep, even more trickery for lock ordering... */
-+#ifdef CONFIG_LOCKDEP
-+	mutex_lock(&dev->kvm->arch.config_lock);
-+	mutex_lock(&its->cmd_lock);
-+	mutex_lock(&its->its_lock);
-+	mutex_unlock(&its->its_lock);
-+	mutex_unlock(&its->cmd_lock);
-+	mutex_unlock(&dev->kvm->arch.config_lock);
-+#endif
-+
- 	its->vgic_its_base = VGIC_ADDR_UNDEF;
- 
- 	INIT_LIST_HEAD(&its->device_list);
-@@ -2752,15 +2762,14 @@ static int vgic_its_ctrl(struct kvm *kvm
- 		return 0;
- 
- 	mutex_lock(&kvm->lock);
--	mutex_lock(&its->its_lock);
- 
- 	if (!lock_all_vcpus(kvm)) {
--		mutex_unlock(&its->its_lock);
- 		mutex_unlock(&kvm->lock);
- 		return -EBUSY;
- 	}
- 
- 	mutex_lock(&kvm->arch.config_lock);
-+	mutex_lock(&its->its_lock);
- 
- 	switch (attr) {
- 	case KVM_DEV_ARM_ITS_CTRL_RESET:
-@@ -2774,9 +2783,9 @@ static int vgic_its_ctrl(struct kvm *kvm
- 		break;
- 	}
- 
-+	mutex_unlock(&its->its_lock);
- 	mutex_unlock(&kvm->arch.config_lock);
- 	unlock_all_vcpus(kvm);
--	mutex_unlock(&its->its_lock);
- 	mutex_unlock(&kvm->lock);
- 	return ret;
- }
+ 	read_subbuf = read_pos / subbuf_size;
+ 	padding = buf->padding[read_subbuf];
 
 
