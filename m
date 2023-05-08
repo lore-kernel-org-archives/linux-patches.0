@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E62168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7500FC433EF;
-	Mon,  8 May 2023 11:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02544168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF91C433EF;
+	Mon,  8 May 2023 11:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543931;
-	bh=xanyatdq1bsbYdTHI1mkiw2Pea0+KDoWVlqAfqiP77E=;
+	s=korg; t=1683543934;
+	bh=MB/lyDL4/GEr019OeuI0dxOAPHRvFbVPNBjN44GEfV4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDMM0BlP9NG1USNwYAmU5pSkqxy/WXL9BZeXUGGztAJpjPWUNrF1NGzv9/maBmOWx
-	 NWd206+Hbz43EI4vruvzoM3+scq8NdpTbjZFe6XriLVW0EvkoWV904yIOSIVJSvT7z
-	 bXDmRtgh3kdDCMwQ4G3v1NCGLvLjBiiMymwjZ4gs=
+	b=FABC7QWj9tOSfHbfoATOyKuiV4tnZekLpSy7uFftmzyh7IIgYZnJpxf0Ni/DKSbjB
+	 /Yy5TSJPA1vMjv7pfj7Rg6hoxSXFT1wtjZeGFbud5UR6xNgUu6DKqtDU5W5v3jRZSP
+	 fQ9qReNUXU2oVzFst1Fy6vqefFrgAEdAftqIx+zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 216/694] ACPI: utils: Fix acpi_evaluate_dsm_typed() redefinition error
-Date: Mon,  8 May 2023 11:40:51 +0200
-Message-Id: <20230508094439.368174890@linuxfoundation.org>
+Subject: [PATCH 6.3 217/694] drm/msm/adreno: drop bogus pm_runtime_set_active()
+Date: Mon,  8 May 2023 11:40:52 +0200
+Message-Id: <20230508094439.408096146@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,56 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kiran K <kiran.k@intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 2c5a06e5505a716387a4d86f1f39de506836435a ]
+[ Upstream commit db7662d076c973072d788bd0e8130e04430307a1 ]
 
-acpi_evaluate_dsm_typed() needs to be gaurded with CONFIG_ACPI to avoid
-a redefintion error when the stub is also enabled.
+The runtime PM status can only be updated while runtime PM is disabled.
 
-In file included from ../drivers/bluetooth/btintel.c:13:
-../include/acpi/acpi_bus.h:57:1: error: redefinition of 'acpi_evaluate_dsm_typed'
-   57 | acpi_evaluate_dsm_typed(acpi_handle handle, const guid_t *guid,..
-      | ^~~~~~~~~~~~~~~~~~~~~~~
-In file included from ../drivers/bluetooth/btintel.c:12:
-../include/linux/acpi.h:967:34: note: previous definition of
-'acpi_evaluate_dsm_typed' with type 'union acpi_object *(void *,
-const guid_t *, u64,  u64,  union acpi_object *, acpi_object_type)'
-{aka 'union acpi_object *(void *, const guid_t *, long long unsigned int,
-long long unsigned int,  union acpi_object *, unsigned int)'}
-  967 | static inline union acpi_object
-*acpi_evaluate_dsm_typed(acpi_handle handle,
+Drop the bogus pm_runtime_set_active() call that was made after enabling
+runtime PM and which (incidentally but correctly) left the runtime PM
+status set to 'suspended'.
 
-Fixes: 1b94ad7ccc21 ("ACPI: utils: Add acpi_evaluate_dsm_typed() and acpi_check_dsm() stubs")
-Signed-off-by: Kiran K <kiran.k@intel.com>
-[ rjw: Subject and changelog edits ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 2c087a336676 ("drm/msm/adreno: Load the firmware before bringing up the hardware")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/524972/
+Link: https://lore.kernel.org/r/20230303164807.13124-4-johan+linaro@kernel.org
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/acpi/acpi_bus.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
-index 57acb895c0381..a6affc0550b0f 100644
---- a/include/acpi/acpi_bus.h
-+++ b/include/acpi/acpi_bus.h
-@@ -52,7 +52,7 @@ bool acpi_dock_match(acpi_handle handle);
- bool acpi_check_dsm(acpi_handle handle, const guid_t *guid, u64 rev, u64 funcs);
- union acpi_object *acpi_evaluate_dsm(acpi_handle handle, const guid_t *guid,
- 			u64 rev, u64 func, union acpi_object *argv4);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index c5c4c93b3689c..cd009d56d35d5 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -438,9 +438,6 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
+ 	 */
+ 	pm_runtime_enable(&pdev->dev);
+ 
+-	/* Make sure pm runtime is active and reset any previous errors */
+-	pm_runtime_set_active(&pdev->dev);
 -
-+#ifdef CONFIG_ACPI
- static inline union acpi_object *
- acpi_evaluate_dsm_typed(acpi_handle handle, const guid_t *guid, u64 rev,
- 			u64 func, union acpi_object *argv4,
-@@ -68,6 +68,7 @@ acpi_evaluate_dsm_typed(acpi_handle handle, const guid_t *guid, u64 rev,
- 
- 	return obj;
- }
-+#endif
- 
- #define	ACPI_INIT_DSM_ARGV4(cnt, eles)			\
- 	{						\
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+ 	if (ret < 0) {
+ 		pm_runtime_put_sync(&pdev->dev);
 -- 
 2.39.2
 
