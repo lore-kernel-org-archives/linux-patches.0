@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A589168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BEBC433EF;
-	Mon,  8 May 2023 11:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35991168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8E5C433EF;
+	Mon,  8 May 2023 11:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544113;
-	bh=VXDgDRPaXFJnjVtytghjh/juy7EXzf6f2L6oSo/T/Kc=;
+	s=korg; t=1683544116;
+	bh=E985gS0XTiQghzO+1q2fkBOFLD3foyHgpbS3V42cqYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FaZw6JTJPpRJ8R6FlnJAT2PA7d6YtfhcEeFMt2jbRslomiJYKyYwsbOz7HhqItvjX
-	 pLNID7SgPZPH1n26LWt10aYb4UIhE///z6PjNNyx93cHPlICjmiyIiEqGr3t9oRYfx
-	 t+cvRxT28Wa/0Orb+UJL8yV5Ul98I83GH0UG5eIQ=
+	b=yxyEZBR6/0iZysPH/6+15llX27wXa7nEktqldWoeggTLXtRhXmDsrISKEJhA5w6Y9
+	 u7BEq/fLrpgYCFoaZIeKmU6P7UXiXZY1ulIXmy7tRxe17WRUvv8bHGtt9J8S1fspUS
+	 258HpFnuzHVl7CCk7VRAFCOM1UP7TMsWzprsmDOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	YAN SHI <m202071378@hust.edu.cn>,
+	kernel test robot <lkp@intel.com>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 305/694] media: venus: dec: Fix capture formats enumeration order
-Date: Mon,  8 May 2023 11:42:20 +0200
-Message-Id: <20230508094442.185479217@linuxfoundation.org>
+Subject: [PATCH 6.3 306/694] regulator: stm32-pwr: fix of_iomap leak
+Date: Mon,  8 May 2023 11:42:21 +0200
+Message-Id: <20230508094442.215605525@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,75 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: YAN SHI <m202071378@hust.edu.cn>
 
-[ Upstream commit a9d45ec74c8e68aaafe90191928eddbf79f4644f ]
+[ Upstream commit c4a413e56d16a2ae84e6d8992f215c4dcc7fac20 ]
 
-Commit 9593126dae3e ("media: venus: Add a handling of QC08C compressed
-format") and commit cef92b14e653 ("media: venus: Add a handling of QC10C
-compressed format") added support for the QC08C and QC10C compressed
-formats respectively.
+Smatch reports:
+drivers/regulator/stm32-pwr.c:166 stm32_pwr_regulator_probe() warn:
+'base' from of_iomap() not released on lines: 151,166.
 
-But these also caused a regression, because the new formats where added
-at the beginning of the vdec_formats[] array and the vdec_inst_init()
-function sets the default format output and capture using fixed indexes
-of that array:
+In stm32_pwr_regulator_probe(), base is not released
+when devm_kzalloc() fails to allocate memory or
+devm_regulator_register() fails to register a new regulator device,
+which may cause a leak.
 
-static void vdec_inst_init(struct venus_inst *inst)
-{
-...
-	inst->fmt_out = &vdec_formats[8];
-	inst->fmt_cap = &vdec_formats[0];
-...
-}
+To fix this issue, replace of_iomap() with
+devm_platform_ioremap_resource(). devm_platform_ioremap_resource()
+is a specialized function for platform devices.
+It allows 'base' to be automatically released whether the probe
+function succeeds or fails.
 
-Since now V4L2_PIX_FMT_NV12 is not the first entry in the array anymore,
-the default capture format is not set to that as it was done before.
+Besides, use IS_ERR(base) instead of !base
+as the return value of devm_platform_ioremap_resource()
+can either be a pointer to the remapped memory or
+an ERR_PTR() encoded error code if the operation fails.
 
-Both commits changed the first index to keep inst->fmt_out default format
-set to V4L2_PIX_FMT_H264, but did not update the latter to keep .fmt_out
-default format set to V4L2_PIX_FMT_NV12.
-
-Rather than updating the index to the current V4L2_PIX_FMT_NV12 position,
-let's reorder the entries so that this format is the first entry again.
-
-This would also make VIDIOC_ENUM_FMT report the V4L2_PIX_FMT_NV12 format
-with an index 0 as it did before the QC08C and QC10C formats were added.
-
-Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
-Fixes: cef92b14e653 ("media: venus: Add a handling of QC10C compressed format")
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: dc62f951a6a8 ("regulator: stm32-pwr: Fix return value check in stm32_pwr_regulator_probe()")
+Signed-off-by: YAN SHI <m202071378@hust.edu.cn>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202304111750.o2643eJN-lkp@intel.com/
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230412033529.18890-1-m202071378@hust.edu.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/regulator/stm32-pwr.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 9d26587716bf6..1a52c2ea2da5b 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -31,15 +31,15 @@
-  */
- static const struct venus_format vdec_formats[] = {
- 	{
--		.pixfmt = V4L2_PIX_FMT_QC08C,
-+		.pixfmt = V4L2_PIX_FMT_NV12,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
- 	}, {
--		.pixfmt = V4L2_PIX_FMT_QC10C,
-+		.pixfmt = V4L2_PIX_FMT_QC08C,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
--	},{
--		.pixfmt = V4L2_PIX_FMT_NV12,
-+	}, {
-+		.pixfmt = V4L2_PIX_FMT_QC10C,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
- 	}, {
+diff --git a/drivers/regulator/stm32-pwr.c b/drivers/regulator/stm32-pwr.c
+index 2a42acb7c24e9..e5dd4db6403b2 100644
+--- a/drivers/regulator/stm32-pwr.c
++++ b/drivers/regulator/stm32-pwr.c
+@@ -129,17 +129,16 @@ static const struct regulator_desc stm32_pwr_desc[] = {
+ 
+ static int stm32_pwr_regulator_probe(struct platform_device *pdev)
+ {
+-	struct device_node *np = pdev->dev.of_node;
+ 	struct stm32_pwr_reg *priv;
+ 	void __iomem *base;
+ 	struct regulator_dev *rdev;
+ 	struct regulator_config config = { };
+ 	int i, ret = 0;
+ 
+-	base = of_iomap(np, 0);
+-	if (!base) {
++	base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(base)) {
+ 		dev_err(&pdev->dev, "Unable to map IO memory\n");
+-		return -ENOMEM;
++		return PTR_ERR(base);
+ 	}
+ 
+ 	config.dev = &pdev->dev;
 -- 
 2.39.2
 
