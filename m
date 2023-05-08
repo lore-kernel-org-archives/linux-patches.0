@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4D2168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEE7C433EF;
-	Mon,  8 May 2023 10:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0237168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 210CAC433EF;
+	Mon,  8 May 2023 10:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542760;
-	bh=FLJkWd5QJwvdpXyGn7+Ubl8/m722AyvF0IM+ucBfds8=;
+	s=korg; t=1683542763;
+	bh=KpO+IDd/OPHpmqeOmoDl93qwT8X3jb/4UFN1KSvzEhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TV72+IzNwf9Dt5FIxeTO1aOzONYAUBrBTqLpr7Up1WWQrnw6Fulzc8cAga8mJmLKf
-	 TJdhd/TFFuAfwX8t+vOVrNF9umO4umteO1oNv7f8eTsEW37e1yoiVrLWqiI4Jjerlx
-	 6v5+Lzayy/r1I16GZOFRIghZpd0M+mwyzVM/hb7k=
+	b=svrX8hZT2kMBO3kflgZCOWXNYdjCUXhzfvqhI0h3E6Pw/gF276QIvdnAUHqZLxeOD
+	 nT7PBPlZAPck3pM1LQgmzKBI8bEd1PPXEl/vgoIq/vTe/hgnb4OfjDzuM3PGDUYite
+	 eBmsy8SZYIyhKI9Z6I+GbPME7G+cKSb4RplNCHYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Zhu Yanjun <zyjzyj2000@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 522/663] clk: mediatek: mt7622: Properly use CLK_IS_CRITICAL flag
-Date: Mon,  8 May 2023 11:45:48 +0200
-Message-Id: <20230508094445.757418330@linuxfoundation.org>
+Subject: [PATCH 6.2 540/663] RDMA/rxe: Remove tasklet call from rxe_cq.c
+Date: Mon,  8 May 2023 11:46:06 +0200
+Message-Id: <20230508094446.510970543@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,120 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit fa8c0d01df62130ff596d560380a6f844f62639e ]
+[ Upstream commit 78b26a335310a097d6b22581b706050db42f196c ]
 
-Instead of calling clk_prepare_enable() for clocks that shall stay
-enabled, use the CLK_IS_CRITICAL flag, which purpose is exactly that.
+Remove the tasklet call in rxe_cq.c and also the is_dying in the
+cq struct. There is no reason for the rxe driver to defer the call
+to the cq completion handler by scheduling a tasklet. rxe_cq_post()
+is not called in a hard irq context.
 
-Fixes: 2fc0a509e4ee ("clk: mediatek: add clock support for MT7622 SoC")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20230306140543.1813621-24-angelogioacchino.delregno@collabora.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+The rxe driver currently is incorrect because the tasklet call is
+made without protecting the cq pointer with a reference from having
+the underlying memory freed before the deferred routine is called.
+Executing the comp_handler inline fixes this problem.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Link: https://lore.kernel.org/r/20230327215643.10410-1-rpearsonhpe@gmail.com
+Acked-by: Zhu Yanjun <zyjzyj2000@gmail.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt7622.c | 35 +++++++++++++------------------
- 1 file changed, 15 insertions(+), 20 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_cq.c    |   32 +++-----------------------------
+ drivers/infiniband/sw/rxe/rxe_verbs.c |    2 --
+ drivers/infiniband/sw/rxe/rxe_verbs.h |    2 --
+ 3 files changed, 3 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt7622.c b/drivers/clk/mediatek/clk-mt7622.c
-index 41b3d032bf91c..eebbb87906930 100644
---- a/drivers/clk/mediatek/clk-mt7622.c
-+++ b/drivers/clk/mediatek/clk-mt7622.c
-@@ -50,9 +50,9 @@
- 		 _pd_reg, _pd_shift, _tuner_reg, _pcw_reg, _pcw_shift,  \
- 		 NULL, "clkxtal")
+--- a/drivers/infiniband/sw/rxe/rxe_cq.c
++++ b/drivers/infiniband/sw/rxe/rxe_cq.c
+@@ -39,21 +39,6 @@ err1:
+ 	return -EINVAL;
+ }
  
--#define GATE_APMIXED(_id, _name, _parent, _shift)			\
--	GATE_MTK(_id, _name, _parent, &apmixed_cg_regs, _shift,		\
--		 &mtk_clk_gate_ops_no_setclr_inv)
-+#define GATE_APMIXED_AO(_id, _name, _parent, _shift)			\
-+	GATE_MTK_FLAGS(_id, _name, _parent, &apmixed_cg_regs, _shift,	\
-+		 &mtk_clk_gate_ops_no_setclr_inv, CLK_IS_CRITICAL)
+-static void rxe_send_complete(struct tasklet_struct *t)
+-{
+-	struct rxe_cq *cq = from_tasklet(cq, t, comp_task);
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&cq->cq_lock, flags);
+-	if (cq->is_dying) {
+-		spin_unlock_irqrestore(&cq->cq_lock, flags);
+-		return;
+-	}
+-	spin_unlock_irqrestore(&cq->cq_lock, flags);
+-
+-	cq->ibcq.comp_handler(&cq->ibcq, cq->ibcq.cq_context);
+-}
+-
+ int rxe_cq_from_init(struct rxe_dev *rxe, struct rxe_cq *cq, int cqe,
+ 		     int comp_vector, struct ib_udata *udata,
+ 		     struct rxe_create_cq_resp __user *uresp)
+@@ -79,10 +64,6 @@ int rxe_cq_from_init(struct rxe_dev *rxe
  
- #define GATE_INFRA(_id, _name, _parent, _shift)				\
- 	GATE_MTK(_id, _name, _parent, &infra_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
-@@ -66,6 +66,10 @@
- #define GATE_PERI0(_id, _name, _parent, _shift)				\
- 	GATE_MTK(_id, _name, _parent, &peri0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
+ 	cq->is_user = uresp;
  
-+#define GATE_PERI0_AO(_id, _name, _parent, _shift)			\
-+	GATE_MTK_FLAGS(_id, _name, _parent, &peri0_cg_regs, _shift,	\
-+		 &mtk_clk_gate_ops_setclr, CLK_IS_CRITICAL)
+-	cq->is_dying = false;
+-
+-	tasklet_setup(&cq->comp_task, rxe_send_complete);
+-
+ 	spin_lock_init(&cq->cq_lock);
+ 	cq->ibcq.cqe = cqe;
+ 	return 0;
+@@ -103,6 +84,7 @@ int rxe_cq_resize_queue(struct rxe_cq *c
+ 	return err;
+ }
+ 
++/* caller holds reference to cq */
+ int rxe_cq_post(struct rxe_cq *cq, struct rxe_cqe *cqe, int solicited)
+ {
+ 	struct ib_event ev;
+@@ -135,21 +117,13 @@ int rxe_cq_post(struct rxe_cq *cq, struc
+ 	if ((cq->notify == IB_CQ_NEXT_COMP) ||
+ 	    (cq->notify == IB_CQ_SOLICITED && solicited)) {
+ 		cq->notify = 0;
+-		tasklet_schedule(&cq->comp_task);
 +
- #define GATE_PERI1(_id, _name, _parent, _shift)				\
- 	GATE_MTK(_id, _name, _parent, &peri1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
-@@ -315,7 +319,7 @@ static const struct mtk_pll_data plls[] = {
- };
- 
- static const struct mtk_gate apmixed_clks[] = {
--	GATE_APMIXED(CLK_APMIXED_MAIN_CORE_EN, "main_core_en", "mainpll", 5),
-+	GATE_APMIXED_AO(CLK_APMIXED_MAIN_CORE_EN, "main_core_en", "mainpll", 5),
- };
- 
- static const struct mtk_gate infra_clks[] = {
-@@ -450,7 +454,7 @@ static const struct mtk_gate peri_clks[] = {
- 	GATE_PERI0(CLK_PERI_AP_DMA_PD, "peri_ap_dma_pd", "axi_sel", 12),
- 	GATE_PERI0(CLK_PERI_MSDC30_0_PD, "peri_msdc30_0", "msdc30_0_sel", 13),
- 	GATE_PERI0(CLK_PERI_MSDC30_1_PD, "peri_msdc30_1", "msdc30_1_sel", 14),
--	GATE_PERI0(CLK_PERI_UART0_PD, "peri_uart0_pd", "axi_sel", 17),
-+	GATE_PERI0_AO(CLK_PERI_UART0_PD, "peri_uart0_pd", "axi_sel", 17),
- 	GATE_PERI0(CLK_PERI_UART1_PD, "peri_uart1_pd", "axi_sel", 18),
- 	GATE_PERI0(CLK_PERI_UART2_PD, "peri_uart2_pd", "axi_sel", 19),
- 	GATE_PERI0(CLK_PERI_UART3_PD, "peri_uart3_pd", "axi_sel", 20),
-@@ -478,12 +482,12 @@ static struct mtk_composite infra_muxes[] = {
- 
- static struct mtk_composite top_muxes[] = {
- 	/* CLK_CFG_0 */
--	MUX_GATE(CLK_TOP_AXI_SEL, "axi_sel", axi_parents,
--		 0x040, 0, 3, 7),
--	MUX_GATE(CLK_TOP_MEM_SEL, "mem_sel", mem_parents,
--		 0x040, 8, 1, 15),
--	MUX_GATE(CLK_TOP_DDRPHYCFG_SEL, "ddrphycfg_sel", ddrphycfg_parents,
--		 0x040, 16, 1, 23),
-+	MUX_GATE_FLAGS(CLK_TOP_AXI_SEL, "axi_sel", axi_parents,
-+		       0x040, 0, 3, 7, CLK_IS_CRITICAL),
-+	MUX_GATE_FLAGS(CLK_TOP_MEM_SEL, "mem_sel", mem_parents,
-+		       0x040, 8, 1, 15, CLK_IS_CRITICAL),
-+	MUX_GATE_FLAGS(CLK_TOP_DDRPHYCFG_SEL, "ddrphycfg_sel", ddrphycfg_parents,
-+		       0x040, 16, 1, 23, CLK_IS_CRITICAL),
- 	MUX_GATE(CLK_TOP_ETH_SEL, "eth_sel", eth_parents,
- 		 0x040, 24, 3, 31),
- 
-@@ -620,10 +624,6 @@ static int mtk_topckgen_init(struct platform_device *pdev)
- 	mtk_clk_register_gates(node, top_clks, ARRAY_SIZE(top_clks),
- 			       clk_data);
- 
--	clk_prepare_enable(clk_data->hws[CLK_TOP_AXI_SEL]->clk);
--	clk_prepare_enable(clk_data->hws[CLK_TOP_MEM_SEL]->clk);
--	clk_prepare_enable(clk_data->hws[CLK_TOP_DDRPHYCFG_SEL]->clk);
--
- 	return of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- }
- 
-@@ -666,9 +666,6 @@ static int mtk_apmixedsys_init(struct platform_device *pdev)
- 	mtk_clk_register_gates(node, apmixed_clks,
- 			       ARRAY_SIZE(apmixed_clks), clk_data);
- 
--	clk_prepare_enable(clk_data->hws[CLK_APMIXED_ARMPLL]->clk);
--	clk_prepare_enable(clk_data->hws[CLK_APMIXED_MAIN_CORE_EN]->clk);
--
- 	return of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- }
- 
-@@ -695,8 +692,6 @@ static int mtk_pericfg_init(struct platform_device *pdev)
- 	if (r)
- 		return r;
- 
--	clk_prepare_enable(clk_data->hws[CLK_PERI_UART0_PD]->clk);
--
- 	mtk_register_reset_controller_with_dev(&pdev->dev, &clk_rst_desc[1]);
++		cq->ibcq.comp_handler(&cq->ibcq, cq->ibcq.cq_context);
+ 	}
  
  	return 0;
--- 
-2.39.2
-
+ }
+ 
+-void rxe_cq_disable(struct rxe_cq *cq)
+-{
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&cq->cq_lock, flags);
+-	cq->is_dying = true;
+-	spin_unlock_irqrestore(&cq->cq_lock, flags);
+-}
+-
+ void rxe_cq_cleanup(struct rxe_pool_elem *elem)
+ {
+ 	struct rxe_cq *cq = container_of(elem, typeof(*cq), elem);
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -786,8 +786,6 @@ static int rxe_destroy_cq(struct ib_cq *
+ 	if (atomic_read(&cq->num_wq))
+ 		return -EINVAL;
+ 
+-	rxe_cq_disable(cq);
+-
+ 	rxe_cleanup(cq);
+ 	return 0;
+ }
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.h
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
+@@ -63,9 +63,7 @@ struct rxe_cq {
+ 	struct rxe_queue	*queue;
+ 	spinlock_t		cq_lock;
+ 	u8			notify;
+-	bool			is_dying;
+ 	bool			is_user;
+-	struct tasklet_struct	comp_task;
+ 	atomic_t		num_wq;
+ };
+ 
 
 
