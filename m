@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723C3171AF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA4A1C433EF;
-	Mon,  8 May 2023 11:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A194171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005AEC433D2;
+	Mon,  8 May 2023 11:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546352;
-	bh=1ovJvShgBjYO84Fe5FrWxN2iG65GwYqS3xSFMDHGwxM=;
+	s=korg; t=1683546355;
+	bh=xp5FzT2Yde6i/KuFmF1+qMe2dAYUeAZG6ZARCJary5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sv0+jGPvb2ok845q3if1bMmmqScse/QrHUjucTIhCFZ9++j1fhU9Lyqq+KminUOos
-	 cuqoOae9i4PyPF4wCutQbpCHe98EAI4Kf0vqBwXxaQydFT8HNT2XQfgcn21SKHPMSm
-	 D9O2abvGvtO+IqTVKItnZSdhDRBTVIvzVkKUWfqI=
+	b=y1qXyV2ruwkwidtSFHDhh9YqF5BdMjyrUOVr+6s2PgMhW55H59edX4DfBoo0GmIOz
+	 veEPL4PCu6Lrdmt2uhYbmQmOHLs4iEc8Kb30xwE5w2Qu54BBK/YGhzCQoY9rqW4cUn
+	 HQapMDdr3dvcNjVB4yCmwK3/Jj6x4e8yUAQfNu50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Kang Chen <void0red@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 339/371] dmaengine: at_xdmac: do not enable all cyclic channels
-Date: Mon,  8 May 2023 11:49:00 +0200
-Message-Id: <20230508094825.581663683@linuxfoundation.org>
+Subject: [PATCH 5.15 340/371] thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe
+Date: Mon,  8 May 2023 11:49:01 +0200
+Message-Id: <20230508094825.620514359@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,53 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Kang Chen <void0red@hust.edu.cn>
 
-[ Upstream commit f8435befd81dd85b7b610598551fadf675849bc1 ]
+[ Upstream commit f05c7b7d9ea9477fcc388476c6f4ade8c66d2d26 ]
 
-Do not global enable all the cyclic channels in at_xdmac_resume(). Instead
-save the global status in at_xdmac_suspend() and re-enable the cyclic
-channel only if it was active before suspend.
+Smatch reports:
+1. mtk_thermal_probe() warn: 'apmixed_base' from of_iomap() not released.
+2. mtk_thermal_probe() warn: 'auxadc_base' from of_iomap() not released.
 
-Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230214151827.1050280-6-claudiu.beznea@microchip.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+The original code forgets to release iomap resource when handling errors,
+fix it by switch to devm_of_iomap.
+
+Fixes: 89945047b166 ("thermal: mediatek: Add tsensor support for V2 thermal system")
+Signed-off-by: Kang Chen <void0red@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20230419020749.621257-1-void0red@hust.edu.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/at_xdmac.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/thermal/mtk_thermal.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index f7b0de4f4667d..80c609aa2a91c 100644
---- a/drivers/dma/at_xdmac.c
-+++ b/drivers/dma/at_xdmac.c
-@@ -243,6 +243,7 @@ struct at_xdmac {
- 	int			irq;
- 	struct clk		*clk;
- 	u32			save_gim;
-+	u32			save_gs;
- 	struct dma_pool		*at_xdmac_desc_pool;
- 	const struct at_xdmac_layout	*layout;
- 	struct at_xdmac_chan	chan[];
-@@ -1984,6 +1985,7 @@ static int atmel_xdmac_suspend(struct device *dev)
- 		}
+diff --git a/drivers/thermal/mtk_thermal.c b/drivers/thermal/mtk_thermal.c
+index ede94eaddddae..9c857fb5d9681 100644
+--- a/drivers/thermal/mtk_thermal.c
++++ b/drivers/thermal/mtk_thermal.c
+@@ -1028,7 +1028,12 @@ static int mtk_thermal_probe(struct platform_device *pdev)
+ 		return -ENODEV;
  	}
- 	atxdmac->save_gim = at_xdmac_read(atxdmac, AT_XDMAC_GIM);
-+	atxdmac->save_gs = at_xdmac_read(atxdmac, AT_XDMAC_GS);
  
- 	at_xdmac_off(atxdmac);
- 	clk_disable_unprepare(atxdmac->clk);
-@@ -2023,7 +2025,8 @@ static int atmel_xdmac_resume(struct device *dev)
- 			at_xdmac_chan_write(atchan, AT_XDMAC_CNDC, atchan->save_cndc);
- 			at_xdmac_chan_write(atchan, AT_XDMAC_CIE, atchan->save_cim);
- 			wmb();
--			at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
-+			if (atxdmac->save_gs & atchan->mask)
-+				at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
- 		}
+-	auxadc_base = of_iomap(auxadc, 0);
++	auxadc_base = devm_of_iomap(&pdev->dev, auxadc, 0, NULL);
++	if (IS_ERR(auxadc_base)) {
++		of_node_put(auxadc);
++		return PTR_ERR(auxadc_base);
++	}
++
+ 	auxadc_phys_base = of_get_phys_base(auxadc);
+ 
+ 	of_node_put(auxadc);
+@@ -1044,7 +1049,12 @@ static int mtk_thermal_probe(struct platform_device *pdev)
+ 		return -ENODEV;
  	}
- 	return 0;
+ 
+-	apmixed_base = of_iomap(apmixedsys, 0);
++	apmixed_base = devm_of_iomap(&pdev->dev, apmixedsys, 0, NULL);
++	if (IS_ERR(apmixed_base)) {
++		of_node_put(apmixedsys);
++		return PTR_ERR(apmixed_base);
++	}
++
+ 	apmixed_phys_base = of_get_phys_base(apmixedsys);
+ 
+ 	of_node_put(apmixedsys);
 -- 
 2.39.2
 
