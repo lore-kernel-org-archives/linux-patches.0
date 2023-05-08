@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F43168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA650C433EF;
-	Mon,  8 May 2023 10:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB6E168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC524C433EF;
+	Mon,  8 May 2023 10:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541399;
-	bh=5Nd3KwLurXLJ3q+bnw86FQWMK0Oauaq5h1mkvU4l7Kk=;
+	s=korg; t=1683541402;
+	bh=EBEywgEIhoeOxvsNWvtzN+uz/IExK8Z6aQeleH6WRII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFYO/4e+mTf+uJ1GxlVRvK+V9idVwjjGSb2xoTTJx5iu5jlHfZYaTYrib9pf4cub7
-	 5GPMxQgtCARF3haYXNlNu2lvaYOpJV/hWbHxBy1nelSR4nkJg8a1ysUCiDvOeY9QYP
-	 ufVLFBuCYNUEbXgESgBKEY7HSWUienu0YEIa9+qA=
+	b=eZvk65EntRDL4gSfw9jdemp220ZFCpXF3SXbjDqpMJ5hYUft4Tjfxs+0K8qJ1+JJc
+	 m7P5ZHN4YNqN4fA1mQJaB8iNGPpHGeb70wcXM+3zK0lImMvTaysS81001pBPI41NaN
+	 Hxw2/uQ5HiLcJjLz/6UpBY0aChN062dyswhM98rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Thierry Reding <thierry.reding@gmail.com>
-Subject: [PATCH 6.2 063/663] pwm: meson: Fix axg ao mux parents
-Date: Mon,  8 May 2023 11:38:09 +0200
-Message-Id: <20230508094430.527789386@linuxfoundation.org>
+	=?UTF-8?q?=D0=A0=D1=83=D1=81=D0=B5=D0=B2=20=D0=9F=D1=83=D1=82=D0=B8=D0=BD?= <rockeraliexpress@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.2 096/663] ACPI: video: Remove acpi_backlight=video quirk for Lenovo ThinkPad W530
+Date: Mon,  8 May 2023 11:38:42 +0200
+Message-Id: <20230508094431.571656454@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,36 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit eb411c0cf59ae6344b34bc6f0d298a22b300627e upstream.
+commit 3db66620ea90b0fd4134b31eabfec16d7b07d7e3 upstream.
 
-This fix is basically the same as 9bce02ef0dfa ("pwm: meson: Fix the
-G12A AO clock parents order"). Vendor driver referenced there has
-xtal as first parent also for axg ao. In addition fix the name
-of the aoclk81 clock. Apparently name aoclk81 as used by the vendor
-driver was changed when mainlining the axg clock driver.
+Remove the acpi_backlight=video quirk for Lenovo ThinkPad W530.
 
-Fixes: bccaa3f917c9 ("pwm: meson: Add clock source configuration for Meson-AXG")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+This was intended to help users of the (unsupported) Nvidia binary driver,
+but this has been reported to cause backlight control issues for users
+who have the gfx configured in hybrid (dual-GPU) mode, so drop this.
+
+The Nvidia binary driver should call acpi_video_register_backlight()
+when necessary and this has been reported to Nvidia.
+
+Until this is fixed Nvidia binary driver users can work around this by
+passing "acpi_backlight=video" on the kernel commandline (with the latest
+6.1.y or newer stable series, kernels < 6.1.y don't need this).
+
+Fixes: a5b2781dcab2 ("ACPI: video: Add acpi_backlight=video quirk for Lenovo ThinkPad W530")
+Reported-by: Русев Путин <rockeraliexpress@gmail.com>
+Link: https://lore.kernel.org/linux-acpi/CAK4BXn0ngZRmzx1bodAF8nmYj0PWdUXzPGHofRrsyZj8MBpcVA@mail.gmail.com/
+Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-meson.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/video_detect.c |   14 --------------
+ 1 file changed, 14 deletions(-)
 
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -418,7 +418,7 @@ static const struct meson_pwm_data pwm_a
- };
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -300,20 +300,6 @@ static const struct dmi_system_id video_
+ 	},
  
- static const char * const pwm_axg_ao_parent_names[] = {
--	"aoclk81", "xtal", "fclk_div4", "fclk_div5"
-+	"xtal", "axg_ao_clk81", "fclk_div4", "fclk_div5"
- };
- 
- static const struct meson_pwm_data pwm_axg_ao_data = {
+ 	/*
+-	 * Older models with nvidia GPU which need acpi_video backlight
+-	 * control and where the old nvidia binary driver series does not
+-	 * call acpi_video_register_backlight().
+-	 */
+-	{
+-	 .callback = video_detect_force_video,
+-	 /* ThinkPad W530 */
+-	 .matches = {
+-		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
+-		DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad W530"),
+-		},
+-	},
+-
+-	/*
+ 	 * These models have a working acpi_video backlight control, and using
+ 	 * native backlight causes a regression where backlight does not work
+ 	 * when userspace is not handling brightness key events. Disable
 
 
