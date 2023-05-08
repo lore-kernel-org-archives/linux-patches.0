@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A054D168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:17:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C41C4339E;
-	Mon,  8 May 2023 10:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E07168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:17:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57DAC433EF;
+	Mon,  8 May 2023 10:17:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541061;
-	bh=P0NNn6IdYvJkxGlNWa6OPfAXpAubJYXOVRICaF5+mPw=;
+	s=korg; t=1683541064;
+	bh=UEz0h3yOFYBbqlGA/Sp6Ce54htzfm8kA5QfvhS62AKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yX8748ecmVhOQVW6C5Ezd6F46JkHLy6GiKxbp2G9519k4izxo9+daqSDZQcd2lpjK
-	 xjo3aCwOR+V6a3g8ke34iHq93rZ9MwQMoOdEQpUZtObVh0fCC0ccZl+lJ98vPLeUaY
-	 z+RsNLpX2TYmLEyqjctMVuioYYlLC/FOqRbb2qUw=
+	b=NZ4kGXaMCh+Cao21/ywvZ9cX24RQGcZaudBVkF9tmImrVi5olbfU+RJkYdyFaGjz+
+	 a2KilsJRh9IxGKIWRnUOjIGDCK/gq151jebcCds/TQ2u6fLcyxEMZV0ATSrmPEWeo/
+	 /0j3RFLAFQIPHZLh7UVOZSsaSuCziQaA5UtWavjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.1 602/611] perf auxtrace: Fix address filter entire kernel size
-Date: Mon,  8 May 2023 11:47:24 +0200
-Message-Id: <20230508094441.470063364@linuxfoundation.org>
+Subject: [PATCH 6.1 603/611] perf intel-pt: Fix CYC timestamps after standalone CBR
+Date: Mon,  8 May 2023 11:47:25 +0200
+Message-Id: <20230508094441.498541305@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -39,30 +39,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 1f9f33ccf0320be21703d9195dd2b36a1c9a07cb upstream.
+commit 430635a0ef1ce958b7b4311f172694ece2c692b8 upstream.
 
-kallsyms is not completely in address order.
+After a standalone CBR (not associated with TSC), update the cycles
+reference timestamp and reset the cycle count, so that CYC timestamps
+are calculated relative to that point with the new frequency.
 
-In find_entire_kern_cb(), calculate the kernel end from the maximum
-address not the last symbol.
-
-Example:
-
- Before:
-
-    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | tail -1
-    ffffffffc00b8bd0 t bpf_prog_6deef7357e7b4530    [bpf]
-    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | sort | tail -1
-    ffffffffc15e0cc0 t iwl_mvm_exit [iwlmvm]
-    $ perf.d093603a05aa record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
-    Address filter: filter 0xffffffff93200000/0x2ceba000
-
- After:
-
-    $ perf.8fb0f7a01f8e record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
-    Address filter: filter 0xffffffff93200000/0x2e3e2000
-
-Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
+Fixes: cc33618619cefc6d ("perf tools: Add Intel PT support for decoding CYC packets")
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Ian Rogers <irogers@google.com>
@@ -73,29 +56,19 @@ Link: https://lore.kernel.org/r/20230403154831.8651-2-adrian.hunter@intel.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/auxtrace.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/util/intel-pt-decoder/intel-pt-decoder.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -2443,6 +2443,7 @@ static int find_entire_kern_cb(void *arg
- 			       char type, u64 start)
- {
- 	struct sym_args *args = arg;
-+	u64 size;
+--- a/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c
++++ b/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c
+@@ -1998,6 +1998,8 @@ static void intel_pt_calc_cbr(struct int
  
- 	if (!kallsyms__is_function(type))
- 		return 0;
-@@ -2452,7 +2453,9 @@ static int find_entire_kern_cb(void *arg
- 		args->start = start;
- 	}
- 	/* Don't know exactly where the kernel ends, so we add a page */
--	args->size = round_up(start, page_size) + page_size - args->start;
-+	size = round_up(start, page_size) + page_size - args->start;
-+	if (size > args->size)
-+		args->size = size;
+ 	decoder->cbr = cbr;
+ 	decoder->cbr_cyc_to_tsc = decoder->max_non_turbo_ratio_fp / cbr;
++	decoder->cyc_ref_timestamp = decoder->timestamp;
++	decoder->cycle_cnt = 0;
  
- 	return 0;
+ 	intel_pt_mtc_cyc_cnt_cbr(decoder);
  }
 
 
