@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E566B171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:44:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552C7C4339B;
-	Mon,  8 May 2023 11:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D8D171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:44:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD9AC433D2;
+	Mon,  8 May 2023 11:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546284;
-	bh=8E8uH+tayCkP/JNoEemaa8uU+tXfPd3bERWLmW8TZIU=;
+	s=korg; t=1683546287;
+	bh=pwmzYVaT4gqjQrJWiUykfQr/PfvcNdpDai0tS7ynvZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uLaNcajE+W266eCEKMEzYVGYRSYsgEsty8TruQwWOsir6dx6aF0QgZbr+AeDqqC6P
-	 tDWIXF0OBVZmyCHkxW5zmlMHdAiRt/L4vgMMIGU/eYtbHaZ+XkvFMTJbAZm7zJm42D
-	 9D9SeSXkmIWPFS22soIJKQxaAvM4875xvbwwWONw=
+	b=mOJCCFlrtwruSZPPtZAxGRPMbVAdvVJxzYNgin8LXiFr1v+jWaJyce73GfgolNB9i
+	 05jQTrAzPYjojalPw94SXLMgur7K7y6ve0p+52XTsI3pQJWu/C3FiYeSzfEpb6jEox
+	 sB2uNlHd93Li1/bTmFs5sBcsFGe8EvV+lV6W96GI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 316/371] Input: raspberrypi-ts - fix refcount leak in rpi_ts_probe
-Date: Mon,  8 May 2023 11:48:37 +0200
-Message-Id: <20230508094824.614371145@linuxfoundation.org>
+Subject: [PATCH 5.15 317/371] RDMA/mlx5: Fix flow counter query via DEVX
+Date: Mon,  8 May 2023 11:48:38 +0200
+Message-Id: <20230508094824.663568634@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,46 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit 5bca3688bdbc3b58a2894b8671a8e2378efe28bd ]
+[ Upstream commit 3e358ea8614ddfbc59ca7a3f5dff5dde2b350b2c ]
 
-rpi_firmware_get() take reference, we need to release it in error paths
-as well. Use devm_rpi_firmware_get() helper to handling the resources.
-Also remove the existing rpi_firmware_put().
+Commit cited in "fixes" tag added bulk support for flow counters but it
+didn't account that's also possible to query a counter using a non-base id
+if the counter was allocated as bulk.
 
-Fixes: 0b9f28fed3f7 ("Input: add official Raspberry Pi's touchscreen driver")
-Fixes: 3b8ddff780b7 ("input: raspberrypi-ts: Release firmware handle when not needed")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-Link: https://lore.kernel.org/r/20221223074657.810346-1-linmq006@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+When a user performs a query, validate the flow counter id given in the
+mailbox is inside the valid range taking bulk value into account.
+
+Fixes: 208d70f562e5 ("IB/mlx5: Support flow counters offset for bulk counters")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Link: https://lore.kernel.org/r/79d7fbe291690128e44672418934256254d93115.1681377114.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/raspberrypi-ts.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/devx.c | 31 ++++++++++++++++++++++++++-----
+ include/linux/mlx5/mlx5_ifc.h     |  3 ++-
+ 2 files changed, 28 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/input/touchscreen/raspberrypi-ts.c b/drivers/input/touchscreen/raspberrypi-ts.c
-index 5000f5fd9ec38..45c575df994e0 100644
---- a/drivers/input/touchscreen/raspberrypi-ts.c
-+++ b/drivers/input/touchscreen/raspberrypi-ts.c
-@@ -134,7 +134,7 @@ static int rpi_ts_probe(struct platform_device *pdev)
- 		return -ENOENT;
+diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
+index 21beded40066d..104e5cbba066b 100644
+--- a/drivers/infiniband/hw/mlx5/devx.c
++++ b/drivers/infiniband/hw/mlx5/devx.c
+@@ -666,7 +666,21 @@ static bool devx_is_valid_obj_id(struct uverbs_attr_bundle *attrs,
+ 				      obj_id;
+ 
+ 	case MLX5_IB_OBJECT_DEVX_OBJ:
+-		return ((struct devx_obj *)uobj->object)->obj_id == obj_id;
++	{
++		u16 opcode = MLX5_GET(general_obj_in_cmd_hdr, in, opcode);
++		struct devx_obj *devx_uobj = uobj->object;
++
++		if (opcode == MLX5_CMD_OP_QUERY_FLOW_COUNTER &&
++		    devx_uobj->flow_counter_bulk_size) {
++			u64 end;
++
++			end = devx_uobj->obj_id +
++				devx_uobj->flow_counter_bulk_size;
++			return devx_uobj->obj_id <= obj_id && end > obj_id;
++		}
++
++		return devx_uobj->obj_id == obj_id;
++	}
+ 
+ 	default:
+ 		return false;
+@@ -1515,10 +1529,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_OBJ_CREATE)(
+ 		goto obj_free;
+ 
+ 	if (opcode == MLX5_CMD_OP_ALLOC_FLOW_COUNTER) {
+-		u8 bulk = MLX5_GET(alloc_flow_counter_in,
+-				   cmd_in,
+-				   flow_counter_bulk);
+-		obj->flow_counter_bulk_size = 128UL * bulk;
++		u32 bulk = MLX5_GET(alloc_flow_counter_in,
++				    cmd_in,
++				    flow_counter_bulk_log_size);
++
++		if (bulk)
++			bulk = 1 << bulk;
++		else
++			bulk = 128UL * MLX5_GET(alloc_flow_counter_in,
++						cmd_in,
++						flow_counter_bulk);
++		obj->flow_counter_bulk_size = bulk;
  	}
  
--	fw = rpi_firmware_get(fw_node);
-+	fw = devm_rpi_firmware_get(&pdev->dev, fw_node);
- 	of_node_put(fw_node);
- 	if (!fw)
- 		return -EPROBE_DEFER;
-@@ -160,7 +160,6 @@ static int rpi_ts_probe(struct platform_device *pdev)
- 	touchbuf = (u32)ts->fw_regs_phys;
- 	error = rpi_firmware_property(fw, RPI_FIRMWARE_FRAMEBUFFER_SET_TOUCHBUF,
- 				      &touchbuf, sizeof(touchbuf));
--	rpi_firmware_put(fw);
- 	if (error || touchbuf != 0) {
- 		dev_warn(dev, "Failed to set touchbuf, %d\n", error);
- 		return error;
+ 	uobj->object = obj;
+diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
+index 49ea0004109e1..442b6ac8a66c1 100644
+--- a/include/linux/mlx5/mlx5_ifc.h
++++ b/include/linux/mlx5/mlx5_ifc.h
+@@ -8508,7 +8508,8 @@ struct mlx5_ifc_alloc_flow_counter_in_bits {
+ 	u8         reserved_at_20[0x10];
+ 	u8         op_mod[0x10];
+ 
+-	u8         reserved_at_40[0x38];
++	u8         reserved_at_40[0x33];
++	u8         flow_counter_bulk_log_size[0x5];
+ 	u8         flow_counter_bulk[0x8];
+ };
+ 
 -- 
 2.39.2
 
