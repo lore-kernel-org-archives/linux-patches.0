@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 110EE168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:04:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C2FBC433EF;
-	Mon,  8 May 2023 11:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556AB168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:04:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEBB8C433D2;
+	Mon,  8 May 2023 11:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543874;
-	bh=B517lV98URvzAzWW6x1EzZsCGBdfmnc2hlRypsbEHgc=;
+	s=korg; t=1683543878;
+	bh=XMCriow+NwxCJWRgOiPGFLrSjT3rBd/hYEc8jHvLViI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SPbgfObds7u8+qK3N3yP6B3EiW+YFzkpQg8r84DDPfLTJ5tb4eLUEGtjaieMy6Lak
-	 cHVb9MOKpRV7/klYZhSVpDpK9yAnd9Qv7J0N3Q+YklWJVbXeG1P8zsl2skXjRzO5kI
-	 oT77pWqVZu6Ha4RBnJm0Xn8BwlyArRt8lVmk+vDg=
+	b=U6qTjUEIoqk/Snkr6mQNelNFI50XA11RK4dxunbGTixTDwQ4X9OoBWj2W74JQ1Mbm
+	 05zAm5wZAbiY/taJrQfNcoUANNa9PJYrid0qwD7ZFXntCkaLluVCgh0bL3YeAc05tH
+	 w0OOpMNFgUXZo71TlkaJqgfU1Kd24DRpsI09bN5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 212/694] media: max9286: Free control handler
-Date: Mon,  8 May 2023 11:40:47 +0200
-Message-Id: <20230508094439.248552619@linuxfoundation.org>
+Subject: [PATCH 6.3 230/694] perf/amlogic: Fix config1/config2 parsing issue
+Date: Mon,  8 May 2023 11:41:05 +0200
+Message-Id: <20230508094439.830648401@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,36 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Jiucheng Xu <jiucheng.xu@amlogic.com>
 
-[ Upstream commit bfce6a12e5ba1edde95126aa06778027f16115d4 ]
+[ Upstream commit c61e5720f23273269cc67ffb2908cf9831c8ca9d ]
 
-The control handler is leaked in some probe-time error paths, as well as
-in the remove path. Fix it.
+The 3th argument of for_each_set_bit is incorrect, fix them.
 
-Fixes: 66d8c9d2422d ("media: i2c: Add MAX9286 driver")
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 2016e2113d35 ("perf/amlogic: Add support for Amlogic meson G12 SoC DDR PMU driver")
+Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
+Link: https://lore.kernel.org/r/20230209115403.521868-1-jiucheng.xu@amlogic.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/max9286.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/perf/amlogic/meson_ddr_pmu_core.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/max9286.c b/drivers/media/i2c/max9286.c
-index 701038d6d19b1..13a986b885889 100644
---- a/drivers/media/i2c/max9286.c
-+++ b/drivers/media/i2c/max9286.c
-@@ -1122,6 +1122,7 @@ static int max9286_v4l2_register(struct max9286_priv *priv)
- static void max9286_v4l2_unregister(struct max9286_priv *priv)
- {
- 	fwnode_handle_put(priv->sd.fwnode);
-+	v4l2_ctrl_handler_free(&priv->ctrls);
- 	v4l2_async_unregister_subdev(&priv->sd);
- 	max9286_v4l2_notifier_unregister(priv);
- }
+diff --git a/drivers/perf/amlogic/meson_ddr_pmu_core.c b/drivers/perf/amlogic/meson_ddr_pmu_core.c
+index b84346dbac2ce..0b24dee1ed3cf 100644
+--- a/drivers/perf/amlogic/meson_ddr_pmu_core.c
++++ b/drivers/perf/amlogic/meson_ddr_pmu_core.c
+@@ -156,10 +156,14 @@ static int meson_ddr_perf_event_add(struct perf_event *event, int flags)
+ 	u64 config2 = event->attr.config2;
+ 	int i;
+ 
+-	for_each_set_bit(i, (const unsigned long *)&config1, sizeof(config1))
++	for_each_set_bit(i,
++			 (const unsigned long *)&config1,
++			 BITS_PER_TYPE(config1))
+ 		meson_ddr_set_axi_filter(event, i);
+ 
+-	for_each_set_bit(i, (const unsigned long *)&config2, sizeof(config2))
++	for_each_set_bit(i,
++			 (const unsigned long *)&config2,
++			 BITS_PER_TYPE(config2))
+ 		meson_ddr_set_axi_filter(event, i + 64);
+ 
+ 	if (flags & PERF_EF_START)
 -- 
 2.39.2
 
