@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E08171A2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C23C433EF;
-	Mon,  8 May 2023 11:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40A7171A2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B178C433EF;
+	Mon,  8 May 2023 11:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545088;
-	bh=gfDGFjV+QykAu/JAuYchGotcnq6yqjwTBcPEGgoNltU=;
+	s=korg; t=1683545091;
+	bh=Eo5Ddk8eYrpYSvgJ4EJtObMrpJytn1wQGTIewg2hinI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDeYqUd1sS6m9YCLk23sWkGlOvUw9PdI37QffzxjGz2NfV4TxXDh4jIpgVWmZ3SJS
-	 bQFRFHXmdgPwHSOh8vXCNsTdmdCZoxpfji59oHZEe/Hi7D7ioGcsn7UEBEpPfWG77l
-	 Iy3xac07YxuAswF2ci6o7MpMBc1OYamHH5HB+OxQ=
+	b=rF5gbhJbzwRGjbywu5B7Niz3EtPGlIDKMmnilBo2/m6wIPtNimjGXE5As3ek0819g
+	 4HrOZJviesFJE0iHDjw9JpS7UBykHahPo1efJ6VHfgG+gZO4MEXUE7R/j7khrzWxqf
+	 uHZmmCytgn+UCNqza6M0Tj7E7BFd51raeeTyJHoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Ziemba <ian.ziemba@hpe.com>,
-	Bob Pearson <rpearsonhpe@gmail.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	syzbot+cfcc1a3c85be15a40cba@syzkaller.appspotmail.com,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 621/694] RDMA/rxe: Remove __rxe_do_task()
-Date: Mon,  8 May 2023 11:47:36 +0200
-Message-Id: <20230508094455.707010673@linuxfoundation.org>
+Subject: [PATCH 6.3 622/694] RDMA/rxe: Fix the error "trying to register non-static key in rxe_cleanup_task"
+Date: Mon,  8 May 2023 11:47:37 +0200
+Message-Id: <20230508094455.745895717@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,190 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Pearson <rpearsonhpe@gmail.com>
+From: Zhu Yanjun <yanjun.zhu@linux.dev>
 
-[ Upstream commit 960ebe97e5238565d15063c8f4d1b2108efe2e65 ]
+[ Upstream commit b2b1ddc457458fecd1c6f385baa9fbda5f0c63ad ]
 
-The subroutine __rxe_do_task is not thread safe and it has no way to
-guarantee that the tasks, which are designed with the assumption that they
-are non-reentrant, are not reentered. All of its uses are non-performance
-critical.
+In the function rxe_create_qp(), rxe_qp_from_init() is called to
+initialize qp, internally things like rxe_init_task are not setup until
+rxe_qp_init_req().
 
-This patch replaces calls to __rxe_do_task with calls to
-rxe_sched_task. It also removes irrelevant or unneeded if tests.
+If an error occurred before this point then the unwind will call
+rxe_cleanup() and eventually to rxe_qp_do_cleanup()/rxe_cleanup_task()
+which will oops when trying to access the uninitialized spinlock.
 
-Instead of calling the task machinery a single call to the tasklet
-function (rxe_requester, etc.) is sufficient to draing the queues if task
-execution has been disabled or stopped.
+If rxe_init_task is not executed, rxe_cleanup_task will not be called.
 
-Together these changes allow the removal of __rxe_do_task.
-
-Link: https://lore.kernel.org/r/20230304174533.11296-7-rpearsonhpe@gmail.com
-Signed-off-by: Ian Ziemba <ian.ziemba@hpe.com>
-Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Stable-dep-of: b2b1ddc45745 ("RDMA/rxe: Fix the error "trying to register non-static key in rxe_cleanup_task"")
+Reported-by: syzbot+cfcc1a3c85be15a40cba@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=fd85757b74b3eb59f904138486f755f71e090df8
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Fixes: 2d4b21e0a291 ("IB/rxe: Prevent from completer to operate on non valid QP")
+Signed-off-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Link: https://lore.kernel.org/r/20230413101115.1366068-1-yanjun.zhu@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c   | 56 +++++++++-------------------
- drivers/infiniband/sw/rxe/rxe_task.c | 13 -------
- drivers/infiniband/sw/rxe/rxe_task.h |  6 ---
- 3 files changed, 17 insertions(+), 58 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index c954dd9394baf..49891f8ed4e61 100644
+index 49891f8ed4e61..d5de5ba6940f1 100644
 --- a/drivers/infiniband/sw/rxe/rxe_qp.c
 +++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -473,29 +473,23 @@ static void rxe_qp_reset(struct rxe_qp *qp)
- {
- 	/* stop tasks from running */
- 	rxe_disable_task(&qp->resp.task);
--
--	/* stop request/comp */
--	if (qp->sq.queue) {
--		if (qp_type(qp) == IB_QPT_RC)
--			rxe_disable_task(&qp->comp.task);
--		rxe_disable_task(&qp->req.task);
--	}
-+	rxe_disable_task(&qp->comp.task);
-+	rxe_disable_task(&qp->req.task);
- 
- 	/* move qp to the reset state */
- 	qp->req.state = QP_STATE_RESET;
- 	qp->comp.state = QP_STATE_RESET;
- 	qp->resp.state = QP_STATE_RESET;
- 
--	/* let state machines reset themselves drain work and packet queues
--	 * etc.
--	 */
--	__rxe_do_task(&qp->resp.task);
-+	/* drain work and packet queuesc */
-+	rxe_requester(qp);
-+	rxe_completer(qp);
-+	rxe_responder(qp);
- 
--	if (qp->sq.queue) {
--		__rxe_do_task(&qp->comp.task);
--		__rxe_do_task(&qp->req.task);
-+	if (qp->rq.queue)
-+		rxe_queue_reset(qp->rq.queue);
-+	if (qp->sq.queue)
- 		rxe_queue_reset(qp->sq.queue);
--	}
- 
- 	/* cleanup attributes */
- 	atomic_set(&qp->ssn, 0);
-@@ -518,13 +512,8 @@ static void rxe_qp_reset(struct rxe_qp *qp)
- 
- 	/* reenable tasks */
- 	rxe_enable_task(&qp->resp.task);
--
--	if (qp->sq.queue) {
--		if (qp_type(qp) == IB_QPT_RC)
--			rxe_enable_task(&qp->comp.task);
--
--		rxe_enable_task(&qp->req.task);
--	}
-+	rxe_enable_task(&qp->comp.task);
-+	rxe_enable_task(&qp->req.task);
- }
- 
- /* drain the send queue */
-@@ -533,10 +522,7 @@ static void rxe_qp_drain(struct rxe_qp *qp)
- 	if (qp->sq.queue) {
- 		if (qp->req.state != QP_STATE_DRAINED) {
- 			qp->req.state = QP_STATE_DRAIN;
--			if (qp_type(qp) == IB_QPT_RC)
--				rxe_sched_task(&qp->comp.task);
--			else
--				__rxe_do_task(&qp->comp.task);
-+			rxe_sched_task(&qp->comp.task);
- 			rxe_sched_task(&qp->req.task);
- 		}
- 	}
-@@ -552,11 +538,7 @@ void rxe_qp_error(struct rxe_qp *qp)
- 
- 	/* drain work and packet queues */
- 	rxe_sched_task(&qp->resp.task);
--
--	if (qp_type(qp) == IB_QPT_RC)
--		rxe_sched_task(&qp->comp.task);
--	else
--		__rxe_do_task(&qp->comp.task);
-+	rxe_sched_task(&qp->comp.task);
- 	rxe_sched_task(&qp->req.task);
- }
- 
-@@ -773,24 +755,20 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
- 
- 	qp->valid = 0;
- 	qp->qp_timeout_jiffies = 0;
--	rxe_cleanup_task(&qp->resp.task);
- 
- 	if (qp_type(qp) == IB_QPT_RC) {
- 		del_timer_sync(&qp->retrans_timer);
+@@ -761,9 +761,14 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
  		del_timer_sync(&qp->rnr_nak_timer);
  	}
  
-+	rxe_cleanup_task(&qp->resp.task);
- 	rxe_cleanup_task(&qp->req.task);
- 	rxe_cleanup_task(&qp->comp.task);
+-	rxe_cleanup_task(&qp->resp.task);
+-	rxe_cleanup_task(&qp->req.task);
+-	rxe_cleanup_task(&qp->comp.task);
++	if (qp->resp.task.func)
++		rxe_cleanup_task(&qp->resp.task);
++
++	if (qp->req.task.func)
++		rxe_cleanup_task(&qp->req.task);
++
++	if (qp->comp.task.func)
++		rxe_cleanup_task(&qp->comp.task);
  
  	/* flush out any receive wr's or pending requests */
--	if (qp->req.task.func)
--		__rxe_do_task(&qp->req.task);
--
--	if (qp->sq.queue) {
--		__rxe_do_task(&qp->comp.task);
--		__rxe_do_task(&qp->req.task);
--	}
-+	rxe_requester(qp);
-+	rxe_completer(qp);
-+	rxe_responder(qp);
- 
- 	if (qp->sq.queue)
- 		rxe_queue_cleanup(qp->sq.queue);
-diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
-index 959cc6229a34e..a67f485454436 100644
---- a/drivers/infiniband/sw/rxe/rxe_task.c
-+++ b/drivers/infiniband/sw/rxe/rxe_task.c
-@@ -6,19 +6,6 @@
- 
- #include "rxe.h"
- 
--int __rxe_do_task(struct rxe_task *task)
--
--{
--	int ret;
--
--	while ((ret = task->func(task->qp)) == 0)
--		;
--
--	task->ret = ret;
--
--	return ret;
--}
--
- /*
-  * this locking is due to a potential race where
-  * a second caller finds the task already running
-diff --git a/drivers/infiniband/sw/rxe/rxe_task.h b/drivers/infiniband/sw/rxe/rxe_task.h
-index 41efd5fd49b03..99585e40cef92 100644
---- a/drivers/infiniband/sw/rxe/rxe_task.h
-+++ b/drivers/infiniband/sw/rxe/rxe_task.h
-@@ -39,12 +39,6 @@ int rxe_init_task(struct rxe_task *task, struct rxe_qp *qp,
- /* cleanup task */
- void rxe_cleanup_task(struct rxe_task *task);
- 
--/*
-- * raw call to func in loop without any checking
-- * can call when tasklets are disabled
-- */
--int __rxe_do_task(struct rxe_task *task);
--
- void rxe_run_task(struct rxe_task *task);
- 
- void rxe_sched_task(struct rxe_task *task);
+ 	rxe_requester(qp);
 -- 
 2.39.2
 
