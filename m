@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 964DE168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED1EC433D2;
-	Mon,  8 May 2023 10:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9455D168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E90C433EF;
+	Mon,  8 May 2023 10:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542861;
-	bh=H/ZfZ1hzS2PyQpHjDFi1/dr4Nj22bcyPiNs0EuTLeEE=;
+	s=korg; t=1683542864;
+	bh=aiT/1/I0dWK5SUBMQewo+ZK2ooa7XQGqTvjSek7ZkI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZBwlZsrZy4Kx2T1HRWYo6hSmnWjUZkv06nSeEHUvFhsS7N+U68RS1n44XwKqiusYQ
-	 9nv0Vvj9oPQ/PYahLrNibTeQ+Ctyin+QdzRtSUVeBXoAdcRs5vgEVQZXoqedladDK2
-	 1WTQUVEObJtonoGhH3n7RvJy9pHK1Z7dkPBpqyFQ=
+	b=tcb3PodxpvggJBgR6CGbolWgBZM99T3HpM15tCbiVJu5+prUUzjMu8xNlE/XMFarc
+	 0OXnumh/WckzEvc+E8lLnBR4KdyUgWUy6EMbLda486UBGrUwdGJf5zV73lflVMo+Vo
+	 v9EqrQS/kt3ZEjD2JLweUMM/sDufBQE2buAbn+w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	John Stultz <jstultz@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 573/663] timekeeping: Fix references to nonexistent ktime_get_fast_ns()
-Date: Mon,  8 May 2023 11:46:39 +0200
-Message-Id: <20230508094447.840798151@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Paulo Alcantara <pc@manguebit.com>
+Subject: [PATCH 6.2 574/663] SMB3: Add missing locks to protect deferred close file list
+Date: Mon,  8 May 2023 11:46:40 +0200
+Message-Id: <20230508094447.889343785@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,45 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Bharath SM <bharathsm@microsoft.com>
 
-[ Upstream commit 158009f1b4a33bc0f354b994eea361362bd83226 ]
+[ Upstream commit ab9ddc87a9055c4bebd6524d5d761d605d52e557 ]
 
-There was never a function named ktime_get_fast_ns().
-Presumably these should refer to ktime_get_mono_fast_ns() instead.
+cifs_del_deferred_close function has a critical section which modifies
+the deferred close file list. We must acquire deferred_lock before
+calling cifs_del_deferred_close function.
 
-Fixes: c1ce406e80fb15fa ("timekeeping: Fix up function documentation for the NMI safe accessors")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: John Stultz <jstultz@google.com>
-Link: https://lore.kernel.org/r/06df7b3cbd94f016403bbf6cd2b38e4368e7468f.1682516546.git.geert+renesas@glider.be
+Fixes: ca08d0eac020 ("cifs: Fix memory leak on the deferred close")
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Acked-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Acked-by: Ronnie Sahlberg <lsahlber@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/timekeeping.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/cifs/misc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
-index 5579ead449f25..09d594900ee0b 100644
---- a/kernel/time/timekeeping.c
-+++ b/kernel/time/timekeeping.c
-@@ -526,7 +526,7 @@ EXPORT_SYMBOL_GPL(ktime_get_raw_fast_ns);
-  * partially updated.  Since the tk->offs_boot update is a rare event, this
-  * should be a rare occurrence which postprocessing should be able to handle.
-  *
-- * The caveats vs. timestamp ordering as documented for ktime_get_fast_ns()
-+ * The caveats vs. timestamp ordering as documented for ktime_get_mono_fast_ns()
-  * apply as well.
-  */
- u64 notrace ktime_get_boot_fast_ns(void)
-@@ -576,7 +576,7 @@ static __always_inline u64 __ktime_get_real_fast(struct tk_fast *tkf, u64 *mono)
- /**
-  * ktime_get_real_fast_ns: - NMI safe and fast access to clock realtime.
-  *
-- * See ktime_get_fast_ns() for documentation of the time stamp ordering.
-+ * See ktime_get_mono_fast_ns() for documentation of the time stamp ordering.
-  */
- u64 ktime_get_real_fast_ns(void)
- {
+diff --git a/fs/cifs/misc.c b/fs/cifs/misc.c
+index 2fae6b08314d9..dc97013469748 100644
+--- a/fs/cifs/misc.c
++++ b/fs/cifs/misc.c
+@@ -749,7 +749,9 @@ cifs_close_deferred_file(struct cifsInodeInfo *cifs_inode)
+ 	list_for_each_entry(cfile, &cifs_inode->openFileList, flist) {
+ 		if (delayed_work_pending(&cfile->deferred)) {
+ 			if (cancel_delayed_work(&cfile->deferred)) {
++				spin_lock(&cifs_inode->deferred_lock);
+ 				cifs_del_deferred_close(cfile);
++				spin_unlock(&cifs_inode->deferred_lock);
+ 
+ 				tmp_list = kmalloc(sizeof(struct file_list), GFP_ATOMIC);
+ 				if (tmp_list == NULL)
+@@ -780,7 +782,9 @@ cifs_close_all_deferred_files(struct cifs_tcon *tcon)
+ 	list_for_each_entry(cfile, &tcon->openFileList, tlist) {
+ 		if (delayed_work_pending(&cfile->deferred)) {
+ 			if (cancel_delayed_work(&cfile->deferred)) {
++				spin_lock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
+ 				cifs_del_deferred_close(cfile);
++				spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
+ 
+ 				tmp_list = kmalloc(sizeof(struct file_list), GFP_ATOMIC);
+ 				if (tmp_list == NULL)
+@@ -815,7 +819,9 @@ cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
+ 		if (strstr(full_path, path)) {
+ 			if (delayed_work_pending(&cfile->deferred)) {
+ 				if (cancel_delayed_work(&cfile->deferred)) {
++					spin_lock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
+ 					cifs_del_deferred_close(cfile);
++					spin_unlock(&CIFS_I(d_inode(cfile->dentry))->deferred_lock);
+ 
+ 					tmp_list = kmalloc(sizeof(struct file_list), GFP_ATOMIC);
+ 					if (tmp_list == NULL)
 -- 
 2.39.2
 
