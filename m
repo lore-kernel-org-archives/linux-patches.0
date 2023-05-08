@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93FC168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F0CCC433D2;
-	Mon,  8 May 2023 10:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BBCE168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0590CC433EF;
+	Mon,  8 May 2023 10:08:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540526;
-	bh=kgVrrUI7cAOg6GpMxbXeY3qLoY4n5BwMWRIW6E6LTRQ=;
+	s=korg; t=1683540529;
+	bh=rM7iOUOjL7wHzvU0ZkSjt72Y8tsGv96YPyomOXdROBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PER31T5YZMwB1YoFVrGtZV34ojYKzpH+5HZNetj9KOEOy/2dbETetN5XiVNG6wLEL
-	 EICqW0jcIH7GLMHSbkE/2RiWjGh7ajSmLaWNEWv8gziW59n4xye+DpjlIGtqXZEBcw
-	 U598gT6D3afdt4ZbSCaZBiKuydZEWqK8iVaZ4vME=
+	b=ddIW45K8jqJ6Rrs7RLGgmamFGC5Oo95Lc4qYR77V3AhZkQCAEkn9YzIq91/RzYq9B
+	 1YH4Updi2SVX5XEbfmH7oKfQtsQyM1sj0yxdz/LdZ4o5luy5Ad2YOco7I7F4hRjXmD
+	 u/Fx8S/ySJRtp8bL9ofb/Z3D7gZZsDeLnSqmU+H4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 381/611] net/mlx5: Remove "recovery" arg from mlx5_load_one() function
-Date: Mon,  8 May 2023 11:43:43 +0200
-Message-Id: <20230508094434.709441205@linuxfoundation.org>
+Subject: [PATCH 6.1 399/611] drivers: staging: rtl8723bs: Fix locking in _rtw_join_timeout_handler()
+Date: Mon,  8 May 2023 11:44:01 +0200
+Message-Id: <20230508094435.244453134@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,89 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Pirko <jiri@nvidia.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 5977ac3910f1cbaf44dca48179118b25c206ac29 ]
+[ Upstream commit 215792eda008f6a1e7ed9d77fa20d582d22bb114 ]
 
-mlx5_load_one() is always called with recovery==false, so remove the
-unneeded function arg.
+Commit 041879b12ddb ("drivers: staging: rtl8192bs: Fix deadlock in
+rtw_joinbss_event_prehandle()") besides fixing the deadlock also
+modified _rtw_join_timeout_handler() to use spin_[un]lock_irq()
+instead of spin_[un]lock_bh().
 
-Signed-off-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Stable-dep-of: dfad99750c0f ("net/mlx5: Use recovery timeout on sync reset flow")
+_rtw_join_timeout_handler() calls rtw_do_join() which takes
+pmlmepriv->scanned_queue.lock using spin_[un]lock_bh(). This
+spin_unlock_bh() call re-enables softirqs which triggers an oops in
+kernel/softirq.c: __local_bh_enable_ip() when it calls
+lockdep_assert_irqs_enabled():
+
+[  244.506087] WARNING: CPU: 2 PID: 0 at kernel/softirq.c:376 __local_bh_enable_ip+0xa6/0x100
+...
+[  244.509022] Call Trace:
+[  244.509048]  <IRQ>
+[  244.509100]  _rtw_join_timeout_handler+0x134/0x170 [r8723bs]
+[  244.509468]  ? __pfx__rtw_join_timeout_handler+0x10/0x10 [r8723bs]
+[  244.509772]  ? __pfx__rtw_join_timeout_handler+0x10/0x10 [r8723bs]
+[  244.510076]  call_timer_fn+0x95/0x2a0
+[  244.510200]  __run_timers.part.0+0x1da/0x2d0
+
+This oops is causd by the switch to spin_[un]lock_irq() which disables
+the IRQs for the entire duration of _rtw_join_timeout_handler().
+
+Disabling the IRQs is not necessary since all code taking this lock
+runs from either user contexts or from softirqs, switch back to
+spin_[un]lock_bh() to fix this.
+
+Fixes: 041879b12ddb ("drivers: staging: rtl8192bs: Fix deadlock in rtw_joinbss_event_prehandle()")
+Cc: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230221145326.7808-1-hdegoede@redhat.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c  | 2 +-
- drivers/net/ethernet/mellanox/mlx5/core/main.c      | 9 ++++-----
- drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h | 2 +-
- 3 files changed, 6 insertions(+), 7 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-index 1e46f9afa40e0..a1f460c9d3cde 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-@@ -154,7 +154,7 @@ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev)
- 		if (mlx5_health_wait_pci_up(dev))
- 			mlx5_core_err(dev, "reset reload flow aborted, PCI reads still not working\n");
- 		else
--			mlx5_load_one(dev, false);
-+			mlx5_load_one(dev);
- 		devlink_remote_reload_actions_performed(priv_to_devlink(dev), 0,
- 							BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT) |
- 							BIT(DEVLINK_RELOAD_ACTION_FW_ACTIVATE));
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 59914f66857da..31841f4307fee 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1484,13 +1484,13 @@ int mlx5_load_one_devl_locked(struct mlx5_core_dev *dev, bool recovery)
- 	return err;
+diff --git a/drivers/staging/rtl8723bs/core/rtw_mlme.c b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+index 6498fd17e1d3e..9f4f032c22aec 100644
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -1549,7 +1549,7 @@ void _rtw_join_timeout_handler(struct timer_list *t)
+ 	if (adapter->bDriverStopped || adapter->bSurpriseRemoved)
+ 		return;
+ 
+-	spin_lock_irq(&pmlmepriv->lock);
++	spin_lock_bh(&pmlmepriv->lock);
+ 
+ 	if (rtw_to_roam(adapter) > 0) { /* join timeout caused by roaming */
+ 		while (1) {
+@@ -1577,7 +1577,7 @@ void _rtw_join_timeout_handler(struct timer_list *t)
+ 
+ 	}
+ 
+-	spin_unlock_irq(&pmlmepriv->lock);
++	spin_unlock_bh(&pmlmepriv->lock);
  }
  
--int mlx5_load_one(struct mlx5_core_dev *dev, bool recovery)
-+int mlx5_load_one(struct mlx5_core_dev *dev)
- {
- 	struct devlink *devlink = priv_to_devlink(dev);
- 	int ret;
- 
- 	devl_lock(devlink);
--	ret = mlx5_load_one_devl_locked(dev, recovery);
-+	ret = mlx5_load_one_devl_locked(dev, false);
- 	devl_unlock(devlink);
- 	return ret;
- }
-@@ -1875,8 +1875,7 @@ static void mlx5_pci_resume(struct pci_dev *pdev)
- 
- 	mlx5_pci_trace(dev, "Enter, loading driver..\n");
- 
--	err = mlx5_load_one(dev, false);
--
-+	err = mlx5_load_one(dev);
- 	if (!err)
- 		devlink_health_reporter_state_update(dev->priv.health.fw_fatal_reporter,
- 						     DEVLINK_HEALTH_REPORTER_STATE_HEALTHY);
-@@ -1967,7 +1966,7 @@ static int mlx5_resume(struct pci_dev *pdev)
- {
- 	struct mlx5_core_dev *dev = pci_get_drvdata(pdev);
- 
--	return mlx5_load_one(dev, false);
-+	return mlx5_load_one(dev);
- }
- 
- static const struct pci_device_id mlx5_core_pci_table[] = {
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-index a806e3de7b7c3..c57e0fc4bab1f 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
-@@ -321,7 +321,7 @@ int mlx5_init_one(struct mlx5_core_dev *dev);
- void mlx5_uninit_one(struct mlx5_core_dev *dev);
- void mlx5_unload_one(struct mlx5_core_dev *dev);
- void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev);
--int mlx5_load_one(struct mlx5_core_dev *dev, bool recovery);
-+int mlx5_load_one(struct mlx5_core_dev *dev);
- int mlx5_load_one_devl_locked(struct mlx5_core_dev *dev, bool recovery);
- 
- int mlx5_vport_get_other_func_cap(struct mlx5_core_dev *dev, u16 function_id, void *out);
+ /*
 -- 
 2.39.2
 
