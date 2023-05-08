@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0561D171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:33:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8140AC433D2;
-	Mon,  8 May 2023 11:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE79171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:34:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8719DC433D2;
+	Mon,  8 May 2023 11:34:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545638;
-	bh=bVSklMlSWz4OtfPFb9mRQASssu4ELl71aqFGbKC8Ms0=;
+	s=korg; t=1683545641;
+	bh=uaQj6qaJKTou4wOcaqUrvKjY4OgH/StKaKWp2CT6UBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VyYW/u1iWH2a3O+jtihgEEdd8q/Lg9nlNKEFj18GLwTwooVmddPvOdmflnz/Sb8cH
-	 Q2rqITTIiQnYiA0IS9XBFMjnzhPc0NacA/ubc3YVwUxzIlCQj2Oy69pmLK6nVgDhpr
-	 zMx00iMXfFRERTOau/1s4tbZucZYnjcRVyWc8XMU=
+	b=qVvTBLUO2gxQp5Q0YQK7QZtodaZ+D6xQkghw2pqGWiB8xUBt/DB/njtuiVkCZu9ff
+	 gHqyzqDKczvV07z5XpHpDp/L/jd/K1LQcpVJIaXO9nXM27B/tKCMn8fHo4/nHBQckt
+	 kH5ApBH288GtHzA3RhRSpj2VoT85ovijw4qxfOEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Dan Carpenter <error27@gmail.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 106/371] media: bdisp: Add missing check for create_workqueue
-Date: Mon,  8 May 2023 11:45:07 +0200
-Message-Id: <20230508094816.232385310@linuxfoundation.org>
+Subject: [PATCH 5.15 107/371] media: av7110: prevent underflow in write_ts_to_decoder()
+Date: Mon,  8 May 2023 11:45:08 +0200
+Message-Id: <20230508094816.271079699@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,35 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 2371adeab717d8fe32144a84f3491a03c5838cfb ]
+[ Upstream commit eed9496a0501357aa326ddd6b71408189ed872eb ]
 
-Add the check for the return value of the create_workqueue
-in order to avoid NULL pointer dereference.
+The buf[4] value comes from the user via ts_play().  It is a value in
+the u8 range.  The final length we pass to av7110_ipack_instant_repack()
+is "len - (buf[4] + 1) - 4" so add a check to ensure that the length is
+not negative.  It's not clear that passing a negative len value does
+anything bad necessarily, but it's not best practice.
 
-Fixes: 28ffeebbb7bd ("[media] bdisp: 2D blitter driver using v4l2 mem2mem framework")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+With the new bounds checking the "if (!len)" condition is no longer
+possible or required so remove that.
+
+Fixes: fd46d16d602a ("V4L/DVB (11759): dvb-ttpci: Add TS replay capability")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/sti/bdisp/bdisp-v4l2.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/staging/media/av7110/av7110_av.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/sti/bdisp/bdisp-v4l2.c b/drivers/media/platform/sti/bdisp/bdisp-v4l2.c
-index 6413cd2791251..19a0f12483dba 100644
---- a/drivers/media/platform/sti/bdisp/bdisp-v4l2.c
-+++ b/drivers/media/platform/sti/bdisp/bdisp-v4l2.c
-@@ -1310,6 +1310,8 @@ static int bdisp_probe(struct platform_device *pdev)
- 	init_waitqueue_head(&bdisp->irq_queue);
- 	INIT_DELAYED_WORK(&bdisp->timeout_work, bdisp_irq_timeout);
- 	bdisp->work_queue = create_workqueue(BDISP_NAME);
-+	if (!bdisp->work_queue)
-+		return -ENOMEM;
+diff --git a/drivers/staging/media/av7110/av7110_av.c b/drivers/staging/media/av7110/av7110_av.c
+index 91f4866c7e59b..964092e2f41fd 100644
+--- a/drivers/staging/media/av7110/av7110_av.c
++++ b/drivers/staging/media/av7110/av7110_av.c
+@@ -823,10 +823,10 @@ static int write_ts_to_decoder(struct av7110 *av7110, int type, const u8 *buf, s
+ 		av7110_ipack_flush(ipack);
  
- 	spin_lock_init(&bdisp->slock);
- 	mutex_init(&bdisp->lock);
+ 	if (buf[3] & ADAPT_FIELD) {
++		if (buf[4] > len - 1 - 4)
++			return 0;
+ 		len -= buf[4] + 1;
+ 		buf += buf[4] + 1;
+-		if (!len)
+-			return 0;
+ 	}
+ 
+ 	av7110_ipack_instant_repack(buf + 4, len - 4, ipack);
 -- 
 2.39.2
 
