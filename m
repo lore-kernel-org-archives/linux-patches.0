@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA25A168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E904C433EF;
-	Mon,  8 May 2023 11:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8D21094C
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9A5C433D2;
+	Mon,  8 May 2023 11:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545001;
-	bh=bK+xXjBqhZ1eCi1oCseU172wydz8THEOa/mgUWICduY=;
+	s=korg; t=1683545004;
+	bh=mJBngOkGDYxboBQlyi79GCfB4L2gSFOz7WyVvDY2kbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fn3Eb5eXZ3F8Yz7nc2P3sc7b4Bi1Lk4g+rOe+fJz49Z5XNWGT54r/lI6WTR81O5O9
-	 5anEtTVW7Soz0HtHaGp+BXa4IPKJ6BI+QlZHeLRR6W5GLTGFhlR68amo4TUrakOSLu
-	 gTLFnTY1bgFfuGttPhV8QP/Ie6ZAyRXrBbA9U6CI=
+	b=ZIo3OTAFwJC9ML+sXrYHr1V1F1pI3Inu8X9JutJPyK+Ac9oSGu1ViLduwXC3KBhiI
+	 4ps3jbOMacEzvwkSlLnx9iXu/5v7ENN1O6KdnwlebsDwyQiUTpRkCjE2RB8yZrCkgC
+	 HgpkvofwMMNtEnrzWEcX1fPgbrByRZugUJGf25LE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com,
+	syzbot+d882d57193079e379309@syzkaller.appspotmail.com,
 	ZhangPeng <zhangpeng362@huawei.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 593/694] fs/ntfs3: Fix null-ptr-deref on inode->i_op in ntfs_lookup()
-Date: Mon,  8 May 2023 11:47:08 +0200
-Message-Id: <20230508094454.354924457@linuxfoundation.org>
+Subject: [PATCH 6.3 594/694] fs/ntfs3: Fix OOB read in indx_insert_into_buffer
+Date: Mon,  8 May 2023 11:47:09 +0200
+Message-Id: <20230508094454.395562388@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,75 +38,55 @@ Content-Transfer-Encoding: 8bit
 
 From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit 254e69f284d7270e0abdc023ee53b71401c3ba0c ]
+[ Upstream commit b8c44949044e5f7f864525fdffe8e95135ce9ce5 ]
 
-Syzbot reported a null-ptr-deref bug:
+Syzbot reported a OOB read bug:
 
-ntfs3: loop0: Different NTFS' sector size (1024) and media sector size
-(512)
-ntfs3: loop0: Mark volume as dirty due to NTFS errors
-general protection fault, probably for non-canonical address
-0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-RIP: 0010:d_flags_for_inode fs/dcache.c:1980 [inline]
-RIP: 0010:__d_add+0x5ce/0x800 fs/dcache.c:2796
+BUG: KASAN: slab-out-of-bounds in indx_insert_into_buffer+0xaa3/0x13b0
+fs/ntfs3/index.c:1755
+Read of size 17168 at addr ffff8880255e06c0 by task syz-executor308/3630
+
 Call Trace:
  <TASK>
- d_splice_alias+0x122/0x3b0 fs/dcache.c:3191
- lookup_open fs/namei.c:3391 [inline]
- open_last_lookups fs/namei.c:3481 [inline]
- path_openat+0x10e6/0x2df0 fs/namei.c:3688
- do_filp_open+0x264/0x4f0 fs/namei.c:3718
- do_sys_openat2+0x124/0x4e0 fs/open.c:1310
- do_sys_open fs/open.c:1326 [inline]
- __do_sys_open fs/open.c:1334 [inline]
- __se_sys_open fs/open.c:1330 [inline]
- __x64_sys_open+0x221/0x270 fs/open.c:1330
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ memmove+0x25/0x60 mm/kasan/shadow.c:54
+ indx_insert_into_buffer+0xaa3/0x13b0 fs/ntfs3/index.c:1755
+ indx_insert_entry+0x446/0x6b0 fs/ntfs3/index.c:1863
+ ntfs_create_inode+0x1d3f/0x35c0 fs/ntfs3/inode.c:1548
+ ntfs_create+0x3e/0x60 fs/ntfs3/namei.c:100
+ lookup_open fs/namei.c:3413 [inline]
 
-If the MFT record of ntfs inode is not a base record, inode->i_op can be
-NULL. And a null-ptr-deref may happen:
+If the member struct INDEX_BUFFER *index of struct indx_node is
+incorrect, that is, the value of __le32 used is greater than the value
+of __le32 total in struct INDEX_HDR. Therefore, OOB read occurs when
+memmove is called in indx_insert_into_buffer().
+Fix this by adding a check in hdr_find_e().
 
-ntfs_lookup()
-    dir_search_u() # inode->i_op is set to NULL
-    d_splice_alias()
-        __d_add()
-            d_flags_for_inode() # inode->i_op->get_link null-ptr-deref
-
-Fix this by adding a Check on inode->i_op before calling the
-d_splice_alias() function.
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Reported-by: syzbot+d882d57193079e379309@syzkaller.appspotmail.com
 Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/namei.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/ntfs3/index.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index 407fe92394e22..8d206770d8c6d 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -88,6 +88,16 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
- 		__putname(uni);
- 	}
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 51ab759546403..ae9616becec15 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -725,9 +725,13 @@ static struct NTFS_DE *hdr_find_e(const struct ntfs_index *indx,
+ 	u32 e_size, e_key_len;
+ 	u32 end = le32_to_cpu(hdr->used);
+ 	u32 off = le32_to_cpu(hdr->de_off);
++	u32 total = le32_to_cpu(hdr->total);
+ 	u16 offs[128];
  
-+	/*
-+	 * Check for a null pointer
-+	 * If the MFT record of ntfs inode is not a base record, inode->i_op can be NULL.
-+	 * This causes null pointer dereference in d_splice_alias().
-+	 */
-+	if (!IS_ERR(inode) && inode->i_op == NULL) {
-+		iput(inode);
-+		inode = ERR_PTR(-EINVAL);
-+	}
+ fill_table:
++	if (end > total)
++		return NULL;
 +
- 	return d_splice_alias(inode, dentry);
- }
+ 	if (off + sizeof(struct NTFS_DE) > end)
+ 		return NULL;
  
 -- 
 2.39.2
