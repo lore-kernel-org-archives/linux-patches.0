@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F936168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDCD1C433EF;
-	Mon,  8 May 2023 11:05:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4D3168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F67C433EF;
+	Mon,  8 May 2023 11:05:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543919;
-	bh=zOUEEmoHCZPO0uP928YvYPbkdpHu1X+GWEZxgsB7pX4=;
+	s=korg; t=1683543922;
+	bh=R6qexKvTMJNCeTfeuuWfunLi4lUS6rKWFa1Taf6sDwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzDIQIutBanJ0oFjwby6DuA9HYHIzzu2EDfNyJmiv5FNtrBZtWhfEincYm6Kpe887
-	 tPNUJ1gzCY2fTTd8uH8DIQehwHLa9CJS4YudEXIiLnCM3N9vOCbD2B6PJ44TZKD5cg
-	 M1NJqm36B6CRH152bVjiYYkJsxNZOBOffZeC6jBQ=
+	b=Wha7JLca14kTZSbAP3kpcis22PUsnsG5Ja1okPuJk05G5h835X8k9A2tAZ/099B+l
+	 ff2Mk2VbIWR/wRhUlZVnJcgU5qDl5vJ7f1PGzjP5Zr6FK10x/TRwm1dpH7IorRfUAx
+	 4QAMUTOvsSYaq/TswS/CU0eA9/D3p5cR2dKjN4Yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinlei Lee <xinlei.lee@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
+	Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 242/694] drm/mediatek: dp: Change the aux retries times when receiving AUX_DEFER
-Date: Mon,  8 May 2023 11:41:17 +0200
-Message-Id: <20230508094440.180021104@linuxfoundation.org>
+Subject: [PATCH 6.3 243/694] mailbox: mpfs: switch to txdone_poll
+Date: Mon,  8 May 2023 11:41:18 +0200
+Message-Id: <20230508094440.208724843@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,74 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xinlei Lee <xinlei.lee@mediatek.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 9243d70e05c5989f84f840612965f96b524da925 ]
+[ Upstream commit b5984a9844fc45cd301a28fb56f3de95f7e20f3c ]
 
-DP 1.4a Section 2.8.7.1.5.6.1:
-A DP Source device shall retry at least seven times upon receiving
-AUX_DEFER before giving up the AUX transaction.
+The system controller on PolarFire SoC has no interrupt to signify that
+the TX has been completed. The interrupt instead signals that a service
+requested by the mailbox client has succeeded. If a service fails, there
+will be no interrupt delivered.
 
-The drm_dp_i2c_do_msg() function in the drm_dp_helper.c file will
-judge the status of the msg->reply parameter passed to aux_transfer
-for different processing.
+Switch to polling the busy register to determine whether transmission
+has completed.
 
-Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
-Signed-off-by: Xinlei Lee <xinlei.lee@mediatek.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/1680072203-10394-1-git-send-email-xinlei.lee@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 83d7b1560810 ("mbox: add polarfire soc system controller mailbox")
+Acked-by: Jassi Brar <jaswinder.singh@linaro.org>
+Tested-by: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/mailbox/mailbox-mpfs.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index a82f53e1a1462..64eee77452c04 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -806,10 +806,9 @@ static int mtk_dp_aux_wait_for_completion(struct mtk_dp *mtk_dp, bool is_read)
+diff --git a/drivers/mailbox/mailbox-mpfs.c b/drivers/mailbox/mailbox-mpfs.c
+index 853901acaeec2..08aa840cccaca 100644
+--- a/drivers/mailbox/mailbox-mpfs.c
++++ b/drivers/mailbox/mailbox-mpfs.c
+@@ -79,6 +79,13 @@ static bool mpfs_mbox_busy(struct mpfs_mbox *mbox)
+ 	return status & SCB_STATUS_BUSY_MASK;
  }
  
- static int mtk_dp_aux_do_transfer(struct mtk_dp *mtk_dp, bool is_read, u8 cmd,
--				  u32 addr, u8 *buf, size_t length)
-+				  u32 addr, u8 *buf, size_t length, u8 *reply_cmd)
++static bool mpfs_mbox_last_tx_done(struct mbox_chan *chan)
++{
++	struct mpfs_mbox *mbox = (struct mpfs_mbox *)chan->con_priv;
++
++	return !mpfs_mbox_busy(mbox);
++}
++
+ static int mpfs_mbox_send_data(struct mbox_chan *chan, void *data)
  {
- 	int ret;
--	u32 reply_cmd;
+ 	struct mpfs_mbox *mbox = (struct mpfs_mbox *)chan->con_priv;
+@@ -182,7 +189,6 @@ static irqreturn_t mpfs_mbox_inbox_isr(int irq, void *data)
  
- 	if (is_read && (length > DP_AUX_MAX_PAYLOAD_BYTES ||
- 			(cmd == DP_AUX_NATIVE_READ && !length)))
-@@ -841,10 +840,10 @@ static int mtk_dp_aux_do_transfer(struct mtk_dp *mtk_dp, bool is_read, u8 cmd,
- 	/* Wait for feedback from sink device. */
- 	ret = mtk_dp_aux_wait_for_completion(mtk_dp, is_read);
+ 	mpfs_mbox_rx_data(chan);
  
--	reply_cmd = mtk_dp_read(mtk_dp, MTK_DP_AUX_P0_3624) &
--		    AUX_RX_REPLY_COMMAND_AUX_TX_P0_MASK;
-+	*reply_cmd = mtk_dp_read(mtk_dp, MTK_DP_AUX_P0_3624) &
-+		     AUX_RX_REPLY_COMMAND_AUX_TX_P0_MASK;
+-	mbox_chan_txdone(chan, 0);
+ 	return IRQ_HANDLED;
+ }
  
--	if (ret || reply_cmd) {
-+	if (ret) {
- 		u32 phy_status = mtk_dp_read(mtk_dp, MTK_DP_AUX_P0_3628) &
- 				 AUX_RX_PHY_STATE_AUX_TX_P0_MASK;
- 		if (phy_status != AUX_RX_PHY_STATE_AUX_TX_P0_RX_IDLE) {
-@@ -2071,7 +2070,7 @@ static ssize_t mtk_dp_aux_transfer(struct drm_dp_aux *mtk_aux,
- 		ret = mtk_dp_aux_do_transfer(mtk_dp, is_read, request,
- 					     msg->address + accessed_bytes,
- 					     msg->buffer + accessed_bytes,
--					     to_access);
-+					     to_access, &msg->reply);
+@@ -212,6 +218,7 @@ static const struct mbox_chan_ops mpfs_mbox_ops = {
+ 	.send_data = mpfs_mbox_send_data,
+ 	.startup = mpfs_mbox_startup,
+ 	.shutdown = mpfs_mbox_shutdown,
++	.last_tx_done = mpfs_mbox_last_tx_done,
+ };
  
- 		if (ret) {
- 			drm_info(mtk_dp->drm_dev,
-@@ -2081,7 +2080,6 @@ static ssize_t mtk_dp_aux_transfer(struct drm_dp_aux *mtk_aux,
- 		accessed_bytes += to_access;
- 	} while (accessed_bytes < msg->size);
+ static int mpfs_mbox_probe(struct platform_device *pdev)
+@@ -247,7 +254,8 @@ static int mpfs_mbox_probe(struct platform_device *pdev)
+ 	mbox->controller.num_chans = 1;
+ 	mbox->controller.chans = mbox->chans;
+ 	mbox->controller.ops = &mpfs_mbox_ops;
+-	mbox->controller.txdone_irq = true;
++	mbox->controller.txdone_poll = true;
++	mbox->controller.txpoll_period = 10u;
  
--	msg->reply = DP_AUX_NATIVE_REPLY_ACK | DP_AUX_I2C_REPLY_ACK;
- 	return msg->size;
- err:
- 	msg->reply = DP_AUX_NATIVE_REPLY_NACK | DP_AUX_I2C_REPLY_NACK;
+ 	ret = devm_mbox_controller_register(&pdev->dev, &mbox->controller);
+ 	if (ret) {
 -- 
 2.39.2
 
