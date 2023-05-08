@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE9C168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76675C433D2;
-	Mon,  8 May 2023 10:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90711168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 162FAC433D2;
+	Mon,  8 May 2023 10:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540915;
-	bh=J5/+2UX8HyoUYOSVQRQbMUBhzE5hFQvdkMsz6RtOOKs=;
+	s=korg; t=1683540918;
+	bh=R35TOCD5/AImE9JcPW5JHgmoxxXW/TS0osNgU9G0TiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tLaJnhqUEklX8ueb8QorjK9dL2N1YHxYnLCiSMZZlaiNnwRrOJaFwFUjbxZaUL3DD
-	 4v3wgyBwseNAEx5QkkxOatwn+fz+fMhn+4tSJEiHDarHS9Lp1Jn71h7GqzprWJ+cLD
-	 wXqj0OrdY7QgUIulT0fe+QfHmkfqjIaLtLJlaHkU=
+	b=woizfE9oOrxnrjmlZF07mt4saxx1hvzx3pYbmDV9L8AwcBw7RLOZEAHVh8UfKTw+o
+	 jY4qyQJQ62NNm21W5YBrSZSuXXud8yL1gNee0hQWkfKV0zDym/SpWY0RjcJClJB2zT
+	 3QXNGRqNFtx0jpQyYHsi5217qeauh9suQMwkWb/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Lee Jones <lee@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 546/611] mfd: tqmx86: Do not access I2C_DETECT register through io_base
-Date: Mon,  8 May 2023 11:46:28 +0200
-Message-Id: <20230508094439.755100696@linuxfoundation.org>
+Subject: [PATCH 6.1 520/611] timekeeping: Fix references to nonexistent ktime_get_fast_ns()
+Date: Mon,  8 May 2023 11:46:02 +0200
+Message-Id: <20230508094438.928830919@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,59 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 1be1b23696b3d4b0231c694f5e0767b4471d33a9 ]
+[ Upstream commit 158009f1b4a33bc0f354b994eea361362bd83226 ]
 
-The I2C_DETECT register is at IO port 0x1a7, which is outside the range
-passed to devm_ioport_map() for io_base, and was only working because
-there aren't actually any bounds checks for IO port accesses.
+There was never a function named ktime_get_fast_ns().
+Presumably these should refer to ktime_get_mono_fast_ns() instead.
 
-Extending the range does not seem like a good solution here, as it would
-then conflict with the IO resource assigned to the I2C controller. As
-this is just a one-off access during probe, use a simple inb() instead.
-
-While we're at it, drop the unused define TQMX86_REG_I2C_INT_EN.
-
-Fixes: 2f17dd34ffed ("mfd: tqmx86: IO controller with I2C, Wachdog and GPIO")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/e8300a30f0791afb67d79db8089fb6004855f378.1676892223.git.matthias.schiffer@ew.tq-group.com
+Fixes: c1ce406e80fb15fa ("timekeeping: Fix up function documentation for the NMI safe accessors")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: John Stultz <jstultz@google.com>
+Link: https://lore.kernel.org/r/06df7b3cbd94f016403bbf6cd2b38e4368e7468f.1682516546.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tqmx86.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ kernel/time/timekeeping.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mfd/tqmx86.c b/drivers/mfd/tqmx86.c
-index 7ae906ff8e353..31d0efb5aacf8 100644
---- a/drivers/mfd/tqmx86.c
-+++ b/drivers/mfd/tqmx86.c
-@@ -49,9 +49,8 @@
- #define TQMX86_REG_IO_EXT_INT_MASK		0x3
- #define TQMX86_REG_IO_EXT_INT_GPIO_SHIFT	4
- 
--#define TQMX86_REG_I2C_DETECT	0x47
-+#define TQMX86_REG_I2C_DETECT	0x1a7
- #define TQMX86_REG_I2C_DETECT_SOFT		0xa5
--#define TQMX86_REG_I2C_INT_EN	0x49
- 
- static uint gpio_irq;
- module_param(gpio_irq, uint, 0);
-@@ -213,7 +212,12 @@ static int tqmx86_probe(struct platform_device *pdev)
- 		 "Found %s - Board ID %d, PCB Revision %d, PLD Revision %d\n",
- 		 board_name, board_id, rev >> 4, rev & 0xf);
- 
--	i2c_det = ioread8(io_base + TQMX86_REG_I2C_DETECT);
-+	/*
-+	 * The I2C_DETECT register is in the range assigned to the I2C driver
-+	 * later, so we don't extend TQMX86_IOSIZE. Use inb() for this one-off
-+	 * access instead of ioport_map + unmap.
-+	 */
-+	i2c_det = inb(TQMX86_REG_I2C_DETECT);
- 
- 	if (gpio_irq_cfg) {
- 		io_ext_int_val =
+diff --git a/kernel/time/timekeeping.c b/kernel/time/timekeeping.c
+index f72b9f1de178e..221c8c404973a 100644
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -526,7 +526,7 @@ EXPORT_SYMBOL_GPL(ktime_get_raw_fast_ns);
+  * partially updated.  Since the tk->offs_boot update is a rare event, this
+  * should be a rare occurrence which postprocessing should be able to handle.
+  *
+- * The caveats vs. timestamp ordering as documented for ktime_get_fast_ns()
++ * The caveats vs. timestamp ordering as documented for ktime_get_mono_fast_ns()
+  * apply as well.
+  */
+ u64 notrace ktime_get_boot_fast_ns(void)
+@@ -576,7 +576,7 @@ static __always_inline u64 __ktime_get_real_fast(struct tk_fast *tkf, u64 *mono)
+ /**
+  * ktime_get_real_fast_ns: - NMI safe and fast access to clock realtime.
+  *
+- * See ktime_get_fast_ns() for documentation of the time stamp ordering.
++ * See ktime_get_mono_fast_ns() for documentation of the time stamp ordering.
+  */
+ u64 ktime_get_real_fast_ns(void)
+ {
 -- 
 2.39.2
 
