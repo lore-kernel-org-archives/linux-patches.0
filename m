@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BAF168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005EBC4339B;
-	Mon,  8 May 2023 11:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803FC125DF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4180C433D2;
+	Mon,  8 May 2023 11:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544086;
-	bh=H6nX+IPDCB1/Hki+p6yuKcuoLcDBnA+Ax7F9m++mm6M=;
+	s=korg; t=1683544089;
+	bh=A/G/qIIkVXdZxnyHqJNtSfAfP5uBuVotfaZ4wm5O3TI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x8TXBq9d4N6dZgq7ufeA/FYcSgwlXbPMps2TN9qtl2jIhevA5cSDIey/slyYraJxC
-	 g4Z0AHVANaJfcNwYdmnkK+bRfFp97vBAouP4MeMrrBHvla+5RKZOeBuENyxQ+rzQOx
-	 q7wO61j09BXYyuLSQhMeHzJIHnEsEp3UG2/XFZLo=
+	b=LrKWkzjsWGIU0JWYYpW9Jn7xsmue8tp7b2W3SJD0Z0BaN7pGpfM/XUiP1rHSnUKfw
+	 cyti6gfFhrDVYKOhPDvYmd4XDu2NOA5ozHFbDyQJ5jnQJ7hAf5AdawXmfYyTLQTH5I
+	 LQ9EGr+Wr0S85fDbgBa19NO94e1Xup3iUEh1Kk+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 280/694] media: mediatek: vcodec: move lat_buf to the top of core list
-Date: Mon,  8 May 2023 11:41:55 +0200
-Message-Id: <20230508094441.359712285@linuxfoundation.org>
+Subject: [PATCH 6.3 298/694] media: rcar_fdp1: Convert to platform remove callback returning void
+Date: Mon,  8 May 2023 11:42:13 +0200
+Message-Id: <20230508094441.948536388@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,85 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 2cfca6c1bf8074175ea7a3b6b47f77ebdef8f701 ]
+[ Upstream commit 0e82d3715fd208de567b8e4307fbf91ae5e57db4 ]
 
-Current instance will decode done when begin to wait lat buf full,
-move the lat_buf of current instance to the top of core list to make
-sure current instance's lat_buf will be used firstly.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Stable-dep-of: c766c90faf93 ("media: rcar_fdp1: Fix refcount leak in probe and remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/mediatek/vcodec/vdec_msg_queue.c | 21 ++++++++++++++++++-
- .../platform/mediatek/vcodec/vdec_msg_queue.h |  2 ++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ drivers/media/platform/renesas/rcar_fdp1.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-index ad5002ca953e0..0da6e3e2ef0b3 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-@@ -174,8 +174,26 @@ void vdec_msg_queue_update_ube_wptr(struct vdec_msg_queue *msg_queue, uint64_t u
+diff --git a/drivers/media/platform/renesas/rcar_fdp1.c b/drivers/media/platform/renesas/rcar_fdp1.c
+index 37ecf489d112e..d80b3214dfae1 100644
+--- a/drivers/media/platform/renesas/rcar_fdp1.c
++++ b/drivers/media/platform/renesas/rcar_fdp1.c
+@@ -2396,7 +2396,7 @@ static int fdp1_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
- bool vdec_msg_queue_wait_lat_buf_full(struct vdec_msg_queue *msg_queue)
+-static int fdp1_remove(struct platform_device *pdev)
++static void fdp1_remove(struct platform_device *pdev)
  {
-+	struct vdec_lat_buf *buf, *tmp;
-+	struct list_head *list_core[3];
-+	struct vdec_msg_queue_ctx *core_ctx;
-+	int ret, i, in_core_count = 0;
- 	long timeout_jiff;
--	int ret;
-+
-+	core_ctx = &msg_queue->ctx->dev->msg_queue_core_ctx;
-+	spin_lock(&core_ctx->ready_lock);
-+	list_for_each_entry_safe(buf, tmp, &core_ctx->ready_queue, core_list) {
-+		if (buf && buf->ctx == msg_queue->ctx) {
-+			list_core[in_core_count++] = &buf->core_list;
-+			list_del(&buf->core_list);
-+		}
-+	}
-+
-+	for (i = 0; i < in_core_count; i++) {
-+		list_add(list_core[in_core_count - (1 + i)], &core_ctx->ready_queue);
-+		queue_work(msg_queue->ctx->dev->core_workqueue, &msg_queue->core_work);
-+	}
-+	spin_unlock(&core_ctx->ready_lock);
+ 	struct fdp1_dev *fdp1 = platform_get_drvdata(pdev);
  
- 	timeout_jiff = msecs_to_jiffies(1000 * (NUM_BUFFER_COUNT + 2));
- 	ret = wait_event_timeout(msg_queue->lat_ctx.ready_to_use,
-@@ -257,6 +275,7 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
- 	if (msg_queue->wdma_addr.size)
- 		return 0;
+@@ -2404,8 +2404,6 @@ static int fdp1_remove(struct platform_device *pdev)
+ 	video_unregister_device(&fdp1->vfd);
+ 	v4l2_device_unregister(&fdp1->v4l2_dev);
+ 	pm_runtime_disable(&pdev->dev);
+-
+-	return 0;
+ }
  
-+	msg_queue->ctx = ctx;
- 	vdec_msg_queue_init_ctx(&msg_queue->lat_ctx, MTK_VDEC_LAT0);
- 	INIT_WORK(&msg_queue->core_work, vdec_msg_queue_core_work);
+ static int __maybe_unused fdp1_pm_runtime_suspend(struct device *dev)
+@@ -2441,7 +2439,7 @@ MODULE_DEVICE_TABLE(of, fdp1_dt_ids);
  
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-index b1aa5572ba49f..56280d6682c5a 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-@@ -72,6 +72,7 @@ struct vdec_lat_buf {
-  * @wdma_wptr_addr: ube write point
-  * @core_work: core hardware work
-  * @lat_ctx: used to store lat buffer list
-+ * @ctx: point to mtk_vcodec_ctx
-  *
-  * @lat_list_cnt: used to record each instance lat list count
-  * @core_list_cnt: used to record each instance core list count
-@@ -85,6 +86,7 @@ struct vdec_msg_queue {
- 
- 	struct work_struct core_work;
- 	struct vdec_msg_queue_ctx lat_ctx;
-+	struct mtk_vcodec_ctx *ctx;
- 
- 	atomic_t lat_list_cnt;
- 	atomic_t core_list_cnt;
+ static struct platform_driver fdp1_pdrv = {
+ 	.probe		= fdp1_probe,
+-	.remove		= fdp1_remove,
++	.remove_new	= fdp1_remove,
+ 	.driver		= {
+ 		.name	= DRIVER_NAME,
+ 		.of_match_table = fdp1_dt_ids,
 -- 
 2.39.2
 
