@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8F1171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:42:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4F49C433EF;
-	Mon,  8 May 2023 11:42:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AE3171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:42:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF0DC433EF;
+	Mon,  8 May 2023 11:42:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546151;
-	bh=KR2/uYQ+1QfAByVE3PHzdIKDUM6jQcPwSfiBVoNgAtA=;
+	s=korg; t=1683546154;
+	bh=F7CkhW/y20KNo+bmFX2BcQsNQQooq6s0ElqmA5EHTjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RntXajWZauHjLbAbl7A6T2vRO1h6URAin8fzD0TJvqrFBxfJ3VuggS9BrhC9zA4W3
-	 xhu7GRML6Iqz6/t8Nh/5xzYFEZ1wGR37Rahf3Kyeke+6GtfAjcYlDLEZc2EsfuBmkR
-	 exVPWVNs4UeDXzYzmYb3yUZ0PV+UpZssgtq72lBI=
+	b=hmDdiT5XR1yuWqXAZrHor608gMmB2Brn4oZcdJYI/uWo+eyzfMPI3Xx8t0lNYZNQX
+	 auCtJYkoq/+UTtw980pPB0mWYs6zqYN8CjqQu0VDeJPic0qS3G9TQ7cmdX1+8P9PfA
+	 DhrNCjq8ZXknD1ePMnYiBL0cqzpL22f/hNdsxz3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 273/371] firmware: stratix10-svc: Fix an NULL vs IS_ERR() bug in probe
-Date: Mon,  8 May 2023 11:47:54 +0200
-Message-Id: <20230508094822.867726373@linuxfoundation.org>
+Subject: [PATCH 5.15 274/371] tty: serial: fsl_lpuart: adjust buffer length to the intended size
+Date: Mon,  8 May 2023 11:47:55 +0200
+Message-Id: <20230508094822.906916006@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -34,37 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-[ Upstream commit e1d6ca042e62c2a69513235f8629eb6e62ca79c5 ]
+[ Upstream commit f73fd750552524b06b5d77ebfdd106ccc8fcac61 ]
 
-The svc_create_memory_pool() function returns error pointers.  It never
-returns NULL.  Fix the check.
+Based on the fls function definition provided below, we should not
+subtract 1 to obtain the correct buffer length:
 
-Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/5f9a8cb4-5a4f-460b-9cdc-2fae6c5b7922@kili.mountain
+fls(0) = 0, fls(1) = 1, fls(0x80000000) = 32.
+
+Fixes: 5887ad43ee02 ("tty: serial: fsl_lpuart: Use cyclic DMA for Rx")
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://lore.kernel.org/r/20230410195555.1003900-1-shenwei.wang@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/stratix10-svc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/fsl_lpuart.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
-index 4fdd75f1e86ea..2b50dc21fba1e 100644
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -989,8 +989,8 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
- 		return ret;
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index 5cabc3c85eb1c..00a941db8dcb7 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1250,7 +1250,7 @@ static inline int lpuart_start_rx_dma(struct lpuart_port *sport)
+ 	 * 10ms at any baud rate.
+ 	 */
+ 	sport->rx_dma_rng_buf_len = (DMA_RX_TIMEOUT * baud /  bits / 1000) * 2;
+-	sport->rx_dma_rng_buf_len = (1 << (fls(sport->rx_dma_rng_buf_len) - 1));
++	sport->rx_dma_rng_buf_len = (1 << fls(sport->rx_dma_rng_buf_len));
+ 	if (sport->rx_dma_rng_buf_len < 16)
+ 		sport->rx_dma_rng_buf_len = 16;
  
- 	genpool = svc_create_memory_pool(pdev, sh_memory);
--	if (!genpool)
--		return -ENOMEM;
-+	if (IS_ERR(genpool))
-+		return PTR_ERR(genpool);
- 
- 	/* allocate service controller and supporting channel */
- 	controller = devm_kzalloc(dev, sizeof(*controller), GFP_KERNEL);
 -- 
 2.39.2
 
