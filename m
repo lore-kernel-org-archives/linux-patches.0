@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795CF168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:27:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2397C433EF;
-	Mon,  8 May 2023 10:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83BB1168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:27:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D09C433D2;
+	Mon,  8 May 2023 10:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541662;
-	bh=tHnMrUnu2XMoazsQhS982BFCWym1YP/gUdcEoDzznlI=;
+	s=korg; t=1683541665;
+	bh=S00R2GvTOEyLcQPvlCwkBQkuaS3piATf0Dr9DeDfTfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMYq8HtIyOjaFgUB2m8Oi89NnhtXgLo6SBC8bh2ADV4Fwq775CjLmeodGzmW5KuD1
-	 x4kFezObp6LCnT2ia/p2uvg/IqsItk/6zzcZyuthHzW/8OYGEgCJqZkzaZvsK5yyVV
-	 ClCCNorXNNnovm0ug4pPLPA/z1rX+9CC7LuO3Uh0=
+	b=cH8uP+A8bKUFlWaSVclbea7uJN6w1Uj5U5z3CGFn5Qc9Z4iUj2kyF8WTmlsWB/b4y
+	 g0vQuw4ATa1J1+r/ddud0hNwA6nCk/cGHd34oKGYBCsTfcKXMqk8MjDa2BxFbX4IQV
+	 e/KdIiBjtMDR61zaqCM2qupVKazgoVHwUMN82gK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 169/663] arm64: dts: qcom: sm8150: Fix the PCI I/O port range
-Date: Mon,  8 May 2023 11:39:55 +0200
-Message-Id: <20230508094433.965860440@linuxfoundation.org>
+Subject: [PATCH 6.2 187/663] drm: msm: adreno: Disable preemption on Adreno 510
+Date: Mon,  8 May 2023 11:40:13 +0200
+Message-Id: <20230508094434.491804885@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,52 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Adam Skladowski <a39.skl@gmail.com>
 
-[ Upstream commit 422b110b9b0af0afd4a4b19e8fc3ceab9e71d842 ]
+[ Upstream commit 010c8bbad2cb8c33c47963e29f051f1e917e45a5 ]
 
-For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
-located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI addresses
-(0x60200000, 0x40200000) specified in the ranges property for I/O region.
+Downstream driver appears to not support preemption on A510 target,
+trying to use one make device slow and fill log with rings related errors.
+Set num_rings to 1 to disable preemption.
 
-While at it, let's use the missing 0x prefix for the addresses.
-
-Fixes: a1c86c680533 ("arm64: dts: qcom: sm8150: Add PCIe nodes")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230228164752.55682-12-manivannan.sadhasivam@linaro.org
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: e20c9284c8f2 ("drm/msm/adreno: Add support for Adreno 510 GPU")
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/526898/
+Link: https://lore.kernel.org/r/20230314221757.13096-1-a39.skl@gmail.com
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index f790223ed8f5a..d338a987e8868 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -1783,8 +1783,8 @@
- 			#address-cells = <3>;
- 			#size-cells = <2>;
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 047c5e8c87ff4..f21f1bb7f886d 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1743,6 +1743,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+ 	struct a5xx_gpu *a5xx_gpu = NULL;
+ 	struct adreno_gpu *adreno_gpu;
+ 	struct msm_gpu *gpu;
++	unsigned int nr_rings;
+ 	int ret;
  
--			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
--				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0x3d00000>;
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x60200000 0x0 0x100000>,
-+				 <0x02000000 0x0 0x60300000 0x0 0x60300000 0x0 0x3d00000>;
+ 	if (!pdev) {
+@@ -1763,7 +1764,12 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
  
- 			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi";
-@@ -1879,7 +1879,7 @@
- 			#address-cells = <3>;
- 			#size-cells = <2>;
+ 	check_speed_bin(&pdev->dev);
  
--			ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
- 
- 			interrupts = <GIC_SPI 307 IRQ_TYPE_EDGE_RISING>;
+-	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 4);
++	nr_rings = 4;
++
++	if (adreno_is_a510(adreno_gpu))
++		nr_rings = 1;
++
++	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, nr_rings);
+ 	if (ret) {
+ 		a5xx_destroy(&(a5xx_gpu->base.base));
+ 		return ERR_PTR(ret);
 -- 
 2.39.2
 
