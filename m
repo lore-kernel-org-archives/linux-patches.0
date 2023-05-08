@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DD5171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2902C433EF;
-	Mon,  8 May 2023 11:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9C2171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1133C433D2;
+	Mon,  8 May 2023 11:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546303;
-	bh=JOeBlXAA3rCBj3nrWTiLinVFbnM4lzOFoVX/TfPLTQI=;
+	s=korg; t=1683546306;
+	bh=FW0MD4duk7G0ZQQxdSx03KTE3SPBbXr9x06v/eNL08M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DeiKaqpAy0OweOs/RBp1Wiy/yZ6ORWvrslnuZm9wlStkLScOBLN5HiyQnH/0qEWTz
-	 sFBR8yTxtuQ2hl5NyYFrSXU8Cd2o1zwy24yS0ug5v2hybGxdolqd81wGBqbLteABNZ
-	 GSh72D51iQ4vIyJ2M/2/HmL9H30HCtVFUiOqIRLA=
+	b=swCNEsV601Jz6bgBzZ29ZVDV7ycKDd/bHJaL8Vg+gWqVZZoOIvn/tTRtlCU0fFdpi
+	 Ypg66HGYvoLyQhB0a0PtTR9mAUbetwTX06oyCO+WIYcj7zGDDyK0Z3VMAJwUUzZYSl
+	 MIqY0TYCB7KbyHGzhx/0wkHf3yIJNnMIqO3qHFcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 292/371] clk: at91: clk-sam9x60-pll: fix return value check
-Date: Mon,  8 May 2023 11:48:13 +0200
-Message-Id: <20230508094823.622269525@linuxfoundation.org>
+Subject: [PATCH 5.15 293/371] RDMA/siw: Fix potential page_array out of range access
+Date: Mon,  8 May 2023 11:48:14 +0200
+Message-Id: <20230508094823.662397232@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,36 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 1bd8e27fd0db0fe7f489213836dcbab92934f8fa ]
+[ Upstream commit 271bfcfb83a9f77cbae3d6e1a16e3c14132922f0 ]
 
-sam9x60_frac_pll_compute_mul_frac() can't return zero. Remove the check
-against zero to reflect this.
+When seg is equal to MAX_ARRAY, the loop should break, otherwise
+it will result in out of range access.
 
-Fixes: 43b1bb4a9b3e ("clk: at91: clk-sam9x60-pll: re-factor to support plls with multiple outputs")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230227105931.2812412-1-claudiu.beznea@microchip.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: b9be6f18cf9e ("rdma/siw: transmit path")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Link: https://lore.kernel.org/r/20230227091751.589612-1-d.dulov@aladdin.ru
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/clk-sam9x60-pll.c | 2 +-
+ drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/at91/clk-sam9x60-pll.c b/drivers/clk/at91/clk-sam9x60-pll.c
-index 1f52409475e9c..a6600afa21454 100644
---- a/drivers/clk/at91/clk-sam9x60-pll.c
-+++ b/drivers/clk/at91/clk-sam9x60-pll.c
-@@ -561,7 +561,7 @@ sam9x60_clk_register_frac_pll(struct regmap *regmap, spinlock_t *lock,
+diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
+index 05052b49107f2..6bb9e9e81ff4c 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_tx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
+@@ -558,7 +558,7 @@ static int siw_tx_hdt(struct siw_iwarp_tx *c_tx, struct socket *s)
+ 			data_len -= plen;
+ 			fp_off = 0;
  
- 		ret = sam9x60_frac_pll_compute_mul_frac(&frac->core, FCORE_MIN,
- 							parent_rate, true);
--		if (ret <= 0) {
-+		if (ret < 0) {
- 			hw = ERR_PTR(ret);
- 			goto free;
- 		}
+-			if (++seg > (int)MAX_ARRAY) {
++			if (++seg >= (int)MAX_ARRAY) {
+ 				siw_dbg_qp(tx_qp(c_tx), "to many fragments\n");
+ 				siw_unmap_pages(iov, kmap_mask, seg-1);
+ 				wqe->processed -= c_tx->bytes_unsent;
 -- 
 2.39.2
 
