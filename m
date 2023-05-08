@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79640168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F80C433D2;
-	Mon,  8 May 2023 10:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01D5168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C366AC4339B;
+	Mon,  8 May 2023 10:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543324;
-	bh=1UnlRJYpfmjQALU7UhLyLH1QxK1YpaGmC7X/FbUrPH4=;
+	s=korg; t=1683543327;
+	bh=x7BcR4FLbKBKAXg+BoTP5ApawmO9ZOtORPYi2DtYg4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wi88kcRlAhMDzC3KlwUsI/icNCh11YjjY7sZ4de9Ruqi76z1phjgcLdkjpBLYLX3N
-	 owqlnx+Dh+n6zW4KHhpJFAgJPgoYfP3e+w3hFroFmaR4UnTSQI91WU7KMjktPQNpv/
-	 KdVc92K6/ANTe0Q6g1RE+iRgv8tDCWJSCOK6Sxi4=
+	b=capdr8eBDEwf9N9//AjX6LltlfKDOMy3VPyMhEyaNU0YUsxKPvyPLsakJpl4fdGF9
+	 Jj+dmh7uD5Qn1tCdq1v3sZR5h697lxH/wvmkncK8s10TRamMlL9kcilMy+ok/fEymi
+	 yQvXJ3lovGo3A7Hj1c01oj9JKY4BUZ2CnWeUlhpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH 6.3 013/694] usb: dwc3: gadget: Stall and restart EP0 if host is unresponsive
-Date: Mon,  8 May 2023 11:37:28 +0200
-Message-Id: <20230508094433.060713312@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.3 047/694] ring-buffer: Sync IRQ works before buffer destruction
+Date: Mon,  8 May 2023 11:38:02 +0200
+Message-Id: <20230508094434.142852069@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,121 +35,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 02435a739b81ae24aff5d6e930efef9458e2af3c upstream.
+commit 675751bb20634f981498c7d66161584080cc061e upstream.
 
-It was observed that there are hosts that may complete pending SETUP
-transactions before the stop active transfers and controller halt occurs,
-leading to lingering endxfer commands on DEPs on subsequent pullup/gadget
-start iterations.
+If something was written to the buffer just before destruction,
+it may be possible (maybe not in a real system, but it did
+happen in ARCH=um with time-travel) to destroy the ringbuffer
+before the IRQ work ran, leading this KASAN report (or a crash
+without KASAN):
 
-  dwc3_gadget_ep_disable   name=ep8in flags=0x3009  direction=1
-  dwc3_gadget_ep_disable   name=ep4in flags=1  direction=1
-  dwc3_gadget_ep_disable   name=ep3out flags=1  direction=0
-  usb_gadget_disconnect   deactivated=0  connected=0  ret=0
+    BUG: KASAN: slab-use-after-free in irq_work_run_list+0x11a/0x13a
+    Read of size 8 at addr 000000006d640a48 by task swapper/0
 
-The sequence shows that the USB gadget disconnect (dwc3_gadget_pullup(0))
-routine completed successfully, allowing for the USB gadget to proceed with
-a USB gadget connect.  However, if this occurs the system runs into an
-issue where:
+    CPU: 0 PID: 0 Comm: swapper Tainted: G        W  O       6.3.0-rc1 #7
+    Stack:
+     60c4f20f 0c203d48 41b58ab3 60f224fc
+     600477fa 60f35687 60c4f20f 601273dd
+     00000008 6101eb00 6101eab0 615be548
+    Call Trace:
+     [<60047a58>] show_stack+0x25e/0x282
+     [<60c609e0>] dump_stack_lvl+0x96/0xfd
+     [<60c50d4c>] print_report+0x1a7/0x5a8
+     [<603078d3>] kasan_report+0xc1/0xe9
+     [<60308950>] __asan_report_load8_noabort+0x1b/0x1d
+     [<60232844>] irq_work_run_list+0x11a/0x13a
+     [<602328b4>] irq_work_tick+0x24/0x34
+     [<6017f9dc>] update_process_times+0x162/0x196
+     [<6019f335>] tick_sched_handle+0x1a4/0x1c3
+     [<6019fd9e>] tick_sched_timer+0x79/0x10c
+     [<601812b9>] __hrtimer_run_queues.constprop.0+0x425/0x695
+     [<60182913>] hrtimer_interrupt+0x16c/0x2c4
+     [<600486a3>] um_timer+0x164/0x183
+     [...]
 
-  BUG: spinlock already unlocked on CPU
-  spin_bug+0x0
-  dwc3_remove_requests+0x278
-  dwc3_ep0_out_start+0xb0
-  __dwc3_gadget_start+0x25c
+    Allocated by task 411:
+     save_stack_trace+0x99/0xb5
+     stack_trace_save+0x81/0x9b
+     kasan_save_stack+0x2d/0x54
+     kasan_set_track+0x34/0x3e
+     kasan_save_alloc_info+0x25/0x28
+     ____kasan_kmalloc+0x8b/0x97
+     __kasan_kmalloc+0x10/0x12
+     __kmalloc+0xb2/0xe8
+     load_elf_phdrs+0xee/0x182
+     [...]
 
-This is due to the pending endxfers, leading to gadget start (w/o lock
-held) to execute the remove requests, which will unlock the dwc3
-spinlock as part of giveback.
+    The buggy address belongs to the object at 000000006d640800
+     which belongs to the cache kmalloc-1k of size 1024
+    The buggy address is located 584 bytes inside of
+     freed 1024-byte region [000000006d640800, 000000006d640c00)
 
-To mitigate this, resolve the pending endxfers on the pullup disable
-path by re-locating the SETUP phase check after stop active transfers, since
-that is where the DWC3_EP_DELAY_STOP is potentially set.  This also allows
-for handling of a host that may be unresponsive by using the completion
-timeout to trigger the stall and restart for EP0.
+Add the appropriate irq_work_sync() so the work finishes before
+the buffers are destroyed.
 
-Fixes: c96683798e27 ("usb: dwc3: ep0: Don't prepare beyond Setup stage")
+Prior to the commit in the Fixes tag below, there was only a
+single global IRQ work, so this issue didn't exist.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230427175920.a76159263122.I8295e405c44362a86c995e9c2c37e3e03810aa56@changeid
+
 Cc: stable@vger.kernel.org
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20230413195742.11821-2-quic_wcheng@quicinc.com
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Fixes: 15693458c4bc ("tracing/ring-buffer: Move poll wake ups into ring buffer code")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |   49 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 32 insertions(+), 17 deletions(-)
+ kernel/trace/ring_buffer.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2532,29 +2532,17 @@ static int __dwc3_gadget_start(struct dw
- static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
- {
- 	unsigned long flags;
-+	int ret;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1774,6 +1774,8 @@ static void rb_free_cpu_buffer(struct ri
+ 	struct list_head *head = cpu_buffer->pages;
+ 	struct buffer_page *bpage, *tmp;
  
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	dwc->connected = false;
- 
- 	/*
--	 * Per databook, when we want to stop the gadget, if a control transfer
--	 * is still in process, complete it and get the core into setup phase.
-+	 * Attempt to end pending SETUP status phase, and not wait for the
-+	 * function to do so.
- 	 */
--	if (dwc->ep0state != EP0_SETUP_PHASE) {
--		int ret;
--
--		if (dwc->delayed_status)
--			dwc3_ep0_send_delayed_status(dwc);
--
--		reinit_completion(&dwc->ep0_in_setup);
--
--		spin_unlock_irqrestore(&dwc->lock, flags);
--		ret = wait_for_completion_timeout(&dwc->ep0_in_setup,
--				msecs_to_jiffies(DWC3_PULL_UP_TIMEOUT));
--		spin_lock_irqsave(&dwc->lock, flags);
--		if (ret == 0)
--			dev_warn(dwc->dev, "timed out waiting for SETUP phase\n");
--	}
-+	if (dwc->delayed_status)
-+		dwc3_ep0_send_delayed_status(dwc);
- 
- 	/*
- 	 * In the Synopsys DesignWare Cores USB3 Databook Rev. 3.30a
-@@ -2568,6 +2556,33 @@ static int dwc3_gadget_soft_disconnect(s
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
- 	/*
-+	 * Per databook, when we want to stop the gadget, if a control transfer
-+	 * is still in process, complete it and get the core into setup phase.
-+	 * In case the host is unresponsive to a SETUP transaction, forcefully
-+	 * stall the transfer, and move back to the SETUP phase, so that any
-+	 * pending endxfers can be executed.
-+	 */
-+	if (dwc->ep0state != EP0_SETUP_PHASE) {
-+		reinit_completion(&dwc->ep0_in_setup);
++	irq_work_sync(&cpu_buffer->irq_work.work);
 +
-+		ret = wait_for_completion_timeout(&dwc->ep0_in_setup,
-+				msecs_to_jiffies(DWC3_PULL_UP_TIMEOUT));
-+		if (ret == 0) {
-+			unsigned int    dir;
+ 	free_buffer_page(cpu_buffer->reader_page);
+ 
+ 	if (head) {
+@@ -1880,6 +1882,8 @@ ring_buffer_free(struct trace_buffer *bu
+ 
+ 	cpuhp_state_remove_instance(CPUHP_TRACE_RB_PREPARE, &buffer->node);
+ 
++	irq_work_sync(&buffer->irq_work.work);
 +
-+			dev_warn(dwc->dev, "wait for SETUP phase timed out\n");
-+			spin_lock_irqsave(&dwc->lock, flags);
-+			dir = !!dwc->ep0_expect_in;
-+			if (dwc->ep0state == EP0_DATA_PHASE)
-+				dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
-+			else
-+				dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
-+			dwc3_ep0_stall_and_restart(dwc);
-+			spin_unlock_irqrestore(&dwc->lock, flags);
-+		}
-+	}
-+
-+	/*
- 	 * Note: if the GEVNTCOUNT indicates events in the event buffer, the
- 	 * driver needs to acknowledge them before the controller can halt.
- 	 * Simply let the interrupt handler acknowledges and handle the
+ 	for_each_buffer_cpu(buffer, cpu)
+ 		rb_free_cpu_buffer(buffer->buffers[cpu]);
+ 
 
 
