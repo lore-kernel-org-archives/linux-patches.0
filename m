@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA9D168CF;
-	Mon,  8 May 2023 11:18:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F875C4339B;
-	Mon,  8 May 2023 11:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5B7171A3
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:18:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8349DC433EF;
+	Mon,  8 May 2023 11:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544699;
-	bh=9dP2pkoC/WQM0vP0ptL6LnIEekN5wSGvTMthfXdWkt4=;
+	s=korg; t=1683544701;
+	bh=Qw0sJuaQv4pHb+xzXZdJO9YMCeWdsOTt338FsIwTZCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cYRSPJ2qxam7d6o9vNwz4ZNYAOyu/TNvt1doNc/bEsAUkYnyQBr5wMbwWXRkVg1n9
-	 usay/6aroJZUPKQUjD9yQG7upmOt+kAZw92IyMTnSrkugjMl1yojIfhH64bejAMjRu
-	 Xm83nd2PcN2xHVjo3ywQcMqiPhbETaT6v7DmkVfI=
+	b=BZ42+7s/5RAa9n7ZDN2qyxcQFYZcWjfOcziziXmELKQKne8vzcc7iwQ5zQtE8tlMC
+	 hEadljwA0rv8gigX8kGGm3qr83s0Fmc+qQiZpvfgfonQHU4zbVHwXgYgmn4YJk9pSJ
+	 D2e9RQpjfqdj+5D+Yn/6SlIHevoj5gcL58fxIA68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 478/694] rxrpc: Fix error when reading rxrpc tokens
-Date: Mon,  8 May 2023 11:45:13 +0200
-Message-Id: <20230508094449.355890639@linuxfoundation.org>
+Subject: [PATCH 6.3 496/694] spi: atmel-quadspi: Dont leak clk enable count in pm resume
+Date: Mon,  8 May 2023 11:45:31 +0200
+Message-Id: <20230508094450.122044129@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -41,44 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit fadfc57cc8047080a123b16f288b7138524fb1e2 ]
+[ Upstream commit c18bbac353ffed50be134b0a2a059a2bd540c503 ]
 
-When converting from ASSERTCMP to WARN_ON, the tested condition must
-be inverted, which was missed for this case.
+The pm resume call is supposed to enable two clocks. If the second enable
+fails the callback reports failure but doesn't undo the first enable.
 
-This would cause an EIO error when trying to read an rxrpc token, for
-instance when trying to display tokens with AuriStor's "tokens" command.
+So call clk_disable() for the first clock when clk_enable() for the second
+one fails.
 
-Fixes: 84924aac08a4 ("rxrpc: Fix checker warning")
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4a2f83b7f780 ("spi: atmel-quadspi: add runtime pm support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20230317084232.142257-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/key.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/atmel-quadspi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/rxrpc/key.c b/net/rxrpc/key.c
-index 8d53aded09c42..33e8302a79e33 100644
---- a/net/rxrpc/key.c
-+++ b/net/rxrpc/key.c
-@@ -680,7 +680,7 @@ static long rxrpc_read(const struct key *key,
- 			return -ENOPKG;
- 		}
+diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
+index f4632cb074954..0c6f80ddea577 100644
+--- a/drivers/spi/atmel-quadspi.c
++++ b/drivers/spi/atmel-quadspi.c
+@@ -786,7 +786,11 @@ static int __maybe_unused atmel_qspi_runtime_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
  
--		if (WARN_ON((unsigned long)xdr - (unsigned long)oldxdr ==
-+		if (WARN_ON((unsigned long)xdr - (unsigned long)oldxdr !=
- 			    toksize))
- 			return -EIO;
- 	}
+-	return clk_enable(aq->qspick);
++	ret = clk_enable(aq->qspick);
++	if (ret)
++		clk_disable(aq->pclk);
++
++	return ret;
+ }
+ 
+ static const struct dev_pm_ops __maybe_unused atmel_qspi_pm_ops = {
 -- 
 2.39.2
 
