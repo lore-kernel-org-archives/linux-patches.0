@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD56168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:56:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BFBFC433EF;
-	Mon,  8 May 2023 09:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DCA168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:56:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D2FC433EF;
+	Mon,  8 May 2023 09:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539772;
-	bh=UGhh3HJK8XeQ9H1FJ+eplCcmKRnw/DaNuQLnuIvhPHE=;
+	s=korg; t=1683539775;
+	bh=AjM985CdZ3WwBdPlkCZ2b4v7aJ2q6YqB8ie2S8+h5rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vo1tofOq58oNd1nAS4AagBUS8UGz8flJC5KUZtgo/1MVrM2zwkxhgRp6Kq1bbzGCG
-	 tccPW3YCJQep96dkb5qpkqRCNIkNt5Cv+JAl9QjCEF+g7dsXlVT34lGTFyOLSCHCwK
-	 B7uKdwp54IMkIo86KwLhaGmjWFGw1oHF50XMMf5I=
+	b=p889LLPZYE3tpsyTsBnNY0bHpppMfvjcnTMpPGVmLcQ003ANmth7dQ13tuCgeBGUD
+	 8kKKBpSWzLrxnM9eOptJdAve1uHTUyZO3V2/hntUproCAp6yNT+sh9nT3bW+p9Xlhr
+	 GNf87nwODflLmyeckpx4RONrHoaul/Fc7Q5ofPrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 131/611] drm/rockchip: Drop unbalanced obj unref
-Date: Mon,  8 May 2023 11:39:33 +0200
-Message-Id: <20230508094426.516452786@linuxfoundation.org>
+Subject: [PATCH 6.1 132/611] drm/i915/dg2: Drop one PCI ID
+Date: Mon,  8 May 2023 11:39:34 +0200
+Message-Id: <20230508094426.545609832@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,36 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit 8ee3b0e85f6ccd9e6c527bc50eaba774c3bb18d0 ]
+[ Upstream commit 3a38be31ec82920a871963c086393bc0ba26a655 ]
 
-In the error path, rockchip_drm_gem_object_mmap() is dropping an obj
-reference that it doesn't own.
+The bspec was recently updated to remove PCI ID 0x5698; this ID is
+actually reserved for future use and should not be treated as DG2-G11.
 
-Fixes: 41315b793e13 ("drm/rockchip: use drm_gem_mmap helpers")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230119231734.2884543-1-robdclark@gmail.com
+Bspec: 44477
+Fixes: 8618b8489ba6 ("drm/i915: DG2 and ATS-M device ID updates")
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230208200905.680865-1-matthew.d.roper@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 3 ---
- 1 file changed, 3 deletions(-)
+ include/drm/i915_pciids.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-index da8a69953706d..9426f7976d22e 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-@@ -261,9 +261,6 @@ static int rockchip_drm_gem_object_mmap(struct drm_gem_object *obj,
- 	else
- 		ret = rockchip_drm_gem_object_mmap_dma(obj, vma);
- 
--	if (ret)
--		drm_gem_vm_close(vma);
--
- 	return ret;
- }
- 
+diff --git a/include/drm/i915_pciids.h b/include/drm/i915_pciids.h
+index 4a4c190f76984..8f648c32a9657 100644
+--- a/include/drm/i915_pciids.h
++++ b/include/drm/i915_pciids.h
+@@ -706,7 +706,6 @@
+ 	INTEL_VGA_DEVICE(0x5693, info), \
+ 	INTEL_VGA_DEVICE(0x5694, info), \
+ 	INTEL_VGA_DEVICE(0x5695, info), \
+-	INTEL_VGA_DEVICE(0x5698, info), \
+ 	INTEL_VGA_DEVICE(0x56A5, info), \
+ 	INTEL_VGA_DEVICE(0x56A6, info), \
+ 	INTEL_VGA_DEVICE(0x56B0, info), \
 -- 
 2.39.2
 
