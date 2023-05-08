@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED3923A4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B75C433EF;
-	Mon,  8 May 2023 10:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AED125DF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20F4C433D2;
+	Mon,  8 May 2023 10:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541911;
-	bh=E985gS0XTiQghzO+1q2fkBOFLD3foyHgpbS3V42cqYo=;
+	s=korg; t=1683541917;
+	bh=18QJBnk7y/+3WJD9t6hXAxdmImRwjGoYco0gU2ChhCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N0aM1a94rWxXQscBUyUj5qJF4iwL8PnxLGipLWM+bIbn51mUG7eei+RfuwHNYXVyT
-	 spdKhtGWjzcrPtE4cZaqNfprej5VU9BxtGq2pHyWQ1AiPwL5QYgVDCJfcyHQjen3bV
-	 nA5Iz/J4RviHT0eroun4IimqFmYSmp6T1ViojvDo=
+	b=Wc2Eh53t5IYrc+4ThOQIM+vS+jZzOYyZEatZM0i82se1BJG6pTQBmwoQQaJY8lOKY
+	 D5sE7sGoT9eGR7RcZAxy8C9s6PVV+nnAhN1p8KZj1IzKGNSb3QnsSSwux3agt8DyQV
+	 Qp5AFaoZoKpSoQUUk3YVumtAje9HO233cUfAABBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YAN SHI <m202071378@hust.edu.cn>,
-	kernel test robot <lkp@intel.com>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Wei Li <liwei391@huawei.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 266/663] regulator: stm32-pwr: fix of_iomap leak
-Date: Mon,  8 May 2023 11:41:32 +0200
-Message-Id: <20230508094436.883680047@linuxfoundation.org>
+Subject: [PATCH 6.2 268/663] arm64: kgdb: Set PSTATE.SS to 1 to re-enable single-step
+Date: Mon,  8 May 2023 11:41:34 +0200
+Message-Id: <20230508094436.941757870@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,67 +38,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YAN SHI <m202071378@hust.edu.cn>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-[ Upstream commit c4a413e56d16a2ae84e6d8992f215c4dcc7fac20 ]
+[ Upstream commit af6c0bd59f4f3ad5daad2f7b777954b1954551d5 ]
 
-Smatch reports:
-drivers/regulator/stm32-pwr.c:166 stm32_pwr_regulator_probe() warn:
-'base' from of_iomap() not released on lines: 151,166.
+Currently only the first attempt to single-step has any effect. After
+that all further stepping remains "stuck" at the same program counter
+value.
 
-In stm32_pwr_regulator_probe(), base is not released
-when devm_kzalloc() fails to allocate memory or
-devm_regulator_register() fails to register a new regulator device,
-which may cause a leak.
+Refer to the ARM Architecture Reference Manual (ARM DDI 0487E.a) D2.12,
+PSTATE.SS=1 should be set at each step before transferring the PE to the
+'Active-not-pending' state. The problem here is PSTATE.SS=1 is not set
+since the second single-step.
 
-To fix this issue, replace of_iomap() with
-devm_platform_ioremap_resource(). devm_platform_ioremap_resource()
-is a specialized function for platform devices.
-It allows 'base' to be automatically released whether the probe
-function succeeds or fails.
+After the first single-step, the PE transferes to the 'Inactive' state,
+with PSTATE.SS=0 and MDSCR.SS=1, thus PSTATE.SS won't be set to 1 due to
+kernel_active_single_step()=true. Then the PE transferes to the
+'Active-pending' state when ERET and returns to the debugger by step
+exception.
 
-Besides, use IS_ERR(base) instead of !base
-as the return value of devm_platform_ioremap_resource()
-can either be a pointer to the remapped memory or
-an ERR_PTR() encoded error code if the operation fails.
+Before this patch:
+==================
+Entering kdb (current=0xffff3376039f0000, pid 1) on processor 0 due to Keyboard Entry
+[0]kdb>
 
-Fixes: dc62f951a6a8 ("regulator: stm32-pwr: Fix return value check in stm32_pwr_regulator_probe()")
-Signed-off-by: YAN SHI <m202071378@hust.edu.cn>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202304111750.o2643eJN-lkp@intel.com/
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230412033529.18890-1-m202071378@hust.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[0]kdb>
+[0]kdb> bp write_sysrq_trigger
+Instruction(i) BP #0 at 0xffffa45c13d09290 (write_sysrq_trigger)
+    is enabled   addr at ffffa45c13d09290, hardtype=0 installed=0
+
+[0]kdb> go
+$ echo h > /proc/sysrq-trigger
+
+Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to Breakpoint @ 0xffffad651a309290
+[1]kdb> ss
+
+Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to SS trap @ 0xffffad651a309294
+[1]kdb> ss
+
+Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to SS trap @ 0xffffad651a309294
+[1]kdb>
+
+After this patch:
+=================
+Entering kdb (current=0xffff6851c39f0000, pid 1) on processor 0 due to Keyboard Entry
+[0]kdb> bp write_sysrq_trigger
+Instruction(i) BP #0 at 0xffffc02d2dd09290 (write_sysrq_trigger)
+    is enabled   addr at ffffc02d2dd09290, hardtype=0 installed=0
+
+[0]kdb> go
+$ echo h > /proc/sysrq-trigger
+
+Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to Breakpoint @ 0xffffc02d2dd09290
+[1]kdb> ss
+
+Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd09294
+[1]kdb> ss
+
+Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd09298
+[1]kdb> ss
+
+Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd0929c
+[1]kdb>
+
+Fixes: 44679a4f142b ("arm64: KGDB: Add step debugging support")
+Co-developed-by: Wei Li <liwei391@huawei.com>
+Signed-off-by: Wei Li <liwei391@huawei.com>
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+Tested-by: Daniel Thompson <daniel.thompson@linaro.org>
+Link: https://lore.kernel.org/r/20230202073148.657746-3-sumit.garg@linaro.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/stm32-pwr.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/debug-monitors.h | 1 +
+ arch/arm64/kernel/debug-monitors.c      | 5 +++++
+ arch/arm64/kernel/kgdb.c                | 2 ++
+ 3 files changed, 8 insertions(+)
 
-diff --git a/drivers/regulator/stm32-pwr.c b/drivers/regulator/stm32-pwr.c
-index 2a42acb7c24e9..e5dd4db6403b2 100644
---- a/drivers/regulator/stm32-pwr.c
-+++ b/drivers/regulator/stm32-pwr.c
-@@ -129,17 +129,16 @@ static const struct regulator_desc stm32_pwr_desc[] = {
+diff --git a/arch/arm64/include/asm/debug-monitors.h b/arch/arm64/include/asm/debug-monitors.h
+index 7b7e05c02691c..13d437bcbf58c 100644
+--- a/arch/arm64/include/asm/debug-monitors.h
++++ b/arch/arm64/include/asm/debug-monitors.h
+@@ -104,6 +104,7 @@ void user_regs_reset_single_step(struct user_pt_regs *regs,
+ void kernel_enable_single_step(struct pt_regs *regs);
+ void kernel_disable_single_step(void);
+ int kernel_active_single_step(void);
++void kernel_rewind_single_step(struct pt_regs *regs);
  
- static int stm32_pwr_regulator_probe(struct platform_device *pdev)
+ #ifdef CONFIG_HAVE_HW_BREAKPOINT
+ int reinstall_suspended_bps(struct pt_regs *regs);
+diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
+index 3da09778267ec..64f2ecbdfe5c2 100644
+--- a/arch/arm64/kernel/debug-monitors.c
++++ b/arch/arm64/kernel/debug-monitors.c
+@@ -438,6 +438,11 @@ int kernel_active_single_step(void)
+ }
+ NOKPROBE_SYMBOL(kernel_active_single_step);
+ 
++void kernel_rewind_single_step(struct pt_regs *regs)
++{
++	set_regs_spsr_ss(regs);
++}
++
+ /* ptrace API */
+ void user_enable_single_step(struct task_struct *task)
  {
--	struct device_node *np = pdev->dev.of_node;
- 	struct stm32_pwr_reg *priv;
- 	void __iomem *base;
- 	struct regulator_dev *rdev;
- 	struct regulator_config config = { };
- 	int i, ret = 0;
- 
--	base = of_iomap(np, 0);
--	if (!base) {
-+	base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(base)) {
- 		dev_err(&pdev->dev, "Unable to map IO memory\n");
--		return -ENOMEM;
-+		return PTR_ERR(base);
- 	}
- 
- 	config.dev = &pdev->dev;
+diff --git a/arch/arm64/kernel/kgdb.c b/arch/arm64/kernel/kgdb.c
+index cda9c1e9864f7..4e1f983df3d1c 100644
+--- a/arch/arm64/kernel/kgdb.c
++++ b/arch/arm64/kernel/kgdb.c
+@@ -224,6 +224,8 @@ int kgdb_arch_handle_exception(int exception_vector, int signo,
+ 		 */
+ 		if (!kernel_active_single_step())
+ 			kernel_enable_single_step(linux_regs);
++		else
++			kernel_rewind_single_step(linux_regs);
+ 		err = 0;
+ 		break;
+ 	default:
 -- 
 2.39.2
 
