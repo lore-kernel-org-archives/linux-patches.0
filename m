@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7A4168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3816C433EF;
-	Mon,  8 May 2023 11:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B896168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5486C433EF;
+	Mon,  8 May 2023 11:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543903;
-	bh=QpxXgoxUhGNqJI4pJBMb/MmRzccyTDm2Fe/vexsKBg8=;
+	s=korg; t=1683543906;
+	bh=YHkcl1MdQC4V+K23BzzvIjP/4qT95taRjGoWL3baj/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fzVYysEx3gJejzCHjAnykeVADiNfbEViRWyOtUaxdztgQBP8aPYEzs7JqxjvG5pts
-	 jGzsUY04x3pp/VI1U2XDxYodrLn5mZUQ43K7SV/ComPCuJowFBs3OISCgn/2K6Z2Rr
-	 p8J7R15s8nrkfVfI3SFEl3Z27cHUBzw1F3xQNuKE=
+	b=Fpe8yV07BfHGnXpLwO/4uJ9nHFilTwPxUS0u0tvxvf95i4vF61MEsN46Eh6nv4CUg
+	 5WuskJyrdTQG9IrXr/dT3mswRpi8mXY3upkvNdmM2GCGRkzX1sbMJ48YHAAIeDbhGs
+	 NglxCAbNHgKh7+MFHhetvF/7ewxE2xO1w6pbAu3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-yu Tsai <wenst@chromium.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Roger Quadros <rogerq@kernel.org>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 238/694] arm64: dts: mediatek: mt8192-asurada: Fix voltage constraint for Vgpu
-Date: Mon,  8 May 2023 11:41:13 +0200
-Message-Id: <20230508094440.064971989@linuxfoundation.org>
+Subject: [PATCH 6.3 239/694] arm64: dts: ti: k3-am625-sk: Add ti,vbus-divider property to usbss1
+Date: Mon,  8 May 2023 11:41:14 +0200
+Message-Id: <20230508094440.093824958@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,41 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Dhruva Gole <d-gole@ti.com>
 
-[ Upstream commit ff4c868ba8df9dcd144ab4943a50adca1cf33ba2 ]
+[ Upstream commit 4b71618cb772f20dfeeba826e9d1713a04f9687f ]
 
-The MT8192 SoC specifies a maximum voltage for the GPU's digital supply
-of 0.88V and the GPU OPPs are declaring a maximum voltage of 0.80V.
+The property "ti,vbus-divider" is needed for both usbss0 and usbss1 as
+both USB0 and USB1 have the same external voltage divider circuit.
 
-In order to keep the GPU voltage in the safe range, change the maximum
-voltage for mt6315@7's vbuck1 to 0.80V as sending, for any mistake,
-1.193V would be catastrophic.
-
-Fixes: 3183cb62b033 ("arm64: dts: mediatek: asurada: Add SPMI regulators")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-yu Tsai <wenst@chromium.org>
-Tested-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20230301095523.428461-12-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: 2d94dfc43885 ("arm64: dts: ti: k3-am625-sk: Add support for USB")
+Signed-off-by: Dhruva Gole <d-gole@ti.com>
+Signed-off-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20230328124315.123778-2-rogerq@kernel.org
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am625-sk.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-index 9f12257ab4e7a..41f9692cbcd47 100644
---- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-@@ -1400,7 +1400,7 @@
- 				regulator-compatible = "vbuck1";
- 				regulator-name = "Vgpu";
- 				regulator-min-microvolt = <606250>;
--				regulator-max-microvolt = <1193750>;
-+				regulator-max-microvolt = <800000>;
- 				regulator-enable-ramp-delay = <256>;
- 				regulator-allowed-modes = <0 1 2>;
- 			};
+diff --git a/arch/arm64/boot/dts/ti/k3-am625-sk.dts b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
+index 6bc7d63cf52fe..4d5dec890ad66 100644
+--- a/arch/arm64/boot/dts/ti/k3-am625-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
+@@ -480,6 +480,7 @@
+ 
+ &usbss1 {
+ 	status = "okay";
++	ti,vbus-divider;
+ };
+ 
+ &usb0 {
 -- 
 2.39.2
 
