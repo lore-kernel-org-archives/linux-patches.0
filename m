@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD065168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A31C433EF;
-	Mon,  8 May 2023 11:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BD9168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F477C433D2;
+	Mon,  8 May 2023 11:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545303;
-	bh=v7ZkMBBHs4eAOBljkwszUkK0taYsw31Y3yi/Js/SBNE=;
+	s=korg; t=1683545306;
+	bh=kZTcq5XOWt5xnBxUS0EFV/zxfCuRYXrXyY+zbtOguHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWrYYT55RBAAPv9soY75CuZUCGeIW5myQDAiv7i/W93wNnX/9HjaBHqLXQ8FWqQPv
-	 J9ew90i83JJNnNpfQdCSas0sHxfA4CVj3XrQeXhsha7r9cMdvV5Vmbxyj5vTIIHwhT
-	 Uh0HDlRc4YuA39Q4ISUybhoGDTQL7mrmZZs1JLnk=
+	b=JFRxe6OV33qrOtsi6cvKNXWllDOML4pz+It1mozC1/mLnvsWleHT7kKwIqjBvEOd/
+	 nZLJcw2GD/kHZCMmAcdpNnmkQr8RWeSl2gAvlyVSJjwfT3NbVSDsHPl4PvyDsIFSt2
+	 zqcefLZgzFzMR2Qn+crgy7ZV0/Fn+YKcpP4kUxs4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 691/694] cifs: fix potential race when tree connecting ipc
-Date: Mon,  8 May 2023 11:48:46 +0200
-Message-Id: <20230508094458.856534843@linuxfoundation.org>
+Subject: [PATCH 6.3 692/694] cifs: protect access of TCP_Server_Info::{origin,leaf}_fullpath
+Date: Mon,  8 May 2023 11:48:47 +0200
+Message-Id: <20230508094458.906014279@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,107 +36,207 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-commit ee20d7c6100752eaf2409d783f4f1449c29ea33d upstream.
+commit 3dc9c433c9dde15477d02b609ccb4328e2adb6dc upstream.
 
-Protect access of TCP_Server_Info::hostname when building the ipc tree
-name as it might get freed in cifsd thread and thus causing an
-use-after-free bug in __tree_connect_dfs_target().  Also, while at it,
-update status of IPC tcon on success and then avoid any extra tree
-connects.
+Protect access of TCP_Server_Info::{origin,leaf}_fullpath when
+matching DFS connections, and get rid of
+TCP_Server_Info::current_fullpath while we're at it.
 
 Cc: stable@vger.kernel.org # v6.2+
 Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/dfs.c |   57 ++++++++++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 50 insertions(+), 7 deletions(-)
+ fs/cifs/cifsglob.h  |   20 +++++++++++++-------
+ fs/cifs/connect.c   |   10 ++++++----
+ fs/cifs/dfs.c       |   14 ++++++++------
+ fs/cifs/dfs.h       |   13 +++++++++++--
+ fs/cifs/dfs_cache.c |    6 +++++-
+ 5 files changed, 43 insertions(+), 20 deletions(-)
 
+--- a/fs/cifs/cifsglob.h
++++ b/fs/cifs/cifsglob.h
+@@ -736,17 +736,23 @@ struct TCP_Server_Info {
+ #endif
+ 	struct mutex refpath_lock; /* protects leaf_fullpath */
+ 	/*
+-	 * Canonical DFS full paths that were used to chase referrals in mount and reconnect.
++	 * origin_fullpath: Canonical copy of smb3_fs_context::source.
++	 *                  It is used for matching existing DFS tcons.
+ 	 *
+-	 * origin_fullpath: first or original referral path
+-	 * leaf_fullpath: last referral path (might be changed due to nested links in reconnect)
++	 * leaf_fullpath: Canonical DFS referral path related to this
++	 *                connection.
++	 *                It is used in DFS cache refresher, reconnect and may
++	 *                change due to nested DFS links.
+ 	 *
+-	 * current_fullpath: pointer to either origin_fullpath or leaf_fullpath
+-	 * NOTE: cannot be accessed outside cifs_reconnect() and smb2_reconnect()
++	 * Both protected by @refpath_lock and @srv_lock.  The @refpath_lock is
++	 * mosly used for not requiring a copy of @leaf_fullpath when getting
++	 * cached or new DFS referrals (which might also sleep during I/O).
++	 * While @srv_lock is held for making string and NULL comparions against
++	 * both fields as in mount(2) and cache refresh.
+ 	 *
+-	 * format: \\HOST\SHARE\[OPTIONAL PATH]
++	 * format: \\HOST\SHARE[\OPTIONAL PATH]
+ 	 */
+-	char *origin_fullpath, *leaf_fullpath, *current_fullpath;
++	char *origin_fullpath, *leaf_fullpath;
+ };
+ 
+ static inline bool is_smb1(struct TCP_Server_Info *server)
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -454,7 +454,6 @@ static int reconnect_target_unlocked(str
+ static int reconnect_dfs_server(struct TCP_Server_Info *server)
+ {
+ 	int rc = 0;
+-	const char *refpath = server->current_fullpath + 1;
+ 	struct dfs_cache_tgt_list tl = DFS_CACHE_TGT_LIST_INIT(tl);
+ 	struct dfs_cache_tgt_iterator *target_hint = NULL;
+ 	int num_targets = 0;
+@@ -467,8 +466,10 @@ static int reconnect_dfs_server(struct T
+ 	 * through /proc/fs/cifs/dfscache or the target list is empty due to server settings after
+ 	 * refreshing the referral, so, in this case, default it to 1.
+ 	 */
+-	if (!dfs_cache_noreq_find(refpath, NULL, &tl))
++	mutex_lock(&server->refpath_lock);
++	if (!dfs_cache_noreq_find(server->leaf_fullpath + 1, NULL, &tl))
+ 		num_targets = dfs_cache_get_nr_tgts(&tl);
++	mutex_unlock(&server->refpath_lock);
+ 	if (!num_targets)
+ 		num_targets = 1;
+ 
+@@ -512,7 +513,9 @@ static int reconnect_dfs_server(struct T
+ 		mod_delayed_work(cifsiod_wq, &server->reconnect, 0);
+ 	} while (server->tcpStatus == CifsNeedReconnect);
+ 
+-	dfs_cache_noreq_update_tgthint(refpath, target_hint);
++	mutex_lock(&server->refpath_lock);
++	dfs_cache_noreq_update_tgthint(server->leaf_fullpath + 1, target_hint);
++	mutex_unlock(&server->refpath_lock);
+ 	dfs_cache_free_tgts(&tl);
+ 
+ 	/* Need to set up echo worker again once connection has been established */
+@@ -1579,7 +1582,6 @@ cifs_get_tcp_session(struct smb3_fs_cont
+ 			rc = -ENOMEM;
+ 			goto out_err;
+ 		}
+-		tcp_ses->current_fullpath = tcp_ses->leaf_fullpath;
+ 	}
+ 
+ 	if (ctx->nosharesock)
 --- a/fs/cifs/dfs.c
 +++ b/fs/cifs/dfs.c
-@@ -398,6 +398,54 @@ static int target_share_matches_server(s
+@@ -248,11 +248,12 @@ static int __dfs_mount_share(struct cifs
+ 		tcon = mnt_ctx->tcon;
+ 
+ 		mutex_lock(&server->refpath_lock);
++		spin_lock(&server->srv_lock);
+ 		if (!server->origin_fullpath) {
+ 			server->origin_fullpath = origin_fullpath;
+-			server->current_fullpath = server->leaf_fullpath;
+ 			origin_fullpath = NULL;
+ 		}
++		spin_unlock(&server->srv_lock);
+ 		mutex_unlock(&server->refpath_lock);
+ 
+ 		if (list_empty(&tcon->dfs_ses_list)) {
+@@ -366,10 +367,11 @@ static int update_server_fullpath(struct
+ 		rc = PTR_ERR(npath);
+ 	} else {
+ 		mutex_lock(&server->refpath_lock);
++		spin_lock(&server->srv_lock);
+ 		kfree(server->leaf_fullpath);
+ 		server->leaf_fullpath = npath;
++		spin_unlock(&server->srv_lock);
+ 		mutex_unlock(&server->refpath_lock);
+-		server->current_fullpath = server->leaf_fullpath;
+ 	}
  	return rc;
  }
+@@ -474,7 +476,7 @@ static int __tree_connect_dfs_target(con
+ 		share = prefix = NULL;
  
-+static void __tree_connect_ipc(const unsigned int xid, char *tree,
-+			       struct cifs_sb_info *cifs_sb,
-+			       struct cifs_ses *ses)
-+{
-+	struct TCP_Server_Info *server = ses->server;
-+	struct cifs_tcon *tcon = ses->tcon_ipc;
-+	int rc;
-+
-+	spin_lock(&ses->ses_lock);
-+	spin_lock(&ses->chan_lock);
-+	if (cifs_chan_needs_reconnect(ses, server) ||
-+	    ses->ses_status != SES_GOOD) {
-+		spin_unlock(&ses->chan_lock);
-+		spin_unlock(&ses->ses_lock);
-+		cifs_server_dbg(FYI, "%s: skipping ipc reconnect due to disconnected ses\n",
-+				__func__);
-+		return;
-+	}
-+	spin_unlock(&ses->chan_lock);
-+	spin_unlock(&ses->ses_lock);
-+
-+	cifs_server_lock(server);
-+	scnprintf(tree, MAX_TREE_SIZE, "\\\\%s\\IPC$", server->hostname);
-+	cifs_server_unlock(server);
-+
-+	rc = server->ops->tree_connect(xid, ses, tree, tcon,
-+				       cifs_sb->local_nls);
-+	cifs_server_dbg(FYI, "%s: tree_reconnect %s: %d\n", __func__, tree, rc);
-+	spin_lock(&tcon->tc_lock);
-+	if (rc) {
-+		tcon->status = TID_NEED_TCON;
-+	} else {
-+		tcon->status = TID_GOOD;
-+		tcon->need_reconnect = false;
-+	}
-+	spin_unlock(&tcon->tc_lock);
-+}
-+
-+static void tree_connect_ipc(const unsigned int xid, char *tree,
-+			     struct cifs_sb_info *cifs_sb,
-+			     struct cifs_tcon *tcon)
-+{
-+	struct cifs_ses *ses = tcon->ses;
-+
-+	__tree_connect_ipc(xid, tree, cifs_sb, ses);
-+	__tree_connect_ipc(xid, tree, cifs_sb, CIFS_DFS_ROOT_SES(ses));
-+}
-+
- static int __tree_connect_dfs_target(const unsigned int xid, struct cifs_tcon *tcon,
- 				     struct cifs_sb_info *cifs_sb, char *tree, bool islink,
- 				     struct dfs_cache_tgt_list *tl)
-@@ -406,7 +454,6 @@ static int __tree_connect_dfs_target(con
- 	struct TCP_Server_Info *server = tcon->ses->server;
- 	const struct smb_version_operations *ops = server->ops;
- 	struct cifs_ses *root_ses = CIFS_DFS_ROOT_SES(tcon->ses);
--	struct cifs_tcon *ipc = root_ses->tcon_ipc;
- 	char *share = NULL, *prefix = NULL;
- 	struct dfs_cache_tgt_iterator *tit;
- 	bool target_match;
-@@ -442,18 +489,14 @@ static int __tree_connect_dfs_target(con
+ 		/* Check if share matches with tcp ses */
+-		rc = dfs_cache_get_tgt_share(server->current_fullpath + 1, tit, &share, &prefix);
++		rc = dfs_cache_get_tgt_share(server->leaf_fullpath + 1, tit, &share, &prefix);
+ 		if (rc) {
+ 			cifs_dbg(VFS, "%s: failed to parse target share: %d\n", __func__, rc);
+ 			break;
+@@ -488,7 +490,7 @@ static int __tree_connect_dfs_target(con
+ 			continue;
  		}
  
- 		dfs_cache_noreq_update_tgthint(server->current_fullpath + 1, tit);
--
--		if (ipc->need_reconnect) {
--			scnprintf(tree, MAX_TREE_SIZE, "\\\\%s\\IPC$", server->hostname);
--			rc = ops->tree_connect(xid, ipc->ses, tree, ipc, cifs_sb->local_nls);
--			cifs_dbg(FYI, "%s: reconnect ipc: %d\n", __func__, rc);
--		}
-+		tree_connect_ipc(xid, tree, cifs_sb, tcon);
+-		dfs_cache_noreq_update_tgthint(server->current_fullpath + 1, tit);
++		dfs_cache_noreq_update_tgthint(server->leaf_fullpath + 1, tit);
+ 		tree_connect_ipc(xid, tree, cifs_sb, tcon);
  
  		scnprintf(tree, MAX_TREE_SIZE, "\\%s", share);
- 		if (!islink) {
- 			rc = ops->tree_connect(xid, tcon->ses, tree, tcon, cifs_sb->local_nls);
- 			break;
- 		}
+@@ -606,8 +608,8 @@ int cifs_tree_connect(const unsigned int
+ 	cifs_sb = CIFS_SB(sb);
+ 
+ 	/* If it is not dfs or there was no cached dfs referral, then reconnect to same share */
+-	if (!server->current_fullpath ||
+-	    dfs_cache_noreq_find(server->current_fullpath + 1, &ref, &tl)) {
++	if (!server->leaf_fullpath ||
++	    dfs_cache_noreq_find(server->leaf_fullpath + 1, &ref, &tl)) {
+ 		rc = ops->tree_connect(xid, tcon->ses, tcon->tree_name, tcon, cifs_sb->local_nls);
+ 		goto out;
+ 	}
+--- a/fs/cifs/dfs.h
++++ b/fs/cifs/dfs.h
+@@ -43,8 +43,12 @@ static inline char *dfs_get_automount_de
+ 	size_t len;
+ 	char *s;
+ 
+-	if (unlikely(!server->origin_fullpath))
++	spin_lock(&server->srv_lock);
++	if (unlikely(!server->origin_fullpath)) {
++		spin_unlock(&server->srv_lock);
+ 		return ERR_PTR(-EREMOTE);
++	}
++	spin_unlock(&server->srv_lock);
+ 
+ 	s = dentry_path_raw(dentry, page, PATH_MAX);
+ 	if (IS_ERR(s))
+@@ -53,13 +57,18 @@ static inline char *dfs_get_automount_de
+ 	if (!s[1])
+ 		s++;
+ 
++	spin_lock(&server->srv_lock);
+ 	len = strlen(server->origin_fullpath);
+-	if (s < (char *)page + len)
++	if (s < (char *)page + len) {
++		spin_unlock(&server->srv_lock);
+ 		return ERR_PTR(-ENAMETOOLONG);
++	}
+ 
+ 	s -= len;
+ 	memcpy(s, server->origin_fullpath, len);
++	spin_unlock(&server->srv_lock);
+ 	convert_delimiter(s, '/');
 +
- 		/*
- 		 * If no dfs referrals were returned from link target, then just do a TREE_CONNECT
- 		 * to it.  Otherwise, cache the dfs referral and then mark current tcp ses for
+ 	return s;
+ }
+ 
+--- a/fs/cifs/dfs_cache.c
++++ b/fs/cifs/dfs_cache.c
+@@ -1278,8 +1278,12 @@ static void refresh_cache_worker(struct
+ 
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_for_each_entry(server, &cifs_tcp_ses_list, tcp_ses_list) {
+-		if (!server->leaf_fullpath)
++		spin_lock(&server->srv_lock);
++		if (!server->leaf_fullpath) {
++			spin_unlock(&server->srv_lock);
+ 			continue;
++		}
++		spin_unlock(&server->srv_lock);
+ 
+ 		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
+ 			if (ses->tcon_ipc) {
 
 
