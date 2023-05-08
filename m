@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E764168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40E1C4339B;
-	Mon,  8 May 2023 11:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116C1168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41698C433D2;
+	Mon,  8 May 2023 11:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544621;
-	bh=GOjHeHpnrSlsa9sf0U5NTqqdlI82C0iRun9451gzg64=;
+	s=korg; t=1683544624;
+	bh=Ogtcnyue6WqY7ThmAQjKC9J+kmtZ4GOChl8A33PQCm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z6Z7W3whFkAiMV182sU7jN2rm6nN6r8qcIdTByLqb5bS7bImL5dS11FALWE7twxKM
-	 Iztc3N0KKSWZTqCqUKMoS49QzQtizauhjYyYDQOqDJWodWLQw5ZiPhKKwa+9anpAP7
-	 AFLjPZkoQS0BWGSJ15eRXohghdyy8aFgMRovLoZ0=
+	b=EpBK6S6deup6i/bv5bT84gAcBIuzb/fZOQKR1Cz8Z2qXAi8Sz8gMcvuvx6IvSjKM8
+	 x91EYu9nP9OKR4TfmLO5RzSPnQBUh1z5lhNI+CNitT57IQ2NHYBRR57NbeQ5UVAbrM
+	 gEAnRDYjoeqsAN0HkjInN7Ux3ytHQif+G0dyAoxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Maor Dickman <maord@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Yan Wang <rk.code@outlook.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 469/694] Revert "net/mlx5e: Dont use termination table when redundant"
-Date: Mon,  8 May 2023 11:45:04 +0200
-Message-Id: <20230508094448.984255959@linuxfoundation.org>
+Subject: [PATCH 6.3 470/694] net: stmmac:fix system hang when setting up tag_8021q VLAN for DSA ports
+Date: Mon,  8 May 2023 11:45:05 +0200
+Message-Id: <20230508094449.035771731@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,105 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Yan Wang <rk.code@outlook.com>
 
-[ Upstream commit 081abcacaf0a9505c0d4cc9780b12e6ce5d33630 ]
+[ Upstream commit 35226750f7ab9d49140d95bc7d38a2a9b0f4fdfc ]
 
-This reverts commit 14624d7247fcd0f3114a6f5f17b3c8d1020fbbb7.
+The system hang because of dsa_tag_8021q_port_setup()->
+				stmmac_vlan_rx_add_vid().
 
-The termination table usage is requires for DMFS steering mode as firmware
-doesn't support mixed table destinations list which causes following
-syndrome with hairpin rules:
+I found in stmmac_drv_probe() that cailing pm_runtime_put()
+disabled the clock.
 
-[81922.283225] mlx5_core 0000:08:00.0: mlx5_cmd_out_err:803:(pid 25977): SET_FLOW_TABLE_ENTRY(0x936) op_mod(0x0) failed, status bad parameter(0x3), syndrome (0xaca205), err(-22)
+First, when the kernel is compiled with CONFIG_PM=y,The stmmac's
+resume/suspend is active.
 
-Fixes: 14624d7247fc ("net/mlx5e: Don't use termination table when redundant")
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Reviewed-by: Maor Dickman <maord@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Secondly,stmmac as DSA master,the dsa_tag_8021q_port_setup() function
+will callback stmmac_vlan_rx_add_vid when DSA dirver starts. However,
+The system is hanged for the stmmac_vlan_rx_add_vid() accesses its
+registers after stmmac's clock is closed.
+
+I would suggest adding the pm_runtime_resume_and_get() to the
+stmmac_vlan_rx_add_vid().This guarantees that resuming clock output
+while in use.
+
+Fixes: b3dcb3127786 ("net: stmmac: correct clocks enabled in stmmac_vlan_rx_kill_vid()")
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Yan Wang <rk.code@outlook.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mlx5/core/eswitch_offloads_termtbl.c      | 32 +++----------------
- 1 file changed, 4 insertions(+), 28 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
-index 3a9a6bb9158de..edd9102583144 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
-@@ -210,18 +210,6 @@ static bool mlx5_eswitch_offload_is_uplink_port(const struct mlx5_eswitch *esw,
- 	return (port_mask & port_value) == MLX5_VPORT_UPLINK;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index d7fcab0570322..f9cd063f1fe30 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -6350,6 +6350,10 @@ static int stmmac_vlan_rx_add_vid(struct net_device *ndev, __be16 proto, u16 vid
+ 	bool is_double = false;
+ 	int ret;
+ 
++	ret = pm_runtime_resume_and_get(priv->device);
++	if (ret < 0)
++		return ret;
++
+ 	if (be16_to_cpu(proto) == ETH_P_8021AD)
+ 		is_double = true;
+ 
+@@ -6357,16 +6361,18 @@ static int stmmac_vlan_rx_add_vid(struct net_device *ndev, __be16 proto, u16 vid
+ 	ret = stmmac_vlan_update(priv, is_double);
+ 	if (ret) {
+ 		clear_bit(vid, priv->active_vlans);
+-		return ret;
++		goto err_pm_put;
+ 	}
+ 
+ 	if (priv->hw->num_vlan) {
+ 		ret = stmmac_add_hw_vlan_rx_fltr(priv, ndev, priv->hw, proto, vid);
+ 		if (ret)
+-			return ret;
++			goto err_pm_put;
+ 	}
++err_pm_put:
++	pm_runtime_put(priv->device);
+ 
+-	return 0;
++	return ret;
  }
  
--static bool
--mlx5_eswitch_is_push_vlan_no_cap(struct mlx5_eswitch *esw,
--				 struct mlx5_flow_act *flow_act)
--{
--	if (flow_act->action & MLX5_FLOW_CONTEXT_ACTION_VLAN_PUSH &&
--	    !(mlx5_fs_get_capabilities(esw->dev, MLX5_FLOW_NAMESPACE_FDB) &
--	      MLX5_FLOW_STEERING_CAP_VLAN_PUSH_ON_RX))
--		return true;
--
--	return false;
--}
--
- bool
- mlx5_eswitch_termtbl_required(struct mlx5_eswitch *esw,
- 			      struct mlx5_flow_attr *attr,
-@@ -237,7 +225,10 @@ mlx5_eswitch_termtbl_required(struct mlx5_eswitch *esw,
- 	    (!mlx5_eswitch_offload_is_uplink_port(esw, spec) && !esw_attr->int_port))
- 		return false;
- 
--	if (mlx5_eswitch_is_push_vlan_no_cap(esw, flow_act))
-+	/* push vlan on RX */
-+	if (flow_act->action & MLX5_FLOW_CONTEXT_ACTION_VLAN_PUSH &&
-+	    !(mlx5_fs_get_capabilities(esw->dev, MLX5_FLOW_NAMESPACE_FDB) &
-+	      MLX5_FLOW_STEERING_CAP_VLAN_PUSH_ON_RX))
- 		return true;
- 
- 	/* hairpin */
-@@ -261,31 +252,19 @@ mlx5_eswitch_add_termtbl_rule(struct mlx5_eswitch *esw,
- 	struct mlx5_flow_act term_tbl_act = {};
- 	struct mlx5_flow_handle *rule = NULL;
- 	bool term_table_created = false;
--	bool is_push_vlan_on_rx;
- 	int num_vport_dests = 0;
- 	int i, curr_dest;
- 
--	is_push_vlan_on_rx = mlx5_eswitch_is_push_vlan_no_cap(esw, flow_act);
- 	mlx5_eswitch_termtbl_actions_move(flow_act, &term_tbl_act);
- 	term_tbl_act.action |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
- 
- 	for (i = 0; i < num_dest; i++) {
- 		struct mlx5_termtbl_handle *tt;
--		bool hairpin = false;
- 
- 		/* only vport destinations can be terminated */
- 		if (dest[i].type != MLX5_FLOW_DESTINATION_TYPE_VPORT)
- 			continue;
- 
--		if (attr->dests[num_vport_dests].rep &&
--		    attr->dests[num_vport_dests].rep->vport == MLX5_VPORT_UPLINK)
--			hairpin = true;
--
--		if (!is_push_vlan_on_rx && !hairpin) {
--			num_vport_dests++;
--			continue;
--		}
--
- 		if (attr->dests[num_vport_dests].flags & MLX5_ESW_DEST_ENCAP) {
- 			term_tbl_act.action |= MLX5_FLOW_CONTEXT_ACTION_PACKET_REFORMAT;
- 			term_tbl_act.pkt_reformat = attr->dests[num_vport_dests].pkt_reformat;
-@@ -333,9 +312,6 @@ mlx5_eswitch_add_termtbl_rule(struct mlx5_eswitch *esw,
- 	for (curr_dest = 0; curr_dest < num_vport_dests; curr_dest++) {
- 		struct mlx5_termtbl_handle *tt = attr->dests[curr_dest].termtbl;
- 
--		if (!tt)
--			continue;
--
- 		attr->dests[curr_dest].termtbl = NULL;
- 
- 		/* search for the destination associated with the
+ static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vid)
 -- 
 2.39.2
 
