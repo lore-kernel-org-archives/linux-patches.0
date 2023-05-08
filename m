@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DCA168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:56:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D2FC433EF;
-	Mon,  8 May 2023 09:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46527168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:56:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BC85C433EF;
+	Mon,  8 May 2023 09:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539775;
-	bh=AjM985CdZ3WwBdPlkCZ2b4v7aJ2q6YqB8ie2S8+h5rM=;
+	s=korg; t=1683539781;
+	bh=J6OYouPg56YCcG27W7vCyoJ/xcd1Qb82+rcUXh5yyAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p889LLPZYE3tpsyTsBnNY0bHpppMfvjcnTMpPGVmLcQ003ANmth7dQ13tuCgeBGUD
-	 8kKKBpSWzLrxnM9eOptJdAve1uHTUyZO3V2/hntUproCAp6yNT+sh9nT3bW+p9Xlhr
-	 GNf87nwODflLmyeckpx4RONrHoaul/Fc7Q5ofPrY=
+	b=M+5rhMLtfbQjmXEcI+kTgw6akbSXq1/ji+cQySYsp+u8xpFiBWE55oiIEPnj64djF
+	 wofTsv3opB2Wf8lLpMjjwophzPwZfp5s/DwUfXC+LnDMUgfTZ3ZZpo2/CCca/v2FE9
+	 XF1GlvvgqvgqYNeelv1bSfV0fqsb++nByzndm/zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 132/611] drm/i915/dg2: Drop one PCI ID
-Date: Mon,  8 May 2023 11:39:34 +0200
-Message-Id: <20230508094426.545609832@linuxfoundation.org>
+Subject: [PATCH 6.1 133/611] drm/vgem: add missing mutex_destroy
+Date: Mon,  8 May 2023 11:39:35 +0200
+Message-Id: <20230508094426.574830698@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,35 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 3a38be31ec82920a871963c086393bc0ba26a655 ]
+[ Upstream commit 7c18189b14b33c1fbf76480b1bd217877c086e67 ]
 
-The bspec was recently updated to remove PCI ID 0x5698; this ID is
-actually reserved for future use and should not be treated as DG2-G11.
+vgem_fence_open() instantiates a mutex for a particular fence
+instance, but never destroys it by calling mutex_destroy() in
+vgem_fence_close().
 
-Bspec: 44477
-Fixes: 8618b8489ba6 ("drm/i915: DG2 and ATS-M device ID updates")
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230208200905.680865-1-matthew.d.roper@intel.com
+So, add the missing mutex_destroy() to guarantee proper resource
+destruction.
+
+Fixes: 407779848445 ("drm/vgem: Attach sw fences to exported vGEM dma-buf (ioctl)")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Signed-off-by: Maíra Canal <mairacanal@riseup.net>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230202125517.427976-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/i915_pciids.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/vgem/vgem_fence.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/drm/i915_pciids.h b/include/drm/i915_pciids.h
-index 4a4c190f76984..8f648c32a9657 100644
---- a/include/drm/i915_pciids.h
-+++ b/include/drm/i915_pciids.h
-@@ -706,7 +706,6 @@
- 	INTEL_VGA_DEVICE(0x5693, info), \
- 	INTEL_VGA_DEVICE(0x5694, info), \
- 	INTEL_VGA_DEVICE(0x5695, info), \
--	INTEL_VGA_DEVICE(0x5698, info), \
- 	INTEL_VGA_DEVICE(0x56A5, info), \
- 	INTEL_VGA_DEVICE(0x56A6, info), \
- 	INTEL_VGA_DEVICE(0x56B0, info), \
+diff --git a/drivers/gpu/drm/vgem/vgem_fence.c b/drivers/gpu/drm/vgem/vgem_fence.c
+index c2a879734d407..e157541783959 100644
+--- a/drivers/gpu/drm/vgem/vgem_fence.c
++++ b/drivers/gpu/drm/vgem/vgem_fence.c
+@@ -249,4 +249,5 @@ void vgem_fence_close(struct vgem_file *vfile)
+ {
+ 	idr_for_each(&vfile->fence_idr, __vgem_fence_idr_fini, vfile);
+ 	idr_destroy(&vfile->fence_idr);
++	mutex_destroy(&vfile->fence_mutex);
+ }
 -- 
 2.39.2
 
