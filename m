@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B2E168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA50C433D2;
-	Mon,  8 May 2023 10:42:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4048B168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D642C433D2;
+	Mon,  8 May 2023 10:42:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542565;
-	bh=StmVsysVd4p1rnWmO2N1aV30ZfZtt5Np3+56CZNJ9fE=;
+	s=korg; t=1683542569;
+	bh=S+r0qtguRFC3MYOnUV0u/jp5wGKz2OatD/jYEOi+MDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pAxJeIPlK+z7uUij5Ey+RE3rWUmj1Kziqm+tCrrqxVvqyUYz5mAVoJKtxZTwz27PM
-	 owGu5E/V3IJebdB74YZH+7NSB08dq7s9Zat85yOxJeDx6yRR21woGW9YAPU49zdrrI
-	 bERSop2mmrxdwm0ZOUWP9TRh1hcBI57QVdU66B4g=
+	b=jyyLJjv8xIrtwADvfyrWGOLWRxiPVF6hTklEuYqNqmxeoPvAzhW07LFMIMGlfYrUJ
+	 X+SnEAdm1NLDyziVsX5MO3cSWxSo5BQqzqRATA/IOGHrWYxD3VG3IMBlR23JKlbu/Z
+	 K7M6xH0hLTzQlhl6eXCIt4YxEXJuDNICOGq3TJPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 476/663] HID: amd_sfh: Increase sensor command timeout for SFH1.1
-Date: Mon,  8 May 2023 11:45:02 +0200
-Message-Id: <20230508094443.730044147@linuxfoundation.org>
+Subject: [PATCH 6.2 477/663] HID: amd_sfh: Handle "no sensors" enabled for SFH1.1
+Date: Mon,  8 May 2023 11:45:03 +0200
+Message-Id: <20230508094443.771264894@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,38 +37,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 571dc8f59dd477037bb5a029e8d1b5a4a4d9dd63 ]
+[ Upstream commit 8455cbb25927013b3417ab619dced1c0e87708af ]
 
-The initialization of SFH1.1 sensors may take some time. Hence, increase
-sensor command timeouts in order to obtain status responses within a
-maximum timeout.
+Based on num_hid_devices, each sensor device is initialized. If
+"no sensors" is initialized, amd_sfh work initialization and scheduling
+doesn’t make sense and returns EOPNOTSUPP to stop driver probe. Hence,
+add a check for "no sensors" enabled to handle the special case.
 
 Fixes: 93ce5e0231d7 ("HID: amd_sfh: Implement SFH1.1 functionality")
 Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-index 6f6047f7f12e9..4f81ef2d4f56e 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-@@ -16,11 +16,11 @@ static int amd_sfh_wait_response(struct amd_mp2_dev *mp2, u8 sid, u32 cmd_id)
- {
- 	struct sfh_cmd_response cmd_resp;
+diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
+index a1d6e08fab7d4..bb8bd7892b674 100644
+--- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
++++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
+@@ -112,6 +112,7 @@ static int amd_sfh1_1_hid_client_init(struct amd_mp2_dev *privdata)
+ 	cl_data->num_hid_devices = amd_sfh_get_sensor_num(privdata, &cl_data->sensor_idx[0]);
+ 	if (cl_data->num_hid_devices == 0)
+ 		return -ENODEV;
++	cl_data->is_any_sensor_enabled = false;
  
--	/* Get response with status within a max of 1600 ms timeout */
-+	/* Get response with status within a max of 10000 ms timeout */
- 	if (!readl_poll_timeout(mp2->mmio + AMD_P2C_MSG(0), cmd_resp.resp,
- 				(cmd_resp.response.response == 0 &&
- 				cmd_resp.response.cmd_id == cmd_id && (sid == 0xff ||
--				cmd_resp.response.sensor_id == sid)), 500, 1600000))
-+				cmd_resp.response.sensor_id == sid)), 500, 10000000))
- 		return cmd_resp.response.response;
+ 	INIT_DELAYED_WORK(&cl_data->work, amd_sfh_work);
+ 	INIT_DELAYED_WORK(&cl_data->work_buffer, amd_sfh_work_buffer);
+@@ -170,6 +171,7 @@ static int amd_sfh1_1_hid_client_init(struct amd_mp2_dev *privdata)
+ 		status = (status == 0) ? SENSOR_ENABLED : SENSOR_DISABLED;
  
- 	return -1;
+ 		if (status == SENSOR_ENABLED) {
++			cl_data->is_any_sensor_enabled = true;
+ 			cl_data->sensor_sts[i] = SENSOR_ENABLED;
+ 			rc = amdtp_hid_probe(i, cl_data);
+ 			if (rc) {
+@@ -186,12 +188,21 @@ static int amd_sfh1_1_hid_client_init(struct amd_mp2_dev *privdata)
+ 					cl_data->sensor_sts[i]);
+ 				goto cleanup;
+ 			}
++		} else {
++			cl_data->sensor_sts[i] = SENSOR_DISABLED;
+ 		}
+ 		dev_dbg(dev, "sid 0x%x (%s) status 0x%x\n",
+ 			cl_data->sensor_idx[i], get_sensor_name(cl_data->sensor_idx[i]),
+ 			cl_data->sensor_sts[i]);
+ 	}
+ 
++	if (!cl_data->is_any_sensor_enabled) {
++		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n",
++			 cl_data->is_any_sensor_enabled);
++		rc = -EOPNOTSUPP;
++		goto cleanup;
++	}
++
+ 	schedule_delayed_work(&cl_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
+ 	return 0;
+ 
 -- 
 2.39.2
 
