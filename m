@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D0E154A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDA2C433D2;
-	Mon,  8 May 2023 10:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D01154A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7E4C433EF;
+	Mon,  8 May 2023 10:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540492;
-	bh=SXPu0ZK+xVCHUr18bqc5J5bNBEsYhCD0P47GsAePr9s=;
+	s=korg; t=1683540495;
+	bh=hDe++XOS1xnfE2Ty7geFW3kAx3JIFleArPvdkBMyqfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dlX6ItXqm7guuimeGtuD7Wb2OeSSXzGvNq6YlFp41y9xvU1Uz57knzzBeQuSQlKHZ
-	 JxOze4C4knHzf0rifcmU6Q7kurfr2ScFGEx3x2VqpmfC8xT1EZTuxj0GFbP+8WY9cP
-	 tXhn+bO904F9Dm/PpZSvnTLTpdLzUIAOgdERLesc=
+	b=QrtQglyzID+gbYE3GWVVKX6uknL2TnvgK8zmDTBsdLQZ9q2tar5qCJp19hV3XmE8J
+	 uhzjsB94cwfnYZ8wCMrfcmR3ABfQAuRioq5vDkc0HIRLHtnmuvSLNAEeGpDP1TCEHc
+	 ueB3bZTdncAosZokGfefrKQHpuDSWRYsRuQyAeFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com,
+	Hsin-Wei Hung <hsinweih@uci.edu>,
+	Xin Liu <liuxin350@huawei.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 354/611] wifi: iwlwifi: yoyo: skip dump correctly on hw error
-Date: Mon,  8 May 2023 11:43:16 +0200
-Message-Id: <20230508094433.907645348@linuxfoundation.org>
+Subject: [PATCH 6.1 345/611] bpf, sockmap: Revert buggy deadlock fix in the sockhash and sockmap
+Date: Mon,  8 May 2023 11:43:07 +0200
+Message-Id: <20230508094433.626365535@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,47 +38,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 11195ab0d6f3202cf7af1a4c69570f59c377d8ad ]
+[ Upstream commit 8c5c2a4898e3d6bad86e29d471e023c8a19ba799 ]
 
-When NIC is in a bad state, reading data will return 28 bits as
-0xa5a5a5a and the lowest 4 bits are not fixed value.
+syzbot reported a splat and bisected it to recent commit ed17aa92dc56 ("bpf,
+sockmap: fix deadlocks in the sockhash and sockmap"):
 
-Mask these bits in a few places to skip the dump correctly.
+  [...]
+  WARNING: CPU: 1 PID: 9280 at kernel/softirq.c:376 __local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
+  Modules linked in:
+  CPU: 1 PID: 9280 Comm: syz-executor.1 Not tainted 6.2.0-syzkaller-13249-gd319f344561d #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+  RIP: 0010:__local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
+  [...]
+  Call Trace:
+  <TASK>
+  spin_unlock_bh include/linux/spinlock.h:395 [inline]
+  sock_map_del_link+0x2ea/0x510 net/core/sock_map.c:165
+  sock_map_unref+0xb0/0x1d0 net/core/sock_map.c:184
+  sock_hash_delete_elem+0x1ec/0x2a0 net/core/sock_map.c:945
+  map_delete_elem kernel/bpf/syscall.c:1536 [inline]
+  __sys_bpf+0x2edc/0x53e0 kernel/bpf/syscall.c:5053
+  __do_sys_bpf kernel/bpf/syscall.c:5166 [inline]
+  __se_sys_bpf kernel/bpf/syscall.c:5164 [inline]
+  __x64_sys_bpf+0x79/0xc0 kernel/bpf/syscall.c:5164
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  RIP: 0033:0x7fe8f7c8c169
+  </TASK>
+  [...]
 
-Fixes: 89639e06d0f3 ("iwlwifi: yoyo: support for new DBGI_SRAM region")
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413213309.df6c0663179d.I36d8487b2419c6fefa65e5514855d94327c3b1eb@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Revert for now until we have a proper solution.
+
+Fixes: ed17aa92dc56 ("bpf, sockmap: fix deadlocks in the sockhash and sockmap")
+Reported-by: syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com
+Cc: Hsin-Wei Hung <hsinweih@uci.edu>
+Cc: Xin Liu <liuxin350@huawei.com>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/000000000000f1db9605f939720e@google.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/sock_map.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index abf49022edbe4..bde6f0764a538 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -1038,7 +1038,7 @@ iwl_dump_ini_prph_mac_iter(struct iwl_fw_runtime *fwrt,
- 	range->range_data_size = reg->dev_addr.size;
- 	for (i = 0; i < le32_to_cpu(reg->dev_addr.size); i += 4) {
- 		prph_val = iwl_read_prph(fwrt->trans, addr + i);
--		if (prph_val == 0x5a5a5a5a)
-+		if ((prph_val & ~0xf) == 0xa5a5a5a0)
- 			return -EBUSY;
- 		*val++ = cpu_to_le32(prph_val);
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 2408965e5c7b6..a68a7290a3b2b 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -414,9 +414,8 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+ {
+ 	struct sock *sk;
+ 	int err = 0;
+-	unsigned long flags;
+ 
+-	raw_spin_lock_irqsave(&stab->lock, flags);
++	raw_spin_lock_bh(&stab->lock);
+ 	sk = *psk;
+ 	if (!sk_test || sk_test == sk)
+ 		sk = xchg(psk, NULL);
+@@ -426,7 +425,7 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+ 	else
+ 		err = -EINVAL;
+ 
+-	raw_spin_unlock_irqrestore(&stab->lock, flags);
++	raw_spin_unlock_bh(&stab->lock);
+ 	return err;
+ }
+ 
+@@ -924,12 +923,11 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
+ 	struct bpf_shtab_bucket *bucket;
+ 	struct bpf_shtab_elem *elem;
+ 	int ret = -ENOENT;
+-	unsigned long flags;
+ 
+ 	hash = sock_hash_bucket_hash(key, key_size);
+ 	bucket = sock_hash_select_bucket(htab, hash);
+ 
+-	raw_spin_lock_irqsave(&bucket->lock, flags);
++	raw_spin_lock_bh(&bucket->lock);
+ 	elem = sock_hash_lookup_elem_raw(&bucket->head, hash, key, key_size);
+ 	if (elem) {
+ 		hlist_del_rcu(&elem->node);
+@@ -937,7 +935,7 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
+ 		sock_hash_free_elem(htab, elem);
+ 		ret = 0;
  	}
-@@ -1562,7 +1562,7 @@ iwl_dump_ini_dbgi_sram_iter(struct iwl_fw_runtime *fwrt,
- 		prph_data = iwl_read_prph_no_grab(fwrt->trans, (i % 2) ?
- 					  DBGI_SRAM_TARGET_ACCESS_RDATA_MSB :
- 					  DBGI_SRAM_TARGET_ACCESS_RDATA_LSB);
--		if (prph_data == 0x5a5a5a5a) {
-+		if ((prph_data & ~0xf) == 0xa5a5a5a0) {
- 			iwl_trans_release_nic_access(fwrt->trans);
- 			return -EBUSY;
- 		}
+-	raw_spin_unlock_irqrestore(&bucket->lock, flags);
++	raw_spin_unlock_bh(&bucket->lock);
+ 	return ret;
+ }
+ 
 -- 
 2.39.2
 
