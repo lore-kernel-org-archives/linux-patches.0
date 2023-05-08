@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2A2171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:42:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFCFC433EF;
-	Mon,  8 May 2023 11:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC0C4171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:43:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F664C433D2;
+	Mon,  8 May 2023 11:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546178;
-	bh=g8/Wjk1eOJxljHfLjV50xM2of/QLVLhG1w+tF/475Ls=;
+	s=korg; t=1683546181;
+	bh=BipXmCCCK3oHxhseUDoV7zDoZb30VyRzOuHYMsumzgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nnCBzRckrFFpYpK+zBELlsONRhflcHcsBitXG2SAZe/by8cWtEHZqkmWsivNiff+9
-	 WroZatT0NLhINC/NqM2buZnYtBuAwn94U0Kx1ePJ19c1fao+e2PaBaa9MFpKL9bwOp
-	 a8XKuCVp3axh/3nIUKI4jA+cQFeFT/huccQzKEe4=
+	b=j1HkMFniHQNAqT5K10lKiojdDam3WvXint1/4L8u2RkVIJGVdlC7+zJAybN1iW6W0
+	 +7+u4HgnmS0qQDJCiNFpLIcohsyrc35WeA3L8dKYUEhGYn2cpdRBk8I5BPJ1lw8ZOj
+	 Pxv9nU7gcy2tSDXfTxbgE/rZVk27EgZhEuZ5WLaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Peter Chen <peter.chen@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Rob Herring <robh@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 282/371] powerpc/wii: fix resource printk format warnings
-Date: Mon,  8 May 2023 11:48:03 +0200
-Message-Id: <20230508094823.203594636@linuxfoundation.org>
+Subject: [PATCH 5.15 256/371] of: Fix modalias string generation
+Date: Mon,  8 May 2023 11:47:37 +0200
+Message-Id: <20230508094822.224255751@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,85 +38,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 7b69600d4da0049244e9be2f5ef5a2f8e04fcd9a ]
+[ Upstream commit b19a4266c52de78496fe40f0b37580a3b762e67d ]
 
-Use "%pa" format specifier for resource_size_t to avoid compiler
-printk format warnings.
+The helper generating an OF based modalias (of_device_get_modalias())
+works fine, but due to the use of snprintf() internally it needs a
+buffer one byte longer than what should be needed just for the entire
+string (excluding the '\0'). Most users of this helper are sysfs hooks
+providing the modalias string to users. They all provide a PAGE_SIZE
+buffer which is way above the number of bytes required to fit the
+modalias string and hence do not suffer from this issue.
 
-../arch/powerpc/platforms/embedded6xx/flipper-pic.c: In function 'flipper_pic_init':
-../include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
-../arch/powerpc/platforms/embedded6xx/flipper-pic.c:148:9: note: in expansion of macro 'pr_info'
-  148 |         pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
-      |         ^~~~~~~
+There is another user though, of_device_request_module(), which is only
+called by drivers/usb/common/ulpi.c. This request module function is
+faulty, but maybe because in most cases there is an alternative, ULPI
+driver users have not noticed it.
 
-../arch/powerpc/platforms/embedded6xx/hlwd-pic.c: In function 'hlwd_pic_init':
-../include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
-../arch/powerpc/platforms/embedded6xx/hlwd-pic.c:174:9: note: in expansion of macro 'pr_info'
-  174 |         pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
-      |         ^~~~~~~
+In this function, of_device_get_modalias() is called twice. The first
+time without buffer just to get the number of bytes required by the
+modalias string (excluding the null byte), and a second time, after
+buffer allocation, to fill the buffer. The allocation asks for an
+additional byte, in order to store the trailing '\0'. However, the
+buffer *length* provided to of_device_get_modalias() excludes this extra
+byte. The internal use of snprintf() with a length that is exactly the
+number of bytes to be written has the effect of using the last available
+byte to store a '\0', which then smashes the last character of the
+modalias string.
 
-../arch/powerpc/platforms/embedded6xx/wii.c: In function 'wii_ioremap_hw_regs':
-../include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 3 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
-../arch/powerpc/platforms/embedded6xx/wii.c:77:17: note: in expansion of macro 'pr_info'
-   77 |                 pr_info("%s at 0x%08x mapped to 0x%p\n", name,
-      |                 ^~~~~~~
+Provide the actual size of the buffer to of_device_get_modalias() to fix
+this issue.
 
-Fixes: 028ee972f032 ("powerpc: gamecube/wii: flipper interrupt controller support")
-Fixes: 9c21025c7845 ("powerpc: wii: hollywood interrupt controller support")
-Fixes: 5a7ee3198dfa ("powerpc: wii: platform support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230223070116.660-3-rdunlap@infradead.org
+Note: the "str[size - 1] = '\0';" line is not really needed as snprintf
+will anyway end the string with a null byte, but there is a possibility
+that this function might be called on a struct device_node without
+compatible, in this case snprintf() would not be executed. So we keep it
+just to avoid possible unbounded strings.
+
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: Peter Chen <peter.chen@kernel.org>
+Fixes: 9c829c097f2f ("of: device: Support loading a module with OF based modalias")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230404172148.82422-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/embedded6xx/flipper-pic.c | 2 +-
- arch/powerpc/platforms/embedded6xx/hlwd-pic.c    | 2 +-
- arch/powerpc/platforms/embedded6xx/wii.c         | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/of/device.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/embedded6xx/flipper-pic.c b/arch/powerpc/platforms/embedded6xx/flipper-pic.c
-index 609bda2ad5dd2..4d9200bdba78c 100644
---- a/arch/powerpc/platforms/embedded6xx/flipper-pic.c
-+++ b/arch/powerpc/platforms/embedded6xx/flipper-pic.c
-@@ -145,7 +145,7 @@ static struct irq_domain * __init flipper_pic_init(struct device_node *np)
- 	}
- 	io_base = ioremap(res.start, resource_size(&res));
+diff --git a/drivers/of/device.c b/drivers/of/device.c
+index 45335fe523f7d..19c42a9dcba91 100644
+--- a/drivers/of/device.c
++++ b/drivers/of/device.c
+@@ -290,12 +290,15 @@ int of_device_request_module(struct device *dev)
+ 	if (size < 0)
+ 		return size;
  
--	pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
-+	pr_info("controller at 0x%pa mapped to 0x%p\n", &res.start, io_base);
+-	str = kmalloc(size + 1, GFP_KERNEL);
++	/* Reserve an additional byte for the trailing '\0' */
++	size++;
++
++	str = kmalloc(size, GFP_KERNEL);
+ 	if (!str)
+ 		return -ENOMEM;
  
- 	__flipper_quiesce(io_base);
+ 	of_device_get_modalias(dev, str, size);
+-	str[size] = '\0';
++	str[size - 1] = '\0';
+ 	ret = request_module(str);
+ 	kfree(str);
  
-diff --git a/arch/powerpc/platforms/embedded6xx/hlwd-pic.c b/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
-index a4b020e4b6af0..132e5c175e2d6 100644
---- a/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
-+++ b/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
-@@ -171,7 +171,7 @@ static struct irq_domain *hlwd_pic_init(struct device_node *np)
- 		return NULL;
- 	}
- 
--	pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
-+	pr_info("controller at 0x%pa mapped to 0x%p\n", &res.start, io_base);
- 
- 	__hlwd_quiesce(io_base);
- 
-diff --git a/arch/powerpc/platforms/embedded6xx/wii.c b/arch/powerpc/platforms/embedded6xx/wii.c
-index a802ef957d63e..458a63a30e803 100644
---- a/arch/powerpc/platforms/embedded6xx/wii.c
-+++ b/arch/powerpc/platforms/embedded6xx/wii.c
-@@ -89,8 +89,8 @@ static void __iomem *wii_ioremap_hw_regs(char *name, char *compatible)
- 
- 	hw_regs = ioremap(res.start, resource_size(&res));
- 	if (hw_regs) {
--		pr_info("%s at 0x%08x mapped to 0x%p\n", name,
--			res.start, hw_regs);
-+		pr_info("%s at 0x%pa mapped to 0x%p\n", name,
-+			&res.start, hw_regs);
- 	}
- 
- out_put:
 -- 
 2.39.2
 
