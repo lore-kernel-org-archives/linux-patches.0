@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDBF11C8F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28459C43443;
-	Mon,  8 May 2023 11:36:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE577171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1F8C433EF;
+	Mon,  8 May 2023 11:36:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545779;
-	bh=ojc58rMjtvQJnZH5ift4m2BaI2Ddu85cIVhMmcACl14=;
+	s=korg; t=1683545782;
+	bh=RTRnU4UMupNEc1dlEDn+cU8wfJuHpYTRTC1O1DwNU6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zI/0/X3nLkzjPr6X1SD1pGlWOXkszZusEuCNqK1LNp950DpyID3MGa+u9Gq2Sb7eE
-	 zRY3nRVzez+rxRXz/oP5GCDStDhTzM22VrQKfKup8r7e5DOaH+HRKokQZsOP02fVuZ
-	 KHrMITRZKThJy0lvSaO5uIcZPeWLVQUCXhxUFd+g=
+	b=ytVHAuZyXdJTicW9N9s3AuHCBWr9obsINnJgPinvmJgOBlW2CCJ2KWpTtnbM+CCxC
+	 0gbVnkm8vNvI7jt3tA53LUh8DZTfLd3emePx7nw9ze4aS2xAFoOyiHid+8THGmRtll
+	 TXO+PG7wt7JXobkDPzH+v7+4Br4J57I4T1l8Msg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 150/371] wifi: ath6kl: minor fix for allocation size
-Date: Mon,  8 May 2023 11:45:51 +0200
-Message-Id: <20230508094818.007516533@linuxfoundation.org>
+Subject: [PATCH 5.15 151/371] wifi: ath9k: hif_usb: fix memory leak of remain_skbs
+Date: Mon,  8 May 2023 11:45:52 +0200
+Message-Id: <20230508094818.046937825@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,38 +37,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey V. Vissarionov <gremlin@altlinux.org>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 778f83f889e7fca37780d9640fcbd0229ae38eaa ]
+[ Upstream commit 7654cc03eb699297130b693ec34e25f77b17c947 ]
 
-Although the "param" pointer occupies more or equal space compared
-to "*param", the allocation size should use the size of variable
-itself.
+hif_dev->remain_skb is allocated and used exclusively in
+ath9k_hif_usb_rx_stream(). It is implied that an allocated remain_skb is
+processed and subsequently freed (in error paths) only during the next
+call of ath9k_hif_usb_rx_stream().
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+So, if the urbs are deallocated between those two calls due to the device
+deinitialization or suspend, it is possible that ath9k_hif_usb_rx_stream()
+is not called next time and the allocated remain_skb is leaked. Our local
+Syzkaller instance was able to trigger that.
 
-Fixes: bdcd81707973cf8a ("Add ath6kl cleaned up driver")
-Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
+remain_skb makes sense when receiving two consecutive urbs which are
+logically linked together, i.e. a specific data field from the first skb
+indicates a cached skb to be allocated, memcpy'd with some data and
+subsequently processed in the next call to ath9k_hif_usb_rx_stream(). Urbs
+deallocation supposedly makes that link irrelevant so we need to free the
+cached skb in those cases.
+
+Fix the leak by introducing a function to explicitly free remain_skb (if
+it is not NULL) when the rx urbs have been deallocated. remain_skb is NULL
+when it has not been allocated at all (hif_dev struct is kzalloced) or
+when it has been processed in next call to ath9k_hif_usb_rx_stream().
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: fb9987d0f748 ("ath9k_htc: Support for AR9271 chipset.")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230117110414.GC12547@altlinux.org
+Link: https://lore.kernel.org/r/20230216192301.171225-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/bmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
-index bde5a10d470c8..af98e871199d3 100644
---- a/drivers/net/wireless/ath/ath6kl/bmi.c
-+++ b/drivers/net/wireless/ath/ath6kl/bmi.c
-@@ -246,7 +246,7 @@ int ath6kl_bmi_execute(struct ath6kl *ar, u32 addr, u32 *param)
- 		return -EACCES;
- 	}
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index f521dfa2f1945..e0130beb304df 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -534,6 +534,24 @@ static struct ath9k_htc_hif hif_usb = {
+ 	.send = hif_usb_send,
+ };
  
--	size = sizeof(cid) + sizeof(addr) + sizeof(param);
-+	size = sizeof(cid) + sizeof(addr) + sizeof(*param);
- 	if (size > ar->bmi.max_cmd_size) {
- 		WARN_ON(1);
- 		return -EINVAL;
++/* Need to free remain_skb allocated in ath9k_hif_usb_rx_stream
++ * in case ath9k_hif_usb_rx_stream wasn't called next time to
++ * process the buffer and subsequently free it.
++ */
++static void ath9k_hif_usb_free_rx_remain_skb(struct hif_device_usb *hif_dev)
++{
++	unsigned long flags;
++
++	spin_lock_irqsave(&hif_dev->rx_lock, flags);
++	if (hif_dev->remain_skb) {
++		dev_kfree_skb_any(hif_dev->remain_skb);
++		hif_dev->remain_skb = NULL;
++		hif_dev->rx_remain_len = 0;
++		RX_STAT_INC(hif_dev, skb_dropped);
++	}
++	spin_unlock_irqrestore(&hif_dev->rx_lock, flags);
++}
++
+ static void ath9k_hif_usb_rx_stream(struct hif_device_usb *hif_dev,
+ 				    struct sk_buff *skb)
+ {
+@@ -868,6 +886,7 @@ static int ath9k_hif_usb_alloc_tx_urbs(struct hif_device_usb *hif_dev)
+ static void ath9k_hif_usb_dealloc_rx_urbs(struct hif_device_usb *hif_dev)
+ {
+ 	usb_kill_anchored_urbs(&hif_dev->rx_submitted);
++	ath9k_hif_usb_free_rx_remain_skb(hif_dev);
+ }
+ 
+ static int ath9k_hif_usb_alloc_rx_urbs(struct hif_device_usb *hif_dev)
 -- 
 2.39.2
 
