@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AAD9125DF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7650CC43444;
-	Mon,  8 May 2023 10:31:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6667E23A4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD42C433EF;
+	Mon,  8 May 2023 10:31:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541889;
-	bh=Zl3yB4I7jmLbr4Wjo08xzHw+k2BrZbWVxUBQSp+G6Ig=;
+	s=korg; t=1683541892;
+	bh=3GjaSjRQxYdGyrHhFCH6DoDx3IN1bcdGWGu3+TTMJv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QiMaYOsaQtVkojJNalwuX2pOfepHBiOeoAWEtOrdCyq2yfxHtqBsUPJqgbu7GMryD
-	 KwLfvmarPqdK0JMfag8bxTKKeciEsb7tsc+MEMlkIspyOePwoiRPY/QJHs032QVXrm
-	 obuyR28lSrgGLiOzFoLg9mkgmfVVGgAkkD7pyoU0=
+	b=g2PdI9tpqqnP2qQIhZmiXKFXej0GDrCa2N2fzhPRBXYDKbyguFU0KflE5IQDvsst1
+	 Ax+xfQ3VFuVObnp5jp8N8EK4K5VIRv3zBIG3LulAWJwtjFuckJEejc4odnjnQb08Cj
+	 4Vucaao98PAA4IurZ2HXI4kDX9dyVzlpuoToahLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 260/663] media: v4l: async: Return async sub-devices to subnotifier list
-Date: Mon,  8 May 2023 11:41:26 +0200
-Message-Id: <20230508094436.683528558@linuxfoundation.org>
+Subject: [PATCH 6.2 243/663] media: mediatek: vcodec: change lat thread decode error condition
+Date: Mon,  8 May 2023 11:41:09 +0200
+Message-Id: <20230508094436.163331581@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,78 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 5276c9df9c2ab9a43b534bfb56bdb10899cd3a22 ]
+[ Upstream commit 960badda95f10fb0c60f6f64978b19eafa9507a7 ]
 
-When an async notifier is unregistered, the async sub-devices in the
-notifier's done list will disappear with the notifier. However this is
-currently also done to the sub-notifiers that remain registered. Their
-sub-devices only need to be unbound while the async sub-devices themselves
-need to be returned to the sub-notifier's waiting list. Do this now.
+If lat thread can't get lat buffer, it should be that current instance
+don't be schedulded, the driver can't free the src buffer directly.
 
-Fixes: 2cab00bb076b ("media: v4l: async: Allow binding notifiers to sub-devices")
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: 7b182b8d9c85 ("media: mediatek: vcodec: Refactor get and put capture buffer flow")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-async.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ .../platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c     | 6 ++++--
+ .../platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c  | 2 +-
+ .../platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c     | 2 +-
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
-index 2f1b718a91893..008a2a3e312e0 100644
---- a/drivers/media/v4l2-core/v4l2-async.c
-+++ b/drivers/media/v4l2-core/v4l2-async.c
-@@ -414,7 +414,8 @@ static void v4l2_async_cleanup(struct v4l2_subdev *sd)
- 
- /* Unbind all sub-devices in the notifier tree. */
- static void
--v4l2_async_nf_unbind_all_subdevs(struct v4l2_async_notifier *notifier)
-+v4l2_async_nf_unbind_all_subdevs(struct v4l2_async_notifier *notifier,
-+				 bool readd)
- {
- 	struct v4l2_subdev *sd, *tmp;
- 
-@@ -423,9 +424,11 @@ v4l2_async_nf_unbind_all_subdevs(struct v4l2_async_notifier *notifier)
- 			v4l2_async_find_subdev_notifier(sd);
- 
- 		if (subdev_notifier)
--			v4l2_async_nf_unbind_all_subdevs(subdev_notifier);
-+			v4l2_async_nf_unbind_all_subdevs(subdev_notifier, true);
- 
- 		v4l2_async_nf_call_unbind(notifier, sd, sd->asd);
-+		if (readd)
-+			list_add_tail(&sd->asd->list, &notifier->waiting);
- 		v4l2_async_cleanup(sd);
- 
- 		list_move(&sd->async_list, &subdev_list);
-@@ -557,7 +560,7 @@ static int __v4l2_async_nf_register(struct v4l2_async_notifier *notifier)
- 	/*
- 	 * On failure, unbind all sub-devices registered through this notifier.
- 	 */
--	v4l2_async_nf_unbind_all_subdevs(notifier);
-+	v4l2_async_nf_unbind_all_subdevs(notifier, false);
- 
- err_unlock:
- 	mutex_unlock(&list_lock);
-@@ -607,7 +610,7 @@ __v4l2_async_nf_unregister(struct v4l2_async_notifier *notifier)
- 	if (!notifier || (!notifier->v4l2_dev && !notifier->sd))
- 		return;
- 
--	v4l2_async_nf_unbind_all_subdevs(notifier);
-+	v4l2_async_nf_unbind_all_subdevs(notifier, false);
- 
- 	notifier->sd = NULL;
- 	notifier->v4l2_dev = NULL;
-@@ -805,7 +808,7 @@ int v4l2_async_register_subdev(struct v4l2_subdev *sd)
- 	 */
- 	subdev_notifier = v4l2_async_find_subdev_notifier(sd);
- 	if (subdev_notifier)
--		v4l2_async_nf_unbind_all_subdevs(subdev_notifier);
-+		v4l2_async_nf_unbind_all_subdevs(subdev_notifier, false);
- 
- 	if (sd->asd)
- 		v4l2_async_nf_call_unbind(notifier, sd, sd->asd);
+diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
+index ab8f642d1e5b0..3000db975e5f5 100644
+--- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
++++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
+@@ -258,8 +258,10 @@ static void mtk_vdec_worker(struct work_struct *work)
+ 		if (src_buf_req)
+ 			v4l2_ctrl_request_complete(src_buf_req, &ctx->ctrl_hdl);
+ 	} else {
+-		v4l2_m2m_src_buf_remove(ctx->m2m_ctx);
+-		v4l2_m2m_buf_done(vb2_v4l2_src, state);
++		if (ret != -EAGAIN) {
++			v4l2_m2m_src_buf_remove(ctx->m2m_ctx);
++			v4l2_m2m_buf_done(vb2_v4l2_src, state);
++		}
+ 		v4l2_m2m_job_finish(dev->m2m_dev_dec, ctx->m2m_ctx);
+ 	}
+ }
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
+index 955b2d0c8f53f..999ce7ee5fdc2 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
+@@ -597,7 +597,7 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
+ 	lat_buf = vdec_msg_queue_dqbuf(&inst->ctx->msg_queue.lat_ctx);
+ 	if (!lat_buf) {
+ 		mtk_vcodec_err(inst, "failed to get lat buffer");
+-		return -EINVAL;
++		return -EAGAIN;
+ 	}
+ 	share_info = lat_buf->private_data;
+ 	src_buf_info = container_of(bs, struct mtk_video_dec_buf, bs_buffer);
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+index cbb6728b8a40b..cf16cf2807f07 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
+@@ -2070,7 +2070,7 @@ static int vdec_vp9_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
+ 	lat_buf = vdec_msg_queue_dqbuf(&instance->ctx->msg_queue.lat_ctx);
+ 	if (!lat_buf) {
+ 		mtk_vcodec_err(instance, "Failed to get VP9 lat buf\n");
+-		return -EBUSY;
++		return -EAGAIN;
+ 	}
+ 	pfc = (struct vdec_vp9_slice_pfc *)lat_buf->private_data;
+ 	if (!pfc) {
 -- 
 2.39.2
 
