@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723111549A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB4DC433EF;
-	Mon,  8 May 2023 11:20:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861061549A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC07C433EF;
+	Mon,  8 May 2023 11:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544847;
-	bh=z4CXdBy3RTadt155dYcPnPbnwArofwqRMS1Hv51U2ok=;
+	s=korg; t=1683544850;
+	bh=bcymKhKH7LHzTjrUPVkh0qE5nI59hjDOuuGm63rXG0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdbrK7diVVUKE/QUzjHfG5Kp6r5BQPnBgUh/RkA4EtsJhzUx0BW63JsncM2cyycSA
-	 BACWtNHo9IIAoW5zKYxu1l4n53Kb6b86kLx/uyQ56trN6INq0Px4fWooUCCVPZt30e
-	 10PztgUB/OHV+ChsNs5/HIGSFa8O8X4ZgN5ahbWQ=
+	b=G/db0cJcGx/8iBaSewasTB7bDcWkVKE5Ol3U49UZ17gnOUjGxRNOf5XA3S+WuzUBU
+	 CUHmHpLeipslXSShyV3v5svySSsKu4oCw8CaFe07Ceh0bFqfcM08V4egN5QOGXtByd
+	 FqcIIRRasvxO0L1VMzk28o0oyUYk4ITvPOr3zoo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Rob Herring <robh@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 541/694] scripts/gdb: raise error with reduced debugging information
-Date: Mon,  8 May 2023 11:46:16 +0200
-Message-Id: <20230508094452.014841201@linuxfoundation.org>
+Subject: [PATCH 6.3 513/694] spi: mpc5xxx-psc: Remove unused platform_data
+Date: Mon,  8 May 2023 11:45:48 +0200
+Message-Id: <20230508094450.833150644@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -40,76 +35,191 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Rob Herring <robh@kernel.org>
 
-[ Upstream commit 8af055ae25bff48f57227f5e3d48a4306f3dd1c4 ]
+[ Upstream commit 04725901d9933b3134e6dee6b5bc1efb67f8d43f ]
 
-If CONFIG_DEBUG_INFO_REDUCED is enabled in the kernel configuration, we
-will typically not be able to load vmlinux-gdb.py and will fail with:
+The platform_data for the MPC5xxx PSC SPI controllers is never used, so
+remove it and the resulting code which depends on it.
 
-Traceback (most recent call last):
-  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/vmlinux-gdb.py", line 25, in <module>
-    import linux.utils
-  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/scripts/gdb/linux/utils.py", line 131, in <module>
-    atomic_long_counter_offset = atomic_long_type.get_type()['counter'].bitpos
-KeyError: 'counter'
-
-Rather be left wondering what is happening only to find out that reduced
-debug information is the cause, raise an eror.  This was not typically a
-problem until e3c8d33e0d62 ("scripts/gdb: fix 'lx-dmesg' on 32 bits arch")
-but it has since then.
-
-Link: https://lkml.kernel.org/r/20230406215252.1580538-1-f.fainelli@gmail.com
-Fixes: e3c8d33e0d62 ("scripts/gdb: fix 'lx-dmesg' on 32 bits arch")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Antonio Borneo <antonio.borneo@foss.st.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20230217-dt-mpc5xxx-spi-v1-1-3be8602fce1e@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 45d2af82e0e6 ("spi: mchp-pci1xxxx: Fix improper implementation of disabling chip select lines")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/constants.py.in | 2 ++
- scripts/gdb/vmlinux-gdb.py        | 5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/spi/spi-mpc512x-psc.c | 28 ++++---------------------
+ drivers/spi/spi-mpc52xx-psc.c | 39 +++--------------------------------
+ 2 files changed, 7 insertions(+), 60 deletions(-)
 
-diff --git a/scripts/gdb/linux/constants.py.in b/scripts/gdb/linux/constants.py.in
-index 2efbec6b6b8db..08f0587d15ea1 100644
---- a/scripts/gdb/linux/constants.py.in
-+++ b/scripts/gdb/linux/constants.py.in
-@@ -39,6 +39,8 @@
+diff --git a/drivers/spi/spi-mpc512x-psc.c b/drivers/spi/spi-mpc512x-psc.c
+index 03630359ce70d..0b4d49ef84de8 100644
+--- a/drivers/spi/spi-mpc512x-psc.c
++++ b/drivers/spi/spi-mpc512x-psc.c
+@@ -22,7 +22,6 @@
+ #include <linux/delay.h>
+ #include <linux/clk.h>
+ #include <linux/spi/spi.h>
+-#include <linux/fsl_devices.h>
+ #include <asm/mpc52xx_psc.h>
  
- import gdb
+ enum {
+@@ -51,8 +50,6 @@ enum {
+ 	__ret; })
  
-+LX_CONFIG(CONFIG_DEBUG_INFO_REDUCED)
-+
- /* linux/clk-provider.h */
- if IS_BUILTIN(CONFIG_COMMON_CLK):
-     LX_GDBPARSED(CLK_GET_RATE_NOCACHE)
-diff --git a/scripts/gdb/vmlinux-gdb.py b/scripts/gdb/vmlinux-gdb.py
-index 3a5b44cd6bfe4..7e024c051e77f 100644
---- a/scripts/gdb/vmlinux-gdb.py
-+++ b/scripts/gdb/vmlinux-gdb.py
-@@ -22,6 +22,10 @@ except:
-     gdb.write("NOTE: gdb 7.2 or later required for Linux helper scripts to "
-               "work.\n")
- else:
-+    import linux.constants
-+    if linux.constants.LX_CONFIG_DEBUG_INFO_REDUCED:
-+        raise gdb.GdbError("Reduced debug information will prevent GDB "
-+                           "from having complete types.\n")
-     import linux.utils
-     import linux.symbols
-     import linux.modules
-@@ -32,7 +36,6 @@ else:
-     import linux.lists
-     import linux.rbtree
-     import linux.proc
--    import linux.constants
-     import linux.timerlist
-     import linux.clk
-     import linux.genpd
+ struct mpc512x_psc_spi {
+-	void (*cs_control)(struct spi_device *spi, bool on);
+-
+ 	/* driver internal data */
+ 	int type;
+ 	void __iomem *psc;
+@@ -128,26 +125,16 @@ static void mpc512x_psc_spi_activate_cs(struct spi_device *spi)
+ 	mps->bits_per_word = cs->bits_per_word;
+ 
+ 	if (spi->cs_gpiod) {
+-		if (mps->cs_control)
+-			/* boardfile override */
+-			mps->cs_control(spi, (spi->mode & SPI_CS_HIGH) ? 1 : 0);
+-		else
+-			/* gpiolib will deal with the inversion */
+-			gpiod_set_value(spi->cs_gpiod, 1);
++		/* gpiolib will deal with the inversion */
++		gpiod_set_value(spi->cs_gpiod, 1);
+ 	}
+ }
+ 
+ static void mpc512x_psc_spi_deactivate_cs(struct spi_device *spi)
+ {
+-	struct mpc512x_psc_spi *mps = spi_master_get_devdata(spi->master);
+-
+ 	if (spi->cs_gpiod) {
+-		if (mps->cs_control)
+-			/* boardfile override */
+-			mps->cs_control(spi, (spi->mode & SPI_CS_HIGH) ? 0 : 1);
+-		else
+-			/* gpiolib will deal with the inversion */
+-			gpiod_set_value(spi->cs_gpiod, 0);
++		/* gpiolib will deal with the inversion */
++		gpiod_set_value(spi->cs_gpiod, 0);
+ 	}
+ }
+ 
+@@ -474,7 +461,6 @@ static irqreturn_t mpc512x_psc_spi_isr(int irq, void *dev_id)
+ static int mpc512x_psc_spi_do_probe(struct device *dev, u32 regaddr,
+ 					      u32 size, unsigned int irq)
+ {
+-	struct fsl_spi_platform_data *pdata = dev_get_platdata(dev);
+ 	struct mpc512x_psc_spi *mps;
+ 	struct spi_master *master;
+ 	int ret;
+@@ -490,12 +476,6 @@ static int mpc512x_psc_spi_do_probe(struct device *dev, u32 regaddr,
+ 	mps->type = (int)of_device_get_match_data(dev);
+ 	mps->irq = irq;
+ 
+-	if (pdata) {
+-		mps->cs_control = pdata->cs_control;
+-		master->bus_num = pdata->bus_num;
+-		master->num_chipselect = pdata->max_chipselect;
+-	}
+-
+ 	master->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LSB_FIRST;
+ 	master->setup = mpc512x_psc_spi_setup;
+ 	master->prepare_transfer_hardware = mpc512x_psc_spi_prep_xfer_hw;
+diff --git a/drivers/spi/spi-mpc52xx-psc.c b/drivers/spi/spi-mpc52xx-psc.c
+index 609311231e64b..604868df913c4 100644
+--- a/drivers/spi/spi-mpc52xx-psc.c
++++ b/drivers/spi/spi-mpc52xx-psc.c
+@@ -18,7 +18,6 @@
+ #include <linux/io.h>
+ #include <linux/delay.h>
+ #include <linux/spi/spi.h>
+-#include <linux/fsl_devices.h>
+ #include <linux/slab.h>
+ #include <linux/of_irq.h>
+ 
+@@ -28,10 +27,6 @@
+ #define MCLK 20000000 /* PSC port MClk in hz */
+ 
+ struct mpc52xx_psc_spi {
+-	/* fsl_spi_platform data */
+-	void (*cs_control)(struct spi_device *spi, bool on);
+-	u32 sysclk;
+-
+ 	/* driver internal data */
+ 	struct mpc52xx_psc __iomem *psc;
+ 	struct mpc52xx_psc_fifo __iomem *fifo;
+@@ -101,17 +96,6 @@ static void mpc52xx_psc_spi_activate_cs(struct spi_device *spi)
+ 		ccr |= (MCLK / 1000000 - 1) & 0xFF;
+ 	out_be16((u16 __iomem *)&psc->ccr, ccr);
+ 	mps->bits_per_word = cs->bits_per_word;
+-
+-	if (mps->cs_control)
+-		mps->cs_control(spi, (spi->mode & SPI_CS_HIGH) ? 1 : 0);
+-}
+-
+-static void mpc52xx_psc_spi_deactivate_cs(struct spi_device *spi)
+-{
+-	struct mpc52xx_psc_spi *mps = spi_master_get_devdata(spi->master);
+-
+-	if (mps->cs_control)
+-		mps->cs_control(spi, (spi->mode & SPI_CS_HIGH) ? 0 : 1);
+ }
+ 
+ #define MPC52xx_PSC_BUFSIZE (MPC52xx_PSC_RFNUM_MASK + 1)
+@@ -220,14 +204,9 @@ int mpc52xx_psc_spi_transfer_one_message(struct spi_controller *ctlr,
+ 		m->actual_length += t->len;
+ 
+ 		spi_transfer_delay_exec(t);
+-
+-		if (cs_change)
+-			mpc52xx_psc_spi_deactivate_cs(spi);
+ 	}
+ 
+ 	m->status = status;
+-	if (status || !cs_change)
+-		mpc52xx_psc_spi_deactivate_cs(spi);
+ 
+ 	mpc52xx_psc_spi_transfer_setup(spi, NULL);
+ 
+@@ -269,7 +248,7 @@ static int mpc52xx_psc_spi_port_config(int psc_id, struct mpc52xx_psc_spi *mps)
+ 	int ret;
+ 
+ 	/* default sysclk is 512MHz */
+-	mclken_div = (mps->sysclk ? mps->sysclk : 512000000) / MCLK;
++	mclken_div = 512000000 / MCLK;
+ 	ret = mpc52xx_set_psc_clkdiv(psc_id, mclken_div);
+ 	if (ret)
+ 		return ret;
+@@ -317,7 +296,6 @@ static irqreturn_t mpc52xx_psc_spi_isr(int irq, void *dev_id)
+ static int mpc52xx_psc_spi_do_probe(struct device *dev, u32 regaddr,
+ 				u32 size, unsigned int irq, s16 bus_num)
+ {
+-	struct fsl_spi_platform_data *pdata = dev_get_platdata(dev);
+ 	struct mpc52xx_psc_spi *mps;
+ 	struct spi_master *master;
+ 	int ret;
+@@ -333,19 +311,8 @@ static int mpc52xx_psc_spi_do_probe(struct device *dev, u32 regaddr,
+ 	master->mode_bits = SPI_CPOL | SPI_CPHA | SPI_CS_HIGH | SPI_LSB_FIRST;
+ 
+ 	mps->irq = irq;
+-	if (pdata == NULL) {
+-		dev_warn(dev,
+-			 "probe called without platform data, no cs_control function will be called\n");
+-		mps->cs_control = NULL;
+-		mps->sysclk = 0;
+-		master->bus_num = bus_num;
+-		master->num_chipselect = 255;
+-	} else {
+-		mps->cs_control = pdata->cs_control;
+-		mps->sysclk = pdata->sysclk;
+-		master->bus_num = pdata->bus_num;
+-		master->num_chipselect = pdata->max_chipselect;
+-	}
++	master->bus_num = bus_num;
++	master->num_chipselect = 255;
+ 	master->setup = mpc52xx_psc_spi_setup;
+ 	master->transfer_one_message = mpc52xx_psc_spi_transfer_one_message;
+ 	master->cleanup = mpc52xx_psc_spi_cleanup;
 -- 
 2.39.2
 
