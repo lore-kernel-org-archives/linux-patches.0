@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E930168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB660C433D2;
-	Mon,  8 May 2023 10:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76BF168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C93EC433D2;
+	Mon,  8 May 2023 10:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540316;
-	bh=+11DuGqPdvMfRuhuO0qUWaw9KcKHW5WvPW26P4xoO+Y=;
+	s=korg; t=1683540318;
+	bh=OhNI5HEa+rGIUEheh2coeEnfiuQZ0gvqR6VgGIFhOtc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBcORhjVWIUH4nzo9V8Dmkc1FipgzWdtty5NJi2s+6NIsounf72CgWZpl7fZmRQfe
-	 cWHydzWiOUG4vnNbV4EK3ox+IBPn6IcDsf+d67QhNtWd18BA6Gp66qxMM6wPcg0xdb
-	 WRPgwQ9hqm/WrbZo43lmtcv4A7Kjr1q5qD1MGq6M=
+	b=csAuQ6dqe4PP+N8f1K3Mzl0f8bhdtVsYT0zNPMkV/ZHQZO62zlsT5yOc95Ddt7uR+
+	 TknVRQqmQiT3z/t13QwZuDxtq4/Vsrg7lKO8nWMb6Z611/FlJ7IV4oVRLSA3F5QXkj
+	 XfSckJj69omMV3O+sBU5MQtUKMa1qQiV+tS+33F0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	John Garry <john.garry@huawei.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 275/611] wifi: rtw88: mac: Return the original error from rtw_pwr_seq_parser()
-Date: Mon,  8 May 2023 11:41:57 +0200
-Message-Id: <20230508094431.315224269@linuxfoundation.org>
+Subject: [PATCH 6.1 312/611] scsi: libsas: Add sas_ata_device_link_abort()
+Date: Mon,  8 May 2023 11:42:34 +0200
+Message-Id: <20230508094432.575868945@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,37 +38,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: John Garry <john.garry@huawei.com>
 
-[ Upstream commit b7ed9fa2cb76ca7a3c3cd4a6d35748fe1fbda9f6 ]
+[ Upstream commit 44112922674b94a7d699dfff6307fc830018df7c ]
 
-rtw_pwr_seq_parser() calls rtw_sub_pwr_seq_parser() which can either
-return -EBUSY, -EINVAL or 0. Propagate the original error code instead
-of unconditionally returning -EBUSY in case of an error.
+Similar to how AHCI handles NCQ errors in ahci_error_intr() ->
+ata_port_abort() -> ata_do_link_abort(), add an NCQ error handler for LLDDs
+to call to initiate a link abort.
 
-Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230226221004.138331-2-martin.blumenstingl@googlemail.com
+This will mark all outstanding QCs as failed and kick-off EH.
+
+Note:
+
+A "force reset" argument is added for drivers which require the ATA error
+handling to always reset the device.
+
+A driver may require this feature for when SATA device per-SCSI cmnd
+resources are only released during reset for ATA EH. As such, we need an
+option to force reset to be done, regardless of what any EH autopsy
+decides.
+
+The SATA device FIS fields are set to indicate a device error from
+ata_eh_analyze_tf().
+
+Suggested-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Suggested-by: Niklas Cassel <niklas.cassel@wdc.com>
+Signed-off-by: John Garry <john.garry@huawei.com>
+Link: https://lore.kernel.org/r/1665998435-199946-2-git-send-email-john.garry@huawei.com
+Tested-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Tested-by: Niklas Cassel <niklas.cassel@wdc.com> # pm80xx
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: bb544224da77 ("scsi: hisi_sas: Handle NCQ error when IPTT is valid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/libsas/sas_ata.c | 15 +++++++++++++++
+ include/scsi/sas_ata.h        |  6 ++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/mac.c b/drivers/net/wireless/realtek/rtw88/mac.c
-index 2afe64f2abe69..498f156553699 100644
---- a/drivers/net/wireless/realtek/rtw88/mac.c
-+++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -233,7 +233,7 @@ static int rtw_pwr_seq_parser(struct rtw_dev *rtwdev,
+diff --git a/drivers/scsi/libsas/sas_ata.c b/drivers/scsi/libsas/sas_ata.c
+index 2fd55ef9ffca5..a34d06fd47f06 100644
+--- a/drivers/scsi/libsas/sas_ata.c
++++ b/drivers/scsi/libsas/sas_ata.c
+@@ -886,6 +886,21 @@ void sas_ata_wait_eh(struct domain_device *dev)
+ 	ata_port_wait_eh(ap);
+ }
  
- 		ret = rtw_sub_pwr_seq_parser(rtwdev, intf_mask, cut_mask, cmd);
- 		if (ret)
--			return -EBUSY;
-+			return ret;
++void sas_ata_device_link_abort(struct domain_device *device, bool force_reset)
++{
++	struct ata_port *ap = device->sata_dev.ap;
++	struct ata_link *link = &ap->link;
++
++	device->sata_dev.fis[2] = ATA_ERR | ATA_DRDY; /* tf status */
++	device->sata_dev.fis[3] = ATA_ABORTED; /* tf error */
++
++	link->eh_info.err_mask |= AC_ERR_DEV;
++	if (force_reset)
++		link->eh_info.action |= ATA_EH_RESET;
++	ata_link_abort(link);
++}
++EXPORT_SYMBOL_GPL(sas_ata_device_link_abort);
++
+ int sas_execute_ata_cmd(struct domain_device *device, u8 *fis, int force_phy_id)
+ {
+ 	struct sas_tmf_task tmf_task = {};
+diff --git a/include/scsi/sas_ata.h b/include/scsi/sas_ata.h
+index ec646217e7f6e..e7d466df81576 100644
+--- a/include/scsi/sas_ata.h
++++ b/include/scsi/sas_ata.h
+@@ -32,6 +32,7 @@ void sas_probe_sata(struct asd_sas_port *port);
+ void sas_suspend_sata(struct asd_sas_port *port);
+ void sas_resume_sata(struct asd_sas_port *port);
+ void sas_ata_end_eh(struct ata_port *ap);
++void sas_ata_device_link_abort(struct domain_device *dev, bool force_reset);
+ int sas_execute_ata_cmd(struct domain_device *device, u8 *fis,
+ 			int force_phy_id);
+ int sas_ata_wait_after_reset(struct domain_device *dev, unsigned long deadline);
+@@ -88,6 +89,11 @@ static inline void sas_ata_end_eh(struct ata_port *ap)
+ {
+ }
  
- 		idx++;
- 	} while (1);
++static inline void sas_ata_device_link_abort(struct domain_device *dev,
++					     bool force_reset)
++{
++}
++
+ static inline int sas_execute_ata_cmd(struct domain_device *device, u8 *fis,
+ 				      int force_phy_id)
+ {
 -- 
 2.39.2
 
