@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93531168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAC1C433EF;
-	Mon,  8 May 2023 10:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4994A168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FB37C433D2;
+	Mon,  8 May 2023 10:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543317;
-	bh=0AQ2wp0OGamjfauAy/P5RuxzgX+X+xJnN5UQGP69ggo=;
+	s=korg; t=1683543321;
+	bh=locGV9iio/HtpP5WMfWl7Z3f1oqcWiQPfUbfQB3EWD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EzYZTmgQmYTZxcFaoTo/IVCwbcg3Akllllj0uvJjssYdUKD2VZPesGUQ/Ml9rdUYQ
-	 G0CT9KudfIfpDMvHYyC/ZOTYEooVKuTsRhFPrSVEB9Xz9HEilwJ20Nbmer9p7xutem
-	 ZuJy7YfRrrQRwiTYq49zLKGTSjDx7tboG1WNwpcw=
+	b=IQhG2rY/REFc+Q1LRtm8rjthm88fdqRP8dUTwXlk+8wBkOdIQcrGYJ14Cnji+XS76
+	 R4ZlFwKNbuKfnh5i3uuxpGIHLpUg6iCGxEJrdF3zJdK848MuH7rFpTVF6ltRvhUpWg
+	 wGcwaO90L3GSlKQnUeDSN6MrM6heSYj50Dp+F02g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Krastev <krastevm@vmware.com>,
-	Maaz Mombasawala <mombasawalam@vmware.com>,
-	Zack Rusin <zackr@vmware.com>
-Subject: [PATCH 6.3 021/694] drm/vmwgfx: Fix Legacy Display Unit atomic drm support
-Date: Mon,  8 May 2023 11:37:36 +0200
-Message-Id: <20230508094433.317671174@linuxfoundation.org>
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.3 022/694] blk-stat: fix QUEUE_FLAG_STATS clear
+Date: Mon,  8 May 2023 11:37:37 +0200
+Message-Id: <20230508094433.356204030@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,208 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Krastev <krastevm@vmware.com>
+From: Chengming Zhou <zhouchengming@bytedance.com>
 
-commit a37a512db3fa1b65fe9087003e5b2072cefb3667 upstream.
+commit 20de765f6d9da0c47b756429c60b41063b990a10 upstream.
 
-Legacy Display Unit (LDU) fb dirty support used a custom fb dirty callback. Latter
-handled only the DIRTYFB IOCTL presentation path but not the ADDFB2/PAGE_FLIP/RMFB
-IOCTL path, common for Wayland compositors.
+We need to set QUEUE_FLAG_STATS for two cases:
+1. blk_stat_enable_accounting()
+2. blk_stat_add_callback()
 
-Get rid of the custom callback in favor of drm_atomic_helper_dirtyfb and unify the
-handling of the presentation paths inside of vmw_ldu_primary_plane_atomic_update.
-This also homogenizes the fb dirty callbacks across all DUs: LDU, SOU and STDU.
+So we should clear it only when ((q->stats->accounting == 0) &&
+list_empty(&q->stats->callbacks)).
 
-Signed-off-by: Martin Krastev <krastevm@vmware.com>
-Reviewed-by: Maaz Mombasawala <mombasawalam@vmware.com>
-Fixes: 2f5544ff0300 ("drm/vmwgfx: Use atomic helper function for dirty fb IOCTL")
-Cc: <stable@vger.kernel.org> # v5.0+
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230321020949.335012-3-zack@kde.org
+blk_stat_disable_accounting() only check if q->stats->accounting
+is 0 before clear the flag, this patch fix it.
+
+Also add list_empty(&q->stats->callbacks)) check when enable, or
+the flag is already set.
+
+The bug can be reproduced on kernel without BLK_DEV_THROTTLING
+(since it unconditionally enable accounting, see the next patch).
+
+  # cat /sys/block/sr0/queue/scheduler
+  none mq-deadline [bfq]
+
+  # cat /sys/kernel/debug/block/sr0/state
+  SAME_COMP|IO_STAT|INIT_DONE|STATS|REGISTERED|NOWAIT|30
+
+  # echo none > /sys/block/sr0/queue/scheduler
+
+  # cat /sys/kernel/debug/block/sr0/state
+  SAME_COMP|IO_STAT|INIT_DONE|REGISTERED|NOWAIT
+
+  # cat /sys/block/sr0/queue/wbt_lat_usec
+  75000
+
+We can see that after changing elevator from "bfq" to "none",
+"STATS" flag is lost even though WBT callback still need it.
+
+Fixes: 68497092bde9 ("block: make queue stat accounting a reference")
+Cc: <stable@vger.kernel.org> # v5.17+
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230413062805.2081970-1-chengming.zhou@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |   62 ------------------------------------
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.h |    5 --
- drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c |   45 +++++++++++++++++++++-----
- 3 files changed, 38 insertions(+), 74 deletions(-)
+ block/blk-stat.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -1420,70 +1420,10 @@ static void vmw_framebuffer_bo_destroy(s
- 	kfree(vfbd);
+--- a/block/blk-stat.c
++++ b/block/blk-stat.c
+@@ -190,7 +190,7 @@ void blk_stat_disable_accounting(struct
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&q->stats->lock, flags);
+-	if (!--q->stats->accounting)
++	if (!--q->stats->accounting && list_empty(&q->stats->callbacks))
+ 		blk_queue_flag_clear(QUEUE_FLAG_STATS, q);
+ 	spin_unlock_irqrestore(&q->stats->lock, flags);
  }
+@@ -201,7 +201,7 @@ void blk_stat_enable_accounting(struct r
+ 	unsigned long flags;
  
--static int vmw_framebuffer_bo_dirty(struct drm_framebuffer *framebuffer,
--				    struct drm_file *file_priv,
--				    unsigned int flags, unsigned int color,
--				    struct drm_clip_rect *clips,
--				    unsigned int num_clips)
--{
--	struct vmw_private *dev_priv = vmw_priv(framebuffer->dev);
--	struct vmw_framebuffer_bo *vfbd =
--		vmw_framebuffer_to_vfbd(framebuffer);
--	struct drm_clip_rect norect;
--	int ret, increment = 1;
--
--	drm_modeset_lock_all(&dev_priv->drm);
--
--	if (!num_clips) {
--		num_clips = 1;
--		clips = &norect;
--		norect.x1 = norect.y1 = 0;
--		norect.x2 = framebuffer->width;
--		norect.y2 = framebuffer->height;
--	} else if (flags & DRM_MODE_FB_DIRTY_ANNOTATE_COPY) {
--		num_clips /= 2;
--		increment = 2;
--	}
--
--	switch (dev_priv->active_display_unit) {
--	case vmw_du_legacy:
--		ret = vmw_kms_ldu_do_bo_dirty(dev_priv, &vfbd->base, 0, 0,
--					      clips, num_clips, increment);
--		break;
--	default:
--		ret = -EINVAL;
--		WARN_ONCE(true, "Dirty called with invalid display system.\n");
--		break;
--	}
--
--	vmw_cmd_flush(dev_priv, false);
--
--	drm_modeset_unlock_all(&dev_priv->drm);
--
--	return ret;
--}
--
--static int vmw_framebuffer_bo_dirty_ext(struct drm_framebuffer *framebuffer,
--					struct drm_file *file_priv,
--					unsigned int flags, unsigned int color,
--					struct drm_clip_rect *clips,
--					unsigned int num_clips)
--{
--	struct vmw_private *dev_priv = vmw_priv(framebuffer->dev);
--
--	if (dev_priv->active_display_unit == vmw_du_legacy &&
--	    vmw_cmd_supported(dev_priv))
--		return vmw_framebuffer_bo_dirty(framebuffer, file_priv, flags,
--						color, clips, num_clips);
--
--	return drm_atomic_helper_dirtyfb(framebuffer, file_priv, flags, color,
--					 clips, num_clips);
--}
--
- static const struct drm_framebuffer_funcs vmw_framebuffer_bo_funcs = {
- 	.create_handle = vmw_framebuffer_bo_create_handle,
- 	.destroy = vmw_framebuffer_bo_destroy,
--	.dirty = vmw_framebuffer_bo_dirty_ext,
-+	.dirty = drm_atomic_helper_dirtyfb,
- };
- 
- /*
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h
-@@ -512,11 +512,6 @@ void vmw_du_connector_destroy_state(stru
-  */
- int vmw_kms_ldu_init_display(struct vmw_private *dev_priv);
- int vmw_kms_ldu_close_display(struct vmw_private *dev_priv);
--int vmw_kms_ldu_do_bo_dirty(struct vmw_private *dev_priv,
--			    struct vmw_framebuffer *framebuffer,
--			    unsigned int flags, unsigned int color,
--			    struct drm_clip_rect *clips,
--			    unsigned int num_clips, int increment);
- int vmw_kms_update_proxy(struct vmw_resource *res,
- 			 const struct drm_clip_rect *clips,
- 			 unsigned num_clips,
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c
-@@ -234,6 +234,7 @@ static const struct drm_crtc_funcs vmw_l
- 	.atomic_duplicate_state = vmw_du_crtc_duplicate_state,
- 	.atomic_destroy_state = vmw_du_crtc_destroy_state,
- 	.set_config = drm_atomic_helper_set_config,
-+	.page_flip = drm_atomic_helper_page_flip,
- };
- 
- 
-@@ -273,6 +274,12 @@ static const struct
- drm_connector_helper_funcs vmw_ldu_connector_helper_funcs = {
- };
- 
-+static int vmw_kms_ldu_do_bo_dirty(struct vmw_private *dev_priv,
-+				   struct vmw_framebuffer *framebuffer,
-+				   unsigned int flags, unsigned int color,
-+				   struct drm_mode_rect *clips,
-+				   unsigned int num_clips);
-+
- /*
-  * Legacy Display Plane Functions
-  */
-@@ -291,7 +298,6 @@ vmw_ldu_primary_plane_atomic_update(stru
- 	struct drm_framebuffer *fb;
- 	struct drm_crtc *crtc = new_state->crtc ?: old_state->crtc;
- 
--
- 	ldu = vmw_crtc_to_ldu(crtc);
- 	dev_priv = vmw_priv(plane->dev);
- 	fb       = new_state->fb;
-@@ -304,8 +310,31 @@ vmw_ldu_primary_plane_atomic_update(stru
- 		vmw_ldu_del_active(dev_priv, ldu);
- 
- 	vmw_ldu_commit_list(dev_priv);
--}
- 
-+	if (vfb && vmw_cmd_supported(dev_priv)) {
-+		struct drm_mode_rect fb_rect = {
-+			.x1 = 0,
-+			.y1 = 0,
-+			.x2 = vfb->base.width,
-+			.y2 = vfb->base.height
-+		};
-+		struct drm_mode_rect *damage_rects = drm_plane_get_damage_clips(new_state);
-+		u32 rect_count = drm_plane_get_damage_clips_count(new_state);
-+		int ret;
-+
-+		if (!damage_rects) {
-+			damage_rects = &fb_rect;
-+			rect_count = 1;
-+		}
-+
-+		ret = vmw_kms_ldu_do_bo_dirty(dev_priv, vfb, 0, 0, damage_rects, rect_count);
-+
-+		drm_WARN_ONCE(plane->dev, ret,
-+			"vmw_kms_ldu_do_bo_dirty failed with: ret=%d\n", ret);
-+
-+		vmw_cmd_flush(dev_priv, false);
-+	}
-+}
- 
- static const struct drm_plane_funcs vmw_ldu_plane_funcs = {
- 	.update_plane = drm_atomic_helper_update_plane,
-@@ -536,11 +565,11 @@ int vmw_kms_ldu_close_display(struct vmw
+ 	spin_lock_irqsave(&q->stats->lock, flags);
+-	if (!q->stats->accounting++)
++	if (!q->stats->accounting++ && list_empty(&q->stats->callbacks))
+ 		blk_queue_flag_set(QUEUE_FLAG_STATS, q);
+ 	spin_unlock_irqrestore(&q->stats->lock, flags);
  }
- 
- 
--int vmw_kms_ldu_do_bo_dirty(struct vmw_private *dev_priv,
--			    struct vmw_framebuffer *framebuffer,
--			    unsigned int flags, unsigned int color,
--			    struct drm_clip_rect *clips,
--			    unsigned int num_clips, int increment)
-+static int vmw_kms_ldu_do_bo_dirty(struct vmw_private *dev_priv,
-+				   struct vmw_framebuffer *framebuffer,
-+				   unsigned int flags, unsigned int color,
-+				   struct drm_mode_rect *clips,
-+				   unsigned int num_clips)
- {
- 	size_t fifo_size;
- 	int i;
-@@ -556,7 +585,7 @@ int vmw_kms_ldu_do_bo_dirty(struct vmw_p
- 		return -ENOMEM;
- 
- 	memset(cmd, 0, fifo_size);
--	for (i = 0; i < num_clips; i++, clips += increment) {
-+	for (i = 0; i < num_clips; i++, clips++) {
- 		cmd[i].header = SVGA_CMD_UPDATE;
- 		cmd[i].body.x = clips->x1;
- 		cmd[i].body.y = clips->y1;
 
 
