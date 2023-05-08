@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B1E168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B4A2C433A0;
-	Mon,  8 May 2023 10:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5DE0168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:43:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DA9C4339B;
+	Mon,  8 May 2023 10:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542578;
-	bh=Ns4P9xblzuxKQQoBbgAkaeEKgiMPKptOtgYf9HZsURk=;
+	s=korg; t=1683542581;
+	bh=m2MAVz1sFRRcDP0NOl/MARcnCO2Q+y+I1t5a6wLEScU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qw/fosVoe5h5RVkaI0r/04o0Cb2C7olFZ6T7PUR6eXnuY0YoYjjFIdDSAyFR2jLNZ
-	 g13TzVpW/mHflMt9Zpp9J4067DSPJQmc9Qd+Ffpox6wCyog1x2fKymtl/uHwMzfvuW
-	 7mT4zwkWwXnSFWya6uPrp4L+HfEhyD8Mpv0FaKp4=
+	b=KTjLfUo3OvTFdv9Sqb8NKg8/YfEjz5rigsuxoXznPBMYrzPULWOl2Jbb03nkUKzXq
+	 TMvR5LI0Kem0DIoMQYygRmqZqbasxKVPshD+Zdbh4LMznYuzyJSKOh+wP+jYhLDVsY
+	 /QUXPUMzDCPHOL8L+E/dvDiFG77+REDEfyHDqPsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 480/663] drm/panel: novatek-nt35950: Improve error handling
-Date: Mon,  8 May 2023 11:45:06 +0200
-Message-Id: <20230508094443.902405310@linuxfoundation.org>
+Subject: [PATCH 6.2 454/663] usb: gadget: udc: renesas_usb3: Fix use after free bug in renesas_usb3_remove due to race condition
+Date: Mon,  8 May 2023 11:44:40 +0200
+Message-Id: <20230508094442.841711004@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,55 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 5dd45b66742a1f3cfa9a92dc0ac8714c7708ee6c ]
+[ Upstream commit 2b947f8769be8b8181dc795fd292d3e7120f5204 ]
 
-In a very peculiar case when probing and registering with the secondary
-DSI host succeeds, but the OF backlight or DSI attachment fails, the
-primary DSI device is automatically cleaned up, but the secondary one
-is not, leading to -EEXIST when the driver core tries to handle
--EPROBE_DEFER.
+In renesas_usb3_probe, role_work is bound with renesas_usb3_role_work.
+renesas_usb3_start will be called to start the work.
 
-Unregister the DSI1 device manually on failure to prevent that.
+If we remove the driver which will call usbhs_remove, there may be
+an unfinished work. The possible sequence is as follows:
 
-Fixes: 623a3531e9cf ("drm/panel: Add driver for Novatek NT35950 DSI DriverIC panels")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230415-konrad-longbois-next-v1-1-ce695dc9df84@linaro.org
+CPU0                  			CPU1
+
+                    			 renesas_usb3_role_work
+renesas_usb3_remove
+usb_role_switch_unregister
+device_unregister
+kfree(sw)
+//free usb3->role_sw
+                    			 usb_role_switch_set_role
+                    			 //use usb3->role_sw
+
+The usb3->role_sw could be freed under such circumstance and then
+used in usb_role_switch_set_role.
+
+This bug was found by static analysis. And note that removing a
+driver is a root-only operation, and should never happen in normal
+case. But the root user may directly remove the device which
+will also trigger the remove function.
+
+Fix it by canceling the work before cleanup in the renesas_usb3_remove.
+
+Fixes: 39facfa01c9f ("usb: gadget: udc: renesas_usb3: Add register of usb role switch")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20230320062931.505170-1-zyytlz.wz@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-novatek-nt35950.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/renesas_usb3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35950.c b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
-index 3a844917da075..4359b02754aac 100644
---- a/drivers/gpu/drm/panel/panel-novatek-nt35950.c
-+++ b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
-@@ -593,8 +593,11 @@ static int nt35950_probe(struct mipi_dsi_device *dsi)
- 		       DRM_MODE_CONNECTOR_DSI);
+diff --git a/drivers/usb/gadget/udc/renesas_usb3.c b/drivers/usb/gadget/udc/renesas_usb3.c
+index 615ba0a6fbee1..32c9e369216c9 100644
+--- a/drivers/usb/gadget/udc/renesas_usb3.c
++++ b/drivers/usb/gadget/udc/renesas_usb3.c
+@@ -2596,6 +2596,7 @@ static int renesas_usb3_remove(struct platform_device *pdev)
+ 	debugfs_remove_recursive(usb3->dentry);
+ 	device_remove_file(&pdev->dev, &dev_attr_role);
  
- 	ret = drm_panel_of_backlight(&nt->panel);
--	if (ret)
-+	if (ret) {
-+		mipi_dsi_device_unregister(nt->dsi[1]);
-+
- 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
-+	}
++	cancel_work_sync(&usb3->role_work);
+ 	usb_role_switch_unregister(usb3->role_sw);
  
- 	drm_panel_add(&nt->panel);
- 
-@@ -610,6 +613,9 @@ static int nt35950_probe(struct mipi_dsi_device *dsi)
- 
- 		ret = mipi_dsi_attach(nt->dsi[i]);
- 		if (ret < 0) {
-+			/* If we fail to attach to either host, we're done */
-+			mipi_dsi_device_unregister(nt->dsi[1]);
-+
- 			return dev_err_probe(dev, ret,
- 					     "Cannot attach to DSI%d host.\n", i);
- 		}
+ 	usb_del_gadget_udc(&usb3->gadget);
 -- 
 2.39.2
 
