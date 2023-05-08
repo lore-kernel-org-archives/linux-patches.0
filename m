@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9790B320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14DD6C433D2;
-	Mon,  8 May 2023 11:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9489320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C8ACC433D2;
+	Mon,  8 May 2023 11:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544145;
-	bh=3GjaSjRQxYdGyrHhFCH6DoDx3IN1bcdGWGu3+TTMJv4=;
+	s=korg; t=1683544148;
+	bh=zg/FSjekkU4algjXcqm//2iYeTCGAsgTynUgScWizjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K5ni3qaASlhNZDCfUrGChYXd84LnoLF5PY/kguImIaZD0XyersWs9IoGXKx1quH0I
-	 lC6HV885v7Wolsq88QCTyuOC+7/LitqqdR6/q35mVNbciNC+yrfDiWNJTs0dUialpG
-	 /TJbrd0K2+gNJ2tTuCXF9FHtRt+dHzybnvdE7PGo=
+	b=moDjr3W2tSG1imxOlYzd4NPj6Wymefc3v94vZA8EYrNtNaxJWJ2zqQTkikev2b7ms
+	 Y+zAVc4BSUZsTZZYVZlxKVW40uoov82YImrNkw0jdnzzDXtueffnZyF5k5tZ5ZxLMu
+	 Bf+8g0cajupo/zFembpXfelqoenvaEegAHwPG1fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 284/694] media: mediatek: vcodec: change lat thread decode error condition
-Date: Mon,  8 May 2023 11:41:59 +0200
-Message-Id: <20230508094441.510863524@linuxfoundation.org>
+Subject: [PATCH 6.3 285/694] media: cedrus: fix use after free bug in cedrus_remove due to race condition
+Date: Mon,  8 May 2023 11:42:00 +0200
+Message-Id: <20230508094441.539591894@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,68 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 960badda95f10fb0c60f6f64978b19eafa9507a7 ]
+[ Upstream commit 50d0a7aea4809cef87979d4669911276aa23b71f ]
 
-If lat thread can't get lat buffer, it should be that current instance
-don't be schedulded, the driver can't free the src buffer directly.
+In cedrus_probe, dev->watchdog_work is bound with cedrus_watchdog function.
+In cedrus_device_run, it will started by schedule_delayed_work. If there is
+an unfinished work in cedrus_remove, there may be a race condition and
+trigger UAF bug.
 
-Fixes: 7b182b8d9c85 ("media: mediatek: vcodec: Refactor get and put capture buffer flow")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+CPU0                  CPU1
+
+                    |cedrus_watchdog
+cedrus_remove       |
+  v4l2_m2m_release  |
+  kfree(m2m_dev)    |
+                    |
+                    | v4l2_m2m_get_curr_priv
+                    |   m2m_dev //use
+
+Fix it by canceling the worker in cedrus_remove.
+
+Fixes: 7c38a551bda1 ("media: cedrus: Add watchdog for job completion")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c     | 6 ++++--
- .../platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c  | 2 +-
- .../platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c     | 2 +-
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/staging/media/sunxi/cedrus/cedrus.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
-index ab8f642d1e5b0..3000db975e5f5 100644
---- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
-+++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
-@@ -258,8 +258,10 @@ static void mtk_vdec_worker(struct work_struct *work)
- 		if (src_buf_req)
- 			v4l2_ctrl_request_complete(src_buf_req, &ctx->ctrl_hdl);
- 	} else {
--		v4l2_m2m_src_buf_remove(ctx->m2m_ctx);
--		v4l2_m2m_buf_done(vb2_v4l2_src, state);
-+		if (ret != -EAGAIN) {
-+			v4l2_m2m_src_buf_remove(ctx->m2m_ctx);
-+			v4l2_m2m_buf_done(vb2_v4l2_src, state);
-+		}
- 		v4l2_m2m_job_finish(dev->m2m_dev_dec, ctx->m2m_ctx);
- 	}
- }
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-index 955b2d0c8f53f..999ce7ee5fdc2 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-@@ -597,7 +597,7 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 	lat_buf = vdec_msg_queue_dqbuf(&inst->ctx->msg_queue.lat_ctx);
- 	if (!lat_buf) {
- 		mtk_vcodec_err(inst, "failed to get lat buffer");
--		return -EINVAL;
-+		return -EAGAIN;
- 	}
- 	share_info = lat_buf->private_data;
- 	src_buf_info = container_of(bs, struct mtk_video_dec_buf, bs_buffer);
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
-index cbb6728b8a40b..cf16cf2807f07 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_vp9_req_lat_if.c
-@@ -2070,7 +2070,7 @@ static int vdec_vp9_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 	lat_buf = vdec_msg_queue_dqbuf(&instance->ctx->msg_queue.lat_ctx);
- 	if (!lat_buf) {
- 		mtk_vcodec_err(instance, "Failed to get VP9 lat buf\n");
--		return -EBUSY;
-+		return -EAGAIN;
- 	}
- 	pfc = (struct vdec_vp9_slice_pfc *)lat_buf->private_data;
- 	if (!pfc) {
+diff --git a/drivers/staging/media/sunxi/cedrus/cedrus.c b/drivers/staging/media/sunxi/cedrus/cedrus.c
+index a43d5ff667163..a50a4d0a8f715 100644
+--- a/drivers/staging/media/sunxi/cedrus/cedrus.c
++++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
+@@ -547,6 +547,7 @@ static int cedrus_remove(struct platform_device *pdev)
+ {
+ 	struct cedrus_dev *dev = platform_get_drvdata(pdev);
+ 
++	cancel_delayed_work_sync(&dev->watchdog_work);
+ 	if (media_devnode_is_registered(dev->mdev.devnode)) {
+ 		media_device_unregister(&dev->mdev);
+ 		v4l2_m2m_unregister_media_controller(dev->m2m_dev);
 -- 
 2.39.2
 
