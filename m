@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BD823A4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:30:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9368AC433D2;
-	Mon,  8 May 2023 10:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CA5523A4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:30:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F09B0C433D2;
+	Mon,  8 May 2023 10:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541856;
-	bh=6QHdSxgOiOqKxFvZzYeaWNF3IttFGI+xjhYuVopaj3I=;
+	s=korg; t=1683541859;
+	bh=QpZGSFcUEdxc4V4AwY/r1ackKvIgcNwFVumQaCxvIpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UoQ+lIVPKoSNtVrInpahoj8btbwOlUbxiTwjZPVsx/nB4zARGEj1ne59qmg+CspiF
-	 hXph4KT83p6Zwc4yITjB3H03pQoRxiCbKepnmPlst6J0jZZJvMHCxG2/Vw+0+sz7MJ
-	 S0M24h0/WfFYSrJtk+z1uMx1jfwsCeLR9cIG9u10=
+	b=Q2JPEKgIdPJS9oPGcMhK2wtPurPP3DmwcfsbZ1iZMo/8yvCMXU/ghZ70giH4ndMnN
+	 Arg4dsalMgTxIEeii+bXEcqWpZFGZlTi9tq9WI4oHnQ6TQiz3l7ikE4pwVjGeRvEUI
+	 k5tyawPTlnr5tItWM8hVUJCE4mkfWwkIUPTIeFxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Jia-Wei Chang <jia-wei.chang@mediatek.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 204/663] cpufreq: mediatek: Raise proc and sram max voltage for MT7622/7623
-Date: Mon,  8 May 2023 11:40:30 +0200
-Message-Id: <20230508094434.993849325@linuxfoundation.org>
+Subject: [PATCH 6.2 242/663] media: mediatek: vcodec: making sure queue_work successfully
+Date: Mon,  8 May 2023 11:41:08 +0200
+Message-Id: <20230508094436.132932694@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,65 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 0883426fd07e39355362e3f2eb9aee1a154dcaf6 ]
+[ Upstream commit 2e0ef56d81cb2569624d288b7e95a8a2734a7c74 ]
 
-During the addition of SRAM voltage tracking for CCI scaling, this
-driver got some voltage limits set for the vtrack algorithm: these
-were moved to platform data first, then enforced in a later commit
-6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
-using these as max values for the regulator_set_voltage() calls.
+Putting core work to work queue using queue_work maybe fail, call
+queue_work again when the count of core work in work queue is less
+than core_list_cnt, making sure all the buffer in core list can be
+scheduled.
 
-In this case, the vsram/vproc constraints for MT7622 and MT7623
-were supposed to be the same as MT2701 (and a number of other SoCs),
-but that turned out to be a mistake because the aforementioned two
-SoCs' maximum voltage for both VPROC and VPROC_SRAM is 1.36V.
-
-Fix that by adding new platform data for MT7622/7623 declaring the
-right {proc,sram}_max_volt parameter.
-
-Fixes: ead858bd128d ("cpufreq: mediatek: Move voltage limits to platform data")
-Fixes: 6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jia-Wei Chang <jia-wei.chang@mediatek.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/mediatek-cpufreq.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ .../platform/mediatek/vcodec/vdec_msg_queue.c | 31 ++++++++++++++-----
+ .../platform/mediatek/vcodec/vdec_msg_queue.h |  2 ++
+ 2 files changed, 25 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
-index 764e4fbdd536c..9a39a7ccfae96 100644
---- a/drivers/cpufreq/mediatek-cpufreq.c
-+++ b/drivers/cpufreq/mediatek-cpufreq.c
-@@ -693,6 +693,15 @@ static const struct mtk_cpufreq_platform_data mt2701_platform_data = {
- 	.ccifreq_supported = false,
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+index cdc539a46cb95..f3073d1e7f420 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+@@ -71,6 +71,7 @@ static void vdec_msg_queue_dec(struct vdec_msg_queue *msg_queue, int hardware_in
+ int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf *buf)
+ {
+ 	struct list_head *head;
++	int status;
+ 
+ 	head = vdec_get_buf_list(msg_ctx->hardware_index, buf);
+ 	if (!head) {
+@@ -83,11 +84,17 @@ int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf
+ 	msg_ctx->ready_num++;
+ 
+ 	vdec_msg_queue_inc(&buf->ctx->msg_queue, msg_ctx->hardware_index);
+-	if (msg_ctx->hardware_index != MTK_VDEC_CORE)
++	if (msg_ctx->hardware_index != MTK_VDEC_CORE) {
+ 		wake_up_all(&msg_ctx->ready_to_use);
+-	else
+-		queue_work(buf->ctx->dev->core_workqueue,
+-			   &buf->ctx->msg_queue.core_work);
++	} else {
++		if (buf->ctx->msg_queue.core_work_cnt <
++			atomic_read(&buf->ctx->msg_queue.core_list_cnt)) {
++			status = queue_work(buf->ctx->dev->core_workqueue,
++					    &buf->ctx->msg_queue.core_work);
++			if (status)
++				buf->ctx->msg_queue.core_work_cnt++;
++		}
++	}
+ 
+ 	mtk_v4l2_debug(3, "enqueue buf type: %d addr: 0x%p num: %d",
+ 		       msg_ctx->hardware_index, buf, msg_ctx->ready_num);
+@@ -254,6 +261,7 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
+ 		container_of(msg_queue, struct mtk_vcodec_ctx, msg_queue);
+ 	struct mtk_vcodec_dev *dev = ctx->dev;
+ 	struct vdec_lat_buf *lat_buf;
++	int status;
+ 
+ 	lat_buf = vdec_msg_queue_dqbuf(&dev->msg_queue_core_ctx);
+ 	if (!lat_buf)
+@@ -270,11 +278,17 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
+ 	vdec_msg_queue_qbuf(&ctx->msg_queue.lat_ctx, lat_buf);
+ 
+ 	wake_up_all(&ctx->msg_queue.core_dec_done);
+-	if (atomic_read(&lat_buf->ctx->msg_queue.core_list_cnt)) {
+-		mtk_v4l2_debug(3, "re-schedule to decode for core: %d",
+-			       dev->msg_queue_core_ctx.ready_num);
+-		queue_work(dev->core_workqueue, &msg_queue->core_work);
++	spin_lock(&dev->msg_queue_core_ctx.ready_lock);
++	lat_buf->ctx->msg_queue.core_work_cnt--;
++
++	if (lat_buf->ctx->msg_queue.core_work_cnt <
++		atomic_read(&lat_buf->ctx->msg_queue.core_list_cnt)) {
++		status = queue_work(lat_buf->ctx->dev->core_workqueue,
++				    &lat_buf->ctx->msg_queue.core_work);
++		if (status)
++			lat_buf->ctx->msg_queue.core_work_cnt++;
+ 	}
++	spin_unlock(&dev->msg_queue_core_ctx.ready_lock);
+ }
+ 
+ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
+@@ -289,6 +303,7 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
+ 		return 0;
+ 
+ 	msg_queue->ctx = ctx;
++	msg_queue->core_work_cnt = 0;
+ 	vdec_msg_queue_init_ctx(&msg_queue->lat_ctx, MTK_VDEC_LAT0);
+ 	INIT_WORK(&msg_queue->core_work, vdec_msg_queue_core_work);
+ 
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
+index a75c04418f52e..a5d44bc97c16b 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
++++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
+@@ -77,6 +77,7 @@ struct vdec_lat_buf {
+  * @lat_list_cnt: used to record each instance lat list count
+  * @core_list_cnt: used to record each instance core list count
+  * @core_dec_done: core work queue decode done event
++ * @core_work_cnt: the number of core work in work queue
+  */
+ struct vdec_msg_queue {
+ 	struct vdec_lat_buf lat_buf[NUM_BUFFER_COUNT];
+@@ -92,6 +93,7 @@ struct vdec_msg_queue {
+ 	atomic_t lat_list_cnt;
+ 	atomic_t core_list_cnt;
+ 	wait_queue_head_t core_dec_done;
++	int core_work_cnt;
  };
  
-+static const struct mtk_cpufreq_platform_data mt7622_platform_data = {
-+	.min_volt_shift = 100000,
-+	.max_volt_shift = 200000,
-+	.proc_max_volt = 1360000,
-+	.sram_min_volt = 0,
-+	.sram_max_volt = 1360000,
-+	.ccifreq_supported = false,
-+};
-+
- static const struct mtk_cpufreq_platform_data mt8183_platform_data = {
- 	.min_volt_shift = 100000,
- 	.max_volt_shift = 200000,
-@@ -724,8 +733,8 @@ static const struct mtk_cpufreq_platform_data mt8516_platform_data = {
- static const struct of_device_id mtk_cpufreq_machines[] __initconst = {
- 	{ .compatible = "mediatek,mt2701", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt2712", .data = &mt2701_platform_data },
--	{ .compatible = "mediatek,mt7622", .data = &mt2701_platform_data },
--	{ .compatible = "mediatek,mt7623", .data = &mt2701_platform_data },
-+	{ .compatible = "mediatek,mt7622", .data = &mt7622_platform_data },
-+	{ .compatible = "mediatek,mt7623", .data = &mt7622_platform_data },
- 	{ .compatible = "mediatek,mt8167", .data = &mt8516_platform_data },
- 	{ .compatible = "mediatek,mt817x", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt8173", .data = &mt2701_platform_data },
+ /**
 -- 
 2.39.2
 
