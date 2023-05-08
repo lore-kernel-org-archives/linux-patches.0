@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75694168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:10:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19D9C433EF;
-	Mon,  8 May 2023 10:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1928B168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:10:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9CCC433EF;
+	Mon,  8 May 2023 10:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540626;
-	bh=v9afTyW3/It3xsLFqOYgFOVO16EMHGvQZU9rOkueRQY=;
+	s=korg; t=1683540628;
+	bh=Ec3INi9tzN8PK5EEiLrwzWnnI++tHTy0UMphsl0DaMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nh0k+azajnZ2tndPhKE2kEqWQK+WM1QReNqTmu7t3IoKQaCYAgKOERdgpwVV4QQ4B
-	 0YvedLmk7ETlnhpP4t/n6beTuHa1GOOVceykqMSfrKueaMYM0WS93ru2qmGGWJpe46
-	 XAF9vZctgaBNJSTBBOCV8cklv32ZwVKpVRFLxq50=
+	b=QjTfyrcSKhgIhMEFgNkC3OJzIBXQeuftMMlM5tV9SsI9ZXapm8+qR/rD3NMtiCjNl
+	 a1XsUsrZz5pFVV3yNEKVseDnMIdt37f1HqcvFVEmAKuLKYcfOaDFgIu4NVWPqxeot1
+	 yO3X6WUEOztI2ONw1iYp1zCGt2JiZVSQ432N/ZxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liliang Ye <yll@hust.edu.cn>,
-	Dan Carpenter <error27@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhiyi Guo <zhguo@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Tarun Gupta <targupta@nvidia.com>,
+	Abhishek Sahu <abhsahu@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 436/611] ASoC: fsl_mqs: move of_node_put() to the correct location
-Date: Mon,  8 May 2023 11:44:38 +0200
-Message-Id: <20230508094436.343327009@linuxfoundation.org>
+Subject: [PATCH 6.1 437/611] PCI/PM: Extend D3hot delay for NVIDIA HDA controllers
+Date: Mon,  8 May 2023 11:44:39 +0200
+Message-Id: <20230508094436.372439254@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,70 +38,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liliang Ye <yll@hust.edu.cn>
+From: Alex Williamson <alex.williamson@redhat.com>
 
-[ Upstream commit 1c34890273a020d61d6127ade3f68ed1cb21c16a ]
+[ Upstream commit a5a6dd2624698b6e3045c3a1450874d8c790d5d9 ]
 
-of_node_put() should have been done directly after
-mqs_priv->regmap = syscon_node_to_regmap(gpr_np);
-otherwise it creates a reference leak on the success path.
+Assignment of NVIDIA Ampere-based GPUs have seen a regression since the
+below referenced commit, where the reduced D3hot transition delay appears
+to introduce a small window where a D3hot->D0 transition followed by a bus
+reset can wedge the device.  The entire device is subsequently unavailable,
+returning -1 on config space read and is unrecoverable without a host
+reset.
 
-To fix this, of_node_put() is moved to the correct location, and change
-all the gotos to direct returns.
+This has been observed with RTX A2000 and A5000 GPU and audio functions
+assigned to a Windows VM, where shutdown of the VM places the devices in
+D3hot prior to vfio-pci performing a bus reset when userspace releases the
+devices.  The issue has roughly a 2-3% chance of occurring per shutdown.
 
-Fixes: a9d273671440 ("ASoC: fsl_mqs: Fix error handling in probe")
-Signed-off-by: Liliang Ye <yll@hust.edu.cn>
-Reviewed-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/20230403152647.17638-1-yll@hust.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Restoring the HDA controller d3hot_delay to the effective value before the
+below commit has been shown to resolve the issue.  NVIDIA confirms this
+change should be safe for all of their HDA controllers.
+
+Fixes: 3e347969a577 ("PCI/PM: Reduce D3hot delay with usleep_range()")
+Link: https://lore.kernel.org/r/20230413194042.605768-1-alex.williamson@redhat.com
+Reported-by: Zhiyi Guo <zhguo@redhat.com>
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Tarun Gupta <targupta@nvidia.com>
+Cc: Abhishek Sahu <abhsahu@nvidia.com>
+Cc: Tarun Gupta <targupta@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_mqs.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ drivers/pci/quirks.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_mqs.c b/sound/soc/fsl/fsl_mqs.c
-index 4922e6795b73f..32d20d351bbf7 100644
---- a/sound/soc/fsl/fsl_mqs.c
-+++ b/sound/soc/fsl/fsl_mqs.c
-@@ -210,10 +210,10 @@ static int fsl_mqs_probe(struct platform_device *pdev)
- 		}
- 
- 		mqs_priv->regmap = syscon_node_to_regmap(gpr_np);
-+		of_node_put(gpr_np);
- 		if (IS_ERR(mqs_priv->regmap)) {
- 			dev_err(&pdev->dev, "failed to get gpr regmap\n");
--			ret = PTR_ERR(mqs_priv->regmap);
--			goto err_free_gpr_np;
-+			return PTR_ERR(mqs_priv->regmap);
- 		}
- 	} else {
- 		regs = devm_platform_ioremap_resource(pdev, 0);
-@@ -242,8 +242,7 @@ static int fsl_mqs_probe(struct platform_device *pdev)
- 	if (IS_ERR(mqs_priv->mclk)) {
- 		dev_err(&pdev->dev, "failed to get the clock: %ld\n",
- 			PTR_ERR(mqs_priv->mclk));
--		ret = PTR_ERR(mqs_priv->mclk);
--		goto err_free_gpr_np;
-+		return PTR_ERR(mqs_priv->mclk);
- 	}
- 
- 	dev_set_drvdata(&pdev->dev, mqs_priv);
-@@ -252,13 +251,9 @@ static int fsl_mqs_probe(struct platform_device *pdev)
- 	ret = devm_snd_soc_register_component(&pdev->dev, &soc_codec_fsl_mqs,
- 			&fsl_mqs_dai, 1);
- 	if (ret)
--		goto err_free_gpr_np;
--	return 0;
--
--err_free_gpr_np:
--	of_node_put(gpr_np);
-+		return ret;
- 
--	return ret;
-+	return 0;
+diff --git a/drivers/pci/quirks.c b/drivers/pci/quirks.c
+index 494fa46f57671..8d32a3834688f 100644
+--- a/drivers/pci/quirks.c
++++ b/drivers/pci/quirks.c
+@@ -1939,6 +1939,19 @@ static void quirk_radeon_pm(struct pci_dev *dev)
  }
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATI, 0x6741, quirk_radeon_pm);
  
- static int fsl_mqs_remove(struct platform_device *pdev)
++/*
++ * NVIDIA Ampere-based HDA controllers can wedge the whole device if a bus
++ * reset is performed too soon after transition to D0, extend d3hot_delay
++ * to previous effective default for all NVIDIA HDA controllers.
++ */
++static void quirk_nvidia_hda_pm(struct pci_dev *dev)
++{
++	quirk_d3hot_delay(dev, 20);
++}
++DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_NVIDIA, PCI_ANY_ID,
++			      PCI_CLASS_MULTIMEDIA_HD_AUDIO, 8,
++			      quirk_nvidia_hda_pm);
++
+ /*
+  * Ryzen5/7 XHCI controllers fail upon resume from runtime suspend or s2idle.
+  * https://bugzilla.kernel.org/show_bug.cgi?id=205587
 -- 
 2.39.2
 
