@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37E9168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E3EC433EF;
-	Mon,  8 May 2023 10:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D56168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB29AC4339B;
+	Mon,  8 May 2023 10:08:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540513;
-	bh=26UkX21mnHCir44Ml/AoGVmniXXgA7fy+N5MBZlbnao=;
+	s=korg; t=1683540516;
+	bh=gtUW9l+48R1oDojnpHWZ8L2hQvMS9oEzPvrb9H+YPcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rH1ERL7z6/Xf0UuxomaSfjbi+6OmHEJY3lW7S/smMlXoBqlkxzQJE21wWUSLvktC2
-	 d9p6iuUbPQ+8m7S1zYOWFxnL9x4b/3pbm7VtP8yglaJYSD229Lmp1XaQW8lhVvfIXD
-	 MXQwPUPswNMq78uQnK+WOXGFJsIhGmEMNtFylrFA=
+	b=N+JrB9idMr9jaRB4nIpESwHmm+l13dTnxzaLx1hGrLKtlcWPB+noJsBIMIJfxsk/x
+	 Qkb84TkDM7ZFa3U0OchZICkkhCPi8WeTFAsARLOrvUJ8NjKV+8VelOY9ySUKHf1WAy
+	 OvxIi0We1tVUVqdb5xgfPtoEFAX4m4yAyudmNVog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brad Spencer <bspencer@blackberry.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gan Gecen <gangecen@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 394/611] netlink: Use copy_to_user() for optval in netlink_getsockopt().
-Date: Mon,  8 May 2023 11:43:56 +0200
-Message-Id: <20230508094435.087894624@linuxfoundation.org>
+Subject: [PATCH 6.1 395/611] net: amd: Fix link leak when verifying config failed
+Date: Mon,  8 May 2023 11:43:57 +0200
+Message-Id: <20230508094435.116563863@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,169 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Gencen Gan <gangecen@hust.edu.cn>
 
-[ Upstream commit d913d32cc2707e9cd24fe6fa6d7d470e9c728980 ]
+[ Upstream commit d325c34d9e7e38d371c0a299d415e9b07f66a1fb ]
 
-Brad Spencer provided a detailed report [0] that when calling getsockopt()
-for AF_NETLINK, some SOL_NETLINK options set only 1 byte even though such
-options require at least sizeof(int) as length.
+After failing to verify configuration, it returns directly without
+releasing link, which may cause memory leak.
 
-The options return a flag value that fits into 1 byte, but such behaviour
-confuses users who do not initialise the variable before calling
-getsockopt() and do not strictly check the returned value as char.
+Paolo Abeni thinks that the whole code of this driver is quite
+"suboptimal" and looks unmainatained since at least ~15y, so he
+suggests that we could simply remove the whole driver, please
+take it into consideration.
 
-Currently, netlink_getsockopt() uses put_user() to copy data to optlen and
-optval, but put_user() casts the data based on the pointer, char *optval.
-As a result, only 1 byte is set to optval.
+Simon Horman suggests that the fix label should be set to
+"Linux-2.6.12-rc2" considering that the problem has existed
+since the driver was introduced and the commit above doesn't
+seem to exist in net/net-next.
 
-To avoid this behaviour, we need to use copy_to_user() or cast optval for
-put_user().
-
-Note that this changes the behaviour on big-endian systems, but we document
-that the size of optval is int in the man page.
-
-  $ man 7 netlink
-  ...
-  Socket options
-       To set or get a netlink socket option, call getsockopt(2) to read
-       or setsockopt(2) to write the option with the option level argument
-       set to SOL_NETLINK.  Unless otherwise noted, optval is a pointer to
-       an int.
-
-Fixes: 9a4595bc7e67 ("[NETLINK]: Add set/getsockopt options to support more than 32 groups")
-Fixes: be0c22a46cfb ("netlink: add NETLINK_BROADCAST_ERROR socket option")
-Fixes: 38938bfe3489 ("netlink: add NETLINK_NO_ENOBUFS socket flag")
-Fixes: 0a6a3a23ea6e ("netlink: add NETLINK_CAP_ACK socket option")
-Fixes: 2d4bc93368f5 ("netlink: extended ACK reporting")
-Fixes: 89d35528d17d ("netlink: Add new socket option to enable strict checking on dumps")
-Reported-by: Brad Spencer <bspencer@blackberry.com>
-Link: https://lore.kernel.org/netdev/ZD7VkNWFfp22kTDt@datsun.rim.net/
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Johannes Berg <johannes@sipsolutions.net>
-Link: https://lore.kernel.org/r/20230421185255.94606-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Gan Gecen <gangecen@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 75 ++++++++++++----------------------------
- 1 file changed, 23 insertions(+), 52 deletions(-)
+ drivers/net/ethernet/amd/nmclan_cs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 99622c64081c4..b1dcc536521b6 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1731,7 +1731,8 @@ static int netlink_getsockopt(struct socket *sock, int level, int optname,
- {
- 	struct sock *sk = sock->sk;
- 	struct netlink_sock *nlk = nlk_sk(sk);
--	int len, val, err;
-+	unsigned int flag;
-+	int len, val;
+diff --git a/drivers/net/ethernet/amd/nmclan_cs.c b/drivers/net/ethernet/amd/nmclan_cs.c
+index 823a329a921f4..0dd391c84c138 100644
+--- a/drivers/net/ethernet/amd/nmclan_cs.c
++++ b/drivers/net/ethernet/amd/nmclan_cs.c
+@@ -651,7 +651,7 @@ static int nmclan_config(struct pcmcia_device *link)
+     } else {
+       pr_notice("mace id not found: %x %x should be 0x40 0x?9\n",
+ 		sig[0], sig[1]);
+-      return -ENODEV;
++      goto failed;
+     }
+   }
  
- 	if (level != SOL_NETLINK)
- 		return -ENOPROTOOPT;
-@@ -1743,39 +1744,17 @@ static int netlink_getsockopt(struct socket *sock, int level, int optname,
- 
- 	switch (optname) {
- 	case NETLINK_PKTINFO:
--		if (len < sizeof(int))
--			return -EINVAL;
--		len = sizeof(int);
--		val = nlk->flags & NETLINK_F_RECV_PKTINFO ? 1 : 0;
--		if (put_user(len, optlen) ||
--		    put_user(val, optval))
--			return -EFAULT;
--		err = 0;
-+		flag = NETLINK_F_RECV_PKTINFO;
- 		break;
- 	case NETLINK_BROADCAST_ERROR:
--		if (len < sizeof(int))
--			return -EINVAL;
--		len = sizeof(int);
--		val = nlk->flags & NETLINK_F_BROADCAST_SEND_ERROR ? 1 : 0;
--		if (put_user(len, optlen) ||
--		    put_user(val, optval))
--			return -EFAULT;
--		err = 0;
-+		flag = NETLINK_F_BROADCAST_SEND_ERROR;
- 		break;
- 	case NETLINK_NO_ENOBUFS:
--		if (len < sizeof(int))
--			return -EINVAL;
--		len = sizeof(int);
--		val = nlk->flags & NETLINK_F_RECV_NO_ENOBUFS ? 1 : 0;
--		if (put_user(len, optlen) ||
--		    put_user(val, optval))
--			return -EFAULT;
--		err = 0;
-+		flag = NETLINK_F_RECV_NO_ENOBUFS;
- 		break;
- 	case NETLINK_LIST_MEMBERSHIPS: {
--		int pos, idx, shift;
-+		int pos, idx, shift, err = 0;
- 
--		err = 0;
- 		netlink_lock_table();
- 		for (pos = 0; pos * 8 < nlk->ngroups; pos += sizeof(u32)) {
- 			if (len - pos < sizeof(u32))
-@@ -1792,40 +1771,32 @@ static int netlink_getsockopt(struct socket *sock, int level, int optname,
- 		if (put_user(ALIGN(nlk->ngroups / 8, sizeof(u32)), optlen))
- 			err = -EFAULT;
- 		netlink_unlock_table();
--		break;
-+		return err;
- 	}
- 	case NETLINK_CAP_ACK:
--		if (len < sizeof(int))
--			return -EINVAL;
--		len = sizeof(int);
--		val = nlk->flags & NETLINK_F_CAP_ACK ? 1 : 0;
--		if (put_user(len, optlen) ||
--		    put_user(val, optval))
--			return -EFAULT;
--		err = 0;
-+		flag = NETLINK_F_CAP_ACK;
- 		break;
- 	case NETLINK_EXT_ACK:
--		if (len < sizeof(int))
--			return -EINVAL;
--		len = sizeof(int);
--		val = nlk->flags & NETLINK_F_EXT_ACK ? 1 : 0;
--		if (put_user(len, optlen) || put_user(val, optval))
--			return -EFAULT;
--		err = 0;
-+		flag = NETLINK_F_EXT_ACK;
- 		break;
- 	case NETLINK_GET_STRICT_CHK:
--		if (len < sizeof(int))
--			return -EINVAL;
--		len = sizeof(int);
--		val = nlk->flags & NETLINK_F_STRICT_CHK ? 1 : 0;
--		if (put_user(len, optlen) || put_user(val, optval))
--			return -EFAULT;
--		err = 0;
-+		flag = NETLINK_F_STRICT_CHK;
- 		break;
- 	default:
--		err = -ENOPROTOOPT;
-+		return -ENOPROTOOPT;
- 	}
--	return err;
-+
-+	if (len < sizeof(int))
-+		return -EINVAL;
-+
-+	len = sizeof(int);
-+	val = nlk->flags & flag ? 1 : 0;
-+
-+	if (put_user(len, optlen) ||
-+	    copy_to_user(optval, &val, len))
-+		return -EFAULT;
-+
-+	return 0;
- }
- 
- static void netlink_cmsg_recv_pktinfo(struct msghdr *msg, struct sk_buff *skb)
 -- 
 2.39.2
 
