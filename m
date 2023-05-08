@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F87168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C7BC433EF;
-	Mon,  8 May 2023 11:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B00D168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B962DC433D2;
+	Mon,  8 May 2023 11:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545161;
-	bh=IZEgaRIaxIfcMamfLugvk7FgPFzcCz3PuZZj/kiup4Q=;
+	s=korg; t=1683545164;
+	bh=F5x3q8P7WXEJ9NfYJwClYwIKwxJgrc4obxA0V6tcjdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UIzAmgcwSlDhl+/WE/tj2uI2nMgAipKANX7ydJVtwZb4PPvPYIGOrjEtL7F9+EZTO
-	 yVBjkA+nAPc5X8CZyeeHw5u/PnEJM2hHuhLFeEdvyKD1Kn/nKxQTXt5wmjMu6GAsdR
-	 7wI3NqjEZRvZyrCDOxheDrEye1cIKR4TKd9d0h+E=
+	b=xmqIWy/UyO3bADMHQxu3IHPnNGYcBwGtsa8U0MpJnA+FH1rsWRAdPqcjCEcrffnMl
+	 fcOjY3/6TkxGQxVPJrDI9QxVooqrB4TGeo4zseqmfW0ySgOyG4rGG2LGEVITgWp3F0
+	 Ocyv8gEIKYj+f2qYoz+NrhvVffD5NiayfmjL43a8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 614/694] clk: qcom: lpassaudiocc-sc7280: Add required gdsc power domain clks in lpass_cc_sc7280_desc
-Date: Mon,  8 May 2023 11:47:29 +0200
-Message-Id: <20230508094455.367571817@linuxfoundation.org>
+Subject: [PATCH 6.3 615/694] clk: qcom: gcc-sm8350: fix PCIe PIPE clocks handling
+Date: Mon,  8 May 2023 11:47:30 +0200
+Message-Id: <20230508094455.413117523@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,37 +35,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit aad09fc7c4a522892eb64a79627b17a3869936cb ]
+[ Upstream commit 1a500e0bc97b6cb3c0d9859e81973b8dd07d1b7b ]
 
-Add GDSCs in lpass_cc_sc7280_desc struct.
-When qcom,adsp-pil-mode is enabled, GDSCs required to solve
-dependencies in lpass_audiocc probe().
+On SM8350 platform the PCIe PIPE clocks require additional handling to
+function correctly. They are to be switched to the tcxo source before
+turning PCIe GDSCs off and should be switched to PHY PIPE source once
+they are working. Switch PCIe PHY clocks to use clk_regmap_phy_mux_ops,
+which provide support for this dance.
 
-Fixes: 0cbcfbe50cbf ("clk: qcom: lpass: Handle the regmap overlap of lpasscc and lpass_aon")
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: 44c20c9ed37f ("clk: qcom: gcc: Add clock driver for SM8350")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230407092255.119690-4-quic_mohs@quicinc.com
+Link: https://lore.kernel.org/r/20230412134829.3686467-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/lpassaudiocc-sc7280.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/gcc-sm8350.c | 47 ++++++++++-------------------------
+ 1 file changed, 13 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-index 1339f9211a149..134eb1529ede2 100644
---- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
-+++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-@@ -696,6 +696,8 @@ static const struct qcom_cc_desc lpass_cc_sc7280_desc = {
- 	.config = &lpass_audio_cc_sc7280_regmap_config,
- 	.clks = lpass_cc_sc7280_clocks,
- 	.num_clks = ARRAY_SIZE(lpass_cc_sc7280_clocks),
-+	.gdscs = lpass_aon_cc_sc7280_gdscs,
-+	.num_gdscs = ARRAY_SIZE(lpass_aon_cc_sc7280_gdscs),
+diff --git a/drivers/clk/qcom/gcc-sm8350.c b/drivers/clk/qcom/gcc-sm8350.c
+index af4a1ea284215..1385a98eb3bbe 100644
+--- a/drivers/clk/qcom/gcc-sm8350.c
++++ b/drivers/clk/qcom/gcc-sm8350.c
+@@ -17,6 +17,7 @@
+ #include "clk-regmap.h"
+ #include "clk-regmap-divider.h"
+ #include "clk-regmap-mux.h"
++#include "clk-regmap-phy-mux.h"
+ #include "gdsc.h"
+ #include "reset.h"
+ 
+@@ -158,26 +159,6 @@ static const struct clk_parent_data gcc_parent_data_3[] = {
+ 	{ .fw_name = "bi_tcxo" },
  };
  
- static const struct qcom_cc_desc lpass_audio_cc_sc7280_desc = {
+-static const struct parent_map gcc_parent_map_4[] = {
+-	{ P_PCIE_0_PIPE_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_4[] = {
+-	{ .fw_name = "pcie_0_pipe_clk", },
+-	{ .fw_name = "bi_tcxo" },
+-};
+-
+-static const struct parent_map gcc_parent_map_5[] = {
+-	{ P_PCIE_1_PIPE_CLK, 0 },
+-	{ P_BI_TCXO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_parent_data_5[] = {
+-	{ .fw_name = "pcie_1_pipe_clk" },
+-	{ .fw_name = "bi_tcxo" },
+-};
+-
+ static const struct parent_map gcc_parent_map_6[] = {
+ 	{ P_BI_TCXO, 0 },
+ 	{ P_GCC_GPLL0_OUT_MAIN, 1 },
+@@ -274,32 +255,30 @@ static const struct clk_parent_data gcc_parent_data_14[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ };
+ 
+-static struct clk_regmap_mux gcc_pcie_0_pipe_clk_src = {
++static struct clk_regmap_phy_mux gcc_pcie_0_pipe_clk_src = {
+ 	.reg = 0x6b054,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_4,
+ 	.clkr = {
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pcie_0_pipe_clk_src",
+-			.parent_data = gcc_parent_data_4,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_4),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "pcie_0_pipe_clk",
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
+ };
+ 
+-static struct clk_regmap_mux gcc_pcie_1_pipe_clk_src = {
++static struct clk_regmap_phy_mux gcc_pcie_1_pipe_clk_src = {
+ 	.reg = 0x8d054,
+-	.shift = 0,
+-	.width = 2,
+-	.parent_map = gcc_parent_map_5,
+ 	.clkr = {
+ 		.hw.init = &(struct clk_init_data){
+ 			.name = "gcc_pcie_1_pipe_clk_src",
+-			.parent_data = gcc_parent_data_5,
+-			.num_parents = ARRAY_SIZE(gcc_parent_data_5),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data){
++				.fw_name = "pcie_1_pipe_clk",
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 		},
+ 	},
+ };
 -- 
 2.39.2
 
