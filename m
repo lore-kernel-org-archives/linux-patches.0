@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0743D168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FA9C433EF;
-	Mon,  8 May 2023 11:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA25A168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E904C433EF;
+	Mon,  8 May 2023 11:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544998;
-	bh=BW96ZvDK83h+uaBf2m1kow07Qd7lkBQ6tXjIxjqt7Jc=;
+	s=korg; t=1683545001;
+	bh=bK+xXjBqhZ1eCi1oCseU172wydz8THEOa/mgUWICduY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yAGvwqveZWmMEJu4UaomTWMn1jVobI22Z+Th134YikotpoYOU/rR41gDDKy6a6S54
-	 ZrbGUQeADOocGlrQuE3PoXwXWDRWsuqQ+gDr9Ix4+gS2RXRcKPkNqiz3AvLJcpytfS
-	 A+XtN6odnZC2kVRkhxawX3wgIqfPjglFdyp+9Vto=
+	b=fn3Eb5eXZ3F8Yz7nc2P3sc7b4Bi1Lk4g+rOe+fJz49Z5XNWGT54r/lI6WTR81O5O9
+	 5anEtTVW7Soz0HtHaGp+BXa4IPKJ6BI+QlZHeLRR6W5GLTGFhlR68amo4TUrakOSLu
+	 gTLFnTY1bgFfuGttPhV8QP/Ie6ZAyRXrBbA9U6CI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com,
+	ZhangPeng <zhangpeng362@huawei.com>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 592/694] fs/ntfs3: Add check for kmemdup
-Date: Mon,  8 May 2023 11:47:07 +0200
-Message-Id: <20230508094454.305105424@linuxfoundation.org>
+Subject: [PATCH 6.3 593/694] fs/ntfs3: Fix null-ptr-deref on inode->i_op in ntfs_lookup()
+Date: Mon,  8 May 2023 11:47:08 +0200
+Message-Id: <20230508094454.354924457@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,37 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit e6c3cef24cb0d045f99d5cb039b344874e3cfd74 ]
+[ Upstream commit 254e69f284d7270e0abdc023ee53b71401c3ba0c ]
 
-Since the kmemdup may return NULL pointer,
-it should be better to add check for the return value
-in order to avoid NULL pointer dereference.
+Syzbot reported a null-ptr-deref bug:
 
-Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+ntfs3: loop0: Different NTFS' sector size (1024) and media sector size
+(512)
+ntfs3: loop0: Mark volume as dirty due to NTFS errors
+general protection fault, probably for non-canonical address
+0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:d_flags_for_inode fs/dcache.c:1980 [inline]
+RIP: 0010:__d_add+0x5ce/0x800 fs/dcache.c:2796
+Call Trace:
+ <TASK>
+ d_splice_alias+0x122/0x3b0 fs/dcache.c:3191
+ lookup_open fs/namei.c:3391 [inline]
+ open_last_lookups fs/namei.c:3481 [inline]
+ path_openat+0x10e6/0x2df0 fs/namei.c:3688
+ do_filp_open+0x264/0x4f0 fs/namei.c:3718
+ do_sys_openat2+0x124/0x4e0 fs/open.c:1310
+ do_sys_open fs/open.c:1326 [inline]
+ __do_sys_open fs/open.c:1334 [inline]
+ __se_sys_open fs/open.c:1330 [inline]
+ __x64_sys_open+0x221/0x270 fs/open.c:1330
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+If the MFT record of ntfs inode is not a base record, inode->i_op can be
+NULL. And a null-ptr-deref may happen:
+
+ntfs_lookup()
+    dir_search_u() # inode->i_op is set to NULL
+    d_splice_alias()
+        __d_add()
+            d_flags_for_inode() # inode->i_op->get_link null-ptr-deref
+
+Fix this by adding a Check on inode->i_op before calling the
+d_splice_alias() function.
+
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ntfs3/namei.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index c6eb371a36951..dc723f03d6bb2 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -4256,6 +4256,10 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
- 	rec_len -= t32;
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index 407fe92394e22..8d206770d8c6d 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -88,6 +88,16 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 		__putname(uni);
+ 	}
  
- 	attr_names = kmemdup(Add2Ptr(lrh, t32), rec_len, GFP_NOFS);
-+	if (!attr_names) {
-+		err = -ENOMEM;
-+		goto out;
++	/*
++	 * Check for a null pointer
++	 * If the MFT record of ntfs inode is not a base record, inode->i_op can be NULL.
++	 * This causes null pointer dereference in d_splice_alias().
++	 */
++	if (!IS_ERR(inode) && inode->i_op == NULL) {
++		iput(inode);
++		inode = ERR_PTR(-EINVAL);
 +	}
++
+ 	return d_splice_alias(inode, dentry);
+ }
  
- 	lcb_put(lcb);
- 	lcb = NULL;
 -- 
 2.39.2
 
