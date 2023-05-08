@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBA4168D5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66145C4339B;
-	Mon,  8 May 2023 11:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43B3168D5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E8AC433EF;
+	Mon,  8 May 2023 11:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545076;
-	bh=TqNMd/yfqXAPuDwKNDOC/T8ginQj1+uCuWTIMOtBa3U=;
+	s=korg; t=1683545079;
+	bh=8ReGRq1adGKUUyB8juqq1nJifdoW3oGiCnVhPoV2Zzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1LzSmE4mwR3oWlAmZOAQvXHZjYQNFmw8fftUq/rDxNUdBlfBYulUptvpvhmq0BJKC
-	 dijBeKWfGgDKuriFtUKui91iXnK3RdkicQ9sidHb1YtOnfmuLaRIsqeRUa9CEkWosa
-	 0Lds7KbuPym9tNHZQjUSrJlRxwDomhF/+3BHlVQk=
+	b=SHgoieKKeGB0I56N0a/k2m1wjTrR4s/zdKJrV99M6vHNnMUgUqKJOJk/0z0xUYNsM
+	 XFuBJ4cRlSwzJtx+eitdVcEmbdqzbtYXfKMOyBLcPqrvbKPjzoNva+OctIotabtdhx
+	 8uXPaU8jqgOHg+8gRtn9JynJWsWRKIUlSD+e8usE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Chen <void0red@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 575/694] IB/hifi1: add a null check of kzalloc_node in hfi1_ipoib_txreq_init
-Date: Mon,  8 May 2023 11:46:50 +0200
-Message-Id: <20230508094453.544862060@linuxfoundation.org>
+Subject: [PATCH 6.3 610/694] NFSv4.1: Always send a RECLAIM_COMPLETE after establishing lease
+Date: Mon,  8 May 2023 11:47:25 +0200
+Message-Id: <20230508094455.186193919@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,40 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kang Chen <void0red@gmail.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit c874ad879c2f29ebe040a34b974389875c0d81eb ]
+[ Upstream commit 40882deb83c29d8df4470d4e5e7f137b6acf7ad1 ]
 
-kzalloc_node may fails, check it and do the cleanup.
+The spec requires that we always at least send a RECLAIM_COMPLETE when
+we're done establishing the lease and recovering any state.
 
-Fixes: b1151b74ff68 ("IB/hfi1: Fix alloc failure with larger txqueuelen")
-Signed-off-by: Kang Chen <void0red@gmail.com>
-Link: https://lore.kernel.org/r/20230227100212.910820-1-void0red@gmail.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: fce5c838e133 ("nfs41: RECLAIM_COMPLETE functionality")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/ipoib_tx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/nfs/nfs4state.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hfi1/ipoib_tx.c b/drivers/infiniband/hw/hfi1/ipoib_tx.c
-index 5d9a7b09ca37e..349eb41391368 100644
---- a/drivers/infiniband/hw/hfi1/ipoib_tx.c
-+++ b/drivers/infiniband/hw/hfi1/ipoib_tx.c
-@@ -737,10 +737,13 @@ int hfi1_ipoib_txreq_init(struct hfi1_ipoib_dev_priv *priv)
- 		txq->tx_ring.shift = ilog2(tx_item_size);
- 		txq->tx_ring.avail = hfi1_ipoib_ring_hwat(txq);
- 		tx_ring = &txq->tx_ring;
--		for (j = 0; j < tx_ring_size; j++)
-+		for (j = 0; j < tx_ring_size; j++) {
- 			hfi1_txreq_from_idx(tx_ring, j)->sdma_hdr =
- 				kzalloc_node(sizeof(*tx->sdma_hdr),
- 					     GFP_KERNEL, priv->dd->node);
-+			if (!hfi1_txreq_from_idx(tx_ring, j)->sdma_hdr)
-+				goto free_txqs;
-+		}
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index 2a0ca5c7f082a..660ccfaf463e4 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -67,6 +67,8 @@
  
- 		netif_napi_add_tx(dev, &txq->napi, hfi1_ipoib_poll_tx_ring);
- 	}
+ #define OPENOWNER_POOL_SIZE	8
+ 
++static void nfs4_state_start_reclaim_reboot(struct nfs_client *clp);
++
+ const nfs4_stateid zero_stateid = {
+ 	{ .data = { 0 } },
+ 	.type = NFS4_SPECIAL_STATEID_TYPE,
+@@ -330,6 +332,8 @@ int nfs41_init_clientid(struct nfs_client *clp, const struct cred *cred)
+ 	status = nfs4_proc_create_session(clp, cred);
+ 	if (status != 0)
+ 		goto out;
++	if (!(clp->cl_exchange_flags & EXCHGID4_FLAG_CONFIRMED_R))
++		nfs4_state_start_reclaim_reboot(clp);
+ 	nfs41_finish_session_reset(clp);
+ 	nfs_mark_client_ready(clp, NFS_CS_READY);
+ out:
 -- 
 2.39.2
 
