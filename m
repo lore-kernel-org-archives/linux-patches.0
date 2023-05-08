@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDEC168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:25:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF17C433D2;
-	Mon,  8 May 2023 11:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E59E168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:25:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B07C433D2;
+	Mon,  8 May 2023 11:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545110;
-	bh=Jc8Mdawx3aHNq1LRGryHP7p+OBu3CO0SNO7/bQfcUPg=;
+	s=korg; t=1683545113;
+	bh=RJcsUH7EJfCiCDFYFLKZheoO2dnPBrhukHJwEr72oQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YiiY26XMZg+m23mYtEKPP6caBG8nskflvKhrMnAGY//0OPSOHQzOhEAVXZELcj4W2
-	 rJd2q0Zuvo6qqMTn3Y0eZkb9UM8XGG2Foq77oZ/SRZQsO7LV8ysQDD0bhUtJgVlSRm
-	 5sicG7lixizeLqe/1XElUHPUMm+XFlIWaYta0oV8=
+	b=DaZLsGDHZkBSkKiCYca8TBdDYrN/wjJ1T5P0DmoiS6bWdWKaQKbVWyDgJRwAJOou2
+	 nDhBTJeV4TnG8V00/a+giESESVc20L3yqkWPt5JBEDt8QgQ4avF0FQgw7/YoURQe0j
+	 fBkJp/LGsdk4Uig63RTFmh8oK24IMsemz/+KxInU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stafford Horne <shorne@gmail.com>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Joerg Roedel <joro@8bytes.org>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 628/694] openrisc: Properly store r31 to pt_regs on unhandled exceptions
-Date: Mon,  8 May 2023 11:47:43 +0200
-Message-Id: <20230508094455.975725269@linuxfoundation.org>
+Subject: [PATCH 6.3 611/694] iommu/amd: Set page size bitmap during V2 domain allocation
+Date: Mon,  8 May 2023 11:47:26 +0200
+Message-Id: <20230508094455.224338799@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,54 +40,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stafford Horne <shorne@gmail.com>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-[ Upstream commit 812489ac4dd91144a74ce65ecf232252a2e406fb ]
+[ Upstream commit 8f880d19e6ad645a4b8066d5ff091c980b3231e7 ]
 
-In commit 91993c8c2ed5 ("openrisc: use shadow registers to save regs on
-exception") the unhandled exception path was changed to do an early
-store of r30 instead of r31.  The entry code was not updated and r31 is
-not getting stored to pt_regs.
+With the addition of the V2 page table support, the domain page size
+bitmap needs to be set prior to iommu core setting up direct mappings
+for reserved regions. When reserved regions are mapped, if this is not
+done, it will be looking at the V1 page size bitmap when determining
+the page size to use in iommu_pgsize(). When it gets into the actual
+amd mapping code, a check of see if the page size is supported can
+fail, because at that point it is checking it against the V2 page size
+bitmap which only supports 4K, 2M, and 1G.
 
-This patch updates the entry handler to store r31 instead of r30.  We
-also remove some misleading commented out store r30 and r31
-instructrions.
+Add a check to __iommu_domain_alloc() to not override the
+bitmap if it was already set by the iommu ops domain_alloc() code path.
 
-I noticed this while working on adding floating point exception
-handling,  This issue probably would never impact anything since we kill
-the process or Oops right away on unhandled exceptions.
-
-Fixes: 91993c8c2ed5 ("openrisc: use shadow registers to save regs on exception")
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Cc: Vasant Hegde <vasant.hegde@amd.com>
+Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Cc: Robin Murphy <robin.murphy@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Joerg Roedel <joro@8bytes.org>
+Fixes: 4db6c41f0946 ("iommu/amd: Add support for using AMD IOMMU v2 page table for DMA-API")
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Link: https://lore.kernel.org/r/20230404072742.1895252-1-jsnitsel@redhat.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/openrisc/kernel/entry.S | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/iommu/amd/iommu.c | 6 ++----
+ drivers/iommu/iommu.c     | 9 +++++++--
+ 2 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/arch/openrisc/kernel/entry.S b/arch/openrisc/kernel/entry.S
-index 54a87bba35caa..a130c4dac48d3 100644
---- a/arch/openrisc/kernel/entry.S
-+++ b/arch/openrisc/kernel/entry.S
-@@ -173,7 +173,6 @@ handler:							;\
- 	l.sw    PT_GPR28(r1),r28					;\
- 	l.sw    PT_GPR29(r1),r29					;\
- 	/* r30 already save */					;\
--/*        l.sw    PT_GPR30(r1),r30*/					;\
- 	l.sw    PT_GPR31(r1),r31					;\
- 	TRACE_IRQS_OFF_ENTRY						;\
- 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
-@@ -211,9 +210,8 @@ handler:							;\
- 	l.sw    PT_GPR27(r1),r27					;\
- 	l.sw    PT_GPR28(r1),r28					;\
- 	l.sw    PT_GPR29(r1),r29					;\
--	/* r31 already saved */					;\
--	l.sw    PT_GPR30(r1),r30					;\
--/*        l.sw    PT_GPR31(r1),r31	*/				;\
-+	/* r30 already saved */						;\
-+	l.sw    PT_GPR31(r1),r31					;\
- 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
- 	l.addi	r30,r0,-1					;\
- 	l.sw	PT_ORIG_GPR11(r1),r30				;\
+diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
+index 5a505ba5467e1..167da5b1a5e31 100644
+--- a/drivers/iommu/amd/iommu.c
++++ b/drivers/iommu/amd/iommu.c
+@@ -1666,10 +1666,6 @@ static void do_attach(struct iommu_dev_data *dev_data,
+ 	domain->dev_iommu[iommu->index] += 1;
+ 	domain->dev_cnt                 += 1;
+ 
+-	/* Override supported page sizes */
+-	if (domain->flags & PD_GIOV_MASK)
+-		domain->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
+-
+ 	/* Update device table */
+ 	set_dte_entry(iommu, dev_data->devid, domain,
+ 		      ats, dev_data->iommu_v2);
+@@ -2048,6 +2044,8 @@ static int protection_domain_init_v2(struct protection_domain *domain)
+ 
+ 	domain->flags |= PD_GIOV_MASK;
+ 
++	domain->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
++
+ 	if (domain_enable_v2(domain, 1)) {
+ 		domain_id_free(domain->id);
+ 		return -ENOMEM;
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 10db680acaed5..256a38371120e 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -1964,8 +1964,13 @@ static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
+ 		return NULL;
+ 
+ 	domain->type = type;
+-	/* Assume all sizes by default; the driver may override this later */
+-	domain->pgsize_bitmap = bus->iommu_ops->pgsize_bitmap;
++	/*
++	 * If not already set, assume all sizes by default; the driver
++	 * may override this later
++	 */
++	if (!domain->pgsize_bitmap)
++		domain->pgsize_bitmap = bus->iommu_ops->pgsize_bitmap;
++
+ 	if (!domain->ops)
+ 		domain->ops = bus->iommu_ops->default_domain_ops;
+ 
 -- 
 2.39.2
 
