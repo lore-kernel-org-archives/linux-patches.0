@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1641549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F78C433EF;
-	Mon,  8 May 2023 10:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4941549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92EDEC433EF;
+	Mon,  8 May 2023 10:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540019;
-	bh=MB/lyDL4/GEr019OeuI0dxOAPHRvFbVPNBjN44GEfV4=;
+	s=korg; t=1683540022;
+	bh=jRLtxG5tSTMrQuSMQyWL7k7PI8ZB0IP2qc5T4CAcYxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fWCsyCPKptvXsi4c2b/mnQM/hOrwf6/12mOrj5MQYwiuTxd+dZjTj+nTo5oc+A5K5
-	 m4+wTL6z1GjQ+WOJQVqujn1g/lrJTAWCVK06o945O+20pb0K4/60u8JO4G+eR85DLr
-	 Z1KlcmYqzMiVoAs5ZX7tKmwPOqjqgo2m/euSzJzc=
+	b=XxjRgdPikLP6vpU/bHs2gOKcjv95Uany5WJaLpEX/UYkVDlewdHXshyfq5VaFvN+7
+	 tsH6XrA8vCHDGuTkjANhkPyTVME5u42JUnIvAYDTk11qMTcUk6hLjrh3BaHIBH8GwP
+	 51pYCXM0Gn1MpVJvj0d+tEP+eLaZAR/xQTdH5TZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Rob Clark <robdclark@chromium.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 180/611] drm/msm/adreno: drop bogus pm_runtime_set_active()
-Date: Mon,  8 May 2023 11:40:22 +0200
-Message-Id: <20230508094428.213979501@linuxfoundation.org>
+Subject: [PATCH 6.1 171/611] media: bdisp: Add missing check for create_workqueue
+Date: Mon,  8 May 2023 11:40:13 +0200
+Message-Id: <20230508094427.905246470@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,40 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit db7662d076c973072d788bd0e8130e04430307a1 ]
+[ Upstream commit 2371adeab717d8fe32144a84f3491a03c5838cfb ]
 
-The runtime PM status can only be updated while runtime PM is disabled.
+Add the check for the return value of the create_workqueue
+in order to avoid NULL pointer dereference.
 
-Drop the bogus pm_runtime_set_active() call that was made after enabling
-runtime PM and which (incidentally but correctly) left the runtime PM
-status set to 'suspended'.
-
-Fixes: 2c087a336676 ("drm/msm/adreno: Load the firmware before bringing up the hardware")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Patchwork: https://patchwork.freedesktop.org/patch/524972/
-Link: https://lore.kernel.org/r/20230303164807.13124-4-johan+linaro@kernel.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: 28ffeebbb7bd ("[media] bdisp: 2D blitter driver using v4l2 mem2mem framework")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index c5c4c93b3689c..cd009d56d35d5 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -438,9 +438,6 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
- 	 */
- 	pm_runtime_enable(&pdev->dev);
+diff --git a/drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c b/drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c
+index dd74cc43920d3..080da254b9109 100644
+--- a/drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c
++++ b/drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c
+@@ -1309,6 +1309,8 @@ static int bdisp_probe(struct platform_device *pdev)
+ 	init_waitqueue_head(&bdisp->irq_queue);
+ 	INIT_DELAYED_WORK(&bdisp->timeout_work, bdisp_irq_timeout);
+ 	bdisp->work_queue = create_workqueue(BDISP_NAME);
++	if (!bdisp->work_queue)
++		return -ENOMEM;
  
--	/* Make sure pm runtime is active and reset any previous errors */
--	pm_runtime_set_active(&pdev->dev);
--
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0) {
- 		pm_runtime_put_sync(&pdev->dev);
+ 	spin_lock_init(&bdisp->slock);
+ 	mutex_init(&bdisp->lock);
 -- 
 2.39.2
 
