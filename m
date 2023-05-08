@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C08FC171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:43:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F2BC433A4;
-	Mon,  8 May 2023 11:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F608171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:43:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F083EC433D2;
+	Mon,  8 May 2023 11:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546205;
-	bh=k4AN3KzYgRmYY0mmsAwEA6dQroTIOnFgjuf0g8VCZKs=;
+	s=korg; t=1683546208;
+	bh=z8XfetHkFZzR3qr+OmK+bDbCz2burq1nYoHSYsrEfiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QOVDEmQqO+VmhJ6YFnEP+uxNBAuow0758rMlwGhV/FHmguifaocTJnUXF548bo4Ht
-	 8rwohIWGUj9wKRFfhjOcGdFw3Mx1Ox98vuEIJlUKPX6hPFYUoMiyJlwYUEhIPE2zgu
-	 resXKFnD2rK4d9NsjbrYAfQnNxRO+p+cJAssNhCI=
+	b=v6YdnMyNPQ9DmCa6C7eyn7uU3zu4pneuG5YRpXKnln3U/Up9Dmvn6MQ5QO2x3YRY2
+	 eZ5g66P/ymv97UurMA6j9X7qzpdTkiDHomgDJZSdjBHaAzA4fccQxVka2iKLXyiUOA
+	 6ffiOAdWfP5Co3Xfsq+JzLrpWb7IRkWVrwv80nZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 262/371] HID: amd_sfh: Add support for shutdown operation
-Date: Mon,  8 May 2023 11:47:43 +0200
-Message-Id: <20230508094822.466359363@linuxfoundation.org>
+Subject: [PATCH 5.15 253/371] spi: qup: Dont skip cleanup in removes error path
+Date: Mon,  8 May 2023 11:47:34 +0200
+Message-Id: <20230508094822.119958088@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,49 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 1353ecaf1830d6d1b74f3225378a9498b4e14fdd ]
+[ Upstream commit 61f49171a43ab1f80c73c5c88c508770c461e0f2 ]
 
-As soon as the system is booted after shutdown, the sensors may remain in
-a weird state and fail to initialize. Therefore, all sensors should be
-turned off during shutdown.
+Returning early in a platform driver's remove callback is wrong. In this
+case the dma resources are not released in the error path. this is never
+retried later and so this is a permanent leak. To fix this, only skip
+hardware disabling if waking the device fails.
 
-Fixes: 4f567b9f8141 ("SFH: PCIe driver to add support of AMD sensor fusion hub")
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 64ff247a978f ("spi: Add Qualcomm QUP SPI controller support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230330210341.2459548-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_pcie.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/spi/spi-qup.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
-index f17f061aeb792..6ff8f254dc840 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_pcie.c
-@@ -351,6 +351,14 @@ static int amd_mp2_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
- 	return devm_add_action_or_reset(&pdev->dev, amd_mp2_pci_remove, privdata);
- }
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index f3877eeb3da65..8bf58510cca6d 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1276,18 +1276,22 @@ static int spi_qup_remove(struct platform_device *pdev)
+ 	struct spi_qup *controller = spi_master_get_devdata(master);
+ 	int ret;
  
-+static void amd_sfh_shutdown(struct pci_dev *pdev)
-+{
-+	struct amd_mp2_dev *mp2 = pci_get_drvdata(pdev);
-+
-+	if (mp2 && mp2->mp2_ops)
-+		mp2->mp2_ops->stop_all(mp2);
-+}
-+
- static int __maybe_unused amd_mp2_pci_resume(struct device *dev)
- {
- 	struct pci_dev *pdev = to_pci_dev(dev);
-@@ -420,6 +428,7 @@ static struct pci_driver amd_mp2_pci_driver = {
- 	.id_table	= amd_mp2_pci_tbl,
- 	.probe		= amd_mp2_pci_probe,
- 	.driver.pm	= &amd_mp2_pm_ops,
-+	.shutdown	= amd_sfh_shutdown,
- };
- module_pci_driver(amd_mp2_pci_driver);
+-	ret = pm_runtime_resume_and_get(&pdev->dev);
+-	if (ret < 0)
+-		return ret;
++	ret = pm_runtime_get_sync(&pdev->dev);
  
+-	ret = spi_qup_set_state(controller, QUP_STATE_RESET);
+-	if (ret)
+-		return ret;
++	if (ret >= 0) {
++		ret = spi_qup_set_state(controller, QUP_STATE_RESET);
++		if (ret)
++			dev_warn(&pdev->dev, "failed to reset controller (%pe)\n",
++				 ERR_PTR(ret));
+ 
+-	spi_qup_release_dma(master);
++		clk_disable_unprepare(controller->cclk);
++		clk_disable_unprepare(controller->iclk);
++	} else {
++		dev_warn(&pdev->dev, "failed to resume, skip hw disable (%pe)\n",
++			 ERR_PTR(ret));
++	}
+ 
+-	clk_disable_unprepare(controller->cclk);
+-	clk_disable_unprepare(controller->iclk);
++	spi_qup_release_dma(master);
+ 
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.39.2
 
