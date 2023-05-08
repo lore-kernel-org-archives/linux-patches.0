@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB49E168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25251C433D2;
-	Mon,  8 May 2023 10:55:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFAA168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B37BC433D2;
+	Mon,  8 May 2023 10:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543352;
-	bh=nxU3sT5KFoKRAkYO2pafruu/aKVV8YLoCO9nIe4toAQ=;
+	s=korg; t=1683543355;
+	bh=N/R7Po8+7ZtT6AqaiPTfprOII21Br8ErrKrIfU0RbTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b4wrdEEG3ndRGS3E94Foo1wa6vRYb4govWWnCMWgR+H4kWBN7eeFgJvoqdTFbnutm
-	 7M+m3syMOnLMb7H2+WkFKx9id2a9e0ev2gn/NzM4zw1NMLJRmdeD5pT6qTRFDALsSN
-	 1GJFjuV13VM6NtvIvuO+m7jclHz5ifORTdEZhgz4=
+	b=RvYHEV7I5tuTrcOzenYM+LPVY0dvEruRC1dRSD3e/fgw+QhXN+p6h1nxcvRwo9iaW
+	 QvcdVm6lD7t5/AlHIu+SPuEM68DRcbNEvs77sArHSzbSNC+UelthUyrRapSNMwbDcF
+	 pxMWdXBnN1FN9j61Ldhw7NqCxZAk0Kw9UcUPYKRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zhengming <zhang.zhengming@h3c.com>,
-	Zhao Lei <zhao_lei1@hoperun.com>,
-	Zhou Kete <zhou.kete@h3c.com>,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 063/694] relayfs: fix out-of-bounds access in relay_file_read
-Date: Mon,  8 May 2023 11:38:18 +0200
-Message-Id: <20230508094434.612415798@linuxfoundation.org>
+	David Matlack <dmatlack@google.com>,
+	Anup Patel <anup@brainfault.org>
+Subject: [PATCH 6.3 064/694] KVM: RISC-V: Retry fault if vma_lookup() results become invalid
+Date: Mon,  8 May 2023 11:38:19 +0200
+Message-Id: <20230508094434.641119058@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,77 +34,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Zhengming <zhang.zhengming@h3c.com>
+From: David Matlack <dmatlack@google.com>
 
-commit 43ec16f1450f4936025a9bdf1a273affdb9732c1 upstream.
+commit 2ed90cb0938a45b12eb947af062d12c7af0067b3 upstream.
 
-There is a crash in relay_file_read, as the var from
-point to the end of last subbuf.
+Read mmu_invalidate_seq before dropping the mmap_lock so that KVM can
+detect if the results of vma_lookup() (e.g. vma_shift) become stale
+before it acquires kvm->mmu_lock. This fixes a theoretical bug where a
+VMA could be changed by userspace after vma_lookup() and before KVM
+reads the mmu_invalidate_seq, causing KVM to install page table entries
+based on a (possibly) no-longer-valid vma_shift.
 
-The oops looks something like:
-pc : __arch_copy_to_user+0x180/0x310
-lr : relay_file_read+0x20c/0x2c8
-Call trace:
- __arch_copy_to_user+0x180/0x310
- full_proxy_read+0x68/0x98
- vfs_read+0xb0/0x1d0
- ksys_read+0x6c/0xf0
- __arm64_sys_read+0x20/0x28
- el0_svc_common.constprop.3+0x84/0x108
- do_el0_svc+0x74/0x90
- el0_svc+0x1c/0x28
- el0_sync_handler+0x88/0xb0
- el0_sync+0x148/0x180
+Re-order the MMU cache top-up to earlier in user_mem_abort() so that it
+is not done after KVM has read mmu_invalidate_seq (i.e. so as to avoid
+inducing spurious fault retries).
 
-We get the condition by analyzing the vmcore:
+It's unlikely that any sane userspace currently modifies VMAs in such a
+way as to trigger this race. And even with directed testing I was unable
+to reproduce it. But a sufficiently motivated host userspace might be
+able to exploit this race.
 
-1). The last produced byte and last consumed byte
-    both at the end of the last subbuf
+Note KVM/ARM had the same bug and was fixed in a separate, near
+identical patch (see Link).
 
-2). A softirq calls function(e.g __blk_add_trace)
-    to write relay buffer occurs when an program is calling
-    relay_file_read_avail().
-
-        relay_file_read
-                relay_file_read_avail
-                        relay_file_read_consume(buf, 0, 0);
-                        //interrupted by softirq who will write subbuf
-                        ....
-                        return 1;
-                //read_start point to the end of the last subbuf
-                read_start = relay_file_read_start_pos
-                //avail is equal to subsize
-                avail = relay_file_read_subbuf_avail
-                //from  points to an invalid memory address
-                from = buf->start + read_start
-                //system is crashed
-                copy_to_user(buffer, from, avail)
-
-Link: https://lkml.kernel.org/r/20230419040203.37676-1-zhang.zhengming@h3c.com
-Fixes: 8d62fdebdaf9 ("relay file read: start-pos fix")
-Signed-off-by: Zhang Zhengming <zhang.zhengming@h3c.com>
-Reviewed-by: Zhao Lei <zhao_lei1@hoperun.com>
-Reviewed-by: Zhou Kete <zhou.kete@h3c.com>
-Reviewed-by: Pengcheng Yang <yangpc@wangsu.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/kvm/20230313235454.2964067-1-dmatlack@google.com/
+Fixes: 9955371cc014 ("RISC-V: KVM: Implement MMU notifiers")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Matlack <dmatlack@google.com>
+Tested-by: Anup Patel <anup@brainfault.org>
+Signed-off-by: Anup Patel <anup@brainfault.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/relay.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/riscv/kvm/mmu.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/kernel/relay.c
-+++ b/kernel/relay.c
-@@ -989,7 +989,8 @@ static size_t relay_file_read_start_pos(
- 	size_t subbuf_size = buf->chan->subbuf_size;
- 	size_t n_subbufs = buf->chan->n_subbufs;
- 	size_t consumed = buf->subbufs_consumed % n_subbufs;
--	size_t read_pos = consumed * subbuf_size + buf->bytes_consumed;
-+	size_t read_pos = (consumed * subbuf_size + buf->bytes_consumed)
-+			% (n_subbufs * subbuf_size);
+--- a/arch/riscv/kvm/mmu.c
++++ b/arch/riscv/kvm/mmu.c
+@@ -628,6 +628,13 @@ int kvm_riscv_gstage_map(struct kvm_vcpu
+ 			!(memslot->flags & KVM_MEM_READONLY)) ? true : false;
+ 	unsigned long vma_pagesize, mmu_seq;
  
- 	read_subbuf = read_pos / subbuf_size;
- 	padding = buf->padding[read_subbuf];
++	/* We need minimum second+third level pages */
++	ret = kvm_mmu_topup_memory_cache(pcache, gstage_pgd_levels);
++	if (ret) {
++		kvm_err("Failed to topup G-stage cache\n");
++		return ret;
++	}
++
+ 	mmap_read_lock(current->mm);
+ 
+ 	vma = vma_lookup(current->mm, hva);
+@@ -648,6 +655,15 @@ int kvm_riscv_gstage_map(struct kvm_vcpu
+ 	if (vma_pagesize == PMD_SIZE || vma_pagesize == PUD_SIZE)
+ 		gfn = (gpa & huge_page_mask(hstate_vma(vma))) >> PAGE_SHIFT;
+ 
++	/*
++	 * Read mmu_invalidate_seq so that KVM can detect if the results of
++	 * vma_lookup() or gfn_to_pfn_prot() become stale priort to acquiring
++	 * kvm->mmu_lock.
++	 *
++	 * Rely on mmap_read_unlock() for an implicit smp_rmb(), which pairs
++	 * with the smp_wmb() in kvm_mmu_invalidate_end().
++	 */
++	mmu_seq = kvm->mmu_invalidate_seq;
+ 	mmap_read_unlock(current->mm);
+ 
+ 	if (vma_pagesize != PUD_SIZE &&
+@@ -657,15 +673,6 @@ int kvm_riscv_gstage_map(struct kvm_vcpu
+ 		return -EFAULT;
+ 	}
+ 
+-	/* We need minimum second+third level pages */
+-	ret = kvm_mmu_topup_memory_cache(pcache, gstage_pgd_levels);
+-	if (ret) {
+-		kvm_err("Failed to topup G-stage cache\n");
+-		return ret;
+-	}
+-
+-	mmu_seq = kvm->mmu_invalidate_seq;
+-
+ 	hfn = gfn_to_pfn_prot(kvm, gfn, is_write, &writable);
+ 	if (hfn == KVM_PFN_ERR_HWPOISON) {
+ 		send_sig_mceerr(BUS_MCEERR_AR, (void __user *)hva,
 
 
