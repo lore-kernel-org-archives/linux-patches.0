@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC86168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8063CC433D2;
-	Mon,  8 May 2023 11:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EFC168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D4BC433D2;
+	Mon,  8 May 2023 11:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544566;
-	bh=37Et6PbHvCGIsocBUxddF/q1eEzwLg/W60V58U66AO8=;
+	s=korg; t=1683544570;
+	bh=xxLEEmPWvRP3QyRVaapV7Ra5vGsixS6jxLWx8rGGRL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LrUjJIrm5kSODaaYrjvL8VR0t/+THLj6CqvBFDoR45cEl4EcOC1NkLTG4cw338rH0
-	 I2L2wym4IoXS0wX9TH1wyHNsvU/0JkB8iPq5sWkcYRpJOsbKnEND+TY4akrcKbklnE
-	 s+OxVOswqJGgAKYTW+ioonQNmfpEHSrZN0tK66e4=
+	b=0Qdw6dDdxHYdbsWLYFsO/TadqFiQJ5FjYo+osJyxKMkCdlkL+tgBxNJXOTMnTrVrw
+	 hyHnsUGPNCOR4KAAH94AgaGjryU1Qf7OwBgOqFz3odSORPI5iQRb5qI7EMw8myMa4W
+	 J2jm/AYr7Islz2vhoqEMCbKia8q4mdtnhAID+ics=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 411/694] wifi: iwlwifi: debug: fix crash in __iwl_err()
-Date: Mon,  8 May 2023 11:44:06 +0200
-Message-Id: <20230508094446.585522575@linuxfoundation.org>
+Subject: [PATCH 6.3 445/694] mt76: mt7921: fix kernel panic by accessing unallocated eeprom.data
+Date: Mon,  8 May 2023 11:44:40 +0200
+Message-Id: <20230508094447.963406250@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,49 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 634c7b1bd08ca322537ab389f8cbd7bb543b5e45 ]
+[ Upstream commit 12db28c3ef31f719bd18fa186a40bb152e6a527c ]
 
-In __iwl_err(), if we rate-limit the message away, then
-vaf.va is still NULL-initialized by the time we get to
-the tracing code, which then crashes. When it doesn't
-get rate-limited out, it's still wrong to reuse the old
-args2 that was already printed, which is why we bother
-making a copy in the first place.
+The MT7921 driver no longer uses eeprom.data, but the relevant code has not
+been removed completely since
+commit 16d98b548365 ("mt76: mt7921: rely on mcu_get_nic_capability").
+This could result in potential invalid memory access.
 
-Assign vaf.va properly to fix this.
+To fix the kernel panic issue in mt7921, it is necessary to avoid accessing
+unallocated eeprom.data which can lead to invalid memory access.
 
-Fixes: e5f1cc98cc1b ("iwlwifi: allow rate-limited error messages")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413102635.e27134c6bcd4.Ib3894cd2ba7a5ad5e75912a7634f146ceaa569e2@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Furthermore, it is possible to entirely eliminate the
+mt7921_mcu_parse_eeprom function and solely depend on
+mt7921_mcu_parse_response to divide the RxD header.
+
+[2.702735] BUG: kernel NULL pointer dereference, address: 0000000000000550
+[2.702740] #PF: supervisor write access in kernel mode
+[2.702741] #PF: error_code(0x0002) - not-present page
+[2.702743] PGD 0 P4D 0
+[2.702747] Oops: 0002 [#1] PREEMPT SMP NOPTI
+[2.702755] RIP: 0010:mt7921_mcu_parse_response+0x147/0x170 [mt7921_common]
+[2.702758] RSP: 0018:ffffae7c00fef828 EFLAGS: 00010286
+[2.702760] RAX: ffffa367f57be024 RBX: ffffa367cc7bf500 RCX: 0000000000000000
+[2.702762] RDX: 0000000000000550 RSI: 0000000000000000 RDI: ffffa367cc7bf500
+[2.702763] RBP: ffffae7c00fef840 R08: ffffa367cb167000 R09: 0000000000000005
+[2.702764] R10: 0000000000000000 R11: ffffffffc04702e4 R12: ffffa367e8329f40
+[2.702766] R13: 0000000000000000 R14: 0000000000000001 R15: ffffa367e8329f40
+[2.702768] FS:  000079ee6cf20c40(0000) GS:ffffa36b2f940000(0000) knlGS:0000000000000000
+[2.702769] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[2.702775] CR2: 0000000000000550 CR3: 00000001233c6004 CR4: 0000000000770ee0
+[2.702776] PKRU: 55555554
+[2.702777] Call Trace:
+[2.702782]  mt76_mcu_skb_send_and_get_msg+0xc3/0x11e [mt76 <HASH:1bc4 5>]
+[2.702785]  mt7921_run_firmware+0x241/0x853 [mt7921_common <HASH:6a2f 6>]
+[2.702789]  mt7921e_mcu_init+0x2b/0x56 [mt7921e <HASH:d290 7>]
+[2.702792]  mt7921_register_device+0x2eb/0x5a5 [mt7921_common <HASH:6a2f 6>]
+[2.702795]  ? mt7921_irq_tasklet+0x1d4/0x1d4 [mt7921e <HASH:d290 7>]
+[2.702797]  mt7921_pci_probe+0x2d6/0x319 [mt7921e <HASH:d290 7>]
+[2.702799]  pci_device_probe+0x9f/0x12a
+
+Fixes: 16d98b548365 ("mt76: mt7921: rely on mcu_get_nic_capability")
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-debug.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../net/wireless/mediatek/mt76/mt7921/mcu.c   | 20 -------------------
+ 1 file changed, 20 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-debug.c b/drivers/net/wireless/intel/iwlwifi/iwl-debug.c
-index ae4c2a3d63d5b..3a3c13a41fc61 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-debug.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-debug.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
- /*
-- * Copyright (C) 2005-2011, 2021 Intel Corporation
-+ * Copyright (C) 2005-2011, 2021-2022 Intel Corporation
-  */
- #include <linux/device.h>
- #include <linux/interrupt.h>
-@@ -57,6 +57,7 @@ void __iwl_err(struct device *dev, enum iwl_err_mode mode, const char *fmt, ...)
- 	default:
- 		break;
- 	}
-+	vaf.va = &args;
- 	trace_iwlwifi_err(&vaf);
- 	va_end(args);
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+index c5e7ad06f8777..48f38dbbb91da 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mcu.c
+@@ -16,24 +16,6 @@ static bool mt7921_disable_clc;
+ module_param_named(disable_clc, mt7921_disable_clc, bool, 0644);
+ MODULE_PARM_DESC(disable_clc, "disable CLC support");
+ 
+-static int
+-mt7921_mcu_parse_eeprom(struct mt76_dev *dev, struct sk_buff *skb)
+-{
+-	struct mt7921_mcu_eeprom_info *res;
+-	u8 *buf;
+-
+-	if (!skb)
+-		return -EINVAL;
+-
+-	skb_pull(skb, sizeof(struct mt76_connac2_mcu_rxd));
+-
+-	res = (struct mt7921_mcu_eeprom_info *)skb->data;
+-	buf = dev->eeprom.data + le32_to_cpu(res->addr);
+-	memcpy(buf, res->data, 16);
+-
+-	return 0;
+-}
+-
+ int mt7921_mcu_parse_response(struct mt76_dev *mdev, int cmd,
+ 			      struct sk_buff *skb, int seq)
+ {
+@@ -60,8 +42,6 @@ int mt7921_mcu_parse_response(struct mt76_dev *mdev, int cmd,
+ 	} else if (cmd == MCU_EXT_CMD(THERMAL_CTRL)) {
+ 		skb_pull(skb, sizeof(*rxd) + 4);
+ 		ret = le32_to_cpu(*(__le32 *)skb->data);
+-	} else if (cmd == MCU_EXT_CMD(EFUSE_ACCESS)) {
+-		ret = mt7921_mcu_parse_eeprom(mdev, skb);
+ 	} else if (cmd == MCU_UNI_CMD(DEV_INFO_UPDATE) ||
+ 		   cmd == MCU_UNI_CMD(BSS_INFO_UPDATE) ||
+ 		   cmd == MCU_UNI_CMD(STA_REC_UPDATE) ||
 -- 
 2.39.2
 
