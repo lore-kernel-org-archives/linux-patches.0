@@ -1,35 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A1613AE0
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6738CC433EF;
-	Mon,  8 May 2023 10:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3829C13AE0
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907D1C433EF;
+	Mon,  8 May 2023 10:59:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543567;
-	bh=fWRoKHGdmRoiWljH8r09kaU4EyvJt97EAsRiSgj5pcY=;
+	s=korg; t=1683543570;
+	bh=tABDN212CA76MVrgvoONGmEu4F/MywUwtIQNv3n17ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gjLgE64LKUkuK8b3l83r4rBUJ7LLeBvswR3ceNaf15vtJRoc4Mb2XSSozXJmIgQs6
-	 FzMQnVBwPEcVoitS/M06Ptt2nw4kkjqO1ES7mCYaYSHif0C1ceL0ct3+2o1/Irz+0b
-	 V7MKhFJRft4jLIQcWLg73QPeO+BLQekiBkpfEr3c=
+	b=lM3va7/93GjM4/Q1L6Et0kf8wbbC5n3f/mOIG1nyhpWwMZFVpRf1rIZnURmy+gPZ4
+	 t+1yK6rx968b/RbES6I9/suRUQrLL6BT/VUq/FXzK4hDjaVuTjAue+l+MU0ZUi7hxo
+	 QAJqSSs6urkqcvQMG5YUAaeZaenG+qE/aOVUTF7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang1.zhang@intel.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Frederic Weisbecker <fweisbec@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Anna-Maria Behnsen <anna-maria@linutronix.de>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 131/694] rcu: Fix missing TICK_DEP_MASK_RCU_EXP dependency check
-Date: Mon,  8 May 2023 11:39:26 +0200
-Message-Id: <20230508094436.728317859@linuxfoundation.org>
+Subject: [PATCH 6.3 132/694] selftests/resctrl: Return NULL if malloc_and_init_memory() did not alloc mem
+Date: Mon,  8 May 2023 11:39:27 +0200
+Message-Id: <20230508094436.758533157@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -43,61 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zqiang <qiang1.zhang@intel.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit db7b464df9d820186e98a65aa6a10f0d51fbf8ce ]
+[ Upstream commit 22a8be280383812235131dda18a8212a59fadd2d ]
 
-This commit adds checks for the TICK_DEP_MASK_RCU_EXP bit, thus enabling
-RCU expedited grace periods to actually force-enable scheduling-clock
-interrupts on holdout CPUs.
+malloc_and_init_memory() in fill_buf isn't checking if memalign()
+successfully allocated memory or not before accessing the memory.
 
-Fixes: df1e849ae455 ("rcu: Enable tick for nohz_full CPUs slow to provide expedited QS")
-Signed-off-by: Zqiang <qiang1.zhang@intel.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Frederic Weisbecker <fweisbec@gmail.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Anna-Maria Behnsen <anna-maria@linutronix.de>
-Acked-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Check the return value of memalign() and return NULL if allocating
+aligned memory fails.
+
+Fixes: a2561b12fe39 ("selftests/resctrl: Add built in benchmark")
+Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/timer.h | 3 ++-
- kernel/time/tick-sched.c     | 5 +++++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ tools/testing/selftests/resctrl/fill_buf.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/trace/events/timer.h b/include/trace/events/timer.h
-index 2e713a7d9aa3a..3e8619c72f774 100644
---- a/include/trace/events/timer.h
-+++ b/include/trace/events/timer.h
-@@ -371,7 +371,8 @@ TRACE_EVENT(itimer_expire,
- 		tick_dep_name(PERF_EVENTS)		\
- 		tick_dep_name(SCHED)			\
- 		tick_dep_name(CLOCK_UNSTABLE)		\
--		tick_dep_name_end(RCU)
-+		tick_dep_name(RCU)			\
-+		tick_dep_name_end(RCU_EXP)
+diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
+index 56ccbeae0638d..c20d0a7ecbe63 100644
+--- a/tools/testing/selftests/resctrl/fill_buf.c
++++ b/tools/testing/selftests/resctrl/fill_buf.c
+@@ -68,6 +68,8 @@ static void *malloc_and_init_memory(size_t s)
+ 	size_t s64;
  
- #undef tick_dep_name
- #undef tick_dep_mask_name
-diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
-index 68d81a4283c89..a46506f7ec6d0 100644
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -281,6 +281,11 @@ static bool check_tick_dependency(atomic_t *dep)
- 		return true;
- 	}
+ 	void *p = memalign(PAGE_SIZE, s);
++	if (!p)
++		return NULL;
  
-+	if (val & TICK_DEP_MASK_RCU_EXP) {
-+		trace_tick_stop(0, TICK_DEP_MASK_RCU_EXP);
-+		return true;
-+	}
-+
- 	return false;
- }
- 
+ 	p64 = (uint64_t *)p;
+ 	s64 = s / sizeof(uint64_t);
 -- 
 2.39.2
 
