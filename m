@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C292171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:42:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D1DBC433EF;
-	Mon,  8 May 2023 11:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA18171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:42:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75140C433EF;
+	Mon,  8 May 2023 11:42:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546129;
-	bh=0oGm11D0PIbWTxsNcfMSl4OkxvvJn+/xNKnxpwoZmJA=;
+	s=korg; t=1683546132;
+	bh=gbsgF0jUZQHzoprFJRgaCygFbigEFv3rZN2HwzN1HcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSSNBnYjrwLfAWZTiKsGQsY2g4r1d22XuuS2b5efyzZ1iqaeZkud3XM7eZsFS79Gw
-	 qbYQ/vws10kSclKMwc5pLXUK3lljB5gxTzKmu7lwJ6y4aK6M6jOzbieNCzg36cDvGZ
-	 Tpj3lCGplMuyh+c4kuH90SmM5uuBO8E/ApJHvmN4=
+	b=rlFh1f4s8V0QOohhWXyOM4BLrtcxOdTHbpO4rPP0E1vX9BgDjy1jZGoGfYCOgkJxs
+	 l8E1qCOSDtUE8rknoqQnCJQhuZUcMdWWSRvGMDwdn4u4pC/i2lIAfzWsZFG54iAd5w
+	 5hyL5rm4pVkqYeQ5Vnw4kTqy1nsqe3MHObGEU5ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Antonio Borneo <antonio.borneo@foss.st.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Petr Mladek <pmladek@suse.com>,
+	Kevin Brodsky <kevin.brodsky@arm.com>,
+	Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>,
+	Petr Vorel <pvorel@suse.cz>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sam Ravnborg <sam@ravnborg.org>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 267/371] scripts/gdb: raise error with reduced debugging information
-Date: Mon,  8 May 2023 11:47:48 +0200
-Message-Id: <20230508094822.650892909@linuxfoundation.org>
+Subject: [PATCH 5.15 268/371] uapi/linux/const.h: prefer ISO-friendly __typeof__
+Date: Mon,  8 May 2023 11:47:49 +0200
+Message-Id: <20230508094822.689443028@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -40,76 +39,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Kevin Brodsky <kevin.brodsky@arm.com>
 
-[ Upstream commit 8af055ae25bff48f57227f5e3d48a4306f3dd1c4 ]
+[ Upstream commit 31088f6f7906253ef4577f6a9b84e2d42447dba0 ]
 
-If CONFIG_DEBUG_INFO_REDUCED is enabled in the kernel configuration, we
-will typically not be able to load vmlinux-gdb.py and will fail with:
+typeof is (still) a GNU extension, which means that it cannot be used when
+building ISO C (e.g.  -std=c99).  It should therefore be avoided in uapi
+headers in favour of the ISO-friendly __typeof__.
 
-Traceback (most recent call last):
-  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/vmlinux-gdb.py", line 25, in <module>
-    import linux.utils
-  File "/home/fainelli/work/buildroot/output/arm64/build/linux-custom/scripts/gdb/linux/utils.py", line 131, in <module>
-    atomic_long_counter_offset = atomic_long_type.get_type()['counter'].bitpos
-KeyError: 'counter'
+Unfortunately this issue could not be detected by
+CONFIG_UAPI_HEADER_TEST=y as the __ALIGN_KERNEL() macro is not expanded in
+any uapi header.
 
-Rather be left wondering what is happening only to find out that reduced
-debug information is the cause, raise an eror.  This was not typically a
-problem until e3c8d33e0d62 ("scripts/gdb: fix 'lx-dmesg' on 32 bits arch")
-but it has since then.
+This matters from a userspace perspective, not a kernel one. uapi
+headers and their contents are expected to be usable in a variety of
+situations, and in particular when building ISO C applications (with
+-std=c99 or similar).
 
-Link: https://lkml.kernel.org/r/20230406215252.1580538-1-f.fainelli@gmail.com
-Fixes: e3c8d33e0d62 ("scripts/gdb: fix 'lx-dmesg' on 32 bits arch")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Antonio Borneo <antonio.borneo@foss.st.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Petr Mladek <pmladek@suse.com>
+This particular problem can be reproduced by trying to use the
+__ALIGN_KERNEL macro directly in application code, say:
+
+#include <linux/const.h>
+
+int align(int x, int a)
+{
+	return __KERNEL_ALIGN(x, a);
+}
+
+and trying to build that with -std=c99.
+
+Link: https://lkml.kernel.org/r/20230411092747.3759032-1-kevin.brodsky@arm.com
+Fixes: a79ff731a1b2 ("netfilter: xtables: make XT_ALIGN() usable in exported headers by exporting __ALIGN_KERNEL()")
+Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
+Reported-by: Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>
+Tested-by: Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>
+Reviewed-by: Petr Vorel <pvorel@suse.cz>
+Tested-by: Petr Vorel <pvorel@suse.cz>
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Sam Ravnborg <sam@ravnborg.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/constants.py.in | 2 ++
- scripts/gdb/vmlinux-gdb.py        | 5 ++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ include/uapi/linux/const.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/gdb/linux/constants.py.in b/scripts/gdb/linux/constants.py.in
-index 2efbec6b6b8db..08f0587d15ea1 100644
---- a/scripts/gdb/linux/constants.py.in
-+++ b/scripts/gdb/linux/constants.py.in
-@@ -39,6 +39,8 @@
+diff --git a/include/uapi/linux/const.h b/include/uapi/linux/const.h
+index af2a44c08683d..a429381e7ca50 100644
+--- a/include/uapi/linux/const.h
++++ b/include/uapi/linux/const.h
+@@ -28,7 +28,7 @@
+ #define _BITUL(x)	(_UL(1) << (x))
+ #define _BITULL(x)	(_ULL(1) << (x))
  
- import gdb
+-#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (typeof(x))(a) - 1)
++#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (__typeof__(x))(a) - 1)
+ #define __ALIGN_KERNEL_MASK(x, mask)	(((x) + (mask)) & ~(mask))
  
-+LX_CONFIG(CONFIG_DEBUG_INFO_REDUCED)
-+
- /* linux/clk-provider.h */
- if IS_BUILTIN(CONFIG_COMMON_CLK):
-     LX_GDBPARSED(CLK_GET_RATE_NOCACHE)
-diff --git a/scripts/gdb/vmlinux-gdb.py b/scripts/gdb/vmlinux-gdb.py
-index 4136dc2c59df2..cd03de50c3bec 100644
---- a/scripts/gdb/vmlinux-gdb.py
-+++ b/scripts/gdb/vmlinux-gdb.py
-@@ -22,6 +22,10 @@ except:
-     gdb.write("NOTE: gdb 7.2 or later required for Linux helper scripts to "
-               "work.\n")
- else:
-+    import linux.constants
-+    if linux.constants.LX_CONFIG_DEBUG_INFO_REDUCED:
-+        raise gdb.GdbError("Reduced debug information will prevent GDB "
-+                           "from having complete types.\n")
-     import linux.utils
-     import linux.symbols
-     import linux.modules
-@@ -32,7 +36,6 @@ else:
-     import linux.lists
-     import linux.rbtree
-     import linux.proc
--    import linux.constants
-     import linux.timerlist
-     import linux.clk
-     import linux.genpd
+ #define __KERNEL_DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
 -- 
 2.39.2
 
