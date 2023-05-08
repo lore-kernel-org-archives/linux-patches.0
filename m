@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A356A171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185B2C433D2;
-	Mon,  8 May 2023 11:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D923171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F282EC433EF;
+	Mon,  8 May 2023 11:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545857;
-	bh=fxESuXsWI4JgjvhVrvIBLgzYsTpDgkLn1r7eHq+2yLk=;
+	s=korg; t=1683545860;
+	bh=ht4eD109vJ3wW+ZjBtY5hoH5e2hvHJKXeQfGyZOYbrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nCIF34A1k7ZV10n/e9dZQ083z48mq0YSH4ownX1ujt85dgqYn9aTWS8bi/UslmGSn
-	 C+CACXk45EzxM836vkcz3u6+G+M/Mm12Tl7t+Tv4S/tIRd+DYxi3afuoPk/WePdOpF
-	 L9rqblEXS1HDzMgR7dYCb4HC/HPNU0mF4gcyTsFE=
+	b=deWhAxLq9FeDHaRt3CYuiRviI+4uYCj1mniNOOMFvV2qWboMIQ3rnuaw9V2gXcAjx
+	 mINWyDF0uKUlIFLPToo3c2GRqvEL4X/jdeUWogDf9OCb6FuvAwAXpEFcxMgHmmdlPh
+	 o4rakFfGl9teFOBezBS2CxC1NWT4l1R0zg31z71U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 159/371] bpf: fix precision propagation verbose logging
-Date: Mon,  8 May 2023 11:46:00 +0200
-Message-Id: <20230508094818.400977753@linuxfoundation.org>
+Subject: [PATCH 5.15 177/371] wifi: rtlwifi: fix incorrect error codes in rtl_debugfs_set_write_rfreg()
+Date: Mon,  8 May 2023 11:46:18 +0200
+Message-Id: <20230508094819.156997323@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,44 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 34f0677e7afd3a292bc1aadda7ce8e35faedb204 ]
+[ Upstream commit 905a9241e4e8c15d2c084fee916280514848fe35 ]
 
-Fix wrong order of frame index vs register/slot index in precision
-propagation verbose (level 2) output. It's wrong and very confusing as is.
+If there is a failure during copy_from_user or user-provided data buffer
+is invalid, rtl_debugfs_set_write_rfreg should return negative error code
+instead of a positive value count.
 
-Fixes: 529409ea92d5 ("bpf: propagate precision across all frames, not just the last one")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20230313184017.4083374-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fix this bug by returning correct error code. Moreover, the check of buffer
+against null is removed since it will be handled by copy_from_user.
+
+Fixes: 610247f46feb ("rtlwifi: Improve debugging by using debugfs")
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230326053138.91338-1-harperchen1110@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/debug.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 8e6f868d6cb9b..41601299f8b4a 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -10620,7 +10620,7 @@ static int propagate_precision(struct bpf_verifier_env *env,
- 			    !(state_reg->live & REG_LIVE_READ))
- 				continue;
- 			if (env->log.level & BPF_LOG_LEVEL2)
--				verbose(env, "frame %d: propagating r%d\n", i, fr);
-+				verbose(env, "frame %d: propagating r%d\n", fr, i);
- 			err = mark_chain_precision_frame(env, fr, i);
- 			if (err < 0)
- 				return err;
-@@ -10636,7 +10636,7 @@ static int propagate_precision(struct bpf_verifier_env *env,
- 				continue;
- 			if (env->log.level & BPF_LOG_LEVEL2)
- 				verbose(env, "frame %d: propagating fp%d\n",
--					(-i - 1) * BPF_REG_SIZE, fr);
-+					fr, (-i - 1) * BPF_REG_SIZE);
- 			err = mark_chain_precision_stack_frame(env, fr, i);
- 			if (err < 0)
- 				return err;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/debug.c b/drivers/net/wireless/realtek/rtlwifi/debug.c
+index 0b1bc04cb6adb..602717928887d 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/debug.c
++++ b/drivers/net/wireless/realtek/rtlwifi/debug.c
+@@ -375,8 +375,8 @@ static ssize_t rtl_debugfs_set_write_rfreg(struct file *filp,
+ 
+ 	tmp_len = (count > sizeof(tmp) - 1 ? sizeof(tmp) - 1 : count);
+ 
+-	if (!buffer || copy_from_user(tmp, buffer, tmp_len))
+-		return count;
++	if (copy_from_user(tmp, buffer, tmp_len))
++		return -EFAULT;
+ 
+ 	tmp[tmp_len] = '\0';
+ 
+@@ -386,7 +386,7 @@ static ssize_t rtl_debugfs_set_write_rfreg(struct file *filp,
+ 	if (num != 4) {
+ 		rtl_dbg(rtlpriv, COMP_ERR, DBG_DMESG,
+ 			"Format is <path> <addr> <mask> <data>\n");
+-		return count;
++		return -EINVAL;
+ 	}
+ 
+ 	rtl_set_rfreg(hw, path, addr, bitmask, data);
 -- 
 2.39.2
 
