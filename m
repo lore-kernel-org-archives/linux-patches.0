@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB8F168CD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B23C433D2;
-	Mon,  8 May 2023 11:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D34E168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B749AC433D2;
+	Mon,  8 May 2023 11:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544947;
-	bh=KAjYB6ti13f9wuDbnoHFG3N9xOQDs7WBjB0qrkRKfxw=;
+	s=korg; t=1683544950;
+	bh=9FIRfJMOI1BrYqC6fBYWT/X7QF+6WNfrvww/JtPUqLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pfanL3xPKRwMqpvt+Qh8x/J84YNfMZm788zZIY3YG9mApt7aAH/sLbGPdqxg4dri8
-	 TNDhAhbC8Nps6QjlwTzvjzSOGaeYLkiJ5qkyGodsrYYmHVNWM1pFRSMyz3N37EdVli
-	 ZwrFKwv9PijzfTjsw/eZEEnLwNzFo2v1/MUjh2PQ=
+	b=mElSDQlj2YseaS9oshWme2xmBYGhRiQSJ75FWjGJBFgpJvkz2tIjvZkCtK3gMWJQG
+	 qJARD8bY4AaOZ7F5O07KQQKWyuFUnoq14jiifP2/1nDd3twSaaLtogi9VAJ8rgec+w
+	 SN2Y/0ZG+M2y+2H3D/fYvfoddsQ/QwYdM5QyWpB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Cook <dcook@linux.microsoft.com>,
-	Beau Belgrave <beaub@linux.microsoft.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 573/694] tracing/user_events: Ensure write index cannot be negative
-Date: Mon,  8 May 2023 11:46:48 +0200
-Message-Id: <20230508094453.464610229@linuxfoundation.org>
+Subject: [PATCH 6.3 574/694] clk: at91: clk-sam9x60-pll: fix return value check
+Date: Mon,  8 May 2023 11:46:49 +0200
+Message-Id: <20230508094453.505167081@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,59 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Beau Belgrave <beaub@linux.microsoft.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit cd98c93286a30cc4588dfd02453bec63c2f4acf4 ]
+[ Upstream commit 1bd8e27fd0db0fe7f489213836dcbab92934f8fa ]
 
-The write index indicates which event the data is for and accesses a
-per-file array. The index is passed by user processes during write()
-calls as the first 4 bytes. Ensure that it cannot be negative by
-returning -EINVAL to prevent out of bounds accesses.
+sam9x60_frac_pll_compute_mul_frac() can't return zero. Remove the check
+against zero to reflect this.
 
-Update ftrace self-test to ensure this occurs properly.
-
-Link: https://lkml.kernel.org/r/20230425225107.8525-2-beaub@linux.microsoft.com
-
-Fixes: 7f5a08c79df3 ("user_events: Add minimal support for trace_event into ftrace")
-Reported-by: Doug Cook <dcook@linux.microsoft.com>
-Signed-off-by: Beau Belgrave <beaub@linux.microsoft.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 43b1bb4a9b3e ("clk: at91: clk-sam9x60-pll: re-factor to support plls with multiple outputs")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230227105931.2812412-1-claudiu.beznea@microchip.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_user.c                  | 3 +++
- tools/testing/selftests/user_events/ftrace_test.c | 5 +++++
- 2 files changed, 8 insertions(+)
+ drivers/clk/at91/clk-sam9x60-pll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_user.c b/kernel/trace/trace_events_user.c
-index 908e8a13c675b..625cab4b9d945 100644
---- a/kernel/trace/trace_events_user.c
-+++ b/kernel/trace/trace_events_user.c
-@@ -1398,6 +1398,9 @@ static ssize_t user_events_write_core(struct file *file, struct iov_iter *i)
- 	if (unlikely(copy_from_iter(&idx, sizeof(idx), i) != sizeof(idx)))
- 		return -EFAULT;
+diff --git a/drivers/clk/at91/clk-sam9x60-pll.c b/drivers/clk/at91/clk-sam9x60-pll.c
+index d757003004cbb..0882ed01d5c27 100644
+--- a/drivers/clk/at91/clk-sam9x60-pll.c
++++ b/drivers/clk/at91/clk-sam9x60-pll.c
+@@ -668,7 +668,7 @@ sam9x60_clk_register_frac_pll(struct regmap *regmap, spinlock_t *lock,
  
-+	if (idx < 0)
-+		return -EINVAL;
-+
- 	rcu_read_lock_sched();
- 
- 	refs = rcu_dereference_sched(info->refs);
-diff --git a/tools/testing/selftests/user_events/ftrace_test.c b/tools/testing/selftests/user_events/ftrace_test.c
-index 404a2713dcae8..1bc26e6476fc3 100644
---- a/tools/testing/selftests/user_events/ftrace_test.c
-+++ b/tools/testing/selftests/user_events/ftrace_test.c
-@@ -294,6 +294,11 @@ TEST_F(user, write_events) {
- 	ASSERT_NE(-1, writev(self->data_fd, (const struct iovec *)io, 3));
- 	after = trace_bytes();
- 	ASSERT_GT(after, before);
-+
-+	/* Negative index should fail with EINVAL */
-+	reg.write_index = -1;
-+	ASSERT_EQ(-1, writev(self->data_fd, (const struct iovec *)io, 3));
-+	ASSERT_EQ(EINVAL, errno);
- }
- 
- TEST_F(user, write_fault) {
+ 		ret = sam9x60_frac_pll_compute_mul_frac(&frac->core, FCORE_MIN,
+ 							parent_rate, true);
+-		if (ret <= 0) {
++		if (ret < 0) {
+ 			hw = ERR_PTR(ret);
+ 			goto free;
+ 		}
 -- 
 2.39.2
 
