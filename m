@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEB93168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:45:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2CEC433A0;
-	Mon,  8 May 2023 10:45:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7786168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:45:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F34FC433EF;
+	Mon,  8 May 2023 10:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542720;
-	bh=id41uX/EeD1kMSvewZp9Toeg0eggBYZ96Jd9KGEMYW8=;
+	s=korg; t=1683542723;
+	bh=4S/srffhV1mIQsLapYZjHLDyz6IiA/CbjfmqvO9V1GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lwLrAfl7Mitz5kTohdqPSFp87nxAtdoOGuHyJYK0ueG+AqgGhRwhZErmqh6Od/7Ml
-	 krzBNkv+ZbSy9OP/m6WoqXlZmoglQ2Z1joNhnq2aU8MmiK7doWjQv4OjlQgpIn4gi2
-	 p3gT8xVmeinz7MPM+I9qB5g7NNcmr0oBvAEcmJa4=
+	b=jziv1sWiFVbdeO3NZK0+6B7FX7+aRChfKfT52ROppyUoS/Y8ovpDaTlSJVRu0VieJ
+	 SVBguR+SEZGxriG0hzerjzwAdjgKkGJh1x2hrmJmOLZjyHUSI/TiBHf7hu5Rh8nN8n
+	 ePsbCuZVZKdF3gQYwvh+SLD0RN/9iJsSFOVkdXaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Michal Simek <michal.simek@amd.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 495/663] serial: 8250: Add missing wakeup event reporting
-Date: Mon,  8 May 2023 11:45:21 +0200
-Message-Id: <20230508094444.521545251@linuxfoundation.org>
+Subject: [PATCH 6.2 486/663] i2c: xiic: xiic_xfer(): Fix runtime PM leak on error path
+Date: Mon,  8 May 2023 11:45:12 +0200
+Message-Id: <20230508094444.163606851@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -34,51 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-[ Upstream commit 0ba9e3a13c6adfa99e32b2576d20820ab10ad48a ]
+[ Upstream commit d663d93bb47e7ab45602b227701022d8aa16040a ]
 
-An 8250 UART configured as a wake-up source would not have reported
-itself through sysfs as being the source of wake-up, correct that.
+The xiic_xfer() function gets a runtime PM reference when the function is
+entered. This reference is released when the function is exited. There is
+currently one error path where the function exits directly, which leads to
+a leak of the runtime PM reference.
 
-Fixes: b3b708fa2780 ("wake up from a serial port")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230414170241.2016255-1-f.fainelli@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Make sure that this error path also releases the runtime PM reference.
+
+Fixes: fdacc3c7405d ("i2c: xiic: Switch from waitqueue to completion")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i2c/busses/i2c-xiic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index b186d6ff12b4a..fa220620511e5 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -15,6 +15,7 @@
- #include <linux/moduleparam.h>
- #include <linux/ioport.h>
- #include <linux/init.h>
-+#include <linux/irq.h>
- #include <linux/console.h>
- #include <linux/gpio/consumer.h>
- #include <linux/sysrq.h>
-@@ -1925,6 +1926,7 @@ static bool handle_rx_dma(struct uart_8250_port *up, unsigned int iir)
- int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
- {
- 	struct uart_8250_port *up = up_to_u8250p(port);
-+	struct tty_port *tport = &port->state->port;
- 	bool skip_rx = false;
- 	unsigned long flags;
- 	u16 status;
-@@ -1950,6 +1952,8 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
- 		skip_rx = true;
- 
- 	if (status & (UART_LSR_DR | UART_LSR_BI) && !skip_rx) {
-+		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
-+			pm_wakeup_event(tport->tty->dev, 0);
- 		if (!up->dma || handle_rx_dma(up, iir))
- 			status = serial8250_rx_chars(up, status);
+diff --git a/drivers/i2c/busses/i2c-xiic.c b/drivers/i2c/busses/i2c-xiic.c
+index bee5a2ef1f229..2bf3713b1969d 100644
+--- a/drivers/i2c/busses/i2c-xiic.c
++++ b/drivers/i2c/busses/i2c-xiic.c
+@@ -704,7 +704,7 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 	err = xiic_start_xfer(i2c, msgs, num);
+ 	if (err < 0) {
+ 		dev_err(adap->dev.parent, "Error xiic_start_xfer\n");
+-		return err;
++		goto out;
  	}
+ 
+ 	err = wait_for_completion_timeout(&i2c->completion, XIIC_XFER_TIMEOUT);
+@@ -722,6 +722,8 @@ static int xiic_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+ 		err = (i2c->state == STATE_DONE) ? num : -EIO;
+ 	}
+ 	mutex_unlock(&i2c->lock);
++
++out:
+ 	pm_runtime_mark_last_busy(i2c->dev);
+ 	pm_runtime_put_autosuspend(i2c->dev);
+ 	return err;
 -- 
 2.39.2
 
