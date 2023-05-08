@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DC7168C7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4202C433EF;
-	Mon,  8 May 2023 11:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A35168C7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD489C433D2;
+	Mon,  8 May 2023 11:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543677;
-	bh=8nmbrug1N676rGjISLq76/epLCNfpaH/EUNoNZZcens=;
+	s=korg; t=1683543680;
+	bh=u5b7Bpblil+mj1fWm5vwOPkz+E/+I9CwizVHx8+4tIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BpWU36GEv0BdLSw5DYe4dMPehwPtP9P2DOwDQBRoNcEddKiiClBGh7chknsRZHdj7
-	 q++zEJl+RvBrEWN6DRdyV6UWyopx1irDmW2WKCz2FuP95DyQdKTCzqmqnAAvQihHa0
-	 oYuzPjUNgBZtqUkl7I1dAU/zvvR63rZLmpNSG9/4=
+	b=XDugrnjBXMSMlo7kduQQz+GgL+uLQ1YwKd/8NzGUZsfgIIPLKbUiEQ2d0WYauDeyE
+	 TkkEzWEpAMelYEQzzZmeVpgLzihtbiPj4S9inAo8xDQhpaX28kiaAV+fhkcsFvWNUj
+	 qEbcEndcnB8qp444NAehYV+b9j9ZDBbeboyRZqDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Guillaume Ranquet <granquet@baylibre.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Vinod Polimera <quic_vpolimer@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 165/694] drm/mediatek: dp: Only trigger DRM HPD events if bridge is attached
-Date: Mon,  8 May 2023 11:40:00 +0200
-Message-Id: <20230508094437.764629704@linuxfoundation.org>
+Subject: [PATCH 6.3 166/694] drm/msm/disp/dpu: check for crtc enable rather than crtc active to release shared resources
+Date: Mon,  8 May 2023 11:40:01 +0200
+Message-Id: <20230508094437.803203720@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,45 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Vinod Polimera <quic_vpolimer@quicinc.com>
 
-[ Upstream commit 36b617f7e4ae663fcadd202ea061ca695ca75539 ]
+[ Upstream commit b6975693846b562c4d3e0e60cc884affc5bdac00 ]
 
-The MediaTek DisplayPort interface bridge driver starts its interrupts
-as soon as its probed. However when the interrupts trigger the bridge
-might not have been attached to a DRM device. As drm_helper_hpd_irq_event()
-does not check whether the passed in drm_device is valid or not, a NULL
-pointer passed in results in a kernel NULL pointer dereference in it.
+According to KMS documentation, The driver must not release any shared
+resources if active is set to false but enable still true.
 
-Check whether the bridge is attached and only trigger an HPD event if
-it is.
-
-Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Guillaume Ranquet <granquet@baylibre.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230202045734.2773503-1-wenst@chromium.org/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: ccc862b957c6 ("drm/msm/dpu: Fix reservation failures in modeset")
+Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/524726/
+Link: https://lore.kernel.org/r/1677774797-31063-5-git-send-email-quic_vpolimer@quicinc.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index 1f94fcc144d3a..a82f53e1a1462 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -1823,7 +1823,8 @@ static irqreturn_t mtk_dp_hpd_event_thread(int hpd, void *dev)
- 	spin_unlock_irqrestore(&mtk_dp->irq_thread_lock, flags);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index 758261e8ac739..c237003670137 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -652,7 +652,7 @@ static int dpu_encoder_virt_atomic_check(
+ 		if (drm_atomic_crtc_needs_modeset(crtc_state)) {
+ 			dpu_rm_release(global_state, drm_enc);
  
- 	if (status & MTK_DP_THREAD_CABLE_STATE_CHG) {
--		drm_helper_hpd_irq_event(mtk_dp->bridge.dev);
-+		if (mtk_dp->bridge.dev)
-+			drm_helper_hpd_irq_event(mtk_dp->bridge.dev);
- 
- 		if (!mtk_dp->train_info.cable_plugged_in) {
- 			mtk_dp_disable_sdp_aui(mtk_dp);
+-			if (!crtc_state->active_changed || crtc_state->active)
++			if (!crtc_state->active_changed || crtc_state->enable)
+ 				ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
+ 						drm_enc, crtc_state, topology);
+ 		}
 -- 
 2.39.2
 
