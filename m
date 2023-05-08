@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37AA11C8F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DEEFC433D2;
-	Mon,  8 May 2023 11:36:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDBF11C8F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28459C43443;
+	Mon,  8 May 2023 11:36:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545776;
-	bh=C3TNWy7E2eTHc/6V+meOjr38etecp82m9YMJVtbCKiY=;
+	s=korg; t=1683545779;
+	bh=ojc58rMjtvQJnZH5ift4m2BaI2Ddu85cIVhMmcACl14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsgkUF1CCnySU/c//Qe1VZwWu2sf7Xid+e8M/iJjbOq3rZUl062DeZLR7eFD3VByy
-	 Qdyx/a0ccMwxVszXaBX9WxCYkRmiXLnjMy0tsTQFWmSm69ycWumYFuXDFsSzznp4wK
-	 YZk/PhhIy2TZz0yy5kglVg7Wj6mDdZ5X/k2/Yw7A=
+	b=zI/0/X3nLkzjPr6X1SD1pGlWOXkszZusEuCNqK1LNp950DpyID3MGa+u9Gq2Sb7eE
+	 zRY3nRVzez+rxRXz/oP5GCDStDhTzM22VrQKfKup8r7e5DOaH+HRKokQZsOP02fVuZ
+	 KHrMITRZKThJy0lvSaO5uIcZPeWLVQUCXhxUFd+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jan=20Kundr=C3=A1t?= <jan.kundrat@cesnet.cz>,
-	=?UTF-8?q?Tom=C3=A1=C5=A1=20Pecka?= <tomas.pecka@cesnet.cz>,
-	Guenter Roeck <linux@roeck-us.net>,
+	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 149/371] hwmon: (pmbus/fsp-3y) Fix functionality bitmask in FSP-3Y YM-2151E
-Date: Mon,  8 May 2023 11:45:50 +0200
-Message-Id: <20230508094817.975893032@linuxfoundation.org>
+Subject: [PATCH 5.15 150/371] wifi: ath6kl: minor fix for allocation size
+Date: Mon,  8 May 2023 11:45:51 +0200
+Message-Id: <20230508094818.007516533@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,44 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomáš Pecka <tomas.pecka@cesnet.cz>
+From: Alexey V. Vissarionov <gremlin@altlinux.org>
 
-[ Upstream commit 93822f5161a2dc57a60b95b35b3cb8589f53413e ]
+[ Upstream commit 778f83f889e7fca37780d9640fcbd0229ae38eaa ]
 
-The bit flags in pmbus_driver_info functionality for YM-2151E chip were
-joined with a comma operator instead of a bitwise OR. This means that
-the last constant PMBUS_HAVE_IIN was not OR-ed with the other
-PM_BUS_HAVE_* constants for this page but it initialized the next element
-of the func array (which was not accessed from anywhere because of the
-number of pages).
+Although the "param" pointer occupies more or equal space compared
+to "*param", the allocation size should use the size of variable
+itself.
 
-However, there is no need for setting PMBUS_HAVE_IIN in the 5Vsb page
-because this command does not seem to be paged. Obviously, the device
-only has one IIN sensor, so it doesn't make sense to query it again from
-the second page.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 1734b4135a62 ("hwmon: Add driver for fsp-3y PSUs and PDUs")
-Signed-off-by: Jan Kundrát <jan.kundrat@cesnet.cz>
-Signed-off-by: Tomáš Pecka <tomas.pecka@cesnet.cz>
-Link: https://lore.kernel.org/r/20230420171939.212040-1-tomas.pecka@cesnet.cz
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: bdcd81707973cf8a ("Add ath6kl cleaned up driver")
+Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230117110414.GC12547@altlinux.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/fsp-3y.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/wireless/ath/ath6kl/bmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/pmbus/fsp-3y.c b/drivers/hwmon/pmbus/fsp-3y.c
-index aec294cc72d1f..c7469d2cdedcf 100644
---- a/drivers/hwmon/pmbus/fsp-3y.c
-+++ b/drivers/hwmon/pmbus/fsp-3y.c
-@@ -180,7 +180,6 @@ static struct pmbus_driver_info fsp3y_info[] = {
- 			PMBUS_HAVE_FAN12,
- 		.func[YM2151_PAGE_5VSB_LOG] =
- 			PMBUS_HAVE_VOUT | PMBUS_HAVE_IOUT,
--			PMBUS_HAVE_IIN,
- 		.read_word_data = fsp3y_read_word_data,
- 		.read_byte_data = fsp3y_read_byte_data,
- 	},
+diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
+index bde5a10d470c8..af98e871199d3 100644
+--- a/drivers/net/wireless/ath/ath6kl/bmi.c
++++ b/drivers/net/wireless/ath/ath6kl/bmi.c
+@@ -246,7 +246,7 @@ int ath6kl_bmi_execute(struct ath6kl *ar, u32 addr, u32 *param)
+ 		return -EACCES;
+ 	}
+ 
+-	size = sizeof(cid) + sizeof(addr) + sizeof(param);
++	size = sizeof(cid) + sizeof(addr) + sizeof(*param);
+ 	if (size > ar->bmi.max_cmd_size) {
+ 		WARN_ON(1);
+ 		return -EINVAL;
 -- 
 2.39.2
 
