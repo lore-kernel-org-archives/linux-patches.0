@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4F4168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8148C433D2;
-	Mon,  8 May 2023 10:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10D60168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827E7C433D2;
+	Mon,  8 May 2023 10:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540905;
-	bh=y2N7+oE41vBXkxludOGv3SC0Y9LV09mk2h/wIlGf6eI=;
+	s=korg; t=1683540907;
+	bh=ZNuOw90LJSQxuyhBruIHHLPa4ffST6ByVRc7KDisjWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNRtgGJOlK7xtXhyn+d0xzvlsETkf4hU6pLqevX1qKRUntPe60BL1p/l6GvhFVnNs
-	 ETocEMpa/uKeMfj74TTjcYKFDLJIQ0tyG3Ij0KeSes3OTD/6eirx2K7qrTya805e7E
-	 WdsJ/B+MnK5VC4J7o7Ve971AunZ8uXllhynrOi/4=
+	b=TgbPaqZcWEp80QReuriWmty62qJKTEy7JVDuo7DLT1XYm5AIcMKrfwiv7QZNGBAdv
+	 SzjAW855kpMq2tsozDewNArrpyL1GcBCaSJIi49LNDcGJsZM6iWt/YPbvpPbMBVuNs
+	 boTNXicTUxZicu+ZQok6akis/CS6GS23R992Dwn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shunsuke Mie <mie@igel.co.jp>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 542/611] dmaengine: dw-edma: Fix to enable to issue dma request on DMA processing
-Date: Mon,  8 May 2023 11:46:24 +0200
-Message-Id: <20230508094439.613740905@linuxfoundation.org>
+Subject: [PATCH 6.1 543/611] dmaengine: at_xdmac: do not enable all cyclic channels
+Date: Mon,  8 May 2023 11:46:25 +0200
+Message-Id: <20230508094439.642275666@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,41 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shunsuke Mie <mie@igel.co.jp>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 970b17dfe264a9085ba4e593730ecfd496b950ab ]
+[ Upstream commit f8435befd81dd85b7b610598551fadf675849bc1 ]
 
-The issue_pending request is ignored while driver is processing a DMA
-request. Fix to issue the pending requests on any dma channel status.
+Do not global enable all the cyclic channels in at_xdmac_resume(). Instead
+save the global status in at_xdmac_suspend() and re-enable the cyclic
+channel only if it was active before suspend.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
-Signed-off-by: Shunsuke Mie <mie@igel.co.jp>
-Link: https://lore.kernel.org/r/20230411101758.438472-2-mie@igel.co.jp
+Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230214151827.1050280-6-claudiu.beznea@microchip.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/dma/at_xdmac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index cb46cbef212ab..ef4cdcf6beba0 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -279,9 +279,12 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	unsigned long flags;
- 
-+	if (!chan->configured)
-+		return;
-+
- 	spin_lock_irqsave(&chan->vc.lock, flags);
--	if (chan->configured && chan->request == EDMA_REQ_NONE &&
--	    chan->status == EDMA_ST_IDLE && vchan_issue_pending(&chan->vc)) {
-+	if (vchan_issue_pending(&chan->vc) && chan->request == EDMA_REQ_NONE &&
-+	    chan->status == EDMA_ST_IDLE) {
- 		chan->status = EDMA_ST_BUSY;
- 		dw_edma_start_transfer(chan);
+diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+index d6c9781cd46af..bfc8ae2143957 100644
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -243,6 +243,7 @@ struct at_xdmac {
+ 	int			irq;
+ 	struct clk		*clk;
+ 	u32			save_gim;
++	u32			save_gs;
+ 	struct dma_pool		*at_xdmac_desc_pool;
+ 	const struct at_xdmac_layout	*layout;
+ 	struct at_xdmac_chan	chan[];
+@@ -1988,6 +1989,7 @@ static int __maybe_unused atmel_xdmac_suspend(struct device *dev)
+ 		}
  	}
+ 	atxdmac->save_gim = at_xdmac_read(atxdmac, AT_XDMAC_GIM);
++	atxdmac->save_gs = at_xdmac_read(atxdmac, AT_XDMAC_GS);
+ 
+ 	at_xdmac_off(atxdmac);
+ 	clk_disable_unprepare(atxdmac->clk);
+@@ -2027,7 +2029,8 @@ static int __maybe_unused atmel_xdmac_resume(struct device *dev)
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CNDC, atchan->save_cndc);
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CIE, atchan->save_cim);
+ 			wmb();
+-			at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
++			if (atxdmac->save_gs & atchan->mask)
++				at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
+ 		}
+ 	}
+ 	return 0;
 -- 
 2.39.2
 
