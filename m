@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6C0168DC
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:29:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1D6C433D2;
-	Mon,  8 May 2023 11:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36342171A6
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:29:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88354C433D2;
+	Mon,  8 May 2023 11:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545373;
-	bh=uSG4I7WtnY2JAx+wC5AT4aFf2nGp52corG9BQKlSPOc=;
+	s=korg; t=1683545377;
+	bh=BsW4UVCmpcs4lRQ4Ur0+Dxgel0Decd0kkOGtglaHXHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gz1Fx5IwI/tCRoD3O3hpxF/3lil7K3sqYouaolqtkm9ls5CRwgQgz+798wcfkiB4/
-	 /NgK4b7MyuYzXpH6uQQszJroEHcwG6rppQmJNS/dg+2NgzAxcvSO8m+4dPMBxJ5RKk
-	 xUbX4yTw/e7jRdPrmDLnDEUNk2HEH2fDIOQzbG0Q=
+	b=0STf2WyphAGlpsb68tvIYD8M8ks8Gwl7Q4oB31H6BBK7XADj6gWnXdj+hxrCsVEq2
+	 i+ysx5jXJk23AryAROndp22WhXG2gy3uOjza6QV6UcPFOBX2/bWYv/bHHufz0tV4VM
+	 MmJ50zc98/Jsi7yHSkp0nPX2lmNXKO66DnajXffg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mariusz=20Bia=C5=82o=C5=84czyk?= <manio@skyboo.net>,
-	Chris Packham <chris.packham@alliedtelesis.co.nz>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 5.15 019/371] hwmon: (adt7475) Use device_property APIs when configuring polarity
-Date: Mon,  8 May 2023 11:43:40 +0200
-Message-Id: <20230508094812.865855220@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 002/371] ASoC: soc-pcm: fix hw->formats cleared by soc_pcm_hw_init() for dpcm
+Date: Mon,  8 May 2023 11:43:23 +0200
+Message-Id: <20230508094812.038963097@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,41 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Packham <chris.packham@alliedtelesis.co.nz>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit 2a8e41ad337508fc5d598c0f9288890214f8e318 upstream.
+[ Upstream commit 083a25b18d6ad9f1f540e629909aa3eaaaf01823 ]
 
-On DT unaware platforms of_property_read_u32_array() returns -ENOSYS
-which wasn't handled by the code treating adi,pwm-active-state as
-optional. Update the code to use device_property_read_u32_array() which
-deals gracefully with DT unaware platforms.
+The hw->formats may be set by snd_dmaengine_pcm_refine_runtime_hwparams()
+in component's startup()/open(), but soc_pcm_hw_init() will init
+hw->formats in dpcm_runtime_setup_fe() after component's startup()/open(),
+which causes the valuable hw->formats to be cleared.
 
-Fixes: 86da28eed4fb ("hwmon: (adt7475) Add support for inverting pwm output")
-Reported-by: Mariusz Białończyk <manio@skyboo.net>
-Link: https://lore.kernel.org/linux-hwmon/52e26a67-9131-2dc0-40cb-db5c07370027@alliedtelesis.co.nz/T/#mdd0505801e0a4e72340de009a47c0fca4f771ed3
-Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
-Link: https://lore.kernel.org/r/20230418233656.869055-2-chris.packham@alliedtelesis.co.nz
-Cc: stable@vger.kernel.org
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+So need to store the hw->formats before initialization, then restore
+it after initialization.
+
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Link: https://lore.kernel.org/r/1678346017-3660-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/adt7475.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/soc-pcm.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/hwmon/adt7475.c
-+++ b/drivers/hwmon/adt7475.c
-@@ -1515,9 +1515,9 @@ static int adt7475_set_pwm_polarity(stru
- 	int ret, i;
- 	u8 val;
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index 3b673477f6215..6f616ac4490f0 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -1554,10 +1554,14 @@ static void dpcm_runtime_setup_fe(struct snd_pcm_substream *substream)
+ 	struct snd_pcm_hardware *hw = &runtime->hw;
+ 	struct snd_soc_dai *dai;
+ 	int stream = substream->stream;
++	u64 formats = hw->formats;
+ 	int i;
  
--	ret = of_property_read_u32_array(client->dev.of_node,
--					 "adi,pwm-active-state", states,
--					 ARRAY_SIZE(states));
-+	ret = device_property_read_u32_array(&client->dev,
-+					     "adi,pwm-active-state", states,
-+					     ARRAY_SIZE(states));
- 	if (ret)
- 		return ret;
+ 	soc_pcm_hw_init(hw);
  
++	if (formats)
++		hw->formats &= formats;
++
+ 	for_each_rtd_cpu_dais(fe, i, dai) {
+ 		struct snd_soc_pcm_stream *cpu_stream;
+ 
+-- 
+2.39.2
+
 
 
