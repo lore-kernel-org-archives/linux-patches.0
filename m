@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3156320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33834C433D2;
-	Mon,  8 May 2023 11:20:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C638E320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45637C433EF;
+	Mon,  8 May 2023 11:20:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544820;
-	bh=yY2sbgvUkZT4C3Y7pdan043aYlRhztio70P3mkbLigk=;
+	s=korg; t=1683544823;
+	bh=xaEc9e6ounUsuVMZvjCaiMGFrtCG5d4bhbYlcKaW9PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ed47+mzhUHkA4etXbzdtfjBj8BbGV0qdl0HD/tMkWYyKYIA5znTqGkk/BDgnsztrl
-	 k0lDTIyLB3Z0KTfPq1DEdoJfpR9mvHYxb4tF5BfvYOcmbX1TM1kIRe8HyTihMkV5Dv
-	 JSvmQfA3g5nQLlwFqJrCIfk2njqtx9raYdZkYxzA=
+	b=ZS6SP8OwwQK92jPZ3jOqygy35jTXqRbGTWzCW1BvE+FnLkEaTM/EOzd72WqMaWhix
+	 Qftg7agSmSjiEvVa0YvghQYzVRZSLQJmDu6RhLt4XU48DbxP4elEh82/fvj4AgRODB
+	 MCI81Ga8pZdFG8CB8HljGvy8WQY/RWbCAYXoHqRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 533/694] coresight: etm_pmu: Set the module field
-Date: Mon,  8 May 2023 11:46:08 +0200
-Message-Id: <20230508094451.678275894@linuxfoundation.org>
+Subject: [PATCH 6.3 534/694] drm/panel: novatek-nt35950: Improve error handling
+Date: Mon,  8 May 2023 11:46:09 +0200
+Message-Id: <20230508094451.715252372@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,33 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 18996a113f2567aef3057e300e3193ce2df1684c ]
+[ Upstream commit 5dd45b66742a1f3cfa9a92dc0ac8714c7708ee6c ]
 
-struct pmu::module must be set to the module owning the PMU driver.
-Set this for the coresight etm_pmu.
+In a very peculiar case when probing and registering with the secondary
+DSI host succeeds, but the OF backlight or DSI attachment fails, the
+primary DSI device is automatically cleaned up, but the secondary one
+is not, leading to -EEXIST when the driver core tries to handle
+-EPROBE_DEFER.
 
-Fixes: 8e264c52e1dab ("coresight: core: Allow the coresight core driver to be built as a module")
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20230405094922.667834-1-suzuki.poulose@arm.com
+Unregister the DSI1 device manually on failure to prevent that.
+
+Fixes: 623a3531e9cf ("drm/panel: Add driver for Novatek NT35950 DSI DriverIC panels")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230415-konrad-longbois-next-v1-1-ce695dc9df84@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-etm-perf.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/panel/panel-novatek-nt35950.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-etm-perf.c b/drivers/hwtracing/coresight/coresight-etm-perf.c
-index a48c97da81658..711f451b69469 100644
---- a/drivers/hwtracing/coresight/coresight-etm-perf.c
-+++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
-@@ -901,6 +901,7 @@ int __init etm_perf_init(void)
- 	etm_pmu.addr_filters_sync	= etm_addr_filters_sync;
- 	etm_pmu.addr_filters_validate	= etm_addr_filters_validate;
- 	etm_pmu.nr_addr_filters		= ETM_ADDR_CMP_MAX;
-+	etm_pmu.module			= THIS_MODULE;
+diff --git a/drivers/gpu/drm/panel/panel-novatek-nt35950.c b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+index abf752b36a523..7498fc6258bb0 100644
+--- a/drivers/gpu/drm/panel/panel-novatek-nt35950.c
++++ b/drivers/gpu/drm/panel/panel-novatek-nt35950.c
+@@ -585,8 +585,11 @@ static int nt35950_probe(struct mipi_dsi_device *dsi)
+ 		       DRM_MODE_CONNECTOR_DSI);
  
- 	ret = perf_pmu_register(&etm_pmu, CORESIGHT_ETM_PMU_NAME, -1);
- 	if (ret == 0)
+ 	ret = drm_panel_of_backlight(&nt->panel);
+-	if (ret)
++	if (ret) {
++		mipi_dsi_device_unregister(nt->dsi[1]);
++
+ 		return dev_err_probe(dev, ret, "Failed to get backlight\n");
++	}
+ 
+ 	drm_panel_add(&nt->panel);
+ 
+@@ -602,6 +605,9 @@ static int nt35950_probe(struct mipi_dsi_device *dsi)
+ 
+ 		ret = mipi_dsi_attach(nt->dsi[i]);
+ 		if (ret < 0) {
++			/* If we fail to attach to either host, we're done */
++			mipi_dsi_device_unregister(nt->dsi[1]);
++
+ 			return dev_err_probe(dev, ret,
+ 					     "Cannot attach to DSI%d host.\n", i);
+ 		}
 -- 
 2.39.2
 
