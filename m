@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5CF168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:54:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA95CC433D2;
-	Mon,  8 May 2023 09:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44B2D168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:54:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5283AC433EF;
+	Mon,  8 May 2023 09:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539653;
-	bh=vaDW+pMskZ06wVM0nSA+WW0HTIbPuEn+CC9mZ315wMY=;
+	s=korg; t=1683539657;
+	bh=0jN8LvS7Yf2lUHNq9R3RkTYeahun7ajkEzxs4fj0IAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Im9nOmK1MYQsARxeQTeskp35dbZyHTcWkXSlKUEJ+FrsWFqHpdHB+6je4wvn2Uzna
-	 LbasC7YT115YnTWdDv9rttu+Ef4a1WeRIZvk/t5h+wiN4Qtq4ExEqpzoYeXZqxZ6dT
-	 0+w4Sl6Qlh/Y4q6pplU/pbLO1AD0c/WPQrnEAOWM=
+	b=tkRmEqq7lgZT2OmDOaJGQnwzOWVNzcKvGjwTqccBQ5fC+FyK/E5VFWiuleAqzrDNS
+	 nlDXUyYg2ol/674WKDAWf6/HGloQQWKlZVCu7UElpUhxm7kFFOkQatcXs93k0tMgWw
+	 TuGgloN0wp7dHwitTMiYdkUSldiUQZ9YdPJUP0j8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reid Tonking <reidt@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.1 094/611] i2c: omap: Fix standard mode false ACK readings
-Date: Mon,  8 May 2023 11:38:56 +0200
-Message-Id: <20230508094425.247349964@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Song Shuai <suagrfillet@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.1 095/611] riscv: mm: remove redundant parameter of create_fdt_early_page_table
+Date: Mon,  8 May 2023 11:38:57 +0200
+Message-Id: <20230508094425.288664980@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,37 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reid Tonking <reidt@ti.com>
+From: Song Shuai <suagrfillet@gmail.com>
 
-commit c770657bd2611b077ec1e7b1fe6aa92f249399bd upstream.
+commit e4ef93edd4e0b022529303db1915766ff9de450e upstream.
 
-Using standard mode, rare false ACK responses were appearing with
-i2cdetect tool. This was happening due to NACK interrupt triggering
-ISR thread before register access interrupt was ready. Removing the
-NACK interrupt's ability to trigger ISR thread lets register access
-ready interrupt do this instead.
+create_fdt_early_page_table() explicitly uses early_pg_dir for
+32-bit fdt mapping and the pgdir parameter is redundant here.
+So remove it and its caller.
 
-Cc: <stable@vger.kernel.org> # v3.7+
-Fixes: 3b2f8f82dad7 ("i2c: omap: switch to threaded IRQ support")
-Signed-off-by: Reid Tonking <reidt@ti.com>
-Acked-by: Vignesh Raghavendra <vigneshr@ti.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Song Shuai <suagrfillet@gmail.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: ef69d2559fe9 ("riscv: Move early dtb mapping into the fixmap region")
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230426100009.685435-1-suagrfillet@gmail.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-omap.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/mm/init.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/i2c/busses/i2c-omap.c
-+++ b/drivers/i2c/busses/i2c-omap.c
-@@ -1058,7 +1058,7 @@ omap_i2c_isr(int irq, void *dev_id)
- 	u16 stat;
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -842,8 +842,7 @@ static void __init create_kernel_page_ta
+  * this means 2 PMD entries whereas for 32-bit kernel, this is only 1 PGDIR
+  * entry.
+  */
+-static void __init create_fdt_early_page_table(pgd_t *pgdir,
+-					       uintptr_t fix_fdt_va,
++static void __init create_fdt_early_page_table(uintptr_t fix_fdt_va,
+ 					       uintptr_t dtb_pa)
+ {
+ 	uintptr_t pa = dtb_pa & ~(PMD_SIZE - 1);
+@@ -1033,8 +1032,7 @@ asmlinkage void __init setup_vm(uintptr_
+ 	create_kernel_page_table(early_pg_dir, true);
  
- 	stat = omap_i2c_read_reg(omap, OMAP_I2C_STAT_REG);
--	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG);
-+	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG) & ~OMAP_I2C_STAT_NACK;
+ 	/* Setup early mapping for FDT early scan */
+-	create_fdt_early_page_table(early_pg_dir,
+-				    __fix_to_virt(FIX_FDT), dtb_pa);
++	create_fdt_early_page_table(__fix_to_virt(FIX_FDT), dtb_pa);
  
- 	if (stat & mask)
- 		ret = IRQ_WAKE_THREAD;
+ 	/*
+ 	 * Bootime fixmap only can handle PMD_SIZE mapping. Thus, boot-ioremap
 
 
