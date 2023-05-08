@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F92168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBFFC433D2;
-	Mon,  8 May 2023 11:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C20A168D7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734CAC4339C;
+	Mon,  8 May 2023 11:17:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544657;
-	bh=Q1E2/2VQovVltMEOu43cAYLNQ9T/TLXeZWQogOPKK+Q=;
+	s=korg; t=1683544660;
+	bh=LYlmOfJhulus+iBnWCJYT90K8x0aOUuWjfXyng6SEUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I1J6F5CeoEsRHS1+xMSMqkbp1NnnW5u0/dcOdRrJ9jSFQhRBgBUL6lPBjt//9bDdF
-	 cRJpCPgweaO+Tg6CQsxK7109J9LrQKVTo8bhsaVylpE/WPvNGRUVR4F8EAv3ovkFVy
-	 FQ2TbN0kAaomVeSXud5as5O9+hBc/lt4ms67mNQk=
+	b=tNm+sT5QM4Ih9HUWMymUq+6QX8l7s3H6HgvxrN3EX6ZlDLAX2czAx6QQJeHS6tnr7
+	 aw/BQetmwMa7Pmj92vwInGAbMbnb5QAr2gA3qJKW99BEi7pl1Bp0lFhBLdwIVEow8M
+	 JOlQs4KbjTQReGFqli/gHVqwmrEoFX43rgSbVBGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 452/694] wifi: mt76: mt7996: fill txd by host driver
-Date: Mon,  8 May 2023 11:44:47 +0200
-Message-Id: <20230508094448.248255717@linuxfoundation.org>
+Subject: [PATCH 6.3 453/694] netfilter: conntrack: fix wrong ct->timeout value
+Date: Mon,  8 May 2023 11:44:48 +0200
+Message-Id: <20230508094448.296956379@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,52 +35,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryder Lee <ryder.lee@mediatek.com>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit 3b522cadedfe6e9e0e8193d7d4ab5aa8d0c73209 ]
+[ Upstream commit 73db1b8f2bb6725b7391e85aab41fdf592b3c0c1 ]
 
-The hardware SDO has issue to fill txd for the moment, so fallback to
-driver filling method.
+(struct nf_conn)->timeout is an interval before the conntrack
+confirmed.  After confirmed, it becomes a timestamp.
 
-Fixes: 98686cd21624 (wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices)
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+It is observed that timeout of an unconfirmed conntrack:
+- Set by calling ctnetlink_change_timeout(). As a result,
+  `nfct_time_stamp` was wrongly added to `ct->timeout` twice.
+- Get by calling ctnetlink_dump_timeout(). As a result,
+  `nfct_time_stamp` was wrongly subtracted.
+
+Call Trace:
+ <TASK>
+ dump_stack_lvl
+ ctnetlink_dump_timeout
+ __ctnetlink_glue_build
+ ctnetlink_glue_build
+ __nfqnl_enqueue_packet
+ nf_queue
+ nf_hook_slow
+ ip_mc_output
+ ? __pfx_ip_finish_output
+ ip_send_skb
+ ? __pfx_dst_output
+ udp_send_skb
+ udp_sendmsg
+ ? __pfx_ip_generic_getfrag
+ sock_sendmsg
+
+Separate the 2 cases in:
+- Setting `ct->timeout` in __nf_ct_set_timeout().
+- Getting `ct->timeout` in ctnetlink_dump_timeout().
+
+Pablo appends:
+
+Update ctnetlink to set up the timeout _after_ the IPS_CONFIRMED flag is
+set on, otherwise conntrack creation via ctnetlink breaks.
+
+Note that the problem described in this patch occurs since the
+introduction of the nfnetlink_queue conntrack support, select a
+sufficiently old Fixes: tag for -stable kernel to pick up this fix.
+
+Fixes: a4b4766c3ceb ("netfilter: nfnetlink_queue: rename related to nfqueue attaching conntrack info")
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/mac.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+ include/net/netfilter/nf_conntrack_core.h |  6 +++++-
+ net/netfilter/nf_conntrack_netlink.c      | 13 +++++++++----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-index 6a635b03a602b..1a715d01b0a3b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
-@@ -1120,11 +1120,8 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 		return id;
+diff --git a/include/net/netfilter/nf_conntrack_core.h b/include/net/netfilter/nf_conntrack_core.h
+index 71d1269fe4d4f..3384859a89210 100644
+--- a/include/net/netfilter/nf_conntrack_core.h
++++ b/include/net/netfilter/nf_conntrack_core.h
+@@ -89,7 +89,11 @@ static inline void __nf_ct_set_timeout(struct nf_conn *ct, u64 timeout)
+ {
+ 	if (timeout > INT_MAX)
+ 		timeout = INT_MAX;
+-	WRITE_ONCE(ct->timeout, nfct_time_stamp + (u32)timeout);
++
++	if (nf_ct_is_confirmed(ct))
++		WRITE_ONCE(ct->timeout, nfct_time_stamp + (u32)timeout);
++	else
++		ct->timeout = (u32)timeout;
+ }
  
- 	pid = mt76_tx_status_skb_add(mdev, wcid, tx_info->skb);
--	memset(txwi_ptr, 0, MT_TXD_SIZE);
--	/* Transmit non qos data by 802.11 header and need to fill txd by host*/
--	if (!is_8023 || pid >= MT_PACKET_ID_FIRST)
--		mt7996_mac_write_txwi(dev, txwi_ptr, tx_info->skb, wcid, key,
--				      pid, qid, 0);
-+	mt7996_mac_write_txwi(dev, txwi_ptr, tx_info->skb, wcid, key,
-+			      pid, qid, 0);
+ int __nf_ct_change_timeout(struct nf_conn *ct, u64 cta_timeout);
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index d3ee188546982..6f3b23a6653cc 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -176,7 +176,12 @@ static int ctnetlink_dump_status(struct sk_buff *skb, const struct nf_conn *ct)
+ static int ctnetlink_dump_timeout(struct sk_buff *skb, const struct nf_conn *ct,
+ 				  bool skip_zero)
+ {
+-	long timeout = nf_ct_expires(ct) / HZ;
++	long timeout;
++
++	if (nf_ct_is_confirmed(ct))
++		timeout = nf_ct_expires(ct) / HZ;
++	else
++		timeout = ct->timeout / HZ;
  
- 	txp = (struct mt76_connac_txp_common *)(txwi + MT_TXD_SIZE);
- 	for (i = 0; i < nbuf; i++) {
-@@ -1133,10 +1130,8 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
- 	}
- 	txp->fw.nbuf = nbuf;
+ 	if (skip_zero && timeout == 0)
+ 		return 0;
+@@ -2253,9 +2258,6 @@ ctnetlink_create_conntrack(struct net *net,
+ 	if (!cda[CTA_TIMEOUT])
+ 		goto err1;
  
--	txp->fw.flags = cpu_to_le16(MT_CT_INFO_FROM_HOST);
+-	timeout = (u64)ntohl(nla_get_be32(cda[CTA_TIMEOUT])) * HZ;
+-	__nf_ct_set_timeout(ct, timeout);
 -
--	if (!is_8023 || pid >= MT_PACKET_ID_FIRST)
--		txp->fw.flags |= cpu_to_le16(MT_CT_INFO_APPLY_TXD);
-+	txp->fw.flags =
-+		cpu_to_le16(MT_CT_INFO_FROM_HOST | MT_CT_INFO_APPLY_TXD);
+ 	rcu_read_lock();
+  	if (cda[CTA_HELP]) {
+ 		char *helpname = NULL;
+@@ -2319,6 +2321,9 @@ ctnetlink_create_conntrack(struct net *net,
+ 	/* we must add conntrack extensions before confirmation. */
+ 	ct->status |= IPS_CONFIRMED;
  
- 	if (!key)
- 		txp->fw.flags |= cpu_to_le16(MT_CT_INFO_NONE_CIPHER_FRAME);
++	timeout = (u64)ntohl(nla_get_be32(cda[CTA_TIMEOUT])) * HZ;
++	__nf_ct_set_timeout(ct, timeout);
++
+ 	if (cda[CTA_STATUS]) {
+ 		err = ctnetlink_change_status(ct, cda);
+ 		if (err < 0)
 -- 
 2.39.2
 
