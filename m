@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929181549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA6DBC433EF;
-	Mon,  8 May 2023 10:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668011549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E08B2C433EF;
+	Mon,  8 May 2023 10:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540028;
-	bh=eif0l6Oc7RHhKo5VfKLLCLzztKYPWDVwYpvsyQDvLs0=;
+	s=korg; t=1683540031;
+	bh=Hv46E2HX+YjvtiRETzJVimONpek+X6z1YAHmGXQ4SrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oeNYKPIeMKAnhv1BxVeW+sqepYTSOax1V/wl6ZQOMVPRtTeUqzmT4N7pH4Ap4dNfj
-	 X3TFJN4svTIxPtrybJfvHdVaIT8Cq2cbtRrOt0TGh35ObuI3YUKZdsH79rEZIDpYca
-	 6DqvGNZEJci4JRnNHtPeQFt6qakK8PvfrpZl9UVQ=
+	b=T/tNxCy3okd2Cu7Ydt+JtP9mZgDJOur2VxBm7+PosLx4+qecttGUXKue7vZRUFUxj
+	 iDCFSm3OqOf2Lq0lCVc1BhMP8vKrkOy6yW5aV0zFVGYL9zUBSPx+v8QBI+M6qwLZ8C
+	 dMzt5cfeO0dFecIMg5N8Soou5g+Z1lNAajZ6D6S0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Douglas Anderson <dianders@chromium.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 216/611] regulator: core: Consistently set mutex_owner when using ww_mutex_lock_slow()
-Date: Mon,  8 May 2023 11:40:58 +0200
-Message-Id: <20230508094429.413501375@linuxfoundation.org>
+Subject: [PATCH 6.1 217/611] regulator: core: Avoid lockdep reports when resolving supplies
+Date: Mon,  8 May 2023 11:40:59 +0200
+Message-Id: <20230508094429.446453073@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,49 +37,262 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit b83a1772be854f87602de14726737d3e5b06e1f4 ]
+[ Upstream commit cba6cfdc7c3f1516f0d08ddfb24e689af0932573 ]
 
-When a codepath locks a rdev using ww_mutex_lock_slow() directly then
-that codepath is responsible for incrementing the "ref_cnt" and also
-setting the "mutex_owner" to "current".
+An automated bot told me that there was a potential lockdep problem
+with regulators. This was on the chromeos-5.15 kernel, but I see
+nothing that would be different downstream compared to upstream. The
+bot said:
+  ============================================
+  WARNING: possible recursive locking detected
+  5.15.104-lockdep-17461-gc1e499ed6604 #1 Not tainted
+  --------------------------------------------
+  kworker/u16:4/115 is trying to acquire lock:
+  ffffff8083110170 (regulator_ww_class_mutex){+.+.}-{3:3}, at: create_regulator+0x398/0x7ec
 
-The regulator core consistently got that right for "ref_cnt" but
-didn't always get it right for "mutex_owner". Let's fix this.
+  but task is already holding lock:
+  ffffff808378e170 (regulator_ww_class_mutex){+.+.}-{3:3}, at: ww_mutex_trylock+0x3c/0x7b8
 
-It's unlikely that this truly matters because the "mutex_owner" is
-only needed if we're going to do subsequent locking of the same
-rdev. However, even though it's not truly needed it seems less
-surprising if we consistently set "mutex_owner" properly.
+  other info that might help us debug this:
+   Possible unsafe locking scenario:
 
-Fixes: f8702f9e4aa7 ("regulator: core: Use ww_mutex for regulators locking")
+         CPU0
+         ----
+    lock(regulator_ww_class_mutex);
+    lock(regulator_ww_class_mutex);
+
+   *** DEADLOCK ***
+
+   May be due to missing lock nesting notation
+
+  4 locks held by kworker/u16:4/115:
+   #0: ffffff808006a948 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work+0x520/0x1348
+   #1: ffffffc00e0a7cc0 ((work_completion)(&entry->work)){+.+.}-{0:0}, at: process_one_work+0x55c/0x1348
+   #2: ffffff80828a2260 (&dev->mutex){....}-{3:3}, at: __device_attach_async_helper+0xd0/0x2a4
+   #3: ffffff808378e170 (regulator_ww_class_mutex){+.+.}-{3:3}, at: ww_mutex_trylock+0x3c/0x7b8
+
+  stack backtrace:
+  CPU: 2 PID: 115 Comm: kworker/u16:4 Not tainted 5.15.104-lockdep-17461-gc1e499ed6604 #1 9292e52fa83c0e23762b2b3aa1bacf5787a4d5da
+  Hardware name: Google Quackingstick (rev0+) (DT)
+  Workqueue: events_unbound async_run_entry_fn
+  Call trace:
+   dump_backtrace+0x0/0x4ec
+   show_stack+0x34/0x50
+   dump_stack_lvl+0xdc/0x11c
+   dump_stack+0x1c/0x48
+   __lock_acquire+0x16d4/0x6c74
+   lock_acquire+0x208/0x750
+   __mutex_lock_common+0x11c/0x11f8
+   ww_mutex_lock+0xc0/0x440
+   create_regulator+0x398/0x7ec
+   regulator_resolve_supply+0x654/0x7c4
+   regulator_register_resolve_supply+0x30/0x120
+   class_for_each_device+0x1b8/0x230
+   regulator_register+0x17a4/0x1f40
+   devm_regulator_register+0x60/0xd0
+   reg_fixed_voltage_probe+0x728/0xaec
+   platform_probe+0x150/0x1c8
+   really_probe+0x274/0xa20
+   __driver_probe_device+0x1dc/0x3f4
+   driver_probe_device+0x78/0x1c0
+   __device_attach_driver+0x1ac/0x2c8
+   bus_for_each_drv+0x11c/0x190
+   __device_attach_async_helper+0x1e4/0x2a4
+   async_run_entry_fn+0xa0/0x3ac
+   process_one_work+0x638/0x1348
+   worker_thread+0x4a8/0x9c4
+   kthread+0x2e4/0x3a0
+   ret_from_fork+0x10/0x20
+
+The problem was first reported soon after we made many of the
+regulators probe asynchronously, though nothing I've seen implies that
+the problems couldn't have also happened even without that.
+
+I haven't personally been able to reproduce the lockdep issue, but the
+issue does look somewhat legitimate. Specifically, it looks like in
+regulator_resolve_supply() we are holding a "rdev" lock while calling
+set_supply() -> create_regulator() which grabs the lock of a
+_different_ "rdev" (the one for our supply). This is not necessarily
+safe from a lockdep perspective since there is no documented ordering
+between these two locks.
+
+In reality, we should always be locking a regulator before the
+supplying regulator, so I don't expect there to be any real deadlocks
+in practice. However, the regulator framework in general doesn't
+express this to lockdep.
+
+Let's fix the issue by simply grabbing the two locks involved in the
+same way we grab multiple locks elsewhere in the regulator framework:
+using the "wound/wait" mechanisms.
+
+Fixes: eaa7995c529b ("regulator: core: avoid regulator_resolve_supply() race condition")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20230329143317.RFC.v2.1.I4e9d433ea26360c06dd1381d091c82bb1a4ce843@changeid
+Link: https://lore.kernel.org/r/20230329143317.RFC.v2.2.I30d8e1ca10cfbe5403884cdd192253a2e063eb9e@changeid
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/regulator/core.c | 91 ++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 83 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 075b8504290ee..da929bef22c64 100644
+index da929bef22c64..c417eae887b2d 100644
 --- a/drivers/regulator/core.c
 +++ b/drivers/regulator/core.c
-@@ -334,6 +334,7 @@ static void regulator_lock_dependent(struct regulator_dev *rdev,
- 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
- 			old_contended_rdev = new_contended_rdev;
- 			old_contended_rdev->ref_cnt++;
-+			old_contended_rdev->mutex_owner = current;
- 		}
+@@ -207,6 +207,78 @@ static void regulator_unlock(struct regulator_dev *rdev)
+ 	mutex_unlock(&regulator_nesting_mutex);
+ }
  
- 		err = regulator_lock_recursive(rdev,
-@@ -6042,6 +6043,7 @@ static void regulator_summary_lock(struct ww_acquire_ctx *ww_ctx)
- 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
- 			old_contended_rdev = new_contended_rdev;
- 			old_contended_rdev->ref_cnt++;
-+			old_contended_rdev->mutex_owner = current;
- 		}
++/**
++ * regulator_lock_two - lock two regulators
++ * @rdev1:		first regulator
++ * @rdev2:		second regulator
++ * @ww_ctx:		w/w mutex acquire context
++ *
++ * Locks both rdevs using the regulator_ww_class.
++ */
++static void regulator_lock_two(struct regulator_dev *rdev1,
++			       struct regulator_dev *rdev2,
++			       struct ww_acquire_ctx *ww_ctx)
++{
++	struct regulator_dev *tmp;
++	int ret;
++
++	ww_acquire_init(ww_ctx, &regulator_ww_class);
++
++	/* Try to just grab both of them */
++	ret = regulator_lock_nested(rdev1, ww_ctx);
++	WARN_ON(ret);
++	ret = regulator_lock_nested(rdev2, ww_ctx);
++	if (ret != -EDEADLOCK) {
++		WARN_ON(ret);
++		goto exit;
++	}
++
++	while (true) {
++		/*
++		 * Start of loop: rdev1 was locked and rdev2 was contended.
++		 * Need to unlock rdev1, slowly lock rdev2, then try rdev1
++		 * again.
++		 */
++		regulator_unlock(rdev1);
++
++		ww_mutex_lock_slow(&rdev2->mutex, ww_ctx);
++		rdev2->ref_cnt++;
++		rdev2->mutex_owner = current;
++		ret = regulator_lock_nested(rdev1, ww_ctx);
++
++		if (ret == -EDEADLOCK) {
++			/* More contention; swap which needs to be slow */
++			tmp = rdev1;
++			rdev1 = rdev2;
++			rdev2 = tmp;
++		} else {
++			WARN_ON(ret);
++			break;
++		}
++	}
++
++exit:
++	ww_acquire_done(ww_ctx);
++}
++
++/**
++ * regulator_unlock_two - unlock two regulators
++ * @rdev1:		first regulator
++ * @rdev2:		second regulator
++ * @ww_ctx:		w/w mutex acquire context
++ *
++ * The inverse of regulator_lock_two().
++ */
++
++static void regulator_unlock_two(struct regulator_dev *rdev1,
++				 struct regulator_dev *rdev2,
++				 struct ww_acquire_ctx *ww_ctx)
++{
++	regulator_unlock(rdev2);
++	regulator_unlock(rdev1);
++	ww_acquire_fini(ww_ctx);
++}
++
+ static bool regulator_supply_is_couple(struct regulator_dev *rdev)
+ {
+ 	struct regulator_dev *c_rdev;
+@@ -1627,8 +1699,8 @@ static int set_machine_constraints(struct regulator_dev *rdev)
  
- 		err = regulator_summary_lock_all(ww_ctx,
+ /**
+  * set_supply - set regulator supply regulator
+- * @rdev: regulator name
+- * @supply_rdev: supply regulator name
++ * @rdev: regulator (locked)
++ * @supply_rdev: supply regulator (locked))
+  *
+  * Called by platform initialisation code to set the supply regulator for this
+  * regulator. This ensures that a regulators supply will also be enabled by the
+@@ -1800,6 +1872,8 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
+ 	struct regulator *regulator;
+ 	int err = 0;
+ 
++	lockdep_assert_held_once(&rdev->mutex.base);
++
+ 	if (dev) {
+ 		char buf[REG_STR_SIZE];
+ 		int size;
+@@ -1827,9 +1901,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
+ 	regulator->rdev = rdev;
+ 	regulator->supply_name = supply_name;
+ 
+-	regulator_lock(rdev);
+ 	list_add(&regulator->list, &rdev->consumer_list);
+-	regulator_unlock(rdev);
+ 
+ 	if (dev) {
+ 		regulator->dev = dev;
+@@ -1995,6 +2067,7 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
+ {
+ 	struct regulator_dev *r;
+ 	struct device *dev = rdev->dev.parent;
++	struct ww_acquire_ctx ww_ctx;
+ 	int ret = 0;
+ 
+ 	/* No supply to resolve? */
+@@ -2061,23 +2134,23 @@ static int regulator_resolve_supply(struct regulator_dev *rdev)
+ 	 * between rdev->supply null check and setting rdev->supply in
+ 	 * set_supply() from concurrent tasks.
+ 	 */
+-	regulator_lock(rdev);
++	regulator_lock_two(rdev, r, &ww_ctx);
+ 
+ 	/* Supply just resolved by a concurrent task? */
+ 	if (rdev->supply) {
+-		regulator_unlock(rdev);
++		regulator_unlock_two(rdev, r, &ww_ctx);
+ 		put_device(&r->dev);
+ 		goto out;
+ 	}
+ 
+ 	ret = set_supply(rdev, r);
+ 	if (ret < 0) {
+-		regulator_unlock(rdev);
++		regulator_unlock_two(rdev, r, &ww_ctx);
+ 		put_device(&r->dev);
+ 		goto out;
+ 	}
+ 
+-	regulator_unlock(rdev);
++	regulator_unlock_two(rdev, r, &ww_ctx);
+ 
+ 	/*
+ 	 * In set_machine_constraints() we may have turned this regulator on
+@@ -2190,7 +2263,9 @@ struct regulator *_regulator_get(struct device *dev, const char *id,
+ 		return regulator;
+ 	}
+ 
++	regulator_lock(rdev);
+ 	regulator = create_regulator(rdev, dev, id);
++	regulator_unlock(rdev);
+ 	if (regulator == NULL) {
+ 		regulator = ERR_PTR(-ENOMEM);
+ 		module_put(rdev->owner);
 -- 
 2.39.2
 
