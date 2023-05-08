@@ -1,104 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EC51361
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 13:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E92E6C433D2;
-	Mon,  8 May 2023 13:25:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683552314;
-	bh=xNoSJkBze9zmRIp6cBsfukeWzToDTAhsz0GIxBWHwDE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=e9NF0L0+jG+zuf8GMwiCnTpL925Y6PByTdhs4795j50bxKw+uWi/uuDMJw2btmWsQ
-	 LFkaE9AI/4Kl45idyexQ/unE7KOUHeoizMTLogU1fecDMFCxVFxepb3DWygSVir/xL
-	 EcnskRR59pGcw0IgERFul0X/2iaftvsTaryBq+IY=
-Date: Mon, 8 May 2023 15:25:11 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Dhruva Gole <d-gole@ti.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 455/611] spi: bcm63xx: remove PM_SLEEP based
- conditional compilation
-Message-ID: <2023050845-pancreas-postage-5769@gregkh>
-References: <20230508094421.513073170@linuxfoundation.org>
- <20230508094436.944529030@linuxfoundation.org>
- <0138fb50-507d-bccf-40bb-07340f3cbb33@ti.com>
- <2023050808-overbite-dancing-53c5@gregkh>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA69E566F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 18:01:31 +0000 (UTC)
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-52cb78647ecso2187713a12.1
+        for <patches@lists.linux.dev>; Mon, 08 May 2023 11:01:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683568891; x=1686160891;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CxYhKZWcTM6D0zvItXjXfl3kEr6BBDEZH2De/KsXnU0=;
+        b=RjE9Zy5bFl7s5q/SOisMx8EM08G+BB800LBMmnQcnf1FZjwKN50ndFOsk9R1TgrV8g
+         Dmqzc+GfiroxjQ5hUQWqtifI0c4ccQfLTfTok398wwKSZGcHwYQx9WfudqNGJeBedwPf
+         6vI8A0qFgL0V/K8ICs7Wo9MlspJ/SRQh1yEcsByHY+R37+oS+44jhc8cfOcQ/zNCJmOl
+         bYoBXrch2J8kTWBecgEY/6NePkXV5Zc9mo8/IWlKqS1wW85Z51EbOJC2M3/HmJfQ/Moc
+         Cf9sRBJWXz1B5/GSWaGmNfRCF+U6nv9hVEJP7UxNMinhuZJfxz2gNubNBY93vT/WW2SE
+         /m5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683568891; x=1686160891;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CxYhKZWcTM6D0zvItXjXfl3kEr6BBDEZH2De/KsXnU0=;
+        b=TQMDXmmHr6sMQHzx0/RFmGKiIg4TlgwAYTNJE5g3I4uJ0b1V9ZLZmjQbC+WS6xSvHm
+         qX2xamIJkOgJEvk+uJo/8dxPy4AcA0AnGotUUyBgy5eIKmbTkUoZSwcU1x5BH8j8asqD
+         0LEvGD7WwukNCIhHIp9hnBNT1P7cKmjZxWiMZwt1nysrWfFt2Sp3YPv0xZbOJg5tkHim
+         G1uIHGr8DyTpmPKnr8oQMSp6E2vgkD3t2gu99MTIrktRozr2zKBU1Z3zKRzPF+1C6oRH
+         Vv3wWDgJAcsXE0nDMfRfWRtimqCfFdLMF6B/mW7PXJFX5WDydZelRbP/JMD1eQr0s91g
+         8+jA==
+X-Gm-Message-State: AC+VfDxrFHctSybcBRZU7n5w3StPuqnxfwquY7Tc7l+A2KhnjZ4QTMNG
+	kyVT8AKbKW9xA8s/lMOXmX8=
+X-Google-Smtp-Source: ACHHUZ4SQsmgQ9UWv9tiEpgxGofTIxrtbBNrMqUq9CdvGszWhGb6ZM87uyYI4/mets9p8H9kHSOdvA==
+X-Received: by 2002:a05:6a20:3d27:b0:100:99a:7f71 with SMTP id y39-20020a056a203d2700b00100099a7f71mr8042018pzi.2.1683568890882;
+        Mon, 08 May 2023 11:01:30 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id k11-20020a63ff0b000000b00528af015a8dsm6566447pgi.14.2023.05.08.11.01.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 May 2023 11:01:29 -0700 (PDT)
+Message-ID: <b082ef46-a26d-db65-81cf-42f6f694de58@gmail.com>
+Date: Mon, 8 May 2023 11:01:27 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2023050808-overbite-dancing-53c5@gregkh>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 5.15 000/371] 5.15.111-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230508094811.912279944@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, May 08, 2023 at 03:15:15PM +0200, Greg Kroah-Hartman wrote:
-> On Mon, May 08, 2023 at 05:55:50PM +0530, Dhruva Gole wrote:
-> > Hi Greg,
-> > 
-> > On 08/05/23 15:14, Greg Kroah-Hartman wrote:
-> > > From: Dhruva Gole <d-gole@ti.com>
-> > > 
-> > > [ Upstream commit 25f0617109496e1aff49594fbae5644286447a0f ]
-> > > 
-> > > Get rid of conditional compilation based on CONFIG_PM_SLEEP because
-> > > it may introduce build issues with certain configs where it maybe disabled
-> > > This is because if above config is not enabled the suspend-resume
-> > > functions are never part of the code but the bcm63xx_spi_pm_ops struct
-> > > still inits them to non-existent suspend-resume functions.
-> > > 
-> > > Fixes: b42dfed83d95 ("spi: add Broadcom BCM63xx SPI controller driver")
-> > > 
-> > > Signed-off-by: Dhruva Gole <d-gole@ti.com>
-> > > Link: https://lore.kernel.org/r/20230420121615.967487-1-d-gole@ti.com
-> > > Signed-off-by: Mark Brown <broonie@kernel.org>
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > ---
-> > >   drivers/spi/spi-bcm63xx.c | 2 --
-> > >   1 file changed, 2 deletions(-)
-> > > 
-> > > diff --git a/drivers/spi/spi-bcm63xx.c b/drivers/spi/spi-bcm63xx.c
-> > > index 80fa0ef8909ca..0324ab3ce1c84 100644
-> > > --- a/drivers/spi/spi-bcm63xx.c
-> > > +++ b/drivers/spi/spi-bcm63xx.c
-> > > @@ -630,7 +630,6 @@ static int bcm63xx_spi_remove(struct platform_device *pdev)
-> > >   	return 0;
-> > >   }
-> > > -#ifdef CONFIG_PM_SLEEP
-> > >   static int bcm63xx_spi_suspend(struct device *dev)
-> > >   {
-> > >   	struct spi_master *master = dev_get_drvdata(dev);
-> > > @@ -657,7 +656,6 @@ static int bcm63xx_spi_resume(struct device *dev)
-> > >   	return 0;
-> > >   }
-> > > -#endif
-> > 
-> > This patch may cause build failures with some of the configs that disable
-> > CONFIG_PM I understand,
-> > So to fix that I had sent another patch:
-> > https://lore.kernel.org/all/CAOiHx==anPTqXNJNG7zap1XP2zKUp5SbaVJdyUsUvvitKRUHZw@mail.gmail.com/
-> > 
-> > However missed out adding the fixes tag.
-> > 
-> > I humbly request you to add
-> > https://lore.kernel.org/all/20230424102546.1604484-1-d-gole@ti.com/
-> > 
-> > this patch to fix this patch throughout the stable fixes trees.
-> > 
-> > It can also be found on Linus' master branch here:
-> > 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/drivers/spi/spi-bcm63xx.c?id=cc5f6fa4f6590e3b9eb8d34302ea43af4a3cfed7
-> > >   static const struct dev_pm_ops bcm63xx_spi_pm_ops = {
-> > >   	SET_SYSTEM_SLEEP_PM_OPS(bcm63xx_spi_suspend, bcm63xx_spi_resume)
+On 5/8/23 02:43, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.111 release.
+> There are 371 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Sure, now queued up, thanks!
+> Responses should be made by Wed, 10 May 2023 09:47:07 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.111-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-Nope, sorry, that broke the build in many places, so I've dropped it now
-from kernels 5.15.y and older.
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
-thanks,
-
-greg k-h
