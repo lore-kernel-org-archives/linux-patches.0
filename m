@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AEA168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:25:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251D2C4339C;
-	Mon,  8 May 2023 10:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DAD168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:25:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74AD8C433EF;
+	Mon,  8 May 2023 10:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541521;
-	bh=Dq7oHpDCJDUIrakCxaYsn4oRWMI6abiRScWxqMmmmu8=;
+	s=korg; t=1683541525;
+	bh=xRBZmjTtZATfJitir68U+VJ2net7eVXUVP+HHN8hZZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZTdpTQOzoa9izSnhJKUcGOGm/sgvnle9GyqqRHqgfahBWSwHUEyoqt+p8V/XKfArj
-	 bWIIUKCvnGamIRXLiElVUsr6+QUoPgGifvV73c2uitumYhOvGgI6oG9e7gkO1Z4ocS
-	 aUyw0TBib72qY5M5qrAoilz5qBPVRKUy0SqNcvX4=
+	b=lzLgWnOGlbNIapZ3Rur66orB3fnklojGeznM+Bi9qwTGorNEp27Wnd2qTVZn8yz22
+	 sg8SLoSU6GK244yvpq6jbI9/KesbcRR7ycnVs7cog0PkTZv8iIPiL+enT7hCJKgruw
+	 SYK1XD75lOkUIVZyjADFQWAYqIT8PQipwHvnILgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 142/663] arm64: dts: renesas: r8a774c0: Remove bogus voltages from OPP table
-Date: Mon,  8 May 2023 11:39:28 +0200
-Message-Id: <20230508094433.124441434@linuxfoundation.org>
+Subject: [PATCH 6.2 143/663] arm64: dts: renesas: r9a07g044: Update IRQ numbers for SSI channels
+Date: Mon,  8 May 2023 11:39:29 +0200
+Message-Id: <20230508094433.154913749@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -34,48 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 554edc3e9239bb81e61be9f0f5dbbeb528a69e72 ]
+[ Upstream commit 5da750ddd96454757a3b467e968e3fb70bb12bc8 ]
 
-According to the RZ/G Series, 2nd Generation Hardware User’s Manual
-Rev. 1.11, the System CPU cores on RZ/G2E do not have their own power
-supply, but use the common internal power supply (typical 1.03V).
+>From R01UH0914EJ0120 Rev.1.20 HW manual the interrupt numbers for SSI
+channels have been updated,
 
-Hence remove the "opp-microvolt" properties from the Operating
-Performance Points table.  They are optional, and unused, when none of
-the CPU nodes is tied to a regulator using the "cpu-supply" property.
+SPI 329 - SSIF0 is now marked as reserved
+SPI 333 - SSIF1 is now marked as reserved
+SPI 335 - SSIF2 is now marked as reserved
+SPI 336 - SSIF2 is now marked as reserved
+SPI 341 - SSIF3 is now marked as reserved
 
-Fixes: 231d8908a66fa98f ("arm64: dts: renesas: r8a774c0: Add OPPs table for cpu devices")
+This patch drops the above IRQs from SoC DTSI.
+
+Fixes: 92a341315afc9 ("arm64: dts: renesas: r9a07g044: Add SSI support")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230217185225.43310-4-prabhakar.mahadev-lad.rj@bp.renesas.com
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/8348e18a011ded94e35919cd8e17c0be1f9acf2f.1676560856.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a774c0.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/arm64/boot/dts/renesas/r9a07g044.dtsi | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
-index 151e32ac03683..ec7c7851519f4 100644
---- a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
-@@ -49,17 +49,14 @@
- 		opp-shared;
- 		opp-800000000 {
- 			opp-hz = /bits/ 64 <800000000>;
--			opp-microvolt = <820000>;
- 			clock-latency-ns = <300000>;
- 		};
- 		opp-1000000000 {
- 			opp-hz = /bits/ 64 <1000000000>;
--			opp-microvolt = <820000>;
- 			clock-latency-ns = <300000>;
- 		};
- 		opp-1200000000 {
- 			opp-hz = /bits/ 64 <1200000000>;
--			opp-microvolt = <820000>;
- 			clock-latency-ns = <300000>;
- 			opp-suspend;
- 		};
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
+index 487536696d900..6a42df15440cf 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
++++ b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
+@@ -175,9 +175,8 @@
+ 			reg = <0 0x10049c00 0 0x400>;
+ 			interrupts = <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 327 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 328 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 329 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++				     <GIC_SPI 328 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "int_req", "dma_rx", "dma_tx";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI0_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI0_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
+@@ -196,9 +195,8 @@
+ 			reg = <0 0x1004a000 0 0x400>;
+ 			interrupts = <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 331 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 332 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 333 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++				     <GIC_SPI 332 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "int_req", "dma_rx", "dma_tx";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI1_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI1_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
+@@ -216,10 +214,8 @@
+ 				     "renesas,rz-ssi";
+ 			reg = <0 0x1004a400 0 0x400>;
+ 			interrupts = <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 335 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 336 IRQ_TYPE_EDGE_RISING>,
+ 				     <GIC_SPI 337 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++			interrupt-names = "int_req", "dma_rt";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI2_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI2_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
+@@ -238,9 +234,8 @@
+ 			reg = <0 0x1004a800 0 0x400>;
+ 			interrupts = <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 339 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 340 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 341 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++				     <GIC_SPI 340 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "int_req", "dma_rx", "dma_tx";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI3_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI3_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
 -- 
 2.39.2
 
