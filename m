@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64FB7168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D60C433EF;
-	Mon,  8 May 2023 11:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF8A168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0470C433EF;
+	Mon,  8 May 2023 11:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544286;
-	bh=jhaS2KqOfxRTPe4+M5q9wdH/42iAqlxw2qnQXJCgFXU=;
+	s=korg; t=1683544290;
+	bh=9+jG0odN+8JQ5OxQ8hciMjlXik1mpvj1mlrXPouo5ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZbtfooaC103gsP8nz2TBTz+89kLgzvPzazXpSMEWEJSrTdZMbUhAxw/SylUj/cwR
-	 HmQ1PHtscNDMuxuZrRRVERPoeavxkuhm0PnOa1BivuVLn8y4n7pp38UCcvE24nfcoB
-	 pWQhvskSw4iPaqd0KSY67iZetURB7pAmNPM1b86g=
+	b=V0g1oUaoDGW33Kk8aFkKt2q1ORvMd0zbSmHuw9OXedsW8+dQq4HAJGuaEC3S1oFqO
+	 xcoOP4RO/JEzyK5qTEh1TkpokO4s4Db+PZb62Pl6MYvEvzwM4D2/EUg8GUzlbxAOK8
+	 j6u/tK1cr/aRReBVyLzDXDuXACGXRMiE5c2uRZT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mike Christie <michael.christie@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 362/694] scsi: target: Move cmd counter allocation
-Date: Mon,  8 May 2023 11:43:17 +0200
-Message-Id: <20230508094444.450711751@linuxfoundation.org>
+Subject: [PATCH 6.3 363/694] scsi: target: Pass in cmd counter to use during cmd setup
+Date: Mon,  8 May 2023 11:43:18 +0200
+Message-Id: <20230508094444.489473097@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,263 +37,195 @@ Content-Transfer-Encoding: 8bit
 
 From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 4edba7e4a8f39112398d3cda94128a8e13a7d527 ]
+[ Upstream commit 8e288be8606ad87c1726618eacfb8fbd3ab4b806 ]
 
-iSCSI needs to allocate its cmd counter per connection for MCS support
-where we need to stop and wait on commands running on a connection instead
-of per session. This moves the cmd counter allocation to
-target_setup_session() which is used by drivers that need the stop+wait
-behavior per session.
-
-xcopy doesn't need stop+wait at all, so we will be OK moving the cmd
-counter allocation outside of transport_init_session().
+Allow target_get_sess_cmd() users to pass in the cmd counter they want to
+use. Right now we pass in the session's cmd counter but in a subsequent
+commit iSCSI will switch from per session to per conn.
 
 Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20230319015620.96006-3-michael.christie@oracle.com
+Link: https://lore.kernel.org/r/20230319015620.96006-4-michael.christie@oracle.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Stable-dep-of: 395cee83d02d ("scsi: target: iscsit: Stop/wait on cmds during conn close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target_login.c | 10 +++++
- drivers/target/target_core_internal.h     |  1 -
- drivers/target/target_core_transport.c    | 55 +++++++++++------------
- drivers/target/target_core_xcopy.c        | 15 +------
- include/target/target_core_fabric.h       |  4 +-
- 5 files changed, 42 insertions(+), 43 deletions(-)
+ drivers/target/iscsi/iscsi_target.c    | 10 +++++----
+ drivers/target/target_core_transport.c | 28 ++++++++++++--------------
+ drivers/target/target_core_xcopy.c     |  8 ++++----
+ drivers/usb/gadget/function/f_tcm.c    |  4 ++--
+ include/target/target_core_fabric.h    |  8 +++++---
+ 5 files changed, 30 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target_login.c b/drivers/target/iscsi/iscsi_target_login.c
-index 27e448c2d066c..8ab6c0107d89c 100644
---- a/drivers/target/iscsi/iscsi_target_login.c
-+++ b/drivers/target/iscsi/iscsi_target_login.c
-@@ -324,8 +324,18 @@ static int iscsi_login_zero_tsih_s1(
- 		goto free_ops;
- 	}
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index baf4da7bb3b4e..87927a36f90df 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -1190,9 +1190,10 @@ int iscsit_setup_scsi_cmd(struct iscsit_conn *conn, struct iscsit_cmd *cmd,
+ 	 * Initialize struct se_cmd descriptor from target_core_mod infrastructure
+ 	 */
+ 	__target_init_cmd(&cmd->se_cmd, &iscsi_ops,
+-			 conn->sess->se_sess, be32_to_cpu(hdr->data_length),
+-			 cmd->data_direction, sam_task_attr,
+-			 cmd->sense_buffer + 2, scsilun_to_int(&hdr->lun));
++			  conn->sess->se_sess, be32_to_cpu(hdr->data_length),
++			  cmd->data_direction, sam_task_attr,
++			  cmd->sense_buffer + 2, scsilun_to_int(&hdr->lun),
++			  conn->sess->se_sess->cmd_cnt);
  
-+	/*
-+	 * This is temp for iser. It will be moved to per conn in later
-+	 * patches for iscsi.
-+	 */
-+	sess->se_sess->cmd_cnt = target_alloc_cmd_counter();
-+	if (!sess->se_sess->cmd_cnt)
-+		goto free_se_sess;
-+
- 	return 0;
+ 	pr_debug("Got SCSI Command, ITT: 0x%08x, CmdSN: 0x%08x,"
+ 		" ExpXferLen: %u, Length: %u, CID: %hu\n", hdr->itt,
+@@ -2055,7 +2056,8 @@ iscsit_handle_task_mgt_cmd(struct iscsit_conn *conn, struct iscsit_cmd *cmd,
+ 	__target_init_cmd(&cmd->se_cmd, &iscsi_ops,
+ 			  conn->sess->se_sess, 0, DMA_NONE,
+ 			  TCM_SIMPLE_TAG, cmd->sense_buffer + 2,
+-			  scsilun_to_int(&hdr->lun));
++			  scsilun_to_int(&hdr->lun),
++			  conn->sess->se_sess->cmd_cnt);
  
-+free_se_sess:
-+	transport_free_session(sess->se_sess);
- free_ops:
- 	kfree(sess->sess_ops);
- free_id:
-diff --git a/drivers/target/target_core_internal.h b/drivers/target/target_core_internal.h
-index 38a6d08f75b34..85e35cf582e50 100644
---- a/drivers/target/target_core_internal.h
-+++ b/drivers/target/target_core_internal.h
-@@ -138,7 +138,6 @@ int	init_se_kmem_caches(void);
- void	release_se_kmem_caches(void);
- u32	scsi_get_new_index(scsi_index_t);
- void	transport_subsystem_check_init(void);
--void	transport_uninit_session(struct se_session *);
- unsigned char *transport_dump_cmd_direction(struct se_cmd *);
- void	transport_dump_dev_state(struct se_device *, char *, int *);
- void	transport_dump_dev_info(struct se_device *, struct se_lun *,
+ 	target_get_sess_cmd(&cmd->se_cmd, true);
+ 
 diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
-index 3d6034f00dcd8..60647a49a1d31 100644
+index 60647a49a1d31..c395606ab1a9c 100644
 --- a/drivers/target/target_core_transport.c
 +++ b/drivers/target/target_core_transport.c
-@@ -228,7 +228,7 @@ static void target_release_cmd_refcnt(struct percpu_ref *ref)
- 	wake_up(&cmd_cnt->refcnt_wq);
- }
- 
--static struct target_cmd_counter *target_alloc_cmd_counter(void)
-+struct target_cmd_counter *target_alloc_cmd_counter(void)
- {
- 	struct target_cmd_counter *cmd_cnt;
- 	int rc;
-@@ -252,6 +252,7 @@ static struct target_cmd_counter *target_alloc_cmd_counter(void)
- 	kfree(cmd_cnt);
- 	return NULL;
- }
-+EXPORT_SYMBOL_GPL(target_alloc_cmd_counter);
- 
- static void target_free_cmd_counter(struct target_cmd_counter *cmd_cnt)
- {
-@@ -271,24 +272,14 @@ static void target_free_cmd_counter(struct target_cmd_counter *cmd_cnt)
+@@ -1441,14 +1441,12 @@ target_cmd_size_check(struct se_cmd *cmd, unsigned int size)
   *
-  * The caller must have zero-initialized @se_sess before calling this function.
+  * Preserves the value of @cmd->tag.
   */
--int transport_init_session(struct se_session *se_sess)
-+void transport_init_session(struct se_session *se_sess)
+-void __target_init_cmd(
+-	struct se_cmd *cmd,
+-	const struct target_core_fabric_ops *tfo,
+-	struct se_session *se_sess,
+-	u32 data_length,
+-	int data_direction,
+-	int task_attr,
+-	unsigned char *sense_buffer, u64 unpacked_lun)
++void __target_init_cmd(struct se_cmd *cmd,
++		       const struct target_core_fabric_ops *tfo,
++		       struct se_session *se_sess, u32 data_length,
++		       int data_direction, int task_attr,
++		       unsigned char *sense_buffer, u64 unpacked_lun,
++		       struct target_cmd_counter *cmd_cnt)
  {
- 	INIT_LIST_HEAD(&se_sess->sess_list);
- 	INIT_LIST_HEAD(&se_sess->sess_acl_list);
- 	spin_lock_init(&se_sess->sess_cmd_lock);
--	se_sess->cmd_cnt = target_alloc_cmd_counter();
--	if (!se_sess->cmd_cnt)
--		return -ENOMEM;
--
--	return  0;
- }
- EXPORT_SYMBOL(transport_init_session);
+ 	INIT_LIST_HEAD(&cmd->se_delayed_node);
+ 	INIT_LIST_HEAD(&cmd->se_qf_node);
+@@ -1468,6 +1466,7 @@ void __target_init_cmd(
+ 	cmd->sam_task_attr = task_attr;
+ 	cmd->sense_buffer = sense_buffer;
+ 	cmd->orig_fe_lun = unpacked_lun;
++	cmd->cmd_cnt = cmd_cnt;
  
--void transport_uninit_session(struct se_session *se_sess)
--{
--	target_free_cmd_counter(se_sess->cmd_cnt);
--}
--
- /**
-  * transport_alloc_session - allocate a session object and initialize it
-  * @sup_prot_ops: bitmask that defines which T10-PI modes are supported.
-@@ -296,7 +287,6 @@ void transport_uninit_session(struct se_session *se_sess)
- struct se_session *transport_alloc_session(enum target_prot_op sup_prot_ops)
- {
- 	struct se_session *se_sess;
--	int ret;
- 
- 	se_sess = kmem_cache_zalloc(se_sess_cache, GFP_KERNEL);
- 	if (!se_sess) {
-@@ -304,11 +294,7 @@ struct se_session *transport_alloc_session(enum target_prot_op sup_prot_ops)
- 				" se_sess_cache\n");
- 		return ERR_PTR(-ENOMEM);
- 	}
--	ret = transport_init_session(se_sess);
--	if (ret < 0) {
--		kmem_cache_free(se_sess_cache, se_sess);
--		return ERR_PTR(ret);
--	}
-+	transport_init_session(se_sess);
- 	se_sess->sup_prot_ops = sup_prot_ops;
- 
- 	return se_sess;
-@@ -474,8 +460,13 @@ target_setup_session(struct se_portal_group *tpg,
- 		     int (*callback)(struct se_portal_group *,
- 				     struct se_session *, void *))
- {
-+	struct target_cmd_counter *cmd_cnt;
- 	struct se_session *sess;
-+	int rc;
- 
-+	cmd_cnt = target_alloc_cmd_counter();
-+	if (!cmd_cnt)
-+		return ERR_PTR(-ENOMEM);
- 	/*
- 	 * If the fabric driver is using percpu-ida based pre allocation
- 	 * of I/O descriptor tags, go ahead and perform that setup now..
-@@ -485,29 +476,36 @@ target_setup_session(struct se_portal_group *tpg,
- 	else
- 		sess = transport_alloc_session(prot_op);
- 
--	if (IS_ERR(sess))
--		return sess;
-+	if (IS_ERR(sess)) {
-+		rc = PTR_ERR(sess);
-+		goto free_cnt;
-+	}
-+	sess->cmd_cnt = cmd_cnt;
- 
- 	sess->se_node_acl = core_tpg_check_initiator_node_acl(tpg,
- 					(unsigned char *)initiatorname);
- 	if (!sess->se_node_acl) {
--		transport_free_session(sess);
--		return ERR_PTR(-EACCES);
-+		rc = -EACCES;
-+		goto free_sess;
- 	}
- 	/*
- 	 * Go ahead and perform any remaining fabric setup that is
- 	 * required before transport_register_session().
+ 	if (!(cmd->se_cmd_flags & SCF_USE_CPUID))
+ 		cmd->cpuid = raw_smp_processor_id();
+@@ -1687,7 +1686,8 @@ int target_init_cmd(struct se_cmd *se_cmd, struct se_session *se_sess,
+ 	 * target_core_fabric_ops->queue_status() callback
  	 */
- 	if (callback != NULL) {
--		int rc = callback(tpg, sess, private);
--		if (rc) {
--			transport_free_session(sess);
--			return ERR_PTR(rc);
--		}
-+		rc = callback(tpg, sess, private);
-+		if (rc)
-+			goto free_sess;
- 	}
+ 	__target_init_cmd(se_cmd, se_tpg->se_tpg_tfo, se_sess, data_length,
+-			  data_dir, task_attr, sense, unpacked_lun);
++			  data_dir, task_attr, sense, unpacked_lun,
++			  se_sess->cmd_cnt);
  
- 	transport_register_session(tpg, sess->se_node_acl, sess, private);
- 	return sess;
-+
-+free_sess:
-+	transport_free_session(sess);
-+free_cnt:
-+	target_free_cmd_counter(cmd_cnt);
-+	return ERR_PTR(rc);
- }
- EXPORT_SYMBOL(target_setup_session);
+ 	/*
+ 	 * Obtain struct se_cmd->cmd_kref reference. A second kref_get here is
+@@ -1982,7 +1982,8 @@ int target_submit_tmr(struct se_cmd *se_cmd, struct se_session *se_sess,
+ 	BUG_ON(!se_tpg);
  
-@@ -632,7 +630,8 @@ void transport_free_session(struct se_session *se_sess)
- 		sbitmap_queue_free(&se_sess->sess_tag_pool);
- 		kvfree(se_sess->sess_cmd_map);
+ 	__target_init_cmd(se_cmd, se_tpg->se_tpg_tfo, se_sess,
+-			  0, DMA_NONE, TCM_SIMPLE_TAG, sense, unpacked_lun);
++			  0, DMA_NONE, TCM_SIMPLE_TAG, sense, unpacked_lun,
++			  se_sess->cmd_cnt);
+ 	/*
+ 	 * FIXME: Currently expect caller to handle se_cmd->se_tmr_req
+ 	 * allocation failure.
+@@ -2986,7 +2987,6 @@ EXPORT_SYMBOL(transport_generic_free_cmd);
+  */
+ int target_get_sess_cmd(struct se_cmd *se_cmd, bool ack_kref)
+ {
+-	struct se_session *se_sess = se_cmd->se_sess;
+ 	int ret = 0;
+ 
+ 	/*
+@@ -3003,11 +3003,9 @@ int target_get_sess_cmd(struct se_cmd *se_cmd, bool ack_kref)
+ 	 * Users like xcopy do not use counters since they never do a stop
+ 	 * and wait.
+ 	 */
+-	if (se_sess->cmd_cnt) {
+-		if (!percpu_ref_tryget_live(&se_sess->cmd_cnt->refcnt))
++	if (se_cmd->cmd_cnt) {
++		if (!percpu_ref_tryget_live(&se_cmd->cmd_cnt->refcnt))
+ 			ret = -ESHUTDOWN;
+-		else
+-			se_cmd->cmd_cnt = se_sess->cmd_cnt;
  	}
--	transport_uninit_session(se_sess);
-+	if (se_sess->cmd_cnt)
-+		target_free_cmd_counter(se_sess->cmd_cnt);
- 	kmem_cache_free(se_sess_cache, se_sess);
- }
- EXPORT_SYMBOL(transport_free_session);
+ 	if (ret && ack_kref)
+ 		target_put_sess_cmd(se_cmd);
 diff --git a/drivers/target/target_core_xcopy.c b/drivers/target/target_core_xcopy.c
-index 49eaee022ef1d..49a83500c8b75 100644
+index 49a83500c8b75..91ed015b588c6 100644
 --- a/drivers/target/target_core_xcopy.c
 +++ b/drivers/target/target_core_xcopy.c
-@@ -461,8 +461,6 @@ static const struct target_core_fabric_ops xcopy_pt_tfo = {
+@@ -591,8 +591,8 @@ static int target_xcopy_read_source(
+ 		(unsigned long long)src_lba, transfer_length_block, src_bytes);
  
- int target_xcopy_setup_pt(void)
- {
--	int ret;
+ 	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, src_bytes,
+-			  DMA_FROM_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
 -
- 	xcopy_wq = alloc_workqueue("xcopy_wq", WQ_MEM_RECLAIM, 0);
- 	if (!xcopy_wq) {
- 		pr_err("Unable to allocate xcopy_wq\n");
-@@ -479,9 +477,7 @@ int target_xcopy_setup_pt(void)
- 	INIT_LIST_HEAD(&xcopy_pt_nacl.acl_list);
- 	INIT_LIST_HEAD(&xcopy_pt_nacl.acl_sess_list);
- 	memset(&xcopy_pt_sess, 0, sizeof(struct se_session));
--	ret = transport_init_session(&xcopy_pt_sess);
--	if (ret < 0)
--		goto destroy_wq;
-+	transport_init_session(&xcopy_pt_sess);
++			  DMA_FROM_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0,
++			  NULL);
+ 	rc = target_xcopy_setup_pt_cmd(&xpt_cmd, xop, src_dev, &cdb[0],
+ 				remote_port);
+ 	if (rc < 0) {
+@@ -636,8 +636,8 @@ static int target_xcopy_write_destination(
+ 		(unsigned long long)dst_lba, transfer_length_block, dst_bytes);
  
- 	xcopy_pt_nacl.se_tpg = &xcopy_pt_tpg;
- 	xcopy_pt_nacl.nacl_sess = &xcopy_pt_sess;
-@@ -490,19 +486,12 @@ int target_xcopy_setup_pt(void)
- 	xcopy_pt_sess.se_node_acl = &xcopy_pt_nacl;
- 
- 	return 0;
+ 	__target_init_cmd(se_cmd, &xcopy_pt_tfo, &xcopy_pt_sess, dst_bytes,
+-			  DMA_TO_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0);
 -
--destroy_wq:
--	destroy_workqueue(xcopy_wq);
--	xcopy_wq = NULL;
--	return ret;
- }
++			  DMA_TO_DEVICE, 0, &xpt_cmd.sense_buffer[0], 0,
++			  NULL);
+ 	rc = target_xcopy_setup_pt_cmd(&xpt_cmd, xop, dst_dev, &cdb[0],
+ 				remote_port);
+ 	if (rc < 0) {
+diff --git a/drivers/usb/gadget/function/f_tcm.c b/drivers/usb/gadget/function/f_tcm.c
+index 658e2e21fdd0d..c21acebe8aae5 100644
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1054,7 +1054,7 @@ static void usbg_cmd_work(struct work_struct *work)
+ 				  tv_nexus->tvn_se_sess->se_tpg->se_tpg_tfo,
+ 				  tv_nexus->tvn_se_sess, cmd->data_len, DMA_NONE,
+ 				  cmd->prio_attr, cmd->sense_iu.sense,
+-				  cmd->unpacked_lun);
++				  cmd->unpacked_lun, NULL);
+ 		goto out;
+ 	}
  
- void target_xcopy_release_pt(void)
- {
--	if (xcopy_wq) {
-+	if (xcopy_wq)
- 		destroy_workqueue(xcopy_wq);
--		transport_uninit_session(&xcopy_pt_sess);
--	}
- }
+@@ -1183,7 +1183,7 @@ static void bot_cmd_work(struct work_struct *work)
+ 				  tv_nexus->tvn_se_sess->se_tpg->se_tpg_tfo,
+ 				  tv_nexus->tvn_se_sess, cmd->data_len, DMA_NONE,
+ 				  cmd->prio_attr, cmd->sense_iu.sense,
+-				  cmd->unpacked_lun);
++				  cmd->unpacked_lun, NULL);
+ 		goto out;
+ 	}
  
- /*
 diff --git a/include/target/target_core_fabric.h b/include/target/target_core_fabric.h
-index 38f0662476d14..65527174b8bc6 100644
+index 65527174b8bc6..d507e7885f17f 100644
 --- a/include/target/target_core_fabric.h
 +++ b/include/target/target_core_fabric.h
-@@ -133,7 +133,9 @@ struct se_session *target_setup_session(struct se_portal_group *,
- 				struct se_session *, void *));
- void target_remove_session(struct se_session *);
+@@ -151,9 +151,11 @@ void	transport_deregister_session_configfs(struct se_session *);
+ void	transport_deregister_session(struct se_session *);
  
--int transport_init_session(struct se_session *se_sess);
-+struct target_cmd_counter *target_alloc_cmd_counter(void);
-+
-+void transport_init_session(struct se_session *se_sess);
- struct se_session *transport_alloc_session(enum target_prot_op);
- int transport_alloc_session_tags(struct se_session *, unsigned int,
- 		unsigned int);
+ 
+-void	__target_init_cmd(struct se_cmd *,
+-		const struct target_core_fabric_ops *,
+-		struct se_session *, u32, int, int, unsigned char *, u64);
++void	__target_init_cmd(struct se_cmd *cmd,
++		const struct target_core_fabric_ops *tfo,
++		struct se_session *sess, u32 data_length, int data_direction,
++		int task_attr, unsigned char *sense_buffer, u64 unpacked_lun,
++		struct target_cmd_counter *cmd_cnt);
+ int	target_init_cmd(struct se_cmd *se_cmd, struct se_session *se_sess,
+ 		unsigned char *sense, u64 unpacked_lun, u32 data_length,
+ 		int task_attr, int data_dir, int flags);
 -- 
 2.39.2
 
