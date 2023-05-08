@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA1DC171A2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FB1C433EF;
-	Mon,  8 May 2023 11:24:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E08171A2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C23C433EF;
+	Mon,  8 May 2023 11:24:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545085;
-	bh=CTLkxeQd8cmp8Mar/37Fn0j7B0XGUe51oyEXN7btVZk=;
+	s=korg; t=1683545088;
+	bh=gfDGFjV+QykAu/JAuYchGotcnq6yqjwTBcPEGgoNltU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCymmFwvGHO4sMcM8hwMwG6o2cFqYdA99vIHGwnP2v5Fp4Ggz60ogbFKpDpRR3SUJ
-	 3c0GmM+Hb9WGRrs2cocMnt+sfbkhxjDr07TFk9QFkxVSveg4Y4VOe0U6/qwQ52hqgV
-	 x6Tj5dsnLnO5E+szUAzEtKIj0SUR0jolo2wfDWtw=
+	b=XDeYqUd1sS6m9YCLk23sWkGlOvUw9PdI37QffzxjGz2NfV4TxXDh4jIpgVWmZ3SJS
+	 bQFRFHXmdgPwHSOh8vXCNsTdmdCZoxpfji59oHZEe/Hi7D7ioGcsn7UEBEpPfWG77l
+	 Iy3xac07YxuAswF2ci6o7MpMBc1OYamHH5HB+OxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ian Ziemba <ian.ziemba@hpe.com>,
 	Bob Pearson <rpearsonhpe@gmail.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 620/694] RDMA/rxe: Convert tasklet args to queue pairs
-Date: Mon,  8 May 2023 11:47:35 +0200
-Message-Id: <20230508094455.658695938@linuxfoundation.org>
+Subject: [PATCH 6.3 621/694] RDMA/rxe: Remove __rxe_do_task()
+Date: Mon,  8 May 2023 11:47:36 +0200
+Message-Id: <20230508094455.707010673@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,149 +38,190 @@ Content-Transfer-Encoding: 8bit
 
 From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 3946fc2a42b18cf0b675121158a2625825ce27b5 ]
+[ Upstream commit 960ebe97e5238565d15063c8f4d1b2108efe2e65 ]
 
-Originally is was thought that the tasklet machinery in rxe_task.c would
-be used in other applications but that has not happened for years. This
-patch replaces the 'void *arg' by struct 'rxe_qp *qp' in the parameters to
-the tasklet calls. This change will have no affect on performance but may
-make the code a little clearer.
+The subroutine __rxe_do_task is not thread safe and it has no way to
+guarantee that the tasks, which are designed with the assumption that they
+are non-reentrant, are not reentered. All of its uses are non-performance
+critical.
 
-Link: https://lore.kernel.org/r/20230304174533.11296-2-rpearsonhpe@gmail.com
+This patch replaces calls to __rxe_do_task with calls to
+rxe_sched_task. It also removes irrelevant or unneeded if tests.
+
+Instead of calling the task machinery a single call to the tasklet
+function (rxe_requester, etc.) is sufficient to draing the queues if task
+execution has been disabled or stopped.
+
+Together these changes allow the removal of __rxe_do_task.
+
+Link: https://lore.kernel.org/r/20230304174533.11296-7-rpearsonhpe@gmail.com
+Signed-off-by: Ian Ziemba <ian.ziemba@hpe.com>
 Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Stable-dep-of: b2b1ddc45745 ("RDMA/rxe: Fix the error "trying to register non-static key in rxe_cleanup_task"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_comp.c |    3 +--
- drivers/infiniband/sw/rxe/rxe_loc.h  |    6 +++---
- drivers/infiniband/sw/rxe/rxe_req.c  |    3 +--
- drivers/infiniband/sw/rxe/rxe_resp.c |    3 +--
- drivers/infiniband/sw/rxe/rxe_task.c |   11 ++++++-----
- drivers/infiniband/sw/rxe/rxe_task.h |    9 +++++----
- 6 files changed, 17 insertions(+), 18 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c   | 56 +++++++++-------------------
+ drivers/infiniband/sw/rxe/rxe_task.c | 13 -------
+ drivers/infiniband/sw/rxe/rxe_task.h |  6 ---
+ 3 files changed, 17 insertions(+), 58 deletions(-)
 
---- a/drivers/infiniband/sw/rxe/rxe_comp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_comp.c
-@@ -571,9 +571,8 @@ static void free_pkt(struct rxe_pkt_info
- 	ib_device_put(dev);
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index c954dd9394baf..49891f8ed4e61 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -473,29 +473,23 @@ static void rxe_qp_reset(struct rxe_qp *qp)
+ {
+ 	/* stop tasks from running */
+ 	rxe_disable_task(&qp->resp.task);
+-
+-	/* stop request/comp */
+-	if (qp->sq.queue) {
+-		if (qp_type(qp) == IB_QPT_RC)
+-			rxe_disable_task(&qp->comp.task);
+-		rxe_disable_task(&qp->req.task);
+-	}
++	rxe_disable_task(&qp->comp.task);
++	rxe_disable_task(&qp->req.task);
+ 
+ 	/* move qp to the reset state */
+ 	qp->req.state = QP_STATE_RESET;
+ 	qp->comp.state = QP_STATE_RESET;
+ 	qp->resp.state = QP_STATE_RESET;
+ 
+-	/* let state machines reset themselves drain work and packet queues
+-	 * etc.
+-	 */
+-	__rxe_do_task(&qp->resp.task);
++	/* drain work and packet queuesc */
++	rxe_requester(qp);
++	rxe_completer(qp);
++	rxe_responder(qp);
+ 
+-	if (qp->sq.queue) {
+-		__rxe_do_task(&qp->comp.task);
+-		__rxe_do_task(&qp->req.task);
++	if (qp->rq.queue)
++		rxe_queue_reset(qp->rq.queue);
++	if (qp->sq.queue)
+ 		rxe_queue_reset(qp->sq.queue);
+-	}
+ 
+ 	/* cleanup attributes */
+ 	atomic_set(&qp->ssn, 0);
+@@ -518,13 +512,8 @@ static void rxe_qp_reset(struct rxe_qp *qp)
+ 
+ 	/* reenable tasks */
+ 	rxe_enable_task(&qp->resp.task);
+-
+-	if (qp->sq.queue) {
+-		if (qp_type(qp) == IB_QPT_RC)
+-			rxe_enable_task(&qp->comp.task);
+-
+-		rxe_enable_task(&qp->req.task);
+-	}
++	rxe_enable_task(&qp->comp.task);
++	rxe_enable_task(&qp->req.task);
  }
  
--int rxe_completer(void *arg)
-+int rxe_completer(struct rxe_qp *qp)
- {
--	struct rxe_qp *qp = (struct rxe_qp *)arg;
- 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
- 	struct rxe_send_wqe *wqe = NULL;
- 	struct sk_buff *skb = NULL;
---- a/drivers/infiniband/sw/rxe/rxe_loc.h
-+++ b/drivers/infiniband/sw/rxe/rxe_loc.h
-@@ -171,9 +171,9 @@ void rxe_srq_cleanup(struct rxe_pool_ele
+ /* drain the send queue */
+@@ -533,10 +522,7 @@ static void rxe_qp_drain(struct rxe_qp *qp)
+ 	if (qp->sq.queue) {
+ 		if (qp->req.state != QP_STATE_DRAINED) {
+ 			qp->req.state = QP_STATE_DRAIN;
+-			if (qp_type(qp) == IB_QPT_RC)
+-				rxe_sched_task(&qp->comp.task);
+-			else
+-				__rxe_do_task(&qp->comp.task);
++			rxe_sched_task(&qp->comp.task);
+ 			rxe_sched_task(&qp->req.task);
+ 		}
+ 	}
+@@ -552,11 +538,7 @@ void rxe_qp_error(struct rxe_qp *qp)
  
- void rxe_dealloc(struct ib_device *ib_dev);
- 
--int rxe_completer(void *arg);
--int rxe_requester(void *arg);
--int rxe_responder(void *arg);
-+int rxe_completer(struct rxe_qp *qp);
-+int rxe_requester(struct rxe_qp *qp);
-+int rxe_responder(struct rxe_qp *qp);
- 
- /* rxe_icrc.c */
- int rxe_icrc_init(struct rxe_dev *rxe);
---- a/drivers/infiniband/sw/rxe/rxe_req.c
-+++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -635,9 +635,8 @@ static int rxe_do_local_ops(struct rxe_q
- 	return 0;
+ 	/* drain work and packet queues */
+ 	rxe_sched_task(&qp->resp.task);
+-
+-	if (qp_type(qp) == IB_QPT_RC)
+-		rxe_sched_task(&qp->comp.task);
+-	else
+-		__rxe_do_task(&qp->comp.task);
++	rxe_sched_task(&qp->comp.task);
+ 	rxe_sched_task(&qp->req.task);
  }
  
--int rxe_requester(void *arg)
-+int rxe_requester(struct rxe_qp *qp)
- {
--	struct rxe_qp *qp = (struct rxe_qp *)arg;
- 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
- 	struct rxe_pkt_info pkt;
- 	struct sk_buff *skb;
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -1439,9 +1439,8 @@ static void rxe_drain_req_pkts(struct rx
- 		queue_advance_consumer(q, q->type);
- }
+@@ -773,24 +755,20 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
  
--int rxe_responder(void *arg)
-+int rxe_responder(struct rxe_qp *qp)
- {
--	struct rxe_qp *qp = (struct rxe_qp *)arg;
- 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
- 	enum resp_states state;
- 	struct rxe_pkt_info *pkt = NULL;
+ 	qp->valid = 0;
+ 	qp->qp_timeout_jiffies = 0;
+-	rxe_cleanup_task(&qp->resp.task);
+ 
+ 	if (qp_type(qp) == IB_QPT_RC) {
+ 		del_timer_sync(&qp->retrans_timer);
+ 		del_timer_sync(&qp->rnr_nak_timer);
+ 	}
+ 
++	rxe_cleanup_task(&qp->resp.task);
+ 	rxe_cleanup_task(&qp->req.task);
+ 	rxe_cleanup_task(&qp->comp.task);
+ 
+ 	/* flush out any receive wr's or pending requests */
+-	if (qp->req.task.func)
+-		__rxe_do_task(&qp->req.task);
+-
+-	if (qp->sq.queue) {
+-		__rxe_do_task(&qp->comp.task);
+-		__rxe_do_task(&qp->req.task);
+-	}
++	rxe_requester(qp);
++	rxe_completer(qp);
++	rxe_responder(qp);
+ 
+ 	if (qp->sq.queue)
+ 		rxe_queue_cleanup(qp->sq.queue);
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
+index 959cc6229a34e..a67f485454436 100644
 --- a/drivers/infiniband/sw/rxe/rxe_task.c
 +++ b/drivers/infiniband/sw/rxe/rxe_task.c
-@@ -11,7 +11,7 @@ int __rxe_do_task(struct rxe_task *task)
- {
- 	int ret;
+@@ -6,19 +6,6 @@
  
--	while ((ret = task->func(task->arg)) == 0)
-+	while ((ret = task->func(task->qp)) == 0)
- 		;
+ #include "rxe.h"
  
- 	task->ret = ret;
-@@ -29,7 +29,7 @@ static void do_task(struct tasklet_struc
- 	int cont;
- 	int ret;
- 	struct rxe_task *task = from_tasklet(task, t, tasklet);
--	struct rxe_qp *qp = (struct rxe_qp *)task->arg;
-+	struct rxe_qp *qp = (struct rxe_qp *)task->qp;
- 	unsigned int iterations = RXE_MAX_ITERATIONS;
- 
- 	spin_lock_bh(&task->lock);
-@@ -54,7 +54,7 @@ static void do_task(struct tasklet_struc
- 
- 	do {
- 		cont = 0;
--		ret = task->func(task->arg);
-+		ret = task->func(task->qp);
- 
- 		spin_lock_bh(&task->lock);
- 		switch (task->state) {
-@@ -91,9 +91,10 @@ static void do_task(struct tasklet_struc
- 	task->ret = ret;
- }
- 
--int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *))
-+int rxe_init_task(struct rxe_task *task, struct rxe_qp *qp,
-+		  int (*func)(struct rxe_qp *))
- {
--	task->arg	= arg;
-+	task->qp	= qp;
- 	task->func	= func;
- 	task->destroyed	= false;
- 
+-int __rxe_do_task(struct rxe_task *task)
+-
+-{
+-	int ret;
+-
+-	while ((ret = task->func(task->qp)) == 0)
+-		;
+-
+-	task->ret = ret;
+-
+-	return ret;
+-}
+-
+ /*
+  * this locking is due to a potential race where
+  * a second caller finds the task already running
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.h b/drivers/infiniband/sw/rxe/rxe_task.h
+index 41efd5fd49b03..99585e40cef92 100644
 --- a/drivers/infiniband/sw/rxe/rxe_task.h
 +++ b/drivers/infiniband/sw/rxe/rxe_task.h
-@@ -22,18 +22,19 @@ struct rxe_task {
- 	struct tasklet_struct	tasklet;
- 	int			state;
- 	spinlock_t		lock;
--	void			*arg;
--	int			(*func)(void *arg);
-+	struct rxe_qp		*qp;
-+	int			(*func)(struct rxe_qp *qp);
- 	int			ret;
- 	bool			destroyed;
- };
- 
- /*
-  * init rxe_task structure
-- *	arg  => parameter to pass to fcn
-+ *	qp  => parameter to pass to func
-  *	func => function to call until it returns != 0
-  */
--int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *));
-+int rxe_init_task(struct rxe_task *task, struct rxe_qp *qp,
-+		  int (*func)(struct rxe_qp *));
- 
+@@ -39,12 +39,6 @@ int rxe_init_task(struct rxe_task *task, struct rxe_qp *qp,
  /* cleanup task */
  void rxe_cleanup_task(struct rxe_task *task);
+ 
+-/*
+- * raw call to func in loop without any checking
+- * can call when tasklets are disabled
+- */
+-int __rxe_do_task(struct rxe_task *task);
+-
+ void rxe_run_task(struct rxe_task *task);
+ 
+ void rxe_sched_task(struct rxe_task *task);
+-- 
+2.39.2
+
 
 
