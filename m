@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163D7168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D37C433D2;
-	Mon,  8 May 2023 11:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BCB168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0620C433EF;
+	Mon,  8 May 2023 11:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544538;
-	bh=Pcm9NjD0tWqqHwFUtCDpqhZXaCNABcDIt2eScz57qdU=;
+	s=korg; t=1683544542;
+	bh=AXkYpCRFf4ALJNaNUAL+0cZeWOMLuoEOBVfr0KKNhWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nccIhlKZ277e2XeLqSmaIast8hQctprYPvOFEVpe6CgkqnwLKVok6ciKyOMilKgAw
-	 yPN4DJ7kzDocHTXJge219MAf9cDXW+xm80I7bnIYgZzoXmiW/89JnLd9El6lVJfGf9
-	 VtFsX4777KYYMTD+tg2UfhNy7pbOaZud76nYOvmo=
+	b=YRYeJqNLGxKN+ty76d/IP1dBQXnuEouHxIPxNrefFdBKBpo2VwU8GdiTo+x57cJDs
+	 cz7kM8qxRI7ib0ObTk5jcBuj6bM/MQXXRMEVzmGAOiBiAmCZsHA0ohT0YjxW62hOr9
+	 QmVa/SjBjiKyVda3HjzfKHokhldA0QjLx+C2EYIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	StanleyYP Wang <StanleyYP.Wang@mediatek.com>,
-	Shayne Chen <shayne.chen@mediatek.com>,
+	Neil Chen <yn.chen@mediatek.com>,
+	Deren Wu <deren.wu@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 441/694] wifi: mt76: mt7996: fix eeprom tx path bitfields
-Date: Mon,  8 May 2023 11:44:36 +0200
-Message-Id: <20230508094447.778164261@linuxfoundation.org>
+Subject: [PATCH 6.3 442/694] wifi: mt76: mt7921: use driver flags rather than mac80211 flags to mcu
+Date: Mon,  8 May 2023 11:44:37 +0200
+Message-Id: <20230508094447.828279842@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,41 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
+From: Neil Chen <yn.chen@mediatek.com>
 
-[ Upstream commit 72fc0df3006ce5c109f9c68f0724e44c47b4ec7b ]
+[ Upstream commit a5af1481a85679a9812f728ee5cf64ee7edbe669 ]
 
-Swap the tx path bitfields of band1 and band2 to read correct setting.
+FIF_* flags from mac80211 is not ABI. mt7921 should not pass it into mcu
+directly. Remap FIF_* to driver defined flags as mcu command input.
 
-Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
-Signed-off-by: StanleyYP Wang <StanleyYP.Wang@mediatek.com>
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Fixes: c222f77fd421 ("wifi: mt76: mt7921: fix rx filter incorrect by drv/fw inconsistent")
+Signed-off-by: Neil Chen <yn.chen@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7996/eeprom.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7921/main.c    | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.h b/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.h
-index 8da599e0abeac..cfc48698539b3 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7996/eeprom.h
-@@ -31,11 +31,11 @@ enum mt7996_eeprom_field {
- #define MT_EE_WIFI_CONF2_BAND_SEL		GENMASK(2, 0)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+index 058aa581ff4f3..2c5e4ad3a0c69 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
+@@ -702,10 +702,25 @@ static void mt7921_configure_filter(struct ieee80211_hw *hw,
+ 				    unsigned int *total_flags,
+ 				    u64 multicast)
+ {
++#define MT7921_FILTER_FCSFAIL    BIT(2)
++#define MT7921_FILTER_CONTROL    BIT(5)
++#define MT7921_FILTER_OTHER_BSS  BIT(6)
++#define MT7921_FILTER_ENABLE     BIT(31)
++
+ 	struct mt7921_dev *dev = mt7921_hw_dev(hw);
++	u32 flags = MT7921_FILTER_ENABLE;
++
++#define MT7921_FILTER(_fif, _type) do {			\
++		if (*total_flags & (_fif))		\
++			flags |= MT7921_FILTER_##_type;	\
++	} while (0)
++
++	MT7921_FILTER(FIF_FCSFAIL, FCSFAIL);
++	MT7921_FILTER(FIF_CONTROL, CONTROL);
++	MT7921_FILTER(FIF_OTHER_BSS, OTHER_BSS);
  
- #define MT_EE_WIFI_CONF1_TX_PATH_BAND0		GENMASK(5, 3)
--#define MT_EE_WIFI_CONF2_TX_PATH_BAND1		GENMASK(5, 3)
--#define MT_EE_WIFI_CONF2_TX_PATH_BAND2		GENMASK(2, 0)
-+#define MT_EE_WIFI_CONF2_TX_PATH_BAND1		GENMASK(2, 0)
-+#define MT_EE_WIFI_CONF2_TX_PATH_BAND2		GENMASK(5, 3)
- #define MT_EE_WIFI_CONF4_STREAM_NUM_BAND0	GENMASK(5, 3)
--#define MT_EE_WIFI_CONF5_STREAM_NUM_BAND1	GENMASK(5, 3)
--#define MT_EE_WIFI_CONF5_STREAM_NUM_BAND2	GENMASK(2, 0)
-+#define MT_EE_WIFI_CONF5_STREAM_NUM_BAND1	GENMASK(2, 0)
-+#define MT_EE_WIFI_CONF5_STREAM_NUM_BAND2	GENMASK(5, 3)
+ 	mt7921_mutex_acquire(dev);
+-	mt7921_mcu_set_rxfilter(dev, *total_flags, 0, 0);
++	mt7921_mcu_set_rxfilter(dev, flags, 0, 0);
+ 	mt7921_mutex_release(dev);
  
- #define MT_EE_RATE_DELTA_MASK			GENMASK(5, 0)
- #define MT_EE_RATE_DELTA_SIGN			BIT(6)
+ 	*total_flags &= (FIF_OTHER_BSS | FIF_FCSFAIL | FIF_CONTROL);
 -- 
 2.39.2
 
