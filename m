@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125C52915
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:41:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DF0C433D2;
-	Mon,  8 May 2023 10:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E72272915
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:41:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62ED2C433D2;
+	Mon,  8 May 2023 10:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542475;
-	bh=qeTKYEy/OFUOzfP0FZswqpALSJeI/wIIvOJIBTq3Ll8=;
+	s=korg; t=1683542478;
+	bh=iuLf9SzfjGXvPRsP0q5LqlMIekYEJnAl5RUXrLLn9Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WMBaojXsu1PmL8/swTuD8p2tNTfIVP+BPIH4XkEnvgsVnK18XXlqReMug/MYbHn6d
-	 8cjOXpITZM2NYxzrZ88xRM8qxRk4ZUwocUMzPDyg0meQ7MJtWw4zUcrzBwfYKKvwfS
-	 z4pW4aosXpIhB/Lc2iLVWl0FhsgdZGCc4tNxB2uQ=
+	b=qLLmbP+NCYDM6mqGdQwgJzA7zEhD5SUNfmi+U4NPaKnTaYWMZJcm6XnIDHZNPLYrS
+	 /1wVl+k2rRY3piglF6oVZfBeKbpcihneEZAhGWawyYE4xU8idHnlr0aQQEUJgM8YNC
+	 taCgGPyjimNh3opX4TBXoBbbUxn+qp3EX7LvSdYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 420/663] net/mlx5: Use recovery timeout on sync reset flow
-Date: Mon,  8 May 2023 11:44:06 +0200
-Message-Id: <20230508094441.710679366@linuxfoundation.org>
+Subject: [PATCH 6.2 447/663] spi: atmel-quadspi: Dont leak clk enable count in pm resume
+Date: Mon,  8 May 2023 11:44:33 +0200
+Message-Id: <20230508094442.581576496@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,61 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moshe Shemesh <moshe@nvidia.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit dfad99750c0f83b0242572a573afa2c055f85b36 ]
+[ Upstream commit c18bbac353ffed50be134b0a2a059a2bd540c503 ]
 
-Use the same timeout for sync reset flow and health recovery flow, since
-the former involves driver's recovery from firmware reset, which is
-similar to health recovery. Otherwise, in some cases, such as a firmware
-upgrade on the DPU, the firmware pre-init bit may not be ready within
-current timeout and the driver will abort loading back after reset.
+The pm resume call is supposed to enable two clocks. If the second enable
+fails the callback reports failure but doesn't undo the first enable.
 
-Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
-Fixes: 37ca95e62ee2 ("net/mlx5: Increase FW pre-init timeout for health recovery")
-Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+So call clk_disable() for the first clock when clk_enable() for the second
+one fails.
+
+Fixes: 4a2f83b7f780 ("spi: atmel-quadspi: add runtime pm support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20230317084232.142257-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/devlink.c  | 2 +-
- drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/atmel-quadspi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-index 31ce591f527fa..2370e9ad52ea9 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-@@ -196,7 +196,7 @@ static int mlx5_devlink_reload_up(struct devlink *devlink, enum devlink_reload_a
- 			break;
- 		/* On fw_activate action, also driver is reloaded and reinit performed */
- 		*actions_performed |= BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT);
--		ret = mlx5_load_one_devl_locked(dev, false);
-+		ret = mlx5_load_one_devl_locked(dev, true);
- 		break;
- 	default:
- 		/* Unsupported action should not get to this function */
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-index 2b74729180394..d219f8417d93a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
-@@ -154,7 +154,7 @@ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev)
- 		if (mlx5_health_wait_pci_up(dev))
- 			mlx5_core_err(dev, "reset reload flow aborted, PCI reads still not working\n");
- 		else
--			mlx5_load_one(dev, false);
-+			mlx5_load_one(dev, true);
- 		devlink_remote_reload_actions_performed(priv_to_devlink(dev), 0,
- 							BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT) |
- 							BIT(DEVLINK_RELOAD_ACTION_FW_ACTIVATE));
-@@ -485,7 +485,7 @@ int mlx5_fw_reset_wait_reset_done(struct mlx5_core_dev *dev)
- 	err = fw_reset->ret;
- 	if (test_and_clear_bit(MLX5_FW_RESET_FLAGS_RELOAD_REQUIRED, &fw_reset->reset_flags)) {
- 		mlx5_unload_one_devl_locked(dev, false);
--		mlx5_load_one_devl_locked(dev, false);
-+		mlx5_load_one_devl_locked(dev, true);
- 	}
- out:
- 	clear_bit(MLX5_FW_RESET_FLAGS_PENDING_COMP, &fw_reset->reset_flags);
+diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
+index 70637e46290a4..2dbb37b1840f3 100644
+--- a/drivers/spi/atmel-quadspi.c
++++ b/drivers/spi/atmel-quadspi.c
+@@ -786,7 +786,11 @@ static int __maybe_unused atmel_qspi_runtime_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
+-	return clk_enable(aq->qspick);
++	ret = clk_enable(aq->qspick);
++	if (ret)
++		clk_disable(aq->pclk);
++
++	return ret;
+ }
+ 
+ static const struct dev_pm_ops __maybe_unused atmel_qspi_pm_ops = {
 -- 
 2.39.2
 
