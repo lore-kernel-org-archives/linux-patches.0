@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F60320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417BAC433D2;
-	Mon,  8 May 2023 11:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B569320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 217B3C433D2;
+	Mon,  8 May 2023 11:09:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544157;
-	bh=V6c7x2Bkf/H7GdclbSjZoJir9+56LWuFk27QSP9RJfU=;
+	s=korg; t=1683544160;
+	bh=W4SvYe4rKZkIlVlw5Ner+meN9XLyf8/ABcPjE9u0W1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryV4nrMd1CRiYeHRDPzDFz1emv2D/uxz30KGCqFExBiFUyMm3P2f2l3lyrY8FJBRm
-	 Ee0JTcU4WiyTDkBWanQJWTDbnlilFva70TGGorfBqh67vDmxegFEpd06fpZ9PA3DyO
-	 LXVqy1tNsEdUbgbGqENN1eLeDvsvREgW5CpbIAJ8=
+	b=mg7vh49dHebaoJTDB5YZRqgSpmEEQuT5iATQzlaOl1iusdS63Qxpj+GkzcHt0UXZl
+	 Cs+tOdk0xXHGTS7qhh3BG6D2XwfUCwyu4GdE9O4FTO1Q3n8kGWeKNSQmoPknXz/aT3
+	 tjBa1bncDn4fKfYpt0p7kcvlahb57pOpaxhvMRvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 278/694] media: mediatek: vcodec: add params to record lat and core lat_buf count
-Date: Mon,  8 May 2023 11:41:53 +0200
-Message-Id: <20230508094441.283014908@linuxfoundation.org>
+Subject: [PATCH 6.3 313/694] drm/i915: Make intel_get_crtc_new_encoder() less oopsy
+Date: Mon,  8 May 2023 11:42:28 +0200
+Message-Id: <20230508094442.463887281@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,106 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 5bbb6e2ca67477ab41163b32e6b3444faea74a5e ]
+[ Upstream commit 631420b06597a33c72b6dcef78d1c2dea17f452d ]
 
-Using lat_buf to share decoder information between lat and core work
-queue, adding params to record the buf count.
+The point of the WARN was to print something, not oops
+straight up. Currently that is precisely what happens
+if we can't find the connector for the crtc in the atomic
+state. Get the dev pointer from the atomic state instead
+of the potentially NULL encoder to avoid that.
 
-Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230413200602.6037-2-ville.syrjala@linux.intel.com
+Fixes: 3a47ae201e07 ("drm/i915/display: Make WARN* drm specific where encoder ptr is available")
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 3b6692357f70498f617ea1b31a0378070a0acf1c)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/mediatek/vcodec/vdec_msg_queue.c | 23 ++++++++++++++++++-
- .../platform/mediatek/vcodec/vdec_msg_queue.h |  6 +++++
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-index dc2004790a472..3f016c87d722c 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-@@ -52,6 +52,22 @@ static struct list_head *vdec_get_buf_list(int hardware_index, struct vdec_lat_b
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index 63b4b73f47c6a..2bef50ab0ad19 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -1053,7 +1053,7 @@ intel_get_crtc_new_encoder(const struct intel_atomic_state *state,
+ 		num_encoders++;
  	}
- }
  
-+static void vdec_msg_queue_inc(struct vdec_msg_queue *msg_queue, int hardware_index)
-+{
-+	if (hardware_index == MTK_VDEC_CORE)
-+		atomic_inc(&msg_queue->core_list_cnt);
-+	else
-+		atomic_inc(&msg_queue->lat_list_cnt);
-+}
-+
-+static void vdec_msg_queue_dec(struct vdec_msg_queue *msg_queue, int hardware_index)
-+{
-+	if (hardware_index == MTK_VDEC_CORE)
-+		atomic_dec(&msg_queue->core_list_cnt);
-+	else
-+		atomic_dec(&msg_queue->lat_list_cnt);
-+}
-+
- int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf *buf)
- {
- 	struct list_head *head;
-@@ -66,6 +82,7 @@ int vdec_msg_queue_qbuf(struct vdec_msg_queue_ctx *msg_ctx, struct vdec_lat_buf
- 	list_add_tail(head, &msg_ctx->ready_queue);
- 	msg_ctx->ready_num++;
+-	drm_WARN(encoder->base.dev, num_encoders != 1,
++	drm_WARN(state->base.dev, num_encoders != 1,
+ 		 "%d encoders for pipe %c\n",
+ 		 num_encoders, pipe_name(master_crtc->pipe));
  
-+	vdec_msg_queue_inc(&buf->ctx->msg_queue, msg_ctx->hardware_index);
- 	if (msg_ctx->hardware_index != MTK_VDEC_CORE)
- 		wake_up_all(&msg_ctx->ready_to_use);
- 	else
-@@ -127,6 +144,7 @@ struct vdec_lat_buf *vdec_msg_queue_dqbuf(struct vdec_msg_queue_ctx *msg_ctx)
- 		return NULL;
- 	}
- 	list_del(head);
-+	vdec_msg_queue_dec(&buf->ctx->msg_queue, msg_ctx->hardware_index);
- 
- 	msg_ctx->ready_num--;
- 	mtk_v4l2_debug(3, "dqueue buf type:%d addr: 0x%p num: %d",
-@@ -241,10 +259,13 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
- 
- 	vdec_msg_queue_init_ctx(&msg_queue->lat_ctx, MTK_VDEC_LAT0);
- 	INIT_WORK(&msg_queue->core_work, vdec_msg_queue_core_work);
-+
-+	atomic_set(&msg_queue->lat_list_cnt, 0);
-+	atomic_set(&msg_queue->core_list_cnt, 0);
-+
- 	msg_queue->wdma_addr.size =
- 		vde_msg_queue_get_trans_size(ctx->picinfo.buf_w,
- 					     ctx->picinfo.buf_h);
--
- 	err = mtk_vcodec_mem_alloc(ctx, &msg_queue->wdma_addr);
- 	if (err) {
- 		mtk_v4l2_err("failed to allocate wdma_addr buf");
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-index c43d427f5f544..b1aa5572ba49f 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-@@ -72,6 +72,9 @@ struct vdec_lat_buf {
-  * @wdma_wptr_addr: ube write point
-  * @core_work: core hardware work
-  * @lat_ctx: used to store lat buffer list
-+ *
-+ * @lat_list_cnt: used to record each instance lat list count
-+ * @core_list_cnt: used to record each instance core list count
-  */
- struct vdec_msg_queue {
- 	struct vdec_lat_buf lat_buf[NUM_BUFFER_COUNT];
-@@ -82,6 +85,9 @@ struct vdec_msg_queue {
- 
- 	struct work_struct core_work;
- 	struct vdec_msg_queue_ctx lat_ctx;
-+
-+	atomic_t lat_list_cnt;
-+	atomic_t core_list_cnt;
- };
- 
- /**
 -- 
 2.39.2
 
