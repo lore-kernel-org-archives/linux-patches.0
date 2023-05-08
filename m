@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314E7168A2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A45BC433EF;
-	Mon,  8 May 2023 10:32:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192FF168A2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917E4C433D2;
+	Mon,  8 May 2023 10:32:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541961;
-	bh=iqSw/hHA2BC7ZGqylfDWfJsmOYGZMTswVrfYTpzF3aw=;
+	s=korg; t=1683541963;
+	bh=dmJd4OCemEENWpqqoGuc7IUh4bnBGElRLNYG/eRgy2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vL6jsBLDTJZFcYl2DRt15otyQ7/ktlCvoKeYoZgc+kP12YJO3AkJnK8OcLTDKbffT
-	 /dgaNKlOjqsJZj1gj48OEKezw/TLbU9qKtCNYONF5y9RzLvO6FfAaZH9jRckKxtgGG
-	 2cR75boW5f9H6VmYz5yal+rOdcOC8D5EgWuuLI1I=
+	b=uv/HeX4S2S6Q8TySt+vV2KvNnxfAdt3DSUi2U7TysZqIJh7IUfYvGOoO+yp4H0UC5
+	 i3FLPw5p5rJAoD4gO+H6pbO+s9Rs60/GPZubMHAYlEIbTkRuw4xlui1wZxtJqnVV4H
+	 VaNqJ5dB38ZhA86lpZsv4hisgKGiPddcDNxqQZRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 250/663] platform/x86/amd: pmc: Move idlemask check into `amd_pmc_idlemask_read`
-Date: Mon,  8 May 2023 11:41:16 +0200
-Message-Id: <20230508094436.370668787@linuxfoundation.org>
+Subject: [PATCH 6.2 241/663] media: mediatek: vcodec: remove unused lat_buf
+Date: Mon,  8 May 2023 11:41:07 +0200
+Message-Id: <20230508094436.103199123@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,127 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 9217bd1d7699f34a01b26ba14ff38c1714ce1185 ]
+[ Upstream commit af50b13dd3d7d5dbc1f08add1c462398e926a053 ]
 
-The version check requirement for idle mask support actually only
-applies to RN/CZN/BRC platforms.
+Remove unused lat_buf from core list, or leading to core list access
+NULL point.
 
-So far no issues have happened because the PMFW version string is
-bigger on other supported systems.  This can be reset for any new platform
-so move the check to only RN/CZN/BRC case.
-
-Fixes: f6045de1f532 ("platform/x86: amd-pmc: Export Idlemask values based on the APU")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20230409185348.556161-5-Shyam-sundar.S-k@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc.c | 74 +++++++++++++++-------------------
- 1 file changed, 33 insertions(+), 41 deletions(-)
+ .../platform/mediatek/vcodec/vdec_msg_queue.c  | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
-index 976bd01644a5e..52f5b54ba5d6f 100644
---- a/drivers/platform/x86/amd/pmc.c
-+++ b/drivers/platform/x86/amd/pmc.c
-@@ -314,33 +314,6 @@ static int amd_pmc_setup_smu_logging(struct amd_pmc_dev *dev)
- 	return 0;
- }
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+index ce7c82e38103a..cdc539a46cb95 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+@@ -177,7 +177,7 @@ bool vdec_msg_queue_wait_lat_buf_full(struct vdec_msg_queue *msg_queue)
+ 	struct vdec_lat_buf *buf, *tmp;
+ 	struct list_head *list_core[3];
+ 	struct vdec_msg_queue_ctx *core_ctx;
+-	int ret, i, in_core_count = 0;
++	int ret, i, in_core_count = 0, count = 0;
+ 	long timeout_jiff;
  
--static int amd_pmc_idlemask_read(struct amd_pmc_dev *pdev, struct device *dev,
--				 struct seq_file *s)
--{
--	u32 val;
--
--	switch (pdev->cpu_id) {
--	case AMD_CPU_ID_CZN:
--		val = amd_pmc_reg_read(pdev, AMD_PMC_SCRATCH_REG_CZN);
--		break;
--	case AMD_CPU_ID_YC:
--	case AMD_CPU_ID_CB:
--	case AMD_CPU_ID_PS:
--		val = amd_pmc_reg_read(pdev, AMD_PMC_SCRATCH_REG_YC);
--		break;
--	default:
--		return -EINVAL;
--	}
--
--	if (dev)
--		dev_dbg(pdev->dev, "SMU idlemask s0i3: 0x%x\n", val);
--
--	if (s)
--		seq_printf(s, "SMU idlemask : 0x%x\n", val);
--
--	return 0;
--}
--
- static int get_metrics_table(struct amd_pmc_dev *pdev, struct smu_metrics *table)
- {
- 	if (!pdev->smu_virt_addr) {
-@@ -517,28 +490,47 @@ static int s0ix_stats_show(struct seq_file *s, void *unused)
- }
- DEFINE_SHOW_ATTRIBUTE(s0ix_stats);
- 
--static int amd_pmc_idlemask_show(struct seq_file *s, void *unused)
-+static int amd_pmc_idlemask_read(struct amd_pmc_dev *pdev, struct device *dev,
-+				 struct seq_file *s)
- {
--	struct amd_pmc_dev *dev = s->private;
-+	u32 val;
- 	int rc;
- 
--	/* we haven't yet read SMU version */
--	if (!dev->major) {
--		rc = amd_pmc_get_smu_version(dev);
--		if (rc)
--			return rc;
-+	switch (pdev->cpu_id) {
-+	case AMD_CPU_ID_CZN:
-+		/* we haven't yet read SMU version */
-+		if (!pdev->major) {
-+			rc = amd_pmc_get_smu_version(pdev);
-+			if (rc)
-+				return rc;
-+		}
-+		if (pdev->major > 56 || (pdev->major >= 55 && pdev->minor >= 37))
-+			val = amd_pmc_reg_read(pdev, AMD_PMC_SCRATCH_REG_CZN);
-+		else
-+			return -EINVAL;
-+		break;
-+	case AMD_CPU_ID_YC:
-+	case AMD_CPU_ID_CB:
-+	case AMD_CPU_ID_PS:
-+		val = amd_pmc_reg_read(pdev, AMD_PMC_SCRATCH_REG_YC);
-+		break;
-+	default:
-+		return -EINVAL;
+ 	core_ctx = &msg_queue->ctx->dev->msg_queue_core_ctx;
+@@ -204,8 +204,20 @@ bool vdec_msg_queue_wait_lat_buf_full(struct vdec_msg_queue *msg_queue)
+ 			       msg_queue->lat_ctx.ready_num);
+ 		return true;
  	}
- 
--	if (dev->major > 56 || (dev->major >= 55 && dev->minor >= 37)) {
--		rc = amd_pmc_idlemask_read(dev, NULL, s);
--		if (rc)
--			return rc;
--	} else {
--		seq_puts(s, "Unsupported SMU version for Idlemask\n");
--	}
-+	if (dev)
-+		dev_dbg(pdev->dev, "SMU idlemask s0i3: 0x%x\n", val);
+-	mtk_v4l2_err("failed with lat buf isn't full: %d",
+-		     msg_queue->lat_ctx.ready_num);
 +
-+	if (s)
-+		seq_printf(s, "SMU idlemask : 0x%x\n", val);
- 
- 	return 0;
++	spin_lock(&core_ctx->ready_lock);
++	list_for_each_entry_safe(buf, tmp, &core_ctx->ready_queue, core_list) {
++		if (buf && buf->ctx == msg_queue->ctx) {
++			count++;
++			list_del(&buf->core_list);
++		}
++	}
++	spin_unlock(&core_ctx->ready_lock);
++
++	mtk_v4l2_err("failed with lat buf isn't full: list(%d %d) count:%d",
++		     atomic_read(&msg_queue->lat_list_cnt),
++		     atomic_read(&msg_queue->core_list_cnt), count);
++
+ 	return false;
  }
-+
-+static int amd_pmc_idlemask_show(struct seq_file *s, void *unused)
-+{
-+	return amd_pmc_idlemask_read(s->private, NULL, s);
-+}
- DEFINE_SHOW_ATTRIBUTE(amd_pmc_idlemask);
  
- static void amd_pmc_dbgfs_unregister(struct amd_pmc_dev *dev)
 -- 
 2.39.2
 
