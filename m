@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45CED1549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:58:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7599C433D2;
-	Mon,  8 May 2023 09:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDF71549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:58:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9754AC4339B;
+	Mon,  8 May 2023 09:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539913;
-	bh=5UkHbB+U2YRLy0FFwQ9GfwwQ6EUhqrByOR93JUTxM7Q=;
+	s=korg; t=1683539916;
+	bh=njPBRV4vdROTsIb9eYX4JgIGLB626mQFNTaz78hpzFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8jCiGR49Bv37rrIlhR3S5emFU2c9SFsgnhHFeX0FnCTHwXvGMeN4DYYdiA6cy6Hd
-	 6ZJ6q7DE194SL0O2rBs+u6gsZ+N9Q4QVyL0olmsBHTFdzAL3G8S/LHHi2x9jrQaf+D
-	 73AUsnD278KxoR7YNibuhmg7Tbq/rJmNaj9/ZVgI=
+	b=Bn6d56CT8HcDMydHi+oKZ5J5x75dAdBjx6bn1qF2abX+YqZ2MfodfvLM5+skJ46xI
+	 j+xYDYlO7UerP3F9W8WY7wRvRQwhUfGU1dxtLEbXvvY9TK3TSsfjEvQ7+PfYAUKUtB
+	 JTWI0MVuOiVlMMRoEPyyxQinCvPlVBR0w5Z46NbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Polimera <quic_vpolimer@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Terry Bowman <terry.bowman@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Feng Tang <feng.tang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/611] drm/msm/disp/dpu: check for crtc enable rather than crtc active to release shared resources
-Date: Mon,  8 May 2023 11:39:47 +0200
-Message-Id: <20230508094426.947753797@linuxfoundation.org>
+Subject: [PATCH 6.1 136/611] tools/x86/kcpuid: Fix avx512bw and avx512lvl fields in Fn00000007
+Date: Mon,  8 May 2023 11:39:38 +0200
+Message-Id: <20230508094426.667472016@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,37 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinod Polimera <quic_vpolimer@quicinc.com>
+From: Terry Bowman <terry.bowman@amd.com>
 
-[ Upstream commit b6975693846b562c4d3e0e60cc884affc5bdac00 ]
+[ Upstream commit 4e347bdf44c1fd4296a7b9657a2c0e1bd900fa50 ]
 
-According to KMS documentation, The driver must not release any shared
-resources if active is set to false but enable still true.
+Leaf Fn00000007 contains avx512bw at bit 26 and avx512vl at bit 28. This
+is incorrect per the SDM. Correct avx512bw to be bit 30 and avx512lvl to
+be bit 31.
 
-Fixes: ccc862b957c6 ("drm/msm/dpu: Fix reservation failures in modeset")
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/524726/
-Link: https://lore.kernel.org/r/1677774797-31063-5-git-send-email-quic_vpolimer@quicinc.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: c6b2f240bf8d ("tools/x86: Add a kcpuid tool to show raw CPU features")
+Signed-off-by: Terry Bowman <terry.bowman@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Feng Tang <feng.tang@intel.com>
+Link: https://lore.kernel.org/r/20230206141832.4162264-2-terry.bowman@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/arch/x86/kcpuid/cpuid.csv | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 9c6817b5a1943..547f9f2b9fcb5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -654,7 +654,7 @@ static int dpu_encoder_virt_atomic_check(
- 		if (drm_atomic_crtc_needs_modeset(crtc_state)) {
- 			dpu_rm_release(global_state, drm_enc);
- 
--			if (!crtc_state->active_changed || crtc_state->active)
-+			if (!crtc_state->active_changed || crtc_state->enable)
- 				ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
- 						drm_enc, crtc_state, topology);
- 		}
+diff --git a/tools/arch/x86/kcpuid/cpuid.csv b/tools/arch/x86/kcpuid/cpuid.csv
+index 4f1c4b0c29e98..9914bdf4fc9ec 100644
+--- a/tools/arch/x86/kcpuid/cpuid.csv
++++ b/tools/arch/x86/kcpuid/cpuid.csv
+@@ -184,8 +184,8 @@
+ 	 7,    0,  EBX,     27, avx512er, AVX512 Exponent Reciproca instr
+ 	 7,    0,  EBX,     28, avx512cd, AVX512 Conflict Detection instr
+ 	 7,    0,  EBX,     29, sha, Intel Secure Hash Algorithm Extensions instr
+-	 7,    0,  EBX,     26, avx512bw, AVX512 Byte & Word instr
+-	 7,    0,  EBX,     28, avx512vl, AVX512 Vector Length Extentions (VL)
++	 7,    0,  EBX,     30, avx512bw, AVX512 Byte & Word instr
++	 7,    0,  EBX,     31, avx512vl, AVX512 Vector Length Extentions (VL)
+ 	 7,    0,  ECX,      0, prefetchwt1, X
+ 	 7,    0,  ECX,      1, avx512vbmi, AVX512 Vector Byte Manipulation Instructions
+ 	 7,    0,  ECX,      2, umip, User-mode Instruction Prevention
 -- 
 2.39.2
 
