@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25055168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:26:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E434C433EF;
-	Mon,  8 May 2023 10:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C9A168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:26:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D032C4339B;
+	Mon,  8 May 2023 10:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541599;
-	bh=RM0x9Ywbxb5+SoOgEKtrf+2ABeiT584y+WoxyKk9Nfk=;
+	s=korg; t=1683541603;
+	bh=rcCNi2gqp2QcHJz1A//bhUUI3LRvKEssIDdo5vWt9Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2b3qtLoIDvzVHR2afWQnBOEGK06tNHu+T9I882yz/meYJMC4+/TM4z3kG7xsWTg60
-	 b3VLnO65UnS+FncFAnxSjGhIEvuqwiSLVnJ4+8JFT9YrIWBLyqYN8QkZqlLUS/gXZr
-	 /SIDL5yhfK51Kz26fUV2AAEhVc9PQjP5QoEslkMU=
+	b=gstdF/eCCrDc6pv33DDf9f6F0APqjcVqMtUjIrw6iol//KLKogm6kg04ieFH+mptQ
+	 xMRwNJOmaLIpUpi9Nj8wwgCiyOOFii6eYqAr+6Ro7N62jAxDoXyJGqmT7LyMdE2M81
+	 lz8Jg5TNLLH3uagktChx9aeDWf540qAcNDivZj5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dom Cobley <popcornmix@gmail.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 166/663] arm64: dts: qcom: msm8996: Fix the PCI I/O port range
-Date: Mon,  8 May 2023 11:39:52 +0200
-Message-Id: <20230508094433.863908999@linuxfoundation.org>
+Subject: [PATCH 6.2 136/663] drm/probe-helper: Cancel previous job before starting new one
+Date: Mon,  8 May 2023 11:39:22 +0200
+Message-Id: <20230508094432.939578812@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,66 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Dom Cobley <popcornmix@gmail.com>
 
-[ Upstream commit cf0ac10feb17661987d0018eb9475dc03e2a2253 ]
+[ Upstream commit a8e47884f1906cd7440fafa056adc8817568e73e ]
 
-For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
-located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI addresses
-(0x0c200000, 0x0d200000, 0x0e200000) specified in the ranges property for
-I/O region.
+Currently we schedule a call to output_poll_execute from
+drm_kms_helper_poll_enable for 10s in future. Later we try to replace
+that in drm_helper_probe_single_connector_modes with a 0s schedule with
+delayed_event set.
 
-While at it, let's also align the entries.
+But as there is already a job in the queue this fails, and the immediate
+job we wanted with delayed_event set doesn't occur until 10s later.
 
-Fixes: ed965ef89227 ("arm64: dts: qcom: msm8996: add support to pcie")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230228164752.55682-8-manivannan.sadhasivam@linaro.org
+And that call acts as if connector state has changed, reprobing modes.
+This has a side effect of waking up a display that has been blanked.
+
+Make sure we cancel the old job before submitting the immediate one.
+
+Fixes: 162b6a57ac50 ("drm/probe-helper: don't lose hotplug event")
+Acked-by: Daniel Vetter <daniel@ffwll.ch>
+Signed-off-by: Dom Cobley <popcornmix@gmail.com>
+[Maxime: Switched to mod_delayed_work]
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230127154052.452524-1-maxime@cerno.tech
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/drm_probe_helper.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 71678749d66f6..25d97cc2d08ff 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1841,8 +1841,8 @@
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index bcd9611dabfd9..1a672747c83b8 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -556,8 +556,9 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+ 		 */
+ 		dev->mode_config.delayed_event = true;
+ 		if (dev->mode_config.poll_enabled)
+-			schedule_delayed_work(&dev->mode_config.output_poll_work,
+-					      0);
++			mod_delayed_work(system_wq,
++					 &dev->mode_config.output_poll_work,
++					 0);
+ 	}
  
- 				#address-cells = <3>;
- 				#size-cells = <2>;
--				ranges = <0x01000000 0x0 0x0c200000 0x0c200000 0x0 0x100000>,
--					<0x02000000 0x0 0x0c300000 0x0c300000 0x0 0xd00000>;
-+				ranges = <0x01000000 0x0 0x00000000 0x0c200000 0x0 0x100000>,
-+					 <0x02000000 0x0 0x0c300000 0x0c300000 0x0 0xd00000>;
- 
- 				device_type = "pci";
- 
-@@ -1895,8 +1895,8 @@
- 
- 				#address-cells = <3>;
- 				#size-cells = <2>;
--				ranges = <0x01000000 0x0 0x0d200000 0x0d200000 0x0 0x100000>,
--					<0x02000000 0x0 0x0d300000 0x0d300000 0x0 0xd00000>;
-+				ranges = <0x01000000 0x0 0x00000000 0x0d200000 0x0 0x100000>,
-+					 <0x02000000 0x0 0x0d300000 0x0d300000 0x0 0xd00000>;
- 
- 				device_type = "pci";
- 
-@@ -1946,8 +1946,8 @@
- 
- 				#address-cells = <3>;
- 				#size-cells = <2>;
--				ranges = <0x01000000 0x0 0x0e200000 0x0e200000 0x0 0x100000>,
--					<0x02000000 0x0 0x0e300000 0x0e300000 0x0 0x1d00000>;
-+				ranges = <0x01000000 0x0 0x00000000 0x0e200000 0x0 0x100000>,
-+					 <0x02000000 0x0 0x0e300000 0x0e300000 0x0 0x1d00000>;
- 
- 				device_type = "pci";
- 
+ 	/* Re-enable polling in case the global poll config changed. */
 -- 
 2.39.2
 
