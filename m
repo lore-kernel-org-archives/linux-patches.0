@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFD1168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:41:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9402C4339B;
-	Mon,  8 May 2023 10:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0DC168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C56C433EF;
+	Mon,  8 May 2023 10:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542519;
-	bh=hqR9NBU7VaQmbbTWi1w16gir0uIP3YlovBnJBhRyTQg=;
+	s=korg; t=1683542522;
+	bh=zoGMQGMFbglB5lHLXBTmhwsFqMp41yfqN9xHd9r/pYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKZiXqZwQM+Gk+wEeIXcaD1Ttb/5KeLn0g5J2uZTJ3yK0gxENJJXEKb+/wknomlmc
-	 qTvznIgabxku6KMREKMCrghZ8VLr7RgRPpbXvgpSJDM6bF2ZTokS3JvCSkObNEEXkz
-	 3rikLGBb3BQerJpawe+rHX3HQJHSCGwgU9WTWk/U=
+	b=DOLGmRup4rHWaty0U77WuzLBHNXgcmD+C9f9Uww1zs7Nn/PeQkQ5hboZ0FGMcjnWy
+	 9AolSYpVHtt58YK4zsmpHO/LH0+3YY4KTRN1xYGW5MIw/dQcWpyn2+0t7FhRY+di/W
+	 3O51l3bIXs9SKfqdaG8EEA6xZCD5qAc4ngurGovI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Joakim Tjernlund <Joakim.Tjernlund@infinera.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 462/663] spi: mchp-pci1xxxx: Fix SPI transactions not working after suspend and resume
-Date: Mon,  8 May 2023 11:44:48 +0200
-Message-Id: <20230508094443.147203610@linuxfoundation.org>
+Subject: [PATCH 6.2 463/663] spi: fsl-spi: Fix CPM/QE mode Litte Endian
+Date: Mon,  8 May 2023 11:44:49 +0200
+Message-Id: <20230508094443.190199204@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,36 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 4266d21669de62cf3fb6774f7d404c1eb95a5ab3 ]
+[ Upstream commit c20c57d9868d7f9fd1b2904c7801b07e128f6322 ]
 
-pci1xxxx_spi_resume API masks SPI interrupt bit which prohibits interrupt
-from coming to the host at the end of the transaction after suspend-resume.
-This patch unmasks this bit at resume.
+CPM has the same problem as QE so for CPM also use the fix added
+by commit 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian"):
 
-Fixes: 1cc0cbea7167 ("spi: microchip: pci1xxxx: Add driver for SPI controller of PCI1XXXX PCIe switch")
-Signed-off-by: Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>
-Link: https://lore.kernel.org/r/20230404171613.1336093-3-tharunkumar.pasumarthi@microchip.com
+  CPM mode uses Little Endian so words > 8 bits are byte swapped.
+  Workaround this by always enforcing wordsize 8 for 16 and 32 bits
+  words. Unfortunately this will not work for LSB transfers
+  where wordsize is > 8 bits so disable these for now.
+
+Also limit the workaround to 16 and 32 bits words because it can
+only work for multiples of 8-bits.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
+Fixes: 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian")
+Link: https://lore.kernel.org/r/1b7d3e84b1128f42c1887dd2fb9cdf390f541bc1.1680371809.git.christophe.leroy@csgroup.eu
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-pci1xxxx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-fsl-spi.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-pci1xxxx.c b/drivers/spi/spi-pci1xxxx.c
-index 0805c441b4065..13efbfeff92ce 100644
---- a/drivers/spi/spi-pci1xxxx.c
-+++ b/drivers/spi/spi-pci1xxxx.c
-@@ -58,7 +58,7 @@
- #define VENDOR_ID_MCHP 0x1055
+diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
+index 93152144fd2ec..5602f052b2b50 100644
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -181,8 +181,8 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 				struct spi_device *spi,
+ 				int bits_per_word)
+ {
+-	/* QE uses Little Endian for words > 8
+-	 * so transform all words > 8 into 8 bits
++	/* CPM/QE uses Little Endian for words > 8
++	 * so transform 16 and 32 bits words into 8 bits
+ 	 * Unfortnatly that doesn't work for LSB so
+ 	 * reject these for now */
+ 	/* Note: 32 bits word, LSB works iff
+@@ -190,9 +190,11 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 	if (spi->mode & SPI_LSB_FIRST &&
+ 	    bits_per_word > 8)
+ 		return -EINVAL;
+-	if (bits_per_word > 8)
++	if (bits_per_word <= 8)
++		return bits_per_word;
++	if (bits_per_word == 16 || bits_per_word == 32)
+ 		return 8; /* pretend its 8 bits */
+-	return bits_per_word;
++	return -EINVAL;
+ }
  
- #define SPI_SUSPEND_CONFIG 0x101
--#define SPI_RESUME_CONFIG 0x303
-+#define SPI_RESUME_CONFIG 0x203
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+@@ -222,7 +224,7 @@ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else if (mpc8xxx_spi->flags & SPI_QE)
++	else
+ 		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+ 							  bits_per_word);
  
- struct pci1xxxx_spi_internal {
- 	u8 hw_inst;
 -- 
 2.39.2
 
