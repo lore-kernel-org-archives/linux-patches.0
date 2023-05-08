@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA0F7168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17082C433EF;
-	Mon,  8 May 2023 10:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37071168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEEEEC43446;
+	Mon,  8 May 2023 10:11:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540697;
-	bh=bfYjoB3bAymDFYI4bEjabX22OdnWDFPlpWoSaRs6spw=;
+	s=korg; t=1683540700;
+	bh=wqRqVd+951/tkOwopTKV8hanfY8Yt2y9KxAVEfydkRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFRwrubtRdWAraKEUFvcuFOdt0vb08bbFCFWKuLLBuk/lrTS9kSMeVz2Wh+vlca2B
-	 FkI5TqBeOm0+d3XQ5f7oeaQjp+EhmXHoWPYvSOrHNVI2r7boBy0UjCwBsAEpW7qe4j
-	 28l4i8cyUVHn+TZifEOiivN+yEN+E988+24RFpSo=
+	b=VuHrF1D7PeVOLouzud+6/GbugCvdMitNgQZr68aYFE9fdQ54t52zsqzsO6LM0Bdvx
+	 Oeql70e4HeBvbbHCWpYFiVzlP2dSiUW4istGy0gJjHFPA3cGyDTzEKepRosqGprqp3
+	 vj0v0f8Xl71qsCzremn5y8LSNqWQbrgMauZ9SawQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Libo Chen <libo.chen@oracle.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Gautham R. Shenoy" <gautham.shenoy@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 464/611] powerpc/rtas: use memmove for potentially overlapping buffer copy
-Date: Mon,  8 May 2023 11:45:06 +0200
-Message-Id: <20230508094437.218599906@linuxfoundation.org>
+Subject: [PATCH 6.1 465/611] sched/fair: Fix inaccurate tally of ttwu_move_affine
+Date: Mon,  8 May 2023 11:45:07 +0200
+Message-Id: <20230508094437.247575654@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,54 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Libo Chen <libo.chen@oracle.com>
 
-[ Upstream commit 271208ee5e335cb1ad280d22784940daf7ddf820 ]
+[ Upstream commit 39afe5d6fc59237ff7738bf3ede5a8856822d59d ]
 
-Using memcpy() isn't safe when buf is identical to rtas_err_buf, which
-can happen during boot before slab is up. Full context which may not
-be obvious from the diff:
+There are scenarios where non-affine wakeups are incorrectly counted as
+affine wakeups by schedstats.
 
-	if (altbuf) {
-		buf = altbuf;
-	} else {
-		buf = rtas_err_buf;
-		if (slab_is_available())
-			buf = kmalloc(RTAS_ERROR_LOG_MAX, GFP_ATOMIC);
-	}
-	if (buf)
-		memcpy(buf, rtas_err_buf, RTAS_ERROR_LOG_MAX);
+When wake_affine_idle() returns prev_cpu which doesn't equal to
+nr_cpumask_bits, it will slip through the check: target == nr_cpumask_bits
+in wake_affine() and be counted as if target == this_cpu in schedstats.
 
-This was found by inspection and I'm not aware of it causing problems
-in practice. It appears to have been introduced by commit
-033ef338b6e0 ("powerpc: Merge rtas.c into arch/powerpc/kernel"); the
-old ppc64 version of this code did not have this problem.
+Replace target == nr_cpumask_bits with target != this_cpu to make sure
+affine wakeups are accurately tallied.
 
-Use memmove() instead.
-
-Fixes: 033ef338b6e0 ("powerpc: Merge rtas.c into arch/powerpc/kernel")
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230220-rtas-queue-for-6-4-v1-2-010e4416f13f@linux.ibm.com
+Fixes: 806486c377e33 (sched/fair: Do not migrate if the prev_cpu is idle)
+Suggested-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Libo Chen <libo.chen@oracle.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Gautham R. Shenoy <gautham.shenoy@amd.com>
+Link: https://lore.kernel.org/r/20220810223313.386614-1-libo.chen@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/rtas.c | 2 +-
+ kernel/sched/fair.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
-index 767ab166933ba..f8d3caad4cf39 100644
---- a/arch/powerpc/kernel/rtas.c
-+++ b/arch/powerpc/kernel/rtas.c
-@@ -421,7 +421,7 @@ static char *__fetch_rtas_last_error(char *altbuf)
- 				buf = kmalloc(RTAS_ERROR_LOG_MAX, GFP_ATOMIC);
- 		}
- 		if (buf)
--			memcpy(buf, rtas_err_buf, RTAS_ERROR_LOG_MAX);
-+			memmove(buf, rtas_err_buf, RTAS_ERROR_LOG_MAX);
- 	}
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index f70c4a7fb4ef3..fa33c441ae867 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -6475,7 +6475,7 @@ static int wake_affine(struct sched_domain *sd, struct task_struct *p,
+ 		target = wake_affine_weight(sd, p, this_cpu, prev_cpu, sync);
  
- 	return buf;
+ 	schedstat_inc(p->stats.nr_wakeups_affine_attempts);
+-	if (target == nr_cpumask_bits)
++	if (target != this_cpu)
+ 		return prev_cpu;
+ 
+ 	schedstat_inc(sd->ttwu_move_affine);
 -- 
 2.39.2
 
