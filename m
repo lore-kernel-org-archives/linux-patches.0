@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6239F168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAEBC433EF;
-	Mon,  8 May 2023 11:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EC2168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBB7BC433EF;
+	Mon,  8 May 2023 11:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543965;
-	bh=/lGom4PQm//Oe2cxKaS1u1inmDmDEVEx32AYWHfP2NY=;
+	s=korg; t=1683543968;
+	bh=8kqUxfzK8HhvW34/JzCdOrdS4s39HiYu249/IWnhSbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OZnoOpCenBqxJI2ODijpy26cVubWYJhP+XF2FypfidAfQSkmIUu4lqemjZcgQWrgX
-	 6aEKTxnmkEwzz46aeuXUZtM4xV+zev3KGoBlB9Hd2FWCFQXFB78+XxbyV/uXqBmGsv
-	 e7GGK2IVlILOFlt8FFYx/vf5fqoG02N9XdZdMjfE=
+	b=Uz91HMk2Oizxd0AM/Ozj0YbBcLbSGAvBwR9bmwruh/ePu1SmnnHxErmg0308DgsVB
+	 I2uXQTLqnNLgIFot03rpNh5vqiAgHig8mhIAfPpRJIKbWAocJgC9tXyxX7+sseQhIO
+	 NMpXSbDurX9gubp1swgMTxY+uAmk/plWPytWXdBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Huang Rui <ray.huang@amd.com>,
-	dri-devel@lists.freedesktop.org,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 259/694] drm/ttm/pool: Fix ttm_pool_alloc error path
-Date: Mon,  8 May 2023 11:41:34 +0200
-Message-Id: <20230508094440.695664175@linuxfoundation.org>
+Subject: [PATCH 6.3 260/694] regulator: core: Consistently set mutex_owner when using ww_mutex_lock_slow()
+Date: Mon,  8 May 2023 11:41:35 +0200
+Message-Id: <20230508094440.725333546@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,190 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 379989e7cbdc7aa7496a00ee286ec146c7599cf0 ]
+[ Upstream commit b83a1772be854f87602de14726737d3e5b06e1f4 ]
 
-When hitting an error, the error path forgot to unmap dma mappings and
-could call set_pages_wb() on already uncached pages.
+When a codepath locks a rdev using ww_mutex_lock_slow() directly then
+that codepath is responsible for incrementing the "ref_cnt" and also
+setting the "mutex_owner" to "current".
 
-Fix this by introducing a common ttm_pool_free_range() function that
-does the right thing.
+The regulator core consistently got that right for "ref_cnt" but
+didn't always get it right for "mutex_owner". Let's fix this.
 
-v2:
-- Simplify that common function (Christian König)
-v3:
-- Rename that common function to ttm_pool_free_range() (Christian König)
+It's unlikely that this truly matters because the "mutex_owner" is
+only needed if we're going to do subsequent locking of the same
+rdev. However, even though it's not truly needed it seems less
+surprising if we consistently set "mutex_owner" properly.
 
-Fixes: d099fc8f540a ("drm/ttm: new TT backend allocation pool v3")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: Christian Koenig <christian.koenig@amd.com>
-Cc: Huang Rui <ray.huang@amd.com>
-Cc: dri-devel@lists.freedesktop.org
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230404200650.11043-2-thomas.hellstrom@linux.intel.com
+Fixes: f8702f9e4aa7 ("regulator: core: Use ww_mutex for regulators locking")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230329143317.RFC.v2.1.I4e9d433ea26360c06dd1381d091c82bb1a4ce843@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/ttm/ttm_pool.c | 81 +++++++++++++++++++++-------------
- 1 file changed, 51 insertions(+), 30 deletions(-)
+ drivers/regulator/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
-index aa116a7bbae3a..dfce896c4baeb 100644
---- a/drivers/gpu/drm/ttm/ttm_pool.c
-+++ b/drivers/gpu/drm/ttm/ttm_pool.c
-@@ -367,6 +367,43 @@ static int ttm_pool_page_allocated(struct ttm_pool *pool, unsigned int order,
- 	return 0;
- }
- 
-+/**
-+ * ttm_pool_free_range() - Free a range of TTM pages
-+ * @pool: The pool used for allocating.
-+ * @tt: The struct ttm_tt holding the page pointers.
-+ * @caching: The page caching mode used by the range.
-+ * @start_page: index for first page to free.
-+ * @end_page: index for last page to free + 1.
-+ *
-+ * During allocation the ttm_tt page-vector may be populated with ranges of
-+ * pages with different attributes if allocation hit an error without being
-+ * able to completely fulfill the allocation. This function can be used
-+ * to free these individual ranges.
-+ */
-+static void ttm_pool_free_range(struct ttm_pool *pool, struct ttm_tt *tt,
-+				enum ttm_caching caching,
-+				pgoff_t start_page, pgoff_t end_page)
-+{
-+	struct page **pages = tt->pages;
-+	unsigned int order;
-+	pgoff_t i, nr;
-+
-+	for (i = start_page; i < end_page; i += nr, pages += nr) {
-+		struct ttm_pool_type *pt = NULL;
-+
-+		order = ttm_pool_page_order(pool, *pages);
-+		nr = (1UL << order);
-+		if (tt->dma_address)
-+			ttm_pool_unmap(pool, tt->dma_address[i], nr);
-+
-+		pt = ttm_pool_select_type(pool, caching, order);
-+		if (pt)
-+			ttm_pool_type_give(pt, *pages);
-+		else
-+			ttm_pool_free_page(pool, caching, order, *pages);
-+	}
-+}
-+
- /**
-  * ttm_pool_alloc - Fill a ttm_tt object
-  *
-@@ -382,12 +419,14 @@ static int ttm_pool_page_allocated(struct ttm_pool *pool, unsigned int order,
- int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
- 		   struct ttm_operation_ctx *ctx)
- {
--	unsigned long num_pages = tt->num_pages;
-+	pgoff_t num_pages = tt->num_pages;
- 	dma_addr_t *dma_addr = tt->dma_address;
- 	struct page **caching = tt->pages;
- 	struct page **pages = tt->pages;
-+	enum ttm_caching page_caching;
- 	gfp_t gfp_flags = GFP_USER;
--	unsigned int i, order;
-+	pgoff_t caching_divide;
-+	unsigned int order;
- 	struct page *p;
- 	int r;
- 
-@@ -410,6 +449,7 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
- 	     order = min_t(unsigned int, order, __fls(num_pages))) {
- 		struct ttm_pool_type *pt;
- 
-+		page_caching = tt->caching;
- 		pt = ttm_pool_select_type(pool, tt->caching, order);
- 		p = pt ? ttm_pool_type_take(pt) : NULL;
- 		if (p) {
-@@ -418,6 +458,7 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
- 			if (r)
- 				goto error_free_page;
- 
-+			caching = pages;
- 			do {
- 				r = ttm_pool_page_allocated(pool, order, p,
- 							    &dma_addr,
-@@ -426,14 +467,15 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
- 				if (r)
- 					goto error_free_page;
- 
-+				caching = pages;
- 				if (num_pages < (1 << order))
- 					break;
- 
- 				p = ttm_pool_type_take(pt);
- 			} while (p);
--			caching = pages;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 1490eb40c973a..9a13240f3084f 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -334,6 +334,7 @@ static void regulator_lock_dependent(struct regulator_dev *rdev,
+ 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
+ 			old_contended_rdev = new_contended_rdev;
+ 			old_contended_rdev->ref_cnt++;
++			old_contended_rdev->mutex_owner = current;
  		}
  
-+		page_caching = ttm_cached;
- 		while (num_pages >= (1 << order) &&
- 		       (p = ttm_pool_alloc_page(pool, gfp_flags, order))) {
+ 		err = regulator_lock_recursive(rdev,
+@@ -6048,6 +6049,7 @@ static void regulator_summary_lock(struct ww_acquire_ctx *ww_ctx)
+ 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
+ 			old_contended_rdev = new_contended_rdev;
+ 			old_contended_rdev->ref_cnt++;
++			old_contended_rdev->mutex_owner = current;
+ 		}
  
-@@ -442,6 +484,7 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
- 							   tt->caching);
- 				if (r)
- 					goto error_free_page;
-+				caching = pages;
- 			}
- 			r = ttm_pool_page_allocated(pool, order, p, &dma_addr,
- 						    &num_pages, &pages);
-@@ -468,15 +511,13 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
- 	return 0;
- 
- error_free_page:
--	ttm_pool_free_page(pool, tt->caching, order, p);
-+	ttm_pool_free_page(pool, page_caching, order, p);
- 
- error_free_all:
- 	num_pages = tt->num_pages - num_pages;
--	for (i = 0; i < num_pages; ) {
--		order = ttm_pool_page_order(pool, tt->pages[i]);
--		ttm_pool_free_page(pool, tt->caching, order, tt->pages[i]);
--		i += 1 << order;
--	}
-+	caching_divide = caching - tt->pages;
-+	ttm_pool_free_range(pool, tt, tt->caching, 0, caching_divide);
-+	ttm_pool_free_range(pool, tt, ttm_cached, caching_divide, num_pages);
- 
- 	return r;
- }
-@@ -492,27 +533,7 @@ EXPORT_SYMBOL(ttm_pool_alloc);
-  */
- void ttm_pool_free(struct ttm_pool *pool, struct ttm_tt *tt)
- {
--	unsigned int i;
--
--	for (i = 0; i < tt->num_pages; ) {
--		struct page *p = tt->pages[i];
--		unsigned int order, num_pages;
--		struct ttm_pool_type *pt;
--
--		order = ttm_pool_page_order(pool, p);
--		num_pages = 1ULL << order;
--		if (tt->dma_address)
--			ttm_pool_unmap(pool, tt->dma_address[i], num_pages);
--
--		pt = ttm_pool_select_type(pool, tt->caching, order);
--		if (pt)
--			ttm_pool_type_give(pt, tt->pages[i]);
--		else
--			ttm_pool_free_page(pool, tt->caching, order,
--					   tt->pages[i]);
--
--		i += num_pages;
--	}
-+	ttm_pool_free_range(pool, tt, tt->caching, 0, tt->num_pages);
- 
- 	while (atomic_long_read(&allocated_pages) > page_pool_size)
- 		ttm_pool_shrink();
+ 		err = regulator_summary_lock_all(ww_ctx,
 -- 
 2.39.2
 
