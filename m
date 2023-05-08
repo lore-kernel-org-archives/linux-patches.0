@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26016168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D836C4339B;
-	Mon,  8 May 2023 10:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133F6168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67279C433D2;
+	Mon,  8 May 2023 10:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540708;
-	bh=sDHuA3n+lwDTVbzl2HTgZN8+lkfUEnUIP6fATf7rfLQ=;
+	s=korg; t=1683540710;
+	bh=EajPEqyFvL9wvjV/fW0Q+paOkdzrup9PPAX+PJ7F0TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jNo+C6kenwa37c6w8brBtvGjqfrfaX9HpLPj14m7kjt6Dj67ZmOYfoWFO635v9Jvl
-	 Hy1g5qwBJyNEYwFlgmy1V/9Zv85dslMvT7zUDdp0oAavWZ9BXckoLktk3+db5WIJCg
-	 ZxX3GIOa8juerX8TJILYywgeFHIg2q65Xd7Dw8Jc=
+	b=uu4cQmtA87oBiAwO/yWfVouxcsOj6qnEgXTuc1iDWWmLxF7zcwygGL2LKkuLO16Fu
+	 n0//UhppX6bQXK9zT1meqOmJbZMKp4kHSl1jaLrwBqRLhoHR52AEDyDnesbH5hptdh
+	 ezLZjihNrAGROGTFEpPqH7ZjZAfa8s+6I9oCaxhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	kernel test robot <lkp@intel.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 468/611] riscv: Fix ptdump when KASAN is enabled
-Date: Mon,  8 May 2023 11:45:10 +0200
-Message-Id: <20230508094437.334194657@linuxfoundation.org>
+Subject: [PATCH 6.1 451/611] spi: cadence-quadspi: use macro DEFINE_SIMPLE_DEV_PM_OPS
+Date: Mon,  8 May 2023 11:44:53 +0200
+Message-Id: <20230508094436.813995530@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,95 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Dhruva Gole <d-gole@ti.com>
 
-[ Upstream commit ecd7ebaf0b5a094a6180b299a5635c0eea42be4b ]
+[ Upstream commit be3206e8906e7a93df673ab2e96d69304a008edc ]
 
-The KASAN shadow region was moved next to the kernel mapping but the
-ptdump code was not updated and it appears to break the dump of the kernel
-page table, so fix this by moving the KASAN shadow region in ptdump.
+Using this macro makes the code more readable.
+It also inits the members of dev_pm_ops in the following manner
+without us explicitly needing to:
 
-Fixes: f7ae02333d13 ("riscv: Move KASAN mapping next to the kernel mapping")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Tested-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
-Link: https://lore.kernel.org/r/20230203075232.274282-6-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+.suspend = cqspi_suspend, \
+.resume = cqspi_resume, \
+.freeze = cqspi_suspend, \
+.thaw = cqspi_resume, \
+.poweroff = cqspi_suspend, \
+.restore = cqspi_resume
+
+Also get rid of conditional compilation based on CONFIG_PM_SLEEP because
+it introduces build issues with certain configs when CQSPI_DEV_PM_OPS is
+just NULL.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202304191900.2fARFQW9-lkp@intel.com/
+Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
+Signed-off-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20230420054257.925092-1-d-gole@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/ptdump.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/arch/riscv/mm/ptdump.c b/arch/riscv/mm/ptdump.c
-index 830e7de65e3a3..20a9f991a6d74 100644
---- a/arch/riscv/mm/ptdump.c
-+++ b/arch/riscv/mm/ptdump.c
-@@ -59,10 +59,6 @@ struct ptd_mm_info {
- };
+diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
+index 4b028d325663f..30fd4bc90580e 100644
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -1763,7 +1763,6 @@ static int cqspi_remove(struct platform_device *pdev)
+ 	return 0;
+ }
  
- enum address_markers_idx {
--#ifdef CONFIG_KASAN
--	KASAN_SHADOW_START_NR,
--	KASAN_SHADOW_END_NR,
--#endif
- 	FIXMAP_START_NR,
- 	FIXMAP_END_NR,
- 	PCI_IO_START_NR,
-@@ -74,6 +70,10 @@ enum address_markers_idx {
- 	VMALLOC_START_NR,
- 	VMALLOC_END_NR,
- 	PAGE_OFFSET_NR,
-+#ifdef CONFIG_KASAN
-+	KASAN_SHADOW_START_NR,
-+	KASAN_SHADOW_END_NR,
-+#endif
- #ifdef CONFIG_64BIT
- 	MODULES_MAPPING_NR,
- 	KERNEL_MAPPING_NR,
-@@ -82,10 +82,6 @@ enum address_markers_idx {
- };
- 
- static struct addr_marker address_markers[] = {
--#ifdef CONFIG_KASAN
--	{0, "Kasan shadow start"},
--	{0, "Kasan shadow end"},
--#endif
- 	{0, "Fixmap start"},
- 	{0, "Fixmap end"},
- 	{0, "PCI I/O start"},
-@@ -97,6 +93,10 @@ static struct addr_marker address_markers[] = {
- 	{0, "vmalloc() area"},
- 	{0, "vmalloc() end"},
- 	{0, "Linear mapping"},
-+#ifdef CONFIG_KASAN
-+	{0, "Kasan shadow start"},
-+	{0, "Kasan shadow end"},
-+#endif
- #ifdef CONFIG_64BIT
- 	{0, "Modules/BPF mapping"},
- 	{0, "Kernel mapping"},
-@@ -362,10 +362,6 @@ static int __init ptdump_init(void)
+-#ifdef CONFIG_PM_SLEEP
+ static int cqspi_suspend(struct device *dev)
  {
- 	unsigned int i, j;
+ 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
+@@ -1793,15 +1792,7 @@ static int cqspi_resume(struct device *dev)
+ 	return spi_master_resume(master);
+ }
  
--#ifdef CONFIG_KASAN
--	address_markers[KASAN_SHADOW_START_NR].start_address = KASAN_SHADOW_START;
--	address_markers[KASAN_SHADOW_END_NR].start_address = KASAN_SHADOW_END;
+-static const struct dev_pm_ops cqspi__dev_pm_ops = {
+-	.suspend = cqspi_suspend,
+-	.resume = cqspi_resume,
+-};
+-
+-#define CQSPI_DEV_PM_OPS	(&cqspi__dev_pm_ops)
+-#else
+-#define CQSPI_DEV_PM_OPS	NULL
 -#endif
- 	address_markers[FIXMAP_START_NR].start_address = FIXADDR_START;
- 	address_markers[FIXMAP_END_NR].start_address = FIXADDR_TOP;
- 	address_markers[PCI_IO_START_NR].start_address = PCI_IO_START;
-@@ -377,6 +373,10 @@ static int __init ptdump_init(void)
- 	address_markers[VMALLOC_START_NR].start_address = VMALLOC_START;
- 	address_markers[VMALLOC_END_NR].start_address = VMALLOC_END;
- 	address_markers[PAGE_OFFSET_NR].start_address = PAGE_OFFSET;
-+#ifdef CONFIG_KASAN
-+	address_markers[KASAN_SHADOW_START_NR].start_address = KASAN_SHADOW_START;
-+	address_markers[KASAN_SHADOW_END_NR].start_address = KASAN_SHADOW_END;
-+#endif
- #ifdef CONFIG_64BIT
- 	address_markers[MODULES_MAPPING_NR].start_address = MODULES_VADDR;
- 	address_markers[KERNEL_MAPPING_NR].start_address = kernel_map.virt_addr;
++static DEFINE_SIMPLE_DEV_PM_OPS(cqspi_dev_pm_ops, cqspi_suspend, cqspi_resume);
+ 
+ static const struct cqspi_driver_platdata cdns_qspi = {
+ 	.quirks = CQSPI_DISABLE_DAC_MODE,
+@@ -1868,7 +1859,7 @@ static struct platform_driver cqspi_platform_driver = {
+ 	.remove = cqspi_remove,
+ 	.driver = {
+ 		.name = CQSPI_NAME,
+-		.pm = CQSPI_DEV_PM_OPS,
++		.pm = &cqspi_dev_pm_ops,
+ 		.of_match_table = cqspi_dt_ids,
+ 	},
+ };
 -- 
 2.39.2
 
