@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C158168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D3DC433D2;
-	Mon,  8 May 2023 09:51:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C96210C
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B51DC433D2;
+	Mon,  8 May 2023 09:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539508;
-	bh=Veoh3nbT/FHO+RMJ4ObqE8nXFs9uC17/9N8Wr6a95qI=;
+	s=korg; t=1683539511;
+	bh=Ug9NZHoDCYVYO8qjH3CgqBdFoPrTxpFJbQaHzYqaRXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IuyE43AaS0kraRZ7hw913A4ZK0QdJii1SbZHJbZV/6jTpDYju26jiGxbNheYG95kj
-	 gmkydExih/Z1PwjrLXG0nFlbeL9waOFAsQXkuQ1MmXvX291NUzqam+ZgA3p0ft3E/j
-	 NriY4jnLtQLQwsP/dL1yPVW/LkBSCe9oGfwG7ts8=
+	b=I8hSTFsnCR3CPl/i+McgRUOSfE4bUZSHLPF+4LFCP4Sm5owsIuM7Sylarb4eImGNb
+	 FqBRZ3jrwZfBT13vOuwoojB0FUpcgI8CeH3URWaVNxDdZ6NyhodoQco+1CUU6R4nXP
+	 4EOcwikazbSdl/w1dIBmOUkTZqiPr6o9Doj0CHDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eugene Huang <eugene.huang99@gmail.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/611] ASoC: Intel: soc-acpi: add table for Intel Rooks County NUC M15
-Date: Mon,  8 May 2023 11:37:24 +0200
-Message-Id: <20230508094421.635520169@linuxfoundation.org>
+	=?UTF-8?q?Mariusz=20Bia=C5=82o=C5=84czyk?= <manio@skyboo.net>,
+	Chris Packham <chris.packham@alliedtelesis.co.nz>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.1 036/611] hwmon: (adt7475) Use device_property APIs when configuring polarity
+Date: Mon,  8 May 2023 11:37:58 +0200
+Message-Id: <20230508094422.970249029@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -38,65 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eugene Huang <eugene.huang99@gmail.com>
+From: Chris Packham <chris.packham@alliedtelesis.co.nz>
 
-[ Upstream commit 9c691a42b8926c8966561265cdae3ddc7464d3a2 ]
+commit 2a8e41ad337508fc5d598c0f9288890214f8e318 upstream.
 
-Same topology as the HP Omen 16-k0005TX, except with the rt1316 amp
-on link2.
+On DT unaware platforms of_property_read_u32_array() returns -ENOSYS
+which wasn't handled by the code treating adi,pwm-active-state as
+optional. Update the code to use device_property_read_u32_array() which
+deals gracefully with DT unaware platforms.
 
-Link: https://github.com/thesofproject/linux/issues/4088
-Signed-off-by: Eugene Huang <eugene.huang99@gmail.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20230314090553.498664-3-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 86da28eed4fb ("hwmon: (adt7475) Add support for inverting pwm output")
+Reported-by: Mariusz Białończyk <manio@skyboo.net>
+Link: https://lore.kernel.org/linux-hwmon/52e26a67-9131-2dc0-40cb-db5c07370027@alliedtelesis.co.nz/T/#mdd0505801e0a4e72340de009a47c0fca4f771ed3
+Signed-off-by: Chris Packham <chris.packham@alliedtelesis.co.nz>
+Link: https://lore.kernel.org/r/20230418233656.869055-2-chris.packham@alliedtelesis.co.nz
+Cc: stable@vger.kernel.org
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../intel/common/soc-acpi-intel-adl-match.c   | 20 +++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ drivers/hwmon/adt7475.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-adl-match.c b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
-index 0102574025e90..6e21e1640acfa 100644
---- a/sound/soc/intel/common/soc-acpi-intel-adl-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
-@@ -354,6 +354,20 @@ static const struct snd_soc_acpi_link_adr adl_sdw_rt711_link0_rt1316_link3[] = {
- 	{}
- };
+--- a/drivers/hwmon/adt7475.c
++++ b/drivers/hwmon/adt7475.c
+@@ -1604,9 +1604,9 @@ static int adt7475_set_pwm_polarity(stru
+ 	int ret, i;
+ 	u8 val;
  
-+static const struct snd_soc_acpi_link_adr adl_sdw_rt711_link0_rt1316_link2[] = {
-+	{
-+		.mask = BIT(0),
-+		.num_adr = ARRAY_SIZE(rt711_sdca_0_adr),
-+		.adr_d = rt711_sdca_0_adr,
-+	},
-+	{
-+		.mask = BIT(2),
-+		.num_adr = ARRAY_SIZE(rt1316_2_single_adr),
-+		.adr_d = rt1316_2_single_adr,
-+	},
-+	{}
-+};
-+
- static const struct snd_soc_acpi_adr_device mx8373_2_adr[] = {
- 	{
- 		.adr = 0x000223019F837300ull,
-@@ -612,6 +626,12 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_sdw_machines[] = {
- 		.drv_name = "sof_sdw",
- 		.sof_tplg_filename = "sof-adl-rt711-l0-rt1316-l3.tplg",
- 	},
-+	{
-+		.link_mask = 0x5, /* 2 active links required */
-+		.links = adl_sdw_rt711_link0_rt1316_link2,
-+		.drv_name = "sof_sdw",
-+		.sof_tplg_filename = "sof-adl-rt711-l0-rt1316-l2.tplg",
-+	},
- 	{
- 		.link_mask = 0x1, /* link0 required */
- 		.links = adl_rvp,
--- 
-2.39.2
-
+-	ret = of_property_read_u32_array(client->dev.of_node,
+-					 "adi,pwm-active-state", states,
+-					 ARRAY_SIZE(states));
++	ret = device_property_read_u32_array(&client->dev,
++					     "adi,pwm-active-state", states,
++					     ARRAY_SIZE(states));
+ 	if (ret)
+ 		return ret;
+ 
 
 
