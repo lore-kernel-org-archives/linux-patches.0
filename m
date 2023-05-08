@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218FF168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AED4C433EF;
-	Mon,  8 May 2023 10:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4DE5168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 408AFC433EF;
+	Mon,  8 May 2023 10:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541006;
-	bh=Nc7/rF0qmGOIiM6jbR0MSmN3TyFrX6fefb5rCTZzh5k=;
+	s=korg; t=1683541008;
+	bh=j4uS4KE5pxGfuHogMe3HeMd/YIK2+mS/kKBnvpskTAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZfEtKtzP3iFF0oMeGCgWWn+4HVlTm2JfQSjBKNyblx98+h7E7JS0VPyHvMFzWFNT6
-	 jXmzKL+4cPk9X9cIWJSqILVltlP5dTiRV62kDhlHCL/kp/Rflurz0uZowPRYNoK4nJ
-	 DYl073AERN9I94aQ1DABz+nSDIu2vqdc2zTvh1VM=
+	b=WXRIlTfQz/wi1grU/cnfLrIItJyPr6mXBT5yauX89P9391LHCY8CmjhZP24zBKJzs
+	 /Q1gIwBy0JuSijuxH87yr26AXmvZVclhiVu0gegFGRyqdZROCkdRuNPMKgn6bljLy2
+	 7HMjLCv1DeuKttGB7S/pVn9haVvNh72E0skEVMm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Jes Sorensen <jes@trained-monkey.org>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.1 580/611] wifi: rtl8xxxu: RTL8192EU always needs full init
-Date: Mon,  8 May 2023 11:47:02 +0200
-Message-Id: <20230508094440.783531289@linuxfoundation.org>
+	Pavankumar Kondeti <quic_pkondeti@quicinc.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 554/611] PM: hibernate: Turn snapshot_test into global variable
+Date: Mon,  8 May 2023 11:46:36 +0200
+Message-Id: <20230508094440.002350219@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,43 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Chen Yu <yu.c.chen@intel.com>
 
-commit d46e04ccd40457a0119b76e11ab64a2ad403e138 upstream.
+[ Upstream commit 08169a162f97819d3e5b4a342bb9cf5137787154 ]
 
-Always run the entire init sequence (rtl8xxxu_init_device()) for
-RTL8192EU. It's what the vendor driver does too.
+There is need to check snapshot_test and open block device
+in different mode, so as to avoid the race condition.
 
-This fixes a bug where the device is unable to connect after
-rebooting:
+No functional changes intended.
 
-wlp3s0f3u2: send auth to ... (try 1/3)
-wlp3s0f3u2: send auth to ... (try 2/3)
-wlp3s0f3u2: send auth to ... (try 3/3)
-wlp3s0f3u2: authentication with ... timed out
-
-Rebooting leaves the device powered on (partially? at least the
-firmware is still running), but not really in a working state.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Jes Sorensen <jes@trained-monkey.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/4eb111a9-d4c4-37d0-b376-4e202de7153c@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Suggested-by: Pavankumar Kondeti <quic_pkondeti@quicinc.com>
+Signed-off-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: 5904de0d735b ("PM: hibernate: Do not get block device exclusively in test_resume mode")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/power/hibernate.c | 7 ++++++-
+ kernel/power/power.h     | 1 +
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-@@ -1700,6 +1700,7 @@ struct rtl8xxxu_fileops rtl8192eu_fops =
- 	.rx_desc_size = sizeof(struct rtl8xxxu_rxdesc24),
- 	.has_s0s1 = 0,
- 	.gen2_thermal_meter = 1,
-+	.needs_full_init = 1,
- 	.adda_1t_init = 0x0fc01616,
- 	.adda_1t_path_on = 0x0fc01616,
- 	.adda_2t_path_on_a = 0x0fc01616,
+diff --git a/kernel/power/hibernate.c b/kernel/power/hibernate.c
+index 793c55a2becba..aa551b093c3f6 100644
+--- a/kernel/power/hibernate.c
++++ b/kernel/power/hibernate.c
+@@ -64,6 +64,7 @@ enum {
+ static int hibernation_mode = HIBERNATION_SHUTDOWN;
+ 
+ bool freezer_test_done;
++bool snapshot_test;
+ 
+ static const struct platform_hibernation_ops *hibernation_ops;
+ 
+@@ -716,7 +717,6 @@ static int load_image_and_restore(void)
+  */
+ int hibernate(void)
+ {
+-	bool snapshot_test = false;
+ 	unsigned int sleep_flags;
+ 	int error;
+ 
+@@ -744,6 +744,9 @@ int hibernate(void)
+ 	if (error)
+ 		goto Exit;
+ 
++	/* protected by system_transition_mutex */
++	snapshot_test = false;
++
+ 	lock_device_hotplug();
+ 	/* Allocate memory management structures */
+ 	error = create_basic_memory_bitmaps();
+@@ -940,6 +943,8 @@ static int software_resume(void)
+ 	 */
+ 	mutex_lock_nested(&system_transition_mutex, SINGLE_DEPTH_NESTING);
+ 
++	snapshot_test = false;
++
+ 	if (swsusp_resume_device)
+ 		goto Check_image;
+ 
+diff --git a/kernel/power/power.h b/kernel/power/power.h
+index b4f4339432096..b83c8d5e188de 100644
+--- a/kernel/power/power.h
++++ b/kernel/power/power.h
+@@ -59,6 +59,7 @@ asmlinkage int swsusp_save(void);
+ 
+ /* kernel/power/hibernate.c */
+ extern bool freezer_test_done;
++extern bool snapshot_test;
+ 
+ extern int hibernation_snapshot(int platform_mode);
+ extern int hibernation_restore(int platform_mode);
+-- 
+2.39.2
+
 
 
