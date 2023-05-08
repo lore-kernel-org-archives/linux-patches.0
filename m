@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D34F7168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:27:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B85C433EF;
-	Mon,  8 May 2023 10:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D96168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:27:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE1CC433D2;
+	Mon,  8 May 2023 10:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541626;
-	bh=3TK63VG1uK1PZQkBjgQN8PfNH/JHskCpIbsgbRoGMYI=;
+	s=korg; t=1683541631;
+	bh=wNWmtMDPNyG/bNCrvp1yfDXFETBZtd/ogoSPSsBFXDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MKvgdwNyQfLL97TCA7AOekfXo11m0VP+8cTzmZx9dJ3dqUwZ2WLidVD6UR19Qb92Q
-	 UIThTBa8DfDzWXzbZN4AXchF3NlsAvWjslIrBdmv9WCMIrEweKJJdEAhWym8mrS8BV
-	 B2cFgna9AogdRR5mDHITbDOYVGoFUXNH8SuoJ2jg=
+	b=jXsj68gF1jJbMP3QGTvDm/97cxHwlt+CX4WM4RGB8kFolM2xECSij/ZwwO4G5s74v
+	 +kkwjQZXC513OSqrHBRKlCBDPYngpR2o24EtQfcqTendl1fGhnR4yTRdyvdNuAyOaI
+	 15v2+ryxJpMEA3DaaTx4UEwwattO6iWvuOr389HY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 168/663] arm64: dts: qcom: sc8280xp: Fix the PCI I/O port range
-Date: Mon,  8 May 2023 11:39:54 +0200
-Message-Id: <20230508094433.936709464@linuxfoundation.org>
+Subject: [PATCH 6.2 177/663] media: platform: mtk-mdp3: Add missing check and free for ida_alloc
+Date: Mon,  8 May 2023 11:40:03 +0200
+Message-Id: <20230508094434.198416791@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,76 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 89fe81c01715f81c3a7d371e9e5f7d7ae5bc557c ]
+[ Upstream commit d00f592250782538cda87745607695b0fe27dcd4 ]
 
-For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
-located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI addresses
-(0x30200000, 0x32200000, 0x34200000, 0x38200000, 0x3c200000) specified in
-the ranges property for I/O region.
+Add the check for the return value of the ida_alloc in order to avoid
+NULL pointer dereference.
+Moreover, free allocated "ctx->id" if mdp_m2m_open fails later in order
+to avoid memory leak.
 
-Fixes: 813e83157001 ("arm64: dts: qcom: sc8280xp/sa8540p: add PCIe2-4 nodes")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230228164752.55682-11-manivannan.sadhasivam@linaro.org
+Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 8363e82369854..966dca906bf07 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -902,7 +902,7 @@
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x30200000 0x0 0x30200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x30200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x30300000 0x0 0x30300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
+diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
+index 5f74ea3b7a524..8612a48bde10f 100644
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
+@@ -566,7 +566,11 @@ static int mdp_m2m_open(struct file *file)
+ 		goto err_free_ctx;
+ 	}
  
-@@ -1001,7 +1001,7 @@
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x32200000 0x0 0x32200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x32200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x32300000 0x0 0x32300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
+-	ctx->id = ida_alloc(&mdp->mdp_ida, GFP_KERNEL);
++	ret = ida_alloc(&mdp->mdp_ida, GFP_KERNEL);
++	if (ret < 0)
++		goto err_unlock_mutex;
++	ctx->id = ret;
++
+ 	ctx->mdp_dev = mdp;
  
-@@ -1098,7 +1098,7 @@
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x34200000 0x0 0x34200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x34200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x34300000 0x0 0x34300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
- 
-@@ -1198,7 +1198,7 @@
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x38200000 0x0 0x38200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x38200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x38300000 0x0 0x38300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
- 
-@@ -1295,7 +1295,7 @@
- 			reg-names = "parf", "dbi", "elbi", "atu", "config";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			ranges = <0x01000000 0x0 0x3c200000 0x0 0x3c200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x0 0x3c200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x3c300000 0x0 0x3c300000 0x0 0x1d00000>;
- 			bus-range = <0x00 0xff>;
- 
+ 	v4l2_fh_init(&ctx->fh, vdev);
+@@ -617,6 +621,8 @@ static int mdp_m2m_open(struct file *file)
+ 	v4l2_fh_del(&ctx->fh);
+ err_exit_fh:
+ 	v4l2_fh_exit(&ctx->fh);
++	ida_free(&mdp->mdp_ida, ctx->id);
++err_unlock_mutex:
+ 	mutex_unlock(&mdp->m2m_lock);
+ err_free_ctx:
+ 	kfree(ctx);
 -- 
 2.39.2
 
