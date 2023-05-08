@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7BE168A2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDC6C4339B;
-	Mon,  8 May 2023 10:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FAB168A2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A33FEC433EF;
+	Mon,  8 May 2023 10:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541954;
-	bh=MXOSj8FDK+cq8x1skx99yF12oRJ+1ZAw+RA86ASI2xo=;
+	s=korg; t=1683541958;
+	bh=NvZOH3SM8whi9sYi9WH1vtF6BVr6lVQ+rE+TZiKhW4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0p5DAtuSL1j+Y2pHgElELDofZx8G1LqdRANAr9xX+1cMCJNLNlEW/3uK8kYZKveaV
-	 ajKOcRgG8bp5+aaQ+ciAvNEAClwLwUqGAIk6pJQ5b40SH2pKVM81QCnTnRBbKBU8uZ
-	 wR3uAVNDJGZfZs/Zi3o4Gojp3pztLSrjHNIP46MU=
+	b=k9yhehiRoSrJ1hRvyat6MBBJvnzg5Pll7Z+yO1NhX7GbtEKnxklnvXfml8COtTOnJ
+	 pKChBy/NowqHIy2A5fSFlgKiXS7hKXcLiyIrYsICmDJnpvVek/f43RHZrlbQ0833w9
+	 uZANaYJu9hF7LijDt8TIBWLf0cZrm3TGRI3ZbV50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 248/663] platform/x86/amd: pmc: Hide SMU version and program attributes for Picasso
-Date: Mon,  8 May 2023 11:41:14 +0200
-Message-Id: <20230508094436.310778668@linuxfoundation.org>
+Subject: [PATCH 6.2 249/663] platform/x86/amd: pmc: Dont dump data after resume from s0i3 on picasso
+Date: Mon,  8 May 2023 11:41:15 +0200
+Message-Id: <20230508094436.340826447@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,59 +37,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 5ec9ee0d464750d72972d5685edf675824e259a1 ]
+[ Upstream commit 7abc3618b65304d409d9489d77e4a8f047842fb7 ]
 
-As the command to get version isn't supported on Picasso, we shouldn't
-be exposing this into sysfs either.
+This command isn't supported on Picasso, so guard against running it
+to avoid errors like `SMU cmd unknown. err: 0xfe` in the logs.
 
 Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2449
-Fixes: 7f1ea75d499a ("platform/x86/amd: pmc: Add sysfs files for SMU")
+Fixes: 766205674962 ("platform/x86: amd-pmc: Add support for logging SMU metrics")
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20230409185348.556161-3-Shyam-sundar.S-k@amd.com
+Link: https://lore.kernel.org/r/20230409185348.556161-4-Shyam-sundar.S-k@amd.com
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmc.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
-index 0553a6419bb90..bc8397635428e 100644
+index bc8397635428e..976bd01644a5e 100644
 --- a/drivers/platform/x86/amd/pmc.c
 +++ b/drivers/platform/x86/amd/pmc.c
-@@ -426,12 +426,31 @@ static ssize_t smu_program_show(struct device *d, struct device_attribute *attr,
- static DEVICE_ATTR_RO(smu_fw_version);
- static DEVICE_ATTR_RO(smu_program);
+@@ -809,6 +809,14 @@ static void amd_pmc_s2idle_check(void)
+ 		dev_err(pdev->dev, "error writing to STB: %d\n", rc);
+ }
  
-+static umode_t pmc_attr_is_visible(struct kobject *kobj, struct attribute *attr, int idx)
++static int amd_pmc_dump_data(struct amd_pmc_dev *pdev)
 +{
-+	struct device *dev = kobj_to_dev(kobj);
-+	struct amd_pmc_dev *pdev = dev_get_drvdata(dev);
-+
 +	if (pdev->cpu_id == AMD_CPU_ID_PCO)
-+		return 0;
-+	return 0444;
++		return -ENODEV;
++
++	return amd_pmc_send_cmd(pdev, 0, NULL, SMU_MSG_LOG_DUMP_DATA, 0);
 +}
 +
- static struct attribute *pmc_attrs[] = {
- 	&dev_attr_smu_fw_version.attr,
- 	&dev_attr_smu_program.attr,
- 	NULL,
- };
--ATTRIBUTE_GROUPS(pmc);
-+
-+static struct attribute_group pmc_attr_group = {
-+	.attrs = pmc_attrs,
-+	.is_visible = pmc_attr_is_visible,
-+};
-+
-+static const struct attribute_group *pmc_groups[] = {
-+	&pmc_attr_group,
-+	NULL,
-+};
- 
- static int smu_fw_info_show(struct seq_file *s, void *unused)
+ static void amd_pmc_s2idle_restore(void)
  {
+ 	struct amd_pmc_dev *pdev = &pmc;
+@@ -821,7 +829,7 @@ static void amd_pmc_s2idle_restore(void)
+ 		dev_err(pdev->dev, "resume failed: %d\n", rc);
+ 
+ 	/* Let SMU know that we are looking for stats */
+-	amd_pmc_send_cmd(pdev, 0, NULL, SMU_MSG_LOG_DUMP_DATA, 0);
++	amd_pmc_dump_data(pdev);
+ 
+ 	rc = amd_pmc_write_stb(pdev, AMD_PMC_STB_S2IDLE_RESTORE);
+ 	if (rc)
 -- 
 2.39.2
 
