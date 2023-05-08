@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D000168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9099AC433D2;
-	Mon,  8 May 2023 10:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224FC168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E156C4339B;
+	Mon,  8 May 2023 10:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541252;
-	bh=8ezcZl5m/cEkzzWdEWK78JGEzBcRyHLWDItMhISB3kQ=;
+	s=korg; t=1683541255;
+	bh=h/ZZrZjIbcp/u86Xg+7tLyYUAglheWMJobuIUAFJ/ow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcZv9xm1KL2PgZhio7st209jxdnp00iiCDADhL5/9wYyGUSsfaf95R5SY/508/l1I
-	 lWLMEvx+u+q2oyjb1yfq/7bQqLxWzv9n1mgonMF4yFJTOTOHbqpTM+2kiLrbKBuy8Q
-	 cysqvrzNGPAoXMzPsVtw8xKWMYOJQD0kaomTh4aI=
+	b=L7e5GyUyXRxXU3FFc4ymwhI1FolhqTuoDhbD8o+hCUfTY8ZWW96lfj2q45W/hZCku
+	 SyModxaBUA2lj9mEiDsnJsDUgyO4WWOdOW8XAOUzrlOjajwlA357sUffPO3U6egXtf
+	 J1DGotdqmwctKflI90+rMTjL/qneAqrbrp6eIFLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6.2 054/663] fs: fix sysctls.c built
-Date: Mon,  8 May 2023 11:38:00 +0200
-Message-Id: <20230508094430.245365552@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.2 055/663] MIPS: fw: Allow firmware to pass a empty env
+Date: Mon,  8 May 2023 11:38:01 +0200
+Message-Id: <20230508094430.279397682@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,56 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kefeng Wang <wangkefeng.wang@huawei.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit e3184de9d46c2eebdb776face2e2662c6733331d upstream.
+commit ee1809ed7bc456a72dc8410b475b73021a3a68d5 upstream.
 
-'obj-$(CONFIG_SYSCTL) += sysctls.o' must be moved after "obj-y :=",
-or it won't be built as it is overwrited.
+fw_getenv will use env entry to determine style of env,
+however it is legal for firmware to just pass a empty list.
 
-Note that there is nothing that is going to break by linking
-sysctl.o later, we were just being way to cautious and patches
-have been updated to reflect these considerations and sent for
-stable as well with the whole "base" stuff needing to be linked
-prior to child sysctl tables that use that directory. All of
-the kernel sysctl APIs always share the same directory, and races
-against using it should end up re-using the same single created
-directory.
+Check if first entry exist before running strchr to avoid
+null pointer dereference.
 
-And so something we can do eventually is do away with all the base stuff.
-For now it's fine, it's not creating an issue. It is just a bit pedantic
-and careful.
-
-Fixes: ab171b952c6e ("fs: move namespace sysctls and declare fs base directory")
-Cc: stable@vger.kernel.org # v5.17
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-[mcgrof: enhanced commit log for stable criteria and clarify base stuff ]
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/clbr/n64bootloader/issues/5
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/Makefile |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/mips/fw/lib/cmdline.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/Makefile
-+++ b/fs/Makefile
-@@ -6,7 +6,6 @@
- # Rewritten to use lists instead of if-statements.
- # 
+--- a/arch/mips/fw/lib/cmdline.c
++++ b/arch/mips/fw/lib/cmdline.c
+@@ -53,7 +53,7 @@ char *fw_getenv(char *envname)
+ {
+ 	char *result = NULL;
  
--obj-$(CONFIG_SYSCTL)		+= sysctls.o
- 
- obj-y :=	open.o read_write.o file_table.o super.o \
- 		char_dev.o stat.o exec.o pipe.o namei.o fcntl.o \
-@@ -49,7 +48,7 @@ obj-$(CONFIG_FS_MBCACHE)	+= mbcache.o
- obj-$(CONFIG_FS_POSIX_ACL)	+= posix_acl.o
- obj-$(CONFIG_NFS_COMMON)	+= nfs_common/
- obj-$(CONFIG_COREDUMP)		+= coredump.o
--obj-$(CONFIG_SYSCTL)		+= drop_caches.o
-+obj-$(CONFIG_SYSCTL)		+= drop_caches.o sysctls.o
- 
- obj-$(CONFIG_FHANDLE)		+= fhandle.o
- obj-y				+= iomap/
+-	if (_fw_envp != NULL) {
++	if (_fw_envp != NULL && fw_envp(0) != NULL) {
+ 		/*
+ 		 * Return a pointer to the given environment variable.
+ 		 * YAMON uses "name", "value" pairs, while U-Boot uses
 
 
