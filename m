@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8F813AE8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A33DC433D2;
-	Mon,  8 May 2023 11:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7146168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D8D3C433EF;
+	Mon,  8 May 2023 11:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545818;
-	bh=aShgEN+Z/e0WduSx0qgk/4HPGe2iRFOSvvmM5JzY0L0=;
+	s=korg; t=1683545821;
+	bh=bBHIXVqHrAN4AY/ZiprgnAImdjm4JwtPjflNY0rto2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GrA6TGl/fWvpUJH4Ks6r0Xjy13jOk5onNpsJIuNwrgityF50H9fLZtkb4wPMMJgIf
-	 AffOlSqIGLkZnm7TX/LMJg/R0VxEBsv/9Ujr8tSN/yHBH1bqEuVw26oi04q5vSXMM9
-	 VJ6CG7UgAkGTjAEvM9jXnGM5LPS+rRkMeu8hU+bQ=
+	b=yZhpj+plVVY0umLY9HWHNjCU8Vlwx6I7ako7KCrwaSHbz00qXSdjRLwegGMZxdeHK
+	 usiucDGHyVO01EyrkH1e1iyLpndIV/P3anHBe3ojNaNzDMaSqBpfQms65EhfudKMcH
+	 nLSH1OxB1ZuVhlPmXLb8u5nTjDct7StlsDTFIRng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tang Bin <tangbin@cmss.chinamobile.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/371] media: rcar_fdp1: Fix the correct variable assignments
-Date: Mon,  8 May 2023 11:45:36 +0200
-Message-Id: <20230508094817.404743166@linuxfoundation.org>
+Subject: [PATCH 5.15 126/371] drm/ttm: optimize pool allocations a bit v2
+Date: Mon,  8 May 2023 11:45:27 +0200
+Message-Id: <20230508094817.035465435@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -38,46 +35,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tang Bin <tangbin@cmss.chinamobile.com>
+From: Christian König <christian.koenig@amd.com>
 
-[ Upstream commit af88c2adbb72a09ab1bb5c37ba388c98fecca69b ]
+[ Upstream commit 735c466465eba51deaee3012d8403c10fc7c8c03 ]
 
-In the function fdp1_probe(), when get irq failed, the
-function platform_get_irq() log an error message, so
-remove redundant message here. And the variable type
-of "ret" is int, the "fdp1->irq" is unsigned int, when
-irq failed, this place maybe wrong, thus fix it.
+If we got a page pool use it as much as possible.
 
-Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: c766c90faf93 ("media: rcar_fdp1: Fix refcount leak in probe and remove function")
+If we can't get more pages from the pool allocate as much as possible.
+
+Only if that still doesn't work reduce the order and try again.
+
+v2: minor cleanups
+
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221107195808.1873-1-christian.koenig@amd.com
+Stable-dep-of: 379989e7cbdc ("drm/ttm/pool: Fix ttm_pool_alloc error path")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rcar_fdp1.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/ttm/ttm_pool.c | 82 ++++++++++++++++++++++++----------
+ 1 file changed, 58 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/media/platform/rcar_fdp1.c b/drivers/media/platform/rcar_fdp1.c
-index 19de3c19bcca2..37ecf489d112e 100644
---- a/drivers/media/platform/rcar_fdp1.c
-+++ b/drivers/media/platform/rcar_fdp1.c
-@@ -2287,11 +2287,10 @@ static int fdp1_probe(struct platform_device *pdev)
- 		return PTR_ERR(fdp1->regs);
+diff --git a/drivers/gpu/drm/ttm/ttm_pool.c b/drivers/gpu/drm/ttm/ttm_pool.c
+index 82cbb29a05aa3..603b044833048 100644
+--- a/drivers/gpu/drm/ttm/ttm_pool.c
++++ b/drivers/gpu/drm/ttm/ttm_pool.c
+@@ -345,6 +345,28 @@ static unsigned int ttm_pool_page_order(struct ttm_pool *pool, struct page *p)
+ 	return p->private;
+ }
  
- 	/* Interrupt service routine registration */
--	fdp1->irq = ret = platform_get_irq(pdev, 0);
--	if (ret < 0) {
--		dev_err(&pdev->dev, "cannot find IRQ\n");
-+	ret = platform_get_irq(pdev, 0);
-+	if (ret < 0)
- 		return ret;
--	}
-+	fdp1->irq = ret;
++/* Called when we got a page, either from a pool or newly allocated */
++static int ttm_pool_page_allocated(struct ttm_pool *pool, unsigned int order,
++				   struct page *p, dma_addr_t **dma_addr,
++				   unsigned long *num_pages,
++				   struct page ***pages)
++{
++	unsigned int i;
++	int r;
++
++	if (*dma_addr) {
++		r = ttm_pool_map(pool, order, p, dma_addr);
++		if (r)
++			return r;
++	}
++
++	*num_pages -= 1 << order;
++	for (i = 1 << order; i; --i, ++(*pages), ++p)
++		**pages = p;
++
++	return 0;
++}
++
+ /**
+  * ttm_pool_alloc - Fill a ttm_tt object
+  *
+@@ -386,45 +408,57 @@ int ttm_pool_alloc(struct ttm_pool *pool, struct ttm_tt *tt,
+ 	for (order = min_t(unsigned int, MAX_ORDER - 1, __fls(num_pages));
+ 	     num_pages;
+ 	     order = min_t(unsigned int, order, __fls(num_pages))) {
+-		bool apply_caching = false;
+ 		struct ttm_pool_type *pt;
  
- 	ret = devm_request_irq(&pdev->dev, fdp1->irq, fdp1_irq_handler, 0,
- 			       dev_name(&pdev->dev), fdp1);
+ 		pt = ttm_pool_select_type(pool, tt->caching, order);
+ 		p = pt ? ttm_pool_type_take(pt) : NULL;
+ 		if (p) {
+-			apply_caching = true;
+-		} else {
+-			p = ttm_pool_alloc_page(pool, gfp_flags, order);
+-			if (p && PageHighMem(p))
+-				apply_caching = true;
+-		}
+-
+-		if (!p) {
+-			if (order) {
+-				--order;
+-				continue;
+-			}
+-			r = -ENOMEM;
+-			goto error_free_all;
+-		}
+-
+-		if (apply_caching) {
+ 			r = ttm_pool_apply_caching(caching, pages,
+ 						   tt->caching);
+ 			if (r)
+ 				goto error_free_page;
+-			caching = pages + (1 << order);
++
++			do {
++				r = ttm_pool_page_allocated(pool, order, p,
++							    &dma_addr,
++							    &num_pages,
++							    &pages);
++				if (r)
++					goto error_free_page;
++
++				if (num_pages < (1 << order))
++					break;
++
++				p = ttm_pool_type_take(pt);
++			} while (p);
++			caching = pages;
+ 		}
+ 
+-		if (dma_addr) {
+-			r = ttm_pool_map(pool, order, p, &dma_addr);
++		while (num_pages >= (1 << order) &&
++		       (p = ttm_pool_alloc_page(pool, gfp_flags, order))) {
++
++			if (PageHighMem(p)) {
++				r = ttm_pool_apply_caching(caching, pages,
++							   tt->caching);
++				if (r)
++					goto error_free_page;
++			}
++			r = ttm_pool_page_allocated(pool, order, p, &dma_addr,
++						    &num_pages, &pages);
+ 			if (r)
+ 				goto error_free_page;
++			if (PageHighMem(p))
++				caching = pages;
+ 		}
+ 
+-		num_pages -= 1 << order;
+-		for (i = 1 << order; i; --i)
+-			*(pages++) = p++;
++		if (!p) {
++			if (order) {
++				--order;
++				continue;
++			}
++			r = -ENOMEM;
++			goto error_free_all;
++		}
+ 	}
+ 
+ 	r = ttm_pool_apply_caching(caching, pages, tt->caching);
 -- 
 2.39.2
 
