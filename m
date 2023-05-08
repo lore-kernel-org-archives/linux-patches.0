@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85454168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09E30C433D2;
-	Mon,  8 May 2023 10:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93531168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAC1C433EF;
+	Mon,  8 May 2023 10:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543314;
-	bh=AXJkpZ9JRhjiJl1jigINIdJrv4oj98063XQaj7pNkds=;
+	s=korg; t=1683543317;
+	bh=0AQ2wp0OGamjfauAy/P5RuxzgX+X+xJnN5UQGP69ggo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RMl8I8LNpp+4PItlN8NS1NS5CjU4fjfSENFoEc/ZRvb6cwyH4y85qzITdJ42Ae30P
-	 CLpdafguUjztdkyTFTkeY0Ohwk7SCpw9PqJlm2vK9cJoJmba7/6CeKu8oPGB+sKtxx
-	 KoafKBJpDy115UR8H7lp3zCHx2hdZizBq2e6u2hE=
+	b=EzYZTmgQmYTZxcFaoTo/IVCwbcg3Akllllj0uvJjssYdUKD2VZPesGUQ/Ml9rdUYQ
+	 G0CT9KudfIfpDMvHYyC/ZOTYEooVKuTsRhFPrSVEB9Xz9HEilwJ20Nbmer9p7xutem
+	 ZuJy7YfRrrQRwiTYq49zLKGTSjDx7tboG1WNwpcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.3 020/694] media: ov8856: Do not check for for module version
-Date: Mon,  8 May 2023 11:37:35 +0200
-Message-Id: <20230508094433.288314439@linuxfoundation.org>
+	Martin Krastev <krastevm@vmware.com>,
+	Maaz Mombasawala <mombasawalam@vmware.com>,
+	Zack Rusin <zackr@vmware.com>
+Subject: [PATCH 6.3 021/694] drm/vmwgfx: Fix Legacy Display Unit atomic drm support
+Date: Mon,  8 May 2023 11:37:36 +0200
+Message-Id: <20230508094433.317671174@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,78 +35,208 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Martin Krastev <krastevm@vmware.com>
 
-commit 5a4e1b5aed2a36a10d6a3b30fafb6b3bf41c3186 upstream.
+commit a37a512db3fa1b65fe9087003e5b2072cefb3667 upstream.
 
-It the device is probed in non-zero ACPI D state, the module
-identification is delayed until the first streamon.
+Legacy Display Unit (LDU) fb dirty support used a custom fb dirty callback. Latter
+handled only the DIRTYFB IOCTL presentation path but not the ADDFB2/PAGE_FLIP/RMFB
+IOCTL path, common for Wayland compositors.
 
-The module identification has two parts: deviceID and version. To rea
-the version we have to enable OTP read. This cannot be done during
-streamon, becase it modifies REG_MODE_SELECT.
+Get rid of the custom callback in favor of drm_atomic_helper_dirtyfb and unify the
+handling of the presentation paths inside of vmw_ldu_primary_plane_atomic_update.
+This also homogenizes the fb dirty callbacks across all DUs: LDU, SOU and STDU.
 
-Since the driver has the same behaviour for all the module versions, do
-not read the module version from the sensor's OTP.
-
-Cc: stable@vger.kernel.org
-Fixes: 0e014f1a8d54 ("media: ov8856: support device probe in non-zero ACPI D state")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Martin Krastev <krastevm@vmware.com>
+Reviewed-by: Maaz Mombasawala <mombasawalam@vmware.com>
+Fixes: 2f5544ff0300 ("drm/vmwgfx: Use atomic helper function for dirty fb IOCTL")
+Cc: <stable@vger.kernel.org> # v5.0+
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230321020949.335012-3-zack@kde.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov8856.c |   40 ----------------------------------------
- 1 file changed, 40 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |   62 ------------------------------------
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.h |    5 --
+ drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c |   45 +++++++++++++++++++++-----
+ 3 files changed, 38 insertions(+), 74 deletions(-)
 
---- a/drivers/media/i2c/ov8856.c
-+++ b/drivers/media/i2c/ov8856.c
-@@ -1709,46 +1709,6 @@ static int ov8856_identify_module(struct
- 		return -ENXIO;
- 	}
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -1420,70 +1420,10 @@ static void vmw_framebuffer_bo_destroy(s
+ 	kfree(vfbd);
+ }
  
--	ret = ov8856_write_reg(ov8856, OV8856_REG_MODE_SELECT,
--			       OV8856_REG_VALUE_08BIT, OV8856_MODE_STREAMING);
--	if (ret)
--		return ret;
+-static int vmw_framebuffer_bo_dirty(struct drm_framebuffer *framebuffer,
+-				    struct drm_file *file_priv,
+-				    unsigned int flags, unsigned int color,
+-				    struct drm_clip_rect *clips,
+-				    unsigned int num_clips)
+-{
+-	struct vmw_private *dev_priv = vmw_priv(framebuffer->dev);
+-	struct vmw_framebuffer_bo *vfbd =
+-		vmw_framebuffer_to_vfbd(framebuffer);
+-	struct drm_clip_rect norect;
+-	int ret, increment = 1;
 -
--	ret = ov8856_write_reg(ov8856, OV8856_OTP_MODE_CTRL,
--			       OV8856_REG_VALUE_08BIT, OV8856_OTP_MODE_AUTO);
--	if (ret) {
--		dev_err(&client->dev, "failed to set otp mode");
--		return ret;
+-	drm_modeset_lock_all(&dev_priv->drm);
+-
+-	if (!num_clips) {
+-		num_clips = 1;
+-		clips = &norect;
+-		norect.x1 = norect.y1 = 0;
+-		norect.x2 = framebuffer->width;
+-		norect.y2 = framebuffer->height;
+-	} else if (flags & DRM_MODE_FB_DIRTY_ANNOTATE_COPY) {
+-		num_clips /= 2;
+-		increment = 2;
 -	}
 -
--	ret = ov8856_write_reg(ov8856, OV8856_OTP_LOAD_CTRL,
--			       OV8856_REG_VALUE_08BIT,
--			       OV8856_OTP_LOAD_CTRL_ENABLE);
--	if (ret) {
--		dev_err(&client->dev, "failed to enable load control");
--		return ret;
+-	switch (dev_priv->active_display_unit) {
+-	case vmw_du_legacy:
+-		ret = vmw_kms_ldu_do_bo_dirty(dev_priv, &vfbd->base, 0, 0,
+-					      clips, num_clips, increment);
+-		break;
+-	default:
+-		ret = -EINVAL;
+-		WARN_ONCE(true, "Dirty called with invalid display system.\n");
+-		break;
 -	}
 -
--	ret = ov8856_read_reg(ov8856, OV8856_MODULE_REVISION,
--			      OV8856_REG_VALUE_08BIT, &val);
--	if (ret) {
--		dev_err(&client->dev, "failed to read module revision");
--		return ret;
--	}
+-	vmw_cmd_flush(dev_priv, false);
 -
--	dev_info(&client->dev, "OV8856 revision %x (%s) at address 0x%02x\n",
--		 val,
--		 val == OV8856_2A_MODULE ? "2A" :
--		 val == OV8856_1B_MODULE ? "1B" : "unknown revision",
--		 client->addr);
+-	drm_modeset_unlock_all(&dev_priv->drm);
 -
--	ret = ov8856_write_reg(ov8856, OV8856_REG_MODE_SELECT,
--			       OV8856_REG_VALUE_08BIT, OV8856_MODE_STANDBY);
--	if (ret) {
--		dev_err(&client->dev, "failed to exit streaming mode");
--		return ret;
--	}
+-	return ret;
+-}
 -
- 	ov8856->identified = true;
+-static int vmw_framebuffer_bo_dirty_ext(struct drm_framebuffer *framebuffer,
+-					struct drm_file *file_priv,
+-					unsigned int flags, unsigned int color,
+-					struct drm_clip_rect *clips,
+-					unsigned int num_clips)
+-{
+-	struct vmw_private *dev_priv = vmw_priv(framebuffer->dev);
+-
+-	if (dev_priv->active_display_unit == vmw_du_legacy &&
+-	    vmw_cmd_supported(dev_priv))
+-		return vmw_framebuffer_bo_dirty(framebuffer, file_priv, flags,
+-						color, clips, num_clips);
+-
+-	return drm_atomic_helper_dirtyfb(framebuffer, file_priv, flags, color,
+-					 clips, num_clips);
+-}
+-
+ static const struct drm_framebuffer_funcs vmw_framebuffer_bo_funcs = {
+ 	.create_handle = vmw_framebuffer_bo_create_handle,
+ 	.destroy = vmw_framebuffer_bo_destroy,
+-	.dirty = vmw_framebuffer_bo_dirty_ext,
++	.dirty = drm_atomic_helper_dirtyfb,
+ };
  
- 	return 0;
+ /*
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.h
+@@ -512,11 +512,6 @@ void vmw_du_connector_destroy_state(stru
+  */
+ int vmw_kms_ldu_init_display(struct vmw_private *dev_priv);
+ int vmw_kms_ldu_close_display(struct vmw_private *dev_priv);
+-int vmw_kms_ldu_do_bo_dirty(struct vmw_private *dev_priv,
+-			    struct vmw_framebuffer *framebuffer,
+-			    unsigned int flags, unsigned int color,
+-			    struct drm_clip_rect *clips,
+-			    unsigned int num_clips, int increment);
+ int vmw_kms_update_proxy(struct vmw_resource *res,
+ 			 const struct drm_clip_rect *clips,
+ 			 unsigned num_clips,
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_ldu.c
+@@ -234,6 +234,7 @@ static const struct drm_crtc_funcs vmw_l
+ 	.atomic_duplicate_state = vmw_du_crtc_duplicate_state,
+ 	.atomic_destroy_state = vmw_du_crtc_destroy_state,
+ 	.set_config = drm_atomic_helper_set_config,
++	.page_flip = drm_atomic_helper_page_flip,
+ };
+ 
+ 
+@@ -273,6 +274,12 @@ static const struct
+ drm_connector_helper_funcs vmw_ldu_connector_helper_funcs = {
+ };
+ 
++static int vmw_kms_ldu_do_bo_dirty(struct vmw_private *dev_priv,
++				   struct vmw_framebuffer *framebuffer,
++				   unsigned int flags, unsigned int color,
++				   struct drm_mode_rect *clips,
++				   unsigned int num_clips);
++
+ /*
+  * Legacy Display Plane Functions
+  */
+@@ -291,7 +298,6 @@ vmw_ldu_primary_plane_atomic_update(stru
+ 	struct drm_framebuffer *fb;
+ 	struct drm_crtc *crtc = new_state->crtc ?: old_state->crtc;
+ 
+-
+ 	ldu = vmw_crtc_to_ldu(crtc);
+ 	dev_priv = vmw_priv(plane->dev);
+ 	fb       = new_state->fb;
+@@ -304,8 +310,31 @@ vmw_ldu_primary_plane_atomic_update(stru
+ 		vmw_ldu_del_active(dev_priv, ldu);
+ 
+ 	vmw_ldu_commit_list(dev_priv);
+-}
+ 
++	if (vfb && vmw_cmd_supported(dev_priv)) {
++		struct drm_mode_rect fb_rect = {
++			.x1 = 0,
++			.y1 = 0,
++			.x2 = vfb->base.width,
++			.y2 = vfb->base.height
++		};
++		struct drm_mode_rect *damage_rects = drm_plane_get_damage_clips(new_state);
++		u32 rect_count = drm_plane_get_damage_clips_count(new_state);
++		int ret;
++
++		if (!damage_rects) {
++			damage_rects = &fb_rect;
++			rect_count = 1;
++		}
++
++		ret = vmw_kms_ldu_do_bo_dirty(dev_priv, vfb, 0, 0, damage_rects, rect_count);
++
++		drm_WARN_ONCE(plane->dev, ret,
++			"vmw_kms_ldu_do_bo_dirty failed with: ret=%d\n", ret);
++
++		vmw_cmd_flush(dev_priv, false);
++	}
++}
+ 
+ static const struct drm_plane_funcs vmw_ldu_plane_funcs = {
+ 	.update_plane = drm_atomic_helper_update_plane,
+@@ -536,11 +565,11 @@ int vmw_kms_ldu_close_display(struct vmw
+ }
+ 
+ 
+-int vmw_kms_ldu_do_bo_dirty(struct vmw_private *dev_priv,
+-			    struct vmw_framebuffer *framebuffer,
+-			    unsigned int flags, unsigned int color,
+-			    struct drm_clip_rect *clips,
+-			    unsigned int num_clips, int increment)
++static int vmw_kms_ldu_do_bo_dirty(struct vmw_private *dev_priv,
++				   struct vmw_framebuffer *framebuffer,
++				   unsigned int flags, unsigned int color,
++				   struct drm_mode_rect *clips,
++				   unsigned int num_clips)
+ {
+ 	size_t fifo_size;
+ 	int i;
+@@ -556,7 +585,7 @@ int vmw_kms_ldu_do_bo_dirty(struct vmw_p
+ 		return -ENOMEM;
+ 
+ 	memset(cmd, 0, fifo_size);
+-	for (i = 0; i < num_clips; i++, clips += increment) {
++	for (i = 0; i < num_clips; i++, clips++) {
+ 		cmd[i].header = SVGA_CMD_UPDATE;
+ 		cmd[i].body.x = clips->x1;
+ 		cmd[i].body.y = clips->y1;
 
 
