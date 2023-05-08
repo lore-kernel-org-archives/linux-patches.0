@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1F8168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:38:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F4AC433EF;
-	Mon,  8 May 2023 10:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D0E168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:39:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD557C4339C;
+	Mon,  8 May 2023 10:39:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542339;
-	bh=6wUdlpnIMKZU5hG6/kNkQTPUb8b+kgE0SJl8R2fc9M8=;
+	s=korg; t=1683542342;
+	bh=8xvn21+HOtnwDBbbKwCoQwJ+FfvgWvVw92y15B935NE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kWtWhRN0RZcNw2PCGvi5RStEj7NVdUcJoZONTtvsS0TnhHuuKpIKSW2re6Z2KlTyi
-	 9Damx17CLtdKaM9Ksq5pDU7TZxsV0fH3iUK1dR3vDrL7O7PFBQySkSh0nCo6YdGAqK
-	 g8buNJfecsp8y4dpD5slp+hK5yn0cLKZIKhnmF9Q=
+	b=wOxgw7rFBqDtq4LJiv6bFdzw6psgGfDoBsf7HSO4bEDj2tRoyMkxJwK6wRERrWx8p
+	 SgSGb2hdkFSPxyvKvXxQ5XXfgpj4uVpWUAeWGBrcbS0e3NaDhrpTIPm1dFoapaz31M
+	 tlbJ7x1KSOCmbzNgi4y6XA2HOaCQOlzyI7lLFluM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryder Lee <ryder.lee@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 404/663] wifi: mt76: connac: fix txd multicast rate setting
-Date: Mon,  8 May 2023 11:43:50 +0200
-Message-Id: <20230508094441.190316190@linuxfoundation.org>
+Subject: [PATCH 6.2 405/663] wifi: iwlwifi: mvm: check firmware response size
+Date: Mon,  8 May 2023 11:43:51 +0200
+Message-Id: <20230508094441.220492108@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,35 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryder Lee <ryder.lee@mediatek.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 3d2892e05086d09aecf14ea64b2debbf495e313c ]
+[ Upstream commit 13513cec93ac9902d0b896976d8bab3758a9881c ]
 
-The vif->bss_conf.mcast_rate should be applied to multicast data frame
-only.
+Check the firmware response size for responses to the
+memory read/write command in debugfs before using it.
 
-Fixes: 182071cdd594 ("mt76: connac: move connac2_mac_write_txwi in mt76_connac module")
-Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 2b55f43f8e47 ("iwlwifi: mvm: Add mem debugfs entry")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230417113648.0d56fcaf68ee.I70e9571f3ed7263929b04f8fabad23c9b999e4ea@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-index aed4ee95fb2ec..82aac0a04655f 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-@@ -537,7 +537,8 @@ void mt76_connac2_mac_write_txwi(struct mt76_dev *dev, __le32 *txwi,
- 	if (txwi[2] & cpu_to_le32(MT_TXD2_FIX_RATE)) {
- 		/* Fixed rata is available just for 802.11 txd */
- 		struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
--		bool multicast = is_multicast_ether_addr(hdr->addr1);
-+		bool multicast = ieee80211_is_data(hdr->frame_control) &&
-+				 is_multicast_ether_addr(hdr->addr1);
- 		u16 rate = mt76_connac2_mac_tx_rate_val(mphy, vif, beacon,
- 							multicast);
- 		u32 val = MT_TXD6_FIXED_BW;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+index 1ce9450e5add2..4071827d44757 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+@@ -1745,6 +1745,11 @@ static ssize_t iwl_dbgfs_mem_read(struct file *file, char __user *user_buf,
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
++		ret = -EIO;
++		goto out;
++	}
++
+ 	rsp = (void *)hcmd.resp_pkt->data;
+ 	if (le32_to_cpu(rsp->status) != DEBUG_MEM_STATUS_SUCCESS) {
+ 		ret = -ENXIO;
+@@ -1821,6 +1826,11 @@ static ssize_t iwl_dbgfs_mem_write(struct file *file,
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
++		ret = -EIO;
++		goto out;
++	}
++
+ 	rsp = (void *)hcmd.resp_pkt->data;
+ 	if (rsp->status != DEBUG_MEM_STATUS_SUCCESS) {
+ 		ret = -ENXIO;
 -- 
 2.39.2
 
