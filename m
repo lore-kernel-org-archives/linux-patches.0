@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EE7F168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:54:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B388EC433D2;
-	Mon,  8 May 2023 09:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D0A168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:54:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1942C4339B;
+	Mon,  8 May 2023 09:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539666;
-	bh=1st2AWW9V0RFH38t0szpIQhSrPtjADkDuPIJmFvPIJA=;
+	s=korg; t=1683539669;
+	bh=bKVfZbGQbbaMi1wWv8cFTLl9g6aqz5vdDPmG5B9/lzQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lETcx001iwsBhffV37RPjA4AOM8qNITv9eJEFQOuUYJ6kfnWwoo1lRj3p+x5b23pN
-	 CjjqhcJ+oAIUbJ6L+d+FHscmWa9Kv16D/P8jVQgEN/gLzPVfMwX2gWy6V7d5Apr9LB
-	 gxbyiK8SLklWyBLngGkIQywE6kgc9ctKf4mWaOyI=
+	b=oT3qaTBl3hyoU8/GyrVEM72x1jJSlFRo2pseKk+BAYKH0PPj1G5w12Gkwy5spQsE0
+	 iTcMF1hkLmVkzyb3rr9BbE+GHFAu/4Jp8mvokZGwQi/rTu6OPpx1aWdl4VNklm0vX4
+	 ZEXVChkgfJT1zEgOyR04tt4AWHdi3B3H3IfH16HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <tim.huang@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 098/611] drm/amd/pm: re-enable the gfx imu when smu resume
-Date: Mon,  8 May 2023 11:39:00 +0200
-Message-Id: <20230508094425.399958702@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 072/611] crypto: ccp - Dont initialize CCP for PSP 0x1649
+Date: Mon,  8 May 2023 11:38:34 +0200
+Message-Id: <20230508094424.364678291@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,91 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <tim.huang@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit f7f28f268b861c29dd18086bb636abedf0ff59ff upstream.
+commit c79a3169b9f3633c215b55857eba5921e5b49217 upstream.
 
-If the gfx imu is poweroff when suspend, then
-it need to be re-enabled when resume.
+A number of platforms are emitting the error:
+```ccp: unable to access the device: you might be running a broken BIOS.```
 
-Signed-off-by: Tim Huang <tim.huang@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This is expected behavior as CCP is no longer accessible from the PSP's
+PCIe BAR so stop trying to probe CCP for 0x1649.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |   40 +++++++++++++++++++++---------
- 1 file changed, 28 insertions(+), 12 deletions(-)
+ drivers/crypto/ccp/sp-pci.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -161,10 +161,15 @@ int smu_get_dpm_freq_range(struct smu_co
- 
- int smu_set_gfx_power_up_by_imu(struct smu_context *smu)
- {
--	if (!smu->ppt_funcs || !smu->ppt_funcs->set_gfx_power_up_by_imu)
--		return -EOPNOTSUPP;
-+	int ret = 0;
-+	struct amdgpu_device *adev = smu->adev;
- 
--	return smu->ppt_funcs->set_gfx_power_up_by_imu(smu);
-+	if (smu->ppt_funcs->set_gfx_power_up_by_imu) {
-+		ret = smu->ppt_funcs->set_gfx_power_up_by_imu(smu);
-+		if (ret)
-+			dev_err(adev->dev, "Failed to enable gfx imu!\n");
-+	}
-+	return ret;
- }
- 
- static u32 smu_get_mclk(void *handle, bool low)
-@@ -195,6 +200,19 @@ static u32 smu_get_sclk(void *handle, bo
- 	return clk_freq * 100;
- }
- 
-+static int smu_set_gfx_imu_enable(struct smu_context *smu)
-+{
-+	struct amdgpu_device *adev = smu->adev;
-+
-+	if (adev->firmware.load_type != AMDGPU_FW_LOAD_PSP)
-+		return 0;
-+
-+	if (amdgpu_in_reset(smu->adev) || adev->in_s0ix)
-+		return 0;
-+
-+	return smu_set_gfx_power_up_by_imu(smu);
-+}
-+
- static int smu_dpm_set_vcn_enable(struct smu_context *smu,
- 				  bool enable)
- {
-@@ -1386,15 +1404,9 @@ static int smu_hw_init(void *handle)
- 	}
- 
- 	if (smu->is_apu) {
--		if ((smu->ppt_funcs->set_gfx_power_up_by_imu) &&
--				likely(adev->firmware.load_type == AMDGPU_FW_LOAD_PSP)) {
--			ret = smu->ppt_funcs->set_gfx_power_up_by_imu(smu);
--			if (ret) {
--				dev_err(adev->dev, "Failed to Enable gfx imu!\n");
--				return ret;
--			}
--		}
--
-+		ret = smu_set_gfx_imu_enable(smu);
-+		if (ret)
-+			return ret;
- 		smu_dpm_set_vcn_enable(smu, true);
- 		smu_dpm_set_jpeg_enable(smu, true);
- 		smu_set_gfx_cgpg(smu, true);
-@@ -1670,6 +1682,10 @@ static int smu_resume(void *handle)
- 		return ret;
- 	}
- 
-+	ret = smu_set_gfx_imu_enable(smu);
-+	if (ret)
-+		return ret;
-+
- 	smu_set_gfx_cgpg(smu, true);
- 
- 	smu->disable_uclk_switch = 0;
+--- a/drivers/crypto/ccp/sp-pci.c
++++ b/drivers/crypto/ccp/sp-pci.c
+@@ -451,9 +451,9 @@ static const struct pci_device_id sp_pci
+ 	{ PCI_VDEVICE(AMD, 0x1468), (kernel_ulong_t)&dev_vdata[2] },
+ 	{ PCI_VDEVICE(AMD, 0x1486), (kernel_ulong_t)&dev_vdata[3] },
+ 	{ PCI_VDEVICE(AMD, 0x15DF), (kernel_ulong_t)&dev_vdata[4] },
+-	{ PCI_VDEVICE(AMD, 0x1649), (kernel_ulong_t)&dev_vdata[4] },
+ 	{ PCI_VDEVICE(AMD, 0x14CA), (kernel_ulong_t)&dev_vdata[5] },
+ 	{ PCI_VDEVICE(AMD, 0x15C7), (kernel_ulong_t)&dev_vdata[6] },
++	{ PCI_VDEVICE(AMD, 0x1649), (kernel_ulong_t)&dev_vdata[6] },
+ 	/* Last entry must be zero */
+ 	{ 0, }
+ };
 
 
