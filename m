@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C406168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50BCC433D2;
-	Mon,  8 May 2023 11:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A657168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C134BC433D2;
+	Mon,  8 May 2023 11:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544381;
-	bh=4BiHR3hB1YoPleLHf1FQeCEQHaDGuu20vKxU55AJZuY=;
+	s=korg; t=1683544384;
+	bh=FVABn5f25HUJh9U67nAaOefoQMgYz+isnmo0axEU4eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k2NC/EUuS1r38C8IX3uGc7K4Tqci2M1gcNO9OVwp3skM3IobFP9wJRl4qfey3KwWH
-	 e8YotF2Khc7WMGK8ppimGUHfZ/ile6iYJwtOC2LmF7twyGt99pHgN5KfIPLe+t1bVl
-	 R0T8tGHvis47QzFbY098698n2+ungeOX4QpK7/DY=
+	b=tNDJCK5wrRd/IEdNgLI72+95fhYVj4DCzF0r31ZVWe8jXtC81BkiZd7tHuSTf6aa8
+	 00Fgt5eWidxf7RNTVSTGg7fLbwu1hqj9c84pA6MZDmH7szrZ1lS0j5mcbBo+2kMxo9
+	 Y0nex/B9smNYPz5QRBTq5yXPIlnwJaCgWpele1xQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kal Conley <kal.conley@dectris.com>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 392/694] xsk: Fix unaligned descriptor validation
-Date: Mon,  8 May 2023 11:43:47 +0200
-Message-Id: <20230508094445.782654175@linuxfoundation.org>
+Subject: [PATCH 6.3 393/694] f2fs: fix to avoid use-after-free for cached IPU bio
+Date: Mon,  8 May 2023 11:43:48 +0200
+Message-Id: <20230508094445.813626926@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,62 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kal Conley <kal.conley@dectris.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit d769ccaf957fe7391f357c0a923de71f594b8a2b ]
+[ Upstream commit 5cdb422c839134273866208dad5360835ddb9794 ]
 
-Make sure unaligned descriptors that straddle the end of the UMEM are
-considered invalid. Currently, descriptor validation is broken for
-zero-copy mode which only checks descriptors at page granularity.
-For example, descriptors in zero-copy mode that overrun the end of the
-UMEM but not a page boundary are (incorrectly) considered valid. The
-UMEM boundary check needs to happen before the page boundary and
-contiguity checks in xp_desc_crosses_non_contig_pg(). Do this check in
-xp_unaligned_validate_desc() instead like xp_check_unaligned() already
-does.
+xfstest generic/019 reports a bug:
 
-Fixes: 2b43470add8c ("xsk: Introduce AF_XDP buffer allocation API")
-Signed-off-by: Kal Conley <kal.conley@dectris.com>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://lore.kernel.org/r/20230405235920.7305-2-kal.conley@dectris.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+kernel BUG at mm/filemap.c:1619!
+RIP: 0010:folio_end_writeback+0x8a/0x90
+Call Trace:
+ end_page_writeback+0x1c/0x60
+ f2fs_write_end_io+0x199/0x420
+ bio_endio+0x104/0x180
+ submit_bio_noacct+0xa5/0x510
+ submit_bio+0x48/0x80
+ f2fs_submit_write_bio+0x35/0x300
+ f2fs_submit_merged_ipu_write+0x2a0/0x2b0
+ f2fs_write_single_data_page+0x838/0x8b0
+ f2fs_write_cache_pages+0x379/0xa30
+ f2fs_write_data_pages+0x30c/0x340
+ do_writepages+0xd8/0x1b0
+ __writeback_single_inode+0x44/0x370
+ writeback_sb_inodes+0x233/0x4d0
+ __writeback_inodes_wb+0x56/0xf0
+ wb_writeback+0x1dd/0x2d0
+ wb_workfn+0x367/0x4a0
+ process_one_work+0x21d/0x430
+ worker_thread+0x4e/0x3c0
+ kthread+0x103/0x130
+ ret_from_fork+0x2c/0x50
+
+The root cause is: after cp_error is set, f2fs_submit_merged_ipu_write()
+in f2fs_write_single_data_page() tries to flush IPU bio in cache, however
+f2fs_submit_merged_ipu_write() missed to check validity of @bio parameter,
+result in submitting random cached bio which belong to other IO context,
+then it will cause use-after-free issue, fix it by adding additional
+validity check.
+
+Fixes: 0b20fcec8651 ("f2fs: cache global IPU bio")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xsk_buff_pool.h | 9 ++-------
- net/xdp/xsk_queue.h         | 1 +
- 2 files changed, 3 insertions(+), 7 deletions(-)
+ fs/f2fs/data.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
-index 3e952e5694188..d318c769b4454 100644
---- a/include/net/xsk_buff_pool.h
-+++ b/include/net/xsk_buff_pool.h
-@@ -180,13 +180,8 @@ static inline bool xp_desc_crosses_non_contig_pg(struct xsk_buff_pool *pool,
- 	if (likely(!cross_pg))
- 		return false;
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 06b552a0aba23..1034912a61b30 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -874,6 +874,8 @@ void f2fs_submit_merged_ipu_write(struct f2fs_sb_info *sbi,
+ 	bool found = false;
+ 	struct bio *target = bio ? *bio : NULL;
  
--	if (pool->dma_pages_cnt) {
--		return !(pool->dma_pages[addr >> PAGE_SHIFT] &
--			 XSK_NEXT_PG_CONTIG_MASK);
--	}
--
--	/* skb path */
--	return addr + len > pool->addrs_cnt;
-+	return pool->dma_pages_cnt &&
-+	       !(pool->dma_pages[addr >> PAGE_SHIFT] & XSK_NEXT_PG_CONTIG_MASK);
- }
++	f2fs_bug_on(sbi, !target && !page);
++
+ 	for (temp = HOT; temp < NR_TEMP_TYPE && !found; temp++) {
+ 		struct f2fs_bio_info *io = sbi->write_io[DATA] + temp;
+ 		struct list_head *head = &io->bio_list;
+@@ -2898,7 +2900,8 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
  
- static inline u64 xp_aligned_extract_addr(struct xsk_buff_pool *pool, u64 addr)
-diff --git a/net/xdp/xsk_queue.h b/net/xdp/xsk_queue.h
-index bfb2a7e50c261..66c6f57c9c447 100644
---- a/net/xdp/xsk_queue.h
-+++ b/net/xdp/xsk_queue.h
-@@ -162,6 +162,7 @@ static inline bool xp_unaligned_validate_desc(struct xsk_buff_pool *pool,
- 		return false;
- 
- 	if (base_addr >= pool->addrs_cnt || addr >= pool->addrs_cnt ||
-+	    addr + desc->len > pool->addrs_cnt ||
- 	    xp_desc_crosses_non_contig_pg(pool, addr, desc->len))
- 		return false;
+ 	if (unlikely(f2fs_cp_error(sbi))) {
+ 		f2fs_submit_merged_write(sbi, DATA);
+-		f2fs_submit_merged_ipu_write(sbi, bio, NULL);
++		if (bio && *bio)
++			f2fs_submit_merged_ipu_write(sbi, bio, NULL);
+ 		submitted = NULL;
+ 	}
  
 -- 
 2.39.2
