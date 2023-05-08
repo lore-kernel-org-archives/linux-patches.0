@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DF4171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:41:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 903A8C433AA;
-	Mon,  8 May 2023 11:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D488171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:41:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C82C433EF;
+	Mon,  8 May 2023 11:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546112;
-	bh=oTlM6QwoHU60c8Rk06LcMqRQgGGh7eAg8gv0p/Gudpo=;
+	s=korg; t=1683546115;
+	bh=7Dse9Mo4Bl2qyQdAHwynYAxizlp7dspDsUDbsWpPqTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bf8atGGsSM7bUYauLdtIEHyxRdIVdDhQDaZF/Jg6YPLTQlvBV0DVy/urwnu6fUorw
-	 62yZeoQWnhhBB7pfVSuyOr3of9IQcrRetS9zEB4Z1fTBBua+71sIbYZYhGy8TJNM0i
-	 NK9JhSDRQskKmkx0HiWTou6gz7OsNyD5IPdS9VVk=
+	b=QkIfgyTLGcZzqc8nwX4bAWlu/VkloLHbXPyEpkClytK4Num7H3yBMA/35eHIMblzF
+	 mf6NXuCOcxvdwCoNGGDkLqSoaf0hY+/mqKUcJH7rXBq4yYRZXORPlm6MhduIO+1lba
+	 5sayDRIV5NLwy5NsRbKjEs8KOgY8DLC4LcagA3G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Wang <sean.wang@mediatek.com>,
-	Deren Wu <deren.wu@mediatek.com>,
-	Wang Zhao <wang.zhao@mediatek.com>,
-	Quan Zhou <quan.zhou@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Joakim Tjernlund <Joakim.Tjernlund@infinera.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 221/371] wifi: mt76: mt7921e: improve reliability of dma reset
-Date: Mon,  8 May 2023 11:47:02 +0200
-Message-Id: <20230508094820.837459683@linuxfoundation.org>
+Subject: [PATCH 5.15 254/371] spi: fsl-spi: Fix CPM/QE mode Litte Endian
+Date: Mon,  8 May 2023 11:47:35 +0200
+Message-Id: <20230508094822.158120660@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -38,105 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quan Zhou <quan.zhou@mediatek.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 87714bf6ed1589813e473db5471e6e9857755764 ]
+[ Upstream commit c20c57d9868d7f9fd1b2904c7801b07e128f6322 ]
 
-The hardware team has advised the driver that it is necessary to first put
-WFDMA into an idle state before resetting the WFDMA. Otherwise, the WFDMA
-may enter an unknown state where it cannot be polled with the right state
-successfully. To ensure that the DMA can work properly while a stressful
-cold reboot test was being made, we have reordered the programming sequence
-in the driver based on the hardware team's guidance.
+CPM has the same problem as QE so for CPM also use the fix added
+by commit 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian"):
 
-The patch would modify the WFDMA disabling flow from
+  CPM mode uses Little Endian so words > 8 bits are byte swapped.
+  Workaround this by always enforcing wordsize 8 for 16 and 32 bits
+  words. Unfortunately this will not work for LSB transfers
+  where wordsize is > 8 bits so disable these for now.
 
-"DMA reset -> disabling DMASHDL -> disabling WFDMA -> polling and waiting
-until DMA idle" to "disabling WFDMA -> polling and waiting for DMA idle ->
-disabling DMASHDL -> DMA reset.
+Also limit the workaround to 16 and 32 bits words because it can
+only work for multiples of 8-bits.
 
-Where he polling and waiting until WFDMA is idle is coordinated with the
-operation of disabling WFDMA. Even while WFDMA is being disabled, it can
-still handle Tx/Rx requests. The additional polling allows sufficient time
-for WFDMA to process the last T/Rx request. When the idle state of WFDMA is
-reached, it is a reliable indication that DMASHDL is also idle to ensure it
-is safe to disable it and perform the DMA reset.
-
-Fixes: 0a1059d0f060 ("mt76: mt7921: move mt7921_dma_reset in dma.c")
-Co-developed-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Sean Wang <sean.wang@mediatek.com>
-Co-developed-by: Deren Wu <deren.wu@mediatek.com>
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
-Co-developed-by: Wang Zhao <wang.zhao@mediatek.com>
-Signed-off-by: Wang Zhao <wang.zhao@mediatek.com>
-Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
+Fixes: 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian")
+Link: https://lore.kernel.org/r/1b7d3e84b1128f42c1887dd2fb9cdf390f541bc1.1680371809.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7921/dma.c   | 36 ++++++++++---------
- 1 file changed, 20 insertions(+), 16 deletions(-)
+ drivers/spi/spi-fsl-spi.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/dma.c b/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
-index 7e39bcfdb0b7a..983861edc6834 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
-@@ -120,22 +120,6 @@ static void mt7921_dma_prefetch(struct mt7921_dev *dev)
- 
- static int mt7921_dma_disable(struct mt7921_dev *dev, bool force)
+diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
+index bdf94cc7be1af..1bad0ceac81b4 100644
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -207,8 +207,8 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 				struct spi_device *spi,
+ 				int bits_per_word)
  {
--	if (force) {
--		/* reset */
--		mt76_clear(dev, MT_WFDMA0_RST,
--			   MT_WFDMA0_RST_DMASHDL_ALL_RST |
--			   MT_WFDMA0_RST_LOGIC_RST);
--
--		mt76_set(dev, MT_WFDMA0_RST,
--			 MT_WFDMA0_RST_DMASHDL_ALL_RST |
--			 MT_WFDMA0_RST_LOGIC_RST);
--	}
--
--	/* disable dmashdl */
--	mt76_clear(dev, MT_WFDMA0_GLO_CFG_EXT0,
--		   MT_WFDMA0_CSR_TX_DMASHDL_ENABLE);
--	mt76_set(dev, MT_DMASHDL_SW_CONTROL, MT_DMASHDL_DMASHDL_BYPASS);
--
- 	/* disable WFDMA0 */
- 	mt76_clear(dev, MT_WFDMA0_GLO_CFG,
- 		   MT_WFDMA0_GLO_CFG_TX_DMA_EN | MT_WFDMA0_GLO_CFG_RX_DMA_EN |
-@@ -149,6 +133,22 @@ static int mt7921_dma_disable(struct mt7921_dev *dev, bool force)
- 				 MT_WFDMA0_GLO_CFG_RX_DMA_BUSY, 0, 100, 1))
- 		return -ETIMEDOUT;
- 
-+	/* disable dmashdl */
-+	mt76_clear(dev, MT_WFDMA0_GLO_CFG_EXT0,
-+		   MT_WFDMA0_CSR_TX_DMASHDL_ENABLE);
-+	mt76_set(dev, MT_DMASHDL_SW_CONTROL, MT_DMASHDL_DMASHDL_BYPASS);
-+
-+	if (force) {
-+		/* reset */
-+		mt76_clear(dev, MT_WFDMA0_RST,
-+			   MT_WFDMA0_RST_DMASHDL_ALL_RST |
-+			   MT_WFDMA0_RST_LOGIC_RST);
-+
-+		mt76_set(dev, MT_WFDMA0_RST,
-+			 MT_WFDMA0_RST_DMASHDL_ALL_RST |
-+			 MT_WFDMA0_RST_LOGIC_RST);
-+	}
-+
- 	return 0;
+-	/* QE uses Little Endian for words > 8
+-	 * so transform all words > 8 into 8 bits
++	/* CPM/QE uses Little Endian for words > 8
++	 * so transform 16 and 32 bits words into 8 bits
+ 	 * Unfortnatly that doesn't work for LSB so
+ 	 * reject these for now */
+ 	/* Note: 32 bits word, LSB works iff
+@@ -216,9 +216,11 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 	if (spi->mode & SPI_LSB_FIRST &&
+ 	    bits_per_word > 8)
+ 		return -EINVAL;
+-	if (bits_per_word > 8)
++	if (bits_per_word <= 8)
++		return bits_per_word;
++	if (bits_per_word == 16 || bits_per_word == 32)
+ 		return 8; /* pretend its 8 bits */
+-	return bits_per_word;
++	return -EINVAL;
  }
  
-@@ -354,6 +354,10 @@ void mt7921_dma_cleanup(struct mt7921_dev *dev)
- 		   MT_WFDMA0_GLO_CFG_OMIT_RX_INFO |
- 		   MT_WFDMA0_GLO_CFG_OMIT_RX_INFO_PFET2);
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+@@ -248,7 +250,7 @@ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else if (mpc8xxx_spi->flags & SPI_QE)
++	else
+ 		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+ 							  bits_per_word);
  
-+	mt76_poll_msec_tick(dev, MT_WFDMA0_GLO_CFG,
-+			    MT_WFDMA0_GLO_CFG_TX_DMA_BUSY |
-+			    MT_WFDMA0_GLO_CFG_RX_DMA_BUSY, 0, 100, 1);
-+
- 	/* reset */
- 	mt76_clear(dev, MT_WFDMA0_RST,
- 		   MT_WFDMA0_RST_DMASHDL_ALL_RST |
 -- 
 2.39.2
 
