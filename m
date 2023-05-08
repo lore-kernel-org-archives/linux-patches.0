@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E34168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBB7C433D2;
-	Mon,  8 May 2023 10:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35795168C8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CB2FC4339B;
+	Mon,  8 May 2023 10:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542821;
-	bh=68JX4anTt8lQMt7CEMItA9kq/5PlzcqMLTiHvolrlcM=;
+	s=korg; t=1683542827;
+	bh=0y5fik3iuohyoHYC0Yzunl6vS+d3MfQ0KCVN9cPo5dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VsVEIfmhipSB8ELqfWrx7ABt4Ep4+VVOKqSZM8gWYOxU/bH2lubhqVDzKl22XTz5v
-	 a/+q9Rti+M8wTr+mpR5b1zzB/yBMIA+4Xkpd4tXHqgVeWQZQCgGO4sgpkOYGne5BdG
-	 Drja5SueOtQa4FPzh/3GcJov3EeNCtBemAI83pe8=
+	b=CtIp86rnymyRnt7Y9kcwCheRDRJtMBcEAQEFdBCFqwDzaXdDcstSJtWUc1BSyRzE/
+	 VRfOnIcK7ycrdB3UOITIKeo+KgQ8PhSr9R5pDjYZR1qZj7X5QcWEPB4fe0v8KaAe/F
+	 ZUACGeGjkYYm6ZHPpBD8VvJ8ePGAo8oSgZRHvzVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Tejun Heo <tj@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 527/663] workqueue: Fix hung time report of worker pools
-Date: Mon,  8 May 2023 11:45:53 +0200
-Message-Id: <20230508094445.966588573@linuxfoundation.org>
+Subject: [PATCH 6.2 529/663] RDMA/mlx4: Prevent shift wrapping in set_user_sq_size()
+Date: Mon,  8 May 2023 11:45:55 +0200
+Message-Id: <20230508094446.037577601@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,69 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Mladek <pmladek@suse.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 335a42ebb0ca8ee9997a1731aaaae6dcd704c113 ]
+[ Upstream commit d50b3c73f1ac20dabc53dc6e9d64ce9c79a331eb ]
 
-The workqueue watchdog prints a warning when there is no progress in
-a worker pool. Where the progress means that the pool started processing
-a pending work item.
+The ucmd->log_sq_bb_count variable is controlled by the user so this
+shift can wrap.  Fix it by using check_shl_overflow() in the same way
+that it was done in commit 515f60004ed9 ("RDMA/hns: Prevent undefined
+behavior in hns_roce_set_user_sq_size()").
 
-Note that it is perfectly fine to process work items much longer.
-The progress should be guaranteed by waking up or creating idle
-workers.
-
-show_one_worker_pool() prints state of non-idle worker pool. It shows
-a delay since the last pool->watchdog_ts.
-
-The timestamp is updated when a first pending work is queued in
-__queue_work(). Also it is updated when a work is dequeued for
-processing in worker_thread() and rescuer_thread().
-
-The delay is misleading when there is no pending work item. In this
-case it shows how long the last work item is being proceed. Show
-zero instead. There is no stall if there is no pending work.
-
-Fixes: 82607adcf9cdf40fb7b ("workqueue: implement lockup detector")
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 839041329fd3 ("IB/mlx4: Sanity check userspace send queue sizes")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/a8dfbd1d-c019-4556-930b-bab1ded73b10@kili.mountain
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/workqueue.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/mlx4/qp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 76ea87b0251ce..e5421775deb38 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -4850,10 +4850,16 @@ static void show_one_worker_pool(struct worker_pool *pool)
- 	struct worker *worker;
- 	bool first = true;
- 	unsigned long flags;
-+	unsigned long hung = 0;
- 
- 	raw_spin_lock_irqsave(&pool->lock, flags);
- 	if (pool->nr_workers == pool->nr_idle)
- 		goto next_pool;
+diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
+index b17d6ebc5b705..488c906c0432c 100644
+--- a/drivers/infiniband/hw/mlx4/qp.c
++++ b/drivers/infiniband/hw/mlx4/qp.c
+@@ -412,9 +412,13 @@ static int set_user_sq_size(struct mlx4_ib_dev *dev,
+ 			    struct mlx4_ib_qp *qp,
+ 			    struct mlx4_ib_create_qp *ucmd)
+ {
++	u32 cnt;
 +
-+	/* How long the first pending work is waiting for a worker. */
-+	if (!list_empty(&pool->worklist))
-+		hung = jiffies_to_msecs(jiffies - pool->watchdog_ts) / 1000;
-+
- 	/*
- 	 * Defer printing to avoid deadlocks in console drivers that
- 	 * queue work while holding locks also taken in their write
-@@ -4862,9 +4868,7 @@ static void show_one_worker_pool(struct worker_pool *pool)
- 	printk_deferred_enter();
- 	pr_info("pool %d:", pool->id);
- 	pr_cont_pool_info(pool);
--	pr_cont(" hung=%us workers=%d",
--		jiffies_to_msecs(jiffies - pool->watchdog_ts) / 1000,
--		pool->nr_workers);
-+	pr_cont(" hung=%lus workers=%d", hung, pool->nr_workers);
- 	if (pool->manager)
- 		pr_cont(" manager: %d",
- 			task_pid_nr(pool->manager->task));
+ 	/* Sanity check SQ size before proceeding */
+-	if ((1 << ucmd->log_sq_bb_count) > dev->dev->caps.max_wqes	 ||
+-	    ucmd->log_sq_stride >
++	if (check_shl_overflow(1, ucmd->log_sq_bb_count, &cnt) ||
++	    cnt > dev->dev->caps.max_wqes)
++		return -EINVAL;
++	if (ucmd->log_sq_stride >
+ 		ilog2(roundup_pow_of_two(dev->dev->caps.max_sq_desc_sz)) ||
+ 	    ucmd->log_sq_stride < MLX4_IB_MIN_SQ_STRIDE)
+ 		return -EINVAL;
 -- 
 2.39.2
 
