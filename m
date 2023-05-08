@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D35E168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CF8C433EF;
-	Mon,  8 May 2023 10:15:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C01168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89B77C433D2;
+	Mon,  8 May 2023 10:15:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540926;
-	bh=2tp9ftnmiVd39AtJGUhDVZj/4N1Rr2e1i9ciwy4XU5U=;
+	s=korg; t=1683540928;
+	bh=+HBhPyas3qgnFIzGUyho7JggeuDIy9lpNXuOlBjEDb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MC9cvm89pMvrcA5eJ/hS8cE6KZpccUkO6u/AtBuBPhYEbfE9HCrQdq+tf4f0TdA7d
-	 Vwfcx7dg4cxtwUQz0w9ntv0y6tp7T4C9Lt3aPLzlCzCkulx9FFQ1zIF5fbVNDfKpki
-	 WQBC2ldCk/Gy5LtoQ3wFYuQPoWAS9wFQFVGv6AWs=
+	b=YYEMIU8CC9QdF+NmlzqfhdVbfc8pxS9CeI3cLkQBc78zvnwu3L3euxVTLiQwJnz+x
+	 nIv76fBb1MlnshE+Hsp9A8fIaDSVwN8d0EF2L3742skfmKaSWBVBlUx++VB/Hs6Wck
+	 KysQJdm35n/KlNKT+taYw/YJ3VNfMNdhwE29j7vY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Foster <colin.foster@in-advantage.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 549/611] mfd: ocelot-spi: Fix unsupported bulk read
-Date: Mon,  8 May 2023 11:46:31 +0200
-Message-Id: <20230508094439.852237582@linuxfoundation.org>
+Subject: [PATCH 6.1 550/611] mfd: arizona-spi: Add missing MODULE_DEVICE_TABLE
+Date: Mon,  8 May 2023 11:46:32 +0200
+Message-Id: <20230508094439.882775188@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,81 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Colin Foster <colin.foster@in-advantage.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit f0484d2f80a72022b7fac72bcb406392900ef1eb ]
+[ Upstream commit 972c91fd7beddc3f19c8c855f6e60e7dbd435cbd ]
 
-Ocelot chips (VSC7511, VSC7512, VSC7513, VSC7514) don't support bulk read
-operations over SPI.
+This patch adds missing MODULE_DEVICE_TABLE definition
+which generates correct modalias for automatic loading
+of this driver when it is built as a module.
 
-Many SPI buses have hardware that can optimize consecutive reads.
-Essentially an address is written to the chip, and if the SPI controller
-continues to toggle the clock, subsequent register values are reported.
-This can lead to significant optimizations, because the time between
-"address is written to the chip" and "chip starts to report data" can often
-take a fixed amount of time.
-
-When support for Ocelot chips were added in commit f3e893626abe ("mfd:
-ocelot: Add support for the vsc7512 chip via spi") it was believed that
-this optimization was supported. However it is not.
-
-Most register transactions with the Ocelot chips are not done in bulk, so
-this bug could go unnoticed. The one scenario where bulk register
-operations _are_ performed is when polling port statistics counters, which
-was added in commit d87b1c08f38a ("net: mscc: ocelot: use bulk reads for
-stats").
-
-Things get slightly more complicated here...
-
-A bug was introduced in commit d4c367650704 ("net: mscc: ocelot: keep
-ocelot_stat_layout by reg address, not offset") that broke the optimization
-of bulk reads. This means that when Ethernet support for the VSC7512 chip
-was added in commit 3d7316ac81ac ("net: dsa: ocelot: add external ocelot
-switch control") things were actually working "as expected".
-
-The bulk read opmtimization was discovered, and fixed in commit
-6acc72a43eac ("net: mscc: ocelot: fix stats region batching") and the
-timing optimizations for SPI were noticed. A bulk read went from ~14ms to
-~2ms. But this timing improvement came at the cost of every register
-reading zero due the fact that bulk reads don't work.
-
-The read timings increase back to 13-14ms, but that's a price worth paying
-in order to receive valid data. This is verified in a DSA setup (cpsw-new
-switch tied to port 0 on the VSC7512, after having been running overnight)
-
-     Rx Octets: 16222055 # Counters from CPSW switch
-     Tx Octets: 12034702
-     Net Octets: 28256757
-     p00_rx_octets: 12034702 # Counters from Ocelot switch
-     p00_rx_frames_below_65_octets: 0
-     p00_rx_frames_65_to_127_octets: 88188
-     p00_rx_frames_128_to_255_octets: 13
-     p00_rx_frames_256_to_511_octets: 0
-     p00_rx_frames_512_to_1023_octets: 0
-     p00_rx_frames_over_1526_octets: 3306
-     p00_tx_octets: 16222055
-
-Fixes: f3e893626abe ("mfd: ocelot: Add support for the vsc7512 chip via spi")
-Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
+Fixes: 3f65555c417c ("mfd: arizona: Split of_match table into I2C and SPI versions")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
 Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230322141130.2531256-1-colin.foster@in-advantage.com
+Link: https://lore.kernel.org/r/20230323134138.834369-1-ckeepax@opensource.cirrus.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/ocelot-spi.c | 1 +
+ drivers/mfd/arizona-spi.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mfd/ocelot-spi.c b/drivers/mfd/ocelot-spi.c
-index 2ecd271de2fb9..85021f94e5874 100644
---- a/drivers/mfd/ocelot-spi.c
-+++ b/drivers/mfd/ocelot-spi.c
-@@ -130,6 +130,7 @@ static const struct regmap_config ocelot_spi_regmap_config = {
+diff --git a/drivers/mfd/arizona-spi.c b/drivers/mfd/arizona-spi.c
+index 941b0267d09d4..5c4af05ed0440 100644
+--- a/drivers/mfd/arizona-spi.c
++++ b/drivers/mfd/arizona-spi.c
+@@ -277,6 +277,7 @@ static const struct of_device_id arizona_spi_of_match[] = {
+ 	{ .compatible = "cirrus,cs47l24", .data = (void *)CS47L24 },
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, arizona_spi_of_match);
+ #endif
  
- 	.write_flag_mask = 0x80,
- 
-+	.use_single_read = true,
- 	.use_single_write = true,
- 	.can_multi_write = false,
- 
+ static struct spi_driver arizona_spi_driver = {
 -- 
 2.39.2
 
