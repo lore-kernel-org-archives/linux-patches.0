@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E8811C8F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5594C433D2;
-	Mon,  8 May 2023 11:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F4511C8F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41CA7C433EF;
+	Mon,  8 May 2023 11:36:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545767;
-	bh=j5i4bGiYM45UKqlt9rBF5Zk0hPiOiW4Jju5rbxfz0dg=;
+	s=korg; t=1683545770;
+	bh=f8O+nUPFTjUY30SfcybyhLUk9Rj7yK7Kk5rWpe5jRJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AgSf1OzuRUdRnkWkGu7dJylmQ6DTiW2+hTZb6Kw5qmdrxLpIdr95IkKk6i2ljuvmC
-	 IXivcUAz9Rpo6WivGvisYMwl2yfMDWZf4sMg6aBG6MZMKTv3MRoE0JUkth2HN32eQS
-	 KUVV3CdBseQLLK3yDrU9/nhe30+KVYZnj9nL8nTE=
+	b=vh5adMx65ttTuWnwYuyJv9Ii9wU1k5LE8NkeHPLYNMY1bkk3Fyy66Fm32lUgMnK6x
+	 G1zP4N5vQ4wtPJHpyAJ6l4aMb49jlTbM4Gbs+w4WFO3FSLwa2Z+PAjebjoUhiuHC4c
+	 0fZU1zXuHx5Z2vmyxDnUAzZ1KmNyf9hwgFCTcpN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Gusenleitner Klaus <gus@keba.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 146/371] drm/i915: Make intel_get_crtc_new_encoder() less oopsy
-Date: Mon,  8 May 2023 11:45:47 +0200
-Message-Id: <20230508094817.868824791@linuxfoundation.org>
+Subject: [PATCH 5.15 147/371] tick/common: Align tick period with the HZ tick.
+Date: Mon,  8 May 2023 11:45:48 +0200
+Message-Id: <20230508094817.908999108@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,40 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 631420b06597a33c72b6dcef78d1c2dea17f452d ]
+[ Upstream commit e9523a0d81899361214d118ad60ef76f0e92f71d ]
 
-The point of the WARN was to print something, not oops
-straight up. Currently that is precisely what happens
-if we can't find the connector for the crtc in the atomic
-state. Get the dev pointer from the atomic state instead
-of the potentially NULL encoder to avoid that.
+With HIGHRES enabled tick_sched_timer() is programmed every jiffy to
+expire the timer_list timers. This timer is programmed accurate in
+respect to CLOCK_MONOTONIC so that 0 seconds and nanoseconds is the
+first tick and the next one is 1000/CONFIG_HZ ms later. For HZ=250 it is
+every 4 ms and so based on the current time the next tick can be
+computed.
 
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230413200602.6037-2-ville.syrjala@linux.intel.com
-Fixes: 3a47ae201e07 ("drm/i915/display: Make WARN* drm specific where encoder ptr is available")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 3b6692357f70498f617ea1b31a0378070a0acf1c)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+This accuracy broke since the commit mentioned below because the jiffy
+based clocksource is initialized with higher accuracy in
+read_persistent_wall_and_boot_offset(). This higher accuracy is
+inherited during the setup in tick_setup_device(). The timer still fires
+every 4ms with HZ=250 but timer is no longer aligned with
+CLOCK_MONOTONIC with 0 as it origin but has an offset in the us/ns part
+of the timestamp. The offset differs with every boot and makes it
+impossible for user land to align with the tick.
+
+Align the tick period with CLOCK_MONOTONIC ensuring that it is always a
+multiple of 1000/CONFIG_HZ ms.
+
+Fixes: 857baa87b6422 ("sched/clock: Enable sched clock early")
+Reported-by: Gusenleitner Klaus <gus@keba.com>
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/20230406095735.0_14edn3@linutronix.de
+Link: https://lore.kernel.org/r/20230418122639.ikgfvu3f@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/time/tick-common.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index 566b34ba57e18..26811176846dc 100644
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -2303,7 +2303,7 @@ intel_get_crtc_new_encoder(const struct intel_atomic_state *state,
- 		num_encoders++;
- 	}
+diff --git a/kernel/time/tick-common.c b/kernel/time/tick-common.c
+index 46789356f856e..65b8658da829e 100644
+--- a/kernel/time/tick-common.c
++++ b/kernel/time/tick-common.c
+@@ -218,9 +218,19 @@ static void tick_setup_device(struct tick_device *td,
+ 		 * this cpu:
+ 		 */
+ 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
++			ktime_t next_p;
++			u32 rem;
++
+ 			tick_do_timer_cpu = cpu;
  
--	drm_WARN(encoder->base.dev, num_encoders != 1,
-+	drm_WARN(state->base.dev, num_encoders != 1,
- 		 "%d encoders for pipe %c\n",
- 		 num_encoders, pipe_name(crtc->pipe));
- 
+-			tick_next_period = ktime_get();
++			next_p = ktime_get();
++			div_u64_rem(next_p, TICK_NSEC, &rem);
++			if (rem) {
++				next_p -= rem;
++				next_p += TICK_NSEC;
++			}
++
++			tick_next_period = next_p;
+ #ifdef CONFIG_NO_HZ_FULL
+ 			/*
+ 			 * The boot CPU may be nohz_full, in which case set
 -- 
 2.39.2
 
