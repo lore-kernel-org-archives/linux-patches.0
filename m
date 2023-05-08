@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05FBF171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:43:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D6F2C433D2;
-	Mon,  8 May 2023 11:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A8B33E3
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:43:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB43C433D2;
+	Mon,  8 May 2023 11:43:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546226;
-	bh=mtk1jRQLs5sLc7mjQpW/vR5jAzlhjbDn5pGZ7T+l0dE=;
+	s=korg; t=1683546229;
+	bh=EqagkdeRNuNe4SklnDsc3XOd2KWiWQmNAHWLKGvDmHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+CNfRoyxVj8e2eCwH0+pQ6GMjgrL1f+DecZXzRhbUvBEOJgf1c+l8ZGo/URuT2hz
-	 o0x4P0T1W30TFKME2oriBgkttYoJInv1SJ908jpkEM83QdoWWK6oDyQlFNSa5u8sFN
-	 72pcBl4gDV35bohmG5ZwxLvGJofAaLq53Jwvlqeg=
+	b=A9x0hsKuvGwRvJ+3jhD9rgN1kkqFBQTD7ZFTw9tQtQCEhN5CaWNWsOCngMqwo1Fdu
+	 45/y6WKVFp18NQBEYtRWwr6nrTtZzdC7IM6kG7TeA9Er4wBt8u2EJIucEj95PRNptM
+	 QXzzo9KPeTrkd6VnUO39PCzmXe+NS/5kTlTc2PPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Kevin Hilman <khilman@baylibre.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 299/371] rtc: meson-vrtc: Use ktime_get_real_ts64() to get the current time
-Date: Mon,  8 May 2023 11:48:20 +0200
-Message-Id: <20230508094823.916776692@linuxfoundation.org>
+Subject: [PATCH 5.15 300/371] fs/ntfs3: Fix memory leak if ntfs_read_mft failed
+Date: Mon,  8 May 2023 11:48:21 +0200
+Message-Id: <20230508094823.966016981@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -37,58 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 0e6255fa3f649170da6bd1a544680589cfae1131 ]
+[ Upstream commit bfa434c60157c9793e9b12c9b68ade02aff9f803 ]
 
-The VRTC alarm register can be programmed with an amount of seconds
-after which the SoC will be woken up by the VRTC timer again. We are
-already converting the alarm time from meson_vrtc_set_alarm() to
-"seconds since 1970". This means we also need to use "seconds since
-1970" for the current time.
+Label ATTR_ROOT in ntfs_read_mft() sets is_root = true and
+ni->ni_flags |= NI_FLAG_DIR, then next attr will goto label ATTR_ALLOC
+and alloc ni->dir.alloc_run. However two states are not always
+consistent and can make memory leak.
 
-This fixes a problem where setting the alarm to one minute in the future
-results in the firmware (which handles wakeup) to output (on the serial
-console) that the system will be woken up in billions of seconds.
-ktime_get_raw_ts64() returns the time since boot, not since 1970. Switch
-to ktime_get_real_ts64() to fix the calculation of the alarm time and to
-make the SoC wake up at the specified date/time. Also the firmware
-(which manages suspend) now prints either 59 or 60 seconds until wakeup
-(depending on how long it takes for the system to enter suspend).
+ 1) attr_name in ATTR_ROOT does not fit the condition it will set
+ is_root = true but NI_FLAG_DIR is not set.
+ 2) next attr_name in ATTR_ALLOC fits the condition and alloc
+ ni->dir.alloc_run
+ 3) in cleanup function ni_clear(), when NI_FLAG_DIR is set, it frees
+ ni->dir.alloc_run, otherwise it frees ni->file.run
+ 4) because NI_FLAG_DIR is not set in this case, ni->dir.alloc_run is
+ leaked as kmemleak reported:
 
-Fixes: 6ef35398e827 ("rtc: Add Amlogic Virtual Wake RTC")
-Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Kevin Hilman <khilman@baylibre.com>
-Link: https://lore.kernel.org/r/20230320212142.2355062-1-martin.blumenstingl@googlemail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+unreferenced object 0xffff888003bc5480 (size 64):
+  backtrace:
+    [<000000003d42e6b0>] __kmalloc_node+0x4e/0x1c0
+    [<00000000d8e19b8a>] kvmalloc_node+0x39/0x1f0
+    [<00000000fc3eb5b8>] run_add_entry+0x18a/0xa40 [ntfs3]
+    [<0000000011c9f978>] run_unpack+0x75d/0x8e0 [ntfs3]
+    [<00000000e7cf1819>] run_unpack_ex+0xbc/0x500 [ntfs3]
+    [<00000000bbf0a43d>] ntfs_iget5+0xb25/0x2dd0 [ntfs3]
+    [<00000000a6e50693>] ntfs_fill_super+0x218d/0x3580 [ntfs3]
+    [<00000000b9170608>] get_tree_bdev+0x3fb/0x710
+    [<000000004833798a>] vfs_get_tree+0x8e/0x280
+    [<000000006e20b8e6>] path_mount+0xf3c/0x1930
+    [<000000007bf15a5f>] do_mount+0xf3/0x110
+    ...
+
+Fix this by always setting is_root and NI_FLAG_DIR together.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-meson-vrtc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ntfs3/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-meson-vrtc.c b/drivers/rtc/rtc-meson-vrtc.c
-index 1463c86215615..648fa362ec447 100644
---- a/drivers/rtc/rtc-meson-vrtc.c
-+++ b/drivers/rtc/rtc-meson-vrtc.c
-@@ -23,7 +23,7 @@ static int meson_vrtc_read_time(struct device *dev, struct rtc_time *tm)
- 	struct timespec64 time;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 136236a25da60..359eff346910e 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -257,7 +257,6 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 			goto out;
  
- 	dev_dbg(dev, "%s\n", __func__);
--	ktime_get_raw_ts64(&time);
-+	ktime_get_real_ts64(&time);
- 	rtc_time64_to_tm(time.tv_sec, tm);
+ 		root = Add2Ptr(attr, roff);
+-		is_root = true;
  
- 	return 0;
-@@ -96,7 +96,7 @@ static int __maybe_unused meson_vrtc_suspend(struct device *dev)
- 		long alarm_secs;
- 		struct timespec64 time;
+ 		if (attr->name_len != ARRAY_SIZE(I30_NAME) ||
+ 		    memcmp(attr_name(attr), I30_NAME, sizeof(I30_NAME)))
+@@ -270,6 +269,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		if (!is_dir)
+ 			goto next_attr;
  
--		ktime_get_raw_ts64(&time);
-+		ktime_get_real_ts64(&time);
- 		local_time = time.tv_sec;
++		is_root = true;
+ 		ni->ni_flags |= NI_FLAG_DIR;
  
- 		dev_dbg(dev, "alarm_time = %lus, local_time=%lus\n",
+ 		err = indx_init(&ni->dir, sbi, attr, INDEX_MUTEX_I30);
 -- 
 2.39.2
 
