@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFCC168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:44:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B67C433D2;
-	Mon,  8 May 2023 10:44:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78848168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:44:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D816EC433D2;
+	Mon,  8 May 2023 10:44:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542678;
-	bh=5FQnNizxAeg/D9Je3T6aRDxQAIyYUeU5KxvGIAY73nk=;
+	s=korg; t=1683542681;
+	bh=sDHuA3n+lwDTVbzl2HTgZN8+lkfUEnUIP6fATf7rfLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dEPgTglboU9rPr3IKX8YAqv/1S0yIASSKTwDPPCdGRNiDOcwCbiMPtdzk8EpRwncx
-	 gCe1YC5VvrSvyK9Ac6LZE6RzezPvi3aJmVm7w05vCyZAA5gU8rKEPXLL//YpXLJren
-	 pOtVlxCO1bGhNGsykpXjgnE4Of7dYxTPhEFR3Xp8=
+	b=menwhwu9tJSoP5ChmBgyuayp8JqXcJrEdmsDwqe7iVK3Pv4n+1EEqUF/nHns8YIQX
+	 AntD6Z0w7PMpAKRVBgLLzaMUm2Q8L99Se3A95WDbHZdsxHsIn7WAmx4vIbKUyS7GYD
+	 9s49bu0RTO69YkAObuJK7qmXXdTtG09CKOemsHmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 512/663] Revert "objtool: Support addition to set CFA base"
-Date: Mon,  8 May 2023 11:45:38 +0200
-Message-Id: <20230508094445.346420850@linuxfoundation.org>
+Subject: [PATCH 6.2 513/663] riscv: Fix ptdump when KASAN is enabled
+Date: Mon,  8 May 2023 11:45:39 +0200
+Message-Id: <20230508094445.391635788@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,51 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit e18398e80c73e3cc7d9c3d2e0bc06a4af8f4f1cb ]
+[ Upstream commit ecd7ebaf0b5a094a6180b299a5635c0eea42be4b ]
 
-Commit 468af56a7bba ("objtool: Support addition to set CFA base") was
-added as a preparatory patch for arm64 support, but that support never
-came.  It triggers a false positive warning on x86, so just revert it
-for now.
+The KASAN shadow region was moved next to the kernel mapping but the
+ptdump code was not updated and it appears to break the dump of the kernel
+page table, so fix this by moving the KASAN shadow region in ptdump.
 
-Fixes the following warning:
-
-  vmlinux.o: warning: objtool: cdce925_regmap_i2c_write+0xdb: stack state mismatch: cfa1=4+120 cfa2=5+40
-
-Fixes: 468af56a7bba ("objtool: Support addition to set CFA base")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/oe-kbuild-all/202304080538.j5G6h1AB-lkp@intel.com/
+Fixes: f7ae02333d13 ("riscv: Move KASAN mapping next to the kernel mapping")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Tested-by: Björn Töpel <bjorn@rivosinc.com>
+Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
+Link: https://lore.kernel.org/r/20230203075232.274282-6-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 11 -----------
- 1 file changed, 11 deletions(-)
+ arch/riscv/mm/ptdump.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index ea1e7cdeb1b34..3b1e19894b21a 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -2913,17 +2913,6 @@ static int update_cfi_state(struct instruction *insn,
- 				break;
- 			}
+diff --git a/arch/riscv/mm/ptdump.c b/arch/riscv/mm/ptdump.c
+index 830e7de65e3a3..20a9f991a6d74 100644
+--- a/arch/riscv/mm/ptdump.c
++++ b/arch/riscv/mm/ptdump.c
+@@ -59,10 +59,6 @@ struct ptd_mm_info {
+ };
  
--			if (!cfi->drap && op->src.reg == CFI_SP &&
--			    op->dest.reg == CFI_BP && cfa->base == CFI_SP &&
--			    check_reg_frame_pos(&regs[CFI_BP], -cfa->offset + op->src.offset)) {
--
--				/* lea disp(%rsp), %rbp */
--				cfa->base = CFI_BP;
--				cfa->offset -= op->src.offset;
--				cfi->bp_scratch = false;
--				break;
--			}
--
- 			if (op->src.reg == CFI_SP && cfa->base == CFI_SP) {
+ enum address_markers_idx {
+-#ifdef CONFIG_KASAN
+-	KASAN_SHADOW_START_NR,
+-	KASAN_SHADOW_END_NR,
+-#endif
+ 	FIXMAP_START_NR,
+ 	FIXMAP_END_NR,
+ 	PCI_IO_START_NR,
+@@ -74,6 +70,10 @@ enum address_markers_idx {
+ 	VMALLOC_START_NR,
+ 	VMALLOC_END_NR,
+ 	PAGE_OFFSET_NR,
++#ifdef CONFIG_KASAN
++	KASAN_SHADOW_START_NR,
++	KASAN_SHADOW_END_NR,
++#endif
+ #ifdef CONFIG_64BIT
+ 	MODULES_MAPPING_NR,
+ 	KERNEL_MAPPING_NR,
+@@ -82,10 +82,6 @@ enum address_markers_idx {
+ };
  
- 				/* drap: lea disp(%rsp), %drap */
+ static struct addr_marker address_markers[] = {
+-#ifdef CONFIG_KASAN
+-	{0, "Kasan shadow start"},
+-	{0, "Kasan shadow end"},
+-#endif
+ 	{0, "Fixmap start"},
+ 	{0, "Fixmap end"},
+ 	{0, "PCI I/O start"},
+@@ -97,6 +93,10 @@ static struct addr_marker address_markers[] = {
+ 	{0, "vmalloc() area"},
+ 	{0, "vmalloc() end"},
+ 	{0, "Linear mapping"},
++#ifdef CONFIG_KASAN
++	{0, "Kasan shadow start"},
++	{0, "Kasan shadow end"},
++#endif
+ #ifdef CONFIG_64BIT
+ 	{0, "Modules/BPF mapping"},
+ 	{0, "Kernel mapping"},
+@@ -362,10 +362,6 @@ static int __init ptdump_init(void)
+ {
+ 	unsigned int i, j;
+ 
+-#ifdef CONFIG_KASAN
+-	address_markers[KASAN_SHADOW_START_NR].start_address = KASAN_SHADOW_START;
+-	address_markers[KASAN_SHADOW_END_NR].start_address = KASAN_SHADOW_END;
+-#endif
+ 	address_markers[FIXMAP_START_NR].start_address = FIXADDR_START;
+ 	address_markers[FIXMAP_END_NR].start_address = FIXADDR_TOP;
+ 	address_markers[PCI_IO_START_NR].start_address = PCI_IO_START;
+@@ -377,6 +373,10 @@ static int __init ptdump_init(void)
+ 	address_markers[VMALLOC_START_NR].start_address = VMALLOC_START;
+ 	address_markers[VMALLOC_END_NR].start_address = VMALLOC_END;
+ 	address_markers[PAGE_OFFSET_NR].start_address = PAGE_OFFSET;
++#ifdef CONFIG_KASAN
++	address_markers[KASAN_SHADOW_START_NR].start_address = KASAN_SHADOW_START;
++	address_markers[KASAN_SHADOW_END_NR].start_address = KASAN_SHADOW_END;
++#endif
+ #ifdef CONFIG_64BIT
+ 	address_markers[MODULES_MAPPING_NR].start_address = MODULES_VADDR;
+ 	address_markers[KERNEL_MAPPING_NR].start_address = kernel_map.virt_addr;
 -- 
 2.39.2
 
