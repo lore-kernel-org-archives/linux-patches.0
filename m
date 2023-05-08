@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED31B171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:47:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B62C433D2;
-	Mon,  8 May 2023 11:47:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 399E1171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:47:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6221DC433D2;
+	Mon,  8 May 2023 11:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546420;
-	bh=Vo4Lq7Y/tycQEWj9Oiap1a1dczeosNFBlqhH2YmtSXw=;
+	s=korg; t=1683546424;
+	bh=sFrfPY7EMkBSX+YimTIkq9AjymcaZRkC1tl3CcGmGv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jg2MsQeaZ4NVTYhg1Il469V+IEgdgZ+cv9tuHXneTEoOUCOqebpuEQREYXKT0Caeo
-	 ee5lO9jFPVbTbQV2LZZRKv7PkskuYI1tgLl/lj4rn7Ds/3gUByE088wrjNqnh1y3x8
-	 V1xx43DqgBcXcnGTee+F106d7QdS2rxT9dV73i9M=
+	b=pyN+N/qnFMalq6YaGjQgETnTLu0c5FpjxKevIpo9AxVn52w77eDwrSer064c5OJZU
+	 GzTq1l7Zr5AD6+Uo3gfz86x33/eiaww1f9bbVemnOsuIE/LdTkdwqW99rHz9p1KcwD
+	 UjlEEzA5kN4DS6/ilfyHFOcdUvlVossgdlV95ciU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mikulas Patocka <mpatocka@redhat.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.15 363/371] dm integrity: call kmem_cache_destroy() in dm_integrity_init() error path
-Date: Mon,  8 May 2023 11:49:24 +0200
-Message-Id: <20230508094826.498676251@linuxfoundation.org>
+Subject: [PATCH 5.15 364/371] dm flakey: fix a crash with invalid table line
+Date: Mon,  8 May 2023 11:49:25 +0200
+Message-Id: <20230508094826.534061123@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -33,37 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 6b79a428c02769f2a11f8ae76bf866226d134887 upstream.
+commit 98dba02d9a93eec11bffbb93c7c51624290702d2 upstream.
 
-Otherwise the journal_io_cache will leak if dm_register_target() fails.
+This command will crash with NULL pointer dereference:
+ dmsetup create flakey --table \
+  "0 `blockdev --getsize /dev/ram0` flakey /dev/ram0 0 0 1 2 corrupt_bio_byte 512"
+
+Fix the crash by checking if arg_name is non-NULL before comparing it.
 
 Cc: stable@vger.kernel.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/md/dm-flakey.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -4632,11 +4632,13 @@ static int __init dm_integrity_init(void
- 	}
- 
- 	r = dm_register_target(&integrity_target);
--
--	if (r < 0)
-+	if (r < 0) {
- 		DMERR("register failed %d", r);
-+		kmem_cache_destroy(journal_io_cache);
-+		return r;
-+	}
- 
--	return r;
-+	return 0;
- }
- 
- static void __exit dm_integrity_exit(void)
+--- a/drivers/md/dm-flakey.c
++++ b/drivers/md/dm-flakey.c
+@@ -124,9 +124,9 @@ static int parse_features(struct dm_arg_
+ 			 * Direction r or w?
+ 			 */
+ 			arg_name = dm_shift_arg(as);
+-			if (!strcasecmp(arg_name, "w"))
++			if (arg_name && !strcasecmp(arg_name, "w"))
+ 				fc->corrupt_bio_rw = WRITE;
+-			else if (!strcasecmp(arg_name, "r"))
++			else if (arg_name && !strcasecmp(arg_name, "r"))
+ 				fc->corrupt_bio_rw = READ;
+ 			else {
+ 				ti->error = "Invalid corrupt bio direction (r or w)";
 
 
