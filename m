@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F139B168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:58:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FADDC433EF;
-	Mon,  8 May 2023 10:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0571549A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:58:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 673ECC433EF;
+	Mon,  8 May 2023 10:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543495;
-	bh=i6hwX11FH4O84Q+vdT5kVWOBAbcTXMl+z8vkTWxiA8Q=;
+	s=korg; t=1683543498;
+	bh=UlrGWoNjebPTqrGCfWumpW0s4UYK0WCmnM6jINk0mI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1cYyQnL+PR0ZzZ8P1jy1l0RN4oetxcNzPrtGtR1KMgkXNglO58J9kUW3wReEafRwD
-	 L1RJT7Ah6b2UrIbvZQkGcLI0PS9FHHJ5vlX1gVAczPI1cDFKhjUWpPboOFZTXkguq7
-	 dLuPHZgShiFk6PIRBTH4V7RWfFFVgFUOSiemm3WE=
+	b=Ijhi8H0WHznEhpA4b/CMJh14yoUJDE3k+7wh/lWBWYbPs/BXvw8UGSumhicvrS+y5
+	 +CDr3+tUhDaWLzj/GlAHECDmAFGwexSDnLuO6sPTEieYQEKkKor3zbITQmAqvHitCo
+	 RQDrYvqAD6gzai3JQ2f3f1Dc+pmY2DkOd+IoO8To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.3 081/694] tracing: Fix permissions for the buffer_percent file
-Date: Mon,  8 May 2023 11:38:36 +0200
-Message-Id: <20230508094435.162180838@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 108/694] nilfs2: do not write dirty data after degenerating to read-only
+Date: Mon,  8 May 2023 11:39:03 +0200
+Message-Id: <20230508094435.979085775@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,37 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 4f94559f40ad06d627c0fdfc3319cec778a2845b upstream.
+commit 28a65b49eb53e172d23567005465019658bfdb4d upstream.
 
-This file defines both read and write operations, yet it is being
-created as read-only. This means that it can't be written to without the
-CAP_DAC_OVERRIDE capability. Fix the permissions to allow root to write
-to it without the need to override DAC perms.
+According to syzbot's report, mark_buffer_dirty() called from
+nilfs_segctor_do_construct() outputs a warning with some patterns after
+nilfs2 detects metadata corruption and degrades to read-only mode.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230503140114.3280002-1-omosnace@redhat.com
+After such read-only degeneration, page cache data may be cleared through
+nilfs_clear_dirty_page() which may also clear the uptodate flag for their
+buffer heads.  However, even after the degeneration, log writes are still
+performed by unmount processing etc., which causes mark_buffer_dirty() to
+be called for buffer heads without the "uptodate" flag and causes the
+warning.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Fixes: 03329f993978 ("tracing: Add tracefs file buffer_percentage")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Since any writes should not be done to a read-only file system in the
+first place, this fixes the warning in mark_buffer_dirty() by letting
+nilfs_segctor_do_construct() abort early if in read-only mode.
+
+This also changes the retry check of nilfs_segctor_write_out() to avoid
+unnecessary log write retries if it detects -EROFS that
+nilfs_segctor_do_construct() returned.
+
+Link: https://lkml.kernel.org/r/20230427011526.13457-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=2af3bc9585be7f23f290
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/segment.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9658,7 +9658,7 @@ init_tracer_tracefs(struct trace_array *
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -2041,6 +2041,9 @@ static int nilfs_segctor_do_construct(st
+ 	struct the_nilfs *nilfs = sci->sc_super->s_fs_info;
+ 	int err;
  
- 	tr->buffer_percent = 50;
++	if (sb_rdonly(sci->sc_super))
++		return -EROFS;
++
+ 	nilfs_sc_cstage_set(sci, NILFS_ST_INIT);
+ 	sci->sc_cno = nilfs->ns_cno;
  
--	trace_create_file("buffer_percent", TRACE_MODE_READ, d_tracer,
-+	trace_create_file("buffer_percent", TRACE_MODE_WRITE, d_tracer,
- 			tr, &buffer_percent_fops);
+@@ -2724,7 +2727,7 @@ static void nilfs_segctor_write_out(stru
  
- 	create_trace_options_dir(tr);
+ 		flush_work(&sci->sc_iput_work);
+ 
+-	} while (ret && retrycount-- > 0);
++	} while (ret && ret != -EROFS && retrycount-- > 0);
+ }
+ 
+ /**
 
 
