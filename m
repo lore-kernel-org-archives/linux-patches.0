@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA1C168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932A2C433EF;
-	Mon,  8 May 2023 10:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2738E168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C306C4339C;
+	Mon,  8 May 2023 10:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542547;
-	bh=W5dXkr+r5xUyDXHbAK4x4mXIDeWryIxamq/GQNcZtTg=;
+	s=korg; t=1683542550;
+	bh=WsR8fgP0yl+3Z6wf2pmqPsUwLcGJv9euAvjGdsRm/No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opEI45gS3hfW89bHA8LmNxsp1SrlYdBWXd7F0Gd2/TlsdNpp4euKqDKkr6y4POXsL
-	 RX8U3h+vtSzMngPR53e82utYftv5JW3mRdOiZh6iSebEMRRat0sCwEefyo7tv22fjl
-	 jTXvvBZZbN1q90yAaL6DsFU4UBT8DZA9UvuiBlYg=
+	b=T3qJ49GIETspPXq+2oDolWgM0UxQNrYyxPq0MTAO6/9xHkReJq9KFYiGY2lzA8dXj
+	 fOOxqrQrVDcAZLi+/R9B+aIhuv7qRCaYsHexlCCxTNcEwn+CPGCeQnGQuzC2WOF87Y
+	 h/Jyl8oqDbC+VDtIu/8PitZXo1s4VikeHBF96rHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Gorski <piotrgorski@cachyos.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Ira Weiny <ira.weiny@intel.com>,
-	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 453/663] module/decompress: Never use kunmap() for local un-mappings
-Date: Mon,  8 May 2023 11:44:39 +0200
-Message-Id: <20230508094442.807921943@linuxfoundation.org>
+Subject: [PATCH 6.2 471/663] HID: amd_sfh: Correct the structure fields
+Date: Mon,  8 May 2023 11:44:57 +0200
+Message-Id: <20230508094443.509830335@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -39,48 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 3c17655ab13704582fe25e8ea3200a9b2f8bf20a ]
+[ Upstream commit 7e7fdab79899f62de39c9280fb78f3d3b02ac207 ]
 
-Use kunmap_local() to unmap pages locally mapped with kmap_local_page().
+Misinterpreted sfh_cmd_base structure member fields. Therefore, adjust
+the structure member fields accordingly to reflect functionality.
 
-kunmap_local() must be called on the kernel virtual address returned by
-kmap_local_page(), differently from how we use kunmap() which instead
-expects the mapped page as its argument.
-
-In module_zstd_decompress() we currently map with kmap_local_page() and
-unmap with kunmap(). This breaks the code and so it should be fixed.
-
-Cc: Piotr Gorski <piotrgorski@cachyos.org>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Fixes: 169a58ad824d ("module/decompress: Support zstd in-kernel decompression")
-Signed-off-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Piotr Gorski <piotrgorski@cachyos.org>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Fixes: 93ce5e0231d7 ("HID: amd_sfh: Implement SFH1.1 functionality")
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/decompress.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
-index bb79ac1a6d8f7..7ddc87bee2741 100644
---- a/kernel/module/decompress.c
-+++ b/kernel/module/decompress.c
-@@ -267,7 +267,7 @@ static ssize_t module_zstd_decompress(struct load_info *info,
- 		zstd_dec.size = PAGE_SIZE;
- 
- 		ret = zstd_decompress_stream(dstream, &zstd_dec, &zstd_buf);
--		kunmap(page);
-+		kunmap_local(zstd_dec.dst);
- 		retval = zstd_get_error_code(ret);
- 		if (retval)
- 			break;
+diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h
+index ae47a369dc05a..a3e0ec289e3f9 100644
+--- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h
++++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h
+@@ -33,9 +33,9 @@ struct sfh_cmd_base {
+ 		struct {
+ 			u32 sensor_id		: 4;
+ 			u32 cmd_id		: 4;
+-			u32 sub_cmd_id		: 6;
+-			u32 length		: 12;
+-			u32 rsvd		: 5;
++			u32 sub_cmd_id		: 8;
++			u32 sub_cmd_value	: 12;
++			u32 rsvd		: 3;
+ 			u32 intr_disable	: 1;
+ 		} cmd;
+ 	};
 -- 
 2.39.2
 
