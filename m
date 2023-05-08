@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782631094C
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EA2C433EF;
-	Mon,  8 May 2023 11:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB9D1094C
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1079C433EF;
+	Mon,  8 May 2023 11:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545014;
-	bh=pZVt+N6axvmewFN3GR7/rsEHSCtBpr4N01uaJxT+KeA=;
+	s=korg; t=1683545017;
+	bh=KpO+IDd/OPHpmqeOmoDl93qwT8X3jb/4UFN1KSvzEhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cAmHvMcUd4l0jIxPiTmahV+CRHMPqJu5jbhxPW/LoZ0nx6BGaRFAoVZ/xv7JSJv1z
-	 /UQVwE4y0zr3XAiKcu/JXPY6BSJKzIt5Owpoaw+l6wsg+j6BsjFx0U1f4aTiwqeN23
-	 ++0KlqqGNlhii9c1vIrxjOGkpGEQLJ2hH4qxlkIc=
+	b=vzyN95QMRK8MRlkKtITALX2qvAE24V7pxAAczuDJxzH8tB/pDcdb69wezg++5iGVf
+	 WnI0i2Q//yZybhWaFHMTk/TQfGybMwPsyna/1evaRMNnEjaW4dmYdTh3htmQNd1tBo
+	 TK8hVb7reatASSBWnUM+WvbRJebmDhTf/MeY0CAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Chengci.Xu" <chengci.xu@mediatek.com>,
-	Yong Wu <yong.wu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Zhu Yanjun <zyjzyj2000@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 596/694] iommu/mediatek: Set dma_mask for PGTABLE_PA_35_EN
-Date: Mon,  8 May 2023 11:47:11 +0200
-Message-Id: <20230508094454.501499511@linuxfoundation.org>
+Subject: [PATCH 6.3 597/694] RDMA/rxe: Remove tasklet call from rxe_cq.c
+Date: Mon,  8 May 2023 11:47:12 +0200
+Message-Id: <20230508094454.549582847@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,45 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yong Wu <yong.wu@mediatek.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit f045e9df6537175d02565f21616ac1a9dd59b61c ]
+[ Upstream commit 78b26a335310a097d6b22581b706050db42f196c ]
 
-When we enable PGTABLE_PA_35_EN, the PA for pgtable may be 35bits.
-Thus add dma_mask for it.
+Remove the tasklet call in rxe_cq.c and also the is_dying in the
+cq struct. There is no reason for the rxe driver to defer the call
+to the cq completion handler by scheduling a tasklet. rxe_cq_post()
+is not called in a hard irq context.
 
-Fixes: 301c3ca12576 ("iommu/mediatek: Allow page table PA up to 35bit")
-Signed-off-by: Chengci.Xu <chengci.xu@mediatek.com>
-Signed-off-by: Yong Wu <yong.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20230316101445.12443-1-yong.wu@mediatek.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+The rxe driver currently is incorrect because the tasklet call is
+made without protecting the cq pointer with a reference from having
+the underlying memory freed before the deferred routine is called.
+Executing the comp_handler inline fixes this problem.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Link: https://lore.kernel.org/r/20230327215643.10410-1-rpearsonhpe@gmail.com
+Acked-by: Zhu Yanjun <zyjzyj2000@gmail.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/infiniband/sw/rxe/rxe_cq.c    |   32 +++-----------------------------
+ drivers/infiniband/sw/rxe/rxe_verbs.c |    2 --
+ drivers/infiniband/sw/rxe/rxe_verbs.h |    2 --
+ 3 files changed, 3 insertions(+), 33 deletions(-)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index d5a4955910ff5..6a00ce208dc2b 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -1258,6 +1258,14 @@ static int mtk_iommu_probe(struct platform_device *pdev)
- 			return PTR_ERR(data->bclk);
+--- a/drivers/infiniband/sw/rxe/rxe_cq.c
++++ b/drivers/infiniband/sw/rxe/rxe_cq.c
+@@ -39,21 +39,6 @@ err1:
+ 	return -EINVAL;
+ }
+ 
+-static void rxe_send_complete(struct tasklet_struct *t)
+-{
+-	struct rxe_cq *cq = from_tasklet(cq, t, comp_task);
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&cq->cq_lock, flags);
+-	if (cq->is_dying) {
+-		spin_unlock_irqrestore(&cq->cq_lock, flags);
+-		return;
+-	}
+-	spin_unlock_irqrestore(&cq->cq_lock, flags);
+-
+-	cq->ibcq.comp_handler(&cq->ibcq, cq->ibcq.cq_context);
+-}
+-
+ int rxe_cq_from_init(struct rxe_dev *rxe, struct rxe_cq *cq, int cqe,
+ 		     int comp_vector, struct ib_udata *udata,
+ 		     struct rxe_create_cq_resp __user *uresp)
+@@ -79,10 +64,6 @@ int rxe_cq_from_init(struct rxe_dev *rxe
+ 
+ 	cq->is_user = uresp;
+ 
+-	cq->is_dying = false;
+-
+-	tasklet_setup(&cq->comp_task, rxe_send_complete);
+-
+ 	spin_lock_init(&cq->cq_lock);
+ 	cq->ibcq.cqe = cqe;
+ 	return 0;
+@@ -103,6 +84,7 @@ int rxe_cq_resize_queue(struct rxe_cq *c
+ 	return err;
+ }
+ 
++/* caller holds reference to cq */
+ int rxe_cq_post(struct rxe_cq *cq, struct rxe_cqe *cqe, int solicited)
+ {
+ 	struct ib_event ev;
+@@ -135,21 +117,13 @@ int rxe_cq_post(struct rxe_cq *cq, struc
+ 	if ((cq->notify == IB_CQ_NEXT_COMP) ||
+ 	    (cq->notify == IB_CQ_SOLICITED && solicited)) {
+ 		cq->notify = 0;
+-		tasklet_schedule(&cq->comp_task);
++
++		cq->ibcq.comp_handler(&cq->ibcq, cq->ibcq.cq_context);
  	}
  
-+	if (MTK_IOMMU_HAS_FLAG(data->plat_data, PGTABLE_PA_35_EN)) {
-+		ret = dma_set_mask(dev, DMA_BIT_MASK(35));
-+		if (ret) {
-+			dev_err(dev, "Failed to set dma_mask 35.\n");
-+			return ret;
-+		}
-+	}
-+
- 	pm_runtime_enable(dev);
+ 	return 0;
+ }
  
- 	if (MTK_IOMMU_IS_TYPE(data->plat_data, MTK_IOMMU_TYPE_MM)) {
--- 
-2.39.2
-
+-void rxe_cq_disable(struct rxe_cq *cq)
+-{
+-	unsigned long flags;
+-
+-	spin_lock_irqsave(&cq->cq_lock, flags);
+-	cq->is_dying = true;
+-	spin_unlock_irqrestore(&cq->cq_lock, flags);
+-}
+-
+ void rxe_cq_cleanup(struct rxe_pool_elem *elem)
+ {
+ 	struct rxe_cq *cq = container_of(elem, typeof(*cq), elem);
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -786,8 +786,6 @@ static int rxe_destroy_cq(struct ib_cq *
+ 	if (atomic_read(&cq->num_wq))
+ 		return -EINVAL;
+ 
+-	rxe_cq_disable(cq);
+-
+ 	rxe_cleanup(cq);
+ 	return 0;
+ }
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.h
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.h
+@@ -63,9 +63,7 @@ struct rxe_cq {
+ 	struct rxe_queue	*queue;
+ 	spinlock_t		cq_lock;
+ 	u8			notify;
+-	bool			is_dying;
+ 	bool			is_user;
+-	struct tasklet_struct	comp_task;
+ 	atomic_t		num_wq;
+ };
+ 
 
 
