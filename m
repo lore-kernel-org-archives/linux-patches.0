@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F082168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 188A2C433EF;
-	Mon,  8 May 2023 10:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA3A168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8069C433D2;
+	Mon,  8 May 2023 10:06:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540387;
-	bh=a5QcUy9ECiqFD21XVRYF04lgFnGRrmOCFXgF5uuq7CI=;
+	s=korg; t=1683540390;
+	bh=zF8pZLfqAA/VezpwlEXibLbcwwZgkrTpiI7SV4Qf2K0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E/3wUYy7O4HA1cY2q9bjes248s1ODyoV9/ewz9Zo+nNzOUgKxWBnBp2xl4lLQ3M7h
-	 Oz0f9srAfR7fbTLn8Em9Iix1NC7sUw5tTEDl+DZmylQNLRDkCO0lxcCOWmfC3+GGpD
-	 M9aRfK6T4Vk3MOgaGVQDjqd+nqDlSHEhqmd592t4=
+	b=jFPCDr8tRRynrIX1geJ18TBBoywCZBrLhTuWRC4AY7P+SdmWSRhr/MGHoaFuHpH4a
+	 eYE3gFRZFh4Lm+tDUXa7sb75ezM1wCNrsvN4lPeJXzvryiMOjj0V329WXEkn1moJwH
+	 /XmzppAeXjsQXx5q/Pc6wX5qsLO58tlXvBIewU/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Qilin Tan <qilin.tan@mediatek.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 344/611] wifi: iwlwifi: mvm: dont set CHECKSUM_COMPLETE for unsupported protocols
-Date: Mon,  8 May 2023 11:43:06 +0200
-Message-Id: <20230508094433.591849978@linuxfoundation.org>
+Subject: [PATCH 6.1 315/611] f2fs: fix iostat lock protection
+Date: Mon,  8 May 2023 11:42:37 +0200
+Message-Id: <20230508094432.675388964@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,46 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Qilin Tan <qilin.tan@mediatek.com>
 
-[ Upstream commit 217f3c52f00d3419ecdd38a99a7eceecb11679b2 ]
+[ Upstream commit 144f1cd40bf91fb3ac1d41806470756ce774f389 ]
 
-On Bz devices, CHECKSUM_COMPLETE was set for unsupported protocols
-which results in a warning. Fix it.
+Made iostat lock irq safe to avoid potentinal deadlock.
 
-Fixes: b6f5b647f694 ("iwlwifi: mvm: handle RX checksum on Bz devices")
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413102635.a2a35286f0ca.I50daa9445a6465514c44f5096c32adef64beba5f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Deadlock scenario:
+f2fs_attr_store
+  -> f2fs_sbi_store
+  -> _sbi_store
+  -> spin_lock(sbi->iostat_lock)
+    <interrupt request>
+    -> scsi_end_request
+    -> bio_endio
+    -> f2fs_dio_read_end_io
+    -> f2fs_update_iostat
+    -> spin_lock_irqsave(sbi->iostat_lock)  ===> Dead lock here
+
+Fixes: 61803e984307 ("f2fs: fix iostat related lock protection")
+Fixes: a1e09b03e6f5 ("f2fs: use iomap for direct I/O")
+Signed-off-by: Qilin Tan <qilin.tan@mediatek.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/f2fs/sysfs.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-index 1aadccd8841fd..091225894037c 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-@@ -193,8 +193,7 @@ static int iwl_mvm_create_skb(struct iwl_mvm *mvm, struct sk_buff *skb,
- 	 * Starting from Bz hardware, it calculates starting directly after
- 	 * the MAC header, so that matches mac80211's expectation.
- 	 */
--	if (skb->ip_summed == CHECKSUM_COMPLETE &&
--	    mvm->trans->trans_cfg->device_family < IWL_DEVICE_FAMILY_BZ) {
-+	if (skb->ip_summed == CHECKSUM_COMPLETE) {
- 		struct {
- 			u8 hdr[6];
- 			__be16 type;
-@@ -209,7 +208,7 @@ static int iwl_mvm_create_skb(struct iwl_mvm *mvm, struct sk_buff *skb,
- 			      shdr->type != htons(ETH_P_PAE) &&
- 			      shdr->type != htons(ETH_P_TDLS))))
- 			skb->ip_summed = CHECKSUM_NONE;
--		else
-+		else if (mvm->trans->trans_cfg->device_family < IWL_DEVICE_FAMILY_BZ)
- 			/* mac80211 assumes full CSUM including SNAP header */
- 			skb_postpush_rcsum(skb, shdr, sizeof(*shdr));
+diff --git a/fs/f2fs/sysfs.c b/fs/f2fs/sysfs.c
+index df27afd71ef48..3d68bfa75cf2a 100644
+--- a/fs/f2fs/sysfs.c
++++ b/fs/f2fs/sysfs.c
+@@ -550,9 +550,9 @@ static ssize_t __sbi_store(struct f2fs_attr *a,
+ 	if (!strcmp(a->attr.name, "iostat_period_ms")) {
+ 		if (t < MIN_IOSTAT_PERIOD_MS || t > MAX_IOSTAT_PERIOD_MS)
+ 			return -EINVAL;
+-		spin_lock(&sbi->iostat_lock);
++		spin_lock_irq(&sbi->iostat_lock);
+ 		sbi->iostat_period_ms = (unsigned int)t;
+-		spin_unlock(&sbi->iostat_lock);
++		spin_unlock_irq(&sbi->iostat_lock);
+ 		return count;
  	}
+ #endif
 -- 
 2.39.2
 
