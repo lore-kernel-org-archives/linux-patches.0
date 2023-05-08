@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13392168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:56:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EBDAC433EF;
-	Mon,  8 May 2023 10:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE72168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:57:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7887EC433D2;
+	Mon,  8 May 2023 10:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543417;
-	bh=QE8+x8mQqTZy8uzQu4KhN8yuBBPjeBq1MEVLqCcUFkI=;
+	s=korg; t=1683543420;
+	bh=Zhw3seNwclcY1xsjtNPI1K+SbmYITXkLX6uOEZnocbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWX1pPkLGNSIOrLZbv7rQ8pBJCSN+6uKN5lKcmzYK6I676zbEUuYxKxqzUMs0jwhr
-	 bXPevNjlSxMwwSVnml9jW1sJ73xrV+3tVqSeVe6OoDIVF/Z+b0KjYV+/DMvuYybYzC
-	 zjsEHNlTIlwAjZVJBUa72saM0nJoN4+gdN1p0piA=
+	b=1fZCDuGQfziX7oW83QE7VKRlqrt8Jog6hHclT7rUFsc6VYe0su6s8cnN4icz4THgx
+	 PgnBhpu7Tt1TpgZKfVorjQtrun379m27IiFl0vz7uLW7x5lo5I890G2NH3VuBWLuU/
+	 MDzzvKHX2Q44rjomEjxRMEYt8BQJaasNBanVhTjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.3 054/694] reiserfs: Add security prefix to xattr name in reiserfs_security_write()
-Date: Mon,  8 May 2023 11:38:09 +0200
-Message-Id: <20230508094434.352042212@linuxfoundation.org>
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>
+Subject: [PATCH 6.3 055/694] cpufreq: qcom-cpufreq-hw: fix double IO unmap and resource release on exit
+Date: Mon,  8 May 2023 11:38:10 +0200
+Message-Id: <20230508094434.381543755@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,54 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit d82dcd9e21b77d338dc4875f3d4111f0db314a7c upstream.
+commit ba5e770c9698782bc203bbf5cf3b36a77720bdbe upstream.
 
-Reiserfs sets a security xattr at inode creation time in two stages: first,
-it calls reiserfs_security_init() to obtain the xattr from active LSMs;
-then, it calls reiserfs_security_write() to actually write that xattr.
+Commit 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data
+during probe") moved getting memory resource and iomap from
+qcom_cpufreq_hw_cpu_init() to the probe function, however it left
+untouched cleanup in qcom_cpufreq_hw_cpu_exit().
 
-Unfortunately, it seems there is a wrong expectation that LSMs provide the
-full xattr name in the form 'security.<suffix>'. However, LSMs always
-provided just the suffix, causing reiserfs to not write the xattr at all
-(if the suffix is shorter than the prefix), or to write an xattr with the
-wrong name.
+During device unbind this will lead to doule release of resource and
+double iounmap(), first by qcom_cpufreq_hw_cpu_exit() and second via
+managed resources:
 
-Add a temporary buffer in reiserfs_security_write(), and write to it the
-full xattr name, before passing it to reiserfs_xattr_set_handle().
+  resource: Trying to free nonexistent resource <0x0000000018593000-0x0000000018593fff>
+  Trying to vunmap() nonexistent vm area (0000000088a7d4dc)
+  ...
+  vunmap (mm/vmalloc.c:2771 (discriminator 1))
+  iounmap (mm/ioremap.c:60)
+  devm_ioremap_release (lib/devres.c:19)
+  devres_release_all (drivers/base/devres.c:506 drivers/base/devres.c:535)
+  device_unbind_cleanup (drivers/base/dd.c:523)
+  device_release_driver_internal (drivers/base/dd.c:1248 drivers/base/dd.c:1263)
+  device_driver_detach (drivers/base/dd.c:1300)
+  unbind_store (drivers/base/bus.c:243)
+  drv_attr_store (drivers/base/bus.c:127)
+  sysfs_kf_write (fs/sysfs/file.c:137)
+  kernfs_fop_write_iter (fs/kernfs/file.c:334)
+  vfs_write (include/linux/fs.h:1851 fs/read_write.c:491 fs/read_write.c:584)
+  ksys_write (fs/read_write.c:637)
+  __arm64_sys_write (fs/read_write.c:646)
+  invoke_syscall (arch/arm64/include/asm/current.h:19 arch/arm64/kernel/syscall.c:57)
+  el0_svc_common.constprop.0 (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/syscall.c:150)
+  do_el0_svc (arch/arm64/kernel/syscall.c:194)
+  el0_svc (arch/arm64/include/asm/daifflags.h:28 arch/arm64/kernel/entry-common.c:133 arch/arm64/kernel/entry-common.c:142 arch/arm64/kernel/entry-common.c:638)
+  el0t_64_sync_handler (arch/arm64/kernel/entry-common.c:656)
+  el0t_64_sync (arch/arm64/kernel/entry.S:591)
 
-Also replace the name length check with a check that the full xattr name is
-not larger than XATTR_NAME_MAX.
-
-Cc: stable@vger.kernel.org # v2.6.x
-Fixes: 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes during inode creation")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: 054a3ef683a1 ("cpufreq: qcom-hw: Allocate qcom_cpufreq_data during probe")
+Cc: <stable@vger.kernel.org>
+Cc: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/reiserfs/xattr_security.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/cpufreq/qcom-cpufreq-hw.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/fs/reiserfs/xattr_security.c
-+++ b/fs/reiserfs/xattr_security.c
-@@ -82,11 +82,15 @@ int reiserfs_security_write(struct reise
- 			    struct inode *inode,
- 			    struct reiserfs_security_handle *sec)
- {
-+	char xattr_name[XATTR_NAME_MAX + 1] = XATTR_SECURITY_PREFIX;
- 	int error;
--	if (strlen(sec->name) < sizeof(XATTR_SECURITY_PREFIX))
-+
-+	if (XATTR_SECURITY_PREFIX_LEN + strlen(sec->name) > XATTR_NAME_MAX)
- 		return -EINVAL;
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -43,7 +43,6 @@ struct qcom_cpufreq_soc_data {
  
--	error = reiserfs_xattr_set_handle(th, inode, sec->name, sec->value,
-+	strlcat(xattr_name, sec->name, sizeof(xattr_name));
-+
-+	error = reiserfs_xattr_set_handle(th, inode, xattr_name, sec->value,
- 					  sec->length, XATTR_CREATE);
- 	if (error == -ENODATA || error == -EOPNOTSUPP)
- 		error = 0;
+ struct qcom_cpufreq_data {
+ 	void __iomem *base;
+-	struct resource *res;
+ 
+ 	/*
+ 	 * Mutex to synchronize between de-init sequence and re-starting LMh
+@@ -590,16 +589,12 @@ static int qcom_cpufreq_hw_cpu_exit(stru
+ {
+ 	struct device *cpu_dev = get_cpu_device(policy->cpu);
+ 	struct qcom_cpufreq_data *data = policy->driver_data;
+-	struct resource *res = data->res;
+-	void __iomem *base = data->base;
+ 
+ 	dev_pm_opp_remove_all_dynamic(cpu_dev);
+ 	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
+ 	qcom_cpufreq_hw_lmh_exit(data);
+ 	kfree(policy->freq_table);
+ 	kfree(data);
+-	iounmap(base);
+-	release_mem_region(res->start, resource_size(res));
+ 
+ 	return 0;
+ }
+@@ -718,17 +713,15 @@ static int qcom_cpufreq_hw_driver_probe(
+ 	for (i = 0; i < num_domains; i++) {
+ 		struct qcom_cpufreq_data *data = &qcom_cpufreq.data[i];
+ 		struct clk_init_data clk_init = {};
+-		struct resource *res;
+ 		void __iomem *base;
+ 
+-		base = devm_platform_get_and_ioremap_resource(pdev, i, &res);
++		base = devm_platform_ioremap_resource(pdev, i);
+ 		if (IS_ERR(base)) {
+-			dev_err(dev, "Failed to map resource %pR\n", res);
++			dev_err(dev, "Failed to map resource index %d\n", i);
+ 			return PTR_ERR(base);
+ 		}
+ 
+ 		data->base = base;
+-		data->res = res;
+ 
+ 		/* Register CPU clock for each frequency domain */
+ 		clk_init.name = kasprintf(GFP_KERNEL, "qcom_cpufreq%d", i);
 
 
