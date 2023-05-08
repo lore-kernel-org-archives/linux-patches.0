@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B620168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 856D1C4339C;
-	Mon,  8 May 2023 11:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB31168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25C2C433EF;
+	Mon,  8 May 2023 11:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544366;
-	bh=CaJ896jZnLu9YzzndB9cOVeB8GlBwBH2gfTWnZzEV78=;
+	s=korg; t=1683544369;
+	bh=aSFNXfwWMM7rrn6Wf1sNpsdwGY2Sz1jIh9jWdXjU+sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6mViSuagUQMZoq3R8KsGyGs01Ago/+ws8CH8ya7RTqN0fnQVCJSWnSciPPysxfCa
-	 M+a1tZEUXqBQW0KEidjwtfPrnlFmxNTe+B2pWIJGmIdqhVIt4cblUJQIlP+GeCM11O
-	 GcmsF0TwN6k1oOpo9pS2IaKu8Jdt+orBpTNgbKls=
+	b=jjHU8HnBbRiTX4nIS419TGxvjqRILH88Y4TiNzS8N0XFyM62UAu+dFtAQq931EzKc
+	 M+8tXzGUe96a/fumOuI/Kg37E0UDrbJ+bGN8Ywy+bfV3Hdmhx4CKembEsS22CyfhIl
+	 /9fXce0B2ZBfnJNQRVMisdI7on4cSisCRWu/ZNtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Kumar Singh <quic_adisi@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 346/694] wifi: ath11k: fix deinitialization of firmware resources
-Date: Mon,  8 May 2023 11:43:01 +0200
-Message-Id: <20230508094443.777522989@linuxfoundation.org>
+Subject: [PATCH 6.3 380/694] scsi: hisi_sas: Handle NCQ error when IPTT is valid
+Date: Mon,  8 May 2023 11:43:35 +0200
+Message-Id: <20230508094445.240317169@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,87 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Kumar Singh <quic_adisi@quicinc.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 5a78ac33e3cb8822da64dd1af196e83664b332b0 ]
+[ Upstream commit bb544224da77b96b2c11a13872bf91ede1e015be ]
 
-Currently, in ath11k_ahb_fw_resources_init(), iommu domain
-mapping is done only for the chipsets having fixed firmware
-memory. Also, for such chipsets, mapping is done only if it
-does not have TrustZone support.
+If an NCQ error occurs when the IPTT is valid and slot->abort flag is set
+in completion path, sas_task_abort() will be called to abort only one NCQ
+command now, and the host would be set to SHOST_RECOVERY state. But this
+may not kick-off EH Immediately until other outstanding QCs timeouts. As a
+result, the host may remain in the SHOST_RECOVERY state for up to 30
+seconds, such as follows:
 
-During deinitialization, only if TrustZone support is not there,
-iommu is unmapped back. However, for non fixed firmware memory
-chipsets, TrustZone support is not there and this makes the
-condition check to true and it tries to unmap the memory which
-was not mapped during initialization.
+[7972317.645234] hisi_sas_v3_hw 0000:74:04.0: erroneous completion iptt=3264 task=00000000466116b8 dev id=2 sas_addr=0x5000000000000502 CQ hdr: 0x1883 0x20cc0 0x40000 0x20420000 Error info: 0x0 0x0 0x200000 0x0
+[7972341.508264] sas: Enter sas_scsi_recover_host busy: 32 failed: 32
+[7972341.984731] sas: --- Exit sas_scsi_recover_host: busy: 0 failed: 32 tries: 1
 
-This leads to the following trace -
+All NCQ commands that are in the queue should be aborted when an NCQ error
+occurs in this scenario.
 
-[   83.198790] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
-[   83.259537] Modules linked in: ath11k_ahb ath11k qmi_helpers
-.. snip ..
-[   83.280286] pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[   83.287228] pc : __iommu_unmap+0x30/0x140
-[   83.293907] lr : iommu_unmap+0x5c/0xa4
-[   83.298072] sp : ffff80000b3abad0
-.. snip ..
-[   83.369175] Call trace:
-[   83.376282]  __iommu_unmap+0x30/0x140
-[   83.378541]  iommu_unmap+0x5c/0xa4
-[   83.382360]  ath11k_ahb_fw_resource_deinit.part.12+0x2c/0xac [ath11k_ahb]
-[   83.385666]  ath11k_ahb_free_resources+0x140/0x17c [ath11k_ahb]
-[   83.392521]  ath11k_ahb_shutdown+0x34/0x40 [ath11k_ahb]
-[   83.398248]  platform_shutdown+0x20/0x2c
-[   83.403455]  device_shutdown+0x16c/0x1c4
-[   83.407621]  kernel_restart_prepare+0x34/0x3c
-[   83.411529]  kernel_restart+0x14/0x74
-[   83.415781]  __do_sys_reboot+0x1c4/0x22c
-[   83.419427]  __arm64_sys_reboot+0x1c/0x24
-[   83.423420]  invoke_syscall+0x44/0xfc
-[   83.427326]  el0_svc_common.constprop.3+0xac/0xe8
-[   83.430974]  do_el0_svc+0xa0/0xa8
-[   83.435659]  el0_svc+0x1c/0x44
-[   83.438957]  el0t_64_sync_handler+0x60/0x144
-[   83.441910]  el0t_64_sync+0x15c/0x160
-[   83.446343] Code: aa0103f4 f9400001 f90027a1 d2800001 (f94006a0)
-[   83.449903] ---[ end trace 0000000000000000 ]---
-
-This can be reproduced by probing an AHB chipset which is not
-having a fixed memory region. During reboot (or rmmod) trace
-can be seen.
-
-Fix this issue by adding a condition check on firmware fixed memory
-hw_param as done in the counter initialization function.
-
-Tested-on: IPQ8074 hw2.0 AHB WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Fixes: f9eec4947add ("ath11k: Add support for targets without trustzone")
-Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230309095308.24937-1-quic_adisi@quicinc.com
+Fixes: 05d91b557af9 ("scsi: hisi_sas: Directly trigger SCSI error handling for completion errors")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1679283265-115066-3-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/ahb.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/scsi/hisi_sas/hisi_sas_v1_hw.c | 6 +++++-
+ drivers/scsi/hisi_sas/hisi_sas_v2_hw.c | 6 +++++-
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 6 +++++-
+ 3 files changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
-index b549576d0b513..5cbba9a8b6ba9 100644
---- a/drivers/net/wireless/ath/ath11k/ahb.c
-+++ b/drivers/net/wireless/ath/ath11k/ahb.c
-@@ -1078,6 +1078,12 @@ static int ath11k_ahb_fw_resource_deinit(struct ath11k_base *ab)
- 	struct iommu_domain *iommu;
- 	size_t unmapped_size;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
+index d643c5a49aa94..70c24377c6a19 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
+@@ -1258,7 +1258,11 @@ static void slot_complete_v1_hw(struct hisi_hba *hisi_hba,
  
-+	/* Chipsets not requiring MSA would have not initialized
-+	 * MSA resources, return success in such cases.
-+	 */
-+	if (!ab->hw_params.fixed_fw_mem)
-+		return 0;
+ 		slot_err_v1_hw(hisi_hba, task, slot);
+ 		if (unlikely(slot->abort)) {
+-			sas_task_abort(task);
++			if (dev_is_sata(device) && task->ata_task.use_ncq)
++				sas_ata_device_link_abort(device, true);
++			else
++				sas_task_abort(task);
 +
- 	if (ab_ahb->fw.use_tz)
- 		return 0;
+ 			return;
+ 		}
+ 		goto out;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+index cded42f4ca445..02575d81afca2 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
+@@ -2404,7 +2404,11 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
+ 				 error_info[2], error_info[3]);
  
+ 		if (unlikely(slot->abort)) {
+-			sas_task_abort(task);
++			if (dev_is_sata(device) && task->ata_task.use_ncq)
++				sas_ata_device_link_abort(device, true);
++			else
++				sas_task_abort(task);
++
+ 			return;
+ 		}
+ 		goto out;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index a63279f55d096..9afc23e3a80fc 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -2320,7 +2320,11 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
+ 					error_info[0], error_info[1],
+ 					error_info[2], error_info[3]);
+ 			if (unlikely(slot->abort)) {
+-				sas_task_abort(task);
++				if (dev_is_sata(device) && task->ata_task.use_ncq)
++					sas_ata_device_link_abort(device, true);
++				else
++					sas_task_abort(task);
++
+ 				return;
+ 			}
+ 			goto out;
 -- 
 2.39.2
 
