@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7B8168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A36BC4339C;
-	Mon,  8 May 2023 10:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465D2168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA09C433EF;
+	Mon,  8 May 2023 10:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540199;
-	bh=WBQHgrZivu1/vaqI2bSpJ1ggUsNp54OLvpEqeScgugQ=;
+	s=korg; t=1683540205;
+	bh=oJGSdN700irTBfOAhWe/HAnxt0W7uX5X0mBBazGBAQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SaIkiZHkstYNIRZdpJYeYItjnEyMzB8yFPYPIkJqkvjT79baLzOKQwjiFeDYi+0SS
-	 ewUYXhza2vdlUtYOVWKV98v2ceI7yHK7oXjg5Lx/CViSTdfHHk5lmprfoC2WPH53e3
-	 fUrBB7fChM/i0Q1Tfvhm8OubcAHEY9lv7MH4C2O4=
+	b=LZzpma0icCeIs8nU163H3zFwv7eZ1rbeJMtnnxQWLoDFWlLdxnWu8usJNUTVGwFVf
+	 vHdU7mqv75z2RFBgXdocm5rsjzZuGedqJvzq4uaO0ggw2YHg9TfnIDC6iR0LLAe874
+	 Qoe32bkp4mBY2mL8rvHb5kJAYVSUMSZK21A0hROY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+555908813b2ea35dae9a@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 273/611] wifi: ath6kl: reduce WARN to dev_dbg() in callback
-Date: Mon,  8 May 2023 11:41:55 +0200
-Message-Id: <20230508094431.254714794@linuxfoundation.org>
+	Moudy Ho <moudy.ho@mediatek.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 244/611] media: platform: mtk-mdp3: fix potential frame size overflow in mdp_try_fmt_mplane()
+Date: Mon,  8 May 2023 11:41:26 +0200
+Message-Id: <20230508094430.352136747@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -38,41 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Moudy Ho <moudy.ho@mediatek.com>
 
-[ Upstream commit 75c4a8154cb6c7239fb55d5550f481f6765fb83c ]
+[ Upstream commit 4168720753ce6c14c5d3a35302fc2e1841383443 ]
 
-The warn is triggered on a known race condition, documented in the code above
-the test, that is correctly handled.  Using WARN() hinders automated testing.
-Reducing severity.
+Fix overflow risk when setting certain formats whose frame size exceeds
+a RGB24 with 7723x7723 resolution.
 
-Fixes: de2070fc4aa7 ("ath6kl: Fix kernel panic on continuous driver load/unload")
-Reported-and-tested-by: syzbot+555908813b2ea35dae9a@syzkaller.appspotmail.com
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230126182431.867984-1-pchelkin@ispras.ru
+For example, a 7723x7724 RGB24 frame:
+    1. bpl (byte per line) = 7723 * 3.
+    2. Overflow occurs when bpl * 7724 * depth.
+
+Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
+Signed-off-by: Moudy Ho <moudy.ho@mediatek.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/htc_pipe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/htc_pipe.c b/drivers/net/wireless/ath/ath6kl/htc_pipe.c
-index c68848819a52d..9b88d96bfe96c 100644
---- a/drivers/net/wireless/ath/ath6kl/htc_pipe.c
-+++ b/drivers/net/wireless/ath/ath6kl/htc_pipe.c
-@@ -960,8 +960,8 @@ static int ath6kl_htc_pipe_rx_complete(struct ath6kl *ar, struct sk_buff *skb,
- 	 * Thus the possibility of ar->htc_target being NULL
- 	 * via ath6kl_recv_complete -> ath6kl_usb_io_comp_work.
- 	 */
--	if (WARN_ON_ONCE(!target)) {
--		ath6kl_err("Target not yet initialized\n");
-+	if (!target) {
-+		ath6kl_dbg(ATH6KL_DBG_HTC, "Target not yet initialized\n");
- 		status = -EINVAL;
- 		goto free_skb;
- 	}
+diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c
+index 4e84a37ecdfc1..36336d169bd91 100644
+--- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c
++++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c
+@@ -4,6 +4,7 @@
+  * Author: Ping-Hsun Wu <ping-hsun.wu@mediatek.com>
+  */
+ 
++#include <linux/math64.h>
+ #include <media/v4l2-common.h>
+ #include <media/videobuf2-v4l2.h>
+ #include <media/videobuf2-dma-contig.h>
+@@ -428,14 +429,15 @@ const struct mdp_format *mdp_try_fmt_mplane(struct v4l2_format *f,
+ 		u32 bpl = pix_mp->plane_fmt[i].bytesperline;
+ 		u32 min_si, max_si;
+ 		u32 si = pix_mp->plane_fmt[i].sizeimage;
++		u64 di;
+ 
+ 		bpl = clamp(bpl, min_bpl, max_bpl);
+ 		pix_mp->plane_fmt[i].bytesperline = bpl;
+ 
+-		min_si = (bpl * pix_mp->height * fmt->depth[i]) /
+-			 fmt->row_depth[i];
+-		max_si = (bpl * s.max_height * fmt->depth[i]) /
+-			 fmt->row_depth[i];
++		di = (u64)bpl * pix_mp->height * fmt->depth[i];
++		min_si = (u32)div_u64(di, fmt->row_depth[i]);
++		di = (u64)bpl * s.max_height * fmt->depth[i];
++		max_si = (u32)div_u64(di, fmt->row_depth[i]);
+ 
+ 		si = clamp(si, min_si, max_si);
+ 		pix_mp->plane_fmt[i].sizeimage = si;
 -- 
 2.39.2
 
