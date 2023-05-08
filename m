@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BCB168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0620C433EF;
-	Mon,  8 May 2023 11:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D9E1168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E4BC433D2;
+	Mon,  8 May 2023 11:15:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544542;
-	bh=AXkYpCRFf4ALJNaNUAL+0cZeWOMLuoEOBVfr0KKNhWQ=;
+	s=korg; t=1683544545;
+	bh=dXgEGa6BFCGhBUfTgbDhuBvUxQVevaVdPPhVVcsOdBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YRYeJqNLGxKN+ty76d/IP1dBQXnuEouHxIPxNrefFdBKBpo2VwU8GdiTo+x57cJDs
-	 cz7kM8qxRI7ib0ObTk5jcBuj6bM/MQXXRMEVzmGAOiBiAmCZsHA0ohT0YjxW62hOr9
-	 QmVa/SjBjiKyVda3HjzfKHokhldA0QjLx+C2EYIs=
+	b=pbwiigmf/ItkQzAwx+1VNvpW1xDoZF8gDHyj73UUWfVbu9/ub5RP3GIb6v7UIt6fm
+	 DqafJ3ycusoPwFPGxnmgHv4AwDjcamhq/GSmq1ZuucNZywnIRDdEvSpuUs49+FoyKO
+	 7wA3C5swhS0Oz0zuzyjv2mckcw2UfFw657uBNbvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Chen <yn.chen@mediatek.com>,
+	Quan Zhou <quan.zhou@mediatek.com>,
 	Deren Wu <deren.wu@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 442/694] wifi: mt76: mt7921: use driver flags rather than mac80211 flags to mcu
-Date: Mon,  8 May 2023 11:44:37 +0200
-Message-Id: <20230508094447.828279842@linuxfoundation.org>
+Subject: [PATCH 6.3 443/694] wifi: mt76: mt7921e: fix probe timeout after reboot
+Date: Mon,  8 May 2023 11:44:38 +0200
+Message-Id: <20230508094447.865864227@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,53 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neil Chen <yn.chen@mediatek.com>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-[ Upstream commit a5af1481a85679a9812f728ee5cf64ee7edbe669 ]
+[ Upstream commit c397fc1e6365a2a9e5540a85b2c1d4ea412aa0e2 ]
 
-FIF_* flags from mac80211 is not ABI. mt7921 should not pass it into mcu
-directly. Remap FIF_* to driver defined flags as mcu command input.
+In system warm reboot scene, due to the polling timeout(now 1000us)
+is too short to wait dma idle in time, it may make driver probe fail
+with error code -ETIMEDOUT. Meanwhile, we also found the dma may take
+around 70ms to enter idle state. Change the polling idle timeout to
+100ms to avoid the probabilistic probe fail.
 
-Fixes: c222f77fd421 ("wifi: mt76: mt7921: fix rx filter incorrect by drv/fw inconsistent")
-Signed-off-by: Neil Chen <yn.chen@mediatek.com>
+Tested pass with 5000 times warm reboot on x86 platform.
+
+[4.477496] pci 0000:01:00.0: attach allowed to drvr mt7921e [internal device]
+[4.478306] mt7921e 0000:01:00.0: ASIC revision: 79610010
+[4.480063] mt7921e: probe of 0000:01:00.0 failed with error -110
+
+Fixes: 0a1059d0f060 ("mt76: mt7921: move mt7921_dma_reset in dma.c")
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
 Signed-off-by: Deren Wu <deren.wu@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/wireless/mediatek/mt76/mt7921/main.c    | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/dma.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/main.c b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-index 058aa581ff4f3..2c5e4ad3a0c69 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/main.c
-@@ -702,10 +702,25 @@ static void mt7921_configure_filter(struct ieee80211_hw *hw,
- 				    unsigned int *total_flags,
- 				    u64 multicast)
- {
-+#define MT7921_FILTER_FCSFAIL    BIT(2)
-+#define MT7921_FILTER_CONTROL    BIT(5)
-+#define MT7921_FILTER_OTHER_BSS  BIT(6)
-+#define MT7921_FILTER_ENABLE     BIT(31)
-+
- 	struct mt7921_dev *dev = mt7921_hw_dev(hw);
-+	u32 flags = MT7921_FILTER_ENABLE;
-+
-+#define MT7921_FILTER(_fif, _type) do {			\
-+		if (*total_flags & (_fif))		\
-+			flags |= MT7921_FILTER_##_type;	\
-+	} while (0)
-+
-+	MT7921_FILTER(FIF_FCSFAIL, FCSFAIL);
-+	MT7921_FILTER(FIF_CONTROL, CONTROL);
-+	MT7921_FILTER(FIF_OTHER_BSS, OTHER_BSS);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/dma.c b/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
+index d1f10f6d9adc3..dc4ccfef4b048 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
+@@ -90,9 +90,9 @@ static int mt7921_dma_disable(struct mt7921_dev *dev, bool force)
+ 		   MT_WFDMA0_GLO_CFG_OMIT_RX_INFO |
+ 		   MT_WFDMA0_GLO_CFG_OMIT_RX_INFO_PFET2);
  
- 	mt7921_mutex_acquire(dev);
--	mt7921_mcu_set_rxfilter(dev, *total_flags, 0, 0);
-+	mt7921_mcu_set_rxfilter(dev, flags, 0, 0);
- 	mt7921_mutex_release(dev);
+-	if (!mt76_poll(dev, MT_WFDMA0_GLO_CFG,
+-		       MT_WFDMA0_GLO_CFG_TX_DMA_BUSY |
+-		       MT_WFDMA0_GLO_CFG_RX_DMA_BUSY, 0, 1000))
++	if (!mt76_poll_msec_tick(dev, MT_WFDMA0_GLO_CFG,
++				 MT_WFDMA0_GLO_CFG_TX_DMA_BUSY |
++				 MT_WFDMA0_GLO_CFG_RX_DMA_BUSY, 0, 100, 1))
+ 		return -ETIMEDOUT;
  
- 	*total_flags &= (FIF_OTHER_BSS | FIF_FCSFAIL | FIF_CONTROL);
+ 	return 0;
 -- 
 2.39.2
 
