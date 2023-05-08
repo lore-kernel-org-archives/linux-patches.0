@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 904ED168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:35:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB32C433D2;
-	Mon,  8 May 2023 11:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D426171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:35:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0489C433EF;
+	Mon,  8 May 2023 11:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545748;
-	bh=kG5RrcIaA/645udRQxi8nUxT/MijWRkpSo6W47MpXP0=;
+	s=korg; t=1683545754;
+	bh=EwORVAjdDPh5yovLm3/lrVKD8R/KJLEUV5xGVX7TB6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=We/VRs+STfmTNROhQ97Ik5jdt1kk22Bs21lovyH1YTfgTqamEkhohgVh0Ncvh7aXn
-	 /V11VR6BdcKYEHejnKAORxU7bkWRtjvOy3nSj3EmWcYWvGij/A+sdyRrVvfQZGfkFt
-	 zAEfi8pE170rCvFPt4Kh80gOyWcNeETaPwUfr7YU=
+	b=2EfxAfWj82WV+9E2MrNoQ7LNqvoo0sK14KDBzksF5LNNVfhSWVIJWiALZGcQRP/kH
+	 M1UIYLZCg3AzoNUsZkEgORjmUcE/BLTxM5jzUILBtKPKu7yMipO3xVpYh9X2oUM+TI
+	 ACs0NNHyLAS/Tbr3uO87lJZkI2y2gC+ZLo39WLkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Krawczyk?= <mk@semihalf.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 141/371] media: venus: dec: Fix handling of the start cmd
-Date: Mon,  8 May 2023 11:45:42 +0200
-Message-Id: <20230508094817.654548279@linuxfoundation.org>
+Subject: [PATCH 5.15 143/371] x86/ioapic: Dont return 0 from arch_dynirq_lower_bound()
+Date: Mon,  8 May 2023 11:45:44 +0200
+Message-Id: <20230508094817.738904742@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,56 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michał Krawczyk <mk@semihalf.com>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit 50248ad9f190d527cbd578190ca769729518b703 ]
+[ Upstream commit 5af507bef93c09a94fb8f058213b489178f4cbe5 ]
 
-The decoder driver should clear the last_buffer_dequeued flag of the
-capture queue upon receiving V4L2_DEC_CMD_START.
+arch_dynirq_lower_bound() is invoked by the core interrupt code to
+retrieve the lowest possible Linux interrupt number for dynamically
+allocated interrupts like MSI.
 
-The last_buffer_dequeued flag is set upon receiving EOS (which always
-happens upon receiving V4L2_DEC_CMD_STOP).
+The x86 implementation uses this to exclude the IO/APIC GSI space.
+This works correctly as long as there is an IO/APIC registered, but
+returns 0 if not. This has been observed in VMs where the BIOS does
+not advertise an IO/APIC.
 
-Without this patch, after issuing the V4L2_DEC_CMD_STOP and
-V4L2_DEC_CMD_START, the vb2_dqbuf() function will always fail, even if
-the buffers are completed by the hardware.
+0 is an invalid interrupt number except for the legacy timer interrupt
+on x86. The return value is unchecked in the core code, so it ends up
+to allocate interrupt number 0 which is subsequently considered to be
+invalid by the caller, e.g. the MSI allocation code.
 
-Fixes: beac82904a87 ("media: venus: make decoder compliant with stateful codec API")
+The function has already a check for 0 in the case that an IO/APIC is
+registered, as ioapic_dynirq_base is 0 in case of device tree setups.
 
-Signed-off-by: Michał Krawczyk <mk@semihalf.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Consolidate this and zero check for both ioapic_dynirq_base and gsi_top,
+which is used in the case that no IO/APIC is registered.
+
+Fixes: 3e5bedc2c258 ("x86/apic: Fix arch_dynirq_lower_bound() bug for DT enabled machines")
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/1679988604-20308-1-git-send-email-ssengar@linux.microsoft.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/kernel/apic/io_apic.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 9a4443a390b1f..6e0466772339a 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -498,6 +498,7 @@ static int
- vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
+diff --git a/arch/x86/kernel/apic/io_apic.c b/arch/x86/kernel/apic/io_apic.c
+index c1bb384935b05..bb71b628edcb4 100644
+--- a/arch/x86/kernel/apic/io_apic.c
++++ b/arch/x86/kernel/apic/io_apic.c
+@@ -2479,17 +2479,21 @@ static int io_apic_get_redir_entries(int ioapic)
+ 
+ unsigned int arch_dynirq_lower_bound(unsigned int from)
  {
- 	struct venus_inst *inst = to_inst(file);
-+	struct vb2_queue *dst_vq;
- 	struct hfi_frame_data fdata = {0};
- 	int ret;
- 
-@@ -528,6 +529,13 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
- 			inst->codec_state = VENUS_DEC_STATE_DRAIN;
- 			inst->drain_active = true;
- 		}
-+	} else if (cmd->cmd == V4L2_DEC_CMD_START &&
-+		   inst->codec_state == VENUS_DEC_STATE_STOPPED) {
-+		dst_vq = v4l2_m2m_get_vq(inst->fh.m2m_ctx,
-+					 V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
-+		vb2_clear_last_buffer_dequeued(dst_vq);
++	unsigned int ret;
 +
-+		inst->codec_state = VENUS_DEC_STATE_DECODING;
- 	}
+ 	/*
+ 	 * dmar_alloc_hwirq() may be called before setup_IO_APIC(), so use
+ 	 * gsi_top if ioapic_dynirq_base hasn't been initialized yet.
+ 	 */
+-	if (!ioapic_initialized)
+-		return gsi_top;
++	ret = ioapic_dynirq_base ? : gsi_top;
++
+ 	/*
+-	 * For DT enabled machines ioapic_dynirq_base is irrelevant and not
+-	 * updated. So simply return @from if ioapic_dynirq_base == 0.
++	 * For DT enabled machines ioapic_dynirq_base is irrelevant and
++	 * always 0. gsi_top can be 0 if there is no IO/APIC registered.
++	 * 0 is an invalid interrupt number for dynamic allocations. Return
++	 * @from instead.
+ 	 */
+-	return ioapic_dynirq_base ? : from;
++	return ret ? : from;
+ }
  
- unlock:
+ #ifdef CONFIG_X86_32
 -- 
 2.39.2
 
