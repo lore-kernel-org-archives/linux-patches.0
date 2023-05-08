@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF14210C
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D1CBC433D2;
-	Mon,  8 May 2023 10:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326D2210C
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC4C7C433EF;
+	Mon,  8 May 2023 10:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541107;
-	bh=Urn5vg1mBdvCq+wg7pN/rwfg92IUT9GVI8Z68g60H/E=;
+	s=korg; t=1683541110;
+	bh=vtOXrtT8NvQiWM1K+mpr/rrs3zk0qSQx4ul15BPLhY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mx8BlWgD/UckYQBcHaNnB3fKtWt0I4+16HiIB4tN3U2b7s6IW3RT0gxUCfEJmEX+7
-	 5LVChQ1UaY80PmlP9fodRHFd2vFvWnXuY6Utr/l0UhQg+3SKdgRQt5hOK10nhw4yaH
-	 dp8C0MC6XIDrAqOuFNrDaeVDY5+CTVxVYdateB0E=
+	b=F9g3WOZk6Huidj2TECYPQO70y3MqDaFPclGiDJVPU7JYtB7kWIl/rgtkC6WUO9VOB
+	 zld3JJu8YWVIVIKHBTbs0l3+ihL1tvv3Y+9F6Ip5nRIAuRsY1OuqSFeFNd13RW8Ro/
+	 S6JdsKGUE6GwMpNeBieASJ2C8TJTW7aZTGf03TJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Zhang <zheng.zhang@email.ucr.edu>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 594/611] dm ioctl: fix nested locking in table_clear() to remove deadlock concern
-Date: Mon,  8 May 2023 11:47:16 +0200
-Message-Id: <20230508094441.208855404@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 585/611] btrfs: scrub: reject unsupported scrub flags
+Date: Mon,  8 May 2023 11:47:07 +0200
+Message-Id: <20230508094440.927051334@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,58 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 3d32aaa7e66d5c1479a3c31d6c2c5d45dd0d3b89 upstream.
+commit 604e6681e114d05a2e384c4d1e8ef81918037ef5 upstream.
 
-syzkaller found the following problematic rwsem locking (with write
-lock already held):
+Since the introduction of scrub interface, the only flag that we support
+is BTRFS_SCRUB_READONLY.  Thus there is no sanity checks, if there are
+some undefined flags passed in, we just ignore them.
 
- down_read+0x9d/0x450 kernel/locking/rwsem.c:1509
- dm_get_inactive_table+0x2b/0xc0 drivers/md/dm-ioctl.c:773
- __dev_status+0x4fd/0x7c0 drivers/md/dm-ioctl.c:844
- table_clear+0x197/0x280 drivers/md/dm-ioctl.c:1537
+This is problematic if we want to introduce new scrub flags, as we have
+no way to determine if such flags are supported.
 
-In table_clear, it first acquires a write lock
-https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L1520
-down_write(&_hash_lock);
+Address the problem by introducing a check for the flags, and if
+unsupported flags are set, return -EOPNOTSUPP to inform the user space.
 
-Then before the lock is released at L1539, there is a path shown above:
-table_clear -> __dev_status -> dm_get_inactive_table ->  down_read
-https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L773
-down_read(&_hash_lock);
+This check should be backported for all supported kernels before any new
+scrub flags are introduced.
 
-It tries to acquire the same read lock again, resulting in the deadlock
-problem.
-
-Fix this by moving table_clear()'s __dev_status() call to after its
-up_write(&_hash_lock);
-
-Cc: stable@vger.kernel.org
-Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/btrfs/ioctl.c           |    5 +++++
+ include/uapi/linux/btrfs.h |    1 +
+ 2 files changed, 6 insertions(+)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1539,11 +1539,12 @@ static int table_clear(struct file *filp
- 		has_new_map = true;
- 	}
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -4050,6 +4050,11 @@ static long btrfs_ioctl_scrub(struct fil
+ 	if (IS_ERR(sa))
+ 		return PTR_ERR(sa);
  
--	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
--
--	__dev_status(hc->md, param);
- 	md = hc->md;
- 	up_write(&_hash_lock);
++	if (sa->flags & ~BTRFS_SCRUB_SUPPORTED_FLAGS) {
++		ret = -EOPNOTSUPP;
++		goto out;
++	}
 +
-+	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
-+	__dev_status(md, param);
-+
- 	if (old_map) {
- 		dm_sync_table(md);
- 		dm_table_destroy(old_map);
+ 	if (!(sa->flags & BTRFS_SCRUB_READONLY)) {
+ 		ret = mnt_want_write_file(file);
+ 		if (ret)
+--- a/include/uapi/linux/btrfs.h
++++ b/include/uapi/linux/btrfs.h
+@@ -181,6 +181,7 @@ struct btrfs_scrub_progress {
+ };
+ 
+ #define BTRFS_SCRUB_READONLY	1
++#define BTRFS_SCRUB_SUPPORTED_FLAGS	(BTRFS_SCRUB_READONLY)
+ struct btrfs_ioctl_scrub_args {
+ 	__u64 devid;				/* in */
+ 	__u64 start;				/* in */
 
 
