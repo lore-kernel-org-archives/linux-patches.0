@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476B3101F4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B960C433D2;
-	Mon,  8 May 2023 10:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528EE125B3
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:20:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15BBC433D2;
+	Mon,  8 May 2023 10:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541230;
-	bh=daIdrKQqQ6UpLDnURGdS4ROoJP1wrSTV9W5iuDShpk8=;
+	s=korg; t=1683541233;
+	bh=ka65zs60x+QSe9eH/Rob1ZLl2kjLhdUvHSAhUNgccDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WzeunG+nlBSWiUS4TuwHXTmxs5LkkLTz7gK+GtT/JzlMueigtSr8R4IHA48lV3TAj
-	 EJZChZZWjVLKV7JqpWhaZlOs58f7c9K9lBS7aUeYgSgjthXPQDNPba4aS1dKjft1yO
-	 d+iVDQbzPpPXSVtG1MLH4OPxtIOXYwf1i869mz6o=
+	b=e9/TL/5cvzSkcc2raJeaA332Mjd1qvvenJmryM00Mom6Zl7x6BJgzVjwvyZiah1W1
+	 14MVvTmmr6FP2KCrLMtX0gAHBsHCO5PvDn2Ez5ycLg/oewHrt7CLjZvDJAH5e+LcH8
+	 82CyspOs0sgS6L8ZQApWtTY0vRERZINGyOjkggyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.2 048/663] tty: Prevent writing chars during tcsetattr TCSADRAIN/FLUSH
-Date: Mon,  8 May 2023 11:37:54 +0200
-Message-Id: <20230508094430.037851217@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 6.2 049/663] xhci: fix debugfs register accesses while suspended
+Date: Mon,  8 May 2023 11:37:55 +0200
+Message-Id: <20230508094430.071277981@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -33,123 +33,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 094fb49a2d0d6827c86d2e0840873e6db0c491d2 upstream.
+commit 735baf1b23458f71a8b15cb924af22c9ff9cd125 upstream.
 
-If userspace races tcsetattr() with a write, the drained condition
-might not be guaranteed by the kernel. There is a race window after
-checking Tx is empty before tty_set_termios() takes termios_rwsem for
-write. During that race window, more characters can be queued by a
-racing writer.
+Wire up the debugfs regset device pointer so that the controller is
+resumed before accessing registers to avoid crashing or locking up if it
+happens to be runtime suspended.
 
-Any ongoing transmission might produce garbage during HW's
-->set_termios() call. The intent of TCSADRAIN/FLUSH seems to be
-preventing such a character corruption. If those flags are set, take
-tty's write lock to stop any writer before performing the lower layer
-Tx empty check and wait for the pending characters to be sent (if any).
-
-The initial wait for all-writers-done must be placed outside of tty's
-write lock to avoid deadlock which makes it impossible to use
-tty_wait_until_sent(). The write lock is retried if a racing write is
-detected.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230317113318.31327-2-ilpo.jarvinen@linux.intel.com
+Fixes: 02b6fdc2a153 ("usb: xhci: Add debugfs interface for xHCI driver")
+Cc: stable@vger.kernel.org # 4.15: 30332eeefec8: debugfs: regset32: Add Runtime PM support
+Cc: stable@vger.kernel.org # 4.15
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230405090342.7363-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/tty.h       |    2 ++
- drivers/tty/tty_io.c    |    4 ++--
- drivers/tty/tty_ioctl.c |   45 +++++++++++++++++++++++++++++++++------------
- 3 files changed, 37 insertions(+), 14 deletions(-)
+ drivers/usb/host/xhci-debugfs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/tty.h
-+++ b/drivers/tty/tty.h
-@@ -62,6 +62,8 @@ int __tty_check_change(struct tty_struct
- int tty_check_change(struct tty_struct *tty);
- void __stop_tty(struct tty_struct *tty);
- void __start_tty(struct tty_struct *tty);
-+void tty_write_unlock(struct tty_struct *tty);
-+int tty_write_lock(struct tty_struct *tty, int ndelay);
- void tty_vhangup_session(struct tty_struct *tty);
- void tty_open_proc_set_tty(struct file *filp, struct tty_struct *tty);
- int tty_signal_session_leader(struct tty_struct *tty, int exit_session);
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -933,13 +933,13 @@ static ssize_t tty_read(struct kiocb *io
- 	return i;
+--- a/drivers/usb/host/xhci-debugfs.c
++++ b/drivers/usb/host/xhci-debugfs.c
+@@ -133,6 +133,7 @@ static void xhci_debugfs_regset(struct x
+ 	regset->regs = regs;
+ 	regset->nregs = nregs;
+ 	regset->base = hcd->regs + base;
++	regset->dev = hcd->self.controller;
+ 
+ 	debugfs_create_regset32((const char *)rgs->name, 0444, parent, regset);
  }
- 
--static void tty_write_unlock(struct tty_struct *tty)
-+void tty_write_unlock(struct tty_struct *tty)
- {
- 	mutex_unlock(&tty->atomic_write_lock);
- 	wake_up_interruptible_poll(&tty->write_wait, EPOLLOUT);
- }
- 
--static int tty_write_lock(struct tty_struct *tty, int ndelay)
-+int tty_write_lock(struct tty_struct *tty, int ndelay)
- {
- 	if (!mutex_trylock(&tty->atomic_write_lock)) {
- 		if (ndelay)
---- a/drivers/tty/tty_ioctl.c
-+++ b/drivers/tty/tty_ioctl.c
-@@ -500,21 +500,42 @@ static int set_termios(struct tty_struct
- 	tmp_termios.c_ispeed = tty_termios_input_baud_rate(&tmp_termios);
- 	tmp_termios.c_ospeed = tty_termios_baud_rate(&tmp_termios);
- 
--	ld = tty_ldisc_ref(tty);
-+	if (opt & (TERMIOS_FLUSH|TERMIOS_WAIT)) {
-+retry_write_wait:
-+		retval = wait_event_interruptible(tty->write_wait, !tty_chars_in_buffer(tty));
-+		if (retval < 0)
-+			return retval;
- 
--	if (ld != NULL) {
--		if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
--			ld->ops->flush_buffer(tty);
--		tty_ldisc_deref(ld);
--	}
-+		if (tty_write_lock(tty, 0) < 0)
-+			goto retry_write_wait;
- 
--	if (opt & TERMIOS_WAIT) {
--		tty_wait_until_sent(tty, 0);
--		if (signal_pending(current))
--			return -ERESTARTSYS;
--	}
-+		/* Racing writer? */
-+		if (tty_chars_in_buffer(tty)) {
-+			tty_write_unlock(tty);
-+			goto retry_write_wait;
-+		}
-+
-+		ld = tty_ldisc_ref(tty);
-+		if (ld != NULL) {
-+			if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
-+				ld->ops->flush_buffer(tty);
-+			tty_ldisc_deref(ld);
-+		}
- 
--	tty_set_termios(tty, &tmp_termios);
-+		if ((opt & TERMIOS_WAIT) && tty->ops->wait_until_sent) {
-+			tty->ops->wait_until_sent(tty, 0);
-+			if (signal_pending(current)) {
-+				tty_write_unlock(tty);
-+				return -ERESTARTSYS;
-+			}
-+		}
-+
-+		tty_set_termios(tty, &tmp_termios);
-+
-+		tty_write_unlock(tty);
-+	} else {
-+		tty_set_termios(tty, &tmp_termios);
-+	}
- 
- 	/* FIXME: Arguably if tmp_termios == tty->termios AND the
- 	   actual requested termios was not tmp_termios then we may
 
 
