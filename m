@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8577E168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DED44C433EF;
-	Mon,  8 May 2023 10:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E1D2168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F123DC433D2;
+	Mon,  8 May 2023 10:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542982;
-	bh=Xdq6WHE3RMmxZGTNIrc9fX9lJQcBS0AbCx8tF2rpevg=;
+	s=korg; t=1683542985;
+	bh=ZNuOw90LJSQxuyhBruIHHLPa4ffST6ByVRc7KDisjWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPqmUkla91RYYBwvroHGdRPYpokAaBgv27jcvw9b8zBOZwViM5YALke4O4v7BzFGw
-	 6OXkPi10x5/ar+s7MqvDabn8jqkWOt9EJUBqYjm3lX1otBEv4wN9436MjXbYotv1Nc
-	 iH2d9EFh/HrTMidcEbVPpNm+Zhz2WRLCAWj/trGY=
+	b=wMSWuBnMtyvUVAdV6VRb2OmZoMk/rsZln9633SQKatV+2X057f4JS2SOxLo/8UouO
+	 8Sp8aJ2II/wN+8v6jCxbZIjzI55z7Y0BF3P2xqT6cguLMy/5toKTc6+VK7slH9XuxN
+	 jqe54kHUtcwEkbpkpvrJB95+0zkTWdxYl8XJUJec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.2 612/663] parisc: Ensure page alignment in flush functions
-Date: Mon,  8 May 2023 11:47:18 +0200
-Message-Id: <20230508094449.542505327@linuxfoundation.org>
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 595/663] dmaengine: at_xdmac: do not enable all cyclic channels
+Date: Mon,  8 May 2023 11:47:01 +0200
+Message-Id: <20230508094448.782386793@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -33,43 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-commit d755bd2caeb47fd806e12399fe8b56798fa5d2cc upstream.
+[ Upstream commit f8435befd81dd85b7b610598551fadf675849bc1 ]
 
-Matthew Wilcox noticed, that if ARCH_HAS_FLUSH_ON_KUNMAP is defined
-(which is the case for PA-RISC), __kunmap_local() calls
-kunmap_flush_on_unmap(), which may call the parisc flush functions with
-a non-page-aligned address and thus the page might not be fully flushed.
+Do not global enable all the cyclic channels in at_xdmac_resume(). Instead
+save the global status in at_xdmac_suspend() and re-enable the cyclic
+channel only if it was active before suspend.
 
-This patch ensures that flush_kernel_dcache_page_asm() and
-flush_kernel_dcache_page_asm() will always operate on page-aligned
-addresses.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v6.0+
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230214151827.1050280-6-claudiu.beznea@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/pacache.S |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/at_xdmac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/parisc/kernel/pacache.S
-+++ b/arch/parisc/kernel/pacache.S
-@@ -889,6 +889,7 @@ ENDPROC_CFI(flush_icache_page_asm)
- ENTRY_CFI(flush_kernel_dcache_page_asm)
- 88:	ldil		L%dcache_stride, %r1
- 	ldw		R%dcache_stride(%r1), %r23
-+	depi_safe	0, 31,PAGE_SHIFT, %r26	/* Clear any offset bits */
+diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+index d6c9781cd46af..bfc8ae2143957 100644
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -243,6 +243,7 @@ struct at_xdmac {
+ 	int			irq;
+ 	struct clk		*clk;
+ 	u32			save_gim;
++	u32			save_gs;
+ 	struct dma_pool		*at_xdmac_desc_pool;
+ 	const struct at_xdmac_layout	*layout;
+ 	struct at_xdmac_chan	chan[];
+@@ -1988,6 +1989,7 @@ static int __maybe_unused atmel_xdmac_suspend(struct device *dev)
+ 		}
+ 	}
+ 	atxdmac->save_gim = at_xdmac_read(atxdmac, AT_XDMAC_GIM);
++	atxdmac->save_gs = at_xdmac_read(atxdmac, AT_XDMAC_GS);
  
- #ifdef CONFIG_64BIT
- 	depdi,z		1, 63-PAGE_SHIFT,1, %r25
-@@ -925,6 +926,7 @@ ENDPROC_CFI(flush_kernel_dcache_page_asm
- ENTRY_CFI(purge_kernel_dcache_page_asm)
- 88:	ldil		L%dcache_stride, %r1
- 	ldw		R%dcache_stride(%r1), %r23
-+	depi_safe	0, 31,PAGE_SHIFT, %r26	/* Clear any offset bits */
- 
- #ifdef CONFIG_64BIT
- 	depdi,z		1, 63-PAGE_SHIFT,1, %r25
+ 	at_xdmac_off(atxdmac);
+ 	clk_disable_unprepare(atxdmac->clk);
+@@ -2027,7 +2029,8 @@ static int __maybe_unused atmel_xdmac_resume(struct device *dev)
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CNDC, atchan->save_cndc);
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CIE, atchan->save_cim);
+ 			wmb();
+-			at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
++			if (atxdmac->save_gs & atchan->mask)
++				at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
+ 		}
+ 	}
+ 	return 0;
+-- 
+2.39.2
+
 
 
