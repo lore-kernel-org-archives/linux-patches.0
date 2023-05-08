@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A639168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A5CC433D2;
-	Mon,  8 May 2023 11:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD44168D7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C20C433EF;
+	Mon,  8 May 2023 11:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544120;
-	bh=ejPmx/SwaUhrm6/WLNfu8NVLhMTcc/UvjcAOq7HF5Vc=;
+	s=korg; t=1683544123;
+	bh=CIfkJ5Fha7/jTtp3HM3tKXjHJs6hs//vl1SArvHw+fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/rAGxmHgw83QZ6Au/nV5m4UjhRp1hP+0yL6IJojdnMiqXrE2tqIQ4yC2plPV7oV8
-	 7FmqVltyI1hD/pBJlLNBxQK+TrH5V7ELx6LDYNKQQPrQcwrDKxUyXzgtJGgz3t91pT
-	 tau6ygFf17UerKGuakuRPVHo+MFUi0b/aupzZz4M=
+	b=h3wf8LRilCWTUGCTzY3I+AOGWxKZU6Hq+wFk87H/LHY4DPYd37fsmBZ19Oe4Cosf8
+	 uXS3LVNf+U4FvpbOYXVZTiFxFqd/vsM+NwoAU2Imdw+hdLSOJ3Su2OmYzDFJRzfBZm
+	 P+znbYYr/D3mUV0nMTO4gbnjhySHOyuR5e0I5ny8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 307/694] x86/ioapic: Dont return 0 from arch_dynirq_lower_bound()
-Date: Mon,  8 May 2023 11:42:22 +0200
-Message-Id: <20230508094442.246815186@linuxfoundation.org>
+Subject: [PATCH 6.3 281/694] media: mediatek: vcodec: add core decode done event
+Date: Mon,  8 May 2023 11:41:56 +0200
+Message-Id: <20230508094441.404336027@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,70 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saurabh Sengar <ssengar@linux.microsoft.com>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 5af507bef93c09a94fb8f058213b489178f4cbe5 ]
+[ Upstream commit d227af847ac2d7d90350124a1b2451e4fc1f050c ]
 
-arch_dynirq_lower_bound() is invoked by the core interrupt code to
-retrieve the lowest possible Linux interrupt number for dynamically
-allocated interrupts like MSI.
+Need to make sure core decode done before current instance is free.
 
-The x86 implementation uses this to exclude the IO/APIC GSI space.
-This works correctly as long as there is an IO/APIC registered, but
-returns 0 if not. This has been observed in VMs where the BIOS does
-not advertise an IO/APIC.
-
-0 is an invalid interrupt number except for the legacy timer interrupt
-on x86. The return value is unchecked in the core code, so it ends up
-to allocate interrupt number 0 which is subsequently considered to be
-invalid by the caller, e.g. the MSI allocation code.
-
-The function has already a check for 0 in the case that an IO/APIC is
-registered, as ioapic_dynirq_base is 0 in case of device tree setups.
-
-Consolidate this and zero check for both ioapic_dynirq_base and gsi_top,
-which is used in the case that no IO/APIC is registered.
-
-Fixes: 3e5bedc2c258 ("x86/apic: Fix arch_dynirq_lower_bound() bug for DT enabled machines")
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/1679988604-20308-1-git-send-email-ssengar@linux.microsoft.com
+Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/apic/io_apic.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c | 4 +++-
+ drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h | 2 ++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/apic/io_apic.c b/arch/x86/kernel/apic/io_apic.c
-index 1f83b052bb74e..f980b38b0227e 100644
---- a/arch/x86/kernel/apic/io_apic.c
-+++ b/arch/x86/kernel/apic/io_apic.c
-@@ -2477,17 +2477,21 @@ static int io_apic_get_redir_entries(int ioapic)
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+index 0da6e3e2ef0b3..ce7c82e38103a 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
++++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
+@@ -196,7 +196,7 @@ bool vdec_msg_queue_wait_lat_buf_full(struct vdec_msg_queue *msg_queue)
+ 	spin_unlock(&core_ctx->ready_lock);
  
- unsigned int arch_dynirq_lower_bound(unsigned int from)
- {
-+	unsigned int ret;
-+
- 	/*
- 	 * dmar_alloc_hwirq() may be called before setup_IO_APIC(), so use
- 	 * gsi_top if ioapic_dynirq_base hasn't been initialized yet.
- 	 */
--	if (!ioapic_initialized)
--		return gsi_top;
-+	ret = ioapic_dynirq_base ? : gsi_top;
-+
- 	/*
--	 * For DT enabled machines ioapic_dynirq_base is irrelevant and not
--	 * updated. So simply return @from if ioapic_dynirq_base == 0.
-+	 * For DT enabled machines ioapic_dynirq_base is irrelevant and
-+	 * always 0. gsi_top can be 0 if there is no IO/APIC registered.
-+	 * 0 is an invalid interrupt number for dynamic allocations. Return
-+	 * @from instead.
- 	 */
--	return ioapic_dynirq_base ? : from;
-+	return ret ? : from;
- }
+ 	timeout_jiff = msecs_to_jiffies(1000 * (NUM_BUFFER_COUNT + 2));
+-	ret = wait_event_timeout(msg_queue->lat_ctx.ready_to_use,
++	ret = wait_event_timeout(msg_queue->ctx->msg_queue.core_dec_done,
+ 				 msg_queue->lat_ctx.ready_num == NUM_BUFFER_COUNT,
+ 				 timeout_jiff);
+ 	if (ret) {
+@@ -257,6 +257,7 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
+ 	mtk_vcodec_dec_disable_hardware(ctx, MTK_VDEC_CORE);
+ 	vdec_msg_queue_qbuf(&ctx->msg_queue.lat_ctx, lat_buf);
  
- #ifdef CONFIG_X86_32
++	wake_up_all(&ctx->msg_queue.core_dec_done);
+ 	if (atomic_read(&lat_buf->ctx->msg_queue.core_list_cnt)) {
+ 		mtk_v4l2_debug(3, "re-schedule to decode for core: %d",
+ 			       dev->msg_queue_core_ctx.ready_num);
+@@ -281,6 +282,7 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
+ 
+ 	atomic_set(&msg_queue->lat_list_cnt, 0);
+ 	atomic_set(&msg_queue->core_list_cnt, 0);
++	init_waitqueue_head(&msg_queue->core_dec_done);
+ 
+ 	msg_queue->wdma_addr.size =
+ 		vde_msg_queue_get_trans_size(ctx->picinfo.buf_w,
+diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
+index 56280d6682c5a..a75c04418f52e 100644
+--- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
++++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
+@@ -76,6 +76,7 @@ struct vdec_lat_buf {
+  *
+  * @lat_list_cnt: used to record each instance lat list count
+  * @core_list_cnt: used to record each instance core list count
++ * @core_dec_done: core work queue decode done event
+  */
+ struct vdec_msg_queue {
+ 	struct vdec_lat_buf lat_buf[NUM_BUFFER_COUNT];
+@@ -90,6 +91,7 @@ struct vdec_msg_queue {
+ 
+ 	atomic_t lat_list_cnt;
+ 	atomic_t core_list_cnt;
++	wait_queue_head_t core_dec_done;
+ };
+ 
+ /**
 -- 
 2.39.2
 
