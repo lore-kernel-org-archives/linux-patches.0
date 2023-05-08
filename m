@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E29168CB
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED524C433D2;
-	Mon,  8 May 2023 11:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC59168CB
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDA7C433EF;
+	Mon,  8 May 2023 11:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544780;
-	bh=hmdACvyceHtfwG6iZa0TlefPkqSpVkF36kkn55rWHqs=;
+	s=korg; t=1683544785;
+	bh=tjLUeJE1CJIYDg4itPBro/bY2qaiygOfo1H3q0rTcYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OdOkiAHUD9QquvWOqmKHix9Cc332AIPg/mXAQm2ObPKP1VEl9GyVyR+EE5DigJYi3
-	 S7dAghArEOkn9ZmfgGg6V6tjRwevK1wNHMTC/C1H2BMTOFNveDhntn17p/F3vyYjjP
-	 Rt3l+dOtD7P56VwURfyEuyiAQPRd4Z85JxAi7gBM=
+	b=tkEFKwZ1DUB3RlVKqLhPZ6+j2mqdyAmAC2AslXFHOmj3s2d3nZw/gcUrgDoasm7oy
+	 tBfUZq/N4JMbUGlxsIf+BgCjACvIJSGLqzznt2VyaJ7MO+beXPesExSrGsS/ShtL/L
+	 MMmyyrfTHsZhBbYhVQAyuJZ/1nu+pl9b2Jj2NmB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Leonard Crestez <leonard.crestez@nxp.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	kernel test robot <lkp@intel.com>,
+	Julia Lawall <julia.lawall@inria.fr>,
+	Aashish Sharma <shraash@google.com>,
+	Guenter Roeck <groeck@chromium.org>,
+	Trevor Wu <trevor.wu@mediatek.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 522/694] scripts/gdb: bail early if there are no generic PD
-Date: Mon,  8 May 2023 11:45:57 +0200
-Message-Id: <20230508094451.207429244@linuxfoundation.org>
+Subject: [PATCH 6.3 523/694] ASoC: mediatek: common: Fix refcount leak in parse_dai_link_info
+Date: Mon,  8 May 2023 11:45:58 +0200
+Message-Id: <20230508094451.256161045@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -39,58 +39,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Aashish Sharma <shraash@google.com>
 
-[ Upstream commit f19c3c2959e465209ade1a7a699e6cbf4359ce78 ]
+[ Upstream commit beed115c2ce78f990222a29abed042582df4e87c ]
 
-Avoid generating an exception if there are no generic power domain(s)
-registered:
+Add missing of_node_put()s before the returns to balance
+of_node_get()s and of_node_put()s, which may get unbalanced
+in case the for loop 'for_each_available_child_of_node' returns
+early.
 
-(gdb) lx-genpd-summary
-domain                          status          children
-    /device                                             runtime status
-----------------------------------------------------------------------
-Python Exception <class 'gdb.error'>: No symbol "gpd_list" in current context.
-Error occurred in Python: No symbol "gpd_list" in current context.
-(gdb) quit
-
-[f.fainelli@gmail.com: correctly invoke gdb_eval_or_none]
-  Link: https://lkml.kernel.org/r/20230327185746.3856407-1-f.fainelli@gmail.com
-Link: https://lkml.kernel.org/r/20230323231659.3319941-1-f.fainelli@gmail.com
-Fixes: 8207d4a88e1e ("scripts/gdb: add lx-genpd-summary command")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Leonard Crestez <leonard.crestez@nxp.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 4302187d955f ("ASoC: mediatek: common: add soundcard driver common code")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Julia Lawall <julia.lawall@inria.fr>
+Link: https://lore.kernel.org/r/202304090504.2K8L6soj-lkp@intel.com/
+Signed-off-by: Aashish Sharma <shraash@google.com>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Reviewed-by: Trevor Wu <trevor.wu@mediatek.com>
+Link: https://lore.kernel.org/r/20230411003431.4048700-1-shraash@google.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/genpd.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/mediatek/common/mtk-soundcard-driver.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/scripts/gdb/linux/genpd.py b/scripts/gdb/linux/genpd.py
-index 39cd1abd85590..b53649c0a77a6 100644
---- a/scripts/gdb/linux/genpd.py
-+++ b/scripts/gdb/linux/genpd.py
-@@ -5,7 +5,7 @@
- import gdb
- import sys
+diff --git a/sound/soc/mediatek/common/mtk-soundcard-driver.c b/sound/soc/mediatek/common/mtk-soundcard-driver.c
+index 7c55c2cb1f214..738093451ccbf 100644
+--- a/sound/soc/mediatek/common/mtk-soundcard-driver.c
++++ b/sound/soc/mediatek/common/mtk-soundcard-driver.c
+@@ -47,20 +47,26 @@ int parse_dai_link_info(struct snd_soc_card *card)
+ 	/* Loop over all the dai link sub nodes */
+ 	for_each_available_child_of_node(dev->of_node, sub_node) {
+ 		if (of_property_read_string(sub_node, "link-name",
+-					    &dai_link_name))
++					    &dai_link_name)) {
++			of_node_put(sub_node);
+ 			return -EINVAL;
++		}
  
--from linux.utils import CachedType
-+from linux.utils import CachedType, gdb_eval_or_none
- from linux.lists import list_for_each_entry
+ 		for_each_card_prelinks(card, i, dai_link) {
+ 			if (!strcmp(dai_link_name, dai_link->name))
+ 				break;
+ 		}
  
- generic_pm_domain_type = CachedType('struct generic_pm_domain')
-@@ -70,6 +70,8 @@ Output is similar to /sys/kernel/debug/pm_genpd/pm_genpd_summary'''
-             gdb.write('    %-50s  %s\n' % (kobj_path, rtpm_status_str(dev)))
+-		if (i >= card->num_links)
++		if (i >= card->num_links) {
++			of_node_put(sub_node);
+ 			return -EINVAL;
++		}
  
-     def invoke(self, arg, from_tty):
-+        if gdb_eval_or_none("&gpd_list") is None:
-+            raise gdb.GdbError("No power domain(s) registered")
-         gdb.write('domain                          status          children\n');
-         gdb.write('    /device                                             runtime status\n');
-         gdb.write('----------------------------------------------------------------------\n');
+ 		ret = set_card_codec_info(card, sub_node, dai_link);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(sub_node);
+ 			return ret;
++		}
+ 	}
+ 
+ 	return 0;
 -- 
 2.39.2
 
