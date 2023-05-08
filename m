@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80372168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0245FC433D2;
-	Mon,  8 May 2023 10:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A365168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A8BC4339B;
+	Mon,  8 May 2023 10:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540340;
-	bh=gxBU2gbwaLkGz46L27Jkt2F3vyoKaznCO3GRzKAYMQg=;
+	s=korg; t=1683540342;
+	bh=fOWDpCswFzW+wd0Dj2tTRTDC9MubYwgUwVi4PUVrEPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NOoamngoMz7flyVJ/mXzQOlV+aSts9DP+Z7T6N6Gjc1QxsLQpBjSwGE+0Pvz7v/nI
-	 EhQy/v5IH6bJqDH6oisI8MkYP6wSmXrgCMYqtaC2OKZOlA7rUNzrkHxIWfKLFkwcyX
-	 fvnJxHHF6SsS/jjFbVSppnhJm+WKE01/BaL2vSsM=
+	b=pXVaW1JAEp4cE5T7TcRVKmTZcBqrN6bfqXCyrAbssuZMzIPE8zVakmMBsWe/F8j66
+	 t8mbXHuCgMm5MR1yBIQHhYIO6htr7X3waFlG+iDwmM7zixab6S6qs8tCfjVKz7gDXs
+	 2LiatMWJDxkCSVyO8ueLSnmdu0X93legykjOXIOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 328/611] net: ethernet: stmmac: dwmac-rk: rework optional clock handling
-Date: Mon,  8 May 2023 11:42:50 +0200
-Message-Id: <20230508094433.094693931@linuxfoundation.org>
+Subject: [PATCH 6.1 329/611] net: ethernet: stmmac: dwmac-rk: fix optional phy regulator handling
+Date: Mon,  8 May 2023 11:42:51 +0200
+Message-Id: <20230508094433.123947527@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -39,340 +37,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit ea449f7fa0bf3fcd02e04a770b9ff707bf5e8f96 ]
+[ Upstream commit db21973263f8c56750cb610f1d5e8bee00a513b9 ]
 
-The clock requesting code is quite repetitive. Fix this by requesting
-the clocks via devm_clk_bulk_get_optional. The optional variant has been
-used, since this is effectively what the old code did. The exact clocks
-required depend on the platform and configuration. As a side effect
-this change adds correct -EPROBE_DEFER handling.
+The usual devm_regulator_get() call already handles "optional"
+regulators by returning a valid dummy and printing a warning
+that the dummy regulator should be described properly. This
+code open coded the same behaviour, but masked any errors that
+are not -EPROBE_DEFER and is quite noisy.
 
-Suggested-by: Jakub Kicinski <kuba@kernel.org>
-Suggested-by: Andrew Lunn <andrew@lunn.ch>
-Fixes: 7ad269ea1a2b ("GMAC: add driver for Rockchip RK3288 SoCs integrated GMAC")
+This change effectively unmasks and propagates regulators errors
+not involving -ENODEV, downgrades the error print to warning level
+if no regulator is specified and captures the probe defer message
+for /sys/kernel/debug/devices_deferred.
+
+Fixes: 2e12f536635f ("net: stmmac: dwmac-rk: Use standard devicetree property for phy regulator")
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/dwmac-rk.c    | 183 +++++++-----------
- 1 file changed, 70 insertions(+), 113 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
-index 6656d76b6766b..21954b3d825c6 100644
+index 21954b3d825c6..cf682a9e3fff2 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
-@@ -39,6 +39,24 @@ struct rk_gmac_ops {
- 	u32 regs[];
- };
- 
-+static const char * const rk_clocks[] = {
-+	"aclk_mac", "pclk_mac", "mac_clk_tx", "clk_mac_speed",
-+};
-+
-+static const char * const rk_rmii_clocks[] = {
-+	"mac_clk_rx", "clk_mac_ref", "clk_mac_refout",
-+};
-+
-+enum rk_clocks_index {
-+	RK_ACLK_MAC = 0,
-+	RK_PCLK_MAC,
-+	RK_MAC_CLK_TX,
-+	RK_CLK_MAC_SPEED,
-+	RK_MAC_CLK_RX,
-+	RK_CLK_MAC_REF,
-+	RK_CLK_MAC_REFOUT,
-+};
-+
- struct rk_priv_data {
- 	struct platform_device *pdev;
- 	phy_interface_t phy_iface;
-@@ -51,15 +69,9 @@ struct rk_priv_data {
- 	bool clock_input;
- 	bool integrated_phy;
- 
-+	struct clk_bulk_data *clks;
-+	int num_clks;
- 	struct clk *clk_mac;
--	struct clk *gmac_clkin;
--	struct clk *mac_clk_rx;
--	struct clk *mac_clk_tx;
--	struct clk *clk_mac_ref;
--	struct clk *clk_mac_refout;
--	struct clk *clk_mac_speed;
--	struct clk *aclk_mac;
--	struct clk *pclk_mac;
- 	struct clk *clk_phy;
- 
- 	struct reset_control *phy_reset;
-@@ -104,10 +116,11 @@ static void px30_set_to_rmii(struct rk_priv_data *bsp_priv)
- 
- static void px30_set_rmii_speed(struct rk_priv_data *bsp_priv, int speed)
- {
-+	struct clk *clk_mac_speed = bsp_priv->clks[RK_CLK_MAC_SPEED].clk;
- 	struct device *dev = &bsp_priv->pdev->dev;
+@@ -1586,9 +1586,6 @@ static int phy_power_on(struct rk_priv_data *bsp_priv, bool enable)
  	int ret;
- 
--	if (IS_ERR(bsp_priv->clk_mac_speed)) {
-+	if (!clk_mac_speed) {
- 		dev_err(dev, "%s: Missing clk_mac_speed clock\n", __func__);
- 		return;
- 	}
-@@ -116,7 +129,7 @@ static void px30_set_rmii_speed(struct rk_priv_data *bsp_priv, int speed)
- 		regmap_write(bsp_priv->grf, PX30_GRF_GMAC_CON1,
- 			     PX30_GMAC_SPEED_10M);
- 
--		ret = clk_set_rate(bsp_priv->clk_mac_speed, 2500000);
-+		ret = clk_set_rate(clk_mac_speed, 2500000);
- 		if (ret)
- 			dev_err(dev, "%s: set clk_mac_speed rate 2500000 failed: %d\n",
- 				__func__, ret);
-@@ -124,7 +137,7 @@ static void px30_set_rmii_speed(struct rk_priv_data *bsp_priv, int speed)
- 		regmap_write(bsp_priv->grf, PX30_GRF_GMAC_CON1,
- 			     PX30_GMAC_SPEED_100M);
- 
--		ret = clk_set_rate(bsp_priv->clk_mac_speed, 25000000);
-+		ret = clk_set_rate(clk_mac_speed, 25000000);
- 		if (ret)
- 			dev_err(dev, "%s: set clk_mac_speed rate 25000000 failed: %d\n",
- 				__func__, ret);
-@@ -1066,6 +1079,7 @@ static void rk3568_set_to_rmii(struct rk_priv_data *bsp_priv)
- 
- static void rk3568_set_gmac_speed(struct rk_priv_data *bsp_priv, int speed)
- {
-+	struct clk *clk_mac_speed = bsp_priv->clks[RK_CLK_MAC_SPEED].clk;
  	struct device *dev = &bsp_priv->pdev->dev;
- 	unsigned long rate;
- 	int ret;
-@@ -1085,7 +1099,7 @@ static void rk3568_set_gmac_speed(struct rk_priv_data *bsp_priv, int speed)
- 		return;
- 	}
  
--	ret = clk_set_rate(bsp_priv->clk_mac_speed, rate);
-+	ret = clk_set_rate(clk_mac_speed, rate);
- 	if (ret)
- 		dev_err(dev, "%s: set clk_mac_speed rate %ld failed %d\n",
- 			__func__, rate, ret);
-@@ -1371,6 +1385,7 @@ static void rv1126_set_to_rmii(struct rk_priv_data *bsp_priv)
- 
- static void rv1126_set_rgmii_speed(struct rk_priv_data *bsp_priv, int speed)
- {
-+	struct clk *clk_mac_speed = bsp_priv->clks[RK_CLK_MAC_SPEED].clk;
- 	struct device *dev = &bsp_priv->pdev->dev;
- 	unsigned long rate;
- 	int ret;
-@@ -1390,7 +1405,7 @@ static void rv1126_set_rgmii_speed(struct rk_priv_data *bsp_priv, int speed)
- 		return;
- 	}
- 
--	ret = clk_set_rate(bsp_priv->clk_mac_speed, rate);
-+	ret = clk_set_rate(clk_mac_speed, rate);
- 	if (ret)
- 		dev_err(dev, "%s: set clk_mac_speed rate %ld failed %d\n",
- 			__func__, rate, ret);
-@@ -1398,6 +1413,7 @@ static void rv1126_set_rgmii_speed(struct rk_priv_data *bsp_priv, int speed)
- 
- static void rv1126_set_rmii_speed(struct rk_priv_data *bsp_priv, int speed)
- {
-+	struct clk *clk_mac_speed = bsp_priv->clks[RK_CLK_MAC_SPEED].clk;
- 	struct device *dev = &bsp_priv->pdev->dev;
- 	unsigned long rate;
- 	int ret;
-@@ -1414,7 +1430,7 @@ static void rv1126_set_rmii_speed(struct rk_priv_data *bsp_priv, int speed)
- 		return;
- 	}
- 
--	ret = clk_set_rate(bsp_priv->clk_mac_speed, rate);
-+	ret = clk_set_rate(clk_mac_speed, rate);
- 	if (ret)
- 		dev_err(dev, "%s: set clk_mac_speed rate %ld failed %d\n",
- 			__func__, rate, ret);
-@@ -1475,68 +1491,50 @@ static int rk_gmac_clk_init(struct plat_stmmacenet_data *plat)
- {
- 	struct rk_priv_data *bsp_priv = plat->bsp_priv;
- 	struct device *dev = &bsp_priv->pdev->dev;
--	int ret;
-+	int phy_iface = bsp_priv->phy_iface;
-+	int i, j, ret;
- 
- 	bsp_priv->clk_enabled = false;
- 
--	bsp_priv->mac_clk_rx = devm_clk_get(dev, "mac_clk_rx");
--	if (IS_ERR(bsp_priv->mac_clk_rx))
--		dev_err(dev, "cannot get clock %s\n",
--			"mac_clk_rx");
+-	if (!ldo)
+-		return 0;
 -
--	bsp_priv->mac_clk_tx = devm_clk_get(dev, "mac_clk_tx");
--	if (IS_ERR(bsp_priv->mac_clk_tx))
--		dev_err(dev, "cannot get clock %s\n",
--			"mac_clk_tx");
-+	bsp_priv->num_clks = ARRAY_SIZE(rk_clocks);
-+	if (phy_iface == PHY_INTERFACE_MODE_RMII)
-+		bsp_priv->num_clks += ARRAY_SIZE(rk_rmii_clocks);
- 
--	bsp_priv->aclk_mac = devm_clk_get(dev, "aclk_mac");
--	if (IS_ERR(bsp_priv->aclk_mac))
--		dev_err(dev, "cannot get clock %s\n",
--			"aclk_mac");
-+	bsp_priv->clks = devm_kcalloc(dev, bsp_priv->num_clks,
-+				      sizeof(*bsp_priv->clks), GFP_KERNEL);
-+	if (!bsp_priv->clks)
-+		return -ENOMEM;
- 
--	bsp_priv->pclk_mac = devm_clk_get(dev, "pclk_mac");
--	if (IS_ERR(bsp_priv->pclk_mac))
--		dev_err(dev, "cannot get clock %s\n",
--			"pclk_mac");
-+	for (i = 0; i < ARRAY_SIZE(rk_clocks); i++)
-+		bsp_priv->clks[i].id = rk_clocks[i];
- 
--	bsp_priv->clk_mac = devm_clk_get(dev, "stmmaceth");
--	if (IS_ERR(bsp_priv->clk_mac))
--		dev_err(dev, "cannot get clock %s\n",
--			"stmmaceth");
--
--	if (bsp_priv->phy_iface == PHY_INTERFACE_MODE_RMII) {
--		bsp_priv->clk_mac_ref = devm_clk_get(dev, "clk_mac_ref");
--		if (IS_ERR(bsp_priv->clk_mac_ref))
--			dev_err(dev, "cannot get clock %s\n",
--				"clk_mac_ref");
--
--		if (!bsp_priv->clock_input) {
--			bsp_priv->clk_mac_refout =
--				devm_clk_get(dev, "clk_mac_refout");
--			if (IS_ERR(bsp_priv->clk_mac_refout))
--				dev_err(dev, "cannot get clock %s\n",
--					"clk_mac_refout");
--		}
-+	if (phy_iface == PHY_INTERFACE_MODE_RMII) {
-+		for (j = 0; j < ARRAY_SIZE(rk_rmii_clocks); j++)
-+			bsp_priv->clks[i++].id = rk_rmii_clocks[j];
- 	}
- 
--	bsp_priv->clk_mac_speed = devm_clk_get(dev, "clk_mac_speed");
--	if (IS_ERR(bsp_priv->clk_mac_speed))
--		dev_err(dev, "cannot get clock %s\n", "clk_mac_speed");
-+	ret = devm_clk_bulk_get_optional(dev, bsp_priv->num_clks,
-+					 bsp_priv->clks);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to get clocks\n");
-+
-+	/* "stmmaceth" will be enabled by the core */
-+	bsp_priv->clk_mac = devm_clk_get(dev, "stmmaceth");
-+	ret = PTR_ERR_OR_ZERO(bsp_priv->clk_mac);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Cannot get stmmaceth clock\n");
- 
- 	if (bsp_priv->clock_input) {
- 		dev_info(dev, "clock input from PHY\n");
--	} else {
--		if (bsp_priv->phy_iface == PHY_INTERFACE_MODE_RMII)
--			clk_set_rate(bsp_priv->clk_mac, 50000000);
-+	} else if (phy_iface == PHY_INTERFACE_MODE_RMII) {
-+		clk_set_rate(bsp_priv->clk_mac, 50000000);
- 	}
- 
- 	if (plat->phy_node && bsp_priv->integrated_phy) {
- 		bsp_priv->clk_phy = of_clk_get(plat->phy_node, 0);
--		if (IS_ERR(bsp_priv->clk_phy)) {
--			ret = PTR_ERR(bsp_priv->clk_phy);
--			dev_err(dev, "Cannot get PHY clock: %d\n", ret);
--			return -EINVAL;
--		}
-+		ret = PTR_ERR_OR_ZERO(bsp_priv->clk_phy);
-+		if (ret)
-+			return dev_err_probe(dev, ret, "Cannot get PHY clock\n");
- 		clk_set_rate(bsp_priv->clk_phy, 50000000);
- 	}
- 
-@@ -1545,77 +1543,36 @@ static int rk_gmac_clk_init(struct plat_stmmacenet_data *plat)
- 
- static int gmac_clk_enable(struct rk_priv_data *bsp_priv, bool enable)
- {
--	int phy_iface = bsp_priv->phy_iface;
-+	int ret;
- 
  	if (enable) {
- 		if (!bsp_priv->clk_enabled) {
--			if (phy_iface == PHY_INTERFACE_MODE_RMII) {
--				if (!IS_ERR(bsp_priv->mac_clk_rx))
--					clk_prepare_enable(
--						bsp_priv->mac_clk_rx);
--
--				if (!IS_ERR(bsp_priv->clk_mac_ref))
--					clk_prepare_enable(
--						bsp_priv->clk_mac_ref);
--
--				if (!IS_ERR(bsp_priv->clk_mac_refout))
--					clk_prepare_enable(
--						bsp_priv->clk_mac_refout);
--			}
--
--			if (!IS_ERR(bsp_priv->clk_phy))
--				clk_prepare_enable(bsp_priv->clk_phy);
--
--			if (!IS_ERR(bsp_priv->aclk_mac))
--				clk_prepare_enable(bsp_priv->aclk_mac);
--
--			if (!IS_ERR(bsp_priv->pclk_mac))
--				clk_prepare_enable(bsp_priv->pclk_mac);
--
--			if (!IS_ERR(bsp_priv->mac_clk_tx))
--				clk_prepare_enable(bsp_priv->mac_clk_tx);
-+			ret = clk_bulk_prepare_enable(bsp_priv->num_clks,
-+						      bsp_priv->clks);
-+			if (ret)
-+				return ret;
- 
--			if (!IS_ERR(bsp_priv->clk_mac_speed))
--				clk_prepare_enable(bsp_priv->clk_mac_speed);
-+			ret = clk_prepare_enable(bsp_priv->clk_phy);
-+			if (ret)
-+				return ret;
- 
- 			if (bsp_priv->ops && bsp_priv->ops->set_clock_selection)
- 				bsp_priv->ops->set_clock_selection(bsp_priv,
- 					       bsp_priv->clock_input, true);
- 
--			/**
--			 * if (!IS_ERR(bsp_priv->clk_mac))
--			 *	clk_prepare_enable(bsp_priv->clk_mac);
--			 */
- 			mdelay(5);
- 			bsp_priv->clk_enabled = true;
- 		}
- 	} else {
- 		if (bsp_priv->clk_enabled) {
--			if (phy_iface == PHY_INTERFACE_MODE_RMII) {
--				clk_disable_unprepare(bsp_priv->mac_clk_rx);
--
--				clk_disable_unprepare(bsp_priv->clk_mac_ref);
--
--				clk_disable_unprepare(bsp_priv->clk_mac_refout);
--			}
--
-+			clk_bulk_disable_unprepare(bsp_priv->num_clks,
-+						   bsp_priv->clks);
- 			clk_disable_unprepare(bsp_priv->clk_phy);
- 
--			clk_disable_unprepare(bsp_priv->aclk_mac);
--
--			clk_disable_unprepare(bsp_priv->pclk_mac);
--
--			clk_disable_unprepare(bsp_priv->mac_clk_tx);
--
--			clk_disable_unprepare(bsp_priv->clk_mac_speed);
--
- 			if (bsp_priv->ops && bsp_priv->ops->set_clock_selection)
- 				bsp_priv->ops->set_clock_selection(bsp_priv,
- 					      bsp_priv->clock_input, false);
--			/**
--			 * if (!IS_ERR(bsp_priv->clk_mac))
--			 *	clk_disable_unprepare(bsp_priv->clk_mac);
--			 */
-+
- 			bsp_priv->clk_enabled = false;
+ 		ret = regulator_enable(ldo);
+ 		if (ret)
+@@ -1636,14 +1633,11 @@ static struct rk_priv_data *rk_gmac_setup(struct platform_device *pdev,
  		}
  	}
+ 
+-	bsp_priv->regulator = devm_regulator_get_optional(dev, "phy");
++	bsp_priv->regulator = devm_regulator_get(dev, "phy");
+ 	if (IS_ERR(bsp_priv->regulator)) {
+-		if (PTR_ERR(bsp_priv->regulator) == -EPROBE_DEFER) {
+-			dev_err(dev, "phy regulator is not available yet, deferred probing\n");
+-			return ERR_PTR(-EPROBE_DEFER);
+-		}
+-		dev_err(dev, "no regulator found\n");
+-		bsp_priv->regulator = NULL;
++		ret = PTR_ERR(bsp_priv->regulator);
++		dev_err_probe(dev, ret, "failed to get phy regulator\n");
++		return ERR_PTR(ret);
+ 	}
+ 
+ 	ret = of_property_read_string(dev->of_node, "clock_in_out", &strings);
 -- 
 2.39.2
 
