@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547AA168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4A14C4339B;
-	Mon,  8 May 2023 10:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A90168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3BDC433EF;
+	Mon,  8 May 2023 10:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540056;
-	bh=4kSVwRMWSeZudJI9wCrpqLtJBze2gZkJ3I8sCofRyEY=;
+	s=korg; t=1683540059;
+	bh=HEjMVt6eg9+7Bfdh+LVYmI3FS0FXpR+FmZYb1shKdaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLhkgHMno11NzCMpdGWM9xhXMTgkYfqhfIhU+737k0ebgAoVvrivIdTm5+fjJ58ov
-	 DivmivI4V8r41PEraQklf0LknWbQYGrZnjGdZsNiLpqAUif7kpbWiL5/ksqgIYU6uC
-	 Uq6vT8jB4cTSudmhXNVi06zlyj1NxrniyQHTXqgE=
+	b=LA9amb+IE8nYgJcxsjbVhCdhFvn0/vQ/CRTtOhApmjMNUXDVvfrUFzkFRk6ZVpyp5
+	 2ctfJDmeOJppQrcBxQXV838X4kFpak9iRpGFg6Uw6dtAAZcSBmqZFH9dLq1j3yE+YP
+	 q7uCuqYg16nMD+AwHrnvxjpeG105JaqSgOc2ewp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	"Nicolas F. R. A. Prado" <nfraprado@collabora.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 225/611] media: mediatek: vcodec: Force capture queue format to MM21
-Date: Mon,  8 May 2023 11:41:07 +0200
-Message-Id: <20230508094429.725266554@linuxfoundation.org>
+Subject: [PATCH 6.1 208/611] arm64: dts: qcom: sc7280-herobrine-villager: correct trackpad supply
+Date: Mon,  8 May 2023 11:40:50 +0200
+Message-Id: <20230508094429.145559414@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -38,77 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 68c7df527657a9e962da7b5b9c0308557357d8dc ]
+[ Upstream commit de88b1759b35086d5e63736fb604ea2d06486b1a ]
 
-While the decoder can produce frames in both MM21 and MT21C formats, only
-MM21 is currently supported by userspace tools (like gstreamer and libyuv).
-In order to ensure userspace keeps working after the SCP firmware is
-updated to support both MM21 and MT21C formats, force the MM21 format for
-the capture queue.
+The hid-over-i2c takes VDD, not VCC supply.  Fix copy-pasta from other
+Herobrine boards which use elan,ekth3000 with valid VCC:
 
-This is meant as a stopgap solution while dynamic format switching between
-MM21 and MT21C isn't implemented in the driver.
+  sc7280-herobrine-villager-r1-lte.dtb: trackpad@2c: 'vcc-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-Fixes: 7501edef6b1f ("media: mediatek: vcodec: Different codec using different capture format")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: Nicolas F. R. A. Prado <nfraprado@collabora.com>
-Tested-by: Nicolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: ee2a62116015 ("arm64: dts: qcom: sc7280: Add device tree for herobrine villager")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230312183622.460488-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../platform/mediatek/vcodec/mtk_vcodec_dec.c | 24 +++----------------
- 1 file changed, 3 insertions(+), 21 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c
-index 641f533c417fd..c99705681a03e 100644
---- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c
-+++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c
-@@ -39,10 +39,9 @@ static bool mtk_vdec_get_cap_fmt(struct mtk_vcodec_ctx *ctx, int format_index)
- {
- 	const struct mtk_vcodec_dec_pdata *dec_pdata = ctx->dev->vdec_pdata;
- 	const struct mtk_video_fmt *fmt;
--	struct mtk_q_data *q_data;
- 	int num_frame_count = 0, i;
--	bool ret = true;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi
+index 4566722bf4ddf..8f5d82885e447 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine-villager.dtsi
+@@ -33,7 +33,7 @@ ap_tp_i2c: &i2c0 {
+ 		interrupts = <7 IRQ_TYPE_EDGE_FALLING>;
  
-+	fmt = &dec_pdata->vdec_formats[format_index];
- 	for (i = 0; i < *dec_pdata->num_formats; i++) {
- 		if (dec_pdata->vdec_formats[i].type != MTK_FMT_FRAME)
- 			continue;
-@@ -50,27 +49,10 @@ static bool mtk_vdec_get_cap_fmt(struct mtk_vcodec_ctx *ctx, int format_index)
- 		num_frame_count++;
- 	}
+ 		hid-descr-addr = <0x20>;
+-		vcc-supply = <&pp3300_z1>;
++		vdd-supply = <&pp3300_z1>;
  
--	if (num_frame_count == 1)
-+	if (num_frame_count == 1 || fmt->fourcc == V4L2_PIX_FMT_MM21)
- 		return true;
- 
--	fmt = &dec_pdata->vdec_formats[format_index];
--	q_data = &ctx->q_data[MTK_Q_DATA_SRC];
--	switch (q_data->fmt->fourcc) {
--	case V4L2_PIX_FMT_VP8_FRAME:
--		if (fmt->fourcc == V4L2_PIX_FMT_MM21)
--			ret = true;
--		break;
--	case V4L2_PIX_FMT_H264_SLICE:
--	case V4L2_PIX_FMT_VP9_FRAME:
--		if (fmt->fourcc == V4L2_PIX_FMT_MM21)
--			ret = false;
--		break;
--	default:
--		ret = true;
--		break;
--	}
--
--	return ret;
-+	return false;
- }
- 
- static struct mtk_q_data *mtk_vdec_get_q_data(struct mtk_vcodec_ctx *ctx,
+ 		wakeup-source;
+ 	};
 -- 
 2.39.2
 
