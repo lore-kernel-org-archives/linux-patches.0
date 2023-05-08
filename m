@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DD5168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:28:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8816DC433A1;
-	Mon,  8 May 2023 10:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579C5168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:28:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE31C433EF;
+	Mon,  8 May 2023 10:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541717;
-	bh=7yAbatqgq7LIvEWfrKnftoaGmhpPFDRJmzZFO4NpaqQ=;
+	s=korg; t=1683541720;
+	bh=DX5bujvDKnZTwP/ZkeGxH+zUT9j9khFj9k9G6LHGTS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fccpckBKh9A6Uy1GVsNak8hoAziL+XMl7ICsXsZz3tK2yGOw87tF/DdS+derLZPn5
-	 CjBLV7qEytb7BajVPMXaMw6pPR7ukCQQFuQICGEYMABTnT8kzUSRqqKHMCrJ/YH61T
-	 +K5dPZiZxDtKQlSUh8XKMgnyRXmfR2x3+pYlUM5I=
+	b=lP7/dRaFEM3p+4e6q0uub6cyTDnwIXlAmfjP+JQSJ1W649jl95WRU0Wa7IH38DLZm
+	 fRek/octzSDLbCHswd/+s0W032i164C4pQR+RuLN+DVw7IiqwvXFycf/g/Z1R3sFOw
+	 XegqqAiwCMaN+Tlel8/8b/gP7wZiVN3vOOkux4pw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia-Wei Chang <jia-wei.chang@mediatek.com>,
-	Nick Hainke <vincent@systemli.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 203/663] cpufreq: mediatek: raise proc/sram max voltage for MT8516
-Date: Mon,  8 May 2023 11:40:29 +0200
-Message-Id: <20230508094434.961707372@linuxfoundation.org>
+Subject: [PATCH 6.2 171/663] ARM: dts: qcom: ipq4019: Fix the PCI I/O port range
+Date: Mon,  8 May 2023 11:39:57 +0200
+Message-Id: <20230508094434.023779684@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,62 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jia-Wei Chang <jia-wei.chang@mediatek.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit d3296bb4cafd4bad4a5cf2eeab9d19cc94f9e30e ]
+[ Upstream commit 2540279e9a9e74fc880d1e4c83754ecfcbe290a0 ]
 
-Since the upper boundary of proc/sram voltage of MT8516 is 1300 mV,
-which is greater than the value of MT2701 1150 mV, we fix it by adding
-the corresponding platform data and specify proc/sram_max_volt to
-support MT8516.
+For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
+located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI address
+(0x40200000) specified in the ranges property for I/O region.
 
-Signed-off-by: Jia-Wei Chang <jia-wei.chang@mediatek.com>
-Fixes: ead858bd128d ("cpufreq: mediatek: Move voltage limits to platform data")
-Fixes: 6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
-Reported-by: Nick Hainke <vincent@systemli.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+While at it, let's use the missing 0x prefix for the addresses.
+
+Fixes: 187519403273 ("ARM: dts: ipq4019: Add a few peripheral nodes")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230228164752.55682-16-manivannan.sadhasivam@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/mediatek-cpufreq.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/qcom-ipq4019.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
-index 6dc225546a8d6..764e4fbdd536c 100644
---- a/drivers/cpufreq/mediatek-cpufreq.c
-+++ b/drivers/cpufreq/mediatek-cpufreq.c
-@@ -711,20 +711,29 @@ static const struct mtk_cpufreq_platform_data mt8186_platform_data = {
- 	.ccifreq_supported = true,
- };
+diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+index acb08dcf94428..a89a17278a118 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
++++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+@@ -426,8 +426,8 @@
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
  
-+static const struct mtk_cpufreq_platform_data mt8516_platform_data = {
-+	.min_volt_shift = 100000,
-+	.max_volt_shift = 200000,
-+	.proc_max_volt = 1310000,
-+	.sram_min_volt = 0,
-+	.sram_max_volt = 1310000,
-+	.ccifreq_supported = false,
-+};
-+
- /* List of machines supported by this driver */
- static const struct of_device_id mtk_cpufreq_machines[] __initconst = {
- 	{ .compatible = "mediatek,mt2701", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt2712", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt7622", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt7623", .data = &mt2701_platform_data },
--	{ .compatible = "mediatek,mt8167", .data = &mt2701_platform_data },
-+	{ .compatible = "mediatek,mt8167", .data = &mt8516_platform_data },
- 	{ .compatible = "mediatek,mt817x", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt8173", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt8176", .data = &mt2701_platform_data },
- 	{ .compatible = "mediatek,mt8183", .data = &mt8183_platform_data },
- 	{ .compatible = "mediatek,mt8186", .data = &mt8186_platform_data },
- 	{ .compatible = "mediatek,mt8365", .data = &mt2701_platform_data },
--	{ .compatible = "mediatek,mt8516", .data = &mt2701_platform_data },
-+	{ .compatible = "mediatek,mt8516", .data = &mt8516_platform_data },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, mtk_cpufreq_machines);
+-			ranges = <0x81000000 0 0x40200000 0x40200000 0 0x00100000>,
+-				 <0x82000000 0 0x40300000 0x40300000 0 0x00d00000>;
++			ranges = <0x81000000 0x0 0x00000000 0x40200000 0x0 0x00100000>,
++				 <0x82000000 0x0 0x40300000 0x40300000 0x0 0x00d00000>;
+ 
+ 			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
 -- 
 2.39.2
 
