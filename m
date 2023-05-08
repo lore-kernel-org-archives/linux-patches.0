@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE1E168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE1BEC433D2;
-	Mon,  8 May 2023 11:03:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88DD7168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0864C433D2;
+	Mon,  8 May 2023 11:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543815;
-	bh=+vuOHB8dPLHS9Yj9hxner0KIaArF5FEpR6IGyKBLEfU=;
+	s=korg; t=1683543818;
+	bh=w7nWp0v0nn2KG45md7CI3TUuCyLuzJymYTR6tDZGHDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0qmt9Nuf7B+mSbwlariiuC3kwlIIH2Eypsr/PEixFHnm8dgknIIPzJaE4nJGa9QhS
-	 OC22C4BTzsBqNVJZdXVS94ntknsh+d0qS6BQELybmuy0F+L0sOOGjyWHx5J2sFkdtg
-	 WYSYkVvMy43uhIuyRYTfeHb4T70Ckz/FTFyQS4us=
+	b=gYDxc2Enhg1vh6CU08DYSEtg1mCO3yy0/RHOGwMvg+/8VmAr3opGn+ReQgnWt6xk2
+	 ezOPW/nkUdaKvPQSm5vvkS/ntmOkyMfZk27qyUxFySx+yCQH6oY+yZy2SGQW6Et08f
+	 AHxcdVc6vk0fZIvxIL3w4f1INQWHFLe2ElCHmw98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jesse Taube <Mr.Bossman075@gmail.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 209/694] media: av7110: prevent underflow in write_ts_to_decoder()
-Date: Mon,  8 May 2023 11:40:44 +0200
-Message-Id: <20230508094439.151729240@linuxfoundation.org>
+Subject: [PATCH 6.3 180/694] soc: canaan: Make K210_SYSCTL depend on CLK_K210
+Date: Mon,  8 May 2023 11:40:15 +0200
+Message-Id: <20230508094438.273355955@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,45 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Jesse Taube <mr.bossman075@gmail.com>
 
-[ Upstream commit eed9496a0501357aa326ddd6b71408189ed872eb ]
+[ Upstream commit 49f965b6fbca63904d7397ce96066fa992f401a3 ]
 
-The buf[4] value comes from the user via ts_play().  It is a value in
-the u8 range.  The final length we pass to av7110_ipack_instant_repack()
-is "len - (buf[4] + 1) - 4" so add a check to ensure that the length is
-not negative.  It's not clear that passing a negative len value does
-anything bad necessarily, but it's not best practice.
+CLK_K210 is no longer a dependency of SOC_CANAAN,
+but K210_SYSCTL depends on CLK_K210. This patch makes K210_SYSCTL
+depend on CLK_K210. Also fix whitespace errors.
 
-With the new bounds checking the "if (!len)" condition is no longer
-possible or required so remove that.
-
-Fixes: fd46d16d602a ("V4L/DVB (11759): dvb-ttpci: Add TS replay capability")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Reported-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/all/42446784-a88b-df09-41e9-5f685b4df6ee@infradead.org
+Fixes: 3af577f9826f ("RISC-V: stop directly selecting drivers for SOC_CANAAN")
+Signed-off-by: Jesse Taube <Mr.Bossman075@gmail.com>
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/av7110/av7110_av.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/canaan/Kconfig | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/staging/media/av7110/av7110_av.c b/drivers/staging/media/av7110/av7110_av.c
-index 0bf513c26b6b5..a5c5bebad3061 100644
---- a/drivers/staging/media/av7110/av7110_av.c
-+++ b/drivers/staging/media/av7110/av7110_av.c
-@@ -823,10 +823,10 @@ static int write_ts_to_decoder(struct av7110 *av7110, int type, const u8 *buf, s
- 		av7110_ipack_flush(ipack);
- 
- 	if (buf[3] & ADAPT_FIELD) {
-+		if (buf[4] > len - 1 - 4)
-+			return 0;
- 		len -= buf[4] + 1;
- 		buf += buf[4] + 1;
--		if (!len)
--			return 0;
- 	}
- 
- 	av7110_ipack_instant_repack(buf + 4, len - 4, ipack);
+diff --git a/drivers/soc/canaan/Kconfig b/drivers/soc/canaan/Kconfig
+index 2527cf5757ec9..43ced2bf84447 100644
+--- a/drivers/soc/canaan/Kconfig
++++ b/drivers/soc/canaan/Kconfig
+@@ -3,8 +3,9 @@
+ config SOC_K210_SYSCTL
+ 	bool "Canaan Kendryte K210 SoC system controller"
+ 	depends on RISCV && SOC_CANAAN && OF
++	depends on COMMON_CLK_K210
+ 	default SOC_CANAAN
+-        select PM
+-        select MFD_SYSCON
++	select PM
++	select MFD_SYSCON
+ 	help
+ 	  Canaan Kendryte K210 SoC system controller driver.
 -- 
 2.39.2
 
