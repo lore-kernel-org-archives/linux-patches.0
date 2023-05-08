@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CC6168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:25:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE81CC433EF;
-	Mon,  8 May 2023 10:25:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D02168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:25:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0B7C433D2;
+	Mon,  8 May 2023 10:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541515;
-	bh=vuFlVCZvohpKggK+AEqrKbeZh0Codm30iAObI7PGUj8=;
+	s=korg; t=1683541518;
+	bh=c6vUoTHq8hpFfIq5z+ISw5BuVYcJhGsrg+mjeSSYxPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byFnGQeP5s3ogNIKtZmBDQSijDrzJy+qIfMCoQRdHWXuUb+8e4f7n74y7kdas+kxS
-	 nWkSUnka0P+2SFr1O4eaFNNEXG3/En+93oCLA/9EG2FULo3nZ4QNcn88pJK0D0Sbx+
-	 ssHLvDJ7M0fKLQNc2CiK+rohuL4U6tiTe5eaRb7o=
+	b=dh7uaf3MUfSOC114vmz2ussljVOf1E06FmVy5gCiaW/bxxSug/VniQJlqpAIZ6f24
+	 K7w9fvvmT/YP9rhMjqwvZXNYq885UwuehRrMEsu3r17cMZFo954K1/tUoLzRttHbto
+	 Lb8ang7bzdKrzzSNpMVxR+Ui+zHQ6cYPPF+Czgf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.2 095/663] ksmbd: fix deadlock in ksmbd_find_crypto_ctx()
-Date: Mon,  8 May 2023 11:38:41 +0200
-Message-Id: <20230508094431.536316534@linuxfoundation.org>
+	Rob Clark <robdclark@chromium.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 133/663] drm/rockchip: Drop unbalanced obj unref
+Date: Mon,  8 May 2023 11:39:19 +0200
+Message-Id: <20230508094432.849227075@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,74 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Rob Clark <robdclark@chromium.org>
 
-commit 7b4323373d844954bb76e0e9f39c4e5fc785fa7b upstream.
+[ Upstream commit 8ee3b0e85f6ccd9e6c527bc50eaba774c3bb18d0 ]
 
-Deadlock is triggered by sending multiple concurrent session setup
-requests. It should be reused after releasing when getting ctx for crypto.
-Multiple consecutive ctx uses cause deadlock while waiting for releasing
-due to the limited number of ctx.
+In the error path, rockchip_drm_gem_object_mmap() is dropping an obj
+reference that it doesn't own.
 
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-20591
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 41315b793e13 ("drm/rockchip: use drm_gem_mmap helpers")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230119231734.2884543-1-robdclark@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/auth.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/fs/ksmbd/auth.c
-+++ b/fs/ksmbd/auth.c
-@@ -221,22 +221,22 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
- {
- 	char ntlmv2_hash[CIFS_ENCPWD_SIZE];
- 	char ntlmv2_rsp[CIFS_HMAC_MD5_HASH_SIZE];
--	struct ksmbd_crypto_ctx *ctx;
-+	struct ksmbd_crypto_ctx *ctx = NULL;
- 	char *construct = NULL;
- 	int rc, len;
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+index 6edb7c52cb3dc..19b46c00dcbfd 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
+@@ -262,9 +262,6 @@ static int rockchip_drm_gem_object_mmap(struct drm_gem_object *obj,
+ 	else
+ 		ret = rockchip_drm_gem_object_mmap_dma(obj, vma);
  
--	ctx = ksmbd_crypto_ctx_find_hmacmd5();
--	if (!ctx) {
--		ksmbd_debug(AUTH, "could not crypto alloc hmacmd5\n");
--		return -ENOMEM;
--	}
+-	if (ret)
+-		drm_gem_vm_close(vma);
 -
- 	rc = calc_ntlmv2_hash(conn, sess, ntlmv2_hash, domain_name);
- 	if (rc) {
- 		ksmbd_debug(AUTH, "could not get v2 hash rc %d\n", rc);
- 		goto out;
- 	}
- 
-+	ctx = ksmbd_crypto_ctx_find_hmacmd5();
-+	if (!ctx) {
-+		ksmbd_debug(AUTH, "could not crypto alloc hmacmd5\n");
-+		return -ENOMEM;
-+	}
-+
- 	rc = crypto_shash_setkey(CRYPTO_HMACMD5_TFM(ctx),
- 				 ntlmv2_hash,
- 				 CIFS_HMAC_MD5_HASH_SIZE);
-@@ -272,6 +272,8 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
- 		ksmbd_debug(AUTH, "Could not generate md5 hash\n");
- 		goto out;
- 	}
-+	ksmbd_release_crypto_ctx(ctx);
-+	ctx = NULL;
- 
- 	rc = ksmbd_gen_sess_key(sess, ntlmv2_hash, ntlmv2_rsp);
- 	if (rc) {
-@@ -282,7 +284,8 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
- 	if (memcmp(ntlmv2->ntlmv2_hash, ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE) != 0)
- 		rc = -EINVAL;
- out:
--	ksmbd_release_crypto_ctx(ctx);
-+	if (ctx)
-+		ksmbd_release_crypto_ctx(ctx);
- 	kfree(construct);
- 	return rc;
+ 	return ret;
  }
+ 
+-- 
+2.39.2
+
 
 
