@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D725168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73F3C433EF;
-	Mon,  8 May 2023 11:14:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A6E168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A98CAC433D2;
+	Mon,  8 May 2023 11:14:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544467;
-	bh=6YVj0NxgcOJaJWuG7TKnMuyPUoLsBZezOE5j5+cJXWE=;
+	s=korg; t=1683544470;
+	bh=dxdcD+9NSBMciiJBDTnYp5+Ym9MqylKKl02uOC6e9XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I9IxgXasyHO6D7ssCLaTmBpZ/OKVP0aolUwd7oi4OWbWk3/Bbj/BPsNlp/6VjO8YX
-	 YgrE0Uj+WV+QvfLN9ay6oh/NnzPV61UKHmi8YrXY/4k/mmSZ01fZlgaTmVK3GKAj6Q
-	 nUz//mpD9xPgIEulHvc6I078vf6zDDKdROZTFj2M=
+	b=2nVPMJiSUrGNjaTR2y8sb2GgB7rb1LojA6lpZFlsAuxCf1r1znj8BSN9UZUuw/90l
+	 Rwn149IaUdt8U2/BvVnJnCi5yroHx1oZbia35MFfUvNicSRDfFLTV69bKd71oATrfB
+	 hrmdZsoLCteXXNcQPAfQY/2yC/D34G9ILAzKf13o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 412/694] wifi: iwlwifi: mvm: fix A-MSDU checks
-Date: Mon,  8 May 2023 11:44:07 +0200
-Message-Id: <20230508094446.625082235@linuxfoundation.org>
+Subject: [PATCH 6.3 421/694] md/raid10: fix memleak of md thread
+Date: Mon,  8 May 2023 11:44:16 +0200
+Message-Id: <20230508094446.953741339@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,40 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit d34d11aea2d5d71a66f2f90507c3f7202b964175 ]
+[ Upstream commit f0ddb83da3cbbf8a1f9087a642c448ff52ee9abd ]
 
-Since Gl A-step devices use the old checksum hardware,
-we shouldn't use the Bz code to check for A-MSDU
-combining ability; fix that.
+In raid10_run(), if setup_conf() succeed and raid10_run() failed before
+setting 'mddev->thread', then in the error path 'conf->thread' is not
+freed.
 
-Fixes: ec18e7d4d20d ("wifi: iwlwifi: mvm: use old checksum for Bz A-step")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413102635.8c445b943fee.Ibf772102ca712f59e2ee0cdd4c344011fcf445aa@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix the problem by setting 'mddev->thread' right after setup_conf().
+
+Fixes: 43a521238aca ("md-cluster: choose correct label when clustered layout is not supported")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230310073855.1337560-7-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/md/raid10.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index b55b1b17f4d19..9fc2d5d8b7d75 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -5525,7 +5525,10 @@ static bool iwl_mvm_mac_can_aggregate(struct ieee80211_hw *hw,
- {
- 	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index 5736ba5932c7f..20522af894e0d 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -4148,6 +4148,9 @@ static int raid10_run(struct mddev *mddev)
+ 	if (!conf)
+ 		goto out;
  
--	if (mvm->trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ)
-+	if (mvm->trans->trans_cfg->device_family > IWL_DEVICE_FAMILY_BZ ||
-+	    (mvm->trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_BZ &&
-+	     !(CSR_HW_REV_TYPE(mvm->trans->hw_rev) == IWL_CFG_MAC_TYPE_GL &&
-+	       mvm->trans->hw_rev_step == SILICON_A_STEP)))
- 		return iwl_mvm_tx_csum_bz(mvm, head, true) ==
- 		       iwl_mvm_tx_csum_bz(mvm, skb, true);
++	mddev->thread = conf->thread;
++	conf->thread = NULL;
++
+ 	if (mddev_is_clustered(conf->mddev)) {
+ 		int fc, fo;
  
+@@ -4160,9 +4163,6 @@ static int raid10_run(struct mddev *mddev)
+ 		}
+ 	}
+ 
+-	mddev->thread = conf->thread;
+-	conf->thread = NULL;
+-
+ 	if (mddev->queue) {
+ 		blk_queue_max_write_zeroes_sectors(mddev->queue, 0);
+ 		blk_queue_io_min(mddev->queue, mddev->chunk_sectors << 9);
 -- 
 2.39.2
 
