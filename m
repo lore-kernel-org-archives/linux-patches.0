@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DBD11C8F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6685CC433D2;
-	Mon,  8 May 2023 11:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CB1011C8F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:09:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A4EC433EF;
+	Mon,  8 May 2023 11:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544184;
-	bh=KcdjGCERVhAYAgknl9UnSIXHyS5sM3UaahESDZw1D40=;
+	s=korg; t=1683544187;
+	bh=y2qKulYF0Q6jJuvhA6/caOOgLo7343Vbi2if3WcCA3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJtug9XZ+Ss5Yb8SMfCj5U3AwKTCzsAyHaztetTePyr65wlSJy9aodEoLj7vZF+Kc
-	 P0mA5rNW93Y5cUXdRWaAwYsraw0OWolvA9FxqHTqUMQRVUzyS7Kq5h3avV5VmKBder
-	 skRwrY5l0DkjlEWLNhERo0wwcOdTSQ7eDGwNs+r0=
+	b=IA4tZcMf5rzoYtxbxpmvfhAtpeR9ECdcyajDWbwlxs+YXWmY0gC+7Si9h4/Nvz79C
+	 VXSCeeH3KUthq67E+bi0cIQKm9Lj+cIP8qkSC7vBIrWHqe4prt95HnLYu+1v90yJ3R
+	 7COddiMLbUZzVBGLf/sjfQAeFgllOJoa6iRrxwwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	kernel test robot <lkp@intel.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 329/694] wifi: ath11k: fix SAC bug on peer addition with sta band migration
-Date: Mon,  8 May 2023 11:42:44 +0200
-Message-Id: <20230508094443.081806980@linuxfoundation.org>
+Subject: [PATCH 6.3 330/694] wifi: rtl8xxxu: Remove always true condition in rtl8xxxu_print_chipinfo
+Date: Mon,  8 May 2023 11:42:45 +0200
+Message-Id: <20230508094443.118219733@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,60 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 60b7d62ba8cdbd073997bff0f1cdae8d844002c0 ]
+[ Upstream commit b9b1e4fe2957f361c86e288ecf373dc7895cf7c7 ]
 
-Fix sleep in atomic context warning detected by Smatch static checker
-analyzer.
+Fix a new smatch warning:
+drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c:1580 rtl8xxxu_print_chipinfo() warn: always true condition '(priv->chip_cut <= 15) => (0-15 <= 15)'
 
-Following the locking pattern for peer_rhash_add lock tbl_mtx_lock mutex
-always even if sta is not transitioning to another band.
-This is peer_add function and a more secure locking should not cause
-performance regression.
-
-Tested-on: IPQ8074 hw2.0 AHB WLAN.HK.2.5.0.1-01208-QCAHKSWPL_SILICONZ-1
-
-Fixes: d673cb6fe6c0 ("wifi: ath11k: fix peer addition/deletion error on sta band migration")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230209222622.1751-1-ansuelsmth@gmail.com
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202302140753.71IgU77A-lkp@intel.com/
+Fixes: 7b0ac469e331 ("wifi: rtl8xxxu: Recognise all possible chip cuts")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/68eff98b-a022-5a00-f330-adf623a35772@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/peer.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/peer.c b/drivers/net/wireless/ath/ath11k/peer.c
-index 1ae7af02c364e..1380811827a84 100644
---- a/drivers/net/wireless/ath/ath11k/peer.c
-+++ b/drivers/net/wireless/ath/ath11k/peer.c
-@@ -382,22 +382,23 @@ int ath11k_peer_create(struct ath11k *ar, struct ath11k_vif *arvif,
- 		return -ENOBUFS;
- 	}
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 620a5cc2bfdd1..54ca6f2ced3f3 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -1575,11 +1575,7 @@ rtl8xxxu_set_spec_sifs(struct rtl8xxxu_priv *priv, u16 cck, u16 ofdm)
+ static void rtl8xxxu_print_chipinfo(struct rtl8xxxu_priv *priv)
+ {
+ 	struct device *dev = &priv->udev->dev;
+-	char cut = '?';
+-
+-	/* Currently always true: chip_cut is 4 bits. */
+-	if (priv->chip_cut <= 15)
+-		cut = 'A' + priv->chip_cut;
++	char cut = 'A' + priv->chip_cut;
  
-+	mutex_lock(&ar->ab->tbl_mtx_lock);
- 	spin_lock_bh(&ar->ab->base_lock);
- 	peer = ath11k_peer_find_by_addr(ar->ab, param->peer_addr);
- 	if (peer) {
- 		if (peer->vdev_id == param->vdev_id) {
- 			spin_unlock_bh(&ar->ab->base_lock);
-+			mutex_unlock(&ar->ab->tbl_mtx_lock);
- 			return -EINVAL;
- 		}
- 
- 		/* Assume sta is transitioning to another band.
- 		 * Remove here the peer from rhash.
- 		 */
--		mutex_lock(&ar->ab->tbl_mtx_lock);
- 		ath11k_peer_rhash_delete(ar->ab, peer);
--		mutex_unlock(&ar->ab->tbl_mtx_lock);
- 	}
- 	spin_unlock_bh(&ar->ab->base_lock);
-+	mutex_unlock(&ar->ab->tbl_mtx_lock);
- 
- 	ret = ath11k_wmi_send_peer_create_cmd(ar, param);
- 	if (ret) {
+ 	dev_info(dev,
+ 		 "RTL%s rev %c (%s) romver %d, %iT%iR, TX queues %i, WiFi=%i, BT=%i, GPS=%i, HI PA=%i\n",
 -- 
 2.39.2
 
