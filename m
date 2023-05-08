@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC19F168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:13:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F507C433EF;
-	Mon,  8 May 2023 10:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77942168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:13:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A96C433EF;
+	Mon,  8 May 2023 10:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540810;
-	bh=/lAsQmWa93y1/iPWwyBwlZ1Uz4b/QRa/wBsOKLMC9Ro=;
+	s=korg; t=1683540813;
+	bh=IZEgaRIaxIfcMamfLugvk7FgPFzcCz3PuZZj/kiup4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6F1Aj8hdqAPLhmJAngPzMtmitZXkEmLiS3URgm3oUOlI7edwio3YFH8fe7SWuibr
-	 ixipcEoMlYiPqUmtzx1Wvpt6bpiyFbWdSvDyelIgMNrT0stZMPHZGjSbFkoQ6EEOT1
-	 uWX2RJ6cN6A2HeZ3nyR7fmAQUcA7Um9VXq921FsE=
+	b=xNykEqQGYV8HVA8xh9GkMrAfQoLg3w2tqvFmQKmt2Bd8i+qW3MdZtr0JtimBQ0VMv
+	 /VNIih9r3lfKw95OV5Jby6LBCFBY72QWSheO5B66wZTnzae+a5oA2h52kN0gGKiWd1
+	 +w7apG1i6bbhaVj6HUbrfW2e1QKe5gdZTi1w5gRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
 	Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
 	Stephen Boyd <swboyd@chromium.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 506/611] clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
-Date: Mon,  8 May 2023 11:45:48 +0200
-Message-Id: <20230508094438.509595629@linuxfoundation.org>
+Subject: [PATCH 6.1 507/611] clk: qcom: lpassaudiocc-sc7280: Add required gdsc power domain clks in lpass_cc_sc7280_desc
+Date: Mon,  8 May 2023 11:45:49 +0200
+Message-Id: <20230508094438.538184649@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,56 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+From: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 
-[ Upstream commit 4fc1c2d9a2b7a394f3b873aae5e03bffd8b5cd31 ]
+[ Upstream commit aad09fc7c4a522892eb64a79627b17a3869936cb ]
 
-The qdsp6ss memory region is being shared by ADSP remoteproc device and
-lpasscc clock device, hence causing memory conflict.
-To avoid this, when qdsp6ss clocks are being enabled in remoteproc driver,
-skip qdsp6ss clock registration if "qcom,adsp-pil-mode" is enabled and
-also assign max_register value.
+Add GDSCs in lpass_cc_sc7280_desc struct.
+When qcom,adsp-pil-mode is enabled, GDSCs required to solve
+dependencies in lpass_audiocc probe().
 
-Fixes: 4ab43d171181 ("clk: qcom: Add lpass clock controller driver for SC7280")
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Fixes: 0cbcfbe50cbf ("clk: qcom: lpass: Handle the regmap overlap of lpasscc and lpass_aon")
 Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230407092255.119690-3-quic_mohs@quicinc.com
+Link: https://lore.kernel.org/r/20230407092255.119690-4-quic_mohs@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/lpasscc-sc7280.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/lpassaudiocc-sc7280.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
-index 5c1e17bd0d763..8486d7135ab10 100644
---- a/drivers/clk/qcom/lpasscc-sc7280.c
-+++ b/drivers/clk/qcom/lpasscc-sc7280.c
-@@ -118,14 +118,18 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
- 		goto destroy_pm_clk;
- 	}
+diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
+index 1339f9211a149..134eb1529ede2 100644
+--- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
++++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
+@@ -696,6 +696,8 @@ static const struct qcom_cc_desc lpass_cc_sc7280_desc = {
+ 	.config = &lpass_audio_cc_sc7280_regmap_config,
+ 	.clks = lpass_cc_sc7280_clocks,
+ 	.num_clks = ARRAY_SIZE(lpass_cc_sc7280_clocks),
++	.gdscs = lpass_aon_cc_sc7280_gdscs,
++	.num_gdscs = ARRAY_SIZE(lpass_aon_cc_sc7280_gdscs),
+ };
  
--	lpass_regmap_config.name = "qdsp6ss";
--	desc = &lpass_qdsp6ss_sc7280_desc;
--
--	ret = qcom_cc_probe_by_index(pdev, 0, desc);
--	if (ret)
--		goto destroy_pm_clk;
-+	if (!of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
-+		lpass_regmap_config.name = "qdsp6ss";
-+		lpass_regmap_config.max_register = 0x3f;
-+		desc = &lpass_qdsp6ss_sc7280_desc;
-+
-+		ret = qcom_cc_probe_by_index(pdev, 0, desc);
-+		if (ret)
-+			goto destroy_pm_clk;
-+	}
- 
- 	lpass_regmap_config.name = "top_cc";
-+	lpass_regmap_config.max_register = 0x4;
- 	desc = &lpass_cc_top_sc7280_desc;
- 
- 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
+ static const struct qcom_cc_desc lpass_audio_cc_sc7280_desc = {
 -- 
 2.39.2
 
