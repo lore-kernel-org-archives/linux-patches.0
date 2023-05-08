@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A37168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EA30C433D2;
-	Mon,  8 May 2023 11:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7950168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67B3AC433D2;
+	Mon,  8 May 2023 11:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545218;
-	bh=+BA7750sAWzzM6mlvisM+T+VeoczYJX2DLbbt1kNYNs=;
+	s=korg; t=1683545221;
+	bh=SYSH3aCgoCAv0uUDnMzc9nKHtw5VLDWrCEOQIbmsShw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCxjxEBznS4jqR116JJx7qtF+ZwU8GfWaOetHKtb+7fT4dm0jTY2kgducBi865nVc
-	 iFJiVZcD27xVcbBKUMDsy2Wq0Yqw2JAPE53vKIjykTIqlL1HUZerisYB54rbOr1sSO
-	 OYOANwvgdaIkmBBbPD0OhM8WHnGD+MS7VsmvUZ68=
+	b=u3YjO9Uq9KbJcuShYwa2in7CPYCYqIiNt0RDYOKQI8B7KT513APlX+VS+Aktq7hZS
+	 dnKCxxndO5UhqQ6D282CWqrJomAqvx4OMowR8svkMRhdgPft/78S3Irhy3WY7UtvqU
+	 eExC4G7vAxb5PWYonXCb3RVxnIDWS+pxiUhGKT3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Lee Jones <lee@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Dipen Patel <dipenp@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 663/694] mfd: arizona-spi: Add missing MODULE_DEVICE_TABLE
-Date: Mon,  8 May 2023 11:48:18 +0200
-Message-Id: <20230508094457.553666935@linuxfoundation.org>
+Subject: [PATCH 6.3 664/694] hte: tegra: fix struct of_device_id build error
+Date: Mon,  8 May 2023 11:48:19 +0200
+Message-Id: <20230508094457.603334800@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,35 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 972c91fd7beddc3f19c8c855f6e60e7dbd435cbd ]
+[ Upstream commit 6680c835ada1b34e882d0a32612f7294c62e27e0 ]
 
-This patch adds missing MODULE_DEVICE_TABLE definition
-which generates correct modalias for automatic loading
-of this driver when it is built as a module.
+Without the extra #include, this driver produces a build failure
+in some configurations.
 
-Fixes: 3f65555c417c ("mfd: arizona: Split of_match table into I2C and SPI versions")
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230323134138.834369-1-ckeepax@opensource.cirrus.com
+drivers/hte/hte-tegra194-test.c:96:34: error: array type has incomplete element type 'struct of_device_id'
+   96 | static const struct of_device_id tegra_hte_test_of_match[] = {
+
+Fixes: 9a75a7cd03c9 ("hte: Add Tegra HTE test driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Dipen Patel <dipenp@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/arizona-spi.c | 1 +
+ drivers/hte/hte-tegra194-test.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mfd/arizona-spi.c b/drivers/mfd/arizona-spi.c
-index da05b966d48c6..02cf4f3e91d76 100644
---- a/drivers/mfd/arizona-spi.c
-+++ b/drivers/mfd/arizona-spi.c
-@@ -277,6 +277,7 @@ static const struct of_device_id arizona_spi_of_match[] = {
- 	{ .compatible = "cirrus,cs47l24", .data = (void *)CS47L24 },
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, arizona_spi_of_match);
- #endif
+diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
+index 5d776a185bd62..ce8c44e792213 100644
+--- a/drivers/hte/hte-tegra194-test.c
++++ b/drivers/hte/hte-tegra194-test.c
+@@ -6,6 +6,7 @@
+  */
  
- static struct spi_driver arizona_spi_driver = {
+ #include <linux/err.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/moduleparam.h>
+ #include <linux/interrupt.h>
 -- 
 2.39.2
 
