@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC08168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:37:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05AE0C4339C;
-	Mon,  8 May 2023 10:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9378D168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:37:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F571C433EF;
+	Mon,  8 May 2023 10:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542270;
-	bh=ZqLfoduxLfHQFahstZ6eoMAgcXnV652PpVU7JyiSIvM=;
+	s=korg; t=1683542273;
+	bh=wRxzhg9uC7CkB7q8uB2nDfcARdCDXM/1ztROGycG8m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puY6rNeAJ0wU5g2szeQNpGin8hdQWYvGQ7bda2aQVrDNL7WoJwcdhgdbXb1GDNi6H
-	 fDwb08DMNnt4QuigsMv05YC8nxB7ZKYUYmFJw4C0F4/m3DnlEpYKTz0lALUP/6Lqjr
-	 Zp3jIoA3rdeC0y5wUm32eLBzVe8cPfSD4C+osugM=
+	b=BbNCSazrOG1yuiWIbqSIRgZb+72zNWkX0B019aljvi/bT7l8/NDPAIWTwkdKNhUO7
+	 K4G1rkttxubkuseIdZ72PYvKw1Bc221S3JqAFI8NnlAVptGUYz4p+edIiaIophLNoQ
+	 etxA7WDcSe45Bz3Xrfj/nwe1nh1dKQLAfhF7J8C0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengming Zhou <zhouchengming@bytedance.com>,
-	Feng Zhou <zhoufeng.zf@bytedance.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Shuchang Li <lishuchang@hust.edu.cn>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 349/663] bpf/btf: Fix is_int_ptr()
-Date: Mon,  8 May 2023 11:42:55 +0200
-Message-Id: <20230508094439.474799956@linuxfoundation.org>
+Subject: [PATCH 6.2 350/663] scsi: lpfc: Fix ioremap issues in lpfc_sli4_pci_mem_setup()
+Date: Mon,  8 May 2023 11:42:56 +0200
+Message-Id: <20230508094439.503811823@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,48 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Feng Zhou <zhoufeng.zf@bytedance.com>
+From: Shuchang Li <lishuchang@hust.edu.cn>
 
-[ Upstream commit 91f2dc6838c19342f7f2993627c622835cc24890 ]
+[ Upstream commit 91a0c0c1413239d0548b5aac4c82f38f6d53a91e ]
 
-When tracing a kernel function with arg type is u32*, btf_ctx_access()
-would report error: arg2 type INT is not a struct.
+When if_type equals zero and pci_resource_start(pdev, PCI_64BIT_BAR4)
+returns false, drbl_regs_memmap_p is not remapped. This passes a NULL
+pointer to iounmap(), which can trigger a WARN() on certain arches.
 
-The commit bb6728d75611 ("bpf: Allow access to int pointer arguments
-in tracing programs") added support for int pointer, but did not skip
-modifiers before checking it's type. This patch fixes it.
+When if_type equals six and pci_resource_start(pdev, PCI_64BIT_BAR4)
+returns true, drbl_regs_memmap_p may has been remapped and
+ctrl_regs_memmap_p is not remapped. This is a resource leak and passes a
+NULL pointer to iounmap().
 
-Fixes: bb6728d75611 ("bpf: Allow access to int pointer arguments in tracing programs")
-Co-developed-by: Chengming Zhou <zhouchengming@bytedance.com>
-Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
-Signed-off-by: Feng Zhou <zhoufeng.zf@bytedance.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20230410085908.98493-2-zhoufeng.zf@bytedance.com
+To fix these issues, we need to add null checks before iounmap(), and
+change some goto labels.
+
+Fixes: 1351e69fc6db ("scsi: lpfc: Add push-to-adapter support to sli4")
+Signed-off-by: Shuchang Li <lishuchang@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230404072133.1022-1-lishuchang@hust.edu.cn
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/scsi/lpfc/lpfc_init.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 70ab572f81bc7..7f18d48c4a15b 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -5848,12 +5848,8 @@ struct btf *bpf_prog_get_target_btf(const struct bpf_prog *prog)
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index eeb73da754d0d..99d2694fe00a0 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -11970,7 +11970,7 @@ lpfc_sli4_pci_mem_setup(struct lpfc_hba *phba)
+ 				goto out_iounmap_all;
+ 		} else {
+ 			error = -ENOMEM;
+-			goto out_iounmap_all;
++			goto out_iounmap_ctrl;
+ 		}
+ 	}
  
- static bool is_int_ptr(struct btf *btf, const struct btf_type *t)
- {
--	/* t comes in already as a pointer */
--	t = btf_type_by_id(btf, t->type);
--
--	/* allow const */
--	if (BTF_INFO_KIND(t->info) == BTF_KIND_CONST)
--		t = btf_type_by_id(btf, t->type);
-+	/* skip modifiers */
-+	t = btf_type_skip_modifiers(btf, t->type, NULL);
+@@ -11988,7 +11988,7 @@ lpfc_sli4_pci_mem_setup(struct lpfc_hba *phba)
+ 			dev_err(&pdev->dev,
+ 			   "ioremap failed for SLI4 HBA dpp registers.\n");
+ 			error = -ENOMEM;
+-			goto out_iounmap_ctrl;
++			goto out_iounmap_all;
+ 		}
+ 		phba->pci_bar4_memmap_p = phba->sli4_hba.dpp_regs_memmap_p;
+ 	}
+@@ -12013,9 +12013,11 @@ lpfc_sli4_pci_mem_setup(struct lpfc_hba *phba)
+ 	return 0;
  
- 	return btf_type_is_int(t);
- }
+ out_iounmap_all:
+-	iounmap(phba->sli4_hba.drbl_regs_memmap_p);
++	if (phba->sli4_hba.drbl_regs_memmap_p)
++		iounmap(phba->sli4_hba.drbl_regs_memmap_p);
+ out_iounmap_ctrl:
+-	iounmap(phba->sli4_hba.ctrl_regs_memmap_p);
++	if (phba->sli4_hba.ctrl_regs_memmap_p)
++		iounmap(phba->sli4_hba.ctrl_regs_memmap_p);
+ out_iounmap_conf:
+ 	iounmap(phba->sli4_hba.conf_regs_memmap_p);
+ 
 -- 
 2.39.2
 
