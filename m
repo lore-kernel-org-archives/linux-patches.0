@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E8E168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:57:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9763C433EF;
-	Mon,  8 May 2023 10:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC3B168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:57:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B471C433EF;
+	Mon,  8 May 2023 10:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543424;
-	bh=oWUxFGWUGp1tUky7lt2pEBZRL81RZORgAxCRAKAofUs=;
+	s=korg; t=1683543427;
+	bh=Ua/MFmWesgy32z8E9MDOiD9RzCL39IRCi8eEaA907E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0YaSIS2hAjV+VbpbIiCxq3Ce2I2qfamX5t/jPcQ3EtE8XOms7M1cff9RDYsGkaC9M
-	 NpbIxs5vxe37ZqCqoXI8YO79ocOYN7UYtaDqgyy+o1yeYXwX/CB65gkxcQHJ2pxiAF
-	 9l9az+nl9IYvfxARjWzhHcOkrzK0dvRlchMNSHpM=
+	b=mdonb1Wxg5jAfqo6IxD7QrGoQZuYj603ypGhNZvnxOVQomXd/ji8A6Wd9hgGdZvpx
+	 BFV6cXaeO8SB+ROT1Tx8RVfOQRSvBU5VhIP5kuBqQSs0Pqr/1l1QuNx6VYYNQ1zWLG
+	 dshh8ztHHDYgp4BOcE3ZtRvcxGVeXZY9bP2TEi7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	npiggin@gmail.com,
-	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
-	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.3 046/694] ring-buffer: Ensure proper resetting of atomic variables in ring_buffer_reset_online_cpus
-Date: Mon,  8 May 2023 11:38:01 +0200
-Message-Id: <20230508094434.114280579@linuxfoundation.org>
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Song Shuai <suagrfillet@gmail.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.3 079/694] riscv: mm: remove redundant parameter of create_fdt_early_page_table
+Date: Mon,  8 May 2023 11:38:34 +0200
+Message-Id: <20230508094435.102696366@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,81 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+From: Song Shuai <suagrfillet@gmail.com>
 
-commit 7c339fb4d8577792378136c15fde773cfb863cb8 upstream.
+commit e4ef93edd4e0b022529303db1915766ff9de450e upstream.
 
-In ring_buffer_reset_online_cpus, the buffer_size_kb write operation
-may permanently fail if the cpu_online_mask changes between two
-for_each_online_buffer_cpu loops. The number of increases and decreases
-on both cpu_buffer->resize_disabled and cpu_buffer->record_disabled may be
-inconsistent, causing some CPUs to have non-zero values for these atomic
-variables after the function returns.
+create_fdt_early_page_table() explicitly uses early_pg_dir for
+32-bit fdt mapping and the pgdir parameter is redundant here.
+So remove it and its caller.
 
-This issue can be reproduced by "echo 0 > trace" while hotplugging cpu.
-After reproducing success, we can find out buffer_size_kb will not be
-functional anymore.
-
-To prevent leaving 'resize_disabled' and 'record_disabled' non-zero after
-ring_buffer_reset_online_cpus returns, we ensure that each atomic variable
-has been set up before atomic_sub() to it.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230426062027.17451-1-Tze-nan.Wu@mediatek.com
-
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Signed-off-by: Song Shuai <suagrfillet@gmail.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: ef69d2559fe9 ("riscv: Move early dtb mapping into the fixmap region")
 Cc: stable@vger.kernel.org
-Cc: <mhiramat@kernel.org>
-Cc: npiggin@gmail.com
-Fixes: b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
-Reviewed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
-Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20230426100009.685435-1-suagrfillet@gmail.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/ring_buffer.c |   16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ arch/riscv/mm/init.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/kernel/trace/ring_buffer.c
-+++ b/kernel/trace/ring_buffer.c
-@@ -5345,6 +5345,9 @@ void ring_buffer_reset_cpu(struct trace_
- }
- EXPORT_SYMBOL_GPL(ring_buffer_reset_cpu);
+--- a/arch/riscv/mm/init.c
++++ b/arch/riscv/mm/init.c
+@@ -843,8 +843,7 @@ static void __init create_kernel_page_ta
+  * this means 2 PMD entries whereas for 32-bit kernel, this is only 1 PGDIR
+  * entry.
+  */
+-static void __init create_fdt_early_page_table(pgd_t *pgdir,
+-					       uintptr_t fix_fdt_va,
++static void __init create_fdt_early_page_table(uintptr_t fix_fdt_va,
+ 					       uintptr_t dtb_pa)
+ {
+ 	uintptr_t pa = dtb_pa & ~(PMD_SIZE - 1);
+@@ -1034,8 +1033,7 @@ asmlinkage void __init setup_vm(uintptr_
+ 	create_kernel_page_table(early_pg_dir, true);
  
-+/* Flag to ensure proper resetting of atomic variables */
-+#define RESET_BIT	(1 << 30)
-+
- /**
-  * ring_buffer_reset_online_cpus - reset a ring buffer per CPU buffer
-  * @buffer: The ring buffer to reset a per cpu buffer of
-@@ -5361,20 +5364,27 @@ void ring_buffer_reset_online_cpus(struc
- 	for_each_online_buffer_cpu(buffer, cpu) {
- 		cpu_buffer = buffer->buffers[cpu];
+ 	/* Setup early mapping for FDT early scan */
+-	create_fdt_early_page_table(early_pg_dir,
+-				    __fix_to_virt(FIX_FDT), dtb_pa);
++	create_fdt_early_page_table(__fix_to_virt(FIX_FDT), dtb_pa);
  
--		atomic_inc(&cpu_buffer->resize_disabled);
-+		atomic_add(RESET_BIT, &cpu_buffer->resize_disabled);
- 		atomic_inc(&cpu_buffer->record_disabled);
- 	}
- 
- 	/* Make sure all commits have finished */
- 	synchronize_rcu();
- 
--	for_each_online_buffer_cpu(buffer, cpu) {
-+	for_each_buffer_cpu(buffer, cpu) {
- 		cpu_buffer = buffer->buffers[cpu];
- 
-+		/*
-+		 * If a CPU came online during the synchronize_rcu(), then
-+		 * ignore it.
-+		 */
-+		if (!(atomic_read(&cpu_buffer->resize_disabled) & RESET_BIT))
-+			continue;
-+
- 		reset_disabled_cpu_buffer(cpu_buffer);
- 
- 		atomic_dec(&cpu_buffer->record_disabled);
--		atomic_dec(&cpu_buffer->resize_disabled);
-+		atomic_sub(RESET_BIT, &cpu_buffer->resize_disabled);
- 	}
- 
- 	mutex_unlock(&buffer->mutex);
+ 	/*
+ 	 * Bootime fixmap only can handle PMD_SIZE mapping. Thus, boot-ioremap
 
 
