@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49929171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3C70C433D2;
-	Mon,  8 May 2023 11:32:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F5C171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D2EC433EF;
+	Mon,  8 May 2023 11:32:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545568;
-	bh=FyRSMsruWJmhoNEsElt/l5MHC/crHin+tdK/RoLzLGg=;
+	s=korg; t=1683545570;
+	bh=I7TWc+zbSwUy1238BHBZPc4xTNJ7aBbXXL03QZk5LpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HG5IqPtlbgE8YO0zDjwZOIk370KgBcn+6Rch3b0ZHg1EQFMHLR4TpX5rEJypYQ1vo
-	 cDdepQX/7ec1FXTuELckyOrBHgeXbag847aPf2rGM8hkwguZs0umYL9b5olurlR4qg
-	 PttioS+R61q70CEeUB8GCPoBNpvZSWqB6vBmlGeA=
+	b=PX3RM9SvcCLBXuxxxxiZJVX9EJU1E3KBKxFxhD6RIYpDNhI8iXZp+347bAHIkOwas
+	 NpiyqAQYrd1pgPibv9MHHNd0t/xm6e3EY705BCkuIJ/dhoe/OZYeS/o+Sm0RlnC2SX
+	 VcPZbqAa25t3F94g7RwxwN/Z/TSUAOVCReQzmJas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Polimera <quic_vpolimer@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Feng Xu <feng.f.xu@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 082/371] drm/msm/disp/dpu: check for crtc enable rather than crtc active to release shared resources
-Date: Mon,  8 May 2023 11:44:43 +0200
-Message-Id: <20230508094815.360390827@linuxfoundation.org>
+Subject: [PATCH 5.15 083/371] EDAC/skx: Fix overflows on the DRAM row address mapping arrays
+Date: Mon,  8 May 2023 11:44:44 +0200
+Message-Id: <20230508094815.391531422@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,37 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinod Polimera <quic_vpolimer@quicinc.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit b6975693846b562c4d3e0e60cc884affc5bdac00 ]
+[ Upstream commit 71b1e3ba3fed5a34c5fac6d3a15c2634b04c1eb7 ]
 
-According to KMS documentation, The driver must not release any shared
-resources if active is set to false but enable still true.
+The current DRAM row address mapping arrays skx_{open,close}_row[]
+only support ranks with sizes up to 16G. Decoding a rank address
+to a DRAM row address for a 32G rank by using either one of the
+above arrays by the skx_edac driver, will result in an overflow on
+the array.
 
-Fixes: ccc862b957c6 ("drm/msm/dpu: Fix reservation failures in modeset")
-Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/524726/
-Link: https://lore.kernel.org/r/1677774797-31063-5-git-send-email-quic_vpolimer@quicinc.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+For a 32G rank, the most significant DRAM row address bit (the
+bit17) is mapped from the bit34 of the rank address. Add this new
+mapping item to both arrays to fix the overflow issue.
+
+Fixes: 4ec656bdf43a ("EDAC, skx_edac: Add EDAC driver for Skylake")
+Reported-by: Feng Xu <feng.f.xu@intel.com>
+Tested-by: Feng Xu <feng.f.xu@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/all/20230211011728.71764-1-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/edac/skx_base.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 5f236395677e6..03bddd904d1a1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -637,7 +637,7 @@ static int dpu_encoder_virt_atomic_check(
- 		if (drm_atomic_crtc_needs_modeset(crtc_state)) {
- 			dpu_rm_release(global_state, drm_enc);
+diff --git a/drivers/edac/skx_base.c b/drivers/edac/skx_base.c
+index 1abc020d49ab6..984c93c8825f0 100644
+--- a/drivers/edac/skx_base.c
++++ b/drivers/edac/skx_base.c
+@@ -510,7 +510,7 @@ static bool skx_rir_decode(struct decoded_addr *res)
+ }
  
--			if (!crtc_state->active_changed || crtc_state->active)
-+			if (!crtc_state->active_changed || crtc_state->enable)
- 				ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
- 						drm_enc, crtc_state, topology);
- 		}
+ static u8 skx_close_row[] = {
+-	15, 16, 17, 18, 20, 21, 22, 28, 10, 11, 12, 13, 29, 30, 31, 32, 33
++	15, 16, 17, 18, 20, 21, 22, 28, 10, 11, 12, 13, 29, 30, 31, 32, 33, 34
+ };
+ 
+ static u8 skx_close_column[] = {
+@@ -518,7 +518,7 @@ static u8 skx_close_column[] = {
+ };
+ 
+ static u8 skx_open_row[] = {
+-	14, 15, 16, 20, 28, 21, 22, 23, 24, 25, 26, 27, 29, 30, 31, 32, 33
++	14, 15, 16, 20, 28, 21, 22, 23, 24, 25, 26, 27, 29, 30, 31, 32, 33, 34
+ };
+ 
+ static u8 skx_open_column[] = {
 -- 
 2.39.2
 
