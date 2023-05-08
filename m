@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78E8168D5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:30:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505EEC433EF;
-	Mon,  8 May 2023 11:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA409168D5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:30:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398A3C433D2;
+	Mon,  8 May 2023 11:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545415;
-	bh=6V9UU7Oo2l6svGl2xdwt7K1tmIn8UpKuZhXy3GC++TM=;
+	s=korg; t=1683545418;
+	bh=3mEJP8tmz/XW5HcFioTquKyOJJLG48D3oWkCAML/yZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KMAOYAhkD3Q7U+FlCp9wfaXDygkvjL5bNK1th1lYjrZrPaTaxvtyf+jQRlHIgzLI2
-	 GnONMfrpphdroUu0FR2ni0lbunFKvMdus/a6nKS9fWiSfU8V87jtTUz9S0wTyc+HDM
-	 Sp+bMGaX6E7q7LiAqIIAXwkTCNLunEFvi2LemmGU=
+	b=VUO06NPpbxyHtRdryliC99koE4OK2CFgEOCZA6yNNHZ/HPQW402TQ408EBb1eAMTt
+	 PnJy3TQv94nBEwBE6CzRmfIC6Fk5Y831znibtw2y+iIC4Ck8EzoGz1T+zQFTGU/2pb
+	 t5HZXzwYqUepHrT/eBMBa0MwrSVIs/QIFAcIBA8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Anh Tuan Phan <tuananhlfc@gmail.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/371] ASoC: Intel: bytcr_rt5640: Add quirk for the Acer Iconia One 7 B1-750
-Date: Mon,  8 May 2023 11:43:26 +0200
-Message-Id: <20230508094812.192765465@linuxfoundation.org>
+Subject: [PATCH 5.15 006/371] selftests mount: Fix mount_setattr_test builds failed
+Date: Mon,  8 May 2023 11:43:27 +0200
+Message-Id: <20230508094812.238005754@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,48 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Anh Tuan Phan <tuananhlfc@gmail.com>
 
-[ Upstream commit e38c5e80c3d293a883c6f1d553f2146ec0bda35e ]
+[ Upstream commit f1594bc676579133a3cd906d7d27733289edfb86 ]
 
-The Acer Iconia One 7 B1-750 tablet mostly works fine with the defaults
-for an Bay Trail CR tablet. Except for the internal mic, instead of
-an analog mic on IN3 a digital mic on DMIC1 is uses.
+When compiling selftests with target mount_setattr I encountered some errors with the below messages:
+mount_setattr_test.c: In function ‘mount_setattr_thread’:
+mount_setattr_test.c:343:16: error: variable ‘attr’ has initializer but incomplete type
+  343 |         struct mount_attr attr = {
+      |                ^~~~~~~~~~
 
-Add a quirk with these settings for this tablet.
+These errors might be because of linux/mount.h is not included. This patch resolves that issue.
 
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230322145332.131525-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Anh Tuan Phan <tuananhlfc@gmail.com>
+Acked-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ tools/testing/selftests/mount_setattr/mount_setattr_test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 5f6e2bb324406..4df1be8170bb6 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -533,6 +533,18 @@ static int byt_rt5640_aif1_hw_params(struct snd_pcm_substream *substream,
+diff --git a/tools/testing/selftests/mount_setattr/mount_setattr_test.c b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
+index 8c5fea68ae677..969647228817b 100644
+--- a/tools/testing/selftests/mount_setattr/mount_setattr_test.c
++++ b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
+@@ -18,6 +18,7 @@
+ #include <grp.h>
+ #include <stdbool.h>
+ #include <stdarg.h>
++#include <linux/mount.h>
  
- /* Please keep this list alphabetically sorted */
- static const struct dmi_system_id byt_rt5640_quirk_table[] = {
-+	{	/* Acer Iconia One 7 B1-750 */
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Insyde"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "VESPA2"),
-+		},
-+		.driver_data = (void *)(BYT_RT5640_DMIC1_MAP |
-+					BYT_RT5640_JD_SRC_JD1_IN4P |
-+					BYT_RT5640_OVCD_TH_1500UA |
-+					BYT_RT5640_OVCD_SF_0P75 |
-+					BYT_RT5640_SSP0_AIF1 |
-+					BYT_RT5640_MCLK_EN),
-+	},
- 	{	/* Acer Iconia Tab 8 W1-810 */
- 		.matches = {
- 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
+ #include "../kselftest_harness.h"
+ 
 -- 
 2.39.2
 
