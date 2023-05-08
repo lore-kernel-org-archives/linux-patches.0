@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78769168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:13:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFBFC433EF;
-	Mon,  8 May 2023 10:13:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9D7168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:13:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87068C433EF;
+	Mon,  8 May 2023 10:13:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540800;
-	bh=gHhybyGWdXjAoaaaC9QnQOCm2AnG71khjR+1WYesOtw=;
+	s=korg; t=1683540802;
+	bh=e8tOSJv6yz9JdOYtxmNuZcBlf9S2CMMH+bTVsVke5n0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BhvRlQQiL4awOfFxfPliqu2rVMO1GfwtfaqsgKAbAwSZQt9kqgQVMh8+9Rkse93Wn
-	 KGAt2hFHfPpEKQE+W6YWcs25Tk7f3/k8vxLc9TwjaS0t5VjvEdjBEZLi0sV7cERSCC
-	 dnDkCwHJZcFSSHX30oDvg2ifSOWPy8gPmkXbbLag=
+	b=KhggNt+ADuc2qCgtFszF/4LYo3e/WY9Jh/2PTTCM5Rq0RtVpjQaKFhtynqc+ydep2
+	 cORfk+TiYEtF4m8+xfXgXMef6wpSueHICbkahCtrQ79dFeLJtIknJdXp9uZT/rBbMM
+	 7QFA4UYkeMYiIvTz7NkSjpSBB2ig1/lrnaWyBIxM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
-	Ye Li <ye.li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 503/611] clk: imx: imx8ulp: Fix XBAR_DIVBUS and AD_SLOW clock parents
-Date: Mon,  8 May 2023 11:45:45 +0200
-Message-Id: <20230508094438.413685503@linuxfoundation.org>
+Subject: [PATCH 6.1 486/611] fs/ntfs3: Fix memory leak if ntfs_read_mft failed
+Date: Mon,  8 May 2023 11:45:28 +0200
+Message-Id: <20230508094437.872188134@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,41 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit d608c18018c897b88d66f1340fe274b7181817fa ]
+[ Upstream commit bfa434c60157c9793e9b12c9b68ade02aff9f803 ]
 
-XBAR_DIVBUS and AD_SLOW should set parent to XBAR_AD_DIVPLAT and
-XBAR_DIVBUS respectively, not the NIC_AD. otherwise we will get
-wrong clock rate.
+Label ATTR_ROOT in ntfs_read_mft() sets is_root = true and
+ni->ni_flags |= NI_FLAG_DIR, then next attr will goto label ATTR_ALLOC
+and alloc ni->dir.alloc_run. However two states are not always
+consistent and can make memory leak.
 
-Fixes: c43a801a5789 ("clk: imx: Add clock driver for imx8ulp")
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
-Signed-off-by: Ye Li <ye.li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230331063814.2462059-2-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+ 1) attr_name in ATTR_ROOT does not fit the condition it will set
+ is_root = true but NI_FLAG_DIR is not set.
+ 2) next attr_name in ATTR_ALLOC fits the condition and alloc
+ ni->dir.alloc_run
+ 3) in cleanup function ni_clear(), when NI_FLAG_DIR is set, it frees
+ ni->dir.alloc_run, otherwise it frees ni->file.run
+ 4) because NI_FLAG_DIR is not set in this case, ni->dir.alloc_run is
+ leaked as kmemleak reported:
+
+unreferenced object 0xffff888003bc5480 (size 64):
+  backtrace:
+    [<000000003d42e6b0>] __kmalloc_node+0x4e/0x1c0
+    [<00000000d8e19b8a>] kvmalloc_node+0x39/0x1f0
+    [<00000000fc3eb5b8>] run_add_entry+0x18a/0xa40 [ntfs3]
+    [<0000000011c9f978>] run_unpack+0x75d/0x8e0 [ntfs3]
+    [<00000000e7cf1819>] run_unpack_ex+0xbc/0x500 [ntfs3]
+    [<00000000bbf0a43d>] ntfs_iget5+0xb25/0x2dd0 [ntfs3]
+    [<00000000a6e50693>] ntfs_fill_super+0x218d/0x3580 [ntfs3]
+    [<00000000b9170608>] get_tree_bdev+0x3fb/0x710
+    [<000000004833798a>] vfs_get_tree+0x8e/0x280
+    [<000000006e20b8e6>] path_mount+0xf3c/0x1930
+    [<000000007bf15a5f>] do_mount+0xf3/0x110
+    ...
+
+Fix this by always setting is_root and NI_FLAG_DIR together.
+
+Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8ulp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ntfs3/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imx8ulp.c b/drivers/clk/imx/clk-imx8ulp.c
-index 8eb1af2d64298..ca0e4a3aa454e 100644
---- a/drivers/clk/imx/clk-imx8ulp.c
-+++ b/drivers/clk/imx/clk-imx8ulp.c
-@@ -200,8 +200,8 @@ static int imx8ulp_clk_cgc1_init(struct platform_device *pdev)
- 	clks[IMX8ULP_CLK_NIC_AD_DIVPLAT] = imx_clk_hw_divider_flags("nic_ad_divplat", "nic_sel", base + 0x34, 21, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
- 	clks[IMX8ULP_CLK_NIC_PER_DIVPLAT] = imx_clk_hw_divider_flags("nic_per_divplat", "nic_ad_divplat", base + 0x34, 14, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
- 	clks[IMX8ULP_CLK_XBAR_AD_DIVPLAT] = imx_clk_hw_divider_flags("xbar_ad_divplat", "nic_ad_divplat", base + 0x38, 14, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
--	clks[IMX8ULP_CLK_XBAR_DIVBUS] = imx_clk_hw_divider_flags("xbar_divbus", "nic_ad_divplat", base + 0x38, 7, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
--	clks[IMX8ULP_CLK_XBAR_AD_SLOW] = imx_clk_hw_divider_flags("xbar_ad_slow", "nic_ad_divplat", base + 0x38, 0, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
-+	clks[IMX8ULP_CLK_XBAR_DIVBUS] = imx_clk_hw_divider_flags("xbar_divbus", "xbar_ad_divplat", base + 0x38, 7, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
-+	clks[IMX8ULP_CLK_XBAR_AD_SLOW] = imx_clk_hw_divider_flags("xbar_ad_slow", "xbar_divbus", base + 0x38, 0, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 22152300e60ca..57988fedd1847 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -257,7 +257,6 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 			goto out;
  
- 	clks[IMX8ULP_CLK_SOSC_DIV1_GATE] = imx_clk_hw_gate_dis("sosc_div1_gate", "sosc", base + 0x108, 7);
- 	clks[IMX8ULP_CLK_SOSC_DIV2_GATE] = imx_clk_hw_gate_dis("sosc_div2_gate", "sosc", base + 0x108, 15);
+ 		root = Add2Ptr(attr, roff);
+-		is_root = true;
+ 
+ 		if (attr->name_len != ARRAY_SIZE(I30_NAME) ||
+ 		    memcmp(attr_name(attr), I30_NAME, sizeof(I30_NAME)))
+@@ -270,6 +269,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 		if (!is_dir)
+ 			goto next_attr;
+ 
++		is_root = true;
+ 		ni->ni_flags |= NI_FLAG_DIR;
+ 
+ 		err = indx_init(&ni->dir, sbi, attr, INDEX_MUTEX_I30);
 -- 
 2.39.2
 
