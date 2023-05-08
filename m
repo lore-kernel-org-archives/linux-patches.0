@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D3115496
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:33:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13E6C433D2;
-	Mon,  8 May 2023 10:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5CE168A2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:33:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30CCC433D2;
+	Mon,  8 May 2023 10:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541986;
-	bh=amE3sEHx8BpKsR+JzTDsT89/L/cImNqKhaQwmTY2Hp8=;
+	s=korg; t=1683541989;
+	bh=NW6FrHLmme65xti4Hb/O87HIVxewUIrQhqySMwRDKSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pijrL2EGmzPeVJZw+ufL68qi5S0Xf8tMPskBDLe0usGptI/ryaS60MIBnsKqVr0NC
-	 lQAAN+GeMff2E4FBqvUceEb3efMF37aK9dWEPa13AWy0L6Wdyv5YHTFpBAUVNpcSbW
-	 1t0nj8vx6HWuod239NFkcisaO9/fnYHeAY7+cW8w=
+	b=fbcQ8sXCWZZv7YqPiiKDm9qdE+g0NYtoDjV3GCLTRqccoJbG8DUXTxkFQuCh5X8SR
+	 UXf9Ix7xkqmdr2OpH7WsGlTi7KEljWQ7fXu3vb2POGRCCu19xPFP5AEPG6zbcwp3qs
+	 ANbpZXxdCuKwDCnBeGkNcTCUL629O+LITXauU99E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 290/663] wifi: rtw88: mac: Return the original error from rtw_pwr_seq_parser()
-Date: Mon,  8 May 2023 11:41:56 +0200
-Message-Id: <20230508094437.613190687@linuxfoundation.org>
+Subject: [PATCH 6.2 291/663] wifi: rtw88: mac: Return the original error from rtw_mac_power_switch()
+Date: Mon,  8 May 2023 11:41:57 +0200
+Message-Id: <20230508094437.641449579@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,35 +38,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit b7ed9fa2cb76ca7a3c3cd4a6d35748fe1fbda9f6 ]
+[ Upstream commit 15c8e267dfa62f207ee1db666c822324e3362b84 ]
 
-rtw_pwr_seq_parser() calls rtw_sub_pwr_seq_parser() which can either
-return -EBUSY, -EINVAL or 0. Propagate the original error code instead
-of unconditionally returning -EBUSY in case of an error.
+rtw_mac_power_switch() calls rtw_pwr_seq_parser() which can return
+-EINVAL, -EBUSY or 0. Propagate the original error code instead of
+unconditionally returning -EINVAL in case of an error.
 
 Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
 Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230226221004.138331-2-martin.blumenstingl@googlemail.com
+Link: https://lore.kernel.org/r/20230226221004.138331-3-martin.blumenstingl@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/mac.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/wireless/realtek/rtw88/mac.c b/drivers/net/wireless/realtek/rtw88/mac.c
-index aa7c5901ef260..a4afef14e18d6 100644
+index a4afef14e18d6..8625a0a1430ac 100644
 --- a/drivers/net/wireless/realtek/rtw88/mac.c
 +++ b/drivers/net/wireless/realtek/rtw88/mac.c
-@@ -233,7 +233,7 @@ static int rtw_pwr_seq_parser(struct rtw_dev *rtwdev,
+@@ -247,6 +247,7 @@ static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
+ 	const struct rtw_pwr_seq_cmd **pwr_seq;
+ 	u8 rpwm;
+ 	bool cur_pwr;
++	int ret;
  
- 		ret = rtw_sub_pwr_seq_parser(rtwdev, intf_mask, cut_mask, cmd);
- 		if (ret)
--			return -EBUSY;
-+			return ret;
+ 	if (rtw_chip_wcpu_11ac(rtwdev)) {
+ 		rpwm = rtw_read8(rtwdev, rtwdev->hci.rpwm_addr);
+@@ -270,8 +271,9 @@ static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
+ 		return -EALREADY;
  
- 		idx++;
- 	} while (1);
+ 	pwr_seq = pwr_on ? chip->pwr_on_seq : chip->pwr_off_seq;
+-	if (rtw_pwr_seq_parser(rtwdev, pwr_seq))
+-		return -EINVAL;
++	ret = rtw_pwr_seq_parser(rtwdev, pwr_seq);
++	if (ret)
++		return ret;
+ 
+ 	if (pwr_on)
+ 		set_bit(RTW_FLAG_POWERON, rtwdev->flags);
 -- 
 2.39.2
 
