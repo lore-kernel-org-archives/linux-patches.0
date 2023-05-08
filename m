@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4523168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F26DC433D2;
-	Mon,  8 May 2023 10:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5FB168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E55C433D2;
+	Mon,  8 May 2023 10:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540668;
-	bh=gkfnnr1qoSbUOYReg2jWrFx1R+8WYHwcmUOKvnwDoOQ=;
+	s=korg; t=1683540671;
+	bh=qJukvqPquSrirTjGJMUxCsM2M72GFAlS7tjQZ05IVZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xWC8kgQpwVbvn0eESi8YA4Ewuwn7SzLzkuNBcYd44Rn9FXxqttpcesVnzv7pagUtH
-	 EHuYNec4HjPMLt8O1+4GW2HdYECMkL1f4vEjQ5udt7zvEkxjMRG9h6wUm4zHbuVLTD
-	 FGm6lPQxugUGL/k2F0p1dy62GtUJ7NcIBTLjTnTc=
+	b=shGhZlZHP/QV14Z333OvPhkJozb421ZMRTbYaKbSyWFFS+jxuOt2kIYXmJahls4pw
+	 SR7vUJEz7YFNaoanpq3dGrPrnXCGRYBqx0eJfrfxvefkHnA+7ufCGxeDDR+urU9Qgi
+	 cqVmwGl/sYELL0vMAYCmeAYIqtqIowwV4rjRo57I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tsaur Erwin <erwin.tsaur@intel.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 421/611] PCI/EDR: Clear Device Status after EDR error recovery
-Date: Mon,  8 May 2023 11:44:23 +0200
-Message-Id: <20230508094435.890977573@linuxfoundation.org>
+Subject: [PATCH 6.1 422/611] ia64: mm/contig: fix section mismatch warning/error
+Date: Mon,  8 May 2023 11:44:24 +0200
+Message-Id: <20230508094435.929499239@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,54 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit c441b1e03da6c680a3e12da59c554f454f2ccf5e ]
+[ Upstream commit 58deeb4ef3b054498747d0929d94ac53ab90981f ]
 
-During EDR recovery, the OS must clear error status of the port that
-triggered DPC even if firmware retains control of DPC and AER (see the
-implementation note in the PCI Firmware spec r3.3, sec 4.6.12).
+alloc_per_cpu_data() is called by find_memory(), which is marked as
+__init.  Therefore alloc_per_cpu_data() can also be marked as __init to
+remedy this modpost problem.
 
-Prior to 068c29a248b6 ("PCI/ERR: Clear PCIe Device Status errors only if
-OS owns AER"), the port Device Status was cleared in this path:
+WARNING: modpost: vmlinux.o: section mismatch in reference: alloc_per_cpu_data (section: .text) -> memblock_alloc_try_nid (section: .init.text)
 
-  edr_handle_event
-    dpc_process_error(dev)                 # "dev" triggered DPC
-    pcie_do_recovery(dev, dpc_reset_link)
-      dpc_reset_link                       # exit DPC
-      pcie_clear_device_status(dev)        # clear Device Status
-
-After 068c29a248b6, pcie_do_recovery() no longer clears Device Status when
-firmware controls AER, so the error bit remains set even after recovery.
-
-Per the "Downstream Port Containment configuration control" bit in the
-returned _OSC Control Field (sec 4.5.1), the OS is allowed to clear error
-status until it evaluates _OST, so clear Device Status in
-edr_handle_event() if the error recovery was successful.
-
-[bhelgaas: commit log]
-Fixes: 068c29a248b6 ("PCI/ERR: Clear PCIe Device Status errors only if OS owns AER")
-Link: https://lore.kernel.org/r/20230315235449.1279209-1-sathyanarayanan.kuppuswamy@linux.intel.com
-Reported-by: Tsaur Erwin <erwin.tsaur@intel.com>
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://lkml.kernel.org/r/20230223034258.12917-1-rdunlap@infradead.org
+Fixes: 4b9ddc7cf272 ("[IA64] Fix section mismatch in contig.c version of per_cpu_init()")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pcie/edr.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/ia64/mm/contig.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/pcie/edr.c b/drivers/pci/pcie/edr.c
-index a6b9b479b97ad..87734e4c3c204 100644
---- a/drivers/pci/pcie/edr.c
-+++ b/drivers/pci/pcie/edr.c
-@@ -193,6 +193,7 @@ static void edr_handle_event(acpi_handle handle, u32 event, void *data)
- 	 */
- 	if (estate == PCI_ERS_RESULT_RECOVERED) {
- 		pci_dbg(edev, "DPC port successfully recovered\n");
-+		pcie_clear_device_status(edev);
- 		acpi_send_edr_status(pdev, edev, EDR_OST_SUCCESS);
- 	} else {
- 		pci_dbg(edev, "DPC port recovery failed\n");
+diff --git a/arch/ia64/mm/contig.c b/arch/ia64/mm/contig.c
+index 24901d8093015..1e9eaa107eb73 100644
+--- a/arch/ia64/mm/contig.c
++++ b/arch/ia64/mm/contig.c
+@@ -77,7 +77,7 @@ void *per_cpu_init(void)
+ 	return __per_cpu_start + __per_cpu_offset[smp_processor_id()];
+ }
+ 
+-static inline void
++static inline __init void
+ alloc_per_cpu_data(void)
+ {
+ 	size_t size = PERCPU_PAGE_SIZE * num_possible_cpus();
 -- 
 2.39.2
 
