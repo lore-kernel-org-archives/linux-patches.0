@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48845168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:17:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39ADC433D2;
-	Mon,  8 May 2023 10:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D852A168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:17:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A99FC43443;
+	Mon,  8 May 2023 10:17:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541035;
-	bh=Xdq6WHE3RMmxZGTNIrc9fX9lJQcBS0AbCx8tF2rpevg=;
+	s=korg; t=1683541037;
+	bh=SYSH3aCgoCAv0uUDnMzc9nKHtw5VLDWrCEOQIbmsShw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h89kGaje1uTjUS85Y+DkzVZZPKSdkSOLPSWlc1FupXmlMP1MWKt01L5mgA3seSXUK
-	 5HIj5vWcZLKgimZm0U6Qa5Hdtuqa7J3/AnEFdu+hLlgOlwuq2Z/jBt6QLITPzvUvtV
-	 wyl+s+nv84yWiS40hWvmk5OP5je+/4gTuUbbm7hE=
+	b=Xw8iUx4JBf8iWu/EgySaKkMbf9KnHgShdcUZgnJk0qXJ9SnmjynGjdqu2YvzaZcex
+	 YUcYNvUSCx/Rd0e0J+bc7zJmteHtD/zgA8WbK45ZdJbd/XXXUd9dXhAypHWn8gl8KR
+	 M4g982zCdy2vXXIznr+tQSNOxrD5UiKN7KVsw+w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 560/611] parisc: Ensure page alignment in flush functions
-Date: Mon,  8 May 2023 11:46:42 +0200
-Message-Id: <20230508094440.183580728@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Dipen Patel <dipenp@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 551/611] hte: tegra: fix struct of_device_id build error
+Date: Mon,  8 May 2023 11:46:33 +0200
+Message-Id: <20230508094439.911862815@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -33,43 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit d755bd2caeb47fd806e12399fe8b56798fa5d2cc upstream.
+[ Upstream commit 6680c835ada1b34e882d0a32612f7294c62e27e0 ]
 
-Matthew Wilcox noticed, that if ARCH_HAS_FLUSH_ON_KUNMAP is defined
-(which is the case for PA-RISC), __kunmap_local() calls
-kunmap_flush_on_unmap(), which may call the parisc flush functions with
-a non-page-aligned address and thus the page might not be fully flushed.
+Without the extra #include, this driver produces a build failure
+in some configurations.
 
-This patch ensures that flush_kernel_dcache_page_asm() and
-flush_kernel_dcache_page_asm() will always operate on page-aligned
-addresses.
+drivers/hte/hte-tegra194-test.c:96:34: error: array type has incomplete element type 'struct of_device_id'
+   96 | static const struct of_device_id tegra_hte_test_of_match[] = {
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v6.0+
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9a75a7cd03c9 ("hte: Add Tegra HTE test driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/pacache.S |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hte/hte-tegra194-test.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/parisc/kernel/pacache.S
-+++ b/arch/parisc/kernel/pacache.S
-@@ -889,6 +889,7 @@ ENDPROC_CFI(flush_icache_page_asm)
- ENTRY_CFI(flush_kernel_dcache_page_asm)
- 88:	ldil		L%dcache_stride, %r1
- 	ldw		R%dcache_stride(%r1), %r23
-+	depi_safe	0, 31,PAGE_SHIFT, %r26	/* Clear any offset bits */
+diff --git a/drivers/hte/hte-tegra194-test.c b/drivers/hte/hte-tegra194-test.c
+index 5d776a185bd62..ce8c44e792213 100644
+--- a/drivers/hte/hte-tegra194-test.c
++++ b/drivers/hte/hte-tegra194-test.c
+@@ -6,6 +6,7 @@
+  */
  
- #ifdef CONFIG_64BIT
- 	depdi,z		1, 63-PAGE_SHIFT,1, %r25
-@@ -925,6 +926,7 @@ ENDPROC_CFI(flush_kernel_dcache_page_asm
- ENTRY_CFI(purge_kernel_dcache_page_asm)
- 88:	ldil		L%dcache_stride, %r1
- 	ldw		R%dcache_stride(%r1), %r23
-+	depi_safe	0, 31,PAGE_SHIFT, %r26	/* Clear any offset bits */
- 
- #ifdef CONFIG_64BIT
- 	depdi,z		1, 63-PAGE_SHIFT,1, %r25
+ #include <linux/err.h>
++#include <linux/mod_devicetable.h>
+ #include <linux/module.h>
+ #include <linux/moduleparam.h>
+ #include <linux/interrupt.h>
+-- 
+2.39.2
+
 
 
