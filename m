@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BD9168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F477C433D2;
-	Mon,  8 May 2023 11:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1A1168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:28:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E6DAC433D2;
+	Mon,  8 May 2023 11:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545306;
-	bh=kZTcq5XOWt5xnBxUS0EFV/zxfCuRYXrXyY+zbtOguHI=;
+	s=korg; t=1683545310;
+	bh=zvB/VyYART+tcy2Eu88vjNemKvTb9iieEW8iUrHd0wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JFRxe6OV33qrOtsi6cvKNXWllDOML4pz+It1mozC1/mLnvsWleHT7kKwIqjBvEOd/
-	 nZLJcw2GD/kHZCMmAcdpNnmkQr8RWeSl2gAvlyVSJjwfT3NbVSDsHPl4PvyDsIFSt2
-	 zqcefLZgzFzMR2Qn+crgy7ZV0/Fn+YKcpP4kUxs4=
+	b=HmRk1cewdUxEydM49dXc74rxxem+Q6x6IKydjdQWOQr0PqZXSTOMdQV15MFwuCwKA
+	 MGhRzzRI3vQQoTsKpF5EgQxGLZ/a5zpf0zcbQoN3gsWAYdEcHysUpex0gJqo+yqPgh
+	 gYTERPxhKQMXfAVviC6zZ64YC2dDQKi/Q+ygDGy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 692/694] cifs: protect access of TCP_Server_Info::{origin,leaf}_fullpath
-Date: Mon,  8 May 2023 11:48:47 +0200
-Message-Id: <20230508094458.906014279@linuxfoundation.org>
+Subject: [PATCH 6.3 693/694] cifs: avoid potential races when handling multiple dfs tcons
+Date: Mon,  8 May 2023 11:48:48 +0200
+Message-Id: <20230508094458.946867919@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,207 +36,377 @@ Content-Transfer-Encoding: 8bit
 
 From: Paulo Alcantara <pc@manguebit.com>
 
-commit 3dc9c433c9dde15477d02b609ccb4328e2adb6dc upstream.
+commit 6be2ea33a4093402252724a00c4af8033725184c upstream.
 
-Protect access of TCP_Server_Info::{origin,leaf}_fullpath when
-matching DFS connections, and get rid of
-TCP_Server_Info::current_fullpath while we're at it.
+Now that a DFS tcon manages its own list of DFS referrals and
+sessions, there is no point in having a single worker to refresh
+referrals of all DFS tcons.  Make it faster and less prone to race
+conditions when having several mounts by queueing a worker per DFS
+tcon that will take care of refreshing only the DFS referrals related
+to it.
 
 Cc: stable@vger.kernel.org # v6.2+
 Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsglob.h  |   20 +++++++++++++-------
- fs/cifs/connect.c   |   10 ++++++----
- fs/cifs/dfs.c       |   14 ++++++++------
- fs/cifs/dfs.h       |   13 +++++++++++--
- fs/cifs/dfs_cache.c |    6 +++++-
- 5 files changed, 43 insertions(+), 20 deletions(-)
+ fs/cifs/cifsglob.h  |    2 
+ fs/cifs/connect.c   |    7 ++
+ fs/cifs/dfs.c       |    4 +
+ fs/cifs/dfs_cache.c |  137 ++++++++++++++++++++++------------------------------
+ fs/cifs/dfs_cache.h |    9 +++
+ 5 files changed, 80 insertions(+), 79 deletions(-)
 
 --- a/fs/cifs/cifsglob.h
 +++ b/fs/cifs/cifsglob.h
-@@ -736,17 +736,23 @@ struct TCP_Server_Info {
+@@ -1238,8 +1238,8 @@ struct cifs_tcon {
+ 	struct cached_fids *cfids;
+ 	/* BB add field for back pointer to sb struct(s)? */
+ #ifdef CONFIG_CIFS_DFS_UPCALL
+-	struct list_head ulist; /* cache update list */
+ 	struct list_head dfs_ses_list;
++	struct delayed_work dfs_cache_work;
  #endif
- 	struct mutex refpath_lock; /* protects leaf_fullpath */
- 	/*
--	 * Canonical DFS full paths that were used to chase referrals in mount and reconnect.
-+	 * origin_fullpath: Canonical copy of smb3_fs_context::source.
-+	 *                  It is used for matching existing DFS tcons.
- 	 *
--	 * origin_fullpath: first or original referral path
--	 * leaf_fullpath: last referral path (might be changed due to nested links in reconnect)
-+	 * leaf_fullpath: Canonical DFS referral path related to this
-+	 *                connection.
-+	 *                It is used in DFS cache refresher, reconnect and may
-+	 *                change due to nested DFS links.
- 	 *
--	 * current_fullpath: pointer to either origin_fullpath or leaf_fullpath
--	 * NOTE: cannot be accessed outside cifs_reconnect() and smb2_reconnect()
-+	 * Both protected by @refpath_lock and @srv_lock.  The @refpath_lock is
-+	 * mosly used for not requiring a copy of @leaf_fullpath when getting
-+	 * cached or new DFS referrals (which might also sleep during I/O).
-+	 * While @srv_lock is held for making string and NULL comparions against
-+	 * both fields as in mount(2) and cache refresh.
- 	 *
--	 * format: \\HOST\SHARE\[OPTIONAL PATH]
-+	 * format: \\HOST\SHARE[\OPTIONAL PATH]
- 	 */
--	char *origin_fullpath, *leaf_fullpath, *current_fullpath;
-+	char *origin_fullpath, *leaf_fullpath;
+ 	struct delayed_work	query_interfaces; /* query interfaces workqueue job */
  };
- 
- static inline bool is_smb1(struct TCP_Server_Info *server)
 --- a/fs/cifs/connect.c
 +++ b/fs/cifs/connect.c
-@@ -454,7 +454,6 @@ static int reconnect_target_unlocked(str
- static int reconnect_dfs_server(struct TCP_Server_Info *server)
- {
- 	int rc = 0;
--	const char *refpath = server->current_fullpath + 1;
- 	struct dfs_cache_tgt_list tl = DFS_CACHE_TGT_LIST_INIT(tl);
- 	struct dfs_cache_tgt_iterator *target_hint = NULL;
- 	int num_targets = 0;
-@@ -467,8 +466,10 @@ static int reconnect_dfs_server(struct T
- 	 * through /proc/fs/cifs/dfscache or the target list is empty due to server settings after
- 	 * refreshing the referral, so, in this case, default it to 1.
- 	 */
--	if (!dfs_cache_noreq_find(refpath, NULL, &tl))
-+	mutex_lock(&server->refpath_lock);
-+	if (!dfs_cache_noreq_find(server->leaf_fullpath + 1, NULL, &tl))
- 		num_targets = dfs_cache_get_nr_tgts(&tl);
-+	mutex_unlock(&server->refpath_lock);
- 	if (!num_targets)
- 		num_targets = 1;
+@@ -2337,6 +2337,9 @@ cifs_put_tcon(struct cifs_tcon *tcon)
  
-@@ -512,7 +513,9 @@ static int reconnect_dfs_server(struct T
- 		mod_delayed_work(cifsiod_wq, &server->reconnect, 0);
- 	} while (server->tcpStatus == CifsNeedReconnect);
+ 	/* cancel polling of interfaces */
+ 	cancel_delayed_work_sync(&tcon->query_interfaces);
++#ifdef CONFIG_CIFS_DFS_UPCALL
++	cancel_delayed_work_sync(&tcon->dfs_cache_work);
++#endif
  
--	dfs_cache_noreq_update_tgthint(refpath, target_hint);
-+	mutex_lock(&server->refpath_lock);
-+	dfs_cache_noreq_update_tgthint(server->leaf_fullpath + 1, target_hint);
-+	mutex_unlock(&server->refpath_lock);
- 	dfs_cache_free_tgts(&tl);
- 
- 	/* Need to set up echo worker again once connection has been established */
-@@ -1579,7 +1582,6 @@ cifs_get_tcp_session(struct smb3_fs_cont
- 			rc = -ENOMEM;
- 			goto out_err;
- 		}
--		tcp_ses->current_fullpath = tcp_ses->leaf_fullpath;
+ 	if (tcon->use_witness) {
+ 		int rc;
+@@ -2584,7 +2587,9 @@ cifs_get_tcon(struct cifs_ses *ses, stru
+ 		queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
+ 				   (SMB_INTERFACE_POLL_INTERVAL * HZ));
  	}
- 
- 	if (ctx->nosharesock)
+-
++#ifdef CONFIG_CIFS_DFS_UPCALL
++	INIT_DELAYED_WORK(&tcon->dfs_cache_work, dfs_cache_refresh);
++#endif
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	list_add(&tcon->tcon_list, &ses->tcon_list);
+ 	spin_unlock(&cifs_tcp_ses_lock);
 --- a/fs/cifs/dfs.c
 +++ b/fs/cifs/dfs.c
-@@ -248,11 +248,12 @@ static int __dfs_mount_share(struct cifs
- 		tcon = mnt_ctx->tcon;
- 
- 		mutex_lock(&server->refpath_lock);
-+		spin_lock(&server->srv_lock);
- 		if (!server->origin_fullpath) {
- 			server->origin_fullpath = origin_fullpath;
--			server->current_fullpath = server->leaf_fullpath;
- 			origin_fullpath = NULL;
- 		}
-+		spin_unlock(&server->srv_lock);
- 		mutex_unlock(&server->refpath_lock);
- 
- 		if (list_empty(&tcon->dfs_ses_list)) {
-@@ -366,10 +367,11 @@ static int update_server_fullpath(struct
- 		rc = PTR_ERR(npath);
- 	} else {
- 		mutex_lock(&server->refpath_lock);
-+		spin_lock(&server->srv_lock);
- 		kfree(server->leaf_fullpath);
- 		server->leaf_fullpath = npath;
-+		spin_unlock(&server->srv_lock);
- 		mutex_unlock(&server->refpath_lock);
--		server->current_fullpath = server->leaf_fullpath;
+@@ -157,6 +157,8 @@ static int get_dfs_conn(struct cifs_moun
+ 		rc = cifs_is_path_remote(mnt_ctx);
  	}
- 	return rc;
- }
-@@ -474,7 +476,7 @@ static int __tree_connect_dfs_target(con
- 		share = prefix = NULL;
  
- 		/* Check if share matches with tcp ses */
--		rc = dfs_cache_get_tgt_share(server->current_fullpath + 1, tit, &share, &prefix);
-+		rc = dfs_cache_get_tgt_share(server->leaf_fullpath + 1, tit, &share, &prefix);
- 		if (rc) {
- 			cifs_dbg(VFS, "%s: failed to parse target share: %d\n", __func__, rc);
- 			break;
-@@ -488,7 +490,7 @@ static int __tree_connect_dfs_target(con
- 			continue;
- 		}
- 
--		dfs_cache_noreq_update_tgthint(server->current_fullpath + 1, tit);
-+		dfs_cache_noreq_update_tgthint(server->leaf_fullpath + 1, tit);
- 		tree_connect_ipc(xid, tree, cifs_sb, tcon);
- 
- 		scnprintf(tree, MAX_TREE_SIZE, "\\%s", share);
-@@ -606,8 +608,8 @@ int cifs_tree_connect(const unsigned int
- 	cifs_sb = CIFS_SB(sb);
- 
- 	/* If it is not dfs or there was no cached dfs referral, then reconnect to same share */
--	if (!server->current_fullpath ||
--	    dfs_cache_noreq_find(server->current_fullpath + 1, &ref, &tl)) {
-+	if (!server->leaf_fullpath ||
-+	    dfs_cache_noreq_find(server->leaf_fullpath + 1, &ref, &tl)) {
- 		rc = ops->tree_connect(xid, tcon->ses, tcon->tree_name, tcon, cifs_sb->local_nls);
- 		goto out;
- 	}
---- a/fs/cifs/dfs.h
-+++ b/fs/cifs/dfs.h
-@@ -43,8 +43,12 @@ static inline char *dfs_get_automount_de
- 	size_t len;
- 	char *s;
- 
--	if (unlikely(!server->origin_fullpath))
-+	spin_lock(&server->srv_lock);
-+	if (unlikely(!server->origin_fullpath)) {
-+		spin_unlock(&server->srv_lock);
- 		return ERR_PTR(-EREMOTE);
-+	}
-+	spin_unlock(&server->srv_lock);
- 
- 	s = dentry_path_raw(dentry, page, PATH_MAX);
- 	if (IS_ERR(s))
-@@ -53,13 +57,18 @@ static inline char *dfs_get_automount_de
- 	if (!s[1])
- 		s++;
- 
-+	spin_lock(&server->srv_lock);
- 	len = strlen(server->origin_fullpath);
--	if (s < (char *)page + len)
-+	if (s < (char *)page + len) {
-+		spin_unlock(&server->srv_lock);
- 		return ERR_PTR(-ENAMETOOLONG);
-+	}
- 
- 	s -= len;
- 	memcpy(s, server->origin_fullpath, len);
-+	spin_unlock(&server->srv_lock);
- 	convert_delimiter(s, '/');
++	dfs_cache_noreq_update_tgthint(ref_path + 1, tit);
 +
- 	return s;
- }
- 
+ 	if (rc == -EREMOTE && is_refsrv) {
+ 		rc2 = add_root_smb_session(mnt_ctx);
+ 		if (rc2)
+@@ -259,6 +261,8 @@ static int __dfs_mount_share(struct cifs
+ 		if (list_empty(&tcon->dfs_ses_list)) {
+ 			list_replace_init(&mnt_ctx->dfs_ses_list,
+ 					  &tcon->dfs_ses_list);
++			queue_delayed_work(dfscache_wq, &tcon->dfs_cache_work,
++					   dfs_cache_get_ttl() * HZ);
+ 		} else {
+ 			dfs_put_root_smb_sessions(&mnt_ctx->dfs_ses_list);
+ 		}
 --- a/fs/cifs/dfs_cache.c
 +++ b/fs/cifs/dfs_cache.c
-@@ -1278,8 +1278,12 @@ static void refresh_cache_worker(struct
+@@ -20,12 +20,14 @@
+ #include "cifs_unicode.h"
+ #include "smb2glob.h"
+ #include "dns_resolve.h"
++#include "dfs.h"
  
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_for_each_entry(server, &cifs_tcp_ses_list, tcp_ses_list) {
--		if (!server->leaf_fullpath)
-+		spin_lock(&server->srv_lock);
-+		if (!server->leaf_fullpath) {
-+			spin_unlock(&server->srv_lock);
- 			continue;
-+		}
-+		spin_unlock(&server->srv_lock);
+ #include "dfs_cache.h"
  
- 		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
- 			if (ses->tcon_ipc) {
+-#define CACHE_HTABLE_SIZE 32
+-#define CACHE_MAX_ENTRIES 64
+-#define CACHE_MIN_TTL 120 /* 2 minutes */
++#define CACHE_HTABLE_SIZE	32
++#define CACHE_MAX_ENTRIES	64
++#define CACHE_MIN_TTL		120 /* 2 minutes */
++#define CACHE_DEFAULT_TTL	300 /* 5 minutes */
+ 
+ #define IS_DFS_INTERLINK(v) (((v) & DFSREF_REFERRAL_SERVER) && !((v) & DFSREF_STORAGE_SERVER))
+ 
+@@ -50,10 +52,9 @@ struct cache_entry {
+ };
+ 
+ static struct kmem_cache *cache_slab __read_mostly;
+-static struct workqueue_struct *dfscache_wq __read_mostly;
++struct workqueue_struct *dfscache_wq;
+ 
+-static int cache_ttl;
+-static DEFINE_SPINLOCK(cache_ttl_lock);
++atomic_t dfs_cache_ttl;
+ 
+ static struct nls_table *cache_cp;
+ 
+@@ -65,10 +66,6 @@ static atomic_t cache_count;
+ static struct hlist_head cache_htable[CACHE_HTABLE_SIZE];
+ static DECLARE_RWSEM(htable_rw_lock);
+ 
+-static void refresh_cache_worker(struct work_struct *work);
+-
+-static DECLARE_DELAYED_WORK(refresh_task, refresh_cache_worker);
+-
+ /**
+  * dfs_cache_canonical_path - get a canonical DFS path
+  *
+@@ -290,7 +287,9 @@ int dfs_cache_init(void)
+ 	int rc;
+ 	int i;
+ 
+-	dfscache_wq = alloc_workqueue("cifs-dfscache", WQ_FREEZABLE | WQ_UNBOUND, 1);
++	dfscache_wq = alloc_workqueue("cifs-dfscache",
++				      WQ_UNBOUND|WQ_FREEZABLE|WQ_MEM_RECLAIM,
++				      0);
+ 	if (!dfscache_wq)
+ 		return -ENOMEM;
+ 
+@@ -306,6 +305,7 @@ int dfs_cache_init(void)
+ 		INIT_HLIST_HEAD(&cache_htable[i]);
+ 
+ 	atomic_set(&cache_count, 0);
++	atomic_set(&dfs_cache_ttl, CACHE_DEFAULT_TTL);
+ 	cache_cp = load_nls("utf8");
+ 	if (!cache_cp)
+ 		cache_cp = load_nls_default();
+@@ -480,6 +480,7 @@ static struct cache_entry *add_cache_ent
+ 	int rc;
+ 	struct cache_entry *ce;
+ 	unsigned int hash;
++	int ttl;
+ 
+ 	WARN_ON(!rwsem_is_locked(&htable_rw_lock));
+ 
+@@ -496,15 +497,8 @@ static struct cache_entry *add_cache_ent
+ 	if (IS_ERR(ce))
+ 		return ce;
+ 
+-	spin_lock(&cache_ttl_lock);
+-	if (!cache_ttl) {
+-		cache_ttl = ce->ttl;
+-		queue_delayed_work(dfscache_wq, &refresh_task, cache_ttl * HZ);
+-	} else {
+-		cache_ttl = min_t(int, cache_ttl, ce->ttl);
+-		mod_delayed_work(dfscache_wq, &refresh_task, cache_ttl * HZ);
+-	}
+-	spin_unlock(&cache_ttl_lock);
++	ttl = min_t(int, atomic_read(&dfs_cache_ttl), ce->ttl);
++	atomic_set(&dfs_cache_ttl, ttl);
+ 
+ 	hlist_add_head(&ce->hlist, &cache_htable[hash]);
+ 	dump_ce(ce);
+@@ -616,7 +610,6 @@ static struct cache_entry *lookup_cache_
+  */
+ void dfs_cache_destroy(void)
+ {
+-	cancel_delayed_work_sync(&refresh_task);
+ 	unload_nls(cache_cp);
+ 	flush_cache_ents();
+ 	kmem_cache_destroy(cache_slab);
+@@ -1142,6 +1135,7 @@ static bool target_share_equal(struct TC
+  * target shares in @refs.
+  */
+ static void mark_for_reconnect_if_needed(struct TCP_Server_Info *server,
++					 const char *path,
+ 					 struct dfs_cache_tgt_list *old_tl,
+ 					 struct dfs_cache_tgt_list *new_tl)
+ {
+@@ -1153,8 +1147,10 @@ static void mark_for_reconnect_if_needed
+ 		     nit = dfs_cache_get_next_tgt(new_tl, nit)) {
+ 			if (target_share_equal(server,
+ 					       dfs_cache_get_tgt_name(oit),
+-					       dfs_cache_get_tgt_name(nit)))
++					       dfs_cache_get_tgt_name(nit))) {
++				dfs_cache_noreq_update_tgthint(path, nit);
+ 				return;
++			}
+ 		}
+ 	}
+ 
+@@ -1162,13 +1158,28 @@ static void mark_for_reconnect_if_needed
+ 	cifs_signal_cifsd_for_reconnect(server, true);
+ }
+ 
++static bool is_ses_good(struct cifs_ses *ses)
++{
++	struct TCP_Server_Info *server = ses->server;
++	struct cifs_tcon *tcon = ses->tcon_ipc;
++	bool ret;
++
++	spin_lock(&ses->ses_lock);
++	spin_lock(&ses->chan_lock);
++	ret = !cifs_chan_needs_reconnect(ses, server) &&
++		ses->ses_status == SES_GOOD &&
++		!tcon->need_reconnect;
++	spin_unlock(&ses->chan_lock);
++	spin_unlock(&ses->ses_lock);
++	return ret;
++}
++
+ /* Refresh dfs referral of tcon and mark it for reconnect if needed */
+-static int __refresh_tcon(const char *path, struct cifs_tcon *tcon, bool force_refresh)
++static int __refresh_tcon(const char *path, struct cifs_ses *ses, bool force_refresh)
+ {
+ 	struct dfs_cache_tgt_list old_tl = DFS_CACHE_TGT_LIST_INIT(old_tl);
+ 	struct dfs_cache_tgt_list new_tl = DFS_CACHE_TGT_LIST_INIT(new_tl);
+-	struct cifs_ses *ses = CIFS_DFS_ROOT_SES(tcon->ses);
+-	struct cifs_tcon *ipc = ses->tcon_ipc;
++	struct TCP_Server_Info *server = ses->server;
+ 	bool needs_refresh = false;
+ 	struct cache_entry *ce;
+ 	unsigned int xid;
+@@ -1190,20 +1201,19 @@ static int __refresh_tcon(const char *pa
+ 		goto out;
+ 	}
+ 
+-	spin_lock(&ipc->tc_lock);
+-	if (ipc->status != TID_GOOD) {
+-		spin_unlock(&ipc->tc_lock);
+-		cifs_dbg(FYI, "%s: skip cache refresh due to disconnected ipc\n", __func__);
++	ses = CIFS_DFS_ROOT_SES(ses);
++	if (!is_ses_good(ses)) {
++		cifs_dbg(FYI, "%s: skip cache refresh due to disconnected ipc\n",
++			 __func__);
+ 		goto out;
+ 	}
+-	spin_unlock(&ipc->tc_lock);
+ 
+ 	ce = cache_refresh_path(xid, ses, path, true);
+ 	if (!IS_ERR(ce)) {
+ 		rc = get_targets(ce, &new_tl);
+ 		up_read(&htable_rw_lock);
+ 		cifs_dbg(FYI, "%s: get_targets: %d\n", __func__, rc);
+-		mark_for_reconnect_if_needed(tcon->ses->server, &old_tl, &new_tl);
++		mark_for_reconnect_if_needed(server, path, &old_tl, &new_tl);
+ 	}
+ 
+ out:
+@@ -1216,10 +1226,11 @@ out:
+ static int refresh_tcon(struct cifs_tcon *tcon, bool force_refresh)
+ {
+ 	struct TCP_Server_Info *server = tcon->ses->server;
++	struct cifs_ses *ses = tcon->ses;
+ 
+ 	mutex_lock(&server->refpath_lock);
+ 	if (server->leaf_fullpath)
+-		__refresh_tcon(server->leaf_fullpath + 1, tcon, force_refresh);
++		__refresh_tcon(server->leaf_fullpath + 1, ses, force_refresh);
+ 	mutex_unlock(&server->refpath_lock);
+ 	return 0;
+ }
+@@ -1263,60 +1274,32 @@ int dfs_cache_remount_fs(struct cifs_sb_
+ 	return refresh_tcon(tcon, true);
+ }
+ 
+-/*
+- * Worker that will refresh DFS cache from all active mounts based on lowest TTL value
+- * from a DFS referral.
+- */
+-static void refresh_cache_worker(struct work_struct *work)
++/* Refresh all DFS referrals related to DFS tcon */
++void dfs_cache_refresh(struct work_struct *work)
+ {
+ 	struct TCP_Server_Info *server;
+-	struct cifs_tcon *tcon, *ntcon;
+-	struct list_head tcons;
++	struct dfs_root_ses *rses;
++	struct cifs_tcon *tcon;
+ 	struct cifs_ses *ses;
+ 
+-	INIT_LIST_HEAD(&tcons);
++	tcon = container_of(work, struct cifs_tcon, dfs_cache_work.work);
++	ses = tcon->ses;
++	server = ses->server;
+ 
+-	spin_lock(&cifs_tcp_ses_lock);
+-	list_for_each_entry(server, &cifs_tcp_ses_list, tcp_ses_list) {
+-		spin_lock(&server->srv_lock);
+-		if (!server->leaf_fullpath) {
+-			spin_unlock(&server->srv_lock);
+-			continue;
+-		}
+-		spin_unlock(&server->srv_lock);
+-
+-		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
+-			if (ses->tcon_ipc) {
+-				ses->ses_count++;
+-				list_add_tail(&ses->tcon_ipc->ulist, &tcons);
+-			}
+-			list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
+-				if (!tcon->ipc) {
+-					tcon->tc_count++;
+-					list_add_tail(&tcon->ulist, &tcons);
+-				}
+-			}
+-		}
+-	}
+-	spin_unlock(&cifs_tcp_ses_lock);
+-
+-	list_for_each_entry_safe(tcon, ntcon, &tcons, ulist) {
+-		struct TCP_Server_Info *server = tcon->ses->server;
+-
+-		list_del_init(&tcon->ulist);
++	mutex_lock(&server->refpath_lock);
++	if (server->leaf_fullpath)
++		__refresh_tcon(server->leaf_fullpath + 1, ses, false);
++	mutex_unlock(&server->refpath_lock);
+ 
++	list_for_each_entry(rses, &tcon->dfs_ses_list, list) {
++		ses = rses->ses;
++		server = ses->server;
+ 		mutex_lock(&server->refpath_lock);
+ 		if (server->leaf_fullpath)
+-			__refresh_tcon(server->leaf_fullpath + 1, tcon, false);
++			__refresh_tcon(server->leaf_fullpath + 1, ses, false);
+ 		mutex_unlock(&server->refpath_lock);
+-
+-		if (tcon->ipc)
+-			cifs_put_smb_ses(tcon->ses);
+-		else
+-			cifs_put_tcon(tcon);
+ 	}
+ 
+-	spin_lock(&cache_ttl_lock);
+-	queue_delayed_work(dfscache_wq, &refresh_task, cache_ttl * HZ);
+-	spin_unlock(&cache_ttl_lock);
++	queue_delayed_work(dfscache_wq, &tcon->dfs_cache_work,
++			   atomic_read(&dfs_cache_ttl) * HZ);
+ }
+--- a/fs/cifs/dfs_cache.h
++++ b/fs/cifs/dfs_cache.h
+@@ -13,6 +13,9 @@
+ #include <linux/uuid.h>
+ #include "cifsglob.h"
+ 
++extern struct workqueue_struct *dfscache_wq;
++extern atomic_t dfs_cache_ttl;
++
+ #define DFS_CACHE_TGT_LIST_INIT(var) { .tl_numtgts = 0, .tl_list = LIST_HEAD_INIT((var).tl_list), }
+ 
+ struct dfs_cache_tgt_list {
+@@ -42,6 +45,7 @@ int dfs_cache_get_tgt_share(char *path,
+ 			    char **prefix);
+ char *dfs_cache_canonical_path(const char *path, const struct nls_table *cp, int remap);
+ int dfs_cache_remount_fs(struct cifs_sb_info *cifs_sb);
++void dfs_cache_refresh(struct work_struct *work);
+ 
+ static inline struct dfs_cache_tgt_iterator *
+ dfs_cache_get_next_tgt(struct dfs_cache_tgt_list *tl,
+@@ -89,4 +93,9 @@ dfs_cache_get_nr_tgts(const struct dfs_c
+ 	return tl ? tl->tl_numtgts : 0;
+ }
+ 
++static inline int dfs_cache_get_ttl(void)
++{
++	return atomic_read(&dfs_cache_ttl);
++}
++
+ #endif /* _CIFS_DFS_CACHE_H */
 
 
