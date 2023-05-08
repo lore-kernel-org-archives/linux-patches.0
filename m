@@ -1,28 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36736168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:04:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641B0C433D2;
-	Mon,  8 May 2023 11:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72954168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:04:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EA6C433D2;
+	Mon,  8 May 2023 11:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543847;
-	bh=sMHOMVXv3z0knY48gwqxw6tf0kbIc9u4FSLgn/iSKvI=;
+	s=korg; t=1683543850;
+	bh=U3AASTqeuFKaMjf51fir0o9dcPQyM3LFthotgOzvu8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVnrqF6PsexWmNZFsPGMgU7BV/ytiZHaGYza/umudIOErQypJ8Bo2gDy5Ska9yYYZ
-	 3mRR9EwgQT4iEcsJwIP0TlqKLQAcG0Ihe0/51PepeC6JZNcQ6teBK766MhovLUgG7i
-	 fwhCubXnaWucHJPZYInivaX7vsOY5qjagP3keg30=
+	b=ozEJUJrp+6y2w8/8ON9al7hwpnvPukEwpMlaB7p2H4dT6AfewETt65p4RinId8CCU
+	 eQDnSPI1X3mTDnzni+nvLKsg2l2cqs16Cw0lH7wiwhkS3Qs9G4wEPUqPUjhIh0DA9a
+	 Lb+AEbjO6pZjZHmLoW3lwT5jPzMogGYVRm70j+Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Pan, Xinhui" <Xinhui.Pan@amd.com>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Mauro Rossi <issor.oruam@gmail.com>,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 221/694] arm64: dts: qcom: sm8350-microsoft-surface: fix USB dual-role mode property
-Date: Mon,  8 May 2023 11:40:56 +0200
-Message-Id: <20230508094439.527049472@linuxfoundation.org>
+Subject: [PATCH 6.3 222/694] drm/amd/display/dc/dce60/Makefile: Fix previous attempt to silence known override-init warnings
+Date: Mon,  8 May 2023 11:40:57 +0200
+Message-Id: <20230508094439.566331883@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,38 +45,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Lee Jones <lee@kernel.org>
 
-[ Upstream commit 0beda02e530f8fc571877939645cb20ade113027 ]
+[ Upstream commit 4082b9f5ead4966797dddcfef0905d59e5a83873 ]
 
-The "dr_mode" is a property of USB DWC3 node, not the Qualcomm wrapper
-one:
-  sm8350-microsoft-surface-duo2.dtb: usb@a6f8800: 'dr_mode' does not match any of the regexes: '^usb@[0-9a-f]+$', 'pinctrl-[0-9]+'
+Fixes the following W=1 kernel build warning(s):
 
-Fixes: c16160cfa565 ("arm64: dts: qcom: add minimal DTS for Microsoft Surface Duo 2")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230304130315.51595-2-krzysztof.kozlowski@linaro.org
+ drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:157:21: note: in expansion of macro ‘mmCRTC1_DCFE_MEM_LIGHT_SLEEP_CNTL’
+ drivers/gpu/drm/amd/amdgpu/../display/dc/dce/dce_transform.h:170:9: note: in expansion of macro ‘SRI’
+ drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:183:17: note: in expansion of macro ‘XFM_COMMON_REG_LIST_DCE60’
+ drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:188:17: note: in expansion of macro ‘transform_regs’
+ drivers/gpu/drm/amd/amdgpu/../include/asic_reg/dce/dce_6_0_d.h:722:43: warning: initialized field overwritten [-Woverride-init]
+ drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:157:21: note: in expansion of macro ‘mmCRTC2_DCFE_MEM_LIGHT_SLEEP_CNTL’
+ drivers/gpu/drm/amd/amdgpu/../display/dc/dce/dce_transform.h:170:9: note: in expansion of macro ‘SRI’
+ drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:183:17: note: in expansion of macro ‘XFM_COMMON_REG_LIST_DCE60’
+ drivers/gpu/drm/amd/amdgpu/../display/dc/dce60/dce60_resource.c:189:17: note: in expansion of macro ‘transform_regs’
+ drivers/gpu/drm/amd/amdgpu/../include/asic_reg/dce/dce_6_0_d.h:722:43: note: (near initialization for ‘xfm_regs[2].DCFE_MEM_LIGHT_SLEEP_CN
+
+[100 lines snipped for brevity]
+
+Fixes: ceb3cf476a441 ("drm/amd/display/dc/dce60/Makefile: Ignore -Woverride-init warning")
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Leo Li <sunpeng.li@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Christian König" <christian.koenig@amd.com>
+Cc: "Pan, Xinhui" <Xinhui.Pan@amd.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Mauro Rossi <issor.oruam@gmail.com>
+Cc: amd-gfx@lists.freedesktop.org
+Cc: dri-devel@lists.freedesktop.org
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dce60/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-index b536ae36ae6de..3bd5e57cbcdaa 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-microsoft-surface-duo2.dts
-@@ -341,6 +341,9 @@
+diff --git a/drivers/gpu/drm/amd/display/dc/dce60/Makefile b/drivers/gpu/drm/amd/display/dc/dce60/Makefile
+index dda596fa1cd76..fee331accc0e7 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce60/Makefile
++++ b/drivers/gpu/drm/amd/display/dc/dce60/Makefile
+@@ -23,7 +23,7 @@
+ # Makefile for the 'controller' sub-component of DAL.
+ # It provides the control and status of HW CRTC block.
  
- &usb_1 {
- 	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
- 	dr_mode = "peripheral";
- };
+-CFLAGS_AMDDALPATH)/dc/dce60/dce60_resource.o = $(call cc-disable-warning, override-init)
++CFLAGS_$(AMDDALPATH)/dc/dce60/dce60_resource.o = $(call cc-disable-warning, override-init)
  
+ DCE60 = dce60_timing_generator.o dce60_hw_sequencer.o \
+ 	dce60_resource.o
 -- 
 2.39.2
 
