@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0142A171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:39:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B5DC4339B;
-	Mon,  8 May 2023 11:39:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB531171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:39:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53EB4C433EF;
+	Mon,  8 May 2023 11:39:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545962;
-	bh=KMOtky+437wF3UKERJj8E3iSJeckzTsgNhx29VbAcLw=;
+	s=korg; t=1683545965;
+	bh=mL1P054s32u91OzNJTWICd3HBWvvFwxbfG5aIg+LxUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jarDVQAkWjp9wnHKo8NSnL4Kz6O0lCAd9zqKk4exnrDQ6hwrDHnSklrIZpwqolHDq
-	 c0E2jMFbBIitlZq2yoo3Keh5yzgq/hd8Nsz17N/3r85L62lMZwA3jFzHixzmbnCeuT
-	 KS0YkII3AX0f3L6tSrDl5DSYIKSCo+nhtFq871WU=
+	b=A5MwgK9YUHDJxf/nIJEAhFzkRwIUkgTg1q1iwgPtNpkoHF/KjHJG4sOwkzFSC4CbK
+	 sIKMUQRNmYnfzfbY4JBEB/XjkPs7L/z0+u7OUuzsN2f6L7u7Id0MzTXjrqPwlfBuW0
+	 ASAdD1NB7ANaD2AyArVdo9fnuxv5zcOyTlDcwOe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 211/371] wifi: iwlwifi: yoyo: skip dump correctly on hw error
-Date: Mon,  8 May 2023 11:46:52 +0200
-Message-Id: <20230508094820.435712996@linuxfoundation.org>
+Subject: [PATCH 5.15 212/371] wifi: iwlwifi: yoyo: Fix possible division by zero
+Date: Mon,  8 May 2023 11:46:53 +0200
+Message-Id: <20230508094820.481510770@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -38,45 +38,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Gabay <daniel.gabay@intel.com>
 
-[ Upstream commit 11195ab0d6f3202cf7af1a4c69570f59c377d8ad ]
+[ Upstream commit ba30415118eee374a08b39a0460a1d1e52c24a25 ]
 
-When NIC is in a bad state, reading data will return 28 bits as
-0xa5a5a5a and the lowest 4 bits are not fixed value.
+Don't allow buffer allocation TLV with zero req_size since it
+leads later to division by zero in iwl_dbg_tlv_alloc_fragments().
+Also, NPK/SRAM locations are allowed to have zero buffer req_size,
+don't discard them.
 
-Mask these bits in a few places to skip the dump correctly.
-
-Fixes: 89639e06d0f3 ("iwlwifi: yoyo: support for new DBGI_SRAM region")
+Fixes: a9248de42464 ("iwlwifi: dbg_ini: add TLV allocation new API support")
 Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413213309.df6c0663179d.I36d8487b2419c6fefa65e5514855d94327c3b1eb@changeid
+Link: https://lore.kernel.org/r/20230413213309.5d6688ed74d8.I5c2f3a882b50698b708d54f4524dc5bdf11e3d32@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index b00cf92c8965a..69616a2868bb8 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -1022,7 +1022,7 @@ iwl_dump_ini_prph_mac_iter(struct iwl_fw_runtime *fwrt,
- 	range->range_data_size = reg->dev_addr.size;
- 	for (i = 0; i < le32_to_cpu(reg->dev_addr.size); i += 4) {
- 		prph_val = iwl_read_prph(fwrt->trans, addr + i);
--		if (prph_val == 0x5a5a5a5a)
-+		if ((prph_val & ~0xf) == 0xa5a5a5a0)
- 			return -EBUSY;
- 		*val++ = cpu_to_le32(prph_val);
- 	}
-@@ -1536,7 +1536,7 @@ iwl_dump_ini_dbgi_sram_iter(struct iwl_fw_runtime *fwrt,
- 		prph_data = iwl_read_prph(fwrt->trans, (i % 2) ?
- 					  DBGI_SRAM_TARGET_ACCESS_RDATA_MSB :
- 					  DBGI_SRAM_TARGET_ACCESS_RDATA_LSB);
--		if (prph_data == 0x5a5a5a5a) {
-+		if ((prph_data & ~0xf) == 0xa5a5a5a0) {
- 			iwl_trans_release_nic_access(fwrt->trans);
- 			return -EBUSY;
- 		}
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+index fc4197bf2478e..f9bd081dd9e08 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+@@ -134,6 +134,12 @@ static int iwl_dbg_tlv_alloc_buf_alloc(struct iwl_trans *trans,
+ 	    alloc_id != IWL_FW_INI_ALLOCATION_ID_DBGC1)
+ 		goto err;
+ 
++	if (buf_location == IWL_FW_INI_LOCATION_DRAM_PATH &&
++	    alloc->req_size == 0) {
++		IWL_ERR(trans, "WRT: Invalid DRAM buffer allocation requested size (0)\n");
++		return -EINVAL;
++	}
++
+ 	trans->dbg.fw_mon_cfg[alloc_id] = *alloc;
+ 
+ 	return 0;
 -- 
 2.39.2
 
