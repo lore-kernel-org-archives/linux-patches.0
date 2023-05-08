@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23ED8168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:21:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7017EC433EF;
-	Mon,  8 May 2023 10:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF35168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:21:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FF1C433D2;
+	Mon,  8 May 2023 10:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541270;
-	bh=ovHfEM0fyjLv6XsaWbJU/Bs5Arfg6u26HFvANVF/FWM=;
+	s=korg; t=1683541272;
+	bh=1UnlRJYpfmjQALU7UhLyLH1QxK1YpaGmC7X/FbUrPH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yY4JxGjTJQH8buX13Zjg9byAac6jMrHhDTZH9dwiAny2WE+m4Ql96m+4J5tk+pPvU
-	 1AMU89IQ5BY2yz4LN/wOmD+m5exuEUzn6IVM/aML8Y2QH49jumWQsuu3j9RjY/5vnx
-	 geDULPArsgx6dA0VjGHn+TNKY43y4HuQua315I3U=
+	b=L1RrZy6VlP777OqziTxE90pmha8u3lAcOwtJSNxoOgfaTyl7KOEIp+V1yDlBwRuuR
+	 w11B1eQwS7mTGFaDRMmeGGrAJtr25LWbH8PUMwpsd5dW0yTCHWq9RVNisEU7IfX6mJ
+	 ly8LPrCu3MeWVEJBsulqaEZeAPJZ1bRLdlwG6AWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.2 060/663] kheaders: Use array declaration instead of char
-Date: Mon,  8 May 2023 11:38:06 +0200
-Message-Id: <20230508094430.436160180@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Wesley Cheng <quic_wcheng@quicinc.com>
+Subject: [PATCH 6.2 034/663] usb: dwc3: gadget: Stall and restart EP0 if host is unresponsive
+Date: Mon,  8 May 2023 11:37:40 +0200
+Message-Id: <20230508094429.572855154@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,75 +34,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Wesley Cheng <quic_wcheng@quicinc.com>
 
-commit b69edab47f1da8edd8e7bfdf8c70f51a2a5d89fb upstream.
+commit 02435a739b81ae24aff5d6e930efef9458e2af3c upstream.
 
-Under CONFIG_FORTIFY_SOURCE, memcpy() will check the size of destination
-and source buffers. Defining kernel_headers_data as "char" would trip
-this check. Since these addresses are treated as byte arrays, define
-them as arrays (as done everywhere else).
+It was observed that there are hosts that may complete pending SETUP
+transactions before the stop active transfers and controller halt occurs,
+leading to lingering endxfer commands on DEPs on subsequent pullup/gadget
+start iterations.
 
-This was seen with:
+  dwc3_gadget_ep_disable   name=ep8in flags=0x3009  direction=1
+  dwc3_gadget_ep_disable   name=ep4in flags=1  direction=1
+  dwc3_gadget_ep_disable   name=ep3out flags=1  direction=0
+  usb_gadget_disconnect   deactivated=0  connected=0  ret=0
 
-  $ cat /sys/kernel/kheaders.tar.xz >> /dev/null
+The sequence shows that the USB gadget disconnect (dwc3_gadget_pullup(0))
+routine completed successfully, allowing for the USB gadget to proceed with
+a USB gadget connect.  However, if this occurs the system runs into an
+issue where:
 
-  detected buffer overflow in memcpy
-  kernel BUG at lib/string_helpers.c:1027!
-  ...
-  RIP: 0010:fortify_panic+0xf/0x20
-  [...]
-  Call Trace:
-   <TASK>
-   ikheaders_read+0x45/0x50 [kheaders]
-   kernfs_fop_read_iter+0x1a4/0x2f0
-  ...
+  BUG: spinlock already unlocked on CPU
+  spin_bug+0x0
+  dwc3_remove_requests+0x278
+  dwc3_ep0_out_start+0xb0
+  __dwc3_gadget_start+0x25c
 
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/bpf/20230302112130.6e402a98@kernel.org/
-Acked-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Jakub Kicinski <kuba@kernel.org>
-Fixes: 43d8ce9d65a5 ("Provide in-kernel headers to make extending kernel easier")
+This is due to the pending endxfers, leading to gadget start (w/o lock
+held) to execute the remove requests, which will unlock the dwc3
+spinlock as part of giveback.
+
+To mitigate this, resolve the pending endxfers on the pullup disable
+path by re-locating the SETUP phase check after stop active transfers, since
+that is where the DWC3_EP_DELAY_STOP is potentially set.  This also allows
+for handling of a host that may be unresponsive by using the completion
+timeout to trigger the stall and restart for EP0.
+
+Fixes: c96683798e27 ("usb: dwc3: ep0: Don't prepare beyond Setup stage")
 Cc: stable@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230302224946.never.243-kees@kernel.org
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
+Link: https://lore.kernel.org/r/20230413195742.11821-2-quic_wcheng@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kheaders.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/usb/dwc3/gadget.c |   49 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 32 insertions(+), 17 deletions(-)
 
---- a/kernel/kheaders.c
-+++ b/kernel/kheaders.c
-@@ -26,15 +26,15 @@ asm (
- "	.popsection				\n"
- );
- 
--extern char kernel_headers_data;
--extern char kernel_headers_data_end;
-+extern char kernel_headers_data[];
-+extern char kernel_headers_data_end[];
- 
- static ssize_t
- ikheaders_read(struct file *file,  struct kobject *kobj,
- 	       struct bin_attribute *bin_attr,
- 	       char *buf, loff_t off, size_t len)
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -2532,29 +2532,17 @@ static int __dwc3_gadget_start(struct dw
+ static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
  {
--	memcpy(buf, &kernel_headers_data + off, len);
-+	memcpy(buf, &kernel_headers_data[off], len);
- 	return len;
- }
+ 	unsigned long flags;
++	int ret;
  
-@@ -48,8 +48,8 @@ static struct bin_attribute kheaders_att
+ 	spin_lock_irqsave(&dwc->lock, flags);
+ 	dwc->connected = false;
  
- static int __init ikheaders_init(void)
- {
--	kheaders_attr.size = (&kernel_headers_data_end -
--			      &kernel_headers_data);
-+	kheaders_attr.size = (kernel_headers_data_end -
-+			      kernel_headers_data);
- 	return sysfs_create_bin_file(kernel_kobj, &kheaders_attr);
- }
+ 	/*
+-	 * Per databook, when we want to stop the gadget, if a control transfer
+-	 * is still in process, complete it and get the core into setup phase.
++	 * Attempt to end pending SETUP status phase, and not wait for the
++	 * function to do so.
+ 	 */
+-	if (dwc->ep0state != EP0_SETUP_PHASE) {
+-		int ret;
+-
+-		if (dwc->delayed_status)
+-			dwc3_ep0_send_delayed_status(dwc);
+-
+-		reinit_completion(&dwc->ep0_in_setup);
+-
+-		spin_unlock_irqrestore(&dwc->lock, flags);
+-		ret = wait_for_completion_timeout(&dwc->ep0_in_setup,
+-				msecs_to_jiffies(DWC3_PULL_UP_TIMEOUT));
+-		spin_lock_irqsave(&dwc->lock, flags);
+-		if (ret == 0)
+-			dev_warn(dwc->dev, "timed out waiting for SETUP phase\n");
+-	}
++	if (dwc->delayed_status)
++		dwc3_ep0_send_delayed_status(dwc);
  
+ 	/*
+ 	 * In the Synopsys DesignWare Cores USB3 Databook Rev. 3.30a
+@@ -2568,6 +2556,33 @@ static int dwc3_gadget_soft_disconnect(s
+ 	spin_unlock_irqrestore(&dwc->lock, flags);
+ 
+ 	/*
++	 * Per databook, when we want to stop the gadget, if a control transfer
++	 * is still in process, complete it and get the core into setup phase.
++	 * In case the host is unresponsive to a SETUP transaction, forcefully
++	 * stall the transfer, and move back to the SETUP phase, so that any
++	 * pending endxfers can be executed.
++	 */
++	if (dwc->ep0state != EP0_SETUP_PHASE) {
++		reinit_completion(&dwc->ep0_in_setup);
++
++		ret = wait_for_completion_timeout(&dwc->ep0_in_setup,
++				msecs_to_jiffies(DWC3_PULL_UP_TIMEOUT));
++		if (ret == 0) {
++			unsigned int    dir;
++
++			dev_warn(dwc->dev, "wait for SETUP phase timed out\n");
++			spin_lock_irqsave(&dwc->lock, flags);
++			dir = !!dwc->ep0_expect_in;
++			if (dwc->ep0state == EP0_DATA_PHASE)
++				dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
++			else
++				dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
++			dwc3_ep0_stall_and_restart(dwc);
++			spin_unlock_irqrestore(&dwc->lock, flags);
++		}
++	}
++
++	/*
+ 	 * Note: if the GEVNTCOUNT indicates events in the event buffer, the
+ 	 * driver needs to acknowledge them before the controller can halt.
+ 	 * Simply let the interrupt handler acknowledges and handle the
 
 
