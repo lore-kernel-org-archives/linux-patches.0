@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C9F168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D523C433D2;
-	Mon,  8 May 2023 10:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98C57168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D986C433D2;
+	Mon,  8 May 2023 10:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543106;
-	bh=ujakiOkxRCfeZWWTPSSDaTrxq/vuoGwTRqtNmDk5QMA=;
+	s=korg; t=1683543109;
+	bh=LG06MaQ6uD4RZMKjqZxUXr5sq9BT3UZfbd8ZI6E8KDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oNryQd4EGm5v8IP+nQcoVMiebfxvHfbjULlxgNI6sFXUhHKfKccz7jp+8J2G3h508
-	 H2A8F+wm6+3nlmCTUgw7y5V9TxxREfJj4mD4kGvXbiDUkNYfbVZ/zhXLvVDLGew1Rn
-	 O/guafb4d9CDUzEN2Rd4tYw2PBwRC66VIhLMzMUY=
+	b=gHNLTG8GntH/PV3Y1lP0Dt00h7jhSirhow9BYHELI5SB5XQPoaZLGhXZCDDrNlk1T
+	 BU8z+dhgGgTGYJNixKQgiaRx3Nhf0cAz9j0756/8d4rDmjbFxLRyMVebxXYzHh+34+
+	 CqkZf3IhXTJN2WB4qeBpyZGhbtRED8uqMVletlew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.2 651/663] blk-iocost: avoid 64-bit division in ioc_timer_fn
-Date: Mon,  8 May 2023 11:47:57 +0200
-Message-Id: <20230508094451.236286732@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 652/663] cifs: fix potential use-after-free bugs in TCP_Server_Info::hostname
+Date: Mon,  8 May 2023 11:47:58 +0200
+Message-Id: <20230508094451.274456352@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,57 +34,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Paulo Alcantara <pc@manguebit.com>
 
-commit 5f2779dfa7b8cc7dfd4a1b6586d86e0d193266f3 upstream.
+commit 90c49fce1c43e1cc152695e20363ff5087897c09 upstream.
 
-The behavior of 'enum' types has changed in gcc-13, so now the
-UNBUSY_THR_PCT constant is interpreted as a 64-bit number because
-it is defined as part of the same enum definition as some other
-constants that do not fit within a 32-bit integer. This in turn
-leads to some inefficient code on 32-bit architectures as well
-as a link error:
+TCP_Server_Info::hostname may be updated once or many times during
+reconnect, so protect its access outside reconnect path as well and
+then prevent any potential use-after-free bugs.
 
-arm-linux-gnueabi/bin/arm-linux-gnueabi-ld: block/blk-iocost.o: in function `ioc_timer_fn':
-blk-iocost.c:(.text+0x68e8): undefined reference to `__aeabi_uldivmod'
-arm-linux-gnueabi-ld: blk-iocost.c:(.text+0x6908): undefined reference to `__aeabi_uldivmod'
-
-Split the enum definition to keep the 64-bit timing constants in
-a separate enum type from those constants that can clearly fit
-within a smaller type.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20230118080706.3303186-1-arnd@kernel.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/blk-iocost.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/cifs/cifs_debug.c |    7 ++++++-
+ fs/cifs/cifs_debug.h |   12 ++++++------
+ fs/cifs/connect.c    |   10 +++++++---
+ fs/cifs/sess.c       |    7 ++++---
+ 4 files changed, 23 insertions(+), 13 deletions(-)
 
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -258,6 +258,11 @@ enum {
- 	VRATE_MIN		= VTIME_PER_USEC * VRATE_MIN_PPM / MILLION,
- 	VRATE_CLAMP_ADJ_PCT	= 4,
+--- a/fs/cifs/cifs_debug.c
++++ b/fs/cifs/cifs_debug.c
+@@ -279,8 +279,10 @@ static int cifs_debug_data_proc_show(str
+ 		seq_printf(m, "\n%d) ConnectionId: 0x%llx ",
+ 			c, server->conn_id);
  
-+	/* switch iff the conditions are met for longer than this */
-+	AUTOP_CYCLE_NSEC	= 10LLU * NSEC_PER_SEC,
-+};
++		spin_lock(&server->srv_lock);
+ 		if (server->hostname)
+ 			seq_printf(m, "Hostname: %s ", server->hostname);
++		spin_unlock(&server->srv_lock);
+ #ifdef CONFIG_CIFS_SMB_DIRECT
+ 		if (!server->rdma)
+ 			goto skip_rdma;
+@@ -620,10 +622,13 @@ static int cifs_stats_proc_show(struct s
+ 				server->fastest_cmd[j],
+ 				server->slowest_cmd[j]);
+ 		for (j = 0; j < NUMBER_OF_SMB2_COMMANDS; j++)
+-			if (atomic_read(&server->smb2slowcmd[j]))
++			if (atomic_read(&server->smb2slowcmd[j])) {
++				spin_lock(&server->srv_lock);
+ 				seq_printf(m, "  %d slow responses from %s for command %d\n",
+ 					atomic_read(&server->smb2slowcmd[j]),
+ 					server->hostname, j);
++				spin_unlock(&server->srv_lock);
++			}
+ #endif /* STATS2 */
+ 		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
+ 			list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
+--- a/fs/cifs/cifs_debug.h
++++ b/fs/cifs/cifs_debug.h
+@@ -81,19 +81,19 @@ do {									\
+ 
+ #define cifs_server_dbg_func(ratefunc, type, fmt, ...)			\
+ do {									\
+-	const char *sn = "";						\
+-	if (server && server->hostname)					\
+-		sn = server->hostname;					\
++	spin_lock(&server->srv_lock);					\
+ 	if ((type) & FYI && cifsFYI & CIFS_INFO) {			\
+ 		pr_debug_ ## ratefunc("%s: \\\\%s " fmt,		\
+-				      __FILE__, sn, ##__VA_ARGS__);	\
++				      __FILE__, server->hostname,	\
++				      ##__VA_ARGS__);			\
+ 	} else if ((type) & VFS) {					\
+ 		pr_err_ ## ratefunc("VFS: \\\\%s " fmt,			\
+-				    sn, ##__VA_ARGS__);			\
++				    server->hostname, ##__VA_ARGS__);	\
+ 	} else if ((type) & NOISY && (NOISY != 0)) {			\
+ 		pr_debug_ ## ratefunc("\\\\%s " fmt,			\
+-				      sn, ##__VA_ARGS__);		\
++				      server->hostname, ##__VA_ARGS__);	\
+ 	}								\
++	spin_unlock(&server->srv_lock);					\
+ } while (0)
+ 
+ #define cifs_server_dbg(type, fmt, ...)					\
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -435,8 +435,10 @@ static int __reconnect_target_unlocked(s
+ 		if (server->hostname != target) {
+ 			hostname = extract_hostname(target);
+ 			if (!IS_ERR(hostname)) {
++				spin_lock(&server->srv_lock);
+ 				kfree(server->hostname);
+ 				server->hostname = hostname;
++				spin_unlock(&server->srv_lock);
+ 			} else {
+ 				cifs_dbg(FYI, "%s: couldn't extract hostname or address from dfs target: %ld\n",
+ 					 __func__, PTR_ERR(hostname));
+@@ -593,9 +595,7 @@ cifs_echo_request(struct work_struct *wo
+ 		goto requeue_echo;
+ 
+ 	rc = server->ops->echo ? server->ops->echo(server) : -ENOSYS;
+-	if (rc)
+-		cifs_dbg(FYI, "Unable to send echo request to server: %s\n",
+-			 server->hostname);
++	cifs_server_dbg(FYI, "send echo request: rc = %d\n", rc);
+ 
+ 	/* Check witness registrations */
+ 	cifs_swn_check();
+@@ -1445,6 +1445,8 @@ static int match_server(struct TCP_Serve
+ {
+ 	struct sockaddr *addr = (struct sockaddr *)&ctx->dstaddr;
+ 
++	lockdep_assert_held(&server->srv_lock);
 +
-+enum {
- 	/* if IOs end up waiting for requests, issue less */
- 	RQ_WAIT_BUSY_PCT	= 5,
+ 	if (ctx->nosharesock)
+ 		return 0;
  
-@@ -296,9 +301,6 @@ enum {
- 	/* don't let cmds which take a very long time pin lagging for too long */
- 	MAX_LAGGING_PERIODS	= 10,
+@@ -1859,7 +1861,9 @@ cifs_setup_ipc(struct cifs_ses *ses, str
+ 	if (tcon == NULL)
+ 		return -ENOMEM;
  
--	/* switch iff the conditions are met for longer than this */
--	AUTOP_CYCLE_NSEC	= 10LLU * NSEC_PER_SEC,
--
- 	/*
- 	 * Count IO size in 4k pages.  The 12bit shift helps keeping
- 	 * size-proportional components of cost calculation in closer
++	spin_lock(&server->srv_lock);
+ 	scnprintf(unc, sizeof(unc), "\\\\%s\\IPC$", server->hostname);
++	spin_unlock(&server->srv_lock);
+ 
+ 	xid = get_xid();
+ 	tcon->ses = ses;
+--- a/fs/cifs/sess.c
++++ b/fs/cifs/sess.c
+@@ -159,6 +159,7 @@ cifs_chan_is_iface_active(struct cifs_se
+ /* returns number of channels added */
+ int cifs_try_adding_channels(struct cifs_sb_info *cifs_sb, struct cifs_ses *ses)
+ {
++	struct TCP_Server_Info *server = ses->server;
+ 	int old_chan_count, new_chan_count;
+ 	int left;
+ 	int rc = 0;
+@@ -178,16 +179,16 @@ int cifs_try_adding_channels(struct cifs
+ 		return 0;
+ 	}
+ 
+-	if (ses->server->dialect < SMB30_PROT_ID) {
++	if (server->dialect < SMB30_PROT_ID) {
+ 		spin_unlock(&ses->chan_lock);
+ 		cifs_dbg(VFS, "multichannel is not supported on this protocol version, use 3.0 or above\n");
+ 		return 0;
+ 	}
+ 
+-	if (!(ses->server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL)) {
++	if (!(server->capabilities & SMB2_GLOBAL_CAP_MULTI_CHANNEL)) {
+ 		ses->chan_max = 1;
+ 		spin_unlock(&ses->chan_lock);
+-		cifs_dbg(VFS, "server %s does not support multichannel\n", ses->server->hostname);
++		cifs_server_dbg(VFS, "no multichannel support\n");
+ 		return 0;
+ 	}
+ 	spin_unlock(&ses->chan_lock);
 
 
