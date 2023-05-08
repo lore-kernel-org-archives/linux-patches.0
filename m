@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BE7B168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81533C4339B;
-	Mon,  8 May 2023 10:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60F5154A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:00:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C84C433EF;
+	Mon,  8 May 2023 10:00:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540040;
-	bh=hA0J+VRRLZBlZjUUMYMUo5fm7vxLUZ8PbJj9uASnpNo=;
+	s=korg; t=1683540043;
+	bh=QX8W8u0UYodCboyNWc/hxK2HeStEPKYql8K4p9E4lsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nyjvUltD+7WwiaxZ9h0Mp4uZ/gg9s4Co2XFOhcjCqNis1F9JSrkX0M1PXBxrEssjl
-	 p47j0qcFLV207JMp/FUPF1sr7X3pFlavZ7U99HyTnNHd1iy7Jt5iTu4TTAsBShNwe7
-	 G+ZTdJ0reqXE9KN8tpz/DS6K0JGFKmyNAMbSZC38=
+	b=1/GSVDAzj+FW0a707gmsYnaa0jM7ROoTWzMXf4zPG9fSM10y+z2892vPVbmvEY6Ci
+	 9qio4muaJqZkB0NpVh7KvF2j/rKd7KMwWaMBkWkBnoceyWqrTJWJ0C+hpBzD5c3doT
+	 q6a/uSnlqFk9zom9KXHaznqhFxu02H2t2Cp66Us4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vorel <pvorel@suse.cz>,
+	Douglas Anderson <dianders@chromium.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 220/611] arm64: dts: qcom: msm8994-angler: removed clash with smem_region
-Date: Mon,  8 May 2023 11:41:02 +0200
-Message-Id: <20230508094429.545495045@linuxfoundation.org>
+Subject: [PATCH 6.1 221/611] arm64: dts: sc7180: Rename qspi data12 as data23
+Date: Mon,  8 May 2023 11:41:03 +0200
+Message-Id: <20230508094429.584378559@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,81 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Vorel <pvorel@suse.cz>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit c85c8a992794dfcd7cea7a41871710c27c5592a6 ]
+[ Upstream commit d84f8f2687bdc67f20262e822b206419bcfd0038 ]
 
-This fixes memory overlap error:
-[    0.000000] reserved@6300000 (0x0000000006300000--0x0000000007000000) overlaps with smem_region@6a00000 (0x0000000006a00000--0x0000000006c00000)
+There are 4 qspi data pins: data0, data1, data2, and data3. Currently
+we have a shared pin state for data0 and data1 (2 lane config) and a
+pin state for data2 and data3 (you'd enable both this and the 2 lane
+state for 4 lanes). The second state is obviously misnamed. Fix it.
 
-smem_region is the same as in downstream (qcom,smem) [1], therefore
-split reserved memory into two sections on either side of smem_region.
-
-Not adding labels as it's not expected to be used.
-
-[1] https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-angler-3.10-marshmallow-mr1/arch/arm/boot/dts/qcom/msm8994.dtsi#948
-
-Fixes: 380cd3a34b7f ("arm64: dts: msm8994-angler: fix the memory map")
-
-Signed-off-by: Petr Vorel <pvorel@suse.cz>
+Fixes: ba3fc6496366 ("arm64: dts: sc7180: Add qupv3_0 and qupv3_1")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230131200414.24373-3-pvorel@suse.cz
+Link: https://lore.kernel.org/r/20230323102605.1.Ifc1b5be04653f4ab119698a5944bfecded2080d6@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi          | 5 -----
- arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts | 4 ++--
- arch/arm64/boot/dts/qcom/msm8994.dtsi                      | 5 +++++
- 3 files changed, 7 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-index 465b2828acbd4..13b8823ae063a 100644
---- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
-@@ -60,11 +60,6 @@
- 			reg = <0x0 0x05000000 0x0 0x1a00000>;
- 			no-map;
- 		};
--
--		reserved@6c00000 {
--			reg = <0x0 0x06c00000 0x0 0x400000>;
--			no-map;
--		};
- 	};
- };
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -1521,7 +1521,7 @@
+ 				};
+ 			};
  
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-index 4c47d8015482c..4801d973f9d7c 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-@@ -40,8 +40,8 @@
- 			no-map;
- 		};
- 
--		removed_region: reserved@6300000 {
--			reg = <0 0x06300000 0 0xD00000>;
-+		reserved@6300000 {
-+			reg = <0 0x06300000 0 0x700000>;
- 			no-map;
- 		};
- 	};
-diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-index ded5b7ceeaf97..7ed59e698c14d 100644
---- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
-@@ -227,6 +227,11 @@
- 			reg = <0 0xc9400000 0 0x3f00000>;
- 			no-map;
- 		};
-+
-+		reserved@6c00000 {
-+			reg = <0 0x06c00000 0 0x400000>;
-+			no-map;
-+		};
- 	};
- 
- 	smd {
--- 
-2.39.2
-
+-			qspi_data12: qspi-data12 {
++			qspi_data23: qspi-data23 {
+ 				pinmux-data {
+ 					pins = "gpio66", "gpio67";
+ 					function = "qspi_data";
 
 
