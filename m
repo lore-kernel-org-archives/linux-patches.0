@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C5B168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:17:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDE7C433EF;
-	Mon,  8 May 2023 10:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1940B168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:17:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 929E4C433EF;
+	Mon,  8 May 2023 10:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541040;
-	bh=CL1HLDwUN1mkeYzB5XCFDH+3dVdjRatD5TFejnbijEY=;
+	s=korg; t=1683541042;
+	bh=yLJfJScy5xNsVDqA4Eu3MqTaZop2eZPlqiCnpbSB/ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Alwim54Bqr1ekkNFE/07NcbGR1zGHG381cyAqyl0evnPvLoVPvHUfyg0z7peAItXy
-	 jzjaiCslzf21RA7ZUnaNWVhNRqO+zAicXPDb7dm/JOTtRlagjQcFI2eWguMZIvI6AG
-	 yhfQLTH96+1lKewhnfRwCeYjM5cVyhaGjD6L7H3s=
+	b=BXXASTluK8frHrKzL+t31QT+I3+mvtNDAYXuRQxsJEBaf9vX7lnktFOK/Mjelc9H+
+	 586Dxj8QGOeY2fdUF0BHzZsaqozwV1jtBGJO1HRafGeZ0ZG/vJ+RfgRyzlEYLD02kU
+	 UUjQuBmNTJK4ONH0l79TOos9+otw/LMK99Y7UOeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 586/611] s390/dasd: fix hanging blockdevice after request requeue
-Date: Mon,  8 May 2023 11:47:08 +0200
-Message-Id: <20230508094440.965848039@linuxfoundation.org>
+	Li Lingfeng <lilingfeng3@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.1 595/611] dm: dont lock fs when the map is NULL in process of resume
+Date: Mon,  8 May 2023 11:47:17 +0200
+Message-Id: <20230508094441.237540223@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,39 +34,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Li Lingfeng <lilingfeng3@huawei.com>
 
-commit d8898ee50edecacdf0141f26fd90acf43d7e9cd7 upstream.
+commit 38d11da522aacaa05898c734a1cec86f1e611129 upstream.
 
-The DASD driver does not kick the requeue list when requeuing IO requests
-to the blocklayer. This might lead to hanging blockdevice when there is
-no other trigger for this.
+Commit fa247089de99 ("dm: requeue IO if mapping table not yet available")
+added a detection of whether the mapping table is available in the IO
+submission process. If the mapping table is unavailable, it returns
+BLK_STS_RESOURCE and requeues the IO.
+This can lead to the following deadlock problem:
 
-Fix by automatically kick the requeue list when requeuing DASD requests
-to the blocklayer.
+dm create                                      mount
+ioctl(DM_DEV_CREATE_CMD)
+ioctl(DM_TABLE_LOAD_CMD)
+                               do_mount
+                                vfs_get_tree
+                                 ext4_get_tree
+                                  get_tree_bdev
+                                   sget_fc
+                                    alloc_super
+                                     // got &s->s_umount
+                                     down_write_nested(&s->s_umount, ...);
+                                   ext4_fill_super
+                                    ext4_load_super
+                                     ext4_read_bh
+                                      submit_bio
+                                      // submit and wait io end
+ioctl(DM_DEV_SUSPEND_CMD)
+dev_suspend
+ do_resume
+  dm_suspend
+   __dm_suspend
+    lock_fs
+     freeze_bdev
+      get_active_super
+       grab_super
+        // wait for &s->s_umount
+        down_write(&s->s_umount);
+  dm_swap_table
+   __bind
+    // set md->map(can't get here)
 
-Fixes: e443343e509a ("s390/dasd: blk-mq conversion")
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230405142017.2446986-8-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+IO will be continuously requeued while holding the lock since mapping
+table is NULL. At the same time, mapping table won't be set since the
+lock is not available.
+Like request-based DM, bio-based DM also has the same problem.
+
+It's not proper to just abort IO if the mapping table not available.
+So clear DM_SKIP_LOCKFS_FLAG when the mapping table is NULL, this
+allows the DM table to be loaded and the IO submitted upon resume.
+
+Fixes: fa247089de99 ("dm: requeue IO if mapping table not yet available")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Lingfeng <lilingfeng3@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-ioctl.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -2941,7 +2941,7 @@ static int _dasd_requeue_request(struct
- 		return 0;
- 	spin_lock_irq(&cqr->dq->lock);
- 	req = (struct request *) cqr->callback_data;
--	blk_mq_requeue_request(req, false);
-+	blk_mq_requeue_request(req, true);
- 	spin_unlock_irq(&cqr->dq->lock);
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1151,10 +1151,13 @@ static int do_resume(struct dm_ioctl *pa
+ 	/* Do we need to load a new map ? */
+ 	if (new_map) {
+ 		sector_t old_size, new_size;
++		int srcu_idx;
  
- 	return 0;
+ 		/* Suspend if it isn't already suspended */
+-		if (param->flags & DM_SKIP_LOCKFS_FLAG)
++		old_map = dm_get_live_table(md, &srcu_idx);
++		if ((param->flags & DM_SKIP_LOCKFS_FLAG) || !old_map)
+ 			suspend_flags &= ~DM_SUSPEND_LOCKFS_FLAG;
++		dm_put_live_table(md, srcu_idx);
+ 		if (param->flags & DM_NOFLUSH_FLAG)
+ 			suspend_flags |= DM_SUSPEND_NOFLUSH_FLAG;
+ 		if (!dm_suspended_md(md))
 
 
