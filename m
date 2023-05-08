@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFE7168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DCDC433D2;
-	Mon,  8 May 2023 10:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE28168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:51:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF7AC433D2;
+	Mon,  8 May 2023 10:51:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543077;
-	bh=lGR6HAMTqbcAsG99GjOZGFXlX6sQYubRIqziW6Cw2p4=;
+	s=korg; t=1683543081;
+	bh=SSfty5k5frekUJIoyYf4pgyqGQ8iyw42iJoT+FBngcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnifV8F7iWqrm68v+1wZ/BgSa8IYHhpV1cGc/rjBgmuzraSwYME70mKri9vX/x6te
-	 5SdsSiyvbPneZgdTOvVWTQ+gKvJEpirUfHhHfjueZVsiU72PfjVOZHKSAN2E58dgcI
-	 k7YQo2LZxLCfkhOItsuBINZXjytMF1VwiKtcQEao=
+	b=WRf4K1tId9Og7UwvFgG2XgVqtBhxoB4ZKquQvAIFZ4Dnsr4t2HF8slbcaRo48Wz0p
+	 JQmei7NbFRuZ6E9MG7qvQBDigwvZ9IlTx0Frb0okz3ZdrOSkC4pjfCFcAYnhPhm/Dg
+	 BfwXSKd5dLN1NBU499fjPdtPv/pxJDy7tcfMMaf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	kernel test robot <oliver.sang@intel.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 643/663] mm/mempolicy: correctly update prev when policy is equal on mbind
-Date: Mon,  8 May 2023 11:47:49 +0200
-Message-Id: <20230508094450.883703893@linuxfoundation.org>
+	Cindy Lu <lulu@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH 6.2 644/663] vhost_vdpa: fix unmap process in no-batch mode
+Date: Mon,  8 May 2023 11:47:50 +0200
+Message-Id: <20230508094450.933620156@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,71 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Stoakes <lstoakes@gmail.com>
+From: Cindy Lu <lulu@redhat.com>
 
-commit 00ca0f2e86bf40b016a646e6323a8941a09cf106 upstream.
+commit c82729e06644f4e087f5ff0f91b8fb15e03b8890 upstream.
 
-The refactoring in commit f4e9e0e69468 ("mm/mempolicy: fix use-after-free
-of VMA iterator") introduces a subtle bug which arises when attempting to
-apply a new NUMA policy across a range of VMAs in mbind_range().
+While using the vdpa device with vIOMMU enabled
+in the guest VM, when the vdpa device bind to vfio-pci and run testpmd
+then system will fail to unmap.
+The test process is
+Load guest VM --> attach to virtio driver--> bind to vfio-pci driver
+So the mapping process is
+1)batched mode map to normal MR
+2)batched mode unmapped the normal MR
+3)unmapped all the memory
+4)mapped to iommu MR
 
-The refactoring passes a **prev pointer to keep track of the previous VMA
-in order to reduce duplication, and in all but one case it keeps this
-correctly updated.
+This error happened in step 3). The iotlb was freed in step 2)
+and the function vhost_vdpa_process_iotlb_msg will return fail
+Which causes failure.
 
-The bug arises when a VMA within the specified range has an equivalent
-policy as determined by mpol_equal() - which unlike other cases, does not
-update prev.
+To fix this, we will not remove the AS while the iotlb->nmaps is 0.
+This will free in the vhost_vdpa_clean
 
-This can result in a situation where, later in the iteration, a VMA is
-found whose policy does need to change.  At this point, vma_merge() is
-invoked with prev pointing to a VMA which is before the previous VMA.
-
-Since vma_merge() discovers the curr VMA by looking for the one
-immediately after prev, it will now be in a situation where this VMA is
-incorrect and the merge will not proceed correctly.
-
-This is checked in the VM_WARN_ON() invariant case with end >
-curr->vm_end, which, if a merge is possible, results in a warning (if
-CONFIG_DEBUG_VM is specified).
-
-I note that vma_merge() performs these invariant checks only after
-merge_prev/merge_next are checked, which is debatable as it hides this
-issue if no merge is possible even though a buggy situation has arisen.
-
-The solution is simply to update the prev pointer even when policies are
-equal.
-
-This caused a bug to arise in the 6.2.y stable tree, and this patch
-resolves this bug.
-
-Link: https://lkml.kernel.org/r/83f1d612acb519d777bebf7f3359317c4e7f4265.1682866629.git.lstoakes@gmail.com
-Fixes: f4e9e0e69468 ("mm/mempolicy: fix use-after-free of VMA iterator")
-Signed-off-by: Lorenzo Stoakes <lstoakes@gmail.com>
-Reported-by: kernel test robot <oliver.sang@intel.com>
-  Link: https://lore.kernel.org/oe-lkp/202304292203.44ddeff6-oliver.sang@intel.com
-Cc: Liam R. Howlett <Liam.Howlett@oracle.com>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: aaca8373c4b1 ("vhost-vdpa: support ASID based IOTLB API")
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+Message-Id: <20230420151734.860168-1-lulu@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/vhost/vdpa.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -802,8 +802,10 @@ static int mbind_range(struct vma_iterat
- 		vmstart = vma->vm_start;
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -819,11 +819,7 @@ static void vhost_vdpa_unmap(struct vhos
+ 		if (!v->in_batch)
+ 			ops->set_map(vdpa, asid, iotlb);
  	}
+-	/* If we are in the middle of batch processing, delay the free
+-	 * of AS until BATCH_END.
+-	 */
+-	if (!v->in_batch && !iotlb->nmaps)
+-		vhost_vdpa_remove_as(v, asid);
++
+ }
  
--	if (mpol_equal(vma_policy(vma), new_pol))
-+	if (mpol_equal(vma_policy(vma), new_pol)) {
-+		*prev = vma;
- 		return 0;
-+	}
- 
- 	pgoff = vma->vm_pgoff + ((vmstart - vma->vm_start) >> PAGE_SHIFT);
- 	merged = vma_merge(vma->vm_mm, *prev, vmstart, vmend, vma->vm_flags,
+ static int vhost_vdpa_va_map(struct vhost_vdpa *v,
+@@ -1080,8 +1076,6 @@ static int vhost_vdpa_process_iotlb_msg(
+ 		if (v->in_batch && ops->set_map)
+ 			ops->set_map(vdpa, asid, iotlb);
+ 		v->in_batch = false;
+-		if (!iotlb->nmaps)
+-			vhost_vdpa_remove_as(v, asid);
+ 		break;
+ 	default:
+ 		r = -EINVAL;
 
 
