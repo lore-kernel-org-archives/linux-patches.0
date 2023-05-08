@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955CE168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C58C433EF;
-	Mon,  8 May 2023 11:13:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93311168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18904C433D2;
+	Mon,  8 May 2023 11:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544437;
-	bh=mLUtACPvjIVG5Agro0m8YCZmkQA0b0aoIHpCpIfvV6s=;
+	s=korg; t=1683544440;
+	bh=GX31uYiQd+Qe+Ty2GIohKZrgGp6XxUZxZqptURN6Eas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=na09LRZzWbdJt1UUf5Sa9Uf2TbyRIgCnaXyhVZyg28QCmtMdd2nZkgYMpCs/sSb5y
-	 +tM5V9cIVYcXFR37cWlD4Hyz8eyuYb05L1oxmI0NBGN5fIqBYCU6s12LPK0RzVkj1d
-	 F/Xwg+fmpRrNIHTTVdl2OcoALY2ujlrRIKcZ9hJI=
+	b=HYO13rHnx4AkofWRzJnsZ0hUZL4JI9oH43HDb3oZKwSEQ664um/pWQe35nM9XcFFq
+	 56S3LFtHt9+DCaAlezTK2cHg16RB52B2GAvn8fM4FWEhvq0x0syThXn3qkzIDgFJ2h
+	 pm2adeJ2/ukuEveB+XzeKWTR3OIOft8kOAO9tL5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Song Liu <song@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 382/694] bpf: factor out fetching basic kfunc metadata
-Date: Mon,  8 May 2023 11:43:37 +0200
-Message-Id: <20230508094445.332166495@linuxfoundation.org>
+Subject: [PATCH 6.3 409/694] selftests/bpf: Fix leaked bpf_link in get_stackid_cannot_attach
+Date: Mon,  8 May 2023 11:44:04 +0200
+Message-Id: <20230508094446.503962755@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,199 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit 07236eab7a3139da97aef9f5f21f403be82a82ea ]
+[ Upstream commit c1e07a80cf23d3a6e96172bc9a73bfa912a9fcbc ]
 
-Factor out logic to fetch basic kfunc metadata based on struct bpf_insn.
-This is not exactly short or trivial code to just copy/paste and this
-information is sometimes necessary in other parts of the verifier logic.
-Subsequent patches will rely on this to determine if an instruction is
-a kfunc call to iterator next method.
+skel->links.oncpu is leaked in one case. This causes test perf_branches
+fails when it runs after get_stackid_cannot_attach:
 
-No functional changes intended, including that verbose() warning
-behavior when kfunc is not allowed for a particular program type.
+./test_progs -t get_stackid_cannot_attach,perf_branches
+84      get_stackid_cannot_attach:OK
+test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
+test_perf_branches_common:PASS:attach_perf_event 0 nsec
+test_perf_branches_common:PASS:set_affinity 0 nsec
+check_good_sample:FAIL:output not valid no valid sample from prog
+146/1   perf_branches/perf_branches_hw:FAIL
+146/2   perf_branches/perf_branches_no_hw:OK
+146     perf_branches:FAIL
 
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20230308184121.1165081-2-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Stable-dep-of: f6a6a5a97628 ("bpf: Fix struct_meta lookup for bpf_obj_free_fields kfunc call")
+All error logs:
+test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
+test_perf_branches_common:PASS:attach_perf_event 0 nsec
+test_perf_branches_common:PASS:set_affinity 0 nsec
+check_good_sample:FAIL:output not valid no valid sample from prog
+146/1   perf_branches/perf_branches_hw:FAIL
+146     perf_branches:FAIL
+Summary: 1/1 PASSED, 0 SKIPPED, 1 FAILED
+
+Fix this by adding the missing bpf_link__destroy().
+
+Fixes: 346938e9380c ("selftests/bpf: Add get_stackid_cannot_attach")
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230412210423.900851-3-song@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 92 +++++++++++++++++++++++++++----------------
- 1 file changed, 59 insertions(+), 33 deletions(-)
+ .../testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index f4f5fadb74c4f..559c9137f834d 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -9788,24 +9788,21 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
- 	return 0;
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c b/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
+index 5308de1ed478e..2715c68301f52 100644
+--- a/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
++++ b/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
+@@ -65,6 +65,7 @@ void test_get_stackid_cannot_attach(void)
+ 	skel->links.oncpu = bpf_program__attach_perf_event(skel->progs.oncpu,
+ 							   pmu_fd);
+ 	ASSERT_OK_PTR(skel->links.oncpu, "attach_perf_event_callchain");
++	bpf_link__destroy(skel->links.oncpu);
+ 	close(pmu_fd);
  
--static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
--			    int *insn_idx_p)
-+static int fetch_kfunc_meta(struct bpf_verifier_env *env,
-+			    struct bpf_insn *insn,
-+			    struct bpf_kfunc_call_arg_meta *meta,
-+			    const char **kfunc_name)
- {
--	const struct btf_type *t, *func, *func_proto, *ptr_type;
--	u32 i, nargs, func_id, ptr_type_id, release_ref_obj_id;
--	struct bpf_reg_state *regs = cur_regs(env);
--	const char *func_name, *ptr_type_name;
--	bool sleepable, rcu_lock, rcu_unlock;
--	struct bpf_kfunc_call_arg_meta meta;
--	int err, insn_idx = *insn_idx_p;
--	const struct btf_param *args;
--	const struct btf_type *ret_t;
-+	const struct btf_type *func, *func_proto;
-+	u32 func_id, *kfunc_flags;
-+	const char *func_name;
- 	struct btf *desc_btf;
--	u32 *kfunc_flags;
- 
--	/* skip for now, but return error when we find this in fixup_kfunc_call */
-+	if (kfunc_name)
-+		*kfunc_name = NULL;
-+
- 	if (!insn->imm)
--		return 0;
-+		return -EINVAL;
- 
- 	desc_btf = find_kfunc_desc_btf(env, insn->off);
- 	if (IS_ERR(desc_btf))
-@@ -9814,22 +9811,51 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 	func_id = insn->imm;
- 	func = btf_type_by_id(desc_btf, func_id);
- 	func_name = btf_name_by_offset(desc_btf, func->name_off);
-+	if (kfunc_name)
-+		*kfunc_name = func_name;
- 	func_proto = btf_type_by_id(desc_btf, func->type);
- 
- 	kfunc_flags = btf_kfunc_id_set_contains(desc_btf, resolve_prog_type(env->prog), func_id);
- 	if (!kfunc_flags) {
--		verbose(env, "calling kernel function %s is not allowed\n",
--			func_name);
- 		return -EACCES;
- 	}
- 
--	/* Prepare kfunc call metadata */
--	memset(&meta, 0, sizeof(meta));
--	meta.btf = desc_btf;
--	meta.func_id = func_id;
--	meta.kfunc_flags = *kfunc_flags;
--	meta.func_proto = func_proto;
--	meta.func_name = func_name;
-+	memset(meta, 0, sizeof(*meta));
-+	meta->btf = desc_btf;
-+	meta->func_id = func_id;
-+	meta->kfunc_flags = *kfunc_flags;
-+	meta->func_proto = func_proto;
-+	meta->func_name = func_name;
-+
-+	return 0;
-+}
-+
-+static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
-+			    int *insn_idx_p)
-+{
-+	const struct btf_type *t, *ptr_type;
-+	u32 i, nargs, ptr_type_id, release_ref_obj_id;
-+	struct bpf_reg_state *regs = cur_regs(env);
-+	const char *func_name, *ptr_type_name;
-+	bool sleepable, rcu_lock, rcu_unlock;
-+	struct bpf_kfunc_call_arg_meta meta;
-+	struct bpf_insn_aux_data *insn_aux;
-+	int err, insn_idx = *insn_idx_p;
-+	const struct btf_param *args;
-+	const struct btf_type *ret_t;
-+	struct btf *desc_btf;
-+
-+	/* skip for now, but return error when we find this in fixup_kfunc_call */
-+	if (!insn->imm)
-+		return 0;
-+
-+	err = fetch_kfunc_meta(env, insn, &meta, &func_name);
-+	if (err == -EACCES && func_name)
-+		verbose(env, "calling kernel function %s is not allowed\n", func_name);
-+	if (err)
-+		return err;
-+	desc_btf = meta.btf;
-+	insn_aux = &env->insn_aux_data[insn_idx];
- 
- 	if (is_kfunc_destructive(&meta) && !capable(CAP_SYS_BOOT)) {
- 		verbose(env, "destructive kfunc calls require CAP_SYS_BOOT capability\n");
-@@ -9886,7 +9912,7 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 		err = release_reference(env, regs[meta.release_regno].ref_obj_id);
- 		if (err) {
- 			verbose(env, "kfunc %s#%d reference has not been acquired before\n",
--				func_name, func_id);
-+				func_name, meta.func_id);
- 			return err;
- 		}
- 	}
-@@ -9898,14 +9924,14 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 		err = ref_convert_owning_non_owning(env, release_ref_obj_id);
- 		if (err) {
- 			verbose(env, "kfunc %s#%d conversion of owning ref to non-owning failed\n",
--				func_name, func_id);
-+				func_name, meta.func_id);
- 			return err;
- 		}
- 
- 		err = release_reference(env, release_ref_obj_id);
- 		if (err) {
- 			verbose(env, "kfunc %s#%d reference has not been acquired before\n",
--				func_name, func_id);
-+				func_name, meta.func_id);
- 			return err;
- 		}
- 	}
-@@ -9915,7 +9941,7 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 					set_rbtree_add_callback_state);
- 		if (err) {
- 			verbose(env, "kfunc %s#%d failed callback verification\n",
--				func_name, func_id);
-+				func_name, meta.func_id);
- 			return err;
- 		}
- 	}
-@@ -9924,7 +9950,7 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 		mark_reg_not_init(env, regs, caller_saved[i]);
- 
- 	/* Check return type */
--	t = btf_type_skip_modifiers(desc_btf, func_proto->type, NULL);
-+	t = btf_type_skip_modifiers(desc_btf, meta.func_proto->type, NULL);
- 
- 	if (is_kfunc_acquire(&meta) && !btf_type_is_struct_ptr(meta.btf, t)) {
- 		/* Only exception is bpf_obj_new_impl */
-@@ -9973,11 +9999,11 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 				regs[BPF_REG_0].btf = ret_btf;
- 				regs[BPF_REG_0].btf_id = ret_btf_id;
- 
--				env->insn_aux_data[insn_idx].obj_new_size = ret_t->size;
--				env->insn_aux_data[insn_idx].kptr_struct_meta =
-+				insn_aux->obj_new_size = ret_t->size;
-+				insn_aux->kptr_struct_meta =
- 					btf_find_struct_meta(ret_btf, ret_btf_id);
- 			} else if (meta.func_id == special_kfunc_list[KF_bpf_obj_drop_impl]) {
--				env->insn_aux_data[insn_idx].kptr_struct_meta =
-+				insn_aux->kptr_struct_meta =
- 					btf_find_struct_meta(meta.arg_obj_drop.btf,
- 							     meta.arg_obj_drop.btf_id);
- 			} else if (meta.func_id == special_kfunc_list[KF_bpf_list_pop_front] ||
-@@ -10066,8 +10092,8 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
- 			regs[BPF_REG_0].id = ++env->id_gen;
- 	} /* else { add_kfunc_call() ensures it is btf_type_is_void(t) } */
- 
--	nargs = btf_type_vlen(func_proto);
--	args = (const struct btf_param *)(func_proto + 1);
-+	nargs = btf_type_vlen(meta.func_proto);
-+	args = (const struct btf_param *)(meta.func_proto + 1);
- 	for (i = 0; i < nargs; i++) {
- 		u32 regno = i + 1;
- 
+ 	/* add exclude_callchain_kernel, attach should fail */
 -- 
 2.39.2
 
