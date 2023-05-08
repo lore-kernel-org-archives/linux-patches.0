@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D50320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C10C433D2;
-	Mon,  8 May 2023 11:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9C5A320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9A3C433D2;
+	Mon,  8 May 2023 11:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544814;
-	bh=tdaGVHC91hk58RYFDYl7oJTJx6nHQiB5NYUyPkvpScQ=;
+	s=korg; t=1683544817;
+	bh=XVU5Vo3I5IXl8bDMikkqu6a3ptheLyt9rM9yyu1g+Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npePH803eU4mCUmsHa89H+ef8U5rm1Gp00KSeuRZtdgbwkoJqCREGjWV0raTkSttR
-	 ct/yBtdIRppqAmJiA7pkwDGtpe+zRsgEYYe9Hh2MEVJDAggsflYCiTPIUm6jWVETNg
-	 oG023KhcJyHyDL7DKjYU1fpKmAXBxFlrYUzzo8xw=
+	b=HtnG63YqI2M2ojkzbg1rDuuTJc9w3zIvxSGY7k0cuzdI8E5SAZw+7I5ReocTbZVAs
+	 1EpjKxWi+Qrx9NndW5oz3a0rx5E7FS5XiF7QsLkyXp4dVwxT6d64j8ZGAM6URUzbl7
+	 WSDKoTggeNuTUbE42LwWWX54pAo7m5fjoAlh6mJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Pierre Gondois <pierre.gondois@arm.com>,
 	Conor Dooley <conor.dooley@microchip.com>,
 	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 531/694] cacheinfo: Check sib_leaf in cache_leaves_are_shared()
-Date: Mon,  8 May 2023 11:46:06 +0200
-Message-Id: <20230508094451.578012891@linuxfoundation.org>
+Subject: [PATCH 6.3 532/694] cacheinfo: Check cache properties are present in DT
+Date: Mon,  8 May 2023 11:46:07 +0200
+Message-Id: <20230508094451.630724234@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,55 +39,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Pierre Gondois <pierre.gondois@arm.com>
 
-[ Upstream commit 7a306e3eabf2b2fd8cffa69b87b32dbf814d79ce ]
+[ Upstream commit cde0fbff07eff7e4e0e85fa053fe19a24c86b1e0 ]
 
-If there is no ACPI/DT information, it is assumed that L1 caches
-are private and L2 (and higher) caches are shared. A cache is
-'shared' between two CPUs if it is accessible from these two
-CPUs.
+If a Device Tree (DT) is used, the presence of cache properties is
+assumed. Not finding any is not considered. For arm64 platforms,
+cache information can be fetched from the clidr_el1 register.
+Checking whether cache information is available in the DT
+allows to switch to using clidr_el1.
 
-Each CPU owns a representation (i.e. has a dedicated cacheinfo struct)
-of the caches it has access to. cache_leaves_are_shared() tries to
-identify whether two representations are designating the same actual
-cache.
+init_of_cache_level()
+\-of_count_cache_leaves()
+will assume there a 2 cache leaves (L1 data/instruction caches), which
+can be different from clidr_el1 information.
 
-In cache_leaves_are_shared(), if 'this_leaf' is a L2 cache (or higher)
-and 'sib_leaf' is a L1 cache, the caches are detected as shared as
-only this_leaf's cache level is checked.
-This is leads to setting sib_leaf as being shared with another CPU,
-which is incorrect as this is a L1 cache.
+cache_setup_of_node() tries to read cache properties in the DT.
+If there are none, this is considered a success. Knowing no
+information was available would allow to switch to using clidr_el1.
 
-Check 'sib_leaf->level'. Also update the comment as the function is
-called when populating 'shared_cpu_map'.
-
-Fixes: f16d1becf96f ("cacheinfo: Use cache identifiers to check if the caches are shared if available")
+Fixes: de0df442ee49 ("cacheinfo: Check 'cache-unified' property to count cache leaves")
+Reported-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/all/20230404-hatred-swimmer-6fecdf33b57a@spud/
 Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
 Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20230414081453.244787-2-pierre.gondois@arm.com
+Link: https://lore.kernel.org/r/20230414081453.244787-3-pierre.gondois@arm.com
 Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/cacheinfo.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/base/cacheinfo.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
 diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
-index f3903d002819e..c5d2293ac2a63 100644
+index c5d2293ac2a63..ea8f416852bd9 100644
 --- a/drivers/base/cacheinfo.c
 +++ b/drivers/base/cacheinfo.c
-@@ -38,11 +38,10 @@ static inline bool cache_leaves_are_shared(struct cacheinfo *this_leaf,
- {
- 	/*
- 	 * For non DT/ACPI systems, assume unique level 1 caches,
--	 * system-wide shared caches for all other levels. This will be used
--	 * only if arch specific code has not populated shared_cpu_map
-+	 * system-wide shared caches for all other levels.
- 	 */
- 	if (!(IS_ENABLED(CONFIG_OF) || IS_ENABLED(CONFIG_ACPI)))
--		return !(this_leaf->level == 1);
-+		return (this_leaf->level != 1) && (sib_leaf->level != 1);
+@@ -78,6 +78,9 @@ bool last_level_cache_is_shared(unsigned int cpu_x, unsigned int cpu_y)
+ }
  
- 	if ((sib_leaf->attributes & CACHE_ID) &&
- 	    (this_leaf->attributes & CACHE_ID))
+ #ifdef CONFIG_OF
++
++static bool of_check_cache_nodes(struct device_node *np);
++
+ /* OF properties to query for a given cache type */
+ struct cache_type_info {
+ 	const char *size_prop;
+@@ -205,6 +208,11 @@ static int cache_setup_of_node(unsigned int cpu)
+ 		return -ENOENT;
+ 	}
+ 
++	if (!of_check_cache_nodes(np)) {
++		of_node_put(np);
++		return -ENOENT;
++	}
++
+ 	prev = np;
+ 
+ 	while (index < cache_leaves(cpu)) {
+@@ -229,6 +237,25 @@ static int cache_setup_of_node(unsigned int cpu)
+ 	return 0;
+ }
+ 
++static bool of_check_cache_nodes(struct device_node *np)
++{
++	struct device_node *next;
++
++	if (of_property_present(np, "cache-size")   ||
++	    of_property_present(np, "i-cache-size") ||
++	    of_property_present(np, "d-cache-size") ||
++	    of_property_present(np, "cache-unified"))
++		return true;
++
++	next = of_find_next_cache_node(np);
++	if (next) {
++		of_node_put(next);
++		return true;
++	}
++
++	return false;
++}
++
+ static int of_count_cache_leaves(struct device_node *np)
+ {
+ 	unsigned int leaves = 0;
+@@ -260,6 +287,11 @@ int init_of_cache_level(unsigned int cpu)
+ 	struct device_node *prev = NULL;
+ 	unsigned int levels = 0, leaves, level;
+ 
++	if (!of_check_cache_nodes(np)) {
++		of_node_put(np);
++		return -ENOENT;
++	}
++
+ 	leaves = of_count_cache_leaves(np);
+ 	if (leaves > 0)
+ 		levels = 1;
 -- 
 2.39.2
 
