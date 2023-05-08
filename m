@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF56D168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C80C433EF;
-	Mon,  8 May 2023 10:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DD40168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 075A8C433D2;
+	Mon,  8 May 2023 10:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540284;
-	bh=yJ2zIC1+N3dj/S5NaxzoQly1HdlNFD+pTh8ALE05Buo=;
+	s=korg; t=1683540287;
+	bh=JS845e7pqSFJ8qj0kh8EIfVlX1p5VCYyJv9WjrtfEyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhbU1d+VBr7Ip1cJAYBcw2HcGvxmUyu0fHREPcknXVm5mVwASO9pAn15H2aK+OQ12
-	 Jbym/GxdYCbejD4SyuzP/sOf+ituaLhLJFf3t2nZCpHUUBi391U9eVJxScLky8JLXE
-	 pXosgrNxly+fsnlgdu9Z433u8C9vOhD7j7RmV/C4=
+	b=g2UpIgrHuYX6wL+UqXARVTf6JeOM4cfEspVZgg8oYMYXq9JbX2GlvdKHx9WncJp95
+	 gjmrOk4bTQR3/SufHaHHNn9DBFTWV9EF2mZM2UB87a2RDYmEuK+Etr8Xh2UK3rKrSl
+	 oHO9rM/GDzTMBfWnisV0f2p++Mi5pRrb78IDkOUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christoph Hellwig <hch@lst.de>,
+	Qi Han <hanqi@vivo.com>,
+	Yangtao Li <frank.li@vivo.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 305/611] f2fs: apply zone capacity to all zone type
-Date: Mon,  8 May 2023 11:42:27 +0200
-Message-Id: <20230508094432.345915444@linuxfoundation.org>
+Subject: [PATCH 6.1 306/611] f2fs: compress: fix to call f2fs_wait_on_page_writeback() in f2fs_write_raw_pages()
+Date: Mon,  8 May 2023 11:42:28 +0200
+Message-Id: <20230508094432.374580143@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,138 +38,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 0b37ed21e3367539b79284e0b0af2246ffcf0dca ]
+[ Upstream commit babedcbac164cec970872b8097401ca913a80e61 ]
 
-If we manage the zone capacity per zone type, it'll break the GC assumption.
-And, the current logic complains valid block count mismatch.
-Let's apply zone capacity to all zone type, if specified.
+BUG_ON() will be triggered when writing files concurrently,
+because the same page is writtenback multiple times.
 
-Fixes: de881df97768 ("f2fs: support zone capacity less than zone size")
+1597 void folio_end_writeback(struct folio *folio)
+1598 {
+		......
+1618     if (!__folio_end_writeback(folio))
+1619         BUG();
+		......
+1625 }
+
+kernel BUG at mm/filemap.c:1619!
+Call Trace:
+ <TASK>
+ f2fs_write_end_io+0x1a0/0x370
+ blk_update_request+0x6c/0x410
+ blk_mq_end_request+0x15/0x130
+ blk_complete_reqs+0x3c/0x50
+ __do_softirq+0xb8/0x29b
+ ? sort_range+0x20/0x20
+ run_ksoftirqd+0x19/0x20
+ smpboot_thread_fn+0x10b/0x1d0
+ kthread+0xde/0x110
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork+0x22/0x30
+ </TASK>
+
+Below is the concurrency scenario:
+
+[Process A]		[Process B]		[Process C]
+f2fs_write_raw_pages()
+  - redirty_page_for_writepage()
+  - unlock page()
+			f2fs_do_write_data_page()
+			  - lock_page()
+			  - clear_page_dirty_for_io()
+			  - set_page_writeback() [1st writeback]
+			    .....
+			    - unlock page()
+
+						generic_perform_write()
+						  - f2fs_write_begin()
+						    - wait_for_stable_page()
+
+						  - f2fs_write_end()
+						    - set_page_dirty()
+
+  - lock_page()
+    - f2fs_do_write_data_page()
+      - set_page_writeback() [2st writeback]
+
+This problem was introduced by the previous commit 7377e853967b ("f2fs:
+compress: fix potential deadlock of compress file"). All pagelocks were
+released in f2fs_write_raw_pages(), but whether the page was
+in the writeback state was ignored in the subsequent writing process.
+Let's fix it by waiting for the page to writeback before writing.
+
+Cc: Christoph Hellwig <hch@lst.de>
+Fixes: 4c8ff7095bef ("f2fs: support data compression")
+Fixes: 7377e853967b ("f2fs: compress: fix potential deadlock of compress file")
+Signed-off-by: Qi Han <hanqi@vivo.com>
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 65 +++--------------------------------------------
- fs/f2fs/segment.h |  3 +++
- 2 files changed, 7 insertions(+), 61 deletions(-)
+ fs/f2fs/compress.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 8d1e8c537daf0..c926479485775 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -4916,48 +4916,6 @@ int f2fs_check_write_pointer(struct f2fs_sb_info *sbi)
- 	return 0;
- }
+diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
+index 74d3f2d2271f3..9ee021e49bced 100644
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -1462,6 +1462,12 @@ static int f2fs_write_raw_pages(struct compress_ctx *cc,
+ 		if (!PageDirty(cc->rpages[i]))
+ 			goto continue_unlock;
  
--static bool is_conv_zone(struct f2fs_sb_info *sbi, unsigned int zone_idx,
--						unsigned int dev_idx)
--{
--	if (!bdev_is_zoned(FDEV(dev_idx).bdev))
--		return true;
--	return !test_bit(zone_idx, FDEV(dev_idx).blkz_seq);
--}
--
--/* Return the zone index in the given device */
--static unsigned int get_zone_idx(struct f2fs_sb_info *sbi, unsigned int secno,
--					int dev_idx)
--{
--	block_t sec_start_blkaddr = START_BLOCK(sbi, GET_SEG_FROM_SEC(sbi, secno));
--
--	return (sec_start_blkaddr - FDEV(dev_idx).start_blk) >>
--						sbi->log_blocks_per_blkz;
--}
--
--/*
-- * Return the usable segments in a section based on the zone's
-- * corresponding zone capacity. Zone is equal to a section.
-- */
--static inline unsigned int f2fs_usable_zone_segs_in_sec(
--		struct f2fs_sb_info *sbi, unsigned int segno)
--{
--	unsigned int dev_idx, zone_idx;
--
--	dev_idx = f2fs_target_device_index(sbi, START_BLOCK(sbi, segno));
--	zone_idx = get_zone_idx(sbi, GET_SEC_FROM_SEG(sbi, segno), dev_idx);
--
--	/* Conventional zone's capacity is always equal to zone size */
--	if (is_conv_zone(sbi, zone_idx, dev_idx))
--		return sbi->segs_per_sec;
--
--	if (!sbi->unusable_blocks_per_sec)
--		return sbi->segs_per_sec;
--
--	/* Get the segment count beyond zone capacity block */
--	return sbi->segs_per_sec - (sbi->unusable_blocks_per_sec >>
--						sbi->log_blocks_per_seg);
--}
--
- /*
-  * Return the number of usable blocks in a segment. The number of blocks
-  * returned is always equal to the number of blocks in a segment for
-@@ -4970,23 +4928,13 @@ static inline unsigned int f2fs_usable_zone_blks_in_seg(
- 			struct f2fs_sb_info *sbi, unsigned int segno)
- {
- 	block_t seg_start, sec_start_blkaddr, sec_cap_blkaddr;
--	unsigned int zone_idx, dev_idx, secno;
--
--	secno = GET_SEC_FROM_SEG(sbi, segno);
--	seg_start = START_BLOCK(sbi, segno);
--	dev_idx = f2fs_target_device_index(sbi, seg_start);
--	zone_idx = get_zone_idx(sbi, secno, dev_idx);
--
--	/*
--	 * Conventional zone's capacity is always equal to zone size,
--	 * so, blocks per segment is unchanged.
--	 */
--	if (is_conv_zone(sbi, zone_idx, dev_idx))
--		return sbi->blocks_per_seg;
-+	unsigned int secno;
++		if (PageWriteback(cc->rpages[i])) {
++			if (wbc->sync_mode == WB_SYNC_NONE)
++				goto continue_unlock;
++			f2fs_wait_on_page_writeback(cc->rpages[i], DATA, true, true);
++		}
++
+ 		if (!clear_page_dirty_for_io(cc->rpages[i]))
+ 			goto continue_unlock;
  
- 	if (!sbi->unusable_blocks_per_sec)
- 		return sbi->blocks_per_seg;
- 
-+	secno = GET_SEC_FROM_SEG(sbi, segno);
-+	seg_start = START_BLOCK(sbi, segno);
- 	sec_start_blkaddr = START_BLOCK(sbi, GET_SEG_FROM_SEC(sbi, secno));
- 	sec_cap_blkaddr = sec_start_blkaddr + CAP_BLKS_PER_SEC(sbi);
- 
-@@ -5020,11 +4968,6 @@ static inline unsigned int f2fs_usable_zone_blks_in_seg(struct f2fs_sb_info *sbi
- 	return 0;
- }
- 
--static inline unsigned int f2fs_usable_zone_segs_in_sec(struct f2fs_sb_info *sbi,
--							unsigned int segno)
--{
--	return 0;
--}
- #endif
- unsigned int f2fs_usable_blks_in_seg(struct f2fs_sb_info *sbi,
- 					unsigned int segno)
-@@ -5039,7 +4982,7 @@ unsigned int f2fs_usable_segs_in_sec(struct f2fs_sb_info *sbi,
- 					unsigned int segno)
- {
- 	if (f2fs_sb_has_blkzoned(sbi))
--		return f2fs_usable_zone_segs_in_sec(sbi, segno);
-+		return CAP_SEGS_PER_SEC(sbi);
- 
- 	return sbi->segs_per_sec;
- }
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index be8f2d7d007b9..cd65778fc9822 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -104,6 +104,9 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
- #define CAP_BLKS_PER_SEC(sbi)					\
- 	((sbi)->segs_per_sec * (sbi)->blocks_per_seg -		\
- 	 (sbi)->unusable_blocks_per_sec)
-+#define CAP_SEGS_PER_SEC(sbi)					\
-+	((sbi)->segs_per_sec - ((sbi)->unusable_blocks_per_sec >>\
-+	(sbi)->log_blocks_per_seg))
- #define GET_SEC_FROM_SEG(sbi, segno)				\
- 	(((segno) == -1) ? -1: (segno) / (sbi)->segs_per_sec)
- #define GET_SEG_FROM_SEC(sbi, secno)				\
 -- 
 2.39.2
 
