@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5CB168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74DD5C433D2;
-	Mon,  8 May 2023 10:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93723168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:50:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA31C4339B;
+	Mon,  8 May 2023 10:50:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542998;
-	bh=/CirPnlQip9K72+yzl27FDVqJP27yaQTcovgu1nBL04=;
+	s=korg; t=1683543001;
+	bh=GTTMHKXhuQKGN/ciIr5pTlTHX/TDFVT/E4fualPsiTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AP0xwzL01z/t6PEE34pf4cqjbry5miXYUC9pUJeXteSo7FOevzEjGZZ68hCqGr670
-	 ezbJJPQ4ybfZZt9qk7Psk6WosCHTCPBGLasbuo15oecxMERx6km7KJmOxZ3y4vQ4cd
-	 pQG5+seJHZ+9EKD3tDTB7RN4Lz2YwA+IpwgkgKF8=
+	b=sQtmBuTwvtw+J7Ykhr0zGreY1Q0ryIay6xlHmSbTqGCSQXzzCHXWxBeRETgvYhtOB
+	 obuavuqTgeyZWK5bp52242jrOeVYNe2wRhT49CaqaoCrPhVAyubkRMpg882Ny1nNgH
+	 yoSqselZSHZ0zJZm1VICbB4F4rY2jtU0qIvT8xn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Harper <calebharp2005@gmail.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.2 616/663] ALSA: hda/realtek: support HP Pavilion Aero 13-be0xxx Mute LED
-Date: Mon,  8 May 2023 11:47:22 +0200
-Message-Id: <20230508094449.705997566@linuxfoundation.org>
+Subject: [PATCH 6.2 617/663] ALSA: hda/realtek: Fix mute and micmute LEDs for an HP laptop
+Date: Mon,  8 May 2023 11:47:23 +0200
+Message-Id: <20230508094449.744878621@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -34,23 +34,16 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Caleb Harper <calebharp2005@gmail.com>
+From: Kai-Heng Feng <kai.heng.feng@canonical.com>
 
-commit e7477cb97607b373d175a759c8c0270a640ab3f2 upstream.
+commit 56fc217f0db4fc78e02a1b8450df06389474a5e5 upstream.
 
-This patch adds support for the mute LED on the HP Pavilion Aero Laptop
-13-be0xxx. The current behavior is that the LED does not turn on at any
-time and does not indicate to the user whether the sound is muted.
+There's another laptop that needs the fixup to enable mute and micmute
+LEDs. So do it accordingly.
 
-The solution is to add a PCI quirk to properly recognize and support the
-LED on this device.
-
-This change has been tested on the device in question using modified
-versions of kernels 6.0.7-6.2.12 on Arch Linux.
-
-Signed-off-by: Caleb Harper <calebharp2005@gmail.com>
+Signed-off-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230503175026.6796-1-calebharp2005@gmail.com
+Link: https://lore.kernel.org/r/20230505125925.543601-1-kai.heng.feng@canonical.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -59,13 +52,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -9428,6 +9428,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8898, "HP EliteBook 845 G8 Notebook PC", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x103c, 0x88d0, "HP Pavilion 15-eh1xxx (mainboard 88D0)", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8902, "HP OMEN 16", ALC285_FIXUP_HP_MUTE_LED),
-+	SND_PCI_QUIRK(0x103c, 0x8919, "HP Pavilion Aero Laptop 13-be0xxx", ALC287_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x896d, "HP ZBook Firefly 16 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x896e, "HP EliteBook x360 830 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8971, "HP EliteBook 830 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+@@ -9479,6 +9479,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8b8d, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b8f, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b92, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b96, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
 
 
