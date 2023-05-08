@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB532168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307C1C433EF;
-	Mon,  8 May 2023 11:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD69A168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CF89C433EF;
+	Mon,  8 May 2023 11:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544491;
-	bh=515YoEgZZ/ABmXF/5cW49bGIDlpvMojKx5q1APCPmy8=;
+	s=korg; t=1683544494;
+	bh=laVpb5trw94Adw1+l4d5840fl1xx2436hq1hrkQtn/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nto1ZeMXe1gCDfsebSsulRhi2/iqX/kbCjkTq4KK85QZGfnBg4Ub45WeuUMACVn6U
-	 Gs57BpB3HqW4Whvwk7hoQMJWD2l9gbL2Bl8Txqof8yYAeEDyelhFsOUU8OucGFvPvV
-	 zTF2UCt5wlEir0Sn1MJQip9dgAIui5zbt6DZO2GE=
+	b=Euql5rjelP3d8Gm1iII+IrdYZR7zH2ZMNuLFoFmpfuWJc4zdq4PYndThw16AhxFTy
+	 AMEaljdmDzF6Uvz83Cl1wgFiBNF5zkyCXo4aGl8xAxjOb7zflmpzRaHoz0MyIcIWvZ
+	 H5PA2yZkGgPjDTFgZo1+g22NSCrfsMgOasU1KXuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 428/694] jdb2: Dont refuse invalidation of already invalidated buffers
-Date: Mon,  8 May 2023 11:44:23 +0200
-Message-Id: <20230508094447.237940761@linuxfoundation.org>
+Subject: [PATCH 6.3 429/694] io_uring/rsrc: use nospeced indexes
+Date: Mon,  8 May 2023 11:44:24 +0200
+Message-Id: <20230508094447.269658638@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,42 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit bd159398a2d2234de07d310132865706964aaaa7 ]
+[ Upstream commit 953c37e066f05a3dca2d74643574b8dfe8a83983 ]
 
-When invalidating buffers under the partial tail page,
-jbd2_journal_invalidate_folio() returns -EBUSY if the buffer is part of
-the committing transaction as we cannot safely modify buffer state.
-However if the buffer is already invalidated (due to previous
-invalidation attempts from ext4_wait_for_tail_page_commit()), there's
-nothing to do and there's no point in returning -EBUSY. This fixes
-occasional warnings from ext4_journalled_invalidate_folio() triggered by
-generic/051 fstest when blocksize < pagesize.
+We use array_index_nospec() for registered buffer indexes, but don't use
+it while poking into rsrc tags, fix that.
 
-Fixes: 53e872681fed ("ext4: fix deadlock in journal_unmap_buffer()")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230329154950.19720-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 634d00df5e1cf ("io_uring: add full-fledged dynamic buffers support")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/f02fafc5a9c0dd69be2b0618c38831c078232ff0.1681395792.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/transaction.c | 3 +++
- 1 file changed, 3 insertions(+)
+ io_uring/rsrc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/jbd2/transaction.c b/fs/jbd2/transaction.c
-index 15de1385012eb..18611241f4513 100644
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -2387,6 +2387,9 @@ static int journal_unmap_buffer(journal_t *journal, struct buffer_head *bh,
- 			spin_unlock(&jh->b_state_lock);
- 			write_unlock(&journal->j_state_lock);
- 			jbd2_journal_put_journal_head(jh);
-+			/* Already zapped buffer? Nothing to do... */
-+			if (!bh->b_bdev)
-+				return 0;
- 			return -EBUSY;
+diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
+index 7a43aed8e395c..e6fec9e971eac 100644
+--- a/io_uring/rsrc.c
++++ b/io_uring/rsrc.c
+@@ -577,7 +577,7 @@ static int __io_sqe_buffers_update(struct io_ring_ctx *ctx,
  		}
- 		/*
+ 
+ 		ctx->user_bufs[i] = imu;
+-		*io_get_tag_slot(ctx->buf_data, offset) = tag;
++		*io_get_tag_slot(ctx->buf_data, i) = tag;
+ 	}
+ 
+ 	if (needs_switch)
 -- 
 2.39.2
 
