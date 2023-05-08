@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A541B168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B46C433EF;
-	Mon,  8 May 2023 10:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E3D168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1816C433EF;
+	Mon,  8 May 2023 10:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540508;
-	bh=ohtPrPbBx1teYiN+2X59fO06LCtZZNKB4bWuzUze5No=;
+	s=korg; t=1683540511;
+	bh=HZbOggi+UOx+XC9gbCjnC4ZeG3/wFDzNw3GlUReWJ9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZX6xLtOuKWSdcBfjz+HVymCSTMbDsPgbrgwj/xJvxw9tVZWH/nHWV4eyWbTi/i+do
-	 06xERNiXxOY1SnrMrTIKAwGWfkOVMbpRRrmhWWDKh/9ZEam0QhUrZuDH90e7HCJShK
-	 m8M8/Vl3zD5q5PTL/VQnF9pdglTMKjn7kW5DhJGo=
+	b=PnAjsBmy5p/3Az1ZxdEi39V2rKPrh13/tjDI8o8WI2eSCN7JRdvAaFb4mFaxgezco
+	 FhCqy+ehtbmByOAlVRdsw350fDcN3kWLmoXJ7rizbf9bmPtLFlrFeivY9L6W4r+88o
+	 OULgaI7MU+oYnXcyJKk/08nISfus+GYHru6pzI3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Ziyang Xuan <william.xuanziyang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Liu Jian <liujian56@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 392/611] ipv4: Fix potential uninit variable access bug in __ip_make_skb()
-Date: Mon,  8 May 2023 11:43:54 +0200
-Message-Id: <20230508094435.024476270@linuxfoundation.org>
+Subject: [PATCH 6.1 393/611] Revert "Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work"
+Date: Mon,  8 May 2023 11:43:55 +0200
+Message-Id: <20230508094435.058451971@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,54 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ziyang Xuan <william.xuanziyang@huawei.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit 99e5acae193e369b71217efe6f1dad42f3f18815 ]
+[ Upstream commit db2bf510bd5d57f064d9e1db395ed86a08320c54 ]
 
-Like commit ea30388baebc ("ipv6: Fix an uninit variable access bug in
-__ip6_make_skb()"). icmphdr does not in skb linear region under the
-scenario of SOCK_RAW socket. Access icmp_hdr(skb)->type directly will
-trigger the uninit variable access bug.
+This reverts commit 1e9ac114c4428fdb7ff4635b45d4f46017e8916f.
 
-Use a local variable icmp_type to carry the correct value in different
-scenarios.
+This patch introduces a possible null-ptr-def problem. Revert it. And the
+fixed bug by this patch have resolved by commit 73f7b171b7c0 ("Bluetooth:
+btsdio: fix use after free bug in btsdio_remove due to race condition").
 
-Fixes: 96793b482540 ("[IPV4]: Add ICMPMsgStats MIB (RFC 4293)")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1e9ac114c442 ("Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/ip_output.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btsdio.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
-index 922c87ef1ab58..2a07588265c70 100644
---- a/net/ipv4/ip_output.c
-+++ b/net/ipv4/ip_output.c
-@@ -1570,9 +1570,19 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
- 	cork->dst = NULL;
- 	skb_dst_set(skb, &rt->dst);
+diff --git a/drivers/bluetooth/btsdio.c b/drivers/bluetooth/btsdio.c
+index 02893600db390..795be33f2892d 100644
+--- a/drivers/bluetooth/btsdio.c
++++ b/drivers/bluetooth/btsdio.c
+@@ -354,7 +354,6 @@ static void btsdio_remove(struct sdio_func *func)
  
--	if (iph->protocol == IPPROTO_ICMP)
--		icmp_out_count(net, ((struct icmphdr *)
--			skb_transport_header(skb))->type);
-+	if (iph->protocol == IPPROTO_ICMP) {
-+		u8 icmp_type;
-+
-+		/* For such sockets, transhdrlen is zero when do ip_append_data(),
-+		 * so icmphdr does not in skb linear region and can not get icmp_type
-+		 * by icmp_hdr(skb)->type.
-+		 */
-+		if (sk->sk_type == SOCK_RAW && !inet_sk(sk)->hdrincl)
-+			icmp_type = fl4->fl4_icmp_type;
-+		else
-+			icmp_type = icmp_hdr(skb)->type;
-+		icmp_out_count(net, icmp_type);
-+	}
+ 	BT_DBG("func %p", func);
  
- 	ip_cork_release(cork);
- out:
+-	cancel_work_sync(&data->work);
+ 	if (!data)
+ 		return;
+ 
 -- 
 2.39.2
 
