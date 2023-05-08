@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D749D168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:50:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0DCC433D2;
-	Mon,  8 May 2023 10:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9D0168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:50:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAAAC433EF;
+	Mon,  8 May 2023 10:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543043;
-	bh=yyXvubOl0Lqw6wg/6U4TJZLynShHOBkAUwmQ0uv7Q0U=;
+	s=korg; t=1683543046;
+	bh=2tp9ftnmiVd39AtJGUhDVZj/4N1Rr2e1i9ciwy4XU5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEw/w2OQr0VPTu0xBEMk0tNT9a+6CyjNpa+af7wpFGUOVlVNmi1X7kxDN7u34xQ2N
-	 t6Lm7/yKN1rbighV/g9vimdYj6jGUJdFuooXZH/Mlav0P4jqf24N1GhrqtT8yGd5Eu
-	 3zZvkEhxKtDFBwNCLbb0vq3vgsqAE9qk4NJItqME=
+	b=X8ZF9u8UkOzIpgH2u1wRCQ5ZKr+eX9GwoWgVHngyJlF4SX3EdNTc7nrtkjDLUF6hc
+	 3UmjiWZfX9XTt7O9xwyFZftEYVDeRJvxhETmqGdRAUc7cYpfC1kXW9/i+7DKf0C1Sv
+	 46+DB2faGGA/6H2Lf6Fc5fcOCIO9q/VKoUIl4j4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Colin Foster <colin.foster@in-advantage.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 600/663] mfd: tqmx86: Correct board names for TQMxE39x
-Date: Mon,  8 May 2023 11:47:06 +0200
-Message-Id: <20230508094449.000259721@linuxfoundation.org>
+Subject: [PATCH 6.2 601/663] mfd: ocelot-spi: Fix unsupported bulk read
+Date: Mon,  8 May 2023 11:47:07 +0200
+Message-Id: <20230508094449.039812441@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,117 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Colin Foster <colin.foster@in-advantage.com>
 
-[ Upstream commit f376c479668557bcc2fd9e9fbc0f53e7819a11cd ]
+[ Upstream commit f0484d2f80a72022b7fac72bcb406392900ef1eb ]
 
-It seems that this driver was developed based on preliminary documentation.
-Report the correct names for all TQMxE39x variants, as they are used by
-the released hardware revisions:
+Ocelot chips (VSC7511, VSC7512, VSC7513, VSC7514) don't support bulk read
+operations over SPI.
 
-- Fix names for TQMxE39C1/C2 board IDs
-- Distinguish TQMxE39M and TQMxE39S, which use the same board ID
+Many SPI buses have hardware that can optimize consecutive reads.
+Essentially an address is written to the chip, and if the SPI controller
+continues to toggle the clock, subsequent register values are reported.
+This can lead to significant optimizations, because the time between
+"address is written to the chip" and "chip starts to report data" can often
+take a fixed amount of time.
 
-The TQMxE39M/S are distinguished using the SAUC (Sanctioned Alternate
-Uses Configuration) register of the GPIO controller. This also prepares
-for the correct handling of the differences between the GPIO controllers
-of our COMe and SMARC modules.
+When support for Ocelot chips were added in commit f3e893626abe ("mfd:
+ocelot: Add support for the vsc7512 chip via spi") it was believed that
+this optimization was supported. However it is not.
 
-Fixes: 2f17dd34ffed ("mfd: tqmx86: IO controller with I2C, Wachdog and GPIO")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Most register transactions with the Ocelot chips are not done in bulk, so
+this bug could go unnoticed. The one scenario where bulk register
+operations _are_ performed is when polling port statistics counters, which
+was added in commit d87b1c08f38a ("net: mscc: ocelot: use bulk reads for
+stats").
+
+Things get slightly more complicated here...
+
+A bug was introduced in commit d4c367650704 ("net: mscc: ocelot: keep
+ocelot_stat_layout by reg address, not offset") that broke the optimization
+of bulk reads. This means that when Ethernet support for the VSC7512 chip
+was added in commit 3d7316ac81ac ("net: dsa: ocelot: add external ocelot
+switch control") things were actually working "as expected".
+
+The bulk read opmtimization was discovered, and fixed in commit
+6acc72a43eac ("net: mscc: ocelot: fix stats region batching") and the
+timing optimizations for SPI were noticed. A bulk read went from ~14ms to
+~2ms. But this timing improvement came at the cost of every register
+reading zero due the fact that bulk reads don't work.
+
+The read timings increase back to 13-14ms, but that's a price worth paying
+in order to receive valid data. This is verified in a DSA setup (cpsw-new
+switch tied to port 0 on the VSC7512, after having been running overnight)
+
+     Rx Octets: 16222055 # Counters from CPSW switch
+     Tx Octets: 12034702
+     Net Octets: 28256757
+     p00_rx_octets: 12034702 # Counters from Ocelot switch
+     p00_rx_frames_below_65_octets: 0
+     p00_rx_frames_65_to_127_octets: 88188
+     p00_rx_frames_128_to_255_octets: 13
+     p00_rx_frames_256_to_511_octets: 0
+     p00_rx_frames_512_to_1023_octets: 0
+     p00_rx_frames_over_1526_octets: 3306
+     p00_tx_octets: 16222055
+
+Fixes: f3e893626abe ("mfd: ocelot: Add support for the vsc7512 chip via spi")
+Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
 Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/aca9a7cb42a85181bcb456c437554d2728e708ec.1676892223.git.matthias.schiffer@ew.tq-group.com
+Link: https://lore.kernel.org/r/20230322141130.2531256-1-colin.foster@in-advantage.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tqmx86.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ drivers/mfd/ocelot-spi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mfd/tqmx86.c b/drivers/mfd/tqmx86.c
-index 958334f14eb00..fac02875fe7d9 100644
---- a/drivers/mfd/tqmx86.c
-+++ b/drivers/mfd/tqmx86.c
-@@ -30,9 +30,9 @@
- #define TQMX86_REG_BOARD_ID_50UC	2
- #define TQMX86_REG_BOARD_ID_E38C	3
- #define TQMX86_REG_BOARD_ID_60EB	4
--#define TQMX86_REG_BOARD_ID_E39M	5
--#define TQMX86_REG_BOARD_ID_E39C	6
--#define TQMX86_REG_BOARD_ID_E39x	7
-+#define TQMX86_REG_BOARD_ID_E39MS	5
-+#define TQMX86_REG_BOARD_ID_E39C1	6
-+#define TQMX86_REG_BOARD_ID_E39C2	7
- #define TQMX86_REG_BOARD_ID_70EB	8
- #define TQMX86_REG_BOARD_ID_80UC	9
- #define TQMX86_REG_BOARD_ID_110EB	11
-@@ -48,6 +48,7 @@
- #define TQMX86_REG_IO_EXT_INT_12		3
- #define TQMX86_REG_IO_EXT_INT_MASK		0x3
- #define TQMX86_REG_IO_EXT_INT_GPIO_SHIFT	4
-+#define TQMX86_REG_SAUC		0x17
+diff --git a/drivers/mfd/ocelot-spi.c b/drivers/mfd/ocelot-spi.c
+index 2ecd271de2fb9..85021f94e5874 100644
+--- a/drivers/mfd/ocelot-spi.c
++++ b/drivers/mfd/ocelot-spi.c
+@@ -130,6 +130,7 @@ static const struct regmap_config ocelot_spi_regmap_config = {
  
- #define TQMX86_REG_I2C_DETECT	0x1a7
- #define TQMX86_REG_I2C_DETECT_SOFT		0xa5
-@@ -110,7 +111,7 @@ static const struct mfd_cell tqmx86_devs[] = {
- 	},
- };
+ 	.write_flag_mask = 0x80,
  
--static const char *tqmx86_board_id_to_name(u8 board_id)
-+static const char *tqmx86_board_id_to_name(u8 board_id, u8 sauc)
- {
- 	switch (board_id) {
- 	case TQMX86_REG_BOARD_ID_E38M:
-@@ -121,12 +122,12 @@ static const char *tqmx86_board_id_to_name(u8 board_id)
- 		return "TQMxE38C";
- 	case TQMX86_REG_BOARD_ID_60EB:
- 		return "TQMx60EB";
--	case TQMX86_REG_BOARD_ID_E39M:
--		return "TQMxE39M";
--	case TQMX86_REG_BOARD_ID_E39C:
--		return "TQMxE39C";
--	case TQMX86_REG_BOARD_ID_E39x:
--		return "TQMxE39x";
-+	case TQMX86_REG_BOARD_ID_E39MS:
-+		return (sauc == 0xff) ? "TQMxE39M" : "TQMxE39S";
-+	case TQMX86_REG_BOARD_ID_E39C1:
-+		return "TQMxE39C1";
-+	case TQMX86_REG_BOARD_ID_E39C2:
-+		return "TQMxE39C2";
- 	case TQMX86_REG_BOARD_ID_70EB:
- 		return "TQMx70EB";
- 	case TQMX86_REG_BOARD_ID_80UC:
-@@ -159,9 +160,9 @@ static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
- 	case TQMX86_REG_BOARD_ID_E40C1:
- 	case TQMX86_REG_BOARD_ID_E40C2:
- 		return 24000;
--	case TQMX86_REG_BOARD_ID_E39M:
--	case TQMX86_REG_BOARD_ID_E39C:
--	case TQMX86_REG_BOARD_ID_E39x:
-+	case TQMX86_REG_BOARD_ID_E39MS:
-+	case TQMX86_REG_BOARD_ID_E39C1:
-+	case TQMX86_REG_BOARD_ID_E39C2:
- 		return 25000;
- 	case TQMX86_REG_BOARD_ID_E38M:
- 	case TQMX86_REG_BOARD_ID_E38C:
-@@ -175,7 +176,7 @@ static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
++	.use_single_read = true,
+ 	.use_single_write = true,
+ 	.can_multi_write = false,
  
- static int tqmx86_probe(struct platform_device *pdev)
- {
--	u8 board_id, rev, i2c_det, io_ext_int_val;
-+	u8 board_id, sauc, rev, i2c_det, io_ext_int_val;
- 	struct device *dev = &pdev->dev;
- 	u8 gpio_irq_cfg, readback;
- 	const char *board_name;
-@@ -205,7 +206,8 @@ static int tqmx86_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	board_id = ioread8(io_base + TQMX86_REG_BOARD_ID);
--	board_name = tqmx86_board_id_to_name(board_id);
-+	sauc = ioread8(io_base + TQMX86_REG_SAUC);
-+	board_name = tqmx86_board_id_to_name(board_id, sauc);
- 	rev = ioread8(io_base + TQMX86_REG_BOARD_REV);
- 
- 	dev_info(dev,
 -- 
 2.39.2
 
