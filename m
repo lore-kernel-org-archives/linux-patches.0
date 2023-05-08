@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE908168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:40:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DD42C4339C;
-	Mon,  8 May 2023 10:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28EF168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:40:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 261C3C4339B;
+	Mon,  8 May 2023 10:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542439;
-	bh=loH+/AUtxY79C8dF7YK+lZcECoMA7wcYEEBP69cCZCk=;
+	s=korg; t=1683542442;
+	bh=KbNpxt2JsZCP1QkrRmz1orwG9BUmxyHoO0dmJydORyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ek49EY8Q6faSbY3ClsCZ0n2ztoKT0mI2nwHl6eQPUu4d1NroIn3Jq38a+TqflapY8
-	 ILRDgi/Ig0G7NhcTIBEk7M3fxkgkfAwoikUo8b6qCQclZxck9RcSC/JQS1QPvx/2KD
-	 j7ANnWK6CN+fcUyAccp0x3G2ozGjAP3tup+zUBHE=
+	b=zOdtS3tqECXpSF68zKIk5NbBFJflh9R5gs23kiOCKRAoWI1o32KBt8vyy+9f8OXw/
+	 p0gZEldgcF9wirnW7DP3c9/IqfVV0K8CGC0mqaUDE6fvzhPXmRqBAxfZd3CUtTGFqg
+	 V+MWLxgi6AJgIzA//vH+Be+MUUydqf+t2V5A5VGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Tanure <lucas.tanure@collabora.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	David Rhodes <david.rhodes@cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 436/663] ASoC: cs35l41: Only disable internal boost
-Date: Mon,  8 May 2023 11:44:22 +0200
-Message-Id: <20230508094442.217492212@linuxfoundation.org>
+Subject: [PATCH 6.2 419/663] Revert "net/mlx5: Remove "recovery" arg from mlx5_load_one() function"
+Date: Mon,  8 May 2023 11:44:05 +0200
+Message-Id: <20230508094441.681914618@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,109 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas Tanure <lucas.tanure@collabora.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 4658de99d43cd740e019e7fd124b4128f8f4027f ]
+[ Upstream commit 21608a2cf38e9f743636b5f86507ffbca18ecee7 ]
 
-In error situations, only the internal boost case should be disabled and
-re-enabled.
-Also, for other boost cases re-enabling the boost to the default internal
-boost config is incorrect.
+This reverts commit 5977ac3910f1cbaf44dca48179118b25c206ac29.
 
-Fixes: 6450ef559056 ("ASoC: cs35l41: CS35L41 Boosted Smart Amplifier")
-Signed-off-by: Lucas Tanure <lucas.tanure@collabora.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Reviewed-by: David Rhodes <david.rhodes@cirrus.com>
-Link: https://lore.kernel.org/r/20230223084324.9076-2-lucas.tanure@collabora.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Revert this patch as we need the "recovery" arg back in mlx5_load_one()
+function. This arg will be used in the next patch for using recovery
+timeout during sync reset flow.
+
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Stable-dep-of: dfad99750c0f ("net/mlx5: Use recovery timeout on sync reset flow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs35l41.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c  | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/main.c      | 9 +++++----
+ drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h | 2 +-
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/codecs/cs35l41.c b/sound/soc/codecs/cs35l41.c
-index c223d83e02cfb..f2b5032daa6ae 100644
---- a/sound/soc/codecs/cs35l41.c
-+++ b/sound/soc/codecs/cs35l41.c
-@@ -356,6 +356,19 @@ static const struct snd_kcontrol_new cs35l41_aud_controls[] = {
- 	WM_ADSP_FW_CONTROL("DSP1", 0),
- };
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+index 2ef42d76ac6a3..2b74729180394 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+@@ -154,7 +154,7 @@ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev)
+ 		if (mlx5_health_wait_pci_up(dev))
+ 			mlx5_core_err(dev, "reset reload flow aborted, PCI reads still not working\n");
+ 		else
+-			mlx5_load_one(dev);
++			mlx5_load_one(dev, false);
+ 		devlink_remote_reload_actions_performed(priv_to_devlink(dev), 0,
+ 							BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT) |
+ 							BIT(DEVLINK_RELOAD_ACTION_FW_ACTIVATE));
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index d5d4f499a2a15..0bb010d00a659 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1491,13 +1491,13 @@ int mlx5_load_one_devl_locked(struct mlx5_core_dev *dev, bool recovery)
+ 	return err;
+ }
  
-+static void cs35l41_boost_enable(struct cs35l41_private *cs35l41, unsigned int enable)
-+{
-+	switch (cs35l41->hw_cfg.bst_type) {
-+	case CS35L41_INT_BOOST:
-+		enable = enable ? CS35L41_BST_EN_DEFAULT : CS35L41_BST_DIS_FET_OFF;
-+		regmap_update_bits(cs35l41->regmap, CS35L41_PWR_CTRL2, CS35L41_BST_EN_MASK,
-+				enable << CS35L41_BST_EN_SHIFT);
-+		break;
-+	default:
-+		break;
-+	}
-+}
-+
- static irqreturn_t cs35l41_irq(int irq, void *data)
+-int mlx5_load_one(struct mlx5_core_dev *dev)
++int mlx5_load_one(struct mlx5_core_dev *dev, bool recovery)
  {
- 	struct cs35l41_private *cs35l41 = data;
-@@ -431,8 +444,7 @@ static irqreturn_t cs35l41_irq(int irq, void *data)
+ 	struct devlink *devlink = priv_to_devlink(dev);
+ 	int ret;
  
- 	if (status[0] & CS35L41_BST_OVP_ERR) {
- 		dev_crit_ratelimited(cs35l41->dev, "VBST Over Voltage error\n");
--		regmap_update_bits(cs35l41->regmap, CS35L41_PWR_CTRL2,
--				   CS35L41_BST_EN_MASK, 0);
-+		cs35l41_boost_enable(cs35l41, 0);
- 		regmap_write(cs35l41->regmap, CS35L41_IRQ1_STATUS1,
- 			     CS35L41_BST_OVP_ERR);
- 		regmap_write(cs35l41->regmap, CS35L41_PROTECT_REL_ERR_IGN, 0);
-@@ -441,16 +453,13 @@ static irqreturn_t cs35l41_irq(int irq, void *data)
- 				   CS35L41_BST_OVP_ERR_RLS);
- 		regmap_update_bits(cs35l41->regmap, CS35L41_PROTECT_REL_ERR_IGN,
- 				   CS35L41_BST_OVP_ERR_RLS, 0);
--		regmap_update_bits(cs35l41->regmap, CS35L41_PWR_CTRL2,
--				   CS35L41_BST_EN_MASK,
--				   CS35L41_BST_EN_DEFAULT << CS35L41_BST_EN_SHIFT);
-+		cs35l41_boost_enable(cs35l41, 1);
- 		ret = IRQ_HANDLED;
- 	}
+ 	devl_lock(devlink);
+-	ret = mlx5_load_one_devl_locked(dev, false);
++	ret = mlx5_load_one_devl_locked(dev, recovery);
+ 	devl_unlock(devlink);
+ 	return ret;
+ }
+@@ -1891,7 +1891,8 @@ static void mlx5_pci_resume(struct pci_dev *pdev)
  
- 	if (status[0] & CS35L41_BST_DCM_UVP_ERR) {
- 		dev_crit_ratelimited(cs35l41->dev, "DCM VBST Under Voltage Error\n");
--		regmap_update_bits(cs35l41->regmap, CS35L41_PWR_CTRL2,
--				   CS35L41_BST_EN_MASK, 0);
-+		cs35l41_boost_enable(cs35l41, 0);
- 		regmap_write(cs35l41->regmap, CS35L41_IRQ1_STATUS1,
- 			     CS35L41_BST_DCM_UVP_ERR);
- 		regmap_write(cs35l41->regmap, CS35L41_PROTECT_REL_ERR_IGN, 0);
-@@ -459,16 +468,13 @@ static irqreturn_t cs35l41_irq(int irq, void *data)
- 				   CS35L41_BST_UVP_ERR_RLS);
- 		regmap_update_bits(cs35l41->regmap, CS35L41_PROTECT_REL_ERR_IGN,
- 				   CS35L41_BST_UVP_ERR_RLS, 0);
--		regmap_update_bits(cs35l41->regmap, CS35L41_PWR_CTRL2,
--				   CS35L41_BST_EN_MASK,
--				   CS35L41_BST_EN_DEFAULT << CS35L41_BST_EN_SHIFT);
-+		cs35l41_boost_enable(cs35l41, 1);
- 		ret = IRQ_HANDLED;
- 	}
+ 	mlx5_pci_trace(dev, "Enter, loading driver..\n");
  
- 	if (status[0] & CS35L41_BST_SHORT_ERR) {
- 		dev_crit_ratelimited(cs35l41->dev, "LBST error: powering off!\n");
--		regmap_update_bits(cs35l41->regmap, CS35L41_PWR_CTRL2,
--				   CS35L41_BST_EN_MASK, 0);
-+		cs35l41_boost_enable(cs35l41, 0);
- 		regmap_write(cs35l41->regmap, CS35L41_IRQ1_STATUS1,
- 			     CS35L41_BST_SHORT_ERR);
- 		regmap_write(cs35l41->regmap, CS35L41_PROTECT_REL_ERR_IGN, 0);
-@@ -477,9 +483,7 @@ static irqreturn_t cs35l41_irq(int irq, void *data)
- 				   CS35L41_BST_SHORT_ERR_RLS);
- 		regmap_update_bits(cs35l41->regmap, CS35L41_PROTECT_REL_ERR_IGN,
- 				   CS35L41_BST_SHORT_ERR_RLS, 0);
--		regmap_update_bits(cs35l41->regmap, CS35L41_PWR_CTRL2,
--				   CS35L41_BST_EN_MASK,
--				   CS35L41_BST_EN_DEFAULT << CS35L41_BST_EN_SHIFT);
-+		cs35l41_boost_enable(cs35l41, 1);
- 		ret = IRQ_HANDLED;
- 	}
+-	err = mlx5_load_one(dev);
++	err = mlx5_load_one(dev, false);
++
+ 	if (!err)
+ 		devlink_health_reporter_state_update(dev->priv.health.fw_fatal_reporter,
+ 						     DEVLINK_HEALTH_REPORTER_STATE_HEALTHY);
+@@ -1982,7 +1983,7 @@ static int mlx5_resume(struct pci_dev *pdev)
+ {
+ 	struct mlx5_core_dev *dev = pci_get_drvdata(pdev);
  
+-	return mlx5_load_one(dev);
++	return mlx5_load_one(dev, false);
+ }
+ 
+ static const struct pci_device_id mlx5_core_pci_table[] = {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+index be0785f83083a..a3c5c2dab5fd7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/mlx5_core.h
+@@ -321,7 +321,7 @@ int mlx5_init_one(struct mlx5_core_dev *dev);
+ void mlx5_uninit_one(struct mlx5_core_dev *dev);
+ void mlx5_unload_one(struct mlx5_core_dev *dev, bool suspend);
+ void mlx5_unload_one_devl_locked(struct mlx5_core_dev *dev, bool suspend);
+-int mlx5_load_one(struct mlx5_core_dev *dev);
++int mlx5_load_one(struct mlx5_core_dev *dev, bool recovery);
+ int mlx5_load_one_devl_locked(struct mlx5_core_dev *dev, bool recovery);
+ 
+ int mlx5_vport_set_other_func_cap(struct mlx5_core_dev *dev, const void *hca_cap, u16 function_id,
 -- 
 2.39.2
 
