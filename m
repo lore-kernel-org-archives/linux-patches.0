@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 655EE168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABABC433D2;
-	Mon,  8 May 2023 11:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E764168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40E1C4339B;
+	Mon,  8 May 2023 11:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544618;
-	bh=RgT8d/fI58ByLNU70uHPNTEYayy68ag2MuLm2uSZaYg=;
+	s=korg; t=1683544621;
+	bh=GOjHeHpnrSlsa9sf0U5NTqqdlI82C0iRun9451gzg64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l8DClqs+0qfOEK4jBLyFfILiWBWNfW/Tpa9jeNQgJ+/kTWgJJtD8savt5wOpZ8IM+
-	 dclixiBmDOGQl2F7acnsnrejqWo/y1f6R7JUOL/8xbgsNOKTdvl0Xyrdj1+HCggNws
-	 pw0KxpOHnnwETmjkogRxHY97isOqHMpG3gUGsFgY=
+	b=Z6Z7W3whFkAiMV182sU7jN2rm6nN6r8qcIdTByLqb5bS7bImL5dS11FALWE7twxKM
+	 Iztc3N0KKSWZTqCqUKMoS49QzQtizauhjYyYDQOqDJWodWLQw5ZiPhKKwa+9anpAP7
+	 AFLjPZkoQS0BWGSJ15eRXohghdyy8aFgMRovLoZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aya Levin <ayal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Roi Dayan <roid@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 468/694] net/mlx5e: Nullify table pointer when failing to create
-Date: Mon,  8 May 2023 11:45:03 +0200
-Message-Id: <20230508094448.935996963@linuxfoundation.org>
+Subject: [PATCH 6.3 469/694] Revert "net/mlx5e: Dont use termination table when redundant"
+Date: Mon,  8 May 2023 11:45:04 +0200
+Message-Id: <20230508094448.984255959@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,49 +37,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aya Levin <ayal@nvidia.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 1b540decd03acd736693aabb6cb46c71fca38ae6 ]
+[ Upstream commit 081abcacaf0a9505c0d4cc9780b12e6ce5d33630 ]
 
-On failing to create promisc flow steering table, the pointer is
-returned with an error. Nullify it so unloading the driver won't try to
-destroy a non existing table.
+This reverts commit 14624d7247fcd0f3114a6f5f17b3c8d1020fbbb7.
 
-Failing to create promisc table may happen over BF devices when the ARM
-side is going through a firmware tear down. The host side start a
-reload flow. While the driver unloads, it tries to remove the promisc
-table. Remove WARN in this state as it is a valid error flow.
+The termination table usage is requires for DMFS steering mode as firmware
+doesn't support mixed table destinations list which causes following
+syndrome with hairpin rules:
 
-Fixes: 1c46d7409f30 ("net/mlx5e: Optimize promiscuous mode")
-Signed-off-by: Aya Levin <ayal@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+[81922.283225] mlx5_core 0000:08:00.0: mlx5_cmd_out_err:803:(pid 25977): SET_FLOW_TABLE_ENTRY(0x936) op_mod(0x0) failed, status bad parameter(0x3), syndrome (0xaca205), err(-22)
+
+Fixes: 14624d7247fc ("net/mlx5e: Don't use termination table when redundant")
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Reviewed-by: Roi Dayan <roid@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_fs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../mlx5/core/eswitch_offloads_termtbl.c      | 32 +++----------------
+ 1 file changed, 4 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
-index f1dac0244958c..33bfe4d7338be 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
-@@ -783,6 +783,7 @@ static int mlx5e_create_promisc_table(struct mlx5e_flow_steering *fs)
- 	ft->t = mlx5_create_auto_grouped_flow_table(fs->ns, &ft_attr);
- 	if (IS_ERR(ft->t)) {
- 		err = PTR_ERR(ft->t);
-+		ft->t = NULL;
- 		fs_err(fs, "fail to create promisc table err=%d\n", err);
- 		return err;
- 	}
-@@ -810,7 +811,7 @@ static void mlx5e_del_promisc_rule(struct mlx5e_flow_steering *fs)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+index 3a9a6bb9158de..edd9102583144 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads_termtbl.c
+@@ -210,18 +210,6 @@ static bool mlx5_eswitch_offload_is_uplink_port(const struct mlx5_eswitch *esw,
+ 	return (port_mask & port_value) == MLX5_VPORT_UPLINK;
+ }
  
- static void mlx5e_destroy_promisc_table(struct mlx5e_flow_steering *fs)
- {
--	if (WARN(!fs->promisc.ft.t, "Trying to remove non-existing promiscuous table"))
-+	if (!fs->promisc.ft.t)
- 		return;
- 	mlx5e_del_promisc_rule(fs);
- 	mlx5_destroy_flow_table(fs->promisc.ft.t);
+-static bool
+-mlx5_eswitch_is_push_vlan_no_cap(struct mlx5_eswitch *esw,
+-				 struct mlx5_flow_act *flow_act)
+-{
+-	if (flow_act->action & MLX5_FLOW_CONTEXT_ACTION_VLAN_PUSH &&
+-	    !(mlx5_fs_get_capabilities(esw->dev, MLX5_FLOW_NAMESPACE_FDB) &
+-	      MLX5_FLOW_STEERING_CAP_VLAN_PUSH_ON_RX))
+-		return true;
+-
+-	return false;
+-}
+-
+ bool
+ mlx5_eswitch_termtbl_required(struct mlx5_eswitch *esw,
+ 			      struct mlx5_flow_attr *attr,
+@@ -237,7 +225,10 @@ mlx5_eswitch_termtbl_required(struct mlx5_eswitch *esw,
+ 	    (!mlx5_eswitch_offload_is_uplink_port(esw, spec) && !esw_attr->int_port))
+ 		return false;
+ 
+-	if (mlx5_eswitch_is_push_vlan_no_cap(esw, flow_act))
++	/* push vlan on RX */
++	if (flow_act->action & MLX5_FLOW_CONTEXT_ACTION_VLAN_PUSH &&
++	    !(mlx5_fs_get_capabilities(esw->dev, MLX5_FLOW_NAMESPACE_FDB) &
++	      MLX5_FLOW_STEERING_CAP_VLAN_PUSH_ON_RX))
+ 		return true;
+ 
+ 	/* hairpin */
+@@ -261,31 +252,19 @@ mlx5_eswitch_add_termtbl_rule(struct mlx5_eswitch *esw,
+ 	struct mlx5_flow_act term_tbl_act = {};
+ 	struct mlx5_flow_handle *rule = NULL;
+ 	bool term_table_created = false;
+-	bool is_push_vlan_on_rx;
+ 	int num_vport_dests = 0;
+ 	int i, curr_dest;
+ 
+-	is_push_vlan_on_rx = mlx5_eswitch_is_push_vlan_no_cap(esw, flow_act);
+ 	mlx5_eswitch_termtbl_actions_move(flow_act, &term_tbl_act);
+ 	term_tbl_act.action |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
+ 
+ 	for (i = 0; i < num_dest; i++) {
+ 		struct mlx5_termtbl_handle *tt;
+-		bool hairpin = false;
+ 
+ 		/* only vport destinations can be terminated */
+ 		if (dest[i].type != MLX5_FLOW_DESTINATION_TYPE_VPORT)
+ 			continue;
+ 
+-		if (attr->dests[num_vport_dests].rep &&
+-		    attr->dests[num_vport_dests].rep->vport == MLX5_VPORT_UPLINK)
+-			hairpin = true;
+-
+-		if (!is_push_vlan_on_rx && !hairpin) {
+-			num_vport_dests++;
+-			continue;
+-		}
+-
+ 		if (attr->dests[num_vport_dests].flags & MLX5_ESW_DEST_ENCAP) {
+ 			term_tbl_act.action |= MLX5_FLOW_CONTEXT_ACTION_PACKET_REFORMAT;
+ 			term_tbl_act.pkt_reformat = attr->dests[num_vport_dests].pkt_reformat;
+@@ -333,9 +312,6 @@ mlx5_eswitch_add_termtbl_rule(struct mlx5_eswitch *esw,
+ 	for (curr_dest = 0; curr_dest < num_vport_dests; curr_dest++) {
+ 		struct mlx5_termtbl_handle *tt = attr->dests[curr_dest].termtbl;
+ 
+-		if (!tt)
+-			continue;
+-
+ 		attr->dests[curr_dest].termtbl = NULL;
+ 
+ 		/* search for the destination associated with the
 -- 
 2.39.2
 
