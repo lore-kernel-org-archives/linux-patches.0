@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630E0168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBBC2C433D2;
-	Mon,  8 May 2023 11:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637FE168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE60C433D2;
+	Mon,  8 May 2023 11:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544375;
-	bh=blmg2Z39pBez/9+eEXZiwrdH4dWEOu8SWhd1zIHJQPI=;
+	s=korg; t=1683544378;
+	bh=JJC5MjBV8lpgp/Q8c9FLB/NnPE+kU9YVY1zWbSiuN+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LsHkUxgcHs4jAtQd/2B1kUBkZc1IvDyWhLpwvlSizDaxbrFpCoUURrnHQnW2gVtnr
-	 anU8EpdRFYjVonttFg7nc5g/c/TZdm7red4EqLGznrwiLUPHExzpOdTrRdCk/lbH13
-	 Ou0J6JNSD7mi5P99SngSxEV2T0/liTB8322RN19I=
+	b=Q5gIsOArm9JcztlxnX+Zx3RZU0bwoRdIOJkgU8Na2QhJ/ACI6xuQfpoZWhKY7//Mp
+	 Z8CnViGYHG7n2Wub7dpkL7DrWl+iuS5DpgGiXOrFp9xfTJFbtNmoWVGlmqYX9dHNL2
+	 5Wo3GWtujHbjl573yUvvbStD0qq3vUZluHqoHtVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Monnet <quentin@isovalent.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Stephan Mueller <smueller@chronox.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 390/694] bpftool: Fix bug for long instructions in program CFG dumps
-Date: Mon,  8 May 2023 11:43:45 +0200
-Message-Id: <20230508094445.702525733@linuxfoundation.org>
+Subject: [PATCH 6.3 391/694] crypto: drbg - Only fail when jent is unavailable in FIPS mode
+Date: Mon,  8 May 2023 11:43:46 +0200
+Message-Id: <20230508094445.743983949@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,44 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quentin Monnet <quentin@isovalent.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 67cf52cdb6c8fa6365d29106555dacf95c9fd374 ]
+[ Upstream commit 686cd976b6ddedeeb1a1fb09ba53a891d3cc9a03 ]
 
-When dumping the control flow graphs for programs using the 16-byte long
-load instruction, we need to skip the second part of this instruction
-when looking for the next instruction to process. Otherwise, we end up
-printing "BUG_ld_00" from the kernel disassembler in the CFG.
+When jent initialisation fails for any reason other than ENOENT,
+the entire drbg fails to initialise, even when we're not in FIPS
+mode.  This is wrong because we can still use the kernel RNG when
+we're not in FIPS mode.
 
-Fixes: efcef17a6d65 ("tools: bpftool: generate .dot graph from CFG information")
-Signed-off-by: Quentin Monnet <quentin@isovalent.com>
-Link: https://lore.kernel.org/r/20230405132120.59886-3-quentin@isovalent.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Change it so that it only fails when we are in FIPS mode.
+
+Fixes: 57225e679788 ("crypto: drbg - Use callback API for random readiness")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Stephan Mueller <smueller@chronox.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/xlated_dumper.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ crypto/drbg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/xlated_dumper.c b/tools/bpf/bpftool/xlated_dumper.c
-index 6fe3134ae45d4..3daa05d9bbb73 100644
---- a/tools/bpf/bpftool/xlated_dumper.c
-+++ b/tools/bpf/bpftool/xlated_dumper.c
-@@ -372,8 +372,15 @@ void dump_xlated_for_graph(struct dump_data *dd, void *buf_start, void *buf_end,
- 	struct bpf_insn *insn_start = buf_start;
- 	struct bpf_insn *insn_end = buf_end;
- 	struct bpf_insn *cur = insn_start;
-+	bool double_insn = false;
+diff --git a/crypto/drbg.c b/crypto/drbg.c
+index 982d4ca4526d8..ff4ebbc68efab 100644
+--- a/crypto/drbg.c
++++ b/crypto/drbg.c
+@@ -1546,7 +1546,7 @@ static int drbg_prepare_hrng(struct drbg_state *drbg)
+ 		const int err = PTR_ERR(drbg->jent);
  
- 	for (; cur <= insn_end; cur++) {
-+		if (double_insn) {
-+			double_insn = false;
-+			continue;
-+		}
-+		double_insn = cur->code == (BPF_LD | BPF_IMM | BPF_DW);
-+
- 		printf("% 4d: ", (int)(cur - insn_start + start_idx));
- 		print_bpf_insn(&cbs, cur, true);
- 		if (cur != insn_end)
+ 		drbg->jent = NULL;
+-		if (fips_enabled || err != -ENOENT)
++		if (fips_enabled)
+ 			return err;
+ 		pr_info("DRBG: Continuing without Jitter RNG\n");
+ 	}
 -- 
 2.39.2
 
