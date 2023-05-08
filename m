@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF35168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:21:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FF1C433D2;
-	Mon,  8 May 2023 10:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A06168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:21:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ACD0C433EF;
+	Mon,  8 May 2023 10:21:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541272;
-	bh=1UnlRJYpfmjQALU7UhLyLH1QxK1YpaGmC7X/FbUrPH4=;
+	s=korg; t=1683541276;
+	bh=3By6DxTL3MyrugwF/L4VUu91zTP66hV4u6IYu8Rxzyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1RrZy6VlP777OqziTxE90pmha8u3lAcOwtJSNxoOgfaTyl7KOEIp+V1yDlBwRuuR
-	 w11B1eQwS7mTGFaDRMmeGGrAJtr25LWbH8PUMwpsd5dW0yTCHWq9RVNisEU7IfX6mJ
-	 ly8LPrCu3MeWVEJBsulqaEZeAPJZ1bRLdlwG6AWQ=
+	b=u+/WX4lbroG2ZjjI+Q71SzuDO6HYIC95fLYGm8sJ2B9na19fKMP3ozoZzyTE0rLwr
+	 ZrrgsXsLMf2jgZOl4iGHTlybo+agVMrwtw330tDYvoB1QlYoSL6lwWd51XPuEFeXSa
+	 EZLhd/Yj+L1D3CxJUH+fqL2jYbTm6vS+idqFZssc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>
-Subject: [PATCH 6.2 034/663] usb: dwc3: gadget: Stall and restart EP0 if host is unresponsive
-Date: Mon,  8 May 2023 11:37:40 +0200
-Message-Id: <20230508094429.572855154@linuxfoundation.org>
+	Brian Coverstone <brian@mainsequence.net>,
+	Felix Fietkau <nbd@nbd.name>
+Subject: [PATCH 6.2 061/663] wifi: mt76: add missing locking to protect against concurrent rx/status calls
+Date: Mon,  8 May 2023 11:38:07 +0200
+Message-Id: <20230508094430.469964471@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -34,121 +34,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 02435a739b81ae24aff5d6e930efef9458e2af3c upstream.
+commit 5b8ccdfb943f6a03c676d2ea816dd38c149e920b upstream.
 
-It was observed that there are hosts that may complete pending SETUP
-transactions before the stop active transfers and controller halt occurs,
-leading to lingering endxfer commands on DEPs on subsequent pullup/gadget
-start iterations.
+According to the documentation, ieee80211_rx_list must not run concurrently
+with ieee80211_tx_status (or its variants).
 
-  dwc3_gadget_ep_disable   name=ep8in flags=0x3009  direction=1
-  dwc3_gadget_ep_disable   name=ep4in flags=1  direction=1
-  dwc3_gadget_ep_disable   name=ep3out flags=1  direction=0
-  usb_gadget_disconnect   deactivated=0  connected=0  ret=0
-
-The sequence shows that the USB gadget disconnect (dwc3_gadget_pullup(0))
-routine completed successfully, allowing for the USB gadget to proceed with
-a USB gadget connect.  However, if this occurs the system runs into an
-issue where:
-
-  BUG: spinlock already unlocked on CPU
-  spin_bug+0x0
-  dwc3_remove_requests+0x278
-  dwc3_ep0_out_start+0xb0
-  __dwc3_gadget_start+0x25c
-
-This is due to the pending endxfers, leading to gadget start (w/o lock
-held) to execute the remove requests, which will unlock the dwc3
-spinlock as part of giveback.
-
-To mitigate this, resolve the pending endxfers on the pullup disable
-path by re-locating the SETUP phase check after stop active transfers, since
-that is where the DWC3_EP_DELAY_STOP is potentially set.  This also allows
-for handling of a host that may be unresponsive by using the completion
-timeout to trigger the stall and restart for EP0.
-
-Fixes: c96683798e27 ("usb: dwc3: ep0: Don't prepare beyond Setup stage")
 Cc: stable@vger.kernel.org
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20230413195742.11821-2-quic_wcheng@quicinc.com
+Fixes: 88046b2c9f6d ("mt76: add support for reporting tx status with skb")
+Reported-by: Brian Coverstone <brian@mainsequence.net>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |   49 ++++++++++++++++++++++++++++++----------------
- 1 file changed, 32 insertions(+), 17 deletions(-)
+ drivers/net/wireless/mediatek/mt76/dma.c         |    2 ++
+ drivers/net/wireless/mediatek/mt76/mt7603/mac.c  |    5 ++++-
+ drivers/net/wireless/mediatek/mt76/mt7615/mac.c  |    5 ++++-
+ drivers/net/wireless/mediatek/mt76/mt76x02_mac.c |    5 ++++-
+ drivers/net/wireless/mediatek/mt76/tx.c          |    4 ++++
+ 5 files changed, 18 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2532,29 +2532,17 @@ static int __dwc3_gadget_start(struct dw
- static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
- {
- 	unsigned long flags;
-+	int ret;
+--- a/drivers/net/wireless/mediatek/mt76/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/dma.c
+@@ -577,7 +577,9 @@ free:
+ free_skb:
+ 	status.skb = tx_info.skb;
+ 	hw = mt76_tx_status_get_hw(dev, tx_info.skb);
++	spin_lock_bh(&dev->rx_lock);
+ 	ieee80211_tx_status_ext(hw, &status);
++	spin_unlock_bh(&dev->rx_lock);
  
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	dwc->connected = false;
+ 	return ret;
+ }
+--- a/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7603/mac.c
+@@ -1279,8 +1279,11 @@ void mt7603_mac_add_txs(struct mt7603_de
+ 	if (wcidx >= MT7603_WTBL_STA || !sta)
+ 		goto out;
  
- 	/*
--	 * Per databook, when we want to stop the gadget, if a control transfer
--	 * is still in process, complete it and get the core into setup phase.
-+	 * Attempt to end pending SETUP status phase, and not wait for the
-+	 * function to do so.
- 	 */
--	if (dwc->ep0state != EP0_SETUP_PHASE) {
--		int ret;
--
--		if (dwc->delayed_status)
--			dwc3_ep0_send_delayed_status(dwc);
--
--		reinit_completion(&dwc->ep0_in_setup);
--
--		spin_unlock_irqrestore(&dwc->lock, flags);
--		ret = wait_for_completion_timeout(&dwc->ep0_in_setup,
--				msecs_to_jiffies(DWC3_PULL_UP_TIMEOUT));
--		spin_lock_irqsave(&dwc->lock, flags);
--		if (ret == 0)
--			dev_warn(dwc->dev, "timed out waiting for SETUP phase\n");
--	}
-+	if (dwc->delayed_status)
-+		dwc3_ep0_send_delayed_status(dwc);
- 
- 	/*
- 	 * In the Synopsys DesignWare Cores USB3 Databook Rev. 3.30a
-@@ -2568,6 +2556,33 @@ static int dwc3_gadget_soft_disconnect(s
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
- 	/*
-+	 * Per databook, when we want to stop the gadget, if a control transfer
-+	 * is still in process, complete it and get the core into setup phase.
-+	 * In case the host is unresponsive to a SETUP transaction, forcefully
-+	 * stall the transfer, and move back to the SETUP phase, so that any
-+	 * pending endxfers can be executed.
-+	 */
-+	if (dwc->ep0state != EP0_SETUP_PHASE) {
-+		reinit_completion(&dwc->ep0_in_setup);
-+
-+		ret = wait_for_completion_timeout(&dwc->ep0_in_setup,
-+				msecs_to_jiffies(DWC3_PULL_UP_TIMEOUT));
-+		if (ret == 0) {
-+			unsigned int    dir;
-+
-+			dev_warn(dwc->dev, "wait for SETUP phase timed out\n");
-+			spin_lock_irqsave(&dwc->lock, flags);
-+			dir = !!dwc->ep0_expect_in;
-+			if (dwc->ep0state == EP0_DATA_PHASE)
-+				dwc3_ep0_end_control_data(dwc, dwc->eps[dir]);
-+			else
-+				dwc3_ep0_end_control_data(dwc, dwc->eps[!dir]);
-+			dwc3_ep0_stall_and_restart(dwc);
-+			spin_unlock_irqrestore(&dwc->lock, flags);
-+		}
+-	if (mt7603_fill_txs(dev, msta, &info, txs_data))
++	if (mt7603_fill_txs(dev, msta, &info, txs_data)) {
++		spin_lock_bh(&dev->mt76.rx_lock);
+ 		ieee80211_tx_status_noskb(mt76_hw(dev), sta, &info);
++		spin_unlock_bh(&dev->mt76.rx_lock);
 +	}
-+
-+	/*
- 	 * Note: if the GEVNTCOUNT indicates events in the event buffer, the
- 	 * driver needs to acknowledge them before the controller can halt.
- 	 * Simply let the interrupt handler acknowledges and handle the
+ 
+ out:
+ 	rcu_read_unlock();
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -1530,8 +1530,11 @@ static void mt7615_mac_add_txs(struct mt
+ 	if (wcid->phy_idx && dev->mt76.phys[MT_BAND1])
+ 		mphy = dev->mt76.phys[MT_BAND1];
+ 
+-	if (mt7615_fill_txs(dev, msta, &info, txs_data))
++	if (mt7615_fill_txs(dev, msta, &info, txs_data)) {
++		spin_lock_bh(&dev->mt76.rx_lock);
+ 		ieee80211_tx_status_noskb(mphy->hw, sta, &info);
++		spin_unlock_bh(&dev->mt76.rx_lock);
++	}
+ 
+ out:
+ 	rcu_read_unlock();
+--- a/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76x02_mac.c
+@@ -631,8 +631,11 @@ void mt76x02_send_tx_status(struct mt76x
+ 
+ 	mt76_tx_status_unlock(mdev, &list);
+ 
+-	if (!status.skb)
++	if (!status.skb) {
++		spin_lock_bh(&dev->mt76.rx_lock);
+ 		ieee80211_tx_status_ext(mt76_hw(dev), &status);
++		spin_unlock_bh(&dev->mt76.rx_lock);
++	}
+ 
+ 	if (!len)
+ 		goto out;
+--- a/drivers/net/wireless/mediatek/mt76/tx.c
++++ b/drivers/net/wireless/mediatek/mt76/tx.c
+@@ -77,7 +77,9 @@ mt76_tx_status_unlock(struct mt76_dev *d
+ 		}
+ 
+ 		hw = mt76_tx_status_get_hw(dev, skb);
++		spin_lock_bh(&dev->rx_lock);
+ 		ieee80211_tx_status_ext(hw, &status);
++		spin_unlock_bh(&dev->rx_lock);
+ 	}
+ 	rcu_read_unlock();
+ }
+@@ -263,7 +265,9 @@ void __mt76_tx_complete_skb(struct mt76_
+ 	if (cb->pktid < MT_PACKET_ID_FIRST) {
+ 		hw = mt76_tx_status_get_hw(dev, skb);
+ 		status.sta = wcid_to_sta(wcid);
++		spin_lock_bh(&dev->rx_lock);
+ 		ieee80211_tx_status_ext(hw, &status);
++		spin_unlock_bh(&dev->rx_lock);
+ 		goto out;
+ 	}
+ 
 
 
