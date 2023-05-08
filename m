@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875E7168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:35:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2124C433EF;
-	Mon,  8 May 2023 11:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4CD168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:35:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4044C433EF;
+	Mon,  8 May 2023 11:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545742;
-	bh=WzWAzHvTGXftM/Na0mbEJilRuprC+2cr+0X5UsabOd8=;
+	s=korg; t=1683545745;
+	bh=z99qIT2lq0WuKPPyuPN9zdkcIcIZlCenqAxLta/hhSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgD0fYQx4HgtoRRGpNgjkQuBGJxraeNUp1+hXyUROdF0yGzmRSnFHz24yv7LyurFI
-	 dxEpdf1AC8xO2w6uEjg5Q1MVPUwptjBWUeyR0sLCb7qUy6v+aJRstf1sDqOWq8zvLY
-	 ucSNjqk7q1lOZeX7mk5W5QtAMCvxyQebH5tuFnfU=
+	b=atUTabFeJUs4H/aGBK/jf+ZwQIceTgRMI1+VAG8Ot7JJtUIRWM1fbwbbIv2AenSvY
+	 z9vZcler29PxSqFHqDlp5ChB91MHKkAK2osyjoEoZozOL4jqqF/de+aPHiZUsLNE5c
+	 kvX67dLVkESzXGtNyzrNT6iVoRvXaOjdqhPwjeM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Artemiev <Igor.A.Artemiev@mcst.ru>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Matthew Lear <matthew.lear@broadcom.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 139/371] drm/amd/display: Fix potential null dereference
-Date: Mon,  8 May 2023 11:45:40 +0200
-Message-Id: <20230508094817.561136305@linuxfoundation.org>
+Subject: [PATCH 5.15 140/371] media: rc: gpio-ir-recv: Fix support for wake-up
+Date: Mon,  8 May 2023 11:45:41 +0200
+Message-Id: <20230508094817.607042998@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,40 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 52f1783ff4146344342422c1cd94fcb4ce39b6fe ]
+[ Upstream commit 9c592f8ab114875fdb3b2040f01818e53de44991 ]
 
-The adev->dm.dc pointer can be NULL and dereferenced in amdgpu_dm_fini()
-without checking.
+The driver was intended from the start to be a wake-up source for the
+system, however due to the absence of a suitable call to
+device_set_wakeup_capable(), the device_may_wakeup() call used to decide
+whether to enable the GPIO interrupt as a wake-up source would never
+happen. Lookup the DT standard "wakeup-source" property and call
+device_init_wakeup() to ensure the device is flagged as being wakeup
+capable.
 
-Add a NULL pointer check before calling dc_dmub_srv_destroy().
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 9a71c7d31734 ("drm/amd/display: Register DMUB service with DC")
-Signed-off-by: Igor Artemiev <Igor.A.Artemiev@mcst.ru>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Matthew Lear <matthew.lear@broadcom.com>
+Fixes: fd0f6851eb46 ("[media] rc: Add support for GPIO based IR Receiver driver")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/rc/gpio-ir-recv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 68c98e30fee71..1e0ddf7722cd4 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1707,7 +1707,8 @@ static void amdgpu_dm_fini(struct amdgpu_device *adev)
- 		dc_deinit_callbacks(adev->dm.dc);
- #endif
+diff --git a/drivers/media/rc/gpio-ir-recv.c b/drivers/media/rc/gpio-ir-recv.c
+index a56c844d7f816..16795e07dc103 100644
+--- a/drivers/media/rc/gpio-ir-recv.c
++++ b/drivers/media/rc/gpio-ir-recv.c
+@@ -107,6 +107,8 @@ static int gpio_ir_recv_probe(struct platform_device *pdev)
+ 		rcdev->map_name = RC_MAP_EMPTY;
  
--	dc_dmub_srv_destroy(&adev->dm.dc->ctx->dmub_srv);
-+	if (adev->dm.dc)
-+		dc_dmub_srv_destroy(&adev->dm.dc->ctx->dmub_srv);
+ 	gpio_dev->rcdev = rcdev;
++	if (of_property_read_bool(np, "wakeup-source"))
++		device_init_wakeup(dev, true);
  
- 	if (dc_enable_dmub_notifications(adev->dm.dc)) {
- 		kfree(adev->dm.dmub_notify);
+ 	rc = devm_rc_register_device(dev, rcdev);
+ 	if (rc < 0) {
 -- 
 2.39.2
 
