@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB0E168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B09C433EF;
-	Mon,  8 May 2023 10:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FB5168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:55:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 605E6C433D2;
+	Mon,  8 May 2023 10:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543336;
-	bh=/7GCR3MGmvw3t8wOdZzBFzteGKmnZ5zeqW1qVIXCXIk=;
+	s=korg; t=1683543339;
+	bh=SMFIXUIWqeYELLyq6WxcJPxoahWwHnZMCJ12D43Z72w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWk4yLM0v+Ag8lqB31ff4qn/vszLEEBPxBsVHG22Hz+6JQNFZH0J+WHTk8SZEgs3L
-	 9xAITjIxkGdsOGHEcsS5wrB8ZVGrwIJZnRf1JdQPraa6h/W5zQdHx2xG+2Chqt/IIJ
-	 DcjbAm9JWK1/oFEW1/vK6rdDog2GVuzRJ8Kkin4w=
+	b=H+QyP9Kduunb2noRS+35RHRnMblSSxtmJVJDQOqK6sd3PQWGcQgn3FBsKb1t28RSJ
+	 rdDhZ+TbIvMU5JLqWT3RbVRu4psHUC/m33UhTYFww0k1HXCrXxXFWV71bP1CkM3Y2d
+	 vGa75NJJNMUryuXw5X/fQEusxt4PSsbe8dnh53IE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeremy Linton <jeremy.linton@arm.com>,
 	Oliver Upton <oliver.upton@linux.dev>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.3 058/694] KVM: arm64: Avoid vcpu->mutex v. kvm->lock inversion in CPU_ON
-Date: Mon,  8 May 2023 11:38:13 +0200
-Message-Id: <20230508094434.467972580@linuxfoundation.org>
+Subject: [PATCH 6.3 059/694] KVM: arm64: Avoid lock inversion when setting the VM register width
+Date: Mon,  8 May 2023 11:38:14 +0200
+Message-Id: <20230508094434.496428690@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,266 +37,116 @@ Content-Transfer-Encoding: 8bit
 
 From: Oliver Upton <oliver.upton@linux.dev>
 
-commit 0acc7239c20a8401b8968c2adace8f7c9b0295ae upstream.
+commit c43120afb5c66a3465c7468f5cf9806a26484cde upstream.
 
-KVM/arm64 had the lock ordering backwards on vcpu->mutex and kvm->lock
-from the very beginning. One such example is the way vCPU resets are
-handled: the kvm->lock is acquired while handling a guest CPU_ON PSCI
-call.
+kvm->lock must be taken outside of the vcpu->mutex. Of course, the
+locking documentation for KVM makes this abundantly clear. Nonetheless,
+the locking order in KVM/arm64 has been wrong for quite a while; we
+acquire the kvm->lock while holding the vcpu->mutex all over the shop.
 
-Add a dedicated lock to serialize writes to kvm_vcpu_arch::{mp_state,
-reset_state}. Promote all accessors of mp_state to {READ,WRITE}_ONCE()
-as readers do not acquire the mp_state_lock. While at it, plug yet
-another race by taking the mp_state_lock in the KVM_SET_MP_STATE ioctl
-handler.
+All was seemingly fine until commit 42a90008f890 ("KVM: Ensure lockdep
+knows about kvm->lock vs. vcpu->mutex ordering rule") caught us with our
+pants down, leading to lockdep barfing:
 
-As changes to MP state are now guarded with a dedicated lock, drop the
-kvm->lock acquisition from the PSCI CPU_ON path. Similarly, move the
-reader of reset_state outside of the kvm->lock and instead protect it
-with the mp_state_lock. Note that writes to reset_state::reset have been
-demoted to regular stores as both readers and writers acquire the
-mp_state_lock.
+ ======================================================
+ WARNING: possible circular locking dependency detected
+ 6.2.0-rc7+ #19 Not tainted
+ ------------------------------------------------------
+ qemu-system-aar/859 is trying to acquire lock:
+ ffff5aa69269eba0 (&host_kvm->lock){+.+.}-{3:3}, at: kvm_reset_vcpu+0x34/0x274
 
-While the kvm->lock inversion still exists in kvm_reset_vcpu(), at least
-now PSCI CPU_ON no longer depends on it for serializing vCPU reset.
+ but task is already holding lock:
+ ffff5aa68768c0b8 (&vcpu->mutex){+.+.}-{3:3}, at: kvm_vcpu_ioctl+0x8c/0xba0
+
+ which lock already depends on the new lock.
+
+Add a dedicated lock to serialize writes to VM-scoped configuration from
+the context of a vCPU. Protect the register width flags with the new
+lock, thus avoiding the need to grab the kvm->lock while holding
+vcpu->mutex in kvm_reset_vcpu().
 
 Cc: stable@vger.kernel.org
+Reported-by: Jeremy Linton <jeremy.linton@arm.com>
+Link: https://lore.kernel.org/kvmarm/f6452cdd-65ff-34b8-bab0-5c06416da5f6@arm.com/
 Tested-by: Jeremy Linton <jeremy.linton@arm.com>
 Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230327164747.2466958-2-oliver.upton@linux.dev
+Link: https://lore.kernel.org/r/20230327164747.2466958-3-oliver.upton@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_host.h |    1 +
- arch/arm64/kvm/arm.c              |   31 ++++++++++++++++++++++---------
- arch/arm64/kvm/psci.c             |   28 ++++++++++++++++------------
- arch/arm64/kvm/reset.c            |    9 +++++----
- 4 files changed, 44 insertions(+), 25 deletions(-)
+ arch/arm64/include/asm/kvm_host.h |    3 +++
+ arch/arm64/kvm/arm.c              |   18 ++++++++++++++++++
+ arch/arm64/kvm/reset.c            |    6 +++---
+ 3 files changed, 24 insertions(+), 3 deletions(-)
 
 --- a/arch/arm64/include/asm/kvm_host.h
 +++ b/arch/arm64/include/asm/kvm_host.h
-@@ -522,6 +522,7 @@ struct kvm_vcpu_arch {
+@@ -199,6 +199,9 @@ struct kvm_arch {
+ 	/* Mandated version of PSCI */
+ 	u32 psci_version;
  
- 	/* vcpu power state */
- 	struct kvm_mp_state mp_state;
-+	spinlock_t mp_state_lock;
- 
- 	/* Cache some mmu pages needed inside spinlock regions */
- 	struct kvm_mmu_memory_cache mmu_page_cache;
++	/* Protects VM-scoped configuration data */
++	struct mutex config_lock;
++
+ 	/*
+ 	 * If we encounter a data abort without valid instruction syndrome
+ 	 * information, report this to user space.  User space can (and
 --- a/arch/arm64/kvm/arm.c
 +++ b/arch/arm64/kvm/arm.c
-@@ -327,6 +327,8 @@ int kvm_arch_vcpu_create(struct kvm_vcpu
+@@ -128,6 +128,16 @@ int kvm_arch_init_vm(struct kvm *kvm, un
  {
- 	int err;
+ 	int ret;
  
-+	spin_lock_init(&vcpu->arch.mp_state_lock);
++	mutex_init(&kvm->arch.config_lock);
++
++#ifdef CONFIG_LOCKDEP
++	/* Clue in lockdep that the config_lock must be taken inside kvm->lock */
++	mutex_lock(&kvm->lock);
++	mutex_lock(&kvm->arch.config_lock);
++	mutex_unlock(&kvm->arch.config_lock);
++	mutex_unlock(&kvm->lock);
++#endif
++
+ 	ret = kvm_share_hyp(kvm, kvm + 1);
+ 	if (ret)
+ 		return ret;
+@@ -329,6 +339,14 @@ int kvm_arch_vcpu_create(struct kvm_vcpu
+ 
+ 	spin_lock_init(&vcpu->arch.mp_state_lock);
+ 
++#ifdef CONFIG_LOCKDEP
++	/* Inform lockdep that the config_lock is acquired after vcpu->mutex */
++	mutex_lock(&vcpu->mutex);
++	mutex_lock(&vcpu->kvm->arch.config_lock);
++	mutex_unlock(&vcpu->kvm->arch.config_lock);
++	mutex_unlock(&vcpu->mutex);
++#endif
 +
  	/* Force users to call KVM_ARM_VCPU_INIT */
  	vcpu->arch.target = -1;
  	bitmap_zero(vcpu->arch.features, KVM_VCPU_MAX_FEATURES);
-@@ -444,34 +446,41 @@ void kvm_arch_vcpu_put(struct kvm_vcpu *
- 	vcpu->cpu = -1;
- }
- 
--void kvm_arm_vcpu_power_off(struct kvm_vcpu *vcpu)
-+static void __kvm_arm_vcpu_power_off(struct kvm_vcpu *vcpu)
- {
--	vcpu->arch.mp_state.mp_state = KVM_MP_STATE_STOPPED;
-+	WRITE_ONCE(vcpu->arch.mp_state.mp_state, KVM_MP_STATE_STOPPED);
- 	kvm_make_request(KVM_REQ_SLEEP, vcpu);
- 	kvm_vcpu_kick(vcpu);
- }
- 
-+void kvm_arm_vcpu_power_off(struct kvm_vcpu *vcpu)
-+{
-+	spin_lock(&vcpu->arch.mp_state_lock);
-+	__kvm_arm_vcpu_power_off(vcpu);
-+	spin_unlock(&vcpu->arch.mp_state_lock);
-+}
-+
- bool kvm_arm_vcpu_stopped(struct kvm_vcpu *vcpu)
- {
--	return vcpu->arch.mp_state.mp_state == KVM_MP_STATE_STOPPED;
-+	return READ_ONCE(vcpu->arch.mp_state.mp_state) == KVM_MP_STATE_STOPPED;
- }
- 
- static void kvm_arm_vcpu_suspend(struct kvm_vcpu *vcpu)
- {
--	vcpu->arch.mp_state.mp_state = KVM_MP_STATE_SUSPENDED;
-+	WRITE_ONCE(vcpu->arch.mp_state.mp_state, KVM_MP_STATE_SUSPENDED);
- 	kvm_make_request(KVM_REQ_SUSPEND, vcpu);
- 	kvm_vcpu_kick(vcpu);
- }
- 
- static bool kvm_arm_vcpu_suspended(struct kvm_vcpu *vcpu)
- {
--	return vcpu->arch.mp_state.mp_state == KVM_MP_STATE_SUSPENDED;
-+	return READ_ONCE(vcpu->arch.mp_state.mp_state) == KVM_MP_STATE_SUSPENDED;
- }
- 
- int kvm_arch_vcpu_ioctl_get_mpstate(struct kvm_vcpu *vcpu,
- 				    struct kvm_mp_state *mp_state)
- {
--	*mp_state = vcpu->arch.mp_state;
-+	*mp_state = READ_ONCE(vcpu->arch.mp_state);
- 
- 	return 0;
- }
-@@ -481,12 +490,14 @@ int kvm_arch_vcpu_ioctl_set_mpstate(stru
- {
- 	int ret = 0;
- 
-+	spin_lock(&vcpu->arch.mp_state_lock);
-+
- 	switch (mp_state->mp_state) {
- 	case KVM_MP_STATE_RUNNABLE:
--		vcpu->arch.mp_state = *mp_state;
-+		WRITE_ONCE(vcpu->arch.mp_state, *mp_state);
- 		break;
- 	case KVM_MP_STATE_STOPPED:
--		kvm_arm_vcpu_power_off(vcpu);
-+		__kvm_arm_vcpu_power_off(vcpu);
- 		break;
- 	case KVM_MP_STATE_SUSPENDED:
- 		kvm_arm_vcpu_suspend(vcpu);
-@@ -495,6 +506,8 @@ int kvm_arch_vcpu_ioctl_set_mpstate(stru
- 		ret = -EINVAL;
- 	}
- 
-+	spin_unlock(&vcpu->arch.mp_state_lock);
-+
- 	return ret;
- }
- 
-@@ -1214,7 +1227,7 @@ static int kvm_arch_vcpu_ioctl_vcpu_init
- 	if (test_bit(KVM_ARM_VCPU_POWER_OFF, vcpu->arch.features))
- 		kvm_arm_vcpu_power_off(vcpu);
- 	else
--		vcpu->arch.mp_state.mp_state = KVM_MP_STATE_RUNNABLE;
-+		WRITE_ONCE(vcpu->arch.mp_state.mp_state, KVM_MP_STATE_RUNNABLE);
- 
- 	return 0;
- }
---- a/arch/arm64/kvm/psci.c
-+++ b/arch/arm64/kvm/psci.c
-@@ -62,6 +62,7 @@ static unsigned long kvm_psci_vcpu_on(st
- 	struct vcpu_reset_state *reset_state;
- 	struct kvm *kvm = source_vcpu->kvm;
- 	struct kvm_vcpu *vcpu = NULL;
-+	int ret = PSCI_RET_SUCCESS;
- 	unsigned long cpu_id;
- 
- 	cpu_id = smccc_get_arg1(source_vcpu);
-@@ -76,11 +77,15 @@ static unsigned long kvm_psci_vcpu_on(st
- 	 */
- 	if (!vcpu)
- 		return PSCI_RET_INVALID_PARAMS;
-+
-+	spin_lock(&vcpu->arch.mp_state_lock);
- 	if (!kvm_arm_vcpu_stopped(vcpu)) {
- 		if (kvm_psci_version(source_vcpu) != KVM_ARM_PSCI_0_1)
--			return PSCI_RET_ALREADY_ON;
-+			ret = PSCI_RET_ALREADY_ON;
- 		else
--			return PSCI_RET_INVALID_PARAMS;
-+			ret = PSCI_RET_INVALID_PARAMS;
-+
-+		goto out_unlock;
- 	}
- 
- 	reset_state = &vcpu->arch.reset_state;
-@@ -96,7 +101,7 @@ static unsigned long kvm_psci_vcpu_on(st
- 	 */
- 	reset_state->r0 = smccc_get_arg3(source_vcpu);
- 
--	WRITE_ONCE(reset_state->reset, true);
-+	reset_state->reset = true;
- 	kvm_make_request(KVM_REQ_VCPU_RESET, vcpu);
- 
- 	/*
-@@ -108,7 +113,9 @@ static unsigned long kvm_psci_vcpu_on(st
- 	vcpu->arch.mp_state.mp_state = KVM_MP_STATE_RUNNABLE;
- 	kvm_vcpu_wake_up(vcpu);
- 
--	return PSCI_RET_SUCCESS;
-+out_unlock:
-+	spin_unlock(&vcpu->arch.mp_state_lock);
-+	return ret;
- }
- 
- static unsigned long kvm_psci_vcpu_affinity_info(struct kvm_vcpu *vcpu)
-@@ -168,8 +175,11 @@ static void kvm_prepare_system_event(str
- 	 * after this call is handled and before the VCPUs have been
- 	 * re-initialized.
- 	 */
--	kvm_for_each_vcpu(i, tmp, vcpu->kvm)
--		tmp->arch.mp_state.mp_state = KVM_MP_STATE_STOPPED;
-+	kvm_for_each_vcpu(i, tmp, vcpu->kvm) {
-+		spin_lock(&tmp->arch.mp_state_lock);
-+		WRITE_ONCE(tmp->arch.mp_state.mp_state, KVM_MP_STATE_STOPPED);
-+		spin_unlock(&tmp->arch.mp_state_lock);
-+	}
- 	kvm_make_all_cpus_request(vcpu->kvm, KVM_REQ_SLEEP);
- 
- 	memset(&vcpu->run->system_event, 0, sizeof(vcpu->run->system_event));
-@@ -229,7 +239,6 @@ static unsigned long kvm_psci_check_allo
- 
- static int kvm_psci_0_2_call(struct kvm_vcpu *vcpu)
- {
--	struct kvm *kvm = vcpu->kvm;
- 	u32 psci_fn = smccc_get_function(vcpu);
- 	unsigned long val;
- 	int ret = 1;
-@@ -254,9 +263,7 @@ static int kvm_psci_0_2_call(struct kvm_
- 		kvm_psci_narrow_to_32bit(vcpu);
- 		fallthrough;
- 	case PSCI_0_2_FN64_CPU_ON:
--		mutex_lock(&kvm->lock);
- 		val = kvm_psci_vcpu_on(vcpu);
--		mutex_unlock(&kvm->lock);
- 		break;
- 	case PSCI_0_2_FN_AFFINITY_INFO:
- 		kvm_psci_narrow_to_32bit(vcpu);
-@@ -395,7 +402,6 @@ static int kvm_psci_1_x_call(struct kvm_
- 
- static int kvm_psci_0_1_call(struct kvm_vcpu *vcpu)
- {
--	struct kvm *kvm = vcpu->kvm;
- 	u32 psci_fn = smccc_get_function(vcpu);
- 	unsigned long val;
- 
-@@ -405,9 +411,7 @@ static int kvm_psci_0_1_call(struct kvm_
- 		val = PSCI_RET_SUCCESS;
- 		break;
- 	case KVM_PSCI_FN_CPU_ON:
--		mutex_lock(&kvm->lock);
- 		val = kvm_psci_vcpu_on(vcpu);
--		mutex_unlock(&kvm->lock);
- 		break;
- 	default:
- 		val = PSCI_RET_NOT_SUPPORTED;
 --- a/arch/arm64/kvm/reset.c
 +++ b/arch/arm64/kvm/reset.c
-@@ -264,15 +264,16 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu
+@@ -205,7 +205,7 @@ static int kvm_set_vm_width(struct kvm_v
  
- 	mutex_lock(&vcpu->kvm->lock);
+ 	is32bit = vcpu_has_feature(vcpu, KVM_ARM_VCPU_EL1_32BIT);
+ 
+-	lockdep_assert_held(&kvm->lock);
++	lockdep_assert_held(&kvm->arch.config_lock);
+ 
+ 	if (test_bit(KVM_ARCH_FLAG_REG_WIDTH_CONFIGURED, &kvm->arch.flags)) {
+ 		/*
+@@ -262,9 +262,9 @@ int kvm_reset_vcpu(struct kvm_vcpu *vcpu
+ 	bool loaded;
+ 	u32 pstate;
+ 
+-	mutex_lock(&vcpu->kvm->lock);
++	mutex_lock(&vcpu->kvm->arch.config_lock);
  	ret = kvm_set_vm_width(vcpu);
--	if (!ret) {
--		reset_state = vcpu->arch.reset_state;
--		WRITE_ONCE(vcpu->arch.reset_state.reset, false);
--	}
- 	mutex_unlock(&vcpu->kvm->lock);
+-	mutex_unlock(&vcpu->kvm->lock);
++	mutex_unlock(&vcpu->kvm->arch.config_lock);
  
  	if (ret)
  		return ret;
- 
-+	spin_lock(&vcpu->arch.mp_state_lock);
-+	reset_state = vcpu->arch.reset_state;
-+	vcpu->arch.reset_state.reset = false;
-+	spin_unlock(&vcpu->arch.mp_state_lock);
-+
- 	/* Reset PMU outside of the non-preemptible section */
- 	kvm_pmu_vcpu_reset(vcpu);
- 
 
 
