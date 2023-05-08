@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C322168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:56:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C27F9C433EF;
-	Mon,  8 May 2023 10:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5767D168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:56:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D34C4339B;
+	Mon,  8 May 2023 10:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543402;
-	bh=4imctYczb9p249Q8WRjxClCsUt2v++otxE90BbSoSHo=;
+	s=korg; t=1683543405;
+	bh=RuTvxuKgghcUCtjqWOFRvAdkvXk8bTsR6H4on0Jn9WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Jv5Atk2FxpdLX9GCJm2HRzpn23B7CYHutLl+0AMR9upniizY3eaNOqjSO3yI5VAa
-	 7XfEf7TAOS5rFkWqcdS25eHBVsXk0xIWFPZaqarPI9k8XNEQmYRdN7JBEK9cfAtz5t
-	 cw9smh0ADSpY4qq0TG0HmfErjsRVa5YSB+/VJLuM=
+	b=fjhXPNsYWHFVu41ZcfxcEc+34mGmv9p59Z1q2bZt60LBW1MBFlorU3p9cpU/RNYpR
+	 VastalgIiSOeCkZMaFUAsF8D6t8C4SPLZ6S8adQv0dUgI0WHaRbNy3ayUCyBaaHn9l
+	 YRTV3EyRJ+wUbvKTojCdSHnIj/kFjk2D3/P1De1g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jesper Dangaard Brouer <brouer@redhat.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.3 077/694] igc: read before write to SRRCTL register
-Date: Mon,  8 May 2023 11:38:32 +0200
-Message-Id: <20230508094435.034375287@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.3 050/694] crypto: arm64/aes-neonbs - fix crash with CFI enabled
+Date: Mon,  8 May 2023 11:38:05 +0200
+Message-Id: <20230508094434.237127736@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -39,89 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Song Yoong Siang <yoong.siang.song@intel.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 3ce29c17dc847bf4245e16aad78a7617afa96297 upstream.
+commit 47446d7cd42358ca7d7a544f2f7823db03f616ff upstream.
 
-igc_configure_rx_ring() function will be called as part of XDP program
-setup. If Rx hardware timestamp is enabled prio to XDP program setup,
-this timestamp enablement will be overwritten when buffer size is
-written into SRRCTL register.
+aesbs_ecb_encrypt(), aesbs_ecb_decrypt(), aesbs_xts_encrypt(), and
+aesbs_xts_decrypt() are called via indirect function calls.  Therefore
+they need to use SYM_TYPED_FUNC_START instead of SYM_FUNC_START to cause
+their type hashes to be emitted when the kernel is built with
+CONFIG_CFI_CLANG=y.  Otherwise, the code crashes with a CFI failure if
+the compiler doesn't happen to optimize out the indirect calls.
 
-Thus, this commit read the register value before write to SRRCTL
-register. This commit is tested by using xdp_hw_metadata bpf selftest
-tool. The tool enables Rx hardware timestamp and then attach XDP program
-to igc driver. It will display hardware timestamp of UDP packet with
-port number 9092. Below are detail of test steps and results.
-
-Command on DUT:
-  sudo ./xdp_hw_metadata <interface name>
-
-Command on Link Partner:
-  echo -n skb | nc -u -q1 <destination IPv4 addr> 9092
-
-Result before this patch:
-  skb hwtstamp is not found!
-
-Result after this patch:
-  found skb hwtstamp = 1677800973.642836757
-
-Optionally, read PHC to confirm the values obtained are almost the same:
-Command:
-  sudo ./testptp -d /dev/ptp0 -g
-Result:
-  clock time: 1677800973.913598978 or Fri Mar  3 07:49:33 2023
-
-Fixes: fc9df2a0b520 ("igc: Enable RX via AF_XDP zero-copy")
-Cc: <stable@vger.kernel.org> # 5.14+
-Signed-off-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Jesper Dangaard Brouer <brouer@redhat.com>
-Tested-by: Jesper Dangaard Brouer <brouer@redhat.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c50d32859e70 ("arm64: Add types to indirect called assembly functions")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igc/igc_base.h |   11 ++++++++---
- drivers/net/ethernet/intel/igc/igc_main.c |    7 +++++--
- 2 files changed, 13 insertions(+), 5 deletions(-)
+ arch/arm64/crypto/aes-neonbs-core.S |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/intel/igc/igc_base.h
-+++ b/drivers/net/ethernet/intel/igc/igc_base.h
-@@ -87,8 +87,13 @@ union igc_adv_rx_desc {
- #define IGC_RXDCTL_SWFLUSH		0x04000000 /* Receive Software Flush */
+--- a/arch/arm64/crypto/aes-neonbs-core.S
++++ b/arch/arm64/crypto/aes-neonbs-core.S
+@@ -15,6 +15,7 @@
+  */
  
- /* SRRCTL bit definitions */
--#define IGC_SRRCTL_BSIZEPKT_SHIFT		10 /* Shift _right_ */
--#define IGC_SRRCTL_BSIZEHDRSIZE_SHIFT		2  /* Shift _left_ */
--#define IGC_SRRCTL_DESCTYPE_ADV_ONEBUF	0x02000000
-+#define IGC_SRRCTL_BSIZEPKT_MASK	GENMASK(6, 0)
-+#define IGC_SRRCTL_BSIZEPKT(x)		FIELD_PREP(IGC_SRRCTL_BSIZEPKT_MASK, \
-+					(x) / 1024) /* in 1 KB resolution */
-+#define IGC_SRRCTL_BSIZEHDR_MASK	GENMASK(13, 8)
-+#define IGC_SRRCTL_BSIZEHDR(x)		FIELD_PREP(IGC_SRRCTL_BSIZEHDR_MASK, \
-+					(x) / 64) /* in 64 bytes resolution */
-+#define IGC_SRRCTL_DESCTYPE_MASK	GENMASK(27, 25)
-+#define IGC_SRRCTL_DESCTYPE_ADV_ONEBUF	FIELD_PREP(IGC_SRRCTL_DESCTYPE_MASK, 1)
+ #include <linux/linkage.h>
++#include <linux/cfi_types.h>
+ #include <asm/assembler.h>
  
- #endif /* _IGC_BASE_H */
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -641,8 +641,11 @@ static void igc_configure_rx_ring(struct
- 	else
- 		buf_size = IGC_RXBUFFER_2048;
+ 	.text
+@@ -620,12 +621,12 @@ SYM_FUNC_END(aesbs_decrypt8)
+ 	.endm
  
--	srrctl = IGC_RX_HDR_LEN << IGC_SRRCTL_BSIZEHDRSIZE_SHIFT;
--	srrctl |= buf_size >> IGC_SRRCTL_BSIZEPKT_SHIFT;
-+	srrctl = rd32(IGC_SRRCTL(reg_idx));
-+	srrctl &= ~(IGC_SRRCTL_BSIZEPKT_MASK | IGC_SRRCTL_BSIZEHDR_MASK |
-+		    IGC_SRRCTL_DESCTYPE_MASK);
-+	srrctl |= IGC_SRRCTL_BSIZEHDR(IGC_RX_HDR_LEN);
-+	srrctl |= IGC_SRRCTL_BSIZEPKT(buf_size);
- 	srrctl |= IGC_SRRCTL_DESCTYPE_ADV_ONEBUF;
+ 	.align		4
+-SYM_FUNC_START(aesbs_ecb_encrypt)
++SYM_TYPED_FUNC_START(aesbs_ecb_encrypt)
+ 	__ecb_crypt	aesbs_encrypt8, v0, v1, v4, v6, v3, v7, v2, v5
+ SYM_FUNC_END(aesbs_ecb_encrypt)
  
- 	wr32(IGC_SRRCTL(reg_idx), srrctl);
+ 	.align		4
+-SYM_FUNC_START(aesbs_ecb_decrypt)
++SYM_TYPED_FUNC_START(aesbs_ecb_decrypt)
+ 	__ecb_crypt	aesbs_decrypt8, v0, v1, v6, v4, v2, v7, v3, v5
+ SYM_FUNC_END(aesbs_ecb_decrypt)
+ 
+@@ -799,11 +800,11 @@ SYM_FUNC_END(__xts_crypt8)
+ 	ret
+ 	.endm
+ 
+-SYM_FUNC_START(aesbs_xts_encrypt)
++SYM_TYPED_FUNC_START(aesbs_xts_encrypt)
+ 	__xts_crypt	aesbs_encrypt8, v0, v1, v4, v6, v3, v7, v2, v5
+ SYM_FUNC_END(aesbs_xts_encrypt)
+ 
+-SYM_FUNC_START(aesbs_xts_decrypt)
++SYM_TYPED_FUNC_START(aesbs_xts_decrypt)
+ 	__xts_crypt	aesbs_decrypt8, v0, v1, v6, v4, v2, v7, v3, v5
+ SYM_FUNC_END(aesbs_xts_decrypt)
+ 
 
 
