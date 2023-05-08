@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233DC168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:30:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C31EC433EF;
-	Mon,  8 May 2023 11:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C7B168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94804C433A1;
+	Mon,  8 May 2023 11:30:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545457;
-	bh=QLhEU+bG9y1YJg/006OtBhIUpOz6md9Y2sUqxsGYKkA=;
+	s=korg; t=1683545460;
+	bh=zWFI4s0PmmdFO8Z4Ni1S6t/Oqf7D+R2Wp59QUWdY/lY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbL9UWY8bwhFpqR7g9yFF3GzdgXBbIsLywyXVcsL0Bf/B1WE4j+UntIQTCGh0NV6U
-	 OoyKNMcuiyCmAkEuUX304FcfDDR0P/ahZqNhyCa+Yydap5krwR2ml61Gv1Ie8pbndv
-	 nOOgnknh3jZxiquLhYJwZ4HBp6sdM5stqCkBNugY=
+	b=UjCm1MbB3rVSmpjWQJch2XKFhHVc479SIfjx1MaZsQFUX3zcO1Jej/qkzbV+23myi
+	 Q0wlXirq51sUuLKlTfvP5detOgu9KxyAfI717yq/HAKNUjc4AN39NW6f4Q3Ppi9IYB
+	 SBvFdyQcZXEOnIjn8vWTC2Q+kmqLpgnmSC8/rCpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>,
 	zdi-disclosures@trendmicro.com
-Subject: [PATCH 5.15 046/371] ksmbd: call rcu_barrier() in ksmbd_server_exit()
-Date: Mon,  8 May 2023 11:44:07 +0200
-Message-Id: <20230508094813.880529105@linuxfoundation.org>
+Subject: [PATCH 5.15 047/371] ksmbd: fix NULL pointer dereference in smb2_get_info_filesystem()
+Date: Mon,  8 May 2023 11:44:08 +0200
+Message-Id: <20230508094813.929243828@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -37,32 +37,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit eb307d09fe15844fdaebeb8cc8c9b9e925430aa5 upstream.
+commit 3ac00a2ab69b34189942afa9e862d5170cdcb018 upstream.
 
-racy issue is triggered the bug by racing between closing a connection
-and rmmod. In ksmbd, rcu_barrier() is not called at module unload time,
-so nothing prevents ksmbd from getting unloaded while it still has RCU
-callbacks pending. It leads to trigger unintended execution of kernel
-code locally and use to defeat protections such as Kernel Lockdown
+If share is , share->path is NULL and it cause NULL pointer
+dereference issue.
 
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-20477
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-20479
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/server.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ksmbd/smb2pdu.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ksmbd/server.c
-+++ b/fs/ksmbd/server.c
-@@ -611,6 +611,7 @@ err_unregister:
- static void __exit ksmbd_server_exit(void)
- {
- 	ksmbd_server_shutdown();
-+	rcu_barrier();
- 	ksmbd_release_inode_hash();
- }
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -4879,6 +4879,9 @@ static int smb2_get_info_filesystem(stru
+ 	int rc = 0, len;
+ 	int fs_infoclass_size = 0;
  
++	if (!share->path)
++		return -EIO;
++
+ 	rc = kern_path(share->path, LOOKUP_NO_SYMLINKS, &path);
+ 	if (rc) {
+ 		pr_err("cannot create vfs path\n");
 
 
