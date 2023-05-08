@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D7223A4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:33:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7ACC433D2;
-	Mon,  8 May 2023 10:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F3923A4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:33:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF72CC4339C;
+	Mon,  8 May 2023 10:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542011;
-	bh=lV3azTj5gRT/0cTKWI7UKGQvjWJwyzPg+ofBmObNIzk=;
+	s=korg; t=1683542014;
+	bh=FdHUNGxotCvqK1hiX2VXsXWneYpEDyTEOc5rU4YzC/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ueHpu7WEfUlfB1nIs+zlVSu7y0ftymjZSQn3jp9lD5KXgu3EvDdmkC6oot7hdw+xj
-	 yds7hoW26hJ3ZiwWp4WzxtCoylqL/ucNlEjnN8BxXYwirxXUpY3higmgNDS0svqgPu
-	 50Fjtfs14X3n+9nPL/HEuuYSYgIxH3aoQ6pCHjaA=
+	b=1QVkIZlwthMttNQv8WXfdZDXuVzLwZ3pHzCT4jmsvWm9SVNJmoTuvcpxrfa+SFgHB
+	 dNrPZ87aKYo3OtMYomeMsOZMuOytQ3B4M95Lq7zRZJfsK8v/YpmZqNhdkFxD7EeVX4
+	 3sMJiSiPZCOf6hPoe5+iAevTwavv1XHlbEXAYSwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Luis Gerhorst <gerhorst@cs.fau.de>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yhs@fb.com>,
-	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 297/663] selftests/bpf: Fix a fd leak in an error path in network_helpers.c
-Date: Mon,  8 May 2023 11:42:03 +0200
-Message-Id: <20230508094437.820946879@linuxfoundation.org>
+Subject: [PATCH 6.2 298/663] bpf: Remove misleading spec_v1 check on var-offset stack read
+Date: Mon,  8 May 2023 11:42:04 +0200
+Message-Id: <20230508094437.854647481@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,38 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Luis Gerhorst <gerhorst@cs.fau.de>
 
-[ Upstream commit 226efec2b0efad60d4a6c4b2c3a8710dafc4dc21 ]
+[ Upstream commit 082cdc69a4651dd2a77539d69416a359ed1214f5 ]
 
-In __start_server, it leaks a fd when setsockopt(SO_REUSEPORT) fails.
-This patch fixes it.
+For every BPF_ADD/SUB involving a pointer, adjust_ptr_min_max_vals()
+ensures that the resulting pointer has a constant offset if
+bypass_spec_v1 is false. This is ensured by calling sanitize_check_bounds()
+which in turn calls check_stack_access_for_ptr_arithmetic(). There,
+-EACCESS is returned if the register's offset is not constant, thereby
+rejecting the program.
 
-Fixes: eed92afdd14c ("bpf: selftest: Test batching and bpf_(get|set)sockopt in bpf tcp iter")
-Reported-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+In summary, an unprivileged user must never be able to create stack
+pointers with a variable offset. That is also the case, because a
+respective check in check_stack_write() is missing. If they were able
+to create a variable-offset pointer, users could still use it in a
+stack-write operation to trigger unsafe speculative behavior [1].
+
+Because unprivileged users must already be prevented from creating
+variable-offset stack pointers, viable options are to either remove
+this check (replacing it with a clarifying comment), or to turn it
+into a "verifier BUG"-message, also adding a similar check in
+check_stack_write() (for consistency, as a second-level defense).
+This patch implements the first option to reduce verifier bloat.
+
+This check was introduced by commit 01f810ace9ed ("bpf: Allow
+variable-offset stack access") which correctly notes that
+"variable-offset reads and writes are disallowed (they were already
+disallowed for the indirect access case) because the speculative
+execution checking code doesn't support them". However, it does not
+further discuss why the check in check_stack_read() is necessary.
+The code which made this check obsolete was also introduced in this
+commit.
+
+I have compiled ~650 programs from the Linux selftests, Linux samples,
+Cilium, and libbpf/examples projects and confirmed that none of these
+trigger the check in check_stack_read() [2]. Instead, all of these
+programs are, as expected, already rejected when constructing the
+variable-offset pointers. Note that the check in
+check_stack_access_for_ptr_arithmetic() also prints "off=%d" while the
+code removed by this patch does not (the error removed does not appear
+in the "verification_error" values). For reproducibility, the
+repository linked includes the raw data and scripts used to create
+the plot.
+
+  [1] https://arxiv.org/pdf/1807.03757.pdf
+  [2] https://gitlab.cs.fau.de/un65esoq/bpf-spectre/-/raw/53dc19fcf459c186613b1156a81504b39c8d49db/data/plots/23-02-26_23-56_bpftool/bpftool/0004-errors.pdf?inline=false
+
+Fixes: 01f810ace9ed ("bpf: Allow variable-offset stack access")
+Signed-off-by: Luis Gerhorst <gerhorst@cs.fau.de>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yhs@fb.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20230316000726.1016773-2-martin.lau@linux.dev
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230315165358.23701-1-gerhorst@cs.fau.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/network_helpers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/network_helpers.c b/tools/testing/selftests/bpf/network_helpers.c
-index 01de33191226b..596caa1765820 100644
---- a/tools/testing/selftests/bpf/network_helpers.c
-+++ b/tools/testing/selftests/bpf/network_helpers.c
-@@ -95,7 +95,7 @@ static int __start_server(int type, int protocol, const struct sockaddr *addr,
- 	if (reuseport &&
- 	    setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, &on, sizeof(on))) {
- 		log_err("Failed to set SO_REUSEPORT");
--		return -1;
-+		goto error_close;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index df353ba844f41..c61216f88ad6a 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -3895,17 +3895,13 @@ static int check_stack_read(struct bpf_verifier_env *env,
  	}
- 
- 	if (bind(fd, addr, addrlen) < 0) {
+ 	/* Variable offset is prohibited for unprivileged mode for simplicity
+ 	 * since it requires corresponding support in Spectre masking for stack
+-	 * ALU. See also retrieve_ptr_limit().
++	 * ALU. See also retrieve_ptr_limit(). The check in
++	 * check_stack_access_for_ptr_arithmetic() called by
++	 * adjust_ptr_min_max_vals() prevents users from creating stack pointers
++	 * with variable offsets, therefore no check is required here. Further,
++	 * just checking it here would be insufficient as speculative stack
++	 * writes could still lead to unsafe speculative behaviour.
+ 	 */
+-	if (!env->bypass_spec_v1 && var_off) {
+-		char tn_buf[48];
+-
+-		tnum_strn(tn_buf, sizeof(tn_buf), reg->var_off);
+-		verbose(env, "R%d variable offset stack access prohibited for !root, var_off=%s\n",
+-				ptr_regno, tn_buf);
+-		return -EACCES;
+-	}
+-
+ 	if (!var_off) {
+ 		off += reg->var_off.value;
+ 		err = check_stack_read_fixed_off(env, state, off, size,
 -- 
 2.39.2
 
