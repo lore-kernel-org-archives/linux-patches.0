@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D488171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:41:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C82C433EF;
-	Mon,  8 May 2023 11:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 893A5171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:41:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4370C433D2;
+	Mon,  8 May 2023 11:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546115;
-	bh=7Dse9Mo4Bl2qyQdAHwynYAxizlp7dspDsUDbsWpPqTg=;
+	s=korg; t=1683546118;
+	bh=IyzHf0wMkXZAUZ8UcY46p9+7qGDAlRFpQ24RWIZkiV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QkIfgyTLGcZzqc8nwX4bAWlu/VkloLHbXPyEpkClytK4Num7H3yBMA/35eHIMblzF
-	 mf6NXuCOcxvdwCoNGGDkLqSoaf0hY+/mqKUcJH7rXBq4yYRZXORPlm6MhduIO+1lba
-	 5sayDRIV5NLwy5NsRbKjEs8KOgY8DLC4LcagA3G4=
+	b=AF5btENYSlt7XSBmV0MybVhMPARoz8D6kyexKZYU+TrL86eGeJEFDQQFTMAITgyuA
+	 DLby1Tf0bCWGngfL2z4D9G9G0/nnn314gWQ1tfkV1stq60nm7lHrADnfch4eKfTruS
+	 K4Q5elc326q1RD4jAY9HbG2LdyCpM/28WekaJniI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Joakim Tjernlund <Joakim.Tjernlund@infinera.com>,
-	Mark Brown <broonie@kernel.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 254/371] spi: fsl-spi: Fix CPM/QE mode Litte Endian
-Date: Mon,  8 May 2023 11:47:35 +0200
-Message-Id: <20230508094822.158120660@linuxfoundation.org>
+Subject: [PATCH 5.15 263/371] coresight: etm_pmu: Set the module field
+Date: Mon,  8 May 2023 11:47:44 +0200
+Message-Id: <20230508094822.506190172@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,69 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-[ Upstream commit c20c57d9868d7f9fd1b2904c7801b07e128f6322 ]
+[ Upstream commit 18996a113f2567aef3057e300e3193ce2df1684c ]
 
-CPM has the same problem as QE so for CPM also use the fix added
-by commit 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian"):
+struct pmu::module must be set to the module owning the PMU driver.
+Set this for the coresight etm_pmu.
 
-  CPM mode uses Little Endian so words > 8 bits are byte swapped.
-  Workaround this by always enforcing wordsize 8 for 16 and 32 bits
-  words. Unfortunately this will not work for LSB transfers
-  where wordsize is > 8 bits so disable these for now.
-
-Also limit the workaround to 16 and 32 bits words because it can
-only work for multiples of 8-bits.
-
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
-Fixes: 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian")
-Link: https://lore.kernel.org/r/1b7d3e84b1128f42c1887dd2fb9cdf390f541bc1.1680371809.git.christophe.leroy@csgroup.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 8e264c52e1dab ("coresight: core: Allow the coresight core driver to be built as a module")
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20230405094922.667834-1-suzuki.poulose@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-spi.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/hwtracing/coresight/coresight-etm-perf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
-index bdf94cc7be1af..1bad0ceac81b4 100644
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -207,8 +207,8 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
- 				struct spi_device *spi,
- 				int bits_per_word)
- {
--	/* QE uses Little Endian for words > 8
--	 * so transform all words > 8 into 8 bits
-+	/* CPM/QE uses Little Endian for words > 8
-+	 * so transform 16 and 32 bits words into 8 bits
- 	 * Unfortnatly that doesn't work for LSB so
- 	 * reject these for now */
- 	/* Note: 32 bits word, LSB works iff
-@@ -216,9 +216,11 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
- 	if (spi->mode & SPI_LSB_FIRST &&
- 	    bits_per_word > 8)
- 		return -EINVAL;
--	if (bits_per_word > 8)
-+	if (bits_per_word <= 8)
-+		return bits_per_word;
-+	if (bits_per_word == 16 || bits_per_word == 32)
- 		return 8; /* pretend its 8 bits */
--	return bits_per_word;
-+	return -EINVAL;
- }
+diff --git a/drivers/hwtracing/coresight/coresight-etm-perf.c b/drivers/hwtracing/coresight/coresight-etm-perf.c
+index 8ebd728d3a800..1feb8f0e6556a 100644
+--- a/drivers/hwtracing/coresight/coresight-etm-perf.c
++++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
+@@ -830,6 +830,7 @@ int __init etm_perf_init(void)
+ 	etm_pmu.addr_filters_sync	= etm_addr_filters_sync;
+ 	etm_pmu.addr_filters_validate	= etm_addr_filters_validate;
+ 	etm_pmu.nr_addr_filters		= ETM_ADDR_CMP_MAX;
++	etm_pmu.module			= THIS_MODULE;
  
- static int fsl_spi_setup_transfer(struct spi_device *spi,
-@@ -248,7 +250,7 @@ static int fsl_spi_setup_transfer(struct spi_device *spi,
- 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
- 							   mpc8xxx_spi,
- 							   bits_per_word);
--	else if (mpc8xxx_spi->flags & SPI_QE)
-+	else
- 		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
- 							  bits_per_word);
- 
+ 	ret = perf_pmu_register(&etm_pmu, CORESIGHT_ETM_PMU_NAME, -1);
+ 	if (ret == 0)
 -- 
 2.39.2
 
