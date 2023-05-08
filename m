@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E643C168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:25:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6770CC433D2;
-	Mon,  8 May 2023 10:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC43E168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:25:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0C8C433EF;
+	Mon,  8 May 2023 10:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541530;
-	bh=pSZNQmukmon3+H2q0ZpWfO5Ii5FE9LSWG3VB8i6lqeM=;
+	s=korg; t=1683541533;
+	bh=CCBSryebc3uG0PaVN6xbha/mpSyz4nZJ2v/CDUz5eMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1iv5TUu+9HrlQ8YU2mzqjxTsRbxxGFGpJF4oOCSf5xtIqyU8ZblW1tcwkl8wCXZC
-	 jxotbEsJPqi/fLIEgFOjWWJ431SWeYnY4k2dA88ZD9plRud+XKdCKU3OG4C7rL8jwJ
-	 lJKuSB4hmMWQGoUyhP8zdXZQ+ANmM4MYAM+AI9qo=
+	b=Is8+VgOl9Rkk1EiyPfBBwL6CxOP0m/MkCRBDB5t42wnLwoqqLBbM1Kp3bgXlZZbzS
+	 Kj0F0TjDLgr+1MCDIG/CknbA541fWI9pascoDDfKEGDXpkY0efqehH1W75ZQMvCUR8
+	 7HSo8gl1Db9uWuuRITDmnv20HJMedaFhz75x0QNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Guillaume Ranquet <granquet@baylibre.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 145/663] arm64: dts: renesas: r9a07g043: Update IRQ numbers for SSI channels
-Date: Mon,  8 May 2023 11:39:31 +0200
-Message-Id: <20230508094433.211787662@linuxfoundation.org>
+Subject: [PATCH 6.2 146/663] drm/mediatek: dp: Only trigger DRM HPD events if bridge is attached
+Date: Mon,  8 May 2023 11:39:32 +0200
+Message-Id: <20230508094433.241125576@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,84 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Chen-Yu Tsai <wenst@chromium.org>
 
-[ Upstream commit 2a5c9891392dca47f6865a2add1986876e40849c ]
+[ Upstream commit 36b617f7e4ae663fcadd202ea061ca695ca75539 ]
 
->From R01UH0968EJ0100 Rev.1.00 HW manual the interrupt numbers for SSI
-channels have been updated,
+The MediaTek DisplayPort interface bridge driver starts its interrupts
+as soon as its probed. However when the interrupts trigger the bridge
+might not have been attached to a DRM device. As drm_helper_hpd_irq_event()
+does not check whether the passed in drm_device is valid or not, a NULL
+pointer passed in results in a kernel NULL pointer dereference in it.
 
-SPI 329 - SSIF0 is now marked as reserved
-SPI 333 - SSIF1 is now marked as reserved
-SPI 335 - SSIF2 is now marked as reserved
-SPI 336 - SSIF2 is now marked as reserved
-SPI 341 - SSIF3 is now marked as reserved
+Check whether the bridge is attached and only trigger an HPD event if
+it is.
 
-This patch drops the above IRQs from SoC DTSI.
-
-Fixes: 559f2b0708c70 ("arm64: dts: renesas: r9a07g043: Add SSI{1,2,3} nodes and fillup the SSI0 stub node")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/20230217185225.43310-5-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
+Reviewed-by: Guillaume Ranquet <granquet@baylibre.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230202045734.2773503-1-wenst@chromium.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a07g043.dtsi | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a07g043.dtsi b/arch/arm64/boot/dts/renesas/r9a07g043.dtsi
-index 3f7d451b11995..95817679b3884 100644
---- a/arch/arm64/boot/dts/renesas/r9a07g043.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a07g043.dtsi
-@@ -80,9 +80,8 @@
- 			reg = <0 0x10049c00 0 0x400>;
- 			interrupts = <SOC_PERIPHERAL_IRQ(326) IRQ_TYPE_LEVEL_HIGH>,
- 				     <SOC_PERIPHERAL_IRQ(327) IRQ_TYPE_EDGE_RISING>,
--				     <SOC_PERIPHERAL_IRQ(328) IRQ_TYPE_EDGE_RISING>,
--				     <SOC_PERIPHERAL_IRQ(329) IRQ_TYPE_EDGE_RISING>;
--			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
-+				     <SOC_PERIPHERAL_IRQ(328) IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "int_req", "dma_rx", "dma_tx";
- 			clocks = <&cpg CPG_MOD R9A07G043_SSI0_PCLK2>,
- 				 <&cpg CPG_MOD R9A07G043_SSI0_PCLK_SFR>,
- 				 <&audio_clk1>, <&audio_clk2>;
-@@ -101,9 +100,8 @@
- 			reg = <0 0x1004a000 0 0x400>;
- 			interrupts = <SOC_PERIPHERAL_IRQ(330) IRQ_TYPE_LEVEL_HIGH>,
- 				     <SOC_PERIPHERAL_IRQ(331) IRQ_TYPE_EDGE_RISING>,
--				     <SOC_PERIPHERAL_IRQ(332) IRQ_TYPE_EDGE_RISING>,
--				     <SOC_PERIPHERAL_IRQ(333) IRQ_TYPE_EDGE_RISING>;
--			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
-+				     <SOC_PERIPHERAL_IRQ(332) IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "int_req", "dma_rx", "dma_tx";
- 			clocks = <&cpg CPG_MOD R9A07G043_SSI1_PCLK2>,
- 				 <&cpg CPG_MOD R9A07G043_SSI1_PCLK_SFR>,
- 				 <&audio_clk1>, <&audio_clk2>;
-@@ -121,10 +119,8 @@
- 				     "renesas,rz-ssi";
- 			reg = <0 0x1004a400 0 0x400>;
- 			interrupts = <SOC_PERIPHERAL_IRQ(334) IRQ_TYPE_LEVEL_HIGH>,
--				     <SOC_PERIPHERAL_IRQ(335) IRQ_TYPE_EDGE_RISING>,
--				     <SOC_PERIPHERAL_IRQ(336) IRQ_TYPE_EDGE_RISING>,
- 				     <SOC_PERIPHERAL_IRQ(337) IRQ_TYPE_EDGE_RISING>;
--			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
-+			interrupt-names = "int_req", "dma_rt";
- 			clocks = <&cpg CPG_MOD R9A07G043_SSI2_PCLK2>,
- 				 <&cpg CPG_MOD R9A07G043_SSI2_PCLK_SFR>,
- 				 <&audio_clk1>, <&audio_clk2>;
-@@ -143,9 +139,8 @@
- 			reg = <0 0x1004a800 0 0x400>;
- 			interrupts = <SOC_PERIPHERAL_IRQ(338) IRQ_TYPE_LEVEL_HIGH>,
- 				     <SOC_PERIPHERAL_IRQ(339) IRQ_TYPE_EDGE_RISING>,
--				     <SOC_PERIPHERAL_IRQ(340) IRQ_TYPE_EDGE_RISING>,
--				     <SOC_PERIPHERAL_IRQ(341) IRQ_TYPE_EDGE_RISING>;
--			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
-+				     <SOC_PERIPHERAL_IRQ(340) IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "int_req", "dma_rx", "dma_tx";
- 			clocks = <&cpg CPG_MOD R9A07G043_SSI3_PCLK2>,
- 				 <&cpg CPG_MOD R9A07G043_SSI3_PCLK_SFR>,
- 				 <&audio_clk1>, <&audio_clk2>;
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index 9d085c05c49c3..d28326350ea93 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -1823,7 +1823,8 @@ static irqreturn_t mtk_dp_hpd_event_thread(int hpd, void *dev)
+ 	spin_unlock_irqrestore(&mtk_dp->irq_thread_lock, flags);
+ 
+ 	if (status & MTK_DP_THREAD_CABLE_STATE_CHG) {
+-		drm_helper_hpd_irq_event(mtk_dp->bridge.dev);
++		if (mtk_dp->bridge.dev)
++			drm_helper_hpd_irq_event(mtk_dp->bridge.dev);
+ 
+ 		if (!mtk_dp->train_info.cable_plugged_in) {
+ 			mtk_dp_disable_sdp_aui(mtk_dp);
 -- 
 2.39.2
 
