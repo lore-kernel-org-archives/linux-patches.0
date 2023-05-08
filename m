@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7FD9168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC06C433D2;
-	Mon,  8 May 2023 11:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53049168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C56A4C433EF;
+	Mon,  8 May 2023 11:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545275;
-	bh=wi5v/ZRYXMvWScD/LVcLTxWds/GzU9qtYN3EsTb9bWQ=;
+	s=korg; t=1683545278;
+	bh=PkJ+5BJhzEjPTSOB48zmeeYHqUYXCXNwn1ITOyAztkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HqX1PG52emN9+5CkEjOVlAZ0DwD1RJATB8EV+OLy/TwkOpnh3ZEotu2y9fR/X9sT5
-	 qCTqc/evm780qdYvoy1oY9H9zpJsAVNVDrThdOxZl5XHZdrDuPBPqA2vXiebIg1tSL
-	 dmrFFRIyJDNQZtgRgAli7NVN4IWPCwrxxO5sX/Ck=
+	b=LG4oIyNgrYsul2C6K7S9AVSz/E491FhvZz459tsODz5fsfAYKeGLFSycPW/Y9Un6g
+	 zohz5cqJkQMxleYFX3LigsQS9UrHfVNTcbZCCh1wWFMbCyygsoypeVx47degxDcQ01
+	 B/f5uYO3K2K6IVI5gJrtn3SElowvEtX/NnCagDT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shunsuke Mie <mie@igel.co.jp>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 651/694] dmaengine: dw-edma: Fix to enable to issue dma request on DMA processing
-Date: Mon,  8 May 2023 11:48:06 +0200
-Message-Id: <20230508094457.021909452@linuxfoundation.org>
+Subject: [PATCH 6.3 642/694] dmaengine: mv_xor_v2: Fix an error code.
+Date: Mon,  8 May 2023 11:47:57 +0200
+Message-Id: <20230508094456.631564850@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,41 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shunsuke Mie <mie@igel.co.jp>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 970b17dfe264a9085ba4e593730ecfd496b950ab ]
+[ Upstream commit 827026ae2e56ec05ef1155661079badbbfc0b038 ]
 
-The issue_pending request is ignored while driver is processing a DMA
-request. Fix to issue the pending requests on any dma channel status.
+If the probe is deferred, -EPROBE_DEFER should be returned, not
++EPROBE_DEFER.
 
-Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
-Signed-off-by: Shunsuke Mie <mie@igel.co.jp>
-Link: https://lore.kernel.org/r/20230411101758.438472-2-mie@igel.co.jp
+Fixes: 3cd2c313f1d6 ("dmaengine: mv_xor_v2: Fix clock resource by adding a register clock")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/201170dff832a3c496d125772e10070cd834ebf2.1679814350.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/dma/mv_xor_v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index 26a395d02f5d3..7d2b73ef08727 100644
---- a/drivers/dma/dw-edma/dw-edma-core.c
-+++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -308,9 +308,12 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
- 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
- 	unsigned long flags;
+diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
+index 89790beba3052..0991b82658296 100644
+--- a/drivers/dma/mv_xor_v2.c
++++ b/drivers/dma/mv_xor_v2.c
+@@ -752,7 +752,7 @@ static int mv_xor_v2_probe(struct platform_device *pdev)
  
-+	if (!chan->configured)
-+		return;
-+
- 	spin_lock_irqsave(&chan->vc.lock, flags);
--	if (chan->configured && chan->request == EDMA_REQ_NONE &&
--	    chan->status == EDMA_ST_IDLE && vchan_issue_pending(&chan->vc)) {
-+	if (vchan_issue_pending(&chan->vc) && chan->request == EDMA_REQ_NONE &&
-+	    chan->status == EDMA_ST_IDLE) {
- 		chan->status = EDMA_ST_BUSY;
- 		dw_edma_start_transfer(chan);
+ 	xor_dev->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (PTR_ERR(xor_dev->clk) == -EPROBE_DEFER) {
+-		ret = EPROBE_DEFER;
++		ret = -EPROBE_DEFER;
+ 		goto disable_reg_clk;
  	}
+ 	if (!IS_ERR(xor_dev->clk)) {
 -- 
 2.39.2
 
