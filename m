@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA20168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:02:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50AA3C433EF;
-	Mon,  8 May 2023 10:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711F9168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:02:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA68EC433EF;
+	Mon,  8 May 2023 10:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540139;
-	bh=E985gS0XTiQghzO+1q2fkBOFLD3foyHgpbS3V42cqYo=;
+	s=korg; t=1683540142;
+	bh=qTSQyqGLlpl1v/p6nVTx1q1OV3sQGvqQ/VwAYXf1X3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YhO0t/o60Ts2bQk36PkX8ts/K7XTQcNgBJ/2hWVu4OEADiP5ID0Qps78iBHoa1Lto
-	 N77ILz7EhHrpJ5WUMbkTagfNzzHWQ/xYlN7+DNlAegQ9n9HjQ8nBBB5T0b/NQs/bxY
-	 gZ6PXwko34YOLSpda1mra0D1h7VvMH3Xo2LDkaA0=
+	b=dj/irqBUrklP8ApKk4+umcOXHLARYrt80RJD06thh436uvE242wDCTL+BA3dVj/au
+	 ReU11FHqITEZLJpazqhBdqvJBAJwMGtm+268n81wqXiREtAc6u5/250VvTuq8A8cuq
+	 snO1KNHXQ9zjCO1eTpHdUm4Ij4K0ymmp5HfwDIq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YAN SHI <m202071378@hust.edu.cn>,
-	kernel test robot <lkp@intel.com>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 252/611] regulator: stm32-pwr: fix of_iomap leak
-Date: Mon,  8 May 2023 11:41:34 +0200
-Message-Id: <20230508094430.608335974@linuxfoundation.org>
+Subject: [PATCH 6.1 253/611] x86/ioapic: Dont return 0 from arch_dynirq_lower_bound()
+Date: Mon,  8 May 2023 11:41:35 +0200
+Message-Id: <20230508094430.647236888@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,67 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YAN SHI <m202071378@hust.edu.cn>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit c4a413e56d16a2ae84e6d8992f215c4dcc7fac20 ]
+[ Upstream commit 5af507bef93c09a94fb8f058213b489178f4cbe5 ]
 
-Smatch reports:
-drivers/regulator/stm32-pwr.c:166 stm32_pwr_regulator_probe() warn:
-'base' from of_iomap() not released on lines: 151,166.
+arch_dynirq_lower_bound() is invoked by the core interrupt code to
+retrieve the lowest possible Linux interrupt number for dynamically
+allocated interrupts like MSI.
 
-In stm32_pwr_regulator_probe(), base is not released
-when devm_kzalloc() fails to allocate memory or
-devm_regulator_register() fails to register a new regulator device,
-which may cause a leak.
+The x86 implementation uses this to exclude the IO/APIC GSI space.
+This works correctly as long as there is an IO/APIC registered, but
+returns 0 if not. This has been observed in VMs where the BIOS does
+not advertise an IO/APIC.
 
-To fix this issue, replace of_iomap() with
-devm_platform_ioremap_resource(). devm_platform_ioremap_resource()
-is a specialized function for platform devices.
-It allows 'base' to be automatically released whether the probe
-function succeeds or fails.
+0 is an invalid interrupt number except for the legacy timer interrupt
+on x86. The return value is unchecked in the core code, so it ends up
+to allocate interrupt number 0 which is subsequently considered to be
+invalid by the caller, e.g. the MSI allocation code.
 
-Besides, use IS_ERR(base) instead of !base
-as the return value of devm_platform_ioremap_resource()
-can either be a pointer to the remapped memory or
-an ERR_PTR() encoded error code if the operation fails.
+The function has already a check for 0 in the case that an IO/APIC is
+registered, as ioapic_dynirq_base is 0 in case of device tree setups.
 
-Fixes: dc62f951a6a8 ("regulator: stm32-pwr: Fix return value check in stm32_pwr_regulator_probe()")
-Signed-off-by: YAN SHI <m202071378@hust.edu.cn>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/oe-kbuild-all/202304111750.o2643eJN-lkp@intel.com/
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230412033529.18890-1-m202071378@hust.edu.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Consolidate this and zero check for both ioapic_dynirq_base and gsi_top,
+which is used in the case that no IO/APIC is registered.
+
+Fixes: 3e5bedc2c258 ("x86/apic: Fix arch_dynirq_lower_bound() bug for DT enabled machines")
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/1679988604-20308-1-git-send-email-ssengar@linux.microsoft.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/stm32-pwr.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ arch/x86/kernel/apic/io_apic.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/regulator/stm32-pwr.c b/drivers/regulator/stm32-pwr.c
-index 2a42acb7c24e9..e5dd4db6403b2 100644
---- a/drivers/regulator/stm32-pwr.c
-+++ b/drivers/regulator/stm32-pwr.c
-@@ -129,17 +129,16 @@ static const struct regulator_desc stm32_pwr_desc[] = {
+diff --git a/arch/x86/kernel/apic/io_apic.c b/arch/x86/kernel/apic/io_apic.c
+index a868b76cd3d42..efa87b6bb1cde 100644
+--- a/arch/x86/kernel/apic/io_apic.c
++++ b/arch/x86/kernel/apic/io_apic.c
+@@ -2480,17 +2480,21 @@ static int io_apic_get_redir_entries(int ioapic)
  
- static int stm32_pwr_regulator_probe(struct platform_device *pdev)
+ unsigned int arch_dynirq_lower_bound(unsigned int from)
  {
--	struct device_node *np = pdev->dev.of_node;
- 	struct stm32_pwr_reg *priv;
- 	void __iomem *base;
- 	struct regulator_dev *rdev;
- 	struct regulator_config config = { };
- 	int i, ret = 0;
++	unsigned int ret;
++
+ 	/*
+ 	 * dmar_alloc_hwirq() may be called before setup_IO_APIC(), so use
+ 	 * gsi_top if ioapic_dynirq_base hasn't been initialized yet.
+ 	 */
+-	if (!ioapic_initialized)
+-		return gsi_top;
++	ret = ioapic_dynirq_base ? : gsi_top;
++
+ 	/*
+-	 * For DT enabled machines ioapic_dynirq_base is irrelevant and not
+-	 * updated. So simply return @from if ioapic_dynirq_base == 0.
++	 * For DT enabled machines ioapic_dynirq_base is irrelevant and
++	 * always 0. gsi_top can be 0 if there is no IO/APIC registered.
++	 * 0 is an invalid interrupt number for dynamic allocations. Return
++	 * @from instead.
+ 	 */
+-	return ioapic_dynirq_base ? : from;
++	return ret ? : from;
+ }
  
--	base = of_iomap(np, 0);
--	if (!base) {
-+	base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(base)) {
- 		dev_err(&pdev->dev, "Unable to map IO memory\n");
--		return -ENOMEM;
-+		return PTR_ERR(base);
- 	}
- 
- 	config.dev = &pdev->dev;
+ #ifdef CONFIG_X86_32
 -- 
 2.39.2
 
