@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C18168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:55:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0744EC4339B;
-	Mon,  8 May 2023 09:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1EF2168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212ACC433EF;
+	Mon,  8 May 2023 09:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539700;
-	bh=xgJQU37Ln7Obnx09CXnTZKOp6QALZyrnQZPRumKNakM=;
+	s=korg; t=1683539703;
+	bh=bGnXy37wj+1zZwVkd//dszMleNfsUbjCbVnwQOr/H10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oA5r8z49VmBwObbUR2KYdY+hTu4Mu9fWdmsQvLHiGl16X9pnVZzRN+AryvefceXn3
-	 2xlYc1ARz3ze3T9kFI6uKut7Yf8Q+UBkssh+YFylXF4S3vvdWeCB7FKgLtJgn8fKXA
-	 0wyjDAg3J55k59HRFUxnkLNke7x8YkNsRrJQccO4=
+	b=gx3LtoN+r2SL3tQ0scC/qVi/72Q0oynUwROQZ4eHZWMyLabom1MDgFRpa/VP9Q+xX
+	 c/a8M0m82fPYfXVStotiC75xwuabHNWK9/0Huq9aHalRx/e83WJBNWsl5awsA1hsoI
+	 wYssqeVBM6SiOvSWJ7DE3VjBOElqN0gpS2bBeQIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Linton <jeremy.linton@arm.com>,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 078/611] KVM: arm64: Use config_lock to protect data ordered against KVM_RUN
-Date: Mon,  8 May 2023 11:38:40 +0200
-Message-Id: <20230508094424.593746538@linuxfoundation.org>
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 069/611] crypto: api - Demote BUG_ON() in crypto_unregister_alg() to a WARN_ON()
+Date: Mon,  8 May 2023 11:38:31 +0200
+Message-Id: <20230508094424.236772771@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,162 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-commit 4bba7f7def6f278266dadf845da472cfbfed784e upstream.
+commit a543ada7db729514ddd3ba4efa45f4c7b802ad85 upstream.
 
-There are various bits of VM-scoped data that can only be configured
-before the first call to KVM_RUN, such as the hypercall bitmaps and
-the PMU. As these fields are protected by the kvm->lock and accessed
-while holding vcpu->mutex, this is yet another example of lock
-inversion.
+The crypto_unregister_alg() function expects callers to ensure that any
+algorithm that is unregistered has a refcnt of exactly 1, and issues a
+BUG_ON() if this is not the case. However, there are in fact drivers that
+will call crypto_unregister_alg() without ensuring that the refcnt has been
+lowered first, most notably on system shutdown. This causes the BUG_ON() to
+trigger, which prevents a clean shutdown and hangs the system.
 
-Change out the kvm->lock for kvm->arch.config_lock in all of these
-instances. Opportunistically simplify the locking mechanics of the
-PMU configuration by holding the config_lock for the entirety of
-kvm_arm_pmu_v3_set_attr().
+To avoid such hangs on shutdown, demote the BUG_ON() in
+crypto_unregister_alg() to a WARN_ON() with early return. Cc stable because
+this problem was observed on a 6.2 kernel, cf the link below.
 
-Note that this also addresses a couple of bugs. There is an unguarded
-read of the PMU version in KVM_ARM_VCPU_PMU_V3_FILTER which could race
-with KVM_ARM_VCPU_PMU_V3_SET_PMU. Additionally, until now writes to the
-per-vCPU vPMU irq were not serialized VM-wide, meaning concurrent calls
-to KVM_ARM_VCPU_PMU_V3_IRQ could lead to a false positive in
-pmu_irq_is_valid().
-
+Link: https://lore.kernel.org/r/87r0tyq8ph.fsf@toke.dk
 Cc: stable@vger.kernel.org
-Tested-by: Jeremy Linton <jeremy.linton@arm.com>
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230327164747.2466958-4-oliver.upton@linux.dev
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/arm.c        |    4 ++--
- arch/arm64/kvm/guest.c      |    2 ++
- arch/arm64/kvm/hypercalls.c |    4 ++--
- arch/arm64/kvm/pmu-emul.c   |   23 ++++++-----------------
- 4 files changed, 12 insertions(+), 21 deletions(-)
+ crypto/algapi.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/arm.c
-+++ b/arch/arm64/kvm/arm.c
-@@ -616,9 +616,9 @@ int kvm_arch_vcpu_run_pid_change(struct
- 	if (kvm_vm_is_protected(kvm))
- 		kvm_call_hyp_nvhe(__pkvm_vcpu_init_traps, vcpu);
+--- a/crypto/algapi.c
++++ b/crypto/algapi.c
+@@ -472,7 +472,9 @@ void crypto_unregister_alg(struct crypto
+ 	if (WARN(ret, "Algorithm %s is not registered", alg->cra_driver_name))
+ 		return;
  
--	mutex_lock(&kvm->lock);
-+	mutex_lock(&kvm->arch.config_lock);
- 	set_bit(KVM_ARCH_FLAG_HAS_RAN_ONCE, &kvm->arch.flags);
--	mutex_unlock(&kvm->lock);
-+	mutex_unlock(&kvm->arch.config_lock);
- 
- 	return ret;
- }
---- a/arch/arm64/kvm/guest.c
-+++ b/arch/arm64/kvm/guest.c
-@@ -951,7 +951,9 @@ int kvm_arm_vcpu_arch_set_attr(struct kv
- 
- 	switch (attr->group) {
- 	case KVM_ARM_VCPU_PMU_V3_CTRL:
-+		mutex_lock(&vcpu->kvm->arch.config_lock);
- 		ret = kvm_arm_pmu_v3_set_attr(vcpu, attr);
-+		mutex_unlock(&vcpu->kvm->arch.config_lock);
- 		break;
- 	case KVM_ARM_VCPU_TIMER_CTRL:
- 		ret = kvm_arm_timer_set_attr(vcpu, attr);
---- a/arch/arm64/kvm/hypercalls.c
-+++ b/arch/arm64/kvm/hypercalls.c
-@@ -377,7 +377,7 @@ static int kvm_arm_set_fw_reg_bmap(struc
- 	if (val & ~fw_reg_features)
- 		return -EINVAL;
- 
--	mutex_lock(&kvm->lock);
-+	mutex_lock(&kvm->arch.config_lock);
- 
- 	if (test_bit(KVM_ARCH_FLAG_HAS_RAN_ONCE, &kvm->arch.flags) &&
- 	    val != *fw_reg_bmap) {
-@@ -387,7 +387,7 @@ static int kvm_arm_set_fw_reg_bmap(struc
- 
- 	WRITE_ONCE(*fw_reg_bmap, val);
- out:
--	mutex_unlock(&kvm->lock);
-+	mutex_unlock(&kvm->arch.config_lock);
- 	return ret;
- }
- 
---- a/arch/arm64/kvm/pmu-emul.c
-+++ b/arch/arm64/kvm/pmu-emul.c
-@@ -850,7 +850,7 @@ static int kvm_arm_pmu_v3_set_pmu(struct
- 	struct arm_pmu *arm_pmu;
- 	int ret = -ENXIO;
- 
--	mutex_lock(&kvm->lock);
-+	lockdep_assert_held(&kvm->arch.config_lock);
- 	mutex_lock(&arm_pmus_lock);
- 
- 	list_for_each_entry(entry, &arm_pmus, entry) {
-@@ -870,7 +870,6 @@ static int kvm_arm_pmu_v3_set_pmu(struct
- 	}
- 
- 	mutex_unlock(&arm_pmus_lock);
--	mutex_unlock(&kvm->lock);
- 	return ret;
- }
- 
-@@ -878,22 +877,20 @@ int kvm_arm_pmu_v3_set_attr(struct kvm_v
- {
- 	struct kvm *kvm = vcpu->kvm;
- 
-+	lockdep_assert_held(&kvm->arch.config_lock);
+-	BUG_ON(refcount_read(&alg->cra_refcnt) != 1);
++	if (WARN_ON(refcount_read(&alg->cra_refcnt) != 1))
++		return;
 +
- 	if (!kvm_vcpu_has_pmu(vcpu))
- 		return -ENODEV;
+ 	if (alg->cra_destroy)
+ 		alg->cra_destroy(alg);
  
- 	if (vcpu->arch.pmu.created)
- 		return -EBUSY;
- 
--	mutex_lock(&kvm->lock);
- 	if (!kvm->arch.arm_pmu) {
- 		/* No PMU set, get the default one */
- 		kvm->arch.arm_pmu = kvm_pmu_probe_armpmu();
--		if (!kvm->arch.arm_pmu) {
--			mutex_unlock(&kvm->lock);
-+		if (!kvm->arch.arm_pmu)
- 			return -ENODEV;
--		}
- 	}
--	mutex_unlock(&kvm->lock);
- 
- 	switch (attr->attr) {
- 	case KVM_ARM_VCPU_PMU_V3_IRQ: {
-@@ -937,19 +934,13 @@ int kvm_arm_pmu_v3_set_attr(struct kvm_v
- 		     filter.action != KVM_PMU_EVENT_DENY))
- 			return -EINVAL;
- 
--		mutex_lock(&kvm->lock);
--
--		if (test_bit(KVM_ARCH_FLAG_HAS_RAN_ONCE, &kvm->arch.flags)) {
--			mutex_unlock(&kvm->lock);
-+		if (test_bit(KVM_ARCH_FLAG_HAS_RAN_ONCE, &kvm->arch.flags))
- 			return -EBUSY;
--		}
- 
- 		if (!kvm->arch.pmu_filter) {
- 			kvm->arch.pmu_filter = bitmap_alloc(nr_events, GFP_KERNEL_ACCOUNT);
--			if (!kvm->arch.pmu_filter) {
--				mutex_unlock(&kvm->lock);
-+			if (!kvm->arch.pmu_filter)
- 				return -ENOMEM;
--			}
- 
- 			/*
- 			 * The default depends on the first applied filter.
-@@ -968,8 +959,6 @@ int kvm_arm_pmu_v3_set_attr(struct kvm_v
- 		else
- 			bitmap_clear(kvm->arch.pmu_filter, filter.base_event, filter.nevents);
- 
--		mutex_unlock(&kvm->lock);
--
- 		return 0;
- 	}
- 	case KVM_ARM_VCPU_PMU_V3_SET_PMU: {
 
 
