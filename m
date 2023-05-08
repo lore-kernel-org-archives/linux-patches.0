@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73885168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBC17C433D2;
-	Mon,  8 May 2023 09:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C158168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D3DC433D2;
+	Mon,  8 May 2023 09:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539506;
-	bh=bu8vS+mCAOz4URE9Wdvm46xUj8MlgItfn6idQuIEVNg=;
+	s=korg; t=1683539508;
+	bh=Veoh3nbT/FHO+RMJ4ObqE8nXFs9uC17/9N8Wr6a95qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0HAbXpPRJlJdQWw6zCWIQomS/gfb2R2AYmSqtm1APJFqgvhSvKBHAkR0qpS4l0pWP
-	 ofFxI2K1LIavCiRU/yXoGQogKJbcbC3goEp0ft+NS2qb/RK+5mR0u8AUaKjZBboPg/
-	 +VaMs2OA2O2bg7Feb+RxSp1b5GLmZGuSeETrKl5s=
+	b=IuyE43AaS0kraRZ7hw913A4ZK0QdJii1SbZHJbZV/6jTpDYju26jiGxbNheYG95kj
+	 gmkydExih/Z1PwjrLXG0nFlbeL9waOFAsQXkuQ1MmXvX291NUzqam+ZgA3p0ft3E/j
+	 NriY4jnLtQLQwsP/dL1yPVW/LkBSCe9oGfwG7ts8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Eugene Huang <eugene.huang99@gmail.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/611] scsi: mpi3mr: Handle soft reset in progress fault code (0xF002)
-Date: Mon,  8 May 2023 11:37:33 +0200
-Message-Id: <20230508094422.013931658@linuxfoundation.org>
+Subject: [PATCH 6.1 002/611] ASoC: Intel: soc-acpi: add table for Intel Rooks County NUC M15
+Date: Mon,  8 May 2023 11:37:24 +0200
+Message-Id: <20230508094421.635520169@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,40 +38,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Eugene Huang <eugene.huang99@gmail.com>
 
-[ Upstream commit a3d27dfdcfc27ac3f46de5391bb6d24f04af7941 ]
+[ Upstream commit 9c691a42b8926c8966561265cdae3ddc7464d3a2 ]
 
-The driver is exiting from the fault watchdog thread if it sees the 0xF002
-(Soft reset in progress) fault code.
+Same topology as the HP Omen 16-k0005TX, except with the rt1316 amp
+on link2.
 
-If the driver initiates the soft reset, then the driver restarts the
-watchdog at the end of the soft reset completion.  However, if the soft
-reset is initiated by the firmware asynchronously, then the driver will
-never restart the watchdog and never re-initialize the controller after the
-asynchronous soft reset completion.
-
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://lore.kernel.org/r/20230331122317.11391-1-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://github.com/thesofproject/linux/issues/4088
+Signed-off-by: Eugene Huang <eugene.huang99@gmail.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20230314090553.498664-3-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../intel/common/soc-acpi-intel-adl-match.c   | 20 +++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index ea9e69fb62826..64355d0baa5fb 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -2526,7 +2526,7 @@ static void mpi3mr_watchdog_work(struct work_struct *work)
- 		mrioc->unrecoverable = 1;
- 		goto schedule_work;
- 	case MPI3_SYSIF_FAULT_CODE_SOFT_RESET_IN_PROGRESS:
--		return;
-+		goto schedule_work;
- 	case MPI3_SYSIF_FAULT_CODE_CI_ACTIVATION_RESET:
- 		reset_reason = MPI3MR_RESET_FROM_CIACTIV_FAULT;
- 		break;
+diff --git a/sound/soc/intel/common/soc-acpi-intel-adl-match.c b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
+index 0102574025e90..6e21e1640acfa 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-adl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
+@@ -354,6 +354,20 @@ static const struct snd_soc_acpi_link_adr adl_sdw_rt711_link0_rt1316_link3[] = {
+ 	{}
+ };
+ 
++static const struct snd_soc_acpi_link_adr adl_sdw_rt711_link0_rt1316_link2[] = {
++	{
++		.mask = BIT(0),
++		.num_adr = ARRAY_SIZE(rt711_sdca_0_adr),
++		.adr_d = rt711_sdca_0_adr,
++	},
++	{
++		.mask = BIT(2),
++		.num_adr = ARRAY_SIZE(rt1316_2_single_adr),
++		.adr_d = rt1316_2_single_adr,
++	},
++	{}
++};
++
+ static const struct snd_soc_acpi_adr_device mx8373_2_adr[] = {
+ 	{
+ 		.adr = 0x000223019F837300ull,
+@@ -612,6 +626,12 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_sdw_machines[] = {
+ 		.drv_name = "sof_sdw",
+ 		.sof_tplg_filename = "sof-adl-rt711-l0-rt1316-l3.tplg",
+ 	},
++	{
++		.link_mask = 0x5, /* 2 active links required */
++		.links = adl_sdw_rt711_link0_rt1316_link2,
++		.drv_name = "sof_sdw",
++		.sof_tplg_filename = "sof-adl-rt711-l0-rt1316-l2.tplg",
++	},
+ 	{
+ 		.link_mask = 0x1, /* link0 required */
+ 		.links = adl_rvp,
 -- 
 2.39.2
 
