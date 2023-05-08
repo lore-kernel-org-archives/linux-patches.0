@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44923168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0A3C433EF;
-	Mon,  8 May 2023 11:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAC5168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C867FC433D2;
+	Mon,  8 May 2023 11:11:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544310;
-	bh=o1QqK/1hVeCP5ino5z2TFM2sRjZ97XnycTGzsTaU678=;
+	s=korg; t=1683544313;
+	bh=gW+lWQ9tIJYeA/+8RpQLqbcV0FQy3caS1Caec1cjZ3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+yz0J4XwRa+lra9DUNxiUiX1/eDAukOgkz0J76B/OmGZzm76WBJPxTuY7LvWl+sF
-	 hSFJ2px9k/7JDPvuNpegJzTbbj3RpAa6CDyaPmRwUxgyzQr7t88nkDSmcwThSVgX3w
-	 Ah38CrnbqR0KJB/UJ7sAsch/SdchnXCszv3gk4J4=
+	b=R3naTM7MK864SdcvDO3atlIThQBI2IloQWPC943mvd7yW/uOpL+RZJASderSEv2Tn
+	 xRtpMRwP/PCLaINVa8I7HcmyKXech9Rc6cnb3pPvXj89POCR7tWm92EHmGJu4UFZu9
+	 an40gL3sJht2so7QQkLCm6Ul+1hfZp24LVC8fcsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Sean Anderson <seanga2@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 368/694] scsi: megaraid: Fix mega_cmd_done() CMDID_INT_CMDS
-Date: Mon,  8 May 2023 11:43:23 +0200
-Message-Id: <20230508094444.712200690@linuxfoundation.org>
+Subject: [PATCH 6.3 369/694] net: sunhme: Fix uninitialized return code
+Date: Mon,  8 May 2023 11:43:24 +0200
+Message-Id: <20230508094444.754660668@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,36 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Sean Anderson <seanga2@gmail.com>
 
-[ Upstream commit 75cb113cd43f06aaf4f1bda0069cfd5b98e909eb ]
+[ Upstream commit d61157414d0a591d10d27d0ce5873916614e5e31 ]
 
-When cmdid == CMDID_INT_CMDS, the 'cmds' pointer is NULL but is
-dereferenced below.
+Fix an uninitialized return code if we never found a qfe slot. It would be
+a bug if we ever got into this situation, but it's good to return something
+tracable.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 0f2bb84d2a68 ("[SCSI] megaraid: simplify internal command handling")
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Link: https://lore.kernel.org/r/20230317175109.18585-1-listdansp@mail.ru
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: acb3f35f920b ("sunhme: forward the error code from pci_enable_device()")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Sean Anderson <seanga2@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/sun/sunhme.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/megaraid.c b/drivers/scsi/megaraid.c
-index bf491af9f0d65..16e2cf848c6ef 100644
---- a/drivers/scsi/megaraid.c
-+++ b/drivers/scsi/megaraid.c
-@@ -1441,6 +1441,7 @@ mega_cmd_done(adapter_t *adapter, u8 completed[], int nstatus, int status)
- 		 */
- 		if (cmdid == CMDID_INT_CMDS) {
- 			scb = &adapter->int_scb;
-+			cmd = scb->cmd;
+diff --git a/drivers/net/ethernet/sun/sunhme.c b/drivers/net/ethernet/sun/sunhme.c
+index b0c7ab74a82ed..7cf8210ebbec3 100644
+--- a/drivers/net/ethernet/sun/sunhme.c
++++ b/drivers/net/ethernet/sun/sunhme.c
+@@ -2834,7 +2834,7 @@ static int happy_meal_pci_probe(struct pci_dev *pdev,
+ 	int i, qfe_slot = -1;
+ 	char prom_name[64];
+ 	u8 addr[ETH_ALEN];
+-	int err;
++	int err = -ENODEV;
  
- 			list_del_init(&scb->list);
- 			scb->state = SCB_FREE;
+ 	/* Now make sure pci_dev cookie is there. */
+ #ifdef CONFIG_SPARC
 -- 
 2.39.2
 
