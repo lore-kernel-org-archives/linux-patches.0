@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D98168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22FEC433D2;
-	Mon,  8 May 2023 11:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADB2168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE18C433D2;
+	Mon,  8 May 2023 11:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544962;
-	bh=2Sp0pLDeFJKodZZ4XHcd/TfSQpY0eSLzKb4Sa3up8T4=;
+	s=korg; t=1683544965;
+	bh=vUx02TOStQc4xnXRJqoMKJTGwsr1mViVOJ9jgvvmFyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O8P9eTz+vvdDvqjAc8BEkZ6T2toBJ3/xMGCJJNGJTNFHCTsr6HdPe5p7EzVLTCyfO
-	 vtDHUnwyYvF/MloEGCWuSKzlTaCbRQDK7FsE5m8UMKMN4u8Eg1TMhnf2K2ZgFskx3f
-	 733SywGnBDjw5EUb80MsHrXnP6s+M/QkG7p/tgzk=
+	b=QJcHZENgBTsqjnPpXKCbWSiAZC5/+VER+enhuiVtzL0abgk2d6V16POrBskpkQK+j
+	 2He4E+bxG60eOimWRbakpaqNF13Pby52gfiPRrKren+Mae14fDpjBOr086HauwWuzh
+	 +K+2EP+lkCPFGvQbuhnjhWBN14DN4rEMegmx6JAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Dhruva Gole <d-gole@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 549/694] serial: 8250: Add missing wakeup event reporting
-Date: Mon,  8 May 2023 11:46:24 +0200
-Message-Id: <20230508094452.362303718@linuxfoundation.org>
+Subject: [PATCH 6.3 550/694] spi: cadence-quadspi: use macro DEFINE_SIMPLE_DEV_PM_OPS
+Date: Mon,  8 May 2023 11:46:25 +0200
+Message-Id: <20230508094452.409260163@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,53 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Dhruva Gole <d-gole@ti.com>
 
-[ Upstream commit 0ba9e3a13c6adfa99e32b2576d20820ab10ad48a ]
+[ Upstream commit be3206e8906e7a93df673ab2e96d69304a008edc ]
 
-An 8250 UART configured as a wake-up source would not have reported
-itself through sysfs as being the source of wake-up, correct that.
+Using this macro makes the code more readable.
+It also inits the members of dev_pm_ops in the following manner
+without us explicitly needing to:
 
-Fixes: b3b708fa2780 ("wake up from a serial port")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230414170241.2016255-1-f.fainelli@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+.suspend = cqspi_suspend, \
+.resume = cqspi_resume, \
+.freeze = cqspi_suspend, \
+.thaw = cqspi_resume, \
+.poweroff = cqspi_suspend, \
+.restore = cqspi_resume
+
+Also get rid of conditional compilation based on CONFIG_PM_SLEEP because
+it introduces build issues with certain configs when CQSPI_DEV_PM_OPS is
+just NULL.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/oe-kbuild-all/202304191900.2fARFQW9-lkp@intel.com/
+Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
+Signed-off-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20230420054257.925092-1-d-gole@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/spi/spi-cadence-quadspi.c |   13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index dfbc501cf9d15..fe8d79c4ae95e 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -15,6 +15,7 @@
- #include <linux/moduleparam.h>
- #include <linux/ioport.h>
- #include <linux/init.h>
-+#include <linux/irq.h>
- #include <linux/console.h>
- #include <linux/gpio/consumer.h>
- #include <linux/sysrq.h>
-@@ -1932,6 +1933,7 @@ static bool handle_rx_dma(struct uart_8250_port *up, unsigned int iir)
- int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
- {
- 	struct uart_8250_port *up = up_to_u8250p(port);
-+	struct tty_port *tport = &port->state->port;
- 	bool skip_rx = false;
- 	unsigned long flags;
- 	u16 status;
-@@ -1957,6 +1959,8 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
- 		skip_rx = true;
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -1802,7 +1802,6 @@ static int cqspi_remove(struct platform_
+ 	return 0;
+ }
  
- 	if (status & (UART_LSR_DR | UART_LSR_BI) && !skip_rx) {
-+		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
-+			pm_wakeup_event(tport->tty->dev, 0);
- 		if (!up->dma || handle_rx_dma(up, iir))
- 			status = serial8250_rx_chars(up, status);
- 	}
--- 
-2.39.2
-
+-#ifdef CONFIG_PM_SLEEP
+ static int cqspi_suspend(struct device *dev)
+ {
+ 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
+@@ -1832,15 +1831,7 @@ static int cqspi_resume(struct device *d
+ 	return spi_master_resume(master);
+ }
+ 
+-static const struct dev_pm_ops cqspi__dev_pm_ops = {
+-	.suspend = cqspi_suspend,
+-	.resume = cqspi_resume,
+-};
+-
+-#define CQSPI_DEV_PM_OPS	(&cqspi__dev_pm_ops)
+-#else
+-#define CQSPI_DEV_PM_OPS	NULL
+-#endif
++static DEFINE_SIMPLE_DEV_PM_OPS(cqspi_dev_pm_ops, cqspi_suspend, cqspi_resume);
+ 
+ static const struct cqspi_driver_platdata cdns_qspi = {
+ 	.quirks = CQSPI_DISABLE_DAC_MODE,
+@@ -1907,7 +1898,7 @@ static struct platform_driver cqspi_plat
+ 	.remove = cqspi_remove,
+ 	.driver = {
+ 		.name = CQSPI_NAME,
+-		.pm = CQSPI_DEV_PM_OPS,
++		.pm = &cqspi_dev_pm_ops,
+ 		.of_match_table = cqspi_dt_ids,
+ 	},
+ };
 
 
