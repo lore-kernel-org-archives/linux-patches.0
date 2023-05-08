@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3B4171AA
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81614C433EF;
-	Mon,  8 May 2023 11:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0743D168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:23:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FA9C433EF;
+	Mon,  8 May 2023 11:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544995;
-	bh=yr5yxZIl7TpbsA0VSYaZquKdsYZdhSbB1IlHRyFW6do=;
+	s=korg; t=1683544998;
+	bh=BW96ZvDK83h+uaBf2m1kow07Qd7lkBQ6tXjIxjqt7Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V28/kyVPAHnhTcLFqvQpr8st2QlL8KJ5BkVAsHCZ8xW+xmGJXR0vEvhUuF6rM91/n
-	 csgwQtFoBlmgJh2AVFl1BGWN1JtOk1xsFlQsXoBIyZGeAinsERDJPKbe1SanurZhI9
-	 afiiK6Ecs+m+cB212rmFZfFW71soyjZDTHUIC9PQ=
+	b=yAGvwqveZWmMEJu4UaomTWMn1jVobI22Z+Th134YikotpoYOU/rR41gDDKy6a6S54
+	 ZrbGUQeADOocGlrQuE3PoXwXWDRWsuqQ+gDr9Ix4+gS2RXRcKPkNqiz3AvLJcpytfS
+	 A+XtN6odnZC2kVRkhxawX3wgIqfPjglFdyp+9Vto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 591/694] fs/ntfs3: Fix memory leak if ntfs_read_mft failed
-Date: Mon,  8 May 2023 11:47:06 +0200
-Message-Id: <20230508094454.255794785@linuxfoundation.org>
+Subject: [PATCH 6.3 592/694] fs/ntfs3: Add check for kmemdup
+Date: Mon,  8 May 2023 11:47:07 +0200
+Message-Id: <20230508094454.305105424@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,69 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit bfa434c60157c9793e9b12c9b68ade02aff9f803 ]
+[ Upstream commit e6c3cef24cb0d045f99d5cb039b344874e3cfd74 ]
 
-Label ATTR_ROOT in ntfs_read_mft() sets is_root = true and
-ni->ni_flags |= NI_FLAG_DIR, then next attr will goto label ATTR_ALLOC
-and alloc ni->dir.alloc_run. However two states are not always
-consistent and can make memory leak.
+Since the kmemdup may return NULL pointer,
+it should be better to add check for the return value
+in order to avoid NULL pointer dereference.
 
- 1) attr_name in ATTR_ROOT does not fit the condition it will set
- is_root = true but NI_FLAG_DIR is not set.
- 2) next attr_name in ATTR_ALLOC fits the condition and alloc
- ni->dir.alloc_run
- 3) in cleanup function ni_clear(), when NI_FLAG_DIR is set, it frees
- ni->dir.alloc_run, otherwise it frees ni->file.run
- 4) because NI_FLAG_DIR is not set in this case, ni->dir.alloc_run is
- leaked as kmemleak reported:
-
-unreferenced object 0xffff888003bc5480 (size 64):
-  backtrace:
-    [<000000003d42e6b0>] __kmalloc_node+0x4e/0x1c0
-    [<00000000d8e19b8a>] kvmalloc_node+0x39/0x1f0
-    [<00000000fc3eb5b8>] run_add_entry+0x18a/0xa40 [ntfs3]
-    [<0000000011c9f978>] run_unpack+0x75d/0x8e0 [ntfs3]
-    [<00000000e7cf1819>] run_unpack_ex+0xbc/0x500 [ntfs3]
-    [<00000000bbf0a43d>] ntfs_iget5+0xb25/0x2dd0 [ntfs3]
-    [<00000000a6e50693>] ntfs_fill_super+0x218d/0x3580 [ntfs3]
-    [<00000000b9170608>] get_tree_bdev+0x3fb/0x710
-    [<000000004833798a>] vfs_get_tree+0x8e/0x280
-    [<000000006e20b8e6>] path_mount+0xf3c/0x1930
-    [<000000007bf15a5f>] do_mount+0xf3/0x110
-    ...
-
-Fix this by always setting is_root and NI_FLAG_DIR together.
-
-Fixes: 82cae269cfa9 ("fs/ntfs3: Add initialization of super block")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Fixes: b46acd6a6a62 ("fs/ntfs3: Add NTFS journal")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/fslog.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 309d9b46b5d5c..ce6bb3bd86b6e 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -259,7 +259,6 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 			goto out;
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index c6eb371a36951..dc723f03d6bb2 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -4256,6 +4256,10 @@ int log_replay(struct ntfs_inode *ni, bool *initialized)
+ 	rec_len -= t32;
  
- 		root = Add2Ptr(attr, roff);
--		is_root = true;
+ 	attr_names = kmemdup(Add2Ptr(lrh, t32), rec_len, GFP_NOFS);
++	if (!attr_names) {
++		err = -ENOMEM;
++		goto out;
++	}
  
- 		if (attr->name_len != ARRAY_SIZE(I30_NAME) ||
- 		    memcmp(attr_name(attr), I30_NAME, sizeof(I30_NAME)))
-@@ -272,6 +271,7 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 		if (!is_dir)
- 			goto next_attr;
- 
-+		is_root = true;
- 		ni->ni_flags |= NI_FLAG_DIR;
- 
- 		err = indx_init(&ni->dir, sbi, attr, INDEX_MUTEX_I30);
+ 	lcb_put(lcb);
+ 	lcb = NULL;
 -- 
 2.39.2
 
