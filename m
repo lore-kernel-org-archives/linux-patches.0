@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E5E171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A4AC4339E;
-	Mon,  8 May 2023 11:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4C81094C
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9521BC433EF;
+	Mon,  8 May 2023 11:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545052;
-	bh=ValpUyJUKPfsegPY6Oujiv451qbJAiZbIHoKjMhQVh8=;
+	s=korg; t=1683545055;
+	bh=Nwaio/23MqfKrZO9fQsnLuwnbQdnJwY5dXcd/I5cMGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F5nnBPUyGjOwYKdAZiVdr0Ef0FMi8MRwV4ZUlPYaU9gwj315xVEtwffJ0LH14nsJQ
-	 n9N7xsvpEZDeqhLcUB0kvbgtFLOXYiTflhuz+d44i+vXh4EuaSRvnLa4BmyP40xiXd
-	 2fOS9jgHi+I4HRH4mDRx0CdkIpJ1r45eHGipU6MI=
+	b=x/ePMtUAoH7VscewGDLWhqear0x9t0XKKT8ENwyTI9nF6ogrLPcHju+88LwbZLA2Z
+	 4i8cra7xkJLLzVIfdljzYF/WrkQV/lp0liaPKLqTN2reAfb4uK9bR18/cWIg3vH2h8
+	 8cB05Lm9MFYYmWQjltV4+ebyFpYZUJD78XWnWCNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
 	Peng Fan <peng.fan@nxp.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 607/694] clk: imx: fracn-gppll: fix the rate table
-Date: Mon,  8 May 2023 11:47:22 +0200
-Message-Id: <20230508094455.040586879@linuxfoundation.org>
+Subject: [PATCH 6.3 608/694] clk: imx: fracn-gppll: disable hardware select control
+Date: Mon,  8 May 2023 11:47:23 +0200
+Message-Id: <20230508094455.088193390@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,56 +37,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit cf8dccfedce848f67eaa42e8839305d028319161 ]
+[ Upstream commit 4435467b15b069e5a6f50ca9a9260e86b74dbc13 ]
 
-The Fvco should be range 2.4GHz to 5GHz, the original table voilate the
-spec, so update the table to fix it.
+When programming PLL, should disable Hardware control select to make PLL
+controlled by register, not hardware inputs through OSCPLL.
 
-Fixes: c196175acdd3 ("clk: imx: clk-fracn-gppll: Add more freq config for video pll")
-Fixes: 044034efbeea ("clk: imx: clk-fracn-gppll: fix mfd value")
 Fixes: 1b26cb8a77a4 ("clk: imx: support fracn gppll")
-Signed-off-by: Jacky Bai <ping.bai@nxp.com>
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230403095300.3386988-2-peng.fan@oss.nxp.com
+Link: https://lore.kernel.org/r/20230403095300.3386988-3-peng.fan@oss.nxp.com
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-fracn-gppll.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/clk/imx/clk-fracn-gppll.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
 diff --git a/drivers/clk/imx/clk-fracn-gppll.c b/drivers/clk/imx/clk-fracn-gppll.c
-index a2aaa14fc1aef..ec50c41e2a4c9 100644
+index ec50c41e2a4c9..f6674110a88e0 100644
 --- a/drivers/clk/imx/clk-fracn-gppll.c
 +++ b/drivers/clk/imx/clk-fracn-gppll.c
-@@ -60,18 +60,20 @@ struct clk_fracn_gppll {
- };
+@@ -15,6 +15,7 @@
+ #include "clk.h"
  
- /*
-- * Fvco = Fref * (MFI + MFN / MFD)
-- * Fout = Fvco / (rdiv * odiv)
-+ * Fvco = (Fref / rdiv) * (MFI + MFN / MFD)
-+ * Fout = Fvco / odiv
-+ * The (Fref / rdiv) should be in range 20MHz to 40MHz
-+ * The Fvco should be in range 2.5Ghz to 5Ghz
-  */
- static const struct imx_fracn_gppll_rate_table fracn_tbl[] = {
--	PLL_FRACN_GP(650000000U, 81, 0, 1, 0, 3),
-+	PLL_FRACN_GP(650000000U, 162, 50, 100, 0, 6),
- 	PLL_FRACN_GP(594000000U, 198, 0, 1, 0, 8),
--	PLL_FRACN_GP(560000000U, 70, 0, 1, 0, 3),
--	PLL_FRACN_GP(498000000U, 83, 0, 1, 0, 4),
-+	PLL_FRACN_GP(560000000U, 140, 0, 1, 0, 6),
-+	PLL_FRACN_GP(498000000U, 166, 0, 1, 0, 8),
- 	PLL_FRACN_GP(484000000U, 121, 0, 1, 0, 6),
- 	PLL_FRACN_GP(445333333U, 167, 0, 1, 0, 9),
--	PLL_FRACN_GP(400000000U, 50, 0, 1, 0, 3),
--	PLL_FRACN_GP(393216000U, 81, 92, 100, 0, 5)
-+	PLL_FRACN_GP(400000000U, 200, 0, 1, 0, 12),
-+	PLL_FRACN_GP(393216000U, 163, 84, 100, 0, 10)
- };
+ #define PLL_CTRL		0x0
++#define HW_CTRL_SEL		BIT(16)
+ #define CLKMUX_BYPASS		BIT(2)
+ #define CLKMUX_EN		BIT(1)
+ #define POWERUP_MASK		BIT(0)
+@@ -193,6 +194,11 @@ static int clk_fracn_gppll_set_rate(struct clk_hw *hw, unsigned long drate,
  
- struct imx_fracn_gppll_clk imx_fracn_gppll = {
+ 	rate = imx_get_pll_settings(pll, drate);
+ 
++	/* Hardware control select disable. PLL is control by register */
++	tmp = readl_relaxed(pll->base + PLL_CTRL);
++	tmp &= ~HW_CTRL_SEL;
++	writel_relaxed(tmp, pll->base + PLL_CTRL);
++
+ 	/* Disable output */
+ 	tmp = readl_relaxed(pll->base + PLL_CTRL);
+ 	tmp &= ~CLKMUX_EN;
 -- 
 2.39.2
 
