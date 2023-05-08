@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2EF168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:39:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511ECC433EF;
-	Mon,  8 May 2023 10:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C71168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:39:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9854C433EF;
+	Mon,  8 May 2023 10:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542363;
-	bh=HYG0zAPTt7XmBrbwIywNUL5DsNgcETV14du3TNuch+w=;
+	s=korg; t=1683542367;
+	bh=WxENUDu9XKD4KrfOb2w89Rm4uQPwqtCXpkL0Ma9kfPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jHhNdfWu5pWv4Vt5p09TB1xju7ujWmXoxQMR8BlhUPm+WXclkL4+ZPRzOaqeVxTnn
-	 xs+JPMycrWhcu3vv2MSWwh5C1qojJV86KDn31yEaaRrnm5UGcJgYneH6OX042QK2lh
-	 Z+MlvYK/VRWhkgST93lw1Vyys6/hMaNBHH9EQ3hg=
+	b=etDef9qx13GOgqdtXdiHwV/mk56r/+FGLBnQJPsV3b7zWKtxpQYagVWrgTFrDdcN5
+	 uV732ppeoHFjUd8RLiOXVNS3SYCGKCzB/h5jIpQiECNxnhtAstn17fpOIU9F4EzVDW
+	 U+cbcwGquM/yYTwgtgXwxcafUR9uOqZUwUEdR2gI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 410/663] wifi: iwlwifi: fw: fix memory leak in debugfs
-Date: Mon,  8 May 2023 11:43:56 +0200
-Message-Id: <20230508094441.378353718@linuxfoundation.org>
+	Joe Damato <jdamato@fastly.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.2 411/663] ixgbe: Allow flow hash to be set via ethtool
+Date: Mon,  8 May 2023 11:43:57 +0200
+Message-Id: <20230508094441.407445084@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,40 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Joe Damato <jdamato@fastly.com>
 
-[ Upstream commit 3d90d2f4a018fe8cfd65068bc6350b6222be4852 ]
+[ Upstream commit 4f3ed1293feb9502dc254b05802faf1ad3317ac6 ]
 
-Fix a memory leak that occurs when reading the fw_info
-file all the way, since we return NULL indicating no
-more data, but don't free the status tracking object.
+ixgbe currently returns `EINVAL` whenever the flowhash it set by ethtool
+because the ethtool code in the kernel passes a non-zero value for hfunc
+that ixgbe should allow.
 
-Fixes: 36dfe9ac6e8b ("iwlwifi: dump api version in yaml format")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230418122405.239e501b3b8d.I4268f87809ef91209cbcd748eee0863195e70fa2@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+When ethtool is called with `ETHTOOL_SRXFHINDIR`,
+`ethtool_set_rxfh_indir` will call ixgbe's set_rxfh function
+with `ETH_RSS_HASH_NO_CHANGE`. This value should be accepted.
+
+When ethtool is called with `ETHTOOL_SRSSH`, `ethtool_set_rxfh` will
+call ixgbe's set_rxfh function with `rxfh.hfunc`, which appears to be
+hardcoded in ixgbe to always be `ETH_RSS_HASH_TOP`. This value should
+also be accepted.
+
+Before this patch:
+
+$ sudo ethtool -L eth1 combined 10
+$ sudo ethtool -X eth1 default
+Cannot set RX flow hash configuration: Invalid argument
+
+After this patch:
+
+$ sudo ethtool -L eth1 combined 10
+$ sudo ethtool -X eth1 default
+$ sudo ethtool -x eth1
+RX flow hash indirection table for eth1 with 10 RX ring(s):
+    0:      0     1     2     3     4     5     6     7
+    8:      8     9     0     1     2     3     4     5
+   16:      6     7     8     9     0     1     2     3
+   24:      4     5     6     7     8     9     0     1
+   ...
+
+Fixes: 1c7cf0784e4d ("ixgbe: support for ethtool set_rxfh")
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/debugfs.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
-index 43e997283db0f..607e07ed2477c 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
-@@ -317,8 +317,10 @@ static void *iwl_dbgfs_fw_info_seq_next(struct seq_file *seq,
- 	const struct iwl_fw *fw = priv->fwrt->fw;
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
+index 6cfc9dc165378..821dfd323fa9a 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
+@@ -3131,8 +3131,8 @@ static int ixgbe_set_rxfh(struct net_device *netdev, const u32 *indir,
+ 	int i;
+ 	u32 reta_entries = ixgbe_rss_indir_tbl_entries(adapter);
  
- 	*pos = ++state->pos;
--	if (*pos >= fw->ucode_capa.n_cmd_versions)
-+	if (*pos >= fw->ucode_capa.n_cmd_versions) {
-+		kfree(state);
- 		return NULL;
-+	}
+-	if (hfunc)
+-		return -EINVAL;
++	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
++		return -EOPNOTSUPP;
  
- 	return state;
- }
+ 	/* Fill out the redirection table */
+ 	if (indir) {
 -- 
 2.39.2
 
