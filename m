@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC726168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EACCC433D2;
-	Mon,  8 May 2023 10:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46A7A168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFF34C433D2;
+	Mon,  8 May 2023 10:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540945;
-	bh=gg0wWCJjlLBpsAl2t/fYYFgCGyh4qfQb8ZDKeNIUork=;
+	s=korg; t=1683540948;
+	bh=vLCJuoym0/SzS2bi6LkyBfnhBr9rtA6CMRGTcY2L4Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQQpoKfSkxquPYb2u7S7gwQwQKBTIT3lz9qFTFPwsMGN8tD7S0f7FIG9KwNsx+411
-	 cLXeOtnExZtJISgwj19HZ14U/UA6fpKWRkroqWBADzzVEQBP2TC2R9b/Rvo+3pzCv+
-	 A7MWITpP3HPztbDSjZBEMliuiPLJz0UQ5jKUMu5M=
+	b=POsWMNh2AMbwYGm6eWqXw5DAQ6iWMDkCE4SAar5DHgBpXyTbqNXT5cxw+o0HLVdw6
+	 GAj6xCCBpVBaQ4BmMv3V8dz+JE2kpN67Oo6s/g4Zqs3ms8yewCR+8+R2xu1T0QkxyJ
+	 8PtFG/TpRWoyZXpJTKL4B662NDmFTjHA5HRqP5os=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phong Hoang <phong.hoang.wz@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 526/611] pinctrl: renesas: r8a779f0: Fix tsn1_avtp_pps pin group
-Date: Mon,  8 May 2023 11:46:08 +0200
-Message-Id: <20230508094439.102407623@linuxfoundation.org>
+Subject: [PATCH 6.1 517/611] RDMA/mlx5: Use correct device num_ports when modify DC
+Date: Mon,  8 May 2023 11:45:59 +0200
+Message-Id: <20230508094438.843244328@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,35 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Phong Hoang <phong.hoang.wz@renesas.com>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit 60003351e99167d8cfa7c161e95856efc016f381 ]
+[ Upstream commit 746aa3c8cb1a650ff2583497ac646e505831b9b9 ]
 
-Correct a typo mistake in the definition of the tsn1_avtp_pps pin group
-mux.
+Just like other QP types, when modify DC, the port_num should be compared
+with dev->num_ports, instead of HCA_CAP.num_ports.  Otherwise Multi-port
+vHCA on DC may not work.
 
-Signed-off-by: Phong Hoang <phong.hoang.wz@renesas.com>
-Fixes: babe298e9caaa3d7 ("pinctrl: renesas: r8a779f0: Add Ethernet pins, groups, and functions")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/45ea6e87b91c36fd0b9706cf58ff50a4d1a99c44.1674825039.git.geert+renesas@glider.be
+Fixes: 776a3906b692 ("IB/mlx5: Add support for DC target QP")
+Link: https://lore.kernel.org/r/20230420013906.1244185-1-markzhang@nvidia.com
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pfc-r8a779f0.c | 2 +-
+ drivers/infiniband/hw/mlx5/qp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/renesas/pfc-r8a779f0.c b/drivers/pinctrl/renesas/pfc-r8a779f0.c
-index 417c357f16b19..65c141ce909ac 100644
---- a/drivers/pinctrl/renesas/pfc-r8a779f0.c
-+++ b/drivers/pinctrl/renesas/pfc-r8a779f0.c
-@@ -1213,7 +1213,7 @@ static const unsigned int tsn1_avtp_pps_pins[] = {
- 	RCAR_GP_PIN(3, 13),
- };
- static const unsigned int tsn1_avtp_pps_mux[] = {
--	TSN0_AVTP_PPS_MARK,
-+	TSN1_AVTP_PPS_MARK,
- };
- static const unsigned int tsn1_avtp_capture_a_pins[] = {
- 	/* TSN1_AVTP_CAPTURE_A */
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index cf953d23d18da..f7d3643b08f50 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -4408,7 +4408,7 @@ static int mlx5_ib_modify_dct(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 			return -EINVAL;
+ 
+ 		if (attr->port_num == 0 ||
+-		    attr->port_num > MLX5_CAP_GEN(dev->mdev, num_ports)) {
++		    attr->port_num > dev->num_ports) {
+ 			mlx5_ib_dbg(dev, "invalid port number %d. number of ports is %d\n",
+ 				    attr->port_num, dev->num_ports);
+ 			return -EINVAL;
 -- 
 2.39.2
 
