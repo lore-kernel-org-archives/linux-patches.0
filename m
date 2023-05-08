@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC2013AF4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D464DC4339E;
-	Mon,  8 May 2023 10:32:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392D815496
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2057C433EF;
+	Mon,  8 May 2023 10:32:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541944;
-	bh=Xy+BvZGyEipNBxUZR0L1092kcoflM3Nty4IXV4AJ8HA=;
+	s=korg; t=1683541947;
+	bh=NN+y6O8IajfjOcSalIZBOb2or+PXqa+pqr8O28XTn+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQboazG71PENyRQM5vuuXFk9huDLjb6guIo2gx5hzEHOGvDKPZtJKlYztfeVOOQ0I
-	 IbncTpff3pEeCocmXz/pmgZUz+fIEjyKWP0WNzyLvmlGUYyZyP/3U+X5R80xMl5KCR
-	 D0Dwomb/lpHcfQoCDaOWOtYwDmJaw8hEVvT08SkA=
+	b=dv898TEwoBU6iW1bJ/UST7vdfqEFKua/rNNpJC1OHWfI2Ugo+vvaBDfwE3ZzROROF
+	 /z+9ZF8bs3SeighiI96V4J+ng/jTuCpTORd2Q2354H1jOxX/5FxXzyAa9S4IivPtNN
+	 7Vhd2crAQ+up7ncUAuESxhl0AhChmd19sopv+O88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Patil Rajesh Reddy <Patil.Reddy@amd.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 245/663] media: rkvdec: fix use after free bug in rkvdec_remove
-Date: Mon,  8 May 2023 11:41:11 +0200
-Message-Id: <20230508094436.222513566@linuxfoundation.org>
+Subject: [PATCH 6.2 246/663] platform/x86/amd/pmf: Move out of BIOS SMN pair for driver probe
+Date: Mon,  8 May 2023 11:41:12 +0200
+Message-Id: <20230508094436.251316074@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,54 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 
-[ Upstream commit 3228cec23b8b29215e18090c6ba635840190993d ]
+[ Upstream commit aec8298c093f052fc8a86f9411b69b23953b0edb ]
 
-In rkvdec_probe, rkvdec->watchdog_work is bound with
-rkvdec_watchdog_func. Then rkvdec_vp9_run may
-be called to start the work.
+The current SMN index used for the driver probe seems to be meant
+for the BIOS pair and there are potential concurrency problems that can
+occur with an inopportune SMI.
 
-If we remove the module which will call rkvdec_remove
- to make cleanup, there may be a unfinished work.
- The possible sequence is as follows, which will
- cause a typical UAF bug.
+It is been advised to use SMN_INDEX_0 instead of SMN_INDEX_2, which is
+what amd_nb.c provides and this function has protections to ensure that
+only one caller can use it at a time.
 
-Fix it by canceling the work before cleanup in rkvdec_remove.
-
-CPU0                  CPU1
-
-                    |rkvdec_watchdog_func
-rkvdec_remove       |
- rkvdec_v4l2_cleanup|
-  v4l2_m2m_release  |
-    kfree(m2m_dev); |
-                    |
-                    | v4l2_m2m_get_curr_priv
-                    |   m2m_dev->curr_ctx //use
-
-Fixes: cd33c830448b ("media: rkvdec: Add the rkvdec driver")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: da5ce22df5fe ("platform/x86/amd/pmf: Add support for PMF core layer")
+Co-developed-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
+Signed-off-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
+Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://lore.kernel.org/r/20230406164807.50969-4-Shyam-sundar.S-k@amd.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/rkvdec/rkvdec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/amd/pmf/Kconfig |  1 +
+ drivers/platform/x86/amd/pmf/core.c  | 22 +++++-----------------
+ 2 files changed, 6 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/staging/media/rkvdec/rkvdec.c b/drivers/staging/media/rkvdec/rkvdec.c
-index 7bab7586918c1..82806f198074a 100644
---- a/drivers/staging/media/rkvdec/rkvdec.c
-+++ b/drivers/staging/media/rkvdec/rkvdec.c
-@@ -1066,6 +1066,8 @@ static int rkvdec_remove(struct platform_device *pdev)
- {
- 	struct rkvdec_dev *rkvdec = platform_get_drvdata(pdev);
+diff --git a/drivers/platform/x86/amd/pmf/Kconfig b/drivers/platform/x86/amd/pmf/Kconfig
+index 6d89528c31779..d87986adf91e1 100644
+--- a/drivers/platform/x86/amd/pmf/Kconfig
++++ b/drivers/platform/x86/amd/pmf/Kconfig
+@@ -7,6 +7,7 @@ config AMD_PMF
+ 	tristate "AMD Platform Management Framework"
+ 	depends on ACPI && PCI
+ 	depends on POWER_SUPPLY
++	depends on AMD_NB
+ 	select ACPI_PLATFORM_PROFILE
+ 	help
+ 	  This driver provides support for the AMD Platform Management Framework.
+diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
+index da23639071d79..0acc0b6221290 100644
+--- a/drivers/platform/x86/amd/pmf/core.c
++++ b/drivers/platform/x86/amd/pmf/core.c
+@@ -8,6 +8,7 @@
+  * Author: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+  */
  
-+	cancel_delayed_work_sync(&rkvdec->watchdog_work);
-+
- 	rkvdec_v4l2_cleanup(rkvdec);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
++#include <asm/amd_nb.h>
+ #include <linux/debugfs.h>
+ #include <linux/iopoll.h>
+ #include <linux/module.h>
+@@ -22,8 +23,6 @@
+ #define AMD_PMF_REGISTER_ARGUMENT	0xA58
+ 
+ /* Base address of SMU for mapping physical address to virtual address */
+-#define AMD_PMF_SMU_INDEX_ADDRESS	0xB8
+-#define AMD_PMF_SMU_INDEX_DATA		0xBC
+ #define AMD_PMF_MAPPING_SIZE		0x01000
+ #define AMD_PMF_BASE_ADDR_OFFSET	0x10000
+ #define AMD_PMF_BASE_ADDR_LO		0x13B102E8
+@@ -348,30 +347,19 @@ static int amd_pmf_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	dev->cpu_id = rdev->device;
+-	err = pci_write_config_dword(rdev, AMD_PMF_SMU_INDEX_ADDRESS, AMD_PMF_BASE_ADDR_LO);
+-	if (err) {
+-		dev_err(dev->dev, "error writing to 0x%x\n", AMD_PMF_SMU_INDEX_ADDRESS);
+-		pci_dev_put(rdev);
+-		return pcibios_err_to_errno(err);
+-	}
+ 
+-	err = pci_read_config_dword(rdev, AMD_PMF_SMU_INDEX_DATA, &val);
++	err = amd_smn_read(0, AMD_PMF_BASE_ADDR_LO, &val);
+ 	if (err) {
++		dev_err(dev->dev, "error in reading from 0x%x\n", AMD_PMF_BASE_ADDR_LO);
+ 		pci_dev_put(rdev);
+ 		return pcibios_err_to_errno(err);
+ 	}
+ 
+ 	base_addr_lo = val & AMD_PMF_BASE_ADDR_HI_MASK;
+ 
+-	err = pci_write_config_dword(rdev, AMD_PMF_SMU_INDEX_ADDRESS, AMD_PMF_BASE_ADDR_HI);
+-	if (err) {
+-		dev_err(dev->dev, "error writing to 0x%x\n", AMD_PMF_SMU_INDEX_ADDRESS);
+-		pci_dev_put(rdev);
+-		return pcibios_err_to_errno(err);
+-	}
+-
+-	err = pci_read_config_dword(rdev, AMD_PMF_SMU_INDEX_DATA, &val);
++	err = amd_smn_read(0, AMD_PMF_BASE_ADDR_HI, &val);
+ 	if (err) {
++		dev_err(dev->dev, "error in reading from 0x%x\n", AMD_PMF_BASE_ADDR_HI);
+ 		pci_dev_put(rdev);
+ 		return pcibios_err_to_errno(err);
+ 	}
 -- 
 2.39.2
 
