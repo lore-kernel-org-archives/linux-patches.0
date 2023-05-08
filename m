@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A526168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13F7C433D2;
-	Mon,  8 May 2023 10:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89679168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC10C433D2;
+	Mon,  8 May 2023 10:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542772;
-	bh=7c+sAgUfN/5JZYIY0VaxJPBToDzf8v7aOnNiLAp6oPg=;
+	s=korg; t=1683542775;
+	bh=FCqTMO3Vk2z0iGNh6QPYDk78ZB0r64nRtcdwlAXpcK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxSKw+9eORLf6vr2mBMrLKTEDZuyDVMaq6iyGw4pztDRJ0n0JvohgZTej7UCR74SA
-	 FSlEoqyFigmOgWh0A/AhKV9KQo0I9iKIxfOmT8YJIBQOmt6FpRrhTpJZzSoVZ7+ecT
-	 wHL3b2dN52YesIomQndhJN/R/crHYng7gRh4VTDo=
+	b=W4isb8jzpv+F6RQvQYGhPOItgeeq19UIq+NmXAksqJmyywQfQcVFG0d1tBh1hymKA
+	 wf+TbXNezIY8vOW9lPTYHSsrCkTDofht1+5g0Wz0YPpaXlcyn4O/1DgiTjpYJYKpFP
+	 +HT2rj+SB5Dsni/6fD/AZ9uAWzv/ZDT5ZsKb9zkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+5e70d01ee8985ae62a3b@syzkaller.appspotmail.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 543/663] RDMA/siw: Remove namespace check from siw_netdev_event()
-Date: Mon,  8 May 2023 11:46:09 +0200
-Message-Id: <20230508094446.642888623@linuxfoundation.org>
+Subject: [PATCH 6.2 544/663] clk: qcom: gcc-sm6115: Mark RCGs shared where applicable
+Date: Mon,  8 May 2023 11:46:10 +0200
+Message-Id: <20230508094446.681854277@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,42 +35,250 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 266e9b3475ba82212062771fdbc40be0e3c06ec8 ]
+[ Upstream commit 996c32b745a15a637e8244a25f06b74acce98976 ]
 
-syzbot is reporting that siw_netdev_event(NETDEV_UNREGISTER) cannot destroy
-siw_device created after unshare(CLONE_NEWNET) due to net namespace check.
-It seems that this check was by error there and should be removed.
+The vast majority of shared RCGs were not marked as such. Fix it.
 
-Reported-by: syzbot <syzbot+5e70d01ee8985ae62a3b@syzkaller.appspotmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=5e70d01ee8985ae62a3b
-Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
-Suggested-by: Leon Romanovsky <leon@kernel.org>
-Fixes: bdcf26bf9b3a ("rdma/siw: network and RDMA core interface")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Link: https://lore.kernel.org/r/a44e9ac5-44e2-d575-9e30-02483cc7ffd1@I-love.SAKURA.ne.jp
-Reviewed-by: Bernard Metzler <bmt@zurich.ibm.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: cbe63bfdc54f ("clk: qcom: Add Global Clock controller (GCC) driver for SM6115")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230404224719.909746-1-konrad.dybcio@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_main.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/clk/qcom/gcc-sm6115.c | 50 +++++++++++++++++------------------
+ 1 file changed, 25 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
-index dacc174604bf2..65b5cda5457ba 100644
---- a/drivers/infiniband/sw/siw/siw_main.c
-+++ b/drivers/infiniband/sw/siw/siw_main.c
-@@ -437,9 +437,6 @@ static int siw_netdev_event(struct notifier_block *nb, unsigned long event,
+diff --git a/drivers/clk/qcom/gcc-sm6115.c b/drivers/clk/qcom/gcc-sm6115.c
+index 565f9912039fe..631419caf695a 100644
+--- a/drivers/clk/qcom/gcc-sm6115.c
++++ b/drivers/clk/qcom/gcc-sm6115.c
+@@ -694,7 +694,7 @@ static struct clk_rcg2 gcc_camss_axi_clk_src = {
+ 		.parent_data = gcc_parents_7,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_7),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
- 	dev_dbg(&netdev->dev, "siw: event %lu\n", event);
+@@ -715,7 +715,7 @@ static struct clk_rcg2 gcc_camss_cci_clk_src = {
+ 		.parent_data = gcc_parents_9,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_9),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
  
--	if (dev_net(netdev) != &init_net)
--		return NOTIFY_OK;
--
- 	base_dev = ib_device_get_by_netdev(netdev, RDMA_DRIVER_SIW);
- 	if (!base_dev)
- 		return NOTIFY_OK;
+@@ -738,7 +738,7 @@ static struct clk_rcg2 gcc_camss_csi0phytimer_clk_src = {
+ 		.parent_data = gcc_parents_4,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_4),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -753,7 +753,7 @@ static struct clk_rcg2 gcc_camss_csi1phytimer_clk_src = {
+ 		.parent_data = gcc_parents_4,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_4),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -768,7 +768,7 @@ static struct clk_rcg2 gcc_camss_csi2phytimer_clk_src = {
+ 		.parent_data = gcc_parents_4,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_4),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -790,7 +790,7 @@ static struct clk_rcg2 gcc_camss_mclk0_clk_src = {
+ 		.parent_data = gcc_parents_3,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_3),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -805,7 +805,7 @@ static struct clk_rcg2 gcc_camss_mclk1_clk_src = {
+ 		.parent_data = gcc_parents_3,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_3),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -820,7 +820,7 @@ static struct clk_rcg2 gcc_camss_mclk2_clk_src = {
+ 		.parent_data = gcc_parents_3,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_3),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -835,7 +835,7 @@ static struct clk_rcg2 gcc_camss_mclk3_clk_src = {
+ 		.parent_data = gcc_parents_3,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_3),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -857,7 +857,7 @@ static struct clk_rcg2 gcc_camss_ope_ahb_clk_src = {
+ 		.parent_data = gcc_parents_8,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_8),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -881,7 +881,7 @@ static struct clk_rcg2 gcc_camss_ope_clk_src = {
+ 		.parent_data = gcc_parents_8,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_8),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -916,7 +916,7 @@ static struct clk_rcg2 gcc_camss_tfe_0_clk_src = {
+ 		.parent_data = gcc_parents_5,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_5),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -941,7 +941,7 @@ static struct clk_rcg2 gcc_camss_tfe_0_csid_clk_src = {
+ 		.parent_data = gcc_parents_6,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_6),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -956,7 +956,7 @@ static struct clk_rcg2 gcc_camss_tfe_1_clk_src = {
+ 		.parent_data = gcc_parents_5,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_5),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -971,7 +971,7 @@ static struct clk_rcg2 gcc_camss_tfe_1_csid_clk_src = {
+ 		.parent_data = gcc_parents_6,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_6),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -986,7 +986,7 @@ static struct clk_rcg2 gcc_camss_tfe_2_clk_src = {
+ 		.parent_data = gcc_parents_5,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_5),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -1001,7 +1001,7 @@ static struct clk_rcg2 gcc_camss_tfe_2_csid_clk_src = {
+ 		.parent_data = gcc_parents_6,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_6),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -1024,7 +1024,7 @@ static struct clk_rcg2 gcc_camss_tfe_cphy_rx_clk_src = {
+ 		.parent_data = gcc_parents_10,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_10),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -1046,7 +1046,7 @@ static struct clk_rcg2 gcc_camss_top_ahb_clk_src = {
+ 		.parent_data = gcc_parents_7,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_7),
+ 		.flags = CLK_SET_RATE_PARENT | CLK_OPS_PARENT_ENABLE,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -1116,7 +1116,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
+ 		.name = "gcc_pdm2_clk_src",
+ 		.parent_data = gcc_parents_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_0),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -1329,7 +1329,7 @@ static struct clk_rcg2 gcc_ufs_phy_axi_clk_src = {
+ 		.name = "gcc_ufs_phy_axi_clk_src",
+ 		.parent_data = gcc_parents_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_0),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -1351,7 +1351,7 @@ static struct clk_rcg2 gcc_ufs_phy_ice_core_clk_src = {
+ 		.name = "gcc_ufs_phy_ice_core_clk_src",
+ 		.parent_data = gcc_parents_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_0),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -1392,7 +1392,7 @@ static struct clk_rcg2 gcc_ufs_phy_unipro_core_clk_src = {
+ 		.name = "gcc_ufs_phy_unipro_core_clk_src",
+ 		.parent_data = gcc_parents_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_0),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -1414,7 +1414,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
+ 		.name = "gcc_usb30_prim_master_clk_src",
+ 		.parent_data = gcc_parents_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_0),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -1483,7 +1483,7 @@ static struct clk_rcg2 gcc_video_venus_clk_src = {
+ 		.parent_data = gcc_parents_13,
+ 		.num_parents = ARRAY_SIZE(gcc_parents_13),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
 -- 
 2.39.2
 
