@@ -1,45 +1,58 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA69E566F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 18:01:31 +0000 (UTC)
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-52cb78647ecso2187713a12.1
-        for <patches@lists.linux.dev>; Mon, 08 May 2023 11:01:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683568891; x=1686160891;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CxYhKZWcTM6D0zvItXjXfl3kEr6BBDEZH2De/KsXnU0=;
-        b=RjE9Zy5bFl7s5q/SOisMx8EM08G+BB800LBMmnQcnf1FZjwKN50ndFOsk9R1TgrV8g
-         Dmqzc+GfiroxjQ5hUQWqtifI0c4ccQfLTfTok398wwKSZGcHwYQx9WfudqNGJeBedwPf
-         6vI8A0qFgL0V/K8ICs7Wo9MlspJ/SRQh1yEcsByHY+R37+oS+44jhc8cfOcQ/zNCJmOl
-         bYoBXrch2J8kTWBecgEY/6NePkXV5Zc9mo8/IWlKqS1wW85Z51EbOJC2M3/HmJfQ/Moc
-         Cf9sRBJWXz1B5/GSWaGmNfRCF+U6nv9hVEJP7UxNMinhuZJfxz2gNubNBY93vT/WW2SE
-         /m5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683568891; x=1686160891;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CxYhKZWcTM6D0zvItXjXfl3kEr6BBDEZH2De/KsXnU0=;
-        b=TQMDXmmHr6sMQHzx0/RFmGKiIg4TlgwAYTNJE5g3I4uJ0b1V9ZLZmjQbC+WS6xSvHm
-         qX2xamIJkOgJEvk+uJo/8dxPy4AcA0AnGotUUyBgy5eIKmbTkUoZSwcU1x5BH8j8asqD
-         0LEvGD7WwukNCIhHIp9hnBNT1P7cKmjZxWiMZwt1nysrWfFt2Sp3YPv0xZbOJg5tkHim
-         G1uIHGr8DyTpmPKnr8oQMSp6E2vgkD3t2gu99MTIrktRozr2zKBU1Z3zKRzPF+1C6oRH
-         Vv3wWDgJAcsXE0nDMfRfWRtimqCfFdLMF6B/mW7PXJFX5WDydZelRbP/JMD1eQr0s91g
-         8+jA==
-X-Gm-Message-State: AC+VfDxrFHctSybcBRZU7n5w3StPuqnxfwquY7Tc7l+A2KhnjZ4QTMNG
-	kyVT8AKbKW9xA8s/lMOXmX8=
-X-Google-Smtp-Source: ACHHUZ4SQsmgQ9UWv9tiEpgxGofTIxrtbBNrMqUq9CdvGszWhGb6ZM87uyYI4/mets9p8H9kHSOdvA==
-X-Received: by 2002:a05:6a20:3d27:b0:100:99a:7f71 with SMTP id y39-20020a056a203d2700b00100099a7f71mr8042018pzi.2.1683568890882;
-        Mon, 08 May 2023 11:01:30 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id k11-20020a63ff0b000000b00528af015a8dsm6566447pgi.14.2023.05.08.11.01.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 May 2023 11:01:29 -0700 (PDT)
-Message-ID: <b082ef46-a26d-db65-81cf-42f6f694de58@gmail.com>
-Date: Mon, 8 May 2023 11:01:27 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D23A111B9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 20:29:05 +0000 (UTC)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 5C8025C0121;
+	Mon,  8 May 2023 16:29:04 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Mon, 08 May 2023 16:29:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
+	1683577744; x=1683664144; bh=G+jMg55hOCbbocEq58MWNDAQoerhosGi6pJ
+	guyIM6MA=; b=UUMbwrGeXkFMipqOEKf0dX+bYnqTaHbps0bjOM5+1ODVYLW5Sxv
+	Ig+gcOoNtgT9js4RcUG4lY3bnS+O4v2cQXUP3PLuGETZWYDfood/lfgvht+Ld0I2
+	/gt4D7eJFLQEeVMdm1rTAjzZajhnkqkMmvbZ4kiQGtgdHdqpmRSJrcpdDXhna+lk
+	t3ijAC2QcJzFvJLG7PI3Tr/5qmye3CY3n/7uKcXpqOxtY4zBGbep2Fjk8bug9cRo
+	+FTWjLcr8ebvts1IJMJI3j1OefQ5uqUj94iy0rLljhIxukZvnla1FvZiOat6xuom
+	LsRD7iYmTcZXFr4XCp/JXmrsWiJdWfLQa+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1683577744; x=1683664144; bh=G+jMg55hOCbbocEq58MWNDAQoerhosGi6pJ
+	guyIM6MA=; b=T39FrWc6UnUy+llTJ+G4RR7R1tsi13odoejvkqf1fTWTgFcwIwm
+	/W/7dl789lCqMOe3fc+jOeeSJ2GKlLH7Sp6BCM7TJbRtuXa5m6wLo1iYjrHxP81K
+	1NYjvE8jq585Oq6M/lc+kbWOOiHt8LUbg86K8G5U5NV2HzoTCMB0ay29JpWh/h/E
+	ui0vFOhuNtqzTlNltrjA+pxIMH8ugwwtx0Ji5Y9vYV4IqSORlkmyeKJk+6aCLo6y
+	EYI13qNgkwRF1gTfA+VeQxbndH4u5xV9qZpM0KidNvV2QGb1ZKqe2U8Ay7+plXig
+	04TIiJo9hyY3sP/NkcoBFPRzzPEhXVQAFZw==
+X-ME-Sender: <xms:kFtZZADVOmLUocTraxTqeX5QsZQHAwKxtyeTflTGvFrjNZWgXf2QDw>
+    <xme:kFtZZCjNYFK9MlPUvLG-0XKRUixXu2H_0-NjJQB0ei5AmlTA6WF0cyN_KaRKuHrFk
+    YgBzfpMv3qkopIc0A>
+X-ME-Received: <xmr:kFtZZDmiydNh-eopV4dsbBixKxCRdEpGyveTx0_0YCvw0wlnIngcZk0K8h25wMUOrtogX0yWWboZSFwsDJknOqVUtw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeefkedgudeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheptehl
+    ihgtvgcutfihhhhluceorghlihgtvgesrhihhhhlrdhioheqnecuggftrfgrthhtvghrnh
+    epheduuddvteekvdektdduledugfffhfdugeejgeeuvdevtdetveejheehiefffeegnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvg
+    esrhihhhhlrdhioh
+X-ME-Proxy: <xmx:kFtZZGy0CJTOlI3pPKxIIMSdNEWnI2iaxyh5QgUMu6h8xDRJ_qZkRQ>
+    <xmx:kFtZZFSeoRGNRwYEAqLKFUtY_Cafveb4dVyxKcPC92zy37S6yXW28Q>
+    <xmx:kFtZZBZ-ZgQ2_hhfGfOaJ-YdiKCLRBykxZBRGUfM55Cxseg2Egb63Q>
+    <xmx:kFtZZC_IowVBjXMV4LBDPYE9oSFd-wbnmAk0lg7WjHeePUSDjMf47w>
+Feedback-ID: i56684263:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 8 May 2023 16:29:01 -0400 (EDT)
+Message-ID: <bb3bfbfb-0761-23b2-24e9-e5b4cb3ffac6@ryhl.io>
+Date: Mon, 8 May 2023 22:29:00 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,44 +60,39 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 5.15 000/371] 5.15.111-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230508094811.912279944@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v2] rust: str: add conversion from `CStr` to `CString`
+To: Gary Guo <gary@garyguo.net>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
+ <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>,
+ Boqun Feng <boqun.feng@gmail.com>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
+ Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+References: <20230503141016.683634-1-aliceryhl@google.com>
+ <20230508124127.77a97c54.gary@garyguo.net>
+Content-Language: en-US-large
+From: Alice Ryhl <alice@ryhl.io>
+In-Reply-To: <20230508124127.77a97c54.gary@garyguo.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 5/8/23 02:43, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.111 release.
-> There are 371 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 5/8/23 13:41, Gary Guo wrote:
+> On Wed,  3 May 2023 14:10:16 +0000
+> Alice Ryhl <aliceryhl@google.com> wrote:
 > 
-> Responses should be made by Wed, 10 May 2023 09:47:07 +0000.
-> Anything received after that time might be too late.
+>> These methods can be used to copy the data in a temporary c string into
+>> a separate allocation, so that it can be accessed later even if the
+>> original is deallocated.
+>>
+>> The API in this change mirrors the standard library API for the `&str`
+>> and `String` types. The `ToOwned` trait is not implemented because it
+>> assumes that allocations are infallible.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.111-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> How about add a `TryToOwned` trait to the kernel crate and implement
+> that trait for `CStr` instead?
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
-
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
-
+Eh, I don't think it's worth it. It doesn't give anything new to the 
+CStr api, and I think it's rather unlikely that someone will actually 
+need to be generic over such a trait any time soon.
