@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F364168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87FA3C433EF;
-	Mon,  8 May 2023 10:46:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E34168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BBB7C433D2;
+	Mon,  8 May 2023 10:47:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542818;
-	bh=4/r6S3nk3nNQWbXQ8F8pRY6MCg4DY4sR9acxwIW4fDk=;
+	s=korg; t=1683542821;
+	bh=68JX4anTt8lQMt7CEMItA9kq/5PlzcqMLTiHvolrlcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RpM3C6/hq95zrTptp5P/k2WbcT6aFcVyKX0Phk6MB5m57qWriR6thMdCvdGvcTaU0
-	 HYU3dI9FFPqJsobZWSeluJ2Il8Ff4/ycnNGVMXbdPQKfK/PH2slBRBOFPYhv/xMNi+
-	 ZOsoLmHjVjnGD7dkvOanHYAl1htXjSkBUnLYgN9k=
+	b=VsVEIfmhipSB8ELqfWrx7ABt4Ep4+VVOKqSZM8gWYOxU/bH2lubhqVDzKl22XTz5v
+	 a/+q9Rti+M8wTr+mpR5b1zzB/yBMIA+4Xkpd4tXHqgVeWQZQCgGO4sgpkOYGne5BdG
+	 Drja5SueOtQa4FPzh/3GcJov3EeNCtBemAI83pe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Petr Mladek <pmladek@suse.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 526/663] clk: qcom: gcc-qcm2290: Fix up gcc_sdcc2_apps_clk_src
-Date: Mon,  8 May 2023 11:45:52 +0200
-Message-Id: <20230508094445.934131151@linuxfoundation.org>
+Subject: [PATCH 6.2 527/663] workqueue: Fix hung time report of worker pools
+Date: Mon,  8 May 2023 11:45:53 +0200
+Message-Id: <20230508094445.966588573@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,36 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Petr Mladek <pmladek@suse.com>
 
-[ Upstream commit 1bf088a9f0e50acd175ba8deef0db11c099fa26e ]
+[ Upstream commit 335a42ebb0ca8ee9997a1731aaaae6dcd704c113 ]
 
-Add the PARENT_ENABLE flag to prevent  the clock from getting stuck
-at boot and use floor_ops to avoid SDHCI overclocking.
+The workqueue watchdog prints a warning when there is no progress in
+a worker pool. Where the progress means that the pool started processing
+a pending work item.
 
-Fixes: 496d1a13d405 ("clk: qcom: Add Global Clock Controller driver for QCM2290")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230315173048.3497655-1-konrad.dybcio@linaro.org
+Note that it is perfectly fine to process work items much longer.
+The progress should be guaranteed by waking up or creating idle
+workers.
+
+show_one_worker_pool() prints state of non-idle worker pool. It shows
+a delay since the last pool->watchdog_ts.
+
+The timestamp is updated when a first pending work is queued in
+__queue_work(). Also it is updated when a work is dequeued for
+processing in worker_thread() and rescuer_thread().
+
+The delay is misleading when there is no pending work item. In this
+case it shows how long the last work item is being proceed. Show
+zero instead. There is no stall if there is no pending work.
+
+Fixes: 82607adcf9cdf40fb7b ("workqueue: implement lockup detector")
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-qcm2290.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/workqueue.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-qcm2290.c b/drivers/clk/qcom/gcc-qcm2290.c
-index 7792b8f237047..096deff2ba257 100644
---- a/drivers/clk/qcom/gcc-qcm2290.c
-+++ b/drivers/clk/qcom/gcc-qcm2290.c
-@@ -1243,7 +1243,8 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
- 		.name = "gcc_sdcc2_apps_clk_src",
- 		.parent_data = gcc_parents_12,
- 		.num_parents = ARRAY_SIZE(gcc_parents_12),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_floor_ops,
-+		.flags = CLK_OPS_PARENT_ENABLE,
- 	},
- };
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 76ea87b0251ce..e5421775deb38 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -4850,10 +4850,16 @@ static void show_one_worker_pool(struct worker_pool *pool)
+ 	struct worker *worker;
+ 	bool first = true;
+ 	unsigned long flags;
++	unsigned long hung = 0;
  
+ 	raw_spin_lock_irqsave(&pool->lock, flags);
+ 	if (pool->nr_workers == pool->nr_idle)
+ 		goto next_pool;
++
++	/* How long the first pending work is waiting for a worker. */
++	if (!list_empty(&pool->worklist))
++		hung = jiffies_to_msecs(jiffies - pool->watchdog_ts) / 1000;
++
+ 	/*
+ 	 * Defer printing to avoid deadlocks in console drivers that
+ 	 * queue work while holding locks also taken in their write
+@@ -4862,9 +4868,7 @@ static void show_one_worker_pool(struct worker_pool *pool)
+ 	printk_deferred_enter();
+ 	pr_info("pool %d:", pool->id);
+ 	pr_cont_pool_info(pool);
+-	pr_cont(" hung=%us workers=%d",
+-		jiffies_to_msecs(jiffies - pool->watchdog_ts) / 1000,
+-		pool->nr_workers);
++	pr_cont(" hung=%lus workers=%d", hung, pool->nr_workers);
+ 	if (pool->manager)
+ 		pr_cont(" manager: %d",
+ 			task_pid_nr(pool->manager->task));
 -- 
 2.39.2
 
