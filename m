@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550D2168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:07:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB39EC433EF;
-	Mon,  8 May 2023 10:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B10168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:07:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D85C433D2;
+	Mon,  8 May 2023 10:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540456;
-	bh=ulhzTMVYkn/KyX9psdhd4gL0psk4mc1dWcbvGv1CfZM=;
+	s=korg; t=1683540458;
+	bh=dSI/wb0Bo68/Pnt381Ba2aM94yZZMBwQt+ItJfbdtOU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2BOYfo2XhGA3mGbHKB0PFKb9FO5/OYnNBcjBGa0X0GaT531haEC3JQnXPv4S9FYtQ
-	 Rawis1NQdTxF2tURYKCn+96ib2DJ/EIZkx1aoM/pl+DPipgJ33HdgKGGL92hYR277e
-	 jHChFFGkwnaRIpTrVEbsvr4lMTvudwxBd3uBvTRY=
+	b=urBUGocq1//J6kF9mUt6ufQl4MFC19NfYxUY6JS8vA1M+t+L/g4pwf27hgE9cg+bh
+	 iLq0OYOI8Zbdd7O0zX3sc+4U5eD6vw8FDWL1gB0TTeKJ/oCz1Qce8t+lpFklkQV2aI
+	 hxLTWEg1AvAYwj4zl2nZp01CzuwRqSNbhB3Iycgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	=?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 371/611] wifi: iwlwifi: mvm: check firmware response size
-Date: Mon,  8 May 2023 11:43:33 +0200
-Message-Id: <20230508094434.417253392@linuxfoundation.org>
+Subject: [PATCH 6.1 372/611] netfilter: conntrack: restore IPS_CONFIRMED out of nf_conntrack_hash_check_insert()
+Date: Mon,  8 May 2023 11:43:34 +0200
+Message-Id: <20230508094434.446108211@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,51 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 13513cec93ac9902d0b896976d8bab3758a9881c ]
+[ Upstream commit 2cdaa3eefed83082923cf219c8b6a314e622da74 ]
 
-Check the firmware response size for responses to the
-memory read/write command in debugfs before using it.
+e6d57e9ff0ae ("netfilter: conntrack: fix rmmod double-free race")
+consolidates IPS_CONFIRMED bit set in nf_conntrack_hash_check_insert().
+However, this breaks ctnetlink:
 
-Fixes: 2b55f43f8e47 ("iwlwifi: mvm: Add mem debugfs entry")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230417113648.0d56fcaf68ee.I70e9571f3ed7263929b04f8fabad23c9b999e4ea@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+ # conntrack -I -p tcp --timeout 123 --src 1.2.3.4 --dst 5.6.7.8 --state ESTABLISHED --sport 1 --dport 4 -u SEEN_REPLY
+ conntrack v1.4.6 (conntrack-tools): Operation failed: Device or resource busy
+
+This is a partial revert of the aforementioned commit to restore
+IPS_CONFIRMED.
+
+Fixes: e6d57e9ff0ae ("netfilter: conntrack: fix rmmod double-free race")
+Reported-by: Stéphane Graber <stgraber@stgraber.org>
+Tested-by: Stéphane Graber <stgraber@stgraber.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ net/netfilter/nf_conntrack_bpf.c     | 1 +
+ net/netfilter/nf_conntrack_core.c    | 1 -
+ net/netfilter/nf_conntrack_netlink.c | 3 +++
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
-index 1e8123140973e..022ec7ec0a2f1 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
-@@ -1745,6 +1745,11 @@ static ssize_t iwl_dbgfs_mem_read(struct file *file, char __user *user_buf,
- 	if (ret < 0)
- 		return ret;
+diff --git a/net/netfilter/nf_conntrack_bpf.c b/net/netfilter/nf_conntrack_bpf.c
+index adae86e8e02e8..8639e7efd0e22 100644
+--- a/net/netfilter/nf_conntrack_bpf.c
++++ b/net/netfilter/nf_conntrack_bpf.c
+@@ -384,6 +384,7 @@ struct nf_conn *bpf_ct_insert_entry(struct nf_conn___init *nfct_i)
+ 	struct nf_conn *nfct = (struct nf_conn *)nfct_i;
+ 	int err;
  
-+	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
-+		ret = -EIO;
-+		goto out;
-+	}
-+
- 	rsp = (void *)hcmd.resp_pkt->data;
- 	if (le32_to_cpu(rsp->status) != DEBUG_MEM_STATUS_SUCCESS) {
- 		ret = -ENXIO;
-@@ -1821,6 +1826,11 @@ static ssize_t iwl_dbgfs_mem_write(struct file *file,
- 	if (ret < 0)
- 		return ret;
++	nfct->status |= IPS_CONFIRMED;
+ 	err = nf_conntrack_hash_check_insert(nfct);
+ 	if (err < 0) {
+ 		nf_conntrack_free(nfct);
+diff --git a/net/netfilter/nf_conntrack_core.c b/net/netfilter/nf_conntrack_core.c
+index 30ed45b1b57df..a0e9c7af08467 100644
+--- a/net/netfilter/nf_conntrack_core.c
++++ b/net/netfilter/nf_conntrack_core.c
+@@ -938,7 +938,6 @@ nf_conntrack_hash_check_insert(struct nf_conn *ct)
+ 		goto out;
+ 	}
  
-+	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
-+		ret = -EIO;
-+		goto out;
-+	}
+-	ct->status |= IPS_CONFIRMED;
+ 	smp_wmb();
+ 	/* The caller holds a reference to this object */
+ 	refcount_set(&ct->ct_general.use, 2);
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index d095d3c1ceca6..a68391e228f0e 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -2316,6 +2316,9 @@ ctnetlink_create_conntrack(struct net *net,
+ 	nfct_seqadj_ext_add(ct);
+ 	nfct_synproxy_ext_add(ct);
+ 
++	/* we must add conntrack extensions before confirmation. */
++	ct->status |= IPS_CONFIRMED;
 +
- 	rsp = (void *)hcmd.resp_pkt->data;
- 	if (rsp->status != DEBUG_MEM_STATUS_SUCCESS) {
- 		ret = -ENXIO;
+ 	if (cda[CTA_STATUS]) {
+ 		err = ctnetlink_change_status(ct, cda);
+ 		if (err < 0)
 -- 
 2.39.2
 
