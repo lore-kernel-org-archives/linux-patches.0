@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889A0168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3D2C433EF;
-	Mon,  8 May 2023 10:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618F0168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:16:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B16C433EF;
+	Mon,  8 May 2023 10:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541016;
-	bh=Jhab4T1IZVUorMxITNTHoSKD2GLUOVE9BUlEJWAVXhw=;
+	s=korg; t=1683541019;
+	bh=3gPY6mgdbqwYvtS6J5cD9ALHeONzHHLbq2YO+VLUE7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DqdrwldxpwYEybcClkF64am2uE995uERTIsPgs+0UIy3w7NNblqItRXX8yTCVMq0B
-	 euMCACx0qse2tOk913QDmlnlWbtZxb+s/SRal9kWc6KRGeaI4S/wrGFXRzY4Bj1BsX
-	 MVQ3rxHau/pmOf2w00JvFDEPnnJlxGZRlonGD+0Q=
+	b=suRWzC6le1wQfZlSEIYm0yPIiZGd9zr5BaCGPMAsrKIbs7+/J3dEvpHPCvimt6/Sc
+	 Y5OD66VVDzx5lRyrw+k3u192kujnWInXJf6FbIacwBNtr+okJ0tbTrUVLvWvVTvziX
+	 s6gUWNmuuOhBDFwUsDzB4QAe7AMLX+AF/OBsCoQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 6.1 583/611] clk: rockchip: rk3399: allow clk_cifout to force clk_cifout_src to reparent
-Date: Mon,  8 May 2023 11:47:05 +0200
-Message-Id: <20230508094440.869636877@linuxfoundation.org>
+	Peng Liu <liupeng17@lenovo.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 584/611] scripts/gdb: fix lx-timerlist for Python3
+Date: Mon,  8 May 2023 11:47:06 +0200
+Message-Id: <20230508094440.898871361@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,39 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+From: Peng Liu <liupeng17@lenovo.com>
 
-commit 933bf364e152cd60902cf9585c2ba310d593e69f upstream.
+commit 7362042f3556528e9e9b1eb5ce8d7a3a6331476b upstream.
 
-clk_cifout is derived from clk_cifout_src through an integer divider
-limited to 32. clk_cifout_src is a child of either cpll, gpll or npll
-without any possibility of a divider of any sort. The default clock
-parent is cpll.
+Below incompatibilities between Python2 and Python3 made lx-timerlist fail
+to run under Python3.
 
-Let's allow clk_cifout to ask its parent clk_cifout_src to reparent in
-order to find the real closest possible rate for clk_cifout and not one
-derived from cpll only.
+o xrange() is replaced by range() in Python3
+o bytes and str are different types in Python3
+o the return value of Inferior.read_memory() is memoryview object in
+  Python3
 
-Cc: stable@vger.kernel.org # 4.10+
-Fixes: fd8bc829336a ("clk: rockchip: fix the rk3399 cifout clock")
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20221117-rk3399-cifout-set-rate-parent-v1-0-432548d04081@theobroma-systems.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+akpm: cc stable so that older kernels are properly debuggable under newer
+Python.
+
+Link: https://lkml.kernel.org/r/TYCP286MB2146EE1180A4D5176CBA8AB2C6819@TYCP286MB2146.JPNP286.PROD.OUTLOOK.COM
+Signed-off-by: Peng Liu <liupeng17@lenovo.com>
+Reviewed-by: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/rockchip/clk-rk3399.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ scripts/gdb/linux/timerlist.py |    4 +++-
+ scripts/gdb/linux/utils.py     |    5 ++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/clk/rockchip/clk-rk3399.c
-+++ b/drivers/clk/rockchip/clk-rk3399.c
-@@ -1263,7 +1263,7 @@ static struct rockchip_clk_branch rk3399
- 			RK3399_CLKSEL_CON(56), 6, 2, MFLAGS,
- 			RK3399_CLKGATE_CON(10), 7, GFLAGS),
+--- a/scripts/gdb/linux/timerlist.py
++++ b/scripts/gdb/linux/timerlist.py
+@@ -73,7 +73,7 @@ def print_cpu(hrtimer_bases, cpu, max_cl
+     ts = cpus.per_cpu(tick_sched_ptr, cpu)
  
--	COMPOSITE_NOGATE(SCLK_CIF_OUT, "clk_cifout", mux_clk_cif_p, 0,
-+	COMPOSITE_NOGATE(SCLK_CIF_OUT, "clk_cifout", mux_clk_cif_p, CLK_SET_RATE_PARENT,
- 			 RK3399_CLKSEL_CON(56), 5, 1, MFLAGS, 0, 5, DFLAGS),
+     text = "cpu: {}\n".format(cpu)
+-    for i in xrange(max_clock_bases):
++    for i in range(max_clock_bases):
+         text += " clock {}:\n".format(i)
+         text += print_base(cpu_base['clock_base'][i])
  
- 	/* gic */
+@@ -158,6 +158,8 @@ def pr_cpumask(mask):
+     num_bytes = (nr_cpu_ids + 7) / 8
+     buf = utils.read_memoryview(inf, bits, num_bytes).tobytes()
+     buf = binascii.b2a_hex(buf)
++    if type(buf) is not str:
++        buf=buf.decode()
+ 
+     chunks = []
+     i = num_bytes
+--- a/scripts/gdb/linux/utils.py
++++ b/scripts/gdb/linux/utils.py
+@@ -88,7 +88,10 @@ def get_target_endianness():
+ 
+ 
+ def read_memoryview(inf, start, length):
+-    return memoryview(inf.read_memory(start, length))
++    m = inf.read_memory(start, length)
++    if type(m) is memoryview:
++        return m
++    return memoryview(m)
+ 
+ 
+ def read_u16(buffer, offset):
 
 
