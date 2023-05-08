@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B08168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:12:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9137BC433D2;
-	Mon,  8 May 2023 10:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BC8168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:12:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F9E5C433EF;
+	Mon,  8 May 2023 10:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540768;
-	bh=cJXSh2oG0AHWA3Sz+HsPAnGVsnWPwY7DHpd4hkI3Z54=;
+	s=korg; t=1683540771;
+	bh=X3h+Bk+jn9xhkPi3oGBK85gbJiOIra04LfReAyRbrgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KbQMmoibI97QDJOdQT3L4PcqeMu6MymY54PxL1/RUXRVLtLlyCgIjuDEbGXZ7hC7p
-	 rGLpsyJMC9NYA6SRfBCJ/PNyFWPB6yRP7ZQkQLLGW/oVO6664oAI8w+cyNXBrZmsuP
-	 SI0FkRWpCvTvM1pX1xHB7R+T9BVdkByHm32xLAx0=
+	b=MDFNLOPYYwoj+eyJ/KJ8excK17chjVNQUSzBxlYUi7ltoFgJdYUPh2iYRo0/XEdwB
+	 aFOn1jIX2zaXGIc7awhksSyJaEQkt6lLktGqt0dXz796gR2xW7V+iO3EW9C8hPGUao
+	 VpMMfQef64UruoSFkbIl6SNsZR4yc3zFR1dLh1QA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 458/611] macintosh/windfarm_smu_sat: Add missing of_node_put()
-Date: Mon,  8 May 2023 11:45:00 +0200
-Message-Id: <20230508094437.031130924@linuxfoundation.org>
+Subject: [PATCH 6.1 449/611] tty: serial: fsl_lpuart: adjust buffer length to the intended size
+Date: Mon,  8 May 2023 11:44:51 +0200
+Message-Id: <20230508094436.742642054@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,33 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-[ Upstream commit 631cf002826007ab7415258ee647dcaf8845ad5a ]
+[ Upstream commit f73fd750552524b06b5d77ebfdd106ccc8fcac61 ]
 
-We call of_node_get() in wf_sat_probe() after sat is created,
-so we need the of_node_put() before *kfree(sat)*.
+Based on the fls function definition provided below, we should not
+subtract 1 to obtain the correct buffer length:
 
-Fixes: ac171c46667c ("[PATCH] powerpc: Thermal control for dual core G5s")
-Signed-off-by: Liang He <windhl@126.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230330033558.2562778-1-windhl@126.com
+fls(0) = 0, fls(1) = 1, fls(0x80000000) = 32.
+
+Fixes: 5887ad43ee02 ("tty: serial: fsl_lpuart: Use cyclic DMA for Rx")
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Link: https://lore.kernel.org/r/20230410195555.1003900-1-shenwei.wang@nxp.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/macintosh/windfarm_smu_sat.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/fsl_lpuart.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/macintosh/windfarm_smu_sat.c b/drivers/macintosh/windfarm_smu_sat.c
-index be5d4593db93e..98fb31e00e203 100644
---- a/drivers/macintosh/windfarm_smu_sat.c
-+++ b/drivers/macintosh/windfarm_smu_sat.c
-@@ -171,6 +171,7 @@ static void wf_sat_release(struct kref *ref)
- 
- 	if (sat->nr >= 0)
- 		sats[sat->nr] = NULL;
-+	of_node_put(sat->node);
- 	kfree(sat);
- }
+diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
+index 48eb5fea62fd0..81467e93c7d53 100644
+--- a/drivers/tty/serial/fsl_lpuart.c
++++ b/drivers/tty/serial/fsl_lpuart.c
+@@ -1276,7 +1276,7 @@ static inline int lpuart_start_rx_dma(struct lpuart_port *sport)
+ 	 * 10ms at any baud rate.
+ 	 */
+ 	sport->rx_dma_rng_buf_len = (DMA_RX_TIMEOUT * baud /  bits / 1000) * 2;
+-	sport->rx_dma_rng_buf_len = (1 << (fls(sport->rx_dma_rng_buf_len) - 1));
++	sport->rx_dma_rng_buf_len = (1 << fls(sport->rx_dma_rng_buf_len));
+ 	if (sport->rx_dma_rng_buf_len < 16)
+ 		sport->rx_dma_rng_buf_len = 16;
  
 -- 
 2.39.2
