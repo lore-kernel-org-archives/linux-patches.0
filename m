@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16543168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8453DC433D2;
-	Mon,  8 May 2023 11:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2367C168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7F9C433EF;
+	Mon,  8 May 2023 11:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544599;
-	bh=Gs3XflwxLToaEsf+Liax7wQxJGi4ptvOVx0qYKfXPy4=;
+	s=korg; t=1683544603;
+	bh=TDiau+zfBxFbKvVSuhNND9OxJa3qdwFgDMrE057EEFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tf6ttDcl51I8bA6/6cB/v1WjpRRAH7KldcG19QNzENkd02lqpupNx/YSfeFLteFbg
-	 x9iZR1T+aeWSBOwFY8g7t9NTEK66lCf2hQzoCExM3DWYHW9tFLwqbXiitlqBlXFxaI
-	 iuUKk6EJRbXk4+uxVf+3Fsv6RhHKVc+IlrHc2oTM=
+	b=Ap12QYBGHd/4QSzQ5dVoYls21d2jaifR/IeBIN59G9x7CviEbMthBs11sSxyYbsdX
+	 Du4iHIqxoiT2cHDFYOSaEJ9Z1o/75qNLOeiZNOHsaKbULzTxnKrFtfCy1n8NqKMCpS
+	 lUkZAW6KLhKKGfseMd25JVPBMUcq6u0NfnjKl11o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mi <cmi@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
-	Maor Dickman <maord@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Jiefeng Li <jiefeng_li@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 463/694] net/mlx5: E-switch, Dont destroy indirect table in split rule
-Date: Mon,  8 May 2023 11:44:58 +0200
-Message-Id: <20230508094448.732358480@linuxfoundation.org>
+Subject: [PATCH 6.3 446/694] wifi: mt76: mt7921: fix missing unwind goto in `mt7921u_probe`
+Date: Mon,  8 May 2023 11:44:41 +0200
+Message-Id: <20230508094448.012281431@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,49 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Mi <cmi@nvidia.com>
+From: Jiefeng Li <jiefeng_li@hust.edu.cn>
 
-[ Upstream commit 4c8189302567f75099a336b0efcff8291ec86ff4 ]
+[ Upstream commit 5c47cdebbaeb7724df6f9f46917c93e53f791547 ]
 
-Source port rewrite (forward to ovs internal port or statck device) isn't
-supported in the rule of split action. So there is no indirect table in
-split rule. The cited commit destroyes indirect table in split rule. The
-indirect table for other rules will be destroyed wrongly. It will cause
-traffic loss.
+`mt7921u_dma_init` can only return zero or negative number according to its
+definition. When it returns non-zero number, there exists an error and this
+function should handle this error rather than return directly.
 
-Fix it by removing the destroy function in split rule. And also remove
-the destroy function in error flow.
-
-Fixes: 10742efc20a4 ("net/mlx5e: VF tunnel TX traffic offloading")
-Signed-off-by: Chris Mi <cmi@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
-Reviewed-by: Maor Dickman <maord@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 0d2afe09fad5 ("mt76: mt7921: add mt7921u driver")
+Signed-off-by: Jiefeng Li <jiefeng_li@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/usb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index 706746cd10af5..c99d208722f58 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -760,7 +760,6 @@ mlx5_eswitch_add_fwd_rule(struct mlx5_eswitch *esw,
- 	kfree(dest);
- 	return rule;
- err_chain_src_rewrite:
--	esw_put_dest_tables_loop(esw, attr, 0, i);
- 	mlx5_esw_vporttbl_put(esw, &fwd_attr);
- err_get_fwd:
- 	mlx5_chains_put_table(chains, attr->chain, attr->prio, 0);
-@@ -803,7 +802,6 @@ __mlx5_eswitch_del_rule(struct mlx5_eswitch *esw,
- 	if (fwd_rule)  {
- 		mlx5_esw_vporttbl_put(esw, &fwd_attr);
- 		mlx5_chains_put_table(chains, attr->chain, attr->prio, 0);
--		esw_put_dest_tables_loop(esw, attr, 0, esw_attr->split_count);
- 	} else {
- 		if (split)
- 			mlx5_esw_vporttbl_put(esw, &fwd_attr);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
+index 8fef09ed29c91..70c9bbdbf60e9 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
+@@ -272,7 +272,7 @@ static int mt7921u_probe(struct usb_interface *usb_intf,
+ 
+ 	ret = mt7921u_dma_init(dev, false);
+ 	if (ret)
+-		return ret;
++		goto error;
+ 
+ 	hw = mt76_hw(dev);
+ 	/* check hw sg support in order to enable AMSDU */
 -- 
 2.39.2
 
