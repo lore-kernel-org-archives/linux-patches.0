@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6D713AFF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62518C433D2;
-	Mon,  8 May 2023 11:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7ECC168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:24:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC83C4339B;
+	Mon,  8 May 2023 11:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545042;
-	bh=KrNPMfkSQ5/JfqgGYwz5qB7SNDQeKkRZwnoDN6hTeM8=;
+	s=korg; t=1683545048;
+	bh=a/BeJockpM/mTLEhxwbKeXONVeE8VkKkZ3K/AaUkPa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OHDRBYslfAXe0kI1wYwsjJkiUdRhGmlbfEmNV48G5mjNiD/QHr04XK3WTvGNJIvOa
-	 JJwW3CiK/eoq6vp58uuyqu9+Fyj3aHUSqD2PHL9jjZTjbnYjVXblCfM0mZr3uOvuF3
-	 rQBSjWgvHk8GBuDtcmh5OEwxwKlXiiLrr9f2vX0s=
+	b=yAlLSBQv0NB1/59h95ECeOCzUXbZLnnOhtxuoeDETFKNyrVP6a2agqdw1UOFBXdOX
+	 Jx57kUM3g/oDUaA+3uAaRjWlOlahK/tJPnSlGCTUDnI5gTITSk2mjFzOoHGwM+stJ4
+	 Tqsea1Vtffw+1FUwXXF6+ivd1anGVlDk+p/1LAAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Brendan Cunningham <bcunningham@cornelisnetworks.com>,
+	Patrick Kelsey <pat.kelsey@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 578/694] clk: mediatek: Consistently use GATE_MTK() macro
-Date: Mon,  8 May 2023 11:46:53 +0200
-Message-Id: <20230508094453.666430596@linuxfoundation.org>
+Subject: [PATCH 6.3 606/694] IB/hfi1: Fix bugs with non-PAGE_SIZE-end multi-iovec user SDMA requests
+Date: Mon,  8 May 2023 11:47:21 +0200
+Message-Id: <20230508094454.987039353@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,1775 +37,1145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
 
-[ Upstream commit 4c85e20b656607897e3bb06ff565822fa4b4de95 ]
+[ Upstream commit 00cbce5cbf88459cd1aa1d60d0f1df15477df127 ]
 
-All the various MediaTek clock drivers are, in a way or another,
-redefining the GATE_MTK() macro with different names: while some
-are doing that by actually using GATE_MTK(), others are copying
-it entirely (hence, entirely redefining it).
+hfi1 user SDMA request processing has two bugs that can cause data
+corruption for user SDMA requests that have multiple payload iovecs
+where an iovec other than the tail iovec does not run up to the page
+boundary for the buffer pointed to by that iovec.a
 
-Change all clock drivers to always and consistently use this macro.
+Here are the specific bugs:
+1. user_sdma_txadd() does not use struct user_sdma_iovec->iov.iov_len.
+   Rather, user_sdma_txadd() will add up to PAGE_SIZE bytes from iovec
+   to the packet, even if some of those bytes are past
+   iovec->iov.iov_len and are thus not intended to be in the packet.
+2. user_sdma_txadd() and user_sdma_send_pkts() fail to advance to the
+   next iovec in user_sdma_request->iovs when the current iovec
+   is not PAGE_SIZE and does not contain enough data to complete the
+   packet. The transmitted packet will contain the wrong data from the
+   iovec pages.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Tested-by: Chen-Yu Tsai <wenst@chromium.org> # MT8183, MT8192, MT8195 Chromebooks
-Link: https://lore.kernel.org/r/20230306140543.1813621-23-angelogioacchino.delregno@collabora.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: fa8c0d01df62 ("clk: mediatek: mt7622: Properly use CLK_IS_CRITICAL flag")
+This has not been an issue with SDMA packets from hfi1 Verbs or PSM2
+because they only produce iovecs that end short of PAGE_SIZE as the tail
+iovec of an SDMA request.
+
+Fixing these bugs exposes other bugs with the SDMA pin cache
+(struct mmu_rb_handler) that get in way of supporting user SDMA requests
+with multiple payload iovecs whose buffers do not end at PAGE_SIZE. So
+this commit fixes those issues as well.
+
+Here are the mmu_rb_handler bugs that non-PAGE_SIZE-end multi-iovec
+payload user SDMA requests can hit:
+1. Overlapping memory ranges in mmu_rb_handler will result in duplicate
+   pinnings.
+2. When extending an existing mmu_rb_handler entry (struct mmu_rb_node),
+   the mmu_rb code (1) removes the existing entry under a lock, (2)
+   releases that lock, pins the new pages, (3) then reacquires the lock
+   to insert the extended mmu_rb_node.
+
+   If someone else comes in and inserts an overlapping entry between (2)
+   and (3), insert in (3) will fail.
+
+   The failure path code in this case unpins _all_ pages in either the
+   original mmu_rb_node or the new mmu_rb_node that was inserted between
+   (2) and (3).
+3. In hfi1_mmu_rb_remove_unless_exact(), mmu_rb_node->refcount is
+   incremented outside of mmu_rb_handler->lock. As a result, mmu_rb_node
+   could be evicted by another thread that gets mmu_rb_handler->lock and
+   checks mmu_rb_node->refcount before mmu_rb_node->refcount is
+   incremented.
+4. Related to #2 above, SDMA request submission failure path does not
+   check mmu_rb_node->refcount before freeing mmu_rb_node object.
+
+   If there are other SDMA requests in progress whose iovecs have
+   pointers to the now-freed mmu_rb_node(s), those pointers to the
+   now-freed mmu_rb nodes will be dereferenced when those SDMA requests
+   complete.
+
+Fixes: 7be85676f1d1 ("IB/hfi1: Don't remove RB entry when not needed.")
+Fixes: 7724105686e7 ("IB/hfi1: add driver files")
+Signed-off-by: Brendan Cunningham <bcunningham@cornelisnetworks.com>
+Signed-off-by: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Link: https://lore.kernel.org/r/168088636445.3027109.10054635277810177889.stgit@252.162.96.66.static.eigbox.net
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt2701-aud.c      | 40 +++--------
- drivers/clk/mediatek/clk-mt2701-bdp.c      | 20 ++----
- drivers/clk/mediatek/clk-mt2701-eth.c      | 10 +--
- drivers/clk/mediatek/clk-mt2701-g3d.c      | 10 +--
- drivers/clk/mediatek/clk-mt2701-hif.c      | 10 +--
- drivers/clk/mediatek/clk-mt2701-img.c      | 10 +--
- drivers/clk/mediatek/clk-mt2701-mm.c       | 20 ++----
- drivers/clk/mediatek/clk-mt2701-vdec.c     | 20 ++----
- drivers/clk/mediatek/clk-mt2701.c          | 40 +++--------
- drivers/clk/mediatek/clk-mt2712-bdp.c      | 10 +--
- drivers/clk/mediatek/clk-mt2712-img.c      | 10 +--
- drivers/clk/mediatek/clk-mt2712-jpgdec.c   | 10 +--
- drivers/clk/mediatek/clk-mt2712-mfg.c      | 10 +--
- drivers/clk/mediatek/clk-mt2712-mm.c       | 34 +++------
- drivers/clk/mediatek/clk-mt2712-vdec.c     | 20 ++----
- drivers/clk/mediatek/clk-mt2712-venc.c     | 10 +--
- drivers/clk/mediatek/clk-mt2712.c          | 60 ++++------------
- drivers/clk/mediatek/clk-mt6765-audio.c    | 20 ++----
- drivers/clk/mediatek/clk-mt6765-cam.c      | 10 +--
- drivers/clk/mediatek/clk-mt6765-img.c      | 10 +--
- drivers/clk/mediatek/clk-mt6765-mipi0a.c   | 10 +--
- drivers/clk/mediatek/clk-mt6765-mm.c       | 10 +--
- drivers/clk/mediatek/clk-mt6765-vcodec.c   | 10 +--
- drivers/clk/mediatek/clk-mt6765.c          | 80 +++++-----------------
- drivers/clk/mediatek/clk-mt6797-img.c      | 10 +--
- drivers/clk/mediatek/clk-mt6797-mm.c       | 20 ++----
- drivers/clk/mediatek/clk-mt6797-vdec.c     | 20 ++----
- drivers/clk/mediatek/clk-mt6797-venc.c     | 10 +--
- drivers/clk/mediatek/clk-mt6797.c          | 42 ++++--------
- drivers/clk/mediatek/clk-mt7622-aud.c      | 40 +++--------
- drivers/clk/mediatek/clk-mt7622-eth.c      | 20 ++----
- drivers/clk/mediatek/clk-mt7622-hif.c      | 22 ++----
- drivers/clk/mediatek/clk-mt7622.c          | 61 ++++-------------
- drivers/clk/mediatek/clk-mt7629-eth.c      | 20 ++----
- drivers/clk/mediatek/clk-mt7629-hif.c      | 22 ++----
- drivers/clk/mediatek/clk-mt7629.c          | 40 +++--------
- drivers/clk/mediatek/clk-mt7986-eth.c      | 24 ++-----
- drivers/clk/mediatek/clk-mt7986-infracfg.c | 24 ++-----
- drivers/clk/mediatek/clk-mt8135.c          | 30 ++------
- drivers/clk/mediatek/clk-mt8167-aud.c      | 11 +--
- drivers/clk/mediatek/clk-mt8167-img.c      | 10 +--
- drivers/clk/mediatek/clk-mt8167-mfgcfg.c   | 10 +--
- drivers/clk/mediatek/clk-mt8167-mm.c       | 22 ++----
- drivers/clk/mediatek/clk-mt8167-vdec.c     | 20 ++----
- drivers/clk/mediatek/clk-mt8173-mm.c       | 22 ++----
- drivers/clk/mediatek/clk-mt8516-aud.c      | 10 +--
- drivers/clk/mediatek/clk-mt8516.c          | 60 ++++------------
- 47 files changed, 224 insertions(+), 840 deletions(-)
+ drivers/infiniband/hw/hfi1/ipoib_tx.c   |   1 +
+ drivers/infiniband/hw/hfi1/mmu_rb.c     |  66 +--
+ drivers/infiniband/hw/hfi1/mmu_rb.h     |   8 +-
+ drivers/infiniband/hw/hfi1/sdma.c       |  21 +-
+ drivers/infiniband/hw/hfi1/sdma.h       |  16 +-
+ drivers/infiniband/hw/hfi1/sdma_txreq.h |   1 +
+ drivers/infiniband/hw/hfi1/trace_mmu.h  |   4 -
+ drivers/infiniband/hw/hfi1/user_sdma.c  | 600 +++++++++++++++---------
+ drivers/infiniband/hw/hfi1/user_sdma.h  |   5 -
+ drivers/infiniband/hw/hfi1/verbs.c      |   4 +-
+ drivers/infiniband/hw/hfi1/vnic_sdma.c  |   1 +
+ 11 files changed, 423 insertions(+), 304 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt2701-aud.c b/drivers/clk/mediatek/clk-mt2701-aud.c
-index 1a32d8b7db84f..21f7cc106bbe5 100644
---- a/drivers/clk/mediatek/clk-mt2701-aud.c
-+++ b/drivers/clk/mediatek/clk-mt2701-aud.c
-@@ -15,41 +15,17 @@
+diff --git a/drivers/infiniband/hw/hfi1/ipoib_tx.c b/drivers/infiniband/hw/hfi1/ipoib_tx.c
+index 349eb41391368..8973a081d641e 100644
+--- a/drivers/infiniband/hw/hfi1/ipoib_tx.c
++++ b/drivers/infiniband/hw/hfi1/ipoib_tx.c
+@@ -215,6 +215,7 @@ static int hfi1_ipoib_build_ulp_payload(struct ipoib_txreq *tx,
+ 		const skb_frag_t *frag = &skb_shinfo(skb)->frags[i];
  
- #include <dt-bindings/clock/mt2701-clk.h>
+ 		ret = sdma_txadd_page(dd,
++				      NULL,
+ 				      txreq,
+ 				      skb_frag_page(frag),
+ 				      frag->bv_offset,
+diff --git a/drivers/infiniband/hw/hfi1/mmu_rb.c b/drivers/infiniband/hw/hfi1/mmu_rb.c
+index af46ff2033426..71b9ac0188875 100644
+--- a/drivers/infiniband/hw/hfi1/mmu_rb.c
++++ b/drivers/infiniband/hw/hfi1/mmu_rb.c
+@@ -126,7 +126,7 @@ int hfi1_mmu_rb_insert(struct mmu_rb_handler *handler,
+ 	spin_lock_irqsave(&handler->lock, flags);
+ 	node = __mmu_rb_search(handler, mnode->addr, mnode->len);
+ 	if (node) {
+-		ret = -EINVAL;
++		ret = -EEXIST;
+ 		goto unlock;
+ 	}
+ 	__mmu_int_rb_insert(mnode, &handler->root);
+@@ -143,6 +143,19 @@ int hfi1_mmu_rb_insert(struct mmu_rb_handler *handler,
+ 	return ret;
+ }
  
--#define GATE_AUDIO0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO0(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio0_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
--#define GATE_AUDIO1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO1(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio1_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
--#define GATE_AUDIO2(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio2_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO2(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio2_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
--#define GATE_AUDIO3(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio3_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO3(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio3_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
- static const struct mtk_gate_regs audio0_cg_regs = {
- 	.set_ofs = 0x0,
-diff --git a/drivers/clk/mediatek/clk-mt2701-bdp.c b/drivers/clk/mediatek/clk-mt2701-bdp.c
-index 435ed4819d563..b0f0572079452 100644
---- a/drivers/clk/mediatek/clk-mt2701-bdp.c
-+++ b/drivers/clk/mediatek/clk-mt2701-bdp.c
-@@ -24,23 +24,11 @@ static const struct mtk_gate_regs bdp1_cg_regs = {
- 	.sta_ofs = 0x0110,
- };
- 
--#define GATE_BDP0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &bdp0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_BDP0(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &bdp0_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
--#define GATE_BDP1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &bdp1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_BDP1(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &bdp1_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
- static const struct mtk_gate bdp_clks[] = {
- 	GATE_BDP0(CLK_BDP_BRG_BA, "brg_baclk", "mm_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt2701-eth.c b/drivers/clk/mediatek/clk-mt2701-eth.c
-index f3cb78e7f6e9e..4c830ebdd7613 100644
---- a/drivers/clk/mediatek/clk-mt2701-eth.c
-+++ b/drivers/clk/mediatek/clk-mt2701-eth.c
-@@ -16,14 +16,8 @@ static const struct mtk_gate_regs eth_cg_regs = {
- 	.sta_ofs = 0x0030,
- };
- 
--#define GATE_ETH(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &eth_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_ETH(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &eth_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate eth_clks[] = {
- 	GATE_DUMMY(CLK_DUMMY, "eth_dummy"),
-diff --git a/drivers/clk/mediatek/clk-mt2701-g3d.c b/drivers/clk/mediatek/clk-mt2701-g3d.c
-index 499a170ba5f92..ae094046890aa 100644
---- a/drivers/clk/mediatek/clk-mt2701-g3d.c
-+++ b/drivers/clk/mediatek/clk-mt2701-g3d.c
-@@ -16,14 +16,8 @@
- 
- #include <dt-bindings/clock/mt2701-clk.h>
- 
--#define GATE_G3D(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &g3d_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_G3D(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &g3d_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate_regs g3d_cg_regs = {
- 	.sta_ofs = 0x0,
-diff --git a/drivers/clk/mediatek/clk-mt2701-hif.c b/drivers/clk/mediatek/clk-mt2701-hif.c
-index d5465d7829935..3583bd1240d55 100644
---- a/drivers/clk/mediatek/clk-mt2701-hif.c
-+++ b/drivers/clk/mediatek/clk-mt2701-hif.c
-@@ -16,14 +16,8 @@ static const struct mtk_gate_regs hif_cg_regs = {
- 	.sta_ofs = 0x0030,
- };
- 
--#define GATE_HIF(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &hif_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_HIF(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &hif_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate hif_clks[] = {
- 	GATE_DUMMY(CLK_DUMMY, "hif_dummy"),
-diff --git a/drivers/clk/mediatek/clk-mt2701-img.c b/drivers/clk/mediatek/clk-mt2701-img.c
-index 7e53deb7f9905..eb172473f0755 100644
---- a/drivers/clk/mediatek/clk-mt2701-img.c
-+++ b/drivers/clk/mediatek/clk-mt2701-img.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs img_cg_regs = {
- 	.sta_ofs = 0x0000,
- };
- 
--#define GATE_IMG(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &img_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_IMG(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &img_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate img_clks[] = {
- 	GATE_IMG(CLK_IMG_SMI_COMM, "img_smi_comm", "mm_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt2701-mm.c b/drivers/clk/mediatek/clk-mt2701-mm.c
-index 23d5ddcc1d372..f4885dffb324f 100644
---- a/drivers/clk/mediatek/clk-mt2701-mm.c
-+++ b/drivers/clk/mediatek/clk-mt2701-mm.c
-@@ -24,23 +24,11 @@ static const struct mtk_gate_regs disp1_cg_regs = {
- 	.sta_ofs = 0x0110,
- };
- 
--#define GATE_DISP0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &disp0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_DISP0(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &disp0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_DISP1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &disp1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_DISP1(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &disp1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate mm_clks[] = {
- 	GATE_DISP0(CLK_MM_SMI_COMMON, "mm_smi_comm", "mm_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt2701-vdec.c b/drivers/clk/mediatek/clk-mt2701-vdec.c
-index d3089da0ab62e..0f07c5d731df6 100644
---- a/drivers/clk/mediatek/clk-mt2701-vdec.c
-+++ b/drivers/clk/mediatek/clk-mt2701-vdec.c
-@@ -24,23 +24,11 @@ static const struct mtk_gate_regs vdec1_cg_regs = {
- 	.sta_ofs = 0x0008,
- };
- 
--#define GATE_VDEC0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &vdec0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_VDEC0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &vdec0_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
--#define GATE_VDEC1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &vdec1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_VDEC1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &vdec1_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
- static const struct mtk_gate vdec_clks[] = {
- 	GATE_VDEC0(CLK_VDEC_CKGEN, "vdec_cken", "vdec_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt2701.c b/drivers/clk/mediatek/clk-mt2701.c
-index 06ca81359d350..dfe328f7a44b2 100644
---- a/drivers/clk/mediatek/clk-mt2701.c
-+++ b/drivers/clk/mediatek/clk-mt2701.c
-@@ -636,14 +636,8 @@ static const struct mtk_gate_regs top_aud_cg_regs = {
- 	.sta_ofs = 0x012C,
- };
- 
--#define GATE_TOP_AUD(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top_aud_cg_regs,		\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_TOP_AUD(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &top_aud_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
- static const struct mtk_gate top_clks[] = {
- 	GATE_TOP_AUD(CLK_TOP_AUD_48K_TIMING, "a1sys_hp_ck", "aud_mux1_div",
-@@ -702,14 +696,8 @@ static const struct mtk_gate_regs infra_cg_regs = {
- 	.sta_ofs = 0x0048,
- };
- 
--#define GATE_ICG(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &infra_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_ICG(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &infra_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate infra_clks[] = {
- 	GATE_ICG(CLK_INFRA_DBG, "dbgclk", "axi_sel", 0),
-@@ -823,23 +811,11 @@ static const struct mtk_gate_regs peri1_cg_regs = {
- 	.sta_ofs = 0x001c,
- };
- 
--#define GATE_PERI0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &peri0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_PERI0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &peri0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_PERI1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &peri1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_PERI1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &peri1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate peri_clks[] = {
- 	GATE_PERI0(CLK_PERI_USB0_MCU, "usb0_mcu_ck", "axi_sel", 31),
-diff --git a/drivers/clk/mediatek/clk-mt2712-bdp.c b/drivers/clk/mediatek/clk-mt2712-bdp.c
-index 684d03e9f6de1..5e668651dd901 100644
---- a/drivers/clk/mediatek/clk-mt2712-bdp.c
-+++ b/drivers/clk/mediatek/clk-mt2712-bdp.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs bdp_cg_regs = {
- 	.sta_ofs = 0x100,
- };
- 
--#define GATE_BDP(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &bdp_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_BDP(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &bdp_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
- static const struct mtk_gate bdp_clks[] = {
- 	GATE_BDP(CLK_BDP_BRIDGE_B, "bdp_bridge_b", "mm_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt2712-img.c b/drivers/clk/mediatek/clk-mt2712-img.c
-index 335049cdc856c..3ffa51384e6b2 100644
---- a/drivers/clk/mediatek/clk-mt2712-img.c
-+++ b/drivers/clk/mediatek/clk-mt2712-img.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs img_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_IMG(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &img_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_IMG(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &img_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
- static const struct mtk_gate img_clks[] = {
- 	GATE_IMG(CLK_IMG_SMI_LARB2, "img_smi_larb2", "mm_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt2712-jpgdec.c b/drivers/clk/mediatek/clk-mt2712-jpgdec.c
-index 07ba7c5e80aff..8c768d5ce24d5 100644
---- a/drivers/clk/mediatek/clk-mt2712-jpgdec.c
-+++ b/drivers/clk/mediatek/clk-mt2712-jpgdec.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs jpgdec_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_JPGDEC(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &jpgdec_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_JPGDEC(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &jpgdec_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
- static const struct mtk_gate jpgdec_clks[] = {
- 	GATE_JPGDEC(CLK_JPGDEC_JPGDEC1, "jpgdec_jpgdec1", "jpgdec_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt2712-mfg.c b/drivers/clk/mediatek/clk-mt2712-mfg.c
-index 42f8cf3ecf4cb..8949315c2dd20 100644
---- a/drivers/clk/mediatek/clk-mt2712-mfg.c
-+++ b/drivers/clk/mediatek/clk-mt2712-mfg.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs mfg_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_MFG(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &mfg_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_MFG(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &mfg_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate mfg_clks[] = {
- 	GATE_MFG(CLK_MFG_BG3D, "mfg_bg3d", "mfg_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt2712-mm.c b/drivers/clk/mediatek/clk-mt2712-mm.c
-index 25b8af640c128..e5264f1ce60d0 100644
---- a/drivers/clk/mediatek/clk-mt2712-mm.c
-+++ b/drivers/clk/mediatek/clk-mt2712-mm.c
-@@ -30,32 +30,14 @@ static const struct mtk_gate_regs mm2_cg_regs = {
- 	.sta_ofs = 0x220,
- };
- 
--#define GATE_MM0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &mm0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
--
--#define GATE_MM1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &mm1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
--
--#define GATE_MM2(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &mm2_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_MM0(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
++/* Caller must hold handler lock */
++struct mmu_rb_node *hfi1_mmu_rb_get_first(struct mmu_rb_handler *handler,
++					  unsigned long addr, unsigned long len)
++{
++	struct mmu_rb_node *node;
 +
-+#define GATE_MM1(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
++	trace_hfi1_mmu_rb_search(addr, len);
++	node = __mmu_int_rb_iter_first(&handler->root, addr, (addr + len) - 1);
++	if (node)
++		list_move_tail(&node->list, &handler->lru_list);
++	return node;
++}
 +
-+#define GATE_MM2(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm2_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
+ /* Caller must hold handler lock */
+ static struct mmu_rb_node *__mmu_rb_search(struct mmu_rb_handler *handler,
+ 					   unsigned long addr,
+@@ -167,34 +180,6 @@ static struct mmu_rb_node *__mmu_rb_search(struct mmu_rb_handler *handler,
+ 	return node;
+ }
  
- static const struct mtk_gate mm_clks[] = {
- 	/* MM0 */
-diff --git a/drivers/clk/mediatek/clk-mt2712-vdec.c b/drivers/clk/mediatek/clk-mt2712-vdec.c
-index 6296ed5c5b555..572290dd43c87 100644
---- a/drivers/clk/mediatek/clk-mt2712-vdec.c
-+++ b/drivers/clk/mediatek/clk-mt2712-vdec.c
-@@ -24,23 +24,11 @@ static const struct mtk_gate_regs vdec1_cg_regs = {
- 	.sta_ofs = 0x8,
- };
- 
--#define GATE_VDEC0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &vdec0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
+-bool hfi1_mmu_rb_remove_unless_exact(struct mmu_rb_handler *handler,
+-				     unsigned long addr, unsigned long len,
+-				     struct mmu_rb_node **rb_node)
+-{
+-	struct mmu_rb_node *node;
+-	unsigned long flags;
+-	bool ret = false;
+-
+-	if (current->mm != handler->mn.mm)
+-		return ret;
+-
+-	spin_lock_irqsave(&handler->lock, flags);
+-	node = __mmu_rb_search(handler, addr, len);
+-	if (node) {
+-		if (node->addr == addr && node->len == len) {
+-			list_move_tail(&node->list, &handler->lru_list);
+-			goto unlock;
+-		}
+-		__mmu_int_rb_remove(node, &handler->root);
+-		list_del(&node->list); /* remove from LRU list */
+-		ret = true;
 -	}
-+#define GATE_VDEC0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &vdec0_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
--#define GATE_VDEC1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &vdec1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_VDEC1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &vdec1_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
- static const struct mtk_gate vdec_clks[] = {
- 	/* VDEC0 */
-diff --git a/drivers/clk/mediatek/clk-mt2712-venc.c b/drivers/clk/mediatek/clk-mt2712-venc.c
-index b9bfc35de629c..9588eb03016eb 100644
---- a/drivers/clk/mediatek/clk-mt2712-venc.c
-+++ b/drivers/clk/mediatek/clk-mt2712-venc.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs venc_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_VENC(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &venc_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_VENC(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &venc_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
- static const struct mtk_gate venc_clks[] = {
- 	GATE_VENC(CLK_VENC_SMI_COMMON_CON, "venc_smi", "mm_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt2712.c b/drivers/clk/mediatek/clk-mt2712.c
-index aa39d006358a3..79cdb1e72ec52 100644
---- a/drivers/clk/mediatek/clk-mt2712.c
-+++ b/drivers/clk/mediatek/clk-mt2712.c
-@@ -958,23 +958,11 @@ static const struct mtk_gate_regs top1_cg_regs = {
- 	.sta_ofs = 0x424,
- };
- 
--#define GATE_TOP0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_TOP0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top0_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
--#define GATE_TOP1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_TOP1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top1_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate top_clks[] = {
- 	/* TOP0 */
-@@ -998,14 +986,8 @@ static const struct mtk_gate_regs infra_cg_regs = {
- 	.sta_ofs = 0x48,
- };
- 
--#define GATE_INFRA(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &infra_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_INFRA(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &infra_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate infra_clks[] = {
- 	GATE_INFRA(CLK_INFRA_DBGCLK, "infra_dbgclk", "axi_sel", 0),
-@@ -1035,32 +1017,14 @@ static const struct mtk_gate_regs peri2_cg_regs = {
- 	.sta_ofs = 0x42c,
- };
- 
--#define GATE_PERI0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &peri0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_PERI0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &peri0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_PERI1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &peri1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_PERI1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &peri1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_PERI2(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &peri2_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_PERI2(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &peri2_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate peri_clks[] = {
- 	/* PERI0 */
-diff --git a/drivers/clk/mediatek/clk-mt6765-audio.c b/drivers/clk/mediatek/clk-mt6765-audio.c
-index 0aa6c0d352ca5..5682e0302eee2 100644
---- a/drivers/clk/mediatek/clk-mt6765-audio.c
-+++ b/drivers/clk/mediatek/clk-mt6765-audio.c
-@@ -24,23 +24,11 @@ static const struct mtk_gate_regs audio1_cg_regs = {
- 	.sta_ofs = 0x4,
- };
- 
--#define GATE_AUDIO0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio0_cg_regs,		\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO0(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio0_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
--#define GATE_AUDIO1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio1_cg_regs,		\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO1(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio1_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
- static const struct mtk_gate audio_clks[] = {
- 	/* AUDIO0 */
-diff --git a/drivers/clk/mediatek/clk-mt6765-cam.c b/drivers/clk/mediatek/clk-mt6765-cam.c
-index 25f2bef38126e..6e7d192c19cb0 100644
---- a/drivers/clk/mediatek/clk-mt6765-cam.c
-+++ b/drivers/clk/mediatek/clk-mt6765-cam.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs cam_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_CAM(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &cam_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_CAM(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &cam_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate cam_clks[] = {
- 	GATE_CAM(CLK_CAM_LARB3, "cam_larb3", "mm_ck", 0),
-diff --git a/drivers/clk/mediatek/clk-mt6765-img.c b/drivers/clk/mediatek/clk-mt6765-img.c
-index a62303ef4f41d..cfbc907988aff 100644
---- a/drivers/clk/mediatek/clk-mt6765-img.c
-+++ b/drivers/clk/mediatek/clk-mt6765-img.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs img_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_IMG(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &img_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_IMG(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &img_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate img_clks[] = {
- 	GATE_IMG(CLK_IMG_LARB2, "img_larb2", "mm_ck", 0),
-diff --git a/drivers/clk/mediatek/clk-mt6765-mipi0a.c b/drivers/clk/mediatek/clk-mt6765-mipi0a.c
-index 25c829fc38661..f2b9dc8084801 100644
---- a/drivers/clk/mediatek/clk-mt6765-mipi0a.c
-+++ b/drivers/clk/mediatek/clk-mt6765-mipi0a.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs mipi0a_cg_regs = {
- 	.sta_ofs = 0x80,
- };
- 
--#define GATE_MIPI0A(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &mipi0a_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_MIPI0A(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &mipi0a_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate mipi0a_clks[] = {
- 	GATE_MIPI0A(CLK_MIPI0A_CSR_CSI_EN_0A,
-diff --git a/drivers/clk/mediatek/clk-mt6765-mm.c b/drivers/clk/mediatek/clk-mt6765-mm.c
-index bda774668a361..a4570c9dbefa5 100644
---- a/drivers/clk/mediatek/clk-mt6765-mm.c
-+++ b/drivers/clk/mediatek/clk-mt6765-mm.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs mm_cg_regs = {
- 	.sta_ofs = 0x100,
- };
- 
--#define GATE_MM(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &mm_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_MM(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate mm_clks[] = {
- 	/* MM */
-diff --git a/drivers/clk/mediatek/clk-mt6765-vcodec.c b/drivers/clk/mediatek/clk-mt6765-vcodec.c
-index 2bc1fbde87da9..75d72b9b4032c 100644
---- a/drivers/clk/mediatek/clk-mt6765-vcodec.c
-+++ b/drivers/clk/mediatek/clk-mt6765-vcodec.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs venc_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_VENC(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &venc_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_VENC(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &venc_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
- static const struct mtk_gate venc_clks[] = {
- 	GATE_VENC(CLK_VENC_SET0_LARB, "venc_set0_larb", "mm_ck", 0),
-diff --git a/drivers/clk/mediatek/clk-mt6765.c b/drivers/clk/mediatek/clk-mt6765.c
-index 6f5c92a7f6204..0c20ce678350e 100644
---- a/drivers/clk/mediatek/clk-mt6765.c
-+++ b/drivers/clk/mediatek/clk-mt6765.c
-@@ -483,32 +483,14 @@ static const struct mtk_gate_regs top2_cg_regs = {
- 	.sta_ofs = 0x320,
- };
- 
--#define GATE_TOP0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_TOP0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top0_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
--#define GATE_TOP1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_TOP1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top1_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
--#define GATE_TOP2(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top2_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_TOP2(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top2_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
- static const struct mtk_gate top_clks[] = {
- 	/* TOP0 */
-@@ -559,41 +541,17 @@ static const struct mtk_gate_regs ifr5_cg_regs = {
- 	.sta_ofs = 0xc8,
- };
- 
--#define GATE_IFR2(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &ifr2_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_IFR2(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &ifr2_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_IFR3(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &ifr3_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_IFR3(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &ifr3_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_IFR4(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &ifr4_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_IFR4(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &ifr4_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_IFR5(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &ifr5_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_IFR5(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &ifr5_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate ifr_clks[] = {
- 	/* INFRA_TOPAXI */
-@@ -674,14 +632,8 @@ static const struct mtk_gate_regs apmixed_cg_regs = {
- 	.sta_ofs = 0x14,
- };
- 
--#define GATE_APMIXED(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &apmixed_cg_regs,		\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,		\
--	}
-+#define GATE_APMIXED(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &apmixed_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate apmixed_clks[] = {
- 	/* AUDIO0 */
-diff --git a/drivers/clk/mediatek/clk-mt6797-img.c b/drivers/clk/mediatek/clk-mt6797-img.c
-index 7c6a53fbb8be6..06441393478f6 100644
---- a/drivers/clk/mediatek/clk-mt6797-img.c
-+++ b/drivers/clk/mediatek/clk-mt6797-img.c
-@@ -16,14 +16,8 @@ static const struct mtk_gate_regs img_cg_regs = {
- 	.sta_ofs = 0x0000,
- };
- 
--#define GATE_IMG(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &img_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_IMG(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &img_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate img_clks[] = {
- 	GATE_IMG(CLK_IMG_FDVT, "img_fdvt", "mm_sel", 11),
-diff --git a/drivers/clk/mediatek/clk-mt6797-mm.c b/drivers/clk/mediatek/clk-mt6797-mm.c
-index deb16a6b16a5e..d5e9fe445e308 100644
---- a/drivers/clk/mediatek/clk-mt6797-mm.c
-+++ b/drivers/clk/mediatek/clk-mt6797-mm.c
-@@ -23,23 +23,11 @@ static const struct mtk_gate_regs mm1_cg_regs = {
- 	.sta_ofs = 0x0110,
- };
- 
--#define GATE_MM0(_id, _name, _parent, _shift) {			\
--	.id = _id,					\
--	.name = _name,					\
--	.parent_name = _parent,				\
--	.regs = &mm0_cg_regs,				\
--	.shift = _shift,				\
--	.ops = &mtk_clk_gate_ops_setclr,		\
+-unlock:
+-	spin_unlock_irqrestore(&handler->lock, flags);
+-	*rb_node = node;
+-	return ret;
 -}
-+#define GATE_MM0(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
+-
+ void hfi1_mmu_rb_evict(struct mmu_rb_handler *handler, void *evict_arg)
+ {
+ 	struct mmu_rb_node *rbnode, *ptr;
+@@ -225,29 +210,6 @@ void hfi1_mmu_rb_evict(struct mmu_rb_handler *handler, void *evict_arg)
+ 	}
+ }
  
--#define GATE_MM1(_id, _name, _parent, _shift) {			\
--	.id = _id,					\
--	.name = _name,					\
--	.parent_name = _parent,				\
--	.regs = &mm1_cg_regs,				\
--	.shift = _shift,				\
--	.ops = &mtk_clk_gate_ops_setclr,		\
+-/*
+- * It is up to the caller to ensure that this function does not race with the
+- * mmu invalidate notifier which may be calling the users remove callback on
+- * 'node'.
+- */
+-void hfi1_mmu_rb_remove(struct mmu_rb_handler *handler,
+-			struct mmu_rb_node *node)
+-{
+-	unsigned long flags;
+-
+-	if (current->mm != handler->mn.mm)
+-		return;
+-
+-	/* Validity of handler and node pointers has been checked by caller. */
+-	trace_hfi1_mmu_rb_remove(node->addr, node->len);
+-	spin_lock_irqsave(&handler->lock, flags);
+-	__mmu_int_rb_remove(node, &handler->root);
+-	list_del(&node->list); /* remove from LRU list */
+-	spin_unlock_irqrestore(&handler->lock, flags);
+-
+-	handler->ops->remove(handler->ops_arg, node);
 -}
-+#define GATE_MM1(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
+-
+ static int mmu_notifier_range_start(struct mmu_notifier *mn,
+ 		const struct mmu_notifier_range *range)
+ {
+diff --git a/drivers/infiniband/hw/hfi1/mmu_rb.h b/drivers/infiniband/hw/hfi1/mmu_rb.h
+index 7417be2b9dc8a..ed75acdb7b839 100644
+--- a/drivers/infiniband/hw/hfi1/mmu_rb.h
++++ b/drivers/infiniband/hw/hfi1/mmu_rb.h
+@@ -52,10 +52,8 @@ void hfi1_mmu_rb_unregister(struct mmu_rb_handler *handler);
+ int hfi1_mmu_rb_insert(struct mmu_rb_handler *handler,
+ 		       struct mmu_rb_node *mnode);
+ void hfi1_mmu_rb_evict(struct mmu_rb_handler *handler, void *evict_arg);
+-void hfi1_mmu_rb_remove(struct mmu_rb_handler *handler,
+-			struct mmu_rb_node *mnode);
+-bool hfi1_mmu_rb_remove_unless_exact(struct mmu_rb_handler *handler,
+-				     unsigned long addr, unsigned long len,
+-				     struct mmu_rb_node **rb_node);
++struct mmu_rb_node *hfi1_mmu_rb_get_first(struct mmu_rb_handler *handler,
++					  unsigned long addr,
++					  unsigned long len);
  
- static const struct mtk_gate mm_clks[] = {
- 	GATE_MM0(CLK_MM_SMI_COMMON, "mm_smi_common", "mm_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt6797-vdec.c b/drivers/clk/mediatek/clk-mt6797-vdec.c
-index 6120fccc859f1..8622ddd87a5bb 100644
---- a/drivers/clk/mediatek/clk-mt6797-vdec.c
-+++ b/drivers/clk/mediatek/clk-mt6797-vdec.c
-@@ -24,23 +24,11 @@ static const struct mtk_gate_regs vdec1_cg_regs = {
- 	.sta_ofs = 0x0008,
- };
- 
--#define GATE_VDEC0(_id, _name, _parent, _shift) {		\
--	.id = _id,					\
--	.name = _name,					\
--	.parent_name = _parent,				\
--	.regs = &vdec0_cg_regs,				\
--	.shift = _shift,				\
--	.ops = &mtk_clk_gate_ops_setclr_inv,		\
--}
-+#define GATE_VDEC0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &vdec0_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
--#define GATE_VDEC1(_id, _name, _parent, _shift) {		\
--	.id = _id,					\
--	.name = _name,					\
--	.parent_name = _parent,				\
--	.regs = &vdec1_cg_regs,				\
--	.shift = _shift,				\
--	.ops = &mtk_clk_gate_ops_setclr_inv,		\
--}
-+#define GATE_VDEC1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &vdec1_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
- static const struct mtk_gate vdec_clks[] = {
- 	GATE_VDEC0(CLK_VDEC_CKEN_ENG, "vdec_cken_eng", "vdec_sel", 8),
-diff --git a/drivers/clk/mediatek/clk-mt6797-venc.c b/drivers/clk/mediatek/clk-mt6797-venc.c
-index 834d3834d2bbc..928d611a476e4 100644
---- a/drivers/clk/mediatek/clk-mt6797-venc.c
-+++ b/drivers/clk/mediatek/clk-mt6797-venc.c
-@@ -18,14 +18,8 @@ static const struct mtk_gate_regs venc_cg_regs = {
- 	.sta_ofs = 0x0000,
- };
- 
--#define GATE_VENC(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &venc_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
+ #endif /* _HFI1_MMU_RB_H */
+diff --git a/drivers/infiniband/hw/hfi1/sdma.c b/drivers/infiniband/hw/hfi1/sdma.c
+index 8ed20392e9f0d..bb2552dd29c1e 100644
+--- a/drivers/infiniband/hw/hfi1/sdma.c
++++ b/drivers/infiniband/hw/hfi1/sdma.c
+@@ -1593,22 +1593,7 @@ static inline void sdma_unmap_desc(
+ 	struct hfi1_devdata *dd,
+ 	struct sdma_desc *descp)
+ {
+-	switch (sdma_mapping_type(descp)) {
+-	case SDMA_MAP_SINGLE:
+-		dma_unmap_single(
+-			&dd->pcidev->dev,
+-			sdma_mapping_addr(descp),
+-			sdma_mapping_len(descp),
+-			DMA_TO_DEVICE);
+-		break;
+-	case SDMA_MAP_PAGE:
+-		dma_unmap_page(
+-			&dd->pcidev->dev,
+-			sdma_mapping_addr(descp),
+-			sdma_mapping_len(descp),
+-			DMA_TO_DEVICE);
+-		break;
 -	}
-+#define GATE_VENC(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &venc_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
- static const struct mtk_gate venc_clks[] = {
- 	GATE_VENC(CLK_VENC_0, "venc_0", "mm_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt6797.c b/drivers/clk/mediatek/clk-mt6797.c
-index 105a512857b3c..17b23ee4faee6 100644
---- a/drivers/clk/mediatek/clk-mt6797.c
-+++ b/drivers/clk/mediatek/clk-mt6797.c
-@@ -421,40 +421,22 @@ static const struct mtk_gate_regs infra2_cg_regs = {
- 	.sta_ofs = 0x00b0,
- };
- 
--#define GATE_ICG0(_id, _name, _parent, _shift) {		\
--	.id = _id,						\
--	.name = _name,						\
--	.parent_name = _parent,					\
--	.regs = &infra0_cg_regs,				\
--	.shift = _shift,					\
--	.ops = &mtk_clk_gate_ops_setclr,			\
--}
-+#define GATE_ICG0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &infra0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_ICG1(_id, _name, _parent, _shift)			\
--	GATE_ICG1_FLAGS(_id, _name, _parent, _shift, 0)
-+#define GATE_ICG1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &infra1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_ICG1_FLAGS(_id, _name, _parent, _shift, _flags) {	\
--	.id = _id,						\
--	.name = _name,						\
--	.parent_name = _parent,					\
--	.regs = &infra1_cg_regs,				\
--	.shift = _shift,					\
--	.ops = &mtk_clk_gate_ops_setclr,			\
--	.flags = _flags,					\
--}
-+#define GATE_ICG1_FLAGS(_id, _name, _parent, _shift, _flags)		\
-+	GATE_MTK_FLAGS(_id, _name, _parent, &infra1_cg_regs, _shift,	\
-+		       &mtk_clk_gate_ops_setclr, _flags)
- 
--#define GATE_ICG2(_id, _name, _parent, _shift)			\
--	GATE_ICG2_FLAGS(_id, _name, _parent, _shift, 0)
-+#define GATE_ICG2(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &infra2_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_ICG2_FLAGS(_id, _name, _parent, _shift, _flags) {	\
--	.id = _id,						\
--	.name = _name,						\
--	.parent_name = _parent,					\
--	.regs = &infra2_cg_regs,				\
--	.shift = _shift,					\
--	.ops = &mtk_clk_gate_ops_setclr,			\
--	.flags = _flags,					\
--}
-+#define GATE_ICG2_FLAGS(_id, _name, _parent, _shift, _flags)		\
-+	GATE_MTK_FLAGS(_id, _name, _parent, &infra2_cg_regs, _shift,	\
-+		       &mtk_clk_gate_ops_setclr, _flags)
++	system_descriptor_complete(dd, descp);
+ }
  
  /*
-  * Clock gates dramc and dramc_b are needed by the DRAM controller.
-diff --git a/drivers/clk/mediatek/clk-mt7622-aud.c b/drivers/clk/mediatek/clk-mt7622-aud.c
-index b8aabfeb1cba4..27c543759f2ab 100644
---- a/drivers/clk/mediatek/clk-mt7622-aud.c
-+++ b/drivers/clk/mediatek/clk-mt7622-aud.c
-@@ -16,41 +16,17 @@
+@@ -3128,7 +3113,7 @@ int ext_coal_sdma_tx_descs(struct hfi1_devdata *dd, struct sdma_txreq *tx,
  
- #include <dt-bindings/clock/mt7622-clk.h>
+ 		/* Add descriptor for coalesce buffer */
+ 		tx->desc_limit = MAX_DESC;
+-		return _sdma_txadd_daddr(dd, SDMA_MAP_SINGLE, tx,
++		return _sdma_txadd_daddr(dd, SDMA_MAP_SINGLE, NULL, tx,
+ 					 addr, tx->tlen);
+ 	}
  
--#define GATE_AUDIO0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO0(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio0_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
+@@ -3167,10 +3152,12 @@ int _pad_sdma_tx_descs(struct hfi1_devdata *dd, struct sdma_txreq *tx)
+ 			return rval;
+ 		}
+ 	}
++
+ 	/* finish the one just added */
+ 	make_tx_sdma_desc(
+ 		tx,
+ 		SDMA_MAP_NONE,
++		NULL,
+ 		dd->sdma_pad_phys,
+ 		sizeof(u32) - (tx->packet_len & (sizeof(u32) - 1)));
+ 	tx->num_desc++;
+diff --git a/drivers/infiniband/hw/hfi1/sdma.h b/drivers/infiniband/hw/hfi1/sdma.h
+index b023fc461bd51..95aaec14c6c28 100644
+--- a/drivers/infiniband/hw/hfi1/sdma.h
++++ b/drivers/infiniband/hw/hfi1/sdma.h
+@@ -594,6 +594,7 @@ static inline dma_addr_t sdma_mapping_addr(struct sdma_desc *d)
+ static inline void make_tx_sdma_desc(
+ 	struct sdma_txreq *tx,
+ 	int type,
++	void *pinning_ctx,
+ 	dma_addr_t addr,
+ 	size_t len)
+ {
+@@ -612,6 +613,7 @@ static inline void make_tx_sdma_desc(
+ 				<< SDMA_DESC0_PHY_ADDR_SHIFT) |
+ 			(((u64)len & SDMA_DESC0_BYTE_COUNT_MASK)
+ 				<< SDMA_DESC0_BYTE_COUNT_SHIFT);
++	desc->pinning_ctx = pinning_ctx;
+ }
  
--#define GATE_AUDIO1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO1(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio1_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
+ /* helper to extend txreq */
+@@ -643,6 +645,7 @@ static inline void _sdma_close_tx(struct hfi1_devdata *dd,
+ static inline int _sdma_txadd_daddr(
+ 	struct hfi1_devdata *dd,
+ 	int type,
++	void *pinning_ctx,
+ 	struct sdma_txreq *tx,
+ 	dma_addr_t addr,
+ 	u16 len)
+@@ -652,6 +655,7 @@ static inline int _sdma_txadd_daddr(
+ 	make_tx_sdma_desc(
+ 		tx,
+ 		type,
++		pinning_ctx,
+ 		addr, len);
+ 	WARN_ON(len > tx->tlen);
+ 	tx->num_desc++;
+@@ -672,6 +676,7 @@ static inline int _sdma_txadd_daddr(
+ /**
+  * sdma_txadd_page() - add a page to the sdma_txreq
+  * @dd: the device to use for mapping
++ * @pinning_ctx: context to be released at descriptor retirement
+  * @tx: tx request to which the page is added
+  * @page: page to map
+  * @offset: offset within the page
+@@ -687,6 +692,7 @@ static inline int _sdma_txadd_daddr(
+  */
+ static inline int sdma_txadd_page(
+ 	struct hfi1_devdata *dd,
++	void *pinning_ctx,
+ 	struct sdma_txreq *tx,
+ 	struct page *page,
+ 	unsigned long offset,
+@@ -714,8 +720,7 @@ static inline int sdma_txadd_page(
+ 		return -ENOSPC;
+ 	}
  
--#define GATE_AUDIO2(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio2_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO2(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio2_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
+-	return _sdma_txadd_daddr(
+-			dd, SDMA_MAP_PAGE, tx, addr, len);
++	return _sdma_txadd_daddr(dd, SDMA_MAP_PAGE, pinning_ctx, tx, addr, len);
+ }
  
--#define GATE_AUDIO3(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &audio3_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_AUDIO3(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &audio3_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
+ /**
+@@ -749,7 +754,8 @@ static inline int sdma_txadd_daddr(
+ 			return rval;
+ 	}
  
- static const struct mtk_gate_regs audio0_cg_regs = {
- 	.set_ofs = 0x0,
-diff --git a/drivers/clk/mediatek/clk-mt7622-eth.c b/drivers/clk/mediatek/clk-mt7622-eth.c
-index aee583fa77d0c..66b163cc16330 100644
---- a/drivers/clk/mediatek/clk-mt7622-eth.c
-+++ b/drivers/clk/mediatek/clk-mt7622-eth.c
-@@ -16,14 +16,8 @@
+-	return _sdma_txadd_daddr(dd, SDMA_MAP_NONE, tx, addr, len);
++	return _sdma_txadd_daddr(dd, SDMA_MAP_NONE, NULL, tx,
++				 addr, len);
+ }
  
- #include <dt-bindings/clock/mt7622-clk.h>
+ /**
+@@ -795,8 +801,7 @@ static inline int sdma_txadd_kvaddr(
+ 		return -ENOSPC;
+ 	}
  
--#define GATE_ETH(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &eth_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_ETH(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &eth_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
+-	return _sdma_txadd_daddr(
+-			dd, SDMA_MAP_SINGLE, tx, addr, len);
++	return _sdma_txadd_daddr(dd, SDMA_MAP_SINGLE, NULL, tx, addr, len);
+ }
  
- static const struct mtk_gate_regs eth_cg_regs = {
- 	.set_ofs = 0x30,
-@@ -45,14 +39,8 @@ static const struct mtk_gate_regs sgmii_cg_regs = {
- 	.sta_ofs = 0xE4,
+ struct iowait_work;
+@@ -1030,4 +1035,5 @@ extern uint mod_num_sdma;
+ 
+ void sdma_update_lmc(struct hfi1_devdata *dd, u64 mask, u32 lid);
+ 
++void system_descriptor_complete(struct hfi1_devdata *dd, struct sdma_desc *descp);
+ #endif
+diff --git a/drivers/infiniband/hw/hfi1/sdma_txreq.h b/drivers/infiniband/hw/hfi1/sdma_txreq.h
+index e262fb5c5ec61..fad946cb5e0d8 100644
+--- a/drivers/infiniband/hw/hfi1/sdma_txreq.h
++++ b/drivers/infiniband/hw/hfi1/sdma_txreq.h
+@@ -19,6 +19,7 @@
+ struct sdma_desc {
+ 	/* private:  don't use directly */
+ 	u64 qw[2];
++	void *pinning_ctx;
  };
  
--#define GATE_SGMII(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &sgmii_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
+ /**
+diff --git a/drivers/infiniband/hw/hfi1/trace_mmu.h b/drivers/infiniband/hw/hfi1/trace_mmu.h
+index 187e9244fe5ed..57900ebb7702e 100644
+--- a/drivers/infiniband/hw/hfi1/trace_mmu.h
++++ b/drivers/infiniband/hw/hfi1/trace_mmu.h
+@@ -37,10 +37,6 @@ DEFINE_EVENT(hfi1_mmu_rb_template, hfi1_mmu_rb_search,
+ 	     TP_PROTO(unsigned long addr, unsigned long len),
+ 	     TP_ARGS(addr, len));
+ 
+-DEFINE_EVENT(hfi1_mmu_rb_template, hfi1_mmu_rb_remove,
+-	     TP_PROTO(unsigned long addr, unsigned long len),
+-	     TP_ARGS(addr, len));
+-
+ DEFINE_EVENT(hfi1_mmu_rb_template, hfi1_mmu_mem_invalidate,
+ 	     TP_PROTO(unsigned long addr, unsigned long len),
+ 	     TP_ARGS(addr, len));
+diff --git a/drivers/infiniband/hw/hfi1/user_sdma.c b/drivers/infiniband/hw/hfi1/user_sdma.c
+index a71c5a36cebab..ae58b48afe074 100644
+--- a/drivers/infiniband/hw/hfi1/user_sdma.c
++++ b/drivers/infiniband/hw/hfi1/user_sdma.c
+@@ -24,7 +24,6 @@
+ 
+ #include "hfi.h"
+ #include "sdma.h"
+-#include "mmu_rb.h"
+ #include "user_sdma.h"
+ #include "verbs.h"  /* for the headers */
+ #include "common.h" /* for struct hfi1_tid_info */
+@@ -39,11 +38,7 @@ static unsigned initial_pkt_count = 8;
+ static int user_sdma_send_pkts(struct user_sdma_request *req, u16 maxpkts);
+ static void user_sdma_txreq_cb(struct sdma_txreq *txreq, int status);
+ static inline void pq_update(struct hfi1_user_sdma_pkt_q *pq);
+-static void user_sdma_free_request(struct user_sdma_request *req, bool unpin);
+-static int pin_vector_pages(struct user_sdma_request *req,
+-			    struct user_sdma_iovec *iovec);
+-static void unpin_vector_pages(struct mm_struct *mm, struct page **pages,
+-			       unsigned start, unsigned npages);
++static void user_sdma_free_request(struct user_sdma_request *req);
+ static int check_header_template(struct user_sdma_request *req,
+ 				 struct hfi1_pkt_header *hdr, u32 lrhlen,
+ 				 u32 datalen);
+@@ -81,6 +76,11 @@ static struct mmu_rb_ops sdma_rb_ops = {
+ 	.invalidate = sdma_rb_invalidate
+ };
+ 
++static int add_system_pages_to_sdma_packet(struct user_sdma_request *req,
++					   struct user_sdma_txreq *tx,
++					   struct user_sdma_iovec *iovec,
++					   u32 *pkt_remaining);
++
+ static int defer_packet_queue(
+ 	struct sdma_engine *sde,
+ 	struct iowait_work *wait,
+@@ -410,6 +410,7 @@ int hfi1_user_sdma_process_request(struct hfi1_filedata *fd,
+ 		ret = -EINVAL;
+ 		goto free_req;
+ 	}
++
+ 	/* Copy the header from the user buffer */
+ 	ret = copy_from_user(&req->hdr, iovec[idx].iov_base + sizeof(info),
+ 			     sizeof(req->hdr));
+@@ -484,9 +485,8 @@ int hfi1_user_sdma_process_request(struct hfi1_filedata *fd,
+ 		memcpy(&req->iovs[i].iov,
+ 		       iovec + idx++,
+ 		       sizeof(req->iovs[i].iov));
+-		ret = pin_vector_pages(req, &req->iovs[i]);
+-		if (ret) {
+-			req->data_iovs = i;
++		if (req->iovs[i].iov.iov_len == 0) {
++			ret = -EINVAL;
+ 			goto free_req;
+ 		}
+ 		req->data_len += req->iovs[i].iov.iov_len;
+@@ -584,7 +584,7 @@ int hfi1_user_sdma_process_request(struct hfi1_filedata *fd,
+ 		if (req->seqsubmitted)
+ 			wait_event(pq->busy.wait_dma,
+ 				   (req->seqcomp == req->seqsubmitted - 1));
+-		user_sdma_free_request(req, true);
++		user_sdma_free_request(req);
+ 		pq_update(pq);
+ 		set_comp_state(pq, cq, info.comp_idx, ERROR, ret);
+ 	}
+@@ -696,48 +696,6 @@ static int user_sdma_txadd_ahg(struct user_sdma_request *req,
+ 	return ret;
+ }
+ 
+-static int user_sdma_txadd(struct user_sdma_request *req,
+-			   struct user_sdma_txreq *tx,
+-			   struct user_sdma_iovec *iovec, u32 datalen,
+-			   u32 *queued_ptr, u32 *data_sent_ptr,
+-			   u64 *iov_offset_ptr)
+-{
+-	int ret;
+-	unsigned int pageidx, len;
+-	unsigned long base, offset;
+-	u64 iov_offset = *iov_offset_ptr;
+-	u32 queued = *queued_ptr, data_sent = *data_sent_ptr;
+-	struct hfi1_user_sdma_pkt_q *pq = req->pq;
+-
+-	base = (unsigned long)iovec->iov.iov_base;
+-	offset = offset_in_page(base + iovec->offset + iov_offset);
+-	pageidx = (((iovec->offset + iov_offset + base) - (base & PAGE_MASK)) >>
+-		   PAGE_SHIFT);
+-	len = offset + req->info.fragsize > PAGE_SIZE ?
+-		PAGE_SIZE - offset : req->info.fragsize;
+-	len = min((datalen - queued), len);
+-	ret = sdma_txadd_page(pq->dd, &tx->txreq, iovec->pages[pageidx],
+-			      offset, len);
+-	if (ret) {
+-		SDMA_DBG(req, "SDMA txreq add page failed %d\n", ret);
+-		return ret;
 -	}
-+#define GATE_SGMII(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &sgmii_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate sgmii_clks[] = {
- 	GATE_SGMII(CLK_SGMII_TX250M_EN, "sgmii_tx250m_en",
-diff --git a/drivers/clk/mediatek/clk-mt7622-hif.c b/drivers/clk/mediatek/clk-mt7622-hif.c
-index ab5cad0c2b1c9..bcd1dfc6e8e0c 100644
---- a/drivers/clk/mediatek/clk-mt7622-hif.c
-+++ b/drivers/clk/mediatek/clk-mt7622-hif.c
-@@ -16,23 +16,11 @@
- 
- #include <dt-bindings/clock/mt7622-clk.h>
- 
--#define GATE_PCIE(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &pcie_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
+-	iov_offset += len;
+-	queued += len;
+-	data_sent += len;
+-	if (unlikely(queued < datalen && pageidx == iovec->npages &&
+-		     req->iov_idx < req->data_iovs - 1)) {
+-		iovec->offset += iov_offset;
+-		iovec = &req->iovs[++req->iov_idx];
+-		iov_offset = 0;
 -	}
 -
--#define GATE_SSUSB(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &ssusb_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
+-	*queued_ptr = queued;
+-	*data_sent_ptr = data_sent;
+-	*iov_offset_ptr = iov_offset;
+-	return ret;
+-}
+-
+ static int user_sdma_send_pkts(struct user_sdma_request *req, u16 maxpkts)
+ {
+ 	int ret = 0;
+@@ -769,8 +727,7 @@ static int user_sdma_send_pkts(struct user_sdma_request *req, u16 maxpkts)
+ 		maxpkts = req->info.npkts - req->seqnum;
+ 
+ 	while (npkts < maxpkts) {
+-		u32 datalen = 0, queued = 0, data_sent = 0;
+-		u64 iov_offset = 0;
++		u32 datalen = 0;
+ 
+ 		/*
+ 		 * Check whether any of the completions have come back
+@@ -863,27 +820,17 @@ static int user_sdma_send_pkts(struct user_sdma_request *req, u16 maxpkts)
+ 				goto free_txreq;
+ 		}
+ 
+-		/*
+-		 * If the request contains any data vectors, add up to
+-		 * fragsize bytes to the descriptor.
+-		 */
+-		while (queued < datalen &&
+-		       (req->sent + data_sent) < req->data_len) {
+-			ret = user_sdma_txadd(req, tx, iovec, datalen,
+-					      &queued, &data_sent, &iov_offset);
+-			if (ret)
+-				goto free_txreq;
+-		}
+-		/*
+-		 * The txreq was submitted successfully so we can update
+-		 * the counters.
+-		 */
+ 		req->koffset += datalen;
+ 		if (req_opcode(req->info.ctrl) == EXPECTED)
+ 			req->tidoffset += datalen;
+-		req->sent += data_sent;
+-		if (req->data_len)
+-			iovec->offset += iov_offset;
++		req->sent += datalen;
++		while (datalen) {
++			ret = add_system_pages_to_sdma_packet(req, tx, iovec,
++							      &datalen);
++			if (ret)
++				goto free_txreq;
++			iovec = &req->iovs[req->iov_idx];
++		}
+ 		list_add_tail(&tx->txreq.list, &req->txps);
+ 		/*
+ 		 * It is important to increment this here as it is used to
+@@ -920,133 +867,14 @@ static int user_sdma_send_pkts(struct user_sdma_request *req, u16 maxpkts)
+ static u32 sdma_cache_evict(struct hfi1_user_sdma_pkt_q *pq, u32 npages)
+ {
+ 	struct evict_data evict_data;
++	struct mmu_rb_handler *handler = pq->handler;
+ 
+ 	evict_data.cleared = 0;
+ 	evict_data.target = npages;
+-	hfi1_mmu_rb_evict(pq->handler, &evict_data);
++	hfi1_mmu_rb_evict(handler, &evict_data);
+ 	return evict_data.cleared;
+ }
+ 
+-static int pin_sdma_pages(struct user_sdma_request *req,
+-			  struct user_sdma_iovec *iovec,
+-			  struct sdma_mmu_node *node,
+-			  int npages)
+-{
+-	int pinned, cleared;
+-	struct page **pages;
+-	struct hfi1_user_sdma_pkt_q *pq = req->pq;
+-
+-	pages = kcalloc(npages, sizeof(*pages), GFP_KERNEL);
+-	if (!pages)
+-		return -ENOMEM;
+-	memcpy(pages, node->pages, node->npages * sizeof(*pages));
+-
+-	npages -= node->npages;
+-retry:
+-	if (!hfi1_can_pin_pages(pq->dd, current->mm,
+-				atomic_read(&pq->n_locked), npages)) {
+-		cleared = sdma_cache_evict(pq, npages);
+-		if (cleared >= npages)
+-			goto retry;
 -	}
-+#define GATE_PCIE(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &pcie_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
-+
-+#define GATE_SSUSB(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &ssusb_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate_regs pcie_cg_regs = {
- 	.set_ofs = 0x30,
-diff --git a/drivers/clk/mediatek/clk-mt7622.c b/drivers/clk/mediatek/clk-mt7622.c
-index 5a82c2270bfbc..41af8d420bbf8 100644
---- a/drivers/clk/mediatek/clk-mt7622.c
-+++ b/drivers/clk/mediatek/clk-mt7622.c
-@@ -50,59 +50,24 @@
- 		 _pd_reg, _pd_shift, _tuner_reg, _pcw_reg, _pcw_shift,  \
- 		 NULL, "clkxtal")
- 
--#define GATE_APMIXED(_id, _name, _parent, _shift) {			\
--		.id = _id,						\
--		.name = _name,						\
--		.parent_name = _parent,					\
--		.regs = &apmixed_cg_regs,				\
--		.shift = _shift,					\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,			\
+-	pinned = hfi1_acquire_user_pages(current->mm,
+-					 ((unsigned long)iovec->iov.iov_base +
+-					 (node->npages * PAGE_SIZE)), npages, 0,
+-					 pages + node->npages);
+-	if (pinned < 0) {
+-		kfree(pages);
+-		return pinned;
 -	}
-+#define GATE_APMIXED(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &apmixed_cg_regs, _shift,		\
-+		 &mtk_clk_gate_ops_no_setclr_inv)
- 
--#define GATE_INFRA(_id, _name, _parent, _shift) {			\
--		.id = _id,						\
--		.name = _name,						\
--		.parent_name = _parent,					\
--		.regs = &infra_cg_regs,					\
--		.shift = _shift,					\
--		.ops = &mtk_clk_gate_ops_setclr,			\
+-	if (pinned != npages) {
+-		unpin_vector_pages(current->mm, pages, node->npages, pinned);
+-		return -EFAULT;
 -	}
-+#define GATE_INFRA(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &infra_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_TOP0(_id, _name, _parent, _shift) {			\
--		.id = _id,						\
--		.name = _name,						\
--		.parent_name = _parent,					\
--		.regs = &top0_cg_regs,					\
--		.shift = _shift,					\
--		.ops = &mtk_clk_gate_ops_no_setclr,			\
+-	kfree(node->pages);
+-	node->rb.len = iovec->iov.iov_len;
+-	node->pages = pages;
+-	atomic_add(pinned, &pq->n_locked);
+-	return pinned;
+-}
+-
+-static void unpin_sdma_pages(struct sdma_mmu_node *node)
+-{
+-	if (node->npages) {
+-		unpin_vector_pages(mm_from_sdma_node(node), node->pages, 0,
+-				   node->npages);
+-		atomic_sub(node->npages, &node->pq->n_locked);
 -	}
-+#define GATE_TOP0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top0_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
--#define GATE_TOP1(_id, _name, _parent, _shift) {			\
--		.id = _id,						\
--		.name = _name,						\
--		.parent_name = _parent,					\
--		.regs = &top1_cg_regs,					\
--		.shift = _shift,					\
--		.ops = &mtk_clk_gate_ops_no_setclr,			\
--	}
-+#define GATE_TOP1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top1_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
- 
--#define GATE_PERI0(_id, _name, _parent, _shift) {			\
--		.id = _id,						\
--		.name = _name,						\
--		.parent_name = _parent,					\
--		.regs = &peri0_cg_regs,					\
--		.shift = _shift,					\
--		.ops = &mtk_clk_gate_ops_setclr,			\
--	}
-+#define GATE_PERI0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &peri0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_PERI1(_id, _name, _parent, _shift) {			\
--		.id = _id,						\
--		.name = _name,						\
--		.parent_name = _parent,					\
--		.regs = &peri1_cg_regs,					\
--		.shift = _shift,					\
--		.ops = &mtk_clk_gate_ops_setclr,			\
--	}
-+#define GATE_PERI1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &peri1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static DEFINE_SPINLOCK(mt7622_clk_lock);
- 
-diff --git a/drivers/clk/mediatek/clk-mt7629-eth.c b/drivers/clk/mediatek/clk-mt7629-eth.c
-index a4ae7d6c7a71a..719a47fef7980 100644
---- a/drivers/clk/mediatek/clk-mt7629-eth.c
-+++ b/drivers/clk/mediatek/clk-mt7629-eth.c
-@@ -16,14 +16,8 @@
- 
- #include <dt-bindings/clock/mt7629-clk.h>
- 
--#define GATE_ETH(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &eth_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_ETH(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &eth_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate_regs eth_cg_regs = {
- 	.set_ofs = 0x30,
-@@ -45,14 +39,8 @@ static const struct mtk_gate_regs sgmii_cg_regs = {
- 	.sta_ofs = 0xE4,
- };
- 
--#define GATE_SGMII(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &sgmii_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_SGMII(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &sgmii_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate sgmii_clks[2][4] = {
- 	{
-diff --git a/drivers/clk/mediatek/clk-mt7629-hif.c b/drivers/clk/mediatek/clk-mt7629-hif.c
-index c3eb09ea6036f..78d85542e4f17 100644
---- a/drivers/clk/mediatek/clk-mt7629-hif.c
-+++ b/drivers/clk/mediatek/clk-mt7629-hif.c
-@@ -16,23 +16,11 @@
- 
- #include <dt-bindings/clock/mt7629-clk.h>
- 
--#define GATE_PCIE(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &pcie_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
+-}
+-
+-static int pin_vector_pages(struct user_sdma_request *req,
+-			    struct user_sdma_iovec *iovec)
+-{
+-	int ret = 0, pinned, npages;
+-	struct hfi1_user_sdma_pkt_q *pq = req->pq;
+-	struct sdma_mmu_node *node = NULL;
+-	struct mmu_rb_node *rb_node;
+-	struct iovec *iov;
+-	bool extracted;
+-
+-	extracted =
+-		hfi1_mmu_rb_remove_unless_exact(pq->handler,
+-						(unsigned long)
+-						iovec->iov.iov_base,
+-						iovec->iov.iov_len, &rb_node);
+-	if (rb_node) {
+-		node = container_of(rb_node, struct sdma_mmu_node, rb);
+-		if (!extracted) {
+-			atomic_inc(&node->refcount);
+-			iovec->pages = node->pages;
+-			iovec->npages = node->npages;
+-			iovec->node = node;
+-			return 0;
+-		}
 -	}
 -
--#define GATE_SSUSB(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &ssusb_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_PCIE(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &pcie_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
-+
-+#define GATE_SSUSB(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &ssusb_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate_regs pcie_cg_regs = {
- 	.set_ofs = 0x30,
-diff --git a/drivers/clk/mediatek/clk-mt7629.c b/drivers/clk/mediatek/clk-mt7629.c
-index cf062d4a7ecc4..09c85fda43d84 100644
---- a/drivers/clk/mediatek/clk-mt7629.c
-+++ b/drivers/clk/mediatek/clk-mt7629.c
-@@ -50,41 +50,17 @@
- 		_pd_reg, _pd_shift, _tuner_reg, _pcw_reg, _pcw_shift,	\
- 		NULL, "clk20m")
- 
--#define GATE_APMIXED(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &apmixed_cg_regs,		\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,	\
--	}
-+#define GATE_APMIXED(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &apmixed_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
--#define GATE_INFRA(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &infra_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_INFRA(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &infra_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_PERI0(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &peri0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_PERI0(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &peri0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_PERI1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &peri1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_PERI1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &peri1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static DEFINE_SPINLOCK(mt7629_clk_lock);
- 
-diff --git a/drivers/clk/mediatek/clk-mt7986-eth.c b/drivers/clk/mediatek/clk-mt7986-eth.c
-index 703872239ecca..e04bc6845ea6d 100644
---- a/drivers/clk/mediatek/clk-mt7986-eth.c
-+++ b/drivers/clk/mediatek/clk-mt7986-eth.c
-@@ -22,12 +22,8 @@ static const struct mtk_gate_regs sgmii0_cg_regs = {
- 	.sta_ofs = 0xe4,
- };
- 
--#define GATE_SGMII0(_id, _name, _parent, _shift)                               \
--	{                                                                      \
--		.id = _id, .name = _name, .parent_name = _parent,              \
--		.regs = &sgmii0_cg_regs, .shift = _shift,                      \
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,                        \
--	}
-+#define GATE_SGMII0(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &sgmii0_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate sgmii0_clks[] __initconst = {
- 	GATE_SGMII0(CLK_SGMII0_TX250M_EN, "sgmii0_tx250m_en", "top_xtal", 2),
-@@ -42,12 +38,8 @@ static const struct mtk_gate_regs sgmii1_cg_regs = {
- 	.sta_ofs = 0xe4,
- };
- 
--#define GATE_SGMII1(_id, _name, _parent, _shift)                               \
--	{                                                                      \
--		.id = _id, .name = _name, .parent_name = _parent,              \
--		.regs = &sgmii1_cg_regs, .shift = _shift,                      \
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,                        \
--	}
-+#define GATE_SGMII1(_id, _name, _parent, _shift)		\
-+	GATE_MTK(_id, _name, _parent, &sgmii1_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate sgmii1_clks[] __initconst = {
- 	GATE_SGMII1(CLK_SGMII1_TX250M_EN, "sgmii1_tx250m_en", "top_xtal", 2),
-@@ -62,12 +54,8 @@ static const struct mtk_gate_regs eth_cg_regs = {
- 	.sta_ofs = 0x30,
- };
- 
--#define GATE_ETH(_id, _name, _parent, _shift)                                  \
--	{                                                                      \
--		.id = _id, .name = _name, .parent_name = _parent,              \
--		.regs = &eth_cg_regs, .shift = _shift,                         \
--		.ops = &mtk_clk_gate_ops_no_setclr_inv,                        \
--	}
-+#define GATE_ETH(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &eth_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr_inv)
- 
- static const struct mtk_gate eth_clks[] __initconst = {
- 	GATE_ETH(CLK_ETH_FE_EN, "eth_fe_en", "netsys_2x_sel", 6),
-diff --git a/drivers/clk/mediatek/clk-mt7986-infracfg.c b/drivers/clk/mediatek/clk-mt7986-infracfg.c
-index e80c92167c8fc..0a4bf87ee1607 100644
---- a/drivers/clk/mediatek/clk-mt7986-infracfg.c
-+++ b/drivers/clk/mediatek/clk-mt7986-infracfg.c
-@@ -87,26 +87,14 @@ static const struct mtk_gate_regs infra2_cg_regs = {
- 	.sta_ofs = 0x68,
- };
- 
--#define GATE_INFRA0(_id, _name, _parent, _shift)                               \
--	{                                                                      \
--		.id = _id, .name = _name, .parent_name = _parent,              \
--		.regs = &infra0_cg_regs, .shift = _shift,                      \
--		.ops = &mtk_clk_gate_ops_setclr,                               \
--	}
-+#define GATE_INFRA0(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &infra0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_INFRA1(_id, _name, _parent, _shift)                               \
--	{                                                                      \
--		.id = _id, .name = _name, .parent_name = _parent,              \
--		.regs = &infra1_cg_regs, .shift = _shift,                      \
--		.ops = &mtk_clk_gate_ops_setclr,                               \
--	}
-+#define GATE_INFRA1(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &infra1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_INFRA2(_id, _name, _parent, _shift)                               \
--	{                                                                      \
--		.id = _id, .name = _name, .parent_name = _parent,              \
--		.regs = &infra2_cg_regs, .shift = _shift,                      \
--		.ops = &mtk_clk_gate_ops_setclr,                               \
--	}
-+#define GATE_INFRA2(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &infra2_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate infra_clks[] = {
- 	/* INFRA0 */
-diff --git a/drivers/clk/mediatek/clk-mt8135.c b/drivers/clk/mediatek/clk-mt8135.c
-index 2b9c925c2a2ba..97a115d2c3daa 100644
---- a/drivers/clk/mediatek/clk-mt8135.c
-+++ b/drivers/clk/mediatek/clk-mt8135.c
-@@ -401,14 +401,8 @@ static const struct mtk_gate_regs infra_cg_regs = {
- 	.sta_ofs = 0x0048,
- };
- 
--#define GATE_ICG(_id, _name, _parent, _shift) {	\
--		.id = _id,					\
--		.name = _name,					\
--		.parent_name = _parent,				\
--		.regs = &infra_cg_regs,				\
--		.shift = _shift,				\
--		.ops = &mtk_clk_gate_ops_setclr,		\
--	}
-+#define GATE_ICG(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &infra_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate infra_clks[] __initconst = {
- 	GATE_ICG(CLK_INFRA_PMIC_WRAP, "pmic_wrap_ck", "axi_sel", 23),
-@@ -438,23 +432,11 @@ static const struct mtk_gate_regs peri1_cg_regs = {
- 	.sta_ofs = 0x001c,
- };
- 
--#define GATE_PERI0(_id, _name, _parent, _shift) {	\
--		.id = _id,					\
--		.name = _name,					\
--		.parent_name = _parent,				\
--		.regs = &peri0_cg_regs,				\
--		.shift = _shift,				\
--		.ops = &mtk_clk_gate_ops_setclr,		\
--	}
-+#define GATE_PERI0(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &peri0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_PERI1(_id, _name, _parent, _shift) {	\
--		.id = _id,					\
--		.name = _name,					\
--		.parent_name = _parent,				\
--		.regs = &peri1_cg_regs,				\
--		.shift = _shift,				\
--		.ops = &mtk_clk_gate_ops_setclr,		\
--	}
-+#define GATE_PERI1(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &peri1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate peri_gates[] __initconst = {
- 	/* PERI0 */
-diff --git a/drivers/clk/mediatek/clk-mt8167-aud.c b/drivers/clk/mediatek/clk-mt8167-aud.c
-index f6bea6e9e6a4e..47a7d89d5777c 100644
---- a/drivers/clk/mediatek/clk-mt8167-aud.c
-+++ b/drivers/clk/mediatek/clk-mt8167-aud.c
-@@ -23,14 +23,9 @@ static const struct mtk_gate_regs aud_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_AUD(_id, _name, _parent, _shift) {	\
--		.id = _id,			\
--		.name = _name,			\
--		.parent_name = _parent,		\
--		.regs = &aud_cg_regs,		\
--		.shift = _shift,		\
--		.ops = &mtk_clk_gate_ops_no_setclr,		\
--	}
-+#define GATE_AUD(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &aud_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
-+
- 
- static const struct mtk_gate aud_clks[] __initconst = {
- 	GATE_AUD(CLK_AUD_AFE, "aud_afe", "clk26m_ck", 2),
-diff --git a/drivers/clk/mediatek/clk-mt8167-img.c b/drivers/clk/mediatek/clk-mt8167-img.c
-index 77db13b177fcc..e196b3b894a16 100644
---- a/drivers/clk/mediatek/clk-mt8167-img.c
-+++ b/drivers/clk/mediatek/clk-mt8167-img.c
-@@ -23,14 +23,8 @@ static const struct mtk_gate_regs img_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_IMG(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &img_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_IMG(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &img_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate img_clks[] __initconst = {
- 	GATE_IMG(CLK_IMG_LARB1_SMI, "img_larb1_smi", "smi_mm", 0),
-diff --git a/drivers/clk/mediatek/clk-mt8167-mfgcfg.c b/drivers/clk/mediatek/clk-mt8167-mfgcfg.c
-index 3c23591b02f7f..602d25f4cb2e2 100644
---- a/drivers/clk/mediatek/clk-mt8167-mfgcfg.c
-+++ b/drivers/clk/mediatek/clk-mt8167-mfgcfg.c
-@@ -23,14 +23,8 @@ static const struct mtk_gate_regs mfg_cg_regs = {
- 	.sta_ofs = 0x0,
- };
- 
--#define GATE_MFG(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &mfg_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_MFG(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &mfg_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate mfg_clks[] __initconst = {
- 	GATE_MFG(CLK_MFG_BAXI, "mfg_baxi", "ahb_infra_sel", 0),
-diff --git a/drivers/clk/mediatek/clk-mt8167-mm.c b/drivers/clk/mediatek/clk-mt8167-mm.c
-index c0b44104c765a..abc70e1221bf9 100644
---- a/drivers/clk/mediatek/clk-mt8167-mm.c
-+++ b/drivers/clk/mediatek/clk-mt8167-mm.c
-@@ -29,23 +29,11 @@ static const struct mtk_gate_regs mm1_cg_regs = {
- 	.sta_ofs = 0x110,
- };
- 
--#define GATE_MM0(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &mm0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
+-	if (!node) {
+-		node = kzalloc(sizeof(*node), GFP_KERNEL);
+-		if (!node)
+-			return -ENOMEM;
+-
+-		node->rb.addr = (unsigned long)iovec->iov.iov_base;
+-		node->pq = pq;
+-		atomic_set(&node->refcount, 0);
 -	}
 -
--#define GATE_MM1(_id, _name, _parent, _shift) {		\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &mm1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
+-	iov = &iovec->iov;
+-	npages = num_user_pages((unsigned long)iov->iov_base, iov->iov_len);
+-	if (node->npages < npages) {
+-		pinned = pin_sdma_pages(req, iovec, node, npages);
+-		if (pinned < 0) {
+-			ret = pinned;
+-			goto bail;
+-		}
+-		node->npages += pinned;
+-		npages = node->npages;
 -	}
-+#define GATE_MM0(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
-+
-+#define GATE_MM1(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate mm_clks[] = {
- 	/* MM0 */
-diff --git a/drivers/clk/mediatek/clk-mt8167-vdec.c b/drivers/clk/mediatek/clk-mt8167-vdec.c
-index 759e5791599f0..92bc05d997985 100644
---- a/drivers/clk/mediatek/clk-mt8167-vdec.c
-+++ b/drivers/clk/mediatek/clk-mt8167-vdec.c
-@@ -29,23 +29,11 @@ static const struct mtk_gate_regs vdec1_cg_regs = {
- 	.sta_ofs = 0x8,
- };
- 
--#define GATE_VDEC0_I(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &vdec0_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
+-	iovec->pages = node->pages;
+-	iovec->npages = npages;
+-	iovec->node = node;
+-
+-	ret = hfi1_mmu_rb_insert(req->pq->handler, &node->rb);
+-	if (ret) {
+-		iovec->node = NULL;
+-		goto bail;
 -	}
-+#define GATE_VDEC0_I(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &vdec0_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
+-	return 0;
+-bail:
+-	unpin_sdma_pages(node);
+-	kfree(node);
+-	return ret;
+-}
+-
+-static void unpin_vector_pages(struct mm_struct *mm, struct page **pages,
+-			       unsigned start, unsigned npages)
+-{
+-	hfi1_release_user_pages(mm, pages + start, npages, false);
+-	kfree(pages);
+-}
+-
+ static int check_header_template(struct user_sdma_request *req,
+ 				 struct hfi1_pkt_header *hdr, u32 lrhlen,
+ 				 u32 datalen)
+@@ -1388,7 +1216,7 @@ static void user_sdma_txreq_cb(struct sdma_txreq *txreq, int status)
+ 	if (req->seqcomp != req->info.npkts - 1)
+ 		return;
  
--#define GATE_VDEC1_I(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &vdec1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_VDEC1_I(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &vdec1_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
+-	user_sdma_free_request(req, false);
++	user_sdma_free_request(req);
+ 	set_comp_state(pq, cq, req->info.comp_idx, state, status);
+ 	pq_update(pq);
+ }
+@@ -1399,10 +1227,8 @@ static inline void pq_update(struct hfi1_user_sdma_pkt_q *pq)
+ 		wake_up(&pq->wait);
+ }
  
- static const struct mtk_gate vdec_clks[] __initconst = {
- 	/* VDEC0 */
-diff --git a/drivers/clk/mediatek/clk-mt8173-mm.c b/drivers/clk/mediatek/clk-mt8173-mm.c
-index 315430ad15814..c11ce453a88aa 100644
---- a/drivers/clk/mediatek/clk-mt8173-mm.c
-+++ b/drivers/clk/mediatek/clk-mt8173-mm.c
-@@ -25,23 +25,11 @@ static const struct mtk_gate_regs mm1_cg_regs = {
- 	.sta_ofs = 0x0110,
- };
+-static void user_sdma_free_request(struct user_sdma_request *req, bool unpin)
++static void user_sdma_free_request(struct user_sdma_request *req)
+ {
+-	int i;
+-
+ 	if (!list_empty(&req->txps)) {
+ 		struct sdma_txreq *t, *p;
  
--#define GATE_MM0(_id, _name, _parent, _shift) {			\
--		.id = _id,					\
--		.name = _name,					\
--		.parent_name = _parent,				\
--		.regs = &mm0_cg_regs,				\
--		.shift = _shift,				\
--		.ops = &mtk_clk_gate_ops_setclr,		\
+@@ -1415,21 +1241,6 @@ static void user_sdma_free_request(struct user_sdma_request *req, bool unpin)
+ 		}
+ 	}
+ 
+-	for (i = 0; i < req->data_iovs; i++) {
+-		struct sdma_mmu_node *node = req->iovs[i].node;
+-
+-		if (!node)
+-			continue;
+-
+-		req->iovs[i].node = NULL;
+-
+-		if (unpin)
+-			hfi1_mmu_rb_remove(req->pq->handler,
+-					   &node->rb);
+-		else
+-			atomic_dec(&node->refcount);
 -	}
 -
--#define GATE_MM1(_id, _name, _parent, _shift) {			\
--		.id = _id,					\
--		.name = _name,					\
--		.parent_name = _parent,				\
--		.regs = &mm1_cg_regs,				\
--		.shift = _shift,				\
--		.ops = &mtk_clk_gate_ops_setclr,		\
--	}
-+#define GATE_MM0(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm0_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
+ 	kfree(req->tids);
+ 	clear_bit(req->info.comp_idx, req->pq->req_in_use);
+ }
+@@ -1447,6 +1258,368 @@ static inline void set_comp_state(struct hfi1_user_sdma_pkt_q *pq,
+ 					idx, state, ret);
+ }
+ 
++static void unpin_vector_pages(struct mm_struct *mm, struct page **pages,
++			       unsigned int start, unsigned int npages)
++{
++	hfi1_release_user_pages(mm, pages + start, npages, false);
++	kfree(pages);
++}
 +
-+#define GATE_MM1(_id, _name, _parent, _shift)	\
-+	GATE_MTK(_id, _name, _parent, &mm1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
++static void free_system_node(struct sdma_mmu_node *node)
++{
++	if (node->npages) {
++		unpin_vector_pages(mm_from_sdma_node(node), node->pages, 0,
++				   node->npages);
++		atomic_sub(node->npages, &node->pq->n_locked);
++	}
++	kfree(node);
++}
++
++static inline void acquire_node(struct sdma_mmu_node *node)
++{
++	atomic_inc(&node->refcount);
++	WARN_ON(atomic_read(&node->refcount) < 0);
++}
++
++static inline void release_node(struct mmu_rb_handler *handler,
++				struct sdma_mmu_node *node)
++{
++	atomic_dec(&node->refcount);
++	WARN_ON(atomic_read(&node->refcount) < 0);
++}
++
++static struct sdma_mmu_node *find_system_node(struct mmu_rb_handler *handler,
++					      unsigned long start,
++					      unsigned long end)
++{
++	struct mmu_rb_node *rb_node;
++	struct sdma_mmu_node *node;
++	unsigned long flags;
++
++	spin_lock_irqsave(&handler->lock, flags);
++	rb_node = hfi1_mmu_rb_get_first(handler, start, (end - start));
++	if (!rb_node) {
++		spin_unlock_irqrestore(&handler->lock, flags);
++		return NULL;
++	}
++	node = container_of(rb_node, struct sdma_mmu_node, rb);
++	acquire_node(node);
++	spin_unlock_irqrestore(&handler->lock, flags);
++
++	return node;
++}
++
++static int pin_system_pages(struct user_sdma_request *req,
++			    uintptr_t start_address, size_t length,
++			    struct sdma_mmu_node *node, int npages)
++{
++	struct hfi1_user_sdma_pkt_q *pq = req->pq;
++	int pinned, cleared;
++	struct page **pages;
++
++	pages = kcalloc(npages, sizeof(*pages), GFP_KERNEL);
++	if (!pages)
++		return -ENOMEM;
++
++retry:
++	if (!hfi1_can_pin_pages(pq->dd, current->mm, atomic_read(&pq->n_locked),
++				npages)) {
++		SDMA_DBG(req, "Evicting: nlocked %u npages %u",
++			 atomic_read(&pq->n_locked), npages);
++		cleared = sdma_cache_evict(pq, npages);
++		if (cleared >= npages)
++			goto retry;
++	}
++
++	SDMA_DBG(req, "Acquire user pages start_address %lx node->npages %u npages %u",
++		 start_address, node->npages, npages);
++	pinned = hfi1_acquire_user_pages(current->mm, start_address, npages, 0,
++					 pages);
++
++	if (pinned < 0) {
++		kfree(pages);
++		SDMA_DBG(req, "pinned %d", pinned);
++		return pinned;
++	}
++	if (pinned != npages) {
++		unpin_vector_pages(current->mm, pages, node->npages, pinned);
++		SDMA_DBG(req, "npages %u pinned %d", npages, pinned);
++		return -EFAULT;
++	}
++	node->rb.addr = start_address;
++	node->rb.len = length;
++	node->pages = pages;
++	node->npages = npages;
++	atomic_add(pinned, &pq->n_locked);
++	SDMA_DBG(req, "done. pinned %d", pinned);
++	return 0;
++}
++
++static int add_system_pinning(struct user_sdma_request *req,
++			      struct sdma_mmu_node **node_p,
++			      unsigned long start, unsigned long len)
++
++{
++	struct hfi1_user_sdma_pkt_q *pq = req->pq;
++	struct sdma_mmu_node *node;
++	int ret;
++
++	node = kzalloc(sizeof(*node), GFP_KERNEL);
++	if (!node)
++		return -ENOMEM;
++
++	node->pq = pq;
++	ret = pin_system_pages(req, start, len, node, PFN_DOWN(len));
++	if (ret == 0) {
++		ret = hfi1_mmu_rb_insert(pq->handler, &node->rb);
++		if (ret)
++			free_system_node(node);
++		else
++			*node_p = node;
++
++		return ret;
++	}
++
++	kfree(node);
++	return ret;
++}
++
++static int get_system_cache_entry(struct user_sdma_request *req,
++				  struct sdma_mmu_node **node_p,
++				  size_t req_start, size_t req_len)
++{
++	struct hfi1_user_sdma_pkt_q *pq = req->pq;
++	u64 start = ALIGN_DOWN(req_start, PAGE_SIZE);
++	u64 end = PFN_ALIGN(req_start + req_len);
++	struct mmu_rb_handler *handler = pq->handler;
++	int ret;
++
++	if ((end - start) == 0) {
++		SDMA_DBG(req,
++			 "Request for empty cache entry req_start %lx req_len %lx start %llx end %llx",
++			 req_start, req_len, start, end);
++		return -EINVAL;
++	}
++
++	SDMA_DBG(req, "req_start %lx req_len %lu", req_start, req_len);
++
++	while (1) {
++		struct sdma_mmu_node *node =
++			find_system_node(handler, start, end);
++		u64 prepend_len = 0;
++
++		SDMA_DBG(req, "node %p start %llx end %llu", node, start, end);
++		if (!node) {
++			ret = add_system_pinning(req, node_p, start,
++						 end - start);
++			if (ret == -EEXIST) {
++				/*
++				 * Another execution context has inserted a
++				 * conficting entry first.
++				 */
++				continue;
++			}
++			return ret;
++		}
++
++		if (node->rb.addr <= start) {
++			/*
++			 * This entry covers at least part of the region. If it doesn't extend
++			 * to the end, then this will be called again for the next segment.
++			 */
++			*node_p = node;
++			return 0;
++		}
++
++		SDMA_DBG(req, "prepend: node->rb.addr %lx, node->refcount %d",
++			 node->rb.addr, atomic_read(&node->refcount));
++		prepend_len = node->rb.addr - start;
++
++		/*
++		 * This node will not be returned, instead a new node
++		 * will be. So release the reference.
++		 */
++		release_node(handler, node);
++
++		/* Prepend a node to cover the beginning of the allocation */
++		ret = add_system_pinning(req, node_p, start, prepend_len);
++		if (ret == -EEXIST) {
++			/* Another execution context has inserted a conficting entry first. */
++			continue;
++		}
++		return ret;
++	}
++}
++
++static int add_mapping_to_sdma_packet(struct user_sdma_request *req,
++				      struct user_sdma_txreq *tx,
++				      struct sdma_mmu_node *cache_entry,
++				      size_t start,
++				      size_t from_this_cache_entry)
++{
++	struct hfi1_user_sdma_pkt_q *pq = req->pq;
++	unsigned int page_offset;
++	unsigned int from_this_page;
++	size_t page_index;
++	void *ctx;
++	int ret;
++
++	/*
++	 * Because the cache may be more fragmented than the memory that is being accessed,
++	 * it's not strictly necessary to have a descriptor per cache entry.
++	 */
++
++	while (from_this_cache_entry) {
++		page_index = PFN_DOWN(start - cache_entry->rb.addr);
++
++		if (page_index >= cache_entry->npages) {
++			SDMA_DBG(req,
++				 "Request for page_index %zu >= cache_entry->npages %u",
++				 page_index, cache_entry->npages);
++			return -EINVAL;
++		}
++
++		page_offset = start - ALIGN_DOWN(start, PAGE_SIZE);
++		from_this_page = PAGE_SIZE - page_offset;
++
++		if (from_this_page < from_this_cache_entry) {
++			ctx = NULL;
++		} else {
++			/*
++			 * In the case they are equal the next line has no practical effect,
++			 * but it's better to do a register to register copy than a conditional
++			 * branch.
++			 */
++			from_this_page = from_this_cache_entry;
++			ctx = cache_entry;
++		}
++
++		ret = sdma_txadd_page(pq->dd, ctx, &tx->txreq,
++				      cache_entry->pages[page_index],
++				      page_offset, from_this_page);
++		if (ret) {
++			/*
++			 * When there's a failure, the entire request is freed by
++			 * user_sdma_send_pkts().
++			 */
++			SDMA_DBG(req,
++				 "sdma_txadd_page failed %d page_index %lu page_offset %u from_this_page %u",
++				 ret, page_index, page_offset, from_this_page);
++			return ret;
++		}
++		start += from_this_page;
++		from_this_cache_entry -= from_this_page;
++	}
++	return 0;
++}
++
++static int add_system_iovec_to_sdma_packet(struct user_sdma_request *req,
++					   struct user_sdma_txreq *tx,
++					   struct user_sdma_iovec *iovec,
++					   size_t from_this_iovec)
++{
++	struct mmu_rb_handler *handler = req->pq->handler;
++
++	while (from_this_iovec > 0) {
++		struct sdma_mmu_node *cache_entry;
++		size_t from_this_cache_entry;
++		size_t start;
++		int ret;
++
++		start = (uintptr_t)iovec->iov.iov_base + iovec->offset;
++		ret = get_system_cache_entry(req, &cache_entry, start,
++					     from_this_iovec);
++		if (ret) {
++			SDMA_DBG(req, "pin system segment failed %d", ret);
++			return ret;
++		}
++
++		from_this_cache_entry = cache_entry->rb.len - (start - cache_entry->rb.addr);
++		if (from_this_cache_entry > from_this_iovec)
++			from_this_cache_entry = from_this_iovec;
++
++		ret = add_mapping_to_sdma_packet(req, tx, cache_entry, start,
++						 from_this_cache_entry);
++		if (ret) {
++			/*
++			 * We're guaranteed that there will be no descriptor
++			 * completion callback that releases this node
++			 * because only the last descriptor referencing it
++			 * has a context attached, and a failure means the
++			 * last descriptor was never added.
++			 */
++			release_node(handler, cache_entry);
++			SDMA_DBG(req, "add system segment failed %d", ret);
++			return ret;
++		}
++
++		iovec->offset += from_this_cache_entry;
++		from_this_iovec -= from_this_cache_entry;
++	}
++
++	return 0;
++}
++
++static int add_system_pages_to_sdma_packet(struct user_sdma_request *req,
++					   struct user_sdma_txreq *tx,
++					   struct user_sdma_iovec *iovec,
++					   u32 *pkt_data_remaining)
++{
++	size_t remaining_to_add = *pkt_data_remaining;
++	/*
++	 * Walk through iovec entries, ensure the associated pages
++	 * are pinned and mapped, add data to the packet until no more
++	 * data remains to be added.
++	 */
++	while (remaining_to_add > 0) {
++		struct user_sdma_iovec *cur_iovec;
++		size_t from_this_iovec;
++		int ret;
++
++		cur_iovec = iovec;
++		from_this_iovec = iovec->iov.iov_len - iovec->offset;
++
++		if (from_this_iovec > remaining_to_add) {
++			from_this_iovec = remaining_to_add;
++		} else {
++			/* The current iovec entry will be consumed by this pass. */
++			req->iov_idx++;
++			iovec++;
++		}
++
++		ret = add_system_iovec_to_sdma_packet(req, tx, cur_iovec,
++						      from_this_iovec);
++		if (ret)
++			return ret;
++
++		remaining_to_add -= from_this_iovec;
++	}
++	*pkt_data_remaining = remaining_to_add;
++
++	return 0;
++}
++
++void system_descriptor_complete(struct hfi1_devdata *dd,
++				struct sdma_desc *descp)
++{
++	switch (sdma_mapping_type(descp)) {
++	case SDMA_MAP_SINGLE:
++		dma_unmap_single(&dd->pcidev->dev, sdma_mapping_addr(descp),
++				 sdma_mapping_len(descp), DMA_TO_DEVICE);
++		break;
++	case SDMA_MAP_PAGE:
++		dma_unmap_page(&dd->pcidev->dev, sdma_mapping_addr(descp),
++			       sdma_mapping_len(descp), DMA_TO_DEVICE);
++		break;
++	}
++
++	if (descp->pinning_ctx) {
++		struct sdma_mmu_node *node = descp->pinning_ctx;
++
++		release_node(node->rb.handler, node);
++	}
++}
++
+ static bool sdma_rb_filter(struct mmu_rb_node *node, unsigned long addr,
+ 			   unsigned long len)
+ {
+@@ -1493,8 +1666,7 @@ static void sdma_rb_remove(void *arg, struct mmu_rb_node *mnode)
+ 	struct sdma_mmu_node *node =
+ 		container_of(mnode, struct sdma_mmu_node, rb);
  
- static const struct mtk_gate mt8173_mm_clks[] = {
- 	/* MM0 */
-diff --git a/drivers/clk/mediatek/clk-mt8516-aud.c b/drivers/clk/mediatek/clk-mt8516-aud.c
-index 00f356fe7c7a6..a6ae8003b9ff6 100644
---- a/drivers/clk/mediatek/clk-mt8516-aud.c
-+++ b/drivers/clk/mediatek/clk-mt8516-aud.c
-@@ -22,14 +22,8 @@ static const struct mtk_gate_regs aud_cg_regs = {
- 	.sta_ofs = 0x0,
+-	unpin_sdma_pages(node);
+-	kfree(node);
++	free_system_node(node);
+ }
+ 
+ static int sdma_rb_invalidate(void *arg, struct mmu_rb_node *mnode)
+diff --git a/drivers/infiniband/hw/hfi1/user_sdma.h b/drivers/infiniband/hw/hfi1/user_sdma.h
+index ea56eb57e6568..a241836371dc1 100644
+--- a/drivers/infiniband/hw/hfi1/user_sdma.h
++++ b/drivers/infiniband/hw/hfi1/user_sdma.h
+@@ -112,16 +112,11 @@ struct sdma_mmu_node {
+ struct user_sdma_iovec {
+ 	struct list_head list;
+ 	struct iovec iov;
+-	/* number of pages in this vector */
+-	unsigned int npages;
+-	/* array of pinned pages for this vector */
+-	struct page **pages;
+ 	/*
+ 	 * offset into the virtual address space of the vector at
+ 	 * which we last left off.
+ 	 */
+ 	u64 offset;
+-	struct sdma_mmu_node *node;
  };
  
--#define GATE_AUD(_id, _name, _parent, _shift) {	\
--		.id = _id,			\
--		.name = _name,			\
--		.parent_name = _parent,		\
--		.regs = &aud_cg_regs,		\
--		.shift = _shift,		\
--		.ops = &mtk_clk_gate_ops_no_setclr,		\
--	}
-+#define GATE_AUD(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &aud_cg_regs, _shift, &mtk_clk_gate_ops_no_setclr)
+ /* evict operation argument */
+diff --git a/drivers/infiniband/hw/hfi1/verbs.c b/drivers/infiniband/hw/hfi1/verbs.c
+index 7f6d7fc7951df..fbdcfecb1768c 100644
+--- a/drivers/infiniband/hw/hfi1/verbs.c
++++ b/drivers/infiniband/hw/hfi1/verbs.c
+@@ -778,8 +778,8 @@ static int build_verbs_tx_desc(
  
- static const struct mtk_gate aud_clks[] __initconst = {
- 	GATE_AUD(CLK_AUD_AFE, "aud_afe", "clk26m_ck", 2),
-diff --git a/drivers/clk/mediatek/clk-mt8516.c b/drivers/clk/mediatek/clk-mt8516.c
-index 2c0cae7b3bcfe..6983d3a48dc9a 100644
---- a/drivers/clk/mediatek/clk-mt8516.c
-+++ b/drivers/clk/mediatek/clk-mt8516.c
-@@ -525,59 +525,23 @@ static const struct mtk_gate_regs top5_cg_regs = {
- 	.sta_ofs = 0x44,
- };
+ 	/* add icrc, lt byte, and padding to flit */
+ 	if (extra_bytes)
+-		ret = sdma_txadd_daddr(sde->dd, &tx->txreq,
+-				       sde->dd->sdma_pad_phys, extra_bytes);
++		ret = sdma_txadd_daddr(sde->dd, &tx->txreq, sde->dd->sdma_pad_phys,
++				       extra_bytes);
  
--#define GATE_TOP1(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top1_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_TOP1(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top1_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
+ bail_txadd:
+ 	return ret;
+diff --git a/drivers/infiniband/hw/hfi1/vnic_sdma.c b/drivers/infiniband/hw/hfi1/vnic_sdma.c
+index c3f0f8d877c37..727eedfba332a 100644
+--- a/drivers/infiniband/hw/hfi1/vnic_sdma.c
++++ b/drivers/infiniband/hw/hfi1/vnic_sdma.c
+@@ -64,6 +64,7 @@ static noinline int build_vnic_ulp_payload(struct sdma_engine *sde,
  
--#define GATE_TOP2(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top2_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_TOP2(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top2_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_TOP2_I(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top2_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_TOP2_I(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &top2_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
--#define GATE_TOP3(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top3_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr,	\
--	}
-+#define GATE_TOP3(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top3_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
--#define GATE_TOP4_I(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top4_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_setclr_inv,	\
--	}
-+#define GATE_TOP4_I(_id, _name, _parent, _shift)			\
-+	GATE_MTK(_id, _name, _parent, &top4_cg_regs, _shift, &mtk_clk_gate_ops_setclr_inv)
- 
--#define GATE_TOP5(_id, _name, _parent, _shift) {	\
--		.id = _id,				\
--		.name = _name,				\
--		.parent_name = _parent,			\
--		.regs = &top5_cg_regs,			\
--		.shift = _shift,			\
--		.ops = &mtk_clk_gate_ops_no_setclr,	\
--	}
-+#define GATE_TOP5(_id, _name, _parent, _shift)				\
-+	GATE_MTK(_id, _name, _parent, &top5_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
- 
- static const struct mtk_gate top_clks[] __initconst = {
- 	/* TOP1 */
+ 		/* combine physically continuous fragments later? */
+ 		ret = sdma_txadd_page(sde->dd,
++				      NULL,
+ 				      &tx->txreq,
+ 				      skb_frag_page(frag),
+ 				      skb_frag_off(frag),
 -- 
 2.39.2
 
