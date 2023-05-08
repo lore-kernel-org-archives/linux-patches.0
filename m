@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD44168D7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C20C433EF;
-	Mon,  8 May 2023 11:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48562171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5470BC433AC;
+	Mon,  8 May 2023 11:08:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544123;
-	bh=CIfkJ5Fha7/jTtp3HM3tKXjHJs6hs//vl1SArvHw+fc=;
+	s=korg; t=1683544127;
+	bh=18QJBnk7y/+3WJD9t6hXAxdmImRwjGoYco0gU2ChhCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3wf8LRilCWTUGCTzY3I+AOGWxKZU6Hq+wFk87H/LHY4DPYd37fsmBZ19Oe4Cosf8
-	 uXS3LVNf+U4FvpbOYXVZTiFxFqd/vsM+NwoAU2Imdw+hdLSOJ3Su2OmYzDFJRzfBZm
-	 P+znbYYr/D3mUV0nMTO4gbnjhySHOyuR5e0I5ny8=
+	b=BFbGWQA7EIh96APxmkmPFaZ94+g43p5bx1aj8nI1Q6ffEoHxeV5euqZbMsnBX7r5M
+	 z4jgzOkedYNN5u65pfCTNTqenJ6tq975ohOW62Ln7DOv8PtOB/Mi2L6LLro17/hXMk
+	 H/vDIax9U14nB0w1seqzE931Voprxd+u/fvpzieI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Wei Li <liwei391@huawei.com>,
+	Sumit Garg <sumit.garg@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 281/694] media: mediatek: vcodec: add core decode done event
-Date: Mon,  8 May 2023 11:41:56 +0200
-Message-Id: <20230508094441.404336027@linuxfoundation.org>
+Subject: [PATCH 6.3 308/694] arm64: kgdb: Set PSTATE.SS to 1 to re-enable single-step
+Date: Mon,  8 May 2023 11:42:23 +0200
+Message-Id: <20230508094442.286064098@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,72 +38,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Sumit Garg <sumit.garg@linaro.org>
 
-[ Upstream commit d227af847ac2d7d90350124a1b2451e4fc1f050c ]
+[ Upstream commit af6c0bd59f4f3ad5daad2f7b777954b1954551d5 ]
 
-Need to make sure core decode done before current instance is free.
+Currently only the first attempt to single-step has any effect. After
+that all further stepping remains "stuck" at the same program counter
+value.
 
-Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Refer to the ARM Architecture Reference Manual (ARM DDI 0487E.a) D2.12,
+PSTATE.SS=1 should be set at each step before transferring the PE to the
+'Active-not-pending' state. The problem here is PSTATE.SS=1 is not set
+since the second single-step.
+
+After the first single-step, the PE transferes to the 'Inactive' state,
+with PSTATE.SS=0 and MDSCR.SS=1, thus PSTATE.SS won't be set to 1 due to
+kernel_active_single_step()=true. Then the PE transferes to the
+'Active-pending' state when ERET and returns to the debugger by step
+exception.
+
+Before this patch:
+==================
+Entering kdb (current=0xffff3376039f0000, pid 1) on processor 0 due to Keyboard Entry
+[0]kdb>
+
+[0]kdb>
+[0]kdb> bp write_sysrq_trigger
+Instruction(i) BP #0 at 0xffffa45c13d09290 (write_sysrq_trigger)
+    is enabled   addr at ffffa45c13d09290, hardtype=0 installed=0
+
+[0]kdb> go
+$ echo h > /proc/sysrq-trigger
+
+Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to Breakpoint @ 0xffffad651a309290
+[1]kdb> ss
+
+Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to SS trap @ 0xffffad651a309294
+[1]kdb> ss
+
+Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to SS trap @ 0xffffad651a309294
+[1]kdb>
+
+After this patch:
+=================
+Entering kdb (current=0xffff6851c39f0000, pid 1) on processor 0 due to Keyboard Entry
+[0]kdb> bp write_sysrq_trigger
+Instruction(i) BP #0 at 0xffffc02d2dd09290 (write_sysrq_trigger)
+    is enabled   addr at ffffc02d2dd09290, hardtype=0 installed=0
+
+[0]kdb> go
+$ echo h > /proc/sysrq-trigger
+
+Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to Breakpoint @ 0xffffc02d2dd09290
+[1]kdb> ss
+
+Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd09294
+[1]kdb> ss
+
+Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd09298
+[1]kdb> ss
+
+Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd0929c
+[1]kdb>
+
+Fixes: 44679a4f142b ("arm64: KGDB: Add step debugging support")
+Co-developed-by: Wei Li <liwei391@huawei.com>
+Signed-off-by: Wei Li <liwei391@huawei.com>
+Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
+Tested-by: Daniel Thompson <daniel.thompson@linaro.org>
+Link: https://lore.kernel.org/r/20230202073148.657746-3-sumit.garg@linaro.org
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c | 4 +++-
- drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h | 2 ++
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/debug-monitors.h | 1 +
+ arch/arm64/kernel/debug-monitors.c      | 5 +++++
+ arch/arm64/kernel/kgdb.c                | 2 ++
+ 3 files changed, 8 insertions(+)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-index 0da6e3e2ef0b3..ce7c82e38103a 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-@@ -196,7 +196,7 @@ bool vdec_msg_queue_wait_lat_buf_full(struct vdec_msg_queue *msg_queue)
- 	spin_unlock(&core_ctx->ready_lock);
+diff --git a/arch/arm64/include/asm/debug-monitors.h b/arch/arm64/include/asm/debug-monitors.h
+index 7b7e05c02691c..13d437bcbf58c 100644
+--- a/arch/arm64/include/asm/debug-monitors.h
++++ b/arch/arm64/include/asm/debug-monitors.h
+@@ -104,6 +104,7 @@ void user_regs_reset_single_step(struct user_pt_regs *regs,
+ void kernel_enable_single_step(struct pt_regs *regs);
+ void kernel_disable_single_step(void);
+ int kernel_active_single_step(void);
++void kernel_rewind_single_step(struct pt_regs *regs);
  
- 	timeout_jiff = msecs_to_jiffies(1000 * (NUM_BUFFER_COUNT + 2));
--	ret = wait_event_timeout(msg_queue->lat_ctx.ready_to_use,
-+	ret = wait_event_timeout(msg_queue->ctx->msg_queue.core_dec_done,
- 				 msg_queue->lat_ctx.ready_num == NUM_BUFFER_COUNT,
- 				 timeout_jiff);
- 	if (ret) {
-@@ -257,6 +257,7 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
- 	mtk_vcodec_dec_disable_hardware(ctx, MTK_VDEC_CORE);
- 	vdec_msg_queue_qbuf(&ctx->msg_queue.lat_ctx, lat_buf);
+ #ifdef CONFIG_HAVE_HW_BREAKPOINT
+ int reinstall_suspended_bps(struct pt_regs *regs);
+diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
+index 3da09778267ec..64f2ecbdfe5c2 100644
+--- a/arch/arm64/kernel/debug-monitors.c
++++ b/arch/arm64/kernel/debug-monitors.c
+@@ -438,6 +438,11 @@ int kernel_active_single_step(void)
+ }
+ NOKPROBE_SYMBOL(kernel_active_single_step);
  
-+	wake_up_all(&ctx->msg_queue.core_dec_done);
- 	if (atomic_read(&lat_buf->ctx->msg_queue.core_list_cnt)) {
- 		mtk_v4l2_debug(3, "re-schedule to decode for core: %d",
- 			       dev->msg_queue_core_ctx.ready_num);
-@@ -281,6 +282,7 @@ int vdec_msg_queue_init(struct vdec_msg_queue *msg_queue,
- 
- 	atomic_set(&msg_queue->lat_list_cnt, 0);
- 	atomic_set(&msg_queue->core_list_cnt, 0);
-+	init_waitqueue_head(&msg_queue->core_dec_done);
- 
- 	msg_queue->wdma_addr.size =
- 		vde_msg_queue_get_trans_size(ctx->picinfo.buf_w,
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-index 56280d6682c5a..a75c04418f52e 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.h
-@@ -76,6 +76,7 @@ struct vdec_lat_buf {
-  *
-  * @lat_list_cnt: used to record each instance lat list count
-  * @core_list_cnt: used to record each instance core list count
-+ * @core_dec_done: core work queue decode done event
-  */
- struct vdec_msg_queue {
- 	struct vdec_lat_buf lat_buf[NUM_BUFFER_COUNT];
-@@ -90,6 +91,7 @@ struct vdec_msg_queue {
- 
- 	atomic_t lat_list_cnt;
- 	atomic_t core_list_cnt;
-+	wait_queue_head_t core_dec_done;
- };
- 
- /**
++void kernel_rewind_single_step(struct pt_regs *regs)
++{
++	set_regs_spsr_ss(regs);
++}
++
+ /* ptrace API */
+ void user_enable_single_step(struct task_struct *task)
+ {
+diff --git a/arch/arm64/kernel/kgdb.c b/arch/arm64/kernel/kgdb.c
+index cda9c1e9864f7..4e1f983df3d1c 100644
+--- a/arch/arm64/kernel/kgdb.c
++++ b/arch/arm64/kernel/kgdb.c
+@@ -224,6 +224,8 @@ int kgdb_arch_handle_exception(int exception_vector, int signo,
+ 		 */
+ 		if (!kernel_active_single_step())
+ 			kernel_enable_single_step(linux_regs);
++		else
++			kernel_rewind_single_step(linux_regs);
+ 		err = 0;
+ 		break;
+ 	default:
 -- 
 2.39.2
 
