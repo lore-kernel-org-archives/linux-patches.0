@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB8C168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF0EC4339B;
-	Mon,  8 May 2023 10:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B90125B3
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:18:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0790C433D2;
+	Mon,  8 May 2023 10:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541086;
-	bh=CjKytRevELX7kf3IJ2TCy9akXHAjAiVJumBW8p7gxpE=;
+	s=korg; t=1683541089;
+	bh=QvDiN8d/mMGJ07zgJtp6pyLoUdXXmYRuk4pUB9u+l6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PzbhXn68X3UGMOwvy1hK8sVgw/pU31vfo9d2PaA5VfU0U1mjvA5MXSkCsFZIrN2Dl
-	 6e6NjTbIAWxstQYbQ2x7k4UHfDSdiIeFc82Dh6oSG9Z5vXZPrPpIWoq4gAXKqDMwht
-	 nLOIngfTBUpZvnSEv1dqmGlyL4Ro1W5wnV6rwT04=
+	b=VpOJFCFfbRT4T9/K8qLHsfVgfM5fR9sXK2JtYZH1rasf2TRESgIXnXtTKDJRQ4u+b
+	 0e4Wr5Xd6WjBh0/QClioBW5GNW10nDP0vqD6Iruu6Rkq2sh7r1+IQGNpV1pl23FF6E
+	 +mn5jD0s3rxLPRJMU9XTTMmtUTEBEm9YYd7oOk3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 610/611] debugobject: Ensure pool refill (again)
-Date: Mon,  8 May 2023 11:47:32 +0200
-Message-Id: <20230508094441.727356463@linuxfoundation.org>
+	Xingui Yang <yangxingui@huawei.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 611/611] scsi: libsas: Grab the ATA port lock in sas_ata_device_link_abort()
+Date: Mon,  8 May 2023 11:47:33 +0200
+Message-Id: <20230508094441.766917233@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -34,85 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Xingui Yang <yangxingui@huawei.com>
 
-commit 0af462f19e635ad522f28981238334620881badc upstream.
+commit a67aad57d9aee41180aff36e54cb72fe4b8d5a5a upstream.
 
-The recent fix to ensure atomicity of lookup and allocation inadvertently
-broke the pool refill mechanism.
+Grab the ATA port lock in sas_ata_device_link_abort() before calling
+ata_link_abort() as outlined in this function's locking requirements.
 
-Prior to that change debug_objects_activate() and debug_objecs_assert_init()
-invoked debug_objecs_init() to set up the tracking object for statically
-initialized objects. That's not longer the case and debug_objecs_init() is
-now the only place which does pool refills.
-
-Depending on the number of statically initialized objects this can be
-enough to actually deplete the pool, which was observed by Ido via a
-debugobjects OOM warning.
-
-Restore the old behaviour by adding explicit refill opportunities to
-debug_objects_activate() and debug_objecs_assert_init().
-
-Fixes: 63a759694eed ("debugobject: Prevent init race with static objects")
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/871qk05a9d.ffs@tglx
+Fixes: 44112922674b ("scsi: libsas: Add sas_ata_device_link_abort()")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c |   21 +++++++++++++++------
- 1 file changed, 15 insertions(+), 6 deletions(-)
+ drivers/scsi/libsas/sas_ata.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -587,6 +587,16 @@ static struct debug_obj *lookup_object_o
- 	return NULL;
- }
- 
-+static void debug_objects_fill_pool(void)
-+{
-+	/*
-+	 * On RT enabled kernels the pool refill must happen in preemptible
-+	 * context:
-+	 */
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible())
-+		fill_pool();
-+}
-+
- static void
- __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack)
+--- a/drivers/scsi/libsas/sas_ata.c
++++ b/drivers/scsi/libsas/sas_ata.c
+@@ -890,7 +890,9 @@ void sas_ata_device_link_abort(struct do
  {
-@@ -595,12 +605,7 @@ __debug_object_init(void *addr, const st
- 	struct debug_obj *obj;
- 	unsigned long flags;
+ 	struct ata_port *ap = device->sata_dev.ap;
+ 	struct ata_link *link = &ap->link;
++	unsigned long flags;
  
--	/*
--	 * On RT enabled kernels the pool refill must happen in preemptible
--	 * context:
--	 */
--	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible())
--		fill_pool();
-+	debug_objects_fill_pool();
++	spin_lock_irqsave(ap->lock, flags);
+ 	device->sata_dev.fis[2] = ATA_ERR | ATA_DRDY; /* tf status */
+ 	device->sata_dev.fis[3] = ATA_ABORTED; /* tf error */
  
- 	db = get_bucket((unsigned long) addr);
+@@ -898,6 +900,7 @@ void sas_ata_device_link_abort(struct do
+ 	if (force_reset)
+ 		link->eh_info.action |= ATA_EH_RESET;
+ 	ata_link_abort(link);
++	spin_unlock_irqrestore(ap->lock, flags);
+ }
+ EXPORT_SYMBOL_GPL(sas_ata_device_link_abort);
  
-@@ -685,6 +690,8 @@ int debug_object_activate(void *addr, co
- 	if (!debug_objects_enabled)
- 		return 0;
- 
-+	debug_objects_fill_pool();
-+
- 	db = get_bucket((unsigned long) addr);
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
-@@ -894,6 +901,8 @@ void debug_object_assert_init(void *addr
- 	if (!debug_objects_enabled)
- 		return;
- 
-+	debug_objects_fill_pool();
-+
- 	db = get_bucket((unsigned long) addr);
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
 
 
