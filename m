@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 322F4168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A34D3C433D2;
-	Mon,  8 May 2023 10:49:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221B8168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AEC2C433D2;
+	Mon,  8 May 2023 10:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542942;
-	bh=m6hWB4ZdwqCUjX/JEb+H73QfA1xko8i3kGsZiDlrHak=;
+	s=korg; t=1683542945;
+	bh=CTLkxeQd8cmp8Mar/37Fn0j7B0XGUe51oyEXN7btVZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kDmFrJHc4FIin1rhS0h42Rbh5i7f8UgH4BQ8cfmmiwpfQf2XMNLUjDFqCjDnR8qWh
-	 KkBjqWaEdgZqhjj/7GvZ5qndc+Fv06DdMDu6zHgF+igrpCfZEqcS9dDAYp977QJJA5
-	 ClD4ossH45muanoMdsoXRtKzCpwyGsquIYTb0iTI=
+	b=JCk3QTPlxoClNwCFo/hLtDfvIrA+0If1m+Zwmos5DIopzb5Z+jiUXIJmdG+L8YDJg
+	 A96J4YHZydoIeGLSgWcixtQe/Lqr/keRsnd4YcKTBZ8f4RfHaMBV2Nly+j954bmxvh
+	 irKEu7mTt2SoQGw0chwfvBXOL3TRB9yCO9fAyRy8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 563/663] swiotlb: fix debugfs reporting of reserved memory pools
-Date: Mon,  8 May 2023 11:46:29 +0200
-Message-Id: <20230508094447.442237720@linuxfoundation.org>
+Subject: [PATCH 6.2 564/663] RDMA/rxe: Convert tasklet args to queue pairs
+Date: Mon,  8 May 2023 11:46:30 +0200
+Message-Id: <20230508094447.473882677@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,48 +35,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 5499d01c029069044a3b3e50501c77b474c96178 ]
+[ Upstream commit 3946fc2a42b18cf0b675121158a2625825ce27b5 ]
 
-For io_tlb_nslabs, the debugfs code reports the correct value for a
-specific reserved memory pool.  But for io_tlb_used, the value reported
-is always for the default pool, not the specific reserved pool. Fix this.
+Originally is was thought that the tasklet machinery in rxe_task.c would
+be used in other applications but that has not happened for years. This
+patch replaces the 'void *arg' by struct 'rxe_qp *qp' in the parameters to
+the tasklet calls. This change will have no affect on performance but may
+make the code a little clearer.
 
-Fixes: 5c850d31880e ("swiotlb: fix passing local variable to debugfs_create_ulong()")
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230304174533.11296-2-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: b2b1ddc45745 ("RDMA/rxe: Fix the error "trying to register non-static key in rxe_cleanup_task"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/swiotlb.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_comp.c |    3 +--
+ drivers/infiniband/sw/rxe/rxe_loc.h  |    6 +++---
+ drivers/infiniband/sw/rxe/rxe_req.c  |    3 +--
+ drivers/infiniband/sw/rxe/rxe_resp.c |    3 +--
+ drivers/infiniband/sw/rxe/rxe_task.c |   11 ++++++-----
+ drivers/infiniband/sw/rxe/rxe_task.h |    9 +++++----
+ 6 files changed, 17 insertions(+), 18 deletions(-)
 
-diff --git a/kernel/dma/swiotlb.c b/kernel/dma/swiotlb.c
-index 465cd2b5481f1..81f40821084ec 100644
---- a/kernel/dma/swiotlb.c
-+++ b/kernel/dma/swiotlb.c
-@@ -935,7 +935,9 @@ EXPORT_SYMBOL_GPL(is_swiotlb_active);
+--- a/drivers/infiniband/sw/rxe/rxe_comp.c
++++ b/drivers/infiniband/sw/rxe/rxe_comp.c
+@@ -571,9 +571,8 @@ static void free_pkt(struct rxe_pkt_info
+ 	ib_device_put(dev);
+ }
  
- static int io_tlb_used_get(void *data, u64 *val)
+-int rxe_completer(void *arg)
++int rxe_completer(struct rxe_qp *qp)
  {
--	*val = mem_used(&io_tlb_default_mem);
-+	struct io_tlb_mem *mem = data;
-+
-+	*val = mem_used(mem);
+-	struct rxe_qp *qp = (struct rxe_qp *)arg;
+ 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+ 	struct rxe_send_wqe *wqe = NULL;
+ 	struct sk_buff *skb = NULL;
+--- a/drivers/infiniband/sw/rxe/rxe_loc.h
++++ b/drivers/infiniband/sw/rxe/rxe_loc.h
+@@ -171,9 +171,9 @@ void rxe_srq_cleanup(struct rxe_pool_ele
+ 
+ void rxe_dealloc(struct ib_device *ib_dev);
+ 
+-int rxe_completer(void *arg);
+-int rxe_requester(void *arg);
+-int rxe_responder(void *arg);
++int rxe_completer(struct rxe_qp *qp);
++int rxe_requester(struct rxe_qp *qp);
++int rxe_responder(struct rxe_qp *qp);
+ 
+ /* rxe_icrc.c */
+ int rxe_icrc_init(struct rxe_dev *rxe);
+--- a/drivers/infiniband/sw/rxe/rxe_req.c
++++ b/drivers/infiniband/sw/rxe/rxe_req.c
+@@ -635,9 +635,8 @@ static int rxe_do_local_ops(struct rxe_q
  	return 0;
  }
- DEFINE_DEBUGFS_ATTRIBUTE(fops_io_tlb_used, io_tlb_used_get, NULL, "%llu\n");
-@@ -948,7 +950,7 @@ static void swiotlb_create_debugfs_files(struct io_tlb_mem *mem,
- 		return;
  
- 	debugfs_create_ulong("io_tlb_nslabs", 0400, mem->debugfs, &mem->nslabs);
--	debugfs_create_file("io_tlb_used", 0400, mem->debugfs, NULL,
-+	debugfs_create_file("io_tlb_used", 0400, mem->debugfs, mem,
- 			&fops_io_tlb_used);
+-int rxe_requester(void *arg)
++int rxe_requester(struct rxe_qp *qp)
+ {
+-	struct rxe_qp *qp = (struct rxe_qp *)arg;
+ 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+ 	struct rxe_pkt_info pkt;
+ 	struct sk_buff *skb;
+--- a/drivers/infiniband/sw/rxe/rxe_resp.c
++++ b/drivers/infiniband/sw/rxe/rxe_resp.c
+@@ -1439,9 +1439,8 @@ static void rxe_drain_req_pkts(struct rx
+ 		queue_advance_consumer(q, q->type);
  }
  
--- 
-2.39.2
-
+-int rxe_responder(void *arg)
++int rxe_responder(struct rxe_qp *qp)
+ {
+-	struct rxe_qp *qp = (struct rxe_qp *)arg;
+ 	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+ 	enum resp_states state;
+ 	struct rxe_pkt_info *pkt = NULL;
+--- a/drivers/infiniband/sw/rxe/rxe_task.c
++++ b/drivers/infiniband/sw/rxe/rxe_task.c
+@@ -11,7 +11,7 @@ int __rxe_do_task(struct rxe_task *task)
+ {
+ 	int ret;
+ 
+-	while ((ret = task->func(task->arg)) == 0)
++	while ((ret = task->func(task->qp)) == 0)
+ 		;
+ 
+ 	task->ret = ret;
+@@ -29,7 +29,7 @@ static void do_task(struct tasklet_struc
+ 	int cont;
+ 	int ret;
+ 	struct rxe_task *task = from_tasklet(task, t, tasklet);
+-	struct rxe_qp *qp = (struct rxe_qp *)task->arg;
++	struct rxe_qp *qp = (struct rxe_qp *)task->qp;
+ 	unsigned int iterations = RXE_MAX_ITERATIONS;
+ 
+ 	spin_lock_bh(&task->lock);
+@@ -54,7 +54,7 @@ static void do_task(struct tasklet_struc
+ 
+ 	do {
+ 		cont = 0;
+-		ret = task->func(task->arg);
++		ret = task->func(task->qp);
+ 
+ 		spin_lock_bh(&task->lock);
+ 		switch (task->state) {
+@@ -91,9 +91,10 @@ static void do_task(struct tasklet_struc
+ 	task->ret = ret;
+ }
+ 
+-int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *))
++int rxe_init_task(struct rxe_task *task, struct rxe_qp *qp,
++		  int (*func)(struct rxe_qp *))
+ {
+-	task->arg	= arg;
++	task->qp	= qp;
+ 	task->func	= func;
+ 	task->destroyed	= false;
+ 
+--- a/drivers/infiniband/sw/rxe/rxe_task.h
++++ b/drivers/infiniband/sw/rxe/rxe_task.h
+@@ -22,18 +22,19 @@ struct rxe_task {
+ 	struct tasklet_struct	tasklet;
+ 	int			state;
+ 	spinlock_t		lock;
+-	void			*arg;
+-	int			(*func)(void *arg);
++	struct rxe_qp		*qp;
++	int			(*func)(struct rxe_qp *qp);
+ 	int			ret;
+ 	bool			destroyed;
+ };
+ 
+ /*
+  * init rxe_task structure
+- *	arg  => parameter to pass to fcn
++ *	qp  => parameter to pass to func
+  *	func => function to call until it returns != 0
+  */
+-int rxe_init_task(struct rxe_task *task, void *arg, int (*func)(void *));
++int rxe_init_task(struct rxe_task *task, struct rxe_qp *qp,
++		  int (*func)(struct rxe_qp *));
+ 
+ /* cleanup task */
+ void rxe_cleanup_task(struct rxe_task *task);
 
 
