@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05757168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75B0DC433D2;
-	Mon,  8 May 2023 10:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013EC168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:46:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57721C433D2;
+	Mon,  8 May 2023 10:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542793;
-	bh=gHmSPUit+cKJJVg0Qx4WIqjFeLzHHhRYRl9x57STIbA=;
+	s=korg; t=1683542796;
+	bh=ValpUyJUKPfsegPY6Oujiv451qbJAiZbIHoKjMhQVh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0AsK2HxskFAzrwxKGaedVW3R7YOnqGVm9vKOzABR6Z/8f7aF689VmQ4Vq63h/A7gU
-	 j742iWCHDDBkW2P6pqWdfyqCr/m/XZw/sF0rhUptY/ydsJmLu2zYnmAy3/Anbc3OuH
-	 28dv9Pi3qIYD6PlRfq7CQl7StgQYMcKCEQcn/9xQ=
+	b=IAeclDRFsamQ9jVWi/3Cw58Z+PNePVhqG0g2BRmh+Xpmk6b6YWin5mJU7yFCOdncm
+	 +Ayg623QupSuFDtNnjq5reyKQWnU/uwC9wxBTBCDqtg2EUBLSzaUZKb98x34kC0pln
+	 pA9ki7PaweeyQT/GFSDvot/yivphLtn37dR2P5DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 523/663] clk: mediatek: mt8135: Properly use CLK_IS_CRITICAL flag
-Date: Mon,  8 May 2023 11:45:49 +0200
-Message-Id: <20230508094445.807087375@linuxfoundation.org>
+Subject: [PATCH 6.2 550/663] clk: imx: fracn-gppll: fix the rate table
+Date: Mon,  8 May 2023 11:46:16 +0200
+Message-Id: <20230508094446.906755264@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,83 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit f4f9a9c003b52ea3cffda186753bfb3e37b970f8 ]
+[ Upstream commit cf8dccfedce848f67eaa42e8839305d028319161 ]
 
-Instead of calling clk_prepare_enable() for clocks that shall stay
-enabled, use the CLK_IS_CRITICAL flag, which purpose is exactly that.
+The Fvco should be range 2.4GHz to 5GHz, the original table voilate the
+spec, so update the table to fix it.
 
-Fixes: a8aede794843 ("clk: mediatek: Add basic clocks for Mediatek MT8135.")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20230306140543.1813621-52-angelogioacchino.delregno@collabora.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: c196175acdd3 ("clk: imx: clk-fracn-gppll: Add more freq config for video pll")
+Fixes: 044034efbeea ("clk: imx: clk-fracn-gppll: fix mfd value")
+Fixes: 1b26cb8a77a4 ("clk: imx: support fracn gppll")
+Signed-off-by: Jacky Bai <ping.bai@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20230403095300.3386988-2-peng.fan@oss.nxp.com
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/mediatek/clk-mt8135.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/clk/imx/clk-fracn-gppll.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/mediatek/clk-mt8135.c b/drivers/clk/mediatek/clk-mt8135.c
-index 1cbe0958d9cd0..3ea06d2ec2f11 100644
---- a/drivers/clk/mediatek/clk-mt8135.c
-+++ b/drivers/clk/mediatek/clk-mt8135.c
-@@ -2,6 +2,8 @@
- /*
-  * Copyright (c) 2014 MediaTek Inc.
-  * Author: James Liao <jamesjj.liao@mediatek.com>
-+ * Copyright (c) 2023 Collabora, Ltd.
-+ *               AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-  */
- 
- #include <linux/clk.h>
-@@ -390,7 +392,7 @@ static const struct mtk_composite top_muxes[] __initconst = {
- 	MUX_GATE(CLK_TOP_GCPU_SEL, "gcpu_sel", gcpu_parents, 0x0164, 24, 3, 31),
- 	/* CLK_CFG_9 */
- 	MUX_GATE(CLK_TOP_DPI1_SEL, "dpi1_sel", dpi1_parents, 0x0168, 0, 2, 7),
--	MUX_GATE(CLK_TOP_CCI_SEL, "cci_sel", cci_parents, 0x0168, 8, 3, 15),
-+	MUX_GATE_FLAGS(CLK_TOP_CCI_SEL, "cci_sel", cci_parents, 0x0168, 8, 3, 15, CLK_IS_CRITICAL),
- 	MUX_GATE(CLK_TOP_APLL_SEL, "apll_sel", apll_parents, 0x0168, 16, 3, 23),
- 	MUX_GATE(CLK_TOP_HDMIPLL_SEL, "hdmipll_sel", hdmipll_parents, 0x0168, 24, 2, 31),
+diff --git a/drivers/clk/imx/clk-fracn-gppll.c b/drivers/clk/imx/clk-fracn-gppll.c
+index a2aaa14fc1aef..ec50c41e2a4c9 100644
+--- a/drivers/clk/imx/clk-fracn-gppll.c
++++ b/drivers/clk/imx/clk-fracn-gppll.c
+@@ -60,18 +60,20 @@ struct clk_fracn_gppll {
  };
-@@ -404,6 +406,10 @@ static const struct mtk_gate_regs infra_cg_regs = {
- #define GATE_ICG(_id, _name, _parent, _shift)	\
- 	GATE_MTK(_id, _name, _parent, &infra_cg_regs, _shift, &mtk_clk_gate_ops_setclr)
  
-+#define GATE_ICG_AO(_id, _name, _parent, _shift)	\
-+	GATE_MTK_FLAGS(_id, _name, _parent, &infra_cg_regs, _shift,	\
-+		       &mtk_clk_gate_ops_setclr, CLK_IS_CRITICAL)
-+
- static const struct mtk_gate infra_clks[] __initconst = {
- 	GATE_ICG(CLK_INFRA_PMIC_WRAP, "pmic_wrap_ck", "axi_sel", 23),
- 	GATE_ICG(CLK_INFRA_PMICSPI, "pmicspi_ck", "pmicspi_sel", 22),
-@@ -411,7 +417,7 @@ static const struct mtk_gate infra_clks[] __initconst = {
- 	GATE_ICG(CLK_INFRA_CCIF0_AP_CTRL, "ccif0_ap_ctrl", "axi_sel", 20),
- 	GATE_ICG(CLK_INFRA_KP, "kp_ck", "axi_sel", 16),
- 	GATE_ICG(CLK_INFRA_CPUM, "cpum_ck", "cpum_tck_in", 15),
--	GATE_ICG(CLK_INFRA_M4U, "m4u_ck", "mem_sel", 8),
-+	GATE_ICG_AO(CLK_INFRA_M4U, "m4u_ck", "mem_sel", 8),
- 	GATE_ICG(CLK_INFRA_MFGAXI, "mfgaxi_ck", "axi_sel", 7),
- 	GATE_ICG(CLK_INFRA_DEVAPC, "devapc_ck", "axi_sel", 6),
- 	GATE_ICG(CLK_INFRA_AUDIO, "audio_ck", "aud_intbus_sel", 5),
-@@ -533,8 +539,6 @@ static void __init mtk_topckgen_init(struct device_node *node)
- 	mtk_clk_register_composites(top_muxes, ARRAY_SIZE(top_muxes), base,
- 			&mt8135_clk_lock, clk_data);
+ /*
+- * Fvco = Fref * (MFI + MFN / MFD)
+- * Fout = Fvco / (rdiv * odiv)
++ * Fvco = (Fref / rdiv) * (MFI + MFN / MFD)
++ * Fout = Fvco / odiv
++ * The (Fref / rdiv) should be in range 20MHz to 40MHz
++ * The Fvco should be in range 2.5Ghz to 5Ghz
+  */
+ static const struct imx_fracn_gppll_rate_table fracn_tbl[] = {
+-	PLL_FRACN_GP(650000000U, 81, 0, 1, 0, 3),
++	PLL_FRACN_GP(650000000U, 162, 50, 100, 0, 6),
+ 	PLL_FRACN_GP(594000000U, 198, 0, 1, 0, 8),
+-	PLL_FRACN_GP(560000000U, 70, 0, 1, 0, 3),
+-	PLL_FRACN_GP(498000000U, 83, 0, 1, 0, 4),
++	PLL_FRACN_GP(560000000U, 140, 0, 1, 0, 6),
++	PLL_FRACN_GP(498000000U, 166, 0, 1, 0, 8),
+ 	PLL_FRACN_GP(484000000U, 121, 0, 1, 0, 6),
+ 	PLL_FRACN_GP(445333333U, 167, 0, 1, 0, 9),
+-	PLL_FRACN_GP(400000000U, 50, 0, 1, 0, 3),
+-	PLL_FRACN_GP(393216000U, 81, 92, 100, 0, 5)
++	PLL_FRACN_GP(400000000U, 200, 0, 1, 0, 12),
++	PLL_FRACN_GP(393216000U, 163, 84, 100, 0, 10)
+ };
  
--	clk_prepare_enable(clk_data->hws[CLK_TOP_CCI_SEL]->clk);
--
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	if (r)
- 		pr_err("%s(): could not register clock provider: %d\n",
-@@ -552,8 +556,6 @@ static void __init mtk_infrasys_init(struct device_node *node)
- 	mtk_clk_register_gates(node, infra_clks, ARRAY_SIZE(infra_clks),
- 						clk_data);
- 
--	clk_prepare_enable(clk_data->hws[CLK_INFRA_M4U]->clk);
--
- 	r = of_clk_add_hw_provider(node, of_clk_hw_onecell_get, clk_data);
- 	if (r)
- 		pr_err("%s(): could not register clock provider: %d\n",
+ struct imx_fracn_gppll_clk imx_fracn_gppll = {
 -- 
 2.39.2
 
