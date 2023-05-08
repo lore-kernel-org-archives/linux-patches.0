@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD24623A4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B186EC433D2;
-	Mon,  8 May 2023 10:31:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE275125DF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437D5C433D2;
+	Mon,  8 May 2023 10:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541908;
-	bh=VXDgDRPaXFJnjVtytghjh/juy7EXzf6f2L6oSo/T/Kc=;
+	s=korg; t=1683541914;
+	bh=qTSQyqGLlpl1v/p6nVTx1q1OV3sQGvqQ/VwAYXf1X3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0c78YcyUeTNS9rH8WStPzZEb3UgYHdYwslajx528NynbvSIgziFFwc1Lbw5gnX99
-	 BsdYhSvCLAAELemebvRYOG5FYp12sPINbEUraTAewbHL04o20MfkVdPmrknsFueWfm
-	 gN9XO2gj3pN6Tzzzwo6M+EVVJrWOzpIp56CmuYws=
+	b=gtom2bK6Ru1CFFKa9F8NXgVf2PjRt6wbPSAjCapKE0LpTnq+CxopmZdG6xZFxGEmJ
+	 /4Y6avc6PfMMoDnQjeAOi8HerGJh2WB+NWgbXmgaTXpAQ5Vkb4jRKkMzK5YsPObi85
+	 xD2/ATSuCGFB9DS9bm4ayni0PUNl3FDCm5iFZWX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 265/663] media: venus: dec: Fix capture formats enumeration order
-Date: Mon,  8 May 2023 11:41:31 +0200
-Message-Id: <20230508094436.844786773@linuxfoundation.org>
+Subject: [PATCH 6.2 267/663] x86/ioapic: Dont return 0 from arch_dynirq_lower_bound()
+Date: Mon,  8 May 2023 11:41:33 +0200
+Message-Id: <20230508094436.912509266@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,75 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Javier Martinez Canillas <javierm@redhat.com>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit a9d45ec74c8e68aaafe90191928eddbf79f4644f ]
+[ Upstream commit 5af507bef93c09a94fb8f058213b489178f4cbe5 ]
 
-Commit 9593126dae3e ("media: venus: Add a handling of QC08C compressed
-format") and commit cef92b14e653 ("media: venus: Add a handling of QC10C
-compressed format") added support for the QC08C and QC10C compressed
-formats respectively.
+arch_dynirq_lower_bound() is invoked by the core interrupt code to
+retrieve the lowest possible Linux interrupt number for dynamically
+allocated interrupts like MSI.
 
-But these also caused a regression, because the new formats where added
-at the beginning of the vdec_formats[] array and the vdec_inst_init()
-function sets the default format output and capture using fixed indexes
-of that array:
+The x86 implementation uses this to exclude the IO/APIC GSI space.
+This works correctly as long as there is an IO/APIC registered, but
+returns 0 if not. This has been observed in VMs where the BIOS does
+not advertise an IO/APIC.
 
-static void vdec_inst_init(struct venus_inst *inst)
-{
-...
-	inst->fmt_out = &vdec_formats[8];
-	inst->fmt_cap = &vdec_formats[0];
-...
-}
+0 is an invalid interrupt number except for the legacy timer interrupt
+on x86. The return value is unchecked in the core code, so it ends up
+to allocate interrupt number 0 which is subsequently considered to be
+invalid by the caller, e.g. the MSI allocation code.
 
-Since now V4L2_PIX_FMT_NV12 is not the first entry in the array anymore,
-the default capture format is not set to that as it was done before.
+The function has already a check for 0 in the case that an IO/APIC is
+registered, as ioapic_dynirq_base is 0 in case of device tree setups.
 
-Both commits changed the first index to keep inst->fmt_out default format
-set to V4L2_PIX_FMT_H264, but did not update the latter to keep .fmt_out
-default format set to V4L2_PIX_FMT_NV12.
+Consolidate this and zero check for both ioapic_dynirq_base and gsi_top,
+which is used in the case that no IO/APIC is registered.
 
-Rather than updating the index to the current V4L2_PIX_FMT_NV12 position,
-let's reorder the entries so that this format is the first entry again.
-
-This would also make VIDIOC_ENUM_FMT report the V4L2_PIX_FMT_NV12 format
-with an index 0 as it did before the QC08C and QC10C formats were added.
-
-Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
-Fixes: cef92b14e653 ("media: venus: Add a handling of QC10C compressed format")
-Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 3e5bedc2c258 ("x86/apic: Fix arch_dynirq_lower_bound() bug for DT enabled machines")
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/1679988604-20308-1-git-send-email-ssengar@linux.microsoft.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/apic/io_apic.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 9d26587716bf6..1a52c2ea2da5b 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -31,15 +31,15 @@
-  */
- static const struct venus_format vdec_formats[] = {
- 	{
--		.pixfmt = V4L2_PIX_FMT_QC08C,
-+		.pixfmt = V4L2_PIX_FMT_NV12,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
- 	}, {
--		.pixfmt = V4L2_PIX_FMT_QC10C,
-+		.pixfmt = V4L2_PIX_FMT_QC08C,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
--	},{
--		.pixfmt = V4L2_PIX_FMT_NV12,
-+	}, {
-+		.pixfmt = V4L2_PIX_FMT_QC10C,
- 		.num_planes = 1,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
- 	}, {
+diff --git a/arch/x86/kernel/apic/io_apic.c b/arch/x86/kernel/apic/io_apic.c
+index a868b76cd3d42..efa87b6bb1cde 100644
+--- a/arch/x86/kernel/apic/io_apic.c
++++ b/arch/x86/kernel/apic/io_apic.c
+@@ -2480,17 +2480,21 @@ static int io_apic_get_redir_entries(int ioapic)
+ 
+ unsigned int arch_dynirq_lower_bound(unsigned int from)
+ {
++	unsigned int ret;
++
+ 	/*
+ 	 * dmar_alloc_hwirq() may be called before setup_IO_APIC(), so use
+ 	 * gsi_top if ioapic_dynirq_base hasn't been initialized yet.
+ 	 */
+-	if (!ioapic_initialized)
+-		return gsi_top;
++	ret = ioapic_dynirq_base ? : gsi_top;
++
+ 	/*
+-	 * For DT enabled machines ioapic_dynirq_base is irrelevant and not
+-	 * updated. So simply return @from if ioapic_dynirq_base == 0.
++	 * For DT enabled machines ioapic_dynirq_base is irrelevant and
++	 * always 0. gsi_top can be 0 if there is no IO/APIC registered.
++	 * 0 is an invalid interrupt number for dynamic allocations. Return
++	 * @from instead.
+ 	 */
+-	return ioapic_dynirq_base ? : from;
++	return ret ? : from;
+ }
+ 
+ #ifdef CONFIG_X86_32
 -- 
 2.39.2
 
