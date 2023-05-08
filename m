@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9DD171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DD4C433A0;
-	Mon,  8 May 2023 11:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44414171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:36:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C10C433D2;
+	Mon,  8 May 2023 11:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545761;
-	bh=TnzMZgdz/x9AnBvos9NrN0HJ3HpMKIv3laD7omQ6X5o=;
+	s=korg; t=1683545764;
+	bh=uEjKJffeFMNY1bzbDWNRGIt6zyN1jem/6u6aM87EJ7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2RZiH5cR368nGrOu9uE7v60Gd3EL03HQMlYRucCmAfUbmZ3I3vM+JLIwqRE4Lxm/
-	 bko3qdNotACb0IdXQ52i3C7AR2ecXYvstDopSgoO/LTfxftlcjcwLsOYX0m13o6J/e
-	 JhoIyMB+aUgW9u6For3+UBNhJYj4Nq33c9QkDRzw=
+	b=MUX5YN0uffMQblJ968h5mS7VzL7FWH2nc0MqvurEaOvZiOL2EUE5P0AGSlNPhimmK
+	 gvAYaAf8y9PqLaWt+SDaJfAIu+/Cz3YOYhldIZD8ATDZu34CNrmvWu2qeD0J24kYlz
+	 1u7L22EfQ9KvCqUiPcn5ti/ukQh25gTwofSCC6Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5093ba19745994288b53@syzkaller.appspotmail.com,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Schspa Shi <schspa@gmail.com>
-Subject: [PATCH 5.15 145/371] debugobject: Prevent init race with static objects
-Date: Mon,  8 May 2023 11:45:46 +0200
-Message-Id: <20230508094817.829958204@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 128/371] regulator: core: Consistently set mutex_owner when using ww_mutex_lock_slow()
+Date: Mon,  8 May 2023 11:45:29 +0200
+Message-Id: <20230508094817.124318334@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -37,281 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 63a759694eed61025713b3e14dd827c8548daadc ]
+[ Upstream commit b83a1772be854f87602de14726737d3e5b06e1f4 ]
 
-Statically initialized objects are usually not initialized via the init()
-function of the subsystem. They are special cased and the subsystem
-provides a function to validate whether an object which is not yet tracked
-by debugobjects is statically initialized. This means the object is started
-to be tracked on first use, e.g. activation.
+When a codepath locks a rdev using ww_mutex_lock_slow() directly then
+that codepath is responsible for incrementing the "ref_cnt" and also
+setting the "mutex_owner" to "current".
 
-This works perfectly fine, unless there are two concurrent operations on
-that object. Schspa decoded the problem:
+The regulator core consistently got that right for "ref_cnt" but
+didn't always get it right for "mutex_owner". Let's fix this.
 
-T0 	          	    	    T1
+It's unlikely that this truly matters because the "mutex_owner" is
+only needed if we're going to do subsequent locking of the same
+rdev. However, even though it's not truly needed it seems less
+surprising if we consistently set "mutex_owner" properly.
 
-debug_object_assert_init(addr)
-  lock_hash_bucket()
-  obj = lookup_object(addr);
-  if (!obj) {
-  	unlock_hash_bucket();
-	- > preemption
-			            lock_subsytem_object(addr);
-				      activate_object(addr)
-				      lock_hash_bucket();
-				      obj = lookup_object(addr);
-				      if (!obj) {
-				    	unlock_hash_bucket();
-					if (is_static_object(addr))
-					   init_and_track(addr);
-				      lock_hash_bucket();
-				      obj = lookup_object(addr);
-				      obj->state = ACTIVATED;
-				      unlock_hash_bucket();
-
-				    subsys function modifies content of addr,
-				    so static object detection does
-				    not longer work.
-
-				    unlock_subsytem_object(addr);
-
-        if (is_static_object(addr)) <- Fails
-
-	  debugobject emits a warning and invokes the fixup function which
-	  reinitializes the already active object in the worst case.
-
-This race exists forever, but was never observed until mod_timer() got a
-debug_object_assert_init() added which is outside of the timer base lock
-held section right at the beginning of the function to cover the lockless
-early exit points too.
-
-Rework the code so that the lookup, the static object check and the
-tracking object association happens atomically under the hash bucket
-lock. This prevents the issue completely as all callers are serialized on
-the hash bucket lock and therefore cannot observe inconsistent state.
-
-Fixes: 3ac7fe5a4aab ("infrastructure to debug (dynamic) objects")
-Reported-by: syzbot+5093ba19745994288b53@syzkaller.appspotmail.com
-Debugged-by: Schspa Shi <schspa@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://syzkaller.appspot.com/bug?id=22c8a5938eab640d1c6bcc0e3dc7be519d878462
-Link: https://lore.kernel.org/lkml/20230303161906.831686-1-schspa@gmail.com
-Link: https://lore.kernel.org/r/87zg7dzgao.ffs@tglx
+Fixes: f8702f9e4aa7 ("regulator: core: Use ww_mutex for regulators locking")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230329143317.RFC.v2.1.I4e9d433ea26360c06dd1381d091c82bb1a4ce843@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c | 125 ++++++++++++++++++++++++---------------------
- 1 file changed, 66 insertions(+), 59 deletions(-)
+ drivers/regulator/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 793c31b7e417d..097071b5a11d9 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -219,10 +219,6 @@ static struct debug_obj *__alloc_object(struct hlist_head *list)
- 	return obj;
- }
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index e876702d6ef36..48db0735e3dba 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -333,6 +333,7 @@ static void regulator_lock_dependent(struct regulator_dev *rdev,
+ 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
+ 			old_contended_rdev = new_contended_rdev;
+ 			old_contended_rdev->ref_cnt++;
++			old_contended_rdev->mutex_owner = current;
+ 		}
  
--/*
-- * Allocate a new object. If the pool is empty, switch off the debugger.
-- * Must be called with interrupts disabled.
-- */
- static struct debug_obj *
- alloc_object(void *addr, struct debug_bucket *b, const struct debug_obj_descr *descr)
- {
-@@ -555,11 +551,49 @@ static void debug_object_is_on_stack(void *addr, int onstack)
- 	WARN_ON(1);
- }
+ 		err = regulator_lock_recursive(rdev,
+@@ -5966,6 +5967,7 @@ static void regulator_summary_lock(struct ww_acquire_ctx *ww_ctx)
+ 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
+ 			old_contended_rdev = new_contended_rdev;
+ 			old_contended_rdev->ref_cnt++;
++			old_contended_rdev->mutex_owner = current;
+ 		}
  
-+static struct debug_obj *lookup_object_or_alloc(void *addr, struct debug_bucket *b,
-+						const struct debug_obj_descr *descr,
-+						bool onstack, bool alloc_ifstatic)
-+{
-+	struct debug_obj *obj = lookup_object(addr, b);
-+	enum debug_obj_state state = ODEBUG_STATE_NONE;
-+
-+	if (likely(obj))
-+		return obj;
-+
-+	/*
-+	 * debug_object_init() unconditionally allocates untracked
-+	 * objects. It does not matter whether it is a static object or
-+	 * not.
-+	 *
-+	 * debug_object_assert_init() and debug_object_activate() allow
-+	 * allocation only if the descriptor callback confirms that the
-+	 * object is static and considered initialized. For non-static
-+	 * objects the allocation needs to be done from the fixup callback.
-+	 */
-+	if (unlikely(alloc_ifstatic)) {
-+		if (!descr->is_static_object || !descr->is_static_object(addr))
-+			return ERR_PTR(-ENOENT);
-+		/* Statically allocated objects are considered initialized */
-+		state = ODEBUG_STATE_INIT;
-+	}
-+
-+	obj = alloc_object(addr, b, descr);
-+	if (likely(obj)) {
-+		obj->state = state;
-+		debug_object_is_on_stack(addr, onstack);
-+		return obj;
-+	}
-+
-+	/* Out of memory. Do the cleanup outside of the locked region */
-+	debug_objects_enabled = 0;
-+	return NULL;
-+}
-+
- static void
- __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack)
- {
- 	enum debug_obj_state state;
--	bool check_stack = false;
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
-@@ -575,16 +609,11 @@ __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
- 
--	obj = lookup_object(addr, db);
--	if (!obj) {
--		obj = alloc_object(addr, db, descr);
--		if (!obj) {
--			debug_objects_enabled = 0;
--			raw_spin_unlock_irqrestore(&db->lock, flags);
--			debug_objects_oom();
--			return;
--		}
--		check_stack = true;
-+	obj = lookup_object_or_alloc(addr, db, descr, onstack, false);
-+	if (unlikely(!obj)) {
-+		raw_spin_unlock_irqrestore(&db->lock, flags);
-+		debug_objects_oom();
-+		return;
- 	}
- 
- 	switch (obj->state) {
-@@ -610,8 +639,6 @@ __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack
- 	}
- 
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
--	if (check_stack)
--		debug_object_is_on_stack(addr, onstack);
- }
- 
- /**
-@@ -651,14 +678,12 @@ EXPORT_SYMBOL_GPL(debug_object_init_on_stack);
-  */
- int debug_object_activate(void *addr, const struct debug_obj_descr *descr)
- {
-+	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
- 	enum debug_obj_state state;
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
- 	int ret;
--	struct debug_obj o = { .object = addr,
--			       .state = ODEBUG_STATE_NOTAVAILABLE,
--			       .descr = descr };
- 
- 	if (!debug_objects_enabled)
- 		return 0;
-@@ -667,8 +692,8 @@ int debug_object_activate(void *addr, const struct debug_obj_descr *descr)
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
- 
--	obj = lookup_object(addr, db);
--	if (obj) {
-+	obj = lookup_object_or_alloc(addr, db, descr, false, true);
-+	if (likely(!IS_ERR_OR_NULL(obj))) {
- 		bool print_object = false;
- 
- 		switch (obj->state) {
-@@ -701,24 +726,16 @@ int debug_object_activate(void *addr, const struct debug_obj_descr *descr)
- 
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
- 
--	/*
--	 * We are here when a static object is activated. We
--	 * let the type specific code confirm whether this is
--	 * true or not. if true, we just make sure that the
--	 * static object is tracked in the object tracker. If
--	 * not, this must be a bug, so we try to fix it up.
--	 */
--	if (descr->is_static_object && descr->is_static_object(addr)) {
--		/* track this static object */
--		debug_object_init(addr, descr);
--		debug_object_activate(addr, descr);
--	} else {
--		debug_print_object(&o, "activate");
--		ret = debug_object_fixup(descr->fixup_activate, addr,
--					ODEBUG_STATE_NOTAVAILABLE);
--		return ret ? 0 : -EINVAL;
-+	/* If NULL the allocation has hit OOM */
-+	if (!obj) {
-+		debug_objects_oom();
-+		return 0;
- 	}
--	return 0;
-+
-+	/* Object is neither static nor tracked. It's not initialized */
-+	debug_print_object(&o, "activate");
-+	ret = debug_object_fixup(descr->fixup_activate, addr, ODEBUG_STATE_NOTAVAILABLE);
-+	return ret ? 0 : -EINVAL;
- }
- EXPORT_SYMBOL_GPL(debug_object_activate);
- 
-@@ -872,6 +889,7 @@ EXPORT_SYMBOL_GPL(debug_object_free);
-  */
- void debug_object_assert_init(void *addr, const struct debug_obj_descr *descr)
- {
-+	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
-@@ -882,31 +900,20 @@ void debug_object_assert_init(void *addr, const struct debug_obj_descr *descr)
- 	db = get_bucket((unsigned long) addr);
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
-+	obj = lookup_object_or_alloc(addr, db, descr, false, true);
-+	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	if (likely(!IS_ERR_OR_NULL(obj)))
-+		return;
- 
--	obj = lookup_object(addr, db);
-+	/* If NULL the allocation has hit OOM */
- 	if (!obj) {
--		struct debug_obj o = { .object = addr,
--				       .state = ODEBUG_STATE_NOTAVAILABLE,
--				       .descr = descr };
--
--		raw_spin_unlock_irqrestore(&db->lock, flags);
--		/*
--		 * Maybe the object is static, and we let the type specific
--		 * code confirm. Track this static object if true, else invoke
--		 * fixup.
--		 */
--		if (descr->is_static_object && descr->is_static_object(addr)) {
--			/* Track this static object */
--			debug_object_init(addr, descr);
--		} else {
--			debug_print_object(&o, "assert_init");
--			debug_object_fixup(descr->fixup_assert_init, addr,
--					   ODEBUG_STATE_NOTAVAILABLE);
--		}
-+		debug_objects_oom();
- 		return;
- 	}
- 
--	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	/* Object is neither tracked nor static. It's not initialized. */
-+	debug_print_object(&o, "assert_init");
-+	debug_object_fixup(descr->fixup_assert_init, addr, ODEBUG_STATE_NOTAVAILABLE);
- }
- EXPORT_SYMBOL_GPL(debug_object_assert_init);
- 
+ 		err = regulator_summary_lock_all(ww_ctx,
 -- 
 2.39.2
 
