@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4458B168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBFBC433EF;
-	Mon,  8 May 2023 11:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D50168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A70C433EF;
+	Mon,  8 May 2023 11:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545243;
-	bh=mG7MorSJYrplD1lXuqZTVjBU4ZbXsIYrvjD+JABBHRc=;
+	s=korg; t=1683545246;
+	bh=4vR5/tlJdEYQUBQJYaJA1qYWOrxXxZyIjX1fCtvUiwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MoOdO5vJ+tMq0ddZiL1zpCp1+o1dgFcUxba6i8urgCQDXca7t/aWeS2j72CNOvAYK
-	 raG94jhr0nElxDaCVNZI/oJw83dZIbhhBc19Z6n7sFnSYlFXfCcXSEFu4sOaUYaJR2
-	 IFLs7JS4Y7aYQbnQ5zqsg8lAGUaTBAt72OOuUqU8=
+	b=Kil59Kl/UIGHyl+uh9TgYykNP01ISr/E2/JHw2rDCWxUcdLwvO97ru1XnFfVi00GS
+	 7zlbL+LbUOOebRfCxAfR45S12SPGXo5sJ/u17i6R8IFNOaJrWhliM6yTE46G3+43L9
+	 0fSnj7kqJlpykzmqmSGPF20hRuHt86qp8GKxpRTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 671/694] afs: Avoid endless loop if file is larger than expected
-Date: Mon,  8 May 2023 11:48:26 +0200
-Message-Id: <20230508094457.927978645@linuxfoundation.org>
+Subject: [PATCH 6.3 645/694] pwm: mtk-disp: Configure double buffering before reading in .get_state()
+Date: Mon,  8 May 2023 11:48:00 +0200
+Message-Id: <20230508094456.754408197@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,58 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 9ea4eff4b6f4f36546d537a74da44fd3f30903ab ]
+[ Upstream commit b16c310115f2084b8826a35b77ef42bab6786d9f ]
 
-afs_read_dir fetches an amount of data that's based on what the inode
-size is thought to be.  If the file on the server is larger than what
-was fetched, the code rechecks i_size and retries.  If the local i_size
-was not properly updated, this can lead to an endless loop of fetching
-i_size from the server and noticing each time that the size is larger on
-the server.
+The DISP_PWM controller's default behavior is to always use register
+double buffering: all reads/writes are then performed on shadow
+registers instead of working registers and this becomes an issue
+in case our chosen configuration in Linux is different from the
+default (or from the one that was pre-applied by the bootloader).
 
-If it is known that the remote size is larger than i_size, bump up the
-fetch size to that size.
+An example of broken behavior is when the controller is configured
+to use shadow registers, but this driver wants to configure it
+otherwise: what happens is that the .get_state() callback is called
+right after registering the pwmchip and checks whether the PWM is
+enabled by reading the DISP_PWM_EN register;
+At this point, if shadow registers are enabled but their content
+was not committed before booting Linux, we are *not* reading the
+current PWM enablement status, leading to the kernel knowing that
+the hardware is actually enabled when, in reality, it's not.
 
-Fixes: f3ddee8dc4e2 ("afs: Fix directory handling")
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: linux-afs@lists.infradead.org
+The aforementioned issue emerged since this driver was fixed with
+commit 0b5ef3429d8f ("pwm: mtk-disp: Fix the parameters calculated
+by the enabled flag of disp_pwm") making it to read the enablement
+status from the right register.
+
+Configure the controller in the .get_state() callback to avoid
+this desync issue and get the backlight properly working again.
+
+Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Tested-by: Alexandre Mergnat <amergnat@baylibre.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/dir.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/pwm/pwm-mtk-disp.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/fs/afs/dir.c b/fs/afs/dir.c
-index 82690d1dd49a0..a97499fd747b6 100644
---- a/fs/afs/dir.c
-+++ b/fs/afs/dir.c
-@@ -275,6 +275,7 @@ static struct afs_read *afs_read_dir(struct afs_vnode *dvnode, struct key *key)
- 	loff_t i_size;
- 	int nr_pages, i;
- 	int ret;
-+	loff_t remote_size = 0;
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index 82b430d881a20..fe9593f968eeb 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -196,6 +196,16 @@ static int mtk_disp_pwm_get_state(struct pwm_chip *chip,
+ 		return err;
+ 	}
  
- 	_enter("");
- 
-@@ -289,6 +290,8 @@ static struct afs_read *afs_read_dir(struct afs_vnode *dvnode, struct key *key)
- 
- expand:
- 	i_size = i_size_read(&dvnode->netfs.inode);
-+	if (i_size < remote_size)
-+	    i_size = remote_size;
- 	if (i_size < 2048) {
- 		ret = afs_bad(dvnode, afs_file_error_dir_small);
- 		goto error;
-@@ -364,6 +367,7 @@ static struct afs_read *afs_read_dir(struct afs_vnode *dvnode, struct key *key)
- 			 * buffer.
- 			 */
- 			up_write(&dvnode->validate_lock);
-+			remote_size = req->file_size;
- 			goto expand;
- 		}
- 
++	/*
++	 * Apply DISP_PWM_DEBUG settings to choose whether to enable or disable
++	 * registers double buffer and manual commit to working register before
++	 * performing any read/write operation
++	 */
++	if (mdp->data->bls_debug)
++		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
++					 mdp->data->bls_debug_mask,
++					 mdp->data->bls_debug_mask);
++
+ 	rate = clk_get_rate(mdp->clk_main);
+ 	con0 = readl(mdp->base + mdp->data->con0);
+ 	con1 = readl(mdp->base + mdp->data->con1);
 -- 
 2.39.2
 
