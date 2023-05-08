@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE44B171AC
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D0EC433EF;
-	Mon,  8 May 2023 11:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4D2171AC
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:19:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB04C433D2;
+	Mon,  8 May 2023 11:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544791;
-	bh=2HE7cBAkhH1rYywG8/ZuDvlgZIOaAeoVhwQc1IRCbak=;
+	s=korg; t=1683544794;
+	bh=RSjOxyB5EPvG1Rqoq05Wv2cmDWnbUTTmS3+tHQm/tIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QS50uRmJyoRtQZpzcFh1onQRBGJR6IKY2Q0ZmEQyZgjyPRFJSOSxeELZjZkHYiTn4
-	 zbF7zGSjk1a5aCmvTpnR/rtD7MrHa6zYgbKOGdgTBRECsqobgGbOMg/sEWBD8dS3bH
-	 XFIu4ir4qdPC0UmKCu9OLQYFH3z21qZebSyS6F+k=
+	b=pUlSRI8PKjijZ1AWQD3uyaRKb5LX83wrcn/iT9nmIBZxMK2hgTtmB1mlFTjFncT18
+	 ue9QXMSjbIKrs9vfqrHIKFSz3crQkUcauiYKLppJW+ilwag1d9U+XG32ZI+7Zh2g02
+	 zAwjFHTeaQcKtK80t1poZ51CNpwY0f0EAj+NtAWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 525/694] HID: amd_sfh: Correct the sensor enable and disable command
-Date: Mon,  8 May 2023 11:46:00 +0200
-Message-Id: <20230508094451.338337002@linuxfoundation.org>
+Subject: [PATCH 6.3 526/694] HID: amd_sfh: Fix illuminance value
+Date: Mon,  8 May 2023 11:46:01 +0200
+Message-Id: <20230508094451.380591962@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,40 +37,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 0b9255bf11baa61cd526e6bd24d6c8e6d1eabf8d ]
+[ Upstream commit a33e5e393171ae8384d3381db5cd159ba877cfcb ]
 
-In order to start or stop sensors, the firmware command needs to be
-changed to add an additional default subcommand value. For this reason,
-add a subcommand value to enable or disable sensors accordingly.
+Illuminance value is actually 32 bits, but is incorrectly trancated to
+16 bits. Hence convert to integer illuminace accordingly to reflect
+correct values.
 
 Fixes: 93ce5e0231d7 ("HID: amd_sfh: Implement SFH1.1 functionality")
 Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c      | 2 +-
+ drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-index c6df959ec7252..6e19ccc124508 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.c
-@@ -33,6 +33,7 @@ static void amd_start_sensor(struct amd_mp2_dev *privdata, struct amd_mp2_sensor
- 	cmd_base.ul = 0;
- 	cmd_base.cmd.cmd_id = ENABLE_SENSOR;
- 	cmd_base.cmd.intr_disable = 0;
-+	cmd_base.cmd.sub_cmd_value = 1;
- 	cmd_base.cmd.sensor_id = info.sensor_idx;
+diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
+index 0609fea581c96..6f0d332ccf51c 100644
+--- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
++++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_desc.c
+@@ -218,7 +218,7 @@ static u8 get_input_rep(u8 current_index, int sensor_idx, int report_id,
+ 			     OFFSET_SENSOR_DATA_DEFAULT;
+ 		memcpy_fromio(&als_data, sensoraddr, sizeof(struct sfh_als_data));
+ 		get_common_inputs(&als_input.common_property, report_id);
+-		als_input.illuminance_value = als_data.lux;
++		als_input.illuminance_value = float_to_int(als_data.lux);
+ 		report_size = sizeof(als_input);
+ 		memcpy(input_report, &als_input, sizeof(als_input));
+ 		break;
+diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h
+index a3e0ec289e3f9..9d31d5b510eb4 100644
+--- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h
++++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_interface.h
+@@ -133,7 +133,7 @@ struct sfh_mag_data {
  
- 	writel(cmd_base.ul, privdata->mmio + AMD_C2P_MSG(0));
-@@ -45,6 +46,7 @@ static void amd_stop_sensor(struct amd_mp2_dev *privdata, u16 sensor_idx)
- 	cmd_base.ul = 0;
- 	cmd_base.cmd.cmd_id = DISABLE_SENSOR;
- 	cmd_base.cmd.intr_disable = 0;
-+	cmd_base.cmd.sub_cmd_value = 1;
- 	cmd_base.cmd.sensor_id = sensor_idx;
+ struct sfh_als_data {
+ 	struct sfh_common_data commondata;
+-	u16 lux;
++	u32 lux;
+ };
  
- 	writeq(0x0, privdata->mmio + AMD_C2P_MSG(1));
+ struct hpd_status {
 -- 
 2.39.2
 
