@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B2B1549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:58:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77F9C433D2;
-	Mon,  8 May 2023 09:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3FD1549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:58:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80189C433D2;
+	Mon,  8 May 2023 09:58:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539919;
-	bh=wNWmtMDPNyG/bNCrvp1yfDXFETBZtd/ogoSPSsBFXDQ=;
+	s=korg; t=1683539921;
+	bh=cxmpl7VmItIFpX27rqZRthfsFNnsIhrQm9vxsXwRfH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imM5HFbmFTofqao33K80i3ZLOU1SGSRmYetTo9HPPiezeXR9uaSanE16T65+nf1dz
-	 FnhR9CMhF+9VTIemO90t2S/Z4ylt0PYouj8J4lQ08au3dWGtRs1BaNutcBfrNpzFWI
-	 8SbrGk0tS432Wh7uAP/KH7O7VnB1zYlQesJBE/T0=
+	b=c4PhmFxpCxfDbi/E3K0Z37VZqRmBL+kAz04QZ79+rDAbLPjVpTXjeK2QoGKqJp4vV
+	 T60N5yTxIVkTXtZF+g6IHusHU+ecHZ+tB5YTPsldF6g9Lv88CGW4Nnuhnk/SPsN6Yl
+	 4TaVUfGQMVYZB9QRi7SVpWXxj0KeEDmOymFGcdec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Adam Skladowski <a39.skl@gmail.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/611] media: platform: mtk-mdp3: Add missing check and free for ida_alloc
-Date: Mon,  8 May 2023 11:40:14 +0200
-Message-Id: <20230508094427.939955344@linuxfoundation.org>
+Subject: [PATCH 6.1 181/611] drm: msm: adreno: Disable preemption on Adreno 510
+Date: Mon,  8 May 2023 11:40:23 +0200
+Message-Id: <20230508094428.247269266@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,51 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Adam Skladowski <a39.skl@gmail.com>
 
-[ Upstream commit d00f592250782538cda87745607695b0fe27dcd4 ]
+[ Upstream commit 010c8bbad2cb8c33c47963e29f051f1e917e45a5 ]
 
-Add the check for the return value of the ida_alloc in order to avoid
-NULL pointer dereference.
-Moreover, free allocated "ctx->id" if mdp_m2m_open fails later in order
-to avoid memory leak.
+Downstream driver appears to not support preemption on A510 target,
+trying to use one make device slow and fill log with rings related errors.
+Set num_rings to 1 to disable preemption.
 
-Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Suggested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: e20c9284c8f2 ("drm/msm/adreno: Add support for Adreno 510 GPU")
+Signed-off-by: Adam Skladowski <a39.skl@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/526898/
+Link: https://lore.kernel.org/r/20230314221757.13096-1-a39.skl@gmail.com
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c | 8 +++++++-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
-index 5f74ea3b7a524..8612a48bde10f 100644
---- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
-+++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
-@@ -566,7 +566,11 @@ static int mdp_m2m_open(struct file *file)
- 		goto err_free_ctx;
- 	}
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 4f0dbeebb79fb..02ff306f96f42 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -1750,6 +1750,7 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+ 	struct a5xx_gpu *a5xx_gpu = NULL;
+ 	struct adreno_gpu *adreno_gpu;
+ 	struct msm_gpu *gpu;
++	unsigned int nr_rings;
+ 	int ret;
  
--	ctx->id = ida_alloc(&mdp->mdp_ida, GFP_KERNEL);
-+	ret = ida_alloc(&mdp->mdp_ida, GFP_KERNEL);
-+	if (ret < 0)
-+		goto err_unlock_mutex;
-+	ctx->id = ret;
+ 	if (!pdev) {
+@@ -1770,7 +1771,12 @@ struct msm_gpu *a5xx_gpu_init(struct drm_device *dev)
+ 
+ 	check_speed_bin(&pdev->dev);
+ 
+-	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, 4);
++	nr_rings = 4;
 +
- 	ctx->mdp_dev = mdp;
- 
- 	v4l2_fh_init(&ctx->fh, vdev);
-@@ -617,6 +621,8 @@ static int mdp_m2m_open(struct file *file)
- 	v4l2_fh_del(&ctx->fh);
- err_exit_fh:
- 	v4l2_fh_exit(&ctx->fh);
-+	ida_free(&mdp->mdp_ida, ctx->id);
-+err_unlock_mutex:
- 	mutex_unlock(&mdp->m2m_lock);
- err_free_ctx:
- 	kfree(ctx);
++	if (adreno_is_a510(adreno_gpu))
++		nr_rings = 1;
++
++	ret = adreno_gpu_init(dev, pdev, adreno_gpu, &funcs, nr_rings);
+ 	if (ret) {
+ 		a5xx_destroy(&(a5xx_gpu->base.base));
+ 		return ERR_PTR(ret);
 -- 
 2.39.2
 
