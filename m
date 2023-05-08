@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D08171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61814C433D2;
-	Mon,  8 May 2023 11:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B7C171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72717C433EF;
+	Mon,  8 May 2023 11:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545911;
-	bh=OV0jQ8quhybc7zhw5CmM4BWa/cmqmWMQBxNHsNTIrho=;
+	s=korg; t=1683545914;
+	bh=pJvHg9YVyFkFfErYMOAUA++mIWqjUzBcTTrorprZqT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Qv172w19FCnviGGGoSNfWW8Mn+4YqiUGXIT28XGGYcnEb8fmtcOnpmthkY2C6+6t
-	 Bl1tv/IKpo8c7gAlq7e97XA6tWIox1fgg1g0huyAwi4DGpeCP3WlXXjOFAtL8VwVtT
-	 7B/DumD0IUmp6jiuGgx+gKr+DkupEodzCXBraTmo=
+	b=aAxLzmq5B2y3HTDHwYpW20/iTSEe0eOXA5s9vQ2OKsqcfFC74C/mUCg3rO0fe33AY
+	 qdRoE90wYEFm6G18vv7EO2D1GD6DSihLiHzuoOm1BJdDS9E4NGE7KbCWTy4f5uCAV8
+	 ZEXx+WluUQr74vBWcXBSg9sxkFQqVp5gahKwCM2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 164/371] vlan: partially enable SIOCSHWTSTAMP in container
-Date: Mon,  8 May 2023 11:46:05 +0200
-Message-Id: <20230508094818.617550626@linuxfoundation.org>
+Subject: [PATCH 5.15 165/371] net/packet: annotate accesses to po->xmit
+Date: Mon,  8 May 2023 11:46:06 +0200
+Message-Id: <20230508094818.659982935@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,35 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 731b73dba359e3ff00517c13aa0daa82b34ff466 ]
+[ Upstream commit b9d83ab8a708f23a4001d60e9d8d0b3be3d9f607 ]
 
-Setting timestamp filter was explicitly disabled on vlan devices in
-containers because it might affect other processes on the host. But it's
-absolutely legit in case when real device is in the same namespace.
+po->xmit can be set from setsockopt(PACKET_QDISC_BYPASS),
+while read locklessly.
 
-Fixes: 873017af7784 ("vlan: disable SIOCSHWTSTAMP in container")
-Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Use READ_ONCE()/WRITE_ONCE() to avoid potential load/store
+tearing issues.
+
+Fixes: d346a3fae3ff ("packet: introduce PACKET_QDISC_BYPASS socket option")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/packet/af_packet.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index a54535cbcf4cf..b6d456c7952ed 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -365,7 +365,7 @@ static int vlan_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 7f9f2d0ef0e62..1b3c54e0fbdfb 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -271,7 +271,8 @@ static void packet_cached_dev_reset(struct packet_sock *po)
  
- 	switch (cmd) {
- 	case SIOCSHWTSTAMP:
--		if (!net_eq(dev_net(dev), &init_net))
-+		if (!net_eq(dev_net(dev), dev_net(real_dev)))
- 			break;
- 		fallthrough;
- 	case SIOCGMIIPHY:
+ static bool packet_use_direct_xmit(const struct packet_sock *po)
+ {
+-	return po->xmit == packet_direct_xmit;
++	/* Paired with WRITE_ONCE() in packet_setsockopt() */
++	return READ_ONCE(po->xmit) == packet_direct_xmit;
+ }
+ 
+ static u16 packet_pick_tx_queue(struct sk_buff *skb)
+@@ -2828,7 +2829,8 @@ static int tpacket_snd(struct packet_sock *po, struct msghdr *msg)
+ 		packet_inc_pending(&po->tx_ring);
+ 
+ 		status = TP_STATUS_SEND_REQUEST;
+-		err = po->xmit(skb);
++		/* Paired with WRITE_ONCE() in packet_setsockopt() */
++		err = READ_ONCE(po->xmit)(skb);
+ 		if (unlikely(err != 0)) {
+ 			if (err > 0)
+ 				err = net_xmit_errno(err);
+@@ -3031,7 +3033,8 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
+ 		virtio_net_hdr_set_proto(skb, &vnet_hdr);
+ 	}
+ 
+-	err = po->xmit(skb);
++	/* Paired with WRITE_ONCE() in packet_setsockopt() */
++	err = READ_ONCE(po->xmit)(skb);
+ 	if (unlikely(err != 0)) {
+ 		if (err > 0)
+ 			err = net_xmit_errno(err);
+@@ -3976,7 +3979,8 @@ packet_setsockopt(struct socket *sock, int level, int optname, sockptr_t optval,
+ 		if (copy_from_sockptr(&val, optval, sizeof(val)))
+ 			return -EFAULT;
+ 
+-		po->xmit = val ? packet_direct_xmit : dev_queue_xmit;
++		/* Paired with all lockless reads of po->xmit */
++		WRITE_ONCE(po->xmit, val ? packet_direct_xmit : dev_queue_xmit);
+ 		return 0;
+ 	}
+ 	default:
 -- 
 2.39.2
 
