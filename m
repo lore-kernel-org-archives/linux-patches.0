@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BE4171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:39:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8ABC433EF;
-	Mon,  8 May 2023 11:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0142A171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:39:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B5DC4339B;
+	Mon,  8 May 2023 11:39:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545959;
-	bh=aiNiJIZSLZWF4BaIO4yHWsK7WdRl7o8Uh6ED2byGR9Q=;
+	s=korg; t=1683545962;
+	bh=KMOtky+437wF3UKERJj8E3iSJeckzTsgNhx29VbAcLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ytGrSQSmCBuEksYtKMtoop1c/MguuHEA5iHf4PiejWbHt0jGF+Vfv2uBmQgz5uBQd
-	 97iFxNcAbPGSn3zE8XFrMCo/G9NmFEnyWt/9E/HB4SN0atf9xKAb0h8Wz0P7mgun9k
-	 f6p1bcz9Z1JTKZqs9XPzs0R8lUOXh54D4wDRYYpw=
+	b=jarDVQAkWjp9wnHKo8NSnL4Kz6O0lCAd9zqKk4exnrDQ6hwrDHnSklrIZpwqolHDq
+	 c0E2jMFbBIitlZq2yoo3Keh5yzgq/hd8Nsz17N/3r85L62lMZwA3jFzHixzmbnCeuT
+	 KS0YkII3AX0f3L6tSrDl5DSYIKSCo+nhtFq871WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Daniel Gabay <daniel.gabay@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 210/371] md/raid10: dont call bio_start_io_acct twice for bio which experienced read error
-Date: Mon,  8 May 2023 11:46:51 +0200
-Message-Id: <20230508094820.394430028@linuxfoundation.org>
+Subject: [PATCH 5.15 211/371] wifi: iwlwifi: yoyo: skip dump correctly on hw error
+Date: Mon,  8 May 2023 11:46:52 +0200
+Message-Id: <20230508094820.435712996@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,48 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Daniel Gabay <daniel.gabay@intel.com>
 
-[ Upstream commit 7cddb055bfda5f7b0be931e8ea750fc28bc18a27 ]
+[ Upstream commit 11195ab0d6f3202cf7af1a4c69570f59c377d8ad ]
 
-handle_read_error() will resumit r10_bio by raid10_read_request(), which
-will call bio_start_io_acct() again, while bio_end_io_acct() will only
-be called once.
+When NIC is in a bad state, reading data will return 28 bits as
+0xa5a5a5a and the lowest 4 bits are not fixed value.
 
-Fix the problem by don't account io again from handle_read_error().
+Mask these bits in a few places to skip the dump correctly.
 
-Fixes: 528bc2cf2fcc ("md/raid10: enable io accounting")
-Suggested-by: Song Liu <song@kernel.org>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230314012258.2395894-1-yukuai1@huaweicloud.com
+Fixes: 89639e06d0f3 ("iwlwifi: yoyo: support for new DBGI_SRAM region")
+Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230413213309.df6c0663179d.I36d8487b2419c6fefa65e5514855d94327c3b1eb@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 9fc9198fc5c4f..5df5e7df6069c 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1216,7 +1216,8 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+index b00cf92c8965a..69616a2868bb8 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -1022,7 +1022,7 @@ iwl_dump_ini_prph_mac_iter(struct iwl_fw_runtime *fwrt,
+ 	range->range_data_size = reg->dev_addr.size;
+ 	for (i = 0; i < le32_to_cpu(reg->dev_addr.size); i += 4) {
+ 		prph_val = iwl_read_prph(fwrt->trans, addr + i);
+-		if (prph_val == 0x5a5a5a5a)
++		if ((prph_val & ~0xf) == 0xa5a5a5a0)
+ 			return -EBUSY;
+ 		*val++ = cpu_to_le32(prph_val);
  	}
- 	slot = r10_bio->read_slot;
- 
--	if (blk_queue_io_stat(bio->bi_bdev->bd_disk->queue))
-+	if (!r10_bio->start_time &&
-+	    blk_queue_io_stat(bio->bi_bdev->bd_disk->queue))
- 		r10_bio->start_time = bio_start_io_acct(bio);
- 	read_bio = bio_clone_fast(bio, gfp, &mddev->bio_set);
- 
-@@ -1550,6 +1551,7 @@ static void __make_request(struct mddev *mddev, struct bio *bio, int sectors)
- 	r10_bio->sector = bio->bi_iter.bi_sector;
- 	r10_bio->state = 0;
- 	r10_bio->read_slot = -1;
-+	r10_bio->start_time = 0;
- 	memset(r10_bio->devs, 0, sizeof(r10_bio->devs[0]) *
- 			conf->geo.raid_disks);
- 
+@@ -1536,7 +1536,7 @@ iwl_dump_ini_dbgi_sram_iter(struct iwl_fw_runtime *fwrt,
+ 		prph_data = iwl_read_prph(fwrt->trans, (i % 2) ?
+ 					  DBGI_SRAM_TARGET_ACCESS_RDATA_MSB :
+ 					  DBGI_SRAM_TARGET_ACCESS_RDATA_LSB);
+-		if (prph_data == 0x5a5a5a5a) {
++		if ((prph_data & ~0xf) == 0xa5a5a5a0) {
+ 			iwl_trans_release_nic_access(fwrt->trans);
+ 			return -EBUSY;
+ 		}
 -- 
 2.39.2
 
