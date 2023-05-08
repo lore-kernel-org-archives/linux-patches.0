@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5B7171A3
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:18:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8349DC433EF;
-	Mon,  8 May 2023 11:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FEB171A3
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:18:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBF3C433D2;
+	Mon,  8 May 2023 11:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544701;
-	bh=Qw0sJuaQv4pHb+xzXZdJO9YMCeWdsOTt338FsIwTZCI=;
+	s=korg; t=1683544705;
+	bh=dtKbTsJG8n80pDWW/+SJgV6nBI3PUUOxDaSylvHc2YA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZ42+7s/5RAa9n7ZDN2qyxcQFYZcWjfOcziziXmELKQKne8vzcc7iwQ5zQtE8tlMC
-	 hEadljwA0rv8gigX8kGGm3qr83s0Fmc+qQiZpvfgfonQHU4zbVHwXgYgmn4YJk9pSJ
-	 D2e9RQpjfqdj+5D+Yn/6SlIHevoj5gcL58fxIA68=
+	b=rtY1o8sEcr7VNHE19/A7ug69DpYadIi/jxrjzubXvr+3EJcxHshMcyOUOg0cONOFy
+	 4HYb9NBfZAWuAuoYzvpUC3cvcWfgT4UfAQWl26VRtQwP39QfcVxCDS9VYXgD3FsWsD
+	 79aZteMUyLAf2bFN9WyV3UMZu979X78CNulBAdNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 496/694] spi: atmel-quadspi: Dont leak clk enable count in pm resume
-Date: Mon,  8 May 2023 11:45:31 +0200
-Message-Id: <20230508094450.122044129@linuxfoundation.org>
+Subject: [PATCH 6.3 497/694] spi: atmel-quadspi: Free resources even if runtime resume failed in .remove()
+Date: Mon,  8 May 2023 11:45:32 +0200
+Message-Id: <20230508094450.152825823@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,41 +38,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit c18bbac353ffed50be134b0a2a059a2bd540c503 ]
+[ Upstream commit 9448bc1dee65f86c0fe64d9dea8b410af0586886 ]
 
-The pm resume call is supposed to enable two clocks. If the second enable
-fails the callback reports failure but doesn't undo the first enable.
+An early error exit in atmel_qspi_remove() doesn't prevent the device
+unbind. So this results in an spi controller with an unbound parent
+and unmapped register space (because devm_ioremap_resource() is undone).
+So using the remaining spi controller probably results in an oops.
 
-So call clk_disable() for the first clock when clk_enable() for the second
-one fails.
+Instead unregister the controller unconditionally and only skip hardware
+access and clk disable.
+
+Also add a warning about resume failing and return zero unconditionally.
+The latter has the only effect to suppress a less helpful error message by
+the spi core.
 
 Fixes: 4a2f83b7f780 ("spi: atmel-quadspi: add runtime pm support")
 Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/r/20230317084232.142257-2-u.kleine-koenig@pengutronix.de
+Link: https://lore.kernel.org/r/20230317084232.142257-3-u.kleine-koenig@pengutronix.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/atmel-quadspi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/spi/atmel-quadspi.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/spi/atmel-quadspi.c b/drivers/spi/atmel-quadspi.c
-index f4632cb074954..0c6f80ddea577 100644
+index 0c6f80ddea577..713a4d6700fd0 100644
 --- a/drivers/spi/atmel-quadspi.c
 +++ b/drivers/spi/atmel-quadspi.c
-@@ -786,7 +786,11 @@ static int __maybe_unused atmel_qspi_runtime_resume(struct device *dev)
- 	if (ret)
- 		return ret;
+@@ -706,18 +706,28 @@ static int atmel_qspi_remove(struct platform_device *pdev)
+ 	struct atmel_qspi *aq = spi_controller_get_devdata(ctrl);
+ 	int ret;
  
--	return clk_enable(aq->qspick);
-+	ret = clk_enable(aq->qspick);
-+	if (ret)
-+		clk_disable(aq->pclk);
+-	ret = pm_runtime_resume_and_get(&pdev->dev);
+-	if (ret < 0)
+-		return ret;
+-
+ 	spi_unregister_controller(ctrl);
+-	atmel_qspi_write(QSPI_CR_QSPIDIS, aq, QSPI_CR);
 +
-+	return ret;
++	ret = pm_runtime_get_sync(&pdev->dev);
++	if (ret >= 0) {
++		atmel_qspi_write(QSPI_CR_QSPIDIS, aq, QSPI_CR);
++		clk_disable(aq->qspick);
++		clk_disable(aq->pclk);
++	} else {
++		/*
++		 * atmel_qspi_runtime_{suspend,resume} just disable and enable
++		 * the two clks respectively. So after resume failed these are
++		 * off, and we skip hardware access and disabling these clks again.
++		 */
++		dev_warn(&pdev->dev, "Failed to resume device on remove\n");
++	}
++
++	clk_unprepare(aq->qspick);
++	clk_unprepare(aq->pclk);
+ 
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 
+-	clk_disable_unprepare(aq->qspick);
+-	clk_disable_unprepare(aq->pclk);
+ 	return 0;
  }
  
- static const struct dev_pm_ops __maybe_unused atmel_qspi_pm_ops = {
 -- 
 2.39.2
 
