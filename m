@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4C0168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D6BC433D2;
-	Mon,  8 May 2023 11:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED45B168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54984C433D2;
+	Mon,  8 May 2023 11:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545176;
-	bh=259hC/9eM3VsoqXYHi8efyk91ljlfqpymN71J1e8wBk=;
+	s=korg; t=1683545179;
+	bh=ylIFTGy/IhV5JExQEPmoZMDFARD2nejl612OaW74Qpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZhDbbniVJwM58aL5kBKIOuO8aumamen6/cuTCOT/vtRrMIsxT9Dg6jNoZ2P9WsGe
-	 TDjWd6isHnHTQd3JYbyx1NZ7Gretj1ItDTlOJyJwj/XN9sdayOalEzOTCXfp8L6Ih6
-	 SpUWNxmrud6JUmG/ITvDgpEwdspgIlqx9Ln+Fyio=
+	b=l21xrrSg6nWAFkqPg3iQuMJIlm4+8y4+oA42gd5sLpEEfYsy5tyTdPvXswIzhANp0
+	 JKhWZDQvS6jk93qIlZdP8TAodZLJ3NJDmx0R42V8UthIFEKk5AVhh7NAonerhyczyA
+	 gXODJAgR8kqX/pdDXIzHp+DDEdhklSlflmxjgzSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacky Bai <ping.bai@nxp.com>,
-	Ye Li <ye.li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Pavel Machek <pavel@ucw.cz>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 609/694] clk: imx: imx8ulp: Fix XBAR_DIVBUS and AD_SLOW clock parents
-Date: Mon,  8 May 2023 11:47:24 +0200
-Message-Id: <20230508094455.134857386@linuxfoundation.org>
+Subject: [PATCH 6.3 643/694] leds: tca6507: Fix error handling of using fwnode_property_read_string
+Date: Mon,  8 May 2023 11:47:58 +0200
+Message-Id: <20230508094456.665701909@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,41 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: H. Nikolaus Schaller <hns@goldelico.com>
 
-[ Upstream commit d608c18018c897b88d66f1340fe274b7181817fa ]
+[ Upstream commit c1087c29e96a48e9080377e168d35dcb52fb068b ]
 
-XBAR_DIVBUS and AD_SLOW should set parent to XBAR_AD_DIVPLAT and
-XBAR_DIVBUS respectively, not the NIC_AD. otherwise we will get
-wrong clock rate.
+Commit 96f524105b9c ("leds: tca6507: use fwnode API instead of OF")
 
-Fixes: c43a801a5789 ("clk: imx: Add clock driver for imx8ulp")
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
-Signed-off-by: Ye Li <ye.li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20230331063814.2462059-2-peng.fan@oss.nxp.com
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+changed to fwnode API but did not take into account that a missing property
+"linux,default-trigger" now seems to return an error and as a side effect
+sets value to -1. This seems to be different from of_get_property() which
+always returned NULL in any case of error.
+
+Neglecting this side-effect leads to
+
+[   11.201965] Unable to handle kernel paging request at virtual address ffffffff when read
+
+in the strcmp() of led_trigger_set_default() if there is no led-trigger
+defined in the DTS.
+
+I don't know if this was recently introduced somewhere in the fwnode lib
+or if the effect was missed in initial testing. Anyways it seems to be a
+bug to ignore the error return value of an optional value here in the
+driver.
+
+Fixes: 96f524105b9c ("leds: tca6507: use fwnode API instead of OF")
+Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
+Acked-by: Pavel Machek <pavel@ucw.cz>
+Reviewed-by: Marek Behún <kabel@kernel.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/cbae7617db83113de726fcc423a805ebaa1bfca6.1680433978.git.hns@goldelico.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8ulp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/leds/leds-tca6507.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8ulp.c b/drivers/clk/imx/clk-imx8ulp.c
-index a07df3b44703f..89121037a8f0e 100644
---- a/drivers/clk/imx/clk-imx8ulp.c
-+++ b/drivers/clk/imx/clk-imx8ulp.c
-@@ -200,8 +200,8 @@ static int imx8ulp_clk_cgc1_init(struct platform_device *pdev)
- 	clks[IMX8ULP_CLK_NIC_AD_DIVPLAT] = imx_clk_hw_divider_flags("nic_ad_divplat", "nic_sel", base + 0x34, 21, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
- 	clks[IMX8ULP_CLK_NIC_PER_DIVPLAT] = imx_clk_hw_divider_flags("nic_per_divplat", "nic_ad_divplat", base + 0x34, 14, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
- 	clks[IMX8ULP_CLK_XBAR_AD_DIVPLAT] = imx_clk_hw_divider_flags("xbar_ad_divplat", "nic_ad_divplat", base + 0x38, 14, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
--	clks[IMX8ULP_CLK_XBAR_DIVBUS] = imx_clk_hw_divider_flags("xbar_divbus", "nic_ad_divplat", base + 0x38, 7, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
--	clks[IMX8ULP_CLK_XBAR_AD_SLOW] = imx_clk_hw_divider_flags("xbar_ad_slow", "nic_ad_divplat", base + 0x38, 0, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
-+	clks[IMX8ULP_CLK_XBAR_DIVBUS] = imx_clk_hw_divider_flags("xbar_divbus", "xbar_ad_divplat", base + 0x38, 7, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
-+	clks[IMX8ULP_CLK_XBAR_AD_SLOW] = imx_clk_hw_divider_flags("xbar_ad_slow", "xbar_divbus", base + 0x38, 0, 6, CLK_SET_RATE_PARENT | CLK_IS_CRITICAL);
+diff --git a/drivers/leds/leds-tca6507.c b/drivers/leds/leds-tca6507.c
+index 07dd12686a696..634cabd5bb796 100644
+--- a/drivers/leds/leds-tca6507.c
++++ b/drivers/leds/leds-tca6507.c
+@@ -691,8 +691,9 @@ tca6507_led_dt_init(struct device *dev)
+ 		if (fwnode_property_read_string(child, "label", &led.name))
+ 			led.name = fwnode_get_name(child);
  
- 	clks[IMX8ULP_CLK_SOSC_DIV1_GATE] = imx_clk_hw_gate_dis("sosc_div1_gate", "sosc", base + 0x108, 7);
- 	clks[IMX8ULP_CLK_SOSC_DIV2_GATE] = imx_clk_hw_gate_dis("sosc_div2_gate", "sosc", base + 0x108, 15);
+-		fwnode_property_read_string(child, "linux,default-trigger",
+-					    &led.default_trigger);
++		if (fwnode_property_read_string(child, "linux,default-trigger",
++						&led.default_trigger))
++			led.default_trigger = NULL;
+ 
+ 		led.flags = 0;
+ 		if (fwnode_device_is_compatible(child, "gpio"))
 -- 
 2.39.2
 
