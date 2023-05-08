@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BD223A4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9609DC433D2;
-	Mon,  8 May 2023 10:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CD423A4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E83C433EF;
+	Mon,  8 May 2023 10:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541865;
-	bh=QQaltyppbFcyatwd/zA0bi8NWu3UkPKo5Ecr4Q+46vU=;
+	s=korg; t=1683541868;
+	bh=45TUghb7z81EybmeblL2XNVdvREe9kqYDNJ67uuIYuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+DcYPJngnU/iuGNUKJ8MLVpxdAaP2tO1Qub2zC0RQPAXVvOuZNyKhZmY8sEIuspF
-	 KEz7j+7HsO9dU36Zy95l2odpj3kZ/fRI++XtiilgtlnXPEDBye6C9Pc1TMOmXbc44y
-	 zMoFlGlPJroMNVfKFgwiYPE+lkiF6c+wqiQHGmEQ=
+	b=GgwrfrOLmMI/sGg4WJj0VU63qcLO2eWDLeBHtYcFXiP3KKOQslIOCAZtPhCDwbCqL
+	 HWU2hJ70lON/gCXr16cfd1jytPZWNx5rYnpDLDExk8wgVSzVxsPoQeIXnsL/B51/Z1
+	 undVWJkMCbDPFEEbDYysFD1qtaBF2sgdl/LYwWh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanket Goswami <Sanket.Goswami@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 252/663] platform/x86/amd: pmc: Move out of BIOS SMN pair for STB init
-Date: Mon,  8 May 2023 11:41:18 +0200
-Message-Id: <20230508094436.440013198@linuxfoundation.org>
+Subject: [PATCH 6.2 253/663] media: dm1105: Fix use after free bug in dm1105_remove due to race condition
+Date: Mon,  8 May 2023 11:41:19 +0200
+Message-Id: <20230508094436.469302963@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,84 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 8d99129eef8f42377b41c1bacee9f8ce806e9f44 ]
+[ Upstream commit 5abda7a16698d4d1f47af1168d8fa2c640116b4a ]
 
-The current SMN index used for the driver probe seems to be meant
-for the BIOS pair and there are potential concurrency problems that can
-occur with an inopportune SMI.
+In dm1105_probe, it called dm1105_ir_init and bound
+&dm1105->ir.work with dm1105_emit_key.
+When it handles IRQ request with dm1105_irq,
+it may call schedule_work to start the work.
 
-It is been advised to use SMN_INDEX_0 instead of SMN_INDEX_6, which is
-what amd_nb.c provides and this function has protections to ensure that
-only one caller can use it at a time.
+When we call dm1105_remove to remove the driver, there
+may be a sequence as follows:
 
-Fixes: 426c0ff27b83 ("platform/x86: amd-pmc: Add support for AMD Smart Trace Buffer")
-Co-developed-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Signed-off-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20230409185348.556161-7-Shyam-sundar.S-k@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fix it by finishing the work before cleanup in dm1105_remove
+
+CPU0                  CPU1
+
+                    |dm1105_emit_key
+dm1105_remove      |
+  dm1105_ir_exit       |
+    rc_unregister_device |
+    rc_free_device  |
+    rc_dev_release  |
+    kfree(dev);     |
+                    |
+                    | rc_keydown
+                    |   //use
+
+Fixes: 34d2f9bf189c ("V4L/DVB: dm1105: use dm1105_dev & dev instead of dm1105dvb")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc.c | 26 ++++----------------------
- 1 file changed, 4 insertions(+), 22 deletions(-)
+ drivers/media/pci/dm1105/dm1105.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
-index f8ef1fa742718..45b0050dfbf7b 100644
---- a/drivers/platform/x86/amd/pmc.c
-+++ b/drivers/platform/x86/amd/pmc.c
-@@ -38,8 +38,6 @@
- #define AMD_PMC_SCRATCH_REG_YC		0xD14
+diff --git a/drivers/media/pci/dm1105/dm1105.c b/drivers/media/pci/dm1105/dm1105.c
+index 4ac645a56c14e..9e9c7c071accc 100644
+--- a/drivers/media/pci/dm1105/dm1105.c
++++ b/drivers/media/pci/dm1105/dm1105.c
+@@ -1176,6 +1176,7 @@ static void dm1105_remove(struct pci_dev *pdev)
+ 	struct dvb_demux *dvbdemux = &dev->demux;
+ 	struct dmx_demux *dmx = &dvbdemux->dmx;
  
- /* STB Registers */
--#define AMD_PMC_STB_INDEX_ADDRESS	0xF8
--#define AMD_PMC_STB_INDEX_DATA		0xFC
- #define AMD_PMC_STB_PMI_0		0x03E30600
- #define AMD_PMC_STB_S2IDLE_PREPARE	0xC6000001
- #define AMD_PMC_STB_S2IDLE_RESTORE	0xC6000002
-@@ -901,17 +899,9 @@ static int amd_pmc_write_stb(struct amd_pmc_dev *dev, u32 data)
- {
- 	int err;
- 
--	err = pci_write_config_dword(dev->rdev, AMD_PMC_STB_INDEX_ADDRESS, AMD_PMC_STB_PMI_0);
-+	err = amd_smn_write(0, AMD_PMC_STB_PMI_0, data);
- 	if (err) {
--		dev_err(dev->dev, "failed to write addr in stb: 0x%X\n",
--			AMD_PMC_STB_INDEX_ADDRESS);
--		return pcibios_err_to_errno(err);
--	}
--
--	err = pci_write_config_dword(dev->rdev, AMD_PMC_STB_INDEX_DATA, data);
--	if (err) {
--		dev_err(dev->dev, "failed to write data in stb: 0x%X\n",
--			AMD_PMC_STB_INDEX_DATA);
-+		dev_err(dev->dev, "failed to write data in stb: 0x%X\n", AMD_PMC_STB_PMI_0);
- 		return pcibios_err_to_errno(err);
- 	}
- 
-@@ -923,18 +913,10 @@ static int amd_pmc_read_stb(struct amd_pmc_dev *dev, u32 *buf)
- {
- 	int i, err;
- 
--	err = pci_write_config_dword(dev->rdev, AMD_PMC_STB_INDEX_ADDRESS, AMD_PMC_STB_PMI_0);
--	if (err) {
--		dev_err(dev->dev, "error writing addr to stb: 0x%X\n",
--			AMD_PMC_STB_INDEX_ADDRESS);
--		return pcibios_err_to_errno(err);
--	}
--
- 	for (i = 0; i < FIFO_SIZE; i++) {
--		err = pci_read_config_dword(dev->rdev, AMD_PMC_STB_INDEX_DATA, buf++);
-+		err = amd_smn_read(0, AMD_PMC_STB_PMI_0, buf++);
- 		if (err) {
--			dev_err(dev->dev, "error reading data from stb: 0x%X\n",
--				AMD_PMC_STB_INDEX_DATA);
-+			dev_err(dev->dev, "error reading data from stb: 0x%X\n", AMD_PMC_STB_PMI_0);
- 			return pcibios_err_to_errno(err);
- 		}
- 	}
++	cancel_work_sync(&dev->ir.work);
+ 	dm1105_ir_exit(dev);
+ 	dmx->close(dmx);
+ 	dvb_net_release(&dev->dvbnet);
 -- 
 2.39.2
 
