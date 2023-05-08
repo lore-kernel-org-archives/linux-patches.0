@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD7E168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1E1C4339B;
-	Mon,  8 May 2023 11:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FED168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E7AC433EF;
+	Mon,  8 May 2023 11:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543909;
-	bh=FB5zIdNKUsbBvvRi0nukRLj+XGzkU2XSMGo4o80cqr0=;
+	s=korg; t=1683543912;
+	bh=P3W5YrNDzx5SS2ocMteFdnJlj3b6PdNMkOPFR6PYjVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wZRH6Jltrx9w79NepjlXYPPs+UGt7HeX9JuTujsUoPFD3tl5a3fMzHpm4UN7ztnfA
-	 RKD4lxewehUzrRSUs7mOUm3cXrfrdFNVSaxK3KCsbKpNxdITyhDpPT8Z5/HepPdXic
-	 gXRjH5P3hbfq2K74gVHf0wcmrjiAie9mWg1Y12P8=
+	b=NpruBwAIWdmsiQi7cSu5frdNRw7gJe9HrGYly//Had2E5qe9Z6K6vsbZuzllad17k
+	 UBp4qd8Up25Z83Pm0INhgLV8TFm0ZwWJMGUL78j2aOjS5L5o+8xXAm9r3pTqK4EX4c
+	 D9puOAVpRz/mOhCTOcBcv89FZ97BAXNeTPftRX/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Oded Gabbay <ogabbay@kernel.org>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 213/694] accel: Link to compute accelerator subsystem intro
-Date: Mon,  8 May 2023 11:40:48 +0200
-Message-Id: <20230508094439.278092401@linuxfoundation.org>
+Subject: [PATCH 6.3 240/694] ACPI: VIOT: Initialize the correct IOMMU fwspec
+Date: Mon,  8 May 2023 11:41:15 +0200
+Message-Id: <20230508094440.122336738@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,41 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bagas Sanjaya <bagasdotme@gmail.com>
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-[ Upstream commit 6d179f84f274a87da51f24ac3e9427221bbaed51 ]
+[ Upstream commit 47d26684185d09e083669bbbd0c465ab3493a51f ]
 
-Commit 2c204f3d53218d ("accel: add dedicated minor for accelerator
-devices") adds link to accelerator nodes section of DRM internals doc
-(Documentation/gpu/drm-internals.rst), but the target doesn't exist.
-Instead, there is only an introduction doc for computer accelerator
-subsytem.
+When setting up DMA for a PCI device, we need to initialize its
+iommu_fwspec with all possible alias RIDs (such as PCI bridges). To do
+this we use pci_for_each_dma_alias() which calls
+viot_pci_dev_iommu_init(). This function incorrectly initializes the
+fwspec of the bridge instead of the device being configured. Fix it by
+passing the original device as context to pci_for_each_dma_alias().
 
-Link to that doc until there is documentation of accelerator internals.
-
-Fixes: 2c204f3d53218d ("accel: add dedicated minor for accelerator devices")
-Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
+Fixes: 3cf485540e7b ("ACPI: Add driver for the VIOT table")
+Link: https://lore.kernel.org/all/Y8qzOKm6kvhGWG1T@myrica
+Reported-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/drm_file.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/viot.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
-index 0d1f853092ab8..ecffe24e2b1b0 100644
---- a/include/drm/drm_file.h
-+++ b/include/drm/drm_file.h
-@@ -408,7 +408,8 @@ static inline bool drm_is_render_client(const struct drm_file *file_priv)
-  * Returns true if this is an open file of the compute acceleration node, i.e.
-  * &drm_file.minor of @file_priv is a accel minor.
-  *
-- * See also the :ref:`section on accel nodes <drm_accel_node>`.
-+ * See also :doc:`Introduction to compute accelerators subsystem
-+ * </accel/introduction>`.
-  */
- static inline bool drm_is_accel_client(const struct drm_file *file_priv)
+diff --git a/drivers/acpi/viot.c b/drivers/acpi/viot.c
+index ed752cbbe6362..c8025921c129b 100644
+--- a/drivers/acpi/viot.c
++++ b/drivers/acpi/viot.c
+@@ -328,6 +328,7 @@ static int viot_pci_dev_iommu_init(struct pci_dev *pdev, u16 dev_id, void *data)
  {
+ 	u32 epid;
+ 	struct viot_endpoint *ep;
++	struct device *aliased_dev = data;
+ 	u32 domain_nr = pci_domain_nr(pdev->bus);
+ 
+ 	list_for_each_entry(ep, &viot_pci_ranges, list) {
+@@ -338,7 +339,7 @@ static int viot_pci_dev_iommu_init(struct pci_dev *pdev, u16 dev_id, void *data)
+ 			epid = ((domain_nr - ep->segment_start) << 16) +
+ 				dev_id - ep->bdf_start + ep->endpoint_id;
+ 
+-			return viot_dev_iommu_init(&pdev->dev, ep->viommu,
++			return viot_dev_iommu_init(aliased_dev, ep->viommu,
+ 						   epid);
+ 		}
+ 	}
+@@ -372,7 +373,7 @@ int viot_iommu_configure(struct device *dev)
+ {
+ 	if (dev_is_pci(dev))
+ 		return pci_for_each_dma_alias(to_pci_dev(dev),
+-					      viot_pci_dev_iommu_init, NULL);
++					      viot_pci_dev_iommu_init, dev);
+ 	else if (dev_is_platform(dev))
+ 		return viot_mmio_dev_iommu_init(to_platform_device(dev));
+ 	return -ENODEV;
 -- 
 2.39.2
 
