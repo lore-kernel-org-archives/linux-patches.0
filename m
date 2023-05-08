@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1C4168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E11C433EF;
-	Mon,  8 May 2023 11:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F6F168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFFCFC433D2;
+	Mon,  8 May 2023 11:15:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544525;
-	bh=5kcGwruRUB4YLkzfCyxdJ97CgKP2Mk4mSsIeZNBq+CQ=;
+	s=korg; t=1683544528;
+	bh=SsODN417px+eE6Jq8gcoEePPGUc/ZKmN/n9ayXY0zE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iFfZrtNO5PyNbXBZ3zQjKn3JPwo6XkzI8LrIl7skTX5DK7sF+C0SEf0OKft3s1fHb
-	 s7Th3Azdz/VC5dmZOf1NmQi4ruIPypQQtwLyujz1//PdZNbAt2Oru41yS3Zt0MsbhA
-	 rcAgh+SNqR/bBO7vlvmov+5DrCqbMxl3haEctoTA=
+	b=ELQ1wvK/Mfc+LZ2+Pht/hBEC7kHBzbNkqy4hhyB9lGUyzRet6s4uaxVkgAGKzl9yC
+	 RVoRTT4mhCslK4QdVycFz2epn6dapyTVmS3ke2xX8O9ZtpuDZW1KFLzWSfqaIV7L/a
+	 L/a4hFxTiu4EaGXDSf10H6+DIk6dB6ADXY3y9VeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Chen <void0red@gmail.com>,
+	Shayne Chen <shayne.chen@mediatek.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 438/694] wifi: mt76: handle failure of vzalloc in mt7615_coredump_work
-Date: Mon,  8 May 2023 11:44:33 +0200
-Message-Id: <20230508094447.638769426@linuxfoundation.org>
+Subject: [PATCH 6.3 439/694] wifi: mt76: mt7996: let non-bufferable MMPDUs use correct hw queue
+Date: Mon,  8 May 2023 11:44:34 +0200
+Message-Id: <20230508094447.678759861@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,46 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kang Chen <void0red@gmail.com>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-[ Upstream commit 9e47dd9f64a47ae00ca0123017584c37209ee900 ]
+[ Upstream commit d0b6f86fdbefa62fd4ad2acd1aea6c45f9b518ba ]
 
-vzalloc may fails, dump might be null and will cause
-illegal address access later.
+Pass qid into mt7996_mac_write_txwi() to let the tx descriptor of
+non-bufferable MMPDUs be filled with correct hw queue index.
 
-Link: https://lore.kernel.org/all/Y%2Fy5Asxw3T3m4jCw@lore-desk
-Fixes: d2bf7959d9c0 ("mt76: mt7663: introduce coredump support")
-Signed-off-by: Kang Chen <void0red@gmail.com>
+Fixes: 98686cd21624 ("wifi: mt76: mt7996: add driver for MediaTek Wi-Fi 7 (802.11be) devices")
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7615/mac.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7996/mac.c    | 11 ++++++-----
+ drivers/net/wireless/mediatek/mt76/mt7996/mcu.c    |  6 +++---
+ drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h |  5 +++--
+ 3 files changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-index 5c41ad5955f4b..eafa0f204c1f8 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
-@@ -2355,7 +2355,7 @@ void mt7615_coredump_work(struct work_struct *work)
- 			break;
- 
- 		skb_pull(skb, sizeof(struct mt7615_mcu_rxd));
--		if (data + skb->len - dump > MT76_CONNAC_COREDUMP_SZ) {
-+		if (!dump || data + skb->len - dump > MT76_CONNAC_COREDUMP_SZ) {
- 			dev_kfree_skb(skb);
- 			continue;
- 		}
-@@ -2365,6 +2365,8 @@ void mt7615_coredump_work(struct work_struct *work)
- 
- 		dev_kfree_skb(skb);
- 	}
--	dev_coredumpv(dev->mt76.dev, dump, MT76_CONNAC_COREDUMP_SZ,
--		      GFP_KERNEL);
-+
-+	if (dump)
-+		dev_coredumpv(dev->mt76.dev, dump, MT76_CONNAC_COREDUMP_SZ,
-+			      GFP_KERNEL);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+index 3c3506c7c87af..6a635b03a602b 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mac.c
+@@ -981,8 +981,9 @@ mt7996_mac_write_txwi_80211(struct mt7996_dev *dev, __le32 *txwi,
  }
+ 
+ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+-			   struct sk_buff *skb, struct mt76_wcid *wcid, int pid,
+-			   struct ieee80211_key_conf *key, u32 changed)
++			   struct sk_buff *skb, struct mt76_wcid *wcid,
++			   struct ieee80211_key_conf *key, int pid,
++			   enum mt76_txq_id qid, u32 changed)
+ {
+ 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+ 	struct ieee80211_vif *vif = info->control.vif;
+@@ -1013,7 +1014,7 @@ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+ 	} else if (beacon) {
+ 		p_fmt = MT_TX_TYPE_FW;
+ 		q_idx = MT_LMAC_BCN0;
+-	} else if (skb_get_queue_mapping(skb) >= MT_TXQ_PSD) {
++	} else if (qid >= MT_TXQ_PSD) {
+ 		p_fmt = MT_TX_TYPE_CT;
+ 		q_idx = MT_LMAC_ALTX0;
+ 	} else {
+@@ -1122,8 +1123,8 @@ int mt7996_tx_prepare_skb(struct mt76_dev *mdev, void *txwi_ptr,
+ 	memset(txwi_ptr, 0, MT_TXD_SIZE);
+ 	/* Transmit non qos data by 802.11 header and need to fill txd by host*/
+ 	if (!is_8023 || pid >= MT_PACKET_ID_FIRST)
+-		mt7996_mac_write_txwi(dev, txwi_ptr, tx_info->skb, wcid, pid,
+-				      key, 0);
++		mt7996_mac_write_txwi(dev, txwi_ptr, tx_info->skb, wcid, key,
++				      pid, qid, 0);
+ 
+ 	txp = (struct mt76_connac_txp_common *)(txwi + MT_TXD_SIZE);
+ 	for (i = 0; i < nbuf; i++) {
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+index dbe30832fd88b..954e581f863ce 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mcu.c
+@@ -1906,8 +1906,9 @@ mt7996_mcu_beacon_cont(struct mt7996_dev *dev, struct ieee80211_vif *vif,
+ 	}
+ 
+ 	buf = (u8 *)bcn + sizeof(*bcn) - MAX_BEACON_SIZE;
+-	mt7996_mac_write_txwi(dev, (__le32 *)buf, skb, wcid, 0, NULL,
++	mt7996_mac_write_txwi(dev, (__le32 *)buf, skb, wcid, NULL, 0, 0,
+ 			      BSS_CHANGED_BEACON);
++
+ 	memcpy(buf + MT_TXD_SIZE, skb->data, skb->len);
+ }
+ 
+@@ -2115,8 +2116,7 @@ int mt7996_mcu_beacon_inband_discov(struct mt7996_dev *dev,
+ 
+ 	buf = (u8 *)tlv + sizeof(*discov) - MAX_INBAND_FRAME_SIZE;
+ 
+-	mt7996_mac_write_txwi(dev, (__le32 *)buf, skb, wcid, 0, NULL,
+-			      changed);
++	mt7996_mac_write_txwi(dev, (__le32 *)buf, skb, wcid, NULL, 0, 0, changed);
+ 
+ 	memcpy(buf + MT_TXD_SIZE, skb->data, skb->len);
+ 
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+index 018dfd2b36b00..ae1210b0a82cd 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7996/mt7996.h
+@@ -487,8 +487,9 @@ void mt7996_mac_enable_nf(struct mt7996_dev *dev, u8 band);
+ void mt7996_mac_enable_rtscts(struct mt7996_dev *dev,
+ 			      struct ieee80211_vif *vif, bool enable);
+ void mt7996_mac_write_txwi(struct mt7996_dev *dev, __le32 *txwi,
+-			   struct sk_buff *skb, struct mt76_wcid *wcid, int pid,
+-			   struct ieee80211_key_conf *key, u32 changed);
++			   struct sk_buff *skb, struct mt76_wcid *wcid,
++			   struct ieee80211_key_conf *key, int pid,
++			   enum mt76_txq_id qid, u32 changed);
+ void mt7996_mac_set_timing(struct mt7996_phy *phy);
+ int mt7996_mac_sta_add(struct mt76_dev *mdev, struct ieee80211_vif *vif,
+ 		       struct ieee80211_sta *sta);
 -- 
 2.39.2
 
