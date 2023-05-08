@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADB213AE0
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F71FC433D2;
-	Mon,  8 May 2023 11:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E4713AE0
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9B1C433EF;
+	Mon,  8 May 2023 11:00:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543625;
-	bh=/psOibmtnnkcz1+tirmhsBiDgkCvd5+0ZG4x9ICNoaM=;
+	s=korg; t=1683543629;
+	bh=E2cQKGIf0Sg7svGkr9tFQQGW4JGX17m45vZK3M2h3HQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wCfKCX9jIHEdnpvZtTnlhsbfkoAeaz6Q/Ni0d1MchosZKQsJfay4ewDMC0597syln
-	 4naKJjJ5qW8ay+zBmyPjdUpWUfqr4rrKLuSmgTQ1xnr+jkryQFK+lrlJQpRpEzbVRI
-	 DZozJ+cCaMKHn4FD689Ae3NQbElA75yd3OczrsVw=
+	b=YDyREkBhshmFs9nydw57mV7NjVoqNCeBjr+DB2axApdaULejyU3JGXMPnt/YXkomt
+	 YPNQ+klEhLhJ+AKjVCgcQoXpImOyq6UZh62INdxkuh8nxlKdQFPQkFoAMtCQjnDXfO
+	 QdfafZpVnUQPMmb+Xyjmier4vZEFj15mGYbUq8w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 109/694] nilfs2: fix infinite loop in nilfs_mdt_get_block()
-Date: Mon,  8 May 2023 11:39:04 +0200
-Message-Id: <20230508094436.008414760@linuxfoundation.org>
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 143/694] tpm, tpm_tis: Claim locality before writing interrupt registers
+Date: Mon,  8 May 2023 11:39:38 +0200
+Message-Id: <20230508094437.101876604@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,71 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-commit a6a491c048882e7e424d407d32cba0b52d9ef2bf upstream.
+[ Upstream commit 15d7aa4e46eba87242a320f39773aa16faddadee ]
 
-If the disk image that nilfs2 mounts is corrupted and a virtual block
-address obtained by block lookup for a metadata file is invalid,
-nilfs_bmap_lookup_at_level() may return the same internal return code as
--ENOENT, meaning the block does not exist in the metadata file.
+In tpm_tis_probe_single_irq() interrupt registers TPM_INT_VECTOR,
+TPM_INT_STATUS and TPM_INT_ENABLE are modified to setup the interrupts.
+Currently these modifications are done without holding a locality thus they
+have no effect. Fix this by claiming the (default) locality before the
+registers are written.
 
-This duplication of return codes confuses nilfs_mdt_get_block(), causing
-it to read and create a metadata block indefinitely.
+Since now tpm_tis_gen_interrupt() is called with the locality already
+claimed remove locality request and release from this function.
 
-In particular, if this happens to the inode metadata file, ifile,
-semaphore i_rwsem can be left held, causing task hangs in lock_mount.
-
-Fix this issue by making nilfs_bmap_lookup_at_level() treat virtual block
-address translation failures with -ENOENT as metadata corruption instead
-of returning the error code.
-
-Link: https://lkml.kernel.org/r/20230430193046.6769-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=221d75710bde87fa0e97
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Stable-dep-of: 955df4f87760 ("tpm, tpm_tis: Claim locality when interrupts are reenabled on resume")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/bmap.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
---- a/fs/nilfs2/bmap.c
-+++ b/fs/nilfs2/bmap.c
-@@ -67,20 +67,28 @@ int nilfs_bmap_lookup_at_level(struct ni
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 4e6075d4e2643..39f27edb32879 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -739,16 +739,10 @@ static void tpm_tis_gen_interrupt(struct tpm_chip *chip)
+ 	cap_t cap;
+ 	int ret;
  
- 	down_read(&bmap->b_sem);
- 	ret = bmap->b_ops->bop_lookup(bmap, key, level, ptrp);
--	if (ret < 0) {
--		ret = nilfs_bmap_convert_error(bmap, __func__, ret);
-+	if (ret < 0)
- 		goto out;
--	}
-+
- 	if (NILFS_BMAP_USE_VBN(bmap)) {
- 		ret = nilfs_dat_translate(nilfs_bmap_get_dat(bmap), *ptrp,
- 					  &blocknr);
- 		if (!ret)
- 			*ptrp = blocknr;
-+		else if (ret == -ENOENT) {
-+			/*
-+			 * If there was no valid entry in DAT for the block
-+			 * address obtained by b_ops->bop_lookup, then pass
-+			 * internal code -EINVAL to nilfs_bmap_convert_error
-+			 * to treat it as metadata corruption.
-+			 */
-+			ret = -EINVAL;
-+		}
- 	}
- 
-  out:
- 	up_read(&bmap->b_sem);
--	return ret;
-+	return nilfs_bmap_convert_error(bmap, __func__, ret);
+-	ret = request_locality(chip, 0);
+-	if (ret < 0)
+-		return;
+-
+ 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
+ 		ret = tpm2_get_tpm_pt(chip, 0x100, &cap2, desc);
+ 	else
+ 		ret = tpm1_getcap(chip, TPM_CAP_PROP_TIS_TIMEOUT, &cap, desc, 0);
+-
+-	release_locality(chip, 0);
  }
  
- int nilfs_bmap_lookup_contig(struct nilfs_bmap *bmap, __u64 key, __u64 *ptrp,
+ /* Register the IRQ and issue a command that will cause an interrupt. If an
+@@ -771,10 +765,16 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	}
+ 	priv->irq = irq;
+ 
++	rc = request_locality(chip, 0);
++	if (rc < 0)
++		return rc;
++
+ 	rc = tpm_tis_read8(priv, TPM_INT_VECTOR(priv->locality),
+ 			   &original_int_vec);
+-	if (rc < 0)
++	if (rc < 0) {
++		release_locality(chip, priv->locality);
+ 		return rc;
++	}
+ 
+ 	rc = tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality), irq);
+ 	if (rc < 0)
+@@ -808,10 +808,12 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
+ 		tpm_tis_write8(priv, original_int_vec,
+ 			       TPM_INT_VECTOR(priv->locality));
+-		return -1;
++		rc = -1;
+ 	}
+ 
+-	return 0;
++	release_locality(chip, priv->locality);
++
++	return rc;
+ }
+ 
+ /* Try to find the IRQ the TPM is using. This is for legacy x86 systems that
+-- 
+2.39.2
+
 
 
