@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3621168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:07:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2885CC433D2;
-	Mon,  8 May 2023 11:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB969168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:07:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399F7C433EF;
+	Mon,  8 May 2023 11:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544046;
-	bh=rFBE3B9096ncav3gQVX3VtMO8M4UAQRymZNgBEM+w2M=;
+	s=korg; t=1683544049;
+	bh=DU6V6TijueeXw5Bbs7En6EjH8Vcz67aqmz3VEVKcrHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mfyfb5JJb+2eCN4RKgSRAXjqMFGlh3qgUFWtYhPGtxApRgWmaMz+Glv4xhdyaYnMb
-	 R1s2tHM51/mQIZAIJ4cYFpiI8W6L1nhlyrQONULcn9NCEN49Mp3aYg80J+ZjoARHxI
-	 8nV9j++FMwOgYqQo0iSzCexBxhdlvp1tdpwYwVJ4=
+	b=JVq2lMb1evIxlQ/+YAPNKpPtkW9Q7Q9oTUmi/d4XyzAoeIuaoB1CrEj3ph8t0FYXh
+	 KyozPgW4GGm/KLff+vwYdtIbBQrixYBRvqWcRfnUoq5xm11lkP+4f5Jkg2b/VhasrF
+	 exFjt8BrcqLv4LN1PR97N/712Dn8mw1DiCn0utYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zhaoyang Li <lizhaoyang04@hust.edu.cn>,
+	Dan Carpenter <error27@gmail.com>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 253/694] arm64: dts: qcom: msm8994-msft-lumia-octagon: drop unit address from PMI8994 regulator
-Date: Mon,  8 May 2023 11:41:28 +0200
-Message-Id: <20230508094440.511885175@linuxfoundation.org>
+Subject: [PATCH 6.3 244/694] soc: bcm: brcmstb: biuctrl: fix of_iomap leak
+Date: Mon,  8 May 2023 11:41:19 +0200
+Message-Id: <20230508094440.237380932@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,36 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Zhaoyang Li <lizhaoyang04@hust.edu.cn>
 
-[ Upstream commit 7a202df0f3eed006e4a9e7c06d62cf67be56c14c ]
+[ Upstream commit c3fbced9af885a6f217fd95509a613d6590916ce ]
 
-The PMIC regulators are not supposed to have unit addresses.
+Smatch reports:
 
-Fixes: 60b214effb80 ("arm64: dts: qcom: msm8994-octagon: Configure regulators")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230312183622.460488-7-krzysztof.kozlowski@linaro.org
+drivers/soc/bcm/brcmstb/biuctrl.c:291 setup_hifcpubiuctrl_regs() warn:
+'cpubiuctrl_base' from of_iomap() not released on lines: 291.
+
+This is because in setup_hifcpubiuctrl_regs(),
+cpubiuctrl_base is not released when handle error, which may cause a leak.
+To fix this, iounmap is added when handle error.
+
+Fixes: 22f7a9116eba ("soc: brcmstb: Correct CPU_CREDIT_REG offset for Brahma-B53 CPUs")
+Signed-off-by: Zhaoyang Li <lizhaoyang04@hust.edu.cn>
+Reviewed-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230327115422.1536615-1-lizhaoyang04@hust.edu.cn
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/soc/bcm/brcmstb/biuctrl.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-index 4520a7e86d5be..0c112b7b57ea1 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon.dtsi
-@@ -542,8 +542,7 @@
- };
+diff --git a/drivers/soc/bcm/brcmstb/biuctrl.c b/drivers/soc/bcm/brcmstb/biuctrl.c
+index e1d7b45432485..364ddbe365c24 100644
+--- a/drivers/soc/bcm/brcmstb/biuctrl.c
++++ b/drivers/soc/bcm/brcmstb/biuctrl.c
+@@ -288,6 +288,10 @@ static int __init setup_hifcpubiuctrl_regs(struct device_node *np)
+ 	if (BRCM_ID(family_id) == 0x7260 && BRCM_REV(family_id) == 0)
+ 		cpubiuctrl_regs = b53_cpubiuctrl_no_wb_regs;
+ out:
++	if (ret && cpubiuctrl_base) {
++		iounmap(cpubiuctrl_base);
++		cpubiuctrl_base = NULL;
++	}
+ 	return ret;
+ }
  
- &pmi8994_spmi_regulators {
--	vdd_gfx: s2@1700 {
--		reg = <0x1700 0x100>;
-+	vdd_gfx: s2 {
- 		regulator-min-microvolt = <980000>;
- 		regulator-max-microvolt = <980000>;
- 	};
 -- 
 2.39.2
 
