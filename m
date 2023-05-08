@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D258168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6222C433D2;
-	Mon,  8 May 2023 10:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECE9C168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76675C433D2;
+	Mon,  8 May 2023 10:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540913;
-	bh=PDufh/iI6PpeM985NOlyt2mzttbmZHePkjpWDnR1t3A=;
+	s=korg; t=1683540915;
+	bh=J5/+2UX8HyoUYOSVQRQbMUBhzE5hFQvdkMsz6RtOOKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nfp9IWWwMeMuJhSaXh1VCXX7uguayUKY4D1Zlz8Cg/MDD8XWK0eq4L5g+F4kG2na2
-	 a2Qs0d/a6kos2nRyR9KGvdQ58TDDXl06nbsPY2W2Fj63TTBuWODRY/IQzoXI0Sqcr7
-	 5ZlWKFQqFMIqNTbyhyWoLHqmW2Raao3hDCGMVWYo=
+	b=tLaJnhqUEklX8ueb8QorjK9dL2N1YHxYnLCiSMZZlaiNnwRrOJaFwFUjbxZaUL3DD
+	 4v3wgyBwseNAEx5QkkxOatwn+fz+fMhn+4tSJEiHDarHS9Lp1Jn71h7GqzprWJ+cLD
+	 wXqj0OrdY7QgUIulT0fe+QfHmkfqjIaLtLJlaHkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kang Chen <void0red@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 545/611] thermal/drivers/mediatek: Use devm_of_iomap to avoid resource leak in mtk_thermal_probe
-Date: Mon,  8 May 2023 11:46:27 +0200
-Message-Id: <20230508094439.715076171@linuxfoundation.org>
+Subject: [PATCH 6.1 546/611] mfd: tqmx86: Do not access I2C_DETECT register through io_base
+Date: Mon,  8 May 2023 11:46:28 +0200
+Message-Id: <20230508094439.755100696@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,60 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kang Chen <void0red@hust.edu.cn>
+From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-[ Upstream commit f05c7b7d9ea9477fcc388476c6f4ade8c66d2d26 ]
+[ Upstream commit 1be1b23696b3d4b0231c694f5e0767b4471d33a9 ]
 
-Smatch reports:
-1. mtk_thermal_probe() warn: 'apmixed_base' from of_iomap() not released.
-2. mtk_thermal_probe() warn: 'auxadc_base' from of_iomap() not released.
+The I2C_DETECT register is at IO port 0x1a7, which is outside the range
+passed to devm_ioport_map() for io_base, and was only working because
+there aren't actually any bounds checks for IO port accesses.
 
-The original code forgets to release iomap resource when handling errors,
-fix it by switch to devm_of_iomap.
+Extending the range does not seem like a good solution here, as it would
+then conflict with the IO resource assigned to the I2C controller. As
+this is just a one-off access during probe, use a simple inb() instead.
 
-Fixes: 89945047b166 ("thermal: mediatek: Add tsensor support for V2 thermal system")
-Signed-off-by: Kang Chen <void0red@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Link: https://lore.kernel.org/r/20230419020749.621257-1-void0red@hust.edu.cn
+While we're at it, drop the unused define TQMX86_REG_I2C_INT_EN.
+
+Fixes: 2f17dd34ffed ("mfd: tqmx86: IO controller with I2C, Wachdog and GPIO")
+Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/e8300a30f0791afb67d79db8089fb6004855f378.1676892223.git.matthias.schiffer@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/mtk_thermal.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/mfd/tqmx86.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/thermal/mtk_thermal.c b/drivers/thermal/mtk_thermal.c
-index 8440692e3890d..62f1e691659e3 100644
---- a/drivers/thermal/mtk_thermal.c
-+++ b/drivers/thermal/mtk_thermal.c
-@@ -1028,7 +1028,12 @@ static int mtk_thermal_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
+diff --git a/drivers/mfd/tqmx86.c b/drivers/mfd/tqmx86.c
+index 7ae906ff8e353..31d0efb5aacf8 100644
+--- a/drivers/mfd/tqmx86.c
++++ b/drivers/mfd/tqmx86.c
+@@ -49,9 +49,8 @@
+ #define TQMX86_REG_IO_EXT_INT_MASK		0x3
+ #define TQMX86_REG_IO_EXT_INT_GPIO_SHIFT	4
  
--	auxadc_base = of_iomap(auxadc, 0);
-+	auxadc_base = devm_of_iomap(&pdev->dev, auxadc, 0, NULL);
-+	if (IS_ERR(auxadc_base)) {
-+		of_node_put(auxadc);
-+		return PTR_ERR(auxadc_base);
-+	}
-+
- 	auxadc_phys_base = of_get_phys_base(auxadc);
+-#define TQMX86_REG_I2C_DETECT	0x47
++#define TQMX86_REG_I2C_DETECT	0x1a7
+ #define TQMX86_REG_I2C_DETECT_SOFT		0xa5
+-#define TQMX86_REG_I2C_INT_EN	0x49
  
- 	of_node_put(auxadc);
-@@ -1044,7 +1049,12 @@ static int mtk_thermal_probe(struct platform_device *pdev)
- 		return -ENODEV;
- 	}
+ static uint gpio_irq;
+ module_param(gpio_irq, uint, 0);
+@@ -213,7 +212,12 @@ static int tqmx86_probe(struct platform_device *pdev)
+ 		 "Found %s - Board ID %d, PCB Revision %d, PLD Revision %d\n",
+ 		 board_name, board_id, rev >> 4, rev & 0xf);
  
--	apmixed_base = of_iomap(apmixedsys, 0);
-+	apmixed_base = devm_of_iomap(&pdev->dev, apmixedsys, 0, NULL);
-+	if (IS_ERR(apmixed_base)) {
-+		of_node_put(apmixedsys);
-+		return PTR_ERR(apmixed_base);
-+	}
-+
- 	apmixed_phys_base = of_get_phys_base(apmixedsys);
+-	i2c_det = ioread8(io_base + TQMX86_REG_I2C_DETECT);
++	/*
++	 * The I2C_DETECT register is in the range assigned to the I2C driver
++	 * later, so we don't extend TQMX86_IOSIZE. Use inb() for this one-off
++	 * access instead of ioport_map + unmap.
++	 */
++	i2c_det = inb(TQMX86_REG_I2C_DETECT);
  
- 	of_node_put(apmixedsys);
+ 	if (gpio_irq_cfg) {
+ 		io_ext_int_val =
 -- 
 2.39.2
 
