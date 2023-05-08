@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E8E2915
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:41:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59A37C433EF;
-	Mon,  8 May 2023 10:41:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125C52915
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:41:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88DF0C433D2;
+	Mon,  8 May 2023 10:41:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542472;
-	bh=2Qu7lRMkpiCSdzL9Wn0xhzrbliIZ6NffpuHSJYKR8Vc=;
+	s=korg; t=1683542475;
+	bh=qeTKYEy/OFUOzfP0FZswqpALSJeI/wIIvOJIBTq3Ll8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vcd6h/52S46NwaRI2Ltc3ZNUjyjoIHW2DrnqhJFNuMGzuMrP9tlUG/v8nmjIcRQZE
-	 +omiS28oOMZyd7bi27eYo4Kbgx8gnyl3Nkwqvno7gaz7AbrlCuBcecoaiussUzQW+8
-	 JH1u7L6meySwEP99seIceZ5IaQqVl/RVTFdRWjmE=
+	b=WMBaojXsu1PmL8/swTuD8p2tNTfIVP+BPIH4XkEnvgsVnK18XXlqReMug/MYbHn6d
+	 8cjOXpITZM2NYxzrZ88xRM8qxRk4ZUwocUMzPDyg0meQ7MJtWw4zUcrzBwfYKKvwfS
+	 z4pW4aosXpIhB/Lc2iLVWl0FhsgdZGCc4tNxB2uQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 446/663] serial: 8250_bcm7271: Fix arbitration handling
-Date: Mon,  8 May 2023 11:44:32 +0200
-Message-Id: <20230508094442.553159955@linuxfoundation.org>
+Subject: [PATCH 6.2 420/663] net/mlx5: Use recovery timeout on sync reset flow
+Date: Mon,  8 May 2023 11:44:06 +0200
+Message-Id: <20230508094441.710679366@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,91 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Doug Berger <opendmb@gmail.com>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-[ Upstream commit 15ac1122fd6d4bf408a03e6f23c7ad4f60b22f9e ]
+[ Upstream commit dfad99750c0f83b0242572a573afa2c055f85b36 ]
 
-The arbitration of the UART DMA is mishandled for a few
-exceptional cases when probing and releasing the driver.
+Use the same timeout for sync reset flow and health recovery flow, since
+the former involves driver's recovery from firmware reset, which is
+similar to health recovery. Otherwise, in some cases, such as a firmware
+upgrade on the DPU, the firmware pre-init bit may not be ready within
+current timeout and the driver will abort loading back after reset.
 
-It is possible that the DMA register spaces are not defined in
-device tree for an instance of the driver, so attempts to access
-the registers in brcmuart_arbitration() would use NULL pointers.
-
-It is also possible for the probe function to return an error
-while still holding the UART DMA. This would prevent the UART
-DMA from being claimed by an instance that could use it.
-
-These errors are addressed by only releasing the UART DMA if it
-is held by this instance (i.e. priv->dma_enabled == 1) and
-directing early error paths in probe to this common release_dma
-handling.
-
-Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230309190224.687380-1-opendmb@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Fixes: 37ca95e62ee2 ("net/mlx5: Increase FW pre-init timeout for health recovery")
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_bcm7271.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/devlink.c  | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_bcm7271.c b/drivers/tty/serial/8250/8250_bcm7271.c
-index ed5a947476920..f801b1f5b46c0 100644
---- a/drivers/tty/serial/8250/8250_bcm7271.c
-+++ b/drivers/tty/serial/8250/8250_bcm7271.c
-@@ -1014,14 +1014,16 @@ static int brcmuart_probe(struct platform_device *pdev)
- 	/* See if a Baud clock has been specified */
- 	baud_mux_clk = of_clk_get_by_name(np, "sw_baud");
- 	if (IS_ERR(baud_mux_clk)) {
--		if (PTR_ERR(baud_mux_clk) == -EPROBE_DEFER)
--			return -EPROBE_DEFER;
-+		if (PTR_ERR(baud_mux_clk) == -EPROBE_DEFER) {
-+			ret = -EPROBE_DEFER;
-+			goto release_dma;
-+		}
- 		dev_dbg(dev, "BAUD MUX clock not specified\n");
- 	} else {
- 		dev_dbg(dev, "BAUD MUX clock found\n");
- 		ret = clk_prepare_enable(baud_mux_clk);
- 		if (ret)
--			return ret;
-+			goto release_dma;
- 		priv->baud_mux_clk = baud_mux_clk;
- 		init_real_clk_rates(dev, priv);
- 		clk_rate = priv->default_mux_rate;
-@@ -1029,7 +1031,8 @@ static int brcmuart_probe(struct platform_device *pdev)
- 
- 	if (clk_rate == 0) {
- 		dev_err(dev, "clock-frequency or clk not defined\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto release_dma;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+index 31ce591f527fa..2370e9ad52ea9 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
+@@ -196,7 +196,7 @@ static int mlx5_devlink_reload_up(struct devlink *devlink, enum devlink_reload_a
+ 			break;
+ 		/* On fw_activate action, also driver is reloaded and reinit performed */
+ 		*actions_performed |= BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT);
+-		ret = mlx5_load_one_devl_locked(dev, false);
++		ret = mlx5_load_one_devl_locked(dev, true);
+ 		break;
+ 	default:
+ 		/* Unsupported action should not get to this function */
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+index 2b74729180394..d219f8417d93a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+@@ -154,7 +154,7 @@ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev)
+ 		if (mlx5_health_wait_pci_up(dev))
+ 			mlx5_core_err(dev, "reset reload flow aborted, PCI reads still not working\n");
+ 		else
+-			mlx5_load_one(dev, false);
++			mlx5_load_one(dev, true);
+ 		devlink_remote_reload_actions_performed(priv_to_devlink(dev), 0,
+ 							BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT) |
+ 							BIT(DEVLINK_RELOAD_ACTION_FW_ACTIVATE));
+@@ -485,7 +485,7 @@ int mlx5_fw_reset_wait_reset_done(struct mlx5_core_dev *dev)
+ 	err = fw_reset->ret;
+ 	if (test_and_clear_bit(MLX5_FW_RESET_FLAGS_RELOAD_REQUIRED, &fw_reset->reset_flags)) {
+ 		mlx5_unload_one_devl_locked(dev, false);
+-		mlx5_load_one_devl_locked(dev, false);
++		mlx5_load_one_devl_locked(dev, true);
  	}
- 
- 	dev_dbg(dev, "DMA is %senabled\n", priv->dma_enabled ? "" : "not ");
-@@ -1116,7 +1119,9 @@ static int brcmuart_probe(struct platform_device *pdev)
- 	serial8250_unregister_port(priv->line);
- err:
- 	brcmuart_free_bufs(dev, priv);
--	brcmuart_arbitration(priv, 0);
-+release_dma:
-+	if (priv->dma_enabled)
-+		brcmuart_arbitration(priv, 0);
- 	return ret;
- }
- 
-@@ -1128,7 +1133,8 @@ static int brcmuart_remove(struct platform_device *pdev)
- 	hrtimer_cancel(&priv->hrt);
- 	serial8250_unregister_port(priv->line);
- 	brcmuart_free_bufs(&pdev->dev, priv);
--	brcmuart_arbitration(priv, 0);
-+	if (priv->dma_enabled)
-+		brcmuart_arbitration(priv, 0);
- 	return 0;
- }
- 
+ out:
+ 	clear_bit(MLX5_FW_RESET_FLAGS_PENDING_COMP, &fw_reset->reset_flags);
 -- 
 2.39.2
 
