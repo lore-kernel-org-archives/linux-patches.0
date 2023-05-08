@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D0D3168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60ED8C4339B;
-	Mon,  8 May 2023 11:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC86168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8063CC433D2;
+	Mon,  8 May 2023 11:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544564;
-	bh=KYBPsMv6YoQYLw8l5kU9m+x0DiLVOu0azJ1u/99zPkw=;
+	s=korg; t=1683544566;
+	bh=37Et6PbHvCGIsocBUxddF/q1eEzwLg/W60V58U66AO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBMdM04mrzaQZBZoaA8inlytBz0C+kSHaK6kKvPVFVvf15UUfmERvREwNx0WdkIF+
-	 krVmkcZX9e1XFwepkNwESz9lw5hgk5sgCkssyjOcHg21MZZ6iHZ5USMrOJl1tmsnik
-	 BVwRkyg+4KTqw1rboBlSmMt6bXbKdZRnU0VE3SV4=
+	b=LrUjJIrm5kSODaaYrjvL8VR0t/+THLj6CqvBFDoR45cEl4EcOC1NkLTG4cw338rH0
+	 I2L2wym4IoXS0wX9TH1wyHNsvU/0JkB8iPq5sWkcYRpJOsbKnEND+TY4akrcKbklnE
+	 s+OxVOswqJGgAKYTW+ioonQNmfpEHSrZN0tK66e4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 420/694] md/raid10: fix memleak for conf->bio_split
-Date: Mon,  8 May 2023 11:44:15 +0200
-Message-Id: <20230508094446.924596164@linuxfoundation.org>
+Subject: [PATCH 6.3 411/694] wifi: iwlwifi: debug: fix crash in __iwl_err()
+Date: Mon,  8 May 2023 11:44:06 +0200
+Message-Id: <20230508094446.585522575@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,94 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit c9ac2acde53f5385de185bccf6aaa91cf9ac1541 ]
+[ Upstream commit 634c7b1bd08ca322537ab389f8cbd7bb543b5e45 ]
 
-In the error path of raid10_run(), 'conf' need be freed, however,
-'conf->bio_split' is missed and memory will be leaked.
+In __iwl_err(), if we rate-limit the message away, then
+vaf.va is still NULL-initialized by the time we get to
+the tracing code, which then crashes. When it doesn't
+get rate-limited out, it's still wrong to reuse the old
+args2 that was already printed, which is why we bother
+making a copy in the first place.
 
-Since there are 3 places to free 'conf', factor out a helper to fix the
-problem.
+Assign vaf.va properly to fix this.
 
-Fixes: fc9977dd069e ("md/raid10: simplify the splitting of requests.")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230310073855.1337560-6-yukuai1@huaweicloud.com
+Fixes: e5f1cc98cc1b ("iwlwifi: allow rate-limited error messages")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230413102635.e27134c6bcd4.Ib3894cd2ba7a5ad5e75912a7634f146ceaa569e2@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 37 +++++++++++++++++--------------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-debug.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index b1c575859218a..5736ba5932c7f 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -4015,6 +4015,20 @@ static int setup_geo(struct geom *geo, struct mddev *mddev, enum geo_type new)
- 	return nc*fc;
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-debug.c b/drivers/net/wireless/intel/iwlwifi/iwl-debug.c
+index ae4c2a3d63d5b..3a3c13a41fc61 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-debug.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-debug.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
+ /*
+- * Copyright (C) 2005-2011, 2021 Intel Corporation
++ * Copyright (C) 2005-2011, 2021-2022 Intel Corporation
+  */
+ #include <linux/device.h>
+ #include <linux/interrupt.h>
+@@ -57,6 +57,7 @@ void __iwl_err(struct device *dev, enum iwl_err_mode mode, const char *fmt, ...)
+ 	default:
+ 		break;
+ 	}
++	vaf.va = &args;
+ 	trace_iwlwifi_err(&vaf);
+ 	va_end(args);
  }
- 
-+static void raid10_free_conf(struct r10conf *conf)
-+{
-+	if (!conf)
-+		return;
-+
-+	mempool_exit(&conf->r10bio_pool);
-+	kfree(conf->mirrors);
-+	kfree(conf->mirrors_old);
-+	kfree(conf->mirrors_new);
-+	safe_put_page(conf->tmppage);
-+	bioset_exit(&conf->bio_split);
-+	kfree(conf);
-+}
-+
- static struct r10conf *setup_conf(struct mddev *mddev)
- {
- 	struct r10conf *conf = NULL;
-@@ -4097,13 +4111,7 @@ static struct r10conf *setup_conf(struct mddev *mddev)
- 	return conf;
- 
-  out:
--	if (conf) {
--		mempool_exit(&conf->r10bio_pool);
--		kfree(conf->mirrors);
--		safe_put_page(conf->tmppage);
--		bioset_exit(&conf->bio_split);
--		kfree(conf);
--	}
-+	raid10_free_conf(conf);
- 	return ERR_PTR(err);
- }
- 
-@@ -4294,10 +4302,7 @@ static int raid10_run(struct mddev *mddev)
- 
- out_free_conf:
- 	md_unregister_thread(&mddev->thread);
--	mempool_exit(&conf->r10bio_pool);
--	safe_put_page(conf->tmppage);
--	kfree(conf->mirrors);
--	kfree(conf);
-+	raid10_free_conf(conf);
- 	mddev->private = NULL;
- out:
- 	return -EIO;
-@@ -4305,15 +4310,7 @@ static int raid10_run(struct mddev *mddev)
- 
- static void raid10_free(struct mddev *mddev, void *priv)
- {
--	struct r10conf *conf = priv;
--
--	mempool_exit(&conf->r10bio_pool);
--	safe_put_page(conf->tmppage);
--	kfree(conf->mirrors);
--	kfree(conf->mirrors_old);
--	kfree(conf->mirrors_new);
--	bioset_exit(&conf->bio_split);
--	kfree(conf);
-+	raid10_free_conf(priv);
- }
- 
- static void raid10_quiesce(struct mddev *mddev, int quiesce)
 -- 
 2.39.2
 
