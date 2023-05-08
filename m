@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112AB171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:33:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB40C433D2;
-	Mon,  8 May 2023 11:33:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0561D171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:33:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8140AC433D2;
+	Mon,  8 May 2023 11:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545635;
-	bh=EogVsNTaEWeQoAvjCV2uoWcH6lS5U3mEIs3+bg0U/y8=;
+	s=korg; t=1683545638;
+	bh=bVSklMlSWz4OtfPFb9mRQASssu4ELl71aqFGbKC8Ms0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WIWpIrHDv/0FZAJjCOUQni07MPZahK9HXn73ZdR6Kz2sLkKRrzwhd0m2LE/7bx61U
-	 /5fMJuyIbVpsdUg+QGkBuviDmZDToiAzp+Cryo7s10mkcfxQVWPL9r99k6/b38ppgW
-	 5DhbnCl3ukufKrrteVpVFSQlYknQszoL+lH/Qvhc=
+	b=VyYW/u1iWH2a3O+jtihgEEdd8q/Lg9nlNKEFj18GLwTwooVmddPvOdmflnz/Sb8cH
+	 Q2rqITTIiQnYiA0IS9XBFMjnzhPc0NacA/ubc3YVwUxzIlCQj2Oy69pmLK6nVgDhpr
+	 zMx00iMXfFRERTOau/1s4tbZucZYnjcRVyWc8XMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muralidhara M K <muralimk@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 105/371] x86/MCE/AMD: Use an u64 for bank_map
-Date: Mon,  8 May 2023 11:45:06 +0200
-Message-Id: <20230508094816.193634383@linuxfoundation.org>
+Subject: [PATCH 5.15 106/371] media: bdisp: Add missing check for create_workqueue
+Date: Mon,  8 May 2023 11:45:07 +0200
+Message-Id: <20230508094816.232385310@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,97 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muralidhara M K <muralimk@amd.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 4c1cdec319b9aadb65737c3eb1f5cb74bd6aa156 ]
+[ Upstream commit 2371adeab717d8fe32144a84f3491a03c5838cfb ]
 
-Thee maximum number of MCA banks is 64 (MAX_NR_BANKS), see
+Add the check for the return value of the create_workqueue
+in order to avoid NULL pointer dereference.
 
-  a0bc32b3cacf ("x86/mce: Increase maximum number of banks to 64").
-
-However, the bank_map which contains a bitfield of which banks to
-initialize is of type unsigned int and that overflows when those bit
-numbers are >= 32, leading to UBSAN complaining correctly:
-
-  UBSAN: shift-out-of-bounds in arch/x86/kernel/cpu/mce/amd.c:1365:38
-  shift exponent 32 is too large for 32-bit type 'int'
-
-Change the bank_map to a u64 and use the proper BIT_ULL() macro when
-modifying bits in there.
-
-  [ bp: Rewrite commit message. ]
-
-Fixes: a0bc32b3cacf ("x86/mce: Increase maximum number of banks to 64")
-Signed-off-by: Muralidhara M K <muralimk@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230127151601.1068324-1-muralimk@amd.com
+Fixes: 28ffeebbb7bd ("[media] bdisp: 2D blitter driver using v4l2 mem2mem framework")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mce/amd.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/media/platform/sti/bdisp/bdisp-v4l2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/kernel/cpu/mce/amd.c b/arch/x86/kernel/cpu/mce/amd.c
-index 6469d3135d268..d4e75be64a4c5 100644
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -210,10 +210,10 @@ static DEFINE_PER_CPU(struct threshold_bank **, threshold_banks);
-  * A list of the banks enabled on each logical CPU. Controls which respective
-  * descriptors to initialize later in mce_threshold_create_device().
-  */
--static DEFINE_PER_CPU(unsigned int, bank_map);
-+static DEFINE_PER_CPU(u64, bank_map);
+diff --git a/drivers/media/platform/sti/bdisp/bdisp-v4l2.c b/drivers/media/platform/sti/bdisp/bdisp-v4l2.c
+index 6413cd2791251..19a0f12483dba 100644
+--- a/drivers/media/platform/sti/bdisp/bdisp-v4l2.c
++++ b/drivers/media/platform/sti/bdisp/bdisp-v4l2.c
+@@ -1310,6 +1310,8 @@ static int bdisp_probe(struct platform_device *pdev)
+ 	init_waitqueue_head(&bdisp->irq_queue);
+ 	INIT_DELAYED_WORK(&bdisp->timeout_work, bdisp_irq_timeout);
+ 	bdisp->work_queue = create_workqueue(BDISP_NAME);
++	if (!bdisp->work_queue)
++		return -ENOMEM;
  
- /* Map of banks that have more than MCA_MISC0 available. */
--static DEFINE_PER_CPU(u32, smca_misc_banks_map);
-+static DEFINE_PER_CPU(u64, smca_misc_banks_map);
- 
- static void amd_threshold_interrupt(void);
- static void amd_deferred_error_interrupt(void);
-@@ -242,7 +242,7 @@ static void smca_set_misc_banks_map(unsigned int bank, unsigned int cpu)
- 		return;
- 
- 	if (low & MASK_BLKPTR_LO)
--		per_cpu(smca_misc_banks_map, cpu) |= BIT(bank);
-+		per_cpu(smca_misc_banks_map, cpu) |= BIT_ULL(bank);
- 
- }
- 
-@@ -505,7 +505,7 @@ static u32 smca_get_block_address(unsigned int bank, unsigned int block,
- 	if (!block)
- 		return MSR_AMD64_SMCA_MCx_MISC(bank);
- 
--	if (!(per_cpu(smca_misc_banks_map, cpu) & BIT(bank)))
-+	if (!(per_cpu(smca_misc_banks_map, cpu) & BIT_ULL(bank)))
- 		return 0;
- 
- 	return MSR_AMD64_SMCA_MCx_MISCy(bank, block - 1);
-@@ -549,7 +549,7 @@ prepare_threshold_block(unsigned int bank, unsigned int block, u32 addr,
- 	int new;
- 
- 	if (!block)
--		per_cpu(bank_map, cpu) |= (1 << bank);
-+		per_cpu(bank_map, cpu) |= BIT_ULL(bank);
- 
- 	memset(&b, 0, sizeof(b));
- 	b.cpu			= cpu;
-@@ -1061,7 +1061,7 @@ static void amd_threshold_interrupt(void)
- 		return;
- 
- 	for (bank = 0; bank < this_cpu_read(mce_num_banks); ++bank) {
--		if (!(per_cpu(bank_map, cpu) & (1 << bank)))
-+		if (!(per_cpu(bank_map, cpu) & BIT_ULL(bank)))
- 			continue;
- 
- 		first_block = bp[bank]->blocks;
-@@ -1538,7 +1538,7 @@ int mce_threshold_create_device(unsigned int cpu)
- 		return -ENOMEM;
- 
- 	for (bank = 0; bank < numbanks; ++bank) {
--		if (!(this_cpu_read(bank_map) & (1 << bank)))
-+		if (!(this_cpu_read(bank_map) & BIT_ULL(bank)))
- 			continue;
- 		err = threshold_create_bank(bp, cpu, bank);
- 		if (err) {
+ 	spin_lock_init(&bdisp->slock);
+ 	mutex_init(&bdisp->lock);
 -- 
 2.39.2
 
