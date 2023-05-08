@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A58168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0198FC4339C;
-	Mon,  8 May 2023 10:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B87168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9BCC433D2;
+	Mon,  8 May 2023 10:11:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540676;
-	bh=22/0GyGstKxSi5WyUg/SfzoRo+KeW+wvMb1rDRutY3g=;
+	s=korg; t=1683540679;
+	bh=GnuTKGySGlfr07daI7HAiFk0boCdBF/4zjHSMFSEV+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPclTX7JzjjfSxmRJKnY2sgKEHM/tPW5Va7bmQjhyjisod0qf87Ss+JTx5M1y49Aj
-	 Irfj3j6Sxcuk04VrXlAVl5d1hS0z3mg1Xs17xcYzm5DRs7z0ImulF8rt1ps/eWPuGK
-	 W95WT9xxb1GTKVDBJe6Ymqr0T0XmvjkRXK3iHdyc=
+	b=NRFObisIsURNT3JDo6mxk7FgptcJ6gBAkYJVaYihtDHGApWPMQdswu7+zR1kLHIt/
+	 KWyuJB6c8rhdLnE/kLP2HPUFEjFTzAE9crmq+sIUNRics6Ky4hTm7vf7GzAbQDDYx5
+	 8DJKCOClXV2efZwy0htjtBnQ0YuY/S0pTSgzkPa0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Leonard Crestez <leonard.crestez@nxp.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	dri-devel@lists.freedesktop.org,
+	linux-fbdev@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 424/611] scripts/gdb: bail early if there are no clocks
-Date: Mon,  8 May 2023 11:44:26 +0200
-Message-Id: <20230508094435.987066817@linuxfoundation.org>
+Subject: [PATCH 6.1 415/611] linux/vt_buffer.h: allow either builtin or modular for macros
+Date: Mon,  8 May 2023 11:44:17 +0200
+Message-Id: <20230508094435.716421365@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -39,46 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 1d7adbc74c009057ed9dc3112f388e91a9c79acc ]
+[ Upstream commit 2b76ffe81e32afd6d318dc4547e2ba8c46207b77 ]
 
-Avoid generating an exception if there are no clocks registered:
+Fix build errors on ARCH=alpha when CONFIG_MDA_CONSOLE=m.
+This allows the ARCH macros to be the only ones defined.
 
-(gdb) lx-clk-summary
-                                 enable  prepare  protect
-   clock                          count    count    count        rate
-------------------------------------------------------------------------
-Python Exception <class 'gdb.error'>: No symbol "clk_root_list" in
-current context.
-Error occurred in Python: No symbol "clk_root_list" in current context.
+In file included from ../drivers/video/console/mdacon.c:37:
+../arch/alpha/include/asm/vga.h:17:40: error: expected identifier or '(' before 'volatile'
+   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
+      |                                        ^~~~~~~~
+../include/linux/vt_buffer.h:24:34: note: in definition of macro 'scr_writew'
+   24 | #define scr_writew(val, addr) (*(addr) = (val))
+      |                                  ^~~~
+../include/linux/vt_buffer.h:24:40: error: expected ')' before '=' token
+   24 | #define scr_writew(val, addr) (*(addr) = (val))
+      |                                        ^
+../arch/alpha/include/asm/vga.h:17:20: note: in expansion of macro 'scr_writew'
+   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
+      |                    ^~~~~~~~~~
+../arch/alpha/include/asm/vga.h:25:29: error: expected identifier or '(' before 'volatile'
+   25 | static inline u16 scr_readw(volatile const u16 *addr)
+      |                             ^~~~~~~~
 
-Link: https://lkml.kernel.org/r/20230323225246.3302977-1-f.fainelli@gmail.com
-Fixes: d1e9710b63d8 ("scripts/gdb: initial clk support: lx-clk-summary")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Leonard Crestez <leonard.crestez@nxp.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-fbdev@vger.kernel.org
+Link: https://lore.kernel.org/r/20230329021529.16188-1-rdunlap@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/clk.py | 2 ++
- 1 file changed, 2 insertions(+)
+ include/linux/vt_buffer.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/gdb/linux/clk.py b/scripts/gdb/linux/clk.py
-index 061aecfa294e6..7a01fdc3e8446 100644
---- a/scripts/gdb/linux/clk.py
-+++ b/scripts/gdb/linux/clk.py
-@@ -41,6 +41,8 @@ are cached and potentially out of date"""
-             self.show_subtree(child, level + 1)
+diff --git a/include/linux/vt_buffer.h b/include/linux/vt_buffer.h
+index 848db1b1569ff..919d999a8c1db 100644
+--- a/include/linux/vt_buffer.h
++++ b/include/linux/vt_buffer.h
+@@ -16,7 +16,7 @@
  
-     def invoke(self, arg, from_tty):
-+        if utils.gdb_eval_or_none("clk_root_list") is None:
-+            raise gdb.GdbError("No clocks registered")
-         gdb.write("                                 enable  prepare  protect               \n")
-         gdb.write("   clock                          count    count    count        rate   \n")
-         gdb.write("------------------------------------------------------------------------\n")
+ #include <linux/string.h>
+ 
+-#if defined(CONFIG_VGA_CONSOLE) || defined(CONFIG_MDA_CONSOLE)
++#if IS_ENABLED(CONFIG_VGA_CONSOLE) || IS_ENABLED(CONFIG_MDA_CONSOLE)
+ #include <asm/vga.h>
+ #endif
+ 
 -- 
 2.39.2
 
