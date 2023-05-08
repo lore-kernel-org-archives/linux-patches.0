@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13008168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:38:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DA2C433EF;
-	Mon,  8 May 2023 10:38:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4FA101F4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:38:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4CDC433D2;
+	Mon,  8 May 2023 10:38:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542285;
-	bh=YA8fMVyRQf4LDjVWfmZtuyBEellaq0Uw6trX5oHv7D8=;
+	s=korg; t=1683542288;
+	bh=JJC5MjBV8lpgp/Q8c9FLB/NnPE+kU9YVY1zWbSiuN+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sPVhE7wqcZWoRyFVmYhW5F4jNAnRvqbedBEPNlM1UEkHrhY1NreSHY0CkYbOzq5uI
-	 sFYMXAh45+CL9R0ol20RbwMcRdtS6wL306mBVm1lnMqjRmCNw0444YXIvDLdtGOMD3
-	 mrN4g8klgdvhtjlhwzS/PuyraPJNj614XWnNvEgo=
+	b=HXzLdx+2m+QuZ4GqwwrAvGAgd/1D/C0owXiulddCtCuq2ksJwj0goh7PBnwr5LQol
+	 YdSUHExdiX/6OTFfO1QZuA9TV+5nRiXTJ9Nwh9VKjIzPjxGIZ4DdYuqRv2kRC8go5w
+	 x+lKSnfyk5gyN5MG1HVdSXxlC/LHvOJOngKB593s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Wei Hung <hsinweih@uci.edu>,
-	Xin Liu <liuxin350@huawei.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Stephan Mueller <smueller@chronox.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 354/663] bpf, sockmap: fix deadlocks in the sockhash and sockmap
-Date: Mon,  8 May 2023 11:43:00 +0200
-Message-Id: <20230508094439.632331899@linuxfoundation.org>
+Subject: [PATCH 6.2 345/663] crypto: drbg - Only fail when jent is unavailable in FIPS mode
+Date: Mon,  8 May 2023 11:42:51 +0200
+Message-Id: <20230508094439.336522022@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,81 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Liu <liuxin350@huawei.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit ed17aa92dc56b6d8883e4b7a8f1c6fbf5ed6cd29 ]
+[ Upstream commit 686cd976b6ddedeeb1a1fb09ba53a891d3cc9a03 ]
 
-When huang uses sched_switch tracepoint, the tracepoint
-does only one thing in the mounted ebpf program, which
-deletes the fixed elements in sockhash ([0])
+When jent initialisation fails for any reason other than ENOENT,
+the entire drbg fails to initialise, even when we're not in FIPS
+mode.  This is wrong because we can still use the kernel RNG when
+we're not in FIPS mode.
 
-It seems that elements in sockhash are rarely actively
-deleted by users or ebpf program. Therefore, we do not
-pay much attention to their deletion. Compared with hash
-maps, sockhash only provides spin_lock_bh protection.
-This causes it to appear to have self-locking behavior
-in the interrupt context.
+Change it so that it only fails when we are in FIPS mode.
 
-  [0]:https://lore.kernel.org/all/CABcoxUayum5oOqFMMqAeWuS8+EzojquSOSyDA3J_2omY=2EeAg@mail.gmail.com/
-
-Reported-by: Hsin-Wei Hung <hsinweih@uci.edu>
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Xin Liu <liuxin350@huawei.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20230406122622.109978-1-liuxin350@huawei.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 57225e679788 ("crypto: drbg - Use callback API for random readiness")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Stephan Mueller <smueller@chronox.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ crypto/drbg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index a055139f410e2..dd5d7b1fa3580 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -414,8 +414,9 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
- {
- 	struct sock *sk;
- 	int err = 0;
-+	unsigned long flags;
+diff --git a/crypto/drbg.c b/crypto/drbg.c
+index 982d4ca4526d8..ff4ebbc68efab 100644
+--- a/crypto/drbg.c
++++ b/crypto/drbg.c
+@@ -1546,7 +1546,7 @@ static int drbg_prepare_hrng(struct drbg_state *drbg)
+ 		const int err = PTR_ERR(drbg->jent);
  
--	raw_spin_lock_bh(&stab->lock);
-+	raw_spin_lock_irqsave(&stab->lock, flags);
- 	sk = *psk;
- 	if (!sk_test || sk_test == sk)
- 		sk = xchg(psk, NULL);
-@@ -425,7 +426,7 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
- 	else
- 		err = -EINVAL;
- 
--	raw_spin_unlock_bh(&stab->lock);
-+	raw_spin_unlock_irqrestore(&stab->lock, flags);
- 	return err;
- }
- 
-@@ -923,11 +924,12 @@ static long sock_hash_delete_elem(struct bpf_map *map, void *key)
- 	struct bpf_shtab_bucket *bucket;
- 	struct bpf_shtab_elem *elem;
- 	int ret = -ENOENT;
-+	unsigned long flags;
- 
- 	hash = sock_hash_bucket_hash(key, key_size);
- 	bucket = sock_hash_select_bucket(htab, hash);
- 
--	raw_spin_lock_bh(&bucket->lock);
-+	raw_spin_lock_irqsave(&bucket->lock, flags);
- 	elem = sock_hash_lookup_elem_raw(&bucket->head, hash, key, key_size);
- 	if (elem) {
- 		hlist_del_rcu(&elem->node);
-@@ -935,7 +937,7 @@ static long sock_hash_delete_elem(struct bpf_map *map, void *key)
- 		sock_hash_free_elem(htab, elem);
- 		ret = 0;
+ 		drbg->jent = NULL;
+-		if (fips_enabled || err != -ENOENT)
++		if (fips_enabled)
+ 			return err;
+ 		pr_info("DRBG: Continuing without Jitter RNG\n");
  	}
--	raw_spin_unlock_bh(&bucket->lock);
-+	raw_spin_unlock_irqrestore(&bucket->lock, flags);
- 	return ret;
- }
- 
 -- 
 2.39.2
 
