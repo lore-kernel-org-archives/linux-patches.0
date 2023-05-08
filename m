@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69B8171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6F5C433EF;
-	Mon,  8 May 2023 11:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E59171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:37:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F3EC433D2;
+	Mon,  8 May 2023 11:37:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545872;
-	bh=mTtuV/Ql6GroExZ/32vNesA1ayUEF9XzBKMzH+XnVdk=;
+	s=korg; t=1683545875;
+	bh=yLH7nl7ORD16r3fE7NKRVZ86hHR+mkSG4+4XhFYNelo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTKKaTQTq0w3wg4p7B5a59ZM1X/w7f+GZxqUdWybOGX6d8INVMQxm/U/ZHILZMYgN
-	 h2RcsCtuwBtno3e0v6szD3NUmmOo7EWAiAc5FpHFiAfa9S7M8X2YZB6B//sHTzlpAe
-	 OarOlCA+dGtplnmukZTWMHn/xq/21ksDkJ+Edhg8=
+	b=G7SQim3B+rWlVG7obesFCtdHp1h3W6NmYapky2hgXD5yAlsnyj9KatTLbluplaDpX
+	 Ns8YKsG1y4AEYUqK4fyLit9mJ/P/T+zotJaDCsWn9ncYj5a3DH45aU2NELoGylxHto
+	 kmTjj+o7raHpOk31570Vkd6t3ThIez6MshFj13/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kal Conley <kal.conley@dectris.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Stanislav Fomichev <sdf@google.com>,
+	YiFei Zhu <zhuyifei@google.com>,
 	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 181/371] selftests: xsk: Disable IPv6 on VETH1
-Date: Mon,  8 May 2023 11:46:22 +0200
-Message-Id: <20230508094819.329939567@linuxfoundation.org>
+Subject: [PATCH 5.15 182/371] selftests/bpf: Wait for receive in cg_storage_multi test
+Date: Mon,  8 May 2023 11:46:23 +0200
+Message-Id: <20230508094819.374513680@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,43 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kal Conley <kal.conley@dectris.com>
+From: YiFei Zhu <zhuyifei@google.com>
 
-[ Upstream commit f2b50f17268390567bc0e95642170d88f336c8f4 ]
+[ Upstream commit 5af607a861d43ffff830fc1890033e579ec44799 ]
 
-This change fixes flakiness in the BIDIRECTIONAL test:
+In some cases the loopback latency might be large enough, causing
+the assertion on invocations to be run before ingress prog getting
+executed. The assertion would fail and the test would flake.
 
-    # [is_pkt_valid] expected length [60], got length [90]
-    not ok 1 FAIL: SKB BUSY-POLL BIDIRECTIONAL
+This can be reliably reproduced by arbitrarily increasing the
+loopback latency (thanks to [1]):
+  tc qdisc add dev lo root handle 1: htb default 12
+  tc class add dev lo parent 1:1 classid 1:12 htb rate 20kbps ceil 20kbps
+  tc qdisc add dev lo parent 1:12 netem delay 100ms
 
-When IPv6 is enabled, the interface will periodically send MLDv1 and
-MLDv2 packets. These packets can cause the BIDIRECTIONAL test to fail
-since it uses VETH0 for RX.
+Fix this by waiting on the receive end, instead of instantly
+returning to the assert. The call to read() will wait for the
+default SO_RCVTIMEO timeout of 3 seconds provided by
+start_server().
 
-For other tests, this was not a problem since they only receive on VETH1
-and IPv6 was already disabled on VETH0.
+[1] https://gist.github.com/kstevens715/4598301
 
-Fixes: a89052572ebb ("selftests/bpf: Xsk selftests framework")
-Signed-off-by: Kal Conley <kal.conley@dectris.com>
-Link: https://lore.kernel.org/r/20230405082905.6303-1-kal.conley@dectris.com
+Reported-by: Martin KaFai Lau <martin.lau@linux.dev>
+Link: https://lore.kernel.org/bpf/9c5c8b7e-1d89-a3af-5400-14fde81f4429@linux.dev/
+Fixes: 3573f384014f ("selftests/bpf: Test CGROUP_STORAGE behavior on shared egress + ingress")
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: YiFei Zhu <zhuyifei@google.com>
+Link: https://lore.kernel.org/r/20230405193354.1956209-1-zhuyifei@google.com
 Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_xsk.sh | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_xsk.sh b/tools/testing/selftests/bpf/test_xsk.sh
-index cd7bf32e6a173..661995af75602 100755
---- a/tools/testing/selftests/bpf/test_xsk.sh
-+++ b/tools/testing/selftests/bpf/test_xsk.sh
-@@ -106,6 +106,7 @@ setup_vethPairs() {
- 	ip link add ${VETH0} numtxqueues 4 numrxqueues 4 type veth peer name ${VETH1} numtxqueues 4 numrxqueues 4
- 	if [ -f /proc/net/if_inet6 ]; then
- 		echo 1 > /proc/sys/net/ipv6/conf/${VETH0}/disable_ipv6
-+		echo 1 > /proc/sys/net/ipv6/conf/${VETH1}/disable_ipv6
- 	fi
- 	if [[ $verbose -eq 1 ]]; then
- 	        echo "setting up ${VETH1}: namespace: ${NS1}"
+diff --git a/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c b/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
+index 876be0ecb654f..a47ea4804766b 100644
+--- a/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
++++ b/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
+@@ -56,8 +56,9 @@ static bool assert_storage_noexist(struct bpf_map *map, const void *key)
+ 
+ static bool connect_send(const char *cgroup_path)
+ {
+-	bool res = true;
+ 	int server_fd = -1, client_fd = -1;
++	char message[] = "message";
++	bool res = true;
+ 
+ 	if (join_cgroup(cgroup_path))
+ 		goto out_clean;
+@@ -70,7 +71,10 @@ static bool connect_send(const char *cgroup_path)
+ 	if (client_fd < 0)
+ 		goto out_clean;
+ 
+-	if (send(client_fd, "message", strlen("message"), 0) < 0)
++	if (send(client_fd, &message, sizeof(message), 0) < 0)
++		goto out_clean;
++
++	if (read(server_fd, &message, sizeof(message)) < 0)
+ 		goto out_clean;
+ 
+ 	res = false;
 -- 
 2.39.2
 
