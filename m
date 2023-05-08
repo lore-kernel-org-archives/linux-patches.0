@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDBE168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:48:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6582C433D2;
-	Mon,  8 May 2023 10:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FD4168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:48:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E85BC433EF;
+	Mon,  8 May 2023 10:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542924;
-	bh=/Jl9Jaavl05gJsehmzRCKJ6D3quk8GZDfuxJ44umj78=;
+	s=korg; t=1683542927;
+	bh=dIUdhrIQPDmNlGJivDXS2Fi69mGGoj0z3PysmSaGwTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Rsyl5OLTIkjrXblhqqwOwDH5jVBS1pMS3A3CYi0O3ZvEQpqK6v2r8Odx8KAXPoW0
-	 NNiXvP5F/JS89SeZ94/U/sJgeK3+m29gu5qCVv2Nbv6+TI76o5jbhw2DsSitWAVJ7J
-	 +ONCQUeoCXQbztF0wcJGPnQgUG5M5mx6B/vLFFyE=
+	b=BwHcu4PU0bac+2Av8RDDbIyHd831cvV8PyOJauxMyoUXW312R6GI9BqvcZmOiPy70
+	 S81eX0PG6F3UOga+SmdKjgTe/Fg9axEgAGOqmU0Vm6RbkJp/mcDIqKnWilw8P+EVJZ
+	 SZW92PJlny1a55lP4WULkE/lmlzfUHuGYrNaFh7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 591/663] phy: ti: j721e-wiz: Fix unreachable code in wiz_mode_select()
-Date: Mon,  8 May 2023 11:46:57 +0200
-Message-Id: <20230508094448.620258094@linuxfoundation.org>
+Subject: [PATCH 6.2 592/663] dma: gpi: remove spurious unlock in gpi_ch_init
+Date: Mon,  8 May 2023 11:46:58 +0200
+Message-Id: <20230508094448.654251174@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,51 +35,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 57c0e1362fdd57d0cea7ab1e583b58abf4bd8c2d ]
+[ Upstream commit 91d6a468e335571f1e67e046050dea9af5fa4ebe ]
 
-In the wiz_mode_select() function, the configuration performed for
-PHY_TYPE_USXGMII is unreachable. Fix it.
+gpi_ch_init() doesn't lock the ctrl_lock mutex, so there is no need to
+unlock it too. Instead the mutex is handled by the function
+gpi_alloc_chan_resources(), which properly locks and unlocks the mutex.
 
-Fixes: b64a85fb8f53 ("phy: ti: phy-j721e-wiz.c: Add usxgmii support in wiz driver")
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20230403094552.929108-1-s-vadapalli@ti.com
+=====================================
+WARNING: bad unlock balance detected!
+6.3.0-rc5-00253-g99792582ded1-dirty #15 Not tainted
+-------------------------------------
+kworker/u16:0/9 is trying to release lock (&gpii->ctrl_lock) at:
+[<ffffb99d04e1284c>] gpi_alloc_chan_resources+0x108/0x5bc
+but there are no more locks to release!
+
+other info that might help us debug this:
+6 locks held by kworker/u16:0/9:
+ #0: ffff575740010938 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work+0x220/0x594
+ #1: ffff80000809bdd0 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work+0x220/0x594
+ #2: ffff575740f2a0f8 (&dev->mutex){....}-{3:3}, at: __device_attach+0x38/0x188
+ #3: ffff57574b5570f8 (&dev->mutex){....}-{3:3}, at: __device_attach+0x38/0x188
+ #4: ffffb99d06a2f180 (of_dma_lock){+.+.}-{3:3}, at: of_dma_request_slave_channel+0x138/0x280
+ #5: ffffb99d06a2ee20 (dma_list_mutex){+.+.}-{3:3}, at: dma_get_slave_channel+0x28/0x10c
+
+stack backtrace:
+CPU: 7 PID: 9 Comm: kworker/u16:0 Not tainted 6.3.0-rc5-00253-g99792582ded1-dirty #15
+Hardware name: Google Pixel 3 (DT)
+Workqueue: events_unbound deferred_probe_work_func
+Call trace:
+ dump_backtrace+0xa0/0xfc
+ show_stack+0x18/0x24
+ dump_stack_lvl+0x60/0xac
+ dump_stack+0x18/0x24
+ print_unlock_imbalance_bug+0x130/0x148
+ lock_release+0x270/0x300
+ __mutex_unlock_slowpath+0x48/0x2cc
+ mutex_unlock+0x20/0x2c
+ gpi_alloc_chan_resources+0x108/0x5bc
+ dma_chan_get+0x84/0x188
+ dma_get_slave_channel+0x5c/0x10c
+ gpi_of_dma_xlate+0x110/0x1a0
+ of_dma_request_slave_channel+0x174/0x280
+ dma_request_chan+0x3c/0x2d4
+ geni_i2c_probe+0x544/0x63c
+ platform_probe+0x68/0xc4
+ really_probe+0x148/0x2ac
+ __driver_probe_device+0x78/0xe0
+ driver_probe_device+0x3c/0x160
+ __device_attach_driver+0xb8/0x138
+ bus_for_each_drv+0x84/0xe0
+ __device_attach+0x9c/0x188
+ device_initial_probe+0x14/0x20
+ bus_probe_device+0xac/0xb0
+ device_add+0x60c/0x7d8
+ of_device_add+0x44/0x60
+ of_platform_device_create_pdata+0x90/0x124
+ of_platform_bus_create+0x15c/0x3c8
+ of_platform_populate+0x58/0xf8
+ devm_of_platform_populate+0x58/0xbc
+ geni_se_probe+0xf0/0x164
+ platform_probe+0x68/0xc4
+ really_probe+0x148/0x2ac
+ __driver_probe_device+0x78/0xe0
+ driver_probe_device+0x3c/0x160
+ __device_attach_driver+0xb8/0x138
+ bus_for_each_drv+0x84/0xe0
+ __device_attach+0x9c/0x188
+ device_initial_probe+0x14/0x20
+ bus_probe_device+0xac/0xb0
+ deferred_probe_work_func+0x8c/0xc8
+ process_one_work+0x2bc/0x594
+ worker_thread+0x228/0x438
+ kthread+0x108/0x10c
+ ret_from_fork+0x10/0x20
+
+Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20230409233355.453741-1-dmitry.baryshkov@linaro.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/ti/phy-j721e-wiz.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ drivers/dma/qcom/gpi.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/phy/ti/phy-j721e-wiz.c b/drivers/phy/ti/phy-j721e-wiz.c
-index ddce5ef7711c6..c21b193fb5498 100644
---- a/drivers/phy/ti/phy-j721e-wiz.c
-+++ b/drivers/phy/ti/phy-j721e-wiz.c
-@@ -430,18 +430,17 @@ static int wiz_mode_select(struct wiz *wiz)
- 	int i;
+diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
+index 59a36cbf9b5f7..932628b319c81 100644
+--- a/drivers/dma/qcom/gpi.c
++++ b/drivers/dma/qcom/gpi.c
+@@ -1966,7 +1966,6 @@ static int gpi_ch_init(struct gchan *gchan)
+ error_config_int:
+ 	gpi_free_ring(&gpii->ev_ring, gpii);
+ exit_gpi_init:
+-	mutex_unlock(&gpii->ctrl_lock);
+ 	return ret;
+ }
  
- 	for (i = 0; i < num_lanes; i++) {
--		if (wiz->lane_phy_type[i] == PHY_TYPE_DP)
-+		if (wiz->lane_phy_type[i] == PHY_TYPE_DP) {
- 			mode = LANE_MODE_GEN1;
--		else if (wiz->lane_phy_type[i] == PHY_TYPE_QSGMII)
-+		} else if (wiz->lane_phy_type[i] == PHY_TYPE_QSGMII) {
- 			mode = LANE_MODE_GEN2;
--		else
--			continue;
--
--		if (wiz->lane_phy_type[i] == PHY_TYPE_USXGMII) {
-+		} else if (wiz->lane_phy_type[i] == PHY_TYPE_USXGMII) {
- 			ret = regmap_field_write(wiz->p0_mac_src_sel[i], 0x3);
- 			ret = regmap_field_write(wiz->p0_rxfclk_sel[i], 0x3);
- 			ret = regmap_field_write(wiz->p0_refclk_sel[i], 0x3);
- 			mode = LANE_MODE_GEN1;
-+		} else {
-+			continue;
- 		}
- 
- 		ret = regmap_field_write(wiz->p_standard_mode[i], mode);
 -- 
 2.39.2
 
