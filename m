@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90330171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9858C4339B;
-	Mon,  8 May 2023 11:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84D90171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C92C433D2;
+	Mon,  8 May 2023 11:32:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545534;
-	bh=Dk3JdR2G+491PHOOQvvFUi1KjknDUYJ54gzcEzTSg+Y=;
+	s=korg; t=1683545537;
+	bh=eIk3xdqU0k0QdvUrF+fEPkdyjl1lCi1xcasx3ZARBgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSfBeeb1GOzaQLJ3yYfdB8rvHQJlJTOtYkRiAcRcqumPw95YmVuJ6klbNDDMzR8Lf
-	 QX4U62V/+dyzQXhhknd1ND5opFIn3hZ1esez+czbbFJYxlgy5CGD1w8tQNxiPzf6G3
-	 Pb1EnjTRouXyY2T5RyVs3rMZCG2wgoS6Pl2hf4EU=
+	b=m+7TLAJlUXUNI0COfvqN8tefnxshHsELhP1FY2rN5Vsx6XYGL/hUPlwrKXxM6NA9t
+	 U4FO/91t7Dpu5cZy4Cg+H6KpgHMm/KK44Jmm658Z8F4QJ4sXHm3MaHqSL6bgP94+SI
+	 HA2InCVRYd+F+C3VKFCGfWhb8M0x/qLhmPQPdvuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 072/371] tpm, tpm_tis: Claim locality when interrupts are reenabled on resume
-Date: Mon,  8 May 2023 11:44:33 +0200
-Message-Id: <20230508094814.981313730@linuxfoundation.org>
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+aafb3f37cfeb6534c4ac@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 073/371] erofs: stop parsing non-compact HEAD index if clusterofs is invalid
+Date: Mon,  8 May 2023 11:44:34 +0200
+Message-Id: <20230508094815.014058453@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,66 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit 955df4f87760b3bb2af253d3fbb12fb712b3ffa6 ]
+[ Upstream commit cc4efd3dd2ac9f89143e5d881609747ecff04164 ]
 
-In tpm_tis_resume() make sure that the locality has been claimed when
-tpm_tis_reenable_interrupts() is called. Otherwise the writings to the
-register might not have any effect.
+Syzbot generated a crafted image [1] with a non-compact HEAD index of
+clusterofs 33024 while valid numbers should be 0 ~ lclustersize-1,
+which causes the following unexpected behavior as below:
 
-Fixes: 45baa1d1fa39 ("tpm_tis: Re-enable interrupts upon (S3) resume")
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+ BUG: unable to handle page fault for address: fffff52101a3fff9
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 23ffed067 P4D 23ffed067 PUD 0
+ Oops: 0000 [#1] PREEMPT SMP KASAN
+ CPU: 1 PID: 4398 Comm: kworker/u5:1 Not tainted 6.3.0-rc6-syzkaller-g09a9639e56c0 #0
+ Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+ Workqueue: erofs_worker z_erofs_decompressqueue_work
+ RIP: 0010:z_erofs_decompress_queue+0xb7e/0x2b40
+ ...
+ Call Trace:
+  <TASK>
+  z_erofs_decompressqueue_work+0x99/0xe0
+  process_one_work+0x8f6/0x1170
+  worker_thread+0xa63/0x1210
+  kthread+0x270/0x300
+  ret_from_fork+0x1f/0x30
+
+Note that normal images or images using compact indexes are not
+impacted.  Let's fix this now.
+
+[1] https://lore.kernel.org/r/000000000000ec75b005ee97fbaa@google.com
+
+Reported-and-tested-by: syzbot+aafb3f37cfeb6534c4ac@syzkaller.appspotmail.com
+Fixes: 02827e1796b3 ("staging: erofs: add erofs_map_blocks_iter")
+Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20230410173714.104604-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ fs/erofs/zmap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 3ea0fff30273e..d65fff4e2ebe9 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -1173,28 +1173,27 @@ int tpm_tis_resume(struct device *dev)
- 	struct tpm_chip *chip = dev_get_drvdata(dev);
- 	int ret;
- 
-+	ret = tpm_tis_request_locality(chip, 0);
-+	if (ret < 0)
-+		return ret;
-+
- 	if (chip->flags & TPM_CHIP_FLAG_IRQ)
- 		tpm_tis_reenable_interrupts(chip);
- 
- 	ret = tpm_pm_resume(dev);
- 	if (ret)
--		return ret;
-+		goto out;
- 
- 	/*
- 	 * TPM 1.2 requires self-test on resume. This function actually returns
- 	 * an error code but for unknown reason it isn't handled.
- 	 */
--	if (!(chip->flags & TPM_CHIP_FLAG_TPM2)) {
--		ret = tpm_tis_request_locality(chip, 0);
--		if (ret < 0)
--			return ret;
--
-+	if (!(chip->flags & TPM_CHIP_FLAG_TPM2))
- 		tpm1_do_selftest(chip);
-+out:
-+	tpm_tis_relinquish_locality(chip, 0);
- 
--		tpm_tis_relinquish_locality(chip, 0);
--	}
--
--	return 0;
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(tpm_tis_resume);
- #endif
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index 73b86b5c1a75b..2c8575a8f6dae 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -191,6 +191,10 @@ static int legacy_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+ 	case Z_EROFS_VLE_CLUSTER_TYPE_PLAIN:
+ 	case Z_EROFS_VLE_CLUSTER_TYPE_HEAD:
+ 		m->clusterofs = le16_to_cpu(di->di_clusterofs);
++		if (m->clusterofs >= 1 << vi->z_logical_clusterbits) {
++			DBG_BUGON(1);
++			return -EFSCORRUPTED;
++		}
+ 		m->pblk = le32_to_cpu(di->di_u.blkaddr);
+ 		break;
+ 	default:
 -- 
 2.39.2
 
