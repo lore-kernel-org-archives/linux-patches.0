@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 897B4168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B8C8C433EF;
-	Mon,  8 May 2023 10:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EE1C168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B9FC433D2;
+	Mon,  8 May 2023 10:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540713;
-	bh=nMIuX5qXAZvnjgpRFaxRWDzDh8dI/nReh4lkHazb79k=;
+	s=korg; t=1683540716;
+	bh=KAjYB6ti13f9wuDbnoHFG3N9xOQDs7WBjB0qrkRKfxw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqVqNGuyE0u3fyWFio7DH/gVvkrWASNSx9I5RygN0HDc9mM78FWsSjTA7S25p7fvj
-	 IWhqTrR+iqyF30gl7NoSI5vtc3q08bRNUfbqAy4K8v6ZYUAJ+/odM93X1hZryGBXbs
-	 AzJcghu4FOiTCwG/YroWiYzLi2S8oI8KIIFuQNMY=
+	b=L3qkbe8z/9zf+1sLiicmm/AjSI9Bg83VGd6QWDmDBa8sAwup5duAZUaH8P+xMOw0O
+	 o5iTHyDRiiKWbQCMVLxZum6PA/eCf8VH6xnOVtb9psBvF41CC5FSh6AAytbTiLN6gf
+	 Ts8UZnEKUk/PHQB7+Jyj/ei9Y+2TBOKcAeiPINxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Schspa Shi <schspa@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Doug Cook <dcook@linux.microsoft.com>,
+	Beau Belgrave <beaub@linux.microsoft.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Dwaine Gonyier <dgonyier@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 469/611] sched/rt: Fix bad task migration for rt tasks
-Date: Mon,  8 May 2023 11:45:11 +0200
-Message-Id: <20230508094437.363428452@linuxfoundation.org>
+Subject: [PATCH 6.1 470/611] tracing/user_events: Ensure write index cannot be negative
+Date: Mon,  8 May 2023 11:45:12 +0200
+Message-Id: <20230508094437.392528898@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -39,83 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Schspa Shi <schspa@gmail.com>
+From: Beau Belgrave <beaub@linux.microsoft.com>
 
-[ Upstream commit feffe5bb274dd3442080ef0e4053746091878799 ]
+[ Upstream commit cd98c93286a30cc4588dfd02453bec63c2f4acf4 ]
 
-Commit 95158a89dd50 ("sched,rt: Use the full cpumask for balancing")
-allows find_lock_lowest_rq() to pick a task with migration disabled.
-The purpose of the commit is to push the current running task on the
-CPU that has the migrate_disable() task away.
+The write index indicates which event the data is for and accesses a
+per-file array. The index is passed by user processes during write()
+calls as the first 4 bytes. Ensure that it cannot be negative by
+returning -EINVAL to prevent out of bounds accesses.
 
-However, there is a race which allows a migrate_disable() task to be
-migrated. Consider:
+Update ftrace self-test to ensure this occurs properly.
 
-  CPU0                                    CPU1
-  push_rt_task
-    check is_migration_disabled(next_task)
+Link: https://lkml.kernel.org/r/20230425225107.8525-2-beaub@linux.microsoft.com
 
-                                          task not running and
-                                          migration_disabled == 0
-
-    find_lock_lowest_rq(next_task, rq);
-      _double_lock_balance(this_rq, busiest);
-        raw_spin_rq_unlock(this_rq);
-        double_rq_lock(this_rq, busiest);
-          <<wait for busiest rq>>
-                                              <wakeup>
-                                          task become running
-                                          migrate_disable();
-                                            <context out>
-    deactivate_task(rq, next_task, 0);
-    set_task_cpu(next_task, lowest_rq->cpu);
-      WARN_ON_ONCE(is_migration_disabled(p));
-
-Fixes: 95158a89dd50 ("sched,rt: Use the full cpumask for balancing")
-Signed-off-by: Schspa Shi <schspa@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Tested-by: Dwaine Gonyier <dgonyier@redhat.com>
+Fixes: 7f5a08c79df3 ("user_events: Add minimal support for trace_event into ftrace")
+Reported-by: Doug Cook <dcook@linux.microsoft.com>
+Signed-off-by: Beau Belgrave <beaub@linux.microsoft.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 1 +
- kernel/sched/rt.c       | 4 ++++
- 2 files changed, 5 insertions(+)
+ kernel/trace/trace_events_user.c                  | 3 +++
+ tools/testing/selftests/user_events/ftrace_test.c | 5 +++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 9ae8f41e3372f..f7d381b6c3133 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2246,6 +2246,7 @@ static struct rq *find_lock_later_rq(struct task_struct *task, struct rq *rq)
- 				     !cpumask_test_cpu(later_rq->cpu, &task->cpus_mask) ||
- 				     task_on_cpu(rq, task) ||
- 				     !dl_task(task) ||
-+				     is_migration_disabled(task) ||
- 				     !task_on_rq_queued(task))) {
- 				double_unlock_balance(rq, later_rq);
- 				later_rq = NULL;
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 0a11f44adee57..4f5796dd26a56 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2000,11 +2000,15 @@ static struct rq *find_lock_lowest_rq(struct task_struct *task, struct rq *rq)
- 			 * the mean time, task could have
- 			 * migrated already or had its affinity changed.
- 			 * Also make sure that it wasn't scheduled on its rq.
-+			 * It is possible the task was scheduled, set
-+			 * "migrate_disabled" and then got preempted, so we must
-+			 * check the task migration disable flag here too.
- 			 */
- 			if (unlikely(task_rq(task) != rq ||
- 				     !cpumask_test_cpu(lowest_rq->cpu, &task->cpus_mask) ||
- 				     task_on_cpu(rq, task) ||
- 				     !rt_task(task) ||
-+				     is_migration_disabled(task) ||
- 				     !task_on_rq_queued(task))) {
+diff --git a/kernel/trace/trace_events_user.c b/kernel/trace/trace_events_user.c
+index 908e8a13c675b..625cab4b9d945 100644
+--- a/kernel/trace/trace_events_user.c
++++ b/kernel/trace/trace_events_user.c
+@@ -1398,6 +1398,9 @@ static ssize_t user_events_write_core(struct file *file, struct iov_iter *i)
+ 	if (unlikely(copy_from_iter(&idx, sizeof(idx), i) != sizeof(idx)))
+ 		return -EFAULT;
  
- 				double_unlock_balance(rq, lowest_rq);
++	if (idx < 0)
++		return -EINVAL;
++
+ 	rcu_read_lock_sched();
+ 
+ 	refs = rcu_dereference_sched(info->refs);
+diff --git a/tools/testing/selftests/user_events/ftrace_test.c b/tools/testing/selftests/user_events/ftrace_test.c
+index 404a2713dcae8..1bc26e6476fc3 100644
+--- a/tools/testing/selftests/user_events/ftrace_test.c
++++ b/tools/testing/selftests/user_events/ftrace_test.c
+@@ -294,6 +294,11 @@ TEST_F(user, write_events) {
+ 	ASSERT_NE(-1, writev(self->data_fd, (const struct iovec *)io, 3));
+ 	after = trace_bytes();
+ 	ASSERT_GT(after, before);
++
++	/* Negative index should fail with EINVAL */
++	reg.write_index = -1;
++	ASSERT_EQ(-1, writev(self->data_fd, (const struct iovec *)io, 3));
++	ASSERT_EQ(EINVAL, errno);
+ }
+ 
+ TEST_F(user, write_fault) {
 -- 
 2.39.2
 
