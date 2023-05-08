@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DD411C8F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E18BC433EF;
-	Mon,  8 May 2023 11:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E29311C8F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C76C433D2;
+	Mon,  8 May 2023 11:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543704;
-	bh=U7PV5EGW4rviqv8Z1kn7D7pdjOTUohDcLe8g0Z1eVFM=;
+	s=korg; t=1683543708;
+	bh=LVOjEFI63TDCa+H6RehajV3mSb3+qUqefeYeby0skB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YSK+xq3pcCUn0A8KBZI52gyclgqBSck/4NEWyAnOn8Ea/QC6EFcp/hbpNPitnAeTT
-	 b3cKZwEDhP2hLKdc2JG3AhUzwet02IUp+fD7es+gVj0uGeUFH9SrpRRB50ouZgx0fu
-	 Ip1TXUbMpOO87AokjW6Z0RnN/Lp0hEW6PTOsnRhw=
+	b=nO6N89AUusIGkWTZ8AkD7pbDT7wySW88wsocqbch0/qx9A1oal787KAkX0o3+mqAI
+	 2yPZK3YYraaqH6Vedsi4wyCt7yWFk/9Fj9LLrEcHDXJxPAp/ohur2QEyeLccT2HL1L
+	 LM3ObQnzXTAypeNlKKRGqMWyOodFhIbG+Cbf5yD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhavya Kapoor <b-kapoor@ti.com>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
 	Nishanth Menon <nm@ti.com>,
-	Diwakar Dhyani <d-dhyani@ti.com>,
-	Nitin Yadav <n-yadav@ti.com>,
+	Kamlesh Gurudasani <kamlesh@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 173/694] arm64: dts: ti: k3-j721e-main: Remove ti,strobe-sel property
-Date: Mon,  8 May 2023 11:40:08 +0200
-Message-Id: <20230508094438.022901956@linuxfoundation.org>
+Subject: [PATCH 6.3 174/694] arm64: dts: ti: k3-j784s4-*: Add ti,sci-dev-id for NAVSS nodes
+Date: Mon,  8 May 2023 11:40:09 +0200
+Message-Id: <20230508094438.052511308@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,41 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bhavya Kapoor <b-kapoor@ti.com>
+From: Jayesh Choudhary <j-choudhary@ti.com>
 
-[ Upstream commit 4f4b30a777d3e61603119297965343a37be36435 ]
+[ Upstream commit 436b288687176bf4d2c1cd25b86173e5a1649a60 ]
 
-According to latest errata of J721e [1], (i2024) 'MMCSD: Peripherals
-Do Not Support HS400' which applies to MMCSD0 subsystem. Speed modes
-supported has been already updated but missed dropping 'ti,strobe-sel'
-property which is only required by HS400 speed mode.
+TISCI device ID for main_navss and mcu_navss nodes are missing in
+the device tree. Add them.
 
-Thus, drop 'ti,strobe-sel' property from kernel dtsi for J721e SoC.
-
-[1] https://www.ti.com/lit/er/sprz455/sprz455.pdf
-
-Fixes: eb8f6194e807 ("arm64: dts: ti: k3-j721e-main: Update the speed modes supported and their itap delay values for MMCSD subsystems")
-Signed-off-by: Bhavya Kapoor <b-kapoor@ti.com>
+Fixes: 4664ebd8346a ("arm64: dts: ti: Add initial support for J784S4 SoC")
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
 Signed-off-by: Nishanth Menon <nm@ti.com>
-Reviewed-by: Diwakar Dhyani <d-dhyani@ti.com>
-Reviewed-by: Nitin Yadav <n-yadav@ti.com>
-Link: https://lore.kernel.org/r/20230203073724.29529-1-b-kapoor@ti.com
+Reviewed-by: Kamlesh Gurudasani <kamlesh@ti.com>
+Link: https://lore.kernel.org/r/20230314152611.140969-2-j-choudhary@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-j721e-main.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi       | 1 +
+ arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-index c935622f01028..bfa296dce3a31 100644
---- a/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-j721e-main.dtsi
-@@ -1180,7 +1180,6 @@
- 		ti,itap-del-sel-mmc-hs = <0xa>;
- 		ti,itap-del-sel-ddr52 = <0x3>;
- 		ti,trm-icp = <0x8>;
--		ti,strobe-sel = <0x77>;
+diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi
+index 7edf324ac159b..80a1b08c51a84 100644
+--- a/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j784s4-main.dtsi
+@@ -398,6 +398,7 @@
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+ 		ranges = <0x00 0x30000000 0x00 0x30000000 0x00 0x0c400000>;
++		ti,sci-dev-id = <280>;
  		dma-coherent;
- 	};
+ 		dma-ranges;
+ 
+diff --git a/arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi b/arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi
+index 93952af618f65..64bd3dee14aa6 100644
+--- a/arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-j784s4-mcu-wakeup.dtsi
+@@ -209,6 +209,7 @@
+ 		#address-cells = <2>;
+ 		#size-cells = <2>;
+ 		ranges = <0x00 0x28380000 0x00 0x28380000 0x00 0x03880000>;
++		ti,sci-dev-id = <323>;
+ 		dma-coherent;
+ 		dma-ranges;
  
 -- 
 2.39.2
