@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72AED125DF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:31:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D20F4C433D2;
-	Mon,  8 May 2023 10:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6192F13AF4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5640C433EF;
+	Mon,  8 May 2023 10:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541917;
-	bh=18QJBnk7y/+3WJD9t6hXAxdmImRwjGoYco0gU2ChhCc=;
+	s=korg; t=1683541920;
+	bh=rGopVJF+qyYKCeISEGi6nsfVzBy87J8aQ8JNWamY3jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wc2Eh53t5IYrc+4ThOQIM+vS+jZzOYyZEatZM0i82se1BJG6pTQBmwoQQaJY8lOKY
-	 D5sE7sGoT9eGR7RcZAxy8C9s6PVV+nnAhN1p8KZj1IzKGNSb3QnsSSwux3agt8DyQV
-	 Qp5AFaoZoKpSoQUUk3YVumtAje9HO233cUfAABBw=
+	b=sLeWBn51Pyd15/9T5vSjbMgORuqvKNrQ/k22bTrLAp0ILUM4ILR4cgAwZKIk1BtxM
+	 goaogLRSUcYSUWXIBLZpGUNcGIxgffcrBb3diBexYoP9XLZxUm46PreAr+EiD+Qsnb
+	 2rKdIpuPiAmyMfUqxVglXFf8SQwWN5vDV3dE5vfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Li <liwei391@huawei.com>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
+	Jing Zhang <renyu.zj@linux.alibaba.com>,
+	Robin Murphy <robin.murphy@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 268/663] arm64: kgdb: Set PSTATE.SS to 1 to re-enable single-step
-Date: Mon,  8 May 2023 11:41:34 +0200
-Message-Id: <20230508094436.941757870@linuxfoundation.org>
+Subject: [PATCH 6.2 269/663] perf/arm-cmn: Fix port detection for CMN-700
+Date: Mon,  8 May 2023 11:41:35 +0200
+Message-Id: <20230508094436.975743411@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,126 +36,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sumit Garg <sumit.garg@linaro.org>
+From: Robin Murphy <robin.murphy@arm.com>
 
-[ Upstream commit af6c0bd59f4f3ad5daad2f7b777954b1954551d5 ]
+[ Upstream commit 2ad91e44e6b0c7ef1ed151b3bb2242a2144e6085 ]
 
-Currently only the first attempt to single-step has any effect. After
-that all further stepping remains "stuck" at the same program counter
-value.
+When the "extra device ports" configuration was first added, the
+additional mxp_device_port_connect_info registers were added around the
+existing mxp_mesh_port_connect_info registers. What I missed about
+CMN-700 is that it shuffled them around to remove this discontinuity.
+As such, tweak the definitions and factor out a helper for reading these
+registers so we can deal with this discrepancy easily, which does at
+least allow nicely tidying up the callsites. With this we can then also
+do the nice thing and skip accesses completely rather than relying on
+RES0 behaviour where we know the extra registers aren't defined.
 
-Refer to the ARM Architecture Reference Manual (ARM DDI 0487E.a) D2.12,
-PSTATE.SS=1 should be set at each step before transferring the PE to the
-'Active-not-pending' state. The problem here is PSTATE.SS=1 is not set
-since the second single-step.
-
-After the first single-step, the PE transferes to the 'Inactive' state,
-with PSTATE.SS=0 and MDSCR.SS=1, thus PSTATE.SS won't be set to 1 due to
-kernel_active_single_step()=true. Then the PE transferes to the
-'Active-pending' state when ERET and returns to the debugger by step
-exception.
-
-Before this patch:
-==================
-Entering kdb (current=0xffff3376039f0000, pid 1) on processor 0 due to Keyboard Entry
-[0]kdb>
-
-[0]kdb>
-[0]kdb> bp write_sysrq_trigger
-Instruction(i) BP #0 at 0xffffa45c13d09290 (write_sysrq_trigger)
-    is enabled   addr at ffffa45c13d09290, hardtype=0 installed=0
-
-[0]kdb> go
-$ echo h > /proc/sysrq-trigger
-
-Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to Breakpoint @ 0xffffad651a309290
-[1]kdb> ss
-
-Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to SS trap @ 0xffffad651a309294
-[1]kdb> ss
-
-Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to SS trap @ 0xffffad651a309294
-[1]kdb>
-
-After this patch:
-=================
-Entering kdb (current=0xffff6851c39f0000, pid 1) on processor 0 due to Keyboard Entry
-[0]kdb> bp write_sysrq_trigger
-Instruction(i) BP #0 at 0xffffc02d2dd09290 (write_sysrq_trigger)
-    is enabled   addr at ffffc02d2dd09290, hardtype=0 installed=0
-
-[0]kdb> go
-$ echo h > /proc/sysrq-trigger
-
-Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to Breakpoint @ 0xffffc02d2dd09290
-[1]kdb> ss
-
-Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd09294
-[1]kdb> ss
-
-Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd09298
-[1]kdb> ss
-
-Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd0929c
-[1]kdb>
-
-Fixes: 44679a4f142b ("arm64: KGDB: Add step debugging support")
-Co-developed-by: Wei Li <liwei391@huawei.com>
-Signed-off-by: Wei Li <liwei391@huawei.com>
-Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
-Tested-by: Daniel Thompson <daniel.thompson@linaro.org>
-Link: https://lore.kernel.org/r/20230202073148.657746-3-sumit.garg@linaro.org
+Fixes: 23760a014417 ("perf/arm-cmn: Add CMN-700 support")
+Reported-by: Jing Zhang <renyu.zj@linux.alibaba.com>
+Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/71d129241d4d7923cde72a0e5b4c8d2f6084525f.1681295193.git.robin.murphy@arm.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/debug-monitors.h | 1 +
- arch/arm64/kernel/debug-monitors.c      | 5 +++++
- arch/arm64/kernel/kgdb.c                | 2 ++
- 3 files changed, 8 insertions(+)
+ drivers/perf/arm-cmn.c | 57 ++++++++++++++++++++++--------------------
+ 1 file changed, 30 insertions(+), 27 deletions(-)
 
-diff --git a/arch/arm64/include/asm/debug-monitors.h b/arch/arm64/include/asm/debug-monitors.h
-index 7b7e05c02691c..13d437bcbf58c 100644
---- a/arch/arm64/include/asm/debug-monitors.h
-+++ b/arch/arm64/include/asm/debug-monitors.h
-@@ -104,6 +104,7 @@ void user_regs_reset_single_step(struct user_pt_regs *regs,
- void kernel_enable_single_step(struct pt_regs *regs);
- void kernel_disable_single_step(void);
- int kernel_active_single_step(void);
-+void kernel_rewind_single_step(struct pt_regs *regs);
+diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+index bc4b1d1ba8fa2..ff86075edca48 100644
+--- a/drivers/perf/arm-cmn.c
++++ b/drivers/perf/arm-cmn.c
+@@ -57,14 +57,12 @@
+ #define CMN_INFO_REQ_VC_NUM		GENMASK_ULL(1, 0)
  
- #ifdef CONFIG_HAVE_HW_BREAKPOINT
- int reinstall_suspended_bps(struct pt_regs *regs);
-diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
-index 3da09778267ec..64f2ecbdfe5c2 100644
---- a/arch/arm64/kernel/debug-monitors.c
-+++ b/arch/arm64/kernel/debug-monitors.c
-@@ -438,6 +438,11 @@ int kernel_active_single_step(void)
+ /* XPs also have some local topology info which has uses too */
+-#define CMN_MXP__CONNECT_INFO_P0	0x0008
+-#define CMN_MXP__CONNECT_INFO_P1	0x0010
+-#define CMN_MXP__CONNECT_INFO_P2	0x0028
+-#define CMN_MXP__CONNECT_INFO_P3	0x0030
+-#define CMN_MXP__CONNECT_INFO_P4	0x0038
+-#define CMN_MXP__CONNECT_INFO_P5	0x0040
++#define CMN_MXP__CONNECT_INFO(p)	(0x0008 + 8 * (p))
+ #define CMN__CONNECT_INFO_DEVICE_TYPE	GENMASK_ULL(4, 0)
+ 
++#define CMN_MAX_PORTS			6
++#define CI700_CONNECT_INFO_P2_5_OFFSET	0x10
++
+ /* PMU registers occupy the 3rd 4KB page of each node's region */
+ #define CMN_PMU_OFFSET			0x2000
+ 
+@@ -396,6 +394,25 @@ static struct arm_cmn_node *arm_cmn_node(const struct arm_cmn *cmn,
+ 	return NULL;
  }
- NOKPROBE_SYMBOL(kernel_active_single_step);
  
-+void kernel_rewind_single_step(struct pt_regs *regs)
++static u32 arm_cmn_device_connect_info(const struct arm_cmn *cmn,
++				       const struct arm_cmn_node *xp, int port)
 +{
-+	set_regs_spsr_ss(regs);
++	int offset = CMN_MXP__CONNECT_INFO(port);
++
++	if (port >= 2) {
++		if (cmn->model & (CMN600 | CMN650))
++			return 0;
++		/*
++		 * CI-700 may have extra ports, but still has the
++		 * mesh_port_connect_info registers in the way.
++		 */
++		if (cmn->model == CI700)
++			offset += CI700_CONNECT_INFO_P2_5_OFFSET;
++	}
++
++	return readl_relaxed(xp->pmu_base - CMN_PMU_OFFSET + offset);
 +}
 +
- /* ptrace API */
- void user_enable_single_step(struct task_struct *task)
- {
-diff --git a/arch/arm64/kernel/kgdb.c b/arch/arm64/kernel/kgdb.c
-index cda9c1e9864f7..4e1f983df3d1c 100644
---- a/arch/arm64/kernel/kgdb.c
-+++ b/arch/arm64/kernel/kgdb.c
-@@ -224,6 +224,8 @@ int kgdb_arch_handle_exception(int exception_vector, int signo,
+ static struct dentry *arm_cmn_debugfs;
+ 
+ #ifdef CONFIG_DEBUG_FS
+@@ -469,7 +486,7 @@ static int arm_cmn_map_show(struct seq_file *s, void *data)
+ 	y = cmn->mesh_y;
+ 	while (y--) {
+ 		int xp_base = cmn->mesh_x * y;
+-		u8 port[6][CMN_MAX_DIMENSION];
++		u8 port[CMN_MAX_PORTS][CMN_MAX_DIMENSION];
+ 
+ 		for (x = 0; x < cmn->mesh_x; x++)
+ 			seq_puts(s, "--------+");
+@@ -477,14 +494,9 @@ static int arm_cmn_map_show(struct seq_file *s, void *data)
+ 		seq_printf(s, "\n%d    |", y);
+ 		for (x = 0; x < cmn->mesh_x; x++) {
+ 			struct arm_cmn_node *xp = cmn->xps + xp_base + x;
+-			void __iomem *base = xp->pmu_base - CMN_PMU_OFFSET;
+-
+-			port[0][x] = readl_relaxed(base + CMN_MXP__CONNECT_INFO_P0);
+-			port[1][x] = readl_relaxed(base + CMN_MXP__CONNECT_INFO_P1);
+-			port[2][x] = readl_relaxed(base + CMN_MXP__CONNECT_INFO_P2);
+-			port[3][x] = readl_relaxed(base + CMN_MXP__CONNECT_INFO_P3);
+-			port[4][x] = readl_relaxed(base + CMN_MXP__CONNECT_INFO_P4);
+-			port[5][x] = readl_relaxed(base + CMN_MXP__CONNECT_INFO_P5);
++
++			for (p = 0; p < CMN_MAX_PORTS; p++)
++				port[p][x] = arm_cmn_device_connect_info(cmn, xp, p);
+ 			seq_printf(s, " XP #%-2d |", xp_base + x);
+ 		}
+ 
+@@ -2082,18 +2094,9 @@ static int arm_cmn_discover(struct arm_cmn *cmn, unsigned int rgn_offset)
+ 		 * from this, since in that case we will see at least one XP
+ 		 * with port 2 connected, for the HN-D.
  		 */
- 		if (!kernel_active_single_step())
- 			kernel_enable_single_step(linux_regs);
-+		else
-+			kernel_rewind_single_step(linux_regs);
- 		err = 0;
- 		break;
- 	default:
+-		if (readq_relaxed(xp_region + CMN_MXP__CONNECT_INFO_P0))
+-			xp_ports |= BIT(0);
+-		if (readq_relaxed(xp_region + CMN_MXP__CONNECT_INFO_P1))
+-			xp_ports |= BIT(1);
+-		if (readq_relaxed(xp_region + CMN_MXP__CONNECT_INFO_P2))
+-			xp_ports |= BIT(2);
+-		if (readq_relaxed(xp_region + CMN_MXP__CONNECT_INFO_P3))
+-			xp_ports |= BIT(3);
+-		if (readq_relaxed(xp_region + CMN_MXP__CONNECT_INFO_P4))
+-			xp_ports |= BIT(4);
+-		if (readq_relaxed(xp_region + CMN_MXP__CONNECT_INFO_P5))
+-			xp_ports |= BIT(5);
++		for (int p = 0; p < CMN_MAX_PORTS; p++)
++			if (arm_cmn_device_connect_info(cmn, xp, p))
++				xp_ports |= BIT(p);
+ 
+ 		if (cmn->multi_dtm && (xp_ports & 0xc))
+ 			arm_cmn_init_dtm(dtm++, xp, 1);
 -- 
 2.39.2
 
