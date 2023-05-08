@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF95168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:55:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512A0C433EF;
-	Mon,  8 May 2023 09:55:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57377168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:55:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 944ACC433D2;
+	Mon,  8 May 2023 09:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539741;
-	bh=RT7JMNLVIVZFoyk9MkqvppZ5D3T+QHCHLlgkN2MaAuQ=;
+	s=korg; t=1683539745;
+	bh=UWL5keJvLh0Uk3EE3JzaaH1CmLH6lJ6rR9IJcJQW9Co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e519y8eObazYYWe6h6dTmXihkYynp46QKZ34ZclM6/LbkcHc56lsdBeHt20mCKjKB
-	 bLkotVdVgKZtOn9aERPRhCbLlRzTutGsIZyXMZeastksW2u7l/+ULPHSSOI8R/jiaP
-	 tiQs/3KK3UOW0qAAqY0Wdmggw3F56UAt1X+Yu9/A=
+	b=v9gFNxyCn1ZGkpIJhS5sIDzYrFNbGLVMPSRwfJnkAx15+bqyxJtkqe8QFXkOsdWJz
+	 xih5BaEtXahuKZLJ0FP11w9FbFDCc6KRGpalPg2Np3vDmTCGyruIuFz78siCRY1kD4
+	 X0f3RKj81Jo5JqU79ersiTJ9fN/wWueQFpHau9RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 6.1 105/611] ubifs: Fix memory leak in do_rename
-Date: Mon,  8 May 2023 11:39:07 +0200
-Message-Id: <20230508094425.660421548@linuxfoundation.org>
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 123/611] tpm, tpm_tis: Claim locality before writing TPM_INT_ENABLE register
+Date: Mon,  8 May 2023 11:39:25 +0200
+Message-Id: <20230508094426.267302907@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,72 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mårten Lindahl <marten.lindahl@axis.com>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-commit 3a36d20e012903f45714df2731261fdefac900cb upstream.
+[ Upstream commit 282657a8bd7fddcf511b834f43705001668b33a7 ]
 
-If renaming a file in an encrypted directory, function
-fscrypt_setup_filename allocates memory for a file name. This name is
-never used, and before returning to the caller the memory for it is not
-freed.
+In disable_interrupts() the TPM_GLOBAL_INT_ENABLE bit is unset in the
+TPM_INT_ENABLE register to shut the interrupts off. However modifying the
+register is only possible with a held locality. So claim the locality
+before disable_interrupts() is called.
 
-When running kmemleak on it we see that it is registered as a leak. The
-report below is triggered by a simple program 'rename' that renames a
-file in an encrypted directory:
-
-  unreferenced object 0xffff888101502840 (size 32):
-    comm "rename", pid 9404, jiffies 4302582475 (age 435.735s)
-    backtrace:
-      __kmem_cache_alloc_node
-      __kmalloc
-      fscrypt_setup_filename
-      do_rename
-      ubifs_rename
-      vfs_rename
-      do_renameat2
-
-To fix this we can remove the call to fscrypt_setup_filename as it's not
-needed.
-
-Fixes: 278d9a243635f26 ("ubifs: Rename whiteout atomically")
-Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Richard Weinberger <richard@nod.at>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Michael Niewöhner <linux@mniewoehner.de>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Stable-dep-of: 955df4f87760 ("tpm, tpm_tis: Claim locality when interrupts are reenabled on resume")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/dir.c |    6 ------
- 1 file changed, 6 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ubifs/dir.c
-+++ b/fs/ubifs/dir.c
-@@ -358,7 +358,6 @@ static struct inode *create_whiteout(str
- 	umode_t mode = S_IFCHR | WHITEOUT_MODE;
- 	struct inode *inode;
- 	struct ubifs_info *c = dir->i_sb->s_fs_info;
--	struct fscrypt_name nm;
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 33d98f3e0f7a6..a2cbf9b6f4c92 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -1094,7 +1094,11 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 				dev_err(&chip->dev, FW_BUG
+ 					"TPM interrupt not working, polling instead\n");
  
- 	/*
- 	 * Create an inode('nlink = 1') for whiteout without updating journal,
-@@ -369,10 +368,6 @@ static struct inode *create_whiteout(str
- 	dbg_gen("dent '%pd', mode %#hx in dir ino %lu",
- 		dentry, mode, dir->i_ino);
- 
--	err = fscrypt_setup_filename(dir, &dentry->d_name, 0, &nm);
--	if (err)
--		return ERR_PTR(err);
--
- 	inode = ubifs_new_inode(c, dir, mode, false);
- 	if (IS_ERR(inode)) {
- 		err = PTR_ERR(inode);
-@@ -395,7 +390,6 @@ out_inode:
- 	make_bad_inode(inode);
- 	iput(inode);
- out_free:
--	fscrypt_free_filename(&nm);
- 	ubifs_err(c, "cannot create whiteout file, error %d", err);
- 	return ERR_PTR(err);
- }
++				rc = request_locality(chip, 0);
++				if (rc < 0)
++					goto out_err;
+ 				disable_interrupts(chip);
++				release_locality(chip, 0);
+ 			}
+ 		} else {
+ 			tpm_tis_probe_irq(chip, intmask);
+-- 
+2.39.2
+
 
 
