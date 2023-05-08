@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DA6168A7;
-	Mon,  8 May 2023 10:40:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4979C4339B;
-	Mon,  8 May 2023 10:40:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7974C168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:40:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6906C433EF;
+	Mon,  8 May 2023 10:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542421;
-	bh=9dP2pkoC/WQM0vP0ptL6LnIEekN5wSGvTMthfXdWkt4=;
+	s=korg; t=1683542424;
+	bh=HZbOggi+UOx+XC9gbCjnC4ZeG3/wFDzNw3GlUReWJ9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XJCKGQb/6L0Q0OfnaWieEC90Dns3rZFs/ov3AJd+Ga2Z5LRg/vQ6QXl1pk9TsXv/w
-	 3HfzIIqXSa6kOGE+hynHCsb3JiUX3/n9EKRNLlhwPuvelDoh+mR7mnqNoTLjiNCjM/
-	 jPgp2vRMMoCiKQRyGtG9ieCa45VNtDGvnN8REc2A=
+	b=vw9zrtsSTj64rSwY5y6JJHk2MV+sQXtYsPVug9DqYRJn6WeannT40plgA6VNA2xy2
+	 YcXb3fMIIqyQW9ZXhgvkiyEYqAu1aw56AHwYJxJZoLK03tBXTC3osfuZVhDYxstise
+	 OwOB5yJ5U7c7muN5B4365+PwUGhT9VnidtGSiMFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
+	Liu Jian <liujian56@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 430/663] rxrpc: Fix error when reading rxrpc tokens
-Date: Mon,  8 May 2023 11:44:16 +0200
-Message-Id: <20230508094442.012078721@linuxfoundation.org>
+Subject: [PATCH 6.2 431/663] Revert "Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work"
+Date: Mon,  8 May 2023 11:44:17 +0200
+Message-Id: <20230508094442.042714066@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -41,44 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Dionne <marc.dionne@auristor.com>
+From: Liu Jian <liujian56@huawei.com>
 
-[ Upstream commit fadfc57cc8047080a123b16f288b7138524fb1e2 ]
+[ Upstream commit db2bf510bd5d57f064d9e1db395ed86a08320c54 ]
 
-When converting from ASSERTCMP to WARN_ON, the tested condition must
-be inverted, which was missed for this case.
+This reverts commit 1e9ac114c4428fdb7ff4635b45d4f46017e8916f.
 
-This would cause an EIO error when trying to read an rxrpc token, for
-instance when trying to display tokens with AuriStor's "tokens" command.
+This patch introduces a possible null-ptr-def problem. Revert it. And the
+fixed bug by this patch have resolved by commit 73f7b171b7c0 ("Bluetooth:
+btsdio: fix use after free bug in btsdio_remove due to race condition").
 
-Fixes: 84924aac08a4 ("rxrpc: Fix checker warning")
-Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1e9ac114c442 ("Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work")
+Signed-off-by: Liu Jian <liujian56@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/key.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bluetooth/btsdio.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/rxrpc/key.c b/net/rxrpc/key.c
-index 8d53aded09c42..33e8302a79e33 100644
---- a/net/rxrpc/key.c
-+++ b/net/rxrpc/key.c
-@@ -680,7 +680,7 @@ static long rxrpc_read(const struct key *key,
- 			return -ENOPKG;
- 		}
+diff --git a/drivers/bluetooth/btsdio.c b/drivers/bluetooth/btsdio.c
+index 02893600db390..795be33f2892d 100644
+--- a/drivers/bluetooth/btsdio.c
++++ b/drivers/bluetooth/btsdio.c
+@@ -354,7 +354,6 @@ static void btsdio_remove(struct sdio_func *func)
  
--		if (WARN_ON((unsigned long)xdr - (unsigned long)oldxdr ==
-+		if (WARN_ON((unsigned long)xdr - (unsigned long)oldxdr !=
- 			    toksize))
- 			return -EIO;
- 	}
+ 	BT_DBG("func %p", func);
+ 
+-	cancel_work_sync(&data->work);
+ 	if (!data)
+ 		return;
+ 
 -- 
 2.39.2
 
