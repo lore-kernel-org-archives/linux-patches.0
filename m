@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BA6168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:07:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91F7FC433D2;
-	Mon,  8 May 2023 10:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5F0168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:07:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1B9C433D2;
+	Mon,  8 May 2023 10:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540424;
-	bh=LBqd+C7Zpt3DsMKRx75hNx6Kkn4pYk+ZCGpR24kff2k=;
+	s=korg; t=1683540427;
+	bh=EaOjM2OVktzvVH0MK6i6J317g45mzTNyqpkmldZdpZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9p5LwGLoUs+p6a7Z3m8FLQHe2DqiHR+KlOwKz45NovMkFhECseRMrBuxGyL5MHUn
-	 v5AAtLYioRkKzZC9vW8d7QQCTVixZoAj5FwhIoLpQuwpevTgNVGTX1W1Odvx96fjXS
-	 FR7+3CVymwD0Kj0SJoVIOXVnMn/U1uRWRLqDUNFA=
+	b=PlaEQxqXTs5HTkgl3E3LbvBbETCf5uoqDFWvX3odtis6bcQZ/vmCcBtXpVNOi5TBb
+	 mHOUZou1Mx02EXKpbxxVCqON9XLgI16N3Vf3hRJ7/AQh4jNU7zYNf4bhFxHpMI5SuA
+	 31kDH5K4kXP2WVAQ/JoW/dKUp30jEKVzuDBsMB7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Lorenzo Zolfanelli <lorenzo@zolfa.nl>
-Subject: [PATCH 6.1 360/611] wifi: iwlwifi: make the loop for card preparation effective
-Date: Mon,  8 May 2023 11:43:22 +0200
-Message-Id: <20230508094434.100646929@linuxfoundation.org>
+	Lorenz Brun <lorenz@brun.one>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Felix Fietkau <nbd@nbd.name>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 361/611] wifi: mt76: mt7915: expose device tree match table
+Date: Mon,  8 May 2023 11:43:23 +0200
+Message-Id: <20230508094434.129102190@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,48 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Lorenz Brun <lorenz@brun.one>
 
-[ Upstream commit 28965ec0b5d9112585f725660e2ff13218505ace ]
+[ Upstream commit 90fb69212c60e26ef70ed0e8532b116c7649ac88 ]
 
-Since we didn't reset t to 0, only the first iteration of the loop
-did checked the ready bit several times.
->From the second iteration and on, we just tested the bit once and
-continued to the next iteration.
+On MT7986 the WiFi driver currently does not get automatically loaded,
+requiring manual modprobing because the device tree compatibles are not
+exported into metadata.
 
-Reported-and-tested-by: Lorenzo Zolfanelli <lorenzo@zolfa.nl>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216452
-Fixes: 289e5501c314 ("iwlwifi: fix the preparation of the card")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230416154301.615b683ab9c8.Ic52c3229d3345b0064fa34263293db095d88daf8@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Add the missing MODULE_DEVICE_TABLE macro to fix this.
+
+Fixes: 99ad32a4ca3a2 ("mt76: mt7915: add support for MT7986")
+Signed-off-by: Lorenz Brun <lorenz@brun.one>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/soc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-index 1690d7a4bd9c0..54f11f60f11c4 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-@@ -599,7 +599,6 @@ static int iwl_pcie_set_hw_ready(struct iwl_trans *trans)
- int iwl_pcie_prepare_card_hw(struct iwl_trans *trans)
- {
- 	int ret;
--	int t = 0;
- 	int iter;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/soc.c b/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
+index ee7ddda4288b8..20a6724ab5dba 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/soc.c
+@@ -1228,6 +1228,8 @@ static const struct of_device_id mt7986_wmac_of_match[] = {
+ 	{},
+ };
  
- 	IWL_DEBUG_INFO(trans, "iwl_trans_prepare_card_hw enter\n");
-@@ -616,6 +615,8 @@ int iwl_pcie_prepare_card_hw(struct iwl_trans *trans)
- 	usleep_range(1000, 2000);
- 
- 	for (iter = 0; iter < 10; iter++) {
-+		int t = 0;
++MODULE_DEVICE_TABLE(of, mt7986_wmac_of_match);
 +
- 		/* If HW is not ready, prepare the conditions to check again */
- 		iwl_set_bit(trans, CSR_HW_IF_CONFIG_REG,
- 			    CSR_HW_IF_CONFIG_REG_PREPARE);
+ struct platform_driver mt7986_wmac_driver = {
+ 	.driver = {
+ 		.name = "mt7986-wmac",
 -- 
 2.39.2
 
