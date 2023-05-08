@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830FE168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9781C433D2;
-	Mon,  8 May 2023 11:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F0AF168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBD8C4339E;
+	Mon,  8 May 2023 11:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544316;
-	bh=EntWdMyeiyAyFnSO1MQ5T/oUIXHBTYpC4ZPrGX4U+jQ=;
+	s=korg; t=1683544319;
+	bh=lNjmbCvH+CZQQA67V5iYciN8E/xbTUjyPb77CBJzdZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DjsHdY0V8kilVSwa1BrN2ig6XRZYCbrBSb0xu+FcrwlZwPCRphGkqzKKsZk4CbGik
-	 BaTHHUeNJwCFaA/eE4r040TkWPu8vx3QXxX3MQd5dP9u48HRy3iWZQx7/TjO2zkaLf
-	 Ze8fHLtHTT4jZ3Ld2Wk+cQWzTN2xcVVGulwE7MTU=
+	b=TdPxzE1to2pgdtuRjAnaSp/nP86IED445SVznCeHBaFxV1QVW5L9LH7JS2Eznk8p8
+	 S1REz67z7j7lDi+iCrL09f2h9sDn9lBWMFOgWrU8qRzAiHOXB7QPMoDr9xrjgQHwXA
+	 bIO42nJO7jWgjefv0hq56/Wqnj9SnkA52TWaKg18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bobby Eshleman <bobby.eshleman@bytedance.com>,
-	Arseniy Krasnov <AVKrasnov@sberdevices.ru>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yangtao Li <frank.li@vivo.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 370/694] testing/vsock: add vsock_perf to gitignore
-Date: Mon,  8 May 2023 11:43:25 +0200
-Message-Id: <20230508094444.802336088@linuxfoundation.org>
+Subject: [PATCH 6.3 371/694] f2fs: handle dqget error in f2fs_transfer_project_quota()
+Date: Mon,  8 May 2023 11:43:26 +0200
+Message-Id: <20230508094444.849707340@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,32 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bobby Eshleman <bobby.eshleman@bytedance.com>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 24265c2c91ad6aae9446e18472566cd83e92b602 ]
+[ Upstream commit 8051692f5f23260215bfe9a72e712d93606acc5f ]
 
-This adds the vsock_perf binary to the gitignore file.
+We should set the error code when dqget() failed.
 
-Fixes: 8abbffd27ced ("test/vsock: vsock_perf utility")
-Signed-off-by: Bobby Eshleman <bobby.eshleman@bytedance.com>
-Reviewed-by: Arseniy Krasnov <AVKrasnov@sberdevices.ru>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Link: https://lore.kernel.org/r/20230327-vsock-add-vsock-perf-to-ignore-v1-1-f28a84f3606b@bytedance.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2c1d03056991 ("f2fs: support F2FS_IOC_FS{GET,SET}XATTR")
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/vsock/.gitignore | 1 +
- 1 file changed, 1 insertion(+)
+ fs/f2fs/file.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/vsock/.gitignore b/tools/testing/vsock/.gitignore
-index 87ca2731cff94..a8adcfdc292ba 100644
---- a/tools/testing/vsock/.gitignore
-+++ b/tools/testing/vsock/.gitignore
-@@ -2,3 +2,4 @@
- *.d
- vsock_test
- vsock_diag_test
-+vsock_perf
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 15dabeac46905..4f684b99ba5a3 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -3009,15 +3009,16 @@ int f2fs_transfer_project_quota(struct inode *inode, kprojid_t kprojid)
+ 	struct dquot *transfer_to[MAXQUOTAS] = {};
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	struct super_block *sb = sbi->sb;
+-	int err = 0;
++	int err;
+ 
+ 	transfer_to[PRJQUOTA] = dqget(sb, make_kqid_projid(kprojid));
+-	if (!IS_ERR(transfer_to[PRJQUOTA])) {
+-		err = __dquot_transfer(inode, transfer_to);
+-		if (err)
+-			set_sbi_flag(sbi, SBI_QUOTA_NEED_REPAIR);
+-		dqput(transfer_to[PRJQUOTA]);
+-	}
++	if (IS_ERR(transfer_to[PRJQUOTA]))
++		return PTR_ERR(transfer_to[PRJQUOTA]);
++
++	err = __dquot_transfer(inode, transfer_to);
++	if (err)
++		set_sbi_flag(sbi, SBI_QUOTA_NEED_REPAIR);
++	dqput(transfer_to[PRJQUOTA]);
+ 	return err;
+ }
+ 
 -- 
 2.39.2
 
