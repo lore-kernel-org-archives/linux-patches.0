@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED45B168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54984C433D2;
-	Mon,  8 May 2023 11:26:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3306168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6608DC433D2;
+	Mon,  8 May 2023 11:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545179;
-	bh=ylIFTGy/IhV5JExQEPmoZMDFARD2nejl612OaW74Qpc=;
+	s=korg; t=1683545182;
+	bh=rOH1ss8kEGYw0aRvGuspzfaz6QYauXSlvNI3STWi7A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l21xrrSg6nWAFkqPg3iQuMJIlm4+8y4+oA42gd5sLpEEfYsy5tyTdPvXswIzhANp0
-	 JKhWZDQvS6jk93qIlZdP8TAodZLJ3NJDmx0R42V8UthIFEKk5AVhh7NAonerhyczyA
-	 gXODJAgR8kqX/pdDXIzHp+DDEdhklSlflmxjgzSk=
+	b=S0O1VwPU2GfqLpKcDPZMV4VaryubKye4Bv92WXgPh6twWnQjvGgbQRzh8H+XzZvxZ
+	 KNEuV8LfoEBhsShcZpFNEvRYEDlq7UBEmjMDsgEL7wSMwlRgeQ1pQ7SJRX6IxnAHY5
+	 Ak6t2oXU8DtOwdbgdMaZMu8KOQWumDSLQq22RoFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 643/694] leds: tca6507: Fix error handling of using fwnode_property_read_string
-Date: Mon,  8 May 2023 11:47:58 +0200
-Message-Id: <20230508094456.665701909@linuxfoundation.org>
+Subject: [PATCH 6.3 652/694] dmaengine: at_xdmac: disable/enable clock directly on suspend/resume
+Date: Mon,  8 May 2023 11:48:07 +0200
+Message-Id: <20230508094457.061648530@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,56 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: H. Nikolaus Schaller <hns@goldelico.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit c1087c29e96a48e9080377e168d35dcb52fb068b ]
+[ Upstream commit 2de5ddb5e68c94b781b3789bca1ce52000d7d0e0 ]
 
-Commit 96f524105b9c ("leds: tca6507: use fwnode API instead of OF")
+Runtime PM APIs for at_xdmac just plays with clk_enable()/clk_disable()
+letting aside the clk_prepare()/clk_unprepare() that needs to be
+executed as the clock is also prepared on probe. Thus instead of using
+runtime PM force suspend/resume APIs use
+clk_disable_unprepare() + pm_runtime_put_noidle() on suspend and
+clk_prepare_enable() + pm_runtime_get_noresume() on resume. This
+approach as been chosen instead of using runtime PM force suspend/resume
+with clk_unprepare()/clk_prepare() as it looks simpler and the final
+code is better.
 
-changed to fwnode API but did not take into account that a missing property
-"linux,default-trigger" now seems to return an error and as a side effect
-sets value to -1. This seems to be different from of_get_property() which
-always returned NULL in any case of error.
+While at it added the missing pm_runtime_mark_last_busy() on suspend before
+decrementing the reference counter.
 
-Neglecting this side-effect leads to
-
-[   11.201965] Unable to handle kernel paging request at virtual address ffffffff when read
-
-in the strcmp() of led_trigger_set_default() if there is no led-trigger
-defined in the DTS.
-
-I don't know if this was recently introduced somewhere in the fwnode lib
-or if the effect was missed in initial testing. Anyways it seems to be a
-bug to ignore the error return value of an optional value here in the
-driver.
-
-Fixes: 96f524105b9c ("leds: tca6507: use fwnode API instead of OF")
-Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
-Acked-by: Pavel Machek <pavel@ucw.cz>
-Reviewed-by: Marek Behún <kabel@kernel.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/cbae7617db83113de726fcc423a805ebaa1bfca6.1680433978.git.hns@goldelico.com
+Fixes: 650b0e990cbd ("dmaengine: at_xdmac: add runtime pm support")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230214151827.1050280-2-claudiu.beznea@microchip.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-tca6507.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/dma/at_xdmac.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/leds/leds-tca6507.c b/drivers/leds/leds-tca6507.c
-index 07dd12686a696..634cabd5bb796 100644
---- a/drivers/leds/leds-tca6507.c
-+++ b/drivers/leds/leds-tca6507.c
-@@ -691,8 +691,9 @@ tca6507_led_dt_init(struct device *dev)
- 		if (fwnode_property_read_string(child, "label", &led.name))
- 			led.name = fwnode_get_name(child);
+diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+index 1f0fab180f8f1..f654ecaafb906 100644
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -2130,7 +2130,11 @@ static int __maybe_unused atmel_xdmac_suspend(struct device *dev)
+ 	atxdmac->save_gim = at_xdmac_read(atxdmac, AT_XDMAC_GIM);
  
--		fwnode_property_read_string(child, "linux,default-trigger",
--					    &led.default_trigger);
-+		if (fwnode_property_read_string(child, "linux,default-trigger",
-+						&led.default_trigger))
-+			led.default_trigger = NULL;
+ 	at_xdmac_off(atxdmac);
+-	return pm_runtime_force_suspend(atxdmac->dev);
++	pm_runtime_mark_last_busy(atxdmac->dev);
++	pm_runtime_put_noidle(atxdmac->dev);
++	clk_disable_unprepare(atxdmac->clk);
++
++	return 0;
+ }
  
- 		led.flags = 0;
- 		if (fwnode_device_is_compatible(child, "gpio"))
+ static int __maybe_unused atmel_xdmac_resume(struct device *dev)
+@@ -2142,10 +2146,12 @@ static int __maybe_unused atmel_xdmac_resume(struct device *dev)
+ 	int			i;
+ 	int ret;
+ 
+-	ret = pm_runtime_force_resume(atxdmac->dev);
+-	if (ret < 0)
++	ret = clk_prepare_enable(atxdmac->clk);
++	if (ret)
+ 		return ret;
+ 
++	pm_runtime_get_noresume(atxdmac->dev);
++
+ 	at_xdmac_axi_config(pdev);
+ 
+ 	/* Clear pending interrupts. */
 -- 
 2.39.2
 
