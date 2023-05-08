@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433DE168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:13:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA402C433D2;
-	Mon,  8 May 2023 10:13:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC19F168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:13:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F507C433EF;
+	Mon,  8 May 2023 10:13:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540808;
-	bh=mo+PNlerTb58Xj4ItmhApXTN2NiPbKa7CXMmolXNwAk=;
+	s=korg; t=1683540810;
+	bh=/lAsQmWa93y1/iPWwyBwlZ1Uz4b/QRa/wBsOKLMC9Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+LmZtV7d1qeGbRykEBV/LDZrAO3C+7wzHidCmixv04ZOxSdmM+KMzRf+lsh/OK58
-	 CEBqH1HKMWGn1St7r3Kvb0j5+roIX9QPgCJVi7qgTEIZhKKZN3YvRIycyxB57B9ANg
-	 6bhp+cJcnyXBO42Sw800S35NOw1TYB4Y0K4Dbs70=
+	b=M6F1Aj8hdqAPLhmJAngPzMtmitZXkEmLiS3URgm3oUOlI7edwio3YFH8fe7SWuibr
+	 ixipcEoMlYiPqUmtzx1Wvpt6bpiyFbWdSvDyelIgMNrT0stZMPHZGjSbFkoQ6EEOT1
+	 uWX2RJ6cN6A2HeZ3nyR7fmAQUcA7Um9VXq921FsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Joerg Roedel <joro@8bytes.org>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
+	Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 505/611] iommu/amd: Set page size bitmap during V2 domain allocation
-Date: Mon,  8 May 2023 11:45:47 +0200
-Message-Id: <20230508094438.480506783@linuxfoundation.org>
+Subject: [PATCH 6.1 506/611] clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
+Date: Mon,  8 May 2023 11:45:48 +0200
+Message-Id: <20230508094438.509595629@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -40,82 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerry Snitselaar <jsnitsel@redhat.com>
+From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
 
-[ Upstream commit 8f880d19e6ad645a4b8066d5ff091c980b3231e7 ]
+[ Upstream commit 4fc1c2d9a2b7a394f3b873aae5e03bffd8b5cd31 ]
 
-With the addition of the V2 page table support, the domain page size
-bitmap needs to be set prior to iommu core setting up direct mappings
-for reserved regions. When reserved regions are mapped, if this is not
-done, it will be looking at the V1 page size bitmap when determining
-the page size to use in iommu_pgsize(). When it gets into the actual
-amd mapping code, a check of see if the page size is supported can
-fail, because at that point it is checking it against the V2 page size
-bitmap which only supports 4K, 2M, and 1G.
+The qdsp6ss memory region is being shared by ADSP remoteproc device and
+lpasscc clock device, hence causing memory conflict.
+To avoid this, when qdsp6ss clocks are being enabled in remoteproc driver,
+skip qdsp6ss clock registration if "qcom,adsp-pil-mode" is enabled and
+also assign max_register value.
 
-Add a check to __iommu_domain_alloc() to not override the
-bitmap if it was already set by the iommu ops domain_alloc() code path.
-
-Cc: Vasant Hegde <vasant.hegde@amd.com>
-Cc: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Cc: Robin Murphy <robin.murphy@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: Joerg Roedel <joro@8bytes.org>
-Fixes: 4db6c41f0946 ("iommu/amd: Add support for using AMD IOMMU v2 page table for DMA-API")
-Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Link: https://lore.kernel.org/r/20230404072742.1895252-1-jsnitsel@redhat.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 4ab43d171181 ("clk: qcom: Add lpass clock controller driver for SC7280")
+Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230407092255.119690-3-quic_mohs@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 6 ++----
- drivers/iommu/iommu.c     | 9 +++++++--
- 2 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/clk/qcom/lpasscc-sc7280.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 20adb9b323d82..26fb78003889f 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1657,10 +1657,6 @@ static void do_attach(struct iommu_dev_data *dev_data,
- 	domain->dev_iommu[iommu->index] += 1;
- 	domain->dev_cnt                 += 1;
+diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
+index 5c1e17bd0d763..8486d7135ab10 100644
+--- a/drivers/clk/qcom/lpasscc-sc7280.c
++++ b/drivers/clk/qcom/lpasscc-sc7280.c
+@@ -118,14 +118,18 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
+ 		goto destroy_pm_clk;
+ 	}
  
--	/* Override supported page sizes */
--	if (domain->flags & PD_GIOV_MASK)
--		domain->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
+-	lpass_regmap_config.name = "qdsp6ss";
+-	desc = &lpass_qdsp6ss_sc7280_desc;
 -
- 	/* Update device table */
- 	set_dte_entry(iommu, dev_data->devid, domain,
- 		      ats, dev_data->iommu_v2);
-@@ -2039,6 +2035,8 @@ static int protection_domain_init_v2(struct protection_domain *domain)
- 
- 	domain->flags |= PD_GIOV_MASK;
- 
-+	domain->domain.pgsize_bitmap = AMD_IOMMU_PGSIZES_V2;
+-	ret = qcom_cc_probe_by_index(pdev, 0, desc);
+-	if (ret)
+-		goto destroy_pm_clk;
++	if (!of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
++		lpass_regmap_config.name = "qdsp6ss";
++		lpass_regmap_config.max_register = 0x3f;
++		desc = &lpass_qdsp6ss_sc7280_desc;
 +
- 	if (domain_enable_v2(domain, 1)) {
- 		domain_id_free(domain->id);
- 		return -ENOMEM;
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index bfb2f163c6914..2bcd1f23d07d2 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -1912,8 +1912,13 @@ static struct iommu_domain *__iommu_domain_alloc(struct bus_type *bus,
- 		return NULL;
++		ret = qcom_cc_probe_by_index(pdev, 0, desc);
++		if (ret)
++			goto destroy_pm_clk;
++	}
  
- 	domain->type = type;
--	/* Assume all sizes by default; the driver may override this later */
--	domain->pgsize_bitmap = bus->iommu_ops->pgsize_bitmap;
-+	/*
-+	 * If not already set, assume all sizes by default; the driver
-+	 * may override this later
-+	 */
-+	if (!domain->pgsize_bitmap)
-+		domain->pgsize_bitmap = bus->iommu_ops->pgsize_bitmap;
-+
- 	if (!domain->ops)
- 		domain->ops = bus->iommu_ops->default_domain_ops;
+ 	lpass_regmap_config.name = "top_cc";
++	lpass_regmap_config.max_register = 0x4;
+ 	desc = &lpass_cc_top_sc7280_desc;
  
+ 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
 -- 
 2.39.2
 
