@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD6FE168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:35:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF45C433D2;
-	Mon,  8 May 2023 10:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3893168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:35:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B6AFC433EF;
+	Mon,  8 May 2023 10:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542144;
-	bh=01HT2Vu2RkuSh4AlBUrK4mqZtGYJTus76ElQYCsqg+o=;
+	s=korg; t=1683542147;
+	bh=Qida51R40wqvaaDDyBXNknlDK63bTZyHq7PMLRbvU0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nEAlDJrHa6X2M4aciv8XkYYUBxibfxvFZ7cO621N8cawmcKmiy/MzIy44o8tQX24i
-	 YjYqOzMJQTDetPIup6TDv09bNz+ELm0VXqDgkXkN4dn58nqHRC5GcFb3MjVljaw5CH
-	 DPi9TXdoicCc/DIfroeE/6M8GDgRAWV9TZsSgpkk=
+	b=jSwsR9YFMXHzBJ7lO4Suh4moD4/IGUzPRiKdxc2dUcLl1AakiMDmQ/egx/WuTRCC6
+	 0/p25sqSJQ8M5ZyyQnYXORIHm1pysjIUvzqYVYPDj5Jb72CPTpBh0X1wgohhk/3UXi
+	 CbChrU8zGRa3AJnY1hTj64ErhO5LpRTN+m2mvsW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kal Conley <kal.conley@dectris.com>,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 340/663] selftests: xsk: Use correct UMEM size in testapp_invalid_desc
-Date: Mon,  8 May 2023 11:42:46 +0200
-Message-Id: <20230508094439.188275262@linuxfoundation.org>
+Subject: [PATCH 6.2 314/663] scsi: target: Fix multiple LUN_RESET handling
+Date: Mon,  8 May 2023 11:42:20 +0200
+Message-Id: <20230508094438.379908903@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,72 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kal Conley <kal.conley@dectris.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 7a2050df244e2c9a4e90882052b7907450ad10ed ]
+[ Upstream commit 673db054d7a2b5a470d7a25baf65956d005ad729 ]
 
-Avoid UMEM_SIZE macro in testapp_invalid_desc which is incorrect when
-the frame size is not XSK_UMEM__DEFAULT_FRAME_SIZE. Also remove the
-macro since it's no longer being used.
+This fixes a bug where an initiator thinks a LUN_RESET has cleaned up
+running commands when it hasn't. The bug was added in commit 51ec502a3266
+("target: Delete tmr from list before processing").
 
-Fixes: 909f0e28207c ("selftests: xsk: Add tests for 2K frame size")
-Signed-off-by: Kal Conley <kal.conley@dectris.com>
-Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Link: https://lore.kernel.org/r/20230403145047.33065-2-kal.conley@dectris.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+The problem occurs when:
+
+ 1. We have N I/O cmds running in the target layer spread over 2 sessions.
+
+ 2. The initiator sends a LUN_RESET for each session.
+
+ 3. session1's LUN_RESET loops over all the running commands from both
+    sessions and moves them to its local drain_task_list.
+
+ 4. session2's LUN_RESET does not see the LUN_RESET from session1 because
+    the commit above has it remove itself. session2 also does not see any
+    commands since the other reset moved them off the state lists.
+
+ 5. sessions2's LUN_RESET will then complete with a successful response.
+
+ 6. sessions2's inititor believes the running commands on its session are
+    now cleaned up due to the successful response and cleans up the running
+    commands from its side. It then restarts them.
+
+ 7. The commands do eventually complete on the backend and the target
+    starts to return aborted task statuses for them. The initiator will
+    either throw a invalid ITT error or might accidentally lookup a new
+    task if the ITT has been reallocated already.
+
+Fix the bug by reverting the patch, and serialize the execution of
+LUN_RESETs and Preempt and Aborts.
+
+Also prevent us from waiting on LUN_RESETs in core_tmr_drain_tmr_list,
+because it turns out the original patch fixed a bug that was not
+mentioned. For LUN_RESET1 core_tmr_drain_tmr_list can see a second
+LUN_RESET and wait on it. Then the second reset will run
+core_tmr_drain_tmr_list and see the first reset and wait on it resulting in
+a deadlock.
+
+Fixes: 51ec502a3266 ("target: Delete tmr from list before processing")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-8-michael.christie@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/xskxceiver.c | 9 +++++----
- tools/testing/selftests/bpf/xskxceiver.h | 1 -
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/target/target_core_device.c |  1 +
+ drivers/target/target_core_tmr.c    | 26 +++++++++++++++++++++++---
+ include/target/target_core_base.h   |  1 +
+ 3 files changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/xskxceiver.c b/tools/testing/selftests/bpf/xskxceiver.c
-index 1b9f48daa2257..2290982758961 100644
---- a/tools/testing/selftests/bpf/xskxceiver.c
-+++ b/tools/testing/selftests/bpf/xskxceiver.c
-@@ -1662,6 +1662,7 @@ static void testapp_single_pkt(struct test_spec *test)
+diff --git a/drivers/target/target_core_device.c b/drivers/target/target_core_device.c
+index f6e58410ec3f9..aeb03136773d5 100644
+--- a/drivers/target/target_core_device.c
++++ b/drivers/target/target_core_device.c
+@@ -782,6 +782,7 @@ struct se_device *target_alloc_device(struct se_hba *hba, const char *name)
+ 	spin_lock_init(&dev->t10_alua.lba_map_lock);
  
- static void testapp_invalid_desc(struct test_spec *test)
- {
-+	u64 umem_size = test->ifobj_tx->umem->num_frames * test->ifobj_tx->umem->frame_size;
- 	struct pkt pkts[] = {
- 		/* Zero packet address allowed */
- 		{0, PKT_SIZE, 0, true},
-@@ -1672,9 +1673,9 @@ static void testapp_invalid_desc(struct test_spec *test)
- 		/* Packet too large */
- 		{0x2000, XSK_UMEM__INVALID_FRAME_SIZE, 0, false},
- 		/* After umem ends */
--		{UMEM_SIZE, PKT_SIZE, 0, false},
-+		{umem_size, PKT_SIZE, 0, false},
- 		/* Straddle the end of umem */
--		{UMEM_SIZE - PKT_SIZE / 2, PKT_SIZE, 0, false},
-+		{umem_size - PKT_SIZE / 2, PKT_SIZE, 0, false},
- 		/* Straddle a page boundrary */
- 		{0x3000 - PKT_SIZE / 2, PKT_SIZE, 0, false},
- 		/* Straddle a 2K boundrary */
-@@ -1692,8 +1693,8 @@ static void testapp_invalid_desc(struct test_spec *test)
+ 	INIT_WORK(&dev->delayed_cmd_work, target_do_delayed_work);
++	mutex_init(&dev->lun_reset_mutex);
+ 
+ 	dev->t10_wwn.t10_dev = dev;
+ 	/*
+diff --git a/drivers/target/target_core_tmr.c b/drivers/target/target_core_tmr.c
+index 2b95b4550a637..4718db628222b 100644
+--- a/drivers/target/target_core_tmr.c
++++ b/drivers/target/target_core_tmr.c
+@@ -188,14 +188,23 @@ static void core_tmr_drain_tmr_list(
+ 	 * LUN_RESET tmr..
+ 	 */
+ 	spin_lock_irqsave(&dev->se_tmr_lock, flags);
+-	if (tmr)
+-		list_del_init(&tmr->tmr_list);
+ 	list_for_each_entry_safe(tmr_p, tmr_pp, &dev->dev_tmr_list, tmr_list) {
++		if (tmr_p == tmr)
++			continue;
++
+ 		cmd = tmr_p->task_cmd;
+ 		if (!cmd) {
+ 			pr_err("Unable to locate struct se_cmd for TMR\n");
+ 			continue;
+ 		}
++
++		/*
++		 * We only execute one LUN_RESET at a time so we can't wait
++		 * on them below.
++		 */
++		if (tmr_p->function == TMR_LUN_RESET)
++			continue;
++
+ 		/*
+ 		 * If this function was called with a valid pr_res_key
+ 		 * parameter (eg: for PROUT PREEMPT_AND_ABORT service action
+@@ -379,14 +388,25 @@ int core_tmr_lun_reset(
+ 				tmr_nacl->initiatorname);
+ 		}
  	}
++
++
++	/*
++	 * We only allow one reset or preempt and abort to execute at a time
++	 * to prevent one call from claiming all the cmds causing a second
++	 * call from returning while cmds it should have waited on are still
++	 * running.
++	 */
++	mutex_lock(&dev->lun_reset_mutex);
++
+ 	pr_debug("LUN_RESET: %s starting for [%s], tas: %d\n",
+ 		(preempt_and_abort_list) ? "Preempt" : "TMR",
+ 		dev->transport->name, tas);
+-
+ 	core_tmr_drain_tmr_list(dev, tmr, preempt_and_abort_list);
+ 	core_tmr_drain_state_list(dev, prout_cmd, tmr_sess, tas,
+ 				preempt_and_abort_list);
  
- 	if (test->ifobj_tx->shared_umem) {
--		pkts[4].addr += UMEM_SIZE;
--		pkts[5].addr += UMEM_SIZE;
-+		pkts[4].addr += umem_size;
-+		pkts[5].addr += umem_size;
- 	}
++	mutex_unlock(&dev->lun_reset_mutex);
++
+ 	/*
+ 	 * Clear any legacy SPC-2 reservation when called during
+ 	 * LOGICAL UNIT RESET
+diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
+index bd299790e99c3..8cc42ad65c925 100644
+--- a/include/target/target_core_base.h
++++ b/include/target/target_core_base.h
+@@ -872,6 +872,7 @@ struct se_device {
+ 	struct rcu_head		rcu_head;
+ 	int			queue_cnt;
+ 	struct se_device_queue	*queues;
++	struct mutex		lun_reset_mutex;
+ };
  
- 	pkt_stream_generate_custom(test, pkts, ARRAY_SIZE(pkts));
-diff --git a/tools/testing/selftests/bpf/xskxceiver.h b/tools/testing/selftests/bpf/xskxceiver.h
-index edb76d2def9fe..292fc943b8fdf 100644
---- a/tools/testing/selftests/bpf/xskxceiver.h
-+++ b/tools/testing/selftests/bpf/xskxceiver.h
-@@ -52,7 +52,6 @@
- #define THREAD_TMOUT 3
- #define DEFAULT_PKT_CNT (4 * 1024)
- #define DEFAULT_UMEM_BUFFERS (DEFAULT_PKT_CNT / 4)
--#define UMEM_SIZE (DEFAULT_UMEM_BUFFERS * XSK_UMEM__DEFAULT_FRAME_SIZE)
- #define RX_FULL_RXQSIZE 32
- #define UMEM_HEADROOM_TEST_SIZE 128
- #define XSK_UMEM__INVALID_FRAME_SIZE (XSK_UMEM__DEFAULT_FRAME_SIZE + 1)
+ struct target_opcode_descriptor {
 -- 
 2.39.2
 
