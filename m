@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAA1168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:38:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85551C433D2;
-	Mon,  8 May 2023 10:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D64168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08132C433D2;
+	Mon,  8 May 2023 10:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542300;
-	bh=z/l2lYS6pqmB61WX3fwNLT9bcnjGYy14NP6+JeyfDCk=;
+	s=korg; t=1683542304;
+	bh=5kcGwruRUB4YLkzfCyxdJ97CgKP2Mk4mSsIeZNBq+CQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0mjSdE6CZC5of9E5Yngymotibn+/rfM13FLn+VYxpN3MUCwN4gF3vYLjuESdXt4rc
-	 WDgwuHSgm2BXcBZrhWxUxpKZCuVMKGikdIDfJO5yQ0XL0soXSiEq2oP69Fv9CoQZpg
-	 iiZlY5I7Bh/iC48pduKBZdL0uTVjTGklxMclCpHk=
+	b=fy9Kgj/9rNFnDeIOTNIvtg6EqX8XQp2pHEtfH5V/2AMAkNNUcsSRW3Si1jj3zBSED
+	 HoduK7sI73Ol3ENzrPc1g0BINpybE9CEq0SIjBLXd8OAHUvfYznRhO1gRcw0/ShvBp
+	 6MPOHJj+S5a3GJI96SG+CQL794fd/PFQEOeydzws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Howard Hsu <howard-yh.hsu@mediatek.com>,
+	Kang Chen <void0red@gmail.com>,
 	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 392/663] wifi: mt76: mt7915: rework init flow in mt7915_thermal_init()
-Date: Mon,  8 May 2023 11:43:38 +0200
-Message-Id: <20230508094440.822499092@linuxfoundation.org>
+Subject: [PATCH 6.2 393/663] wifi: mt76: handle failure of vzalloc in mt7615_coredump_work
+Date: Mon,  8 May 2023 11:43:39 +0200
+Message-Id: <20230508094440.851556770@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,49 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Howard Hsu <howard-yh.hsu@mediatek.com>
+From: Kang Chen <void0red@gmail.com>
 
-[ Upstream commit 9c97df11dfe68b548a47744ba9fa6beddcfba2bc ]
+[ Upstream commit 9e47dd9f64a47ae00ca0123017584c37209ee900 ]
 
-If kernel do not enable CONFIG_HWMON, it may cause thermal
-initialization to be done with temperature value 0 and then can not
-transmit. This commit fixes it by setting trigger/restore temperature
-before checking CONFIG_HWMON.
+vzalloc may fails, dump might be null and will cause
+illegal address access later.
 
-Fixes: 7d12b38ab6f6 ("wifi: mt76: mt7915: call mt7915_mcu_set_thermal_throttling() only after init_work")
-Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
+Link: https://lore.kernel.org/all/Y%2Fy5Asxw3T3m4jCw@lore-desk
+Fixes: d2bf7959d9c0 ("mt76: mt7663: introduce coredump support")
+Signed-off-by: Kang Chen <void0red@gmail.com>
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/init.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7615/mac.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-index db0a35974ca7e..0d8bc7b06a46b 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
-@@ -204,6 +204,10 @@ static int mt7915_thermal_init(struct mt7915_phy *phy)
- 			phy->cdev = cdev;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+index 5c41ad5955f4b..eafa0f204c1f8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7615/mac.c
+@@ -2355,7 +2355,7 @@ void mt7615_coredump_work(struct work_struct *work)
+ 			break;
+ 
+ 		skb_pull(skb, sizeof(struct mt7615_mcu_rxd));
+-		if (data + skb->len - dump > MT76_CONNAC_COREDUMP_SZ) {
++		if (!dump || data + skb->len - dump > MT76_CONNAC_COREDUMP_SZ) {
+ 			dev_kfree_skb(skb);
+ 			continue;
+ 		}
+@@ -2365,6 +2365,8 @@ void mt7615_coredump_work(struct work_struct *work)
+ 
+ 		dev_kfree_skb(skb);
  	}
- 
-+	/* initialize critical/maximum high temperature */
-+	phy->throttle_temp[MT7915_CRIT_TEMP_IDX] = MT7915_CRIT_TEMP;
-+	phy->throttle_temp[MT7915_MAX_TEMP_IDX] = MT7915_MAX_TEMP;
+-	dev_coredumpv(dev->mt76.dev, dump, MT76_CONNAC_COREDUMP_SZ,
+-		      GFP_KERNEL);
 +
- 	if (!IS_REACHABLE(CONFIG_HWMON))
- 		return 0;
- 
-@@ -212,10 +216,6 @@ static int mt7915_thermal_init(struct mt7915_phy *phy)
- 	if (IS_ERR(hwmon))
- 		return PTR_ERR(hwmon);
- 
--	/* initialize critical/maximum high temperature */
--	phy->throttle_temp[MT7915_CRIT_TEMP_IDX] = MT7915_CRIT_TEMP;
--	phy->throttle_temp[MT7915_MAX_TEMP_IDX] = MT7915_MAX_TEMP;
--
- 	return 0;
++	if (dump)
++		dev_coredumpv(dev->mt76.dev, dump, MT76_CONNAC_COREDUMP_SZ,
++			      GFP_KERNEL);
  }
- 
 -- 
 2.39.2
 
