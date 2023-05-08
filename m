@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A82171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B42C433D2;
-	Mon,  8 May 2023 11:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90330171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9858C4339B;
+	Mon,  8 May 2023 11:32:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545531;
-	bh=o/RsRvPsDCqKSPlyZcxcCkqOJneHDWqXUSXTgodD6qY=;
+	s=korg; t=1683545534;
+	bh=Dk3JdR2G+491PHOOQvvFUi1KjknDUYJ54gzcEzTSg+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nh1ztOjjzYPUkBr6wE7z8rpGCGTaPd7bdZlH2vVGtqSAzlcq6Wv5S6rkDOL8tZbvu
-	 gW7OWWk7oYS0yW44OfAU09gLSuwrTF5Vys9D392O41MJdODaNs9kbUsIa3TsiZVEMY
-	 srJ28zqvt9vvM7EYNcP/UlCju/hxokp3Ube5mvRE=
+	b=DSfBeeb1GOzaQLJ3yYfdB8rvHQJlJTOtYkRiAcRcqumPw95YmVuJ6klbNDDMzR8Lf
+	 QX4U62V/+dyzQXhhknd1ND5opFIn3hZ1esez+czbbFJYxlgy5CGD1w8tQNxiPzf6G3
+	 Pb1EnjTRouXyY2T5RyVs3rMZCG2wgoS6Pl2hf4EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 063/371] selftests/resctrl: Allow ->setup() to return errors
-Date: Mon,  8 May 2023 11:44:24 +0200
-Message-Id: <20230508094814.580506488@linuxfoundation.org>
+Subject: [PATCH 5.15 072/371] tpm, tpm_tis: Claim locality when interrupts are reenabled on resume
+Date: Mon,  8 May 2023 11:44:33 +0200
+Message-Id: <20230508094814.981313730@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,135 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit fa10366cc6f4cc862871f8938426d85c2481f084 ]
+[ Upstream commit 955df4f87760b3bb2af253d3fbb12fb712b3ffa6 ]
 
-resctrl_val() assumes ->setup() always returns either 0 to continue
-tests or < 0 in case of the normal termination of tests after x runs.
-The latter overlaps with normal error returns.
+In tpm_tis_resume() make sure that the locality has been claimed when
+tpm_tis_reenable_interrupts() is called. Otherwise the writings to the
+register might not have any effect.
 
-Define END_OF_TESTS (=1) to differentiate the normal termination of
-tests and return errors as negative values. Alter callers of ->setup()
-to handle errors properly.
-
-Fixes: 790bf585b0ee ("selftests/resctrl: Add Cache Allocation Technology (CAT) selftest")
-Fixes: ecdbb911f22d ("selftests/resctrl: Add MBM test")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 45baa1d1fa39 ("tpm_tis: Re-enable interrupts upon (S3) resume")
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/cache.c       | 4 +++-
- tools/testing/selftests/resctrl/cat_test.c    | 2 +-
- tools/testing/selftests/resctrl/cmt_test.c    | 2 +-
- tools/testing/selftests/resctrl/mba_test.c    | 2 +-
- tools/testing/selftests/resctrl/mbm_test.c    | 2 +-
- tools/testing/selftests/resctrl/resctrl.h     | 2 ++
- tools/testing/selftests/resctrl/resctrl_val.c | 4 +++-
- 7 files changed, 12 insertions(+), 6 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
-index 68ff856d36f0b..0485863a169f2 100644
---- a/tools/testing/selftests/resctrl/cache.c
-+++ b/tools/testing/selftests/resctrl/cache.c
-@@ -244,10 +244,12 @@ int cat_val(struct resctrl_val_param *param)
- 	while (1) {
- 		if (!strncmp(resctrl_val, CAT_STR, sizeof(CAT_STR))) {
- 			ret = param->setup(1, param);
--			if (ret) {
-+			if (ret == END_OF_TESTS) {
- 				ret = 0;
- 				break;
- 			}
-+			if (ret < 0)
-+				break;
- 			ret = reset_enable_llc_perf(bm_pid, param->cpu_no);
- 			if (ret)
- 				break;
-diff --git a/tools/testing/selftests/resctrl/cat_test.c b/tools/testing/selftests/resctrl/cat_test.c
-index 1c5e90c632548..2d3c7c77ab6cb 100644
---- a/tools/testing/selftests/resctrl/cat_test.c
-+++ b/tools/testing/selftests/resctrl/cat_test.c
-@@ -40,7 +40,7 @@ static int cat_setup(int num, ...)
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 3ea0fff30273e..d65fff4e2ebe9 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -1173,28 +1173,27 @@ int tpm_tis_resume(struct device *dev)
+ 	struct tpm_chip *chip = dev_get_drvdata(dev);
+ 	int ret;
  
- 	/* Run NUM_OF_RUNS times */
- 	if (p->num_of_runs >= NUM_OF_RUNS)
--		return -1;
-+		return END_OF_TESTS;
- 
- 	if (p->num_of_runs == 0) {
- 		sprintf(schemata, "%lx", p->mask);
-diff --git a/tools/testing/selftests/resctrl/cmt_test.c b/tools/testing/selftests/resctrl/cmt_test.c
-index 8968e36db99d7..3b0454e7fc826 100644
---- a/tools/testing/selftests/resctrl/cmt_test.c
-+++ b/tools/testing/selftests/resctrl/cmt_test.c
-@@ -32,7 +32,7 @@ static int cmt_setup(int num, ...)
- 
- 	/* Run NUM_OF_RUNS times */
- 	if (p->num_of_runs >= NUM_OF_RUNS)
--		return -1;
-+		return END_OF_TESTS;
- 
- 	p->num_of_runs++;
- 
-diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
-index 1a1bdb6180cf2..f32289ae17aeb 100644
---- a/tools/testing/selftests/resctrl/mba_test.c
-+++ b/tools/testing/selftests/resctrl/mba_test.c
-@@ -41,7 +41,7 @@ static int mba_setup(int num, ...)
- 		return 0;
- 
- 	if (allocation < ALLOCATION_MIN || allocation > ALLOCATION_MAX)
--		return -1;
-+		return END_OF_TESTS;
- 
- 	sprintf(allocation_str, "%d", allocation);
- 
-diff --git a/tools/testing/selftests/resctrl/mbm_test.c b/tools/testing/selftests/resctrl/mbm_test.c
-index 8392e5c55ed02..280187628054d 100644
---- a/tools/testing/selftests/resctrl/mbm_test.c
-+++ b/tools/testing/selftests/resctrl/mbm_test.c
-@@ -95,7 +95,7 @@ static int mbm_setup(int num, ...)
- 
- 	/* Run NUM_OF_RUNS times */
- 	if (num_of_runs++ >= NUM_OF_RUNS)
--		return -1;
-+		return END_OF_TESTS;
- 
- 	va_start(param, num);
- 	p = va_arg(param, struct resctrl_val_param *);
-diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
-index f0ded31fb3c7c..f44fa2de4d986 100644
---- a/tools/testing/selftests/resctrl/resctrl.h
-+++ b/tools/testing/selftests/resctrl/resctrl.h
-@@ -37,6 +37,8 @@
- #define ARCH_INTEL     1
- #define ARCH_AMD       2
- 
-+#define END_OF_TESTS	1
++	ret = tpm_tis_request_locality(chip, 0);
++	if (ret < 0)
++		return ret;
 +
- #define PARENT_EXIT(err_msg)			\
- 	do {					\
- 		perror(err_msg);		\
-diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
-index dd907809d0b29..02110e7ee6361 100644
---- a/tools/testing/selftests/resctrl/resctrl_val.c
-+++ b/tools/testing/selftests/resctrl/resctrl_val.c
-@@ -734,10 +734,12 @@ int resctrl_val(char **benchmark_cmd, struct resctrl_val_param *param)
- 	/* Test runs until the callback setup() tells the test to stop. */
- 	while (1) {
- 		ret = param->setup(1, param);
--		if (ret) {
-+		if (ret == END_OF_TESTS) {
- 			ret = 0;
- 			break;
- 		}
-+		if (ret < 0)
-+			break;
+ 	if (chip->flags & TPM_CHIP_FLAG_IRQ)
+ 		tpm_tis_reenable_interrupts(chip);
  
- 		if (!strncmp(resctrl_val, MBM_STR, sizeof(MBM_STR)) ||
- 		    !strncmp(resctrl_val, MBA_STR, sizeof(MBA_STR))) {
+ 	ret = tpm_pm_resume(dev);
+ 	if (ret)
+-		return ret;
++		goto out;
+ 
+ 	/*
+ 	 * TPM 1.2 requires self-test on resume. This function actually returns
+ 	 * an error code but for unknown reason it isn't handled.
+ 	 */
+-	if (!(chip->flags & TPM_CHIP_FLAG_TPM2)) {
+-		ret = tpm_tis_request_locality(chip, 0);
+-		if (ret < 0)
+-			return ret;
+-
++	if (!(chip->flags & TPM_CHIP_FLAG_TPM2))
+ 		tpm1_do_selftest(chip);
++out:
++	tpm_tis_relinquish_locality(chip, 0);
+ 
+-		tpm_tis_relinquish_locality(chip, 0);
+-	}
+-
+-	return 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(tpm_tis_resume);
+ #endif
 -- 
 2.39.2
 
