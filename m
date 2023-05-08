@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA409168D5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:30:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398A3C433D2;
-	Mon,  8 May 2023 11:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BEE9171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:30:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF75C433D2;
+	Mon,  8 May 2023 11:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545418;
-	bh=3mEJP8tmz/XW5HcFioTquKyOJJLG48D3oWkCAML/yZA=;
+	s=korg; t=1683545422;
+	bh=zh5XKJ/UyuqyrJ5hCrGW6axciS0TL/7B2vgoKiTKf2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUO06NPpbxyHtRdryliC99koE4OK2CFgEOCZA6yNNHZ/HPQW402TQ408EBb1eAMTt
-	 PnJy3TQv94nBEwBE6CzRmfIC6Fk5Y831znibtw2y+iIC4Ck8EzoGz1T+zQFTGU/2pb
-	 t5HZXzwYqUepHrT/eBMBa0MwrSVIs/QIFAcIBA8I=
+	b=CYPUzG+LQjqwFVSYspN5GVti3TK2DWFEq8cLupTrs/ugpKguVdl4PVVC6+B9L7hW8
+	 OugrrGHum/OsZ9WxsNruqKFMQ0neocExG3M66RvH9WXY1Bvekh4UmxJ3IEy1Qtni4d
+	 Qqxu4A9hktxdUp3tmzT3ahJPRK5w69jKI1fvTjh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anh Tuan Phan <tuananhlfc@gmail.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/371] selftests mount: Fix mount_setattr_test builds failed
-Date: Mon,  8 May 2023 11:43:27 +0200
-Message-Id: <20230508094812.238005754@linuxfoundation.org>
+Subject: [PATCH 5.15 007/371] asm-generic/io.h: suppress endianness warnings for readq() and writeq()
+Date: Mon,  8 May 2023 11:43:28 +0200
+Message-Id: <20230508094812.293252616@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,38 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anh Tuan Phan <tuananhlfc@gmail.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit f1594bc676579133a3cd906d7d27733289edfb86 ]
+[ Upstream commit d564fa1ff19e893e2971d66e5c8f49dc1cdc8ffc ]
 
-When compiling selftests with target mount_setattr I encountered some errors with the below messages:
-mount_setattr_test.c: In function ‘mount_setattr_thread’:
-mount_setattr_test.c:343:16: error: variable ‘attr’ has initializer but incomplete type
-  343 |         struct mount_attr attr = {
-      |                ^~~~~~~~~~
+Commit c1d55d50139b ("asm-generic/io.h: Fix sparse warnings on
+big-endian architectures") missed fixing the 64-bit accessors.
 
-These errors might be because of linux/mount.h is not included. This patch resolves that issue.
+Arnd explains in the attached link why the casts are necessary, even if
+__raw_readq() and __raw_writeq() do not take endian-specific types.
 
-Signed-off-by: Anh Tuan Phan <tuananhlfc@gmail.com>
-Acked-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/lkml/9105d6fc-880b-4734-857d-e3d30b87ccf6@app.fastmail.com/
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/mount_setattr/mount_setattr_test.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/asm-generic/io.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/mount_setattr/mount_setattr_test.c b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-index 8c5fea68ae677..969647228817b 100644
---- a/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-+++ b/tools/testing/selftests/mount_setattr/mount_setattr_test.c
-@@ -18,6 +18,7 @@
- #include <grp.h>
- #include <stdbool.h>
- #include <stdarg.h>
-+#include <linux/mount.h>
+diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
+index 98954dda57344..82f2c01accbb9 100644
+--- a/include/asm-generic/io.h
++++ b/include/asm-generic/io.h
+@@ -190,7 +190,7 @@ static inline u64 readq(const volatile void __iomem *addr)
+ 	u64 val;
  
- #include "../kselftest_harness.h"
- 
+ 	__io_br();
+-	val = __le64_to_cpu(__raw_readq(addr));
++	val = __le64_to_cpu((__le64 __force)__raw_readq(addr));
+ 	__io_ar(val);
+ 	return val;
+ }
+@@ -233,7 +233,7 @@ static inline void writel(u32 value, volatile void __iomem *addr)
+ static inline void writeq(u64 value, volatile void __iomem *addr)
+ {
+ 	__io_bw();
+-	__raw_writeq(__cpu_to_le64(value), addr);
++	__raw_writeq((u64 __force)__cpu_to_le64(value), addr);
+ 	__io_aw();
+ }
+ #endif
 -- 
 2.39.2
 
