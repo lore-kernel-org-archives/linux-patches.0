@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 982B6168C7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11D7C4339B;
-	Mon,  8 May 2023 11:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91919168C7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E18C433EF;
+	Mon,  8 May 2023 11:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543642;
-	bh=hNwT2XPXfrM0qa/w+rJHWnhrTUuC/p2Z9y753f/6sVU=;
+	s=korg; t=1683543645;
+	bh=cr8qEIPPK9/x+fTbmXyAuH2hxvKlJYg7RwWLSh5Rq0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LOTlYw35knrDIF6VjWX1jqDAwDPeNOOmIMM9jTO3ntdhH/mBALJ7YcxRF39yWWsW3
-	 uHXE9vUgKcNIeHWMrOw8tCK6VpY/tgFswjZfLH9DfCcCTmn2SUgmiu14kcPkOZXhgu
-	 G7Q/NGzyj+EvOTUmr6fgI+FHcl6rA4L1y0Ny8X6g=
+	b=aqIM/RlQxhxQDsmmFQkecLDIcdIaU63XUvizo07NL4kmV5H5jdaRaqHW42Tf0ywYj
+	 zoufUoML+23y/M0lMF4polxt0VyS7OKoyomMZt1/qHBssNutz38WDfMqIqf0SgnIGQ
+	 5vKdAjIJlBQiWro6dK2IYSQLGWA32yr1r3BV27/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Orlando Chamberlain <orlandoch.dev@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 155/694] arm64: dts: amlogic: meson-g12b-radxa-zero2: fix pwm clock names
-Date: Mon,  8 May 2023 11:39:50 +0200
-Message-Id: <20230508094437.462300276@linuxfoundation.org>
+Subject: [PATCH 6.3 156/694] drm/amdgpu: register a vga_switcheroo client for MacBooks with apple-gmux
+Date: Mon,  8 May 2023 11:39:51 +0200
+Message-Id: <20230508094437.491064884@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,63 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Orlando Chamberlain <orlandoch.dev@gmail.com>
 
-[ Upstream commit db217e84d0a3f4183ea5b6d5929e55b73128fcb2 ]
+[ Upstream commit d37a3929ca0363ed1dce02b2772cd5bc547ca66d ]
 
-Fixes the following bindings check error:
- - pwm@2000: clock-names: 'oneOf' conditional failed, one must be fixed:
-	['clkin4'] is too short
-	'clkin4' is not one of ['clkin0', 'clkin1']
-	'clkin0' was expected
- - pwm@7000: clock-names: 'oneOf' conditional failed, one must be fixed:
-	['clkin3'] is too short
-	'clkin3' is not one of ['clkin0', 'clkin1']
-	'clkin0' was expected
- - pwm@19000: clock-names: 'oneOf' conditional failed, one must be fixed:
-	['clkin2'] is too short
-	'clkin2' is not one of ['clkin0', 'clkin1']
-	'clkin0' was expected
+Commit 3840c5bcc245 ("drm/amdgpu: disentangle runtime pm and
+vga_switcheroo") made amdgpu only register a vga_switcheroo client for
+GPU's with PX, however AMD GPUs in dual gpu Apple Macbooks do need to
+register, but don't have PX. Instead of AMD's PX, they use apple-gmux.
 
-Fixes: d747e7f76a5f ("arm64: dts: meson: add support for Radxa Zero2")
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20230207-b4-amlogic-bindings-fixups-v2-v1-4-93b7e50286e7@linaro.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Use apple_gmux_detect() to identify these gpus, and
+pci_is_thunderbolt_attached() to ensure eGPUs connected to Dual GPU
+Macbooks don't register with vga_switcheroo.
+
+Fixes: 3840c5bcc245 ("drm/amdgpu: disentangle runtime pm and vga_switcheroo")
+Link: https://lore.kernel.org/amd-gfx/20230210044826.9834-10-orlandoch.dev@gmail.com/
+Signed-off-by: Orlando Chamberlain <orlandoch.dev@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-g12b-radxa-zero2.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-radxa-zero2.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-radxa-zero2.dts
-index 9a60c5ec20725..890f5bfebb030 100644
---- a/arch/arm64/boot/dts/amlogic/meson-g12b-radxa-zero2.dts
-+++ b/arch/arm64/boot/dts/amlogic/meson-g12b-radxa-zero2.dts
-@@ -360,7 +360,7 @@
- 	pinctrl-0 = <&pwm_e_pins>;
- 	pinctrl-names = "default";
- 	clocks = <&xtal>;
--	clock-names = "clkin2";
-+	clock-names = "clkin0";
- 	status = "okay";
- };
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 3d98fc2ad36b0..6f715fb930bb4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -35,6 +35,7 @@
+ #include <linux/devcoredump.h>
+ #include <generated/utsrelease.h>
+ #include <linux/pci-p2pdma.h>
++#include <linux/apple-gmux.h>
  
-@@ -368,7 +368,7 @@
- 	pinctrl-0 = <&pwm_ao_a_pins>;
- 	pinctrl-names = "default";
- 	clocks = <&xtal>;
--	clock-names = "clkin3";
-+	clock-names = "clkin0";
- 	status = "okay";
- };
+ #include <drm/drm_aperture.h>
+ #include <drm/drm_atomic_helper.h>
+@@ -3945,12 +3946,15 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 	if ((adev->pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA)
+ 		vga_client_register(adev->pdev, amdgpu_device_vga_set_decode);
  
-@@ -376,7 +376,7 @@
- 	pinctrl-0 = <&pwm_ao_d_e_pins>;
- 	pinctrl-names = "default";
- 	clocks = <&xtal>;
--	clock-names = "clkin4";
-+	clock-names = "clkin1";
- 	status = "okay";
- };
+-	if (amdgpu_device_supports_px(ddev)) {
+-		px = true;
++	px = amdgpu_device_supports_px(ddev);
++
++	if (px || (!pci_is_thunderbolt_attached(adev->pdev) &&
++				apple_gmux_detect(NULL, NULL)))
+ 		vga_switcheroo_register_client(adev->pdev,
+ 					       &amdgpu_switcheroo_ops, px);
++
++	if (px)
+ 		vga_switcheroo_init_domain_pm_ops(adev->dev, &adev->vga_pm_domain);
+-	}
+ 
+ 	if (adev->gmc.xgmi.pending_reset)
+ 		queue_delayed_work(system_wq, &mgpu_info.delayed_reset_work,
+@@ -4054,6 +4058,7 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
+ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
+ {
+ 	int idx;
++	bool px;
+ 
+ 	amdgpu_fence_driver_sw_fini(adev);
+ 	amdgpu_device_ip_fini(adev);
+@@ -4072,10 +4077,16 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
+ 
+ 	kfree(adev->bios);
+ 	adev->bios = NULL;
+-	if (amdgpu_device_supports_px(adev_to_drm(adev))) {
++
++	px = amdgpu_device_supports_px(adev_to_drm(adev));
++
++	if (px || (!pci_is_thunderbolt_attached(adev->pdev) &&
++				apple_gmux_detect(NULL, NULL)))
+ 		vga_switcheroo_unregister_client(adev->pdev);
++
++	if (px)
+ 		vga_switcheroo_fini_domain_pm_ops(adev->dev);
+-	}
++
+ 	if ((adev->pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA)
+ 		vga_client_unregister(adev->pdev);
  
 -- 
 2.39.2
