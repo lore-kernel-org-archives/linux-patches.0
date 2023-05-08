@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FC3171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:39:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85753C433EF;
-	Mon,  8 May 2023 11:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14FF171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:39:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8772CC433EF;
+	Mon,  8 May 2023 11:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545974;
-	bh=blUy9C1Tt+dysK/2ZSW197bQ/v2Ol0kLFgl9O0itrHs=;
+	s=korg; t=1683545978;
+	bh=gG53gcjqCb0Wu6bCUVvRaqzn65iMcc4gF07snRt/dKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BGlTPXMW//M4lMsPkQJnG6c7KtFXSDo3I3IAUY02MX+EKKu17VrUXrzEeM+NOTLto
-	 soIpOYQy1/GYsCGeHjJii6EEaftIgCtL1LgrhA8X5LE6VwhNk7Al6mZDb0TlvoM+l8
-	 NdCdoI4lWf8+v91C5QnnlYZQu+4DXFTTJOGgH57U=
+	b=Rg0dPMC7QxT/CGfzKB7rWVF1AdtQletNUgUyB39hAjSSZMr+t1zlbBkzoDSxHKee6
+	 rvaXIsMu3ibUinEr0mfxsHDBVnI9HE/5/i/ckhpjV6hm63Mb2FtANsO/i/Qb4O6w7q
+	 Tnw6+aCmDgg7df/84ZG7wmA0BsoaGcLIuPT8o7uI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 215/371] jdb2: Dont refuse invalidation of already invalidated buffers
-Date: Mon,  8 May 2023 11:46:56 +0200
-Message-Id: <20230508094820.600063375@linuxfoundation.org>
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Lorenzo Zolfanelli <lorenzo@zolfa.nl>
+Subject: [PATCH 5.15 216/371] wifi: iwlwifi: make the loop for card preparation effective
+Date: Mon,  8 May 2023 11:46:57 +0200
+Message-Id: <20230508094820.636663419@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,42 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit bd159398a2d2234de07d310132865706964aaaa7 ]
+[ Upstream commit 28965ec0b5d9112585f725660e2ff13218505ace ]
 
-When invalidating buffers under the partial tail page,
-jbd2_journal_invalidate_folio() returns -EBUSY if the buffer is part of
-the committing transaction as we cannot safely modify buffer state.
-However if the buffer is already invalidated (due to previous
-invalidation attempts from ext4_wait_for_tail_page_commit()), there's
-nothing to do and there's no point in returning -EBUSY. This fixes
-occasional warnings from ext4_journalled_invalidate_folio() triggered by
-generic/051 fstest when blocksize < pagesize.
+Since we didn't reset t to 0, only the first iteration of the loop
+did checked the ready bit several times.
+>From the second iteration and on, we just tested the bit once and
+continued to the next iteration.
 
-Fixes: 53e872681fed ("ext4: fix deadlock in journal_unmap_buffer()")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230329154950.19720-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-and-tested-by: Lorenzo Zolfanelli <lorenzo@zolfa.nl>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216452
+Fixes: 289e5501c314 ("iwlwifi: fix the preparation of the card")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230416154301.615b683ab9c8.Ic52c3229d3345b0064fa34263293db095d88daf8@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/transaction.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jbd2/transaction.c b/fs/jbd2/transaction.c
-index 55232064cab21..ce4a5ccadeff4 100644
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -2378,6 +2378,9 @@ static int journal_unmap_buffer(journal_t *journal, struct buffer_head *bh,
- 			spin_unlock(&jh->b_state_lock);
- 			write_unlock(&journal->j_state_lock);
- 			jbd2_journal_put_journal_head(jh);
-+			/* Already zapped buffer? Nothing to do... */
-+			if (!bh->b_bdev)
-+				return 0;
- 			return -EBUSY;
- 		}
- 		/*
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+index 02da9cc8646cf..ee325950de9d2 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
+@@ -581,7 +581,6 @@ static int iwl_pcie_set_hw_ready(struct iwl_trans *trans)
+ int iwl_pcie_prepare_card_hw(struct iwl_trans *trans)
+ {
+ 	int ret;
+-	int t = 0;
+ 	int iter;
+ 
+ 	IWL_DEBUG_INFO(trans, "iwl_trans_prepare_card_hw enter\n");
+@@ -596,6 +595,8 @@ int iwl_pcie_prepare_card_hw(struct iwl_trans *trans)
+ 	usleep_range(1000, 2000);
+ 
+ 	for (iter = 0; iter < 10; iter++) {
++		int t = 0;
++
+ 		/* If HW is not ready, prepare the conditions to check again */
+ 		iwl_set_bit(trans, CSR_HW_IF_CONFIG_REG,
+ 			    CSR_HW_IF_CONFIG_REG_PREPARE);
 -- 
 2.39.2
 
