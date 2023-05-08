@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3306168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6608DC433D2;
-	Mon,  8 May 2023 11:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C155B168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42164C433EF;
+	Mon,  8 May 2023 11:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545182;
-	bh=rOH1ss8kEGYw0aRvGuspzfaz6QYauXSlvNI3STWi7A4=;
+	s=korg; t=1683545185;
+	bh=8r86ET8CjpRMe2jQpa5GkEJa/m5rbmbRQz4fYwqxoT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0O1VwPU2GfqLpKcDPZMV4VaryubKye4Bv92WXgPh6twWnQjvGgbQRzh8H+XzZvxZ
-	 KNEuV8LfoEBhsShcZpFNEvRYEDlq7UBEmjMDsgEL7wSMwlRgeQ1pQ7SJRX6IxnAHY5
-	 Ak6t2oXU8DtOwdbgdMaZMu8KOQWumDSLQq22RoFk=
+	b=OhVYVHDIStD8rGgowOXcuL5sQ2+Z3OR9Zb1h/RzTeZCFB1dXdOW4NBSskJT8oMZ7q
+	 0e25qq2ufxTDoi4oXV6x0e8SKv/luog/u4+VaiuU7MKw6SJuRCoBVJT93krwiRz+Lo
+	 nY1/Y7PhXJpzaS/iyAKeubLgEpaf9721c8+G7VeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 652/694] dmaengine: at_xdmac: disable/enable clock directly on suspend/resume
-Date: Mon,  8 May 2023 11:48:07 +0200
-Message-Id: <20230508094457.061648530@linuxfoundation.org>
+Subject: [PATCH 6.3 653/694] dmaengine: at_xdmac: fix imbalanced runtime PM reference counter
+Date: Mon,  8 May 2023 11:48:08 +0200
+Message-Id: <20230508094457.111958981@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,62 +37,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 2de5ddb5e68c94b781b3789bca1ce52000d7d0e0 ]
+[ Upstream commit e53957e1ec5196671e49a48f90a5c9555153189a ]
 
-Runtime PM APIs for at_xdmac just plays with clk_enable()/clk_disable()
-letting aside the clk_prepare()/clk_unprepare() that needs to be
-executed as the clock is also prepared on probe. Thus instead of using
-runtime PM force suspend/resume APIs use
-clk_disable_unprepare() + pm_runtime_put_noidle() on suspend and
-clk_prepare_enable() + pm_runtime_get_noresume() on resume. This
-approach as been chosen instead of using runtime PM force suspend/resume
-with clk_unprepare()/clk_prepare() as it looks simpler and the final
-code is better.
-
-While at it added the missing pm_runtime_mark_last_busy() on suspend before
-decrementing the reference counter.
+In case there are channels not paused during suspend (which on AT91 case
+is valid for serial driver when no_console_suspend boot argument is used)
+the at_xdmac_runtime_suspend_descriptors() was called more than
+one time due to at_xdmac_off(). To fix this add a new argument to
+at_xdmac_off() to specify if runtime PM reference counter needs to be
+decremented for queued active descriptors. Along with it moved the
+at_xdmac_runtime_suspend_descriptors() call under at_xdmac_chan_is_paused()
+check on suspend path as for the rest of channels the suspend is delayed
+by atmel_xdmac_prepare() in case channel is enabled. Same approach has
+been applied on resume path.
 
 Fixes: 650b0e990cbd ("dmaengine: at_xdmac: add runtime pm support")
 Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230214151827.1050280-2-claudiu.beznea@microchip.com
+Link: https://lore.kernel.org/r/20230214151827.1050280-3-claudiu.beznea@microchip.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/at_xdmac.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/dma/at_xdmac.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
-index 1f0fab180f8f1..f654ecaafb906 100644
+index f654ecaafb906..af3b494f9ba9b 100644
 --- a/drivers/dma/at_xdmac.c
 +++ b/drivers/dma/at_xdmac.c
-@@ -2130,7 +2130,11 @@ static int __maybe_unused atmel_xdmac_suspend(struct device *dev)
- 	atxdmac->save_gim = at_xdmac_read(atxdmac, AT_XDMAC_GIM);
- 
- 	at_xdmac_off(atxdmac);
--	return pm_runtime_force_suspend(atxdmac->dev);
-+	pm_runtime_mark_last_busy(atxdmac->dev);
-+	pm_runtime_put_noidle(atxdmac->dev);
-+	clk_disable_unprepare(atxdmac->clk);
-+
-+	return 0;
+@@ -412,7 +412,7 @@ static bool at_xdmac_chan_is_enabled(struct at_xdmac_chan *atchan)
+ 	return ret;
  }
  
- static int __maybe_unused atmel_xdmac_resume(struct device *dev)
-@@ -2142,10 +2146,12 @@ static int __maybe_unused atmel_xdmac_resume(struct device *dev)
- 	int			i;
- 	int ret;
+-static void at_xdmac_off(struct at_xdmac *atxdmac)
++static void at_xdmac_off(struct at_xdmac *atxdmac, bool suspend_descriptors)
+ {
+ 	struct dma_chan		*chan, *_chan;
+ 	struct at_xdmac_chan	*atchan;
+@@ -431,7 +431,7 @@ static void at_xdmac_off(struct at_xdmac *atxdmac)
+ 	at_xdmac_write(atxdmac, AT_XDMAC_GID, -1L);
  
--	ret = pm_runtime_force_resume(atxdmac->dev);
--	if (ret < 0)
-+	ret = clk_prepare_enable(atxdmac->clk);
-+	if (ret)
- 		return ret;
+ 	/* Decrement runtime PM ref counter for each active descriptor. */
+-	if (!list_empty(&atxdmac->dma.channels)) {
++	if (!list_empty(&atxdmac->dma.channels) && suspend_descriptors) {
+ 		list_for_each_entry_safe(chan, _chan, &atxdmac->dma.channels,
+ 					 device_node) {
+ 			atchan = to_at_xdmac_chan(chan);
+@@ -2118,18 +2118,18 @@ static int __maybe_unused atmel_xdmac_suspend(struct device *dev)
  
-+	pm_runtime_get_noresume(atxdmac->dev);
-+
- 	at_xdmac_axi_config(pdev);
+ 		atchan->save_cc = at_xdmac_chan_read(atchan, AT_XDMAC_CC);
+ 		if (at_xdmac_chan_is_cyclic(atchan)) {
+-			if (!at_xdmac_chan_is_paused(atchan))
++			if (!at_xdmac_chan_is_paused(atchan)) {
+ 				at_xdmac_device_pause(chan);
++				at_xdmac_runtime_suspend_descriptors(atchan);
++			}
+ 			atchan->save_cim = at_xdmac_chan_read(atchan, AT_XDMAC_CIM);
+ 			atchan->save_cnda = at_xdmac_chan_read(atchan, AT_XDMAC_CNDA);
+ 			atchan->save_cndc = at_xdmac_chan_read(atchan, AT_XDMAC_CNDC);
+ 		}
+-
+-		at_xdmac_runtime_suspend_descriptors(atchan);
+ 	}
+ 	atxdmac->save_gim = at_xdmac_read(atxdmac, AT_XDMAC_GIM);
  
- 	/* Clear pending interrupts. */
+-	at_xdmac_off(atxdmac);
++	at_xdmac_off(atxdmac, false);
+ 	pm_runtime_mark_last_busy(atxdmac->dev);
+ 	pm_runtime_put_noidle(atxdmac->dev);
+ 	clk_disable_unprepare(atxdmac->clk);
+@@ -2165,14 +2165,14 @@ static int __maybe_unused atmel_xdmac_resume(struct device *dev)
+ 	list_for_each_entry_safe(chan, _chan, &atxdmac->dma.channels, device_node) {
+ 		atchan = to_at_xdmac_chan(chan);
+ 
+-		ret = at_xdmac_runtime_resume_descriptors(atchan);
+-		if (ret < 0)
+-			return ret;
+-
+ 		at_xdmac_chan_write(atchan, AT_XDMAC_CC, atchan->save_cc);
+ 		if (at_xdmac_chan_is_cyclic(atchan)) {
+-			if (at_xdmac_chan_is_paused(atchan))
++			if (at_xdmac_chan_is_paused(atchan)) {
++				ret = at_xdmac_runtime_resume_descriptors(atchan);
++				if (ret < 0)
++					return ret;
+ 				at_xdmac_device_resume(chan);
++			}
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CNDA, atchan->save_cnda);
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CNDC, atchan->save_cndc);
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CIE, atchan->save_cim);
+@@ -2318,7 +2318,7 @@ static int at_xdmac_probe(struct platform_device *pdev)
+ 	INIT_LIST_HEAD(&atxdmac->dma.channels);
+ 
+ 	/* Disable all chans and interrupts. */
+-	at_xdmac_off(atxdmac);
++	at_xdmac_off(atxdmac, true);
+ 
+ 	for (i = 0; i < nr_channels; i++) {
+ 		struct at_xdmac_chan *atchan = &atxdmac->chan[i];
+@@ -2382,7 +2382,7 @@ static int at_xdmac_remove(struct platform_device *pdev)
+ 	struct at_xdmac	*atxdmac = (struct at_xdmac *)platform_get_drvdata(pdev);
+ 	int		i;
+ 
+-	at_xdmac_off(atxdmac);
++	at_xdmac_off(atxdmac, true);
+ 	of_dma_controller_free(pdev->dev.of_node);
+ 	dma_async_device_unregister(&atxdmac->dma);
+ 	pm_runtime_disable(atxdmac->dev);
 -- 
 2.39.2
 
