@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06C0168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242F0C433EF;
-	Mon,  8 May 2023 11:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92F8168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE19C433D2;
+	Mon,  8 May 2023 11:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544331;
-	bh=yOqpS3YhiBeQh3SMvS0w9c23/0OzxPWSez7K9On06bE=;
+	s=korg; t=1683544334;
+	bh=ee2Tf2PlDpqy3JmwMMzh4sGSIFeCaaBC7Nsyb0MvsTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShSGfNPekFKtnIyp3zAVNVXBgeQkUY9Of+khpqJbFGIUvjOT69Of1FfiWm54xvLU1
-	 dx14lLcME2NZluwyjM0zKu+jMT/Cw1Ln58S5dt5r/iWj1DDTBh3nHnrhBMf5UrNlza
-	 H+y+WMJGuqj+dYxCumMU/4xPASvOdlAx7CZ0c7p8=
+	b=z6rnQu7a3aEG9I3bTaumSRDnYKjfsx4f4o6q517rq3/mVl6tlFwVqgodq1LFyuQCd
+	 ofQQS0SWdVFdxxrOvBXX8HRmmxHHqfSJzWLIFy8CjGujRMBzLj9EhXMmVJXM1WJ8xl
+	 Mrk4D6vs9yg1b9+2jpRt+6XL9U9av0L3chmOkuRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	David Vernet <void@manifault.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 375/694] f2fs: fix scheduling while atomic in decompression path
-Date: Mon,  8 May 2023 11:43:30 +0200
-Message-Id: <20230508094445.035091067@linuxfoundation.org>
+Subject: [PATCH 6.3 349/694] bpf: Free struct bpf_cpumask in call_rcu handler
+Date: Mon,  8 May 2023 11:43:04 +0200
+Message-Id: <20230508094443.914625781@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,108 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: David Vernet <void@manifault.com>
 
-[ Upstream commit 1aa161e43106d46ca8e9a86f4aa28d420258134b ]
+[ Upstream commit 77473d1a962f3d4f7ba48324502b6d27b8ef2591 ]
 
-[   16.945668][    C0] Call trace:
-[   16.945678][    C0]  dump_backtrace+0x110/0x204
-[   16.945706][    C0]  dump_stack_lvl+0x84/0xbc
-[   16.945735][    C0]  __schedule_bug+0xb8/0x1ac
-[   16.945756][    C0]  __schedule+0x724/0xbdc
-[   16.945778][    C0]  schedule+0x154/0x258
-[   16.945793][    C0]  bit_wait_io+0x48/0xa4
-[   16.945808][    C0]  out_of_line_wait_on_bit+0x114/0x198
-[   16.945824][    C0]  __sync_dirty_buffer+0x1f8/0x2e8
-[   16.945853][    C0]  __f2fs_commit_super+0x140/0x1f4
-[   16.945881][    C0]  f2fs_commit_super+0x110/0x28c
-[   16.945898][    C0]  f2fs_handle_error+0x1f4/0x2f4
-[   16.945917][    C0]  f2fs_decompress_cluster+0xc4/0x450
-[   16.945942][    C0]  f2fs_end_read_compressed_page+0xc0/0xfc
-[   16.945959][    C0]  f2fs_handle_step_decompress+0x118/0x1cc
-[   16.945978][    C0]  f2fs_read_end_io+0x168/0x2b0
-[   16.945993][    C0]  bio_endio+0x25c/0x2c8
-[   16.946015][    C0]  dm_io_dec_pending+0x3e8/0x57c
-[   16.946052][    C0]  clone_endio+0x134/0x254
-[   16.946069][    C0]  bio_endio+0x25c/0x2c8
-[   16.946084][    C0]  blk_update_request+0x1d4/0x478
-[   16.946103][    C0]  scsi_end_request+0x38/0x4cc
-[   16.946129][    C0]  scsi_io_completion+0x94/0x184
-[   16.946147][    C0]  scsi_finish_command+0xe8/0x154
-[   16.946164][    C0]  scsi_complete+0x90/0x1d8
-[   16.946181][    C0]  blk_done_softirq+0xa4/0x11c
-[   16.946198][    C0]  _stext+0x184/0x614
-[   16.946214][    C0]  __irq_exit_rcu+0x78/0x144
-[   16.946234][    C0]  handle_domain_irq+0xd4/0x154
-[   16.946260][    C0]  gic_handle_irq.33881+0x5c/0x27c
-[   16.946281][    C0]  call_on_irq_stack+0x40/0x70
-[   16.946298][    C0]  do_interrupt_handler+0x48/0xa4
-[   16.946313][    C0]  el1_interrupt+0x38/0x68
-[   16.946346][    C0]  el1h_64_irq_handler+0x20/0x30
-[   16.946362][    C0]  el1h_64_irq+0x78/0x7c
-[   16.946377][    C0]  finish_task_switch+0xc8/0x3d8
-[   16.946394][    C0]  __schedule+0x600/0xbdc
-[   16.946408][    C0]  preempt_schedule_common+0x34/0x5c
-[   16.946423][    C0]  preempt_schedule+0x44/0x48
-[   16.946438][    C0]  process_one_work+0x30c/0x550
-[   16.946456][    C0]  worker_thread+0x414/0x8bc
-[   16.946472][    C0]  kthread+0x16c/0x1e0
-[   16.946486][    C0]  ret_from_fork+0x10/0x20
+The struct bpf_cpumask type uses the bpf_mem_cache_{alloc,free}() APIs
+to allocate and free its cpumasks. The bpf_mem allocator may currently
+immediately reuse some memory when its freed, without waiting for an RCU
+read cycle to elapse. We want to be able to treat struct bpf_cpumask
+objects as completely RCU safe.
 
-Fixes: bff139b49d9f ("f2fs: handle decompress only post processing in softirq")
-Fixes: 95fa90c9e5a7 ("f2fs: support recording errors into superblock")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+This is necessary for two reasons:
+
+1. bpf_cpumask_kptr_get() currently does an RCU-protected
+   refcnt_inc_not_zero(). This of course assumes that the underlying
+   memory is not reused, and is therefore unsafe in its current form.
+
+2. We want to be able to get rid of bpf_cpumask_kptr_get() entirely, and
+   intead use the superior kptr RCU semantics now afforded by the
+   verifier.
+
+This patch fixes (1), and enables (2), by making struct bpf_cpumask RCU
+safe. A subsequent patch will update the verifier to allow struct
+bpf_cpumask * pointers to be passed to KF_RCU kfuncs, and then a latter
+patch will remove bpf_cpumask_kptr_get().
+
+Fixes: 516f4d3397c9 ("bpf: Enable cpumasks to be queried and used as kptrs")
+Signed-off-by: David Vernet <void@manifault.com>
+Link: https://lore.kernel.org/r/20230316054028.88924-2-void@manifault.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 7 ++++++-
- fs/f2fs/f2fs.h     | 1 +
- fs/f2fs/super.c    | 2 +-
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ kernel/bpf/cpumask.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index ff7db6c4ee134..25f8162d292da 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -755,7 +755,12 @@ void f2fs_decompress_cluster(struct decompress_io_ctx *dic, bool in_task)
+diff --git a/kernel/bpf/cpumask.c b/kernel/bpf/cpumask.c
+index 2b3fbbfebdc5f..c08132caca33d 100644
+--- a/kernel/bpf/cpumask.c
++++ b/kernel/bpf/cpumask.c
+@@ -9,6 +9,7 @@
+ /**
+  * struct bpf_cpumask - refcounted BPF cpumask wrapper structure
+  * @cpumask:	The actual cpumask embedded in the struct.
++ * @rcu:	The RCU head used to free the cpumask with RCU safety.
+  * @usage:	Object reference counter. When the refcount goes to 0, the
+  *		memory is released back to the BPF allocator, which provides
+  *		RCU safety.
+@@ -24,6 +25,7 @@
+  */
+ struct bpf_cpumask {
+ 	cpumask_t cpumask;
++	struct rcu_head rcu;
+ 	refcount_t usage;
+ };
  
- 	if (dic->clen > PAGE_SIZE * dic->nr_cpages - COMPRESS_HEADER_SIZE) {
- 		ret = -EFSCORRUPTED;
--		f2fs_handle_error(sbi, ERROR_FAIL_DECOMPRESSION);
-+
-+		/* Avoid f2fs_commit_super in irq context */
-+		if (in_task)
-+			f2fs_save_errors(sbi, ERROR_FAIL_DECOMPRESSION);
-+		else
-+			f2fs_handle_error(sbi, ERROR_FAIL_DECOMPRESSION);
- 		goto out_release;
- 	}
- 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index b0ab2062038a0..620343c65ab67 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -3554,6 +3554,7 @@ int f2fs_quota_sync(struct super_block *sb, int type);
- loff_t max_file_blocks(struct inode *inode);
- void f2fs_quota_off_umount(struct super_block *sb);
- void f2fs_handle_stop(struct f2fs_sb_info *sbi, unsigned char reason);
-+void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag);
- void f2fs_handle_error(struct f2fs_sb_info *sbi, unsigned char error);
- int f2fs_commit_super(struct f2fs_sb_info *sbi, bool recover);
- int f2fs_sync_fs(struct super_block *sb, int sync);
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index fbaaabbcd6de7..5c1c3a84501fe 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -3885,7 +3885,7 @@ void f2fs_handle_stop(struct f2fs_sb_info *sbi, unsigned char reason)
- 	f2fs_up_write(&sbi->sb_lock);
+@@ -108,6 +110,16 @@ __bpf_kfunc struct bpf_cpumask *bpf_cpumask_kptr_get(struct bpf_cpumask **cpumas
+ 	return cpumask;
  }
  
--static void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag)
-+void f2fs_save_errors(struct f2fs_sb_info *sbi, unsigned char flag)
- {
- 	spin_lock(&sbi->error_lock);
- 	if (!test_bit(flag, (unsigned long *)sbi->errors)) {
++static void cpumask_free_cb(struct rcu_head *head)
++{
++	struct bpf_cpumask *cpumask;
++
++	cpumask = container_of(head, struct bpf_cpumask, rcu);
++	migrate_disable();
++	bpf_mem_cache_free(&bpf_cpumask_ma, cpumask);
++	migrate_enable();
++}
++
+ /**
+  * bpf_cpumask_release() - Release a previously acquired BPF cpumask.
+  * @cpumask: The cpumask being released.
+@@ -121,11 +133,8 @@ __bpf_kfunc void bpf_cpumask_release(struct bpf_cpumask *cpumask)
+ 	if (!cpumask)
+ 		return;
+ 
+-	if (refcount_dec_and_test(&cpumask->usage)) {
+-		migrate_disable();
+-		bpf_mem_cache_free(&bpf_cpumask_ma, cpumask);
+-		migrate_enable();
+-	}
++	if (refcount_dec_and_test(&cpumask->usage))
++		call_rcu(&cpumask->rcu, cpumask_free_cb);
+ }
+ 
+ /**
 -- 
 2.39.2
 
