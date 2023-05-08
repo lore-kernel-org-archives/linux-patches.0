@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0919A168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6338FC433EF;
-	Mon,  8 May 2023 10:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513E1168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746CDC433D2;
+	Mon,  8 May 2023 10:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541433;
-	bh=n1IcSOAvQll2yh0jpLbA8jk4DZOpWW+3pcW7KM2DQYU=;
+	s=korg; t=1683541437;
+	bh=vaDW+pMskZ06wVM0nSA+WW0HTIbPuEn+CC9mZ315wMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=retWQJR3alQF76j/nbigfJ4uQr4+Fc8DCoGZeN8Jhjd8qpbRjozO8XvIkGffRt/JA
-	 Jzrr6LJ9ym1fhGHakMnNLNc+BLSPz4CgBL+1wthSJCFU5qyV0/OlSV/P8OM5B4+Dpe
-	 GM6Z1Wp9yA8vSHKAdm2DryHhO6sKOikTEFiHjj1U=
+	b=qgiNRXddOmbh3+L/xkck9VPrbqQKnV2lWGao1Kp1fKicHGLGlkP0MuSKj1xhRKTOW
+	 uZh1aJcCVfISIp/OwBQ1TlFDbXpp3o15c7KLd7/O6W3N/5V5N3JT86LfEgnPhSlG65
+	 QWHlM+ToT2EfUoud8VxriLTGvQMMtcH69/PEQenU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.2 114/663] bus: mhi: host: Range check CHDBOFF and ERDBOFF
-Date: Mon,  8 May 2023 11:39:00 +0200
-Message-Id: <20230508094432.199784209@linuxfoundation.org>
+	Reid Tonking <reidt@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.2 097/663] i2c: omap: Fix standard mode false ACK readings
+Date: Mon,  8 May 2023 11:38:43 +0200
+Message-Id: <20230508094431.602288149@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,54 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+From: Reid Tonking <reidt@ti.com>
 
-commit 6a0c637bfee69a74c104468544d9f2a6579626d0 upstream.
+commit c770657bd2611b077ec1e7b1fe6aa92f249399bd upstream.
 
-If the value read from the CHDBOFF and ERDBOFF registers is outside the
-range of the MHI register space then an invalid address might be computed
-which later causes a kernel panic.  Range check the read value to prevent
-a crash due to bad data from the device.
+Using standard mode, rare false ACK responses were appearing with
+i2cdetect tool. This was happening due to NACK interrupt triggering
+ISR thread before register access interrupt was ready. Removing the
+NACK interrupt's ability to trigger ISR thread lets register access
+ready interrupt do this instead.
 
-Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://lore.kernel.org/r/1679674384-27209-1-git-send-email-quic_jhugo@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: <stable@vger.kernel.org> # v3.7+
+Fixes: 3b2f8f82dad7 ("i2c: omap: switch to threaded IRQ support")
+Signed-off-by: Reid Tonking <reidt@ti.com>
+Acked-by: Vignesh Raghavendra <vigneshr@ti.com>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/init.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/i2c/busses/i2c-omap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -516,6 +516,12 @@ int mhi_init_mmio(struct mhi_controller
- 		return -EIO;
- 	}
+--- a/drivers/i2c/busses/i2c-omap.c
++++ b/drivers/i2c/busses/i2c-omap.c
+@@ -1058,7 +1058,7 @@ omap_i2c_isr(int irq, void *dev_id)
+ 	u16 stat;
  
-+	if (val >= mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB)) {
-+		dev_err(dev, "CHDB offset: 0x%x is out of range: 0x%zx\n",
-+			val, mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB));
-+		return -ERANGE;
-+	}
-+
- 	/* Setup wake db */
- 	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
- 	mhi_cntrl->wake_set = false;
-@@ -532,6 +538,12 @@ int mhi_init_mmio(struct mhi_controller
- 		return -EIO;
- 	}
+ 	stat = omap_i2c_read_reg(omap, OMAP_I2C_STAT_REG);
+-	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG);
++	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG) & ~OMAP_I2C_STAT_NACK;
  
-+	if (val >= mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings)) {
-+		dev_err(dev, "ERDB offset: 0x%x is out of range: 0x%zx\n",
-+			val, mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings));
-+		return -ERANGE;
-+	}
-+
- 	/* Setup event db address for each ev_ring */
- 	mhi_event = mhi_cntrl->mhi_event;
- 	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, val += 8, mhi_event++) {
+ 	if (stat & mask)
+ 		ret = IRQ_WAKE_THREAD;
 
 
