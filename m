@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62158125B6
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D558FC433D2;
-	Mon,  8 May 2023 11:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E023313AE0
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:00:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78FDC433D2;
+	Mon,  8 May 2023 11:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543603;
-	bh=OHs6TpBgypNBA9W8AcNr7xMM8GZpMB6ixPocoqwR4Ho=;
+	s=korg; t=1683543609;
+	bh=TEaVhIydNQnLKiXJhWZpgFVvnkilYZ6X5krCV07KMXs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mD2NhhKkjPOSxSsJkdqvgo4RWAduELD9C4aslmbRfqJiCUZRwSt6zqyBuYajjcdJT
-	 iNcpmZvZKMIiwIWOGpc2FACkx32rll0Qcf4VHgLHf48UOLV9fE5bIFbd47+AEDVUdq
-	 09punt3Kk0fW0hJbx4DxPkerKPatrV2FpFlmaXmA=
+	b=nSayjb7o1BOnkvd4OBGq+jLCcUZrKp+r0IzaBgy6m7nVHy43qrvWMk/bfHdB4Ivda
+	 LV7VNDbzr7YIWTnTotnNPNWLg4bbdvyzTjPzymxKaHzAfdCwRpxCtPGeDJxrXEeTb1
+	 9qDJA4VjJ+nXslBvYTD2lShcsQ1h5W/ZhujYBjxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Logan Gunthorpe <logang@deltatee.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.3 113/694] md/raid5: Improve performance for sequential IO
-Date: Mon,  8 May 2023 11:39:08 +0200
-Message-Id: <20230508094436.137020985@linuxfoundation.org>
+	Michael Walle <michael@walle.cc>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.3 115/694] mtd: core: provide unique name for nvmem device, take two
+Date: Mon,  8 May 2023 11:39:10 +0200
+Message-Id: <20230508094436.205100643@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,119 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Michael Walle <michael@walle.cc>
 
-commit fc05e06e6098ca2c28f7a10da0e00aeea20fa59e upstream.
+commit 1cd9ceaa5282ff10ea20a7fbadde5a476a1cc99e upstream.
 
-Commit 7e55c60acfbb ("md/raid5: Pivot raid5_make_request()") changed the
-order in which requests for underlying disks are created. Since for
-large sequential IO adding of requests frequently races with md_raid5
-thread submitting bios to underlying disks, this results in a change in
-IO pattern because intermediate states of new order of request creation
-result in more smaller discontiguous requests. For RAID5 on top of three
-rotational disks our performance testing revealed this results in
-regression in write throughput:
+Commit c048b60d39e1 ("mtd: core: provide unique name for nvmem device")
+tries to give the nvmem device a unique name, but fails badly if the mtd
+device doesn't have a "struct device" associated with it, i.e. if
+CONFIG_MTD_PARTITIONED_MASTER is not set. This will result in the name
+"(null)-user-otp", which is not unique. It seems the best we can do is
+to use the compatible name together with a unique identifier added by
+the nvmem subsystem by using NVMEM_DEVID_AUTO.
 
-iozone -a -s 131072000 -y 4 -q 8 -i 0 -i 1 -R
-
-before 7e55c60acfbb:
-              KB  reclen   write rewrite    read    reread
-       131072000       4  493670  525964   524575   513384
-       131072000       8  540467  532880   512028   513703
-
-after 7e55c60acfbb:
-              KB  reclen   write rewrite    read    reread
-       131072000       4  421785  456184   531278   509248
-       131072000       8  459283  456354   528449   543834
-
-To reduce the amount of discontiguous requests we can start generating
-requests with the stripe with the lowest chunk offset as that has the
-best chance of being adjacent to IO queued previously. This improves the
-performance to:
-              KB  reclen   write rewrite    read    reread
-       131072000       4  497682  506317   518043   514559
-       131072000       8  514048  501886   506453   504319
-
-restoring big part of the regression.
-
-Fixes: 7e55c60acfbb ("md/raid5: Pivot raid5_make_request()")
-Cc: stable@vger.kernel.org # v6.0+
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Logan Gunthorpe <logang@deltatee.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230417171537.17899-1-jack@suse.cz
+Fixes: c048b60d39e1 ("mtd: core: provide unique name for nvmem device")
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20230308082021.870459-1-michael@walle.cc
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid5.c |   45 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 44 insertions(+), 1 deletion(-)
+ drivers/mtd/mtdcore.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -6079,6 +6079,38 @@ out_release:
- 	return ret;
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -888,8 +888,8 @@ static struct nvmem_device *mtd_otp_nvme
+ 
+ 	/* OTP nvmem will be registered on the physical device */
+ 	config.dev = mtd->dev.parent;
+-	config.name = kasprintf(GFP_KERNEL, "%s-%s", dev_name(&mtd->dev), compatible);
+-	config.id = NVMEM_DEVID_NONE;
++	config.name = compatible;
++	config.id = NVMEM_DEVID_AUTO;
+ 	config.owner = THIS_MODULE;
+ 	config.type = NVMEM_TYPE_OTP;
+ 	config.root_only = true;
+@@ -905,7 +905,6 @@ static struct nvmem_device *mtd_otp_nvme
+ 		nvmem = NULL;
+ 
+ 	of_node_put(np);
+-	kfree(config.name);
+ 
+ 	return nvmem;
  }
- 
-+/*
-+ * If the bio covers multiple data disks, find sector within the bio that has
-+ * the lowest chunk offset in the first chunk.
-+ */
-+static sector_t raid5_bio_lowest_chunk_sector(struct r5conf *conf,
-+					      struct bio *bi)
-+{
-+	int sectors_per_chunk = conf->chunk_sectors;
-+	int raid_disks = conf->raid_disks;
-+	int dd_idx;
-+	struct stripe_head sh;
-+	unsigned int chunk_offset;
-+	sector_t r_sector = bi->bi_iter.bi_sector & ~((sector_t)RAID5_STRIPE_SECTORS(conf)-1);
-+	sector_t sector;
-+
-+	/* We pass in fake stripe_head to get back parity disk numbers */
-+	sector = raid5_compute_sector(conf, r_sector, 0, &dd_idx, &sh);
-+	chunk_offset = sector_div(sector, sectors_per_chunk);
-+	if (sectors_per_chunk - chunk_offset >= bio_sectors(bi))
-+		return r_sector;
-+	/*
-+	 * Bio crosses to the next data disk. Check whether it's in the same
-+	 * chunk.
-+	 */
-+	dd_idx++;
-+	while (dd_idx == sh.pd_idx || dd_idx == sh.qd_idx)
-+		dd_idx++;
-+	if (dd_idx >= raid_disks)
-+		return r_sector;
-+	return r_sector + sectors_per_chunk - chunk_offset;
-+}
-+
- static bool raid5_make_request(struct mddev *mddev, struct bio * bi)
- {
- 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
-@@ -6150,6 +6182,17 @@ static bool raid5_make_request(struct md
- 	}
- 	md_account_bio(mddev, &bi);
- 
-+	/*
-+	 * Lets start with the stripe with the lowest chunk offset in the first
-+	 * chunk. That has the best chances of creating IOs adjacent to
-+	 * previous IOs in case of sequential IO and thus creates the most
-+	 * sequential IO pattern. We don't bother with the optimization when
-+	 * reshaping as the performance benefit is not worth the complexity.
-+	 */
-+	if (likely(conf->reshape_progress == MaxSector))
-+		logical_sector = raid5_bio_lowest_chunk_sector(conf, bi);
-+	s = (logical_sector - ctx.first_sector) >> RAID5_STRIPE_SHIFT(conf);
-+
- 	add_wait_queue(&conf->wait_for_overlap, &wait);
- 	while (1) {
- 		res = make_stripe_request(mddev, conf, &ctx, logical_sector,
-@@ -6178,7 +6221,7 @@ static bool raid5_make_request(struct md
- 			continue;
- 		}
- 
--		s = find_first_bit(ctx.sectors_to_do, stripe_cnt);
-+		s = find_next_bit_wrap(ctx.sectors_to_do, stripe_cnt, s);
- 		if (s == stripe_cnt)
- 			break;
- 
 
 
