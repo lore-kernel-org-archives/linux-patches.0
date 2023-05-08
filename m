@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96CE8171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB08C433D2;
-	Mon,  8 May 2023 11:38:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793E3171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D9CC433D2;
+	Mon,  8 May 2023 11:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545881;
-	bh=NMYUbi9jjr4zmYoL0WvPj5HLGrlO1pCVfP9HqywaE4E=;
+	s=korg; t=1683545884;
+	bh=nWdde6/rxppFNFihixM8VfLxuonY0FYYC585ZxjUTjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZdEkKqQ67spPvdcwoLe92/fMVzNr4Cna86BS8BZw2yMM9wdCn08XHOrokF3dm96XE
-	 Dhs/CjNQAo71pxQ0m9f7JamTO9VHbs92UIWWw2p2dyAXTOoktrAZ/5YeCZLotzbVv/
-	 +H411POgCTvf6T43ika6+cipBZqvaGjzfRs0Mqw0=
+	b=BZ1nvHNyQrP/qImEQPoJndYVJMgCyt23GVKrRbxxOcibjUDPLn4/bELGYueoTFSRG
+	 PqIYXF3Ple9QXRhMDBhvtVkQDr/o7x6vVs0fhurA3CidOvFSQ9OmZIXPknzkgc1Yjq
+	 dBSzTR9dRaPd3C56llEfDPyHkZOrHwPxSwsYW24I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Stange <nstange@suse.de>,
-	=?UTF-8?q?Stephan=20M=C3=BCller?= <smueller@chronox.de>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
+	Stephan Mueller <smueller@chronox.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 184/371] crypto: drbg - make drbg_prepare_hrng() handle jent instantiation errors
-Date: Mon,  8 May 2023 11:46:25 +0200
-Message-Id: <20230508094819.443064052@linuxfoundation.org>
+Subject: [PATCH 5.15 185/371] crypto: drbg - Only fail when jent is unavailable in FIPS mode
+Date: Mon,  8 May 2023 11:46:26 +0200
+Message-Id: <20230508094819.475590187@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,62 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolai Stange <nstange@suse.de>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-[ Upstream commit 559edd47cce4cc407d606b4d7f376822816fd4b8 ]
+[ Upstream commit 686cd976b6ddedeeb1a1fb09ba53a891d3cc9a03 ]
 
-Now that drbg_prepare_hrng() doesn't do anything but to instantiate a
-jitterentropy crypto_rng instance, it looks a little odd to have the
-related error handling at its only caller, drbg_instantiate().
+When jent initialisation fails for any reason other than ENOENT,
+the entire drbg fails to initialise, even when we're not in FIPS
+mode.  This is wrong because we can still use the kernel RNG when
+we're not in FIPS mode.
 
-Move the handling of jitterentropy allocation failures from
-drbg_instantiate() close to the allocation itself in drbg_prepare_hrng().
+Change it so that it only fails when we are in FIPS mode.
 
-There is no change in behaviour.
-
-Signed-off-by: Nicolai Stange <nstange@suse.de>
-Reviewed-by: Stephan Müller <smueller@chronox.de>
+Fixes: 57225e679788 ("crypto: drbg - Use callback API for random readiness")
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 686cd976b6dd ("crypto: drbg - Only fail when jent is unavailable in FIPS mode")
+Reviewed-by: Stephan Mueller <smueller@chronox.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/drbg.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ crypto/drbg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/crypto/drbg.c b/crypto/drbg.c
-index 761104e93d44a..c89e26e677404 100644
+index c89e26e677404..44b0a7f624021 100644
 --- a/crypto/drbg.c
 +++ b/crypto/drbg.c
-@@ -1516,6 +1516,14 @@ static int drbg_prepare_hrng(struct drbg_state *drbg)
- 		return 0;
+@@ -1520,7 +1520,7 @@ static int drbg_prepare_hrng(struct drbg_state *drbg)
+ 		const int err = PTR_ERR(drbg->jent);
  
- 	drbg->jent = crypto_alloc_rng("jitterentropy_rng", 0, 0);
-+	if (IS_ERR(drbg->jent)) {
-+		const int err = PTR_ERR(drbg->jent);
-+
-+		drbg->jent = NULL;
-+		if (fips_enabled || err != -ENOENT)
-+			return err;
-+		pr_info("DRBG: Continuing without Jitter RNG\n");
-+	}
- 
- 	return 0;
- }
-@@ -1571,14 +1579,6 @@ static int drbg_instantiate(struct drbg_state *drbg, struct drbg_string *pers,
- 		if (ret)
- 			goto free_everything;
- 
--		if (IS_ERR(drbg->jent)) {
--			ret = PTR_ERR(drbg->jent);
--			drbg->jent = NULL;
--			if (fips_enabled || ret != -ENOENT)
--				goto free_everything;
--			pr_info("DRBG: Continuing without Jitter RNG\n");
--		}
--
- 		reseed = false;
+ 		drbg->jent = NULL;
+-		if (fips_enabled || err != -ENOENT)
++		if (fips_enabled)
+ 			return err;
+ 		pr_info("DRBG: Continuing without Jitter RNG\n");
  	}
- 
 -- 
 2.39.2
 
