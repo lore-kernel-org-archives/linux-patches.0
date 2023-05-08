@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E40FC1549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:53:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A581C433EF;
-	Mon,  8 May 2023 09:53:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F4C1549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:53:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 753F3C433D2;
+	Mon,  8 May 2023 09:53:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539582;
-	bh=AXJkpZ9JRhjiJl1jigINIdJrv4oj98063XQaj7pNkds=;
+	s=korg; t=1683539585;
+	bh=nB9bG0a5cgbvIKW0IeYIsGReD1qGJ8dnKPJie26WJZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LQxoACYgV+w80+npVR99nOwLu9WotM29q0E4znBXJHHZG+0H2SV18sWv2ZixbGqLy
-	 mWExpsP4EJrpZJfIp8b+v06/I+bONeeWEeby3xOijIc/rpT0CDtd7z7orgKG53dpqr
-	 eQaksU/D86mPV+TCx0F7+1vXz8chG0zP0uNCD62w=
+	b=xkZIsQ3106kCF3nRVwD+HmUCLmFKm6f8QHJfYEiOJWkVp7MdR/YfUH9bWeoKKTImK
+	 OzqAKIM+I+0VE6/IOqxTMSllB86x5RgKP50WCzksPVF5b4BFrAIRmNAik+wZC1iuq/
+	 ZA7wjOMNzX83xvLBwPBkFr1Rp0EdhbEkuBCRzKZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 039/611] media: ov8856: Do not check for for module version
-Date: Mon,  8 May 2023 11:38:01 +0200
-Message-Id: <20230508094423.089371143@linuxfoundation.org>
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 040/611] blk-stat: fix QUEUE_FLAG_STATS clear
+Date: Mon,  8 May 2023 11:38:02 +0200
+Message-Id: <20230508094423.123448873@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,78 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Chengming Zhou <zhouchengming@bytedance.com>
 
-commit 5a4e1b5aed2a36a10d6a3b30fafb6b3bf41c3186 upstream.
+commit 20de765f6d9da0c47b756429c60b41063b990a10 upstream.
 
-It the device is probed in non-zero ACPI D state, the module
-identification is delayed until the first streamon.
+We need to set QUEUE_FLAG_STATS for two cases:
+1. blk_stat_enable_accounting()
+2. blk_stat_add_callback()
 
-The module identification has two parts: deviceID and version. To rea
-the version we have to enable OTP read. This cannot be done during
-streamon, becase it modifies REG_MODE_SELECT.
+So we should clear it only when ((q->stats->accounting == 0) &&
+list_empty(&q->stats->callbacks)).
 
-Since the driver has the same behaviour for all the module versions, do
-not read the module version from the sensor's OTP.
+blk_stat_disable_accounting() only check if q->stats->accounting
+is 0 before clear the flag, this patch fix it.
 
-Cc: stable@vger.kernel.org
-Fixes: 0e014f1a8d54 ("media: ov8856: support device probe in non-zero ACPI D state")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Also add list_empty(&q->stats->callbacks)) check when enable, or
+the flag is already set.
+
+The bug can be reproduced on kernel without BLK_DEV_THROTTLING
+(since it unconditionally enable accounting, see the next patch).
+
+  # cat /sys/block/sr0/queue/scheduler
+  none mq-deadline [bfq]
+
+  # cat /sys/kernel/debug/block/sr0/state
+  SAME_COMP|IO_STAT|INIT_DONE|STATS|REGISTERED|NOWAIT|30
+
+  # echo none > /sys/block/sr0/queue/scheduler
+
+  # cat /sys/kernel/debug/block/sr0/state
+  SAME_COMP|IO_STAT|INIT_DONE|REGISTERED|NOWAIT
+
+  # cat /sys/block/sr0/queue/wbt_lat_usec
+  75000
+
+We can see that after changing elevator from "bfq" to "none",
+"STATS" flag is lost even though WBT callback still need it.
+
+Fixes: 68497092bde9 ("block: make queue stat accounting a reference")
+Cc: <stable@vger.kernel.org> # v5.17+
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230413062805.2081970-1-chengming.zhou@linux.dev
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/ov8856.c |   40 ----------------------------------------
- 1 file changed, 40 deletions(-)
+ block/blk-stat.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/media/i2c/ov8856.c
-+++ b/drivers/media/i2c/ov8856.c
-@@ -1709,46 +1709,6 @@ static int ov8856_identify_module(struct
- 		return -ENXIO;
- 	}
+--- a/block/blk-stat.c
++++ b/block/blk-stat.c
+@@ -189,7 +189,7 @@ void blk_stat_disable_accounting(struct
+ 	unsigned long flags;
  
--	ret = ov8856_write_reg(ov8856, OV8856_REG_MODE_SELECT,
--			       OV8856_REG_VALUE_08BIT, OV8856_MODE_STREAMING);
--	if (ret)
--		return ret;
--
--	ret = ov8856_write_reg(ov8856, OV8856_OTP_MODE_CTRL,
--			       OV8856_REG_VALUE_08BIT, OV8856_OTP_MODE_AUTO);
--	if (ret) {
--		dev_err(&client->dev, "failed to set otp mode");
--		return ret;
--	}
--
--	ret = ov8856_write_reg(ov8856, OV8856_OTP_LOAD_CTRL,
--			       OV8856_REG_VALUE_08BIT,
--			       OV8856_OTP_LOAD_CTRL_ENABLE);
--	if (ret) {
--		dev_err(&client->dev, "failed to enable load control");
--		return ret;
--	}
--
--	ret = ov8856_read_reg(ov8856, OV8856_MODULE_REVISION,
--			      OV8856_REG_VALUE_08BIT, &val);
--	if (ret) {
--		dev_err(&client->dev, "failed to read module revision");
--		return ret;
--	}
--
--	dev_info(&client->dev, "OV8856 revision %x (%s) at address 0x%02x\n",
--		 val,
--		 val == OV8856_2A_MODULE ? "2A" :
--		 val == OV8856_1B_MODULE ? "1B" : "unknown revision",
--		 client->addr);
--
--	ret = ov8856_write_reg(ov8856, OV8856_REG_MODE_SELECT,
--			       OV8856_REG_VALUE_08BIT, OV8856_MODE_STANDBY);
--	if (ret) {
--		dev_err(&client->dev, "failed to exit streaming mode");
--		return ret;
--	}
--
- 	ov8856->identified = true;
+ 	spin_lock_irqsave(&q->stats->lock, flags);
+-	if (!--q->stats->accounting)
++	if (!--q->stats->accounting && list_empty(&q->stats->callbacks))
+ 		blk_queue_flag_clear(QUEUE_FLAG_STATS, q);
+ 	spin_unlock_irqrestore(&q->stats->lock, flags);
+ }
+@@ -200,7 +200,7 @@ void blk_stat_enable_accounting(struct r
+ 	unsigned long flags;
  
- 	return 0;
+ 	spin_lock_irqsave(&q->stats->lock, flags);
+-	if (!q->stats->accounting++)
++	if (!q->stats->accounting++ && list_empty(&q->stats->callbacks))
+ 		blk_queue_flag_set(QUEUE_FLAG_STATS, q);
+ 	spin_unlock_irqrestore(&q->stats->lock, flags);
+ }
 
 
