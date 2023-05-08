@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB41168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5635C433D2;
-	Mon,  8 May 2023 11:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A589168C4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:08:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34BEBC433EF;
+	Mon,  8 May 2023 11:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544109;
-	bh=dFo8+hQ+MPyxL2bFbcdotG2r2BdsFswtxkQEm50Bspw=;
+	s=korg; t=1683544113;
+	bh=VXDgDRPaXFJnjVtytghjh/juy7EXzf6f2L6oSo/T/Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3G09Ezx+JfC5CZ01oqxNvYqTP4eGrzu1Kx8P9OmldBq5cM29mrnDhRyvT+fnDNhL
-	 gOGZjCnqRZc9YSLZJa7ITLFv3mRvHEzIlVPJDFXDMf0eEx3cS9tVHqv2qK4jPyV/EB
-	 l0NISYkQzOR7B/GmFNBiU1le5WngU4xqhE40/THQ=
+	b=FaZw6JTJPpRJ8R6FlnJAT2PA7d6YtfhcEeFMt2jbRslomiJYKyYwsbOz7HhqItvjX
+	 pLNID7SgPZPH1n26LWt10aYb4UIhE///z6PjNNyx93cHPlICjmiyIiEqGr3t9oRYfx
+	 t+cvRxT28Wa/0Orb+UJL8yV5Ul98I83GH0UG5eIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Micha=C5=82=20Krawczyk?= <mk@semihalf.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 304/694] media: venus: dec: Fix handling of the start cmd
-Date: Mon,  8 May 2023 11:42:19 +0200
-Message-Id: <20230508094442.154654014@linuxfoundation.org>
+Subject: [PATCH 6.3 305/694] media: venus: dec: Fix capture formats enumeration order
+Date: Mon,  8 May 2023 11:42:20 +0200
+Message-Id: <20230508094442.185479217@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,56 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michał Krawczyk <mk@semihalf.com>
+From: Javier Martinez Canillas <javierm@redhat.com>
 
-[ Upstream commit 50248ad9f190d527cbd578190ca769729518b703 ]
+[ Upstream commit a9d45ec74c8e68aaafe90191928eddbf79f4644f ]
 
-The decoder driver should clear the last_buffer_dequeued flag of the
-capture queue upon receiving V4L2_DEC_CMD_START.
+Commit 9593126dae3e ("media: venus: Add a handling of QC08C compressed
+format") and commit cef92b14e653 ("media: venus: Add a handling of QC10C
+compressed format") added support for the QC08C and QC10C compressed
+formats respectively.
 
-The last_buffer_dequeued flag is set upon receiving EOS (which always
-happens upon receiving V4L2_DEC_CMD_STOP).
+But these also caused a regression, because the new formats where added
+at the beginning of the vdec_formats[] array and the vdec_inst_init()
+function sets the default format output and capture using fixed indexes
+of that array:
 
-Without this patch, after issuing the V4L2_DEC_CMD_STOP and
-V4L2_DEC_CMD_START, the vb2_dqbuf() function will always fail, even if
-the buffers are completed by the hardware.
+static void vdec_inst_init(struct venus_inst *inst)
+{
+...
+	inst->fmt_out = &vdec_formats[8];
+	inst->fmt_cap = &vdec_formats[0];
+...
+}
 
-Fixes: beac82904a87 ("media: venus: make decoder compliant with stateful codec API")
+Since now V4L2_PIX_FMT_NV12 is not the first entry in the array anymore,
+the default capture format is not set to that as it was done before.
 
-Signed-off-by: Michał Krawczyk <mk@semihalf.com>
+Both commits changed the first index to keep inst->fmt_out default format
+set to V4L2_PIX_FMT_H264, but did not update the latter to keep .fmt_out
+default format set to V4L2_PIX_FMT_NV12.
+
+Rather than updating the index to the current V4L2_PIX_FMT_NV12 position,
+let's reorder the entries so that this format is the first entry again.
+
+This would also make VIDIOC_ENUM_FMT report the V4L2_PIX_FMT_NV12 format
+with an index 0 as it did before the QC08C and QC10C formats were added.
+
+Fixes: 9593126dae3e ("media: venus: Add a handling of QC08C compressed format")
+Fixes: cef92b14e653 ("media: venus: Add a handling of QC10C compressed format")
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/media/platform/qcom/venus/vdec.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 4ceaba37e2e57..9d26587716bf6 100644
+index 9d26587716bf6..1a52c2ea2da5b 100644
 --- a/drivers/media/platform/qcom/venus/vdec.c
 +++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -526,6 +526,7 @@ static int
- vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
- {
- 	struct venus_inst *inst = to_inst(file);
-+	struct vb2_queue *dst_vq;
- 	struct hfi_frame_data fdata = {0};
- 	int ret;
- 
-@@ -556,6 +557,13 @@ vdec_decoder_cmd(struct file *file, void *fh, struct v4l2_decoder_cmd *cmd)
- 			inst->codec_state = VENUS_DEC_STATE_DRAIN;
- 			inst->drain_active = true;
- 		}
-+	} else if (cmd->cmd == V4L2_DEC_CMD_START &&
-+		   inst->codec_state == VENUS_DEC_STATE_STOPPED) {
-+		dst_vq = v4l2_m2m_get_vq(inst->fh.m2m_ctx,
-+					 V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
-+		vb2_clear_last_buffer_dequeued(dst_vq);
-+
-+		inst->codec_state = VENUS_DEC_STATE_DECODING;
- 	}
- 
- unlock:
+@@ -31,15 +31,15 @@
+  */
+ static const struct venus_format vdec_formats[] = {
+ 	{
+-		.pixfmt = V4L2_PIX_FMT_QC08C,
++		.pixfmt = V4L2_PIX_FMT_NV12,
+ 		.num_planes = 1,
+ 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+ 	}, {
+-		.pixfmt = V4L2_PIX_FMT_QC10C,
++		.pixfmt = V4L2_PIX_FMT_QC08C,
+ 		.num_planes = 1,
+ 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+-	},{
+-		.pixfmt = V4L2_PIX_FMT_NV12,
++	}, {
++		.pixfmt = V4L2_PIX_FMT_QC10C,
+ 		.num_planes = 1,
+ 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+ 	}, {
 -- 
 2.39.2
 
