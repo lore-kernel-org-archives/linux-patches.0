@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1BB168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B867EC433D2;
-	Mon,  8 May 2023 11:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D317168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F0FC433D2;
+	Mon,  8 May 2023 11:03:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543803;
-	bh=M+Tvs7CRZp08dicHcQz5Te3Kk8VPP5fiNq+T+qHMFUA=;
+	s=korg; t=1683543806;
+	bh=jRLtxG5tSTMrQuSMQyWL7k7PI8ZB0IP2qc5T4CAcYxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2od/TVJprQeUK3yBxpjxc0Lp+3MeMA+0iloS3r9tMfUzDW3LJXXzT+gLULdjgQrp8
-	 SOWWHL80ScwwzSat370C+mDS2yTtq2e42BN6gFAdtJqU5XK8ovyerSlkHthkVHs2ej
-	 tWkFCH0/xlGEq/45D0LnZ4iDsNBE9HY5NpReQ7A4=
+	b=ywWEkjXBVZWIpCvAR/4WVEljxezulhZuY1KSVkK7b+scnRrmEhklHYwyff0QWRxF+
+	 p5G0WYgCQPVSe34oOawf2ssS6Um3+UuPz97KJmtug99IajlXl4iUP+dob5smP4Tk4s
+	 vMO7OKOGb/BqpOU9mErXwPsX88QnOTOEqsJeEP1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 179/694] arm64: dts: qcom: msm8998: Fix stm-stimulus-base reg name
-Date: Mon,  8 May 2023 11:40:14 +0200
-Message-Id: <20230508094438.244132260@linuxfoundation.org>
+Subject: [PATCH 6.3 206/694] media: bdisp: Add missing check for create_workqueue
+Date: Mon,  8 May 2023 11:40:41 +0200
+Message-Id: <20230508094439.064218403@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,35 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit b5d08f08377218b1d2ab4026e427a7788b271c8e ]
+[ Upstream commit 2371adeab717d8fe32144a84f3491a03c5838cfb ]
 
-The name stm-data-base comes from ancient (msm-3.10 or older)
-downstream kernels. Upstream uses stm-stimulus-base instead. Fix it.
+Add the check for the return value of the create_workqueue
+in order to avoid NULL pointer dereference.
 
-Fixes: 783abfa2249a ("arm64: dts: qcom: msm8998: Add Coresight support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230213210331.2106877-1-konrad.dybcio@linaro.org
+Fixes: 28ffeebbb7bd ("[media] bdisp: 2D blitter driver using v4l2 mem2mem framework")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 8bc1c59127e50..adf7258b32695 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1524,7 +1524,7 @@
- 			compatible = "arm,coresight-stm", "arm,primecell";
- 			reg = <0x06002000 0x1000>,
- 			      <0x16280000 0x180000>;
--			reg-names = "stm-base", "stm-data-base";
-+			reg-names = "stm-base", "stm-stimulus-base";
- 			status = "disabled";
+diff --git a/drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c b/drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c
+index dd74cc43920d3..080da254b9109 100644
+--- a/drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c
++++ b/drivers/media/platform/st/sti/bdisp/bdisp-v4l2.c
+@@ -1309,6 +1309,8 @@ static int bdisp_probe(struct platform_device *pdev)
+ 	init_waitqueue_head(&bdisp->irq_queue);
+ 	INIT_DELAYED_WORK(&bdisp->timeout_work, bdisp_irq_timeout);
+ 	bdisp->work_queue = create_workqueue(BDISP_NAME);
++	if (!bdisp->work_queue)
++		return -ENOMEM;
  
- 			clocks = <&rpmcc RPM_SMD_QDSS_CLK>, <&rpmcc RPM_SMD_QDSS_A_CLK>;
+ 	spin_lock_init(&bdisp->slock);
+ 	mutex_init(&bdisp->lock);
 -- 
 2.39.2
 
