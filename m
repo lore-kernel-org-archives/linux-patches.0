@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A3A168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA569C433D2;
-	Mon,  8 May 2023 11:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BCC168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7C8C433EF;
+	Mon,  8 May 2023 11:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543809;
-	bh=wNWmtMDPNyG/bNCrvp1yfDXFETBZtd/ogoSPSsBFXDQ=;
+	s=korg; t=1683543812;
+	bh=LOBuAmjh6DX43wlSYEnAzz956FiqMx7LPlhIGDB2Cng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gwk7ioMpFkPaglv8JEGDFnu/rFiOeUffIKi0PBIQjRmLLtBT1wYCV9yHRCtxghkhI
-	 F6lQfZxyFv1ChB5BoqwFFZglSnqDpJGfRG/9Lf8u93PcD9qy5RZKRFoGTUt4JqGGNh
-	 czu9ItDC4OVR8C/ghqsBE4fOOeH/VMADC0/2cmn0=
+	b=q20LALxdffEeYKnPME0GszulS7GlxoCk5lpdmkYhFY4nFGMkNgv6VfYBhOS28NLiA
+	 AZxIkO2Ssd1XzPUBRVljlvSwT1Bmh94OoU3wRgfrz+YTueep4cYax8u9/RTbIV0Dh6
+	 cIUQl4aBer8jFbvVw3oNdqTzWlB0JX190fU9VSKE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Ming Qian <ming.qian@nxp.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 207/694] media: platform: mtk-mdp3: Add missing check and free for ida_alloc
-Date: Mon,  8 May 2023 11:40:42 +0200
-Message-Id: <20230508094439.093578417@linuxfoundation.org>
+Subject: [PATCH 6.3 208/694] media: amphion: decoder implement display delay enable
+Date: Mon,  8 May 2023 11:40:43 +0200
+Message-Id: <20230508094439.122342657@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,51 +36,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit d00f592250782538cda87745607695b0fe27dcd4 ]
+[ Upstream commit ffa331d9bf9407655fc4c4d57dcc92ed2868e326 ]
 
-Add the check for the return value of the ida_alloc in order to avoid
-NULL pointer dereference.
-Moreover, free allocated "ctx->id" if mdp_m2m_open fails later in order
-to avoid memory leak.
+amphion vpu support a low latency mode,
+when V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE is enabled,
+decoder can display frame immediately after it's decoded.
+Only h264 is support yet.
 
-Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 6de8d628df6e ("media: amphion: add v4l2 m2m vpu decoder stateful driver")
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/media/platform/amphion/vdec.c       | 32 +++++++++++++++++++++
+ drivers/media/platform/amphion/vpu_codec.h  |  3 +-
+ drivers/media/platform/amphion/vpu_malone.c |  4 ++-
+ 3 files changed, 37 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
-index 5f74ea3b7a524..8612a48bde10f 100644
---- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
-+++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-m2m.c
-@@ -566,7 +566,11 @@ static int mdp_m2m_open(struct file *file)
- 		goto err_free_ctx;
+diff --git a/drivers/media/platform/amphion/vdec.c b/drivers/media/platform/amphion/vdec.c
+index 87f9f8e90ab13..70633530d23a1 100644
+--- a/drivers/media/platform/amphion/vdec.c
++++ b/drivers/media/platform/amphion/vdec.c
+@@ -168,7 +168,31 @@ static const struct vpu_format vdec_formats[] = {
+ 	{0, 0, 0, 0},
+ };
+ 
++static int vdec_op_s_ctrl(struct v4l2_ctrl *ctrl)
++{
++	struct vpu_inst *inst = ctrl_to_inst(ctrl);
++	struct vdec_t *vdec = inst->priv;
++	int ret = 0;
++
++	vpu_inst_lock(inst);
++	switch (ctrl->id) {
++	case V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE:
++		vdec->params.display_delay_enable = ctrl->val;
++		break;
++	case V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY:
++		vdec->params.display_delay = ctrl->val;
++		break;
++	default:
++		ret = -EINVAL;
++		break;
++	}
++	vpu_inst_unlock(inst);
++
++	return ret;
++}
++
+ static const struct v4l2_ctrl_ops vdec_ctrl_ops = {
++	.s_ctrl = vdec_op_s_ctrl,
+ 	.g_volatile_ctrl = vpu_helper_g_volatile_ctrl,
+ };
+ 
+@@ -181,6 +205,14 @@ static int vdec_ctrl_init(struct vpu_inst *inst)
+ 	if (ret)
+ 		return ret;
+ 
++	v4l2_ctrl_new_std(&inst->ctrl_handler, &vdec_ctrl_ops,
++			  V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY,
++			  0, 0, 1, 0);
++
++	v4l2_ctrl_new_std(&inst->ctrl_handler, &vdec_ctrl_ops,
++			  V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE,
++			  0, 1, 1, 0);
++
+ 	ctrl = v4l2_ctrl_new_std(&inst->ctrl_handler, &vdec_ctrl_ops,
+ 				 V4L2_CID_MIN_BUFFERS_FOR_CAPTURE, 1, 32, 1, 2);
+ 	if (ctrl)
+diff --git a/drivers/media/platform/amphion/vpu_codec.h b/drivers/media/platform/amphion/vpu_codec.h
+index 528a93f08ecd4..bac6d0d94f8a5 100644
+--- a/drivers/media/platform/amphion/vpu_codec.h
++++ b/drivers/media/platform/amphion/vpu_codec.h
+@@ -55,7 +55,8 @@ struct vpu_encode_params {
+ struct vpu_decode_params {
+ 	u32 codec_format;
+ 	u32 output_format;
+-	u32 b_dis_reorder;
++	u32 display_delay_enable;
++	u32 display_delay;
+ 	u32 b_non_frame;
+ 	u32 frame_count;
+ 	u32 end_flag;
+diff --git a/drivers/media/platform/amphion/vpu_malone.c b/drivers/media/platform/amphion/vpu_malone.c
+index 2c9bfc6a5a72e..feb5c25e31044 100644
+--- a/drivers/media/platform/amphion/vpu_malone.c
++++ b/drivers/media/platform/amphion/vpu_malone.c
+@@ -641,7 +641,9 @@ static int vpu_malone_set_params(struct vpu_shared_addr *shared,
+ 		hc->jpg[instance].jpg_mjpeg_interlaced = 0;
  	}
  
--	ctx->id = ida_alloc(&mdp->mdp_ida, GFP_KERNEL);
-+	ret = ida_alloc(&mdp->mdp_ida, GFP_KERNEL);
-+	if (ret < 0)
-+		goto err_unlock_mutex;
-+	ctx->id = ret;
-+
- 	ctx->mdp_dev = mdp;
+-	hc->codec_param[instance].disp_imm = params->b_dis_reorder ? 1 : 0;
++	hc->codec_param[instance].disp_imm = params->display_delay_enable ? 1 : 0;
++	if (malone_format != MALONE_FMT_AVC)
++		hc->codec_param[instance].disp_imm = 0;
+ 	hc->codec_param[instance].dbglog_enable = 0;
+ 	iface->dbglog_desc.level = 0;
  
- 	v4l2_fh_init(&ctx->fh, vdev);
-@@ -617,6 +621,8 @@ static int mdp_m2m_open(struct file *file)
- 	v4l2_fh_del(&ctx->fh);
- err_exit_fh:
- 	v4l2_fh_exit(&ctx->fh);
-+	ida_free(&mdp->mdp_ida, ctx->id);
-+err_unlock_mutex:
- 	mutex_unlock(&mdp->m2m_lock);
- err_free_ctx:
- 	kfree(ctx);
 -- 
 2.39.2
 
