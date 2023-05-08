@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE59E171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:40:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 583CCC433EF;
-	Mon,  8 May 2023 11:40:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCC2171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:40:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A730C433EF;
+	Mon,  8 May 2023 11:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546015;
-	bh=Q4hhfPp9/kHefkrurnp71vJhxL/wq4aRG0tApmDqY2U=;
+	s=korg; t=1683546018;
+	bh=0kQLufVjoQk3iPl+GWbISYHeppmkerfeufStuMnYZyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W8bN9VQMTFFcZsP0s7UmFjK7YdrJ/kwZZc3pRu228/D1l4rt6In88a6yB4TEsld/0
-	 qvyw5xfnS/cq5lXxFT78BmAGMuxP876fXq/nzNJlO2wzJmqaUnof5fX33aPH0+2DvA
-	 uonj2MUWaieXq/hhkDAJkKsk8D4UpN8o+5tjD9ac=
+	b=J+TXealMoeERXXjjFi5qUu6bqspkeglwI64T0M0VQG9HTa5DdyYh+c7zecNrI9WSv
+	 dTwzANhe74uGXVMvdRCt/7gFjEhZLeLbqsDqNenm/MGs5raHwNvVB2WebP5oysPXCZ
+	 quRNTsuz6Ja0xcarps4jQB41AlNRRcD2wjzjjsj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hsin-Wei Hung <hsinweih@uci.edu>,
-	Xin Liu <liuxin350@huawei.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/371] bpf, sockmap: fix deadlocks in the sockhash and sockmap
-Date: Mon,  8 May 2023 11:46:31 +0200
-Message-Id: <20230508094819.663169070@linuxfoundation.org>
+Subject: [PATCH 5.15 222/371] wifi: iwlwifi: mvm: check firmware response size
+Date: Mon,  8 May 2023 11:47:03 +0200
+Message-Id: <20230508094820.866892460@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -37,81 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Liu <liuxin350@huawei.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit ed17aa92dc56b6d8883e4b7a8f1c6fbf5ed6cd29 ]
+[ Upstream commit 13513cec93ac9902d0b896976d8bab3758a9881c ]
 
-When huang uses sched_switch tracepoint, the tracepoint
-does only one thing in the mounted ebpf program, which
-deletes the fixed elements in sockhash ([0])
+Check the firmware response size for responses to the
+memory read/write command in debugfs before using it.
 
-It seems that elements in sockhash are rarely actively
-deleted by users or ebpf program. Therefore, we do not
-pay much attention to their deletion. Compared with hash
-maps, sockhash only provides spin_lock_bh protection.
-This causes it to appear to have self-locking behavior
-in the interrupt context.
-
-  [0]:https://lore.kernel.org/all/CABcoxUayum5oOqFMMqAeWuS8+EzojquSOSyDA3J_2omY=2EeAg@mail.gmail.com/
-
-Reported-by: Hsin-Wei Hung <hsinweih@uci.edu>
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Xin Liu <liuxin350@huawei.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20230406122622.109978-1-liuxin350@huawei.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 2b55f43f8e47 ("iwlwifi: mvm: Add mem debugfs entry")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230417113648.0d56fcaf68ee.I70e9571f3ed7263929b04f8fabad23c9b999e4ea@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 86b4e8909ad1e..36afe39dd2df9 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -414,8 +414,9 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
- {
- 	struct sock *sk;
- 	int err = 0;
-+	unsigned long flags;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+index d398a06b26567..0f5c4c2510ef1 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+@@ -1931,6 +1931,11 @@ static ssize_t iwl_dbgfs_mem_read(struct file *file, char __user *user_buf,
+ 	if (ret < 0)
+ 		return ret;
  
--	raw_spin_lock_bh(&stab->lock);
-+	raw_spin_lock_irqsave(&stab->lock, flags);
- 	sk = *psk;
- 	if (!sk_test || sk_test == sk)
- 		sk = xchg(psk, NULL);
-@@ -425,7 +426,7 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
- 	else
- 		err = -EINVAL;
++	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
++		ret = -EIO;
++		goto out;
++	}
++
+ 	rsp = (void *)hcmd.resp_pkt->data;
+ 	if (le32_to_cpu(rsp->status) != DEBUG_MEM_STATUS_SUCCESS) {
+ 		ret = -ENXIO;
+@@ -2008,6 +2013,11 @@ static ssize_t iwl_dbgfs_mem_write(struct file *file,
+ 	if (ret < 0)
+ 		return ret;
  
--	raw_spin_unlock_bh(&stab->lock);
-+	raw_spin_unlock_irqrestore(&stab->lock, flags);
- 	return err;
- }
- 
-@@ -930,11 +931,12 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
- 	struct bpf_shtab_bucket *bucket;
- 	struct bpf_shtab_elem *elem;
- 	int ret = -ENOENT;
-+	unsigned long flags;
- 
- 	hash = sock_hash_bucket_hash(key, key_size);
- 	bucket = sock_hash_select_bucket(htab, hash);
- 
--	raw_spin_lock_bh(&bucket->lock);
-+	raw_spin_lock_irqsave(&bucket->lock, flags);
- 	elem = sock_hash_lookup_elem_raw(&bucket->head, hash, key, key_size);
- 	if (elem) {
- 		hlist_del_rcu(&elem->node);
-@@ -942,7 +944,7 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
- 		sock_hash_free_elem(htab, elem);
- 		ret = 0;
- 	}
--	raw_spin_unlock_bh(&bucket->lock);
-+	raw_spin_unlock_irqrestore(&bucket->lock, flags);
- 	return ret;
- }
- 
++	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
++		ret = -EIO;
++		goto out;
++	}
++
+ 	rsp = (void *)hcmd.resp_pkt->data;
+ 	if (rsp->status != DEBUG_MEM_STATUS_SUCCESS) {
+ 		ret = -ENXIO;
 -- 
 2.39.2
 
