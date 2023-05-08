@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B55168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:29:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DEAC433EF;
-	Mon,  8 May 2023 10:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87B0168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:29:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEFF8C4339B;
+	Mon,  8 May 2023 10:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541751;
-	bh=aHRk0qezGA9Wl1a3lQ4lKIOVMda2VzdL4zUAQ7eltqk=;
+	s=korg; t=1683541754;
+	bh=IbA2kI44DiybcmENrfW6ndxjyPxEF2oKV1ME6S9IHSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zkpAk/PzmhbhUReaQ87i4tBNXQ5aDpdFyeYpqt++tDzifX2iTdx0BPpQ6nvUV6KcZ
-	 Mnqgrdx38bT5vxKq5sQsK4soKiJW5/k93qR+ujj8gBX4LSB1QDtjf8Wuxb7MFi46hf
-	 JVxlFXFcUH8F8c5LJclZRk0qNf8Kd2zU7D/gY6+A=
+	b=SK1bZhG4zUgDHt2xsCFNfF+6jB88szgP/oj2IWlpeRPQ6Vao4SGdRz+2TOZeXaWwJ
+	 WVvAlM4uHE79U66p8oZh3QoCfSlGPuwKFdyqKx4sF3j5zYISNZ0O5V9HHt9xB8yF32
+	 p8gFeZjoGLhNg+ompE1d2V7aapsJdKMRbwkioc/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 216/663] arm64: dts: qcom: sc7180-trogdor-lazor: correct trackpad supply
-Date: Mon,  8 May 2023 11:40:42 +0200
-Message-Id: <20230508094435.358139878@linuxfoundation.org>
+Subject: [PATCH 6.2 217/663] arm64: dts: qcom: sc7180-trogdor-pazquel: correct trackpad supply
+Date: Mon,  8 May 2023 11:40:43 +0200
+Message-Id: <20230508094435.387089485@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -40,38 +40,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 52e2996f253d82520011340d40dbc1c76ea79208 ]
+[ Upstream commit 24f39eec6a70768e7c2eb2f3d8158f45050ff75a ]
 
 The hid-over-i2c takes VDD, not VCC supply.  Fix copy-pasta from other
 boards which use elan,ekth3000 with valid VCC:
 
-  sc7180-trogdor-lazor-limozeen-nots-r4.dtb: trackpad@2c: 'vcc-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
+  sc7180-trogdor-pazquel360-lte.dtb: trackpad@15: 'vcc-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-Fixes: 2c26adb8dbab ("arm64: dts: qcom: Add sc7180-lazor-limozeen skus")
+Fixes: fb69f6adaf88 ("arm64: dts: qcom: sc7180: Add pazquel dts files")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230312183622.460488-3-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230312183622.460488-4-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts     | 2 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
-index 850776c5323d1..70d5a7aa88735 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
-@@ -26,7 +26,7 @@
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+index d06cc4ea33756..8823edbb4d6e2 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pazquel.dtsi
+@@ -39,7 +39,7 @@
  		interrupt-parent = <&tlmm>;
- 		interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
+ 		interrupts = <0 IRQ_TYPE_EDGE_FALLING>;
  
 -		vcc-supply = <&pp3300_fp_tp>;
 +		vdd-supply = <&pp3300_fp_tp>;
- 		hid-descr-addr = <0x20>;
+ 		post-power-on-delay-ms = <100>;
+ 		hid-descr-addr = <0x0001>;
  
- 		wakeup-source;
 -- 
 2.39.2
 
