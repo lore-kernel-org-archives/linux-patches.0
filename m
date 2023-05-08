@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B362F168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342C2C433D2;
-	Mon,  8 May 2023 11:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07759168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D35C4339B;
+	Mon,  8 May 2023 11:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544227;
-	bh=f8O+nUPFTjUY30SfcybyhLUk9Rj7yK7Kk5rWpe5jRJI=;
+	s=korg; t=1683544230;
+	bh=a10Z9gk8KifaWlkndg4PwUl0YBly/ikSQjbzOAHQbNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d+yQ6m1p7kDeaNPu6g8tUTynWO3o6q1MDy0w/qoBVUDbV0EY/h8Z+HbeIJIF8855O
-	 ShgPpo4+qSRv/72E5eZJdzLFMzTGKpT6GHbsN9M6wNLMWGpjL27wAnsVRkUABpCxeU
-	 riaKmzQdlr2tGuBuWxF0Of86Gy1abQg7nelsoUyo=
+	b=uK6GjbaL32G9ASZKo9wLohOtq2hnLhCbMnHW2WDFIdUh/SyM/lfS1mvSefhDtBZ27
+	 sw1/Yr5OQ2gMJNA7W3KSIdIzDpWEKJ1KKHgBlCNyAebiuRlLVkQvSaglsyYHjYAEOI
+	 SvwyZac4Ho8TaIsf24su3SrKGAXi+SY+aBgkg4go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gusenleitner Klaus <gus@keba.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 315/694] tick/common: Align tick period with the HZ tick.
-Date: Mon,  8 May 2023 11:42:30 +0200
-Message-Id: <20230508094442.524397347@linuxfoundation.org>
+Subject: [PATCH 6.3 342/694] bpf: fix precision propagation verbose logging
+Date: Mon,  8 May 2023 11:42:57 +0200
+Message-Id: <20230508094443.606489925@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,65 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit e9523a0d81899361214d118ad60ef76f0e92f71d ]
+[ Upstream commit 34f0677e7afd3a292bc1aadda7ce8e35faedb204 ]
 
-With HIGHRES enabled tick_sched_timer() is programmed every jiffy to
-expire the timer_list timers. This timer is programmed accurate in
-respect to CLOCK_MONOTONIC so that 0 seconds and nanoseconds is the
-first tick and the next one is 1000/CONFIG_HZ ms later. For HZ=250 it is
-every 4 ms and so based on the current time the next tick can be
-computed.
+Fix wrong order of frame index vs register/slot index in precision
+propagation verbose (level 2) output. It's wrong and very confusing as is.
 
-This accuracy broke since the commit mentioned below because the jiffy
-based clocksource is initialized with higher accuracy in
-read_persistent_wall_and_boot_offset(). This higher accuracy is
-inherited during the setup in tick_setup_device(). The timer still fires
-every 4ms with HZ=250 but timer is no longer aligned with
-CLOCK_MONOTONIC with 0 as it origin but has an offset in the us/ns part
-of the timestamp. The offset differs with every boot and makes it
-impossible for user land to align with the tick.
-
-Align the tick period with CLOCK_MONOTONIC ensuring that it is always a
-multiple of 1000/CONFIG_HZ ms.
-
-Fixes: 857baa87b6422 ("sched/clock: Enable sched clock early")
-Reported-by: Gusenleitner Klaus <gus@keba.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/20230406095735.0_14edn3@linutronix.de
-Link: https://lore.kernel.org/r/20230418122639.ikgfvu3f@linutronix.de
+Fixes: 529409ea92d5 ("bpf: propagate precision across all frames, not just the last one")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20230313184017.4083374-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-common.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/tick-common.c b/kernel/time/tick-common.c
-index 46789356f856e..65b8658da829e 100644
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -218,9 +218,19 @@ static void tick_setup_device(struct tick_device *td,
- 		 * this cpu:
- 		 */
- 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
-+			ktime_t next_p;
-+			u32 rem;
-+
- 			tick_do_timer_cpu = cpu;
- 
--			tick_next_period = ktime_get();
-+			next_p = ktime_get();
-+			div_u64_rem(next_p, TICK_NSEC, &rem);
-+			if (rem) {
-+				next_p -= rem;
-+				next_p += TICK_NSEC;
-+			}
-+
-+			tick_next_period = next_p;
- #ifdef CONFIG_NO_HZ_FULL
- 			/*
- 			 * The boot CPU may be nohz_full, in which case set
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 63510f8a1c7dc..856e2088289da 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -14229,7 +14229,7 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ 			    !(state_reg->live & REG_LIVE_READ))
+ 				continue;
+ 			if (env->log.level & BPF_LOG_LEVEL2)
+-				verbose(env, "frame %d: propagating r%d\n", i, fr);
++				verbose(env, "frame %d: propagating r%d\n", fr, i);
+ 			err = mark_chain_precision_frame(env, fr, i);
+ 			if (err < 0)
+ 				return err;
+@@ -14245,7 +14245,7 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ 				continue;
+ 			if (env->log.level & BPF_LOG_LEVEL2)
+ 				verbose(env, "frame %d: propagating fp%d\n",
+-					(-i - 1) * BPF_REG_SIZE, fr);
++					fr, (-i - 1) * BPF_REG_SIZE);
+ 			err = mark_chain_precision_stack_frame(env, fr, i);
+ 			if (err < 0)
+ 				return err;
 -- 
 2.39.2
 
