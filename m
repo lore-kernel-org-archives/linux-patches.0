@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DB4171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:34:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A33C433D2;
-	Mon,  8 May 2023 11:34:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048BB168DC
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:34:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49281C433D2;
+	Mon,  8 May 2023 11:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545692;
-	bh=R6qexKvTMJNCeTfeuuWfunLi4lUS6rKWFa1Taf6sDwA=;
+	s=korg; t=1683545695;
+	bh=PTohp8NhdeiYIBb5TnIGzvAeEh16kS7PL2q+suwLRek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQxI8M5t/GAo9ebd9jMlBgn6/f4i2xJEHi55TMhBx+BW/BruCaggS7r54MqBo3qLq
-	 A0SGZ6lET37Rm3jEMuED4xDeokgszTfs1t3ycHTlji2fa+obJImO8hM+1lojReuBZf
-	 Z8Vw+1Xi6ackNC0nLpCZRQE0suqKq6NJdymPbGC8=
+	b=x2SwouXfuN2KH0AIb/omwwXg9W6wIDjY882pfJi5gqaNlZqciCiTkVNA+RSd0IbJ4
+	 u8Zp0RuyQyFzkSD2I8sEPUMdywcFRFX/USae7SORNqIrzZYnc18aMUc23w7O41VWKV
+	 R5XbznaEmCofidaek4BGvbcBmBbTUdhBRCb4lKLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	Valentina Fernandez <valentina.fernandezalanis@microchip.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 122/371] mailbox: mpfs: switch to txdone_poll
-Date: Mon,  8 May 2023 11:45:23 +0200
-Message-Id: <20230508094816.859737282@linuxfoundation.org>
+Subject: [PATCH 5.15 123/371] arm64: dts: qcom: sc7180-trogdor-lazor: correct trackpad supply
+Date: Mon,  8 May 2023 11:45:24 +0200
+Message-Id: <20230508094816.900836142@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,71 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit b5984a9844fc45cd301a28fb56f3de95f7e20f3c ]
+[ Upstream commit 52e2996f253d82520011340d40dbc1c76ea79208 ]
 
-The system controller on PolarFire SoC has no interrupt to signify that
-the TX has been completed. The interrupt instead signals that a service
-requested by the mailbox client has succeeded. If a service fails, there
-will be no interrupt delivered.
+The hid-over-i2c takes VDD, not VCC supply.  Fix copy-pasta from other
+boards which use elan,ekth3000 with valid VCC:
 
-Switch to polling the busy register to determine whether transmission
-has completed.
+  sc7180-trogdor-lazor-limozeen-nots-r4.dtb: trackpad@2c: 'vcc-supply' does not match any of the regexes: 'pinctrl-[0-9]+'
 
-Fixes: 83d7b1560810 ("mbox: add polarfire soc system controller mailbox")
-Acked-by: Jassi Brar <jaswinder.singh@linaro.org>
-Tested-by: Valentina Fernandez <valentina.fernandezalanis@microchip.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: 2c26adb8dbab ("arm64: dts: qcom: Add sc7180-lazor-limozeen skus")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230312183622.460488-3-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox-mpfs.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ .../boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts     | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/mailbox-mpfs.c b/drivers/mailbox/mailbox-mpfs.c
-index 853901acaeec2..08aa840cccaca 100644
---- a/drivers/mailbox/mailbox-mpfs.c
-+++ b/drivers/mailbox/mailbox-mpfs.c
-@@ -79,6 +79,13 @@ static bool mpfs_mbox_busy(struct mpfs_mbox *mbox)
- 	return status & SCB_STATUS_BUSY_MASK;
- }
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
+index 6ebde0828550c..8a98a6f849c4f 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dts
+@@ -26,7 +26,7 @@
+ 		interrupt-parent = <&tlmm>;
+ 		interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
  
-+static bool mpfs_mbox_last_tx_done(struct mbox_chan *chan)
-+{
-+	struct mpfs_mbox *mbox = (struct mpfs_mbox *)chan->con_priv;
-+
-+	return !mpfs_mbox_busy(mbox);
-+}
-+
- static int mpfs_mbox_send_data(struct mbox_chan *chan, void *data)
- {
- 	struct mpfs_mbox *mbox = (struct mpfs_mbox *)chan->con_priv;
-@@ -182,7 +189,6 @@ static irqreturn_t mpfs_mbox_inbox_isr(int irq, void *data)
+-		vcc-supply = <&pp3300_fp_tp>;
++		vdd-supply = <&pp3300_fp_tp>;
+ 		hid-descr-addr = <0x20>;
  
- 	mpfs_mbox_rx_data(chan);
- 
--	mbox_chan_txdone(chan, 0);
- 	return IRQ_HANDLED;
- }
- 
-@@ -212,6 +218,7 @@ static const struct mbox_chan_ops mpfs_mbox_ops = {
- 	.send_data = mpfs_mbox_send_data,
- 	.startup = mpfs_mbox_startup,
- 	.shutdown = mpfs_mbox_shutdown,
-+	.last_tx_done = mpfs_mbox_last_tx_done,
- };
- 
- static int mpfs_mbox_probe(struct platform_device *pdev)
-@@ -247,7 +254,8 @@ static int mpfs_mbox_probe(struct platform_device *pdev)
- 	mbox->controller.num_chans = 1;
- 	mbox->controller.chans = mbox->chans;
- 	mbox->controller.ops = &mpfs_mbox_ops;
--	mbox->controller.txdone_irq = true;
-+	mbox->controller.txdone_poll = true;
-+	mbox->controller.txpoll_period = 10u;
- 
- 	ret = devm_mbox_controller_register(&pdev->dev, &mbox->controller);
- 	if (ret) {
+ 		wakeup-source;
 -- 
 2.39.2
 
