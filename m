@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946E1168C4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FDEEC433EF;
-	Mon,  8 May 2023 11:31:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9BD171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C34C4339B;
+	Mon,  8 May 2023 11:31:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545475;
-	bh=VsRCM+Vk5hWR0iQfMAkv7FU/4cUfkFfZbh+aLmCtIKo=;
+	s=korg; t=1683545478;
+	bh=/1jU58CawqNL+24BzGN3tQTZLKQQ9cGWRu093uBT6ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kIzEnYFTzYKJPkPvR2mh0RZzk2HWhbTa/MHCTxc19uztc2UZ+WbNTu5AdP0hcCSpv
-	 vzGt1IuIdFRLqdYxZoGnF0SbWwEbng6D8Kh/lkhyUm779T7TVxLBrJMqxeDY67XaKa
-	 NqMROL+iXm/1yQgZF0WJzHiBpu8Zt6vb1n+mPX5E=
+	b=Hty99L3KxBtPr+8wB3/Ck8lIZ6Wo1/vJvKeaSemApiZ+xPfCzGYm5tm99atJYHBVO
+	 meo2574okHldgjxBlSEVt1e2lOTYKgaxOUeC4GUsuczMEYIq2KaulYEAlGps2es0ma
+	 K18Rw33kBr366wJiSgKmFKC8GV5Q9YHs4In3ub0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 051/371] tracing: Fix permissions for the buffer_percent file
-Date: Mon,  8 May 2023 11:44:12 +0200
-Message-Id: <20230508094814.096796092@linuxfoundation.org>
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Kishon Vijay Abraham I <kvijayab@amd.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 5.15 052/371] iommu/amd: Fix "Guest Virtual APIC Table Root Pointer" configuration in IRTE
+Date: Mon,  8 May 2023 11:44:13 +0200
+Message-Id: <20230508094814.126856384@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,37 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Kishon Vijay Abraham I <kvijayab@amd.com>
 
-commit 4f94559f40ad06d627c0fdfc3319cec778a2845b upstream.
+commit ccc62b827775915a9b82db42a29813d04f92df7a upstream.
 
-This file defines both read and write operations, yet it is being
-created as read-only. This means that it can't be written to without the
-CAP_DAC_OVERRIDE capability. Fix the permissions to allow root to write
-to it without the need to override DAC perms.
+commit b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC
+(de-)activation code") while refactoring guest virtual APIC
+activation/de-activation code, stored information for activate/de-activate
+in "struct amd_ir_data". It used 32-bit integer data type for storing the
+"Guest Virtual APIC Table Root Pointer" (ga_root_ptr), though the
+"ga_root_ptr" is actually a 40-bit field in IRTE (Interrupt Remapping
+Table Entry).
 
-Link: https://lore.kernel.org/linux-trace-kernel/20230503140114.3280002-1-omosnace@redhat.com
+This causes interrupts from PCIe devices to not reach the guest in the case
+of PCIe passthrough with SME (Secure Memory Encryption) enabled as _SME_
+bit in the "ga_root_ptr" is lost before writing it to the IRTE.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Fixes: 03329f993978 ("tracing: Add tracefs file buffer_percentage")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fix it by using 64-bit data type for storing the "ga_root_ptr". While at
+that also change the data type of "ga_tag" to u32 in order to match
+the IOMMU spec.
+
+Fixes: b9c6ff94e43a ("iommu/amd: Re-factor guest virtual APIC (de-)activation code")
+Cc: stable@vger.kernel.org # v5.4+
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Kishon Vijay Abraham I <kvijayab@amd.com>
+Link: https://lore.kernel.org/r/20230405130317.9351-1-kvijayab@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/amd/amd_iommu_types.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9565,7 +9565,7 @@ init_tracer_tracefs(struct trace_array *
+--- a/drivers/iommu/amd/amd_iommu_types.h
++++ b/drivers/iommu/amd/amd_iommu_types.h
+@@ -918,8 +918,8 @@ struct amd_ir_data {
+ 	 */
+ 	struct irq_cfg *cfg;
+ 	int ga_vector;
+-	int ga_root_ptr;
+-	int ga_tag;
++	u64 ga_root_ptr;
++	u32 ga_tag;
+ };
  
- 	tr->buffer_percent = 50;
- 
--	trace_create_file("buffer_percent", TRACE_MODE_READ, d_tracer,
-+	trace_create_file("buffer_percent", TRACE_MODE_WRITE, d_tracer,
- 			tr, &buffer_percent_fops);
- 
- 	create_trace_options_dir(tr);
+ struct amd_irte_ops {
 
 
