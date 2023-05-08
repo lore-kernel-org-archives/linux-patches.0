@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C595168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A5BC433EF;
-	Mon,  8 May 2023 11:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FD2168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CF10C433D2;
+	Mon,  8 May 2023 11:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544421;
-	bh=OFAMPQh9dUgKWlh7mTfVM7ndk/SM5s1IRxO7UVwNQac=;
+	s=korg; t=1683544425;
+	bh=zPlBGA54tOLkW/Hbg2cuRz974v7+Jr7UhpvUuTtJFxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P4A0UjXrfUoU235zEZgL7YZozjOC8Agc7W1w4pMReBonbzS2ujEgsPFOh/kI6PF7f
-	 xKKdTZy0e+NIHwi9CGER0Or46vK7qLsrRXu6T2Zsm/w6QSIoENjlmnTS3l9oLYtexw
-	 blq3FIRr2Knt8qyXJDk7N3NZGSIIfMl8WTS49N0Y=
+	b=cr0kznyaRpEM+bkD8EuwWo6eUcMHHgGDURiJ8no1AsM6WNlhjIdaiUbzlwSOsxmPv
+	 La0Wh8ghMFHTTqSW+vmAyaeFYJ0xV9QBLwOPWdHgc2e+9v9bVPkhQF5AwE9kA1r/n7
+	 e/NsW5SrRb/qw98mm5AxA7eHvbM4dqD0syKUObF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 404/694] nvmet: fix Identify Active Namespace ID list handling
-Date: Mon,  8 May 2023 11:43:59 +0200
-Message-Id: <20230508094446.294342444@linuxfoundation.org>
+Subject: [PATCH 6.3 405/694] nvmet: fix I/O Command Set specific Identify Controller
+Date: Mon,  8 May 2023 11:44:00 +0200
+Message-Id: <20230508094446.334368750@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,44 +38,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-[ Upstream commit 97416f67d55fb8b866ff1815ca7ef26b6dfa6a5e ]
+[ Upstream commit a5a6ab0950b46ab1ef4a5c83c80234018b81b38a ]
 
-The identify command with cns set to NVME_ID_CNS_NS_ACTIVE_LIST does
-not depend on the command set. The execution of this command should
-thus not look at the csi field specified in the command. Simplify
-nvmet_execute_identify() to directly call
-nvmet_execute_identify_nslist() without the csi switch-case.
+For an identify command with cns set to NVME_ID_CNS_CS_CTRL, the NVMe
+2.0 specification states that:
 
-Fixes: ab5d0b38c047 ("nvmet: add Command Set Identifier support")
+If the I/O Command Set specified by the CSI field does not have an
+Identify Controller data structure, then the controller shall return
+a zero filled data structure. If the host requests a data structure for
+an I/O Command Set that the controller does not support, the controller
+shall abort the command with a status code of Invalid Field in Command.
+
+However, the current implementation of this identify command in
+nvmet_execute_identify() only handles the ZNS command set, returning an
+error for the NVM command set, which is not compliant with the
+specifications as we do support this command set.
+
+Fix this by:
+1) Renaming nvmet_execute_identify_cns_cs_ctrl() to
+   nvmet_execute_identify_ctrl_zns() to continue handling the
+   ZNS command set as is.
+2) Introduce a nvmet_execute_identify_ctrl_ns() helper to handle the
+   NVM command set, returning a zero filled nvme_id_ctrl_nvm data
+   structure.
+3) Modify nvmet_execute_identify() to call these helpers based on
+   the csi specified, returning an error for unsupported command sets.
+
+Fixes: aaf2e048af27 ("nvmet: add ZBD over ZNS backend support")
 Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
 Tested-by: Chaitanya Kulkarni <kch@nvidia.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/admin-cmd.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ drivers/nvme/target/admin-cmd.c | 22 ++++++++++++++++------
+ drivers/nvme/target/nvmet.h     |  2 +-
+ drivers/nvme/target/zns.c       |  2 +-
+ 3 files changed, 18 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
-index a747c69074daf..93c441ab9f090 100644
+index 93c441ab9f090..5bfbf5c651db0 100644
 --- a/drivers/nvme/target/admin-cmd.c
 +++ b/drivers/nvme/target/admin-cmd.c
-@@ -718,13 +718,8 @@ static void nvmet_execute_identify(struct nvmet_req *req)
+@@ -685,6 +685,13 @@ static bool nvmet_handle_identify_desclist(struct nvmet_req *req)
+ 	}
+ }
+ 
++static void nvmet_execute_identify_ctrl_nvm(struct nvmet_req *req)
++{
++	/* Not supported: return zeroes */
++	nvmet_req_complete(req,
++		   nvmet_zero_sgl(req, 0, sizeof(struct nvme_id_ctrl_nvm)));
++}
++
+ static void nvmet_execute_identify(struct nvmet_req *req)
+ {
+ 	if (!nvmet_check_transfer_len(req, NVME_IDENTIFY_DATA_SIZE))
+@@ -708,13 +715,16 @@ static void nvmet_execute_identify(struct nvmet_req *req)
+ 		nvmet_execute_identify_ctrl(req);
+ 		return;
+ 	case NVME_ID_CNS_CS_CTRL:
+-		if (IS_ENABLED(CONFIG_BLK_DEV_ZONED)) {
+-			switch (req->cmd->identify.csi) {
+-			case NVME_CSI_ZNS:
+-				return nvmet_execute_identify_cns_cs_ctrl(req);
+-			default:
+-				break;
++		switch (req->cmd->identify.csi) {
++		case NVME_CSI_NVM:
++			nvmet_execute_identify_ctrl_nvm(req);
++			return;
++		case NVME_CSI_ZNS:
++			if (IS_ENABLED(CONFIG_BLK_DEV_ZONED)) {
++				nvmet_execute_identify_ctrl_zns(req);
++				return;
+ 			}
++			break;
  		}
  		break;
  	case NVME_ID_CNS_NS_ACTIVE_LIST:
--		switch (req->cmd->identify.csi) {
--		case NVME_CSI_NVM:
--			return nvmet_execute_identify_nslist(req);
--		default:
--			break;
--		}
--		break;
-+		nvmet_execute_identify_nslist(req);
-+		return;
- 	case NVME_ID_CNS_NS_DESC_LIST:
- 		if (nvmet_handle_identify_desclist(req) == true)
- 			return;
+diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
+index 89bedfcd974c4..ed3786140965f 100644
+--- a/drivers/nvme/target/nvmet.h
++++ b/drivers/nvme/target/nvmet.h
+@@ -581,7 +581,7 @@ bool nvmet_ns_revalidate(struct nvmet_ns *ns);
+ u16 blk_to_nvme_status(struct nvmet_req *req, blk_status_t blk_sts);
+ 
+ bool nvmet_bdev_zns_enable(struct nvmet_ns *ns);
+-void nvmet_execute_identify_cns_cs_ctrl(struct nvmet_req *req);
++void nvmet_execute_identify_ctrl_zns(struct nvmet_req *req);
+ void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req);
+ void nvmet_bdev_execute_zone_mgmt_recv(struct nvmet_req *req);
+ void nvmet_bdev_execute_zone_mgmt_send(struct nvmet_req *req);
+diff --git a/drivers/nvme/target/zns.c b/drivers/nvme/target/zns.c
+index 77ef0a86ff61f..ae4d9d35e46ae 100644
+--- a/drivers/nvme/target/zns.c
++++ b/drivers/nvme/target/zns.c
+@@ -70,7 +70,7 @@ bool nvmet_bdev_zns_enable(struct nvmet_ns *ns)
+ 	return true;
+ }
+ 
+-void nvmet_execute_identify_cns_cs_ctrl(struct nvmet_req *req)
++void nvmet_execute_identify_ctrl_zns(struct nvmet_req *req)
+ {
+ 	u8 zasl = req->sq->ctrl->subsys->zasl;
+ 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
 -- 
 2.39.2
 
