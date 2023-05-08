@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3949D168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:02:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05BEC433EF;
-	Mon,  8 May 2023 10:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F7F168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:02:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5997BC433EF;
+	Mon,  8 May 2023 10:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540158;
-	bh=RY4yXJE9sgrl9r/hogv5KT6WuuIN158AI1wSDxnKAcQ=;
+	s=korg; t=1683540160;
+	bh=45TUghb7z81EybmeblL2XNVdvREe9kqYDNJ67uuIYuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gGCF+v6nVkOfyUhLqdruCNvJtiQmZgLXetOWqXJbVhOrViEA1bwmVBr91/Vzu+pnG
-	 QfTnQv4JvsiIzUJWEr9LI+smBIXbBvJWV9JxtG+nsG5RjsyIAlikULuGlOJMo5UH+u
-	 MPHosr8Yj4NFjE60ZeShR/2vV9hXIxBwvfUxWbPU=
+	b=fZ5xdT2uGZdIJ+BJMkDTFCGM2jbkWyF235iecgrImQMEK61o5KP2t8y17ZIwnd0cB
+	 eDckY5XhwR3FIfeny9H+PfsNB7ypWru1sM61VSLu+u07yG2Ixx4HgQWDtP+TZLiveH
+	 6swnZEw12bbnG9qdtzwxZMretioufW5UU/+dWuZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 259/611] drm/i915: Make intel_get_crtc_new_encoder() less oopsy
-Date: Mon,  8 May 2023 11:41:41 +0200
-Message-Id: <20230508094430.834704431@linuxfoundation.org>
+Subject: [PATCH 6.1 242/611] media: dm1105: Fix use after free bug in dm1105_remove due to race condition
+Date: Mon,  8 May 2023 11:41:24 +0200
+Message-Id: <20230508094430.279782879@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,40 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 631420b06597a33c72b6dcef78d1c2dea17f452d ]
+[ Upstream commit 5abda7a16698d4d1f47af1168d8fa2c640116b4a ]
 
-The point of the WARN was to print something, not oops
-straight up. Currently that is precisely what happens
-if we can't find the connector for the crtc in the atomic
-state. Get the dev pointer from the atomic state instead
-of the potentially NULL encoder to avoid that.
+In dm1105_probe, it called dm1105_ir_init and bound
+&dm1105->ir.work with dm1105_emit_key.
+When it handles IRQ request with dm1105_irq,
+it may call schedule_work to start the work.
 
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230413200602.6037-2-ville.syrjala@linux.intel.com
-Fixes: 3a47ae201e07 ("drm/i915/display: Make WARN* drm specific where encoder ptr is available")
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 3b6692357f70498f617ea1b31a0378070a0acf1c)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+When we call dm1105_remove to remove the driver, there
+may be a sequence as follows:
+
+Fix it by finishing the work before cleanup in dm1105_remove
+
+CPU0                  CPU1
+
+                    |dm1105_emit_key
+dm1105_remove      |
+  dm1105_ir_exit       |
+    rc_unregister_device |
+    rc_free_device  |
+    rc_dev_release  |
+    kfree(dev);     |
+                    |
+                    | rc_keydown
+                    |   //use
+
+Fixes: 34d2f9bf189c ("V4L/DVB: dm1105: use dm1105_dev & dev instead of dm1105dvb")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/dm1105/dm1105.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index 3f3982ae9974b..455d9ae6c41c9 100644
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -1079,7 +1079,7 @@ intel_get_crtc_new_encoder(const struct intel_atomic_state *state,
- 		num_encoders++;
- 	}
+diff --git a/drivers/media/pci/dm1105/dm1105.c b/drivers/media/pci/dm1105/dm1105.c
+index 4ac645a56c14e..9e9c7c071accc 100644
+--- a/drivers/media/pci/dm1105/dm1105.c
++++ b/drivers/media/pci/dm1105/dm1105.c
+@@ -1176,6 +1176,7 @@ static void dm1105_remove(struct pci_dev *pdev)
+ 	struct dvb_demux *dvbdemux = &dev->demux;
+ 	struct dmx_demux *dmx = &dvbdemux->dmx;
  
--	drm_WARN(encoder->base.dev, num_encoders != 1,
-+	drm_WARN(state->base.dev, num_encoders != 1,
- 		 "%d encoders for pipe %c\n",
- 		 num_encoders, pipe_name(master_crtc->pipe));
- 
++	cancel_work_sync(&dev->ir.work);
+ 	dm1105_ir_exit(dev);
+ 	dmx->close(dmx);
+ 	dvb_net_release(&dev->dvbnet);
 -- 
 2.39.2
 
