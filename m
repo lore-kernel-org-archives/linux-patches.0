@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87352171A5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:29:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03A9C433D2;
-	Mon,  8 May 2023 11:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A2033E3
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:29:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F64C433D2;
+	Mon,  8 May 2023 11:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545358;
-	bh=PTKNeMfGnooxHlmJtU5iVCPw4+NIcAyiMp49q2fV4tU=;
+	s=korg; t=1683545361;
+	bh=8r1z6+zlLX5kZZjRsnVMbks8vuLgQJO5hKGKMtuVvsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1NGgb08PEyTvIP5XauticyAfpaehafb0LsIaDYW+hzZMYl5t8I10EpjORsoZPH1Fd
-	 JCIfQ4zwFyqv6icvGY+kpmLMepM45AfOfuP7Z0hAVd9abYUcA9tNVK5c0J2sFBldPy
-	 Vp8+Sd60e7+2TOmvXZ6I+LkUMiv+MEmK2ydHwIqw=
+	b=pq13mowXFJ9X3mDVx2+HW6n9sL9GfqRAqrGqvSYN7ObRYfqTNFTwAVsJCMmyiEd4E
+	 1e7TCnkcA4SReBu/PNY+i9/fbomMhoYRXbEFfyAv1iKFbl8Nb8K6xzZU50j5xGxpHE
+	 /boAoh5jZ8aHV4JQjZW67uPOSvj6zj8Qke/M+WjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>
-Subject: [PATCH 5.15 014/371] PCI: qcom: Fix the incorrect register usage in v2.7.0 config
-Date: Mon,  8 May 2023 11:43:35 +0200
-Message-Id: <20230508094812.631023934@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Fabio Estevam <festevam@gmail.com>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-um@lists.infradead.org,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 5.15 015/371] IMA: allow/fix UML builds
+Date: Mon,  8 May 2023 11:43:36 +0200
+Message-Id: <20230508094812.675651517@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -34,44 +39,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 2542e16c392508800f1d9037feee881a9c444951 upstream.
+commit 644f17412f5acf01a19af9d04a921937a2bc86c6 upstream.
 
-Qcom PCIe IP version v2.7.0 and its derivatives don't contain the
-PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT register. Instead, they have the new
-PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2 register. So fix the incorrect
-register usage which is modifying a different register.
+UML supports HAS_IOMEM since 0bbadafdc49d (um: allow disabling
+NO_IOMEM).
 
-Also in this IP version, this register change doesn't depend on MSI
-being enabled. So remove that check also.
+Current IMA build on UML fails on allmodconfig (with TCG_TPM=m):
 
-Link: https://lore.kernel.org/r/20230316081117.14288-2-manivannan.sadhasivam@linaro.org
-Fixes: ed8cc3b1fc84 ("PCI: qcom: Add support for SDM845 PCIe controller")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc: <stable@vger.kernel.org> # 5.6+
+ld: security/integrity/ima/ima_queue.o: in function `ima_add_template_entry':
+ima_queue.c:(.text+0x2d9): undefined reference to `tpm_pcr_extend'
+ld: security/integrity/ima/ima_init.o: in function `ima_init':
+ima_init.c:(.init.text+0x43f): undefined reference to `tpm_default_chip'
+ld: security/integrity/ima/ima_crypto.o: in function `ima_calc_boot_aggregate_tfm':
+ima_crypto.c:(.text+0x1044): undefined reference to `tpm_pcr_read'
+ld: ima_crypto.c:(.text+0x10d8): undefined reference to `tpm_pcr_read'
+
+Modify the IMA Kconfig entry so that it selects TCG_TPM if HAS_IOMEM
+is set, regardless of the UML Kconfig setting.
+This updates TCG_TPM from =m to =y and fixes the linker errors.
+
+Fixes: f4a0391dfa91 ("ima: fix Kconfig dependencies")
+Cc: Stable <stable@vger.kernel.org> # v5.14+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-um@lists.infradead.org
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ security/integrity/ima/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1228,11 +1228,9 @@ static int qcom_pcie_init_2_7_0(struct q
- 	val |= BIT(4);
- 	writel(val, pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
- 
--	if (IS_ENABLED(CONFIG_PCI_MSI)) {
--		val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
--		val |= BIT(31);
--		writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT);
--	}
-+	val = readl(pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2);
-+	val |= BIT(31);
-+	writel(val, pcie->parf + PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2);
- 
- 	return 0;
- err_disable_clocks:
+--- a/security/integrity/ima/Kconfig
++++ b/security/integrity/ima/Kconfig
+@@ -8,7 +8,7 @@ config IMA
+ 	select CRYPTO_HMAC
+ 	select CRYPTO_SHA1
+ 	select CRYPTO_HASH_INFO
+-	select TCG_TPM if HAS_IOMEM && !UML
++	select TCG_TPM if HAS_IOMEM
+ 	select TCG_TIS if TCG_TPM && X86
+ 	select TCG_CRB if TCG_TPM && ACPI
+ 	select TCG_IBMVTPM if TCG_TPM && PPC_PSERIES
 
 
