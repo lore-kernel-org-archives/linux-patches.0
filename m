@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D508168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 296A0C433EF;
-	Mon,  8 May 2023 11:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645DE168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:03:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7AC2C433EF;
+	Mon,  8 May 2023 11:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543834;
-	bh=a3SCL90UjeE99WJXPv9wC13MtunTaz7ORaH+ZZCcgic=;
+	s=korg; t=1683543837;
+	bh=oo+mgKjtrMb1Vi08fabsduXLpZhxuZyzQg9XKNt2FCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ut7z5U6HN37rTAZdCCMk7dQ3zKjWvyRPv7xvGPrSa+PxcByf627pxKsWMKFWYOgKI
-	 iMFI7wr9UDcNMwIfuqilcmqBl0vfn2PtUckhk9QDhV4UJeL3i+dcvSAbwYD0NK81fI
-	 hQAA2CY1AEdSDIRksoYVbv8JpTkYLsDrwiWO0qOo=
+	b=0AGnv0FKuKcmLuC9H4vLj0t3y/OV4iyq8esSb29nprCz0qe142M0iUC31GV4mbgq3
+	 SsqPUPq1g74J1Zb+qbtcg3lY9TUgu15iZgSK97qhsCitf5Vl4WsuNftp4jiBcAoPQo
+	 PYuovNPDk1iZA9Ju4L9gNRsfrb0PUtep/AggfFAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 185/694] arm64: dts: qcom: msm8998: Fix the PCI I/O port range
-Date: Mon,  8 May 2023 11:40:20 +0200
-Message-Id: <20230508094438.434846369@linuxfoundation.org>
+Subject: [PATCH 6.3 176/694] arm64: dts: broadcom: bcmbca: bcm4908: fix LED nodenames
+Date: Mon,  8 May 2023 11:40:11 +0200
+Message-Id: <20230508094438.122088397@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,39 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit c30a27dcfe4545edbda1578b3a63ed6147519cdd ]
+[ Upstream commit 23be9f68f933adee8163b8efc9c6bff71410cc7c ]
 
-For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
-located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI address
-(0x1b200000) specified in the ranges property for I/O region.
+This fixes:
+arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dtb: leds@800: 'led-lan@19', 'led-power@11', 'led-wan-red@12', 'led-wan-white@15', 'led-wps@14' do not match any of the regexes: '^led@[a-f0-9]+$', 'pinctrl-[0-9]+'
+        From schema: Documentation/devicetree/bindings/leds/leds-bcm63138.yaml
 
-Fixes: b84dfd175c09 ("arm64: dts: qcom: msm8998: Add PCIe PHY and RC nodes")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230228164752.55682-3-manivannan.sadhasivam@linaro.org
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/all/20230228144400.21689-2-zajec5@gmail.com/
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts     | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index adf7258b32695..2a2cfa905f5e0 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -922,7 +922,7 @@
- 			phy-names = "pciephy";
- 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts
+index 839ca33178b01..d94a53d68320b 100644
+--- a/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts
++++ b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4908-asus-gt-ac5300.dts
+@@ -120,7 +120,7 @@
+ };
  
--			ranges = <0x01000000 0x0 0x1b200000 0x1b200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x1b200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x1b300000 0x1b300000 0x0 0xd00000>;
+ &leds {
+-	led-power@11 {
++	led@11 {
+ 		reg = <0x11>;
+ 		function = LED_FUNCTION_POWER;
+ 		color = <LED_COLOR_ID_WHITE>;
+@@ -130,7 +130,7 @@
+ 		pinctrl-0 = <&pins_led_17_a>;
+ 	};
  
- 			#interrupt-cells = <1>;
+-	led-wan-red@12 {
++	led@12 {
+ 		reg = <0x12>;
+ 		function = LED_FUNCTION_WAN;
+ 		color = <LED_COLOR_ID_RED>;
+@@ -139,7 +139,7 @@
+ 		pinctrl-0 = <&pins_led_18_a>;
+ 	};
+ 
+-	led-wps@14 {
++	led@14 {
+ 		reg = <0x14>;
+ 		function = LED_FUNCTION_WPS;
+ 		color = <LED_COLOR_ID_WHITE>;
+@@ -148,7 +148,7 @@
+ 		pinctrl-0 = <&pins_led_20_a>;
+ 	};
+ 
+-	led-wan-white@15 {
++	led@15 {
+ 		reg = <0x15>;
+ 		function = LED_FUNCTION_WAN;
+ 		color = <LED_COLOR_ID_WHITE>;
+@@ -157,7 +157,7 @@
+ 		pinctrl-0 = <&pins_led_21_a>;
+ 	};
+ 
+-	led-lan@19 {
++	led@19 {
+ 		reg = <0x19>;
+ 		function = LED_FUNCTION_LAN;
+ 		color = <LED_COLOR_ID_WHITE>;
 -- 
 2.39.2
 
