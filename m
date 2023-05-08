@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D8D171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:44:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD9AC433D2;
-	Mon,  8 May 2023 11:44:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8BD171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:44:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 785E5C433EF;
+	Mon,  8 May 2023 11:44:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546287;
-	bh=pwmzYVaT4gqjQrJWiUykfQr/PfvcNdpDai0tS7ynvZw=;
+	s=korg; t=1683546290;
+	bh=UR3mG0EgpGjr25oaXJdyIWz0H8+/2x2zNFR3ypS6JU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mOJCCFlrtwruSZPPtZAxGRPMbVAdvVJxzYNgin8LXiFr1v+jWaJyce73GfgolNB9i
-	 05jQTrAzPYjojalPw94SXLMgur7K7y6ve0p+52XTsI3pQJWu/C3FiYeSzfEpb6jEox
-	 sB2uNlHd93Li1/bTmFs5sBcsFGe8EvV+lV6W96GI=
+	b=SWoK4Nm898+Xz7UKJsJzo9fJwCUn8NtgYS6RNgkPTD5H5ZN/pLi/edQ8dbSZUhQdh
+	 y4Oj7QtK7j0Ep0CWW5Z81iDJoxR3BvG4n/t1Lzsw/bptK6T1uIAjBdpajCwCT3vKGs
+	 VaQWuB0yfAaiaWab/6Fv+eV1/ditWs6wmvR5uXdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Bloch <mbloch@nvidia.com>,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Helen Chao <helen.chao@oracle.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 317/371] RDMA/mlx5: Fix flow counter query via DEVX
-Date: Mon,  8 May 2023 11:48:38 +0200
-Message-Id: <20230508094824.663568634@linuxfoundation.org>
+Subject: [PATCH 5.15 318/371] SUNRPC: remove the maximum number of retries in call_bind_status
+Date: Mon,  8 May 2023 11:48:39 +0200
+Message-Id: <20230508094824.713089820@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,91 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Bloch <mbloch@nvidia.com>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 3e358ea8614ddfbc59ca7a3f5dff5dde2b350b2c ]
+[ Upstream commit 691d0b782066a6eeeecbfceb7910a8f6184e6105 ]
 
-Commit cited in "fixes" tag added bulk support for flow counters but it
-didn't account that's also possible to query a counter using a non-base id
-if the counter was allocated as bulk.
+Currently call_bind_status places a hard limit of 3 to the number of
+retries on EACCES error. This limit was done to prevent NLM unlock
+requests from being hang forever when the server keeps returning garbage.
+However this change causes problem for cases when NLM service takes
+longer than 9 seconds to register with the port mapper after a restart.
 
-When a user performs a query, validate the flow counter id given in the
-mailbox is inside the valid range taking bulk value into account.
+This patch removes this hard coded limit and let the RPC handles
+the retry based on the standard hard/soft task semantics.
 
-Fixes: 208d70f562e5 ("IB/mlx5: Support flow counters offset for bulk counters")
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Link: https://lore.kernel.org/r/79d7fbe291690128e44672418934256254d93115.1681377114.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 0b760113a3a1 ("NLM: Don't hang forever on NLM unlock requests")
+Reported-by: Helen Chao <helen.chao@oracle.com>
+Tested-by: Helen Chao <helen.chao@oracle.com>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/devx.c | 31 ++++++++++++++++++++++++++-----
- include/linux/mlx5/mlx5_ifc.h     |  3 ++-
- 2 files changed, 28 insertions(+), 6 deletions(-)
+ include/linux/sunrpc/sched.h | 3 +--
+ net/sunrpc/clnt.c            | 3 ---
+ net/sunrpc/sched.c           | 1 -
+ 3 files changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/devx.c b/drivers/infiniband/hw/mlx5/devx.c
-index 21beded40066d..104e5cbba066b 100644
---- a/drivers/infiniband/hw/mlx5/devx.c
-+++ b/drivers/infiniband/hw/mlx5/devx.c
-@@ -666,7 +666,21 @@ static bool devx_is_valid_obj_id(struct uverbs_attr_bundle *attrs,
- 				      obj_id;
- 
- 	case MLX5_IB_OBJECT_DEVX_OBJ:
--		return ((struct devx_obj *)uobj->object)->obj_id == obj_id;
-+	{
-+		u16 opcode = MLX5_GET(general_obj_in_cmd_hdr, in, opcode);
-+		struct devx_obj *devx_uobj = uobj->object;
-+
-+		if (opcode == MLX5_CMD_OP_QUERY_FLOW_COUNTER &&
-+		    devx_uobj->flow_counter_bulk_size) {
-+			u64 end;
-+
-+			end = devx_uobj->obj_id +
-+				devx_uobj->flow_counter_bulk_size;
-+			return devx_uobj->obj_id <= obj_id && end > obj_id;
-+		}
-+
-+		return devx_uobj->obj_id == obj_id;
-+	}
- 
- 	default:
- 		return false;
-@@ -1515,10 +1529,17 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_OBJ_CREATE)(
- 		goto obj_free;
- 
- 	if (opcode == MLX5_CMD_OP_ALLOC_FLOW_COUNTER) {
--		u8 bulk = MLX5_GET(alloc_flow_counter_in,
--				   cmd_in,
--				   flow_counter_bulk);
--		obj->flow_counter_bulk_size = 128UL * bulk;
-+		u32 bulk = MLX5_GET(alloc_flow_counter_in,
-+				    cmd_in,
-+				    flow_counter_bulk_log_size);
-+
-+		if (bulk)
-+			bulk = 1 << bulk;
-+		else
-+			bulk = 128UL * MLX5_GET(alloc_flow_counter_in,
-+						cmd_in,
-+						flow_counter_bulk);
-+		obj->flow_counter_bulk_size = bulk;
- 	}
- 
- 	uobj->object = obj;
-diff --git a/include/linux/mlx5/mlx5_ifc.h b/include/linux/mlx5/mlx5_ifc.h
-index 49ea0004109e1..442b6ac8a66c1 100644
---- a/include/linux/mlx5/mlx5_ifc.h
-+++ b/include/linux/mlx5/mlx5_ifc.h
-@@ -8508,7 +8508,8 @@ struct mlx5_ifc_alloc_flow_counter_in_bits {
- 	u8         reserved_at_20[0x10];
- 	u8         op_mod[0x10];
- 
--	u8         reserved_at_40[0x38];
-+	u8         reserved_at_40[0x33];
-+	u8         flow_counter_bulk_log_size[0x5];
- 	u8         flow_counter_bulk[0x8];
+diff --git a/include/linux/sunrpc/sched.h b/include/linux/sunrpc/sched.h
+index a237b8dbf6086..ba047a145e092 100644
+--- a/include/linux/sunrpc/sched.h
++++ b/include/linux/sunrpc/sched.h
+@@ -90,8 +90,7 @@ struct rpc_task {
+ #endif
+ 	unsigned char		tk_priority : 2,/* Task priority */
+ 				tk_garb_retry : 2,
+-				tk_cred_retry : 2,
+-				tk_rebind_retry : 2;
++				tk_cred_retry : 2;
  };
  
+ typedef void			(*rpc_action)(struct rpc_task *);
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index ad3e9a40b0610..b9c54c03c30a6 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -1981,9 +1981,6 @@ call_bind_status(struct rpc_task *task)
+ 			status = -EOPNOTSUPP;
+ 			break;
+ 		}
+-		if (task->tk_rebind_retry == 0)
+-			break;
+-		task->tk_rebind_retry--;
+ 		rpc_delay(task, 3*HZ);
+ 		goto retry_timeout;
+ 	case -ENOBUFS:
+diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
+index f0f55fbd13752..a00890962e115 100644
+--- a/net/sunrpc/sched.c
++++ b/net/sunrpc/sched.c
+@@ -796,7 +796,6 @@ rpc_init_task_statistics(struct rpc_task *task)
+ 	/* Initialize retry counters */
+ 	task->tk_garb_retry = 2;
+ 	task->tk_cred_retry = 2;
+-	task->tk_rebind_retry = 2;
+ 
+ 	/* starting timestamp */
+ 	task->tk_start = ktime_get();
 -- 
 2.39.2
 
