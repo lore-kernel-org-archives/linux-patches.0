@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C625168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:14:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 866A3C433D2;
-	Mon,  8 May 2023 11:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24502168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDB3C4339B;
+	Mon,  8 May 2023 11:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544498;
-	bh=x3eg2N19eGRJdwsY/2D7GaWpwl7igUeDKDrtO7znVbg=;
+	s=korg; t=1683544501;
+	bh=Vz6FXD+nTESi9ykuQCZ8RPeDHcdB9OmyxMqaP7lU10I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRTTuWwLKbFjSP1SmLLhWJNbelnz4c8E/32b6T8XkmRbFQpoiso4jFF341ADtDbXj
-	 DxcO7yUKBs4LQAey7F6V1K8xTDTNXFZ5E0Yj+QFaV/FLxo2IO9ew6JeC9QpFtSAsYZ
-	 tWxOX73dMil6b9pJbltsaj0tbo7pld4s5MFW883c=
+	b=y87cCIXmwoG39Vvp37JX+8LBTZxk+ZDQnRyKLjV5WBH/PWGka3ALzLSZOFePkN8AU
+	 8PQMjidXODK4hETLzaScTgUFWJNCEK7473TZRX1urNSOsnhinrIgr+4bbqgE9+epaV
+	 7KsgnCJRYr63pWCtJE2lBGuWLuC7EpXO1H+m61Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Avraham Stern <avraham.stern@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Lorenzo Zolfanelli <lorenzo@zolfa.nl>
-Subject: [PATCH 6.3 430/694] wifi: iwlwifi: make the loop for card preparation effective
-Date: Mon,  8 May 2023 11:44:25 +0200
-Message-Id: <20230508094447.309135408@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 413/694] wifi: iwlwifi: trans: dont trigger d3 interrupt twice
+Date: Mon,  8 May 2023 11:44:08 +0200
+Message-Id: <20230508094446.669006422@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,48 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Avraham Stern <avraham.stern@intel.com>
 
-[ Upstream commit 28965ec0b5d9112585f725660e2ff13218505ace ]
+[ Upstream commit 277f56a141fc54ef7f9e09dba65fb2e12021411d ]
 
-Since we didn't reset t to 0, only the first iteration of the loop
-did checked the ready bit several times.
->From the second iteration and on, we just tested the bit once and
-continued to the next iteration.
+When the IPC registers are used for sleep control, setting
+the IPC sleep bit already triggers an interrupt to the fw, so
+there is no need to also set the doorbell. Setting also the
+doorbell triggers the sleep interrupt twice which lead to
+an assert.
 
-Reported-and-tested-by: Lorenzo Zolfanelli <lorenzo@zolfa.nl>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216452
-Fixes: 289e5501c314 ("iwlwifi: fix the preparation of the card")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Fixes: af08571d3925 ("iwlwifi: pcie: support Bz suspend/resume trigger")
+Signed-off-by: Avraham Stern <avraham.stern@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230416154301.615b683ab9c8.Ic52c3229d3345b0064fa34263293db095d88daf8@changeid
+Link: https://lore.kernel.org/r/20230413102635.b5f2f6e44d38.I4cb5b6ad4914db47a714e731c4c8b4db679cabce@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-index 40283fe622daa..171b6bf4a65a0 100644
+index 0a9af1ad1f206..40283fe622daa 100644
 --- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
 +++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-@@ -599,7 +599,6 @@ static int iwl_pcie_set_hw_ready(struct iwl_trans *trans)
- int iwl_pcie_prepare_card_hw(struct iwl_trans *trans)
- {
+@@ -1522,19 +1522,16 @@ static int iwl_pcie_d3_handshake(struct iwl_trans *trans, bool suspend)
+ 	struct iwl_trans_pcie *trans_pcie = IWL_TRANS_GET_PCIE_TRANS(trans);
  	int ret;
--	int t = 0;
- 	int iter;
  
- 	IWL_DEBUG_INFO(trans, "iwl_trans_prepare_card_hw enter\n");
-@@ -616,6 +615,8 @@ int iwl_pcie_prepare_card_hw(struct iwl_trans *trans)
- 	usleep_range(1000, 2000);
+-	if (trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_AX210) {
++	if (trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_AX210)
+ 		iwl_write_umac_prph(trans, UREG_DOORBELL_TO_ISR6,
+ 				    suspend ? UREG_DOORBELL_TO_ISR6_SUSPEND :
+ 					      UREG_DOORBELL_TO_ISR6_RESUME);
+-	} else if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
++	else if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ)
+ 		iwl_write32(trans, CSR_IPC_SLEEP_CONTROL,
+ 			    suspend ? CSR_IPC_SLEEP_CONTROL_SUSPEND :
+ 				      CSR_IPC_SLEEP_CONTROL_RESUME);
+-		iwl_write_umac_prph(trans, UREG_DOORBELL_TO_ISR6,
+-				    UREG_DOORBELL_TO_ISR6_SLEEP_CTRL);
+-	} else {
++	else
+ 		return 0;
+-	}
  
- 	for (iter = 0; iter < 10; iter++) {
-+		int t = 0;
-+
- 		/* If HW is not ready, prepare the conditions to check again */
- 		iwl_set_bit(trans, CSR_HW_IF_CONFIG_REG,
- 			    CSR_HW_IF_CONFIG_REG_PREPARE);
+ 	ret = wait_event_timeout(trans_pcie->sx_waitq,
+ 				 trans_pcie->sx_complete, 2 * HZ);
 -- 
 2.39.2
 
