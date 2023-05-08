@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42FF171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40434C433D2;
-	Mon,  8 May 2023 11:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A075E171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06558C433EF;
+	Mon,  8 May 2023 11:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545513;
-	bh=0kM0V+605O1M1znJUIHIVJQociBMYCy5OXAFrQeck+o=;
+	s=korg; t=1683545516;
+	bh=UXqE0aF+Dgzy9JzQ6TuSK4YCephGJml1toDoiacqo0E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nAzRABe6Rs0tpmJP3oYdLv1HpiZspkS7ojODnb3Wolfn1EWsrDwNYSJeHgBgWqSCB
-	 vBhMMasIfbvTcpdd7wkpnpQMmfjAFAgcYxYknWml9I+sh8aljB4GLKmWQmqtT03zK8
-	 Erh3jjLRjY7qPyZN+yy2dASl+ra45xq/H1TrV5zI=
+	b=ridc6MTOk4R71lp3Jy67frxD1wm3K2l6Tnaute1Q0IaYfExUE39Osm62/Ylsrx2GU
+	 hmset/k1ELw0t0ZeC0u1pH2kzvMGjfwAqvezxG8FS9uFsWgY7vHW/MCMebSedq7FYV
+	 qFLVPn3/zul6N7wwArEVJA6wRpCOzwrY05gD6iCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Thierry Reding <thierry.reding@gmail.com>
-Subject: [PATCH 5.15 035/371] pwm: meson: Fix g12a ao clk81 name
-Date: Mon,  8 May 2023 11:43:56 +0200
-Message-Id: <20230508094813.483672083@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 036/371] soundwire: qcom: correct setting ignore bit on v1.5.1
+Date: Mon,  8 May 2023 11:43:57 +0200
+Message-Id: <20230508094813.521074650@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,42 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 9e4fa80ab7ef9eb4f7b1ea9fc31e0eb040e85e25 upstream.
+commit bd934f77eeac377e81ddac8673803e7334b82d3d upstream.
 
-Fix the name of the aoclk81 clock. Apparently name aoclk81 as used by
-the vendor driver was changed when mainlining the g12a clock driver.
+According to the comment and to downstream sources, the
+SWRM_CONTINUE_EXEC_ON_CMD_IGNORE in SWRM_CMD_FIFO_CFG_ADDR register
+should be set for v1.5.1 and newer, so fix the >= operator.
 
-Fixes: f41efceb46e6 ("pwm: meson: Add clock source configuration for Meson G12A")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 542d3491cdd7 ("soundwire: qcom: set continue execution flag for ignored commands")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230222140343.188691-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-meson.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soundwire/qcom.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -433,7 +433,7 @@ static const struct meson_pwm_data pwm_a
- };
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -640,7 +640,7 @@ static int qcom_swrm_init(struct qcom_sw
  
- static const char * const pwm_g12a_ao_ab_parent_names[] = {
--	"xtal", "aoclk81", "fclk_div4", "fclk_div5"
-+	"xtal", "g12a_ao_clk81", "fclk_div4", "fclk_div5"
- };
- 
- static const struct meson_pwm_data pwm_g12a_ao_ab_data = {
-@@ -442,7 +442,7 @@ static const struct meson_pwm_data pwm_g
- };
- 
- static const char * const pwm_g12a_ao_cd_parent_names[] = {
--	"xtal", "aoclk81",
-+	"xtal", "g12a_ao_clk81",
- };
- 
- static const struct meson_pwm_data pwm_g12a_ao_cd_data = {
+ 	ctrl->reg_write(ctrl, SWRM_MCP_BUS_CTRL, SWRM_MCP_BUS_CLK_START);
+ 	/* Configure number of retries of a read/write cmd */
+-	if (ctrl->version > 0x01050001) {
++	if (ctrl->version >= 0x01050001) {
+ 		/* Only for versions >= 1.5.1 */
+ 		ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CFG_ADDR,
+ 				SWRM_RD_WR_CMD_RETRIES |
 
 
