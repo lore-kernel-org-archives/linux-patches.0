@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17826168C8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:53:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C41C433EF;
-	Mon,  8 May 2023 10:52:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC646168C8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:53:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325A1C433EF;
+	Mon,  8 May 2023 10:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543179;
-	bh=DdcAoN2JalWl6Zg8G0USnl3BPFjwyeQ2m3T6BjxTn5U=;
+	s=korg; t=1683543182;
+	bh=cw3OnQkRRzLSZofw1h00fHi3CqqZKFvyxjHDHAz3LDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TiggZL1l4NOuqBBJ+8unNeeEyVrV5LPyLv83+aGC6CVY2CuR4EYYqyBAQxVQRxxvE
-	 KndcgvvKnuEOuNJQfjs3iCnYEnGyCIbUztCz0hVZ5vXjCZSkPNt+/D0A1NoxUgEh2k
-	 0gX9GTcfz3NL8QAV0bEsrLlFeIIKX/MdzFQryBgs=
+	b=TSw4WqHSxBrfLO37CdqXb1OGBcr/RrwWug8tMsjqowbysmhhv2imbzoFntXEopUct
+	 4haDG+FfU/bUhCNAJGGIgfOP6/CqMC4srbn847Fe5orM1F4SKDFwPByiLqWk7jepyh
+	 rjm7aRyjUZ5dGIyf8rv7MwssqaRioIZxK7ZgyVpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anson Tsao <anson.tsao@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Sean Wang <sean.wang@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>
-Subject: [PATCH 6.3 001/694] wifi: mt76: mt7921e: Set memory space enable in PCI_COMMAND if unset
-Date: Mon,  8 May 2023 11:37:16 +0200
-Message-Id: <20230508094432.660777731@linuxfoundation.org>
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	ValdikSS <iam@valdikss.org.ru>,
+	Alexandru gagniuc <mr.nuke.me@gmail.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.3 010/694] wifi: rtw88: usb: fix priority queue to endpoint mapping
+Date: Mon,  8 May 2023 11:37:25 +0200
+Message-Id: <20230508094432.969367923@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,47 +38,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit 09d4d6da1b65d09414e7bce61459593f3c80ead1 upstream.
+commit a6f187f92bcc2b17821538b4a11d61764e68b091 upstream.
 
-When the BIOS has been configured for Fast Boot, systems with mt7921e
-have non-functional wifi.  Turning on Fast boot caused both bus master
-enable and memory space enable bits in PCI_COMMAND not to get configured.
+The RTW88 chipsets have four different priority queues in hardware. For
+the USB type chipsets the packets destined for a specific priority queue
+must be sent through the endpoint corresponding to the queue. This was
+not fully understood when porting from the RTW88 USB out of tree driver
+and thus violated.
 
-The mt7921 driver already sets bus master enable, but explicitly check
-and set memory access enable as well to fix this problem.
+This patch implements the qsel to endpoint mapping as in
+get_usb_bulkout_id_88xx() in the downstream driver.
 
-Tested-by: Anson Tsao <anson.tsao@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Sean Wang <sean.wang@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Without this the driver often issues "timed out to flush queue 3"
+warnings and often TX stalls completely.
+
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Tested-by: ValdikSS <iam@valdikss.org.ru>
+Tested-by: Alexandru gagniuc <mr.nuke.me@gmail.com>
+Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
+Cc: stable@vger.kernel.org
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230417140358.2240429-2-s.hauer@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/pci.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/realtek/rtw88/usb.c |   70 ++++++++++++++++++++-----------
+ 1 file changed, 47 insertions(+), 23 deletions(-)
 
---- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
-@@ -263,6 +263,7 @@ static int mt7921_pci_probe(struct pci_d
- 	struct mt76_dev *mdev;
- 	u8 features;
- 	int ret;
-+	u16 cmd;
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -118,6 +118,22 @@ static void rtw_usb_write32(struct rtw_d
+ 	rtw_usb_write(rtwdev, addr, val, 4);
+ }
  
- 	ret = pcim_enable_device(pdev);
- 	if (ret)
-@@ -272,6 +273,11 @@ static int mt7921_pci_probe(struct pci_d
- 	if (ret)
- 		return ret;
- 
-+	pci_read_config_word(pdev, PCI_COMMAND, &cmd);
-+	if (!(cmd & PCI_COMMAND_MEMORY)) {
-+		cmd |= PCI_COMMAND_MEMORY;
-+		pci_write_config_word(pdev, PCI_COMMAND, cmd);
++static int dma_mapping_to_ep(enum rtw_dma_mapping dma_mapping)
++{
++	switch (dma_mapping) {
++	case RTW_DMA_MAPPING_HIGH:
++		return 0;
++	case RTW_DMA_MAPPING_NORMAL:
++		return 1;
++	case RTW_DMA_MAPPING_LOW:
++		return 2;
++	case RTW_DMA_MAPPING_EXTRA:
++		return 3;
++	default:
++		return -EINVAL;
 +	}
- 	pci_set_master(pdev);
++}
++
+ static int rtw_usb_parse(struct rtw_dev *rtwdev,
+ 			 struct usb_interface *interface)
+ {
+@@ -129,6 +145,8 @@ static int rtw_usb_parse(struct rtw_dev
+ 	int num_out_pipes = 0;
+ 	int i;
+ 	u8 num;
++	const struct rtw_chip_info *chip = rtwdev->chip;
++	const struct rtw_rqpn *rqpn;
  
- 	ret = pci_alloc_irq_vectors(pdev, 1, 1, PCI_IRQ_ALL_TYPES);
+ 	for (i = 0; i < interface_desc->bNumEndpoints; i++) {
+ 		endpoint = &host_interface->endpoint[i].desc;
+@@ -183,31 +201,34 @@ static int rtw_usb_parse(struct rtw_dev
+ 
+ 	rtwdev->hci.bulkout_num = num_out_pipes;
+ 
+-	switch (num_out_pipes) {
+-	case 4:
+-	case 3:
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID0] = 2;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID1] = 2;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID2] = 2;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID3] = 2;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID4] = 1;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID5] = 1;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID6] = 0;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID7] = 0;
+-		break;
+-	case 2:
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID0] = 1;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID1] = 1;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID2] = 1;
+-		rtwusb->qsel_to_ep[TX_DESC_QSEL_TID3] = 1;
+-		break;
+-	case 1:
+-		break;
+-	default:
+-		rtw_err(rtwdev, "failed to get out_pipes(%d)\n", num_out_pipes);
++	if (num_out_pipes < 1 || num_out_pipes > 4) {
++		rtw_err(rtwdev, "invalid number of endpoints %d\n", num_out_pipes);
+ 		return -EINVAL;
+ 	}
+ 
++	rqpn = &chip->rqpn_table[num_out_pipes];
++
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID0] = dma_mapping_to_ep(rqpn->dma_map_be);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID1] = dma_mapping_to_ep(rqpn->dma_map_bk);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID2] = dma_mapping_to_ep(rqpn->dma_map_bk);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID3] = dma_mapping_to_ep(rqpn->dma_map_be);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID4] = dma_mapping_to_ep(rqpn->dma_map_vi);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID5] = dma_mapping_to_ep(rqpn->dma_map_vi);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID6] = dma_mapping_to_ep(rqpn->dma_map_vo);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID7] = dma_mapping_to_ep(rqpn->dma_map_vo);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID8] = -EINVAL;
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID9] = -EINVAL;
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID10] = -EINVAL;
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID11] = -EINVAL;
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID12] = -EINVAL;
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID13] = -EINVAL;
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID14] = -EINVAL;
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_TID15] = -EINVAL;
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_BEACON] = dma_mapping_to_ep(rqpn->dma_map_hi);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_HIGH] = dma_mapping_to_ep(rqpn->dma_map_hi);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_MGMT] = dma_mapping_to_ep(rqpn->dma_map_mg);
++	rtwusb->qsel_to_ep[TX_DESC_QSEL_H2C] = dma_mapping_to_ep(rqpn->dma_map_hi);
++
+ 	return 0;
+ }
+ 
+@@ -250,7 +271,7 @@ static void rtw_usb_write_port_tx_comple
+ static int qsel_to_ep(struct rtw_usb *rtwusb, unsigned int qsel)
+ {
+ 	if (qsel >= ARRAY_SIZE(rtwusb->qsel_to_ep))
+-		return 0;
++		return -EINVAL;
+ 
+ 	return rtwusb->qsel_to_ep[qsel];
+ }
+@@ -265,6 +286,9 @@ static int rtw_usb_write_port(struct rtw
+ 	int ret;
+ 	int ep = qsel_to_ep(rtwusb, qsel);
+ 
++	if (ep < 0)
++		return ep;
++
+ 	pipe = usb_sndbulkpipe(usbd, rtwusb->out_ep[ep]);
+ 	urb = usb_alloc_urb(0, GFP_ATOMIC);
+ 	if (!urb)
 
 
