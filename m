@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB31168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25C2C433EF;
-	Mon,  8 May 2023 11:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AC7C168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5146C4339B;
+	Mon,  8 May 2023 11:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544369;
-	bh=aSFNXfwWMM7rrn6Wf1sNpsdwGY2Sz1jIh9jWdXjU+sE=;
+	s=korg; t=1683544372;
+	bh=xVWEwo7p5kVaKev6Tr3b2FO0fOqVI04SPm/moheSsMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jjHU8HnBbRiTX4nIS419TGxvjqRILH88Y4TiNzS8N0XFyM62UAu+dFtAQq931EzKc
-	 M+8tXzGUe96a/fumOuI/Kg37E0UDrbJ+bGN8Ywy+bfV3Hdmhx4CKembEsS22CyfhIl
-	 /9fXce0B2ZBfnJNQRVMisdI7on4cSisCRWu/ZNtA=
+	b=VjiaiU4RjcpJg5hceLFfsgWcpkDhiAt1KRwy8EX+xEXYeWut6oEel0tZ3/PjVe7Rb
+	 i3lpVI/s9hV2sggjcj+83z+y6L8XyztSygHZ4b3Mp3TYr9TxOJTeZgajy74poH13Hb
+	 LxUj/RCicFhiezqrCBuoPOe1y0I6BYaDVD3k3a/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingui Yang <yangxingui@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Stanislav Fomichev <sdf@google.com>,
+	YiFei Zhu <zhuyifei@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 380/694] scsi: hisi_sas: Handle NCQ error when IPTT is valid
-Date: Mon,  8 May 2023 11:43:35 +0200
-Message-Id: <20230508094445.240317169@linuxfoundation.org>
+Subject: [PATCH 6.3 389/694] selftests/bpf: Wait for receive in cg_storage_multi test
+Date: Mon,  8 May 2023 11:43:44 +0200
+Message-Id: <20230508094445.649822141@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,87 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xingui Yang <yangxingui@huawei.com>
+From: YiFei Zhu <zhuyifei@google.com>
 
-[ Upstream commit bb544224da77b96b2c11a13872bf91ede1e015be ]
+[ Upstream commit 5af607a861d43ffff830fc1890033e579ec44799 ]
 
-If an NCQ error occurs when the IPTT is valid and slot->abort flag is set
-in completion path, sas_task_abort() will be called to abort only one NCQ
-command now, and the host would be set to SHOST_RECOVERY state. But this
-may not kick-off EH Immediately until other outstanding QCs timeouts. As a
-result, the host may remain in the SHOST_RECOVERY state for up to 30
-seconds, such as follows:
+In some cases the loopback latency might be large enough, causing
+the assertion on invocations to be run before ingress prog getting
+executed. The assertion would fail and the test would flake.
 
-[7972317.645234] hisi_sas_v3_hw 0000:74:04.0: erroneous completion iptt=3264 task=00000000466116b8 dev id=2 sas_addr=0x5000000000000502 CQ hdr: 0x1883 0x20cc0 0x40000 0x20420000 Error info: 0x0 0x0 0x200000 0x0
-[7972341.508264] sas: Enter sas_scsi_recover_host busy: 32 failed: 32
-[7972341.984731] sas: --- Exit sas_scsi_recover_host: busy: 0 failed: 32 tries: 1
+This can be reliably reproduced by arbitrarily increasing the
+loopback latency (thanks to [1]):
+  tc qdisc add dev lo root handle 1: htb default 12
+  tc class add dev lo parent 1:1 classid 1:12 htb rate 20kbps ceil 20kbps
+  tc qdisc add dev lo parent 1:12 netem delay 100ms
 
-All NCQ commands that are in the queue should be aborted when an NCQ error
-occurs in this scenario.
+Fix this by waiting on the receive end, instead of instantly
+returning to the assert. The call to read() will wait for the
+default SO_RCVTIMEO timeout of 3 seconds provided by
+start_server().
 
-Fixes: 05d91b557af9 ("scsi: hisi_sas: Directly trigger SCSI error handling for completion errors")
-Signed-off-by: Xingui Yang <yangxingui@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1679283265-115066-3-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[1] https://gist.github.com/kstevens715/4598301
+
+Reported-by: Martin KaFai Lau <martin.lau@linux.dev>
+Link: https://lore.kernel.org/bpf/9c5c8b7e-1d89-a3af-5400-14fde81f4429@linux.dev/
+Fixes: 3573f384014f ("selftests/bpf: Test CGROUP_STORAGE behavior on shared egress + ingress")
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: YiFei Zhu <zhuyifei@google.com>
+Link: https://lore.kernel.org/r/20230405193354.1956209-1-zhuyifei@google.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_v1_hw.c | 6 +++++-
- drivers/scsi/hisi_sas/hisi_sas_v2_hw.c | 6 +++++-
- drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 6 +++++-
- 3 files changed, 15 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-index d643c5a49aa94..70c24377c6a19 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v1_hw.c
-@@ -1258,7 +1258,11 @@ static void slot_complete_v1_hw(struct hisi_hba *hisi_hba,
+diff --git a/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c b/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
+index 621c572221918..63ee892bc7573 100644
+--- a/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
++++ b/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
+@@ -56,8 +56,9 @@ static bool assert_storage_noexist(struct bpf_map *map, const void *key)
  
- 		slot_err_v1_hw(hisi_hba, task, slot);
- 		if (unlikely(slot->abort)) {
--			sas_task_abort(task);
-+			if (dev_is_sata(device) && task->ata_task.use_ncq)
-+				sas_ata_device_link_abort(device, true);
-+			else
-+				sas_task_abort(task);
-+
- 			return;
- 		}
- 		goto out;
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-index cded42f4ca445..02575d81afca2 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v2_hw.c
-@@ -2404,7 +2404,11 @@ static void slot_complete_v2_hw(struct hisi_hba *hisi_hba,
- 				 error_info[2], error_info[3]);
+ static bool connect_send(const char *cgroup_path)
+ {
+-	bool res = true;
+ 	int server_fd = -1, client_fd = -1;
++	char message[] = "message";
++	bool res = true;
  
- 		if (unlikely(slot->abort)) {
--			sas_task_abort(task);
-+			if (dev_is_sata(device) && task->ata_task.use_ncq)
-+				sas_ata_device_link_abort(device, true);
-+			else
-+				sas_task_abort(task);
+ 	if (join_cgroup(cgroup_path))
+ 		goto out_clean;
+@@ -70,7 +71,10 @@ static bool connect_send(const char *cgroup_path)
+ 	if (client_fd < 0)
+ 		goto out_clean;
+ 
+-	if (send(client_fd, "message", strlen("message"), 0) < 0)
++	if (send(client_fd, &message, sizeof(message), 0) < 0)
++		goto out_clean;
 +
- 			return;
- 		}
- 		goto out;
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-index a63279f55d096..9afc23e3a80fc 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
-@@ -2320,7 +2320,11 @@ static void slot_complete_v3_hw(struct hisi_hba *hisi_hba,
- 					error_info[0], error_info[1],
- 					error_info[2], error_info[3]);
- 			if (unlikely(slot->abort)) {
--				sas_task_abort(task);
-+				if (dev_is_sata(device) && task->ata_task.use_ncq)
-+					sas_ata_device_link_abort(device, true);
-+				else
-+					sas_task_abort(task);
-+
- 				return;
- 			}
- 			goto out;
++	if (read(server_fd, &message, sizeof(message)) < 0)
+ 		goto out_clean;
+ 
+ 	res = false;
 -- 
 2.39.2
 
