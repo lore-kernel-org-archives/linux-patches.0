@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D34E168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B749AC433D2;
-	Mon,  8 May 2023 11:22:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E99C168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BCFC4339B;
+	Mon,  8 May 2023 11:22:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544950;
-	bh=9FIRfJMOI1BrYqC6fBYWT/X7QF+6WNfrvww/JtPUqLM=;
+	s=korg; t=1683544953;
+	bh=HuVk1l2B0m+JV5hjaJfPHQDnHZ4YtvJoU0wfVCYbGLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mElSDQlj2YseaS9oshWme2xmBYGhRiQSJ75FWjGJBFgpJvkz2tIjvZkCtK3gMWJQG
-	 qJARD8bY4AaOZ7F5O07KQQKWyuFUnoq14jiifP2/1nDd3twSaaLtogi9VAJ8rgec+w
-	 SN2Y/0ZG+M2y+2H3D/fYvfoddsQ/QwYdM5QyWpB0=
+	b=GsoizRUmaOd8rE2TzLTZx0VdGzEzOIBdnHFjszejVftUpMrOkYxAGSGNArl5mO/me
+	 mqVwJWDAtxznpoesoAaJ0lodhwkMQFdrTz/HuRZWemaaIRVyT5A2YX89HLFfQTJu6H
+	 PWOoLNv+sLsRITkXz6ES0RuHQp7oL5cB2hL6bf3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Chunfeng Yun <chunfeng.yun@mediatek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 574/694] clk: at91: clk-sam9x60-pll: fix return value check
-Date: Mon,  8 May 2023 11:46:49 +0200
-Message-Id: <20230508094453.505167081@linuxfoundation.org>
+Subject: [PATCH 6.3 546/694] usb: mtu3: fix kernel panic at qmu transfer done irq handler
+Date: Mon,  8 May 2023 11:46:21 +0200
+Message-Id: <20230508094452.225779801@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,36 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Chunfeng Yun <chunfeng.yun@mediatek.com>
 
-[ Upstream commit 1bd8e27fd0db0fe7f489213836dcbab92934f8fa ]
+[ Upstream commit d28f4091ea7ec3510fd6a3c6d433234e7a2bef14 ]
 
-sam9x60_frac_pll_compute_mul_frac() can't return zero. Remove the check
-against zero to reflect this.
+When handle qmu transfer irq, it will unlock @mtu->lock before give back
+request, if another thread handle disconnect event at the same time, and
+try to disable ep, it may lock @mtu->lock and free qmu ring, then qmu
+irq hanlder may get a NULL gpd, avoid the KE by checking gpd's value before
+handling it.
 
-Fixes: 43b1bb4a9b3e ("clk: at91: clk-sam9x60-pll: re-factor to support plls with multiple outputs")
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20230227105931.2812412-1-claudiu.beznea@microchip.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+e.g.
+qmu done irq on cpu0                 thread running on cpu1
+
+qmu_done_tx()
+  handle gpd [0]
+    mtu3_requ_complete()        mtu3_gadget_ep_disable()
+      unlock @mtu->lock
+        give back request         lock @mtu->lock
+                                    mtu3_ep_disable()
+                                      mtu3_gpd_ring_free()
+                                   unlock @mtu->lock
+      lock @mtu->lock
+    get next gpd [1]
+
+[1]: goto [0] to handle next gpd, and next gpd may be NULL.
+
+Fixes: 48e0d3735aa5 ("usb: mtu3: supports new QMU format")
+Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
+Link: https://lore.kernel.org/r/20230417025203.18097-3-chunfeng.yun@mediatek.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/at91/clk-sam9x60-pll.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/mtu3/mtu3_qmu.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/at91/clk-sam9x60-pll.c b/drivers/clk/at91/clk-sam9x60-pll.c
-index d757003004cbb..0882ed01d5c27 100644
---- a/drivers/clk/at91/clk-sam9x60-pll.c
-+++ b/drivers/clk/at91/clk-sam9x60-pll.c
-@@ -668,7 +668,7 @@ sam9x60_clk_register_frac_pll(struct regmap *regmap, spinlock_t *lock,
+diff --git a/drivers/usb/mtu3/mtu3_qmu.c b/drivers/usb/mtu3/mtu3_qmu.c
+index a2fdab8b63b28..3b68a0a19cc76 100644
+--- a/drivers/usb/mtu3/mtu3_qmu.c
++++ b/drivers/usb/mtu3/mtu3_qmu.c
+@@ -210,6 +210,7 @@ static struct qmu_gpd *advance_enq_gpd(struct mtu3_gpd_ring *ring)
+ 	return ring->enqueue;
+ }
  
- 		ret = sam9x60_frac_pll_compute_mul_frac(&frac->core, FCORE_MIN,
- 							parent_rate, true);
--		if (ret <= 0) {
-+		if (ret < 0) {
- 			hw = ERR_PTR(ret);
- 			goto free;
- 		}
++/* @dequeue may be NULL if ring is unallocated or freed */
+ static struct qmu_gpd *advance_deq_gpd(struct mtu3_gpd_ring *ring)
+ {
+ 	if (ring->dequeue < ring->end)
+@@ -491,7 +492,7 @@ static void qmu_done_tx(struct mtu3 *mtu, u8 epnum)
+ 	dev_dbg(mtu->dev, "%s EP%d, last=%p, current=%p, enq=%p\n",
+ 		__func__, epnum, gpd, gpd_current, ring->enqueue);
+ 
+-	while (gpd != gpd_current && !GET_GPD_HWO(gpd)) {
++	while (gpd && gpd != gpd_current && !GET_GPD_HWO(gpd)) {
+ 
+ 		mreq = next_request(mep);
+ 
+@@ -530,7 +531,7 @@ static void qmu_done_rx(struct mtu3 *mtu, u8 epnum)
+ 	dev_dbg(mtu->dev, "%s EP%d, last=%p, current=%p, enq=%p\n",
+ 		__func__, epnum, gpd, gpd_current, ring->enqueue);
+ 
+-	while (gpd != gpd_current && !GET_GPD_HWO(gpd)) {
++	while (gpd && gpd != gpd_current && !GET_GPD_HWO(gpd)) {
+ 
+ 		mreq = next_request(mep);
+ 
 -- 
 2.39.2
 
