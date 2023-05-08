@@ -1,32 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47047168DF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9806C433EF;
-	Mon,  8 May 2023 11:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22902168DF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61110C433D2;
+	Mon,  8 May 2023 11:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545496;
-	bh=+0RE+7ZUlgN+Hud6gu9TQz4rBrwna8HXuIwEzINMsqw=;
+	s=korg; t=1683545499;
+	bh=wJMLf8Mlfh7XUQkOMZufoxztxuemjmz9tRlqawBw+Jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=znYrjj8YCF6Y2lD7AmkXKYSERJnhCYQAQtHd0yNANJjhg4nubphj6Uxvy3gnPCQeW
-	 TU5dhmBCf/egk9QRFOPdUnXNbSJLcJVlqcPAJ4A2qp9LZq20FPstTG5zSdRFyH6LLN
-	 AToHswAULzxf0Qciks/RZcU73KbCr8ZMDFCUZnCE=
+	b=GddpGb/4iOdP72gz2oPBlVXuDSBrPPkW7EjL+YXgbJTqa6izJjhuFizZ0KQL/BVkk
+	 FgHGF1WmdQnqb27MG+KxAEQsWt4aahWrm8/Lbr+bX/JnOvzkfUVEUPOsXfSTzOGF4T
+	 mzn+9IBSRkH4mDesWH3xI4E9WIbcraM6fmZFIpBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	alsa-devel@alsa-project.org,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 058/371] sound/oss/dmasound: fix build when drivers are mixed =y/=m
-Date: Mon,  8 May 2023 11:44:19 +0200
-Message-Id: <20230508094814.380911635@linuxfoundation.org>
+	Zqiang <qiang1.zhang@intel.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Frederic Weisbecker <fweisbec@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Anna-Maria Behnsen <anna-maria@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 059/371] rcu: Fix missing TICK_DEP_MASK_RCU_EXP dependency check
+Date: Mon,  8 May 2023 11:44:20 +0200
+Message-Id: <20230508094814.426323122@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -40,166 +43,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Zqiang <qiang1.zhang@intel.com>
 
-commit 9dd7c46346ca4390f84a7ea9933005eb1b175c15 upstream.
+[ Upstream commit db7b464df9d820186e98a65aa6a10f0d51fbf8ce ]
 
-When CONFIG_DMASOUND_ATARI=m and CONFIG_DMASOUND_Q40=y (or vice versa),
-dmasound_core.o can be built without dmasound_deinit() being defined,
-causing a build error:
+This commit adds checks for the TICK_DEP_MASK_RCU_EXP bit, thus enabling
+RCU expedited grace periods to actually force-enable scheduling-clock
+interrupts on holdout CPUs.
 
-ERROR: modpost: "dmasound_deinit" [sound/oss/dmasound/dmasound_atari.ko] undefined!
-
-Modify dmasound_core.c and dmasound.h so that dmasound_deinit() is
-always available.
-
-The mixed modes (=y/=m) also mean that several variables and structs
-have to be declared in all cases.
-
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: lore.kernel.org/r/202204032138.EFT9qGEd-lkp@intel.com
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: alsa-devel@alsa-project.org
-Link: https://lore.kernel.org/r/20220405234118.24830-1-rdunlap@infradead.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: df1e849ae455 ("rcu: Enable tick for nohz_full CPUs slow to provide expedited QS")
+Signed-off-by: Zqiang <qiang1.zhang@intel.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Frederic Weisbecker <fweisbec@gmail.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Anna-Maria Behnsen <anna-maria@linutronix.de>
+Acked-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/oss/dmasound/dmasound.h      |    6 ------
- sound/oss/dmasound/dmasound_core.c |   24 +-----------------------
- 2 files changed, 1 insertion(+), 29 deletions(-)
+ include/trace/events/timer.h | 3 ++-
+ kernel/time/tick-sched.c     | 5 +++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/sound/oss/dmasound/dmasound.h
-+++ b/sound/oss/dmasound/dmasound.h
-@@ -88,11 +88,7 @@ static inline int ioctl_return(int __use
-      */
+diff --git a/include/trace/events/timer.h b/include/trace/events/timer.h
+index 6ad031c71be74..1cf012de6442e 100644
+--- a/include/trace/events/timer.h
++++ b/include/trace/events/timer.h
+@@ -368,7 +368,8 @@ TRACE_EVENT(itimer_expire,
+ 		tick_dep_name(PERF_EVENTS)		\
+ 		tick_dep_name(SCHED)			\
+ 		tick_dep_name(CLOCK_UNSTABLE)		\
+-		tick_dep_name_end(RCU)
++		tick_dep_name(RCU)			\
++		tick_dep_name_end(RCU_EXP)
  
- extern int dmasound_init(void);
--#ifdef MODULE
- extern void dmasound_deinit(void);
--#else
--#define dmasound_deinit()	do { } while (0)
--#endif
- 
- /* description of the set-up applies to either hard or soft settings */
- 
-@@ -114,9 +110,7 @@ typedef struct {
-     void *(*dma_alloc)(unsigned int, gfp_t);
-     void (*dma_free)(void *, unsigned int);
-     int (*irqinit)(void);
--#ifdef MODULE
-     void (*irqcleanup)(void);
--#endif
-     void (*init)(void);
-     void (*silence)(void);
-     int (*setFormat)(int);
---- a/sound/oss/dmasound/dmasound_core.c
-+++ b/sound/oss/dmasound/dmasound_core.c
-@@ -206,12 +206,10 @@ module_param(writeBufSize, int, 0);
- 
- MODULE_LICENSE("GPL");
- 
--#ifdef MODULE
- static int sq_unit = -1;
- static int mixer_unit = -1;
- static int state_unit = -1;
- static int irq_installed;
--#endif /* MODULE */
- 
- /* control over who can modify resources shared between play/record */
- static fmode_t shared_resource_owner;
-@@ -391,9 +389,6 @@ static const struct file_operations mixe
- 
- static void mixer_init(void)
- {
--#ifndef MODULE
--	int mixer_unit;
--#endif
- 	mixer_unit = register_sound_mixer(&mixer_fops, -1);
- 	if (mixer_unit < 0)
- 		return;
-@@ -1171,9 +1166,6 @@ static const struct file_operations sq_f
- static int sq_init(void)
- {
- 	const struct file_operations *fops = &sq_fops;
--#ifndef MODULE
--	int sq_unit;
--#endif
- 
- 	sq_unit = register_sound_dsp(fops, -1);
- 	if (sq_unit < 0) {
-@@ -1366,9 +1358,6 @@ static const struct file_operations stat
- 
- static int state_init(void)
- {
--#ifndef MODULE
--	int state_unit;
--#endif
- 	state_unit = register_sound_special(&state_fops, SND_DEV_STATUS);
- 	if (state_unit < 0)
- 		return state_unit ;
-@@ -1386,10 +1375,9 @@ static int state_init(void)
- int dmasound_init(void)
- {
- 	int res ;
--#ifdef MODULE
-+
- 	if (irq_installed)
- 		return -EBUSY;
--#endif
- 
- 	/* Set up sound queue, /dev/audio and /dev/dsp. */
- 
-@@ -1408,9 +1396,7 @@ int dmasound_init(void)
- 		printk(KERN_ERR "DMA sound driver: Interrupt initialization failed\n");
- 		return -ENODEV;
+ #undef tick_dep_name
+ #undef tick_dep_mask_name
+diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
+index 63e3e8ebcd643..e014927c82e76 100644
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -264,6 +264,11 @@ static bool check_tick_dependency(atomic_t *dep)
+ 		return true;
  	}
--#ifdef MODULE
- 	irq_installed = 1;
--#endif
  
- 	printk(KERN_INFO "%s DMA sound driver rev %03d installed\n",
- 		dmasound.mach.name, (DMASOUND_CORE_REVISION<<4) +
-@@ -1424,8 +1410,6 @@ int dmasound_init(void)
- 	return 0;
++	if (val & TICK_DEP_MASK_RCU_EXP) {
++		trace_tick_stop(0, TICK_DEP_MASK_RCU_EXP);
++		return true;
++	}
++
+ 	return false;
  }
  
--#ifdef MODULE
--
- void dmasound_deinit(void)
- {
- 	if (irq_installed) {
-@@ -1444,8 +1428,6 @@ void dmasound_deinit(void)
- 		unregister_sound_dsp(sq_unit);
- }
- 
--#else /* !MODULE */
--
- static int dmasound_setup(char *str)
- {
- 	int ints[6], size;
-@@ -1489,8 +1471,6 @@ static int dmasound_setup(char *str)
- 
- __setup("dmasound=", dmasound_setup);
- 
--#endif /* !MODULE */
--
-     /*
-      *  Conversion tables
-      */
-@@ -1577,9 +1557,7 @@ char dmasound_alaw2dma8[] = {
- 
- EXPORT_SYMBOL(dmasound);
- EXPORT_SYMBOL(dmasound_init);
--#ifdef MODULE
- EXPORT_SYMBOL(dmasound_deinit);
--#endif
- EXPORT_SYMBOL(dmasound_write_sq);
- EXPORT_SYMBOL(dmasound_catchRadius);
- #ifdef HAS_8BIT_TABLES
+-- 
+2.39.2
+
 
 
