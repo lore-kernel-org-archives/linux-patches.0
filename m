@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D02168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:25:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D0B7C433D2;
-	Mon,  8 May 2023 10:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2AEA168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:25:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251D2C4339C;
+	Mon,  8 May 2023 10:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541518;
-	bh=c6vUoTHq8hpFfIq5z+ISw5BuVYcJhGsrg+mjeSSYxPY=;
+	s=korg; t=1683541521;
+	bh=Dq7oHpDCJDUIrakCxaYsn4oRWMI6abiRScWxqMmmmu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dh7uaf3MUfSOC114vmz2ussljVOf1E06FmVy5gCiaW/bxxSug/VniQJlqpAIZ6f24
-	 K7w9fvvmT/YP9rhMjqwvZXNYq885UwuehRrMEsu3r17cMZFo954K1/tUoLzRttHbto
-	 Lb8ang7bzdKrzzSNpMVxR+Ui+zHQ6cYPPF+Czgf0=
+	b=ZTdpTQOzoa9izSnhJKUcGOGm/sgvnle9GyqqRHqgfahBWSwHUEyoqt+p8V/XKfArj
+	 bWIIUKCvnGamIRXLiElVUsr6+QUoPgGifvV73c2uitumYhOvGgI6oG9e7gkO1Z4ocS
+	 aUyw0TBib72qY5M5qrAoilz5qBPVRKUy0SqNcvX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 133/663] drm/rockchip: Drop unbalanced obj unref
-Date: Mon,  8 May 2023 11:39:19 +0200
-Message-Id: <20230508094432.849227075@linuxfoundation.org>
+Subject: [PATCH 6.2 142/663] arm64: dts: renesas: r8a774c0: Remove bogus voltages from OPP table
+Date: Mon,  8 May 2023 11:39:28 +0200
+Message-Id: <20230508094433.124441434@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,36 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 8ee3b0e85f6ccd9e6c527bc50eaba774c3bb18d0 ]
+[ Upstream commit 554edc3e9239bb81e61be9f0f5dbbeb528a69e72 ]
 
-In the error path, rockchip_drm_gem_object_mmap() is dropping an obj
-reference that it doesn't own.
+According to the RZ/G Series, 2nd Generation Hardware User’s Manual
+Rev. 1.11, the System CPU cores on RZ/G2E do not have their own power
+supply, but use the common internal power supply (typical 1.03V).
 
-Fixes: 41315b793e13 ("drm/rockchip: use drm_gem_mmap helpers")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230119231734.2884543-1-robdclark@gmail.com
+Hence remove the "opp-microvolt" properties from the Operating
+Performance Points table.  They are optional, and unused, when none of
+the CPU nodes is tied to a regulator using the "cpu-supply" property.
+
+Fixes: 231d8908a66fa98f ("arm64: dts: renesas: r8a774c0: Add OPPs table for cpu devices")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/8348e18a011ded94e35919cd8e17c0be1f9acf2f.1676560856.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 3 ---
+ arch/arm64/boot/dts/renesas/r8a774c0.dtsi | 3 ---
  1 file changed, 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-index 6edb7c52cb3dc..19b46c00dcbfd 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-@@ -262,9 +262,6 @@ static int rockchip_drm_gem_object_mmap(struct drm_gem_object *obj,
- 	else
- 		ret = rockchip_drm_gem_object_mmap_dma(obj, vma);
- 
--	if (ret)
--		drm_gem_vm_close(vma);
--
- 	return ret;
- }
- 
+diff --git a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
+index 151e32ac03683..ec7c7851519f4 100644
+--- a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
+@@ -49,17 +49,14 @@
+ 		opp-shared;
+ 		opp-800000000 {
+ 			opp-hz = /bits/ 64 <800000000>;
+-			opp-microvolt = <820000>;
+ 			clock-latency-ns = <300000>;
+ 		};
+ 		opp-1000000000 {
+ 			opp-hz = /bits/ 64 <1000000000>;
+-			opp-microvolt = <820000>;
+ 			clock-latency-ns = <300000>;
+ 		};
+ 		opp-1200000000 {
+ 			opp-hz = /bits/ 64 <1200000000>;
+-			opp-microvolt = <820000>;
+ 			clock-latency-ns = <300000>;
+ 			opp-suspend;
+ 		};
 -- 
 2.39.2
 
