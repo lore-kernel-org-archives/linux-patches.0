@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2D01549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:53:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A70C433D2;
-	Mon,  8 May 2023 09:53:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F54F1549F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:53:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9141C433D2;
+	Mon,  8 May 2023 09:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539589;
-	bh=XToYTx5PS/B7GTKwfRHrGEU4NqFk0xpPtsk6gj6+620=;
+	s=korg; t=1683539592;
+	bh=Su3z3FPAG783e7UBfk1wjhLMdJ48fUsYar7QM2XQ4ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DhXLvF1NRVFqTdqLY4uCmenDCpiJWd/mMw1zBM0JZ/sKMYt5TNyc3GtGvEkbjAcJs
-	 Z25oy4061dangnpILA+CJaHDcW2eo3z4suMlqERg42HWvrIeRmkAaZph9cJVpHbPJA
-	 k90RpM8RrgJWpAeYcv3VDBlIGfQ3enuFq5RqnCgI=
+	b=1uB2bY+KBnKyVQbjG/pfARCdS1Ldn4ZmMNfAnQ11SvMjfmc3kTGTXRRtaIcCHahhJ
+	 uGILcHflwHu9zrmeQPWI+ybNpQoKnhw8IvcbVMoXar7a7mQWbSkZQeRvMFDjhwWNA+
+	 nGJJGhnoQMGsPJg+aiIATe9reNHwbpZwc/9cioGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Eric Biggers <ebiggers@google.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 041/611] blk-crypto: dont use struct request_queue for public interfaces
-Date: Mon,  8 May 2023 11:38:03 +0200
-Message-Id: <20230508094423.164845249@linuxfoundation.org>
+Subject: [PATCH 6.1 042/611] blk-crypto: add a blk_crypto_config_supported_natively helper
+Date: Mon,  8 May 2023 11:38:04 +0200
+Message-Id: <20230508094423.210497614@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,218 +37,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-commit fce3caea0f241f5d34855c82c399d5e0e2d91f07 upstream.
+commit 6715c98b6cf003f26b1b2f655393134e9d999a05 upstream.
 
-Switch all public blk-crypto interfaces to use struct block_device
-arguments to specify the device they operate on instead of th
-request_queue, which is a block layer implementation detail.
+Add a blk_crypto_config_supported_natively helper that wraps
+__blk_crypto_cfg_supported to retrieve the crypto_profile from the
+request queue.  With this fscrypt can stop including
+blk-crypto-profile.h and rely on the public consumer interface in
+blk-crypto.h.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221114042944.1009870-2-hch@lst.de
+Link: https://lore.kernel.org/r/20221114042944.1009870-3-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/block/inline-encryption.rst |   12 ++++++------
- block/blk-crypto.c                        |   24 ++++++++++++++----------
- drivers/md/dm-table.c                     |    2 +-
- fs/crypto/inline_crypt.c                  |    8 +++-----
- include/linux/blk-crypto.h                |   11 ++++-------
- 5 files changed, 28 insertions(+), 29 deletions(-)
+ block/blk-crypto.c         |   21 ++++++++++++---------
+ fs/crypto/inline_crypt.c   |    6 ++----
+ include/linux/blk-crypto.h |    2 ++
+ 3 files changed, 16 insertions(+), 13 deletions(-)
 
---- a/Documentation/block/inline-encryption.rst
-+++ b/Documentation/block/inline-encryption.rst
-@@ -142,7 +142,7 @@ Therefore, we also introduce *blk-crypto
- of inline encryption using the kernel crypto API.  blk-crypto-fallback is built
- into the block layer, so it works on any block device without any special setup.
- Essentially, when a bio with an encryption context is submitted to a
--request_queue that doesn't support that encryption context, the block layer will
-+block_device that doesn't support that encryption context, the block layer will
- handle en/decryption of the bio using blk-crypto-fallback.
- 
- For encryption, the data cannot be encrypted in-place, as callers usually rely
-@@ -187,7 +187,7 @@ API presented to users of the block laye
- 
- ``blk_crypto_config_supported()`` allows users to check ahead of time whether
- inline encryption with particular crypto settings will work on a particular
--request_queue -- either via hardware or via blk-crypto-fallback.  This function
-+block_device -- either via hardware or via blk-crypto-fallback.  This function
- takes in a ``struct blk_crypto_config`` which is like blk_crypto_key, but omits
- the actual bytes of the key and instead just contains the algorithm, data unit
- size, etc.  This function can be useful if blk-crypto-fallback is disabled.
-@@ -195,7 +195,7 @@ size, etc.  This function can be useful
- ``blk_crypto_init_key()`` allows users to initialize a blk_crypto_key.
- 
- Users must call ``blk_crypto_start_using_key()`` before actually starting to use
--a blk_crypto_key on a request_queue (even if ``blk_crypto_config_supported()``
-+a blk_crypto_key on a block_device (even if ``blk_crypto_config_supported()``
- was called earlier).  This is needed to initialize blk-crypto-fallback if it
- will be needed.  This must not be called from the data path, as this may have to
- allocate resources, which may deadlock in that case.
-@@ -207,7 +207,7 @@ for en/decryption.  Users don't need to
- later, as that happens automatically when the bio is freed or reset.
- 
- Finally, when done using inline encryption with a blk_crypto_key on a
--request_queue, users must call ``blk_crypto_evict_key()``.  This ensures that
-+block_device, users must call ``blk_crypto_evict_key()``.  This ensures that
- the key is evicted from all keyslots it may be programmed into and unlinked from
- any kernel data structures it may be linked into.
- 
-@@ -221,9 +221,9 @@ as follows:
- 5. ``blk_crypto_evict_key()`` (after all I/O has completed)
- 6. Zeroize the blk_crypto_key (this has no dedicated function)
- 
--If a blk_crypto_key is being used on multiple request_queues, then
-+If a blk_crypto_key is being used on multiple block_devices, then
- ``blk_crypto_config_supported()`` (if used), ``blk_crypto_start_using_key()``,
--and ``blk_crypto_evict_key()`` must be called on each request_queue.
-+and ``blk_crypto_evict_key()`` must be called on each block_device.
- 
- API presented to device drivers
- ===============================
 --- a/block/blk-crypto.c
 +++ b/block/blk-crypto.c
-@@ -354,20 +354,21 @@ int blk_crypto_init_key(struct blk_crypt
+@@ -267,7 +267,6 @@ bool __blk_crypto_bio_prep(struct bio **
+ {
+ 	struct bio *bio = *bio_ptr;
+ 	const struct blk_crypto_key *bc_key = bio->bi_crypt_context->bc_key;
+-	struct blk_crypto_profile *profile;
  
+ 	/* Error if bio has no data. */
+ 	if (WARN_ON_ONCE(!bio_has_data(bio))) {
+@@ -284,10 +283,9 @@ bool __blk_crypto_bio_prep(struct bio **
+ 	 * Success if device supports the encryption context, or if we succeeded
+ 	 * in falling back to the crypto API.
+ 	 */
+-	profile = bdev_get_queue(bio->bi_bdev)->crypto_profile;
+-	if (__blk_crypto_cfg_supported(profile, &bc_key->crypto_cfg))
++	if (blk_crypto_config_supported_natively(bio->bi_bdev,
++						 &bc_key->crypto_cfg))
+ 		return true;
+-
+ 	if (blk_crypto_fallback_bio_prep(bio_ptr))
+ 		return true;
+ fail:
+@@ -352,6 +350,13 @@ int blk_crypto_init_key(struct blk_crypt
+ 	return 0;
+ }
+ 
++bool blk_crypto_config_supported_natively(struct block_device *bdev,
++					  const struct blk_crypto_config *cfg)
++{
++	return __blk_crypto_cfg_supported(bdev_get_queue(bdev)->crypto_profile,
++					  cfg);
++}
++
  /*
   * Check if bios with @cfg can be en/decrypted by blk-crypto (i.e. either the
-- * request queue it's submitted to supports inline crypto, or the
-+ * block_device it's submitted to supports inline crypto, or the
-  * blk-crypto-fallback is enabled and supports the cfg).
-  */
--bool blk_crypto_config_supported(struct request_queue *q,
-+bool blk_crypto_config_supported(struct block_device *bdev,
+  * block_device it's submitted to supports inline crypto, or the
+@@ -361,8 +366,7 @@ bool blk_crypto_config_supported(struct
  				 const struct blk_crypto_config *cfg)
  {
  	return IS_ENABLED(CONFIG_BLK_INLINE_ENCRYPTION_FALLBACK) ||
--	       __blk_crypto_cfg_supported(q->crypto_profile, cfg);
-+	       __blk_crypto_cfg_supported(bdev_get_queue(bdev)->crypto_profile,
-+					  cfg);
+-	       __blk_crypto_cfg_supported(bdev_get_queue(bdev)->crypto_profile,
+-					  cfg);
++	       blk_crypto_config_supported_natively(bdev, cfg);
  }
  
  /**
-  * blk_crypto_start_using_key() - Start using a blk_crypto_key on a device
-+ * @bdev: block device to operate on
-  * @key: A key to use on the device
-- * @q: the request queue for the device
-  *
-  * Upper layers must call this function to ensure that either the hardware
-  * supports the key's crypto settings, or the crypto API fallback has transforms
-@@ -379,10 +380,11 @@ bool blk_crypto_config_supported(struct
-  *	   blk-crypto-fallback is either disabled or the needed algorithm
-  *	   is disabled in the crypto API; or another -errno code.
-  */
--int blk_crypto_start_using_key(const struct blk_crypto_key *key,
--			       struct request_queue *q)
-+int blk_crypto_start_using_key(struct block_device *bdev,
-+			       const struct blk_crypto_key *key)
+@@ -383,8 +387,7 @@ bool blk_crypto_config_supported(struct
+ int blk_crypto_start_using_key(struct block_device *bdev,
+ 			       const struct blk_crypto_key *key)
  {
--	if (__blk_crypto_cfg_supported(q->crypto_profile, &key->crypto_cfg))
-+	if (__blk_crypto_cfg_supported(bdev_get_queue(bdev)->crypto_profile,
-+			&key->crypto_cfg))
+-	if (__blk_crypto_cfg_supported(bdev_get_queue(bdev)->crypto_profile,
+-			&key->crypto_cfg))
++	if (blk_crypto_config_supported_natively(bdev, &key->crypto_cfg))
  		return 0;
  	return blk_crypto_fallback_start_using_mode(key->crypto_cfg.crypto_mode);
  }
-@@ -390,7 +392,7 @@ int blk_crypto_start_using_key(const str
- /**
-  * blk_crypto_evict_key() - Evict a key from any inline encryption hardware
-  *			    it may have been programmed into
-- * @q: The request queue who's associated inline encryption hardware this key
-+ * @bdev: The block_device who's associated inline encryption hardware this key
-  *     might have been programmed into
-  * @key: The key to evict
-  *
-@@ -400,14 +402,16 @@ int blk_crypto_start_using_key(const str
-  *
-  * Return: 0 on success or if the key wasn't in any keyslot; -errno on error.
-  */
--int blk_crypto_evict_key(struct request_queue *q,
-+int blk_crypto_evict_key(struct block_device *bdev,
- 			 const struct blk_crypto_key *key)
+@@ -407,7 +410,7 @@ int blk_crypto_evict_key(struct block_de
  {
-+	struct request_queue *q = bdev_get_queue(bdev);
-+
- 	if (__blk_crypto_cfg_supported(q->crypto_profile, &key->crypto_cfg))
+ 	struct request_queue *q = bdev_get_queue(bdev);
+ 
+-	if (__blk_crypto_cfg_supported(q->crypto_profile, &key->crypto_cfg))
++	if (blk_crypto_config_supported_natively(bdev, &key->crypto_cfg))
  		return __blk_crypto_evict_key(q->crypto_profile, key);
  
  	/*
--	 * If the request_queue didn't support the key, then blk-crypto-fallback
-+	 * If the block_device didn't support the key, then blk-crypto-fallback
- 	 * may have been used, so try to evict the key from blk-crypto-fallback.
- 	 */
- 	return blk_crypto_fallback_evict_key(key);
---- a/drivers/md/dm-table.c
-+++ b/drivers/md/dm-table.c
-@@ -1214,7 +1214,7 @@ static int dm_keyslot_evict_callback(str
- 	struct dm_keyslot_evict_args *args = data;
- 	int err;
- 
--	err = blk_crypto_evict_key(bdev_get_queue(dev->bdev), args->key);
-+	err = blk_crypto_evict_key(dev->bdev, args->key);
- 	if (!args->err)
- 		args->err = err;
- 	/* Always try to evict the key from all devices. */
 --- a/fs/crypto/inline_crypt.c
 +++ b/fs/crypto/inline_crypt.c
-@@ -139,8 +139,7 @@ int fscrypt_select_encryption_impl(struc
- 		return PTR_ERR(devs);
+@@ -12,7 +12,7 @@
+  * provides the key and IV to use.
+  */
+ 
+-#include <linux/blk-crypto-profile.h>
++#include <linux/blk-crypto.h>
+ #include <linux/blkdev.h>
+ #include <linux/buffer_head.h>
+ #include <linux/sched/mm.h>
+@@ -77,10 +77,8 @@ static void fscrypt_log_blk_crypto_impl(
+ 	unsigned int i;
  
  	for (i = 0; i < num_devs; i++) {
--		if (!blk_crypto_config_supported(bdev_get_queue(devs[i]),
--						 &crypto_cfg))
-+		if (!blk_crypto_config_supported(devs[i], &crypto_cfg))
- 			goto out_free_devs;
- 	}
- 
-@@ -184,8 +183,7 @@ int fscrypt_prepare_inline_crypt_key(str
- 		goto fail;
- 	}
- 	for (i = 0; i < num_devs; i++) {
--		err = blk_crypto_start_using_key(blk_key,
--						 bdev_get_queue(devs[i]));
-+		err = blk_crypto_start_using_key(devs[i], blk_key);
- 		if (err)
- 			break;
- 	}
-@@ -224,7 +222,7 @@ void fscrypt_destroy_inline_crypt_key(st
- 	devs = fscrypt_get_devices(sb, &num_devs);
- 	if (!IS_ERR(devs)) {
- 		for (i = 0; i < num_devs; i++)
--			blk_crypto_evict_key(bdev_get_queue(devs[i]), blk_key);
-+			blk_crypto_evict_key(devs[i], blk_key);
- 		kfree(devs);
- 	}
- 	kfree_sensitive(blk_key);
+-		struct request_queue *q = bdev_get_queue(devs[i]);
+-
+ 		if (!IS_ENABLED(CONFIG_BLK_INLINE_ENCRYPTION_FALLBACK) ||
+-		    __blk_crypto_cfg_supported(q->crypto_profile, cfg)) {
++		    blk_crypto_config_supported_natively(devs[i], cfg)) {
+ 			if (!xchg(&mode->logged_blk_crypto_native, 1))
+ 				pr_info("fscrypt: %s using blk-crypto (native)\n",
+ 					mode->friendly_name);
 --- a/include/linux/blk-crypto.h
 +++ b/include/linux/blk-crypto.h
-@@ -71,9 +71,6 @@ struct bio_crypt_ctx {
- #include <linux/blk_types.h>
- #include <linux/blkdev.h>
- 
--struct request;
--struct request_queue;
--
- #ifdef CONFIG_BLK_INLINE_ENCRYPTION
- 
- static inline bool bio_has_crypt_ctx(struct bio *bio)
-@@ -94,13 +91,13 @@ int blk_crypto_init_key(struct blk_crypt
- 			unsigned int dun_bytes,
- 			unsigned int data_unit_size);
- 
--int blk_crypto_start_using_key(const struct blk_crypto_key *key,
--			       struct request_queue *q);
-+int blk_crypto_start_using_key(struct block_device *bdev,
-+			       const struct blk_crypto_key *key);
- 
--int blk_crypto_evict_key(struct request_queue *q,
-+int blk_crypto_evict_key(struct block_device *bdev,
+@@ -97,6 +97,8 @@ int blk_crypto_start_using_key(struct bl
+ int blk_crypto_evict_key(struct block_device *bdev,
  			 const struct blk_crypto_key *key);
  
--bool blk_crypto_config_supported(struct request_queue *q,
-+bool blk_crypto_config_supported(struct block_device *bdev,
++bool blk_crypto_config_supported_natively(struct block_device *bdev,
++					  const struct blk_crypto_config *cfg);
+ bool blk_crypto_config_supported(struct block_device *bdev,
  				 const struct blk_crypto_config *cfg);
  
- #else /* CONFIG_BLK_INLINE_ENCRYPTION */
 
 
