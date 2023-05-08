@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C329C168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:07:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49146C433EF;
-	Mon,  8 May 2023 11:07:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF1F168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:07:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D813C433D2;
+	Mon,  8 May 2023 11:07:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544073;
-	bh=45TUghb7z81EybmeblL2XNVdvREe9kqYDNJ67uuIYuY=;
+	s=korg; t=1683544076;
+	bh=9g0eQcHGOm5RoBnhn4PF9aXqenZz5p9qE742o7UZkmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qe4mucSREdCU8yf63rnqlysoI4PIWg/jHH+BHs0MpmrRf5wdr+ODSSE16RSYDlaIJ
-	 4SS/5QFbv2Pwvlx73OaRBjf+/52QtMewSO3NUq3d1/f96nlkvDvU2StWFtWE2wDKLZ
-	 7H5PAAN0tIYaKro633YV+kOR9r5W4AMJy7RevOBg=
+	b=v8Ew7JJIbtKYNG52KRB0dsMUXb6JHN+1W5Zf1mRf0spG8kDqoCnpvICsrKz/2yjlQ
+	 q/MCJXfPlB4BJWM8ZP+orUrQfKX1JddNIxEpCMvY4sSnheKsuKHCB/onzLUv66yF5H
+	 F/fdaGep0xheAJDGdIy+tvmZ61aCCQnyusBvUqS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zheng Wang <zyytlz.wz@163.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 294/694] media: dm1105: Fix use after free bug in dm1105_remove due to race condition
-Date: Mon,  8 May 2023 11:42:09 +0200
-Message-Id: <20230508094441.817112474@linuxfoundation.org>
+Subject: [PATCH 6.3 295/694] media: saa7134: fix use after free bug in saa7134_finidev due to race condition
+Date: Mon,  8 May 2023 11:42:10 +0200
+Message-Id: <20230508094441.845405376@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,51 +37,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 5abda7a16698d4d1f47af1168d8fa2c640116b4a ]
+[ Upstream commit 30cf57da176cca80f11df0d9b7f71581fe601389 ]
 
-In dm1105_probe, it called dm1105_ir_init and bound
-&dm1105->ir.work with dm1105_emit_key.
-When it handles IRQ request with dm1105_irq,
-it may call schedule_work to start the work.
+In saa7134_initdev, it will call saa7134_hwinit1. There are three
+function invoking here: saa7134_video_init1, saa7134_ts_init1
+and saa7134_vbi_init1.
 
-When we call dm1105_remove to remove the driver, there
-may be a sequence as follows:
+All of them will init a timer with same function. Take
+saa7134_video_init1 as an example. It'll bound &dev->video_q.timeout
+with saa7134_buffer_timeout.
 
-Fix it by finishing the work before cleanup in dm1105_remove
+In buffer_activate, the timer funtcion is started.
+
+If we remove the module or device which will call saa7134_finidev
+to make cleanup, there may be a unfinished work. The
+possible sequence is as follows, which will cause a
+typical UAF bug.
+
+Fix it by canceling the timer works accordingly before cleanup in
+saa7134_finidev.
 
 CPU0                  CPU1
 
-                    |dm1105_emit_key
-dm1105_remove      |
-  dm1105_ir_exit       |
-    rc_unregister_device |
-    rc_free_device  |
-    rc_dev_release  |
-    kfree(dev);     |
+                    |saa7134_buffer_timeout
+saa7134_finidev     |
+  kfree(dev);       |
                     |
-                    | rc_keydown
-                    |   //use
+                    | saa7134_buffer_next
+                    | //use dev
 
-Fixes: 34d2f9bf189c ("V4L/DVB: dm1105: use dm1105_dev & dev instead of dm1105dvb")
+Fixes: 1e7126b4a86a ("media: saa7134: Convert timers to use timer_setup()")
 Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/dm1105/dm1105.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/pci/saa7134/saa7134-ts.c    | 1 +
+ drivers/media/pci/saa7134/saa7134-vbi.c   | 1 +
+ drivers/media/pci/saa7134/saa7134-video.c | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/drivers/media/pci/dm1105/dm1105.c b/drivers/media/pci/dm1105/dm1105.c
-index 4ac645a56c14e..9e9c7c071accc 100644
---- a/drivers/media/pci/dm1105/dm1105.c
-+++ b/drivers/media/pci/dm1105/dm1105.c
-@@ -1176,6 +1176,7 @@ static void dm1105_remove(struct pci_dev *pdev)
- 	struct dvb_demux *dvbdemux = &dev->demux;
- 	struct dmx_demux *dmx = &dvbdemux->dmx;
+diff --git a/drivers/media/pci/saa7134/saa7134-ts.c b/drivers/media/pci/saa7134/saa7134-ts.c
+index 6a5053126237f..437dbe5e75e29 100644
+--- a/drivers/media/pci/saa7134/saa7134-ts.c
++++ b/drivers/media/pci/saa7134/saa7134-ts.c
+@@ -300,6 +300,7 @@ int saa7134_ts_start(struct saa7134_dev *dev)
  
-+	cancel_work_sync(&dev->ir.work);
- 	dm1105_ir_exit(dev);
- 	dmx->close(dmx);
- 	dvb_net_release(&dev->dvbnet);
+ int saa7134_ts_fini(struct saa7134_dev *dev)
+ {
++	del_timer_sync(&dev->ts_q.timeout);
+ 	saa7134_pgtable_free(dev->pci, &dev->ts_q.pt);
+ 	return 0;
+ }
+diff --git a/drivers/media/pci/saa7134/saa7134-vbi.c b/drivers/media/pci/saa7134/saa7134-vbi.c
+index 3f0b0933eed69..3e773690468bd 100644
+--- a/drivers/media/pci/saa7134/saa7134-vbi.c
++++ b/drivers/media/pci/saa7134/saa7134-vbi.c
+@@ -185,6 +185,7 @@ int saa7134_vbi_init1(struct saa7134_dev *dev)
+ int saa7134_vbi_fini(struct saa7134_dev *dev)
+ {
+ 	/* nothing */
++	del_timer_sync(&dev->vbi_q.timeout);
+ 	return 0;
+ }
+ 
+diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
+index 4d8974c9fcc98..29124756a62bc 100644
+--- a/drivers/media/pci/saa7134/saa7134-video.c
++++ b/drivers/media/pci/saa7134/saa7134-video.c
+@@ -2146,6 +2146,7 @@ int saa7134_video_init1(struct saa7134_dev *dev)
+ 
+ void saa7134_video_fini(struct saa7134_dev *dev)
+ {
++	del_timer_sync(&dev->video_q.timeout);
+ 	/* free stuff */
+ 	saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
+ 	saa7134_pgtable_free(dev->pci, &dev->vbi_q.pt);
 -- 
 2.39.2
 
