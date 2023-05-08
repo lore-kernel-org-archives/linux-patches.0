@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5260111C8F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD677C433D2;
-	Mon,  8 May 2023 10:59:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8D111C8F
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7856C4339B;
+	Mon,  8 May 2023 10:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543545;
-	bh=sVrm4fFIR40TPvE566MrX757Ru1LLIfkpqSQNuQ7DTo=;
+	s=korg; t=1683543548;
+	bh=8zr1kOPTgKzYczvIe0anltLdNVwdCDHYFNsZaTgHBiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mXb8Q4r5QUHAgpsL5RJlad7O0uL0OSWYAUWCIxcuPZA0+LjU/ObGDVZjKK/51Hc2F
-	 r5an4zE+CC5QXKnPTFOjf/4ui48nqkTGM+vekroVF06QDqOSHwR2TbWv9BqUOsDFkv
-	 cIb73lMZhAysytKsP3f9eLCy0sYPNpOLbM1t3C4E=
+	b=L6G2NctZ8DcTZGSOZBoGxjpgSAHHMd8G1UE3t1K6BHvMo6rOiNfIcKvAprCKUhrC+
+	 BEr6yP5jyiTV1wcmmfFgPc0t/M2DbkKrH1+qHGfa4kOGqBjUUsaCc5F5AQ2MN4S7dy
+	 vCwrzG5hHKGfEHx6FzGI80grYd/7VKXuiDQnPxKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Jes Sorensen <jes@trained-monkey.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Alexandru gagniuc <mr.nuke.me@gmail.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	ValdikSS <iam@valdikss.org.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.3 125/694] wifi: rtl8xxxu: RTL8192EU always needs full init
-Date: Mon,  8 May 2023 11:39:20 +0200
-Message-Id: <20230508094436.523947581@linuxfoundation.org>
+Subject: [PATCH 6.3 126/694] wifi: rtw88: rtw8821c: Fix rfe_option field width
+Date: Mon,  8 May 2023 11:39:21 +0200
+Message-Id: <20230508094436.553020247@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,43 +38,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit d46e04ccd40457a0119b76e11ab64a2ad403e138 upstream.
+commit 14705f969d98187a1cc2682e0c9bd2e230b8098f upstream.
 
-Always run the entire init sequence (rtl8xxxu_init_device()) for
-RTL8192EU. It's what the vendor driver does too.
+On my RTW8821CU chipset rfe_option reads as 0x22. Looking at the
+vendor driver suggests that the field width of rfe_option is 5 bit,
+so rfe_option should be masked with 0x1f.
 
-This fixes a bug where the device is unable to connect after
-rebooting:
+Without this the rfe_option comparisons with 2 further down the
+driver evaluate as false when they should really evaluate as true.
+The effect is that 2G channels do not work.
 
-wlp3s0f3u2: send auth to ... (try 1/3)
-wlp3s0f3u2: send auth to ... (try 2/3)
-wlp3s0f3u2: send auth to ... (try 3/3)
-wlp3s0f3u2: authentication with ... timed out
+rfe_option is also used as an array index into rtw8821c_rfe_defs[].
+rtw8821c_rfe_defs[34] (0x22) was added as part of adding USB support,
+likely because rfe_option reads as 0x22. As this now becomes 0x2,
+rtw8821c_rfe_defs[34] is no longer used and can be removed.
 
-Rebooting leaves the device powered on (partially? at least the
-firmware is still running), but not really in a working state.
+Note that this might not be the whole truth. In the vendor driver
+there are indeed places where the unmasked rfe_option value is used.
+However, the driver has several places where rfe_option is tested
+with the pattern if (rfe_option == 2 || rfe_option == 0x22) or
+if (rfe_option == 4 || rfe_option == 0x24), so that rfe_option BIT(5)
+has no influence on the code path taken. We therefore mask BIT(5)
+out from rfe_option entirely until this assumption is proved wrong
+by some chip variant we do not know yet.
 
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Tested-by: Alexandru gagniuc <mr.nuke.me@gmail.com>
+Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
+Tested-by: ValdikSS <iam@valdikss.org.ru>
 Cc: stable@vger.kernel.org
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Jes Sorensen <jes@trained-monkey.org>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/4eb111a9-d4c4-37d0-b376-4e202de7153c@gmail.com
+Link: https://lore.kernel.org/r/20230417140358.2240429-3-s.hauer@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtw88/rtw8821c.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-@@ -1817,6 +1817,7 @@ struct rtl8xxxu_fileops rtl8192eu_fops =
- 	.rx_desc_size = sizeof(struct rtl8xxxu_rxdesc24),
- 	.has_s0s1 = 0,
- 	.gen2_thermal_meter = 1,
-+	.needs_full_init = 1,
- 	.adda_1t_init = 0x0fc01616,
- 	.adda_1t_path_on = 0x0fc01616,
- 	.adda_2t_path_on_a = 0x0fc01616,
+--- a/drivers/net/wireless/realtek/rtw88/rtw8821c.c
++++ b/drivers/net/wireless/realtek/rtw88/rtw8821c.c
+@@ -47,7 +47,7 @@ static int rtw8821c_read_efuse(struct rt
+ 
+ 	map = (struct rtw8821c_efuse *)log_map;
+ 
+-	efuse->rfe_option = map->rfe_option;
++	efuse->rfe_option = map->rfe_option & 0x1f;
+ 	efuse->rf_board_option = map->rf_board_option;
+ 	efuse->crystal_cap = map->xtal_k;
+ 	efuse->pa_type_2g = map->pa_type;
+@@ -1537,7 +1537,6 @@ static const struct rtw_rfe_def rtw8821c
+ 	[2] = RTW_DEF_RFE_EXT(8821c, 0, 0, 2),
+ 	[4] = RTW_DEF_RFE_EXT(8821c, 0, 0, 2),
+ 	[6] = RTW_DEF_RFE(8821c, 0, 0),
+-	[34] = RTW_DEF_RFE(8821c, 0, 0),
+ };
+ 
+ static struct rtw_hw_reg rtw8821c_dig[] = {
 
 
