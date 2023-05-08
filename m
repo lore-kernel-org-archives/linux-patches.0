@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556AA168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8761C433EF;
-	Mon,  8 May 2023 11:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB48168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF78C4339B;
+	Mon,  8 May 2023 11:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545213;
-	bh=7X98Q68tdnKC7dbExgak/ZRmpRf41AcaFLYx8neyNDA=;
+	s=korg; t=1683545216;
+	bh=2tp9ftnmiVd39AtJGUhDVZj/4N1Rr2e1i9ciwy4XU5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o31T9IQm2fXB5GTLEO07dbt4NNubZktS2n7l7c5JTnv8+VYeClZirDrNWqNTZQbQc
-	 rA3ktvugeTlqX5l0CUJJHnK0PIG5oueG/LQYYuPj7oZvDOtPAyM0FaPguci5FBLHXH
-	 9jMsZmGaAHZphpqvZh8lrfSJoSZBAgQC7xHgHFVI=
+	b=U4HdKK8uB21w2cFloNh05w3G81igWXYYj3pJCm1nF3buhUGEpXfDFnbO6KZa95I8j
+	 3M+INU+YGbfFxMIPCoXEC12NKWj3EbGaYnV2p4mY7yvHE5GOnCFocQZX7UuBlrpL+S
+	 RbPneapNeWEQFLKp2hAe7P6pPCTMryow/XJcYnp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Colin Foster <colin.foster@in-advantage.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 644/694] pwm: mtk-disp: Disable shadow registers before setting backlight values
-Date: Mon,  8 May 2023 11:47:59 +0200
-Message-Id: <20230508094456.705105690@linuxfoundation.org>
+Subject: [PATCH 6.3 662/694] mfd: ocelot-spi: Fix unsupported bulk read
+Date: Mon,  8 May 2023 11:48:17 +0200
+Message-Id: <20230508094457.512192340@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,68 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Colin Foster <colin.foster@in-advantage.com>
 
-[ Upstream commit 36dd7f530ae7d9ce9e853ffb8aa337de65c6600b ]
+[ Upstream commit f0484d2f80a72022b7fac72bcb406392900ef1eb ]
 
-If shadow registers usage is not desired, disable that before performing
-any write to CON0/1 registers in the .apply() callback, otherwise we may
-lose clkdiv or period/width updates.
+Ocelot chips (VSC7511, VSC7512, VSC7513, VSC7514) don't support bulk read
+operations over SPI.
 
-Fixes: cd4b45ac449a ("pwm: Add MediaTek MT2701 display PWM driver support")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Tested-by: Alexandre Mergnat <amergnat@baylibre.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Many SPI buses have hardware that can optimize consecutive reads.
+Essentially an address is written to the chip, and if the SPI controller
+continues to toggle the clock, subsequent register values are reported.
+This can lead to significant optimizations, because the time between
+"address is written to the chip" and "chip starts to report data" can often
+take a fixed amount of time.
+
+When support for Ocelot chips were added in commit f3e893626abe ("mfd:
+ocelot: Add support for the vsc7512 chip via spi") it was believed that
+this optimization was supported. However it is not.
+
+Most register transactions with the Ocelot chips are not done in bulk, so
+this bug could go unnoticed. The one scenario where bulk register
+operations _are_ performed is when polling port statistics counters, which
+was added in commit d87b1c08f38a ("net: mscc: ocelot: use bulk reads for
+stats").
+
+Things get slightly more complicated here...
+
+A bug was introduced in commit d4c367650704 ("net: mscc: ocelot: keep
+ocelot_stat_layout by reg address, not offset") that broke the optimization
+of bulk reads. This means that when Ethernet support for the VSC7512 chip
+was added in commit 3d7316ac81ac ("net: dsa: ocelot: add external ocelot
+switch control") things were actually working "as expected".
+
+The bulk read opmtimization was discovered, and fixed in commit
+6acc72a43eac ("net: mscc: ocelot: fix stats region batching") and the
+timing optimizations for SPI were noticed. A bulk read went from ~14ms to
+~2ms. But this timing improvement came at the cost of every register
+reading zero due the fact that bulk reads don't work.
+
+The read timings increase back to 13-14ms, but that's a price worth paying
+in order to receive valid data. This is verified in a DSA setup (cpsw-new
+switch tied to port 0 on the VSC7512, after having been running overnight)
+
+     Rx Octets: 16222055 # Counters from CPSW switch
+     Tx Octets: 12034702
+     Net Octets: 28256757
+     p00_rx_octets: 12034702 # Counters from Ocelot switch
+     p00_rx_frames_below_65_octets: 0
+     p00_rx_frames_65_to_127_octets: 88188
+     p00_rx_frames_128_to_255_octets: 13
+     p00_rx_frames_256_to_511_octets: 0
+     p00_rx_frames_512_to_1023_octets: 0
+     p00_rx_frames_over_1526_octets: 3306
+     p00_tx_octets: 16222055
+
+Fixes: f3e893626abe ("mfd: ocelot: Add support for the vsc7512 chip via spi")
+Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230322141130.2531256-1-colin.foster@in-advantage.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/mfd/ocelot-spi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index 692a06121b286..82b430d881a20 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -138,6 +138,19 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 	high_width = mul_u64_u64_div_u64(state->duty_cycle, rate, div);
- 	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
+diff --git a/drivers/mfd/ocelot-spi.c b/drivers/mfd/ocelot-spi.c
+index 2ecd271de2fb9..85021f94e5874 100644
+--- a/drivers/mfd/ocelot-spi.c
++++ b/drivers/mfd/ocelot-spi.c
+@@ -130,6 +130,7 @@ static const struct regmap_config ocelot_spi_regmap_config = {
  
-+	if (mdp->data->bls_debug && !mdp->data->has_commit) {
-+		/*
-+		 * For MT2701, disable double buffer before writing register
-+		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
-+		 */
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
-+					 mdp->data->bls_debug_mask,
-+					 mdp->data->bls_debug_mask);
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
-+					 mdp->data->con0_sel,
-+					 mdp->data->con0_sel);
-+	}
-+
- 	mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
- 				 PWM_CLKDIV_MASK,
- 				 clk_div << PWM_CLKDIV_SHIFT);
-@@ -152,17 +165,6 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 		mtk_disp_pwm_update_bits(mdp, mdp->data->commit,
- 					 mdp->data->commit_mask,
- 					 0x0);
--	} else {
--		/*
--		 * For MT2701, disable double buffer before writing register
--		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
--		 */
--		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
--					 mdp->data->bls_debug_mask,
--					 mdp->data->bls_debug_mask);
--		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
--					 mdp->data->con0_sel,
--					 mdp->data->con0_sel);
- 	}
+ 	.write_flag_mask = 0x80,
  
- 	mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
++	.use_single_read = true,
+ 	.use_single_write = true,
+ 	.can_multi_write = false,
+ 
 -- 
 2.39.2
 
