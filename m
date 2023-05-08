@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F407A168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C6F6C433D2;
-	Mon,  8 May 2023 11:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A15D3168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:12:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3232C433D2;
+	Mon,  8 May 2023 11:12:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544349;
-	bh=8lnWZ978QwRBBZIGxqLhZoA+ZvPcf7Mdkoeej4JcQ1M=;
+	s=korg; t=1683544353;
+	bh=NJaYxXLt5ot96ncLGHWXkpEyuzS5Z29wOWMwTPuSIN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3HLoiYaadddd6ZK9OMSFdxIAiyiu7NQtCnhBHXBIFwlBlV1yQ5LyKlnS7PPw3uoM
-	 3InmGiBRtaYkcS2EEBP/Q/o4jzYKfLi9FyOYn9fvWKSV9HGrV8saVf0p9ddlhn6NrU
-	 1JNJmfBhyRx2dY0e2li6xgCBiUNotdbELOkHG6pw=
+	b=PdVPLLpzDQnBb3xhiywJh4fEwtzlE3QUB0g1NspIur6WpB02T7BwwP8yb+USaG1Md
+	 sjUpT6jgTlLiY3jQ5fIHJVVmK1CPY6sFx1ujJJEjTob+TveyilwT1BBezkfDapyrfZ
+	 asF9F7WOb3AM7tlftfC08UjYJTigi+UTwdEm/iZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 351/694] net: pcs: xpcs: remove double-read of link state when using AN
-Date: Mon,  8 May 2023 11:43:06 +0200
-Message-Id: <20230508094443.995978383@linuxfoundation.org>
+Subject: [PATCH 6.3 352/694] vlan: partially enable SIOCSHWTSTAMP in container
+Date: Mon,  8 May 2023 11:43:07 +0200
+Message-Id: <20230508094444.029798145@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,66 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 
-[ Upstream commit ef63461caf427a77a04620d74ba90035a712af9c ]
+[ Upstream commit 731b73dba359e3ff00517c13aa0daa82b34ff466 ]
 
-Phylink does not want the current state of the link when reading the
-PCS link state - it wants the latched state. Don't double-read the
-MII status register. Phylink will re-read as necessary to capture
-transient link-down events as of dbae3388ea9c ("net: phylink: Force
-retrigger in case of latched link-fail indicator").
+Setting timestamp filter was explicitly disabled on vlan devices in
+containers because it might affect other processes on the host. But it's
+absolutely legit in case when real device is in the same namespace.
 
-The above referenced commit is a dependency for this change, and thus
-this change should not be backported to any kernel that does not
-contain the above referenced commit.
-
-Fixes: fcb26bd2b6ca ("net: phy: Add Synopsys DesignWare XPCS MDIO module")
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 873017af7784 ("vlan: disable SIOCSHWTSTAMP in container")
+Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/pcs/pcs-xpcs.c | 13 ++-----------
- 1 file changed, 2 insertions(+), 11 deletions(-)
+ net/8021q/vlan_dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
-index bc428a816719d..04a6853530418 100644
---- a/drivers/net/pcs/pcs-xpcs.c
-+++ b/drivers/net/pcs/pcs-xpcs.c
-@@ -321,7 +321,7 @@ static int xpcs_read_fault_c73(struct dw_xpcs *xpcs,
- 	return 0;
- }
+diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
+index 296d0145932f4..5920544e93e82 100644
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -365,7 +365,7 @@ static int vlan_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
  
--static int xpcs_read_link_c73(struct dw_xpcs *xpcs, bool an)
-+static int xpcs_read_link_c73(struct dw_xpcs *xpcs)
- {
- 	bool link = true;
- 	int ret;
-@@ -333,15 +333,6 @@ static int xpcs_read_link_c73(struct dw_xpcs *xpcs, bool an)
- 	if (!(ret & MDIO_STAT1_LSTATUS))
- 		link = false;
- 
--	if (an) {
--		ret = xpcs_read(xpcs, MDIO_MMD_AN, MDIO_STAT1);
--		if (ret < 0)
--			return ret;
--
--		if (!(ret & MDIO_STAT1_LSTATUS))
--			link = false;
--	}
--
- 	return link;
- }
- 
-@@ -935,7 +926,7 @@ static int xpcs_get_state_c73(struct dw_xpcs *xpcs,
- 	int ret;
- 
- 	/* Link needs to be read first ... */
--	state->link = xpcs_read_link_c73(xpcs, state->an_enabled) > 0 ? 1 : 0;
-+	state->link = xpcs_read_link_c73(xpcs) > 0 ? 1 : 0;
- 
- 	/* ... and then we check the faults. */
- 	ret = xpcs_read_fault_c73(xpcs, state);
+ 	switch (cmd) {
+ 	case SIOCSHWTSTAMP:
+-		if (!net_eq(dev_net(dev), &init_net))
++		if (!net_eq(dev_net(dev), dev_net(real_dev)))
+ 			break;
+ 		fallthrough;
+ 	case SIOCGMIIPHY:
 -- 
 2.39.2
 
