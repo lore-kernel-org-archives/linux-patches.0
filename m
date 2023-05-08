@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D1B168D7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51F25C433EF;
-	Mon,  8 May 2023 11:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21954168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 644E5C433EF;
+	Mon,  8 May 2023 11:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544633;
-	bh=xwbGBvLJPyXufQ40mYAwJ0XBkgJxWhf8odoTsjBU/GE=;
+	s=korg; t=1683544637;
+	bh=Vyc4bcYllsPnAOPFMkvB+XeaZrIBXof52yS/eVIo7OY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v56OpIqb1XQNXw3GFxOGyQsTaREmmJ32ZB9EgRDlWRlwlc3moA3+vs4Jqql0i9zw2
-	 +ibjFoufb890a6GmnZvVXWE9yXJUL/kMD1W5fmOF2LfWqdp9ILNzSpmvqpogJ2palD
-	 4zSbvfrq0SOacAXA+IKkxHSkGhMYDqUhPVtCFsHQ=
+	b=GKkgkdI9ZClE0n/WhhMmjE5tTfd77sNdjivWC/Gmbj+Kuwbvj31d1uMY2TL42CruM
+	 cpcLwCPpqaJUbwnSnDN6dOKca5IwJIRBUD2rR7aymEULu9mqdoknHyLwWRfXEOauCG
+	 A4n24fuuIOgkIO3duAzZNY7G+uObhFMuUY5hgV0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Wang Zhao <wang.zhao@mediatek.com>,
+	Quan Zhou <quan.zhou@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 473/694] netfilter: nf_tables: dont write table validation state without mutex
-Date: Mon,  8 May 2023 11:45:08 +0200
-Message-Id: <20230508094449.159107484@linuxfoundation.org>
+Subject: [PATCH 6.3 447/694] wifi: mt76: mt7921e: improve reliability of dma reset
+Date: Mon,  8 May 2023 11:44:42 +0200
+Message-Id: <20230508094448.051844001@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,84 +38,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-[ Upstream commit 9a32e9850686599ed194ccdceb6cd3dd56b2d9b9 ]
+[ Upstream commit 87714bf6ed1589813e473db5471e6e9857755764 ]
 
-The ->cleanup callback needs to be removed, this doesn't work anymore as
-the transaction mutex is already released in the ->abort function.
+The hardware team has advised the driver that it is necessary to first put
+WFDMA into an idle state before resetting the WFDMA. Otherwise, the WFDMA
+may enter an unknown state where it cannot be polled with the right state
+successfully. To ensure that the DMA can work properly while a stressful
+cold reboot test was being made, we have reordered the programming sequence
+in the driver based on the hardware team's guidance.
 
-Just do it after a successful validation pass, this either happens
-from commit or abort phases where transaction mutex is held.
+The patch would modify the WFDMA disabling flow from
 
-Fixes: f102d66b335a ("netfilter: nf_tables: use dedicated mutex to guard transactions")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+"DMA reset -> disabling DMASHDL -> disabling WFDMA -> polling and waiting
+until DMA idle" to "disabling WFDMA -> polling and waiting for DMA idle ->
+disabling DMASHDL -> DMA reset.
+
+Where he polling and waiting until WFDMA is idle is coordinated with the
+operation of disabling WFDMA. Even while WFDMA is being disabled, it can
+still handle Tx/Rx requests. The additional polling allows sufficient time
+for WFDMA to process the last T/Rx request. When the idle state of WFDMA is
+reached, it is a reliable indication that DMASHDL is also idle to ensure it
+is safe to disable it and perform the DMA reset.
+
+Fixes: 0a1059d0f060 ("mt76: mt7921: move mt7921_dma_reset in dma.c")
+Co-developed-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Co-developed-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Co-developed-by: Wang Zhao <wang.zhao@mediatek.com>
+Signed-off-by: Wang Zhao <wang.zhao@mediatek.com>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter/nfnetlink.h | 1 -
- net/netfilter/nf_tables_api.c       | 8 ++------
- net/netfilter/nfnetlink.c           | 2 --
- 3 files changed, 2 insertions(+), 9 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7921/dma.c   | 36 ++++++++++---------
+ 1 file changed, 20 insertions(+), 16 deletions(-)
 
-diff --git a/include/linux/netfilter/nfnetlink.h b/include/linux/netfilter/nfnetlink.h
-index 241e005f290ad..e9a9ab34a7ccc 100644
---- a/include/linux/netfilter/nfnetlink.h
-+++ b/include/linux/netfilter/nfnetlink.h
-@@ -45,7 +45,6 @@ struct nfnetlink_subsystem {
- 	int (*commit)(struct net *net, struct sk_buff *skb);
- 	int (*abort)(struct net *net, struct sk_buff *skb,
- 		     enum nfnl_abort_action action);
--	void (*cleanup)(struct net *net);
- 	bool (*valid_genid)(struct net *net, u32 genid);
- };
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/dma.c b/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
+index dc4ccfef4b048..fd57c87a29ae3 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/dma.c
+@@ -66,22 +66,6 @@ static void mt7921_dma_prefetch(struct mt7921_dev *dev)
  
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index e48ab8dfb5410..d67ee2774b273 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8645,6 +8645,8 @@ static int nf_tables_validate(struct net *net)
- 			if (nft_table_validate(net, table) < 0)
- 				return -EAGAIN;
- 		}
+ static int mt7921_dma_disable(struct mt7921_dev *dev, bool force)
+ {
+-	if (force) {
+-		/* reset */
+-		mt76_clear(dev, MT_WFDMA0_RST,
+-			   MT_WFDMA0_RST_DMASHDL_ALL_RST |
+-			   MT_WFDMA0_RST_LOGIC_RST);
+-
+-		mt76_set(dev, MT_WFDMA0_RST,
+-			 MT_WFDMA0_RST_DMASHDL_ALL_RST |
+-			 MT_WFDMA0_RST_LOGIC_RST);
+-	}
+-
+-	/* disable dmashdl */
+-	mt76_clear(dev, MT_WFDMA0_GLO_CFG_EXT0,
+-		   MT_WFDMA0_CSR_TX_DMASHDL_ENABLE);
+-	mt76_set(dev, MT_DMASHDL_SW_CONTROL, MT_DMASHDL_DMASHDL_BYPASS);
+-
+ 	/* disable WFDMA0 */
+ 	mt76_clear(dev, MT_WFDMA0_GLO_CFG,
+ 		   MT_WFDMA0_GLO_CFG_TX_DMA_EN | MT_WFDMA0_GLO_CFG_RX_DMA_EN |
+@@ -95,6 +79,22 @@ static int mt7921_dma_disable(struct mt7921_dev *dev, bool force)
+ 				 MT_WFDMA0_GLO_CFG_RX_DMA_BUSY, 0, 100, 1))
+ 		return -ETIMEDOUT;
+ 
++	/* disable dmashdl */
++	mt76_clear(dev, MT_WFDMA0_GLO_CFG_EXT0,
++		   MT_WFDMA0_CSR_TX_DMASHDL_ENABLE);
++	mt76_set(dev, MT_DMASHDL_SW_CONTROL, MT_DMASHDL_DMASHDL_BYPASS);
 +
-+		nft_validate_state_update(net, NFT_VALIDATE_SKIP);
- 		break;
- 	}
- 
-@@ -9586,11 +9588,6 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
++	if (force) {
++		/* reset */
++		mt76_clear(dev, MT_WFDMA0_RST,
++			   MT_WFDMA0_RST_DMASHDL_ALL_RST |
++			   MT_WFDMA0_RST_LOGIC_RST);
++
++		mt76_set(dev, MT_WFDMA0_RST,
++			 MT_WFDMA0_RST_DMASHDL_ALL_RST |
++			 MT_WFDMA0_RST_LOGIC_RST);
++	}
++
  	return 0;
  }
  
--static void nf_tables_cleanup(struct net *net)
--{
--	nft_validate_state_update(net, NFT_VALIDATE_SKIP);
--}
--
- static int nf_tables_abort(struct net *net, struct sk_buff *skb,
- 			   enum nfnl_abort_action action)
- {
-@@ -9624,7 +9621,6 @@ static const struct nfnetlink_subsystem nf_tables_subsys = {
- 	.cb		= nf_tables_cb,
- 	.commit		= nf_tables_commit,
- 	.abort		= nf_tables_abort,
--	.cleanup	= nf_tables_cleanup,
- 	.valid_genid	= nf_tables_valid_genid,
- 	.owner		= THIS_MODULE,
- };
-diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
-index 81c7737c803a6..ae7146475d17a 100644
---- a/net/netfilter/nfnetlink.c
-+++ b/net/netfilter/nfnetlink.c
-@@ -590,8 +590,6 @@ static void nfnetlink_rcv_batch(struct sk_buff *skb, struct nlmsghdr *nlh,
- 			goto replay_abort;
- 		}
- 	}
--	if (ss->cleanup)
--		ss->cleanup(net);
+@@ -301,6 +301,10 @@ void mt7921_dma_cleanup(struct mt7921_dev *dev)
+ 		   MT_WFDMA0_GLO_CFG_OMIT_RX_INFO |
+ 		   MT_WFDMA0_GLO_CFG_OMIT_RX_INFO_PFET2);
  
- 	nfnl_err_deliver(&err_list, oskb);
- 	kfree_skb(skb);
++	mt76_poll_msec_tick(dev, MT_WFDMA0_GLO_CFG,
++			    MT_WFDMA0_GLO_CFG_TX_DMA_BUSY |
++			    MT_WFDMA0_GLO_CFG_RX_DMA_BUSY, 0, 100, 1);
++
+ 	/* reset */
+ 	mt76_clear(dev, MT_WFDMA0_RST,
+ 		   MT_WFDMA0_RST_DMASHDL_ALL_RST |
 -- 
 2.39.2
 
