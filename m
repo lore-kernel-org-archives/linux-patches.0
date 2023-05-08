@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310F813AF2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D03CC433D2;
-	Mon,  8 May 2023 11:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D9B168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C91AC433D2;
+	Mon,  8 May 2023 11:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543714;
-	bh=SpOpKVv8DDz0fgrpciLmpc0hAFRgh4wAcDV1HpjQDTc=;
+	s=korg; t=1683543717;
+	bh=myoRusOpr7mTY3suWiCDOa1G0693Xmazzk+u7qoqnyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cljp7dl0ZrfUZo7JYZl9LoFQBTydjgeJnXLibwsUULaxYuv/SldbSUaqO8yTfMxOe
-	 GDDgumluBsRIdblNMGTji49H5KwmNJ+o/EPdVzbg0jLWzoex7mBB1h1uyWhYAPJa+L
-	 KMwP2sbjnsWuAMXXdzVRqbDWZnk93RJexndnecHM=
+	b=0TsBTLxG2QbWXaxH10J8PPH2oHWt9VWyzF7KRHCXyMIoV3nGlFhnm0fD4DugPni+K
+	 rbcGrocHa1mzOX2ZUBnfxLhB8stjn5H1d4XbwchFqoBlydpzqzxlhCXLX/Kik/Fr43
+	 FeipNHua1S5/0LPv3gN2uviom6G6Nb+UOlSMrRgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Tobias Klauser <tklauser@distanz.ch>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 146/694] selftests/clone3: fix number of tests in ksft_set_plan
-Date: Mon,  8 May 2023 11:39:41 +0200
-Message-Id: <20230508094437.190359374@linuxfoundation.org>
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+aafb3f37cfeb6534c4ac@syzkaller.appspotmail.com
+Subject: [PATCH 6.3 147/694] erofs: stop parsing non-compact HEAD index if clusterofs is invalid
+Date: Mon,  8 May 2023 11:39:42 +0200
+Message-Id: <20230508094437.219934476@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,47 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Klauser <tklauser@distanz.ch>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit d95debbdc528d50042807754d6085c15abc21768 ]
+[ Upstream commit cc4efd3dd2ac9f89143e5d881609747ecff04164 ]
 
-Commit 515bddf0ec41 ("selftests/clone3: test clone3 with CLONE_NEWTIME")
-added an additional test, so the number passed to ksft_set_plan needs to
-be bumped accordingly.
+Syzbot generated a crafted image [1] with a non-compact HEAD index of
+clusterofs 33024 while valid numbers should be 0 ~ lclustersize-1,
+which causes the following unexpected behavior as below:
 
-Also use ksft_finished() to print results and exit. This will catch future
-mismatches between ksft_set_plan() and the number of tests being run.
+ BUG: unable to handle page fault for address: fffff52101a3fff9
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 23ffed067 P4D 23ffed067 PUD 0
+ Oops: 0000 [#1] PREEMPT SMP KASAN
+ CPU: 1 PID: 4398 Comm: kworker/u5:1 Not tainted 6.3.0-rc6-syzkaller-g09a9639e56c0 #0
+ Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+ Workqueue: erofs_worker z_erofs_decompressqueue_work
+ RIP: 0010:z_erofs_decompress_queue+0xb7e/0x2b40
+ ...
+ Call Trace:
+  <TASK>
+  z_erofs_decompressqueue_work+0x99/0xe0
+  process_one_work+0x8f6/0x1170
+  worker_thread+0xa63/0x1210
+  kthread+0x270/0x300
+  ret_from_fork+0x1f/0x30
 
-Fixes: 515bddf0ec41 ("selftests/clone3: test clone3 with CLONE_NEWTIME")
-Cc: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Tobias Klauser <tklauser@distanz.ch>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Note that normal images or images using compact indexes are not
+impacted.  Let's fix this now.
+
+[1] https://lore.kernel.org/r/000000000000ec75b005ee97fbaa@google.com
+
+Reported-and-tested-by: syzbot+aafb3f37cfeb6534c4ac@syzkaller.appspotmail.com
+Fixes: 02827e1796b3 ("staging: erofs: add erofs_map_blocks_iter")
+Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20230410173714.104604-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/clone3/clone3.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/erofs/zmap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/clone3/clone3.c b/tools/testing/selftests/clone3/clone3.c
-index 4fce46afe6db8..e495f895a2cdd 100644
---- a/tools/testing/selftests/clone3/clone3.c
-+++ b/tools/testing/selftests/clone3/clone3.c
-@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
- 	uid_t uid = getuid();
- 
- 	ksft_print_header();
--	ksft_set_plan(17);
-+	ksft_set_plan(18);
- 	test_clone3_supported();
- 
- 	/* Just a simple clone3() should return 0.*/
-@@ -198,5 +198,5 @@ int main(int argc, char *argv[])
- 	/* Do a clone3() in a new time namespace */
- 	test_clone3(CLONE_NEWTIME, 0, 0, CLONE3_ARGS_NO_TEST);
- 
--	return !ksft_get_fail_cnt() ? ksft_exit_pass() : ksft_exit_fail();
-+	ksft_finished();
- }
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index 655da4d739cb6..b5f4086537548 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -86,6 +86,10 @@ static int legacy_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+ 		if (advise & Z_EROFS_VLE_DI_PARTIAL_REF)
+ 			m->partialref = true;
+ 		m->clusterofs = le16_to_cpu(di->di_clusterofs);
++		if (m->clusterofs >= 1 << vi->z_logical_clusterbits) {
++			DBG_BUGON(1);
++			return -EFSCORRUPTED;
++		}
+ 		m->pblk = le32_to_cpu(di->di_u.blkaddr);
+ 		break;
+ 	default:
 -- 
 2.39.2
 
