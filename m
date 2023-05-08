@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98017168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:34:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC4AC4339B;
-	Mon,  8 May 2023 10:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D078A168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:34:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A814C4339B;
+	Mon,  8 May 2023 10:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542076;
-	bh=CQfW+nljOBd9Vz2opStQ5BkOROaXJGZOYtBCDhJ7duA=;
+	s=korg; t=1683542079;
+	bh=q1NAxiws0H3X1zX3z577hsO0guSNKafkpvWr3af+H0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTKoMyIpHkUJkRhNGJbYJ+xkatJmUzeEQ3iRqWgYr+XBMtfP11TPCI4aJUOjOuSYa
-	 Q2H1Ylc8xgVpX5r18iMf/P+Og/Q9d/mU/hdIsqB6DuHW3AizJAx9ea6qnOQwicwCSr
-	 Xy+hnOvTTROVR6Mp5czrTYmAaLiDog/UP6jjEMMQ=
+	b=vxR8Jr6EvwxSGPq0WDjB12flvHBTtdzL2RQWlS9Z1HJVO8en/JbJsn0YrvHnb8Ncw
+	 hBB8aj6E2qQUCinj4Hb1bogSWUMG3dOJDYWdGNEZatHWBqZZC8Mt/Db+mlKPoG+pxW
+	 gXWAQf6gT3WkEfz0ZfV/nmEvKDjy36e1TMPsP/1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay Chandrashekara <sanjayc@nvidia.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 276/663] cpufreq: use correct unit when verify cur freq
-Date: Mon,  8 May 2023 11:41:42 +0200
-Message-Id: <20230508094437.202175477@linuxfoundation.org>
+Subject: [PATCH 6.2 312/663] scsi: target: iscsit: isert: Alloc per conn cmd counter
+Date: Mon,  8 May 2023 11:42:18 +0200
+Message-Id: <20230508094438.314035067@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,41 +35,178 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sanjay Chandrashekara <sanjayc@nvidia.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 44295af5019f1997d038ad2611086a2d1e2af167 ]
+[ Upstream commit 6d256bee602b131bd4fbc92863b6a1210bcf6325 ]
 
-cpufreq_verify_current_freq checks() if the frequency returned by
-the hardware has a slight delta with the valid frequency value
-last set and returns "policy->cur" if the delta is within "1 MHz".
-In the comparison, "policy->cur" is in "kHz" but it's compared
-against HZ_PER_MHZ. So, the comparison range becomes "1 GHz".
+This has iscsit allocate a per conn cmd counter and converts iscsit/isert
+to use it instead of the per session one.
 
-Fix this by comparing against KHZ_PER_MHZ instead of HZ_PER_MHZ.
-
-Fixes: f55ae08c8987 ("cpufreq: Avoid unnecessary frequency updates due to mismatch")
-Signed-off-by: Sanjay Chandrashekara <sanjayc@nvidia.com>
-[ sumit gupta: Commit message update ]
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-5-michael.christie@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 395cee83d02d ("scsi: target: iscsit: Stop/wait on cmds during conn close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/ulp/isert/ib_isert.c   |  4 ++--
+ drivers/target/iscsi/iscsi_target.c       |  4 ++--
+ drivers/target/iscsi/iscsi_target_login.c | 17 +++++++----------
+ drivers/target/target_core_transport.c    |  9 ++++++---
+ include/target/target_core_fabric.h       |  3 +++
+ 5 files changed, 20 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 7e56a42750ea5..285ba51b31f60 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -1727,7 +1727,7 @@ static unsigned int cpufreq_verify_current_freq(struct cpufreq_policy *policy, b
- 		 * MHz. In such cases it is better to avoid getting into
- 		 * unnecessary frequency updates.
- 		 */
--		if (abs(policy->cur - new_freq) < HZ_PER_MHZ)
-+		if (abs(policy->cur - new_freq) < KHZ_PER_MHZ)
- 			return policy->cur;
+diff --git a/drivers/infiniband/ulp/isert/ib_isert.c b/drivers/infiniband/ulp/isert/ib_isert.c
+index 75404885cf981..f290cd49698ea 100644
+--- a/drivers/infiniband/ulp/isert/ib_isert.c
++++ b/drivers/infiniband/ulp/isert/ib_isert.c
+@@ -2506,8 +2506,8 @@ isert_wait4cmds(struct iscsit_conn *conn)
+ 	isert_info("iscsit_conn %p\n", conn);
  
- 		cpufreq_out_of_sync(policy, new_freq);
+ 	if (conn->sess) {
+-		target_stop_session(conn->sess->se_sess);
+-		target_wait_for_sess_cmds(conn->sess->se_sess);
++		target_stop_cmd_counter(conn->cmd_cnt);
++		target_wait_for_cmds(conn->cmd_cnt);
+ 	}
+ }
+ 
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 87927a36f90df..11115c2078446 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -1193,7 +1193,7 @@ int iscsit_setup_scsi_cmd(struct iscsit_conn *conn, struct iscsit_cmd *cmd,
+ 			  conn->sess->se_sess, be32_to_cpu(hdr->data_length),
+ 			  cmd->data_direction, sam_task_attr,
+ 			  cmd->sense_buffer + 2, scsilun_to_int(&hdr->lun),
+-			  conn->sess->se_sess->cmd_cnt);
++			  conn->cmd_cnt);
+ 
+ 	pr_debug("Got SCSI Command, ITT: 0x%08x, CmdSN: 0x%08x,"
+ 		" ExpXferLen: %u, Length: %u, CID: %hu\n", hdr->itt,
+@@ -2057,7 +2057,7 @@ iscsit_handle_task_mgt_cmd(struct iscsit_conn *conn, struct iscsit_cmd *cmd,
+ 			  conn->sess->se_sess, 0, DMA_NONE,
+ 			  TCM_SIMPLE_TAG, cmd->sense_buffer + 2,
+ 			  scsilun_to_int(&hdr->lun),
+-			  conn->sess->se_sess->cmd_cnt);
++			  conn->cmd_cnt);
+ 
+ 	target_get_sess_cmd(&cmd->se_cmd, true);
+ 
+diff --git a/drivers/target/iscsi/iscsi_target_login.c b/drivers/target/iscsi/iscsi_target_login.c
+index 8ab6c0107d89c..274bdd7845ca9 100644
+--- a/drivers/target/iscsi/iscsi_target_login.c
++++ b/drivers/target/iscsi/iscsi_target_login.c
+@@ -324,18 +324,8 @@ static int iscsi_login_zero_tsih_s1(
+ 		goto free_ops;
+ 	}
+ 
+-	/*
+-	 * This is temp for iser. It will be moved to per conn in later
+-	 * patches for iscsi.
+-	 */
+-	sess->se_sess->cmd_cnt = target_alloc_cmd_counter();
+-	if (!sess->se_sess->cmd_cnt)
+-		goto free_se_sess;
+-
+ 	return 0;
+ 
+-free_se_sess:
+-	transport_free_session(sess->se_sess);
+ free_ops:
+ 	kfree(sess->sess_ops);
+ free_id:
+@@ -1157,8 +1147,14 @@ static struct iscsit_conn *iscsit_alloc_conn(struct iscsi_np *np)
+ 		goto free_conn_cpumask;
+ 	}
+ 
++	conn->cmd_cnt = target_alloc_cmd_counter();
++	if (!conn->cmd_cnt)
++		goto free_conn_allowed_cpumask;
++
+ 	return conn;
+ 
++free_conn_allowed_cpumask:
++	free_cpumask_var(conn->allowed_cpumask);
+ free_conn_cpumask:
+ 	free_cpumask_var(conn->conn_cpumask);
+ free_conn_ops:
+@@ -1172,6 +1168,7 @@ static struct iscsit_conn *iscsit_alloc_conn(struct iscsi_np *np)
+ 
+ void iscsit_free_conn(struct iscsit_conn *conn)
+ {
++	target_free_cmd_counter(conn->cmd_cnt);
+ 	free_cpumask_var(conn->allowed_cpumask);
+ 	free_cpumask_var(conn->conn_cpumask);
+ 	kfree(conn->conn_ops);
+diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
+index c395606ab1a9c..86adff2a86edd 100644
+--- a/drivers/target/target_core_transport.c
++++ b/drivers/target/target_core_transport.c
+@@ -254,7 +254,7 @@ struct target_cmd_counter *target_alloc_cmd_counter(void)
+ }
+ EXPORT_SYMBOL_GPL(target_alloc_cmd_counter);
+ 
+-static void target_free_cmd_counter(struct target_cmd_counter *cmd_cnt)
++void target_free_cmd_counter(struct target_cmd_counter *cmd_cnt)
+ {
+ 	/*
+ 	 * Drivers like loop do not call target_stop_session during session
+@@ -265,6 +265,7 @@ static void target_free_cmd_counter(struct target_cmd_counter *cmd_cnt)
+ 
+ 	percpu_ref_exit(&cmd_cnt->refcnt);
+ }
++EXPORT_SYMBOL_GPL(target_free_cmd_counter);
+ 
+ /**
+  * transport_init_session - initialize a session object
+@@ -3170,13 +3171,14 @@ static void target_stop_cmd_counter_confirm(struct percpu_ref *ref)
+  * target_stop_cmd_counter - Stop new IO from being added to the counter.
+  * @cmd_cnt: counter to stop
+  */
+-static void target_stop_cmd_counter(struct target_cmd_counter *cmd_cnt)
++void target_stop_cmd_counter(struct target_cmd_counter *cmd_cnt)
+ {
+ 	pr_debug("Stopping command counter.\n");
+ 	if (!atomic_cmpxchg(&cmd_cnt->stopped, 0, 1))
+ 		percpu_ref_kill_and_confirm(&cmd_cnt->refcnt,
+ 					    target_stop_cmd_counter_confirm);
+ }
++EXPORT_SYMBOL_GPL(target_stop_cmd_counter);
+ 
+ /**
+  * target_stop_session - Stop new IO from being queued on the session.
+@@ -3192,7 +3194,7 @@ EXPORT_SYMBOL(target_stop_session);
+  * target_wait_for_cmds - Wait for outstanding cmds.
+  * @cmd_cnt: counter to wait for active I/O for.
+  */
+-static void target_wait_for_cmds(struct target_cmd_counter *cmd_cnt)
++void target_wait_for_cmds(struct target_cmd_counter *cmd_cnt)
+ {
+ 	int ret;
+ 
+@@ -3208,6 +3210,7 @@ static void target_wait_for_cmds(struct target_cmd_counter *cmd_cnt)
+ 	wait_for_completion(&cmd_cnt->stop_done);
+ 	pr_debug("Waiting for cmds done.\n");
+ }
++EXPORT_SYMBOL_GPL(target_wait_for_cmds);
+ 
+ /**
+  * target_wait_for_sess_cmds - Wait for outstanding commands
+diff --git a/include/target/target_core_fabric.h b/include/target/target_core_fabric.h
+index d507e7885f17f..b188b1e90e1ed 100644
+--- a/include/target/target_core_fabric.h
++++ b/include/target/target_core_fabric.h
+@@ -133,7 +133,10 @@ struct se_session *target_setup_session(struct se_portal_group *,
+ 				struct se_session *, void *));
+ void target_remove_session(struct se_session *);
+ 
++void target_stop_cmd_counter(struct target_cmd_counter *cmd_cnt);
++void target_wait_for_cmds(struct target_cmd_counter *cmd_cnt);
+ struct target_cmd_counter *target_alloc_cmd_counter(void);
++void target_free_cmd_counter(struct target_cmd_counter *cmd_cnt);
+ 
+ void transport_init_session(struct se_session *se_sess);
+ struct se_session *transport_alloc_session(enum target_prot_op);
 -- 
 2.39.2
 
