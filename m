@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20E2171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:34:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24122C4339B;
-	Mon,  8 May 2023 11:34:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1025171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:34:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35E91C433EF;
+	Mon,  8 May 2023 11:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545683;
-	bh=gbyrfqi8g6Uf8sk/3bk8Oq+X7M24dMHjqKF8ZoH4PNw=;
+	s=korg; t=1683545686;
+	bh=kOwf8w8GkyqXNPHM/FZBYpCm0d1z3erKSzX47/jGq50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNV6WL1Hr790uNXiudcvqZDQT9/rbU5I/iMFyTU0g79SdkhgWAXoj3yN7V1IVW8SG
-	 K6NxfslXNeOzLkrrYVBsq6gWrWQIJJZBzKH9CYBn8mQo9eFcdPQd31m7Xki3NqIpaX
-	 3EnPJREYitfUTgHQVfA0QdM927MMmVf249JUS+PY=
+	b=sWSczI7j4zLNjJ//c3zr3WAuVDMpmvxO1DyU2JJNFF2XOVSLA3k+YyRhzURLFddnA
+	 lUHmgNA4tm2ywd8uo7zJ7o/QCCSzZaeopG85ncolEn882lIj/nlTF7BmEsrkh8Mhxa
+	 o4m/N8YbRmdN6XiqFS0r4gpHsewUMFIwE+MHR/tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Jean-Philippe Brucker <jean-philippe@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 119/371] firmware: arm_scmi: Fix xfers allocation on Rx channel
-Date: Mon,  8 May 2023 11:45:20 +0200
-Message-Id: <20230508094816.733886692@linuxfoundation.org>
+Subject: [PATCH 5.15 120/371] ACPI: VIOT: Initialize the correct IOMMU fwspec
+Date: Mon,  8 May 2023 11:45:21 +0200
+Message-Id: <20230508094816.772330372@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,46 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
 
-[ Upstream commit b2ccba9e8cdc6fb3985cc227844e7c6af309ffb1 ]
+[ Upstream commit 47d26684185d09e083669bbbd0c465ab3493a51f ]
 
-Two distinct pools of xfer descriptors are allocated at initialization
-time: one (Tx) used to provide xfers to track commands and their replies
-(or delayed replies) and another (Rx) to pick xfers from to be used for
-processing notifications.
+When setting up DMA for a PCI device, we need to initialize its
+iommu_fwspec with all possible alias RIDs (such as PCI bridges). To do
+this we use pci_for_each_dma_alias() which calls
+viot_pci_dev_iommu_init(). This function incorrectly initializes the
+fwspec of the bridge instead of the device being configured. Fix it by
+passing the original device as context to pci_for_each_dma_alias().
 
-Such pools, though, are allocated globally to be used by the whole SCMI
-instance, they are not allocated per-channel and as such the allocation of
-notifications xfers cannot be simply skipped if no Rx channel was found for
-the base protocol common channel, because there could be defined more
-optional per-protocol dedicated channels that instead support Rx channels.
-
-Change the conditional check to skip allocation for the notification pool
-only if no Rx channel has been detected on any per-channel protocol at all.
-
-Fixes: 4ebd8f6dea81 ("firmware: arm_scmi: Add receive buffer support for notifications")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20230326203449.3492948-1-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 3cf485540e7b ("ACPI: Add driver for the VIOT table")
+Link: https://lore.kernel.org/all/Y8qzOKm6kvhGWG1T@myrica
+Reported-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Tested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/viot.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index 11842497b2261..7ccda7d720a19 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -1463,7 +1463,7 @@ static int scmi_xfer_info_init(struct scmi_info *sinfo)
- 		return ret;
+diff --git a/drivers/acpi/viot.c b/drivers/acpi/viot.c
+index 647f11cf165d7..fe4b66dae01b5 100644
+--- a/drivers/acpi/viot.c
++++ b/drivers/acpi/viot.c
+@@ -329,6 +329,7 @@ static int viot_pci_dev_iommu_init(struct pci_dev *pdev, u16 dev_id, void *data)
+ {
+ 	u32 epid;
+ 	struct viot_endpoint *ep;
++	struct device *aliased_dev = data;
+ 	u32 domain_nr = pci_domain_nr(pdev->bus);
  
- 	ret = __scmi_xfer_info_init(sinfo, &sinfo->tx_minfo);
--	if (!ret && idr_find(&sinfo->rx_idr, SCMI_PROTOCOL_BASE))
-+	if (!ret && !idr_is_empty(&sinfo->rx_idr))
- 		ret = __scmi_xfer_info_init(sinfo, &sinfo->rx_minfo);
+ 	list_for_each_entry(ep, &viot_pci_ranges, list) {
+@@ -339,7 +340,7 @@ static int viot_pci_dev_iommu_init(struct pci_dev *pdev, u16 dev_id, void *data)
+ 			epid = ((domain_nr - ep->segment_start) << 16) +
+ 				dev_id - ep->bdf_start + ep->endpoint_id;
  
- 	return ret;
+-			return viot_dev_iommu_init(&pdev->dev, ep->viommu,
++			return viot_dev_iommu_init(aliased_dev, ep->viommu,
+ 						   epid);
+ 		}
+ 	}
+@@ -373,7 +374,7 @@ int viot_iommu_configure(struct device *dev)
+ {
+ 	if (dev_is_pci(dev))
+ 		return pci_for_each_dma_alias(to_pci_dev(dev),
+-					      viot_pci_dev_iommu_init, NULL);
++					      viot_pci_dev_iommu_init, dev);
+ 	else if (dev_is_platform(dev))
+ 		return viot_mmio_dev_iommu_init(to_platform_device(dev));
+ 	return -ENODEV;
 -- 
 2.39.2
 
