@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055BF168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:56:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBA9C433EF;
-	Mon,  8 May 2023 09:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0038E168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:56:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64AB2C433EF;
+	Mon,  8 May 2023 09:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539786;
-	bh=7WdwPKP2ajb40UYQ6VCpsCcIORTnkiIEZtDtJGKOAAY=;
+	s=korg; t=1683539789;
+	bh=gZ+bRMauUXwl5no0RP9+NqdPeV2jwAvkv3NtuIAfj0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjv3IR8Cze/wRKX2B0fvO3cNMLnR9qX9HEaP4I5jsdqpsdNCtBDhpio/ke3O5efw/
-	 WMsW6Vrzb4aO0ZU85nyRteiDmYKjgLA20Ek6P2y5YCXTJNt9aV1eDRduyuhn+yG2h8
-	 7THuic6AxfCxsLRtBtjHw1wj611isc7urJoL7HIg=
+	b=pQ2BNo4YXkUDoCPkoH9SBWwMS3Yba8DhyGgh2WM5tBy5hA6bvFcKHgSkWNBM+oJXV
+	 AScruA4oZT/OiT0ZHAlY9BPKyDEvWnVKhSAoqIj/Ey0JSZmZM7yhEYCG9QXfaa0J8e
+	 2ZOz8CJgDEs8DVMrWyPcRdl0rIe7E1QXwx9+jads=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Orlando Chamberlain <orlandoch.dev@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 135/611] drm/amdgpu: register a vga_switcheroo client for MacBooks with apple-gmux
-Date: Mon,  8 May 2023 11:39:37 +0200
-Message-Id: <20230508094426.638403210@linuxfoundation.org>
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Dave Chinner <david@fromorbit.com>
+Subject: [PATCH 6.1 107/611] xfs: dont consider future format versions valid
+Date: Mon,  8 May 2023 11:39:09 +0200
+Message-Id: <20230508094425.723503024@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,88 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Orlando Chamberlain <orlandoch.dev@gmail.com>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit d37a3929ca0363ed1dce02b2772cd5bc547ca66d ]
+commit aa88019851a85df80cb77f143758b13aee09e3d9 upstream.
 
-Commit 3840c5bcc245 ("drm/amdgpu: disentangle runtime pm and
-vga_switcheroo") made amdgpu only register a vga_switcheroo client for
-GPU's with PX, however AMD GPUs in dual gpu Apple Macbooks do need to
-register, but don't have PX. Instead of AMD's PX, they use apple-gmux.
+In commit fe08cc504448 we reworked the valid superblock version
+checks. If it is a V5 filesystem, it is always valid, then we
+checked if the version was less than V4 (reject) and then checked
+feature fields in the V4 flags to determine if it was valid.
 
-Use apple_gmux_detect() to identify these gpus, and
-pci_is_thunderbolt_attached() to ensure eGPUs connected to Dual GPU
-Macbooks don't register with vga_switcheroo.
+What we missed was that if the version is not V4 at this point,
+we shoudl reject the fs. i.e. the check current treats V6+
+filesystems as if it was a v4 filesystem. Fix this.
 
-Fixes: 3840c5bcc245 ("drm/amdgpu: disentangle runtime pm and vga_switcheroo")
-Link: https://lore.kernel.org/amd-gfx/20230210044826.9834-10-orlandoch.dev@gmail.com/
-Signed-off-by: Orlando Chamberlain <orlandoch.dev@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+cc: stable@vger.kernel.org
+Fixes: fe08cc504448 ("xfs: open code sb verifier feature checks")
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Dave Chinner <david@fromorbit.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ fs/xfs/libxfs/xfs_sb.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 9df5dcedaf3e2..9776e0b488cf6 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -35,6 +35,7 @@
- #include <linux/devcoredump.h>
- #include <generated/utsrelease.h>
- #include <linux/pci-p2pdma.h>
-+#include <linux/apple-gmux.h>
+--- a/fs/xfs/libxfs/xfs_sb.c
++++ b/fs/xfs/libxfs/xfs_sb.c
+@@ -72,7 +72,8 @@ xfs_sb_validate_v5_features(
+ }
  
- #include <drm/drm_aperture.h>
- #include <drm/drm_atomic_helper.h>
-@@ -3942,12 +3943,15 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	if ((adev->pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA)
- 		vga_client_register(adev->pdev, amdgpu_device_vga_set_decode);
+ /*
+- * We support all XFS versions newer than a v4 superblock with V2 directories.
++ * We current support XFS v5 formats with known features and v4 superblocks with
++ * at least V2 directories.
+  */
+ bool
+ xfs_sb_good_version(
+@@ -86,16 +87,16 @@ xfs_sb_good_version(
+ 	if (xfs_sb_is_v5(sbp))
+ 		return xfs_sb_validate_v5_features(sbp);
  
--	if (amdgpu_device_supports_px(ddev)) {
--		px = true;
-+	px = amdgpu_device_supports_px(ddev);
++	/* versions prior to v4 are not supported */
++	if (XFS_SB_VERSION_NUM(sbp) != XFS_SB_VERSION_4)
++		return false;
 +
-+	if (px || (!pci_is_thunderbolt_attached(adev->pdev) &&
-+				apple_gmux_detect(NULL, NULL)))
- 		vga_switcheroo_register_client(adev->pdev,
- 					       &amdgpu_switcheroo_ops, px);
-+
-+	if (px)
- 		vga_switcheroo_init_domain_pm_ops(adev->dev, &adev->vga_pm_domain);
--	}
+ 	/* We must not have any unknown v4 feature bits set */
+ 	if ((sbp->sb_versionnum & ~XFS_SB_VERSION_OKBITS) ||
+ 	    ((sbp->sb_versionnum & XFS_SB_VERSION_MOREBITSBIT) &&
+ 	     (sbp->sb_features2 & ~XFS_SB_VERSION2_OKBITS)))
+ 		return false;
  
- 	if (adev->gmc.xgmi.pending_reset)
- 		queue_delayed_work(system_wq, &mgpu_info.delayed_reset_work,
-@@ -4053,6 +4057,7 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
- void amdgpu_device_fini_sw(struct amdgpu_device *adev)
- {
- 	int idx;
-+	bool px;
- 
- 	amdgpu_fence_driver_sw_fini(adev);
- 	amdgpu_device_ip_fini(adev);
-@@ -4072,10 +4077,16 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev)
- 
- 	kfree(adev->bios);
- 	adev->bios = NULL;
--	if (amdgpu_device_supports_px(adev_to_drm(adev))) {
-+
-+	px = amdgpu_device_supports_px(adev_to_drm(adev));
-+
-+	if (px || (!pci_is_thunderbolt_attached(adev->pdev) &&
-+				apple_gmux_detect(NULL, NULL)))
- 		vga_switcheroo_unregister_client(adev->pdev);
-+
-+	if (px)
- 		vga_switcheroo_fini_domain_pm_ops(adev->dev);
--	}
-+
- 	if ((adev->pdev->class >> 8) == PCI_CLASS_DISPLAY_VGA)
- 		vga_client_unregister(adev->pdev);
- 
--- 
-2.39.2
-
+-	/* versions prior to v4 are not supported */
+-	if (XFS_SB_VERSION_NUM(sbp) < XFS_SB_VERSION_4)
+-		return false;
+-
+ 	/* V4 filesystems need v2 directories and unwritten extents */
+ 	if (!(sbp->sb_versionnum & XFS_SB_VERSION_DIRV2BIT))
+ 		return false;
 
 
