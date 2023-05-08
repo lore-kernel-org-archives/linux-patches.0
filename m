@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8305168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BFFC433EF;
-	Mon,  8 May 2023 11:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3DB168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8699AC433D2;
+	Mon,  8 May 2023 11:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543995;
-	bh=EcHEW2fxCkX8xvjdikGQmUSKlrbCfFMawQG2r9OCvjU=;
+	s=korg; t=1683543999;
+	bh=/udD4aTSZTEpOkzkEGL8WCi98hBZUSpxZmWWW8RqDec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WhjgUvWddrWFA7Mn+Y++vyu6TVibVR6otvz81i4XtyX9BqkBT3IQ2qpumNy6lio0W
-	 fd6evC3wJU84/1MaQnN0yaD526vv8DaBTrAl3uqx4lSetBMkfqTbflZLrxyeuZuzji
-	 FldKinTX0Jqycq+tyJLZacGOheD74BA+fogSAXNw=
+	b=CKR0OxKNH4GWTF3tvDt9+Wd6tN/EN5gA9C6cCV+quJS97NUBzVfn6QlH7F0i2aRD4
+	 tZyl+wqDjuHHMBvO9/a6BO4OwvBPQ9vxIOnAYYSmmncPsSAeqs0aWYi6bhGrckPrAV
+	 SS3ueOkwqdn9lD/pzgDX44i9b1caHW90vEsMnueo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Petr Vorel <pvorel@suse.cz>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 268/694] arm64: dts: qcom: msm8994-angler: Fix cont_splash_mem mapping
-Date: Mon,  8 May 2023 11:41:43 +0200
-Message-Id: <20230508094440.964198271@linuxfoundation.org>
+Subject: [PATCH 6.3 269/694] arm64: dts: qcom: msm8994-angler: removed clash with smem_region
+Date: Mon,  8 May 2023 11:41:44 +0200
+Message-Id: <20230508094440.993217488@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,53 +37,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Petr Vorel <pvorel@suse.cz>
 
-[ Upstream commit fe88480a6be92ecbf6f205ff3a7d7e5ded0562dd ]
+[ Upstream commit c85c8a992794dfcd7cea7a41871710c27c5592a6 ]
 
-Angler's cont_splash_mem mapping is shorter in downstream [1],
-therefore 380cd3a34b7f was wrong. Obviously also 0e5ded926f2a was wrong
-(workaround which fixed booting at the time).
+This fixes memory overlap error:
+[    0.000000] reserved@6300000 (0x0000000006300000--0x0000000007000000) overlaps with smem_region@6a00000 (0x0000000006a00000--0x0000000006c00000)
 
-This fixes error:
-[    0.000000] memory@3401000 (0x0000000003401000--0x0000000005601000) overlaps with tzapp@4800000 (0x0000000004800000--0x0000000006100000)
+smem_region is the same as in downstream (qcom,smem) [1], therefore
+split reserved memory into two sections on either side of smem_region.
 
-[1] https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-angler-3.10-marshmallow-mr1/arch/arm64/boot/dts/huawei/huawei_msm8994_angler_row_vn1/huawei-fingerprint.dtsi#16
+Not adding labels as it's not expected to be used.
+
+[1] https://android.googlesource.com/kernel/msm/+/refs/heads/android-msm-angler-3.10-marshmallow-mr1/arch/arm/boot/dts/qcom/msm8994.dtsi#948
 
 Fixes: 380cd3a34b7f ("arm64: dts: msm8994-angler: fix the memory map")
-Fixes: 0e5ded926f2a ("arm64: dts: qcom: msm8994-angler: Disable cont_splash_mem")
 
 Signed-off-by: Petr Vorel <pvorel@suse.cz>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230131200414.24373-2-pvorel@suse.cz
+Link: https://lore.kernel.org/r/20230131200414.24373-3-pvorel@suse.cz
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi          | 5 -----
+ arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts | 4 ++--
+ arch/arm64/boot/dts/qcom/msm8994.dtsi                      | 5 +++++
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+index cd77dcb558722..b8f2a01bcb96c 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+@@ -60,11 +60,6 @@
+ 			reg = <0x0 0x05000000 0x0 0x1a00000>;
+ 			no-map;
+ 		};
+-
+-		reserved@6c00000 {
+-			reg = <0x0 0x06c00000 0x0 0x400000>;
+-			no-map;
+-		};
+ 	};
+ };
+ 
 diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-index 7b0f62144c3ee..59b9ed78cf0cb 100644
+index 59b9ed78cf0cb..29e79ae0849d8 100644
 --- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
 +++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-@@ -2,7 +2,7 @@
- /*
-  * Copyright (c) 2015, Huawei Inc. All rights reserved.
-  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2022, Petr Vorel <petr.vorel@gmail.com>
-+ * Copyright (c) 2021-2023, Petr Vorel <petr.vorel@gmail.com>
-  */
+@@ -41,8 +41,8 @@
+ 			no-map;
+ 		};
  
- /dts-v1/;
-@@ -31,6 +31,11 @@
- 		#size-cells = <2>;
- 		ranges;
- 
-+		cont_splash_mem: memory@3401000 {
-+			reg = <0 0x03401000 0 0x1000000>;
+-		removed_region: reserved@6300000 {
+-			reg = <0 0x06300000 0 0xD00000>;
++		reserved@6300000 {
++			reg = <0 0x06300000 0 0x700000>;
+ 			no-map;
+ 		};
+ 	};
+diff --git a/arch/arm64/boot/dts/qcom/msm8994.dtsi b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+index 9ff9d35496d21..24c3fced8df71 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994.dtsi
+@@ -228,6 +228,11 @@
+ 			reg = <0 0xc9400000 0 0x3f00000>;
+ 			no-map;
+ 		};
++
++		reserved@6c00000 {
++			reg = <0 0x06c00000 0 0x400000>;
 +			no-map;
 +		};
-+
- 		tzapp_mem: tzapp@4800000 {
- 			reg = <0 0x04800000 0 0x1900000>;
- 			no-map;
+ 	};
+ 
+ 	smd {
 -- 
 2.39.2
 
