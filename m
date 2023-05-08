@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1B6168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8497EC433EF;
-	Mon,  8 May 2023 09:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB1DD168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:51:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDC6C433EF;
+	Mon,  8 May 2023 09:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539492;
-	bh=0tlCgn/g2uLNgXFgxB/PsjI7UdfHzqyRNbDgd1eDnxc=;
+	s=korg; t=1683539495;
+	bh=w194uIv02dRzzmArfVp/aAraTo8Omr2YJqo7iox1U1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdHKVo0SvoyJWQRv9pnsEV3tXQ/IZrCNgqp1S4FMIazHi5Tleud+/Ca2KGpQLen47
-	 4et39PJKj42/2n4Z4Lt2H7q/ITBw//nTqKz6JcAWfNhCNtXkgL5tAIvPmRY6PpCsq+
-	 UwKc22F+Nd1V4dh+BmSqAJNoo01htwDfKXm1M8SA=
+	b=ny8R+3xScR/AU36laF3MG42Qg5ZSI7VZl2LdO+ba5yU8a503cb2hGQeGNTmsbb2ik
+	 5tj+VcZwLcqIEwNwioH3DJ+CF5R+T0t9BJrl9rZrBX3LhkWNslSJTHPuDbpIenp41d
+	 hEyFLYLKxqvSOozBZ5Bdqd8dWYlV7TvZ0Popaw8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Patrik=20Dahlstr=C3=B6m?= <risca@dalakolonin.se>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 006/611] iio: adc: palmas_gpadc: fix NULL dereference on rmmod
-Date: Mon,  8 May 2023 11:37:28 +0200
-Message-Id: <20230508094421.795984810@linuxfoundation.org>
+Subject: [PATCH 6.1 007/611] ASoC: Intel: bytcr_rt5640: Add quirk for the Acer Iconia One 7 B1-750
+Date: Mon,  8 May 2023 11:37:29 +0200
+Message-Id: <20230508094421.837317296@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,34 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Patrik Dahlström <risca@dalakolonin.se>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 49f76c499d38bf67803438eee88c8300d0f6ce09 ]
+[ Upstream commit e38c5e80c3d293a883c6f1d553f2146ec0bda35e ]
 
-Calling dev_to_iio_dev() on a platform device pointer is undefined and
-will make adc NULL.
+The Acer Iconia One 7 B1-750 tablet mostly works fine with the defaults
+for an Bay Trail CR tablet. Except for the internal mic, instead of
+an analog mic on IN3 a digital mic on DMIC1 is uses.
 
-Signed-off-by: Patrik Dahlström <risca@dalakolonin.se>
-Link: https://lore.kernel.org/r/20230313205029.1881745-1-risca@dalakolonin.se
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Add a quirk with these settings for this tablet.
+
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230322145332.131525-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/palmas_gpadc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/boards/bytcr_rt5640.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/iio/adc/palmas_gpadc.c b/drivers/iio/adc/palmas_gpadc.c
-index fd000345ec5cf..849a697a467e5 100644
---- a/drivers/iio/adc/palmas_gpadc.c
-+++ b/drivers/iio/adc/palmas_gpadc.c
-@@ -639,7 +639,7 @@ static int palmas_gpadc_probe(struct platform_device *pdev)
+diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
+index 4f46f52c38e44..783c201259921 100644
+--- a/sound/soc/intel/boards/bytcr_rt5640.c
++++ b/sound/soc/intel/boards/bytcr_rt5640.c
+@@ -533,6 +533,18 @@ static int byt_rt5640_aif1_hw_params(struct snd_pcm_substream *substream,
  
- static int palmas_gpadc_remove(struct platform_device *pdev)
- {
--	struct iio_dev *indio_dev = dev_to_iio_dev(&pdev->dev);
-+	struct iio_dev *indio_dev = dev_get_drvdata(&pdev->dev);
- 	struct palmas_gpadc *adc = iio_priv(indio_dev);
- 
- 	if (adc->wakeup1_enable || adc->wakeup2_enable)
+ /* Please keep this list alphabetically sorted */
+ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
++	{	/* Acer Iconia One 7 B1-750 */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Insyde"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "VESPA2"),
++		},
++		.driver_data = (void *)(BYT_RT5640_DMIC1_MAP |
++					BYT_RT5640_JD_SRC_JD1_IN4P |
++					BYT_RT5640_OVCD_TH_1500UA |
++					BYT_RT5640_OVCD_SF_0P75 |
++					BYT_RT5640_SSP0_AIF1 |
++					BYT_RT5640_MCLK_EN),
++	},
+ 	{	/* Acer Iconia Tab 8 W1-810 */
+ 		.matches = {
+ 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
 -- 
 2.39.2
 
