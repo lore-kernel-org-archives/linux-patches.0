@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FBA168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88794C433EF;
-	Mon,  8 May 2023 11:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF16168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:26:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99FB0C433EF;
+	Mon,  8 May 2023 11:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545168;
-	bh=xghh3jpNNkWugck2oAidqLtKhwyzrLdC9xihcEx88bU=;
+	s=korg; t=1683545171;
+	bh=8E8uH+tayCkP/JNoEemaa8uU+tXfPd3bERWLmW8TZIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QK9VLS6yOvEB7gzAsVxQVYuqrbpb9NVpb6knLAxfRpyGTP9YdDjF6EZ8qhU3iHa/W
-	 TuNyaCd+R7hF5oEywlapnW//abXG+Xx1Jwpoo79OTTLz71aQDaR6KbMpSdUcspNxKs
-	 ottc8vqJqIVJ/58Suimta0tkzYYXGns9ei2A3NdU=
+	b=ljCc/GgP7m9AqHw5rLuqYYqKB2PvIGhzm52QUQD5JFXDyeayMu7HxJoiUmnIhXsYn
+	 TU7awQGFmCWIQpdBcqRGlcBzXAlmm9R4K+pmA7jWNjSOKPLFJ2cgg6WaODkVhexZxN
+	 fMdb3oKddEj/0idwWGAP7ELKhyaE7IWL6i/qtZKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 616/694] clk: qcom: dispcc-qcm2290: Remove inexistent DSI1PHY clk
-Date: Mon,  8 May 2023 11:47:31 +0200
-Message-Id: <20230508094455.465888735@linuxfoundation.org>
+Subject: [PATCH 6.3 617/694] Input: raspberrypi-ts - fix refcount leak in rpi_ts_probe
+Date: Mon,  8 May 2023 11:47:32 +0200
+Message-Id: <20230508094455.512023576@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,48 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 68d1151f03067533827fc50b770954ef33149533 ]
+[ Upstream commit 5bca3688bdbc3b58a2894b8671a8e2378efe28bd ]
 
-There's only one DSI PHY on this SoC. Remove the ghost entry for the
-clock produced by a secondary one.
+rpi_firmware_get() take reference, we need to release it in error paths
+as well. Use devm_rpi_firmware_get() helper to handling the resources.
+Also remove the existing rpi_firmware_put().
 
-Fixes: cc517ea3333f ("clk: qcom: Add display clock controller driver for QCM2290")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230412-topic-qcm_dispcc-v1-2-bf2989a75ae4@linaro.org
+Fixes: 0b9f28fed3f7 ("Input: add official Raspberry Pi's touchscreen driver")
+Fixes: 3b8ddff780b7 ("input: raspberrypi-ts: Release firmware handle when not needed")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+Link: https://lore.kernel.org/r/20221223074657.810346-1-linmq006@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/dispcc-qcm2290.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/input/touchscreen/raspberrypi-ts.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
-index 2ebd9a02b8950..24755dc841f9d 100644
---- a/drivers/clk/qcom/dispcc-qcm2290.c
-+++ b/drivers/clk/qcom/dispcc-qcm2290.c
-@@ -26,7 +26,6 @@ enum {
- 	P_DISP_CC_PLL0_OUT_MAIN,
- 	P_DSI0_PHY_PLL_OUT_BYTECLK,
- 	P_DSI0_PHY_PLL_OUT_DSICLK,
--	P_DSI1_PHY_PLL_OUT_DSICLK,
- 	P_GPLL0_OUT_MAIN,
- 	P_SLEEP_CLK,
- };
-@@ -106,13 +105,11 @@ static const struct clk_parent_data disp_cc_parent_data_3[] = {
- static const struct parent_map disp_cc_parent_map_4[] = {
- 	{ P_BI_TCXO, 0 },
- 	{ P_DSI0_PHY_PLL_OUT_DSICLK, 1 },
--	{ P_DSI1_PHY_PLL_OUT_DSICLK, 2 },
- };
+diff --git a/drivers/input/touchscreen/raspberrypi-ts.c b/drivers/input/touchscreen/raspberrypi-ts.c
+index 5000f5fd9ec38..45c575df994e0 100644
+--- a/drivers/input/touchscreen/raspberrypi-ts.c
++++ b/drivers/input/touchscreen/raspberrypi-ts.c
+@@ -134,7 +134,7 @@ static int rpi_ts_probe(struct platform_device *pdev)
+ 		return -ENOENT;
+ 	}
  
- static const struct clk_parent_data disp_cc_parent_data_4[] = {
- 	{ .fw_name = "bi_tcxo" },
- 	{ .fw_name = "dsi0_phy_pll_out_dsiclk" },
--	{ .fw_name = "dsi1_phy_pll_out_dsiclk" },
- };
- 
- static const struct parent_map disp_cc_parent_map_5[] = {
+-	fw = rpi_firmware_get(fw_node);
++	fw = devm_rpi_firmware_get(&pdev->dev, fw_node);
+ 	of_node_put(fw_node);
+ 	if (!fw)
+ 		return -EPROBE_DEFER;
+@@ -160,7 +160,6 @@ static int rpi_ts_probe(struct platform_device *pdev)
+ 	touchbuf = (u32)ts->fw_regs_phys;
+ 	error = rpi_firmware_property(fw, RPI_FIRMWARE_FRAMEBUFFER_SET_TOUCHBUF,
+ 				      &touchbuf, sizeof(touchbuf));
+-	rpi_firmware_put(fw);
+ 	if (error || touchbuf != 0) {
+ 		dev_warn(dev, "Failed to set touchbuf, %d\n", error);
+ 		return error;
 -- 
 2.39.2
 
