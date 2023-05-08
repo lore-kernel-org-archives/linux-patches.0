@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B87168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9BCC433D2;
-	Mon,  8 May 2023 10:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B352C168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388E6C433EF;
+	Mon,  8 May 2023 10:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540679;
-	bh=GnuTKGySGlfr07daI7HAiFk0boCdBF/4zjHSMFSEV+4=;
+	s=korg; t=1683540681;
+	bh=99+RV+m1UrRspcfPc/tKZycQpkUXI/tfPtJT3S/XQyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NRFObisIsURNT3JDo6mxk7FgptcJ6gBAkYJVaYihtDHGApWPMQdswu7+zR1kLHIt/
-	 KWyuJB6c8rhdLnE/kLP2HPUFEjFTzAE9crmq+sIUNRics6Ky4hTm7vf7GzAbQDDYx5
-	 8DJKCOClXV2efZwy0htjtBnQ0YuY/S0pTSgzkPa0=
+	b=cI27xZAkWv1GefNTzf4O074752VugNyQSyUCWaKN0e2euBLmwPqLa8de3BGE1ozoE
+	 UNrQ7NT7+7P79bfSD/f+PDOHyN655M+bVI54S11IZi6H38gqaXRN/0+nc1O6ZwrbwW
+	 zsol/A3zCUbIfhEE2j9tCUE7Mr7hOgbZmzMNd+HE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	linux-fbdev@vger.kernel.org,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 415/611] linux/vt_buffer.h: allow either builtin or modular for macros
-Date: Mon,  8 May 2023 11:44:17 +0200
-Message-Id: <20230508094435.716421365@linuxfoundation.org>
+Subject: [PATCH 6.1 450/611] serial: 8250: Add missing wakeup event reporting
+Date: Mon,  8 May 2023 11:44:52 +0200
+Message-Id: <20230508094436.776072178@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,56 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 2b76ffe81e32afd6d318dc4547e2ba8c46207b77 ]
+[ Upstream commit 0ba9e3a13c6adfa99e32b2576d20820ab10ad48a ]
 
-Fix build errors on ARCH=alpha when CONFIG_MDA_CONSOLE=m.
-This allows the ARCH macros to be the only ones defined.
+An 8250 UART configured as a wake-up source would not have reported
+itself through sysfs as being the source of wake-up, correct that.
 
-In file included from ../drivers/video/console/mdacon.c:37:
-../arch/alpha/include/asm/vga.h:17:40: error: expected identifier or '(' before 'volatile'
-   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
-      |                                        ^~~~~~~~
-../include/linux/vt_buffer.h:24:34: note: in definition of macro 'scr_writew'
-   24 | #define scr_writew(val, addr) (*(addr) = (val))
-      |                                  ^~~~
-../include/linux/vt_buffer.h:24:40: error: expected ')' before '=' token
-   24 | #define scr_writew(val, addr) (*(addr) = (val))
-      |                                        ^
-../arch/alpha/include/asm/vga.h:17:20: note: in expansion of macro 'scr_writew'
-   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
-      |                    ^~~~~~~~~~
-../arch/alpha/include/asm/vga.h:25:29: error: expected identifier or '(' before 'volatile'
-   25 | static inline u16 scr_readw(volatile const u16 *addr)
-      |                             ^~~~~~~~
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-fbdev@vger.kernel.org
-Link: https://lore.kernel.org/r/20230329021529.16188-1-rdunlap@infradead.org
+Fixes: b3b708fa2780 ("wake up from a serial port")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230414170241.2016255-1-f.fainelli@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/vt_buffer.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_port.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/linux/vt_buffer.h b/include/linux/vt_buffer.h
-index 848db1b1569ff..919d999a8c1db 100644
---- a/include/linux/vt_buffer.h
-+++ b/include/linux/vt_buffer.h
-@@ -16,7 +16,7 @@
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index b82dce557c383..b8e8a96c3eb63 100644
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -15,6 +15,7 @@
+ #include <linux/moduleparam.h>
+ #include <linux/ioport.h>
+ #include <linux/init.h>
++#include <linux/irq.h>
+ #include <linux/console.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/sysrq.h>
+@@ -1926,6 +1927,7 @@ static bool handle_rx_dma(struct uart_8250_port *up, unsigned int iir)
+ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
+ {
+ 	struct uart_8250_port *up = up_to_u8250p(port);
++	struct tty_port *tport = &port->state->port;
+ 	bool skip_rx = false;
+ 	unsigned long flags;
+ 	u16 status;
+@@ -1951,6 +1953,8 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
+ 		skip_rx = true;
  
- #include <linux/string.h>
- 
--#if defined(CONFIG_VGA_CONSOLE) || defined(CONFIG_MDA_CONSOLE)
-+#if IS_ENABLED(CONFIG_VGA_CONSOLE) || IS_ENABLED(CONFIG_MDA_CONSOLE)
- #include <asm/vga.h>
- #endif
- 
+ 	if (status & (UART_LSR_DR | UART_LSR_BI) && !skip_rx) {
++		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
++			pm_wakeup_event(tport->tty->dev, 0);
+ 		if (!up->dma || handle_rx_dma(up, iir))
+ 			status = serial8250_rx_chars(up, status);
+ 	}
 -- 
 2.39.2
 
