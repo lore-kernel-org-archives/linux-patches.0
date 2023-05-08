@@ -1,58 +1,42 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D23A111B9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 20:29:05 +0000 (UTC)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5C8025C0121;
-	Mon,  8 May 2023 16:29:04 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 08 May 2023 16:29:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1683577744; x=1683664144; bh=G+jMg55hOCbbocEq58MWNDAQoerhosGi6pJ
-	guyIM6MA=; b=UUMbwrGeXkFMipqOEKf0dX+bYnqTaHbps0bjOM5+1ODVYLW5Sxv
-	Ig+gcOoNtgT9js4RcUG4lY3bnS+O4v2cQXUP3PLuGETZWYDfood/lfgvht+Ld0I2
-	/gt4D7eJFLQEeVMdm1rTAjzZajhnkqkMmvbZ4kiQGtgdHdqpmRSJrcpdDXhna+lk
-	t3ijAC2QcJzFvJLG7PI3Tr/5qmye3CY3n/7uKcXpqOxtY4zBGbep2Fjk8bug9cRo
-	+FTWjLcr8ebvts1IJMJI3j1OefQ5uqUj94iy0rLljhIxukZvnla1FvZiOat6xuom
-	LsRD7iYmTcZXFr4XCp/JXmrsWiJdWfLQa+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1683577744; x=1683664144; bh=G+jMg55hOCbbocEq58MWNDAQoerhosGi6pJ
-	guyIM6MA=; b=T39FrWc6UnUy+llTJ+G4RR7R1tsi13odoejvkqf1fTWTgFcwIwm
-	/W/7dl789lCqMOe3fc+jOeeSJ2GKlLH7Sp6BCM7TJbRtuXa5m6wLo1iYjrHxP81K
-	1NYjvE8jq585Oq6M/lc+kbWOOiHt8LUbg86K8G5U5NV2HzoTCMB0ay29JpWh/h/E
-	ui0vFOhuNtqzTlNltrjA+pxIMH8ugwwtx0Ji5Y9vYV4IqSORlkmyeKJk+6aCLo6y
-	EYI13qNgkwRF1gTfA+VeQxbndH4u5xV9qZpM0KidNvV2QGb1ZKqe2U8Ay7+plXig
-	04TIiJo9hyY3sP/NkcoBFPRzzPEhXVQAFZw==
-X-ME-Sender: <xms:kFtZZADVOmLUocTraxTqeX5QsZQHAwKxtyeTflTGvFrjNZWgXf2QDw>
-    <xme:kFtZZCjNYFK9MlPUvLG-0XKRUixXu2H_0-NjJQB0ei5AmlTA6WF0cyN_KaRKuHrFk
-    YgBzfpMv3qkopIc0A>
-X-ME-Received: <xmr:kFtZZDmiydNh-eopV4dsbBixKxCRdEpGyveTx0_0YCvw0wlnIngcZk0K8h25wMUOrtogX0yWWboZSFwsDJknOqVUtw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeefkedgudeglecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheptehl
-    ihgtvgcutfihhhhluceorghlihgtvgesrhihhhhlrdhioheqnecuggftrfgrthhtvghrnh
-    epheduuddvteekvdektdduledugfffhfdugeejgeeuvdevtdetveejheehiefffeegnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvg
-    esrhihhhhlrdhioh
-X-ME-Proxy: <xmx:kFtZZGy0CJTOlI3pPKxIIMSdNEWnI2iaxyh5QgUMu6h8xDRJ_qZkRQ>
-    <xmx:kFtZZFSeoRGNRwYEAqLKFUtY_Cafveb4dVyxKcPC92zy37S6yXW28Q>
-    <xmx:kFtZZBZ-ZgQ2_hhfGfOaJ-YdiKCLRBykxZBRGUfM55Cxseg2Egb63Q>
-    <xmx:kFtZZC_IowVBjXMV4LBDPYE9oSFd-wbnmAk0lg7WjHeePUSDjMf47w>
-Feedback-ID: i56684263:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 May 2023 16:29:01 -0400 (EDT)
-Message-ID: <bb3bfbfb-0761-23b2-24e9-e5b4cb3ffac6@ryhl.io>
-Date: Mon, 8 May 2023 22:29:00 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342E7111BC
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 21:04:17 +0000 (UTC)
+Received: by mail-io1-f44.google.com with SMTP id ca18e2360f4ac-76c50ad63f1so5361739f.1
+        for <patches@lists.linux.dev>; Mon, 08 May 2023 14:04:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1683579856; x=1686171856;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GVXgA2/yKlvvCi/fNq3LAF2WhpqNYS7jROBS62P7jtk=;
+        b=bhDFKdOYBkDlJlIyfJ6oeEaUD4FXDyCIJbqbPJuK3AbN3iPZe64yXwaqtenCwnWLHI
+         UfIxT/4Apv8UEl/KUkBRBsb5X7IhBAsLs8nB0ahFeBDcPG0mcnYAkW8YnUw0DBJ9e16b
+         Gg4bP7dpRars8SwZgt+nS9amSCPdkyXrLWBCw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683579856; x=1686171856;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GVXgA2/yKlvvCi/fNq3LAF2WhpqNYS7jROBS62P7jtk=;
+        b=QvnW57aH0uMyS63kc9gTAU7rBGukNRPB2L+/r03dv4EQEoLSKDZBlwqp3jblIrXDt3
+         RCWotOmEsZ4PcVzNz1p0rkaXieRRIJobhq8UD98dSTHOunv4dwri16NR9iaoYN3sVIiE
+         rqz0Egyz7RD/E1ameSKCEHfQELFR5IoSZqOPzaY66jCJP98LHlyvEgXxFNu30OpXQUUU
+         tIgs59ciizZ+GHcpTLaQxK/JLqlDQpGNVXOUNeMC6PwwOAwwWG8lL2qEyXEZQAJLu1oI
+         qRd8AvjB5vbkkGVtQIOHEJTL0vfjuQDEFYAWtN0fsDQFba+ykP07WcrGRZ9U5PYlLQ4O
+         P6wg==
+X-Gm-Message-State: AC+VfDxJ1GkCFS7NwiOhlQ81ibEPxue+FcnkMKgC26XyYHRKK23QgkYL
+	vHE8ApYLXMfaQ5ZcOw+JVkwg6A==
+X-Google-Smtp-Source: ACHHUZ4t04uSHpQwGrXiKWff4IIvHQkJNAdWLVy7AQ3UmpbqbOY4HE0p5FbLVqTv8NnyYz/3+mUPtw==
+X-Received: by 2002:a05:6602:150c:b0:769:8d14:7d15 with SMTP id g12-20020a056602150c00b007698d147d15mr8047686iow.0.1683579856123;
+        Mon, 08 May 2023 14:04:16 -0700 (PDT)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id k35-20020a056638372300b0040f99b59cbbsm2299330jav.166.2023.05.08.14.04.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 May 2023 14:04:15 -0700 (PDT)
+Message-ID: <24e0163b-b7fd-e88b-2bee-479147a91d91@linuxfoundation.org>
+Date: Mon, 8 May 2023 15:04:14 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -60,39 +44,45 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v2] rust: str: add conversion from `CStr` to `CString`
-To: Gary Guo <gary@garyguo.net>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
- <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>,
- Boqun Feng <boqun.feng@gmail.com>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
- Martin Rodriguez Reboredo <yakoyoku@gmail.com>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-References: <20230503141016.683634-1-aliceryhl@google.com>
- <20230508124127.77a97c54.gary@garyguo.net>
-Content-Language: en-US-large
-From: Alice Ryhl <alice@ryhl.io>
-In-Reply-To: <20230508124127.77a97c54.gary@garyguo.net>
+ Thunderbird/102.10.0
+Subject: Re: [PATCH 6.3 000/694] 6.3.2-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230508094432.603705160@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 5/8/23 13:41, Gary Guo wrote:
-> On Wed,  3 May 2023 14:10:16 +0000
-> Alice Ryhl <aliceryhl@google.com> wrote:
+On 5/8/23 03:37, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.3.2 release.
+> There are 694 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->> These methods can be used to copy the data in a temporary c string into
->> a separate allocation, so that it can be accessed later even if the
->> original is deallocated.
->>
->> The API in this change mirrors the standard library API for the `&str`
->> and `String` types. The `ToOwned` trait is not implemented because it
->> assumes that allocations are infallible.
+> Responses should be made by Wed, 10 May 2023 09:42:40 +0000.
+> Anything received after that time might be too late.
 > 
-> How about add a `TryToOwned` trait to the kernel crate and implement
-> that trait for `CStr` instead?
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.2-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-Eh, I don't think it's worth it. It doesn't give anything new to the 
-CStr api, and I think it's rather unlikely that someone will actually 
-need to be generic over such a trait any time soon.
+Compiled and booted on my test system. No dmesg regressions.
+
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+
+thanks,
+-- Shuah
