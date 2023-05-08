@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24502168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FDB3C4339B;
-	Mon,  8 May 2023 11:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17ECA168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC02C433D2;
+	Mon,  8 May 2023 11:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544501;
-	bh=Vz6FXD+nTESi9ykuQCZ8RPeDHcdB9OmyxMqaP7lU10I=;
+	s=korg; t=1683544503;
+	bh=HEJjA6ByPB3z7YcJMR6szPccgJQ9178/Rx2Z0VCIP90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y87cCIXmwoG39Vvp37JX+8LBTZxk+ZDQnRyKLjV5WBH/PWGka3ALzLSZOFePkN8AU
-	 8PQMjidXODK4hETLzaScTgUFWJNCEK7473TZRX1urNSOsnhinrIgr+4bbqgE9+epaV
-	 7KsgnCJRYr63pWCtJE2lBGuWLuC7EpXO1H+m61Zs=
+	b=QfZnkelEDL4q++xixvMjN3/DX5KRSsjxdiZLYOEQAPlVB8l1HO57YULOg+hM5BlAa
+	 dbEyYAeH0yb1eFhZR2cvkdmDJcIsgFHxMMuuLP6IIktneC30ik5Th5u9lRZVp1sP4Z
+	 5V5ZHWYFcXjAR/HSYVxPh1rtnwSutv6v1eaUNvYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Avraham Stern <avraham.stern@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 413/694] wifi: iwlwifi: trans: dont trigger d3 interrupt twice
-Date: Mon,  8 May 2023 11:44:08 +0200
-Message-Id: <20230508094446.669006422@linuxfoundation.org>
+Subject: [PATCH 6.3 431/694] wifi: mt76: remove redundent MCU_UNI_CMD_* definitions
+Date: Mon,  8 May 2023 11:44:26 +0200
+Message-Id: <20230508094447.355466247@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,53 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Avraham Stern <avraham.stern@intel.com>
+From: Deren Wu <deren.wu@mediatek.com>
 
-[ Upstream commit 277f56a141fc54ef7f9e09dba65fb2e12021411d ]
+[ Upstream commit 532f0482fc577a78c0086893ab39acb406ac3e65 ]
 
-When the IPC registers are used for sleep control, setting
-the IPC sleep bit already triggers an interrupt to the fw, so
-there is no need to also set the doorbell. Setting also the
-doorbell triggers the sleep interrupt twice which lead to
-an assert.
+clear redundent definitions only
 
-Fixes: af08571d3925 ("iwlwifi: pcie: support Bz suspend/resume trigger")
-Signed-off-by: Avraham Stern <avraham.stern@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413102635.b5f2f6e44d38.I4cb5b6ad4914db47a714e731c4c8b4db679cabce@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 5b55b6da982c ("wifi: mt76: mt7921: add unified ROC cmd/event support")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-index 0a9af1ad1f206..40283fe622daa 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-@@ -1522,19 +1522,16 @@ static int iwl_pcie_d3_handshake(struct iwl_trans *trans, bool suspend)
- 	struct iwl_trans_pcie *trans_pcie = IWL_TRANS_GET_PCIE_TRANS(trans);
- 	int ret;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
+index a5e6ee4daf92e..40a99e0caded8 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.h
+@@ -967,9 +967,6 @@ enum {
+ 	DEV_INFO_MAX_NUM
+ };
  
--	if (trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_AX210) {
-+	if (trans->trans_cfg->device_family == IWL_DEVICE_FAMILY_AX210)
- 		iwl_write_umac_prph(trans, UREG_DOORBELL_TO_ISR6,
- 				    suspend ? UREG_DOORBELL_TO_ISR6_SUSPEND :
- 					      UREG_DOORBELL_TO_ISR6_RESUME);
--	} else if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
-+	else if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ)
- 		iwl_write32(trans, CSR_IPC_SLEEP_CONTROL,
- 			    suspend ? CSR_IPC_SLEEP_CONTROL_SUSPEND :
- 				      CSR_IPC_SLEEP_CONTROL_RESUME);
--		iwl_write_umac_prph(trans, UREG_DOORBELL_TO_ISR6,
--				    UREG_DOORBELL_TO_ISR6_SLEEP_CTRL);
--	} else {
-+	else
- 		return 0;
--	}
- 
- 	ret = wait_event_timeout(trans_pcie->sx_waitq,
- 				 trans_pcie->sx_complete, 2 * HZ);
+-#define MCU_UNI_CMD_EVENT                       BIT(1)
+-#define MCU_UNI_CMD_UNSOLICITED_EVENT           BIT(2)
+-
+ /* event table */
+ enum {
+ 	MCU_EVENT_TARGET_ADDRESS_LEN = 0x01,
 -- 
 2.39.2
 
