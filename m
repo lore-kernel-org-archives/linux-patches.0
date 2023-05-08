@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EA2168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:45:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BEDAC433D2;
-	Mon,  8 May 2023 10:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D6D168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:45:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB21C433D2;
+	Mon,  8 May 2023 10:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542736;
-	bh=ZWSsbtjvn51hD3F/mhWjOTtUVCLJaFCrwRlHmU/IgJo=;
+	s=korg; t=1683542739;
+	bh=chVjX3WU5K6olyKoXQPixSHbU5enEVWovGW26cX2yEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbjxKbuvW18jbPzo2pygfRcQ8JxJGqGF8Y/ySz/3sTSaITIiRigqpB5CtCmA465PY
-	 3ezjwefHyfEQ+wvlJahdrtCSPoU0Nu0AvH9m0AS3y7kTUZVahrj08fY6Q3xD1084G3
-	 x/f7pURBRzI1BISntzh7y6smo9ywScacO5qNM7hQ=
+	b=gXGdeR2wKspVLW0mhR3sxXeKPeXvAj/+MReVHBZTwGNMt/VEXxK7steowb5FRt93O
+	 GZLNRCDEzgAlVSBMTwL1vMxs/p0aVcPzEGWAjkrlnrqSJVYSp1iu45YHo5scbS0PmS
+	 +QHUA57yBDgSCIzSjfrsDG67k/skFUd53tDZqpRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Pearson <rpearsonhpe@gmail.com>,
+	Cheng Xu <chengyou@linux.alibaba.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 532/663] RDMA/rxe: Replace exists by rxe in rxe.c
-Date: Mon,  8 May 2023 11:45:58 +0200
-Message-Id: <20230508094446.162710711@linuxfoundation.org>
+Subject: [PATCH 6.2 533/663] RDMA/erdma: Use fixed hardware page size
+Date: Mon,  8 May 2023 11:45:59 +0200
+Message-Id: <20230508094446.203770270@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,62 +35,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Pearson <rpearsonhpe@gmail.com>
+From: Cheng Xu <chengyou@linux.alibaba.com>
 
-[ Upstream commit 9168d125ea032ad199275193493c13cb077da5cc ]
+[ Upstream commit d649c638dc26f3501da510cf7fceb5c15ca54258 ]
 
-'exists' looks like a boolean. This patch replaces it by the
-normal name used for the rxe device, 'rxe', which should be a
-little less confusing. The second rxe_dbg() message is
-incorrect since rxe is known to be NULL and this will cause a
-seg fault if this message were ever sent. Replace it by pr_debug
-for the moment.
+Hardware's page size is 4096, but the kernel's page size may vary. Driver
+should use hardware's page size when communicating with hardware.
 
-Fixes: c6aba5ea0055 ("RDMA/rxe: Replace pr_xxx by rxe_dbg_xxx in rxe.c")
-Link: https://lore.kernel.org/r/20230303221623.8053-2-rpearsonhpe@gmail.com
-Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Fixes: 155055771704 ("RDMA/erdma: Add verbs implementation")
+Link: https://lore.kernel.org/r/20230307102924.70577-2-chengyou@linux.alibaba.com
+Signed-off-by: Cheng Xu <chengyou@linux.alibaba.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/infiniband/hw/erdma/erdma_hw.h    |  4 ++++
+ drivers/infiniband/hw/erdma/erdma_verbs.c | 17 +++++++++--------
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe.c b/drivers/infiniband/sw/rxe/rxe.c
-index 136c2efe34660..a3f05fdd9fac2 100644
---- a/drivers/infiniband/sw/rxe/rxe.c
-+++ b/drivers/infiniband/sw/rxe/rxe.c
-@@ -175,7 +175,7 @@ int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name)
+diff --git a/drivers/infiniband/hw/erdma/erdma_hw.h b/drivers/infiniband/hw/erdma/erdma_hw.h
+index 8a8d4539a006b..51ab2058b03f1 100644
+--- a/drivers/infiniband/hw/erdma/erdma_hw.h
++++ b/drivers/infiniband/hw/erdma/erdma_hw.h
+@@ -112,6 +112,10 @@
  
- static int rxe_newlink(const char *ibdev_name, struct net_device *ndev)
- {
--	struct rxe_dev *exists;
-+	struct rxe_dev *rxe;
- 	int err = 0;
+ #define ERDMA_PAGE_SIZE_SUPPORT 0x7FFFF000
  
- 	if (is_vlan_dev(ndev)) {
-@@ -184,17 +184,17 @@ static int rxe_newlink(const char *ibdev_name, struct net_device *ndev)
- 		goto err;
- 	}
++/* Hardware page size definition */
++#define ERDMA_HW_PAGE_SHIFT 12
++#define ERDMA_HW_PAGE_SIZE 4096
++
+ /* WQE related. */
+ #define EQE_SIZE 16
+ #define EQE_SHIFT 4
+diff --git a/drivers/infiniband/hw/erdma/erdma_verbs.c b/drivers/infiniband/hw/erdma/erdma_verbs.c
+index 9c30d78730aa1..83e1b0d559771 100644
+--- a/drivers/infiniband/hw/erdma/erdma_verbs.c
++++ b/drivers/infiniband/hw/erdma/erdma_verbs.c
+@@ -38,7 +38,7 @@ static int create_qp_cmd(struct erdma_dev *dev, struct erdma_qp *qp)
+ 		   FIELD_PREP(ERDMA_CMD_CREATE_QP_PD_MASK, pd->pdn);
  
--	exists = rxe_get_dev_from_net(ndev);
--	if (exists) {
--		ib_device_put(&exists->ib_dev);
--		rxe_dbg(exists, "already configured on %s\n", ndev->name);
-+	rxe = rxe_get_dev_from_net(ndev);
-+	if (rxe) {
-+		ib_device_put(&rxe->ib_dev);
-+		rxe_dbg(rxe, "already configured on %s\n", ndev->name);
- 		err = -EEXIST;
- 		goto err;
- 	}
+ 	if (rdma_is_kernel_res(&qp->ibqp.res)) {
+-		u32 pgsz_range = ilog2(SZ_1M) - PAGE_SHIFT;
++		u32 pgsz_range = ilog2(SZ_1M) - ERDMA_HW_PAGE_SHIFT;
  
- 	err = rxe_net_add(ibdev_name, ndev);
- 	if (err) {
--		rxe_dbg(exists, "failed to add %s\n", ndev->name);
-+		pr_debug("failed to add %s\n", ndev->name);
- 		goto err;
- 	}
- err:
+ 		req.sq_cqn_mtt_cfg =
+ 			FIELD_PREP(ERDMA_CMD_CREATE_QP_PAGE_SIZE_MASK,
+@@ -66,13 +66,13 @@ static int create_qp_cmd(struct erdma_dev *dev, struct erdma_qp *qp)
+ 		user_qp = &qp->user_qp;
+ 		req.sq_cqn_mtt_cfg = FIELD_PREP(
+ 			ERDMA_CMD_CREATE_QP_PAGE_SIZE_MASK,
+-			ilog2(user_qp->sq_mtt.page_size) - PAGE_SHIFT);
++			ilog2(user_qp->sq_mtt.page_size) - ERDMA_HW_PAGE_SHIFT);
+ 		req.sq_cqn_mtt_cfg |=
+ 			FIELD_PREP(ERDMA_CMD_CREATE_QP_CQN_MASK, qp->scq->cqn);
+ 
+ 		req.rq_cqn_mtt_cfg = FIELD_PREP(
+ 			ERDMA_CMD_CREATE_QP_PAGE_SIZE_MASK,
+-			ilog2(user_qp->rq_mtt.page_size) - PAGE_SHIFT);
++			ilog2(user_qp->rq_mtt.page_size) - ERDMA_HW_PAGE_SHIFT);
+ 		req.rq_cqn_mtt_cfg |=
+ 			FIELD_PREP(ERDMA_CMD_CREATE_QP_CQN_MASK, qp->rcq->cqn);
+ 
+@@ -162,7 +162,7 @@ static int create_cq_cmd(struct erdma_dev *dev, struct erdma_cq *cq)
+ 	if (rdma_is_kernel_res(&cq->ibcq.res)) {
+ 		page_size = SZ_32M;
+ 		req.cfg0 |= FIELD_PREP(ERDMA_CMD_CREATE_CQ_PAGESIZE_MASK,
+-				       ilog2(page_size) - PAGE_SHIFT);
++				       ilog2(page_size) - ERDMA_HW_PAGE_SHIFT);
+ 		req.qbuf_addr_l = lower_32_bits(cq->kern_cq.qbuf_dma_addr);
+ 		req.qbuf_addr_h = upper_32_bits(cq->kern_cq.qbuf_dma_addr);
+ 
+@@ -175,8 +175,9 @@ static int create_cq_cmd(struct erdma_dev *dev, struct erdma_cq *cq)
+ 			cq->kern_cq.qbuf_dma_addr + (cq->depth << CQE_SHIFT);
+ 	} else {
+ 		mtt = &cq->user_cq.qbuf_mtt;
+-		req.cfg0 |= FIELD_PREP(ERDMA_CMD_CREATE_CQ_PAGESIZE_MASK,
+-				       ilog2(mtt->page_size) - PAGE_SHIFT);
++		req.cfg0 |=
++			FIELD_PREP(ERDMA_CMD_CREATE_CQ_PAGESIZE_MASK,
++				   ilog2(mtt->page_size) - ERDMA_HW_PAGE_SHIFT);
+ 		if (mtt->mtt_nents == 1) {
+ 			req.qbuf_addr_l = lower_32_bits(*(u64 *)mtt->mtt_buf);
+ 			req.qbuf_addr_h = upper_32_bits(*(u64 *)mtt->mtt_buf);
+@@ -636,7 +637,7 @@ static int init_user_qp(struct erdma_qp *qp, struct erdma_ucontext *uctx,
+ 	u32 rq_offset;
+ 	int ret;
+ 
+-	if (len < (PAGE_ALIGN(qp->attrs.sq_size * SQEBB_SIZE) +
++	if (len < (ALIGN(qp->attrs.sq_size * SQEBB_SIZE, ERDMA_HW_PAGE_SIZE) +
+ 		   qp->attrs.rq_size * RQE_SIZE))
+ 		return -EINVAL;
+ 
+@@ -646,7 +647,7 @@ static int init_user_qp(struct erdma_qp *qp, struct erdma_ucontext *uctx,
+ 	if (ret)
+ 		return ret;
+ 
+-	rq_offset = PAGE_ALIGN(qp->attrs.sq_size << SQEBB_SHIFT);
++	rq_offset = ALIGN(qp->attrs.sq_size << SQEBB_SHIFT, ERDMA_HW_PAGE_SIZE);
+ 	qp->user_qp.rq_offset = rq_offset;
+ 
+ 	ret = get_mtt_entries(qp->dev, &qp->user_qp.rq_mtt, va + rq_offset,
 -- 
 2.39.2
 
