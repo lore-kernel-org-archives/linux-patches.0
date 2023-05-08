@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D74A168A2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:33:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76931C433D2;
-	Mon,  8 May 2023 10:33:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D148101F4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:33:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92145C433D2;
+	Mon,  8 May 2023 10:33:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542001;
-	bh=5Xz6DNewh+6cg6nd7xwBDceSdpGCKhYyujgZh2gky+s=;
+	s=korg; t=1683542005;
+	bh=C3TNWy7E2eTHc/6V+meOjr38etecp82m9YMJVtbCKiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J13Dsg8vVrBEX5QajpfLvApeH9D7qhaTcXTsgRnclQgYdyFIPRvFe/UQ4rfKf6jYC
-	 +DErCkuRYR2yPGUpMPchlIj7IVJGsq+7Ri+DAMPP6vxDMh8hTcxIWJItPbwUwhBrFg
-	 hdkIQRLylqRJutS4tfI4KujC/1MuriBjKeSM0dsE=
+	b=EtMGMeneOL4V0hJgGxqmXnFIsexD9/h6jbegkT3d3AcH7KJXk6Lolkg2bMqvz4F9T
+	 Kn5cFWq/lAFugDGo74KJ2IYwPm+fbhzJezTTgN3ncvoiHBwuHDmAg0MGZCihSydEYE
+	 ZklquOa93gOKh/PnBfp2Eisa7gnNtEoIAfpjRdAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
-	Paul Moore <paul@paul-moore.com>,
+	=?UTF-8?q?Jan=20Kundr=C3=A1t?= <jan.kundrat@cesnet.cz>,
+	=?UTF-8?q?Tom=C3=A1=C5=A1=20Pecka?= <tomas.pecka@cesnet.cz>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 295/663] scm: fix MSG_CTRUNC setting condition for SO_PASSSEC
-Date: Mon,  8 May 2023 11:42:01 +0200
-Message-Id: <20230508094437.758244440@linuxfoundation.org>
+Subject: [PATCH 6.2 278/663] hwmon: (pmbus/fsp-3y) Fix functionality bitmask in FSP-3Y YM-2151E
+Date: Mon,  8 May 2023 11:41:44 +0200
+Message-Id: <20230508094437.259650454@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -40,75 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+From: Tomáš Pecka <tomas.pecka@cesnet.cz>
 
-[ Upstream commit a02d83f9947d8f71904eda4de046630c3eb6802c ]
+[ Upstream commit 93822f5161a2dc57a60b95b35b3cb8589f53413e ]
 
-Currently, kernel would set MSG_CTRUNC flag if msg_control buffer
-wasn't provided and SO_PASSCRED was set or if there was pending SCM_RIGHTS.
+The bit flags in pmbus_driver_info functionality for YM-2151E chip were
+joined with a comma operator instead of a bitwise OR. This means that
+the last constant PMBUS_HAVE_IIN was not OR-ed with the other
+PM_BUS_HAVE_* constants for this page but it initialized the next element
+of the func array (which was not accessed from anywhere because of the
+number of pages).
 
-For some reason we have no corresponding check for SO_PASSSEC.
+However, there is no need for setting PMBUS_HAVE_IIN in the 5Vsb page
+because this command does not seem to be paged. Obviously, the device
+only has one IIN sensor, so it doesn't make sense to query it again from
+the second page.
 
-In the recvmsg(2) doc we have:
-       MSG_CTRUNC
-              indicates that some control data was discarded due to lack
-              of space in the buffer for ancillary data.
-
-So, we need to set MSG_CTRUNC flag for all types of SCM.
-
-This change can break applications those don't check MSG_CTRUNC flag.
-
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-
-v2:
-- commit message was rewritten according to Eric's suggestion
-Acked-by: Paul Moore <paul@paul-moore.com>
-
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1734b4135a62 ("hwmon: Add driver for fsp-3y PSUs and PDUs")
+Signed-off-by: Jan Kundrát <jan.kundrat@cesnet.cz>
+Signed-off-by: Tomáš Pecka <tomas.pecka@cesnet.cz>
+Link: https://lore.kernel.org/r/20230420171939.212040-1-tomas.pecka@cesnet.cz
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/scm.h | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/fsp-3y.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/include/net/scm.h b/include/net/scm.h
-index 1ce365f4c2560..585adc1346bd0 100644
---- a/include/net/scm.h
-+++ b/include/net/scm.h
-@@ -105,16 +105,27 @@ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct sc
- 		}
- 	}
- }
-+
-+static inline bool scm_has_secdata(struct socket *sock)
-+{
-+	return test_bit(SOCK_PASSSEC, &sock->flags);
-+}
- #else
- static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct scm_cookie *scm)
- { }
-+
-+static inline bool scm_has_secdata(struct socket *sock)
-+{
-+	return false;
-+}
- #endif /* CONFIG_SECURITY_NETWORK */
- 
- static __inline__ void scm_recv(struct socket *sock, struct msghdr *msg,
- 				struct scm_cookie *scm, int flags)
- {
- 	if (!msg->msg_control) {
--		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp)
-+		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp ||
-+		    scm_has_secdata(sock))
- 			msg->msg_flags |= MSG_CTRUNC;
- 		scm_destroy(scm);
- 		return;
+diff --git a/drivers/hwmon/pmbus/fsp-3y.c b/drivers/hwmon/pmbus/fsp-3y.c
+index aec294cc72d1f..c7469d2cdedcf 100644
+--- a/drivers/hwmon/pmbus/fsp-3y.c
++++ b/drivers/hwmon/pmbus/fsp-3y.c
+@@ -180,7 +180,6 @@ static struct pmbus_driver_info fsp3y_info[] = {
+ 			PMBUS_HAVE_FAN12,
+ 		.func[YM2151_PAGE_5VSB_LOG] =
+ 			PMBUS_HAVE_VOUT | PMBUS_HAVE_IOUT,
+-			PMBUS_HAVE_IIN,
+ 		.read_word_data = fsp3y_read_word_data,
+ 		.read_byte_data = fsp3y_read_byte_data,
+ 	},
 -- 
 2.39.2
 
