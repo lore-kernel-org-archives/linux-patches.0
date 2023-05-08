@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80A53168D7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D83A5C433D2;
-	Mon,  8 May 2023 11:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9272C168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC297C433EF;
+	Mon,  8 May 2023 11:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544431;
-	bh=ynJjKYwqy3erZ80zvU8qzgrhA8o/yYdGFmvnvkqwDpM=;
+	s=korg; t=1683544434;
+	bh=8L17YB0cC2N/BVvnhsFJ2duIe5kL8IcfTOzPwWmjbis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iW/rKYYQUWhkdKkQ55cwDGGE41ntPQQotbRV+LR0shfu/icER4xH4YN8alQ0s0I+7
-	 FLLjXg9lVzMnG2XYtJo4oYEhtr9A3KmYJnZQS4RhErHBYT/4z9Sap7/UoYrZsVbcxv
-	 4OJUCXH6FzB0e/y4y78FXra0IcTeHqtGjKGUrjVU=
+	b=Al1w2ruEuY91FY146Vffip81nKC1OgseLfi9R3egCmfO/J/pTLNO42nOU5OZ4ISsS
+	 pbheJQDR+o2xxPHETR8j+YOtAB07PZ1PlC7or16aBQrhq9zZrSSowSN9AyXq03IVb8
+	 y5cBwZqf/0XxiNlqOhmmVG1KQZ50jHFazkp3Nx38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Song Liu <song@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 407/694] nvme-fcloop: fix "inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage"
-Date: Mon,  8 May 2023 11:44:02 +0200
-Message-Id: <20230508094446.417913447@linuxfoundation.org>
+Subject: [PATCH 6.3 408/694] selftests/bpf: Use read_perf_max_sample_freq() in perf_event_stackmap
+Date: Mon,  8 May 2023 11:44:03 +0200
+Message-Id: <20230508094446.465295868@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,203 +35,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit 4f86a6ff6fbd891232dda3ca97fd1b9630b59809 ]
+[ Upstream commit de6d014a09bf12a9a8959d60c0a1d4a41d394a89 ]
 
-fcloop_fcp_op() could be called from flush request's ->end_io(flush_end_io) in
-which the spinlock of fq->mq_flush_lock is grabbed with irq saved/disabled.
+Currently, perf_event sample period in perf_event_stackmap is set too low
+that the test fails randomly. Fix this by using the max sample frequency,
+from read_perf_max_sample_freq().
 
-So fcloop_fcp_op() can't call spin_unlock_irq(&tfcp_req->reqlock) simply
-which enables irq unconditionally.
+Move read_perf_max_sample_freq() to testing_helpers.c. Replace the CHECK()
+with if-printf, as CHECK is not available in testing_helpers.c.
 
-Fixes the warning by switching to spin_lock_irqsave()/spin_unlock_irqrestore()
-
-Fixes: c38dbbfab1bc ("nvme-fcloop: fix inconsistent lock state warnings")
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 1da4864c2b20 ("selftests/bpf: Add callchain_stackid")
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230412210423.900851-2-song@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fcloop.c | 48 ++++++++++++++++++++----------------
- 1 file changed, 27 insertions(+), 21 deletions(-)
+ .../bpf/prog_tests/perf_event_stackmap.c      |  3 ++-
+ .../bpf/prog_tests/stacktrace_build_id_nmi.c  | 15 --------------
+ tools/testing/selftests/bpf/testing_helpers.c | 20 +++++++++++++++++++
+ tools/testing/selftests/bpf/testing_helpers.h |  2 ++
+ 4 files changed, 24 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
-index 5c16372f3b533..c780af36c1d4a 100644
---- a/drivers/nvme/target/fcloop.c
-+++ b/drivers/nvme/target/fcloop.c
-@@ -614,10 +614,11 @@ fcloop_fcp_recv_work(struct work_struct *work)
- 	struct fcloop_fcpreq *tfcp_req =
- 		container_of(work, struct fcloop_fcpreq, fcp_rcv_work);
- 	struct nvmefc_fcp_req *fcpreq = tfcp_req->fcpreq;
-+	unsigned long flags;
- 	int ret = 0;
- 	bool aborted = false;
+diff --git a/tools/testing/selftests/bpf/prog_tests/perf_event_stackmap.c b/tools/testing/selftests/bpf/prog_tests/perf_event_stackmap.c
+index 33144c9432aeb..f4aad35afae16 100644
+--- a/tools/testing/selftests/bpf/prog_tests/perf_event_stackmap.c
++++ b/tools/testing/selftests/bpf/prog_tests/perf_event_stackmap.c
+@@ -63,7 +63,8 @@ void test_perf_event_stackmap(void)
+ 			PERF_SAMPLE_BRANCH_NO_FLAGS |
+ 			PERF_SAMPLE_BRANCH_NO_CYCLES |
+ 			PERF_SAMPLE_BRANCH_CALL_STACK,
+-		.sample_period = 5000,
++		.freq = 1,
++		.sample_freq = read_perf_max_sample_freq(),
+ 		.size = sizeof(struct perf_event_attr),
+ 	};
+ 	struct perf_event_stackmap *skel;
+diff --git a/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c b/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
+index f4ea1a215ce4d..704f7f6c3704a 100644
+--- a/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
++++ b/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
+@@ -2,21 +2,6 @@
+ #include <test_progs.h>
+ #include "test_stacktrace_build_id.skel.h"
  
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_START:
- 		tfcp_req->inistate = INI_IO_ACTIVE;
-@@ -626,11 +627,11 @@ fcloop_fcp_recv_work(struct work_struct *work)
- 		aborted = true;
- 		break;
- 	default:
--		spin_unlock_irq(&tfcp_req->reqlock);
-+		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 		WARN_ON(1);
- 		return;
- 	}
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	if (unlikely(aborted))
- 		ret = -ECANCELED;
-@@ -655,8 +656,9 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 		container_of(work, struct fcloop_fcpreq, abort_rcv_work);
- 	struct nvmefc_fcp_req *fcpreq;
- 	bool completed = false;
-+	unsigned long flags;
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	fcpreq = tfcp_req->fcpreq;
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_ABORTED:
-@@ -665,11 +667,11 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 		completed = true;
- 		break;
- 	default:
--		spin_unlock_irq(&tfcp_req->reqlock);
-+		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 		WARN_ON(1);
- 		return;
- 	}
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	if (unlikely(completed)) {
- 		/* remove reference taken in original abort downcall */
-@@ -681,9 +683,9 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 		nvmet_fc_rcv_fcp_abort(tfcp_req->tport->targetport,
- 					&tfcp_req->tgt_fcp_req);
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	tfcp_req->fcpreq = NULL;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	fcloop_call_host_done(fcpreq, tfcp_req, -ECANCELED);
- 	/* call_host_done releases reference for abort downcall */
-@@ -699,11 +701,12 @@ fcloop_tgt_fcprqst_done_work(struct work_struct *work)
- 	struct fcloop_fcpreq *tfcp_req =
- 		container_of(work, struct fcloop_fcpreq, tio_done_work);
- 	struct nvmefc_fcp_req *fcpreq;
-+	unsigned long flags;
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	fcpreq = tfcp_req->fcpreq;
- 	tfcp_req->inistate = INI_IO_COMPLETED;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	fcloop_call_host_done(fcpreq, tfcp_req, tfcp_req->status);
- }
-@@ -807,13 +810,14 @@ fcloop_fcp_op(struct nvmet_fc_target_port *tgtport,
- 	u32 rsplen = 0, xfrlen = 0;
- 	int fcp_err = 0, active, aborted;
- 	u8 op = tgt_fcpreq->op;
-+	unsigned long flags;
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	fcpreq = tfcp_req->fcpreq;
- 	active = tfcp_req->active;
- 	aborted = tfcp_req->aborted;
- 	tfcp_req->active = true;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	if (unlikely(active))
- 		/* illegal - call while i/o active */
-@@ -821,9 +825,9 @@ fcloop_fcp_op(struct nvmet_fc_target_port *tgtport,
- 
- 	if (unlikely(aborted)) {
- 		/* target transport has aborted i/o prior */
--		spin_lock_irq(&tfcp_req->reqlock);
-+		spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 		tfcp_req->active = false;
--		spin_unlock_irq(&tfcp_req->reqlock);
-+		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 		tgt_fcpreq->transferred_length = 0;
- 		tgt_fcpreq->fcp_error = -ECANCELED;
- 		tgt_fcpreq->done(tgt_fcpreq);
-@@ -880,9 +884,9 @@ fcloop_fcp_op(struct nvmet_fc_target_port *tgtport,
- 		break;
- 	}
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	tfcp_req->active = false;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	tgt_fcpreq->transferred_length = xfrlen;
- 	tgt_fcpreq->fcp_error = fcp_err;
-@@ -896,15 +900,16 @@ fcloop_tgt_fcp_abort(struct nvmet_fc_target_port *tgtport,
- 			struct nvmefc_tgt_fcp_req *tgt_fcpreq)
+-static __u64 read_perf_max_sample_freq(void)
+-{
+-	__u64 sample_freq = 5000; /* fallback to 5000 on error */
+-	FILE *f;
+-	__u32 duration = 0;
+-
+-	f = fopen("/proc/sys/kernel/perf_event_max_sample_rate", "r");
+-	if (f == NULL)
+-		return sample_freq;
+-	CHECK(fscanf(f, "%llu", &sample_freq) != 1, "Get max sample rate",
+-		  "return default value: 5000,err %d\n", -errno);
+-	fclose(f);
+-	return sample_freq;
+-}
+-
+ void test_stacktrace_build_id_nmi(void)
  {
- 	struct fcloop_fcpreq *tfcp_req = tgt_fcp_req_to_fcpreq(tgt_fcpreq);
-+	unsigned long flags;
+ 	int control_map_fd, stackid_hmap_fd, stackmap_fd;
+diff --git a/tools/testing/selftests/bpf/testing_helpers.c b/tools/testing/selftests/bpf/testing_helpers.c
+index 6c44153755e66..3fe98ffed38a6 100644
+--- a/tools/testing/selftests/bpf/testing_helpers.c
++++ b/tools/testing/selftests/bpf/testing_helpers.c
+@@ -229,3 +229,23 @@ int bpf_test_load_program(enum bpf_prog_type type, const struct bpf_insn *insns,
  
- 	/*
- 	 * mark aborted only in case there were 2 threads in transport
- 	 * (one doing io, other doing abort) and only kills ops posted
- 	 * after the abort request
- 	 */
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	tfcp_req->aborted = true;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	tfcp_req->status = NVME_SC_INTERNAL;
- 
-@@ -946,6 +951,7 @@ fcloop_fcp_abort(struct nvme_fc_local_port *localport,
- 	struct fcloop_ini_fcpreq *inireq = fcpreq->private;
- 	struct fcloop_fcpreq *tfcp_req;
- 	bool abortio = true;
-+	unsigned long flags;
- 
- 	spin_lock(&inireq->inilock);
- 	tfcp_req = inireq->tfcp_req;
-@@ -958,7 +964,7 @@ fcloop_fcp_abort(struct nvme_fc_local_port *localport,
- 		return;
- 
- 	/* break initiator/target relationship for io */
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_START:
- 	case INI_IO_ACTIVE:
-@@ -968,11 +974,11 @@ fcloop_fcp_abort(struct nvme_fc_local_port *localport,
- 		abortio = false;
- 		break;
- 	default:
--		spin_unlock_irq(&tfcp_req->reqlock);
-+		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 		WARN_ON(1);
- 		return;
- 	}
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	if (abortio)
- 		/* leave the reference while the work item is scheduled */
+ 	return bpf_prog_load(type, NULL, license, insns, insns_cnt, &opts);
+ }
++
++__u64 read_perf_max_sample_freq(void)
++{
++	__u64 sample_freq = 5000; /* fallback to 5000 on error */
++	FILE *f;
++
++	f = fopen("/proc/sys/kernel/perf_event_max_sample_rate", "r");
++	if (f == NULL) {
++		printf("Failed to open /proc/sys/kernel/perf_event_max_sample_rate: err %d\n"
++		       "return default value: 5000\n", -errno);
++		return sample_freq;
++	}
++	if (fscanf(f, "%llu", &sample_freq) != 1) {
++		printf("Failed to parse /proc/sys/kernel/perf_event_max_sample_rate: err %d\n"
++		       "return default value: 5000\n", -errno);
++	}
++
++	fclose(f);
++	return sample_freq;
++}
+diff --git a/tools/testing/selftests/bpf/testing_helpers.h b/tools/testing/selftests/bpf/testing_helpers.h
+index 6ec00bf79cb55..eb8790f928e4c 100644
+--- a/tools/testing/selftests/bpf/testing_helpers.h
++++ b/tools/testing/selftests/bpf/testing_helpers.h
+@@ -20,3 +20,5 @@ struct test_filter_set;
+ int parse_test_list(const char *s,
+ 		    struct test_filter_set *test_set,
+ 		    bool is_glob_pattern);
++
++__u64 read_perf_max_sample_freq(void);
 -- 
 2.39.2
 
