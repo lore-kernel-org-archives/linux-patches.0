@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447BD168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1BFC433EF;
-	Mon,  8 May 2023 11:22:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1775168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E07C433EF;
+	Mon,  8 May 2023 11:22:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544971;
-	bh=gbsgF0jUZQHzoprFJRgaCygFbigEFv3rZN2HwzN1HcM=;
+	s=korg; t=1683544974;
+	bh=FW0MD4duk7G0ZQQxdSx03KTE3SPBbXr9x06v/eNL08M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jqQ/ui1/VSVET37jeWGTV7+CbtawXcM9N4dPI6fhrREQ/U5nRFk7Tx2m0WFuV9I3h
-	 CyLNxY7DwLqbRYS52EhQG5Y6F/QrRSNsXdwtd/t/1rZhZvZZMi4e6PVH25mDsjU74v
-	 QfGG7jLtkUf4FTYQW5IWPpNcvWc9N5VkXkZxx1NQ=
+	b=bbo4DPiAZHahs2g/Q5H82XC8RI1t3KUajmBbmuV2tcOgDUrhuv9v3Zn7G/2AlNrQZ
+	 eX5oMqtZJPk1F8iSOhN4ldhVphA0KqID/MyvyhVSRUhgD20SN/9ddFkGzcELLGHWj4
+	 56acO3/J+8h07K7iUjVXAFeMjzhh1tHuWtxJWMWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>,
-	Petr Vorel <pvorel@suse.cz>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 542/694] uapi/linux/const.h: prefer ISO-friendly __typeof__
-Date: Mon,  8 May 2023 11:46:17 +0200
-Message-Id: <20230508094452.056177387@linuxfoundation.org>
+Subject: [PATCH 6.3 576/694] RDMA/siw: Fix potential page_array out of range access
+Date: Mon,  8 May 2023 11:46:51 +0200
+Message-Id: <20230508094453.591927553@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -39,63 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kevin Brodsky <kevin.brodsky@arm.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 31088f6f7906253ef4577f6a9b84e2d42447dba0 ]
+[ Upstream commit 271bfcfb83a9f77cbae3d6e1a16e3c14132922f0 ]
 
-typeof is (still) a GNU extension, which means that it cannot be used when
-building ISO C (e.g.  -std=c99).  It should therefore be avoided in uapi
-headers in favour of the ISO-friendly __typeof__.
+When seg is equal to MAX_ARRAY, the loop should break, otherwise
+it will result in out of range access.
 
-Unfortunately this issue could not be detected by
-CONFIG_UAPI_HEADER_TEST=y as the __ALIGN_KERNEL() macro is not expanded in
-any uapi header.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This matters from a userspace perspective, not a kernel one. uapi
-headers and their contents are expected to be usable in a variety of
-situations, and in particular when building ISO C applications (with
--std=c99 or similar).
-
-This particular problem can be reproduced by trying to use the
-__ALIGN_KERNEL macro directly in application code, say:
-
-#include <linux/const.h>
-
-int align(int x, int a)
-{
-	return __KERNEL_ALIGN(x, a);
-}
-
-and trying to build that with -std=c99.
-
-Link: https://lkml.kernel.org/r/20230411092747.3759032-1-kevin.brodsky@arm.com
-Fixes: a79ff731a1b2 ("netfilter: xtables: make XT_ALIGN() usable in exported headers by exporting __ALIGN_KERNEL()")
-Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Reported-by: Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>
-Tested-by: Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Tested-by: Petr Vorel <pvorel@suse.cz>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b9be6f18cf9e ("rdma/siw: transmit path")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Link: https://lore.kernel.org/r/20230227091751.589612-1-d.dulov@aladdin.ru
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/const.h | 2 +-
+ drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/const.h b/include/uapi/linux/const.h
-index af2a44c08683d..a429381e7ca50 100644
---- a/include/uapi/linux/const.h
-+++ b/include/uapi/linux/const.h
-@@ -28,7 +28,7 @@
- #define _BITUL(x)	(_UL(1) << (x))
- #define _BITULL(x)	(_ULL(1) << (x))
+diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
+index 05052b49107f2..6bb9e9e81ff4c 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_tx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
+@@ -558,7 +558,7 @@ static int siw_tx_hdt(struct siw_iwarp_tx *c_tx, struct socket *s)
+ 			data_len -= plen;
+ 			fp_off = 0;
  
--#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (typeof(x))(a) - 1)
-+#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (__typeof__(x))(a) - 1)
- #define __ALIGN_KERNEL_MASK(x, mask)	(((x) + (mask)) & ~(mask))
- 
- #define __KERNEL_DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
+-			if (++seg > (int)MAX_ARRAY) {
++			if (++seg >= (int)MAX_ARRAY) {
+ 				siw_dbg_qp(tx_qp(c_tx), "to many fragments\n");
+ 				siw_unmap_pages(iov, kmap_mask, seg-1);
+ 				wqe->processed -= c_tx->bytes_unsent;
 -- 
 2.39.2
 
