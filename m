@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95600168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18679C433EF;
-	Mon,  8 May 2023 10:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3343C168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF4C7C4339B;
+	Mon,  8 May 2023 10:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540374;
-	bh=GX31uYiQd+Qe+Ty2GIohKZrgGp6XxUZxZqptURN6Eas=;
+	s=korg; t=1683540377;
+	bh=n+MyhvLQuaL6P+rcPk0Nqm7xeI6e3h1ejyiTDBOpUtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hquq7MPsqsqbkXgnrzCQXI4W77MC2xbQ2J9292ArDR6pt9MB8UyHhLGSvB2Yzu1DR
-	 gvrbtNS6dnr8LDYmXDyct/UXTT4HoX24MKyWE+2HEJQb8+ROjcCZvxFsloFEZyNeb6
-	 iAp+WHUKxv2YtrytMM/uA7vVfGO88CNINo0sHh2Y=
+	b=Ei0RMXOkUWll8l9SbrDvgdIHHJzi1F+qnYXVYr793ySCu5B2jc2ks5a3pb3jm8zp3
+	 KfOKNG9FaKPnOGyYnDv3fBbQgm9KqXWkJ96coom+zDjItHppMtLbRyOrhNZOrsc/at
+	 +jvQVg+xllaaRJ8pacpDmLveBREz+cQyOvAAwrZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Armin Wolf <W_Armin@gmx.de>,
+	Simon Horman <simon.horman@corigine.com>,
+	Stanislaw Gruszka <stf_xl@wp.pl>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 340/611] selftests/bpf: Fix leaked bpf_link in get_stackid_cannot_attach
-Date: Mon,  8 May 2023 11:43:02 +0200
-Message-Id: <20230508094433.467315614@linuxfoundation.org>
+Subject: [PATCH 6.1 314/611] wifi: rt2x00: Fix memory leak when handling surveys
+Date: Mon,  8 May 2023 11:42:36 +0200
+Message-Id: <20230508094432.646457276@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,55 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Song Liu <song@kernel.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit c1e07a80cf23d3a6e96172bc9a73bfa912a9fcbc ]
+[ Upstream commit cbef9a83c51dfcb07f77cfa6ac26f53a1ea86f49 ]
 
-skel->links.oncpu is leaked in one case. This causes test perf_branches
-fails when it runs after get_stackid_cannot_attach:
+When removing a rt2x00 device, its associated channel surveys
+are not freed, causing a memory leak observable with kmemleak:
 
-./test_progs -t get_stackid_cannot_attach,perf_branches
-84      get_stackid_cannot_attach:OK
-test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
-test_perf_branches_common:PASS:attach_perf_event 0 nsec
-test_perf_branches_common:PASS:set_affinity 0 nsec
-check_good_sample:FAIL:output not valid no valid sample from prog
-146/1   perf_branches/perf_branches_hw:FAIL
-146/2   perf_branches/perf_branches_no_hw:OK
-146     perf_branches:FAIL
+unreferenced object 0xffff9620f0881a00 (size 512):
+  comm "systemd-udevd", pid 2290, jiffies 4294906974 (age 33.768s)
+  hex dump (first 32 bytes):
+    70 44 12 00 00 00 00 00 92 8a 00 00 00 00 00 00  pD..............
+    00 00 00 00 00 00 00 00 ab 87 01 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffffb0ed858b>] __kmalloc+0x4b/0x130
+    [<ffffffffc1b0f29b>] rt2800_probe_hw+0xc2b/0x1380 [rt2800lib]
+    [<ffffffffc1a9496e>] rt2800usb_probe_hw+0xe/0x60 [rt2800usb]
+    [<ffffffffc1ae491a>] rt2x00lib_probe_dev+0x21a/0x7d0 [rt2x00lib]
+    [<ffffffffc1b3b83e>] rt2x00usb_probe+0x1be/0x980 [rt2x00usb]
+    [<ffffffffc05981e2>] usb_probe_interface+0xe2/0x310 [usbcore]
+    [<ffffffffb13be2d5>] really_probe+0x1a5/0x410
+    [<ffffffffb13be5c8>] __driver_probe_device+0x78/0x180
+    [<ffffffffb13be6fe>] driver_probe_device+0x1e/0x90
+    [<ffffffffb13be972>] __driver_attach+0xd2/0x1c0
+    [<ffffffffb13bbc57>] bus_for_each_dev+0x77/0xd0
+    [<ffffffffb13bd2a2>] bus_add_driver+0x112/0x210
+    [<ffffffffb13bfc6c>] driver_register+0x5c/0x120
+    [<ffffffffc0596ae8>] usb_register_driver+0x88/0x150 [usbcore]
+    [<ffffffffb0c011c4>] do_one_initcall+0x44/0x220
+    [<ffffffffb0d6134c>] do_init_module+0x4c/0x220
 
-All error logs:
-test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
-test_perf_branches_common:PASS:attach_perf_event 0 nsec
-test_perf_branches_common:PASS:set_affinity 0 nsec
-check_good_sample:FAIL:output not valid no valid sample from prog
-146/1   perf_branches/perf_branches_hw:FAIL
-146     perf_branches:FAIL
-Summary: 1/1 PASSED, 0 SKIPPED, 1 FAILED
+Fix this by freeing the channel surveys on device removal.
 
-Fix this by adding the missing bpf_link__destroy().
+Tested with a RT3070 based USB wireless adapter.
 
-Fixes: 346938e9380c ("selftests/bpf: Add get_stackid_cannot_attach")
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230412210423.900851-3-song@kernel.org
+Fixes: 5447626910f5 ("rt2x00: save survey for every channel visited")
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230330215637.4332-1-W_Armin@gmx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c | 1 +
+ drivers/net/wireless/ralink/rt2x00/rt2x00dev.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c b/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-index 5308de1ed478e..2715c68301f52 100644
---- a/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-+++ b/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-@@ -65,6 +65,7 @@ void test_get_stackid_cannot_attach(void)
- 	skel->links.oncpu = bpf_program__attach_perf_event(skel->progs.oncpu,
- 							   pmu_fd);
- 	ASSERT_OK_PTR(skel->links.oncpu, "attach_perf_event_callchain");
-+	bpf_link__destroy(skel->links.oncpu);
- 	close(pmu_fd);
+diff --git a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+index 3a035afcf7f99..9a9cfd0ce402d 100644
+--- a/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
++++ b/drivers/net/wireless/ralink/rt2x00/rt2x00dev.c
+@@ -1091,6 +1091,7 @@ static void rt2x00lib_remove_hw(struct rt2x00_dev *rt2x00dev)
+ 	}
  
- 	/* add exclude_callchain_kernel, attach should fail */
+ 	kfree(rt2x00dev->spec.channels_info);
++	kfree(rt2x00dev->chan_survey);
+ }
+ 
+ static const struct ieee80211_tpt_blink rt2x00_tpt_blink[] = {
 -- 
 2.39.2
 
