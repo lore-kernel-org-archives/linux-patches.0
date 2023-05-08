@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735DE168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF713C433D2;
-	Mon,  8 May 2023 11:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E5E168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C39E5C433D2;
+	Mon,  8 May 2023 11:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544237;
-	bh=5Xz6DNewh+6cg6nd7xwBDceSdpGCKhYyujgZh2gky+s=;
+	s=korg; t=1683544240;
+	bh=IRK2DORPnbkO9g0F+zpv4H4P8iekk+Ilkw9JhVxYXg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yd+94F0yq81xeh/Mc6hu1DGu1Shn8y/Ly/Pt//w6zoj8L+WAC5P2Kqvae9FRR74Ys
-	 x9PMeCbvTO5sHuoThp/UD3oT1/EAl45TdyRshLqoyJpBTOZHApi87n6QGtoA6m63Sn
-	 yveHg+UKz912ni3XDW4TDZWBxh07kY8XxNXvoNKE=
+	b=Ea7EbJWQI/8vTarTehobmKgeSr/12Dr5SJioVUMtAB6HLOXfTn3nGBoTRAUTvuBGd
+	 Q96qcEXjVAGDqPbJt04LuW+6GKR4T7it4YDJotQyrFcsiMRVeq825OCdvj+2eaau0n
+	 ib9Dr/H+MocsgPoKImbnRhvYuFVUIfR7jC1yM2ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 344/694] scm: fix MSG_CTRUNC setting condition for SO_PASSSEC
-Date: Mon,  8 May 2023 11:42:59 +0200
-Message-Id: <20230508094443.694089191@linuxfoundation.org>
+Subject: [PATCH 6.3 345/694] wifi: ath12k: Add missing unwind goto in ath12k_pci_probe()
+Date: Mon,  8 May 2023 11:43:00 +0200
+Message-Id: <20230508094443.744505601@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -40,75 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit a02d83f9947d8f71904eda4de046630c3eb6802c ]
+[ Upstream commit 488d9a484f96eee4f0e8e108aed42a057a1c7295 ]
 
-Currently, kernel would set MSG_CTRUNC flag if msg_control buffer
-wasn't provided and SO_PASSCRED was set or if there was pending SCM_RIGHTS.
+Smatch Warns:
+	drivers/net/wireless/ath/ath12k/pci.c:1198 ath12k_pci_probe()
+	warn: missing unwind goto?
 
-For some reason we have no corresponding check for SO_PASSSEC.
+Store the error value in ret and use correct label with a goto.
 
-In the recvmsg(2) doc we have:
-       MSG_CTRUNC
-              indicates that some control data was discarded due to lack
-              of space in the buffer for ancillary data.
+Only Compile tested, found with Smatch.
 
-So, we need to set MSG_CTRUNC flag for all types of SCM.
-
-This change can break applications those don't check MSG_CTRUNC flag.
-
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-
-v2:
-- commit message was rewritten according to Eric's suggestion
-Acked-by: Paul Moore <paul@paul-moore.com>
-
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/all/Y+426q6cfkEdb5Bv@kili/
+Suggested-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230307104706.240119-1-harshit.m.mogalapalli@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/scm.h | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/pci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/scm.h b/include/net/scm.h
-index 1ce365f4c2560..585adc1346bd0 100644
---- a/include/net/scm.h
-+++ b/include/net/scm.h
-@@ -105,16 +105,27 @@ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct sc
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index ae7f6083c9fc2..f523aa15885f6 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -1195,7 +1195,8 @@ static int ath12k_pci_probe(struct pci_dev *pdev,
+ 			dev_err(&pdev->dev,
+ 				"Unknown hardware version found for QCN9274: 0x%x\n",
+ 				soc_hw_version_major);
+-			return -EOPNOTSUPP;
++			ret = -EOPNOTSUPP;
++			goto err_pci_free_region;
  		}
- 	}
- }
-+
-+static inline bool scm_has_secdata(struct socket *sock)
-+{
-+	return test_bit(SOCK_PASSSEC, &sock->flags);
-+}
- #else
- static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct scm_cookie *scm)
- { }
-+
-+static inline bool scm_has_secdata(struct socket *sock)
-+{
-+	return false;
-+}
- #endif /* CONFIG_SECURITY_NETWORK */
- 
- static __inline__ void scm_recv(struct socket *sock, struct msghdr *msg,
- 				struct scm_cookie *scm, int flags)
- {
- 	if (!msg->msg_control) {
--		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp)
-+		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp ||
-+		    scm_has_secdata(sock))
- 			msg->msg_flags |= MSG_CTRUNC;
- 		scm_destroy(scm);
- 		return;
+ 		break;
+ 	case WCN7850_DEVICE_ID:
 -- 
 2.39.2
 
