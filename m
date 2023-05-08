@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF530168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68A40C433EF;
-	Mon,  8 May 2023 10:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D2E168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31848C433D2;
+	Mon,  8 May 2023 10:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540221;
-	bh=9bnz+Vq1Lxg90s6NpnkIMPrGy0eVwjlgYdDFZ6YKs0k=;
+	s=korg; t=1683540224;
+	bh=xV3p6K65EfQRQrtHRLkzwRKYBbPo1Cy0iglTIRevToM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1ZXNcs2Uppn2i/yZgI4OOMtk4ocROKjbu2i0WI8A9ik+1StLabSZEeuO5FlpfBQE
-	 vqE+t6dNVpr9bdXKeUyXJxOMxEy9VnegKNFDEx4TksyKXyL95gw+BTFCBHT7LI9c3k
-	 wf4KtuUn2+rTMJXVIxzqwQHY0o7VbzlDpM3dPcJo=
+	b=k5gDO6VI7yEW6R54UjNQKhrA5NaqNZRp/o5SNtGfkZzi9rmYWXiippXRjDcRN8OHl
+	 fkggc/YzgVct9tA/7H0UcqQpGhtJeHIEd767CO5R0LOhXuBrXyUMotGqhpZGdxnwzh
+	 96CWPp7PU19325hJbk06FRXq1FUU2J62BvdwqB1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanket Goswami <Sanket.Goswami@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 240/611] platform/x86/amd: pmc: Utilize SMN index 0 for driver probe
-Date: Mon,  8 May 2023 11:41:22 +0200
-Message-Id: <20230508094430.202499347@linuxfoundation.org>
+Subject: [PATCH 6.1 276/611] wifi: rtw88: mac: Return the original error from rtw_mac_power_switch()
+Date: Mon,  8 May 2023 11:41:58 +0200
+Message-Id: <20230508094431.353535197@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,100 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 310e782a99c7f16fb533a45d8f9c16defefa5aab ]
+[ Upstream commit 15c8e267dfa62f207ee1db666c822324e3362b84 ]
 
-The current SMN index used for the driver probe seems to be meant
-for the BIOS pair and there are potential concurrency problems that can
-occur with an inopportune SMI.
+rtw_mac_power_switch() calls rtw_pwr_seq_parser() which can return
+-EINVAL, -EBUSY or 0. Propagate the original error code instead of
+unconditionally returning -EINVAL in case of an error.
 
-It is been advised to use SMN_INDEX_0 instead of SMN_INDEX_2, which is
-what amd_nb.c provides and this function has protections to ensure that
-only one caller can use it at a time.
-
-Fixes: 156ec4731cb2 ("platform/x86: amd-pmc: Add AMD platform support for S2Idle")
-Co-developed-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Signed-off-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20230409185348.556161-6-Shyam-sundar.S-k@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230226221004.138331-3-martin.blumenstingl@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/Kconfig |  2 +-
- drivers/platform/x86/amd/pmc.c   | 23 +++++------------------
- 2 files changed, 6 insertions(+), 19 deletions(-)
+ drivers/net/wireless/realtek/rtw88/mac.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/amd/Kconfig b/drivers/platform/x86/amd/Kconfig
-index 2ce8cb2170dfc..d9685aef0887d 100644
---- a/drivers/platform/x86/amd/Kconfig
-+++ b/drivers/platform/x86/amd/Kconfig
-@@ -7,7 +7,7 @@ source "drivers/platform/x86/amd/pmf/Kconfig"
+diff --git a/drivers/net/wireless/realtek/rtw88/mac.c b/drivers/net/wireless/realtek/rtw88/mac.c
+index 498f156553699..589caeff2033a 100644
+--- a/drivers/net/wireless/realtek/rtw88/mac.c
++++ b/drivers/net/wireless/realtek/rtw88/mac.c
+@@ -247,6 +247,7 @@ static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
+ 	const struct rtw_pwr_seq_cmd **pwr_seq;
+ 	u8 rpwm;
+ 	bool cur_pwr;
++	int ret;
  
- config AMD_PMC
- 	tristate "AMD SoC PMC driver"
--	depends on ACPI && PCI && RTC_CLASS
-+	depends on ACPI && PCI && RTC_CLASS && AMD_NB
- 	select SERIO
- 	help
- 	  The driver provides support for AMD Power Management Controller
-diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
-index 752015ca507f9..2ecee810c960a 100644
---- a/drivers/platform/x86/amd/pmc.c
-+++ b/drivers/platform/x86/amd/pmc.c
-@@ -10,6 +10,7 @@
+ 	if (rtw_chip_wcpu_11ac(rtwdev)) {
+ 		rpwm = rtw_read8(rtwdev, rtwdev->hci.rpwm_addr);
+@@ -270,8 +271,9 @@ static int rtw_mac_power_switch(struct rtw_dev *rtwdev, bool pwr_on)
+ 		return -EALREADY;
  
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+ 	pwr_seq = pwr_on ? chip->pwr_on_seq : chip->pwr_off_seq;
+-	if (rtw_pwr_seq_parser(rtwdev, pwr_seq))
+-		return -EINVAL;
++	ret = rtw_pwr_seq_parser(rtwdev, pwr_seq);
++	if (ret)
++		return ret;
  
-+#include <asm/amd_nb.h>
- #include <linux/acpi.h>
- #include <linux/bitfield.h>
- #include <linux/bits.h>
-@@ -55,8 +56,6 @@
- #define S2D_TELEMETRY_DRAMBYTES_MAX	0x1000000
- 
- /* Base address of SMU for mapping physical address to virtual address */
--#define AMD_PMC_SMU_INDEX_ADDRESS	0xB8
--#define AMD_PMC_SMU_INDEX_DATA		0xBC
- #define AMD_PMC_MAPPING_SIZE		0x01000
- #define AMD_PMC_BASE_ADDR_OFFSET	0x10000
- #define AMD_PMC_BASE_ADDR_LO		0x13B102E8
-@@ -958,30 +957,18 @@ static int amd_pmc_probe(struct platform_device *pdev)
- 
- 	dev->cpu_id = rdev->device;
- 	dev->rdev = rdev;
--	err = pci_write_config_dword(rdev, AMD_PMC_SMU_INDEX_ADDRESS, AMD_PMC_BASE_ADDR_LO);
--	if (err) {
--		dev_err(dev->dev, "error writing to 0x%x\n", AMD_PMC_SMU_INDEX_ADDRESS);
--		err = pcibios_err_to_errno(err);
--		goto err_pci_dev_put;
--	}
--
--	err = pci_read_config_dword(rdev, AMD_PMC_SMU_INDEX_DATA, &val);
-+	err = amd_smn_read(0, AMD_PMC_BASE_ADDR_LO, &val);
- 	if (err) {
-+		dev_err(dev->dev, "error reading 0x%x\n", AMD_PMC_BASE_ADDR_LO);
- 		err = pcibios_err_to_errno(err);
- 		goto err_pci_dev_put;
- 	}
- 
- 	base_addr_lo = val & AMD_PMC_BASE_ADDR_HI_MASK;
- 
--	err = pci_write_config_dword(rdev, AMD_PMC_SMU_INDEX_ADDRESS, AMD_PMC_BASE_ADDR_HI);
--	if (err) {
--		dev_err(dev->dev, "error writing to 0x%x\n", AMD_PMC_SMU_INDEX_ADDRESS);
--		err = pcibios_err_to_errno(err);
--		goto err_pci_dev_put;
--	}
--
--	err = pci_read_config_dword(rdev, AMD_PMC_SMU_INDEX_DATA, &val);
-+	err = amd_smn_read(0, AMD_PMC_BASE_ADDR_HI, &val);
- 	if (err) {
-+		dev_err(dev->dev, "error reading 0x%x\n", AMD_PMC_BASE_ADDR_HI);
- 		err = pcibios_err_to_errno(err);
- 		goto err_pci_dev_put;
- 	}
+ 	if (pwr_on)
+ 		set_bit(RTW_FLAG_POWERON, rtwdev->flags);
 -- 
 2.39.2
 
