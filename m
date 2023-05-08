@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24FD4168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:48:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E85BC433EF;
-	Mon,  8 May 2023 10:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BAF168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:48:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A22CCC433D2;
+	Mon,  8 May 2023 10:48:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542927;
-	bh=dIUdhrIQPDmNlGJivDXS2Fi69mGGoj0z3PysmSaGwTQ=;
+	s=korg; t=1683542930;
+	bh=OxINo+q/tSjvY3Nxtj2ly40l4J7dXpR1eGk+vhx47Ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BwHcu4PU0bac+2Av8RDDbIyHd831cvV8PyOJauxMyoUXW312R6GI9BqvcZmOiPy70
-	 S81eX0PG6F3UOga+SmdKjgTe/Fg9axEgAGOqmU0Vm6RbkJp/mcDIqKnWilw8P+EVJZ
-	 SZW92PJlny1a55lP4WULkE/lmlzfUHuGYrNaFh7Q=
+	b=mG15cofy5Otid34Kymf8G+L7i5cP+iO5QhJfJ1fcV/ax+JgjF+ADOm8ok8l6tcemV
+	 DKHKgzlJRxClbeT+OHhquzuNESpdwnalsmcszjSznU//0yOOhUuWuAnpBHDzXGtcWL
+	 KoHtcUkWyS3hZsVr7eZa7Qmsm1LgVSVAE0lnwzh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 592/663] dma: gpi: remove spurious unlock in gpi_ch_init
-Date: Mon,  8 May 2023 11:46:58 +0200
-Message-Id: <20230508094448.654251174@linuxfoundation.org>
+Subject: [PATCH 6.2 559/663] clk: qcom: dispcc-qcm2290: get rid of test clock
+Date: Mon,  8 May 2023 11:46:25 +0200
+Message-Id: <20230508094447.285176334@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,101 +38,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 91d6a468e335571f1e67e046050dea9af5fa4ebe ]
+[ Upstream commit 62db82f9c8004f1226f5cec8a5441fb89eb984fa ]
 
-gpi_ch_init() doesn't lock the ctrl_lock mutex, so there is no need to
-unlock it too. Instead the mutex is handled by the function
-gpi_alloc_chan_resources(), which properly locks and unlocks the mutex.
+The test clock apparently it's not used by anyone upstream. Remove it.
 
-=====================================
-WARNING: bad unlock balance detected!
-6.3.0-rc5-00253-g99792582ded1-dirty #15 Not tainted
--------------------------------------
-kworker/u16:0/9 is trying to release lock (&gpii->ctrl_lock) at:
-[<ffffb99d04e1284c>] gpi_alloc_chan_resources+0x108/0x5bc
-but there are no more locks to release!
-
-other info that might help us debug this:
-6 locks held by kworker/u16:0/9:
- #0: ffff575740010938 ((wq_completion)events_unbound){+.+.}-{0:0}, at: process_one_work+0x220/0x594
- #1: ffff80000809bdd0 (deferred_probe_work){+.+.}-{0:0}, at: process_one_work+0x220/0x594
- #2: ffff575740f2a0f8 (&dev->mutex){....}-{3:3}, at: __device_attach+0x38/0x188
- #3: ffff57574b5570f8 (&dev->mutex){....}-{3:3}, at: __device_attach+0x38/0x188
- #4: ffffb99d06a2f180 (of_dma_lock){+.+.}-{3:3}, at: of_dma_request_slave_channel+0x138/0x280
- #5: ffffb99d06a2ee20 (dma_list_mutex){+.+.}-{3:3}, at: dma_get_slave_channel+0x28/0x10c
-
-stack backtrace:
-CPU: 7 PID: 9 Comm: kworker/u16:0 Not tainted 6.3.0-rc5-00253-g99792582ded1-dirty #15
-Hardware name: Google Pixel 3 (DT)
-Workqueue: events_unbound deferred_probe_work_func
-Call trace:
- dump_backtrace+0xa0/0xfc
- show_stack+0x18/0x24
- dump_stack_lvl+0x60/0xac
- dump_stack+0x18/0x24
- print_unlock_imbalance_bug+0x130/0x148
- lock_release+0x270/0x300
- __mutex_unlock_slowpath+0x48/0x2cc
- mutex_unlock+0x20/0x2c
- gpi_alloc_chan_resources+0x108/0x5bc
- dma_chan_get+0x84/0x188
- dma_get_slave_channel+0x5c/0x10c
- gpi_of_dma_xlate+0x110/0x1a0
- of_dma_request_slave_channel+0x174/0x280
- dma_request_chan+0x3c/0x2d4
- geni_i2c_probe+0x544/0x63c
- platform_probe+0x68/0xc4
- really_probe+0x148/0x2ac
- __driver_probe_device+0x78/0xe0
- driver_probe_device+0x3c/0x160
- __device_attach_driver+0xb8/0x138
- bus_for_each_drv+0x84/0xe0
- __device_attach+0x9c/0x188
- device_initial_probe+0x14/0x20
- bus_probe_device+0xac/0xb0
- device_add+0x60c/0x7d8
- of_device_add+0x44/0x60
- of_platform_device_create_pdata+0x90/0x124
- of_platform_bus_create+0x15c/0x3c8
- of_platform_populate+0x58/0xf8
- devm_of_platform_populate+0x58/0xbc
- geni_se_probe+0xf0/0x164
- platform_probe+0x68/0xc4
- really_probe+0x148/0x2ac
- __driver_probe_device+0x78/0xe0
- driver_probe_device+0x3c/0x160
- __device_attach_driver+0xb8/0x138
- bus_for_each_drv+0x84/0xe0
- __device_attach+0x9c/0x188
- device_initial_probe+0x14/0x20
- bus_probe_device+0xac/0xb0
- deferred_probe_work_func+0x8c/0xc8
- process_one_work+0x2bc/0x594
- worker_thread+0x228/0x438
- kthread+0x108/0x10c
- ret_from_fork+0x10/0x20
-
-Fixes: 5d0c3533a19f ("dmaengine: qcom: Add GPI dma driver")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230409233355.453741-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221228185237.3111988-9-dmitry.baryshkov@linaro.org
+Stable-dep-of: 68d1151f0306 ("clk: qcom: dispcc-qcm2290: Remove inexistent DSI1PHY clk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/qcom/gpi.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/clk/qcom/dispcc-qcm2290.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-index 59a36cbf9b5f7..932628b319c81 100644
---- a/drivers/dma/qcom/gpi.c
-+++ b/drivers/dma/qcom/gpi.c
-@@ -1966,7 +1966,6 @@ static int gpi_ch_init(struct gchan *gchan)
- error_config_int:
- 	gpi_free_ring(&gpii->ev_ring, gpii);
- exit_gpi_init:
--	mutex_unlock(&gpii->ctrl_lock);
- 	return ret;
- }
+diff --git a/drivers/clk/qcom/dispcc-qcm2290.c b/drivers/clk/qcom/dispcc-qcm2290.c
+index 96b149365912a..2ebd9a02b8950 100644
+--- a/drivers/clk/qcom/dispcc-qcm2290.c
++++ b/drivers/clk/qcom/dispcc-qcm2290.c
+@@ -71,7 +71,6 @@ static const struct parent_map disp_cc_parent_map_0[] = {
+ static const struct clk_parent_data disp_cc_parent_data_0[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .fw_name = "dsi0_phy_pll_out_byteclk" },
+-	{ .fw_name = "core_bi_pll_test_se" },
+ };
  
+ static const struct parent_map disp_cc_parent_map_1[] = {
+@@ -80,7 +79,6 @@ static const struct parent_map disp_cc_parent_map_1[] = {
+ 
+ static const struct clk_parent_data disp_cc_parent_data_1[] = {
+ 	{ .fw_name = "bi_tcxo" },
+-	{ .fw_name = "core_bi_pll_test_se" },
+ };
+ 
+ static const struct parent_map disp_cc_parent_map_2[] = {
+@@ -91,7 +89,6 @@ static const struct parent_map disp_cc_parent_map_2[] = {
+ static const struct clk_parent_data disp_cc_parent_data_2[] = {
+ 	{ .fw_name = "bi_tcxo_ao" },
+ 	{ .fw_name = "gcc_disp_gpll0_div_clk_src" },
+-	{ .fw_name = "core_bi_pll_test_se" },
+ };
+ 
+ static const struct parent_map disp_cc_parent_map_3[] = {
+@@ -104,7 +101,6 @@ static const struct clk_parent_data disp_cc_parent_data_3[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .hw = &disp_cc_pll0.clkr.hw },
+ 	{ .fw_name = "gcc_disp_gpll0_clk_src" },
+-	{ .fw_name = "core_bi_pll_test_se" },
+ };
+ 
+ static const struct parent_map disp_cc_parent_map_4[] = {
+@@ -117,7 +113,6 @@ static const struct clk_parent_data disp_cc_parent_data_4[] = {
+ 	{ .fw_name = "bi_tcxo" },
+ 	{ .fw_name = "dsi0_phy_pll_out_dsiclk" },
+ 	{ .fw_name = "dsi1_phy_pll_out_dsiclk" },
+-	{ .fw_name = "core_bi_pll_test_se" },
+ };
+ 
+ static const struct parent_map disp_cc_parent_map_5[] = {
+@@ -126,7 +121,6 @@ static const struct parent_map disp_cc_parent_map_5[] = {
+ 
+ static const struct clk_parent_data disp_cc_parent_data_5[] = {
+ 	{ .fw_name = "sleep_clk" },
+-	{ .fw_name = "core_bi_pll_test_se" },
+ };
+ 
+ static struct clk_rcg2 disp_cc_mdss_byte0_clk_src = {
 -- 
 2.39.2
 
