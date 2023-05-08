@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75C4168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5015EC433D2;
-	Mon,  8 May 2023 11:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70DF168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE4B2C433D2;
+	Mon,  8 May 2023 11:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544274;
-	bh=aLIHrtKppp7T/H5pskN+NwG4ATJ+sTc2Fi4cheBB1R8=;
+	s=korg; t=1683544277;
+	bh=RQv/4WI2Nci/60y5eqhi3HiMadcIQ4dF0cK2EDb0R7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIqTWnfsd0iJ79SIBEUsZATGykAzjcceMKeV0Jm8R0zGfZul3paZrLW9Ws6QicYd9
-	 GO624QnYEuUcX/AlSc4V16NOT5nSerUUfwJWz+IlSyk25zMkCRSWIMO91N1T0jC+8o
-	 QPB8OrLxUfdnTaQ6lQ+f8P4F6vcgLAGz5Nc6W/Y0=
+	b=mmznz1v052WfooZJMw8BOr6QoqycVLwfGPY5sDI7oHRqeL7KWTTIpuw6mZ0AohQv9
+	 E1NFqWvT3WNNBkajhCaLlDVEqVn3jnkhAdqX7CjKfLfpfLkmnw1z81eksA8YERMl3B
+	 2Gq3UovZtKAgigCOWUPiyKG8owixOfcP2dzn5vrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Madhu Koriginja <madhu.koriginja@nxp.com>,
-	Florian Westphal <fw@strlen.de>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	JP Kobryn <inwardvessel@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 358/694] netfilter: keep conntrack reference until IPsecv6 policy checks are done
-Date: Mon,  8 May 2023 11:43:13 +0200
-Message-Id: <20230508094444.274974803@linuxfoundation.org>
+Subject: [PATCH 6.3 359/694] bpf: return long from bpf_map_ops funcs
+Date: Mon,  8 May 2023 11:43:14 +0200
+Message-Id: <20230508094444.317359022@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,129 +36,835 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Madhu Koriginja <madhu.koriginja@nxp.com>
+From: JP Kobryn <inwardvessel@gmail.com>
 
-[ Upstream commit b0e214d212030fe497d4d150bb3474e50ad5d093 ]
+[ Upstream commit d7ba4cc900bf1eea2d8c807c6b1fc6bd61f41237 ]
 
-Keep the conntrack reference until policy checks have been performed for
-IPsec V6 NAT support, just like ipv4.
+This patch changes the return types of bpf_map_ops functions to long, where
+previously int was returned. Using long allows for bpf programs to maintain
+the sign bit in the absence of sign extension during situations where
+inlined bpf helper funcs make calls to the bpf_map_ops funcs and a negative
+error is returned.
 
-The reference needs to be dropped before a packet is
-queued to avoid having the conntrack module unloadable.
+The definitions of the helper funcs are generated from comments in the bpf
+uapi header at `include/uapi/linux/bpf.h`. The return type of these
+helpers was previously changed from int to long in commit bdb7b79b4ce8. For
+any case where one of the map helpers call the bpf_map_ops funcs that are
+still returning 32-bit int, a compiler might not include sign extension
+instructions to properly convert the 32-bit negative value a 64-bit
+negative value.
 
-Fixes: 58a317f1061c ("netfilter: ipv6: add IPv6 NAT support")
-Signed-off-by: Madhu Koriginja <madhu.koriginja@nxp.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+For example:
+bpf assembly excerpt of an inlined helper calling a kernel function and
+checking for a specific error:
+
+; err = bpf_map_update_elem(&mymap, &key, &val, BPF_NOEXIST);
+  ...
+  46:	call   0xffffffffe103291c	; htab_map_update_elem
+; if (err && err != -EEXIST) {
+  4b:	cmp    $0xffffffffffffffef,%rax ; cmp -EEXIST,%rax
+
+kernel function assembly excerpt of return value from
+`htab_map_update_elem` returning 32-bit int:
+
+movl $0xffffffef, %r9d
+...
+movl %r9d, %eax
+
+...results in the comparison:
+cmp $0xffffffffffffffef, $0x00000000ffffffef
+
+Fixes: bdb7b79b4ce8 ("bpf: Switch most helper return values from 32-bit int to 64-bit long")
+Tested-by: Eduard Zingerman <eddyz87@gmail.com>
+Signed-off-by: JP Kobryn <inwardvessel@gmail.com>
+Link: https://lore.kernel.org/r/20230322194754.185781-3-inwardvessel@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/dccp/ipv6.c      |  1 +
- net/ipv6/ip6_input.c | 14 ++++++--------
- net/ipv6/raw.c       |  5 ++---
- net/ipv6/tcp_ipv6.c  |  2 ++
- net/ipv6/udp.c       |  2 ++
- 5 files changed, 13 insertions(+), 11 deletions(-)
+ include/linux/bpf.h            | 14 ++++++-------
+ include/linux/filter.h         |  6 +++---
+ kernel/bpf/arraymap.c          | 12 ++++++------
+ kernel/bpf/bloom_filter.c      | 12 ++++++------
+ kernel/bpf/bpf_cgrp_storage.c  |  6 +++---
+ kernel/bpf/bpf_inode_storage.c |  6 +++---
+ kernel/bpf/bpf_struct_ops.c    |  6 +++---
+ kernel/bpf/bpf_task_storage.c  |  6 +++---
+ kernel/bpf/cpumap.c            |  8 ++++----
+ kernel/bpf/devmap.c            | 24 +++++++++++------------
+ kernel/bpf/hashtab.c           | 36 +++++++++++++++++-----------------
+ kernel/bpf/local_storage.c     |  6 +++---
+ kernel/bpf/lpm_trie.c          |  6 +++---
+ kernel/bpf/queue_stack_maps.c  | 22 ++++++++++-----------
+ kernel/bpf/reuseport_array.c   |  2 +-
+ kernel/bpf/ringbuf.c           |  6 +++---
+ kernel/bpf/stackmap.c          |  6 +++---
+ kernel/bpf/verifier.c          | 14 ++++++-------
+ net/core/bpf_sk_storage.c      |  6 +++---
+ net/core/sock_map.c            |  8 ++++----
+ net/xdp/xskmap.c               |  8 ++++----
+ 21 files changed, 110 insertions(+), 110 deletions(-)
 
-diff --git a/net/dccp/ipv6.c b/net/dccp/ipv6.c
-index b9d7c3dd1cb39..c0fd8f5f3b94e 100644
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -783,6 +783,7 @@ static int dccp_v6_rcv(struct sk_buff *skb)
+diff --git a/include/linux/bpf.h b/include/linux/bpf.h
+index 520b238abd5a2..5bd6ac04773aa 100644
+--- a/include/linux/bpf.h
++++ b/include/linux/bpf.h
+@@ -96,11 +96,11 @@ struct bpf_map_ops {
  
- 	if (!xfrm6_policy_check(sk, XFRM_POLICY_IN, skb))
- 		goto discard_and_relse;
-+	nf_reset_ct(skb);
+ 	/* funcs callable from userspace and from eBPF programs */
+ 	void *(*map_lookup_elem)(struct bpf_map *map, void *key);
+-	int (*map_update_elem)(struct bpf_map *map, void *key, void *value, u64 flags);
+-	int (*map_delete_elem)(struct bpf_map *map, void *key);
+-	int (*map_push_elem)(struct bpf_map *map, void *value, u64 flags);
+-	int (*map_pop_elem)(struct bpf_map *map, void *value);
+-	int (*map_peek_elem)(struct bpf_map *map, void *value);
++	long (*map_update_elem)(struct bpf_map *map, void *key, void *value, u64 flags);
++	long (*map_delete_elem)(struct bpf_map *map, void *key);
++	long (*map_push_elem)(struct bpf_map *map, void *value, u64 flags);
++	long (*map_pop_elem)(struct bpf_map *map, void *value);
++	long (*map_peek_elem)(struct bpf_map *map, void *value);
+ 	void *(*map_lookup_percpu_elem)(struct bpf_map *map, void *key, u32 cpu);
  
- 	return __sk_receive_skb(sk, skb, 1, dh->dccph_doff * 4,
- 				refcounted) ? -1 : 0;
-diff --git a/net/ipv6/ip6_input.c b/net/ipv6/ip6_input.c
-index e1ebf5e42ebe9..d94041bb42872 100644
---- a/net/ipv6/ip6_input.c
-+++ b/net/ipv6/ip6_input.c
-@@ -404,10 +404,6 @@ void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
- 			/* Only do this once for first final protocol */
- 			have_final = true;
+ 	/* funcs called by prog_array and perf_event_array map */
+@@ -139,7 +139,7 @@ struct bpf_map_ops {
+ 	struct bpf_local_storage __rcu ** (*map_owner_storage_ptr)(void *owner);
  
--			/* Free reference early: we don't need it any more,
--			   and it may hold ip_conntrack module loaded
--			   indefinitely. */
--			nf_reset_ct(skb);
+ 	/* Misc helpers.*/
+-	int (*map_redirect)(struct bpf_map *map, u64 key, u64 flags);
++	long (*map_redirect)(struct bpf_map *map, u64 key, u64 flags);
  
- 			skb_postpull_rcsum(skb, skb_network_header(skb),
- 					   skb_network_header_len(skb));
-@@ -430,10 +426,12 @@ void ip6_protocol_deliver_rcu(struct net *net, struct sk_buff *skb, int nexthdr,
- 				goto discard;
- 			}
- 		}
--		if (!(ipprot->flags & INET6_PROTO_NOPOLICY) &&
--		    !xfrm6_policy_check(NULL, XFRM_POLICY_IN, skb)) {
--			SKB_DR_SET(reason, XFRM_POLICY);
--			goto discard;
-+		if (!(ipprot->flags & INET6_PROTO_NOPOLICY)) {
-+			if (!xfrm6_policy_check(NULL, XFRM_POLICY_IN, skb)) {
-+				SKB_DR_SET(reason, XFRM_POLICY);
-+				goto discard;
-+			}
-+			nf_reset_ct(skb);
- 		}
+ 	/* map_meta_equal must be implemented for maps that can be
+ 	 * used as an inner map.  It is a runtime check to ensure
+@@ -157,7 +157,7 @@ struct bpf_map_ops {
+ 	int (*map_set_for_each_callback_args)(struct bpf_verifier_env *env,
+ 					      struct bpf_func_state *caller,
+ 					      struct bpf_func_state *callee);
+-	int (*map_for_each_callback)(struct bpf_map *map,
++	long (*map_for_each_callback)(struct bpf_map *map,
+ 				     bpf_callback_t callback_fn,
+ 				     void *callback_ctx, u64 flags);
  
- 		ret = INDIRECT_CALL_2(ipprot->handler, tcp_v6_rcv, udpv6_rcv,
-diff --git a/net/ipv6/raw.c b/net/ipv6/raw.c
-index a327aa481df48..9986e2d15c8be 100644
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -193,10 +193,8 @@ static bool ipv6_raw_deliver(struct sk_buff *skb, int nexthdr)
- 			struct sk_buff *clone = skb_clone(skb, GFP_ATOMIC);
+diff --git a/include/linux/filter.h b/include/linux/filter.h
+index 1727898f16413..370c96acd7098 100644
+--- a/include/linux/filter.h
++++ b/include/linux/filter.h
+@@ -1504,9 +1504,9 @@ static inline bool bpf_sk_lookup_run_v6(struct net *net, int protocol,
+ }
+ #endif /* IS_ENABLED(CONFIG_IPV6) */
  
- 			/* Not releasing hash table! */
--			if (clone) {
--				nf_reset_ct(clone);
-+			if (clone)
- 				rawv6_rcv(sk, clone);
--			}
- 		}
+-static __always_inline int __bpf_xdp_redirect_map(struct bpf_map *map, u64 index,
+-						  u64 flags, const u64 flag_mask,
+-						  void *lookup_elem(struct bpf_map *map, u32 key))
++static __always_inline long __bpf_xdp_redirect_map(struct bpf_map *map, u64 index,
++						   u64 flags, const u64 flag_mask,
++						   void *lookup_elem(struct bpf_map *map, u32 key))
+ {
+ 	struct bpf_redirect_info *ri = this_cpu_ptr(&bpf_redirect_info);
+ 	const u64 action_mask = XDP_ABORTED | XDP_DROP | XDP_PASS | XDP_TX;
+diff --git a/kernel/bpf/arraymap.c b/kernel/bpf/arraymap.c
+index 4847069595569..cb80bcc880b44 100644
+--- a/kernel/bpf/arraymap.c
++++ b/kernel/bpf/arraymap.c
+@@ -307,8 +307,8 @@ static int array_map_get_next_key(struct bpf_map *map, void *key, void *next_key
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int array_map_update_elem(struct bpf_map *map, void *key, void *value,
+-				 u64 map_flags)
++static long array_map_update_elem(struct bpf_map *map, void *key, void *value,
++				  u64 map_flags)
+ {
+ 	struct bpf_array *array = container_of(map, struct bpf_array, map);
+ 	u32 index = *(u32 *)key;
+@@ -386,7 +386,7 @@ int bpf_percpu_array_update(struct bpf_map *map, void *key, void *value,
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int array_map_delete_elem(struct bpf_map *map, void *key)
++static long array_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	return -EINVAL;
+ }
+@@ -686,8 +686,8 @@ static const struct bpf_iter_seq_info iter_seq_info = {
+ 	.seq_priv_size		= sizeof(struct bpf_iter_seq_array_map_info),
+ };
+ 
+-static int bpf_for_each_array_elem(struct bpf_map *map, bpf_callback_t callback_fn,
+-				   void *callback_ctx, u64 flags)
++static long bpf_for_each_array_elem(struct bpf_map *map, bpf_callback_t callback_fn,
++				    void *callback_ctx, u64 flags)
+ {
+ 	u32 i, key, num_elems = 0;
+ 	struct bpf_array *array;
+@@ -847,7 +847,7 @@ int bpf_fd_array_map_update_elem(struct bpf_map *map, struct file *map_file,
+ 	return 0;
+ }
+ 
+-static int fd_array_map_delete_elem(struct bpf_map *map, void *key)
++static long fd_array_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct bpf_array *array = container_of(map, struct bpf_array, map);
+ 	void *old_ptr;
+diff --git a/kernel/bpf/bloom_filter.c b/kernel/bpf/bloom_filter.c
+index 48ee750849f25..b386a8fdf28cc 100644
+--- a/kernel/bpf/bloom_filter.c
++++ b/kernel/bpf/bloom_filter.c
+@@ -41,7 +41,7 @@ static u32 hash(struct bpf_bloom_filter *bloom, void *value,
+ 	return h & bloom->bitset_mask;
+ }
+ 
+-static int bloom_map_peek_elem(struct bpf_map *map, void *value)
++static long bloom_map_peek_elem(struct bpf_map *map, void *value)
+ {
+ 	struct bpf_bloom_filter *bloom =
+ 		container_of(map, struct bpf_bloom_filter, map);
+@@ -56,7 +56,7 @@ static int bloom_map_peek_elem(struct bpf_map *map, void *value)
+ 	return 0;
+ }
+ 
+-static int bloom_map_push_elem(struct bpf_map *map, void *value, u64 flags)
++static long bloom_map_push_elem(struct bpf_map *map, void *value, u64 flags)
+ {
+ 	struct bpf_bloom_filter *bloom =
+ 		container_of(map, struct bpf_bloom_filter, map);
+@@ -73,12 +73,12 @@ static int bloom_map_push_elem(struct bpf_map *map, void *value, u64 flags)
+ 	return 0;
+ }
+ 
+-static int bloom_map_pop_elem(struct bpf_map *map, void *value)
++static long bloom_map_pop_elem(struct bpf_map *map, void *value)
+ {
+ 	return -EOPNOTSUPP;
+ }
+ 
+-static int bloom_map_delete_elem(struct bpf_map *map, void *value)
++static long bloom_map_delete_elem(struct bpf_map *map, void *value)
+ {
+ 	return -EOPNOTSUPP;
+ }
+@@ -177,8 +177,8 @@ static void *bloom_map_lookup_elem(struct bpf_map *map, void *key)
+ 	return ERR_PTR(-EINVAL);
+ }
+ 
+-static int bloom_map_update_elem(struct bpf_map *map, void *key,
+-				 void *value, u64 flags)
++static long bloom_map_update_elem(struct bpf_map *map, void *key,
++				  void *value, u64 flags)
+ {
+ 	/* The eBPF program should use map_push_elem instead */
+ 	return -EINVAL;
+diff --git a/kernel/bpf/bpf_cgrp_storage.c b/kernel/bpf/bpf_cgrp_storage.c
+index 6cdf6d9ed91df..d4a074247b64d 100644
+--- a/kernel/bpf/bpf_cgrp_storage.c
++++ b/kernel/bpf/bpf_cgrp_storage.c
+@@ -100,8 +100,8 @@ static void *bpf_cgrp_storage_lookup_elem(struct bpf_map *map, void *key)
+ 	return sdata ? sdata->data : NULL;
+ }
+ 
+-static int bpf_cgrp_storage_update_elem(struct bpf_map *map, void *key,
+-					  void *value, u64 map_flags)
++static long bpf_cgrp_storage_update_elem(struct bpf_map *map, void *key,
++					 void *value, u64 map_flags)
+ {
+ 	struct bpf_local_storage_data *sdata;
+ 	struct cgroup *cgroup;
+@@ -132,7 +132,7 @@ static int cgroup_storage_delete(struct cgroup *cgroup, struct bpf_map *map)
+ 	return 0;
+ }
+ 
+-static int bpf_cgrp_storage_delete_elem(struct bpf_map *map, void *key)
++static long bpf_cgrp_storage_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct cgroup *cgroup;
+ 	int err, fd;
+diff --git a/kernel/bpf/bpf_inode_storage.c b/kernel/bpf/bpf_inode_storage.c
+index 05f4c66c9089f..a8afc656808b2 100644
+--- a/kernel/bpf/bpf_inode_storage.c
++++ b/kernel/bpf/bpf_inode_storage.c
+@@ -97,8 +97,8 @@ static void *bpf_fd_inode_storage_lookup_elem(struct bpf_map *map, void *key)
+ 	return sdata ? sdata->data : NULL;
+ }
+ 
+-static int bpf_fd_inode_storage_update_elem(struct bpf_map *map, void *key,
+-					 void *value, u64 map_flags)
++static long bpf_fd_inode_storage_update_elem(struct bpf_map *map, void *key,
++					     void *value, u64 map_flags)
+ {
+ 	struct bpf_local_storage_data *sdata;
+ 	struct file *f;
+@@ -133,7 +133,7 @@ static int inode_storage_delete(struct inode *inode, struct bpf_map *map)
+ 	return 0;
+ }
+ 
+-static int bpf_fd_inode_storage_delete_elem(struct bpf_map *map, void *key)
++static long bpf_fd_inode_storage_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct file *f;
+ 	int fd, err;
+diff --git a/kernel/bpf/bpf_struct_ops.c b/kernel/bpf/bpf_struct_ops.c
+index ece9870cab68e..36c17271d38bd 100644
+--- a/kernel/bpf/bpf_struct_ops.c
++++ b/kernel/bpf/bpf_struct_ops.c
+@@ -349,8 +349,8 @@ int bpf_struct_ops_prepare_trampoline(struct bpf_tramp_links *tlinks,
+ 					   model, flags, tlinks, NULL);
+ }
+ 
+-static int bpf_struct_ops_map_update_elem(struct bpf_map *map, void *key,
+-					  void *value, u64 flags)
++static long bpf_struct_ops_map_update_elem(struct bpf_map *map, void *key,
++					   void *value, u64 flags)
+ {
+ 	struct bpf_struct_ops_map *st_map = (struct bpf_struct_ops_map *)map;
+ 	const struct bpf_struct_ops *st_ops = st_map->st_ops;
+@@ -524,7 +524,7 @@ static int bpf_struct_ops_map_update_elem(struct bpf_map *map, void *key,
+ 	return err;
+ }
+ 
+-static int bpf_struct_ops_map_delete_elem(struct bpf_map *map, void *key)
++static long bpf_struct_ops_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	enum bpf_struct_ops_state prev_state;
+ 	struct bpf_struct_ops_map *st_map;
+diff --git a/kernel/bpf/bpf_task_storage.c b/kernel/bpf/bpf_task_storage.c
+index 1e486055a523d..b29f0bf28fd15 100644
+--- a/kernel/bpf/bpf_task_storage.c
++++ b/kernel/bpf/bpf_task_storage.c
+@@ -127,8 +127,8 @@ static void *bpf_pid_task_storage_lookup_elem(struct bpf_map *map, void *key)
+ 	return ERR_PTR(err);
+ }
+ 
+-static int bpf_pid_task_storage_update_elem(struct bpf_map *map, void *key,
+-					    void *value, u64 map_flags)
++static long bpf_pid_task_storage_update_elem(struct bpf_map *map, void *key,
++					     void *value, u64 map_flags)
+ {
+ 	struct bpf_local_storage_data *sdata;
+ 	struct task_struct *task;
+@@ -180,7 +180,7 @@ static int task_storage_delete(struct task_struct *task, struct bpf_map *map,
+ 	return 0;
+ }
+ 
+-static int bpf_pid_task_storage_delete_elem(struct bpf_map *map, void *key)
++static long bpf_pid_task_storage_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct task_struct *task;
+ 	unsigned int f_flags;
+diff --git a/kernel/bpf/cpumap.c b/kernel/bpf/cpumap.c
+index d2110c1f6fa64..90b95a69acbbc 100644
+--- a/kernel/bpf/cpumap.c
++++ b/kernel/bpf/cpumap.c
+@@ -540,7 +540,7 @@ static void __cpu_map_entry_replace(struct bpf_cpu_map *cmap,
  	}
- 	rcu_read_unlock();
-@@ -389,6 +387,7 @@ int rawv6_rcv(struct sock *sk, struct sk_buff *skb)
- 		kfree_skb_reason(skb, SKB_DROP_REASON_XFRM_POLICY);
- 		return NET_RX_DROP;
- 	}
-+	nf_reset_ct(skb);
+ }
  
- 	if (!rp->checksum)
- 		skb->ip_summed = CHECKSUM_UNNECESSARY;
-diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
-index 1bf93b61aa06f..1e747241c7710 100644
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1722,6 +1722,8 @@ INDIRECT_CALLABLE_SCOPE int tcp_v6_rcv(struct sk_buff *skb)
- 	if (drop_reason)
- 		goto discard_and_relse;
+-static int cpu_map_delete_elem(struct bpf_map *map, void *key)
++static long cpu_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct bpf_cpu_map *cmap = container_of(map, struct bpf_cpu_map, map);
+ 	u32 key_cpu = *(u32 *)key;
+@@ -553,8 +553,8 @@ static int cpu_map_delete_elem(struct bpf_map *map, void *key)
+ 	return 0;
+ }
  
-+	nf_reset_ct(skb);
-+
- 	if (tcp_filter(sk, skb)) {
- 		drop_reason = SKB_DROP_REASON_SOCKET_FILTER;
- 		goto discard_and_relse;
-diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
-index a675acfb901d1..c519f21632656 100644
---- a/net/ipv6/udp.c
-+++ b/net/ipv6/udp.c
-@@ -704,6 +704,7 @@ static int udpv6_queue_rcv_one_skb(struct sock *sk, struct sk_buff *skb)
- 		drop_reason = SKB_DROP_REASON_XFRM_POLICY;
- 		goto drop;
- 	}
-+	nf_reset_ct(skb);
+-static int cpu_map_update_elem(struct bpf_map *map, void *key, void *value,
+-			       u64 map_flags)
++static long cpu_map_update_elem(struct bpf_map *map, void *key, void *value,
++				u64 map_flags)
+ {
+ 	struct bpf_cpu_map *cmap = container_of(map, struct bpf_cpu_map, map);
+ 	struct bpf_cpumap_val cpumap_value = {};
+@@ -667,7 +667,7 @@ static int cpu_map_get_next_key(struct bpf_map *map, void *key, void *next_key)
+ 	return 0;
+ }
  
- 	if (static_branch_unlikely(&udpv6_encap_needed_key) && up->encap_type) {
- 		int (*encap_rcv)(struct sock *sk, struct sk_buff *skb);
-@@ -1027,6 +1028,7 @@ int __udp6_lib_rcv(struct sk_buff *skb, struct udp_table *udptable,
+-static int cpu_map_redirect(struct bpf_map *map, u64 index, u64 flags)
++static long cpu_map_redirect(struct bpf_map *map, u64 index, u64 flags)
+ {
+ 	return __bpf_xdp_redirect_map(map, index, flags, 0,
+ 				      __cpu_map_lookup_elem);
+diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
+index 2675fefc6cb62..38aa5d16b4d85 100644
+--- a/kernel/bpf/devmap.c
++++ b/kernel/bpf/devmap.c
+@@ -809,7 +809,7 @@ static void __dev_map_entry_free(struct rcu_head *rcu)
+ 	kfree(dev);
+ }
  
- 	if (!xfrm6_policy_check(NULL, XFRM_POLICY_IN, skb))
- 		goto discard;
-+	nf_reset_ct(skb);
+-static int dev_map_delete_elem(struct bpf_map *map, void *key)
++static long dev_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct bpf_dtab *dtab = container_of(map, struct bpf_dtab, map);
+ 	struct bpf_dtab_netdev *old_dev;
+@@ -824,7 +824,7 @@ static int dev_map_delete_elem(struct bpf_map *map, void *key)
+ 	return 0;
+ }
  
- 	if (udp_lib_checksum_complete(skb))
- 		goto csum_error;
+-static int dev_map_hash_delete_elem(struct bpf_map *map, void *key)
++static long dev_map_hash_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct bpf_dtab *dtab = container_of(map, struct bpf_dtab, map);
+ 	struct bpf_dtab_netdev *old_dev;
+@@ -895,8 +895,8 @@ static struct bpf_dtab_netdev *__dev_map_alloc_node(struct net *net,
+ 	return ERR_PTR(-EINVAL);
+ }
+ 
+-static int __dev_map_update_elem(struct net *net, struct bpf_map *map,
+-				 void *key, void *value, u64 map_flags)
++static long __dev_map_update_elem(struct net *net, struct bpf_map *map,
++				  void *key, void *value, u64 map_flags)
+ {
+ 	struct bpf_dtab *dtab = container_of(map, struct bpf_dtab, map);
+ 	struct bpf_dtab_netdev *dev, *old_dev;
+@@ -935,15 +935,15 @@ static int __dev_map_update_elem(struct net *net, struct bpf_map *map,
+ 	return 0;
+ }
+ 
+-static int dev_map_update_elem(struct bpf_map *map, void *key, void *value,
+-			       u64 map_flags)
++static long dev_map_update_elem(struct bpf_map *map, void *key, void *value,
++				u64 map_flags)
+ {
+ 	return __dev_map_update_elem(current->nsproxy->net_ns,
+ 				     map, key, value, map_flags);
+ }
+ 
+-static int __dev_map_hash_update_elem(struct net *net, struct bpf_map *map,
+-				     void *key, void *value, u64 map_flags)
++static long __dev_map_hash_update_elem(struct net *net, struct bpf_map *map,
++				       void *key, void *value, u64 map_flags)
+ {
+ 	struct bpf_dtab *dtab = container_of(map, struct bpf_dtab, map);
+ 	struct bpf_dtab_netdev *dev, *old_dev;
+@@ -995,21 +995,21 @@ static int __dev_map_hash_update_elem(struct net *net, struct bpf_map *map,
+ 	return err;
+ }
+ 
+-static int dev_map_hash_update_elem(struct bpf_map *map, void *key, void *value,
+-				   u64 map_flags)
++static long dev_map_hash_update_elem(struct bpf_map *map, void *key, void *value,
++				     u64 map_flags)
+ {
+ 	return __dev_map_hash_update_elem(current->nsproxy->net_ns,
+ 					 map, key, value, map_flags);
+ }
+ 
+-static int dev_map_redirect(struct bpf_map *map, u64 ifindex, u64 flags)
++static long dev_map_redirect(struct bpf_map *map, u64 ifindex, u64 flags)
+ {
+ 	return __bpf_xdp_redirect_map(map, ifindex, flags,
+ 				      BPF_F_BROADCAST | BPF_F_EXCLUDE_INGRESS,
+ 				      __dev_map_lookup_elem);
+ }
+ 
+-static int dev_hash_map_redirect(struct bpf_map *map, u64 ifindex, u64 flags)
++static long dev_hash_map_redirect(struct bpf_map *map, u64 ifindex, u64 flags)
+ {
+ 	return __bpf_xdp_redirect_map(map, ifindex, flags,
+ 				      BPF_F_BROADCAST | BPF_F_EXCLUDE_INGRESS,
+diff --git a/kernel/bpf/hashtab.c b/kernel/bpf/hashtab.c
+index 5dfcb5ad0d068..90852e0e64f26 100644
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -1057,8 +1057,8 @@ static int check_flags(struct bpf_htab *htab, struct htab_elem *l_old,
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int htab_map_update_elem(struct bpf_map *map, void *key, void *value,
+-				u64 map_flags)
++static long htab_map_update_elem(struct bpf_map *map, void *key, void *value,
++				 u64 map_flags)
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+ 	struct htab_elem *l_new = NULL, *l_old;
+@@ -1159,8 +1159,8 @@ static void htab_lru_push_free(struct bpf_htab *htab, struct htab_elem *elem)
+ 	bpf_lru_push_free(&htab->lru, &elem->lru_node);
+ }
+ 
+-static int htab_lru_map_update_elem(struct bpf_map *map, void *key, void *value,
+-				    u64 map_flags)
++static long htab_lru_map_update_elem(struct bpf_map *map, void *key, void *value,
++				     u64 map_flags)
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+ 	struct htab_elem *l_new, *l_old = NULL;
+@@ -1226,9 +1226,9 @@ static int htab_lru_map_update_elem(struct bpf_map *map, void *key, void *value,
+ 	return ret;
+ }
+ 
+-static int __htab_percpu_map_update_elem(struct bpf_map *map, void *key,
+-					 void *value, u64 map_flags,
+-					 bool onallcpus)
++static long __htab_percpu_map_update_elem(struct bpf_map *map, void *key,
++					  void *value, u64 map_flags,
++					  bool onallcpus)
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+ 	struct htab_elem *l_new = NULL, *l_old;
+@@ -1281,9 +1281,9 @@ static int __htab_percpu_map_update_elem(struct bpf_map *map, void *key,
+ 	return ret;
+ }
+ 
+-static int __htab_lru_percpu_map_update_elem(struct bpf_map *map, void *key,
+-					     void *value, u64 map_flags,
+-					     bool onallcpus)
++static long __htab_lru_percpu_map_update_elem(struct bpf_map *map, void *key,
++					      void *value, u64 map_flags,
++					      bool onallcpus)
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+ 	struct htab_elem *l_new = NULL, *l_old;
+@@ -1348,21 +1348,21 @@ static int __htab_lru_percpu_map_update_elem(struct bpf_map *map, void *key,
+ 	return ret;
+ }
+ 
+-static int htab_percpu_map_update_elem(struct bpf_map *map, void *key,
+-				       void *value, u64 map_flags)
++static long htab_percpu_map_update_elem(struct bpf_map *map, void *key,
++					void *value, u64 map_flags)
+ {
+ 	return __htab_percpu_map_update_elem(map, key, value, map_flags, false);
+ }
+ 
+-static int htab_lru_percpu_map_update_elem(struct bpf_map *map, void *key,
+-					   void *value, u64 map_flags)
++static long htab_lru_percpu_map_update_elem(struct bpf_map *map, void *key,
++					    void *value, u64 map_flags)
+ {
+ 	return __htab_lru_percpu_map_update_elem(map, key, value, map_flags,
+ 						 false);
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int htab_map_delete_elem(struct bpf_map *map, void *key)
++static long htab_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+ 	struct hlist_nulls_head *head;
+@@ -1398,7 +1398,7 @@ static int htab_map_delete_elem(struct bpf_map *map, void *key)
+ 	return ret;
+ }
+ 
+-static int htab_lru_map_delete_elem(struct bpf_map *map, void *key)
++static long htab_lru_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+ 	struct hlist_nulls_head *head;
+@@ -2119,8 +2119,8 @@ static const struct bpf_iter_seq_info iter_seq_info = {
+ 	.seq_priv_size		= sizeof(struct bpf_iter_seq_hash_map_info),
+ };
+ 
+-static int bpf_for_each_hash_elem(struct bpf_map *map, bpf_callback_t callback_fn,
+-				  void *callback_ctx, u64 flags)
++static long bpf_for_each_hash_elem(struct bpf_map *map, bpf_callback_t callback_fn,
++				   void *callback_ctx, u64 flags)
+ {
+ 	struct bpf_htab *htab = container_of(map, struct bpf_htab, map);
+ 	struct hlist_nulls_head *head;
+diff --git a/kernel/bpf/local_storage.c b/kernel/bpf/local_storage.c
+index e90d9f63edc5d..66d8ce2ab5b34 100644
+--- a/kernel/bpf/local_storage.c
++++ b/kernel/bpf/local_storage.c
+@@ -141,8 +141,8 @@ static void *cgroup_storage_lookup_elem(struct bpf_map *_map, void *key)
+ 	return &READ_ONCE(storage->buf)->data[0];
+ }
+ 
+-static int cgroup_storage_update_elem(struct bpf_map *map, void *key,
+-				      void *value, u64 flags)
++static long cgroup_storage_update_elem(struct bpf_map *map, void *key,
++				       void *value, u64 flags)
+ {
+ 	struct bpf_cgroup_storage *storage;
+ 	struct bpf_storage_buffer *new;
+@@ -348,7 +348,7 @@ static void cgroup_storage_map_free(struct bpf_map *_map)
+ 	bpf_map_area_free(map);
+ }
+ 
+-static int cgroup_storage_delete_elem(struct bpf_map *map, void *key)
++static long cgroup_storage_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	return -EINVAL;
+ }
+diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
+index d833496e9e426..27980506fc7d5 100644
+--- a/kernel/bpf/lpm_trie.c
++++ b/kernel/bpf/lpm_trie.c
+@@ -300,8 +300,8 @@ static struct lpm_trie_node *lpm_trie_node_alloc(const struct lpm_trie *trie,
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int trie_update_elem(struct bpf_map *map,
+-			    void *_key, void *value, u64 flags)
++static long trie_update_elem(struct bpf_map *map,
++			     void *_key, void *value, u64 flags)
+ {
+ 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
+ 	struct lpm_trie_node *node, *im_node = NULL, *new_node = NULL;
+@@ -431,7 +431,7 @@ static int trie_update_elem(struct bpf_map *map,
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int trie_delete_elem(struct bpf_map *map, void *_key)
++static long trie_delete_elem(struct bpf_map *map, void *_key)
+ {
+ 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
+ 	struct bpf_lpm_trie_key *key = _key;
+diff --git a/kernel/bpf/queue_stack_maps.c b/kernel/bpf/queue_stack_maps.c
+index 8a5e060de63bc..80f958ff63966 100644
+--- a/kernel/bpf/queue_stack_maps.c
++++ b/kernel/bpf/queue_stack_maps.c
+@@ -95,7 +95,7 @@ static void queue_stack_map_free(struct bpf_map *map)
+ 	bpf_map_area_free(qs);
+ }
+ 
+-static int __queue_map_get(struct bpf_map *map, void *value, bool delete)
++static long __queue_map_get(struct bpf_map *map, void *value, bool delete)
+ {
+ 	struct bpf_queue_stack *qs = bpf_queue_stack(map);
+ 	unsigned long flags;
+@@ -124,7 +124,7 @@ static int __queue_map_get(struct bpf_map *map, void *value, bool delete)
+ }
+ 
+ 
+-static int __stack_map_get(struct bpf_map *map, void *value, bool delete)
++static long __stack_map_get(struct bpf_map *map, void *value, bool delete)
+ {
+ 	struct bpf_queue_stack *qs = bpf_queue_stack(map);
+ 	unsigned long flags;
+@@ -156,32 +156,32 @@ static int __stack_map_get(struct bpf_map *map, void *value, bool delete)
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int queue_map_peek_elem(struct bpf_map *map, void *value)
++static long queue_map_peek_elem(struct bpf_map *map, void *value)
+ {
+ 	return __queue_map_get(map, value, false);
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int stack_map_peek_elem(struct bpf_map *map, void *value)
++static long stack_map_peek_elem(struct bpf_map *map, void *value)
+ {
+ 	return __stack_map_get(map, value, false);
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int queue_map_pop_elem(struct bpf_map *map, void *value)
++static long queue_map_pop_elem(struct bpf_map *map, void *value)
+ {
+ 	return __queue_map_get(map, value, true);
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int stack_map_pop_elem(struct bpf_map *map, void *value)
++static long stack_map_pop_elem(struct bpf_map *map, void *value)
+ {
+ 	return __stack_map_get(map, value, true);
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int queue_stack_map_push_elem(struct bpf_map *map, void *value,
+-				     u64 flags)
++static long queue_stack_map_push_elem(struct bpf_map *map, void *value,
++				      u64 flags)
+ {
+ 	struct bpf_queue_stack *qs = bpf_queue_stack(map);
+ 	unsigned long irq_flags;
+@@ -227,14 +227,14 @@ static void *queue_stack_map_lookup_elem(struct bpf_map *map, void *key)
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int queue_stack_map_update_elem(struct bpf_map *map, void *key,
+-				       void *value, u64 flags)
++static long queue_stack_map_update_elem(struct bpf_map *map, void *key,
++					void *value, u64 flags)
+ {
+ 	return -EINVAL;
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int queue_stack_map_delete_elem(struct bpf_map *map, void *key)
++static long queue_stack_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	return -EINVAL;
+ }
+diff --git a/kernel/bpf/reuseport_array.c b/kernel/bpf/reuseport_array.c
+index 82c61612f382a..d1188b0350914 100644
+--- a/kernel/bpf/reuseport_array.c
++++ b/kernel/bpf/reuseport_array.c
+@@ -59,7 +59,7 @@ static void *reuseport_array_lookup_elem(struct bpf_map *map, void *key)
+ }
+ 
+ /* Called from syscall only */
+-static int reuseport_array_delete_elem(struct bpf_map *map, void *key)
++static long reuseport_array_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct reuseport_array *array = reuseport_array(map);
+ 	u32 index = *(u32 *)key;
+diff --git a/kernel/bpf/ringbuf.c b/kernel/bpf/ringbuf.c
+index 8732e0aadf366..f9bbc254cd449 100644
+--- a/kernel/bpf/ringbuf.c
++++ b/kernel/bpf/ringbuf.c
+@@ -241,13 +241,13 @@ static void *ringbuf_map_lookup_elem(struct bpf_map *map, void *key)
+ 	return ERR_PTR(-ENOTSUPP);
+ }
+ 
+-static int ringbuf_map_update_elem(struct bpf_map *map, void *key, void *value,
+-				   u64 flags)
++static long ringbuf_map_update_elem(struct bpf_map *map, void *key, void *value,
++				    u64 flags)
+ {
+ 	return -ENOTSUPP;
+ }
+ 
+-static int ringbuf_map_delete_elem(struct bpf_map *map, void *key)
++static long ringbuf_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	return -ENOTSUPP;
+ }
+diff --git a/kernel/bpf/stackmap.c b/kernel/bpf/stackmap.c
+index aecea7451b610..496ce1695dd89 100644
+--- a/kernel/bpf/stackmap.c
++++ b/kernel/bpf/stackmap.c
+@@ -618,14 +618,14 @@ static int stack_map_get_next_key(struct bpf_map *map, void *key,
+ 	return 0;
+ }
+ 
+-static int stack_map_update_elem(struct bpf_map *map, void *key, void *value,
+-				 u64 map_flags)
++static long stack_map_update_elem(struct bpf_map *map, void *key, void *value,
++				  u64 map_flags)
+ {
+ 	return -EINVAL;
+ }
+ 
+ /* Called from syscall or from eBPF program */
+-static int stack_map_delete_elem(struct bpf_map *map, void *key)
++static long stack_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct bpf_stack_map *smap = container_of(map, struct bpf_stack_map, map);
+ 	struct stack_map_bucket *old_bucket;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 672a667b3d760..14604611a35dd 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -16678,21 +16678,21 @@ static int do_misc_fixups(struct bpf_verifier_env *env)
+ 			BUILD_BUG_ON(!__same_type(ops->map_lookup_elem,
+ 				     (void *(*)(struct bpf_map *map, void *key))NULL));
+ 			BUILD_BUG_ON(!__same_type(ops->map_delete_elem,
+-				     (int (*)(struct bpf_map *map, void *key))NULL));
++				     (long (*)(struct bpf_map *map, void *key))NULL));
+ 			BUILD_BUG_ON(!__same_type(ops->map_update_elem,
+-				     (int (*)(struct bpf_map *map, void *key, void *value,
++				     (long (*)(struct bpf_map *map, void *key, void *value,
+ 					      u64 flags))NULL));
+ 			BUILD_BUG_ON(!__same_type(ops->map_push_elem,
+-				     (int (*)(struct bpf_map *map, void *value,
++				     (long (*)(struct bpf_map *map, void *value,
+ 					      u64 flags))NULL));
+ 			BUILD_BUG_ON(!__same_type(ops->map_pop_elem,
+-				     (int (*)(struct bpf_map *map, void *value))NULL));
++				     (long (*)(struct bpf_map *map, void *value))NULL));
+ 			BUILD_BUG_ON(!__same_type(ops->map_peek_elem,
+-				     (int (*)(struct bpf_map *map, void *value))NULL));
++				     (long (*)(struct bpf_map *map, void *value))NULL));
+ 			BUILD_BUG_ON(!__same_type(ops->map_redirect,
+-				     (int (*)(struct bpf_map *map, u64 index, u64 flags))NULL));
++				     (long (*)(struct bpf_map *map, u64 index, u64 flags))NULL));
+ 			BUILD_BUG_ON(!__same_type(ops->map_for_each_callback,
+-				     (int (*)(struct bpf_map *map,
++				     (long (*)(struct bpf_map *map,
+ 					      bpf_callback_t callback_fn,
+ 					      void *callback_ctx,
+ 					      u64 flags))NULL));
+diff --git a/net/core/bpf_sk_storage.c b/net/core/bpf_sk_storage.c
+index bb378c33f542c..6a4b3e9313241 100644
+--- a/net/core/bpf_sk_storage.c
++++ b/net/core/bpf_sk_storage.c
+@@ -100,8 +100,8 @@ static void *bpf_fd_sk_storage_lookup_elem(struct bpf_map *map, void *key)
+ 	return ERR_PTR(err);
+ }
+ 
+-static int bpf_fd_sk_storage_update_elem(struct bpf_map *map, void *key,
+-					 void *value, u64 map_flags)
++static long bpf_fd_sk_storage_update_elem(struct bpf_map *map, void *key,
++					  void *value, u64 map_flags)
+ {
+ 	struct bpf_local_storage_data *sdata;
+ 	struct socket *sock;
+@@ -120,7 +120,7 @@ static int bpf_fd_sk_storage_update_elem(struct bpf_map *map, void *key,
+ 	return err;
+ }
+ 
+-static int bpf_fd_sk_storage_delete_elem(struct bpf_map *map, void *key)
++static long bpf_fd_sk_storage_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct socket *sock;
+ 	int fd, err;
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index a68a7290a3b2b..a055139f410e2 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -437,7 +437,7 @@ static void sock_map_delete_from_link(struct bpf_map *map, struct sock *sk,
+ 	__sock_map_delete(stab, sk, link_raw);
+ }
+ 
+-static int sock_map_delete_elem(struct bpf_map *map, void *key)
++static long sock_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct bpf_stab *stab = container_of(map, struct bpf_stab, map);
+ 	u32 i = *(u32 *)key;
+@@ -587,8 +587,8 @@ int sock_map_update_elem_sys(struct bpf_map *map, void *key, void *value,
+ 	return ret;
+ }
+ 
+-static int sock_map_update_elem(struct bpf_map *map, void *key,
+-				void *value, u64 flags)
++static long sock_map_update_elem(struct bpf_map *map, void *key,
++				 void *value, u64 flags)
+ {
+ 	struct sock *sk = (struct sock *)value;
+ 	int ret;
+@@ -916,7 +916,7 @@ static void sock_hash_delete_from_link(struct bpf_map *map, struct sock *sk,
+ 	raw_spin_unlock_bh(&bucket->lock);
+ }
+ 
+-static int sock_hash_delete_elem(struct bpf_map *map, void *key)
++static long sock_hash_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct bpf_shtab *htab = container_of(map, struct bpf_shtab, map);
+ 	u32 hash, key_size = map->key_size;
+diff --git a/net/xdp/xskmap.c b/net/xdp/xskmap.c
+index 771d0fa90ef58..3436a8efb8dc7 100644
+--- a/net/xdp/xskmap.c
++++ b/net/xdp/xskmap.c
+@@ -150,8 +150,8 @@ static void *xsk_map_lookup_elem_sys_only(struct bpf_map *map, void *key)
+ 	return ERR_PTR(-EOPNOTSUPP);
+ }
+ 
+-static int xsk_map_update_elem(struct bpf_map *map, void *key, void *value,
+-			       u64 map_flags)
++static long xsk_map_update_elem(struct bpf_map *map, void *key, void *value,
++				u64 map_flags)
+ {
+ 	struct xsk_map *m = container_of(map, struct xsk_map, map);
+ 	struct xdp_sock __rcu **map_entry;
+@@ -211,7 +211,7 @@ static int xsk_map_update_elem(struct bpf_map *map, void *key, void *value,
+ 	return err;
+ }
+ 
+-static int xsk_map_delete_elem(struct bpf_map *map, void *key)
++static long xsk_map_delete_elem(struct bpf_map *map, void *key)
+ {
+ 	struct xsk_map *m = container_of(map, struct xsk_map, map);
+ 	struct xdp_sock __rcu **map_entry;
+@@ -231,7 +231,7 @@ static int xsk_map_delete_elem(struct bpf_map *map, void *key)
+ 	return 0;
+ }
+ 
+-static int xsk_map_redirect(struct bpf_map *map, u64 index, u64 flags)
++static long xsk_map_redirect(struct bpf_map *map, u64 index, u64 flags)
+ {
+ 	return __bpf_xdp_redirect_map(map, index, flags, 0,
+ 				      __xsk_map_lookup_elem);
 -- 
 2.39.2
 
