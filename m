@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 849CA168C7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012C1C433EF;
-	Mon,  8 May 2023 11:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C922168C7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6725C433D2;
+	Mon,  8 May 2023 11:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543664;
-	bh=bPpjuJhKjHFDob9qP1LhmD7q8YeQbCIPhuGF1oi6CRs=;
+	s=korg; t=1683543667;
+	bh=xRBZmjTtZATfJitir68U+VJ2net7eVXUVP+HHN8hZZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BsJif8UeHZXOPp3Bq0BG5au41ShJvAbhw2AESNQYogUdhp7rW/Bxr0hgGA6zD0NkA
-	 CejNJq5LAUccEGmSW4iJTlpU+wZ3Z7w9bkb9Sf+DcXavTzjy7nhCbTEJHlmOjmbWsx
-	 pPyNCF/XU16bWzKjgbFNz5pBSO76AJqdJMYg56jw=
+	b=TTfMqP+4atKSAkb9g0EbDHToOdb1VLSkLy9g29U1FO35AzlJAzMtm9LxaT9J9oK8I
+	 sRZa2GHWzEbb9Vtp/m1oJQAIZ8GYKDF44tMsySe+oqsou4F6hS2gc18qOVv3vtlKIS
+	 +bxbzVLlzBJatx1vesQJFOMe1IWVuscFmK3i6sEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 144/694] tpm, tpm: Implement usage counter for locality
-Date: Mon,  8 May 2023 11:39:39 +0200
-Message-Id: <20230508094437.131295897@linuxfoundation.org>
+Subject: [PATCH 6.3 162/694] arm64: dts: renesas: r9a07g044: Update IRQ numbers for SSI channels
+Date: Mon,  8 May 2023 11:39:57 +0200
+Message-Id: <20230508094437.672007024@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,230 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 7a2f55d0be296c4e81fd782f3d6c43ed4ec7e265 ]
+[ Upstream commit 5da750ddd96454757a3b467e968e3fb70bb12bc8 ]
 
-Implement a usage counter for the (default) locality used by the TPM TIS
-driver:
-Request the locality from the TPM if it has not been claimed yet, otherwise
-only increment the counter. Also release the locality if the counter is 0
-otherwise only decrement the counter. Since in case of SPI the register
-accesses are locked by means of the SPI bus mutex use a sleepable lock
-(i.e. also a mutex) to ensure thread-safety of the counter which may be
-accessed by both a userspace thread and the interrupt handler.
+>From R01UH0914EJ0120 Rev.1.20 HW manual the interrupt numbers for SSI
+channels have been updated,
 
-By doing this refactor the names of the amended functions to use a more
-appropriate prefix.
+SPI 329 - SSIF0 is now marked as reserved
+SPI 333 - SSIF1 is now marked as reserved
+SPI 335 - SSIF2 is now marked as reserved
+SPI 336 - SSIF2 is now marked as reserved
+SPI 341 - SSIF3 is now marked as reserved
 
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Tested-by: Michael Niewöhner <linux@mniewoehner.de>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Stable-dep-of: 955df4f87760 ("tpm, tpm_tis: Claim locality when interrupts are reenabled on resume")
+This patch drops the above IRQs from SoC DTSI.
+
+Fixes: 92a341315afc9 ("arm64: dts: renesas: r9a07g044: Add SSI support")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20230217185225.43310-4-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 63 +++++++++++++++++++++++----------
- drivers/char/tpm/tpm_tis_core.h |  2 ++
- 2 files changed, 47 insertions(+), 18 deletions(-)
+ arch/arm64/boot/dts/renesas/r9a07g044.dtsi | 19 +++++++------------
+ 1 file changed, 7 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 39f27edb32879..c5fef63c6179d 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -136,16 +136,27 @@ static bool check_locality(struct tpm_chip *chip, int l)
- 	return false;
- }
- 
--static int release_locality(struct tpm_chip *chip, int l)
-+static int __tpm_tis_relinquish_locality(struct tpm_tis_data *priv, int l)
-+{
-+	tpm_tis_write8(priv, TPM_ACCESS(l), TPM_ACCESS_ACTIVE_LOCALITY);
-+
-+	return 0;
-+}
-+
-+static int tpm_tis_relinquish_locality(struct tpm_chip *chip, int l)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
- 
--	tpm_tis_write8(priv, TPM_ACCESS(l), TPM_ACCESS_ACTIVE_LOCALITY);
-+	mutex_lock(&priv->locality_count_mutex);
-+	priv->locality_count--;
-+	if (priv->locality_count == 0)
-+		__tpm_tis_relinquish_locality(priv, l);
-+	mutex_unlock(&priv->locality_count_mutex);
- 
- 	return 0;
- }
- 
--static int request_locality(struct tpm_chip *chip, int l)
-+static int __tpm_tis_request_locality(struct tpm_chip *chip, int l)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
- 	unsigned long stop, timeout;
-@@ -186,6 +197,20 @@ static int request_locality(struct tpm_chip *chip, int l)
- 	return -1;
- }
- 
-+static int tpm_tis_request_locality(struct tpm_chip *chip, int l)
-+{
-+	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
-+	int ret = 0;
-+
-+	mutex_lock(&priv->locality_count_mutex);
-+	if (priv->locality_count == 0)
-+		ret = __tpm_tis_request_locality(chip, l);
-+	if (!ret)
-+		priv->locality_count++;
-+	mutex_unlock(&priv->locality_count_mutex);
-+	return ret;
-+}
-+
- static u8 tpm_tis_status(struct tpm_chip *chip)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
-@@ -652,7 +677,7 @@ static int probe_itpm(struct tpm_chip *chip)
- 	if (vendor != TPM_VID_INTEL)
- 		return 0;
- 
--	if (request_locality(chip, 0) != 0)
-+	if (tpm_tis_request_locality(chip, 0) != 0)
- 		return -EBUSY;
- 
- 	rc = tpm_tis_send_data(chip, cmd_getticks, len);
-@@ -673,7 +698,7 @@ static int probe_itpm(struct tpm_chip *chip)
- 
- out:
- 	tpm_tis_ready(chip);
--	release_locality(chip, priv->locality);
-+	tpm_tis_relinquish_locality(chip, priv->locality);
- 
- 	return rc;
- }
-@@ -765,14 +790,14 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
- 	}
- 	priv->irq = irq;
- 
--	rc = request_locality(chip, 0);
-+	rc = tpm_tis_request_locality(chip, 0);
- 	if (rc < 0)
- 		return rc;
- 
- 	rc = tpm_tis_read8(priv, TPM_INT_VECTOR(priv->locality),
- 			   &original_int_vec);
- 	if (rc < 0) {
--		release_locality(chip, priv->locality);
-+		tpm_tis_relinquish_locality(chip, priv->locality);
- 		return rc;
- 	}
- 
-@@ -811,7 +836,7 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
- 		rc = -1;
- 	}
- 
--	release_locality(chip, priv->locality);
-+	tpm_tis_relinquish_locality(chip, priv->locality);
- 
- 	return rc;
- }
-@@ -927,8 +952,8 @@ static const struct tpm_class_ops tpm_tis = {
- 	.req_complete_mask = TPM_STS_DATA_AVAIL | TPM_STS_VALID,
- 	.req_complete_val = TPM_STS_DATA_AVAIL | TPM_STS_VALID,
- 	.req_canceled = tpm_tis_req_canceled,
--	.request_locality = request_locality,
--	.relinquish_locality = release_locality,
-+	.request_locality = tpm_tis_request_locality,
-+	.relinquish_locality = tpm_tis_relinquish_locality,
- 	.clk_enable = tpm_tis_clkrun_enable,
- };
- 
-@@ -962,6 +987,8 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 	priv->timeout_min = TPM_TIMEOUT_USECS_MIN;
- 	priv->timeout_max = TPM_TIMEOUT_USECS_MAX;
- 	priv->phy_ops = phy_ops;
-+	priv->locality_count = 0;
-+	mutex_init(&priv->locality_count_mutex);
- 
- 	dev_set_drvdata(&chip->dev, priv);
- 
-@@ -1008,14 +1035,14 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 		   TPM_INTF_DATA_AVAIL_INT | TPM_INTF_STS_VALID_INT;
- 	intmask &= ~TPM_GLOBAL_INT_ENABLE;
- 
--	rc = request_locality(chip, 0);
-+	rc = tpm_tis_request_locality(chip, 0);
- 	if (rc < 0) {
- 		rc = -ENODEV;
- 		goto out_err;
- 	}
- 
- 	tpm_tis_write32(priv, TPM_INT_ENABLE(priv->locality), intmask);
--	release_locality(chip, 0);
-+	tpm_tis_relinquish_locality(chip, 0);
- 
- 	rc = tpm_chip_start(chip);
- 	if (rc)
-@@ -1075,13 +1102,13 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 		 * proper timeouts for the driver.
- 		 */
- 
--		rc = request_locality(chip, 0);
-+		rc = tpm_tis_request_locality(chip, 0);
- 		if (rc < 0)
- 			goto out_err;
- 
- 		rc = tpm_get_timeouts(chip);
- 
--		release_locality(chip, 0);
-+		tpm_tis_relinquish_locality(chip, 0);
- 
- 		if (rc) {
- 			dev_err(dev, "Could not get TPM timeouts and durations\n");
-@@ -1099,11 +1126,11 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 			dev_err(&chip->dev, FW_BUG
- 					"TPM interrupt not working, polling instead\n");
- 
--			rc = request_locality(chip, 0);
-+			rc = tpm_tis_request_locality(chip, 0);
- 			if (rc < 0)
- 				goto out_err;
- 			disable_interrupts(chip);
--			release_locality(chip, 0);
-+			tpm_tis_relinquish_locality(chip, 0);
- 		}
- 	}
- 
-@@ -1176,13 +1203,13 @@ int tpm_tis_resume(struct device *dev)
- 	 * an error code but for unknown reason it isn't handled.
- 	 */
- 	if (!(chip->flags & TPM_CHIP_FLAG_TPM2)) {
--		ret = request_locality(chip, 0);
-+		ret = tpm_tis_request_locality(chip, 0);
- 		if (ret < 0)
- 			return ret;
- 
- 		tpm1_do_selftest(chip);
- 
--		release_locality(chip, 0);
-+		tpm_tis_relinquish_locality(chip, 0);
- 	}
- 
- 	return 0;
-diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
-index b68479e0de10f..1d51d5168fb6e 100644
---- a/drivers/char/tpm/tpm_tis_core.h
-+++ b/drivers/char/tpm/tpm_tis_core.h
-@@ -91,6 +91,8 @@ enum tpm_tis_flags {
- 
- struct tpm_tis_data {
- 	u16 manufacturer_id;
-+	struct mutex locality_count_mutex;
-+	unsigned int locality_count;
- 	int locality;
- 	int irq;
- 	bool irq_tested;
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
+index 487536696d900..6a42df15440cf 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
++++ b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
+@@ -175,9 +175,8 @@
+ 			reg = <0 0x10049c00 0 0x400>;
+ 			interrupts = <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 327 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 328 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 329 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++				     <GIC_SPI 328 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "int_req", "dma_rx", "dma_tx";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI0_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI0_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
+@@ -196,9 +195,8 @@
+ 			reg = <0 0x1004a000 0 0x400>;
+ 			interrupts = <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 331 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 332 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 333 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++				     <GIC_SPI 332 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "int_req", "dma_rx", "dma_tx";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI1_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI1_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
+@@ -216,10 +214,8 @@
+ 				     "renesas,rz-ssi";
+ 			reg = <0 0x1004a400 0 0x400>;
+ 			interrupts = <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 335 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 336 IRQ_TYPE_EDGE_RISING>,
+ 				     <GIC_SPI 337 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++			interrupt-names = "int_req", "dma_rt";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI2_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI2_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
+@@ -238,9 +234,8 @@
+ 			reg = <0 0x1004a800 0 0x400>;
+ 			interrupts = <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 339 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 340 IRQ_TYPE_EDGE_RISING>,
+-				     <GIC_SPI 341 IRQ_TYPE_EDGE_RISING>;
+-			interrupt-names = "int_req", "dma_rx", "dma_tx", "dma_rt";
++				     <GIC_SPI 340 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "int_req", "dma_rx", "dma_tx";
+ 			clocks = <&cpg CPG_MOD R9A07G044_SSI3_PCLK2>,
+ 				 <&cpg CPG_MOD R9A07G044_SSI3_PCLK_SFR>,
+ 				 <&audio_clk1>, <&audio_clk2>;
 -- 
 2.39.2
 
