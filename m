@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8BD171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5797C433D2;
-	Mon,  8 May 2023 11:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FB7171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:46:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C334C433EF;
+	Mon,  8 May 2023 11:46:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546364;
-	bh=yyXvubOl0Lqw6wg/6U4TJZLynShHOBkAUwmQ0uv7Q0U=;
+	s=korg; t=1683546366;
+	bh=2yX76qLcn1KkNIJrDXgeIgBXiy8XGQgn4DbjAXQFVQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W97nCuE5945GEDKJjimhyj1v3+dKOzKbCHlW1L6PuSN7nrit4cNvCtmtp5974bK+i
-	 g14AB2R2yM5544WJfqOwfuNGNJvloViYEz4MDJTQVp2PnxhDGgh1B5Yij8kZEB46yp
-	 Vs5g+2EWu2pmQR2gJDwxwPEmH5ofy5jgD6FGNaDk=
+	b=PvzRFlR5/UgCUIx8lvk5AJ5+MyO1Hd6ivepw7Rooi+/Uk+edPK87eZofqsHtk+8Vf
+	 evrY6GLOto/xk6vvZaz+M3ihywlrpoWbp693v7K/+9IclOvJt5P9dZU2D8XNDvRf5F
+	 jz3Nb9glvVaFcxy7h0QoTzyOVSZQ/KunFiGS1nxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Lee Jones <lee@kernel.org>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 343/371] mfd: tqmx86: Correct board names for TQMxE39x
-Date: Mon,  8 May 2023 11:49:04 +0200
-Message-Id: <20230508094825.756940129@linuxfoundation.org>
+Subject: [PATCH 5.15 344/371] afs: Fix updating of i_size with dv jump from server
+Date: Mon,  8 May 2023 11:49:05 +0200
+Message-Id: <20230508094825.799944115@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,117 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
+From: Marc Dionne <marc.dionne@auristor.com>
 
-[ Upstream commit f376c479668557bcc2fd9e9fbc0f53e7819a11cd ]
+[ Upstream commit d7f74e9a917503ee78f2b603a456d7227cf38919 ]
 
-It seems that this driver was developed based on preliminary documentation.
-Report the correct names for all TQMxE39x variants, as they are used by
-the released hardware revisions:
+If the data version returned from the server is larger than expected,
+the local data is invalidated, but we may still want to note the remote
+file size.
 
-- Fix names for TQMxE39C1/C2 board IDs
-- Distinguish TQMxE39M and TQMxE39S, which use the same board ID
+Since we're setting change_size, we have to also set data_changed
+for the i_size to get updated.
 
-The TQMxE39M/S are distinguished using the SAUC (Sanctioned Alternate
-Uses Configuration) register of the GPIO controller. This also prepares
-for the correct handling of the differences between the GPIO controllers
-of our COMe and SMARC modules.
-
-Fixes: 2f17dd34ffed ("mfd: tqmx86: IO controller with I2C, Wachdog and GPIO")
-Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/aca9a7cb42a85181bcb456c437554d2728e708ec.1676892223.git.matthias.schiffer@ew.tq-group.com
+Fixes: 3f4aa9818163 ("afs: Fix EOF corruption")
+Signed-off-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: linux-afs@lists.infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tqmx86.c | 32 +++++++++++++++++---------------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ fs/afs/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mfd/tqmx86.c b/drivers/mfd/tqmx86.c
-index 958334f14eb00..fac02875fe7d9 100644
---- a/drivers/mfd/tqmx86.c
-+++ b/drivers/mfd/tqmx86.c
-@@ -30,9 +30,9 @@
- #define TQMX86_REG_BOARD_ID_50UC	2
- #define TQMX86_REG_BOARD_ID_E38C	3
- #define TQMX86_REG_BOARD_ID_60EB	4
--#define TQMX86_REG_BOARD_ID_E39M	5
--#define TQMX86_REG_BOARD_ID_E39C	6
--#define TQMX86_REG_BOARD_ID_E39x	7
-+#define TQMX86_REG_BOARD_ID_E39MS	5
-+#define TQMX86_REG_BOARD_ID_E39C1	6
-+#define TQMX86_REG_BOARD_ID_E39C2	7
- #define TQMX86_REG_BOARD_ID_70EB	8
- #define TQMX86_REG_BOARD_ID_80UC	9
- #define TQMX86_REG_BOARD_ID_110EB	11
-@@ -48,6 +48,7 @@
- #define TQMX86_REG_IO_EXT_INT_12		3
- #define TQMX86_REG_IO_EXT_INT_MASK		0x3
- #define TQMX86_REG_IO_EXT_INT_GPIO_SHIFT	4
-+#define TQMX86_REG_SAUC		0x17
- 
- #define TQMX86_REG_I2C_DETECT	0x1a7
- #define TQMX86_REG_I2C_DETECT_SOFT		0xa5
-@@ -110,7 +111,7 @@ static const struct mfd_cell tqmx86_devs[] = {
- 	},
- };
- 
--static const char *tqmx86_board_id_to_name(u8 board_id)
-+static const char *tqmx86_board_id_to_name(u8 board_id, u8 sauc)
- {
- 	switch (board_id) {
- 	case TQMX86_REG_BOARD_ID_E38M:
-@@ -121,12 +122,12 @@ static const char *tqmx86_board_id_to_name(u8 board_id)
- 		return "TQMxE38C";
- 	case TQMX86_REG_BOARD_ID_60EB:
- 		return "TQMx60EB";
--	case TQMX86_REG_BOARD_ID_E39M:
--		return "TQMxE39M";
--	case TQMX86_REG_BOARD_ID_E39C:
--		return "TQMxE39C";
--	case TQMX86_REG_BOARD_ID_E39x:
--		return "TQMxE39x";
-+	case TQMX86_REG_BOARD_ID_E39MS:
-+		return (sauc == 0xff) ? "TQMxE39M" : "TQMxE39S";
-+	case TQMX86_REG_BOARD_ID_E39C1:
-+		return "TQMxE39C1";
-+	case TQMX86_REG_BOARD_ID_E39C2:
-+		return "TQMxE39C2";
- 	case TQMX86_REG_BOARD_ID_70EB:
- 		return "TQMx70EB";
- 	case TQMX86_REG_BOARD_ID_80UC:
-@@ -159,9 +160,9 @@ static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
- 	case TQMX86_REG_BOARD_ID_E40C1:
- 	case TQMX86_REG_BOARD_ID_E40C2:
- 		return 24000;
--	case TQMX86_REG_BOARD_ID_E39M:
--	case TQMX86_REG_BOARD_ID_E39C:
--	case TQMX86_REG_BOARD_ID_E39x:
-+	case TQMX86_REG_BOARD_ID_E39MS:
-+	case TQMX86_REG_BOARD_ID_E39C1:
-+	case TQMX86_REG_BOARD_ID_E39C2:
- 		return 25000;
- 	case TQMX86_REG_BOARD_ID_E38M:
- 	case TQMX86_REG_BOARD_ID_E38C:
-@@ -175,7 +176,7 @@ static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
- 
- static int tqmx86_probe(struct platform_device *pdev)
- {
--	u8 board_id, rev, i2c_det, io_ext_int_val;
-+	u8 board_id, sauc, rev, i2c_det, io_ext_int_val;
- 	struct device *dev = &pdev->dev;
- 	u8 gpio_irq_cfg, readback;
- 	const char *board_name;
-@@ -205,7 +206,8 @@ static int tqmx86_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 
- 	board_id = ioread8(io_base + TQMX86_REG_BOARD_ID);
--	board_name = tqmx86_board_id_to_name(board_id);
-+	sauc = ioread8(io_base + TQMX86_REG_SAUC);
-+	board_name = tqmx86_board_id_to_name(board_id, sauc);
- 	rev = ioread8(io_base + TQMX86_REG_BOARD_REV);
- 
- 	dev_info(dev,
+diff --git a/fs/afs/inode.c b/fs/afs/inode.c
+index 785bacb972da5..91b1f8cabd58f 100644
+--- a/fs/afs/inode.c
++++ b/fs/afs/inode.c
+@@ -219,6 +219,7 @@ static void afs_apply_status(struct afs_operation *op,
+ 			set_bit(AFS_VNODE_ZAP_DATA, &vnode->flags);
+ 		}
+ 		change_size = true;
++		data_changed = true;
+ 	} else if (vnode->status.type == AFS_FTYPE_DIR) {
+ 		/* Expected directory change is handled elsewhere so
+ 		 * that we can locally edit the directory and save on a
 -- 
 2.39.2
 
