@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F62B13AE0
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8597C433EF;
-	Mon,  8 May 2023 10:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F84125B6
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:59:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBEF9C433D2;
+	Mon,  8 May 2023 10:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543591;
-	bh=QYno0vz/d8QgxohmFQF8mBOmRPWQqQD1GBoA/5/kgDc=;
+	s=korg; t=1683543594;
+	bh=AIEDbdtkdwfgnxXgObbj/Xfv0A+aP9sTc29GPKhmA2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KPfHWFgrKv+jnaiQ0z2wHsea6f+BRFFcPuEXnDrIBUs1AQzw46O42523j0UTDGZXZ
-	 hXcO6yYR1iQINUjnuXLI9JI9edZi9FSiE6h5K7qpkNUq+x7lI4YLIezHvppRByE3xv
-	 /SnoMvyhDCEUlrfRQpriaJcfM35gowKIxx1nmFjs=
+	b=IaDwskWgRIXdlE43uc4iIsJeibiL6W784QMS4MGsKe6LmQBVMX64as1329Gi4aP2T
+	 DsTUTfy4WQCM6AbFjpU+GA4LnQTtjuW47/L8qFT9CysaaKNb8ZrJJhpCeHsvrsGfbQ
+	 SpzQlXd3/2iOxcuC7LzPqCsqNqmihWyb+Prb6J7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.3 112/694] md/raid10: fix null-ptr-deref in raid10_sync_request
-Date: Mon,  8 May 2023 11:39:07 +0200
-Message-Id: <20230508094436.108046947@linuxfoundation.org>
+	Paul Moore <paul@paul-moore.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 139/694] selinux: ensure av_permissions.h is built when needed
+Date: Mon,  8 May 2023 11:39:34 +0200
+Message-Id: <20230508094436.967956368@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -34,64 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Paul Moore <paul@paul-moore.com>
 
-commit a405c6f0229526160aa3f177f65e20c86fce84c5 upstream.
+[ Upstream commit 4ce1f694eb5d8ca607fed8542d32a33b4f1217a5 ]
 
-init_resync() inits mempool and sets conf->have_replacemnt at the beginning
-of sync, close_sync() frees the mempool when sync is completed.
+The Makefile rule responsible for building flask.h and
+av_permissions.h only lists flask.h as a target which means that
+av_permissions.h is only generated when flask.h needs to be
+generated.  This patch fixes this by adding av_permissions.h as a
+target to the rule.
 
-After [1] recovery might be skipped and init_resync() is called but
-close_sync() is not. null-ptr-deref occurs with r10bio->dev[i].repl_bio.
-
-The following is one way to reproduce the issue.
-
-  1) create a array, wait for resync to complete, mddev->recovery_cp is set
-     to MaxSector.
-  2) recovery is woken and it is skipped. conf->have_replacement is set to
-     0 in init_resync(). close_sync() not called.
-  3) some io errors and rdev A is set to WantReplacement.
-  4) a new device is added and set to A's replacement.
-  5) recovery is woken, A have replacement, but conf->have_replacemnt is
-     0. r10bio->dev[i].repl_bio will not be alloced and null-ptr-deref
-     occurs.
-
-Fix it by not calling init_resync() if recovery skipped.
-
-[1] commit 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
-Fixes: 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
-Cc: stable@vger.kernel.org
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230222041000.3341651-3-linan666@huaweicloud.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8753f6bec352 ("selinux: generate flask headers during kernel build")
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ security/selinux/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -3289,10 +3289,6 @@ static sector_t raid10_sync_request(stru
- 	sector_t chunk_mask = conf->geo.chunk_mask;
- 	int page_idx = 0;
+diff --git a/security/selinux/Makefile b/security/selinux/Makefile
+index 103c2776478a7..0aecf9334ec31 100644
+--- a/security/selinux/Makefile
++++ b/security/selinux/Makefile
+@@ -26,5 +26,5 @@ quiet_cmd_flask = GEN     $(obj)/flask.h $(obj)/av_permissions.h
+       cmd_flask = $< $(obj)/flask.h $(obj)/av_permissions.h
  
--	if (!mempool_initialized(&conf->r10buf_pool))
--		if (init_resync(conf))
--			return 0;
--
- 	/*
- 	 * Allow skipping a full rebuild for incremental assembly
- 	 * of a clean array, like RAID1 does.
-@@ -3308,6 +3304,10 @@ static sector_t raid10_sync_request(stru
- 		return mddev->dev_sectors - sector_nr;
- 	}
- 
-+	if (!mempool_initialized(&conf->r10buf_pool))
-+		if (init_resync(conf))
-+			return 0;
-+
-  skipped:
- 	max_sector = mddev->dev_sectors;
- 	if (test_bit(MD_RECOVERY_SYNC, &mddev->recovery) ||
+ targets += flask.h av_permissions.h
+-$(obj)/flask.h: scripts/selinux/genheaders/genheaders FORCE
++$(obj)/flask.h $(obj)/av_permissions.h &: scripts/selinux/genheaders/genheaders FORCE
+ 	$(call if_changed,flask)
+-- 
+2.39.2
+
 
 
