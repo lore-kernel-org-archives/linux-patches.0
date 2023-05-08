@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDF6168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F3DC433D2;
-	Mon,  8 May 2023 10:49:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A55168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0BFC433D2;
+	Mon,  8 May 2023 10:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542957;
-	bh=FC884IW4HmSfoKS5dBzpF8BXVzOw0LBrRmhS3DCvSEE=;
+	s=korg; t=1683542960;
+	bh=kjsn8EC8znD3UmGWKTTvGFe8CixJgsskO6DqxniylZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bimP2C8u5vjDCKmbdJ8cSXkFXJF4QSBfiFDByQ29MNJR2E/C8MDLbJrpIdw6EHkrv
-	 e03TNhpZWX6wt4U7JfXf4RpqwmLGHzoU6cemPzfCmnuzfftnXGVix2Xuq95ytXLB9P
-	 rn/fmd/JeMxNZRC/7gwWPyHgqDoloayhRNBlS5F8=
+	b=wm7QgxBNMZOGRCnUtLwnxVQRU9Izay2bd+X4Um1E2VAF5TbCQWbTSmUwkb5KUSJZI
+	 Fq0oA9sgpPEIWlzaKGvyrkdm+gWBiA8pLZdmxxBvEn6R+HNj+GA64JkdBDK2B0Xv/R
+	 pY+dVNFwcE3eoX2o+bTPY9imAvO01FosPmYG2k+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Dipen Patel <dipenp@nvidia.com>,
+	=?UTF-8?q?G=C3=A9=20Koerkamp?= <ge.koerkamp@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 604/663] hte: tegra-194: Fix off by one in tegra_hte_map_to_line_id()
-Date: Mon,  8 May 2023 11:47:10 +0200
-Message-Id: <20230508094449.182441223@linuxfoundation.org>
+Subject: [PATCH 6.2 605/663] ACPI: PM: Do not turn of unused power resources on the Toshiba Click Mini
+Date: Mon,  8 May 2023 11:47:11 +0200
+Message-Id: <20230508094449.229722375@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,36 +36,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit e078180d66848a6a890daf0a3ce28dc43cc66790 ]
+[ Upstream commit 9b04d99788cf475cbd277f30ec66230ccb7e99f4 ]
 
-The "map_sz" is the number of elements in the "m" array so the >
-comparison needs to be changed to >= to prevent an out of bounds
-read.
+The CPR3 power resource on the Toshiba Click Mini toggles a GPIO
+which is called SISP (for SIS touchscreen power?) on/off.
 
-Fixes: 09574cca6ad6 ("hte: Add Tegra194 HTE kernel provider")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Acked-by: Dipen Patel <dipenp@nvidia.com>
-Signed-off-by: Dipen Patel <dipenp@nvidia.com>
+This CPR3 power resource is not listed in any _PR? lists, let alone
+in a _PR0 list for the SIS0817 touchscreen ACPI device which needs it.
+
+Before commit a1224f34d72a ("ACPI: PM: Check states of power resources
+during initialization") this was not an issue because since nothing
+referenced the CPR3 power resource its state was always
+ACPI_POWER_RESOURCE_STATE_UNKNOWN and power resources with this state
+get ignored by acpi_turn_off_unused_power_resources().
+
+This clearly is a bug in the DSDT of this device. Add a DMI quirk
+to make acpi_turn_off_unused_power_resources() a no-op on this
+model to fix the touchscreen no longer working since kernel 5.16 .
+
+This quirk also causes 2 other power resources to not get turned
+off, but the _OFF method on these already was a no-op, so this makes
+no difference for the other 2 power resources.
+
+Fixes: a1224f34d72a ("ACPI: PM: Check states of power resources during initialization")
+Reported-by: Gé Koerkamp <ge.koerkamp@gmail.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216946
+Link: https://lore.kernel.org/regressions/32a14a8a-9795-4c8c-7e00-da9012f548f8@leemhuis.info/
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hte/hte-tegra194.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/power.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/drivers/hte/hte-tegra194.c b/drivers/hte/hte-tegra194.c
-index 49a27af22742b..d1b579c822797 100644
---- a/drivers/hte/hte-tegra194.c
-+++ b/drivers/hte/hte-tegra194.c
-@@ -251,7 +251,7 @@ static int tegra_hte_map_to_line_id(u32 eid,
- {
+diff --git a/drivers/acpi/power.c b/drivers/acpi/power.c
+index 23507d29f0006..c2c70139c4f1d 100644
+--- a/drivers/acpi/power.c
++++ b/drivers/acpi/power.c
+@@ -23,6 +23,7 @@
  
- 	if (m) {
--		if (eid > map_sz)
-+		if (eid >= map_sz)
- 			return -EINVAL;
- 		if (m[eid].slice == NV_AON_SLICE_INVALID)
- 			return -EINVAL;
+ #define pr_fmt(fmt) "ACPI: PM: " fmt
+ 
++#include <linux/dmi.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/init.h>
+@@ -1022,6 +1023,21 @@ void acpi_resume_power_resources(void)
+ }
+ #endif
+ 
++static const struct dmi_system_id dmi_leave_unused_power_resources_on[] = {
++	{
++		/*
++		 * The Toshiba Click Mini has a CPR3 power-resource which must
++		 * be on for the touchscreen to work, but which is not in any
++		 * _PR? lists. The other 2 affected power-resources are no-ops.
++		 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "TOSHIBA"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "SATELLITE Click Mini L9W-B"),
++		},
++	},
++	{}
++};
++
+ /**
+  * acpi_turn_off_unused_power_resources - Turn off power resources not in use.
+  */
+@@ -1029,6 +1045,9 @@ void acpi_turn_off_unused_power_resources(void)
+ {
+ 	struct acpi_power_resource *resource;
+ 
++	if (dmi_check_system(dmi_leave_unused_power_resources_on))
++		return;
++
+ 	mutex_lock(&power_resource_list_lock);
+ 
+ 	list_for_each_entry_reverse(resource, &acpi_power_resource_list, list_node) {
 -- 
 2.39.2
 
