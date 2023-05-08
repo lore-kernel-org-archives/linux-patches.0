@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB6E168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC524C433EF;
-	Mon,  8 May 2023 10:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90402168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08DDDC433D2;
+	Mon,  8 May 2023 10:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541402;
-	bh=EBEywgEIhoeOxvsNWvtzN+uz/IExK8Z6aQeleH6WRII=;
+	s=korg; t=1683541405;
+	bh=BeaBmBFLMhn6wR0QhlMdNixRueD2HU3RQaKSeAdF75M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eZvk65EntRDL4gSfw9jdemp220ZFCpXF3SXbjDqpMJ5hYUft4Tjfxs+0K8qJ1+JJc
-	 m7P5ZHN4YNqN4fA1mQJaB8iNGPpHGeb70wcXM+3zK0lImMvTaysS81001pBPI41NaN
-	 Hxw2/uQ5HiLcJjLz/6UpBY0aChN062dyswhM98rU=
+	b=Vdmxkq+1CNcwRKtKhwswwAe16KC2sEMNqOVYLATnmY4cSI+l4dCS8YfvgNpi610Mm
+	 RTOj02YEZopPJZYAwf8CnD9d27m5vA8t5Qu/PXLL6VnGJ+R9er/T3JSuNWLJyyznr2
+	 NOMZM+r/vPCLAnvvjrsaYEQGQD9fSTgX2STBA2f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=D0=A0=D1=83=D1=81=D0=B5=D0=B2=20=D0=9F=D1=83=D1=82=D0=B8=D0=BD?= <rockeraliexpress@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.2 096/663] ACPI: video: Remove acpi_backlight=video quirk for Lenovo ThinkPad W530
-Date: Mon,  8 May 2023 11:38:42 +0200
-Message-Id: <20230508094431.571656454@linuxfoundation.org>
+	Wang YanQing <udknight@gmail.com>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.2 105/663] ubi: Fix return value overwrite issue in try_write_vid_and_data()
+Date: Mon,  8 May 2023 11:38:51 +0200
+Message-Id: <20230508094431.885874836@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,56 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Wang YanQing <udknight@gmail.com>
 
-commit 3db66620ea90b0fd4134b31eabfec16d7b07d7e3 upstream.
+commit 31a149d5c13c4cbcf97de3435817263a2d8c9d6e upstream.
 
-Remove the acpi_backlight=video quirk for Lenovo ThinkPad W530.
+The commit 2d78aee426d8 ("UBI: simplify LEB write and atomic LEB change code")
+adds helper function, try_write_vid_and_data(), to simplify the code, but this
+helper function has bug, it will return 0 (success) when ubi_io_write_vid_hdr()
+or the ubi_io_write_data() return error number (-EIO, etc), because the return
+value of ubi_wl_put_peb() will overwrite the original return value.
 
-This was intended to help users of the (unsupported) Nvidia binary driver,
-but this has been reported to cause backlight control issues for users
-who have the gfx configured in hybrid (dual-GPU) mode, so drop this.
+This issue will cause unexpected data loss issue, because the caller of this
+function and UBIFS willn't know the data is lost.
 
-The Nvidia binary driver should call acpi_video_register_backlight()
-when necessary and this has been reported to Nvidia.
-
-Until this is fixed Nvidia binary driver users can work around this by
-passing "acpi_backlight=video" on the kernel commandline (with the latest
-6.1.y or newer stable series, kernels < 6.1.y don't need this).
-
-Fixes: a5b2781dcab2 ("ACPI: video: Add acpi_backlight=video quirk for Lenovo ThinkPad W530")
-Reported-by: Русев Путин <rockeraliexpress@gmail.com>
-Link: https://lore.kernel.org/linux-acpi/CAK4BXn0ngZRmzx1bodAF8nmYj0PWdUXzPGHofRrsyZj8MBpcVA@mail.gmail.com/
-Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 2d78aee426d8 ("UBI: simplify LEB write and atomic LEB change code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wang YanQing <udknight@gmail.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c |   14 --------------
- 1 file changed, 14 deletions(-)
+ drivers/mtd/ubi/eba.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -300,20 +300,6 @@ static const struct dmi_system_id video_
- 	},
+--- a/drivers/mtd/ubi/eba.c
++++ b/drivers/mtd/ubi/eba.c
+@@ -946,7 +946,7 @@ static int try_write_vid_and_data(struct
+ 				  int offset, int len)
+ {
+ 	struct ubi_device *ubi = vol->ubi;
+-	int pnum, opnum, err, vol_id = vol->vol_id;
++	int pnum, opnum, err, err2, vol_id = vol->vol_id;
  
- 	/*
--	 * Older models with nvidia GPU which need acpi_video backlight
--	 * control and where the old nvidia binary driver series does not
--	 * call acpi_video_register_backlight().
--	 */
--	{
--	 .callback = video_detect_force_video,
--	 /* ThinkPad W530 */
--	 .matches = {
--		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
--		DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad W530"),
--		},
--	},
--
--	/*
- 	 * These models have a working acpi_video backlight control, and using
- 	 * native backlight causes a regression where backlight does not work
- 	 * when userspace is not handling brightness key events. Disable
+ 	pnum = ubi_wl_get_peb(ubi);
+ 	if (pnum < 0) {
+@@ -981,10 +981,19 @@ static int try_write_vid_and_data(struct
+ out_put:
+ 	up_read(&ubi->fm_eba_sem);
+ 
+-	if (err && pnum >= 0)
+-		err = ubi_wl_put_peb(ubi, vol_id, lnum, pnum, 1);
+-	else if (!err && opnum >= 0)
+-		err = ubi_wl_put_peb(ubi, vol_id, lnum, opnum, 0);
++	if (err && pnum >= 0) {
++		err2 = ubi_wl_put_peb(ubi, vol_id, lnum, pnum, 1);
++		if (err2) {
++			ubi_warn(ubi, "failed to return physical eraseblock %d, error %d",
++				 pnum, err2);
++		}
++	} else if (!err && opnum >= 0) {
++		err2 = ubi_wl_put_peb(ubi, vol_id, lnum, opnum, 0);
++		if (err2) {
++			ubi_warn(ubi, "failed to return physical eraseblock %d, error %d",
++				 opnum, err2);
++		}
++	}
+ 
+ 	return err;
+ }
 
 
