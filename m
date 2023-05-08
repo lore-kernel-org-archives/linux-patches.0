@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88F6C168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:04:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD62C433EF;
-	Mon,  8 May 2023 11:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADABA168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:04:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1501BC433EF;
+	Mon,  8 May 2023 11:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543856;
-	bh=E/mjO3w316du/4NCN5FEqQc8cNavz00WxbU33FV8TRk=;
+	s=korg; t=1683543859;
+	bh=mpTes964mqXXGyctO4vhDHifhhAQxSchPulv0ClTJys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EyOUE/sOpNFVzlR8ybbzdxXfIZ/Spk9TkEXyJq7l4UA5FPpNLg6hBT1mzQcSd+nHK
-	 cCqlHwqKh/IhcaBVmnRiQyyR1PHj8lTBGcOrco/1U3tc1adjuVhrI+cw0WrBI3o3pI
-	 5NiU2vZRHejW98lxZwLow6h1/LlZpxLfAO1jXkpM=
+	b=HHYsiqLX56AGeR0Jx4xnw1e/v02LMIMhw60aAaTXknUyHXfYO3ZbAS7JFLf4hQLJm
+	 c2yu+pueFnbV9RsB12j0O1tmbq9AId8KHdXkvGeDIoQ+9M419E4+vna5p1jc2E6GFE
+	 yeUDO2Ofo+YVR6ZpBN7s6mlzEkOwagYDMGlDk5iI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Georgii Kruglov <georgy.kruglov@yandex.ru>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 224/694] mmc: sdhci-of-esdhc: fix quirk to ignore command inhibit for data
-Date: Mon,  8 May 2023 11:40:59 +0200
-Message-Id: <20230508094439.625384939@linuxfoundation.org>
+Subject: [PATCH 6.3 225/694] arm64: dts: qcom: sm8450: fix pcie1 gpios properties name
+Date: Mon,  8 May 2023 11:41:00 +0200
+Message-Id: <20230508094439.663374721@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,80 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Georgii Kruglov <georgy.kruglov@yandex.ru>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 0dd8316037a2a6d85b2be208bef9991de7b42170 ]
+[ Upstream commit e57430d2483506f046e39bf8c61159dde88aede2 ]
 
-If spec_reg is equal to 'SDHCI_PRESENT_STATE', esdhc_readl_fixup()
-fixes up register value and returns it immediately. As a result, the
-further block
-(spec_reg == SDHCI_PRESENT_STATE)
-    &&(esdhc->quirk_ignore_data_inhibit == true),
-is never executed.
+Add the final "s" to the pgio properties and fix the invalid "enable"
+name to the correct "wake", checked against the HDK8450 schematics.
 
-The patch merges the second block into the first one.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 1f1929f3f2fa ("mmc: sdhci-of-esdhc: add quirk to ignore command inhibit for data")
-Signed-off-by: Georgii Kruglov <georgy.kruglov@yandex.ru>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20230321203715.3975-1-georgy.kruglov@yandex.ru
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: bc6588bc25fb ("arm64: dts: qcom: sm8450: add PCIe1 root device")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230323-topic-sm8450-upstream-dt-bindings-fixes-v2-4-0ca1bea1a843@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-of-esdhc.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/sdhci-of-esdhc.c b/drivers/mmc/host/sdhci-of-esdhc.c
-index 4712adac7f7c0..48ca1cf15b199 100644
---- a/drivers/mmc/host/sdhci-of-esdhc.c
-+++ b/drivers/mmc/host/sdhci-of-esdhc.c
-@@ -133,6 +133,7 @@ static u32 esdhc_readl_fixup(struct sdhci_host *host,
- 			return ret;
- 		}
- 	}
-+
- 	/*
- 	 * The DAT[3:0] line signal levels and the CMD line signal level are
- 	 * not compatible with standard SDHC register. The line signal levels
-@@ -144,6 +145,16 @@ static u32 esdhc_readl_fixup(struct sdhci_host *host,
- 		ret = value & 0x000fffff;
- 		ret |= (value >> 4) & SDHCI_DATA_LVL_MASK;
- 		ret |= (value << 1) & SDHCI_CMD_LVL;
-+
-+		/*
-+		 * Some controllers have unreliable Data Line Active
-+		 * bit for commands with busy signal. This affects
-+		 * Command Inhibit (data) bit. Just ignore it since
-+		 * MMC core driver has already polled card status
-+		 * with CMD13 after any command with busy siganl.
-+		 */
-+		if (esdhc->quirk_ignore_data_inhibit)
-+			ret &= ~SDHCI_DATA_INHIBIT;
- 		return ret;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index bcb0eac83ef01..243ef642fcef6 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -1917,8 +1917,8 @@
+ 			phys = <&pcie1_lane>;
+ 			phy-names = "pciephy";
  
-@@ -158,19 +169,6 @@ static u32 esdhc_readl_fixup(struct sdhci_host *host,
- 		return ret;
- 	}
+-			perst-gpio = <&tlmm 97 GPIO_ACTIVE_LOW>;
+-			enable-gpio = <&tlmm 99 GPIO_ACTIVE_HIGH>;
++			perst-gpios = <&tlmm 97 GPIO_ACTIVE_LOW>;
++			wake-gpios = <&tlmm 99 GPIO_ACTIVE_HIGH>;
  
--	/*
--	 * Some controllers have unreliable Data Line Active
--	 * bit for commands with busy signal. This affects
--	 * Command Inhibit (data) bit. Just ignore it since
--	 * MMC core driver has already polled card status
--	 * with CMD13 after any command with busy siganl.
--	 */
--	if ((spec_reg == SDHCI_PRESENT_STATE) &&
--	(esdhc->quirk_ignore_data_inhibit == true)) {
--		ret = value & ~SDHCI_DATA_INHIBIT;
--		return ret;
--	}
--
- 	ret = value;
- 	return ret;
- }
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&pcie1_default_state>;
 -- 
 2.39.2
 
