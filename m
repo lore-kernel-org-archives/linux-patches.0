@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E38111CA1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:18:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF90AC433EF;
-	Mon,  8 May 2023 11:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7076211CA1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:18:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB2B5C433EF;
+	Mon,  8 May 2023 11:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544690;
-	bh=ZtIJ/uCgzOndMHoyBAkZS7gDJUmbx108Wy2j3f+vj+E=;
+	s=korg; t=1683544693;
+	bh=/Elnoj2QzjpjJK1ro0dCdRhNWhEUyfh6d99b26iN3wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pVrBhhICHESwoqMTG+STCqfFKJwGTgzp/XGW4mDrh52QHYP+ZPvw+qYPSt2dJATJU
-	 3JFXFEMY+yxX3ftMzoxRsKHxsVoYqkeASPVAfefHxKZBJYqUNHFenCOJhWmqLFmVz4
-	 cxgsPnOgC+AqZb91AykZpIP7FuEwhU/eUdBd1vGA=
+	b=kUmm5BiRb1anRppHIuiAEBhu880UNH0xA2uQ+4Y77MsK5I0V06DTuvL1I1i3zyfrP
+	 3HV7CeCcc9u6D1i1Efd6jm+sPfn4AyEqUuwpZ8WLk1bLCIastea3b7GjuF9mIh3ytB
+	 z/NZZux/3REKkkLecRw/H8K6hIPlyCwpKhkPFMas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 493/694] iio: light: max44009: add missing OF device matching
-Date: Mon,  8 May 2023 11:45:28 +0200
-Message-Id: <20230508094449.991532858@linuxfoundation.org>
+Subject: [PATCH 6.3 494/694] spi: Constify spi parameters of chip select APIs
+Date: Mon,  8 May 2023 11:45:29 +0200
+Message-Id: <20230508094450.038000527@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,61 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit b29c49026c3c05a11f845dba17cad0b3ba06836d ]
+[ Upstream commit d2f19eec510424caa55ea949f016ddabe2d8173a ]
 
-The driver currently matches only via i2c_device_id, but also has
-of_device_id table:
+The "spi" parameters of spi_get_chipselect() and spi_get_csgpiod() can
+be const.
 
-  drivers/iio/light/max44009.c:545:34: error: ‘max44009_of_match’ defined but not used [-Werror=unused-const-variable=]
-
-Fixes: 6aef699a7d7e ("iio: light: add driver for MAX44009")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230312153429.371702-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 303feb3cc06ac066 ("spi: Add APIs in spi core to set/get spi->chip_select and spi->cs_gpiod")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/b112de79e7a1e9095a3b6ff22b639f39e39d7748.1678704562.git.geert+renesas@glider.be
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/light/max44009.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ include/linux/spi/spi.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/light/max44009.c b/drivers/iio/light/max44009.c
-index 3dadace09fe2e..176dcad6e8e8a 100644
---- a/drivers/iio/light/max44009.c
-+++ b/drivers/iio/light/max44009.c
-@@ -527,6 +527,12 @@ static int max44009_probe(struct i2c_client *client)
- 	return devm_iio_device_register(&client->dev, indio_dev);
+diff --git a/include/linux/spi/spi.h b/include/linux/spi/spi.h
+index 4fa26b9a35725..509bd620a258c 100644
+--- a/include/linux/spi/spi.h
++++ b/include/linux/spi/spi.h
+@@ -266,7 +266,7 @@ static inline void *spi_get_drvdata(struct spi_device *spi)
+ 	return dev_get_drvdata(&spi->dev);
  }
  
-+static const struct of_device_id max44009_of_match[] = {
-+	{ .compatible = "maxim,max44009" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, max44009_of_match);
-+
- static const struct i2c_device_id max44009_id[] = {
- 	{ "max44009", 0 },
- 	{ }
-@@ -536,18 +542,13 @@ MODULE_DEVICE_TABLE(i2c, max44009_id);
- static struct i2c_driver max44009_driver = {
- 	.driver = {
- 		.name = MAX44009_DRV_NAME,
-+		.of_match_table = max44009_of_match,
- 	},
- 	.probe_new = max44009_probe,
- 	.id_table = max44009_id,
- };
- module_i2c_driver(max44009_driver);
+-static inline u8 spi_get_chipselect(struct spi_device *spi, u8 idx)
++static inline u8 spi_get_chipselect(const struct spi_device *spi, u8 idx)
+ {
+ 	return spi->chip_select;
+ }
+@@ -276,7 +276,7 @@ static inline void spi_set_chipselect(struct spi_device *spi, u8 idx, u8 chipsel
+ 	spi->chip_select = chipselect;
+ }
  
--static const struct of_device_id max44009_of_match[] = {
--	{ .compatible = "maxim,max44009" },
--	{ }
--};
--MODULE_DEVICE_TABLE(of, max44009_of_match);
--
- MODULE_AUTHOR("Robert Eshleman <bobbyeshleman@gmail.com>");
- MODULE_LICENSE("GPL v2");
- MODULE_DESCRIPTION("MAX44009 ambient light sensor driver");
+-static inline struct gpio_desc *spi_get_csgpiod(struct spi_device *spi, u8 idx)
++static inline struct gpio_desc *spi_get_csgpiod(const struct spi_device *spi, u8 idx)
+ {
+ 	return spi->cs_gpiod;
+ }
 -- 
 2.39.2
 
