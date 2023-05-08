@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C209F168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF5EC433EF;
-	Mon,  8 May 2023 11:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5F5168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D59C433D2;
+	Mon,  8 May 2023 11:10:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544246;
-	bh=OuNjMXmlzqQiPYImBTWREOcHDDwi3oGzydEbu2VEC+8=;
+	s=korg; t=1683544249;
+	bh=lu3ggu9njnwH7Ijt2g4C9gEUy7XTQd6IRqs+E3CViQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IG0e+M0v1mvx47Fwg0MOhdHqIbOAvhtOykGABAKp6EFaIfTzA0vNhZ++qIGvnzYuq
-	 VMymP94twtmDJ4eI+fY7eQvI77MaC3+PRY/U9xoavBxsdbGWtP9r6CZlFGZMFEcegD
-	 7SmKvRMu5tjnrGhEv+7sZODZu6tVLq0liD6/izpo=
+	b=0NM4oJBzw/rsIcKtieU8GhCFzIOKGFYRKowol2TdMirRBoSbNYDyf8BuLMa2wiNkf
+	 eZ031KE7k3J5arDy06PxZeWXwvUaVMFXd0aF4jFfW7gSg23m7VWQ4ajuqkdXoCKlhN
+	 G1tB3cka2EXQX+eSL5uWJcxgf5OO2IWGWu4s2U8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanjay Chandrashekara <sanjayc@nvidia.com>,
-	Sumit Gupta <sumitg@nvidia.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Chris Lew <quic_clew@quicinc.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 317/694] cpufreq: use correct unit when verify cur freq
-Date: Mon,  8 May 2023 11:42:32 +0200
-Message-Id: <20230508094442.592021639@linuxfoundation.org>
+Subject: [PATCH 6.3 318/694] rpmsg: glink: Propagate TX failures in intentless mode as well
+Date: Mon,  8 May 2023 11:42:33 +0200
+Message-Id: <20230508094442.621114536@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,41 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sanjay Chandrashekara <sanjayc@nvidia.com>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit 44295af5019f1997d038ad2611086a2d1e2af167 ]
+[ Upstream commit 7a68f9fa97357a0f2073c9c31ed4101da4fce93e ]
 
-cpufreq_verify_current_freq checks() if the frequency returned by
-the hardware has a slight delta with the valid frequency value
-last set and returns "policy->cur" if the delta is within "1 MHz".
-In the comparison, "policy->cur" is in "kHz" but it's compared
-against HZ_PER_MHZ. So, the comparison range becomes "1 GHz".
+As support for splitting transmission over several messages using
+TX_DATA_CONT was introduced it does not immediately return the return
+value of qcom_glink_tx().
 
-Fix this by comparing against KHZ_PER_MHZ instead of HZ_PER_MHZ.
+The result is that in the intentless case (i.e. intent == NULL), the
+code will continue to send all additional chunks. This is wasteful, and
+it's possible that the send operation could incorrectly indicate
+success, if the last chunk fits in the TX fifo.
 
-Fixes: f55ae08c8987 ("cpufreq: Avoid unnecessary frequency updates due to mismatch")
-Signed-off-by: Sanjay Chandrashekara <sanjayc@nvidia.com>
-[ sumit gupta: Commit message update ]
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix the condition.
+
+Fixes: 8956927faed3 ("rpmsg: glink: Add TX_DATA_CONT command while sending")
+Reviewed-by: Chris Lew <quic_clew@quicinc.com>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230418163018.785524-2-quic_bjorande@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rpmsg/qcom_glink_native.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq.c b/drivers/cpufreq/cpufreq.c
-index 6d8fd3b8dcb52..a0742c787014d 100644
---- a/drivers/cpufreq/cpufreq.c
-+++ b/drivers/cpufreq/cpufreq.c
-@@ -1727,7 +1727,7 @@ static unsigned int cpufreq_verify_current_freq(struct cpufreq_policy *policy, b
- 		 * MHz. In such cases it is better to avoid getting into
- 		 * unnecessary frequency updates.
- 		 */
--		if (abs(policy->cur - new_freq) < HZ_PER_MHZ)
-+		if (abs(policy->cur - new_freq) < KHZ_PER_MHZ)
- 			return policy->cur;
+diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+index 01d2805fe30f5..62634d020d139 100644
+--- a/drivers/rpmsg/qcom_glink_native.c
++++ b/drivers/rpmsg/qcom_glink_native.c
+@@ -1356,8 +1356,9 @@ static int __qcom_glink_send(struct glink_channel *channel,
+ 	ret = qcom_glink_tx(glink, &req, sizeof(req), data, chunk_size, wait);
  
- 		cpufreq_out_of_sync(policy, new_freq);
+ 	/* Mark intent available if we failed */
+-	if (ret && intent) {
+-		intent->in_use = false;
++	if (ret) {
++		if (intent)
++			intent->in_use = false;
+ 		return ret;
+ 	}
+ 
+@@ -1378,8 +1379,9 @@ static int __qcom_glink_send(struct glink_channel *channel,
+ 				    chunk_size, wait);
+ 
+ 		/* Mark intent available if we failed */
+-		if (ret && intent) {
+-			intent->in_use = false;
++		if (ret) {
++			if (intent)
++				intent->in_use = false;
+ 			break;
+ 		}
+ 	}
 -- 
 2.39.2
 
