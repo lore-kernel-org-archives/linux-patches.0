@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465D2168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCA09C433EF;
-	Mon,  8 May 2023 10:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D978C168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CE9FC433EF;
+	Mon,  8 May 2023 10:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540205;
-	bh=oJGSdN700irTBfOAhWe/HAnxt0W7uX5X0mBBazGBAQI=;
+	s=korg; t=1683540207;
+	bh=Z/QWEeChUg/0tX5Wv/oH0TJy2/Dcj2j0rB7GzzZhVIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZzpma0icCeIs8nU163H3zFwv7eZ1rbeJMtnnxQWLoDFWlLdxnWu8usJNUTVGwFVf
-	 vHdU7mqv75z2RFBgXdocm5rsjzZuGedqJvzq4uaO0ggw2YHg9TfnIDC6iR0LLAe874
-	 Qoe32bkp4mBY2mL8rvHb5kJAYVSUMSZK21A0hROY=
+	b=BC5i5OwL7pLBy2WVaX5TsEn8obeoH3EobMKoPT42EYghUEFnyl+mOB3g6rTbdfZtq
+	 D1dQlgqNS9bCUbMPxpSz8MR3KGvulrtK11H+aeVLxkWDCUA2qOAwiGl/6Jbf8FCH/K
+	 MLSTljHOFe7vbbMK/A+bngrk7wbjUq5UmHa6nj8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Moudy Ho <moudy.ho@mediatek.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 244/611] media: platform: mtk-mdp3: fix potential frame size overflow in mdp_try_fmt_mplane()
-Date: Mon,  8 May 2023 11:41:26 +0200
-Message-Id: <20230508094430.352136747@linuxfoundation.org>
+Subject: [PATCH 6.1 245/611] media: rcar_fdp1: Fix refcount leak in probe and remove function
+Date: Mon,  8 May 2023 11:41:27 +0200
+Message-Id: <20230508094430.380308590@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,57 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Moudy Ho <moudy.ho@mediatek.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 4168720753ce6c14c5d3a35302fc2e1841383443 ]
+[ Upstream commit c766c90faf93897b77c9c5daa603cffab85ba907 ]
 
-Fix overflow risk when setting certain formats whose frame size exceeds
-a RGB24 with 7723x7723 resolution.
+rcar_fcp_get() take reference, which should be balanced with
+rcar_fcp_put(). Add missing rcar_fcp_put() in fdp1_remove and
+the error paths of fdp1_probe() to fix this.
 
-For example, a 7723x7724 RGB24 frame:
-    1. bpl (byte per line) = 7723 * 3.
-    2. Overflow occurs when bpl * 7724 * depth.
-
-Fixes: 61890ccaefaf ("media: platform: mtk-mdp3: add MediaTek MDP3 driver")
-Signed-off-by: Moudy Ho <moudy.ho@mediatek.com>
+Fixes: 4710b752e029 ("[media] v4l: Add Renesas R-Car FDP1 Driver")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+[hverkuil: resolve merge conflict, remove() is now void]
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/platform/renesas/rcar_fdp1.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c
-index 4e84a37ecdfc1..36336d169bd91 100644
---- a/drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c
-+++ b/drivers/media/platform/mediatek/mdp3/mtk-mdp3-regs.c
-@@ -4,6 +4,7 @@
-  * Author: Ping-Hsun Wu <ping-hsun.wu@mediatek.com>
-  */
+diff --git a/drivers/media/platform/renesas/rcar_fdp1.c b/drivers/media/platform/renesas/rcar_fdp1.c
+index 37ecf489d112e..dea22e3579052 100644
+--- a/drivers/media/platform/renesas/rcar_fdp1.c
++++ b/drivers/media/platform/renesas/rcar_fdp1.c
+@@ -2313,8 +2313,10 @@ static int fdp1_probe(struct platform_device *pdev)
  
-+#include <linux/math64.h>
- #include <media/v4l2-common.h>
- #include <media/videobuf2-v4l2.h>
- #include <media/videobuf2-dma-contig.h>
-@@ -428,14 +429,15 @@ const struct mdp_format *mdp_try_fmt_mplane(struct v4l2_format *f,
- 		u32 bpl = pix_mp->plane_fmt[i].bytesperline;
- 		u32 min_si, max_si;
- 		u32 si = pix_mp->plane_fmt[i].sizeimage;
-+		u64 di;
+ 	/* Determine our clock rate */
+ 	clk = clk_get(&pdev->dev, NULL);
+-	if (IS_ERR(clk))
+-		return PTR_ERR(clk);
++	if (IS_ERR(clk)) {
++		ret = PTR_ERR(clk);
++		goto put_dev;
++	}
  
- 		bpl = clamp(bpl, min_bpl, max_bpl);
- 		pix_mp->plane_fmt[i].bytesperline = bpl;
+ 	fdp1->clk_rate = clk_get_rate(clk);
+ 	clk_put(clk);
+@@ -2323,7 +2325,7 @@ static int fdp1_probe(struct platform_device *pdev)
+ 	ret = v4l2_device_register(&pdev->dev, &fdp1->v4l2_dev);
+ 	if (ret) {
+ 		v4l2_err(&fdp1->v4l2_dev, "Failed to register video device\n");
+-		return ret;
++		goto put_dev;
+ 	}
  
--		min_si = (bpl * pix_mp->height * fmt->depth[i]) /
--			 fmt->row_depth[i];
--		max_si = (bpl * s.max_height * fmt->depth[i]) /
--			 fmt->row_depth[i];
-+		di = (u64)bpl * pix_mp->height * fmt->depth[i];
-+		min_si = (u32)div_u64(di, fmt->row_depth[i]);
-+		di = (u64)bpl * s.max_height * fmt->depth[i];
-+		max_si = (u32)div_u64(di, fmt->row_depth[i]);
+ 	/* M2M registration */
+@@ -2393,6 +2395,8 @@ static int fdp1_probe(struct platform_device *pdev)
+ unreg_dev:
+ 	v4l2_device_unregister(&fdp1->v4l2_dev);
  
- 		si = clamp(si, min_si, max_si);
- 		pix_mp->plane_fmt[i].sizeimage = si;
++put_dev:
++	rcar_fcp_put(fdp1->fcp);
+ 	return ret;
+ }
+ 
+@@ -2404,6 +2408,7 @@ static int fdp1_remove(struct platform_device *pdev)
+ 	video_unregister_device(&fdp1->vfd);
+ 	v4l2_device_unregister(&fdp1->v4l2_dev);
+ 	pm_runtime_disable(&pdev->dev);
++	rcar_fcp_put(fdp1->fcp);
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
