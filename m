@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78D50168D1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A70C433EF;
-	Mon,  8 May 2023 11:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F9C168D1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:27:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8121C433EF;
+	Mon,  8 May 2023 11:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545246;
-	bh=4vR5/tlJdEYQUBQJYaJA1qYWOrxXxZyIjX1fCtvUiwg=;
+	s=korg; t=1683545249;
+	bh=3gPY6mgdbqwYvtS6J5cD9ALHeONzHHLbq2YO+VLUE7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kil59Kl/UIGHyl+uh9TgYykNP01ISr/E2/JHw2rDCWxUcdLwvO97ru1XnFfVi00GS
-	 7zlbL+LbUOOebRfCxAfR45S12SPGXo5sJ/u17i6R8IFNOaJrWhliM6yTE46G3+43L9
-	 0fSnj7kqJlpykzmqmSGPF20hRuHt86qp8GKxpRTo=
+	b=tRcpQJEMtT0rjNitsAj3ttDJfNuhM1gnxGWQRXot7ctCGNcvu4BKAM3svJPfUBgz3
+	 kqtLTQxLr1XtCI/c8LQizbLFDt3peFAUhpHHCAiPoCMgV/vMsC1NolMVbyYwB+27NN
+	 suX4T6yzHEDXJ8YiPgLo0MqHH8lAVThPHIUU0d3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 645/694] pwm: mtk-disp: Configure double buffering before reading in .get_state()
-Date: Mon,  8 May 2023 11:48:00 +0200
-Message-Id: <20230508094456.754408197@linuxfoundation.org>
+	Peng Liu <liupeng17@lenovo.com>,
+	Jan Kiszka <jan.kiszka@siemens.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Kieran Bingham <kbingham@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 672/694] scripts/gdb: fix lx-timerlist for Python3
+Date: Mon,  8 May 2023 11:48:27 +0200
+Message-Id: <20230508094457.975811293@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,69 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Peng Liu <liupeng17@lenovo.com>
 
-[ Upstream commit b16c310115f2084b8826a35b77ef42bab6786d9f ]
+commit 7362042f3556528e9e9b1eb5ce8d7a3a6331476b upstream.
 
-The DISP_PWM controller's default behavior is to always use register
-double buffering: all reads/writes are then performed on shadow
-registers instead of working registers and this becomes an issue
-in case our chosen configuration in Linux is different from the
-default (or from the one that was pre-applied by the bootloader).
+Below incompatibilities between Python2 and Python3 made lx-timerlist fail
+to run under Python3.
 
-An example of broken behavior is when the controller is configured
-to use shadow registers, but this driver wants to configure it
-otherwise: what happens is that the .get_state() callback is called
-right after registering the pwmchip and checks whether the PWM is
-enabled by reading the DISP_PWM_EN register;
-At this point, if shadow registers are enabled but their content
-was not committed before booting Linux, we are *not* reading the
-current PWM enablement status, leading to the kernel knowing that
-the hardware is actually enabled when, in reality, it's not.
+o xrange() is replaced by range() in Python3
+o bytes and str are different types in Python3
+o the return value of Inferior.read_memory() is memoryview object in
+  Python3
 
-The aforementioned issue emerged since this driver was fixed with
-commit 0b5ef3429d8f ("pwm: mtk-disp: Fix the parameters calculated
-by the enabled flag of disp_pwm") making it to read the enablement
-status from the right register.
+akpm: cc stable so that older kernels are properly debuggable under newer
+Python.
 
-Configure the controller in the .get_state() callback to avoid
-this desync issue and get the backlight properly working again.
-
-Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Tested-by: Alexandre Mergnat <amergnat@baylibre.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/TYCP286MB2146EE1180A4D5176CBA8AB2C6819@TYCP286MB2146.JPNP286.PROD.OUTLOOK.COM
+Signed-off-by: Peng Liu <liupeng17@lenovo.com>
+Reviewed-by: Jan Kiszka <jan.kiszka@siemens.com>
+Cc: Florian Fainelli <f.fainelli@gmail.com>
+Cc: Kieran Bingham <kbingham@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ scripts/gdb/linux/timerlist.py |    4 +++-
+ scripts/gdb/linux/utils.py     |    5 ++++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index 82b430d881a20..fe9593f968eeb 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -196,6 +196,16 @@ static int mtk_disp_pwm_get_state(struct pwm_chip *chip,
- 		return err;
- 	}
+--- a/scripts/gdb/linux/timerlist.py
++++ b/scripts/gdb/linux/timerlist.py
+@@ -73,7 +73,7 @@ def print_cpu(hrtimer_bases, cpu, max_cl
+     ts = cpus.per_cpu(tick_sched_ptr, cpu)
  
-+	/*
-+	 * Apply DISP_PWM_DEBUG settings to choose whether to enable or disable
-+	 * registers double buffer and manual commit to working register before
-+	 * performing any read/write operation
-+	 */
-+	if (mdp->data->bls_debug)
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
-+					 mdp->data->bls_debug_mask,
-+					 mdp->data->bls_debug_mask);
-+
- 	rate = clk_get_rate(mdp->clk_main);
- 	con0 = readl(mdp->base + mdp->data->con0);
- 	con1 = readl(mdp->base + mdp->data->con1);
--- 
-2.39.2
-
+     text = "cpu: {}\n".format(cpu)
+-    for i in xrange(max_clock_bases):
++    for i in range(max_clock_bases):
+         text += " clock {}:\n".format(i)
+         text += print_base(cpu_base['clock_base'][i])
+ 
+@@ -158,6 +158,8 @@ def pr_cpumask(mask):
+     num_bytes = (nr_cpu_ids + 7) / 8
+     buf = utils.read_memoryview(inf, bits, num_bytes).tobytes()
+     buf = binascii.b2a_hex(buf)
++    if type(buf) is not str:
++        buf=buf.decode()
+ 
+     chunks = []
+     i = num_bytes
+--- a/scripts/gdb/linux/utils.py
++++ b/scripts/gdb/linux/utils.py
+@@ -88,7 +88,10 @@ def get_target_endianness():
+ 
+ 
+ def read_memoryview(inf, start, length):
+-    return memoryview(inf.read_memory(start, length))
++    m = inf.read_memory(start, length)
++    if type(m) is memoryview:
++        return m
++    return memoryview(m)
+ 
+ 
+ def read_u16(buffer, offset):
 
 
