@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46235168A2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA352C433D2;
-	Mon,  8 May 2023 10:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E43B168A2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8158C433D2;
+	Mon,  8 May 2023 10:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541926;
-	bh=zg/FSjekkU4algjXcqm//2iYeTCGAsgTynUgScWizjU=;
+	s=korg; t=1683541929;
+	bh=kt4SL8s8/N0gTflDgFFe3rKG/F8ZNMjBOvhF1xQjP3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IWHmUcBvribAzOaLdIOYj/EhNH371ljm0rKN5+W2BrdNchDf2xKXuHCFZx6bHm8+G
-	 pkRQATMIO4DTP51XNGvqS1otQg5pUlJS2p00UDfKNNTFXZLRxTXDUY21EI4IhyAyDZ
-	 JCl/7qzmpZEMbSOekimUosLttI20M3X8rMD2/Q2U=
+	b=qu3YFWqxoNWKfxoyRUkPd8oV1zZ0q1eViorf+ir9gtOpiE26vYkkbEkS5stVGnyNg
+	 +X5L8J5t6B3h7ARiemH91Xr8oJjYi5lq8n+HrHvRXm272g7JE/tbVFCwecsktJeccO
+	 B80R3isR6bx8z6Sdk50PjcdDeM5v+ZY8cToThU9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 244/663] media: cedrus: fix use after free bug in cedrus_remove due to race condition
-Date: Mon,  8 May 2023 11:41:10 +0200
-Message-Id: <20230508094436.193146512@linuxfoundation.org>
+Subject: [PATCH 6.2 271/663] media: mediatek: vcodec: add remove function for decoder platform driver
+Date: Mon,  8 May 2023 11:41:37 +0200
+Message-Id: <20230508094437.038556999@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,49 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 50d0a7aea4809cef87979d4669911276aa23b71f ]
+[ Upstream commit e2a10b3801061d05d3e3415b9b824251451cfd6c ]
 
-In cedrus_probe, dev->watchdog_work is bound with cedrus_watchdog function.
-In cedrus_device_run, it will started by schedule_delayed_work. If there is
-an unfinished work in cedrus_remove, there may be a race condition and
-trigger UAF bug.
+Need to disable decoder power when remove decoder hardware driver, adding
+remove callback function in the definition of platform driver.
 
-CPU0                  CPU1
-
-                    |cedrus_watchdog
-cedrus_remove       |
-  v4l2_m2m_release  |
-  kfree(m2m_dev)    |
-                    |
-                    | v4l2_m2m_get_curr_priv
-                    |   m2m_dev //use
-
-Fix it by canceling the worker in cedrus_remove.
-
-Fixes: 7c38a551bda1 ("media: cedrus: Add watchdog for job completion")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Fixes: c05bada35f01 ("media: mtk-vcodec: Add to support multi hardware decode")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/sunxi/cedrus/cedrus.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../media/platform/mediatek/vcodec/mtk_vcodec_dec_hw.c    | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/staging/media/sunxi/cedrus/cedrus.c b/drivers/staging/media/sunxi/cedrus/cedrus.c
-index a43d5ff667163..a50a4d0a8f715 100644
---- a/drivers/staging/media/sunxi/cedrus/cedrus.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus.c
-@@ -547,6 +547,7 @@ static int cedrus_remove(struct platform_device *pdev)
- {
- 	struct cedrus_dev *dev = platform_get_drvdata(pdev);
+diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_hw.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_hw.c
+index 376db0e433d75..b753bf54ebd90 100644
+--- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_hw.c
++++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_hw.c
+@@ -193,8 +193,16 @@ static int mtk_vdec_hw_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
-+	cancel_delayed_work_sync(&dev->watchdog_work);
- 	if (media_devnode_is_registered(dev->mdev.devnode)) {
- 		media_device_unregister(&dev->mdev);
- 		v4l2_m2m_unregister_media_controller(dev->m2m_dev);
++static int mtk_vdec_hw_remove(struct platform_device *pdev)
++{
++	pm_runtime_disable(&pdev->dev);
++
++	return 0;
++}
++
+ static struct platform_driver mtk_vdec_driver = {
+ 	.probe	= mtk_vdec_hw_probe,
++	.remove = mtk_vdec_hw_remove,
+ 	.driver	= {
+ 		.name	= "mtk-vdec-comp",
+ 		.of_match_table = mtk_vdec_hw_match,
 -- 
 2.39.2
 
