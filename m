@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5F8101FD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1103FC433D2;
-	Mon,  8 May 2023 10:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8EC101FD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A75FDC433D2;
+	Mon,  8 May 2023 10:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540189;
-	bh=9g0eQcHGOm5RoBnhn4PF9aXqenZz5p9qE742o7UZkmk=;
+	s=korg; t=1683540192;
+	bh=JBS+rpUjd6bZ6hDQarSh10y84oUhkEUGJaaU1qQ1ycM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T4W7rCwxKfJkwkDdNmnZdjeBjlvWdbbkWzxxQ/9DNFtmTIoELM7Eoy8rQzaqd/UFj
-	 Bri8Y/MmFdexCzOeeiIQfAs7Q2OK0WsO1wn4FWsSrzOFu8sctD7MvylHSnPGMqdoc9
-	 PrheRHWlckYIL5EAUesp9Uih27Ag7Ie5YJBbPGnQ=
+	b=Pd3OQselFtxMJWkeduXE1U8ya2siTBXwTPhQK0b3r8d33RYXsFwegDFo6L8lX4Z+1
+	 MAfww+rP7aPq78yPEXW0nor1xnHdpUDrFeHOemJzo78BK+wk2Od8wtf8xO0hYaeUd/
+	 pGe9IRRF3UL2cVOwI2Jo7K3kmgJjcv/9pB3r3f6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Dan Carpenter <error27@gmail.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 243/611] media: saa7134: fix use after free bug in saa7134_finidev due to race condition
-Date: Mon,  8 May 2023 11:41:25 +0200
-Message-Id: <20230508094430.317616441@linuxfoundation.org>
+Subject: [PATCH 6.1 270/611] wifi: ath5k: fix an off by one check in ath5k_eeprom_read_freq_list()
+Date: Mon,  8 May 2023 11:41:52 +0200
+Message-Id: <20230508094431.161617438@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,83 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 30cf57da176cca80f11df0d9b7f71581fe601389 ]
+[ Upstream commit 4c856ee12df85aabd437c3836ed9f68d94268358 ]
 
-In saa7134_initdev, it will call saa7134_hwinit1. There are three
-function invoking here: saa7134_video_init1, saa7134_ts_init1
-and saa7134_vbi_init1.
+This loop checks that i < max at the start of loop but then it does
+i++ which could put it past the end of the array.  It's harmless to
+check again and prevent a potential out of bounds.
 
-All of them will init a timer with same function. Take
-saa7134_video_init1 as an example. It'll bound &dev->video_q.timeout
-with saa7134_buffer_timeout.
-
-In buffer_activate, the timer funtcion is started.
-
-If we remove the module or device which will call saa7134_finidev
-to make cleanup, there may be a unfinished work. The
-possible sequence is as follows, which will cause a
-typical UAF bug.
-
-Fix it by canceling the timer works accordingly before cleanup in
-saa7134_finidev.
-
-CPU0                  CPU1
-
-                    |saa7134_buffer_timeout
-saa7134_finidev     |
-  kfree(dev);       |
-                    |
-                    | saa7134_buffer_next
-                    | //use dev
-
-Fixes: 1e7126b4a86a ("media: saa7134: Convert timers to use timer_setup()")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 1048643ea94d ("ath5k: Clean up eeprom parsing and add missing calibration data")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/Y+D9hPQrHfWBJhXz@kili
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7134/saa7134-ts.c    | 1 +
- drivers/media/pci/saa7134/saa7134-vbi.c   | 1 +
- drivers/media/pci/saa7134/saa7134-video.c | 1 +
- 3 files changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath5k/eeprom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/saa7134/saa7134-ts.c b/drivers/media/pci/saa7134/saa7134-ts.c
-index 6a5053126237f..437dbe5e75e29 100644
---- a/drivers/media/pci/saa7134/saa7134-ts.c
-+++ b/drivers/media/pci/saa7134/saa7134-ts.c
-@@ -300,6 +300,7 @@ int saa7134_ts_start(struct saa7134_dev *dev)
+diff --git a/drivers/net/wireless/ath/ath5k/eeprom.c b/drivers/net/wireless/ath/ath5k/eeprom.c
+index d444b3d70ba2e..58d3e86f6256d 100644
+--- a/drivers/net/wireless/ath/ath5k/eeprom.c
++++ b/drivers/net/wireless/ath/ath5k/eeprom.c
+@@ -529,7 +529,7 @@ ath5k_eeprom_read_freq_list(struct ath5k_hw *ah, int *offset, int max,
+ 		ee->ee_n_piers[mode]++;
  
- int saa7134_ts_fini(struct saa7134_dev *dev)
- {
-+	del_timer_sync(&dev->ts_q.timeout);
- 	saa7134_pgtable_free(dev->pci, &dev->ts_q.pt);
- 	return 0;
- }
-diff --git a/drivers/media/pci/saa7134/saa7134-vbi.c b/drivers/media/pci/saa7134/saa7134-vbi.c
-index 3f0b0933eed69..3e773690468bd 100644
---- a/drivers/media/pci/saa7134/saa7134-vbi.c
-+++ b/drivers/media/pci/saa7134/saa7134-vbi.c
-@@ -185,6 +185,7 @@ int saa7134_vbi_init1(struct saa7134_dev *dev)
- int saa7134_vbi_fini(struct saa7134_dev *dev)
- {
- 	/* nothing */
-+	del_timer_sync(&dev->vbi_q.timeout);
- 	return 0;
- }
+ 		freq2 = (val >> 8) & 0xff;
+-		if (!freq2)
++		if (!freq2 || i >= max)
+ 			break;
  
-diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
-index 4d8974c9fcc98..29124756a62bc 100644
---- a/drivers/media/pci/saa7134/saa7134-video.c
-+++ b/drivers/media/pci/saa7134/saa7134-video.c
-@@ -2146,6 +2146,7 @@ int saa7134_video_init1(struct saa7134_dev *dev)
- 
- void saa7134_video_fini(struct saa7134_dev *dev)
- {
-+	del_timer_sync(&dev->video_q.timeout);
- 	/* free stuff */
- 	saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
- 	saa7134_pgtable_free(dev->pci, &dev->vbi_q.pt);
+ 		pc[i++].freq = ath5k_eeprom_bin2freq(ee,
 -- 
 2.39.2
 
