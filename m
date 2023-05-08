@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C087101F4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:34:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AC2C433EF;
-	Mon,  8 May 2023 10:34:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813C2125DF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:34:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BCFC433D2;
+	Mon,  8 May 2023 10:34:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542048;
-	bh=WIFk0acwhcfY5KNp6RyknXLPpth6Z2AV3QO9+dW5P0A=;
+	s=korg; t=1683542051;
+	bh=PNYMvP+YiJ5MaCwtUxeo9OTfP4dLxRAvmSnk9XPJJp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=er/A8Cf8Agv0CcOToFIroQBwChS9kh7fNsq1CohAfVsptUK5tAWUZsZ1cgTOAvSVp
-	 AW9+CyLhXjlFVOzJfH0SYgMd+tkh3WqjGcCNSmZQjextQEKgkmU2Ed4Zn1NI8kn0gl
-	 XqCb8t8gJ6zny7DMJjpawdwuWsDDHV9E9vC4qS7k=
+	b=Z69X3qDpoZ5jxGTDedDIyv7a0QjBrooJxuc+QHOX2HKqqHot8X+8O+UtohFpK40+K
+	 p9mJM2HR2zhHrv4Wxfb3fUYC6hmAQ6QQdEF4O7XE6wlRMkYSpwyEHewV6aEX5lN3js
+	 MZQcsXrVhk5MWvnhtvpgP3Gt9CKqXXbc+XN/rp40=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huaweicloud.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 308/663] bpf: Fix __reg_bound_offset 64->32 var_off subreg propagation
-Date: Mon,  8 May 2023 11:42:14 +0200
-Message-Id: <20230508094438.187668334@linuxfoundation.org>
+Subject: [PATCH 6.2 309/663] scsi: target: Move sess cmd counter to new struct
+Date: Mon,  8 May 2023 11:42:15 +0200
+Message-Id: <20230508094438.216379134@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,264 +36,311 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 7be14c1c9030f73cc18b4ff23b78a0a081f16188 ]
+[ Upstream commit becd9be6069e7b183c084f460f0eb363e43cc487 ]
 
-Xu reports that after commit 3f50f132d840 ("bpf: Verifier, do explicit ALU32
-bounds tracking"), the following BPF program is rejected by the verifier:
+iSCSI needs to wait on outstanding commands like how SRP and the FC/FCoE
+drivers do. It can't use target_stop_session() because for MCS support we
+can't stop the entire session during recovery because if other connections
+are OK then we want to be able to continue to execute I/O on them.
 
-   0: (61) r2 = *(u32 *)(r1 +0)          ; R2_w=pkt(off=0,r=0,imm=0)
-   1: (61) r3 = *(u32 *)(r1 +4)          ; R3_w=pkt_end(off=0,imm=0)
-   2: (bf) r1 = r2
-   3: (07) r1 += 1
-   4: (2d) if r1 > r3 goto pc+8
-   5: (71) r1 = *(u8 *)(r2 +0)           ; R1_w=scalar(umax=255,var_off=(0x0; 0xff))
-   6: (18) r0 = 0x7fffffffffffff10
-   8: (0f) r1 += r0                      ; R1_w=scalar(umin=0x7fffffffffffff10,umax=0x800000000000000f)
-   9: (18) r0 = 0x8000000000000000
-  11: (07) r0 += 1
-  12: (ad) if r0 < r1 goto pc-2
-  13: (b7) r0 = 0
-  14: (95) exit
+Move the per session cmd counters to a new struct so iSCSI can allocate
+them per connection. The xcopy code can also just not allocate in the
+future since it doesn't need to track commands.
 
-And the verifier log says:
-
-  func#0 @0
-  0: R1=ctx(off=0,imm=0) R10=fp0
-  0: (61) r2 = *(u32 *)(r1 +0)          ; R1=ctx(off=0,imm=0) R2_w=pkt(off=0,r=0,imm=0)
-  1: (61) r3 = *(u32 *)(r1 +4)          ; R1=ctx(off=0,imm=0) R3_w=pkt_end(off=0,imm=0)
-  2: (bf) r1 = r2                       ; R1_w=pkt(off=0,r=0,imm=0) R2_w=pkt(off=0,r=0,imm=0)
-  3: (07) r1 += 1                       ; R1_w=pkt(off=1,r=0,imm=0)
-  4: (2d) if r1 > r3 goto pc+8          ; R1_w=pkt(off=1,r=1,imm=0) R3_w=pkt_end(off=0,imm=0)
-  5: (71) r1 = *(u8 *)(r2 +0)           ; R1_w=scalar(umax=255,var_off=(0x0; 0xff)) R2_w=pkt(off=0,r=1,imm=0)
-  6: (18) r0 = 0x7fffffffffffff10       ; R0_w=9223372036854775568
-  8: (0f) r1 += r0                      ; R0_w=9223372036854775568 R1_w=scalar(umin=9223372036854775568,umax=9223372036854775823,s32_min=-240,s32_max=15)
-  9: (18) r0 = 0x8000000000000000       ; R0_w=-9223372036854775808
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775807
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775807 R1_w=scalar(umin=9223372036854775568,umax=9223372036854775809)
-  13: (b7) r0 = 0                       ; R0_w=0
-  14: (95) exit
-
-  from 12 to 11: R0_w=-9223372036854775807 R1_w=scalar(umin=9223372036854775810,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff)) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775806
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775806 R1_w=scalar(umin=9223372036854775810,umax=9223372036854775810,var_off=(0x8000000000000000; 0xffffffff))
-  13: safe
-
-  [...]
-
-  from 12 to 11: R0_w=-9223372036854775795 R1=scalar(umin=9223372036854775822,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff)) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775794
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775794 R1=scalar(umin=9223372036854775822,umax=9223372036854775822,var_off=(0x8000000000000000; 0xffffffff))
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775794 R1=scalar(umin=9223372036854775823,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff)) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775793
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775793 R1=scalar(umin=9223372036854775823,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff))
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775793 R1=scalar(umin=9223372036854775824,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff)) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775792
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775792 R1=scalar(umin=9223372036854775824,umax=9223372036854775823,var_off=(0x8000000000000000; 0xffffffff))
-  13: safe
-
-  [...]
-
-The 64bit umin=9223372036854775810 bound continuously bumps by +1 while
-umax=9223372036854775823 stays as-is until the verifier complexity limit
-is reached and the program gets finally rejected. During this simulation,
-the umin also eventually surpasses umax. Looking at the first 'from 12
-to 11' output line from the loop, R1 has the following state:
-
-  R1_w=scalar(umin=0x8000000000000002 (9223372036854775810),
-              umax=0x800000000000000f (9223372036854775823),
-          var_off=(0x8000000000000000;
-                           0xffffffff))
-
-The var_off has technically not an inconsistent state but it's very
-imprecise and far off surpassing 64bit umax bounds whereas the expected
-output with refined known bits in var_off should have been like:
-
-  R1_w=scalar(umin=0x8000000000000002 (9223372036854775810),
-              umax=0x800000000000000f (9223372036854775823),
-          var_off=(0x8000000000000000;
-                                  0xf))
-
-In the above log, var_off stays as var_off=(0x8000000000000000; 0xffffffff)
-and does not converge into a narrower mask where more bits become known,
-eventually transforming R1 into a constant upon umin=9223372036854775823,
-umax=9223372036854775823 case where the verifier would have terminated and
-let the program pass.
-
-The __reg_combine_64_into_32() marks the subregister unknown and propagates
-64bit {s,u}min/{s,u}max bounds to their 32bit equivalents iff they are within
-the 32bit universe. The question came up whether __reg_combine_64_into_32()
-should special case the situation that when 64bit {s,u}min bounds have
-the same value as 64bit {s,u}max bounds to then assign the latter as
-well to the 32bit reg->{s,u}32_{min,max}_value. As can be seen from the
-above example however, that is just /one/ special case and not a /generic/
-solution given above example would still not be addressed this way and
-remain at an imprecise var_off=(0x8000000000000000; 0xffffffff).
-
-The improvement is needed in __reg_bound_offset() to refine var32_off with
-the updated var64_off instead of the prior reg->var_off. The reg_bounds_sync()
-code first refines information about the register's min/max bounds via
-__update_reg_bounds() from the current var_off, then in __reg_deduce_bounds()
-from sign bit and with the potentially learned bits from bounds it'll
-update the var_off tnum in __reg_bound_offset(). For example, intersecting
-with the old var_off might have improved bounds slightly, e.g. if umax
-was 0x7f...f and var_off was (0; 0xf...fc), then new var_off will then
-result in (0; 0x7f...fc). The intersected var64_off holds then the
-universe which is a superset of var32_off. The point for the latter is
-not to broaden, but to further refine known bits based on the intersection
-of var_off with 32 bit bounds, so that we later construct the final var_off
-from upper and lower 32 bits. The final __update_reg_bounds() can then
-potentially still slightly refine bounds if more bits became known from the
-new var_off.
-
-After the improvement, we can see R1 converging successively:
-
-  func#0 @0
-  0: R1=ctx(off=0,imm=0) R10=fp0
-  0: (61) r2 = *(u32 *)(r1 +0)          ; R1=ctx(off=0,imm=0) R2_w=pkt(off=0,r=0,imm=0)
-  1: (61) r3 = *(u32 *)(r1 +4)          ; R1=ctx(off=0,imm=0) R3_w=pkt_end(off=0,imm=0)
-  2: (bf) r1 = r2                       ; R1_w=pkt(off=0,r=0,imm=0) R2_w=pkt(off=0,r=0,imm=0)
-  3: (07) r1 += 1                       ; R1_w=pkt(off=1,r=0,imm=0)
-  4: (2d) if r1 > r3 goto pc+8          ; R1_w=pkt(off=1,r=1,imm=0) R3_w=pkt_end(off=0,imm=0)
-  5: (71) r1 = *(u8 *)(r2 +0)           ; R1_w=scalar(umax=255,var_off=(0x0; 0xff)) R2_w=pkt(off=0,r=1,imm=0)
-  6: (18) r0 = 0x7fffffffffffff10       ; R0_w=9223372036854775568
-  8: (0f) r1 += r0                      ; R0_w=9223372036854775568 R1_w=scalar(umin=9223372036854775568,umax=9223372036854775823,s32_min=-240,s32_max=15)
-  9: (18) r0 = 0x8000000000000000       ; R0_w=-9223372036854775808
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775807
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775807 R1_w=scalar(umin=9223372036854775568,umax=9223372036854775809)
-  13: (b7) r0 = 0                       ; R0_w=0
-  14: (95) exit
-
-  from 12 to 11: R0_w=-9223372036854775807 R1_w=scalar(umin=9223372036854775810,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775806
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775806 R1_w=-9223372036854775806
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775806 R1_w=scalar(umin=9223372036854775811,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775805
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775805 R1_w=-9223372036854775805
-  13: safe
-
-  [...]
-
-  from 12 to 11: R0_w=-9223372036854775798 R1=scalar(umin=9223372036854775819,umax=9223372036854775823,var_off=(0x8000000000000008; 0x7),s32_min=8,s32_max=15,u32_min=8,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775797
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775797 R1=-9223372036854775797
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775797 R1=scalar(umin=9223372036854775820,umax=9223372036854775823,var_off=(0x800000000000000c; 0x3),s32_min=12,s32_max=15,u32_min=12,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775796
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775796 R1=-9223372036854775796
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775796 R1=scalar(umin=9223372036854775821,umax=9223372036854775823,var_off=(0x800000000000000c; 0x3),s32_min=12,s32_max=15,u32_min=12,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775795
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775795 R1=-9223372036854775795
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775795 R1=scalar(umin=9223372036854775822,umax=9223372036854775823,var_off=(0x800000000000000e; 0x1),s32_min=14,s32_max=15,u32_min=14,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775794
-  12: (ad) if r0 < r1 goto pc-2         ; R0_w=-9223372036854775794 R1=-9223372036854775794
-  13: safe
-
-  from 12 to 11: R0_w=-9223372036854775794 R1=-9223372036854775793 R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  11: (07) r0 += 1                      ; R0_w=-9223372036854775793
-  12: (ad) if r0 < r1 goto pc-2
-  last_idx 12 first_idx 12
-  parent didn't have regs=1 stack=0 marks: R0_rw=P-9223372036854775801 R1_r=scalar(umin=9223372036854775815,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  last_idx 11 first_idx 11
-  regs=1 stack=0 before 11: (07) r0 += 1
-  parent didn't have regs=1 stack=0 marks: R0_rw=P-9223372036854775805 R1_rw=scalar(umin=9223372036854775812,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  last_idx 12 first_idx 0
-  regs=1 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=1 stack=0 before 11: (07) r0 += 1
-  regs=1 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=1 stack=0 before 11: (07) r0 += 1
-  regs=1 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=1 stack=0 before 11: (07) r0 += 1
-  regs=1 stack=0 before 9: (18) r0 = 0x8000000000000000
-  last_idx 12 first_idx 12
-  parent didn't have regs=2 stack=0 marks: R0_rw=P-9223372036854775801 R1_r=Pscalar(umin=9223372036854775815,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2=pkt(off=0,r=1,imm=0) R3=pkt_end(off=0,imm=0) R10=fp0
-  last_idx 11 first_idx 11
-  regs=2 stack=0 before 11: (07) r0 += 1
-  parent didn't have regs=2 stack=0 marks: R0_rw=P-9223372036854775805 R1_rw=Pscalar(umin=9223372036854775812,umax=9223372036854775823,var_off=(0x8000000000000000; 0xf),s32_min=0,s32_max=15,u32_max=15) R2_w=pkt(off=0,r=1,imm=0) R3_w=pkt_end(off=0,imm=0) R10=fp0
-  last_idx 12 first_idx 0
-  regs=2 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=2 stack=0 before 11: (07) r0 += 1
-  regs=2 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=2 stack=0 before 11: (07) r0 += 1
-  regs=2 stack=0 before 12: (ad) if r0 < r1 goto pc-2
-  regs=2 stack=0 before 11: (07) r0 += 1
-  regs=2 stack=0 before 9: (18) r0 = 0x8000000000000000
-  regs=2 stack=0 before 8: (0f) r1 += r0
-  regs=3 stack=0 before 6: (18) r0 = 0x7fffffffffffff10
-  regs=2 stack=0 before 5: (71) r1 = *(u8 *)(r2 +0)
-  13: safe
-
-  from 4 to 13: safe
-  verification time 322 usec
-  stack depth 0
-  processed 56 insns (limit 1000000) max_states_per_insn 1 total_states 3 peak_states 3 mark_read 1
-
-This also fixes up a test case along with this improvement where we match
-on the verifier log. The updated log now has a refined var_off, too.
-
-Fixes: 3f50f132d840 ("bpf: Verifier, do explicit ALU32 bounds tracking")
-Reported-by: Xu Kuohai <xukuohai@huaweicloud.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Reviewed-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/20230314203424.4015351-2-xukuohai@huaweicloud.com
-Link: https://lore.kernel.org/bpf/20230322213056.2470-1-daniel@iogearbox.net
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-2-michael.christie@oracle.com
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 395cee83d02d ("scsi: target: iscsit: Stop/wait on cmds during conn close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c                          | 6 +++---
- tools/testing/selftests/bpf/prog_tests/align.c | 4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/target/target_core_tpg.c         |   2 +-
+ drivers/target/target_core_transport.c   | 135 ++++++++++++++++-------
+ include/target/iscsi/iscsi_target_core.h |   1 +
+ include/target/target_core_base.h        |  13 ++-
+ 4 files changed, 107 insertions(+), 44 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index bb8579a3bf310..0afafb539d783 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -1769,9 +1769,9 @@ static void __reg_bound_offset(struct bpf_reg_state *reg)
- 	struct tnum var64_off = tnum_intersect(reg->var_off,
- 					       tnum_range(reg->umin_value,
- 							  reg->umax_value));
--	struct tnum var32_off = tnum_intersect(tnum_subreg(reg->var_off),
--						tnum_range(reg->u32_min_value,
--							   reg->u32_max_value));
-+	struct tnum var32_off = tnum_intersect(tnum_subreg(var64_off),
-+					       tnum_range(reg->u32_min_value,
-+							  reg->u32_max_value));
+diff --git a/drivers/target/target_core_tpg.c b/drivers/target/target_core_tpg.c
+index 736847c933e5c..8ebccdbd94f0e 100644
+--- a/drivers/target/target_core_tpg.c
++++ b/drivers/target/target_core_tpg.c
+@@ -328,7 +328,7 @@ static void target_shutdown_sessions(struct se_node_acl *acl)
+ restart:
+ 	spin_lock_irqsave(&acl->nacl_sess_lock, flags);
+ 	list_for_each_entry(sess, &acl->acl_sess_list, sess_acl_list) {
+-		if (atomic_read(&sess->stopped))
++		if (sess->cmd_cnt && atomic_read(&sess->cmd_cnt->stopped))
+ 			continue;
  
- 	reg->var_off = tnum_or(tnum_clear_subreg(var64_off), var32_off);
+ 		list_del_init(&sess->sess_acl_list);
+diff --git a/drivers/target/target_core_transport.c b/drivers/target/target_core_transport.c
+index 5926316252eb9..3d6034f00dcd8 100644
+--- a/drivers/target/target_core_transport.c
++++ b/drivers/target/target_core_transport.c
+@@ -220,11 +220,49 @@ void transport_subsystem_check_init(void)
+ 	sub_api_initialized = 1;
  }
-diff --git a/tools/testing/selftests/bpf/prog_tests/align.c b/tools/testing/selftests/bpf/prog_tests/align.c
-index 4666f88f2bb4f..8baebb41541dc 100644
---- a/tools/testing/selftests/bpf/prog_tests/align.c
-+++ b/tools/testing/selftests/bpf/prog_tests/align.c
-@@ -575,14 +575,14 @@ static struct bpf_align_test tests[] = {
- 			/* New unknown value in R7 is (4n), >= 76 */
- 			{14, "R7_w=scalar(umin=76,umax=1096,var_off=(0x0; 0x7fc))"},
- 			/* Adding it to packet pointer gives nice bounds again */
--			{16, "R5_w=pkt(id=3,off=0,r=0,umin=2,umax=1082,var_off=(0x2; 0xfffffffc)"},
-+			{16, "R5_w=pkt(id=3,off=0,r=0,umin=2,umax=1082,var_off=(0x2; 0x7fc)"},
- 			/* At the time the word size load is performed from R5,
- 			 * its total fixed offset is NET_IP_ALIGN + reg->off (0)
- 			 * which is 2.  Then the variable offset is (4n+2), so
- 			 * the total offset is 4-byte aligned and meets the
- 			 * load's requirements.
- 			 */
--			{20, "R5=pkt(id=3,off=0,r=4,umin=2,umax=1082,var_off=(0x2; 0xfffffffc)"},
-+			{20, "R5=pkt(id=3,off=0,r=4,umin=2,umax=1082,var_off=(0x2; 0x7fc)"},
- 		},
- 	},
+ 
+-static void target_release_sess_cmd_refcnt(struct percpu_ref *ref)
++static void target_release_cmd_refcnt(struct percpu_ref *ref)
+ {
+-	struct se_session *sess = container_of(ref, typeof(*sess), cmd_count);
++	struct target_cmd_counter *cmd_cnt  = container_of(ref,
++							   typeof(*cmd_cnt),
++							   refcnt);
++	wake_up(&cmd_cnt->refcnt_wq);
++}
++
++static struct target_cmd_counter *target_alloc_cmd_counter(void)
++{
++	struct target_cmd_counter *cmd_cnt;
++	int rc;
++
++	cmd_cnt = kzalloc(sizeof(*cmd_cnt), GFP_KERNEL);
++	if (!cmd_cnt)
++		return NULL;
+ 
+-	wake_up(&sess->cmd_count_wq);
++	init_completion(&cmd_cnt->stop_done);
++	init_waitqueue_head(&cmd_cnt->refcnt_wq);
++	atomic_set(&cmd_cnt->stopped, 0);
++
++	rc = percpu_ref_init(&cmd_cnt->refcnt, target_release_cmd_refcnt, 0,
++			     GFP_KERNEL);
++	if (rc)
++		goto free_cmd_cnt;
++
++	return cmd_cnt;
++
++free_cmd_cnt:
++	kfree(cmd_cnt);
++	return NULL;
++}
++
++static void target_free_cmd_counter(struct target_cmd_counter *cmd_cnt)
++{
++	/*
++	 * Drivers like loop do not call target_stop_session during session
++	 * shutdown so we have to drop the ref taken at init time here.
++	 */
++	if (!atomic_read(&cmd_cnt->stopped))
++		percpu_ref_put(&cmd_cnt->refcnt);
++
++	percpu_ref_exit(&cmd_cnt->refcnt);
+ }
+ 
+ /**
+@@ -238,25 +276,17 @@ int transport_init_session(struct se_session *se_sess)
+ 	INIT_LIST_HEAD(&se_sess->sess_list);
+ 	INIT_LIST_HEAD(&se_sess->sess_acl_list);
+ 	spin_lock_init(&se_sess->sess_cmd_lock);
+-	init_waitqueue_head(&se_sess->cmd_count_wq);
+-	init_completion(&se_sess->stop_done);
+-	atomic_set(&se_sess->stopped, 0);
+-	return percpu_ref_init(&se_sess->cmd_count,
+-			       target_release_sess_cmd_refcnt, 0, GFP_KERNEL);
++	se_sess->cmd_cnt = target_alloc_cmd_counter();
++	if (!se_sess->cmd_cnt)
++		return -ENOMEM;
++
++	return  0;
+ }
+ EXPORT_SYMBOL(transport_init_session);
+ 
+ void transport_uninit_session(struct se_session *se_sess)
+ {
+-	/*
+-	 * Drivers like iscsi and loop do not call target_stop_session
+-	 * during session shutdown so we have to drop the ref taken at init
+-	 * time here.
+-	 */
+-	if (!atomic_read(&se_sess->stopped))
+-		percpu_ref_put(&se_sess->cmd_count);
+-
+-	percpu_ref_exit(&se_sess->cmd_count);
++	target_free_cmd_counter(se_sess->cmd_cnt);
+ }
+ 
+ /**
+@@ -2970,9 +3000,16 @@ int target_get_sess_cmd(struct se_cmd *se_cmd, bool ack_kref)
+ 		se_cmd->se_cmd_flags |= SCF_ACK_KREF;
+ 	}
+ 
+-	if (!percpu_ref_tryget_live(&se_sess->cmd_count))
+-		ret = -ESHUTDOWN;
+-
++	/*
++	 * Users like xcopy do not use counters since they never do a stop
++	 * and wait.
++	 */
++	if (se_sess->cmd_cnt) {
++		if (!percpu_ref_tryget_live(&se_sess->cmd_cnt->refcnt))
++			ret = -ESHUTDOWN;
++		else
++			se_cmd->cmd_cnt = se_sess->cmd_cnt;
++	}
+ 	if (ret && ack_kref)
+ 		target_put_sess_cmd(se_cmd);
+ 
+@@ -2993,7 +3030,7 @@ static void target_free_cmd_mem(struct se_cmd *cmd)
+ static void target_release_cmd_kref(struct kref *kref)
+ {
+ 	struct se_cmd *se_cmd = container_of(kref, struct se_cmd, cmd_kref);
+-	struct se_session *se_sess = se_cmd->se_sess;
++	struct target_cmd_counter *cmd_cnt = se_cmd->cmd_cnt;
+ 	struct completion *free_compl = se_cmd->free_compl;
+ 	struct completion *abrt_compl = se_cmd->abrt_compl;
+ 
+@@ -3004,7 +3041,8 @@ static void target_release_cmd_kref(struct kref *kref)
+ 	if (abrt_compl)
+ 		complete(abrt_compl);
+ 
+-	percpu_ref_put(&se_sess->cmd_count);
++	if (cmd_cnt)
++		percpu_ref_put(&cmd_cnt->refcnt);
+ }
+ 
+ /**
+@@ -3123,46 +3161,65 @@ void target_show_cmd(const char *pfx, struct se_cmd *cmd)
+ }
+ EXPORT_SYMBOL(target_show_cmd);
+ 
+-static void target_stop_session_confirm(struct percpu_ref *ref)
++static void target_stop_cmd_counter_confirm(struct percpu_ref *ref)
++{
++	struct target_cmd_counter *cmd_cnt = container_of(ref,
++						struct target_cmd_counter,
++						refcnt);
++	complete_all(&cmd_cnt->stop_done);
++}
++
++/**
++ * target_stop_cmd_counter - Stop new IO from being added to the counter.
++ * @cmd_cnt: counter to stop
++ */
++static void target_stop_cmd_counter(struct target_cmd_counter *cmd_cnt)
+ {
+-	struct se_session *se_sess = container_of(ref, struct se_session,
+-						  cmd_count);
+-	complete_all(&se_sess->stop_done);
++	pr_debug("Stopping command counter.\n");
++	if (!atomic_cmpxchg(&cmd_cnt->stopped, 0, 1))
++		percpu_ref_kill_and_confirm(&cmd_cnt->refcnt,
++					    target_stop_cmd_counter_confirm);
+ }
+ 
+ /**
+  * target_stop_session - Stop new IO from being queued on the session.
+- * @se_sess:    session to stop
++ * @se_sess: session to stop
+  */
+ void target_stop_session(struct se_session *se_sess)
+ {
+-	pr_debug("Stopping session queue.\n");
+-	if (atomic_cmpxchg(&se_sess->stopped, 0, 1) == 0)
+-		percpu_ref_kill_and_confirm(&se_sess->cmd_count,
+-					    target_stop_session_confirm);
++	target_stop_cmd_counter(se_sess->cmd_cnt);
+ }
+ EXPORT_SYMBOL(target_stop_session);
+ 
+ /**
+- * target_wait_for_sess_cmds - Wait for outstanding commands
+- * @se_sess:    session to wait for active I/O
++ * target_wait_for_cmds - Wait for outstanding cmds.
++ * @cmd_cnt: counter to wait for active I/O for.
+  */
+-void target_wait_for_sess_cmds(struct se_session *se_sess)
++static void target_wait_for_cmds(struct target_cmd_counter *cmd_cnt)
+ {
+ 	int ret;
+ 
+-	WARN_ON_ONCE(!atomic_read(&se_sess->stopped));
++	WARN_ON_ONCE(!atomic_read(&cmd_cnt->stopped));
+ 
+ 	do {
+ 		pr_debug("Waiting for running cmds to complete.\n");
+-		ret = wait_event_timeout(se_sess->cmd_count_wq,
+-				percpu_ref_is_zero(&se_sess->cmd_count),
+-				180 * HZ);
++		ret = wait_event_timeout(cmd_cnt->refcnt_wq,
++					 percpu_ref_is_zero(&cmd_cnt->refcnt),
++					 180 * HZ);
+ 	} while (ret <= 0);
+ 
+-	wait_for_completion(&se_sess->stop_done);
++	wait_for_completion(&cmd_cnt->stop_done);
+ 	pr_debug("Waiting for cmds done.\n");
+ }
++
++/**
++ * target_wait_for_sess_cmds - Wait for outstanding commands
++ * @se_sess: session to wait for active I/O
++ */
++void target_wait_for_sess_cmds(struct se_session *se_sess)
++{
++	target_wait_for_cmds(se_sess->cmd_cnt);
++}
+ EXPORT_SYMBOL(target_wait_for_sess_cmds);
+ 
+ /*
+diff --git a/include/target/iscsi/iscsi_target_core.h b/include/target/iscsi/iscsi_target_core.h
+index 94d06ddfd80ad..229118156a1f6 100644
+--- a/include/target/iscsi/iscsi_target_core.h
++++ b/include/target/iscsi/iscsi_target_core.h
+@@ -600,6 +600,7 @@ struct iscsit_conn {
+ 	struct iscsi_tpg_np	*tpg_np;
+ 	/* Pointer to parent session */
+ 	struct iscsit_session	*sess;
++	struct target_cmd_counter *cmd_cnt;
+ 	int			bitmap_id;
+ 	int			rx_thread_active;
+ 	struct task_struct	*rx_thread;
+diff --git a/include/target/target_core_base.h b/include/target/target_core_base.h
+index 12c9ba16217ef..bd299790e99c3 100644
+--- a/include/target/target_core_base.h
++++ b/include/target/target_core_base.h
+@@ -494,6 +494,7 @@ struct se_cmd {
+ 	struct se_lun		*se_lun;
+ 	/* Only used for internal passthrough and legacy TCM fabric modules */
+ 	struct se_session	*se_sess;
++	struct target_cmd_counter *cmd_cnt;
+ 	struct se_tmr_req	*se_tmr_req;
+ 	struct llist_node	se_cmd_list;
+ 	struct completion	*free_compl;
+@@ -619,22 +620,26 @@ static inline struct se_node_acl *fabric_stat_to_nacl(struct config_item *item)
+ 			acl_fabric_stat_group);
+ }
+ 
+-struct se_session {
++struct target_cmd_counter {
++	struct percpu_ref	refcnt;
++	wait_queue_head_t	refcnt_wq;
++	struct completion	stop_done;
+ 	atomic_t		stopped;
++};
++
++struct se_session {
+ 	u64			sess_bin_isid;
+ 	enum target_prot_op	sup_prot_ops;
+ 	enum target_prot_type	sess_prot_type;
+ 	struct se_node_acl	*se_node_acl;
+ 	struct se_portal_group *se_tpg;
+ 	void			*fabric_sess_ptr;
+-	struct percpu_ref	cmd_count;
+ 	struct list_head	sess_list;
+ 	struct list_head	sess_acl_list;
+ 	spinlock_t		sess_cmd_lock;
+-	wait_queue_head_t	cmd_count_wq;
+-	struct completion	stop_done;
+ 	void			*sess_cmd_map;
+ 	struct sbitmap_queue	sess_tag_pool;
++	struct target_cmd_counter *cmd_cnt;
  };
+ 
+ struct se_device;
 -- 
 2.39.2
 
