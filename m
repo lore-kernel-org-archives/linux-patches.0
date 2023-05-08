@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A903168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:50:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0712C433D2;
-	Mon,  8 May 2023 10:50:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D749D168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0DCC433D2;
+	Mon,  8 May 2023 10:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543041;
-	bh=TYVftzPFH3d122fStT/BFsArYteAjmvF3SwKnaQBLn0=;
+	s=korg; t=1683543043;
+	bh=yyXvubOl0Lqw6wg/6U4TJZLynShHOBkAUwmQ0uv7Q0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E1Vd/aGbvv3s8rJjItTXKlAcoY4oTPD6nFXS6YdNn0vUwiB6zbtliNbERc+dsLDal
-	 btaXIXs2JktZKIXykRu4BCMVwNwmyuUYDCo483W7mE2DRleevBc4CNNYgq2irFuQpu
-	 /Ar2WuE6GuHRGZaQ4jHBpQ5k738DLp4b/qS9s4G0=
+	b=BEw/w2OQr0VPTu0xBEMk0tNT9a+6CyjNpa+af7wpFGUOVlVNmi1X7kxDN7u34xQ2N
+	 t6Lm7/yKN1rbighV/g9vimdYj6jGUJdFuooXZH/Mlav0P4jqf24N1GhrqtT8yGd5Eu
+	 3zZvkEhxKtDFBwNCLbb0vq3vgsqAE9qk4NJItqME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andrew Lunn <andrew@lunn.ch>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 599/663] mfd: tqmx86: Specify IO port register range more precisely
-Date: Mon,  8 May 2023 11:47:05 +0200
-Message-Id: <20230508094448.954777076@linuxfoundation.org>
+Subject: [PATCH 6.2 600/663] mfd: tqmx86: Correct board names for TQMxE39x
+Date: Mon,  8 May 2023 11:47:06 +0200
+Message-Id: <20230508094449.000259721@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,60 +38,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 
-[ Upstream commit 051c69ff4f607aa114c7bbdd7c41ed881367aeee ]
+[ Upstream commit f376c479668557bcc2fd9e9fbc0f53e7819a11cd ]
 
-Registers 0x160..0x17f are unassigned. Use 0x180 as base register and
-update offets accordingly.
+It seems that this driver was developed based on preliminary documentation.
+Report the correct names for all TQMxE39x variants, as they are used by
+the released hardware revisions:
 
-Also change the size of the range to include 0x19f. While 0x19f is
-currently reserved for future extensions, so are several of the previous
-registers up to 0x19e, and it is weird to leave out just the last one.
+- Fix names for TQMxE39C1/C2 board IDs
+- Distinguish TQMxE39M and TQMxE39S, which use the same board ID
+
+The TQMxE39M/S are distinguished using the SAUC (Sanctioned Alternate
+Uses Configuration) register of the GPIO controller. This also prepares
+for the correct handling of the differences between the GPIO controllers
+of our COMe and SMARC modules.
 
 Fixes: 2f17dd34ffed ("mfd: tqmx86: IO controller with I2C, Wachdog and GPIO")
 Signed-off-by: Matthias Schiffer <matthias.schiffer@ew.tq-group.com>
 Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/db4677ac318b1283c8956f637f409995a30a31c3.1676892223.git.matthias.schiffer@ew.tq-group.com
+Link: https://lore.kernel.org/r/aca9a7cb42a85181bcb456c437554d2728e708ec.1676892223.git.matthias.schiffer@ew.tq-group.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/tqmx86.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/mfd/tqmx86.c | 32 +++++++++++++++++---------------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
 diff --git a/drivers/mfd/tqmx86.c b/drivers/mfd/tqmx86.c
-index 31d0efb5aacf8..958334f14eb00 100644
+index 958334f14eb00..fac02875fe7d9 100644
 --- a/drivers/mfd/tqmx86.c
 +++ b/drivers/mfd/tqmx86.c
-@@ -16,8 +16,8 @@
- #include <linux/platform_data/i2c-ocores.h>
- #include <linux/platform_device.h>
- 
--#define TQMX86_IOBASE	0x160
--#define TQMX86_IOSIZE	0x3f
-+#define TQMX86_IOBASE	0x180
-+#define TQMX86_IOSIZE	0x20
- #define TQMX86_IOBASE_I2C	0x1a0
- #define TQMX86_IOSIZE_I2C	0xa
- #define TQMX86_IOBASE_WATCHDOG	0x18b
-@@ -25,7 +25,7 @@
- #define TQMX86_IOBASE_GPIO	0x18d
- #define TQMX86_IOSIZE_GPIO	0x4
- 
--#define TQMX86_REG_BOARD_ID	0x20
-+#define TQMX86_REG_BOARD_ID	0x00
- #define TQMX86_REG_BOARD_ID_E38M	1
+@@ -30,9 +30,9 @@
  #define TQMX86_REG_BOARD_ID_50UC	2
  #define TQMX86_REG_BOARD_ID_E38C	3
-@@ -40,8 +40,8 @@
- #define TQMX86_REG_BOARD_ID_E40S	13
- #define TQMX86_REG_BOARD_ID_E40C1	14
- #define TQMX86_REG_BOARD_ID_E40C2	15
--#define TQMX86_REG_BOARD_REV	0x21
--#define TQMX86_REG_IO_EXT_INT	0x26
-+#define TQMX86_REG_BOARD_REV	0x01
-+#define TQMX86_REG_IO_EXT_INT	0x06
- #define TQMX86_REG_IO_EXT_INT_NONE		0
- #define TQMX86_REG_IO_EXT_INT_7			1
- #define TQMX86_REG_IO_EXT_INT_9			2
+ #define TQMX86_REG_BOARD_ID_60EB	4
+-#define TQMX86_REG_BOARD_ID_E39M	5
+-#define TQMX86_REG_BOARD_ID_E39C	6
+-#define TQMX86_REG_BOARD_ID_E39x	7
++#define TQMX86_REG_BOARD_ID_E39MS	5
++#define TQMX86_REG_BOARD_ID_E39C1	6
++#define TQMX86_REG_BOARD_ID_E39C2	7
+ #define TQMX86_REG_BOARD_ID_70EB	8
+ #define TQMX86_REG_BOARD_ID_80UC	9
+ #define TQMX86_REG_BOARD_ID_110EB	11
+@@ -48,6 +48,7 @@
+ #define TQMX86_REG_IO_EXT_INT_12		3
+ #define TQMX86_REG_IO_EXT_INT_MASK		0x3
+ #define TQMX86_REG_IO_EXT_INT_GPIO_SHIFT	4
++#define TQMX86_REG_SAUC		0x17
+ 
+ #define TQMX86_REG_I2C_DETECT	0x1a7
+ #define TQMX86_REG_I2C_DETECT_SOFT		0xa5
+@@ -110,7 +111,7 @@ static const struct mfd_cell tqmx86_devs[] = {
+ 	},
+ };
+ 
+-static const char *tqmx86_board_id_to_name(u8 board_id)
++static const char *tqmx86_board_id_to_name(u8 board_id, u8 sauc)
+ {
+ 	switch (board_id) {
+ 	case TQMX86_REG_BOARD_ID_E38M:
+@@ -121,12 +122,12 @@ static const char *tqmx86_board_id_to_name(u8 board_id)
+ 		return "TQMxE38C";
+ 	case TQMX86_REG_BOARD_ID_60EB:
+ 		return "TQMx60EB";
+-	case TQMX86_REG_BOARD_ID_E39M:
+-		return "TQMxE39M";
+-	case TQMX86_REG_BOARD_ID_E39C:
+-		return "TQMxE39C";
+-	case TQMX86_REG_BOARD_ID_E39x:
+-		return "TQMxE39x";
++	case TQMX86_REG_BOARD_ID_E39MS:
++		return (sauc == 0xff) ? "TQMxE39M" : "TQMxE39S";
++	case TQMX86_REG_BOARD_ID_E39C1:
++		return "TQMxE39C1";
++	case TQMX86_REG_BOARD_ID_E39C2:
++		return "TQMxE39C2";
+ 	case TQMX86_REG_BOARD_ID_70EB:
+ 		return "TQMx70EB";
+ 	case TQMX86_REG_BOARD_ID_80UC:
+@@ -159,9 +160,9 @@ static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
+ 	case TQMX86_REG_BOARD_ID_E40C1:
+ 	case TQMX86_REG_BOARD_ID_E40C2:
+ 		return 24000;
+-	case TQMX86_REG_BOARD_ID_E39M:
+-	case TQMX86_REG_BOARD_ID_E39C:
+-	case TQMX86_REG_BOARD_ID_E39x:
++	case TQMX86_REG_BOARD_ID_E39MS:
++	case TQMX86_REG_BOARD_ID_E39C1:
++	case TQMX86_REG_BOARD_ID_E39C2:
+ 		return 25000;
+ 	case TQMX86_REG_BOARD_ID_E38M:
+ 	case TQMX86_REG_BOARD_ID_E38C:
+@@ -175,7 +176,7 @@ static int tqmx86_board_id_to_clk_rate(struct device *dev, u8 board_id)
+ 
+ static int tqmx86_probe(struct platform_device *pdev)
+ {
+-	u8 board_id, rev, i2c_det, io_ext_int_val;
++	u8 board_id, sauc, rev, i2c_det, io_ext_int_val;
+ 	struct device *dev = &pdev->dev;
+ 	u8 gpio_irq_cfg, readback;
+ 	const char *board_name;
+@@ -205,7 +206,8 @@ static int tqmx86_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	board_id = ioread8(io_base + TQMX86_REG_BOARD_ID);
+-	board_name = tqmx86_board_id_to_name(board_id);
++	sauc = ioread8(io_base + TQMX86_REG_SAUC);
++	board_name = tqmx86_board_id_to_name(board_id, sauc);
+ 	rev = ioread8(io_base + TQMX86_REG_BOARD_REV);
+ 
+ 	dev_info(dev,
 -- 
 2.39.2
 
