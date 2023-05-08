@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64CC168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BAB9C433D2;
-	Mon,  8 May 2023 11:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D36168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:22:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E266C433EF;
+	Mon,  8 May 2023 11:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544931;
-	bh=tUzZwBidde6xtSinxYe2xVHPpnOjyXOU14PA1HMpBwo=;
+	s=korg; t=1683544934;
+	bh=QHiXMgLzhHOMmXf0BcYXLN65yHpQUQ3MLv1U70y5V98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wnJVdSepXcbf6LNlcNJavAd49uOPGAuox7UIphBG1O4QMrH+wOkwFVN+cWYMeQ4wy
-	 DxwVYxXKkmv6sncCOEWwSOG/3wDeM4eLBJA5k4vGiX0fo2PclE8SmUQOwb//mHX2mA
-	 EyG2pWzpDIQdpJ9WLH5reMUYRJ+j4xV2z7S3/nNk=
+	b=Q1TId0DHYn/v6Eu7IvzqCxbNi06/qowb16XJm+RXyZQAVENthRMXEVY+Nhide3MQz
+	 gKBDt79r8O+NuXwYpOmBoAp0E5+MQZ5jlNybUALl4liMM4W6gxgbEnRaItIWx3dTGM
+	 7Lut5lWFiKmr1zMY1uAkUHD3kIfkkTkR3HKrE3sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Schspa Shi <schspa@gmail.com>,
+	Aaron Thompson <dev@aaront.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Dwaine Gonyier <dgonyier@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 569/694] sched/rt: Fix bad task migration for rt tasks
-Date: Mon,  8 May 2023 11:46:44 +0200
-Message-Id: <20230508094453.276126653@linuxfoundation.org>
+Subject: [PATCH 6.3 570/694] sched/clock: Fix local_clock() before sched_clock_init()
+Date: Mon,  8 May 2023 11:46:45 +0200
+Message-Id: <20230508094453.326201626@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -39,83 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Schspa Shi <schspa@gmail.com>
+From: Aaron Thompson <dev@aaront.org>
 
-[ Upstream commit feffe5bb274dd3442080ef0e4053746091878799 ]
+[ Upstream commit f31dcb152a3d0816e2f1deab4e64572336da197d ]
 
-Commit 95158a89dd50 ("sched,rt: Use the full cpumask for balancing")
-allows find_lock_lowest_rq() to pick a task with migration disabled.
-The purpose of the commit is to push the current running task on the
-CPU that has the migrate_disable() task away.
+Have local_clock() return sched_clock() if sched_clock_init() has not
+yet run. sched_clock_cpu() has this check but it was not included in the
+new noinstr implementation of local_clock().
 
-However, there is a race which allows a migrate_disable() task to be
-migrated. Consider:
+The effect can be seen on x86 with CONFIG_PRINTK_TIME enabled, for
+instance. scd->clock quickly reaches the value of TICK_NSEC and that
+value is returned until sched_clock_init() runs.
 
-  CPU0                                    CPU1
-  push_rt_task
-    check is_migration_disabled(next_task)
+dmesg without this patch:
 
-                                          task not running and
-                                          migration_disabled == 0
+    [    0.000000] kvm-clock: ...
+    [    0.000002] kvm-clock: ...
+    [    0.000672] clocksource: ...
+    [    0.001000] tsc: ...
+    [    0.001000] e820: ...
+    [    0.001000] e820: ...
+     ...
+    [    0.001000] ..TIMER: ...
+    [    0.001000] clocksource: ...
+    [    0.378956] Calibrating delay loop ...
+    [    0.379955] pid_max: ...
 
-    find_lock_lowest_rq(next_task, rq);
-      _double_lock_balance(this_rq, busiest);
-        raw_spin_rq_unlock(this_rq);
-        double_rq_lock(this_rq, busiest);
-          <<wait for busiest rq>>
-                                              <wakeup>
-                                          task become running
-                                          migrate_disable();
-                                            <context out>
-    deactivate_task(rq, next_task, 0);
-    set_task_cpu(next_task, lowest_rq->cpu);
-      WARN_ON_ONCE(is_migration_disabled(p));
+dmesg with this patch:
 
-Fixes: 95158a89dd50 ("sched,rt: Use the full cpumask for balancing")
-Signed-off-by: Schspa Shi <schspa@gmail.com>
+    [    0.000000] kvm-clock: ...
+    [    0.000001] kvm-clock: ...
+    [    0.000675] clocksource: ...
+    [    0.002685] tsc: ...
+    [    0.003331] e820: ...
+    [    0.004190] e820: ...
+     ...
+    [    0.421939] ..TIMER: ...
+    [    0.422842] clocksource: ...
+    [    0.424582] Calibrating delay loop ...
+    [    0.425580] pid_max: ...
+
+Fixes: 776f22913b8e ("sched/clock: Make local_clock() noinstr")
+Signed-off-by: Aaron Thompson <dev@aaront.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Tested-by: Dwaine Gonyier <dgonyier@redhat.com>
+Link: https://lkml.kernel.org/r/20230413175012.2201-1-dev@aaront.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/deadline.c | 1 +
- kernel/sched/rt.c       | 4 ++++
- 2 files changed, 5 insertions(+)
+ kernel/sched/clock.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
-index 71b24371a6f77..ac8010f6f3a22 100644
---- a/kernel/sched/deadline.c
-+++ b/kernel/sched/deadline.c
-@@ -2246,6 +2246,7 @@ static struct rq *find_lock_later_rq(struct task_struct *task, struct rq *rq)
- 				     !cpumask_test_cpu(later_rq->cpu, &task->cpus_mask) ||
- 				     task_on_cpu(rq, task) ||
- 				     !dl_task(task) ||
-+				     is_migration_disabled(task) ||
- 				     !task_on_rq_queued(task))) {
- 				double_unlock_balance(rq, later_rq);
- 				later_rq = NULL;
-diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
-index 0a11f44adee57..4f5796dd26a56 100644
---- a/kernel/sched/rt.c
-+++ b/kernel/sched/rt.c
-@@ -2000,11 +2000,15 @@ static struct rq *find_lock_lowest_rq(struct task_struct *task, struct rq *rq)
- 			 * the mean time, task could have
- 			 * migrated already or had its affinity changed.
- 			 * Also make sure that it wasn't scheduled on its rq.
-+			 * It is possible the task was scheduled, set
-+			 * "migrate_disabled" and then got preempted, so we must
-+			 * check the task migration disable flag here too.
- 			 */
- 			if (unlikely(task_rq(task) != rq ||
- 				     !cpumask_test_cpu(lowest_rq->cpu, &task->cpus_mask) ||
- 				     task_on_cpu(rq, task) ||
- 				     !rt_task(task) ||
-+				     is_migration_disabled(task) ||
- 				     !task_on_rq_queued(task))) {
+diff --git a/kernel/sched/clock.c b/kernel/sched/clock.c
+index 5732fa75ebab2..b5cc2b53464de 100644
+--- a/kernel/sched/clock.c
++++ b/kernel/sched/clock.c
+@@ -300,6 +300,9 @@ noinstr u64 local_clock(void)
+ 	if (static_branch_likely(&__sched_clock_stable))
+ 		return sched_clock() + __sched_clock_offset;
  
- 				double_unlock_balance(rq, lowest_rq);
++	if (!static_branch_likely(&sched_clock_running))
++		return sched_clock();
++
+ 	preempt_disable_notrace();
+ 	clock = sched_clock_local(this_scd());
+ 	preempt_enable_notrace();
 -- 
 2.39.2
 
