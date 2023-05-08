@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5556B168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADDB2C433EF;
-	Mon,  8 May 2023 10:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E7E168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:49:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9BFAC433A0;
+	Mon,  8 May 2023 10:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542948;
-	bh=UoX9BlAcrEjfFtRGibc6e3zRYJyDqathBGUlgDLqds4=;
+	s=korg; t=1683542951;
+	bh=y2N7+oE41vBXkxludOGv3SC0Y9LV09mk2h/wIlGf6eI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ri/o5WDaOmmCwC9U79Pfu/jUoU71Ogez3wjLuupn4R2hXZUHukLSIg9aRAC8vLbaJ
-	 qUH/daonLNjAETQpXjEmgQ2i3w01NjzuMNd0jPiNzIySBnNJ9HoMDiDPZFpv4ZuWry
-	 nDGTtzlKX0HxWRBzKAVyrz+Jnh22NKI/uiQUx+jg=
+	b=sQ74egQWNFkezhIfylpqZkntOca7pHC5l+jed2F5Px+jN9/WQMw2n8eqzv+K2HDai
+	 D+EgACFThCZHSL1IdFQfBK19HllRh+6LxpDSXeQa28BeRk//rMGI7/alFBtKYuHpzH
+	 dUVEXlBbETDX3RAgr8mkP4uUSDN6tNemKsvN/mts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+	Shunsuke Mie <mie@igel.co.jp>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 555/663] s390/checksum: always use cksm instruction
-Date: Mon,  8 May 2023 11:46:21 +0200
-Message-Id: <20230508094447.109640114@linuxfoundation.org>
+Subject: [PATCH 6.2 594/663] dmaengine: dw-edma: Fix to enable to issue dma request on DMA processing
+Date: Mon,  8 May 2023 11:47:00 +0200
+Message-Id: <20230508094448.743585728@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,91 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Shunsuke Mie <mie@igel.co.jp>
 
-[ Upstream commit e42ac7789df64120d7d3d57433dfc9f37ec0cb99 ]
+[ Upstream commit 970b17dfe264a9085ba4e593730ecfd496b950ab ]
 
-Commit dfe843dce775 ("s390/checksum: support GENERIC_CSUM, enable it for
-KASAN") switched s390 to use the generic checksum functions, so that KASAN
-instrumentation also works checksum functions by avoiding architecture
-specific inline assemblies.
+The issue_pending request is ignored while driver is processing a DMA
+request. Fix to issue the pending requests on any dma channel status.
 
-There is however the problem that the generic csum_partial() function
-returns a 32 bit value with a 16 bit folded checksum, while the original
-s390 variant does not fold to 16 bit. This in turn causes that the
-ipib_checksum in lowcore contains different values depending on kernel
-config options.
-
-The ipib_checksum is used by system dumpers to verify if pointers in
-lowcore point to valid data. Verification is done by comparing checksum
-values. The system dumpers still use 32 bit checksum values which are not
-folded, and therefore the checksum verification fails (incorrectly).
-
-Symptom is that reboot after dump does not work anymore when a KASAN
-instrumented kernel is dumped.
-
-Fix this by not using the generic checksum implementation. Instead add an
-explicit kasan_check_read() so that KASAN knows about the read access from
-within the inline assembly.
-
-Reported-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Fixes: dfe843dce775 ("s390/checksum: support GENERIC_CSUM, enable it for KASAN")
-Tested-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Signed-off-by: Shunsuke Mie <mie@igel.co.jp>
+Link: https://lore.kernel.org/r/20230411101758.438472-2-mie@igel.co.jp
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/Kconfig                | 4 ----
- arch/s390/include/asm/checksum.h | 9 ++-------
- 2 files changed, 2 insertions(+), 11 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/arch/s390/Kconfig b/arch/s390/Kconfig
-index 7fd08755a1f9e..854a6581d2f90 100644
---- a/arch/s390/Kconfig
-+++ b/arch/s390/Kconfig
-@@ -26,10 +26,6 @@ config GENERIC_BUG
- config GENERIC_BUG_RELATIVE_POINTERS
- 	def_bool y
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index cb46cbef212ab..ef4cdcf6beba0 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -279,9 +279,12 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	unsigned long flags;
  
--config GENERIC_CSUM
--	bool
--	default y if KASAN
--
- config GENERIC_LOCKBREAK
- 	def_bool y if PREEMPTION
- 
-diff --git a/arch/s390/include/asm/checksum.h b/arch/s390/include/asm/checksum.h
-index d977a3a2f6190..1b6b992cf18ed 100644
---- a/arch/s390/include/asm/checksum.h
-+++ b/arch/s390/include/asm/checksum.h
-@@ -12,12 +12,7 @@
- #ifndef _S390_CHECKSUM_H
- #define _S390_CHECKSUM_H
- 
--#ifdef CONFIG_GENERIC_CSUM
--
--#include <asm-generic/checksum.h>
--
--#else /* CONFIG_GENERIC_CSUM */
--
-+#include <linux/kasan-checks.h>
- #include <linux/uaccess.h>
- #include <linux/in6.h>
- 
-@@ -40,6 +35,7 @@ static inline __wsum csum_partial(const void *buff, int len, __wsum sum)
- 		.odd = (unsigned long) len,
- 	};
- 
-+	kasan_check_read(buff, len);
- 	asm volatile(
- 		"0:	cksm	%[sum],%[rp]\n"
- 		"	jo	0b\n"
-@@ -135,5 +131,4 @@ static inline __sum16 csum_ipv6_magic(const struct in6_addr *saddr,
- 	return csum_fold((__force __wsum)(sum >> 32));
- }
- 
--#endif /* CONFIG_GENERIC_CSUM */
- #endif /* _S390_CHECKSUM_H */
++	if (!chan->configured)
++		return;
++
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+-	if (chan->configured && chan->request == EDMA_REQ_NONE &&
+-	    chan->status == EDMA_ST_IDLE && vchan_issue_pending(&chan->vc)) {
++	if (vchan_issue_pending(&chan->vc) && chan->request == EDMA_REQ_NONE &&
++	    chan->status == EDMA_ST_IDLE) {
+ 		chan->status = EDMA_ST_BUSY;
+ 		dw_edma_start_transfer(chan);
+ 	}
 -- 
 2.39.2
 
