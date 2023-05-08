@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199AD13ADF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD65C433D2;
-	Mon,  8 May 2023 11:01:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF84813ADF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580E0C433EF;
+	Mon,  8 May 2023 11:01:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543698;
-	bh=xzlrzZkuLIcP7YhZu2SlQaZL/uCQ6swPFrmmflrvv8c=;
+	s=korg; t=1683543701;
+	bh=6oXXMw4I2SU38rSDkbt672ZgxnV/Clps40hIg4opPIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10Vwh97PNiGDSxOTlhqOehwB3YIWXhpoYfHzPs/NZdO47v9dRqlWt2CEcnm5CGGUm
-	 0KrJfJC6WqqshjBbzolk+iGseUTIhDCgAhfeOxNxAlVq50tmqFTp2d3uBhje4HTaDv
-	 B+E3DEfqCQe397MtlWGKNPVfaFDA1zmw/vQ8tNNg=
+	b=Ds6R0VbDY+lbEEyatekbAEYtwFB0sju6DLadtENSR0+5iGIYsaEbnJyZMQG65VMYa
+	 hm5l+ZgJtE4gQrgn86+nUYaXdJDyiEESGbLfOILv/AaCBQyr9OQm13UItw0IrJ4ccP
+	 xSYlvVz/b4BzSYlUQ5RQLsxB1f1M2xhkKIpqs2dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Devarsh Thakkar <devarsht@ti.com>,
+	Nishanth Menon <nm@ti.com>,
+	Bryan Brattlof <bb@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 145/694] tpm, tpm_tis: Claim locality when interrupts are reenabled on resume
-Date: Mon,  8 May 2023 11:39:40 +0200
-Message-Id: <20230508094437.160811581@linuxfoundation.org>
+Subject: [PATCH 6.3 172/694] arm64: dts: ti: k3-am62a7-sk: Fix DDR size to full 4GB
+Date: Mon,  8 May 2023 11:40:07 +0200
+Message-Id: <20230508094437.993476792@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,66 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Devarsh Thakkar <devarsht@ti.com>
 
-[ Upstream commit 955df4f87760b3bb2af253d3fbb12fb712b3ffa6 ]
+[ Upstream commit a1bc0d6084dba8a31831c65318a8a8e46f00906f ]
 
-In tpm_tis_resume() make sure that the locality has been claimed when
-tpm_tis_reenable_interrupts() is called. Otherwise the writings to the
-register might not have any effect.
+All revisions of AM62A7-SK board have 4GB LPDDR4 Micron
+MT53E2G32D4DE-046 AUT:B memory. Commit 38c4a08c820c ("arm64: dts: ti:
+Add support for AM62A7-SK") enabled just 2GB due to a schematics error
+in early revision of the board. Fix it by enabling full 4GB available on
+the platform.
 
-Fixes: 45baa1d1fa39 ("tpm_tis: Re-enable interrupts upon (S3) resume")
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Design docs: https://www.ti.com/lit/zip/sprr459
+
+Fixes: 38c4a08c820c ("arm64: dts: ti: Add support for AM62A7-SK")
+Signed-off-by: Devarsh Thakkar <devarsht@ti.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Reviewed-by: Bryan Brattlof <bb@ti.com>
+Link: https://lore.kernel.org/r/20230314094645.3411599-1-devarsht@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62a7-sk.dts | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index c5fef63c6179d..eecfbd7e97867 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -1191,28 +1191,27 @@ int tpm_tis_resume(struct device *dev)
- 	struct tpm_chip *chip = dev_get_drvdata(dev);
- 	int ret;
+diff --git a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+index 5c9012141ee23..f6a67f072dca6 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62a7-sk.dts
+@@ -27,8 +27,9 @@
  
-+	ret = tpm_tis_request_locality(chip, 0);
-+	if (ret < 0)
-+		return ret;
-+
- 	if (chip->flags & TPM_CHIP_FLAG_IRQ)
- 		tpm_tis_reenable_interrupts(chip);
+ 	memory@80000000 {
+ 		device_type = "memory";
+-		/* 2G RAM */
+-		reg = <0x00000000 0x80000000 0x00000000 0x80000000>;
++		/* 4G RAM */
++		reg = <0x00000000 0x80000000 0x00000000 0x80000000>,
++		      <0x00000008 0x80000000 0x00000000 0x80000000>;
+ 	};
  
- 	ret = tpm_pm_resume(dev);
- 	if (ret)
--		return ret;
-+		goto out;
- 
- 	/*
- 	 * TPM 1.2 requires self-test on resume. This function actually returns
- 	 * an error code but for unknown reason it isn't handled.
- 	 */
--	if (!(chip->flags & TPM_CHIP_FLAG_TPM2)) {
--		ret = tpm_tis_request_locality(chip, 0);
--		if (ret < 0)
--			return ret;
--
-+	if (!(chip->flags & TPM_CHIP_FLAG_TPM2))
- 		tpm1_do_selftest(chip);
-+out:
-+	tpm_tis_relinquish_locality(chip, 0);
- 
--		tpm_tis_relinquish_locality(chip, 0);
--	}
--
--	return 0;
-+	return ret;
- }
- EXPORT_SYMBOL_GPL(tpm_tis_resume);
- #endif
+ 	reserved-memory {
 -- 
 2.39.2
 
