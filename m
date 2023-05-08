@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBAA5168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:50:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2F6C433D2;
-	Mon,  8 May 2023 10:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4E4168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:50:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12E0DC433EF;
+	Mon,  8 May 2023 10:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543010;
-	bh=6g/SUIc1SOo0h76dWEFzKw6r+0RRHEA6H+r1l73pSLo=;
+	s=korg; t=1683543013;
+	bh=FtV+m2S0jaIWeJiyxNUkr0FhixAtSJNNEoRnu34VeVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qtFoGk7PeN9F2GgNovW0a97clu3HvpXr8IAQLEzpxirX/JB+XwEBe9Pokm12fUYp9
-	 4u4izMQiN5VBvin2Ws9urUoco2dPLmhWkvAun/SEvhlYVzwcJOneSIU7NZgbURzlk4
-	 xG/xji0AMEaAvZOy25X54/f9j6c1IjlKaQK+khqQ=
+	b=zSn8CN2YB4kbHlpWDnPQj4kErwIHwepKaYAXymlmvaifRxiiX9qLYY892SDXH5ziH
+	 0eL46nPvj0qUqSd2tEV8aUQBvYQGS2+W7A5jLCuICqKvk8aZ/6CzMpoqCxHmvZ6djq
+	 KL5vFAAkrQInLxik6fkqaJd7MY2DoqeszrZQFn2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Thomas Voegtle <tv@lio96.de>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
 	Christoph Hellwig <hch@lst.de>,
-	John Hubbard <jhubbard@nvidia.com>,
-	David Hildenbrand <david@redhat.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 620/663] mm: do not reclaim private data from pinned page
-Date: Mon,  8 May 2023 11:47:26 +0200
-Message-Id: <20230508094449.870628796@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.2 621/663] drbd: correctly submit flush bio on barrier
+Date: Mon,  8 May 2023 11:47:27 +0200
+Message-Id: <20230508094449.915722925@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -40,50 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
 
-commit d824ec2a154677f63c56cc71ffe4578274f6e32e upstream.
+commit 3899d94e3831ee07ea6821c032dc297aec80586a upstream.
 
-If the page is pinned, there's no point in trying to reclaim it.
-Furthermore if the page is from the page cache we don't want to reclaim
-fs-private data from the page because the pinning process may be writing
-to the page at any time and reclaiming fs private info on a dirty page can
-upset the filesystem (see link below).
+When we receive a flush command (or "barrier" in DRBD), we currently use
+a REQ_OP_FLUSH with the REQ_PREFLUSH flag set.
 
-Link: https://lore.kernel.org/linux-mm/20180103100430.GE4911@quack2.suse.cz
-Link: https://lkml.kernel.org/r/20230428124140.30166-1-jack@suse.cz
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Reviewed-by: Lorenzo Stoakes <lstoakes@gmail.com>
+The correct way to submit a flush bio is by using a REQ_OP_WRITE without
+any data, and set the REQ_PREFLUSH flag.
+
+Since commit b4a6bb3a67aa ("block: add a sanity check for non-write
+flush/fua bios"), this triggers a warning in the block layer, but this
+has been broken for quite some time before that.
+
+So use the correct set of flags to actually make the flush happen.
+
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: stable@vger.kernel.org
+Fixes: f9ff0da56437 ("drbd: allow parallel flushes for multi-volume resources")
+Reported-by: Thomas Voegtle <tv@lio96.de>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: John Hubbard <jhubbard@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230503121937.17232-1-christoph.boehmwalder@linbit.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/block/drbd/drbd_receiver.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -1905,6 +1905,16 @@ retry:
- 			}
- 		}
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -1283,7 +1283,7 @@ static void one_flush_endio(struct bio *
+ static void submit_one_flush(struct drbd_device *device, struct issue_flush_context *ctx)
+ {
+ 	struct bio *bio = bio_alloc(device->ldev->backing_bdev, 0,
+-				    REQ_OP_FLUSH | REQ_PREFLUSH, GFP_NOIO);
++				    REQ_OP_WRITE | REQ_PREFLUSH, GFP_NOIO);
+ 	struct one_flush_context *octx = kmalloc(sizeof(*octx), GFP_NOIO);
  
-+		/*
-+		 * Folio is unmapped now so it cannot be newly pinned anymore.
-+		 * No point in trying to reclaim folio if it is pinned.
-+		 * Furthermore we don't want to reclaim underlying fs metadata
-+		 * if the folio is pinned and thus potentially modified by the
-+		 * pinning process as that may upset the filesystem.
-+		 */
-+		if (folio_maybe_dma_pinned(folio))
-+			goto activate_locked;
-+
- 		mapping = folio_mapping(folio);
- 		if (folio_test_dirty(folio)) {
- 			/*
+ 	if (!octx) {
 
 
