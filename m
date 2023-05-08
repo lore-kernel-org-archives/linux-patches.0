@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AB0168DF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61A3C433EF;
-	Mon,  8 May 2023 11:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47047168DF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:31:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9806C433EF;
+	Mon,  8 May 2023 11:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545493;
-	bh=gZ+bRMauUXwl5no0RP9+NqdPeV2jwAvkv3NtuIAfj0I=;
+	s=korg; t=1683545496;
+	bh=+0RE+7ZUlgN+Hud6gu9TQz4rBrwna8HXuIwEzINMsqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgkgPU7W5kqUfLQu8i7FblqeUnvbhersyMwAqOUJJS5iF18to22DBMAur/kv/remP
-	 jQCsA4ZQiBfGrrWJpzbvSbNq20GJDJ9DxY8UBqxDaNg70X6KOtvS/hF+frnjMYy8OF
-	 RKoMPir9M+rHrdDqzxvNxCWPf3QOpM8xghavT3n8=
+	b=znYrjj8YCF6Y2lD7AmkXKYSERJnhCYQAQtHd0yNANJjhg4nubphj6Uxvy3gnPCQeW
+	 TU5dhmBCf/egk9QRFOPdUnXNbSJLcJVlqcPAJ4A2qp9LZq20FPstTG5zSdRFyH6LLN
+	 AToHswAULzxf0Qciks/RZcU73KbCr8ZMDFCUZnCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <david@fromorbit.com>
-Subject: [PATCH 5.15 057/371] xfs: dont consider future format versions valid
-Date: Mon,  8 May 2023 11:44:18 +0200
-Message-Id: <20230508094814.339263330@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 058/371] sound/oss/dmasound: fix build when drivers are mixed =y/=m
+Date: Mon,  8 May 2023 11:44:19 +0200
+Message-Id: <20230508094814.380911635@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,61 +40,166 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit aa88019851a85df80cb77f143758b13aee09e3d9 upstream.
+commit 9dd7c46346ca4390f84a7ea9933005eb1b175c15 upstream.
 
-In commit fe08cc504448 we reworked the valid superblock version
-checks. If it is a V5 filesystem, it is always valid, then we
-checked if the version was less than V4 (reject) and then checked
-feature fields in the V4 flags to determine if it was valid.
+When CONFIG_DMASOUND_ATARI=m and CONFIG_DMASOUND_Q40=y (or vice versa),
+dmasound_core.o can be built without dmasound_deinit() being defined,
+causing a build error:
 
-What we missed was that if the version is not V4 at this point,
-we shoudl reject the fs. i.e. the check current treats V6+
-filesystems as if it was a v4 filesystem. Fix this.
+ERROR: modpost: "dmasound_deinit" [sound/oss/dmasound/dmasound_atari.ko] undefined!
 
-cc: stable@vger.kernel.org
-Fixes: fe08cc504448 ("xfs: open code sb verifier feature checks")
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Dave Chinner <david@fromorbit.com>
+Modify dmasound_core.c and dmasound.h so that dmasound_deinit() is
+always available.
+
+The mixed modes (=y/=m) also mean that several variables and structs
+have to be declared in all cases.
+
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: lore.kernel.org/r/202204032138.EFT9qGEd-lkp@intel.com
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org
+Link: https://lore.kernel.org/r/20220405234118.24830-1-rdunlap@infradead.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_sb.c |   11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ sound/oss/dmasound/dmasound.h      |    6 ------
+ sound/oss/dmasound/dmasound_core.c |   24 +-----------------------
+ 2 files changed, 1 insertion(+), 29 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_sb.c
-+++ b/fs/xfs/libxfs/xfs_sb.c
-@@ -72,7 +72,8 @@ xfs_sb_validate_v5_features(
+--- a/sound/oss/dmasound/dmasound.h
++++ b/sound/oss/dmasound/dmasound.h
+@@ -88,11 +88,7 @@ static inline int ioctl_return(int __use
+      */
+ 
+ extern int dmasound_init(void);
+-#ifdef MODULE
+ extern void dmasound_deinit(void);
+-#else
+-#define dmasound_deinit()	do { } while (0)
+-#endif
+ 
+ /* description of the set-up applies to either hard or soft settings */
+ 
+@@ -114,9 +110,7 @@ typedef struct {
+     void *(*dma_alloc)(unsigned int, gfp_t);
+     void (*dma_free)(void *, unsigned int);
+     int (*irqinit)(void);
+-#ifdef MODULE
+     void (*irqcleanup)(void);
+-#endif
+     void (*init)(void);
+     void (*silence)(void);
+     int (*setFormat)(int);
+--- a/sound/oss/dmasound/dmasound_core.c
++++ b/sound/oss/dmasound/dmasound_core.c
+@@ -206,12 +206,10 @@ module_param(writeBufSize, int, 0);
+ 
+ MODULE_LICENSE("GPL");
+ 
+-#ifdef MODULE
+ static int sq_unit = -1;
+ static int mixer_unit = -1;
+ static int state_unit = -1;
+ static int irq_installed;
+-#endif /* MODULE */
+ 
+ /* control over who can modify resources shared between play/record */
+ static fmode_t shared_resource_owner;
+@@ -391,9 +389,6 @@ static const struct file_operations mixe
+ 
+ static void mixer_init(void)
+ {
+-#ifndef MODULE
+-	int mixer_unit;
+-#endif
+ 	mixer_unit = register_sound_mixer(&mixer_fops, -1);
+ 	if (mixer_unit < 0)
+ 		return;
+@@ -1171,9 +1166,6 @@ static const struct file_operations sq_f
+ static int sq_init(void)
+ {
+ 	const struct file_operations *fops = &sq_fops;
+-#ifndef MODULE
+-	int sq_unit;
+-#endif
+ 
+ 	sq_unit = register_sound_dsp(fops, -1);
+ 	if (sq_unit < 0) {
+@@ -1366,9 +1358,6 @@ static const struct file_operations stat
+ 
+ static int state_init(void)
+ {
+-#ifndef MODULE
+-	int state_unit;
+-#endif
+ 	state_unit = register_sound_special(&state_fops, SND_DEV_STATUS);
+ 	if (state_unit < 0)
+ 		return state_unit ;
+@@ -1386,10 +1375,9 @@ static int state_init(void)
+ int dmasound_init(void)
+ {
+ 	int res ;
+-#ifdef MODULE
++
+ 	if (irq_installed)
+ 		return -EBUSY;
+-#endif
+ 
+ 	/* Set up sound queue, /dev/audio and /dev/dsp. */
+ 
+@@ -1408,9 +1396,7 @@ int dmasound_init(void)
+ 		printk(KERN_ERR "DMA sound driver: Interrupt initialization failed\n");
+ 		return -ENODEV;
+ 	}
+-#ifdef MODULE
+ 	irq_installed = 1;
+-#endif
+ 
+ 	printk(KERN_INFO "%s DMA sound driver rev %03d installed\n",
+ 		dmasound.mach.name, (DMASOUND_CORE_REVISION<<4) +
+@@ -1424,8 +1410,6 @@ int dmasound_init(void)
+ 	return 0;
  }
  
- /*
-- * We support all XFS versions newer than a v4 superblock with V2 directories.
-+ * We current support XFS v5 formats with known features and v4 superblocks with
-+ * at least V2 directories.
-  */
- bool
- xfs_sb_good_version(
-@@ -86,16 +87,16 @@ xfs_sb_good_version(
- 	if (xfs_sb_is_v5(sbp))
- 		return xfs_sb_validate_v5_features(sbp);
- 
-+	/* versions prior to v4 are not supported */
-+	if (XFS_SB_VERSION_NUM(sbp) != XFS_SB_VERSION_4)
-+		return false;
-+
- 	/* We must not have any unknown v4 feature bits set */
- 	if ((sbp->sb_versionnum & ~XFS_SB_VERSION_OKBITS) ||
- 	    ((sbp->sb_versionnum & XFS_SB_VERSION_MOREBITSBIT) &&
- 	     (sbp->sb_features2 & ~XFS_SB_VERSION2_OKBITS)))
- 		return false;
- 
--	/* versions prior to v4 are not supported */
--	if (XFS_SB_VERSION_NUM(sbp) < XFS_SB_VERSION_4)
--		return false;
+-#ifdef MODULE
 -
- 	/* V4 filesystems need v2 directories and unwritten extents */
- 	if (!(sbp->sb_versionnum & XFS_SB_VERSION_DIRV2BIT))
- 		return false;
+ void dmasound_deinit(void)
+ {
+ 	if (irq_installed) {
+@@ -1444,8 +1428,6 @@ void dmasound_deinit(void)
+ 		unregister_sound_dsp(sq_unit);
+ }
+ 
+-#else /* !MODULE */
+-
+ static int dmasound_setup(char *str)
+ {
+ 	int ints[6], size;
+@@ -1489,8 +1471,6 @@ static int dmasound_setup(char *str)
+ 
+ __setup("dmasound=", dmasound_setup);
+ 
+-#endif /* !MODULE */
+-
+     /*
+      *  Conversion tables
+      */
+@@ -1577,9 +1557,7 @@ char dmasound_alaw2dma8[] = {
+ 
+ EXPORT_SYMBOL(dmasound);
+ EXPORT_SYMBOL(dmasound_init);
+-#ifdef MODULE
+ EXPORT_SYMBOL(dmasound_deinit);
+-#endif
+ EXPORT_SYMBOL(dmasound_write_sq);
+ EXPORT_SYMBOL(dmasound_catchRadius);
+ #ifdef HAS_8BIT_TABLES
 
 
