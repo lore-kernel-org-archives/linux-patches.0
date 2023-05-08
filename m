@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C19B168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:14:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63DCC433EF;
-	Mon,  8 May 2023 10:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC163168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:14:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6099AC433EF;
+	Mon,  8 May 2023 10:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540884;
-	bh=OA4b/0jb12WeWdYP3LvDJaMTvf/wovwjSeQtyUhE68Q=;
+	s=korg; t=1683540886;
+	bh=1bM7GDM268V3JwW9V+XQq64HRE/lwIG0oDu5w9HEcTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUUzG2tnf8JG5lOnAh0EqcgPrgB0kZ9rIROY2766oxJmcmRkKppBhnWWICkHSf98+
-	 0j9w5XDPB0t7uS9+0Stz3aJL7b68Sm9yE7OFyqW7e2dBxLGns79cbBr4T40V1L7AwM
-	 v0TqDNT7DR8WyctW7d0HB2R76hJ9+cXxLsTUptXI=
+	b=jvh3Az1zmC5mCiUbMeRwPUMZG1aQyXBhdfMu81Ob1ztvxavIqTYrz8AW3NA0dLWrq
+	 eraHykMmy8+y0b6aFPHM7kjFWvvX/BaDFJTaYBz+LOkIovAI2FFOQrced40HPFQHlJ
+	 kD2Ee8enBu4Wv6gC/gbEiEoPno+kP02EkNekhu+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 535/611] pwm: mtk-disp: Configure double buffering before reading in .get_state()
-Date: Mon,  8 May 2023 11:46:17 +0200
-Message-Id: <20230508094439.386165667@linuxfoundation.org>
+Subject: [PATCH 6.1 536/611] soundwire: cadence: rename sdw_cdns_dai_dma_data as sdw_cdns_dai_runtime
+Date: Mon,  8 May 2023 11:46:18 +0200
+Message-Id: <20230508094439.424807634@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,67 +37,365 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit b16c310115f2084b8826a35b77ef42bab6786d9f ]
+[ Upstream commit e0767e391079687081c5564b1390983c36b49cd1 ]
 
-The DISP_PWM controller's default behavior is to always use register
-double buffering: all reads/writes are then performed on shadow
-registers instead of working registers and this becomes an issue
-in case our chosen configuration in Linux is different from the
-default (or from the one that was pre-applied by the bootloader).
+The existing 'struct sdw_cdns_dma_data' has really nothing to do with
+DMAs. The information is stored in the dai->dma_data, but this is
+really private data that should be stored in a different context.
 
-An example of broken behavior is when the controller is configured
-to use shadow registers, but this driver wants to configure it
-otherwise: what happens is that the .get_state() callback is called
-right after registering the pwmchip and checks whether the PWM is
-enabled by reading the DISP_PWM_EN register;
-At this point, if shadow registers are enabled but their content
-was not committed before booting Linux, we are *not* reading the
-current PWM enablement status, leading to the kernel knowing that
-the hardware is actually enabled when, in reality, it's not.
+Beyond the academic elegance discussion, using dma_data is a problem
+for new Intel hardware where the dma_data structure is already used
+for true DMA handling performed by other parts of the code.
 
-The aforementioned issue emerged since this driver was fixed with
-commit 0b5ef3429d8f ("pwm: mtk-disp: Fix the parameters calculated
-by the enabled flag of disp_pwm") making it to read the enablement
-status from the right register.
+This patch prepares a transition away from the use of dma_data, for
+now with a rename-only change.
 
-Configure the controller in the .get_state() callback to avoid
-this desync issue and get the backlight properly working again.
-
-Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Tested-by: Alexandre Mergnat <amergnat@baylibre.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20221101023521.2384586-2-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 0a0d1740bd8f ("soundwire: intel: don't save hw_params for use in prepare")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/soundwire/cadence_master.c | 30 +++++-----
+ drivers/soundwire/cadence_master.h |  4 +-
+ drivers/soundwire/intel.c          | 96 +++++++++++++++---------------
+ 3 files changed, 65 insertions(+), 65 deletions(-)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index 7fea385a387a5..3811578fcff05 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -196,6 +196,16 @@ static int mtk_disp_pwm_get_state(struct pwm_chip *chip,
- 		return 0;
+diff --git a/drivers/soundwire/cadence_master.c b/drivers/soundwire/cadence_master.c
+index e7da7d7b213fb..7286c9b3be691 100644
+--- a/drivers/soundwire/cadence_master.c
++++ b/drivers/soundwire/cadence_master.c
+@@ -1719,40 +1719,40 @@ int cdns_set_sdw_stream(struct snd_soc_dai *dai,
+ 			void *stream, int direction)
+ {
+ 	struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
+-	struct sdw_cdns_dma_data *dma;
++	struct sdw_cdns_dai_runtime *dai_runtime;
+ 
+ 	if (stream) {
+ 		/* first paranoia check */
+ 		if (direction == SNDRV_PCM_STREAM_PLAYBACK)
+-			dma = dai->playback_dma_data;
++			dai_runtime = dai->playback_dma_data;
+ 		else
+-			dma = dai->capture_dma_data;
++			dai_runtime = dai->capture_dma_data;
+ 
+-		if (dma) {
++		if (dai_runtime) {
+ 			dev_err(dai->dev,
+-				"dma_data already allocated for dai %s\n",
++				"dai_runtime already allocated for dai %s\n",
+ 				dai->name);
+ 			return -EINVAL;
+ 		}
+ 
+-		/* allocate and set dma info */
+-		dma = kzalloc(sizeof(*dma), GFP_KERNEL);
+-		if (!dma)
++		/* allocate and set dai_runtime info */
++		dai_runtime = kzalloc(sizeof(*dai_runtime), GFP_KERNEL);
++		if (!dai_runtime)
+ 			return -ENOMEM;
+ 
+-		dma->stream_type = SDW_STREAM_PCM;
++		dai_runtime->stream_type = SDW_STREAM_PCM;
+ 
+-		dma->bus = &cdns->bus;
+-		dma->link_id = cdns->instance;
++		dai_runtime->bus = &cdns->bus;
++		dai_runtime->link_id = cdns->instance;
+ 
+-		dma->stream = stream;
++		dai_runtime->stream = stream;
+ 
+ 		if (direction == SNDRV_PCM_STREAM_PLAYBACK)
+-			dai->playback_dma_data = dma;
++			dai->playback_dma_data = dai_runtime;
+ 		else
+-			dai->capture_dma_data = dma;
++			dai->capture_dma_data = dai_runtime;
+ 	} else {
+-		/* for NULL stream we release allocated dma_data */
++		/* for NULL stream we release allocated dai_runtime */
+ 		if (direction == SNDRV_PCM_STREAM_PLAYBACK) {
+ 			kfree(dai->playback_dma_data);
+ 			dai->playback_dma_data = NULL;
+diff --git a/drivers/soundwire/cadence_master.h b/drivers/soundwire/cadence_master.h
+index 51e6ecc027cbc..9b0113d48e419 100644
+--- a/drivers/soundwire/cadence_master.h
++++ b/drivers/soundwire/cadence_master.h
+@@ -76,7 +76,7 @@ struct sdw_cdns_stream_config {
+ };
+ 
+ /**
+- * struct sdw_cdns_dma_data: Cadence DMA data
++ * struct sdw_cdns_dai_runtime: Cadence DAI runtime data
+  *
+  * @name: SoundWire stream name
+  * @stream: stream runtime
+@@ -88,7 +88,7 @@ struct sdw_cdns_stream_config {
+  * @suspended: status set when suspended, to be used in .prepare
+  * @paused: status set in .trigger, to be used in suspend
+  */
+-struct sdw_cdns_dma_data {
++struct sdw_cdns_dai_runtime {
+ 	char *name;
+ 	struct sdw_stream_runtime *stream;
+ 	struct sdw_cdns_pdi *pdi;
+diff --git a/drivers/soundwire/intel.c b/drivers/soundwire/intel.c
+index 8c76541d553f1..52e5c54b4f36a 100644
+--- a/drivers/soundwire/intel.c
++++ b/drivers/soundwire/intel.c
+@@ -824,15 +824,15 @@ static int intel_hw_params(struct snd_pcm_substream *substream,
+ {
+ 	struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
+ 	struct sdw_intel *sdw = cdns_to_intel(cdns);
+-	struct sdw_cdns_dma_data *dma;
++	struct sdw_cdns_dai_runtime *dai_runtime;
+ 	struct sdw_cdns_pdi *pdi;
+ 	struct sdw_stream_config sconfig;
+ 	struct sdw_port_config *pconfig;
+ 	int ch, dir;
+ 	int ret;
+ 
+-	dma = snd_soc_dai_get_dma_data(dai, substream);
+-	if (!dma)
++	dai_runtime = snd_soc_dai_get_dma_data(dai, substream);
++	if (!dai_runtime)
+ 		return -EIO;
+ 
+ 	ch = params_channels(params);
+@@ -854,10 +854,10 @@ static int intel_hw_params(struct snd_pcm_substream *substream,
+ 	sdw_cdns_config_stream(cdns, ch, dir, pdi);
+ 
+ 	/* store pdi and hw_params, may be needed in prepare step */
+-	dma->paused = false;
+-	dma->suspended = false;
+-	dma->pdi = pdi;
+-	dma->hw_params = params;
++	dai_runtime->paused = false;
++	dai_runtime->suspended = false;
++	dai_runtime->pdi = pdi;
++	dai_runtime->hw_params = params;
+ 
+ 	/* Inform DSP about PDI stream number */
+ 	ret = intel_params_stream(sdw, substream->stream, dai, params,
+@@ -869,7 +869,7 @@ static int intel_hw_params(struct snd_pcm_substream *substream,
+ 	sconfig.direction = dir;
+ 	sconfig.ch_count = ch;
+ 	sconfig.frame_rate = params_rate(params);
+-	sconfig.type = dma->stream_type;
++	sconfig.type = dai_runtime->stream_type;
+ 
+ 	sconfig.bps = snd_pcm_format_width(params_format(params));
+ 
+@@ -884,7 +884,7 @@ static int intel_hw_params(struct snd_pcm_substream *substream,
+ 	pconfig->ch_mask = (1 << ch) - 1;
+ 
+ 	ret = sdw_stream_add_master(&cdns->bus, &sconfig,
+-				    pconfig, 1, dma->stream);
++				    pconfig, 1, dai_runtime->stream);
+ 	if (ret)
+ 		dev_err(cdns->dev, "add master to stream failed:%d\n", ret);
+ 
+@@ -898,19 +898,19 @@ static int intel_prepare(struct snd_pcm_substream *substream,
+ {
+ 	struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
+ 	struct sdw_intel *sdw = cdns_to_intel(cdns);
+-	struct sdw_cdns_dma_data *dma;
++	struct sdw_cdns_dai_runtime *dai_runtime;
+ 	int ch, dir;
+ 	int ret = 0;
+ 
+-	dma = snd_soc_dai_get_dma_data(dai, substream);
+-	if (!dma) {
+-		dev_err(dai->dev, "failed to get dma data in %s\n",
++	dai_runtime = snd_soc_dai_get_dma_data(dai, substream);
++	if (!dai_runtime) {
++		dev_err(dai->dev, "failed to get dai runtime in %s\n",
+ 			__func__);
+ 		return -EIO;
  	}
  
-+	/*
-+	 * Apply DISP_PWM_DEBUG settings to choose whether to enable or disable
-+	 * registers double buffer and manual commit to working register before
-+	 * performing any read/write operation
-+	 */
-+	if (mdp->data->bls_debug)
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
-+					 mdp->data->bls_debug_mask,
-+					 mdp->data->bls_debug_mask);
-+
- 	rate = clk_get_rate(mdp->clk_main);
- 	con0 = readl(mdp->base + mdp->data->con0);
- 	con1 = readl(mdp->base + mdp->data->con1);
+-	if (dma->suspended) {
+-		dma->suspended = false;
++	if (dai_runtime->suspended) {
++		dai_runtime->suspended = false;
+ 
+ 		/*
+ 		 * .prepare() is called after system resume, where we
+@@ -921,21 +921,21 @@ static int intel_prepare(struct snd_pcm_substream *substream,
+ 		 */
+ 
+ 		/* configure stream */
+-		ch = params_channels(dma->hw_params);
++		ch = params_channels(dai_runtime->hw_params);
+ 		if (substream->stream == SNDRV_PCM_STREAM_CAPTURE)
+ 			dir = SDW_DATA_DIR_RX;
+ 		else
+ 			dir = SDW_DATA_DIR_TX;
+ 
+-		intel_pdi_shim_configure(sdw, dma->pdi);
+-		intel_pdi_alh_configure(sdw, dma->pdi);
+-		sdw_cdns_config_stream(cdns, ch, dir, dma->pdi);
++		intel_pdi_shim_configure(sdw, dai_runtime->pdi);
++		intel_pdi_alh_configure(sdw, dai_runtime->pdi);
++		sdw_cdns_config_stream(cdns, ch, dir, dai_runtime->pdi);
+ 
+ 		/* Inform DSP about PDI stream number */
+ 		ret = intel_params_stream(sdw, substream->stream, dai,
+-					  dma->hw_params,
++					  dai_runtime->hw_params,
+ 					  sdw->instance,
+-					  dma->pdi->intel_alh_id);
++					  dai_runtime->pdi->intel_alh_id);
+ 	}
+ 
+ 	return ret;
+@@ -946,11 +946,11 @@ intel_hw_free(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ {
+ 	struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
+ 	struct sdw_intel *sdw = cdns_to_intel(cdns);
+-	struct sdw_cdns_dma_data *dma;
++	struct sdw_cdns_dai_runtime *dai_runtime;
+ 	int ret;
+ 
+-	dma = snd_soc_dai_get_dma_data(dai, substream);
+-	if (!dma)
++	dai_runtime = snd_soc_dai_get_dma_data(dai, substream);
++	if (!dai_runtime)
+ 		return -EIO;
+ 
+ 	/*
+@@ -959,10 +959,10 @@ intel_hw_free(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ 	 * DEPREPARED for the first cpu-dai and to RELEASED for the last
+ 	 * cpu-dai.
+ 	 */
+-	ret = sdw_stream_remove_master(&cdns->bus, dma->stream);
++	ret = sdw_stream_remove_master(&cdns->bus, dai_runtime->stream);
+ 	if (ret < 0) {
+ 		dev_err(dai->dev, "remove master from stream %s failed: %d\n",
+-			dma->stream->name, ret);
++			dai_runtime->stream->name, ret);
+ 		return ret;
+ 	}
+ 
+@@ -972,8 +972,8 @@ intel_hw_free(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
+ 		return ret;
+ 	}
+ 
+-	dma->hw_params = NULL;
+-	dma->pdi = NULL;
++	dai_runtime->hw_params = NULL;
++	dai_runtime->pdi = NULL;
+ 
+ 	return 0;
+ }
+@@ -996,17 +996,17 @@ static int intel_pcm_set_sdw_stream(struct snd_soc_dai *dai,
+ static void *intel_get_sdw_stream(struct snd_soc_dai *dai,
+ 				  int direction)
+ {
+-	struct sdw_cdns_dma_data *dma;
++	struct sdw_cdns_dai_runtime *dai_runtime;
+ 
+ 	if (direction == SNDRV_PCM_STREAM_PLAYBACK)
+-		dma = dai->playback_dma_data;
++		dai_runtime = dai->playback_dma_data;
+ 	else
+-		dma = dai->capture_dma_data;
++		dai_runtime = dai->capture_dma_data;
+ 
+-	if (!dma)
++	if (!dai_runtime)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	return dma->stream;
++	return dai_runtime->stream;
+ }
+ 
+ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct snd_soc_dai *dai)
+@@ -1014,7 +1014,7 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
+ 	struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
+ 	struct sdw_intel *sdw = cdns_to_intel(cdns);
+ 	struct sdw_intel_link_res *res = sdw->link_res;
+-	struct sdw_cdns_dma_data *dma;
++	struct sdw_cdns_dai_runtime *dai_runtime;
+ 	int ret = 0;
+ 
+ 	/*
+@@ -1025,9 +1025,9 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
+ 	if (res->ops && res->ops->trigger)
+ 		res->ops->trigger(dai, cmd, substream->stream);
+ 
+-	dma = snd_soc_dai_get_dma_data(dai, substream);
+-	if (!dma) {
+-		dev_err(dai->dev, "failed to get dma data in %s\n",
++	dai_runtime = snd_soc_dai_get_dma_data(dai, substream);
++	if (!dai_runtime) {
++		dev_err(dai->dev, "failed to get dai runtime in %s\n",
+ 			__func__);
+ 		return -EIO;
+ 	}
+@@ -1042,17 +1042,17 @@ static int intel_trigger(struct snd_pcm_substream *substream, int cmd, struct sn
+ 		 * the .trigger callback is used to track the suspend case only.
+ 		 */
+ 
+-		dma->suspended = true;
++		dai_runtime->suspended = true;
+ 
+ 		ret = intel_free_stream(sdw, substream->stream, dai, sdw->instance);
+ 		break;
+ 
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+-		dma->paused = true;
++		dai_runtime->paused = true;
+ 		break;
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+-		dma->paused = false;
++		dai_runtime->paused = false;
+ 		break;
+ 	default:
+ 		break;
+@@ -1091,25 +1091,25 @@ static int intel_component_dais_suspend(struct snd_soc_component *component)
+ 	for_each_component_dais(component, dai) {
+ 		struct sdw_cdns *cdns = snd_soc_dai_get_drvdata(dai);
+ 		struct sdw_intel *sdw = cdns_to_intel(cdns);
+-		struct sdw_cdns_dma_data *dma;
++		struct sdw_cdns_dai_runtime *dai_runtime;
+ 		int stream;
+ 		int ret;
+ 
+-		dma = dai->playback_dma_data;
++		dai_runtime = dai->playback_dma_data;
+ 		stream = SNDRV_PCM_STREAM_PLAYBACK;
+-		if (!dma) {
+-			dma = dai->capture_dma_data;
++		if (!dai_runtime) {
++			dai_runtime = dai->capture_dma_data;
+ 			stream = SNDRV_PCM_STREAM_CAPTURE;
+ 		}
+ 
+-		if (!dma)
++		if (!dai_runtime)
+ 			continue;
+ 
+-		if (dma->suspended)
++		if (dai_runtime->suspended)
+ 			continue;
+ 
+-		if (dma->paused) {
+-			dma->suspended = true;
++		if (dai_runtime->paused) {
++			dai_runtime->suspended = true;
+ 
+ 			ret = intel_free_stream(sdw, stream, dai, sdw->instance);
+ 			if (ret < 0)
 -- 
 2.39.2
 
