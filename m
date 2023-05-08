@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACAD2171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:33:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2122DC433D2;
-	Mon,  8 May 2023 11:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7EB171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:33:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27CF9C433D2;
+	Mon,  8 May 2023 11:33:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545586;
-	bh=9MzuzXbYk0jKVGrjsxDW1izZe2D7HtK9yRfIxe+GalU=;
+	s=korg; t=1683545589;
+	bh=t/DIvJEjfQnrhoem8pyfzPnqPJwvif7i4iy+FOTBs3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jJoB0GOIZjbsY0mUa5duahsM8uradDi/wcExX8VSzREQmTxst0yOGNQlJmv4icYaM
-	 EOJxKgdu3ymlFAlqdejo951pNIpFXD2KnS2qOeVf0Mr+ahd7MpaNgx97pDAAV9DTkn
-	 ws2pK9j3VRv7rXM+zEfVwCGVcVkHzYHVhYId8nRg=
+	b=JCW/zGkwu/a6DTu447x3zypIijAYbeJtHp2fOkLtTG8yC7ypeMnJ1lkTEGEpKjbDO
+	 IYhAvpQx6KAVMANPi5sfmsuho+f1F7ZEOXLrJ3z3j6SOMQfSbGq9zlYQMqNK1z5VI4
+	 DpIVP9JT3PzR2jTjK+zHL6JyLPLT8ZsaCiw2UpGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhang <william.zhang@broadcom.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Anand Gore <anand.gore@broadcom.com>,
 	Florian Fainelli <f.fainelli@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/371] arm64: dts: Add DTS files for bcmbca SoC BCM4912
-Date: Mon,  8 May 2023 11:44:49 +0200
-Message-Id: <20230508094815.578344000@linuxfoundation.org>
+Subject: [PATCH 5.15 089/371] ARM64: dts: Add DTS files for bcmbca SoC BCM6858
+Date: Mon,  8 May 2023 11:44:50 +0200
+Message-Id: <20230508094815.608638951@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -36,42 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Zhang <william.zhang@broadcom.com>
+From: Anand Gore <anand.gore@broadcom.com>
 
-[ Upstream commit 1ba56aeb391401c4cb2126c39f90b3cdbfabdb3f ]
+[ Upstream commit e663e06bd3f21e64bc2163910f626af68add6308 ]
 
-Add DTS for ARMv8 based broadband SoC BCM4912. bcm4912.dtsi is the
-SoC description DTS header and bcm94912.dts is a simple DTS file for
-Broadcom BCM94912 Reference board that only enable the UART port.
+Add DTS for ARMv8 based broadband SoC BCM6858. bcm6858.dtsi is the SoC
+description DTS header and bcm96858.dts is a simple DTS file for
+Broadcom BCM96858 Reference board that only enables the UART port.
 
-Signed-off-by: William Zhang <william.zhang@broadcom.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Anand Gore <anand.gore@broadcom.com>
 Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Stable-dep-of: 5cca02449490 ("arm64: dts: broadcom: bcmbca: bcm4908: fix NAND interrupt name")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  arch/arm64/boot/dts/broadcom/bcmbca/Makefile  |   3 +-
- .../boot/dts/broadcom/bcmbca/bcm4912.dtsi     | 128 ++++++++++++++++++
- .../boot/dts/broadcom/bcmbca/bcm94912.dts     |  30 ++++
- 3 files changed, 160 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm64/boot/dts/broadcom/bcmbca/bcm4912.dtsi
- create mode 100644 arch/arm64/boot/dts/broadcom/bcmbca/bcm94912.dts
+ .../boot/dts/broadcom/bcmbca/bcm6858.dtsi     | 121 ++++++++++++++++++
+ .../boot/dts/broadcom/bcmbca/bcm96858.dts     |  30 +++++
+ 3 files changed, 153 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm64/boot/dts/broadcom/bcmbca/bcm6858.dtsi
+ create mode 100644 arch/arm64/boot/dts/broadcom/bcmbca/bcm96858.dts
 
 diff --git a/arch/arm64/boot/dts/broadcom/bcmbca/Makefile b/arch/arm64/boot/dts/broadcom/bcmbca/Makefile
-index d5f89245336c4..b6e520e9f2f21 100644
+index b6e520e9f2f21..4161d557b1329 100644
 --- a/arch/arm64/boot/dts/broadcom/bcmbca/Makefile
 +++ b/arch/arm64/boot/dts/broadcom/bcmbca/Makefile
-@@ -1,2 +1,3 @@
+@@ -1,3 +1,4 @@
  # SPDX-License-Identifier: GPL-2.0
--dtb-$(CONFIG_ARCH_BCMBCA) += bcm963158.dtb
-+dtb-$(CONFIG_ARCH_BCMBCA) += bcm94912.dtb \
-+				bcm963158.dtb
-diff --git a/arch/arm64/boot/dts/broadcom/bcmbca/bcm4912.dtsi b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4912.dtsi
+ dtb-$(CONFIG_ARCH_BCMBCA) += bcm94912.dtb \
+-				bcm963158.dtb
++				bcm963158.dtb \
++				bcm96858.dtb
+diff --git a/arch/arm64/boot/dts/broadcom/bcmbca/bcm6858.dtsi b/arch/arm64/boot/dts/broadcom/bcmbca/bcm6858.dtsi
 new file mode 100644
-index 0000000000000..3d016c2ce6759
+index 0000000000000..29a880c6c8588
 --- /dev/null
-+++ b/arch/arm64/boot/dts/broadcom/bcmbca/bcm4912.dtsi
-@@ -0,0 +1,128 @@
++++ b/arch/arm64/boot/dts/broadcom/bcmbca/bcm6858.dtsi
+@@ -0,0 +1,121 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright 2022 Broadcom Ltd.
@@ -81,7 +80,7 @@ index 0000000000000..3d016c2ce6759
 +#include <dt-bindings/interrupt-controller/arm-gic.h>
 +
 +/ {
-+	compatible = "brcm,bcm4912", "brcm,bcmbca";
++	compatible = "brcm,bcm6858", "brcm,bcmbca";
 +	#address-cells = <2>;
 +	#size-cells = <2>;
 +
@@ -122,7 +121,6 @@ index 0000000000000..3d016c2ce6759
 +			next-level-cache = <&L2_0>;
 +			enable-method = "psci";
 +		};
-+
 +		L2_0: l2-cache0 {
 +			compatible = "cache";
 +		};
@@ -137,27 +135,20 @@ index 0000000000000..3d016c2ce6759
 +	};
 +
 +	pmu: pmu {
-+		compatible = "arm,cortex-a53-pmu";
-+		interrupts = <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>,
-+			<GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
-+			<GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>,
-+			<GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
++		compatible = "arm,armv8-pmuv3";
++		interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>,
++			<GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>,
++			<GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>,
++			<GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
 +		interrupt-affinity = <&B53_0>, <&B53_1>,
 +			<&B53_2>, <&B53_3>;
 +	};
 +
 +	clocks: clocks {
-+		periph_clk: periph-clk {
++		periph_clk:periph-clk {
 +			compatible = "fixed-clock";
 +			#clock-cells = <0>;
 +			clock-frequency = <200000000>;
-+		};
-+		uart_clk: uart-clk {
-+			compatible = "fixed-factor-clock";
-+			#clock-cells = <0>;
-+			clocks = <&periph_clk>;
-+			clock-div = <4>;
-+			clock-mult = <1>;
 +		};
 +	};
 +
@@ -176,11 +167,12 @@ index 0000000000000..3d016c2ce6759
 +			compatible = "arm,gic-400";
 +			#interrupt-cells = <3>;
 +			interrupt-controller;
-+			interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
-+			reg = <0x1000 0x1000>,
-+				<0x2000 0x2000>,
-+				<0x4000 0x2000>,
-+				<0x6000 0x2000>;
++			reg = <0x1000 0x1000>, /* GICD */
++				<0x2000 0x2000>, /* GICC */
++				<0x4000 0x2000>, /* GICH */
++				<0x6000 0x2000>; /* GICV */
++			interrupts = <GIC_PPI 9 (GIC_CPU_MASK_SIMPLE(4) |
++					IRQ_TYPE_LEVEL_HIGH)>;
 +		};
 +	};
 +
@@ -188,23 +180,23 @@ index 0000000000000..3d016c2ce6759
 +		compatible = "simple-bus";
 +		#address-cells = <1>;
 +		#size-cells = <1>;
-+		ranges = <0x0 0x0 0xff800000 0x800000>;
++		ranges = <0x0 0x0 0xff800000 0x62000>;
 +
-+		uart0: serial@12000 {
-+			compatible = "arm,pl011", "arm,primecell";
-+			reg = <0x12000 0x1000>;
++		uart0: serial@640 {
++			compatible = "brcm,bcm6345-uart";
++			reg = <0x640 0x18>;
 +			interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&uart_clk>, <&uart_clk>;
-+			clock-names = "uartclk", "apb_pclk";
++			clocks = <&periph_clk>;
++			clock-names = "refclk";
 +			status = "disabled";
 +		};
 +	};
 +};
-diff --git a/arch/arm64/boot/dts/broadcom/bcmbca/bcm94912.dts b/arch/arm64/boot/dts/broadcom/bcmbca/bcm94912.dts
+diff --git a/arch/arm64/boot/dts/broadcom/bcmbca/bcm96858.dts b/arch/arm64/boot/dts/broadcom/bcmbca/bcm96858.dts
 new file mode 100644
-index 0000000000000..a3623e6f6919c
+index 0000000000000..0cbf582f5d545
 --- /dev/null
-+++ b/arch/arm64/boot/dts/broadcom/bcmbca/bcm94912.dts
++++ b/arch/arm64/boot/dts/broadcom/bcmbca/bcm96858.dts
 @@ -0,0 +1,30 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -213,11 +205,11 @@ index 0000000000000..a3623e6f6919c
 +
 +/dts-v1/;
 +
-+#include "bcm4912.dtsi"
++#include "bcm6858.dtsi"
 +
 +/ {
-+	model = "Broadcom BCM94912 Reference Board";
-+	compatible = "brcm,bcm94912", "brcm,bcm4912", "brcm,bcmbca";
++	model = "Broadcom BCM96858 Reference Board";
++	compatible = "brcm,bcm96858", "brcm,bcm6858", "brcm,bcmbca";
 +
 +	aliases {
 +		serial0 = &uart0;
