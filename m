@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F08168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8942AC433D2;
-	Mon,  8 May 2023 10:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320F3168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB96C4339C;
+	Mon,  8 May 2023 10:42:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542534;
-	bh=qJukvqPquSrirTjGJMUxCsM2M72GFAlS7tjQZ05IVZQ=;
+	s=korg; t=1683542538;
+	bh=HhS8ufqiPeZJLcjy3gTHXiqrCRYmeorO5lLoe/y8+oU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvQ0JOHPFNMAGlaR75PBGU1PDeiojG9yyuUqQ14vMWwTA2s3xRr56zJzrFdS+AKku
-	 TPUHs3e58qlrc8xvjxmJdkwJ4shEhx8dpNP3KfFvTk5FTYLR1dByFxPnFf2tShOjSA
-	 zRFYQcEjCfuS2pMZrYFyESCwsOPYAOkNG5fHs9PM=
+	b=GZ8uwtYq9aZocRbd+h9g4jjiFJzlL+03hfJI+IniHqMW7j+FQrVTvz1teU7jEzX04
+	 r9Hc/X45l0ApSMwwtLAcjKxegWEQbbwdA8sjO3ftDGXU8Ra0gqoh03fixg50qA/GB/
+	 MnheUpbVSg9I/YlyxLamgqzYvkHd0B6S2DXZdzkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 467/663] ia64: mm/contig: fix section mismatch warning/error
-Date: Mon,  8 May 2023 11:44:53 +0200
-Message-Id: <20230508094443.358600977@linuxfoundation.org>
+Subject: [PATCH 6.2 468/663] ia64: salinfo: placate defined-but-not-used warning
+Date: Mon,  8 May 2023 11:44:54 +0200
+Message-Id: <20230508094443.392787495@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -38,37 +38,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 58deeb4ef3b054498747d0929d94ac53ab90981f ]
+[ Upstream commit 0de155752b152d6bcd96b5b5bf20af336abd183a ]
 
-alloc_per_cpu_data() is called by find_memory(), which is marked as
-__init.  Therefore alloc_per_cpu_data() can also be marked as __init to
-remedy this modpost problem.
+When CONFIG_PROC_FS is not set, proc_salinfo_show() is not used.  Mark the
+function as __maybe_unused to quieten the warning message.
 
-WARNING: modpost: vmlinux.o: section mismatch in reference: alloc_per_cpu_data (section: .text) -> memblock_alloc_try_nid (section: .init.text)
+../arch/ia64/kernel/salinfo.c:584:12: warning: 'proc_salinfo_show' defined but not used [-Wunused-function]
+  584 | static int proc_salinfo_show(struct seq_file *m, void *v)
+      |            ^~~~~~~~~~~~~~~~~
 
-Link: https://lkml.kernel.org/r/20230223034258.12917-1-rdunlap@infradead.org
-Fixes: 4b9ddc7cf272 ("[IA64] Fix section mismatch in contig.c version of per_cpu_init()")
+Link: https://lkml.kernel.org/r/20230223034309.13375-1-rdunlap@infradead.org
+Fixes: 3f3942aca6da ("proc: introduce proc_create_single{,_data}")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 Cc: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/ia64/mm/contig.c | 2 +-
+ arch/ia64/kernel/salinfo.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/ia64/mm/contig.c b/arch/ia64/mm/contig.c
-index 24901d8093015..1e9eaa107eb73 100644
---- a/arch/ia64/mm/contig.c
-+++ b/arch/ia64/mm/contig.c
-@@ -77,7 +77,7 @@ void *per_cpu_init(void)
- 	return __per_cpu_start + __per_cpu_offset[smp_processor_id()];
- }
- 
--static inline void
-+static inline __init void
- alloc_per_cpu_data(void)
+diff --git a/arch/ia64/kernel/salinfo.c b/arch/ia64/kernel/salinfo.c
+index bd3ba276e69c3..03b632c568995 100644
+--- a/arch/ia64/kernel/salinfo.c
++++ b/arch/ia64/kernel/salinfo.c
+@@ -581,7 +581,7 @@ static int salinfo_cpu_pre_down(unsigned int cpu)
+  * 'data' contains an integer that corresponds to the feature we're
+  * testing
+  */
+-static int proc_salinfo_show(struct seq_file *m, void *v)
++static int __maybe_unused proc_salinfo_show(struct seq_file *m, void *v)
  {
- 	size_t size = PERCPU_PAGE_SIZE * num_possible_cpus();
+ 	unsigned long data = (unsigned long)v;
+ 	seq_puts(m, (sal_platform_features & data) ? "1\n" : "0\n");
 -- 
 2.39.2
 
