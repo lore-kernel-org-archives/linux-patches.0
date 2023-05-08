@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F9C320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:18:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E72C433EF;
-	Mon,  8 May 2023 11:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261F9320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:18:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91310C433EF;
+	Mon,  8 May 2023 11:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544720;
-	bh=W5dXkr+r5xUyDXHbAK4x4mXIDeWryIxamq/GQNcZtTg=;
+	s=korg; t=1683544723;
+	bh=kLD1exgn11j7jkdwFjgNTWcNa2iFa5/Kg8NVCFmMa9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yzkFf8ACrCWPr8d9qMoaXwi9qmwWkYnp2ZGzt8rC095j6JnCYholOvsi7AAKPzXCD
-	 VqoViu1RFscHRf9F1JxIjvWIZMT4raClky4LkFJu5CImi6bq6bvASFKMstBMDjqQoa
-	 NOQTT0bfSpNJFuxa8yZIBh3leR4CL+UI/sT4Zedg=
+	b=AZjRtQ1mGiAUnPV4iYbslVgBwT2psekucYNrFittGDQdoUqtSQDoxCllx6yle8KNu
+	 HW61FWgYCNTiyKrBG+Fu1qTPxmfJL0UTgjLSYakSZVrnth0xtzcKgzhyt8I+zQpo2P
+	 aiVOWTAT0ctSHVcFeikAM995M6XFJ/auZ5w+8w2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Gorski <piotrgorski@cachyos.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Ira Weiny <ira.weiny@intel.com>,
-	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 502/694] module/decompress: Never use kunmap() for local un-mappings
-Date: Mon,  8 May 2023 11:45:37 +0200
-Message-Id: <20230508094450.373771610@linuxfoundation.org>
+Subject: [PATCH 6.3 503/694] usb: gadget: udc: renesas_usb3: Fix use after free bug in renesas_usb3_remove due to race condition
+Date: Mon,  8 May 2023 11:45:38 +0200
+Message-Id: <20230508094450.420408906@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -39,48 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 3c17655ab13704582fe25e8ea3200a9b2f8bf20a ]
+[ Upstream commit 2b947f8769be8b8181dc795fd292d3e7120f5204 ]
 
-Use kunmap_local() to unmap pages locally mapped with kmap_local_page().
+In renesas_usb3_probe, role_work is bound with renesas_usb3_role_work.
+renesas_usb3_start will be called to start the work.
 
-kunmap_local() must be called on the kernel virtual address returned by
-kmap_local_page(), differently from how we use kunmap() which instead
-expects the mapped page as its argument.
+If we remove the driver which will call usbhs_remove, there may be
+an unfinished work. The possible sequence is as follows:
 
-In module_zstd_decompress() we currently map with kmap_local_page() and
-unmap with kunmap(). This breaks the code and so it should be fixed.
+CPU0                  			CPU1
 
-Cc: Piotr Gorski <piotrgorski@cachyos.org>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Fixes: 169a58ad824d ("module/decompress: Support zstd in-kernel decompression")
-Signed-off-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Piotr Gorski <piotrgorski@cachyos.org>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+                    			 renesas_usb3_role_work
+renesas_usb3_remove
+usb_role_switch_unregister
+device_unregister
+kfree(sw)
+//free usb3->role_sw
+                    			 usb_role_switch_set_role
+                    			 //use usb3->role_sw
+
+The usb3->role_sw could be freed under such circumstance and then
+used in usb_role_switch_set_role.
+
+This bug was found by static analysis. And note that removing a
+driver is a root-only operation, and should never happen in normal
+case. But the root user may directly remove the device which
+will also trigger the remove function.
+
+Fix it by canceling the work before cleanup in the renesas_usb3_remove.
+
+Fixes: 39facfa01c9f ("usb: gadget: udc: renesas_usb3: Add register of usb role switch")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20230320062931.505170-1-zyytlz.wz@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/decompress.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/udc/renesas_usb3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
-index bb79ac1a6d8f7..7ddc87bee2741 100644
---- a/kernel/module/decompress.c
-+++ b/kernel/module/decompress.c
-@@ -267,7 +267,7 @@ static ssize_t module_zstd_decompress(struct load_info *info,
- 		zstd_dec.size = PAGE_SIZE;
+diff --git a/drivers/usb/gadget/udc/renesas_usb3.c b/drivers/usb/gadget/udc/renesas_usb3.c
+index bee6bceafc4fa..a301af66bd912 100644
+--- a/drivers/usb/gadget/udc/renesas_usb3.c
++++ b/drivers/usb/gadget/udc/renesas_usb3.c
+@@ -2661,6 +2661,7 @@ static int renesas_usb3_remove(struct platform_device *pdev)
+ 	debugfs_remove_recursive(usb3->dentry);
+ 	device_remove_file(&pdev->dev, &dev_attr_role);
  
- 		ret = zstd_decompress_stream(dstream, &zstd_dec, &zstd_buf);
--		kunmap(page);
-+		kunmap_local(zstd_dec.dst);
- 		retval = zstd_get_error_code(ret);
- 		if (retval)
- 			break;
++	cancel_work_sync(&usb3->role_work);
+ 	usb_role_switch_unregister(usb3->role_sw);
+ 
+ 	usb_del_gadget_udc(&usb3->gadget);
 -- 
 2.39.2
 
