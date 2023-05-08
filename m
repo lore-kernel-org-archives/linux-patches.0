@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0EE168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:44:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B56FC433D2;
-	Mon,  8 May 2023 10:44:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C70168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:44:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297EFC433EF;
+	Mon,  8 May 2023 10:44:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542687;
-	bh=SbLh43z8CnugQdIRAkRO8lTSmxgzYthN6WN7To6vhc8=;
+	s=korg; t=1683542690;
+	bh=Vl5hFgP8MYg0x/vOx8uph7RhIvyY1UHjcUzoV6BWXug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o9Gnm+rUgEuLVHBm1nr5/xa14WkKMaNH9XXK6lAqYCGRPY59JePHxc1RjUhWlbonC
-	 Bu1T45kc7Ggl7gZc3uqgl8SB9hPHDGyhk665b1IgZHnk5DWaPsKHgkyYBlhj1C1Euw
-	 Pz7PIJwqG/euMIhM6p/qRpotcDDwH/szUBMbryLU=
+	b=0Xe329qRD7jEuvMUIkTzWaYvDFlE6q1xA2ynN8yedPFXj+c/pkluZu3QFcxdca5rQ
+	 F6/CEXXjWeNqdMtcPxBEM5V8gyHNBlTTDE6UkobqfdSqq/fnTfZ0rJwxBPUmVmgFOb
+	 Fgo+AUfg4/5TdO5iCtFb+w27nafF3CV9gss3DoSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 515/663] rv: Fix addition on an uninitialized variable run
-Date: Mon,  8 May 2023 11:45:41 +0200
-Message-Id: <20230508094445.483194705@linuxfoundation.org>
+Subject: [PATCH 6.2 489/663] sh: sq: Fix incorrect element size for allocating bitmap buffer
+Date: Mon,  8 May 2023 11:45:15 +0200
+Message-Id: <20230508094444.277595233@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,39 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Colin Ian King <colin.i.king@gmail.com>
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 
-[ Upstream commit 54a0dffa62de0c91b406ff32082a121ccfa0d7f1 ]
+[ Upstream commit 80f746e2bd0e1da3fdb49a53570e54a1a225faac ]
 
-The variable run is not initialized however it is being accumulated
-by the return value from the call to ikm_run_monitor.  Fix this by
-initializing run to zero at the start of the function.
+The Store Queue code allocates a bitmap buffer with the size of
+multiple of sizeof(long) in sq_api_init(). While the buffer size
+is calculated correctly, the code uses the wrong element size to
+allocate the buffer which results in the allocated bitmap buffer
+being too small.
 
-Link: https://lkml.kernel.org/r/20230424094730.105313-1-colin.i.king@gmail.com
+Fix this by allocating the buffer with kcalloc() with element size
+sizeof(long) instead of kzalloc() whose elements size defaults to
+sizeof(char).
 
-Fixes: 4bc4b131d44c ("rv: Add rv tool")
-
-Signed-off-by: Colin Ian King <colin.i.king@gmail.com>
-Acked-by: Daniel Bristot de Oliveira <bristot@kernel.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: d7c30c682a27 ("sh: Store Queue API rework.")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230419114854.528677-1-glaubitz@physik.fu-berlin.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/verification/rv/src/rv.c | 2 +-
+ arch/sh/kernel/cpu/sh4/sq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/verification/rv/src/rv.c b/tools/verification/rv/src/rv.c
-index e601cd9c411e1..1ddb855328165 100644
---- a/tools/verification/rv/src/rv.c
-+++ b/tools/verification/rv/src/rv.c
-@@ -74,7 +74,7 @@ static void rv_list(int argc, char **argv)
- static void rv_mon(int argc, char **argv)
- {
- 	char *monitor_name;
--	int i, run;
-+	int i, run = 0;
+diff --git a/arch/sh/kernel/cpu/sh4/sq.c b/arch/sh/kernel/cpu/sh4/sq.c
+index a76b94e41e913..8ddfe9989f5fc 100644
+--- a/arch/sh/kernel/cpu/sh4/sq.c
++++ b/arch/sh/kernel/cpu/sh4/sq.c
+@@ -382,7 +382,7 @@ static int __init sq_api_init(void)
+ 	if (unlikely(!sq_cache))
+ 		return ret;
  
- 	static const char *const usage[] = {
- 		"",
+-	sq_bitmap = kzalloc(size, GFP_KERNEL);
++	sq_bitmap = kcalloc(size, sizeof(long), GFP_KERNEL);
+ 	if (unlikely(!sq_bitmap))
+ 		goto out;
+ 
 -- 
 2.39.2
 
