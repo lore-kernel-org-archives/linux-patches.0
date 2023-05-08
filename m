@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9272C168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC297C433EF;
-	Mon,  8 May 2023 11:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955CE168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:13:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2C58C433EF;
+	Mon,  8 May 2023 11:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544434;
-	bh=8L17YB0cC2N/BVvnhsFJ2duIe5kL8IcfTOzPwWmjbis=;
+	s=korg; t=1683544437;
+	bh=mLUtACPvjIVG5Agro0m8YCZmkQA0b0aoIHpCpIfvV6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Al1w2ruEuY91FY146Vffip81nKC1OgseLfi9R3egCmfO/J/pTLNO42nOU5OZ4ISsS
-	 pbheJQDR+o2xxPHETR8j+YOtAB07PZ1PlC7or16aBQrhq9zZrSSowSN9AyXq03IVb8
-	 y5cBwZqf/0XxiNlqOhmmVG1KQZ50jHFazkp3Nx38=
+	b=na09LRZzWbdJt1UUf5Sa9Uf2TbyRIgCnaXyhVZyg28QCmtMdd2nZkgYMpCs/sSb5y
+	 +tM5V9cIVYcXFR37cWlD4Hyz8eyuYb05L1oxmI0NBGN5fIqBYCU6s12LPK0RzVkj1d
+	 F/Xwg+fmpRrNIHTTVdl2OcoALY2ujlrRIKcZ9hJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 408/694] selftests/bpf: Use read_perf_max_sample_freq() in perf_event_stackmap
-Date: Mon,  8 May 2023 11:44:03 +0200
-Message-Id: <20230508094446.465295868@linuxfoundation.org>
+Subject: [PATCH 6.3 382/694] bpf: factor out fetching basic kfunc metadata
+Date: Mon,  8 May 2023 11:43:37 +0200
+Message-Id: <20230508094445.332166495@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,107 +35,199 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Song Liu <song@kernel.org>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit de6d014a09bf12a9a8959d60c0a1d4a41d394a89 ]
+[ Upstream commit 07236eab7a3139da97aef9f5f21f403be82a82ea ]
 
-Currently, perf_event sample period in perf_event_stackmap is set too low
-that the test fails randomly. Fix this by using the max sample frequency,
-from read_perf_max_sample_freq().
+Factor out logic to fetch basic kfunc metadata based on struct bpf_insn.
+This is not exactly short or trivial code to just copy/paste and this
+information is sometimes necessary in other parts of the verifier logic.
+Subsequent patches will rely on this to determine if an instruction is
+a kfunc call to iterator next method.
 
-Move read_perf_max_sample_freq() to testing_helpers.c. Replace the CHECK()
-with if-printf, as CHECK is not available in testing_helpers.c.
+No functional changes intended, including that verbose() warning
+behavior when kfunc is not allowed for a particular program type.
 
-Fixes: 1da4864c2b20 ("selftests/bpf: Add callchain_stackid")
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230412210423.900851-2-song@kernel.org
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20230308184121.1165081-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: f6a6a5a97628 ("bpf: Fix struct_meta lookup for bpf_obj_free_fields kfunc call")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpf/prog_tests/perf_event_stackmap.c      |  3 ++-
- .../bpf/prog_tests/stacktrace_build_id_nmi.c  | 15 --------------
- tools/testing/selftests/bpf/testing_helpers.c | 20 +++++++++++++++++++
- tools/testing/selftests/bpf/testing_helpers.h |  2 ++
- 4 files changed, 24 insertions(+), 16 deletions(-)
+ kernel/bpf/verifier.c | 92 +++++++++++++++++++++++++++----------------
+ 1 file changed, 59 insertions(+), 33 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/perf_event_stackmap.c b/tools/testing/selftests/bpf/prog_tests/perf_event_stackmap.c
-index 33144c9432aeb..f4aad35afae16 100644
---- a/tools/testing/selftests/bpf/prog_tests/perf_event_stackmap.c
-+++ b/tools/testing/selftests/bpf/prog_tests/perf_event_stackmap.c
-@@ -63,7 +63,8 @@ void test_perf_event_stackmap(void)
- 			PERF_SAMPLE_BRANCH_NO_FLAGS |
- 			PERF_SAMPLE_BRANCH_NO_CYCLES |
- 			PERF_SAMPLE_BRANCH_CALL_STACK,
--		.sample_period = 5000,
-+		.freq = 1,
-+		.sample_freq = read_perf_max_sample_freq(),
- 		.size = sizeof(struct perf_event_attr),
- 	};
- 	struct perf_event_stackmap *skel;
-diff --git a/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c b/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
-index f4ea1a215ce4d..704f7f6c3704a 100644
---- a/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
-+++ b/tools/testing/selftests/bpf/prog_tests/stacktrace_build_id_nmi.c
-@@ -2,21 +2,6 @@
- #include <test_progs.h>
- #include "test_stacktrace_build_id.skel.h"
- 
--static __u64 read_perf_max_sample_freq(void)
--{
--	__u64 sample_freq = 5000; /* fallback to 5000 on error */
--	FILE *f;
--	__u32 duration = 0;
--
--	f = fopen("/proc/sys/kernel/perf_event_max_sample_rate", "r");
--	if (f == NULL)
--		return sample_freq;
--	CHECK(fscanf(f, "%llu", &sample_freq) != 1, "Get max sample rate",
--		  "return default value: 5000,err %d\n", -errno);
--	fclose(f);
--	return sample_freq;
--}
--
- void test_stacktrace_build_id_nmi(void)
- {
- 	int control_map_fd, stackid_hmap_fd, stackmap_fd;
-diff --git a/tools/testing/selftests/bpf/testing_helpers.c b/tools/testing/selftests/bpf/testing_helpers.c
-index 6c44153755e66..3fe98ffed38a6 100644
---- a/tools/testing/selftests/bpf/testing_helpers.c
-+++ b/tools/testing/selftests/bpf/testing_helpers.c
-@@ -229,3 +229,23 @@ int bpf_test_load_program(enum bpf_prog_type type, const struct bpf_insn *insns,
- 
- 	return bpf_prog_load(type, NULL, license, insns, insns_cnt, &opts);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index f4f5fadb74c4f..559c9137f834d 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9788,24 +9788,21 @@ static int check_kfunc_args(struct bpf_verifier_env *env, struct bpf_kfunc_call_
+ 	return 0;
  }
+ 
+-static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+-			    int *insn_idx_p)
++static int fetch_kfunc_meta(struct bpf_verifier_env *env,
++			    struct bpf_insn *insn,
++			    struct bpf_kfunc_call_arg_meta *meta,
++			    const char **kfunc_name)
+ {
+-	const struct btf_type *t, *func, *func_proto, *ptr_type;
+-	u32 i, nargs, func_id, ptr_type_id, release_ref_obj_id;
+-	struct bpf_reg_state *regs = cur_regs(env);
+-	const char *func_name, *ptr_type_name;
+-	bool sleepable, rcu_lock, rcu_unlock;
+-	struct bpf_kfunc_call_arg_meta meta;
+-	int err, insn_idx = *insn_idx_p;
+-	const struct btf_param *args;
+-	const struct btf_type *ret_t;
++	const struct btf_type *func, *func_proto;
++	u32 func_id, *kfunc_flags;
++	const char *func_name;
+ 	struct btf *desc_btf;
+-	u32 *kfunc_flags;
+ 
+-	/* skip for now, but return error when we find this in fixup_kfunc_call */
++	if (kfunc_name)
++		*kfunc_name = NULL;
 +
-+__u64 read_perf_max_sample_freq(void)
-+{
-+	__u64 sample_freq = 5000; /* fallback to 5000 on error */
-+	FILE *f;
+ 	if (!insn->imm)
+-		return 0;
++		return -EINVAL;
+ 
+ 	desc_btf = find_kfunc_desc_btf(env, insn->off);
+ 	if (IS_ERR(desc_btf))
+@@ -9814,22 +9811,51 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 	func_id = insn->imm;
+ 	func = btf_type_by_id(desc_btf, func_id);
+ 	func_name = btf_name_by_offset(desc_btf, func->name_off);
++	if (kfunc_name)
++		*kfunc_name = func_name;
+ 	func_proto = btf_type_by_id(desc_btf, func->type);
+ 
+ 	kfunc_flags = btf_kfunc_id_set_contains(desc_btf, resolve_prog_type(env->prog), func_id);
+ 	if (!kfunc_flags) {
+-		verbose(env, "calling kernel function %s is not allowed\n",
+-			func_name);
+ 		return -EACCES;
+ 	}
+ 
+-	/* Prepare kfunc call metadata */
+-	memset(&meta, 0, sizeof(meta));
+-	meta.btf = desc_btf;
+-	meta.func_id = func_id;
+-	meta.kfunc_flags = *kfunc_flags;
+-	meta.func_proto = func_proto;
+-	meta.func_name = func_name;
++	memset(meta, 0, sizeof(*meta));
++	meta->btf = desc_btf;
++	meta->func_id = func_id;
++	meta->kfunc_flags = *kfunc_flags;
++	meta->func_proto = func_proto;
++	meta->func_name = func_name;
 +
-+	f = fopen("/proc/sys/kernel/perf_event_max_sample_rate", "r");
-+	if (f == NULL) {
-+		printf("Failed to open /proc/sys/kernel/perf_event_max_sample_rate: err %d\n"
-+		       "return default value: 5000\n", -errno);
-+		return sample_freq;
-+	}
-+	if (fscanf(f, "%llu", &sample_freq) != 1) {
-+		printf("Failed to parse /proc/sys/kernel/perf_event_max_sample_rate: err %d\n"
-+		       "return default value: 5000\n", -errno);
-+	}
-+
-+	fclose(f);
-+	return sample_freq;
++	return 0;
 +}
-diff --git a/tools/testing/selftests/bpf/testing_helpers.h b/tools/testing/selftests/bpf/testing_helpers.h
-index 6ec00bf79cb55..eb8790f928e4c 100644
---- a/tools/testing/selftests/bpf/testing_helpers.h
-+++ b/tools/testing/selftests/bpf/testing_helpers.h
-@@ -20,3 +20,5 @@ struct test_filter_set;
- int parse_test_list(const char *s,
- 		    struct test_filter_set *test_set,
- 		    bool is_glob_pattern);
 +
-+__u64 read_perf_max_sample_freq(void);
++static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
++			    int *insn_idx_p)
++{
++	const struct btf_type *t, *ptr_type;
++	u32 i, nargs, ptr_type_id, release_ref_obj_id;
++	struct bpf_reg_state *regs = cur_regs(env);
++	const char *func_name, *ptr_type_name;
++	bool sleepable, rcu_lock, rcu_unlock;
++	struct bpf_kfunc_call_arg_meta meta;
++	struct bpf_insn_aux_data *insn_aux;
++	int err, insn_idx = *insn_idx_p;
++	const struct btf_param *args;
++	const struct btf_type *ret_t;
++	struct btf *desc_btf;
++
++	/* skip for now, but return error when we find this in fixup_kfunc_call */
++	if (!insn->imm)
++		return 0;
++
++	err = fetch_kfunc_meta(env, insn, &meta, &func_name);
++	if (err == -EACCES && func_name)
++		verbose(env, "calling kernel function %s is not allowed\n", func_name);
++	if (err)
++		return err;
++	desc_btf = meta.btf;
++	insn_aux = &env->insn_aux_data[insn_idx];
+ 
+ 	if (is_kfunc_destructive(&meta) && !capable(CAP_SYS_BOOT)) {
+ 		verbose(env, "destructive kfunc calls require CAP_SYS_BOOT capability\n");
+@@ -9886,7 +9912,7 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 		err = release_reference(env, regs[meta.release_regno].ref_obj_id);
+ 		if (err) {
+ 			verbose(env, "kfunc %s#%d reference has not been acquired before\n",
+-				func_name, func_id);
++				func_name, meta.func_id);
+ 			return err;
+ 		}
+ 	}
+@@ -9898,14 +9924,14 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 		err = ref_convert_owning_non_owning(env, release_ref_obj_id);
+ 		if (err) {
+ 			verbose(env, "kfunc %s#%d conversion of owning ref to non-owning failed\n",
+-				func_name, func_id);
++				func_name, meta.func_id);
+ 			return err;
+ 		}
+ 
+ 		err = release_reference(env, release_ref_obj_id);
+ 		if (err) {
+ 			verbose(env, "kfunc %s#%d reference has not been acquired before\n",
+-				func_name, func_id);
++				func_name, meta.func_id);
+ 			return err;
+ 		}
+ 	}
+@@ -9915,7 +9941,7 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 					set_rbtree_add_callback_state);
+ 		if (err) {
+ 			verbose(env, "kfunc %s#%d failed callback verification\n",
+-				func_name, func_id);
++				func_name, meta.func_id);
+ 			return err;
+ 		}
+ 	}
+@@ -9924,7 +9950,7 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 		mark_reg_not_init(env, regs, caller_saved[i]);
+ 
+ 	/* Check return type */
+-	t = btf_type_skip_modifiers(desc_btf, func_proto->type, NULL);
++	t = btf_type_skip_modifiers(desc_btf, meta.func_proto->type, NULL);
+ 
+ 	if (is_kfunc_acquire(&meta) && !btf_type_is_struct_ptr(meta.btf, t)) {
+ 		/* Only exception is bpf_obj_new_impl */
+@@ -9973,11 +9999,11 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 				regs[BPF_REG_0].btf = ret_btf;
+ 				regs[BPF_REG_0].btf_id = ret_btf_id;
+ 
+-				env->insn_aux_data[insn_idx].obj_new_size = ret_t->size;
+-				env->insn_aux_data[insn_idx].kptr_struct_meta =
++				insn_aux->obj_new_size = ret_t->size;
++				insn_aux->kptr_struct_meta =
+ 					btf_find_struct_meta(ret_btf, ret_btf_id);
+ 			} else if (meta.func_id == special_kfunc_list[KF_bpf_obj_drop_impl]) {
+-				env->insn_aux_data[insn_idx].kptr_struct_meta =
++				insn_aux->kptr_struct_meta =
+ 					btf_find_struct_meta(meta.arg_obj_drop.btf,
+ 							     meta.arg_obj_drop.btf_id);
+ 			} else if (meta.func_id == special_kfunc_list[KF_bpf_list_pop_front] ||
+@@ -10066,8 +10092,8 @@ static int check_kfunc_call(struct bpf_verifier_env *env, struct bpf_insn *insn,
+ 			regs[BPF_REG_0].id = ++env->id_gen;
+ 	} /* else { add_kfunc_call() ensures it is btf_type_is_void(t) } */
+ 
+-	nargs = btf_type_vlen(func_proto);
+-	args = (const struct btf_param *)(func_proto + 1);
++	nargs = btf_type_vlen(meta.func_proto);
++	args = (const struct btf_param *)(meta.func_proto + 1);
+ 	for (i = 0; i < nargs; i++) {
+ 		u32 regno = i + 1;
+ 
 -- 
 2.39.2
 
