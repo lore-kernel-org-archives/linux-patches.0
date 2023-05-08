@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DC41549F
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:59:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B431C433D2;
-	Mon,  8 May 2023 09:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E17154A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:59:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7485AC433EF;
+	Mon,  8 May 2023 09:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539988;
-	bh=I6YvetD1qWttRXEm+8celIczEEwvdQxK3G7osOUiPUM=;
+	s=korg; t=1683539991;
+	bh=XWG19OrXHotSvNPbXH+zJ8nVDfaw5KTqABFpEFd8XZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gl9nXpaGUFO57DemIuWS0E1L4gLy1n0Q1FoqcvDxwIoWitJNkH4PIi/84A3CD+hOZ
-	 tN/dtrJkZbOkzb4PFJ13Pgp2m1DBpkKWb5ZjrnDyhqwqAFkOdlKSkFU8l8Ff1QAWdl
-	 CXAhVfK/NhatnrgxDhNYu+A6stUrDAe7ZUGwRsPg=
+	b=TAVSbGzfZVIE4bEHjD+2fej+krrhPIWcV7Eqd3Ckf1urIS771j3pXa7dTHfMp0nei
+	 NRKqzmzs6jyKFtboqY21Z+7vKe+gKfzpkMmA/2OqLzwMjxMz8lL8gnMWkDsDhvAXTa
+	 3c3k5TdSJqaKmOhsPO38jDRhzPSbB4U0PSX2Nb1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Qiang Yu <yuq825@gmail.com>,
+	Xinlei Lee <xinlei.lee@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 201/611] drm/lima/lima_drv: Add missing unwind goto in lima_pdev_probe()
-Date: Mon,  8 May 2023 11:40:43 +0200
-Message-Id: <20230508094428.902016145@linuxfoundation.org>
+Subject: [PATCH 6.1 202/611] drm/mediatek: dp: Change the aux retries times when receiving AUX_DEFER
+Date: Mon,  8 May 2023 11:40:44 +0200
+Message-Id: <20230508094428.941257146@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,43 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Xinlei Lee <xinlei.lee@mediatek.com>
 
-[ Upstream commit c5647cae2704e58d1c4e5fedbf63f11bca6376c9 ]
+[ Upstream commit 9243d70e05c5989f84f840612965f96b524da925 ]
 
-Smatch reports:
-drivers/gpu/drm/lima/lima_drv.c:396 lima_pdev_probe() warn:
-	missing unwind goto?
+DP 1.4a Section 2.8.7.1.5.6.1:
+A DP Source device shall retry at least seven times upon receiving
+AUX_DEFER before giving up the AUX transaction.
 
-Store return value in err and goto 'err_out0' which has
-lima_sched_slab_fini() before returning.
+The drm_dp_i2c_do_msg() function in the drm_dp_helper.c file will
+judge the status of the msg->reply parameter passed to aux_transfer
+for different processing.
 
-Fixes: a1d2a6339961 ("drm/lima: driver for ARM Mali4xx GPUs")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230314052711.4061652-1-harshit.m.mogalapalli@oracle.com
+Fixes: f70ac097a2cf ("drm/mediatek: Add MT8195 Embedded DisplayPort driver")
+Signed-off-by: Xinlei Lee <xinlei.lee@mediatek.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/1680072203-10394-1-git-send-email-xinlei.lee@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/lima/lima_drv.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/lima/lima_drv.c b/drivers/gpu/drm/lima/lima_drv.c
-index 7b8d7178d09aa..39cab4a55f572 100644
---- a/drivers/gpu/drm/lima/lima_drv.c
-+++ b/drivers/gpu/drm/lima/lima_drv.c
-@@ -392,8 +392,10 @@ static int lima_pdev_probe(struct platform_device *pdev)
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index d28326350ea93..007af69e5026f 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -806,10 +806,9 @@ static int mtk_dp_aux_wait_for_completion(struct mtk_dp *mtk_dp, bool is_read)
+ }
  
- 	/* Allocate and initialize the DRM device. */
- 	ddev = drm_dev_alloc(&lima_drm_driver, &pdev->dev);
--	if (IS_ERR(ddev))
--		return PTR_ERR(ddev);
-+	if (IS_ERR(ddev)) {
-+		err = PTR_ERR(ddev);
-+		goto err_out0;
-+	}
+ static int mtk_dp_aux_do_transfer(struct mtk_dp *mtk_dp, bool is_read, u8 cmd,
+-				  u32 addr, u8 *buf, size_t length)
++				  u32 addr, u8 *buf, size_t length, u8 *reply_cmd)
+ {
+ 	int ret;
+-	u32 reply_cmd;
  
- 	ddev->dev_private = ldev;
- 	ldev->ddev = ddev;
+ 	if (is_read && (length > DP_AUX_MAX_PAYLOAD_BYTES ||
+ 			(cmd == DP_AUX_NATIVE_READ && !length)))
+@@ -841,10 +840,10 @@ static int mtk_dp_aux_do_transfer(struct mtk_dp *mtk_dp, bool is_read, u8 cmd,
+ 	/* Wait for feedback from sink device. */
+ 	ret = mtk_dp_aux_wait_for_completion(mtk_dp, is_read);
+ 
+-	reply_cmd = mtk_dp_read(mtk_dp, MTK_DP_AUX_P0_3624) &
+-		    AUX_RX_REPLY_COMMAND_AUX_TX_P0_MASK;
++	*reply_cmd = mtk_dp_read(mtk_dp, MTK_DP_AUX_P0_3624) &
++		     AUX_RX_REPLY_COMMAND_AUX_TX_P0_MASK;
+ 
+-	if (ret || reply_cmd) {
++	if (ret) {
+ 		u32 phy_status = mtk_dp_read(mtk_dp, MTK_DP_AUX_P0_3628) &
+ 				 AUX_RX_PHY_STATE_AUX_TX_P0_MASK;
+ 		if (phy_status != AUX_RX_PHY_STATE_AUX_TX_P0_RX_IDLE) {
+@@ -2071,7 +2070,7 @@ static ssize_t mtk_dp_aux_transfer(struct drm_dp_aux *mtk_aux,
+ 		ret = mtk_dp_aux_do_transfer(mtk_dp, is_read, request,
+ 					     msg->address + accessed_bytes,
+ 					     msg->buffer + accessed_bytes,
+-					     to_access);
++					     to_access, &msg->reply);
+ 
+ 		if (ret) {
+ 			drm_info(mtk_dp->drm_dev,
+@@ -2081,7 +2080,6 @@ static ssize_t mtk_dp_aux_transfer(struct drm_dp_aux *mtk_aux,
+ 		accessed_bytes += to_access;
+ 	} while (accessed_bytes < msg->size);
+ 
+-	msg->reply = DP_AUX_NATIVE_REPLY_ACK | DP_AUX_I2C_REPLY_ACK;
+ 	return msg->size;
+ err:
+ 	msg->reply = DP_AUX_NATIVE_REPLY_NACK | DP_AUX_I2C_REPLY_NACK;
 -- 
 2.39.2
 
