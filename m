@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B896168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5486C433EF;
-	Mon,  8 May 2023 11:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD7E168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1E1C4339B;
+	Mon,  8 May 2023 11:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543906;
-	bh=YHkcl1MdQC4V+K23BzzvIjP/4qT95taRjGoWL3baj/s=;
+	s=korg; t=1683543909;
+	bh=FB5zIdNKUsbBvvRi0nukRLj+XGzkU2XSMGo4o80cqr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fpe8yV07BfHGnXpLwO/4uJ9nHFilTwPxUS0u0tvxvf95i4vF61MEsN46Eh6nv4CUg
-	 5WuskJyrdTQG9IrXr/dT3mswRpi8mXY3upkvNdmM2GCGRkzX1sbMJ48YHAAIeDbhGs
-	 NglxCAbNHgKh7+MFHhetvF/7ewxE2xO1w6pbAu3Q=
+	b=wZRH6Jltrx9w79NepjlXYPPs+UGt7HeX9JuTujsUoPFD3tl5a3fMzHpm4UN7ztnfA
+	 RKD4lxewehUzrRSUs7mOUm3cXrfrdFNVSaxK3KCsbKpNxdITyhDpPT8Z5/HepPdXic
+	 gXRjH5P3hbfq2K74gVHf0wcmrjiAie9mWg1Y12P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhruva Gole <d-gole@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Nishanth Menon <nm@ti.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Oded Gabbay <ogabbay@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 239/694] arm64: dts: ti: k3-am625-sk: Add ti,vbus-divider property to usbss1
-Date: Mon,  8 May 2023 11:41:14 +0200
-Message-Id: <20230508094440.093824958@linuxfoundation.org>
+Subject: [PATCH 6.3 213/694] accel: Link to compute accelerator subsystem intro
+Date: Mon,  8 May 2023 11:40:48 +0200
+Message-Id: <20230508094439.278092401@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,35 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dhruva Gole <d-gole@ti.com>
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 
-[ Upstream commit 4b71618cb772f20dfeeba826e9d1713a04f9687f ]
+[ Upstream commit 6d179f84f274a87da51f24ac3e9427221bbaed51 ]
 
-The property "ti,vbus-divider" is needed for both usbss0 and usbss1 as
-both USB0 and USB1 have the same external voltage divider circuit.
+Commit 2c204f3d53218d ("accel: add dedicated minor for accelerator
+devices") adds link to accelerator nodes section of DRM internals doc
+(Documentation/gpu/drm-internals.rst), but the target doesn't exist.
+Instead, there is only an introduction doc for computer accelerator
+subsytem.
 
-Fixes: 2d94dfc43885 ("arm64: dts: ti: k3-am625-sk: Add support for USB")
-Signed-off-by: Dhruva Gole <d-gole@ti.com>
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20230328124315.123778-2-rogerq@kernel.org
-Signed-off-by: Nishanth Menon <nm@ti.com>
+Link to that doc until there is documentation of accelerator internals.
+
+Fixes: 2c204f3d53218d ("accel: add dedicated minor for accelerator devices")
+Signed-off-by: Bagas Sanjaya <bagasdotme@gmail.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am625-sk.dts | 1 +
- 1 file changed, 1 insertion(+)
+ include/drm/drm_file.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am625-sk.dts b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
-index 6bc7d63cf52fe..4d5dec890ad66 100644
---- a/arch/arm64/boot/dts/ti/k3-am625-sk.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am625-sk.dts
-@@ -480,6 +480,7 @@
- 
- &usbss1 {
- 	status = "okay";
-+	ti,vbus-divider;
- };
- 
- &usb0 {
+diff --git a/include/drm/drm_file.h b/include/drm/drm_file.h
+index 0d1f853092ab8..ecffe24e2b1b0 100644
+--- a/include/drm/drm_file.h
++++ b/include/drm/drm_file.h
+@@ -408,7 +408,8 @@ static inline bool drm_is_render_client(const struct drm_file *file_priv)
+  * Returns true if this is an open file of the compute acceleration node, i.e.
+  * &drm_file.minor of @file_priv is a accel minor.
+  *
+- * See also the :ref:`section on accel nodes <drm_accel_node>`.
++ * See also :doc:`Introduction to compute accelerators subsystem
++ * </accel/introduction>`.
+  */
+ static inline bool drm_is_accel_client(const struct drm_file *file_priv)
+ {
 -- 
 2.39.2
 
