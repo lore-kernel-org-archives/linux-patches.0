@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F798171A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AEDC433EF;
-	Mon,  8 May 2023 11:32:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69A82171A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:32:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B42C433D2;
+	Mon,  8 May 2023 11:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545528;
-	bh=XmcK61++eq3I1ivCFoKSwIBTROMsf1phJzvHxWTo/XA=;
+	s=korg; t=1683545531;
+	bh=o/RsRvPsDCqKSPlyZcxcCkqOJneHDWqXUSXTgodD6qY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/cA7eSBBsjyIDN/MYS4uR9scJiHGS1WXb2SmHF9QlMnSy7ibsEhQ2NkQrtSJVDjE
-	 z1/hWY9G71jG55fTPKxHwBCVvkT+U+/itfsK1DKa5Nu5gA9421Hmp2IobdcDbJobep
-	 4jOJga0MmZFhKHuHjbK7/tH3UBpFZmUvoi2S1Bi8=
+	b=Nh1ztOjjzYPUkBr6wE7z8rpGCGTaPd7bdZlH2vVGtqSAzlcq6Wv5S6rkDOL8tZbvu
+	 gW7OWWk7oYS0yW44OfAU09gLSuwrTF5Vys9D392O41MJdODaNs9kbUsIa3TsiZVEMY
+	 srJ28zqvt9vvM7EYNcP/UlCju/hxokp3Ube5mvRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Machek <pavel@denx.de>,
-	Corey Minyard <minyard@acm.org>
-Subject: [PATCH 5.15 030/371] ipmi:ssif: Add send_retries increment
-Date: Mon,  8 May 2023 11:43:51 +0200
-Message-Id: <20230508094813.315341754@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 063/371] selftests/resctrl: Allow ->setup() to return errors
+Date: Mon,  8 May 2023 11:44:24 +0200
+Message-Id: <20230508094814.580506488@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -34,34 +36,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corey Minyard <minyard@acm.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 6ce7995a43febe693d4894033c6e29314970646a upstream.
+[ Upstream commit fa10366cc6f4cc862871f8938426d85c2481f084 ]
 
-A recent change removed an increment of send_retries, re-add it.
+resctrl_val() assumes ->setup() always returns either 0 to continue
+tests or < 0 in case of the normal termination of tests after x runs.
+The latter overlaps with normal error returns.
 
-Fixes: 95767ed78a18 ipmi:ssif: resend_msg() cannot fail
-Reported-by: Pavel Machek <pavel@denx.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Corey Minyard <minyard@acm.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Define END_OF_TESTS (=1) to differentiate the normal termination of
+tests and return errors as negative values. Alter callers of ->setup()
+to handle errors properly.
+
+Fixes: 790bf585b0ee ("selftests/resctrl: Add Cache Allocation Technology (CAT) selftest")
+Fixes: ecdbb911f22d ("selftests/resctrl: Add MBM test")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/resctrl/cache.c       | 4 +++-
+ tools/testing/selftests/resctrl/cat_test.c    | 2 +-
+ tools/testing/selftests/resctrl/cmt_test.c    | 2 +-
+ tools/testing/selftests/resctrl/mba_test.c    | 2 +-
+ tools/testing/selftests/resctrl/mbm_test.c    | 2 +-
+ tools/testing/selftests/resctrl/resctrl.h     | 2 ++
+ tools/testing/selftests/resctrl/resctrl_val.c | 4 +++-
+ 7 files changed, 12 insertions(+), 6 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -564,8 +564,10 @@ static void retry_timeout(struct timer_l
+diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
+index 68ff856d36f0b..0485863a169f2 100644
+--- a/tools/testing/selftests/resctrl/cache.c
++++ b/tools/testing/selftests/resctrl/cache.c
+@@ -244,10 +244,12 @@ int cat_val(struct resctrl_val_param *param)
+ 	while (1) {
+ 		if (!strncmp(resctrl_val, CAT_STR, sizeof(CAT_STR))) {
+ 			ret = param->setup(1, param);
+-			if (ret) {
++			if (ret == END_OF_TESTS) {
+ 				ret = 0;
+ 				break;
+ 			}
++			if (ret < 0)
++				break;
+ 			ret = reset_enable_llc_perf(bm_pid, param->cpu_no);
+ 			if (ret)
+ 				break;
+diff --git a/tools/testing/selftests/resctrl/cat_test.c b/tools/testing/selftests/resctrl/cat_test.c
+index 1c5e90c632548..2d3c7c77ab6cb 100644
+--- a/tools/testing/selftests/resctrl/cat_test.c
++++ b/tools/testing/selftests/resctrl/cat_test.c
+@@ -40,7 +40,7 @@ static int cat_setup(int num, ...)
  
- 	if (waiting)
- 		start_get(ssif_info);
--	if (resend)
-+	if (resend) {
- 		start_resend(ssif_info);
-+		ssif_inc_stat(ssif_info, send_retries);
-+	}
- }
+ 	/* Run NUM_OF_RUNS times */
+ 	if (p->num_of_runs >= NUM_OF_RUNS)
+-		return -1;
++		return END_OF_TESTS;
  
- static void watch_timeout(struct timer_list *t)
+ 	if (p->num_of_runs == 0) {
+ 		sprintf(schemata, "%lx", p->mask);
+diff --git a/tools/testing/selftests/resctrl/cmt_test.c b/tools/testing/selftests/resctrl/cmt_test.c
+index 8968e36db99d7..3b0454e7fc826 100644
+--- a/tools/testing/selftests/resctrl/cmt_test.c
++++ b/tools/testing/selftests/resctrl/cmt_test.c
+@@ -32,7 +32,7 @@ static int cmt_setup(int num, ...)
+ 
+ 	/* Run NUM_OF_RUNS times */
+ 	if (p->num_of_runs >= NUM_OF_RUNS)
+-		return -1;
++		return END_OF_TESTS;
+ 
+ 	p->num_of_runs++;
+ 
+diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
+index 1a1bdb6180cf2..f32289ae17aeb 100644
+--- a/tools/testing/selftests/resctrl/mba_test.c
++++ b/tools/testing/selftests/resctrl/mba_test.c
+@@ -41,7 +41,7 @@ static int mba_setup(int num, ...)
+ 		return 0;
+ 
+ 	if (allocation < ALLOCATION_MIN || allocation > ALLOCATION_MAX)
+-		return -1;
++		return END_OF_TESTS;
+ 
+ 	sprintf(allocation_str, "%d", allocation);
+ 
+diff --git a/tools/testing/selftests/resctrl/mbm_test.c b/tools/testing/selftests/resctrl/mbm_test.c
+index 8392e5c55ed02..280187628054d 100644
+--- a/tools/testing/selftests/resctrl/mbm_test.c
++++ b/tools/testing/selftests/resctrl/mbm_test.c
+@@ -95,7 +95,7 @@ static int mbm_setup(int num, ...)
+ 
+ 	/* Run NUM_OF_RUNS times */
+ 	if (num_of_runs++ >= NUM_OF_RUNS)
+-		return -1;
++		return END_OF_TESTS;
+ 
+ 	va_start(param, num);
+ 	p = va_arg(param, struct resctrl_val_param *);
+diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
+index f0ded31fb3c7c..f44fa2de4d986 100644
+--- a/tools/testing/selftests/resctrl/resctrl.h
++++ b/tools/testing/selftests/resctrl/resctrl.h
+@@ -37,6 +37,8 @@
+ #define ARCH_INTEL     1
+ #define ARCH_AMD       2
+ 
++#define END_OF_TESTS	1
++
+ #define PARENT_EXIT(err_msg)			\
+ 	do {					\
+ 		perror(err_msg);		\
+diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
+index dd907809d0b29..02110e7ee6361 100644
+--- a/tools/testing/selftests/resctrl/resctrl_val.c
++++ b/tools/testing/selftests/resctrl/resctrl_val.c
+@@ -734,10 +734,12 @@ int resctrl_val(char **benchmark_cmd, struct resctrl_val_param *param)
+ 	/* Test runs until the callback setup() tells the test to stop. */
+ 	while (1) {
+ 		ret = param->setup(1, param);
+-		if (ret) {
++		if (ret == END_OF_TESTS) {
+ 			ret = 0;
+ 			break;
+ 		}
++		if (ret < 0)
++			break;
+ 
+ 		if (!strncmp(resctrl_val, MBM_STR, sizeof(MBM_STR)) ||
+ 		    !strncmp(resctrl_val, MBA_STR, sizeof(MBA_STR))) {
+-- 
+2.39.2
+
 
 
