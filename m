@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED18F168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:39:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6AFBC4339B;
-	Mon,  8 May 2023 10:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2EF168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:39:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 511ECC433EF;
+	Mon,  8 May 2023 10:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542360;
-	bh=CDfdJZqpwX2mULZbpnLcFHDv6B+/YHYhNwzix/R+n70=;
+	s=korg; t=1683542363;
+	bh=HYG0zAPTt7XmBrbwIywNUL5DsNgcETV14du3TNuch+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=du/PEI5vXqxouoELm+n61FbsMdYgOjCWSBGgLGRo5nZxtDPbL6puLhgigN2BzHcCQ
-	 WM63X8UBIvyS/8D6xsNxKn+5J5iPp17HtRanlRT+U77DjwsP4wCbh0SRETsmURoR4P
-	 k+fYUJCeVhBpwbDruC1mJZ8+Zv1f2Pvp7TaXN1GI=
+	b=jHhNdfWu5pWv4Vt5p09TB1xju7ujWmXoxQMR8BlhUPm+WXclkL4+ZPRzOaqeVxTnn
+	 xs+JPMycrWhcu3vv2MSWwh5C1qojJV86KDn31yEaaRrnm5UGcJgYneH6OX042QK2lh
+	 Z+MlvYK/VRWhkgST93lw1Vyys6/hMaNBHH9EQ3hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 383/663] io_uring/rsrc: use nospeced indexes
-Date: Mon,  8 May 2023 11:43:29 +0200
-Message-Id: <20230508094440.532882181@linuxfoundation.org>
+Subject: [PATCH 6.2 410/663] wifi: iwlwifi: fw: fix memory leak in debugfs
+Date: Mon,  8 May 2023 11:43:56 +0200
+Message-Id: <20230508094441.378353718@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,35 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 953c37e066f05a3dca2d74643574b8dfe8a83983 ]
+[ Upstream commit 3d90d2f4a018fe8cfd65068bc6350b6222be4852 ]
 
-We use array_index_nospec() for registered buffer indexes, but don't use
-it while poking into rsrc tags, fix that.
+Fix a memory leak that occurs when reading the fw_info
+file all the way, since we return NULL indicating no
+more data, but don't free the status tracking object.
 
-Fixes: 634d00df5e1cf ("io_uring: add full-fledged dynamic buffers support")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/f02fafc5a9c0dd69be2b0618c38831c078232ff0.1681395792.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 36dfe9ac6e8b ("iwlwifi: dump api version in yaml format")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230418122405.239e501b3b8d.I4268f87809ef91209cbcd748eee0863195e70fa2@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rsrc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/debugfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/rsrc.c b/io_uring/rsrc.c
-index 4ccfc29216269..e100f040371b5 100644
---- a/io_uring/rsrc.c
-+++ b/io_uring/rsrc.c
-@@ -577,7 +577,7 @@ static int __io_sqe_buffers_update(struct io_ring_ctx *ctx,
- 		}
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
+index 43e997283db0f..607e07ed2477c 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
+@@ -317,8 +317,10 @@ static void *iwl_dbgfs_fw_info_seq_next(struct seq_file *seq,
+ 	const struct iwl_fw *fw = priv->fwrt->fw;
  
- 		ctx->user_bufs[i] = imu;
--		*io_get_tag_slot(ctx->buf_data, offset) = tag;
-+		*io_get_tag_slot(ctx->buf_data, i) = tag;
- 	}
+ 	*pos = ++state->pos;
+-	if (*pos >= fw->ucode_capa.n_cmd_versions)
++	if (*pos >= fw->ucode_capa.n_cmd_versions) {
++		kfree(state);
+ 		return NULL;
++	}
  
- 	if (needs_switch)
+ 	return state;
+ }
 -- 
 2.39.2
 
