@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFF2168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:15:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1FDAC433D2;
-	Mon,  8 May 2023 11:15:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D76FD168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:16:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467AFC433D2;
+	Mon,  8 May 2023 11:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544557;
-	bh=FewckPP14EzAjvE0UTFlgR/yCRHg21qJ2WRY+m5WPHQ=;
+	s=korg; t=1683544560;
+	bh=byixTph1G17/Orer4R4OqxBdjvcUT5I2UA8NzHIWazk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxyWm/qgCkhgYcRhVta96YuTGyEo1pWXj+iaBg08pA22lY811N/NUOP0IgWTIr8Cy
-	 eAoPocLiEG04xDMWwEAEknklGZtt881tyJ3EW1mObHuGmIacNSSTAU+I+UO/xaI8h9
-	 zvREXhmM60Bc46IABdXsARRIPpK/LUei71kjDy0U=
+	b=s3FlCgWTGflJQcTtXC48NLNGgXnN7OC/wpdj1f7aibS3TQMRTItsCgpi8A5p7u5op
+	 KjI+xHAo7jjCfHgGoLX24nwoVn7ldnGiaXVRBBtDKh4lRErCniabNqHKb7yl6OlA4w
+	 BVzQTp8zneEHfTl7NMxBnNcw+lSotqDJXllqlPs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
 	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 418/694] md/raid10: fix task hung in raid10d
-Date: Mon,  8 May 2023 11:44:13 +0200
-Message-Id: <20230508094446.845286186@linuxfoundation.org>
+Subject: [PATCH 6.3 419/694] md/raid10: fix leak of r10bio->remaining for recovery
+Date: Mon,  8 May 2023 11:44:14 +0200
+Message-Id: <20230508094446.884703537@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,113 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 72c215ed8731c88b2d7e09afc51fffc207ae47b8 ]
+[ Upstream commit 26208a7cffd0c7cbf14237ccd20c7270b3ffeb7e ]
 
-commit fe630de009d0 ("md/raid10: avoid deadlock on recovery.") allowed
-normal io and sync io to exist at the same time. Task hung will occur as
-below:
+raid10_sync_request() will add 'r10bio->remaining' for both rdev and
+replacement rdev. However, if the read io fails, recovery_request_write()
+returns without issuing the write io, in this case, end_sync_request()
+is only called once and 'remaining' is leaked, cause an io hang.
 
-T1                      T2		T3		T4
-raid10d
- handle_read_error
-  allow_barrier
-   conf->nr_pending--
-    -> 0
-                        //submit sync io
-                        raid10_sync_request
-                         raise_barrier
-			  ->will not be blocked
-			  ...
-			//submit to drivers
-  raid10_read_request
-   wait_barrier
-    conf->nr_pending++
-     -> 1
-					//retry read fail
-					raid10_end_read_request
-					 reschedule_retry
-					  add to retry_list
-					  conf->nr_queued++
-					   -> 1
-							//sync io fail
-							end_sync_read
-							 __end_sync_read
-							  reschedule_retry
-							   add to retry_list
-					                    conf->nr_queued++
-							     -> 2
- ...
- handle_read_error
- get form retry_list
- conf->nr_queued--
-  freeze_array
-   wait nr_pending == nr_queued+1
-        ->1	      ->2
-   //task hung
+Fix the problem by decreasing 'remaining' according to if 'bio' and
+'repl_bio' is valid.
 
-retry read and sync io will be added to retry_list(nr_queued->2) if they
-fails. raid10d() called handle_read_error() and hung in freeze_array().
-nr_queued will not decrease because raid10d is blocked, nr_pending will
-not increase because conf->barrier is not released.
-
-Fix it by moving allow_barrier() after raid10_read_request().
-raise_barrier() will wait for nr_waiting to become 0. Therefore, sync io
-and regular io will not be issued at the same time.
-
-Also remove the check of nr_queued in stop_waiting_barrier. It can be 0
-but don't need to be blocking. Remove the check for MD_RECOVERY_RUNNING as
-the check is redundent.
-
-Fixes: fe630de009d0 ("md/raid10: avoid deadlock on recovery.")
-Signed-off-by: Li Nan <linan122@huawei.com>
+Fixes: 24afd80d99f8 ("md/raid10: handle recovery of replacement devices.")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
 Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230222041000.3341651-2-linan666@huaweicloud.com
+Link: https://lore.kernel.org/r/20230310073855.1337560-5-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/md/raid10.c | 23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 6c66357f92f55..db9ee3b637d6f 100644
+index db9ee3b637d6f..b1c575859218a 100644
 --- a/drivers/md/raid10.c
 +++ b/drivers/md/raid10.c
-@@ -995,11 +995,15 @@ static bool stop_waiting_barrier(struct r10conf *conf)
- 	    (!bio_list_empty(&bio_list[0]) || !bio_list_empty(&bio_list[1])))
- 		return true;
- 
--	/* move on if recovery thread is blocked by us */
--	if (conf->mddev->thread->tsk == current &&
--	    test_bit(MD_RECOVERY_RUNNING, &conf->mddev->recovery) &&
--	    conf->nr_queued > 0)
-+	/*
-+	 * move on if io is issued from raid10d(), nr_pending is not released
-+	 * from original io(see handle_read_error()). All raise barrier is
-+	 * blocked until this io is done.
+@@ -2613,11 +2613,22 @@ static void recovery_request_write(struct mddev *mddev, struct r10bio *r10_bio)
+ {
+ 	struct r10conf *conf = mddev->private;
+ 	int d;
+-	struct bio *wbio, *wbio2;
++	struct bio *wbio = r10_bio->devs[1].bio;
++	struct bio *wbio2 = r10_bio->devs[1].repl_bio;
++
++	/* Need to test wbio2->bi_end_io before we call
++	 * submit_bio_noacct as if the former is NULL,
++	 * the latter is free to free wbio2.
 +	 */
-+	if (conf->mddev->thread->tsk == current) {
-+		WARN_ON_ONCE(atomic_read(&conf->nr_pending) == 0);
- 		return true;
-+	}
++	if (wbio2 && !wbio2->bi_end_io)
++		wbio2 = NULL;
  
- 	return false;
- }
-@@ -2978,9 +2982,13 @@ static void handle_read_error(struct mddev *mddev, struct r10bio *r10_bio)
- 		md_error(mddev, rdev);
+ 	if (!test_bit(R10BIO_Uptodate, &r10_bio->state)) {
+ 		fix_recovery_read_error(r10_bio);
+-		end_sync_request(r10_bio);
++		if (wbio->bi_end_io)
++			end_sync_request(r10_bio);
++		if (wbio2)
++			end_sync_request(r10_bio);
+ 		return;
+ 	}
  
- 	rdev_dec_pending(rdev, mddev);
--	allow_barrier(conf);
- 	r10_bio->state = 0;
- 	raid10_read_request(mddev, r10_bio->master_bio, r10_bio);
-+	/*
-+	 * allow_barrier after re-submit to ensure no sync io
-+	 * can be issued while regular io pending.
-+	 */
-+	allow_barrier(conf);
- }
- 
- static void handle_write_completed(struct r10conf *conf, struct r10bio *r10_bio)
+@@ -2626,14 +2637,6 @@ static void recovery_request_write(struct mddev *mddev, struct r10bio *r10_bio)
+ 	 * and submit the write request
+ 	 */
+ 	d = r10_bio->devs[1].devnum;
+-	wbio = r10_bio->devs[1].bio;
+-	wbio2 = r10_bio->devs[1].repl_bio;
+-	/* Need to test wbio2->bi_end_io before we call
+-	 * submit_bio_noacct as if the former is NULL,
+-	 * the latter is free to free wbio2.
+-	 */
+-	if (wbio2 && !wbio2->bi_end_io)
+-		wbio2 = NULL;
+ 	if (wbio->bi_end_io) {
+ 		atomic_inc(&conf->mirrors[d].rdev->nr_pending);
+ 		md_sync_acct(conf->mirrors[d].rdev->bdev, bio_sectors(wbio));
 -- 
 2.39.2
 
