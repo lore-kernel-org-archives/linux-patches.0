@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9182D171AE
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1789BC4339B;
-	Mon,  8 May 2023 11:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78B3171AE
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:45:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE141C433EF;
+	Mon,  8 May 2023 11:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546315;
-	bh=V+PBmn6QvuLsy02UVxjONmKs9Drv8w0fXm+jVaYO6cY=;
+	s=korg; t=1683546318;
+	bh=6dOhzkgCy06Vv2qJsKWke3On47RrByfCAYURwYKOJN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OHy3ifh9RK7o0nEPhM/bsU0UF9ouvNHycQVGiyy08TKcZF+bhvIDxLrj8bx1xbXjT
-	 cxWhzuGQJ+mpF5YAzSIBz76VaWInKsTjfintCxdQAbQPfozTGurELoIzKRb/Y0PUoE
-	 NjSkjqyWSBj2Nlx9/PFopqHLbGSPCgBEY33WJNxM=
+	b=l3NpVTO98/n6s1hMMlHaHJVRLXsmHMadHQd0sQE3zRxEgCOWmim6YrXC7AyCKEjV1
+	 tnsfwAYWYlBqIkDKts+t2MxW1do8OLFYdIGwBnDGcJVIW9dx5Exv23HEg0yfZrVVfo
+	 rQNrRfX7bVpKNwJxEda9Nm0F+DcVE24I8kzv2WpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qinrun Dai <flno@hust.edu.cn>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 320/371] clocksource/drivers/davinci: Fix memory leak in davinci_timer_register when init fails
-Date: Mon,  8 May 2023 11:48:41 +0200
-Message-Id: <20230508094824.777852451@linuxfoundation.org>
+Subject: [PATCH 5.15 329/371] dmaengine: mv_xor_v2: Fix an error code.
+Date: Mon,  8 May 2023 11:48:50 +0200
+Message-Id: <20230508094825.145002790@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,98 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qinrun Dai <flno@hust.edu.cn>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit fb73556386e074e9bee9fa2d253aeaefe4e063e0 ]
+[ Upstream commit 827026ae2e56ec05ef1155661079badbbfc0b038 ]
 
-Smatch reports:
-drivers/clocksource/timer-davinci.c:332 davinci_timer_register()
-warn: 'base' from ioremap() not released on lines: 274.
+If the probe is deferred, -EPROBE_DEFER should be returned, not
++EPROBE_DEFER.
 
-Fix this and other potential memory leak problems
-by adding a set of corresponding exit lables.
-
-Fixes: 721154f972aa ("clocksource/drivers/davinci: Add support for clockevents")
-Signed-off-by: Qinrun Dai <flno@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230413135037.1505799-1-flno@hust.edu.cn
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fixes: 3cd2c313f1d6 ("dmaengine: mv_xor_v2: Fix clock resource by adding a register clock")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/201170dff832a3c496d125772e10070cd834ebf2.1679814350.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-davinci.c | 30 +++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ drivers/dma/mv_xor_v2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clocksource/timer-davinci.c b/drivers/clocksource/timer-davinci.c
-index 9996c05425200..b1c248498be46 100644
---- a/drivers/clocksource/timer-davinci.c
-+++ b/drivers/clocksource/timer-davinci.c
-@@ -257,21 +257,25 @@ int __init davinci_timer_register(struct clk *clk,
- 				resource_size(&timer_cfg->reg),
- 				"davinci-timer")) {
- 		pr_err("Unable to request memory region\n");
--		return -EBUSY;
-+		rv = -EBUSY;
-+		goto exit_clk_disable;
+diff --git a/drivers/dma/mv_xor_v2.c b/drivers/dma/mv_xor_v2.c
+index 4800c596433ad..9f3e011fbd914 100644
+--- a/drivers/dma/mv_xor_v2.c
++++ b/drivers/dma/mv_xor_v2.c
+@@ -756,7 +756,7 @@ static int mv_xor_v2_probe(struct platform_device *pdev)
+ 
+ 	xor_dev->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (PTR_ERR(xor_dev->clk) == -EPROBE_DEFER) {
+-		ret = EPROBE_DEFER;
++		ret = -EPROBE_DEFER;
+ 		goto disable_reg_clk;
  	}
- 
- 	base = ioremap(timer_cfg->reg.start, resource_size(&timer_cfg->reg));
- 	if (!base) {
- 		pr_err("Unable to map the register range\n");
--		return -ENOMEM;
-+		rv = -ENOMEM;
-+		goto exit_mem_region;
- 	}
- 
- 	davinci_timer_init(base);
- 	tick_rate = clk_get_rate(clk);
- 
- 	clockevent = kzalloc(sizeof(*clockevent), GFP_KERNEL);
--	if (!clockevent)
--		return -ENOMEM;
-+	if (!clockevent) {
-+		rv = -ENOMEM;
-+		goto exit_iounmap_base;
-+	}
- 
- 	clockevent->dev.name = "tim12";
- 	clockevent->dev.features = CLOCK_EVT_FEAT_ONESHOT;
-@@ -296,7 +300,7 @@ int __init davinci_timer_register(struct clk *clk,
- 			 "clockevent/tim12", clockevent);
- 	if (rv) {
- 		pr_err("Unable to request the clockevent interrupt\n");
--		return rv;
-+		goto exit_free_clockevent;
- 	}
- 
- 	davinci_clocksource.dev.rating = 300;
-@@ -323,13 +327,27 @@ int __init davinci_timer_register(struct clk *clk,
- 	rv = clocksource_register_hz(&davinci_clocksource.dev, tick_rate);
- 	if (rv) {
- 		pr_err("Unable to register clocksource\n");
--		return rv;
-+		goto exit_free_irq;
- 	}
- 
- 	sched_clock_register(davinci_timer_read_sched_clock,
- 			     DAVINCI_TIMER_CLKSRC_BITS, tick_rate);
- 
- 	return 0;
-+
-+exit_free_irq:
-+	free_irq(timer_cfg->irq[DAVINCI_TIMER_CLOCKEVENT_IRQ].start,
-+			clockevent);
-+exit_free_clockevent:
-+	kfree(clockevent);
-+exit_iounmap_base:
-+	iounmap(base);
-+exit_mem_region:
-+	release_mem_region(timer_cfg->reg.start,
-+			   resource_size(&timer_cfg->reg));
-+exit_clk_disable:
-+	clk_disable_unprepare(clk);
-+	return rv;
- }
- 
- static int __init of_davinci_timer_register(struct device_node *np)
+ 	if (!IS_ERR(xor_dev->clk)) {
 -- 
 2.39.2
 
