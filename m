@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19FF168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:22:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AEAC4339B;
-	Mon,  8 May 2023 10:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD5D168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:23:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E803C4339B;
+	Mon,  8 May 2023 10:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541377;
-	bh=H31vwZ0XZVomVXa/a0t0cVSLQoLFQwi7q5oYi3uUXrU=;
+	s=korg; t=1683541380;
+	bh=pyxRkPcyzXW4E7iLpCoYr89mfSh15sgb4Gw6JsyyhNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vgAsk27UJX4U9om0PfMK+wb2AtkjNzCFKk27hkYZkmH6P5PnFtp5CixvEI6pS6ATY
-	 q3vSa8l50bmNx/ZW8XNLEvAqHlBl4cLTISNtO3hzER1brW9Zlev1Hx6Qh/CBs8NOnp
-	 Pxy2FNOlmPkYXIKd4EggiqBHDcGQN6gIPH0q2sOA=
+	b=nco7ZmZ4fk0/cSiqO82QuQI6D1vz60C8h9+Ulqneo3RwWPjzUc4W9eOeDPRHQ9bOg
+	 XCiSVqZJyaAQmJh+k+fsI+FpuuWu2ot22K2xHY1GtCFqeQf0WhOi6zPdh+OAXc1TQ3
+	 /CAa4TtzqA/YdOfD67F03UZzu9yojsJA0b02Kk/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.2 094/663] ksmbd: not allow guest user on multichannel
-Date: Mon,  8 May 2023 11:38:40 +0200
-Message-Id: <20230508094431.506208185@linuxfoundation.org>
+	mhiramat@kernel.org,
+	npiggin@gmail.com,
+	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.2 067/663] ring-buffer: Ensure proper resetting of atomic variables in ring_buffer_reset_online_cpus
+Date: Mon,  8 May 2023 11:38:13 +0200
+Message-Id: <20230508094430.645973037@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,61 +37,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
 
-commit 3353ab2df5f68dab7da8d5ebb427a2d265a1f2b2 upstream.
+commit 7c339fb4d8577792378136c15fde773cfb863cb8 upstream.
 
-This patch return STATUS_NOT_SUPPORTED if binding session is guest.
+In ring_buffer_reset_online_cpus, the buffer_size_kb write operation
+may permanently fail if the cpu_online_mask changes between two
+for_each_online_buffer_cpu loops. The number of increases and decreases
+on both cpu_buffer->resize_disabled and cpu_buffer->record_disabled may be
+inconsistent, causing some CPUs to have non-zero values for these atomic
+variables after the function returns.
+
+This issue can be reproduced by "echo 0 > trace" while hotplugging cpu.
+After reproducing success, we can find out buffer_size_kb will not be
+functional anymore.
+
+To prevent leaving 'resize_disabled' and 'record_disabled' non-zero after
+ring_buffer_reset_online_cpus returns, we ensure that each atomic variable
+has been set up before atomic_sub() to it.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230426062027.17451-1-Tze-nan.Wu@mediatek.com
 
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-20480
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Cc: <mhiramat@kernel.org>
+Cc: npiggin@gmail.com
+Fixes: b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
+Reviewed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
+Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c |   16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -1456,7 +1456,7 @@ static int ntlm_authenticate(struct ksmb
- 		 * Reuse session if anonymous try to connect
- 		 * on reauthetication.
- 		 */
--		if (ksmbd_anonymous_user(user)) {
-+		if (conn->binding == false && ksmbd_anonymous_user(user)) {
- 			ksmbd_free_user(user);
- 			return 0;
- 		}
-@@ -1470,7 +1470,7 @@ static int ntlm_authenticate(struct ksmb
- 		sess->user = user;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5349,6 +5349,9 @@ void ring_buffer_reset_cpu(struct trace_
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_reset_cpu);
+ 
++/* Flag to ensure proper resetting of atomic variables */
++#define RESET_BIT	(1 << 30)
++
+ /**
+  * ring_buffer_reset_online_cpus - reset a ring buffer per CPU buffer
+  * @buffer: The ring buffer to reset a per cpu buffer of
+@@ -5365,20 +5368,27 @@ void ring_buffer_reset_online_cpus(struc
+ 	for_each_online_buffer_cpu(buffer, cpu) {
+ 		cpu_buffer = buffer->buffers[cpu];
+ 
+-		atomic_inc(&cpu_buffer->resize_disabled);
++		atomic_add(RESET_BIT, &cpu_buffer->resize_disabled);
+ 		atomic_inc(&cpu_buffer->record_disabled);
  	}
  
--	if (user_guest(sess->user)) {
-+	if (conn->binding == false && user_guest(sess->user)) {
- 		rsp->SessionFlags = SMB2_SESSION_FLAG_IS_GUEST_LE;
- 	} else {
- 		struct authenticate_message *authblob;
-@@ -1715,6 +1715,11 @@ int smb2_sess_setup(struct ksmbd_work *w
- 			goto out_err;
- 		}
+ 	/* Make sure all commits have finished */
+ 	synchronize_rcu();
  
-+		if (user_guest(sess->user)) {
-+			rc = -EOPNOTSUPP;
-+			goto out_err;
-+		}
+-	for_each_online_buffer_cpu(buffer, cpu) {
++	for_each_buffer_cpu(buffer, cpu) {
+ 		cpu_buffer = buffer->buffers[cpu];
+ 
++		/*
++		 * If a CPU came online during the synchronize_rcu(), then
++		 * ignore it.
++		 */
++		if (!(atomic_read(&cpu_buffer->resize_disabled) & RESET_BIT))
++			continue;
 +
- 		conn->binding = true;
- 	} else if ((conn->dialect < SMB30_PROT_ID ||
- 		    server_conf.flags & KSMBD_GLOBAL_FLAG_SMB3_MULTICHANNEL) &&
-@@ -1827,6 +1832,8 @@ out_err:
- 		rsp->hdr.Status = STATUS_NETWORK_SESSION_EXPIRED;
- 	else if (rc == -ENOMEM)
- 		rsp->hdr.Status = STATUS_INSUFFICIENT_RESOURCES;
-+	else if (rc == -EOPNOTSUPP)
-+		rsp->hdr.Status = STATUS_NOT_SUPPORTED;
- 	else if (rc)
- 		rsp->hdr.Status = STATUS_LOGON_FAILURE;
+ 		reset_disabled_cpu_buffer(cpu_buffer);
  
+ 		atomic_dec(&cpu_buffer->record_disabled);
+-		atomic_dec(&cpu_buffer->resize_disabled);
++		atomic_sub(RESET_BIT, &cpu_buffer->resize_disabled);
+ 	}
+ 
+ 	mutex_unlock(&buffer->mutex);
 
 
