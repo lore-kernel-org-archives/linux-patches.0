@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91FF6168B4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:55:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D4DCC433EF;
-	Mon,  8 May 2023 09:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF95168B4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 09:55:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512A0C433EF;
+	Mon,  8 May 2023 09:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683539738;
-	bh=ljGUanVlqx0yS+M5XoWqywrvHJc5WXwblkPLxdONJOM=;
+	s=korg; t=1683539741;
+	bh=RT7JMNLVIVZFoyk9MkqvppZ5D3T+QHCHLlgkN2MaAuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OcUI32M90sdKCF3E5D/t9BOJERsFywsif105PXEbv8SjEJnPppThM1on3bDwYKS8d
-	 b+aGKxZDWBkslcdfUvqZ9L/R7toSRlaUiqWTD2F3l1mJKZMQUFcB0urAGy+VXUhZvf
-	 Kp7jTWkpYu2iUWPN3gR5uKOAgopTfC51GwKNgwzM=
+	b=e519y8eObazYYWe6h6dTmXihkYynp46QKZ34ZclM6/LbkcHc56lsdBeHt20mCKjKB
+	 bLkotVdVgKZtOn9aERPRhCbLlRzTutGsIZyXMZeastksW2u7l/+ULPHSSOI8R/jiaP
+	 tiQs/3KK3UOW0qAAqY0Wdmggw3F56UAt1X+Yu9/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 122/611] tpm, tpm_tis: Do not skip reset of original interrupt vector
-Date: Mon,  8 May 2023 11:39:24 +0200
-Message-Id: <20230508094426.228615002@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 6.1 105/611] ubifs: Fix memory leak in do_rename
+Date: Mon,  8 May 2023 11:39:07 +0200
+Message-Id: <20230508094425.660421548@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,113 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Mårten Lindahl <marten.lindahl@axis.com>
 
-[ Upstream commit ed9be0e6c892a783800d77a41ca4c7255c6af8c5 ]
+commit 3a36d20e012903f45714df2731261fdefac900cb upstream.
 
-If in tpm_tis_probe_irq_single() an error occurs after the original
-interrupt vector has been read, restore the interrupts before the error is
-returned.
+If renaming a file in an encrypted directory, function
+fscrypt_setup_filename allocates memory for a file name. This name is
+never used, and before returning to the caller the memory for it is not
+freed.
 
-Since the caller does not check the error value, return -1 in any case that
-the TPM_CHIP_FLAG_IRQ flag is not set. Since the return value of function
-tpm_tis_gen_interrupt() is not longer used, make it a void function.
+When running kmemleak on it we see that it is registered as a leak. The
+report below is triggered by a simple program 'rename' that renames a
+file in an encrypted directory:
 
-Fixes: 1107d065fdf1 ("tpm_tis: Introduce intermediate layer for TPM access")
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  unreferenced object 0xffff888101502840 (size 32):
+    comm "rename", pid 9404, jiffies 4302582475 (age 435.735s)
+    backtrace:
+      __kmem_cache_alloc_node
+      __kmalloc
+      fscrypt_setup_filename
+      do_rename
+      ubifs_rename
+      vfs_rename
+      do_renameat2
+
+To fix this we can remove the call to fscrypt_setup_filename as it's not
+needed.
+
+Fixes: 278d9a243635f26 ("ubifs: Rename whiteout atomically")
+Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 29 +++++++++++------------------
- 1 file changed, 11 insertions(+), 18 deletions(-)
+ fs/ubifs/dir.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 3f98e587b3e84..33d98f3e0f7a6 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -732,7 +732,7 @@ static irqreturn_t tis_int_handler(int dummy, void *dev_id)
- 	return IRQ_HANDLED;
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -358,7 +358,6 @@ static struct inode *create_whiteout(str
+ 	umode_t mode = S_IFCHR | WHITEOUT_MODE;
+ 	struct inode *inode;
+ 	struct ubifs_info *c = dir->i_sb->s_fs_info;
+-	struct fscrypt_name nm;
+ 
+ 	/*
+ 	 * Create an inode('nlink = 1') for whiteout without updating journal,
+@@ -369,10 +368,6 @@ static struct inode *create_whiteout(str
+ 	dbg_gen("dent '%pd', mode %#hx in dir ino %lu",
+ 		dentry, mode, dir->i_ino);
+ 
+-	err = fscrypt_setup_filename(dir, &dentry->d_name, 0, &nm);
+-	if (err)
+-		return ERR_PTR(err);
+-
+ 	inode = ubifs_new_inode(c, dir, mode, false);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+@@ -395,7 +390,6 @@ out_inode:
+ 	make_bad_inode(inode);
+ 	iput(inode);
+ out_free:
+-	fscrypt_free_filename(&nm);
+ 	ubifs_err(c, "cannot create whiteout file, error %d", err);
+ 	return ERR_PTR(err);
  }
- 
--static int tpm_tis_gen_interrupt(struct tpm_chip *chip)
-+static void tpm_tis_gen_interrupt(struct tpm_chip *chip)
- {
- 	const char *desc = "attempting to generate an interrupt";
- 	u32 cap2;
-@@ -741,7 +741,7 @@ static int tpm_tis_gen_interrupt(struct tpm_chip *chip)
- 
- 	ret = request_locality(chip, 0);
- 	if (ret < 0)
--		return ret;
-+		return;
- 
- 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
- 		ret = tpm2_get_tpm_pt(chip, 0x100, &cap2, desc);
-@@ -749,8 +749,6 @@ static int tpm_tis_gen_interrupt(struct tpm_chip *chip)
- 		ret = tpm1_getcap(chip, TPM_CAP_PROP_TIS_TIMEOUT, &cap, desc, 0);
- 
- 	release_locality(chip, 0);
--
--	return ret;
- }
- 
- /* Register the IRQ and issue a command that will cause an interrupt. If an
-@@ -780,42 +778,37 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
- 
- 	rc = tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality), irq);
- 	if (rc < 0)
--		return rc;
-+		goto restore_irqs;
- 
- 	rc = tpm_tis_read32(priv, TPM_INT_STATUS(priv->locality), &int_status);
- 	if (rc < 0)
--		return rc;
-+		goto restore_irqs;
- 
- 	/* Clear all existing */
- 	rc = tpm_tis_write32(priv, TPM_INT_STATUS(priv->locality), int_status);
- 	if (rc < 0)
--		return rc;
--
-+		goto restore_irqs;
- 	/* Turn on */
- 	rc = tpm_tis_write32(priv, TPM_INT_ENABLE(priv->locality),
- 			     intmask | TPM_GLOBAL_INT_ENABLE);
- 	if (rc < 0)
--		return rc;
-+		goto restore_irqs;
- 
- 	priv->irq_tested = false;
- 
- 	/* Generate an interrupt by having the core call through to
- 	 * tpm_tis_send
- 	 */
--	rc = tpm_tis_gen_interrupt(chip);
--	if (rc < 0)
--		return rc;
-+	tpm_tis_gen_interrupt(chip);
- 
-+restore_irqs:
- 	/* tpm_tis_send will either confirm the interrupt is working or it
- 	 * will call disable_irq which undoes all of the above.
- 	 */
- 	if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
--		rc = tpm_tis_write8(priv, original_int_vec,
--				TPM_INT_VECTOR(priv->locality));
--		if (rc < 0)
--			return rc;
--
--		return 1;
-+		tpm_tis_write8(priv, original_int_vec,
-+			       TPM_INT_VECTOR(priv->locality));
-+		return -1;
- 	}
- 
- 	return 0;
--- 
-2.39.2
-
 
 
