@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE0C168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADFCC433EF;
-	Mon,  8 May 2023 10:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA1C168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:42:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932A2C433EF;
+	Mon,  8 May 2023 10:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542544;
-	bh=hmdACvyceHtfwG6iZa0TlefPkqSpVkF36kkn55rWHqs=;
+	s=korg; t=1683542547;
+	bh=W5dXkr+r5xUyDXHbAK4x4mXIDeWryIxamq/GQNcZtTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XeZqFjYU+921xvMTC4/ztDpX9ymWj73RLlHJtcpyeF755oRzjMOuNtkn8ktQjfdvF
-	 +l5vh1hOs4ZvoNt/qZXkLiDj+PkGQWLiRqY5ZOeCBEfSDLSbtLugzTSes4dNWNDFTC
-	 i5oUBp6IWO+ROXsxDXFdqVkOzutD4NFi4efYYpuw=
+	b=opEI45gS3hfW89bHA8LmNxsp1SrlYdBWXd7F0Gd2/TlsdNpp4euKqDKkr6y4POXsL
+	 RX8U3h+vtSzMngPR53e82utYftv5JW3mRdOiZh6iSebEMRRat0sCwEefyo7tv22fjl
+	 jTXvvBZZbN1q90yAaL6DsFU4UBT8DZA9UvuiBlYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Leonard Crestez <leonard.crestez@nxp.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Piotr Gorski <piotrgorski@cachyos.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Ira Weiny <ira.weiny@intel.com>,
+	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 470/663] scripts/gdb: bail early if there are no generic PD
-Date: Mon,  8 May 2023 11:44:56 +0200
-Message-Id: <20230508094443.468130521@linuxfoundation.org>
+Subject: [PATCH 6.2 453/663] module/decompress: Never use kunmap() for local un-mappings
+Date: Mon,  8 May 2023 11:44:39 +0200
+Message-Id: <20230508094442.807921943@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -39,58 +39,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Fabio M. De Francesco <fmdefrancesco@gmail.com>
 
-[ Upstream commit f19c3c2959e465209ade1a7a699e6cbf4359ce78 ]
+[ Upstream commit 3c17655ab13704582fe25e8ea3200a9b2f8bf20a ]
 
-Avoid generating an exception if there are no generic power domain(s)
-registered:
+Use kunmap_local() to unmap pages locally mapped with kmap_local_page().
 
-(gdb) lx-genpd-summary
-domain                          status          children
-    /device                                             runtime status
-----------------------------------------------------------------------
-Python Exception <class 'gdb.error'>: No symbol "gpd_list" in current context.
-Error occurred in Python: No symbol "gpd_list" in current context.
-(gdb) quit
+kunmap_local() must be called on the kernel virtual address returned by
+kmap_local_page(), differently from how we use kunmap() which instead
+expects the mapped page as its argument.
 
-[f.fainelli@gmail.com: correctly invoke gdb_eval_or_none]
-  Link: https://lkml.kernel.org/r/20230327185746.3856407-1-f.fainelli@gmail.com
-Link: https://lkml.kernel.org/r/20230323231659.3319941-1-f.fainelli@gmail.com
-Fixes: 8207d4a88e1e ("scripts/gdb: add lx-genpd-summary command")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Leonard Crestez <leonard.crestez@nxp.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+In module_zstd_decompress() we currently map with kmap_local_page() and
+unmap with kunmap(). This breaks the code and so it should be fixed.
+
+Cc: Piotr Gorski <piotrgorski@cachyos.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Fixes: 169a58ad824d ("module/decompress: Support zstd in-kernel decompression")
+Signed-off-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Piotr Gorski <piotrgorski@cachyos.org>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/genpd.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/module/decompress.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/gdb/linux/genpd.py b/scripts/gdb/linux/genpd.py
-index 39cd1abd85590..b53649c0a77a6 100644
---- a/scripts/gdb/linux/genpd.py
-+++ b/scripts/gdb/linux/genpd.py
-@@ -5,7 +5,7 @@
- import gdb
- import sys
+diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
+index bb79ac1a6d8f7..7ddc87bee2741 100644
+--- a/kernel/module/decompress.c
++++ b/kernel/module/decompress.c
+@@ -267,7 +267,7 @@ static ssize_t module_zstd_decompress(struct load_info *info,
+ 		zstd_dec.size = PAGE_SIZE;
  
--from linux.utils import CachedType
-+from linux.utils import CachedType, gdb_eval_or_none
- from linux.lists import list_for_each_entry
- 
- generic_pm_domain_type = CachedType('struct generic_pm_domain')
-@@ -70,6 +70,8 @@ Output is similar to /sys/kernel/debug/pm_genpd/pm_genpd_summary'''
-             gdb.write('    %-50s  %s\n' % (kobj_path, rtpm_status_str(dev)))
- 
-     def invoke(self, arg, from_tty):
-+        if gdb_eval_or_none("&gpd_list") is None:
-+            raise gdb.GdbError("No power domain(s) registered")
-         gdb.write('domain                          status          children\n');
-         gdb.write('    /device                                             runtime status\n');
-         gdb.write('----------------------------------------------------------------------\n');
+ 		ret = zstd_decompress_stream(dstream, &zstd_dec, &zstd_buf);
+-		kunmap(page);
++		kunmap_local(zstd_dec.dst);
+ 		retval = zstd_get_error_code(ret);
+ 		if (retval)
+ 			break;
 -- 
 2.39.2
 
