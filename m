@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59F7168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:07:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32D51C433D2;
-	Mon,  8 May 2023 11:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81E7168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:07:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41639C433D2;
+	Mon,  8 May 2023 11:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544052;
-	bh=jvkW4ESrj/bo14bLAISxVFn7BcmfXtFEFu1aZGXd/kk=;
+	s=korg; t=1683544055;
+	bh=U3GQrR3uJLaucEjmkIUed2quljwFDiOi/otQYZ8DQnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8Ezb2LNR8mpSRmGDhBwirbIPPwssc0S2fu/pkRBFvC/cdQdCqSYq6TnsxWRbYcfc
-	 Z5tvyt5hSdfL0blSQqFFejbh9OEA8MafcBR8i5R/Sx4FyAlnnKNF7FbjTXjGEhCanM
-	 qOQa1Fbr+qGVFfhW1TdmGcVWYWHuokk7HunurBhc=
+	b=iriwRI/1K4Ndb0HlvS2GIplg354D7qGXiCyAw3pfhszgXImvzM1hX5AU2WP/Jv9mo
+	 ltcqWyv39ExwnRNf1V9YHOB05J2V94O2Q3fpdhIrBwPih07wg3fISSf32IqZBN+odi
+	 aIdW9aSdg3AghAxdBDuLIIELVYNa9U5iJe6HKhkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 279/694] media: mediatek: vcodec: using each instance lat_buf count replace core ready list
-Date: Mon,  8 May 2023 11:41:54 +0200
-Message-Id: <20230508094441.321560825@linuxfoundation.org>
+Subject: [PATCH 6.3 288/694] platform/x86/amd: pmc: Dont try to read SMU version on Picasso
+Date: Mon,  8 May 2023 11:42:03 +0200
+Message-Id: <20230508094441.637905681@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,37 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit f7a3780cf96925670736582b9a623a2c9ffb4166 ]
+[ Upstream commit b845772677ea19b8e4c032bc07393ef32de4ee39 ]
 
-Core Hardware decoder depends on each instance lat_buf count,
-calling queue_work decode again when the lat_buf count of each instance
-isn't zero.
+Picasso doesn't support the command in the uPEP mailbox to try to
+read the SMU version.
 
-Fixes: 365e4ba01df4 ("media: mtk-vcodec: Add work queue for core hardware decode")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2449
+Fixes: f6045de1f532 ("platform/x86: amd-pmc: Export Idlemask values based on the APU")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230409185348.556161-2-Shyam-sundar.S-k@amd.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-index 3f016c87d722c..ad5002ca953e0 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec_msg_queue.c
-@@ -239,7 +239,7 @@ static void vdec_msg_queue_core_work(struct work_struct *work)
- 	mtk_vcodec_dec_disable_hardware(ctx, MTK_VDEC_CORE);
- 	vdec_msg_queue_qbuf(&ctx->msg_queue.lat_ctx, lat_buf);
+diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
+index 2edaae04a6912..4ffb08d2b01bc 100644
+--- a/drivers/platform/x86/amd/pmc.c
++++ b/drivers/platform/x86/amd/pmc.c
+@@ -403,6 +403,9 @@ static int amd_pmc_get_smu_version(struct amd_pmc_dev *dev)
+ 	int rc;
+ 	u32 val;
  
--	if (!list_empty(&dev->msg_queue_core_ctx.ready_queue)) {
-+	if (atomic_read(&lat_buf->ctx->msg_queue.core_list_cnt)) {
- 		mtk_v4l2_debug(3, "re-schedule to decode for core: %d",
- 			       dev->msg_queue_core_ctx.ready_num);
- 		queue_work(dev->core_workqueue, &msg_queue->core_work);
++	if (dev->cpu_id == AMD_CPU_ID_PCO)
++		return -ENODEV;
++
+ 	rc = amd_pmc_send_cmd(dev, 0, &val, SMU_MSG_GETSMUVERSION, 1);
+ 	if (rc)
+ 		return rc;
 -- 
 2.39.2
 
