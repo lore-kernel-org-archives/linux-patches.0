@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64306168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C357FC433D2;
-	Mon,  8 May 2023 11:10:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F7E168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:10:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B02C433EF;
+	Mon,  8 May 2023 11:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544206;
-	bh=Vla0GIz2fMFPrCo66DGoMe8brMfqUeFvzBeD4bz1yZU=;
+	s=korg; t=1683544209;
+	bh=nevuDMl1SG2woGI0AghotnSi8v0EJbipHf362ZSLz3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XgT91HRJ4VjEw11JS1xCimQBI895MV0a/yawg9XF/n0zbWdeDwZoTNI4kBiTN8bHo
-	 r1dw1rv7LPhU6Xmi9v7AGUov+DXUzHrkc9Z77yElanXM8lMfEeQAoSaiKP2rH5vXyQ
-	 30rD1+o17l7z1dBMnvR1njdooeRGHL/Wxvg/HUoE=
+	b=iC6dOss0NrJJq9DTodkBjHdd51JPXepMQ0Kr7giHr9TeKbvJMfDONamMemNS5Grhk
+	 pw35NHjBuLv5RbnPGSOjcogR20XOvTuuiGqCI11+d39nce9wFjQaHMLfmmLHlxPZ6G
+	 ZPci/cq8+He3qTeMHb8mDn5Z4klxEnNuyID875A4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yhs@fb.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 335/694] libbpf: Fix bpf_xdp_query() in old kernels
-Date: Mon,  8 May 2023 11:42:50 +0200
-Message-Id: <20230508094443.332090112@linuxfoundation.org>
+Subject: [PATCH 6.3 336/694] wifi: rtw88: mac: Return the original error from rtw_pwr_seq_parser()
+Date: Mon,  8 May 2023 11:42:51 +0200
+Message-Id: <20230508094443.374769628@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,62 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonghong Song <yhs@fb.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit c8ee37bde4021a275d2e4f33bd48d54912bb00c4 ]
+[ Upstream commit b7ed9fa2cb76ca7a3c3cd4a6d35748fe1fbda9f6 ]
 
-Commit 04d58f1b26a4("libbpf: add API to get XDP/XSK supported features")
-added feature_flags to struct bpf_xdp_query_opts. If a user uses
-bpf_xdp_query_opts with feature_flags member, the bpf_xdp_query()
-will check whether 'netdev' family exists or not in the kernel.
-If it does not exist, the bpf_xdp_query() will return -ENOENT.
+rtw_pwr_seq_parser() calls rtw_sub_pwr_seq_parser() which can either
+return -EBUSY, -EINVAL or 0. Propagate the original error code instead
+of unconditionally returning -EBUSY in case of an error.
 
-But 'netdev' family does not exist in old kernels as it is
-introduced in the same patch set as Commit 04d58f1b26a4.
-So old kernel with newer libbpf won't work properly with
-bpf_xdp_query() api call.
-
-To fix this issue, if the return value of
-libbpf_netlink_resolve_genl_family_id() is -ENOENT, bpf_xdp_query()
-will just return 0, skipping the rest of xdp feature query.
-This preserves backward compatibility.
-
-Fixes: 04d58f1b26a4 ("libbpf: add API to get XDP/XSK supported features")
-Signed-off-by: Yonghong Song <yhs@fb.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230227224943.1153459-1-yhs@fb.com
+Fixes: e3037485c68e ("rtw88: new Realtek 802.11ac driver")
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230226221004.138331-2-martin.blumenstingl@googlemail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/netlink.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/netlink.c b/tools/lib/bpf/netlink.c
-index 1653e7a8b0a11..84dd5fa149058 100644
---- a/tools/lib/bpf/netlink.c
-+++ b/tools/lib/bpf/netlink.c
-@@ -468,8 +468,13 @@ int bpf_xdp_query(int ifindex, int xdp_flags, struct bpf_xdp_query_opts *opts)
- 		return 0;
+diff --git a/drivers/net/wireless/realtek/rtw88/mac.c b/drivers/net/wireless/realtek/rtw88/mac.c
+index dae64901bac5a..663907c38327f 100644
+--- a/drivers/net/wireless/realtek/rtw88/mac.c
++++ b/drivers/net/wireless/realtek/rtw88/mac.c
+@@ -233,7 +233,7 @@ static int rtw_pwr_seq_parser(struct rtw_dev *rtwdev,
  
- 	err = libbpf_netlink_resolve_genl_family_id("netdev", sizeof("netdev"), &id);
--	if (err < 0)
-+	if (err < 0) {
-+		if (err == -ENOENT) {
-+			opts->feature_flags = 0;
-+			goto skip_feature_flags;
-+		}
- 		return libbpf_err(err);
-+	}
+ 		ret = rtw_sub_pwr_seq_parser(rtwdev, intf_mask, cut_mask, cmd);
+ 		if (ret)
+-			return -EBUSY;
++			return ret;
  
- 	memset(&req, 0, sizeof(req));
- 	req.nh.nlmsg_len = NLMSG_LENGTH(GENL_HDRLEN);
-@@ -489,6 +494,7 @@ int bpf_xdp_query(int ifindex, int xdp_flags, struct bpf_xdp_query_opts *opts)
- 
- 	opts->feature_flags = md.flags;
- 
-+skip_feature_flags:
- 	return 0;
- }
- 
+ 		idx++;
+ 	} while (1);
 -- 
 2.39.2
 
