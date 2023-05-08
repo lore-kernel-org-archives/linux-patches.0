@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2465171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC15C433D2;
-	Mon,  8 May 2023 11:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0276171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2287AC433EF;
+	Mon,  8 May 2023 11:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545923;
-	bh=RXod3Kex7x8kPIpIdidJx2dPmqspXj5HjTm/WpllcxQ=;
+	s=korg; t=1683545926;
+	bh=ynJjKYwqy3erZ80zvU8qzgrhA8o/yYdGFmvnvkqwDpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CCrWulRFI9FBsvA0m625UVpJHh7sHx6BUNa2sZDnDuJ9q4/XJ+PHE/H2oRrfM82S0
-	 FvGhP8EmKHwDQX8803g+DXOqnH4o3zamCKrRQshfOHC19ZYv79FChHbGFv5Xj/l2UB
-	 s2g6Lvl9zX4a/K+CkOHZgEVcd0Q9eIg90uw6ZP/s=
+	b=kbRzKcO6cAPRHhhTIHLuDRthQ52rnNgSE9iyk2ixkopMEllSVeaTClWjg1P4wLsIJ
+	 //+K3vozxaQuEzykhU8jIs32Etc/JxIYzNFV3OhHgNDbbJLtzYxw9J+iEFIhB13K7Q
+	 aemHK8Jm0Wg3IlWsuMftbJ+u4RroOGUkmnc4DAi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kulkarni <kch@nvidia.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	"Ewan D. Milne" <emilne@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 191/371] nvmet: use i_size_read() to set size for file-ns
-Date: Mon,  8 May 2023 11:46:32 +0200
-Message-Id: <20230508094819.705131363@linuxfoundation.org>
+Subject: [PATCH 5.15 200/371] nvme-fcloop: fix "inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage"
+Date: Mon,  8 May 2023 11:46:41 +0200
+Message-Id: <20230508094820.051778065@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,83 +37,203 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit 2caecd62ea5160803b25d96cb1a14ce755c2c259 ]
+[ Upstream commit 4f86a6ff6fbd891232dda3ca97fd1b9630b59809 ]
 
-Instead of calling vfs_getattr() use i_size_read() to read the size of
-file so we can read the size of not only file type but also block type
-with one call. This is needed to implement buffered_io support for the
-NVMeOF block device backend.
+fcloop_fcp_op() could be called from flush request's ->end_io(flush_end_io) in
+which the spinlock of fq->mq_flush_lock is grabbed with irq saved/disabled.
 
-We also change return type of function nvmet_file_ns_revalidate() from
-int to void, since this function does not return any meaning value.
+So fcloop_fcp_op() can't call spin_unlock_irq(&tfcp_req->reqlock) simply
+which enables irq unconditionally.
 
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Fixes the warning by switching to spin_lock_irqsave()/spin_unlock_irqrestore()
+
+Fixes: c38dbbfab1bc ("nvme-fcloop: fix inconsistent lock state warnings")
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Ewan D. Milne <emilne@redhat.com>
+Tested-by: Yi Zhang <yi.zhang@redhat.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: ab76e7206b67 ("nvmet: fix error handling in nvmet_execute_identify_cns_cs_ns()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/io-cmd-file.c | 17 ++++-------------
- drivers/nvme/target/nvmet.h       |  2 +-
- 2 files changed, 5 insertions(+), 14 deletions(-)
+ drivers/nvme/target/fcloop.c | 48 ++++++++++++++++++++----------------
+ 1 file changed, 27 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
-index eadba13b276de..098b6bf12cd0a 100644
---- a/drivers/nvme/target/io-cmd-file.c
-+++ b/drivers/nvme/target/io-cmd-file.c
-@@ -13,16 +13,9 @@
+diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
+index 5c16372f3b533..c780af36c1d4a 100644
+--- a/drivers/nvme/target/fcloop.c
++++ b/drivers/nvme/target/fcloop.c
+@@ -614,10 +614,11 @@ fcloop_fcp_recv_work(struct work_struct *work)
+ 	struct fcloop_fcpreq *tfcp_req =
+ 		container_of(work, struct fcloop_fcpreq, fcp_rcv_work);
+ 	struct nvmefc_fcp_req *fcpreq = tfcp_req->fcpreq;
++	unsigned long flags;
+ 	int ret = 0;
+ 	bool aborted = false;
  
- #define NVMET_MIN_MPOOL_OBJ		16
+-	spin_lock_irq(&tfcp_req->reqlock);
++	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+ 	switch (tfcp_req->inistate) {
+ 	case INI_IO_START:
+ 		tfcp_req->inistate = INI_IO_ACTIVE;
+@@ -626,11 +627,11 @@ fcloop_fcp_recv_work(struct work_struct *work)
+ 		aborted = true;
+ 		break;
+ 	default:
+-		spin_unlock_irq(&tfcp_req->reqlock);
++		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 		WARN_ON(1);
+ 		return;
+ 	}
+-	spin_unlock_irq(&tfcp_req->reqlock);
++	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
  
--int nvmet_file_ns_revalidate(struct nvmet_ns *ns)
-+void nvmet_file_ns_revalidate(struct nvmet_ns *ns)
- {
--	struct kstat stat;
--	int ret;
--
--	ret = vfs_getattr(&ns->file->f_path, &stat, STATX_SIZE,
--			  AT_STATX_FORCE_SYNC);
--	if (!ret)
--		ns->size = stat.size;
--	return ret;
-+	ns->size = i_size_read(ns->file->f_mapping->host);
+ 	if (unlikely(aborted))
+ 		ret = -ECANCELED;
+@@ -655,8 +656,9 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
+ 		container_of(work, struct fcloop_fcpreq, abort_rcv_work);
+ 	struct nvmefc_fcp_req *fcpreq;
+ 	bool completed = false;
++	unsigned long flags;
+ 
+-	spin_lock_irq(&tfcp_req->reqlock);
++	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+ 	fcpreq = tfcp_req->fcpreq;
+ 	switch (tfcp_req->inistate) {
+ 	case INI_IO_ABORTED:
+@@ -665,11 +667,11 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
+ 		completed = true;
+ 		break;
+ 	default:
+-		spin_unlock_irq(&tfcp_req->reqlock);
++		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 		WARN_ON(1);
+ 		return;
+ 	}
+-	spin_unlock_irq(&tfcp_req->reqlock);
++	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 
+ 	if (unlikely(completed)) {
+ 		/* remove reference taken in original abort downcall */
+@@ -681,9 +683,9 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
+ 		nvmet_fc_rcv_fcp_abort(tfcp_req->tport->targetport,
+ 					&tfcp_req->tgt_fcp_req);
+ 
+-	spin_lock_irq(&tfcp_req->reqlock);
++	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+ 	tfcp_req->fcpreq = NULL;
+-	spin_unlock_irq(&tfcp_req->reqlock);
++	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 
+ 	fcloop_call_host_done(fcpreq, tfcp_req, -ECANCELED);
+ 	/* call_host_done releases reference for abort downcall */
+@@ -699,11 +701,12 @@ fcloop_tgt_fcprqst_done_work(struct work_struct *work)
+ 	struct fcloop_fcpreq *tfcp_req =
+ 		container_of(work, struct fcloop_fcpreq, tio_done_work);
+ 	struct nvmefc_fcp_req *fcpreq;
++	unsigned long flags;
+ 
+-	spin_lock_irq(&tfcp_req->reqlock);
++	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+ 	fcpreq = tfcp_req->fcpreq;
+ 	tfcp_req->inistate = INI_IO_COMPLETED;
+-	spin_unlock_irq(&tfcp_req->reqlock);
++	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 
+ 	fcloop_call_host_done(fcpreq, tfcp_req, tfcp_req->status);
  }
+@@ -807,13 +810,14 @@ fcloop_fcp_op(struct nvmet_fc_target_port *tgtport,
+ 	u32 rsplen = 0, xfrlen = 0;
+ 	int fcp_err = 0, active, aborted;
+ 	u8 op = tgt_fcpreq->op;
++	unsigned long flags;
  
- void nvmet_file_ns_disable(struct nvmet_ns *ns)
-@@ -40,7 +33,7 @@ void nvmet_file_ns_disable(struct nvmet_ns *ns)
- int nvmet_file_ns_enable(struct nvmet_ns *ns)
- {
- 	int flags = O_RDWR | O_LARGEFILE;
--	int ret;
-+	int ret = 0;
+-	spin_lock_irq(&tfcp_req->reqlock);
++	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+ 	fcpreq = tfcp_req->fcpreq;
+ 	active = tfcp_req->active;
+ 	aborted = tfcp_req->aborted;
+ 	tfcp_req->active = true;
+-	spin_unlock_irq(&tfcp_req->reqlock);
++	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
  
- 	if (!ns->buffered_io)
- 		flags |= O_DIRECT;
-@@ -54,9 +47,7 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
- 		return ret;
+ 	if (unlikely(active))
+ 		/* illegal - call while i/o active */
+@@ -821,9 +825,9 @@ fcloop_fcp_op(struct nvmet_fc_target_port *tgtport,
+ 
+ 	if (unlikely(aborted)) {
+ 		/* target transport has aborted i/o prior */
+-		spin_lock_irq(&tfcp_req->reqlock);
++		spin_lock_irqsave(&tfcp_req->reqlock, flags);
+ 		tfcp_req->active = false;
+-		spin_unlock_irq(&tfcp_req->reqlock);
++		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 		tgt_fcpreq->transferred_length = 0;
+ 		tgt_fcpreq->fcp_error = -ECANCELED;
+ 		tgt_fcpreq->done(tgt_fcpreq);
+@@ -880,9 +884,9 @@ fcloop_fcp_op(struct nvmet_fc_target_port *tgtport,
+ 		break;
  	}
  
--	ret = nvmet_file_ns_revalidate(ns);
--	if (ret)
--		goto err;
-+	nvmet_file_ns_revalidate(ns);
+-	spin_lock_irq(&tfcp_req->reqlock);
++	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+ 	tfcp_req->active = false;
+-	spin_unlock_irq(&tfcp_req->reqlock);
++	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 
+ 	tgt_fcpreq->transferred_length = xfrlen;
+ 	tgt_fcpreq->fcp_error = fcp_err;
+@@ -896,15 +900,16 @@ fcloop_tgt_fcp_abort(struct nvmet_fc_target_port *tgtport,
+ 			struct nvmefc_tgt_fcp_req *tgt_fcpreq)
+ {
+ 	struct fcloop_fcpreq *tfcp_req = tgt_fcp_req_to_fcpreq(tgt_fcpreq);
++	unsigned long flags;
  
  	/*
- 	 * i_blkbits can be greater than the universally accepted upper bound,
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index fdb06a9d430d2..f3e42d2c85c6c 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -542,7 +542,7 @@ u16 nvmet_bdev_flush(struct nvmet_req *req);
- u16 nvmet_file_flush(struct nvmet_req *req);
- void nvmet_ns_changed(struct nvmet_subsys *subsys, u32 nsid);
- void nvmet_bdev_ns_revalidate(struct nvmet_ns *ns);
--int nvmet_file_ns_revalidate(struct nvmet_ns *ns);
-+void nvmet_file_ns_revalidate(struct nvmet_ns *ns);
- void nvmet_ns_revalidate(struct nvmet_ns *ns);
- u16 blk_to_nvme_status(struct nvmet_req *req, blk_status_t blk_sts);
+ 	 * mark aborted only in case there were 2 threads in transport
+ 	 * (one doing io, other doing abort) and only kills ops posted
+ 	 * after the abort request
+ 	 */
+-	spin_lock_irq(&tfcp_req->reqlock);
++	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+ 	tfcp_req->aborted = true;
+-	spin_unlock_irq(&tfcp_req->reqlock);
++	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
  
+ 	tfcp_req->status = NVME_SC_INTERNAL;
+ 
+@@ -946,6 +951,7 @@ fcloop_fcp_abort(struct nvme_fc_local_port *localport,
+ 	struct fcloop_ini_fcpreq *inireq = fcpreq->private;
+ 	struct fcloop_fcpreq *tfcp_req;
+ 	bool abortio = true;
++	unsigned long flags;
+ 
+ 	spin_lock(&inireq->inilock);
+ 	tfcp_req = inireq->tfcp_req;
+@@ -958,7 +964,7 @@ fcloop_fcp_abort(struct nvme_fc_local_port *localport,
+ 		return;
+ 
+ 	/* break initiator/target relationship for io */
+-	spin_lock_irq(&tfcp_req->reqlock);
++	spin_lock_irqsave(&tfcp_req->reqlock, flags);
+ 	switch (tfcp_req->inistate) {
+ 	case INI_IO_START:
+ 	case INI_IO_ACTIVE:
+@@ -968,11 +974,11 @@ fcloop_fcp_abort(struct nvme_fc_local_port *localport,
+ 		abortio = false;
+ 		break;
+ 	default:
+-		spin_unlock_irq(&tfcp_req->reqlock);
++		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 		WARN_ON(1);
+ 		return;
+ 	}
+-	spin_unlock_irq(&tfcp_req->reqlock);
++	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+ 
+ 	if (abortio)
+ 		/* leave the reference while the work item is scheduled */
 -- 
 2.39.2
 
