@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FD1168C2
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:22:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554F7C433EF;
-	Mon,  8 May 2023 10:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25833168C2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:22:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81543C433EF;
+	Mon,  8 May 2023 10:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541337;
-	bh=0VbnlVJjOo638DvmnajlggrGbUsglIz0Kltuz/fFdL0=;
+	s=korg; t=1683541341;
+	bh=lE0iVr6vFooUwwIpPU3OVgO1WvMteKCsrak9kTdvJ50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RLBSrPGzNzkBOPyW2j3RfBxrm6U8Hv/FEhA4NArYzQ6B1N/OKzA14tDjXUrSohmxM
-	 SSeUmb9QsBu0u3XeXu71QoGxDUDCH5ga3cmniriPzOQvqL9uwtO/Lu6u/pCOttTiDY
-	 TtKLcBNKe5sBo6AbuyrAD0ldWVBX38aA2g9rUprk=
+	b=pY/BMjJIFA2sGGvw+id422vLX/Xi9pHhjcD7P6BuIuLYjQxhAqaksUJLaviCTTMmL
+	 Fz3iRAdtBVjV8oaYnsxo/OL5iP9/1fYizrqRR/A5UxSifHQlUyM/9rv1ljW9ta+xf1
+	 jvSJGvmhQSsP0sl5nE5SpToU48XfMDioXLu694AE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.2 065/663] soundwire: qcom: correct setting ignore bit on v1.5.1
-Date: Mon,  8 May 2023 11:38:11 +0200
-Message-Id: <20230508094430.586951932@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.2 083/663] KVM: arm64: vgic: Dont acquire its_lock before config_lock
+Date: Mon,  8 May 2023 11:38:29 +0200
+Message-Id: <20230508094431.141573455@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,35 +34,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit bd934f77eeac377e81ddac8673803e7334b82d3d upstream.
+commit 49e5d16b6fc003407a33a9961b4bcbb970bd1c76 upstream.
 
-According to the comment and to downstream sources, the
-SWRM_CONTINUE_EXEC_ON_CMD_IGNORE in SWRM_CMD_FIFO_CFG_ADDR register
-should be set for v1.5.1 and newer, so fix the >= operator.
+commit f00327731131 ("KVM: arm64: Use config_lock to protect vgic
+state") was meant to rectify a longstanding lock ordering issue in KVM
+where the kvm->lock is taken while holding vcpu->mutex. As it so
+happens, the aforementioned commit introduced yet another locking issue
+by acquiring the its_lock before acquiring the config lock.
 
-Fixes: 542d3491cdd7 ("soundwire: qcom: set continue execution flag for ignored commands")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230222140343.188691-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This is obviously wrong, especially considering that the lock ordering
+is well documented in vgic.c. Reshuffle the locks once more to take the
+config_lock before the its_lock. While at it, sprinkle in the lockdep
+hinting that has become popular as of late to keep lockdep apprised of
+our ordering.
+
+Cc: stable@vger.kernel.org
+Fixes: f00327731131 ("KVM: arm64: Use config_lock to protect vgic state")
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230412062733.988229-1-oliver.upton@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soundwire/qcom.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kvm/vgic/vgic-its.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -704,7 +704,7 @@ static int qcom_swrm_init(struct qcom_sw
+--- a/arch/arm64/kvm/vgic/vgic-its.c
++++ b/arch/arm64/kvm/vgic/vgic-its.c
+@@ -1958,6 +1958,16 @@ static int vgic_its_create(struct kvm_de
+ 	mutex_init(&its->its_lock);
+ 	mutex_init(&its->cmd_lock);
+ 
++	/* Yep, even more trickery for lock ordering... */
++#ifdef CONFIG_LOCKDEP
++	mutex_lock(&dev->kvm->arch.config_lock);
++	mutex_lock(&its->cmd_lock);
++	mutex_lock(&its->its_lock);
++	mutex_unlock(&its->its_lock);
++	mutex_unlock(&its->cmd_lock);
++	mutex_unlock(&dev->kvm->arch.config_lock);
++#endif
++
+ 	its->vgic_its_base = VGIC_ADDR_UNDEF;
+ 
+ 	INIT_LIST_HEAD(&its->device_list);
+@@ -2752,15 +2762,14 @@ static int vgic_its_ctrl(struct kvm *kvm
+ 		return 0;
+ 
+ 	mutex_lock(&kvm->lock);
+-	mutex_lock(&its->its_lock);
+ 
+ 	if (!lock_all_vcpus(kvm)) {
+-		mutex_unlock(&its->its_lock);
+ 		mutex_unlock(&kvm->lock);
+ 		return -EBUSY;
  	}
  
- 	/* Configure number of retries of a read/write cmd */
--	if (ctrl->version > 0x01050001) {
-+	if (ctrl->version >= 0x01050001) {
- 		/* Only for versions >= 1.5.1 */
- 		ctrl->reg_write(ctrl, SWRM_CMD_FIFO_CFG_ADDR,
- 				SWRM_RD_WR_CMD_RETRIES |
+ 	mutex_lock(&kvm->arch.config_lock);
++	mutex_lock(&its->its_lock);
+ 
+ 	switch (attr) {
+ 	case KVM_DEV_ARM_ITS_CTRL_RESET:
+@@ -2774,9 +2783,9 @@ static int vgic_its_ctrl(struct kvm *kvm
+ 		break;
+ 	}
+ 
++	mutex_unlock(&its->its_lock);
+ 	mutex_unlock(&kvm->arch.config_lock);
+ 	unlock_all_vcpus(kvm);
+-	mutex_unlock(&its->its_lock);
+ 	mutex_unlock(&kvm->lock);
+ 	return ret;
+ }
 
 
