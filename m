@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A51320A
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4208C433EF;
-	Mon,  8 May 2023 11:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D50320A
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:20:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C10C433D2;
+	Mon,  8 May 2023 11:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544811;
-	bh=S+r0qtguRFC3MYOnUV0u/jp5wGKz2OatD/jYEOi+MDM=;
+	s=korg; t=1683544814;
+	bh=tdaGVHC91hk58RYFDYl7oJTJx6nHQiB5NYUyPkvpScQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBrYA2OEeVx7YpxIEq1+odoWoZNlFSFw3J0qnOtHl0CnQNd1vOEr3FmkL1goABxdF
-	 SOl5K0K83W6WIhULcyosBk/wm4WRpRmuPCEnlXkWIc58buiYFH6TBgf8F17blkxhEt
-	 DzHjnKUJegdtaa9Insilc5R5x0oXea2XzcjKoB4M=
+	b=npePH803eU4mCUmsHa89H+ef8U5rm1Gp00KSeuRZtdgbwkoJqCREGjWV0raTkSttR
+	 ct/yBtdIRppqAmJiA7pkwDGtpe+zRsgEYYe9Hh2MEVJDAggsflYCiTPIUm6jWVETNg
+	 oG023KhcJyHyDL7DKjYU1fpKmAXBxFlrYUzzo8xw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Pierre Gondois <pierre.gondois@arm.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 530/694] HID: amd_sfh: Handle "no sensors" enabled for SFH1.1
-Date: Mon,  8 May 2023 11:46:05 +0200
-Message-Id: <20230508094451.537609067@linuxfoundation.org>
+Subject: [PATCH 6.3 531/694] cacheinfo: Check sib_leaf in cache_leaves_are_shared()
+Date: Mon,  8 May 2023 11:46:06 +0200
+Message-Id: <20230508094451.578012891@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,65 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Pierre Gondois <pierre.gondois@arm.com>
 
-[ Upstream commit 8455cbb25927013b3417ab619dced1c0e87708af ]
+[ Upstream commit 7a306e3eabf2b2fd8cffa69b87b32dbf814d79ce ]
 
-Based on num_hid_devices, each sensor device is initialized. If
-"no sensors" is initialized, amd_sfh work initialization and scheduling
-doesn’t make sense and returns EOPNOTSUPP to stop driver probe. Hence,
-add a check for "no sensors" enabled to handle the special case.
+If there is no ACPI/DT information, it is assumed that L1 caches
+are private and L2 (and higher) caches are shared. A cache is
+'shared' between two CPUs if it is accessible from these two
+CPUs.
 
-Fixes: 93ce5e0231d7 ("HID: amd_sfh: Implement SFH1.1 functionality")
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Each CPU owns a representation (i.e. has a dedicated cacheinfo struct)
+of the caches it has access to. cache_leaves_are_shared() tries to
+identify whether two representations are designating the same actual
+cache.
+
+In cache_leaves_are_shared(), if 'this_leaf' is a L2 cache (or higher)
+and 'sib_leaf' is a L1 cache, the caches are detected as shared as
+only this_leaf's cache level is checked.
+This is leads to setting sib_leaf as being shared with another CPU,
+which is incorrect as this is a L1 cache.
+
+Check 'sib_leaf->level'. Also update the comment as the function is
+called when populating 'shared_cpu_map'.
+
+Fixes: f16d1becf96f ("cacheinfo: Use cache identifiers to check if the caches are shared if available")
+Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230414081453.244787-2-pierre.gondois@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/base/cacheinfo.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-index a1d6e08fab7d4..bb8bd7892b674 100644
---- a/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-+++ b/drivers/hid/amd-sfh-hid/sfh1_1/amd_sfh_init.c
-@@ -112,6 +112,7 @@ static int amd_sfh1_1_hid_client_init(struct amd_mp2_dev *privdata)
- 	cl_data->num_hid_devices = amd_sfh_get_sensor_num(privdata, &cl_data->sensor_idx[0]);
- 	if (cl_data->num_hid_devices == 0)
- 		return -ENODEV;
-+	cl_data->is_any_sensor_enabled = false;
+diff --git a/drivers/base/cacheinfo.c b/drivers/base/cacheinfo.c
+index f3903d002819e..c5d2293ac2a63 100644
+--- a/drivers/base/cacheinfo.c
++++ b/drivers/base/cacheinfo.c
+@@ -38,11 +38,10 @@ static inline bool cache_leaves_are_shared(struct cacheinfo *this_leaf,
+ {
+ 	/*
+ 	 * For non DT/ACPI systems, assume unique level 1 caches,
+-	 * system-wide shared caches for all other levels. This will be used
+-	 * only if arch specific code has not populated shared_cpu_map
++	 * system-wide shared caches for all other levels.
+ 	 */
+ 	if (!(IS_ENABLED(CONFIG_OF) || IS_ENABLED(CONFIG_ACPI)))
+-		return !(this_leaf->level == 1);
++		return (this_leaf->level != 1) && (sib_leaf->level != 1);
  
- 	INIT_DELAYED_WORK(&cl_data->work, amd_sfh_work);
- 	INIT_DELAYED_WORK(&cl_data->work_buffer, amd_sfh_work_buffer);
-@@ -170,6 +171,7 @@ static int amd_sfh1_1_hid_client_init(struct amd_mp2_dev *privdata)
- 		status = (status == 0) ? SENSOR_ENABLED : SENSOR_DISABLED;
- 
- 		if (status == SENSOR_ENABLED) {
-+			cl_data->is_any_sensor_enabled = true;
- 			cl_data->sensor_sts[i] = SENSOR_ENABLED;
- 			rc = amdtp_hid_probe(i, cl_data);
- 			if (rc) {
-@@ -186,12 +188,21 @@ static int amd_sfh1_1_hid_client_init(struct amd_mp2_dev *privdata)
- 					cl_data->sensor_sts[i]);
- 				goto cleanup;
- 			}
-+		} else {
-+			cl_data->sensor_sts[i] = SENSOR_DISABLED;
- 		}
- 		dev_dbg(dev, "sid 0x%x (%s) status 0x%x\n",
- 			cl_data->sensor_idx[i], get_sensor_name(cl_data->sensor_idx[i]),
- 			cl_data->sensor_sts[i]);
- 	}
- 
-+	if (!cl_data->is_any_sensor_enabled) {
-+		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n",
-+			 cl_data->is_any_sensor_enabled);
-+		rc = -EOPNOTSUPP;
-+		goto cleanup;
-+	}
-+
- 	schedule_delayed_work(&cl_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
- 	return 0;
- 
+ 	if ((sib_leaf->attributes & CACHE_ID) &&
+ 	    (this_leaf->attributes & CACHE_ID))
 -- 
 2.39.2
 
