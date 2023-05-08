@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F51E168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50F2C433D2;
-	Mon,  8 May 2023 11:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1707A168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:11:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F8FC433EF;
+	Mon,  8 May 2023 11:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544268;
-	bh=QNvySg/455ZPe+JjSomXiDEzlDkxlTK3w57SdW4oILs=;
+	s=korg; t=1683544271;
+	bh=Q175l7yiLH7joxotR7q5mH+YUHJDYICx8eeUVLs8vE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiuPYP0RwrpsWy+tqKRyE4xyDXweBAwG0WZ+M4ZQUAHqMd3Vv4vMBrB6Jb9Me3sAJ
-	 6XIEb2HcsJz0lBNxPeI4g+McOpYHjtZWSo3ULUIVl5HURdLFtZloSWYynomnMuBMgJ
-	 p5FmT6s9LdG15XwL6PYioiDeojbEHt8TYooxqsBc=
+	b=0Ts44TKAmx2qc8xyHExf9uo6ZObwCZKnaOO+5qj5lBQ4iqEjtjAY3Nm+AKBH4Kk1E
+	 SnmvsILyEBbeyekKftkIQOHfyJJfum1p4bZs3ZfAZi+sgyiAx3KUZVB0fYEwOubYy9
+	 Z0vaHbafw8FWCeF2DJ04/kU0a63kZgcsCY3jS7Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 356/694] libbpf: Fix ld_imm64 copy logic for ksym in light skeleton.
-Date: Mon,  8 May 2023 11:43:11 +0200
-Message-Id: <20230508094444.198166038@linuxfoundation.org>
+Subject: [PATCH 6.3 357/694] net: dsa: qca8k: remove assignment of an_enabled in pcs_get_state()
+Date: Mon,  8 May 2023 11:43:12 +0200
+Message-Id: <20230508094444.237135251@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,59 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit a506d6ce1dd184051037dc9d26c3eb187c9fe625 ]
+[ Upstream commit 9ef70d0130f282638b28cfce24222f71ada00c9c ]
 
-Unlike normal libbpf the light skeleton 'loader' program is doing
-btf_find_by_name_kind() call at run-time to find ksym in the kernel and
-populate its {btf_id, btf_obj_fd} pair in ld_imm64 insn. To avoid doing the
-search multiple times for the same ksym it remembers the first patched ld_imm64
-insn and copies {btf_id, btf_obj_fd} from it into subsequent ld_imm64 insn.
-Fix a bug in copying logic, since it may incorrectly clear BPF_PSEUDO_BTF_ID flag.
+pcs_get_state() implementations are not supposed to alter an_enabled.
+Remove this assignment.
 
-Also replace always true if (btf_obj_fd >= 0) check with unconditional JMP_JA
-to clarify the code.
-
-Fixes: d995816b77eb ("libbpf: Avoid reload of imm for weak, unresolved, repeating ksym")
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20230319203014.55866-1-alexei.starovoitov@gmail.com
+Fixes: b3591c2a3661 ("net: dsa: qca8k: Switch to PHYLINK instead of PHYLIB")
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://lore.kernel.org/r/E1pdsE5-00Dl2l-8F@rmk-PC.armlinux.org.uk
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/gen_loader.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/dsa/qca/qca8k-8xxx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/lib/bpf/gen_loader.c b/tools/lib/bpf/gen_loader.c
-index 23f5c46708f8f..b74c82bb831e6 100644
---- a/tools/lib/bpf/gen_loader.c
-+++ b/tools/lib/bpf/gen_loader.c
-@@ -804,11 +804,13 @@ static void emit_relo_ksym_btf(struct bpf_gen *gen, struct ksym_relo_desc *relo,
- 		return;
- 	/* try to copy from existing ldimm64 insn */
- 	if (kdesc->ref > 1) {
--		move_blob2blob(gen, insn + offsetof(struct bpf_insn, imm), 4,
--			       kdesc->insn + offsetof(struct bpf_insn, imm));
- 		move_blob2blob(gen, insn + sizeof(struct bpf_insn) + offsetof(struct bpf_insn, imm), 4,
- 			       kdesc->insn + sizeof(struct bpf_insn) + offsetof(struct bpf_insn, imm));
--		/* jump over src_reg adjustment if imm is not 0, reuse BPF_REG_0 from move_blob2blob */
-+		move_blob2blob(gen, insn + offsetof(struct bpf_insn, imm), 4,
-+			       kdesc->insn + offsetof(struct bpf_insn, imm));
-+		/* jump over src_reg adjustment if imm (btf_id) is not 0, reuse BPF_REG_0 from move_blob2blob
-+		 * If btf_id is zero, clear BPF_PSEUDO_BTF_ID flag in src_reg of ld_imm64 insn
-+		 */
- 		emit(gen, BPF_JMP_IMM(BPF_JNE, BPF_REG_0, 0, 3));
- 		goto clear_src_reg;
- 	}
-@@ -831,7 +833,7 @@ static void emit_relo_ksym_btf(struct bpf_gen *gen, struct ksym_relo_desc *relo,
- 	emit(gen, BPF_STX_MEM(BPF_W, BPF_REG_8, BPF_REG_7,
- 			      sizeof(struct bpf_insn) + offsetof(struct bpf_insn, imm)));
- 	/* skip src_reg adjustment */
--	emit(gen, BPF_JMP_IMM(BPF_JSGE, BPF_REG_7, 0, 3));
-+	emit(gen, BPF_JMP_IMM(BPF_JA, 0, 0, 3));
- clear_src_reg:
- 	/* clear bpf_object__relocate_data's src_reg assignment, otherwise we get a verifier failure */
- 	reg_mask = src_reg_mask();
+diff --git a/drivers/net/dsa/qca/qca8k-8xxx.c b/drivers/net/dsa/qca/qca8k-8xxx.c
+index 55df4479ea30b..62810903f1b31 100644
+--- a/drivers/net/dsa/qca/qca8k-8xxx.c
++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
+@@ -1483,7 +1483,6 @@ static void qca8k_pcs_get_state(struct phylink_pcs *pcs,
+ 
+ 	state->link = !!(reg & QCA8K_PORT_STATUS_LINK_UP);
+ 	state->an_complete = state->link;
+-	state->an_enabled = !!(reg & QCA8K_PORT_STATUS_LINK_AUTO);
+ 	state->duplex = (reg & QCA8K_PORT_STATUS_DUPLEX) ? DUPLEX_FULL :
+ 							   DUPLEX_HALF;
+ 
 -- 
 2.39.2
 
