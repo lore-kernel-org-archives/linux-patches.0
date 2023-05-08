@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A4F8BF9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:30:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE560C433D2;
-	Mon,  8 May 2023 10:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BD823A4
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:30:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9368AC433D2;
+	Mon,  8 May 2023 10:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541853;
-	bh=CbCnVWiw97CkQCa1siral+G1i6x/Z7lFJ0TtoRZVEfY=;
+	s=korg; t=1683541856;
+	bh=6QHdSxgOiOqKxFvZzYeaWNF3IttFGI+xjhYuVopaj3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTVpsM/B558NXz7ImpmIlackBXsIu7C34yAjti8CbW1c2WFPoSd5ghoXRKqNji3Ab
-	 thEv84VindNBPC9cvKgdGXqowQtq6dA1CCAWDbZRs29sFczJm7oyOljsyGH6KzpKUS
-	 LBGffTYTFcsu6eZ446T/WQDze3UGuNPmOrlbaInU=
+	b=UoQ+lIVPKoSNtVrInpahoj8btbwOlUbxiTwjZPVsx/nB4zARGEj1ne59qmg+CspiF
+	 hXph4KT83p6Zwc4yITjB3H03pQoRxiCbKepnmPlst6J0jZZJvMHCxG2/Vw+0+sz7MJ
+	 S0M24h0/WfFYSrJtk+z1uMx1jfwsCeLR9cIG9u10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mikko Perttunen <mperttunen@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jia-Wei Chang <jia-wei.chang@mediatek.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 213/663] gpu: host1x: Fix potential double free if IOMMU is disabled
-Date: Mon,  8 May 2023 11:40:39 +0200
-Message-Id: <20230508094435.263860991@linuxfoundation.org>
+Subject: [PATCH 6.2 204/663] cpufreq: mediatek: Raise proc and sram max voltage for MT7622/7623
+Date: Mon,  8 May 2023 11:40:30 +0200
+Message-Id: <20230508094434.993849325@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,38 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 8466ff24a37a9a18fb935e90dda64f049131ae28 ]
+[ Upstream commit 0883426fd07e39355362e3f2eb9aee1a154dcaf6 ]
 
-If context device has no IOMMU, the 'cdl->devs' is freed in
-error path, but host1x_memory_context_list_init() doesn't
-return an error code, so the module can be loaded successfully,
-when it's unloading, the host1x_memory_context_list_free() is
-called in host1x_remove(), it will cause double free. Set the
-'cdl->devs' to NULL after freeing it to avoid double free.
+During the addition of SRAM voltage tracking for CCI scaling, this
+driver got some voltage limits set for the vtrack algorithm: these
+were moved to platform data first, then enforced in a later commit
+6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
+using these as max values for the regulator_set_voltage() calls.
 
-Fixes: 8aa5bcb61612 ("gpu: host1x: Add context device management code")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Mikko Perttunen <mperttunen@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+In this case, the vsram/vproc constraints for MT7622 and MT7623
+were supposed to be the same as MT2701 (and a number of other SoCs),
+but that turned out to be a mistake because the aforementioned two
+SoCs' maximum voltage for both VPROC and VPROC_SRAM is 1.36V.
+
+Fix that by adding new platform data for MT7622/7623 declaring the
+right {proc,sram}_max_volt parameter.
+
+Fixes: ead858bd128d ("cpufreq: mediatek: Move voltage limits to platform data")
+Fixes: 6a17b3876bc8 ("cpufreq: mediatek: Refine mtk_cpufreq_voltage_tracking()")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Jia-Wei Chang <jia-wei.chang@mediatek.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/host1x/context.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/cpufreq/mediatek-cpufreq.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/host1x/context.c b/drivers/gpu/host1x/context.c
-index c8e7994c2c9cd..3be0d6d02f1a4 100644
---- a/drivers/gpu/host1x/context.c
-+++ b/drivers/gpu/host1x/context.c
-@@ -87,6 +87,7 @@ int host1x_memory_context_list_init(struct host1x *host1x)
- 		device_del(&cdl->devs[i].dev);
+diff --git a/drivers/cpufreq/mediatek-cpufreq.c b/drivers/cpufreq/mediatek-cpufreq.c
+index 764e4fbdd536c..9a39a7ccfae96 100644
+--- a/drivers/cpufreq/mediatek-cpufreq.c
++++ b/drivers/cpufreq/mediatek-cpufreq.c
+@@ -693,6 +693,15 @@ static const struct mtk_cpufreq_platform_data mt2701_platform_data = {
+ 	.ccifreq_supported = false,
+ };
  
- 	kfree(cdl->devs);
-+	cdl->devs = NULL;
- 	cdl->len = 0;
- 
- 	return err;
++static const struct mtk_cpufreq_platform_data mt7622_platform_data = {
++	.min_volt_shift = 100000,
++	.max_volt_shift = 200000,
++	.proc_max_volt = 1360000,
++	.sram_min_volt = 0,
++	.sram_max_volt = 1360000,
++	.ccifreq_supported = false,
++};
++
+ static const struct mtk_cpufreq_platform_data mt8183_platform_data = {
+ 	.min_volt_shift = 100000,
+ 	.max_volt_shift = 200000,
+@@ -724,8 +733,8 @@ static const struct mtk_cpufreq_platform_data mt8516_platform_data = {
+ static const struct of_device_id mtk_cpufreq_machines[] __initconst = {
+ 	{ .compatible = "mediatek,mt2701", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt2712", .data = &mt2701_platform_data },
+-	{ .compatible = "mediatek,mt7622", .data = &mt2701_platform_data },
+-	{ .compatible = "mediatek,mt7623", .data = &mt2701_platform_data },
++	{ .compatible = "mediatek,mt7622", .data = &mt7622_platform_data },
++	{ .compatible = "mediatek,mt7623", .data = &mt7622_platform_data },
+ 	{ .compatible = "mediatek,mt8167", .data = &mt8516_platform_data },
+ 	{ .compatible = "mediatek,mt817x", .data = &mt2701_platform_data },
+ 	{ .compatible = "mediatek,mt8173", .data = &mt2701_platform_data },
 -- 
 2.39.2
 
