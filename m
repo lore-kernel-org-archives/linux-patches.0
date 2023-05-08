@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54839168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:07:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF01AC433D2;
-	Mon,  8 May 2023 11:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95604168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:07:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1291C433D2;
+	Mon,  8 May 2023 11:07:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544040;
-	bh=l9oukmY2Wis4zTECh8aGXsUXPbanShQsKiE0WP65res=;
+	s=korg; t=1683544043;
+	bh=AgrqtO/xJrLcnNHEcQt7FP6+ZXM1I6xKHX0lnHmtzRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MaFQNrgpuw1Nz1aJtyzd7zsAiKH/tBkuBrSXffIF8JF3wDXzvfpxxuTYwqCxx3EcX
-	 ZCPhuh1tJR85K27qlq/vtFGoXNMtXzPdcNMRMBUlY5VaeR6EbQCPy+lLQlFWjIq3Lb
-	 FQRXyCgqOv02JUqeH3Qcl7ZhhNPZ+uc6qFQgQTsQ=
+	b=zRwGWGXMAXs1Xf9425yLv2sIVw1zejATgohaXbi8RTLqFbCiECX7RW6Pb77hKuWWG
+	 lyR5+YaCqMdkdTc46pxQzGrirOQ1/nvFxjygEwI41eEUrTIuDHgiSzyULXDPEHOa24
+	 VIm/GrixXtlqG/JVN5gLMMsr625KZ6cyoI/FkB9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 251/694] arm64: dts: qcom: msm8998-oneplus-cheeseburger: revert "fix backlight pin function"
-Date: Mon,  8 May 2023 11:41:26 +0200
-Message-Id: <20230508094440.444233862@linuxfoundation.org>
+Subject: [PATCH 6.3 252/694] arm64: dts: qcom: msm8994-kitakami: drop unit address from PMI8994 regulator
+Date: Mon,  8 May 2023 11:41:27 +0200
+Message-Id: <20230508094440.473282539@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -38,38 +38,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 97b4fdc6b82d6d5cfb92a9b164540278720fb700 ]
+[ Upstream commit 3555dd528ba9c08d6ccd56239c695dbeac3b63e3 ]
 
-This reverts commit 46546f28825cf3a5ef6873b9cf947cd85c8a7258 because it
-mistakenly took PMIC pinctrl/GPIO as TLMM.  The TLMM pinctrl uses "gpio"
-function, but PMIC uses "normal", so original code was correct:
+The PMIC regulators are not supposed to have unit addresses.
 
-  msm8998-oneplus-cheeseburger.dtb: pmic@2: gpio@c000:button-backlight-state: 'oneOf' conditional failed, one must be fixed:
-    'gpio' is not one of ['normal', 'paired', 'func1', 'func2', 'dtest1', 'dtest2', 'dtest3', 'dtest4', 'func3', 'func4']
-
-Fixes: 46546f28825c ("arm64: dts: qcom: msm8998-oneplus-cheeseburger: fix backlight pin function")
+Fixes: e9783584c9b7 ("arm64: dts: qcom: msm8994-kitakami: Add VDD_GFX regulator")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230312183622.460488-5-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230312183622.460488-6-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts b/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
-index d36b36af49d0b..fac8b3510cd3a 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-cheeseburger.dts
-@@ -34,7 +34,7 @@
- &pmi8998_gpios {
- 	button_backlight_default: button-backlight-state {
- 		pins = "gpio5";
--		function = "gpio";
-+		function = "normal";
- 		bias-pull-down;
- 		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
- 	};
+diff --git a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+index 3ceb86b06209a..26059f861250f 100644
+--- a/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami.dtsi
+@@ -173,8 +173,7 @@
+ 	 * power domain.. which still isn't enough and forces us to bind
+ 	 * OXILI_CX and OXILI_GX together!
+ 	 */
+-	vdd_gfx: s2@1700 {
+-		reg = <0x1700 0x100>;
++	vdd_gfx: s2 {
+ 		regulator-name = "VDD_GFX";
+ 		regulator-min-microvolt = <980000>;
+ 		regulator-max-microvolt = <980000>;
 -- 
 2.39.2
 
