@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15099168A7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:36:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DBB5C433EF;
-	Mon,  8 May 2023 10:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 251E0168A7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:36:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E6E0C433EF;
+	Mon,  8 May 2023 10:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542211;
-	bh=GX31uYiQd+Qe+Ty2GIohKZrgGp6XxUZxZqptURN6Eas=;
+	s=korg; t=1683542215;
+	bh=foCCdI1m8dsBwMNCg1ce7C3ipM0XK3r297lEKuwtJsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mLqAv3t7XyxTvcT5cjVceEA/lTEVIenuuGagLk8Z5axhBnLrcNB2SkqadoxKf5bVv
-	 hIMqPGSutkkcE17DBCYSGkfUg4+/iLNDGb62Mh6Zyd6Lmp6KLVbl+lZ8RN+qmxOZ5p
-	 UFPzfpbwmXkknleZoJc0zRm+Ic8XDGkIrbuOprXE=
+	b=ekCmxKVR6BqkMlf2HuItTuhTPtvLAF8foG407rLFXLK33llEBEPS/TQPr6t4M5hbC
+	 7iLooE6ots+Sd40nNVX2dkMAag5YH0QLLZJStT/G/S+xOL8pQioFFg4F77GjRXraiO
+	 Of4sLRzeKyUDiCwpLuuSGWsHCbZHz3Vk1yuKZJkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Christoph Hellwig <hch@lst.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 363/663] selftests/bpf: Fix leaked bpf_link in get_stackid_cannot_attach
-Date: Mon,  8 May 2023 11:43:09 +0200
-Message-Id: <20230508094439.930291019@linuxfoundation.org>
+Subject: [PATCH 6.2 364/663] blk-mq: dont plug for head insertions in blk_execute_rq_nowait
+Date: Mon,  8 May 2023 11:43:10 +0200
+Message-Id: <20230508094439.958727800@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,55 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Song Liu <song@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit c1e07a80cf23d3a6e96172bc9a73bfa912a9fcbc ]
+[ Upstream commit 50947d7fe9fa6abe3ddc40769dfb02a51c58edb6 ]
 
-skel->links.oncpu is leaked in one case. This causes test perf_branches
-fails when it runs after get_stackid_cannot_attach:
+Plugs never insert at head, so don't plug for head insertions.
 
-./test_progs -t get_stackid_cannot_attach,perf_branches
-84      get_stackid_cannot_attach:OK
-test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
-test_perf_branches_common:PASS:attach_perf_event 0 nsec
-test_perf_branches_common:PASS:set_affinity 0 nsec
-check_good_sample:FAIL:output not valid no valid sample from prog
-146/1   perf_branches/perf_branches_hw:FAIL
-146/2   perf_branches/perf_branches_no_hw:OK
-146     perf_branches:FAIL
-
-All error logs:
-test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
-test_perf_branches_common:PASS:attach_perf_event 0 nsec
-test_perf_branches_common:PASS:set_affinity 0 nsec
-check_good_sample:FAIL:output not valid no valid sample from prog
-146/1   perf_branches/perf_branches_hw:FAIL
-146     perf_branches:FAIL
-Summary: 1/1 PASSED, 0 SKIPPED, 1 FAILED
-
-Fix this by adding the missing bpf_link__destroy().
-
-Fixes: 346938e9380c ("selftests/bpf: Add get_stackid_cannot_attach")
-Signed-off-by: Song Liu <song@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230412210423.900851-3-song@kernel.org
+Fixes: 1c2d2fff6dc0 ("block: wire-up support for passthrough plugging")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20230413064057.707578-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-mq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c b/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-index 5308de1ed478e..2715c68301f52 100644
---- a/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-+++ b/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-@@ -65,6 +65,7 @@ void test_get_stackid_cannot_attach(void)
- 	skel->links.oncpu = bpf_program__attach_perf_event(skel->progs.oncpu,
- 							   pmu_fd);
- 	ASSERT_OK_PTR(skel->links.oncpu, "attach_perf_event_callchain");
-+	bpf_link__destroy(skel->links.oncpu);
- 	close(pmu_fd);
- 
- 	/* add exclude_callchain_kernel, attach should fail */
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 22d739cf8d326..9f1bafb62973d 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1345,7 +1345,7 @@ void blk_execute_rq_nowait(struct request *rq, bool at_head)
+ 	 * device, directly accessing the plug instead of using blk_mq_plug()
+ 	 * should not have any consequences.
+ 	 */
+-	if (current->plug)
++	if (current->plug && !at_head)
+ 		blk_add_rq_to_plug(current->plug, rq);
+ 	else
+ 		blk_mq_sched_insert_request(rq, at_head, true, false);
 -- 
 2.39.2
 
