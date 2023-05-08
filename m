@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E66A5171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C015C4339B;
-	Mon,  8 May 2023 11:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF925171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:38:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FBAC433EF;
+	Mon,  8 May 2023 11:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683545929;
-	bh=pOoBRO0dJbmOclHfPDIwfvwzXfranY6xDAAuH6uuuSw=;
+	s=korg; t=1683545932;
+	bh=2/DAWnGdib0vVKlWwh2MCi66iXb5eZK4e18KWU5bFNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JKItsSjL+/X49aOteA9ZqRnmUFphq6oFJSCYDOX76mP8GP0O6f9eHuUJtJcoJBDpH
-	 DYZ9UUMESdjgfj+0ISUqScB4CPfHeMVLfRSHCjkK0oJ9SkqtOSPj9SEALaKfUvBr5t
-	 9lZVkVND+PH9fSQ3N7PIsLIfSQfU4iZxFHxhoCkc=
+	b=oQZJ5NjVvsI2cWpfKteNsJWENaJSIdjWPSRdQlqcU62RzMeAyTR6tN06QmaefxuWh
+	 DyamQI8rxKcM35dHAZuIgL7abyQKRRrF3sNaExg61EGkgxQGsTO3LEtMpmXto7qZ12
+	 ZtIVshPJtI4m54qjRL2i/FNHjR9YtQx6cTQ2U8Zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
+	syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com,
+	Hsin-Wei Hung <hsinweih@uci.edu>,
+	Xin Liu <liuxin350@huawei.com>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 201/371] selftests/bpf: Fix leaked bpf_link in get_stackid_cannot_attach
-Date: Mon,  8 May 2023 11:46:42 +0200
-Message-Id: <20230508094820.081765718@linuxfoundation.org>
+Subject: [PATCH 5.15 202/371] bpf, sockmap: Revert buggy deadlock fix in the sockhash and sockmap
+Date: Mon,  8 May 2023 11:46:43 +0200
+Message-Id: <20230508094820.122449071@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -35,55 +38,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Song Liu <song@kernel.org>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit c1e07a80cf23d3a6e96172bc9a73bfa912a9fcbc ]
+[ Upstream commit 8c5c2a4898e3d6bad86e29d471e023c8a19ba799 ]
 
-skel->links.oncpu is leaked in one case. This causes test perf_branches
-fails when it runs after get_stackid_cannot_attach:
+syzbot reported a splat and bisected it to recent commit ed17aa92dc56 ("bpf,
+sockmap: fix deadlocks in the sockhash and sockmap"):
 
-./test_progs -t get_stackid_cannot_attach,perf_branches
-84      get_stackid_cannot_attach:OK
-test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
-test_perf_branches_common:PASS:attach_perf_event 0 nsec
-test_perf_branches_common:PASS:set_affinity 0 nsec
-check_good_sample:FAIL:output not valid no valid sample from prog
-146/1   perf_branches/perf_branches_hw:FAIL
-146/2   perf_branches/perf_branches_no_hw:OK
-146     perf_branches:FAIL
+  [...]
+  WARNING: CPU: 1 PID: 9280 at kernel/softirq.c:376 __local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
+  Modules linked in:
+  CPU: 1 PID: 9280 Comm: syz-executor.1 Not tainted 6.2.0-syzkaller-13249-gd319f344561d #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+  RIP: 0010:__local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
+  [...]
+  Call Trace:
+  <TASK>
+  spin_unlock_bh include/linux/spinlock.h:395 [inline]
+  sock_map_del_link+0x2ea/0x510 net/core/sock_map.c:165
+  sock_map_unref+0xb0/0x1d0 net/core/sock_map.c:184
+  sock_hash_delete_elem+0x1ec/0x2a0 net/core/sock_map.c:945
+  map_delete_elem kernel/bpf/syscall.c:1536 [inline]
+  __sys_bpf+0x2edc/0x53e0 kernel/bpf/syscall.c:5053
+  __do_sys_bpf kernel/bpf/syscall.c:5166 [inline]
+  __se_sys_bpf kernel/bpf/syscall.c:5164 [inline]
+  __x64_sys_bpf+0x79/0xc0 kernel/bpf/syscall.c:5164
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  RIP: 0033:0x7fe8f7c8c169
+  </TASK>
+  [...]
 
-All error logs:
-test_perf_branches_common:PASS:test_perf_branches_load 0 nsec
-test_perf_branches_common:PASS:attach_perf_event 0 nsec
-test_perf_branches_common:PASS:set_affinity 0 nsec
-check_good_sample:FAIL:output not valid no valid sample from prog
-146/1   perf_branches/perf_branches_hw:FAIL
-146     perf_branches:FAIL
-Summary: 1/1 PASSED, 0 SKIPPED, 1 FAILED
+Revert for now until we have a proper solution.
 
-Fix this by adding the missing bpf_link__destroy().
-
-Fixes: 346938e9380c ("selftests/bpf: Add get_stackid_cannot_attach")
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: ed17aa92dc56 ("bpf, sockmap: fix deadlocks in the sockhash and sockmap")
+Reported-by: syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com
+Cc: Hsin-Wei Hung <hsinweih@uci.edu>
+Cc: Xin Liu <liuxin350@huawei.com>
+Cc: John Fastabend <john.fastabend@gmail.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230412210423.900851-3-song@kernel.org
+Link: https://lore.kernel.org/bpf/000000000000f1db9605f939720e@google.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/sock_map.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c b/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-index 8d5a6023a1bbf..4022c89ea268a 100644
---- a/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-+++ b/tools/testing/selftests/bpf/prog_tests/get_stackid_cannot_attach.c
-@@ -65,6 +65,7 @@ void test_get_stackid_cannot_attach(void)
- 	skel->links.oncpu = bpf_program__attach_perf_event(skel->progs.oncpu,
- 							   pmu_fd);
- 	ASSERT_OK_PTR(skel->links.oncpu, "attach_perf_event_callchain");
-+	bpf_link__destroy(skel->links.oncpu);
- 	close(pmu_fd);
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 36afe39dd2df9..86b4e8909ad1e 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -414,9 +414,8 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+ {
+ 	struct sock *sk;
+ 	int err = 0;
+-	unsigned long flags;
  
- 	/* add exclude_callchain_kernel, attach should fail */
+-	raw_spin_lock_irqsave(&stab->lock, flags);
++	raw_spin_lock_bh(&stab->lock);
+ 	sk = *psk;
+ 	if (!sk_test || sk_test == sk)
+ 		sk = xchg(psk, NULL);
+@@ -426,7 +425,7 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+ 	else
+ 		err = -EINVAL;
+ 
+-	raw_spin_unlock_irqrestore(&stab->lock, flags);
++	raw_spin_unlock_bh(&stab->lock);
+ 	return err;
+ }
+ 
+@@ -931,12 +930,11 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
+ 	struct bpf_shtab_bucket *bucket;
+ 	struct bpf_shtab_elem *elem;
+ 	int ret = -ENOENT;
+-	unsigned long flags;
+ 
+ 	hash = sock_hash_bucket_hash(key, key_size);
+ 	bucket = sock_hash_select_bucket(htab, hash);
+ 
+-	raw_spin_lock_irqsave(&bucket->lock, flags);
++	raw_spin_lock_bh(&bucket->lock);
+ 	elem = sock_hash_lookup_elem_raw(&bucket->head, hash, key, key_size);
+ 	if (elem) {
+ 		hlist_del_rcu(&elem->node);
+@@ -944,7 +942,7 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
+ 		sock_hash_free_elem(htab, elem);
+ 		ret = 0;
+ 	}
+-	raw_spin_unlock_irqrestore(&bucket->lock, flags);
++	raw_spin_unlock_bh(&bucket->lock);
+ 	return ret;
+ }
+ 
 -- 
 2.39.2
 
