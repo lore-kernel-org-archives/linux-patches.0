@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54AE4168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:52:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86B2C433EF;
-	Mon,  8 May 2023 10:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9E5168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:52:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B2D6C433D2;
+	Mon,  8 May 2023 10:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543153;
-	bh=zBdp+zsekEOSqHB0BbV85+KLf0Bky9LWx3/+WQuJjGM=;
+	s=korg; t=1683543156;
+	bh=rMEvcg+RThqv5mEPoepbFECD7ugCWRztXrUSbrFW79o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qWRxCRK6n3BdqRVwCDOgxjVipiU759BgX/ZVDC/Lmzgcs/zEqtN50vcoC30fLbW+J
-	 COousMm57Aim3BrsYZLC4w4oyepg10WQs6MhG2ZIEJGdifVhHGJAQNi9a44e+rB0U8
-	 810G2NLqCo+Tt2oJlsv7sZBUHMNb+AojpH9FonMA=
+	b=ItZvK3JObKK/6T1EfZKD0EbJqsqq/yjPHR5n0gh5rJ4lrXEr2jZXwnZEzqspsN8ep
+	 Q5xhU4oU0yKgqFHetyQ0654COdUkp+1i5IXNvgo/uNehh8p2zG7F+nggk4Tv7H7Jmk
+	 FMGTfFFNzlQ6xzlEcXHX/fufTvVeuS2X1GNMnuzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huanhuan Wang <huanhuan.wang@corigine.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Louis Peens <louis.peens@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.2 633/663] nfp: fix incorrect pointer deference when offloading IPsec with bonding
-Date: Mon,  8 May 2023 11:47:39 +0200
-Message-Id: <20230508094450.435602755@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Jes Sorensen <jes@trained-monkey.org>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.2 634/663] wifi: rtl8xxxu: RTL8192EU always needs full init
+Date: Mon,  8 May 2023 11:47:40 +0200
+Message-Id: <20230508094450.475849689@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,50 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huanhuan Wang <huanhuan.wang@corigine.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 63cfd210034c772fad047afa13dd5a4664b0a72e upstream.
+commit d46e04ccd40457a0119b76e11ab64a2ad403e138 upstream.
 
-There are two pointers in struct xfrm_dev_offload, *dev, *real_dev.
-The *dev points whether bonding interface or real interface, if
-bonding IPsec offload is used, it points bonding interface; if not,
-it points real interface. And *real_dev always points real interface.
-So nfp should always use real_dev instead of dev.
+Always run the entire init sequence (rtl8xxxu_init_device()) for
+RTL8192EU. It's what the vendor driver does too.
 
-Prior to this change the system becomes unresponsive when offloading
-IPsec for a device which is a lower device to a bonding device.
+This fixes a bug where the device is unable to connect after
+rebooting:
 
-Fixes: 859a497fe80c ("nfp: implement xfrm callbacks and expose ipsec offload feature to upper layer")
-CC: stable@vger.kernel.org
-Signed-off-by: Huanhuan Wang <huanhuan.wang@corigine.com>
-Acked-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Louis Peens <louis.peens@corigine.com>
-Link: https://lore.kernel.org/r/20230420140125.38521-1-louis.peens@corigine.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+wlp3s0f3u2: send auth to ... (try 1/3)
+wlp3s0f3u2: send auth to ... (try 2/3)
+wlp3s0f3u2: send auth to ... (try 3/3)
+wlp3s0f3u2: authentication with ... timed out
+
+Rebooting leaves the device powered on (partially? at least the
+firmware is still running), but not really in a working state.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Jes Sorensen <jes@trained-monkey.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/4eb111a9-d4c4-37d0-b376-4e202de7153c@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/netronome/nfp/crypto/ipsec.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c
-+++ b/drivers/net/ethernet/netronome/nfp/crypto/ipsec.c
-@@ -267,7 +267,7 @@ static void set_sha2_512hmac(struct nfp_
- 
- static int nfp_net_xfrm_add_state(struct xfrm_state *x)
- {
--	struct net_device *netdev = x->xso.dev;
-+	struct net_device *netdev = x->xso.real_dev;
- 	struct nfp_ipsec_cfg_mssg msg = {};
- 	int i, key_len, trunc_len, err = 0;
- 	struct nfp_ipsec_cfg_add_sa *cfg;
-@@ -503,7 +503,7 @@ static void nfp_net_xfrm_del_state(struc
- 		.cmd = NFP_IPSEC_CFG_MSSG_INV_SA,
- 		.sa_idx = x->xso.offload_handle - 1,
- 	};
--	struct net_device *netdev = x->xso.dev;
-+	struct net_device *netdev = x->xso.real_dev;
- 	struct nfp_net *nn;
- 	int err;
- 
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
+@@ -1801,6 +1801,7 @@ struct rtl8xxxu_fileops rtl8192eu_fops =
+ 	.rx_desc_size = sizeof(struct rtl8xxxu_rxdesc24),
+ 	.has_s0s1 = 0,
+ 	.gen2_thermal_meter = 1,
++	.needs_full_init = 1,
+ 	.adda_1t_init = 0x0fc01616,
+ 	.adda_1t_path_on = 0x0fc01616,
+ 	.adda_2t_path_on_a = 0x0fc01616,
 
 
