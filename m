@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54918168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD149C433EF;
-	Mon,  8 May 2023 10:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64E2168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:11:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEA9C433D2;
+	Mon,  8 May 2023 10:11:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540684;
-	bh=vNOmNtAn3cq21wXC0/F3vb0CHXvm+wABlSecA9RM07g=;
+	s=korg; t=1683540686;
+	bh=wVG3mQxykTEfONmcYLAe94tNPOpX3LZZp4oSSA/Ku1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZUGP1C1Ghi/3enbZS3jctaVA8bVqT4h7bB8MPi86Eiy8MeJnt7Y8qcPtFdOdsmbNy
-	 K9wpRpjRx4qJ/w8TuoFswNNUhl03RnAf5PlvG3JTWrIXBIUy9EPhn8jSTPcBlK0jdH
-	 53PBEmh1iKpTt8TrADxFEkKVBuxVj1ksATJaNsms=
+	b=SKAGujFUKxM+CraX8TIbb3/2fJdfWK5O0JuJsYvKiHAGqlRJb/KeyJ1f5r1DX+8AA
+	 h4MlvvhLoKfcD/gfRyX8dwLFbR8E4a2x0NzdElgmAMYN064qhPYHEKDY561DbujdYT
+	 vm/Rwd6bTe57JtS+vME4lcsHs28TDN9T13AYrGus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 459/611] powerpc/perf: Properly detect mpc7450 family
-Date: Mon,  8 May 2023 11:45:01 +0200
-Message-Id: <20230508094437.068001792@linuxfoundation.org>
+Subject: [PATCH 6.1 460/611] powerpc/mpc512x: fix resource printk format warning
+Date: Mon,  8 May 2023 11:45:02 +0200
+Message-Id: <20230508094437.101653365@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -37,69 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit e7299f961fe5e4496db0bfaa9e819f5e97f3846b ]
+[ Upstream commit 7538c97e2b80ff6b7a8ea2ecf16a04355461b439 ]
 
-Unlike PVR_POWER8, etc ...., PVR_7450 represents a full PVR
-value and not a family value.
+Use "%pa" format specifier for resource_size_t to avoid a compiler
+printk format warning.
 
-To avoid confusion, do like E500 family and define the relevant
-PVR_VER_xxxx values for the 7450 family:
-  0x8000 ==> 7450
-  0x8001 ==> 7455
-  0x8002 ==> 7447
-  0x8003 ==> 7447A
-  0x8004 ==> 7448
+../arch/powerpc/platforms/512x/clock-commonclk.c: In function 'mpc5121_clk_provide_backwards_compat':
+../arch/powerpc/platforms/512x/clock-commonclk.c:989:44: error: format '%x' expects argument of type 'unsigned int', but argument 4 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
+  989 |         snprintf(devname, sizeof(devname), "%08x.%s", res.start, np->name); \
+      |                                            ^~~~~~~~~  ~~~~~~~~~
+      |                                                          |
+      |                                                          resource_size_t {aka long long unsigned int}
 
-And use them to detect 7450 family for perf events.
+Prevents 24 such warnings.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/202302260657.7dM9Uwev-lkp@intel.com/
-Fixes: ec3eb9d941a9 ("powerpc/perf: Use PVR rather than oprofile field to determine CPU version")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Fixes: 01f25c371658 ("clk: mpc512x: add backwards compat to the CCF code")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/99ca1da2e5a6cf82a8abf4bc034918e500e31781.1677513277.git.christophe.leroy@csgroup.eu
+Link: https://msgid.link/20230223070116.660-2-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/reg.h  | 5 +++++
- arch/powerpc/perf/mpc7450-pmu.c | 6 +++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ arch/powerpc/platforms/512x/clock-commonclk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/reg.h b/arch/powerpc/include/asm/reg.h
-index 1e8b2e04e626a..8fda87af2fa5e 100644
---- a/arch/powerpc/include/asm/reg.h
-+++ b/arch/powerpc/include/asm/reg.h
-@@ -1310,6 +1310,11 @@
- #define PVR_VER_E500MC	0x8023
- #define PVR_VER_E5500	0x8024
- #define PVR_VER_E6500	0x8040
-+#define PVR_VER_7450	0x8000
-+#define PVR_VER_7455	0x8001
-+#define PVR_VER_7447	0x8002
-+#define PVR_VER_7447A	0x8003
-+#define PVR_VER_7448	0x8004
+diff --git a/arch/powerpc/platforms/512x/clock-commonclk.c b/arch/powerpc/platforms/512x/clock-commonclk.c
+index 42abeba4f6983..079cb3627eacd 100644
+--- a/arch/powerpc/platforms/512x/clock-commonclk.c
++++ b/arch/powerpc/platforms/512x/clock-commonclk.c
+@@ -986,7 +986,7 @@ static void __init mpc5121_clk_provide_migration_support(void)
  
- /*
-  * For the 8xx processors, all of them report the same PVR family for
-diff --git a/arch/powerpc/perf/mpc7450-pmu.c b/arch/powerpc/perf/mpc7450-pmu.c
-index 552d51a925d37..db451b9aac35e 100644
---- a/arch/powerpc/perf/mpc7450-pmu.c
-+++ b/arch/powerpc/perf/mpc7450-pmu.c
-@@ -417,9 +417,9 @@ struct power_pmu mpc7450_pmu = {
+ #define NODE_PREP do { \
+ 	of_address_to_resource(np, 0, &res); \
+-	snprintf(devname, sizeof(devname), "%08x.%s", res.start, np->name); \
++	snprintf(devname, sizeof(devname), "%pa.%s", &res.start, np->name); \
+ } while (0)
  
- static int __init init_mpc7450_pmu(void)
- {
--	unsigned int pvr = mfspr(SPRN_PVR);
--
--	if (PVR_VER(pvr) != PVR_7450)
-+	if (!pvr_version_is(PVR_VER_7450) && !pvr_version_is(PVR_VER_7455) &&
-+	    !pvr_version_is(PVR_VER_7447) && !pvr_version_is(PVR_VER_7447A) &&
-+	    !pvr_version_is(PVR_VER_7448))
- 		return -ENODEV;
- 
- 	return register_power_pmu(&mpc7450_pmu);
+ #define NODE_CHK(clkname, clkitem, regnode, regflag) do { \
 -- 
 2.39.2
 
