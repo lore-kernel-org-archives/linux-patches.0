@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6B1168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:43:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D42F6C433EF;
-	Mon,  8 May 2023 10:43:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C641168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:43:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4474C433D2;
+	Mon,  8 May 2023 10:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542609;
-	bh=GnuTKGySGlfr07daI7HAiFk0boCdBF/4zjHSMFSEV+4=;
+	s=korg; t=1683542612;
+	bh=hJKjsrOyN9/5GVVjaDHcU1d3tLeZX/FlbR7DPHsRfys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3/LHtu1ozRR7W7tnEZitWUqWZpJf74bOPkgUT9iSPHOcDARrOV+E4yD6mcmsqVm0
-	 /2aLkT8ip9mfyYUAodd1n2wEH5FB8ZfySCtT6pUuRKg3Bzo0R4HMxH0EZ5MIxMgmJP
-	 iRIOthgNqzJqrkxnBDmXe+lM7UMVIMGaOe0NbxF4=
+	b=Ju0/V8sAWZWWDc+JivCbxf/xMuWtH/oYF3Ve+A15iW6P79Ky8dDhQBG2HVVDLYL/Z
+	 dDK3rst0hOMD//6PNuUfL8dGm9n0frHZO9vuU3LWlKAQFYbi+rRoaQCmCaJq2rm7zf
+	 mZJpR5tBMBOfbUcG50+JIecYbAi8v8VKxCjm5XL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	linux-fbdev@vger.kernel.org,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 458/663] linux/vt_buffer.h: allow either builtin or modular for macros
-Date: Mon,  8 May 2023 11:44:44 +0200
-Message-Id: <20230508094442.979541492@linuxfoundation.org>
+Subject: [PATCH 6.2 459/663] spi: qup: Dont skip cleanup in removes error path
+Date: Mon,  8 May 2023 11:44:45 +0200
+Message-Id: <20230508094443.020376142@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,56 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 2b76ffe81e32afd6d318dc4547e2ba8c46207b77 ]
+[ Upstream commit 61f49171a43ab1f80c73c5c88c508770c461e0f2 ]
 
-Fix build errors on ARCH=alpha when CONFIG_MDA_CONSOLE=m.
-This allows the ARCH macros to be the only ones defined.
+Returning early in a platform driver's remove callback is wrong. In this
+case the dma resources are not released in the error path. this is never
+retried later and so this is a permanent leak. To fix this, only skip
+hardware disabling if waking the device fails.
 
-In file included from ../drivers/video/console/mdacon.c:37:
-../arch/alpha/include/asm/vga.h:17:40: error: expected identifier or '(' before 'volatile'
-   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
-      |                                        ^~~~~~~~
-../include/linux/vt_buffer.h:24:34: note: in definition of macro 'scr_writew'
-   24 | #define scr_writew(val, addr) (*(addr) = (val))
-      |                                  ^~~~
-../include/linux/vt_buffer.h:24:40: error: expected ')' before '=' token
-   24 | #define scr_writew(val, addr) (*(addr) = (val))
-      |                                        ^
-../arch/alpha/include/asm/vga.h:17:20: note: in expansion of macro 'scr_writew'
-   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
-      |                    ^~~~~~~~~~
-../arch/alpha/include/asm/vga.h:25:29: error: expected identifier or '(' before 'volatile'
-   25 | static inline u16 scr_readw(volatile const u16 *addr)
-      |                             ^~~~~~~~
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-fbdev@vger.kernel.org
-Link: https://lore.kernel.org/r/20230329021529.16188-1-rdunlap@infradead.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 64ff247a978f ("spi: Add Qualcomm QUP SPI controller support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230330210341.2459548-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/vt_buffer.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-qup.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/vt_buffer.h b/include/linux/vt_buffer.h
-index 848db1b1569ff..919d999a8c1db 100644
---- a/include/linux/vt_buffer.h
-+++ b/include/linux/vt_buffer.h
-@@ -16,7 +16,7 @@
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index 678dc51ef0174..205e54f157b4a 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1277,18 +1277,22 @@ static int spi_qup_remove(struct platform_device *pdev)
+ 	struct spi_qup *controller = spi_master_get_devdata(master);
+ 	int ret;
  
- #include <linux/string.h>
+-	ret = pm_runtime_resume_and_get(&pdev->dev);
+-	if (ret < 0)
+-		return ret;
++	ret = pm_runtime_get_sync(&pdev->dev);
  
--#if defined(CONFIG_VGA_CONSOLE) || defined(CONFIG_MDA_CONSOLE)
-+#if IS_ENABLED(CONFIG_VGA_CONSOLE) || IS_ENABLED(CONFIG_MDA_CONSOLE)
- #include <asm/vga.h>
- #endif
+-	ret = spi_qup_set_state(controller, QUP_STATE_RESET);
+-	if (ret)
+-		return ret;
++	if (ret >= 0) {
++		ret = spi_qup_set_state(controller, QUP_STATE_RESET);
++		if (ret)
++			dev_warn(&pdev->dev, "failed to reset controller (%pe)\n",
++				 ERR_PTR(ret));
  
+-	spi_qup_release_dma(master);
++		clk_disable_unprepare(controller->cclk);
++		clk_disable_unprepare(controller->iclk);
++	} else {
++		dev_warn(&pdev->dev, "failed to resume, skip hw disable (%pe)\n",
++			 ERR_PTR(ret));
++	}
+ 
+-	clk_disable_unprepare(controller->cclk);
+-	clk_disable_unprepare(controller->iclk);
++	spi_qup_release_dma(master);
+ 
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.39.2
 
