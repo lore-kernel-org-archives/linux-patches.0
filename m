@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04444168C9
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:06:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAD3C433D2;
-	Mon,  8 May 2023 11:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407F9168C9
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:07:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73791C433D2;
+	Mon,  8 May 2023 11:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544017;
-	bh=uRG1Lne9p8ZLST3S39Ylke+Vn6pqUOoaaTR6c4xgeEs=;
+	s=korg; t=1683544020;
+	bh=w/t2A4zVFzPFuF4F1zTVMPbkwgl6BgQv6xF64kcS2w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uKgYDfZQLquIsVjLKYx6z3DMNvu7R/67i3P4NlzKpPQJfVdLaVf9r698f7ic+lfxK
-	 jK1/hNzmKoP/zV8q2VDk/y19vQfoimmvbfKfIUrU2lbWl3Jo3g4enGKpIP4dZS280m
-	 6+NJqe/3+soW8G4cqJLXwyyMD5LK1zCtKx4qwOts=
+	b=GUrBQMExiwloni/jzZAedOQ085MRNAbCt/u0264f2k0oRZrH11T5uf5DGK5sKUpRs
+	 zYGzmFvZ49cks99eQWywBm9cXbEu2qE9rplqW6DcaBo7h4Kq18J61pZnQHCUxzd3sc
+	 gc2FQWAUkpZS9QyzOAbxIUcpdyZhvxyZIh96ED0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kyrie wu <kyrie.wu@mediatek.com>,
-	irui wang <irui.wang@mediatek.com>,
+	Pin-yen Lin <treapking@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 274/694] media: mtk-jpeg: Fixes jpeg enc&dec worker sw flow
-Date: Mon,  8 May 2023 11:41:49 +0200
-Message-Id: <20230508094441.138312792@linuxfoundation.org>
+Subject: [PATCH 6.3 275/694] media: mediatek: vcodec: Use 4K frame size when supported by stateful decoder
+Date: Mon,  8 May 2023 11:41:50 +0200
+Message-Id: <20230508094441.176815169@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,97 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: kyrie wu <kyrie.wu@mediatek.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 86379bd9d399e2c5fd638a869af223d4910725c3 ]
+[ Upstream commit e25528e1dbe52784ac250071653104a8adc848e2 ]
 
-1. Move removing buffer after sw setting and before hw setting
-in enc&dec worker to prevents the operation of removing
-the buffer twice if the sw setting fails.
-2. Remove the redundant operation of queue work in the
-jpegenc irq handler because the jpegenc worker has called
-v4l2_m2m_job_finish to do it.
+After commit b018be06f3c7 ("media: mediatek: vcodec: Read max resolution
+from dec_capability"), the stateful video decoder driver never really
+sets its output frame size to 4K.
 
-Fixes: 5fb1c2361e56 ("mtk-jpegenc: add jpeg encode worker interface")
-Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
-Signed-off-by: kyrie wu <kyrie.wu@mediatek.com>
-Signed-off-by: irui wang <irui.wang@mediatek.com>
+Parse the decoder capability reported by the firmware, and update the
+output frame size in mtk_init_vdec_params to enable 4K frame size when
+available.
+
+Fixes: b018be06f3c7 ("media: mediatek: vcodec: Read max resolution from dec_capability")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/mediatek/jpeg/mtk_jpeg_core.c   | 14 +++++++-------
- .../media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c |  4 ----
- 2 files changed, 7 insertions(+), 11 deletions(-)
+ .../mediatek/vcodec/mtk_vcodec_dec_stateful.c        | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index 6d052747a15e8..d9584fe5033eb 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1025,9 +1025,6 @@ static void mtk_jpegenc_worker(struct work_struct *work)
- 	if (!dst_buf)
- 		goto getbuf_fail;
+diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateful.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateful.c
+index 035c86e7809fd..29991551cf614 100644
+--- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateful.c
++++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateful.c
+@@ -11,7 +11,7 @@
+ #include "mtk_vcodec_dec_pm.h"
+ #include "vdec_drv_if.h"
  
--	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
--	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
--
- 	v4l2_m2m_buf_copy_metadata(src_buf, dst_buf, true);
+-static const struct mtk_video_fmt mtk_video_formats[] = {
++static struct mtk_video_fmt mtk_video_formats[] = {
+ 	{
+ 		.fourcc = V4L2_PIX_FMT_H264,
+ 		.type = MTK_FMT_DEC,
+@@ -580,6 +580,16 @@ static int mtk_vcodec_dec_ctrls_setup(struct mtk_vcodec_ctx *ctx)
  
- 	mtk_jpegenc_set_hw_param(ctx, hw_id, src_buf, dst_buf);
-@@ -1045,6 +1042,9 @@ static void mtk_jpegenc_worker(struct work_struct *work)
- 		goto enc_end;
- 	}
- 
-+	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
-+	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
+ static void mtk_init_vdec_params(struct mtk_vcodec_ctx *ctx)
+ {
++	unsigned int i;
 +
- 	schedule_delayed_work(&comp_jpeg[hw_id]->job_timeout_work,
- 			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
++	if (!(ctx->dev->dec_capability & VCODEC_CAPABILITY_4K_DISABLED)) {
++		for (i = 0; i < num_supported_formats; i++) {
++			mtk_video_formats[i].frmsize.max_width =
++				VCODEC_DEC_4K_CODED_WIDTH;
++			mtk_video_formats[i].frmsize.max_height =
++				VCODEC_DEC_4K_CODED_HEIGHT;
++		}
++	}
+ }
  
-@@ -1220,9 +1220,6 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 	if (!dst_buf)
- 		goto getbuf_fail;
- 
--	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
--	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
--
- 	v4l2_m2m_buf_copy_metadata(src_buf, dst_buf, true);
- 	jpeg_src_buf = mtk_jpeg_vb2_to_srcbuf(&src_buf->vb2_buf);
- 	jpeg_dst_buf = mtk_jpeg_vb2_to_srcbuf(&dst_buf->vb2_buf);
-@@ -1231,7 +1228,7 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 					     &jpeg_src_buf->dec_param)) {
- 		mtk_jpeg_queue_src_chg_event(ctx);
- 		ctx->state = MTK_JPEG_SOURCE_CHANGE;
--		goto dec_end;
-+		goto getbuf_fail;
- 	}
- 
- 	jpeg_src_buf->curr_ctx = ctx;
-@@ -1254,6 +1251,9 @@ static void mtk_jpegdec_worker(struct work_struct *work)
- 		goto clk_end;
- 	}
- 
-+	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
-+	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
-+
- 	schedule_delayed_work(&comp_jpeg[hw_id]->job_timeout_work,
- 			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
- 
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
-index 1bbb712d78d0e..867f4c1a09fa6 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
-@@ -286,10 +286,6 @@ static irqreturn_t mtk_jpegenc_hw_irq_handler(int irq, void *priv)
- 	mtk_jpegenc_put_buf(jpeg);
- 	pm_runtime_put(ctx->jpeg->dev);
- 	clk_disable_unprepare(jpeg->venc_clk.clks->clk);
--	if (!list_empty(&ctx->fh.m2m_ctx->out_q_ctx.rdy_queue) ||
--	    !list_empty(&ctx->fh.m2m_ctx->cap_q_ctx.rdy_queue)) {
--		queue_work(master_jpeg->workqueue, &ctx->jpeg_work);
--	}
- 
- 	jpeg->hw_state = MTK_JPEG_HW_IDLE;
- 	wake_up(&master_jpeg->enc_hw_wq);
+ static struct vb2_ops mtk_vdec_frame_vb2_ops = {
 -- 
 2.39.2
 
