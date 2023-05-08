@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392D815496
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2057C433EF;
-	Mon,  8 May 2023 10:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D16D168A2
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:32:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0D1AC433D2;
+	Mon,  8 May 2023 10:32:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541947;
-	bh=NN+y6O8IajfjOcSalIZBOb2or+PXqa+pqr8O28XTn+w=;
+	s=korg; t=1683541950;
+	bh=A5MR+F6sPdzg5x0lfEGCfIObVCJS9YeIDrVxFd6OMK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dv898TEwoBU6iW1bJ/UST7vdfqEFKua/rNNpJC1OHWfI2Ugo+vvaBDfwE3ZzROROF
-	 /z+9ZF8bs3SeighiI96V4J+ng/jTuCpTORd2Q2354H1jOxX/5FxXzyAa9S4IivPtNN
-	 7Vhd2crAQ+up7ncUAuESxhl0AhChmd19sopv+O88=
+	b=aDik7mFldYWxfS48WD9RtWGf3pe8CBwZUt3tWVdQ5BJI1NCUrf8L5eKF/gf9MxZU+
+	 r+v/NjnjJG/8Ug6gW6S9enwDNerqkkv3HE3RHKbH4KYOOh/y+5MtwitPez2uSfjgPv
+	 CA/b3DcyXAAQJjAniDD2qz4JIYhB3XwqpfLjy/J4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patil Rajesh Reddy <Patil.Reddy@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 246/663] platform/x86/amd/pmf: Move out of BIOS SMN pair for driver probe
-Date: Mon,  8 May 2023 11:41:12 +0200
-Message-Id: <20230508094436.251316074@linuxfoundation.org>
+Subject: [PATCH 6.2 247/663] platform/x86/amd: pmc: Dont try to read SMU version on Picasso
+Date: Mon,  8 May 2023 11:41:13 +0200
+Message-Id: <20230508094436.281868549@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -36,99 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit aec8298c093f052fc8a86f9411b69b23953b0edb ]
+[ Upstream commit b845772677ea19b8e4c032bc07393ef32de4ee39 ]
 
-The current SMN index used for the driver probe seems to be meant
-for the BIOS pair and there are potential concurrency problems that can
-occur with an inopportune SMI.
+Picasso doesn't support the command in the uPEP mailbox to try to
+read the SMU version.
 
-It is been advised to use SMN_INDEX_0 instead of SMN_INDEX_2, which is
-what amd_nb.c provides and this function has protections to ensure that
-only one caller can use it at a time.
-
-Fixes: da5ce22df5fe ("platform/x86/amd/pmf: Add support for PMF core layer")
-Co-developed-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Signed-off-by: Patil Rajesh Reddy <Patil.Reddy@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20230406164807.50969-4-Shyam-sundar.S-k@amd.com
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2449
+Fixes: f6045de1f532 ("platform/x86: amd-pmc: Export Idlemask values based on the APU")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20230409185348.556161-2-Shyam-sundar.S-k@amd.com
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmf/Kconfig |  1 +
- drivers/platform/x86/amd/pmf/core.c  | 22 +++++-----------------
- 2 files changed, 6 insertions(+), 17 deletions(-)
+ drivers/platform/x86/amd/pmc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/platform/x86/amd/pmf/Kconfig b/drivers/platform/x86/amd/pmf/Kconfig
-index 6d89528c31779..d87986adf91e1 100644
---- a/drivers/platform/x86/amd/pmf/Kconfig
-+++ b/drivers/platform/x86/amd/pmf/Kconfig
-@@ -7,6 +7,7 @@ config AMD_PMF
- 	tristate "AMD Platform Management Framework"
- 	depends on ACPI && PCI
- 	depends on POWER_SUPPLY
-+	depends on AMD_NB
- 	select ACPI_PLATFORM_PROFILE
- 	help
- 	  This driver provides support for the AMD Platform Management Framework.
-diff --git a/drivers/platform/x86/amd/pmf/core.c b/drivers/platform/x86/amd/pmf/core.c
-index da23639071d79..0acc0b6221290 100644
---- a/drivers/platform/x86/amd/pmf/core.c
-+++ b/drivers/platform/x86/amd/pmf/core.c
-@@ -8,6 +8,7 @@
-  * Author: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-  */
+diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
+index 3cbb01ec10e32..0553a6419bb90 100644
+--- a/drivers/platform/x86/amd/pmc.c
++++ b/drivers/platform/x86/amd/pmc.c
+@@ -377,6 +377,9 @@ static int amd_pmc_get_smu_version(struct amd_pmc_dev *dev)
+ 	int rc;
+ 	u32 val;
  
-+#include <asm/amd_nb.h>
- #include <linux/debugfs.h>
- #include <linux/iopoll.h>
- #include <linux/module.h>
-@@ -22,8 +23,6 @@
- #define AMD_PMF_REGISTER_ARGUMENT	0xA58
- 
- /* Base address of SMU for mapping physical address to virtual address */
--#define AMD_PMF_SMU_INDEX_ADDRESS	0xB8
--#define AMD_PMF_SMU_INDEX_DATA		0xBC
- #define AMD_PMF_MAPPING_SIZE		0x01000
- #define AMD_PMF_BASE_ADDR_OFFSET	0x10000
- #define AMD_PMF_BASE_ADDR_LO		0x13B102E8
-@@ -348,30 +347,19 @@ static int amd_pmf_probe(struct platform_device *pdev)
- 	}
- 
- 	dev->cpu_id = rdev->device;
--	err = pci_write_config_dword(rdev, AMD_PMF_SMU_INDEX_ADDRESS, AMD_PMF_BASE_ADDR_LO);
--	if (err) {
--		dev_err(dev->dev, "error writing to 0x%x\n", AMD_PMF_SMU_INDEX_ADDRESS);
--		pci_dev_put(rdev);
--		return pcibios_err_to_errno(err);
--	}
- 
--	err = pci_read_config_dword(rdev, AMD_PMF_SMU_INDEX_DATA, &val);
-+	err = amd_smn_read(0, AMD_PMF_BASE_ADDR_LO, &val);
- 	if (err) {
-+		dev_err(dev->dev, "error in reading from 0x%x\n", AMD_PMF_BASE_ADDR_LO);
- 		pci_dev_put(rdev);
- 		return pcibios_err_to_errno(err);
- 	}
- 
- 	base_addr_lo = val & AMD_PMF_BASE_ADDR_HI_MASK;
- 
--	err = pci_write_config_dword(rdev, AMD_PMF_SMU_INDEX_ADDRESS, AMD_PMF_BASE_ADDR_HI);
--	if (err) {
--		dev_err(dev->dev, "error writing to 0x%x\n", AMD_PMF_SMU_INDEX_ADDRESS);
--		pci_dev_put(rdev);
--		return pcibios_err_to_errno(err);
--	}
--
--	err = pci_read_config_dword(rdev, AMD_PMF_SMU_INDEX_DATA, &val);
-+	err = amd_smn_read(0, AMD_PMF_BASE_ADDR_HI, &val);
- 	if (err) {
-+		dev_err(dev->dev, "error in reading from 0x%x\n", AMD_PMF_BASE_ADDR_HI);
- 		pci_dev_put(rdev);
- 		return pcibios_err_to_errno(err);
- 	}
++	if (dev->cpu_id == AMD_CPU_ID_PCO)
++		return -ENODEV;
++
+ 	rc = amd_pmc_send_cmd(dev, 0, &val, SMU_MSG_GETSMUVERSION, 1);
+ 	if (rc)
+ 		return rc;
 -- 
 2.39.2
 
