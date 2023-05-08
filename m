@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7D4168C7
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7FE8C433EF;
-	Mon,  8 May 2023 11:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9FAB168C7
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:01:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A94C433A8;
+	Mon,  8 May 2023 11:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683543686;
-	bh=hQfpgEJa6KYJGMHGAYNsWLGmH9T0lUzZYDTsxc6JByg=;
+	s=korg; t=1683543689;
+	bh=wVodvFsR1kIHZhS5o0/bBT7hFgxysWTzBkcLHeeNmDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2frkTQx8RkbwaBcBFnSr/bThlMclsicsnNp8upCY9bunvqouZy9o3hxjHolFFJsXi
-	 +kqkCvhME2dME16wHzBrGiQELVxzWCwOEzZ7Lb1GLJgTDOtEH7gZZ1qGYiScTcnLQC
-	 o07ioFjprvcGeZWzy454pzxJDwF/z9xqCACsczp8=
+	b=f424GsMFNCfPzew00RZ30vP6cxQBOUW3gR2oFRmf43uyJ2c8uIsJdfk0Qemavza26
+	 LPqfumP12LTVqxzOZxYM1RU6BDhWsPUPZ8mAqYiD3JeALLioDVcTf2WIFHqQ6Shnfr
+	 c95UGWBpb46GvNZsfTe2FQfzZww66HmM1fjqHWdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	David Heidelberg <david@ixit.cz>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Liu Ying <victor.liu@nxp.com>,
+	Marek Vasut <marex@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 168/694] ARM: dts: qcom-apq8064: Fix opp table child name
-Date: Mon,  8 May 2023 11:40:03 +0200
-Message-Id: <20230508094437.866389495@linuxfoundation.org>
+Subject: [PATCH 6.3 169/694] arm64: dts: imx8mp: Drop simple-bus from fsl,imx8mp-media-blk-ctrl
+Date: Mon,  8 May 2023 11:40:04 +0200
+Message-Id: <20230508094437.900924742@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -36,36 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit b9745c275246a7e43c34d1b3be5ff9a9f3cf9305 ]
+[ Upstream commit 5a51e1f2b083423f75145c512ee284862ab33854 ]
 
-The opp-320000000 name is rather misleading with the opp-hz value
-of 450 MHz. Fix it!
+This block should not be compatible with simple-bus and misuse it that way.
+Instead, the driver should scan its subnodes and bind drivers to them.
 
-Fixes: 8db0b6c7b636 ("ARM: dts: qcom: apq8064: Convert adreno from legacy gpu-pwrlevels to opp-v2")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: David Heidelberg <david@ixit.cz>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230220120831.1591820-1-konrad.dybcio@linaro.org
+Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Reviewed-by: Liu Ying <victor.liu@nxp.com>
+Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Fixes: 94e6197dadc9 ("arm64: dts: imx8mp: Add LCDIF2 & LDB nodes")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mp.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index 92aa2b081901f..3aeac0cabb28b 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -1260,7 +1260,7 @@
- 			gpu_opp_table: opp-table {
- 				compatible = "operating-points-v2";
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
+index a237275ee0179..3f9d67341484b 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
+@@ -1151,7 +1151,7 @@
  
--				opp-320000000 {
-+				opp-450000000 {
- 					opp-hz = /bits/ 64 <450000000>;
- 				};
- 
+ 			media_blk_ctrl: blk-ctrl@32ec0000 {
+ 				compatible = "fsl,imx8mp-media-blk-ctrl",
+-					     "simple-bus", "syscon";
++					     "syscon";
+ 				reg = <0x32ec0000 0x10000>;
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
 -- 
 2.39.2
 
