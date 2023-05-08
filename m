@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD441168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33ACCC433EF;
-	Mon,  8 May 2023 10:04:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C6D168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:04:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF7C4C433EF;
+	Mon,  8 May 2023 10:04:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540279;
-	bh=tStkMQ6lfeqNfiLI0NZmx3bZzT/NOweDFNWzH7WYP5I=;
+	s=korg; t=1683540282;
+	bh=M1WxhtCixUDrUKBeAnZf8pMKfDVgV0AvS+YaIuute0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhdptwbpVhtkfKXrK38EIPUK6J+SbfFaagjZ2Dz4/EH+TKA6jcITDTGzgJJJmeLab
-	 rVs6LYfCXHvziUnqs2vdUIJM/401fufG6vR1Efjde9HaVdROpBkR7YQnX+cxV5+M6k
-	 OUIKdl1wpS2goTJ2yI5tAmv5x/6Qer291nR3ocA4=
+	b=cnBwXoq3f7wJS6KmnDXnkd1vXga9gtWcYNEOA8KmMRerl0270wmkoJQdIbnnR6MZt
+	 YTXPiOiUUfBdxLbTtMB7KlektysiT8cgUPtD+QicmpCGM/+4NhQ8HYDeMqFKdHo6o3
+	 gb0TDt/h61oOIaNZpZjP4/j54ftmxMXsvUIGR154=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonggil Song <yonggil.song@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 304/611] f2fs: fix uninitialized skipped_gc_rwsem
-Date: Mon,  8 May 2023 11:42:26 +0200
-Message-Id: <20230508094432.303471796@linuxfoundation.org>
+Subject: [PATCH 6.1 278/611] bpf: fix precision propagation verbose logging
+Date: Mon,  8 May 2023 11:42:00 +0200
+Message-Id: <20230508094431.420791803@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,38 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonggil Song <yonggil.song@samsung.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit c17caf0ba3aa3411b96c71b4ce24be1040b8f3e8 ]
+[ Upstream commit 34f0677e7afd3a292bc1aadda7ce8e35faedb204 ]
 
-When f2fs skipped a gc round during victim migration, there was a bug which
-would skip all upcoming gc rounds unconditionally because skipped_gc_rwsem
-was not initialized. It fixes the bug by correctly initializing the
-skipped_gc_rwsem inside the gc loop.
+Fix wrong order of frame index vs register/slot index in precision
+propagation verbose (level 2) output. It's wrong and very confusing as is.
 
-Fixes: 6f8d4455060d ("f2fs: avoid fi->i_gc_rwsem[WRITE] lock in f2fs_gc")
-Signed-off-by: Yonggil Song <yonggil.song@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 529409ea92d5 ("bpf: propagate precision across all frames, not just the last one")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20230313184017.4083374-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index ee6836478efe6..aa928d1c81597 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1792,8 +1792,8 @@ int f2fs_gc(struct f2fs_sb_info *sbi, struct f2fs_gc_control *gc_control)
- 				prefree_segments(sbi));
- 
- 	cpc.reason = __get_cp_reason(sbi);
--	sbi->skipped_gc_rwsem = 0;
- gc_more:
-+	sbi->skipped_gc_rwsem = 0;
- 	if (unlikely(!(sbi->sb->s_flags & SB_ACTIVE))) {
- 		ret = -EINVAL;
- 		goto stop;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index deaeedcdc12d7..8a9f5143bbd1f 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -11912,7 +11912,7 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ 			    !(state_reg->live & REG_LIVE_READ))
+ 				continue;
+ 			if (env->log.level & BPF_LOG_LEVEL2)
+-				verbose(env, "frame %d: propagating r%d\n", i, fr);
++				verbose(env, "frame %d: propagating r%d\n", fr, i);
+ 			err = mark_chain_precision_frame(env, fr, i);
+ 			if (err < 0)
+ 				return err;
+@@ -11928,7 +11928,7 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ 				continue;
+ 			if (env->log.level & BPF_LOG_LEVEL2)
+ 				verbose(env, "frame %d: propagating fp%d\n",
+-					(-i - 1) * BPF_REG_SIZE, fr);
++					fr, (-i - 1) * BPF_REG_SIZE);
+ 			err = mark_chain_precision_stack_frame(env, fr, i);
+ 			if (err < 0)
+ 				return err;
 -- 
 2.39.2
 
