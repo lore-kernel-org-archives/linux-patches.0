@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A03A3168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2429FC433D2;
-	Mon,  8 May 2023 10:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C529168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:05:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD506C433D2;
+	Mon,  8 May 2023 10:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540332;
-	bh=oC8/QsNoyKVfJ8I1WKXuwfGA8uk6LMoz7H2eIFCfyjo=;
+	s=korg; t=1683540335;
+	bh=ZMFyRCA5jdPhBpHA9sdbIMffHFrvQ/CC7cttwGVJiKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nGocS6SP4Jb4QH+SYUhNT0GRoYaULRdDp/VHwvPxqfuyPrbFiJlDCJkIHwD87KJ8N
-	 nP8C1bc7PRcZ6rz8ibkezryhdQpsgPxE2hTmYlZg0ZZsOAlsvF+VAGoADjfvK0IhLi
-	 KiRrjjmL2EsdLg0dzDYNW5dngd2cK8TRZXNG9IpA=
+	b=Rad2dTUErjRVP9iS0CBpk3egMq8UQ62fNrk9uQuVNWu8CJadhUHYuHsQRJbofseOA
+	 0OhhG0QgEebu35iMXJUtQYEFDFcBvA5UNbhsmJfFndCZKdVlZ4bKh+FwwsUD6PABXy
+	 cBIHKjncWy+kLB6pOxECDW8aAaVu0MVTYRBkn/rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Chengming Zhou <zhouchengming@bytedance.com>,
+	Feng Zhou <zhoufeng.zf@bytedance.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jiri Olsa <jolsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 325/611] wifi: iwlwifi: fix duplicate entry in iwl_dev_info_table
-Date: Mon,  8 May 2023 11:42:47 +0200
-Message-Id: <20230508094432.997750974@linuxfoundation.org>
+Subject: [PATCH 6.1 326/611] bpf/btf: Fix is_int_ptr()
+Date: Mon,  8 May 2023 11:42:48 +0200
+Message-Id: <20230508094433.031462876@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,34 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gregory Greenman <gregory.greenman@intel.com>
+From: Feng Zhou <zhoufeng.zf@bytedance.com>
 
-[ Upstream commit fc3c2f0ed86b65dff4b6844c59c597b977cae533 ]
+[ Upstream commit 91f2dc6838c19342f7f2993627c622835cc24890 ]
 
-There're two identical entries for ax1650 device in
-iwl_dev_info_table. Remove one of the duplicate entries.
+When tracing a kernel function with arg type is u32*, btf_ctx_access()
+would report error: arg2 type INT is not a struct.
 
-Fixes: 953e66a7238b ("iwlwifi: add new ax1650 killer device")
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230410140721.897683-2-gregory.greenman@intel.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+The commit bb6728d75611 ("bpf: Allow access to int pointer arguments
+in tracing programs") added support for int pointer, but did not skip
+modifiers before checking it's type. This patch fixes it.
+
+Fixes: bb6728d75611 ("bpf: Allow access to int pointer arguments in tracing programs")
+Co-developed-by: Chengming Zhou <zhouchengming@bytedance.com>
+Signed-off-by: Chengming Zhou <zhouchengming@bytedance.com>
+Signed-off-by: Feng Zhou <zhoufeng.zf@bytedance.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/bpf/20230410085908.98493-2-zhoufeng.zf@bytedance.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/bpf/btf.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-index 4f699862e7f73..85fadd1ef1ff3 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -565,7 +565,6 @@ static const struct iwl_dev_info iwl_dev_info_table[] = {
- 	IWL_DEV_INFO(0x43F0, 0x1652, killer1650i_2ax_cfg_qu_b0_hr_b0, iwl_ax201_killer_1650i_name),
- 	IWL_DEV_INFO(0x43F0, 0x2074, iwl_ax201_cfg_qu_hr, NULL),
- 	IWL_DEV_INFO(0x43F0, 0x4070, iwl_ax201_cfg_qu_hr, NULL),
--	IWL_DEV_INFO(0x43F0, 0x1651, killer1650s_2ax_cfg_qu_b0_hr_b0, iwl_ax201_killer_1650s_name),
- 	IWL_DEV_INFO(0xA0F0, 0x0070, iwl_ax201_cfg_qu_hr, NULL),
- 	IWL_DEV_INFO(0xA0F0, 0x0074, iwl_ax201_cfg_qu_hr, NULL),
- 	IWL_DEV_INFO(0xA0F0, 0x0078, iwl_ax201_cfg_qu_hr, NULL),
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index b73169737a01e..a83a3f2745561 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -5333,12 +5333,8 @@ struct btf *bpf_prog_get_target_btf(const struct bpf_prog *prog)
+ 
+ static bool is_int_ptr(struct btf *btf, const struct btf_type *t)
+ {
+-	/* t comes in already as a pointer */
+-	t = btf_type_by_id(btf, t->type);
+-
+-	/* allow const */
+-	if (BTF_INFO_KIND(t->info) == BTF_KIND_CONST)
+-		t = btf_type_by_id(btf, t->type);
++	/* skip modifiers */
++	t = btf_type_skip_modifiers(btf, t->type, NULL);
+ 
+ 	return btf_type_is_int(t);
+ }
 -- 
 2.39.2
 
