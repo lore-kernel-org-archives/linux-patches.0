@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15AC101FD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76E89C433EF;
-	Mon,  8 May 2023 10:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5F8101FD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:03:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1103FC433D2;
+	Mon,  8 May 2023 10:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540186;
-	bh=rKxa6za2E3Ax6EuEdZlSGaFfMGzEoKJwAYaUArXmzAE=;
+	s=korg; t=1683540189;
+	bh=9g0eQcHGOm5RoBnhn4PF9aXqenZz5p9qE742o7UZkmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZroncoU3nPj5ngcMXYxL1Z4NIiOxWof44kye/NLt1/B1hzhzW3Un2m4X15g3fdqe
-	 56fKue0GSFI7IXOcnYMJMEsGhFmSxFjA3lwICsDbtV4PLA32uLRZW+eEItcg+q83Jg
-	 SEcBmuiDlQYmcbVCa1SsFJrHvef8gxJgdciHzpVA=
+	b=T4W7rCwxKfJkwkDdNmnZdjeBjlvWdbbkWzxxQ/9DNFtmTIoELM7Eoy8rQzaqd/UFj
+	 Bri8Y/MmFdexCzOeeiIQfAs7Q2OK0WsO1wn4FWsSrzOFu8sctD7MvylHSnPGMqdoc9
+	 PrheRHWlckYIL5EAUesp9Uih27Ag7Ie5YJBbPGnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 269/611] wifi: ath5k: Use platform_get_irq() to get the interrupt
-Date: Mon,  8 May 2023 11:41:51 +0200
-Message-Id: <20230508094431.132593091@linuxfoundation.org>
+Subject: [PATCH 6.1 243/611] media: saa7134: fix use after free bug in saa7134_finidev due to race condition
+Date: Mon,  8 May 2023 11:41:25 +0200
+Message-Id: <20230508094430.317616441@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,54 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 95c95251d0547b46d6571e4fbd51b42865c15a4a ]
+[ Upstream commit 30cf57da176cca80f11df0d9b7f71581fe601389 ]
 
-As of commit a1a2b7125e10 ("of/platform: Drop static setup of IRQ
-resource from DT core"), we need to use platform_get_irq() instead of
-platform_get_resource() to get our IRQs because
-platform_get_resource() simply won't get them anymore.
+In saa7134_initdev, it will call saa7134_hwinit1. There are three
+function invoking here: saa7134_video_init1, saa7134_ts_init1
+and saa7134_vbi_init1.
 
-This was already fixed in several other Atheros WiFi drivers,
-apparently in response to Zeal Robot reports. An example of another
-fix is commit 9503a1fc123d ("ath9k: Use platform_get_irq() to get the
-interrupt"). ath5k seems to have been missed in this effort, though.
+All of them will init a timer with same function. Take
+saa7134_video_init1 as an example. It'll bound &dev->video_q.timeout
+with saa7134_buffer_timeout.
 
-Fixes: a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from DT core")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230201084131.v2.2.Ic4f8542b0588d7eb4bc6e322d4af3d2064e84ff0@changeid
+In buffer_activate, the timer funtcion is started.
+
+If we remove the module or device which will call saa7134_finidev
+to make cleanup, there may be a unfinished work. The
+possible sequence is as follows, which will cause a
+typical UAF bug.
+
+Fix it by canceling the timer works accordingly before cleanup in
+saa7134_finidev.
+
+CPU0                  CPU1
+
+                    |saa7134_buffer_timeout
+saa7134_finidev     |
+  kfree(dev);       |
+                    |
+                    | saa7134_buffer_next
+                    | //use dev
+
+Fixes: 1e7126b4a86a ("media: saa7134: Convert timers to use timer_setup()")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath5k/ahb.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/media/pci/saa7134/saa7134-ts.c    | 1 +
+ drivers/media/pci/saa7134/saa7134-vbi.c   | 1 +
+ drivers/media/pci/saa7134/saa7134-video.c | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath5k/ahb.c b/drivers/net/wireless/ath/ath5k/ahb.c
-index 2c9cec8b53d9e..28a1e5eff204e 100644
---- a/drivers/net/wireless/ath/ath5k/ahb.c
-+++ b/drivers/net/wireless/ath/ath5k/ahb.c
-@@ -113,15 +113,13 @@ static int ath_ahb_probe(struct platform_device *pdev)
- 		goto err_out;
- 	}
+diff --git a/drivers/media/pci/saa7134/saa7134-ts.c b/drivers/media/pci/saa7134/saa7134-ts.c
+index 6a5053126237f..437dbe5e75e29 100644
+--- a/drivers/media/pci/saa7134/saa7134-ts.c
++++ b/drivers/media/pci/saa7134/saa7134-ts.c
+@@ -300,6 +300,7 @@ int saa7134_ts_start(struct saa7134_dev *dev)
  
--	res = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
--	if (res == NULL) {
--		dev_err(&pdev->dev, "no IRQ resource found\n");
--		ret = -ENXIO;
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0) {
-+		dev_err(&pdev->dev, "no IRQ resource found: %d\n", irq);
-+		ret = irq;
- 		goto err_iounmap;
- 	}
+ int saa7134_ts_fini(struct saa7134_dev *dev)
+ {
++	del_timer_sync(&dev->ts_q.timeout);
+ 	saa7134_pgtable_free(dev->pci, &dev->ts_q.pt);
+ 	return 0;
+ }
+diff --git a/drivers/media/pci/saa7134/saa7134-vbi.c b/drivers/media/pci/saa7134/saa7134-vbi.c
+index 3f0b0933eed69..3e773690468bd 100644
+--- a/drivers/media/pci/saa7134/saa7134-vbi.c
++++ b/drivers/media/pci/saa7134/saa7134-vbi.c
+@@ -185,6 +185,7 @@ int saa7134_vbi_init1(struct saa7134_dev *dev)
+ int saa7134_vbi_fini(struct saa7134_dev *dev)
+ {
+ 	/* nothing */
++	del_timer_sync(&dev->vbi_q.timeout);
+ 	return 0;
+ }
  
--	irq = res->start;
--
- 	hw = ieee80211_alloc_hw(sizeof(struct ath5k_hw), &ath5k_hw_ops);
- 	if (hw == NULL) {
- 		dev_err(&pdev->dev, "no memory for ieee80211_hw\n");
+diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
+index 4d8974c9fcc98..29124756a62bc 100644
+--- a/drivers/media/pci/saa7134/saa7134-video.c
++++ b/drivers/media/pci/saa7134/saa7134-video.c
+@@ -2146,6 +2146,7 @@ int saa7134_video_init1(struct saa7134_dev *dev)
+ 
+ void saa7134_video_fini(struct saa7134_dev *dev)
+ {
++	del_timer_sync(&dev->video_q.timeout);
+ 	/* free stuff */
+ 	saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
+ 	saa7134_pgtable_free(dev->pci, &dev->vbi_q.pt);
 -- 
 2.39.2
 
