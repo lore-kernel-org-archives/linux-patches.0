@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E556168CF
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B868FC433EF;
-	Mon,  8 May 2023 11:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 626F4168CF
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:17:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD1DAC433D2;
+	Mon,  8 May 2023 11:17:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544643;
-	bh=emNMdWt3FAv3Z0+lFpCvz7Ly2tt9NTbxZP+6Hybqlfc=;
+	s=korg; t=1683544646;
+	bh=skFFywk52dAcgXA3YocwB7KdKfo0s77CUk/BIdMXGgA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iyk6+YQCWUIjKR3meg73yD3TRQI0bUvHFvBFcWzFC2rq+oTAfFxBQpsDkYvxRD5JK
-	 4OTvNq1uW97nBpAlQp4/CiKqB3sD1aFYk/6YYJ8jI6gAkjti1r0ROfHdN9WluI7FoL
-	 74peSDB2ID7R7C3yYinJgT4XvWubO0Y0dDcNN6cY=
+	b=raLwV2oAC1MMBSmMPYh7MPeI1STx9pI4z2SQE0D3ze+CO2EE8a3BaImxqeHJPq82R
+	 np74E/ShUvBotCt7uUaz91foLl9X/2Uf/NE57BTlAywKfmt4Pj3w0JJtBzV2Dodr6a
+	 RcQzDos1SJeDaIuQcthSqLDDsSD+N9MfHAAOPyqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Wang Zhao <wang.zhao@mediatek.com>,
+	Quan Zhou <quan.zhou@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 475/694] net/sched: sch_fq: fix integer overflow of "credit"
-Date: Mon,  8 May 2023 11:45:10 +0200
-Message-Id: <20230508094449.240869503@linuxfoundation.org>
+Subject: [PATCH 6.3 448/694] wifi: mt76: mt7921e: stop chip reset worker in unregister hook
+Date: Mon,  8 May 2023 11:44:43 +0200
+Message-Id: <20230508094448.086142929@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -37,90 +38,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Quan Zhou <quan.zhou@mediatek.com>
 
-[ Upstream commit 7041101ff6c3073fd8f2e99920f535b111c929cb ]
+[ Upstream commit 3d78c46423c6567ed25ca033e086865b1b4d5ae1 ]
 
-if sch_fq is configured with "initial quantum" having values greater than
-INT_MAX, the first assignment of "credit" does signed integer overflow to
-a very negative value.
-In this situation, the syzkaller script provided by Cristoph triggers the
-CPU soft-lockup warning even with few sockets. It's not an infinite loop,
-but "credit" wasn't probably meant to be minus 2Gb for each new flow.
-Capping "initial quantum" to INT_MAX proved to fix the issue.
+If the chip reset worker is triggered during the remove process, the chip
+DMA may not be properly pushed back to the idle state. This can lead to
+corruption of the DMA flow due to the chip reset. Therefore, it is
+necessary to stop the chip reset before the DMA is finalized.
 
-v2: validation of "initial quantum" is done in fq_policy, instead of open
-    coding in fq_change() _ suggested by Jakub Kicinski
+To avoid resetting the chip after the reset worker is cancelled, use
+__mt7921_mcu_drv_pmctrl() instead of mt7921_mcu_drv_pmctrl(). It is safe to
+ignore the pm mutex because the pm worker and wake worker have already been
+cancelled.
 
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/377
-Fixes: afe4fd062416 ("pkt_sched: fq: Fair Queue packet scheduler")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Link: https://lore.kernel.org/r/7b3a3c7e36d03068707a021760a194a8eb5ad41a.1682002300.git.dcaratti@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 033ae79b3830 ("mt76: mt7921: refactor init.c to be bus independent")
+Co-developed-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Co-developed-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Co-developed-by: Wang Zhao <wang.zhao@mediatek.com>
+Signed-off-by: Wang Zhao <wang.zhao@mediatek.com>
+Signed-off-by: Quan Zhou <quan.zhou@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_fq.c                            |  6 ++++-
- .../tc-testing/tc-tests/qdiscs/fq.json        | 22 +++++++++++++++++++
- 2 files changed, 27 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7921/pci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_fq.c b/net/sched/sch_fq.c
-index 48d14fb90ba02..f59a2cb2c803d 100644
---- a/net/sched/sch_fq.c
-+++ b/net/sched/sch_fq.c
-@@ -779,13 +779,17 @@ static int fq_resize(struct Qdisc *sch, u32 log)
- 	return 0;
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+index bda92d8359692..aa4ecf008a3c9 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/pci.c
+@@ -115,9 +115,10 @@ static void mt7921e_unregister_device(struct mt7921_dev *dev)
+ 		napi_disable(&dev->mt76.napi[i]);
+ 	cancel_delayed_work_sync(&pm->ps_work);
+ 	cancel_work_sync(&pm->wake_work);
++	cancel_work_sync(&dev->reset_work);
  
-+static struct netlink_range_validation iq_range = {
-+	.max = INT_MAX,
-+};
-+
- static const struct nla_policy fq_policy[TCA_FQ_MAX + 1] = {
- 	[TCA_FQ_UNSPEC]			= { .strict_start_type = TCA_FQ_TIMER_SLACK },
- 
- 	[TCA_FQ_PLIMIT]			= { .type = NLA_U32 },
- 	[TCA_FQ_FLOW_PLIMIT]		= { .type = NLA_U32 },
- 	[TCA_FQ_QUANTUM]		= { .type = NLA_U32 },
--	[TCA_FQ_INITIAL_QUANTUM]	= { .type = NLA_U32 },
-+	[TCA_FQ_INITIAL_QUANTUM]	= NLA_POLICY_FULL_RANGE(NLA_U32, &iq_range),
- 	[TCA_FQ_RATE_ENABLE]		= { .type = NLA_U32 },
- 	[TCA_FQ_FLOW_DEFAULT_RATE]	= { .type = NLA_U32 },
- 	[TCA_FQ_FLOW_MAX_RATE]		= { .type = NLA_U32 },
-diff --git a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/fq.json b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/fq.json
-index 8acb904d14193..3593fb8f79ad3 100644
---- a/tools/testing/selftests/tc-testing/tc-tests/qdiscs/fq.json
-+++ b/tools/testing/selftests/tc-testing/tc-tests/qdiscs/fq.json
-@@ -114,6 +114,28 @@
-             "$IP link del dev $DUMMY type dummy"
-         ]
-     },
-+    {
-+        "id": "10f7",
-+        "name": "Create FQ with invalid initial_quantum setting",
-+        "category": [
-+            "qdisc",
-+            "fq"
-+        ],
-+        "plugins": {
-+            "requires": "nsPlugin"
-+        },
-+        "setup": [
-+            "$IP link add dev $DUMMY type dummy || /bin/true"
-+        ],
-+        "cmdUnderTest": "$TC qdisc add dev $DUMMY handle 1: root fq initial_quantum 0x80000000",
-+        "expExitCode": "2",
-+        "verifyCmd": "$TC qdisc show dev $DUMMY",
-+        "matchPattern": "qdisc fq 1: root.*initial_quantum 2048Mb",
-+        "matchCount": "0",
-+        "teardown": [
-+            "$IP link del dev $DUMMY type dummy"
-+        ]
-+    },
-     {
-         "id": "9398",
-         "name": "Create FQ with maxrate setting",
+ 	mt7921_tx_token_put(dev);
+-	mt7921_mcu_drv_pmctrl(dev);
++	__mt7921_mcu_drv_pmctrl(dev);
+ 	mt7921_dma_cleanup(dev);
+ 	mt7921_wfsys_reset(dev);
+ 	skb_queue_purge(&dev->mt76.mcu.res_q);
 -- 
 2.39.2
 
