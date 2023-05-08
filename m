@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87701168C5
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01DDC433EF;
-	Mon,  8 May 2023 10:47:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641E9168C5
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:47:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87A6C433D2;
+	Mon,  8 May 2023 10:47:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683542833;
-	bh=/lAsQmWa93y1/iPWwyBwlZ1Uz4b/QRa/wBsOKLMC9Ro=;
+	s=korg; t=1683542836;
+	bh=gfDGFjV+QykAu/JAuYchGotcnq6yqjwTBcPEGgoNltU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uoGTw63j72vluAc5EW1SY5u37xE8mXt9v2vD6l9u/uQ3t5ntpPBLxAFTUqLXPuhtc
-	 Nmy90cOX0K0150ahQP4jvVY0fFksrlyxnKM7ENkornFLNBcLWQ2R+wb2AP2kYkMlzJ
-	 anhChdpxNrEn8LvF4KHf8GOnpV9colPpAgZLIyHA=
+	b=Gg4ZBfS9PCJ6zIxpMYGAHKPZAEnUkmt6J/2TRds+TfsN6kX2Oatvio73sC1SQg3Ur
+	 5vtO+QaJPJRWpESLWm5KHIXQgwyyrtkkD/JH+4D7JApPEyG1mIEZcWDYmi5jjOVOdu
+	 0z9pF192l0SQ5909dBMPg7NQ8rl256DAOaKshY9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>,
-	Mohammad Rafi Shaik <quic_mohs@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ian Ziemba <ian.ziemba@hpe.com>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 556/663] clk: qcom: lpasscc-sc7280: Skip qdsp6ss clock registration
-Date: Mon,  8 May 2023 11:46:22 +0200
-Message-Id: <20230508094447.163628477@linuxfoundation.org>
+Subject: [PATCH 6.2 565/663] RDMA/rxe: Remove __rxe_do_task()
+Date: Mon,  8 May 2023 11:46:31 +0200
+Message-Id: <20230508094447.519276774@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -37,56 +36,190 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 4fc1c2d9a2b7a394f3b873aae5e03bffd8b5cd31 ]
+[ Upstream commit 960ebe97e5238565d15063c8f4d1b2108efe2e65 ]
 
-The qdsp6ss memory region is being shared by ADSP remoteproc device and
-lpasscc clock device, hence causing memory conflict.
-To avoid this, when qdsp6ss clocks are being enabled in remoteproc driver,
-skip qdsp6ss clock registration if "qcom,adsp-pil-mode" is enabled and
-also assign max_register value.
+The subroutine __rxe_do_task is not thread safe and it has no way to
+guarantee that the tasks, which are designed with the assumption that they
+are non-reentrant, are not reentered. All of its uses are non-performance
+critical.
 
-Fixes: 4ab43d171181 ("clk: qcom: Add lpass clock controller driver for SC7280")
-Signed-off-by: Srinivasa Rao Mandadapu <quic_srivasam@quicinc.com>
-Signed-off-by: Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230407092255.119690-3-quic_mohs@quicinc.com
+This patch replaces calls to __rxe_do_task with calls to
+rxe_sched_task. It also removes irrelevant or unneeded if tests.
+
+Instead of calling the task machinery a single call to the tasklet
+function (rxe_requester, etc.) is sufficient to draing the queues if task
+execution has been disabled or stopped.
+
+Together these changes allow the removal of __rxe_do_task.
+
+Link: https://lore.kernel.org/r/20230304174533.11296-7-rpearsonhpe@gmail.com
+Signed-off-by: Ian Ziemba <ian.ziemba@hpe.com>
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: b2b1ddc45745 ("RDMA/rxe: Fix the error "trying to register non-static key in rxe_cleanup_task"")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/lpasscc-sc7280.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c   | 56 +++++++++-------------------
+ drivers/infiniband/sw/rxe/rxe_task.c | 13 -------
+ drivers/infiniband/sw/rxe/rxe_task.h |  6 ---
+ 3 files changed, 17 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
-index 5c1e17bd0d763..8486d7135ab10 100644
---- a/drivers/clk/qcom/lpasscc-sc7280.c
-+++ b/drivers/clk/qcom/lpasscc-sc7280.c
-@@ -118,14 +118,18 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
- 		goto destroy_pm_clk;
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index c954dd9394baf..49891f8ed4e61 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -473,29 +473,23 @@ static void rxe_qp_reset(struct rxe_qp *qp)
+ {
+ 	/* stop tasks from running */
+ 	rxe_disable_task(&qp->resp.task);
+-
+-	/* stop request/comp */
+-	if (qp->sq.queue) {
+-		if (qp_type(qp) == IB_QPT_RC)
+-			rxe_disable_task(&qp->comp.task);
+-		rxe_disable_task(&qp->req.task);
+-	}
++	rxe_disable_task(&qp->comp.task);
++	rxe_disable_task(&qp->req.task);
+ 
+ 	/* move qp to the reset state */
+ 	qp->req.state = QP_STATE_RESET;
+ 	qp->comp.state = QP_STATE_RESET;
+ 	qp->resp.state = QP_STATE_RESET;
+ 
+-	/* let state machines reset themselves drain work and packet queues
+-	 * etc.
+-	 */
+-	__rxe_do_task(&qp->resp.task);
++	/* drain work and packet queuesc */
++	rxe_requester(qp);
++	rxe_completer(qp);
++	rxe_responder(qp);
+ 
+-	if (qp->sq.queue) {
+-		__rxe_do_task(&qp->comp.task);
+-		__rxe_do_task(&qp->req.task);
++	if (qp->rq.queue)
++		rxe_queue_reset(qp->rq.queue);
++	if (qp->sq.queue)
+ 		rxe_queue_reset(qp->sq.queue);
+-	}
+ 
+ 	/* cleanup attributes */
+ 	atomic_set(&qp->ssn, 0);
+@@ -518,13 +512,8 @@ static void rxe_qp_reset(struct rxe_qp *qp)
+ 
+ 	/* reenable tasks */
+ 	rxe_enable_task(&qp->resp.task);
+-
+-	if (qp->sq.queue) {
+-		if (qp_type(qp) == IB_QPT_RC)
+-			rxe_enable_task(&qp->comp.task);
+-
+-		rxe_enable_task(&qp->req.task);
+-	}
++	rxe_enable_task(&qp->comp.task);
++	rxe_enable_task(&qp->req.task);
+ }
+ 
+ /* drain the send queue */
+@@ -533,10 +522,7 @@ static void rxe_qp_drain(struct rxe_qp *qp)
+ 	if (qp->sq.queue) {
+ 		if (qp->req.state != QP_STATE_DRAINED) {
+ 			qp->req.state = QP_STATE_DRAIN;
+-			if (qp_type(qp) == IB_QPT_RC)
+-				rxe_sched_task(&qp->comp.task);
+-			else
+-				__rxe_do_task(&qp->comp.task);
++			rxe_sched_task(&qp->comp.task);
+ 			rxe_sched_task(&qp->req.task);
+ 		}
+ 	}
+@@ -552,11 +538,7 @@ void rxe_qp_error(struct rxe_qp *qp)
+ 
+ 	/* drain work and packet queues */
+ 	rxe_sched_task(&qp->resp.task);
+-
+-	if (qp_type(qp) == IB_QPT_RC)
+-		rxe_sched_task(&qp->comp.task);
+-	else
+-		__rxe_do_task(&qp->comp.task);
++	rxe_sched_task(&qp->comp.task);
+ 	rxe_sched_task(&qp->req.task);
+ }
+ 
+@@ -773,24 +755,20 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
+ 
+ 	qp->valid = 0;
+ 	qp->qp_timeout_jiffies = 0;
+-	rxe_cleanup_task(&qp->resp.task);
+ 
+ 	if (qp_type(qp) == IB_QPT_RC) {
+ 		del_timer_sync(&qp->retrans_timer);
+ 		del_timer_sync(&qp->rnr_nak_timer);
  	}
  
--	lpass_regmap_config.name = "qdsp6ss";
--	desc = &lpass_qdsp6ss_sc7280_desc;
++	rxe_cleanup_task(&qp->resp.task);
+ 	rxe_cleanup_task(&qp->req.task);
+ 	rxe_cleanup_task(&qp->comp.task);
+ 
+ 	/* flush out any receive wr's or pending requests */
+-	if (qp->req.task.func)
+-		__rxe_do_task(&qp->req.task);
 -
--	ret = qcom_cc_probe_by_index(pdev, 0, desc);
--	if (ret)
--		goto destroy_pm_clk;
-+	if (!of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
-+		lpass_regmap_config.name = "qdsp6ss";
-+		lpass_regmap_config.max_register = 0x3f;
-+		desc = &lpass_qdsp6ss_sc7280_desc;
-+
-+		ret = qcom_cc_probe_by_index(pdev, 0, desc);
-+		if (ret)
-+			goto destroy_pm_clk;
-+	}
+-	if (qp->sq.queue) {
+-		__rxe_do_task(&qp->comp.task);
+-		__rxe_do_task(&qp->req.task);
+-	}
++	rxe_requester(qp);
++	rxe_completer(qp);
++	rxe_responder(qp);
  
- 	lpass_regmap_config.name = "top_cc";
-+	lpass_regmap_config.max_register = 0x4;
- 	desc = &lpass_cc_top_sc7280_desc;
+ 	if (qp->sq.queue)
+ 		rxe_queue_cleanup(qp->sq.queue);
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.c b/drivers/infiniband/sw/rxe/rxe_task.c
+index 959cc6229a34e..a67f485454436 100644
+--- a/drivers/infiniband/sw/rxe/rxe_task.c
++++ b/drivers/infiniband/sw/rxe/rxe_task.c
+@@ -6,19 +6,6 @@
  
- 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
+ #include "rxe.h"
+ 
+-int __rxe_do_task(struct rxe_task *task)
+-
+-{
+-	int ret;
+-
+-	while ((ret = task->func(task->qp)) == 0)
+-		;
+-
+-	task->ret = ret;
+-
+-	return ret;
+-}
+-
+ /*
+  * this locking is due to a potential race where
+  * a second caller finds the task already running
+diff --git a/drivers/infiniband/sw/rxe/rxe_task.h b/drivers/infiniband/sw/rxe/rxe_task.h
+index 41efd5fd49b03..99585e40cef92 100644
+--- a/drivers/infiniband/sw/rxe/rxe_task.h
++++ b/drivers/infiniband/sw/rxe/rxe_task.h
+@@ -39,12 +39,6 @@ int rxe_init_task(struct rxe_task *task, struct rxe_qp *qp,
+ /* cleanup task */
+ void rxe_cleanup_task(struct rxe_task *task);
+ 
+-/*
+- * raw call to func in loop without any checking
+- * can call when tasklets are disabled
+- */
+-int __rxe_do_task(struct rxe_task *task);
+-
+ void rxe_run_task(struct rxe_task *task);
+ 
+ void rxe_sched_task(struct rxe_task *task);
 -- 
 2.39.2
 
