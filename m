@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 023D4168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1CEC433D2;
-	Mon,  8 May 2023 10:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986B4168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:06:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C111C433D2;
+	Mon,  8 May 2023 10:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540410;
-	bh=rYiCoB+DKt+7REm0/FM7ikuKnN3Sy5KsDk4tv4VrQ/4=;
+	s=korg; t=1683540413;
+	bh=tzobr1ZDYEVm9gsJzCQFyLdLXHukthX5IbvbvsSCVfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yivo1bPS3xJdv6ak6E+gsIWYa1N8CTGVfDPxTQRrCFaKvQoyMWlclDe6XbmsSijf1
-	 7N6i35ZNZv6oYawahbS9WYQ+2NbENfyks/9brg15mOnAPka16Ak2AHcH3QV7wj7fc+
-	 Uq3ER56bhUzn0BHo2Q3q7E8dveVDC9AEcMqswms8=
+	b=EfJuU4YnfTsoK4OX1OXv+LTJpMqYX1iazG/yYn/AKM+tzcv6A1PKYvxomc2ZP4GNU
+	 s59a0FHfIjziU6dL9bUELlA1ysCCoooJ2qUAaHbzofVmYa7vW+2TYaRMY5ZqTYuERI
+	 86Bo+1x9gRGLDjS5d8ktSHMfJHBVAerwXufWmN7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
+	Tom Rix <trix@redhat.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 355/611] wifi: iwlwifi: yoyo: Fix possible division by zero
-Date: Mon,  8 May 2023 11:43:17 +0200
-Message-Id: <20230508094433.936113178@linuxfoundation.org>
+Subject: [PATCH 6.1 356/611] wifi: iwlwifi: mvm: initialize seq variable
+Date: Mon,  8 May 2023 11:43:18 +0200
+Message-Id: <20230508094433.965903480@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -36,42 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Tom Rix <trix@redhat.com>
 
-[ Upstream commit ba30415118eee374a08b39a0460a1d1e52c24a25 ]
+[ Upstream commit 11e94d2bcd88dea5d9ce99555b6b172f5232d3e2 ]
 
-Don't allow buffer allocation TLV with zero req_size since it
-leads later to division by zero in iwl_dbg_tlv_alloc_fragments().
-Also, NPK/SRAM locations are allowed to have zero buffer req_size,
-don't discard them.
+Clang static analysis reports this issue
+d3.c:567:22: warning: The left operand of '>' is
+  a garbage value
+  if (seq.tkip.iv32 > cur_rx_iv32)
+      ~~~~~~~~~~~~~ ^
 
-Fixes: a9248de42464 ("iwlwifi: dbg_ini: add TLV allocation new API support")
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
+seq is never initialized. Call ieee80211_get_key_rx_seq() to
+initialize seq.
+
+Fixes: 0419e5e672d6 ("iwlwifi: mvm: d3: separate TKIP data from key iteration")
+Signed-off-by: Tom Rix <trix@redhat.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413213309.5d6688ed74d8.I5c2f3a882b50698b708d54f4524dc5bdf11e3d32@changeid
+Link: https://lore.kernel.org/r/20230414130637.6dd372f84f93.If1f708c90e6424a935b4eba3917dfb7582e0dd0a@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-index 3237d4b528b5d..a1d34f3e7a9f4 100644
---- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
-@@ -138,6 +138,12 @@ static int iwl_dbg_tlv_alloc_buf_alloc(struct iwl_trans *trans,
- 	    alloc_id != IWL_FW_INI_ALLOCATION_ID_DBGC1)
- 		goto err;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+index 919b1f478b4ce..bbdda3e1ff3fc 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -563,6 +563,7 @@ static void iwl_mvm_wowlan_get_tkip_data(struct ieee80211_hw *hw,
+ 		}
  
-+	if (buf_location == IWL_FW_INI_LOCATION_DRAM_PATH &&
-+	    alloc->req_size == 0) {
-+		IWL_ERR(trans, "WRT: Invalid DRAM buffer allocation requested size (0)\n");
-+		return -EINVAL;
-+	}
-+
- 	trans->dbg.fw_mon_cfg[alloc_id] = *alloc;
- 
- 	return 0;
+ 		for (i = 0; i < IWL_NUM_RSC; i++) {
++			ieee80211_get_key_rx_seq(key, i, &seq);
+ 			/* wrapping isn't allowed, AP must rekey */
+ 			if (seq.tkip.iv32 > cur_rx_iv32)
+ 				cur_rx_iv32 = seq.tkip.iv32;
 -- 
 2.39.2
 
