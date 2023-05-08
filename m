@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7960154A1
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C92CC433D2;
-	Mon,  8 May 2023 10:08:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6723A154A1
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:08:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECB3C433D2;
+	Mon,  8 May 2023 10:08:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683540487;
-	bh=SM8qaz5n1g4nXZqwAw/4F7bqdgxvQ4UiAq0ZRbISkEM=;
+	s=korg; t=1683540490;
+	bh=POKbqvt9fvc6l7RP4ZCjGBg8ML0uBWcn0rP1sofmOEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OXzrj7rQvXZRGX+6VOCBv05DJrHMBZcTSB+gtSUXP+7CWKHwOPTZnmC11noY1KeGw
-	 MAduV6OLa+++rFhv/zWWQ2YcDEXgCKGpCsRiu5cKXPTP5RsIJ/5QRbtVJCVEnPY5zW
-	 0QQh6yA3YSfnPc2eJ9ob8LRhvaBoRSio+j2SQPdA=
+	b=y3k0TKSDaJWAh3d21S+XcFFRDUJYF4IbSfeVtgBGOiCjckH6kTpvd5er4OZ5iaG4L
+	 FUNAeBE08oj08XlxIKkNVT6IZWoQIw2mk5NF3xn6jrQ6hkD03pTq/5EkCFbbGT11mH
+	 n+zVqZEWHHLoV4j5OwtYJD4L9NbCCKbT4haQgCak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Ayala Beker <ayala.beker@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 352/611] md/raid10: dont call bio_start_io_acct twice for bio which experienced read error
-Date: Mon,  8 May 2023 11:43:14 +0200
-Message-Id: <20230508094433.838906882@linuxfoundation.org>
+Subject: [PATCH 6.1 353/611] wifi: iwlwifi: mvm: dont drop unencrypted MCAST frames
+Date: Mon,  8 May 2023 11:43:15 +0200
+Message-Id: <20230508094433.876953643@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094421.513073170@linuxfoundation.org>
 References: <20230508094421.513073170@linuxfoundation.org>
@@ -35,48 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Ayala Beker <ayala.beker@intel.com>
 
-[ Upstream commit 7cddb055bfda5f7b0be931e8ea750fc28bc18a27 ]
+[ Upstream commit 8e5a26360cbe29b896b6758518280d41c3704d43 ]
 
-handle_read_error() will resumit r10_bio by raid10_read_request(), which
-will call bio_start_io_acct() again, while bio_end_io_acct() will only
-be called once.
+MCAST frames are filtered out by the driver if we are not
+authorized yet.
+Fix it to filter out only protected frames.
 
-Fix the problem by don't account io again from handle_read_error().
-
-Fixes: 528bc2cf2fcc ("md/raid10: enable io accounting")
-Suggested-by: Song Liu <song@kernel.org>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230314012258.2395894-1-yukuai1@huaweicloud.com
+Fixes: 147eb05f24e6 ("iwlwifi: mvm: always tell the firmware to accept MCAST frames in BSS")
+Signed-off-by: Ayala Beker <ayala.beker@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230413213309.9cedcc27db60.I8fb7057981392660da482dd215e85c15946d3f4b@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/rx.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 006c28edd1dd6..a519f8467dad4 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1248,7 +1248,8 @@ static void raid10_read_request(struct mddev *mddev, struct bio *bio,
- 	}
- 	slot = r10_bio->read_slot;
- 
--	if (blk_queue_io_stat(bio->bi_bdev->bd_disk->queue))
-+	if (!r10_bio->start_time &&
-+	    blk_queue_io_stat(bio->bi_bdev->bd_disk->queue))
- 		r10_bio->start_time = bio_start_io_acct(bio);
- 	read_bio = bio_alloc_clone(rdev->bdev, bio, gfp, &mddev->bio_set);
- 
-@@ -1578,6 +1579,7 @@ static void __make_request(struct mddev *mddev, struct bio *bio, int sectors)
- 	r10_bio->sector = bio->bi_iter.bi_sector;
- 	r10_bio->state = 0;
- 	r10_bio->read_slot = -1;
-+	r10_bio->start_time = 0;
- 	memset(r10_bio->devs, 0, sizeof(r10_bio->devs[0]) *
- 			conf->geo.raid_disks);
- 
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rx.c b/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
+index 49ca1e168fc5b..eee98cebbb46a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/rx.c
+@@ -384,9 +384,10 @@ void iwl_mvm_rx_rx_mpdu(struct iwl_mvm *mvm, struct napi_struct *napi,
+ 		 * Don't even try to decrypt a MCAST frame that was received
+ 		 * before the managed vif is authorized, we'd fail anyway.
+ 		 */
+-		if (vif->type == NL80211_IFTYPE_STATION &&
++		if (is_multicast_ether_addr(hdr->addr1) &&
++		    vif->type == NL80211_IFTYPE_STATION &&
+ 		    !mvmvif->authorized &&
+-		    is_multicast_ether_addr(hdr->addr1)) {
++		    ieee80211_has_protected(hdr->frame_control)) {
+ 			IWL_DEBUG_DROP(mvm, "MCAST before the vif is authorized\n");
+ 			kfree_skb(skb);
+ 			rcu_read_unlock();
 -- 
 2.39.2
 
