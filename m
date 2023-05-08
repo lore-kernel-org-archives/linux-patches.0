@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302EE171A8
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:42:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF9BC433D2;
-	Mon,  8 May 2023 11:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B9B171A8
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:42:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C294C4339B;
+	Mon,  8 May 2023 11:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683546145;
-	bh=96xJQ/2uB8QceE5ijnDHeqsXxx2vhniFS4ziP/WEReg=;
+	s=korg; t=1683546148;
+	bh=9LJbx+ELuwApZUsSfMPBiPMGyel/4ljM8YpTP5ivLhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2O6f9s9ryZdl5MlGo8V2SzTx3vHgQaHsMYtRxEttHjldCB+l6GvtHndrwco8XSLj
-	 l0hxVxaar24zy+liLwnRYUfVid9TW644q5CTashCp3ppnnGCwsWcKEtrurI6DNvQFw
-	 Thm1Zp04SLXQywpMWnaepX4LJOPW5FhJwK4W+Es4=
+	b=NsJ/yYDxCST4Gh2TxHMlyOb2f16/y08pgkJ6EZpTn7pISQbxnO1PdcbZiIMccJgHQ
+	 mx1zrBdbVQDbNYet5nZbJ4Dk36CQLNINn2KmwhToHvV8oyGgp3iIs3GOIGaqtp9AwI
+	 tZIN/OmF/2KWMdWtVNkEvV4seCGvEz5OranTXgX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>,
+	"Dae R. Jeong" <threeearcat@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 272/371] usb: mtu3: fix kernel panic at qmu transfer done irq handler
-Date: Mon,  8 May 2023 11:47:53 +0200
-Message-Id: <20230508094822.828126292@linuxfoundation.org>
+Subject: [PATCH 5.15 255/371] vmci_host: fix a race condition in vmci_host_poll() causing GPF
+Date: Mon,  8 May 2023 11:47:36 +0200
+Message-Id: <20230508094822.188558780@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094811.912279944@linuxfoundation.org>
 References: <20230508094811.912279944@linuxfoundation.org>
@@ -34,71 +34,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunfeng Yun <chunfeng.yun@mediatek.com>
+From: Dae R. Jeong <threeearcat@gmail.com>
 
-[ Upstream commit d28f4091ea7ec3510fd6a3c6d433234e7a2bef14 ]
+[ Upstream commit ae13381da5ff0e8e084c0323c3cc0a945e43e9c7 ]
 
-When handle qmu transfer irq, it will unlock @mtu->lock before give back
-request, if another thread handle disconnect event at the same time, and
-try to disable ep, it may lock @mtu->lock and free qmu ring, then qmu
-irq hanlder may get a NULL gpd, avoid the KE by checking gpd's value before
-handling it.
+During fuzzing, a general protection fault is observed in
+vmci_host_poll().
 
-e.g.
-qmu done irq on cpu0                 thread running on cpu1
+general protection fault, probably for non-canonical address 0xdffffc0000000019: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x00000000000000c8-0x00000000000000cf]
+RIP: 0010:__lock_acquire+0xf3/0x5e00 kernel/locking/lockdep.c:4926
+<- omitting registers ->
+Call Trace:
+ <TASK>
+ lock_acquire+0x1a4/0x4a0 kernel/locking/lockdep.c:5672
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+ _raw_spin_lock_irqsave+0xb3/0x100 kernel/locking/spinlock.c:162
+ add_wait_queue+0x3d/0x260 kernel/sched/wait.c:22
+ poll_wait include/linux/poll.h:49 [inline]
+ vmci_host_poll+0xf8/0x2b0 drivers/misc/vmw_vmci/vmci_host.c:174
+ vfs_poll include/linux/poll.h:88 [inline]
+ do_pollfd fs/select.c:873 [inline]
+ do_poll fs/select.c:921 [inline]
+ do_sys_poll+0xc7c/0x1aa0 fs/select.c:1015
+ __do_sys_ppoll fs/select.c:1121 [inline]
+ __se_sys_ppoll+0x2cc/0x330 fs/select.c:1101
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x4e/0xa0 arch/x86/entry/common.c:82
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-qmu_done_tx()
-  handle gpd [0]
-    mtu3_requ_complete()        mtu3_gadget_ep_disable()
-      unlock @mtu->lock
-        give back request         lock @mtu->lock
-                                    mtu3_ep_disable()
-                                      mtu3_gpd_ring_free()
-                                   unlock @mtu->lock
-      lock @mtu->lock
-    get next gpd [1]
+Example thread interleaving that causes the general protection fault
+is as follows:
 
-[1]: goto [0] to handle next gpd, and next gpd may be NULL.
+CPU1 (vmci_host_poll)               CPU2 (vmci_host_do_init_context)
+-----                               -----
+// Read uninitialized context
+context = vmci_host_dev->context;
+                                    // Initialize context
+                                    vmci_host_dev->context = vmci_ctx_create();
+                                    vmci_host_dev->ct_type = VMCIOBJ_CONTEXT;
 
-Fixes: 48e0d3735aa5 ("usb: mtu3: supports new QMU format")
-Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-Link: https://lore.kernel.org/r/20230417025203.18097-3-chunfeng.yun@mediatek.com
+if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
+    // Dereferencing the wrong pointer
+    poll_wait(..., &context->host_context);
+}
+
+In this scenario, vmci_host_poll() reads vmci_host_dev->context first,
+and then reads vmci_host_dev->ct_type to check that
+vmci_host_dev->context is initialized. However, since these two reads
+are not atomically executed, there is a chance of a race condition as
+described above.
+
+To fix this race condition, read vmci_host_dev->context after checking
+the value of vmci_host_dev->ct_type so that vmci_host_poll() always
+reads an initialized context.
+
+Reported-by: Dae R. Jeong <threeearcat@gmail.com>
+Fixes: 8bf503991f87 ("VMCI: host side driver implementation.")
+Signed-off-by: Dae R. Jeong <threeearcat@gmail.com>
+Link: https://lore.kernel.org/r/ZCGFsdBAU4cYww5l@dragonet
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/mtu3/mtu3_qmu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/misc/vmw_vmci/vmci_host.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/mtu3/mtu3_qmu.c b/drivers/usb/mtu3/mtu3_qmu.c
-index 2ea3157ddb6e2..e65586147965d 100644
---- a/drivers/usb/mtu3/mtu3_qmu.c
-+++ b/drivers/usb/mtu3/mtu3_qmu.c
-@@ -210,6 +210,7 @@ static struct qmu_gpd *advance_enq_gpd(struct mtu3_gpd_ring *ring)
- 	return ring->enqueue;
- }
- 
-+/* @dequeue may be NULL if ring is unallocated or freed */
- static struct qmu_gpd *advance_deq_gpd(struct mtu3_gpd_ring *ring)
+diff --git a/drivers/misc/vmw_vmci/vmci_host.c b/drivers/misc/vmw_vmci/vmci_host.c
+index 857b9851402a6..abe79f6fd2a79 100644
+--- a/drivers/misc/vmw_vmci/vmci_host.c
++++ b/drivers/misc/vmw_vmci/vmci_host.c
+@@ -165,10 +165,16 @@ static int vmci_host_close(struct inode *inode, struct file *filp)
+ static __poll_t vmci_host_poll(struct file *filp, poll_table *wait)
  {
- 	if (ring->dequeue < ring->end)
-@@ -484,7 +485,7 @@ static void qmu_done_tx(struct mtu3 *mtu, u8 epnum)
- 	dev_dbg(mtu->dev, "%s EP%d, last=%p, current=%p, enq=%p\n",
- 		__func__, epnum, gpd, gpd_current, ring->enqueue);
+ 	struct vmci_host_dev *vmci_host_dev = filp->private_data;
+-	struct vmci_ctx *context = vmci_host_dev->context;
++	struct vmci_ctx *context;
+ 	__poll_t mask = 0;
  
--	while (gpd != gpd_current && !GET_GPD_HWO(gpd)) {
-+	while (gpd && gpd != gpd_current && !GET_GPD_HWO(gpd)) {
- 
- 		mreq = next_request(mep);
- 
-@@ -523,7 +524,7 @@ static void qmu_done_rx(struct mtu3 *mtu, u8 epnum)
- 	dev_dbg(mtu->dev, "%s EP%d, last=%p, current=%p, enq=%p\n",
- 		__func__, epnum, gpd, gpd_current, ring->enqueue);
- 
--	while (gpd != gpd_current && !GET_GPD_HWO(gpd)) {
-+	while (gpd && gpd != gpd_current && !GET_GPD_HWO(gpd)) {
- 
- 		mreq = next_request(mep);
- 
+ 	if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
++		/*
++		 * Read context only if ct_type == VMCIOBJ_CONTEXT to make
++		 * sure that context is initialized
++		 */
++		context = vmci_host_dev->context;
++
+ 		/* Check for VMCI calls to this VM context. */
+ 		if (wait)
+ 			poll_wait(filp, &context->host_context.wait_queue,
 -- 
 2.39.2
 
