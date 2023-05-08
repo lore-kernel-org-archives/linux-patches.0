@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46195168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:29:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5D19C433D2;
-	Mon,  8 May 2023 10:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D06168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:29:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBA1C433D2;
+	Mon,  8 May 2023 10:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541773;
-	bh=8kqUxfzK8HhvW34/JzCdOrdS4s39HiYu249/IWnhSbI=;
+	s=korg; t=1683541779;
+	bh=15RMTC+ZN1QytF2d7EaMMDUeqoxF3Gg6R/lbc1gyPqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcrSlA6nCOZcD7YDm8GzKzUW57oS6oZ1tnSF20popNHPT/tWgEhzc+RGqWzqUAC6u
-	 nM0h0P7CTUCxwFdPpa8pVjSsF3jp3ZsxoqEOGr7SxyD52kYdyxj/pUzqxKLHgYAQdt
-	 5JOoyro8oTeT6CDscaGROWLkN0HKCZ8iTUkLJvKQ=
+	b=GwjKxUSbXmilxLTDZ6Yua6TjVVrZXlsMp+qsphuTzsx0JvBz/wb4+Gi/4XofuoED+
+	 6YzhA3y1Ud8TrrXjMEnLaInYe+VrAACKaRUJ0cQDFF9cAuxh1/0ziH2qnV+nAq9DV7
+	 MlJFVboSL+66da60+vM3bviBeGJuljWSbU/pLol8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chen-yu Tsai <wenst@chromium.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 223/663] regulator: core: Consistently set mutex_owner when using ww_mutex_lock_slow()
-Date: Mon,  8 May 2023 11:40:49 +0200
-Message-Id: <20230508094435.559768286@linuxfoundation.org>
+Subject: [PATCH 6.2 206/663] arm64: dts: mediatek: mt8192-asurada: Fix voltage constraint for Vgpu
+Date: Mon,  8 May 2023 11:40:32 +0200
+Message-Id: <20230508094435.052467485@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -35,51 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit b83a1772be854f87602de14726737d3e5b06e1f4 ]
+[ Upstream commit ff4c868ba8df9dcd144ab4943a50adca1cf33ba2 ]
 
-When a codepath locks a rdev using ww_mutex_lock_slow() directly then
-that codepath is responsible for incrementing the "ref_cnt" and also
-setting the "mutex_owner" to "current".
+The MT8192 SoC specifies a maximum voltage for the GPU's digital supply
+of 0.88V and the GPU OPPs are declaring a maximum voltage of 0.80V.
 
-The regulator core consistently got that right for "ref_cnt" but
-didn't always get it right for "mutex_owner". Let's fix this.
+In order to keep the GPU voltage in the safe range, change the maximum
+voltage for mt6315@7's vbuck1 to 0.80V as sending, for any mistake,
+1.193V would be catastrophic.
 
-It's unlikely that this truly matters because the "mutex_owner" is
-only needed if we're going to do subsequent locking of the same
-rdev. However, even though it's not truly needed it seems less
-surprising if we consistently set "mutex_owner" properly.
-
-Fixes: f8702f9e4aa7 ("regulator: core: Use ww_mutex for regulators locking")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20230329143317.RFC.v2.1.I4e9d433ea26360c06dd1381d091c82bb1a4ce843@changeid
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3183cb62b033 ("arm64: dts: mediatek: asurada: Add SPMI regulators")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Chen-yu Tsai <wenst@chromium.org>
+Tested-by: Chen-Yu Tsai <wenst@chromium.org>
+Link: https://lore.kernel.org/r/20230301095523.428461-12-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 1490eb40c973a..9a13240f3084f 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -334,6 +334,7 @@ static void regulator_lock_dependent(struct regulator_dev *rdev,
- 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
- 			old_contended_rdev = new_contended_rdev;
- 			old_contended_rdev->ref_cnt++;
-+			old_contended_rdev->mutex_owner = current;
- 		}
- 
- 		err = regulator_lock_recursive(rdev,
-@@ -6048,6 +6049,7 @@ static void regulator_summary_lock(struct ww_acquire_ctx *ww_ctx)
- 			ww_mutex_lock_slow(&new_contended_rdev->mutex, ww_ctx);
- 			old_contended_rdev = new_contended_rdev;
- 			old_contended_rdev->ref_cnt++;
-+			old_contended_rdev->mutex_owner = current;
- 		}
- 
- 		err = regulator_summary_lock_all(ww_ctx,
+diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
+index 4b314435f8fd6..50367da93cd79 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
+@@ -935,7 +935,7 @@
+ 				regulator-compatible = "vbuck1";
+ 				regulator-name = "Vgpu";
+ 				regulator-min-microvolt = <606250>;
+-				regulator-max-microvolt = <1193750>;
++				regulator-max-microvolt = <800000>;
+ 				regulator-enable-ramp-delay = <256>;
+ 				regulator-allowed-modes = <0 1 2>;
+ 			};
 -- 
 2.39.2
 
