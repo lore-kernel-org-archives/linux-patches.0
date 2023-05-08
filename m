@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18C2168D4
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:30:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAD7C433D2;
-	Mon,  8 May 2023 10:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1993168DC
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 10:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D80CC433EF;
+	Mon,  8 May 2023 10:30:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683541806;
-	bh=gUzbTRmh/hdvIxFEop95lgP8rXOvYzPuzE2r3ceH+L0=;
+	s=korg; t=1683541809;
+	bh=uRG1Lne9p8ZLST3S39Ylke+Vn6pqUOoaaTR6c4xgeEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j0j5f3oQJLLXD9AsmxzERhQ2rfAbUBUvaw9J+4xvlx6yeB0Vwg2xY1EVHthpL29cz
-	 gMmXLKHbxwZ2/i052owajjHQ3lsFReU/cse0BWaxfyElT2+ZR5PWqzG0Jj9ZhwsLiR
-	 6szRN0TRaMx0Zyrfzpvm+n4GjtgzCyznIBYsi7EQ=
+	b=kwzmlKfVDOPv4fwNQgN15Lf6M3eTpmngTEwhX2hV1gc8E0YfXtmIltC57cr/r1An7
+	 rHm3VT9uCLoQwkyjp0NUTEWj+kNhcILZtIipw5JT4GlNe6qbYXE3RVg/w3bNkX9KSn
+	 ha2Tkc8H2L/WPWI/MjWA8AMYWldePXj0Hu9nyJ7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	kyrie wu <kyrie.wu@mediatek.com>,
 	irui wang <irui.wang@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 232/663] media: mtk-jpeg: Fixes jpeghw multi-core judgement
-Date: Mon,  8 May 2023 11:40:58 +0200
-Message-Id: <20230508094435.823323870@linuxfoundation.org>
+Subject: [PATCH 6.2 233/663] media: mtk-jpeg: Fixes jpeg enc&dec worker sw flow
+Date: Mon,  8 May 2023 11:40:59 +0200
+Message-Id: <20230508094435.852418215@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094428.384831245@linuxfoundation.org>
 References: <20230508094428.384831245@linuxfoundation.org>
@@ -40,80 +39,95 @@ Content-Transfer-Encoding: 8bit
 
 From: kyrie wu <kyrie.wu@mediatek.com>
 
-[ Upstream commit 75c38caf66a10983acc5a59069bfc9492c43d682 ]
+[ Upstream commit 86379bd9d399e2c5fd638a869af223d4910725c3 ]
 
-some chips have multi-hw, but others have only one,
-modify the condition of multi-hw judgement
+1. Move removing buffer after sw setting and before hw setting
+in enc&dec worker to prevents the operation of removing
+the buffer twice if the sw setting fails.
+2. Remove the redundant operation of queue work in the
+jpegenc irq handler because the jpegenc worker has called
+v4l2_m2m_job_finish to do it.
 
-Fixes: 934e8bccac95 ("mtk-jpegenc: support jpegenc multi-hardware")
+Fixes: 5fb1c2361e56 ("mtk-jpegenc: add jpeg encode worker interface")
+Fixes: dedc21500334 ("media: mtk-jpegdec: add jpeg decode worker interface")
 Signed-off-by: kyrie wu <kyrie.wu@mediatek.com>
 Signed-off-by: irui wang <irui.wang@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c | 5 ++++-
- drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.h | 2 ++
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ .../media/platform/mediatek/jpeg/mtk_jpeg_core.c   | 14 +++++++-------
+ .../media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c |  4 ----
+ 2 files changed, 7 insertions(+), 11 deletions(-)
 
 diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-index 969516a940ba7..6d052747a15e8 100644
+index 6d052747a15e8..d9584fe5033eb 100644
 --- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
 +++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c
-@@ -1692,7 +1692,7 @@ static int mtk_jpeg_probe(struct platform_device *pdev)
- 		return -EINVAL;
+@@ -1025,9 +1025,6 @@ static void mtk_jpegenc_worker(struct work_struct *work)
+ 	if (!dst_buf)
+ 		goto getbuf_fail;
+ 
+-	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
+-	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
+-
+ 	v4l2_m2m_buf_copy_metadata(src_buf, dst_buf, true);
+ 
+ 	mtk_jpegenc_set_hw_param(ctx, hw_id, src_buf, dst_buf);
+@@ -1045,6 +1042,9 @@ static void mtk_jpegenc_worker(struct work_struct *work)
+ 		goto enc_end;
  	}
  
--	if (list_empty(&pdev->dev.devres_head)) {
-+	if (!jpeg->variant->multi_core) {
- 		INIT_DELAYED_WORK(&jpeg->job_timeout_work,
- 				  mtk_jpeg_job_timeout_work);
++	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
++	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
++
+ 	schedule_delayed_work(&comp_jpeg[hw_id]->job_timeout_work,
+ 			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
  
-@@ -1874,6 +1874,7 @@ static const struct mtk_jpeg_variant mtk_jpeg_drvdata = {
- 	.ioctl_ops = &mtk_jpeg_enc_ioctl_ops,
- 	.out_q_default_fourcc = V4L2_PIX_FMT_YUYV,
- 	.cap_q_default_fourcc = V4L2_PIX_FMT_JPEG,
-+	.multi_core = false,
- };
+@@ -1220,9 +1220,6 @@ static void mtk_jpegdec_worker(struct work_struct *work)
+ 	if (!dst_buf)
+ 		goto getbuf_fail;
  
- static struct mtk_jpeg_variant mtk8195_jpegenc_drvdata = {
-@@ -1885,6 +1886,7 @@ static struct mtk_jpeg_variant mtk8195_jpegenc_drvdata = {
- 	.ioctl_ops = &mtk_jpeg_enc_ioctl_ops,
- 	.out_q_default_fourcc = V4L2_PIX_FMT_YUYV,
- 	.cap_q_default_fourcc = V4L2_PIX_FMT_JPEG,
-+	.multi_core = true,
- };
+-	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
+-	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
+-
+ 	v4l2_m2m_buf_copy_metadata(src_buf, dst_buf, true);
+ 	jpeg_src_buf = mtk_jpeg_vb2_to_srcbuf(&src_buf->vb2_buf);
+ 	jpeg_dst_buf = mtk_jpeg_vb2_to_srcbuf(&dst_buf->vb2_buf);
+@@ -1231,7 +1228,7 @@ static void mtk_jpegdec_worker(struct work_struct *work)
+ 					     &jpeg_src_buf->dec_param)) {
+ 		mtk_jpeg_queue_src_chg_event(ctx);
+ 		ctx->state = MTK_JPEG_SOURCE_CHANGE;
+-		goto dec_end;
++		goto getbuf_fail;
+ 	}
  
- static const struct mtk_jpeg_variant mtk8195_jpegdec_drvdata = {
-@@ -1896,6 +1898,7 @@ static const struct mtk_jpeg_variant mtk8195_jpegdec_drvdata = {
- 	.ioctl_ops = &mtk_jpeg_dec_ioctl_ops,
- 	.out_q_default_fourcc = V4L2_PIX_FMT_JPEG,
- 	.cap_q_default_fourcc = V4L2_PIX_FMT_YUV420M,
-+	.multi_core = true,
- };
+ 	jpeg_src_buf->curr_ctx = ctx;
+@@ -1254,6 +1251,9 @@ static void mtk_jpegdec_worker(struct work_struct *work)
+ 		goto clk_end;
+ 	}
  
- #if defined(CONFIG_OF)
-diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.h b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.h
-index b9126476be8fa..f87358cc9f47f 100644
---- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.h
-+++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.h
-@@ -60,6 +60,7 @@ enum mtk_jpeg_ctx_state {
-  * @ioctl_ops:			the callback of jpeg v4l2_ioctl_ops
-  * @out_q_default_fourcc:	output queue default fourcc
-  * @cap_q_default_fourcc:	capture queue default fourcc
-+ * @multi_core:		mark jpeg hw is multi_core or not
-  */
- struct mtk_jpeg_variant {
- 	struct clk_bulk_data *clks;
-@@ -74,6 +75,7 @@ struct mtk_jpeg_variant {
- 	const struct v4l2_ioctl_ops *ioctl_ops;
- 	u32 out_q_default_fourcc;
- 	u32 cap_q_default_fourcc;
-+	bool multi_core;
- };
++	v4l2_m2m_src_buf_remove(ctx->fh.m2m_ctx);
++	v4l2_m2m_dst_buf_remove(ctx->fh.m2m_ctx);
++
+ 	schedule_delayed_work(&comp_jpeg[hw_id]->job_timeout_work,
+ 			      msecs_to_jiffies(MTK_JPEG_HW_TIMEOUT_MSEC));
  
- struct mtk_jpeg_src_buf {
+diff --git a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
+index 1bbb712d78d0e..867f4c1a09fa6 100644
+--- a/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
++++ b/drivers/media/platform/mediatek/jpeg/mtk_jpeg_enc_hw.c
+@@ -286,10 +286,6 @@ static irqreturn_t mtk_jpegenc_hw_irq_handler(int irq, void *priv)
+ 	mtk_jpegenc_put_buf(jpeg);
+ 	pm_runtime_put(ctx->jpeg->dev);
+ 	clk_disable_unprepare(jpeg->venc_clk.clks->clk);
+-	if (!list_empty(&ctx->fh.m2m_ctx->out_q_ctx.rdy_queue) ||
+-	    !list_empty(&ctx->fh.m2m_ctx->cap_q_ctx.rdy_queue)) {
+-		queue_work(master_jpeg->workqueue, &ctx->jpeg_work);
+-	}
+ 
+ 	jpeg->hw_state = MTK_JPEG_HW_IDLE;
+ 	wake_up(&master_jpeg->enc_hw_wq);
 -- 
 2.39.2
 
