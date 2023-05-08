@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F0C168AD
-	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:21:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E32C433D2;
-	Mon,  8 May 2023 11:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65466168AD
+	for <patches@lists.linux.dev>; Mon,  8 May 2023 11:21:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB622C433EF;
+	Mon,  8 May 2023 11:21:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683544902;
-	bh=xdAFWYR/RXqH8ok1Y1aPIX+9ysIpKlGcch10JaOzDf4=;
+	s=korg; t=1683544905;
+	bh=fquWWUTh7y+Gdg76M90XUq7d3ZEihN4eT4T7TfhaCoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TTq3XRP/YfT1GC1Dgmznj3I1z+nA8mnaeLXyEFVfD1DdBlHeblRH8memdbvd61D3f
-	 o/O02fnd+LYy0PwpRVqLHBMu65zs/lq2h8HVn7NHkvu+/WKBl3PncPp5c3x/8DY6+0
-	 J71OtQPUwy8fpyim99NYyTNuWGNBiCOfltkqhUC8=
+	b=jZX+1qkiyU0FFwpI0K80DVgk3tVfGD9ZVNm5jtCNQuevP/wQHyCAcMUEj1BM0GKK0
+	 EH4Edl9xelo108SRLIV90GOrXDqvy1qxJhMLQCZFgkn0FezLiqMhYn4WE72VDLp051
+	 9c43hMHXIzmK45CZwym/LpfKiRF+7rXfcsZIN/Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Thierry Reding <treding@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 561/694] powerpc/wii: fix resource printk format warnings
-Date: Mon,  8 May 2023 11:46:36 +0200
-Message-Id: <20230508094452.896573512@linuxfoundation.org>
+Subject: [PATCH 6.3 544/694] usb: gadget: tegra-xudc: Fix crash in vbus_draw
+Date: Mon,  8 May 2023 11:46:19 +0200
+Message-Id: <20230508094452.137579119@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230508094432.603705160@linuxfoundation.org>
 References: <20230508094432.603705160@linuxfoundation.org>
@@ -35,85 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit 7b69600d4da0049244e9be2f5ef5a2f8e04fcd9a ]
+[ Upstream commit 5629d31955297ca47b9283c64fff70f2f34aa528 ]
 
-Use "%pa" format specifier for resource_size_t to avoid compiler
-printk format warnings.
+Commit ac82b56bda5f ("usb: gadget: tegra-xudc: Add vbus_draw support")
+populated the vbus_draw callback for the Tegra XUDC driver. The function
+tegra_xudc_gadget_vbus_draw(), that was added by this commit, assumes
+that the pointer 'curr_usbphy' has been initialised, which is not always
+the case because this is only initialised when the USB role is updated.
+Fix this crash, by checking that the 'curr_usbphy' is valid before
+dereferencing.
 
-../arch/powerpc/platforms/embedded6xx/flipper-pic.c: In function 'flipper_pic_init':
-../include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
-../arch/powerpc/platforms/embedded6xx/flipper-pic.c:148:9: note: in expansion of macro 'pr_info'
-  148 |         pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
-      |         ^~~~~~~
-
-../arch/powerpc/platforms/embedded6xx/hlwd-pic.c: In function 'hlwd_pic_init':
-../include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
-../arch/powerpc/platforms/embedded6xx/hlwd-pic.c:174:9: note: in expansion of macro 'pr_info'
-  174 |         pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
-      |         ^~~~~~~
-
-../arch/powerpc/platforms/embedded6xx/wii.c: In function 'wii_ioremap_hw_regs':
-../include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 3 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
-../arch/powerpc/platforms/embedded6xx/wii.c:77:17: note: in expansion of macro 'pr_info'
-   77 |                 pr_info("%s at 0x%08x mapped to 0x%p\n", name,
-      |                 ^~~~~~~
-
-Fixes: 028ee972f032 ("powerpc: gamecube/wii: flipper interrupt controller support")
-Fixes: 9c21025c7845 ("powerpc: wii: hollywood interrupt controller support")
-Fixes: 5a7ee3198dfa ("powerpc: wii: platform support")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230223070116.660-3-rdunlap@infradead.org
+Fixes: ac82b56bda5f ("usb: gadget: tegra-xudc: Add vbus_draw support")
+Reviewed-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Link: https://lore.kernel.org/r/20230405181854.42355-1-jonathanh@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/embedded6xx/flipper-pic.c | 2 +-
- arch/powerpc/platforms/embedded6xx/hlwd-pic.c    | 2 +-
- arch/powerpc/platforms/embedded6xx/wii.c         | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/udc/tegra-xudc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/embedded6xx/flipper-pic.c b/arch/powerpc/platforms/embedded6xx/flipper-pic.c
-index 609bda2ad5dd2..4d9200bdba78c 100644
---- a/arch/powerpc/platforms/embedded6xx/flipper-pic.c
-+++ b/arch/powerpc/platforms/embedded6xx/flipper-pic.c
-@@ -145,7 +145,7 @@ static struct irq_domain * __init flipper_pic_init(struct device_node *np)
- 	}
- 	io_base = ioremap(res.start, resource_size(&res));
+diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
+index 2b71b33725f17..5bccd64847ff7 100644
+--- a/drivers/usb/gadget/udc/tegra-xudc.c
++++ b/drivers/usb/gadget/udc/tegra-xudc.c
+@@ -2167,7 +2167,7 @@ static int tegra_xudc_gadget_vbus_draw(struct usb_gadget *gadget,
  
--	pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
-+	pr_info("controller at 0x%pa mapped to 0x%p\n", &res.start, io_base);
+ 	dev_dbg(xudc->dev, "%s: %u mA\n", __func__, m_a);
  
- 	__flipper_quiesce(io_base);
+-	if (xudc->curr_usbphy->chg_type == SDP_TYPE)
++	if (xudc->curr_usbphy && xudc->curr_usbphy->chg_type == SDP_TYPE)
+ 		ret = usb_phy_set_power(xudc->curr_usbphy, m_a);
  
-diff --git a/arch/powerpc/platforms/embedded6xx/hlwd-pic.c b/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
-index 380b4285cce47..4d2d92de30afd 100644
---- a/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
-+++ b/arch/powerpc/platforms/embedded6xx/hlwd-pic.c
-@@ -171,7 +171,7 @@ static struct irq_domain *__init hlwd_pic_init(struct device_node *np)
- 		return NULL;
- 	}
- 
--	pr_info("controller at 0x%08x mapped to 0x%p\n", res.start, io_base);
-+	pr_info("controller at 0x%pa mapped to 0x%p\n", &res.start, io_base);
- 
- 	__hlwd_quiesce(io_base);
- 
-diff --git a/arch/powerpc/platforms/embedded6xx/wii.c b/arch/powerpc/platforms/embedded6xx/wii.c
-index f4e654a9d4ff6..219659f2ede06 100644
---- a/arch/powerpc/platforms/embedded6xx/wii.c
-+++ b/arch/powerpc/platforms/embedded6xx/wii.c
-@@ -74,8 +74,8 @@ static void __iomem *__init wii_ioremap_hw_regs(char *name, char *compatible)
- 
- 	hw_regs = ioremap(res.start, resource_size(&res));
- 	if (hw_regs) {
--		pr_info("%s at 0x%08x mapped to 0x%p\n", name,
--			res.start, hw_regs);
-+		pr_info("%s at 0x%pa mapped to 0x%p\n", name,
-+			&res.start, hw_regs);
- 	}
- 
- out_put:
+ 	return ret;
 -- 
 2.39.2
 
