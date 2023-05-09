@@ -1,82 +1,343 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA741096E
-	for <patches@lists.linux.dev>; Tue,  9 May 2023 12:25:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1683635132; x=1715171132;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ijkGrW+2rpFL4Y0gLu0veMBivtrLnsxJY0JGpTtZ9Bk=;
-  b=cd5IrANdkZFtLU6U4ckBnV+8SH9a6t+O36Dx/aAfOjl5vthZ1b1C3NA7
-   WicIB4UyZvWs4xrJYxAXwb4gKYuweIkfPaAEeNpiDQotveT2SHND4wsAA
-   o4I62oq5QG7537vGKr3FCSThz5eh/pV7IxtRO8HqiKsy3qvTlkIlisrTp
-   QI+Iyg2lil17t0KP2H2NuwRERUTRvbGFEQnaVtaYpSrn27KfKyhZAu1iN
-   wP0guVO8sk2U/nJn17afGLBv0TDV/rx6NmwsT/tjbKMV0DOV2acGMZzNd
-   ofzUuqnAleeNllMH+29p/dFK5PqltA2bnamn5oA+/9ka0yA3MTf6Gk9lC
-   Q==;
-X-IronPort-AV: E=Sophos;i="5.99,262,1677567600"; 
-   d="asc'?scan'208";a="210342933"
-X-Amp-Result: UNKNOWN
-X-Amp-Original-Verdict: FILE UNKNOWN
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa4.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 09 May 2023 05:25:26 -0700
-Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
- chn-vm-ex04.mchp-main.com (10.10.85.152) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.21; Tue, 9 May 2023 05:25:25 -0700
-Received: from wendy (10.10.115.15) by chn-vm-ex03.mchp-main.com
- (10.10.85.151) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
- Transport; Tue, 9 May 2023 05:25:22 -0700
-Date: Tue, 9 May 2023 13:25:03 +0100
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>
-Subject: Re: [PATCH 6.3 000/694] 6.3.2-rc2 review
-Message-ID: <20230509-reheat-enclosure-c0f8fcf7f157@wendy>
-References: <20230509030705.399628514@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B0F8BE3
+	for <patches@lists.linux.dev>; Tue,  9 May 2023 12:58:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 844D6C433D2;
+	Tue,  9 May 2023 12:58:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1683637121;
+	bh=3Fh9WArHaMt88X9J653cBBj7vWD50mo9lG6KtFjGTjI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=gMcX3bkYSFUQanUmW4kVoaz2uPgRcHd5BG+j9c60ufY/LcvgxyGOErkWzcWNBjm4S
+	 4T93h0ooCIE/gZRdStTid8uDbCpzdEWY62/zs2jyg9cC765S3Qlv6wzmlZlvzDg7RD
+	 RM2yaFjS8dLJX0rXF5UYltOeyQhGe4MGJRem8UFRFLHm6iY6lQoy3JZSAxp38OV68y
+	 z3I10gRh8u0Mn1LXl9NNICVDVra0mQaqt14jkLrLqf+owQ2eI1mJGAghaB1Ktz53Vv
+	 foxSYN6cD5dfIWw58x7L8ok/Rw3IDFq/brcluEmfQ//9gd0pjbFU8Y5akvfrXhTUH/
+	 Hd15E+1lMMF9w==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 1/2] clang-format: Update with v6.4-rc1's  macro list
+Date: Tue,  9 May 2023 14:58:11 +0200
+Message-Id: <20230509125812.310307-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="9nh3UvsGBTT76EVo"
-Content-Disposition: inline
-In-Reply-To: <20230509030705.399628514@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
---9nh3UvsGBTT76EVo
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Re-run the shell fragment that generated the original list.
 
-On Tue, May 09, 2023 at 05:26:44AM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.2 release.
-> There are 694 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ .clang-format | 65 ++++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 51 insertions(+), 14 deletions(-)
 
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+diff --git a/.clang-format b/.clang-format
+index 0d1ed8776733..20969c66fec7 100644
+--- a/.clang-format
++++ b/.clang-format
+@@ -82,11 +82,16 @@ ForEachMacros:
+   - '__for_each_thread'
+   - '__hlist_for_each_rcu'
+   - '__map__for_each_symbol_by_name'
++  - '__pci_bus_for_each_res0'
++  - '__pci_bus_for_each_res1'
++  - '__pci_dev_for_each_res0'
++  - '__pci_dev_for_each_res1'
+   - '__perf_evlist__for_each_entry'
+   - '__perf_evlist__for_each_entry_reverse'
+   - '__perf_evlist__for_each_entry_safe'
+   - '__rq_for_each_bio'
+   - '__shost_for_each_device'
++  - '__sym_for_each'
+   - 'apei_estatus_for_each_section'
+   - 'ata_for_each_dev'
+   - 'ata_for_each_link'
+@@ -107,10 +112,11 @@ ForEachMacros:
+   - 'bond_for_each_slave_rcu'
+   - 'bpf__perf_for_each_map'
+   - 'bpf__perf_for_each_map_named'
++  - 'bpf_for_each'
++  - 'bpf_for_each_reg_in_vstate'
+   - 'bpf_for_each_spilled_reg'
+   - 'bpf_object__for_each_map'
+   - 'bpf_object__for_each_program'
+-  - 'bpf_object__for_each_safe'
+   - 'bpf_perf_object__for_each'
+   - 'btree_for_each_safe128'
+   - 'btree_for_each_safe32'
+@@ -119,6 +125,7 @@ ForEachMacros:
+   - 'card_for_each_dev'
+   - 'cgroup_taskset_for_each'
+   - 'cgroup_taskset_for_each_leader'
++  - 'cpu_aggr_map__for_each_idx'
+   - 'cpufreq_for_each_efficient_entry_idx'
+   - 'cpufreq_for_each_entry'
+   - 'cpufreq_for_each_entry_idx'
+@@ -128,11 +135,14 @@ ForEachMacros:
+   - 'css_for_each_descendant_post'
+   - 'css_for_each_descendant_pre'
+   - 'damon_for_each_region'
++  - 'damon_for_each_region_from'
+   - 'damon_for_each_region_safe'
+   - 'damon_for_each_scheme'
+   - 'damon_for_each_scheme_safe'
+   - 'damon_for_each_target'
+   - 'damon_for_each_target_safe'
++  - 'damos_for_each_filter'
++  - 'damos_for_each_filter_safe'
+   - 'data__for_each_file'
+   - 'data__for_each_file_new'
+   - 'data__for_each_file_start'
+@@ -168,16 +178,17 @@ ForEachMacros:
+   - 'drm_mm_for_each_node_safe'
+   - 'dsa_switch_for_each_available_port'
+   - 'dsa_switch_for_each_cpu_port'
++  - 'dsa_switch_for_each_cpu_port_continue_reverse'
+   - 'dsa_switch_for_each_port'
+   - 'dsa_switch_for_each_port_continue_reverse'
+   - 'dsa_switch_for_each_port_safe'
+   - 'dsa_switch_for_each_user_port'
++  - 'dsa_tree_for_each_cpu_port'
+   - 'dsa_tree_for_each_user_port'
++  - 'dsa_tree_for_each_user_port_continue_reverse'
+   - 'dso__for_each_symbol'
+   - 'dsos__for_each_with_build_id'
+   - 'elf_hash_for_each_possible'
+-  - 'elf_section__for_each_rel'
+-  - 'elf_section__for_each_rela'
+   - 'elf_symtab__for_each_symbol'
+   - 'evlist__for_each_cpu'
+   - 'evlist__for_each_entry'
+@@ -186,12 +197,15 @@ ForEachMacros:
+   - 'evlist__for_each_entry_reverse'
+   - 'evlist__for_each_entry_safe'
+   - 'flow_action_for_each'
++  - 'for_each_acpi_consumer_dev'
+   - 'for_each_acpi_dev_match'
+   - 'for_each_active_dev_scope'
+   - 'for_each_active_drhd_unit'
+   - 'for_each_active_iommu'
+   - 'for_each_active_route'
+   - 'for_each_aggr_pgid'
++  - 'for_each_and_bit'
++  - 'for_each_andnot_bit'
+   - 'for_each_available_child_of_node'
+   - 'for_each_bench'
+   - 'for_each_bio'
+@@ -222,10 +236,13 @@ ForEachMacros:
+   - 'for_each_compatible_node'
+   - 'for_each_component_dais'
+   - 'for_each_component_dais_safe'
++  - 'for_each_conduit'
+   - 'for_each_console'
+   - 'for_each_console_srcu'
+   - 'for_each_cpu'
+   - 'for_each_cpu_and'
++  - 'for_each_cpu_andnot'
++  - 'for_each_cpu_or'
+   - 'for_each_cpu_wrap'
+   - 'for_each_dapm_widgets'
+   - 'for_each_dedup_cand'
+@@ -254,6 +271,7 @@ ForEachMacros:
+   - 'for_each_free_mem_range'
+   - 'for_each_free_mem_range_reverse'
+   - 'for_each_func_rsrc'
++  - 'for_each_gpiochip_node'
+   - 'for_each_group_evsel'
+   - 'for_each_group_member'
+   - 'for_each_hstate'
+@@ -272,6 +290,7 @@ ForEachMacros:
+   - 'for_each_lru'
+   - 'for_each_matching_node'
+   - 'for_each_matching_node_and_match'
++  - 'for_each_media_entity_data_link'
+   - 'for_each_mem_pfn_range'
+   - 'for_each_mem_range'
+   - 'for_each_mem_range_rev'
+@@ -280,6 +299,8 @@ ForEachMacros:
+   - 'for_each_memory'
+   - 'for_each_migratetype_order'
+   - 'for_each_missing_reg'
++  - 'for_each_mle_subelement'
++  - 'for_each_mod_mem_type'
+   - 'for_each_net'
+   - 'for_each_net_continue_reverse'
+   - 'for_each_net_rcu'
+@@ -307,6 +328,7 @@ ForEachMacros:
+   - 'for_each_node_with_cpus'
+   - 'for_each_node_with_property'
+   - 'for_each_nonreserved_multicast_dest_pgid'
++  - 'for_each_numa_hop_mask'
+   - 'for_each_of_allnodes'
+   - 'for_each_of_allnodes_from'
+   - 'for_each_of_cpu_node'
+@@ -325,6 +347,7 @@ ForEachMacros:
+   - 'for_each_online_cpu'
+   - 'for_each_online_node'
+   - 'for_each_online_pgdat'
++  - 'for_each_or_bit'
+   - 'for_each_path'
+   - 'for_each_pci_bridge'
+   - 'for_each_pci_dev'
+@@ -347,7 +370,6 @@ ForEachMacros:
+   - 'for_each_property_of_node'
+   - 'for_each_reg'
+   - 'for_each_reg_filtered'
+-  - 'for_each_registered_fb'
+   - 'for_each_requested_gpio'
+   - 'for_each_requested_gpio_in_range'
+   - 'for_each_reserved_mem_range'
+@@ -360,6 +382,7 @@ ForEachMacros:
+   - 'for_each_sec'
+   - 'for_each_set_bit'
+   - 'for_each_set_bit_from'
++  - 'for_each_set_bit_wrap'
+   - 'for_each_set_bitrange'
+   - 'for_each_set_bitrange_from'
+   - 'for_each_set_clump8'
+@@ -370,8 +393,8 @@ ForEachMacros:
+   - 'for_each_sgtable_dma_sg'
+   - 'for_each_sgtable_page'
+   - 'for_each_sgtable_sg'
+-  - 'for_each_shell_test'
+   - 'for_each_sibling_event'
++  - 'for_each_sta_active_link'
+   - 'for_each_subelement'
+   - 'for_each_subelement_extid'
+   - 'for_each_subelement_id'
+@@ -379,10 +402,15 @@ ForEachMacros:
+   - 'for_each_subsystem'
+   - 'for_each_supported_activate_fn'
+   - 'for_each_supported_inject_fn'
++  - 'for_each_sym'
+   - 'for_each_test'
+   - 'for_each_thread'
+   - 'for_each_token'
+   - 'for_each_unicast_dest_pgid'
++  - 'for_each_valid_link'
++  - 'for_each_vif_active_link'
++  - 'for_each_vma'
++  - 'for_each_vma_range'
+   - 'for_each_vsi'
+   - 'for_each_wakeup_source'
+   - 'for_each_zone'
+@@ -391,6 +419,7 @@ ForEachMacros:
+   - 'func_for_each_insn'
+   - 'fwnode_for_each_available_child_node'
+   - 'fwnode_for_each_child_node'
++  - 'fwnode_for_each_parent_node'
+   - 'fwnode_graph_for_each_endpoint'
+   - 'gadget_for_each_ep'
+   - 'genradix_for_each'
+@@ -438,14 +467,9 @@ ForEachMacros:
+   - 'in_dev_for_each_ifa_rcu'
+   - 'in_dev_for_each_ifa_rtnl'
+   - 'inet_bind_bucket_for_each'
+-  - 'inet_lhash2_for_each_icsk'
+-  - 'inet_lhash2_for_each_icsk_continue'
+-  - 'inet_lhash2_for_each_icsk_rcu'
+-  - 'interval_tree_for_each_double_span'
+   - 'interval_tree_for_each_span'
+   - 'intlist__for_each_entry'
+   - 'intlist__for_each_entry_safe'
+-  - 'iopt_for_each_contig_area'
+   - 'kcore_copy__for_each_phdr'
+   - 'key_for_each'
+   - 'key_for_each_safe'
+@@ -482,6 +506,7 @@ ForEachMacros:
+   - 'list_for_each_from'
+   - 'list_for_each_prev'
+   - 'list_for_each_prev_safe'
++  - 'list_for_each_rcu'
+   - 'list_for_each_safe'
+   - 'llist_for_each'
+   - 'llist_for_each_entry'
+@@ -489,21 +514,27 @@ ForEachMacros:
+   - 'llist_for_each_safe'
+   - 'map__for_each_symbol'
+   - 'map__for_each_symbol_by_name'
+-  - 'map_for_each_event'
+-  - 'map_for_each_metric'
+   - 'maps__for_each_entry'
+   - 'maps__for_each_entry_safe'
++  - 'mas_for_each'
+   - 'mci_for_each_dimm'
+   - 'media_device_for_each_entity'
+   - 'media_device_for_each_intf'
+   - 'media_device_for_each_link'
+   - 'media_device_for_each_pad'
++  - 'media_entity_for_each_pad'
++  - 'media_pipeline_for_each_entity'
++  - 'media_pipeline_for_each_pad'
++  - 'msi_domain_for_each_desc'
+   - 'msi_for_each_desc'
++  - 'mt_for_each'
+   - 'nanddev_io_for_each_page'
+   - 'netdev_for_each_lower_dev'
+   - 'netdev_for_each_lower_private'
+   - 'netdev_for_each_lower_private_rcu'
+   - 'netdev_for_each_mc_addr'
++  - 'netdev_for_each_synced_mc_addr'
++  - 'netdev_for_each_synced_uc_addr'
+   - 'netdev_for_each_uc_addr'
+   - 'netdev_for_each_upper_dev_rcu'
+   - 'netdev_hw_addr_list_for_each'
+@@ -528,6 +559,7 @@ ForEachMacros:
+   - 'perf_config_sections__for_each_entry'
+   - 'perf_config_set__for_each_entry'
+   - 'perf_cpu_map__for_each_cpu'
++  - 'perf_cpu_map__for_each_idx'
+   - 'perf_evlist__for_each_entry'
+   - 'perf_evlist__for_each_entry_reverse'
+   - 'perf_evlist__for_each_entry_safe'
+@@ -538,8 +570,8 @@ ForEachMacros:
+   - 'perf_hpp_list__for_each_sort_list'
+   - 'perf_hpp_list__for_each_sort_list_safe'
+   - 'perf_pmu__for_each_hybrid_pmu'
+-  - 'ping_portaddr_for_each_entry'
+-  - 'ping_portaddr_for_each_entry_rcu'
++  - 'perf_pmus__for_each_pmu'
++  - 'perf_tool_event__for_each_event'
+   - 'plist_for_each'
+   - 'plist_for_each_continue'
+   - 'plist_for_each_entry'
+@@ -576,6 +608,7 @@ ForEachMacros:
+   - 'rq_for_each_segment'
+   - 'rq_list_for_each'
+   - 'rq_list_for_each_safe'
++  - 'sample_read_group__for_each'
+   - 'scsi_for_each_prot_sg'
+   - 'scsi_for_each_sg'
+   - 'sctp_for_each_hentry'
+@@ -583,10 +616,12 @@ ForEachMacros:
+   - 'sec_for_each_insn'
+   - 'sec_for_each_insn_continue'
+   - 'sec_for_each_insn_from'
++  - 'sec_for_each_sym'
+   - 'shdma_for_each_chan'
+   - 'shost_for_each_device'
+   - 'sk_for_each'
+   - 'sk_for_each_bound'
++  - 'sk_for_each_bound_bhash2'
+   - 'sk_for_each_entry_offset_rcu'
+   - 'sk_for_each_from'
+   - 'sk_for_each_rcu'
+@@ -608,6 +643,8 @@ ForEachMacros:
+   - 'tb_property_for_each'
+   - 'tcf_act_for_each_action'
+   - 'tcf_exts_for_each_action'
++  - 'ttm_resource_manager_for_each_res'
++  - 'twsk_for_each_bound_bhash2'
+   - 'udp_portaddr_for_each_entry'
+   - 'udp_portaddr_for_each_entry_rcu'
+   - 'usb_hub_for_each_child'
+-- 
+2.40.1
 
-Thanks,
-Conor.
-
---9nh3UvsGBTT76EVo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZFo7nwAKCRB4tDGHoIJi
-0rXdAQCStlcR0Mkfx/k9Pb/1gFsKOiO1GZCFh66yXngIdynN/QEAyex3G0ZVNS/F
-qe2nUILynK5mjBX5La5rIPAZCi7NAQw=
-=MJU6
------END PGP SIGNATURE-----
-
---9nh3UvsGBTT76EVo--
