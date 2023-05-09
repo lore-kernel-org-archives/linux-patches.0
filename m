@@ -1,99 +1,86 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30FCB53B2
-	for <patches@lists.linux.dev>; Tue,  9 May 2023 10:17:14 +0000 (UTC)
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-953343581a4so866174066b.3
-        for <patches@lists.linux.dev>; Tue, 09 May 2023 03:17:13 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6943111BE
+	for <patches@lists.linux.dev>; Tue,  9 May 2023 11:11:06 +0000 (UTC)
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-b9246a5f3feso8684593276.1
+        for <patches@lists.linux.dev>; Tue, 09 May 2023 04:11:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1683627432; x=1686219432;
+        d=gmail.com; s=20221208; t=1683630665; x=1686222665;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ohlbAzo5ypwXbaF7pM6OkdMeUeZBKkZUohq6OEP0kZU=;
-        b=ziO7DvPc9SBB23k/jehuNJYdveEYLM7h0sazR78aoaxgiajd9ybCUcuDAf3VzW35L1
-         iRc4Ae/FHc1FW73mx7JrbMQoc0ReumUMiG1MHR3J9JF+5Km1utCuV5aSAHlEHNTXty4X
-         ryZko4DYK2p0Sc90zohTHW4dyo8hrxyiD2zfnp/lGPrn6U2JNu45UvUsj0SkJtNdHNWV
-         gK7bptIul5zh9ro5ihYQtP1pQOlLM2h2gbgoiIC+F9DzrZ4ZoHrJd5gmvbMIwLLxum0j
-         BByOL1WVXyQKzJPZMk9HDEHpqAl4OvV6+NMo5J8xrw7aCX2/b23SCLAPQy1HqW1FGBcJ
-         mhAg==
+        bh=Vkk5DCy0z8eSEQJVhraU0gyt2AdUF96RHlpvGnmt4l8=;
+        b=jWHqrlv1baM2RFyMyWnFWvRvQzJwzy1tI//qEiBRlo7NtLAkNSSADCHP1qXq2HKOXw
+         4ylVczxZLkaVP5CHkls7q1hHxLD9XQlHp2eObYN2YwWNBhhumPVdMc60Fe0yZcD+TBKL
+         fATB2lmJZK+t/B+KdFaQ1eBX7oo6DrSMhiRAegBaPghSGt9y0PI8jusxxywFJA8/XEG0
+         UUD/6hRxCrT7bNkKCmwmb53CsaiENjSM4KedxejCfcAE3JmR3Ga7lj0MWT9W5Wsp89fr
+         AINQdsIMhgWTgeVny665E9o666cv3Fu3un2KgJ0M9BzavlnFZq2WM71Uxia4rsnaA1oA
+         QtEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683627432; x=1686219432;
+        d=1e100.net; s=20221208; t=1683630665; x=1686222665;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ohlbAzo5ypwXbaF7pM6OkdMeUeZBKkZUohq6OEP0kZU=;
-        b=INBz5eCt08tyLHN96NarP3DK0UcbLzAqnupp+LOub0zcl48dWqfNb5S981MRxjmwnL
-         6qNwQRj5UTq5SK1SbuzKaaNPW7oSkw2T3+Ri7jYlzUUvuwCRCmh/+apZXS5JTQIhhZ0E
-         FwXN4Oo5aAhV5MaYokfcH/mCJMVwdtr+GGC8luauoZ0hRGxmwjWbLifhx+TwbowaNfzA
-         b5BbaFFDa3XM8cJUxoox7OyQlELk1l4aZ4VLYKrVpefwEOGmSoQMU1WMO9xx1RCMledx
-         VJrEloQxPC1RKc0CmTxBlVbR1QOPB0gYzx2jD/TFbxzo4LBJVwmuZcqMTwsWkx2LuLrY
-         WRag==
-X-Gm-Message-State: AC+VfDx6CH9j1zwymQmoJkksAvylNGzOyNND5Ic/YZhQ4PrOtFDmGCJO
-	myWLJQDG66utEZlsX1aED0WYTibVOJtXI7EpzG9z7g==
-X-Google-Smtp-Source: ACHHUZ4fpHBQjFItIPZmI0/7UCEWgb0vqm/e9/KBpogQJkDgd3uL/4mLaxg2DFynAPUZl/b50gJqaip9svkToh9hxNo=
-X-Received: by 2002:a17:907:868f:b0:969:f9e8:a77c with SMTP id
- qa15-20020a170907868f00b00969f9e8a77cmr1058743ejc.64.1683627432167; Tue, 09
- May 2023 03:17:12 -0700 (PDT)
+        bh=Vkk5DCy0z8eSEQJVhraU0gyt2AdUF96RHlpvGnmt4l8=;
+        b=Dslc9sb364JzxYm9DwEEGLyeKU7motWZD0C2dayjPzjAxGekd1dsEc+SqzbZOgyWmh
+         /mcbWaXA6jBdTvpAUfN7exl2Fsrav5QOip5irR4gjx+HhpRlNp9h405QL+WaWLHvP2iM
+         ybt4J8iKNDdmKReskY4VP7zy5nMiFu5IKL7RFhUsRLH+FE8ovvPO1+gF7q2JoeZ94FJC
+         JyawvSuGWuk34wpEQL3tt57wlI1BF9vgdlVSbvey/i6R0NX7SuI/chEz+hEJV3w1MXwF
+         KOAV6zq3beIZCl4pj4g4KYeALjKm3vqm2OtCUccPNRLZye9PYx1QrXYFlymBU9ISQVDx
+         uCpA==
+X-Gm-Message-State: AC+VfDz0t/rta0goOpCAzrPH8MfZQkzR4EYuIlm+/vCRbIvDwE6m1DZ6
+	CWaYlqoKbfIFrC2F0ZjAND0VNg9cT5DjytlMD4g=
+X-Google-Smtp-Source: ACHHUZ6F9VU8XtGo+n2aInAJWRWYS2JnkqgFQhs0oZ9WPnE+YhEjkUNoi+ZYf4bu9RXqyJMqktr3zZL0nifP5dHX+xo=
+X-Received: by 2002:a25:2d4:0:b0:b9e:7896:63a0 with SMTP id
+ 203-20020a2502d4000000b00b9e789663a0mr14839271ybc.54.1683630665536; Tue, 09
+ May 2023 04:11:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230509030653.039732630@linuxfoundation.org>
-In-Reply-To: <20230509030653.039732630@linuxfoundation.org>
-From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 9 May 2023 19:17:01 +0900
-Message-ID: <CAKL4bV7QsdCtqJfm1O1MvkHN1WcmzGZuTaiBqmBVd7Rw59TsVQ@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/610] 6.1.28-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230508124701.443ba331.gary@garyguo.net> <20230509080700.1608146-1-aliceryhl@google.com>
+ <2023050937-scouring-truck-d7c0@gregkh>
+In-Reply-To: <2023050937-scouring-truck-d7c0@gregkh>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 9 May 2023 13:10:54 +0200
+Message-ID: <CANiq72=g=CnEQTkc50qozUdOBZECr7Jr2NCRfGFaKh751i6Sww@mail.gmail.com>
+Subject: Re: [PATCH v2] rust: error: add missing error codes
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: Alice Ryhl <aliceryhl@google.com>, gary@garyguo.net, alex.gaynor@gmail.com, 
+	benno.lossin@proton.me, bjorn3_gh@protonmail.com, boqun.feng@gmail.com, 
+	linux-kernel@vger.kernel.org, ojeda@kernel.org, patches@lists.linux.dev, 
+	rust-for-linux@vger.kernel.org, wedsonaf@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Greg
-
-On Tue, May 9, 2023 at 12:27=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Tue, May 9, 2023 at 10:46=E2=80=AFAM Greg KH <gregkh@linuxfoundation.org=
+> wrote:
 >
-> This is the start of the stable review cycle for the 6.1.28 release.
-> There are 610 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 11 May 2023 03:05:05 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.28-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+> It depends on which arch you are building for.  That's why we have
+> per-platform errno.h files, the values are different for different ones.
+> So you need to handle them all properly somehow.  How is rust going to
+> handle per-arch stuff like this?
 
-6.1.28-rc2 tested.
+We can do conditional compilation in the same file, possibly with a
+Rust macro which takes a nice table that shows all arches at once.
 
-x86_64
+We can also split into files like C and move it to each `arch/`, there
+are a couple of approaches for this. This is best for `MAINTAINERS`,
+although these headers almost never change, so it is not a big
+advantage.
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+We could also automatically do everything based on the C headers, too.
+Back then it felt to me like too much complexity for little gain,
+given those C headers almost never change, but now it may be worth it.
+Or, instead, having a test that verifies they are the same instead,
+and that way we don't introduce complexity for the build itself.
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P, arch linux)
+Alice only needs `ERESTARTSYS` so far, as far as I understand, so
+perhaps it is simplest to only add the rest of the non-generic ones
+for the moment; and gather opinions on the approaches above meanwhile.
 
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Cheers,
+Miguel
