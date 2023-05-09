@@ -1,105 +1,97 @@
-Received: from qproxy1-pub.mail.unifiedlayer.com (qproxy1-pub.mail.unifiedlayer.com [173.254.64.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B012914
-	for <patches@lists.linux.dev>; Tue,  9 May 2023 06:22:50 +0000 (UTC)
-Received: from progateway7-pub.mail.pro1.eigbox.com (unknown [67.222.38.55])
-	by qproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id D20808033D8C
-	for <patches@lists.linux.dev>; Tue,  9 May 2023 05:59:22 +0000 (UTC)
-Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
-	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id 45FCD100448F8
-	for <patches@lists.linux.dev>; Tue,  9 May 2023 05:59:15 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id wGNXpMrhB9wCvwGNXpXWMc; Tue, 09 May 2023 05:59:15 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=LPaj/La9 c=1 sm=1 tr=0 ts=6459e133
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=P0xRbXHiH_UA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=T+DsXenP+89lNfkhDF5slgNvfG0rhgYbr74++bIgvyM=; b=TIiUhpczppYQC2OZA+nhTXlIos
-	XDsDogt/RS4qEER2oCcrTdKDddFXIstpOOzS8tNnK06TWrjrWD3A6Oy4KeGBC/dax2ufO2ysZgB0V
-	kV1KxK02RqI9oCoyHl9ghWwZyLKPJ517fCb58DTmpUWkgYv62WCAu3P/j/V/tftGLiknxjpuKh1R7
-	93tqz8FHxUklheWbtjK3+GFnuiw8SjIWIp+GuvDiGisi/F4J4gIYCEoHFMoCwKUwPwAxdgT1m9aE0
-	J/w0vqX66iPizcuqLmy5d+3AZqsgmzzhb+uS7eJMD0olBpvZ/ZrFWzTjIepzrNFmozYpzJ5r+SV5G
-	OrPghdqw==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:37660 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pwGNW-001cYJ-F7;
-	Mon, 08 May 2023 23:59:14 -0600
-Subject: Re: [PATCH 5.15 000/370] 5.15.111-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230509030611.521807993@linuxfoundation.org>
-In-Reply-To: <20230509030611.521807993@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <ad3f83fa-e1f1-ae59-4c69-a1ba9116fb5b@w6rz.net>
-Date: Mon, 8 May 2023 22:59:12 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A9B3D6A
+	for <patches@lists.linux.dev>; Tue,  9 May 2023 08:07:04 +0000 (UTC)
+Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-50bcd24504eso6368636a12.3
+        for <patches@lists.linux.dev>; Tue, 09 May 2023 01:07:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1683619623; x=1686211623;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=sefTIBuyPY1tklzs4eZt4f6X1hRT1gQo6nNE62cYqXw=;
+        b=RAsdyPEVtcl1EExzGMYbQfdm5z+ZKoRFQ1f/kG7J4e8rJnMYer1P31mOW1C96Hc1MD
+         xvQ1lBUrbVZjQPdDgWke++lW0s51PC8Cje+CBTwz+0lijAmKDThmd6z1F5M5LgNQwRQp
+         Sa96nUO740TqCB6OsdVxs8z1J0i+i4/zfaKVNOv+w1i5qijNgN01QENvxjYt/5fDbIRu
+         V65nwI1dm9D1w+oEf4GK03fMHS4d0uBm/ycFTMrsQGHJPlTL7HEfGIagMAcW5w9N8GKU
+         +KTOmfAjngAqdrJw2J4uVvc4CtePTpu3Twnl/SdATYXPzGlg72rS3FfUmIkXXqawvBj+
+         dszw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683619623; x=1686211623;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sefTIBuyPY1tklzs4eZt4f6X1hRT1gQo6nNE62cYqXw=;
+        b=SrOSacU42SYiLscZcB8jijg+Z66a/+BtEyjGRK2vbTJp+mfXnhVR8ATN/Dy1vK0ctX
+         2fDMOam3i0GHUtY/SPgpiSmTZWVjJXvdxdoTvGiLi70lEWJECNWmL77bYwdNKcMn40yN
+         Hb3GWnlBNXT2lfOPpp+HEqiQfADEeI35wwFS5mO2Cf+5jShghxu8uctLbtm5h+Fx5+6u
+         xkGKLcdSMrx4vz7UF8pUSjIojqB20IXQ5bK7N+luADy/V8iV+c3UNW5pAMmD23+Ddf9R
+         PEghiVC09/2n6nfcY9YX/WA/VijEwFjjXJQIou8IQGsh3GAjzeCt4CdxrTuZGZv+fDZa
+         pohQ==
+X-Gm-Message-State: AC+VfDzABNzPbgIFCu8G8QkK8MXf6Ee33PxaGaQW52FBNAwso++oLwJ0
+	TRFfqV831qmM9N5El7qqw38Q/TyxMbVAUgY=
+X-Google-Smtp-Source: ACHHUZ5kqoAPjPokTiyAE943lxaftoydddV0k1qApv9fmVkqFVgkZfSBpWevHNlo7ES/Qb9HwMzmv+czd7rl34M=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a50:cd1a:0:b0:50b:c88a:f7cd with SMTP id
+ z26-20020a50cd1a000000b0050bc88af7cdmr4762794edi.4.1683619623130; Tue, 09 May
+ 2023 01:07:03 -0700 (PDT)
+Date: Tue,  9 May 2023 08:07:00 +0000
+In-Reply-To: <20230508124701.443ba331.gary@garyguo.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pwGNW-001cYJ-F7
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:37660
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Mime-Version: 1.0
+References: <20230508124701.443ba331.gary@garyguo.net>
+X-Mailer: git-send-email 2.40.1.521.gf1e218fcd8-goog
+Message-ID: <20230509080700.1608146-1-aliceryhl@google.com>
+Subject: Re: [PATCH v2] rust: error: add missing error codes
+From: Alice Ryhl <aliceryhl@google.com>
+To: gary@garyguo.net
+Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
+	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, linux-kernel@vger.kernel.org, 
+	ojeda@kernel.org, patches@lists.linux.dev, rust-for-linux@vger.kernel.org, 
+	wedsonaf@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 5/8/23 8:26 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.111 release.
-> There are 370 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 11 May 2023 03:05:05 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.111-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Mon, 8 May 2023 12:47:01 +0100
+Gary Guo <gary@garyguo.net> wrote:
+> On Thu,  4 May 2023 06:48:54 +0000
+> Alice Ryhl <aliceryhl@google.com> wrote:
+> > This adds the error codes from `include/linux/errno.h` to the list of
+> > Rust error constants. These errors were not included originally, because
+> > they are not supposed to be visible from userspace. However, they are
+> > still a perfectly valid error to use when writing a kernel driver. For
+> > example, you might want to return ERESTARTSYS if you receive a signal
+> > during a call to `schedule`.
+> 
+> `include/linux/errno.h` also includes all of `asm/errno.h`,
+> which defines EDEADLK - EHWPOISON, which is not included in this patch.
+> I feel like these error codes should be added first?
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+It seems like there are a lot of asm/errno.h files:
 
-Tested-by: Ron Economos <re@w6rz.net>
+$ find . -name errno.h
+./arch/powerpc/include/uapi/asm/errno.h
+./arch/mips/include/asm/errno.h
+./arch/mips/include/uapi/asm/errno.h
+./arch/alpha/include/uapi/asm/errno.h
+./arch/parisc/include/uapi/asm/errno.h
+./arch/sparc/include/uapi/asm/errno.h
+./arch/x86/include/generated/uapi/asm/errno.h
+./tools/arch/powerpc/include/uapi/asm/errno.h
+./tools/arch/mips/include/asm/errno.h
+./tools/arch/mips/include/uapi/asm/errno.h
+./tools/arch/alpha/include/uapi/asm/errno.h
+./tools/arch/parisc/include/uapi/asm/errno.h
+./tools/arch/sparc/include/uapi/asm/errno.h
+./tools/arch/x86/include/uapi/asm/errno.h
+./tools/include/nolibc/errno.h
+./tools/include/uapi/asm/errno.h
+./tools/include/uapi/asm-generic/errno.h
+./include/uapi/asm-generic/errno.h
+./include/uapi/linux/errno.h
+./include/linux/errno.h
 
+How should I proceed with this? You mention EDEADLK - EHWPOISON, but its
+not clear to me which asm/errno.h file I should base this on.
