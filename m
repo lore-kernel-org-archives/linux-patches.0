@@ -1,142 +1,220 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from esa6.hc3370-68.iphmx.com (esa6.hc3370-68.iphmx.com [216.71.155.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F97F9D9
-	for <patches@lists.linux.dev>; Wed, 10 May 2023 11:58:18 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-1ab032d9266so66807285ad.0
-        for <patches@lists.linux.dev>; Wed, 10 May 2023 04:58:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CD112B92
+	for <patches@lists.linux.dev>; Wed, 10 May 2023 13:20:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=citrix.com; s=securemail; t=1683724808;
+  h=date:from:to:cc:subject:message-id:references:
+   in-reply-to:mime-version;
+  bh=d6T+Tuh6mf1YUW2xjnx5OE3o+Oh5Pa7D0V2T78Yr87M=;
+  b=MUtnfqcny4W/LoRFkwmPAZLPVUFLrCO8Ntl2jCttc4PvBe1As8zmOv83
+   PSN8nYebiGwj156G1h8nSIO9mnbyE3+INdveiRzuc9RNSUIbLPw9qDtpO
+   FaLpjJLJ08mlKBTioTv81N4uazHtvgrzb3H5230NEkRVNxlryNtO/yRiE
+   M=;
+X-IronPort-RemoteIP: 104.47.66.42
+X-IronPort-MID: 107856255
+X-IronPort-Reputation: None
+X-IronPort-Listener: OutboundMail
+X-IronPort-SenderGroup: RELAY_O365
+X-IronPort-MailFlowPolicy: $RELAYED
+IronPort-Data: A9a23:B0N98a5pw2ho95ygeQ3rsAxRtM7HchMFZxGqfqrLsTDasY5as4F+v
+ mdNUGqFPauKMGamL9p2aNyy9R8PvcLTnYNkHQA++Ho3Hi5G8cbLO4+Ufxz6V8+wwm8vb2o8t
+ plDNYOQRCwQZiWBzvt4GuG59RGQ7YnRGvynTraCYnsrLeNdYH9JoQp5nOIkiZJfj9G8Agec0
+ fv/uMSaM1K+s9JOGjt8B5mr9VU+7ZwehBtC5gZlPa0S5AeH/5UoJMl3yZ+ZfiOQrrZ8RoZWd
+ 86bpJml82XQ+QsaC9/Nut4XpWVTH9Y+lSDX4pZnc/DKbipq/0Te4Y5iXBYoUm9Fii3hojxE4
+ I4lWapc6+seFvakdOw1C3G0GszlVEFM0OevzXOX6aR/w6BaGpdFLjoH4EweZOUlFuhL7W5m2
+ u1IEQEtTzu/oLiV/Om1S+hJlMN9BZy+VG8fkikIITDxK98DGMqGZpqQoNhS0XE3m9xEGuvYa
+ 4wBcz1zYR/cYhpJfFAKFJY5m+TujX76G9FagAvN+exrvC6NkkotitABM/KMEjCObd9SkUuC4
+ HrP4kzyAw0ANczZwj2Amp6prraXwnOmBthPSdVU8NZDhXGU9k80ISERC0G3heKlsnaVWIxmf
+ hl8Fi0G6PJaGFaQZsH0QRC8iHKJuA5aV9c4O/Yn5ACVz+zR/gWZC3IGQzNpZ9kvtctwTjsvv
+ neH2d3gBDpitLmUYX2Y/7aQ6zi1PEA9L2gEbDMERA0Fy9/9oY0yh1TESdMLOKq2gMGwBSvxy
+ j+HhCw/nKkIy8oK0ayh+hbAmT3EjoDAUgU16x7/XW+/6A59b4/jYJangXDA7etJLK6aQ0OHs
+ XxCnNKRhMgVF46ljyiETOgSFa2q5vCedjvRnTZHG5gn6iSF4XmudoMV/So4Ikp1Wu4YfiX3a
+ UvfoitV5ZlOLD6karJxb4utCsMsi6/6GrzNUvHSc8oLYZVrcgKD1D9haFTW3G33lkUo16YlN
+ v+zac+wBnYXEoxjzSGqXKEZ0Lk21mYyyH27bYvnxh6j3JKAa3OPD7QIKl2DaqY+9qzsiB7Y+
+ tBQPpGixBBWUem4aS7SmaYcN10FLngTAZHwttxZcfOFLgN6GWYnTfjLztsJco99moxRl+HV7
+ jSzXVJexFPjhHrBbwKQZRhLcqzmR414slo0ODxqMVvA5pQ4SYOm7aNacoRte7AirbZn1aQsE
+ 6NDfNicCPNSTDiB4y4acZT2sI1lclKsmB6KOC2mJjM4evaMWjD0xzMtRSO3nAFmM8Z9nZtuy
+ 1F8/ms3maY+ejk=
+IronPort-HdrOrdr: A9a23:Xh1pDaqItgmgeVxyHrM/uxQaV5r2eYIsimQD101hICG9E/bo9P
+ xG+c5x6faaslsssR0b9exoQZPwPU80lqQU3WByB9mftVLdyQmVxehZhOOJ/9SKIUzDH4Bmup
+ uIeZIObeEZKjBB/KGKhnjAYq4d6ejC04ShheLT1B5WPHtXgtlbnnxE4tjyKDwTeOF/baBJaa
+ Z0TfA32AadRQ==
+X-Talos-CUID: =?us-ascii?q?9a23=3AcftW0Wt+t25H4fTTM36aTeX+6IsKYy3k/VfxCHO?=
+ =?us-ascii?q?fU0VVE7OUSHqC//1Nxp8=3D?=
+X-Talos-MUID: 9a23:MoHdgghs+nCp6G9uxkZwcsMpHcJE5JSNL2kxlssct+2fKRRIEDTDtWHi
+X-IronPort-AV: E=Sophos;i="5.99,264,1677560400"; 
+   d="scan'208";a="107856255"
+Received: from mail-mw2nam12lp2042.outbound.protection.outlook.com (HELO NAM12-MW2-obe.outbound.protection.outlook.com) ([104.47.66.42])
+  by ob1.hc3370-68.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES128-GCM-SHA256; 10 May 2023 09:18:28 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=gvufFj74cSLjxbYMwyKQzfZJLoE1L6PzeoHXT6Z2g5ar2GJjUWLEh3Nz7GbLyNrZh4VNRWJlRtyIYi8Rsrb4plRIehJYMms0/cRaktWsm9PhzLjqUMKIsdAhqXovo1rucKm2ESiCAZkM01LZ3Sfp9gF2CGN8vylXDFO3l8c13jjoWgbhwgAg5lLWNB9uQqyT2Td2RvkIMMwsV+izEV3KadHPy2W0TM/csY9Ivbuf1ihWLdJoC1iRMFxIdo9wtXdXBp5aAqW+QDG3zxD5DpsgTvDDBzLRFIuHEhApWMWTjEbTAYHHfvPFu+L7HDe7co5vFtfAiMp5FdXv2KG9GXdLZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+ZnS5NaggzoCNK5demEo22gikIQ7cEJq4HpTn2tUjfo=;
+ b=dKzmmU/YDPQsUufDv07F91q9TAcZhbOfOM+gT8x9VEVyJwDRp269QTcV6mhXgLyBrPggkiyNCsA+17LIsg6lcGKnX5SRXfcMc5urQg+InNG4xoeAU7eKDuO7GHfjAn9PHAXcudvtU9uIkb3NYAuwcj1m6KL9bC7cR+OK6VntRaCxZZmsH5lRLsbFCa2kvwDVnSqsdvWwVoBlaBWmmbMHOuEv16g8CO9g3/ZtnHnqnYLmuxJReB68AgbOC6qUkssZWMk21XYhUH6/VWG4+Mkgv67bDDwnTriC9ymfO9QS7wZI3RhxNxUD7ZxeL8gC0W+kf1PnwyLvmLjjFe09N4cRWg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=citrix.com; dmarc=pass action=none header.from=citrix.com;
+ dkim=pass header.d=citrix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google; t=1683719898; x=1686311898;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YEjvu86VPeGIfcd6OBm9HJ4PKZg1A/Y6LH8NJqVZG8c=;
-        b=ZbAGM2fObdjVBK1J10RtHSe/ix/n1zTYxNYJgd/RAtr2N7aH+2zKW02g7tmRFBiOgc
-         5tTsQd0TqpkEmPErxPlk16+4EH5aRi0HOIOJow+Fd28D7ehk0eUVT7f/KKMUzP86dWK/
-         SOot1yuKRrBUktim6LY9fQ8hzGr6qAB04dsMw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683719898; x=1686311898;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YEjvu86VPeGIfcd6OBm9HJ4PKZg1A/Y6LH8NJqVZG8c=;
-        b=c/kIXPeVw1X76gGrUlrehzoFNhaOTaBISSoNHmVgMgIAVy+8IDHcu1J2TYn+06y7UD
-         MjAVk3UwLpXTu+LgJL95nYswSRIRRCiEUaoj+tJ5fBwhGGUiyPfML7BDCR0RYGIpJxN0
-         XllnFvMsAoe1Ji87x4AA56DWCIbM/IfXIhSx1GwcCtsVknwmqACPu0VNhWG5s75lZu2L
-         TINggxL82aCFpWgLj649FgSmaN2WNsPi4R4ZXOxb4tmxP0N5BoMAn0Ajk5jw1I/rmE4r
-         Oz2rEVBRnR+8CfOTKwFOgkePV9aHTpaDyMMeVvPvhxUfS5W4VHhkH6ixsn6dkjz/+6c6
-         NDUQ==
-X-Gm-Message-State: AC+VfDxnqR0J74F/rzRKDMScCR9m9BsDr5kWyB1PmmvHW0DlW4v08iSK
-	b2AVjo7u1cdBIl6SMFHb0kpzblyH8455spzmCQuX3A==
-X-Google-Smtp-Source: ACHHUZ4EzpDvqdANutq6jWg36ktzU9BJBGxSvmCy60I6ujWewzPWfKsIh2WnBGcBv4iDfADN/VCRmrS5OeH5QSllRVQ=
-X-Received: by 2002:a17:902:7b87:b0:1aa:da53:dd9b with SMTP id
- w7-20020a1709027b8700b001aada53dd9bmr17018316pll.28.1683719897795; Wed, 10
- May 2023 04:58:17 -0700 (PDT)
+ d=citrix.onmicrosoft.com; s=selector2-citrix-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+ZnS5NaggzoCNK5demEo22gikIQ7cEJq4HpTn2tUjfo=;
+ b=mgLixnknTMmDJ2nCYV1zY0sGBG2/moRF9qggxIINLRf/Pc5LOh1/F2pOUfXLb2d+ZMe0YibM/eizvMnRrcXE5GkAfKrN0ELp2pTjqHiqCBVDoLrGAEsHe5KEoz+Jt39v8gWLuG8RixUnAN3gZgAnq2RR+9EPygtSddYVXWTWU0g=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=citrix.com;
+Received: from SJ0PR03MB6423.namprd03.prod.outlook.com (2603:10b6:a03:38d::21)
+ by PH8PR03MB7247.namprd03.prod.outlook.com (2603:10b6:510:23a::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6387.18; Wed, 10 May
+ 2023 13:18:22 +0000
+Received: from SJ0PR03MB6423.namprd03.prod.outlook.com
+ ([fe80::b0b8:8f54:2603:54ec]) by SJ0PR03MB6423.namprd03.prod.outlook.com
+ ([fe80::b0b8:8f54:2603:54ec%4]) with mapi id 15.20.6363.032; Wed, 10 May 2023
+ 13:18:21 +0000
+Date: Wed, 10 May 2023 15:18:14 +0200
+From: Roger Pau =?utf-8?B?TW9ubsOp?= <roger.pau@citrix.com>
+To: Pavel Machek <pavel@denx.de>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, seanga2@gmail.com,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/610] 6.1.28-rc2 review
+Message-ID: <ZFuZllSJguONF2p0@Air-de-Roger>
+References: <20230509030653.039732630@linuxfoundation.org>
+ <ZFuEoWJL1TRmEuMM@duo.ucw.cz>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ZFuEoWJL1TRmEuMM@duo.ucw.cz>
+X-ClientProxiedBy: LO4P265CA0090.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:2bc::11) To SJ0PR03MB6423.namprd03.prod.outlook.com
+ (2603:10b6:a03:38d::21)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230509030705.399628514@linuxfoundation.org> <20230509080658.GA152864@d6921c044a31>
- <20230509131032.GA8@9ed91d9f7b3c> <2023050913-spearhead-angrily-fc58@gregkh>
- <20230509145806.GA8@df3c0d7ae0b0> <2023051025-plug-willow-e278@gregkh>
- <CAG9oJsnr55Atybm4nOQAFjXQ_TeqVG+Nz_8zqMT3ansdnEpGBQ@mail.gmail.com> <2023051048-plus-mountable-6280@gregkh>
-In-Reply-To: <2023051048-plus-mountable-6280@gregkh>
-From: Rudi Heitbaum <rudi@heitbaum.com>
-Date: Wed, 10 May 2023 21:58:06 +1000
-Message-ID: <CAG9oJskrJotpyqwi6AHVMmhnFmL+Ym=xAFmL51RiZFaU78wv-A@mail.gmail.com>
-Subject: Re: [PATCH 6.3 000/694] 6.3.2-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, ntfs3@lists.linux.dev, 
-	almaz.alexandrovich@paragon-software.com
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR03MB6423:EE_|PH8PR03MB7247:EE_
+X-MS-Office365-Filtering-Correlation-Id: dcd1ccff-c426-4bbd-8931-08db515906c3
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	sgyTSMH42f3rz2jmzpBLYdpanB9nTw0DTWI5RkJW0NzfmPxqkpv90CLiR9EHM42jXQVdf9ZWgH7bphmpDZX+aKi90fp2VgK3Od66du3H4enqjfVNyZ3qe4NGGWN6k3nggRPK3VeBSFDSCFax0oBO/48Y4z4Z8/YU2GAIIN4oLd2MLshwLChONkfPo2JSnQU/rQNu4Bc/ApgKLw6qkFP35S5ZhsSswuCSwksqlLcvLNMB66eC+K2LfJ7dA3oXCmMX6oekqy0wVCBVFc0Zwws1OC9fez66GDRyBJVnvGf1AH49m47V7mR9c2Th48dGk9oS1yUz9ulilyAzIHlNEHBpqJWkeQVVewg10ua7rCRPV2YsYHoHXVW4VOSTnLvlktBQrGB4BefBnKVYCe12sCTWHoq/QYMZlG+KKEzZHEGYA3iH5l3EFuY8NevDJ7aEPv7DIKLFJnT0mH5WY1pv92Qk2jztJqXxH1LK0vgPqG2QoYrbvX2YsWyYB08ANgPeHPJnPyqyhZwapyidzigGS9WXWObmKUXxhSxUkf3GX7oE/ZmpB/SBj8UaKqR2EWPKGKpc
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR03MB6423.namprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(7916004)(4636009)(136003)(376002)(396003)(39860400002)(346002)(366004)(451199021)(186003)(2906002)(38100700002)(85182001)(86362001)(33716001)(82960400001)(5660300002)(8936002)(8676002)(7416002)(66946007)(66556008)(66476007)(4326008)(6916009)(6666004)(41300700001)(6486002)(478600001)(316002)(6506007)(6512007)(9686003)(26005);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?NlFpWC9LdHNIa0VCRHNNRGNmckw1cEQ4TFVkMGthR0lXYUdEZGpiZk5DZFUx?=
+ =?utf-8?B?R0JWL09Ca2RzMUYxYjhwN3ZBSkdEVHA5cXJPejdjcW85UnpUZXZWbThnczBE?=
+ =?utf-8?B?ZTN1aDM5KzY5WG94SzRUOWJTNEpyZmVFUXdYRFhGYVFydFRxN3N6VHdIM2h3?=
+ =?utf-8?B?bnpSRWZkOEdvRTlqNFZwQWkxN09uemFtanZlM2VPNUwybDhJeTFkMzdHcmVH?=
+ =?utf-8?B?Mis3cmRKRHNMVjFvMEY3SUJqY0F6MUlSbWtERDBJd3hOSEhYVXRzQmkxUDdp?=
+ =?utf-8?B?VE8vVXlwV2JxTWQyS3hia0pSa1NkUTlaaU5PYmp3bTNZbGlrdFFnbzBCQmQr?=
+ =?utf-8?B?UC9MMDJNenA1K1pLeGdjMGx1R3VYdmNjbmE2R0pOVDJ6YVdzMWc2U0lYRVho?=
+ =?utf-8?B?Tmg5S2FQVWgvY2RBVTVvNm1HQml6Wld0SWg2R09qeDg0MHc4VlRWNTloQXpr?=
+ =?utf-8?B?NTRCN1g0S1hOdElNQ2UvY3ZXZG5uSGozTkVBRm9aclRtWHVYUkdWYUlMRVNI?=
+ =?utf-8?B?WHJVYW5IQ2tzMVBocEZDdDh0NHo3TCs3dkVmSXhzN1ppMnlJU2ZXeGp1M1dT?=
+ =?utf-8?B?S3h4Uk5XaVQyMGpsK3Z2d0tsaWVWVEdROEsxTHJmN3B0L0twNG1WNUszZHVm?=
+ =?utf-8?B?ekZnZ2dmWjhPZ0RCTkhGTFJWemxTd2ZpekhDbXV5bjdkZnJFNjR5bGxFVXQ5?=
+ =?utf-8?B?MWRnNldIL0lpWnpEemlITGFYMmpxYWJzNlRaeE1SSHdMSGhOTTYxTWFtTHFx?=
+ =?utf-8?B?YVZoRDQxUTM0dzVSWlFTbHR2Y0FkNlZCUXRsV3dja2hnSy9xbU9JZDB4dzFQ?=
+ =?utf-8?B?aWdlZGZhTnhaVW9QQU14Y09Rc1RHREZrOXhFRUpJcG5qVzFST0M1WFBLUU4v?=
+ =?utf-8?B?aE1oUXRkRE1XYit3ZEEwZUMyZ3JXMUdsY29nRS9ldURadzJXaHdkQnViSWZp?=
+ =?utf-8?B?UkNNaEtOWU1KM3B6cmY4Tnh4NmtaVHZsU3FINkx4cVRKSlZHZHY2bVFoakxj?=
+ =?utf-8?B?WExEUFBmZ3ozNndpbC8vQVhRWENBMGxnRFBjUEgvZmVGNUJSRDA5THNlMHky?=
+ =?utf-8?B?ek9mZk1hTFMvVTdCWWZxajJ4SGNJRDhuVGRsMXJyemI2Y3Vvd0RhNjJKTG5z?=
+ =?utf-8?B?VXVneXIrKzJaekVEZ2NqbHR0VExHTVdpbE5ERzdEUStBaFcxRmtPMXdlaDRp?=
+ =?utf-8?B?VTUzL01haUprOTVoUTcyUmo2NDNwVzh6TXNTUGJjaFpUYkZZNmpsd1hLdVVE?=
+ =?utf-8?B?Y2hRRUt6c2xvWW9jMGFPOTBhN0NZVlZKWld5ZVEyQVFieUhtVVJzZDlLK3pm?=
+ =?utf-8?B?ZHdDTm0yU0ZOZDM1VFhYNHVrc0xyd3NmN1p2MXdQTWpEU1NqRGVqTnhnTGJW?=
+ =?utf-8?B?ejhDaUtVZ3B6Q09qMGE1TjZIZ2Z1SDErRXN4ejhwUWVqNjJTVDRDRU5GS2hR?=
+ =?utf-8?B?eS9lTlV1NE5Odi9nc1RkOGRCb0FxYWhMN3EycXFHZ1Zyb2hNRGNWdXdHNWQ0?=
+ =?utf-8?B?bGNJY2ZLbjAxUlUyclZQNDVKSWtoZzJ0WUFGZ0dKWkszS1ZxM1NIWlU0KzRX?=
+ =?utf-8?B?ZVZSS09SVTRtbXVmTWRDenM0aFZFU3VLTVk5MDNEUEZWZE9PcnhXNEZPNG1h?=
+ =?utf-8?B?YUptNi9hMWZFWDl0Q1BWbGl4TXF5a29xdDdSYjJLSDBtK0dVdWJlMnVLWjJ2?=
+ =?utf-8?B?NXU5ZXIxUnlUdjJRcitkZk9PbEUwK2RTQndlcFh0b2s2dVRrMTZrTHRhSFE2?=
+ =?utf-8?B?OVJ0NXZXWHh6aXZNSHRFSmhkZXpOeUJjdHJiWDFQd1kzTmhnTHl3L3ZMTTVR?=
+ =?utf-8?B?b2pJOURjUEhCZ2RkS2dtaS80WkRmM0lVSHZpeFMvMi9UdWFJK2RzSExVU2NU?=
+ =?utf-8?B?cGFhSU80bW10b2hya0FRVXZxdnZyTThPQ2xqWU1jdkZWdFJVbnRkTlpua1RY?=
+ =?utf-8?B?RXh3QzlabUlaeHBaQXhtc2o5WEhwWHZIU3Vaak5hVG1JZGNBQ05OWklDckx5?=
+ =?utf-8?B?SE05N1h4U2d3VXRSRURZVlVKNHRISEZWSCtsQjMzYTV1aVVid1JxR2JCbjlj?=
+ =?utf-8?B?UW5NbHJpeEszUGFkbHVLZUJEQWNWS0todGpkMEkwaytHOStkWlY4L3hyQW1k?=
+ =?utf-8?Q?P3kJb0+P0OWc+qGTrEByQUKHS?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
+	=?utf-8?B?VEZVNm5hSzV2Tk9tcjBRSzg2VEZjTWFtRzRPOGJtdFVud0xnVUFMR3NCTEwx?=
+ =?utf-8?B?NXBmMFpWNmsyZGdYZ1J2Tnd5ZWNlVHo4SVU4SDlQa1BPTG5hWHVGMlhlWHlT?=
+ =?utf-8?B?U1lOUllUQXUxK2djTkhCMjZIZnJBbmJyQk5IaG84aGsxRGFuNGFWZUY2ZzJ1?=
+ =?utf-8?B?M1k2RGtCN3g2ZThrVkd2VldWSUZhcE5kdmY4NVdybHc0NTF1WUVTSlRtOXpX?=
+ =?utf-8?B?VnUyRmtPTjhYUXh6NmVNU2NoM3FmZXVyK0VKWWlCOUtySmlpdGgzeFQ2WVNa?=
+ =?utf-8?B?NkNiS2pPTk13OG96MDI5eWd4UVFMM0M3U0daRTFxZEtmaTdqczNWdUVWQWoz?=
+ =?utf-8?B?WFlqYzBOaWVUcEU5S0c2emNzS2RQcTQ1VEhITTkrUzNTQ1Irbkt3QjZxMEg2?=
+ =?utf-8?B?TDIxbzk3R2QrUE1UMlNZcjVyTXJFSmFnM2JxV3poTFFKdk0zMVkrYldXcWha?=
+ =?utf-8?B?MHdzc1FqejVRbDFtaUl3MlVUTEtaS2tVSWFWNEZ4cERJRU1teGVqb3hTNUF2?=
+ =?utf-8?B?TFVSZy9aSzdlVFRDeHhWYm9ObW1nSFd6cnVOWlhPdG1qYmRyWXRrbHJ0cWxl?=
+ =?utf-8?B?cTRLTi9PbDBMQ1M5dUoxWmhtVUVXWmZFLzhEWENWak9hWGkxU1BJWXVTaTZo?=
+ =?utf-8?B?SkFIN3dpa2J4VjBKNlMyS0t6cDl2ODB1R0RqUlZraWhpSUkvRVhtUTcyYkxS?=
+ =?utf-8?B?emQ4M0o0T0ZROFlPTTUrTUgxS05CSHgwYkFWcTN3MktIMENPYkR0dVlMbkQ1?=
+ =?utf-8?B?TU5FK1BmN2dVamJlSUdveTdVbW1wZ3VNTldldjluRGlhbERGVzd4VUpsRzBk?=
+ =?utf-8?B?UUhrN0h1THR2RS9KdUZSc2ZaVC9hT3NFS3p0OHlPV0NmRkRhaisvdmxwaXhi?=
+ =?utf-8?B?UU1uVSsrRi9hVTdrZk1iYllWRTd5UVRDLzQyWkRzamlUc1VNSzlPNnMvWlNs?=
+ =?utf-8?B?Q0xNZ2x5Tk5jd0lLcUozVWZUdTVoTFhoeFR4ZnhoUjNuVDhXKytUOUdnSlRz?=
+ =?utf-8?B?dklocjNRVGRVZTZQM0VyM28zbDdYdDRMbjQ2ZUU2ZFQyaXQ4NGVNc0RXdUF0?=
+ =?utf-8?B?QUg2QmMyOUxKVDB4N3pKZkgwb2pZb3pDOEtSUW5DWTZLY3RrSWMvOWQ3T0hH?=
+ =?utf-8?B?SEl3NXR6Rmx2NjlIRnBydklhUElQdTJrV3lZUWw3dk9URUFRWHdZUGI5S0ln?=
+ =?utf-8?B?T2psdmlEVUhoazNIMHFRUEc4ZkdlaWMvNWVFSU41NmVqSXhJckQ2QmhSRnNU?=
+ =?utf-8?B?bG9RWnIrc1lGOHEybDJ3RDB3VHE1Um1hTk1jakVMdmkwTFpEQW0rUG51WUhO?=
+ =?utf-8?B?Q0IrcFFoRU9MZk9XL3c4ODM4MGdDSnlzOUJkSm5SSmljTlp2ZU45TE9rU0pw?=
+ =?utf-8?B?d0I5cTZvYkFMalhWMHZJVVFXdEhPMzdGTDV6Z05aVUdkUGFTQ3BJV3pPVUlK?=
+ =?utf-8?B?bmU5NUhXL0tYYzgxM1hDeTA5b3VESTdIa09TUGIvYzA1Snh2cnBGWUxWU0Fj?=
+ =?utf-8?B?UWhuc25WSnNONVVKb2luVmJoWmNvcjBFZGNjSjJ4OEdYODVoTW04WDdEb1U3?=
+ =?utf-8?Q?boQ4Huv0bUwzPyZ8WtnyOLEU8eeP4coBDRBO4xs6qhNYt9?=
+X-OriginatorOrg: citrix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: dcd1ccff-c426-4bbd-8931-08db515906c3
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR03MB6423.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 May 2023 13:18:21.5372
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 335836de-42ef-43a2-b145-348c2ee9ca5b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sSJfxiCjeDhGsqhqrleQ3kvFsct1iu9WsG6jxSVtBzagF7bUHTvuUfhXxSy2JZ0PMppFgYUVshs/tGxQG5SHIQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR03MB7247
 
-On Wed, 10 May 2023 at 19:09, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Wed, May 10, 2023 at 06:29:23PM +1000, Rudi Heitbaum wrote:
-> > On Wed, 10 May 2023 at 17:25, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > On Tue, May 09, 2023 at 02:58:06PM +0000, Rudi Heitbaum wrote:
-> > > > On Tue, May 09, 2023 at 03:56:42PM +0200, Greg Kroah-Hartman wrote:
-> > > > > On Tue, May 09, 2023 at 01:10:32PM +0000, Rudi Heitbaum wrote:
-> > > > > > On Tue, May 09, 2023 at 08:06:58AM +0000, Rudi Heitbaum wrote:
-> > > > > > > On Tue, May 09, 2023 at 05:26:44AM +0200, Greg Kroah-Hartman wrote:
-> > > > > > > > This is the start of the stable review cycle for the 6.3.2 release.
-> > > > > > > > There are 694 patches in this series, all will be posted as a response
-> > > > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > > > let me know.
-> > > > > > > >
-> > > > > > > > Responses should be made by Thu, 11 May 2023 03:05:05 +0000.
-> > > > > > > > Anything received after that time might be too late.
-> > > > > > >
-> > > > > > > Hi Greg,
-> > > > > > >
-> > > > > > > 6.3.2-rc2 tested.
-> > > > > >
-> > > > > > Hi Greg,
-> > > > > >
-> > > > > > Further testing and have seen ntfs3: NULL pointer dereference with ntfs_lookup errors
-> > > > > > with 6.3.2-rc2 (I have not seen this error before.) No other errors in the logs.
-> > > > >
-> > > > > Can you reproduce this without the extern, gpl-violation module loaded?
-> > > > >
-> > > > > thanks,
-> > > > >
-> > > > > greg k-h
-> > > >
-> > > > Hi Greg,
-> > > >
-> > > > I dropped the bcm_sta and recompiled and commented out the i915.guc=3
-> > > > and was able to reproduce.
-> > > >
-> > > > [   84.745080] BUG: kernel NULL pointer dereference, address: 0000000000000020
-> > > > [   84.746239] #PF: supervisor read access in kernel mode
-> > > > [   84.747599] #PF: error_code(0x0000) - not-present page
-> > > > [   84.748929] PGD 0 P4D 0
-> > > > [   84.750240] Oops: 0000 [#1] SMP NOPTI
-> > > > [   84.751575] CPU: 2 PID: 3176 Comm: .NET ThreadPool Not tainted 6.3.2-rc2 #1
-> > > > [   84.752998] Hardware name: Intel(R) Client Systems NUC12WSKi7/NUC12WSBi7, BIOS WSADL357.0085.2022.0718.1739 07/18/2022
-> > > > [   84.754474] RIP: 0010:ntfs_lookup+0x76/0xe0 [ntfs3]
-> > >
-> > > And do you get this same crash on ntfs3 on 6.4-rc1?  Is this a new
-> > > regression, or does it also show up on 6.3.1?
-> >
-> > Tested with 6.3.1 during the day today. No errors, and had been
-> > running 6.3.1 with no issue. Retested with 6.3.2-rc2 and problem
-> > immediately evident. So yes - I believe a regression.
-> >
-> > I have built and am now testing 6.4.0-rc1 this evening - no errors so far.
-> >
-> > [    0.000000] Linux version 6.4.0-rc1 (docker@1ccd349e2545)
-> > (x86_64-libreelec-linux-gnu-gcc-13.1.0 (GCC) 13.1.0, GNU ld (GNU
-> > Binutils) 2.40) #1 SMP Wed May 10 07:51:37 UTC 2023
-> >
-> > > And ntfs, ick, why?  And .NET?  What a combination...
-> >
-> > Joys of media players. Test device gets to test exfat, ntfs3, .NET,
-> > and throw in a compile host/GHA runner to put it through paces.
->
-> Yeah, this should work.  Thanks for verifying this works on other
-> releases.  Any chance you can do 'git bisect' to track down the
-> offending commit?  In looking things over, I don't see anything
-> obvious...
+On Wed, May 10, 2023 at 01:48:49PM +0200, Pavel Machek wrote:
+> Hi!
+> 
+> > This is the start of the stable review cycle for the 6.1.28 release.
+> > There are 610 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> 
+> 
+> > Sean Anderson <seanga2@gmail.com>
+> >     net: sunhme: Fix uninitialized return code
+> 
+> This one is wrong for stable. err is still initialzied to 0, which is
+> wrong thing to do. Mainline is ok, but fix does not work for 6.1.
+> 
+> > Roger Pau Monne <roger.pau@citrix.com>
+> >     ACPI: processor: Fix evaluating _PDC method when running as Xen dom0
+> 
+> If the condition can be handled (and code has "return false"), it
+> should use WARN, not BUG.
 
-Hi Greg,
+Feel free to send a followup fix.
 
-I can confirm the offending commit in 6.3.2-rc2 is
+Such dummy handler getting caller is a sign of an error elsewhere:
+someone playing with Kconfig logic or trying to add _PDC / Xen support
+to a different architecture, so I think it's fine to BUG in that
+case.
 
-bf11fd528a97 fs/ntfs3: Fix null-ptr-deref on inode->i_op in ntfs_lookup()
-
-Regards
-Rudi
-
-> thanks,
->
-> greg k-h
+Thanks, Roger.
