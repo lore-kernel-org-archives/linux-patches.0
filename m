@@ -1,90 +1,71 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4ED7F;
-	Wed, 10 May 2023 07:25:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF94C433EF;
-	Wed, 10 May 2023 07:25:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788ED258D
+	for <patches@lists.linux.dev>; Wed, 10 May 2023 07:43:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B2B9C433D2;
+	Wed, 10 May 2023 07:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683703527;
-	bh=AI5OVdEmuEsaQK/Di94zBM76x3I/2hHIehvXnU/jfms=;
+	s=korg; t=1683704625;
+	bh=HGDgcnUYhuIGRYcbgZbIP2n2DCbFNR8IlInvEEoKZEE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GiahEjvr096NoWCctLcoUU0tTgaMjxaWd0tgFtlsMjFoPpdmHgDqU1igMu1+wuP7T
-	 KjyksxbUrwQ17K2zxrvNjVv4FYzlgEVV8QWms04Omk1fFZ01HTbp5k/o9LUaGaBylv
-	 FXbXXpFiDrHEkFHUfVYDl+cQrZC6votWnOaKRfOw=
-Date: Wed, 10 May 2023 09:25:24 +0200
+	b=y6dwyEZ3E0GoHYZI6eOkx9WSho49HLVb7DsbJwS8aPgpccoXxJPY9vjcl6uEi3dEf
+	 2ixPd+iQ+TqAVvEbiWObhcwZ5M3py+gs2kvl9aKalr7KnNtfKsrMpbC0MQttNXPypu
+	 HHCBEKySikrHu5DtgFeu+y6cIW3ZsXVd8u9xduqo=
+Date: Wed, 10 May 2023 09:43:42 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Rudi Heitbaum <rudi@heitbaum.com>
+To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	ntfs3@lists.linux.dev, almaz.alexandrovich@paragon-software.com
-Subject: Re: [PATCH 6.3 000/694] 6.3.2-rc2 review
-Message-ID: <2023051025-plug-willow-e278@gregkh>
-References: <20230509030705.399628514@linuxfoundation.org>
- <20230509080658.GA152864@d6921c044a31>
- <20230509131032.GA8@9ed91d9f7b3c>
- <2023050913-spearhead-angrily-fc58@gregkh>
- <20230509145806.GA8@df3c0d7ae0b0>
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 000/370] 5.15.111-rc2 review
+Message-ID: <2023051035-monitor-sandy-2a5b@gregkh>
+References: <20230509030611.521807993@linuxfoundation.org>
+ <863a112f-f4a4-d580-9687-f6214d555939@linaro.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20230509145806.GA8@df3c0d7ae0b0>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <863a112f-f4a4-d580-9687-f6214d555939@linaro.org>
 
-On Tue, May 09, 2023 at 02:58:06PM +0000, Rudi Heitbaum wrote:
-> On Tue, May 09, 2023 at 03:56:42PM +0200, Greg Kroah-Hartman wrote:
-> > On Tue, May 09, 2023 at 01:10:32PM +0000, Rudi Heitbaum wrote:
-> > > On Tue, May 09, 2023 at 08:06:58AM +0000, Rudi Heitbaum wrote:
-> > > > On Tue, May 09, 2023 at 05:26:44AM +0200, Greg Kroah-Hartman wrote:
-> > > > > This is the start of the stable review cycle for the 6.3.2 release.
-> > > > > There are 694 patches in this series, all will be posted as a response
-> > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > let me know.
-> > > > > 
-> > > > > Responses should be made by Thu, 11 May 2023 03:05:05 +0000.
-> > > > > Anything received after that time might be too late.
-> > > > 
-> > > > Hi Greg,
-> > > > 
-> > > > 6.3.2-rc2 tested.
-> > > 
-> > > Hi Greg,
-> > > 
-> > > Further testing and have seen ntfs3: NULL pointer dereference with ntfs_lookup errors 
-> > > with 6.3.2-rc2 (I have not seen this error before.) No other errors in the logs.
+On Tue, May 09, 2023 at 09:12:33AM -0600, Daniel Díaz wrote:
+> Hello!
+> 
+> On 08/05/23 21:26, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.111 release.
+> > There are 370 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > Can you reproduce this without the extern, gpl-violation module loaded?
+> > Responses should be made by Thu, 11 May 2023 03:05:05 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.111-rc2.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
 > > 
 > > thanks,
 > > 
 > > greg k-h
 > 
-> Hi Greg,
+> New warnings are introduced for Arm, PowerPC, RISC-V:
 > 
-> I dropped the bcm_sta and recompiled and commented out the i915.guc=3
-> and was able to reproduce.
-> 
-> [   84.745080] BUG: kernel NULL pointer dereference, address: 0000000000000020
-> [   84.746239] #PF: supervisor read access in kernel mode
-> [   84.747599] #PF: error_code(0x0000) - not-present page
-> [   84.748929] PGD 0 P4D 0 
-> [   84.750240] Oops: 0000 [#1] SMP NOPTI
-> [   84.751575] CPU: 2 PID: 3176 Comm: .NET ThreadPool Not tainted 6.3.2-rc2 #1
-> [   84.752998] Hardware name: Intel(R) Client Systems NUC12WSKi7/NUC12WSBi7, BIOS WSADL357.0085.2022.0718.1739 07/18/2022
-> [   84.754474] RIP: 0010:ntfs_lookup+0x76/0xe0 [ntfs3]
+>   /builds/linux/kernel/sched/debug.c: In function 'print_cfs_group_stats':
+>   /builds/linux/kernel/sched/debug.c:465:41: warning: unused variable 'stats' [-Wunused-variable]
+>                   struct sched_statistics *stats =  __schedstats_from_se(se);
+>                                            ^~~~~
 
-And do you get this same crash on ntfs3 on 6.4-rc1?  Is this a new
-regression, or does it also show up on 6.3.1?
-
-And ntfs, ick, why?  And .NET?  What a combination...
+Odd, and this isn't on other kernels too?
 
 thanks,
 
