@@ -1,122 +1,214 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE1248C0F
-	for <patches@lists.linux.dev>; Wed, 10 May 2023 19:53:50 +0000 (UTC)
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1aaea3909d1so72313325ad.2
-        for <patches@lists.linux.dev>; Wed, 10 May 2023 12:53:50 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DE08C0F
+	for <patches@lists.linux.dev>; Wed, 10 May 2023 20:24:13 +0000 (UTC)
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-643990c5373so7708031b3a.1
+        for <patches@lists.linux.dev>; Wed, 10 May 2023 13:24:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683748430; x=1686340430;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Z1W4uqEw+0QjDuIqb5LwmtDskQMM72Nc3FiWOEWWSIU=;
-        b=bAmLwZB2OYKVGc1eFyp9Olwwlhe1e213Fm6w4youNp+X8FpGJwS/YUIsfbCwwsoiLL
-         bFKR5YRaJJV5Uvol2/Bb+n1h9yUj8wBuyVBUfUlQ2hdLL9xvnZvzcAkOFTWWkBGtJa0r
-         9fz4vaM1sVGQf1I/9jvaClvwnv5nD8IZ9jo1KrnMzt8NLn8/0d293UuPJ1iQ3PL2aLxv
-         FU6zZf2GPXdr/KsOovOY1MQ0hq6vSUTVyiGhizL/v3MBn29wFuEuBa5EF9+zHJQCF+3Z
-         w/Zy2CfYDWifVRbGkPmzv7IX3NLg1i+Lf2+q63JoLLhVB7aFnv1K2lzcuoi1vNlzvyQ1
-         lOrA==
+        d=gmail.com; s=20221208; t=1683750253; x=1686342253;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nOqXUZiOn/jbSQs17L6q02ziolcmWifsT1TYQOY1qSY=;
+        b=Hn+UCnzV77OBGkRlHOGSFKAb6OcNQRqJ8IQnldKNfoU/yANURsKO9t2igLjw+mabAq
+         /IPmuHzXMwkrdlFKJmmR+Gt9verLisyjAjUSFDVqzolZz4q9Tr7Duuqe0KY5MsaVR4zH
+         /DZXk/Zhcdu2nE4xEse9Av5Zsqat1K5i92FoU/aR0lisZyAzzYilhsOO2c3S6lDGuplf
+         vwGahTH4WbRXVrdj1r0l/DT1TqaI/QTtm98Jord7lh451z/D8SWX8AzRN76hrr9sp+45
+         JbDW++TmQNMuoIdirhmXQ366/1DMbDYDUhTz8RuMRJAlF22L0mroV0coHjJq5joEmfsW
+         jWoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683748430; x=1686340430;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z1W4uqEw+0QjDuIqb5LwmtDskQMM72Nc3FiWOEWWSIU=;
-        b=aokD46U9e+6XSCPwN/DVhzYwc0QCc2yf5TrA+NVOpq8P+jYuHrkHAsD3CvljBhwooy
-         zEevft3InNGITg3jYtkPImOJtBFo6zCljMnBxw/gQVnFDkYPF/dz2/rqXbL0zmBXotdI
-         MUQ0gO6X+3+e9KbitLef9TpqUFq+NHWnj85dewFqZYvqhxXA+pEuEkqSmaGkLAmIEYzY
-         G/mnmRneVKJWawGBQ4tFj9KGy9a4NFsQ0KbPeNTx8kF7esU/5Tsy/AEAh3SIxLXKkUVj
-         XnOjOqGg7zrlCUUC1WxxmgwnM9nvJdC4a+DCijpw/0Qucz9X6cO5wXDosqjmKp5sA2li
-         f4+w==
-X-Gm-Message-State: AC+VfDw8vFQkECTakcqbgrRJURC+6aSm02piYSiyU1D394hNS3ovSnUv
-	NQhJB9XfW18+Afdr1aPxatNtTW7+HA0=
-X-Google-Smtp-Source: ACHHUZ5/zkYXLcb9Lzc5gleFvypNUl55bl4EUFRViFwjuCxQrTKzxgUePO3U5+fR1EuFBia1UmC0JQ==
-X-Received: by 2002:a17:903:1110:b0:1a6:8ed5:428a with SMTP id n16-20020a170903111000b001a68ed5428amr22480545plh.22.1683748430442;
-        Wed, 10 May 2023 12:53:50 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id ij30-20020a170902ab5e00b001a6c15cad12sm4214978plb.166.2023.05.10.12.53.49
+        d=1e100.net; s=20221208; t=1683750253; x=1686342253;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nOqXUZiOn/jbSQs17L6q02ziolcmWifsT1TYQOY1qSY=;
+        b=A7nLZGd6KL+CZgIG/87I37tCQe5lj2n/o432BF0aJg4PASoTlxziN1viaB+/+H2EIR
+         3scDdqFHs400dfMGxG5e5rj2YAXwsy3QIFQ5XycYQY3tqPtIpdLKYzSONiiok0R+Nb3r
+         GTCTnN6M3AYfCAORJpbRBbZGDLScWtQu0LANTkJWELZqf1+nFvTa5U9Aj7f7HieZ7dVZ
+         QsnH/yLBU2riPMAS8qA/FfW++3T110Z+7ENKWZVVSQI2njT2vTQFnmUmxNZpcz0EIGZy
+         hfXEWOQeCQMw0oQHO607UcrLnnLpSfVC5oJ/C6OmCrCnhwfkl2WsfnFHzvQO4T/vgqx0
+         tkaA==
+X-Gm-Message-State: AC+VfDyvxG/k0ZjZHzmyDRiPEjfDkCu6DhefjDct7LtJH4JLA9+hIjlj
+	xZwO6ubwFBH3949m3ROue1M=
+X-Google-Smtp-Source: ACHHUZ6f8vyYdfqiJozi9u+SvGpSL8JArXiYGOH//CgnyhUeOA7mEhAnOxgJEEuw40NEiXdB3C+wXQ==
+X-Received: by 2002:a05:6a20:1591:b0:103:9d9b:1ead with SMTP id h17-20020a056a20159100b001039d9b1eadmr1621812pzj.50.1683750252642;
+        Wed, 10 May 2023 13:24:12 -0700 (PDT)
+Received: from google.com ([2620:15c:9d:2:f65a:fd28:e01b:3900])
+        by smtp.gmail.com with ESMTPSA id x1-20020a63f701000000b0051b8172fa68sm3636950pgh.38.2023.05.10.13.24.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 12:53:49 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 10 May 2023 12:53:48 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, laoar.shao@gmail.com
-Subject: Re: [PATCH 5.15 000/370] 5.15.111-rc2 review
-Message-ID: <4d3c5462-1788-426a-a44a-e839b1c4970d@roeck-us.net>
-References: <20230509030611.521807993@linuxfoundation.org>
- <863a112f-f4a4-d580-9687-f6214d555939@linaro.org>
- <2023051035-monitor-sandy-2a5b@gregkh>
- <CAEUSe79AViqsHimbYbFjkKAxcvROGhFKA2yKVuC3aP1Gm=jc1w@mail.gmail.com>
- <CAEUSe7_ZBW_hPUZYeKkZ6zuckeqYb+O46GdgGx0wE6T0=c5wZg@mail.gmail.com>
+        Wed, 10 May 2023 13:24:11 -0700 (PDT)
+Date: Wed, 10 May 2023 13:24:08 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	linux-input@vger.kernel.org
+Subject: Re: [PATCH] HID: google: Don't use devm for hid_hw_stop()
+Message-ID: <ZFv9aKZlZbfK1cVr@google.com>
+References: <20230505232417.1377393-1-swboyd@chromium.org>
+ <ZFWZ785FRHDii/+5@google.com>
+ <CAE-0n521MhmdWjEb0-xwnPLQz07bMCGyXokZ3L87azYcw6_C_Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAEUSe7_ZBW_hPUZYeKkZ6zuckeqYb+O46GdgGx0wE6T0=c5wZg@mail.gmail.com>
+In-Reply-To: <CAE-0n521MhmdWjEb0-xwnPLQz07bMCGyXokZ3L87azYcw6_C_Q@mail.gmail.com>
 
-On Wed, May 10, 2023 at 11:00:42AM -0600, Daniel Díaz wrote:
-> Hello!
-> 
-> On Wed, 10 May 2023 at 09:46, Daniel Díaz <daniel.diaz@linaro.org> wrote:
-> > Hello!
-> >
-> > On Wed, 10 May 2023 at 01:43, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > > On Tue, May 09, 2023 at 09:12:33AM -0600, Daniel Díaz wrote:
-> > > > Hello!
-> > > >
-> > > > On 08/05/23 21:26, Greg Kroah-Hartman wrote:
-> > > > > This is the start of the stable review cycle for the 5.15.111 release.
-> > > > > There are 370 patches in this series, all will be posted as a response
-> > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > let me know.
-> > > > >
-> > > > > Responses should be made by Thu, 11 May 2023 03:05:05 +0000.
-> > > > > Anything received after that time might be too late.
-> > > > >
-> > > > > The whole patch series can be found in one patch at:
-> > > > >     https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.111-rc2.gz
-> > > > > or in the git tree and branch at:
-> > > > >     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > > > > and the diffstat can be found below.
-> > > > >
-> > > > > thanks,
-> > > > >
-> > > > > greg k-h
-> > > >
-> > > > New warnings are introduced for Arm, PowerPC, RISC-V:
-> > > >
-> > > >   /builds/linux/kernel/sched/debug.c: In function 'print_cfs_group_stats':
-> > > >   /builds/linux/kernel/sched/debug.c:465:41: warning: unused variable 'stats' [-Wunused-variable]
-> > > >                   struct sched_statistics *stats =  __schedstats_from_se(se);
-> > > >                                            ^~~~~
+On Wed, May 10, 2023 at 11:51:31AM -0700, Stephen Boyd wrote:
+> Quoting Dmitry Torokhov (2023-05-05 17:06:07)
+> > On Fri, May 05, 2023 at 04:24:16PM -0700, Stephen Boyd wrote:
 > > >
-> > > Odd, and this isn't on other kernels too?
+> > ...
+> > > Unfortunately, the hid google hammer driver hand rolls a devm function
+> > > to call hid_hw_stop() when the driver is unbound and implements an
+> > > hid_driver::remove() function. The driver core doesn't call the devm
+> > > release functions until _after_ the bus unbinds the driver, so the order
+> > > of operations is like this:
 > >
-> > Only on 5.15, not on the 6.x RC's. I'll share more info after my
-> > bisection is done.
+> > Excellent analysis, but the problem is not limited to the hammer driver
+> > (potentially) and shalt be dealt with appropriately, at the HID bus
+> > level.
 > 
-> Bisection leads to:
+> Thanks. I thought of the bus level approach as well, but I was trying to
+> keep the fix isolated to the driver that had the problem. I'd like to
+> get the fix into the stable kernel, as this fixes a regression
+> introduced by commit d950db3f80a8 ("HID: google: switch to devm when
+> registering keyboard backlight LED") in v5.18.
 > 
->   sched: Make struct sched_statistics independent of fair sched class
-> 
-> Reverting makes the warning disappear.
-> 
+> Is the bus level approach going to be acceptable as a stable backport?
 
-Commit 769fdf83df57 ("sched: Fix DEBUG && !SCHEDSTATS warn") explains why
-this works upstream.
+Sure, why not given the kind of stuff flowing into stable kernels. At
+least this would be fixing real issue that can be triggered with a real
+device.
 
-Guenter
+> 
+> Is it a problem to call hid_hw_stop() directly? I suppose for the
+> hid-google-hammer driver we don't want to leave the led sysfs node
+> hanging around after the hid_hw_stop() function has been called either,
+> so some sort of forced ejection of the devm led device is needed and the
+> bus level approach helps there.
+> 
+> I was curious to see if anything else had this problem so I did this
+> poor grep to find code that isn't calling hid_hw_stop() from probe or
+> remove:
+> 
+>   git grep -W hid_hw_stop | grep .c= | grep -v probe | grep -v remove
+> 
+> and I got this list (minus hid core which doesn't matter):
+> 
+>  drivers/hid/hid-google-hammer.c=static void hammer_stop(void *hdev)
+>  drivers/hid/hid-mcp2221.c=static void mcp2221_hid_unregister(void *ptr)
+>  drivers/hid/hid-wiimote-core.c=static void wiimote_destroy(struct
+> wiimote_data *wdata)
+>  drivers/hid/wacom_sys.c=static int wacom_parse_and_register(struct
+> wacom *wacom, bool wireless)
+>  drivers/hid/wacom_sys.c=static void wacom_wireless_work(struct
+> work_struct *work)
+>  drivers/hid/wacom_sys.c=static void wacom_mode_change_work(struct
+> work_struct *work)
+> 
+> The wacom_sys.c ones look OK because they're during workqueues that are
+> probably flushed, and wiimote_destroy() is called from an error path or
+> driver remove, so it is also OK. But mcp2221_hid_unregister() has the
+> same problem.
+> 
+> If you look at drivers/hid/hid-mcp2221.c you'll see this comment above
+> mcp2221_remove() too:
+> 
+>  /* This is needed to be sure hid_hw_stop() isn't called twice by the
+> subsystem */
+>  static void mcp2221_remove(struct hid_device *hdev)
+> 
+> which is kinda weird. Why can't we have a devm_hid_hw_start() API that
+> tells the hid bus to not call hid_hw_stop() at all in
+> hid_device_remove()? That would allow us to avoid this pitfall where
+> everything is moved to devm and the driver has no remove function at all
+> and we forget to populate an empty one. Instead, the bus layer can know
+> that hardware will be stopped with devm later.
+
+So yes, this is another option: all bus code should exclusively use
+devm* API and can not use non-managed resources. This for HID includes
+disconnecting hiddev, hidraw and hidinput handlers/drivers.
+
+FTR, I think having devm_hid_hw_start() would be nice.
+
+> 
+> >
+> > Actually, it is not even limited to HID, but exists in most buses with
+> > non-trivial ->remove() implementation. For example I fixed similar issue
+> > in I2C in 5b5475826c52 ("i2c: ensure timely release of driver-allocated
+> > resources"). I tried fixing it in SPI but Mark has some objections, and
+> > wanted to fix it in the driver core, so I was thinking about it and then
+> > dropped the ball. At this time I do not think fixing it at driver core
+> > makes logic any clearer, so I think we just need to fix a handful of
+> > buses.
+> 
+> Do you have a link to that discussion?
+
+https://lore.kernel.org/lkml/YFf2RD931nq3RudJ@google.com/
+
+> 
+> -------
+> 
+> This got me thinking that maybe both of these approaches are wrong.
+> Maybe the call to hid_close_report() should be removed from
+> hid_device_remove() instead.
+> 
+> The device is being removed from the bus when hid_device_remove() is
+> called, but it hasn't been released yet. Other devices like the hidinput
+> device are referencing the hdev device because they set the hdev as
+> their parent. Basically, child devices are still bound to some sort of
+> driver or subsystem when the parent hdev is unbound from its driver,
+> leading to a state where the child drivers could still access the hdev
+> while it is being destroyed. If we remove the hid_close_report() call
+> from this function it will eventually be called by hid_device_release()
+> when the last reference to the device is dropped, i.e. when the child
+> devices all get destroyed. In the case of hid-google-hammer, that would
+> be when hid_hw_stop() is called from the devm release function by driver
+> core.
+> 
+> The benefit of this approach is that we don't allocate a devres group
+> for all the hid devices when only two drivers need it. The possible
+> downside is that we keep the report around while the device exists but
+> has no driver bound to it.
+> 
+> Here's a totally untested patch for that.
+> 
+> ---8<----
+> diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+> index 22623eb4f72f..93905e200cae 100644
+> --- a/drivers/hid/hid-core.c
+> +++ b/drivers/hid/hid-core.c
+> @@ -1211,8 +1211,8 @@ int hid_open_report(struct hid_device *device)
+>  		hid_parser_reserved
+>  	};
+> 
+> -	if (WARN_ON(device->status & HID_STAT_PARSED))
+> -		return -EBUSY;
+> +	if (device->status & HID_STAT_PARSED)
+> +		hid_close_report(device);
+> 
+>  	start = device->dev_rdesc;
+>  	if (WARN_ON(!start))
+> @@ -2662,7 +2662,6 @@ static void hid_device_remove(struct device *dev)
+>  			hdrv->remove(hdev);
+>  		else /* default remove */
+>  			hid_hw_stop(hdev);
+> -		hid_close_report(hdev);
+>  		hdev->driver = NULL;
+>  	}
+
+This will probably work, but it I consider this still being fragile as
+at some point we might want to add some more unwinding, and we'll run
+into this issue again. I would feel much safer if the order of release
+followed (inversely) order of allocations more closely.
+
+Thanks.
+
+-- 
+Dmitry
