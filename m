@@ -1,127 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E195B174F5
-	for <patches@lists.linux.dev>; Tue,  9 May 2023 21:30:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84DB0C4339B;
-	Tue,  9 May 2023 21:30:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1683667849;
-	bh=TV3iq4M+Rv3zhN9J5JlzxPrprg0eHHr6VLCMjCYMMck=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hqOXwCPhHpvlfvzNC2XLzHgxG6WH5eSr1z2xMCH6cEAjKQ9hMLdEmWMxKmDCViYlO
-	 WcM7J6XBLvSp3D1CTAoCK6B2cn+W5fp3jw/iA+NXkQzoNENtST3VVTN6dzUnFIXFmT
-	 zGZYYtzlGxgoOLPR+40NiZ9zCUCZklYazMVbtZg64Fq2sZpbadAXxNruiQ8N3i0v93
-	 pZoUl8gKJMVhMZdLTBzM08jL1qWOlOW4uRX0v7y33U7hjDmQ3z29V/kIeJzqzYu7Pr
-	 1PPh1ukZhHJOBxxBos4OVhoW6corTf/PSE7OSTTq0SZlYsDoyEy987B2Jdux/pf4KQ
-	 2Ba+/nvpqd3UA==
-Date: Tue, 9 May 2023 22:30:44 +0100
-From: Conor Dooley <conor@kernel.org>
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/610] 6.1.28-rc2 review
-Message-ID: <20230509-tacking-polo-d841ebfffcd0@spud>
-References: <20230509030653.039732630@linuxfoundation.org>
- <0837e157-8615-418a-a3d3-1c14af11aba5@roeck-us.net>
- <20230509-robust-crate-5fe128d00e6d@spud>
- <ce667220-5803-4b6a-a2d2-f538289af584@roeck-us.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B9F814
+	for <patches@lists.linux.dev>; Wed, 10 May 2023 06:53:49 +0000 (UTC)
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-643990c5319so4832798b3a.2
+        for <patches@lists.linux.dev>; Tue, 09 May 2023 23:53:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google; t=1683701629; x=1686293629;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=9ARlpM+pAsr8BGSZNletFEdMQRPC07jRQRvs7jrtEQg=;
+        b=Ba6Qxb6tPiVzsdverLvJeaA6NMNs1ESe2582fx4Ch2x9nGbxGoede5BMdVMhrMkMXG
+         aQp2cdPrwDF+HEclzi3fHCh2YX612MHaOqfL2bgAKvp0V3reXphaf7Ar9w8jPv6aeEQB
+         Pf30hlSXS0yL7rqaXpmkiJ5OkARMDSPDV/p+0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683701629; x=1686293629;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9ARlpM+pAsr8BGSZNletFEdMQRPC07jRQRvs7jrtEQg=;
+        b=kbA4BcxJ9jnP3TDVn6fgpvzVX1O3aIxq52gF5dRlko0IN1sfkwAEn0Smt2uX9uKl16
+         6quGeeELZWFMKhmtgl91Upy+9WcroqwK0BvsrwIT/XRRr5YotX2S7aQWvZY9KM0l1Exn
+         toYCXU6x6yUs0X0lHa4VOhxTRCOg7AboAiq+PeWTNqgHooDAo1rLe2Hx9GUbV76I1ym3
+         3Fq3DdJk9A3cGBorgaTNPuxjSS1x5L0dSdbCdJ/vlAycfYWSUvBoLofrSgwj9N0nR2lx
+         3uBPbz5GDUq23l1inEqZQb4iB0lXbqObAbFYsQF2yXViX4IP7ourYytpA18rtZTHTAkj
+         fDNw==
+X-Gm-Message-State: AC+VfDzVxSpzrfiTNcBQynxbCpufAq49WQ1GwJk4K9l3eS0JhCRtPent
+	ORQ+0RAbfrXnXDL9oMf+lECruGx03XR/nUsU25RwuQ==
+X-Google-Smtp-Source: ACHHUZ5cDWPb1mJZ0ZYYOzrCTrAw5KODsZQvrHxo2j5ECdRSUuDCYP5w1GI6SDTCL5wXkAlKoem2FIwX4BIuiyjMU8U=
+X-Received: by 2002:a05:6a21:3391:b0:101:5f33:94ad with SMTP id
+ yy17-20020a056a21339100b001015f3394admr5767688pzb.52.1683701628619; Tue, 09
+ May 2023 23:53:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="XZAFXv1xCRIWO+qY"
-Content-Disposition: inline
-In-Reply-To: <ce667220-5803-4b6a-a2d2-f538289af584@roeck-us.net>
+References: <20230509030705.399628514@linuxfoundation.org> <20230509080658.GA152864@d6921c044a31>
+ <20230509131032.GA8@9ed91d9f7b3c> <2023050913-spearhead-angrily-fc58@gregkh>
+ <20230509145806.GA8@df3c0d7ae0b0> <CA+G9fYuCLSuPchYoSfqnu6y+CUV+Km3TVFr1NhGj0dik-ScEdQ@mail.gmail.com>
+In-Reply-To: <CA+G9fYuCLSuPchYoSfqnu6y+CUV+Km3TVFr1NhGj0dik-ScEdQ@mail.gmail.com>
+From: Rudi Heitbaum <rudi@heitbaum.com>
+Date: Wed, 10 May 2023 16:53:36 +1000
+Message-ID: <CAG9oJsnsSdkj=rEVSmuSa2U4GfLqPhtgWm=a_71d7orZ=r4CJg@mail.gmail.com>
+Subject: Re: [PATCH 6.3 000/694] 6.3.2-rc2 review
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	ntfs3@lists.linux.dev, almaz.alexandrovich@paragon-software.com
+Content-Type: text/plain; charset="UTF-8"
 
+On Wed, 10 May 2023 at 05:30, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+>
+> On Tue, 9 May 2023 at 20:28, Rudi Heitbaum <rudi@heitbaum.com> wrote:
+> >
+> > On Tue, May 09, 2023 at 03:56:42PM +0200, Greg Kroah-Hartman wrote:
+> > > On Tue, May 09, 2023 at 01:10:32PM +0000, Rudi Heitbaum wrote:
+> > > > On Tue, May 09, 2023 at 08:06:58AM +0000, Rudi Heitbaum wrote:
+> > > > > On Tue, May 09, 2023 at 05:26:44AM +0200, Greg Kroah-Hartman wrote:
+> > > > > > This is the start of the stable review cycle for the 6.3.2 release.
+> > > > > > There are 694 patches in this series, all will be posted as a response
+> > > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > > let me know.
+> > > > > >
+> > > > > > Responses should be made by Thu, 11 May 2023 03:05:05 +0000.
+> > > > > > Anything received after that time might be too late.
+> > > > >
+> > > > > Hi Greg,
+> > > > >
+> > > > > 6.3.2-rc2 tested.
+> > > >
+> > > > Hi Greg,
+> > > >
+> > > > Further testing and have seen ntfs3: NULL pointer dereference with ntfs_lookup errors
+> > > > with 6.3.2-rc2 (I have not seen this error before.) No other errors in the logs.
+> > >
+> > > Can you reproduce this without the extern, gpl-violation module loaded?
+>
+> Please share the steps to reproduce
+>  test case / Kconfigs / device under test environment / firmware / boot loaders.
 
---XZAFXv1xCRIWO+qY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi Naresh,
 
-On Tue, May 09, 2023 at 02:18:35PM -0700, Guenter Roeck wrote:
-> On Tue, May 09, 2023 at 09:41:42PM +0100, Conor Dooley wrote:
-> > On Tue, May 09, 2023 at 12:57:58PM -0700, Guenter Roeck wrote:
-> > > On Tue, May 09, 2023 at 05:26:31AM +0200, Greg Kroah-Hartman wrote:
-> > > > This is the start of the stable review cycle for the 6.1.28 release.
-> > > > There are 610 patches in this series, all will be posted as a respo=
-nse
-> > > > to this one.  If anyone has any issues with these being applied, pl=
-ease
-> > > > let me know.
-> > > >=20
-> > > > Responses should be made by Thu, 11 May 2023 03:05:05 +0000.
-> > > > Anything received after that time might be too late.
-> > > >=20
-> > >=20
-> > > Build results:
-> > > 	total: 155 pass: 155 fail: 0
-> > > Qemu test results:
-> > > 	total: 519 pass: 519 fail: 0
-> > >=20
-> > > New persistent runtime warning when booting riscv32/64 images:
-> >=20
-> > You sure this is new? I seem to be able to reproduce for QEMU (which I
->=20
-> New for my tests, yes.
->=20
-> > don't usually test) in several versions of 6.1. Don't see it in (my)
-> > hardware though, as the particular platform doesn't end up calling the
-> > offending function. Out of curiosity, what's your QEMU invocation?
->=20
-> Example boot from initrd:
->=20
-> qemu-system-riscv64 -M virt -m 512M \
->      -no-reboot -kernel arch/riscv/boot/Image \
->      -initrd rootfs.cpio \
->      -device e1000,netdev=3Dnet0 \
->      -netdev user,id=3Dnet0 -bios default \
->      -append "panic=3D-1 rdinit=3D/sbin/init console=3DttyS0,115200 early=
-con=3Duart8250,mmio,0x10000000,115200" \
->      -nographic -monitor none
+Test case:
+- general use - no specific case
 
-Cool, was mainly interested in seeing if you were explicitly enabling
-any ISA extensions. NGL, I expected to see some.
+Test device:
+LibreELEC with docker used as media player with docker for development
+/ package testing for LibreELEC
+[    0.000000] microcode: updated early: 0x421 -> 0x429, date = 2023-01-11
+[    0.000000] DMI: Intel(R) Client Systems NUC12WSKi7/NUC12WSBi7,
+BIOS WSADL357.0085.2022.0718.1739 07/18/2022
 
-> qemu version is 8.0, but I don't think that makes a difference.
+ntfs3 volume is:
+/dev/sdb2 on /var/media/L-Z type ntfs3
+(rw,relatime,uid=0,gid=0,fmask=0133,iocharset=utf8)
 
-I'm on 7.2.50 (v7.2.0-2653-g7080c3ab79-dirty) as it is where I ended
-during my last bisection of QEMU. But aye, makes no odds - I see it on a
-more recent 8.0.50 version too.
+                 *-usb:1
+                      description: Mass storage device
+                      product: USB to ATA/ATAPI Bridge
+                      vendor: JMicron
+                      physical id: 2
+                      bus info: usb@4:2.2
+                      logical name: scsi1
+                      version: 5.08
+                      serial:
+                      capabilities: usb-3.00 scsi
+                      configuration: driver=uas maxpower=896mA speed=5000Mbit/s
+                    *-disk
+                         description: SCSI Disk
+                         product: Generic
+                         vendor: JMicron
+                         physical id: 0.0.0
+                         bus info: scsi@1:0.0.0
+                         logical name: /dev/sdb
+                         version: 0508
+                         serial:
+                         size: 10TiB (12TB)
+                         capabilities: gpt-1.00 partitioned partitioned:gpt
+                         configuration: ansiversion=6
+guid=7fe84503-eeb0-4ee6-806d-9cbe22dc50f2 logicalsectorsize=512
+sectorsize=4096
+                       *-volume:0
+                            description: reserved partition
+                            vendor: Windows
+                            physical id: 1
+                            bus info: scsi@1:0.0.0,1
+                            logical name: /dev/sdb1
+                            serial:
+                            capacity: 15MiB
+                            capabilities: nofs
+                            configuration: name=Microsoft reserved partition
+                       *-volume:1
+                            description: Windows NTFS volume
+                            vendor: Windows
+                            physical id: 2
+                            bus info: scsi@1:0.0.0,2
+                            logical name: /dev/sdb2
+                            logical name: /var/media/L-Z
+                            version: 3.1
+                            serial:
+                            size: 935GiB
+                            capacity: 10TiB
+                            capabilities: ntfs initialized
+                            configuration: clustersize=4096
+created=2022-10-01 10:18:29 filesystem=ntfs label=L-Z
+mount.fstype=ntfs3
+mount.options=rw,relatime,uid=0,gid=0,fmask=0133,iocharset=utf8
+name=Basic data partition state=mounted
 
-> What does your command line look like ?
+Operating system:
+- LibreELEC - https://libreelec.tv/ (master+ branch)
 
-In this particular instance:
-	qemu-system-riscv64 -M virt \
-		-m 2G -smp 5 \
-		-nographic \
-		-kernel $(vmlinux_bin) \
-		-initrd $(initramfs)
+Boot loader:
+- syslinux
 
-> > Anyways, looks like a partial backport is the cause. How's it look with:
+Kconfig:
+- https://github.com/LibreELEC/LibreELEC.tv/blob/master/projects/Generic/linux/linux.x86_64.conf
 
-> This fixes the problem for me.
-
-Cool, shall send it as a real patch. Thanks.
-
---XZAFXv1xCRIWO+qY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZFq7gwAKCRB4tDGHoIJi
-0pWvAQDpsknEvAm568mJ3lmPfIERipnx+EYNfwlScWRVYAPZTgD/UnSqcJTWGhHz
-An66ZI9Yfv3VaPqoUvYIezKns6Xa/w0=
-=LNau
------END PGP SIGNATURE-----
-
---XZAFXv1xCRIWO+qY--
+> - Naresh
