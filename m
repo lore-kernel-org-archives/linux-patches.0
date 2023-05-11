@@ -1,166 +1,166 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FC11E50B
-	for <patches@lists.linux.dev>; Wed, 10 May 2023 23:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB645C433EF;
-	Wed, 10 May 2023 23:16:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1683760615;
-	bh=vIO/pbMw7hd/LQtTLHhb36ZJL8+SKJcMQgnYYrxnEhg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ChMvym4BdgnKakXfPkF5zMnoEW8XICR+Jj2XR2zfe8O50HEh8QvBe2QaVjCXonsUT
-	 jVhvjk7t/nl43jboiRwtF6/lT+P7p9FotggtZg7Ec0nVL6Mh7wH+HWYrSnXZ0jfu38
-	 +wdNoYIUbvwdyyg1GXUiEVO9a2h75UeYhYqEhhb8=
-Date: Thu, 11 May 2023 08:16:47 +0900
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Daniel =?iso-8859-1?Q?D=EDaz?= <daniel.diaz@linaro.org>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, laoar.shao@gmail.com
-Subject: Re: [PATCH 5.15 000/370] 5.15.111-rc2 review
-Message-ID: <2023051127-coastline-buffer-061a@gregkh>
-References: <20230509030611.521807993@linuxfoundation.org>
- <863a112f-f4a4-d580-9687-f6214d555939@linaro.org>
- <2023051035-monitor-sandy-2a5b@gregkh>
- <CAEUSe79AViqsHimbYbFjkKAxcvROGhFKA2yKVuC3aP1Gm=jc1w@mail.gmail.com>
- <CAEUSe7_ZBW_hPUZYeKkZ6zuckeqYb+O46GdgGx0wE6T0=c5wZg@mail.gmail.com>
- <4d3c5462-1788-426a-a44a-e839b1c4970d@roeck-us.net>
- <2023051154-activator-aside-bc8e@gregkh>
- <CAHk-=wh2nmNs98AUpv6+BZ3x_bNh6ps+nuufQO2Sn6LdXCbC9A@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE650363
+	for <patches@lists.linux.dev>; Thu, 11 May 2023 00:25:06 +0000 (UTC)
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-64115eef620so54107900b3a.1
+        for <patches@lists.linux.dev>; Wed, 10 May 2023 17:25:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683764706; x=1686356706;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NiIAKS0VeNTa0Mpe7u/4NIaUrufb6wO/HHXswmRGRIQ=;
+        b=D6ZVr8L5gm2c6Qrq+kA00eiTsg5rBpmsfXi9fenQ0gNlZZ8pjMcDY5F0LcGwVe5m1c
+         ZlNY1pTqDOh/Sdf3JJHuwU2SqXmTUiXD4tznuUwPnzXOq+wlmAJTMX/s+ETnP39OKyPA
+         MW1R4sgwYXh4euC0Qy4GDOcS2yIPoXJDSIxSqJh0YglohoKveKeZLF/qYDesMD/cJ/WO
+         iEQU1gfl3UM8uA6u0Wv2sawFK/cw0P5kunYnDN1IuuwJZPUQv2SSmModvt329ibayPth
+         pcLChR3avq77eEklPDgP7Sk7KLIodNJWal96Kf6qohTgQZ28DMvwL3+NypmWANhL4j3D
+         Q+ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683764706; x=1686356706;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NiIAKS0VeNTa0Mpe7u/4NIaUrufb6wO/HHXswmRGRIQ=;
+        b=H7+MkDYJEETnGumk2bK/W9WoQJcl/NvOEKblZtZPMlAyw02neLQTDieQQzM0ZtRErb
+         4kgUYZOVdCPYJIIGWtsMp2nUEyfL7nfQmYH4WJYN3lgBQ6lP0Bb4bLVql1iEMb/32sbo
+         ZixWJvkxCBG0eRNe24bvu5Tg1n3Y1aP7N/ANiJCN94xNb6bNNBSvTK9ulEzydxoCnc52
+         we3Koac0ha3Xvm1T/duOZE8hYfvwZxEH+fCg/XhZs/2PGYqO326EN4/WDwMdhKfB9BXV
+         IxwMpxe8YaGCEEFZurD6KV+GtTRtCWPw2QZM0R0wXE009AKzjcy7iOT0jko17FlAzBom
+         xMIQ==
+X-Gm-Message-State: AC+VfDwt9chfYslEtzE65s6XjnAxRK6hy1HwXSUXhdraeP+jGBpbZjsC
+	E70V4UyDNBsNrgm1Z1OiY1w=
+X-Google-Smtp-Source: ACHHUZ4xdFMjnxzjvjJ1Fd7ldfzzLJIyyYXtJr+gghVAO38rUN0DBRdC8d6E6cSW+9qzfZpLdHvkeA==
+X-Received: by 2002:a17:902:ea0e:b0:1ac:7d8a:35a with SMTP id s14-20020a170902ea0e00b001ac7d8a035amr14529498plg.12.1683764705845;
+        Wed, 10 May 2023 17:25:05 -0700 (PDT)
+Received: from google.com ([2620:15c:9d:2:84a:ed9c:4024:c347])
+        by smtp.gmail.com with ESMTPSA id jn22-20020a170903051600b001a80ad9c599sm4386641plb.294.2023.05.10.17.25.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 May 2023 17:25:05 -0700 (PDT)
+Date: Wed, 10 May 2023 17:25:02 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	linux-input@vger.kernel.org
+Subject: Re: [PATCH] HID: google: Don't use devm for hid_hw_stop()
+Message-ID: <ZFw13uv7/q5jsLWE@google.com>
+References: <20230505232417.1377393-1-swboyd@chromium.org>
+ <ZFWZ785FRHDii/+5@google.com>
+ <CAE-0n521MhmdWjEb0-xwnPLQz07bMCGyXokZ3L87azYcw6_C_Q@mail.gmail.com>
+ <ZFv9aKZlZbfK1cVr@google.com>
+ <CAE-0n52bv1-VaQikOV6hdFmuRyPBX6YV7MT=2+xrpReJecrgbQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="NT7Vp7lOswVCjS8Z"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAHk-=wh2nmNs98AUpv6+BZ3x_bNh6ps+nuufQO2Sn6LdXCbC9A@mail.gmail.com>
+In-Reply-To: <CAE-0n52bv1-VaQikOV6hdFmuRyPBX6YV7MT=2+xrpReJecrgbQ@mail.gmail.com>
 
-
---NT7Vp7lOswVCjS8Z
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-
-On Wed, May 10, 2023 at 06:09:35PM -0500, Linus Torvalds wrote:
-> On Wed, May 10, 2023 at 5:58 PM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
+On Wed, May 10, 2023 at 01:50:01PM -0700, Stephen Boyd wrote:
+> Quoting Dmitry Torokhov (2023-05-10 13:24:08)
+> > On Wed, May 10, 2023 at 11:51:31AM -0700, Stephen Boyd wrote:
+> > > Quoting Dmitry Torokhov (2023-05-05 17:06:07)
+> > > > On Fri, May 05, 2023 at 04:24:16PM -0700, Stephen Boyd wrote:
+> > > > >
+> > > > ...
+> > > > > Unfortunately, the hid google hammer driver hand rolls a devm function
+> > > > > to call hid_hw_stop() when the driver is unbound and implements an
+> > > > > hid_driver::remove() function. The driver core doesn't call the devm
+> > > > > release functions until _after_ the bus unbinds the driver, so the order
+> > > > > of operations is like this:
+> > > >
+> > > > Excellent analysis, but the problem is not limited to the hammer driver
+> > > > (potentially) and shalt be dealt with appropriately, at the HID bus
+> > > > level.
+> > >
+> > > Thanks. I thought of the bus level approach as well, but I was trying to
+> > > keep the fix isolated to the driver that had the problem. I'd like to
+> > > get the fix into the stable kernel, as this fixes a regression
+> > > introduced by commit d950db3f80a8 ("HID: google: switch to devm when
+> > > registering keyboard backlight LED") in v5.18.
+> > >
+> > > Is the bus level approach going to be acceptable as a stable backport?
 > >
-> > Thanks!  Turns out someone put the wrong "Fixes:" tag in that commit
-> > which is why I missed it.
+> > Sure, why not given the kind of stuff flowing into stable kernels. At
+> > least this would be fixing real issue that can be triggered with a real
+> > device.
 > 
-> Hmm. Presumably the real commit ceeadb83aea2 at some point got
-> rebased, and had had that other mentioned SHA1 before that.
+> Hmm, ok. I was worried it would be too much "new code" vs. fixing
+> something.
 > 
-> It might be a good idea in general - not just for stable - if we had
-> some automation that said "this refers to a commit ID that doesn't
-> exist".
+> > >
+> > > This got me thinking that maybe both of these approaches are wrong.
+> > > Maybe the call to hid_close_report() should be removed from
+> > > hid_device_remove() instead.
+> > >
+> > > The device is being removed from the bus when hid_device_remove() is
+> > > called, but it hasn't been released yet. Other devices like the hidinput
+> > > device are referencing the hdev device because they set the hdev as
+> > > their parent. Basically, child devices are still bound to some sort of
+> > > driver or subsystem when the parent hdev is unbound from its driver,
+> > > leading to a state where the child drivers could still access the hdev
+> > > while it is being destroyed. If we remove the hid_close_report() call
+> > > from this function it will eventually be called by hid_device_release()
+> > > when the last reference to the device is dropped, i.e. when the child
+> > > devices all get destroyed. In the case of hid-google-hammer, that would
+> > > be when hid_hw_stop() is called from the devm release function by driver
+> > > core.
+> > >
+> > > The benefit of this approach is that we don't allocate a devres group
+> > > for all the hid devices when only two drivers need it. The possible
+> > > downside is that we keep the report around while the device exists but
+> > > has no driver bound to it.
+> > >
+> > > Here's a totally untested patch for that.
+> > >
+> > > ---8<----
+> > > diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+> > > index 22623eb4f72f..93905e200cae 100644
+> > > --- a/drivers/hid/hid-core.c
+> > > +++ b/drivers/hid/hid-core.c
+> > > @@ -1211,8 +1211,8 @@ int hid_open_report(struct hid_device *device)
+> > >               hid_parser_reserved
+> > >       };
+> > >
+> > > -     if (WARN_ON(device->status & HID_STAT_PARSED))
+> > > -             return -EBUSY;
+> > > +     if (device->status & HID_STAT_PARSED)
+> > > +             hid_close_report(device);
+> > >
+> > >       start = device->dev_rdesc;
+> > >       if (WARN_ON(!start))
+> > > @@ -2662,7 +2662,6 @@ static void hid_device_remove(struct device *dev)
+> > >                       hdrv->remove(hdev);
+> > >               else /* default remove */
+> > >                       hid_hw_stop(hdev);
+> > > -             hid_close_report(hdev);
+> > >               hdev->driver = NULL;
+> > >       }
+> >
+> > This will probably work, but it I consider this still being fragile as
+> > at some point we might want to add some more unwinding, and we'll run
+> > into this issue again. I would feel much safer if the order of release
+> > followed (inversely) order of allocations more closely.
+> >
+> 
+> Sorry, I'm not following here. How is it fragile? Are you saying that if
+> we want to add devm calls into the bus layer itself the order of release
+> won't be inverse of allocation/creation?
 
-We have that in linux-next today (or at least we used to, I took the
-scripts from linux-next and rely on them to catch this in my trees.)
-I cleaned up the scripts and posted them to the kernel workgroup mailing
-list a long time ago for any other maintainer to also use, I've attached
-it below as well.
+What I was trying to say is that later someone else might be tempted to
+add more traditional-style resources and non-devm-unwinding for them.
+Having an explicit devres groups gives exact point when driver-allocated resources
+are released, and makes patch authors take it into consideration.
 
-I run across this issue 2-3 times each -rc release, it's quite common
-but very low overall.
+If everything is devm-controlled then we do not need a separate devres
+group.
 
-thanks,
+Thanks.
 
-greg k-h
-
---NT7Vp7lOswVCjS8Z
-Content-Type: application/x-sh
-Content-Disposition: attachment; filename="verify_fixes.sh"
-Content-Transfer-Encoding: quoted-printable
-
-#!/bin/bash=0A# SPDX-License-Identifier: GPL-2.0=0A#=0A# Copyright (C) 2019=
- Stephen Rothwell <sfr@canb.auug.org.au>=0A# Copyright (C) 2019 Greg Kroah-=
-Hartman <gregkh@linuxfoundation.org>=0A#=0A# Verify that the "Fixes:" tag i=
-s correct in a kernel commit=0A#=0A# usage:=0A#	verify_fixes.sh GIT_RANGE=
-=0A#=0A# To test just the HEAD commit do:=0A#	verify_fixes.sh HEAD^..HEAD=
-=0A#=0A#=0A# Thanks to Stephen Rothwell <sfr@canb.auug.org.au> for the majo=
-rity of this code=0A#=0A=0A# Only thing you might want to change here, the =
-location of where Linus's git=0A# tree is on your system:=0ALinus_tree=3D"/=
-home/gregkh/linux/work/torvalds/"=0A=0A####################################=
-######=0A# No need to touch anything below here=0A=0Asplit_re=3D'^([Cc][Oo]=
-[Mm][Mm][Ii][Tt])?[[:space:]]*([[:xdigit:]]{5,})([[:space:]]*)(.*)$'=0Anl=
-=3D$'\n'=0Atab=3D$'\t'=0A=0Ahelp()=0A{=0A	echo "error, git range not found"=
-=0A	echo "usage:"=0A	echo "	$0 GIT_RANGE"=0A	exit 1=0A}=0A=0A# Strip the le=
-ading and training spaces from a string=0Astrip_spaces()=0A{=0A	[[ "$1" =3D=
-~ ^[[:space:]]*(.*[^[:space:]])[[:space:]]*$ ]]=0A	echo "${BASH_REMATCH[1]}=
-"=0A}=0A=0Averify_fixes()=0A{=0A	git_range=3D$1=0A	error=3D0=0A	commits=3D$=
-(git rev-list --no-merges -i --grep=3D'^[[:space:]]*Fixes:' "${git_range}")=
-=0A	if [ -z "$commits" ]; then=0A	        return 0=0A	fi=0A=0A	for c in $co=
-mmits; do=0A=0A		commit_log=3D$(git log -1 --format=3D'%h ("%s")' "$c")=0A#=
-			commit_msg=3D"In commit:=0A#	$commit_log=0A#"=0A			commit_msg=3D"Commit:=
- $commit_log=0A"=0A=0A		fixes_lines=3D$(git log -1 --format=3D'%B' "$c" |=
-=0A				grep -i '^[[:space:]]*Fixes:')=0A=0A		while read -r fline; do=0A			[=
-[ "$fline" =3D~ ^[[:space:]]*[Ff][Ii][Xx][Ee][Ss]:[[:space:]]*(.*)$ ]]=0A		=
-	f=3D"${BASH_REMATCH[1]}"=0A#			fixes_msg=3D"	Fixes tag:=0A#		$fline=0A#	Ha=
-s these problem(s):=0A#"=0A			fixes_msg=3D"	Fixes tag: $fline=0A	Has these =
-problem(s):=0A"=0A			sha=3D=0A			subject=3D=0A			msg=3D=0A			=0A			if git l=
-og -1 --format=3D'%B' "$c" | tr '\n' '#' | grep -qF "##$fline##"; then=0A		=
-		msg=3D"${msg:+${msg}${nl}}${tab}${tab}- empty lines surround the Fixes ta=
-g"=0A			fi=0A			=0A			if [[ "$f" =3D~ $split_re ]]; then=0A				first=3D"${B=
-ASH_REMATCH[1]}"=0A				sha=3D"${BASH_REMATCH[2]}"=0A				spaces=3D"${BASH_RE=
-MATCH[3]}"=0A				subject=3D"${BASH_REMATCH[4]}"=0A				if [ "$first" ]; then=
-=0A					msg=3D"${msg:+${msg}${nl}}${tab}${tab}- leading word '$first' unexp=
-ected"=0A				fi=0A				if [ -z "$subject" ]; then=0A					msg=3D"${msg:+${msg=
-}${nl}}${tab}${tab}- missing subject"=0A				elif [ -z "$spaces" ]; then=0A	=
-				msg=3D"${msg:+${msg}${nl}}${tab}${tab}- missing space between the SHA1 =
-and the subject"=0A				fi=0A			else=0A				printf '%s%s\t\t- %s\n' "$commit_=
-msg" "$fixes_msg" 'No SHA1 recognised'=0A				commit_msg=3D''=0A				error=3D=
-1=0A				continue=0A			fi=0A			if ! git rev-parse -q --verify "$sha" >/dev/n=
-ull; then=0A				printf '%s%s\t\t- %s\n' "$commit_msg" "$fixes_msg" 'Target =
-SHA1 does not exist'=0A				commit_msg=3D''=0A				error=3D1=0A				continue=
-=0A			fi=0A=0A			if [ "${#sha}" -lt 12 ]; then=0A				msg=3D"${msg:+${msg}${=
-nl}}${tab}${tab}- SHA1 should be at least 12 digits long${nl}${tab}${tab}  =
-Can be fixed by setting core.abbrev to 12 (or more) or (for git v2.11${nl}$=
-{tab}${tab}  or later) just making sure it is not set (or set to \"auto\").=
-"=0A			fi=0A			# reduce the subject to the part between () if there=0A			if=
- [[ "$subject" =3D~ ^\((.*)\) ]]; then=0A				subject=3D"${BASH_REMATCH[1]}"=
-=0A			elif [[ "$subject" =3D~ ^\((.*) ]]; then=0A				subject=3D"${BASH_REMA=
-TCH[1]}"=0A				msg=3D"${msg:+${msg}${nl}}${tab}${tab}- Subject has leading =
-but no trailing parentheses"=0A			fi=0A=0A			# strip matching quotes at the=
- start and end of the subject=0A			# the unicode characters in the classes =
-are=0A			# U+201C LEFT DOUBLE QUOTATION MARK=0A			# U+201D RIGHT DOUBLE QUO=
-TATION MARK=0A			# U+2018 LEFT SINGLE QUOTATION MARK=0A			# U+2019 RIGHT SI=
-NGLE QUOTATION MARK=0A			re1=3D$'^[\"\u201C](.*)[\"\u201D]$'=0A			re2=3D$'^=
-[\'\u2018](.*)[\'\u2019]$'=0A			re3=3D$'^[\"\'\u201C\u2018](.*)$'=0A			if [=
-[ "$subject" =3D~ $re1 ]]; then=0A				subject=3D"${BASH_REMATCH[1]}"=0A			e=
-lif [[ "$subject" =3D~ $re2 ]]; then=0A				subject=3D"${BASH_REMATCH[1]}"=
-=0A			elif [[ "$subject" =3D~ $re3 ]]; then=0A				subject=3D"${BASH_REMATCH=
-[1]}"=0A				msg=3D"${msg:+${msg}${nl}}${tab}${tab}- Subject has leading but=
- no trailing quotes"=0A			fi=0A=0A			subject=3D$(strip_spaces "$subject")=
-=0A=0A			target_subject=3D$(git log -1 --format=3D'%s' "$sha")=0A			target_=
-subject=3D$(strip_spaces "$target_subject")=0A=0A			# match with ellipses=
-=0A			case "$subject" in=0A			*...)	subject=3D"${subject%...}"=0A				target=
-_subject=3D"${target_subject:0:${#subject}}"=0A				;;=0A			...*)	subject=3D=
-"${subject#...}"=0A				target_subject=3D"${target_subject: -${#subject}}"=
-=0A				;;=0A			*\ ...\ *)=0A				s1=3D"${subject% ... *}"=0A				s2=3D"${subj=
-ect#* ... }"=0A				subject=3D"$s1 $s2"=0A				t1=3D"${target_subject:0:${#s1=
-}}"=0A				t2=3D"${target_subject: -${#s2}}"=0A				target_subject=3D"$t1 $t2=
-"=0A				;;=0A			esac=0A			subject=3D$(strip_spaces "$subject")=0A			target_=
-subject=3D$(strip_spaces "$target_subject")=0A=0A			if [ "$subject" !=3D "$=
-{target_subject:0:${#subject}}" ]; then=0A				msg=3D"${msg:+${msg}${nl}}${t=
-ab}${tab}- Subject does not match target commit subject${nl}${tab}${tab}  J=
-ust use${nl}${tab}${tab}${tab}git log -1 --format=3D'Fixes: %h (\"%s\")'"=
-=0A			fi=0A			lsha=3D$(cd "$Linus_tree" && git rev-parse -q --verify "$sha"=
-)=0A			if [ -z "$lsha" ]; then=0A				count=3D$(git rev-list --count "$sha".=
-=2E"$c")=0A				if [ "$count" -eq 0 ]; then=0A					msg=3D"${msg:+${msg}${nl}=
-}${tab}${tab}- Target is not an ancestor of this commit"=0A				fi=0A			fi=
-=0A=0A			if [ "$msg" ]; then=0A				printf '%s%s%s\n' "$commit_msg" "$fixes_=
-msg" "$msg"=0A				commit_msg=3D''=0A				error=3D1=0A			fi=0A		done <<< "$fi=
-xes_lines"=0A	done=0A=0A	if [ ${error} -eq 1 ] ; then=0A		exit 1=0A	fi=0A}=
-=0A=0Agit_range=3D$1=0A=0Aif [ "${git_range}" =3D=3D "" ] ; then=0A	help=0A=
-fi=0A=0Averify_fixes "${git_range}"=0Aexit 0=0A
---NT7Vp7lOswVCjS8Z--
+-- 
+Dmitry
