@@ -1,166 +1,99 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE650363
-	for <patches@lists.linux.dev>; Thu, 11 May 2023 00:25:06 +0000 (UTC)
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-64115eef620so54107900b3a.1
-        for <patches@lists.linux.dev>; Wed, 10 May 2023 17:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683764706; x=1686356706;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=NiIAKS0VeNTa0Mpe7u/4NIaUrufb6wO/HHXswmRGRIQ=;
-        b=D6ZVr8L5gm2c6Qrq+kA00eiTsg5rBpmsfXi9fenQ0gNlZZ8pjMcDY5F0LcGwVe5m1c
-         ZlNY1pTqDOh/Sdf3JJHuwU2SqXmTUiXD4tznuUwPnzXOq+wlmAJTMX/s+ETnP39OKyPA
-         MW1R4sgwYXh4euC0Qy4GDOcS2yIPoXJDSIxSqJh0YglohoKveKeZLF/qYDesMD/cJ/WO
-         iEQU1gfl3UM8uA6u0Wv2sawFK/cw0P5kunYnDN1IuuwJZPUQv2SSmModvt329ibayPth
-         pcLChR3avq77eEklPDgP7Sk7KLIodNJWal96Kf6qohTgQZ28DMvwL3+NypmWANhL4j3D
-         Q+ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683764706; x=1686356706;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NiIAKS0VeNTa0Mpe7u/4NIaUrufb6wO/HHXswmRGRIQ=;
-        b=H7+MkDYJEETnGumk2bK/W9WoQJcl/NvOEKblZtZPMlAyw02neLQTDieQQzM0ZtRErb
-         4kgUYZOVdCPYJIIGWtsMp2nUEyfL7nfQmYH4WJYN3lgBQ6lP0Bb4bLVql1iEMb/32sbo
-         ZixWJvkxCBG0eRNe24bvu5Tg1n3Y1aP7N/ANiJCN94xNb6bNNBSvTK9ulEzydxoCnc52
-         we3Koac0ha3Xvm1T/duOZE8hYfvwZxEH+fCg/XhZs/2PGYqO326EN4/WDwMdhKfB9BXV
-         IxwMpxe8YaGCEEFZurD6KV+GtTRtCWPw2QZM0R0wXE009AKzjcy7iOT0jko17FlAzBom
-         xMIQ==
-X-Gm-Message-State: AC+VfDwt9chfYslEtzE65s6XjnAxRK6hy1HwXSUXhdraeP+jGBpbZjsC
-	E70V4UyDNBsNrgm1Z1OiY1w=
-X-Google-Smtp-Source: ACHHUZ4xdFMjnxzjvjJ1Fd7ldfzzLJIyyYXtJr+gghVAO38rUN0DBRdC8d6E6cSW+9qzfZpLdHvkeA==
-X-Received: by 2002:a17:902:ea0e:b0:1ac:7d8a:35a with SMTP id s14-20020a170902ea0e00b001ac7d8a035amr14529498plg.12.1683764705845;
-        Wed, 10 May 2023 17:25:05 -0700 (PDT)
-Received: from google.com ([2620:15c:9d:2:84a:ed9c:4024:c347])
-        by smtp.gmail.com with ESMTPSA id jn22-20020a170903051600b001a80ad9c599sm4386641plb.294.2023.05.10.17.25.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 17:25:05 -0700 (PDT)
-Date: Wed, 10 May 2023 17:25:02 -0700
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Jiri Kosina <jikos@kernel.org>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	linux-input@vger.kernel.org
-Subject: Re: [PATCH] HID: google: Don't use devm for hid_hw_stop()
-Message-ID: <ZFw13uv7/q5jsLWE@google.com>
-References: <20230505232417.1377393-1-swboyd@chromium.org>
- <ZFWZ785FRHDii/+5@google.com>
- <CAE-0n521MhmdWjEb0-xwnPLQz07bMCGyXokZ3L87azYcw6_C_Q@mail.gmail.com>
- <ZFv9aKZlZbfK1cVr@google.com>
- <CAE-0n52bv1-VaQikOV6hdFmuRyPBX6YV7MT=2+xrpReJecrgbQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5209620
+	for <patches@lists.linux.dev>; Thu, 11 May 2023 00:56:59 +0000 (UTC)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4QGtl43Rlfz4x1N;
+	Thu, 11 May 2023 10:56:48 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canb.auug.org.au;
+	s=201702; t=1683766610;
+	bh=q36ZmE9sftj4sy6e6gNn4B4r6kchkg86VVL14Q7l91I=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=GQXJ4zCM+lj0KX7ZkrM6zRrWlWuh28On20Zf8lU4yWYzmDXG2mc47et+E3FU6Jsd8
+	 uuIOc0Bu1w/4WI8RFtNZpzQkhlQ7BoQNNWutwOVvK9q1DEAZYUlV7odctB5XFdLZsR
+	 r1cNLydE94UhatEAsUMa2htL2eeivpTj1fibBgjksN6SVA+MWFn7GkkfSPifhhzryh
+	 7gzkxkIyILfHcpqrZ+K4zQeOjHeI96n9fJRS+ws6uSspEcBmZfRWOXdqc1chu7c9Su
+	 37cU4Bs+bXTsv2g2UXdt5lNi/zmh7wytpbfzcdsYZ07dTFTaI+dM47nkUoGL7VZzYt
+	 1iwOZT+dzej1A==
+Date: Thu, 11 May 2023 10:56:46 +1000
+From: Stephen Rothwell <sfr@canb.auug.org.au>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Guenter Roeck
+ <linux@roeck-us.net>, Daniel =?UTF-8?B?RMOtYXo=?= <daniel.diaz@linaro.org>,
+ stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, laoar.shao@gmail.com
+Subject: Re: [PATCH 5.15 000/370] 5.15.111-rc2 review
+Message-ID: <20230511105646.7412e6cd@canb.auug.org.au>
+In-Reply-To: <CAHk-=wh2nmNs98AUpv6+BZ3x_bNh6ps+nuufQO2Sn6LdXCbC9A@mail.gmail.com>
+References: <20230509030611.521807993@linuxfoundation.org>
+	<863a112f-f4a4-d580-9687-f6214d555939@linaro.org>
+	<2023051035-monitor-sandy-2a5b@gregkh>
+	<CAEUSe79AViqsHimbYbFjkKAxcvROGhFKA2yKVuC3aP1Gm=jc1w@mail.gmail.com>
+	<CAEUSe7_ZBW_hPUZYeKkZ6zuckeqYb+O46GdgGx0wE6T0=c5wZg@mail.gmail.com>
+	<4d3c5462-1788-426a-a44a-e839b1c4970d@roeck-us.net>
+	<2023051154-activator-aside-bc8e@gregkh>
+	<CAHk-=wh2nmNs98AUpv6+BZ3x_bNh6ps+nuufQO2Sn6LdXCbC9A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n52bv1-VaQikOV6hdFmuRyPBX6YV7MT=2+xrpReJecrgbQ@mail.gmail.com>
+Content-Type: multipart/signed; boundary="Sig_/iOvNNEGS0EvxcNYioHkoKCh";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
 
-On Wed, May 10, 2023 at 01:50:01PM -0700, Stephen Boyd wrote:
-> Quoting Dmitry Torokhov (2023-05-10 13:24:08)
-> > On Wed, May 10, 2023 at 11:51:31AM -0700, Stephen Boyd wrote:
-> > > Quoting Dmitry Torokhov (2023-05-05 17:06:07)
-> > > > On Fri, May 05, 2023 at 04:24:16PM -0700, Stephen Boyd wrote:
-> > > > >
-> > > > ...
-> > > > > Unfortunately, the hid google hammer driver hand rolls a devm function
-> > > > > to call hid_hw_stop() when the driver is unbound and implements an
-> > > > > hid_driver::remove() function. The driver core doesn't call the devm
-> > > > > release functions until _after_ the bus unbinds the driver, so the order
-> > > > > of operations is like this:
-> > > >
-> > > > Excellent analysis, but the problem is not limited to the hammer driver
-> > > > (potentially) and shalt be dealt with appropriately, at the HID bus
-> > > > level.
-> > >
-> > > Thanks. I thought of the bus level approach as well, but I was trying to
-> > > keep the fix isolated to the driver that had the problem. I'd like to
-> > > get the fix into the stable kernel, as this fixes a regression
-> > > introduced by commit d950db3f80a8 ("HID: google: switch to devm when
-> > > registering keyboard backlight LED") in v5.18.
-> > >
-> > > Is the bus level approach going to be acceptable as a stable backport?
+--Sig_/iOvNNEGS0EvxcNYioHkoKCh
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+Hi Linus,
+
+On Wed, 10 May 2023 18:09:35 -0500 Linus Torvalds <torvalds@linux-foundatio=
+n.org> wrote:
+>
+> On Wed, May 10, 2023 at 5:58=E2=80=AFPM Greg Kroah-Hartman <gregkh@linuxf=
+oundation.org> wrote:
 > >
-> > Sure, why not given the kind of stuff flowing into stable kernels. At
-> > least this would be fixing real issue that can be triggered with a real
-> > device.
-> 
-> Hmm, ok. I was worried it would be too much "new code" vs. fixing
-> something.
-> 
-> > >
-> > > This got me thinking that maybe both of these approaches are wrong.
-> > > Maybe the call to hid_close_report() should be removed from
-> > > hid_device_remove() instead.
-> > >
-> > > The device is being removed from the bus when hid_device_remove() is
-> > > called, but it hasn't been released yet. Other devices like the hidinput
-> > > device are referencing the hdev device because they set the hdev as
-> > > their parent. Basically, child devices are still bound to some sort of
-> > > driver or subsystem when the parent hdev is unbound from its driver,
-> > > leading to a state where the child drivers could still access the hdev
-> > > while it is being destroyed. If we remove the hid_close_report() call
-> > > from this function it will eventually be called by hid_device_release()
-> > > when the last reference to the device is dropped, i.e. when the child
-> > > devices all get destroyed. In the case of hid-google-hammer, that would
-> > > be when hid_hw_stop() is called from the devm release function by driver
-> > > core.
-> > >
-> > > The benefit of this approach is that we don't allocate a devres group
-> > > for all the hid devices when only two drivers need it. The possible
-> > > downside is that we keep the report around while the device exists but
-> > > has no driver bound to it.
-> > >
-> > > Here's a totally untested patch for that.
-> > >
-> > > ---8<----
-> > > diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-> > > index 22623eb4f72f..93905e200cae 100644
-> > > --- a/drivers/hid/hid-core.c
-> > > +++ b/drivers/hid/hid-core.c
-> > > @@ -1211,8 +1211,8 @@ int hid_open_report(struct hid_device *device)
-> > >               hid_parser_reserved
-> > >       };
-> > >
-> > > -     if (WARN_ON(device->status & HID_STAT_PARSED))
-> > > -             return -EBUSY;
-> > > +     if (device->status & HID_STAT_PARSED)
-> > > +             hid_close_report(device);
-> > >
-> > >       start = device->dev_rdesc;
-> > >       if (WARN_ON(!start))
-> > > @@ -2662,7 +2662,6 @@ static void hid_device_remove(struct device *dev)
-> > >                       hdrv->remove(hdev);
-> > >               else /* default remove */
-> > >                       hid_hw_stop(hdev);
-> > > -             hid_close_report(hdev);
-> > >               hdev->driver = NULL;
-> > >       }
-> >
-> > This will probably work, but it I consider this still being fragile as
-> > at some point we might want to add some more unwinding, and we'll run
-> > into this issue again. I would feel much safer if the order of release
-> > followed (inversely) order of allocations more closely.
-> >
-> 
-> Sorry, I'm not following here. How is it fragile? Are you saying that if
-> we want to add devm calls into the bus layer itself the order of release
-> won't be inverse of allocation/creation?
+> > Thanks!  Turns out someone put the wrong "Fixes:" tag in that commit
+> > which is why I missed it. =20
+>=20
+> Hmm. Presumably the real commit ceeadb83aea2 at some point got
+> rebased, and had had that other mentioned SHA1 before that.
+>=20
+> It might be a good idea in general - not just for stable - if we had
+> some automation that said "this refers to a commit ID that doesn't
+> exist".
 
-What I was trying to say is that later someone else might be tempted to
-add more traditional-style resources and non-devm-unwinding for them.
-Having an explicit devres groups gives exact point when driver-allocated resources
-are released, and makes patch authors take it into consideration.
+In linux-next, I report various problems with Fixes tags including when
+the SHA1 doesn't exist (or is not reachable from the fixing commit.
+Sometimes they are corrected, sometimes not (especially if it is a non
+rebasing branch).
 
-If everything is devm-controlled then we do not need a separate devres
-group.
+--=20
+Cheers,
+Stephen Rothwell
 
-Thanks.
+--Sig_/iOvNNEGS0EvxcNYioHkoKCh
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
 
--- 
-Dmitry
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAmRcPU4ACgkQAVBC80lX
+0Gzo3Qf8DJv+Hbi1TducEEdydQQwAvKyyRB8Z3R5qLM/wCqf3q3O79+R5mvQ/Ioj
+6Vh14XuZRHi/txaJ/ueJlg89IOJxFawU8MK2KTOybEH/nuaDawlpdByeVKebebQ/
+g9Oe2YBWfWB9GYInb9tEqTsBYvZcQInX1tm64Tg4pBCvyJ5YgTW3aLVfoFjLZzXh
+8sak2R5vpi33Fxa0uYrFBGducgqyYlrjqgnh3ZoOwmMtmcRGuBPVjaBaKB8jvm0o
+gBlTzp0S/89jUcfZl7yQfI7WoyV70ar9BrmM2LPQHYocFcW5W4Xqv7IJbIJffb5k
+BU2rkscau5AUmphw71JD2TL/3FDVxw==
+=PvmK
+-----END PGP SIGNATURE-----
+
+--Sig_/iOvNNEGS0EvxcNYioHkoKCh--
