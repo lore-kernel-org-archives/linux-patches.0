@@ -1,99 +1,221 @@
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5209620
-	for <patches@lists.linux.dev>; Thu, 11 May 2023 00:56:59 +0000 (UTC)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4QGtl43Rlfz4x1N;
-	Thu, 11 May 2023 10:56:48 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canb.auug.org.au;
-	s=201702; t=1683766610;
-	bh=q36ZmE9sftj4sy6e6gNn4B4r6kchkg86VVL14Q7l91I=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=GQXJ4zCM+lj0KX7ZkrM6zRrWlWuh28On20Zf8lU4yWYzmDXG2mc47et+E3FU6Jsd8
-	 uuIOc0Bu1w/4WI8RFtNZpzQkhlQ7BoQNNWutwOVvK9q1DEAZYUlV7odctB5XFdLZsR
-	 r1cNLydE94UhatEAsUMa2htL2eeivpTj1fibBgjksN6SVA+MWFn7GkkfSPifhhzryh
-	 7gzkxkIyILfHcpqrZ+K4zQeOjHeI96n9fJRS+ws6uSspEcBmZfRWOXdqc1chu7c9Su
-	 37cU4Bs+bXTsv2g2UXdt5lNi/zmh7wytpbfzcdsYZ07dTFTaI+dM47nkUoGL7VZzYt
-	 1iwOZT+dzej1A==
-Date: Thu, 11 May 2023 10:56:46 +1000
-From: Stephen Rothwell <sfr@canb.auug.org.au>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Guenter Roeck
- <linux@roeck-us.net>, Daniel =?UTF-8?B?RMOtYXo=?= <daniel.diaz@linaro.org>,
- stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, laoar.shao@gmail.com
-Subject: Re: [PATCH 5.15 000/370] 5.15.111-rc2 review
-Message-ID: <20230511105646.7412e6cd@canb.auug.org.au>
-In-Reply-To: <CAHk-=wh2nmNs98AUpv6+BZ3x_bNh6ps+nuufQO2Sn6LdXCbC9A@mail.gmail.com>
-References: <20230509030611.521807993@linuxfoundation.org>
-	<863a112f-f4a4-d580-9687-f6214d555939@linaro.org>
-	<2023051035-monitor-sandy-2a5b@gregkh>
-	<CAEUSe79AViqsHimbYbFjkKAxcvROGhFKA2yKVuC3aP1Gm=jc1w@mail.gmail.com>
-	<CAEUSe7_ZBW_hPUZYeKkZ6zuckeqYb+O46GdgGx0wE6T0=c5wZg@mail.gmail.com>
-	<4d3c5462-1788-426a-a44a-e839b1c4970d@roeck-us.net>
-	<2023051154-activator-aside-bc8e@gregkh>
-	<CAHk-=wh2nmNs98AUpv6+BZ3x_bNh6ps+nuufQO2Sn6LdXCbC9A@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F0327734
+	for <patches@lists.linux.dev>; Thu, 11 May 2023 08:30:15 +0000 (UTC)
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-643990c5373so8336271b3a.1
+        for <patches@lists.linux.dev>; Thu, 11 May 2023 01:30:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google; t=1683793814; x=1686385814;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=uBduSQSx05MHlBvD82+EqabT9/Ep5JlcWUORXDoOtcA=;
+        b=cUmBs1hPWa2SRLAW2xRdKd+TCclc1WmU+SkhJJ6LXx87U2+FgfoZ/hZrtFnsRD8I6M
+         ZuSZh5pGfLIJh01kxkYNjntsqag9jkEdu6GlV/vTvLIyQFsD1TIzCtKodT7EO2cHvuWR
+         Ia3bHhF+vy5bxWq53vTLQaB2zrKQJ6IqvncT8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683793814; x=1686385814;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uBduSQSx05MHlBvD82+EqabT9/Ep5JlcWUORXDoOtcA=;
+        b=Feh9dTYZpVCY91WIFzZt0lffHY7iThPsH8yTGvIcWzAlv2YS4pkiIIw7IoYVL5U03n
+         Qe6eEAxoW5nkdhMMx0hvgChSDA6AbItDvlNwNhTDZx55Rkg/5EhFoGR0HVb9pSIu2WP8
+         I7tDJLnRA5Qq2O1eFStPQQ/U9Cy5ob5bLARpsMCn14s4ol28tPmU63LEjv0VOe7sS3U/
+         vPgJR1k2UQ84CVFAZNz1yqUGosYMmTUkIaR/MRT8tBoTAaLYQxN983OoeajCWAgciNKy
+         saAPJ3kdWrz0jMldkK079YO1uAor5dlna0j4wnNzm0RLFqaBOQYnBwmn7VHPm1v5F+fG
+         XfJw==
+X-Gm-Message-State: AC+VfDxNeGVAcRBGB+2TJoczNHw+s4JKGO0IxDZpXPCKTWx5YBthWuKg
+	ulu+XgybOOlBWP9X8mHl7G5R9lWJPWEwbGt7rqUWEQ==
+X-Google-Smtp-Source: ACHHUZ5fZH5sQTSF9kSLjomYFKmTXdEya8wfytEsAnCND0kXRN3jlhDQ+LjZOBfSPpSW+yd7TjJQPApe7tfGB7zoTK4=
+X-Received: by 2002:a17:90b:b85:b0:24b:a5b6:e866 with SMTP id
+ bd5-20020a17090b0b8500b0024ba5b6e866mr21612001pjb.24.1683793814515; Thu, 11
+ May 2023 01:30:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/iOvNNEGS0EvxcNYioHkoKCh";
- protocol="application/pgp-signature"; micalg=pgp-sha256
+References: <20230509030705.399628514@linuxfoundation.org> <20230509080658.GA152864@d6921c044a31>
+ <20230509131032.GA8@9ed91d9f7b3c> <2023050913-spearhead-angrily-fc58@gregkh>
+ <20230509145806.GA8@df3c0d7ae0b0> <2023051025-plug-willow-e278@gregkh>
+ <CAG9oJsnr55Atybm4nOQAFjXQ_TeqVG+Nz_8zqMT3ansdnEpGBQ@mail.gmail.com>
+ <2023051048-plus-mountable-6280@gregkh> <CAG9oJskrJotpyqwi6AHVMmhnFmL+Ym=xAFmL51RiZFaU78wv-A@mail.gmail.com>
+ <2023051132-dweller-upturned-b446@gregkh>
+In-Reply-To: <2023051132-dweller-upturned-b446@gregkh>
+From: Rudi Heitbaum <rudi@heitbaum.com>
+Date: Thu, 11 May 2023 18:30:02 +1000
+Message-ID: <CAG9oJskf0fE7LiumdzD4QW8dTmGpmVyXBSyiKu_xP+s72Rw44A@mail.gmail.com>
+Subject: Re: [PATCH 6.3 000/694] 6.3.2-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, ntfs3@lists.linux.dev, 
+	almaz.alexandrovich@paragon-software.com
+Content-Type: text/plain; charset="UTF-8"
 
---Sig_/iOvNNEGS0EvxcNYioHkoKCh
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-Hi Linus,
-
-On Wed, 10 May 2023 18:09:35 -0500 Linus Torvalds <torvalds@linux-foundatio=
-n.org> wrote:
+On Thu, 11 May 2023 at 09:00, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> On Wed, May 10, 2023 at 5:58=E2=80=AFPM Greg Kroah-Hartman <gregkh@linuxf=
-oundation.org> wrote:
+> On Wed, May 10, 2023 at 09:58:06PM +1000, Rudi Heitbaum wrote:
+> > On Wed, 10 May 2023 at 19:09, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > On Wed, May 10, 2023 at 06:29:23PM +1000, Rudi Heitbaum wrote:
+> > > > On Wed, 10 May 2023 at 17:25, Greg Kroah-Hartman
+> > > > <gregkh@linuxfoundation.org> wrote:
+> > > > >
+> > > > > On Tue, May 09, 2023 at 02:58:06PM +0000, Rudi Heitbaum wrote:
+> > > > > > On Tue, May 09, 2023 at 03:56:42PM +0200, Greg Kroah-Hartman wrote:
+> > > > > > > On Tue, May 09, 2023 at 01:10:32PM +0000, Rudi Heitbaum wrote:
+> > > > > > > > On Tue, May 09, 2023 at 08:06:58AM +0000, Rudi Heitbaum wrote:
+> > > > > > > > > On Tue, May 09, 2023 at 05:26:44AM +0200, Greg Kroah-Hartman wrote:
+> > > > > > > > > > This is the start of the stable review cycle for the 6.3.2 release.
+> > > > > > > > > > There are 694 patches in this series, all will be posted as a response
+> > > > > > > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > > > > > > let me know.
+> > > > > > > > > >
+> > > > > > > > > > Responses should be made by Thu, 11 May 2023 03:05:05 +0000.
+> > > > > > > > > > Anything received after that time might be too late.
+> > > > > > > > >
+> > > > > > > > > Hi Greg,
+> > > > > > > > >
+> > > > > > > > > 6.3.2-rc2 tested.
+> > > > > > > >
+> > > > > > > > Hi Greg,
+> > > > > > > >
+> > > > > > > > Further testing and have seen ntfs3: NULL pointer dereference with ntfs_lookup errors
+> > > > > > > > with 6.3.2-rc2 (I have not seen this error before.) No other errors in the logs.
+> > > > > > >
+> > > > > > > Can you reproduce this without the extern, gpl-violation module loaded?
+> > > > > > >
+> > > > > > > thanks,
+> > > > > > >
+> > > > > > > greg k-h
+> > > > > >
+> > > > > > Hi Greg,
+> > > > > >
+> > > > > > I dropped the bcm_sta and recompiled and commented out the i915.guc=3
+> > > > > > and was able to reproduce.
+> > > > > >
+> > > > > > [   84.745080] BUG: kernel NULL pointer dereference, address: 0000000000000020
+> > > > > > [   84.746239] #PF: supervisor read access in kernel mode
+> > > > > > [   84.747599] #PF: error_code(0x0000) - not-present page
+> > > > > > [   84.748929] PGD 0 P4D 0
+> > > > > > [   84.750240] Oops: 0000 [#1] SMP NOPTI
+> > > > > > [   84.751575] CPU: 2 PID: 3176 Comm: .NET ThreadPool Not tainted 6.3.2-rc2 #1
+> > > > > > [   84.752998] Hardware name: Intel(R) Client Systems NUC12WSKi7/NUC12WSBi7, BIOS WSADL357.0085.2022.0718.1739 07/18/2022
+> > > > > > [   84.754474] RIP: 0010:ntfs_lookup+0x76/0xe0 [ntfs3]
+> > > > >
+> > > > > And do you get this same crash on ntfs3 on 6.4-rc1?  Is this a new
+> > > > > regression, or does it also show up on 6.3.1?
+> > > >
+> > > > Tested with 6.3.1 during the day today. No errors, and had been
+> > > > running 6.3.1 with no issue. Retested with 6.3.2-rc2 and problem
+> > > > immediately evident. So yes - I believe a regression.
+> > > >
+> > > > I have built and am now testing 6.4.0-rc1 this evening - no errors so far.
+> > > >
+> > > > [    0.000000] Linux version 6.4.0-rc1 (docker@1ccd349e2545)
+> > > > (x86_64-libreelec-linux-gnu-gcc-13.1.0 (GCC) 13.1.0, GNU ld (GNU
+> > > > Binutils) 2.40) #1 SMP Wed May 10 07:51:37 UTC 2023
+> > > >
+> > > > > And ntfs, ick, why?  And .NET?  What a combination...
+> > > >
+> > > > Joys of media players. Test device gets to test exfat, ntfs3, .NET,
+> > > > and throw in a compile host/GHA runner to put it through paces.
+> > >
+> > > Yeah, this should work.  Thanks for verifying this works on other
+> > > releases.  Any chance you can do 'git bisect' to track down the
+> > > offending commit?  In looking things over, I don't see anything
+> > > obvious...
 > >
-> > Thanks!  Turns out someone put the wrong "Fixes:" tag in that commit
-> > which is why I missed it. =20
->=20
-> Hmm. Presumably the real commit ceeadb83aea2 at some point got
-> rebased, and had had that other mentioned SHA1 before that.
->=20
-> It might be a good idea in general - not just for stable - if we had
-> some automation that said "this refers to a commit ID that doesn't
-> exist".
+> > Hi Greg,
+> >
+> > I can confirm the offending commit in 6.3.2-rc2 is
+> >
+> > bf11fd528a97 fs/ntfs3: Fix null-ptr-deref on inode->i_op in ntfs_lookup()
+>
+> Thanks!  Odd that this didn't show up for you on the other stable -rc
+> releases, as that commit is also in those trees.
+>
+> I'll go revert this for now and ask the maintainer to send a fixed
+> version.
 
-In linux-next, I report various problems with Fixes tags including when
-the SHA1 doesn't exist (or is not reachable from the fixing commit.
-Sometimes they are corrected, sometimes not (especially if it is a non
-rebasing branch).
+Hi Greg,
 
---=20
-Cheers,
-Stephen Rothwell
+I have run 6.1.28-rc2 today, and was able to trigger the error. So
+definitely bad in both 6.3 and 6.1.
 
---Sig_/iOvNNEGS0EvxcNYioHkoKCh
-Content-Type: application/pgp-signature
-Content-Description: OpenPGP digital signature
+[13812.020209] BUG: kernel NULL pointer dereference, address: 0000000000000020
+[13812.021322] #PF: supervisor read access in kernel mode
+[13812.022346] #PF: error_code(0x0000) - not-present page
+[13812.023591] PGD 0 P4D 0
+[13812.024876] Oops: 0000 [#1] SMP NOPTI
+[13812.026088] CPU: 5 PID: 20386 Comm: .NET ThreadPool Not tainted 6.1.28-rc2 #1
+[13812.027336] Hardware name: Intel(R) Client Systems
+NUC12WSKi7/NUC12WSBi7, BIOS WSADL357.0085.2022.0718.1739 07/18/2022
+[13812.028593] RIP: 0010:ntfs_lookup+0x76/0xe0 [ntfs3]
+[13812.029827] Code: 00 00 00 49 89 c4 e8 19 47 fe ff 85 c0 79 3a 48
+63 d8 48 8b 3d 4b 1d 77 cd 4c 89 e6 e8 33 25 d1 c3 48 81 fb 00 f0 ff
+ff 77 07 <48> 83 7b 20 00 74 41 4c 89 ee 48 89 df e8 88 a5 d5 c3 5b 41
+5c 41
+[13812.031149] RSP: 0018:ffff91f40537bbc8 EFLAGS: 00010207
+[13812.032408] RAX: ffff8a844946a001 RBX: 0000000000000000 RCX: 00000000000042f7
+[13812.033650] RDX: 00000000000042f6 RSI: fffff40a00000000 RDI: 0000000000030ed0
+[13812.034869] RBP: ffff91f40537bbe8 R08: ffff8a844946c01e R09: ffff8a8474d0387e
+[13812.036138] R10: ffff8a845a900000 R11: 0000000000000017 R12: ffff8a844946c000
+[13812.037372] R13: ffff8a84db3fd2c0 R14: ffff8a84b44a0470 R15: ffff8a84b44a0548
+[13812.039002] FS:  00007f437e7fc6c0(0000) GS:ffff8a8b77740000(0000)
+knlGS:0000000000000000
+[13812.040509] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[13812.041741] CR2: 0000000000000020 CR3: 000000017835e006 CR4: 0000000000f70ea0
+[13812.042986] PKRU: 55555554
+[13812.044227] Call Trace:
+[13812.045464]  <TASK>
+[13812.046708]  __lookup_slow+0x81/0x130
+[13812.047939]  walk_component+0x10b/0x180
+[13812.049169]  path_lookupat+0x6a/0x1a0
+[13812.050388]  filename_lookup+0xd0/0x190
+[13812.051612]  vfs_statx+0x84/0x150
+[13812.052838]  ? getname_flags+0x54/0x1d0
+[13812.054062]  vfs_fstatat+0x5c/0x80
+[13812.055284]  __do_sys_newlstat+0x37/0x70
+[13812.056580]  ? trace_hardirqs_on+0x3a/0xe0
+[13812.058429]  __x64_sys_newlstat+0x1a/0x20
+[13812.059878]  do_syscall_64+0x3c/0x90
+[13812.061109]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[13812.062369] RIP: 0033:0x7f447ea17184
+[13812.063598] Code: 89 02 b8 ff ff ff ff c3 66 2e 0f 1f 84 00 00 00
+00 00 0f 1f 40 00 89 f8 48 89 f7 48 89 d6 83 f8 01 77 2b b8 06 00 00
+00 0f 05 <48> 3d 00 f0 ff ff 77 04 c3 0f 1f 00 48 8b 15 61 cc 0b 00 f7
+d8 64
+[13812.064927] RSP: 002b:00007f437e7fa098 EFLAGS: 00000246 ORIG_RAX:
+0000000000000006
+[13812.066267] RAX: ffffffffffffffda RBX: 00007f43cf45a870 RCX: 00007f447ea17184
+[13812.067601] RDX: 00007f437e7fa0a0 RSI: 00007f437e7fa0a0 RDI: 00007f437e7fa210
+[13812.068940] RBP: 00007f437e7fa1f0 R08: 00007f437e7fa320 R09: 000000000000002d
+[13812.070276] R10: 00007f44051a15e8 R11: 0000000000000246 R12: 00007f43cc018408
+[13812.071616] R13: 00007f437e7fa210 R14: 00007f43cf45a870 R15: 000000000000002d
+[13812.072960]  </TASK>
+[13812.074295] Modules linked in: rfcomm xt_nat xt_tcpudp veth
+xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat
+nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 xt_addrtype
+iptable_filter ip_tables x_tables br_netfilter bridge stp llc overlay
+8021q ntfs3 bnep btusb btrtl btbcm btintel btmtk bluetooth
+ecdh_generic ecc exfat snd_hda_codec_hdmi snd_hda_codec_realtek
+snd_hda_codec_generic ledtrig_audio snd_hda_intel snd_hda_codec
+iwlwifi mei_hdcp snd_hwdep tpm_tis mei_pxp x86_pkg_temp_thermal
+snd_hda_core tpm_tis_core cfg80211 intel_rapl_msr mei_me
+intel_powerclamp snd_intel_dspcfg intel_rapl_common mei rfkill tpm_crb
+idma64 tpm rng_core pkcs8_key_parser fuse dmi_sysfs
+[13812.079600] CR2: 0000000000000020
+[13812.081160] ---[ end trace 0000000000000000 ]---
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAmRcPU4ACgkQAVBC80lX
-0Gzo3Qf8DJv+Hbi1TducEEdydQQwAvKyyRB8Z3R5qLM/wCqf3q3O79+R5mvQ/Ioj
-6Vh14XuZRHi/txaJ/ueJlg89IOJxFawU8MK2KTOybEH/nuaDawlpdByeVKebebQ/
-g9Oe2YBWfWB9GYInb9tEqTsBYvZcQInX1tm64Tg4pBCvyJ5YgTW3aLVfoFjLZzXh
-8sak2R5vpi33Fxa0uYrFBGducgqyYlrjqgnh3ZoOwmMtmcRGuBPVjaBaKB8jvm0o
-gBlTzp0S/89jUcfZl7yQfI7WoyV70ar9BrmM2LPQHYocFcW5W4Xqv7IJbIJffb5k
-BU2rkscau5AUmphw71JD2TL/3FDVxw==
-=PvmK
------END PGP SIGNATURE-----
-
---Sig_/iOvNNEGS0EvxcNYioHkoKCh--
+> thanks,
+>
+> greg k-h
