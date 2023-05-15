@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD40FFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 421D4C433EF;
-	Mon, 15 May 2023 16:51:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6193FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B740C433EF;
+	Mon, 15 May 2023 16:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169491;
-	bh=PvErCNWy9upi3n+FPP0v22rDzyW1zD8pthpoUcTZ12w=;
+	s=korg; t=1684169494;
+	bh=HanVtLJpY1guYUzj/8wbjpECc797Bwor7zkaj1alfHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sY/6zsYqO7Y7cMoq9jW7htadmwvlYlweLoZfXND/nrWq/C0Gu8Zvyts5yzgprZMY9
-	 fRuA9vJXm1vmsYM0873qodoDLkW8PkqEmrKXvSqtRAA8ztze0rN2AcRmCmHa+BEwZw
-	 IgsUUo1MtHnWEDlnIEZRJGeUhSg0BdIlbOWC05AY=
+	b=Zj+Vs+j8IHJNPsNQRQhsSiNXEUQvm/O/iyE6k0J11tBkTIPn3nJVQ3Fgv+Y13T8it
+	 QoCU8HVeerLyYrgZDddMM9fCUqAYEUlaJu/rNDNWZ4avIbUZ7wWj2e/Wp8kLT2t3Lb
+	 8iUIHs1NLoZLcA78/1ApD0aVmHbMY0Ekzer98cp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sai Krishna <saikrishnag@marvell.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 074/246] octeontx2-pf: Disable packet I/O for graceful exit
-Date: Mon, 15 May 2023 18:24:46 +0200
-Message-Id: <20230515161724.790822644@linuxfoundation.org>
+Subject: [PATCH 6.3 075/246] octeontx2-vf: Detach LF resources on probe cleanup
+Date: Mon, 15 May 2023 18:24:47 +0200
+Message-Id: <20230515161724.822739573@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -39,51 +39,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-[ Upstream commit c926252205c424c4842dbdbe02f8e3296f623204 ]
+[ Upstream commit 99ae1260fdb5f15beab8a3adfb93a9041c87a2c1 ]
 
-At the stage of enabling packet I/O in otx2_open, If mailbox
-timeout occurs then interface ends up in down state where as
-hardware packet I/O is enabled. Hence disable packet I/O also
-before bailing out.
+When a VF device probe fails due to error in MSIX vector allocation then
+the resources NIX and NPA LFs were not detached. Fix this by detaching
+the LFs when MSIX vector allocation fails.
 
-Fixes: 1ea0166da050 ("octeontx2-pf: Fix the device state on error")
+Fixes: 3184fb5ba96e ("octeontx2-vf: Virtual function driver support")
 Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
 Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
 Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index a75c944cc739d..18284ad751572 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -1835,13 +1835,22 @@ int otx2_open(struct net_device *netdev)
- 		otx2_dmacflt_reinstall_flows(pf);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
+index ab126f8706c74..53366dbfbf27c 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
+@@ -621,7 +621,7 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
  
- 	err = otx2_rxtx_enable(pf, true);
--	if (err)
-+	/* If a mbox communication error happens at this point then interface
-+	 * will end up in a state such that it is in down state but hardware
-+	 * mcam entries are enabled to receive the packets. Hence disable the
-+	 * packet I/O.
-+	 */
-+	if (err == EIO)
-+		goto err_disable_rxtx;
-+	else if (err)
- 		goto err_tx_stop_queues;
+ 	err = otx2vf_realloc_msix_vectors(vf);
+ 	if (err)
+-		goto err_mbox_destroy;
++		goto err_detach_rsrc;
  
- 	otx2_do_set_rx_mode(pf);
- 
- 	return 0;
- 
-+err_disable_rxtx:
-+	otx2_rxtx_enable(pf, false);
- err_tx_stop_queues:
- 	netif_tx_stop_all_queues(netdev);
- 	netif_carrier_off(netdev);
+ 	err = otx2_set_real_num_queues(netdev, qcount, qcount);
+ 	if (err)
 -- 
 2.39.2
 
