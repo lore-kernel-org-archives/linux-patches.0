@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337F5FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD7FC4339C;
-	Mon, 15 May 2023 17:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC51FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9597DC4339B;
+	Mon, 15 May 2023 17:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171328;
-	bh=SI5unBrxwNY48CnBdvlRteVOARI2eCLIK3MmiTVSsGA=;
+	s=korg; t=1684171332;
+	bh=q6AzAGrTG8ArFQN82EMIcsu59wUViAOx8XuiCJeb2zI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OdW1gMA6vTG4IaSSDziu/pDHppktGTyetXZZ412GnPuRVg7DZFF4TvaruKokKITiO
-	 tbU3FU1HerJ4kwxhmAr9fZX2l0ajyzO91CageJwqoxa0Xiv/528OYRqdrdqvrxPsPX
-	 3k8awCA+xdV01iRiisv1g1nwhtl7mma2X+cGSE3w=
+	b=edSM6uHrVSzLAHifASKTq4oI2uk9qm4jP0DCJbAt4Ymag59YIkXPF8BESMvQfi7R4
+	 PMlHpC0I4gPKJUaKKCawOuYxMn4EOTNf2HKmVELLecjwbGCPddQDIu0UQQQ65sDHS6
+	 Y5vfAZ2QIjd+gCMJtondu/NyDq6iTx60PSCDVTp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.2 134/242] btrfs: zero the buffer before marking it dirty in btrfs_redirty_list_add
-Date: Mon, 15 May 2023 18:27:40 +0200
-Message-Id: <20230515161725.922657280@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 6.2 168/242] drm/msm/adreno: fix runtime PM imbalance at gpu load
+Date: Mon, 15 May 2023 18:28:14 +0200
+Message-Id: <20230515161726.921128187@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -34,43 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit c83b56d1dd87cf67492bb770c26d6f87aee70ed6 upstream.
+commit 0d997f95b70f98987ae031a89677c13e0e223670 upstream.
 
-btrfs_redirty_list_add zeroes the buffer data and sets the
-EXTENT_BUFFER_NO_CHECK to make sure writeback is fine with a bogus
-header.  But it does that after already marking the buffer dirty, which
-means that writeback could already be looking at the buffer.
+A recent commit moved enabling of runtime PM to GPU load time (first
+open()) but failed to update the error paths so that runtime PM is
+disabled if initialisation of the GPU fails. This would trigger a
+warning about the unbalanced disable count on the next open() attempt.
 
-Switch the order of operations around so that the buffer is only marked
-dirty when we're ready to write it.
+Note that pm_runtime_put_noidle() is sufficient to balance the usage
+count when pm_runtime_put_sync() fails (and is chosen over
+pm_runtime_resume_and_get() for consistency reasons).
 
-Fixes: d3575156f662 ("btrfs: zoned: redirty released extent buffers")
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 4b18299b3365 ("drm/msm/adreno: Defer enabling runpm until hw_init()")
+Cc: stable@vger.kernel.org      # 6.0
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/524971/
+Link: https://lore.kernel.org/r/20230303164807.13124-3-johan+linaro@kernel.org
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1606,11 +1606,11 @@ void btrfs_redirty_list_add(struct btrfs
- 	    !list_empty(&eb->release_list))
- 		return;
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -440,20 +440,21 @@ struct msm_gpu *adreno_load_gpu(struct d
  
-+	memzero_extent_buffer(eb, 0, eb->len);
-+	set_bit(EXTENT_BUFFER_NO_CHECK, &eb->bflags);
- 	set_extent_buffer_dirty(eb);
- 	set_extent_bits_nowait(&trans->dirty_pages, eb->start,
- 			       eb->start + eb->len - 1, EXTENT_DIRTY);
--	memzero_extent_buffer(eb, 0, eb->len);
--	set_bit(EXTENT_BUFFER_NO_CHECK, &eb->bflags);
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+ 	if (ret < 0) {
+-		pm_runtime_put_sync(&pdev->dev);
++		pm_runtime_put_noidle(&pdev->dev);
+ 		DRM_DEV_ERROR(dev->dev, "Couldn't power up the GPU: %d\n", ret);
+-		return NULL;
++		goto err_disable_rpm;
+ 	}
  
- 	spin_lock(&trans->releasing_ebs_lock);
- 	list_add_tail(&eb->release_list, &trans->releasing_ebs);
+ 	mutex_lock(&gpu->lock);
+ 	ret = msm_gpu_hw_init(gpu);
+ 	mutex_unlock(&gpu->lock);
+-	pm_runtime_put_autosuspend(&pdev->dev);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "gpu hw init failed: %d\n", ret);
+-		return NULL;
++		goto err_put_rpm;
+ 	}
+ 
++	pm_runtime_put_autosuspend(&pdev->dev);
++
+ #ifdef CONFIG_DEBUG_FS
+ 	if (gpu->funcs->debugfs_init) {
+ 		gpu->funcs->debugfs_init(gpu, dev->primary);
+@@ -462,6 +463,13 @@ struct msm_gpu *adreno_load_gpu(struct d
+ #endif
+ 
+ 	return gpu;
++
++err_put_rpm:
++	pm_runtime_put_sync(&pdev->dev);
++err_disable_rpm:
++	pm_runtime_disable(&pdev->dev);
++
++	return NULL;
+ }
+ 
+ static int find_chipid(struct device *dev, struct adreno_rev *rev)
 
 
