@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6965FFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8056C433D2;
-	Mon, 15 May 2023 16:48:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1E3FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5675C433D2;
+	Mon, 15 May 2023 16:48:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169306;
-	bh=RsC4Pa5ML4AzCvUjZQkoRTLU/33LB+2BZnLp4SD8y7A=;
+	s=korg; t=1684169309;
+	bh=7wfe8MJ732zoSb3PdLj2xb6XHuuTP6qtzA4NYhHfhAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iDH8WUUSQJMGBXMphBhgsjrwePi9O9htE9sg+BiPGZ4pSI11AuRxqhhMukFrY2FLQ
-	 AurvRmQ9iA2fvXId/aQayfFw36NWP4mPDdLLLEj1OmOOYb5p4M2eN9qcBXNVAfvdmm
-	 OYAqwQFET5nNCfkQwGeCI8eAvc7dgKUSojnBUz1E=
+	b=itul9UdN8gtwnAB/gUzzoI0FvrV9aGoNmizOPLVI4uT+XkuQEpmZlKSmn7gC1rtjD
+	 LHIfrxg06wCIHWWqnzw26dV2HNfazpawLQhNbXPYyar2Oefs2yq1+yTBLobweBxl9m
+	 ZkuKvFRiMqmBH+EgjnWAPR+tqzJvte9A4ftDuikc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Leo Li <sunpeng.li@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
 	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 017/246] drm/amd/display: Return error code on DSC atomic check failure
-Date: Mon, 15 May 2023 18:23:49 +0200
-Message-Id: <20230515161723.127865572@linuxfoundation.org>
+Subject: [PATCH 6.3 018/246] drm/amd/display: Fixes for dcn32_clk_mgr implementation
+Date: Mon, 15 May 2023 18:23:50 +0200
+Message-Id: <20230515161723.157422741@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -37,48 +38,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit dd24662d9dfbad281bbf030f06d68c7938fa0c66 ]
+[ Upstream commit d1c5c3e252b8a911a524e6ee33b82aca81397745 ]
 
 [Why&How]
-We were not returning -EINVAL on DSC atomic check fail. Add it.
+Fix CLK MGR early initialization and add logging.
 
-Fixes: 71be4b16d39a ("drm/amd/display: dsc validate fail not pass to atomic check")
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
+Fixes: 265280b99822 ("drm/amd/display: add CLKMGR changes for DCN32/321")
+Reviewed-by: Leo Li <sunpeng.li@amd.com>
+Reviewed-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c           | 1 +
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 62af874f26e01..d486670e48c3e 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10150,6 +10150,7 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
- 		ret = compute_mst_dsc_configs_for_state(state, dm_state->context, vars);
- 		if (ret) {
- 			DRM_DEBUG_DRIVER("compute_mst_dsc_configs_for_state() failed\n");
-+			ret = -EINVAL;
- 			goto fail;
- 		}
- 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-index 8dc442f90eafa..d9191dd9d3cb2 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -1410,6 +1410,7 @@ int pre_validate_dsc(struct drm_atomic_state *state,
- 	ret = pre_compute_mst_dsc_configs_for_state(state, local_dc_state, vars);
- 	if (ret != 0) {
- 		DRM_INFO_ONCE("pre_compute_mst_dsc_configs_for_state() failed\n");
-+		ret = -EINVAL;
- 		goto clean_exit;
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+index 61768bf726f8c..31ee81ebb4ea2 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+@@ -805,6 +805,8 @@ void dcn32_clk_mgr_construct(
+ 		struct pp_smu_funcs *pp_smu,
+ 		struct dccg *dccg)
+ {
++	struct clk_log_info log_info = {0};
++
+ 	clk_mgr->base.ctx = ctx;
+ 	clk_mgr->base.funcs = &dcn32_funcs;
+ 	if (ASICREV_IS_GC_11_0_2(clk_mgr->base.ctx->asic_id.hw_internal_rev)) {
+@@ -838,6 +840,7 @@ void dcn32_clk_mgr_construct(
+ 			clk_mgr->base.clks.ref_dtbclk_khz = 268750;
  	}
  
++
+ 	/* integer part is now VCO frequency in kHz */
+ 	clk_mgr->base.dentist_vco_freq_khz = dcn32_get_vco_frequency_from_reg(clk_mgr);
+ 
+@@ -845,6 +848,8 @@ void dcn32_clk_mgr_construct(
+ 	if (clk_mgr->base.dentist_vco_freq_khz == 0)
+ 		clk_mgr->base.dentist_vco_freq_khz = 4300000; /* Updated as per HW docs */
+ 
++	dcn32_dump_clk_registers(&clk_mgr->base.boot_snapshot, &clk_mgr->base, &log_info);
++
+ 	if (ctx->dc->debug.disable_dtb_ref_clk_switch &&
+ 			clk_mgr->base.clks.ref_dtbclk_khz != clk_mgr->base.boot_snapshot.dtbclk) {
+ 		clk_mgr->base.clks.ref_dtbclk_khz = clk_mgr->base.boot_snapshot.dtbclk;
 -- 
 2.39.2
 
