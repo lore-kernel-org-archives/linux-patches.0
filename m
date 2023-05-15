@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46774FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E013C433D2;
-	Mon, 15 May 2023 17:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 402EEFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD296C433EF;
+	Mon, 15 May 2023 17:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171517;
-	bh=5r3Jdb8FnxwJfoi2+Lhyq/bTS7b1dyUlxUs3I53yp+w=;
+	s=korg; t=1684171520;
+	bh=gfKhUyKw0CX2PeLVIE8ww3bHJUVtkPZriPj0BxQava8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B4NC1EmY63kUPBZ8oMl7fqZsN8OqZ07yiaYIgNHzyk7n0ARcFr/ffi8xb3U+7e7dI
-	 DCk6VcEa7/U5JQgN3+FLr5b/0cMWCrgYgRTHQzoHJfSOX2uAsCrbpVPx6PJNfqx4qX
-	 gMbdwlHn7MSXQiOjMd0XoLlhmzoI0HHC11bBeiGg=
+	b=IEauLi7pPLMIwUv2kD/umlh6cl+tkTm5wuBRaYv27bPUGudlRftW+YAPmX5QFhw3G
+	 YB24paCms48Pg/SPAd3LeWl3f3dJdL7ET+90eNL2BeqCuBE33xFlWYtdEOunb/rYDd
+	 Uy71AZqNXCZDsIOKj+8JsqKLL4RKpz8rrifu2wYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.2 205/242] drm/amd: Use `amdgpu_ucode_*` helpers for MES
-Date: Mon, 15 May 2023 18:28:51 +0200
-Message-Id: <20230515161728.088766717@linuxfoundation.org>
+	Ping Cheng <ping.cheng@wacom.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Subject: [PATCH 6.2 206/242] HID: wacom: Set a default resolution for older tablets
+Date: Mon, 15 May 2023 18:28:52 +0200
+Message-Id: <20230515161728.118047770@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,103 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Ping Cheng <pinglinux@gmail.com>
 
-commit 11e0b0067ec0707e8e598a5f9a547ab618ae7982 upstream.
+commit 08a46b4190d345544d04ce4fe2e1844b772b8535 upstream.
 
-The `amdgpu_ucode_request` helper will ensure that the return code for
-missing firmware is -ENODEV so that early_init can fail.
+Some older tablets may not report physical maximum for X/Y
+coordinates. Set a default to prevent undefined resolution.
 
-The `amdgpu_ucode_release` helper provides symmetry for releasing firmware.
-
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Ping Cheng <ping.cheng@wacom.com>
+Link: https://lore.kernel.org/r/20230409164229.29777-1-ping.cheng@wacom.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |   10 ++--------
- drivers/gpu/drm/amd/amdgpu/mes_v10_1.c  |   10 +---------
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c  |   10 +---------
- 3 files changed, 4 insertions(+), 26 deletions(-)
+ drivers/hid/wacom_wac.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-@@ -1438,11 +1438,7 @@ int amdgpu_mes_init_microcode(struct amd
- 	snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_mes%s.bin",
- 		ucode_prefix,
- 		pipe == AMDGPU_MES_SCHED_PIPE ? "" : "1");
--	r = request_firmware(&adev->mes.fw[pipe], fw_name, adev->dev);
--	if (r)
--		goto out;
--
--	r = amdgpu_ucode_validate(adev->mes.fw[pipe]);
-+	r = amdgpu_ucode_request(adev, &adev->mes.fw[pipe], fw_name);
- 	if (r)
- 		goto out;
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1895,6 +1895,7 @@ static void wacom_map_usage(struct input
+ 	int fmax = field->logical_maximum;
+ 	unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
+ 	int resolution_code = code;
++	int resolution = hidinput_calc_abs_res(field, resolution_code);
  
-@@ -1482,9 +1478,7 @@ int amdgpu_mes_init_microcode(struct amd
- 	}
- 
- 	return 0;
--
- out:
--	release_firmware(adev->mes.fw[pipe]);
--	adev->mes.fw[pipe] = NULL;
-+	amdgpu_ucode_release(&adev->mes.fw[pipe]);
- 	return r;
- }
---- a/drivers/gpu/drm/amd/amdgpu/mes_v10_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v10_1.c
-@@ -379,13 +379,6 @@ static const struct amdgpu_mes_funcs mes
- 	.resume_gang = mes_v10_1_resume_gang,
- };
- 
--static void mes_v10_1_free_microcode(struct amdgpu_device *adev,
--				     enum admgpu_mes_pipe pipe)
--{
--	release_firmware(adev->mes.fw[pipe]);
--	adev->mes.fw[pipe] = NULL;
--}
--
- static int mes_v10_1_allocate_ucode_buffer(struct amdgpu_device *adev,
- 					   enum admgpu_mes_pipe pipe)
- {
-@@ -979,8 +972,7 @@ static int mes_v10_1_sw_fini(void *handl
- 		amdgpu_bo_free_kernel(&adev->mes.eop_gpu_obj[pipe],
- 				      &adev->mes.eop_gpu_addr[pipe],
- 				      NULL);
--
--		mes_v10_1_free_microcode(adev, pipe);
-+		amdgpu_ucode_release(&adev->mes.fw[pipe]);
- 	}
- 
- 	amdgpu_bo_free_kernel(&adev->gfx.kiq.ring.mqd_obj,
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -460,13 +460,6 @@ static const struct amdgpu_mes_funcs mes
- 	.misc_op = mes_v11_0_misc_op,
- };
- 
--static void mes_v11_0_free_microcode(struct amdgpu_device *adev,
--				     enum admgpu_mes_pipe pipe)
--{
--	release_firmware(adev->mes.fw[pipe]);
--	adev->mes.fw[pipe] = NULL;
--}
--
- static int mes_v11_0_allocate_ucode_buffer(struct amdgpu_device *adev,
- 					   enum admgpu_mes_pipe pipe)
- {
-@@ -1070,8 +1063,7 @@ static int mes_v11_0_sw_fini(void *handl
- 		amdgpu_bo_free_kernel(&adev->mes.eop_gpu_obj[pipe],
- 				      &adev->mes.eop_gpu_addr[pipe],
- 				      NULL);
--
--		mes_v11_0_free_microcode(adev, pipe);
-+		amdgpu_ucode_release(&adev->mes.fw[pipe]);
- 	}
- 
- 	amdgpu_bo_free_kernel(&adev->gfx.kiq.ring.mqd_obj,
+ 	if (equivalent_usage == HID_DG_TWIST) {
+ 		resolution_code = ABS_RZ;
+@@ -1915,8 +1916,15 @@ static void wacom_map_usage(struct input
+ 	switch (type) {
+ 	case EV_ABS:
+ 		input_set_abs_params(input, code, fmin, fmax, fuzz, 0);
+-		input_abs_set_res(input, code,
+-				  hidinput_calc_abs_res(field, resolution_code));
++
++		/* older tablet may miss physical usage */
++		if ((code == ABS_X || code == ABS_Y) && !resolution) {
++			resolution = WACOM_INTUOS_RES;
++			hid_warn(input,
++				 "Wacom usage (%d) missing resolution \n",
++				 code);
++		}
++		input_abs_set_res(input, code, resolution);
+ 		break;
+ 	case EV_KEY:
+ 	case EV_MSC:
 
 
