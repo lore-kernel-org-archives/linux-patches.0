@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799F8FBF7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:49:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012C5C433D2;
-	Mon, 15 May 2023 16:49:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355F3FBEC
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:49:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B009FC433D2;
+	Mon, 15 May 2023 16:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169354;
-	bh=D+nVR6YJ6wziewKaom6jQtPAN2+qliognPODIvsi3EE=;
+	s=korg; t=1684169357;
+	bh=qTsrLSqGAkEBd9UiyRLMI7cQ0VBHbsj8urXUfkpEl78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KUMm3wIySgL3XRyHa+QTQ6PVtVRNJBt3ivyYtFk3S3LPdrWfnfndefvSLTUz6Rj5B
-	 PYebWAnIGzlMfD9QC3yAil2I9HGmo1aCRZ2uzZKkaVuO/P2xjWuWnhU/5RG0ckKUmO
-	 ft+3bEYv8ou+qsU44ObSFdg5B0T29kWpaUjkwVfE=
+	b=YKhF+bNi9v+QDUOAl8vjrACt56hmP3gLPiwcdAQTh83+uSBRHMuWCwIYIP0O/eya5
+	 WS5P56kE5YupLPTAMpLMyrj1+tenC2lHGwxQRmYQO6D4Xs7p6HwlnZY2xx4ptNO7+z
+	 kp7jJxtItC96NpvYNRW8U0D1HdxgsN8M8wFdc58I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 032/246] octeontx2-pf: mcs: Fix shared counters logic
-Date: Mon, 15 May 2023 18:24:04 +0200
-Message-Id: <20230515161723.566068867@linuxfoundation.org>
+Subject: [PATCH 6.3 033/246] octeontx2-pf: mcs: Do not reset PN while updating secy
+Date: Mon, 15 May 2023 18:24:05 +0200
+Message-Id: <20230515161723.595334159@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -40,16 +40,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-[ Upstream commit 9bdfe61054fb2b989eb58df20bf99c0cf67e3038 ]
+[ Upstream commit 3c99bace4ad08ad0264285ba8ad73117560992c2 ]
 
-Macsec stats like InPktsLate and InPktsDelayed share
-same counter in hardware. If SecY replay_protect is true
-then counter represents InPktsLate otherwise InPktsDelayed.
-This mode change was tracked based on protect_frames
-instead of replay_protect mistakenly. Similarly InPktsUnchecked
-and InPktsOk share same counter and mode change was tracked
-based on validate_check instead of validate_disabled.
-This patch fixes those problems.
+After creating SecYs, SCs and SAs a SecY can be modified
+to change attributes like validation mode, protect frames
+mode etc. During this SecY update, packet number is reset to
+initial user given value by mistake. Hence do not reset
+PN when updating SecY parameters.
 
 Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
 Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
@@ -59,83 +56,46 @@ Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/cn10k_macsec.c  | 14 +++++++-------
- .../ethernet/marvell/octeontx2/nic/otx2_common.h   |  2 +-
- 2 files changed, 8 insertions(+), 8 deletions(-)
+ .../ethernet/marvell/octeontx2/nic/cn10k_macsec.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-index 13faca9add9f4..3ad8d7ef20be6 100644
+index 3ad8d7ef20be6..a487a98eac88c 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-@@ -1014,7 +1014,7 @@ static void cn10k_mcs_sync_stats(struct otx2_nic *pfvf, struct macsec_secy *secy
+@@ -1134,6 +1134,7 @@ static int cn10k_mdo_upd_secy(struct macsec_context *ctx)
+ 	struct macsec_secy *secy = ctx->secy;
+ 	struct macsec_tx_sa *sw_tx_sa;
+ 	struct cn10k_mcs_txsc *txsc;
++	bool active;
+ 	u8 sa_num;
+ 	int err;
  
- 	/* Check if sync is really needed */
- 	if (secy->validate_frames == txsc->last_validate_frames &&
--	    secy->protect_frames == txsc->last_protect_frames)
-+	    secy->replay_protect == txsc->last_replay_protect)
- 		return;
+@@ -1141,15 +1142,19 @@ static int cn10k_mdo_upd_secy(struct macsec_context *ctx)
+ 	if (!txsc)
+ 		return -ENOENT;
  
- 	cn10k_mcs_secy_stats(pfvf, txsc->hw_secy_id_rx, &rx_rsp, MCS_RX, true);
-@@ -1036,19 +1036,19 @@ static void cn10k_mcs_sync_stats(struct otx2_nic *pfvf, struct macsec_secy *secy
- 		rxsc->stats.InPktsInvalid += sc_rsp.pkt_invalid_cnt;
- 		rxsc->stats.InPktsNotValid += sc_rsp.pkt_notvalid_cnt;
+-	txsc->encoding_sa = secy->tx_sc.encoding_sa;
+-
+-	sa_num = txsc->encoding_sa;
+-	sw_tx_sa = rcu_dereference_bh(secy->tx_sc.sa[sa_num]);
++	/* Encoding SA got changed */
++	if (txsc->encoding_sa != secy->tx_sc.encoding_sa) {
++		txsc->encoding_sa = secy->tx_sc.encoding_sa;
++		sa_num = txsc->encoding_sa;
++		sw_tx_sa = rcu_dereference_bh(secy->tx_sc.sa[sa_num]);
++		active = sw_tx_sa ? sw_tx_sa->active : false;
++		cn10k_mcs_link_tx_sa2sc(pfvf, secy, txsc, sa_num, active);
++	}
  
--		if (txsc->last_protect_frames)
-+		if (txsc->last_replay_protect)
- 			rxsc->stats.InPktsLate += sc_rsp.pkt_late_cnt;
- 		else
- 			rxsc->stats.InPktsDelayed += sc_rsp.pkt_late_cnt;
+ 	if (netif_running(secy->netdev)) {
+ 		cn10k_mcs_sync_stats(pfvf, secy, txsc);
  
--		if (txsc->last_validate_frames == MACSEC_VALIDATE_CHECK)
-+		if (txsc->last_validate_frames == MACSEC_VALIDATE_DISABLED)
- 			rxsc->stats.InPktsUnchecked += sc_rsp.pkt_unchecked_cnt;
- 		else
- 			rxsc->stats.InPktsOK += sc_rsp.pkt_unchecked_cnt;
+-		err = cn10k_mcs_secy_tx_cfg(pfvf, secy, txsc, sw_tx_sa, sa_num);
++		err = cn10k_mcs_secy_tx_cfg(pfvf, secy, txsc, NULL, 0);
+ 		if (err)
+ 			return err;
  	}
- 
- 	txsc->last_validate_frames = secy->validate_frames;
--	txsc->last_protect_frames = secy->protect_frames;
-+	txsc->last_replay_protect = secy->replay_protect;
- }
- 
- static int cn10k_mdo_open(struct macsec_context *ctx)
-@@ -1117,7 +1117,7 @@ static int cn10k_mdo_add_secy(struct macsec_context *ctx)
- 	txsc->sw_secy = secy;
- 	txsc->encoding_sa = secy->tx_sc.encoding_sa;
- 	txsc->last_validate_frames = secy->validate_frames;
--	txsc->last_protect_frames = secy->protect_frames;
-+	txsc->last_replay_protect = secy->replay_protect;
- 
- 	list_add(&txsc->entry, &cfg->txsc_list);
- 
-@@ -1538,12 +1538,12 @@ static int cn10k_mdo_get_rx_sc_stats(struct macsec_context *ctx)
- 	rxsc->stats.InPktsInvalid += rsp.pkt_invalid_cnt;
- 	rxsc->stats.InPktsNotValid += rsp.pkt_notvalid_cnt;
- 
--	if (secy->protect_frames)
-+	if (secy->replay_protect)
- 		rxsc->stats.InPktsLate += rsp.pkt_late_cnt;
- 	else
- 		rxsc->stats.InPktsDelayed += rsp.pkt_late_cnt;
- 
--	if (secy->validate_frames == MACSEC_VALIDATE_CHECK)
-+	if (secy->validate_frames == MACSEC_VALIDATE_DISABLED)
- 		rxsc->stats.InPktsUnchecked += rsp.pkt_unchecked_cnt;
- 	else
- 		rxsc->stats.InPktsOK += rsp.pkt_unchecked_cnt;
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-index 3d22cc6a2804a..f42b2b65bfd7b 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-@@ -389,7 +389,7 @@ struct cn10k_mcs_txsc {
- 	struct cn10k_txsc_stats stats;
- 	struct list_head entry;
- 	enum macsec_validation_type last_validate_frames;
--	bool last_protect_frames;
-+	bool last_replay_protect;
- 	u16 hw_secy_id_tx;
- 	u16 hw_secy_id_rx;
- 	u16 hw_flow_id;
 -- 
 2.39.2
 
