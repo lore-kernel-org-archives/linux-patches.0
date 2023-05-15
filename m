@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB528FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CF4C433EF;
-	Mon, 15 May 2023 17:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E2BFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31DEFC433EF;
+	Mon, 15 May 2023 17:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171763;
-	bh=hwUZ9YVafrpiG1N1lIpwutibPFDmewnCBy5rSOHCh9E=;
+	s=korg; t=1684171766;
+	bh=2xvQAeax2EMa+cUXB5NTlt/YPr3Lei8JeNUheRKngcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0eTTNLHkqUvgxJEaeHbuKSJ3eGE4Kv8AsmEwQUWzuHJz8epJstc+tGuBklGvyRUF8
-	 KNLiwaOB6JNCaOxeJGNUUeV5J1BQ+MDVEZ55WfuJmlz3+BXfc/I4lJJTfqtTEOw1SW
-	 9XMNR9tdo/X5+G1Y1LnHgtFH80iff4o2GNGVbCc0=
+	b=BoDeHMKxXAsoRbF/+mHQpfqA1e4Bi7Mm7L4jQsNnH0l3Um0iXxh203ewFmi/FKkiQ
+	 nwVNj9NBfe53ELo/eqUHAO8su7/pPbE3idSF0/53JUgnWq1Mxjzs9iaQx/SaGCSkWR
+	 ggvOshzNk44W+d5stF+S6MQm1zyoEroMlPs74rqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andrey Avdeev <jamesstoun@gmail.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.15 070/134] platform/x86: touchscreen_dmi: Add upside-down quirk for GDIX1002 ts on the Juno Tablet
-Date: Mon, 15 May 2023 18:29:07 +0200
-Message-Id: <20230515161705.493725004@linuxfoundation.org>
+Subject: [PATCH 5.15 071/134] platform/x86: touchscreen_dmi: Add info for the Dexp Ursus KX210i
+Date: Mon, 15 May 2023 18:29:08 +0200
+Message-Id: <20230515161705.532705351@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -33,54 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Andrey Avdeev <jamesstoun@gmail.com>
 
-commit 6abfa99ce52f61a31bcfc2aaaae09006f5665495 upstream.
+commit 4b65f95c87c35699bc6ad540d6b9dd7f950d0924 upstream.
 
-The Juno Computers Juno Tablet has an upside-down mounted Goodix
-touchscreen. Add a quirk to invert both axis to correct for this.
+Add touchscreen info for the Dexp Ursus KX210i
 
-Link: https://junocomputers.com/us/product/juno-tablet/
+Signed-off-by: Andrey Avdeev <jamesstoun@gmail.com>
+Link: https://lore.kernel.org/r/ZE4gRgzRQCjXFYD0@avdeevavpc
 Cc: stable@vger.kernel.org
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230505210323.43177-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/platform/x86/touchscreen_dmi.c |   24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
 --- a/drivers/platform/x86/touchscreen_dmi.c
 +++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -381,6 +381,11 @@ static const struct ts_dmi_data glavey_t
- 	.properties	= glavey_tm800a550l_props,
+@@ -327,6 +327,22 @@ static const struct ts_dmi_data dexp_urs
+ 	.properties	= dexp_ursus_7w_props,
  };
  
-+static const struct ts_dmi_data gdix1002_00_upside_down_data = {
-+	.acpi_name	= "GDIX1002:00",
-+	.properties	= gdix1001_upside_down_props,
++static const struct property_entry dexp_ursus_kx210i_props[] = {
++	PROPERTY_ENTRY_U32("touchscreen-min-x", 5),
++	PROPERTY_ENTRY_U32("touchscreen-min-y",  2),
++	PROPERTY_ENTRY_U32("touchscreen-size-x", 1720),
++	PROPERTY_ENTRY_U32("touchscreen-size-y", 1137),
++	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-dexp-ursus-kx210i.fw"),
++	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
++	PROPERTY_ENTRY_BOOL("silead,home-button"),
++	{ }
 +};
 +
- static const struct property_entry gp_electronic_t701_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 960),
- 	PROPERTY_ENTRY_U32("touchscreen-size-y", 640),
-@@ -1281,6 +1286,18 @@ const struct dmi_system_id touchscreen_d
++static const struct ts_dmi_data dexp_ursus_kx210i_data = {
++	.acpi_name	= "MSSL1680:00",
++	.properties	= dexp_ursus_kx210i_props,
++};
++
+ static const struct property_entry digma_citi_e200_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1980),
+ 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1500),
+@@ -1167,6 +1183,14 @@ const struct dmi_system_id touchscreen_d
  		},
  	},
  	{
-+		/* Juno Tablet */
-+		.driver_data = (void *)&gdix1002_00_upside_down_data,
++		/* DEXP Ursus KX210i */
++		.driver_data = (void *)&dexp_ursus_kx210i_data,
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Default string"),
-+			/* Both product- and board-name being "Default string" is somewhat rare */
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Default string"),
-+			/* Above matches are too generic, add partial bios-version match */
-+			DMI_MATCH(DMI_BIOS_VERSION, "JP2V1."),
++			DMI_MATCH(DMI_SYS_VENDOR, "INSYDE Corp."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "S107I"),
 +		},
 +	},
 +	{
- 		/* Mediacom WinPad 7.0 W700 (same hw as Wintron surftab 7") */
- 		.driver_data = (void *)&trekstor_surftab_wintron70_data,
+ 		/* Digma Citi E200 */
+ 		.driver_data = (void *)&digma_citi_e200_data,
  		.matches = {
 
 
