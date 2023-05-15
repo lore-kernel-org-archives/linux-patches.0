@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B6BDFC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:31:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FC0C433D2;
-	Mon, 15 May 2023 17:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87813FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:31:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA4EEC433EF;
+	Mon, 15 May 2023 17:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171878;
-	bh=c/O0qV31ZKfDuQtGjvdPfrfaJpo9rVqHAzIqawCN0mY=;
+	s=korg; t=1684171881;
+	bh=o3CztR2pOVZ9XTw3z60fpg3PRvvlhR+HFVkAVKfL3YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0bziMr94ZEOsOyFiuknJVYOz4dwUXFFdgDZkRnQ7zmkbF/mbc5nOnipK8Qg03kazN
-	 LimyJ9Rp7sgHl9/AAvnl6mO7j8TSa463hWNW7GsCQwQeBDkTwwvwidQKciPM4nMds/
-	 gNQLDOmq3si7a+b91yPAIc3p0Aloj5SodivrVK3c=
+	b=XKCLdLaaNwEtcufQ5kXwLQshQS61Vt1tcmHZdCCsIhnYeqlRIbPHZti+guwZFaL8R
+	 t1Ab9UrAhr2EaDRJd+SWzrM801T2ROTZooUdKvOtQx8Z+OeaYa6bImgjtG+JaEaU4Z
+	 VCquBe8dmum9NlCpCqJEfDTgiPcFUkGqUBH9WUmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Subject: [PATCH 5.15 080/134] remoteproc: st: Call of_node_put() on iteration error
-Date: Mon, 15 May 2023 18:29:17 +0200
-Message-Id: <20230515161705.852089821@linuxfoundation.org>
+	Krunoslav Kovac <Krunoslav.Kovac@amd.com>,
+	Mikita Lipski <mikita.lipski@amd.com>,
+	Dale Zhao <dale.zhao@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 107/134] drm/amd/display: Refine condition of cursor visibility for pipe-split
+Date: Mon, 15 May 2023 18:29:44 +0200
+Message-Id: <20230515161706.686812987@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -34,46 +38,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
+From: Dale Zhao <dale.zhao@amd.com>
 
-commit 8a74918948b40317a5b5bab9739d13dcb5de2784 upstream.
+[ Upstream commit 63f8bee439c0e3f94cff90d0f9c7b719be693265 ]
 
-Function of_phandle_iterator_next() calls of_node_put() on the last
-device_node it iterated over, but when the loop exits prematurely it has
-to be called explicitly.
+[Why]
+In some scenarios like fullscreen game, major plane is scaled. Then
+if a upper layer owns the cursor, cursor is invisiable in the
+majority of the screen.
 
-Fixes: 3df52ed7f269 ("remoteproc: st: add reserved memory support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Reviewed-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Link: https://lore.kernel.org/r/20230320221826.2728078-3-mathieu.poirier@linaro.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[How]
+Instead assuming upper plane handles cursor, summing up upper
+split planes on the same layer. If whole upper plane covers current
+half/whole pipe plane, disable cursor.
+
+Reviewed-by: Krunoslav Kovac <Krunoslav.Kovac@amd.com>
+Acked-by: Mikita Lipski <mikita.lipski@amd.com>
+Signed-off-by: Dale Zhao <dale.zhao@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: d29fb7baab09 ("drm/amd/display: Add NULL plane_state check for cursor disable logic")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/st_remoteproc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../amd/display/dc/dcn10/dcn10_hw_sequencer.c | 43 +++++++++++--------
+ 1 file changed, 24 insertions(+), 19 deletions(-)
 
---- a/drivers/remoteproc/st_remoteproc.c
-+++ b/drivers/remoteproc/st_remoteproc.c
-@@ -129,6 +129,7 @@ static int st_rproc_parse_fw(struct rpro
- 	while (of_phandle_iterator_next(&it) == 0) {
- 		rmem = of_reserved_mem_lookup(it.node);
- 		if (!rmem) {
-+			of_node_put(it.node);
- 			dev_err(dev, "unable to acquire memory-region\n");
- 			return -EINVAL;
- 		}
-@@ -150,8 +151,10 @@ static int st_rproc_parse_fw(struct rpro
- 							   it.node->name);
- 		}
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
+index c655d03ef754d..eef6e4c80a37f 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
+@@ -3211,13 +3211,11 @@ void dcn10_update_dchub(struct dce_hwseq *hws, struct dchub_init_data *dh_data)
  
--		if (!mem)
-+		if (!mem) {
-+			of_node_put(it.node);
- 			return -ENOMEM;
-+		}
+ static bool dcn10_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx)
+ {
+-	struct pipe_ctx *test_pipe;
++	struct pipe_ctx *test_pipe, *split_pipe;
+ 	const struct scaler_data *scl_data = &pipe_ctx->plane_res.scl_data;
+-	const struct rect *r1 = &scl_data->recout, *r2;
+-	int r1_r = r1->x + r1->width, r1_b = r1->y + r1->height, r2_r, r2_b;
++	struct rect r1 = scl_data->recout, r2, r2_half;
++	int r1_r = r1.x + r1.width, r1_b = r1.y + r1.height, r2_r, r2_b;
+ 	int cur_layer = pipe_ctx->plane_state->layer_index;
+-	bool upper_pipe_exists = false;
+-	struct fixed31_32 one = dc_fixpt_from_int(1);
  
- 		rproc_add_carveout(rproc, mem);
- 		index++;
+ 	/**
+ 	 * Disable the cursor if there's another pipe above this with a
+@@ -3226,26 +3224,33 @@ static bool dcn10_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx)
+ 	 */
+ 	for (test_pipe = pipe_ctx->top_pipe; test_pipe;
+ 	     test_pipe = test_pipe->top_pipe) {
+-		if (!test_pipe->plane_state->visible)
++		// Skip invisible layer and pipe-split plane on same layer
++		if (!test_pipe->plane_state->visible || test_pipe->plane_state->layer_index == cur_layer)
+ 			continue;
+ 
+-		r2 = &test_pipe->plane_res.scl_data.recout;
+-		r2_r = r2->x + r2->width;
+-		r2_b = r2->y + r2->height;
++		r2 = test_pipe->plane_res.scl_data.recout;
++		r2_r = r2.x + r2.width;
++		r2_b = r2.y + r2.height;
++		split_pipe = test_pipe;
+ 
+-		if (r1->x >= r2->x && r1->y >= r2->y && r1_r <= r2_r && r1_b <= r2_b)
+-			return true;
++		/**
++		 * There is another half plane on same layer because of
++		 * pipe-split, merge together per same height.
++		 */
++		for (split_pipe = pipe_ctx->top_pipe; split_pipe;
++		     split_pipe = split_pipe->top_pipe)
++			if (split_pipe->plane_state->layer_index == test_pipe->plane_state->layer_index) {
++				r2_half = split_pipe->plane_res.scl_data.recout;
++				r2.x = (r2_half.x < r2.x) ? r2_half.x : r2.x;
++				r2.width = r2.width + r2_half.width;
++				r2_r = r2.x + r2.width;
++				break;
++			}
+ 
+-		if (test_pipe->plane_state->layer_index < cur_layer)
+-			upper_pipe_exists = true;
++		if (r1.x >= r2.x && r1.y >= r2.y && r1_r <= r2_r && r1_b <= r2_b)
++			return true;
+ 	}
+ 
+-	// if plane scaled, assume an upper plane can handle cursor if it exists.
+-	if (upper_pipe_exists &&
+-			(scl_data->ratios.horz.value != one.value ||
+-			scl_data->ratios.vert.value != one.value))
+-		return true;
+-
+ 	return false;
+ }
+ 
+-- 
+2.39.2
+
 
 
