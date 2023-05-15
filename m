@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F906FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:18:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D6CC433EF;
-	Mon, 15 May 2023 17:18:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9DEFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:18:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA531C4339B;
+	Mon, 15 May 2023 17:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171103;
-	bh=Z2kymbeN5wytZKbNXRaXm9cSgz/sAIgIKG8qApj2vFc=;
+	s=korg; t=1684171106;
+	bh=CQLT/bsvAJd2jCdkCfQb3EdAHZfQbieJuhsfPHb1y0o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i2+kS9zuBtLnLj8U5DSsDf0Sx3oBjDehfYoWSSn12Ng6IA+qQWeej4O8aMtpPzraD
-	 rCpV3+hVHcsgo8KsE/Pk6lnGvwsmceCTZc2LEoTuax8vRYa7lZtKRi4zIPcd43MV2X
-	 YlwGTbXYALBaxMHMpIFsvUjnQk6/D5Cu4wE0wuR0=
+	b=1w3AbR2ZctyE/41zpFERtG9PFOHK/0OIWWyTFAyld1KTGJzr1qsNg9DSvhp9FfD3B
+	 hE6DiyijDL56OPhR8DqHAeVEqP+I84b5Q0Oqo7nHnohraqcVgWNhWlLkSAzqUuG3oi
+	 jvfm2amlVN2Ct65Bxkm1lQ9V2QFyS3THtjB93b4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	Sai Krishna <saikrishnag@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Arnaldo Carvalho de Melo <acme@kernel.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Disha Goel <disgoel@linux.ibm.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Sukadev Bhattiprolu <sukadev@linux.vnet.ibm.com>,
+	linuxppc-dev@lists.ozlabs.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 074/242] octeontx2-af: Skip PFs if not enabled
-Date: Mon, 15 May 2023 18:26:40 +0200
-Message-Id: <20230515161724.123146177@linuxfoundation.org>
+Subject: [PATCH 6.2 101/242] perf vendor events power9: Remove UTF-8 characters from JSON files
+Date: Mon, 15 May 2023 18:27:07 +0200
+Message-Id: <20230515161724.935020376@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -37,194 +43,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Kajol Jain <kjain@linux.ibm.com>
 
-[ Upstream commit 5eb1b7220948a69298a436148a735f32ec325289 ]
+[ Upstream commit 5d9df8731c0941f3add30f96745a62586a0c9d52 ]
 
-Firmware enables PFs and allocate mbox resources for each of the PFs.
-Currently PF driver configures mbox resources without checking whether
-PF is enabled or not. This results in crash. This patch fixes this issue
-by skipping disabled PF's mbox initialization.
+Commit 3c22ba5243040c13 ("perf vendor events powerpc: Update POWER9
+events") added and updated power9 PMU JSON events. However some of the
+JSON events which are part of other.json and pipeline.json files,
+contains UTF-8 characters in their brief description.  Having UTF-8
+character could breaks the perf build on some distros.
 
-Fixes: 9bdc47a6e328 ("octeontx2-af: Mbox communication support btw AF and it's VFs")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix this issue by removing the UTF-8 characters from other.json and
+pipeline.json files.
+
+Result without the fix:
+
+  [command]# file -i pmu-events/arch/powerpc/power9/*
+  pmu-events/arch/powerpc/power9/cache.json:          application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/floating-point.json: application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/frontend.json:       application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/marked.json:         application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/memory.json:         application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/metrics.json:        application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/nest_metrics.json:   application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/other.json:          application/json; charset=utf-8
+  pmu-events/arch/powerpc/power9/pipeline.json:       application/json; charset=utf-8
+  pmu-events/arch/powerpc/power9/pmc.json:            application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/translation.json:    application/json; charset=us-ascii
+  [command]#
+
+Result with the fix:
+
+  [command]# file -i pmu-events/arch/powerpc/power9/*
+  pmu-events/arch/powerpc/power9/cache.json:          application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/floating-point.json: application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/frontend.json:       application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/marked.json:         application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/memory.json:         application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/metrics.json:        application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/nest_metrics.json:   application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/other.json:          application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/pipeline.json:       application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/pmc.json:            application/json; charset=us-ascii
+  pmu-events/arch/powerpc/power9/translation.json:    application/json; charset=us-ascii
+  [command]#
+
+Fixes: 3c22ba5243040c13 ("perf vendor events powerpc: Update POWER9 events")
+Reported-by: Arnaldo Carvalho de Melo <acme@kernel.com>
+Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
+Acked-by: Ian Rogers <irogers@google.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Disha Goel <disgoel@linux.ibm.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: Sukadev Bhattiprolu <sukadev@linux.vnet.ibm.com>
+Cc: linuxppc-dev@lists.ozlabs.org
+Link: https://lore.kernel.org/lkml/ZBxP77deq7ikTxwG@kernel.org/
+Link: https://lore.kernel.org/r/20230328112908.113158-1-kjain@linux.ibm.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/mbox.c  |  5 +-
- .../net/ethernet/marvell/octeontx2/af/mbox.h  |  3 +-
- .../net/ethernet/marvell/octeontx2/af/rvu.c   | 49 +++++++++++++++----
- 3 files changed, 46 insertions(+), 11 deletions(-)
+ tools/perf/pmu-events/arch/powerpc/power9/other.json    | 4 ++--
+ tools/perf/pmu-events/arch/powerpc/power9/pipeline.json | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.c b/drivers/net/ethernet/marvell/octeontx2/af/mbox.c
-index 2898931d5260a..9690ac01f02c8 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.c
-@@ -157,7 +157,7 @@ EXPORT_SYMBOL(otx2_mbox_init);
-  */
- int otx2_mbox_regions_init(struct otx2_mbox *mbox, void **hwbase,
- 			   struct pci_dev *pdev, void *reg_base,
--			   int direction, int ndevs)
-+			   int direction, int ndevs, unsigned long *pf_bmap)
- {
- 	struct otx2_mbox_dev *mdev;
- 	int devid, err;
-@@ -169,6 +169,9 @@ int otx2_mbox_regions_init(struct otx2_mbox *mbox, void **hwbase,
- 	mbox->hwbase = hwbase[0];
- 
- 	for (devid = 0; devid < ndevs; devid++) {
-+		if (!test_bit(devid, pf_bmap))
-+			continue;
-+
- 		mdev = &mbox->dev[devid];
- 		mdev->mbase = hwbase[devid];
- 		mdev->hwbase = hwbase[devid];
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-index ac90131d5b4ad..d9ee56ff73b46 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-@@ -96,9 +96,10 @@ void otx2_mbox_destroy(struct otx2_mbox *mbox);
- int otx2_mbox_init(struct otx2_mbox *mbox, void __force *hwbase,
- 		   struct pci_dev *pdev, void __force *reg_base,
- 		   int direction, int ndevs);
-+
- int otx2_mbox_regions_init(struct otx2_mbox *mbox, void __force **hwbase,
- 			   struct pci_dev *pdev, void __force *reg_base,
--			   int direction, int ndevs);
-+			   int direction, int ndevs, unsigned long *bmap);
- void otx2_mbox_msg_send(struct otx2_mbox *mbox, int devid);
- int otx2_mbox_wait_for_rsp(struct otx2_mbox *mbox, int devid);
- int otx2_mbox_busy_poll_for_rsp(struct otx2_mbox *mbox, int devid);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-index 3f5e09b77d4bd..873f081c030de 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
-@@ -2274,7 +2274,7 @@ static inline void rvu_afvf_mbox_up_handler(struct work_struct *work)
- }
- 
- static int rvu_get_mbox_regions(struct rvu *rvu, void **mbox_addr,
--				int num, int type)
-+				int num, int type, unsigned long *pf_bmap)
- {
- 	struct rvu_hwinfo *hw = rvu->hw;
- 	int region;
-@@ -2286,6 +2286,9 @@ static int rvu_get_mbox_regions(struct rvu *rvu, void **mbox_addr,
- 	 */
- 	if (type == TYPE_AFVF) {
- 		for (region = 0; region < num; region++) {
-+			if (!test_bit(region, pf_bmap))
-+				continue;
-+
- 			if (hw->cap.per_pf_mbox_regs) {
- 				bar4 = rvu_read64(rvu, BLKADDR_RVUM,
- 						  RVU_AF_PFX_BAR4_ADDR(0)) +
-@@ -2307,6 +2310,9 @@ static int rvu_get_mbox_regions(struct rvu *rvu, void **mbox_addr,
- 	 * RVU_AF_PF_BAR4_ADDR register.
- 	 */
- 	for (region = 0; region < num; region++) {
-+		if (!test_bit(region, pf_bmap))
-+			continue;
-+
- 		if (hw->cap.per_pf_mbox_regs) {
- 			bar4 = rvu_read64(rvu, BLKADDR_RVUM,
- 					  RVU_AF_PFX_BAR4_ADDR(region));
-@@ -2335,20 +2341,41 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
- 	int err = -EINVAL, i, dir, dir_up;
- 	void __iomem *reg_base;
- 	struct rvu_work *mwork;
-+	unsigned long *pf_bmap;
- 	void **mbox_regions;
- 	const char *name;
-+	u64 cfg;
- 
--	mbox_regions = kcalloc(num, sizeof(void *), GFP_KERNEL);
--	if (!mbox_regions)
-+	pf_bmap = bitmap_zalloc(num, GFP_KERNEL);
-+	if (!pf_bmap)
- 		return -ENOMEM;
- 
-+	/* RVU VFs */
-+	if (type == TYPE_AFVF)
-+		bitmap_set(pf_bmap, 0, num);
-+
-+	if (type == TYPE_AFPF) {
-+		/* Mark enabled PFs in bitmap */
-+		for (i = 0; i < num; i++) {
-+			cfg = rvu_read64(rvu, BLKADDR_RVUM, RVU_PRIV_PFX_CFG(i));
-+			if (cfg & BIT_ULL(20))
-+				set_bit(i, pf_bmap);
-+		}
-+	}
-+
-+	mbox_regions = kcalloc(num, sizeof(void *), GFP_KERNEL);
-+	if (!mbox_regions) {
-+		err = -ENOMEM;
-+		goto free_bitmap;
-+	}
-+
- 	switch (type) {
- 	case TYPE_AFPF:
- 		name = "rvu_afpf_mailbox";
- 		dir = MBOX_DIR_AFPF;
- 		dir_up = MBOX_DIR_AFPF_UP;
- 		reg_base = rvu->afreg_base;
--		err = rvu_get_mbox_regions(rvu, mbox_regions, num, TYPE_AFPF);
-+		err = rvu_get_mbox_regions(rvu, mbox_regions, num, TYPE_AFPF, pf_bmap);
- 		if (err)
- 			goto free_regions;
- 		break;
-@@ -2357,7 +2384,7 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
- 		dir = MBOX_DIR_PFVF;
- 		dir_up = MBOX_DIR_PFVF_UP;
- 		reg_base = rvu->pfreg_base;
--		err = rvu_get_mbox_regions(rvu, mbox_regions, num, TYPE_AFVF);
-+		err = rvu_get_mbox_regions(rvu, mbox_regions, num, TYPE_AFVF, pf_bmap);
- 		if (err)
- 			goto free_regions;
- 		break;
-@@ -2388,16 +2415,19 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
- 	}
- 
- 	err = otx2_mbox_regions_init(&mw->mbox, mbox_regions, rvu->pdev,
--				     reg_base, dir, num);
-+				     reg_base, dir, num, pf_bmap);
- 	if (err)
- 		goto exit;
- 
- 	err = otx2_mbox_regions_init(&mw->mbox_up, mbox_regions, rvu->pdev,
--				     reg_base, dir_up, num);
-+				     reg_base, dir_up, num, pf_bmap);
- 	if (err)
- 		goto exit;
- 
- 	for (i = 0; i < num; i++) {
-+		if (!test_bit(i, pf_bmap))
-+			continue;
-+
- 		mwork = &mw->mbox_wrk[i];
- 		mwork->rvu = rvu;
- 		INIT_WORK(&mwork->work, mbox_handler);
-@@ -2406,8 +2436,7 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
- 		mwork->rvu = rvu;
- 		INIT_WORK(&mwork->work, mbox_up_handler);
- 	}
--	kfree(mbox_regions);
--	return 0;
-+	goto free_regions;
- 
- exit:
- 	destroy_workqueue(mw->mbox_wq);
-@@ -2416,6 +2445,8 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
- 		iounmap((void __iomem *)mbox_regions[num]);
- free_regions:
- 	kfree(mbox_regions);
-+free_bitmap:
-+	bitmap_free(pf_bmap);
- 	return err;
- }
- 
+diff --git a/tools/perf/pmu-events/arch/powerpc/power9/other.json b/tools/perf/pmu-events/arch/powerpc/power9/other.json
+index 3f69422c21f99..f10bd554521a0 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power9/other.json
++++ b/tools/perf/pmu-events/arch/powerpc/power9/other.json
+@@ -1417,7 +1417,7 @@
+   {
+     "EventCode": "0x45054",
+     "EventName": "PM_FMA_CMPL",
+-    "BriefDescription": "two flops operation completed (fmadd, fnmadd, fmsub, fnmsub) Scalar instructions only. "
++    "BriefDescription": "two flops operation completed (fmadd, fnmadd, fmsub, fnmsub) Scalar instructions only."
+   },
+   {
+     "EventCode": "0x201E8",
+@@ -2017,7 +2017,7 @@
+   {
+     "EventCode": "0xC0BC",
+     "EventName": "PM_LSU_FLUSH_OTHER",
+-    "BriefDescription": "Other LSU flushes including: Sync (sync ack from L2 caused search of LRQ for oldest snooped load, This will either signal a Precise Flush of the oldest snooped loa or a Flush Next PPC); Data Valid Flush Next (several cases of this, one example is store and reload are lined up such that a store-hit-reload scenario exists and the CDF has already launched and has gotten bad/stale data); Bad Data Valid Flush Next (might be a few cases of this, one example is a larxa (D$ hit) return data and dval but can't allocate to LMQ (LMQ full or other reason). Already gave dval but can't watch it for snoop_hit_larx. Need to take the “bad dval” back and flush all younger ops)"
++    "BriefDescription": "Other LSU flushes including: Sync (sync ack from L2 caused search of LRQ for oldest snooped load, This will either signal a Precise Flush of the oldest snooped loa or a Flush Next PPC); Data Valid Flush Next (several cases of this, one example is store and reload are lined up such that a store-hit-reload scenario exists and the CDF has already launched and has gotten bad/stale data); Bad Data Valid Flush Next (might be a few cases of this, one example is a larxa (D$ hit) return data and dval but can't allocate to LMQ (LMQ full or other reason). Already gave dval but can't watch it for snoop_hit_larx. Need to take the 'bad dval' back and flush all younger ops)"
+   },
+   {
+     "EventCode": "0x5094",
+diff --git a/tools/perf/pmu-events/arch/powerpc/power9/pipeline.json b/tools/perf/pmu-events/arch/powerpc/power9/pipeline.json
+index d0265f255de2b..723bffa41c448 100644
+--- a/tools/perf/pmu-events/arch/powerpc/power9/pipeline.json
++++ b/tools/perf/pmu-events/arch/powerpc/power9/pipeline.json
+@@ -442,7 +442,7 @@
+   {
+     "EventCode": "0x4D052",
+     "EventName": "PM_2FLOP_CMPL",
+-    "BriefDescription": "DP vector version of fmul, fsub, fcmp, fsel, fabs, fnabs, fres ,fsqrte, fneg "
++    "BriefDescription": "DP vector version of fmul, fsub, fcmp, fsel, fabs, fnabs, fres ,fsqrte, fneg"
+   },
+   {
+     "EventCode": "0x1F142",
 -- 
 2.39.2
 
