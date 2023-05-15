@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A8ED512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:34:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B6FC433EF;
-	Mon, 15 May 2023 16:34:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66940D512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:34:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D642EC433D2;
+	Mon, 15 May 2023 16:34:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168457;
-	bh=gLbZkO7xSdLFvxVHi8FHbnFZcOSRJv88/qAESEmgFn0=;
+	s=korg; t=1684168460;
+	bh=l9ihL4LLSdP9ilZPWjq3E58wqc+k9I3wi/q0FWPZEjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tj5zmzvKPDLjT4zLhPsNuRW9Cs98Q0l30+hYv0huC41Bo3rmNkCzxHnPlBYU7Vpal
-	 8Fi9nws96OG1DIBys/KA5wuS/b+SrpF2el3LbFGIluuGFZmje8bD8i5zL81is5ZdnZ
-	 kA29bZLEnJLQStiPjEAQHyq7SfJHz4hCvjiIBrjs=
+	b=dRtOUDGbtZc5oBydlf0yqL63DYGKKXbNg3OCb4+w31hDtO8HcRfs24XUGH+YMN9r1
+	 VcEJbWEL05WOQuVslxOK0FwJlC54EsII9uTFgXXW1YTC1kIfNTN8LRMknWNWDMQdnh
+	 wwOp7f1RvcCWya4bK9hk2x6QwpJue+Ay0zShC6Tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 054/116] serial: 8250: Add missing wakeup event reporting
-Date: Mon, 15 May 2023 18:25:51 +0200
-Message-Id: <20230515161700.061737554@linuxfoundation.org>
+Subject: [PATCH 4.14 027/116] wifi: ath6kl: minor fix for allocation size
+Date: Mon, 15 May 2023 18:25:24 +0200
+Message-Id: <20230515161659.179124029@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -34,51 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Alexey V. Vissarionov <gremlin@altlinux.org>
 
-[ Upstream commit 0ba9e3a13c6adfa99e32b2576d20820ab10ad48a ]
+[ Upstream commit 778f83f889e7fca37780d9640fcbd0229ae38eaa ]
 
-An 8250 UART configured as a wake-up source would not have reported
-itself through sysfs as being the source of wake-up, correct that.
+Although the "param" pointer occupies more or equal space compared
+to "*param", the allocation size should use the size of variable
+itself.
 
-Fixes: b3b708fa2780 ("wake up from a serial port")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230414170241.2016255-1-f.fainelli@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: bdcd81707973cf8a ("Add ath6kl cleaned up driver")
+Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230117110414.GC12547@altlinux.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/ath/ath6kl/bmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index fe1de63269d1a..cdc1b2b0f4bc6 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -23,6 +23,7 @@
- #include <linux/moduleparam.h>
- #include <linux/ioport.h>
- #include <linux/init.h>
-+#include <linux/irq.h>
- #include <linux/console.h>
- #include <linux/sysrq.h>
- #include <linux/delay.h>
-@@ -1886,6 +1887,7 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
- 	unsigned char status;
- 	unsigned long flags;
- 	struct uart_8250_port *up = up_to_u8250p(port);
-+	struct tty_port *tport = &port->state->port;
- 	bool skip_rx = false;
- 
- 	if (iir & UART_IIR_NO_INT)
-@@ -1909,6 +1911,8 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
- 		skip_rx = true;
- 
- 	if (status & (UART_LSR_DR | UART_LSR_BI) && !skip_rx) {
-+		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
-+			pm_wakeup_event(tport->tty->dev, 0);
- 		if (!up->dma || handle_rx_dma(up, iir))
- 			status = serial8250_rx_chars(up, status);
+diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
+index 334dbd834b3a6..8380ee76bdde7 100644
+--- a/drivers/net/wireless/ath/ath6kl/bmi.c
++++ b/drivers/net/wireless/ath/ath6kl/bmi.c
+@@ -246,7 +246,7 @@ int ath6kl_bmi_execute(struct ath6kl *ar, u32 addr, u32 *param)
+ 		return -EACCES;
  	}
+ 
+-	size = sizeof(cid) + sizeof(addr) + sizeof(param);
++	size = sizeof(cid) + sizeof(addr) + sizeof(*param);
+ 	if (size > ar->bmi.max_cmd_size) {
+ 		WARN_ON(1);
+ 		return -EINVAL;
 -- 
 2.39.2
 
