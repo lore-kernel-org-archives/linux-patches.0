@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D2BFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C14C433EF;
-	Mon, 15 May 2023 17:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA585FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42577C433D2;
+	Mon, 15 May 2023 17:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170049;
-	bh=CxbJiUdoOwWCub5oUT4dciourSL24OIe77Bt3433Y8Q=;
+	s=korg; t=1684170051;
+	bh=tnbqdeWmDdVpY5e6xaMz1JYQPDy0Xzf5AV+eqgHt8A8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEV2fdxTvxaRZL2UgClFvwNHIGpRKv3QA3yHqbMOU0rIU++hc2vXjVn9Hq01UDv0s
-	 Yrv6YEBWjgKdFRR25/pwzOhPFEtLfmWFzHEtjtNTrn4k2BYei0defKsSxLx3PEIyv8
-	 MfCPpfr6GL5xSwgg1R54x7f9yEMOx9RWL+fcGK60=
+	b=exA3OQ2oU4Fpl+YUTy0tayDCU4bcB1pbtIIJQ8GTgPzhkV0qTfyj+LxSeVMfFce03
+	 ps4WmzOlsBf9CBtVlGaaIT+MGs2UliQ0H3/vJKARvR4Bc80a6/47oaB0skiEbP8ehA
+	 47+DAnOdwWGg05V8qt6eXAZvtC8GJ8Zs2YDGW3aU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+401145a9a237779feb26@syzkaller.appspotmail.com>,
-	Borislav Petkov <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.3 241/246] x86: fix clear_user_rep_good() exception handling annotation
-Date: Mon, 15 May 2023 18:27:33 +0200
-Message-Id: <20230515161729.882088074@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/239] USB: dwc3: gadget: drop dead hibernation code
+Date: Mon, 15 May 2023 18:24:24 +0200
+Message-Id: <20230515161721.594150622@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
-References: <20230515161722.610123835@linuxfoundation.org>
+In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
+References: <20230515161721.545370111@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,97 +37,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-This code no longer exists in mainline, because it was removed in
-commit d2c95f9d6802 ("x86: don't use REP_GOOD or ERMS for user memory
-clearing") upstream.
+[ Upstream commit bdb19d01026a5cccfa437be8adcf2df472c5889e ]
 
-However, rather than backport the full range of x86 memory clearing and
-copying cleanups, fix the exception table annotation placement for the
-final 'rep movsb' in clear_user_rep_good(): rather than pointing at the
-actual instruction that did the user space access, it pointed to the
-register move just before it.
+The hibernation code is broken and has never been enabled in mainline
+and should thus be dropped.
 
-That made sense from a code flow standpoint, but not from an actual
-usage standpoint: it means that if user access takes an exception, the
-exception handler won't actually find the instruction in the exception
-tables.
+Remove the hibernation bits from the gadget code, which effectively
+reverts commits e1dadd3b0f27 ("usb: dwc3: workaround: bogus hibernation
+events") and 7b2a0368bbc9 ("usb: dwc3: gadget: set KEEP_CONNECT in case
+of hibernation") except for the spurious interrupt warning.
 
-As a result, rather than fixing it up and returning -EFAULT, it would
-then turn it into a kernel oops report instead, something like:
-
-    BUG: unable to handle page fault for address: 0000000020081000
-    #PF: supervisor write access in kernel mode
-    #PF: error_code(0x0002) - not-present page
-    ...
-    RIP: 0010:clear_user_rep_good+0x1c/0x30 arch/x86/lib/clear_page_64.S:147
-    ...
-    Call Trace:
-      __clear_user arch/x86/include/asm/uaccess_64.h:103 [inline]
-      clear_user arch/x86/include/asm/uaccess_64.h:124 [inline]
-      iov_iter_zero+0x709/0x1290 lib/iov_iter.c:800
-      iomap_dio_hole_iter fs/iomap/direct-io.c:389 [inline]
-      iomap_dio_iter fs/iomap/direct-io.c:440 [inline]
-      __iomap_dio_rw+0xe3d/0x1cd0 fs/iomap/direct-io.c:601
-      iomap_dio_rw+0x40/0xa0 fs/iomap/direct-io.c:689
-      ext4_dio_read_iter fs/ext4/file.c:94 [inline]
-      ext4_file_read_iter+0x4be/0x690 fs/ext4/file.c:145
-      call_read_iter include/linux/fs.h:2183 [inline]
-      do_iter_readv_writev+0x2e0/0x3b0 fs/read_write.c:733
-      do_iter_read+0x2f2/0x750 fs/read_write.c:796
-      vfs_readv+0xe5/0x150 fs/read_write.c:916
-      do_preadv+0x1b6/0x270 fs/read_write.c:1008
-      __do_sys_preadv2 fs/read_write.c:1070 [inline]
-      __se_sys_preadv2 fs/read_write.c:1061 [inline]
-      __x64_sys_preadv2+0xef/0x150 fs/read_write.c:1061
-      do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-      do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
-      entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-which then looks like a filesystem bug rather than the incorrect
-exception annotation that it is.
-
-[ The alternative to this one-liner fix is to take the upstream series
-  that cleans this all up:
-
-    68674f94ffc9 ("x86: don't use REP_GOOD or ERMS for small memory copies")
-    20f3337d350c ("x86: don't use REP_GOOD or ERMS for small memory clearing")
-    adfcf4231b8c ("x86: don't use REP_GOOD or ERMS for user memory copies")
-  * d2c95f9d6802 ("x86: don't use REP_GOOD or ERMS for user memory clearing")
-    3639a535587d ("x86: move stac/clac from user copy routines into callers")
-    577e6a7fd50d ("x86: inline the 'rep movs' in user copies for the FSRM case")
-    8c9b6a88b7e2 ("x86: improve on the non-rep 'clear_user' function")
-    427fda2c8a49 ("x86: improve on the non-rep 'copy_user' function")
-  * e046fe5a36a9 ("x86: set FSRS automatically on AMD CPUs that have FSRM")
-    e1f2750edc4a ("x86: remove 'zerorest' argument from __copy_user_nocache()")
-    034ff37d3407 ("x86: rewrite '__copy_user_nocache' function")
-
-  with either the whole series or at a minimum the two marked commits
-  being needed to fix this issue ]
-
-Reported-by: syzbot <syzbot+401145a9a237779feb26@syzkaller.appspotmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=401145a9a237779feb26
-Fixes: 0db7058e8e23 ("x86/clear_user: Make it faster")
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: stable@kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230404072524.19014-5-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 39674be56fba ("usb: dwc3: gadget: Execute gadget stop after halting the controller")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/clear_page_64.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/gadget.c | 46 +++++----------------------------------
+ 1 file changed, 6 insertions(+), 40 deletions(-)
 
---- a/arch/x86/lib/clear_page_64.S
-+++ b/arch/x86/lib/clear_page_64.S
-@@ -142,8 +142,8 @@ SYM_FUNC_START(clear_user_rep_good)
- 	and $7, %edx
- 	jz .Lrep_good_exit
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index d2622378ce040..2a6a5ffa54836 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -2468,7 +2468,7 @@ static void __dwc3_gadget_set_speed(struct dwc3 *dwc)
+ 	dwc3_writel(dwc->regs, DWC3_DCFG, reg);
+ }
  
--.Lrep_good_bytes:
- 	mov %edx, %ecx
-+.Lrep_good_bytes:
- 	rep stosb
+-static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
++static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on)
+ {
+ 	u32			reg;
+ 	u32			timeout = 2000;
+@@ -2487,17 +2487,11 @@ static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
+ 			reg &= ~DWC3_DCTL_KEEP_CONNECT;
+ 		reg |= DWC3_DCTL_RUN_STOP;
  
- .Lrep_good_exit:
+-		if (dwc->has_hibernation)
+-			reg |= DWC3_DCTL_KEEP_CONNECT;
+-
+ 		__dwc3_gadget_set_speed(dwc);
+ 		dwc->pullups_connected = true;
+ 	} else {
+ 		reg &= ~DWC3_DCTL_RUN_STOP;
+ 
+-		if (dwc->has_hibernation && !suspend)
+-			reg &= ~DWC3_DCTL_KEEP_CONNECT;
+-
+ 		dwc->pullups_connected = false;
+ 	}
+ 
+@@ -2579,7 +2573,7 @@ static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
+ 	 * remaining event generated by the controller while polling for
+ 	 * DSTS.DEVCTLHLT.
+ 	 */
+-	return dwc3_gadget_run_stop(dwc, false, false);
++	return dwc3_gadget_run_stop(dwc, false);
+ }
+ 
+ static int dwc3_gadget_pullup(struct usb_gadget *g, int is_on)
+@@ -2633,7 +2627,7 @@ static int dwc3_gadget_pullup(struct usb_gadget *g, int is_on)
+ 
+ 		dwc3_event_buffers_setup(dwc);
+ 		__dwc3_gadget_start(dwc);
+-		ret = dwc3_gadget_run_stop(dwc, true, false);
++		ret = dwc3_gadget_run_stop(dwc, true);
+ 	}
+ 
+ 	pm_runtime_put(dwc->dev);
+@@ -4200,30 +4194,6 @@ static void dwc3_gadget_suspend_interrupt(struct dwc3 *dwc,
+ 	dwc->link_state = next;
+ }
+ 
+-static void dwc3_gadget_hibernation_interrupt(struct dwc3 *dwc,
+-		unsigned int evtinfo)
+-{
+-	unsigned int is_ss = evtinfo & BIT(4);
+-
+-	/*
+-	 * WORKAROUND: DWC3 revision 2.20a with hibernation support
+-	 * have a known issue which can cause USB CV TD.9.23 to fail
+-	 * randomly.
+-	 *
+-	 * Because of this issue, core could generate bogus hibernation
+-	 * events which SW needs to ignore.
+-	 *
+-	 * Refers to:
+-	 *
+-	 * STAR#9000546576: Device Mode Hibernation: Issue in USB 2.0
+-	 * Device Fallback from SuperSpeed
+-	 */
+-	if (is_ss ^ (dwc->speed == USB_SPEED_SUPER))
+-		return;
+-
+-	/* enter hibernation here */
+-}
+-
+ static void dwc3_gadget_interrupt(struct dwc3 *dwc,
+ 		const struct dwc3_event_devt *event)
+ {
+@@ -4241,11 +4211,7 @@ static void dwc3_gadget_interrupt(struct dwc3 *dwc,
+ 		dwc3_gadget_wakeup_interrupt(dwc);
+ 		break;
+ 	case DWC3_DEVICE_EVENT_HIBER_REQ:
+-		if (dev_WARN_ONCE(dwc->dev, !dwc->has_hibernation,
+-					"unexpected hibernation event\n"))
+-			break;
+-
+-		dwc3_gadget_hibernation_interrupt(dwc, event->event_info);
++		dev_WARN_ONCE(dwc->dev, true, "unexpected hibernation event\n");
+ 		break;
+ 	case DWC3_DEVICE_EVENT_LINK_STATUS_CHANGE:
+ 		dwc3_gadget_linksts_change_interrupt(dwc, event->event_info);
+@@ -4582,7 +4548,7 @@ int dwc3_gadget_suspend(struct dwc3 *dwc)
+ 	if (!dwc->gadget_driver)
+ 		return 0;
+ 
+-	dwc3_gadget_run_stop(dwc, false, false);
++	dwc3_gadget_run_stop(dwc, false);
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
+ 	dwc3_disconnect_gadget(dwc);
+@@ -4603,7 +4569,7 @@ int dwc3_gadget_resume(struct dwc3 *dwc)
+ 	if (ret < 0)
+ 		goto err0;
+ 
+-	ret = dwc3_gadget_run_stop(dwc, true, false);
++	ret = dwc3_gadget_run_stop(dwc, true);
+ 	if (ret < 0)
+ 		goto err1;
+ 
+-- 
+2.39.2
+
 
 
