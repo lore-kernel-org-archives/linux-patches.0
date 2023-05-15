@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 965A317730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:05:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBB3C433EF;
-	Mon, 15 May 2023 18:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CEB17730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:05:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AAB8C433D2;
+	Mon, 15 May 2023 18:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173940;
-	bh=NJXUh4Lgtn+ZJzU+eOLEXZAwsz7yZfmjWz2wHSfJXs0=;
+	s=korg; t=1684173943;
+	bh=/d8m33Wb4zQNT483fe/OEdmgzGFccMxpvFSVcejgspo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loC/IEK/93CclUS3fX3/TowBb0nGPYGlBKzPuRtdqbang44JNM/gtaQoRAnpT1QHM
-	 1hgejK1/LaJXZLeZd6tdM1D63CoWq4Geixwtyq6itFSTwpbCI7YcBAK6VYMtCWVNhb
-	 FkLkNtyop/Ho5JBSBPRXpDTMwzwc0Bls+dIv4wik=
+	b=BksvQna2S1ajr4foZUPHyMfJByGXeZPisW3nX/4+ohsED1olC5DYCEHu8luhg5mKB
+	 U81pCR4ESBKxFIF8miUvTQcDu5v04LkXgTHo35CNxBO9AREMR+X8enmR+rzdjoFX5j
+	 Mzz4ES8xYzn/zuiPQmuYX5gadThb2gn7Yghu+CAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Guchun Chen <guchun.chen@amd.com>,
 	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 255/282] drm/amdgpu/gfx: disable gfx9 cp_ecc_error_irq only when enabling legacy gfx ras
-Date: Mon, 15 May 2023 18:30:33 +0200
-Message-Id: <20230515161729.925241955@linuxfoundation.org>
+Subject: [PATCH 5.4 256/282] drm/amdgpu: disable sdma ecc irq only when sdma RAS is enabled in suspend
+Date: Mon, 15 May 2023 18:30:34 +0200
+Message-Id: <20230515161729.954154960@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -37,35 +37,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Guchun Chen <guchun.chen@amd.com>
 
-commit 4a76680311330aefe5074bed8f06afa354b85c48 upstream.
+commit 8b229ada2669b74fdae06c83fbfda5a5a99fc253 upstream.
 
-gfx9 cp_ecc_error_irq is only enabled when legacy gfx ras is assert.
-So in gfx_v9_0_hw_fini, interrupt disablement for cp_ecc_error_irq
-should be executed under such condition, otherwise, an amdgpu_irq_put
-calltrace will occur.
+sdma_v4_0_ip is shared on a few asics, but in sdma_v4_0_hw_fini,
+driver unconditionally disables ecc_irq which is only enabled on
+those asics enabling sdma ecc. This will introduce a warning in
+suspend cycle on those chips with sdma ip v4.0, while without
+sdma ecc. So this patch correct this.
 
-[ 7283.170322] RIP: 0010:amdgpu_irq_put+0x45/0x70 [amdgpu]
-[ 7283.170964] RSP: 0018:ffff9a5fc3967d00 EFLAGS: 00010246
-[ 7283.170967] RAX: ffff98d88afd3040 RBX: ffff98d89da20000 RCX: 0000000000000000
-[ 7283.170969] RDX: 0000000000000000 RSI: ffff98d89da2bef8 RDI: ffff98d89da20000
-[ 7283.170971] RBP: ffff98d89da20000 R08: ffff98d89da2ca18 R09: 0000000000000006
-[ 7283.170973] R10: ffffd5764243c008 R11: 0000000000000000 R12: 0000000000001050
-[ 7283.170975] R13: ffff98d89da38978 R14: ffffffff999ae15a R15: ffff98d880130105
-[ 7283.170978] FS:  0000000000000000(0000) GS:ffff98d996f00000(0000) knlGS:0000000000000000
-[ 7283.170981] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 7283.170983] CR2: 00000000f7a9d178 CR3: 00000001c42ea000 CR4: 00000000003506e0
-[ 7283.170986] Call Trace:
-[ 7283.170988]  <TASK>
-[ 7283.170989]  gfx_v9_0_hw_fini+0x1c/0x6d0 [amdgpu]
-[ 7283.171655]  amdgpu_device_ip_suspend_phase2+0x101/0x1a0 [amdgpu]
-[ 7283.172245]  amdgpu_device_suspend+0x103/0x180 [amdgpu]
-[ 7283.172823]  amdgpu_pmops_freeze+0x21/0x60 [amdgpu]
-[ 7283.173412]  pci_pm_freeze+0x54/0xc0
-[ 7283.173419]  ? __pfx_pci_pm_freeze+0x10/0x10
-[ 7283.173425]  dpm_run_callback+0x98/0x200
-[ 7283.173430]  __device_suspend+0x164/0x5f0
-
-v2: drop gfx11 as it's fixed in a different solution by retiring cp_ecc_irq funcs(Hawking)
+[ 7283.166354] RIP: 0010:amdgpu_irq_put+0x45/0x70 [amdgpu]
+[ 7283.167001] RSP: 0018:ffff9a5fc3967d08 EFLAGS: 00010246
+[ 7283.167019] RAX: ffff98d88afd3770 RBX: 0000000000000001 RCX: 0000000000000000
+[ 7283.167023] RDX: 0000000000000000 RSI: ffff98d89da30390 RDI: ffff98d89da20000
+[ 7283.167025] RBP: ffff98d89da20000 R08: 0000000000036838 R09: 0000000000000006
+[ 7283.167028] R10: ffffd5764243c008 R11: 0000000000000000 R12: ffff98d89da30390
+[ 7283.167030] R13: ffff98d89da38978 R14: ffffffff999ae15a R15: ffff98d880130105
+[ 7283.167032] FS:  0000000000000000(0000) GS:ffff98d996f00000(0000) knlGS:0000000000000000
+[ 7283.167036] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 7283.167039] CR2: 00000000f7a9d178 CR3: 00000001c42ea000 CR4: 00000000003506e0
+[ 7283.167041] Call Trace:
+[ 7283.167046]  <TASK>
+[ 7283.167048]  sdma_v4_0_hw_fini+0x38/0xa0 [amdgpu]
+[ 7283.167704]  amdgpu_device_ip_suspend_phase2+0x101/0x1a0 [amdgpu]
+[ 7283.168296]  amdgpu_device_suspend+0x103/0x180 [amdgpu]
+[ 7283.168875]  amdgpu_pmops_freeze+0x21/0x60 [amdgpu]
+[ 7283.169464]  pci_pm_freeze+0x54/0xc0
 
 Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
 Signed-off-by: Guchun Chen <guchun.chen@amd.com>
@@ -74,20 +70,25 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -3908,7 +3908,8 @@ static int gfx_v9_0_hw_fini(void *handle
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
+@@ -1911,9 +1911,11 @@ static int sdma_v4_0_hw_fini(void *handl
+ 	if (amdgpu_sriov_vf(adev))
+ 		return 0;
  
--	amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
-+	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__GFX))
-+		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
- 	amdgpu_irq_put(adev, &adev->gfx.priv_reg_irq, 0);
- 	amdgpu_irq_put(adev, &adev->gfx.priv_inst_irq, 0);
+-	for (i = 0; i < adev->sdma.num_instances; i++) {
+-		amdgpu_irq_put(adev, &adev->sdma.ecc_irq,
+-			       AMDGPU_SDMA_IRQ_INSTANCE0 + i);
++	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__SDMA)) {
++		for (i = 0; i < adev->sdma.num_instances; i++) {
++			amdgpu_irq_put(adev, &adev->sdma.ecc_irq,
++				       AMDGPU_SDMA_IRQ_INSTANCE0 + i);
++		}
+ 	}
  
+ 	sdma_v4_0_ctx_switch_enable(adev, false);
 
 
