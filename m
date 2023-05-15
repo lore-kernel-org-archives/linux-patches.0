@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B3EFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:59:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0456C433EF;
-	Mon, 15 May 2023 16:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713F3FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:59:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDCFC4339B;
+	Mon, 15 May 2023 16:59:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169943;
-	bh=Vagv3USjgjEaM/bYDesxtVCTp3u/4PufHwxGFTPcGzY=;
+	s=korg; t=1684169946;
+	bh=6bc4r8hhPwLpn7u/K2gooVQoh0VagQRG8DT/taaWISk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RIL1fvFRAGyd9wgOG9EDZPluiIrpoR16e8upApdotYvFWpFuvy1x8vxNXoB8d4Fob
-	 1wjMCL3YjbLwlxRJkiZgN2ftb0keBrP2jSZdisd9ysn0sQBLuBSaN7wZTqdUZJjMqe
-	 a3j4U9GMAe5V0+z+/dLjMBInpEH3EhPWo6wj2NP0=
+	b=CQSiTcrhUFHIZ3MwZAnRCP6FqQi6flPJzBPBm6qXnM2mRTFKs0pO2N1DEmRqfWbfW
+	 IqOrUlyt7ln0NdhB1mErLRi0dB2x6CfHVUsTXO4ZYKip4DctHWFsEziSOjsZ/f4ujF
+	 fUgTTCWAljF31bKyAX0ubYM8dLKqZpVQtC6rOL7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.3 181/246] f2fs: remove entire rb_entry sharing
-Date: Mon, 15 May 2023 18:26:33 +0200
-Message-Id: <20230515161728.056886457@linuxfoundation.org>
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 6.3 214/246] drm/msm/adreno: adreno_gpu: Use suspend() instead of idle() on load error
+Date: Mon, 15 May 2023 18:27:06 +0200
+Message-Id: <20230515161729.016719126@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,324 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit bf21acf9959a48d90dd32869a0649525eb21be56 upstream.
+commit 3eeca5e5f3100435b06a5b5d86daa3d135a8a4bd upstream.
 
-This is a last part to remove the memory sharing for rb_tree in extent_cache.
+The adreno_load_gpu() path is guarded by an error check on
+adreno_load_fw(). This function is responsible for loading
+Qualcomm-only-signed binaries (e.g. SQE and GMU FW for A6XX), but it
+does not take the vendor-signed ZAP blob into account.
 
-This should also fix arm32 memory alignment issue.
+By embedding the SQE (and GMU, if necessary) firmware into the
+initrd/kernel, we can trigger and unfortunate path that would not bail
+out early and proceed with gpu->hw_init(). That will fail, as the ZAP
+loader path will not find the firmware and return back to
+adreno_load_gpu().
 
-[struct extent_node]               [struct rb_entry]
-[0] struct rb_node rb_node;        [0] struct rb_node rb_node;
-  union {                              union {
-    struct {                             struct {
-[16]  unsigned int fofs;           [12]    unsigned int ofs;
-      unsigned int len;                    unsigned int len;
-                                         };
-                                         unsigned long long key;
-                                       } __packed;
+This error path involves pm_runtime_put_sync() which then calls idle()
+instead of suspend(). This is suboptimal, as it means that we're not
+going through the clean shutdown sequence. With at least A619_holi, this
+makes the GPU not wake up until it goes through at least one more
+start-fail-stop cycle. The pm_runtime_put_sync that appears in the error
+path actually does not guarantee that because of the earlier enabling of
+runtime autosuspend.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 13054c548a1c ("f2fs: introduce infra macro and data structure of rb-tree extent cache")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fix that by using pm_runtime_put_sync_suspend to force a clean shutdown.
+
+Test cases:
+1. All firmware baked into kernel
+2. error loading ZAP fw in initrd -> load from rootfs at DE start
+
+Both succeed on A619_holi (SM6375) and A630 (SDM845).
+
+Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu load")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/530001/
+Link: https://lore.kernel.org/r/20230330231517.2747024-1-konrad.dybcio@linaro.org
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/extent_cache.c |  177 +++++++++++++++++++------------------------------
- fs/f2fs/f2fs.h         |    6 -
- 2 files changed, 71 insertions(+), 112 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -161,95 +161,52 @@ static bool __is_front_mergeable(struct
- 	return __is_extent_mergeable(cur, front, type);
- }
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -465,7 +465,7 @@ struct msm_gpu *adreno_load_gpu(struct d
+ 	return gpu;
  
--static struct rb_entry *__lookup_rb_tree_fast(struct rb_entry *cached_re,
--							unsigned int ofs)
--{
--	if (cached_re) {
--		if (cached_re->ofs <= ofs &&
--				cached_re->ofs + cached_re->len > ofs) {
--			return cached_re;
--		}
--	}
--	return NULL;
--}
--
--static struct rb_entry *__lookup_rb_tree_slow(struct rb_root_cached *root,
--							unsigned int ofs)
-+static struct extent_node *__lookup_extent_node(struct rb_root_cached *root,
-+			struct extent_node *cached_en, unsigned int fofs)
- {
- 	struct rb_node *node = root->rb_root.rb_node;
--	struct rb_entry *re;
-+	struct extent_node *en;
-+
-+	/* check a cached entry */
-+	if (cached_en && cached_en->ei.fofs <= fofs &&
-+			cached_en->ei.fofs + cached_en->ei.len > fofs)
-+		return cached_en;
+ err_put_rpm:
+-	pm_runtime_put_sync(&pdev->dev);
++	pm_runtime_put_sync_suspend(&pdev->dev);
+ err_disable_rpm:
+ 	pm_runtime_disable(&pdev->dev);
  
-+	/* check rb_tree */
- 	while (node) {
--		re = rb_entry(node, struct rb_entry, rb_node);
-+		en = rb_entry(node, struct extent_node, rb_node);
- 
--		if (ofs < re->ofs)
-+		if (fofs < en->ei.fofs)
- 			node = node->rb_left;
--		else if (ofs >= re->ofs + re->len)
-+		else if (fofs >= en->ei.fofs + en->ei.len)
- 			node = node->rb_right;
- 		else
--			return re;
-+			return en;
- 	}
- 	return NULL;
- }
- 
--static struct rb_entry *f2fs_lookup_rb_tree(struct rb_root_cached *root,
--				struct rb_entry *cached_re, unsigned int ofs)
--{
--	struct rb_entry *re;
--
--	re = __lookup_rb_tree_fast(cached_re, ofs);
--	if (!re)
--		return __lookup_rb_tree_slow(root, ofs);
--
--	return re;
--}
--
--static struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
--				struct rb_root_cached *root,
--				struct rb_node **parent,
--				unsigned int ofs, bool *leftmost)
--{
--	struct rb_node **p = &root->rb_root.rb_node;
--	struct rb_entry *re;
--
--	while (*p) {
--		*parent = *p;
--		re = rb_entry(*parent, struct rb_entry, rb_node);
--
--		if (ofs < re->ofs) {
--			p = &(*p)->rb_left;
--		} else if (ofs >= re->ofs + re->len) {
--			p = &(*p)->rb_right;
--			*leftmost = false;
--		} else {
--			f2fs_bug_on(sbi, 1);
--		}
--	}
--
--	return p;
--}
--
- /*
-- * lookup rb entry in position of @ofs in rb-tree,
-+ * lookup rb entry in position of @fofs in rb-tree,
-  * if hit, return the entry, otherwise, return NULL
-- * @prev_ex: extent before ofs
-- * @next_ex: extent after ofs
-- * @insert_p: insert point for new extent at ofs
-+ * @prev_ex: extent before fofs
-+ * @next_ex: extent after fofs
-+ * @insert_p: insert point for new extent at fofs
-  * in order to simplify the insertion after.
-  * tree must stay unchanged between lookup and insertion.
-  */
--static struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
--				struct rb_entry *cached_re,
--				unsigned int ofs,
--				struct rb_entry **prev_entry,
--				struct rb_entry **next_entry,
-+static struct extent_node *__lookup_extent_node_ret(struct rb_root_cached *root,
-+				struct extent_node *cached_en,
-+				unsigned int fofs,
-+				struct extent_node **prev_entry,
-+				struct extent_node **next_entry,
- 				struct rb_node ***insert_p,
- 				struct rb_node **insert_parent,
--				bool force, bool *leftmost)
-+				bool *leftmost)
- {
- 	struct rb_node **pnode = &root->rb_root.rb_node;
- 	struct rb_node *parent = NULL, *tmp_node;
--	struct rb_entry *re = cached_re;
-+	struct extent_node *en = cached_en;
- 
- 	*insert_p = NULL;
- 	*insert_parent = NULL;
-@@ -259,24 +216,20 @@ static struct rb_entry *f2fs_lookup_rb_t
- 	if (RB_EMPTY_ROOT(&root->rb_root))
- 		return NULL;
- 
--	if (re) {
--		if (re->ofs <= ofs && re->ofs + re->len > ofs)
--			goto lookup_neighbors;
--	}
-+	if (en && en->ei.fofs <= fofs && en->ei.fofs + en->ei.len > fofs)
-+		goto lookup_neighbors;
- 
--	if (leftmost)
--		*leftmost = true;
-+	*leftmost = true;
- 
- 	while (*pnode) {
- 		parent = *pnode;
--		re = rb_entry(*pnode, struct rb_entry, rb_node);
-+		en = rb_entry(*pnode, struct extent_node, rb_node);
- 
--		if (ofs < re->ofs) {
-+		if (fofs < en->ei.fofs) {
- 			pnode = &(*pnode)->rb_left;
--		} else if (ofs >= re->ofs + re->len) {
-+		} else if (fofs >= en->ei.fofs + en->ei.len) {
- 			pnode = &(*pnode)->rb_right;
--			if (leftmost)
--				*leftmost = false;
-+			*leftmost = false;
- 		} else {
- 			goto lookup_neighbors;
- 		}
-@@ -285,30 +238,32 @@ static struct rb_entry *f2fs_lookup_rb_t
- 	*insert_p = pnode;
- 	*insert_parent = parent;
- 
--	re = rb_entry(parent, struct rb_entry, rb_node);
-+	en = rb_entry(parent, struct extent_node, rb_node);
- 	tmp_node = parent;
--	if (parent && ofs > re->ofs)
-+	if (parent && fofs > en->ei.fofs)
- 		tmp_node = rb_next(parent);
--	*next_entry = rb_entry_safe(tmp_node, struct rb_entry, rb_node);
-+	*next_entry = rb_entry_safe(tmp_node, struct extent_node, rb_node);
- 
- 	tmp_node = parent;
--	if (parent && ofs < re->ofs)
-+	if (parent && fofs < en->ei.fofs)
- 		tmp_node = rb_prev(parent);
--	*prev_entry = rb_entry_safe(tmp_node, struct rb_entry, rb_node);
-+	*prev_entry = rb_entry_safe(tmp_node, struct extent_node, rb_node);
- 	return NULL;
- 
- lookup_neighbors:
--	if (ofs == re->ofs || force) {
-+	if (fofs == en->ei.fofs) {
- 		/* lookup prev node for merging backward later */
--		tmp_node = rb_prev(&re->rb_node);
--		*prev_entry = rb_entry_safe(tmp_node, struct rb_entry, rb_node);
-+		tmp_node = rb_prev(&en->rb_node);
-+		*prev_entry = rb_entry_safe(tmp_node,
-+					struct extent_node, rb_node);
- 	}
--	if (ofs == re->ofs + re->len - 1 || force) {
-+	if (fofs == en->ei.fofs + en->ei.len - 1) {
- 		/* lookup next node for merging frontward later */
--		tmp_node = rb_next(&re->rb_node);
--		*next_entry = rb_entry_safe(tmp_node, struct rb_entry, rb_node);
-+		tmp_node = rb_next(&en->rb_node);
-+		*next_entry = rb_entry_safe(tmp_node,
-+					struct extent_node, rb_node);
- 	}
--	return re;
-+	return en;
- }
- 
- static struct kmem_cache *extent_tree_slab;
-@@ -523,8 +478,7 @@ static bool __lookup_extent_tree(struct
- 		goto out;
- 	}
- 
--	en = (struct extent_node *)f2fs_lookup_rb_tree(&et->root,
--				(struct rb_entry *)et->cached_en, pgofs);
-+	en = __lookup_extent_node(&et->root, et->cached_en, pgofs);
- 	if (!en)
- 		goto out;
- 
-@@ -598,7 +552,7 @@ static struct extent_node *__insert_exte
- 				bool leftmost)
- {
- 	struct extent_tree_info *eti = &sbi->extent_tree[et->type];
--	struct rb_node **p;
-+	struct rb_node **p = &et->root.rb_root.rb_node;
- 	struct rb_node *parent = NULL;
- 	struct extent_node *en = NULL;
- 
-@@ -610,8 +564,21 @@ static struct extent_node *__insert_exte
- 
- 	leftmost = true;
- 
--	p = f2fs_lookup_rb_tree_for_insert(sbi, &et->root, &parent,
--						ei->fofs, &leftmost);
-+	/* look up extent_node in the rb tree */
-+	while (*p) {
-+		parent = *p;
-+		en = rb_entry(parent, struct extent_node, rb_node);
-+
-+		if (ei->fofs < en->ei.fofs) {
-+			p = &(*p)->rb_left;
-+		} else if (ei->fofs >= en->ei.fofs + en->ei.len) {
-+			p = &(*p)->rb_right;
-+			leftmost = false;
-+		} else {
-+			f2fs_bug_on(sbi, 1);
-+		}
-+	}
-+
- do_insert:
- 	en = __attach_extent_node(sbi, et, ei, parent, p, leftmost);
- 	if (!en)
-@@ -670,11 +637,10 @@ static void __update_extent_tree_range(s
- 	}
- 
- 	/* 1. lookup first extent node in range [fofs, fofs + len - 1] */
--	en = (struct extent_node *)f2fs_lookup_rb_tree_ret(&et->root,
--					(struct rb_entry *)et->cached_en, fofs,
--					(struct rb_entry **)&prev_en,
--					(struct rb_entry **)&next_en,
--					&insert_p, &insert_parent, false,
-+	en = __lookup_extent_node_ret(&et->root,
-+					et->cached_en, fofs,
-+					&prev_en, &next_en,
-+					&insert_p, &insert_parent,
- 					&leftmost);
- 	if (!en)
- 		en = next_en;
-@@ -812,12 +778,11 @@ void f2fs_update_read_extent_tree_range_
- 
- 	write_lock(&et->lock);
- 
--	en = (struct extent_node *)f2fs_lookup_rb_tree_ret(&et->root,
--				(struct rb_entry *)et->cached_en, fofs,
--				(struct rb_entry **)&prev_en,
--				(struct rb_entry **)&next_en,
--				&insert_p, &insert_parent, false,
--				&leftmost);
-+	en = __lookup_extent_node_ret(&et->root,
-+					et->cached_en, fofs,
-+					&prev_en, &next_en,
-+					&insert_p, &insert_parent,
-+					&leftmost);
- 	if (en)
- 		goto unlock_out;
- 
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -620,12 +620,6 @@ enum extent_type {
- 	NR_EXTENT_CACHES,
- };
- 
--struct rb_entry {
--	struct rb_node rb_node;		/* rb node located in rb-tree */
--	unsigned int ofs;		/* start offset of the entry */
--	unsigned int len;		/* length of the entry */
--};
--
- struct extent_info {
- 	unsigned int fofs;		/* start offset in a file */
- 	unsigned int len;		/* length of the extent */
 
 
