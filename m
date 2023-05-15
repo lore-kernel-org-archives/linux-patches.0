@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCEC17730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:05:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37991C433EF;
-	Mon, 15 May 2023 18:05:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF77C17730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:05:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E06C433EF;
+	Mon, 15 May 2023 18:05:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173921;
-	bh=vStKJEne7Ft5xib0WFgd4nHsqJtxaId9XuTiXPhH6oo=;
+	s=korg; t=1684173924;
+	bh=qj0tsuMYNdc8QVwRITjZvNMKATUgDEEBJcil9mgsVPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zy0b+Zbqpw3SJUB0kw5FLrP7kJfOmjyT2c/Iq1NDJwuywMokYCXbgy5gpKDrFXfBD
-	 ZIJxh1R3mq6izUjpcpd8My27sZhCKFq9Lu6lTg+CVyEj9Z+lCFelVb17lhbIgA9Orh
-	 x3KAnZ0ca8XnMI+5wrIyc4Yyq0nt9OCdXOb/cn3Q=
+	b=AW68BWlRAE2UEFTglE1bSCzvJBC+GCtRyTx9ZKCtKfyyu8K5TM3YAVhd4KrJX2G7U
+	 HNL8ulPqIqT6Ge9woyNxGYRqFjta2r3gPgKCMWnSix/voiiAYeOxJIuwjJ6MpmCrfr
+	 tpRiY9JG0MWv6iCAaUXro1Ed6lY+neBt1J0pjhmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.4 250/282] ARM: dts: exynos: fix WM8960 clock name in Itop Elite
-Date: Mon, 15 May 2023 18:30:28 +0200
-Message-Id: <20230515161729.771198059@linuxfoundation.org>
+Subject: [PATCH 5.4 251/282] ARM: dts: s5pv210: correct MIPI CSIS clock name
+Date: Mon, 15 May 2023 18:30:29 +0200
+Message-Id: <20230515161729.800805439@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,30 +35,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 6c950c20da38debf1ed531e0b972bd8b53d1c11f upstream.
+commit 665b9459bb53b8f19bd1541567e1fe9782c83c4b upstream.
 
-The WM8960 Linux driver expects the clock to be named "mclk".  Otherwise
-the clock will be ignored and not prepared/enabled by the driver.
+The Samsung S5P/Exynos MIPI CSIS bindings and Linux driver expect first
+clock name to be "csis".  Otherwise the driver fails to probe.
 
+Fixes: 94ad0f6d9278 ("ARM: dts: Add Device tree for s5pv210 SoC")
 Cc: <stable@vger.kernel.org>
-Fixes: 339b2fb36a67 ("ARM: dts: exynos: Add TOPEET itop elite based board")
-Link: https://lore.kernel.org/r/20230217150627.779764-3-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20230212185818.43503-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/exynos4412-itop-elite.dts |    2 +-
+ arch/arm/boot/dts/s5pv210.dtsi |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm/boot/dts/exynos4412-itop-elite.dts
-+++ b/arch/arm/boot/dts/exynos4412-itop-elite.dts
-@@ -179,7 +179,7 @@
- 		compatible = "wlf,wm8960";
- 		reg = <0x1a>;
- 		clocks = <&pmu_system_controller 0>;
--		clock-names = "MCLK1";
-+		clock-names = "mclk";
- 		wlf,shared-lrclk;
- 		#sound-dai-cells = <0>;
- 	};
+--- a/arch/arm/boot/dts/s5pv210.dtsi
++++ b/arch/arm/boot/dts/s5pv210.dtsi
+@@ -571,7 +571,7 @@
+ 				interrupts = <29>;
+ 				clocks = <&clocks CLK_CSIS>,
+ 						<&clocks SCLK_CSIS>;
+-				clock-names = "clk_csis",
++				clock-names = "csis",
+ 						"sclk_csis";
+ 				bus-width = <4>;
+ 				status = "disabled";
 
 
