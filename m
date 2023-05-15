@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 679F9FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:41:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEF01C433D2;
-	Mon, 15 May 2023 17:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E02FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:41:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9201C433EF;
+	Mon, 15 May 2023 17:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172482;
-	bh=JIbDUYnII4i271qjKieXGt2Oy4nzk7VKyLk58eaihxg=;
+	s=korg; t=1684172485;
+	bh=hFs6H8U4vhH6vm2ONxBuoxMhFHoJU80DZCVmCwifdOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ddvd7lvGTfE5mSxqZvDNKBydCuPGLw+qoMuz866oAyp410DPVQz/OXlSMihyTGTyq
-	 7rBKuBqlHhE1vSSDvNzOloYrMcykZpqyRKMexnCiEX8cYhQMWiiEcc4PJKozX3iNc7
-	 7O/IU1nWAlXZr7nlbVMoWCwHJygf8+Wi4CxTJ4bs=
+	b=2jIGJwMMBkaIX+U03gV6Y1EIjilVvoRmGo5JtSm/+S5OxJEeUwRWr/5lNyF3awTdU
+	 OYKqVe0XBvf9to+oGw0AQgIsDJk+Pts7SXnFH3TjZ0geYKrtOyhSViPpO7QARgH68W
+	 vXSDgMRCtM1o+ckm6BiQG4z2UR3/bToWdvwsc50w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gusenleitner Klaus <gus@keba.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Quentin Monnet <quentin@isovalent.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 129/381] tick/common: Align tick period with the HZ tick.
-Date: Mon, 15 May 2023 18:26:20 +0200
-Message-Id: <20230515161742.654722493@linuxfoundation.org>
+Subject: [PATCH 5.10 161/381] bpftool: Fix bug for long instructions in program CFG dumps
+Date: Mon, 15 May 2023 18:26:52 +0200
+Message-Id: <20230515161744.080986921@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,65 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Quentin Monnet <quentin@isovalent.com>
 
-[ Upstream commit e9523a0d81899361214d118ad60ef76f0e92f71d ]
+[ Upstream commit 67cf52cdb6c8fa6365d29106555dacf95c9fd374 ]
 
-With HIGHRES enabled tick_sched_timer() is programmed every jiffy to
-expire the timer_list timers. This timer is programmed accurate in
-respect to CLOCK_MONOTONIC so that 0 seconds and nanoseconds is the
-first tick and the next one is 1000/CONFIG_HZ ms later. For HZ=250 it is
-every 4 ms and so based on the current time the next tick can be
-computed.
+When dumping the control flow graphs for programs using the 16-byte long
+load instruction, we need to skip the second part of this instruction
+when looking for the next instruction to process. Otherwise, we end up
+printing "BUG_ld_00" from the kernel disassembler in the CFG.
 
-This accuracy broke since the commit mentioned below because the jiffy
-based clocksource is initialized with higher accuracy in
-read_persistent_wall_and_boot_offset(). This higher accuracy is
-inherited during the setup in tick_setup_device(). The timer still fires
-every 4ms with HZ=250 but timer is no longer aligned with
-CLOCK_MONOTONIC with 0 as it origin but has an offset in the us/ns part
-of the timestamp. The offset differs with every boot and makes it
-impossible for user land to align with the tick.
-
-Align the tick period with CLOCK_MONOTONIC ensuring that it is always a
-multiple of 1000/CONFIG_HZ ms.
-
-Fixes: 857baa87b6422 ("sched/clock: Enable sched clock early")
-Reported-by: Gusenleitner Klaus <gus@keba.com>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/20230406095735.0_14edn3@linutronix.de
-Link: https://lore.kernel.org/r/20230418122639.ikgfvu3f@linutronix.de
+Fixes: efcef17a6d65 ("tools: bpftool: generate .dot graph from CFG information")
+Signed-off-by: Quentin Monnet <quentin@isovalent.com>
+Link: https://lore.kernel.org/r/20230405132120.59886-3-quentin@isovalent.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-common.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ tools/bpf/bpftool/xlated_dumper.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/kernel/time/tick-common.c b/kernel/time/tick-common.c
-index 92bf99d558b48..2b7448ae5b478 100644
---- a/kernel/time/tick-common.c
-+++ b/kernel/time/tick-common.c
-@@ -216,9 +216,19 @@ static void tick_setup_device(struct tick_device *td,
- 		 * this cpu:
- 		 */
- 		if (tick_do_timer_cpu == TICK_DO_TIMER_BOOT) {
-+			ktime_t next_p;
-+			u32 rem;
-+
- 			tick_do_timer_cpu = cpu;
+diff --git a/tools/bpf/bpftool/xlated_dumper.c b/tools/bpf/bpftool/xlated_dumper.c
+index 8608cd68cdd07..13d614b16f6c2 100644
+--- a/tools/bpf/bpftool/xlated_dumper.c
++++ b/tools/bpf/bpftool/xlated_dumper.c
+@@ -363,8 +363,15 @@ void dump_xlated_for_graph(struct dump_data *dd, void *buf_start, void *buf_end,
+ 	struct bpf_insn *insn_start = buf_start;
+ 	struct bpf_insn *insn_end = buf_end;
+ 	struct bpf_insn *cur = insn_start;
++	bool double_insn = false;
  
--			tick_next_period = ktime_get();
-+			next_p = ktime_get();
-+			div_u64_rem(next_p, TICK_NSEC, &rem);
-+			if (rem) {
-+				next_p -= rem;
-+				next_p += TICK_NSEC;
-+			}
+ 	for (; cur <= insn_end; cur++) {
++		if (double_insn) {
++			double_insn = false;
++			continue;
++		}
++		double_insn = cur->code == (BPF_LD | BPF_IMM | BPF_DW);
 +
-+			tick_next_period = next_p;
- #ifdef CONFIG_NO_HZ_FULL
- 			/*
- 			 * The boot CPU may be nohz_full, in which case set
+ 		printf("% 4d: ", (int)(cur - insn_start + start_idx));
+ 		print_bpf_insn(&cbs, cur, true);
+ 		if (cur != insn_end)
 -- 
 2.39.2
 
