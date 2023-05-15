@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB8BE573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3165C4339B;
-	Mon, 15 May 2023 16:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB294E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1230FC433EF;
+	Mon, 15 May 2023 16:41:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168887;
-	bh=hAABR0kpMdIctDfWtCBTGa0StvGurFhcmCnd/RuacnI=;
+	s=korg; t=1684168890;
+	bh=8i/JvyJzl4/l64YOefdgKj3GkQ/Fwr088NYA7QpuCa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XfFof/ngL6nVc+QXz4ruULl/jXHWrlOh9XIVeyqXKY2y6FSBRw/Vb9E9+qjJwok89
-	 73ftSgbYG1iYXjGanwOfCpvLhtREF1fM6tTMyH0r4lVHsBld8JutmnxZniLMXgancb
-	 cLQRHfzjRUfjJzKR2gICnNz4fROFE/WY0VvV5M3Q=
+	b=Me2MJXsTuYTABMbtF/zVfIBavKwsUQjdT6Lr9yAneAgbYUbMx/hHSDbh/liTMNZmJ
+	 3L4Es7nJyXTzo0tfR1YHadrNqx14o2D6t6A305jr2vhAfxCJVA4Xrgzz/titqLO+NB
+	 T9xRIgtKbe2eTi8xzR7/21/Uzi4wvZEMRGy33QEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 056/191] net/packet: convert po->auxdata to an atomic flag
-Date: Mon, 15 May 2023 18:24:53 +0200
-Message-Id: <20230515161709.249420244@linuxfoundation.org>
+	Joe Damato <jdamato@fastly.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 4.19 074/191] ixgbe: Enable setting RSS table to default values
+Date: Mon, 15 May 2023 18:25:11 +0200
+Message-Id: <20230515161709.954097935@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,93 +37,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Joe Damato <jdamato@fastly.com>
 
-[ Upstream commit fd53c297aa7b077ae98a3d3d2d3aa278a1686ba6 ]
+[ Upstream commit e85d3d55875f7a1079edfbc4e4e98d6f8aea9ac7 ]
 
-po->auxdata can be read while another thread
-is changing its value, potentially raising KCSAN splat.
+ethtool uses `ETHTOOL_GRXRINGS` to compute how many queues are supported
+by RSS. The driver should return the smaller of either:
+  - The maximum number of RSS queues the device supports, OR
+  - The number of RX queues configured
 
-Convert it to PACKET_SOCK_AUXDATA flag.
+Prior to this change, running `ethtool -X $iface default` fails if the
+number of queues configured is larger than the number supported by RSS,
+even though changing the queue count correctly resets the flowhash to
+use all supported queues.
 
-Fixes: 8dc419447415 ("[PACKET]: Add optional checksum computation for recvmsg")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Other drivers (for example, i40e) will succeed but the flow hash will
+reset to support the maximum number of queues supported by RSS, even if
+that amount is smaller than the configured amount.
+
+Prior to this change:
+
+$ sudo ethtool -L eth1 combined 20
+$ sudo ethtool -x eth1
+RX flow hash indirection table for eth1 with 20 RX ring(s):
+    0:      0     1     2     3     4     5     6     7
+    8:      8     9    10    11    12    13    14    15
+   16:      0     1     2     3     4     5     6     7
+   24:      8     9    10    11    12    13    14    15
+   32:      0     1     2     3     4     5     6     7
+...
+
+You can see that the flowhash was correctly set to use the maximum
+number of queues supported by the driver (16).
+
+However, asking the NIC to reset to "default" fails:
+
+$ sudo ethtool -X eth1 default
+Cannot set RX flow hash configuration: Invalid argument
+
+After this change, the flowhash can be reset to default which will use
+all of the available RSS queues (16) or the configured queue count,
+whichever is smaller.
+
+Starting with eth1 which has 10 queues and a flowhash distributing to
+all 10 queues:
+
+$ sudo ethtool -x eth1
+RX flow hash indirection table for eth1 with 10 RX ring(s):
+    0:      0     1     2     3     4     5     6     7
+    8:      8     9     0     1     2     3     4     5
+   16:      6     7     8     9     0     1     2     3
+...
+
+Increasing the queue count to 48 resets the flowhash to distribute to 16
+queues, as it did before this patch:
+
+$ sudo ethtool -L eth1 combined 48
+$ sudo ethtool -x eth1
+RX flow hash indirection table for eth1 with 16 RX ring(s):
+    0:      0     1     2     3     4     5     6     7
+    8:      8     9    10    11    12    13    14    15
+   16:      0     1     2     3     4     5     6     7
+...
+
+Due to the other bugfix in this series, the flowhash can be set to use
+queues 0-5:
+
+$ sudo ethtool -X eth1 equal 5
+$ sudo ethtool -x eth1
+RX flow hash indirection table for eth1 with 16 RX ring(s):
+    0:      0     1     2     3     4     0     1     2
+    8:      3     4     0     1     2     3     4     0
+   16:      1     2     3     4     0     1     2     3
+...
+
+Due to this bugfix, the flowhash can be reset to default and use 16
+queues:
+
+$ sudo ethtool -X eth1 default
+$ sudo ethtool -x eth1
+RX flow hash indirection table for eth1 with 16 RX ring(s):
+    0:      0     1     2     3     4     5     6     7
+    8:      8     9    10    11    12    13    14    15
+   16:      0     1     2     3     4     5     6     7
+...
+
+Fixes: 91cd94bfe4f0 ("ixgbe: add basic support for setting and getting nfc controls")
+Signed-off-by: Joe Damato <jdamato@fastly.com>
+Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 8 +++-----
- net/packet/diag.c      | 2 +-
- net/packet/internal.h  | 4 ++--
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ .../net/ethernet/intel/ixgbe/ixgbe_ethtool.c  | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 91c35d45e43ca..60986c209311f 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3444,7 +3444,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 		memcpy(msg->msg_name, &PACKET_SKB_CB(skb)->sa, copy_len);
- 	}
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
+index a852f9c920742..3d361557a63a3 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
+@@ -2539,6 +2539,14 @@ static int ixgbe_get_rss_hash_opts(struct ixgbe_adapter *adapter,
+ 	return 0;
+ }
  
--	if (pkt_sk(sk)->auxdata) {
-+	if (packet_sock_flag(pkt_sk(sk), PACKET_SOCK_AUXDATA)) {
- 		struct tpacket_auxdata aux;
++static int ixgbe_rss_indir_tbl_max(struct ixgbe_adapter *adapter)
++{
++	if (adapter->hw.mac.type < ixgbe_mac_X550)
++		return 16;
++	else
++		return 64;
++}
++
+ static int ixgbe_get_rxnfc(struct net_device *dev, struct ethtool_rxnfc *cmd,
+ 			   u32 *rule_locs)
+ {
+@@ -2547,7 +2555,8 @@ static int ixgbe_get_rxnfc(struct net_device *dev, struct ethtool_rxnfc *cmd,
  
- 		aux.tp_status = TP_STATUS_USER;
-@@ -3827,9 +3827,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, char __user *optv
- 		if (copy_from_user(&val, optval, sizeof(val)))
- 			return -EFAULT;
- 
--		lock_sock(sk);
--		po->auxdata = !!val;
--		release_sock(sk);
-+		packet_sock_flag_set(po, PACKET_SOCK_AUXDATA, val);
- 		return 0;
- 	}
- 	case PACKET_ORIGDEV:
-@@ -3971,7 +3969,7 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
- 
+ 	switch (cmd->cmd) {
+ 	case ETHTOOL_GRXRINGS:
+-		cmd->data = adapter->num_rx_queues;
++		cmd->data = min_t(int, adapter->num_rx_queues,
++				  ixgbe_rss_indir_tbl_max(adapter));
+ 		ret = 0;
  		break;
- 	case PACKET_AUXDATA:
--		val = po->auxdata;
-+		val = packet_sock_flag(po, PACKET_SOCK_AUXDATA);
- 		break;
- 	case PACKET_ORIGDEV:
- 		val = packet_sock_flag(po, PACKET_SOCK_ORIGDEV);
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index bf5928e5df035..d9f912ad23dfa 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -22,7 +22,7 @@ static int pdiag_put_info(const struct packet_sock *po, struct sk_buff *nlskb)
- 	pinfo.pdi_flags = 0;
- 	if (po->running)
- 		pinfo.pdi_flags |= PDI_RUNNING;
--	if (po->auxdata)
-+	if (packet_sock_flag(po, PACKET_SOCK_AUXDATA))
- 		pinfo.pdi_flags |= PDI_AUXDATA;
- 	if (packet_sock_flag(po, PACKET_SOCK_ORIGDEV))
- 		pinfo.pdi_flags |= PDI_ORIGDEV;
-diff --git a/net/packet/internal.h b/net/packet/internal.h
-index f39dcc7608bc6..3d871cae85b8c 100644
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -117,8 +117,7 @@ struct packet_sock {
- 	struct mutex		pg_vec_lock;
- 	unsigned long		flags;
- 	unsigned int		running;	/* bind_lock must be held */
--	unsigned int		auxdata:1,	/* writer must hold sock lock */
--				has_vnet_hdr:1,
-+	unsigned int		has_vnet_hdr:1, /* writer must hold sock lock */
- 				tp_loss:1,
- 				tp_tx_has_off:1;
- 	int			pressure;
-@@ -144,6 +143,7 @@ static struct packet_sock *pkt_sk(struct sock *sk)
+ 	case ETHTOOL_GRXCLSRLCNT:
+@@ -2949,14 +2958,6 @@ static int ixgbe_set_rxnfc(struct net_device *dev, struct ethtool_rxnfc *cmd)
+ 	return ret;
+ }
  
- enum packet_sock_flags {
- 	PACKET_SOCK_ORIGDEV,
-+	PACKET_SOCK_AUXDATA,
- };
- 
- static inline void packet_sock_flag_set(struct packet_sock *po,
+-static int ixgbe_rss_indir_tbl_max(struct ixgbe_adapter *adapter)
+-{
+-	if (adapter->hw.mac.type < ixgbe_mac_X550)
+-		return 16;
+-	else
+-		return 64;
+-}
+-
+ static u32 ixgbe_get_rxfh_key_size(struct net_device *netdev)
+ {
+ 	return IXGBE_RSS_KEY_SIZE;
 -- 
 2.39.2
 
