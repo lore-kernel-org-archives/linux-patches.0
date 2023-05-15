@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6853AFBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C207EC433D2;
-	Mon, 15 May 2023 17:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D76FC1C
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1EC3C433A4;
+	Mon, 15 May 2023 17:48:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172892;
-	bh=QQBEp5i7ROCH6hrCJjJJ6bTfN34uM97nfboYK1Sn2aE=;
+	s=korg; t=1684172895;
+	bh=lHhIiqYt+rIljfPY/wQT6/g6xOoPVbENZ5tSkJfZ3oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NW7EquGs+ZYWjDl0i0I6dwFPlpQa55lGrqz+HkZhlscz/vhTxOM8osWvstXtEen2s
-	 Eaa3cdPtsFOewlptls+wLZdoWoZmx8Ic2ATLcgj28Ht96TvUs6QEfeQm3x8PUbFSs0
-	 0WrNpFlpI/FUqQzObBcDVAOkXZeez+UCA8lxVwQg=
+	b=gDTHtbqYLjsiIGolSF4PfEB0r2nkffI4KgwoysQl488dz5UeglLInpRQOLQWf/+J+
+	 fj+KOMJZ9lpViC+T3FGYEUj20l9T1+pM8hNmadQL1z02USIQtHT+DrQxPTarTP1cvw
+	 sYsrzQguf2BW+6SqxPfHOyjqrIHdTrSonRsrmBZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	mhiramat@kernel.org,
+	npiggin@gmail.com,
+	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 301/381] tty: Prevent writing chars during tcsetattr TCSADRAIN/FLUSH
-Date: Mon, 15 May 2023 18:29:12 +0200
-Message-Id: <20230515161750.408389029@linuxfoundation.org>
+Subject: [PATCH 5.10 302/381] ring-buffer: Ensure proper resetting of atomic variables in ring_buffer_reset_online_cpus
+Date: Mon, 15 May 2023 18:29:13 +0200
+Message-Id: <20230515161750.459521450@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,131 +38,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
 
-[ Upstream commit 094fb49a2d0d6827c86d2e0840873e6db0c491d2 ]
+[ Upstream commit 7c339fb4d8577792378136c15fde773cfb863cb8 ]
 
-If userspace races tcsetattr() with a write, the drained condition
-might not be guaranteed by the kernel. There is a race window after
-checking Tx is empty before tty_set_termios() takes termios_rwsem for
-write. During that race window, more characters can be queued by a
-racing writer.
+In ring_buffer_reset_online_cpus, the buffer_size_kb write operation
+may permanently fail if the cpu_online_mask changes between two
+for_each_online_buffer_cpu loops. The number of increases and decreases
+on both cpu_buffer->resize_disabled and cpu_buffer->record_disabled may be
+inconsistent, causing some CPUs to have non-zero values for these atomic
+variables after the function returns.
 
-Any ongoing transmission might produce garbage during HW's
-->set_termios() call. The intent of TCSADRAIN/FLUSH seems to be
-preventing such a character corruption. If those flags are set, take
-tty's write lock to stop any writer before performing the lower layer
-Tx empty check and wait for the pending characters to be sent (if any).
+This issue can be reproduced by "echo 0 > trace" while hotplugging cpu.
+After reproducing success, we can find out buffer_size_kb will not be
+functional anymore.
 
-The initial wait for all-writers-done must be placed outside of tty's
-write lock to avoid deadlock which makes it impossible to use
-tty_wait_until_sent(). The write lock is retried if a racing write is
-detected.
+To prevent leaving 'resize_disabled' and 'record_disabled' non-zero after
+ring_buffer_reset_online_cpus returns, we ensure that each atomic variable
+has been set up before atomic_sub() to it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://lore.kernel.org/linux-trace-kernel/20230426062027.17451-1-Tze-nan.Wu@mediatek.com
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230317113318.31327-2-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <mhiramat@kernel.org>
+Cc: npiggin@gmail.com
+Fixes: b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
+Reviewed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
+Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/tty.h       |  2 ++
- drivers/tty/tty_io.c    |  4 ++--
- drivers/tty/tty_ioctl.c | 45 ++++++++++++++++++++++++++++++-----------
- 3 files changed, 37 insertions(+), 14 deletions(-)
+ kernel/trace/ring_buffer.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/tty.h b/drivers/tty/tty.h
-index 74ed99bc5449a..1908f27a795a0 100644
---- a/drivers/tty/tty.h
-+++ b/drivers/tty/tty.h
-@@ -63,6 +63,8 @@ int __tty_check_change(struct tty_struct *tty, int sig);
- int tty_check_change(struct tty_struct *tty);
- void __stop_tty(struct tty_struct *tty);
- void __start_tty(struct tty_struct *tty);
-+void tty_write_unlock(struct tty_struct *tty);
-+int tty_write_lock(struct tty_struct *tty, int ndelay);
- void tty_vhangup_session(struct tty_struct *tty);
- void tty_open_proc_set_tty(struct file *filp, struct tty_struct *tty);
- int tty_signal_session_leader(struct tty_struct *tty, int exit_session);
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 86fbfe42ce0ac..094e82a12d298 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -942,13 +942,13 @@ static ssize_t tty_read(struct kiocb *iocb, struct iov_iter *to)
- 	return i;
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index 1fe6b29366f10..f08904914166b 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5051,6 +5051,9 @@ void ring_buffer_reset_cpu(struct trace_buffer *buffer, int cpu)
  }
+ EXPORT_SYMBOL_GPL(ring_buffer_reset_cpu);
  
--static void tty_write_unlock(struct tty_struct *tty)
-+void tty_write_unlock(struct tty_struct *tty)
- {
- 	mutex_unlock(&tty->atomic_write_lock);
- 	wake_up_interruptible_poll(&tty->write_wait, EPOLLOUT);
- }
- 
--static int tty_write_lock(struct tty_struct *tty, int ndelay)
-+int tty_write_lock(struct tty_struct *tty, int ndelay)
- {
- 	if (!mutex_trylock(&tty->atomic_write_lock)) {
- 		if (ndelay)
-diff --git a/drivers/tty/tty_ioctl.c b/drivers/tty/tty_ioctl.c
-index 50e65784fbf77..68b07250dcb60 100644
---- a/drivers/tty/tty_ioctl.c
-+++ b/drivers/tty/tty_ioctl.c
-@@ -398,21 +398,42 @@ static int set_termios(struct tty_struct *tty, void __user *arg, int opt)
- 	tmp_termios.c_ispeed = tty_termios_input_baud_rate(&tmp_termios);
- 	tmp_termios.c_ospeed = tty_termios_baud_rate(&tmp_termios);
- 
--	ld = tty_ldisc_ref(tty);
-+	if (opt & (TERMIOS_FLUSH|TERMIOS_WAIT)) {
-+retry_write_wait:
-+		retval = wait_event_interruptible(tty->write_wait, !tty_chars_in_buffer(tty));
-+		if (retval < 0)
-+			return retval;
- 
--	if (ld != NULL) {
--		if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
--			ld->ops->flush_buffer(tty);
--		tty_ldisc_deref(ld);
--	}
-+		if (tty_write_lock(tty, 0) < 0)
-+			goto retry_write_wait;
- 
--	if (opt & TERMIOS_WAIT) {
--		tty_wait_until_sent(tty, 0);
--		if (signal_pending(current))
--			return -ERESTARTSYS;
--	}
-+		/* Racing writer? */
-+		if (tty_chars_in_buffer(tty)) {
-+			tty_write_unlock(tty);
-+			goto retry_write_wait;
-+		}
- 
--	tty_set_termios(tty, &tmp_termios);
-+		ld = tty_ldisc_ref(tty);
-+		if (ld != NULL) {
-+			if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
-+				ld->ops->flush_buffer(tty);
-+			tty_ldisc_deref(ld);
-+		}
++/* Flag to ensure proper resetting of atomic variables */
++#define RESET_BIT	(1 << 30)
 +
-+		if ((opt & TERMIOS_WAIT) && tty->ops->wait_until_sent) {
-+			tty->ops->wait_until_sent(tty, 0);
-+			if (signal_pending(current)) {
-+				tty_write_unlock(tty);
-+				return -ERESTARTSYS;
-+			}
-+		}
-+
-+		tty_set_termios(tty, &tmp_termios);
-+
-+		tty_write_unlock(tty);
-+	} else {
-+		tty_set_termios(tty, &tmp_termios);
-+	}
+ /**
+  * ring_buffer_reset_cpu - reset a ring buffer per CPU buffer
+  * @buffer: The ring buffer to reset a per cpu buffer of
+@@ -5067,20 +5070,27 @@ void ring_buffer_reset_online_cpus(struct trace_buffer *buffer)
+ 	for_each_online_buffer_cpu(buffer, cpu) {
+ 		cpu_buffer = buffer->buffers[cpu];
  
- 	/* FIXME: Arguably if tmp_termios == tty->termios AND the
- 	   actual requested termios was not tmp_termios then we may
+-		atomic_inc(&cpu_buffer->resize_disabled);
++		atomic_add(RESET_BIT, &cpu_buffer->resize_disabled);
+ 		atomic_inc(&cpu_buffer->record_disabled);
+ 	}
+ 
+ 	/* Make sure all commits have finished */
+ 	synchronize_rcu();
+ 
+-	for_each_online_buffer_cpu(buffer, cpu) {
++	for_each_buffer_cpu(buffer, cpu) {
+ 		cpu_buffer = buffer->buffers[cpu];
+ 
++		/*
++		 * If a CPU came online during the synchronize_rcu(), then
++		 * ignore it.
++		 */
++		if (!(atomic_read(&cpu_buffer->resize_disabled) & RESET_BIT))
++			continue;
++
+ 		reset_disabled_cpu_buffer(cpu_buffer);
+ 
+ 		atomic_dec(&cpu_buffer->record_disabled);
+-		atomic_dec(&cpu_buffer->resize_disabled);
++		atomic_sub(RESET_BIT, &cpu_buffer->resize_disabled);
+ 	}
+ 
+ 	mutex_unlock(&buffer->mutex);
 -- 
 2.39.2
 
