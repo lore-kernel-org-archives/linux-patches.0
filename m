@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C2A156E8
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:00:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE959C433D2;
-	Mon, 15 May 2023 18:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A779C8E3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:00:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D4EC433EF;
+	Mon, 15 May 2023 18:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173649;
-	bh=v0IrvVKjkf/iUVncVD5oSy3gCk3TCo5gKDf0waE2AMk=;
+	s=korg; t=1684173646;
+	bh=bbox77BWzc71QLC/mdTsnFHuW1z28RKGyNpcwQzjzCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhipV4srfX4DfNfE5na1Ncg7VdXKdcqXbQFPRd87Dl4dC4+a4RIZn6o3WNJVUb3ke
-	 uqSop7xGFipGMkcedooKW6wxhYTFXVEYiZmjoPhIz/bZHWi0WMIeAyjOkmot8KGMwY
-	 zIeJHfil8f6Sinhegj+sTZPi+rU4guZ8wBE4Aadk=
+	b=R/WRzjncv/SOqPQZnStadMeYRyaMcxNAFPr2OXobkVRisUOHHyLyutE5TbvgSfxwE
+	 WeKbjccyA8ubZQcD26JxgTJ5G/ER8/1M5JLKN5B/UU5pXGR40gjs4BzHn6bXMDED2u
+	 NK/gqXFrP2Zb64PIPZ/FzisIpCANUL1lBJqFlx7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Daniil Dulov <d.dulov@aladdin.ru>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 135/282] ia64: mm/contig: fix section mismatch warning/error
-Date: Mon, 15 May 2023 18:28:33 +0200
-Message-Id: <20230515161726.268610076@linuxfoundation.org>
+Subject: [PATCH 5.4 161/282] RDMA/siw: Fix potential page_array out of range access
+Date: Mon, 15 May 2023 18:28:59 +0200
+Message-Id: <20230515161727.039842933@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,39 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-[ Upstream commit 58deeb4ef3b054498747d0929d94ac53ab90981f ]
+[ Upstream commit 271bfcfb83a9f77cbae3d6e1a16e3c14132922f0 ]
 
-alloc_per_cpu_data() is called by find_memory(), which is marked as
-__init.  Therefore alloc_per_cpu_data() can also be marked as __init to
-remedy this modpost problem.
+When seg is equal to MAX_ARRAY, the loop should break, otherwise
+it will result in out of range access.
 
-WARNING: modpost: vmlinux.o: section mismatch in reference: alloc_per_cpu_data (section: .text) -> memblock_alloc_try_nid (section: .init.text)
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Link: https://lkml.kernel.org/r/20230223034258.12917-1-rdunlap@infradead.org
-Fixes: 4b9ddc7cf272 ("[IA64] Fix section mismatch in contig.c version of per_cpu_init()")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: b9be6f18cf9e ("rdma/siw: transmit path")
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Link: https://lore.kernel.org/r/20230227091751.589612-1-d.dulov@aladdin.ru
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/ia64/mm/contig.c | 2 +-
+ drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/ia64/mm/contig.c b/arch/ia64/mm/contig.c
-index 5b00dc3898e19..f2b40bcd2495d 100644
---- a/arch/ia64/mm/contig.c
-+++ b/arch/ia64/mm/contig.c
-@@ -81,7 +81,7 @@ void *per_cpu_init(void)
- 	return __per_cpu_start + __per_cpu_offset[smp_processor_id()];
- }
+diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
+index 2b5120a13e376..42d03bd1622d5 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_tx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
+@@ -548,7 +548,7 @@ static int siw_tx_hdt(struct siw_iwarp_tx *c_tx, struct socket *s)
+ 			data_len -= plen;
+ 			fp_off = 0;
  
--static inline void
-+static inline __init void
- alloc_per_cpu_data(void)
- {
- 	size_t size = PERCPU_PAGE_SIZE * num_possible_cpus();
+-			if (++seg > (int)MAX_ARRAY) {
++			if (++seg >= (int)MAX_ARRAY) {
+ 				siw_dbg_qp(tx_qp(c_tx), "to many fragments\n");
+ 				siw_unmap_pages(page_array, kmap_mask);
+ 				wqe->processed -= c_tx->bytes_unsent;
 -- 
 2.39.2
 
