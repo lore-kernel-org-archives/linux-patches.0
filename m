@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65662FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFD03C433D2;
-	Mon, 15 May 2023 17:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913FCFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91C9C433EF;
+	Mon, 15 May 2023 17:25:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171548;
-	bh=M7GBqfX5ce6zJ8h0MOog4Pd7G7biwvALEcKTt4Qkmj8=;
+	s=korg; t=1684171551;
+	bh=CO+ruu5NkpRgtRYA3hftMbSIOvFlNRVgiGKt7J7EbIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJvoL/zqyxMxcwtyWyX12Tec0Mt0z/NO5yWMObQzxmTrdI++e2OzFapiobfwFiCpf
-	 z5OVPAE7ss7K4j0FxmlPb3gRhZY3NaBDfxk7mEojq8geepmfYkOWsVkeKRZ7zzLMel
-	 u561ghfViSy3j4CMxsoUQyAi/xZGEOgBnddgJnLw=
+	b=cSrR5wsbTz9oyrzmAzt/ZyytjOK/RMAIQSxOocVoCdbdgzfd1HtcN4uU8rNeD4U9A
+	 HsOn7wzDgiJcuF2GMn4wp3OAhajhdEKrcUKlNf7Ljz5waQLPA5txLyv/OjADfc9id2
+	 WWSSn9k2bc0bsfXXSGiaVlPheUwnk5P/oOuVMVvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Govindapillai <vinod.govindapillai@intel.com>,
-	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Subject: [PATCH 6.2 237/242] drm/dsc: fix DP_DSC_MAX_BPP_DELTA_* macro values
-Date: Mon, 15 May 2023 18:29:23 +0200
-Message-Id: <20230515161729.017310801@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.2 238/242] x86/amd_nb: Add PCI ID for family 19h model 78h
+Date: Mon, 15 May 2023 18:29:24 +0200
+Message-Id: <20230515161729.046210396@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,35 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 0d68683838f2850dd8ff31f1121e05bfb7a2def0 upstream.
+commit 23a5b8bb022c1e071ca91b1a9c10f0ad6a0966e9 upstream.
 
-The macro values just don't match the specs. Fix them.
+Commit
 
-Fixes: 1482ec00be4a ("drm: Add missing DP DSC extended capability definitions.")
-Cc: Vinod Govindapillai <vinod.govindapillai@intel.com>
-Cc: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230406134615.1422509-2-jani.nikula@intel.com
+  310e782a99c7 ("platform/x86/amd: pmc: Utilize SMN index 0 for driver probe")
+
+switched to using amd_smn_read() which relies upon the misc PCI ID used
+by DF function 3 being included in a table.  The ID for model 78h is
+missing in that table, so amd_smn_read() doesn't work.
+
+Add the missing ID into amd_nb, restoring s2idle on this system.
+
+  [ bp: Simplify commit message. ]
+
+Fixes: 310e782a99c7 ("platform/x86/amd: pmc: Utilize SMN index 0 for driver probe")
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>  # pci_ids.h
+Acked-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230427053338.16653-2-mario.limonciello@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/display/drm_dp.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/kernel/amd_nb.c |    2 ++
+ include/linux/pci_ids.h  |    1 +
+ 2 files changed, 3 insertions(+)
 
---- a/include/drm/display/drm_dp.h
-+++ b/include/drm/display/drm_dp.h
-@@ -286,8 +286,8 @@
+--- a/arch/x86/kernel/amd_nb.c
++++ b/arch/x86/kernel/amd_nb.c
+@@ -36,6 +36,7 @@
+ #define PCI_DEVICE_ID_AMD_19H_M50H_DF_F4 0x166e
+ #define PCI_DEVICE_ID_AMD_19H_M60H_DF_F4 0x14e4
+ #define PCI_DEVICE_ID_AMD_19H_M70H_DF_F4 0x14f4
++#define PCI_DEVICE_ID_AMD_19H_M78H_DF_F4 0x12fc
  
- #define DP_DSC_MAX_BITS_PER_PIXEL_HI        0x068   /* eDP 1.4 */
- # define DP_DSC_MAX_BITS_PER_PIXEL_HI_MASK  (0x3 << 0)
--# define DP_DSC_MAX_BPP_DELTA_VERSION_MASK  0x06
--# define DP_DSC_MAX_BPP_DELTA_AVAILABILITY  0x08
-+# define DP_DSC_MAX_BPP_DELTA_VERSION_MASK  (0x3 << 5)	/* eDP 1.5 & DP 2.0 */
-+# define DP_DSC_MAX_BPP_DELTA_AVAILABILITY  (1 << 7)	/* eDP 1.5 & DP 2.0 */
+ /* Protect the PCI config register pairs used for SMN. */
+ static DEFINE_MUTEX(smn_mutex);
+@@ -79,6 +80,7 @@ static const struct pci_device_id amd_nb
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M50H_DF_F3) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M60H_DF_F3) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M70H_DF_F3) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
+ 	{}
+ };
  
- #define DP_DSC_DEC_COLOR_FORMAT_CAP         0x069
- # define DP_DSC_RGB                         (1 << 0)
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -567,6 +567,7 @@
+ #define PCI_DEVICE_ID_AMD_19H_M50H_DF_F3 0x166d
+ #define PCI_DEVICE_ID_AMD_19H_M60H_DF_F3 0x14e3
+ #define PCI_DEVICE_ID_AMD_19H_M70H_DF_F3 0x14f3
++#define PCI_DEVICE_ID_AMD_19H_M78H_DF_F3 0x12fb
+ #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
+ #define PCI_DEVICE_ID_AMD_LANCE		0x2000
+ #define PCI_DEVICE_ID_AMD_LANCE_HOME	0x2001
 
 
