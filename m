@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D09DFC0D
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2DBC4339B;
-	Mon, 15 May 2023 17:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972C6FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B275C433D2;
+	Mon, 15 May 2023 17:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171856;
-	bh=/C1nt0VkewCeECE6zGbk4JRXWaDZikvWt0oIWbdPne8=;
+	s=korg; t=1684171859;
+	bh=QI2K0loe8k3M28BNuCxhp4xyfKlRNfUnnoBlg1EQw4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQ5A2To2G6W271kPwmYaQnZqxl+BYCyASXm8d/HIGKTyJ9n5IIFpFOsnWCdJEb/H2
-	 jbGgbNKHSMggDvGn+1bbktkyBjhNdbU68m4T3dI+T7RBI96ap5/8XokNYwf2BS5psM
-	 nnudHqDaehpXnkGh2HMwp6l2cHaGZR+6PKEK7aLg=
+	b=AjEKgqiZ+s8XFq1+JWX+j/ZaBEkkcl9En2sORl0zJQSw/UcvwZ4b1Och8PrnUw4qj
+	 Z7vjO7RdjVjaWmRi83PTJMX3W/0zJXfs75MnpNZbFuaz+1/IIbWq6MZxelLFkjeeWJ
+	 04Ei1gYFiyPDbw0ZesDDS/kKOAwDA7z8/bH1+bFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Natalsson <harmoniesworlds@gmail.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Takashi Iwai <tiwai@suse.de>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 100/134] ASoC: DPCM: Dont pick up BE without substream
-Date: Mon, 15 May 2023 18:29:37 +0200
-Message-Id: <20230515161706.464951360@linuxfoundation.org>
+Subject: [PATCH 5.15 101/134] ASoC: soc-pcm.c: call __soc_pcm_close() in soc_pcm_close()
+Date: Mon, 15 May 2023 18:29:38 +0200
+Message-Id: <20230515161706.494629358@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -37,50 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-commit 754590651ccbbcc74a7c20907be4bb15d642bde3 upstream.
+commit 6bbabd28805f36baf6d0f3eb082db032a638f612 upstream.
 
-When DPCM tries to add valid BE connections at dpcm_add_paths(), it
-doesn't check whether the picked BE actually supports for the given
-stream direction.  Due to that, when an asymmetric BE stream is
-present, it picks up wrongly and this may result in a NULL dereference
-at a later point where the code assumes the existence of a
-corresponding BE substream.
+commit b7898396f4bbe16 ("ASoC: soc-pcm: Fix and cleanup DPCM locking")
+added __soc_pcm_close() for non-lock version of soc_pcm_close().
+But soc_pcm_close() is not using it. It is no problem, but confusable.
 
-This patch adds the check for the presence of the substream for the
-target BE for avoiding the problem above.
+	static int __soc_pcm_close(...)
+	{
+=>		return soc_pcm_clean(rtd, substream, 0);
+	}
 
-Note that we have already some fix for non-existing BE substream at
-commit 6246f283d5e0 ("ASoC: dpcm: skip missing substream while
-applying symmetry").  But the code path we've hit recently is rather
-happening before the previous fix.  So this patch tries to fix at
-picking up a BE instead of parsing BE lists.
+	static int soc_pcm_close(...)
+	{
+		...
+		snd_soc_dpcm_mutex_lock(rtd);
+=>		soc_pcm_clean(rtd, substream, 0);
+		snd_soc_dpcm_mutex_unlock(rtd);
+		return 0;
+	}
 
-Fixes: bbf7d3b1c4f4 ("ASoC: soc-pcm: align BE 'atomicity' with that of the FE")
-Reported-by: Alex Natalsson <harmoniesworlds@gmail.com>
-Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Cc: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/CADs9LoPZH_D+eJ9qjTxSLE5jGyhKsjMN7g2NighZ16biVxsyKw@mail.gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20220801170510.26582-1-tiwai@suse.de
+This patch use it.
+
+Fixes: b7898396f4bbe16 ("ASoC: soc-pcm: Fix and cleanup DPCM locking")
+Cc: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/87czctgg3w.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/soc-pcm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/soc-pcm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/sound/soc/soc-pcm.c
 +++ b/sound/soc/soc-pcm.c
-@@ -1339,6 +1339,9 @@ static struct snd_soc_pcm_runtime *dpcm_
- 		if (!be->dai_link->no_pcm)
- 			continue;
+@@ -723,7 +723,7 @@ static int soc_pcm_close(struct snd_pcm_
+ 	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
  
-+		if (!snd_soc_dpcm_get_substream(be, stream))
-+			continue;
-+
- 		for_each_rtd_dais(be, i, dai) {
- 			w = snd_soc_dai_get_widget(dai, stream);
- 
+ 	snd_soc_dpcm_mutex_lock(rtd);
+-	soc_pcm_clean(rtd, substream, 0);
++	__soc_pcm_close(rtd, substream);
+ 	snd_soc_dpcm_mutex_unlock(rtd);
+ 	return 0;
+ }
 
 
