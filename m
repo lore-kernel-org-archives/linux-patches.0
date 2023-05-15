@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0887FBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55363C4339B;
-	Mon, 15 May 2023 17:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9720FBEC
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCD6C433EF;
+	Mon, 15 May 2023 17:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172962;
-	bh=OkX61BRkrqTYY7gOCAiC+bBABkapBqMZaWEuZC2gpZU=;
+	s=korg; t=1684172965;
+	bh=sFrfPY7EMkBSX+YimTIkq9AjymcaZRkC1tl3CcGmGv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HvaZA301ib5GYgjRa0OZUFdyP7dE5VlkEiebA9GIeqM1uj4nuZkd54YIjQJpUU+hi
-	 z5tOhtIdhweptplSaVXA0gv9urVqGnGMT6CTiG/NWbWO21rINIcFuy/rjlDEOsDrZy
-	 rQQedwPyMSbuwRwLWAkdjRCGGwH1KGYWdx9lC/zk=
+	b=jCWROsMaHCNIOIqndsOnhdWqG1MCGOKkaEImpUu7tStsmwNGQ4FDdAQp6UHctMfxg
+	 l5lew4fP17WUexJqfhy7KkRBE6IkT0i3kxsLPPO3lO82PfY4h83SASIxP7Vi+ilTQg
+	 EcbJRnepYeHujGEUBypX5lRgUg3wkG9RD0hoFtto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.10 294/381] scsi: target: core: Avoid smp_processor_id() in preemptible code
-Date: Mon, 15 May 2023 18:29:05 +0200
-Message-Id: <20230515161750.071005176@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.10 285/381] dm flakey: fix a crash with invalid table line
+Date: Mon, 15 May 2023 18:28:56 +0200
+Message-Id: <20230515161749.656204944@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,124 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 70ca3c57ff914113f681e657634f7fbfa68e1ad1 upstream.
+commit 98dba02d9a93eec11bffbb93c7c51624290702d2 upstream.
 
-The BUG message "BUG: using smp_processor_id() in preemptible [00000000]
-code" was observed for TCMU devices with kernel config DEBUG_PREEMPT.
+This command will crash with NULL pointer dereference:
+ dmsetup create flakey --table \
+  "0 `blockdev --getsize /dev/ram0` flakey /dev/ram0 0 0 1 2 corrupt_bio_byte 512"
 
-The message was observed when blktests block/005 was run on TCMU devices
-with fileio backend or user:zbc backend [1]. The commit 1130b499b4a7
-("scsi: target: tcm_loop: Use LIO wq cmd submission helper") triggered the
-symptom. The commit modified work queue to handle commands and changed
-'current->nr_cpu_allowed' at smp_processor_id() call.
+Fix the crash by checking if arg_name is non-NULL before comparing it.
 
-The message was also observed at system shutdown when TCMU devices were not
-cleaned up [2]. The function smp_processor_id() was called in SCSI host
-work queue for abort handling, and triggered the BUG message. This symptom
-was observed regardless of the commit 1130b499b4a7 ("scsi: target:
-tcm_loop: Use LIO wq cmd submission helper").
-
-To avoid the preemptible code check at smp_processor_id(), get CPU ID with
-raw_smp_processor_id() instead. The CPU ID is used for performance
-improvement then thread move to other CPU will not affect the code.
-
-[1]
-
-[   56.468103] run blktests block/005 at 2021-05-12 14:16:38
-[   57.369473] check_preemption_disabled: 85 callbacks suppressed
-[   57.369480] BUG: using smp_processor_id() in preemptible [00000000] code: fio/1511
-[   57.369506] BUG: using smp_processor_id() in preemptible [00000000] code: fio/1510
-[   57.369512] BUG: using smp_processor_id() in preemptible [00000000] code: fio/1506
-[   57.369552] caller is __target_init_cmd+0x157/0x170 [target_core_mod]
-[   57.369606] CPU: 4 PID: 1506 Comm: fio Not tainted 5.13.0-rc1+ #34
-[   57.369613] Hardware name: System manufacturer System Product Name/PRIME Z270-A, BIOS 1302 03/15/2018
-[   57.369617] Call Trace:
-[   57.369621] BUG: using smp_processor_id() in preemptible [00000000] code: fio/1507
-[   57.369628]  dump_stack+0x6d/0x89
-[   57.369642]  check_preemption_disabled+0xc8/0xd0
-[   57.369628] caller is __target_init_cmd+0x157/0x170 [target_core_mod]
-[   57.369655]  __target_init_cmd+0x157/0x170 [target_core_mod]
-[   57.369695]  target_init_cmd+0x76/0x90 [target_core_mod]
-[   57.369732]  tcm_loop_queuecommand+0x109/0x210 [tcm_loop]
-[   57.369744]  scsi_queue_rq+0x38e/0xc40
-[   57.369761]  __blk_mq_try_issue_directly+0x109/0x1c0
-[   57.369779]  blk_mq_try_issue_directly+0x43/0x90
-[   57.369790]  blk_mq_submit_bio+0x4e5/0x5d0
-[   57.369812]  submit_bio_noacct+0x46e/0x4e0
-[   57.369830]  __blkdev_direct_IO_simple+0x1a3/0x2d0
-[   57.369859]  ? set_init_blocksize.isra.0+0x60/0x60
-[   57.369880]  generic_file_read_iter+0x89/0x160
-[   57.369898]  blkdev_read_iter+0x44/0x60
-[   57.369906]  new_sync_read+0x102/0x170
-[   57.369929]  vfs_read+0xd4/0x160
-[   57.369941]  __x64_sys_pread64+0x6e/0xa0
-[   57.369946]  ? lockdep_hardirqs_on+0x79/0x100
-[   57.369958]  do_syscall_64+0x3a/0x70
-[   57.369965]  entry_SYSCALL_64_after_hwframe+0x44/0xae
-[   57.369973] RIP: 0033:0x7f7ed4c1399f
-[   57.369979] Code: 08 89 3c 24 48 89 4c 24 18 e8 7d f3 ff ff 4c 8b 54 24 18 48 8b 54 24 10 41 89 c0 48 8b 74 24 08 8b 3c 24 b8 11 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 31 44 89 c7 48 89 04 24 e8 cd f3 ff ff 48 8b
-[   57.369983] RSP: 002b:00007ffd7918c580 EFLAGS: 00000293 ORIG_RAX: 0000000000000011
-[   57.369990] RAX: ffffffffffffffda RBX: 00000000015b4540 RCX: 00007f7ed4c1399f
-[   57.369993] RDX: 0000000000001000 RSI: 00000000015de000 RDI: 0000000000000009
-[   57.369996] RBP: 00000000015b4540 R08: 0000000000000000 R09: 0000000000000001
-[   57.369999] R10: 0000000000e5c000 R11: 0000000000000293 R12: 00007f7eb5269a70
-[   57.370002] R13: 0000000000000000 R14: 0000000000001000 R15: 00000000015b4568
-[   57.370031] CPU: 7 PID: 1507 Comm: fio Not tainted 5.13.0-rc1+ #34
-[   57.370036] Hardware name: System manufacturer System Product Name/PRIME Z270-A, BIOS 1302 03/15/2018
-[   57.370039] Call Trace:
-[   57.370045]  dump_stack+0x6d/0x89
-[   57.370056]  check_preemption_disabled+0xc8/0xd0
-[   57.370068]  __target_init_cmd+0x157/0x170 [target_core_mod]
-[   57.370121]  target_init_cmd+0x76/0x90 [target_core_mod]
-[   57.370178]  tcm_loop_queuecommand+0x109/0x210 [tcm_loop]
-[   57.370197]  scsi_queue_rq+0x38e/0xc40
-[   57.370224]  __blk_mq_try_issue_directly+0x109/0x1c0
-...
-
-[2]
-
-[  117.458597] BUG: using smp_processor_id() in preemptible [00000000] code: kworker/u16:8
-[  117.467279] caller is __target_init_cmd+0x157/0x170 [target_core_mod]
-[  117.473893] CPU: 1 PID: 418 Comm: kworker/u16:6 Not tainted 5.13.0-rc1+ #34
-[  117.481150] Hardware name: System manufacturer System Product Name/PRIME Z270-A, BIOS 8
-[  117.481153] Workqueue: scsi_tmf_7 scmd_eh_abort_handler
-[  117.481156] Call Trace:
-[  117.481158]  dump_stack+0x6d/0x89
-[  117.481162]  check_preemption_disabled+0xc8/0xd0
-[  117.512575]  target_submit_tmr+0x41/0x150 [target_core_mod]
-[  117.519705]  tcm_loop_issue_tmr+0xa7/0x100 [tcm_loop]
-[  117.524913]  tcm_loop_abort_task+0x43/0x60 [tcm_loop]
-[  117.530137]  scmd_eh_abort_handler+0x7b/0x230
-[  117.534681]  process_one_work+0x268/0x580
-[  117.538862]  worker_thread+0x55/0x3b0
-[  117.542652]  ? process_one_work+0x580/0x580
-[  117.548351]  kthread+0x143/0x160
-[  117.551675]  ? kthread_create_worker_on_cpu+0x40/0x40
-[  117.556873]  ret_from_fork+0x1f/0x30
-
-Link: https://lore.kernel.org/r/20210515070315.215801-1-shinichiro.kawasaki@wdc.com
-Fixes: 1526d9f10c61 ("scsi: target: Make state_list per CPU")
-Cc: stable@vger.kernel.org # v5.11+
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_transport.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-flakey.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/target/target_core_transport.c
-+++ b/drivers/target/target_core_transport.c
-@@ -1396,7 +1396,7 @@ void transport_init_se_cmd(
- 	cmd->orig_fe_lun = unpacked_lun;
- 
- 	if (!(cmd->se_cmd_flags & SCF_USE_CPUID))
--		cmd->cpuid = smp_processor_id();
-+		cmd->cpuid = raw_smp_processor_id();
- 
- 	cmd->state_active = false;
- }
+--- a/drivers/md/dm-flakey.c
++++ b/drivers/md/dm-flakey.c
+@@ -124,9 +124,9 @@ static int parse_features(struct dm_arg_
+ 			 * Direction r or w?
+ 			 */
+ 			arg_name = dm_shift_arg(as);
+-			if (!strcasecmp(arg_name, "w"))
++			if (arg_name && !strcasecmp(arg_name, "w"))
+ 				fc->corrupt_bio_rw = WRITE;
+-			else if (!strcasecmp(arg_name, "r"))
++			else if (arg_name && !strcasecmp(arg_name, "r"))
+ 				fc->corrupt_bio_rw = READ;
+ 			else {
+ 				ti->error = "Invalid corrupt bio direction (r or w)";
 
 
