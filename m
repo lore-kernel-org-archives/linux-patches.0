@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7F7FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:18:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E29BC433D2;
-	Mon, 15 May 2023 17:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F978FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:18:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AC66C433EF;
+	Mon, 15 May 2023 17:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171090;
-	bh=N4j3UetDREU97zvtSxjpWrR8AZlNcTWfAVMJuufj21w=;
+	s=korg; t=1684171093;
+	bh=fFIITTqZj4Tpks68nbymJI6pymHbMQrYOSVdLreAt7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N0VnaXZ8bRmtUAE+S5A5MA5xrBCVOnm+Wp2aWAWiSzwRYVOQaBZd/plUtRVa8FxGQ
-	 FZk4edqgRbV/YaOxovnJajndiC19mJuJUpNZBByca6mtHqsnVvy9NJ1eZiqiSA6JYO
-	 mc0zWp3P/4es47qQ21TfTDgypuBZEXD5gnq43HAA=
+	b=wTX/I96H1XdvXqa6SfQml9d4YyyzIvV4S7aCw7f1r9RaAw5JhezYOdKxeWltHUGug
+	 IZEJicXDNoYwNH3Iy7Wt3Nq26+70H7OGsxt6Y2ATtgjOh2xQAOAQLjLCnT50Kcy1Mh
+	 S1yNi5urZGZq2v+iofw1/+kxioaHF1jRQadiFk34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 097/242] perf hist: Improve srcfile sort key performance (really)
-Date: Mon, 15 May 2023 18:27:03 +0200
-Message-Id: <20230515161724.817887906@linuxfoundation.org>
+Subject: [PATCH 6.2 098/242] perf vendor events s390: Remove UTF-8 characters from JSON file
+Date: Mon, 15 May 2023 18:27:04 +0200
+Message-Id: <20230515161724.847223728@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -40,52 +39,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Thomas Richter <tmricht@linux.ibm.com>
 
-[ Upstream commit 6094c7744bb0563e833e81d8df8513f9a4e7a257 ]
+[ Upstream commit eb2feb68cb7d404288493c41480843bc9f404789 ]
 
-The earlier commit f0cdde28fecc0d7f ("perf hist: Improve srcfile sort
-key performance") updated the srcfile logic but missed to change the
-->cmp() callback which is called for every sample.
+Commit 7f76b31130680fb3 ("perf list: Add IBM z16 event description for
+s390") contains the verbal description for z16 extended counter set.
 
-It should use the same logic like in the srcline to speed up the
-processing because it'd return the same information repeatedly for the
-same address.  The real processing will be done in
-sort__srcfile_collapse().
+However some entries of the public description contain UTF-8 characters
+which breaks the build on some distros.
 
-Fixes: f0cdde28fecc0d7f ("perf hist: Improve srcfile sort key performance")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230323025005.191239-1-namhyung@kernel.org
+Fix this and remove the UTF-8 characters.
+
+Fixes: 7f76b31130680fb3 ("perf list: Add IBM z16 event description for s390")
+Reported-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Suggested-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Cc: Sven Schnelle <svens@linux.ibm.com>
+Cc: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://lore.kernel.org/r/ZBwkl77/I31AQk12@osiris
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/sort.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ tools/perf/pmu-events/arch/s390/cf_z16/extended.json | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/util/sort.c b/tools/perf/util/sort.c
-index 37662cdec5eef..2bf3f88276972 100644
---- a/tools/perf/util/sort.c
-+++ b/tools/perf/util/sort.c
-@@ -603,12 +603,7 @@ static char *hist_entry__get_srcfile(struct hist_entry *e)
- static int64_t
- sort__srcfile_cmp(struct hist_entry *left, struct hist_entry *right)
- {
--	if (!left->srcfile)
--		left->srcfile = hist_entry__get_srcfile(left);
--	if (!right->srcfile)
--		right->srcfile = hist_entry__get_srcfile(right);
--
--	return strcmp(right->srcfile, left->srcfile);
-+	return sort__srcline_cmp(left, right);
- }
- 
- static int64_t
+diff --git a/tools/perf/pmu-events/arch/s390/cf_z16/extended.json b/tools/perf/pmu-events/arch/s390/cf_z16/extended.json
+index c306190fc06f2..c2b10ec1c6e01 100644
+--- a/tools/perf/pmu-events/arch/s390/cf_z16/extended.json
++++ b/tools/perf/pmu-events/arch/s390/cf_z16/extended.json
+@@ -95,28 +95,28 @@
+ 		"EventCode": "145",
+ 		"EventName": "DCW_REQ",
+ 		"BriefDescription": "Directory Write Level 1 Data Cache from Cache",
+-		"PublicDescription": "A directory write to the Level-1 Data cache directory where the returned cache line was sourced from the requestor’s Level-2 cache."
++		"PublicDescription": "A directory write to the Level-1 Data cache directory where the returned cache line was sourced from the requestors Level-2 cache."
+ 	},
+ 	{
+ 		"Unit": "CPU-M-CF",
+ 		"EventCode": "146",
+ 		"EventName": "DCW_REQ_IV",
+ 		"BriefDescription": "Directory Write Level 1 Data Cache from Cache with Intervention",
+-		"PublicDescription": "A directory write to the Level-1 Data cache directory where the returned cache line was sourced from the requestor’s Level-2 cache with intervention."
++		"PublicDescription": "A directory write to the Level-1 Data cache directory where the returned cache line was sourced from the requestors Level-2 cache with intervention."
+ 	},
+ 	{
+ 		"Unit": "CPU-M-CF",
+ 		"EventCode": "147",
+ 		"EventName": "DCW_REQ_CHIP_HIT",
+ 		"BriefDescription": "Directory Write Level 1 Data Cache from Cache with Chip HP Hit",
+-		"PublicDescription": "A directory write to the Level-1 Data cache directory where the returned cache line was sourced from the requestor’s Level-2 cache after using chip level horizontal persistence, Chip-HP hit."
++		"PublicDescription": "A directory write to the Level-1 Data cache directory where the returned cache line was sourced from the requestors Level-2 cache after using chip level horizontal persistence, Chip-HP hit."
+ 	},
+ 	{
+ 		"Unit": "CPU-M-CF",
+ 		"EventCode": "148",
+ 		"EventName": "DCW_REQ_DRAWER_HIT",
+ 		"BriefDescription": "Directory Write Level 1 Data Cache from Cache with Drawer HP Hit",
+-		"PublicDescription": "A directory write to the Level-1 Data cache directory where the returned cache line was sourced from the requestor’s Level-2 cache after using drawer level horizontal persistence, Drawer-HP hit."
++		"PublicDescription": "A directory write to the Level-1 Data cache directory where the returned cache line was sourced from the requestors Level-2 cache after using drawer level horizontal persistence, Drawer-HP hit."
+ 	},
+ 	{
+ 		"Unit": "CPU-M-CF",
+@@ -284,7 +284,7 @@
+ 		"EventCode": "172",
+ 		"EventName": "ICW_REQ_DRAWER_HIT",
+ 		"BriefDescription": "Directory Write Level 1 Instruction Cache from Cache with Drawer HP Hit",
+-		"PublicDescription": "A directory write to the Level-1 Instruction cache directory where the returned cache line was sourced from the requestor’s Level-2 cache using drawer level horizontal persistence, Drawer-HP hit."
++		"PublicDescription": "A directory write to the Level-1 Instruction cache directory where the returned cache line was sourced from the requestors Level-2 cache using drawer level horizontal persistence, Drawer-HP hit."
+ 	},
+ 	{
+ 		"Unit": "CPU-M-CF",
 -- 
 2.39.2
 
