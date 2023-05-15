@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E5EFD512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:34:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C61C433D2;
-	Mon, 15 May 2023 16:34:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A8ED512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:34:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B6FC433EF;
+	Mon, 15 May 2023 16:34:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168454;
-	bh=ufqFlv+I9tCin+KtiMY6Y3gmHisBpvYSxrl/qB3IAjI=;
+	s=korg; t=1684168457;
+	bh=gLbZkO7xSdLFvxVHi8FHbnFZcOSRJv88/qAESEmgFn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7qGeC7OJWe/4zwGc5cBjfbc+hznVhTDclQpVByfoz2feL5f3MoNRlYrZ5cQUVVEN
-	 rocpXCsxzZQQ0M12UjONSNe8BAdvLIjA0xYNy1Zg/cBtaxKTWFvhecx0ZQH/cotOdT
-	 Z2ljRyzM/+lmS7UJPIE9i1JD9hOGkSUBpkIoz3O0=
+	b=tj5zmzvKPDLjT4zLhPsNuRW9Cs98Q0l30+hYv0huC41Bo3rmNkCzxHnPlBYU7Vpal
+	 8Fi9nws96OG1DIBys/KA5wuS/b+SrpF2el3LbFGIluuGFZmje8bD8i5zL81is5ZdnZ
+	 kA29bZLEnJLQStiPjEAQHyq7SfJHz4hCvjiIBrjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 053/116] tty: serial: fsl_lpuart: adjust buffer length to the intended size
-Date: Mon, 15 May 2023 18:25:50 +0200
-Message-Id: <20230515161700.031734357@linuxfoundation.org>
+Subject: [PATCH 4.14 054/116] serial: 8250: Add missing wakeup event reporting
+Date: Mon, 15 May 2023 18:25:51 +0200
+Message-Id: <20230515161700.061737554@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -34,37 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit f73fd750552524b06b5d77ebfdd106ccc8fcac61 ]
+[ Upstream commit 0ba9e3a13c6adfa99e32b2576d20820ab10ad48a ]
 
-Based on the fls function definition provided below, we should not
-subtract 1 to obtain the correct buffer length:
+An 8250 UART configured as a wake-up source would not have reported
+itself through sysfs as being the source of wake-up, correct that.
 
-fls(0) = 0, fls(1) = 1, fls(0x80000000) = 32.
-
-Fixes: 5887ad43ee02 ("tty: serial: fsl_lpuart: Use cyclic DMA for Rx")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Link: https://lore.kernel.org/r/20230410195555.1003900-1-shenwei.wang@nxp.com
+Fixes: b3b708fa2780 ("wake up from a serial port")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230414170241.2016255-1-f.fainelli@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/fsl_lpuart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_port.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/tty/serial/fsl_lpuart.c b/drivers/tty/serial/fsl_lpuart.c
-index 20dd476e4d1a1..e7ab8ec032cfe 100644
---- a/drivers/tty/serial/fsl_lpuart.c
-+++ b/drivers/tty/serial/fsl_lpuart.c
-@@ -998,7 +998,7 @@ static inline int lpuart_start_rx_dma(struct lpuart_port *sport)
- 	 * 10ms at any baud rate.
- 	 */
- 	sport->rx_dma_rng_buf_len = (DMA_RX_TIMEOUT * baud /  bits / 1000) * 2;
--	sport->rx_dma_rng_buf_len = (1 << (fls(sport->rx_dma_rng_buf_len) - 1));
-+	sport->rx_dma_rng_buf_len = (1 << fls(sport->rx_dma_rng_buf_len));
- 	if (sport->rx_dma_rng_buf_len < 16)
- 		sport->rx_dma_rng_buf_len = 16;
+diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
+index fe1de63269d1a..cdc1b2b0f4bc6 100644
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -23,6 +23,7 @@
+ #include <linux/moduleparam.h>
+ #include <linux/ioport.h>
+ #include <linux/init.h>
++#include <linux/irq.h>
+ #include <linux/console.h>
+ #include <linux/sysrq.h>
+ #include <linux/delay.h>
+@@ -1886,6 +1887,7 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
+ 	unsigned char status;
+ 	unsigned long flags;
+ 	struct uart_8250_port *up = up_to_u8250p(port);
++	struct tty_port *tport = &port->state->port;
+ 	bool skip_rx = false;
  
+ 	if (iir & UART_IIR_NO_INT)
+@@ -1909,6 +1911,8 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
+ 		skip_rx = true;
+ 
+ 	if (status & (UART_LSR_DR | UART_LSR_BI) && !skip_rx) {
++		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
++			pm_wakeup_event(tport->tty->dev, 0);
+ 		if (!up->dma || handle_rx_dma(up, iir))
+ 			status = serial8250_rx_chars(up, status);
+ 	}
 -- 
 2.39.2
 
