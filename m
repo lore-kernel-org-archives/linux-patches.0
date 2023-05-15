@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97869FC1C
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001A0C433EF;
-	Mon, 15 May 2023 17:48:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8ACFC1B
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D56DC433EF;
+	Mon, 15 May 2023 17:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172934;
-	bh=d7RI03HynCAR1+H3PVW5/R2mgra1sr+H/qsTWV8+sro=;
+	s=korg; t=1684172937;
+	bh=qAWGRpUIBnXMdNJmWOeWjj6QEEvjuwCCa1UXsR7N9AE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EquzfYdTeO/yxCxXGPaJYEKmLhqBOwhPgPdfVHlFnStMgLstjPVViHYTHFHAtroKj
-	 H8bUnmPbOEqNrvuGBChRStlocv9ZsmFlyfW6FLfKurEoAU0e1trF/BZiiVB/LpFHOq
-	 lM+SJYOF7Hz9hjD20vjSkh7KfezhrxRotcsr82bc=
+	b=OsR/6XuZ3I9h6qtcCVlDdjWo1IDse/1zeiXoTHhWHJxgLpN3zmbfqOXn2P7Ux7PKn
+	 erCM/On7l02VSI3cyD38S9m2dEhNhI97nyBieayXeN7rY6t/HD7Gx7K9IYfLgEszCa
+	 RhqU+qWANi42XnDAXXZnoDro5+fpW3vmbYug752A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 314/381] watchdog: dw_wdt: Fix the error handling path of dw_wdt_drv_probe()
-Date: Mon, 15 May 2023 18:29:25 +0200
-Message-Id: <20230515161751.005319190@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 5.10 288/381] perf intel-pt: Fix CYC timestamps after standalone CBR
+Date: Mon, 15 May 2023 18:28:59 +0200
+Message-Id: <20230515161749.791786782@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,59 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 7f5390750645756bd5da2b24fac285f2654dd922 ]
+commit 430635a0ef1ce958b7b4311f172694ece2c692b8 upstream.
 
-The commit in Fixes has only updated the remove function and missed the
-error handling path of the probe.
+After a standalone CBR (not associated with TSC), update the cycles
+reference timestamp and reset the cycle count, so that CYC timestamps
+are calculated relative to that point with the new frequency.
 
-Add the missing reset_control_assert() call.
-
-Fixes: 65a3b6935d92 ("watchdog: dw_wdt: get reset lines from dt")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/fbb650650bbb33a8fa2fd028c23157bedeed50e1.1682491863.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cc33618619cefc6d ("perf tools: Add Intel PT support for decoding CYC packets")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230403154831.8651-2-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/dw_wdt.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/perf/util/intel-pt-decoder/intel-pt-decoder.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/watchdog/dw_wdt.c b/drivers/watchdog/dw_wdt.c
-index 32d0e1781e63c..3cd1182819809 100644
---- a/drivers/watchdog/dw_wdt.c
-+++ b/drivers/watchdog/dw_wdt.c
-@@ -638,7 +638,7 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
+--- a/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c
++++ b/tools/perf/util/intel-pt-decoder/intel-pt-decoder.c
+@@ -1639,6 +1639,8 @@ static void intel_pt_calc_cbr(struct int
  
- 	ret = dw_wdt_init_timeouts(dw_wdt, dev);
- 	if (ret)
--		goto out_disable_clk;
-+		goto out_assert_rst;
+ 	decoder->cbr = cbr;
+ 	decoder->cbr_cyc_to_tsc = decoder->max_non_turbo_ratio_fp / cbr;
++	decoder->cyc_ref_timestamp = decoder->timestamp;
++	decoder->cycle_cnt = 0;
  
- 	wdd = &dw_wdt->wdd;
- 	wdd->ops = &dw_wdt_ops;
-@@ -669,12 +669,15 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
- 
- 	ret = watchdog_register_device(wdd);
- 	if (ret)
--		goto out_disable_pclk;
-+		goto out_assert_rst;
- 
- 	dw_wdt_dbgfs_init(dw_wdt);
- 
- 	return 0;
- 
-+out_assert_rst:
-+	reset_control_assert(dw_wdt->rst);
-+
- out_disable_pclk:
- 	clk_disable_unprepare(dw_wdt->pclk);
- 
--- 
-2.39.2
-
+ 	intel_pt_mtc_cyc_cnt_cbr(decoder);
+ }
 
 
