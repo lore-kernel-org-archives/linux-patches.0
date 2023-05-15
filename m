@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2A3FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:46:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0105DC433EF;
-	Mon, 15 May 2023 17:46:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5D1FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:46:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12825C433D2;
+	Mon, 15 May 2023 17:46:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172777;
-	bh=kvbit7G32yOy//dA96Pvm6UyorxCBvmePhIJIWsisDw=;
+	s=korg; t=1684172780;
+	bh=Tsm850rU7/rC7EYIcmSHAI2raHqCOV1CYD7LlqRaxOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H6z+6tFHfS2GJb03fPDJIdUpKAPEBs95V2zG1iEroKd7zzJPNo9V2zCPoCXtHHIOM
-	 QRCjss3sB1oYWvzyO9uY1NPYdK+IdK4HJO76RewIsESoN0RMjOTlV1fB/MIHPC+oZ+
-	 zn7iriBNgv5bJmpSFKgy4n4lRULsct0OPZzzAtEs=
+	b=tydi/kUCcM8tNTibs6TeQ7r+EJyrypvpzDzVpKawymd/1eGTn/pBNYGI9b04bvPpF
+	 H6EA2yaIXO+hIII5I412yzJba5nRUKp3D+EOQxutiuLWmGQrBf51oDLYaLtjHPIYMe
+	 rZE0vwXvZWEQsmZ++WKYOiy9on2DnWujB1q5ePkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 264/381] leds: tca6507: Fix error handling of using fwnode_property_read_string
-Date: Mon, 15 May 2023 18:28:35 +0200
-Message-Id: <20230515161748.669768958@linuxfoundation.org>
+Subject: [PATCH 5.10 265/381] pwm: mtk-disp: Dont check the return code of pwmchip_remove()
+Date: Mon, 15 May 2023 18:28:36 +0200
+Message-Id: <20230515161748.721724641@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,56 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: H. Nikolaus Schaller <hns@goldelico.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit c1087c29e96a48e9080377e168d35dcb52fb068b ]
+[ Upstream commit 9b7b5736ffd5da6f8f6329ebe5f1829cbcf8afae ]
 
-Commit 96f524105b9c ("leds: tca6507: use fwnode API instead of OF")
+pwmchip_remove() returns always 0. Don't use the value to make it
+possible to eventually change the function to return void. Also the
+driver core ignores the return value of mtk_disp_pwm_remove().
 
-changed to fwnode API but did not take into account that a missing property
-"linux,default-trigger" now seems to return an error and as a side effect
-sets value to -1. This seems to be different from of_get_property() which
-always returned NULL in any case of error.
-
-Neglecting this side-effect leads to
-
-[   11.201965] Unable to handle kernel paging request at virtual address ffffffff when read
-
-in the strcmp() of led_trigger_set_default() if there is no led-trigger
-defined in the DTS.
-
-I don't know if this was recently introduced somewhere in the fwnode lib
-or if the effect was missed in initial testing. Anyways it seems to be a
-bug to ignore the error return value of an optional value here in the
-driver.
-
-Fixes: 96f524105b9c ("leds: tca6507: use fwnode API instead of OF")
-Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
-Acked-by: Pavel Machek <pavel@ucw.cz>
-Reviewed-by: Marek Behún <kabel@kernel.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/cbae7617db83113de726fcc423a805ebaa1bfca6.1680433978.git.hns@goldelico.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 36dd7f530ae7 ("pwm: mtk-disp: Disable shadow registers before setting backlight values")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/leds-tca6507.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/pwm/pwm-mtk-disp.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/leds/leds-tca6507.c b/drivers/leds/leds-tca6507.c
-index 225b765830bdc..caad9d3e0eac8 100644
---- a/drivers/leds/leds-tca6507.c
-+++ b/drivers/leds/leds-tca6507.c
-@@ -696,8 +696,9 @@ tca6507_led_dt_init(struct device *dev)
- 		if (fwnode_property_read_string(child, "label", &led.name))
- 			led.name = fwnode_get_name(child);
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index 83b8be0209b74..af63aaab8e153 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -240,13 +240,12 @@ static int mtk_disp_pwm_probe(struct platform_device *pdev)
+ static int mtk_disp_pwm_remove(struct platform_device *pdev)
+ {
+ 	struct mtk_disp_pwm *mdp = platform_get_drvdata(pdev);
+-	int ret;
  
--		fwnode_property_read_string(child, "linux,default-trigger",
--					    &led.default_trigger);
-+		if (fwnode_property_read_string(child, "linux,default-trigger",
-+						&led.default_trigger))
-+			led.default_trigger = NULL;
+-	ret = pwmchip_remove(&mdp->chip);
++	pwmchip_remove(&mdp->chip);
+ 	clk_unprepare(mdp->clk_mm);
+ 	clk_unprepare(mdp->clk_main);
  
- 		led.flags = 0;
- 		if (fwnode_property_match_string(child, "compatible",
+-	return ret;
++	return 0;
+ }
+ 
+ static const struct mtk_pwm_data mt2701_pwm_data = {
 -- 
 2.39.2
 
