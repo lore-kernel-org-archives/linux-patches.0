@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCAEFBE7;
-	Mon, 15 May 2023 16:47:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD44C4339B;
-	Mon, 15 May 2023 16:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7DBFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:47:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD71C433EF;
+	Mon, 15 May 2023 16:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169221;
-	bh=zh/9JYGvcoSVjQ7npxV+BgPxVQexxuYJ23M0md2Kmdw=;
+	s=korg; t=1684169225;
+	bh=pxGqeHSv+OrPjKOpEJvIgsbeu2BN14LR7HeoGqP4ChQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIslEs2yQMckXwL5/Na8/0ePoLj2OJS9gernvA5rFeBS1JZvh+z6sn4u18xMqrlTi
-	 9X96zOY7e96hlRRQSRciZ5yArXIfqc8dZP2Q48BjUjG/eSz2Kiz5XuWZEZghy7gNHe
-	 NgLt94Xd8Ntq4UHii/+vj9y76A0oB0YRxXP/+PTg=
+	b=m3dIQX2GHEoLzW/MqD6bP/hwZzxvzXwPKKcAvQgz31VVFycvK4S465aLVlfv7aN8H
+	 6UAYHidwR9PFTheUQftnMAu4NI2xYlZFXYc6oQJqccOVlg0Ik8SgqHfCHvHUM27oDC
+	 6Sl+eKPCAhKgbiU96YpkdB1MesV7NKTk/qTX/0Wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 154/191] rxrpc: Fix hard call timeout units
-Date: Mon, 15 May 2023 18:26:31 +0200
-Message-Id: <20230515161713.016576684@linuxfoundation.org>
+	syzbot+1966db24521e5f6e23f7@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 181/191] ext4: add bounds checking in get_max_inline_xattr_value_size()
+Date: Mon, 15 May 2023 18:26:58 +0200
+Message-Id: <20230515161714.056413127@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -42,45 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit 0d098d83c5d9e107b2df7f5e11f81492f56d2fe7 ]
+commit 2220eaf90992c11d888fe771055d4de330385f01 upstream.
 
-The hard call timeout is specified in the RXRPC_SET_CALL_TIMEOUT cmsg in
-seconds, so fix the point at which sendmsg() applies it to the call to
-convert to jiffies from seconds, not milliseconds.
+Normally the extended attributes in the inode body would have been
+checked when the inode is first opened, but if someone is writing to
+the block device while the file system is mounted, it's possible for
+the inode table to get corrupted.  Add bounds checking to avoid
+reading beyond the end of allocated memory if this happens.
 
-Fixes: a158bdd3247b ("rxrpc: Fix timeout of a call that hasn't yet been granted a channel")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
-cc: linux-kernel@vger.kernel.org
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+1966db24521e5f6e23f7@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=1966db24521e5f6e23f7
+Cc: stable@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rxrpc/sendmsg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/inline.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index a7a09eb04d93b..eaa032c498c96 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -709,7 +709,7 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- 		/* Fall through */
- 	case 1:
- 		if (p.call.timeouts.hard > 0) {
--			j = msecs_to_jiffies(p.call.timeouts.hard);
-+			j = p.call.timeouts.hard * HZ;
- 			now = jiffies;
- 			j += now;
- 			WRITE_ONCE(call->expect_term_by, j);
--- 
-2.39.2
-
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -32,6 +32,7 @@ static int get_max_inline_xattr_value_si
+ 	struct ext4_xattr_ibody_header *header;
+ 	struct ext4_xattr_entry *entry;
+ 	struct ext4_inode *raw_inode;
++	void *end;
+ 	int free, min_offs;
+ 
+ 	if (!EXT4_INODE_HAS_XATTR_SPACE(inode))
+@@ -55,14 +56,23 @@ static int get_max_inline_xattr_value_si
+ 	raw_inode = ext4_raw_inode(iloc);
+ 	header = IHDR(inode, raw_inode);
+ 	entry = IFIRST(header);
++	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
+ 
+ 	/* Compute min_offs. */
+-	for (; !IS_LAST_ENTRY(entry); entry = EXT4_XATTR_NEXT(entry)) {
++	while (!IS_LAST_ENTRY(entry)) {
++		void *next = EXT4_XATTR_NEXT(entry);
++
++		if (next >= end) {
++			EXT4_ERROR_INODE(inode,
++					 "corrupt xattr in inline inode");
++			return 0;
++		}
+ 		if (!entry->e_value_inum && entry->e_value_size) {
+ 			size_t offs = le16_to_cpu(entry->e_value_offs);
+ 			if (offs < min_offs)
+ 				min_offs = offs;
+ 		}
++		entry = next;
+ 	}
+ 	free = min_offs -
+ 		((void *)entry - (void *)IFIRST(header)) - sizeof(__u32);
 
 
