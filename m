@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25616101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD68C433D2;
-	Mon, 15 May 2023 17:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05230101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62D1EC433D2;
+	Mon, 15 May 2023 17:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173098;
-	bh=iitImpDgGmwmMZHxjqTf7HR7xO/FUPNLehp02kgZ0ck=;
+	s=korg; t=1684173100;
+	bh=Qf7wl4a+SoERfRmQmpA+6tuz283D+k4fJzW+m9JrtCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GLieDViwgt1nYwXEyaEV0EeKp74qDZg954MUkPphp/+7yjL1hObmKgbeVyf795655
-	 gzF8/kCIoGV+KopA5of2sJciQY1pGHfBD7WGSXiELYs6KtNFnu8KCjBZLGmDy7sgAV
-	 4Ys0OLC9Aor+6Z2UCzwuTgzxkQjA8vEaaTRx2wTY=
+	b=mLemlnhYjZ7Mal2GdBbkiPcrwaIuBt+qx07NF9OqUEy+yaEjRDJ0OyuoYcxOh6G8/
+	 WqO7M+Yr717Ix6Dh4FBz+BkAWtoNvgkleGF8GvzcmAQ6zGDpbykSut4LGk2UFr4Omb
+	 fLIPlInC3RA5cOI27oitGEuh+Q9oYqVzZRfKjwx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 5.10 349/381] f2fs: fix potential corruption when moving a directory
-Date: Mon, 15 May 2023 18:30:00 +0200
-Message-Id: <20230515161752.627711794@linuxfoundation.org>
+	stable@kernel.org,
+	syzbot+64b645917ce07d89bde5@syzkaller.appspotmail.com,
+	syzbot+0d042627c4f2ad332195@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 367/381] ext4: fix invalid free tracking in ext4_xattr_move_to_block()
+Date: Mon, 15 May 2023 18:30:18 +0200
+Message-Id: <20230515161753.492568795@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -33,65 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit d94772154e524b329a168678836745d2773a6e02 upstream.
+commit b87c7cdf2bed4928b899e1ce91ef0d147017ba45 upstream.
 
-F2FS has the same issue in ext4_rename causing crash revealed by
-xfstests/generic/707.
+In ext4_xattr_move_to_block(), the value of the extended attribute
+which we need to move to an external block may be allocated by
+kvmalloc() if the value is stored in an external inode.  So at the end
+of the function the code tried to check if this was the case by
+testing entry->e_value_inum.
 
-See also commit 0813299c586b ("ext4: Fix possible corruption when moving a directory")
+However, at this point, the pointer to the xattr entry is no longer
+valid, because it was removed from the original location where it had
+been stored.  So we could end up calling kvfree() on a pointer which
+was not allocated by kvmalloc(); or we could also potentially leak
+memory by not freeing the buffer when it should be freed.  Fix this by
+storing whether it should be freed in a separate variable.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20230430160426.581366-1-tytso@mit.edu
+Link: https://syzkaller.appspot.com/bug?id=5c2aee8256e30b55ccf57312c16d88417adbd5e1
+Link: https://syzkaller.appspot.com/bug?id=41a6b5d4917c0412eb3b3c3c604965bed7d7420b
+Reported-by: syzbot+64b645917ce07d89bde5@syzkaller.appspotmail.com
+Reported-by: syzbot+0d042627c4f2ad332195@syzkaller.appspotmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/namei.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ fs/ext4/xattr.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -969,12 +969,20 @@ static int f2fs_rename(struct inode *old
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2554,6 +2554,7 @@ static int ext4_xattr_move_to_block(hand
+ 		.in_inode = !!entry->e_value_inum,
+ 	};
+ 	struct ext4_xattr_ibody_header *header = IHDR(inode, raw_inode);
++	int needs_kvfree = 0;
+ 	int error;
+ 
+ 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
+@@ -2576,7 +2577,7 @@ static int ext4_xattr_move_to_block(hand
+ 			error = -ENOMEM;
  			goto out;
- 	}
+ 		}
+-
++		needs_kvfree = 1;
+ 		error = ext4_xattr_inode_get(inode, entry, buffer, value_size);
+ 		if (error)
+ 			goto out;
+@@ -2615,7 +2616,7 @@ static int ext4_xattr_move_to_block(hand
  
-+	/*
-+	 * Copied from ext4_rename: we need to protect against old.inode
-+	 * directory getting converted from inline directory format into
-+	 * a normal one.
-+	 */
-+	if (S_ISDIR(old_inode->i_mode))
-+		inode_lock_nested(old_inode, I_MUTEX_NONDIR2);
-+
- 	err = -ENOENT;
- 	old_entry = f2fs_find_entry(old_dir, &old_dentry->d_name, &old_page);
- 	if (!old_entry) {
- 		if (IS_ERR(old_page))
- 			err = PTR_ERR(old_page);
--		goto out;
-+		goto out_unlock_old;
- 	}
- 
- 	if (S_ISDIR(old_inode->i_mode)) {
-@@ -1082,6 +1090,9 @@ static int f2fs_rename(struct inode *old
- 
- 	f2fs_unlock_op(sbi);
- 
-+	if (S_ISDIR(old_inode->i_mode))
-+		inode_unlock(old_inode);
-+
- 	if (IS_DIRSYNC(old_dir) || IS_DIRSYNC(new_dir))
- 		f2fs_sync_fs(sbi->sb, 1);
- 
-@@ -1096,6 +1107,9 @@ out_dir:
- 		f2fs_put_page(old_dir_page, 0);
- out_old:
- 	f2fs_put_page(old_page, 0);
-+out_unlock_old:
-+	if (S_ISDIR(old_inode->i_mode))
-+		inode_unlock(old_inode);
  out:
- 	if (whiteout)
- 		iput(whiteout);
+ 	kfree(b_entry_name);
+-	if (entry->e_value_inum && buffer)
++	if (needs_kvfree && buffer)
+ 		kvfree(buffer);
+ 	if (is)
+ 		brelse(is->iloc.bh);
 
 
