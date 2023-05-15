@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C1417730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:06:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFD3C433D2;
-	Mon, 15 May 2023 18:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6AB17730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:06:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A26C433EF;
+	Mon, 15 May 2023 18:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173970;
-	bh=LhVdcJgaoc/8HeU8wsUNbo/kCn8zMi4Cv9Jn36CO2ok=;
+	s=korg; t=1684173973;
+	bh=9m1s3a2+sxEem6TSnP6uV2NTNlWtNWdtVlp/jTRI9mw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDGsJ1eDrw0t9yWD/BwARsv0RvePHNgvPNYw2/0mJ8hA/cY778hsnTGshQGGguEdW
-	 RHT3YKrUMky6ydSByPzo1+/f5dphpXaCqodhTthCXDaTvbVMkQ1G34Auu6rYNqVxlB
-	 3WpNkP98rZOE7A6Lljr/nFELCT1vqyGZkcre6xYs=
+	b=qpqig5TF2lr5yWJ8QoBnrsqEcbauSA8FCQvbmg+VDB+6b2IXxS9bS3O1Zrr1cd+zf
+	 s9KzhdAZjNYoSW5Jl58xeem12sCh+jdsp20kzxmNzpfZ7edvlKTdpv4sNFDQ8nN878
+	 vYe/Vsem1Yv1c8UGDjsAY+r5VkCbzaTsJGoS70bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Anastasia Belova <abelova@astralinux.ru>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 241/282] btrfs: print-tree: parent bytenr must be aligned to sector size
-Date: Mon, 15 May 2023 18:30:19 +0200
-Message-Id: <20230515161729.463006911@linuxfoundation.org>
+	Pawel Witek <pawel.ireneusz.witek@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.4 242/282] cifs: fix pcchunk length type in smb2_copychunk_range
+Date: Mon, 15 May 2023 18:30:20 +0200
+Message-Id: <20230515161729.502502673@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,42 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: Pawel Witek <pawel.ireneusz.witek@gmail.com>
 
-commit c87f318e6f47696b4040b58f460d5c17ea0280e6 upstream.
+commit d66cde50c3c868af7abddafce701bb86e4a93039 upstream.
 
-Check nodesize to sectorsize in alignment check in print_extent_item.
-The comment states that and this is correct, similar check is done
-elsewhere in the functions.
+Change type of pcchunk->Length from u32 to u64 to match
+smb2_copychunk_range arguments type. Fixes the problem where performing
+server-side copy with CIFS_IOC_COPYCHUNK_FILE ioctl resulted in incomplete
+copy of large files while returning -EINVAL.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: ea57788eb76d ("btrfs: require only sector size alignment for parent eb bytenr")
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 9bf0c9cd4314 ("CIFS: Fix SMB2/SMB3 Copy offload support (refcopy) for large files")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Pawel Witek <pawel.ireneusz.witek@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/print-tree.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/cifs/smb2ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/print-tree.c
-+++ b/fs/btrfs/print-tree.c
-@@ -109,10 +109,10 @@ static void print_extent_item(struct ext
- 			pr_cont("shared data backref parent %llu count %u\n",
- 			       offset, btrfs_shared_data_ref_count(eb, sref));
- 			/*
--			 * offset is supposed to be a tree block which
--			 * must be aligned to nodesize.
-+			 * Offset is supposed to be a tree block which must be
-+			 * aligned to sectorsize.
- 			 */
--			if (!IS_ALIGNED(offset, eb->fs_info->nodesize))
-+			if (!IS_ALIGNED(offset, eb->fs_info->sectorsize))
- 				pr_info(
- 			"\t\t\t(parent %llu not aligned to sectorsize %u)\n",
- 				     offset, eb->fs_info->sectorsize);
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -1678,7 +1678,7 @@ smb2_copychunk_range(const unsigned int
+ 		pcchunk->SourceOffset = cpu_to_le64(src_off);
+ 		pcchunk->TargetOffset = cpu_to_le64(dest_off);
+ 		pcchunk->Length =
+-			cpu_to_le32(min_t(u32, len, tcon->max_bytes_chunk));
++			cpu_to_le32(min_t(u64, len, tcon->max_bytes_chunk));
+ 
+ 		/* Request server copy to target from src identified by key */
+ 		kfree(retbuf);
 
 
