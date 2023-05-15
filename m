@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3580FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEF0C4339E;
-	Mon, 15 May 2023 17:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDA1FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13305C433EF;
+	Mon, 15 May 2023 17:00:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170005;
-	bh=CO+ruu5NkpRgtRYA3hftMbSIOvFlNRVgiGKt7J7EbIA=;
+	s=korg; t=1684170008;
+	bh=C9NqJ/XM3DvZ12PBA5SStdrYT+fZS8XNvP0Acs9n2gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eHMUdn8d5JmOjCidfSSP41u1OMRG34427diwqjknjh0Lfj0UK+Sc951OX8KS+Jb1K
-	 MpOu7Rk03MwgMlx9l6wtmLcwO1UuXboJ+mvLt6iVT6SBkv7YgdoQdi10ns6iNE/3GW
-	 lLmU2WLO1gFUupmjQtMbIGpuBlW2ThnkdDKuVhW0=
+	b=jP3QDxIrcdCicLvLYkpYafvMpYGElz3eutsyfoiZ4E6Zx4Wq4IpYzVfIAZ2ityw0e
+	 1waGW0NJEzJJq/HFPPh/dVz1Thov1AIkMfGQNkfiRwfnjAhq9yqpxgNQYzsNQzJFiM
+	 AiZ7kchzau06vzF0ryFQF5cIv5h3ICzUhEW23WkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.3 240/246] x86/amd_nb: Add PCI ID for family 19h model 78h
-Date: Mon, 15 May 2023 18:27:32 +0200
-Message-Id: <20230515161729.847915315@linuxfoundation.org>
+	Wenjing Liu <Wenjing.Liu@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Robin Chen <robin.chen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 216/246] drm/amd/display: hpd rx irq not working with eDP interface
+Date: Mon, 15 May 2023 18:27:08 +0200
+Message-Id: <20230515161729.076296251@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,61 +39,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Robin Chen <robin.chen@amd.com>
 
-commit 23a5b8bb022c1e071ca91b1a9c10f0ad6a0966e9 upstream.
+[ Upstream commit eeefe7c4820b6baa0462a8b723ea0a3b5846ccae ]
 
-Commit
+[Why]
+This is the fix for the defect of commit ab144f0b4ad6
+("drm/amd/display: Allow individual control of eDP hotplug support").
 
-  310e782a99c7 ("platform/x86/amd: pmc: Utilize SMN index 0 for driver probe")
+[How]
+To revise the default eDP hotplug setting and use the enum to git rid
+of the magic number for different options.
 
-switched to using amd_smn_read() which relies upon the misc PCI ID used
-by DF function 3 being included in a table.  The ID for model 78h is
-missing in that table, so amd_smn_read() doesn't work.
-
-Add the missing ID into amd_nb, restoring s2idle on this system.
-
-  [ bp: Simplify commit message. ]
-
-Fixes: 310e782a99c7 ("platform/x86/amd: pmc: Utilize SMN index 0 for driver probe")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>  # pci_ids.h
-Acked-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230427053338.16653-2-mario.limonciello@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ab144f0b4ad6 ("drm/amd/display: Allow individual control of eDP hotplug support")
+Cc: stable@vger.kernel.org
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Wenjing Liu <Wenjing.Liu@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Robin Chen <robin.chen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/amd_nb.c |    2 ++
- include/linux/pci_ids.h  |    1 +
- 2 files changed, 3 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dc_types.h          | 7 +++++++
+ drivers/gpu/drm/amd/display/dc/link/link_factory.c | 9 +++++++--
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/amd_nb.c
-+++ b/arch/x86/kernel/amd_nb.c
-@@ -36,6 +36,7 @@
- #define PCI_DEVICE_ID_AMD_19H_M50H_DF_F4 0x166e
- #define PCI_DEVICE_ID_AMD_19H_M60H_DF_F4 0x14e4
- #define PCI_DEVICE_ID_AMD_19H_M70H_DF_F4 0x14f4
-+#define PCI_DEVICE_ID_AMD_19H_M78H_DF_F4 0x12fc
- 
- /* Protect the PCI config register pairs used for SMN. */
- static DEFINE_MUTEX(smn_mutex);
-@@ -79,6 +80,7 @@ static const struct pci_device_id amd_nb
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M50H_DF_F3) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M60H_DF_F3) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M70H_DF_F3) },
-+	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
- 	{}
+diff --git a/drivers/gpu/drm/amd/display/dc/dc_types.h b/drivers/gpu/drm/amd/display/dc/dc_types.h
+index f28b8597cc1e6..cba65766ef47b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
+@@ -1086,4 +1086,11 @@ struct dc_dpia_bw_alloc {
  };
  
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -567,6 +567,7 @@
- #define PCI_DEVICE_ID_AMD_19H_M50H_DF_F3 0x166d
- #define PCI_DEVICE_ID_AMD_19H_M60H_DF_F3 0x14e3
- #define PCI_DEVICE_ID_AMD_19H_M70H_DF_F3 0x14f3
-+#define PCI_DEVICE_ID_AMD_19H_M78H_DF_F3 0x12fb
- #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
- #define PCI_DEVICE_ID_AMD_LANCE		0x2000
- #define PCI_DEVICE_ID_AMD_LANCE_HOME	0x2001
+ #define MAX_SINKS_PER_LINK 4
++
++enum dc_hpd_enable_select {
++	HPD_EN_FOR_ALL_EDP = 0,
++	HPD_EN_FOR_PRIMARY_EDP_ONLY,
++	HPD_EN_FOR_SECONDARY_EDP_ONLY,
++};
++
+ #endif /* DC_TYPES_H_ */
+diff --git a/drivers/gpu/drm/amd/display/dc/link/link_factory.c b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
+index aeb26a4d539e9..8aaf14afa4271 100644
+--- a/drivers/gpu/drm/amd/display/dc/link/link_factory.c
++++ b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
+@@ -274,14 +274,18 @@ static bool dc_link_construct_phy(struct dc_link *link,
+ 				link->irq_source_hpd = DC_IRQ_SOURCE_INVALID;
+ 
+ 			switch (link->dc->config.allow_edp_hotplug_detection) {
+-			case 1: // only the 1st eDP handles hotplug
++			case HPD_EN_FOR_ALL_EDP:
++				link->irq_source_hpd_rx =
++						dal_irq_get_rx_source(link->hpd_gpio);
++				break;
++			case HPD_EN_FOR_PRIMARY_EDP_ONLY:
+ 				if (link->link_index == 0)
+ 					link->irq_source_hpd_rx =
+ 						dal_irq_get_rx_source(link->hpd_gpio);
+ 				else
+ 					link->irq_source_hpd = DC_IRQ_SOURCE_INVALID;
+ 				break;
+-			case 2: // only the 2nd eDP handles hotplug
++			case HPD_EN_FOR_SECONDARY_EDP_ONLY:
+ 				if (link->link_index == 1)
+ 					link->irq_source_hpd_rx =
+ 						dal_irq_get_rx_source(link->hpd_gpio);
+@@ -289,6 +293,7 @@ static bool dc_link_construct_phy(struct dc_link *link,
+ 					link->irq_source_hpd = DC_IRQ_SOURCE_INVALID;
+ 				break;
+ 			default:
++				link->irq_source_hpd = DC_IRQ_SOURCE_INVALID;
+ 				break;
+ 			}
+ 		}
+-- 
+2.39.2
+
 
 
