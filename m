@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DACEFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:02:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B549FC433EF;
-	Mon, 15 May 2023 17:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86006FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:02:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB3DC433D2;
+	Mon, 15 May 2023 17:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170130;
-	bh=H1+om2kL0wlTAdMlJWD3Cr7y6FlqsntZQccW6ntWY3M=;
+	s=korg; t=1684170133;
+	bh=jJyNus2CwwIY+AAgjOpLx+S5mKMQaBPOy9bff8eWG8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eR/cgIw44WdKMkLe2lylfpX8T7eobT/kbElgjx4+CV3F2vqSCGlcjHtwMr7a22n8G
-	 lEzpnaEXcr9br4FMAtrAAh6LS48Jm2u93MS038tC9ByL0+yInrp/oR3e08NgayaaC6
-	 xQ6XpS+fVz7nbPyntQ6XJT8jd/4fU77SyQ/070+4=
+	b=elNfUevw10euiQUlNoIHYJ4frt4K4F279xKwMV/EpzFFeaqoql138sKh1AB/iUWqQ
+	 4ctHKNKwpkXE2aij9+kwEiamCSvGmWFVOqK2H1U9qpjwBJGDSpH2LVboeOb0kxvrYv
+	 ZGsxOJnCdYWMEa9Dz13S+oWqpyefLTIBH1mhxXOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Hickey <jjh@daedalian.us>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 6.1 034/239] ixgbe: Fix panic during XDP_TX with > 64 CPUs
-Date: Mon, 15 May 2023 18:24:57 +0200
-Message-Id: <20230515161722.738486476@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 035/239] octeonxt2-af: mcs: Fix per port bypass config
+Date: Mon, 15 May 2023 18:24:58 +0200
+Message-Id: <20230515161722.768477633@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -38,143 +37,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Hickey <jjh@daedalian.us>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit c23ae5091a8b3e50fe755257df020907e7c029bb ]
+[ Upstream commit c222b292a3568754828ffd30338d2909b14ed160 ]
 
-Commit 4fe815850bdc ("ixgbe: let the xdpdrv work with more than 64 cpus")
-adds support to allow XDP programs to run on systems with more than
-64 CPUs by locking the XDP TX rings and indexing them using cpu % 64
-(IXGBE_MAX_XDP_QS).
+For each lmac port, MCS has two MCS_TOP_SLAVE_CHANNEL_CONFIGX
+registers. For CN10KB both register need to be configured for the
+port level mcs bypass to work. This patch also sets bitmap
+of flowid/secy entry reserved for default bypass so that these
+entries can be shown in debugfs.
 
-Upon trying this out patch on a system with more than 64 cores,
-the kernel paniced with an array-index-out-of-bounds at the return in
-ixgbe_determine_xdp_ring in ixgbe.h, which means ixgbe_determine_xdp_q_idx
-was just returning the cpu instead of cpu % IXGBE_MAX_XDP_QS.  An example
-splat:
-
- ==========================================================================
- UBSAN: array-index-out-of-bounds in
- /var/lib/dkms/ixgbe/5.18.6+focal-1/build/src/ixgbe.h:1147:26
- index 65 is out of range for type 'ixgbe_ring *[64]'
- ==========================================================================
- BUG: kernel NULL pointer dereference, address: 0000000000000058
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: 0000 [#1] SMP NOPTI
- CPU: 65 PID: 408 Comm: ksoftirqd/65
- Tainted: G          IOE     5.15.0-48-generic #54~20.04.1-Ubuntu
- Hardware name: Dell Inc. PowerEdge R640/0W23H8, BIOS 2.5.4 01/13/2020
- RIP: 0010:ixgbe_xmit_xdp_ring+0x1b/0x1c0 [ixgbe]
- Code: 3b 52 d4 cf e9 42 f2 ff ff 66 0f 1f 44 00 00 0f 1f 44 00 00 55 b9
- 00 00 00 00 48 89 e5 41 57 41 56 41 55 41 54 53 48 83 ec 08 <44> 0f b7
- 47 58 0f b7 47 5a 0f b7 57 54 44 0f b7 76 08 66 41 39 c0
- RSP: 0018:ffffbc3fcd88fcb0 EFLAGS: 00010282
- RAX: ffff92a253260980 RBX: ffffbc3fe68b00a0 RCX: 0000000000000000
- RDX: ffff928b5f659000 RSI: ffff928b5f659000 RDI: 0000000000000000
- RBP: ffffbc3fcd88fce0 R08: ffff92b9dfc20580 R09: 0000000000000001
- R10: 3d3d3d3d3d3d3d3d R11: 3d3d3d3d3d3d3d3d R12: 0000000000000000
- R13: ffff928b2f0fa8c0 R14: ffff928b9be20050 R15: 000000000000003c
- FS:  0000000000000000(0000) GS:ffff92b9dfc00000(0000)
- knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000058 CR3: 000000011dd6a002 CR4: 00000000007706e0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- PKRU: 55555554
- Call Trace:
-  <TASK>
-  ixgbe_poll+0x103e/0x1280 [ixgbe]
-  ? sched_clock_cpu+0x12/0xe0
-  __napi_poll+0x30/0x160
-  net_rx_action+0x11c/0x270
-  __do_softirq+0xda/0x2ee
-  run_ksoftirqd+0x2f/0x50
-  smpboot_thread_fn+0xb7/0x150
-  ? sort_range+0x30/0x30
-  kthread+0x127/0x150
-  ? set_kthread_struct+0x50/0x50
-  ret_from_fork+0x1f/0x30
-  </TASK>
-
-I think this is how it happens:
-
-Upon loading the first XDP program on a system with more than 64 CPUs,
-ixgbe_xdp_locking_key is incremented in ixgbe_xdp_setup.  However,
-immediately after this, the rings are reconfigured by ixgbe_setup_tc.
-ixgbe_setup_tc calls ixgbe_clear_interrupt_scheme which calls
-ixgbe_free_q_vectors which calls ixgbe_free_q_vector in a loop.
-ixgbe_free_q_vector decrements ixgbe_xdp_locking_key once per call if
-it is non-zero.  Commenting out the decrement in ixgbe_free_q_vector
-stopped my system from panicing.
-
-I suspect to make the original patch work, I would need to load an XDP
-program and then replace it in order to get ixgbe_xdp_locking_key back
-above 0 since ixgbe_setup_tc is only called when transitioning between
-XDP and non-XDP ring configurations, while ixgbe_xdp_locking_key is
-incremented every time ixgbe_xdp_setup is called.
-
-Also, ixgbe_setup_tc can be called via ethtool --set-channels, so this
-becomes another path to decrement ixgbe_xdp_locking_key to 0 on systems
-with more than 64 CPUs.
-
-Since ixgbe_xdp_locking_key only protects the XDP_TX path and is tied
-to the number of CPUs present, there is no reason to disable it upon
-unloading an XDP program.  To avoid confusion, I have moved enabling
-ixgbe_xdp_locking_key into ixgbe_sw_init, which is part of the probe path.
-
-Fixes: 4fe815850bdc ("ixgbe: let the xdpdrv work with more than 64 cpus")
-Signed-off-by: John Hickey <jjh@daedalian.us>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20230425170308.2522429-1-anthony.l.nguyen@intel.com
+Fixes: bd69476e86fc ("octeontx2-af: cn10k: mcs: Install a default TCAM for normal traffic")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_lib.c  | 3 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c | 6 ++++--
- 2 files changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/af/mcs.c       | 11 ++++++++++-
+ .../net/ethernet/marvell/octeontx2/af/rvu_debugfs.c   |  5 +++--
+ 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_lib.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_lib.c
-index f8156fe4b1dc4..0ee943db3dc92 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_lib.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_lib.c
-@@ -1035,9 +1035,6 @@ static void ixgbe_free_q_vector(struct ixgbe_adapter *adapter, int v_idx)
- 	adapter->q_vector[v_idx] = NULL;
- 	__netif_napi_del(&q_vector->napi);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
+index f68a6a0e3aa41..492baa0b594ce 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
+@@ -494,6 +494,9 @@ int mcs_install_flowid_bypass_entry(struct mcs *mcs)
  
--	if (static_key_enabled(&ixgbe_xdp_locking_key))
--		static_branch_dec(&ixgbe_xdp_locking_key);
--
- 	/*
- 	 * after a call to __netif_napi_del() napi may still be used and
- 	 * ixgbe_get_stats64() might access the rings on this vector,
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-index faf3a094ac540..9b8848daeb430 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -6495,6 +6495,10 @@ static int ixgbe_sw_init(struct ixgbe_adapter *adapter,
- 	set_bit(0, adapter->fwd_bitmask);
- 	set_bit(__IXGBE_DOWN, &adapter->state);
+ 	/* Flow entry */
+ 	flow_id = mcs->hw->tcam_entries - MCS_RSRC_RSVD_CNT;
++	__set_bit(flow_id, mcs->rx.flow_ids.bmap);
++	__set_bit(flow_id, mcs->tx.flow_ids.bmap);
++
+ 	for (reg_id = 0; reg_id < 4; reg_id++) {
+ 		reg = MCSX_CPM_RX_SLAVE_FLOWID_TCAM_MASKX(reg_id, flow_id);
+ 		mcs_reg_write(mcs, reg, GENMASK_ULL(63, 0));
+@@ -504,6 +507,8 @@ int mcs_install_flowid_bypass_entry(struct mcs *mcs)
+ 	}
+ 	/* secy */
+ 	secy_id = mcs->hw->secy_entries - MCS_RSRC_RSVD_CNT;
++	__set_bit(secy_id, mcs->rx.secy.bmap);
++	__set_bit(secy_id, mcs->tx.secy.bmap);
  
-+	/* enable locking for XDP_TX if we have more CPUs than queues */
-+	if (nr_cpu_ids > IXGBE_MAX_XDP_QS)
-+		static_branch_enable(&ixgbe_xdp_locking_key);
+ 	/* Set validate frames to NULL and enable control port */
+ 	plcy = 0x7ull;
+@@ -528,6 +533,7 @@ int mcs_install_flowid_bypass_entry(struct mcs *mcs)
+ 	/* Enable Flowid entry */
+ 	mcs_ena_dis_flowid_entry(mcs, flow_id, MCS_RX, true);
+ 	mcs_ena_dis_flowid_entry(mcs, flow_id, MCS_TX, true);
 +
  	return 0;
  }
  
-@@ -10288,8 +10292,6 @@ static int ixgbe_xdp_setup(struct net_device *dev, struct bpf_prog *prog)
- 	 */
- 	if (nr_cpu_ids > IXGBE_MAX_XDP_QS * 2)
- 		return -ENOMEM;
--	else if (nr_cpu_ids > IXGBE_MAX_XDP_QS)
--		static_branch_inc(&ixgbe_xdp_locking_key);
+@@ -1325,8 +1331,11 @@ void mcs_reset_port(struct mcs *mcs, u8 port_id, u8 reset)
+ void mcs_set_lmac_mode(struct mcs *mcs, int lmac_id, u8 mode)
+ {
+ 	u64 reg;
++	int id = lmac_id * 2;
  
- 	old_prog = xchg(&adapter->xdp_prog, prog);
- 	need_reset = (!!prog != !!old_prog);
+-	reg = MCSX_MCS_TOP_SLAVE_CHANNEL_CFG(lmac_id * 2);
++	reg = MCSX_MCS_TOP_SLAVE_CHANNEL_CFG(id);
++	mcs_reg_write(mcs, reg, (u64)mode);
++	reg = MCSX_MCS_TOP_SLAVE_CHANNEL_CFG((id + 1));
+ 	mcs_reg_write(mcs, reg, (u64)mode);
+ }
+ 
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+index abef0fd4259a3..0cab27448399c 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_debugfs.c
+@@ -497,8 +497,9 @@ static int rvu_dbg_mcs_rx_secy_stats_display(struct seq_file *filp, void *unused
+ 			   stats.octet_validated_cnt);
+ 		seq_printf(filp, "secy%d: Pkts on disable port: %lld\n", secy_id,
+ 			   stats.pkt_port_disabled_cnt);
+-		seq_printf(filp, "secy%d: Octets validated: %lld\n", secy_id, stats.pkt_badtag_cnt);
+-		seq_printf(filp, "secy%d: Octets validated: %lld\n", secy_id, stats.pkt_nosa_cnt);
++		seq_printf(filp, "secy%d: Pkts with badtag: %lld\n", secy_id, stats.pkt_badtag_cnt);
++		seq_printf(filp, "secy%d: Pkts with no SA(sectag.tci.c=0): %lld\n", secy_id,
++			   stats.pkt_nosa_cnt);
+ 		seq_printf(filp, "secy%d: Pkts with nosaerror: %lld\n", secy_id,
+ 			   stats.pkt_nosaerror_cnt);
+ 		seq_printf(filp, "secy%d: Tagged ctrl pkts: %lld\n", secy_id,
 -- 
 2.39.2
 
