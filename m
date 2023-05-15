@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23D1FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEF6C433D2;
-	Mon, 15 May 2023 17:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0C5FC1B
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0BFC433D2;
+	Mon, 15 May 2023 17:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172870;
-	bh=re1681Jx3Nx40Lypy9e/Zv2rVsgmImruh54jTh2vkkM=;
+	s=korg; t=1684172873;
+	bh=c0q4Pa9RUsjPwM87U5v9KA9oRJzlW1FsOsEQ21jYaaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGj2h/YpN2ZyNnQUtyT39b1f9EjWl8+wM18d5MT7T8Zaws9ldZizruTr6tLBa1cSR
-	 ED4nKwXxRIoXpZ5HpY07zMYGlVTPMDFdZoUZmB5bLg/umgH0vM9ITcQc9j4SWf62ia
-	 4tTIAtspYKW6s60y67oibYx568mY61ZsdGfv9zCU=
+	b=lASWbWB4WsLfqztbxf77KVNW8FWVMGQVKhZU07ERrNJp0OfT3poa6Cx4q00pu6bkr
+	 T0RcWBJzkY8L2h346kf6fy+0lDOxYwNdqAhLeqTinMPOZg3xdQHOi/LMFfvxVCtXPX
+	 Fo5BXpTr9JzuMwmZ0Qa7pkBBPZsSCU5IF4lQ4DJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Zhang <zheng.zhang@email.ucr.edu>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.10 286/381] dm ioctl: fix nested locking in table_clear() to remove deadlock concern
-Date: Mon, 15 May 2023 18:28:57 +0200
-Message-Id: <20230515161749.706005916@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.10 295/381] netfilter: nf_tables: deactivate anonymous set from preparation phase
+Date: Mon, 15 May 2023 18:29:06 +0200
+Message-Id: <20230515161750.120782998@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,58 +33,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 3d32aaa7e66d5c1479a3c31d6c2c5d45dd0d3b89 upstream.
+commit c1592a89942e9678f7d9c8030efa777c0d57edab upstream.
 
-syzkaller found the following problematic rwsem locking (with write
-lock already held):
+Toggle deleted anonymous sets as inactive in the next generation, so
+users cannot perform any update on it. Clear the generation bitmask
+in case the transaction is aborted.
 
- down_read+0x9d/0x450 kernel/locking/rwsem.c:1509
- dm_get_inactive_table+0x2b/0xc0 drivers/md/dm-ioctl.c:773
- __dev_status+0x4fd/0x7c0 drivers/md/dm-ioctl.c:844
- table_clear+0x197/0x280 drivers/md/dm-ioctl.c:1537
+The following KASAN splat shows a set element deletion for a bound
+anonymous set that has been already removed in the same transaction.
 
-In table_clear, it first acquires a write lock
-https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L1520
-down_write(&_hash_lock);
+[   64.921510] ==================================================================
+[   64.923123] BUG: KASAN: wild-memory-access in nf_tables_commit+0xa24/0x1490 [nf_tables]
+[   64.924745] Write of size 8 at addr dead000000000122 by task test/890
+[   64.927903] CPU: 3 PID: 890 Comm: test Not tainted 6.3.0+ #253
+[   64.931120] Call Trace:
+[   64.932699]  <TASK>
+[   64.934292]  dump_stack_lvl+0x33/0x50
+[   64.935908]  ? nf_tables_commit+0xa24/0x1490 [nf_tables]
+[   64.937551]  kasan_report+0xda/0x120
+[   64.939186]  ? nf_tables_commit+0xa24/0x1490 [nf_tables]
+[   64.940814]  nf_tables_commit+0xa24/0x1490 [nf_tables]
+[   64.942452]  ? __kasan_slab_alloc+0x2d/0x60
+[   64.944070]  ? nf_tables_setelem_notify+0x190/0x190 [nf_tables]
+[   64.945710]  ? kasan_set_track+0x21/0x30
+[   64.947323]  nfnetlink_rcv_batch+0x709/0xd90 [nfnetlink]
+[   64.948898]  ? nfnetlink_rcv_msg+0x480/0x480 [nfnetlink]
 
-Then before the lock is released at L1539, there is a path shown above:
-table_clear -> __dev_status -> dm_get_inactive_table ->  down_read
-https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L773
-down_read(&_hash_lock);
-
-It tries to acquire the same read lock again, resulting in the deadlock
-problem.
-
-Fix this by moving table_clear()'s __dev_status() call to after its
-up_write(&_hash_lock);
-
-Cc: stable@vger.kernel.org
-Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/net/netfilter/nf_tables.h |    1 +
+ net/netfilter/nf_tables_api.c     |   12 ++++++++++++
+ net/netfilter/nft_dynset.c        |    2 +-
+ net/netfilter/nft_lookup.c        |    2 +-
+ net/netfilter/nft_objref.c        |    2 +-
+ 5 files changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1435,11 +1435,12 @@ static int table_clear(struct file *filp
- 		hc->new_map = NULL;
- 	}
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -507,6 +507,7 @@ struct nft_set_binding {
+ };
  
--	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
--
--	__dev_status(hc->md, param);
- 	md = hc->md;
- 	up_write(&_hash_lock);
+ enum nft_trans_phase;
++void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set);
+ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 			      struct nft_set_binding *binding,
+ 			      enum nft_trans_phase phase);
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -4479,12 +4479,24 @@ static void nf_tables_unbind_set(const s
+ 	}
+ }
+ 
++void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set)
++{
++	if (nft_set_is_anonymous(set))
++		nft_clear(ctx->net, set);
 +
-+	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
-+	__dev_status(md, param);
++	set->use++;
++}
++EXPORT_SYMBOL_GPL(nf_tables_activate_set);
 +
- 	if (old_map) {
- 		dm_sync_table(md);
- 		dm_table_destroy(old_map);
+ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 			      struct nft_set_binding *binding,
+ 			      enum nft_trans_phase phase)
+ {
+ 	switch (phase) {
+ 	case NFT_TRANS_PREPARE:
++		if (nft_set_is_anonymous(set))
++			nft_deactivate_next(ctx->net, set);
++
+ 		set->use--;
+ 		return;
+ 	case NFT_TRANS_ABORT:
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -233,7 +233,7 @@ static void nft_dynset_activate(const st
+ {
+ 	struct nft_dynset *priv = nft_expr_priv(expr);
+ 
+-	priv->set->use++;
++	nf_tables_activate_set(ctx, priv->set);
+ }
+ 
+ static void nft_dynset_destroy(const struct nft_ctx *ctx,
+--- a/net/netfilter/nft_lookup.c
++++ b/net/netfilter/nft_lookup.c
+@@ -132,7 +132,7 @@ static void nft_lookup_activate(const st
+ {
+ 	struct nft_lookup *priv = nft_expr_priv(expr);
+ 
+-	priv->set->use++;
++	nf_tables_activate_set(ctx, priv->set);
+ }
+ 
+ static void nft_lookup_destroy(const struct nft_ctx *ctx,
+--- a/net/netfilter/nft_objref.c
++++ b/net/netfilter/nft_objref.c
+@@ -180,7 +180,7 @@ static void nft_objref_map_activate(cons
+ {
+ 	struct nft_objref_map *priv = nft_expr_priv(expr);
+ 
+-	priv->set->use++;
++	nf_tables_activate_set(ctx, priv->set);
+ }
+ 
+ static void nft_objref_map_destroy(const struct nft_ctx *ctx,
 
 
