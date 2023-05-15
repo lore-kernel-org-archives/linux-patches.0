@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288F8101C9
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:16:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81041C4339B;
-	Mon, 15 May 2023 17:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5472DFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:16:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA735C433EF;
+	Mon, 15 May 2023 17:16:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171000;
-	bh=EjYWI+vrEYWHbKz+07NKfGE94fMCdH5nrExeSkdOEX8=;
+	s=korg; t=1684171003;
+	bh=rCR/umXWjr3fBettugLtcE2iJQTWkq6+wtzDClOh1uI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RD5EV02z7vTxYQ+HZ6c9+/88JE7dty7WYtZrwvQzxQauwCuuQNLWtd4ab82l2t9Gr
-	 Qfa3w8X7js//GXmQOFoLXyH5mKD5F8Y1lQkeLEYExCmwsVycg1VxQcHTiF3NlV+hz9
-	 SaM7+O49Bvzm89Aomw1r8Y0ATEtU4L1fPzwlMs1w=
+	b=aaWYJQ4lIBTio43/6rY4lU53JqEl3EJ9alJhviDu4OxDWluM2OaQObB8ePSRuvX8k
+	 hP+rta7bi+pplpnKOAkWgS/OVSRaJn1EzZy76o5B1ln5NCcMG25Lgq4Kg7BD7To9g5
+	 gI0Yz11LcwrcpMAlfbp/Eb6yrB39shnOnQ4Zlv54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	Sai Krishna <saikrishnag@marvell.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Cosmo Chou <chou.cosmo@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 068/242] octeontx2-af: Fix depth of cam and mem table.
-Date: Mon, 15 May 2023 18:26:34 +0200
-Message-Id: <20230515161723.947420683@linuxfoundation.org>
+Subject: [PATCH 6.2 042/242] net/ncsi: clear Tx enable mode when handling a Config required AEN
+Date: Mon, 15 May 2023 18:26:08 +0200
+Message-Id: <20230515161723.179660116@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -38,41 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Cosmo Chou <chou.cosmo@gmail.com>
 
-[ Upstream commit 60999cb83554ebcf6cfff8894bc2c3d99ea858ba ]
+[ Upstream commit 6f75cd166a5a3c0bc50441faa8b8304f60522fdd ]
 
-In current driver, NPC cam and mem table sizes are read from wrong
-register offset. This patch fixes the register offset so that correct
-values are populated on read.
+ncsi_channel_is_tx() determines whether a given channel should be
+used for Tx or not. However, when reconfiguring the channel by
+handling a Configuration Required AEN, there is a misjudgment that
+the channel Tx has already been enabled, which results in the Enable
+Channel Network Tx command not being sent.
 
-Fixes: b747923afff8 ("octeontx2-af: Exact match support")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Clear the channel Tx enable flag before reconfiguring the channel to
+avoid the misjudgment.
+
+Fixes: 8d951a75d022 ("net/ncsi: Configure multi-package, multi-channel modes with failover")
+Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ncsi/ncsi-aen.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-index f69102d20c903..f2d7156262ff1 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-@@ -1878,9 +1878,9 @@ int rvu_npc_exact_init(struct rvu *rvu)
- 	rvu->hw->table = table;
+diff --git a/net/ncsi/ncsi-aen.c b/net/ncsi/ncsi-aen.c
+index b635c194f0a85..62fb1031763d1 100644
+--- a/net/ncsi/ncsi-aen.c
++++ b/net/ncsi/ncsi-aen.c
+@@ -165,6 +165,7 @@ static int ncsi_aen_handler_cr(struct ncsi_dev_priv *ndp,
+ 	nc->state = NCSI_CHANNEL_INACTIVE;
+ 	list_add_tail_rcu(&nc->link, &ndp->channel_queue);
+ 	spin_unlock_irqrestore(&ndp->lock, flags);
++	nc->modes[NCSI_MODE_TX_ENABLE].enable = 0;
  
- 	/* Read table size, ways and depth */
--	table->mem_table.depth = FIELD_GET(GENMASK_ULL(31, 24), npc_const3);
- 	table->mem_table.ways = FIELD_GET(GENMASK_ULL(19, 16), npc_const3);
--	table->cam_table.depth = FIELD_GET(GENMASK_ULL(15, 0), npc_const3);
-+	table->mem_table.depth = FIELD_GET(GENMASK_ULL(15, 0), npc_const3);
-+	table->cam_table.depth = FIELD_GET(GENMASK_ULL(31, 24), npc_const3);
- 
- 	dev_dbg(rvu->dev, "%s: NPC exact match 4way_2k table(ways=%d, depth=%d)\n",
- 		__func__,  table->mem_table.ways, table->cam_table.depth);
+ 	return ncsi_process_next_channel(ndp);
+ }
 -- 
 2.39.2
 
