@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3193FFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:19:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 567C1C433D2;
-	Mon, 15 May 2023 17:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E652FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:19:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29D4C433EF;
+	Mon, 15 May 2023 17:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171172;
-	bh=O0tUuKde/RdhX0mbcPVYduL/FB+PD5/RgB6fpP6thNc=;
+	s=korg; t=1684171175;
+	bh=6xlHvXlBl9JEB8ti6cUpKgnSMC9ERIGl3eyIEz4zWPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9TszwjWawOYhONsOTp6OhBxwOH0c9oMToLW8q6g06glUbMjJPAXOkiJPn0mIC30N
-	 Ke2oFftjivmEqQcHNlEn/YrwtKUMqXscAmO8aRkWUUajUsH80Q/1ein8JxRije0FNR
-	 ofcg1KunOSD8uLZl0Ms69FxGkfb//B429AqpxJmo=
+	b=rpgmbjKXH6GFdtQvDnVszhS/ejhEwXdi9FAqxkYQ/CiNzytPk1NlfgvLsMaNguvd7
+	 heAphFElVPPbGJcIh0xSC01W1WGDfe5vwgBXiiCz8pGeLL1wXx2x+UEcPUFhx0lyKv
+	 7344O8tB5pVlVS3sg8fnTjQDyIMe209ndkMxufxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 123/242] cifs: avoid potential races when handling multiple dfs tcons
-Date: Mon, 15 May 2023 18:27:29 +0200
-Message-Id: <20230515161725.595492216@linuxfoundation.org>
+Subject: [PATCH 6.2 124/242] netfilter: nf_tables: extended netlink error reporting for netdevice
+Date: Mon, 15 May 2023 18:27:30 +0200
+Message-Id: <20230515161725.625877519@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,390 +34,169 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 6be2ea33a4093402252724a00c4af8033725184c ]
+[ Upstream commit c3c060adc0249355411a93e61888051e6902b8a1 ]
 
-Now that a DFS tcon manages its own list of DFS referrals and
-sessions, there is no point in having a single worker to refresh
-referrals of all DFS tcons.  Make it faster and less prone to race
-conditions when having several mounts by queueing a worker per DFS
-tcon that will take care of refreshing only the DFS referrals related
-to it.
+Flowtable and netdev chains are bound to one or several netdevice,
+extend netlink error reporting to specify the the netdevice that
+triggers the error.
 
-Cc: stable@vger.kernel.org # v6.2+
-Signed-off-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 8509f62b0b07 ("netfilter: nf_tables: hit ENOENT on unexisting chain/flowtable update with missing attributes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsglob.h  |   2 +-
- fs/cifs/connect.c   |   7 ++-
- fs/cifs/dfs.c       |   4 ++
- fs/cifs/dfs_cache.c | 137 +++++++++++++++++++-------------------------
- fs/cifs/dfs_cache.h |   9 +++
- 5 files changed, 80 insertions(+), 79 deletions(-)
+ net/netfilter/nf_tables_api.c | 38 ++++++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 14 deletions(-)
 
-diff --git a/fs/cifs/cifsglob.h b/fs/cifs/cifsglob.h
-index ea216e9d0f944..e6d12a6563887 100644
---- a/fs/cifs/cifsglob.h
-+++ b/fs/cifs/cifsglob.h
-@@ -1244,8 +1244,8 @@ struct cifs_tcon {
- 	struct cached_fids *cfids;
- 	/* BB add field for back pointer to sb struct(s)? */
- #ifdef CONFIG_CIFS_DFS_UPCALL
--	struct list_head ulist; /* cache update list */
- 	struct list_head dfs_ses_list;
-+	struct delayed_work dfs_cache_work;
- #endif
- 	struct delayed_work	query_interfaces; /* query interfaces workqueue job */
- };
-diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
-index af491ae70678a..d71c2fb117c9e 100644
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -2386,6 +2386,9 @@ cifs_put_tcon(struct cifs_tcon *tcon)
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 96bc4b8ded423..4b0a84a39b19e 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -1951,7 +1951,8 @@ static struct nft_hook *nft_hook_list_find(struct list_head *hook_list,
  
- 	/* cancel polling of interfaces */
- 	cancel_delayed_work_sync(&tcon->query_interfaces);
-+#ifdef CONFIG_CIFS_DFS_UPCALL
-+	cancel_delayed_work_sync(&tcon->dfs_cache_work);
-+#endif
+ static int nf_tables_parse_netdev_hooks(struct net *net,
+ 					const struct nlattr *attr,
+-					struct list_head *hook_list)
++					struct list_head *hook_list,
++					struct netlink_ext_ack *extack)
+ {
+ 	struct nft_hook *hook, *next;
+ 	const struct nlattr *tmp;
+@@ -1965,10 +1966,12 @@ static int nf_tables_parse_netdev_hooks(struct net *net,
  
- 	if (tcon->use_witness) {
- 		int rc;
-@@ -2633,7 +2636,9 @@ cifs_get_tcon(struct cifs_ses *ses, struct smb3_fs_context *ctx)
- 		queue_delayed_work(cifsiod_wq, &tcon->query_interfaces,
- 				   (SMB_INTERFACE_POLL_INTERVAL * HZ));
- 	}
--
-+#ifdef CONFIG_CIFS_DFS_UPCALL
-+	INIT_DELAYED_WORK(&tcon->dfs_cache_work, dfs_cache_refresh);
-+#endif
- 	spin_lock(&cifs_tcp_ses_lock);
- 	list_add(&tcon->tcon_list, &ses->tcon_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
-diff --git a/fs/cifs/dfs.c b/fs/cifs/dfs.c
-index f02f8d3b92ee8..a93dbca1411b2 100644
---- a/fs/cifs/dfs.c
-+++ b/fs/cifs/dfs.c
-@@ -157,6 +157,8 @@ static int get_dfs_conn(struct cifs_mount_ctx *mnt_ctx, const char *ref_path, co
- 		rc = cifs_is_path_remote(mnt_ctx);
- 	}
- 
-+	dfs_cache_noreq_update_tgthint(ref_path + 1, tit);
-+
- 	if (rc == -EREMOTE && is_refsrv) {
- 		rc2 = add_root_smb_session(mnt_ctx);
- 		if (rc2)
-@@ -259,6 +261,8 @@ static int __dfs_mount_share(struct cifs_mount_ctx *mnt_ctx)
- 		if (list_empty(&tcon->dfs_ses_list)) {
- 			list_replace_init(&mnt_ctx->dfs_ses_list,
- 					  &tcon->dfs_ses_list);
-+			queue_delayed_work(dfscache_wq, &tcon->dfs_cache_work,
-+					   dfs_cache_get_ttl() * HZ);
- 		} else {
- 			dfs_put_root_smb_sessions(&mnt_ctx->dfs_ses_list);
+ 		hook = nft_netdev_hook_alloc(net, tmp);
+ 		if (IS_ERR(hook)) {
++			NL_SET_BAD_ATTR(extack, tmp);
+ 			err = PTR_ERR(hook);
+ 			goto err_hook;
  		}
-diff --git a/fs/cifs/dfs_cache.c b/fs/cifs/dfs_cache.c
-index 6557d7b2798a0..1513b2709889b 100644
---- a/fs/cifs/dfs_cache.c
-+++ b/fs/cifs/dfs_cache.c
-@@ -20,12 +20,14 @@
- #include "cifs_unicode.h"
- #include "smb2glob.h"
- #include "dns_resolve.h"
-+#include "dfs.h"
+ 		if (nft_hook_list_find(hook_list, hook)) {
++			NL_SET_BAD_ATTR(extack, tmp);
+ 			kfree(hook);
+ 			err = -EEXIST;
+ 			goto err_hook;
+@@ -2001,20 +2004,23 @@ struct nft_chain_hook {
  
- #include "dfs_cache.h"
- 
--#define CACHE_HTABLE_SIZE 32
--#define CACHE_MAX_ENTRIES 64
--#define CACHE_MIN_TTL 120 /* 2 minutes */
-+#define CACHE_HTABLE_SIZE	32
-+#define CACHE_MAX_ENTRIES	64
-+#define CACHE_MIN_TTL		120 /* 2 minutes */
-+#define CACHE_DEFAULT_TTL	300 /* 5 minutes */
- 
- #define IS_DFS_INTERLINK(v) (((v) & DFSREF_REFERRAL_SERVER) && !((v) & DFSREF_STORAGE_SERVER))
- 
-@@ -50,10 +52,9 @@ struct cache_entry {
- };
- 
- static struct kmem_cache *cache_slab __read_mostly;
--static struct workqueue_struct *dfscache_wq __read_mostly;
-+struct workqueue_struct *dfscache_wq;
- 
--static int cache_ttl;
--static DEFINE_SPINLOCK(cache_ttl_lock);
-+atomic_t dfs_cache_ttl;
- 
- static struct nls_table *cache_cp;
- 
-@@ -65,10 +66,6 @@ static atomic_t cache_count;
- static struct hlist_head cache_htable[CACHE_HTABLE_SIZE];
- static DECLARE_RWSEM(htable_rw_lock);
- 
--static void refresh_cache_worker(struct work_struct *work);
--
--static DECLARE_DELAYED_WORK(refresh_task, refresh_cache_worker);
--
- /**
-  * dfs_cache_canonical_path - get a canonical DFS path
-  *
-@@ -290,7 +287,9 @@ int dfs_cache_init(void)
- 	int rc;
- 	int i;
- 
--	dfscache_wq = alloc_workqueue("cifs-dfscache", WQ_FREEZABLE | WQ_UNBOUND, 1);
-+	dfscache_wq = alloc_workqueue("cifs-dfscache",
-+				      WQ_UNBOUND|WQ_FREEZABLE|WQ_MEM_RECLAIM,
-+				      0);
- 	if (!dfscache_wq)
- 		return -ENOMEM;
- 
-@@ -306,6 +305,7 @@ int dfs_cache_init(void)
- 		INIT_HLIST_HEAD(&cache_htable[i]);
- 
- 	atomic_set(&cache_count, 0);
-+	atomic_set(&dfs_cache_ttl, CACHE_DEFAULT_TTL);
- 	cache_cp = load_nls("utf8");
- 	if (!cache_cp)
- 		cache_cp = load_nls_default();
-@@ -480,6 +480,7 @@ static struct cache_entry *add_cache_entry_locked(struct dfs_info3_param *refs,
- 	int rc;
- 	struct cache_entry *ce;
- 	unsigned int hash;
-+	int ttl;
- 
- 	WARN_ON(!rwsem_is_locked(&htable_rw_lock));
- 
-@@ -496,15 +497,8 @@ static struct cache_entry *add_cache_entry_locked(struct dfs_info3_param *refs,
- 	if (IS_ERR(ce))
- 		return ce;
- 
--	spin_lock(&cache_ttl_lock);
--	if (!cache_ttl) {
--		cache_ttl = ce->ttl;
--		queue_delayed_work(dfscache_wq, &refresh_task, cache_ttl * HZ);
--	} else {
--		cache_ttl = min_t(int, cache_ttl, ce->ttl);
--		mod_delayed_work(dfscache_wq, &refresh_task, cache_ttl * HZ);
--	}
--	spin_unlock(&cache_ttl_lock);
-+	ttl = min_t(int, atomic_read(&dfs_cache_ttl), ce->ttl);
-+	atomic_set(&dfs_cache_ttl, ttl);
- 
- 	hlist_add_head(&ce->hlist, &cache_htable[hash]);
- 	dump_ce(ce);
-@@ -616,7 +610,6 @@ static struct cache_entry *lookup_cache_entry(const char *path)
-  */
- void dfs_cache_destroy(void)
+ static int nft_chain_parse_netdev(struct net *net,
+ 				  struct nlattr *tb[],
+-				  struct list_head *hook_list)
++				  struct list_head *hook_list,
++				  struct netlink_ext_ack *extack)
  {
--	cancel_delayed_work_sync(&refresh_task);
- 	unload_nls(cache_cp);
- 	flush_cache_ents();
- 	kmem_cache_destroy(cache_slab);
-@@ -1142,6 +1135,7 @@ static bool target_share_equal(struct TCP_Server_Info *server, const char *s1, c
-  * target shares in @refs.
-  */
- static void mark_for_reconnect_if_needed(struct TCP_Server_Info *server,
-+					 const char *path,
- 					 struct dfs_cache_tgt_list *old_tl,
- 					 struct dfs_cache_tgt_list *new_tl)
+ 	struct nft_hook *hook;
+ 	int err;
+ 
+ 	if (tb[NFTA_HOOK_DEV]) {
+ 		hook = nft_netdev_hook_alloc(net, tb[NFTA_HOOK_DEV]);
+-		if (IS_ERR(hook))
++		if (IS_ERR(hook)) {
++			NL_SET_BAD_ATTR(extack, tb[NFTA_HOOK_DEV]);
+ 			return PTR_ERR(hook);
++		}
+ 
+ 		list_add_tail(&hook->list, hook_list);
+ 	} else if (tb[NFTA_HOOK_DEVS]) {
+ 		err = nf_tables_parse_netdev_hooks(net, tb[NFTA_HOOK_DEVS],
+-						   hook_list);
++						   hook_list, extack);
+ 		if (err < 0)
+ 			return err;
+ 
+@@ -2082,7 +2088,7 @@ static int nft_chain_parse_hook(struct net *net,
+ 
+ 	INIT_LIST_HEAD(&hook->list);
+ 	if (nft_base_chain_netdev(family, hook->num)) {
+-		err = nft_chain_parse_netdev(net, ha, &hook->list);
++		err = nft_chain_parse_netdev(net, ha, &hook->list, extack);
+ 		if (err < 0) {
+ 			module_put(type->owner);
+ 			return err;
+@@ -7552,7 +7558,8 @@ static const struct nla_policy nft_flowtable_hook_policy[NFTA_FLOWTABLE_HOOK_MAX
+ static int nft_flowtable_parse_hook(const struct nft_ctx *ctx,
+ 				    const struct nlattr *attr,
+ 				    struct nft_flowtable_hook *flowtable_hook,
+-				    struct nft_flowtable *flowtable, bool add)
++				    struct nft_flowtable *flowtable,
++				    struct netlink_ext_ack *extack, bool add)
  {
-@@ -1153,8 +1147,10 @@ static void mark_for_reconnect_if_needed(struct TCP_Server_Info *server,
- 		     nit = dfs_cache_get_next_tgt(new_tl, nit)) {
- 			if (target_share_equal(server,
- 					       dfs_cache_get_tgt_name(oit),
--					       dfs_cache_get_tgt_name(nit)))
-+					       dfs_cache_get_tgt_name(nit))) {
-+				dfs_cache_noreq_update_tgthint(path, nit);
- 				return;
-+			}
- 		}
+ 	struct nlattr *tb[NFTA_FLOWTABLE_HOOK_MAX + 1];
+ 	struct nft_hook *hook;
+@@ -7599,7 +7606,8 @@ static int nft_flowtable_parse_hook(const struct nft_ctx *ctx,
+ 	if (tb[NFTA_FLOWTABLE_HOOK_DEVS]) {
+ 		err = nf_tables_parse_netdev_hooks(ctx->net,
+ 						   tb[NFTA_FLOWTABLE_HOOK_DEVS],
+-						   &flowtable_hook->list);
++						   &flowtable_hook->list,
++						   extack);
+ 		if (err < 0)
+ 			return err;
  	}
- 
-@@ -1162,13 +1158,28 @@ static void mark_for_reconnect_if_needed(struct TCP_Server_Info *server,
- 	cifs_signal_cifsd_for_reconnect(server, true);
+@@ -7742,7 +7750,8 @@ static void nft_flowtable_hooks_destroy(struct list_head *hook_list)
  }
  
-+static bool is_ses_good(struct cifs_ses *ses)
-+{
-+	struct TCP_Server_Info *server = ses->server;
-+	struct cifs_tcon *tcon = ses->tcon_ipc;
-+	bool ret;
-+
-+	spin_lock(&ses->ses_lock);
-+	spin_lock(&ses->chan_lock);
-+	ret = !cifs_chan_needs_reconnect(ses, server) &&
-+		ses->ses_status == SES_GOOD &&
-+		!tcon->need_reconnect;
-+	spin_unlock(&ses->chan_lock);
-+	spin_unlock(&ses->ses_lock);
-+	return ret;
-+}
-+
- /* Refresh dfs referral of tcon and mark it for reconnect if needed */
--static int __refresh_tcon(const char *path, struct cifs_tcon *tcon, bool force_refresh)
-+static int __refresh_tcon(const char *path, struct cifs_ses *ses, bool force_refresh)
+ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
+-				struct nft_flowtable *flowtable)
++				struct nft_flowtable *flowtable,
++				struct netlink_ext_ack *extack)
  {
- 	struct dfs_cache_tgt_list old_tl = DFS_CACHE_TGT_LIST_INIT(old_tl);
- 	struct dfs_cache_tgt_list new_tl = DFS_CACHE_TGT_LIST_INIT(new_tl);
--	struct cifs_ses *ses = CIFS_DFS_ROOT_SES(tcon->ses);
--	struct cifs_tcon *ipc = ses->tcon_ipc;
-+	struct TCP_Server_Info *server = ses->server;
- 	bool needs_refresh = false;
- 	struct cache_entry *ce;
- 	unsigned int xid;
-@@ -1190,20 +1201,19 @@ static int __refresh_tcon(const char *path, struct cifs_tcon *tcon, bool force_r
- 		goto out;
+ 	const struct nlattr * const *nla = ctx->nla;
+ 	struct nft_flowtable_hook flowtable_hook;
+@@ -7753,7 +7762,7 @@ static int nft_flowtable_update(struct nft_ctx *ctx, const struct nlmsghdr *nlh,
+ 	int err;
+ 
+ 	err = nft_flowtable_parse_hook(ctx, nla[NFTA_FLOWTABLE_HOOK],
+-				       &flowtable_hook, flowtable, false);
++				       &flowtable_hook, flowtable, extack, false);
+ 	if (err < 0)
+ 		return err;
+ 
+@@ -7858,7 +7867,7 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
+ 
+ 		nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
+ 
+-		return nft_flowtable_update(&ctx, info->nlh, flowtable);
++		return nft_flowtable_update(&ctx, info->nlh, flowtable, extack);
  	}
  
--	spin_lock(&ipc->tc_lock);
--	if (ipc->status != TID_GOOD) {
--		spin_unlock(&ipc->tc_lock);
--		cifs_dbg(FYI, "%s: skip cache refresh due to disconnected ipc\n", __func__);
-+	ses = CIFS_DFS_ROOT_SES(ses);
-+	if (!is_ses_good(ses)) {
-+		cifs_dbg(FYI, "%s: skip cache refresh due to disconnected ipc\n",
-+			 __func__);
- 		goto out;
- 	}
--	spin_unlock(&ipc->tc_lock);
+ 	nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
+@@ -7899,7 +7908,7 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
+ 		goto err3;
  
- 	ce = cache_refresh_path(xid, ses, path, true);
- 	if (!IS_ERR(ce)) {
- 		rc = get_targets(ce, &new_tl);
- 		up_read(&htable_rw_lock);
- 		cifs_dbg(FYI, "%s: get_targets: %d\n", __func__, rc);
--		mark_for_reconnect_if_needed(tcon->ses->server, &old_tl, &new_tl);
-+		mark_for_reconnect_if_needed(server, path, &old_tl, &new_tl);
- 	}
+ 	err = nft_flowtable_parse_hook(&ctx, nla[NFTA_FLOWTABLE_HOOK],
+-				       &flowtable_hook, flowtable, true);
++				       &flowtable_hook, flowtable, extack, true);
+ 	if (err < 0)
+ 		goto err4;
  
- out:
-@@ -1216,10 +1226,11 @@ static int __refresh_tcon(const char *path, struct cifs_tcon *tcon, bool force_r
- static int refresh_tcon(struct cifs_tcon *tcon, bool force_refresh)
+@@ -7951,7 +7960,8 @@ static void nft_flowtable_hook_release(struct nft_flowtable_hook *flowtable_hook
+ }
+ 
+ static int nft_delflowtable_hook(struct nft_ctx *ctx,
+-				 struct nft_flowtable *flowtable)
++				 struct nft_flowtable *flowtable,
++				 struct netlink_ext_ack *extack)
  {
- 	struct TCP_Server_Info *server = tcon->ses->server;
-+	struct cifs_ses *ses = tcon->ses;
+ 	const struct nlattr * const *nla = ctx->nla;
+ 	struct nft_flowtable_hook flowtable_hook;
+@@ -7961,7 +7971,7 @@ static int nft_delflowtable_hook(struct nft_ctx *ctx,
+ 	int err;
  
- 	mutex_lock(&server->refpath_lock);
- 	if (server->leaf_fullpath)
--		__refresh_tcon(server->leaf_fullpath + 1, tcon, force_refresh);
-+		__refresh_tcon(server->leaf_fullpath + 1, ses, force_refresh);
- 	mutex_unlock(&server->refpath_lock);
- 	return 0;
- }
-@@ -1263,60 +1274,32 @@ int dfs_cache_remount_fs(struct cifs_sb_info *cifs_sb)
- 	return refresh_tcon(tcon, true);
- }
+ 	err = nft_flowtable_parse_hook(ctx, nla[NFTA_FLOWTABLE_HOOK],
+-				       &flowtable_hook, flowtable, false);
++				       &flowtable_hook, flowtable, extack, false);
+ 	if (err < 0)
+ 		return err;
  
--/*
-- * Worker that will refresh DFS cache from all active mounts based on lowest TTL value
-- * from a DFS referral.
-- */
--static void refresh_cache_worker(struct work_struct *work)
-+/* Refresh all DFS referrals related to DFS tcon */
-+void dfs_cache_refresh(struct work_struct *work)
- {
- 	struct TCP_Server_Info *server;
--	struct cifs_tcon *tcon, *ntcon;
--	struct list_head tcons;
-+	struct dfs_root_ses *rses;
-+	struct cifs_tcon *tcon;
- 	struct cifs_ses *ses;
+@@ -8039,7 +8049,7 @@ static int nf_tables_delflowtable(struct sk_buff *skb,
+ 	nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
  
--	INIT_LIST_HEAD(&tcons);
-+	tcon = container_of(work, struct cifs_tcon, dfs_cache_work.work);
-+	ses = tcon->ses;
-+	server = ses->server;
+ 	if (nla[NFTA_FLOWTABLE_HOOK])
+-		return nft_delflowtable_hook(&ctx, flowtable);
++		return nft_delflowtable_hook(&ctx, flowtable, extack);
  
--	spin_lock(&cifs_tcp_ses_lock);
--	list_for_each_entry(server, &cifs_tcp_ses_list, tcp_ses_list) {
--		spin_lock(&server->srv_lock);
--		if (!server->leaf_fullpath) {
--			spin_unlock(&server->srv_lock);
--			continue;
--		}
--		spin_unlock(&server->srv_lock);
--
--		list_for_each_entry(ses, &server->smb_ses_list, smb_ses_list) {
--			if (ses->tcon_ipc) {
--				ses->ses_count++;
--				list_add_tail(&ses->tcon_ipc->ulist, &tcons);
--			}
--			list_for_each_entry(tcon, &ses->tcon_list, tcon_list) {
--				if (!tcon->ipc) {
--					tcon->tc_count++;
--					list_add_tail(&tcon->ulist, &tcons);
--				}
--			}
--		}
--	}
--	spin_unlock(&cifs_tcp_ses_lock);
--
--	list_for_each_entry_safe(tcon, ntcon, &tcons, ulist) {
--		struct TCP_Server_Info *server = tcon->ses->server;
--
--		list_del_init(&tcon->ulist);
-+	mutex_lock(&server->refpath_lock);
-+	if (server->leaf_fullpath)
-+		__refresh_tcon(server->leaf_fullpath + 1, ses, false);
-+	mutex_unlock(&server->refpath_lock);
- 
-+	list_for_each_entry(rses, &tcon->dfs_ses_list, list) {
-+		ses = rses->ses;
-+		server = ses->server;
- 		mutex_lock(&server->refpath_lock);
- 		if (server->leaf_fullpath)
--			__refresh_tcon(server->leaf_fullpath + 1, tcon, false);
-+			__refresh_tcon(server->leaf_fullpath + 1, ses, false);
- 		mutex_unlock(&server->refpath_lock);
--
--		if (tcon->ipc)
--			cifs_put_smb_ses(tcon->ses);
--		else
--			cifs_put_tcon(tcon);
- 	}
- 
--	spin_lock(&cache_ttl_lock);
--	queue_delayed_work(dfscache_wq, &refresh_task, cache_ttl * HZ);
--	spin_unlock(&cache_ttl_lock);
-+	queue_delayed_work(dfscache_wq, &tcon->dfs_cache_work,
-+			   atomic_read(&dfs_cache_ttl) * HZ);
- }
-diff --git a/fs/cifs/dfs_cache.h b/fs/cifs/dfs_cache.h
-index e0d39393035a9..c6d89cd6d4fd7 100644
---- a/fs/cifs/dfs_cache.h
-+++ b/fs/cifs/dfs_cache.h
-@@ -13,6 +13,9 @@
- #include <linux/uuid.h>
- #include "cifsglob.h"
- 
-+extern struct workqueue_struct *dfscache_wq;
-+extern atomic_t dfs_cache_ttl;
-+
- #define DFS_CACHE_TGT_LIST_INIT(var) { .tl_numtgts = 0, .tl_list = LIST_HEAD_INIT((var).tl_list), }
- 
- struct dfs_cache_tgt_list {
-@@ -42,6 +45,7 @@ int dfs_cache_get_tgt_share(char *path, const struct dfs_cache_tgt_iterator *it,
- 			    char **prefix);
- char *dfs_cache_canonical_path(const char *path, const struct nls_table *cp, int remap);
- int dfs_cache_remount_fs(struct cifs_sb_info *cifs_sb);
-+void dfs_cache_refresh(struct work_struct *work);
- 
- static inline struct dfs_cache_tgt_iterator *
- dfs_cache_get_next_tgt(struct dfs_cache_tgt_list *tl,
-@@ -89,4 +93,9 @@ dfs_cache_get_nr_tgts(const struct dfs_cache_tgt_list *tl)
- 	return tl ? tl->tl_numtgts : 0;
- }
- 
-+static inline int dfs_cache_get_ttl(void)
-+{
-+	return atomic_read(&dfs_cache_ttl);
-+}
-+
- #endif /* _CIFS_DFS_CACHE_H */
+ 	if (flowtable->use > 0) {
+ 		NL_SET_BAD_ATTR(extack, attr);
 -- 
 2.39.2
 
