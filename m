@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53CAAFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4D2C433EF;
-	Mon, 15 May 2023 17:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F50D512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981D3C433D2;
+	Mon, 15 May 2023 17:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170054;
-	bh=MUMro1ON8i1GRPAlfObErMXpHnnUZ2lJ85KxPh8j/AM=;
+	s=korg; t=1684170057;
+	bh=kltuW1aT/nc6YOfj7X4MjHR1svWrsydIFor7E6q6lyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JouLIrhqj8WMCbXUbOqo3JL5s0zJIqNqbUNovNyE01ntaoD4wXUBAJu0+6+ng42wB
-	 VC/e299C3ZZ3+PttV5s4k6IU+UXXRdJc5ufxXPILo6F5DTIQTT0BbnR0P5a/Ng7uHc
-	 ZOMo5Pi3zx+jAS6UtR72prEQanrXANUXAJZea0zk=
+	b=AEwneCItm+eBlAn4L0eRxPMXrQu0Lr9I2+77dO6mlzQGoOJ8clUA3n+7VMeY7Wt1t
+	 OqbnHqQTmqr3D3MjQ+IXbXQKYx2HD5Je5/KFqmboVW/J0K8sQ7AnCADrJGgWxE7+mm
+	 btFWMlRV3sNkfK+5Z5aFS4czJCm4dgIbzmpfxUIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudip Mukherjee <sudip.mukherjee@sifive.com>,
-	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/239] mtd: spi-nor: add SFDP fixups for Quad Page Program
-Date: Mon, 15 May 2023 18:24:33 +0200
-Message-Id: <20230515161721.900376188@linuxfoundation.org>
+Subject: [PATCH 6.1 011/239] mtd: spi-nor: Add a RWW flag
+Date: Mon, 15 May 2023 18:24:34 +0200
+Message-Id: <20230515161721.929383534@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,75 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudip Mukherjee <sudip.mukherjee@sifive.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 1799cd8540b67b88514c82f5fae1c75b986bcbd8 ]
+[ Upstream commit 4eddee70140b3ae183398b246a609756546c51f1 ]
 
-SFDP table of some flash chips do not advertise support of Quad Input
-Page Program even though it has support. Use flags and add hardware
-cap for these chips.
+Introduce a new (no SFDP) flag for the feature that we are about to
+support: Read While Write. This means, if the chip has several banks and
+supports RWW, once a page of data to write has been transferred into the
+chip's internal SRAM, another read operation happening on a different
+bank can be performed during the tPROG delay.
 
-Signed-off-by: Sudip Mukherjee <sudip.mukherjee@sifive.com>
-[tudor.ambarus@microchip.com: move pp setting in spi_nor_init_default_params]
-Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Link: https://lore.kernel.org/r/20220920184808.44876-2-sudip.mukherjee@sifive.com
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/r/20230328154105.448540-7-miquel.raynal@bootlin.com
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Stable-dep-of: 9fd0945fe6fa ("mtd: spi-nor: spansion: Enable JFFS2 write buffer for Infineon s28hx SEMPER flash")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/core.c | 6 ++++++
- drivers/mtd/spi-nor/core.h | 2 ++
- drivers/mtd/spi-nor/issi.c | 1 +
- 3 files changed, 9 insertions(+)
+ drivers/mtd/spi-nor/core.c    | 3 +++
+ drivers/mtd/spi-nor/core.h    | 3 +++
+ drivers/mtd/spi-nor/debugfs.c | 1 +
+ 3 files changed, 7 insertions(+)
 
 diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 9a7bea365acb7..88da4a125c743 100644
+index 88da4a125c743..621e9ad4bcc39 100644
 --- a/drivers/mtd/spi-nor/core.c
 +++ b/drivers/mtd/spi-nor/core.c
-@@ -2578,6 +2578,12 @@ static void spi_nor_init_default_params(struct spi_nor *nor)
- 	params->hwcaps.mask |= SNOR_HWCAPS_PP;
- 	spi_nor_set_pp_settings(&params->page_programs[SNOR_CMD_PP],
- 				SPINOR_OP_PP, SNOR_PROTO_1_1_1);
+@@ -2440,6 +2440,9 @@ static void spi_nor_init_flags(struct spi_nor *nor)
+ 
+ 	if (flags & NO_CHIP_ERASE)
+ 		nor->flags |= SNOR_F_NO_OP_CHIP_ERASE;
 +
-+	if (info->flags & SPI_NOR_QUAD_PP) {
-+		params->hwcaps.mask |= SNOR_HWCAPS_PP_1_1_4;
-+		spi_nor_set_pp_settings(&params->page_programs[SNOR_CMD_PP_1_1_4],
-+					SPINOR_OP_PP_1_1_4, SNOR_PROTO_1_1_4);
-+	}
++	if (flags & SPI_NOR_RWW)
++		nor->flags |= SNOR_F_RWW;
  }
  
  /**
 diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
-index 00bf0d0e955a0..8a846ad86d298 100644
+index 8a846ad86d298..f23d1e77199e5 100644
 --- a/drivers/mtd/spi-nor/core.h
 +++ b/drivers/mtd/spi-nor/core.h
-@@ -458,6 +458,7 @@ struct spi_nor_fixups {
-  *   SPI_NOR_NO_ERASE:        no erase command needed.
+@@ -130,6 +130,7 @@ enum spi_nor_option_flags {
+ 	SNOR_F_IO_MODE_EN_VOLATILE = BIT(11),
+ 	SNOR_F_SOFT_RESET	= BIT(12),
+ 	SNOR_F_SWP_IS_VOLATILE	= BIT(13),
++	SNOR_F_RWW		= BIT(14),
+ };
+ 
+ struct spi_nor_read_command {
+@@ -459,6 +460,7 @@ struct spi_nor_fixups {
   *   NO_CHIP_ERASE:           chip does not support chip erase.
   *   SPI_NOR_NO_FR:           can't do fastread.
-+ *   SPI_NOR_QUAD_PP:         flash supports Quad Input Page Program.
+  *   SPI_NOR_QUAD_PP:         flash supports Quad Input Page Program.
++ *   SPI_NOR_RWW:             flash supports reads while write.
   *
   * @no_sfdp_flags:  flags that indicate support that can be discovered via SFDP.
   *                  Used when SFDP tables are not defined in the flash. These
-@@ -507,6 +508,7 @@ struct flash_info {
- #define SPI_NOR_NO_ERASE		BIT(6)
+@@ -509,6 +511,7 @@ struct flash_info {
  #define NO_CHIP_ERASE			BIT(7)
  #define SPI_NOR_NO_FR			BIT(8)
-+#define SPI_NOR_QUAD_PP			BIT(9)
+ #define SPI_NOR_QUAD_PP			BIT(9)
++#define SPI_NOR_RWW			BIT(10)
  
  	u8 no_sfdp_flags;
  #define SPI_NOR_SKIP_SFDP		BIT(0)
-diff --git a/drivers/mtd/spi-nor/issi.c b/drivers/mtd/spi-nor/issi.c
-index 89a66a19d754f..7c8eee808dda6 100644
---- a/drivers/mtd/spi-nor/issi.c
-+++ b/drivers/mtd/spi-nor/issi.c
-@@ -73,6 +73,7 @@ static const struct flash_info issi_nor_parts[] = {
- 	{ "is25wp256", INFO(0x9d7019, 0, 64 * 1024, 512)
- 		NO_SFDP_FLAGS(SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ)
- 		FIXUP_FLAGS(SPI_NOR_4B_OPCODES)
-+		FLAGS(SPI_NOR_QUAD_PP)
- 		.fixups = &is25lp256_fixups },
+diff --git a/drivers/mtd/spi-nor/debugfs.c b/drivers/mtd/spi-nor/debugfs.c
+index 5f56b23205d8b..8b4922a1aafb9 100644
+--- a/drivers/mtd/spi-nor/debugfs.c
++++ b/drivers/mtd/spi-nor/debugfs.c
+@@ -25,6 +25,7 @@ static const char *const snor_f_names[] = {
+ 	SNOR_F_NAME(IO_MODE_EN_VOLATILE),
+ 	SNOR_F_NAME(SOFT_RESET),
+ 	SNOR_F_NAME(SWP_IS_VOLATILE),
++	SNOR_F_NAME(RWW),
+ };
+ #undef SNOR_F_NAME
  
- 	/* PMC */
 -- 
 2.39.2
 
