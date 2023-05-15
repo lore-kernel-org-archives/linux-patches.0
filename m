@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BECBD512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3255C4339B;
-	Mon, 15 May 2023 16:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89313D512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E013CC433EF;
+	Mon, 15 May 2023 16:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168407;
-	bh=id2S6nBlN/37MdHf1wUp7CHlbRzzlmjFhnPRGMbd2m0=;
+	s=korg; t=1684168410;
+	bh=mDgzfjAPKrsfbwPvzL4Z90EaGAz4BlY7kENVzOuNEYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2SR7xf8MtheIq27voYBoKvjfByIIJ6+e3sJ+jUAhDyu9vlI/EIBVsljyyDzO3Y8lK
-	 nFyexe8KfgtJLgIh9WEl3+WpvL1i/TlrxbtBoElppw4iLan60rWV9bIEDpzO/SkqmN
-	 2wvOX8jtIlic1AC/v1UPrFgOJwnFebfzyDQa8FqU=
+	b=10M5byIcAMW7hgI9klhfA53cR1HccnDVCUq2wXzcTztdmV/zzLzpkotzxKEyk61Qx
+	 N/CRJhOeqMr7AOiQuArRkpSWoRC+eZc7j8eapDOKfP2hgIqA3NdyE6Etj3tmfOvx9B
+	 0LmPRFfvYwdvwIsyKVddGGw02xRXN6QpFK6xRk2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <jdamato@fastly.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 4.14 040/116] ixgbe: Enable setting RSS table to default values
-Date: Mon, 15 May 2023 18:25:37 +0200
-Message-Id: <20230515161659.599243323@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 041/116] ipv4: Fix potential uninit variable access bug in __ip_make_skb()
+Date: Mon, 15 May 2023 18:25:38 +0200
+Message-Id: <20230515161659.628375976@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -37,145 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Damato <jdamato@fastly.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit e85d3d55875f7a1079edfbc4e4e98d6f8aea9ac7 ]
+[ Upstream commit 99e5acae193e369b71217efe6f1dad42f3f18815 ]
 
-ethtool uses `ETHTOOL_GRXRINGS` to compute how many queues are supported
-by RSS. The driver should return the smaller of either:
-  - The maximum number of RSS queues the device supports, OR
-  - The number of RX queues configured
+Like commit ea30388baebc ("ipv6: Fix an uninit variable access bug in
+__ip6_make_skb()"). icmphdr does not in skb linear region under the
+scenario of SOCK_RAW socket. Access icmp_hdr(skb)->type directly will
+trigger the uninit variable access bug.
 
-Prior to this change, running `ethtool -X $iface default` fails if the
-number of queues configured is larger than the number supported by RSS,
-even though changing the queue count correctly resets the flowhash to
-use all supported queues.
+Use a local variable icmp_type to carry the correct value in different
+scenarios.
 
-Other drivers (for example, i40e) will succeed but the flow hash will
-reset to support the maximum number of queues supported by RSS, even if
-that amount is smaller than the configured amount.
-
-Prior to this change:
-
-$ sudo ethtool -L eth1 combined 20
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 20 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9    10    11    12    13    14    15
-   16:      0     1     2     3     4     5     6     7
-   24:      8     9    10    11    12    13    14    15
-   32:      0     1     2     3     4     5     6     7
-...
-
-You can see that the flowhash was correctly set to use the maximum
-number of queues supported by the driver (16).
-
-However, asking the NIC to reset to "default" fails:
-
-$ sudo ethtool -X eth1 default
-Cannot set RX flow hash configuration: Invalid argument
-
-After this change, the flowhash can be reset to default which will use
-all of the available RSS queues (16) or the configured queue count,
-whichever is smaller.
-
-Starting with eth1 which has 10 queues and a flowhash distributing to
-all 10 queues:
-
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 10 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9     0     1     2     3     4     5
-   16:      6     7     8     9     0     1     2     3
-...
-
-Increasing the queue count to 48 resets the flowhash to distribute to 16
-queues, as it did before this patch:
-
-$ sudo ethtool -L eth1 combined 48
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 16 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9    10    11    12    13    14    15
-   16:      0     1     2     3     4     5     6     7
-...
-
-Due to the other bugfix in this series, the flowhash can be set to use
-queues 0-5:
-
-$ sudo ethtool -X eth1 equal 5
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 16 RX ring(s):
-    0:      0     1     2     3     4     0     1     2
-    8:      3     4     0     1     2     3     4     0
-   16:      1     2     3     4     0     1     2     3
-...
-
-Due to this bugfix, the flowhash can be reset to default and use 16
-queues:
-
-$ sudo ethtool -X eth1 default
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 16 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9    10    11    12    13    14    15
-   16:      0     1     2     3     4     5     6     7
-...
-
-Fixes: 91cd94bfe4f0 ("ixgbe: add basic support for setting and getting nfc controls")
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 96793b482540 ("[IPV4]: Add ICMPMsgStats MIB (RFC 4293)")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/ixgbe/ixgbe_ethtool.c  | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ net/ipv4/ip_output.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-index 4bfa9ba8201b1..55b2b6eaae2bf 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-@@ -2554,6 +2554,14 @@ static int ixgbe_get_rss_hash_opts(struct ixgbe_adapter *adapter,
- 	return 0;
- }
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index aab18ab49e3b9..c5c9dc0f41cbc 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -1415,9 +1415,19 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
+ 	cork->dst = NULL;
+ 	skb_dst_set(skb, &rt->dst);
  
-+static int ixgbe_rss_indir_tbl_max(struct ixgbe_adapter *adapter)
-+{
-+	if (adapter->hw.mac.type < ixgbe_mac_X550)
-+		return 16;
-+	else
-+		return 64;
-+}
+-	if (iph->protocol == IPPROTO_ICMP)
+-		icmp_out_count(net, ((struct icmphdr *)
+-			skb_transport_header(skb))->type);
++	if (iph->protocol == IPPROTO_ICMP) {
++		u8 icmp_type;
 +
- static int ixgbe_get_rxnfc(struct net_device *dev, struct ethtool_rxnfc *cmd,
- 			   u32 *rule_locs)
- {
-@@ -2562,7 +2570,8 @@ static int ixgbe_get_rxnfc(struct net_device *dev, struct ethtool_rxnfc *cmd,
++		/* For such sockets, transhdrlen is zero when do ip_append_data(),
++		 * so icmphdr does not in skb linear region and can not get icmp_type
++		 * by icmp_hdr(skb)->type.
++		 */
++		if (sk->sk_type == SOCK_RAW && !inet_sk(sk)->hdrincl)
++			icmp_type = fl4->fl4_icmp_type;
++		else
++			icmp_type = icmp_hdr(skb)->type;
++		icmp_out_count(net, icmp_type);
++	}
  
- 	switch (cmd->cmd) {
- 	case ETHTOOL_GRXRINGS:
--		cmd->data = adapter->num_rx_queues;
-+		cmd->data = min_t(int, adapter->num_rx_queues,
-+				  ixgbe_rss_indir_tbl_max(adapter));
- 		ret = 0;
- 		break;
- 	case ETHTOOL_GRXCLSRLCNT:
-@@ -2964,14 +2973,6 @@ static int ixgbe_set_rxnfc(struct net_device *dev, struct ethtool_rxnfc *cmd)
- 	return ret;
- }
- 
--static int ixgbe_rss_indir_tbl_max(struct ixgbe_adapter *adapter)
--{
--	if (adapter->hw.mac.type < ixgbe_mac_X550)
--		return 16;
--	else
--		return 64;
--}
--
- static u32 ixgbe_get_rxfh_key_size(struct net_device *netdev)
- {
- 	return IXGBE_RSS_KEY_SIZE;
+ 	ip_cork_release(cork);
+ out:
 -- 
 2.39.2
 
