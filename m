@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F42FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2FEAC433EF;
-	Mon, 15 May 2023 17:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1DBFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F68C433EF;
+	Mon, 15 May 2023 17:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171382;
-	bh=JC70Sl1t0WUNNhXT84QXKEaHtPHWnyTKtGEoYJAcAbs=;
+	s=korg; t=1684171385;
+	bh=///zHZg4pXoJKgurYXlA50L1XGwpvcc8o1dla1oLyCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OZa7b9Cg8iqsJXuG9KOZZAb3EDtFofqK8hA/2eb6sB/0mbhr0ywy266SuLHcOncUw
-	 DQa0dug1/5Df1QP9eIoMEKXL88syUGfcAU7K1lfQfrJGTMI/yD215ve6SGuUXO5OYT
-	 /ONdP2IFB/qo6YZLIwGX/8JEcCWEERtSqTnj4zRw=
+	b=VFdtsL4R7n8x5afKlVN47gL9LxfkSvCEAQDvoaw4sPHTLSJwPjw/rC67lpOIfylBv
+	 /A2+17g9g+u7yS/x7b0ktD547vMxBHgZ82ooWQJHkH7hHQ/70UoVzD8adlcNfTEjQ/
+	 0KrBnq+9+kemOLS4UlGZKFuYXn1ykGVaw4ceVrHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Horatio Zhang <Hongkun.Zhang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
 	Guchun Chen <guchun.chen@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 191/242] drm/amdgpu: drop redundant sched job cleanup when cs is aborted
-Date: Mon, 15 May 2023 18:28:37 +0200
-Message-Id: <20230515161727.675768319@linuxfoundation.org>
+Subject: [PATCH 6.2 192/242] drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v10_0_hw_fini
+Date: Mon, 15 May 2023 18:28:38 +0200
+Message-Id: <20230515161727.709069097@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,62 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Horatio Zhang <Hongkun.Zhang@amd.com>
 
-commit 1253685f0d3eb3eab0bfc4bf15ab341a5f3da0c8 upstream.
+commit 08c677cb0b436a96a836792bb35a8ec5de4999c2 upstream.
 
-Once command submission failed due to userptr invalidation in
-amdgpu_cs_submit, legacy code will perform cleanup of scheduler
-job. However, it's not needed at all, as former commit has integrated
-job cleanup stuff into amdgpu_job_free. Otherwise, because of double
-free, a NULL pointer dereference will occur in such scenario.
+The gmc.ecc_irq is enabled by firmware per IFWI setting,
+and the host driver is not privileged to enable/disable
+the interrupt. So, it is meaningless to use the amdgpu_irq_put
+function in gmc_v10_0_hw_fini, which also leads to the call
+trace.
 
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2457
-Fixes: f7d66fb2ea43 ("drm/amdgpu: cleanup scheduler job initialization v2")
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+[   82.340264] Call Trace:
+[   82.340265]  <TASK>
+[   82.340269]  gmc_v10_0_hw_fini+0x83/0xa0 [amdgpu]
+[   82.340447]  gmc_v10_0_suspend+0xe/0x20 [amdgpu]
+[   82.340623]  amdgpu_device_ip_suspend_phase2+0x127/0x1c0 [amdgpu]
+[   82.340789]  amdgpu_device_ip_suspend+0x3d/0x80 [amdgpu]
+[   82.340955]  amdgpu_device_pre_asic_reset+0xdd/0x2b0 [amdgpu]
+[   82.341122]  amdgpu_device_gpu_recover.cold+0x4dd/0xbb2 [amdgpu]
+[   82.341359]  amdgpu_debugfs_reset_work+0x4c/0x70 [amdgpu]
+[   82.341529]  process_one_work+0x21d/0x3f0
+[   82.341535]  worker_thread+0x1fa/0x3c0
+[   82.341538]  ? process_one_work+0x3f0/0x3f0
+[   82.341540]  kthread+0xff/0x130
+[   82.341544]  ? kthread_complete_and_exit+0x20/0x20
+[   82.341547]  ret_from_fork+0x22/0x30
+
+Signed-off-by: Horatio Zhang <Hongkun.Zhang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Guchun Chen <guchun.chen@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
+Fixes: c8b5a95b5709 ("drm/amdgpu: Fix desktop freezed after gpu-reset")
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |   13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1274,7 +1274,7 @@ static int amdgpu_cs_submit(struct amdgp
- 		r = drm_sched_job_add_dependency(&leader->base, fence);
- 		if (r) {
- 			dma_fence_put(fence);
--			goto error_cleanup;
-+			return r;
- 		}
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+@@ -1145,7 +1145,6 @@ static int gmc_v10_0_hw_fini(void *handl
+ 		return 0;
  	}
  
-@@ -1301,7 +1301,8 @@ static int amdgpu_cs_submit(struct amdgp
- 	}
- 	if (r) {
- 		r = -EAGAIN;
--		goto error_unlock;
-+		mutex_unlock(&p->adev->notifier_lock);
-+		return r;
- 	}
+-	amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
  
- 	p->fence = dma_fence_get(&leader->base.s_fence->finished);
-@@ -1348,14 +1349,6 @@ static int amdgpu_cs_submit(struct amdgp
- 	mutex_unlock(&p->adev->notifier_lock);
- 	mutex_unlock(&p->bo_list->bo_list_mutex);
  	return 0;
--
--error_unlock:
--	mutex_unlock(&p->adev->notifier_lock);
--
--error_cleanup:
--	for (i = 0; i < p->gang_size; ++i)
--		drm_sched_job_cleanup(&p->jobs[i]->base);
--	return r;
- }
- 
- /* Cleanup the parser structure */
 
 
