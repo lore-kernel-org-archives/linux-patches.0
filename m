@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1659AFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77A39C433EF;
-	Mon, 15 May 2023 17:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B87FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89314C433EF;
+	Mon, 15 May 2023 17:23:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171394;
-	bh=Ju7e178sOtBRAO2y1aDdKAo7sOcEGoyUpMVi8dpuPXM=;
+	s=korg; t=1684171398;
+	bh=doUGeYeK5D6hC+5KFMRRy2mVHjf3LgxF2nqwGpUT1Cs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lQRC4xHPRDKF/aHBu0rYPrppGg8TVRHfT0EJ+aQ9yg7PbbONrk54WTn6LC220AM97
-	 3HocoVbsqt9YGyhh0a2Qn4tUePyBfvtZqSPUn73TLbgC5D8reGb2vCDVsF1BVN+pIx
-	 sretnD+VS60Hpzk/Y9RAww3GYgSt/h8RRXCE/h9M=
+	b=g1QuLC0j4ry3mxTN0qIExh5gl155ft2NtKhIBwW2D1gXzBvVRJu6rYIotuWIFUk9t
+	 11fQzusdatBckcVWvOED8O2GxAOxA3kvk93KunL0+fekN37M96tPWoNAC37kkKlHbg
+	 GBRhBkRQjw/rJciapZ1535lRvWHimKffGId9ClI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guchun Chen <guchun.chen@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
+	Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
+	Veerabadhran Gopalakrishnan <Veerabadhran.Gopalakrishnan@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 195/242] drm/amdgpu/gfx: disable gfx9 cp_ecc_error_irq only when enabling legacy gfx ras
-Date: Mon, 15 May 2023 18:28:41 +0200
-Message-Id: <20230515161727.797026033@linuxfoundation.org>
+Subject: [PATCH 6.2 196/242] drm/amdgpu/jpeg: Remove harvest checking for JPEG3
+Date: Mon, 15 May 2023 18:28:42 +0200
+Message-Id: <20230515161727.825961259@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,59 +35,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
 
-commit 4a76680311330aefe5074bed8f06afa354b85c48 upstream.
+commit 5b94db73e45e2e6c2840f39c022fd71dfa47fc58 upstream.
 
-gfx9 cp_ecc_error_irq is only enabled when legacy gfx ras is assert.
-So in gfx_v9_0_hw_fini, interrupt disablement for cp_ecc_error_irq
-should be executed under such condition, otherwise, an amdgpu_irq_put
-calltrace will occur.
+Register CC_UVD_HARVESTING is obsolete for JPEG 3.1.2
 
-[ 7283.170322] RIP: 0010:amdgpu_irq_put+0x45/0x70 [amdgpu]
-[ 7283.170964] RSP: 0018:ffff9a5fc3967d00 EFLAGS: 00010246
-[ 7283.170967] RAX: ffff98d88afd3040 RBX: ffff98d89da20000 RCX: 0000000000000000
-[ 7283.170969] RDX: 0000000000000000 RSI: ffff98d89da2bef8 RDI: ffff98d89da20000
-[ 7283.170971] RBP: ffff98d89da20000 R08: ffff98d89da2ca18 R09: 0000000000000006
-[ 7283.170973] R10: ffffd5764243c008 R11: 0000000000000000 R12: 0000000000001050
-[ 7283.170975] R13: ffff98d89da38978 R14: ffffffff999ae15a R15: ffff98d880130105
-[ 7283.170978] FS:  0000000000000000(0000) GS:ffff98d996f00000(0000) knlGS:0000000000000000
-[ 7283.170981] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 7283.170983] CR2: 00000000f7a9d178 CR3: 00000001c42ea000 CR4: 00000000003506e0
-[ 7283.170986] Call Trace:
-[ 7283.170988]  <TASK>
-[ 7283.170989]  gfx_v9_0_hw_fini+0x1c/0x6d0 [amdgpu]
-[ 7283.171655]  amdgpu_device_ip_suspend_phase2+0x101/0x1a0 [amdgpu]
-[ 7283.172245]  amdgpu_device_suspend+0x103/0x180 [amdgpu]
-[ 7283.172823]  amdgpu_pmops_freeze+0x21/0x60 [amdgpu]
-[ 7283.173412]  pci_pm_freeze+0x54/0xc0
-[ 7283.173419]  ? __pfx_pci_pm_freeze+0x10/0x10
-[ 7283.173425]  dpm_run_callback+0x98/0x200
-[ 7283.173430]  __device_suspend+0x164/0x5f0
-
-v2: drop gfx11 as it's fixed in a different solution by retiring cp_ecc_irq funcs(Hawking)
-
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
+Reviewed-by: Veerabadhran Gopalakrishnan <Veerabadhran.Gopalakrishnan@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -3845,7 +3845,8 @@ static int gfx_v9_0_hw_fini(void *handle
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+--- a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
+@@ -54,6 +54,7 @@ static int jpeg_v3_0_early_init(void *ha
  
--	amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
-+	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__GFX))
-+		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
- 	amdgpu_irq_put(adev, &adev->gfx.priv_reg_irq, 0);
- 	amdgpu_irq_put(adev, &adev->gfx.priv_inst_irq, 0);
- 
+ 	switch (adev->ip_versions[UVD_HWIP][0]) {
+ 	case IP_VERSION(3, 1, 1):
++	case IP_VERSION(3, 1, 2):
+ 		break;
+ 	default:
+ 		harvest = RREG32_SOC15(JPEG, 0, mmCC_UVD_HARVESTING);
 
 
