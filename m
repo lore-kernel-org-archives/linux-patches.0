@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C38FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F1BC433EF;
-	Mon, 15 May 2023 16:47:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36C6FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:47:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25828C433EF;
+	Mon, 15 May 2023 16:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169253;
-	bh=10PrFOX4WF5f8/43rF2h3WrMmn/LvJNR/3zPcqbrsbo=;
+	s=korg; t=1684169256;
+	bh=QyduOsEwRvEmvpGJPIOv46s04vhblpwmm6AXtDn+8MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UGJD8AdsPy8iRG5q9ePJH7/Uv1xw/Zr2NfTEzuea9c1aEebmZOF1JEYODc8opKEH
-	 9gxqo0XKeWEjq/o+3LcRN6DT86LBFAk1gaGFfJ/b0Vb4Cmb+t9tll6gTg/qSDajX2w
-	 jdTkl6LgKR9S68ZllKO8hoOE+okhP6gMyq8X+BoE=
+	b=2kMaxjAJJkY3EwIqPoVf2Z81laRk9FNnquotr4++oRoihZ2D4ZTUsQp9MnLSlCFgB
+	 qFb6rp4SsxHjlb7yxUaqGz1US63i26ZXmek27Iqup2e2JbAhLIAm2KVsKEv0+K2gYL
+	 PC+tIRBeiRNgpB/duB4lLptmX6KbWTS/8pW7w2pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angelo Dureghello <angelo.dureghello@timesys.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 151/191] net: dsa: mv88e6xxx: add mv88e6321 rsvd2cpu
-Date: Mon, 15 May 2023 18:26:28 +0200
-Message-Id: <20230515161712.898675370@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 4.19 185/191] tty: Prevent writing chars during tcsetattr TCSADRAIN/FLUSH
+Date: Mon, 15 May 2023 18:27:02 +0200
+Message-Id: <20230515161714.211195755@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,36 +33,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Angelo Dureghello <angelo.dureghello@timesys.com>
+From: "Ilpo J�rvinen" <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 6686317855c6997671982d4489ccdd946f644957 ]
+If userspace races tcsetattr() with a write, the drained condition
+might not be guaranteed by the kernel. There is a race window after
+checking Tx is empty before tty_set_termios() takes termios_rwsem for
+write. During that race window, more characters can be queued by a
+racing writer.
 
-Add rsvd2cpu capability for mv88e6321 model, to allow proper bpdu
-processing.
+Any ongoing transmission might produce garbage during HW's
+->set_termios() call. The intent of TCSADRAIN/FLUSH seems to be
+preventing such a character corruption. If those flags are set, take
+tty's write lock to stop any writer before performing the lower layer
+Tx empty check and wait for the pending characters to be sent (if any).
 
-Signed-off-by: Angelo Dureghello <angelo.dureghello@timesys.com>
-Fixes: 51c901a775621 ("net: dsa: mv88e6xxx: distinguish Global 2 Rsvd2CPU")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The initial wait for all-writers-done must be placed outside of tty's
+write lock to avoid deadlock which makes it impossible to use
+tty_wait_until_sent(). The write lock is retried if a racing write is
+detected.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230317113318.31327-2-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(cherry picked from commit 094fb49a2d0d6827c86d2e0840873e6db0c491d2)
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/tty_io.c    |    4 ++--
+ drivers/tty/tty_ioctl.c |   45 +++++++++++++++++++++++++++++++++------------
+ include/linux/tty.h     |    2 ++
+ 3 files changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index fddd7e4f3de71..b593e4d85e9c0 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -3645,6 +3645,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
- 	.set_cpu_port = mv88e6095_g1_set_cpu_port,
- 	.set_egress_port = mv88e6095_g1_set_egress_port,
- 	.watchdog_ops = &mv88e6390_watchdog_ops,
-+	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
- 	.reset = mv88e6352_g1_reset,
- 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
- 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
--- 
-2.39.2
-
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -875,13 +875,13 @@ static ssize_t tty_read(struct file *fil
+ 	return i;
+ }
+ 
+-static void tty_write_unlock(struct tty_struct *tty)
++void tty_write_unlock(struct tty_struct *tty)
+ {
+ 	mutex_unlock(&tty->atomic_write_lock);
+ 	wake_up_interruptible_poll(&tty->write_wait, EPOLLOUT);
+ }
+ 
+-static int tty_write_lock(struct tty_struct *tty, int ndelay)
++int tty_write_lock(struct tty_struct *tty, int ndelay)
+ {
+ 	if (!mutex_trylock(&tty->atomic_write_lock)) {
+ 		if (ndelay)
+--- a/drivers/tty/tty_ioctl.c
++++ b/drivers/tty/tty_ioctl.c
+@@ -397,21 +397,42 @@ static int set_termios(struct tty_struct
+ 	tmp_termios.c_ispeed = tty_termios_input_baud_rate(&tmp_termios);
+ 	tmp_termios.c_ospeed = tty_termios_baud_rate(&tmp_termios);
+ 
+-	ld = tty_ldisc_ref(tty);
++	if (opt & (TERMIOS_FLUSH|TERMIOS_WAIT)) {
++retry_write_wait:
++		retval = wait_event_interruptible(tty->write_wait, !tty_chars_in_buffer(tty));
++		if (retval < 0)
++			return retval;
+ 
+-	if (ld != NULL) {
+-		if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
+-			ld->ops->flush_buffer(tty);
+-		tty_ldisc_deref(ld);
+-	}
++		if (tty_write_lock(tty, 0) < 0)
++			goto retry_write_wait;
+ 
+-	if (opt & TERMIOS_WAIT) {
+-		tty_wait_until_sent(tty, 0);
+-		if (signal_pending(current))
+-			return -ERESTARTSYS;
+-	}
++		/* Racing writer? */
++		if (tty_chars_in_buffer(tty)) {
++			tty_write_unlock(tty);
++			goto retry_write_wait;
++		}
++
++		ld = tty_ldisc_ref(tty);
++		if (ld != NULL) {
++			if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
++				ld->ops->flush_buffer(tty);
++			tty_ldisc_deref(ld);
++		}
+ 
+-	tty_set_termios(tty, &tmp_termios);
++		if ((opt & TERMIOS_WAIT) && tty->ops->wait_until_sent) {
++			tty->ops->wait_until_sent(tty, 0);
++			if (signal_pending(current)) {
++				tty_write_unlock(tty);
++				return -ERESTARTSYS;
++			}
++		}
++
++		tty_set_termios(tty, &tmp_termios);
++
++		tty_write_unlock(tty);
++	} else {
++		tty_set_termios(tty, &tmp_termios);
++	}
+ 
+ 	/* FIXME: Arguably if tmp_termios == tty->termios AND the
+ 	   actual requested termios was not tmp_termios then we may
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -480,6 +480,8 @@ extern void __stop_tty(struct tty_struct
+ extern void stop_tty(struct tty_struct *tty);
+ extern void __start_tty(struct tty_struct *tty);
+ extern void start_tty(struct tty_struct *tty);
++void tty_write_unlock(struct tty_struct *tty);
++int tty_write_lock(struct tty_struct *tty, int ndelay);
+ extern int tty_register_driver(struct tty_driver *driver);
+ extern int tty_unregister_driver(struct tty_driver *driver);
+ extern struct device *tty_register_device(struct tty_driver *driver,
 
 
