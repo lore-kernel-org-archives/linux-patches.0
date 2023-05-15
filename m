@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA4F7FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EB1AC4339B;
-	Mon, 15 May 2023 17:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337F5FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DD7FC4339C;
+	Mon, 15 May 2023 17:22:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171325;
-	bh=JEIw3/JeNfM0mUIqTOhzCXaqqyzceP9zscvyxHK/3V4=;
+	s=korg; t=1684171328;
+	bh=SI5unBrxwNY48CnBdvlRteVOARI2eCLIK3MmiTVSsGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kyZNcPCNk/2dtGJ0lHoiyegApazQ9043k4EDsEbAQDH+3OUEJANFSJbACryP0K2Na
-	 +nKUwpdnIUsbNniBDx9dagg5yg+Whm9t2PjZOIPfam80WPOjDleGb/Z0uzGARUk3SC
-	 xzhMAy1rBAfVJ50sjfLhzOTIcShmrRKRDoY+QcVM=
+	b=OdW1gMA6vTG4IaSSDziu/pDHppktGTyetXZZ412GnPuRVg7DZFF4TvaruKokKITiO
+	 tbU3FU1HerJ4kwxhmAr9fZX2l0ajyzO91CageJwqoxa0Xiv/528OYRqdrdqvrxPsPX
+	 3k8awCA+xdV01iRiisv1g1nwhtl7mma2X+cGSE3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Wendy Wang <wendy.wang@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.2 143/242] platform/x86/intel-uncore-freq: Return error on write frequency
-Date: Mon, 15 May 2023 18:27:49 +0200
-Message-Id: <20230515161726.191866151@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.2 134/242] btrfs: zero the buffer before marking it dirty in btrfs_redirty_list_add
+Date: Mon, 15 May 2023 18:27:40 +0200
+Message-Id: <20230515161725.922657280@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -37,47 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 75e406b540c3eca67625d97bbefd4e3787eafbfe upstream.
+commit c83b56d1dd87cf67492bb770c26d6f87aee70ed6 upstream.
 
-Currently when the uncore_write() returns error, it is silently
-ignored. Return error to user space when uncore_write() fails.
+btrfs_redirty_list_add zeroes the buffer data and sets the
+EXTENT_BUFFER_NO_CHECK to make sure writeback is fine with a bogus
+header.  But it does that after already marking the buffer dirty, which
+means that writeback could already be looking at the buffer.
 
-Fixes: 49a474c7ba51 ("platform/x86: Add support for Uncore frequency control")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Wendy Wang <wendy.wang@intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230418153230.679094-1-srinivas.pandruvada@linux.intel.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Switch the order of operations around so that the buffer is only marked
+dirty when we're ready to write it.
+
+Fixes: d3575156f662 ("btrfs: zoned: redirty released extent buffers")
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/btrfs/zoned.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency-common.c
-@@ -44,14 +44,18 @@ static ssize_t store_min_max_freq_khz(st
- 				      int min_max)
- {
- 	unsigned int input;
-+	int ret;
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -1606,11 +1606,11 @@ void btrfs_redirty_list_add(struct btrfs
+ 	    !list_empty(&eb->release_list))
+ 		return;
  
- 	if (kstrtouint(buf, 10, &input))
- 		return -EINVAL;
++	memzero_extent_buffer(eb, 0, eb->len);
++	set_bit(EXTENT_BUFFER_NO_CHECK, &eb->bflags);
+ 	set_extent_buffer_dirty(eb);
+ 	set_extent_bits_nowait(&trans->dirty_pages, eb->start,
+ 			       eb->start + eb->len - 1, EXTENT_DIRTY);
+-	memzero_extent_buffer(eb, 0, eb->len);
+-	set_bit(EXTENT_BUFFER_NO_CHECK, &eb->bflags);
  
- 	mutex_lock(&uncore_lock);
--	uncore_write(data, input, min_max);
-+	ret = uncore_write(data, input, min_max);
- 	mutex_unlock(&uncore_lock);
- 
-+	if (ret)
-+		return ret;
-+
- 	return count;
- }
- 
+ 	spin_lock(&trans->releasing_ebs_lock);
+ 	list_add_tail(&eb->release_list, &trans->releasing_ebs);
 
 
