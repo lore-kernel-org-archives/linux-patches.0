@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D314BDF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B06C433D2;
-	Mon, 15 May 2023 16:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3775DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356FEC433D2;
+	Mon, 15 May 2023 16:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168551;
-	bh=mPVHQG3wkykm4b9DcExtlMVpVjuKR6KpDR1/7/KdtCI=;
+	s=korg; t=1684168554;
+	bh=YP20k4uTBYOa3lNZ/nESrY3geiP1NtK9CIRuCqQeXxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rhj6CVwg6Plv2KMkKTIZ626WcJAfSIBwNrbj3/fdV9fWzOBFWdQ1848S7eZ84hqLx
-	 sCjEpFK16l4vYkWXFu/pvyKk+fLXrRhi8T/okIC3MdwrzR3z/OmFS7MKix/ABLcJBn
-	 N3bsYP51gW7bgcpRc6SiVc3ZX8iwHbZwCSDm+mds=
+	b=t9i4DhURvoTN/0NQKWnVmA3L3rxT7i2sDl3WMd93Hk6Mj4sonF+Vdm8KK7ls0002X
+	 DYlCS/oASTs38/0T3SR1I6aNYxVRw0E3+B+V1eAi6ZdhTcmIlcMiZELl/C4XSsthpq
+	 LbkkdsHJHi53QJVyEFRwbi5kMM/FIhwXRQ1iRlZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 085/116] netfilter: nft_hash: fix nft_hash_deactivate
-Date: Mon, 15 May 2023 18:26:22 +0200
-Message-Id: <20230515161701.107297105@linuxfoundation.org>
+Subject: [PATCH 4.14 086/116] netfilter: nf_tables: use-after-free in failing rule with bound set
+Date: Mon, 15 May 2023 18:26:23 +0200
+Message-Id: <20230515161701.138215173@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -37,32 +36,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ backport for 4.14 of 7f4dae2d7f03d2aaf3b7d8343d4509c8d9d7ca9b ]
+[ backport for 4.14 of 6a0a8d10a3661a036b55af695542a714c429ab7c ]
 
-Jindřich Makovička says:
-  The logical OR looks fishy to me. Shouldn't be && there instead?
+If a rule that has already a bound anonymous set fails to be added, the
+preparation phase releases the rule and the bound set. However, the
+transaction object from the abort path still has a reference to the set
+object that is stale, leading to a use-after-free when checking for the
+set->bound field. Add a new field to the transaction that specifies if
+the set is bound, so the abort path can skip releasing it since the rule
+command owns it and it takes care of releasing it. After this update,
+the set->bound field is removed.
 
-Link: https://bugzilla.netfilter.org/show_bug.cgi?id=1199
-Signed-off-by: Florian Westphal <fw@strlen.de>
+[   24.649883] Unable to handle kernel paging request at virtual address 0000000000040434
+[   24.657858] Mem abort info:
+[   24.660686]   ESR = 0x96000004
+[   24.663769]   Exception class = DABT (current EL), IL = 32 bits
+[   24.669725]   SET = 0, FnV = 0
+[   24.672804]   EA = 0, S1PTW = 0
+[   24.675975] Data abort info:
+[   24.678880]   ISV = 0, ISS = 0x00000004
+[   24.682743]   CM = 0, WnR = 0
+[   24.685723] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000428952000
+[   24.692207] [0000000000040434] pgd=0000000000000000
+[   24.697119] Internal error: Oops: 96000004 [#1] SMP
+[...]
+[   24.889414] Call trace:
+[   24.891870]  __nf_tables_abort+0x3f0/0x7a0
+[   24.895984]  nf_tables_abort+0x20/0x40
+[   24.899750]  nfnetlink_rcv_batch+0x17c/0x588
+[   24.904037]  nfnetlink_rcv+0x13c/0x190
+[   24.907803]  netlink_unicast+0x18c/0x208
+[   24.911742]  netlink_sendmsg+0x1b0/0x350
+[   24.915682]  sock_sendmsg+0x4c/0x68
+[   24.919185]  ___sys_sendmsg+0x288/0x2c8
+[   24.923037]  __sys_sendmsg+0x7c/0xd0
+[   24.926628]  __arm64_sys_sendmsg+0x2c/0x38
+[   24.930744]  el0_svc_common.constprop.0+0x94/0x158
+[   24.935556]  el0_svc_handler+0x34/0x90
+[   24.939322]  el0_svc+0x8/0xc
+[   24.942216] Code: 37280300 f9404023 91014262 aa1703e0 (f9401863)
+[   24.948336] ---[ end trace cebbb9dcbed3b56f ]---
+
+Fixes: f6ac85858976 ("netfilter: nf_tables: unbind set in rule from commit path")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_hash.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netfilter/nf_tables.h |  3 +++
+ net/netfilter/nf_tables_api.c     | 22 +++++++++++++++++-----
+ 2 files changed, 20 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
-index a684234bd229c..eb7db31dd1733 100644
---- a/net/netfilter/nft_set_hash.c
-+++ b/net/netfilter/nft_set_hash.c
-@@ -520,7 +520,7 @@ static void *nft_hash_deactivate(const struct net *net,
- 	hash = nft_jhash(set, priv, &this->ext);
- 	hlist_for_each_entry(he, &priv->table[hash], node) {
- 		if (!memcmp(nft_set_ext_key(&this->ext), &elem->key.val,
--			    set->klen) ||
-+			    set->klen) &&
- 		    nft_set_elem_active(&he->ext, genmask)) {
- 			nft_set_elem_change_active(net, set, &he->ext);
- 			return he;
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index cc6ba7e593e74..ca82f32d10cd4 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -1335,12 +1335,15 @@ struct nft_trans_table {
+ struct nft_trans_elem {
+ 	struct nft_set			*set;
+ 	struct nft_set_elem		elem;
++	bool				bound;
+ };
+ 
+ #define nft_trans_elem_set(trans)	\
+ 	(((struct nft_trans_elem *)trans->data)->set)
+ #define nft_trans_elem(trans)	\
+ 	(((struct nft_trans_elem *)trans->data)->elem)
++#define nft_trans_elem_set_bound(trans)	\
++	(((struct nft_trans_elem *)trans->data)->bound)
+ 
+ struct nft_trans_obj {
+ 	struct nft_object		*obj;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 5541ba7cc4a01..e9e3e7680a14c 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -149,9 +149,14 @@ static void nft_set_trans_bind(const struct nft_ctx *ctx, struct nft_set *set)
+ 		return;
+ 
+ 	list_for_each_entry_reverse(trans, &net->nft.commit_list, list) {
+-		if (trans->msg_type == NFT_MSG_NEWSET &&
+-		    nft_trans_set(trans) == set) {
+-			nft_trans_set_bound(trans) = true;
++		switch (trans->msg_type) {
++		case NFT_MSG_NEWSET:
++			if (nft_trans_set(trans) == set)
++				nft_trans_set_bound(trans) = true;
++			break;
++		case NFT_MSG_NEWSETELEM:
++			if (nft_trans_elem_set(trans) == set)
++				nft_trans_elem_set_bound(trans) = true;
+ 			break;
+ 		}
+ 	}
+@@ -5340,8 +5345,11 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb)
+ 			break;
+ 		case NFT_MSG_NEWSET:
+ 			trans->ctx.table->use--;
+-			if (!nft_trans_set_bound(trans))
+-				list_del_rcu(&nft_trans_set(trans)->list);
++			if (nft_trans_set_bound(trans)) {
++				nft_trans_destroy(trans);
++				break;
++			}
++			list_del_rcu(&nft_trans_set(trans)->list);
+ 			break;
+ 		case NFT_MSG_DELSET:
+ 			trans->ctx.table->use++;
+@@ -5349,6 +5357,10 @@ static int nf_tables_abort(struct net *net, struct sk_buff *skb)
+ 			nft_trans_destroy(trans);
+ 			break;
+ 		case NFT_MSG_NEWSETELEM:
++			if (nft_trans_elem_set_bound(trans)) {
++				nft_trans_destroy(trans);
++				break;
++			}
+ 			te = (struct nft_trans_elem *)trans->data;
+ 
+ 			te->set->ops->remove(net, te->set, &te->elem);
 -- 
 2.39.2
 
