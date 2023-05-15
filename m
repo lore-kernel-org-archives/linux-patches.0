@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E021FFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:52:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 346F3C4339C;
-	Mon, 15 May 2023 16:52:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB13FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:52:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2F8C433D2;
+	Mon, 15 May 2023 16:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169574;
-	bh=11s5hQQIt6oPe7E9J4D/Sy1kgwU/vDLELyPypGElEkI=;
+	s=korg; t=1684169577;
+	bh=okmCW/nC5I62wkF5kWuZFeOKF9Qrq+Dk2uDjwK7SZZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SaUHcagtaQigPvlmWnvsETr48WGfxPriPkLfKA39U55LgPcCe88lp9aZzIrQTTQ2h
-	 hrXOV1ylgcr2mPnrA2gQLrqKG5ZgNlFSIgt9wTF6ophPPXfCxXqug1L+asrZ7T/VCP
-	 13WXAbgWyqRBUOwOsa0Ghy+BLrG7Ky0Lhb2exSbs=
+	b=UA0iRLXmgArEXzBKu4qq2XTvVxZxpzBfOGngQ8BWhbVrYA8/6TqmOem7NC0CG/KGS
+	 8B7HUGIjnxaG94GVzsOhTJbaIDKc9+Dy0CHJKl6G05+JMccrC4eneRZFBSyqKe9PPn
+	 ezCK8fEkuVsNqJ9rMYPHsZoGIRtIcyKBSd2rxR5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Garry <john.g.garry@oracle.com>,
-	Ian Rogers <irogers@google.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Roman Lozko <lozko.roma@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 102/246] perf test: Fix "PMU event table sanity" for NO_JEVENTS=1
-Date: Mon, 15 May 2023 18:25:14 +0200
-Message-Id: <20230515161725.643260317@linuxfoundation.org>
+Subject: [PATCH 6.3 103/246] perf scripts intel-pt-events.py: Fix IPC output for Python 2
+Date: Mon, 15 May 2023 18:25:15 +0200
+Message-Id: <20230515161725.672416780@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -43,54 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Rogers <irogers@google.com>
+From: Roman Lozko <lozko.roma@gmail.com>
 
-[ Upstream commit 07fc5921a014e227bd3b622d31a8a35ff3f19afb ]
+[ Upstream commit 1f64cfdebfe0494264271e8d7a3a47faf5f58ec7 ]
 
-A table was renamed and needed to be renamed in the empty case.
+Integers are not converted to floats during division in Python 2 which
+results in incorrect IPC values. Fix by switching to new division
+behavior.
 
-Fixes: 62774db2a05dc878 ("perf jevents: Generate metrics and events as separate tables")
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230308002714.1755698-1-irogers@google.com
+Fixes: a483e64c0b62e93a ("perf scripting python: intel-pt-events.py: Add --insn-trace and --src-trace")
+Signed-off-by: Roman Lozko <lozko.roma@gmail.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20230310150445.2925841-1-lozko.roma@gmail.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/pmu-events/empty-pmu-events.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/scripts/python/intel-pt-events.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/pmu-events/empty-pmu-events.c b/tools/perf/pmu-events/empty-pmu-events.c
-index a938b74cf487c..e74defb5284ff 100644
---- a/tools/perf/pmu-events/empty-pmu-events.c
-+++ b/tools/perf/pmu-events/empty-pmu-events.c
-@@ -227,7 +227,7 @@ static const struct pmu_events_map pmu_events_map[] = {
- 	},
- };
+diff --git a/tools/perf/scripts/python/intel-pt-events.py b/tools/perf/scripts/python/intel-pt-events.py
+index 08862a2582f44..1c76368f13c1a 100644
+--- a/tools/perf/scripts/python/intel-pt-events.py
++++ b/tools/perf/scripts/python/intel-pt-events.py
+@@ -11,7 +11,7 @@
+ # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ # more details.
  
--static const struct pmu_event pme_test_soc_sys[] = {
-+static const struct pmu_event pmu_events__test_soc_sys[] = {
- 	{
- 		.name = "sys_ddr_pmu.write_cycles",
- 		.event = "event=0x2b",
-@@ -258,8 +258,8 @@ struct pmu_sys_events {
+-from __future__ import print_function
++from __future__ import division, print_function
  
- static const struct pmu_sys_events pmu_sys_event_tables[] = {
- 	{
--		.table = { pme_test_soc_sys },
--		.name = "pme_test_soc_sys",
-+		.table = { pmu_events__test_soc_sys },
-+		.name = "pmu_events__test_soc_sys",
- 	},
- 	{
- 		.table = { 0 }
+ import io
+ import os
 -- 
 2.39.2
 
