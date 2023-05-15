@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45112FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD6DC433D2;
-	Mon, 15 May 2023 17:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71525FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5421C4339E;
+	Mon, 15 May 2023 17:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172220;
-	bh=RQAyKoxJPXp2/5Zu2X3PvEEINs1sMUK/6e47PO81TjU=;
+	s=korg; t=1684172223;
+	bh=BRMRkJznTfJAUS5WkOAvsod7HyB93P5o/GTKVXF4Xi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Omt2TSeaLYMWgIiSJTZ6QCQ7eD2nDUp4pESuA5qJKxDYHOR1kDb9RbkbeG/p5gLj/
-	 AuLNpEUQQ1qbXsDPCDsSL809135/axGA/NIpiEAalLq1M+wXqRhuk2YeV5g5zR6T62
-	 DNh2ABG8um3K4BzVDYHMZo9N5iPTUrmdmuH0vEmc=
+	b=CgSC13F782Z7e9GaTAWCiTufmLxzE3CNotTgpFpU0zOPFFY1bvP7XS8ZJny1usd9+
+	 0EnWZwV4oC7XRcbN/EQsiGyrYWdUTVxhN4nnVISgrs756Z4cAUWXRy+aDyzmh0sJA/
+	 23M9TdPeybhFSWxVJB2slwDoCf0pgYRyrrOwUn+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danny Lin <danny@kdrag0n.dev>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 083/381] arm64: dts: qcom: sdm845: correct dynamic power coefficients
-Date: Mon, 15 May 2023 18:25:34 +0200
-Message-Id: <20230515161740.558788935@linuxfoundation.org>
+Subject: [PATCH 5.10 084/381] arm64: dts: qcom: sdm845: Fix the PCI I/O port range
+Date: Mon, 15 May 2023 18:25:35 +0200
+Message-Id: <20230515161740.597086228@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,125 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 0e0a8e35d72533b3eef3365e900baacd7cede8e2 ]
+[ Upstream commit 67aa109eee654c76dcc100554e637fa64d5aa099 ]
 
-Following sm8150/sm8250 update sdm845 capacity-dmips-mhz and
-dynamic-power-coefficient based on the measurements [1], [2].
+For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
+located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI addresses
+(0x60200000, 0x40200000) specified in the ranges property for I/O region.
 
-The energy model dynamic-power-coefficient values were calculated with
-    DPC = µW / MHz / V^2
-for each OPP, and averaged across all OPPs within each cluster for the
-final coefficient. Voltages were obtained from the qcom-cpufreq-hw
-driver that reads voltages from the OSM LUT programmed into the SoC.
+While at it, let's use the missing 0x prefix for the addresses.
 
-Normalized DMIPS/MHz capacity scale values for each CPU were calculated
-from CoreMarks/MHz (CoreMark iterations per second per MHz), which
-serves the same purpose. For each CPU, the final capacity-dmips-mhz
-value is the C/MHz value of its maximum frequency normalized to
-SCHED_CAPACITY_SCALE (1024) for the fastest CPU in the system.
-
-For more details on measurement process see the commit message for the
-commit 6aabed5526ee ("arm64: dts: qcom: sm8250: Add CPU capacities and
-energy model").
-
-[1] https://github.com/kdrag0n/freqbench
-[2] https://github.com/kdrag0n/freqbench/tree/master/results/sdm845/main
-
-Cc: Danny Lin <danny@kdrag0n.dev>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20220315141104.730235-1-dmitry.baryshkov@linaro.org
+Fixes: 42ad231338c1 ("arm64: dts: qcom: sdm845: Add second PCIe PHY and controller")
+Fixes: 5c538e09cb19 ("arm64: dts: qcom: sdm845: Add first PCIe controller and PHY")
+Reported-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230228164752.55682-2-manivannan.sadhasivam@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 9beb3c34fcdb5..076b6949a0eed 100644
+index 076b6949a0eed..28fbd728304d3 100644
 --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -196,8 +196,8 @@
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &LITTLE_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			capacity-dmips-mhz = <607>;
--			dynamic-power-coefficient = <100>;
-+			capacity-dmips-mhz = <611>;
-+			dynamic-power-coefficient = <290>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -221,8 +221,8 @@
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &LITTLE_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			capacity-dmips-mhz = <607>;
--			dynamic-power-coefficient = <100>;
-+			capacity-dmips-mhz = <611>;
-+			dynamic-power-coefficient = <290>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -243,8 +243,8 @@
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &LITTLE_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			capacity-dmips-mhz = <607>;
--			dynamic-power-coefficient = <100>;
-+			capacity-dmips-mhz = <611>;
-+			dynamic-power-coefficient = <290>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -265,8 +265,8 @@
- 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
- 					   &LITTLE_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			capacity-dmips-mhz = <607>;
--			dynamic-power-coefficient = <100>;
-+			capacity-dmips-mhz = <611>;
-+			dynamic-power-coefficient = <290>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
- 			operating-points-v2 = <&cpu0_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -288,7 +288,7 @@
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &BIG_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			dynamic-power-coefficient = <396>;
-+			dynamic-power-coefficient = <442>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -310,7 +310,7 @@
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &BIG_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			dynamic-power-coefficient = <396>;
-+			dynamic-power-coefficient = <442>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -332,7 +332,7 @@
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &BIG_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			dynamic-power-coefficient = <396>;
-+			dynamic-power-coefficient = <442>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
-@@ -354,7 +354,7 @@
- 			cpu-idle-states = <&BIG_CPU_SLEEP_0
- 					   &BIG_CPU_SLEEP_1
- 					   &CLUSTER_SLEEP_0>;
--			dynamic-power-coefficient = <396>;
-+			dynamic-power-coefficient = <442>;
- 			qcom,freq-domain = <&cpufreq_hw 1>;
- 			operating-points-v2 = <&cpu4_opp_table>;
- 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -1816,8 +1816,8 @@
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
+ 
+-			ranges = <0x01000000 0x0 0x60200000 0 0x60200000 0x0 0x100000>,
+-				 <0x02000000 0x0 0x60300000 0 0x60300000 0x0 0xd00000>;
++			ranges = <0x01000000 0x0 0x00000000 0x0 0x60200000 0x0 0x100000>,
++				 <0x02000000 0x0 0x60300000 0x0 0x60300000 0x0 0xd00000>;
+ 
+ 			interrupts = <GIC_SPI 141 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupt-names = "msi";
+@@ -1920,7 +1920,7 @@
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
+ 
+-			ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
++			ranges = <0x01000000 0x0 0x00000000 0x0 0x40200000 0x0 0x100000>,
+ 				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
+ 
+ 			interrupts = <GIC_SPI 307 IRQ_TYPE_EDGE_RISING>;
 -- 
 2.39.2
 
