@@ -1,31 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FEFDF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:37:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A6A3C433EF;
-	Mon, 15 May 2023 16:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB8FDF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:37:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0118C433EF;
+	Mon, 15 May 2023 16:37:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168633;
-	bh=GlLKchtGOYLvwPcxXBP/qDaJ5S5fsUO1cK/Slfo2m6Y=;
+	s=korg; t=1684168636;
+	bh=T8au94eHrWZYEQx1/WIYlFxAIfJfkGx5hyBMO3b35V8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lf433/7lq3vFyTxnmMYdOetD1vqaeEbXlCCF5hc6OJE4BcrrCHXrdzjCOta7qBhO9
-	 pT6hvff/r8GrOIVG24OyHUB9xFi+vLOEuG4XOcnUfow+R/24jA6CTqxgvB8BH8ivVD
-	 DyG6lhV4ufIgnyXc3n0WKKL/FOzmNgcGDlcBlVJw=
+	b=Qv1qDE27hGQaBWyjWoG1TJAevsgsdyDOfE2SIyDcikNaaa3B7xJ7XN0OHx1oHJD3b
+	 V+sTIkj/PstJ1/vjD9/WdoTI8B46P3ilk7aO01hHnAN5lReZwW0aHfVW4gW6VBtjZp
+	 Hd2wD2VmZ/zqHKztpFO6B0lzdnliwHHD/bjsMwz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	=?UTF-8?q?Daniel=20D=C3=ADaz?= <daniel.diaz@linaro.org>
-Subject: [PATCH 4.14 111/116] perf bench: Share some global variables to fix build with gcc 10
-Date: Mon, 15 May 2023 18:26:48 +0200
-Message-Id: <20230515161701.922956299@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 4.14 112/116] tty: Prevent writing chars during tcsetattr TCSADRAIN/FLUSH
+Date: Mon, 15 May 2023 18:26:49 +0200
+Message-Id: <20230515161701.958491406@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -39,149 +33,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: "Ilpo J�rvinen" <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit e4d9b04b973b2dbce7b42af95ea70d07da1c936d ]
+If userspace races tcsetattr() with a write, the drained condition
+might not be guaranteed by the kernel. There is a race window after
+checking Tx is empty before tty_set_termios() takes termios_rwsem for
+write. During that race window, more characters can be queued by a
+racing writer.
 
-Noticed with gcc 10 (fedora rawhide) that those variables were not being
-declared as static, so end up with:
+Any ongoing transmission might produce garbage during HW's
+->set_termios() call. The intent of TCSADRAIN/FLUSH seems to be
+preventing such a character corruption. If those flags are set, take
+tty's write lock to stop any writer before performing the lower layer
+Tx empty check and wait for the pending characters to be sent (if any).
 
-  ld: /tmp/build/perf/bench/epoll-wait.o:/git/perf/tools/perf/bench/epoll-wait.c:93: multiple definition of `end'; /tmp/build/perf/bench/futex-hash.o:/git/perf/tools/perf/bench/futex-hash.c:40: first defined here
-  ld: /tmp/build/perf/bench/epoll-wait.o:/git/perf/tools/perf/bench/epoll-wait.c:93: multiple definition of `start'; /tmp/build/perf/bench/futex-hash.o:/git/perf/tools/perf/bench/futex-hash.c:40: first defined here
-  ld: /tmp/build/perf/bench/epoll-wait.o:/git/perf/tools/perf/bench/epoll-wait.c:93: multiple definition of `runtime'; /tmp/build/perf/bench/futex-hash.o:/git/perf/tools/perf/bench/futex-hash.c:40: first defined here
-  ld: /tmp/build/perf/bench/epoll-ctl.o:/git/perf/tools/perf/bench/epoll-ctl.c:38: multiple definition of `end'; /tmp/build/perf/bench/futex-hash.o:/git/perf/tools/perf/bench/futex-hash.c:40: first defined here
-  ld: /tmp/build/perf/bench/epoll-ctl.o:/git/perf/tools/perf/bench/epoll-ctl.c:38: multiple definition of `start'; /tmp/build/perf/bench/futex-hash.o:/git/perf/tools/perf/bench/futex-hash.c:40: first defined here
-  ld: /tmp/build/perf/bench/epoll-ctl.o:/git/perf/tools/perf/bench/epoll-ctl.c:38: multiple definition of `runtime'; /tmp/build/perf/bench/futex-hash.o:/git/perf/tools/perf/bench/futex-hash.c:40: first defined here
-  make[4]: *** [/git/perf/tools/build/Makefile.build:145: /tmp/build/perf/bench/perf-in.o] Error 1
+The initial wait for all-writers-done must be placed outside of tty's
+write lock to avoid deadlock which makes it impossible to use
+tty_wait_until_sent(). The write lock is retried if a racing write is
+detected.
 
-Prefix those with bench__ and add them to bench/bench.h, so that we can
-share those on the tools needing to access those variables from signal
-handlers.
-
-Acked-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Davidlohr Bueso <dave@stgolabs.net>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: http://lore.kernel.org/lkml/20200303155811.GD13702@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Daniel Díaz <daniel.diaz@linaro.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230317113318.31327-2-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+(cherry picked from commit 094fb49a2d0d6827c86d2e0840873e6db0c491d2)
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/bench/bench.h         |    4 ++++
- tools/perf/bench/futex-hash.c    |   12 ++++++------
- tools/perf/bench/futex-lock-pi.c |   11 +++++------
- 3 files changed, 15 insertions(+), 12 deletions(-)
+ drivers/tty/tty_io.c    |    4 ++--
+ drivers/tty/tty_ioctl.c |   45 +++++++++++++++++++++++++++++++++------------
+ include/linux/tty.h     |    2 ++
+ 3 files changed, 37 insertions(+), 14 deletions(-)
 
---- a/tools/perf/bench/bench.h
-+++ b/tools/perf/bench/bench.h
-@@ -2,6 +2,10 @@
- #ifndef BENCH_H
- #define BENCH_H
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -874,13 +874,13 @@ static ssize_t tty_read(struct file *fil
+ 	return i;
+ }
  
-+#include <sys/time.h>
-+
-+extern struct timeval bench__start, bench__end, bench__runtime;
-+
- /*
-  * The madvise transparent hugepage constants were added in glibc
-  * 2.13. For compatibility with older versions of glibc, define these
---- a/tools/perf/bench/futex-hash.c
-+++ b/tools/perf/bench/futex-hash.c
-@@ -35,7 +35,7 @@ static unsigned int nfutexes = 1024;
- static bool fshared = false, done = false, silent = false;
- static int futex_flag = 0;
- 
--struct timeval start, end, runtime;
-+struct timeval bench__start, bench__end, bench__runtime;
- static pthread_mutex_t thread_lock;
- static unsigned int threads_starting;
- static struct stats throughput_stats;
-@@ -101,8 +101,8 @@ static void toggle_done(int sig __maybe_
+-static void tty_write_unlock(struct tty_struct *tty)
++void tty_write_unlock(struct tty_struct *tty)
  {
- 	/* inform all threads that we're done for the day */
- 	done = true;
--	gettimeofday(&end, NULL);
--	timersub(&end, &start, &runtime);
-+	gettimeofday(&bench__end, NULL);
-+	timersub(&bench__end, &bench__start, &bench__runtime);
+ 	mutex_unlock(&tty->atomic_write_lock);
+ 	wake_up_interruptible_poll(&tty->write_wait, POLLOUT);
  }
  
- static void print_summary(void)
-@@ -112,7 +112,7 @@ static void print_summary(void)
- 
- 	printf("%sAveraged %ld operations/sec (+- %.2f%%), total secs = %d\n",
- 	       !silent ? "\n" : "", avg, rel_stddev_stats(stddev, avg),
--	       (int) runtime.tv_sec);
-+	       (int)bench__runtime.tv_sec);
- }
- 
- int bench_futex_hash(int argc, const char **argv)
-@@ -156,7 +156,7 @@ int bench_futex_hash(int argc, const cha
- 
- 	threads_starting = nthreads;
- 	pthread_attr_init(&thread_attr);
--	gettimeofday(&start, NULL);
-+	gettimeofday(&bench__start, NULL);
- 	for (i = 0; i < nthreads; i++) {
- 		worker[i].tid = i;
- 		worker[i].futex = calloc(nfutexes, sizeof(*worker[i].futex));
-@@ -199,7 +199,7 @@ int bench_futex_hash(int argc, const cha
- 	pthread_mutex_destroy(&thread_lock);
- 
- 	for (i = 0; i < nthreads; i++) {
--		unsigned long t = worker[i].ops/runtime.tv_sec;
-+		unsigned long t = worker[i].ops / bench__runtime.tv_sec;
- 		update_stats(&throughput_stats, t);
- 		if (!silent) {
- 			if (nfutexes == 1)
---- a/tools/perf/bench/futex-lock-pi.c
-+++ b/tools/perf/bench/futex-lock-pi.c
-@@ -34,7 +34,6 @@ static bool silent = false, multi = fals
- static bool done = false, fshared = false;
- static unsigned int ncpus, nthreads = 0;
- static int futex_flag = 0;
--struct timeval start, end, runtime;
- static pthread_mutex_t thread_lock;
- static unsigned int threads_starting;
- static struct stats throughput_stats;
-@@ -61,7 +60,7 @@ static void print_summary(void)
- 
- 	printf("%sAveraged %ld operations/sec (+- %.2f%%), total secs = %d\n",
- 	       !silent ? "\n" : "", avg, rel_stddev_stats(stddev, avg),
--	       (int) runtime.tv_sec);
-+	       (int)bench__runtime.tv_sec);
- }
- 
- static void toggle_done(int sig __maybe_unused,
-@@ -70,8 +69,8 @@ static void toggle_done(int sig __maybe_
+-static int tty_write_lock(struct tty_struct *tty, int ndelay)
++int tty_write_lock(struct tty_struct *tty, int ndelay)
  {
- 	/* inform all threads that we're done for the day */
- 	done = true;
--	gettimeofday(&end, NULL);
--	timersub(&end, &start, &runtime);
-+	gettimeofday(&bench__end, NULL);
-+	timersub(&bench__end, &bench__start, &bench__runtime);
- }
+ 	if (!mutex_trylock(&tty->atomic_write_lock)) {
+ 		if (ndelay)
+--- a/drivers/tty/tty_ioctl.c
++++ b/drivers/tty/tty_ioctl.c
+@@ -396,21 +396,42 @@ static int set_termios(struct tty_struct
+ 	tmp_termios.c_ispeed = tty_termios_input_baud_rate(&tmp_termios);
+ 	tmp_termios.c_ospeed = tty_termios_baud_rate(&tmp_termios);
  
- static void *workerfn(void *arg)
-@@ -178,7 +177,7 @@ int bench_futex_lock_pi(int argc, const
+-	ld = tty_ldisc_ref(tty);
++	if (opt & (TERMIOS_FLUSH|TERMIOS_WAIT)) {
++retry_write_wait:
++		retval = wait_event_interruptible(tty->write_wait, !tty_chars_in_buffer(tty));
++		if (retval < 0)
++			return retval;
  
- 	threads_starting = nthreads;
- 	pthread_attr_init(&thread_attr);
--	gettimeofday(&start, NULL);
-+	gettimeofday(&bench__start, NULL);
+-	if (ld != NULL) {
+-		if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
+-			ld->ops->flush_buffer(tty);
+-		tty_ldisc_deref(ld);
+-	}
++		if (tty_write_lock(tty, 0) < 0)
++			goto retry_write_wait;
  
- 	create_threads(worker, thread_attr);
- 	pthread_attr_destroy(&thread_attr);
-@@ -204,7 +203,7 @@ int bench_futex_lock_pi(int argc, const
- 	pthread_mutex_destroy(&thread_lock);
+-	if (opt & TERMIOS_WAIT) {
+-		tty_wait_until_sent(tty, 0);
+-		if (signal_pending(current))
+-			return -ERESTARTSYS;
+-	}
++		/* Racing writer? */
++		if (tty_chars_in_buffer(tty)) {
++			tty_write_unlock(tty);
++			goto retry_write_wait;
++		}
++
++		ld = tty_ldisc_ref(tty);
++		if (ld != NULL) {
++			if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
++				ld->ops->flush_buffer(tty);
++			tty_ldisc_deref(ld);
++		}
  
- 	for (i = 0; i < nthreads; i++) {
--		unsigned long t = worker[i].ops/runtime.tv_sec;
-+		unsigned long t = worker[i].ops / bench__runtime.tv_sec;
+-	tty_set_termios(tty, &tmp_termios);
++		if ((opt & TERMIOS_WAIT) && tty->ops->wait_until_sent) {
++			tty->ops->wait_until_sent(tty, 0);
++			if (signal_pending(current)) {
++				tty_write_unlock(tty);
++				return -ERESTARTSYS;
++			}
++		}
++
++		tty_set_termios(tty, &tmp_termios);
++
++		tty_write_unlock(tty);
++	} else {
++		tty_set_termios(tty, &tmp_termios);
++	}
  
- 		update_stats(&throughput_stats, t);
- 		if (!silent)
+ 	/* FIXME: Arguably if tmp_termios == tty->termios AND the
+ 	   actual requested termios was not tmp_termios then we may
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -479,6 +479,8 @@ extern void __stop_tty(struct tty_struct
+ extern void stop_tty(struct tty_struct *tty);
+ extern void __start_tty(struct tty_struct *tty);
+ extern void start_tty(struct tty_struct *tty);
++void tty_write_unlock(struct tty_struct *tty);
++int tty_write_lock(struct tty_struct *tty, int ndelay);
+ extern int tty_register_driver(struct tty_driver *driver);
+ extern int tty_unregister_driver(struct tty_driver *driver);
+ extern struct device *tty_register_device(struct tty_driver *driver,
 
 
