@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4D9FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9935C4339B;
-	Mon, 15 May 2023 17:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C22FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9005C433EF;
+	Mon, 15 May 2023 17:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171264;
-	bh=FMYE9s9UcN/SYgWSelygdnD5Wo+vZ2xPThJ5LTHXXvc=;
+	s=korg; t=1684171267;
+	bh=h5mK51aebmM7frvlZj9/VAIXXGKmEyWTQHFtggW+AO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOU3VJRu7LmBweJjJjKcbvxEAcv52/dX/rCqknQp36LrWxxb8Logx2a/UxhSXgRQG
-	 XCnuuhPZb8P2HqvZ5G6wr2LJ1vv++q643MTgREnC6SzwoHiY3K7mdAzEAA5twMyjID
-	 FxV8cy1t43zaSF+MX5teEqeAKg7QKdQLFtNxaAvI=
+	b=OiISy/CXzo5KaHmwuCLa+V2rMYanClreSTTj9VE+RMhuKJhW1W30JSuL0l0D4Jl8T
+	 mEg6IKJ3mo8wWTTI697GAlrwoe36/oWiEzRmPTsDaCLDD4BvSH8FJIeMFH9NJrvRwK
+	 KF8ghGhp+thz9lSiMs6dFpo+e+mNu6DNaArqSmmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Anastasia Belova <abelova@astralinux.ru>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.2 136/242] btrfs: print-tree: parent bytenr must be aligned to sector size
-Date: Mon, 15 May 2023 18:27:42 +0200
-Message-Id: <20230515161725.983432685@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Frank Rowand <frowand.list@gmail.com>,
+	devicetree@vger.kernel.org,
+	Rich Felker <dalias@libc.org>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	linux-sh@vger.kernel.org
+Subject: [PATCH 6.2 154/242] sh: init: use OF_EARLY_FLATTREE for early init
+Date: Mon, 15 May 2023 18:28:00 +0200
+Message-Id: <20230515161726.509748856@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,42 +41,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit c87f318e6f47696b4040b58f460d5c17ea0280e6 upstream.
+commit 6cba655543c7959f8a6d2979b9d40a6a66b7ed4f upstream.
 
-Check nodesize to sectorsize in alignment check in print_extent_item.
-The comment states that and this is correct, similar check is done
-elsewhere in the functions.
+When CONFIG_OF_EARLY_FLATTREE and CONFIG_SH_DEVICE_TREE are not set,
+SH3 build fails with a call to early_init_dt_scan(), so in
+arch/sh/kernel/setup.c and arch/sh/kernel/head_32.S, use
+CONFIG_OF_EARLY_FLATTREE instead of CONFIG_OF_FLATTREE.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fixes this build error:
+../arch/sh/kernel/setup.c: In function 'sh_fdt_init':
+../arch/sh/kernel/setup.c:262:26: error: implicit declaration of function 'early_init_dt_scan' [-Werror=implicit-function-declaration]
+  262 |         if (!dt_virt || !early_init_dt_scan(dt_virt)) {
 
-Fixes: ea57788eb76d ("btrfs: require only sector size alignment for parent eb bytenr")
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 03767daa1387 ("sh: fix build regression with CONFIG_OF && !CONFIG_OF_FLATTREE")
+Fixes: eb6b6930a70f ("sh: fix memory corruption of unflattened device tree")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Suggested-by: Rob Herring <robh+dt@kernel.org>
+Cc: Frank Rowand <frowand.list@gmail.com>
+Cc: devicetree@vger.kernel.org
+Cc: Rich Felker <dalias@libc.org>
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+Cc: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: linux-sh@vger.kernel.org
+Cc: stable@vger.kernel.org
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230306040037.20350-4-rdunlap@infradead.org
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/print-tree.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/sh/kernel/head_32.S |    6 +++---
+ arch/sh/kernel/setup.c   |    4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/fs/btrfs/print-tree.c
-+++ b/fs/btrfs/print-tree.c
-@@ -151,10 +151,10 @@ static void print_extent_item(struct ext
- 			pr_cont("shared data backref parent %llu count %u\n",
- 			       offset, btrfs_shared_data_ref_count(eb, sref));
- 			/*
--			 * offset is supposed to be a tree block which
--			 * must be aligned to nodesize.
-+			 * Offset is supposed to be a tree block which must be
-+			 * aligned to sectorsize.
- 			 */
--			if (!IS_ALIGNED(offset, eb->fs_info->nodesize))
-+			if (!IS_ALIGNED(offset, eb->fs_info->sectorsize))
- 				pr_info(
- 			"\t\t\t(parent %llu not aligned to sectorsize %u)\n",
- 				     offset, eb->fs_info->sectorsize);
+--- a/arch/sh/kernel/head_32.S
++++ b/arch/sh/kernel/head_32.S
+@@ -64,7 +64,7 @@ ENTRY(_stext)
+ 	ldc	r0, r6_bank
+ #endif
+ 
+-#ifdef CONFIG_OF_FLATTREE
++#ifdef CONFIG_OF_EARLY_FLATTREE
+ 	mov	r4, r12		! Store device tree blob pointer in r12
+ #endif
+ 	
+@@ -315,7 +315,7 @@ ENTRY(_stext)
+ 10:		
+ #endif
+ 
+-#ifdef CONFIG_OF_FLATTREE
++#ifdef CONFIG_OF_EARLY_FLATTREE
+ 	mov.l	8f, r0		! Make flat device tree available early.
+ 	jsr	@r0
+ 	 mov	r12, r4
+@@ -346,7 +346,7 @@ ENTRY(stack_start)
+ 5:	.long	start_kernel
+ 6:	.long	cpu_init
+ 7:	.long	init_thread_union
+-#if defined(CONFIG_OF_FLATTREE)
++#if defined(CONFIG_OF_EARLY_FLATTREE)
+ 8:	.long	sh_fdt_init
+ #endif
+ 
+--- a/arch/sh/kernel/setup.c
++++ b/arch/sh/kernel/setup.c
+@@ -244,7 +244,7 @@ void __init __weak plat_early_device_set
+ {
+ }
+ 
+-#ifdef CONFIG_OF_FLATTREE
++#ifdef CONFIG_OF_EARLY_FLATTREE
+ void __ref sh_fdt_init(phys_addr_t dt_phys)
+ {
+ 	static int done = 0;
+@@ -326,7 +326,7 @@ void __init setup_arch(char **cmdline_p)
+ 	/* Let earlyprintk output early console messages */
+ 	sh_early_platform_driver_probe("earlyprintk", 1, 1);
+ 
+-#ifdef CONFIG_OF_FLATTREE
++#ifdef CONFIG_OF_EARLY_FLATTREE
+ #ifdef CONFIG_USE_BUILTIN_DTB
+ 	unflatten_and_copy_device_tree();
+ #else
 
 
