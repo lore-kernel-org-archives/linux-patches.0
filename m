@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9EEE547
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:44:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7E36C433D2;
-	Mon, 15 May 2023 16:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFF0E547
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:44:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1864C433EF;
+	Mon, 15 May 2023 16:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169086;
-	bh=7yYWsLn4NgxeiZvphET31kHt77Y68wTjMEYvyFc9N7A=;
+	s=korg; t=1684169089;
+	bh=2HkCgxJREfkIZLneWIq6ABUfuSB7MwQjqJo1CSLLubI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ein1ZknbKdZsoTk1R06oO63vbO6M3uz25ZgsFIPb8bChcuFu6BorF2uR4d80pSLva
-	 ONWrNVSBmkGA2kj14aavce8/X9v1MTJFd8/a8DgBJTZNcV8FvpaAa27Om94I+WgAjY
-	 XPMenXsiXze4uzxDVD2EvNCw19j9myTh0nPpFNvM=
+	b=0QrJ0Vmi7WpbdRIAWT3RuNY9zwlqiblF6GiqJJbuwR8ZKUdMYA7Hmcg1pKf0xLaMD
+	 OrFeYufzTndP9FktAGJfx/WLb3T2EwtfK1p4gibxOnrXIkbQ83F3WhMMpYC1HUN9zp
+	 cLYo9MGZhue1llq72sy7d+Od/qTSV+EKQXhfQEgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.19 138/191] netfilter: nf_tables: deactivate anonymous set from preparation phase
-Date: Mon, 15 May 2023 18:26:15 +0200
-Message-Id: <20230515161712.410293698@linuxfoundation.org>
+	Jitao Shi <jitao.shi@mediatek.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 121/191] pwm: mtk-disp: Adjust the clocks to avoid them mismatch
+Date: Mon, 15 May 2023 18:25:58 +0200
+Message-Id: <20230515161711.683785268@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -33,113 +35,198 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jitao Shi <jitao.shi@mediatek.com>
 
-commit c1592a89942e9678f7d9c8030efa777c0d57edab upstream.
+[ Upstream commit d7a4e582587d97a586b1f7709e3bddcf35928e96 ]
 
-Toggle deleted anonymous sets as inactive in the next generation, so
-users cannot perform any update on it. Clear the generation bitmask
-in case the transaction is aborted.
+The clks "main" and "mm" are prepared in .probe() (and unprepared in
+.remove()). This results in the clocks being on during suspend which
+results in unnecessarily increased power consumption.
 
-The following KASAN splat shows a set element deletion for a bound
-anonymous set that has been already removed in the same transaction.
+Remove the clock operations from .probe() and .remove(). Add the
+clk_prepare_enable() in .enable() and the clk_disable_unprepare() in
+.disable().
 
-[   64.921510] ==================================================================
-[   64.923123] BUG: KASAN: wild-memory-access in nf_tables_commit+0xa24/0x1490 [nf_tables]
-[   64.924745] Write of size 8 at addr dead000000000122 by task test/890
-[   64.927903] CPU: 3 PID: 890 Comm: test Not tainted 6.3.0+ #253
-[   64.931120] Call Trace:
-[   64.932699]  <TASK>
-[   64.934292]  dump_stack_lvl+0x33/0x50
-[   64.935908]  ? nf_tables_commit+0xa24/0x1490 [nf_tables]
-[   64.937551]  kasan_report+0xda/0x120
-[   64.939186]  ? nf_tables_commit+0xa24/0x1490 [nf_tables]
-[   64.940814]  nf_tables_commit+0xa24/0x1490 [nf_tables]
-[   64.942452]  ? __kasan_slab_alloc+0x2d/0x60
-[   64.944070]  ? nf_tables_setelem_notify+0x190/0x190 [nf_tables]
-[   64.945710]  ? kasan_set_track+0x21/0x30
-[   64.947323]  nfnetlink_rcv_batch+0x709/0xd90 [nfnetlink]
-[   64.948898]  ? nfnetlink_rcv_msg+0x480/0x480 [nfnetlink]
-
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jitao Shi <jitao.shi@mediatek.com>
+[thierry.reding@gmail.com: squashed in fixup patch]
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Stable-dep-of: 36dd7f530ae7 ("pwm: mtk-disp: Disable shadow registers before setting backlight values")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |    1 +
- net/netfilter/nf_tables_api.c     |   12 ++++++++++++
- net/netfilter/nft_dynset.c        |    2 +-
- net/netfilter/nft_lookup.c        |    2 +-
- net/netfilter/nft_objref.c        |    2 +-
- 5 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/pwm/pwm-mtk-disp.c | 91 +++++++++++++++++---------------------
+ 1 file changed, 41 insertions(+), 50 deletions(-)
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -471,6 +471,7 @@ struct nft_set_binding {
- };
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index dd31a00d6326c..6d08938866048 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -82,6 +82,19 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	u64 div, rate;
+ 	int err;
  
- enum nft_trans_phase;
-+void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set);
- void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
- 			      struct nft_set_binding *binding,
- 			      enum nft_trans_phase phase);
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3758,12 +3758,24 @@ void nf_tables_unbind_set(const struct n
- }
- EXPORT_SYMBOL_GPL(nf_tables_unbind_set);
- 
-+void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set)
-+{
-+	if (nft_set_is_anonymous(set))
-+		nft_clear(ctx->net, set);
++	err = clk_prepare_enable(mdp->clk_main);
++	if (err < 0) {
++		dev_err(chip->dev, "Can't enable mdp->clk_main: %pe\n", ERR_PTR(err));
++		return err;
++	}
 +
-+	set->use++;
-+}
-+EXPORT_SYMBOL_GPL(nf_tables_activate_set);
++	err = clk_prepare_enable(mdp->clk_mm);
++	if (err < 0) {
++		dev_err(chip->dev, "Can't enable mdp->clk_mm: %pe\n", ERR_PTR(err));
++		clk_disable_unprepare(mdp->clk_main);
++		return err;
++	}
 +
- void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
- 			      struct nft_set_binding *binding,
- 			      enum nft_trans_phase phase)
- {
- 	switch (phase) {
- 	case NFT_TRANS_PREPARE:
-+		if (nft_set_is_anonymous(set))
-+			nft_deactivate_next(ctx->net, set);
-+
- 		set->use--;
- 		return;
- 	case NFT_TRANS_ABORT:
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -248,7 +248,7 @@ static void nft_dynset_activate(const st
- {
- 	struct nft_dynset *priv = nft_expr_priv(expr);
+ 	/*
+ 	 * Find period, high_width and clk_div to suit duty_ns and period_ns.
+ 	 * Calculate proper div value to keep period value in the bound.
+@@ -95,8 +108,11 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	rate = clk_get_rate(mdp->clk_main);
+ 	clk_div = div_u64(rate * period_ns, NSEC_PER_SEC) >>
+ 			  PWM_PERIOD_BIT_WIDTH;
+-	if (clk_div > PWM_CLKDIV_MAX)
++	if (clk_div > PWM_CLKDIV_MAX) {
++		clk_disable_unprepare(mdp->clk_mm);
++		clk_disable_unprepare(mdp->clk_main);
+ 		return -EINVAL;
++	}
  
--	priv->set->use++;
-+	nf_tables_activate_set(ctx, priv->set);
+ 	div = NSEC_PER_SEC * (clk_div + 1);
+ 	period = div64_u64(rate * period_ns, div);
+@@ -106,16 +122,6 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	high_width = div64_u64(rate * duty_ns, div);
+ 	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
+ 
+-	err = clk_enable(mdp->clk_main);
+-	if (err < 0)
+-		return err;
+-
+-	err = clk_enable(mdp->clk_mm);
+-	if (err < 0) {
+-		clk_disable(mdp->clk_main);
+-		return err;
+-	}
+-
+ 	mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
+ 				 PWM_CLKDIV_MASK,
+ 				 clk_div << PWM_CLKDIV_SHIFT);
+@@ -130,10 +136,21 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 		mtk_disp_pwm_update_bits(mdp, mdp->data->commit,
+ 					 mdp->data->commit_mask,
+ 					 0x0);
++	} else {
++		/*
++		 * For MT2701, disable double buffer before writing register
++		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
++		 */
++		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
++					 mdp->data->bls_debug_mask,
++					 mdp->data->bls_debug_mask);
++		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
++					 mdp->data->con0_sel,
++					 mdp->data->con0_sel);
+ 	}
+ 
+-	clk_disable(mdp->clk_mm);
+-	clk_disable(mdp->clk_main);
++	clk_disable_unprepare(mdp->clk_mm);
++	clk_disable_unprepare(mdp->clk_main);
+ 
+ 	return 0;
+ }
+@@ -143,13 +160,16 @@ static int mtk_disp_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	struct mtk_disp_pwm *mdp = to_mtk_disp_pwm(chip);
+ 	int err;
+ 
+-	err = clk_enable(mdp->clk_main);
+-	if (err < 0)
++	err = clk_prepare_enable(mdp->clk_main);
++	if (err < 0) {
++		dev_err(chip->dev, "Can't enable mdp->clk_main: %pe\n", ERR_PTR(err));
+ 		return err;
++	}
+ 
+-	err = clk_enable(mdp->clk_mm);
++	err = clk_prepare_enable(mdp->clk_mm);
+ 	if (err < 0) {
+-		clk_disable(mdp->clk_main);
++		dev_err(chip->dev, "Can't enable mdp->clk_mm: %pe\n", ERR_PTR(err));
++		clk_disable_unprepare(mdp->clk_main);
+ 		return err;
+ 	}
+ 
+@@ -166,8 +186,8 @@ static void mtk_disp_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+ 	mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
+ 				 0x0);
+ 
+-	clk_disable(mdp->clk_mm);
+-	clk_disable(mdp->clk_main);
++	clk_disable_unprepare(mdp->clk_mm);
++	clk_disable_unprepare(mdp->clk_main);
  }
  
- static void nft_dynset_destroy(const struct nft_ctx *ctx,
---- a/net/netfilter/nft_lookup.c
-+++ b/net/netfilter/nft_lookup.c
-@@ -132,7 +132,7 @@ static void nft_lookup_activate(const st
- {
- 	struct nft_lookup *priv = nft_expr_priv(expr);
+ static const struct pwm_ops mtk_disp_pwm_ops = {
+@@ -202,14 +222,6 @@ static int mtk_disp_pwm_probe(struct platform_device *pdev)
+ 	if (IS_ERR(mdp->clk_mm))
+ 		return PTR_ERR(mdp->clk_mm);
  
--	priv->set->use++;
-+	nf_tables_activate_set(ctx, priv->set);
+-	ret = clk_prepare(mdp->clk_main);
+-	if (ret < 0)
+-		return ret;
+-
+-	ret = clk_prepare(mdp->clk_mm);
+-	if (ret < 0)
+-		goto disable_clk_main;
+-
+ 	mdp->chip.dev = &pdev->dev;
+ 	mdp->chip.ops = &mtk_disp_pwm_ops;
+ 	mdp->chip.base = -1;
+@@ -217,32 +229,13 @@ static int mtk_disp_pwm_probe(struct platform_device *pdev)
+ 
+ 	ret = pwmchip_add(&mdp->chip);
+ 	if (ret < 0) {
+-		dev_err(&pdev->dev, "pwmchip_add() failed: %d\n", ret);
+-		goto disable_clk_mm;
++		dev_err(&pdev->dev, "pwmchip_add() failed: %pe\n", ERR_PTR(ret));
++		return ret;
+ 	}
+ 
+ 	platform_set_drvdata(pdev, mdp);
+ 
+-	/*
+-	 * For MT2701, disable double buffer before writing register
+-	 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
+-	 */
+-	if (!mdp->data->has_commit) {
+-		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
+-					 mdp->data->bls_debug_mask,
+-					 mdp->data->bls_debug_mask);
+-		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
+-					 mdp->data->con0_sel,
+-					 mdp->data->con0_sel);
+-	}
+-
+ 	return 0;
+-
+-disable_clk_mm:
+-	clk_unprepare(mdp->clk_mm);
+-disable_clk_main:
+-	clk_unprepare(mdp->clk_main);
+-	return ret;
  }
  
- static void nft_lookup_destroy(const struct nft_ctx *ctx,
---- a/net/netfilter/nft_objref.c
-+++ b/net/netfilter/nft_objref.c
-@@ -182,7 +182,7 @@ static void nft_objref_map_activate(cons
- {
- 	struct nft_objref_map *priv = nft_expr_priv(expr);
+ static int mtk_disp_pwm_remove(struct platform_device *pdev)
+@@ -250,8 +243,6 @@ static int mtk_disp_pwm_remove(struct platform_device *pdev)
+ 	struct mtk_disp_pwm *mdp = platform_get_drvdata(pdev);
  
--	priv->set->use++;
-+	nf_tables_activate_set(ctx, priv->set);
+ 	pwmchip_remove(&mdp->chip);
+-	clk_unprepare(mdp->clk_mm);
+-	clk_unprepare(mdp->clk_main);
+ 
+ 	return 0;
  }
- 
- static void nft_objref_map_destroy(const struct nft_ctx *ctx,
+-- 
+2.39.2
+
 
 
