@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015DCFBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:50:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABDAC433EF;
-	Mon, 15 May 2023 17:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B73DFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:50:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 663D3C433D2;
+	Mon, 15 May 2023 17:50:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173043;
-	bh=TEFehOJQSqRTVFskNhdrKlC+xE+sZFutqi15P9qa6S4=;
+	s=korg; t=1684173046;
+	bh=QxKW70SDUOcM4ZzlccBHnO5C9wSOqYL2IMHRXM7Zdjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtUmLZPB2/mKHONih5JQcPgg0aHwUhhFoy8rpkDoRBotmY5cq9t73VyGe2atEJPBI
-	 Jzu88Q4uRl8G/ulT/WvpN1mtLsXVg7SBeM1y0Akbd1E2GM4vLt2CJ3ca4x5KW9EMrS
-	 N35Xsh7KBwkMcKmx91M+BvfKLQZK4sk4e2RduS1Q=
+	b=N4sG6kwyeFnreEPhQnF0VciUsEuOnEm2+6eudfBZFdx+rYl8GUBFMKkmxUX6kd/d3
+	 S4TB//WFksdeef5j0rpmLhBrBb027+oIiP7MFul/sBC3sCIPWS6c45FDfXoFOAM9VQ
+	 OMRqhHOHxSH5yXvUJAovHmN1rIhsVGqTDBhUxbkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chia-I Wu <olvaffe@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Ruliang Lin <u202112092@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Daniel Mack <daniel@zonque.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 322/381] drm/amdgpu: add a missing lock for AMDGPU_SCHED
-Date: Mon, 15 May 2023 18:29:33 +0200
-Message-Id: <20230515161751.345018713@linuxfoundation.org>
+Subject: [PATCH 5.10 323/381] ALSA: caiaq: input: Add error handling for unsupported input methods in `snd_usb_caiaq_input_init`
+Date: Mon, 15 May 2023 18:29:34 +0200
+Message-Id: <20230515161751.383320637@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,49 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chia-I Wu <olvaffe@gmail.com>
+From: Ruliang Lin <u202112092@hust.edu.cn>
 
-[ Upstream commit 2397e3d8d2e120355201a8310b61929f5a8bd2c0 ]
+[ Upstream commit 0d727e1856ef22dd9337199430258cb64cbbc658 ]
 
-mgr->ctx_handles should be protected by mgr->lock.
+Smatch complains that:
+snd_usb_caiaq_input_init() warn: missing error code 'ret'
 
-v2: improve commit message
-v3: add a Fixes tag
+This patch adds a new case to handle the situation where the
+device does not support any input methods in the
+`snd_usb_caiaq_input_init` function. It returns an `-EINVAL` error code
+to indicate that no input methods are supported on the device.
 
-Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Fixes: 52c6a62c64fa ("drm/amdgpu: add interface for editing a foreign process's priority v3")
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 523f1dce3743 ("[ALSA] Add Native Instrument usb audio device support")
+Signed-off-by: Ruliang Lin <u202112092@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Acked-by: Daniel Mack <daniel@zonque.org>
+Link: https://lore.kernel.org/r/20230504065054.3309-1-u202112092@hust.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/usb/caiaq/input.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c
-index 0da0a0d986720..15c0a3068eab8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c
-@@ -66,6 +66,7 @@ static int amdgpu_sched_process_priority_override(struct amdgpu_device *adev,
- {
- 	struct fd f = fdget(fd);
- 	struct amdgpu_fpriv *fpriv;
-+	struct amdgpu_ctx_mgr *mgr;
- 	struct amdgpu_ctx *ctx;
- 	uint32_t id;
- 	int r;
-@@ -79,8 +80,11 @@ static int amdgpu_sched_process_priority_override(struct amdgpu_device *adev,
- 		return r;
+diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
+index 1e2cf2f08eecd..84f26dce7f5d0 100644
+--- a/sound/usb/caiaq/input.c
++++ b/sound/usb/caiaq/input.c
+@@ -804,6 +804,7 @@ int snd_usb_caiaq_input_init(struct snd_usb_caiaqdev *cdev)
+ 
+ 	default:
+ 		/* no input methods supported on this device */
++		ret = -EINVAL;
+ 		goto exit_free_idev;
  	}
  
--	idr_for_each_entry(&fpriv->ctx_mgr.ctx_handles, ctx, id)
-+	mgr = &fpriv->ctx_mgr;
-+	mutex_lock(&mgr->lock);
-+	idr_for_each_entry(&mgr->ctx_handles, ctx, id)
- 		amdgpu_ctx_priority_override(ctx, priority);
-+	mutex_unlock(&mgr->lock);
- 
- 	fdput(f);
- 	return 0;
 -- 
 2.39.2
 
