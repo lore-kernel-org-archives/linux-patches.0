@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ADBDFC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2258C433EF;
-	Mon, 15 May 2023 17:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D09DFC0D
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE2DBC4339B;
+	Mon, 15 May 2023 17:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171853;
-	bh=F4VmDvo9vhiaWp/qqDmfCbSrANSvjEq2IIoUGwzChOs=;
+	s=korg; t=1684171856;
+	bh=/C1nt0VkewCeECE6zGbk4JRXWaDZikvWt0oIWbdPne8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Un62rheKXTiDgfuPJdHWu4uiOOdMWeWMX4OHdhdVKRT4ipA1OkJd7emS2pD6Hx9zc
-	 iKa2f1tGdZ4EGfGPptNlahd554SpB/ygxzl+w7EYsPqp78aiHuaN1Rx1l9a+oGXuGX
-	 rbhJbYLC3FJctkTCJXWucpjZKXT9DWH37U4MuHI8=
+	b=GQ5A2To2G6W271kPwmYaQnZqxl+BYCyASXm8d/HIGKTyJ9n5IIFpFOsnWCdJEb/H2
+	 jbGgbNKHSMggDvGn+1bbktkyBjhNdbU68m4T3dI+T7RBI96ap5/8XokNYwf2BS5psM
+	 nnudHqDaehpXnkGh2HMwp6l2cHaGZR+6PKEK7aLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alex Natalsson <harmoniesworlds@gmail.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Takashi Iwai <tiwai@suse.de>,
-	Mark Brown <broonie@kernel.org>,
-	Marek Szyprowski <m.szyprowski@samsung.com>
-Subject: [PATCH 5.15 099/134] ASoC: soc-pcm: Move debugfs removal out of spinlock
-Date: Mon, 15 May 2023 18:29:36 +0200
-Message-Id: <20230515161706.435184021@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 100/134] ASoC: DPCM: Dont pick up BE without substream
+Date: Mon, 15 May 2023 18:29:37 +0200
+Message-Id: <20230515161706.464951360@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -37,59 +39,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-commit 9f620684c1ef5a002b6622ecc7b5818e81252f48 upstream.
+commit 754590651ccbbcc74a7c20907be4bb15d642bde3 upstream.
 
-The recent fix for DPCM locking also covered the loop in
-dpcm_be_disconnect() with the FE stream lock.  This caused an
-unexpected side effect, thought: calling debugfs_remove_recursive() in
-the spinlock may lead to lockdep splats as the code there assumes the
-SOFTIRQ-safe context.
+When DPCM tries to add valid BE connections at dpcm_add_paths(), it
+doesn't check whether the picked BE actually supports for the given
+stream direction.  Due to that, when an asymmetric BE stream is
+present, it picks up wrongly and this may result in a NULL dereference
+at a later point where the code assumes the existence of a
+corresponding BE substream.
 
-For avoiding the problem, this patch changes the disconnection
-procedure to two phases: at first, the matching entries are removed
-from the linked list, then the resources are freed outside the lock.
+This patch adds the check for the presence of the substream for the
+target BE for avoiding the problem above.
 
-Fixes: b7898396f4bb ("ASoC: soc-pcm: Fix and cleanup DPCM locking")
-Reported-and-tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Note that we have already some fix for non-existing BE substream at
+commit 6246f283d5e0 ("ASoC: dpcm: skip missing substream while
+applying symmetry").  But the code path we've hit recently is rather
+happening before the previous fix.  So this patch tries to fix at
+picking up a BE instead of parsing BE lists.
+
+Fixes: bbf7d3b1c4f4 ("ASoC: soc-pcm: align BE 'atomicity' with that of the FE")
+Reported-by: Alex Natalsson <harmoniesworlds@gmail.com>
+Cc: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Cc: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/CADs9LoPZH_D+eJ9qjTxSLE5jGyhKsjMN7g2NighZ16biVxsyKw@mail.gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20220119155249.26754-3-tiwai@suse.de
+Link: https://lore.kernel.org/r/20220801170510.26582-1-tiwai@suse.de
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/soc-pcm.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ sound/soc/soc-pcm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/sound/soc/soc-pcm.c
 +++ b/sound/soc/soc-pcm.c
-@@ -1289,6 +1289,7 @@ static void dpcm_be_reparent(struct snd_
- void dpcm_be_disconnect(struct snd_soc_pcm_runtime *fe, int stream)
- {
- 	struct snd_soc_dpcm *dpcm, *d;
-+	LIST_HEAD(deleted_dpcms);
+@@ -1339,6 +1339,9 @@ static struct snd_soc_pcm_runtime *dpcm_
+ 		if (!be->dai_link->no_pcm)
+ 			continue;
  
- 	snd_soc_dpcm_mutex_assert_held(fe);
- 
-@@ -1308,13 +1309,18 @@ void dpcm_be_disconnect(struct snd_soc_p
- 		/* BEs still alive need new FE */
- 		dpcm_be_reparent(fe, dpcm->be, stream);
- 
--		dpcm_remove_debugfs_state(dpcm);
--
- 		list_del(&dpcm->list_be);
-+		list_move(&dpcm->list_fe, &deleted_dpcms);
-+	}
-+	snd_soc_dpcm_stream_unlock_irq(fe, stream);
++		if (!snd_soc_dpcm_get_substream(be, stream))
++			continue;
 +
-+	while (!list_empty(&deleted_dpcms)) {
-+		dpcm = list_first_entry(&deleted_dpcms, struct snd_soc_dpcm,
-+					list_fe);
- 		list_del(&dpcm->list_fe);
-+		dpcm_remove_debugfs_state(dpcm);
- 		kfree(dpcm);
- 	}
--	snd_soc_dpcm_stream_unlock_irq(fe, stream);
- }
+ 		for_each_rtd_dais(be, i, dai) {
+ 			w = snd_soc_dai_get_widget(dai, stream);
  
- /* get BE for DAI widget and stream */
 
 
