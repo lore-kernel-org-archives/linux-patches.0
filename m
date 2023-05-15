@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA09101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:53:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E9EEC4339B;
-	Mon, 15 May 2023 17:53:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D377101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:53:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E8FC433D2;
+	Mon, 15 May 2023 17:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173228;
-	bh=8r1z6+zlLX5kZZjRsnVMbks8vuLgQJO5hKGKMtuVvsk=;
+	s=korg; t=1684173231;
+	bh=W5b+sfXG6vdvGdFoAhDY6Q/wLz64qFKhxa/mkAulGxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yXm08roLxi77qQ8N4mFkiT/PxVDOjt5/uX7CkDo554B5ovJeGzWhrU+wjGLbR2Dc6
-	 hfb8ddhN3J1vg2Kb+OK3G9QKKAbjIEQLmNVPm7JtJUjybqFr9C6ys9yRnO7DMbsyJV
-	 Z/c7c0wIeHvSVCaXqKS5WhSZYMgghKqMXWdnHd4k=
+	b=CD4xk2+j3rL5tWCv7n8Ifz1XhWQZM/40dKdlN0Ub7usgzalSQAz7wFvRrobhDiZ2l
+	 gfYdFdgHSDOMAr37XtnT1f0Xk+msMQzN7zs7+tbiv0mFLDrxW2aNWJl9BiUCK9q0LP
+	 DWy8OC4FNQz8urbIyz2+wZAsLl6rIjE3i5L3lvhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Fabio Estevam <festevam@gmail.com>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	linux-um@lists.infradead.org,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 5.4 009/282] IMA: allow/fix UML builds
-Date: Mon, 15 May 2023 18:26:27 +0200
-Message-Id: <20230515161722.547364677@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>
+Subject: [PATCH 5.4 027/282] ubifs: Fix memleak when insert_old_idx() failed
+Date: Mon, 15 May 2023 18:26:45 +0200
+Message-Id: <20230515161723.093045688@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -39,51 +34,222 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit 644f17412f5acf01a19af9d04a921937a2bc86c6 upstream.
+commit b5fda08ef213352ac2df7447611eb4d383cce929 upstream.
 
-UML supports HAS_IOMEM since 0bbadafdc49d (um: allow disabling
-NO_IOMEM).
+Following process will cause a memleak for copied up znode:
 
-Current IMA build on UML fails on allmodconfig (with TCG_TPM=m):
+dirty_cow_znode
+  zn = copy_znode(c, znode);
+  err = insert_old_idx(c, zbr->lnum, zbr->offs);
+  if (unlikely(err))
+     return ERR_PTR(err);   // No one refers to zn.
 
-ld: security/integrity/ima/ima_queue.o: in function `ima_add_template_entry':
-ima_queue.c:(.text+0x2d9): undefined reference to `tpm_pcr_extend'
-ld: security/integrity/ima/ima_init.o: in function `ima_init':
-ima_init.c:(.init.text+0x43f): undefined reference to `tpm_default_chip'
-ld: security/integrity/ima/ima_crypto.o: in function `ima_calc_boot_aggregate_tfm':
-ima_crypto.c:(.text+0x1044): undefined reference to `tpm_pcr_read'
-ld: ima_crypto.c:(.text+0x10d8): undefined reference to `tpm_pcr_read'
+Fetch a reproducer in [Link].
 
-Modify the IMA Kconfig entry so that it selects TCG_TPM if HAS_IOMEM
-is set, regardless of the UML Kconfig setting.
-This updates TCG_TPM from =m to =y and fixes the linker errors.
+Function copy_znode() is split into 2 parts: resource allocation
+and znode replacement, insert_old_idx() is split in similar way,
+so resource cleanup could be done in error handling path without
+corrupting metadata(mem & disk).
+It's okay that old index inserting is put behind of add_idx_dirt(),
+old index is used in layout_leb_in_gaps(), so the two processes do
+not depend on each other.
 
-Fixes: f4a0391dfa91 ("ima: fix Kconfig dependencies")
-Cc: Stable <stable@vger.kernel.org> # v5.14+
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-um@lists.infradead.org
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216705
+Fixes: 1e51764a3c2a ("UBIFS: add new flash file system")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ubifs/tnc.c |  137 ++++++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 87 insertions(+), 50 deletions(-)
 
---- a/security/integrity/ima/Kconfig
-+++ b/security/integrity/ima/Kconfig
-@@ -8,7 +8,7 @@ config IMA
- 	select CRYPTO_HMAC
- 	select CRYPTO_SHA1
- 	select CRYPTO_HASH_INFO
--	select TCG_TPM if HAS_IOMEM && !UML
-+	select TCG_TPM if HAS_IOMEM
- 	select TCG_TIS if TCG_TPM && X86
- 	select TCG_CRB if TCG_TPM && ACPI
- 	select TCG_IBMVTPM if TCG_TPM && PPC_PSERIES
+--- a/fs/ubifs/tnc.c
++++ b/fs/ubifs/tnc.c
+@@ -44,6 +44,33 @@ enum {
+ 	NOT_ON_MEDIA = 3,
+ };
+ 
++static void do_insert_old_idx(struct ubifs_info *c,
++			      struct ubifs_old_idx *old_idx)
++{
++	struct ubifs_old_idx *o;
++	struct rb_node **p, *parent = NULL;
++
++	p = &c->old_idx.rb_node;
++	while (*p) {
++		parent = *p;
++		o = rb_entry(parent, struct ubifs_old_idx, rb);
++		if (old_idx->lnum < o->lnum)
++			p = &(*p)->rb_left;
++		else if (old_idx->lnum > o->lnum)
++			p = &(*p)->rb_right;
++		else if (old_idx->offs < o->offs)
++			p = &(*p)->rb_left;
++		else if (old_idx->offs > o->offs)
++			p = &(*p)->rb_right;
++		else {
++			ubifs_err(c, "old idx added twice!");
++			kfree(old_idx);
++		}
++	}
++	rb_link_node(&old_idx->rb, parent, p);
++	rb_insert_color(&old_idx->rb, &c->old_idx);
++}
++
+ /**
+  * insert_old_idx - record an index node obsoleted since the last commit start.
+  * @c: UBIFS file-system description object
+@@ -69,35 +96,15 @@ enum {
+  */
+ static int insert_old_idx(struct ubifs_info *c, int lnum, int offs)
+ {
+-	struct ubifs_old_idx *old_idx, *o;
+-	struct rb_node **p, *parent = NULL;
++	struct ubifs_old_idx *old_idx;
+ 
+ 	old_idx = kmalloc(sizeof(struct ubifs_old_idx), GFP_NOFS);
+ 	if (unlikely(!old_idx))
+ 		return -ENOMEM;
+ 	old_idx->lnum = lnum;
+ 	old_idx->offs = offs;
++	do_insert_old_idx(c, old_idx);
+ 
+-	p = &c->old_idx.rb_node;
+-	while (*p) {
+-		parent = *p;
+-		o = rb_entry(parent, struct ubifs_old_idx, rb);
+-		if (lnum < o->lnum)
+-			p = &(*p)->rb_left;
+-		else if (lnum > o->lnum)
+-			p = &(*p)->rb_right;
+-		else if (offs < o->offs)
+-			p = &(*p)->rb_left;
+-		else if (offs > o->offs)
+-			p = &(*p)->rb_right;
+-		else {
+-			ubifs_err(c, "old idx added twice!");
+-			kfree(old_idx);
+-			return 0;
+-		}
+-	}
+-	rb_link_node(&old_idx->rb, parent, p);
+-	rb_insert_color(&old_idx->rb, &c->old_idx);
+ 	return 0;
+ }
+ 
+@@ -199,23 +206,6 @@ static struct ubifs_znode *copy_znode(st
+ 	__set_bit(DIRTY_ZNODE, &zn->flags);
+ 	__clear_bit(COW_ZNODE, &zn->flags);
+ 
+-	ubifs_assert(c, !ubifs_zn_obsolete(znode));
+-	__set_bit(OBSOLETE_ZNODE, &znode->flags);
+-
+-	if (znode->level != 0) {
+-		int i;
+-		const int n = zn->child_cnt;
+-
+-		/* The children now have new parent */
+-		for (i = 0; i < n; i++) {
+-			struct ubifs_zbranch *zbr = &zn->zbranch[i];
+-
+-			if (zbr->znode)
+-				zbr->znode->parent = zn;
+-		}
+-	}
+-
+-	atomic_long_inc(&c->dirty_zn_cnt);
+ 	return zn;
+ }
+ 
+@@ -234,6 +224,42 @@ static int add_idx_dirt(struct ubifs_inf
+ }
+ 
+ /**
++ * replace_znode - replace old znode with new znode.
++ * @c: UBIFS file-system description object
++ * @new_zn: new znode
++ * @old_zn: old znode
++ * @zbr: the branch of parent znode
++ *
++ * Replace old znode with new znode in TNC.
++ */
++static void replace_znode(struct ubifs_info *c, struct ubifs_znode *new_zn,
++			  struct ubifs_znode *old_zn, struct ubifs_zbranch *zbr)
++{
++	ubifs_assert(c, !ubifs_zn_obsolete(old_zn));
++	__set_bit(OBSOLETE_ZNODE, &old_zn->flags);
++
++	if (old_zn->level != 0) {
++		int i;
++		const int n = new_zn->child_cnt;
++
++		/* The children now have new parent */
++		for (i = 0; i < n; i++) {
++			struct ubifs_zbranch *child = &new_zn->zbranch[i];
++
++			if (child->znode)
++				child->znode->parent = new_zn;
++		}
++	}
++
++	zbr->znode = new_zn;
++	zbr->lnum = 0;
++	zbr->offs = 0;
++	zbr->len = 0;
++
++	atomic_long_inc(&c->dirty_zn_cnt);
++}
++
++/**
+  * dirty_cow_znode - ensure a znode is not being committed.
+  * @c: UBIFS file-system description object
+  * @zbr: branch of znode to check
+@@ -265,21 +291,32 @@ static struct ubifs_znode *dirty_cow_zno
+ 		return zn;
+ 
+ 	if (zbr->len) {
+-		err = insert_old_idx(c, zbr->lnum, zbr->offs);
+-		if (unlikely(err))
+-			return ERR_PTR(err);
++		struct ubifs_old_idx *old_idx;
++
++		old_idx = kmalloc(sizeof(struct ubifs_old_idx), GFP_NOFS);
++		if (unlikely(!old_idx)) {
++			err = -ENOMEM;
++			goto out;
++		}
++		old_idx->lnum = zbr->lnum;
++		old_idx->offs = zbr->offs;
++
+ 		err = add_idx_dirt(c, zbr->lnum, zbr->len);
+-	} else
+-		err = 0;
++		if (err) {
++			kfree(old_idx);
++			goto out;
++		}
+ 
+-	zbr->znode = zn;
+-	zbr->lnum = 0;
+-	zbr->offs = 0;
+-	zbr->len = 0;
++		do_insert_old_idx(c, old_idx);
++	}
++
++	replace_znode(c, zn, znode, zbr);
+ 
+-	if (unlikely(err))
+-		return ERR_PTR(err);
+ 	return zn;
++
++out:
++	kfree(zn);
++	return ERR_PTR(err);
+ }
+ 
+ /**
 
 
