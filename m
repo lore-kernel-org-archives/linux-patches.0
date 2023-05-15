@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D231772F
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9758C433D2;
-	Mon, 15 May 2023 18:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8351772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FA7C433D2;
+	Mon, 15 May 2023 18:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173752;
-	bh=/cuxQjA9Rb5GNUDebYWUDoUYJutjfz/vMw0V/FMfP5s=;
+	s=korg; t=1684173755;
+	bh=sraKeo25oCEdIPlE/2+gjB6EOJuLMCWEpZ8JyLg5YzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G/RqtUekAFFelpYj5j7578tfAZZz5tdZXvZvHTDqueDjz6lkvwCHBV3Lgj9CFrL4U
-	 F0ntOSWfUX4U378lUzQMZNJwAdIkj5ehsrhsont5p5zPRGRoThuhHdJm87adS8zZ6/
-	 BITf8L4rhnsz2t20aEMlw7IJFL8UJ3nMT4V2YMfs=
+	b=yKxpKijwhdtEAtDbG7/x2hEWdlDVlYieMuUjrmGhJ6CVFvY9GzQNfGseNLAmBqmST
+	 UmGieYPhRSIEobJfMIV+UvVHO2uDUjd1K4wnoorKCybW5o85IkfdnzkQpfz+p6BkB8
+	 8MzCscLzgaMF8S3X7p07EM2aQZdPWkBh74Uagy/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+5e70d01ee8985ae62a3b@syzkaller.appspotmail.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
-	Leon Romanovsky <leon@kernel.org>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 168/282] RDMA/siw: Remove namespace check from siw_netdev_event()
-Date: Mon, 15 May 2023 18:29:06 +0200
-Message-Id: <20230515161727.247966643@linuxfoundation.org>
+	Li Nan <linan122@huawei.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 5.4 195/282] md/raid10: fix null-ptr-deref in raid10_sync_request
+Date: Mon, 15 May 2023 18:29:33 +0200
+Message-Id: <20230515161728.105334151@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -38,44 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 266e9b3475ba82212062771fdbc40be0e3c06ec8 ]
+commit a405c6f0229526160aa3f177f65e20c86fce84c5 upstream.
 
-syzbot is reporting that siw_netdev_event(NETDEV_UNREGISTER) cannot destroy
-siw_device created after unshare(CLONE_NEWNET) due to net namespace check.
-It seems that this check was by error there and should be removed.
+init_resync() inits mempool and sets conf->have_replacemnt at the beginning
+of sync, close_sync() frees the mempool when sync is completed.
 
-Reported-by: syzbot <syzbot+5e70d01ee8985ae62a3b@syzkaller.appspotmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=5e70d01ee8985ae62a3b
-Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
-Suggested-by: Leon Romanovsky <leon@kernel.org>
-Fixes: bdcf26bf9b3a ("rdma/siw: network and RDMA core interface")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Link: https://lore.kernel.org/r/a44e9ac5-44e2-d575-9e30-02483cc7ffd1@I-love.SAKURA.ne.jp
-Reviewed-by: Bernard Metzler <bmt@zurich.ibm.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+After [1] recovery might be skipped and init_resync() is called but
+close_sync() is not. null-ptr-deref occurs with r10bio->dev[i].repl_bio.
+
+The following is one way to reproduce the issue.
+
+  1) create a array, wait for resync to complete, mddev->recovery_cp is set
+     to MaxSector.
+  2) recovery is woken and it is skipped. conf->have_replacement is set to
+     0 in init_resync(). close_sync() not called.
+  3) some io errors and rdev A is set to WantReplacement.
+  4) a new device is added and set to A's replacement.
+  5) recovery is woken, A have replacement, but conf->have_replacemnt is
+     0. r10bio->dev[i].repl_bio will not be alloced and null-ptr-deref
+     occurs.
+
+Fix it by not calling init_resync() if recovery skipped.
+
+[1] commit 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
+Fixes: 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Nan <linan122@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230222041000.3341651-3-linan666@huaweicloud.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/sw/siw/siw_main.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/md/raid10.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
-index dbbf8c6c16d38..a462c2fc6f311 100644
---- a/drivers/infiniband/sw/siw/siw_main.c
-+++ b/drivers/infiniband/sw/siw/siw_main.c
-@@ -472,9 +472,6 @@ static int siw_netdev_event(struct notifier_block *nb, unsigned long event,
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -2920,10 +2920,6 @@ static sector_t raid10_sync_request(stru
+ 	sector_t chunk_mask = conf->geo.chunk_mask;
+ 	int page_idx = 0;
  
- 	dev_dbg(&netdev->dev, "siw: event %lu\n", event);
- 
--	if (dev_net(netdev) != &init_net)
--		return NOTIFY_OK;
+-	if (!mempool_initialized(&conf->r10buf_pool))
+-		if (init_resync(conf))
+-			return 0;
 -
- 	base_dev = ib_device_get_by_netdev(netdev, RDMA_DRIVER_SIW);
- 	if (!base_dev)
- 		return NOTIFY_OK;
--- 
-2.39.2
-
+ 	/*
+ 	 * Allow skipping a full rebuild for incremental assembly
+ 	 * of a clean array, like RAID1 does.
+@@ -2939,6 +2935,10 @@ static sector_t raid10_sync_request(stru
+ 		return mddev->dev_sectors - sector_nr;
+ 	}
+ 
++	if (!mempool_initialized(&conf->r10buf_pool))
++		if (init_resync(conf))
++			return 0;
++
+  skipped:
+ 	max_sector = mddev->dev_sectors;
+ 	if (test_bit(MD_RECOVERY_SYNC, &mddev->recovery) ||
 
 
