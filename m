@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95DEC8E3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:00:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1054FC433D2;
-	Mon, 15 May 2023 18:00:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0032EC8E3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5373DC433EF;
+	Mon, 15 May 2023 18:01:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173658;
-	bh=lXrRkdfjtDzDD/obIOP2P/PnycCKMgmaigQzPVNxdRQ=;
+	s=korg; t=1684173661;
+	bh=P3LJuBHYgsovuhX168UZu7erP46wMEvf1t4p2Af870Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tokv+96c6xzUaqB7490NUNI4tP2jmAvOeVTvUku5GAQn5atxgX+DS0Ho44aaQ3BJP
-	 R0Az2FBoyGCMrHLEeXXAaeo6F0tkZznlYsmxlGhQLYgQNelzy1b/aoy1BctSHcLy86
-	 eUytrmqkwHDwIhUBbIkhjr6RviTSNV2jLOzCsf2c=
+	b=LMyArvWmWNh3XAyrfY8FcpQFNT4mcpNADKz6zPO4+Kqw4Ikg9KIouPBhEznrSIIhR
+	 k8WA3tPayMLYq3oJJ1ay6njiVZ9r2eYZdvTAbEVEtnNCY7CKprEoZmzfafhhBzZTxe
+	 xWakHYzGN7/85AFyGlcW7DE/cY/FYyDBniRKnb1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 164/282] RDMA/mlx4: Prevent shift wrapping in set_user_sq_size()
-Date: Mon, 15 May 2023 18:29:02 +0200
-Message-Id: <20230515161727.127066666@linuxfoundation.org>
+Subject: [PATCH 5.4 136/282] ia64: salinfo: placate defined-but-not-used warning
+Date: Mon, 15 May 2023 18:28:34 +0200
+Message-Id: <20230515161726.297683411@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,44 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit d50b3c73f1ac20dabc53dc6e9d64ce9c79a331eb ]
+[ Upstream commit 0de155752b152d6bcd96b5b5bf20af336abd183a ]
 
-The ucmd->log_sq_bb_count variable is controlled by the user so this
-shift can wrap.  Fix it by using check_shl_overflow() in the same way
-that it was done in commit 515f60004ed9 ("RDMA/hns: Prevent undefined
-behavior in hns_roce_set_user_sq_size()").
+When CONFIG_PROC_FS is not set, proc_salinfo_show() is not used.  Mark the
+function as __maybe_unused to quieten the warning message.
 
-Fixes: 839041329fd3 ("IB/mlx4: Sanity check userspace send queue sizes")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/a8dfbd1d-c019-4556-930b-bab1ded73b10@kili.mountain
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+../arch/ia64/kernel/salinfo.c:584:12: warning: 'proc_salinfo_show' defined but not used [-Wunused-function]
+  584 | static int proc_salinfo_show(struct seq_file *m, void *v)
+      |            ^~~~~~~~~~~~~~~~~
+
+Link: https://lkml.kernel.org/r/20230223034309.13375-1-rdunlap@infradead.org
+Fixes: 3f3942aca6da ("proc: introduce proc_create_single{,_data}")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/qp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/ia64/kernel/salinfo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
-index bca5358f3ef29..4523eb85ec698 100644
---- a/drivers/infiniband/hw/mlx4/qp.c
-+++ b/drivers/infiniband/hw/mlx4/qp.c
-@@ -438,9 +438,13 @@ static int set_user_sq_size(struct mlx4_ib_dev *dev,
- 			    struct mlx4_ib_qp *qp,
- 			    struct mlx4_ib_create_qp *ucmd)
+diff --git a/arch/ia64/kernel/salinfo.c b/arch/ia64/kernel/salinfo.c
+index b392c0a503468..0ec8b55b28ac0 100644
+--- a/arch/ia64/kernel/salinfo.c
++++ b/arch/ia64/kernel/salinfo.c
+@@ -581,7 +581,7 @@ static int salinfo_cpu_pre_down(unsigned int cpu)
+  * 'data' contains an integer that corresponds to the feature we're
+  * testing
+  */
+-static int proc_salinfo_show(struct seq_file *m, void *v)
++static int __maybe_unused proc_salinfo_show(struct seq_file *m, void *v)
  {
-+	u32 cnt;
-+
- 	/* Sanity check SQ size before proceeding */
--	if ((1 << ucmd->log_sq_bb_count) > dev->dev->caps.max_wqes	 ||
--	    ucmd->log_sq_stride >
-+	if (check_shl_overflow(1, ucmd->log_sq_bb_count, &cnt) ||
-+	    cnt > dev->dev->caps.max_wqes)
-+		return -EINVAL;
-+	if (ucmd->log_sq_stride >
- 		ilog2(roundup_pow_of_two(dev->dev->caps.max_sq_desc_sz)) ||
- 	    ucmd->log_sq_stride < MLX4_IB_MIN_SQ_STRIDE)
- 		return -EINVAL;
+ 	unsigned long data = (unsigned long)v;
+ 	seq_puts(m, (sal_platform_features & data) ? "1\n" : "0\n");
 -- 
 2.39.2
 
