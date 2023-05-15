@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27537FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB62C433EF;
-	Mon, 15 May 2023 17:33:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2357BFC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D21BC433EF;
+	Mon, 15 May 2023 17:33:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172003;
-	bh=1eO2mQahIqPUHlcx0RY6P55blfFH5Nk26/p9x67hqlw=;
+	s=korg; t=1684172006;
+	bh=2mpnOqWxpEpI0cTAts/u0E+GMwSudv3Lxo6rRUfhOzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5jVS0Yomu84M1bC0BYWwadFtvUjBHn8DODN0PltiJoQYLh/Df8XvuDLdrGwmcdVp
-	 oWOqNgi2/+fXD1UjlOw8L352b1ybWnhootp+/XcKT7WImFDZis8nuBtVqnEPneEeMJ
-	 3mHyaEUCKJrakNym32mKiE/jU8KTY0jr3Ub4ZQ5s=
+	b=YxIuLHV+1JQ+6Cxcil37AHD+B/GZqy3qEy8OzuKNpXf/2g30xHxeLT951U3cv5+FV
+	 r5N5BvoK+eyg4j1iZ86g4M425LpUrCX9/sfQZw/LE/8axZQP5Jal/EfzV4Sg3VMivQ
+	 nc/RPWM8QHcBa1PlC8Xi7yuwC61aEXPfz2VxTP/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 013/381] asm-generic/io.h: suppress endianness warnings for readq() and writeq()
-Date: Mon, 15 May 2023 18:24:24 +0200
-Message-Id: <20230515161737.350877017@linuxfoundation.org>
+	Martin Liska <mliska@suse.cz>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Chris Clayton <chris2553@googlemail.com>
+Subject: [PATCH 5.10 014/381] wireguard: timers: cast enum limits members to int in prints
+Date: Mon, 15 May 2023 18:24:25 +0200
+Message-Id: <20230515161737.397558267@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,50 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit d564fa1ff19e893e2971d66e5c8f49dc1cdc8ffc ]
+commit 2d4ee16d969c97996e80e4c9cb6de0acaff22c9f upstream.
 
-Commit c1d55d50139b ("asm-generic/io.h: Fix sparse warnings on
-big-endian architectures") missed fixing the 64-bit accessors.
+Since gcc13, each member of an enum has the same type as the enum. And
+that is inherited from its members. Provided "REKEY_AFTER_MESSAGES =
+1ULL << 60", the named type is unsigned long.
 
-Arnd explains in the attached link why the casts are necessary, even if
-__raw_readq() and __raw_writeq() do not take endian-specific types.
+This generates warnings with gcc-13:
+  error: format '%d' expects argument of type 'int', but argument 6 has type 'long unsigned int'
 
-Link: https://lore.kernel.org/lkml/9105d6fc-880b-4734-857d-e3d30b87ccf6@app.fastmail.com/
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cast those particular enum members to int when printing them.
+
+Link: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
+Cc: Martin Liska <mliska@suse.cz>
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://lore.kernel.org/all/20221213225208.3343692-2-Jason@zx2c4.com/
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Chris Clayton <chris2553@googlemail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/io.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireguard/timers.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
-index 9ea83d80eb6f9..dcbd41048b4e7 100644
---- a/include/asm-generic/io.h
-+++ b/include/asm-generic/io.h
-@@ -190,7 +190,7 @@ static inline u64 readq(const volatile void __iomem *addr)
- 	u64 val;
+--- a/drivers/net/wireguard/timers.c
++++ b/drivers/net/wireguard/timers.c
+@@ -46,7 +46,7 @@ static void wg_expired_retransmit_handsh
+ 	if (peer->timer_handshake_attempts > MAX_TIMER_HANDSHAKES) {
+ 		pr_debug("%s: Handshake for peer %llu (%pISpfsc) did not complete after %d attempts, giving up\n",
+ 			 peer->device->dev->name, peer->internal_id,
+-			 &peer->endpoint.addr, MAX_TIMER_HANDSHAKES + 2);
++			 &peer->endpoint.addr, (int)MAX_TIMER_HANDSHAKES + 2);
  
- 	__io_br();
--	val = __le64_to_cpu(__raw_readq(addr));
-+	val = __le64_to_cpu((__le64 __force)__raw_readq(addr));
- 	__io_ar(val);
- 	return val;
- }
-@@ -233,7 +233,7 @@ static inline void writel(u32 value, volatile void __iomem *addr)
- static inline void writeq(u64 value, volatile void __iomem *addr)
- {
- 	__io_bw();
--	__raw_writeq(__cpu_to_le64(value), addr);
-+	__raw_writeq((u64 __force)__cpu_to_le64(value), addr);
- 	__io_aw();
- }
- #endif
--- 
-2.39.2
-
+ 		del_timer(&peer->timer_send_keepalive);
+ 		/* We drop all packets without a keypair and don't try again,
+@@ -64,7 +64,7 @@ static void wg_expired_retransmit_handsh
+ 		++peer->timer_handshake_attempts;
+ 		pr_debug("%s: Handshake for peer %llu (%pISpfsc) did not complete after %d seconds, retrying (try %d)\n",
+ 			 peer->device->dev->name, peer->internal_id,
+-			 &peer->endpoint.addr, REKEY_TIMEOUT,
++			 &peer->endpoint.addr, (int)REKEY_TIMEOUT,
+ 			 peer->timer_handshake_attempts + 1);
+ 
+ 		/* We clear the endpoint address src address, in case this is
+@@ -94,7 +94,7 @@ static void wg_expired_new_handshake(str
+ 
+ 	pr_debug("%s: Retrying handshake with peer %llu (%pISpfsc) because we stopped hearing back after %d seconds\n",
+ 		 peer->device->dev->name, peer->internal_id,
+-		 &peer->endpoint.addr, KEEPALIVE_TIMEOUT + REKEY_TIMEOUT);
++		 &peer->endpoint.addr, (int)(KEEPALIVE_TIMEOUT + REKEY_TIMEOUT));
+ 	/* We clear the endpoint address src address, in case this is the cause
+ 	 * of trouble.
+ 	 */
+@@ -126,7 +126,7 @@ static void wg_queued_expired_zero_key_m
+ 
+ 	pr_debug("%s: Zeroing out all keys for peer %llu (%pISpfsc), since we haven't received a new one in %d seconds\n",
+ 		 peer->device->dev->name, peer->internal_id,
+-		 &peer->endpoint.addr, REJECT_AFTER_TIME * 3);
++		 &peer->endpoint.addr, (int)REJECT_AFTER_TIME * 3);
+ 	wg_noise_handshake_clear(&peer->handshake);
+ 	wg_noise_keypairs_clear(&peer->keypairs);
+ 	wg_peer_put(peer);
 
 
