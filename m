@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8A8171B9
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:03:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60C8C4339B;
-	Mon, 15 May 2023 18:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9853C171B9
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:03:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2EE9C433D2;
+	Mon, 15 May 2023 18:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173818;
-	bh=OUDdx1/+ndFS8cjN2u1aFYgMWoFLoSoVodw288cEd74=;
+	s=korg; t=1684173821;
+	bh=ZyjwAePiV0okZQS3H01dOD/0oUz3zgwcoR6fXxPFWOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J1zLLCGP7PFyewYNWJkKRNcHX1mI84yagrPb77rSsf8SwxNqLPpRH1iC5aNhrcggQ
-	 Z53P2SnTqcp3dibc839m1eun6gVR5qwi6kSd7jaVN2zFexloMHOkPhkuLEs5+8wxj7
-	 H9zCRdAuJJoR2ibwASiuX5nP6EYS7DboIC0xQc50=
+	b=pzQ9TX+5g9pQ9InaTCGAJGqNhvjtorgry/N0E5SMkbC1Vz9VSILBYhIhnea1Lb1vq
+	 Cem/0JECcD2YP4DxuN3NcVrQnC8iKw/jBddVWRsGsY92mATvTPTbLN19qigK5Tpdy1
+	 U/bDkjy+yNgHzAqOOorRUNwa2ZfBNSjIoyMkcbp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Auhagen <sven.auhagen@voleatech.de>,
+	Jonathan McDowell <noodles@earth.li>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 217/282] crypto: inside-secure - irq balance
-Date: Mon, 15 May 2023 18:29:55 +0200
-Message-Id: <20230515161728.741104819@linuxfoundation.org>
+Subject: [PATCH 5.4 218/282] crypto: safexcel - Cleanup ring IRQ workqueues on load failure
+Date: Mon, 15 May 2023 18:29:56 +0200
+Message-Id: <20230515161728.770240153@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,100 +35,157 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Auhagen <Sven.Auhagen@voleatech.de>
+From: Jonathan McDowell <noodles@earth.li>
 
-[ Upstream commit c6720415907f21b9c53efbe679b96c3cc9d06404 ]
+[ Upstream commit ca25c00ccbc5f942c63897ed23584cfc66e8ec81 ]
 
-Balance the irqs of the inside secure driver over all
-available cpus.
-Currently all interrupts are handled by the first CPU.
+A failure loading the safexcel driver results in the following warning
+on boot, because the IRQ affinity has not been correctly cleaned up.
+Ensure we clean up the affinity and workqueues on a failure to load the
+driver.
 
->From my testing with IPSec AES-GCM 256
-on my MCbin with 4 Cores I get a 50% speed increase:
+crypto-safexcel: probe of f2800000.crypto failed with error -2
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 232 at kernel/irq/manage.c:1913 free_irq+0x300/0x340
+Modules linked in: hwmon mdio_i2c crypto_safexcel(+) md5 sha256_generic libsha256 authenc libdes omap_rng rng_core nft_masq nft_nat nft_chain_nat nf_nat nft_ct nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nf_tables libcrc32c nfnetlink fuse autofs4
+CPU: 1 PID: 232 Comm: systemd-udevd Tainted: G        W          6.1.6-00002-g9d4898824677 #3
+Hardware name: MikroTik RB5009 (DT)
+pstate: 600000c5 (nZCv daIF -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : free_irq+0x300/0x340
+lr : free_irq+0x2e0/0x340
+sp : ffff800008fa3890
+x29: ffff800008fa3890 x28: 0000000000000000 x27: 0000000000000000
+x26: ffff8000008e6dc0 x25: ffff000009034cac x24: ffff000009034d50
+x23: 0000000000000000 x22: 000000000000004a x21: ffff0000093e0d80
+x20: ffff000009034c00 x19: ffff00000615fc00 x18: 0000000000000000
+x17: 0000000000000000 x16: 0000000000000000 x15: 000075f5c1584c5e
+x14: 0000000000000017 x13: 0000000000000000 x12: 0000000000000040
+x11: ffff000000579b60 x10: ffff000000579b62 x9 : ffff800008bbe370
+x8 : ffff000000579dd0 x7 : 0000000000000000 x6 : ffff000000579e18
+x5 : ffff000000579da8 x4 : ffff800008ca0000 x3 : ffff800008ca0188
+x2 : 0000000013033204 x1 : ffff000009034c00 x0 : ffff8000087eadf0
+Call trace:
+ free_irq+0x300/0x340
+ devm_irq_release+0x14/0x20
+ devres_release_all+0xa0/0x100
+ device_unbind_cleanup+0x14/0x60
+ really_probe+0x198/0x2d4
+ __driver_probe_device+0x74/0xdc
+ driver_probe_device+0x3c/0x110
+ __driver_attach+0x8c/0x190
+ bus_for_each_dev+0x6c/0xc0
+ driver_attach+0x20/0x30
+ bus_add_driver+0x148/0x1fc
+ driver_register+0x74/0x120
+ __platform_driver_register+0x24/0x30
+ safexcel_init+0x48/0x1000 [crypto_safexcel]
+ do_one_initcall+0x4c/0x1b0
+ do_init_module+0x44/0x1cc
+ load_module+0x1724/0x1be4
+ __do_sys_finit_module+0xbc/0x110
+ __arm64_sys_finit_module+0x1c/0x24
+ invoke_syscall+0x44/0x110
+ el0_svc_common.constprop.0+0xc0/0xe0
+ do_el0_svc+0x20/0x80
+ el0_svc+0x14/0x4c
+ el0t_64_sync_handler+0xb0/0xb4
+ el0t_64_sync+0x148/0x14c
+---[ end trace 0000000000000000 ]---
 
-Before the patch: 99.73 Kpps
-With the patch: 151.25 Kpps
-
-Signed-off-by: Sven Auhagen <sven.auhagen@voleatech.de>
+Fixes: 1b44c5a60c13 ("inside-secure - add SafeXcel EIP197 crypto engine driver")
+Signed-off-by: Jonathan McDowell <noodles@earth.li>
+Cc: stable@vger.kernel.org
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: ca25c00ccbc5 ("crypto: safexcel - Cleanup ring IRQ workqueues on load failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/inside-secure/safexcel.c | 13 +++++++++++--
- drivers/crypto/inside-secure/safexcel.h |  3 +++
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/crypto/inside-secure/safexcel.c | 37 ++++++++++++++++++-------
+ 1 file changed, 27 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/crypto/inside-secure/safexcel.c b/drivers/crypto/inside-secure/safexcel.c
-index 9534f52210af0..2d34a3832d8e6 100644
+index 2d34a3832d8e6..04638e1833513 100644
 --- a/drivers/crypto/inside-secure/safexcel.c
 +++ b/drivers/crypto/inside-secure/safexcel.c
-@@ -1090,11 +1090,12 @@ static irqreturn_t safexcel_irq_ring_thread(int irq, void *data)
- 
- static int safexcel_request_ring_irq(void *pdev, int irqid,
- 				     int is_pci_dev,
-+				     int ring_id,
- 				     irq_handler_t handler,
- 				     irq_handler_t threaded_handler,
- 				     struct safexcel_ring_irq_data *ring_irq_priv)
- {
--	int ret, irq;
-+	int ret, irq, cpu;
- 	struct device *dev;
- 
- 	if (IS_ENABLED(CONFIG_PCI) && is_pci_dev) {
-@@ -1132,6 +1133,10 @@ static int safexcel_request_ring_irq(void *pdev, int irqid,
- 		return ret;
- 	}
- 
-+	/* Set affinity */
-+	cpu = cpumask_local_spread(ring_id, NUMA_NO_NODE);
-+	irq_set_affinity_hint(irq, get_cpu_mask(cpu));
-+
- 	return irq;
- }
- 
-@@ -1482,6 +1487,7 @@ static int safexcel_probe_generic(void *pdev,
- 		irq = safexcel_request_ring_irq(pdev,
- 						EIP197_IRQ_NUMBER(i, is_pci_dev),
- 						is_pci_dev,
-+						i,
- 						safexcel_irq_ring,
- 						safexcel_irq_ring_thread,
- 						ring_irq);
-@@ -1490,6 +1496,7 @@ static int safexcel_probe_generic(void *pdev,
- 			return irq;
+@@ -1467,19 +1467,23 @@ static int safexcel_probe_generic(void *pdev,
+ 						     &priv->ring[i].rdr);
+ 		if (ret) {
+ 			dev_err(dev, "Failed to initialize rings\n");
+-			return ret;
++			goto err_cleanup_rings;
  		}
  
-+		priv->ring[i].irq = irq;
- 		priv->ring[i].work_data.priv = priv;
- 		priv->ring[i].work_data.ring = i;
- 		INIT_WORK(&priv->ring[i].work_data.work,
-@@ -1627,8 +1634,10 @@ static int safexcel_remove(struct platform_device *pdev)
+ 		priv->ring[i].rdr_req = devm_kcalloc(dev,
+ 			EIP197_DEFAULT_RING_SIZE,
+ 			sizeof(*priv->ring[i].rdr_req),
+ 			GFP_KERNEL);
+-		if (!priv->ring[i].rdr_req)
+-			return -ENOMEM;
++		if (!priv->ring[i].rdr_req) {
++			ret = -ENOMEM;
++			goto err_cleanup_rings;
++		}
  
- 	clk_disable_unprepare(priv->clk);
+ 		ring_irq = devm_kzalloc(dev, sizeof(*ring_irq), GFP_KERNEL);
+-		if (!ring_irq)
+-			return -ENOMEM;
++		if (!ring_irq) {
++			ret = -ENOMEM;
++			goto err_cleanup_rings;
++		}
  
--	for (i = 0; i < priv->config.rings; i++)
-+	for (i = 0; i < priv->config.rings; i++) {
-+		irq_set_affinity_hint(priv->ring[i].irq, NULL);
- 		destroy_workqueue(priv->ring[i].workqueue);
-+	}
+ 		ring_irq->priv = priv;
+ 		ring_irq->ring = i;
+@@ -1493,7 +1497,8 @@ static int safexcel_probe_generic(void *pdev,
+ 						ring_irq);
+ 		if (irq < 0) {
+ 			dev_err(dev, "Failed to get IRQ ID for ring %d\n", i);
+-			return irq;
++			ret = irq;
++			goto err_cleanup_rings;
+ 		}
+ 
+ 		priv->ring[i].irq = irq;
+@@ -1505,8 +1510,10 @@ static int safexcel_probe_generic(void *pdev,
+ 		snprintf(wq_name, 9, "wq_ring%d", i);
+ 		priv->ring[i].workqueue =
+ 			create_singlethread_workqueue(wq_name);
+-		if (!priv->ring[i].workqueue)
+-			return -ENOMEM;
++		if (!priv->ring[i].workqueue) {
++			ret = -ENOMEM;
++			goto err_cleanup_rings;
++		}
+ 
+ 		priv->ring[i].requests = 0;
+ 		priv->ring[i].busy = false;
+@@ -1523,16 +1530,26 @@ static int safexcel_probe_generic(void *pdev,
+ 	ret = safexcel_hw_init(priv);
+ 	if (ret) {
+ 		dev_err(dev, "HW init failed (%d)\n", ret);
+-		return ret;
++		goto err_cleanup_rings;
+ 	}
+ 
+ 	ret = safexcel_register_algorithms(priv);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register algorithms (%d)\n", ret);
+-		return ret;
++		goto err_cleanup_rings;
+ 	}
  
  	return 0;
- }
-diff --git a/drivers/crypto/inside-secure/safexcel.h b/drivers/crypto/inside-secure/safexcel.h
-index 930cc48a6f859..6a4d7f09bca96 100644
---- a/drivers/crypto/inside-secure/safexcel.h
-+++ b/drivers/crypto/inside-secure/safexcel.h
-@@ -640,6 +640,9 @@ struct safexcel_ring {
- 	 */
- 	struct crypto_async_request *req;
- 	struct crypto_async_request *backlog;
 +
-+	/* irq of this ring */
-+	int irq;
- };
++err_cleanup_rings:
++	for (i = 0; i < priv->config.rings; i++) {
++		if (priv->ring[i].irq)
++			irq_set_affinity_hint(priv->ring[i].irq, NULL);
++		if (priv->ring[i].workqueue)
++			destroy_workqueue(priv->ring[i].workqueue);
++	}
++
++	return ret;
+ }
  
- /* EIP integration context flags */
+ static void safexcel_hw_reset_rings(struct safexcel_crypto_priv *priv)
 -- 
 2.39.2
 
