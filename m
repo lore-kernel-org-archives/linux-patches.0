@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F0FFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF043C433D2;
-	Mon, 15 May 2023 17:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804B3FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6336C433D2;
+	Mon, 15 May 2023 17:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171532;
-	bh=TifXGaWGBWlm68FOaLPEkkCtywDrgJcuZ+MEP8HwFis=;
+	s=korg; t=1684171535;
+	bh=VrWsb2kRQw+fErr23gXJEMqklrdRjVJeQWSzcPK/e6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AivxRLC95WMoUgUuPXcZIzYG//l9rozsfZp84gf15uQnqB5Yp93qPHnf/FHz7IStA
-	 m2rML0l8GGUR09IvT52rf5zKd/tuYNtLQvZNoO3q/1lrBf56Jbbu+RBbafhDHWnoJR
-	 RMZR71DbVG1NbSkP8mTAVwLOnb3KZ+I+8cKzwdOc=
+	b=CO4H7uix/liiI93D5GEPTd9K5xbF+oV5Rtq2/4ebwKfNacXQG1ZkcoNFOOYTjEjw8
+	 Tyov/dDjYnXHHm7MDfxNPCirZtpFSDpOX4ckCVEbZzZ8J4Fh1480AMAa5PyV21e8m9
+	 Z841QRNH5BIHFzNgzrEa7Jf+H5ts4UGVHjWrJi88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 200/242] drm/amd/pm: parse pp_handle under appropriate conditions
-Date: Mon, 15 May 2023 18:28:46 +0200
-Message-Id: <20230515161727.943827582@linuxfoundation.org>
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.2 233/242] ext4: bail out of ext4_xattr_ibody_get() fails for any reason
+Date: Mon, 15 May 2023 18:29:19 +0200
+Message-Id: <20230515161728.901721297@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,59 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 58d9b9a14b47c2a3da6effcbb01607ad7edc0275 upstream.
+commit 2a534e1d0d1591e951f9ece2fb460b2ff92edabd upstream.
 
-amdgpu_dpm_is_overdrive_supported is a common API across all
-asics, so we should cast pp_handle into correct structure
-under different power frameworks.
+In ext4_update_inline_data(), if ext4_xattr_ibody_get() fails for any
+reason, it's best if we just fail as opposed to stumbling on,
+especially if the failure is EFSCORRUPTED.
 
-v2: using return directly to simplify code
-v3: SI asic does not carry od_enabled member in pp_handle, and update Fixes tag
-
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2541
-Fixes: eb4900aa4c49 ("drm/amdgpu: Fix kernel NULL pointer dereference in dpm functions")
-Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c |   20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ fs/ext4/inline.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -1414,15 +1414,21 @@ int amdgpu_dpm_get_smu_prv_buf_details(s
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -360,7 +360,7 @@ static int ext4_update_inline_data(handl
  
- int amdgpu_dpm_is_overdrive_supported(struct amdgpu_device *adev)
- {
--	struct pp_hwmgr *hwmgr = adev->powerplay.pp_handle;
--	struct smu_context *smu = adev->powerplay.pp_handle;
-+	if (is_support_sw_smu(adev)) {
-+		struct smu_context *smu = adev->powerplay.pp_handle;
+ 	error = ext4_xattr_ibody_get(inode, i.name_index, i.name,
+ 				     value, len);
+-	if (error == -ENODATA)
++	if (error < 0)
+ 		goto out;
  
--	if ((is_support_sw_smu(adev) && smu->od_enabled) ||
--	    (is_support_sw_smu(adev) && smu->is_apu) ||
--		(!is_support_sw_smu(adev) && hwmgr->od_enabled))
--		return true;
-+		return (smu->od_enabled || smu->is_apu);
-+	} else {
-+		struct pp_hwmgr *hwmgr;
- 
--	return false;
-+		/* SI asic does not carry od_enabled */
-+		if (adev->family == AMDGPU_FAMILY_SI)
-+			return false;
-+
-+		hwmgr = (struct pp_hwmgr *)adev->powerplay.pp_handle;
-+
-+		return hwmgr->od_enabled;
-+	}
- }
- 
- int amdgpu_dpm_set_pp_table(struct amdgpu_device *adev,
+ 	BUFFER_TRACE(is.iloc.bh, "get_write_access");
 
 
