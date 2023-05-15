@@ -1,45 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E4CFBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:05:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04B3C433EF;
-	Mon, 15 May 2023 17:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFC9FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:05:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7590C433EF;
+	Mon, 15 May 2023 17:05:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170332;
-	bh=MrpB9z0J6gO/McZWH9KQ5LiAs8arGJOOrHoF9cZXNEI=;
+	s=korg; t=1684170335;
+	bh=hQZJNFV9wR2W1eG7dCxga04grQ8fiae9q7llo2dHJtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2jGKkFLYpZXH1kRuzg/z2JBxdYXABDMNZsoGOPaFRUBLm8UhuAuDtiBpSXwUde4xj
-	 dkXJB8TxnQ2zCiIvZpuejabQPbVh5avS8f/xgDrMrNhHT05Uzc4x2C9pHiXMsn6kiN
-	 v/4QyLw8fiB9Yg3/gHqbDh07uOinMGXPUIn/aD68=
+	b=0Hp1aDiAI96W852W2TV68e7dGm/9a/VBXiYpQ+aVQMU0sBsFuKRX1bGJHIV38A6ez
+	 XInmP+F+Km6z8a+IhqYoM0zP7hDz+OIKdkdv8QwJf1+mPMwAH+/Ijw+0lelUp8vn9m
+	 V96ldX5L7UNLmXMRfAg5ICGp1VnEKc5L5uwzAYUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shi <shy828301@gmail.com>,
-	James Clark <james.clark@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Mike Leach <mike.leach@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Suzuki Poulouse <suzuki.poulose@arm.com>,
-	Will Deacon <will@kernel.org>,
-	coresight@lists.linaro.org,
-	denik@google.com,
-	linux-arm-kernel@lists.infradead.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/239] perf cs-etm: Fix timeless decode mode detection
-Date: Mon, 15 May 2023 18:26:01 +0200
-Message-Id: <20230515161724.617421950@linuxfoundation.org>
+Subject: [PATCH 6.1 099/239] crypto: sun8i-ss - Fix a test in sun8i_ss_setup_ivs()
+Date: Mon, 15 May 2023 18:26:02 +0200
+Message-Id: <20230515161724.655521235@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -53,119 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Clark <james.clark@arm.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 449067f3fc9f340da54e383738286881e6634d0b ]
+[ Upstream commit 8fd91151ebcb21b3f2f2bf158ac6092192550b2b ]
 
-In this context, timeless refers to the trace data rather than the perf
-event data. But when detecting whether there are timestamps in the trace
-data or not, the presence of a timestamp flag on any perf event is used.
+SS_ENCRYPTION is (0 << 7 = 0), so the test can never be true.
+Use a direct comparison to SS_ENCRYPTION instead.
 
-Since commit f42c0ce573df ("perf record: Always get text_poke events
-with --kcore option") timestamps were added to a tracking event when
---kcore is used which breaks this detection mechanism. Fix it by
-detecting if trace timestamps exist by looking at the ETM config flags.
-This would have always been a more accurate way of doing it anyway.
+The same king of test is already done the same way in sun8i_ss_run_task().
 
-This fixes the following error message when using --kcore with
-Coresight:
-
-  $ perf record --kcore -e cs_etm// --per-thread
-  $ perf report
-  The perf.data/data data has no samples!
-
-Fixes: f42c0ce573df79d1 ("perf record: Always get text_poke events with --kcore option")
-Reported-by: Yang Shi <shy828301@gmail.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Suzuki Poulouse <suzuki.poulose@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: coresight@lists.linaro.org
-Cc: denik@google.com
-Cc: linux-arm-kernel@lists.infradead.org
-Link: https://lore.kernel.org/lkml/CAHbLzkrJQTrYBtPkf=jf3OpQ-yBcJe7XkvQstX9j2frz4WF-SQ@mail.gmail.com/
-Link: https://lore.kernel.org/r/20230424134748.228137-2-james.clark@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 359e893e8af4 ("crypto: sun8i-ss - rework handling of IV")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 16db965ac995e..09e240e4477d0 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -2488,26 +2488,29 @@ static int cs_etm__process_auxtrace_event(struct perf_session *session,
- 	return 0;
- }
- 
--static bool cs_etm__is_timeless_decoding(struct cs_etm_auxtrace *etm)
-+static int cs_etm__setup_timeless_decoding(struct cs_etm_auxtrace *etm)
- {
- 	struct evsel *evsel;
- 	struct evlist *evlist = etm->session->evlist;
--	bool timeless_decoding = true;
- 
- 	/* Override timeless mode with user input from --itrace=Z */
--	if (etm->synth_opts.timeless_decoding)
--		return true;
-+	if (etm->synth_opts.timeless_decoding) {
-+		etm->timeless_decoding = true;
-+		return 0;
-+	}
- 
- 	/*
--	 * Circle through the list of event and complain if we find one
--	 * with the time bit set.
-+	 * Find the cs_etm evsel and look at what its timestamp setting was
- 	 */
--	evlist__for_each_entry(evlist, evsel) {
--		if ((evsel->core.attr.sample_type & PERF_SAMPLE_TIME))
--			timeless_decoding = false;
--	}
-+	evlist__for_each_entry(evlist, evsel)
-+		if (cs_etm__evsel_is_auxtrace(etm->session, evsel)) {
-+			etm->timeless_decoding =
-+				!(evsel->core.attr.config & BIT(ETM_OPT_TS));
-+			return 0;
-+		}
- 
--	return timeless_decoding;
-+	pr_err("CS ETM: Couldn't find ETM evsel\n");
-+	return -EINVAL;
- }
- 
- static const char * const cs_etm_global_header_fmts[] = {
-@@ -3051,7 +3054,6 @@ int cs_etm__process_auxtrace_info(union perf_event *event,
- 	etm->snapshot_mode = (hdr[CS_ETM_SNAPSHOT] != 0);
- 	etm->metadata = metadata;
- 	etm->auxtrace_type = auxtrace_info->type;
--	etm->timeless_decoding = cs_etm__is_timeless_decoding(etm);
- 
- 	etm->auxtrace.process_event = cs_etm__process_event;
- 	etm->auxtrace.process_auxtrace_event = cs_etm__process_auxtrace_event;
-@@ -3061,6 +3063,10 @@ int cs_etm__process_auxtrace_info(union perf_event *event,
- 	etm->auxtrace.evsel_is_auxtrace = cs_etm__evsel_is_auxtrace;
- 	session->auxtrace = &etm->auxtrace;
- 
-+	err = cs_etm__setup_timeless_decoding(etm);
-+	if (err)
-+		return err;
-+
- 	etm->unknown_thread = thread__new(999999999, 999999999);
- 	if (!etm->unknown_thread) {
- 		err = -ENOMEM;
+diff --git a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+index 902f6be057ec6..e97fb203690ae 100644
+--- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
++++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+@@ -151,7 +151,7 @@ static int sun8i_ss_setup_ivs(struct skcipher_request *areq)
+ 		}
+ 		rctx->p_iv[i] = a;
+ 		/* we need to setup all others IVs only in the decrypt way */
+-		if (rctx->op_dir & SS_ENCRYPTION)
++		if (rctx->op_dir == SS_ENCRYPTION)
+ 			return 0;
+ 		todo = min(len, sg_dma_len(sg));
+ 		len -= todo;
 -- 
 2.39.2
 
