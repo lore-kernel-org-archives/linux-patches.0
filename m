@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535AFDF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:39:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADE6C4339B;
-	Mon, 15 May 2023 16:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC2DDF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:39:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D607DC433D2;
+	Mon, 15 May 2023 16:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168785;
-	bh=ZFTmJW7rZLvYQNhAc3+3YUQg7hL8GX+CIqeQ1n/Tn+4=;
+	s=korg; t=1684168788;
+	bh=BqZ7owbgPMTDNsNhh8nulEcIPbxQ2Qxv3yefNrCZ6kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1ehouwGHFmm+7/WcKdTZPWVvSjSWQ9KVJHIsyR7AY4ZCe29/18VOCGfZWBgLgodZ7
-	 NfN7gl/JTr6zrw9Sk73+dZ/afl0d2rJ8RkjdtKm3mBRzM36zrvBW3q0CM4UEGtXUOx
-	 2bmUjEHHuLblZoL3j1Txv83vxgJlYpGz6d1v9bgg=
+	b=dnFuihYuo36xsuEhTFQn4LYm4OW+OuL5qhTq8grOyw417kJf2Lc+hfiiTpV4QIEYB
+	 5kAWS3uafeTy0Mj5GU0SAEq4WnPwft1FL0hCU9y2lcZZmMGp1h75k05NuKs9fu1qji
+	 NOOw4U5NuJe8VAg3qRBrff/pinSGaJvyXLlICwTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Matthew Lear <matthew.lear@broadcom.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 041/191] media: rcar_fdp1: Fix refcount leak in probe and remove function
-Date: Mon, 15 May 2023 18:24:38 +0200
-Message-Id: <20230515161708.680809356@linuxfoundation.org>
+Subject: [PATCH 4.19 042/191] media: rc: gpio-ir-recv: Fix support for wake-up
+Date: Mon, 15 May 2023 18:24:39 +0200
+Message-Id: <20230515161708.711373277@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,68 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit c766c90faf93897b77c9c5daa603cffab85ba907 ]
+[ Upstream commit 9c592f8ab114875fdb3b2040f01818e53de44991 ]
 
-rcar_fcp_get() take reference, which should be balanced with
-rcar_fcp_put(). Add missing rcar_fcp_put() in fdp1_remove and
-the error paths of fdp1_probe() to fix this.
+The driver was intended from the start to be a wake-up source for the
+system, however due to the absence of a suitable call to
+device_set_wakeup_capable(), the device_may_wakeup() call used to decide
+whether to enable the GPIO interrupt as a wake-up source would never
+happen. Lookup the DT standard "wakeup-source" property and call
+device_init_wakeup() to ensure the device is flagged as being wakeup
+capable.
 
-Fixes: 4710b752e029 ("[media] v4l: Add Renesas R-Car FDP1 Driver")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-[hverkuil: resolve merge conflict, remove() is now void]
+Reported-by: Matthew Lear <matthew.lear@broadcom.com>
+Fixes: fd0f6851eb46 ("[media] rc: Add support for GPIO based IR Receiver driver")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rcar_fdp1.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/media/rc/gpio-ir-recv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/rcar_fdp1.c b/drivers/media/platform/rcar_fdp1.c
-index e1c8701d44ade..605d8188ac8c1 100644
---- a/drivers/media/platform/rcar_fdp1.c
-+++ b/drivers/media/platform/rcar_fdp1.c
-@@ -2313,8 +2313,10 @@ static int fdp1_probe(struct platform_device *pdev)
+diff --git a/drivers/media/rc/gpio-ir-recv.c b/drivers/media/rc/gpio-ir-recv.c
+index 3d99b51384ac9..ed5cfde4d9e79 100644
+--- a/drivers/media/rc/gpio-ir-recv.c
++++ b/drivers/media/rc/gpio-ir-recv.c
+@@ -91,6 +91,8 @@ static int gpio_ir_recv_probe(struct platform_device *pdev)
+ 		rcdev->map_name = RC_MAP_EMPTY;
  
- 	/* Determine our clock rate */
- 	clk = clk_get(&pdev->dev, NULL);
--	if (IS_ERR(clk))
--		return PTR_ERR(clk);
-+	if (IS_ERR(clk)) {
-+		ret = PTR_ERR(clk);
-+		goto put_dev;
-+	}
+ 	gpio_dev->rcdev = rcdev;
++	if (of_property_read_bool(np, "wakeup-source"))
++		device_init_wakeup(dev, true);
  
- 	fdp1->clk_rate = clk_get_rate(clk);
- 	clk_put(clk);
-@@ -2323,7 +2325,7 @@ static int fdp1_probe(struct platform_device *pdev)
- 	ret = v4l2_device_register(&pdev->dev, &fdp1->v4l2_dev);
- 	if (ret) {
- 		v4l2_err(&fdp1->v4l2_dev, "Failed to register video device\n");
--		return ret;
-+		goto put_dev;
- 	}
- 
- 	/* M2M registration */
-@@ -2388,6 +2390,8 @@ static int fdp1_probe(struct platform_device *pdev)
- unreg_dev:
- 	v4l2_device_unregister(&fdp1->v4l2_dev);
- 
-+put_dev:
-+	rcar_fcp_put(fdp1->fcp);
- 	return ret;
- }
- 
-@@ -2399,6 +2403,7 @@ static int fdp1_remove(struct platform_device *pdev)
- 	video_unregister_device(&fdp1->vfd);
- 	v4l2_device_unregister(&fdp1->v4l2_dev);
- 	pm_runtime_disable(&pdev->dev);
-+	rcar_fcp_put(fdp1->fcp);
- 
- 	return 0;
- }
+ 	rc = devm_rc_register_device(dev, rcdev);
+ 	if (rc < 0) {
 -- 
 2.39.2
 
