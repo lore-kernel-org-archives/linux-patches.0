@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5979FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35904C433EF;
-	Mon, 15 May 2023 17:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8501FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A223C433D2;
+	Mon, 15 May 2023 17:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171585;
-	bh=lVUCW/TKayKVWUenr6mVciz180m9I+z90cVX8JR3gTc=;
+	s=korg; t=1684171588;
+	bh=Ny8WIhhc+DsIwnwuaYUZiTvakmtGRstHvTGDZXsgPEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v6tsIW8cMEhxW7hU9fNkJq/TKE4fVk9u8sGWEBQ2PLpoeYD40+12akZmmwQSUBNdY
-	 4oL7j2sI/s64LBvTC7bZkTmne54/YBHiYzX/MFUY/6W9/lcAVRqCoYG0sRNZ2zXajm
-	 Rh3QIDNIWzgW74CM1yTihuzTxcEJ/g8uIZXdM3VI=
+	b=VuRyHYtkamK50mFfmriMaSBXbJ1G7JRf/oNkJ6xn239c4s1f+jVgXGAJ5nedSLLu7
+	 3ePlXSgQuysH3wWFfrQRUcHuM2J8XPPwkSuxglKmeNXfQ/k22Kf3RnWoYQImiXLyFW
+	 MdHElPD6RJ+WWRsdenkuD/ZDnyRkOW47qi2BEYnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hemant Kumar <hemantk@codeaurora.org>,
-	Alex Elder <elder@linaro.org>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Carl Vanderlip <quic_carlv@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/134] bus: mhi: Move host MHI code to "host" directory
-Date: Mon, 15 May 2023 18:28:02 +0200
-Message-Id: <20230515161703.099991093@linuxfoundation.org>
+Subject: [PATCH 5.15 006/134] bus: mhi: host: Remove duplicate ee check for syserr
+Date: Mon, 15 May 2023 18:28:03 +0200
+Message-Id: <20230515161703.139942312@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -36,187 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-[ Upstream commit a0f5a630668cb8b2ebf5204f08e957875e991780 ]
+[ Upstream commit d469d9448a0f1a33c175d3280b1542fa0158ad7a ]
 
-In preparation of the endpoint MHI support, let's move the host MHI code
-to its own "host" directory and adjust the toplevel MHI Kconfig & Makefile.
+If we detect a system error via intvec, we only process the syserr if the
+current ee is different than the last observed ee.  The reason for this
+check is to prevent bhie from running multiple times, but with the single
+queue handling syserr, that is not possible.
 
-While at it, let's also move the "pci_generic" driver to "host" directory
-as it is a host MHI controller driver.
+The check can cause an issue with device recovery.  If PBL loads a bad SBL
+via BHI, but that SBL hangs before notifying the host of an ee change,
+then issuing soc_reset to crash the device and retry (after supplying a
+fixed SBL) will not recover the device as the host will observe a PBL->PBL
+transition and not process the syserr.  The device will be stuck until
+either the driver is reloaded, or the host is rebooted.  Instead, remove
+the check so that we can attempt to recover the device.
 
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-Reviewed-by: Alex Elder <elder@linaro.org>
+Fixes: ef2126c4e2ea ("bus: mhi: core: Process execution environment changes serially")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/1681142292-27571-2-git-send-email-quic_jhugo@quicinc.com
 Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20220301160308.107452-5-manivannan.sadhasivam@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: d469d9448a0f ("bus: mhi: host: Remove duplicate ee check for syserr")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/Makefile                      |  2 +-
- drivers/bus/mhi/Kconfig                   | 27 ++------------------
- drivers/bus/mhi/Makefile                  |  8 ++----
- drivers/bus/mhi/host/Kconfig              | 31 +++++++++++++++++++++++
- drivers/bus/mhi/{core => host}/Makefile   |  4 ++-
- drivers/bus/mhi/{core => host}/boot.c     |  0
- drivers/bus/mhi/{core => host}/debugfs.c  |  0
- drivers/bus/mhi/{core => host}/init.c     |  0
- drivers/bus/mhi/{core => host}/internal.h |  0
- drivers/bus/mhi/{core => host}/main.c     |  0
- drivers/bus/mhi/{ => host}/pci_generic.c  |  0
- drivers/bus/mhi/{core => host}/pm.c       |  0
- 12 files changed, 39 insertions(+), 33 deletions(-)
- create mode 100644 drivers/bus/mhi/host/Kconfig
- rename drivers/bus/mhi/{core => host}/Makefile (54%)
- rename drivers/bus/mhi/{core => host}/boot.c (100%)
- rename drivers/bus/mhi/{core => host}/debugfs.c (100%)
- rename drivers/bus/mhi/{core => host}/init.c (100%)
- rename drivers/bus/mhi/{core => host}/internal.h (100%)
- rename drivers/bus/mhi/{core => host}/main.c (100%)
- rename drivers/bus/mhi/{ => host}/pci_generic.c (100%)
- rename drivers/bus/mhi/{core => host}/pm.c (100%)
+ drivers/bus/mhi/host/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bus/Makefile b/drivers/bus/Makefile
-index 52c2f35a26a99..16da51130d1a1 100644
---- a/drivers/bus/Makefile
-+++ b/drivers/bus/Makefile
-@@ -39,4 +39,4 @@ obj-$(CONFIG_VEXPRESS_CONFIG)	+= vexpress-config.o
- obj-$(CONFIG_DA8XX_MSTPRI)	+= da8xx-mstpri.o
+diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+index 9a94b8d66f575..6b36689999427 100644
+--- a/drivers/bus/mhi/host/main.c
++++ b/drivers/bus/mhi/host/main.c
+@@ -489,7 +489,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
+ 	}
+ 	write_unlock_irq(&mhi_cntrl->pm_lock);
  
- # MHI
--obj-$(CONFIG_MHI_BUS)		+= mhi/
-+obj-y				+= mhi/
-diff --git a/drivers/bus/mhi/Kconfig b/drivers/bus/mhi/Kconfig
-index da5cd0c9fc620..4748df7f9cd58 100644
---- a/drivers/bus/mhi/Kconfig
-+++ b/drivers/bus/mhi/Kconfig
-@@ -2,30 +2,7 @@
- #
- # MHI bus
- #
--# Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
-+# Copyright (c) 2021, Linaro Ltd.
- #
+-	if (pm_state != MHI_PM_SYS_ERR_DETECT || ee == mhi_cntrl->ee)
++	if (pm_state != MHI_PM_SYS_ERR_DETECT)
+ 		goto exit_intvec;
  
--config MHI_BUS
--	tristate "Modem Host Interface (MHI) bus"
--	help
--	  Bus driver for MHI protocol. Modem Host Interface (MHI) is a
--	  communication protocol used by the host processors to control
--	  and communicate with modem devices over a high speed peripheral
--	  bus or shared memory.
--
--config MHI_BUS_DEBUG
--	bool "Debugfs support for the MHI bus"
--	depends on MHI_BUS && DEBUG_FS
--	help
--	  Enable debugfs support for use with the MHI transport. Allows
--	  reading and/or modifying some values within the MHI controller
--	  for debug and test purposes.
--
--config MHI_BUS_PCI_GENERIC
--	tristate "MHI PCI controller driver"
--	depends on MHI_BUS
--	depends on PCI
--	help
--	  This driver provides MHI PCI controller driver for devices such as
--	  Qualcomm SDX55 based PCIe modems.
--
-+source "drivers/bus/mhi/host/Kconfig"
-diff --git a/drivers/bus/mhi/Makefile b/drivers/bus/mhi/Makefile
-index 0a2d778d6fb42..5f5708a249f54 100644
---- a/drivers/bus/mhi/Makefile
-+++ b/drivers/bus/mhi/Makefile
-@@ -1,6 +1,2 @@
--# core layer
--obj-y += core/
--
--obj-$(CONFIG_MHI_BUS_PCI_GENERIC) += mhi_pci_generic.o
--mhi_pci_generic-y += pci_generic.o
--
-+# Host MHI stack
-+obj-y += host/
-diff --git a/drivers/bus/mhi/host/Kconfig b/drivers/bus/mhi/host/Kconfig
-new file mode 100644
-index 0000000000000..da5cd0c9fc620
---- /dev/null
-+++ b/drivers/bus/mhi/host/Kconfig
-@@ -0,0 +1,31 @@
-+# SPDX-License-Identifier: GPL-2.0
-+#
-+# MHI bus
-+#
-+# Copyright (c) 2018-2020, The Linux Foundation. All rights reserved.
-+#
-+
-+config MHI_BUS
-+	tristate "Modem Host Interface (MHI) bus"
-+	help
-+	  Bus driver for MHI protocol. Modem Host Interface (MHI) is a
-+	  communication protocol used by the host processors to control
-+	  and communicate with modem devices over a high speed peripheral
-+	  bus or shared memory.
-+
-+config MHI_BUS_DEBUG
-+	bool "Debugfs support for the MHI bus"
-+	depends on MHI_BUS && DEBUG_FS
-+	help
-+	  Enable debugfs support for use with the MHI transport. Allows
-+	  reading and/or modifying some values within the MHI controller
-+	  for debug and test purposes.
-+
-+config MHI_BUS_PCI_GENERIC
-+	tristate "MHI PCI controller driver"
-+	depends on MHI_BUS
-+	depends on PCI
-+	help
-+	  This driver provides MHI PCI controller driver for devices such as
-+	  Qualcomm SDX55 based PCIe modems.
-+
-diff --git a/drivers/bus/mhi/core/Makefile b/drivers/bus/mhi/host/Makefile
-similarity index 54%
-rename from drivers/bus/mhi/core/Makefile
-rename to drivers/bus/mhi/host/Makefile
-index c3feb4130aa37..859c2f38451c6 100644
---- a/drivers/bus/mhi/core/Makefile
-+++ b/drivers/bus/mhi/host/Makefile
-@@ -1,4 +1,6 @@
- obj-$(CONFIG_MHI_BUS) += mhi.o
--
- mhi-y := init.o main.o pm.o boot.o
- mhi-$(CONFIG_MHI_BUS_DEBUG) += debugfs.o
-+
-+obj-$(CONFIG_MHI_BUS_PCI_GENERIC) += mhi_pci_generic.o
-+mhi_pci_generic-y += pci_generic.o
-diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/host/boot.c
-similarity index 100%
-rename from drivers/bus/mhi/core/boot.c
-rename to drivers/bus/mhi/host/boot.c
-diff --git a/drivers/bus/mhi/core/debugfs.c b/drivers/bus/mhi/host/debugfs.c
-similarity index 100%
-rename from drivers/bus/mhi/core/debugfs.c
-rename to drivers/bus/mhi/host/debugfs.c
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/host/init.c
-similarity index 100%
-rename from drivers/bus/mhi/core/init.c
-rename to drivers/bus/mhi/host/init.c
-diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/host/internal.h
-similarity index 100%
-rename from drivers/bus/mhi/core/internal.h
-rename to drivers/bus/mhi/host/internal.h
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/host/main.c
-similarity index 100%
-rename from drivers/bus/mhi/core/main.c
-rename to drivers/bus/mhi/host/main.c
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-similarity index 100%
-rename from drivers/bus/mhi/pci_generic.c
-rename to drivers/bus/mhi/host/pci_generic.c
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/host/pm.c
-similarity index 100%
-rename from drivers/bus/mhi/core/pm.c
-rename to drivers/bus/mhi/host/pm.c
+ 	switch (ee) {
 -- 
 2.39.2
 
