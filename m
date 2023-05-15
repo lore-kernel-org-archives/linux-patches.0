@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270B1FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:55:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E516C433D2;
-	Mon, 15 May 2023 17:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381A1FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:55:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB61AC4339B;
+	Mon, 15 May 2023 17:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173337;
-	bh=oK1WbgPkpTjEzoAgn0awBJHzstd2h2OygAwWHv8wsIs=;
+	s=korg; t=1684173340;
+	bh=xEI/SGk3dVUjk/+bYPMd8dWbnHNJOerA/s83AmY6AC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QrGbIvCycvlUQ2vNR+b/f86nMigHIgT/VOr/ksAzO/AkKcydozs6QFuJhgHDMIUnP
-	 0k77bhl+Tey2xpJWyH1qzPOluf1QvvAbi9BAOIr7xcUprq+yB1q3XTXwbKpntTWymR
-	 g7iHzs2sCQolnhxRYNNKTjjSW1ZjZ/knFjlgWaIg=
+	b=MK6xQ9PHZHg1kgR1XHIzu/TPA+fWjyb4VviykDjrC0B8Z2AC10ddRvFbHmjB/jDNR
+	 r/R9794vSHAJUxi+LDQFhre+V+jBFYYaP4z2aS2ihC9UZi15ctwLXCfbMKUHfJpZDv
+	 VaWYMjaxnYjiDdN6FpmznE3eCgkI8ytJM30sLzA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tang Bin <tangbin@cmss.chinamobile.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 061/282] media: rcar_fdp1: Fix the correct variable assignments
-Date: Mon, 15 May 2023 18:27:19 +0200
-Message-Id: <20230515161724.072806020@linuxfoundation.org>
+Subject: [PATCH 5.4 062/282] media: rcar_fdp1: Fix refcount leak in probe and remove function
+Date: Mon, 15 May 2023 18:27:20 +0200
+Message-Id: <20230515161724.101708306@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -38,46 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tang Bin <tangbin@cmss.chinamobile.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit af88c2adbb72a09ab1bb5c37ba388c98fecca69b ]
+[ Upstream commit c766c90faf93897b77c9c5daa603cffab85ba907 ]
 
-In the function fdp1_probe(), when get irq failed, the
-function platform_get_irq() log an error message, so
-remove redundant message here. And the variable type
-of "ret" is int, the "fdp1->irq" is unsigned int, when
-irq failed, this place maybe wrong, thus fix it.
+rcar_fcp_get() take reference, which should be balanced with
+rcar_fcp_put(). Add missing rcar_fcp_put() in fdp1_remove and
+the error paths of fdp1_probe() to fix this.
 
-Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Fixes: 4710b752e029 ("[media] v4l: Add Renesas R-Car FDP1 Driver")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+[hverkuil: resolve merge conflict, remove() is now void]
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Stable-dep-of: c766c90faf93 ("media: rcar_fdp1: Fix refcount leak in probe and remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rcar_fdp1.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/media/platform/rcar_fdp1.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/media/platform/rcar_fdp1.c b/drivers/media/platform/rcar_fdp1.c
-index 90575a58ad880..0967b10a459b1 100644
+index 0967b10a459b1..af2408b4856e6 100644
 --- a/drivers/media/platform/rcar_fdp1.c
 +++ b/drivers/media/platform/rcar_fdp1.c
-@@ -2291,11 +2291,10 @@ static int fdp1_probe(struct platform_device *pdev)
- 		return PTR_ERR(fdp1->regs);
+@@ -2317,8 +2317,10 @@ static int fdp1_probe(struct platform_device *pdev)
  
- 	/* Interrupt service routine registration */
--	fdp1->irq = ret = platform_get_irq(pdev, 0);
--	if (ret < 0) {
--		dev_err(&pdev->dev, "cannot find IRQ\n");
-+	ret = platform_get_irq(pdev, 0);
-+	if (ret < 0)
- 		return ret;
--	}
-+	fdp1->irq = ret;
+ 	/* Determine our clock rate */
+ 	clk = clk_get(&pdev->dev, NULL);
+-	if (IS_ERR(clk))
+-		return PTR_ERR(clk);
++	if (IS_ERR(clk)) {
++		ret = PTR_ERR(clk);
++		goto put_dev;
++	}
  
- 	ret = devm_request_irq(&pdev->dev, fdp1->irq, fdp1_irq_handler, 0,
- 			       dev_name(&pdev->dev), fdp1);
+ 	fdp1->clk_rate = clk_get_rate(clk);
+ 	clk_put(clk);
+@@ -2327,7 +2329,7 @@ static int fdp1_probe(struct platform_device *pdev)
+ 	ret = v4l2_device_register(&pdev->dev, &fdp1->v4l2_dev);
+ 	if (ret) {
+ 		v4l2_err(&fdp1->v4l2_dev, "Failed to register video device\n");
+-		return ret;
++		goto put_dev;
+ 	}
+ 
+ 	/* M2M registration */
+@@ -2397,6 +2399,8 @@ static int fdp1_probe(struct platform_device *pdev)
+ unreg_dev:
+ 	v4l2_device_unregister(&fdp1->v4l2_dev);
+ 
++put_dev:
++	rcar_fcp_put(fdp1->fcp);
+ 	return ret;
+ }
+ 
+@@ -2408,6 +2412,7 @@ static int fdp1_remove(struct platform_device *pdev)
+ 	video_unregister_device(&fdp1->vfd);
+ 	v4l2_device_unregister(&fdp1->v4l2_dev);
+ 	pm_runtime_disable(&pdev->dev);
++	rcar_fcp_put(fdp1->fcp);
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
