@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF37FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:42:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E55C1C433EF;
-	Mon, 15 May 2023 17:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5C5FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:42:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8813C433EF;
+	Mon, 15 May 2023 17:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172574;
-	bh=F56bhykUT9oGQyslUX9QEksNGwsbMmSdJCe8OoY5e+M=;
+	s=korg; t=1684172577;
+	bh=iWbCCRy1Spjcf836iiuBVoDOigsexpBSKY30+3yNyjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eGXHHwdfoNein+cCKtU87jcwkdBBseuexJxhT7ids7Jjbzz0gXE2LhHrKiq4eai/x
-	 AZ5NlU3FeuOA7wP8JNCwb2zD2Dt16L34IX75Mompi5fKUNdf9NQGwn95tNk5JQNM63
-	 MAzozoV7OCSBNtUMQ/yCJ1cIU2WPe90P97n+LVwI=
+	b=be8neLZF9AodVs4lDk6AIKtDtOJ5IPBvKdO4fPlac24AkLT+kjuHI9jMX2/7qkl6+
+	 9sgdw/orW7CVWlLY2EiHoUyUrU+9ue8Ua0Uhbffjs7lwYmsSMqTmCtMDYkW2Df/XgY
+	 xNNyMn9Ve86AlVbwWvfEz3/SbRTDXepscKqe0EUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Stanislav Fomichev <sdf@google.com>,
+	YiFei Zhu <zhuyifei@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 169/381] nvme: handle the persistent internal error AER
-Date: Mon, 15 May 2023 18:27:00 +0200
-Message-Id: <20230515161744.447126051@linuxfoundation.org>
+Subject: [PATCH 5.10 160/381] selftests/bpf: Wait for receive in cg_storage_multi test
+Date: Mon, 15 May 2023 18:26:51 +0200
+Message-Id: <20230515161744.033983594@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,111 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: YiFei Zhu <zhuyifei@google.com>
 
-[ Upstream commit 2c61c97fb12b806e1c8eb15f04c277ad097ec95e ]
+[ Upstream commit 5af607a861d43ffff830fc1890033e579ec44799 ]
 
-In the NVM Express Revision 1.4 spec, Figure 145 describes possible
-values for an AER with event type "Error" (value 000b). For a
-Persistent Internal Error (value 03h), the host should perform a
-controller reset.
+In some cases the loopback latency might be large enough, causing
+the assertion on invocations to be run before ingress prog getting
+executed. The assertion would fail and the test would flake.
 
-Add support for this error using code that already exists for
-doing a controller reset. As part of this support, introduce
-two utility functions for parsing the AER type and subtype.
+This can be reliably reproduced by arbitrarily increasing the
+loopback latency (thanks to [1]):
+  tc qdisc add dev lo root handle 1: htb default 12
+  tc class add dev lo parent 1:1 classid 1:12 htb rate 20kbps ceil 20kbps
+  tc qdisc add dev lo parent 1:12 netem delay 100ms
 
-This new support was tested in a lab environment where we can
-generate the persistent internal error on demand, and observe
-both the Linux side and NVMe controller side to see that the
-controller reset has been done.
+Fix this by waiting on the receive end, instead of instantly
+returning to the assert. The call to read() will wait for the
+default SO_RCVTIMEO timeout of 3 seconds provided by
+start_server().
 
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 6622b76fe922 ("nvme: fix async event trace event")
+[1] https://gist.github.com/kstevens715/4598301
+
+Reported-by: Martin KaFai Lau <martin.lau@linux.dev>
+Link: https://lore.kernel.org/bpf/9c5c8b7e-1d89-a3af-5400-14fde81f4429@linux.dev/
+Fixes: 3573f384014f ("selftests/bpf: Test CGROUP_STORAGE behavior on shared egress + ingress")
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: YiFei Zhu <zhuyifei@google.com>
+Link: https://lore.kernel.org/r/20230405193354.1956209-1-zhuyifei@google.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 31 +++++++++++++++++++++++++++++--
- include/linux/nvme.h     |  4 ++++
- 2 files changed, 33 insertions(+), 2 deletions(-)
+ tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index a4b6aa932a8fe..cb3f807ede1b8 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4416,9 +4416,19 @@ static void nvme_fw_act_work(struct work_struct *work)
- 	nvme_get_fw_slot_info(ctrl);
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c b/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
+index 643dfa35419c1..48dc5827daa7f 100644
+--- a/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
++++ b/tools/testing/selftests/bpf/prog_tests/cg_storage_multi.c
+@@ -56,8 +56,9 @@ static bool assert_storage_noexist(struct bpf_map *map, const void *key)
  
-+static u32 nvme_aer_type(u32 result)
-+{
-+	return result & 0x7;
-+}
-+
-+static u32 nvme_aer_subtype(u32 result)
-+{
-+	return (result & 0xff00) >> 8;
-+}
-+
- static void nvme_handle_aen_notice(struct nvme_ctrl *ctrl, u32 result)
+ static bool connect_send(const char *cgroup_path)
  {
--	u32 aer_notice_type = (result & 0xff00) >> 8;
-+	u32 aer_notice_type = nvme_aer_subtype(result);
+-	bool res = true;
+ 	int server_fd = -1, client_fd = -1;
++	char message[] = "message";
++	bool res = true;
  
- 	trace_nvme_async_event(ctrl, aer_notice_type);
+ 	if (join_cgroup(cgroup_path))
+ 		goto out_clean;
+@@ -70,7 +71,10 @@ static bool connect_send(const char *cgroup_path)
+ 	if (client_fd < 0)
+ 		goto out_clean;
  
-@@ -4451,11 +4461,19 @@ static void nvme_handle_aen_notice(struct nvme_ctrl *ctrl, u32 result)
- 	}
- }
- 
-+static void nvme_handle_aer_persistent_error(struct nvme_ctrl *ctrl)
-+{
-+	trace_nvme_async_event(ctrl, NVME_AER_ERROR);
-+	dev_warn(ctrl->device, "resetting controller due to AER\n");
-+	nvme_reset_ctrl(ctrl);
-+}
+-	if (send(client_fd, "message", strlen("message"), 0) < 0)
++	if (send(client_fd, &message, sizeof(message), 0) < 0)
++		goto out_clean;
 +
- void nvme_complete_async_event(struct nvme_ctrl *ctrl, __le16 status,
- 		volatile union nvme_result *res)
- {
- 	u32 result = le32_to_cpu(res->u32);
--	u32 aer_type = result & 0x07;
-+	u32 aer_type = nvme_aer_type(result);
-+	u32 aer_subtype = nvme_aer_subtype(result);
++	if (read(server_fd, &message, sizeof(message)) < 0)
+ 		goto out_clean;
  
- 	if (le16_to_cpu(status) >> 1 != NVME_SC_SUCCESS)
- 		return;
-@@ -4465,6 +4483,15 @@ void nvme_complete_async_event(struct nvme_ctrl *ctrl, __le16 status,
- 		nvme_handle_aen_notice(ctrl, result);
- 		break;
- 	case NVME_AER_ERROR:
-+		/*
-+		 * For a persistent internal error, don't run async_event_work
-+		 * to submit a new AER. The controller reset will do it.
-+		 */
-+		if (aer_subtype == NVME_AER_ERROR_PERSIST_INT_ERR) {
-+			nvme_handle_aer_persistent_error(ctrl);
-+			return;
-+		}
-+		fallthrough;
- 	case NVME_AER_SMART:
- 	case NVME_AER_CSS:
- 	case NVME_AER_VS:
-diff --git a/include/linux/nvme.h b/include/linux/nvme.h
-index fe39ed9e9303e..f454dd1003347 100644
---- a/include/linux/nvme.h
-+++ b/include/linux/nvme.h
-@@ -602,6 +602,10 @@ enum {
- 	NVME_AER_VS			= 7,
- };
- 
-+enum {
-+	NVME_AER_ERROR_PERSIST_INT_ERR	= 0x03,
-+};
-+
- enum {
- 	NVME_AER_NOTICE_NS_CHANGED	= 0x00,
- 	NVME_AER_NOTICE_FW_ACT_STARTING = 0x01,
+ 	res = false;
 -- 
 2.39.2
 
