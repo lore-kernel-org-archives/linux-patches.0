@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24AC6DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07E0C433D2;
-	Mon, 15 May 2023 16:36:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B061EDF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342A1C433D2;
+	Mon, 15 May 2023 16:36:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168600;
-	bh=z/biu6dJ/DDQ/FeUniG5YHiPUaSzHPKC50V4lLeDmGo=;
+	s=korg; t=1684168602;
+	bh=RyzLRF49Cd3ARYY40Fd6emOXeG71ykNQNSy9ruFktlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ID7b2ZU266xV1HGSx6o7tiGYAFAoiKZq+WEFZjE5890kkfPv3qvHf4fMtmpuI5Ob0
-	 ZD9wnzqRo3WV/RXxlrhuBBRNXzrDYmSfqV9Sm7eIu1aF9KEnaUMZ3qGKZ0IaIPdX1F
-	 DMl4EVk2oMo4i9Wc2zgxX771wbDBGlnTgIHjUims=
+	b=hRdV7YcTV/cNELSCvPfgrGnB3IkMaMJTLzRMFk/yvDTn6usT7T2irkOZDkWIjzvR+
+	 ZnRPW55F6xoEdmx865SH8viYWENnZnnAjaJghrjj3Da3MUiiUM0xRNUpzv7gBoIMvF
+	 YlGoPC48WTXpCIHqOYg/eRQ+nnCOvlz0uGhwowAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 4.14 103/116] ARM: dts: s5pv210: correct MIPI CSIS clock name
-Date: Mon, 15 May 2023 18:26:40 +0200
-Message-Id: <20230515161701.667085490@linuxfoundation.org>
+	Ping Cheng <ping.cheng@wacom.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Subject: [PATCH 4.14 104/116] HID: wacom: Set a default resolution for older tablets
+Date: Mon, 15 May 2023 18:26:41 +0200
+Message-Id: <20230515161701.696572010@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -33,32 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ping Cheng <pinglinux@gmail.com>
 
-commit 665b9459bb53b8f19bd1541567e1fe9782c83c4b upstream.
+commit 08a46b4190d345544d04ce4fe2e1844b772b8535 upstream.
 
-The Samsung S5P/Exynos MIPI CSIS bindings and Linux driver expect first
-clock name to be "csis".  Otherwise the driver fails to probe.
+Some older tablets may not report physical maximum for X/Y
+coordinates. Set a default to prevent undefined resolution.
 
-Fixes: 94ad0f6d9278 ("ARM: dts: Add Device tree for s5pv210 SoC")
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230212185818.43503-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Ping Cheng <ping.cheng@wacom.com>
+Link: https://lore.kernel.org/r/20230409164229.29777-1-ping.cheng@wacom.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/s5pv210.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/wacom_wac.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/arch/arm/boot/dts/s5pv210.dtsi
-+++ b/arch/arm/boot/dts/s5pv210.dtsi
-@@ -563,7 +563,7 @@
- 				interrupts = <29>;
- 				clocks = <&clocks CLK_CSIS>,
- 						<&clocks SCLK_CSIS>;
--				clock-names = "clk_csis",
-+				clock-names = "csis",
- 						"sclk_csis";
- 				bus-width = <4>;
- 				status = "disabled";
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1734,6 +1734,7 @@ static void wacom_map_usage(struct input
+ 	int fmax = field->logical_maximum;
+ 	unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
+ 	int resolution_code = code;
++	int resolution = hidinput_calc_abs_res(field, resolution_code);
+ 
+ 	if (equivalent_usage == HID_DG_TWIST) {
+ 		resolution_code = ABS_RZ;
+@@ -1756,8 +1757,15 @@ static void wacom_map_usage(struct input
+ 	switch (type) {
+ 	case EV_ABS:
+ 		input_set_abs_params(input, code, fmin, fmax, fuzz, 0);
+-		input_abs_set_res(input, code,
+-				  hidinput_calc_abs_res(field, resolution_code));
++
++		/* older tablet may miss physical usage */
++		if ((code == ABS_X || code == ABS_Y) && !resolution) {
++			resolution = WACOM_INTUOS_RES;
++			hid_warn(input,
++				 "Wacom usage (%d) missing resolution \n",
++				 code);
++		}
++		input_abs_set_res(input, code, resolution);
+ 		break;
+ 	case EV_KEY:
+ 		input_set_capability(input, EV_KEY, code);
 
 
