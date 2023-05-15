@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19862FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72EAAC433EF;
-	Mon, 15 May 2023 17:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596ACFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FC8C433EF;
+	Mon, 15 May 2023 17:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171687;
-	bh=9lzqGye6+idj4w5EqB2Kh33HZuYJ35XYhK8eGB5pQEs=;
+	s=korg; t=1684171691;
+	bh=hQl1vF4EDF9oLu7f1wQ5MfUEadqEOU6zE5pIzOerR9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OMrgrr1L+YmlMQ3Z8kZrRclwcImMeGHcKvIoE3tEySMjEx59nsUGBbwJar+nGwZmR
-	 8sSVueeMjfq6sjv+HeymFwSHMWiWyPe5rc/cem1BXj+BFA/DPKqDwuROXhjIb0Klnk
-	 uxDr3SZ7MAcYQewvV/RCeMgHMutan9OS1p4EINuQ=
+	b=xh7wNwT/VloF8TcycoJoxGl8xnbDVQ2RRRXlPkiJ61LIi4LhptQBB9M+hyqtZ2Q0l
+	 VPmdct1A8Fw8ASb0y1y75JUICoyI29i36oSfnb5stpo74k4SN/82nIIRMZKS200v5L
+	 kdP2hkwPU7D4wQYC3n1vucVtBjphfvzFACx/uHmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bard Liao <bard.liao@intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 016/134] ASoC: soc-pcm: fix BE handling of PAUSE_RELEASE
-Date: Mon, 15 May 2023 18:28:13 +0200
-Message-Id: <20230515161703.536518243@linuxfoundation.org>
+Subject: [PATCH 5.15 017/134] fs/ntfs3: Fix null-ptr-deref on inode->i_op in ntfs_lookup()
+Date: Mon, 15 May 2023 18:28:14 +0200
+Message-Id: <20230515161703.574773196@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -39,76 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit 3aa1e96a2b95e2ece198f8dd01e96818971b84df ]
+[ Upstream commit 254e69f284d7270e0abdc023ee53b71401c3ba0c ]
 
-A BE connected to more than one FE, e.g. in a mixer case, can go
-through the following transitions.
+Syzbot reported a null-ptr-deref bug:
 
-play FE1    -> BE state is START
-pause FE1   -> BE state is PAUSED
-play FE2    -> BE state is START
-stop FE2    -> BE state is STOP (see note [1] below)
-release FE1 -> BE state is START
-stop FE1    -> BE state is STOP
+ntfs3: loop0: Different NTFS' sector size (1024) and media sector size
+(512)
+ntfs3: loop0: Mark volume as dirty due to NTFS errors
+general protection fault, probably for non-canonical address
+0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
+RIP: 0010:d_flags_for_inode fs/dcache.c:1980 [inline]
+RIP: 0010:__d_add+0x5ce/0x800 fs/dcache.c:2796
+Call Trace:
+ <TASK>
+ d_splice_alias+0x122/0x3b0 fs/dcache.c:3191
+ lookup_open fs/namei.c:3391 [inline]
+ open_last_lookups fs/namei.c:3481 [inline]
+ path_openat+0x10e6/0x2df0 fs/namei.c:3688
+ do_filp_open+0x264/0x4f0 fs/namei.c:3718
+ do_sys_openat2+0x124/0x4e0 fs/open.c:1310
+ do_sys_open fs/open.c:1326 [inline]
+ __do_sys_open fs/open.c:1334 [inline]
+ __se_sys_open fs/open.c:1330 [inline]
+ __x64_sys_open+0x221/0x270 fs/open.c:1330
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-play FE1    -> BE state is START
-pause FE1   -> BE state is PAUSED
-play FE2    -> BE state is START
-release FE1 -> BE state is START
-stop FE2    -> BE state is START
-stop FE1    -> BE state is STOP
+If the MFT record of ntfs inode is not a base record, inode->i_op can be
+NULL. And a null-ptr-deref may happen:
 
-play FE1    -> BE state is START
-play FE2    -> BE state is START (no change)
-pause FE1   -> BE state is START (no change)
-pause FE2   -> BE state is PAUSED
-release FE1 -> BE state is START
-release FE2 -> BE state is START (no change)
-stop FE1    -> BE state is START (no change)
-stop FE2    -> BE state is STOP
+ntfs_lookup()
+    dir_search_u() # inode->i_op is set to NULL
+    d_splice_alias()
+        __d_add()
+            d_flags_for_inode() # inode->i_op->get_link null-ptr-deref
 
-The existing code for PAUSE_RELEASE only allows for the case where the
-BE is paused, which clearly would not work in the sequences above.
+Fix this by adding a Check on inode->i_op before calling the
+d_splice_alias() function.
 
-Extend the allowed states to restart the BE when PAUSE_RELEASE is
-received, and increase the refcount if the BE is already in START.
-
-[1] the existing logic does not move the BE state back to PAUSED when
-the FE2 is stopped. This patch does not change the logic; it would be
-painful to keep a history of changes on the FE side, the state machine
-is already rather complicated with transitions based on the last BE
-state and the trigger type.
-
-Reported-by: Bard Liao <bard.liao@intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Link: https://lore.kernel.org/r/20211207173745.15850-7-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Reported-by: syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-pcm.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ntfs3/namei.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
-index 83977a715a61d..7f96b7d4b3dac 100644
---- a/sound/soc/soc-pcm.c
-+++ b/sound/soc/soc-pcm.c
-@@ -2155,7 +2155,10 @@ int dpcm_be_dai_trigger(struct snd_soc_pcm_runtime *fe, int stream,
- 			be->dpcm[stream].state = SND_SOC_DPCM_STATE_START;
- 			break;
- 		case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
--			if ((be->dpcm[stream].state != SND_SOC_DPCM_STATE_PAUSED))
-+			if (!be->dpcm[stream].be_start &&
-+			    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_START) &&
-+			    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_STOP) &&
-+			    (be->dpcm[stream].state != SND_SOC_DPCM_STATE_PAUSED))
- 				goto next;
+diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
+index bc741213ad848..29fd76d94c744 100644
+--- a/fs/ntfs3/namei.c
++++ b/fs/ntfs3/namei.c
+@@ -86,6 +86,16 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
+ 		__putname(uni);
+ 	}
  
- 			be->dpcm[stream].be_start++;
++	/*
++	 * Check for a null pointer
++	 * If the MFT record of ntfs inode is not a base record, inode->i_op can be NULL.
++	 * This causes null pointer dereference in d_splice_alias().
++	 */
++	if (!IS_ERR(inode) && inode->i_op == NULL) {
++		iput(inode);
++		inode = ERR_PTR(-EINVAL);
++	}
++
+ 	return d_splice_alias(inode, dentry);
+ }
+ 
 -- 
 2.39.2
 
