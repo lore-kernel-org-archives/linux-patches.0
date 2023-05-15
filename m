@@ -1,32 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9539BFC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF01CC4339C;
-	Mon, 15 May 2023 17:33:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9DE8FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BAA5C4339B;
+	Mon, 15 May 2023 17:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171987;
-	bh=vl+moLX2PUd01Hhe6ZpxAD8Crz/zCowVUH3ljoOjytg=;
+	s=korg; t=1684171990;
+	bh=sgLYlJEycQfjsHuNhERr2TA08C3ZmAIv5aEV0godErw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBI2TDiiYMXv0+EdvCPTPKna+Ay0OLfi6MBNIbAdGxgGDoN02Lov4oOWrpuEDEurQ
-	 pMX4VekmRmneH4tjkxZPmCJQknDZCnozRwZlag5rXA5ycmbBBLU6BJvTllZuRzz6HR
-	 a9KdW8p9F/ObpkWkHPPTqTFEJRN715ZDx5SM31ao=
+	b=0UsNybLr/qFpNHU+y3FId1RU2ny6ibuRcuEgBrmxzRLG4OTVZAe/oySgjKeGBkSMW
+	 CFy9+gTJUGIKzKKDNotbagYsucZI1s6la10kZIe2mL7w3uI/GZ6P1A30I2pns0RBBj
+	 VCcsFaEuNNiQY+4J0lcWyFlnAL8ihGFoNQq1UkEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziwei Xie <zw.xie@high-flyer.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/134] ksmbd: set RSS capable in FSCTL_QUERY_NETWORK_INTERFACE_INFO
-Date: Mon, 15 May 2023 18:29:47 +0200
-Message-Id: <20230515161706.781489695@linuxfoundation.org>
+	syzbot+ab17848fe269b573eb71@syzkaller.appspotmail.com,
+	Ayushman Dutta <ayudutta@amazon.com>,
+	Kees Cook <keescook@chromium.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>
+Subject: [PATCH 5.10 001/381] seccomp: Move copy_seccomp() to no failure path.
+Date: Mon, 15 May 2023 18:24:12 +0200
+Message-Id: <20230515161736.847344716@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
-References: <20230515161702.887638251@linuxfoundation.org>
+In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
+References: <20230515161736.775969473@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,98 +39,174 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit a58b45a4dbfd0bf2ebb157789da4d8e6368afb1b ]
+commit a1140cb215fa13dcec06d12ba0c3ee105633b7c4 upstream.
 
-Set RSS capable in FSCTL_QUERY_NETWORK_INTERFACE_INFO if netdev has
-multi tx queues. And add ksmbd_compare_user() to avoid racy condition
-issue in ksmbd_free_user(). because windows client is simultaneously used
-to send session setup requests for multichannel connection.
+Our syzbot instance reported memory leaks in do_seccomp() [0], similar
+to the report [1].  It shows that we miss freeing struct seccomp_filter
+and some objects included in it.
 
-Tested-by: Ziwei Xie <zw.xie@high-flyer.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 7b4323373d84 ("ksmbd: fix deadlock in ksmbd_find_crypto_ctx()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We can reproduce the issue with the program below [2] which calls one
+seccomp() and two clone() syscalls.
+
+The first clone()d child exits earlier than its parent and sends a
+signal to kill it during the second clone(), more precisely before the
+fatal_signal_pending() test in copy_process().  When the parent receives
+the signal, it has to destroy the embryonic process and return -EINTR to
+user space.  In the failure path, we have to call seccomp_filter_release()
+to decrement the filter's refcount.
+
+Initially, we called it in free_task() called from the failure path, but
+the commit 3a15fb6ed92c ("seccomp: release filter after task is fully
+dead") moved it to release_task() to notify user space as early as possible
+that the filter is no longer used.
+
+To keep the change and current seccomp refcount semantics, let's move
+copy_seccomp() just after the signal check and add a WARN_ON_ONCE() in
+free_task() for future debugging.
+
+[0]:
+unreferenced object 0xffff8880063add00 (size 256):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.914s)
+  hex dump (first 32 bytes):
+    01 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00  ................
+    ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
+  backtrace:
+    do_seccomp (./include/linux/slab.h:600 ./include/linux/slab.h:733 kernel/seccomp.c:666 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+unreferenced object 0xffffc90000035000 (size 4096):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    __vmalloc_node_range (mm/vmalloc.c:3226)
+    __vmalloc_node (mm/vmalloc.c:3261 (discriminator 4))
+    bpf_prog_alloc_no_stats (kernel/bpf/core.c:91)
+    bpf_prog_alloc (kernel/bpf/core.c:129)
+    bpf_prog_create_from_user (net/core/filter.c:1414)
+    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+unreferenced object 0xffff888003fa1000 (size 1024):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    bpf_prog_alloc_no_stats (./include/linux/slab.h:600 ./include/linux/slab.h:733 kernel/bpf/core.c:95)
+    bpf_prog_alloc (kernel/bpf/core.c:129)
+    bpf_prog_create_from_user (net/core/filter.c:1414)
+    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+unreferenced object 0xffff888006360240 (size 16):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
+  hex dump (first 16 bytes):
+    01 00 37 00 76 65 72 6c e0 83 01 06 80 88 ff ff  ..7.verl........
+  backtrace:
+    bpf_prog_store_orig_filter (net/core/filter.c:1137)
+    bpf_prog_create_from_user (net/core/filter.c:1428)
+    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+unreferenced object 0xffff8880060183e0 (size 8):
+  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
+  hex dump (first 8 bytes):
+    06 00 00 00 00 00 ff 7f                          ........
+  backtrace:
+    kmemdup (mm/util.c:129)
+    bpf_prog_store_orig_filter (net/core/filter.c:1144)
+    bpf_prog_create_from_user (net/core/filter.c:1428)
+    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
+    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
+    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
+
+[1]: https://syzkaller.appspot.com/bug?id=2809bb0ac77ad9aa3f4afe42d6a610aba594a987
+
+[2]:
+#define _GNU_SOURCE
+#include <sched.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <linux/filter.h>
+#include <linux/seccomp.h>
+
+void main(void)
+{
+	struct sock_filter filter[] = {
+		BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ALLOW),
+	};
+	struct sock_fprog fprog = {
+		.len = sizeof(filter) / sizeof(filter[0]),
+		.filter = filter,
+	};
+	long i, pid;
+
+	syscall(__NR_seccomp, SECCOMP_SET_MODE_FILTER, 0, &fprog);
+
+	for (i = 0; i < 2; i++) {
+		pid = syscall(__NR_clone, CLONE_NEWNET | SIGKILL, NULL, NULL, 0);
+		if (pid == 0)
+			return;
+	}
+}
+
+Fixes: 3a15fb6ed92c ("seccomp: release filter after task is fully dead")
+Reported-by: syzbot+ab17848fe269b573eb71@syzkaller.appspotmail.com
+Reported-by: Ayushman Dutta <ayudutta@amazon.com>
+Suggested-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20220823154532.82913-1-kuniyu@amazon.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/mgmt/user_config.c | 10 ++++++++++
- fs/ksmbd/mgmt/user_config.h |  1 +
- fs/ksmbd/smb2pdu.c          | 15 ++++++++++-----
- 3 files changed, 21 insertions(+), 5 deletions(-)
+ kernel/fork.c |   17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/fs/ksmbd/mgmt/user_config.c b/fs/ksmbd/mgmt/user_config.c
-index 1019d3677d553..279d00feff216 100644
---- a/fs/ksmbd/mgmt/user_config.c
-+++ b/fs/ksmbd/mgmt/user_config.c
-@@ -67,3 +67,13 @@ int ksmbd_anonymous_user(struct ksmbd_user *user)
- 		return 1;
- 	return 0;
- }
-+
-+bool ksmbd_compare_user(struct ksmbd_user *u1, struct ksmbd_user *u2)
-+{
-+	if (strcmp(u1->name, u2->name))
-+		return false;
-+	if (memcmp(u1->passkey, u2->passkey, u1->passkey_sz))
-+		return false;
-+
-+	return true;
-+}
-diff --git a/fs/ksmbd/mgmt/user_config.h b/fs/ksmbd/mgmt/user_config.h
-index aff80b0295790..6a44109617f14 100644
---- a/fs/ksmbd/mgmt/user_config.h
-+++ b/fs/ksmbd/mgmt/user_config.h
-@@ -64,4 +64,5 @@ struct ksmbd_user *ksmbd_login_user(const char *account);
- struct ksmbd_user *ksmbd_alloc_user(struct ksmbd_login_response *resp);
- void ksmbd_free_user(struct ksmbd_user *user);
- int ksmbd_anonymous_user(struct ksmbd_user *user);
-+bool ksmbd_compare_user(struct ksmbd_user *u1, struct ksmbd_user *u2);
- #endif /* __USER_CONFIG_MANAGEMENT_H__ */
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index 22d9fcb5f7ca4..c8c2b326ee042 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -1463,10 +1463,16 @@ static int ntlm_authenticate(struct ksmbd_work *work)
- 			ksmbd_free_user(user);
- 			return 0;
- 		}
--		ksmbd_free_user(sess->user);
-+
-+		if (!ksmbd_compare_user(sess->user, user)) {
-+			ksmbd_free_user(user);
-+			return -EPERM;
-+		}
-+		ksmbd_free_user(user);
-+	} else {
-+		sess->user = user;
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -441,6 +441,9 @@ void put_task_stack(struct task_struct *
+ 
+ void free_task(struct task_struct *tsk)
+ {
++#ifdef CONFIG_SECCOMP
++	WARN_ON_ONCE(tsk->seccomp.filter);
++#endif
+ 	scs_release(tsk);
+ 
+ #ifndef CONFIG_THREAD_INFO_IN_TASK
+@@ -2248,12 +2251,6 @@ static __latent_entropy struct task_stru
+ 
+ 	spin_lock(&current->sighand->siglock);
+ 
+-	/*
+-	 * Copy seccomp details explicitly here, in case they were changed
+-	 * before holding sighand lock.
+-	 */
+-	copy_seccomp(p);
+-
+ 	rseq_fork(p, clone_flags);
+ 
+ 	/* Don't start children in a dying pid namespace */
+@@ -2268,6 +2265,14 @@ static __latent_entropy struct task_stru
+ 		goto bad_fork_cancel_cgroup;
  	}
  
--	sess->user = user;
- 	if (user_guest(sess->user)) {
- 		rsp->SessionFlags = SMB2_SESSION_FLAG_IS_GUEST_LE;
- 	} else {
-@@ -2071,9 +2077,6 @@ int smb2_session_logoff(struct ksmbd_work *work)
- 
- 	ksmbd_debug(SMB, "request\n");
- 
--	/* Got a valid session, set connection state */
--	WARN_ON(sess->conn != conn);
--
- 	/* setting CifsExiting here may race with start_tcp_sess */
- 	ksmbd_conn_set_need_reconnect(work);
- 	ksmbd_close_session_fds(work);
-@@ -7302,6 +7305,8 @@ static int fsctl_query_iface_info_ioctl(struct ksmbd_conn *conn,
- 		nii_rsp->IfIndex = cpu_to_le32(netdev->ifindex);
- 
- 		nii_rsp->Capability = 0;
-+		if (netdev->real_num_tx_queues > 1)
-+			nii_rsp->Capability |= cpu_to_le32(RSS_CAPABLE);
- 		if (ksmbd_rdma_capable_netdev(netdev))
- 			nii_rsp->Capability |= cpu_to_le32(RDMA_CAPABLE);
- 
--- 
-2.39.2
-
++	/* No more failure paths after this point. */
++
++	/*
++	 * Copy seccomp details explicitly here, in case they were changed
++	 * before holding sighand lock.
++	 */
++	copy_seccomp(p);
++
+ 	init_task_pid_links(p);
+ 	if (likely(p->pid)) {
+ 		ptrace_init_task(p, (clone_flags & CLONE_PTRACE) || trace);
 
 
