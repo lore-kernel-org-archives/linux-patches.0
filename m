@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E280FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C96C433EF;
-	Mon, 15 May 2023 17:33:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F72FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C00C433EF;
+	Mon, 15 May 2023 17:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172030;
-	bh=6nw58DCutxaqipw12odRty6ol90qLWfJBRF1TpFMDcM=;
+	s=korg; t=1684172033;
+	bh=R6yb1hfeBaOqGpTmhzm4UaWyZSy3HmdgbiVDHtoNFUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D952kHffD15IQ7MZsabQXDw4gR3sLm18GoS8AoJhV5mTj4/SnI8TOATiAR63avk2i
-	 Dky/wGZN7MUxZzOp2u2JCjdFhFLolvnxoxHQqm4ojLWo60YnuxCA8DM+Uew3OCA0t0
-	 F/xI7J/g7pFvpEVG8kzslrhvufM01HKbtZfIHmYM=
+	b=X+0IHBjlcbdkl+CZbXoZ6SAIdCT6Vdhvv3y8a4awaIgyzag0H3GI7iOsa4cs8EcGD
+	 yeAtvoc++q3gkGeIc9II6Uh/IkXBjY5Hq6gugsgSBxLr6672XsOvNGzQDHYb+5D4z+
+	 FEISHM8rX2U2zUhclRw0aREUSaXHfJJA7J+SABpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.10 004/381] wifi: brcmfmac: slab-out-of-bounds read in brcmf_get_assoc_ies()
-Date: Mon, 15 May 2023 18:24:15 +0200
-Message-Id: <20230515161736.970755090@linuxfoundation.org>
+	Marco Elver <elver@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Frederic Weisbecker <frederic@kernel.org>
+Subject: [PATCH 5.10 022/381] posix-cpu-timers: Implement the missing timer_wait_running callback
+Date: Mon, 15 May 2023 18:24:33 +0200
+Message-Id: <20230515161737.785349616@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,168 +36,268 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 0da40e018fd034d87c9460123fa7f897b69fdee7 upstream.
+commit f7abf14f0001a5a47539d9f60bbdca649e43536b upstream.
 
-Fix a slab-out-of-bounds read that occurs in kmemdup() called from
-brcmf_get_assoc_ies().
-The bug could occur when assoc_info->req_len, data from a URB provided
-by a USB device, is bigger than the size of buffer which is defined as
-WL_EXTRA_BUF_MAX.
+For some unknown reason the introduction of the timer_wait_running callback
+missed to fixup posix CPU timers, which went unnoticed for almost four years.
+Marco reported recently that the WARN_ON() in timer_wait_running()
+triggers with a posix CPU timer test case.
 
-Add the size check for req_len/resp_len of assoc_info.
+Posix CPU timers have two execution models for expiring timers depending on
+CONFIG_POSIX_CPU_TIMERS_TASK_WORK:
 
-Found by a modified version of syzkaller.
+1) If not enabled, the expiry happens in hard interrupt context so
+   spin waiting on the remote CPU is reasonably time bound.
 
-[   46.592467][    T7] ==================================================================
-[   46.594687][    T7] BUG: KASAN: slab-out-of-bounds in kmemdup+0x3e/0x50
-[   46.596572][    T7] Read of size 3014656 at addr ffff888019442000 by task kworker/0:1/7
-[   46.598575][    T7]
-[   46.599157][    T7] CPU: 0 PID: 7 Comm: kworker/0:1 Tainted: G           O      5.14.0+ #145
-[   46.601333][    T7] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-[   46.604360][    T7] Workqueue: events brcmf_fweh_event_worker
-[   46.605943][    T7] Call Trace:
-[   46.606584][    T7]  dump_stack_lvl+0x8e/0xd1
-[   46.607446][    T7]  print_address_description.constprop.0.cold+0x93/0x334
-[   46.608610][    T7]  ? kmemdup+0x3e/0x50
-[   46.609341][    T7]  kasan_report.cold+0x79/0xd5
-[   46.610151][    T7]  ? kmemdup+0x3e/0x50
-[   46.610796][    T7]  kasan_check_range+0x14e/0x1b0
-[   46.611691][    T7]  memcpy+0x20/0x60
-[   46.612323][    T7]  kmemdup+0x3e/0x50
-[   46.612987][    T7]  brcmf_get_assoc_ies+0x967/0xf60
-[   46.613904][    T7]  ? brcmf_notify_vif_event+0x3d0/0x3d0
-[   46.614831][    T7]  ? lock_chain_count+0x20/0x20
-[   46.615683][    T7]  ? mark_lock.part.0+0xfc/0x2770
-[   46.616552][    T7]  ? lock_chain_count+0x20/0x20
-[   46.617409][    T7]  ? mark_lock.part.0+0xfc/0x2770
-[   46.618244][    T7]  ? lock_chain_count+0x20/0x20
-[   46.619024][    T7]  brcmf_bss_connect_done.constprop.0+0x241/0x2e0
-[   46.620019][    T7]  ? brcmf_parse_configure_security.isra.0+0x2a0/0x2a0
-[   46.620818][    T7]  ? __lock_acquire+0x181f/0x5790
-[   46.621462][    T7]  brcmf_notify_connect_status+0x448/0x1950
-[   46.622134][    T7]  ? rcu_read_lock_bh_held+0xb0/0xb0
-[   46.622736][    T7]  ? brcmf_cfg80211_join_ibss+0x7b0/0x7b0
-[   46.623390][    T7]  ? find_held_lock+0x2d/0x110
-[   46.623962][    T7]  ? brcmf_fweh_event_worker+0x19f/0xc60
-[   46.624603][    T7]  ? mark_held_locks+0x9f/0xe0
-[   46.625145][    T7]  ? lockdep_hardirqs_on_prepare+0x3e0/0x3e0
-[   46.625871][    T7]  ? brcmf_cfg80211_join_ibss+0x7b0/0x7b0
-[   46.626545][    T7]  brcmf_fweh_call_event_handler.isra.0+0x90/0x100
-[   46.627338][    T7]  brcmf_fweh_event_worker+0x557/0xc60
-[   46.627962][    T7]  ? brcmf_fweh_call_event_handler.isra.0+0x100/0x100
-[   46.628736][    T7]  ? rcu_read_lock_sched_held+0xa1/0xd0
-[   46.629396][    T7]  ? rcu_read_lock_bh_held+0xb0/0xb0
-[   46.629970][    T7]  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
-[   46.630649][    T7]  process_one_work+0x92b/0x1460
-[   46.631205][    T7]  ? pwq_dec_nr_in_flight+0x330/0x330
-[   46.631821][    T7]  ? rwlock_bug.part.0+0x90/0x90
-[   46.632347][    T7]  worker_thread+0x95/0xe00
-[   46.632832][    T7]  ? __kthread_parkme+0x115/0x1e0
-[   46.633393][    T7]  ? process_one_work+0x1460/0x1460
-[   46.633957][    T7]  kthread+0x3a1/0x480
-[   46.634369][    T7]  ? set_kthread_struct+0x120/0x120
-[   46.634933][    T7]  ret_from_fork+0x1f/0x30
-[   46.635431][    T7]
-[   46.635687][    T7] Allocated by task 7:
-[   46.636151][    T7]  kasan_save_stack+0x1b/0x40
-[   46.636628][    T7]  __kasan_kmalloc+0x7c/0x90
-[   46.637108][    T7]  kmem_cache_alloc_trace+0x19e/0x330
-[   46.637696][    T7]  brcmf_cfg80211_attach+0x4a0/0x4040
-[   46.638275][    T7]  brcmf_attach+0x389/0xd40
-[   46.638739][    T7]  brcmf_usb_probe+0x12de/0x1690
-[   46.639279][    T7]  usb_probe_interface+0x2aa/0x760
-[   46.639820][    T7]  really_probe+0x205/0xb70
-[   46.640342][    T7]  __driver_probe_device+0x311/0x4b0
-[   46.640876][    T7]  driver_probe_device+0x4e/0x150
-[   46.641445][    T7]  __device_attach_driver+0x1cc/0x2a0
-[   46.642000][    T7]  bus_for_each_drv+0x156/0x1d0
-[   46.642543][    T7]  __device_attach+0x23f/0x3a0
-[   46.643065][    T7]  bus_probe_device+0x1da/0x290
-[   46.643644][    T7]  device_add+0xb7b/0x1eb0
-[   46.644130][    T7]  usb_set_configuration+0xf59/0x16f0
-[   46.644720][    T7]  usb_generic_driver_probe+0x82/0xa0
-[   46.645295][    T7]  usb_probe_device+0xbb/0x250
-[   46.645786][    T7]  really_probe+0x205/0xb70
-[   46.646258][    T7]  __driver_probe_device+0x311/0x4b0
-[   46.646804][    T7]  driver_probe_device+0x4e/0x150
-[   46.647387][    T7]  __device_attach_driver+0x1cc/0x2a0
-[   46.647926][    T7]  bus_for_each_drv+0x156/0x1d0
-[   46.648454][    T7]  __device_attach+0x23f/0x3a0
-[   46.648939][    T7]  bus_probe_device+0x1da/0x290
-[   46.649478][    T7]  device_add+0xb7b/0x1eb0
-[   46.649936][    T7]  usb_new_device.cold+0x49c/0x1029
-[   46.650526][    T7]  hub_event+0x1c98/0x3950
-[   46.650975][    T7]  process_one_work+0x92b/0x1460
-[   46.651535][    T7]  worker_thread+0x95/0xe00
-[   46.651991][    T7]  kthread+0x3a1/0x480
-[   46.652413][    T7]  ret_from_fork+0x1f/0x30
-[   46.652885][    T7]
-[   46.653131][    T7] The buggy address belongs to the object at ffff888019442000
-[   46.653131][    T7]  which belongs to the cache kmalloc-2k of size 2048
-[   46.654669][    T7] The buggy address is located 0 bytes inside of
-[   46.654669][    T7]  2048-byte region [ffff888019442000, ffff888019442800)
-[   46.656137][    T7] The buggy address belongs to the page:
-[   46.656720][    T7] page:ffffea0000651000 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x19440
-[   46.657792][    T7] head:ffffea0000651000 order:3 compound_mapcount:0 compound_pincount:0
-[   46.658673][    T7] flags: 0x100000000010200(slab|head|node=0|zone=1)
-[   46.659422][    T7] raw: 0100000000010200 0000000000000000 dead000000000122 ffff888100042000
-[   46.660363][    T7] raw: 0000000000000000 0000000000080008 00000001ffffffff 0000000000000000
-[   46.661236][    T7] page dumped because: kasan: bad access detected
-[   46.661956][    T7] page_owner tracks the page as allocated
-[   46.662588][    T7] page last allocated via order 3, migratetype Unmovable, gfp_mask 0x52a20(GFP_ATOMIC|__GFP_NOWARN|__GFP_NORETRY|__GFP_COMP), pid 7, ts 31136961085, free_ts 0
-[   46.664271][    T7]  prep_new_page+0x1aa/0x240
-[   46.664763][    T7]  get_page_from_freelist+0x159a/0x27c0
-[   46.665340][    T7]  __alloc_pages+0x2da/0x6a0
-[   46.665847][    T7]  alloc_pages+0xec/0x1e0
-[   46.666308][    T7]  allocate_slab+0x380/0x4e0
-[   46.666770][    T7]  ___slab_alloc+0x5bc/0x940
-[   46.667264][    T7]  __slab_alloc+0x6d/0x80
-[   46.667712][    T7]  kmem_cache_alloc_trace+0x30a/0x330
-[   46.668299][    T7]  brcmf_usbdev_qinit.constprop.0+0x50/0x470
-[   46.668885][    T7]  brcmf_usb_probe+0xc97/0x1690
-[   46.669438][    T7]  usb_probe_interface+0x2aa/0x760
-[   46.669988][    T7]  really_probe+0x205/0xb70
-[   46.670487][    T7]  __driver_probe_device+0x311/0x4b0
-[   46.671031][    T7]  driver_probe_device+0x4e/0x150
-[   46.671604][    T7]  __device_attach_driver+0x1cc/0x2a0
-[   46.672192][    T7]  bus_for_each_drv+0x156/0x1d0
-[   46.672739][    T7] page_owner free stack trace missing
-[   46.673335][    T7]
-[   46.673620][    T7] Memory state around the buggy address:
-[   46.674213][    T7]  ffff888019442700: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   46.675083][    T7]  ffff888019442780: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
-[   46.675994][    T7] >ffff888019442800: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   46.676875][    T7]                    ^
-[   46.677323][    T7]  ffff888019442880: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   46.678190][    T7]  ffff888019442900: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[   46.679052][    T7] ==================================================================
-[   46.679945][    T7] Disabling lock debugging due to kernel taint
-[   46.680725][    T7] Kernel panic - not syncing:
+   Implement an empty stub function for that case.
 
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230309104457.22628-1-jisoo.jang@yonsei.ac.kr
+2) If enabled, the expiry happens in task work before returning to user
+   space or guest mode. The expired timers are marked as firing and moved
+   from the timer queue to a local list head with sighand lock held. Once
+   the timers are moved, sighand lock is dropped and the expiry happens in
+   fully preemptible context. That means the expiring task can be scheduled
+   out, migrated, interrupted etc. So spin waiting on it is more than
+   suboptimal.
+
+   The timer wheel has a timer_wait_running() mechanism for RT, which uses
+   a per CPU timer-base expiry lock which is held by the expiry code and the
+   task waiting for the timer function to complete blocks on that lock.
+
+   This does not work in the same way for posix CPU timers as there is no
+   timer base and expiry for process wide timers can run on any task
+   belonging to that process, but the concept of waiting on an expiry lock
+   can be used too in a slightly different way:
+
+    - Add a mutex to struct posix_cputimers_work. This struct is per task
+      and used to schedule the expiry task work from the timer interrupt.
+
+    - Add a task_struct pointer to struct cpu_timer which is used to store
+      a the task which runs the expiry. That's filled in when the task
+      moves the expired timers to the local expiry list. That's not
+      affecting the size of the k_itimer union as there are bigger union
+      members already
+
+    - Let the task take the expiry mutex around the expiry function
+
+    - Let the waiter acquire a task reference with rcu_read_lock() held and
+      block on the expiry mutex
+
+   This avoids spin-waiting on a task which might not even be on a CPU and
+   works nicely for RT too.
+
+Fixes: ec8f954a40da ("posix-timers: Use a callback for cancel synchronization on PREEMPT_RT")
+Reported-by: Marco Elver <elver@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Marco Elver <elver@google.com>
+Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/87zg764ojw.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/posix-timers.h   |   17 +++++---
+ kernel/time/posix-cpu-timers.c |   81 +++++++++++++++++++++++++++++++++--------
+ kernel/time/posix-timers.c     |    4 ++
+ 3 files changed, 82 insertions(+), 20 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
-@@ -5834,6 +5834,11 @@ static s32 brcmf_get_assoc_ies(struct br
- 		(struct brcmf_cfg80211_assoc_ielen_le *)cfg->extra_buf;
- 	req_len = le32_to_cpu(assoc_info->req_len);
- 	resp_len = le32_to_cpu(assoc_info->resp_len);
-+	if (req_len > WL_EXTRA_BUF_MAX || resp_len > WL_EXTRA_BUF_MAX) {
-+		bphy_err(drvr, "invalid lengths in assoc info: req %u resp %u\n",
-+			 req_len, resp_len);
-+		return -EINVAL;
-+	}
- 	if (req_len) {
- 		err = brcmf_fil_iovar_data_get(ifp, "assoc_req_ies",
- 					       cfg->extra_buf,
+--- a/include/linux/posix-timers.h
++++ b/include/linux/posix-timers.h
+@@ -4,6 +4,7 @@
+ 
+ #include <linux/spinlock.h>
+ #include <linux/list.h>
++#include <linux/mutex.h>
+ #include <linux/alarmtimer.h>
+ #include <linux/timerqueue.h>
+ #include <linux/task_work.h>
+@@ -63,16 +64,18 @@ static inline int clockid_to_fd(const cl
+  * cpu_timer - Posix CPU timer representation for k_itimer
+  * @node:	timerqueue node to queue in the task/sig
+  * @head:	timerqueue head on which this timer is queued
+- * @task:	Pointer to target task
++ * @pid:	Pointer to target task PID
+  * @elist:	List head for the expiry list
+  * @firing:	Timer is currently firing
++ * @handling:	Pointer to the task which handles expiry
+  */
+ struct cpu_timer {
+-	struct timerqueue_node	node;
+-	struct timerqueue_head	*head;
+-	struct pid		*pid;
+-	struct list_head	elist;
+-	int			firing;
++	struct timerqueue_node		node;
++	struct timerqueue_head		*head;
++	struct pid			*pid;
++	struct list_head		elist;
++	int				firing;
++	struct task_struct __rcu	*handling;
+ };
+ 
+ static inline bool cpu_timer_enqueue(struct timerqueue_head *head,
+@@ -129,10 +132,12 @@ struct posix_cputimers {
+ /**
+  * posix_cputimers_work - Container for task work based posix CPU timer expiry
+  * @work:	The task work to be scheduled
++ * @mutex:	Mutex held around expiry in context of this task work
+  * @scheduled:  @work has been scheduled already, no further processing
+  */
+ struct posix_cputimers_work {
+ 	struct callback_head	work;
++	struct mutex		mutex;
+ 	unsigned int		scheduled;
+ };
+ 
+--- a/kernel/time/posix-cpu-timers.c
++++ b/kernel/time/posix-cpu-timers.c
+@@ -782,6 +782,8 @@ static u64 collect_timerqueue(struct tim
+ 			return expires;
+ 
+ 		ctmr->firing = 1;
++		/* See posix_cpu_timer_wait_running() */
++		rcu_assign_pointer(ctmr->handling, current);
+ 		cpu_timer_dequeue(ctmr);
+ 		list_add_tail(&ctmr->elist, firing);
+ 	}
+@@ -1097,7 +1099,49 @@ static void handle_posix_cpu_timers(stru
+ #ifdef CONFIG_POSIX_CPU_TIMERS_TASK_WORK
+ static void posix_cpu_timers_work(struct callback_head *work)
+ {
++	struct posix_cputimers_work *cw = container_of(work, typeof(*cw), work);
++
++	mutex_lock(&cw->mutex);
+ 	handle_posix_cpu_timers(current);
++	mutex_unlock(&cw->mutex);
++}
++
++/*
++ * Invoked from the posix-timer core when a cancel operation failed because
++ * the timer is marked firing. The caller holds rcu_read_lock(), which
++ * protects the timer and the task which is expiring it from being freed.
++ */
++static void posix_cpu_timer_wait_running(struct k_itimer *timr)
++{
++	struct task_struct *tsk = rcu_dereference(timr->it.cpu.handling);
++
++	/* Has the handling task completed expiry already? */
++	if (!tsk)
++		return;
++
++	/* Ensure that the task cannot go away */
++	get_task_struct(tsk);
++	/* Now drop the RCU protection so the mutex can be locked */
++	rcu_read_unlock();
++	/* Wait on the expiry mutex */
++	mutex_lock(&tsk->posix_cputimers_work.mutex);
++	/* Release it immediately again. */
++	mutex_unlock(&tsk->posix_cputimers_work.mutex);
++	/* Drop the task reference. */
++	put_task_struct(tsk);
++	/* Relock RCU so the callsite is balanced */
++	rcu_read_lock();
++}
++
++static void posix_cpu_timer_wait_running_nsleep(struct k_itimer *timr)
++{
++	/* Ensure that timr->it.cpu.handling task cannot go away */
++	rcu_read_lock();
++	spin_unlock_irq(&timr->it_lock);
++	posix_cpu_timer_wait_running(timr);
++	rcu_read_unlock();
++	/* @timr is on stack and is valid */
++	spin_lock_irq(&timr->it_lock);
+ }
+ 
+ /*
+@@ -1113,6 +1157,7 @@ void clear_posix_cputimers_work(struct t
+ 	       sizeof(p->posix_cputimers_work.work));
+ 	init_task_work(&p->posix_cputimers_work.work,
+ 		       posix_cpu_timers_work);
++	mutex_init(&p->posix_cputimers_work.mutex);
+ 	p->posix_cputimers_work.scheduled = false;
+ }
+ 
+@@ -1191,6 +1236,18 @@ static inline void __run_posix_cpu_timer
+ 	lockdep_posixtimer_exit();
+ }
+ 
++static void posix_cpu_timer_wait_running(struct k_itimer *timr)
++{
++	cpu_relax();
++}
++
++static void posix_cpu_timer_wait_running_nsleep(struct k_itimer *timr)
++{
++	spin_unlock_irq(&timr->it_lock);
++	cpu_relax();
++	spin_lock_irq(&timr->it_lock);
++}
++
+ static inline bool posix_cpu_timers_work_scheduled(struct task_struct *tsk)
+ {
+ 	return false;
+@@ -1299,6 +1356,8 @@ static void handle_posix_cpu_timers(stru
+ 		 */
+ 		if (likely(cpu_firing >= 0))
+ 			cpu_timer_fire(timer);
++		/* See posix_cpu_timer_wait_running() */
++		rcu_assign_pointer(timer->it.cpu.handling, NULL);
+ 		spin_unlock(&timer->it_lock);
+ 	}
+ }
+@@ -1434,23 +1493,16 @@ static int do_cpu_nanosleep(const clocki
+ 		expires = cpu_timer_getexpires(&timer.it.cpu);
+ 		error = posix_cpu_timer_set(&timer, 0, &zero_it, &it);
+ 		if (!error) {
+-			/*
+-			 * Timer is now unarmed, deletion can not fail.
+-			 */
++			/* Timer is now unarmed, deletion can not fail. */
+ 			posix_cpu_timer_del(&timer);
++		} else {
++			while (error == TIMER_RETRY) {
++				posix_cpu_timer_wait_running_nsleep(&timer);
++				error = posix_cpu_timer_del(&timer);
++			}
+ 		}
+-		spin_unlock_irq(&timer.it_lock);
+ 
+-		while (error == TIMER_RETRY) {
+-			/*
+-			 * We need to handle case when timer was or is in the
+-			 * middle of firing. In other cases we already freed
+-			 * resources.
+-			 */
+-			spin_lock_irq(&timer.it_lock);
+-			error = posix_cpu_timer_del(&timer);
+-			spin_unlock_irq(&timer.it_lock);
+-		}
++		spin_unlock_irq(&timer.it_lock);
+ 
+ 		if ((it.it_value.tv_sec | it.it_value.tv_nsec) == 0) {
+ 			/*
+@@ -1560,6 +1612,7 @@ const struct k_clock clock_posix_cpu = {
+ 	.timer_del		= posix_cpu_timer_del,
+ 	.timer_get		= posix_cpu_timer_get,
+ 	.timer_rearm		= posix_cpu_timer_rearm,
++	.timer_wait_running	= posix_cpu_timer_wait_running,
+ };
+ 
+ const struct k_clock clock_process = {
+--- a/kernel/time/posix-timers.c
++++ b/kernel/time/posix-timers.c
+@@ -846,6 +846,10 @@ static struct k_itimer *timer_wait_runni
+ 	rcu_read_lock();
+ 	unlock_timer(timer, *flags);
+ 
++	/*
++	 * kc->timer_wait_running() might drop RCU lock. So @timer
++	 * cannot be touched anymore after the function returns!
++	 */
+ 	if (!WARN_ON_ONCE(!kc->timer_wait_running))
+ 		kc->timer_wait_running(timer);
+ 
 
 
