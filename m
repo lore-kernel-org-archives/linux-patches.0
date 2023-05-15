@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525FEFBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:44:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54CE8C433EF;
-	Mon, 15 May 2023 17:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B31EFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:44:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C92C433EF;
+	Mon, 15 May 2023 17:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172673;
-	bh=96xJQ/2uB8QceE5ijnDHeqsXxx2vhniFS4ziP/WEReg=;
+	s=korg; t=1684172676;
+	bh=nRmzcU8kUGA+Sj0LJGzHBvlAM50gkBsKB76+M9HrRsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jLy+qCQ5KqvUO7nmJli1XD/9jxZrOxYFzT5BqRIdkzoiwQPmLl+LFbYhFsGae7dB4
-	 09rl32faQPUyTbaa0gYtMTRp/EzmvUB/QrOGKEQILVpJNeF+AggHfDYv3YRHP3qAeQ
-	 g0bZF201ed/A4Ou3UEIOEDNPDgqmBXsH1mu4GPGI=
+	b=RitA/oFrzgbP7QFnlOdEzTKfEi1eFjde2nWL4JaR59HFjzDEJ31/vA1y24YmergN/
+	 cU0u5ASJsighDyHJzwGHUw5Ll7pkh4yr1ZtluLKExz/YvrKnbCb1ApP+yisS79cRKE
+	 xWvaE2ONcWLWF510rJqGj5x67U3f3kS6B5H0AznM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 222/381] usb: mtu3: fix kernel panic at qmu transfer done irq handler
-Date: Mon, 15 May 2023 18:27:53 +0200
-Message-Id: <20230515161746.761176362@linuxfoundation.org>
+Subject: [PATCH 5.10 231/381] powerpc/sysdev/tsi108: fix resource printk format warnings
+Date: Mon, 15 May 2023 18:28:02 +0200
+Message-Id: <20230515161747.142380529@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,71 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunfeng Yun <chunfeng.yun@mediatek.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit d28f4091ea7ec3510fd6a3c6d433234e7a2bef14 ]
+[ Upstream commit 55d8bd02cc1b9f1063993b5c42c9cabf4af67dea ]
 
-When handle qmu transfer irq, it will unlock @mtu->lock before give back
-request, if another thread handle disconnect event at the same time, and
-try to disable ep, it may lock @mtu->lock and free qmu ring, then qmu
-irq hanlder may get a NULL gpd, avoid the KE by checking gpd's value before
-handling it.
+Use "%pa" format specifier for resource_size_t to avoid a compiler
+printk format warning.
 
-e.g.
-qmu done irq on cpu0                 thread running on cpu1
+  arch/powerpc/sysdev/tsi108_pci.c: In function 'tsi108_setup_pci':
+  include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'resource_size_t'
 
-qmu_done_tx()
-  handle gpd [0]
-    mtu3_requ_complete()        mtu3_gadget_ep_disable()
-      unlock @mtu->lock
-        give back request         lock @mtu->lock
-                                    mtu3_ep_disable()
-                                      mtu3_gpd_ring_free()
-                                   unlock @mtu->lock
-      lock @mtu->lock
-    get next gpd [1]
-
-[1]: goto [0] to handle next gpd, and next gpd may be NULL.
-
-Fixes: 48e0d3735aa5 ("usb: mtu3: supports new QMU format")
-Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-Link: https://lore.kernel.org/r/20230417025203.18097-3-chunfeng.yun@mediatek.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c4342ff92bed ("[POWERPC] Update mpc7448hpc2 board irq support using device tree")
+Fixes: 2b9d7467a6db ("[POWERPC] Add tsi108 pci and platform device data register function")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+[mpe: Use pr_info() and unsplit string]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230223070116.660-5-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/mtu3/mtu3_qmu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/powerpc/sysdev/tsi108_pci.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/mtu3/mtu3_qmu.c b/drivers/usb/mtu3/mtu3_qmu.c
-index 2ea3157ddb6e2..e65586147965d 100644
---- a/drivers/usb/mtu3/mtu3_qmu.c
-+++ b/drivers/usb/mtu3/mtu3_qmu.c
-@@ -210,6 +210,7 @@ static struct qmu_gpd *advance_enq_gpd(struct mtu3_gpd_ring *ring)
- 	return ring->enqueue;
- }
+diff --git a/arch/powerpc/sysdev/tsi108_pci.c b/arch/powerpc/sysdev/tsi108_pci.c
+index 49f9541954f8d..3664ffcbb313c 100644
+--- a/arch/powerpc/sysdev/tsi108_pci.c
++++ b/arch/powerpc/sysdev/tsi108_pci.c
+@@ -216,9 +216,8 @@ int __init tsi108_setup_pci(struct device_node *dev, u32 cfg_phys, int primary)
  
-+/* @dequeue may be NULL if ring is unallocated or freed */
- static struct qmu_gpd *advance_deq_gpd(struct mtu3_gpd_ring *ring)
- {
- 	if (ring->dequeue < ring->end)
-@@ -484,7 +485,7 @@ static void qmu_done_tx(struct mtu3 *mtu, u8 epnum)
- 	dev_dbg(mtu->dev, "%s EP%d, last=%p, current=%p, enq=%p\n",
- 		__func__, epnum, gpd, gpd_current, ring->enqueue);
+ 	(hose)->ops = &tsi108_direct_pci_ops;
  
--	while (gpd != gpd_current && !GET_GPD_HWO(gpd)) {
-+	while (gpd && gpd != gpd_current && !GET_GPD_HWO(gpd)) {
+-	printk(KERN_INFO "Found tsi108 PCI host bridge at 0x%08x. "
+-	       "Firmware bus number: %d->%d\n",
+-	       rsrc.start, hose->first_busno, hose->last_busno);
++	pr_info("Found tsi108 PCI host bridge at 0x%pa. Firmware bus number: %d->%d\n",
++		&rsrc.start, hose->first_busno, hose->last_busno);
  
- 		mreq = next_request(mep);
- 
-@@ -523,7 +524,7 @@ static void qmu_done_rx(struct mtu3 *mtu, u8 epnum)
- 	dev_dbg(mtu->dev, "%s EP%d, last=%p, current=%p, enq=%p\n",
- 		__func__, epnum, gpd, gpd_current, ring->enqueue);
- 
--	while (gpd != gpd_current && !GET_GPD_HWO(gpd)) {
-+	while (gpd && gpd != gpd_current && !GET_GPD_HWO(gpd)) {
- 
- 		mreq = next_request(mep);
- 
+ 	/* Interpret the "ranges" property */
+ 	/* This also maps the I/O region and sets isa_io/mem_base */
 -- 
 2.39.2
 
