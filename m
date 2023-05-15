@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCF2D512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:01:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ECC9C433D2;
-	Mon, 15 May 2023 17:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B603D512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:01:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0BBFC433D2;
+	Mon, 15 May 2023 17:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170067;
-	bh=kgXIv9b0Q1x6z5FTnOZu/VyQ1bcISavoEtagl+jYDWs=;
+	s=korg; t=1684170070;
+	bh=ZicQ6uSO6+ZppPJQszgth2Xw6/yerDIifcflPinaSCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DX2OcBdRKnL9X1p/4MTUkcay3eMohJeJAbMTgPtB/hT6ZJsRN5VZ1PsP9LAWmViP8
-	 F23judGtpWEaBz4x+Yae7oslmDUbT9bzh6pfyqhDpYhR7abXAKZzLZbuifHNb5OfMP
-	 pjjdLMTZ3iR1UEx0koCiCdug4C+TaiUno1E5LwOI=
+	b=0uSFw0Hs+ppw/vT24FhWes6z+agCSiOc6Ng/1RlgKK7sgJKtyn7GC0r5cc6ksVOx8
+	 MBSHh/iPZQs8GjBJV+v4bwWwq/8YYqMhB3StC/Zdep+Rcwj45pi1PBMkZmK18ZBgGj
+	 VHDK+PjiN+bwzZs+oR/IIgTjCVdnXuQbHktUGw2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steev Klimaszewski <steev@kali.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/239] soc: qcom: llcc: Do not create EDAC platform device on SDM845
-Date: Mon, 15 May 2023 18:24:37 +0200
-Message-Id: <20230515161722.018718138@linuxfoundation.org>
+Subject: [PATCH 6.1 015/239] mailbox: zynq: Switch to flexible array to simplify code
+Date: Mon, 15 May 2023 18:24:38 +0200
+Message-Id: <20230515161722.048880462@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,80 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit cca94f1dd6d0a4c7e5c8190672f5747e3c00ddde ]
+[ Upstream commit 043f85ce81cb1714e14d31c322c5646513dde3fb ]
 
-The platforms based on SDM845 SoC locks the access to EDAC registers in the
-bootloader. So probing the EDAC driver will result in a crash. Hence,
-disable the creation of EDAC platform device on all SDM845 devices.
+Using flexible array is more straight forward. It
+  - saves 1 pointer in the 'zynqmp_ipi_pdata' structure
+  - saves an indirection when using this array
+  - saves some LoC and avoids some always spurious pointer arithmetic
 
-The issue has been observed on Lenovo Yoga C630 and DB845c.
-
-While at it, also sort the members of `struct qcom_llcc_config` to avoid
-any holes in-between.
-
-Cc: <stable@vger.kernel.org> # 5.10
-Reported-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230314080443.64635-15-manivannan.sadhasivam@linaro.org
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Stable-dep-of: f72f805e7288 ("mailbox: zynqmp: Fix counts of child nodes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 63a08635fc159..d4cba3b3c56c4 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -101,10 +101,11 @@ struct llcc_slice_config {
- 
- struct qcom_llcc_config {
- 	const struct llcc_slice_config *sct_data;
--	int size;
--	bool need_llcc_cfg;
- 	const u32 *reg_offset;
- 	const struct llcc_edac_reg_offset *edac_reg_offset;
-+	int size;
-+	bool need_llcc_cfg;
-+	bool no_edac;
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index e02a4a18e8c29..29f09ded6e739 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -110,7 +110,7 @@ struct zynqmp_ipi_pdata {
+ 	unsigned int method;
+ 	u32 local_id;
+ 	int num_mboxes;
+-	struct zynqmp_ipi_mbox *ipi_mboxes;
++	struct zynqmp_ipi_mbox ipi_mboxes[];
  };
  
- enum llcc_reg_offset {
-@@ -401,6 +402,7 @@ static const struct qcom_llcc_config sdm845_cfg = {
- 	.need_llcc_cfg	= false,
- 	.reg_offset	= llcc_v1_reg_offset,
- 	.edac_reg_offset = &llcc_v1_edac_reg_offset,
-+	.no_edac	= true,
- };
+ static struct device_driver zynqmp_ipi_mbox_driver = {
+@@ -635,7 +635,7 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
+ 	int num_mboxes, ret = -EINVAL;
  
- static const struct qcom_llcc_config sm6350_cfg = {
-@@ -851,11 +853,19 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+ 	num_mboxes = of_get_child_count(np);
+-	pdata = devm_kzalloc(dev, sizeof(*pdata) + (num_mboxes * sizeof(*mbox)),
++	pdata = devm_kzalloc(dev, struct_size(pdata, ipi_mboxes, num_mboxes),
+ 			     GFP_KERNEL);
+ 	if (!pdata)
+ 		return -ENOMEM;
+@@ -649,8 +649,6 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
+ 	}
  
- 	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
+ 	pdata->num_mboxes = num_mboxes;
+-	pdata->ipi_mboxes = (struct zynqmp_ipi_mbox *)
+-			    ((char *)pdata + sizeof(*pdata));
  
--	llcc_edac = platform_device_register_data(&pdev->dev,
--					"qcom_llcc_edac", -1, drv_data,
--					sizeof(*drv_data));
--	if (IS_ERR(llcc_edac))
--		dev_err(dev, "Failed to register llcc edac driver\n");
-+	/*
-+	 * On some platforms, the access to EDAC registers will be locked by
-+	 * the bootloader. So probing the EDAC driver will result in a crash.
-+	 * Hence, disable the creation of EDAC platform device for the
-+	 * problematic platforms.
-+	 */
-+	if (!cfg->no_edac) {
-+		llcc_edac = platform_device_register_data(&pdev->dev,
-+						"qcom_llcc_edac", -1, drv_data,
-+						sizeof(*drv_data));
-+		if (IS_ERR(llcc_edac))
-+			dev_err(dev, "Failed to register llcc edac driver\n");
-+	}
- 
- 	return 0;
- err:
+ 	mbox = pdata->ipi_mboxes;
+ 	for_each_available_child_of_node(np, nc) {
 -- 
 2.39.2
 
