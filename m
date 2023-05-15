@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72555E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC56C433EF;
-	Mon, 15 May 2023 16:40:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F17BE573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048B7C433D2;
+	Mon, 15 May 2023 16:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168825;
-	bh=4S2f7Dvc7vAXXUUaen3W2qHM42GrMtyEzKG1ZPERPe4=;
+	s=korg; t=1684168828;
+	bh=5Xz6DNewh+6cg6nd7xwBDceSdpGCKhYyujgZh2gky+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=voyPIQVTFLhdQB+eqDKCFM9JGxzA0nbu6lQaRREBSg+FocgT1h8Ll3iTwCYf6kvpw
-	 RLSkynsLdMKqLn+Nx1/MA6o0j0i7HVIKkFE2IrFxIVse2VFAch1twphi5/9kLyI6XV
-	 xUbEe4iHU23RZ2XAEXXCnhbtqcafqCJqeDzjSIEg=
+	b=q2FT/oSZW8DXz0mvj+nCf7Y6FZL+e7eHGUYx1gU3F+kUfe66orPcHEQ9HMcyJY4h0
+	 7qIJ2WjB4io4zk63Y22tmJq+aYtvzqmTMJrLz+14++lOBrwMW27f9tVnRo4kxW5a5j
+	 +YXOehS+2OwfY9HS0GPC/sBSaD3z3nF8JopPFkxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 026/191] drm/vgem: add missing mutex_destroy
-Date: Mon, 15 May 2023 18:24:23 +0200
-Message-Id: <20230515161708.128164737@linuxfoundation.org>
+Subject: [PATCH 4.19 053/191] scm: fix MSG_CTRUNC setting condition for SO_PASSSEC
+Date: Mon, 15 May 2023 18:24:50 +0200
+Message-Id: <20230515161709.138140642@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,37 +40,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
 
-[ Upstream commit 7c18189b14b33c1fbf76480b1bd217877c086e67 ]
+[ Upstream commit a02d83f9947d8f71904eda4de046630c3eb6802c ]
 
-vgem_fence_open() instantiates a mutex for a particular fence
-instance, but never destroys it by calling mutex_destroy() in
-vgem_fence_close().
+Currently, kernel would set MSG_CTRUNC flag if msg_control buffer
+wasn't provided and SO_PASSCRED was set or if there was pending SCM_RIGHTS.
 
-So, add the missing mutex_destroy() to guarantee proper resource
-destruction.
+For some reason we have no corresponding check for SO_PASSSEC.
 
-Fixes: 407779848445 ("drm/vgem: Attach sw fences to exported vGEM dma-buf (ioctl)")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Signed-off-by: Maíra Canal <mairacanal@riseup.net>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230202125517.427976-1-mcanal@igalia.com
+In the recvmsg(2) doc we have:
+       MSG_CTRUNC
+              indicates that some control data was discarded due to lack
+              of space in the buffer for ancillary data.
+
+So, we need to set MSG_CTRUNC flag for all types of SCM.
+
+This change can break applications those don't check MSG_CTRUNC flag.
+
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+
+v2:
+- commit message was rewritten according to Eric's suggestion
+Acked-by: Paul Moore <paul@paul-moore.com>
+
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vgem/vgem_fence.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/scm.h | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vgem/vgem_fence.c b/drivers/gpu/drm/vgem/vgem_fence.c
-index b28876c222b46..04527d8f36236 100644
---- a/drivers/gpu/drm/vgem/vgem_fence.c
-+++ b/drivers/gpu/drm/vgem/vgem_fence.c
-@@ -280,4 +280,5 @@ void vgem_fence_close(struct vgem_file *vfile)
- {
- 	idr_for_each(&vfile->fence_idr, __vgem_fence_idr_fini, vfile);
- 	idr_destroy(&vfile->fence_idr);
-+	mutex_destroy(&vfile->fence_mutex);
+diff --git a/include/net/scm.h b/include/net/scm.h
+index 1ce365f4c2560..585adc1346bd0 100644
+--- a/include/net/scm.h
++++ b/include/net/scm.h
+@@ -105,16 +105,27 @@ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct sc
+ 		}
+ 	}
  }
++
++static inline bool scm_has_secdata(struct socket *sock)
++{
++	return test_bit(SOCK_PASSSEC, &sock->flags);
++}
+ #else
+ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct scm_cookie *scm)
+ { }
++
++static inline bool scm_has_secdata(struct socket *sock)
++{
++	return false;
++}
+ #endif /* CONFIG_SECURITY_NETWORK */
+ 
+ static __inline__ void scm_recv(struct socket *sock, struct msghdr *msg,
+ 				struct scm_cookie *scm, int flags)
+ {
+ 	if (!msg->msg_control) {
+-		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp)
++		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp ||
++		    scm_has_secdata(sock))
+ 			msg->msg_flags |= MSG_CTRUNC;
+ 		scm_destroy(scm);
+ 		return;
 -- 
 2.39.2
 
