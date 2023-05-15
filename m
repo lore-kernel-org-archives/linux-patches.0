@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A55FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:17:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AA2DC433D2;
-	Mon, 15 May 2023 17:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82178FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:17:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2F16C4339B;
+	Mon, 15 May 2023 17:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171034;
-	bh=SKYHOo+ocBqi3svK99f0dRZfnFk8GrZrVbQK4/JBTHY=;
+	s=korg; t=1684171037;
+	bh=Fy1TiHkbTaEi1fw06xSCWC0V11qSGjZg9LOrFxrMTOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RevHFrGjuxLPOt0erqieNijjGlFVO3F8qeZu+3JFgytaLAaS7yfL591I6EeApAuP3
-	 ji1o+BCRlVWTyiUuN/IyH4SFh59l5EZAWt5VM1VJIi1v9UXi7OPVpZUbsha9eecgai
-	 t3UwNBUhtIGlNypQM5yLzNfdJot454GogmYJubbU=
+	b=poxbamNTWssQgRWSbO5gCdJA3J3LozZkCYt53jP6mnWQ12wye1mbkt5BJ+ahKSS5/
+	 1HF4tdO2jHkztRm1w9aAspxPYCX3wn91J8QLMDXbpdG3akXr7MUtFx0tnWy4rGgEpX
+	 Sfg5kRaxzgfWAGyPdrj3o3kcZb4MyeoRbv9vmCLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	Sai Krishna <saikrishnag@marvell.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chia-I Wu <olvaffe@gmail.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 072/242] octeontx2-af: Update/Fix NPC field hash extract feature
-Date: Mon, 15 May 2023 18:26:38 +0200
-Message-Id: <20230515161724.063922248@linuxfoundation.org>
+Subject: [PATCH 6.2 081/242] drm/amdgpu: add a missing lock for AMDGPU_SCHED
+Date: Mon, 15 May 2023 18:26:47 +0200
+Message-Id: <20230515161724.324404677@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -38,195 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Chia-I Wu <olvaffe@gmail.com>
 
-[ Upstream commit 406bed11fb91a0b35c26fe633d8700febaec6439 ]
+[ Upstream commit 2397e3d8d2e120355201a8310b61929f5a8bd2c0 ]
 
-1. As per previous implementation, mask and control parameter to
-generate the field hash value was not passed to the caller program.
-Updated the secret key mbox to share that information as well,
-as a part of the fix.
-2. Earlier implementation did not consider hash reduction of both
-source and destination IPv6 addresses. Only source IPv6 address
-was considered. This fix solves that and provides option to hash
+mgr->ctx_handles should be protected by mgr->lock.
 
-Fixes: 56d9f5fd2246 ("octeontx2-af: Use hashed field in MCAM key")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+v2: improve commit message
+v3: add a Fixes tag
+
+Signed-off-by: Chia-I Wu <olvaffe@gmail.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Fixes: 52c6a62c64fa ("drm/amdgpu: add interface for editing a foreign process's priority v3")
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/af/mbox.h  | 16 +++++---
- .../marvell/octeontx2/af/rvu_npc_hash.c       | 37 ++++++++++++-------
- .../marvell/octeontx2/af/rvu_npc_hash.h       |  6 +++
- 3 files changed, 41 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-index d2584ebb7a70c..ac90131d5b4ad 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
-@@ -242,9 +242,9 @@ M(NPC_MCAM_READ_BASE_RULE, 0x6011, npc_read_base_steer_rule,            \
- M(NPC_MCAM_GET_STATS, 0x6012, npc_mcam_entry_stats,                     \
- 				   npc_mcam_get_stats_req,              \
- 				   npc_mcam_get_stats_rsp)              \
--M(NPC_GET_SECRET_KEY, 0x6013, npc_get_secret_key,                     \
--				   npc_get_secret_key_req,              \
--				   npc_get_secret_key_rsp)              \
-+M(NPC_GET_FIELD_HASH_INFO, 0x6013, npc_get_field_hash_info,                     \
-+				   npc_get_field_hash_info_req,              \
-+				   npc_get_field_hash_info_rsp)              \
- M(NPC_GET_FIELD_STATUS, 0x6014, npc_get_field_status,                     \
- 				   npc_get_field_status_req,              \
- 				   npc_get_field_status_rsp)              \
-@@ -1517,14 +1517,20 @@ struct npc_mcam_get_stats_rsp {
- 	u8 stat_ena; /* enabled */
- };
- 
--struct npc_get_secret_key_req {
-+struct npc_get_field_hash_info_req {
- 	struct mbox_msghdr hdr;
- 	u8 intf;
- };
- 
--struct npc_get_secret_key_rsp {
-+struct npc_get_field_hash_info_rsp {
- 	struct mbox_msghdr hdr;
- 	u64 secret_key[3];
-+#define NPC_MAX_HASH 2
-+#define NPC_MAX_HASH_MASK 2
-+	/* NPC_AF_INTF(0..1)_HASH(0..1)_MASK(0..1) */
-+	u64 hash_mask[NPC_MAX_INTF][NPC_MAX_HASH][NPC_MAX_HASH_MASK];
-+	/* NPC_AF_INTF(0..1)_HASH(0..1)_RESULT_CTRL */
-+	u64 hash_ctrl[NPC_MAX_INTF][NPC_MAX_HASH];
- };
- 
- enum ptp_op {
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-index f2d7156262ff1..9ec5b3c65020b 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-@@ -110,8 +110,8 @@ static u64 npc_update_use_hash(int lt, int ld)
- 		 * in KEX_LD_CFG
- 		 */
- 		cfg = KEX_LD_CFG_USE_HASH(0x1, 0x03,
--					  ld ? 0x8 : 0x18,
--					  0x1, 0x0, 0x10);
-+					  ld ? 0x18 : 0x8,
-+					  0x1, 0x0, ld ? 0x14 : 0x10);
- 		break;
- 	}
- 
-@@ -134,7 +134,6 @@ static void npc_program_mkex_hash_rx(struct rvu *rvu, int blkaddr,
- 				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
- 					u64 cfg = npc_update_use_hash(lt, ld);
- 
--					hash_cnt++;
- 					if (hash_cnt == NPC_MAX_HASH)
- 						return;
- 
-@@ -149,6 +148,8 @@ static void npc_program_mkex_hash_rx(struct rvu *rvu, int blkaddr,
- 							     mkex_hash->hash_mask[intf][ld][1]);
- 					SET_KEX_LD_HASH_CTRL(intf, ld,
- 							     mkex_hash->hash_ctrl[intf][ld]);
-+
-+					hash_cnt++;
- 				}
- 			}
- 		}
-@@ -171,7 +172,6 @@ static void npc_program_mkex_hash_tx(struct rvu *rvu, int blkaddr,
- 				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
- 					u64 cfg = npc_update_use_hash(lt, ld);
- 
--					hash_cnt++;
- 					if (hash_cnt == NPC_MAX_HASH)
- 						return;
- 
-@@ -187,8 +187,6 @@ static void npc_program_mkex_hash_tx(struct rvu *rvu, int blkaddr,
- 					SET_KEX_LD_HASH_CTRL(intf, ld,
- 							     mkex_hash->hash_ctrl[intf][ld]);
- 					hash_cnt++;
--					if (hash_cnt == NPC_MAX_HASH)
--						return;
- 				}
- 		}
- 	}
-@@ -242,8 +240,8 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
- 			   struct flow_msg *omask)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c
+index e9b45089a28a6..863b2a34b2d64 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_sched.c
+@@ -38,6 +38,7 @@ static int amdgpu_sched_process_priority_override(struct amdgpu_device *adev,
  {
- 	struct npc_mcam_kex_hash *mkex_hash = rvu->kpu.mkex_hash;
--	struct npc_get_secret_key_req req;
--	struct npc_get_secret_key_rsp rsp;
-+	struct npc_get_field_hash_info_req req;
-+	struct npc_get_field_hash_info_rsp rsp;
- 	u64 ldata[2], cfg;
- 	u32 field_hash;
- 	u8 hash_idx;
-@@ -254,7 +252,7 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
+ 	struct fd f = fdget(fd);
+ 	struct amdgpu_fpriv *fpriv;
++	struct amdgpu_ctx_mgr *mgr;
+ 	struct amdgpu_ctx *ctx;
+ 	uint32_t id;
+ 	int r;
+@@ -51,8 +52,11 @@ static int amdgpu_sched_process_priority_override(struct amdgpu_device *adev,
+ 		return r;
  	}
  
- 	req.intf = intf;
--	rvu_mbox_handler_npc_get_secret_key(rvu, &req, &rsp);
-+	rvu_mbox_handler_npc_get_field_hash_info(rvu, &req, &rsp);
+-	idr_for_each_entry(&fpriv->ctx_mgr.ctx_handles, ctx, id)
++	mgr = &fpriv->ctx_mgr;
++	mutex_lock(&mgr->lock);
++	idr_for_each_entry(&mgr->ctx_handles, ctx, id)
+ 		amdgpu_ctx_priority_override(ctx, priority);
++	mutex_unlock(&mgr->lock);
  
- 	for (hash_idx = 0; hash_idx < NPC_MAX_HASH; hash_idx++) {
- 		cfg = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_CFG(intf, hash_idx));
-@@ -315,13 +313,13 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
- 	}
- }
- 
--int rvu_mbox_handler_npc_get_secret_key(struct rvu *rvu,
--					struct npc_get_secret_key_req *req,
--					struct npc_get_secret_key_rsp *rsp)
-+int rvu_mbox_handler_npc_get_field_hash_info(struct rvu *rvu,
-+					     struct npc_get_field_hash_info_req *req,
-+					     struct npc_get_field_hash_info_rsp *rsp)
- {
- 	u64 *secret_key = rsp->secret_key;
- 	u8 intf = req->intf;
--	int blkaddr;
-+	int i, j, blkaddr;
- 
- 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
- 	if (blkaddr < 0) {
-@@ -333,6 +331,19 @@ int rvu_mbox_handler_npc_get_secret_key(struct rvu *rvu,
- 	secret_key[1] = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY1(intf));
- 	secret_key[2] = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY2(intf));
- 
-+	for (i = 0; i < NPC_MAX_HASH; i++) {
-+		for (j = 0; j < NPC_MAX_HASH_MASK; j++) {
-+			rsp->hash_mask[NIX_INTF_RX][i][j] =
-+				GET_KEX_LD_HASH_MASK(NIX_INTF_RX, i, j);
-+			rsp->hash_mask[NIX_INTF_TX][i][j] =
-+				GET_KEX_LD_HASH_MASK(NIX_INTF_TX, i, j);
-+		}
-+	}
-+
-+	for (i = 0; i < NPC_MAX_INTF; i++)
-+		for (j = 0; j < NPC_MAX_HASH; j++)
-+			rsp->hash_ctrl[i][j] = GET_KEX_LD_HASH_CTRL(i, j);
-+
+ 	fdput(f);
  	return 0;
- }
- 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-index 3efeb09c58dec..65936f4aeaacf 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-@@ -31,6 +31,12 @@
- 	rvu_write64(rvu, blkaddr,	\
- 		    NPC_AF_INTFX_HASHX_MASKX(intf, ld, mask_idx), cfg)
- 
-+#define GET_KEX_LD_HASH_CTRL(intf, ld)	\
-+	rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_RESULT_CTRL(intf, ld))
-+
-+#define GET_KEX_LD_HASH_MASK(intf, ld, mask_idx)	\
-+	rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_MASKX(intf, ld, mask_idx))
-+
- #define SET_KEX_LD_HASH_CTRL(intf, ld, cfg) \
- 	rvu_write64(rvu, blkaddr,	\
- 		    NPC_AF_INTFX_HASHX_RESULT_CTRL(intf, ld), cfg)
 -- 
 2.39.2
 
