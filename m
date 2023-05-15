@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B06DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE709C433EF;
-	Mon, 15 May 2023 16:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13E6DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F344CC433D2;
+	Mon, 15 May 2023 16:36:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168564;
-	bh=5Vi8SFSi5y9LeCUt1u8PLiMWdPJokZMze00l6jbOiQo=;
+	s=korg; t=1684168567;
+	bh=fm4ANcIVKjOawTKLX6tE4YaaVSDii09q5juDefNaC04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fv1hCBJWtSBTQGgUVLR8urp2CXjXTfdw6o0VnaHr8qDpU9gF8VbDjf9UfXT7AaMXD
-	 Je4nA7DmdK0w4fIEv02zOyAUuQmCivOFz9kbCI+bQ1dy3+Zuv8b3EO9HH/NkdXDZPB
-	 iw6W8BBlPaXL40hwUoA0yoyKXk/RgeQ0XVaUg1Mw=
+	b=O7qURahFVkSgqZ/AzJgViE79O4sAaH4Ar+AI2q8ravzRu9XIuNFiKwRsS2EkaHTiD
+	 qExMCh7qP1C8nC+uNUw3SDFWYbtcNWEsrRVlFrhI7AwMRSYEex4mz3cfIUTgFelTCk
+	 S4QUAeevwJ9hwSeVjeIf1rE31cdrGRtUYTcswyZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Randy Dunlap <rdunlap@infradead.org>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 060/116] powerpc/sysdev/tsi108: fix resource printk format warnings
-Date: Mon, 15 May 2023 18:25:57 +0200
-Message-Id: <20230515161700.270014611@linuxfoundation.org>
+Subject: [PATCH 4.14 061/116] macintosh: via-pmu-led: requires ATA to be set
+Date: Mon, 15 May 2023 18:25:58 +0200
+Message-Id: <20230515161700.302533385@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -37,41 +37,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 55d8bd02cc1b9f1063993b5c42c9cabf4af67dea ]
+[ Upstream commit 05dce4ba125336875cd3eed3c1503fa81cd2f691 ]
 
-Use "%pa" format specifier for resource_size_t to avoid a compiler
-printk format warning.
+LEDS_TRIGGER_DISK depends on ATA, so selecting LEDS_TRIGGER_DISK
+when ATA is not set/enabled causes a Kconfig warning:
 
-  arch/powerpc/sysdev/tsi108_pci.c: In function 'tsi108_setup_pci':
-  include/linux/kern_levels.h:5:25: error: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'resource_size_t'
+WARNING: unmet direct dependencies detected for LEDS_TRIGGER_DISK
+  Depends on [n]: NEW_LEDS [=y] && LEDS_TRIGGERS [=y] && ATA [=n]
+  Selected by [y]:
+  - ADB_PMU_LED_DISK [=y] && MACINTOSH_DRIVERS [=y] && ADB_PMU_LED [=y] && LEDS_CLASS [=y]
 
-Fixes: c4342ff92bed ("[POWERPC] Update mpc7448hpc2 board irq support using device tree")
-Fixes: 2b9d7467a6db ("[POWERPC] Add tsi108 pci and platform device data register function")
+Fix this by making ADB_PMU_LED_DISK depend on ATA.
+
+Seen on both PPC32 and PPC64.
+
+Fixes: 0e865a80c135 ("macintosh: Remove dependency on IDE_GD_ATA if ADB_PMU_LED_DISK is selected")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-[mpe: Use pr_info() and unsplit string]
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230223070116.660-5-rdunlap@infradead.org
+Link: https://msgid.link/20230223014241.20878-1-rdunlap@infradead.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/tsi108_pci.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/macintosh/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/sysdev/tsi108_pci.c b/arch/powerpc/sysdev/tsi108_pci.c
-index 28ff1f53cefc1..6bd50c690006f 100644
---- a/arch/powerpc/sysdev/tsi108_pci.c
-+++ b/arch/powerpc/sysdev/tsi108_pci.c
-@@ -229,9 +229,8 @@ int __init tsi108_setup_pci(struct device_node *dev, u32 cfg_phys, int primary)
+diff --git a/drivers/macintosh/Kconfig b/drivers/macintosh/Kconfig
+index 5e47d91da5193..aa42a41ba4389 100644
+--- a/drivers/macintosh/Kconfig
++++ b/drivers/macintosh/Kconfig
+@@ -94,6 +94,7 @@ config ADB_PMU_LED
  
- 	(hose)->ops = &tsi108_direct_pci_ops;
- 
--	printk(KERN_INFO "Found tsi108 PCI host bridge at 0x%08x. "
--	       "Firmware bus number: %d->%d\n",
--	       rsrc.start, hose->first_busno, hose->last_busno);
-+	pr_info("Found tsi108 PCI host bridge at 0x%pa. Firmware bus number: %d->%d\n",
-+		&rsrc.start, hose->first_busno, hose->last_busno);
- 
- 	/* Interpret the "ranges" property */
- 	/* This also maps the I/O region and sets isa_io/mem_base */
+ config ADB_PMU_LED_DISK
+ 	bool "Use front LED as DISK LED by default"
++	depends on ATA
+ 	depends on ADB_PMU_LED
+ 	depends on LEDS_CLASS
+ 	select LEDS_TRIGGERS
 -- 
 2.39.2
 
