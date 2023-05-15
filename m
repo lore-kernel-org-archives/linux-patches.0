@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F065FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A3AC433EF;
-	Mon, 15 May 2023 17:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9F6FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCD8C433EF;
+	Mon, 15 May 2023 17:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171694;
-	bh=3vLdLPB3pcM1IWnqjkfSjDouRNOjFoxsNHVOaWvc284=;
+	s=korg; t=1684171697;
+	bh=zILS+NdQ4mJKrNVsOyfPoE81OgIygHCaFqtaZV3+Ofs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xT1hfVtbySch8e5ZCCfxE7TkyOL7C0917GkrC+Au2DJ20XJMELOwWDwvJsWVAh9BX
-	 2iC7+rFEyY7l21vHWLpsoO8SrM4Mu+LLhfyETS+rHC/HkW0/+HmbHJa9+OTfPt/XQM
-	 fVTDOEO827ZpsEtG2S8w/rhrDRIIMM3tOFEzByTY=
+	b=gDzkGrBAXBqlf5ajbdMPZ8vH99SPf7op0K/yTjBn/AqNV4Ih2j0CrNG022C+bmYTX
+	 /MZlUt71KuU/gsbCAfoY8JX5fNfi17ODgdnSdAZI9gIK7w6bcrBR6CfyUTx/kwlDTH
+	 Zflths9PYJMHPeMHgFXYeCswySYXfM3Jk7OdyERE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/134] drm/hyperv: Dont overwrite dirt_needed value set by host
-Date: Mon, 15 May 2023 18:28:15 +0200
-Message-Id: <20230515161703.604152837@linuxfoundation.org>
+Subject: [PATCH 5.15 019/134] scsi: qedi: Fix use after free bug in qedi_remove()
+Date: Mon, 15 May 2023 18:28:16 +0200
+Message-Id: <20230515161703.644113656@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -37,40 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saurabh Sengar <ssengar@linux.microsoft.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 19b5e6659eaf537ebeac90ae30c7df0296fe5ab9 ]
+[ Upstream commit c5749639f2d0a1f6cbe187d05f70c2e7c544d748 ]
 
-Existing code is causing a race condition where dirt_needed value is
-already set by the host and gets overwritten with default value. Remove
-this default setting of dirt_needed, to avoid overwriting the value
-received in the channel callback set by vmbus_open. Removing this
-setting also means the default value for dirt_needed is changed to false
-as it's allocated by kzalloc which is similar to legacy hyperv_fb driver.
+In qedi_probe() we call __qedi_probe() which initializes
+&qedi->recovery_work with qedi_recovery_handler() and
+&qedi->board_disable_work with qedi_board_disable_work().
 
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Reviewed-by: Dexuan Cui <decui@microsoft.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1662996766-19304-1-git-send-email-ssengar@linux.microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+When qedi_schedule_recovery_handler() is called, schedule_delayed_work()
+will finally start the work.
+
+In qedi_remove(), which is called to remove the driver, the following
+sequence may be observed:
+
+Fix this by finishing the work before cleanup in qedi_remove().
+
+CPU0                  CPU1
+
+                     |qedi_recovery_handler
+qedi_remove          |
+  __qedi_remove      |
+iscsi_host_free      |
+scsi_host_put        |
+//free shost         |
+                     |iscsi_host_for_each_session
+                     |//use qedi->shost
+
+Cancel recovery_work and board_disable_work in __qedi_remove().
+
+Fixes: 4b1068f5d74b ("scsi: qedi: Add MFW error recovery process")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Link: https://lore.kernel.org/r/20230413033422.28003-1-zyytlz.wz@163.com
+Acked-by: Manish Rangankar <mrangankar@marvell.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/hyperv/hyperv_drm_drv.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/scsi/qedi/qedi_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-index 00e53de4812bb..584d3a73db96c 100644
---- a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-+++ b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
-@@ -198,8 +198,6 @@ static int hyperv_vmbus_probe(struct hv_device *hdev,
- 	if (ret)
- 		drm_warn(dev, "Failed to update vram location.\n");
+diff --git a/drivers/scsi/qedi/qedi_main.c b/drivers/scsi/qedi/qedi_main.c
+index a117d11f2b078..e0096fc5927e7 100644
+--- a/drivers/scsi/qedi/qedi_main.c
++++ b/drivers/scsi/qedi/qedi_main.c
+@@ -2455,6 +2455,9 @@ static void __qedi_remove(struct pci_dev *pdev, int mode)
+ 		qedi_ops->ll2->stop(qedi->cdev);
+ 	}
  
--	hv->dirt_needed = true;
--
- 	ret = hyperv_mode_config_init(hv);
- 	if (ret)
- 		goto err_vmbus_close;
++	cancel_delayed_work_sync(&qedi->recovery_work);
++	cancel_delayed_work_sync(&qedi->board_disable_work);
++
+ 	qedi_free_iscsi_pf_param(qedi);
+ 
+ 	rval = qedi_ops->common->update_drv_state(qedi->cdev, false);
 -- 
 2.39.2
 
