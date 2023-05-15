@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C48FDF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C49CC4339B;
-	Mon, 15 May 2023 16:34:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DBE2DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 761A0C433EF;
+	Mon, 15 May 2023 16:35:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168499;
-	bh=lcQo//sOACpOP8JKGYVsifXaBziuDHQ098L2pTs2jPE=;
+	s=korg; t=1684168502;
+	bh=dbV5rgEEDAArATgYAHkEvBS6FI1duv/4NLhTehqiZ10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=awaWXTnmPsnUrNOzaCOMKQ+8kAPfo4vSEQo6GvPDUvLe9hEumIxIYRwZvdxaKBxHw
-	 Kqw78aswXXHfu7zNEReOIPC5R93dnepwwtY+kY8wA8aaPqKhR9lkCKdcqpaa1aW3aP
-	 geQChMc+JSzvPslrW4t5zEi6LQ2T8z/+B6wmAL/Y=
+	b=R2tM09M60Fdp5iTTv4PreYLEEddq3+G9uNPR3bsnEp5ja8cH+9OLnNH1IUkZ4YnJp
+	 CpTrTyX8KzSld0F3h+wQ3XBgkvvY5hAHayvMNR3swMdAnOue3DtGYDRB1xsdSqWEGL
+	 L5+LTDWKmuNlV+h/hoHyzhG+VvjqrhWOqQArFDRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 070/116] phy: tegra: xusb: Add missing tegra_xusb_port_unregister for usb2_port and ulpi_port
-Date: Mon, 15 May 2023 18:26:07 +0200
-Message-Id: <20230515161700.617268486@linuxfoundation.org>
+Subject: [PATCH 4.14 071/116] dmaengine: at_xdmac: do not enable all cyclic channels
+Date: Mon, 15 May 2023 18:26:08 +0200
+Message-Id: <20230515161700.649133155@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -36,44 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit e024854048e733391b31fe5a398704b31b9af803 ]
+[ Upstream commit f8435befd81dd85b7b610598551fadf675849bc1 ]
 
-The tegra_xusb_port_unregister should be called when usb2_port
-and ulpi_port map fails in tegra_xusb_add_usb2_port() or in
-tegra_xusb_add_ulpi_port(), fix it.
+Do not global enable all the cyclic channels in at_xdmac_resume(). Instead
+save the global status in at_xdmac_suspend() and re-enable the cyclic
+channel only if it was active before suspend.
 
-Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20221129111634.1547747-1-cuigaosheng1@huawei.com
+Fixes: e1f7c9eee707 ("dmaengine: at_xdmac: creation of the atmel eXtended DMA Controller driver")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230214151827.1050280-6-claudiu.beznea@microchip.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/tegra/xusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/at_xdmac.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/phy/tegra/xusb.c b/drivers/phy/tegra/xusb.c
-index 9c55e0f45ea8a..d0483712637b9 100644
---- a/drivers/phy/tegra/xusb.c
-+++ b/drivers/phy/tegra/xusb.c
-@@ -596,6 +596,7 @@ static int tegra_xusb_add_usb2_port(struct tegra_xusb_padctl *padctl,
- 	usb2->base.lane = usb2->base.ops->map(&usb2->base);
- 	if (IS_ERR(usb2->base.lane)) {
- 		err = PTR_ERR(usb2->base.lane);
-+		tegra_xusb_port_unregister(&usb2->base);
- 		goto out;
+diff --git a/drivers/dma/at_xdmac.c b/drivers/dma/at_xdmac.c
+index c8dd0eef0b67b..3f9f1d6e3b501 100644
+--- a/drivers/dma/at_xdmac.c
++++ b/drivers/dma/at_xdmac.c
+@@ -223,6 +223,7 @@ struct at_xdmac {
+ 	int			irq;
+ 	struct clk		*clk;
+ 	u32			save_gim;
++	u32			save_gs;
+ 	struct dma_pool		*at_xdmac_desc_pool;
+ 	struct at_xdmac_chan	chan[0];
+ };
+@@ -1880,6 +1881,7 @@ static int atmel_xdmac_suspend(struct device *dev)
+ 		}
  	}
+ 	atxdmac->save_gim = at_xdmac_read(atxdmac, AT_XDMAC_GIM);
++	atxdmac->save_gs = at_xdmac_read(atxdmac, AT_XDMAC_GS);
  
-@@ -648,6 +649,7 @@ static int tegra_xusb_add_ulpi_port(struct tegra_xusb_padctl *padctl,
- 	ulpi->base.lane = ulpi->base.ops->map(&ulpi->base);
- 	if (IS_ERR(ulpi->base.lane)) {
- 		err = PTR_ERR(ulpi->base.lane);
-+		tegra_xusb_port_unregister(&ulpi->base);
- 		goto out;
+ 	at_xdmac_off(atxdmac);
+ 	clk_disable_unprepare(atxdmac->clk);
+@@ -1917,7 +1919,8 @@ static int atmel_xdmac_resume(struct device *dev)
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CNDC, atchan->save_cndc);
+ 			at_xdmac_chan_write(atchan, AT_XDMAC_CIE, atchan->save_cim);
+ 			wmb();
+-			at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
++			if (atxdmac->save_gs & atchan->mask)
++				at_xdmac_write(atxdmac, AT_XDMAC_GE, atchan->mask);
+ 		}
  	}
- 
+ 	return 0;
 -- 
 2.39.2
 
