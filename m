@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58286FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:36:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D465AC433EF;
-	Mon, 15 May 2023 17:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E91AFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:36:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A87C433D2;
+	Mon, 15 May 2023 17:36:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172204;
-	bh=yNNOQDUTepK3CVuIAj0W+0yKY+IttWeLcLyIp9e+2Cg=;
+	s=korg; t=1684172207;
+	bh=+0VFB440BDw5dpQiODHMgyaBpzo4L+5etmiOL+KeIvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxhA8b8wQTV/HWNq3f/RT8rrKAJMMOzFyJsSTwKQ3wMbkb6KUfWblaVId6ITY7l9X
-	 K9ys8E5TJy4XeRdtgJpCapG8tTnJP4lE8wrm73nvlMhsc/xFGCtBD5bS+9K8ubTq41
-	 zqiezwdVlOUzSaE/jY7FbGVhdDstEMQmyL/IZXR4=
+	b=yb0jbNRri43zuZKghVkCI+3/N0TvZtvd1FLq0O16dbf4+nVeWmdHoFUIZfmxl4hLd
+	 4PvZdLpcUX8YbARSbFgnRzYnQGI+GfauYQWS9x38evSrgidnMqM2fL8k5fQvN0CFMs
+	 qhtZyfMSY9F2/8Vu/arDBXE42rBRrVHUV0JLxK4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 078/381] arm64: dts: renesas: r8a77990: Remove bogus voltages from OPP table
-Date: Mon, 15 May 2023 18:25:29 +0200
-Message-Id: <20230515161740.337883098@linuxfoundation.org>
+Subject: [PATCH 5.10 079/381] arm64: dts: renesas: r8a774c0: Remove bogus voltages from OPP table
+Date: Mon, 15 May 2023 18:25:30 +0200
+Message-Id: <20230515161740.385654718@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,29 +36,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit fb76b0fae3ca880363214e1dcd6513ab8bd529e7 ]
+[ Upstream commit 554edc3e9239bb81e61be9f0f5dbbeb528a69e72 ]
 
-According to the R-Car Series, 3rd Generation Hardware User’s Manual
-Rev. 2.30, the System CPU cores on R-Car E3 do not have their own power
+According to the RZ/G Series, 2nd Generation Hardware User’s Manual
+Rev. 1.11, the System CPU cores on RZ/G2E do not have their own power
 supply, but use the common internal power supply (typical 1.03V).
 
 Hence remove the "opp-microvolt" properties from the Operating
 Performance Points table.  They are optional, and unused, when none of
 the CPU nodes is tied to a regulator using the "cpu-supply" property.
 
-Fixes: dd7188eb4ed128dc ("arm64: dts: renesas: r8a77990: Add OPPs table for cpu devices")
+Fixes: 231d8908a66fa98f ("arm64: dts: renesas: r8a774c0: Add OPPs table for cpu devices")
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/9232578d9d395d529f64db3333a371e31327f459.1676560856.git.geert+renesas@glider.be
+Link: https://lore.kernel.org/r/8348e18a011ded94e35919cd8e17c0be1f9acf2f.1676560856.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a77990.dtsi | 3 ---
+ arch/arm64/boot/dts/renesas/r8a774c0.dtsi | 3 ---
  1 file changed, 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a77990.dtsi b/arch/arm64/boot/dts/renesas/r8a77990.dtsi
-index 37159b9408e8a..e91d197a4c0b4 100644
---- a/arch/arm64/boot/dts/renesas/r8a77990.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a77990.dtsi
-@@ -60,17 +60,14 @@
+diff --git a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
+index 4c7d7e8f8e289..c4a6dfae93aad 100644
+--- a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
+@@ -49,17 +49,14 @@
  		opp-shared;
  		opp-800000000 {
  			opp-hz = /bits/ 64 <800000000>;
