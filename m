@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88A6FC1D
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BCA0C4339B;
-	Mon, 15 May 2023 17:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23D1FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEF6C433D2;
+	Mon, 15 May 2023 17:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172867;
-	bh=NTnTgBHvGS2sPmmcschSakYcit8uEF+uf8wePGtnKks=;
+	s=korg; t=1684172870;
+	bh=re1681Jx3Nx40Lypy9e/Zv2rVsgmImruh54jTh2vkkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNdfXzjqDrx982fFPIhAOyHb24u7RJlQ6mAW9Y9qfJzgZj2eCigdLoYuA7SZRER4y
-	 68brNKvmEiFC83/zTZ/KD4VlPbPshiOZfREB27S8JEe/YeKi6hMWL5g/kCOGIn8LnG
-	 4Y35bGEax3/4lLWSDH2mKUdSmak0fOn39Y5RJsUw=
+	b=yGj2h/YpN2ZyNnQUtyT39b1f9EjWl8+wM18d5MT7T8Zaws9ldZizruTr6tLBa1cSR
+	 ED4nKwXxRIoXpZ5HpY07zMYGlVTPMDFdZoUZmB5bLg/umgH0vM9ITcQc9j4SWf62ia
+	 4tTIAtspYKW6s60y67oibYx568mY61ZsdGfv9zCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 252/381] NFSv4.1: Always send a RECLAIM_COMPLETE after establishing lease
-Date: Mon, 15 May 2023 18:28:23 +0200
-Message-Id: <20230515161748.094894643@linuxfoundation.org>
+	Zheng Zhang <zheng.zhang@email.ucr.edu>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.10 286/381] dm ioctl: fix nested locking in table_clear() to remove deadlock concern
+Date: Mon, 15 May 2023 18:28:57 +0200
+Message-Id: <20230515161749.706005916@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,45 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-[ Upstream commit 40882deb83c29d8df4470d4e5e7f137b6acf7ad1 ]
+commit 3d32aaa7e66d5c1479a3c31d6c2c5d45dd0d3b89 upstream.
 
-The spec requires that we always at least send a RECLAIM_COMPLETE when
-we're done establishing the lease and recovering any state.
+syzkaller found the following problematic rwsem locking (with write
+lock already held):
 
-Fixes: fce5c838e133 ("nfs41: RECLAIM_COMPLETE functionality")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ down_read+0x9d/0x450 kernel/locking/rwsem.c:1509
+ dm_get_inactive_table+0x2b/0xc0 drivers/md/dm-ioctl.c:773
+ __dev_status+0x4fd/0x7c0 drivers/md/dm-ioctl.c:844
+ table_clear+0x197/0x280 drivers/md/dm-ioctl.c:1537
+
+In table_clear, it first acquires a write lock
+https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L1520
+down_write(&_hash_lock);
+
+Then before the lock is released at L1539, there is a path shown above:
+table_clear -> __dev_status -> dm_get_inactive_table ->  down_read
+https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L773
+down_read(&_hash_lock);
+
+It tries to acquire the same read lock again, resulting in the deadlock
+problem.
+
+Fix this by moving table_clear()'s __dev_status() call to after its
+up_write(&_hash_lock);
+
+Cc: stable@vger.kernel.org
+Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfs/nfs4state.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/md/dm-ioctl.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index 628e030f8e3ba..ff6ca05a9d441 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -67,6 +67,8 @@
+--- a/drivers/md/dm-ioctl.c
++++ b/drivers/md/dm-ioctl.c
+@@ -1435,11 +1435,12 @@ static int table_clear(struct file *filp
+ 		hc->new_map = NULL;
+ 	}
  
- #define OPENOWNER_POOL_SIZE	8
- 
-+static void nfs4_state_start_reclaim_reboot(struct nfs_client *clp);
+-	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
+-
+-	__dev_status(hc->md, param);
+ 	md = hc->md;
+ 	up_write(&_hash_lock);
 +
- const nfs4_stateid zero_stateid = {
- 	{ .data = { 0 } },
- 	.type = NFS4_SPECIAL_STATEID_TYPE,
-@@ -330,6 +332,8 @@ int nfs41_init_clientid(struct nfs_client *clp, const struct cred *cred)
- 	status = nfs4_proc_create_session(clp, cred);
- 	if (status != 0)
- 		goto out;
-+	if (!(clp->cl_exchange_flags & EXCHGID4_FLAG_CONFIRMED_R))
-+		nfs4_state_start_reclaim_reboot(clp);
- 	nfs41_finish_session_reset(clp);
- 	nfs_mark_client_ready(clp, NFS_CS_READY);
- out:
--- 
-2.39.2
-
++	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
++	__dev_status(md, param);
++
+ 	if (old_map) {
+ 		dm_sync_table(md);
+ 		dm_table_destroy(old_map);
 
 
