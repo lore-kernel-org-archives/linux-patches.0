@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BDB17730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:06:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 519F7C433EF;
-	Mon, 15 May 2023 18:06:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B42717730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:06:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E4AC433D2;
+	Mon, 15 May 2023 18:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173964;
-	bh=VnFxh8ioBS3o08LB+RtnNcsiBmI7NE/JJorIKk7HnNM=;
+	s=korg; t=1684173967;
+	bh=01YOxuVDfYgIE9DQaqmzsjxjFVnmn6ALCZI/VdRsBW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mSw5FggxjQ4s5vroBh5VNigGW6eY3h8B9KpJxBXIIX23/xsbjLE2Tlsw1v343SZ9U
-	 3okqKM5G0V3QYt7Do3nh7nWFRp5xo5/7r3sKfavN966LkwEr46Nfrp7jysqSg3VJCM
-	 VKd5x8Q5+YBLcnJr7+a+qd61MYfkRNenpe0AfLJk=
+	b=Bqdz4CNwAez4N2pooIV25DeJXI/0CATSXJXM4zlr0rm7zFO0/FsSQ4R8wo9EQfhqX
+	 ZGNxlDzpn0rJvsD2cmmm4vop3NnVL2VxPSR5RQMrnAk9oceep2aafSsWUVE5jjKYus
+	 9lThxPAUR/iDUTzch0p+qcevbIG1zfgT7SLsywJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qu Wenruo <wqu@suse.com>,
 	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 239/282] btrfs: fix btrfs_prev_leaf() to not return the same key twice
-Date: Mon, 15 May 2023 18:30:17 +0200
-Message-Id: <20230515161729.401762089@linuxfoundation.org>
+Subject: [PATCH 5.4 240/282] btrfs: dont free qgroup space unless specified
+Date: Mon, 15 May 2023 18:30:18 +0200
+Message-Id: <20230515161729.431754985@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,136 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 6f932d4ef007d6a4ae03badcb749fbb8f49196f6 upstream.
+commit d246331b78cbef86237f9c22389205bc9b4e1cc1 upstream.
 
-A call to btrfs_prev_leaf() may end up returning a path that points to the
-same item (key) again. This happens if while btrfs_prev_leaf(), after we
-release the path, a concurrent insertion happens, which moves items off
-from a sibling into the front of the previous leaf, and an item with the
-computed previous key does not exists.
+Boris noticed in his simple quotas testing that he was getting a leak
+with Sweet Tea's change to subvol create that stopped doing a
+transaction commit.  This was just a side effect of that change.
 
-For example, suppose we have the two following leaves:
+In the delayed inode code we have an optimization that will free extra
+reservations if we think we can pack a dir item into an already modified
+leaf.  Previously this wouldn't be triggered in the subvolume create
+case because we'd commit the transaction, it was still possible but
+much harder to trigger.  It could actually be triggered if we did a
+mkdir && subvol create with qgroups enabled.
 
-  Leaf A
+This occurs because in btrfs_insert_delayed_dir_index(), which gets
+called when we're adding the dir item, we do the following:
 
-  -------------------------------------------------------------
-  | ...   key (300 96 10)   key (300 96 15)   key (300 96 16) |
-  -------------------------------------------------------------
-              slot 20             slot 21             slot 22
+  btrfs_block_rsv_release(fs_info, trans->block_rsv, bytes, NULL);
 
-  Leaf B
+if we're able to skip reserving space.
 
-  -------------------------------------------------------------
-  | key (300 96 20)   key (300 96 21)   key (300 96 22)   ... |
-  -------------------------------------------------------------
-      slot 0             slot 1             slot 2
+The problem here is that trans->block_rsv points at the temporary block
+rsv for the subvolume create, which has qgroup reservations in the block
+rsv.
 
-If we call btrfs_prev_leaf(), from btrfs_previous_item() for example, with
-a path pointing to leaf B and slot 0 and the following happens:
+This is a problem because btrfs_block_rsv_release() will do the
+following:
 
-1) At btrfs_prev_leaf() we compute the previous key to search as:
-   (300 96 19), which is a key that does not exists in the tree;
+  if (block_rsv->qgroup_rsv_reserved >= block_rsv->qgroup_rsv_size) {
+	  qgroup_to_release = block_rsv->qgroup_rsv_reserved -
+		  block_rsv->qgroup_rsv_size;
+	  block_rsv->qgroup_rsv_reserved = block_rsv->qgroup_rsv_size;
+  }
 
-2) Then we call btrfs_release_path() at btrfs_prev_leaf();
+The temporary block rsv just has ->qgroup_rsv_reserved set,
+->qgroup_rsv_size == 0.  The optimization in
+btrfs_insert_delayed_dir_index() sets ->qgroup_rsv_reserved = 0.  Then
+later on when we call btrfs_subvolume_release_metadata() which has
 
-3) Some other task inserts a key at leaf A, that sorts before the key at
-   slot 20, for example it has an objectid of 299. In order to make room
-   for the new key, the key at slot 22 is moved to the front of leaf B.
-   This happens at push_leaf_right(), called from split_leaf().
+  btrfs_block_rsv_release(fs_info, rsv, (u64)-1, &qgroup_to_release);
+  btrfs_qgroup_convert_reserved_meta(root, qgroup_to_release);
 
-   After this leaf B now looks like:
+qgroup_to_release is set to 0, and we do not convert the reserved
+metadata space.
 
-  --------------------------------------------------------------------------------
-  | key (300 96 16)    key (300 96 20)   key (300 96 21)   key (300 96 22)   ... |
-  --------------------------------------------------------------------------------
-       slot 0              slot 1             slot 2             slot 3
+The problem here is that the block rsv code has been unconditionally
+messing with ->qgroup_rsv_reserved, because the main place this is used
+is delalloc, and any time we call btrfs_block_rsv_release() we do it
+with qgroup_to_release set, and thus do the proper accounting.
 
-4) At btrfs_prev_leaf() we call btrfs_search_slot() for the computed
-   previous key: (300 96 19). Since the key does not exists,
-   btrfs_search_slot() returns 1 and with a path pointing to leaf B
-   and slot 1, the item with key (300 96 20);
+The subvolume code is the only other code that uses the qgroup
+reservation stuff, but it's intermingled with the above optimization,
+and thus was getting its reservation freed out from underneath it and
+thus leaking the reserved space.
 
-5) This makes btrfs_prev_leaf() return a path that points to slot 1 of
-   leaf B, the same key as before it was called, since the key at slot 0
-   of leaf B (300 96 16) is less than the computed previous key, which is
-   (300 96 19);
+The solution is to simply not mess with the qgroup reservations if we
+don't have qgroup_to_release set.  This works with the existing code as
+anything that messes with the delalloc reservations always have
+qgroup_to_release set.  This fixes the leak that Boris was observing.
 
-6) As a consequence btrfs_previous_item() returns a path that points again
-   to the item with key (300 96 20).
-
-For some users of btrfs_prev_leaf() or btrfs_previous_item() this may not
-be functional a problem, despite not making sense to return a new path
-pointing again to the same item/key. However for a caller such as
-tree-log.c:log_dir_items(), this has a bad consequence, as it can result
-in not logging some dir index deletions in case the directory is being
-logged without holding the inode's VFS lock (logging triggered while
-logging a child inode for example) - for the example scenario above, in
-case the dir index keys 17, 18 and 19 were deleted in the current
-transaction.
-
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+CC: stable@vger.kernel.org # 5.4+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.c |   32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ fs/btrfs/block-rsv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -5138,10 +5138,12 @@ int btrfs_del_items(struct btrfs_trans_h
- int btrfs_prev_leaf(struct btrfs_root *root, struct btrfs_path *path)
- {
- 	struct btrfs_key key;
-+	struct btrfs_key orig_key;
- 	struct btrfs_disk_key found_key;
- 	int ret;
- 
- 	btrfs_item_key_to_cpu(path->nodes[0], &key, 0);
-+	orig_key = key;
- 
- 	if (key.offset > 0) {
- 		key.offset--;
-@@ -5158,8 +5160,36 @@ int btrfs_prev_leaf(struct btrfs_root *r
- 
- 	btrfs_release_path(path);
- 	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
--	if (ret < 0)
-+	if (ret <= 0)
- 		return ret;
-+
-+	/*
-+	 * Previous key not found. Even if we were at slot 0 of the leaf we had
-+	 * before releasing the path and calling btrfs_search_slot(), we now may
-+	 * be in a slot pointing to the same original key - this can happen if
-+	 * after we released the path, one of more items were moved from a
-+	 * sibling leaf into the front of the leaf we had due to an insertion
-+	 * (see push_leaf_right()).
-+	 * If we hit this case and our slot is > 0 and just decrement the slot
-+	 * so that the caller does not process the same key again, which may or
-+	 * may not break the caller, depending on its logic.
-+	 */
-+	if (path->slots[0] < btrfs_header_nritems(path->nodes[0])) {
-+		btrfs_item_key(path->nodes[0], &found_key, path->slots[0]);
-+		ret = comp_keys(&found_key, &orig_key);
-+		if (ret == 0) {
-+			if (path->slots[0] > 0) {
-+				path->slots[0]--;
-+				return 0;
-+			}
-+			/*
-+			 * At slot 0, same key as before, it means orig_key is
-+			 * the lowest, leftmost, key in the tree. We're done.
-+			 */
-+			return 1;
-+		}
-+	}
-+
- 	btrfs_item_key(path->nodes[0], &found_key, 0);
- 	ret = comp_keys(&found_key, &key);
- 	/*
+--- a/fs/btrfs/block-rsv.c
++++ b/fs/btrfs/block-rsv.c
+@@ -29,7 +29,8 @@ static u64 block_rsv_release_bytes(struc
+ 	} else {
+ 		num_bytes = 0;
+ 	}
+-	if (block_rsv->qgroup_rsv_reserved >= block_rsv->qgroup_rsv_size) {
++	if (qgroup_to_release_ret &&
++	    block_rsv->qgroup_rsv_reserved >= block_rsv->qgroup_rsv_size) {
+ 		qgroup_to_release = block_rsv->qgroup_rsv_reserved -
+ 				    block_rsv->qgroup_rsv_size;
+ 		block_rsv->qgroup_rsv_reserved = block_rsv->qgroup_rsv_size;
 
 
