@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A2EFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA975C433EF;
-	Mon, 15 May 2023 17:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9331EFBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB83FC433D2;
+	Mon, 15 May 2023 17:00:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170030;
-	bh=OORrfuUZocx0djOc4uov2tXBCCCru7qy0rWNyvf1UuA=;
+	s=korg; t=1684170033;
+	bh=25k/maKvTjokGF7S74GJjyHlScOMw2b5fZgwxGk+au4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mm6jHwW7v8gcmrvOqfp/HqfpZj+VK9IusNrHDkCj6/hSRtQXDP/ZsA3GtuqjkoV5D
-	 Wza7eRznTGNr7e9WW+cRPE7L35u0aOZA/vzx08As4hoF7lkmjG3xkuMkEWbM3vaugz
-	 sdgzwwZ1U7b0X9504jJO2imDP7qE2wt+0ZxBxf38=
+	b=t1K3srPWnyLBX9Hq1dCv0FEGaP7SVIdH3ekJc/rzIWZH1pHTbsDkhPt0nq+v1wOWE
+	 oQoPvoNDaeD4m+R/7vajXDKnT7yjWIPdDAzgiqzAqm5WMhdOW5K2zb4idrzs6F/nTw
+	 FblB8Ks4aMnJF9oEJ1o9qLqeJtuoeBGmm+PnRHiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.3 213/246] Revert "net/sched: flower: Fix wrong handle assignment during filter change"
-Date: Mon, 15 May 2023 18:27:05 +0200
-Message-Id: <20230515161728.987764060@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.3 242/246] spi: fsl-spi: Re-organise transfer bits_per_word adaptation
+Date: Mon, 15 May 2023 18:27:34 +0200
+Message-Id: <20230515161729.915456481@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,32 +34,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 5110f3ff6d3c986df9575c8da86630578b7f0846 upstream.
+commit 8a5299a1278eadf1e08a598a5345c376206f171e upstream.
 
-This reverts commit 32eff6bacec2cb574677c15378169a9fa30043ef.
+For different reasons, fsl-spi driver performs bits_per_word
+modifications for different reasons:
+- On CPU mode, to minimise amount of interrupts
+- On CPM/QE mode to work around controller byte order
 
-Superseded by the following commit in this series.
+For CPU mode that's done in fsl_spi_prepare_message() while
+for CPM mode that's done in fsl_spi_setup_transfer().
 
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reunify all of it in fsl_spi_prepare_message(), and catch
+impossible cases early through master's bits_per_word_mask
+instead of returning EINVAL later.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/0ce96fe96e8b07cba0613e4097cfd94d09b8919a.1680371809.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_flower.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-fsl-spi.c |   46 +++++++++++++++++++++-------------------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
---- a/net/sched/cls_flower.c
-+++ b/net/sched/cls_flower.c
-@@ -2231,8 +2231,8 @@ static int fl_change(struct net *net, st
- 			kfree(fnew);
- 			goto errout_tb;
- 		}
--		fnew->handle = handle;
- 	}
-+	fnew->handle = handle;
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -177,26 +177,6 @@ static int mspi_apply_cpu_mode_quirks(st
+ 	return bits_per_word;
+ }
  
- 	err = tcf_exts_init_ex(&fnew->exts, net, TCA_FLOWER_ACT, 0, tp, handle,
- 			       !tc_skip_hw(fnew->flags));
+-static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+-				struct spi_device *spi,
+-				int bits_per_word)
+-{
+-	/* CPM/QE uses Little Endian for words > 8
+-	 * so transform 16 and 32 bits words into 8 bits
+-	 * Unfortnatly that doesn't work for LSB so
+-	 * reject these for now */
+-	/* Note: 32 bits word, LSB works iff
+-	 * tfcr/rfcr is set to CPMFCR_GBL */
+-	if (spi->mode & SPI_LSB_FIRST &&
+-	    bits_per_word > 8)
+-		return -EINVAL;
+-	if (bits_per_word <= 8)
+-		return bits_per_word;
+-	if (bits_per_word == 16 || bits_per_word == 32)
+-		return 8; /* pretend its 8 bits */
+-	return -EINVAL;
+-}
+-
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 					struct spi_transfer *t)
+ {
+@@ -224,9 +204,6 @@ static int fsl_spi_setup_transfer(struct
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else
+-		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+-							  bits_per_word);
+ 
+ 	if (bits_per_word < 0)
+ 		return bits_per_word;
+@@ -361,6 +338,19 @@ static int fsl_spi_prepare_message(struc
+ 				t->bits_per_word = 32;
+ 			else if ((t->len & 1) == 0)
+ 				t->bits_per_word = 16;
++		} else {
++			/*
++			 * CPM/QE uses Little Endian for words > 8
++			 * so transform 16 and 32 bits words into 8 bits
++			 * Unfortnatly that doesn't work for LSB so
++			 * reject these for now
++			 * Note: 32 bits word, LSB works iff
++			 * tfcr/rfcr is set to CPMFCR_GBL
++			 */
++			if (m->spi->mode & SPI_LSB_FIRST && t->bits_per_word > 8)
++				return -EINVAL;
++			if (t->bits_per_word == 16 || t->bits_per_word == 32)
++				t->bits_per_word = 8; /* pretend its 8 bits */
+ 		}
+ 	}
+ 	return fsl_spi_setup_transfer(m->spi, first);
+@@ -594,8 +584,14 @@ static struct spi_master *fsl_spi_probe(
+ 	if (mpc8xxx_spi->type == TYPE_GRLIB)
+ 		fsl_spi_grlib_probe(dev);
+ 
+-	master->bits_per_word_mask =
+-		(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32)) &
++	if (mpc8xxx_spi->flags & SPI_CPM_MODE)
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 8) | SPI_BPW_MASK(16) | SPI_BPW_MASK(32));
++	else
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32));
++
++	master->bits_per_word_mask &=
+ 		SPI_BPW_RANGE_MASK(1, mpc8xxx_spi->max_bits_per_word);
+ 
+ 	if (mpc8xxx_spi->flags & SPI_QE_CPU_MODE)
 
 
