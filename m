@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F37FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:06:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB4AC433D2;
-	Mon, 15 May 2023 17:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D3FFBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:06:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30BBC433EF;
+	Mon, 15 May 2023 17:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170416;
-	bh=ZGQwDrblZujQZQODfbu5LD+tJ6qDeTPQhNlyaCkmguQ=;
+	s=korg; t=1684170419;
+	bh=IQ7V4jLYoSfUBFp+KuV9+fH8dgnsgWzuyfXIi4oP/rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBQssClJC/0NcXRPjAualPgzI0VMSVNTx8M4aqN9HnOXxsjzZruSU3imprzHvp9K1
-	 CqwTZPfGT0TkG5WOyLu54lObx4E5lkYBLt5S22uQ3Qik3ylcoRNiVkJmxFNaYjSYPf
-	 igKf129yZGXUfYq+W9wP029b3w5YxX6/p3XDaQFU=
+	b=LfjRhXaG4S9fIfiOS5A2fJP8mjuP7cgB2OyDD3VU2Z6RhljsZurhJxSNSEUliD2WE
+	 yIDSeEDiHTY+SF9hGjV807b/W6wxTZlYETNZCzVFfj1znF9XTYmbG4r9Lmhq8iqHcN
+	 ghOusRfIwIKq5n9nuGoSa1msZM6U8jytKRWI6dcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 124/239] platform/x86: touchscreen_dmi: Add upside-down quirk for GDIX1002 ts on the Juno Tablet
-Date: Mon, 15 May 2023 18:26:27 +0200
-Message-Id: <20230515161725.422584438@linuxfoundation.org>
+Subject: [PATCH 6.1 125/239] platform/x86: thinkpad_acpi: Fix platform profiles on T490
+Date: Mon, 15 May 2023 18:26:28 +0200
+Message-Id: <20230515161725.451593822@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -33,54 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-commit 6abfa99ce52f61a31bcfc2aaaae09006f5665495 upstream.
+commit 0c0cd3e25a5b64b541dd83ba6e032475a9d77432 upstream.
 
-The Juno Computers Juno Tablet has an upside-down mounted Goodix
-touchscreen. Add a quirk to invert both axis to correct for this.
+I had incorrectly thought that PSC profiles were not usable on Intel
+platforms so had blocked them in the driver initialistion. This broke
+platform profiles on the T490.
 
-Link: https://junocomputers.com/us/product/juno-tablet/
+After discussion with the FW team PSC does work on Intel platforms and
+should be allowed.
+
+Note - it's possible this may impact other platforms where it is advertised
+but special driver support that only Windows has is needed. But if it does
+then they will need fixing via quirks. Please report any issues to me so I
+can get them addressed - but I haven't found any problems in testing...yet
+
+Fixes: bce6243f767f ("platform/x86: thinkpad_acpi: do not use PSC mode on Intel platforms")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2177962
 Cc: stable@vger.kernel.org
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20230505132523.214338-1-mpearson-lenovo@squebb.ca
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230505210323.43177-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/platform/x86/thinkpad_acpi.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -378,6 +378,11 @@ static const struct ts_dmi_data gdix1001
- 	.properties	= gdix1001_upside_down_props,
- };
- 
-+static const struct ts_dmi_data gdix1002_00_upside_down_data = {
-+	.acpi_name	= "GDIX1002:00",
-+	.properties	= gdix1001_upside_down_props,
-+};
-+
- static const struct property_entry gp_electronic_t701_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 960),
- 	PROPERTY_ENTRY_U32("touchscreen-size-y", 640),
-@@ -1296,6 +1301,18 @@ const struct dmi_system_id touchscreen_d
- 		},
- 	},
- 	{
-+		/* Juno Tablet */
-+		.driver_data = (void *)&gdix1002_00_upside_down_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Default string"),
-+			/* Both product- and board-name being "Default string" is somewhat rare */
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
-+			DMI_MATCH(DMI_BOARD_NAME, "Default string"),
-+			/* Above matches are too generic, add partial bios-version match */
-+			DMI_MATCH(DMI_BIOS_VERSION, "JP2V1."),
-+		},
-+	},
-+	{
- 		/* Mediacom WinPad 7.0 W700 (same hw as Wintron surftab 7") */
- 		.driver_data = (void *)&trekstor_surftab_wintron70_data,
- 		.matches = {
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -10597,11 +10597,6 @@ static int tpacpi_dytc_profile_init(stru
+ 				dytc_mmc_get_available = true;
+ 		}
+ 	} else if (dytc_capabilities & BIT(DYTC_FC_PSC)) { /* PSC MODE */
+-		/* Support for this only works on AMD platforms */
+-		if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD) {
+-			dbg_printk(TPACPI_DBG_INIT, "PSC not support on Intel platforms\n");
+-			return -ENODEV;
+-		}
+ 		pr_debug("PSC is supported\n");
+ 	} else {
+ 		dbg_printk(TPACPI_DBG_INIT, "No DYTC support available\n");
 
 
