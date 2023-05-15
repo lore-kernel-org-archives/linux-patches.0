@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18528FBEE
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:39:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D8A4C4339E;
-	Mon, 15 May 2023 16:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45077FBEE
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:39:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 992C4C433D2;
+	Mon, 15 May 2023 16:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168778;
-	bh=B3DNZ4uP3qz5Muc0Eq10wvdq5oUeHd+9JbGPh8ZKKFA=;
+	s=korg; t=1684168782;
+	bh=0rA4eYM5UuckOLg09kPwgQB0speykBb3UIQzUBkg+Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0hxbpHL3IKw1uNvx8AI6/iIg3IbdaZ+Mph2ei+w9MZrApoFwSoa7j0F9B1Uvt+dNH
-	 tcO05nrzUz7zTliKE8YEpcJv0dJ5gRcANIrYbK4Pa9ZQdpOWqBj5/vyHYlPB7I6LaV
-	 yUTLIQxMemw+9QRL62wpExOiydvFemPykSlk4io8=
+	b=Dlb+Bzb3UPecLbqY4abcZi4wACnHPjy8SMLVqaq94cmPq8jQ0FuOCokeobbXOtygC
+	 H9bE2mD6Pwj1xNbnWDzMMMxlDmLS+kOFl7qllRcgQ8Kx7O9nwdNe/h9b1m3s5N4sEv
+	 rs8yKtgopVhmRXc2J+fPIQn7Z3XQc+2hjh5PF+/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
+	Tang Bin <tangbin@cmss.chinamobile.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 039/191] media: saa7134: fix use after free bug in saa7134_finidev due to race condition
-Date: Mon, 15 May 2023 18:24:36 +0200
-Message-Id: <20230515161708.602887921@linuxfoundation.org>
+Subject: [PATCH 4.19 040/191] media: rcar_fdp1: Fix the correct variable assignments
+Date: Mon, 15 May 2023 18:24:37 +0200
+Message-Id: <20230515161708.649543401@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,83 +38,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Tang Bin <tangbin@cmss.chinamobile.com>
 
-[ Upstream commit 30cf57da176cca80f11df0d9b7f71581fe601389 ]
+[ Upstream commit af88c2adbb72a09ab1bb5c37ba388c98fecca69b ]
 
-In saa7134_initdev, it will call saa7134_hwinit1. There are three
-function invoking here: saa7134_video_init1, saa7134_ts_init1
-and saa7134_vbi_init1.
+In the function fdp1_probe(), when get irq failed, the
+function platform_get_irq() log an error message, so
+remove redundant message here. And the variable type
+of "ret" is int, the "fdp1->irq" is unsigned int, when
+irq failed, this place maybe wrong, thus fix it.
 
-All of them will init a timer with same function. Take
-saa7134_video_init1 as an example. It'll bound &dev->video_q.timeout
-with saa7134_buffer_timeout.
-
-In buffer_activate, the timer funtcion is started.
-
-If we remove the module or device which will call saa7134_finidev
-to make cleanup, there may be a unfinished work. The
-possible sequence is as follows, which will cause a
-typical UAF bug.
-
-Fix it by canceling the timer works accordingly before cleanup in
-saa7134_finidev.
-
-CPU0                  CPU1
-
-                    |saa7134_buffer_timeout
-saa7134_finidev     |
-  kfree(dev);       |
-                    |
-                    | saa7134_buffer_next
-                    | //use dev
-
-Fixes: 1e7126b4a86a ("media: saa7134: Convert timers to use timer_setup()")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: c766c90faf93 ("media: rcar_fdp1: Fix refcount leak in probe and remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7134/saa7134-ts.c    | 1 +
- drivers/media/pci/saa7134/saa7134-vbi.c   | 1 +
- drivers/media/pci/saa7134/saa7134-video.c | 1 +
- 3 files changed, 3 insertions(+)
+ drivers/media/platform/rcar_fdp1.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/pci/saa7134/saa7134-ts.c b/drivers/media/pci/saa7134/saa7134-ts.c
-index 2be703617e294..e7adcd4f99623 100644
---- a/drivers/media/pci/saa7134/saa7134-ts.c
-+++ b/drivers/media/pci/saa7134/saa7134-ts.c
-@@ -309,6 +309,7 @@ int saa7134_ts_start(struct saa7134_dev *dev)
+diff --git a/drivers/media/platform/rcar_fdp1.c b/drivers/media/platform/rcar_fdp1.c
+index 2bd5898a62044..e1c8701d44ade 100644
+--- a/drivers/media/platform/rcar_fdp1.c
++++ b/drivers/media/platform/rcar_fdp1.c
+@@ -2287,11 +2287,10 @@ static int fdp1_probe(struct platform_device *pdev)
+ 		return PTR_ERR(fdp1->regs);
  
- int saa7134_ts_fini(struct saa7134_dev *dev)
- {
-+	del_timer_sync(&dev->ts_q.timeout);
- 	saa7134_pgtable_free(dev->pci, &dev->ts_q.pt);
- 	return 0;
- }
-diff --git a/drivers/media/pci/saa7134/saa7134-vbi.c b/drivers/media/pci/saa7134/saa7134-vbi.c
-index 57bea543c39ba..559db500b19ce 100644
---- a/drivers/media/pci/saa7134/saa7134-vbi.c
-+++ b/drivers/media/pci/saa7134/saa7134-vbi.c
-@@ -194,6 +194,7 @@ int saa7134_vbi_init1(struct saa7134_dev *dev)
- int saa7134_vbi_fini(struct saa7134_dev *dev)
- {
- 	/* nothing */
-+	del_timer_sync(&dev->vbi_q.timeout);
- 	return 0;
- }
+ 	/* Interrupt service routine registration */
+-	fdp1->irq = ret = platform_get_irq(pdev, 0);
+-	if (ret < 0) {
+-		dev_err(&pdev->dev, "cannot find IRQ\n");
++	ret = platform_get_irq(pdev, 0);
++	if (ret < 0)
+ 		return ret;
+-	}
++	fdp1->irq = ret;
  
-diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
-index 079219288af7b..90255ecb08ca4 100644
---- a/drivers/media/pci/saa7134/saa7134-video.c
-+++ b/drivers/media/pci/saa7134/saa7134-video.c
-@@ -2213,6 +2213,7 @@ int saa7134_video_init1(struct saa7134_dev *dev)
- 
- void saa7134_video_fini(struct saa7134_dev *dev)
- {
-+	del_timer_sync(&dev->video_q.timeout);
- 	/* free stuff */
- 	vb2_queue_release(&dev->video_vbq);
- 	saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
+ 	ret = devm_request_irq(&pdev->dev, fdp1->irq, fdp1_irq_handler, 0,
+ 			       dev_name(&pdev->dev), fdp1);
 -- 
 2.39.2
 
