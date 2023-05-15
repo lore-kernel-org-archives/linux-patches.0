@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A940FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:45:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621D5C4339B;
-	Mon, 15 May 2023 17:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19718FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:45:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 722E1C433EF;
+	Mon, 15 May 2023 17:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172721;
-	bh=dgAQ5VvnJFKq2LJJ21i33e3dV3dJnp0HqaUwd+ikY+4=;
+	s=korg; t=1684172724;
+	bh=SQhgvZiRS09ztDnk3hOzPjDt2xtuQBJu+gwgGfnOXlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jE3/ElsoKTncyl1c2b2a1y+VfmYVU9EOS8Y1vIkfZexJRbcVP4ZNzKzX4yRK8h9cC
-	 AmlR+ncmRUoSUm8lVsZYEPFnrgOkzgZgxtREInlq3m9+19yTT+Rl8txu7tPLaN1uLK
-	 I5dYspqgqP8kbJJNxkQUgPdeJJ1HD2fsZZkNhzdg=
+	b=MPwnnmSOOWf2Y0ZClfmb7qbkcEAoFT4NLgWMFarVq3SGmjV+37R75Ph9yzx7QZEMM
+	 DL1CkKnyQGLdhw2KGx6Ctpid2SisrA8Bi82vIjezyj4TFT1u/HkMbvJy0r9VuVfoz/
+	 /dAQiII1QNfRVL4RJZj8PN8qbMmEVf98hTomIAN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+5e70d01ee8985ae62a3b@syzkaller.appspotmail.com>,
-	Jason Gunthorpe <jgg@ziepe.ca>,
+	Mark Zhang <markzhang@nvidia.com>,
 	Leon Romanovsky <leon@kernel.org>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 245/381] RDMA/siw: Remove namespace check from siw_netdev_event()
-Date: Mon, 15 May 2023 18:28:16 +0200
-Message-Id: <20230515161747.778638134@linuxfoundation.org>
+Subject: [PATCH 5.10 246/381] RDMA/cm: Trace icm_send_rej event before the cm state is reset
+Date: Mon, 15 May 2023 18:28:17 +0200
+Message-Id: <20230515161747.816158305@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -38,42 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit 266e9b3475ba82212062771fdbc40be0e3c06ec8 ]
+[ Upstream commit bd9de1badac7e4ff6780365d4aa38983f5e2a436 ]
 
-syzbot is reporting that siw_netdev_event(NETDEV_UNREGISTER) cannot destroy
-siw_device created after unshare(CLONE_NEWNET) due to net namespace check.
-It seems that this check was by error there and should be removed.
+Trace icm_send_rej event before the cm state is reset to idle, so that
+correct cm state will be logged. For example when an incoming request is
+rejected, the old trace log was:
+    icm_send_rej: local_id=961102742 remote_id=3829151631 state=IDLE reason=REJ_CONSUMER_DEFINED
+With this patch:
+    icm_send_rej: local_id=312971016 remote_id=3778819983 state=MRA_REQ_SENT reason=REJ_CONSUMER_DEFINED
 
-Reported-by: syzbot <syzbot+5e70d01ee8985ae62a3b@syzkaller.appspotmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=5e70d01ee8985ae62a3b
-Suggested-by: Jason Gunthorpe <jgg@ziepe.ca>
-Suggested-by: Leon Romanovsky <leon@kernel.org>
-Fixes: bdcf26bf9b3a ("rdma/siw: network and RDMA core interface")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Link: https://lore.kernel.org/r/a44e9ac5-44e2-d575-9e30-02483cc7ffd1@I-love.SAKURA.ne.jp
-Reviewed-by: Bernard Metzler <bmt@zurich.ibm.com>
+Fixes: 8dc105befe16 ("RDMA/cm: Add tracepoints to track MAD send operations")
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/20230330072351.481200-1-markzhang@nvidia.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_main.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/infiniband/core/cm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_main.c b/drivers/infiniband/sw/siw/siw_main.c
-index 32a553a1b905e..5ba0893f1f017 100644
---- a/drivers/infiniband/sw/siw/siw_main.c
-+++ b/drivers/infiniband/sw/siw/siw_main.c
-@@ -458,9 +458,6 @@ static int siw_netdev_event(struct notifier_block *nb, unsigned long event,
+diff --git a/drivers/infiniband/core/cm.c b/drivers/infiniband/core/cm.c
+index 3133b6be6cab9..db1a25fbe2fa9 100644
+--- a/drivers/infiniband/core/cm.c
++++ b/drivers/infiniband/core/cm.c
+@@ -2924,6 +2924,8 @@ static int cm_send_rej_locked(struct cm_id_private *cm_id_priv,
+ 	    (ari && ari_length > IB_CM_REJ_ARI_LENGTH))
+ 		return -EINVAL;
  
- 	dev_dbg(&netdev->dev, "siw: event %lu\n", event);
++	trace_icm_send_rej(&cm_id_priv->id, reason);
++
+ 	switch (state) {
+ 	case IB_CM_REQ_SENT:
+ 	case IB_CM_MRA_REQ_RCVD:
+@@ -2954,7 +2956,6 @@ static int cm_send_rej_locked(struct cm_id_private *cm_id_priv,
+ 		return -EINVAL;
+ 	}
  
--	if (dev_net(netdev) != &init_net)
--		return NOTIFY_OK;
--
- 	base_dev = ib_device_get_by_netdev(netdev, RDMA_DRIVER_SIW);
- 	if (!base_dev)
- 		return NOTIFY_OK;
+-	trace_icm_send_rej(&cm_id_priv->id, reason);
+ 	ret = ib_post_send_mad(msg, NULL);
+ 	if (ret) {
+ 		cm_free_msg(msg);
 -- 
 2.39.2
 
