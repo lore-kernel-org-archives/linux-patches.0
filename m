@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E363FC1B
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E612DC433EF;
-	Mon, 15 May 2023 17:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F243FC1B
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044C7C4339E;
+	Mon, 15 May 2023 17:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172898;
-	bh=T0CeFnq3CHc5Xe1O31FYeiX17Q66noo5q2ST0EwTdNY=;
+	s=korg; t=1684172901;
+	bh=Dxv0V0djtdYeLj6z8vYogg+s4bQ8ZSK+opspWFTIT50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GZM1aAuWRR3u35YCPrKPuWZFETbl7NRXJgSRODrQsWqOLqEJmnlshMohVkU4ql2tl
-	 1r0BftT5/0jPvKMy9niYLUCPkmhIEcPRVtJLjDedX3XEw4wkKueXm6V/xLXgdNnQ9I
-	 1Esy4h4r5q0M3FiE3S0W1nxbHqQTTLnwMob3qq0A=
+	b=IBjOdAbwc2e/GY1Oxckw7QCoBdGea+3UBpz9c7VQdRKojseZfbyYypTy7xpImO3vD
+	 0NeD6jF5brIfZrH+n7u8SFqYNiUBSUpCq8ZOvGNkC7qfaDgebE7JxpoRMKHYecflie
+	 hGiANMHNEUU7YmpN+Mu4aFCYB6xy/1/cq8Ix8Rk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 303/381] crypto: ccp - Clear PSP interrupt status register before calling handler
-Date: Mon, 15 May 2023 18:29:14 +0200
-Message-Id: <20230515161750.511276964@linuxfoundation.org>
+Subject: [PATCH 5.10 304/381] mailbox: zynq: Switch to flexible array to simplify code
+Date: Mon, 15 May 2023 18:29:15 +0200
+Message-Id: <20230515161750.560894259@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,71 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 45121ad4a1750ca47ce3f32bd434bdb0cdbf0043 ]
+[ Upstream commit 043f85ce81cb1714e14d31c322c5646513dde3fb ]
 
-The PSP IRQ is edge-triggered (MSI or MSI-X) in all cases supported by
-the psp module so clear the interrupt status register early in the
-handler to prevent missed interrupts. sev_irq_handler() calls wake_up()
-on a wait queue, which can result in a new command being submitted from
-a different CPU. This then races with the clearing of isr and can result
-in missed interrupts. A missed interrupt results in a command waiting
-until it times out, which results in the psp being declared dead.
+Using flexible array is more straight forward. It
+  - saves 1 pointer in the 'zynqmp_ipi_pdata' structure
+  - saves an indirection when using this array
+  - saves some LoC and avoids some always spurious pointer arithmetic
 
-This is unlikely on bare metal, but has been observed when running
-virtualized. In the cases where this is observed, sev->cmdresp_reg has
-PSP_CMDRESP_RESP set which indicates that the command was processed
-correctly but no interrupt was asserted.
-
-The full sequence of events looks like this:
-
-CPU 1: submits SEV cmd #1
-CPU 1: calls wait_event_timeout()
-CPU 0: enters psp_irq_handler()
-CPU 0: calls sev_handler()->wake_up()
-CPU 1: wakes up; finishes processing cmd #1
-CPU 1: submits SEV cmd #2
-CPU 1: calls wait_event_timeout()
-PSP:   finishes processing cmd #2; interrupt status is still set; no interrupt
-CPU 0: clears intsts
-CPU 0: exits psp_irq_handler()
-CPU 1: wait_event_timeout() times out; psp_dead=true
-
-Fixes: 200664d5237f ("crypto: ccp: Add Secure Encrypted Virtualization (SEV) command support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Stable-dep-of: f72f805e7288 ("mailbox: zynqmp: Fix counts of child nodes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/psp-dev.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/ccp/psp-dev.c b/drivers/crypto/ccp/psp-dev.c
-index ae7b445999144..4bf9eaab4456f 100644
---- a/drivers/crypto/ccp/psp-dev.c
-+++ b/drivers/crypto/ccp/psp-dev.c
-@@ -42,6 +42,9 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
- 	/* Read the interrupt status: */
- 	status = ioread32(psp->io_regs + psp->vdata->intsts_reg);
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index 05e36229622e3..136a84ad871cc 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -110,7 +110,7 @@ struct zynqmp_ipi_pdata {
+ 	unsigned int method;
+ 	u32 local_id;
+ 	int num_mboxes;
+-	struct zynqmp_ipi_mbox *ipi_mboxes;
++	struct zynqmp_ipi_mbox ipi_mboxes[];
+ };
  
-+	/* Clear the interrupt status by writing the same value we read. */
-+	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
-+
- 	/* invoke subdevice interrupt handlers */
- 	if (status) {
- 		if (psp->sev_irq_handler)
-@@ -51,9 +54,6 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
- 			psp->tee_irq_handler(irq, psp->tee_irq_data, status);
+ static struct device_driver zynqmp_ipi_mbox_driver = {
+@@ -635,7 +635,7 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
+ 	int num_mboxes, ret = -EINVAL;
+ 
+ 	num_mboxes = of_get_child_count(np);
+-	pdata = devm_kzalloc(dev, sizeof(*pdata) + (num_mboxes * sizeof(*mbox)),
++	pdata = devm_kzalloc(dev, struct_size(pdata, ipi_mboxes, num_mboxes),
+ 			     GFP_KERNEL);
+ 	if (!pdata)
+ 		return -ENOMEM;
+@@ -649,8 +649,6 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
  	}
  
--	/* Clear the interrupt status by writing the same value we read. */
--	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
--
- 	return IRQ_HANDLED;
- }
+ 	pdata->num_mboxes = num_mboxes;
+-	pdata->ipi_mboxes = (struct zynqmp_ipi_mbox *)
+-			    ((char *)pdata + sizeof(*pdata));
  
+ 	mbox = pdata->ipi_mboxes;
+ 	for_each_available_child_of_node(np, nc) {
 -- 
 2.39.2
 
