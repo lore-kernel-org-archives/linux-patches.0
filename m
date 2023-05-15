@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70391FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:39:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB63BC433EF;
-	Mon, 15 May 2023 17:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CA1FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:39:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEDAC433D2;
+	Mon, 15 May 2023 17:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172390;
-	bh=ojc58rMjtvQJnZH5ift4m2BaI2Ddu85cIVhMmcACl14=;
+	s=korg; t=1684172393;
+	bh=5Xz6DNewh+6cg6nd7xwBDceSdpGCKhYyujgZh2gky+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=asHTf1br/lIebbE24H/ii55XtAwZNcchPvdaZzZ8CZe6J93vUKGwXTVv1fAUNHnRP
-	 9PMuNCovMgjjapxfPOlOJMXeVj3c8f+BtDTC963FXRn7F7G+C4v29MaB5YjpxK/V8t
-	 7RokOqJJqPe9fWO8o/Wty75+9vVilwraRHmeuW/4=
+	b=TFR8+3P3dS54o7D4Dy6rlq8tVYVRNL4n+GIYKhLcEbygmeQ1t8fXMdWmsa+CpWivl
+	 4qw3xx+NSH8yZzpq7bbsR8OZtwSvGzCqeYbmqR5wFJ/snDJdTu3okS7YvRAJhgbCIe
+	 ubXwl7pVIZ0In6ONa0b6bD8kuttqTiihSE5pKpUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 130/381] wifi: ath6kl: minor fix for allocation size
-Date: Mon, 15 May 2023 18:26:21 +0200
-Message-Id: <20230515161742.702838850@linuxfoundation.org>
+Subject: [PATCH 5.10 139/381] scm: fix MSG_CTRUNC setting condition for SO_PASSSEC
+Date: Mon, 15 May 2023 18:26:30 +0200
+Message-Id: <20230515161743.115415582@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,38 +40,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey V. Vissarionov <gremlin@altlinux.org>
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
 
-[ Upstream commit 778f83f889e7fca37780d9640fcbd0229ae38eaa ]
+[ Upstream commit a02d83f9947d8f71904eda4de046630c3eb6802c ]
 
-Although the "param" pointer occupies more or equal space compared
-to "*param", the allocation size should use the size of variable
-itself.
+Currently, kernel would set MSG_CTRUNC flag if msg_control buffer
+wasn't provided and SO_PASSCRED was set or if there was pending SCM_RIGHTS.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+For some reason we have no corresponding check for SO_PASSSEC.
 
-Fixes: bdcd81707973cf8a ("Add ath6kl cleaned up driver")
-Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230117110414.GC12547@altlinux.org
+In the recvmsg(2) doc we have:
+       MSG_CTRUNC
+              indicates that some control data was discarded due to lack
+              of space in the buffer for ancillary data.
+
+So, we need to set MSG_CTRUNC flag for all types of SCM.
+
+This change can break applications those don't check MSG_CTRUNC flag.
+
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+
+v2:
+- commit message was rewritten according to Eric's suggestion
+Acked-by: Paul Moore <paul@paul-moore.com>
+
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/bmi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/scm.h | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
-index bde5a10d470c8..af98e871199d3 100644
---- a/drivers/net/wireless/ath/ath6kl/bmi.c
-+++ b/drivers/net/wireless/ath/ath6kl/bmi.c
-@@ -246,7 +246,7 @@ int ath6kl_bmi_execute(struct ath6kl *ar, u32 addr, u32 *param)
- 		return -EACCES;
+diff --git a/include/net/scm.h b/include/net/scm.h
+index 1ce365f4c2560..585adc1346bd0 100644
+--- a/include/net/scm.h
++++ b/include/net/scm.h
+@@ -105,16 +105,27 @@ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct sc
+ 		}
  	}
+ }
++
++static inline bool scm_has_secdata(struct socket *sock)
++{
++	return test_bit(SOCK_PASSSEC, &sock->flags);
++}
+ #else
+ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct scm_cookie *scm)
+ { }
++
++static inline bool scm_has_secdata(struct socket *sock)
++{
++	return false;
++}
+ #endif /* CONFIG_SECURITY_NETWORK */
  
--	size = sizeof(cid) + sizeof(addr) + sizeof(param);
-+	size = sizeof(cid) + sizeof(addr) + sizeof(*param);
- 	if (size > ar->bmi.max_cmd_size) {
- 		WARN_ON(1);
- 		return -EINVAL;
+ static __inline__ void scm_recv(struct socket *sock, struct msghdr *msg,
+ 				struct scm_cookie *scm, int flags)
+ {
+ 	if (!msg->msg_control) {
+-		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp)
++		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp ||
++		    scm_has_secdata(sock))
+ 			msg->msg_flags |= MSG_CTRUNC;
+ 		scm_destroy(scm);
+ 		return;
 -- 
 2.39.2
 
