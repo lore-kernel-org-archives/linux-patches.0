@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC82FBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:50:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F46FC4339C;
-	Mon, 15 May 2023 17:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020F3FBEC
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:50:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A43C433A0;
+	Mon, 15 May 2023 17:50:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173003;
-	bh=ViVYu6hAlUJmSv0QDirXEDVuE5sWvWxD6CCabKZUl30=;
+	s=korg; t=1684173005;
+	bh=FowtQaz1nJYoTfNE5gy61S5PKrMyX5xjKgKq3thAIO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AyS+KjSyYZ5eiFV9b8+M26/dh8MsFwoTtZRMt6fzNbOozAZYyE/yeqphmD02LvqHm
-	 9QSCNiIZn6C85X2CexiYtNoGnJHwk4INidmiK3PW5FhfUJzc8lBVCVWLwfAE6NZ1E+
-	 5I9gfr+0D2kdOO118FtjHgfX2WyIxX+ui3tTYYrY=
+	b=A6vwVXfn6Zf+0sctsKOOOzWbMkH4GWENsBdS5oR0joQ3dWqqTGT7m87rybDcBvOGS
+	 QrvVS0L4p6JL8s3LYNL0RULLUFpe/XTRls2utiFGDlRxUranVI1fGCS6cKxKQxNRdP
+	 I73N6qN3IQurHpBIfJOo6MO+CtncwgYxv1SGY1tA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	Sai Krishna <saikrishnag@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 319/381] octeontx2-vf: Detach LF resources on probe cleanup
-Date: Mon, 15 May 2023 18:29:30 +0200
-Message-Id: <20230515161751.207411124@linuxfoundation.org>
+	Pawel Witek <pawel.ireneusz.witek@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.10 337/381] cifs: fix pcchunk length type in smb2_copychunk_range
+Date: Mon, 15 May 2023 18:29:48 +0200
+Message-Id: <20230515161752.065440318@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,39 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: Pawel Witek <pawel.ireneusz.witek@gmail.com>
 
-[ Upstream commit 99ae1260fdb5f15beab8a3adfb93a9041c87a2c1 ]
+commit d66cde50c3c868af7abddafce701bb86e4a93039 upstream.
 
-When a VF device probe fails due to error in MSIX vector allocation then
-the resources NIX and NPA LFs were not detached. Fix this by detaching
-the LFs when MSIX vector allocation fails.
+Change type of pcchunk->Length from u32 to u64 to match
+smb2_copychunk_range arguments type. Fixes the problem where performing
+server-side copy with CIFS_IOC_COPYCHUNK_FILE ioctl resulted in incomplete
+copy of large files while returning -EINVAL.
 
-Fixes: 3184fb5ba96e ("octeontx2-vf: Virtual function driver support")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9bf0c9cd4314 ("CIFS: Fix SMB2/SMB3 Copy offload support (refcopy) for large files")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Pawel Witek <pawel.ireneusz.witek@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c | 2 +-
+ fs/cifs/smb2ops.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-index 67fabf265fe6f..5310b71795ecd 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
-@@ -542,7 +542,7 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -1784,7 +1784,7 @@ smb2_copychunk_range(const unsigned int
+ 		pcchunk->SourceOffset = cpu_to_le64(src_off);
+ 		pcchunk->TargetOffset = cpu_to_le64(dest_off);
+ 		pcchunk->Length =
+-			cpu_to_le32(min_t(u32, len, tcon->max_bytes_chunk));
++			cpu_to_le32(min_t(u64, len, tcon->max_bytes_chunk));
  
- 	err = otx2vf_realloc_msix_vectors(vf);
- 	if (err)
--		goto err_mbox_destroy;
-+		goto err_detach_rsrc;
- 
- 	err = otx2_set_real_num_queues(netdev, qcount, qcount);
- 	if (err)
--- 
-2.39.2
-
+ 		/* Request server copy to target from src identified by key */
+ 		kfree(retbuf);
 
 
