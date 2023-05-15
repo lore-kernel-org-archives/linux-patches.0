@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52648DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF458C433EF;
-	Mon, 15 May 2023 16:40:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72555E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEC56C433EF;
+	Mon, 15 May 2023 16:40:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168819;
-	bh=3qlsIwMETSV2KODNKoAInhn85Jnz1AuoLhQwWFwkTpw=;
+	s=korg; t=1684168825;
+	bh=4S2f7Dvc7vAXXUUaen3W2qHM42GrMtyEzKG1ZPERPe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTgiDnckBWlYPX23IpFMgCgMnZ9AB6qGwsJVq57N/7/RQ/KzwR7+lfsxejWIok308
-	 lsrZWDTpVA373K6VxDjed5YZ/lviwoReo5GwWVdgFbq58dlsXIZWUkTaLlyVPKSee0
-	 IC1WygwM64SIyEUgAv73s3quJkiW2VLXa4n3aN1Y=
+	b=voyPIQVTFLhdQB+eqDKCFM9JGxzA0nbu6lQaRREBSg+FocgT1h8Ll3iTwCYf6kvpw
+	 RLSkynsLdMKqLn+Nx1/MA6o0j0i7HVIKkFE2IrFxIVse2VFAch1twphi5/9kLyI6XV
+	 xUbEe4iHU23RZ2XAEXXCnhbtqcafqCJqeDzjSIEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+555908813b2ea35dae9a@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 051/191] wifi: ath6kl: reduce WARN to dev_dbg() in callback
-Date: Mon, 15 May 2023 18:24:48 +0200
-Message-Id: <20230515161709.053197610@linuxfoundation.org>
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 026/191] drm/vgem: add missing mutex_destroy
+Date: Mon, 15 May 2023 18:24:23 +0200
+Message-Id: <20230515161708.128164737@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -38,41 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 75c4a8154cb6c7239fb55d5550f481f6765fb83c ]
+[ Upstream commit 7c18189b14b33c1fbf76480b1bd217877c086e67 ]
 
-The warn is triggered on a known race condition, documented in the code above
-the test, that is correctly handled.  Using WARN() hinders automated testing.
-Reducing severity.
+vgem_fence_open() instantiates a mutex for a particular fence
+instance, but never destroys it by calling mutex_destroy() in
+vgem_fence_close().
 
-Fixes: de2070fc4aa7 ("ath6kl: Fix kernel panic on continuous driver load/unload")
-Reported-and-tested-by: syzbot+555908813b2ea35dae9a@syzkaller.appspotmail.com
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230126182431.867984-1-pchelkin@ispras.ru
+So, add the missing mutex_destroy() to guarantee proper resource
+destruction.
+
+Fixes: 407779848445 ("drm/vgem: Attach sw fences to exported vGEM dma-buf (ioctl)")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Signed-off-by: Maíra Canal <mairacanal@riseup.net>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230202125517.427976-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath6kl/htc_pipe.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/vgem/vgem_fence.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/ath/ath6kl/htc_pipe.c b/drivers/net/wireless/ath/ath6kl/htc_pipe.c
-index 434b668296466..73bf4af1f3c7c 100644
---- a/drivers/net/wireless/ath/ath6kl/htc_pipe.c
-+++ b/drivers/net/wireless/ath/ath6kl/htc_pipe.c
-@@ -963,8 +963,8 @@ static int ath6kl_htc_pipe_rx_complete(struct ath6kl *ar, struct sk_buff *skb,
- 	 * Thus the possibility of ar->htc_target being NULL
- 	 * via ath6kl_recv_complete -> ath6kl_usb_io_comp_work.
- 	 */
--	if (WARN_ON_ONCE(!target)) {
--		ath6kl_err("Target not yet initialized\n");
-+	if (!target) {
-+		ath6kl_dbg(ATH6KL_DBG_HTC, "Target not yet initialized\n");
- 		status = -EINVAL;
- 		goto free_skb;
- 	}
+diff --git a/drivers/gpu/drm/vgem/vgem_fence.c b/drivers/gpu/drm/vgem/vgem_fence.c
+index b28876c222b46..04527d8f36236 100644
+--- a/drivers/gpu/drm/vgem/vgem_fence.c
++++ b/drivers/gpu/drm/vgem/vgem_fence.c
+@@ -280,4 +280,5 @@ void vgem_fence_close(struct vgem_file *vfile)
+ {
+ 	idr_for_each(&vfile->fence_idr, __vgem_fence_idr_fini, vfile);
+ 	idr_destroy(&vfile->fence_idr);
++	mutex_destroy(&vfile->fence_mutex);
+ }
 -- 
 2.39.2
 
