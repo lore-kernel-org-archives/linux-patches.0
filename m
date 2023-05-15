@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519A2FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:43:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921B0C433D2;
-	Mon, 15 May 2023 17:43:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2C1FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:43:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D29C433EF;
+	Mon, 15 May 2023 17:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172623;
-	bh=hmdACvyceHtfwG6iZa0TlefPkqSpVkF36kkn55rWHqs=;
+	s=korg; t=1684172626;
+	bh=zllBvhBxtQ3/NTfM/tZcoHnrfxgnpBhmWmpmNqNx0T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GzUY/FTiDBEH/G6Cmh1+2OUZzU8fkf3sudWIwKfcV13XRnen+hjVRfzthRkwVKJwA
-	 eHuHbSwMVApzGXGTtDnK391Ha7wLYSkNGlwSpjQ+V7GoftWdgsewLHVWauoP2JMtH+
-	 Cd7e0Ejc1fI+GaTCHVeYPCLKEm3e/145wPXr01BQ=
+	b=UHP0f3BM0Ib036ts4GdB3OxmPoF2OGCBJME9AJWnhAsz1DAaUwRg+wreZzOmLcjEF
+	 ZNJyq+iXwoRAgIFgntAKQBlK3SUCb1+oJ4CopVDGDfXwRrQ0h3Cj2K4S3TPKjFb6H4
+	 8Wzdq1D4XgE4dEFqWOy+JvxKi6cQLRnQ2hSFEXio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Leonard Crestez <leonard.crestez@nxp.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 213/381] scripts/gdb: bail early if there are no generic PD
-Date: Mon, 15 May 2023 18:27:44 +0200
-Message-Id: <20230515161746.406308922@linuxfoundation.org>
+Subject: [PATCH 5.10 214/381] coresight: etm_pmu: Set the module field
+Date: Mon, 15 May 2023 18:27:45 +0200
+Message-Id: <20230515161746.446883225@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -39,58 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Suzuki K Poulose <suzuki.poulose@arm.com>
 
-[ Upstream commit f19c3c2959e465209ade1a7a699e6cbf4359ce78 ]
+[ Upstream commit 18996a113f2567aef3057e300e3193ce2df1684c ]
 
-Avoid generating an exception if there are no generic power domain(s)
-registered:
+struct pmu::module must be set to the module owning the PMU driver.
+Set this for the coresight etm_pmu.
 
-(gdb) lx-genpd-summary
-domain                          status          children
-    /device                                             runtime status
-----------------------------------------------------------------------
-Python Exception <class 'gdb.error'>: No symbol "gpd_list" in current context.
-Error occurred in Python: No symbol "gpd_list" in current context.
-(gdb) quit
-
-[f.fainelli@gmail.com: correctly invoke gdb_eval_or_none]
-  Link: https://lkml.kernel.org/r/20230327185746.3856407-1-f.fainelli@gmail.com
-Link: https://lkml.kernel.org/r/20230323231659.3319941-1-f.fainelli@gmail.com
-Fixes: 8207d4a88e1e ("scripts/gdb: add lx-genpd-summary command")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Leonard Crestez <leonard.crestez@nxp.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8e264c52e1dab ("coresight: core: Allow the coresight core driver to be built as a module")
+Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20230405094922.667834-1-suzuki.poulose@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/genpd.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwtracing/coresight/coresight-etm-perf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/scripts/gdb/linux/genpd.py b/scripts/gdb/linux/genpd.py
-index 39cd1abd85590..b53649c0a77a6 100644
---- a/scripts/gdb/linux/genpd.py
-+++ b/scripts/gdb/linux/genpd.py
-@@ -5,7 +5,7 @@
- import gdb
- import sys
+diff --git a/drivers/hwtracing/coresight/coresight-etm-perf.c b/drivers/hwtracing/coresight/coresight-etm-perf.c
+index bdc34ca449f71..c5698c62b6103 100644
+--- a/drivers/hwtracing/coresight/coresight-etm-perf.c
++++ b/drivers/hwtracing/coresight/coresight-etm-perf.c
+@@ -619,6 +619,7 @@ int __init etm_perf_init(void)
+ 	etm_pmu.addr_filters_sync	= etm_addr_filters_sync;
+ 	etm_pmu.addr_filters_validate	= etm_addr_filters_validate;
+ 	etm_pmu.nr_addr_filters		= ETM_ADDR_CMP_MAX;
++	etm_pmu.module			= THIS_MODULE;
  
--from linux.utils import CachedType
-+from linux.utils import CachedType, gdb_eval_or_none
- from linux.lists import list_for_each_entry
- 
- generic_pm_domain_type = CachedType('struct generic_pm_domain')
-@@ -70,6 +70,8 @@ Output is similar to /sys/kernel/debug/pm_genpd/pm_genpd_summary'''
-             gdb.write('    %-50s  %s\n' % (kobj_path, rtpm_status_str(dev)))
- 
-     def invoke(self, arg, from_tty):
-+        if gdb_eval_or_none("&gpd_list") is None:
-+            raise gdb.GdbError("No power domain(s) registered")
-         gdb.write('domain                          status          children\n');
-         gdb.write('    /device                                             runtime status\n');
-         gdb.write('----------------------------------------------------------------------\n');
+ 	ret = perf_pmu_register(&etm_pmu, CORESIGHT_ETM_PMU_NAME, -1);
+ 	if (ret == 0)
 -- 
 2.39.2
 
