@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1874EFBFE
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:12:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 736DFC433D2;
-	Mon, 15 May 2023 17:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC04FBFE
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:12:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB30C4339B;
+	Mon, 15 May 2023 17:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170736;
-	bh=bxFIocmA/966J2uMkJHVQ06clj+a7pm+Lx20MByDI6I=;
+	s=korg; t=1684170739;
+	bh=Kra88e1xBRKhOzdO16W7/YyxQdwURgp/5mQpythfczo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJrN34UhUc0PUDUPtl9zXKnUkj3ZaUk3YBP3Aci1O/XQboSSt1I1WfNb2C9D2OkvY
-	 hLarJTPFaAMAnei+7eA3ko+I5ldaZaXibciaVtKtEKVMA2RYSuiD/F8oHGVKdYFirF
-	 cUlBkv+l34dwC5wToDXPBGc8sCjVgY/csblOcKZ4=
+	b=iiRf6nzJUWjxYoj/FYUBVlAD31teb2JkhnTHQnWwyqS3cCnGIzveWnNNFPdKRr9Yp
+	 F5n39wPiBW2hN1H/kN1lH8MM8kXVwyTocWI+veQbBoLBq06uyI57Bt7TEJUwIdqLkN
+	 SQcVTfMB0I4u8Q48+a2R25rDO2NgfAz6+HvuSUCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+1966db24521e5f6e23f7@syzkaller.appspotmail.com,
 	stable@kernel.org,
-	syzbot+91dccab7c64e2850a4e5@syzkaller.appspotmail.com,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 226/239] ext4: fix deadlock when converting an inline directory in nojournal mode
-Date: Mon, 15 May 2023 18:28:09 +0200
-Message-Id: <20230515161728.497543251@linuxfoundation.org>
+Subject: [PATCH 6.1 227/239] ext4: add bounds checking in get_max_inline_xattr_value_size()
+Date: Mon, 15 May 2023 18:28:10 +0200
+Message-Id: <20230515161728.525959192@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -37,61 +37,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Theodore Ts'o <tytso@mit.edu>
 
-commit f4ce24f54d9cca4f09a395f3eecce20d6bec4663 upstream.
+commit 2220eaf90992c11d888fe771055d4de330385f01 upstream.
 
-In no journal mode, ext4_finish_convert_inline_dir() can self-deadlock
-by calling ext4_handle_dirty_dirblock() when it already has taken the
-directory lock.  There is a similar self-deadlock in
-ext4_incvert_inline_data_nolock() for data files which we'll fix at
-the same time.
+Normally the extended attributes in the inode body would have been
+checked when the inode is first opened, but if someone is writing to
+the block device while the file system is mounted, it's possible for
+the inode table to get corrupted.  Add bounds checking to avoid
+reading beyond the end of allocated memory if this happens.
 
-A simple reproducer demonstrating the problem:
-
-    mke2fs -Fq -t ext2 -O inline_data -b 4k /dev/vdc 64
-    mount -t ext4 -o dirsync /dev/vdc /vdc
-    cd /vdc
-    mkdir file0
-    cd file0
-    touch file0
-    touch file1
-    attr -s BurnSpaceInEA -V abcde .
-    touch supercalifragilisticexpialidocious
-
+Reported-by: syzbot+1966db24521e5f6e23f7@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=1966db24521e5f6e23f7
 Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230507021608.1290720-1-tytso@mit.edu
-Reported-by: syzbot+91dccab7c64e2850a4e5@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=ba84cc80a9491d65416bc7877e1650c87530fe8a
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inline.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/inline.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 --- a/fs/ext4/inline.c
 +++ b/fs/ext4/inline.c
-@@ -1178,6 +1178,7 @@ static int ext4_finish_convert_inline_di
- 		ext4_initialize_dirent_tail(dir_block,
- 					    inode->i_sb->s_blocksize);
- 	set_buffer_uptodate(dir_block);
-+	unlock_buffer(dir_block);
- 	err = ext4_handle_dirty_dirblock(handle, inode, dir_block);
- 	if (err)
- 		return err;
-@@ -1252,6 +1253,7 @@ static int ext4_convert_inline_data_nolo
- 	if (!S_ISDIR(inode->i_mode)) {
- 		memcpy(data_bh->b_data, buf, inline_size);
- 		set_buffer_uptodate(data_bh);
-+		unlock_buffer(data_bh);
- 		error = ext4_handle_dirty_metadata(handle,
- 						   inode, data_bh);
- 	} else {
-@@ -1259,7 +1261,6 @@ static int ext4_convert_inline_data_nolo
- 						       buf, inline_size);
- 	}
+@@ -34,6 +34,7 @@ static int get_max_inline_xattr_value_si
+ 	struct ext4_xattr_ibody_header *header;
+ 	struct ext4_xattr_entry *entry;
+ 	struct ext4_inode *raw_inode;
++	void *end;
+ 	int free, min_offs;
  
--	unlock_buffer(data_bh);
- out_restore:
- 	if (error)
- 		ext4_restore_inline_data(handle, inode, iloc, buf, inline_size);
+ 	if (!EXT4_INODE_HAS_XATTR_SPACE(inode))
+@@ -57,14 +58,23 @@ static int get_max_inline_xattr_value_si
+ 	raw_inode = ext4_raw_inode(iloc);
+ 	header = IHDR(inode, raw_inode);
+ 	entry = IFIRST(header);
++	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
+ 
+ 	/* Compute min_offs. */
+-	for (; !IS_LAST_ENTRY(entry); entry = EXT4_XATTR_NEXT(entry)) {
++	while (!IS_LAST_ENTRY(entry)) {
++		void *next = EXT4_XATTR_NEXT(entry);
++
++		if (next >= end) {
++			EXT4_ERROR_INODE(inode,
++					 "corrupt xattr in inline inode");
++			return 0;
++		}
+ 		if (!entry->e_value_inum && entry->e_value_size) {
+ 			size_t offs = le16_to_cpu(entry->e_value_offs);
+ 			if (offs < min_offs)
+ 				min_offs = offs;
+ 		}
++		entry = next;
+ 	}
+ 	free = min_offs -
+ 		((void *)entry - (void *)IFIRST(header)) - sizeof(__u32);
 
 
