@@ -1,30 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1EADF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A9CC433D2;
-	Mon, 15 May 2023 16:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F078DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B41C433EF;
+	Mon, 15 May 2023 16:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168594;
-	bh=Na2VM1Wf6BrkX347llMLUoTmaOF8sVJrWPnjz0Eqzv0=;
+	s=korg; t=1684168597;
+	bh=0NcWATHt+Q6mr1wFr7ePeK9J47VQ1qUNQ71rtYo7yJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YVpvdBOmsiuvtaJ0/pREOdWBxwNvuWJN9H8HGSUIjL/77Uxhr9GixXdPHVnjFK7VP
-	 J1rafyCNabuC8NKJi5A4e+/KhcpdmUb2IDWfFpir50+8fE8wZffqDiSYhf7ltw/lqa
-	 aCIKI3i23iNxR6ecoERFPeHKCVNs5hj1Fy1OX9zc=
+	b=09LyUpTmipnf2gfa0WMSu9sHhZoWVLlPGGcKhh57lSiZh4EAsltXOr1Suslx+E9xk
+	 OMzH5BRBE1NdF5AW0ntE8aETNH00UabGk31gYwtHwi5s5D6oSnfVGNlmtKWMJSz81g
+	 MzuALn/qBx6xDsQH48nIBbOM+3VLzk3DdS9tQ88U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Igor Zhbanov <izh1979@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	linux-sh@vger.kernel.org
-Subject: [PATCH 4.14 101/116] sh: nmi_debug: fix return value of __setup handler
-Date: Mon, 15 May 2023 18:26:38 +0200
-Message-Id: <20230515161701.606314874@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 4.14 102/116] ARM: dts: exynos: fix WM8960 clock name in Itop Elite
+Date: Mon, 15 May 2023 18:26:39 +0200
+Message-Id: <20230515161701.636463779@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -38,53 +33,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit d1155e4132de712a9d3066e2667ceaad39a539c5 upstream.
+commit 6c950c20da38debf1ed531e0b972bd8b53d1c11f upstream.
 
-__setup() handlers should return 1 to obsolete_checksetup() in
-init/main.c to indicate that the boot option has been handled.
-A return of 0 causes the boot option/value to be listed as an Unknown
-kernel parameter and added to init's (limited) argument or environment
-strings. Also, error return codes don't mean anything to
-obsolete_checksetup() -- only non-zero (usually 1) or zero.
-So return 1 from nmi_debug_setup().
+The WM8960 Linux driver expects the clock to be named "mclk".  Otherwise
+the clock will be ignored and not prepared/enabled by the driver.
 
-Fixes: 1e1030dccb10 ("sh: nmi_debug support.")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <izh1979@gmail.com>
-Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-Cc: Rich Felker <dalias@libc.org>
-Cc: linux-sh@vger.kernel.org
-Cc: stable@vger.kernel.org
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230306040037.20350-3-rdunlap@infradead.org
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: <stable@vger.kernel.org>
+Fixes: 339b2fb36a67 ("ARM: dts: exynos: Add TOPEET itop elite based board")
+Link: https://lore.kernel.org/r/20230217150627.779764-3-krzysztof.kozlowski@linaro.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/kernel/nmi_debug.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/exynos4412-itop-elite.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/sh/kernel/nmi_debug.c
-+++ b/arch/sh/kernel/nmi_debug.c
-@@ -52,7 +52,7 @@ static int __init nmi_debug_setup(char *
- 	register_die_notifier(&nmi_debug_nb);
- 
- 	if (*str != '=')
--		return 0;
-+		return 1;
- 
- 	for (p = str + 1; *p; p = sep + 1) {
- 		sep = strchr(p, ',');
-@@ -73,6 +73,6 @@ static int __init nmi_debug_setup(char *
- 			break;
- 	}
- 
--	return 0;
-+	return 1;
- }
- __setup("nmi_debug", nmi_debug_setup);
+--- a/arch/arm/boot/dts/exynos4412-itop-elite.dts
++++ b/arch/arm/boot/dts/exynos4412-itop-elite.dts
+@@ -187,7 +187,7 @@
+ 		compatible = "wlf,wm8960";
+ 		reg = <0x1a>;
+ 		clocks = <&pmu_system_controller 0>;
+-		clock-names = "MCLK1";
++		clock-names = "mclk";
+ 		wlf,shared-lrclk;
+ 		#sound-dai-cells = <0>;
+ 	};
 
 
