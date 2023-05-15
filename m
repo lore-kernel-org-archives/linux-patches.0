@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCA9FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:44:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A47F7C433EF;
-	Mon, 15 May 2023 17:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A701FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:44:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49C5C433EF;
+	Mon, 15 May 2023 17:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172682;
-	bh=hO7xPhrREoVxlkouoqE91heUC0ALVMUIfGgzo7zpx9s=;
+	s=korg; t=1684172685;
+	bh=XzJ+DE1pKchvye9Q+bugsdyvn2RHAXqGcfyPvhS3E0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iahS03n+EAA3dfXULtQNn3LAkLU+rVBhWM7ju4LrlV07pdOgzGsVgyzYO3AHw3vPn
-	 uQFJAqvF/kGrQcJ7xe4RbC9u+CJEUO/2qwcnAWn8o6aaeuMiXfSt+Ti1Qv1Kew1GhQ
-	 KnBBziOvoRy+P9ebnDaUYSLCIobu9mq0WU0YfxPY=
+	b=h4qvkLS4DjfxRA0ZLZr1MJYLxUSVEcxgwFkcnIdYi6HvEZ6lXMe52oxxRMoTOvoCn
+	 KwsB/LGoqs3iPNHd569Z5k8HduRFMXoArWvk4BUgun38gl65GdAndnujjq3w9Oqsdy
+	 btoKHYIfVZ5/Ww58GzGM4HtutAT6Ma9pIE4CQofM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 233/381] powerpc/rtas: use memmove for potentially overlapping buffer copy
-Date: Mon, 15 May 2023 18:28:04 +0200
-Message-Id: <20230515161747.230347516@linuxfoundation.org>
+Subject: [PATCH 5.10 234/381] perf/core: Fix hardlockup failure caused by perf throttle
+Date: Mon, 15 May 2023 18:28:05 +0200
+Message-Id: <20230515161747.278006756@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,54 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 271208ee5e335cb1ad280d22784940daf7ddf820 ]
+[ Upstream commit 15def34e2635ab7e0e96f1bc32e1b69609f14942 ]
 
-Using memcpy() isn't safe when buf is identical to rtas_err_buf, which
-can happen during boot before slab is up. Full context which may not
-be obvious from the diff:
+commit e050e3f0a71bf ("perf: Fix broken interrupt rate throttling")
+introduces a change in throttling threshold judgment. Before this,
+compare hwc->interrupts and max_samples_per_tick, then increase
+hwc->interrupts by 1, but this commit reverses order of these two
+behaviors, causing the semantics of max_samples_per_tick to change.
+In literal sense of "max_samples_per_tick", if hwc->interrupts ==
+max_samples_per_tick, it should not be throttled, therefore, the judgment
+condition should be changed to "hwc->interrupts > max_samples_per_tick".
 
-	if (altbuf) {
-		buf = altbuf;
-	} else {
-		buf = rtas_err_buf;
-		if (slab_is_available())
-			buf = kmalloc(RTAS_ERROR_LOG_MAX, GFP_ATOMIC);
-	}
-	if (buf)
-		memcpy(buf, rtas_err_buf, RTAS_ERROR_LOG_MAX);
+In fact, this may cause the hardlockup to fail, The minimum value of
+max_samples_per_tick may be 1, in this case, the return value of
+__perf_event_account_interrupt function is 1.
+As a result, nmi_watchdog gets throttled, which would stop PMU (Use x86
+architecture as an example, see x86_pmu_handle_irq).
 
-This was found by inspection and I'm not aware of it causing problems
-in practice. It appears to have been introduced by commit
-033ef338b6e0 ("powerpc: Merge rtas.c into arch/powerpc/kernel"); the
-old ppc64 version of this code did not have this problem.
-
-Use memmove() instead.
-
-Fixes: 033ef338b6e0 ("powerpc: Merge rtas.c into arch/powerpc/kernel")
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230220-rtas-queue-for-6-4-v1-2-010e4416f13f@linux.ibm.com
+Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20230227023508.102230-1-yangjihong1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/rtas.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/events/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
-index c2e407a112a28..5976a25c6264d 100644
---- a/arch/powerpc/kernel/rtas.c
-+++ b/arch/powerpc/kernel/rtas.c
-@@ -399,7 +399,7 @@ static char *__fetch_rtas_last_error(char *altbuf)
- 				buf = kmalloc(RTAS_ERROR_LOG_MAX, GFP_ATOMIC);
- 		}
- 		if (buf)
--			memcpy(buf, rtas_err_buf, RTAS_ERROR_LOG_MAX);
-+			memmove(buf, rtas_err_buf, RTAS_ERROR_LOG_MAX);
- 	}
- 
- 	return buf;
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index f0df3bc0e6415..53f36bbaf0c66 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -8925,8 +8925,8 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
+ 		hwc->interrupts = 1;
+ 	} else {
+ 		hwc->interrupts++;
+-		if (unlikely(throttle
+-			     && hwc->interrupts >= max_samples_per_tick)) {
++		if (unlikely(throttle &&
++			     hwc->interrupts > max_samples_per_tick)) {
+ 			__this_cpu_inc(perf_throttled_count);
+ 			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
+ 			hwc->interrupts = MAX_INTERRUPTS;
 -- 
 2.39.2
 
