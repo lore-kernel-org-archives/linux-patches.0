@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64964FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:06:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD132C433EF;
-	Mon, 15 May 2023 17:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92F37FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:06:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB4AC433D2;
+	Mon, 15 May 2023 17:06:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170413;
-	bh=Ngi4LQ44VGaz8RVAh2Zu41he3dRteW5oc68uNrwcRb4=;
+	s=korg; t=1684170416;
+	bh=ZGQwDrblZujQZQODfbu5LD+tJ6qDeTPQhNlyaCkmguQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Er1UqiTTgOkbrsyrFPST54WB286hYmcK8/+FWpHhGR5ixLJXW5zf7M13rS5jjqnWz
-	 3GyUtjzqgu/n4w1cj5F4Ac7aot68u6WGo3bxJBVBlKDmQ/JK6tV4w11RdRSuImYtWw
-	 trBOAxc2O3hoQZORKRifLeWngxDMkY/idAwgW74U=
+	b=vBQssClJC/0NcXRPjAualPgzI0VMSVNTx8M4aqN9HnOXxsjzZruSU3imprzHvp9K1
+	 CqwTZPfGT0TkG5WOyLu54lObx4E5lkYBLt5S22uQ3Qik3ylcoRNiVkJmxFNaYjSYPf
+	 igKf129yZGXUfYq+W9wP029b3w5YxX6/p3XDaQFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 115/239] btrfs: zero the buffer before marking it dirty in btrfs_redirty_list_add
-Date: Mon, 15 May 2023 18:26:18 +0200
-Message-Id: <20230515161725.153641733@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.1 124/239] platform/x86: touchscreen_dmi: Add upside-down quirk for GDIX1002 ts on the Juno Tablet
+Date: Mon, 15 May 2023 18:26:27 +0200
+Message-Id: <20230515161725.422584438@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -34,43 +33,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit c83b56d1dd87cf67492bb770c26d6f87aee70ed6 upstream.
+commit 6abfa99ce52f61a31bcfc2aaaae09006f5665495 upstream.
 
-btrfs_redirty_list_add zeroes the buffer data and sets the
-EXTENT_BUFFER_NO_CHECK to make sure writeback is fine with a bogus
-header.  But it does that after already marking the buffer dirty, which
-means that writeback could already be looking at the buffer.
+The Juno Computers Juno Tablet has an upside-down mounted Goodix
+touchscreen. Add a quirk to invert both axis to correct for this.
 
-Switch the order of operations around so that the buffer is only marked
-dirty when we're ready to write it.
-
-Fixes: d3575156f662 ("btrfs: zoned: redirty released extent buffers")
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://junocomputers.com/us/product/juno-tablet/
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230505210323.43177-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/platform/x86/touchscreen_dmi.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1605,11 +1605,11 @@ void btrfs_redirty_list_add(struct btrfs
- 	    !list_empty(&eb->release_list))
- 		return;
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -378,6 +378,11 @@ static const struct ts_dmi_data gdix1001
+ 	.properties	= gdix1001_upside_down_props,
+ };
  
-+	memzero_extent_buffer(eb, 0, eb->len);
-+	set_bit(EXTENT_BUFFER_NO_CHECK, &eb->bflags);
- 	set_extent_buffer_dirty(eb);
- 	set_extent_bits_nowait(&trans->dirty_pages, eb->start,
- 			       eb->start + eb->len - 1, EXTENT_DIRTY);
--	memzero_extent_buffer(eb, 0, eb->len);
--	set_bit(EXTENT_BUFFER_NO_CHECK, &eb->bflags);
- 
- 	spin_lock(&trans->releasing_ebs_lock);
- 	list_add_tail(&eb->release_list, &trans->releasing_ebs);
++static const struct ts_dmi_data gdix1002_00_upside_down_data = {
++	.acpi_name	= "GDIX1002:00",
++	.properties	= gdix1001_upside_down_props,
++};
++
+ static const struct property_entry gp_electronic_t701_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-size-x", 960),
+ 	PROPERTY_ENTRY_U32("touchscreen-size-y", 640),
+@@ -1296,6 +1301,18 @@ const struct dmi_system_id touchscreen_d
+ 		},
+ 	},
+ 	{
++		/* Juno Tablet */
++		.driver_data = (void *)&gdix1002_00_upside_down_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Default string"),
++			/* Both product- and board-name being "Default string" is somewhat rare */
++			DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
++			DMI_MATCH(DMI_BOARD_NAME, "Default string"),
++			/* Above matches are too generic, add partial bios-version match */
++			DMI_MATCH(DMI_BIOS_VERSION, "JP2V1."),
++		},
++	},
++	{
+ 		/* Mediacom WinPad 7.0 W700 (same hw as Wintron surftab 7") */
+ 		.driver_data = (void *)&trekstor_surftab_wintron70_data,
+ 		.matches = {
 
 
