@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA76FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:58:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B0FC433D2;
-	Mon, 15 May 2023 16:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20741FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:58:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77287C433EF;
+	Mon, 15 May 2023 16:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169911;
-	bh=gfKhUyKw0CX2PeLVIE8ww3bHJUVtkPZriPj0BxQava8=;
+	s=korg; t=1684169915;
+	bh=tPSVz4NBhSMOYeOgTzwDoMxs1IxWrZOBVBJI9KE2Op8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FMISDRvK3TaZ/wwPjBY9AN2FGbf9uIlW8ksvBW0MhuyeE/4OcelyQJXSHP1lg6ZD6
-	 SsiZXV5q8AoyCwM61ZRHTm3wOJ8N1XKlO89XOlkfuEg6fUYVWJFHGC4dAYSfMlBdsv
-	 pxXlIyXqDSxSL11+u3MyyDY4VByJ2H7PXZicmrZM=
+	b=e0GbCqOItRy5Yoz1ayVP9XwXpm1dFLChtiaWoHkaH6S7JPcCu//SdllcfYPwSwGFZ
+	 gzh9LyS7RMV4jgu7iOdVkINQW4Ezi7yWqN6Ha+YmqBEP1CpcYLyujQMZHhdxFIfZpD
+	 m4XWAHmJzoFSbuKXwjWSR1/Qqs5JZ5fqJzysrt98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Subject: [PATCH 6.3 210/246] HID: wacom: Set a default resolution for older tablets
-Date: Mon, 15 May 2023 18:27:02 +0200
-Message-Id: <20230515161728.899808073@linuxfoundation.org>
+	Jianmin Lv <lvjianmin@loongson.cn>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.3 184/246] irqchip/loongson-pch-pic: Fix pch_pic_acpi_init calling
+Date: Mon, 15 May 2023 18:26:36 +0200
+Message-Id: <20230515161728.144903463@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,48 +34,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping Cheng <pinglinux@gmail.com>
+From: Jianmin Lv <lvjianmin@loongson.cn>
 
-commit 08a46b4190d345544d04ce4fe2e1844b772b8535 upstream.
+commit 48ce2d722f7f108f27bedddf54bee3423a57ce57 upstream.
 
-Some older tablets may not report physical maximum for X/Y
-coordinates. Set a default to prevent undefined resolution.
+For dual-bridges scenario, pch_pic_acpi_init() will be called
+in following path:
 
-Signed-off-by: Ping Cheng <ping.cheng@wacom.com>
-Link: https://lore.kernel.org/r/20230409164229.29777-1-ping.cheng@wacom.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+cpuintc_acpi_init
+  acpi_cascade_irqdomain_init(in cpuintc driver)
+    acpi_table_parse_madt
+      eiointc_parse_madt
+        eiointc_acpi_init /* this will be called two times
+                             correspondingto parsing two
+                             eiointc entries in MADT under
+                             dual-bridges scenario*/
+          acpi_cascade_irqdomain_init(in eiointc driver)
+            acpi_table_parse_madt
+              pch_pic_parse_madt
+                pch_pic_acpi_init /* this will be called depend
+                                     on valid parent IRQ domain
+                                     handle for one or two times
+                                     corresponding to parsing
+                                     two pchpic entries in MADT
+                                     druring calling
+                                     eiointc_acpi_init() under
+                                     dual-bridges scenario*/
+
+During the first eiointc_acpi_init() calling, the
+pch_pic_acpi_init() will be called just one time since only
+one valid parent IRQ domain handle will be found for current
+eiointc IRQ domain.
+
+During the second eiointc_acpi_init() calling, the
+pch_pic_acpi_init() will be called two times since two valid
+parent IRQ domain handles will be found. So in pch_pic_acpi_init(),
+we must have a reasonable way to prevent from creating second same
+pch_pic IRQ domain.
+
+The patch matches gsi base information in created pch_pic IRQ
+domains to check if the target domain has been created to avoid the
+bug mentioned above.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230407083453.6305-6-lvjianmin@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-loongson-pch-pic.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1895,6 +1895,7 @@ static void wacom_map_usage(struct input
- 	int fmax = field->logical_maximum;
- 	unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
- 	int resolution_code = code;
-+	int resolution = hidinput_calc_abs_res(field, resolution_code);
+--- a/drivers/irqchip/irq-loongson-pch-pic.c
++++ b/drivers/irqchip/irq-loongson-pch-pic.c
+@@ -403,6 +403,9 @@ int __init pch_pic_acpi_init(struct irq_
+ 	int ret, vec_base;
+ 	struct fwnode_handle *domain_handle;
  
- 	if (equivalent_usage == HID_DG_TWIST) {
- 		resolution_code = ABS_RZ;
-@@ -1915,8 +1916,15 @@ static void wacom_map_usage(struct input
- 	switch (type) {
- 	case EV_ABS:
- 		input_set_abs_params(input, code, fmin, fmax, fuzz, 0);
--		input_abs_set_res(input, code,
--				  hidinput_calc_abs_res(field, resolution_code));
++	if (find_pch_pic(acpi_pchpic->gsi_base) >= 0)
++		return 0;
 +
-+		/* older tablet may miss physical usage */
-+		if ((code == ABS_X || code == ABS_Y) && !resolution) {
-+			resolution = WACOM_INTUOS_RES;
-+			hid_warn(input,
-+				 "Wacom usage (%d) missing resolution \n",
-+				 code);
-+		}
-+		input_abs_set_res(input, code, resolution);
- 		break;
- 	case EV_KEY:
- 	case EV_MSC:
+ 	vec_base = acpi_pchpic->gsi_base - GSI_MIN_PCH_IRQ;
+ 
+ 	domain_handle = irq_domain_alloc_fwnode(&acpi_pchpic->address);
 
 
