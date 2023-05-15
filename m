@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC55FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D43BFC433D2;
-	Mon, 15 May 2023 17:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B75FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD50C433D2;
+	Mon, 15 May 2023 17:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172315;
-	bh=z99qIT2lq0WuKPPyuPN9zdkcIcIZlCenqAxLta/hhSk=;
+	s=korg; t=1684172318;
+	bh=clBBDFwernhtCC9RalsshTgN0xPKDakN/yU9b828QbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BdSlMKw0g8Cytmsy++9HmTjz0yN3B+QmAkgVsEoixfVs+S9XhsfogeXv62/tjZ0nR
-	 Rcrt9LZBud5PYmxmxf4an0FXegeHOe7M9eUHeKZMIvXY7EqMp72squHnybMoJ0Kwve
-	 Evq8Llen4Bcz6NCrAayZ0ojXCtMSoelWKHCKOUd4=
+	b=TFrq9E0vh03Z8cpQr0bEFwjQddcT1FIOYdbEaPbg5nfiuBJj110bDiK/Y1QoyXZFq
+	 dY+AzwY5C/DpyGJn4FlRWcHGgDK9G44fwTw444z/51OkkyerGYzV0A5U4CZkiL6Y3V
+	 rrIim1d8ICIktadf64pvw4OddaxhKHnTMUF1EOSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Lear <matthew.lear@broadcom.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 114/381] media: rc: gpio-ir-recv: Fix support for wake-up
-Date: Mon, 15 May 2023 18:26:05 +0200
-Message-Id: <20230515161741.971082405@linuxfoundation.org>
+Subject: [PATCH 5.10 115/381] media: venus: vdec: Fix non reliable setting of LAST flag
+Date: Mon, 15 May 2023 18:26:06 +0200
+Message-Id: <20230515161742.021636010@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,41 +35,184 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-[ Upstream commit 9c592f8ab114875fdb3b2040f01818e53de44991 ]
+[ Upstream commit acf8a57d8caf5ceabbe50774953fe04745ad1a50 ]
 
-The driver was intended from the start to be a wake-up source for the
-system, however due to the absence of a suitable call to
-device_set_wakeup_capable(), the device_may_wakeup() call used to decide
-whether to enable the GPIO interrupt as a wake-up source would never
-happen. Lookup the DT standard "wakeup-source" property and call
-device_init_wakeup() to ensure the device is flagged as being wakeup
-capable.
+In real use of dynamic-resolution-change it is observed that the
+LAST buffer flag (which marks the last decoded buffer with the
+resolution before the resolution-change event) is not reliably set.
 
-Reported-by: Matthew Lear <matthew.lear@broadcom.com>
-Fixes: fd0f6851eb46 ("[media] rc: Add support for GPIO based IR Receiver driver")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fix this by set the LAST buffer flag on next queued capture buffer
+after the resolution-change event.
+
+Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: 50248ad9f190 ("media: venus: dec: Fix handling of the start cmd")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/gpio-ir-recv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/qcom/venus/core.h    |  5 +--
+ drivers/media/platform/qcom/venus/helpers.c |  6 +++
+ drivers/media/platform/qcom/venus/vdec.c    | 45 ++++++++++++---------
+ 3 files changed, 33 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/media/rc/gpio-ir-recv.c b/drivers/media/rc/gpio-ir-recv.c
-index a56c844d7f816..16795e07dc103 100644
---- a/drivers/media/rc/gpio-ir-recv.c
-+++ b/drivers/media/rc/gpio-ir-recv.c
-@@ -107,6 +107,8 @@ static int gpio_ir_recv_probe(struct platform_device *pdev)
- 		rcdev->map_name = RC_MAP_EMPTY;
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index f2a0ef9ee884e..f78eed2c243a8 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -283,7 +283,6 @@ enum venus_dec_state {
+ 	VENUS_DEC_STATE_DRAIN		= 5,
+ 	VENUS_DEC_STATE_DECODING	= 6,
+ 	VENUS_DEC_STATE_DRC		= 7,
+-	VENUS_DEC_STATE_DRC_FLUSH_DONE	= 8,
+ };
  
- 	gpio_dev->rcdev = rcdev;
-+	if (of_property_read_bool(np, "wakeup-source"))
-+		device_init_wakeup(dev, true);
+ struct venus_ts_metadata {
+@@ -348,7 +347,7 @@ struct venus_ts_metadata {
+  * @priv:	a private for HFI operations callbacks
+  * @session_type:	the type of the session (decoder or encoder)
+  * @hprop:	a union used as a holder by get property
+- * @last_buf:	last capture buffer for dynamic-resoluton-change
++ * @next_buf_last: a flag to mark next queued capture buffer as last
+  */
+ struct venus_inst {
+ 	struct list_head list;
+@@ -410,7 +409,7 @@ struct venus_inst {
+ 	union hfi_get_property hprop;
+ 	unsigned int core_acquired: 1;
+ 	unsigned int bit_depth;
+-	struct vb2_buffer *last_buf;
++	bool next_buf_last;
+ };
  
- 	rc = devm_rc_register_device(dev, rcdev);
- 	if (rc < 0) {
+ #define IS_V1(core)	((core)->res->hfi_version == HFI_VERSION_1XX)
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index 50439eb1ffeaa..5ca3920237c5a 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -1347,6 +1347,12 @@ void venus_helper_vb2_buf_queue(struct vb2_buffer *vb)
+ 
+ 	v4l2_m2m_buf_queue(m2m_ctx, vbuf);
+ 
++	/* Skip processing queued capture buffers after LAST flag */
++	if (inst->session_type == VIDC_SESSION_TYPE_DEC &&
++	    V4L2_TYPE_IS_CAPTURE(vb->vb2_queue->type) &&
++	    inst->codec_state == VENUS_DEC_STATE_DRC)
++		goto unlock;
++
+ 	cache_payload(inst, vb);
+ 
+ 	if (inst->session_type == VIDC_SESSION_TYPE_ENC &&
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index de34a87d1130e..b6b5ae0a457bb 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -916,10 +916,6 @@ static int vdec_start_capture(struct venus_inst *inst)
+ 		return 0;
+ 
+ reconfigure:
+-	ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, true);
+-	if (ret)
+-		return ret;
+-
+ 	ret = vdec_output_conf(inst);
+ 	if (ret)
+ 		return ret;
+@@ -947,6 +943,8 @@ static int vdec_start_capture(struct venus_inst *inst)
+ 
+ 	venus_pm_load_scale(inst);
+ 
++	inst->next_buf_last = false;
++
+ 	ret = hfi_session_continue(inst);
+ 	if (ret)
+ 		goto free_dpb_bufs;
+@@ -987,6 +985,7 @@ static int vdec_start_output(struct venus_inst *inst)
+ 	venus_helper_init_instance(inst);
+ 	inst->sequence_out = 0;
+ 	inst->reconfig = false;
++	inst->next_buf_last = false;
+ 
+ 	ret = vdec_set_properties(inst);
+ 	if (ret)
+@@ -1080,9 +1079,7 @@ static int vdec_stop_capture(struct venus_inst *inst)
+ 		inst->codec_state = VENUS_DEC_STATE_STOPPED;
+ 		break;
+ 	case VENUS_DEC_STATE_DRC:
+-		WARN_ON(1);
+-		fallthrough;
+-	case VENUS_DEC_STATE_DRC_FLUSH_DONE:
++		ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, true);
+ 		inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
+ 		venus_helper_free_dpb_bufs(inst);
+ 		break;
+@@ -1206,9 +1203,28 @@ static void vdec_buf_cleanup(struct vb2_buffer *vb)
+ static void vdec_vb2_buf_queue(struct vb2_buffer *vb)
+ {
+ 	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
++	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
++	static const struct v4l2_event eos = { .type = V4L2_EVENT_EOS };
+ 
+ 	vdec_pm_get_put(inst);
+ 
++	mutex_lock(&inst->lock);
++
++	if (inst->next_buf_last && V4L2_TYPE_IS_CAPTURE(vb->vb2_queue->type) &&
++	    inst->codec_state == VENUS_DEC_STATE_DRC) {
++		vbuf->flags |= V4L2_BUF_FLAG_LAST;
++		vbuf->sequence = inst->sequence_cap++;
++		vbuf->field = V4L2_FIELD_NONE;
++		vb2_set_plane_payload(vb, 0, 0);
++		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
++		v4l2_event_queue_fh(&inst->fh, &eos);
++		inst->next_buf_last = false;
++		mutex_unlock(&inst->lock);
++		return;
++	}
++
++	mutex_unlock(&inst->lock);
++
+ 	venus_helper_vb2_buf_queue(vb);
+ }
+ 
+@@ -1252,13 +1268,6 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+ 		vb->timestamp = timestamp_us * NSEC_PER_USEC;
+ 		vbuf->sequence = inst->sequence_cap++;
+ 
+-		if (inst->last_buf == vb) {
+-			inst->last_buf = NULL;
+-			vbuf->flags |= V4L2_BUF_FLAG_LAST;
+-			vb2_set_plane_payload(vb, 0, 0);
+-			vb->timestamp = 0;
+-		}
+-
+ 		if (vbuf->flags & V4L2_BUF_FLAG_LAST) {
+ 			const struct v4l2_event ev = { .type = V4L2_EVENT_EOS };
+ 
+@@ -1343,12 +1352,9 @@ static void vdec_event_change(struct venus_inst *inst,
+ 	 */
+ 
+ 	if (!sufficient && inst->codec_state == VENUS_DEC_STATE_DRC) {
+-		struct vb2_v4l2_buffer *last;
+ 		int ret;
+ 
+-		last = v4l2_m2m_last_dst_buf(inst->m2m_ctx);
+-		if (last)
+-			inst->last_buf = &last->vb2_buf;
++		inst->next_buf_last = true;
+ 
+ 		ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, false);
+ 		if (ret)
+@@ -1397,8 +1403,7 @@ static void vdec_event_notify(struct venus_inst *inst, u32 event,
+ 
+ static void vdec_flush_done(struct venus_inst *inst)
+ {
+-	if (inst->codec_state == VENUS_DEC_STATE_DRC)
+-		inst->codec_state = VENUS_DEC_STATE_DRC_FLUSH_DONE;
++	dev_dbg(inst->core->dev_dec, VDBGH "flush done\n");
+ }
+ 
+ static const struct hfi_inst_ops vdec_hfi_ops = {
 -- 
 2.39.2
 
