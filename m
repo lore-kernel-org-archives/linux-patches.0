@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC15DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68F5C433EF;
-	Mon, 15 May 2023 16:35:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A9BDF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB22EC4339B;
+	Mon, 15 May 2023 16:35:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168515;
-	bh=ke6IBrxQa/Z0rVtosGv/WT0YqEmh9i+aENIf2DcZNzo=;
+	s=korg; t=1684168518;
+	bh=lWvqTOxU1QgW3fIQ7ZpzBHA2YPWpg0MaVGVFKM3GgC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xZEvXXp6hyy3zn4EzfUCJ5KhYozHz3DErKzDixyiz5A3hpcRdj1+NfJjOLKba/aN+
-	 vRBI3gUiygEzoqNPFeIFVZ1oP1dVab2Vfh/5T0Hm3or/NZDNJkbWLyq4JoGHbsc7N/
-	 etLlGV6C+hadxj7OEGKaV7zn8KbJRibHgZewzMrY=
+	b=eDQL+/m0NQCMn7eQioP6Nye4el9ZhK/GIa1v6rH4h90UQYV0H3uxQuWbP8uLNY345
+	 ZFqGyT/AgHo2pno19IE6c2nkRq1jeG9ZVq5JVBGRy1COfAAn7MXOh8wdE7e1WS7jPJ
+	 P7FOm6tL05TxC3fI6mzz+s9ix7BufcBTYzdl4YGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 057/116] macintosh/windfarm_smu_sat: Add missing of_node_put()
-Date: Mon, 15 May 2023 18:25:54 +0200
-Message-Id: <20230515161700.163846425@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Jes Sorensen <jes@trained-monkey.org>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 4.14 075/116] wifi: rtl8xxxu: RTL8192EU always needs full init
+Date: Mon, 15 May 2023 18:26:12 +0200
+Message-Id: <20230515161700.777115270@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -35,36 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 631cf002826007ab7415258ee647dcaf8845ad5a ]
+commit d46e04ccd40457a0119b76e11ab64a2ad403e138 upstream.
 
-We call of_node_get() in wf_sat_probe() after sat is created,
-so we need the of_node_put() before *kfree(sat)*.
+Always run the entire init sequence (rtl8xxxu_init_device()) for
+RTL8192EU. It's what the vendor driver does too.
 
-Fixes: ac171c46667c ("[PATCH] powerpc: Thermal control for dual core G5s")
-Signed-off-by: Liang He <windhl@126.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230330033558.2562778-1-windhl@126.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This fixes a bug where the device is unable to connect after
+rebooting:
+
+wlp3s0f3u2: send auth to ... (try 1/3)
+wlp3s0f3u2: send auth to ... (try 2/3)
+wlp3s0f3u2: send auth to ... (try 3/3)
+wlp3s0f3u2: authentication with ... timed out
+
+Rebooting leaves the device powered on (partially? at least the
+firmware is still running), but not really in a working state.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Acked-by: Jes Sorensen <jes@trained-monkey.org>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/4eb111a9-d4c4-37d0-b376-4e202de7153c@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/macintosh/windfarm_smu_sat.c | 1 +
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c |    1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/macintosh/windfarm_smu_sat.c b/drivers/macintosh/windfarm_smu_sat.c
-index a0f61eb853c55..644e123510c52 100644
---- a/drivers/macintosh/windfarm_smu_sat.c
-+++ b/drivers/macintosh/windfarm_smu_sat.c
-@@ -172,6 +172,7 @@ static void wf_sat_release(struct kref *ref)
- 
- 	if (sat->nr >= 0)
- 		sats[sat->nr] = NULL;
-+	of_node_put(sat->node);
- 	kfree(sat);
- }
- 
--- 
-2.39.2
-
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
+@@ -1660,6 +1660,7 @@ struct rtl8xxxu_fileops rtl8192eu_fops =
+ 	.rx_desc_size = sizeof(struct rtl8xxxu_rxdesc24),
+ 	.has_s0s1 = 0,
+ 	.gen2_thermal_meter = 1,
++	.needs_full_init = 1,
+ 	.adda_1t_init = 0x0fc01616,
+ 	.adda_1t_path_on = 0x0fc01616,
+ 	.adda_2t_path_on_a = 0x0fc01616,
 
 
