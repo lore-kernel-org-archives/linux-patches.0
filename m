@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FD117730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:07:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8B5C433D2;
-	Mon, 15 May 2023 18:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71DF17730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:07:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D9FDC4339B;
+	Mon, 15 May 2023 18:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684174020;
-	bh=sLBgVwLQ1/NwkgMJoCu914AkWZ4lW8x4D8RJDEAfrHs=;
+	s=korg; t=1684174023;
+	bh=TWeHQE8V1n7idXRbaByFCCGlEcGWlI0GkH4fh2CbHLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jI1jeQ4C/shxstd1mihNR2L3cf9dJpFiiX2GLLzXx4ZBurqHVkc2T5vDvqStxcMd9
-	 qFqoohj+mddNxaHJcYxjGcAh6R0HCh4V7l5OPhdnI8+p9xXkGSebtVGIxxGOMcPuCt
-	 wMjEk8NL6Qtzwe9uUOW3Tfm6MBBZ/mZT4HI8aN8o=
+	b=IJBCmVYs3yAA2HpQRMk6oPDOH/FF6elEiCBTot6aLVhHULFfRYwCD87JwWguiGSo5
+	 znHNr3SHMyMBx27EF3YXeqauEVJGCmY/EI7BitPuVp1M6OXYq6Y8sd6akJ4m9ROFBh
+	 8NQqMo3IUyrFeBlPl5uODVbZ1LWvA2rvoRVyw3sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+223c7461c58c58a4cb10@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Michal Hocko <mhocko@suse.com>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Petr Mladek <pmladek@suse.com>,
-	David Hildenbrand <david@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	Patrick Daly <quic_pdaly@quicinc.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 281/282] mm/page_alloc: fix potential deadlock on zonelist_update_seq seqlock
-Date: Mon, 15 May 2023 18:30:59 +0200
-Message-Id: <20230515161730.815284577@linuxfoundation.org>
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.4 282/282] drm/amd/display: Fix hang when skipping modeset
+Date: Mon, 15 May 2023 18:31:00 +0200
+Message-Id: <20230515161730.860063043@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -44,181 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-commit 1007843a91909a4995ee78a538f62d8665705b66 upstream.
+commit da5e14909776edea4462672fb4a3007802d262e7 upstream.
 
-syzbot is reporting circular locking dependency which involves
-zonelist_update_seq seqlock [1], for this lock is checked by memory
-allocation requests which do not need to be retried.
+[Why&How]
 
-One deadlock scenario is kmalloc(GFP_ATOMIC) from an interrupt handler.
+When skipping full modeset since the only state change was a front porch
+change, the DC commit sequence requires extra checks to handle non
+existant plane states being asked to be removed from context.
 
-  CPU0
-  ----
-  __build_all_zonelists() {
-    write_seqlock(&zonelist_update_seq); // makes zonelist_update_seq.seqcount odd
-    // e.g. timer interrupt handler runs at this moment
-      some_timer_func() {
-        kmalloc(GFP_ATOMIC) {
-          __alloc_pages_slowpath() {
-            read_seqbegin(&zonelist_update_seq) {
-              // spins forever because zonelist_update_seq.seqcount is odd
-            }
-          }
-        }
-      }
-    // e.g. timer interrupt handler finishes
-    write_sequnlock(&zonelist_update_seq); // makes zonelist_update_seq.seqcount even
-  }
-
-This deadlock scenario can be easily eliminated by not calling
-read_seqbegin(&zonelist_update_seq) from !__GFP_DIRECT_RECLAIM allocation
-requests, for retry is applicable to only __GFP_DIRECT_RECLAIM allocation
-requests.  But Michal Hocko does not know whether we should go with this
-approach.
-
-Another deadlock scenario which syzbot is reporting is a race between
-kmalloc(GFP_ATOMIC) from tty_insert_flip_string_and_push_buffer() with
-port->lock held and printk() from __build_all_zonelists() with
-zonelist_update_seq held.
-
-  CPU0                                   CPU1
-  ----                                   ----
-  pty_write() {
-    tty_insert_flip_string_and_push_buffer() {
-                                         __build_all_zonelists() {
-                                           write_seqlock(&zonelist_update_seq);
-                                           build_zonelists() {
-                                             printk() {
-                                               vprintk() {
-                                                 vprintk_default() {
-                                                   vprintk_emit() {
-                                                     console_unlock() {
-                                                       console_flush_all() {
-                                                         console_emit_next_record() {
-                                                           con->write() = serial8250_console_write() {
-      spin_lock_irqsave(&port->lock, flags);
-      tty_insert_flip_string() {
-        tty_insert_flip_string_fixed_flag() {
-          __tty_buffer_request_room() {
-            tty_buffer_alloc() {
-              kmalloc(GFP_ATOMIC | __GFP_NOWARN) {
-                __alloc_pages_slowpath() {
-                  zonelist_iter_begin() {
-                    read_seqbegin(&zonelist_update_seq); // spins forever because zonelist_update_seq.seqcount is odd
-                                                             spin_lock_irqsave(&port->lock, flags); // spins forever because port->lock is held
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      spin_unlock_irqrestore(&port->lock, flags);
-                                                             // message is printed to console
-                                                             spin_unlock_irqrestore(&port->lock, flags);
-                                                           }
-                                                         }
-                                                       }
-                                                     }
-                                                   }
-                                                 }
-                                               }
-                                             }
-                                           }
-                                           write_sequnlock(&zonelist_update_seq);
-                                         }
-    }
-  }
-
-This deadlock scenario can be eliminated by
-
-  preventing interrupt context from calling kmalloc(GFP_ATOMIC)
-
-and
-
-  preventing printk() from calling console_flush_all()
-
-while zonelist_update_seq.seqcount is odd.
-
-Since Petr Mladek thinks that __build_all_zonelists() can become a
-candidate for deferring printk() [2], let's address this problem by
-
-  disabling local interrupts in order to avoid kmalloc(GFP_ATOMIC)
-
-and
-
-  disabling synchronous printk() in order to avoid console_flush_all()
-
-.
-
-As a side effect of minimizing duration of zonelist_update_seq.seqcount
-being odd by disabling synchronous printk(), latency at
-read_seqbegin(&zonelist_update_seq) for both !__GFP_DIRECT_RECLAIM and
-__GFP_DIRECT_RECLAIM allocation requests will be reduced.  Although, from
-lockdep perspective, not calling read_seqbegin(&zonelist_update_seq) (i.e.
-do not record unnecessary locking dependency) from interrupt context is
-still preferable, even if we don't allow calling kmalloc(GFP_ATOMIC)
-inside
-write_seqlock(&zonelist_update_seq)/write_sequnlock(&zonelist_update_seq)
-section...
-
-Link: https://lkml.kernel.org/r/8796b95c-3da3-5885-fddd-6ef55f30e4d3@I-love.SAKURA.ne.jp
-Fixes: 3d36424b3b58 ("mm/page_alloc: fix race condition between build_all_zonelists and page allocation")
-Link: https://lkml.kernel.org/r/ZCrs+1cDqPWTDFNM@alley [2]
-Reported-by: syzbot <syzbot+223c7461c58c58a4cb10@syzkaller.appspotmail.com>
-  Link: https://syzkaller.appspot.com/bug?extid=223c7461c58c58a4cb10 [1]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Acked-by: Michal Hocko <mhocko@suse.com>
-Acked-by: Mel Gorman <mgorman@techsingularity.net>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: Patrick Daly <quic_pdaly@quicinc.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 ++++-
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    3 +++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -5816,7 +5816,21 @@ static void __build_all_zonelists(void *
- 	int nid;
- 	int __maybe_unused cpu;
- 	pg_data_t *self = data;
-+	unsigned long flags;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5776,6 +5776,8 @@ static void amdgpu_dm_commit_planes(stru
+ 			continue;
  
-+	/*
-+	 * Explicitly disable this CPU's interrupts before taking seqlock
-+	 * to prevent any IRQ handler from calling into the page allocator
-+	 * (e.g. GFP_ATOMIC) that could hit zonelist_iter_begin and livelock.
-+	 */
-+	local_irq_save(flags);
-+	/*
-+	 * Explicitly disable this CPU's synchronous printk() before taking
-+	 * seqlock to prevent any printk() from trying to hold port->lock, for
-+	 * tty_insert_flip_string_and_push_buffer() on other CPU might be
-+	 * calling kmalloc(GFP_ATOMIC | __GFP_NOWARN) with port->lock held.
-+	 */
-+	printk_deferred_enter();
- 	write_seqlock(&zonelist_update_seq);
+ 		dc_plane = dm_new_plane_state->dc_state;
++		if (!dc_plane)
++			continue;
  
- #ifdef CONFIG_NUMA
-@@ -5851,6 +5865,8 @@ static void __build_all_zonelists(void *
- 	}
+ 		bundle->surface_updates[planes_count].surface = dc_plane;
+ 		if (new_pcrtc_state->color_mgmt_changed) {
+@@ -7029,8 +7031,9 @@ static int dm_update_plane_state(struct
+ 			return -EINVAL;
+ 		}
  
- 	write_sequnlock(&zonelist_update_seq);
-+	printk_deferred_exit();
-+	local_irq_restore(flags);
- }
++		if (dm_old_plane_state->dc_state)
++			dc_plane_state_release(dm_old_plane_state->dc_state);
  
- static noinline void __init
+-		dc_plane_state_release(dm_old_plane_state->dc_state);
+ 		dm_new_plane_state->dc_state = NULL;
+ 
+ 		*lock_and_validation_needed = true;
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -1315,6 +1315,9 @@ bool dc_remove_plane_from_context(
+ 	struct dc_stream_status *stream_status = NULL;
+ 	struct resource_pool *pool = dc->res_pool;
+ 
++	if (!plane_state)
++		return true;
++
+ 	for (i = 0; i < context->stream_count; i++)
+ 		if (context->streams[i] == stream) {
+ 			stream_status = &context->stream_status[i];
 
 
