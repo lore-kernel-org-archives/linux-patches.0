@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D392FBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BBFC433EF;
-	Mon, 15 May 2023 17:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E228FBEC
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B81B4C433D2;
+	Mon, 15 May 2023 17:49:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172946;
-	bh=r6KVSG6H5mECMJ8cou6lSc555P9voLPje+R49bY+H/8=;
+	s=korg; t=1684172950;
+	bh=gFIGOI8Nhr27BglzSZDQ32vVzrm2gVTEEhhpeFQeYUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tGq6U4WeuqHBv2BrZIULjZKPR8CT751yHRxTgcMXSYp68rPAitsC00I/mc9H5A6nZ
-	 xhaO+U0UElY9Lwm4n0rdXwwP1GzocAEbmZzJbQwNKAnHZYxt+QO0rb3xTpjGtefIJM
-	 1l9N+zm9Uqd2plEwcBEl5zOais4/aNojLYTKiIn4=
+	b=tKvWJUjKlN5D3gE8zSSCltJP2t/aEBW6a58oTVnO7fbGlQD4Fmmv5QjsQpZGLtwj+
+	 xzBABb/YcMiKxhSQ2wx/9qN6HB2ELWmqVs2Jc8giTxjeAtEGeYt8a6Bb1pANnJtJIu
+	 yCRHgnsT23jLDDOqDgQ3AfE76A5jNCtZoOzMrKGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ard Biesheuvel <ardb@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
 	Kees Cook <keescook@chromium.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 5.10 289/381] arm64: Always load shadow stack pointer directly from the task struct
-Date: Mon, 15 May 2023 18:29:00 +0200
-Message-Id: <20230515161749.839128505@linuxfoundation.org>
+Subject: [PATCH 5.10 290/381] arm64: Stash shadow stack pointer in the task struct on interrupt
+Date: Mon, 15 May 2023 18:29:01 +0200
+Message-Id: <20230515161749.887679258@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -38,81 +38,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 2198d07c509f1db4a1185d1f65aaada794c6ea59 upstream.
+commit 59b37fe52f49955791a460752c37145f1afdcad1 upstream.
 
-All occurrences of the scs_load macro load the value of the shadow call
-stack pointer from the task which is current at that point. So instead
-of taking a task struct register argument in the scs_load macro to
-specify the task struct to load from, let's always reference the current
-task directly. This should make it much harder to exploit any
-instruction sequences reloading the shadow call stack pointer register
-from memory.
+Instead of reloading the shadow call stack pointer from the ordinary
+stack, which may be vulnerable to the kind of gadget based attacks
+shadow call stacks were designed to prevent, let's store a task's shadow
+call stack pointer in the task struct when switching to the shadow IRQ
+stack.
+
+Given that currently, the task_struct::scs_sp field is only used to
+preserve the shadow call stack pointer while a task is scheduled out or
+running in user space, reusing this field to preserve and restore it
+while running off the IRQ stack must be safe, as those occurrences are
+guaranteed to never overlap. (The stack switching logic only switches
+stacks when running from the task stack, and so the value being saved
+here always corresponds to the task mode shadow stack)
+
+While at it, fold a mov/add/mov sequence into a single add.
 
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
 Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230109174800.3286265-2-ardb@kernel.org
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Link: https://lore.kernel.org/r/20230109174800.3286265-3-ardb@kernel.org
 Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ardb: v5.10 backport, which doesn't have call_on_irq_stack() yet *]
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/scs.h |    7 ++++---
- arch/arm64/kernel/entry.S    |    4 ++--
- arch/arm64/kernel/head.S     |    2 +-
- 3 files changed, 7 insertions(+), 6 deletions(-)
+ arch/arm64/kernel/entry.S |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/arch/arm64/include/asm/scs.h
-+++ b/arch/arm64/include/asm/scs.h
-@@ -9,15 +9,16 @@
- #ifdef CONFIG_SHADOW_CALL_STACK
- 	scs_sp	.req	x18
- 
--	.macro scs_load tsk, tmp
--	ldr	scs_sp, [\tsk, #TSK_TI_SCS_SP]
-+	.macro scs_load_current
-+	get_current_task scs_sp
-+	ldr	scs_sp, [scs_sp, #TSK_TI_SCS_SP]
- 	.endm
- 
- 	.macro scs_save tsk, tmp
- 	str	scs_sp, [\tsk, #TSK_TI_SCS_SP]
- 	.endm
- #else
--	.macro scs_load tsk, tmp
-+	.macro scs_load_current
- 	.endm
- 
- 	.macro scs_save tsk, tmp
 --- a/arch/arm64/kernel/entry.S
 +++ b/arch/arm64/kernel/entry.S
-@@ -221,7 +221,7 @@ alternative_else_nop_endif
+@@ -431,9 +431,7 @@ SYM_CODE_END(__swpan_exit_el0)
  
- 	ptrauth_keys_install_kernel tsk, x20, x22, x23
+ 	.macro	irq_stack_entry
+ 	mov	x19, sp			// preserve the original sp
+-#ifdef CONFIG_SHADOW_CALL_STACK
+-	mov	x24, scs_sp		// preserve the original shadow stack
+-#endif
++	scs_save tsk			// preserve the original shadow stack
  
--	scs_load tsk, x20
+ 	/*
+ 	 * Compare sp with the base of the task stack.
+@@ -467,9 +465,7 @@ SYM_CODE_END(__swpan_exit_el0)
+ 	 */
+ 	.macro	irq_stack_exit
+ 	mov	sp, x19
+-#ifdef CONFIG_SHADOW_CALL_STACK
+-	mov	scs_sp, x24
+-#endif
 +	scs_load_current
- 	.else
- 	add	x21, sp, #S_FRAME_SIZE
- 	get_current_task tsk
-@@ -1025,7 +1025,7 @@ SYM_FUNC_START(cpu_switch_to)
- 	msr	sp_el0, x1
- 	ptrauth_keys_install_kernel x1, x8, x9, x10
- 	scs_save x0, x8
--	scs_load x1, x8
-+	scs_load_current
- 	ret
- SYM_FUNC_END(cpu_switch_to)
- NOKPROBE(cpu_switch_to)
---- a/arch/arm64/kernel/head.S
-+++ b/arch/arm64/kernel/head.S
-@@ -747,7 +747,7 @@ SYM_FUNC_START_LOCAL(__secondary_switche
- 	ldr	x2, [x0, #CPU_BOOT_TASK]
- 	cbz	x2, __secondary_too_slow
- 	msr	sp_el0, x2
--	scs_load x2, x3
-+	scs_load_current
- 	mov	x29, #0
- 	mov	x30, #0
+ 	.endm
  
+ /* GPRs used by entry code */
 
 
