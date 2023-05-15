@@ -1,35 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB26DD512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18BEFC4339B;
-	Mon, 15 May 2023 16:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9B98BF4
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC97C433EF;
+	Mon, 15 May 2023 16:33:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168426;
-	bh=RETydS2WhO8BHTIZvVcuOofMQcvxYdqOjTMw5QOfR54=;
+	s=korg; t=1684168429;
+	bh=GnuTKGySGlfr07daI7HAiFk0boCdBF/4zjHSMFSEV+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NRgH/ZB3mqyus8qHkDzO8FJiVNvAAX3ouYHUkc1KHPVgmVrYWqRCWdKmXuCxX36lG
-	 6Z/CHTC4sIYeQYQ/mVcYsuKTSe4e+THa3UptULuBkI3X30WwMspU9njaTliygAy/J2
-	 48METAdvIxsRj+ECxoXWo62A9kIcXZ6X8o8n1ePY=
+	b=1aIdYLMOHA1hZ1ACdhSlfahkkVrnJw5/tcISA0f4/g5E7BpAJqL+0lb/EM20GH5Dz
+	 iufl1rmSfm4upXI4e1ytXJobyFWN6F+lS4Ps9QTgm54XJ3BcQTcwWU8++u1FDMlGp8
+	 9Dr7ZGOiAJYUwKsv7TZthJ8PM5NJ12sWQzp15amA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Wang <wvw@google.com>,
-	Midas Chien <midaschieh@google.com>,
-	=?UTF-8?q?Chunhui=20Li=20 ?= <chunhui.li@mediatek.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Kees Cook <keescook@chromium.org>,
-	Anton Vorontsov <anton@enomsg.org>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Tony Luck <tony.luck@intel.com>,
-	kernel-team@android.com,
-	John Stultz <jstultz@google.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	dri-devel@lists.freedesktop.org,
+	linux-fbdev@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 045/116] pstore: Revert pmsg_lock back to a normal mutex
-Date: Mon, 15 May 2023 18:25:42 +0200
-Message-Id: <20230515161659.757361712@linuxfoundation.org>
+Subject: [PATCH 4.14 046/116] linux/vt_buffer.h: allow either builtin or modular for macros
+Date: Mon, 15 May 2023 18:25:43 +0200
+Message-Id: <20230515161659.786548194@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -43,94 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Stultz <jstultz@google.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 5239a89b06d6b199f133bf0ffea421683187f257 ]
+[ Upstream commit 2b76ffe81e32afd6d318dc4547e2ba8c46207b77 ]
 
-This reverts commit 76d62f24db07f22ccf9bc18ca793c27d4ebef721.
+Fix build errors on ARCH=alpha when CONFIG_MDA_CONSOLE=m.
+This allows the ARCH macros to be the only ones defined.
 
-So while priority inversion on the pmsg_lock is an occasional
-problem that an rt_mutex would help with, in uses where logging
-is writing to pmsg heavily from multiple threads, the pmsg_lock
-can be heavily contended.
+In file included from ../drivers/video/console/mdacon.c:37:
+../arch/alpha/include/asm/vga.h:17:40: error: expected identifier or '(' before 'volatile'
+   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
+      |                                        ^~~~~~~~
+../include/linux/vt_buffer.h:24:34: note: in definition of macro 'scr_writew'
+   24 | #define scr_writew(val, addr) (*(addr) = (val))
+      |                                  ^~~~
+../include/linux/vt_buffer.h:24:40: error: expected ')' before '=' token
+   24 | #define scr_writew(val, addr) (*(addr) = (val))
+      |                                        ^
+../arch/alpha/include/asm/vga.h:17:20: note: in expansion of macro 'scr_writew'
+   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
+      |                    ^~~~~~~~~~
+../arch/alpha/include/asm/vga.h:25:29: error: expected identifier or '(' before 'volatile'
+   25 | static inline u16 scr_readw(volatile const u16 *addr)
+      |                             ^~~~~~~~
 
-After this change landed, it was reported that cases where the
-mutex locking overhead was commonly adding on the order of 10s
-of usecs delay had suddenly jumped to ~msec delay with rtmutex.
-
-It seems the slight differences in the locks under this level
-of contention causes the normal mutexes to utilize the spinning
-optimizations, while the rtmutexes end up in the sleeping
-slowpath (which allows additional threads to pile on trying
-to take the lock).
-
-In this case, it devolves to a worse case senerio where the lock
-acquisition and scheduling overhead dominates, and each thread
-is waiting on the order of ~ms to do ~us of work.
-
-Obviously, having tons of threads all contending on a single
-lock for logging is non-optimal, so the proper fix is probably
-reworking pstore pmsg to have per-cpu buffers so we don't have
-contention.
-
-Additionally, Steven Rostedt has provided some furhter
-optimizations for rtmutexes that improves the rtmutex spinning
-path, but at least in my testing, I still see the test tripping
-into the sleeping path on rtmutexes while utilizing the spinning
-path with mutexes.
-
-But in the short term, lets revert the change to the rt_mutex
-and go back to normal mutexes to avoid a potentially major
-performance regression. And we can work on optimizations to both
-rtmutexes and finer-grained locking for pstore pmsg in the
-future.
-
-Cc: Wei Wang <wvw@google.com>
-Cc: Midas Chien<midaschieh@google.com>
-Cc: "Chunhui Li (李春辉)" <chunhui.li@mediatek.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Anton Vorontsov <anton@enomsg.org>
-Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: kernel-team@android.com
-Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
-Reported-by: "Chunhui Li (李春辉)" <chunhui.li@mediatek.com>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230308204043.2061631-1-jstultz@google.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Cc: dri-devel@lists.freedesktop.org
+Cc: linux-fbdev@vger.kernel.org
+Link: https://lore.kernel.org/r/20230329021529.16188-1-rdunlap@infradead.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/pmsg.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ include/linux/vt_buffer.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/pstore/pmsg.c b/fs/pstore/pmsg.c
-index ffc13ea196d2a..24db02de17874 100644
---- a/fs/pstore/pmsg.c
-+++ b/fs/pstore/pmsg.c
-@@ -15,10 +15,9 @@
- #include <linux/device.h>
- #include <linux/fs.h>
- #include <linux/uaccess.h>
--#include <linux/rtmutex.h>
- #include "internal.h"
+diff --git a/include/linux/vt_buffer.h b/include/linux/vt_buffer.h
+index 848db1b1569ff..919d999a8c1db 100644
+--- a/include/linux/vt_buffer.h
++++ b/include/linux/vt_buffer.h
+@@ -16,7 +16,7 @@
  
--static DEFINE_RT_MUTEX(pmsg_lock);
-+static DEFINE_MUTEX(pmsg_lock);
+ #include <linux/string.h>
  
- static ssize_t write_pmsg(struct file *file, const char __user *buf,
- 			  size_t count, loff_t *ppos)
-@@ -37,9 +36,9 @@ static ssize_t write_pmsg(struct file *file, const char __user *buf,
- 	if (!access_ok(VERIFY_READ, buf, count))
- 		return -EFAULT;
- 
--	rt_mutex_lock(&pmsg_lock);
-+	mutex_lock(&pmsg_lock);
- 	ret = psinfo->write_user(&record, buf);
--	rt_mutex_unlock(&pmsg_lock);
-+	mutex_unlock(&pmsg_lock);
- 	return ret ? ret : count;
- }
+-#if defined(CONFIG_VGA_CONSOLE) || defined(CONFIG_MDA_CONSOLE)
++#if IS_ENABLED(CONFIG_VGA_CONSOLE) || IS_ENABLED(CONFIG_MDA_CONSOLE)
+ #include <asm/vga.h>
+ #endif
  
 -- 
 2.39.2
