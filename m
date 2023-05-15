@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24BA2FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9B2C433D2;
-	Mon, 15 May 2023 17:35:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830B5FC12
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F671C4339B;
+	Mon, 15 May 2023 17:35:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172117;
-	bh=//c8dfAGvmdKHhBAXN1JTTTBJ0dDpiT2vV7bFnVQQqo=;
+	s=korg; t=1684172120;
+	bh=qG3t6hDwXvIDoNWas+q3ijmmtyRvzXYKHav44WDZj9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhbE8YhU2ZgDwlmtinbjGZ8PlOKem8uy+3RvU4YeixKSM+ky2dPHob+zSg1iScxOs
-	 2kSobDVBiE8e5qYcf4otxN3rJWoNf3KR5T+r8XTKvCIFO6HYaayIBwIWSMOS2/ZOME
-	 g7R7gSPEZWimzi9IIiTnK6YuDSERjH8QW1IUKk1w=
+	b=YlQRs5nY3tc8qqGMKAnoEbKTxzv9H9J10FZsbcsRKO0ycpKe0A7tm4Pwxyb/mv0Bw
+	 exKPvo/dcc90G16VdrPWgI/v+hJzPrRGaZIVkWW2zvNMdjOZ3gsisAO2stWBq3+HRU
+	 GTICCUnv++7NAha5uAA53Nyh6/pSCiBWlvHYFPrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 5.10 050/381] ubifs: Free memory for tmpfile name
-Date: Mon, 15 May 2023 18:25:01 +0200
-Message-Id: <20230515161739.089529606@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	alsa-devel@alsa-project.org,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 051/381] sound/oss/dmasound: fix build when drivers are mixed =y/=m
+Date: Mon, 15 May 2023 18:25:02 +0200
+Message-Id: <20230515161739.138348227@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,49 +40,166 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mårten Lindahl <marten.lindahl@axis.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 1fb815b38bb31d6af9bd0540b8652a0d6fe6cfd3 upstream.
+commit 9dd7c46346ca4390f84a7ea9933005eb1b175c15 upstream.
 
-When opening a ubifs tmpfile on an encrypted directory, function
-fscrypt_setup_filename allocates memory for the name that is to be
-stored in the directory entry, but after the name has been copied to the
-directory entry inode, the memory is not freed.
+When CONFIG_DMASOUND_ATARI=m and CONFIG_DMASOUND_Q40=y (or vice versa),
+dmasound_core.o can be built without dmasound_deinit() being defined,
+causing a build error:
 
-When running kmemleak on it we see that it is registered as a leak. The
-report below is triggered by a simple program 'tmpfile' just opening a
-tmpfile:
+ERROR: modpost: "dmasound_deinit" [sound/oss/dmasound/dmasound_atari.ko] undefined!
 
-  unreferenced object 0xffff88810178f380 (size 32):
-    comm "tmpfile", pid 509, jiffies 4294934744 (age 1524.742s)
-    backtrace:
-      __kmem_cache_alloc_node
-      __kmalloc
-      fscrypt_setup_filename
-      ubifs_tmpfile
-      vfs_tmpfile
-      path_openat
+Modify dmasound_core.c and dmasound.h so that dmasound_deinit() is
+always available.
 
-Free this memory after it has been copied to the inode.
+The mixed modes (=y/=m) also mean that several variables and structs
+have to be declared in all cases.
 
-Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: lore.kernel.org/r/202204032138.EFT9qGEd-lkp@intel.com
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Cc: alsa-devel@alsa-project.org
+Link: https://lore.kernel.org/r/20220405234118.24830-1-rdunlap@infradead.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ubifs/dir.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/oss/dmasound/dmasound.h      |    6 ------
+ sound/oss/dmasound/dmasound_core.c |   24 +-----------------------
+ 2 files changed, 1 insertion(+), 29 deletions(-)
 
---- a/fs/ubifs/dir.c
-+++ b/fs/ubifs/dir.c
-@@ -425,6 +425,7 @@ static int do_tmpfile(struct inode *dir,
- 	mutex_unlock(&dir_ui->ui_mutex);
+--- a/sound/oss/dmasound/dmasound.h
++++ b/sound/oss/dmasound/dmasound.h
+@@ -88,11 +88,7 @@ static inline int ioctl_return(int __use
+      */
  
- 	ubifs_release_budget(c, &req);
-+	fscrypt_free_filename(&nm);
+ extern int dmasound_init(void);
+-#ifdef MODULE
+ extern void dmasound_deinit(void);
+-#else
+-#define dmasound_deinit()	do { } while (0)
+-#endif
  
+ /* description of the set-up applies to either hard or soft settings */
+ 
+@@ -114,9 +110,7 @@ typedef struct {
+     void *(*dma_alloc)(unsigned int, gfp_t);
+     void (*dma_free)(void *, unsigned int);
+     int (*irqinit)(void);
+-#ifdef MODULE
+     void (*irqcleanup)(void);
+-#endif
+     void (*init)(void);
+     void (*silence)(void);
+     int (*setFormat)(int);
+--- a/sound/oss/dmasound/dmasound_core.c
++++ b/sound/oss/dmasound/dmasound_core.c
+@@ -206,12 +206,10 @@ module_param(writeBufSize, int, 0);
+ 
+ MODULE_LICENSE("GPL");
+ 
+-#ifdef MODULE
+ static int sq_unit = -1;
+ static int mixer_unit = -1;
+ static int state_unit = -1;
+ static int irq_installed;
+-#endif /* MODULE */
+ 
+ /* control over who can modify resources shared between play/record */
+ static fmode_t shared_resource_owner;
+@@ -391,9 +389,6 @@ static const struct file_operations mixe
+ 
+ static void mixer_init(void)
+ {
+-#ifndef MODULE
+-	int mixer_unit;
+-#endif
+ 	mixer_unit = register_sound_mixer(&mixer_fops, -1);
+ 	if (mixer_unit < 0)
+ 		return;
+@@ -1176,9 +1171,6 @@ static const struct file_operations sq_f
+ static int sq_init(void)
+ {
+ 	const struct file_operations *fops = &sq_fops;
+-#ifndef MODULE
+-	int sq_unit;
+-#endif
+ 
+ 	sq_unit = register_sound_dsp(fops, -1);
+ 	if (sq_unit < 0) {
+@@ -1380,9 +1372,6 @@ static const struct file_operations stat
+ 
+ static int state_init(void)
+ {
+-#ifndef MODULE
+-	int state_unit;
+-#endif
+ 	state_unit = register_sound_special(&state_fops, SND_DEV_STATUS);
+ 	if (state_unit < 0)
+ 		return state_unit ;
+@@ -1400,10 +1389,9 @@ static int state_init(void)
+ int dmasound_init(void)
+ {
+ 	int res ;
+-#ifdef MODULE
++
+ 	if (irq_installed)
+ 		return -EBUSY;
+-#endif
+ 
+ 	/* Set up sound queue, /dev/audio and /dev/dsp. */
+ 
+@@ -1422,9 +1410,7 @@ int dmasound_init(void)
+ 		printk(KERN_ERR "DMA sound driver: Interrupt initialization failed\n");
+ 		return -ENODEV;
+ 	}
+-#ifdef MODULE
+ 	irq_installed = 1;
+-#endif
+ 
+ 	printk(KERN_INFO "%s DMA sound driver rev %03d installed\n",
+ 		dmasound.mach.name, (DMASOUND_CORE_REVISION<<4) +
+@@ -1438,8 +1424,6 @@ int dmasound_init(void)
  	return 0;
+ }
  
+-#ifdef MODULE
+-
+ void dmasound_deinit(void)
+ {
+ 	if (irq_installed) {
+@@ -1458,8 +1442,6 @@ void dmasound_deinit(void)
+ 		unregister_sound_dsp(sq_unit);
+ }
+ 
+-#else /* !MODULE */
+-
+ static int dmasound_setup(char *str)
+ {
+ 	int ints[6], size;
+@@ -1503,8 +1485,6 @@ static int dmasound_setup(char *str)
+ 
+ __setup("dmasound=", dmasound_setup);
+ 
+-#endif /* !MODULE */
+-
+     /*
+      *  Conversion tables
+      */
+@@ -1591,9 +1571,7 @@ char dmasound_alaw2dma8[] = {
+ 
+ EXPORT_SYMBOL(dmasound);
+ EXPORT_SYMBOL(dmasound_init);
+-#ifdef MODULE
+ EXPORT_SYMBOL(dmasound_deinit);
+-#endif
+ EXPORT_SYMBOL(dmasound_write_sq);
+ EXPORT_SYMBOL(dmasound_catchRadius);
+ #ifdef HAS_8BIT_TABLES
 
 
