@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1332C1078D
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E859C4339B;
-	Mon, 15 May 2023 17:59:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDC31078D
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6B8C433EF;
+	Mon, 15 May 2023 17:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173576;
-	bh=dkFXUhD0YoqFVX1VrVWTr5uc9++mJyTLDhh5R0bxMfQ=;
+	s=korg; t=1684173579;
+	bh=xRFaHS4/wjGE5zx1LGGL8Td5VLHMsORKnRWuBboN0hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WsfqOONqjzWdfEuAIR52FLx7BExHy5YEOXI7VFk2i2nbHHoeZZAZZ/Dd2DZayXOAk
-	 BYbh3o4yLyOUmIrsFRE3f8acDcIkmDhgG8t/UpqwlhTRSAbhhxExziVn4WDSrOvkmO
-	 bJdAjCSH6gxUv7DNj7who+tt5qSrWm3aEnYGYQBY=
+	b=ofgQGxx67U3NVvqqr66LnHNrpDhqTwYREqadmV/WSkB58tqm5bFGl16aUEEhuXKlN
+	 i+zTAGHdVkgoRo1x2ia18EDPQr90aOHxNRycyce6MaTp3y1yUgNJiUsycLxWERFlnQ
+	 0YoHmbUW8rT4Biz7gqGM3RzwH0GK3NQbsUHkPqxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com,
-	Hsin-Wei Hung <hsinweih@uci.edu>,
-	Xin Liu <liuxin350@huawei.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	"Dae R. Jeong" <threeearcat@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 101/282] bpf, sockmap: Revert buggy deadlock fix in the sockhash and sockmap
-Date: Mon, 15 May 2023 18:27:59 +0200
-Message-Id: <20230515161725.283165554@linuxfoundation.org>
+Subject: [PATCH 5.4 133/282] vmci_host: fix a race condition in vmci_host_poll() causing GPF
+Date: Mon, 15 May 2023 18:28:31 +0200
+Message-Id: <20230515161726.210625146@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -38,99 +34,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Dae R. Jeong <threeearcat@gmail.com>
 
-[ Upstream commit 8c5c2a4898e3d6bad86e29d471e023c8a19ba799 ]
+[ Upstream commit ae13381da5ff0e8e084c0323c3cc0a945e43e9c7 ]
 
-syzbot reported a splat and bisected it to recent commit ed17aa92dc56 ("bpf,
-sockmap: fix deadlocks in the sockhash and sockmap"):
+During fuzzing, a general protection fault is observed in
+vmci_host_poll().
 
-  [...]
-  WARNING: CPU: 1 PID: 9280 at kernel/softirq.c:376 __local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
-  Modules linked in:
-  CPU: 1 PID: 9280 Comm: syz-executor.1 Not tainted 6.2.0-syzkaller-13249-gd319f344561d #0
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
-  RIP: 0010:__local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
-  [...]
-  Call Trace:
-  <TASK>
-  spin_unlock_bh include/linux/spinlock.h:395 [inline]
-  sock_map_del_link+0x2ea/0x510 net/core/sock_map.c:165
-  sock_map_unref+0xb0/0x1d0 net/core/sock_map.c:184
-  sock_hash_delete_elem+0x1ec/0x2a0 net/core/sock_map.c:945
-  map_delete_elem kernel/bpf/syscall.c:1536 [inline]
-  __sys_bpf+0x2edc/0x53e0 kernel/bpf/syscall.c:5053
-  __do_sys_bpf kernel/bpf/syscall.c:5166 [inline]
-  __se_sys_bpf kernel/bpf/syscall.c:5164 [inline]
-  __x64_sys_bpf+0x79/0xc0 kernel/bpf/syscall.c:5164
-  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-  do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  RIP: 0033:0x7fe8f7c8c169
-  </TASK>
-  [...]
+general protection fault, probably for non-canonical address 0xdffffc0000000019: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x00000000000000c8-0x00000000000000cf]
+RIP: 0010:__lock_acquire+0xf3/0x5e00 kernel/locking/lockdep.c:4926
+<- omitting registers ->
+Call Trace:
+ <TASK>
+ lock_acquire+0x1a4/0x4a0 kernel/locking/lockdep.c:5672
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+ _raw_spin_lock_irqsave+0xb3/0x100 kernel/locking/spinlock.c:162
+ add_wait_queue+0x3d/0x260 kernel/sched/wait.c:22
+ poll_wait include/linux/poll.h:49 [inline]
+ vmci_host_poll+0xf8/0x2b0 drivers/misc/vmw_vmci/vmci_host.c:174
+ vfs_poll include/linux/poll.h:88 [inline]
+ do_pollfd fs/select.c:873 [inline]
+ do_poll fs/select.c:921 [inline]
+ do_sys_poll+0xc7c/0x1aa0 fs/select.c:1015
+ __do_sys_ppoll fs/select.c:1121 [inline]
+ __se_sys_ppoll+0x2cc/0x330 fs/select.c:1101
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x4e/0xa0 arch/x86/entry/common.c:82
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Revert for now until we have a proper solution.
+Example thread interleaving that causes the general protection fault
+is as follows:
 
-Fixes: ed17aa92dc56 ("bpf, sockmap: fix deadlocks in the sockhash and sockmap")
-Reported-by: syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com
-Cc: Hsin-Wei Hung <hsinweih@uci.edu>
-Cc: Xin Liu <liuxin350@huawei.com>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/000000000000f1db9605f939720e@google.com/
+CPU1 (vmci_host_poll)               CPU2 (vmci_host_do_init_context)
+-----                               -----
+// Read uninitialized context
+context = vmci_host_dev->context;
+                                    // Initialize context
+                                    vmci_host_dev->context = vmci_ctx_create();
+                                    vmci_host_dev->ct_type = VMCIOBJ_CONTEXT;
+
+if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
+    // Dereferencing the wrong pointer
+    poll_wait(..., &context->host_context);
+}
+
+In this scenario, vmci_host_poll() reads vmci_host_dev->context first,
+and then reads vmci_host_dev->ct_type to check that
+vmci_host_dev->context is initialized. However, since these two reads
+are not atomically executed, there is a chance of a race condition as
+described above.
+
+To fix this race condition, read vmci_host_dev->context after checking
+the value of vmci_host_dev->ct_type so that vmci_host_poll() always
+reads an initialized context.
+
+Reported-by: Dae R. Jeong <threeearcat@gmail.com>
+Fixes: 8bf503991f87 ("VMCI: host side driver implementation.")
+Signed-off-by: Dae R. Jeong <threeearcat@gmail.com>
+Link: https://lore.kernel.org/r/ZCGFsdBAU4cYww5l@dragonet
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/misc/vmw_vmci/vmci_host.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 78f2b6b265b2a..5bce6d4d20573 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -322,9 +322,8 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+diff --git a/drivers/misc/vmw_vmci/vmci_host.c b/drivers/misc/vmw_vmci/vmci_host.c
+index 833e2bd248a57..8ff8d649d9b3a 100644
+--- a/drivers/misc/vmw_vmci/vmci_host.c
++++ b/drivers/misc/vmw_vmci/vmci_host.c
+@@ -160,10 +160,16 @@ static int vmci_host_close(struct inode *inode, struct file *filp)
+ static __poll_t vmci_host_poll(struct file *filp, poll_table *wait)
  {
- 	struct sock *sk;
- 	int err = 0;
--	unsigned long flags;
+ 	struct vmci_host_dev *vmci_host_dev = filp->private_data;
+-	struct vmci_ctx *context = vmci_host_dev->context;
++	struct vmci_ctx *context;
+ 	__poll_t mask = 0;
  
--	raw_spin_lock_irqsave(&stab->lock, flags);
-+	raw_spin_lock_bh(&stab->lock);
- 	sk = *psk;
- 	if (!sk_test || sk_test == sk)
- 		sk = xchg(psk, NULL);
-@@ -334,7 +333,7 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
- 	else
- 		err = -EINVAL;
- 
--	raw_spin_unlock_irqrestore(&stab->lock, flags);
-+	raw_spin_unlock_bh(&stab->lock);
- 	return err;
- }
- 
-@@ -656,12 +655,11 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
- 	struct bpf_htab_bucket *bucket;
- 	struct bpf_htab_elem *elem;
- 	int ret = -ENOENT;
--	unsigned long flags;
- 
- 	hash = sock_hash_bucket_hash(key, key_size);
- 	bucket = sock_hash_select_bucket(htab, hash);
- 
--	raw_spin_lock_irqsave(&bucket->lock, flags);
-+	raw_spin_lock_bh(&bucket->lock);
- 	elem = sock_hash_lookup_elem_raw(&bucket->head, hash, key, key_size);
- 	if (elem) {
- 		hlist_del_rcu(&elem->node);
-@@ -669,7 +667,7 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
- 		sock_hash_free_elem(htab, elem);
- 		ret = 0;
- 	}
--	raw_spin_unlock_irqrestore(&bucket->lock, flags);
-+	raw_spin_unlock_bh(&bucket->lock);
- 	return ret;
- }
- 
+ 	if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
++		/*
++		 * Read context only if ct_type == VMCIOBJ_CONTEXT to make
++		 * sure that context is initialized
++		 */
++		context = vmci_host_dev->context;
++
+ 		/* Check for VMCI calls to this VM context. */
+ 		if (wait)
+ 			poll_wait(filp, &context->host_context.wait_queue,
 -- 
 2.39.2
 
