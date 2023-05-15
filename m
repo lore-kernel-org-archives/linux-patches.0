@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C0D1FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:46:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE400C433EF;
-	Mon, 15 May 2023 17:46:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EE5FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:46:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD4CC4339B;
+	Mon, 15 May 2023 17:46:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172793;
-	bh=rtOpymRfZvfeRVyj11dSXMi9w0U9vzUsi7gXK5tqrrY=;
+	s=korg; t=1684172796;
+	bh=6PVesVjd2bVOGsvJhGbv4cPTLuyuAH+y5s8htNFp7fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKjzl6bAVilEDPHAdroExfvqM1VFxQhMz7bSo97hALIU8PP/SblPUqCKN9gtaVAl4
-	 9D+4p4zQ2ahaK1wNxmwi/2WJkis9/JhwlrDbs1Gekcveg/POtz+5lva7FbNUBK9yn9
-	 TQR27N7ifnTsqRysgvxGLUcpIYtefn9S/WbDyKcI=
+	b=nTVUTVEYVMWcMZ/t/AjydLRHVYDUt9YM8WPzm9+x5HKpwKqR1sBFnUf6MuiMVYtbn
+	 xKfVezzxyca3sO25e0t+SmgKD4bp3y69K47Eqf2WieBEMxVYvAOrxLZ0m4gPS8/0WV
+	 X7Ccwl97tG96UKGdxbDuS9zN1gaE1QQO7dSxI4KM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shunsuke Mie <mie@igel.co.jp>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 269/381] dmaengine: dw-edma: Fix to change for continuous transfer
-Date: Mon, 15 May 2023 18:28:40 +0200
-Message-Id: <20230515161748.917736528@linuxfoundation.org>
+Subject: [PATCH 5.10 270/381] dmaengine: dw-edma: Fix to enable to issue dma request on DMA processing
+Date: Mon, 15 May 2023 18:28:41 +0200
+Message-Id: <20230515161748.966602788@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,86 +37,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Shunsuke Mie <mie@igel.co.jp>
 
-[ Upstream commit a251994a441ee0a69ba7062c8cd2d08ead3db379 ]
+[ Upstream commit 970b17dfe264a9085ba4e593730ecfd496b950ab ]
 
-The dw-edma driver stops after processing a DMA request even if a request
-remains in the issued queue, which is not the expected behavior. The DMA
-engine API requires continuous processing.
-
-Add a trigger to start after one processing finished if there are requests
-remain.
+The issue_pending request is ignored while driver is processing a DMA
+request. Fix to issue the pending requests on any dma channel status.
 
 Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
 Signed-off-by: Shunsuke Mie <mie@igel.co.jp>
-Link: https://lore.kernel.org/r/20230411101758.438472-1-mie@igel.co.jp
+Link: https://lore.kernel.org/r/20230411101758.438472-2-mie@igel.co.jp
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/dw-edma/dw-edma-core.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ drivers/dma/dw-edma/dw-edma-core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
-index d7ed50f8b9294..a3790f7b1b530 100644
+index a3790f7b1b530..f91dbf43a5980 100644
 --- a/drivers/dma/dw-edma/dw-edma-core.c
 +++ b/drivers/dma/dw-edma/dw-edma-core.c
-@@ -166,7 +166,7 @@ static void vchan_free_desc(struct virt_dma_desc *vdesc)
- 	dw_edma_free_desc(vd2dw_edma_desc(vdesc));
- }
+@@ -276,9 +276,12 @@ static void dw_edma_device_issue_pending(struct dma_chan *dchan)
+ 	struct dw_edma_chan *chan = dchan2dw_edma_chan(dchan);
+ 	unsigned long flags;
  
--static void dw_edma_start_transfer(struct dw_edma_chan *chan)
-+static int dw_edma_start_transfer(struct dw_edma_chan *chan)
- {
- 	struct dw_edma_chunk *child;
- 	struct dw_edma_desc *desc;
-@@ -174,16 +174,16 @@ static void dw_edma_start_transfer(struct dw_edma_chan *chan)
- 
- 	vd = vchan_next_desc(&chan->vc);
- 	if (!vd)
--		return;
-+		return 0;
- 
- 	desc = vd2dw_edma_desc(vd);
- 	if (!desc)
--		return;
-+		return 0;
- 
- 	child = list_first_entry_or_null(&desc->chunk->list,
- 					 struct dw_edma_chunk, list);
- 	if (!child)
--		return;
-+		return 0;
- 
- 	dw_edma_v0_core_start(child, !desc->xfer_sz);
- 	desc->xfer_sz += child->ll_region.sz;
-@@ -191,6 +191,8 @@ static void dw_edma_start_transfer(struct dw_edma_chan *chan)
- 	list_del(&child->list);
- 	kfree(child);
- 	desc->chunks_alloc--;
++	if (!chan->configured)
++		return;
 +
-+	return 1;
- }
- 
- static int dw_edma_device_config(struct dma_chan *dchan,
-@@ -497,14 +499,14 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
- 		switch (chan->request) {
- 		case EDMA_REQ_NONE:
- 			desc = vd2dw_edma_desc(vd);
--			if (desc->chunks_alloc) {
--				chan->status = EDMA_ST_BUSY;
--				dw_edma_start_transfer(chan);
--			} else {
-+			if (!desc->chunks_alloc) {
- 				list_del(&vd->node);
- 				vchan_cookie_complete(vd);
--				chan->status = EDMA_ST_IDLE;
- 			}
-+
-+			/* Continue transferring if there are remaining chunks or issued requests.
-+			 */
-+			chan->status = dw_edma_start_transfer(chan) ? EDMA_ST_BUSY : EDMA_ST_IDLE;
- 			break;
- 
- 		case EDMA_REQ_STOP:
+ 	spin_lock_irqsave(&chan->vc.lock, flags);
+-	if (chan->configured && chan->request == EDMA_REQ_NONE &&
+-	    chan->status == EDMA_ST_IDLE && vchan_issue_pending(&chan->vc)) {
++	if (vchan_issue_pending(&chan->vc) && chan->request == EDMA_REQ_NONE &&
++	    chan->status == EDMA_ST_IDLE) {
+ 		chan->status = EDMA_ST_BUSY;
+ 		dw_edma_start_transfer(chan);
+ 	}
 -- 
 2.39.2
 
