@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A792FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DB9C433D2;
-	Mon, 15 May 2023 16:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342DFFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C522C433D2;
+	Mon, 15 May 2023 16:54:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169663;
-	bh=VbmG4b/PP0cMZbKPa6u8FDsjcWq3UUmX/mC1ek3GoNk=;
+	s=korg; t=1684169667;
+	bh=XGM6gZJzD88LVq2+6ZwZ204UFWDDs4SgUijuLLH/l70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jpkWDqD6gRlXJ6VJBddxGIOx42w4ki79tpKX9mobRepMkmQd43rvqyOriEXgvWeiw
-	 3I24mv4J8ST1RiDxAGG++kdV/QgIdg+IJ26X8vCa2v2g59llB3bYZ2rUb8TZMER7qO
-	 NrtQCA5X8kvO8klytGXRzJ8Aydaiy/kFpRGoNh1E=
+	b=oR7oAlWkxaTvEclY495YN3PDCPPl96pmLr2Lkh7OtWW2c5p1LKIac0kKyfEaPcZ5B
+	 yeKPy4O4sMn+VFCcShW6aIdu2F1VdzxKPsxh8ox9RMwubNRb0iQxYZBSrgNZJBspzN
+	 LAlsJxZcKRStUihGso2bsCSwIsavUvm3j4FFvosA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Qu Wenruo <wqu@suse.com>,
 	Josef Bacik <josef@toxicpanda.com>,
-	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.3 131/246] btrfs: fix encoded write i_size corruption with no-holes
-Date: Mon, 15 May 2023 18:25:43 +0200
-Message-Id: <20230515161726.492376808@linuxfoundation.org>
+Subject: [PATCH 6.3 132/246] btrfs: dont free qgroup space unless specified
+Date: Mon, 15 May 2023 18:25:44 +0200
+Message-Id: <20230515161726.521819389@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -35,92 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Boris Burkov <boris@bur.io>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit e7db9e5c6b9615b287d01f0231904fbc1fbde9c5 upstream.
+commit d246331b78cbef86237f9c22389205bc9b4e1cc1 upstream.
 
-We have observed a btrfs filesystem corruption on workloads using
-no-holes and encoded writes via send stream v2. The symptom is that a
-file appears to be truncated to the end of its last aligned extent, even
-though the final unaligned extent and even the file extent and otherwise
-correctly updated inode item have been written.
+Boris noticed in his simple quotas testing that he was getting a leak
+with Sweet Tea's change to subvol create that stopped doing a
+transaction commit.  This was just a side effect of that change.
 
-So if we were writing out a 1MiB+X file via 8 128K extents and one
-extent of length X, i_size would be set to 1MiB, but the ninth extent,
-nbyte, etc. would all appear correct otherwise.
+In the delayed inode code we have an optimization that will free extra
+reservations if we think we can pack a dir item into an already modified
+leaf.  Previously this wouldn't be triggered in the subvolume create
+case because we'd commit the transaction, it was still possible but
+much harder to trigger.  It could actually be triggered if we did a
+mkdir && subvol create with qgroups enabled.
 
-The source of the race is a narrow (one line of code) window in which a
-no-holes fs has read in an updated i_size, but has not yet set a shared
-disk_i_size variable to write. Therefore, if two ordered extents run in
-parallel (par for the course for receive workloads), the following
-sequence can play out: (following "threads" a bit loosely, since there
-are callbacks involved for endio but extra threads aren't needed to
-cause the issue)
+This occurs because in btrfs_insert_delayed_dir_index(), which gets
+called when we're adding the dir item, we do the following:
 
-  ENC-WR1 (second to last)                                         ENC-WR2 (last)
-  -------                                                          -------
-  btrfs_do_encoded_write
-    set i_size = 1M
-    submit bio B1 ending at 1M
-  endio B1
-  btrfs_inode_safe_disk_i_size_write
-    local i_size = 1M
-    falls off a cliff for some reason
-							      btrfs_do_encoded_write
-								set i_size = 1M+X
-								submit bio B2 ending at 1M+X
-							      endio B2
-							      btrfs_inode_safe_disk_i_size_write
-								local i_size = 1M+X
-								disk_i_size = 1M+X
-    disk_i_size = 1M
-							      btrfs_delayed_update_inode
-    btrfs_delayed_update_inode
+  btrfs_block_rsv_release(fs_info, trans->block_rsv, bytes, NULL);
 
-And the delayed inode ends up filled with nbytes=1M+X and isize=1M, and
-writes respect i_size and present a corrupted file missing its last
-extents.
+if we're able to skip reserving space.
 
-Fix this by holding the inode lock in the no-holes case so that a thread
-can't sneak in a write to disk_i_size that gets overwritten with an out
-of date i_size.
+The problem here is that trans->block_rsv points at the temporary block
+rsv for the subvolume create, which has qgroup reservations in the block
+rsv.
 
-Fixes: 41a2ee75aab0 ("btrfs: introduce per-inode file extent tree")
-CC: stable@vger.kernel.org # 5.10+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Reviewed-by: David Sterba <dsterba@suse.com>
+This is a problem because btrfs_block_rsv_release() will do the
+following:
+
+  if (block_rsv->qgroup_rsv_reserved >= block_rsv->qgroup_rsv_size) {
+	  qgroup_to_release = block_rsv->qgroup_rsv_reserved -
+		  block_rsv->qgroup_rsv_size;
+	  block_rsv->qgroup_rsv_reserved = block_rsv->qgroup_rsv_size;
+  }
+
+The temporary block rsv just has ->qgroup_rsv_reserved set,
+->qgroup_rsv_size == 0.  The optimization in
+btrfs_insert_delayed_dir_index() sets ->qgroup_rsv_reserved = 0.  Then
+later on when we call btrfs_subvolume_release_metadata() which has
+
+  btrfs_block_rsv_release(fs_info, rsv, (u64)-1, &qgroup_to_release);
+  btrfs_qgroup_convert_reserved_meta(root, qgroup_to_release);
+
+qgroup_to_release is set to 0, and we do not convert the reserved
+metadata space.
+
+The problem here is that the block rsv code has been unconditionally
+messing with ->qgroup_rsv_reserved, because the main place this is used
+is delalloc, and any time we call btrfs_block_rsv_release() we do it
+with qgroup_to_release set, and thus do the proper accounting.
+
+The subvolume code is the only other code that uses the qgroup
+reservation stuff, but it's intermingled with the above optimization,
+and thus was getting its reservation freed out from underneath it and
+thus leaking the reserved space.
+
+The solution is to simply not mess with the qgroup reservations if we
+don't have qgroup_to_release set.  This works with the existing code as
+anything that messes with the delalloc reservations always have
+qgroup_to_release set.  This fixes the leak that Boris was observing.
+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+CC: stable@vger.kernel.org # 5.4+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/file-item.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/btrfs/block-rsv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/file-item.c
-+++ b/fs/btrfs/file-item.c
-@@ -52,13 +52,13 @@ void btrfs_inode_safe_disk_i_size_write(
- 	u64 start, end, i_size;
- 	int ret;
- 
-+	spin_lock(&inode->lock);
- 	i_size = new_i_size ?: i_size_read(&inode->vfs_inode);
- 	if (btrfs_fs_incompat(fs_info, NO_HOLES)) {
- 		inode->disk_i_size = i_size;
--		return;
-+		goto out_unlock;
+--- a/fs/btrfs/block-rsv.c
++++ b/fs/btrfs/block-rsv.c
+@@ -124,7 +124,8 @@ static u64 block_rsv_release_bytes(struc
+ 	} else {
+ 		num_bytes = 0;
  	}
- 
--	spin_lock(&inode->lock);
- 	ret = find_contiguous_extent_bit(&inode->file_extent_tree, 0, &start,
- 					 &end, EXTENT_DIRTY);
- 	if (!ret && start == 0)
-@@ -66,6 +66,7 @@ void btrfs_inode_safe_disk_i_size_write(
- 	else
- 		i_size = 0;
- 	inode->disk_i_size = i_size;
-+out_unlock:
- 	spin_unlock(&inode->lock);
- }
- 
+-	if (block_rsv->qgroup_rsv_reserved >= block_rsv->qgroup_rsv_size) {
++	if (qgroup_to_release_ret &&
++	    block_rsv->qgroup_rsv_reserved >= block_rsv->qgroup_rsv_size) {
+ 		qgroup_to_release = block_rsv->qgroup_rsv_reserved -
+ 				    block_rsv->qgroup_rsv_size;
+ 		block_rsv->qgroup_rsv_reserved = block_rsv->qgroup_rsv_size;
 
 
