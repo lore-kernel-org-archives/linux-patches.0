@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E254FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:43:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1FF2C433D2;
-	Mon, 15 May 2023 17:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9384CFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:43:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F48C433D2;
+	Mon, 15 May 2023 17:43:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172632;
-	bh=81kQAN+x/AjDnTJwE638OXy+B90Tkgjsop+chHdMsns=;
+	s=korg; t=1684172635;
+	bh=OQjjANkcR+s7Bt46b9oCFPm6ZkiUzY5NQVROiqBiH2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NVLjfHR0ktX9FovDWLC6hgua+Fv/3a4rUykoNS+XVZJjM1xaYZe/yjjJBCRvTUCPh
-	 XiCKwfQhA1rwKvLcODkuCW8TEKsVC/sdFGS9ESSN8ACaN0vg8JZ2g5+O46GTvG/UrI
-	 W+QCT4NIWm5Y0d7qec89Fb2AkYM1NzLhdYfJpTbY=
+	b=ZDjeRX95YOK+9Xvy86EO3efid3ertCVdDONG5ww8w6Zb29pDS8tvD+xvMP9Io2vpU
+	 6HNlPNm+r8styv4KLPukyzl+Pv3kxHVzfPlL6Jj15dw7xH87eWRim6Z5omB6lO4TpI
+	 zxCQcRT8BlIumAhb+2IeY4BENN7WfZ7R6hic4h/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dhruva Gole <d-gole@ti.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lars-Peter Clausen <lars@metafoo.de>,
+	Michal Simek <michal.simek@amd.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 216/381] spi: cadence-quadspi: fix suspend-resume implementations
-Date: Mon, 15 May 2023 18:27:47 +0200
-Message-Id: <20230515161746.530517630@linuxfoundation.org>
+Subject: [PATCH 5.10 217/381] i2c: cadence: cdns_i2c_master_xfer(): Fix runtime PM leak on error path
+Date: Mon, 15 May 2023 18:27:48 +0200
+Message-Id: <20230515161746.569064971@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,66 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dhruva Gole <d-gole@ti.com>
+From: Lars-Peter Clausen <lars@metafoo.de>
 
-[ Upstream commit 2087e85bb66ee3652dafe732bb9b9b896229eafc ]
+[ Upstream commit ae1664f04f504a998737f5bb563f16b44357bcca ]
 
-The cadence QSPI driver misbehaves after performing a full system suspend
-resume:
-...
-spi-nor spi0.0: resume() failed
-...
-This results in a flash connected via OSPI interface after system suspend-
-resume to be unusable.
-fix these suspend and resume functions.
+The cdns_i2c_master_xfer() function gets a runtime PM reference when the
+function is entered. This reference is released when the function is
+exited. There is currently one error path where the function exits
+directly, which leads to a leak of the runtime PM reference.
 
-Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
-Signed-off-by: Dhruva Gole <d-gole@ti.com>
-Link: https://lore.kernel.org/r/20230417091027.966146-3-d-gole@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Make sure that this error path also releases the runtime PM reference.
+
+Fixes: 1a351b10b967 ("i2c: cadence: Added slave support")
+Signed-off-by: Lars-Peter Clausen <lars@metafoo.de>
+Reviewed-by: Michal Simek <michal.simek@amd.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-cadence-quadspi.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/i2c/busses/i2c-cadence.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-cadence-quadspi.c b/drivers/spi/spi-cadence-quadspi.c
-index 2e1255bf1b429..23d50a19ae271 100644
---- a/drivers/spi/spi-cadence-quadspi.c
-+++ b/drivers/spi/spi-cadence-quadspi.c
-@@ -1355,17 +1355,30 @@ static int cqspi_remove(struct platform_device *pdev)
- static int cqspi_suspend(struct device *dev)
- {
- 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
-+	struct spi_master *master = dev_get_drvdata(dev);
-+	int ret;
+diff --git a/drivers/i2c/busses/i2c-cadence.c b/drivers/i2c/busses/i2c-cadence.c
+index 50928216b3f28..24987902ca590 100644
+--- a/drivers/i2c/busses/i2c-cadence.c
++++ b/drivers/i2c/busses/i2c-cadence.c
+@@ -792,8 +792,10 @@ static int cdns_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ #if IS_ENABLED(CONFIG_I2C_SLAVE)
+ 	/* Check i2c operating mode and switch if possible */
+ 	if (id->dev_mode == CDNS_I2C_MODE_SLAVE) {
+-		if (id->slave_state != CDNS_I2C_SLAVE_STATE_IDLE)
+-			return -EAGAIN;
++		if (id->slave_state != CDNS_I2C_SLAVE_STATE_IDLE) {
++			ret = -EAGAIN;
++			goto out;
++		}
  
-+	ret = spi_master_suspend(master);
- 	cqspi_controller_enable(cqspi, 0);
--	return 0;
-+
-+	clk_disable_unprepare(cqspi->clk);
-+
-+	return ret;
- }
- 
- static int cqspi_resume(struct device *dev)
- {
- 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
-+	struct spi_master *master = dev_get_drvdata(dev);
- 
--	cqspi_controller_enable(cqspi, 1);
--	return 0;
-+	clk_prepare_enable(cqspi->clk);
-+	cqspi_wait_idle(cqspi);
-+	cqspi_controller_init(cqspi);
-+
-+	cqspi->current_cs = -1;
-+	cqspi->sclk = 0;
-+
-+	return spi_master_resume(master);
- }
- 
- static const struct dev_pm_ops cqspi__dev_pm_ops = {
+ 		/* Set mode to master */
+ 		cdns_i2c_set_mode(CDNS_I2C_MODE_MASTER, id);
 -- 
 2.39.2
 
