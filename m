@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDE8FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B817C433D2;
-	Mon, 15 May 2023 17:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52076FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD27C4339B;
+	Mon, 15 May 2023 17:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171286;
-	bh=mblPHaVTzJFd9zvtR/j6mmAdK23F7mYATGqoMeeeZ2k=;
+	s=korg; t=1684171289;
+	bh=QmnDGkAw0UDgIUvCaXOQ+xUZF9d48JvpofGptycY9vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2Dt7y+pPPatrToeOnKS3h0DTAkn3n3XPTL5hjj8yUgMVu3EowberjgJ07gEN4FAG
-	 MEc94cI4raAbktufawEYCBn8C0qHXLJ+c0lkZC+zUNZFgdW8tPmQVlK0SAis5P3ytX
-	 9Z6/fJIpoKaXvydli67hezBS2bSTw0DonWboeFCs=
+	b=eou/SdUraUCwhlD/kFm5Xru6yFUfpIkHYDgLCuMB86n6opZmAFO8v2Sli3p3reBjr
+	 Q0/0hZmOSvNbkkvEocTNERO8i1rs5CV55HY/xRnFhHIVgRvaQ9qb963ArbceEJNwy+
+	 wWgSOG7WjxgXdLuB2jf797RR/5w2OeTGbKSF2f+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Shengjiu Wang <shengjiu.wang@gmail.com>
-Subject: [PATCH 6.2 160/242] remoteproc: imx_dsp_rproc: Call of_node_put() on iteration error
-Date: Mon, 15 May 2023 18:28:06 +0200
-Message-Id: <20230515161726.685862677@linuxfoundation.org>
+	Peng Fan <peng.fan@nxp.com>
+Subject: [PATCH 6.2 161/242] remoteproc: imx_rproc: Call of_node_put() on iteration error
+Date: Mon, 15 May 2023 18:28:07 +0200
+Message-Id: <20230515161726.714526104@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,49 +36,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 
-commit e0e01de8ee146986872e54e8365f4b4654819412 upstream.
+commit 5ef074e805ecfd9a16dbb7b6b88bbfa8abad7054 upstream.
 
 Function of_phandle_iterator_next() calls of_node_put() on the last
 device_node it iterated over, but when the loop exits prematurely it has
 to be called explicitly.
 
-Fixes: ec0e5549f358 ("remoteproc: imx_dsp_rproc: Add remoteproc driver for DSP on i.MX")
+Fixes: b29b4249f8f0 ("remoteproc: imx_rproc: add i.MX specific parse fw hook")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Link: https://lore.kernel.org/r/20230320221826.2728078-6-mathieu.poirier@linaro.org
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/20230320221826.2728078-5-mathieu.poirier@linaro.org
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/imx_dsp_rproc.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/remoteproc/imx_rproc.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/remoteproc/imx_dsp_rproc.c
-+++ b/drivers/remoteproc/imx_dsp_rproc.c
-@@ -627,15 +627,19 @@ static int imx_dsp_rproc_add_carveout(st
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -541,6 +541,7 @@ static int imx_rproc_prepare(struct rpro
  
  		rmem = of_reserved_mem_lookup(it.node);
  		if (!rmem) {
 +			of_node_put(it.node);
- 			dev_err(dev, "unable to acquire memory-region\n");
+ 			dev_err(priv->dev, "unable to acquire memory-region\n");
  			return -EINVAL;
  		}
- 
--		if (imx_dsp_rproc_sys_to_da(priv, rmem->base, rmem->size, &da))
-+		if (imx_dsp_rproc_sys_to_da(priv, rmem->base, rmem->size, &da)) {
-+			of_node_put(it.node);
- 			return -EINVAL;
-+		}
- 
- 		cpu_addr = devm_ioremap_wc(dev, rmem->base, rmem->size);
- 		if (!cpu_addr) {
-+			of_node_put(it.node);
- 			dev_err(dev, "failed to map memory %p\n", &rmem->base);
- 			return -ENOMEM;
- 		}
-@@ -644,10 +648,12 @@ static int imx_dsp_rproc_add_carveout(st
- 		mem = rproc_mem_entry_init(dev, (void __force *)cpu_addr, (dma_addr_t)rmem->base,
- 					   rmem->size, da, NULL, NULL, it.node->name);
+@@ -553,10 +554,12 @@ static int imx_rproc_prepare(struct rpro
+ 					   imx_rproc_mem_alloc, imx_rproc_mem_release,
+ 					   it.node->name);
  
 -		if (mem)
 +		if (mem) {
