@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE44FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E1AC433EF;
-	Mon, 15 May 2023 16:42:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488E2FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A446AC4339C;
+	Mon, 15 May 2023 16:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168947;
-	bh=eWOD+ctRbSmWXvkox3o3YYIKB0MxRx4s2aqLfpxkaXQ=;
+	s=korg; t=1684168950;
+	bh=BmY2/NjYOVUdtnWQwfRNC9GZccEWeBLHaTRcXE3hlgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sl1UgRfaagA5VjyUfxtJJpT6Dl9cuQdxgot5vGTWdr/UbLI3lVZnxuG0MBbvLHPcT
-	 VnlQ22MduPz4qNit/QnZIKt3BiIm9eTFB6tAYobeuDZMw0SOJtju1i0uVAW/zKbAm3
-	 5lrCyxCI8suZfF5iXDw/tFAyHRYPlabyZP1QLUq8=
+	b=FlRSjoLiHrksc+vUB0twD43EhCI0COlbBZzGRciMP+OY2hqYSXDvAd2HVkBZMrFcY
+	 fobcXoiofsqvZ1i4SRZZIv7/FQpz4+mSZ7VvhRcBsAYxkwsg334csZb6csnTKWYrpy
+	 Gq8uBL9C44+MFtvHIOFOzi5WhMHYSmA8vGm8GRRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 063/191] wifi: rtlwifi: fix incorrect error codes in rtl_debugfs_set_write_reg()
-Date: Mon, 15 May 2023 18:25:00 +0200
-Message-Id: <20230515161709.494341149@linuxfoundation.org>
+Subject: [PATCH 4.19 054/191] vlan: partially enable SIOCSHWTSTAMP in container
+Date: Mon, 15 May 2023 18:24:51 +0200
+Message-Id: <20230515161709.178139801@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,51 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Vadim Fedorenko <vadim.fedorenko@linux.dev>
 
-[ Upstream commit 5dbe1f8eb8c5ac69394400a5b86fd81775e96c43 ]
+[ Upstream commit 731b73dba359e3ff00517c13aa0daa82b34ff466 ]
 
-If there is a failure during copy_from_user or user-provided data buffer is
-invalid, rtl_debugfs_set_write_reg should return negative error code instead
-of a positive value count.
+Setting timestamp filter was explicitly disabled on vlan devices in
+containers because it might affect other processes on the host. But it's
+absolutely legit in case when real device is in the same namespace.
 
-Fix this bug by returning correct error code. Moreover, the check of buffer
-against null is removed since it will be handled by copy_from_user.
-
-Fixes: 610247f46feb ("rtlwifi: Improve debugging by using debugfs")
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230326054217.93492-1-harperchen1110@gmail.com
+Fixes: 873017af7784 ("vlan: disable SIOCSHWTSTAMP in container")
+Signed-off-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtlwifi/debug.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/8021q/vlan_dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtlwifi/debug.c b/drivers/net/wireless/realtek/rtlwifi/debug.c
-index deacc7a28d3a7..6a0dfc6d4905e 100644
---- a/drivers/net/wireless/realtek/rtlwifi/debug.c
-+++ b/drivers/net/wireless/realtek/rtlwifi/debug.c
-@@ -319,8 +319,8 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
+diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
+index 84ef837721141..c80add6edf598 100644
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -369,7 +369,7 @@ static int vlan_dev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
  
- 	tmp_len = (count > sizeof(tmp) - 1 ? sizeof(tmp) - 1 : count);
- 
--	if (!buffer || copy_from_user(tmp, buffer, tmp_len))
--		return count;
-+	if (copy_from_user(tmp, buffer, tmp_len))
-+		return -EFAULT;
- 
- 	tmp[tmp_len] = '\0';
- 
-@@ -328,7 +328,7 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
- 	num = sscanf(tmp, "%x %x %x", &addr, &val, &len);
- 
- 	if (num !=  3)
--		return count;
-+		return -EINVAL;
- 
- 	switch (len) {
- 	case 1:
+ 	switch (cmd) {
+ 	case SIOCSHWTSTAMP:
+-		if (!net_eq(dev_net(dev), &init_net))
++		if (!net_eq(dev_net(dev), dev_net(real_dev)))
+ 			break;
+ 	case SIOCGMIIPHY:
+ 	case SIOCGMIIREG:
 -- 
 2.39.2
 
