@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EC6FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCD6C4339B;
-	Mon, 15 May 2023 16:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94F9FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DEAC433EF;
+	Mon, 15 May 2023 16:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169510;
-	bh=BjXWGzHn/6ks4060ocqyfFeUSKQNGjPdJ5BudGBnoN0=;
+	s=korg; t=1684169513;
+	bh=kRa/bjtKIZol98kBkfkNCuv5f4XFIPOMp9eF/zVnAq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ihtu5+bDQ1NcXtbOmgbKxHg5zmsERU2z63yRvjF9cb7bexz91QnkKpB2GykPHOMYE
-	 4quuQ27m6TulE9CunnF/XPVNrLSXK5aCsWfjxIkWo3KTfLcCyMQ05jTX5xs4vP5FlO
-	 Q0TspIskpkmDWe8Y2Hz19ttU4XVwNYnWzYpN5yTY=
+	b=lKyLUECQ+U0+RB3QymbMaoOsS5qYTrXb242uW+018zPNzTeOmcRwDsWzn3Ro+zOWC
+	 kGhCqw1ITwm3ooSjRtZJb9KtZsf0+G5oJqS5OPjqM5640sIDbl7+ivnO0AymevXn88
+	 S+DEJkt4phkRd7o/dgchY1f5XmOk+afRdJRbqwZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Rvfg <i@rvf6.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 080/246] af_packet: Dont send zero-byte data in packet_sendmsg_spkt().
-Date: Mon, 15 May 2023 18:24:52 +0200
-Message-Id: <20230515161724.979922992@linuxfoundation.org>
+Subject: [PATCH 6.3 081/246] netfilter: nf_tables: fix ct untracked match breakage
+Date: Mon, 15 May 2023 18:24:53 +0200
+Message-Id: <20230515161725.009039005@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -37,109 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 6a341729fb31b4c5df9f74f24b4b1c98410c9b87 ]
+[ Upstream commit f057b63bc11d86a98176de31b437e46789f44d8f ]
 
-syzkaller reported a warning below [0].
+"ct untracked" no longer works properly due to erroneous NFT_BREAK.
+We have to check ctinfo enum first.
 
-We can reproduce it by sending 0-byte data from the (AF_PACKET,
-SOCK_PACKET) socket via some devices whose dev->hard_header_len
-is 0.
-
-    struct sockaddr_pkt addr = {
-        .spkt_family = AF_PACKET,
-        .spkt_device = "tun0",
-    };
-    int fd;
-
-    fd = socket(AF_PACKET, SOCK_PACKET, 0);
-    sendto(fd, NULL, 0, 0, (struct sockaddr *)&addr, sizeof(addr));
-
-We have a similar fix for the (AF_PACKET, SOCK_RAW) socket as
-commit dc633700f00f ("net/af_packet: check len when min_header_len
-equals to 0").
-
-Let's add the same test for the SOCK_PACKET socket.
-
-[0]:
-skb_assert_len
-WARNING: CPU: 1 PID: 19945 at include/linux/skbuff.h:2552 skb_assert_len include/linux/skbuff.h:2552 [inline]
-WARNING: CPU: 1 PID: 19945 at include/linux/skbuff.h:2552 __dev_queue_xmit+0x1f26/0x31d0 net/core/dev.c:4159
-Modules linked in:
-CPU: 1 PID: 19945 Comm: syz-executor.0 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:skb_assert_len include/linux/skbuff.h:2552 [inline]
-RIP: 0010:__dev_queue_xmit+0x1f26/0x31d0 net/core/dev.c:4159
-Code: 89 de e8 1d a2 85 fd 84 db 75 21 e8 64 a9 85 fd 48 c7 c6 80 2a 1f 86 48 c7 c7 c0 06 1f 86 c6 05 23 cf 27 04 01 e8 fa ee 56 fd <0f> 0b e8 43 a9 85 fd 0f b6 1d 0f cf 27 04 31 ff 89 de e8 e3 a1 85
-RSP: 0018:ffff8880217af6e0 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffc90001133000
-RDX: 0000000000040000 RSI: ffffffff81186922 RDI: 0000000000000001
-RBP: ffff8880217af8b0 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000001 R12: ffff888030045640
-R13: ffff8880300456b0 R14: ffff888030045650 R15: ffff888030045718
-FS:  00007fc5864da640(0000) GS:ffff88806cd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020005740 CR3: 000000003f856003 CR4: 0000000000770ee0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- dev_queue_xmit include/linux/netdevice.h:3085 [inline]
- packet_sendmsg_spkt+0xc4b/0x1230 net/packet/af_packet.c:2066
- sock_sendmsg_nosec net/socket.c:724 [inline]
- sock_sendmsg+0x1b4/0x200 net/socket.c:747
- ____sys_sendmsg+0x331/0x970 net/socket.c:2503
- ___sys_sendmsg+0x11d/0x1c0 net/socket.c:2557
- __sys_sendmmsg+0x18c/0x430 net/socket.c:2643
- __do_sys_sendmmsg net/socket.c:2672 [inline]
- __se_sys_sendmmsg net/socket.c:2669 [inline]
- __x64_sys_sendmmsg+0x9c/0x100 net/socket.c:2669
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3c/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-RIP: 0033:0x7fc58791de5d
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 9f 1b 00 f7 d8 64 89 01 48
-RSP: 002b:00007fc5864d9cc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
-RAX: ffffffffffffffda RBX: 00000000004bbf80 RCX: 00007fc58791de5d
-RDX: 0000000000000001 RSI: 0000000020005740 RDI: 0000000000000004
-RBP: 00000000004bbf80 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fc58797e530 R15: 0000000000000000
- </TASK>
----[ end trace 0000000000000000 ]---
-skb len=0 headroom=16 headlen=0 tailroom=304
-mac=(16,0) net=(16,-1) trans=-1
-shinfo(txflags=0 nr_frags=0 gso(size=0 type=0 segs=0))
-csum(0x0 ip_summed=0 complete_sw=0 valid=0 level=0)
-hash(0x0 sw=0 l4=0) proto=0x0000 pkttype=0 iif=0
-dev name=sit0 feat=0x00000006401d7869
-sk family=17 type=10 proto=0
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d9e789147605 ("netfilter: nf_tables: avoid retpoline overhead for some ct expression calls")
+Reported-by: Rvfg <i@rvf6.com>
+Link: https://marc.info/?l=netfilter&m=168294996212038&w=2
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_ct_fast.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index ecd9fc27e360c..b8c62d88567ba 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2034,7 +2034,7 @@ static int packet_sendmsg_spkt(struct socket *sock, struct msghdr *msg,
- 		goto retry;
- 	}
+diff --git a/net/netfilter/nft_ct_fast.c b/net/netfilter/nft_ct_fast.c
+index 89983b0613fa3..e684c8a918487 100644
+--- a/net/netfilter/nft_ct_fast.c
++++ b/net/netfilter/nft_ct_fast.c
+@@ -15,10 +15,6 @@ void nft_ct_get_fast_eval(const struct nft_expr *expr,
+ 	unsigned int state;
  
--	if (!dev_validate_header(dev, skb->data, len)) {
-+	if (!dev_validate_header(dev, skb->data, len) || !skb->len) {
- 		err = -EINVAL;
- 		goto out_unlock;
- 	}
+ 	ct = nf_ct_get(pkt->skb, &ctinfo);
+-	if (!ct) {
+-		regs->verdict.code = NFT_BREAK;
+-		return;
+-	}
+ 
+ 	switch (priv->key) {
+ 	case NFT_CT_STATE:
+@@ -30,6 +26,16 @@ void nft_ct_get_fast_eval(const struct nft_expr *expr,
+ 			state = NF_CT_STATE_INVALID_BIT;
+ 		*dest = state;
+ 		return;
++	default:
++		break;
++	}
++
++	if (!ct) {
++		regs->verdict.code = NFT_BREAK;
++		return;
++	}
++
++	switch (priv->key) {
+ 	case NFT_CT_DIRECTION:
+ 		nft_reg_store8(dest, CTINFO2DIR(ctinfo));
+ 		return;
 -- 
 2.39.2
 
