@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F40E101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:57:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BDAC433EF;
-	Mon, 15 May 2023 17:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA5ED507
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:57:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32470C433EF;
+	Mon, 15 May 2023 17:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173469;
-	bh=jn/KJPtko9C4vM80ZJrD0xZOWj4M0n48uYm3g9CACgw=;
+	s=korg; t=1684173472;
+	bh=WBQHgrZivu1/vaqI2bSpJ1ggUsNp54OLvpEqeScgugQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQzt8zM0UeICA2Y3B8qaNyzde6PNf5zlWJ2jub2SK7uWhtyiWpZbXnsb+5kPZwFyL
-	 R2SR46/Y6HWCX58hNqbukNjXplPhOXS1TeUCj4J00h8eMe1FzrZ6Lf+J8qZwsGMjr1
-	 tm4nsmRqXGvE+fqLl/yUDmsOad2oLBVNOwl5OPRs=
+	b=io1a06uwXo3mAf1sNyuhDBAQQuHNeBMLd/a5nr1OMbYSSkY6MIelirCk3Inn3s5ol
+	 iaaxCArVegxol6YDgZO8wbRic6xUVCduxSLPMcC+UAcJHTyZ+2SQo+u0pu3J2L4awf
+	 MKG9K1z0mviPJ6QUhVlH/PvA7nXnBsw20SGBVBm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 076/282] wifi: ath5k: fix an off by one check in ath5k_eeprom_read_freq_list()
-Date: Mon, 15 May 2023 18:27:34 +0200
-Message-Id: <20230515161724.520119785@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+555908813b2ea35dae9a@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 077/282] wifi: ath6kl: reduce WARN to dev_dbg() in callback
+Date: Mon, 15 May 2023 18:27:35 +0200
+Message-Id: <20230515161724.549300929@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,37 +38,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 4c856ee12df85aabd437c3836ed9f68d94268358 ]
+[ Upstream commit 75c4a8154cb6c7239fb55d5550f481f6765fb83c ]
 
-This loop checks that i < max at the start of loop but then it does
-i++ which could put it past the end of the array.  It's harmless to
-check again and prevent a potential out of bounds.
+The warn is triggered on a known race condition, documented in the code above
+the test, that is correctly handled.  Using WARN() hinders automated testing.
+Reducing severity.
 
-Fixes: 1048643ea94d ("ath5k: Clean up eeprom parsing and add missing calibration data")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Fixes: de2070fc4aa7 ("ath6kl: Fix kernel panic on continuous driver load/unload")
+Reported-and-tested-by: syzbot+555908813b2ea35dae9a@syzkaller.appspotmail.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/Y+D9hPQrHfWBJhXz@kili
+Link: https://lore.kernel.org/r/20230126182431.867984-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath5k/eeprom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath6kl/htc_pipe.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath5k/eeprom.c b/drivers/net/wireless/ath/ath5k/eeprom.c
-index 01163b3339451..92f5c8e830901 100644
---- a/drivers/net/wireless/ath/ath5k/eeprom.c
-+++ b/drivers/net/wireless/ath/ath5k/eeprom.c
-@@ -529,7 +529,7 @@ ath5k_eeprom_read_freq_list(struct ath5k_hw *ah, int *offset, int max,
- 		ee->ee_n_piers[mode]++;
- 
- 		freq2 = (val >> 8) & 0xff;
--		if (!freq2)
-+		if (!freq2 || i >= max)
- 			break;
- 
- 		pc[i++].freq = ath5k_eeprom_bin2freq(ee,
+diff --git a/drivers/net/wireless/ath/ath6kl/htc_pipe.c b/drivers/net/wireless/ath/ath6kl/htc_pipe.c
+index c68848819a52d..9b88d96bfe96c 100644
+--- a/drivers/net/wireless/ath/ath6kl/htc_pipe.c
++++ b/drivers/net/wireless/ath/ath6kl/htc_pipe.c
+@@ -960,8 +960,8 @@ static int ath6kl_htc_pipe_rx_complete(struct ath6kl *ar, struct sk_buff *skb,
+ 	 * Thus the possibility of ar->htc_target being NULL
+ 	 * via ath6kl_recv_complete -> ath6kl_usb_io_comp_work.
+ 	 */
+-	if (WARN_ON_ONCE(!target)) {
+-		ath6kl_err("Target not yet initialized\n");
++	if (!target) {
++		ath6kl_dbg(ATH6KL_DBG_HTC, "Target not yet initialized\n");
+ 		status = -EINVAL;
+ 		goto free_skb;
+ 	}
 -- 
 2.39.2
 
