@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5472DFC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:16:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA735C433EF;
-	Mon, 15 May 2023 17:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F7CFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:16:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF61C433EF;
+	Mon, 15 May 2023 17:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171003;
-	bh=rCR/umXWjr3fBettugLtcE2iJQTWkq6+wtzDClOh1uI=;
+	s=korg; t=1684171006;
+	bh=WM1gXq+IRa5djWBc1wYQt6/vJlH4KNIRIuKm3FHKw/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aaWYJQ4lIBTio43/6rY4lU53JqEl3EJ9alJhviDu4OxDWluM2OaQObB8ePSRuvX8k
-	 hP+rta7bi+pplpnKOAkWgS/OVSRaJn1EzZy76o5B1ln5NCcMG25Lgq4Kg7BD7To9g5
-	 gI0Yz11LcwrcpMAlfbp/Eb6yrB39shnOnQ4Zlv54=
+	b=jRCOTzyAeUAZpz5jYqsnMLFPFlWq/mG6KqpPdUDwzSAC6YrRukwomf9JjIzk0h2aS
+	 vqwt3cttvzxumB3T72i0K7eBm2Uf+hqSzrE0vPA3yQnhJTs5j6nu9+9OgX55N9z6ND
+	 tAVbTxhWAsmF2YP/vCsRa0VlM10MNnLYD1bcQ0HI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmo Chou <chou.cosmo@gmail.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	Sai Krishna <saikrishnag@marvell.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 042/242] net/ncsi: clear Tx enable mode when handling a Config required AEN
-Date: Mon, 15 May 2023 18:26:08 +0200
-Message-Id: <20230515161723.179660116@linuxfoundation.org>
+Subject: [PATCH 6.2 069/242] octeontx2-pf: Increase the size of dmac filter flows
+Date: Mon, 15 May 2023 18:26:35 +0200
+Message-Id: <20230515161723.975857242@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,39 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cosmo Chou <chou.cosmo@gmail.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 6f75cd166a5a3c0bc50441faa8b8304f60522fdd ]
+[ Upstream commit 2a6eecc592b4d59a04d513aa25fc0f30d52100cd ]
 
-ncsi_channel_is_tx() determines whether a given channel should be
-used for Tx or not. However, when reconfiguring the channel by
-handling a Configuration Required AEN, there is a misjudgment that
-the channel Tx has already been enabled, which results in the Enable
-Channel Network Tx command not being sent.
+CN10kb supports large number of dmac filter flows to be
+inserted. Increase the field size to accommodate the same
 
-Clear the channel Tx enable flag before reconfiguring the channel to
-avoid the misjudgment.
-
-Fixes: 8d951a75d022 ("net/ncsi: Configure multi-package, multi-channel modes with failover")
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
+Fixes: b747923afff8 ("octeontx2-af: Exact match support")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-aen.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/ncsi/ncsi-aen.c b/net/ncsi/ncsi-aen.c
-index b635c194f0a85..62fb1031763d1 100644
---- a/net/ncsi/ncsi-aen.c
-+++ b/net/ncsi/ncsi-aen.c
-@@ -165,6 +165,7 @@ static int ncsi_aen_handler_cr(struct ncsi_dev_priv *ndp,
- 	nc->state = NCSI_CHANNEL_INACTIVE;
- 	list_add_tail_rcu(&nc->link, &ndp->channel_queue);
- 	spin_unlock_irqrestore(&ndp->lock, flags);
-+	nc->modes[NCSI_MODE_TX_ENABLE].enable = 0;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
+index f42b2b65bfd7b..0c8fc66ade82d 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
+@@ -335,11 +335,11 @@ struct otx2_flow_config {
+ #define OTX2_PER_VF_VLAN_FLOWS	2 /* Rx + Tx per VF */
+ #define OTX2_VF_VLAN_RX_INDEX	0
+ #define OTX2_VF_VLAN_TX_INDEX	1
+-	u16			max_flows;
+-	u8			dmacflt_max_flows;
+ 	u32			*bmap_to_dmacindex;
+ 	unsigned long		*dmacflt_bmap;
+ 	struct list_head	flow_list;
++	u32			dmacflt_max_flows;
++	u16                     max_flows;
+ };
  
- 	return ncsi_process_next_channel(ndp);
- }
+ struct otx2_tc_info {
 -- 
 2.39.2
 
