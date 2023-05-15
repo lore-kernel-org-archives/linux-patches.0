@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F88BFC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:36:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96EBEC433EF;
-	Mon, 15 May 2023 17:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D7FFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:36:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9549C4339B;
+	Mon, 15 May 2023 17:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172198;
-	bh=TFkufBmbjWOEFjG+8mkET8EfzYJk6FIXJkjZvYnvRr4=;
+	s=korg; t=1684172201;
+	bh=K8shd9osToc3L45Gnffq0Ke+e+wzP7LdhZz9RhTehAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BNtCUSx7BffNJjo3x0K/TpBuSj5pzK0hUrxSYgiVXie/Cz53OuucqP+dipIWI0S3z
-	 TMaG03luc5Uc2bmezCs3PYfLHdVTEqygfgUszauPC4hWlTDMPrH/dz7RXZtLstFWkR
-	 maeQi4RjkuXC1cDcGORLrNvFd1DghI/V6bIpUzBA=
+	b=F9/5pyJaUStQ6zU1uQWiVYJWOzpemQD2hdIvHk7GwgrEn5yl8MzR/9G00ZJynLhIK
+	 atpdZwWc/JZ4AN04Z47pcCLWzPajY7w1IrVIqCzP44bCcOkQCXhOWMgn/SPAuCPcJA
+	 uFJGz0KGrTxo/vtSnmWhgd+mPHqfidlq2Mpd2HH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Gerlach <d-gerlach@ti.com>,
-	Santosh Shilimkar <ssantosh@kernel.org>,
-	Suman Anna <s-anna@ti.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 076/381] soc: ti: pm33xx: Enable basic PM runtime support for genpd
-Date: Mon, 15 May 2023 18:25:27 +0200
-Message-Id: <20230515161740.248469854@linuxfoundation.org>
+Subject: [PATCH 5.10 077/381] soc: ti: pm33xx: Fix refcount leak in am33xx_pm_probe
+Date: Mon, 15 May 2023 18:25:28 +0200
+Message-Id: <20230515161740.297243405@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,73 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 74033131d2467fda6b76ba10bc80a75fb47e03d1 ]
+[ Upstream commit 8f3c307b580a4a6425896007325bddefc36e8d91 ]
 
-To prepare for moving to use genpd, let's enable basic PM
-runtime support.
+wkup_m3_ipc_get() takes refcount, which should be freed by
+wkup_m3_ipc_put(). Add missing refcount release in the error paths.
 
-Cc: Dave Gerlach <d-gerlach@ti.com>
-Cc: Santosh Shilimkar <ssantosh@kernel.org>
-Cc: Suman Anna <s-anna@ti.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Stable-dep-of: 8f3c307b580a ("soc: ti: pm33xx: Fix refcount leak in am33xx_pm_probe")
+Fixes: 5a99ae0092fe ("soc: ti: pm33xx: AM437X: Add rtc_only with ddr in self-refresh support")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20230106054022.947529-1-linmq006@gmail.com
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/pm33xx.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/soc/ti/pm33xx.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/soc/ti/pm33xx.c b/drivers/soc/ti/pm33xx.c
-index dc21aa855a458..332588de22f3f 100644
+index 332588de22f3f..44ec0048911cd 100644
 --- a/drivers/soc/ti/pm33xx.c
 +++ b/drivers/soc/ti/pm33xx.c
-@@ -19,6 +19,7 @@
- #include <linux/of_address.h>
- #include <linux/platform_data/pm33xx.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
- #include <linux/rtc.h>
- #include <linux/rtc/rtc-omap.h>
- #include <linux/sizes.h>
-@@ -555,16 +556,26 @@ static int am33xx_pm_probe(struct platform_device *pdev)
- 	suspend_wfi_flags |= WFI_FLAG_WAKE_M3;
- #endif /* CONFIG_SUSPEND */
+@@ -529,7 +529,7 @@ static int am33xx_pm_probe(struct platform_device *pdev)
  
-+	pm_runtime_enable(dev);
-+	ret = pm_runtime_get_sync(dev);
-+	if (ret < 0) {
-+		pm_runtime_put_noidle(dev);
-+		goto err_pm_runtime_disable;
-+	}
-+
- 	ret = pm_ops->init(am33xx_do_sram_idle);
- 	if (ret) {
- 		dev_err(dev, "Unable to call core pm init!\n");
- 		ret = -ENODEV;
--		goto err_put_wkup_m3_ipc;
-+		goto err_pm_runtime_put;
- 	}
+ 	ret = am33xx_pm_alloc_sram();
+ 	if (ret)
+-		return ret;
++		goto err_wkup_m3_ipc_put;
  
- 	return 0;
- 
--err_put_wkup_m3_ipc:
-+err_pm_runtime_put:
-+	pm_runtime_put_sync(dev);
-+err_pm_runtime_disable:
-+	pm_runtime_disable(dev);
- 	wkup_m3_ipc_put(m3_ipc);
+ 	ret = am33xx_pm_rtc_setup();
+ 	if (ret)
+@@ -576,13 +576,14 @@ static int am33xx_pm_probe(struct platform_device *pdev)
+ 	pm_runtime_put_sync(dev);
+ err_pm_runtime_disable:
+ 	pm_runtime_disable(dev);
+-	wkup_m3_ipc_put(m3_ipc);
  err_unsetup_rtc:
  	iounmap(rtc_base_virt);
-@@ -577,6 +588,8 @@ static int am33xx_pm_probe(struct platform_device *pdev)
+ 	clk_put(rtc_fck);
+ err_free_sram:
+ 	am33xx_pm_free_sram();
+ 	pm33xx_dev = NULL;
++err_wkup_m3_ipc_put:
++	wkup_m3_ipc_put(m3_ipc);
+ 	return ret;
+ }
  
- static int am33xx_pm_remove(struct platform_device *pdev)
- {
-+	pm_runtime_put_sync(&pdev->dev);
-+	pm_runtime_disable(&pdev->dev);
- 	if (pm_ops->deinit)
- 		pm_ops->deinit();
- 	suspend_set_ops(NULL);
 -- 
 2.39.2
 
