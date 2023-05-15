@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED30FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:16:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02423C433D2;
-	Mon, 15 May 2023 17:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7A5FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:16:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7ADC433D2;
+	Mon, 15 May 2023 17:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171009;
-	bh=nEI/eOx7zUkaeigj2ydAZtMduAjAzCGKwrId/1zLzM4=;
+	s=korg; t=1684171012;
+	bh=YBYlm6vj409LhjO5PIPteA9rF87iOWsbzMuC2IpVG3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b1g1lhBIPWcscqJiHdAQhn8yxpxA3fkhOTNA9rD5jJkMR199ww+n/ZJCng3tavq8M
-	 YXW8/hbAK9wrjsu2MGqTFK7DfISG44xmVkwcPDkx5w0n2TuEFeYvIlaz9Ncd9qJGH/
-	 Q0kARpVAU+N+t9Pg4BYiWUsu7n0cyHm3TSF0MHd0=
+	b=hxCavAAbAOEa6eJl2dWFk2XxSiGhCfGiA/o0O8poDOcbTHLGCUVWmMQyo53YE2d4l
+	 W0JXxRh2mYNEgVaChZXS1XpzCBfrjz5nPsO5c4PIF5aYPX986p1TRp9KpfpFcpG5DO
+	 xy2qHaGYQ6VAnyyZLq/BfkMCSPjAeMuig0EU42mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
-	Sai Krishna <saikrishnag@marvell.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	David Ahern <dsahern@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Coco Li <lixiaoyan@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 070/242] octeontx2-af: Add validation for lmac type
-Date: Mon, 15 May 2023 18:26:36 +0200
-Message-Id: <20230515161724.004460211@linuxfoundation.org>
+Subject: [PATCH 6.2 043/242] tcp: fix skb_copy_ubufs() vs BIG TCP
+Date: Mon, 15 May 2023 18:26:09 +0200
+Message-Id: <20230515161723.209140527@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -38,58 +39,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hariprasad Kelam <hkelam@marvell.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit cb5edce271764524b88b1a6866b3e626686d9a33 ]
+[ Upstream commit 7e692df3933628d974acb9f5b334d2b3e885e2a6 ]
 
-Upon physical link change, firmware reports to the kernel about the
-change along with the details like speed, lmac_type_id, etc.
-Kernel derives lmac_type based on lmac_type_id received from firmware.
+David Ahern reported crashes in skb_copy_ubufs() caused by TCP tx zerocopy
+using hugepages, and skb length bigger than ~68 KB.
 
-In a few scenarios, firmware returns an invalid lmac_type_id, which
-is resulting in below kernel panic. This patch adds the missing
-validation of the lmac_type_id field.
+skb_copy_ubufs() assumed it could copy all payload using up to
+MAX_SKB_FRAGS order-0 pages.
 
-Internal error: Oops: 96000005 [#1] PREEMPT SMP
-[   35.321595] Modules linked in:
-[   35.328982] CPU: 0 PID: 31 Comm: kworker/0:1 Not tainted
-5.4.210-g2e3169d8e1bc-dirty #17
-[   35.337014] Hardware name: Marvell CN103XX board (DT)
-[   35.344297] Workqueue: events work_for_cpu_fn
-[   35.352730] pstate: 40400089 (nZcv daIf +PAN -UAO)
-[   35.360267] pc : strncpy+0x10/0x30
-[   35.366595] lr : cgx_link_change_handler+0x90/0x180
+This assumption broke when BIG TCP was able to put up to 512 KB per skb.
 
-Fixes: 61071a871ea6 ("octeontx2-af: Forward CGX link notifications to PFs")
-Signed-off-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
-Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+We did not hit this bug at Google because we use CONFIG_MAX_SKB_FRAGS=45
+and limit gso_max_size to 180000.
+
+A solution is to use higher order pages if needed.
+
+v2: add missing __GFP_COMP, or we leak memory.
+
+Fixes: 7c4e983c4f3c ("net: allow gso_max_size to exceed 65536")
+Reported-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/netdev/c70000f6-baa4-4a05-46d0-4b3e0dc1ccc8@gmail.com/T/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Xin Long <lucien.xin@gmail.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Cc: Coco Li <lixiaoyan@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/cgx.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/core/skbuff.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-index 724df6398bbe2..bd77152bb8d7c 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/cgx.c
-@@ -1231,6 +1231,14 @@ static inline void link_status_user_format(u64 lstat,
- 	linfo->an = FIELD_GET(RESP_LINKSTAT_AN, lstat);
- 	linfo->fec = FIELD_GET(RESP_LINKSTAT_FEC, lstat);
- 	linfo->lmac_type_id = FIELD_GET(RESP_LINKSTAT_LMAC_TYPE, lstat);
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 6f5ef18a8b772..ef3dd8f120e02 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1608,7 +1608,7 @@ int skb_copy_ubufs(struct sk_buff *skb, gfp_t gfp_mask)
+ {
+ 	int num_frags = skb_shinfo(skb)->nr_frags;
+ 	struct page *page, *head = NULL;
+-	int i, new_frags;
++	int i, order, psize, new_frags;
+ 	u32 d_off;
+ 
+ 	if (skb_shared(skb) || skb_unclone(skb, gfp_mask))
+@@ -1617,9 +1617,17 @@ int skb_copy_ubufs(struct sk_buff *skb, gfp_t gfp_mask)
+ 	if (!num_frags)
+ 		goto release;
+ 
+-	new_frags = (__skb_pagelen(skb) + PAGE_SIZE - 1) >> PAGE_SHIFT;
++	/* We might have to allocate high order pages, so compute what minimum
++	 * page order is needed.
++	 */
++	order = 0;
++	while ((PAGE_SIZE << order) * MAX_SKB_FRAGS < __skb_pagelen(skb))
++		order++;
++	psize = (PAGE_SIZE << order);
 +
-+	if (linfo->lmac_type_id >= LMAC_MODE_MAX) {
-+		dev_err(&cgx->pdev->dev, "Unknown lmac_type_id %d reported by firmware on cgx port%d:%d",
-+			linfo->lmac_type_id, cgx->cgx_id, lmac_id);
-+		strncpy(linfo->lmac_type, "Unknown", LMACTYPE_STR_LEN - 1);
-+		return;
-+	}
-+
- 	lmac_string = cgx_lmactype_string[linfo->lmac_type_id];
- 	strncpy(linfo->lmac_type, lmac_string, LMACTYPE_STR_LEN - 1);
- }
++	new_frags = (__skb_pagelen(skb) + psize - 1) >> (PAGE_SHIFT + order);
+ 	for (i = 0; i < new_frags; i++) {
+-		page = alloc_page(gfp_mask);
++		page = alloc_pages(gfp_mask | __GFP_COMP, order);
+ 		if (!page) {
+ 			while (head) {
+ 				struct page *next = (struct page *)page_private(head);
+@@ -1646,11 +1654,11 @@ int skb_copy_ubufs(struct sk_buff *skb, gfp_t gfp_mask)
+ 			vaddr = kmap_atomic(p);
+ 
+ 			while (done < p_len) {
+-				if (d_off == PAGE_SIZE) {
++				if (d_off == psize) {
+ 					d_off = 0;
+ 					page = (struct page *)page_private(page);
+ 				}
+-				copy = min_t(u32, PAGE_SIZE - d_off, p_len - done);
++				copy = min_t(u32, psize - d_off, p_len - done);
+ 				memcpy(page_address(page) + d_off,
+ 				       vaddr + p_off + done, copy);
+ 				done += copy;
+@@ -1666,7 +1674,7 @@ int skb_copy_ubufs(struct sk_buff *skb, gfp_t gfp_mask)
+ 
+ 	/* skb frags point to kernel buffers */
+ 	for (i = 0; i < new_frags - 1; i++) {
+-		__skb_fill_page_desc(skb, i, head, 0, PAGE_SIZE);
++		__skb_fill_page_desc(skb, i, head, 0, psize);
+ 		head = (struct page *)page_private(head);
+ 	}
+ 	__skb_fill_page_desc(skb, new_frags - 1, head, 0, d_off);
 -- 
 2.39.2
 
