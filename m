@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60FAFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:46:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A121C433EF;
-	Mon, 15 May 2023 16:46:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24666FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:46:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31EB6C433EF;
+	Mon, 15 May 2023 16:46:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169187;
-	bh=uQtyOy6TNsbELjjqbnDxZNPI4ULgQu9ZfLQXiBaHeQU=;
+	s=korg; t=1684169191;
+	bh=Nc25TSkVxVrXY64easAv0Dysj5N+r+hR4Ws0zUbzFD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z4wqRYYlkJlIhzcovXD56kJ8d0E0u8s5KXnbSDFu2E0HNJ5+7fEG4VT+aeuelQdsK
-	 Plxt5NoxzqNbXrL0TRQpHl8oMxcifPftekR5H7Ae+qRlGsz9ZtUKkud2B8HSvYcA05
-	 fj2k5ePMQDp+S+UcKT2EsSHXRfxXrD/buDzycvh8=
+	b=OOnI04cL1yRxTH6Pj2z8SjzhzSGwEPdIpTDYuoy9u/zvEaY6oqtPH/0V2GG+DPeh5
+	 FhnmAI7aTlMRXoaXdrqCJD+iAPyUqRW7IbZbVQlfZOFTzq/mDw97c7U5+621JyX0rc
+	 eJmWhcZgEGDHnOzw5TKOPxF0zPco1xASPfvqvZWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 153/191] net/sched: act_mirred: Add carrier check
-Date: Mon, 15 May 2023 18:26:30 +0200
-Message-Id: <20230515161712.969118391@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>,
+	Rich Felker <dalias@libc.org>,
+	linux-sh@vger.kernel.org,
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 4.19 171/191] sh: math-emu: fix macro redefined warning
+Date: Mon, 15 May 2023 18:26:48 +0200
+Message-Id: <20230515161713.645485562@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,49 +39,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 526f28bd0fbdc699cda31426928802650c1528e5 ]
+commit 58a49ad90939386a8682e842c474a0d2c00ec39c upstream.
 
-There are cases where the device is adminstratively UP, but operationally
-down. For example, we have a physical device (Nvidia ConnectX-6 Dx, 25Gbps)
-who's cable was pulled out, here is its ip link output:
+Fix a warning that was reported by the kernel test robot:
 
-5: ens2f1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DEFAULT group default qlen 1000
-    link/ether b8:ce:f6:4b:68:35 brd ff:ff:ff:ff:ff:ff
-    altname enp179s0f1np1
+In file included from ../include/math-emu/soft-fp.h:27,
+                 from ../arch/sh/math-emu/math.c:22:
+../arch/sh/include/asm/sfp-machine.h:17: warning: "__BYTE_ORDER" redefined
+   17 | #define __BYTE_ORDER __BIG_ENDIAN
+In file included from ../arch/sh/math-emu/math.c:21:
+../arch/sh/math-emu/sfp-util.h:71: note: this is the location of the previous definition
+   71 | #define __BYTE_ORDER __LITTLE_ENDIAN
 
-As you can see, it's administratively UP but operationally down.
-In this case, sending a packet to this port caused a nasty kernel hang (so
-nasty that we were unable to capture it). Aborting a transmit based on
-operational status (in addition to administrative status) fixes the issue.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-v1->v2: Add fixes tag
-v2->v3: Remove blank line between tags + add change log, suggested by Leon
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b929926f01f2 ("sh: define __BIG_ENDIAN for math-emu")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: lore.kernel.org/r/202111121827.6v6SXtVv-lkp@intel.com
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+Cc: Rich Felker <dalias@libc.org>
+Cc: linux-sh@vger.kernel.org
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: stable@vger.kernel.org
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230306040037.20350-5-rdunlap@infradead.org
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_mirred.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/sh/math-emu/sfp-util.h |    4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index a30c17a282819..9aad86e4a0fb9 100644
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -220,7 +220,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 		goto out;
- 	}
+--- a/arch/sh/math-emu/sfp-util.h
++++ b/arch/sh/math-emu/sfp-util.h
+@@ -67,7 +67,3 @@
+   } while (0)
  
--	if (unlikely(!(dev->flags & IFF_UP))) {
-+	if (unlikely(!(dev->flags & IFF_UP)) || !netif_carrier_ok(dev)) {
- 		net_notice_ratelimited("tc mirred to Houston: device %s is down\n",
- 				       dev->name);
- 		goto out;
--- 
-2.39.2
-
+ #define abort()	return 0
+-
+-#define __BYTE_ORDER __LITTLE_ENDIAN
+-
+-
 
 
