@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4B271772F
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46830C4339C;
-	Mon, 15 May 2023 18:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17BC1772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36562C4339C;
+	Mon, 15 May 2023 18:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173723;
-	bh=PuJhJ386qkY3xe3BLwUd8Qs6572r5SKV0MWy8mHBvuE=;
+	s=korg; t=1684173726;
+	bh=HibkFFaDIeEug2W6/0dp0JOubJ2brmBiumJ33xsNx4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oJ0UeOv2+n3EXx3wVsmbHfGNMR0J9z9IwV6NFYRDznJcdSycSRFTZK83wn6cV5hMQ
-	 FRuPnkvJWAEo/xu9iYpjIBIwLaQxsTKyErTOPTwlse+8jYDSdRGjjrWQ6T/LayYZB6
-	 Pswghp2X6XFk+y0ZlqkABIpDHXHW+kepcWFH/dAQ=
+	b=QxtGfIKbYq1AOkhRq0+26BXVVp14MUyobu3+dyx86Lbr0sQTfvAcOK8vpZUwfp77y
+	 Yl2e3N5Y5PDb6Oiy/ixLzZaSwBkEzTq7jBK1109Oudln7a8pYYkQbuBWybBB7zNgY1
+	 KNHrgthvxA/l3hhYZdrvVaI4LJpTfiIZSqgPHJrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 186/282] pwm: mtk-disp: Disable shadow registers before setting backlight values
-Date: Mon, 15 May 2023 18:29:24 +0200
-Message-Id: <20230515161727.847183572@linuxfoundation.org>
+Subject: [PATCH 5.4 187/282] phy: tegra: xusb: Add missing tegra_xusb_port_unregister for usb2_port and ulpi_port
+Date: Mon, 15 May 2023 18:29:25 +0200
+Message-Id: <20230515161727.875959089@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -37,68 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 36dd7f530ae7d9ce9e853ffb8aa337de65c6600b ]
+[ Upstream commit e024854048e733391b31fe5a398704b31b9af803 ]
 
-If shadow registers usage is not desired, disable that before performing
-any write to CON0/1 registers in the .apply() callback, otherwise we may
-lose clkdiv or period/width updates.
+The tegra_xusb_port_unregister should be called when usb2_port
+and ulpi_port map fails in tegra_xusb_add_usb2_port() or in
+tegra_xusb_add_ulpi_port(), fix it.
 
-Fixes: cd4b45ac449a ("pwm: Add MediaTek MT2701 display PWM driver support")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Tested-by: Alexandre Mergnat <amergnat@baylibre.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20221129111634.1547747-1-cuigaosheng1@huawei.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/phy/tegra/xusb.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index a594a0fdddd7b..327c780d433da 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -114,6 +114,19 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	high_width = div64_u64(rate * duty_ns, div);
- 	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
- 
-+	if (mdp->data->bls_debug && !mdp->data->has_commit) {
-+		/*
-+		 * For MT2701, disable double buffer before writing register
-+		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
-+		 */
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
-+					 mdp->data->bls_debug_mask,
-+					 mdp->data->bls_debug_mask);
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
-+					 mdp->data->con0_sel,
-+					 mdp->data->con0_sel);
-+	}
-+
- 	mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
- 				 PWM_CLKDIV_MASK,
- 				 clk_div << PWM_CLKDIV_SHIFT);
-@@ -128,17 +141,6 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 		mtk_disp_pwm_update_bits(mdp, mdp->data->commit,
- 					 mdp->data->commit_mask,
- 					 0x0);
--	} else {
--		/*
--		 * For MT2701, disable double buffer before writing register
--		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
--		 */
--		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
--					 mdp->data->bls_debug_mask,
--					 mdp->data->bls_debug_mask);
--		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
--					 mdp->data->con0_sel,
--					 mdp->data->con0_sel);
+diff --git a/drivers/phy/tegra/xusb.c b/drivers/phy/tegra/xusb.c
+index bf5d80b97597b..efe7abf459fda 100644
+--- a/drivers/phy/tegra/xusb.c
++++ b/drivers/phy/tegra/xusb.c
+@@ -606,6 +606,7 @@ static int tegra_xusb_add_usb2_port(struct tegra_xusb_padctl *padctl,
+ 	usb2->base.lane = usb2->base.ops->map(&usb2->base);
+ 	if (IS_ERR(usb2->base.lane)) {
+ 		err = PTR_ERR(usb2->base.lane);
++		tegra_xusb_port_unregister(&usb2->base);
+ 		goto out;
  	}
  
- 	clk_disable_unprepare(mdp->clk_mm);
+@@ -658,6 +659,7 @@ static int tegra_xusb_add_ulpi_port(struct tegra_xusb_padctl *padctl,
+ 	ulpi->base.lane = ulpi->base.ops->map(&ulpi->base);
+ 	if (IS_ERR(ulpi->base.lane)) {
+ 		err = PTR_ERR(ulpi->base.lane);
++		tegra_xusb_port_unregister(&ulpi->base);
+ 		goto out;
+ 	}
+ 
 -- 
 2.39.2
 
