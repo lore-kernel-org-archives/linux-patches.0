@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E7DFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:43:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB860C433D2;
-	Mon, 15 May 2023 16:43:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50FF8FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:43:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC2F5C4339B;
+	Mon, 15 May 2023 16:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169018;
-	bh=26mI+EMAj6RgnTLQYmPlNyfcRTi1EK1AZMJwmxc08iw=;
+	s=korg; t=1684169021;
+	bh=sF7ZBgsVmgijIqv/pXx+8FRGezQlNpxl1nYiGp21MJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xb4WPb7jJ00RiAS3SxEEX6iTRnNy6MroOFU/9GRwGEB7IDMPXzavI0mxkg3Gmk/bL
-	 OCyL4bR35gIwlIwmgBHYDVXkCS+cFG0rHO+pHH3TYhX2NjSFaZSHsuplKomssT8HkV
-	 GlWxaOYERwrfasdIkkdB2nBDf+HE5NZmvMVmn60M=
+	b=aA1acU75Pyxj2FsB9QTGOCbx4722AkT4SNdfbzcXPvyl6+rEn34EWQha7SvgtHCOe
+	 5yMLJrpi4XILe6CHkB7OT1qEXYQVbRjsJ8G0Bl5EZB5xojEVW7nexRUUfW2tlT9t5G
+	 JoQOBfHJNxXxGZaIbQqVP9av0kNgoT4YGtkAx3i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brendan Cunningham <bcunningham@cornelisnetworks.com>,
-	Patrick Kelsey <pat.kelsey@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	"Dae R. Jeong" <threeearcat@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 115/191] IB/hfi1: Fix SDMA mmu_rb_node not being evicted in LRU order
-Date: Mon, 15 May 2023 18:25:52 +0200
-Message-Id: <20230515161711.447022231@linuxfoundation.org>
+Subject: [PATCH 4.19 089/191] vmci_host: fix a race condition in vmci_host_poll() causing GPF
+Date: Mon, 15 May 2023 18:25:26 +0200
+Message-Id: <20230515161710.490427586@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -37,91 +34,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
+From: Dae R. Jeong <threeearcat@gmail.com>
 
-[ Upstream commit 9fe8fec5e43d5a80f43cbf61aaada1b047a1eb61 ]
+[ Upstream commit ae13381da5ff0e8e084c0323c3cc0a945e43e9c7 ]
 
-hfi1_mmu_rb_remove_unless_exact() did not move mmu_rb_node objects in
-mmu_rb_handler->lru_list after getting a cache hit on an mmu_rb_node.
+During fuzzing, a general protection fault is observed in
+vmci_host_poll().
 
-As a result, hfi1_mmu_rb_evict() was not guaranteed to evict truly
-least-recently used nodes.
+general protection fault, probably for non-canonical address 0xdffffc0000000019: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x00000000000000c8-0x00000000000000cf]
+RIP: 0010:__lock_acquire+0xf3/0x5e00 kernel/locking/lockdep.c:4926
+<- omitting registers ->
+Call Trace:
+ <TASK>
+ lock_acquire+0x1a4/0x4a0 kernel/locking/lockdep.c:5672
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+ _raw_spin_lock_irqsave+0xb3/0x100 kernel/locking/spinlock.c:162
+ add_wait_queue+0x3d/0x260 kernel/sched/wait.c:22
+ poll_wait include/linux/poll.h:49 [inline]
+ vmci_host_poll+0xf8/0x2b0 drivers/misc/vmw_vmci/vmci_host.c:174
+ vfs_poll include/linux/poll.h:88 [inline]
+ do_pollfd fs/select.c:873 [inline]
+ do_poll fs/select.c:921 [inline]
+ do_sys_poll+0xc7c/0x1aa0 fs/select.c:1015
+ __do_sys_ppoll fs/select.c:1121 [inline]
+ __se_sys_ppoll+0x2cc/0x330 fs/select.c:1101
+ do_syscall_x64 arch/x86/entry/common.c:51 [inline]
+ do_syscall_64+0x4e/0xa0 arch/x86/entry/common.c:82
+ entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-This could be a performance issue for an application when that
-application:
-- Uses some long-lived buffers frequently.
-- Uses a large number of buffers once.
-- Hits the mmu_rb_handler cache size or pinned-page limits, forcing
-  mmu_rb_handler cache entries to be evicted.
+Example thread interleaving that causes the general protection fault
+is as follows:
 
-In this case, the one-time use buffers cause the long-lived buffer
-entries to eventually filter to the end of the LRU list where
-hfi1_mmu_rb_evict() will consider evicting a frequently-used long-lived
-entry instead of evicting one of the one-time use entries.
+CPU1 (vmci_host_poll)               CPU2 (vmci_host_do_init_context)
+-----                               -----
+// Read uninitialized context
+context = vmci_host_dev->context;
+                                    // Initialize context
+                                    vmci_host_dev->context = vmci_ctx_create();
+                                    vmci_host_dev->ct_type = VMCIOBJ_CONTEXT;
 
-Fix this by inserting new mmu_rb_node at the tail of
-mmu_rb_handler->lru_list and move mmu_rb_ndoe to the tail of
-mmu_rb_handler->lru_list when the mmu_rb_node is a hit in
-hfi1_mmu_rb_remove_unless_exact(). Change hfi1_mmu_rb_evict() to evict
-from the head of mmu_rb_handler->lru_list instead of the tail.
+if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
+    // Dereferencing the wrong pointer
+    poll_wait(..., &context->host_context);
+}
 
-Fixes: 0636e9ab8355 ("IB/hfi1: Add cache evict LRU list")
-Signed-off-by: Brendan Cunningham <bcunningham@cornelisnetworks.com>
-Signed-off-by: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/168088635931.3027109.10423156330761536044.stgit@252.162.96.66.static.eigbox.net
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+In this scenario, vmci_host_poll() reads vmci_host_dev->context first,
+and then reads vmci_host_dev->ct_type to check that
+vmci_host_dev->context is initialized. However, since these two reads
+are not atomically executed, there is a chance of a race condition as
+described above.
+
+To fix this race condition, read vmci_host_dev->context after checking
+the value of vmci_host_dev->ct_type so that vmci_host_poll() always
+reads an initialized context.
+
+Reported-by: Dae R. Jeong <threeearcat@gmail.com>
+Fixes: 8bf503991f87 ("VMCI: host side driver implementation.")
+Signed-off-by: Dae R. Jeong <threeearcat@gmail.com>
+Link: https://lore.kernel.org/r/ZCGFsdBAU4cYww5l@dragonet
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/mmu_rb.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/misc/vmw_vmci/vmci_host.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/mmu_rb.c b/drivers/infiniband/hw/hfi1/mmu_rb.c
-index e1c7996c018ef..513a297b4ff0e 100644
---- a/drivers/infiniband/hw/hfi1/mmu_rb.c
-+++ b/drivers/infiniband/hw/hfi1/mmu_rb.c
-@@ -175,7 +175,7 @@ int hfi1_mmu_rb_insert(struct mmu_rb_handler *handler,
- 		goto unlock;
- 	}
- 	__mmu_int_rb_insert(mnode, &handler->root);
--	list_add(&mnode->list, &handler->lru_list);
-+	list_add_tail(&mnode->list, &handler->lru_list);
+diff --git a/drivers/misc/vmw_vmci/vmci_host.c b/drivers/misc/vmw_vmci/vmci_host.c
+index 83e0c95d20a47..5acbf384ffa64 100644
+--- a/drivers/misc/vmw_vmci/vmci_host.c
++++ b/drivers/misc/vmw_vmci/vmci_host.c
+@@ -169,10 +169,16 @@ static int vmci_host_close(struct inode *inode, struct file *filp)
+ static __poll_t vmci_host_poll(struct file *filp, poll_table *wait)
+ {
+ 	struct vmci_host_dev *vmci_host_dev = filp->private_data;
+-	struct vmci_ctx *context = vmci_host_dev->context;
++	struct vmci_ctx *context;
+ 	__poll_t mask = 0;
  
- 	ret = handler->ops->insert(handler->ops_arg, mnode);
- 	if (ret) {
-@@ -222,8 +222,10 @@ bool hfi1_mmu_rb_remove_unless_exact(struct mmu_rb_handler *handler,
- 	spin_lock_irqsave(&handler->lock, flags);
- 	node = __mmu_rb_search(handler, addr, len);
- 	if (node) {
--		if (node->addr == addr && node->len == len)
-+		if (node->addr == addr && node->len == len) {
-+			list_move_tail(&node->list, &handler->lru_list);
- 			goto unlock;
-+		}
- 		__mmu_int_rb_remove(node, &handler->root);
- 		list_del(&node->list); /* remove from LRU list */
- 		ret = true;
-@@ -244,8 +246,7 @@ void hfi1_mmu_rb_evict(struct mmu_rb_handler *handler, void *evict_arg)
- 	INIT_LIST_HEAD(&del_list);
- 
- 	spin_lock_irqsave(&handler->lock, flags);
--	list_for_each_entry_safe_reverse(rbnode, ptr, &handler->lru_list,
--					 list) {
-+	list_for_each_entry_safe(rbnode, ptr, &handler->lru_list, list) {
- 		if (handler->ops->evict(handler->ops_arg, rbnode, evict_arg,
- 					&stop)) {
- 			__mmu_int_rb_remove(rbnode, &handler->root);
-@@ -257,9 +258,7 @@ void hfi1_mmu_rb_evict(struct mmu_rb_handler *handler, void *evict_arg)
- 	}
- 	spin_unlock_irqrestore(&handler->lock, flags);
- 
--	while (!list_empty(&del_list)) {
--		rbnode = list_first_entry(&del_list, struct mmu_rb_node, list);
--		list_del(&rbnode->list);
-+	list_for_each_entry_safe(rbnode, ptr, &del_list, list) {
- 		handler->ops->remove(handler->ops_arg, rbnode);
- 	}
- }
+ 	if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
++		/*
++		 * Read context only if ct_type == VMCIOBJ_CONTEXT to make
++		 * sure that context is initialized
++		 */
++		context = vmci_host_dev->context;
++
+ 		/* Check for VMCI calls to this VM context. */
+ 		if (wait)
+ 			poll_wait(filp, &context->host_context.wait_queue,
 -- 
 2.39.2
 
