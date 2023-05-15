@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9C4FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:31:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5F4C433D2;
-	Mon, 15 May 2023 17:31:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419C8FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:31:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A760CC433D2;
+	Mon, 15 May 2023 17:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171900;
-	bh=OS/0TrytQFg/zb1q7nr/0ZmHojUHwONBC8iw3eH7D8c=;
+	s=korg; t=1684171903;
+	bh=U4NSWi9f+F1NaQZ6NGyWh16DzOqv+ksa2bIZuhHkBuY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bW/7DNRDLSHXofSRfs+6WkcgcDqTJF59/vAYh1Y/k0taHulQciWN66thWfsHGVci9
-	 BihNOzsp7k/02cttTmzNAvnr6Ms+rLOwYVZbSsXRp6/0WYQXcG0iAvaOFas5RMKKUY
-	 /0rKmf4xe9DQKvi359AsNCNKH1JteucVQjyL5Yvk=
+	b=yx0xW6P+O4GwoFKxo6s53rce0k40iwjvLo4QWOjJwhaPP3pDMMFz1PsY5MWNIDYNW
+	 QEAge+lQTEpGZ7gwnCBU6mEOviHBokOOgBASNgIim59+QZvudQZxX5Bie05syvhEKP
+	 ATCAYAX/L4cKWtuSHc5avHc0uWgpYyCaM9hvdPKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Robert Foss <rfoss@kernel.org>
-Subject: [PATCH 5.15 084/134] drm/bridge: lt8912b: Fix DSI Video Mode
-Date: Mon, 15 May 2023 18:29:21 +0200
-Message-Id: <20230515161705.970534179@linuxfoundation.org>
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 5.15 085/134] drm/msm: fix NULL-deref on snapshot tear down
+Date: Mon, 15 May 2023 18:29:22 +0200
+Message-Id: <20230515161706.000459956@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -34,34 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit f435b7ef3b360d689df2ffa8326352cd07940d92 upstream.
+commit a465353b9250802f87b97123e33a17f51277f0b1 upstream.
 
-LT8912 DSI port supports only Non-Burst mode video operation with Sync
-Events and continuous clock on clock lane, correct dsi mode flags
-according to that removing MIPI_DSI_MODE_VIDEO_BURST flag.
+In case of early initialisation errors and on platforms that do not use
+the DPU controller, the deinitilisation code can be called with the kms
+pointer set to NULL.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230330093131.424828-1-francesco@dolcini.it
+Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Cc: stable@vger.kernel.org      # 5.14
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/525099/
+Link: https://lore.kernel.org/r/20230306100722.28485-4-johan+linaro@kernel.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/msm/msm_drv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -494,7 +494,6 @@ static int lt8912_attach_dsi(struct lt89
- 	dsi->format = MIPI_DSI_FMT_RGB888;
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -359,7 +359,8 @@ static int msm_drm_uninit(struct device
+ 		msm_fbdev_free(ddev);
+ #endif
  
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
--			  MIPI_DSI_MODE_VIDEO_BURST |
- 			  MIPI_DSI_MODE_LPM |
- 			  MIPI_DSI_MODE_NO_EOT_PACKET;
+-	msm_disp_snapshot_destroy(ddev);
++	if (kms)
++		msm_disp_snapshot_destroy(ddev);
+ 
+ 	drm_mode_config_cleanup(ddev);
  
 
 
