@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67080DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:38:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE228C433D2;
-	Mon, 15 May 2023 16:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BA67DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:38:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B83C433EF;
+	Mon, 15 May 2023 16:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168716;
-	bh=H7lTaxAkWUTCZRnELFrZ32gMgiKFX9KwKInMsAGrMew=;
+	s=korg; t=1684168719;
+	bh=Ryr/Rq4IiAQ+qha+9rw2bVrpqB17MVa8mli6FI60AiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3ZMFJtkYRxdT7udBbPp1Kfutgd8fBJ04HcssM0U0LJnIjmvTtcGVuc4+rdV2UU9K
-	 UMFMWPbbYr51SF6+7SvZxDqmIFOcEgI5ZPQGiGC6tuRikU6bIWJwVKaSDLkAznAMm0
-	 dRLMNW/lAZWT/t3XtQnLNKN+idquhJOak3HImU3M=
+	b=zbgQ/VhiYQevZ4QLPQYeEblnF9NrYo9taahqDky2OT4ANFkqPwUXfxNj9eGlLFUSL
+	 ZNvKwNVAGve482PZRm6TijwPSyqR6kkSI7ApmBzccHBXJEQTwOO5suR2+aAT0o6VfM
+	 5cYhPryFWnj3OWVUxs+ISUZj4bjJvQDA9o7pGdbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 4.19 019/191] Revert "ubifs: dirty_cow_znode: Fix memleak in error handling path"
-Date: Mon, 15 May 2023 18:24:16 +0200
-Message-Id: <20230515161707.895412315@linuxfoundation.org>
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 4.19 002/191] bluetooth: Perform careful capability checks in hci_sock_ioctl()
+Date: Mon, 15 May 2023 18:23:59 +0200
+Message-Id: <20230515161707.292050643@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -34,47 +34,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-commit 7d01cb27f6aebc54efbe28d8961a973b8f795b13 upstream.
+commit 25c150ac103a4ebeed0319994c742a90634ddf18 upstream.
 
-This reverts commit 122deabfe1428 (ubifs: dirty_cow_znode: Fix memleak
-in error handling path).
-After commit 122deabfe1428 applied, if insert_old_idx() failed, old
-index neither exists in TNC nor in old-index tree. Which means that
-old index node could be overwritten in layout_leb_in_gaps(), then
-ubifs image will be corrupted in power-cut.
+Previously, capability was checked using capable(), which verified that the
+caller of the ioctl system call had the required capability. In addition,
+the result of the check would be stored in the HCI_SOCK_TRUSTED flag,
+making it persistent for the socket.
 
-Fixes: 122deabfe1428 (ubifs: dirty_cow_znode: Fix memleak ... path)
+However, malicious programs can abuse this approach by deliberately sharing
+an HCI socket with a privileged task. The HCI socket will be marked as
+trusted when the privileged task occasionally makes an ioctl call.
+
+This problem can be solved by using sk_capable() to check capability, which
+ensures that not only the current task but also the socket opener has the
+specified capability, thus reducing the risk of privilege escalation
+through the previously identified vulnerability.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Fixes: f81f5b2db869 ("Bluetooth: Send control open and close messages for HCI raw sockets")
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ubifs/tnc.c |    9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ net/bluetooth/hci_sock.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/fs/ubifs/tnc.c
-+++ b/fs/ubifs/tnc.c
-@@ -279,18 +279,11 @@ static struct ubifs_znode *dirty_cow_zno
- 	if (zbr->len) {
- 		err = insert_old_idx(c, zbr->lnum, zbr->offs);
- 		if (unlikely(err))
--			/*
--			 * Obsolete znodes will be freed by tnc_destroy_cnext()
--			 * or free_obsolete_znodes(), copied up znodes should
--			 * be added back to tnc and freed by
--			 * ubifs_destroy_tnc_subtree().
--			 */
--			goto out;
-+			return ERR_PTR(err);
- 		err = add_idx_dirt(c, zbr->lnum, zbr->len);
- 	} else
- 		err = 0;
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -989,7 +989,14 @@ static int hci_sock_ioctl(struct socket
+ 	if (hci_sock_gen_cookie(sk)) {
+ 		struct sk_buff *skb;
  
--out:
- 	zbr->znode = zn;
- 	zbr->lnum = 0;
- 	zbr->offs = 0;
+-		if (capable(CAP_NET_ADMIN))
++		/* Perform careful checks before setting the HCI_SOCK_TRUSTED
++		 * flag. Make sure that not only the current task but also
++		 * the socket opener has the required capability, since
++		 * privileged programs can be tricked into making ioctl calls
++		 * on HCI sockets, and the socket should not be marked as
++		 * trusted simply because the ioctl caller is privileged.
++		 */
++		if (sk_capable(sk, CAP_NET_ADMIN))
+ 			hci_sock_set_flag(sk, HCI_SOCK_TRUSTED);
+ 
+ 		/* Send event to monitor */
 
 
