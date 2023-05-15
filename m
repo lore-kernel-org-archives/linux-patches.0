@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B71FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232F8C433EF;
-	Mon, 15 May 2023 16:48:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A5BFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA09C433EF;
+	Mon, 15 May 2023 16:48:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169281;
-	bh=eneSfdHZZIigCbK4uJJvxm1G7RJebvwOZ+fvEna6Sew=;
+	s=korg; t=1684169284;
+	bh=xNOXRCWgfnAYfImjNtYYaDmHq3W8p9M3utCo1WQo9NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+ngNw+s/MfOO6hAN3eTzspspRfe8AO9C89qFkv9sJ6srd4EZEDfXz4QccoB0ANPv
-	 +vhYIha1CSrOakuA+9P3QT2HXgUAwg+vHz2p4DE/BiUNMJNaOqQQ2VI1sr54N3OH6j
-	 P/05eMs4KRb+uVP6mPpLXbpaWi9xgG4vYDzqVvuI=
+	b=EBGxbX4D3Bj0oyy24IftwmDuwD+Z223YO8EUXPFCz+7cRPQzYyNx4Bg4xB4eeNYRc
+	 lWYG97tZgoSCNCr+wvnxqD1daMFngR8yuABuocfOLfA0BpJm2acsv99mUKdnCQHyRO
+	 SxlgHrq0CS/IcTpBsGj1spF3GTK6mCeIyzOoIeSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 001/246] USB: dwc3: gadget: drop dead hibernation code
-Date: Mon, 15 May 2023 18:23:33 +0200
-Message-Id: <20230515161722.658179152@linuxfoundation.org>
+Subject: [PATCH 6.3 010/246] RDMA/rxe: Change rxe_dbg to rxe_dbg_dev
+Date: Mon, 15 May 2023 18:23:42 +0200
+Message-Id: <20230515161722.926119386@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,139 +35,273 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit bdb19d01026a5cccfa437be8adcf2df472c5889e ]
+[ Upstream commit a9fb3287211e64b94ceb2b6b4791cc2b829d0d56 ]
 
-The hibernation code is broken and has never been enabled in mainline
-and should thus be dropped.
+Replace the name rxe_dbg with rxe_dbg_dev which better matches
+the remaining rxe_dbg_xxx macros for debug messages with a
+rxe device parameter. Reuse the name rxe_dbg for debug messages
+which do not have a rxe device parameter.
 
-Remove the hibernation bits from the gadget code, which effectively
-reverts commits e1dadd3b0f27 ("usb: dwc3: workaround: bogus hibernation
-events") and 7b2a0368bbc9 ("usb: dwc3: gadget: set KEEP_CONNECT in case
-of hibernation") except for the spurious interrupt warning.
-
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230404072524.19014-5-johan+linaro@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 39674be56fba ("usb: dwc3: gadget: Execute gadget stop after halting the controller")
+Link: https://lore.kernel.org/r/20230303221623.8053-3-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 78b26a335310 ("RDMA/rxe: Remove tasklet call from rxe_cq.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 46 +++++----------------------------------
- 1 file changed, 6 insertions(+), 40 deletions(-)
+ drivers/infiniband/sw/rxe/rxe.c       |  2 +-
+ drivers/infiniband/sw/rxe/rxe.h       |  3 ++-
+ drivers/infiniband/sw/rxe/rxe_cq.c    |  6 +++---
+ drivers/infiniband/sw/rxe/rxe_icrc.c  |  4 ++--
+ drivers/infiniband/sw/rxe/rxe_mmap.c  |  6 +++---
+ drivers/infiniband/sw/rxe/rxe_net.c   |  4 ++--
+ drivers/infiniband/sw/rxe/rxe_qp.c    | 16 ++++++++--------
+ drivers/infiniband/sw/rxe/rxe_srq.c   |  6 +++---
+ drivers/infiniband/sw/rxe/rxe_verbs.c |  2 +-
+ 9 files changed, 25 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index 3faac3244c7db..a995e3f4df37f 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2478,7 +2478,7 @@ static void __dwc3_gadget_set_speed(struct dwc3 *dwc)
- 	dwc3_writel(dwc->regs, DWC3_DCFG, reg);
- }
- 
--static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
-+static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on)
- {
- 	u32			reg;
- 	u32			timeout = 2000;
-@@ -2497,17 +2497,11 @@ static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
- 			reg &= ~DWC3_DCTL_KEEP_CONNECT;
- 		reg |= DWC3_DCTL_RUN_STOP;
- 
--		if (dwc->has_hibernation)
--			reg |= DWC3_DCTL_KEEP_CONNECT;
--
- 		__dwc3_gadget_set_speed(dwc);
- 		dwc->pullups_connected = true;
- 	} else {
- 		reg &= ~DWC3_DCTL_RUN_STOP;
- 
--		if (dwc->has_hibernation && !suspend)
--			reg &= ~DWC3_DCTL_KEEP_CONNECT;
--
- 		dwc->pullups_connected = false;
+diff --git a/drivers/infiniband/sw/rxe/rxe.c b/drivers/infiniband/sw/rxe/rxe.c
+index a3f05fdd9fac2..d57ba7a5964b9 100644
+--- a/drivers/infiniband/sw/rxe/rxe.c
++++ b/drivers/infiniband/sw/rxe/rxe.c
+@@ -187,7 +187,7 @@ static int rxe_newlink(const char *ibdev_name, struct net_device *ndev)
+ 	rxe = rxe_get_dev_from_net(ndev);
+ 	if (rxe) {
+ 		ib_device_put(&rxe->ib_dev);
+-		rxe_dbg(rxe, "already configured on %s\n", ndev->name);
++		rxe_dbg_dev(rxe, "already configured on %s\n", ndev->name);
+ 		err = -EEXIST;
+ 		goto err;
  	}
+diff --git a/drivers/infiniband/sw/rxe/rxe.h b/drivers/infiniband/sw/rxe/rxe.h
+index 2415f3704f576..0757acc381038 100644
+--- a/drivers/infiniband/sw/rxe/rxe.h
++++ b/drivers/infiniband/sw/rxe/rxe.h
+@@ -38,7 +38,8 @@
  
-@@ -2589,7 +2583,7 @@ static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
- 	 * remaining event generated by the controller while polling for
- 	 * DSTS.DEVCTLHLT.
- 	 */
--	return dwc3_gadget_run_stop(dwc, false, false);
-+	return dwc3_gadget_run_stop(dwc, false);
- }
+ #define RXE_ROCE_V2_SPORT		(0xc000)
  
- static int dwc3_gadget_pullup(struct usb_gadget *g, int is_on)
-@@ -2643,7 +2637,7 @@ static int dwc3_gadget_pullup(struct usb_gadget *g, int is_on)
+-#define rxe_dbg(rxe, fmt, ...) ibdev_dbg(&(rxe)->ib_dev,		\
++#define rxe_dbg(fmt, ...) pr_debug("%s: " fmt "\n", __func__, ##__VA_ARGS__)
++#define rxe_dbg_dev(rxe, fmt, ...) ibdev_dbg(&(rxe)->ib_dev,		\
+ 		"%s: " fmt, __func__, ##__VA_ARGS__)
+ #define rxe_dbg_uc(uc, fmt, ...) ibdev_dbg((uc)->ibuc.device,		\
+ 		"uc#%d %s: " fmt, (uc)->elem.index, __func__, ##__VA_ARGS__)
+diff --git a/drivers/infiniband/sw/rxe/rxe_cq.c b/drivers/infiniband/sw/rxe/rxe_cq.c
+index faf49c50bbaba..519ddec29b4ba 100644
+--- a/drivers/infiniband/sw/rxe/rxe_cq.c
++++ b/drivers/infiniband/sw/rxe/rxe_cq.c
+@@ -14,12 +14,12 @@ int rxe_cq_chk_attr(struct rxe_dev *rxe, struct rxe_cq *cq,
+ 	int count;
  
- 		dwc3_event_buffers_setup(dwc);
- 		__dwc3_gadget_start(dwc);
--		ret = dwc3_gadget_run_stop(dwc, true, false);
-+		ret = dwc3_gadget_run_stop(dwc, true);
- 	}
- 
- 	pm_runtime_put(dwc->dev);
-@@ -4210,30 +4204,6 @@ static void dwc3_gadget_suspend_interrupt(struct dwc3 *dwc,
- 	dwc->link_state = next;
- }
- 
--static void dwc3_gadget_hibernation_interrupt(struct dwc3 *dwc,
--		unsigned int evtinfo)
--{
--	unsigned int is_ss = evtinfo & BIT(4);
--
--	/*
--	 * WORKAROUND: DWC3 revision 2.20a with hibernation support
--	 * have a known issue which can cause USB CV TD.9.23 to fail
--	 * randomly.
--	 *
--	 * Because of this issue, core could generate bogus hibernation
--	 * events which SW needs to ignore.
--	 *
--	 * Refers to:
--	 *
--	 * STAR#9000546576: Device Mode Hibernation: Issue in USB 2.0
--	 * Device Fallback from SuperSpeed
--	 */
--	if (is_ss ^ (dwc->speed == USB_SPEED_SUPER))
--		return;
--
--	/* enter hibernation here */
--}
--
- static void dwc3_gadget_interrupt(struct dwc3 *dwc,
- 		const struct dwc3_event_devt *event)
- {
-@@ -4251,11 +4221,7 @@ static void dwc3_gadget_interrupt(struct dwc3 *dwc,
- 		dwc3_gadget_wakeup_interrupt(dwc);
- 		break;
- 	case DWC3_DEVICE_EVENT_HIBER_REQ:
--		if (dev_WARN_ONCE(dwc->dev, !dwc->has_hibernation,
--					"unexpected hibernation event\n"))
--			break;
--
--		dwc3_gadget_hibernation_interrupt(dwc, event->event_info);
-+		dev_WARN_ONCE(dwc->dev, true, "unexpected hibernation event\n");
- 		break;
- 	case DWC3_DEVICE_EVENT_LINK_STATUS_CHANGE:
- 		dwc3_gadget_linksts_change_interrupt(dwc, event->event_info);
-@@ -4592,7 +4558,7 @@ int dwc3_gadget_suspend(struct dwc3 *dwc)
- 	if (!dwc->gadget_driver)
- 		return 0;
- 
--	dwc3_gadget_run_stop(dwc, false, false);
-+	dwc3_gadget_run_stop(dwc, false);
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	dwc3_disconnect_gadget(dwc);
-@@ -4613,7 +4579,7 @@ int dwc3_gadget_resume(struct dwc3 *dwc)
- 	if (ret < 0)
- 		goto err0;
- 
--	ret = dwc3_gadget_run_stop(dwc, true, false);
-+	ret = dwc3_gadget_run_stop(dwc, true);
- 	if (ret < 0)
+ 	if (cqe <= 0) {
+-		rxe_dbg(rxe, "cqe(%d) <= 0\n", cqe);
++		rxe_dbg_dev(rxe, "cqe(%d) <= 0\n", cqe);
  		goto err1;
+ 	}
  
+ 	if (cqe > rxe->attr.max_cqe) {
+-		rxe_dbg(rxe, "cqe(%d) > max_cqe(%d)\n",
++		rxe_dbg_dev(rxe, "cqe(%d) > max_cqe(%d)\n",
+ 				cqe, rxe->attr.max_cqe);
+ 		goto err1;
+ 	}
+@@ -50,7 +50,7 @@ int rxe_cq_from_init(struct rxe_dev *rxe, struct rxe_cq *cq, int cqe,
+ 	cq->queue = rxe_queue_init(rxe, &cqe,
+ 			sizeof(struct rxe_cqe), type);
+ 	if (!cq->queue) {
+-		rxe_dbg(rxe, "unable to create cq\n");
++		rxe_dbg_dev(rxe, "unable to create cq\n");
+ 		return -ENOMEM;
+ 	}
+ 
+diff --git a/drivers/infiniband/sw/rxe/rxe_icrc.c b/drivers/infiniband/sw/rxe/rxe_icrc.c
+index 71bc2c1895888..fdf5f08cd8f17 100644
+--- a/drivers/infiniband/sw/rxe/rxe_icrc.c
++++ b/drivers/infiniband/sw/rxe/rxe_icrc.c
+@@ -21,7 +21,7 @@ int rxe_icrc_init(struct rxe_dev *rxe)
+ 
+ 	tfm = crypto_alloc_shash("crc32", 0, 0);
+ 	if (IS_ERR(tfm)) {
+-		rxe_dbg(rxe, "failed to init crc32 algorithm err: %ld\n",
++		rxe_dbg_dev(rxe, "failed to init crc32 algorithm err: %ld\n",
+ 			       PTR_ERR(tfm));
+ 		return PTR_ERR(tfm);
+ 	}
+@@ -51,7 +51,7 @@ static __be32 rxe_crc32(struct rxe_dev *rxe, __be32 crc, void *next, size_t len)
+ 	*(__be32 *)shash_desc_ctx(shash) = crc;
+ 	err = crypto_shash_update(shash, next, len);
+ 	if (unlikely(err)) {
+-		rxe_dbg(rxe, "failed crc calculation, err: %d\n", err);
++		rxe_dbg_dev(rxe, "failed crc calculation, err: %d\n", err);
+ 		return (__force __be32)crc32_le((__force u32)crc, next, len);
+ 	}
+ 
+diff --git a/drivers/infiniband/sw/rxe/rxe_mmap.c b/drivers/infiniband/sw/rxe/rxe_mmap.c
+index a47d72dbc5376..6b7f2bd698799 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mmap.c
++++ b/drivers/infiniband/sw/rxe/rxe_mmap.c
+@@ -79,7 +79,7 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 
+ 		/* Don't allow a mmap larger than the object. */
+ 		if (size > ip->info.size) {
+-			rxe_dbg(rxe, "mmap region is larger than the object!\n");
++			rxe_dbg_dev(rxe, "mmap region is larger than the object!\n");
+ 			spin_unlock_bh(&rxe->pending_lock);
+ 			ret = -EINVAL;
+ 			goto done;
+@@ -87,7 +87,7 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 
+ 		goto found_it;
+ 	}
+-	rxe_dbg(rxe, "unable to find pending mmap info\n");
++	rxe_dbg_dev(rxe, "unable to find pending mmap info\n");
+ 	spin_unlock_bh(&rxe->pending_lock);
+ 	ret = -EINVAL;
+ 	goto done;
+@@ -98,7 +98,7 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 
+ 	ret = remap_vmalloc_range(vma, ip->obj, 0);
+ 	if (ret) {
+-		rxe_dbg(rxe, "err %d from remap_vmalloc_range\n", ret);
++		rxe_dbg_dev(rxe, "err %d from remap_vmalloc_range\n", ret);
+ 		goto done;
+ 	}
+ 
+diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
+index e02e1624bcf4d..a2ace42e95366 100644
+--- a/drivers/infiniband/sw/rxe/rxe_net.c
++++ b/drivers/infiniband/sw/rxe/rxe_net.c
+@@ -596,7 +596,7 @@ static int rxe_notify(struct notifier_block *not_blk,
+ 		rxe_port_down(rxe);
+ 		break;
+ 	case NETDEV_CHANGEMTU:
+-		rxe_dbg(rxe, "%s changed mtu to %d\n", ndev->name, ndev->mtu);
++		rxe_dbg_dev(rxe, "%s changed mtu to %d\n", ndev->name, ndev->mtu);
+ 		rxe_set_mtu(rxe, ndev->mtu);
+ 		break;
+ 	case NETDEV_CHANGE:
+@@ -608,7 +608,7 @@ static int rxe_notify(struct notifier_block *not_blk,
+ 	case NETDEV_CHANGENAME:
+ 	case NETDEV_FEAT_CHANGE:
+ 	default:
+-		rxe_dbg(rxe, "ignoring netdev event = %ld for %s\n",
++		rxe_dbg_dev(rxe, "ignoring netdev event = %ld for %s\n",
+ 			event, ndev->name);
+ 		break;
+ 	}
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index 13283ec06f95e..d5de5ba6940f1 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -19,33 +19,33 @@ static int rxe_qp_chk_cap(struct rxe_dev *rxe, struct ib_qp_cap *cap,
+ 			  int has_srq)
+ {
+ 	if (cap->max_send_wr > rxe->attr.max_qp_wr) {
+-		rxe_dbg(rxe, "invalid send wr = %u > %d\n",
++		rxe_dbg_dev(rxe, "invalid send wr = %u > %d\n",
+ 			 cap->max_send_wr, rxe->attr.max_qp_wr);
+ 		goto err1;
+ 	}
+ 
+ 	if (cap->max_send_sge > rxe->attr.max_send_sge) {
+-		rxe_dbg(rxe, "invalid send sge = %u > %d\n",
++		rxe_dbg_dev(rxe, "invalid send sge = %u > %d\n",
+ 			 cap->max_send_sge, rxe->attr.max_send_sge);
+ 		goto err1;
+ 	}
+ 
+ 	if (!has_srq) {
+ 		if (cap->max_recv_wr > rxe->attr.max_qp_wr) {
+-			rxe_dbg(rxe, "invalid recv wr = %u > %d\n",
++			rxe_dbg_dev(rxe, "invalid recv wr = %u > %d\n",
+ 				 cap->max_recv_wr, rxe->attr.max_qp_wr);
+ 			goto err1;
+ 		}
+ 
+ 		if (cap->max_recv_sge > rxe->attr.max_recv_sge) {
+-			rxe_dbg(rxe, "invalid recv sge = %u > %d\n",
++			rxe_dbg_dev(rxe, "invalid recv sge = %u > %d\n",
+ 				 cap->max_recv_sge, rxe->attr.max_recv_sge);
+ 			goto err1;
+ 		}
+ 	}
+ 
+ 	if (cap->max_inline_data > rxe->max_inline_data) {
+-		rxe_dbg(rxe, "invalid max inline data = %u > %d\n",
++		rxe_dbg_dev(rxe, "invalid max inline data = %u > %d\n",
+ 			 cap->max_inline_data, rxe->max_inline_data);
+ 		goto err1;
+ 	}
+@@ -73,7 +73,7 @@ int rxe_qp_chk_init(struct rxe_dev *rxe, struct ib_qp_init_attr *init)
+ 	}
+ 
+ 	if (!init->recv_cq || !init->send_cq) {
+-		rxe_dbg(rxe, "missing cq\n");
++		rxe_dbg_dev(rxe, "missing cq\n");
+ 		goto err1;
+ 	}
+ 
+@@ -82,14 +82,14 @@ int rxe_qp_chk_init(struct rxe_dev *rxe, struct ib_qp_init_attr *init)
+ 
+ 	if (init->qp_type == IB_QPT_GSI) {
+ 		if (!rdma_is_port_valid(&rxe->ib_dev, port_num)) {
+-			rxe_dbg(rxe, "invalid port = %d\n", port_num);
++			rxe_dbg_dev(rxe, "invalid port = %d\n", port_num);
+ 			goto err1;
+ 		}
+ 
+ 		port = &rxe->port;
+ 
+ 		if (init->qp_type == IB_QPT_GSI && port->qp_gsi_index) {
+-			rxe_dbg(rxe, "GSI QP exists for port %d\n", port_num);
++			rxe_dbg_dev(rxe, "GSI QP exists for port %d\n", port_num);
+ 			goto err1;
+ 		}
+ 	}
+diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
+index 82e37a41ced40..27ca82ec0826b 100644
+--- a/drivers/infiniband/sw/rxe/rxe_srq.c
++++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+@@ -13,13 +13,13 @@ int rxe_srq_chk_init(struct rxe_dev *rxe, struct ib_srq_init_attr *init)
+ 	struct ib_srq_attr *attr = &init->attr;
+ 
+ 	if (attr->max_wr > rxe->attr.max_srq_wr) {
+-		rxe_dbg(rxe, "max_wr(%d) > max_srq_wr(%d)\n",
++		rxe_dbg_dev(rxe, "max_wr(%d) > max_srq_wr(%d)\n",
+ 			attr->max_wr, rxe->attr.max_srq_wr);
+ 		goto err1;
+ 	}
+ 
+ 	if (attr->max_wr <= 0) {
+-		rxe_dbg(rxe, "max_wr(%d) <= 0\n", attr->max_wr);
++		rxe_dbg_dev(rxe, "max_wr(%d) <= 0\n", attr->max_wr);
+ 		goto err1;
+ 	}
+ 
+@@ -27,7 +27,7 @@ int rxe_srq_chk_init(struct rxe_dev *rxe, struct ib_srq_init_attr *init)
+ 		attr->max_wr = RXE_MIN_SRQ_WR;
+ 
+ 	if (attr->max_sge > rxe->attr.max_srq_sge) {
+-		rxe_dbg(rxe, "max_sge(%d) > max_srq_sge(%d)\n",
++		rxe_dbg_dev(rxe, "max_sge(%d) > max_srq_sge(%d)\n",
+ 			attr->max_sge, rxe->attr.max_srq_sge);
+ 		goto err1;
+ 	}
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index 6803ac76ae572..a40a6d0581500 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -1093,7 +1093,7 @@ int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name)
+ 
+ 	err = ib_register_device(dev, ibdev_name, NULL);
+ 	if (err)
+-		rxe_dbg(rxe, "failed with error %d\n", err);
++		rxe_dbg_dev(rxe, "failed with error %d\n", err);
+ 
+ 	/*
+ 	 * Note that rxe may be invalid at this point if another thread
 -- 
 2.39.2
 
