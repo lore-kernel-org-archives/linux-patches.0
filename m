@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5541FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:45:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2180EC4339B;
-	Mon, 15 May 2023 17:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD964FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:45:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CA1C4339B;
+	Mon, 15 May 2023 17:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172706;
-	bh=PsqgKafZcqs7T4IVecJejKrs8cnA6FFjnjY/okz6uSU=;
+	s=korg; t=1684172709;
+	bh=/wXyAaDEVcjCdwyKN8Nli+AOqcWw9TEOKqmSVBsIuPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cy7hB/67gVQDaZlFOPyVhNGrFuKUMV8WIIWq3rDBKN3MP3iOJQ/LKYvqHfSI7QoKs
-	 2eufMEVTEhKEi5VGDO3Dp9XexJVt72FAdDhiwHQibJj610V6FyHRlttvyEA9qddIRZ
-	 tN0UQVOvxoFOGe67g0UhjLWruqwHsUJVOU3KXrxQ=
+	b=ele8y36wOzC20uTJK1pNXOWh4SVUAF1wSyhQpapm15NbF9uqHcL6RZkJ7ju0ByX7g
+	 Z5kiLniujdx/pAYkWj/xqlVIZDm2FWCG/IPROm8nLb6BWFpUvuB0keAyXxDXZzsAMM
+	 9hsPVtcGLG+5nH43ks9s3qFmVFT/a59ymMNpy6ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 223/381] firmware: stratix10-svc: Fix an NULL vs IS_ERR() bug in probe
-Date: Mon, 15 May 2023 18:27:54 +0200
-Message-Id: <20230515161746.800339847@linuxfoundation.org>
+Subject: [PATCH 5.10 241/381] RDMA/mlx4: Prevent shift wrapping in set_user_sq_size()
+Date: Mon, 15 May 2023 18:28:12 +0200
+Message-Id: <20230515161747.588226808@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,37 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit e1d6ca042e62c2a69513235f8629eb6e62ca79c5 ]
+[ Upstream commit d50b3c73f1ac20dabc53dc6e9d64ce9c79a331eb ]
 
-The svc_create_memory_pool() function returns error pointers.  It never
-returns NULL.  Fix the check.
+The ucmd->log_sq_bb_count variable is controlled by the user so this
+shift can wrap.  Fix it by using check_shl_overflow() in the same way
+that it was done in commit 515f60004ed9 ("RDMA/hns: Prevent undefined
+behavior in hns_roce_set_user_sq_size()").
 
-Fixes: 7ca5ce896524 ("firmware: add Intel Stratix10 service layer driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/5f9a8cb4-5a4f-460b-9cdc-2fae6c5b7922@kili.mountain
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 839041329fd3 ("IB/mlx4: Sanity check userspace send queue sizes")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/a8dfbd1d-c019-4556-930b-bab1ded73b10@kili.mountain
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/stratix10-svc.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx4/qp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/stratix10-svc.c b/drivers/firmware/stratix10-svc.c
-index 7dd0ac1a0cfc7..78a446cb43486 100644
---- a/drivers/firmware/stratix10-svc.c
-+++ b/drivers/firmware/stratix10-svc.c
-@@ -989,8 +989,8 @@ static int stratix10_svc_drv_probe(struct platform_device *pdev)
- 		return ret;
- 
- 	genpool = svc_create_memory_pool(pdev, sh_memory);
--	if (!genpool)
--		return -ENOMEM;
-+	if (IS_ERR(genpool))
-+		return PTR_ERR(genpool);
- 
- 	/* allocate service controller and supporting channel */
- 	controller = devm_kzalloc(dev, sizeof(*controller), GFP_KERNEL);
+diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
+index c6a815a705fef..255194029e2d8 100644
+--- a/drivers/infiniband/hw/mlx4/qp.c
++++ b/drivers/infiniband/hw/mlx4/qp.c
+@@ -412,9 +412,13 @@ static int set_user_sq_size(struct mlx4_ib_dev *dev,
+ 			    struct mlx4_ib_qp *qp,
+ 			    struct mlx4_ib_create_qp *ucmd)
+ {
++	u32 cnt;
++
+ 	/* Sanity check SQ size before proceeding */
+-	if ((1 << ucmd->log_sq_bb_count) > dev->dev->caps.max_wqes	 ||
+-	    ucmd->log_sq_stride >
++	if (check_shl_overflow(1, ucmd->log_sq_bb_count, &cnt) ||
++	    cnt > dev->dev->caps.max_wqes)
++		return -EINVAL;
++	if (ucmd->log_sq_stride >
+ 		ilog2(roundup_pow_of_two(dev->dev->caps.max_sq_desc_sz)) ||
+ 	    ucmd->log_sq_stride < MLX4_IB_MIN_SQ_STRIDE)
+ 		return -EINVAL;
 -- 
 2.39.2
 
