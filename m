@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3306FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28095C433A4;
-	Mon, 15 May 2023 16:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F09FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39440C433D2;
+	Mon, 15 May 2023 16:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169781;
-	bh=Nc25TSkVxVrXY64easAv0Dysj5N+r+hR4Ws0zUbzFD0=;
+	s=korg; t=1684169784;
+	bh=gHwocGite3FnJHIeWjDsd9hljM4pRdYxv0OaXT2IviM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRSWXCh95R53OJM6SadulcdDc3Q6Bz3en5cdI6uFfqzKddWdiF9Z55vS+rggHvrQZ
-	 LqOHccjZP3nc/pGk1drKTqVyJFjJU+TM2EJ/yJ/WLQKl1jonyeCij5MCT08mv42UQi
-	 uJMBeQBGN4ytA/pvEY0shiq7kXK08gGocEXQUVqA=
+	b=nYLtXjErXZD3dJxlFo7ukqCOy8VjZnp0sURV+EDJcH4/8ZDSlI6V3rnfhtQVeNacK
+	 40bCmO6/qJCb1UNbKcaPm/hKvqoA64hFLly6Wpg1yvmdW7TDbID+LwVszPaeRKKA6k
+	 KOdPIfClu4JR4l9u//NIV8BjIU5u0z4OZGsrhi2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	linux-sh@vger.kernel.org,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 6.3 151/246] sh: math-emu: fix macro redefined warning
-Date: Mon, 15 May 2023 18:26:03 +0200
-Message-Id: <20230515161727.081528476@linuxfoundation.org>
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.3 169/246] drm/i915/color: Fix typo for Plane CSC indexes
+Date: Mon, 15 May 2023 18:26:21 +0200
+Message-Id: <20230515161727.703043200@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -39,47 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit 58a49ad90939386a8682e842c474a0d2c00ec39c upstream.
+commit 2efc8e1001acfdc143cf2d25a08a4974c322e2a8 upstream.
 
-Fix a warning that was reported by the kernel test robot:
+Replace _PLANE_INPUT_CSC_RY_GY_2_* with _PLANE_CSC_RY_GY_2_*
+for Plane CSC
 
-In file included from ../include/math-emu/soft-fp.h:27,
-                 from ../arch/sh/math-emu/math.c:22:
-../arch/sh/include/asm/sfp-machine.h:17: warning: "__BYTE_ORDER" redefined
-   17 | #define __BYTE_ORDER __BIG_ENDIAN
-In file included from ../arch/sh/math-emu/math.c:21:
-../arch/sh/math-emu/sfp-util.h:71: note: this is the location of the previous definition
-   71 | #define __BYTE_ORDER __LITTLE_ENDIAN
+Fixes: 6eba56f64d5d ("drm/i915/pxp: black pixels on pxp disabled")
 
-Fixes: b929926f01f2 ("sh: define __BIG_ENDIAN for math-emu")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: lore.kernel.org/r/202111121827.6v6SXtVv-lkp@intel.com
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-Cc: Rich Felker <dalias@libc.org>
-Cc: linux-sh@vger.kernel.org
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: stable@vger.kernel.org
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230306040037.20350-5-rdunlap@infradead.org
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: <stable@vger.kernel.org>
+
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Animesh Manna <animesh.manna@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230330150104.2923519-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit e39c76b2160bbd005587f978d29603ef790aefcd)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/math-emu/sfp-util.h |    4 ----
- 1 file changed, 4 deletions(-)
+ drivers/gpu/drm/i915/i915_reg.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/sh/math-emu/sfp-util.h
-+++ b/arch/sh/math-emu/sfp-util.h
-@@ -67,7 +67,3 @@
-   } while (0)
+--- a/drivers/gpu/drm/i915/i915_reg.h
++++ b/drivers/gpu/drm/i915/i915_reg.h
+@@ -7596,8 +7596,8 @@ enum skl_power_gate {
  
- #define abort()	return 0
--
--#define __BYTE_ORDER __LITTLE_ENDIAN
--
--
+ #define _PLANE_CSC_RY_GY_1(pipe)	_PIPE(pipe, _PLANE_CSC_RY_GY_1_A, \
+ 					      _PLANE_CSC_RY_GY_1_B)
+-#define _PLANE_CSC_RY_GY_2(pipe)	_PIPE(pipe, _PLANE_INPUT_CSC_RY_GY_2_A, \
+-					      _PLANE_INPUT_CSC_RY_GY_2_B)
++#define _PLANE_CSC_RY_GY_2(pipe)	_PIPE(pipe, _PLANE_CSC_RY_GY_2_A, \
++					      _PLANE_CSC_RY_GY_2_B)
+ #define PLANE_CSC_COEFF(pipe, plane, index)	_MMIO_PLANE(plane, \
+ 							    _PLANE_CSC_RY_GY_1(pipe) +  (index) * 4, \
+ 							    _PLANE_CSC_RY_GY_2(pipe) + (index) * 4)
 
 
