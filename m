@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76EFFBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2D4C4339B;
-	Mon, 15 May 2023 17:49:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC82FBEC
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:50:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F46FC4339C;
+	Mon, 15 May 2023 17:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172999;
-	bh=4LJ3Nv3a6viQkQdNImyTDfhRmkvTz/PVLioB2CSnvqQ=;
+	s=korg; t=1684173003;
+	bh=ViVYu6hAlUJmSv0QDirXEDVuE5sWvWxD6CCabKZUl30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pu2EEB6zFm6XVeSnsR7+CjcK87eSfG9TgEdrX/zyhYsoS/3QKQI+unOxYnOa5m9vL
-	 ujLnrFNq4eSNI2litwUKNdyf09xEwriKW8ceqquHs11Db1BM/AKQvJeoecgeFq70jj
-	 SfEEGcZeMnvowA41GM1rDioslThDZA8mxyiO59nQ=
+	b=AyS+KjSyYZ5eiFV9b8+M26/dh8MsFwoTtZRMt6fzNbOozAZYyE/yeqphmD02LvqHm
+	 9QSCNiIZn6C85X2CexiYtNoGnJHwk4INidmiK3PW5FhfUJzc8lBVCVWLwfAE6NZ1E+
+	 5I9gfr+0D2kdOO118FtjHgfX2WyIxX+ui3tTYYrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Anastasia Belova <abelova@astralinux.ru>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.10 336/381] btrfs: print-tree: parent bytenr must be aligned to sector size
-Date: Mon, 15 May 2023 18:29:47 +0200
-Message-Id: <20230515161752.023797235@linuxfoundation.org>
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	Sai Krishna <saikrishnag@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 319/381] octeontx2-vf: Detach LF resources on probe cleanup
+Date: Mon, 15 May 2023 18:29:30 +0200
+Message-Id: <20230515161751.207411124@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,42 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-commit c87f318e6f47696b4040b58f460d5c17ea0280e6 upstream.
+[ Upstream commit 99ae1260fdb5f15beab8a3adfb93a9041c87a2c1 ]
 
-Check nodesize to sectorsize in alignment check in print_extent_item.
-The comment states that and this is correct, similar check is done
-elsewhere in the functions.
+When a VF device probe fails due to error in MSIX vector allocation then
+the resources NIX and NPA LFs were not detached. Fix this by detaching
+the LFs when MSIX vector allocation fails.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: ea57788eb76d ("btrfs: require only sector size alignment for parent eb bytenr")
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3184fb5ba96e ("octeontx2-vf: Virtual function driver support")
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/print-tree.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/print-tree.c
-+++ b/fs/btrfs/print-tree.c
-@@ -147,10 +147,10 @@ static void print_extent_item(struct ext
- 			pr_cont("shared data backref parent %llu count %u\n",
- 			       offset, btrfs_shared_data_ref_count(eb, sref));
- 			/*
--			 * offset is supposed to be a tree block which
--			 * must be aligned to nodesize.
-+			 * Offset is supposed to be a tree block which must be
-+			 * aligned to sectorsize.
- 			 */
--			if (!IS_ALIGNED(offset, eb->fs_info->nodesize))
-+			if (!IS_ALIGNED(offset, eb->fs_info->sectorsize))
- 				pr_info(
- 			"\t\t\t(parent %llu not aligned to sectorsize %u)\n",
- 				     offset, eb->fs_info->sectorsize);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
+index 67fabf265fe6f..5310b71795ecd 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_vf.c
+@@ -542,7 +542,7 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 
+ 	err = otx2vf_realloc_msix_vectors(vf);
+ 	if (err)
+-		goto err_mbox_destroy;
++		goto err_detach_rsrc;
+ 
+ 	err = otx2_set_real_num_queues(netdev, qcount, qcount);
+ 	if (err)
+-- 
+2.39.2
+
 
 
