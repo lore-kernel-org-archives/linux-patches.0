@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89AFFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BFBC433EF;
-	Mon, 15 May 2023 17:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2ABFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52EADC433D2;
+	Mon, 15 May 2023 17:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171419;
-	bh=UN20jy19sAMcDfa9TOxDAd6YRxQA7hWvRgp/9mMGqjc=;
+	s=korg; t=1684171422;
+	bh=qRacf3d9zqa8JPCICGZ9g6cRbmCDnT/mRzFISU6SVus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOFsjX3gVxGjo5tgD6QjOngJ8BY6sTEfiepIAVibebWxfeuEb1VW4cUwszd8w+IEF
-	 OdaYodArOFb3jpa6GENyUc8MNLeuUcnvjzF+P3Q9uUFpt9yIBHkQ4rm01obmKUThJ/
-	 /rDp7ut24iCT30PB6TovaxwgxbZv7FcjR1zFP9vw=
+	b=tqfFIcyM9HdZ1DUqdr6CwMVfHgv92iaL0wY8gaNJvWM45NIXSaySv7zFeBE11Tumr
+	 KeOkTR6uyhSxroWEt212M/VVreeJOUesrMXL7qy2pEiKhTCNpFlOI19DZFnRleBuOM
+	 KFJpuvBtXmihgR4sRMIzKJSPhUBfW36iLBWC8FiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 6.2 173/242] drm/msm: fix drm device leak on bind errors
-Date: Mon, 15 May 2023 18:28:19 +0200
-Message-Id: <20230515161727.067878746@linuxfoundation.org>
+	Craig Tatlor <ctatlor97@gmail.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.2 174/242] drm/msm: fix vram leak on bind errors
+Date: Mon, 15 May 2023 18:28:20 +0200
+Message-Id: <20230515161727.097492076@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,53 +37,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 214b09db61978497df24efcb3959616814bca46b upstream.
+commit 60d476af96015891c7959f30838ae7a9749932bf upstream.
 
-Make sure to free the DRM device also in case of early errors during
-bind().
+Make sure to release the VRAM buffer also in a case a subcomponent fails
+to bind.
 
-Fixes: 2027e5b3413d ("drm/msm: Initialize MDSS irq domain at probe time")
-Cc: stable@vger.kernel.org      # 5.17
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: d863f0c7b536 ("drm/msm: Call msm_init_vram before binding the gpu")
+Cc: stable@vger.kernel.org      # 5.11
+Cc: Craig Tatlor <ctatlor97@gmail.com>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/525097/
-Link: https://lore.kernel.org/r/20230306100722.28485-6-johan+linaro@kernel.org
+Patchwork: https://patchwork.freedesktop.org/patch/525094/
+Link: https://lore.kernel.org/r/20230306100722.28485-7-johan+linaro@kernel.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/msm_drv.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c |   26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
 --- a/drivers/gpu/drm/msm/msm_drv.c
 +++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -443,12 +443,12 @@ static int msm_drm_init(struct device *d
+@@ -50,6 +50,8 @@
+ #define MSM_VERSION_MINOR	9
+ #define MSM_VERSION_PATCHLEVEL	0
  
- 	ret = msm_init_vram(ddev);
- 	if (ret)
--		return ret;
-+		goto err_put_dev;
++static void msm_deinit_vram(struct drm_device *ddev);
++
+ static const struct drm_mode_config_funcs mode_config_funcs = {
+ 	.fb_create = msm_framebuffer_create,
+ 	.output_poll_changed = drm_fb_helper_output_poll_changed,
+@@ -259,12 +261,7 @@ static int msm_drm_uninit(struct device
+ 	if (kms && kms->funcs)
+ 		kms->funcs->destroy(kms);
  
+-	if (priv->vram.paddr) {
+-		unsigned long attrs = DMA_ATTR_NO_KERNEL_MAPPING;
+-		drm_mm_takedown(&priv->vram.mm);
+-		dma_free_attrs(dev, priv->vram.size, NULL,
+-			       priv->vram.paddr, attrs);
+-	}
++	msm_deinit_vram(ddev);
+ 
+ 	component_unbind_all(dev, ddev);
+ 
+@@ -402,6 +399,19 @@ static int msm_init_vram(struct drm_devi
+ 	return ret;
+ }
+ 
++static void msm_deinit_vram(struct drm_device *ddev)
++{
++	struct msm_drm_private *priv = ddev->dev_private;
++	unsigned long attrs = DMA_ATTR_NO_KERNEL_MAPPING;
++
++	if (!priv->vram.paddr)
++		return;
++
++	drm_mm_takedown(&priv->vram.mm);
++	dma_free_attrs(ddev->dev, priv->vram.size, NULL, priv->vram.paddr,
++			attrs);
++}
++
+ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
+ {
+ 	struct msm_drm_private *priv = dev_get_drvdata(dev);
+@@ -448,7 +458,7 @@ static int msm_drm_init(struct device *d
  	/* Bind all our sub-components: */
  	ret = component_bind_all(dev, ddev);
  	if (ret)
--		return ret;
-+		goto err_put_dev;
+-		goto err_put_dev;
++		goto err_deinit_vram;
  
  	dma_set_max_seg_size(dev, UINT_MAX);
  
-@@ -543,6 +543,12 @@ static int msm_drm_init(struct device *d
+@@ -546,6 +556,8 @@ err_msm_uninit:
  
- err_msm_uninit:
- 	msm_drm_uninit(dev);
-+
-+	return ret;
-+
-+err_put_dev:
-+	drm_dev_put(ddev);
-+
  	return ret;
- }
+ 
++err_deinit_vram:
++	msm_deinit_vram(ddev);
+ err_put_dev:
+ 	drm_dev_put(ddev);
  
 
 
