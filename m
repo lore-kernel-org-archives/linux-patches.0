@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABE8FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:11:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C70D5C433EF;
-	Mon, 15 May 2023 17:11:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E54FBFE
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:11:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF50DC433EF;
+	Mon, 15 May 2023 17:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170709;
-	bh=7OUK97C5iHsWr2QaPyn8rk8/bCc8lvYudI710fn/FRU=;
+	s=korg; t=1684170712;
+	bh=hi6YpvwkqwvuWQeFelCu8ydho8FQbsHKPNbAEPX+8B8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FwUJkHQj3VtL2UPxzwqvzzRXTrF2xzIaMBwaa9x8ZNvb+mhAg26FUprIUfZMDx21Q
-	 RX0OUscaF+YFTBltZVLJsjt1FdzArmxFOg5Fj86CpR/WuUwzOT79SGvExs9yXTBLP7
-	 L7Lnt+TGAclsORwDsrwiZ2CFUaQynCTYr8jtzVwg=
+	b=Ssmdg7I1LETPC5dIv7EqsXnCDedl0M1i5+SH3rVHakNbwy78nfJHlLtK/eKyXQpHJ
+	 /8xoqWOtDPvZQ+oX+z9ZnvTHuf5eaT/Oo5NOTrhtDa9Sww5zosCEFx2qJ3W4oadqcZ
+	 mzSVyQdLMuhbOxBVsb/CR/Tz9fvX+08IXZsP+8mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 178/239] drm/amd: Add a new helper for loading/validating microcode
-Date: Mon, 15 May 2023 18:27:21 +0200
-Message-Id: <20230515161727.007875544@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 210/239] drm/amd/display: Update Z8 SR exit/enter latencies
+Date: Mon, 15 May 2023 18:27:53 +0200
+Message-Id: <20230515161728.027693385@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,81 +38,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-commit 2210af50ae7f4104269dfde7bafbbfbacdbe1a2b upstream.
+[ Upstream commit 9b0f51e8449f6f76170fda6a8dd9c417a43ce270 ]
 
-All microcode runs a basic validation after it's been loaded. Each
-IP block as part of init will run both.
+[Why]
+Request from HW team to update the latencies to the new measured values.
 
-Introduce a wrapper for request_firmware and amdgpu_ucode_validate.
-This wrapper will also remap any error codes from request_firmware
-to -ENODEV.  This is so that early_init will fail if firmware couldn't
-be loaded instead of the IP block being disabled.
+[How]
+Update the values in the bounding box.
 
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 8f586cc16c1f ("drm/amd/display: Change default Z8 watermark values")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c |   36 ++++++++++++++++++++++++++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h |    3 ++
- 2 files changed, 39 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
-@@ -1091,3 +1091,39 @@ void amdgpu_ucode_ip_version_decode(stru
- 
- 	snprintf(ucode_prefix, len, "%s_%d_%d_%d", ip_name, maj, min, rev);
- }
-+
-+/*
-+ * amdgpu_ucode_request - Fetch and validate amdgpu microcode
-+ *
-+ * @adev: amdgpu device
-+ * @fw: pointer to load firmware to
-+ * @fw_name: firmware to load
-+ *
-+ * This is a helper that will use request_firmware and amdgpu_ucode_validate
-+ * to load and run basic validation on firmware. If the load fails, remap
-+ * the error code to -ENODEV, so that early_init functions will fail to load.
-+ */
-+int amdgpu_ucode_request(struct amdgpu_device *adev, const struct firmware **fw,
-+			 const char *fw_name)
-+{
-+	int err = request_firmware(fw, fw_name, adev->dev);
-+
-+	if (err)
-+		return -ENODEV;
-+	err = amdgpu_ucode_validate(*fw);
-+	if (err)
-+		dev_dbg(adev->dev, "\"%s\" failed to validate\n", fw_name);
-+
-+	return err;
-+}
-+
-+/*
-+ * amdgpu_ucode_release - Release firmware microcode
-+ *
-+ * @fw: pointer to firmware to release
-+ */
-+void amdgpu_ucode_release(const struct firmware **fw)
-+{
-+	release_firmware(*fw);
-+	*fw = NULL;
-+}
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h
-@@ -543,6 +543,9 @@ void amdgpu_ucode_print_sdma_hdr(const s
- void amdgpu_ucode_print_psp_hdr(const struct common_firmware_header *hdr);
- void amdgpu_ucode_print_gpu_info_hdr(const struct common_firmware_header *hdr);
- int amdgpu_ucode_validate(const struct firmware *fw);
-+int amdgpu_ucode_request(struct amdgpu_device *adev, const struct firmware **fw,
-+			 const char *fw_name);
-+void amdgpu_ucode_release(const struct firmware **fw);
- bool amdgpu_ucode_hdr_version(union amdgpu_firmware_header *hdr,
- 				uint16_t hdr_major, uint16_t hdr_minor);
- 
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
+index 9214ce23c3bd3..2c99193b63fa6 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
+@@ -148,8 +148,8 @@ struct _vcs_dpi_soc_bounding_box_st dcn3_14_soc = {
+ 	.num_states = 5,
+ 	.sr_exit_time_us = 16.5,
+ 	.sr_enter_plus_exit_time_us = 18.5,
+-	.sr_exit_z8_time_us = 280.0,
+-	.sr_enter_plus_exit_z8_time_us = 350.0,
++	.sr_exit_z8_time_us = 210.0,
++	.sr_enter_plus_exit_z8_time_us = 310.0,
+ 	.writeback_latency_us = 12.0,
+ 	.dram_channel_width_bytes = 4,
+ 	.round_trip_ping_latency_dcfclk_cycles = 106,
+-- 
+2.39.2
+
 
 
