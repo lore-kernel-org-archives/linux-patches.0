@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3009FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DDB8C433D2;
-	Mon, 15 May 2023 16:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8B2FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:58:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4687CC433D2;
+	Mon, 15 May 2023 16:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169877;
-	bh=kqsXevOgDDeBfG/+dwtWjMABVuZUZrpoE6RoeOaFD6Q=;
+	s=korg; t=1684169880;
+	bh=s8wDbjqh+HXmZvxIEdG4/svUmEnO0uOhDV/tXEsLJiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2LxfrkMKmICErjlrsMmMNLMjglzaOy31wSyCZcm7h5uftNKTq59vbR5h84CHYG+D
-	 0mv5hGxLtyGjkl9mvszEpWVZGYdwx2rN3XIqcBEmlR/mCj1RPqWnRXTGuZz+5ZCfiD
-	 44FLhO/97/g5womEiNpMnlgzgKtP5fS5TX8apCVw=
+	b=ZVk0El68KnPXHS8zSU7CiT1q+OEeNMZkLcJ31+Ju/BSgNHuoGUBN50A2WSyd6PJRe
+	 3KkI41TsLooVmwAXW9e/Z1W4HCCld3ZBEaX15w86k025Fc5hQoeJ0AzvVusHkPnzvG
+	 5OBYGob7d+as0XqzvEleFouMSA8EuwFc30YuV9CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guchun Chen <guchun.chen@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 200/246] drm/amdgpu/gfx: disable gfx9 cp_ecc_error_irq only when enabling legacy gfx ras
-Date: Mon, 15 May 2023 18:26:52 +0200
-Message-Id: <20230515161728.610404009@linuxfoundation.org>
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.3 183/246] f2fs: fix potential corruption when moving a directory
+Date: Mon, 15 May 2023 18:26:35 +0200
+Message-Id: <20230515161728.116198116@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -35,59 +33,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 4a76680311330aefe5074bed8f06afa354b85c48 upstream.
+commit d94772154e524b329a168678836745d2773a6e02 upstream.
 
-gfx9 cp_ecc_error_irq is only enabled when legacy gfx ras is assert.
-So in gfx_v9_0_hw_fini, interrupt disablement for cp_ecc_error_irq
-should be executed under such condition, otherwise, an amdgpu_irq_put
-calltrace will occur.
+F2FS has the same issue in ext4_rename causing crash revealed by
+xfstests/generic/707.
 
-[ 7283.170322] RIP: 0010:amdgpu_irq_put+0x45/0x70 [amdgpu]
-[ 7283.170964] RSP: 0018:ffff9a5fc3967d00 EFLAGS: 00010246
-[ 7283.170967] RAX: ffff98d88afd3040 RBX: ffff98d89da20000 RCX: 0000000000000000
-[ 7283.170969] RDX: 0000000000000000 RSI: ffff98d89da2bef8 RDI: ffff98d89da20000
-[ 7283.170971] RBP: ffff98d89da20000 R08: ffff98d89da2ca18 R09: 0000000000000006
-[ 7283.170973] R10: ffffd5764243c008 R11: 0000000000000000 R12: 0000000000001050
-[ 7283.170975] R13: ffff98d89da38978 R14: ffffffff999ae15a R15: ffff98d880130105
-[ 7283.170978] FS:  0000000000000000(0000) GS:ffff98d996f00000(0000) knlGS:0000000000000000
-[ 7283.170981] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 7283.170983] CR2: 00000000f7a9d178 CR3: 00000001c42ea000 CR4: 00000000003506e0
-[ 7283.170986] Call Trace:
-[ 7283.170988]  <TASK>
-[ 7283.170989]  gfx_v9_0_hw_fini+0x1c/0x6d0 [amdgpu]
-[ 7283.171655]  amdgpu_device_ip_suspend_phase2+0x101/0x1a0 [amdgpu]
-[ 7283.172245]  amdgpu_device_suspend+0x103/0x180 [amdgpu]
-[ 7283.172823]  amdgpu_pmops_freeze+0x21/0x60 [amdgpu]
-[ 7283.173412]  pci_pm_freeze+0x54/0xc0
-[ 7283.173419]  ? __pfx_pci_pm_freeze+0x10/0x10
-[ 7283.173425]  dpm_run_callback+0x98/0x200
-[ 7283.173430]  __device_suspend+0x164/0x5f0
+See also commit 0813299c586b ("ext4: Fix possible corruption when moving a directory")
 
-v2: drop gfx11 as it's fixed in a different solution by retiring cp_ecc_irq funcs(Hawking)
-
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+CC: stable@vger.kernel.org
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/namei.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
-@@ -3751,7 +3751,8 @@ static int gfx_v9_0_hw_fini(void *handle
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -995,12 +995,20 @@ static int f2fs_rename(struct mnt_idmap
+ 			goto out;
+ 	}
  
--	amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
-+	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__GFX))
-+		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
- 	amdgpu_irq_put(adev, &adev->gfx.priv_reg_irq, 0);
- 	amdgpu_irq_put(adev, &adev->gfx.priv_inst_irq, 0);
++	/*
++	 * Copied from ext4_rename: we need to protect against old.inode
++	 * directory getting converted from inline directory format into
++	 * a normal one.
++	 */
++	if (S_ISDIR(old_inode->i_mode))
++		inode_lock_nested(old_inode, I_MUTEX_NONDIR2);
++
+ 	err = -ENOENT;
+ 	old_entry = f2fs_find_entry(old_dir, &old_dentry->d_name, &old_page);
+ 	if (!old_entry) {
+ 		if (IS_ERR(old_page))
+ 			err = PTR_ERR(old_page);
+-		goto out;
++		goto out_unlock_old;
+ 	}
  
+ 	if (S_ISDIR(old_inode->i_mode)) {
+@@ -1108,6 +1116,9 @@ static int f2fs_rename(struct mnt_idmap
+ 
+ 	f2fs_unlock_op(sbi);
+ 
++	if (S_ISDIR(old_inode->i_mode))
++		inode_unlock(old_inode);
++
+ 	if (IS_DIRSYNC(old_dir) || IS_DIRSYNC(new_dir))
+ 		f2fs_sync_fs(sbi->sb, 1);
+ 
+@@ -1122,6 +1133,9 @@ out_dir:
+ 		f2fs_put_page(old_dir_page, 0);
+ out_old:
+ 	f2fs_put_page(old_page, 0);
++out_unlock_old:
++	if (S_ISDIR(old_inode->i_mode))
++		inode_unlock(old_inode);
+ out:
+ 	iput(whiteout);
+ 	return err;
 
 
