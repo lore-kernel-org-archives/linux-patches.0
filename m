@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B681E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9147C433D2;
-	Mon, 15 May 2023 16:40:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92790E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED813C433EF;
+	Mon, 15 May 2023 16:40:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168853;
-	bh=bY4N8iuughYAGdVD9UlDnk+nM6pcGWWyezXAyxQ4+6Q=;
+	s=korg; t=1684168856;
+	bh=ImAR1mWjiJ72WgRNzga7RlY2PhSq8D1Q/ETM0nFKrYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=00mUlkOJUXZhv47aK83RDXy0YB3ubXL/u4IZLOCNJ1PASBLkrvJDJfyEcv5ytNjEx
-	 sU+OrrwgYOESFMq5lKz9/QDlIFUPpgeFuJ6tvJ0PSsEFiHQ2NNcT8WUAyaP3zchR/z
-	 ln+ctGpndRywqKcmp0LDEAMQqB8vVTgijYzun8Ps=
+	b=mYICVJMMM9fKDra3DlvfE3Y5KAY6Ig7ai3iLe6vShhA/oGRlIO9e5AEWpALK8lnVI
+	 YUrzxWQPyqPJubM+p1ePLqmedX87fvxSPSbSHrPXuPPpyv2TJyPLbWJ3khFeFY10uG
+	 c5SG/dfcRiKjhZdWvQ8CECW2Q9ly3D6VeGDWrqiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot <syzkaller@googlegroups.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Quentin Monnet <quentin@isovalent.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 055/191] net/packet: convert po->origdev to an atomic flag
-Date: Mon, 15 May 2023 18:24:52 +0200
-Message-Id: <20230515161709.217902521@linuxfoundation.org>
+Subject: [PATCH 4.19 064/191] bpftool: Fix bug for long instructions in program CFG dumps
+Date: Mon, 15 May 2023 18:25:01 +0200
+Message-Id: <20230515161709.531166715@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,124 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Quentin Monnet <quentin@isovalent.com>
 
-[ Upstream commit ee5675ecdf7a4e713ed21d98a70c2871d6ebed01 ]
+[ Upstream commit 67cf52cdb6c8fa6365d29106555dacf95c9fd374 ]
 
-syzbot/KCAN reported that po->origdev can be read
-while another thread is changing its value.
+When dumping the control flow graphs for programs using the 16-byte long
+load instruction, we need to skip the second part of this instruction
+when looking for the next instruction to process. Otherwise, we end up
+printing "BUG_ld_00" from the kernel disassembler in the CFG.
 
-We can avoid this splat by converting this field
-to an actual bit.
-
-Following patches will convert remaining 1bit fields.
-
-Fixes: 80feaacb8a64 ("[AF_PACKET]: Add option to return orig_dev to userspace.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: efcef17a6d65 ("tools: bpftool: generate .dot graph from CFG information")
+Signed-off-by: Quentin Monnet <quentin@isovalent.com>
+Link: https://lore.kernel.org/r/20230405132120.59886-3-quentin@isovalent.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 10 ++++------
- net/packet/diag.c      |  2 +-
- net/packet/internal.h  | 22 +++++++++++++++++++++-
- 3 files changed, 26 insertions(+), 8 deletions(-)
+ tools/bpf/bpftool/xlated_dumper.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 6fa0a9a453a8b..91c35d45e43ca 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -2105,7 +2105,7 @@ static int packet_rcv(struct sk_buff *skb, struct net_device *dev,
- 	sll = &PACKET_SKB_CB(skb)->sa.ll;
- 	sll->sll_hatype = dev->type;
- 	sll->sll_pkttype = skb->pkt_type;
--	if (unlikely(po->origdev))
-+	if (unlikely(packet_sock_flag(po, PACKET_SOCK_ORIGDEV)))
- 		sll->sll_ifindex = orig_dev->ifindex;
- 	else
- 		sll->sll_ifindex = dev->ifindex;
-@@ -2371,7 +2371,7 @@ static int tpacket_rcv(struct sk_buff *skb, struct net_device *dev,
- 	sll->sll_hatype = dev->type;
- 	sll->sll_protocol = skb->protocol;
- 	sll->sll_pkttype = skb->pkt_type;
--	if (unlikely(po->origdev))
-+	if (unlikely(packet_sock_flag(po, PACKET_SOCK_ORIGDEV)))
- 		sll->sll_ifindex = orig_dev->ifindex;
- 	else
- 		sll->sll_ifindex = dev->ifindex;
-@@ -3841,9 +3841,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, char __user *optv
- 		if (copy_from_user(&val, optval, sizeof(val)))
- 			return -EFAULT;
+diff --git a/tools/bpf/bpftool/xlated_dumper.c b/tools/bpf/bpftool/xlated_dumper.c
+index 3284759df98ad..7f49347bf5aa4 100644
+--- a/tools/bpf/bpftool/xlated_dumper.c
++++ b/tools/bpf/bpftool/xlated_dumper.c
+@@ -336,8 +336,15 @@ void dump_xlated_for_graph(struct dump_data *dd, void *buf_start, void *buf_end,
+ 	struct bpf_insn *insn_start = buf_start;
+ 	struct bpf_insn *insn_end = buf_end;
+ 	struct bpf_insn *cur = insn_start;
++	bool double_insn = false;
  
--		lock_sock(sk);
--		po->origdev = !!val;
--		release_sock(sk);
-+		packet_sock_flag_set(po, PACKET_SOCK_ORIGDEV, val);
- 		return 0;
- 	}
- 	case PACKET_VNET_HDR:
-@@ -3976,7 +3974,7 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
- 		val = po->auxdata;
- 		break;
- 	case PACKET_ORIGDEV:
--		val = po->origdev;
-+		val = packet_sock_flag(po, PACKET_SOCK_ORIGDEV);
- 		break;
- 	case PACKET_VNET_HDR:
- 		val = po->has_vnet_hdr;
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index 7ef1c881ae741..bf5928e5df035 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -24,7 +24,7 @@ static int pdiag_put_info(const struct packet_sock *po, struct sk_buff *nlskb)
- 		pinfo.pdi_flags |= PDI_RUNNING;
- 	if (po->auxdata)
- 		pinfo.pdi_flags |= PDI_AUXDATA;
--	if (po->origdev)
-+	if (packet_sock_flag(po, PACKET_SOCK_ORIGDEV))
- 		pinfo.pdi_flags |= PDI_ORIGDEV;
- 	if (po->has_vnet_hdr)
- 		pinfo.pdi_flags |= PDI_VNETHDR;
-diff --git a/net/packet/internal.h b/net/packet/internal.h
-index f10294800aafb..f39dcc7608bc6 100644
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -115,9 +115,9 @@ struct packet_sock {
- 	int			copy_thresh;
- 	spinlock_t		bind_lock;
- 	struct mutex		pg_vec_lock;
-+	unsigned long		flags;
- 	unsigned int		running;	/* bind_lock must be held */
- 	unsigned int		auxdata:1,	/* writer must hold sock lock */
--				origdev:1,
- 				has_vnet_hdr:1,
- 				tp_loss:1,
- 				tp_tx_has_off:1;
-@@ -142,4 +142,24 @@ static struct packet_sock *pkt_sk(struct sock *sk)
- 	return (struct packet_sock *)sk;
- }
- 
-+enum packet_sock_flags {
-+	PACKET_SOCK_ORIGDEV,
-+};
+ 	for (; cur <= insn_end; cur++) {
++		if (double_insn) {
++			double_insn = false;
++			continue;
++		}
++		double_insn = cur->code == (BPF_LD | BPF_IMM | BPF_DW);
 +
-+static inline void packet_sock_flag_set(struct packet_sock *po,
-+					enum packet_sock_flags flag,
-+					bool val)
-+{
-+	if (val)
-+		set_bit(flag, &po->flags);
-+	else
-+		clear_bit(flag, &po->flags);
-+}
-+
-+static inline bool packet_sock_flag(const struct packet_sock *po,
-+				    enum packet_sock_flags flag)
-+{
-+	return test_bit(flag, &po->flags);
-+}
-+
- #endif
+ 		printf("% 4d: ", (int)(cur - insn_start + start_idx));
+ 		print_bpf_insn(&cbs, cur, true);
+ 		if (cur != insn_end)
 -- 
 2.39.2
 
