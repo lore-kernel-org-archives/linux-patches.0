@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518B1C8E3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA19AC433D2;
-	Mon, 15 May 2023 18:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D06C8E3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC3FC433D2;
+	Mon, 15 May 2023 18:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173677;
-	bh=JvunV0I2SGxCgkrjijXWkeVwiEGWlSHq6au3OmwcdpU=;
+	s=korg; t=1684173680;
+	bh=iE0wZMksM6a9tSftIOGq0hN69rU1j92IRkBBYfHFQZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=16U/VQnzLWeBexdsP0Utm7BBvj4EOJQqfthF6jRs7bRUP7jGfT+j4THokHjeI+3lw
-	 +vv/kaZu4D1Mn0kVngAx/FnOdrvCKf9U6TuXrggm1mt+oP2SKXTWQcOJX9YgVZsCaL
-	 Mb0gL/nri2jrc+cGJeYD/CpOBon+T2WbbiyhWkeQ=
+	b=MOjjv4wHTo4RF1YtAeX6jHdYYb1MeZo8zRCD6nZi0TWNpJxajJIDAdQLvGFQpSPHw
+	 CZUQExzvVdY1tUlBNJUTZRF2tlu6Bmtla+EanwudveBsKFWqWVSREdeVQUZ3t1E76B
+	 kbdhsCZomQWNQXJY5YiHDADZY+RK/DScW/kthBCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Joakim Tjernlund <Joakim.Tjernlund@infinera.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 141/282] mtd: spi-nor: cadence-quadspi: Provide a way to disable DAC mode
-Date: Mon, 15 May 2023 18:28:39 +0200
-Message-Id: <20230515161726.449122108@linuxfoundation.org>
+Subject: [PATCH 5.4 132/282] spi: fsl-spi: Fix CPM/QE mode Litte Endian
+Date: Mon, 15 May 2023 18:28:30 +0200
+Message-Id: <20230515161726.181212525@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,58 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vignesh Raghavendra <vigneshr@ti.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit a99705079a91e6373122bd0ca2fc129b688fc5b3 ]
+[ Upstream commit c20c57d9868d7f9fd1b2904c7801b07e128f6322 ]
 
-Currently direct access mode is used on platforms that have AHB window
-(memory mapped window) larger than flash size. This feature is limited
-to TI platforms as non TI platforms have < 1MB of AHB window.
-Therefore introduce a driver quirk to disable DAC mode and set it for
-non TI compatibles. This is in preparation to move to spi-mem framework
-where flash geometry cannot be known.
+CPM has the same problem as QE so for CPM also use the fix added
+by commit 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian"):
 
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-Reviewed-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Acked-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Link: https://lore.kernel.org/r/20200601070444.16923-3-vigneshr@ti.com
+  CPM mode uses Little Endian so words > 8 bits are byte swapped.
+  Workaround this by always enforcing wordsize 8 for 16 and 32 bits
+  words. Unfortunately this will not work for LSB transfers
+  where wordsize is > 8 bits so disable these for now.
+
+Also limit the workaround to 16 and 32 bits words because it can
+only work for multiples of 8-bits.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
+Fixes: 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian")
+Link: https://lore.kernel.org/r/1b7d3e84b1128f42c1887dd2fb9cdf390f541bc1.1680371809.git.christophe.leroy@csgroup.eu
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 2087e85bb66e ("spi: cadence-quadspi: fix suspend-resume implementations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/cadence-quadspi.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-spi.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/mtd/spi-nor/cadence-quadspi.c b/drivers/mtd/spi-nor/cadence-quadspi.c
-index d680e4a272a13..7e7736bbbfb3b 100644
---- a/drivers/mtd/spi-nor/cadence-quadspi.c
-+++ b/drivers/mtd/spi-nor/cadence-quadspi.c
-@@ -34,6 +34,7 @@
+diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
+index 02b999d48ca19..ae805f91eafa5 100644
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -208,8 +208,8 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 				struct spi_device *spi,
+ 				int bits_per_word)
+ {
+-	/* QE uses Little Endian for words > 8
+-	 * so transform all words > 8 into 8 bits
++	/* CPM/QE uses Little Endian for words > 8
++	 * so transform 16 and 32 bits words into 8 bits
+ 	 * Unfortnatly that doesn't work for LSB so
+ 	 * reject these for now */
+ 	/* Note: 32 bits word, LSB works iff
+@@ -217,9 +217,11 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 	if (spi->mode & SPI_LSB_FIRST &&
+ 	    bits_per_word > 8)
+ 		return -EINVAL;
+-	if (bits_per_word > 8)
++	if (bits_per_word <= 8)
++		return bits_per_word;
++	if (bits_per_word == 16 || bits_per_word == 32)
+ 		return 8; /* pretend its 8 bits */
+-	return bits_per_word;
++	return -EINVAL;
+ }
  
- /* Quirks */
- #define CQSPI_NEEDS_WR_DELAY		BIT(0)
-+#define CQSPI_DISABLE_DAC_MODE		BIT(1)
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+@@ -249,7 +251,7 @@ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else if (mpc8xxx_spi->flags & SPI_QE)
++	else
+ 		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+ 							  bits_per_word);
  
- /* Capabilities mask */
- #define CQSPI_BASE_HWCAPS_MASK					\
-@@ -1257,7 +1258,8 @@ static int cqspi_setup_flash(struct cqspi_st *cqspi, struct device_node *np)
- 
- 		f_pdata->registered = true;
- 
--		if (mtd->size <= cqspi->ahb_size) {
-+		if (mtd->size <= cqspi->ahb_size &&
-+		    !(ddata->quirks & CQSPI_DISABLE_DAC_MODE)) {
- 			f_pdata->use_direct_mode = true;
- 			dev_dbg(nor->dev, "using direct mode for %s\n",
- 				mtd->name);
-@@ -1455,6 +1457,7 @@ static const struct dev_pm_ops cqspi__dev_pm_ops = {
- 
- static const struct cqspi_driver_platdata cdns_qspi = {
- 	.hwcaps_mask = CQSPI_BASE_HWCAPS_MASK,
-+	.quirks = CQSPI_DISABLE_DAC_MODE,
- };
- 
- static const struct cqspi_driver_platdata k2g_qspi = {
 -- 
 2.39.2
 
