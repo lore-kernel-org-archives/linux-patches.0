@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C38E57E
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D8C6C433EF;
-	Mon, 15 May 2023 16:42:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE44FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E1AC433EF;
+	Mon, 15 May 2023 16:42:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168943;
-	bh=9mfTpl/fDFD5RuG++U2FVTrjiOwftWwVOOAONrbEaZ4=;
+	s=korg; t=1684168947;
+	bh=eWOD+ctRbSmWXvkox3o3YYIKB0MxRx4s2aqLfpxkaXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cGyQRpZKMWGAVjyoMm7UOdP6XgObAYBb4Dk0w4T+ATYdc7PCLJGvIRhrF8iwmCB8L
-	 Ld7VOI8dqddlkuyuVLxePqPbkbeTekajwU3tQmUGy3cORTvGIzXSWwUeEsoMAOUQs2
-	 02Ju05OXdsVFNU00elFNdOcGmtfAVb64vQbgh4ts=
+	b=Sl1UgRfaagA5VjyUfxtJJpT6Dl9cuQdxgot5vGTWdr/UbLI3lVZnxuG0MBbvLHPcT
+	 VnlQ22MduPz4qNit/QnZIKt3BiIm9eTFB6tAYobeuDZMw0SOJtju1i0uVAW/zKbAm3
+	 5lrCyxCI8suZfF5iXDw/tFAyHRYPlabyZP1QLUq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Simon Horman <simon.horman@corigine.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 062/191] wifi: rtlwifi: fix incorrect error codes in rtl_debugfs_set_write_rfreg()
-Date: Mon, 15 May 2023 18:24:59 +0200
-Message-Id: <20230515161709.462215852@linuxfoundation.org>
+Subject: [PATCH 4.19 063/191] wifi: rtlwifi: fix incorrect error codes in rtl_debugfs_set_write_reg()
+Date: Mon, 15 May 2023 18:25:00 +0200
+Message-Id: <20230515161709.494341149@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -38,11 +38,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit 905a9241e4e8c15d2c084fee916280514848fe35 ]
+[ Upstream commit 5dbe1f8eb8c5ac69394400a5b86fd81775e96c43 ]
 
-If there is a failure during copy_from_user or user-provided data buffer
-is invalid, rtl_debugfs_set_write_rfreg should return negative error code
-instead of a positive value count.
+If there is a failure during copy_from_user or user-provided data buffer is
+invalid, rtl_debugfs_set_write_reg should return negative error code instead
+of a positive value count.
 
 Fix this bug by returning correct error code. Moreover, the check of buffer
 against null is removed since it will be handled by copy_from_user.
@@ -51,17 +51,17 @@ Fixes: 610247f46feb ("rtlwifi: Improve debugging by using debugfs")
 Signed-off-by: Wei Chen <harperchen1110@gmail.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230326053138.91338-1-harperchen1110@gmail.com
+Link: https://lore.kernel.org/r/20230326054217.93492-1-harperchen1110@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/net/wireless/realtek/rtlwifi/debug.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/net/wireless/realtek/rtlwifi/debug.c b/drivers/net/wireless/realtek/rtlwifi/debug.c
-index cead66f7eb9f5..deacc7a28d3a7 100644
+index deacc7a28d3a7..6a0dfc6d4905e 100644
 --- a/drivers/net/wireless/realtek/rtlwifi/debug.c
 +++ b/drivers/net/wireless/realtek/rtlwifi/debug.c
-@@ -416,8 +416,8 @@ static ssize_t rtl_debugfs_set_write_rfreg(struct file *filp,
+@@ -319,8 +319,8 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
  
  	tmp_len = (count > sizeof(tmp) - 1 ? sizeof(tmp) - 1 : count);
  
@@ -72,15 +72,15 @@ index cead66f7eb9f5..deacc7a28d3a7 100644
  
  	tmp[tmp_len] = '\0';
  
-@@ -427,7 +427,7 @@ static ssize_t rtl_debugfs_set_write_rfreg(struct file *filp,
- 	if (num != 4) {
- 		rtl_dbg(rtlpriv, COMP_ERR, DBG_DMESG,
- 			"Format is <path> <addr> <mask> <data>\n");
+@@ -328,7 +328,7 @@ static ssize_t rtl_debugfs_set_write_reg(struct file *filp,
+ 	num = sscanf(tmp, "%x %x %x", &addr, &val, &len);
+ 
+ 	if (num !=  3)
 -		return count;
 +		return -EINVAL;
- 	}
  
- 	rtl_set_rfreg(hw, path, addr, bitmask, data);
+ 	switch (len) {
+ 	case 1:
 -- 
 2.39.2
 
