@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B898FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCF9FC433EF;
-	Mon, 15 May 2023 17:38:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43026FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD5CC433EF;
+	Mon, 15 May 2023 17:38:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172294;
-	bh=B5Vh63GZ5qlHy4lvhtOCM0ahM4ltWuWP31HpFqjMVXs=;
+	s=korg; t=1684172297;
+	bh=hAH0M2YpQkc4i4mY8Kl41/9GQaNyr/0AZsDDFALuWfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ilmwcQnGPdcZTFivyvUnv1SUpDtG9bpcYFKnxsL4dDfylJTEX78wZiyGDw45LWYdl
-	 ZU3/x0q3LwokNO07g+1pVhiZxwRp8WP9zGpASISRYgX8O3i6k6+cteEK7VbeCOO5Ev
-	 J95iE1uX0UAXWjwp53A1kouwKNvcyPhClpgYQyhE=
+	b=pROfjsYlWIrm4qz2gv+NHJnypRBZ+7/6rcVlYXx9MnK3zfr+gQO9cTrSrzIhHkVSQ
+	 0zmxCD8DZvgeknjp9Ri9/ybBuz4H5c19UivsuIvSF4H/mNJye979KtxSyScqsKb/AQ
+	 sHKhmV+f3xzWlFMD5eefvIfhuVaYsRrrg3KSzNWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Juergen Gross <jgross@suse.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 099/381] ACPI: processor: Fix evaluating _PDC method when running as Xen dom0
-Date: Mon, 15 May 2023 18:25:50 +0200
-Message-Id: <20230515161741.287015992@linuxfoundation.org>
+Subject: [PATCH 5.10 108/381] media: saa7134: fix use after free bug in saa7134_finidev due to race condition
+Date: Mon, 15 May 2023 18:25:59 +0200
+Message-Id: <20230515161741.681574771@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,141 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roger Pau Monne <roger.pau@citrix.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 073828e954459b883f23e53999d31e4c55ab9654 ]
+[ Upstream commit 30cf57da176cca80f11df0d9b7f71581fe601389 ]
 
-In ACPI systems, the OS can direct power management, as opposed to the
-firmware.  This OS-directed Power Management is called OSPM.  Part of
-telling the firmware that the OS going to direct power management is
-making ACPI "_PDC" (Processor Driver Capabilities) calls.  These _PDC
-methods must be evaluated for every processor object.  If these _PDC
-calls are not completed for every processor it can lead to
-inconsistency and later failures in things like the CPU frequency
-driver.
+In saa7134_initdev, it will call saa7134_hwinit1. There are three
+function invoking here: saa7134_video_init1, saa7134_ts_init1
+and saa7134_vbi_init1.
 
-In a Xen system, the dom0 kernel is responsible for system-wide power
-management.  The dom0 kernel is in charge of OSPM.  However, the
-number of CPUs available to dom0 can be different than the number of
-CPUs physically present on the system.
+All of them will init a timer with same function. Take
+saa7134_video_init1 as an example. It'll bound &dev->video_q.timeout
+with saa7134_buffer_timeout.
 
-This leads to a problem: the dom0 kernel needs to evaluate _PDC for
-all the processors, but it can't always see them.
+In buffer_activate, the timer funtcion is started.
 
-In dom0 kernels, ignore the existing ACPI method for determining if a
-processor is physically present because it might not be accurate.
-Instead, ask the hypervisor for this information.
+If we remove the module or device which will call saa7134_finidev
+to make cleanup, there may be a unfinished work. The
+possible sequence is as follows, which will cause a
+typical UAF bug.
 
-Fix this by introducing a custom function to use when running as Xen
-dom0 in order to check whether a processor object matches a CPU that's
-online.  Such checking is done using the existing information fetched
-by the Xen pCPU subsystem, extending it to also store the ACPI ID.
+Fix it by canceling the timer works accordingly before cleanup in
+saa7134_finidev.
 
-This ensures that _PDC method gets evaluated for all physically online
-CPUs, regardless of the number of CPUs made available to dom0.
+CPU0                  CPU1
 
-Fixes: 5d554a7bb064 ("ACPI: processor: add internal processor_physically_present()")
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+                    |saa7134_buffer_timeout
+saa7134_finidev     |
+  kfree(dev);       |
+                    |
+                    | saa7134_buffer_next
+                    | //use dev
+
+Fixes: 1e7126b4a86a ("media: saa7134: Convert timers to use timer_setup()")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_pdc.c | 11 +++++++++++
- drivers/xen/pcpu.c           | 20 ++++++++++++++++++++
- include/xen/xen.h            | 11 +++++++++++
- 3 files changed, 42 insertions(+)
+ drivers/media/pci/saa7134/saa7134-ts.c    | 1 +
+ drivers/media/pci/saa7134/saa7134-vbi.c   | 1 +
+ drivers/media/pci/saa7134/saa7134-video.c | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/drivers/acpi/processor_pdc.c b/drivers/acpi/processor_pdc.c
-index 813f1b78c16a9..c0d2d9a2c0d58 100644
---- a/drivers/acpi/processor_pdc.c
-+++ b/drivers/acpi/processor_pdc.c
-@@ -14,6 +14,8 @@
- #include <linux/acpi.h>
- #include <acpi/processor.h>
+diff --git a/drivers/media/pci/saa7134/saa7134-ts.c b/drivers/media/pci/saa7134/saa7134-ts.c
+index 6a5053126237f..437dbe5e75e29 100644
+--- a/drivers/media/pci/saa7134/saa7134-ts.c
++++ b/drivers/media/pci/saa7134/saa7134-ts.c
+@@ -300,6 +300,7 @@ int saa7134_ts_start(struct saa7134_dev *dev)
  
-+#include <xen/xen.h>
-+
- #include "internal.h"
- 
- #define _COMPONENT              ACPI_PROCESSOR_COMPONENT
-@@ -50,6 +52,15 @@ static bool __init processor_physically_present(acpi_handle handle)
- 		return false;
- 	}
- 
-+	if (xen_initial_domain())
-+		/*
-+		 * When running as a Xen dom0 the number of processors Linux
-+		 * sees can be different from the real number of processors on
-+		 * the system, and we still need to execute _PDC for all of
-+		 * them.
-+		 */
-+		return xen_processor_present(acpi_id);
-+
- 	type = (acpi_type == ACPI_TYPE_DEVICE) ? 1 : 0;
- 	cpuid = acpi_get_cpuid(handle, type, acpi_id);
- 
-diff --git a/drivers/xen/pcpu.c b/drivers/xen/pcpu.c
-index 9cf7085a260b4..4581217e31fea 100644
---- a/drivers/xen/pcpu.c
-+++ b/drivers/xen/pcpu.c
-@@ -58,6 +58,7 @@ struct pcpu {
- 	struct list_head list;
- 	struct device dev;
- 	uint32_t cpu_id;
-+	uint32_t acpi_id;
- 	uint32_t flags;
- };
- 
-@@ -249,6 +250,7 @@ static struct pcpu *create_and_register_pcpu(struct xenpf_pcpuinfo *info)
- 
- 	INIT_LIST_HEAD(&pcpu->list);
- 	pcpu->cpu_id = info->xen_cpuid;
-+	pcpu->acpi_id = info->acpi_id;
- 	pcpu->flags = info->flags;
- 
- 	/* Need hold on xen_pcpu_lock before pcpu list manipulations */
-@@ -416,3 +418,21 @@ static int __init xen_pcpu_init(void)
- 	return ret;
+ int saa7134_ts_fini(struct saa7134_dev *dev)
+ {
++	del_timer_sync(&dev->ts_q.timeout);
+ 	saa7134_pgtable_free(dev->pci, &dev->ts_q.pt);
+ 	return 0;
  }
- arch_initcall(xen_pcpu_init);
-+
-+#ifdef CONFIG_ACPI
-+bool __init xen_processor_present(uint32_t acpi_id)
-+{
-+	const struct pcpu *pcpu;
-+	bool online = false;
-+
-+	mutex_lock(&xen_pcpu_lock);
-+	list_for_each_entry(pcpu, &xen_pcpus, list)
-+		if (pcpu->acpi_id == acpi_id) {
-+			online = pcpu->flags & XEN_PCPU_FLAGS_ONLINE;
-+			break;
-+		}
-+	mutex_unlock(&xen_pcpu_lock);
-+
-+	return online;
-+}
-+#endif
-diff --git a/include/xen/xen.h b/include/xen/xen.h
-index 43efba045acc7..5a6a2ab675bed 100644
---- a/include/xen/xen.h
-+++ b/include/xen/xen.h
-@@ -61,4 +61,15 @@ void xen_free_unpopulated_pages(unsigned int nr_pages, struct page **pages);
- #include <xen/balloon.h>
- #endif
+diff --git a/drivers/media/pci/saa7134/saa7134-vbi.c b/drivers/media/pci/saa7134/saa7134-vbi.c
+index 3f0b0933eed69..3e773690468bd 100644
+--- a/drivers/media/pci/saa7134/saa7134-vbi.c
++++ b/drivers/media/pci/saa7134/saa7134-vbi.c
+@@ -185,6 +185,7 @@ int saa7134_vbi_init1(struct saa7134_dev *dev)
+ int saa7134_vbi_fini(struct saa7134_dev *dev)
+ {
+ 	/* nothing */
++	del_timer_sync(&dev->vbi_q.timeout);
+ 	return 0;
+ }
  
-+#if defined(CONFIG_XEN_DOM0) && defined(CONFIG_ACPI) && defined(CONFIG_X86)
-+bool __init xen_processor_present(uint32_t acpi_id);
-+#else
-+#include <linux/bug.h>
-+static inline bool xen_processor_present(uint32_t acpi_id)
-+{
-+	BUG();
-+	return false;
-+}
-+#endif
-+
- #endif	/* _XEN_XEN_H */
+diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
+index 85d082baaadc5..df9e3293015a2 100644
+--- a/drivers/media/pci/saa7134/saa7134-video.c
++++ b/drivers/media/pci/saa7134/saa7134-video.c
+@@ -2153,6 +2153,7 @@ int saa7134_video_init1(struct saa7134_dev *dev)
+ 
+ void saa7134_video_fini(struct saa7134_dev *dev)
+ {
++	del_timer_sync(&dev->video_q.timeout);
+ 	/* free stuff */
+ 	saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
+ 	saa7134_pgtable_free(dev->pci, &dev->vbi_q.pt);
 -- 
 2.39.2
 
