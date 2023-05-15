@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CA1FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:39:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAEDAC433D2;
-	Mon, 15 May 2023 17:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D608FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:39:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E68CEC433D2;
+	Mon, 15 May 2023 17:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172393;
-	bh=5Xz6DNewh+6cg6nd7xwBDceSdpGCKhYyujgZh2gky+s=;
+	s=korg; t=1684172396;
+	bh=gtaysH2z7e9qFKOB5QoSVP8a3ej52SOVwrtI1fCJ9YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFR8+3P3dS54o7D4Dy6rlq8tVYVRNL4n+GIYKhLcEbygmeQ1t8fXMdWmsa+CpWivl
-	 4qw3xx+NSH8yZzpq7bbsR8OZtwSvGzCqeYbmqR5wFJ/snDJdTu3okS7YvRAJhgbCIe
-	 ubXwl7pVIZ0In6ONa0b6bD8kuttqTiihSE5pKpUg=
+	b=yUZTdANwhpuG3gUlvzJluN0Ou9579WYKTtm35kd7Bi82/Hnb/FitFzSlpLdI5wXcL
+	 kl4eiU0gak0I9AME8Oez4ip/NVIMfbZal/NVpZ2Mmp9Qm30YvWo4HAkLhNuUGcrG3/
+	 Yh2AGGkvuxN7EApHhqes63qQSAKAxf7lWFtTYIjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Luis Gerhorst <gerhorst@cs.fau.de>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 139/381] scm: fix MSG_CTRUNC setting condition for SO_PASSSEC
-Date: Mon, 15 May 2023 18:26:30 +0200
-Message-Id: <20230515161743.115415582@linuxfoundation.org>
+Subject: [PATCH 5.10 140/381] bpf: Remove misleading spec_v1 check on var-offset stack read
+Date: Mon, 15 May 2023 18:26:31 +0200
+Message-Id: <20230515161743.164623439@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -40,75 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+From: Luis Gerhorst <gerhorst@cs.fau.de>
 
-[ Upstream commit a02d83f9947d8f71904eda4de046630c3eb6802c ]
+[ Upstream commit 082cdc69a4651dd2a77539d69416a359ed1214f5 ]
 
-Currently, kernel would set MSG_CTRUNC flag if msg_control buffer
-wasn't provided and SO_PASSCRED was set or if there was pending SCM_RIGHTS.
+For every BPF_ADD/SUB involving a pointer, adjust_ptr_min_max_vals()
+ensures that the resulting pointer has a constant offset if
+bypass_spec_v1 is false. This is ensured by calling sanitize_check_bounds()
+which in turn calls check_stack_access_for_ptr_arithmetic(). There,
+-EACCESS is returned if the register's offset is not constant, thereby
+rejecting the program.
 
-For some reason we have no corresponding check for SO_PASSSEC.
+In summary, an unprivileged user must never be able to create stack
+pointers with a variable offset. That is also the case, because a
+respective check in check_stack_write() is missing. If they were able
+to create a variable-offset pointer, users could still use it in a
+stack-write operation to trigger unsafe speculative behavior [1].
 
-In the recvmsg(2) doc we have:
-       MSG_CTRUNC
-              indicates that some control data was discarded due to lack
-              of space in the buffer for ancillary data.
+Because unprivileged users must already be prevented from creating
+variable-offset stack pointers, viable options are to either remove
+this check (replacing it with a clarifying comment), or to turn it
+into a "verifier BUG"-message, also adding a similar check in
+check_stack_write() (for consistency, as a second-level defense).
+This patch implements the first option to reduce verifier bloat.
 
-So, we need to set MSG_CTRUNC flag for all types of SCM.
+This check was introduced by commit 01f810ace9ed ("bpf: Allow
+variable-offset stack access") which correctly notes that
+"variable-offset reads and writes are disallowed (they were already
+disallowed for the indirect access case) because the speculative
+execution checking code doesn't support them". However, it does not
+further discuss why the check in check_stack_read() is necessary.
+The code which made this check obsolete was also introduced in this
+commit.
 
-This change can break applications those don't check MSG_CTRUNC flag.
+I have compiled ~650 programs from the Linux selftests, Linux samples,
+Cilium, and libbpf/examples projects and confirmed that none of these
+trigger the check in check_stack_read() [2]. Instead, all of these
+programs are, as expected, already rejected when constructing the
+variable-offset pointers. Note that the check in
+check_stack_access_for_ptr_arithmetic() also prints "off=%d" while the
+code removed by this patch does not (the error removed does not appear
+in the "verification_error" values). For reproducibility, the
+repository linked includes the raw data and scripts used to create
+the plot.
 
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+  [1] https://arxiv.org/pdf/1807.03757.pdf
+  [2] https://gitlab.cs.fau.de/un65esoq/bpf-spectre/-/raw/53dc19fcf459c186613b1156a81504b39c8d49db/data/plots/23-02-26_23-56_bpftool/bpftool/0004-errors.pdf?inline=false
 
-v2:
-- commit message was rewritten according to Eric's suggestion
-Acked-by: Paul Moore <paul@paul-moore.com>
-
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 01f810ace9ed ("bpf: Allow variable-offset stack access")
+Signed-off-by: Luis Gerhorst <gerhorst@cs.fau.de>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230315165358.23701-1-gerhorst@cs.fau.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/scm.h | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 16 ++++++----------
+ 1 file changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/scm.h b/include/net/scm.h
-index 1ce365f4c2560..585adc1346bd0 100644
---- a/include/net/scm.h
-+++ b/include/net/scm.h
-@@ -105,16 +105,27 @@ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct sc
- 		}
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 232f720104cdf..6876796a8de0c 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2775,17 +2775,13 @@ static int check_stack_read(struct bpf_verifier_env *env,
  	}
- }
-+
-+static inline bool scm_has_secdata(struct socket *sock)
-+{
-+	return test_bit(SOCK_PASSSEC, &sock->flags);
-+}
- #else
- static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct scm_cookie *scm)
- { }
-+
-+static inline bool scm_has_secdata(struct socket *sock)
-+{
-+	return false;
-+}
- #endif /* CONFIG_SECURITY_NETWORK */
- 
- static __inline__ void scm_recv(struct socket *sock, struct msghdr *msg,
- 				struct scm_cookie *scm, int flags)
- {
- 	if (!msg->msg_control) {
--		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp)
-+		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp ||
-+		    scm_has_secdata(sock))
- 			msg->msg_flags |= MSG_CTRUNC;
- 		scm_destroy(scm);
- 		return;
+ 	/* Variable offset is prohibited for unprivileged mode for simplicity
+ 	 * since it requires corresponding support in Spectre masking for stack
+-	 * ALU. See also retrieve_ptr_limit().
++	 * ALU. See also retrieve_ptr_limit(). The check in
++	 * check_stack_access_for_ptr_arithmetic() called by
++	 * adjust_ptr_min_max_vals() prevents users from creating stack pointers
++	 * with variable offsets, therefore no check is required here. Further,
++	 * just checking it here would be insufficient as speculative stack
++	 * writes could still lead to unsafe speculative behaviour.
+ 	 */
+-	if (!env->bypass_spec_v1 && var_off) {
+-		char tn_buf[48];
+-
+-		tnum_strn(tn_buf, sizeof(tn_buf), reg->var_off);
+-		verbose(env, "R%d variable offset stack access prohibited for !root, var_off=%s\n",
+-				ptr_regno, tn_buf);
+-		return -EACCES;
+-	}
+-
+ 	if (!var_off) {
+ 		off += reg->var_off.value;
+ 		err = check_stack_read_fixed_off(env, state, off, size,
 -- 
 2.39.2
 
