@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADC3FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403C0C433AA;
-	Mon, 15 May 2023 17:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FED7FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69872C433D2;
+	Mon, 15 May 2023 17:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170011;
-	bh=HBeguLkvqwmESsAcM+3GWYQltD5pdUwiFwgU7sAlujk=;
+	s=korg; t=1684170014;
+	bh=uT7yH8EljGRkIGVgE54YDzsgnkU/Avswe1YPG7bcaDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l15I6VD63HVAbc+d42UEymketWARxx1q9tVcT54XxNSVYvcSkqaPUMHzoUuzkcc1j
-	 dOCdesbyK9QwMs3GOBpZfsEgIhR6XuN/GGfDuYlppF7l4vbi4OMTMRa+NZ0qCvzF0O
-	 wXjcrX7mRUy26lgiqN1xzA1g7xbExshcmVvqfNRM=
+	b=kOZDGrlQLlFB+FUf4LpgqVGZPO31rP4gHtrxJA9KKzK+mAKZpTyXsyJzQ1Np8JwTJ
+	 JopdLD0QPCNU+q1wJOX92x86FagQwRSG2RRIR6srjdwRyVvprZzwmiuG8f3TGKBZZY
+	 W9J3YbTardJ4jv/S+yanK4VYqPEgVGmmEsEkvCeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Anusha Srivatsa <anusha.srivatsa@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
+	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 217/246] drm/i915: Add _PICK_EVEN_2RANGES()
-Date: Mon, 15 May 2023 18:27:09 +0200
-Message-Id: <20230515161729.105836992@linuxfoundation.org>
+Subject: [PATCH 6.3 218/246] drm/i915/mtl: Add workarounds Wa_14017066071 and Wa_14017654203
+Date: Mon, 15 May 2023 18:27:10 +0200
+Message-Id: <20230515161729.134779997@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,81 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas De Marchi <lucas.demarchi@intel.com>
+From: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
 
-[ Upstream commit 357513233d6456c9f99e34794897efd4ae907e83 ]
+[ Upstream commit 5fba65efa7cfb8cef227a2c555deb10327a5e27b ]
 
-It's a constant pattern in the driver to need to use 2 ranges of MMIOs
-based on port, phy, pll, etc. When that happens, instead of using
-_PICK_EVEN(), _PICK() needs to be used.  Using _PICK() is discouraged
-due to some reasons like:
+Both workarounds require the same implementation and apply to MTL P and
+M from stepping A0 to B0 (exclusive).
 
-1) It increases the code size since the array is declared
-   in each call site
-2) Developers need to be careful not to incur an
-   out-of-bounds array access
-3) Developers need to be careful that the indexes match the
-   table. For that it may be that the table needs to contain
-   holes, making (1) even worse.
+v2:
+  - Remove unrelated brace removal. (Matt)
 
-Add a variant of _PICK_EVEN() that works with 2 ranges and selects which
-one to use depending on the index value.
-
-v2: Fix the address expansion in the example (Anusha)
-v3: Also rename macro to _PICK_EVEN_2RANGES() in the documentation
-    and reword it to clarify what ranges are chosen based on the index
-    (Jani)
-
-Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Reviewed-by: Anusha Srivatsa <anusha.srivatsa@intel.com>
-Acked-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230125182403.7526-1-lucas.demarchi@intel.com
-Stable-dep-of: 214b09db6197 ("drm/msm: fix drm device leak on bind errors")
+Signed-off-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230329212336.106161-2-gustavo.sousa@intel.com
+Stable-dep-of: 81900e3a3775 ("drm/i915: disable sampler indirect state in bindless heap")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_reg_defs.h | 29 ++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ drivers/gpu/drm/i915/gt/intel_gt_regs.h     | 1 +
+ drivers/gpu/drm/i915/gt/intel_workarounds.c | 9 +++++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/i915_reg_defs.h b/drivers/gpu/drm/i915/i915_reg_defs.h
-index be43580a69793..983c5aa3045b3 100644
---- a/drivers/gpu/drm/i915/i915_reg_defs.h
-+++ b/drivers/gpu/drm/i915/i915_reg_defs.h
-@@ -119,6 +119,35 @@
-  */
- #define _PICK_EVEN(__index, __a, __b) ((__a) + (__index) * ((__b) - (__a)))
+diff --git a/drivers/gpu/drm/i915/gt/intel_gt_regs.h b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
+index be0f6e305c881..15b8636853ff0 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
++++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
+@@ -1145,6 +1145,7 @@
+ #define   ENABLE_SMALLPL			REG_BIT(15)
+ #define   SC_DISABLE_POWER_OPTIMIZATION_EBB	REG_BIT(9)
+ #define   GEN11_SAMPLER_ENABLE_HEADLESS_MSG	REG_BIT(5)
++#define   MTL_DISABLE_SAMPLER_SC_OOO		REG_BIT(3)
  
-+/*
-+ * Like _PICK_EVEN(), but supports 2 ranges of evenly spaced address offsets.
-+ * @__c_index corresponds to the index in which the second range starts to be
-+ * used. Using math interval notation, the first range is used for indexes [ 0,
-+ * @__c_index), while the second range is used for [ @__c_index, ... ). Example:
-+ *
-+ * #define _FOO_A			0xf000
-+ * #define _FOO_B			0xf004
-+ * #define _FOO_C			0xf008
-+ * #define _SUPER_FOO_A			0xa000
-+ * #define _SUPER_FOO_B			0xa100
-+ * #define FOO(x)			_MMIO(_PICK_EVEN_2RANGES(x, 3,		\
-+ *					      _FOO_A, _FOO_B,			\
-+ *					      _SUPER_FOO_A, _SUPER_FOO_B))
-+ *
-+ * This expands to:
-+ *	0: 0xf000,
-+ *	1: 0xf004,
-+ *	2: 0xf008,
-+ *	3: 0xa000,
-+ *	4: 0xa100,
-+ *	5: 0xa200,
-+ *	...
-+ */
-+#define _PICK_EVEN_2RANGES(__index, __c_index, __a, __b, __c, __d)		\
-+	(BUILD_BUG_ON_ZERO(!__is_constexpr(__c_index)) +			\
-+	 ((__index) < (__c_index) ? _PICK_EVEN(__index, __a, __b) :		\
-+				   _PICK_EVEN((__index) - (__c_index), __c, __d)))
+ #define GEN9_HALF_SLICE_CHICKEN7		MCR_REG(0xe194)
+ #define   DG2_DISABLE_ROUND_ENABLE_ALLOW_FOR_SSLA	REG_BIT(15)
+diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+index 485c5cc5d0f96..bfdffb6a013ce 100644
+--- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
++++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+@@ -3015,6 +3015,15 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
+ 
+ 	add_render_compute_tuning_settings(i915, wal);
+ 
++	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
++	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0))
++		/*
++		 * Wa_14017066071
++		 * Wa_14017654203
++		 */
++		wa_mcr_masked_en(wal, GEN10_SAMPLER_MODE,
++				 MTL_DISABLE_SAMPLER_SC_OOO);
 +
- /*
-  * Given the arbitrary numbers in varargs, pick the 0-based __index'th number.
-  *
+ 	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
+ 	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0) ||
+ 	    IS_DG2_GRAPHICS_STEP(i915, G10, STEP_B0, STEP_FOREVER) ||
 -- 
 2.39.2
 
