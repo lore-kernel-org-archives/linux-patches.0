@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52076FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD27C4339B;
-	Mon, 15 May 2023 17:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A4AFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB7EC433D2;
+	Mon, 15 May 2023 17:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171289;
-	bh=QmnDGkAw0UDgIUvCaXOQ+xUZF9d48JvpofGptycY9vA=;
+	s=korg; t=1684171292;
+	bh=1KPsK5CooWq2LIUUkVehmIvDtU8paAYcvb+8wlSp0d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eou/SdUraUCwhlD/kFm5Xru6yFUfpIkHYDgLCuMB86n6opZmAFO8v2Sli3p3reBjr
-	 Q0/0hZmOSvNbkkvEocTNERO8i1rs5CV55HY/xRnFhHIVgRvaQ9qb963ArbceEJNwy+
-	 wWgSOG7WjxgXdLuB2jf797RR/5w2OeTGbKSF2f+Q=
+	b=zfAjGjgDVUCVrXkQaHjtA2kUXjN0eCHDFZojFfR24SDCl4I6mvkySO8wCzoP6NH9l
+	 m5e9ZVDfez09Dc77Qzs31tv0ceiFRFK2Ap6c0nLYVRnH31xUDCYjNR4uwtJI8Rwyo7
+	 beL/h7X9snV2J5UQxof3WBGE2lVoay4jDRIOTXEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Peng Fan <peng.fan@nxp.com>
-Subject: [PATCH 6.2 161/242] remoteproc: imx_rproc: Call of_node_put() on iteration error
-Date: Mon, 15 May 2023 18:28:07 +0200
-Message-Id: <20230515161726.714526104@linuxfoundation.org>
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.2 162/242] remoteproc: rcar_rproc: Call of_node_put() on iteration error
+Date: Mon, 15 May 2023 18:28:08 +0200
+Message-Id: <20230515161726.743204853@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,42 +35,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathieu Poirier <mathieu.poirier@linaro.org>
 
-commit 5ef074e805ecfd9a16dbb7b6b88bbfa8abad7054 upstream.
+commit f8bae637d3d5e082b4ced71e28b16eb3ee0683c1 upstream.
 
 Function of_phandle_iterator_next() calls of_node_put() on the last
 device_node it iterated over, but when the loop exits prematurely it has
 to be called explicitly.
 
-Fixes: b29b4249f8f0 ("remoteproc: imx_rproc: add i.MX specific parse fw hook")
+Fixes: 285892a74f13 ("remoteproc: Add Renesas rcar driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Link: https://lore.kernel.org/r/20230320221826.2728078-5-mathieu.poirier@linaro.org
+Link: https://lore.kernel.org/r/20230320221826.2728078-4-mathieu.poirier@linaro.org
 Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/imx_rproc.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/remoteproc/rcar_rproc.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -541,6 +541,7 @@ static int imx_rproc_prepare(struct rpro
+--- a/drivers/remoteproc/rcar_rproc.c
++++ b/drivers/remoteproc/rcar_rproc.c
+@@ -62,13 +62,16 @@ static int rcar_rproc_prepare(struct rpr
  
  		rmem = of_reserved_mem_lookup(it.node);
  		if (!rmem) {
 +			of_node_put(it.node);
- 			dev_err(priv->dev, "unable to acquire memory-region\n");
+ 			dev_err(&rproc->dev,
+ 				"unable to acquire memory-region\n");
  			return -EINVAL;
  		}
-@@ -553,10 +554,12 @@ static int imx_rproc_prepare(struct rpro
- 					   imx_rproc_mem_alloc, imx_rproc_mem_release,
+ 
+-		if (rmem->base > U32_MAX)
++		if (rmem->base > U32_MAX) {
++			of_node_put(it.node);
+ 			return -EINVAL;
++		}
+ 
+ 		/* No need to translate pa to da, R-Car use same map */
+ 		da = rmem->base;
+@@ -79,8 +82,10 @@ static int rcar_rproc_prepare(struct rpr
+ 					   rcar_rproc_mem_release,
  					   it.node->name);
  
--		if (mem)
-+		if (mem) {
- 			rproc_coredump_add_segment(rproc, da, rmem->size);
--		else
-+		} else {
+-		if (!mem)
++		if (!mem) {
 +			of_node_put(it.node);
  			return -ENOMEM;
 +		}
