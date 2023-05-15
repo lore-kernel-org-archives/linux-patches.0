@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF6BFC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F76C433D2;
-	Mon, 15 May 2023 17:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10745FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7879BC433EF;
+	Mon, 15 May 2023 17:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172263;
-	bh=889NDf79AbqXnuCtmyh5OT2hpA5pDC6+jpAvhV7SOgE=;
+	s=korg; t=1684172266;
+	bh=wwgLppoq/qEbHUG0r5n2Q9C67QiJWzLZIa/GJFDFtE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cEjbR1owi4pLLknWylITnGiOViyWJBBVpMHHfWeIs8b6Ptdxm4mbBRg+U4nkOyawA
-	 fP5JpafSdbKpOI1H30kZlH2wDAs8YaipT34+N2ZEIqWabF0uJD7ABHcT0qx9OGGvXc
-	 5G+8vnsXbT5g2nwxOG2RmXgjRkFxTLXJrJP/qz2Q=
+	b=UWzqVmSRRcrFmJtxfgx5p193OzKbva0bKIRlZSq/u0ItP/vj7pHK6TUVnpeqsAwR3
+	 SPgrY8ePyOqk8n68eirihdNjpTYBb7JYezd/JwrfMCXSHMLMSxDUOVrMu28stdGuX2
+	 hdCIFBiiYiOBNpvwcU6A09/PiSxE4Z7/Dn0wHhxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 069/381] tpm, tpm: Implement usage counter for locality
-Date: Mon, 15 May 2023 18:25:20 +0200
-Message-Id: <20230515161739.931729530@linuxfoundation.org>
+Subject: [PATCH 5.10 096/381] drm/msm/adreno: Defer enabling runpm until hw_init()
+Date: Mon, 15 May 2023 18:25:47 +0200
+Message-Id: <20230515161741.147201771@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,230 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 7a2f55d0be296c4e81fd782f3d6c43ed4ec7e265 ]
+[ Upstream commit 4b18299b33655fa9672b774b6df774dc03d6aee8 ]
 
-Implement a usage counter for the (default) locality used by the TPM TIS
-driver:
-Request the locality from the TPM if it has not been claimed yet, otherwise
-only increment the counter. Also release the locality if the counter is 0
-otherwise only decrement the counter. Since in case of SPI the register
-accesses are locked by means of the SPI bus mutex use a sleepable lock
-(i.e. also a mutex) to ensure thread-safety of the counter which may be
-accessed by both a userspace thread and the interrupt handler.
+To avoid preventing the display from coming up before the rootfs is
+mounted, without resorting to packing fw in the initrd, the GPU has
+this limbo state where the device is probed, but we aren't ready to
+start sending commands to it.  This is particularly problematic for
+a6xx, since the GMU (which requires fw to be loaded) is the one that
+is controlling the power/clk/icc votes.
 
-By doing this refactor the names of the amended functions to use a more
-appropriate prefix.
+So defer enabling runpm until we are ready to call gpu->hw_init(),
+as that is a point where we know we have all the needed fw and are
+ready to start sending commands to the coproc's.
 
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Tested-by: Michael Niewöhner <linux@mniewoehner.de>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Stable-dep-of: 955df4f87760 ("tpm, tpm_tis: Claim locality when interrupts are reenabled on resume")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/489337/
+Link: https://lore.kernel.org/r/20220613182036.2567963-1-robdclark@gmail.com
+Stable-dep-of: db7662d076c9 ("drm/msm/adreno: drop bogus pm_runtime_set_active()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 63 +++++++++++++++++++++++----------
- drivers/char/tpm/tpm_tis_core.h |  2 ++
- 2 files changed, 47 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 6 ++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 1 -
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 52826a7edf800..3ea0fff30273e 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -136,16 +136,27 @@ static bool check_locality(struct tpm_chip *chip, int l)
- 	return false;
- }
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 58e03b20e1c7a..c06202b9243c4 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -301,6 +301,12 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
+ 	if (ret)
+ 		return NULL;
  
--static int release_locality(struct tpm_chip *chip, int l)
-+static int __tpm_tis_relinquish_locality(struct tpm_tis_data *priv, int l)
-+{
-+	tpm_tis_write8(priv, TPM_ACCESS(l), TPM_ACCESS_ACTIVE_LOCALITY);
++	/*
++	 * Now that we have firmware loaded, and are ready to begin
++	 * booting the gpu, go ahead and enable runpm:
++	 */
++	pm_runtime_enable(&pdev->dev);
 +
-+	return 0;
-+}
-+
-+static int tpm_tis_relinquish_locality(struct tpm_chip *chip, int l)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
+ 	/* Make sure pm runtime is active and reset any previous errors */
+ 	pm_runtime_set_active(&pdev->dev);
  
--	tpm_tis_write8(priv, TPM_ACCESS(l), TPM_ACCESS_ACTIVE_LOCALITY);
-+	mutex_lock(&priv->locality_count_mutex);
-+	priv->locality_count--;
-+	if (priv->locality_count == 0)
-+		__tpm_tis_relinquish_locality(priv, l);
-+	mutex_unlock(&priv->locality_count_mutex);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 78181e2d78a97..11a6a41b4910f 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -916,7 +916,6 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ 	pm_runtime_set_autosuspend_delay(dev,
+ 		adreno_gpu->info->inactive_period);
+ 	pm_runtime_use_autosuspend(dev);
+-	pm_runtime_enable(dev);
  
- 	return 0;
- }
- 
--static int request_locality(struct tpm_chip *chip, int l)
-+static int __tpm_tis_request_locality(struct tpm_chip *chip, int l)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
- 	unsigned long stop, timeout;
-@@ -186,6 +197,20 @@ static int request_locality(struct tpm_chip *chip, int l)
- 	return -1;
- }
- 
-+static int tpm_tis_request_locality(struct tpm_chip *chip, int l)
-+{
-+	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
-+	int ret = 0;
-+
-+	mutex_lock(&priv->locality_count_mutex);
-+	if (priv->locality_count == 0)
-+		ret = __tpm_tis_request_locality(chip, l);
-+	if (!ret)
-+		priv->locality_count++;
-+	mutex_unlock(&priv->locality_count_mutex);
-+	return ret;
-+}
-+
- static u8 tpm_tis_status(struct tpm_chip *chip)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
-@@ -638,7 +663,7 @@ static int probe_itpm(struct tpm_chip *chip)
- 	if (vendor != TPM_VID_INTEL)
- 		return 0;
- 
--	if (request_locality(chip, 0) != 0)
-+	if (tpm_tis_request_locality(chip, 0) != 0)
- 		return -EBUSY;
- 
- 	rc = tpm_tis_send_data(chip, cmd_getticks, len);
-@@ -659,7 +684,7 @@ static int probe_itpm(struct tpm_chip *chip)
- 
- out:
- 	tpm_tis_ready(chip);
--	release_locality(chip, priv->locality);
-+	tpm_tis_relinquish_locality(chip, priv->locality);
- 
- 	return rc;
- }
-@@ -747,14 +772,14 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
- 	}
- 	priv->irq = irq;
- 
--	rc = request_locality(chip, 0);
-+	rc = tpm_tis_request_locality(chip, 0);
- 	if (rc < 0)
- 		return rc;
- 
- 	rc = tpm_tis_read8(priv, TPM_INT_VECTOR(priv->locality),
- 			   &original_int_vec);
- 	if (rc < 0) {
--		release_locality(chip, priv->locality);
-+		tpm_tis_relinquish_locality(chip, priv->locality);
- 		return rc;
- 	}
- 
-@@ -793,7 +818,7 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
- 		rc = -1;
- 	}
- 
--	release_locality(chip, priv->locality);
-+	tpm_tis_relinquish_locality(chip, priv->locality);
- 
- 	return rc;
- }
-@@ -909,8 +934,8 @@ static const struct tpm_class_ops tpm_tis = {
- 	.req_complete_mask = TPM_STS_DATA_AVAIL | TPM_STS_VALID,
- 	.req_complete_val = TPM_STS_DATA_AVAIL | TPM_STS_VALID,
- 	.req_canceled = tpm_tis_req_canceled,
--	.request_locality = request_locality,
--	.relinquish_locality = release_locality,
-+	.request_locality = tpm_tis_request_locality,
-+	.relinquish_locality = tpm_tis_relinquish_locality,
- 	.clk_enable = tpm_tis_clkrun_enable,
- };
- 
-@@ -944,6 +969,8 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 	priv->timeout_min = TPM_TIMEOUT_USECS_MIN;
- 	priv->timeout_max = TPM_TIMEOUT_USECS_MAX;
- 	priv->phy_ops = phy_ops;
-+	priv->locality_count = 0;
-+	mutex_init(&priv->locality_count_mutex);
- 
- 	dev_set_drvdata(&chip->dev, priv);
- 
-@@ -990,14 +1017,14 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 		   TPM_INTF_DATA_AVAIL_INT | TPM_INTF_STS_VALID_INT;
- 	intmask &= ~TPM_GLOBAL_INT_ENABLE;
- 
--	rc = request_locality(chip, 0);
-+	rc = tpm_tis_request_locality(chip, 0);
- 	if (rc < 0) {
- 		rc = -ENODEV;
- 		goto out_err;
- 	}
- 
- 	tpm_tis_write32(priv, TPM_INT_ENABLE(priv->locality), intmask);
--	release_locality(chip, 0);
-+	tpm_tis_relinquish_locality(chip, 0);
- 
- 	rc = tpm_chip_start(chip);
- 	if (rc)
-@@ -1057,13 +1084,13 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 		 * proper timeouts for the driver.
- 		 */
- 
--		rc = request_locality(chip, 0);
-+		rc = tpm_tis_request_locality(chip, 0);
- 		if (rc < 0)
- 			goto out_err;
- 
- 		rc = tpm_get_timeouts(chip);
- 
--		release_locality(chip, 0);
-+		tpm_tis_relinquish_locality(chip, 0);
- 
- 		if (rc) {
- 			dev_err(dev, "Could not get TPM timeouts and durations\n");
-@@ -1081,11 +1108,11 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
- 			dev_err(&chip->dev, FW_BUG
- 					"TPM interrupt not working, polling instead\n");
- 
--			rc = request_locality(chip, 0);
-+			rc = tpm_tis_request_locality(chip, 0);
- 			if (rc < 0)
- 				goto out_err;
- 			disable_interrupts(chip);
--			release_locality(chip, 0);
-+			tpm_tis_relinquish_locality(chip, 0);
- 		}
- 	}
- 
-@@ -1158,13 +1185,13 @@ int tpm_tis_resume(struct device *dev)
- 	 * an error code but for unknown reason it isn't handled.
- 	 */
- 	if (!(chip->flags & TPM_CHIP_FLAG_TPM2)) {
--		ret = request_locality(chip, 0);
-+		ret = tpm_tis_request_locality(chip, 0);
- 		if (ret < 0)
- 			return ret;
- 
- 		tpm1_do_selftest(chip);
- 
--		release_locality(chip, 0);
-+		tpm_tis_relinquish_locality(chip, 0);
- 	}
- 
- 	return 0;
-diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
-index 3be24f221e32a..464ed352ab2e8 100644
---- a/drivers/char/tpm/tpm_tis_core.h
-+++ b/drivers/char/tpm/tpm_tis_core.h
-@@ -90,6 +90,8 @@ enum tpm_tis_flags {
- 
- struct tpm_tis_data {
- 	u16 manufacturer_id;
-+	struct mutex locality_count_mutex;
-+	unsigned int locality_count;
- 	int locality;
- 	int irq;
- 	bool irq_tested;
+ 	ret = msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
+ 			adreno_gpu->info->name, &adreno_gpu_config);
 -- 
 2.39.2
 
