@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F485E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB033C433EF;
-	Mon, 15 May 2023 16:41:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EBAE573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB78AC4339B;
+	Mon, 15 May 2023 16:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168878;
-	bh=X1X0/twsuXsKQ2K4g6enurbyjNWyT9rU+N52SREuXvQ=;
+	s=korg; t=1684168881;
+	bh=XW1/T5OeDjqtg/b6YN1XMJduOneGCxaciek3jJrGBjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1X+g/6xNxmv7cEn5JX8awqUwf9kqrr+NBiGjuGP5Fq3wWyBtbu+SE8m+fcbEwk2Ii
-	 SqZhgM/j458ywYmaABHfPXt/8MTnPtw3wAyiL6Zahfa8b1FGrPeztAYNNkllM7f1EE
-	 i+8pns2g84UDzct8QHYfwLPljEvZqVbOC5i5mvAU=
+	b=oTot/z0c0ddNmqT6Gx955nq6cJZgT2Buih0ayihUVMPXzL5tfp7DGZqXAXiWlYre7
+	 +xu0jLZBLGOD+D4VMZE4NA89Qe7fhHswjyE8LiCv4kgiPPjOEpjwmxff0c3rP4+Jj6
+	 CvFhYgQ7ErrqmFvJMoxZY0z2xWN5zDn7ETxAl0Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Lorenzo Zolfanelli <lorenzo@zolfa.nl>
-Subject: [PATCH 4.19 071/191] wifi: iwlwifi: make the loop for card preparation effective
-Date: Mon, 15 May 2023 18:25:08 +0200
-Message-Id: <20230515161709.828236772@linuxfoundation.org>
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 072/191] wifi: iwlwifi: mvm: check firmware response size
+Date: Mon, 15 May 2023 18:25:09 +0200
+Message-Id: <20230515161709.870863156@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -37,48 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 28965ec0b5d9112585f725660e2ff13218505ace ]
+[ Upstream commit 13513cec93ac9902d0b896976d8bab3758a9881c ]
 
-Since we didn't reset t to 0, only the first iteration of the loop
-did checked the ready bit several times.
->From the second iteration and on, we just tested the bit once and
-continued to the next iteration.
+Check the firmware response size for responses to the
+memory read/write command in debugfs before using it.
 
-Reported-and-tested-by: Lorenzo Zolfanelli <lorenzo@zolfa.nl>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216452
-Fixes: 289e5501c314 ("iwlwifi: fix the preparation of the card")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Fixes: 2b55f43f8e47 ("iwlwifi: mvm: Add mem debugfs entry")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230416154301.615b683ab9c8.Ic52c3229d3345b0064fa34263293db095d88daf8@changeid
+Link: https://lore.kernel.org/r/20230417113648.0d56fcaf68ee.I70e9571f3ed7263929b04f8fabad23c9b999e4ea@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/trans.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-index 2d2afc1758304..c69c13e762bbe 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/trans.c
-@@ -666,7 +666,6 @@ static int iwl_pcie_set_hw_ready(struct iwl_trans *trans)
- int iwl_pcie_prepare_card_hw(struct iwl_trans *trans)
- {
- 	int ret;
--	int t = 0;
- 	int iter;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+index 05b77419953ce..9540c874fc380 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+@@ -1835,6 +1835,11 @@ static ssize_t iwl_dbgfs_mem_read(struct file *file, char __user *user_buf,
+ 	if (ret < 0)
+ 		return ret;
  
- 	IWL_DEBUG_INFO(trans, "iwl_trans_prepare_card_hw enter\n");
-@@ -681,6 +680,8 @@ int iwl_pcie_prepare_card_hw(struct iwl_trans *trans)
- 	usleep_range(1000, 2000);
- 
- 	for (iter = 0; iter < 10; iter++) {
-+		int t = 0;
++	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
++		ret = -EIO;
++		goto out;
++	}
 +
- 		/* If HW is not ready, prepare the conditions to check again */
- 		iwl_set_bit(trans, CSR_HW_IF_CONFIG_REG,
- 			    CSR_HW_IF_CONFIG_REG_PREPARE);
+ 	rsp = (void *)hcmd.resp_pkt->data;
+ 	if (le32_to_cpu(rsp->status) != DEBUG_MEM_STATUS_SUCCESS) {
+ 		ret = -ENXIO;
+@@ -1912,6 +1917,11 @@ static ssize_t iwl_dbgfs_mem_write(struct file *file,
+ 	if (ret < 0)
+ 		return ret;
+ 
++	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
++		ret = -EIO;
++		goto out;
++	}
++
+ 	rsp = (void *)hcmd.resp_pkt->data;
+ 	if (rsp->status != DEBUG_MEM_STATUS_SUCCESS) {
+ 		ret = -ENXIO;
 -- 
 2.39.2
 
