@@ -1,26 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54225FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:52:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C557DC4339B;
-	Mon, 15 May 2023 16:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A3CAFBF0;
+	Mon, 15 May 2023 16:52:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7230BC433EF;
+	Mon, 15 May 2023 16:52:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169544;
-	bh=VfIcsxlmDpuEN2b1u4het1P4n2aS1RBSAMOgO5ewpBo=;
+	s=korg; t=1684169547;
+	bh=dyvVhBldc2lQ5+fBJ7yXqpacp8JRUXVrN4hOOR0qruQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YKu3CKiqSRbbkHuipGya/H6zngDEtx4lYwcpqr5cH4EIXDWxZjEC+oi/L3x9esTpW
-	 u+zkeltdT9fz2v/ht6lOESuX8NWChwk0e5N4uyph1mZPvuNGjlIRO8VoK217JgCXoI
-	 CSRmeqOEzhD5S1HIKP+tABWz+LMlbN8wKh3zayqA=
+	b=tbX0ru5nECvLVC0Vs3DEbjJGfDdX8qfL5/kSojuLI0RfgcQQdl1RFwnp/Ez8AK0U8
+	 jbzOFaaUJQEd1yfMQYyiShsOC+NYtmJgHu2KoROl27+ogwixTKMV7wBcL4NC/Yw10F
+	 YxEfV1idToHVNeI0PaIJj3Ow/z7dJ6PsElLa3wbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	linux-afs@lists.infradead.org,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 062/246] netfilter: nf_tables: support for adding new devices to an existing netdev chain
-Date: Mon, 15 May 2023 18:24:34 +0200
-Message-Id: <20230515161724.442900995@linuxfoundation.org>
+Subject: [PATCH 6.3 053/246] rxrpc: Fix timeout of a call that hasnt yet been granted a channel
+Date: Mon, 15 May 2023 18:24:25 +0200
+Message-Id: <20230515161724.172164116@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,478 +42,228 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit b9703ed44ffbfba85c103b9de01886a225e14b38 ]
+[ Upstream commit db099c625b13a74d462521a46d98a8ce5b53af5d ]
 
-This patch allows users to add devices to an existing netdev chain.
+afs_make_call() calls rxrpc_kernel_begin_call() to begin a call (which may
+get stalled in the background waiting for a connection to become
+available); it then calls rxrpc_kernel_set_max_life() to set the timeouts -
+but that starts the call timer so the call timer might then expire before
+we get a connection assigned - leading to the following oops if the call
+stalled:
 
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 8509f62b0b07 ("netfilter: nf_tables: hit ENOENT on unexisting chain/flowtable update with missing attributes")
+	BUG: kernel NULL pointer dereference, address: 0000000000000000
+	...
+	CPU: 1 PID: 5111 Comm: krxrpcio/0 Not tainted 6.3.0-rc7-build3+ #701
+	RIP: 0010:rxrpc_alloc_txbuf+0xc0/0x157
+	...
+	Call Trace:
+	 <TASK>
+	 rxrpc_send_ACK+0x50/0x13b
+	 rxrpc_input_call_event+0x16a/0x67d
+	 rxrpc_io_thread+0x1b6/0x45f
+	 ? _raw_spin_unlock_irqrestore+0x1f/0x35
+	 ? rxrpc_input_packet+0x519/0x519
+	 kthread+0xe7/0xef
+	 ? kthread_complete_and_exit+0x1b/0x1b
+	 ret_from_fork+0x22/0x30
+
+Fix this by noting the timeouts in struct rxrpc_call when the call is
+created.  The timer will be started when the first packet is transmitted.
+
+It shouldn't be possible to trigger this directly from userspace through
+AF_RXRPC as sendmsg() will return EBUSY if the call is in the
+waiting-for-conn state if it dropped out of the wait due to a signal.
+
+Fixes: 9d35d880e0e4 ("rxrpc: Move client call connection to the I/O thread")
+Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: Eric Dumazet <edumazet@google.com>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: linux-afs@lists.infradead.org
+cc: netdev@vger.kernel.org
+cc: linux-kernel@vger.kernel.org
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |   6 +
- net/netfilter/nf_tables_api.c     | 217 +++++++++++++++++++-----------
- 2 files changed, 142 insertions(+), 81 deletions(-)
+ fs/afs/afs.h            |  4 ++--
+ fs/afs/internal.h       |  2 +-
+ fs/afs/rxrpc.c          |  8 +++-----
+ include/net/af_rxrpc.h  | 21 +++++++++++----------
+ net/rxrpc/af_rxrpc.c    |  3 +++
+ net/rxrpc/ar-internal.h |  1 +
+ net/rxrpc/call_object.c |  9 ++++++++-
+ net/rxrpc/sendmsg.c     |  1 +
+ 8 files changed, 30 insertions(+), 19 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 9dace9bcba8e5..3eb7d20ddfc97 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1602,6 +1602,8 @@ struct nft_trans_chain {
- 	struct nft_stats __percpu	*stats;
- 	u8				policy;
- 	u32				chain_id;
-+	struct nft_base_chain		*basechain;
-+	struct list_head		hook_list;
- };
+diff --git a/fs/afs/afs.h b/fs/afs/afs.h
+index 432cb4b239614..81815724db6c9 100644
+--- a/fs/afs/afs.h
++++ b/fs/afs/afs.h
+@@ -19,8 +19,8 @@
+ #define AFSPATHMAX		1024	/* Maximum length of a pathname plus NUL */
+ #define AFSOPAQUEMAX		1024	/* Maximum length of an opaque field */
  
- #define nft_trans_chain_update(trans)	\
-@@ -1614,6 +1616,10 @@ struct nft_trans_chain {
- 	(((struct nft_trans_chain *)trans->data)->policy)
- #define nft_trans_chain_id(trans)	\
- 	(((struct nft_trans_chain *)trans->data)->chain_id)
-+#define nft_trans_basechain(trans)	\
-+	(((struct nft_trans_chain *)trans->data)->basechain)
-+#define nft_trans_chain_hooks(trans)	\
-+	(((struct nft_trans_chain *)trans->data)->hook_list)
+-#define AFS_VL_MAX_LIFESPAN	(120 * HZ)
+-#define AFS_PROBE_MAX_LIFESPAN	(30 * HZ)
++#define AFS_VL_MAX_LIFESPAN	120
++#define AFS_PROBE_MAX_LIFESPAN	30
  
- struct nft_trans_table {
- 	bool				update;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index d41f35e88642b..f64e83323473a 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -1575,7 +1575,8 @@ static int nft_dump_stats(struct sk_buff *skb, struct nft_stats __percpu *stats)
- }
- 
- static int nft_dump_basechain_hook(struct sk_buff *skb, int family,
--				   const struct nft_base_chain *basechain)
-+				   const struct nft_base_chain *basechain,
-+				   const struct list_head *hook_list)
- {
- 	const struct nf_hook_ops *ops = &basechain->ops;
- 	struct nft_hook *hook, *first = NULL;
-@@ -1592,7 +1593,11 @@ static int nft_dump_basechain_hook(struct sk_buff *skb, int family,
- 
- 	if (nft_base_chain_netdev(family, ops->hooknum)) {
- 		nest_devs = nla_nest_start_noflag(skb, NFTA_HOOK_DEVS);
--		list_for_each_entry(hook, &basechain->hook_list, list) {
-+
-+		if (!hook_list)
-+			hook_list = &basechain->hook_list;
-+
-+		list_for_each_entry(hook, hook_list, list) {
- 			if (!first)
- 				first = hook;
- 
-@@ -1617,7 +1622,8 @@ static int nft_dump_basechain_hook(struct sk_buff *skb, int family,
- static int nf_tables_fill_chain_info(struct sk_buff *skb, struct net *net,
- 				     u32 portid, u32 seq, int event, u32 flags,
- 				     int family, const struct nft_table *table,
--				     const struct nft_chain *chain)
-+				     const struct nft_chain *chain,
-+				     const struct list_head *hook_list)
- {
- 	struct nlmsghdr *nlh;
- 
-@@ -1639,7 +1645,7 @@ static int nf_tables_fill_chain_info(struct sk_buff *skb, struct net *net,
- 		const struct nft_base_chain *basechain = nft_base_chain(chain);
- 		struct nft_stats __percpu *stats;
- 
--		if (nft_dump_basechain_hook(skb, family, basechain))
-+		if (nft_dump_basechain_hook(skb, family, basechain, hook_list))
- 			goto nla_put_failure;
- 
- 		if (nla_put_be32(skb, NFTA_CHAIN_POLICY,
-@@ -1674,7 +1680,8 @@ static int nf_tables_fill_chain_info(struct sk_buff *skb, struct net *net,
- 	return -1;
- }
- 
--static void nf_tables_chain_notify(const struct nft_ctx *ctx, int event)
-+static void nf_tables_chain_notify(const struct nft_ctx *ctx, int event,
-+				   const struct list_head *hook_list)
- {
- 	struct nftables_pernet *nft_net;
- 	struct sk_buff *skb;
-@@ -1694,7 +1701,7 @@ static void nf_tables_chain_notify(const struct nft_ctx *ctx, int event)
- 
- 	err = nf_tables_fill_chain_info(skb, ctx->net, ctx->portid, ctx->seq,
- 					event, flags, ctx->family, ctx->table,
--					ctx->chain);
-+					ctx->chain, hook_list);
- 	if (err < 0) {
- 		kfree_skb(skb);
- 		goto err;
-@@ -1740,7 +1747,7 @@ static int nf_tables_dump_chains(struct sk_buff *skb,
- 						      NFT_MSG_NEWCHAIN,
- 						      NLM_F_MULTI,
- 						      table->family, table,
--						      chain) < 0)
-+						      chain, NULL) < 0)
- 				goto done;
- 
- 			nl_dump_check_consistent(cb, nlmsg_hdr(skb));
-@@ -1794,7 +1801,7 @@ static int nf_tables_getchain(struct sk_buff *skb, const struct nfnl_info *info,
- 
- 	err = nf_tables_fill_chain_info(skb2, net, NETLINK_CB(skb).portid,
- 					info->nlh->nlmsg_seq, NFT_MSG_NEWCHAIN,
--					0, family, table, chain);
-+					0, family, table, chain, NULL);
- 	if (err < 0)
- 		goto err_fill_chain_info;
- 
-@@ -2038,9 +2045,10 @@ static int nft_chain_parse_netdev(struct net *net,
- }
- 
- static int nft_chain_parse_hook(struct net *net,
-+				struct nft_base_chain *basechain,
- 				const struct nlattr * const nla[],
- 				struct nft_chain_hook *hook, u8 family,
--				struct netlink_ext_ack *extack, bool autoload)
-+				struct netlink_ext_ack *extack)
- {
- 	struct nftables_pernet *nft_net = nft_pernet(net);
- 	struct nlattr *ha[NFTA_HOOK_MAX + 1];
-@@ -2056,31 +2064,46 @@ static int nft_chain_parse_hook(struct net *net,
- 	if (err < 0)
- 		return err;
- 
--	if (ha[NFTA_HOOK_HOOKNUM] == NULL ||
--	    ha[NFTA_HOOK_PRIORITY] == NULL)
--		return -EINVAL;
-+	if (!basechain) {
-+		if (!ha[NFTA_HOOK_HOOKNUM] ||
-+		    !ha[NFTA_HOOK_PRIORITY])
-+			return -EINVAL;
- 
--	hook->num = ntohl(nla_get_be32(ha[NFTA_HOOK_HOOKNUM]));
--	hook->priority = ntohl(nla_get_be32(ha[NFTA_HOOK_PRIORITY]));
-+		hook->num = ntohl(nla_get_be32(ha[NFTA_HOOK_HOOKNUM]));
-+		hook->priority = ntohl(nla_get_be32(ha[NFTA_HOOK_PRIORITY]));
- 
--	type = __nft_chain_type_get(family, NFT_CHAIN_T_DEFAULT);
--	if (!type)
--		return -EOPNOTSUPP;
-+		type = __nft_chain_type_get(family, NFT_CHAIN_T_DEFAULT);
-+		if (!type)
-+			return -EOPNOTSUPP;
- 
--	if (nla[NFTA_CHAIN_TYPE]) {
--		type = nf_tables_chain_type_lookup(net, nla[NFTA_CHAIN_TYPE],
--						   family, autoload);
--		if (IS_ERR(type)) {
--			NL_SET_BAD_ATTR(extack, nla[NFTA_CHAIN_TYPE]);
--			return PTR_ERR(type);
-+		if (nla[NFTA_CHAIN_TYPE]) {
-+			type = nf_tables_chain_type_lookup(net, nla[NFTA_CHAIN_TYPE],
-+							   family, true);
-+			if (IS_ERR(type)) {
-+				NL_SET_BAD_ATTR(extack, nla[NFTA_CHAIN_TYPE]);
-+				return PTR_ERR(type);
-+			}
- 		}
--	}
--	if (hook->num >= NFT_MAX_HOOKS || !(type->hook_mask & (1 << hook->num)))
--		return -EOPNOTSUPP;
-+		if (hook->num >= NFT_MAX_HOOKS || !(type->hook_mask & (1 << hook->num)))
-+			return -EOPNOTSUPP;
- 
--	if (type->type == NFT_CHAIN_T_NAT &&
--	    hook->priority <= NF_IP_PRI_CONNTRACK)
--		return -EOPNOTSUPP;
-+		if (type->type == NFT_CHAIN_T_NAT &&
-+		    hook->priority <= NF_IP_PRI_CONNTRACK)
-+			return -EOPNOTSUPP;
-+	} else {
-+		if (ha[NFTA_HOOK_HOOKNUM]) {
-+			hook->num = ntohl(nla_get_be32(ha[NFTA_HOOK_HOOKNUM]));
-+			if (hook->num != basechain->ops.hooknum)
-+				return -EOPNOTSUPP;
-+		}
-+		if (ha[NFTA_HOOK_PRIORITY]) {
-+			hook->priority = ntohl(nla_get_be32(ha[NFTA_HOOK_PRIORITY]));
-+			if (hook->priority != basechain->ops.priority)
-+				return -EOPNOTSUPP;
-+		}
-+
-+		type = basechain->type;
-+	}
- 
- 	if (!try_module_get(type->owner)) {
- 		if (nla[NFTA_CHAIN_TYPE])
-@@ -2178,12 +2201,8 @@ static int nft_basechain_init(struct nft_base_chain *basechain, u8 family,
- 		list_splice_init(&hook->list, &basechain->hook_list);
- 		list_for_each_entry(h, &basechain->hook_list, list)
- 			nft_basechain_hook_init(&h->ops, family, hook, chain);
--
--		basechain->ops.hooknum	= hook->num;
--		basechain->ops.priority	= hook->priority;
--	} else {
--		nft_basechain_hook_init(&basechain->ops, family, hook, chain);
- 	}
-+	nft_basechain_hook_init(&basechain->ops, family, hook, chain);
- 
- 	chain->flags |= NFT_CHAIN_BASE | flags;
- 	basechain->policy = NF_ACCEPT;
-@@ -2234,13 +2253,13 @@ static int nf_tables_addchain(struct nft_ctx *ctx, u8 family, u8 genmask,
- 
- 	if (nla[NFTA_CHAIN_HOOK]) {
- 		struct nft_stats __percpu *stats = NULL;
--		struct nft_chain_hook hook;
-+		struct nft_chain_hook hook = {};
- 
- 		if (flags & NFT_CHAIN_BINDING)
- 			return -EOPNOTSUPP;
- 
--		err = nft_chain_parse_hook(net, nla, &hook, family, extack,
--					   true);
-+		err = nft_chain_parse_hook(net, NULL, nla, &hook, family,
-+					   extack);
- 		if (err < 0)
- 			return err;
- 
-@@ -2355,65 +2374,57 @@ static int nf_tables_addchain(struct nft_ctx *ctx, u8 family, u8 genmask,
- 	return err;
- }
- 
--static bool nft_hook_list_equal(struct list_head *hook_list1,
--				struct list_head *hook_list2)
--{
--	struct nft_hook *hook;
--	int n = 0, m = 0;
--
--	n = 0;
--	list_for_each_entry(hook, hook_list2, list) {
--		if (!nft_hook_list_find(hook_list1, hook))
--			return false;
--
--		n++;
--	}
--	list_for_each_entry(hook, hook_list1, list)
--		m++;
--
--	return n == m;
--}
--
- static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 			      u32 flags, const struct nlattr *attr,
- 			      struct netlink_ext_ack *extack)
- {
- 	const struct nlattr * const *nla = ctx->nla;
-+	struct nft_base_chain *basechain = NULL;
- 	struct nft_table *table = ctx->table;
- 	struct nft_chain *chain = ctx->chain;
--	struct nft_base_chain *basechain;
-+	struct nft_chain_hook hook = {};
- 	struct nft_stats *stats = NULL;
--	struct nft_chain_hook hook;
-+	struct nft_hook *h, *next;
- 	struct nf_hook_ops *ops;
- 	struct nft_trans *trans;
-+	bool unregister = false;
- 	int err;
- 
- 	if (chain->flags ^ flags)
- 		return -EOPNOTSUPP;
- 
-+	INIT_LIST_HEAD(&hook.list);
-+
- 	if (nla[NFTA_CHAIN_HOOK]) {
- 		if (!nft_is_base_chain(chain)) {
- 			NL_SET_BAD_ATTR(extack, attr);
- 			return -EEXIST;
- 		}
--		err = nft_chain_parse_hook(ctx->net, nla, &hook, ctx->family,
--					   extack, false);
-+
-+		basechain = nft_base_chain(chain);
-+		err = nft_chain_parse_hook(ctx->net, basechain, nla, &hook,
-+					   ctx->family, extack);
- 		if (err < 0)
- 			return err;
- 
--		basechain = nft_base_chain(chain);
- 		if (basechain->type != hook.type) {
- 			nft_chain_release_hook(&hook);
- 			NL_SET_BAD_ATTR(extack, attr);
- 			return -EEXIST;
- 		}
- 
--		if (nft_base_chain_netdev(ctx->family, hook.num)) {
--			if (!nft_hook_list_equal(&basechain->hook_list,
--						 &hook.list)) {
--				nft_chain_release_hook(&hook);
--				NL_SET_BAD_ATTR(extack, attr);
--				return -EEXIST;
-+		if (nft_base_chain_netdev(ctx->family, basechain->ops.hooknum)) {
-+			list_for_each_entry_safe(h, next, &hook.list, list) {
-+				h->ops.pf	= basechain->ops.pf;
-+				h->ops.hooknum	= basechain->ops.hooknum;
-+				h->ops.priority	= basechain->ops.priority;
-+				h->ops.priv	= basechain->ops.priv;
-+				h->ops.hook	= basechain->ops.hook;
-+
-+				if (nft_hook_list_find(&basechain->hook_list, h)) {
-+					list_del(&h->list);
-+					kfree(h);
-+				}
- 			}
- 		} else {
- 			ops = &basechain->ops;
-@@ -2424,7 +2435,6 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 				return -EEXIST;
- 			}
- 		}
--		nft_chain_release_hook(&hook);
+ typedef u64			afs_volid_t;
+ typedef u64			afs_vnodeid_t;
+diff --git a/fs/afs/internal.h b/fs/afs/internal.h
+index ad8523d0d0386..68ae91d21b578 100644
+--- a/fs/afs/internal.h
++++ b/fs/afs/internal.h
+@@ -128,7 +128,7 @@ struct afs_call {
+ 	spinlock_t		state_lock;
+ 	int			error;		/* error code */
+ 	u32			abort_code;	/* Remote abort ID or 0 */
+-	unsigned int		max_lifespan;	/* Maximum lifespan to set if not 0 */
++	unsigned int		max_lifespan;	/* Maximum lifespan in secs to set if not 0 */
+ 	unsigned		request_size;	/* size of request data */
+ 	unsigned		reply_max;	/* maximum size of reply */
+ 	unsigned		count2;		/* count used in unmarshalling */
+diff --git a/fs/afs/rxrpc.c b/fs/afs/rxrpc.c
+index 7817e2b860e5e..6862e3dde364b 100644
+--- a/fs/afs/rxrpc.c
++++ b/fs/afs/rxrpc.c
+@@ -334,7 +334,9 @@ void afs_make_call(struct afs_addr_cursor *ac, struct afs_call *call, gfp_t gfp)
+ 	/* create a call */
+ 	rxcall = rxrpc_kernel_begin_call(call->net->socket, srx, call->key,
+ 					 (unsigned long)call,
+-					 tx_total_len, gfp,
++					 tx_total_len,
++					 call->max_lifespan,
++					 gfp,
+ 					 (call->async ?
+ 					  afs_wake_up_async_call :
+ 					  afs_wake_up_call_waiter),
+@@ -349,10 +351,6 @@ void afs_make_call(struct afs_addr_cursor *ac, struct afs_call *call, gfp_t gfp)
  	}
  
- 	if (nla[NFTA_CHAIN_HANDLE] &&
-@@ -2435,24 +2445,43 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 					  nla[NFTA_CHAIN_NAME], genmask);
- 		if (!IS_ERR(chain2)) {
- 			NL_SET_BAD_ATTR(extack, nla[NFTA_CHAIN_NAME]);
--			return -EEXIST;
-+			err = -EEXIST;
-+			goto err_hooks;
- 		}
- 	}
+ 	call->rxcall = rxcall;
+-
+-	if (call->max_lifespan)
+-		rxrpc_kernel_set_max_life(call->net->socket, rxcall,
+-					  call->max_lifespan);
+ 	call->issue_time = ktime_get_real();
  
- 	if (nla[NFTA_CHAIN_COUNTERS]) {
--		if (!nft_is_base_chain(chain))
--			return -EOPNOTSUPP;
-+		if (!nft_is_base_chain(chain)) {
-+			err = -EOPNOTSUPP;
-+			goto err_hooks;
-+		}
+ 	/* send the request */
+diff --git a/include/net/af_rxrpc.h b/include/net/af_rxrpc.h
+index ba717eac0229a..73644bd42a3f9 100644
+--- a/include/net/af_rxrpc.h
++++ b/include/net/af_rxrpc.h
+@@ -40,16 +40,17 @@ typedef void (*rxrpc_user_attach_call_t)(struct rxrpc_call *, unsigned long);
+ void rxrpc_kernel_new_call_notification(struct socket *,
+ 					rxrpc_notify_new_call_t,
+ 					rxrpc_discard_new_call_t);
+-struct rxrpc_call *rxrpc_kernel_begin_call(struct socket *,
+-					   struct sockaddr_rxrpc *,
+-					   struct key *,
+-					   unsigned long,
+-					   s64,
+-					   gfp_t,
+-					   rxrpc_notify_rx_t,
+-					   bool,
+-					   enum rxrpc_interruptibility,
+-					   unsigned int);
++struct rxrpc_call *rxrpc_kernel_begin_call(struct socket *sock,
++					   struct sockaddr_rxrpc *srx,
++					   struct key *key,
++					   unsigned long user_call_ID,
++					   s64 tx_total_len,
++					   u32 hard_timeout,
++					   gfp_t gfp,
++					   rxrpc_notify_rx_t notify_rx,
++					   bool upgrade,
++					   enum rxrpc_interruptibility interruptibility,
++					   unsigned int debug_id);
+ int rxrpc_kernel_send_data(struct socket *, struct rxrpc_call *,
+ 			   struct msghdr *, size_t,
+ 			   rxrpc_notify_end_tx_t);
+diff --git a/net/rxrpc/af_rxrpc.c b/net/rxrpc/af_rxrpc.c
+index 102f5cbff91a3..a6f0d29f35ef9 100644
+--- a/net/rxrpc/af_rxrpc.c
++++ b/net/rxrpc/af_rxrpc.c
+@@ -265,6 +265,7 @@ static int rxrpc_listen(struct socket *sock, int backlog)
+  * @key: The security context to use (defaults to socket setting)
+  * @user_call_ID: The ID to use
+  * @tx_total_len: Total length of data to transmit during the call (or -1)
++ * @hard_timeout: The maximum lifespan of the call in sec
+  * @gfp: The allocation constraints
+  * @notify_rx: Where to send notifications instead of socket queue
+  * @upgrade: Request service upgrade for call
+@@ -283,6 +284,7 @@ struct rxrpc_call *rxrpc_kernel_begin_call(struct socket *sock,
+ 					   struct key *key,
+ 					   unsigned long user_call_ID,
+ 					   s64 tx_total_len,
++					   u32 hard_timeout,
+ 					   gfp_t gfp,
+ 					   rxrpc_notify_rx_t notify_rx,
+ 					   bool upgrade,
+@@ -313,6 +315,7 @@ struct rxrpc_call *rxrpc_kernel_begin_call(struct socket *sock,
+ 	p.tx_total_len		= tx_total_len;
+ 	p.interruptibility	= interruptibility;
+ 	p.kernel		= true;
++	p.timeouts.hard		= hard_timeout;
  
- 		stats = nft_stats_alloc(nla[NFTA_CHAIN_COUNTERS]);
--		if (IS_ERR(stats))
--			return PTR_ERR(stats);
-+		if (IS_ERR(stats)) {
-+			err = PTR_ERR(stats);
-+			goto err_hooks;
-+		}
- 	}
+ 	memset(&cp, 0, sizeof(cp));
+ 	cp.local		= rx->local;
+diff --git a/net/rxrpc/ar-internal.h b/net/rxrpc/ar-internal.h
+index 67b0a894162d7..5d44dc08f66d0 100644
+--- a/net/rxrpc/ar-internal.h
++++ b/net/rxrpc/ar-internal.h
+@@ -616,6 +616,7 @@ struct rxrpc_call {
+ 	unsigned long		expect_term_by;	/* When we expect call termination by */
+ 	u32			next_rx_timo;	/* Timeout for next Rx packet (jif) */
+ 	u32			next_req_timo;	/* Timeout for next Rx request packet (jif) */
++	u32			hard_timo;	/* Maximum lifetime or 0 (jif) */
+ 	struct timer_list	timer;		/* Combined event timer */
+ 	struct work_struct	destroyer;	/* In-process-context destroyer */
+ 	rxrpc_notify_rx_t	notify_rx;	/* kernel service Rx notification function */
+diff --git a/net/rxrpc/call_object.c b/net/rxrpc/call_object.c
+index e9f1f49d18c2a..fecbc73054bc2 100644
+--- a/net/rxrpc/call_object.c
++++ b/net/rxrpc/call_object.c
+@@ -226,6 +226,13 @@ static struct rxrpc_call *rxrpc_alloc_client_call(struct rxrpc_sock *rx,
+ 	if (cp->exclusive)
+ 		__set_bit(RXRPC_CALL_EXCLUSIVE, &call->flags);
  
-+	if (!(table->flags & NFT_TABLE_F_DORMANT) &&
-+	    nft_is_base_chain(chain) &&
-+	    !list_empty(&hook.list)) {
-+		basechain = nft_base_chain(chain);
-+		ops = &basechain->ops;
++	if (p->timeouts.normal)
++		call->next_rx_timo = min(msecs_to_jiffies(p->timeouts.normal), 1UL);
++	if (p->timeouts.idle)
++		call->next_req_timo = min(msecs_to_jiffies(p->timeouts.idle), 1UL);
++	if (p->timeouts.hard)
++		call->hard_timo = p->timeouts.hard * HZ;
 +
-+		if (nft_base_chain_netdev(table->family, basechain->ops.hooknum)) {
-+			err = nft_netdev_register_hooks(ctx->net, &hook.list);
-+			if (err < 0)
-+				goto err_hooks;
-+		}
-+	}
-+
-+	unregister = true;
- 	err = -ENOMEM;
- 	trans = nft_trans_alloc(ctx, NFT_MSG_NEWCHAIN,
- 				sizeof(struct nft_trans_chain));
- 	if (trans == NULL)
--		goto err;
-+		goto err_trans;
- 
- 	nft_trans_chain_stats(trans) = stats;
- 	nft_trans_chain_update(trans) = true;
-@@ -2471,7 +2500,7 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 		err = -ENOMEM;
- 		name = nla_strdup(nla[NFTA_CHAIN_NAME], GFP_KERNEL_ACCOUNT);
- 		if (!name)
--			goto err;
-+			goto err_trans;
- 
- 		err = -EEXIST;
- 		list_for_each_entry(tmp, &nft_net->commit_list, list) {
-@@ -2482,18 +2511,35 @@ static int nf_tables_updchain(struct nft_ctx *ctx, u8 genmask, u8 policy,
- 			    strcmp(name, nft_trans_chain_name(tmp)) == 0) {
- 				NL_SET_BAD_ATTR(extack, nla[NFTA_CHAIN_NAME]);
- 				kfree(name);
--				goto err;
-+				goto err_trans;
- 			}
- 		}
- 
- 		nft_trans_chain_name(trans) = name;
- 	}
-+
-+	nft_trans_basechain(trans) = basechain;
-+	INIT_LIST_HEAD(&nft_trans_chain_hooks(trans));
-+	list_splice(&hook.list, &nft_trans_chain_hooks(trans));
-+
- 	nft_trans_commit_list_add_tail(ctx->net, trans);
- 
- 	return 0;
--err:
-+
-+err_trans:
- 	free_percpu(stats);
- 	kfree(trans);
-+err_hooks:
-+	if (nla[NFTA_CHAIN_HOOK]) {
-+		list_for_each_entry_safe(h, next, &hook.list, list) {
-+			if (unregister)
-+				nf_unregister_net_hook(ctx->net, &h->ops);
-+			list_del(&h->list);
-+			kfree_rcu(h, rcu);
-+		}
-+		module_put(hook.type->owner);
-+	}
-+
- 	return err;
+ 	ret = rxrpc_init_client_call_security(call);
+ 	if (ret < 0) {
+ 		rxrpc_prefail_call(call, RXRPC_CALL_LOCAL_ERROR, ret);
+@@ -257,7 +264,7 @@ void rxrpc_start_call_timer(struct rxrpc_call *call)
+ 	call->keepalive_at = j;
+ 	call->expect_rx_by = j;
+ 	call->expect_req_by = j;
+-	call->expect_term_by = j;
++	call->expect_term_by = j + call->hard_timo;
+ 	call->timer.expires = now;
  }
  
-@@ -9233,19 +9279,22 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
- 		case NFT_MSG_NEWCHAIN:
- 			if (nft_trans_chain_update(trans)) {
- 				nft_chain_commit_update(trans);
--				nf_tables_chain_notify(&trans->ctx, NFT_MSG_NEWCHAIN);
-+				nf_tables_chain_notify(&trans->ctx, NFT_MSG_NEWCHAIN,
-+						       &nft_trans_chain_hooks(trans));
-+				list_splice(&nft_trans_chain_hooks(trans),
-+					    &nft_trans_basechain(trans)->hook_list);
- 				/* trans destroyed after rcu grace period */
- 			} else {
- 				nft_chain_commit_drop_policy(trans);
- 				nft_clear(net, trans->ctx.chain);
--				nf_tables_chain_notify(&trans->ctx, NFT_MSG_NEWCHAIN);
-+				nf_tables_chain_notify(&trans->ctx, NFT_MSG_NEWCHAIN, NULL);
- 				nft_trans_destroy(trans);
- 			}
- 			break;
- 		case NFT_MSG_DELCHAIN:
- 		case NFT_MSG_DESTROYCHAIN:
- 			nft_chain_del(trans->ctx.chain);
--			nf_tables_chain_notify(&trans->ctx, trans->msg_type);
-+			nf_tables_chain_notify(&trans->ctx, trans->msg_type, NULL);
- 			nf_tables_unregister_hook(trans->ctx.net,
- 						  trans->ctx.table,
- 						  trans->ctx.chain);
-@@ -9412,7 +9461,10 @@ static void nf_tables_abort_release(struct nft_trans *trans)
- 		nf_tables_table_destroy(&trans->ctx);
- 		break;
- 	case NFT_MSG_NEWCHAIN:
--		nf_tables_chain_destroy(&trans->ctx);
-+		if (nft_trans_chain_update(trans))
-+			nft_hooks_destroy(&nft_trans_chain_hooks(trans));
-+		else
-+			nf_tables_chain_destroy(&trans->ctx);
- 		break;
- 	case NFT_MSG_NEWRULE:
- 		nf_tables_rule_destroy(&trans->ctx, nft_trans_rule(trans));
-@@ -9475,6 +9527,9 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
- 			break;
- 		case NFT_MSG_NEWCHAIN:
- 			if (nft_trans_chain_update(trans)) {
-+				nft_netdev_unregister_hooks(net,
-+							    &nft_trans_chain_hooks(trans),
-+							    true);
- 				free_percpu(nft_trans_chain_stats(trans));
- 				kfree(nft_trans_chain_name(trans));
- 				nft_trans_destroy(trans);
+diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
+index c1b074c17b33e..8e0b94714e849 100644
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -651,6 +651,7 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
+ 		if (IS_ERR(call))
+ 			return PTR_ERR(call);
+ 		/* ... and we have the call lock. */
++		p.call.nr_timeouts = 0;
+ 		ret = 0;
+ 		if (rxrpc_call_is_complete(call))
+ 			goto out_put_unlock;
 -- 
 2.39.2
 
