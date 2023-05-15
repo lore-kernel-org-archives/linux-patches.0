@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5692EFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C61F3C433D2;
-	Mon, 15 May 2023 17:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 665A1FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2F7C433EF;
+	Mon, 15 May 2023 17:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171754;
-	bh=4LjBI5KL8/JNMtAu02Op0SecTeiWUAidqmNK6zUHwt8=;
+	s=korg; t=1684171757;
+	bh=Za5uzRIxnRJiwpO/qHlEJZLLEAOfoFzVhAXClj0R4wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvcam/jlmcncxlgx4dBiC4NVK1+AFlROQptVWVfF7hFcuXsnV4ezsPncwLWcqvyvA
-	 wKFcm3FQP6XbHW5Aw5wZk4zjqFpvQEpLSBiOMZkT+avbRb4mrhAndAUhaGdHz4D4SJ
-	 zfKhM/ngQHBkfc3RBL2kS9JxZmGBZFvurYyyylXA=
+	b=kLtEy8DEIGIoQ9aPNfSqB49C9OvL9tO/ZGrKwtOnSha4gL5Abhu2a+yDKgr87CWLF
+	 x6TuX0BndWLgZkLtPorbuJ8nmienIySPcBFHvN0/B/DtYx6fb3sHfCrHnbf6JM/hsg
+	 f57XaHQjL5+m5D2XwL2agiUcwKOVf40vMBsp1YFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 067/134] btrfs: fix space cache inconsistency after error loading it from disk
-Date: Mon, 15 May 2023 18:29:04 +0200
-Message-Id: <20230515161705.387363599@linuxfoundation.org>
+	Pawel Witek <pawel.ireneusz.witek@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 068/134] cifs: fix pcchunk length type in smb2_copychunk_range
+Date: Mon, 15 May 2023 18:29:05 +0200
+Message-Id: <20230515161705.422784067@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -35,57 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Pawel Witek <pawel.ireneusz.witek@gmail.com>
 
-commit 0004ff15ea26015a0a3a6182dca3b9d1df32e2b7 upstream.
+commit d66cde50c3c868af7abddafce701bb86e4a93039 upstream.
 
-When loading a free space cache from disk, at __load_free_space_cache(),
-if we fail to insert a bitmap entry, we still increment the number of
-total bitmaps in the btrfs_free_space_ctl structure, which is incorrect
-since we failed to add the bitmap entry. On error we then empty the
-cache by calling __btrfs_remove_free_space_cache(), which will result
-in getting the total bitmaps counter set to 1.
+Change type of pcchunk->Length from u32 to u64 to match
+smb2_copychunk_range arguments type. Fixes the problem where performing
+server-side copy with CIFS_IOC_COPYCHUNK_FILE ioctl resulted in incomplete
+copy of large files while returning -EINVAL.
 
-A failure to load a free space cache is not critical, so if a failure
-happens we just rebuild the cache by scanning the extent tree, which
-happens at block-group.c:caching_thread(). Yet the failure will result
-in having the total bitmaps of the btrfs_free_space_ctl always bigger
-by 1 then the number of bitmap entries we have. So fix this by having
-the total bitmaps counter be incremented only if we successfully added
-the bitmap entry.
-
-Fixes: a67509c30079 ("Btrfs: add a io_ctl struct and helpers for dealing with the space cache")
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-CC: stable@vger.kernel.org # 4.4+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 9bf0c9cd4314 ("CIFS: Fix SMB2/SMB3 Copy offload support (refcopy) for large files")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Pawel Witek <pawel.ireneusz.witek@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/free-space-cache.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/cifs/smb2ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -825,15 +825,16 @@ static int __load_free_space_cache(struc
- 			}
- 			spin_lock(&ctl->tree_lock);
- 			ret = link_free_space(ctl, e);
--			ctl->total_bitmaps++;
--			recalculate_thresholds(ctl);
--			spin_unlock(&ctl->tree_lock);
- 			if (ret) {
-+				spin_unlock(&ctl->tree_lock);
- 				btrfs_err(fs_info,
- 					"Duplicate entries in free space cache, dumping");
- 				kmem_cache_free(btrfs_free_space_cachep, e);
- 				goto free_cache;
- 			}
-+			ctl->total_bitmaps++;
-+			recalculate_thresholds(ctl);
-+			spin_unlock(&ctl->tree_lock);
- 			list_add_tail(&e->list, &bitmaps);
- 		}
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -1893,7 +1893,7 @@ smb2_copychunk_range(const unsigned int
+ 		pcchunk->SourceOffset = cpu_to_le64(src_off);
+ 		pcchunk->TargetOffset = cpu_to_le64(dest_off);
+ 		pcchunk->Length =
+-			cpu_to_le32(min_t(u32, len, tcon->max_bytes_chunk));
++			cpu_to_le32(min_t(u64, len, tcon->max_bytes_chunk));
  
+ 		/* Request server copy to target from src identified by key */
+ 		kfree(retbuf);
 
 
