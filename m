@@ -1,31 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79308FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04B9C433D2;
-	Mon, 15 May 2023 17:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3944DFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA399C433EF;
+	Mon, 15 May 2023 17:26:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171567;
-	bh=CxbJiUdoOwWCub5oUT4dciourSL24OIe77Bt3433Y8Q=;
+	s=korg; t=1684171570;
+	bh=2qVUV9OkNHd1g2qmZFWshx7GnnNRYQpXuECWjUBNC9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ch0tUpkKX8Tr7zL59T9Gy+A7LJfdKVbQCqmpQ3woHtO7BQNb5juwzCA1Z43dEqiuH
-	 JEid1cx3uCuZ7ImixX1BUIhpoxn0gEaxzHXY4Qpy3AqXktGIangasZ1jXezHcKOqNa
-	 IZJPk8t8wgYxMMQjN8IFDAr9pqJyiay908GQ6EaE=
+	b=bEJWe1jM1IIb3SAaVP9mMUdnBLvAfdTbB14O/A89zzWrTcxETbRfz0jupMRM/jCQG
+	 jpx008ZsG+PDhOwGOstRCMV5Yas/ENuNmgpvnHzDI6GjONCn7H2wL7DAPBTa1moASj
+	 kfQMjkFBVD6pRjfiXzI04VOOPTbCzr82XoUCW3xA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+401145a9a237779feb26@syzkaller.appspotmail.com>,
-	Borislav Petkov <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 6.2 239/242] x86: fix clear_user_rep_good() exception handling annotation
-Date: Mon, 15 May 2023 18:29:25 +0200
-Message-Id: <20230515161729.076494020@linuxfoundation.org>
+	mhiramat@kernel.org,
+	npiggin@gmail.com,
+	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/134] ring-buffer: Ensure proper resetting of atomic variables in ring_buffer_reset_online_cpus
+Date: Mon, 15 May 2023 18:27:58 +0200
+Message-Id: <20230515161702.947758823@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
-References: <20230515161721.802179972@linuxfoundation.org>
+In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
+References: <20230515161702.887638251@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,97 +40,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
 
-This code no longer exists in mainline, because it was removed in
-commit d2c95f9d6802 ("x86: don't use REP_GOOD or ERMS for user memory
-clearing") upstream.
+[ Upstream commit 7c339fb4d8577792378136c15fde773cfb863cb8 ]
 
-However, rather than backport the full range of x86 memory clearing and
-copying cleanups, fix the exception table annotation placement for the
-final 'rep movsb' in clear_user_rep_good(): rather than pointing at the
-actual instruction that did the user space access, it pointed to the
-register move just before it.
+In ring_buffer_reset_online_cpus, the buffer_size_kb write operation
+may permanently fail if the cpu_online_mask changes between two
+for_each_online_buffer_cpu loops. The number of increases and decreases
+on both cpu_buffer->resize_disabled and cpu_buffer->record_disabled may be
+inconsistent, causing some CPUs to have non-zero values for these atomic
+variables after the function returns.
 
-That made sense from a code flow standpoint, but not from an actual
-usage standpoint: it means that if user access takes an exception, the
-exception handler won't actually find the instruction in the exception
-tables.
+This issue can be reproduced by "echo 0 > trace" while hotplugging cpu.
+After reproducing success, we can find out buffer_size_kb will not be
+functional anymore.
 
-As a result, rather than fixing it up and returning -EFAULT, it would
-then turn it into a kernel oops report instead, something like:
+To prevent leaving 'resize_disabled' and 'record_disabled' non-zero after
+ring_buffer_reset_online_cpus returns, we ensure that each atomic variable
+has been set up before atomic_sub() to it.
 
-    BUG: unable to handle page fault for address: 0000000020081000
-    #PF: supervisor write access in kernel mode
-    #PF: error_code(0x0002) - not-present page
-    ...
-    RIP: 0010:clear_user_rep_good+0x1c/0x30 arch/x86/lib/clear_page_64.S:147
-    ...
-    Call Trace:
-      __clear_user arch/x86/include/asm/uaccess_64.h:103 [inline]
-      clear_user arch/x86/include/asm/uaccess_64.h:124 [inline]
-      iov_iter_zero+0x709/0x1290 lib/iov_iter.c:800
-      iomap_dio_hole_iter fs/iomap/direct-io.c:389 [inline]
-      iomap_dio_iter fs/iomap/direct-io.c:440 [inline]
-      __iomap_dio_rw+0xe3d/0x1cd0 fs/iomap/direct-io.c:601
-      iomap_dio_rw+0x40/0xa0 fs/iomap/direct-io.c:689
-      ext4_dio_read_iter fs/ext4/file.c:94 [inline]
-      ext4_file_read_iter+0x4be/0x690 fs/ext4/file.c:145
-      call_read_iter include/linux/fs.h:2183 [inline]
-      do_iter_readv_writev+0x2e0/0x3b0 fs/read_write.c:733
-      do_iter_read+0x2f2/0x750 fs/read_write.c:796
-      vfs_readv+0xe5/0x150 fs/read_write.c:916
-      do_preadv+0x1b6/0x270 fs/read_write.c:1008
-      __do_sys_preadv2 fs/read_write.c:1070 [inline]
-      __se_sys_preadv2 fs/read_write.c:1061 [inline]
-      __x64_sys_preadv2+0xef/0x150 fs/read_write.c:1061
-      do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-      do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
-      entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Link: https://lore.kernel.org/linux-trace-kernel/20230426062027.17451-1-Tze-nan.Wu@mediatek.com
 
-which then looks like a filesystem bug rather than the incorrect
-exception annotation that it is.
-
-[ The alternative to this one-liner fix is to take the upstream series
-  that cleans this all up:
-
-    68674f94ffc9 ("x86: don't use REP_GOOD or ERMS for small memory copies")
-    20f3337d350c ("x86: don't use REP_GOOD or ERMS for small memory clearing")
-    adfcf4231b8c ("x86: don't use REP_GOOD or ERMS for user memory copies")
-  * d2c95f9d6802 ("x86: don't use REP_GOOD or ERMS for user memory clearing")
-    3639a535587d ("x86: move stac/clac from user copy routines into callers")
-    577e6a7fd50d ("x86: inline the 'rep movs' in user copies for the FSRM case")
-    8c9b6a88b7e2 ("x86: improve on the non-rep 'clear_user' function")
-    427fda2c8a49 ("x86: improve on the non-rep 'copy_user' function")
-  * e046fe5a36a9 ("x86: set FSRS automatically on AMD CPUs that have FSRM")
-    e1f2750edc4a ("x86: remove 'zerorest' argument from __copy_user_nocache()")
-    034ff37d3407 ("x86: rewrite '__copy_user_nocache' function")
-
-  with either the whole series or at a minimum the two marked commits
-  being needed to fix this issue ]
-
-Reported-by: syzbot <syzbot+401145a9a237779feb26@syzkaller.appspotmail.com>
-Link: https://syzkaller.appspot.com/bug?extid=401145a9a237779feb26
-Fixes: 0db7058e8e23 ("x86/clear_user: Make it faster")
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: stable@kernel.org
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Cc: <mhiramat@kernel.org>
+Cc: npiggin@gmail.com
+Fixes: b23d7a5f4a07 ("ring-buffer: speed up buffer resets by avoiding synchronize_rcu for each CPU")
+Reviewed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
+Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/clear_page_64.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
---- a/arch/x86/lib/clear_page_64.S
-+++ b/arch/x86/lib/clear_page_64.S
-@@ -142,8 +142,8 @@ SYM_FUNC_START(clear_user_rep_good)
- 	and $7, %edx
- 	jz .Lrep_good_exit
+diff --git a/kernel/trace/ring_buffer.c b/kernel/trace/ring_buffer.c
+index bacd1f87f941b..83046c6443f1c 100644
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -5295,6 +5295,9 @@ void ring_buffer_reset_cpu(struct trace_buffer *buffer, int cpu)
+ }
+ EXPORT_SYMBOL_GPL(ring_buffer_reset_cpu);
  
--.Lrep_good_bytes:
- 	mov %edx, %ecx
-+.Lrep_good_bytes:
- 	rep stosb
++/* Flag to ensure proper resetting of atomic variables */
++#define RESET_BIT	(1 << 30)
++
+ /**
+  * ring_buffer_reset_cpu - reset a ring buffer per CPU buffer
+  * @buffer: The ring buffer to reset a per cpu buffer of
+@@ -5311,20 +5314,27 @@ void ring_buffer_reset_online_cpus(struct trace_buffer *buffer)
+ 	for_each_online_buffer_cpu(buffer, cpu) {
+ 		cpu_buffer = buffer->buffers[cpu];
  
- .Lrep_good_exit:
+-		atomic_inc(&cpu_buffer->resize_disabled);
++		atomic_add(RESET_BIT, &cpu_buffer->resize_disabled);
+ 		atomic_inc(&cpu_buffer->record_disabled);
+ 	}
+ 
+ 	/* Make sure all commits have finished */
+ 	synchronize_rcu();
+ 
+-	for_each_online_buffer_cpu(buffer, cpu) {
++	for_each_buffer_cpu(buffer, cpu) {
+ 		cpu_buffer = buffer->buffers[cpu];
+ 
++		/*
++		 * If a CPU came online during the synchronize_rcu(), then
++		 * ignore it.
++		 */
++		if (!(atomic_read(&cpu_buffer->resize_disabled) & RESET_BIT))
++			continue;
++
+ 		reset_disabled_cpu_buffer(cpu_buffer);
+ 
+ 		atomic_dec(&cpu_buffer->record_disabled);
+-		atomic_dec(&cpu_buffer->resize_disabled);
++		atomic_sub(RESET_BIT, &cpu_buffer->resize_disabled);
+ 	}
+ 
+ 	mutex_unlock(&buffer->mutex);
+-- 
+2.39.2
+
 
 
