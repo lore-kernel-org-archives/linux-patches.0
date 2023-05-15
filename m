@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E76DF58
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B3EC4339B;
-	Mon, 15 May 2023 16:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE54DF58
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1859C4339B;
+	Mon, 15 May 2023 16:48:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169335;
-	bh=dGSZtykAz1SgYQunmoxeFTh7UV2GyiCpvAZcTkzTbJo=;
+	s=korg; t=1684169338;
+	bh=KSWoIp/fqUhbfbJrdcU2UXGl33rwz5zbp+H/RsfZLaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7O7d3SArlm9FEaHyuyXG83IXyi39Qp9+tglqwMJv6O4/qsO+bOaRFEoqwdEg5OBX
-	 DdNf0xnkhQfSdVNJ41eEfjFbzxVj+cyvjj74b4LqKA7gTxVhkvYhbFKMbikKahKX7y
-	 LVTQZlbh2CK7k52Yz02CT6Ke8mETzqPsux8ydcSE=
+	b=TYydwscWAZi3mDUKV22fl8Mu9T77y+hamqMAKZk81GqptAVpFVMXl5w2hr9bIvKtE
+	 MavebJG1mOZ/vIWT/23yIzdUVA6qPBHt15hTBuMPuwc3rCNY6foU1lCuIqlLBgjcQW
+	 /DscwxsQd5vhv/YxQgWbmOOmnHWUYS8wajsFWmpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steev Klimaszewski <steev@kali.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 007/246] soc: qcom: llcc: Do not create EDAC platform device on SDM845
-Date: Mon, 15 May 2023 18:23:39 +0200
-Message-Id: <20230515161722.839757016@linuxfoundation.org>
+Subject: [PATCH 6.3 008/246] mtd: spi-nor: spansion: Enable JFFS2 write buffer for Infineon s25hx SEMPER flash
+Date: Mon, 15 May 2023 18:23:40 +0200
+Message-Id: <20230515161722.869713012@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,80 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
 
-[ Upstream commit cca94f1dd6d0a4c7e5c8190672f5747e3c00ddde ]
+[ Upstream commit 4199c1719e24e73be0acc8b0146fc31ad8af9771 ]
 
-The platforms based on SDM845 SoC locks the access to EDAC registers in the
-bootloader. So probing the EDAC driver will result in a crash. Hence,
-disable the creation of EDAC platform device on all SDM845 devices.
+Infineon(Cypress) SEMPER NOR flash family has on-die ECC and its program
+granularity is 16-byte ECC data unit size. JFFS2 supports write buffer
+mode for ECC'd NOR flash. Provide a way to clear the MTD_BIT_WRITEABLE
+flag in order to enable JFFS2 write buffer mode support.
 
-The issue has been observed on Lenovo Yoga C630 and DB845c.
-
-While at it, also sort the members of `struct qcom_llcc_config` to avoid
-any holes in-between.
-
-Cc: <stable@vger.kernel.org> # 5.10
-Reported-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230314080443.64635-15-manivannan.sadhasivam@linaro.org
+Fixes: b6b23833fc42 ("mtd: spi-nor: spansion: Add s25hl-t/s25hs-t IDs and fixups")
+Suggested-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/a1cc128e094db4ec141f85bd380127598dfef17e.1680760742.git.Takahiro.Kuwano@infineon.com
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/mtd/spi-nor/spansion.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index e417bd285d9db..d4d3eced52f35 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -122,10 +122,11 @@ struct llcc_slice_config {
+diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
+index 4c34077f12162..27a3634762ad3 100644
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -266,13 +266,10 @@ static void s25hx_t_post_sfdp_fixup(struct spi_nor *nor)
  
- struct qcom_llcc_config {
- 	const struct llcc_slice_config *sct_data;
--	int size;
--	bool need_llcc_cfg;
- 	const u32 *reg_offset;
- 	const struct llcc_edac_reg_offset *edac_reg_offset;
-+	int size;
-+	bool need_llcc_cfg;
-+	bool no_edac;
- };
+ static void s25hx_t_late_init(struct spi_nor *nor)
+ {
+-	struct spi_nor_flash_parameter *params = nor->params;
+-
+ 	/* Fast Read 4B requires mode cycles */
+-	params->reads[SNOR_CMD_READ_FAST].num_mode_clocks = 8;
++	nor->params->reads[SNOR_CMD_READ_FAST].num_mode_clocks = 8;
  
- enum llcc_reg_offset {
-@@ -454,6 +455,7 @@ static const struct qcom_llcc_config sdm845_cfg = {
- 	.need_llcc_cfg	= false,
- 	.reg_offset	= llcc_v1_reg_offset,
- 	.edac_reg_offset = &llcc_v1_edac_reg_offset,
-+	.no_edac	= true,
- };
+-	/* The writesize should be ECC data unit size */
+-	params->writesize = 16;
++	cypress_nor_ecc_init(nor);
+ }
  
- static const struct qcom_llcc_config sm6350_cfg = {
-@@ -1002,11 +1004,19 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 
- 	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
- 
--	llcc_edac = platform_device_register_data(&pdev->dev,
--					"qcom_llcc_edac", -1, drv_data,
--					sizeof(*drv_data));
--	if (IS_ERR(llcc_edac))
--		dev_err(dev, "Failed to register llcc edac driver\n");
-+	/*
-+	 * On some platforms, the access to EDAC registers will be locked by
-+	 * the bootloader. So probing the EDAC driver will result in a crash.
-+	 * Hence, disable the creation of EDAC platform device for the
-+	 * problematic platforms.
-+	 */
-+	if (!cfg->no_edac) {
-+		llcc_edac = platform_device_register_data(&pdev->dev,
-+						"qcom_llcc_edac", -1, drv_data,
-+						sizeof(*drv_data));
-+		if (IS_ERR(llcc_edac))
-+			dev_err(dev, "Failed to register llcc edac driver\n");
-+	}
- 
- 	return 0;
- err:
+ static struct spi_nor_fixups s25hx_t_fixups = {
 -- 
 2.39.2
 
