@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1CB101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:53:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000F8C433EF;
-	Mon, 15 May 2023 17:53:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8470C101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:53:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F41C6C433D2;
+	Mon, 15 May 2023 17:53:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173209;
-	bh=0kM0V+605O1M1znJUIHIVJQociBMYCy5OXAFrQeck+o=;
+	s=korg; t=1684173212;
+	bh=kVX7bvlNhmqCnuerntj3GNTH1+FF1cqd7GCQagwQgTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tUFSVLHDWK1dwhn1g4V4EULeDGvJrNai2ejClC/u02rtiaoSWb4I/RTTo/XTAJnVM
-	 zI1yatMjwDQmO7cP93Iq55RZfo9AgiLmc8VslSoVICfsp1rhllbaR0VDFmcjF+yJUD
-	 L8o+nXPA8272s+EnZavUU3QMCwM/BURD7gLgtkmI=
+	b=TnOpq5CtyKnwdsep/OefQwpjUt1oc5yWsWQfaI7nYESYCt6IBz+T7r9JPTEMHK0Om
+	 av1gr5zKZhhilZ7oV82obXHahOXGj5rib+WyxYtOzcPx+nAu1MMRLqQpsHmTnesGLr
+	 VX3nRs8x+RmtInlpC7+wqX6FzrUI815Q4IRP648M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Thierry Reding <thierry.reding@gmail.com>
-Subject: [PATCH 5.4 021/282] pwm: meson: Fix g12a ao clk81 name
-Date: Mon, 15 May 2023 18:26:39 +0200
-Message-Id: <20230515161722.909797309@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 022/282] ring-buffer: Sync IRQ works before buffer destruction
+Date: Mon, 15 May 2023 18:26:40 +0200
+Message-Id: <20230515161722.938085951@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,42 +35,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 9e4fa80ab7ef9eb4f7b1ea9fc31e0eb040e85e25 upstream.
+commit 675751bb20634f981498c7d66161584080cc061e upstream.
 
-Fix the name of the aoclk81 clock. Apparently name aoclk81 as used by
-the vendor driver was changed when mainlining the g12a clock driver.
+If something was written to the buffer just before destruction,
+it may be possible (maybe not in a real system, but it did
+happen in ARCH=um with time-travel) to destroy the ringbuffer
+before the IRQ work ran, leading this KASAN report (or a crash
+without KASAN):
 
-Fixes: f41efceb46e6 ("pwm: meson: Add clock source configuration for Meson G12A")
+    BUG: KASAN: slab-use-after-free in irq_work_run_list+0x11a/0x13a
+    Read of size 8 at addr 000000006d640a48 by task swapper/0
+
+    CPU: 0 PID: 0 Comm: swapper Tainted: G        W  O       6.3.0-rc1 #7
+    Stack:
+     60c4f20f 0c203d48 41b58ab3 60f224fc
+     600477fa 60f35687 60c4f20f 601273dd
+     00000008 6101eb00 6101eab0 615be548
+    Call Trace:
+     [<60047a58>] show_stack+0x25e/0x282
+     [<60c609e0>] dump_stack_lvl+0x96/0xfd
+     [<60c50d4c>] print_report+0x1a7/0x5a8
+     [<603078d3>] kasan_report+0xc1/0xe9
+     [<60308950>] __asan_report_load8_noabort+0x1b/0x1d
+     [<60232844>] irq_work_run_list+0x11a/0x13a
+     [<602328b4>] irq_work_tick+0x24/0x34
+     [<6017f9dc>] update_process_times+0x162/0x196
+     [<6019f335>] tick_sched_handle+0x1a4/0x1c3
+     [<6019fd9e>] tick_sched_timer+0x79/0x10c
+     [<601812b9>] __hrtimer_run_queues.constprop.0+0x425/0x695
+     [<60182913>] hrtimer_interrupt+0x16c/0x2c4
+     [<600486a3>] um_timer+0x164/0x183
+     [...]
+
+    Allocated by task 411:
+     save_stack_trace+0x99/0xb5
+     stack_trace_save+0x81/0x9b
+     kasan_save_stack+0x2d/0x54
+     kasan_set_track+0x34/0x3e
+     kasan_save_alloc_info+0x25/0x28
+     ____kasan_kmalloc+0x8b/0x97
+     __kasan_kmalloc+0x10/0x12
+     __kmalloc+0xb2/0xe8
+     load_elf_phdrs+0xee/0x182
+     [...]
+
+    The buggy address belongs to the object at 000000006d640800
+     which belongs to the cache kmalloc-1k of size 1024
+    The buggy address is located 584 bytes inside of
+     freed 1024-byte region [000000006d640800, 000000006d640c00)
+
+Add the appropriate irq_work_sync() so the work finishes before
+the buffers are destroyed.
+
+Prior to the commit in the Fixes tag below, there was only a
+single global IRQ work, so this issue didn't exist.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230427175920.a76159263122.I8295e405c44362a86c995e9c2c37e3e03810aa56@changeid
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Fixes: 15693458c4bc ("tracing/ring-buffer: Move poll wake ups into ring buffer code")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-meson.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -433,7 +433,7 @@ static const struct meson_pwm_data pwm_a
- };
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1393,6 +1393,8 @@ static void rb_free_cpu_buffer(struct ri
+ 	struct list_head *head = cpu_buffer->pages;
+ 	struct buffer_page *bpage, *tmp;
  
- static const char * const pwm_g12a_ao_ab_parent_names[] = {
--	"xtal", "aoclk81", "fclk_div4", "fclk_div5"
-+	"xtal", "g12a_ao_clk81", "fclk_div4", "fclk_div5"
- };
++	irq_work_sync(&cpu_buffer->irq_work.work);
++
+ 	free_buffer_page(cpu_buffer->reader_page);
  
- static const struct meson_pwm_data pwm_g12a_ao_ab_data = {
-@@ -442,7 +442,7 @@ static const struct meson_pwm_data pwm_g
- };
+ 	if (head) {
+@@ -1498,6 +1500,8 @@ ring_buffer_free(struct ring_buffer *buf
  
- static const char * const pwm_g12a_ao_cd_parent_names[] = {
--	"xtal", "aoclk81",
-+	"xtal", "g12a_ao_clk81",
- };
+ 	cpuhp_state_remove_instance(CPUHP_TRACE_RB_PREPARE, &buffer->node);
  
- static const struct meson_pwm_data pwm_g12a_ao_cd_data = {
++	irq_work_sync(&buffer->irq_work.work);
++
+ 	for_each_buffer_cpu(buffer, cpu)
+ 		rb_free_cpu_buffer(buffer->buffers[cpu]);
+ 
 
 
