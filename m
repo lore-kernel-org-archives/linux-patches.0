@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDC9EFC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:36:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4137DC4339C;
-	Mon, 15 May 2023 17:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14287FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:36:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9F7C433EF;
+	Mon, 15 May 2023 17:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172191;
-	bh=ovHfEM0fyjLv6XsaWbJU/Bs5Arfg6u26HFvANVF/FWM=;
+	s=korg; t=1684172194;
+	bh=ZGAacLBeVYZkq82ruS4X/tASMfAaJ2tPuVHY47k9p20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7NTaVHsU6yqfFhVV82HDMSqPnRjhm34jNYrVphJLUKYyykrzbal3Q8Gt5rK7z1Lw
-	 MDk4+7wWN2Nk9ju0cnhpo3hJgk1RBV2ieeDCBaeutPubdSrhiL9KiBnMdZpWZjGOxN
-	 RHygD0oEjlUkFS2Dux+u0+zULvWY0Rbkwdh0HeJk=
+	b=wc6kh7Rs+oXLQqMfFvUiakTSLlCzXiQ7pYEiKlP2N5Uq3NZs1nwwT1WobpfYXQfpP
+	 SppL6AgR5VBYAN4XMyNulyDhLl03WpnWmLu4zTmdVTmkS0BxkN+ogqFW0NJWZsRgBL
+	 gXTXNVAFFeT6I2w19KuOF7LjxsHCIDIdkLLUE4r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 5.10 034/381] kheaders: Use array declaration instead of char
-Date: Mon, 15 May 2023 18:24:45 +0200
-Message-Id: <20230515161738.346763618@linuxfoundation.org>
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 067/381] tpm, tpm_tis: Disable interrupts if tpm_tis_probe_irq() failed
+Date: Mon, 15 May 2023 18:25:18 +0200
+Message-Id: <20230515161739.838036834@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,75 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-commit b69edab47f1da8edd8e7bfdf8c70f51a2a5d89fb upstream.
+[ Upstream commit 6d789ad726950e612a7f31044260337237c5b490 ]
 
-Under CONFIG_FORTIFY_SOURCE, memcpy() will check the size of destination
-and source buffers. Defining kernel_headers_data as "char" would trip
-this check. Since these addresses are treated as byte arrays, define
-them as arrays (as done everywhere else).
+Both functions tpm_tis_probe_irq_single() and tpm_tis_probe_irq() may setup
+the interrupts and then return with an error. This case is indicated by a
+missing TPM_CHIP_FLAG_IRQ flag in chip->flags.
+Currently the interrupt setup is only undone if tpm_tis_probe_irq_single()
+fails. Undo the setup also if tpm_tis_probe_irq() fails.
 
-This was seen with:
-
-  $ cat /sys/kernel/kheaders.tar.xz >> /dev/null
-
-  detected buffer overflow in memcpy
-  kernel BUG at lib/string_helpers.c:1027!
-  ...
-  RIP: 0010:fortify_panic+0xf/0x20
-  [...]
-  Call Trace:
-   <TASK>
-   ikheaders_read+0x45/0x50 [kheaders]
-   kernfs_fop_read_iter+0x1a4/0x2f0
-  ...
-
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://lore.kernel.org/bpf/20230302112130.6e402a98@kernel.org/
-Acked-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Tested-by: Jakub Kicinski <kuba@kernel.org>
-Fixes: 43d8ce9d65a5 ("Provide in-kernel headers to make extending kernel easier")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20230302224946.never.243-kees@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Michael Niewöhner <linux@mniewoehner.de>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Stable-dep-of: 955df4f87760 ("tpm, tpm_tis: Claim locality when interrupts are reenabled on resume")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kheaders.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
---- a/kernel/kheaders.c
-+++ b/kernel/kheaders.c
-@@ -26,15 +26,15 @@ asm (
- "	.popsection				\n"
- );
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 274096fece3fa..99cbf6fb062ce 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -1069,21 +1069,21 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 			goto out_err;
+ 		}
  
--extern char kernel_headers_data;
--extern char kernel_headers_data_end;
-+extern char kernel_headers_data[];
-+extern char kernel_headers_data_end[];
+-		if (irq) {
++		if (irq)
+ 			tpm_tis_probe_irq_single(chip, intmask, IRQF_SHARED,
+ 						 irq);
+-			if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
+-				dev_err(&chip->dev, FW_BUG
++		else
++			tpm_tis_probe_irq(chip, intmask);
++
++		if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
++			dev_err(&chip->dev, FW_BUG
+ 					"TPM interrupt not working, polling instead\n");
  
- static ssize_t
- ikheaders_read(struct file *file,  struct kobject *kobj,
- 	       struct bin_attribute *bin_attr,
- 	       char *buf, loff_t off, size_t len)
- {
--	memcpy(buf, &kernel_headers_data + off, len);
-+	memcpy(buf, &kernel_headers_data[off], len);
- 	return len;
- }
+-				rc = request_locality(chip, 0);
+-				if (rc < 0)
+-					goto out_err;
+-				disable_interrupts(chip);
+-				release_locality(chip, 0);
+-			}
+-		} else {
+-			tpm_tis_probe_irq(chip, intmask);
++			rc = request_locality(chip, 0);
++			if (rc < 0)
++				goto out_err;
++			disable_interrupts(chip);
++			release_locality(chip, 0);
+ 		}
+ 	}
  
-@@ -48,8 +48,8 @@ static struct bin_attribute kheaders_att
- 
- static int __init ikheaders_init(void)
- {
--	kheaders_attr.size = (&kernel_headers_data_end -
--			      &kernel_headers_data);
-+	kheaders_attr.size = (kernel_headers_data_end -
-+			      kernel_headers_data);
- 	return sysfs_create_bin_file(kernel_kobj, &kheaders_attr);
- }
- 
+-- 
+2.39.2
+
 
 
