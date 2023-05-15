@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FA8FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D88C4339B;
-	Mon, 15 May 2023 17:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DF0FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5523DC433EF;
+	Mon, 15 May 2023 17:28:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171735;
-	bh=m0leyK6JmemnPRnYMoyC1BnaXkj94cgxvPK4oCk1EBs=;
+	s=korg; t=1684171738;
+	bh=8HqKZbdm+NdWuMjFruEQj0mnHgrk5sNmmaxBCSov924=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2oMN7s/Nmfj1U3kIS/t3UcgWBtSELC2ecHLYkIqnqbis9Zx70k7V+adtbe9PqBrVu
-	 Eg2OLYVN5tVcqFUjHhUZNwKSsSQFmjwWjr3/FSbJjx+Q7gcFH/J3SbBItYYJ+kF+m0
-	 9iz1BWtkdx5yGPBNpg5YfjnuYSE4Ty3htR0tv48w=
+	b=DjHiqDUsEatue8EBivI4wRBJWUPnLASuAwp0xJINc4QCUyxtp6oig97/s9+xxdR0+
+	 AWeqSqc5fsyveZCYJGjM5syXmTJ5kH7dkIHjkLsnhkJRO/UtkZbN5oMuLoXWrxsqYA
+	 vze9M8mmQK2Xj117c++aEkxCE7/3HDkduzoEahX0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 062/134] btrfs: zoned: fix wrong use of bitops API in btrfs_ensure_empty_zones
-Date: Mon, 15 May 2023 18:28:59 +0200
-Message-Id: <20230515161705.209303577@linuxfoundation.org>
+Subject: [PATCH 5.15 063/134] btrfs: fix encoded write i_size corruption with no-holes
+Date: Mon, 15 May 2023 18:29:00 +0200
+Message-Id: <20230515161705.244859624@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -34,45 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Boris Burkov <boris@bur.io>
 
-commit 631003e2333c12cc1b52df06a707365b7363a159 upstream.
+commit e7db9e5c6b9615b287d01f0231904fbc1fbde9c5 upstream.
 
-find_next_bit and find_next_zero_bit take @size as the second parameter and
-@offset as the third parameter. They are specified opposite in
-btrfs_ensure_empty_zones(). Thanks to the later loop, it never failed to
-detect the empty zones. Fix them and (maybe) return the result a bit
-faster.
+We have observed a btrfs filesystem corruption on workloads using
+no-holes and encoded writes via send stream v2. The symptom is that a
+file appears to be truncated to the end of its last aligned extent, even
+though the final unaligned extent and even the file extent and otherwise
+correctly updated inode item have been written.
 
-Note: the naming is a bit confusing, size has two meanings here, bitmap
-and our range size.
+So if we were writing out a 1MiB+X file via 8 128K extents and one
+extent of length X, i_size would be set to 1MiB, but the ninth extent,
+nbyte, etc. would all appear correct otherwise.
 
-Fixes: 1cd6121f2a38 ("btrfs: zoned: implement zoned chunk allocator")
-CC: stable@vger.kernel.org # 5.15+
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+The source of the race is a narrow (one line of code) window in which a
+no-holes fs has read in an updated i_size, but has not yet set a shared
+disk_i_size variable to write. Therefore, if two ordered extents run in
+parallel (par for the course for receive workloads), the following
+sequence can play out: (following "threads" a bit loosely, since there
+are callbacks involved for endio but extra threads aren't needed to
+cause the issue)
+
+  ENC-WR1 (second to last)                                         ENC-WR2 (last)
+  -------                                                          -------
+  btrfs_do_encoded_write
+    set i_size = 1M
+    submit bio B1 ending at 1M
+  endio B1
+  btrfs_inode_safe_disk_i_size_write
+    local i_size = 1M
+    falls off a cliff for some reason
+							      btrfs_do_encoded_write
+								set i_size = 1M+X
+								submit bio B2 ending at 1M+X
+							      endio B2
+							      btrfs_inode_safe_disk_i_size_write
+								local i_size = 1M+X
+								disk_i_size = 1M+X
+    disk_i_size = 1M
+							      btrfs_delayed_update_inode
+    btrfs_delayed_update_inode
+
+And the delayed inode ends up filled with nbytes=1M+X and isize=1M, and
+writes respect i_size and present a corrupted file missing its last
+extents.
+
+Fix this by holding the inode lock in the no-holes case so that a thread
+can't sneak in a write to disk_i_size that gets overwritten with an out
+of date i_size.
+
+Fixes: 41a2ee75aab0 ("btrfs: introduce per-inode file extent tree")
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/file-item.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -1014,12 +1014,12 @@ int btrfs_ensure_empty_zones(struct btrf
- 		return -ERANGE;
+--- a/fs/btrfs/file-item.c
++++ b/fs/btrfs/file-item.c
+@@ -47,13 +47,13 @@ void btrfs_inode_safe_disk_i_size_write(
+ 	u64 start, end, i_size;
+ 	int ret;
  
- 	/* All the zones are conventional */
--	if (find_next_bit(zinfo->seq_zones, begin, end) == end)
-+	if (find_next_bit(zinfo->seq_zones, end, begin) == end)
- 		return 0;
++	spin_lock(&inode->lock);
+ 	i_size = new_i_size ?: i_size_read(&inode->vfs_inode);
+ 	if (btrfs_fs_incompat(fs_info, NO_HOLES)) {
+ 		inode->disk_i_size = i_size;
+-		return;
++		goto out_unlock;
+ 	}
  
- 	/* All the zones are sequential and empty */
--	if (find_next_zero_bit(zinfo->seq_zones, begin, end) == end &&
--	    find_next_zero_bit(zinfo->empty_zones, begin, end) == end)
-+	if (find_next_zero_bit(zinfo->seq_zones, end, begin) == end &&
-+	    find_next_zero_bit(zinfo->empty_zones, end, begin) == end)
- 		return 0;
+-	spin_lock(&inode->lock);
+ 	ret = find_contiguous_extent_bit(&inode->file_extent_tree, 0, &start,
+ 					 &end, EXTENT_DIRTY);
+ 	if (!ret && start == 0)
+@@ -61,6 +61,7 @@ void btrfs_inode_safe_disk_i_size_write(
+ 	else
+ 		i_size = 0;
+ 	inode->disk_i_size = i_size;
++out_unlock:
+ 	spin_unlock(&inode->lock);
+ }
  
- 	for (pos = start; pos < start + size; pos += zinfo->zone_size) {
 
 
