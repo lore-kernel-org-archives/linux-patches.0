@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7214FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB38C433EF;
-	Mon, 15 May 2023 17:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C63BAFBFA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174F0C4339B;
+	Mon, 15 May 2023 17:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171313;
-	bh=oTFOm9a1I4SXPcx67g0sW13+p9FWNJgJ/O4fxlINvsk=;
+	s=korg; t=1684171319;
+	bh=pf6+SKiWM4pVf5L2+Cue4JEmUJowG91OBj+W4/tfvNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/sCiRPZaKlnFTq3Jz1dd5DAW9yLtcSgmoT2/MdD9p24ud0ZhTCpaDFaUNDAgQ5Si
-	 43sUJecjYHf77AjJieeOl7t4yB+zKN4XN1UhXxWSIqho8IXBb0barhu97MH8kQIZ18
-	 LD60fry9t/rDCLcCgGHy/oTd41sDU9OXU5P6DngQ=
+	b=H6lcLmefygzjZPL3Rn3vcX8776O9lsDoYCF4iXYdMm3qzeh8nWfT3vnq/C2tF+9eJ
+	 KD3hcA0QJlXXxrEwerBFAzwbZ7fDAF3yI3k0IxU5lchUHsNjrlHniIMJu267xtK2Re
+	 O1lU843caGusHxSkeOlctbxMVhen2nNmn5XreIMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.2 139/242] btrfs: zoned: fix full zone super block reading on ZNS
-Date: Mon, 15 May 2023 18:27:45 +0200
-Message-Id: <20230515161726.073049946@linuxfoundation.org>
+	Pawel Witek <pawel.ireneusz.witek@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.2 141/242] cifs: fix pcchunk length type in smb2_copychunk_range
+Date: Mon, 15 May 2023 18:27:47 +0200
+Message-Id: <20230515161726.134356267@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,39 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naohiro Aota <Naohiro.Aota@wdc.com>
+From: Pawel Witek <pawel.ireneusz.witek@gmail.com>
 
-commit 02ca9e6fb5f66a031df4fac508b8e477ca69e918 upstream.
+commit d66cde50c3c868af7abddafce701bb86e4a93039 upstream.
 
-When both of the superblock zones are full, we need to check which
-superblock is newer. The calculation of last superblock position is wrong
-as it does not consider zone_capacity and uses the length.
+Change type of pcchunk->Length from u32 to u64 to match
+smb2_copychunk_range arguments type. Fixes the problem where performing
+server-side copy with CIFS_IOC_COPYCHUNK_FILE ioctl resulted in incomplete
+copy of large files while returning -EINVAL.
 
-Fixes: 9658b72ef300 ("btrfs: zoned: locate superblock position using zone capacity")
-CC: stable@vger.kernel.org # 6.1+
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 9bf0c9cd4314 ("CIFS: Fix SMB2/SMB3 Copy offload support (refcopy) for large files")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Pawel Witek <pawel.ireneusz.witek@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zoned.c |    7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ fs/cifs/smb2ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/zoned.c
-+++ b/fs/btrfs/zoned.c
-@@ -121,10 +121,9 @@ static int sb_write_pointer(struct block
- 		int i;
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -1682,7 +1682,7 @@ smb2_copychunk_range(const unsigned int
+ 		pcchunk->SourceOffset = cpu_to_le64(src_off);
+ 		pcchunk->TargetOffset = cpu_to_le64(dest_off);
+ 		pcchunk->Length =
+-			cpu_to_le32(min_t(u32, len, tcon->max_bytes_chunk));
++			cpu_to_le32(min_t(u64, len, tcon->max_bytes_chunk));
  
- 		for (i = 0; i < BTRFS_NR_SB_LOG_ZONES; i++) {
--			u64 bytenr;
--
--			bytenr = ((zones[i].start + zones[i].len)
--				   << SECTOR_SHIFT) - BTRFS_SUPER_INFO_SIZE;
-+			u64 zone_end = (zones[i].start + zones[i].capacity) << SECTOR_SHIFT;
-+			u64 bytenr = ALIGN_DOWN(zone_end, BTRFS_SUPER_INFO_SIZE) -
-+						BTRFS_SUPER_INFO_SIZE;
- 
- 			page[i] = read_cache_page_gfp(mapping,
- 					bytenr >> PAGE_SHIFT, GFP_NOFS);
+ 		/* Request server copy to target from src identified by key */
+ 		kfree(retbuf);
 
 
