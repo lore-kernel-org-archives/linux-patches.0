@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754D7FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5013C433D2;
-	Mon, 15 May 2023 17:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF17FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5465C433D2;
+	Mon, 15 May 2023 17:24:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171445;
-	bh=2WJEHbltfK+962lN2ytJ9AYBAltXnSy/AHNXzKm6IQM=;
+	s=korg; t=1684171448;
+	bh=YcZJu+xEqBVbuXs9A7Hv1gAQC7Z4UgkSRCZdWBuTSWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ns8QkAI28MP9PiHfJ+YoICbF5chIUf2vQibxCJ7j7R5oqS+FtZx9/cWAqNS+wqyZb
-	 5tpH4kUq4lq9W4v/kwscO50B0XoF4pFvdgElnGXQ6bE1ugR1c9BQNW3E3AZXaEg0cQ
-	 z1w+xQu1EiFHcgzqZknUulTTY1PH0IbMmAYlOSnk=
+	b=gh+4y3kxodlaPrAX0N+VJ4UVoVfpQ9NMMxWjZdoZdZl0nB8l58pkTbf1Wzd1ACHNn
+	 Kyki00Gob/y1j3ZRzDbzPihjNIQChA8h4yf2prxNC90LOWV666L3TqWui+zD9ai3JM
+	 c/pvHna/vchocCzhmDUEwA+ucTTSse4CJZwUyNPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lionel Landwerlin <lionel.g.landwerlin@intel.com>,
-	Haridhar Kalvala <haridhar.kalvala@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 212/242] drm/i915: disable sampler indirect state in bindless heap
-Date: Mon, 15 May 2023 18:28:58 +0200
-Message-Id: <20230515161728.290726011@linuxfoundation.org>
+Subject: [PATCH 6.2 213/242] drm/i915/mtl: update scaler source and destination limits for MTL
+Date: Mon, 15 May 2023 18:28:59 +0200
+Message-Id: <20230515161728.319620707@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -37,79 +38,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
+From: Animesh Manna <animesh.manna@intel.com>
 
-[ Upstream commit 81900e3a37750d8c6ad705045310e002f6dd0356 ]
+[ Upstream commit f840834a8b60ffd305f03a53007605ba4dfbbc4b ]
 
-By default the indirect state sampler data (border colors) are stored
-in the same heap as the SAMPLER_STATE structure. For userspace drivers
-that can be 2 different heaps (dynamic state heap & bindless sampler
-state heap). This means that border colors have to copied in 2
-different places so that the same SAMPLER_STATE structure find the
-right data.
+The max source and destination limits for scalers in MTL have changed.
+Use the new values accordingly.
 
-This change is forcing the indirect state sampler data to only be in
-the dynamic state pool (more convenient for userspace drivers, they
-only have to have one copy of the border colors). This is reproducing
-the behavior of the Windows drivers.
-
-BSpec: 46052
-
-Signed-off-by: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Haridhar Kalvala <haridhar.kalvala@intel.com>
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230407093237.3296286-1-lionel.g.landwerlin@intel.com
-(cherry picked from commit 16fc9c08f0ec7b1c95f1ea4a16097acdb3fc943d)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
+Signed-off-by: Animesh Manna <animesh.manna@intel.com>
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Signed-off-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221223130509.43245-3-luciano.coelho@intel.com
+Stable-dep-of: d944eafed618 ("drm/i915: Check pipe source size when using skl+ scalers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt_regs.h     |  1 +
- drivers/gpu/drm/i915/gt/intel_workarounds.c | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+)
+ drivers/gpu/drm/i915/display/skl_scaler.c | 40 ++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt_regs.h b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-index 0c30738087a79..1d96c36f9efc2 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-@@ -1136,6 +1136,7 @@
- #define   SC_DISABLE_POWER_OPTIMIZATION_EBB	REG_BIT(9)
- #define   GEN11_SAMPLER_ENABLE_HEADLESS_MSG	REG_BIT(5)
- #define   MTL_DISABLE_SAMPLER_SC_OOO		REG_BIT(3)
-+#define   GEN11_INDIRECT_STATE_BASE_ADDR_OVERRIDE	REG_BIT(0)
+diff --git a/drivers/gpu/drm/i915/display/skl_scaler.c b/drivers/gpu/drm/i915/display/skl_scaler.c
+index d7390067b7d4c..01e8812936126 100644
+--- a/drivers/gpu/drm/i915/display/skl_scaler.c
++++ b/drivers/gpu/drm/i915/display/skl_scaler.c
+@@ -87,6 +87,10 @@ static u16 skl_scaler_calc_phase(int sub, int scale, bool chroma_cosited)
+ #define ICL_MAX_SRC_H 4096
+ #define ICL_MAX_DST_W 5120
+ #define ICL_MAX_DST_H 4096
++#define MTL_MAX_SRC_W 4096
++#define MTL_MAX_SRC_H 8192
++#define MTL_MAX_DST_W 8192
++#define MTL_MAX_DST_H 8192
+ #define SKL_MIN_YUV_420_SRC_W 16
+ #define SKL_MIN_YUV_420_SRC_H 16
  
- #define GEN9_HALF_SLICE_CHICKEN7		MCR_REG(0xe194)
- #define   DG2_DISABLE_ROUND_ENABLE_ALLOW_FOR_SSLA	REG_BIT(15)
-diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-index 09455682967de..620071efb2fc1 100644
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -3035,6 +3035,25 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
+@@ -103,6 +107,8 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
+ 	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
+ 	const struct drm_display_mode *adjusted_mode =
+ 		&crtc_state->hw.adjusted_mode;
++	int min_src_w, min_src_h, min_dst_w, min_dst_h;
++	int max_src_w, max_src_h, max_dst_w, max_dst_h;
  
- 	add_render_compute_tuning_settings(i915, wal);
+ 	/*
+ 	 * Src coordinates are already rotated by 270 degrees for
+@@ -157,15 +163,33 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
+ 		return -EINVAL;
+ 	}
  
-+	if (GRAPHICS_VER(i915) >= 11) {
-+		/* This is not a Wa (although referred to as
-+		 * WaSetInidrectStateOverride in places), this allows
-+		 * applications that reference sampler states through
-+		 * the BindlessSamplerStateBaseAddress to have their
-+		 * border color relative to DynamicStateBaseAddress
-+		 * rather than BindlessSamplerStateBaseAddress.
-+		 *
-+		 * Otherwise SAMPLER_STATE border colors have to be
-+		 * copied in multiple heaps (DynamicStateBaseAddress &
-+		 * BindlessSamplerStateBaseAddress)
-+		 *
-+		 * BSpec: 46052
-+		 */
-+		wa_mcr_masked_en(wal,
-+				 GEN10_SAMPLER_MODE,
-+				 GEN11_INDIRECT_STATE_BASE_ADDR_OVERRIDE);
++	min_src_w = SKL_MIN_SRC_W;
++	min_src_h = SKL_MIN_SRC_H;
++	min_dst_w = SKL_MIN_DST_W;
++	min_dst_h = SKL_MIN_DST_H;
++
++	if (DISPLAY_VER(dev_priv) < 11) {
++		max_src_w = SKL_MAX_SRC_W;
++		max_src_h = SKL_MAX_SRC_H;
++		max_dst_w = SKL_MAX_DST_W;
++		max_dst_h = SKL_MAX_DST_H;
++	} else if (DISPLAY_VER(dev_priv) < 14) {
++		max_src_w = ICL_MAX_SRC_W;
++		max_src_h = ICL_MAX_SRC_H;
++		max_dst_w = ICL_MAX_DST_W;
++		max_dst_h = ICL_MAX_DST_H;
++	} else {
++		max_src_w = MTL_MAX_SRC_W;
++		max_src_h = MTL_MAX_SRC_H;
++		max_dst_w = MTL_MAX_DST_W;
++		max_dst_h = MTL_MAX_DST_H;
 +	}
 +
- 	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_B0, STEP_FOREVER) ||
- 	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_B0, STEP_FOREVER))
- 		/* Wa_14017856879 */
+ 	/* range checks */
+-	if (src_w < SKL_MIN_SRC_W || src_h < SKL_MIN_SRC_H ||
+-	    dst_w < SKL_MIN_DST_W || dst_h < SKL_MIN_DST_H ||
+-	    (DISPLAY_VER(dev_priv) >= 11 &&
+-	     (src_w > ICL_MAX_SRC_W || src_h > ICL_MAX_SRC_H ||
+-	      dst_w > ICL_MAX_DST_W || dst_h > ICL_MAX_DST_H)) ||
+-	    (DISPLAY_VER(dev_priv) < 11 &&
+-	     (src_w > SKL_MAX_SRC_W || src_h > SKL_MAX_SRC_H ||
+-	      dst_w > SKL_MAX_DST_W || dst_h > SKL_MAX_DST_H)))	{
++	if (src_w < min_src_w || src_h < min_src_h ||
++	    dst_w < min_dst_w || dst_h < min_dst_h ||
++	    src_w > max_src_w || src_h > max_src_h ||
++	    dst_w > max_dst_w || dst_h > max_dst_h) {
+ 		drm_dbg_kms(&dev_priv->drm,
+ 			    "scaler_user index %u.%u: src %ux%u dst %ux%u "
+ 			    "size is out of scaler range\n",
 -- 
 2.39.2
 
