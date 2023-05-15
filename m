@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E1BFBEB
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778C5C4339B;
-	Mon, 15 May 2023 16:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DABFFBF5
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37F4C4339E;
+	Mon, 15 May 2023 16:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168367;
-	bh=tt/2gS8U7sQTmTMFd0sPLzI5CfcICp6nHFZCtsEDrks=;
+	s=korg; t=1684168370;
+	bh=sm0lFB1Hn23gvq32Ugr83/HZ6PHLx2Be4MFFqTicPKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QeD0WE21H6XU1t09hw95nA49XyNxVTuLmTk7fiaVzlaDJy7GXrsEujJ4ccv0zL2F2
-	 py7YvW5iEZxEU0+pfB+rgto1BaXdmZa//HibqdyZiVbxyXlp/vR3ajn6L9toiNJxoz
-	 q5JeuqPKaXYfgWZ/MeO69EIWb2v8srhzqMbd2qcA=
+	b=F8zDOgUO6u85CXKb0wZbVZSKH9TwnyR4jB+7BJkcsaNHUtog1dC6RPkc2fwYt9cEQ
+	 xaec87QPDGmUtXBDusK7T8vjGtrRAC0zHeHdQpJ0LLQGyqr7OA+c7DLFvi99yBZZO7
+	 so6A0O83I25PHbv76P+CyOrlal6Je2tjKs4pSF1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Jun <jun.li@nxp.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 4.14 006/116] USB: dwc3: fix runtime pm imbalance on unbind
-Date: Mon, 15 May 2023 18:25:03 +0200
-Message-Id: <20230515161658.473998112@linuxfoundation.org>
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 4.14 007/116] perf sched: Cast PTHREAD_STACK_MIN to int as it may turn into sysconf(__SC_THREAD_STACK_MIN_VALUE)
+Date: Mon, 15 May 2023 18:25:04 +0200
+Message-Id: <20230515161658.507043042@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -35,34 +34,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-commit 44d257e9012ee8040e41d224d0e5bfb5ef5427ea upstream.
+commit d08c84e01afa7a7eee6badab25d5420fa847f783 upstream.
 
-Make sure to balance the runtime PM usage count on driver unbind by
-adding back the pm_runtime_allow() call that had been erroneously
-removed.
+In fedora rawhide the PTHREAD_STACK_MIN define may end up expanded to a
+sysconf() call, and that will return 'long int', breaking the build:
 
-Fixes: 266d0493900a ("usb: dwc3: core: don't trigger runtime pm when remove driver")
-Cc: stable@vger.kernel.org	# 5.9
-Cc: Li Jun <jun.li@nxp.com>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230404072524.19014-3-johan+linaro@kernel.org
+    45 fedora:rawhide                : FAIL gcc version 11.1.1 20210623 (Red Hat 11.1.1-6) (GCC)
+      builtin-sched.c: In function 'create_tasks':
+      /git/perf-5.14.0-rc1/tools/include/linux/kernel.h:43:24: error: comparison of distinct pointer types lacks a cast [-Werror]
+         43 |         (void) (&_max1 == &_max2);              \
+            |                        ^~
+      builtin-sched.c:673:34: note: in expansion of macro 'max'
+        673 |                         (size_t) max(16 * 1024, PTHREAD_STACK_MIN));
+            |                                  ^~~
+      cc1: all warnings being treated as errors
+
+  $ grep __sysconf /usr/include/*/*.h
+  /usr/include/bits/pthread_stack_min-dynamic.h:extern long int __sysconf (int __name) __THROW;
+  /usr/include/bits/pthread_stack_min-dynamic.h:#   define PTHREAD_STACK_MIN __sysconf (__SC_THREAD_STACK_MIN_VALUE)
+  /usr/include/bits/time.h:extern long int __sysconf (int);
+  /usr/include/bits/time.h:# define CLK_TCK ((__clock_t) __sysconf (2))	/* 2 is _SC_CLK_TCK */
+  $
+
+So cast it to int to cope with that.
+
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/builtin-sched.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1348,6 +1348,7 @@ static int dwc3_remove(struct platform_d
- 	dwc3_core_exit(dwc);
- 	dwc3_ulpi_exit(dwc);
- 
-+	pm_runtime_allow(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_set_suspended(&pdev->dev);
+--- a/tools/perf/builtin-sched.c
++++ b/tools/perf/builtin-sched.c
+@@ -655,7 +655,7 @@ static void create_tasks(struct perf_sch
+ 	err = pthread_attr_init(&attr);
+ 	BUG_ON(err);
+ 	err = pthread_attr_setstacksize(&attr,
+-			(size_t) max(16 * 1024, PTHREAD_STACK_MIN));
++			(size_t) max(16 * 1024, (int)PTHREAD_STACK_MIN));
+ 	BUG_ON(err);
+ 	err = pthread_mutex_lock(&sched->start_work_mutex);
+ 	BUG_ON(err);
 
 
