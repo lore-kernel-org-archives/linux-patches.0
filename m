@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30D2101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB06CC433EF;
-	Mon, 15 May 2023 17:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16036101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878BCC433D2;
+	Mon, 15 May 2023 17:51:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173091;
-	bh=4tfU5tqKgsS9bIgzDZ7AGnvNOgJ7gYuvRikHdzIAaS0=;
+	s=korg; t=1684173094;
+	bh=dbioeZD80QGJiAVPO1qyKT8fDeCAUEE1jA1jbClvWAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sy9NZ2wqogvzPuH52VQe0BIZ6yr2Ghh93RFpVmremcfyxVgs6+NJ90L5UTVojM6LO
-	 efIBrs9Smwo1tcAgDT41IQn4D+WbEbsBrbBvmm2M/miJKtaHAbssP4UJrpHe+cAB7L
-	 GhzgBgd6xDF4e9YiiWTrnNiKys3DEiPHqD9l6tsg=
+	b=fvQqV1rgVCyEtssy6SWK5RQpCCqWS8Z1CgMTJNbBKrkm6aBFbL1sIA9pNPc7p5/iD
+	 E8g7r7HMc4Jaly4t4gpTB/rM047lZZ9dVKiz1UPBtM0GS2cO9eGTmtB/PqFXNH9WZ7
+	 29kvvrb6yCOmyYjzD1jDQLVkgD/M5ZKgBLV/kQbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	syzbot+e2efa3efc15a1c9e95c3@syzkaller.appspotmail.com,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 365/381] ext4: bail out of ext4_xattr_ibody_get() fails for any reason
-Date: Mon, 15 May 2023 18:30:16 +0200
-Message-Id: <20230515161753.407015402@linuxfoundation.org>
+Subject: [PATCH 5.10 366/381] ext4: remove a BUG_ON in ext4_mb_release_group_pa()
+Date: Mon, 15 May 2023 18:30:17 +0200
+Message-Id: <20230515161753.444227206@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,29 +37,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Theodore Ts'o <tytso@mit.edu>
 
-commit 2a534e1d0d1591e951f9ece2fb460b2ff92edabd upstream.
+commit 463808f237cf73e98a1a45ff7460c2406a150a0b upstream.
 
-In ext4_update_inline_data(), if ext4_xattr_ibody_get() fails for any
-reason, it's best if we just fail as opposed to stumbling on,
-especially if the failure is EFSCORRUPTED.
+If a malicious fuzzer overwrites the ext4 superblock while it is
+mounted such that the s_first_data_block is set to a very large
+number, the calculation of the block group can underflow, and trigger
+a BUG_ON check.  Change this to be an ext4_warning so that we don't
+crash the kernel.
 
 Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20230430154311.579720-3-tytso@mit.edu
+Reported-by: syzbot+e2efa3efc15a1c9e95c3@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=69b28112e098b070f639efb356393af3ffec4220
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inline.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/mballoc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -358,7 +358,7 @@ static int ext4_update_inline_data(handl
- 
- 	error = ext4_xattr_ibody_get(inode, i.name_index, i.name,
- 				     value, len);
--	if (error == -ENODATA)
-+	if (error < 0)
- 		goto out;
- 
- 	BUFFER_TRACE(is.iloc.bh, "get_write_access");
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -4250,7 +4250,11 @@ ext4_mb_release_group_pa(struct ext4_bud
+ 	trace_ext4_mb_release_group_pa(sb, pa);
+ 	BUG_ON(pa->pa_deleted == 0);
+ 	ext4_get_group_no_and_offset(sb, pa->pa_pstart, &group, &bit);
+-	BUG_ON(group != e4b->bd_group && pa->pa_len != 0);
++	if (unlikely(group != e4b->bd_group && pa->pa_len != 0)) {
++		ext4_warning(sb, "bad group: expected %u, group %u, pa_start %llu",
++			     e4b->bd_group, group, pa->pa_pstart);
++		return 0;
++	}
+ 	mb_free_blocks(pa->pa_inode, e4b, bit, pa->pa_len);
+ 	atomic_add(pa->pa_len, &EXT4_SB(sb)->s_mb_discarded);
+ 	trace_ext4_mballoc_discard(sb, NULL, group, bit, pa->pa_len);
 
 
