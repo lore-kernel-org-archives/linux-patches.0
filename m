@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E722FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:41:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E308C433EF;
-	Mon, 15 May 2023 17:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECB1FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:41:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71AEAC4339B;
+	Mon, 15 May 2023 17:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172503;
-	bh=TKlScOMpG9D9dm91T3m0t+4SlTlHyF+P2q4/sHpXZRg=;
+	s=korg; t=1684172506;
+	bh=CmsO0nj1b+TKyZ2VdMkTac/bZKpIrDNLfLpV+k27QA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PllIanSrQVJaH0WFGHNJ68O3nPedNhef4QaRCq8bQ5RPhT1XpHMnqvP9k44sUHmS4
-	 8FjEFP8CvfI7LKFptmEHPhkFQwOf5vrfIzauoLLqetREthFsvoPJO87Jv5ezOAcq6a
-	 wQXkcKmf5jkZ1uEkwBChUULBH8CCiKmqBRnRZyqU=
+	b=ecBVJWrRBH+qA5c07VNNl+Nemh8+64dJ6Op0vTHs8reLVeu5bo9p8UwNY75qvdu/C
+	 GeMH5lPKBw+kcJjiyDcmuweaWJnmI2DTPDcY4RSVYS+bw7Lfg7skFrPT2yDSdqDhZo
+	 XhssMtB93O5A3TnMpBb9TIXfC5J6b/BA7ZlCqPb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Daniel Gabay <daniel.gabay@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 175/381] md/raid10: fix memleak of md thread
-Date: Mon, 15 May 2023 18:27:06 +0200
-Message-Id: <20230515161744.716873758@linuxfoundation.org>
+Subject: [PATCH 5.10 176/381] wifi: iwlwifi: yoyo: Fix possible division by zero
+Date: Mon, 15 May 2023 18:27:07 +0200
+Message-Id: <20230515161744.764521709@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,49 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Daniel Gabay <daniel.gabay@intel.com>
 
-[ Upstream commit f0ddb83da3cbbf8a1f9087a642c448ff52ee9abd ]
+[ Upstream commit ba30415118eee374a08b39a0460a1d1e52c24a25 ]
 
-In raid10_run(), if setup_conf() succeed and raid10_run() failed before
-setting 'mddev->thread', then in the error path 'conf->thread' is not
-freed.
+Don't allow buffer allocation TLV with zero req_size since it
+leads later to division by zero in iwl_dbg_tlv_alloc_fragments().
+Also, NPK/SRAM locations are allowed to have zero buffer req_size,
+don't discard them.
 
-Fix the problem by setting 'mddev->thread' right after setup_conf().
-
-Fixes: 43a521238aca ("md-cluster: choose correct label when clustered layout is not supported")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230310073855.1337560-7-yukuai1@huaweicloud.com
+Fixes: a9248de42464 ("iwlwifi: dbg_ini: add TLV allocation new API support")
+Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230413213309.5d6688ed74d8.I5c2f3a882b50698b708d54f4524dc5bdf11e3d32@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 51f122db9668e..c6a196a10f894 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -3752,6 +3752,9 @@ static int raid10_run(struct mddev *mddev)
- 	if (!conf)
- 		goto out;
+diff --git a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+index 3c931b1b2a0bb..fdf2c6ea41d96 100644
+--- a/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
++++ b/drivers/net/wireless/intel/iwlwifi/iwl-dbg-tlv.c
+@@ -191,6 +191,12 @@ static int iwl_dbg_tlv_alloc_buf_alloc(struct iwl_trans *trans,
+ 	    alloc_id != IWL_FW_INI_ALLOCATION_ID_INTERNAL)
+ 		goto err;
  
-+	mddev->thread = conf->thread;
-+	conf->thread = NULL;
++	if (buf_location == IWL_FW_INI_LOCATION_DRAM_PATH &&
++	    alloc->req_size == 0) {
++		IWL_ERR(trans, "WRT: Invalid DRAM buffer allocation requested size (0)\n");
++		return -EINVAL;
++	}
 +
- 	if (mddev_is_clustered(conf->mddev)) {
- 		int fc, fo;
+ 	trans->dbg.fw_mon_cfg[alloc_id] = *alloc;
  
-@@ -3764,9 +3767,6 @@ static int raid10_run(struct mddev *mddev)
- 		}
- 	}
- 
--	mddev->thread = conf->thread;
--	conf->thread = NULL;
--
- 	if (mddev->queue) {
- 		blk_queue_max_discard_sectors(mddev->queue,
- 					      mddev->chunk_sectors);
+ 	return 0;
 -- 
 2.39.2
 
