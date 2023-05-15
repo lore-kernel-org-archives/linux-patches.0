@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB46FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353DAC433EF;
-	Mon, 15 May 2023 17:38:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09505FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB73C433EF;
+	Mon, 15 May 2023 17:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172321;
-	bh=Ey9SXtDm4MHsmW8U53wHZ768rSca/8UKbYWuPhjr9AU=;
+	s=korg; t=1684172324;
+	bh=gDY07EIPdHipUGspStemNluDEyVzMy5F4+wU9EnXIQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QCF6e1LwBIgjhEdyEM2PwpPR5QSGb9WCVq7MPD6siX5+QfLERkn5j/+fKWBKQ9Y4c
-	 0/bU+K4KHWoerB/nja4CQcO2xtu/LO46BnyZ/wwd4T/NkyR7m01aABf7PIWqZabcW0
-	 7mg8Ua+0nCJP+FcwN7oc77kdJVrqLlO9DKzO1SfY=
+	b=baSsHJ5YUFMQyEc1HssehEhjnmHAWwy/V47BZM+2/k08VKxPo3/kp94W3xN8LMOdZ
+	 4oJARNJB1N+T9cn2RMqN2yM+MqusfI+nFavxuV+dELk1sZlTuWjeIc2+SxhANgLsOw
+	 nUtdB/Jns9oqmPElLmciK7LoOxtwWGFyVYCk97f8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Alexandre Courbot <acourbot@chromium.org>,
 	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 116/381] media: venus: vdec: Make decoder return LAST flag for sufficient event
-Date: Mon, 15 May 2023 18:26:07 +0200
-Message-Id: <20230515161742.068836796@linuxfoundation.org>
+Subject: [PATCH 5.10 117/381] media: venus: preserve DRC state across seeks
+Date: Mon, 15 May 2023 18:26:08 +0200
+Message-Id: <20230515161742.116525236@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,97 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
+From: Alexandre Courbot <acourbot@chromium.org>
 
-[ Upstream commit a4ca67af8b831a781ac53060c5d5c3dccaf7676e ]
+[ Upstream commit d5ee32d7e5929592ad9b6e7a919dcdf89d05221b ]
 
-This makes the decoder to behaives equally for sufficient and
-insufficient events. After this change the LAST buffer flag will be set
-when the new resolution (in dynamic-resolution-change state) is smaller
-then the old bitstream resolution.
+DRC events can happen virtually at anytime, including when we are
+starting a seek. Should this happen, we must make sure to return to the
+DRC state, otherwise the firmware will expect buffers of the new
+resolution whereas userspace will still work with the old one.
 
+Returning to the DRC state upon resume for seeking makes sure that the
+client will get the DRC event and will reallocate the buffers to fit the
+firmware's expectations.
+
+Signed-off-by: Alexandre Courbot <acourbot@chromium.org>
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Stable-dep-of: 50248ad9f190 ("media: venus: dec: Fix handling of the start cmd")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c | 42 ++++++++++++++++--------
- 1 file changed, 28 insertions(+), 14 deletions(-)
+ drivers/media/platform/qcom/venus/vdec.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index b6b5ae0a457bb..3adff10fce6a7 100644
+index 3adff10fce6a7..1bb2350408cf2 100644
 --- a/drivers/media/platform/qcom/venus/vdec.c
 +++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -636,6 +636,7 @@ static int vdec_output_conf(struct venus_inst *inst)
- {
- 	struct venus_core *core = inst->core;
- 	struct hfi_enable en = { .enable = 1 };
-+	struct hfi_buffer_requirements bufreq;
- 	u32 width = inst->out_width;
- 	u32 height = inst->out_height;
- 	u32 out_fmt, out2_fmt;
-@@ -711,6 +712,23 @@ static int vdec_output_conf(struct venus_inst *inst)
+@@ -987,7 +987,10 @@ static int vdec_start_output(struct venus_inst *inst)
+ 
+ 	if (inst->codec_state == VENUS_DEC_STATE_SEEK) {
+ 		ret = venus_helper_process_initial_out_bufs(inst);
+-		inst->codec_state = VENUS_DEC_STATE_DECODING;
++		if (inst->next_buf_last)
++			inst->codec_state = VENUS_DEC_STATE_DRC;
++		else
++			inst->codec_state = VENUS_DEC_STATE_DECODING;
+ 		goto done;
  	}
  
- 	if (IS_V3(core) || IS_V4(core)) {
-+		ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
-+		if (ret)
-+			return ret;
-+
-+		if (bufreq.size > inst->output_buf_size)
-+			return -EINVAL;
-+
-+		if (inst->dpb_fmt) {
-+			ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT2,
-+						      &bufreq);
-+			if (ret)
-+				return ret;
-+
-+			if (bufreq.size > inst->output2_buf_size)
-+				return -EINVAL;
-+		}
-+
- 		if (inst->output2_buf_size) {
- 			ret = venus_helper_set_bufsize(inst,
- 						       inst->output2_buf_size,
-@@ -1330,19 +1348,15 @@ static void vdec_event_change(struct venus_inst *inst,
- 	dev_dbg(dev, VDBGM "event %s sufficient resources (%ux%u)\n",
- 		sufficient ? "" : "not", ev_data->width, ev_data->height);
- 
--	if (sufficient) {
--		hfi_session_continue(inst);
--	} else {
--		switch (inst->codec_state) {
--		case VENUS_DEC_STATE_INIT:
--			inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
--			break;
--		case VENUS_DEC_STATE_DECODING:
--			inst->codec_state = VENUS_DEC_STATE_DRC;
--			break;
--		default:
--			break;
--		}
-+	switch (inst->codec_state) {
-+	case VENUS_DEC_STATE_INIT:
-+		inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
-+		break;
-+	case VENUS_DEC_STATE_DECODING:
-+		inst->codec_state = VENUS_DEC_STATE_DRC;
-+		break;
-+	default:
-+		break;
+@@ -1093,8 +1096,10 @@ static int vdec_stop_capture(struct venus_inst *inst)
+ 		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+ 		fallthrough;
+ 	case VENUS_DEC_STATE_DRAIN:
+-		vdec_cancel_dst_buffers(inst);
+ 		inst->codec_state = VENUS_DEC_STATE_STOPPED;
++		fallthrough;
++	case VENUS_DEC_STATE_SEEK:
++		vdec_cancel_dst_buffers(inst);
+ 		break;
+ 	case VENUS_DEC_STATE_DRC:
+ 		ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, true);
+@@ -1116,6 +1121,7 @@ static int vdec_stop_output(struct venus_inst *inst)
+ 	case VENUS_DEC_STATE_DECODING:
+ 	case VENUS_DEC_STATE_DRAIN:
+ 	case VENUS_DEC_STATE_STOPPED:
++	case VENUS_DEC_STATE_DRC:
+ 		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+ 		inst->codec_state = VENUS_DEC_STATE_SEEK;
+ 		break;
+@@ -1375,6 +1381,7 @@ static void vdec_event_change(struct venus_inst *inst,
+ 			dev_dbg(dev, VDBGH "flush output error %d\n", ret);
  	}
  
- 	/*
-@@ -1351,7 +1365,7 @@ static void vdec_event_change(struct venus_inst *inst,
- 	 * itself doesn't mark the last decoder output buffer with HFI EOS flag.
- 	 */
- 
--	if (!sufficient && inst->codec_state == VENUS_DEC_STATE_DRC) {
-+	if (inst->codec_state == VENUS_DEC_STATE_DRC) {
- 		int ret;
- 
- 		inst->next_buf_last = true;
++	inst->next_buf_last = true;
+ 	inst->reconfig = true;
+ 	v4l2_event_queue_fh(&inst->fh, &ev);
+ 	wake_up(&inst->reconf_wait);
 -- 
 2.39.2
 
