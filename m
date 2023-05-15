@@ -1,39 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FD36FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74F86C433D2;
-	Mon, 15 May 2023 17:33:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E20FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F29C433D2;
+	Mon, 15 May 2023 17:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172009;
-	bh=Rw0pSNQBVmqVnVO5qQ0fjbWqjjvpW2WvqxUM+ZkQmb4=;
+	s=korg; t=1684172015;
+	bh=8r1z6+zlLX5kZZjRsnVMbks8vuLgQJO5hKGKMtuVvsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1OJALUcFjVRvYTPyw+LgE3fyqqRA2rIr0vVCtZDajzmIs9D/TrMsInSjv2YFZ06x
-	 X1aTNMqRsG1yIJNrYUmnyBvnx9QzBsWWXCeVQzhDenKnfEZCUpaT19wti8h02uemNJ
-	 zruIFcLpOTpztOu511hBJRQRWF3NIY/0b63Jo9AQ=
+	b=mTeDZuAGjP8YLWOccUBxqsX1Z9mB6LoUYt0EC9buRoHSQZlXlG5xIm5PDsKHMwk0R
+	 XRz4lUAK94c5x5OSSebj33Ipw515EAtSslwF8XZwqn7FgXyUhrrrrAn8qE9M+rRo2R
+	 cHUu/DvBY9xuPFh48eyQ3/HwmJZx05hELX41alvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Haeuptle <michael.haeuptle@hpe.com>,
-	Ian May <ian.may@canonical.com>,
-	Andrey Grodzovsky <andrey2805@gmail.com>,
-	Rahul Kumar <rahul.kumar1@amd.com>,
-	Jialin Zhang <zhangjialin11@huawei.com>,
-	Anatoli Antonovitch <Anatoli.Antonovitch@amd.com>,
-	Lukas Wunner <lukas@wunner.de>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Dan Stein <dstein@hpe.com>,
-	Ashok Raj <ashok.raj@intel.com>,
-	Alex Michon <amichon@kalrayinc.com>,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Sathyanarayanan Kuppuswamy <sathyanarayanan.kuppuswamy@linux.intel.com>
-Subject: [PATCH 5.10 015/381] PCI: pciehp: Fix AB-BA deadlock between reset_lock and device_lock
-Date: Mon, 15 May 2023 18:24:26 +0200
-Message-Id: <20230515161737.445915121@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	Fabio Estevam <festevam@gmail.com>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-um@lists.infradead.org,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 5.10 017/381] IMA: allow/fix UML builds
+Date: Mon, 15 May 2023 18:24:28 +0200
+Message-Id: <20230515161737.553558624@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -47,178 +39,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit f5eff5591b8f9c5effd25c92c758a127765f74c1 upstream.
+commit 644f17412f5acf01a19af9d04a921937a2bc86c6 upstream.
 
-In 2013, commits
+UML supports HAS_IOMEM since 0bbadafdc49d (um: allow disabling
+NO_IOMEM).
 
-  2e35afaefe64 ("PCI: pciehp: Add reset_slot() method")
-  608c388122c7 ("PCI: Add slot reset option to pci_dev_reset()")
+Current IMA build on UML fails on allmodconfig (with TCG_TPM=m):
 
-amended PCIe hotplug to mask Presence Detect Changed events during a
-Secondary Bus Reset.  The reset thus no longer causes gratuitous slot
-bringdown and bringup.
+ld: security/integrity/ima/ima_queue.o: in function `ima_add_template_entry':
+ima_queue.c:(.text+0x2d9): undefined reference to `tpm_pcr_extend'
+ld: security/integrity/ima/ima_init.o: in function `ima_init':
+ima_init.c:(.init.text+0x43f): undefined reference to `tpm_default_chip'
+ld: security/integrity/ima/ima_crypto.o: in function `ima_calc_boot_aggregate_tfm':
+ima_crypto.c:(.text+0x1044): undefined reference to `tpm_pcr_read'
+ld: ima_crypto.c:(.text+0x10d8): undefined reference to `tpm_pcr_read'
 
-However the commits neglected to serialize reset with code paths reading
-slot registers.  For instance, a slot bringup due to an earlier hotplug
-event may see the Presence Detect State bit cleared during a concurrent
-Secondary Bus Reset.
+Modify the IMA Kconfig entry so that it selects TCG_TPM if HAS_IOMEM
+is set, regardless of the UML Kconfig setting.
+This updates TCG_TPM from =m to =y and fixes the linker errors.
 
-In 2018, commit
-
-  5b3f7b7d062b ("PCI: pciehp: Avoid slot access during reset")
-
-retrofitted the missing locking.  It introduced a reset_lock which
-serializes a Secondary Bus Reset with other parts of pciehp.
-
-Unfortunately the locking turns out to be overzealous:  reset_lock is
-held for the entire enumeration and de-enumeration of hotplugged devices,
-including driver binding and unbinding.
-
-Driver binding and unbinding acquires device_lock while the reset_lock
-of the ancestral hotplug port is held.  A concurrent Secondary Bus Reset
-acquires the ancestral reset_lock while already holding the device_lock.
-The asymmetric locking order in the two code paths can lead to AB-BA
-deadlocks.
-
-Michael Haeuptle reports such deadlocks on simultaneous hot-removal and
-vfio release (the latter implies a Secondary Bus Reset):
-
-  pciehp_ist()                                    # down_read(reset_lock)
-    pciehp_handle_presence_or_link_change()
-      pciehp_disable_slot()
-        __pciehp_disable_slot()
-          remove_board()
-            pciehp_unconfigure_device()
-              pci_stop_and_remove_bus_device()
-                pci_stop_bus_device()
-                  pci_stop_dev()
-                    device_release_driver()
-                      device_release_driver_internal()
-                        __device_driver_lock()    # device_lock()
-
-  SYS_munmap()
-    vfio_device_fops_release()
-      vfio_device_group_close()
-        vfio_device_close()
-          vfio_device_last_close()
-            vfio_pci_core_close_device()
-              vfio_pci_core_disable()             # device_lock()
-                __pci_reset_function_locked()
-                  pci_reset_bus_function()
-                    pci_dev_reset_slot_function()
-                      pci_reset_hotplug_slot()
-                        pciehp_reset_slot()       # down_write(reset_lock)
-
-Ian May reports the same deadlock on simultaneous hot-removal and an
-AER-induced Secondary Bus Reset:
-
-  aer_recover_work_func()
-    pcie_do_recovery()
-      aer_root_reset()
-        pci_bus_error_reset()
-          pci_slot_reset()
-            pci_slot_lock()                       # device_lock()
-            pci_reset_hotplug_slot()
-              pciehp_reset_slot()                 # down_write(reset_lock)
-
-Fix by releasing the reset_lock during driver binding and unbinding,
-thereby splitting and shrinking the critical section.
-
-Driver binding and unbinding is protected by the device_lock() and thus
-serialized with a Secondary Bus Reset.  There's no need to additionally
-protect it with the reset_lock.  However, pciehp does not bind and
-unbind devices directly, but rather invokes PCI core functions which
-also perform certain enumeration and de-enumeration steps.
-
-The reset_lock's purpose is to protect slot registers, not enumeration
-and de-enumeration of hotplugged devices.  That would arguably be the
-job of the PCI core, not the PCIe hotplug driver.  After all, an
-AER-induced Secondary Bus Reset may as well happen during boot-time
-enumeration of the PCI hierarchy and there's no locking to prevent that
-either.
-
-Exempting *de-enumeration* from the reset_lock is relatively harmless:
-A concurrent Secondary Bus Reset may foil config space accesses such as
-PME interrupt disablement.  But if the device is physically gone, those
-accesses are pointless anyway.  If the device is physically present and
-only logically removed through an Attention Button press or the sysfs
-"power" attribute, PME interrupts as well as DMA cannot come through
-because pciehp_unconfigure_device() disables INTx and Bus Master bits.
-That's still protected by the reset_lock in the present commit.
-
-Exempting *enumeration* from the reset_lock also has limited impact:
-The exempted call to pci_bus_add_device() may perform device accesses
-through pcibios_bus_add_device() and pci_fixup_device() which are now
-no longer protected from a concurrent Secondary Bus Reset.  Otherwise
-there should be no impact.
-
-In essence, the present commit seeks to fix the AB-BA deadlocks while
-still retaining a best-effort reset protection for enumeration and
-de-enumeration of hotplugged devices -- until a general solution is
-implemented in the PCI core.
-
-Link: https://lore.kernel.org/linux-pci/CS1PR8401MB0728FC6FDAB8A35C22BD90EC95F10@CS1PR8401MB0728.NAMPRD84.PROD.OUTLOOK.COM
-Link: https://lore.kernel.org/linux-pci/20200615143250.438252-1-ian.may@canonical.com
-Link: https://lore.kernel.org/linux-pci/ce878dab-c0c4-5bd0-a725-9805a075682d@amd.com
-Link: https://lore.kernel.org/linux-pci/ed831249-384a-6d35-0831-70af191e9bce@huawei.com
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=215590
-Fixes: 5b3f7b7d062b ("PCI: pciehp: Avoid slot access during reset")
-Link: https://lore.kernel.org/r/fef2b2e9edf245c049a8c5b94743c0f74ff5008a.1681191902.git.lukas@wunner.de
-Reported-by: Michael Haeuptle <michael.haeuptle@hpe.com>
-Reported-by: Ian May <ian.may@canonical.com>
-Reported-by: Andrey Grodzovsky <andrey2805@gmail.com>
-Reported-by: Rahul Kumar <rahul.kumar1@amd.com>
-Reported-by: Jialin Zhang <zhangjialin11@huawei.com>
-Tested-by: Anatoli Antonovitch <Anatoli.Antonovitch@amd.com>
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org # v4.19+
-Cc: Dan Stein <dstein@hpe.com>
-Cc: Ashok Raj <ashok.raj@intel.com>
-Cc: Alex Michon <amichon@kalrayinc.com>
-Cc: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>
-Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
-Cc: Sathyanarayanan Kuppuswamy <sathyanarayanan.kuppuswamy@linux.intel.com>
+Fixes: f4a0391dfa91 ("ima: fix Kconfig dependencies")
+Cc: Stable <stable@vger.kernel.org> # v5.14+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-um@lists.infradead.org
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/pciehp_pci.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ security/integrity/ima/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/hotplug/pciehp_pci.c
-+++ b/drivers/pci/hotplug/pciehp_pci.c
-@@ -63,7 +63,14 @@ int pciehp_configure_device(struct contr
- 
- 	pci_assign_unassigned_bridge_resources(bridge);
- 	pcie_bus_configure_settings(parent);
-+
-+	/*
-+	 * Release reset_lock during driver binding
-+	 * to avoid AB-BA deadlock with device_lock.
-+	 */
-+	up_read(&ctrl->reset_lock);
- 	pci_bus_add_devices(parent);
-+	down_read_nested(&ctrl->reset_lock, ctrl->depth);
- 
-  out:
- 	pci_unlock_rescan_remove();
-@@ -104,7 +111,15 @@ void pciehp_unconfigure_device(struct co
- 	list_for_each_entry_safe_reverse(dev, temp, &parent->devices,
- 					 bus_list) {
- 		pci_dev_get(dev);
-+
-+		/*
-+		 * Release reset_lock during driver unbinding
-+		 * to avoid AB-BA deadlock with device_lock.
-+		 */
-+		up_read(&ctrl->reset_lock);
- 		pci_stop_and_remove_bus_device(dev);
-+		down_read_nested(&ctrl->reset_lock, ctrl->depth);
-+
- 		/*
- 		 * Ensure that no new Requests will be generated from
- 		 * the device.
+--- a/security/integrity/ima/Kconfig
++++ b/security/integrity/ima/Kconfig
+@@ -8,7 +8,7 @@ config IMA
+ 	select CRYPTO_HMAC
+ 	select CRYPTO_SHA1
+ 	select CRYPTO_HASH_INFO
+-	select TCG_TPM if HAS_IOMEM && !UML
++	select TCG_TPM if HAS_IOMEM
+ 	select TCG_TIS if TCG_TPM && X86
+ 	select TCG_CRB if TCG_TPM && ACPI
+ 	select TCG_IBMVTPM if TCG_TPM && PPC_PSERIES
 
 
