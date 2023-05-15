@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7840FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:53:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3764CC433D2;
-	Mon, 15 May 2023 16:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B041BFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:53:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AC1C433D2;
+	Mon, 15 May 2023 16:53:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169624;
-	bh=RbMCWs1+Fj9wlJPzBp+uUkKL8ru3qVodRW21E63UH5o=;
+	s=korg; t=1684169627;
+	bh=KpNUlfO/wZFHDnP/5DrVX+6+6J/xS54pHkFXK4m1PC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hhl0dxlO/OxVPH2oFBI2xUzGy/x0tjIHo284EyCLErP0cH2FGU4cruAkuFTGfh2DZ
-	 Lfklp2kpJOtHTEQbV5qRSDdBKt2nuOJZPqxbw4FXXQMeb+JK8ArOPGRl9SB+YFlGu0
-	 yPJ6Eso/uXqhjOhkCA1ME08OfWrRDdt7333nSiNw=
+	b=aZZRaAf6jFnpaK+LNkAg8ULfpbellsouka5zpxqIW6wAVIDiSzRyvqnKcOud5vViK
+	 bxuJ8P2J3x6VLEY02EdKdm0gdUlUfXvcu8R/kBBJJ4jw7oUBOW2qWKnjMdAvR8diaX
+	 Hwnbyld5/V5kQIiJd+5z1zOLKL95u2wpsacImzSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Bartel Eerdekens <bartel.eerdekens@constell8.be>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 116/246] crypto: sun8i-ss - Fix a test in sun8i_ss_setup_ivs()
-Date: Mon, 15 May 2023 18:25:28 +0200
-Message-Id: <20230515161726.052747775@linuxfoundation.org>
+Subject: [PATCH 6.3 089/246] net: dsa: mt7530: fix corrupt frames using trgmii on 40 MHz XTAL MT7621
+Date: Mon, 15 May 2023 18:25:01 +0200
+Message-Id: <20230515161725.251742780@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -35,36 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit 8fd91151ebcb21b3f2f2bf158ac6092192550b2b ]
+[ Upstream commit 37c218d8021e36e226add4bab93d071d30fe0704 ]
 
-SS_ENCRYPTION is (0 << 7 = 0), so the test can never be true.
-Use a direct comparison to SS_ENCRYPTION instead.
+The multi-chip module MT7530 switch with a 40 MHz oscillator on the
+MT7621AT, MT7621DAT, and MT7621ST SoCs forwards corrupt frames using
+trgmii.
 
-The same king of test is already done the same way in sun8i_ss_run_task().
+This is caused by the assumption that MT7621 SoCs have got 150 MHz PLL,
+hence using the ncpo1 value, 0x0780.
 
-Fixes: 359e893e8af4 ("crypto: sun8i-ss - rework handling of IV")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+My testing shows this value works on Unielec U7621-06, Bartel's testing
+shows it won't work on Hi-Link HLK-MT7621A and Netgear WAC104. All devices
+tested have got 40 MHz oscillators.
+
+Using the value for 125 MHz PLL, 0x0640, works on all boards at hand. The
+definitions for 125 MHz PLL exist on the Banana Pi BPI-R2 BSP source code
+whilst 150 MHz PLL don't.
+
+Forwarding frames using trgmii on the MCM MT7530 switch with a 25 MHz
+oscillator on the said MT7621 SoCs works fine because the ncpo1 value
+defined for it is for 125 MHz PLL.
+
+Change the 150 MHz PLL comment to 125 MHz PLL, and use the 125 MHz PLL
+ncpo1 values for both oscillator frequencies.
+
+Link: https://github.com/BPI-SINOVOIP/BPI-R2-bsp/blob/81d24bbce7d99524d0771a8bdb2d6663e4eb4faa/u-boot-mt/drivers/net/rt2880_eth.c#L2195
+Fixes: 7ef6f6f8d237 ("net: dsa: mt7530: Add MT7621 TRGMII mode support")
+Tested-by: Bartel Eerdekens <bartel.eerdekens@constell8.be>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/mt7530.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
-index 83c6dfad77e1b..16966cc94e247 100644
---- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
-+++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
-@@ -151,7 +151,7 @@ static int sun8i_ss_setup_ivs(struct skcipher_request *areq)
- 		}
- 		rctx->p_iv[i] = a;
- 		/* we need to setup all others IVs only in the decrypt way */
--		if (rctx->op_dir & SS_ENCRYPTION)
-+		if (rctx->op_dir == SS_ENCRYPTION)
- 			return 0;
- 		todo = min(len, sg_dma_len(sg));
- 		len -= todo;
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 02410ac439b76..4d5c5820e4618 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -446,9 +446,9 @@ mt7530_pad_clk_setup(struct dsa_switch *ds, phy_interface_t interface)
+ 		else
+ 			ssc_delta = 0x87;
+ 		if (priv->id == ID_MT7621) {
+-			/* PLL frequency: 150MHz: 1.2GBit */
++			/* PLL frequency: 125MHz: 1.0GBit */
+ 			if (xtal == HWTRAP_XTAL_40MHZ)
+-				ncpo1 = 0x0780;
++				ncpo1 = 0x0640;
+ 			if (xtal == HWTRAP_XTAL_25MHZ)
+ 				ncpo1 = 0x0a00;
+ 		} else { /* PLL frequency: 250MHz: 2.0Gbit */
 -- 
 2.39.2
 
