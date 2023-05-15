@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4971FBF8
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:14:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E971DC433D2;
-	Mon, 15 May 2023 17:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F032DFBF8
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:14:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3559FC433D2;
+	Mon, 15 May 2023 17:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170843;
-	bh=fuu7aK3XgegqChFiQwiUMAqQXp5TEg+yBOBibtS0UrQ=;
+	s=korg; t=1684170846;
+	bh=eV07xSRNLhte9c73M6SfOKOpux8alZZFXYqdV0ZCBDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGSQNesnLaJvgncFoP9uRQVQ7P5qdNRHxfwzT/tAKpOcz76n9ig84QEgH5C43RE7n
-	 qQud4waNzI35Cps1kIdkG1FYEBbkXzJRqh4eONveyOPsxm/6iukm/mGmXAEBmQHcFa
-	 gEhoNflKqnOSYu8KHVszYbIgxe/AiirUHDjeGHBw=
+	b=rAw/CbEl9UhMiJQaZNGMtwTWcDqsY55vjyAtqKNdGaXgduCGQWMKxnkvPr/i5+BIL
+	 m4jDiRra5HWPuePoxhzwsIMfN2wQxUXyfT2T5fTkulIAJW+jbnQC2l6an/CQ4smsc1
+	 Sw5XRb9/wGycRMhjjkUkjn7o+r03h4ePvBV0im8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Krause <minipli@grsecurity.net>,
-	Sean Christopherson <seanjc@google.com>,
+	Bob Pearson <rpearsonhpe@gmail.com>,
+	Devesh Sharma <devesh.s.sharma@oracle.com>,
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 019/242] KVM: x86/mmu: Refresh CR0.WP prior to checking for emulated permission faults
-Date: Mon, 15 May 2023 18:25:45 +0200
-Message-Id: <20230515161722.508403410@linuxfoundation.org>
+Subject: [PATCH 6.2 020/242] RDMA/rxe: Remove rxe_alloc()
+Date: Mon, 15 May 2023 18:25:46 +0200
+Message-Id: <20230515161722.539186970@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,114 +37,249 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit cf9f4c0eb1699d306e348b1fd0225af7b2c282d3 ]
+[ Upstream commit 72a03627443d5bc7032ab98bd784740cd8a76f8a ]
 
-Refresh the MMU's snapshot of the vCPU's CR0.WP prior to checking for
-permission faults when emulating a guest memory access and CR0.WP may be
-guest owned.  If the guest toggles only CR0.WP and triggers emulation of
-a supervisor write, e.g. when KVM is emulating UMIP, KVM may consume a
-stale CR0.WP, i.e. use stale protection bits metadata.
+Currently all the object types in the rxe driver are allocated in
+rdma-core except for MRs. By moving tha kzalloc() call outside of
+the pool code the rxe_alloc() subroutine can be eliminated and code
+checking for MR as a special case can be removed.
 
-Note, KVM passes through CR0.WP if and only if EPT is enabled as CR0.WP
-is part of the MMU role for legacy shadow paging, and SVM (NPT) doesn't
-support per-bit interception controls for CR0.  Don't bother checking for
-EPT vs. NPT as the "old == new" check will always be true under NPT, i.e.
-the only cost is the read of vcpu->arch.cr4 (SVM unconditionally grabs CR0
-from the VMCB on VM-Exit).
+This patch moves the kzalloc() and kfree_rcu() calls into the mr
+registration and destruction verbs. It removes that code from
+rxe_pool.c including the rxe_alloc() subroutine which is no longer
+used.
 
-Reported-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lkml.kernel.org/r/677169b4-051f-fcae-756b-9a3e1bb9f8fe%40grsecurity.net
-Fixes: fb509f76acc8 ("KVM: VMX: Make CR0.WP a guest owned bit")
-Tested-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20230405002608.418442-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>	# backport to v6.2.x
+Link: https://lore.kernel.org/r/20230213225551.12437-1-rpearsonhpe@gmail.com
+Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
+Reviewed-by: Devesh Sharma <devesh.s.sharma@oracle.com>
+Reviewed-by: Devesh Sharma <devesh.s.sharma@oracle.com>
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Stable-dep-of: 78b26a335310 ("RDMA/rxe: Remove tasklet call from rxe_cq.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu.h     | 26 +++++++++++++++++++++++++-
- arch/x86/kvm/mmu/mmu.c | 15 +++++++++++++++
- 2 files changed, 40 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_mr.c    |  2 +-
+ drivers/infiniband/sw/rxe/rxe_pool.c  | 46 ---------------------
+ drivers/infiniband/sw/rxe/rxe_pool.h  |  3 --
+ drivers/infiniband/sw/rxe/rxe_verbs.c | 59 +++++++++++++++++++--------
+ 4 files changed, 44 insertions(+), 66 deletions(-)
 
-diff --git a/arch/x86/kvm/mmu.h b/arch/x86/kvm/mmu.h
-index 6bdaacb6faa07..59804be91b5b0 100644
---- a/arch/x86/kvm/mmu.h
-+++ b/arch/x86/kvm/mmu.h
-@@ -113,6 +113,8 @@ void kvm_init_shadow_ept_mmu(struct kvm_vcpu *vcpu, bool execonly,
- bool kvm_can_do_async_pf(struct kvm_vcpu *vcpu);
- int kvm_handle_page_fault(struct kvm_vcpu *vcpu, u64 error_code,
- 				u64 fault_address, char *insn, int insn_len);
-+void __kvm_mmu_refresh_passthrough_bits(struct kvm_vcpu *vcpu,
-+					struct kvm_mmu *mmu);
+diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
+index 5e9a03831bf9f..b10aa1580a644 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mr.c
++++ b/drivers/infiniband/sw/rxe/rxe_mr.c
+@@ -731,7 +731,7 @@ int rxe_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
+ 		return -EINVAL;
  
- int kvm_mmu_load(struct kvm_vcpu *vcpu);
- void kvm_mmu_unload(struct kvm_vcpu *vcpu);
-@@ -153,6 +155,24 @@ static inline void kvm_mmu_load_pgd(struct kvm_vcpu *vcpu)
- 					  vcpu->arch.mmu->root_role.level);
+ 	rxe_cleanup(mr);
+-
++	kfree_rcu(mr);
+ 	return 0;
  }
  
-+static inline void kvm_mmu_refresh_passthrough_bits(struct kvm_vcpu *vcpu,
-+						    struct kvm_mmu *mmu)
-+{
-+	/*
-+	 * When EPT is enabled, KVM may passthrough CR0.WP to the guest, i.e.
-+	 * @mmu's snapshot of CR0.WP and thus all related paging metadata may
-+	 * be stale.  Refresh CR0.WP and the metadata on-demand when checking
-+	 * for permission faults.  Exempt nested MMUs, i.e. MMUs for shadowing
-+	 * nEPT and nNPT, as CR0.WP is ignored in both cases.  Note, KVM does
-+	 * need to refresh nested_mmu, a.k.a. the walker used to translate L2
-+	 * GVAs to GPAs, as that "MMU" needs to honor L2's CR0.WP.
-+	 */
-+	if (!tdp_enabled || mmu == &vcpu->arch.guest_mmu)
-+		return;
-+
-+	__kvm_mmu_refresh_passthrough_bits(vcpu, mmu);
-+}
-+
- /*
-  * Check if a given access (described through the I/D, W/R and U/S bits of a
-  * page fault error code pfec) causes a permission fault with the given PTE
-@@ -184,8 +204,12 @@ static inline u8 permission_fault(struct kvm_vcpu *vcpu, struct kvm_mmu *mmu,
- 	u64 implicit_access = access & PFERR_IMPLICIT_ACCESS;
- 	bool not_smap = ((rflags & X86_EFLAGS_AC) | implicit_access) == X86_EFLAGS_AC;
- 	int index = (pfec + (not_smap << PFERR_RSVD_BIT)) >> 1;
--	bool fault = (mmu->permissions[index] >> pte_access) & 1;
- 	u32 errcode = PFERR_PRESENT_MASK;
-+	bool fault;
-+
-+	kvm_mmu_refresh_passthrough_bits(vcpu, mmu);
-+
-+	fault = (mmu->permissions[index] >> pte_access) & 1;
- 
- 	WARN_ON(pfec & (PFERR_PK_MASK | PFERR_RSVD_MASK));
- 	if (unlikely(mmu->pkru_mask)) {
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 2faea9e873629..ce135539145fd 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -5047,6 +5047,21 @@ kvm_calc_cpu_role(struct kvm_vcpu *vcpu, const struct kvm_mmu_role_regs *regs)
- 	return role;
+diff --git a/drivers/infiniband/sw/rxe/rxe_pool.c b/drivers/infiniband/sw/rxe/rxe_pool.c
+index 1151c0b5cceab..6215c6de3a840 100644
+--- a/drivers/infiniband/sw/rxe/rxe_pool.c
++++ b/drivers/infiniband/sw/rxe/rxe_pool.c
+@@ -116,55 +116,12 @@ void rxe_pool_cleanup(struct rxe_pool *pool)
+ 	WARN_ON(!xa_empty(&pool->xa));
  }
  
-+void __kvm_mmu_refresh_passthrough_bits(struct kvm_vcpu *vcpu,
-+					struct kvm_mmu *mmu)
-+{
-+	const bool cr0_wp = !!kvm_read_cr0_bits(vcpu, X86_CR0_WP);
-+
-+	BUILD_BUG_ON((KVM_MMU_CR0_ROLE_BITS & KVM_POSSIBLE_CR0_GUEST_BITS) != X86_CR0_WP);
-+	BUILD_BUG_ON((KVM_MMU_CR4_ROLE_BITS & KVM_POSSIBLE_CR4_GUEST_BITS));
-+
-+	if (is_cr0_wp(mmu) == cr0_wp)
-+		return;
-+
-+	mmu->cpu_role.base.cr0_wp = cr0_wp;
-+	reset_guest_paging_metadata(vcpu, mmu);
-+}
-+
- static inline int kvm_mmu_get_tdp_level(struct kvm_vcpu *vcpu)
+-void *rxe_alloc(struct rxe_pool *pool)
+-{
+-	struct rxe_pool_elem *elem;
+-	void *obj;
+-	int err;
+-
+-	if (WARN_ON(!(pool->type == RXE_TYPE_MR)))
+-		return NULL;
+-
+-	if (atomic_inc_return(&pool->num_elem) > pool->max_elem)
+-		goto err_cnt;
+-
+-	obj = kzalloc(pool->elem_size, GFP_KERNEL);
+-	if (!obj)
+-		goto err_cnt;
+-
+-	elem = (struct rxe_pool_elem *)((u8 *)obj + pool->elem_offset);
+-
+-	elem->pool = pool;
+-	elem->obj = obj;
+-	kref_init(&elem->ref_cnt);
+-	init_completion(&elem->complete);
+-
+-	/* allocate index in array but leave pointer as NULL so it
+-	 * can't be looked up until rxe_finalize() is called
+-	 */
+-	err = xa_alloc_cyclic(&pool->xa, &elem->index, NULL, pool->limit,
+-			      &pool->next, GFP_KERNEL);
+-	if (err < 0)
+-		goto err_free;
+-
+-	return obj;
+-
+-err_free:
+-	kfree(obj);
+-err_cnt:
+-	atomic_dec(&pool->num_elem);
+-	return NULL;
+-}
+-
+ int __rxe_add_to_pool(struct rxe_pool *pool, struct rxe_pool_elem *elem,
+ 				bool sleepable)
  {
- 	/* tdp_root_level is architecture forced level, use it if nonzero */
+ 	int err;
+ 	gfp_t gfp_flags;
+ 
+-	if (WARN_ON(pool->type == RXE_TYPE_MR))
+-		return -EINVAL;
+-
+ 	if (atomic_inc_return(&pool->num_elem) > pool->max_elem)
+ 		goto err_cnt;
+ 
+@@ -275,9 +232,6 @@ int __rxe_cleanup(struct rxe_pool_elem *elem, bool sleepable)
+ 	if (pool->cleanup)
+ 		pool->cleanup(elem);
+ 
+-	if (pool->type == RXE_TYPE_MR)
+-		kfree_rcu(elem->obj);
+-
+ 	atomic_dec(&pool->num_elem);
+ 
+ 	return err;
+diff --git a/drivers/infiniband/sw/rxe/rxe_pool.h b/drivers/infiniband/sw/rxe/rxe_pool.h
+index 9d83cb32092ff..b42e26427a702 100644
+--- a/drivers/infiniband/sw/rxe/rxe_pool.h
++++ b/drivers/infiniband/sw/rxe/rxe_pool.h
+@@ -54,9 +54,6 @@ void rxe_pool_init(struct rxe_dev *rxe, struct rxe_pool *pool,
+ /* free resources from object pool */
+ void rxe_pool_cleanup(struct rxe_pool *pool);
+ 
+-/* allocate an object from pool */
+-void *rxe_alloc(struct rxe_pool *pool);
+-
+ /* connect already allocated object to pool */
+ int __rxe_add_to_pool(struct rxe_pool *pool, struct rxe_pool_elem *elem,
+ 				bool sleepable);
+diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+index 9ae7cf93365c7..6803ac76ae572 100644
+--- a/drivers/infiniband/sw/rxe/rxe_verbs.c
++++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+@@ -867,10 +867,17 @@ static struct ib_mr *rxe_get_dma_mr(struct ib_pd *ibpd, int access)
+ 	struct rxe_dev *rxe = to_rdev(ibpd->device);
+ 	struct rxe_pd *pd = to_rpd(ibpd);
+ 	struct rxe_mr *mr;
++	int err;
+ 
+-	mr = rxe_alloc(&rxe->mr_pool);
+-	if (!mr)
+-		return ERR_PTR(-ENOMEM);
++	mr = kzalloc(sizeof(*mr), GFP_KERNEL);
++	if (!mr) {
++		err = -ENOMEM;
++		goto err_out;
++	}
++
++	err = rxe_add_to_pool(&rxe->mr_pool, mr);
++	if (err)
++		goto err_free;
+ 
+ 	rxe_get(pd);
+ 	mr->ibmr.pd = ibpd;
+@@ -878,8 +885,12 @@ static struct ib_mr *rxe_get_dma_mr(struct ib_pd *ibpd, int access)
+ 
+ 	rxe_mr_init_dma(access, mr);
+ 	rxe_finalize(mr);
+-
+ 	return &mr->ibmr;
++
++err_free:
++	kfree(mr);
++err_out:
++	return ERR_PTR(err);
+ }
+ 
+ static struct ib_mr *rxe_reg_user_mr(struct ib_pd *ibpd,
+@@ -893,9 +904,15 @@ static struct ib_mr *rxe_reg_user_mr(struct ib_pd *ibpd,
+ 	struct rxe_pd *pd = to_rpd(ibpd);
+ 	struct rxe_mr *mr;
+ 
+-	mr = rxe_alloc(&rxe->mr_pool);
+-	if (!mr)
+-		return ERR_PTR(-ENOMEM);
++	mr = kzalloc(sizeof(*mr), GFP_KERNEL);
++	if (!mr) {
++		err = -ENOMEM;
++		goto err_out;
++	}
++
++	err = rxe_add_to_pool(&rxe->mr_pool, mr);
++	if (err)
++		goto err_free;
+ 
+ 	rxe_get(pd);
+ 	mr->ibmr.pd = ibpd;
+@@ -903,14 +920,16 @@ static struct ib_mr *rxe_reg_user_mr(struct ib_pd *ibpd,
+ 
+ 	err = rxe_mr_init_user(rxe, start, length, iova, access, mr);
+ 	if (err)
+-		goto err1;
++		goto err_cleanup;
+ 
+ 	rxe_finalize(mr);
+-
+ 	return &mr->ibmr;
+ 
+-err1:
++err_cleanup:
+ 	rxe_cleanup(mr);
++err_free:
++	kfree(mr);
++err_out:
+ 	return ERR_PTR(err);
+ }
+ 
+@@ -925,9 +944,15 @@ static struct ib_mr *rxe_alloc_mr(struct ib_pd *ibpd, enum ib_mr_type mr_type,
+ 	if (mr_type != IB_MR_TYPE_MEM_REG)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	mr = rxe_alloc(&rxe->mr_pool);
+-	if (!mr)
+-		return ERR_PTR(-ENOMEM);
++	mr = kzalloc(sizeof(*mr), GFP_KERNEL);
++	if (!mr) {
++		err = -ENOMEM;
++		goto err_out;
++	}
++
++	err = rxe_add_to_pool(&rxe->mr_pool, mr);
++	if (err)
++		goto err_free;
+ 
+ 	rxe_get(pd);
+ 	mr->ibmr.pd = ibpd;
+@@ -935,14 +960,16 @@ static struct ib_mr *rxe_alloc_mr(struct ib_pd *ibpd, enum ib_mr_type mr_type,
+ 
+ 	err = rxe_mr_init_fast(max_num_sg, mr);
+ 	if (err)
+-		goto err1;
++		goto err_cleanup;
+ 
+ 	rxe_finalize(mr);
+-
+ 	return &mr->ibmr;
+ 
+-err1:
++err_cleanup:
+ 	rxe_cleanup(mr);
++err_free:
++	kfree(mr);
++err_out:
+ 	return ERR_PTR(err);
+ }
+ 
 -- 
 2.39.2
 
