@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AC9101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:57:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0C7C433D2;
-	Mon, 15 May 2023 17:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD311101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:57:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AF1C433D2;
+	Mon, 15 May 2023 17:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173460;
-	bh=golirGr/35zmfbnhpV4tWeZqMMaOK+pBAVFygUKo43I=;
+	s=korg; t=1684173463;
+	bh=ojc58rMjtvQJnZH5ift4m2BaI2Ddu85cIVhMmcACl14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BSVIVeXDak/m2NkjvOSzx5Hqv+dq5W4PGJgIIdMmklVq2KAH36cBKLl4B0MyOEd4x
-	 3AHPCEWbHVq2Ihje+SGyHj0yZpX0j6B9vdbOnGidaiM3rm1nLzmb+Obe3BJ74UdVAA
-	 n3uNBe+ia04v1/O5eCtRwBAzaUMGwF4QfNL+NR0s=
+	b=d5Ypz7mazf1UQEYTIhhvw/O8deayyeS7n3lOBCkVornPhwb8xX0Ix0P7cb+QPD+a6
+	 mz8tMApYMnz5RE9B8tHLkzsVpG0ENyjG5GhPk7eMohy9CE/mE6s/Ecwv66ahoipRG/
+	 /D7l5q8VtSd+bOmvp86//7Td0qUhxnCR2+Piro+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	"Ewan D. Milne" <emilne@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
+	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 100/282] nvme-fcloop: fix "inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage"
-Date: Mon, 15 May 2023 18:27:58 +0200
-Message-Id: <20230515161725.253654713@linuxfoundation.org>
+Subject: [PATCH 5.4 074/282] wifi: ath6kl: minor fix for allocation size
+Date: Mon, 15 May 2023 18:27:32 +0200
+Message-Id: <20230515161724.452600710@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -37,203 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Alexey V. Vissarionov <gremlin@altlinux.org>
 
-[ Upstream commit 4f86a6ff6fbd891232dda3ca97fd1b9630b59809 ]
+[ Upstream commit 778f83f889e7fca37780d9640fcbd0229ae38eaa ]
 
-fcloop_fcp_op() could be called from flush request's ->end_io(flush_end_io) in
-which the spinlock of fq->mq_flush_lock is grabbed with irq saved/disabled.
+Although the "param" pointer occupies more or equal space compared
+to "*param", the allocation size should use the size of variable
+itself.
 
-So fcloop_fcp_op() can't call spin_unlock_irq(&tfcp_req->reqlock) simply
-which enables irq unconditionally.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes the warning by switching to spin_lock_irqsave()/spin_unlock_irqrestore()
-
-Fixes: c38dbbfab1bc ("nvme-fcloop: fix inconsistent lock state warnings")
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Ewan D. Milne <emilne@redhat.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: bdcd81707973cf8a ("Add ath6kl cleaned up driver")
+Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230117110414.GC12547@altlinux.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fcloop.c | 48 ++++++++++++++++++++----------------
- 1 file changed, 27 insertions(+), 21 deletions(-)
+ drivers/net/wireless/ath/ath6kl/bmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/target/fcloop.c b/drivers/nvme/target/fcloop.c
-index b50b53db37462..34345c45a3e52 100644
---- a/drivers/nvme/target/fcloop.c
-+++ b/drivers/nvme/target/fcloop.c
-@@ -431,10 +431,11 @@ fcloop_fcp_recv_work(struct work_struct *work)
- 	struct fcloop_fcpreq *tfcp_req =
- 		container_of(work, struct fcloop_fcpreq, fcp_rcv_work);
- 	struct nvmefc_fcp_req *fcpreq = tfcp_req->fcpreq;
-+	unsigned long flags;
- 	int ret = 0;
- 	bool aborted = false;
+diff --git a/drivers/net/wireless/ath/ath6kl/bmi.c b/drivers/net/wireless/ath/ath6kl/bmi.c
+index bde5a10d470c8..af98e871199d3 100644
+--- a/drivers/net/wireless/ath/ath6kl/bmi.c
++++ b/drivers/net/wireless/ath/ath6kl/bmi.c
+@@ -246,7 +246,7 @@ int ath6kl_bmi_execute(struct ath6kl *ar, u32 addr, u32 *param)
+ 		return -EACCES;
+ 	}
  
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_START:
- 		tfcp_req->inistate = INI_IO_ACTIVE;
-@@ -443,11 +444,11 @@ fcloop_fcp_recv_work(struct work_struct *work)
- 		aborted = true;
- 		break;
- 	default:
--		spin_unlock_irq(&tfcp_req->reqlock);
-+		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
+-	size = sizeof(cid) + sizeof(addr) + sizeof(param);
++	size = sizeof(cid) + sizeof(addr) + sizeof(*param);
+ 	if (size > ar->bmi.max_cmd_size) {
  		WARN_ON(1);
- 		return;
- 	}
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	if (unlikely(aborted))
- 		ret = -ECANCELED;
-@@ -468,8 +469,9 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 		container_of(work, struct fcloop_fcpreq, abort_rcv_work);
- 	struct nvmefc_fcp_req *fcpreq;
- 	bool completed = false;
-+	unsigned long flags;
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	fcpreq = tfcp_req->fcpreq;
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_ABORTED:
-@@ -478,11 +480,11 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 		completed = true;
- 		break;
- 	default:
--		spin_unlock_irq(&tfcp_req->reqlock);
-+		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 		WARN_ON(1);
- 		return;
- 	}
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	if (unlikely(completed)) {
- 		/* remove reference taken in original abort downcall */
-@@ -494,9 +496,9 @@ fcloop_fcp_abort_recv_work(struct work_struct *work)
- 		nvmet_fc_rcv_fcp_abort(tfcp_req->tport->targetport,
- 					&tfcp_req->tgt_fcp_req);
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	tfcp_req->fcpreq = NULL;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	fcloop_call_host_done(fcpreq, tfcp_req, -ECANCELED);
- 	/* call_host_done releases reference for abort downcall */
-@@ -512,11 +514,12 @@ fcloop_tgt_fcprqst_done_work(struct work_struct *work)
- 	struct fcloop_fcpreq *tfcp_req =
- 		container_of(work, struct fcloop_fcpreq, tio_done_work);
- 	struct nvmefc_fcp_req *fcpreq;
-+	unsigned long flags;
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	fcpreq = tfcp_req->fcpreq;
- 	tfcp_req->inistate = INI_IO_COMPLETED;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	fcloop_call_host_done(fcpreq, tfcp_req, tfcp_req->status);
- }
-@@ -620,13 +623,14 @@ fcloop_fcp_op(struct nvmet_fc_target_port *tgtport,
- 	u32 rsplen = 0, xfrlen = 0;
- 	int fcp_err = 0, active, aborted;
- 	u8 op = tgt_fcpreq->op;
-+	unsigned long flags;
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	fcpreq = tfcp_req->fcpreq;
- 	active = tfcp_req->active;
- 	aborted = tfcp_req->aborted;
- 	tfcp_req->active = true;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	if (unlikely(active))
- 		/* illegal - call while i/o active */
-@@ -634,9 +638,9 @@ fcloop_fcp_op(struct nvmet_fc_target_port *tgtport,
- 
- 	if (unlikely(aborted)) {
- 		/* target transport has aborted i/o prior */
--		spin_lock_irq(&tfcp_req->reqlock);
-+		spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 		tfcp_req->active = false;
--		spin_unlock_irq(&tfcp_req->reqlock);
-+		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 		tgt_fcpreq->transferred_length = 0;
- 		tgt_fcpreq->fcp_error = -ECANCELED;
- 		tgt_fcpreq->done(tgt_fcpreq);
-@@ -693,9 +697,9 @@ fcloop_fcp_op(struct nvmet_fc_target_port *tgtport,
- 		break;
- 	}
- 
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	tfcp_req->active = false;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	tgt_fcpreq->transferred_length = xfrlen;
- 	tgt_fcpreq->fcp_error = fcp_err;
-@@ -709,15 +713,16 @@ fcloop_tgt_fcp_abort(struct nvmet_fc_target_port *tgtport,
- 			struct nvmefc_tgt_fcp_req *tgt_fcpreq)
- {
- 	struct fcloop_fcpreq *tfcp_req = tgt_fcp_req_to_fcpreq(tgt_fcpreq);
-+	unsigned long flags;
- 
- 	/*
- 	 * mark aborted only in case there were 2 threads in transport
- 	 * (one doing io, other doing abort) and only kills ops posted
- 	 * after the abort request
- 	 */
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	tfcp_req->aborted = true;
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	tfcp_req->status = NVME_SC_INTERNAL;
- 
-@@ -753,6 +758,7 @@ fcloop_fcp_abort(struct nvme_fc_local_port *localport,
- 	struct fcloop_ini_fcpreq *inireq = fcpreq->private;
- 	struct fcloop_fcpreq *tfcp_req;
- 	bool abortio = true;
-+	unsigned long flags;
- 
- 	spin_lock(&inireq->inilock);
- 	tfcp_req = inireq->tfcp_req;
-@@ -765,7 +771,7 @@ fcloop_fcp_abort(struct nvme_fc_local_port *localport,
- 		return;
- 
- 	/* break initiator/target relationship for io */
--	spin_lock_irq(&tfcp_req->reqlock);
-+	spin_lock_irqsave(&tfcp_req->reqlock, flags);
- 	switch (tfcp_req->inistate) {
- 	case INI_IO_START:
- 	case INI_IO_ACTIVE:
-@@ -775,11 +781,11 @@ fcloop_fcp_abort(struct nvme_fc_local_port *localport,
- 		abortio = false;
- 		break;
- 	default:
--		spin_unlock_irq(&tfcp_req->reqlock);
-+		spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 		WARN_ON(1);
- 		return;
- 	}
--	spin_unlock_irq(&tfcp_req->reqlock);
-+	spin_unlock_irqrestore(&tfcp_req->reqlock, flags);
- 
- 	if (abortio)
- 		/* leave the reference while the work item is scheduled */
+ 		return -EINVAL;
 -- 
 2.39.2
 
