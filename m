@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15BAFBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:06:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36783C433EF;
-	Mon, 15 May 2023 17:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FA6FFBFD
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:06:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 271BCC4339C;
+	Mon, 15 May 2023 17:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170368;
-	bh=rgjQGaJgYa4vbdY63LGiqm38ckabBTpfj+Sw51LylgY=;
+	s=korg; t=1684170374;
+	bh=4WoCIRYarhKRg3t4I+aMszyQ+wLDNX7DJUp8huWSEhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XG72sh+L4SzilNxrK7nuG34/0bWMobvmrrF3F68/nOQcA1yBZLCCl7SfKkYpzYJjb
-	 1/SsAr78RWA4jyJ22adUMubQyqcUtLXqx+bL5IQlIo2xGHK7eAf9jrk3AkXiYLde2K
-	 xb6uj6nTcriC4UBroH3A85aMzhFM6BHGQPv9J56s=
+	b=PuVtfNqxQi74e4K1guqMiw8abHv+E3gvXeAkat9eISBsGuaUBJsZalLEqXddr3cNU
+	 tfRRiN6cT0+WXMQRenr1bjDvFQHsizJbYgBMsUYnQCPgaQorII7z5fdXGM2T5Sx+ze
+	 wQTOHxHDH7+77kmGX5ASq0IM8T5BvQG6HcyZEbA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 109/239] btrfs: fix btrfs_prev_leaf() to not return the same key twice
-Date: Mon, 15 May 2023 18:26:12 +0200
-Message-Id: <20230515161724.968083965@linuxfoundation.org>
+Subject: [PATCH 6.1 111/239] btrfs: properly reject clear_cache and v1 cache for block-group-tree
+Date: Mon, 15 May 2023 18:26:14 +0200
+Message-Id: <20230515161725.028354035@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,136 +34,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 6f932d4ef007d6a4ae03badcb749fbb8f49196f6 upstream.
+commit 64b5d5b2852661284ccbb038c697562cc56231bf upstream.
 
-A call to btrfs_prev_leaf() may end up returning a path that points to the
-same item (key) again. This happens if while btrfs_prev_leaf(), after we
-release the path, a concurrent insertion happens, which moves items off
-from a sibling into the front of the previous leaf, and an item with the
-computed previous key does not exists.
+[BUG]
+With block-group-tree feature enabled, mounting it with clear_cache
+would cause the following transaction abort at mount or remount:
 
-For example, suppose we have the two following leaves:
+  BTRFS info (device dm-4): force clearing of disk cache
+  BTRFS info (device dm-4): using free space tree
+  BTRFS info (device dm-4): auto enabling async discard
+  BTRFS info (device dm-4): clearing free space tree
+  BTRFS info (device dm-4): clearing compat-ro feature flag for FREE_SPACE_TREE (0x1)
+  BTRFS info (device dm-4): clearing compat-ro feature flag for FREE_SPACE_TREE_VALID (0x2)
+  BTRFS error (device dm-4): block-group-tree feature requires fres-space-tree and no-holes
+  BTRFS error (device dm-4): super block corruption detected before writing it to disk
+  BTRFS: error (device dm-4) in write_all_supers:4288: errno=-117 Filesystem corrupted (unexpected superblock corruption detected)
+  BTRFS warning (device dm-4: state E): Skipping commit of aborted transaction.
 
-  Leaf A
+[CAUSE]
+For block-group-tree feature, we have an artificial dependency on
+free-space-tree.
 
-  -------------------------------------------------------------
-  | ...   key (300 96 10)   key (300 96 15)   key (300 96 16) |
-  -------------------------------------------------------------
-              slot 20             slot 21             slot 22
+This means if we detect block-group-tree without v2 cache, we consider
+it a corruption and cause the problem.
 
-  Leaf B
+For clear_cache mount option, it would temporary disable v2 cache, then
+re-enable it.
 
-  -------------------------------------------------------------
-  | key (300 96 20)   key (300 96 21)   key (300 96 22)   ... |
-  -------------------------------------------------------------
-      slot 0             slot 1             slot 2
+But unfortunately for that temporary v2 cache disabled status, we refuse
+to write a superblock with bg tree only flag, thus leads to the above
+transaction abortion.
 
-If we call btrfs_prev_leaf(), from btrfs_previous_item() for example, with
-a path pointing to leaf B and slot 0 and the following happens:
+[FIX]
+For now, just reject clear_cache and v1 cache mount option for block
+group tree.  So now we got a graceful rejection other than a transaction
+abort:
 
-1) At btrfs_prev_leaf() we compute the previous key to search as:
-   (300 96 19), which is a key that does not exists in the tree;
+  BTRFS info (device dm-4): force clearing of disk cache
+  BTRFS error (device dm-4): cannot disable free space tree with block-group-tree feature
+  BTRFS error (device dm-4): open_ctree failed
 
-2) Then we call btrfs_release_path() at btrfs_prev_leaf();
-
-3) Some other task inserts a key at leaf A, that sorts before the key at
-   slot 20, for example it has an objectid of 299. In order to make room
-   for the new key, the key at slot 22 is moved to the front of leaf B.
-   This happens at push_leaf_right(), called from split_leaf().
-
-   After this leaf B now looks like:
-
-  --------------------------------------------------------------------------------
-  | key (300 96 16)    key (300 96 20)   key (300 96 21)   key (300 96 22)   ... |
-  --------------------------------------------------------------------------------
-       slot 0              slot 1             slot 2             slot 3
-
-4) At btrfs_prev_leaf() we call btrfs_search_slot() for the computed
-   previous key: (300 96 19). Since the key does not exists,
-   btrfs_search_slot() returns 1 and with a path pointing to leaf B
-   and slot 1, the item with key (300 96 20);
-
-5) This makes btrfs_prev_leaf() return a path that points to slot 1 of
-   leaf B, the same key as before it was called, since the key at slot 0
-   of leaf B (300 96 16) is less than the computed previous key, which is
-   (300 96 19);
-
-6) As a consequence btrfs_previous_item() returns a path that points again
-   to the item with key (300 96 20).
-
-For some users of btrfs_prev_leaf() or btrfs_previous_item() this may not
-be functional a problem, despite not making sense to return a new path
-pointing again to the same item/key. However for a caller such as
-tree-log.c:log_dir_items(), this has a bad consequence, as it can result
-in not logging some dir index deletions in case the directory is being
-logged without holding the inode's VFS lock (logging triggered while
-logging a child inode for example) - for the example scenario above, in
-case the dir index keys 17, 18 and 19 were deleted in the current
-transaction.
-
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+CC: stable@vger.kernel.org # 6.1+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.c |   32 +++++++++++++++++++++++++++++++-
- 1 file changed, 31 insertions(+), 1 deletion(-)
+ fs/btrfs/super.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/ctree.c
-+++ b/fs/btrfs/ctree.c
-@@ -4411,10 +4411,12 @@ int btrfs_del_items(struct btrfs_trans_h
- int btrfs_prev_leaf(struct btrfs_root *root, struct btrfs_path *path)
- {
- 	struct btrfs_key key;
-+	struct btrfs_key orig_key;
- 	struct btrfs_disk_key found_key;
- 	int ret;
- 
- 	btrfs_item_key_to_cpu(path->nodes[0], &key, 0);
-+	orig_key = key;
- 
- 	if (key.offset > 0) {
- 		key.offset--;
-@@ -4431,8 +4433,36 @@ int btrfs_prev_leaf(struct btrfs_root *r
- 
- 	btrfs_release_path(path);
- 	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
--	if (ret < 0)
-+	if (ret <= 0)
- 		return ret;
-+
-+	/*
-+	 * Previous key not found. Even if we were at slot 0 of the leaf we had
-+	 * before releasing the path and calling btrfs_search_slot(), we now may
-+	 * be in a slot pointing to the same original key - this can happen if
-+	 * after we released the path, one of more items were moved from a
-+	 * sibling leaf into the front of the leaf we had due to an insertion
-+	 * (see push_leaf_right()).
-+	 * If we hit this case and our slot is > 0 and just decrement the slot
-+	 * so that the caller does not process the same key again, which may or
-+	 * may not break the caller, depending on its logic.
-+	 */
-+	if (path->slots[0] < btrfs_header_nritems(path->nodes[0])) {
-+		btrfs_item_key(path->nodes[0], &found_key, path->slots[0]);
-+		ret = comp_keys(&found_key, &orig_key);
-+		if (ret == 0) {
-+			if (path->slots[0] > 0) {
-+				path->slots[0]--;
-+				return 0;
-+			}
-+			/*
-+			 * At slot 0, same key as before, it means orig_key is
-+			 * the lowest, leftmost, key in the tree. We're done.
-+			 */
-+			return 1;
-+		}
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1136,7 +1136,12 @@ out:
+ 	    !btrfs_test_opt(info, CLEAR_CACHE)) {
+ 		btrfs_err(info, "cannot disable free space tree");
+ 		ret = -EINVAL;
+-
 +	}
-+
- 	btrfs_item_key(path->nodes[0], &found_key, 0);
- 	ret = comp_keys(&found_key, &key);
- 	/*
++	if (btrfs_fs_compat_ro(info, BLOCK_GROUP_TREE) &&
++	    (btrfs_test_opt(info, CLEAR_CACHE) ||
++	     !btrfs_test_opt(info, FREE_SPACE_TREE))) {
++		btrfs_err(info, "cannot disable free space tree with block-group-tree feature");
++		ret = -EINVAL;
+ 	}
+ 	if (!ret)
+ 		ret = btrfs_check_mountopts_zoned(info);
 
 
