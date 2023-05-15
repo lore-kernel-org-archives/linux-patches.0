@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C54FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C9DC433EF;
-	Mon, 15 May 2023 17:21:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A4D9FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9935C4339B;
+	Mon, 15 May 2023 17:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171261;
-	bh=FtIGOI305kwy/6FOj8mlpzgLrPNp4dN8LNtHBq5MSRA=;
+	s=korg; t=1684171264;
+	bh=FMYE9s9UcN/SYgWSelygdnD5Wo+vZ2xPThJ5LTHXXvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3RT9bgyrIjOYzZR1PAPyb1FG4/gsof82pehVnd0+B2zntgdC0k6IMPkfK8uRNlAE
-	 NjNmbOKz2KCnR5SxCSYQaV6KLw48VmOnSD3TDqpbes85WxzTQjukkJga02ICW/vOBt
-	 2MFkeyAPdB2PwY/3I79LZrhhAjDFKxl8GSQebJ6A=
+	b=eOU3VJRu7LmBweJjJjKcbvxEAcv52/dX/rCqknQp36LrWxxb8Logx2a/UxhSXgRQG
+	 XCnuuhPZb8P2HqvZ5G6wr2LJ1vv++q643MTgREnC6SzwoHiY3K7mdAzEAA5twMyjID
+	 FxV8cy1t43zaSF+MX5teEqeAKg7QKdQLFtNxaAvI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH 6.2 153/242] sh: mcount.S: fix build error when PRINTK is not enabled
-Date: Mon, 15 May 2023 18:27:59 +0200
-Message-Id: <20230515161726.480034937@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Anastasia Belova <abelova@astralinux.ru>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.2 136/242] btrfs: print-tree: parent bytenr must be aligned to sector size
+Date: Mon, 15 May 2023 18:27:42 +0200
+Message-Id: <20230515161725.983432685@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -37,41 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-commit c2bd1e18c6f85c0027da2e5e7753b9bfd9f8e6dc upstream.
+commit c87f318e6f47696b4040b58f460d5c17ea0280e6 upstream.
 
-Fix a build error in mcount.S when CONFIG_PRINTK is not enabled.
-Fixes this build error:
+Check nodesize to sectorsize in alignment check in print_extent_item.
+The comment states that and this is correct, similar check is done
+elsewhere in the functions.
 
-sh2-linux-ld: arch/sh/lib/mcount.o: in function `stack_panic':
-(.text+0xec): undefined reference to `dump_stack'
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: e460ab27b6c3 ("sh: Fix up stack overflow check with ftrace disabled.")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-Cc: Rich Felker <dalias@libc.org>
-Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: stable@vger.kernel.org
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230306040037.20350-8-rdunlap@infradead.org
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Fixes: ea57788eb76d ("btrfs: require only sector size alignment for parent eb bytenr")
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/Kconfig.debug |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/print-tree.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/sh/Kconfig.debug
-+++ b/arch/sh/Kconfig.debug
-@@ -15,7 +15,7 @@ config SH_STANDARD_BIOS
- 
- config STACK_DEBUG
- 	bool "Check for stack overflows"
--	depends on DEBUG_KERNEL
-+	depends on DEBUG_KERNEL && PRINTK
- 	help
- 	  This option will cause messages to be printed if free stack space
- 	  drops below a certain limit. Saying Y here will add overhead to
+--- a/fs/btrfs/print-tree.c
++++ b/fs/btrfs/print-tree.c
+@@ -151,10 +151,10 @@ static void print_extent_item(struct ext
+ 			pr_cont("shared data backref parent %llu count %u\n",
+ 			       offset, btrfs_shared_data_ref_count(eb, sref));
+ 			/*
+-			 * offset is supposed to be a tree block which
+-			 * must be aligned to nodesize.
++			 * Offset is supposed to be a tree block which must be
++			 * aligned to sectorsize.
+ 			 */
+-			if (!IS_ALIGNED(offset, eb->fs_info->nodesize))
++			if (!IS_ALIGNED(offset, eb->fs_info->sectorsize))
+ 				pr_info(
+ 			"\t\t\t(parent %llu not aligned to sectorsize %u)\n",
+ 				     offset, eb->fs_info->sectorsize);
 
 
