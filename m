@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F180D101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:54:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC6BC433EF;
-	Mon, 15 May 2023 17:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE37A101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:55:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D2A1C433D2;
+	Mon, 15 May 2023 17:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173299;
-	bh=S36NYVKjfmDx6sKc59U5sRs1sjbL0bkuQywxhdOvNYQ=;
+	s=korg; t=1684173302;
+	bh=BngxkBEeruidy+V43jLSck4RA53JDM+RyB8mLAt8jJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=axUAmskcWGbdsDuvL7w5OEUt4ubJX2y5BKJiL8TEvCI6isD+vmVcC9iNGVhOJl678
-	 29yDIcJNdW1KFaH4JdVhh+vJQRNdbZKKuMxyiZAZNwqLhvmwYocp9R0BET5vyLqna+
-	 9c1wO9+17AUdloy0C83lgpRgAzBj5VDqOkJNqhdY=
+	b=bjQeeFqnMNUryNQCJYZyQKmqwIuGStwUofe+npMeHlM+OWKPF68TdfAzjnzlbqY/w
+	 mtwRZRIo0qyAth0Z6kkYyxpOEQ58kRKzJb/dBfmDDn4pwu/lu1H+Kz8jN9wYZslsCe
+	 GWpHxlDeL4iIu26lgTRvdOxWqAfuCauxMcbQSpaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Rob Clark <robdclark@chromium.org>,
+	Georgii Kruglov <georgy.kruglov@yandex.ru>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 050/282] drm/msm/adreno: drop bogus pm_runtime_set_active()
-Date: Mon, 15 May 2023 18:27:08 +0200
-Message-Id: <20230515161723.756531172@linuxfoundation.org>
+Subject: [PATCH 5.4 051/282] mmc: sdhci-of-esdhc: fix quirk to ignore command inhibit for data
+Date: Mon, 15 May 2023 18:27:09 +0200
+Message-Id: <20230515161723.784972052@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,40 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Georgii Kruglov <georgy.kruglov@yandex.ru>
 
-[ Upstream commit db7662d076c973072d788bd0e8130e04430307a1 ]
+[ Upstream commit 0dd8316037a2a6d85b2be208bef9991de7b42170 ]
 
-The runtime PM status can only be updated while runtime PM is disabled.
+If spec_reg is equal to 'SDHCI_PRESENT_STATE', esdhc_readl_fixup()
+fixes up register value and returns it immediately. As a result, the
+further block
+(spec_reg == SDHCI_PRESENT_STATE)
+    &&(esdhc->quirk_ignore_data_inhibit == true),
+is never executed.
 
-Drop the bogus pm_runtime_set_active() call that was made after enabling
-runtime PM and which (incidentally but correctly) left the runtime PM
-status set to 'suspended'.
+The patch merges the second block into the first one.
 
-Fixes: 2c087a336676 ("drm/msm/adreno: Load the firmware before bringing up the hardware")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Patchwork: https://patchwork.freedesktop.org/patch/524972/
-Link: https://lore.kernel.org/r/20230303164807.13124-4-johan+linaro@kernel.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1f1929f3f2fa ("mmc: sdhci-of-esdhc: add quirk to ignore command inhibit for data")
+Signed-off-by: Georgii Kruglov <georgy.kruglov@yandex.ru>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20230321203715.3975-1-georgy.kruglov@yandex.ru
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/mmc/host/sdhci-of-esdhc.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 6ad9d2de07ed6..2a727ab0faf75 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -239,9 +239,6 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
- 	 */
- 	pm_runtime_enable(&pdev->dev);
+diff --git a/drivers/mmc/host/sdhci-of-esdhc.c b/drivers/mmc/host/sdhci-of-esdhc.c
+index 69c133e7ced05..48765208e2953 100644
+--- a/drivers/mmc/host/sdhci-of-esdhc.c
++++ b/drivers/mmc/host/sdhci-of-esdhc.c
+@@ -124,6 +124,7 @@ static u32 esdhc_readl_fixup(struct sdhci_host *host,
+ 			return ret;
+ 		}
+ 	}
++
+ 	/*
+ 	 * The DAT[3:0] line signal levels and the CMD line signal level are
+ 	 * not compatible with standard SDHC register. The line signal levels
+@@ -135,6 +136,16 @@ static u32 esdhc_readl_fixup(struct sdhci_host *host,
+ 		ret = value & 0x000fffff;
+ 		ret |= (value >> 4) & SDHCI_DATA_LVL_MASK;
+ 		ret |= (value << 1) & SDHCI_CMD_LVL;
++
++		/*
++		 * Some controllers have unreliable Data Line Active
++		 * bit for commands with busy signal. This affects
++		 * Command Inhibit (data) bit. Just ignore it since
++		 * MMC core driver has already polled card status
++		 * with CMD13 after any command with busy siganl.
++		 */
++		if (esdhc->quirk_ignore_data_inhibit)
++			ret &= ~SDHCI_DATA_INHIBIT;
+ 		return ret;
+ 	}
  
--	/* Make sure pm runtime is active and reset any previous errors */
--	pm_runtime_set_active(&pdev->dev);
+@@ -149,19 +160,6 @@ static u32 esdhc_readl_fixup(struct sdhci_host *host,
+ 		return ret;
+ 	}
+ 
+-	/*
+-	 * Some controllers have unreliable Data Line Active
+-	 * bit for commands with busy signal. This affects
+-	 * Command Inhibit (data) bit. Just ignore it since
+-	 * MMC core driver has already polled card status
+-	 * with CMD13 after any command with busy siganl.
+-	 */
+-	if ((spec_reg == SDHCI_PRESENT_STATE) &&
+-	(esdhc->quirk_ignore_data_inhibit == true)) {
+-		ret = value & ~SDHCI_DATA_INHIBIT;
+-		return ret;
+-	}
 -
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0) {
- 		pm_runtime_put_sync(&pdev->dev);
+ 	ret = value;
+ 	return ret;
+ }
 -- 
 2.39.2
 
