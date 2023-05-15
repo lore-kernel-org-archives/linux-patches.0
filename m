@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2141FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:20:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F4AC433EF;
-	Mon, 15 May 2023 17:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC2EFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:20:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218F3C433EF;
+	Mon, 15 May 2023 17:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171227;
-	bh=L8hsJ148mhTqbR9e5JMoXQW0eQTs/fqiByvGzhJ+Wf4=;
+	s=korg; t=1684171230;
+	bh=VBWOec6NQIRi806vB/+Fc3YRQsKjTu60+8ZeoLGuOXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gcyD7994G23zlGWvJjp8GsS1DJ9dBUYKyc0NkX7Pa3564LNlY6fJYcpOpkSqRXI9q
-	 7h1ILZ+LQRcgwtBN+UQ7evQQl3X1Q18mZ48B895VIqo7nm+47+vQ534lzr4U42KzAC
-	 9lMZUmuqDG3wyQuJuJ0WHAzgl1X7h+mivShq5VUU=
+	b=CChcX1GeEyftK+sJApTv78Gi3OScojJ9iBnRZYqFUgKoI5P3VUIjBy/HvUrwZxXjh
+	 +JCyISck8CtEK2DrK9Uky7CSOmiB6Pij/HFPUYepAENm/22NJoMQT66F24FwB0FIGk
+	 x39/qKgdvdvnpsT0EJJjMjfe39+y2jcX47g4kLng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 102/242] perf pmu: zfree() expects a pointer to a pointer to zero it after freeing its contents
-Date: Mon, 15 May 2023 18:27:08 +0200
-Message-Id: <20230515161724.963850503@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.2 135/242] btrfs: make clear_cache mount option to rebuild FST without disabling it
+Date: Mon, 15 May 2023 18:27:41 +0200
+Message-Id: <20230515161725.952871313@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -34,34 +34,181 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 57f14b5ae1a97537f2abd2828ee7212cada7036e ]
+commit 1d6a4fc85717677e00fefffd847a50fc5928ce69 upstream.
 
-An audit showed just this one problem with zfree(), fix it.
+Previously clear_cache mount option would simply disable free-space-tree
+feature temporarily then re-enable it to rebuild the whole free space
+tree.
 
-Fixes: 9fbc61f832ebf432 ("perf pmu: Add support for PMU capabilities")
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+But this is problematic for block-group-tree feature, as we have an
+artificial dependency on free-space-tree feature.
+
+If we go the existing method, after clearing the free-space-tree
+feature, we would flip the filesystem to read-only mode, as we detect a
+super block write with block-group-tree but no free-space-tree feature.
+
+This patch would change the behavior by properly rebuilding the free
+space tree without disabling this feature, thus allowing clear_cache
+mount option to work with block group tree.
+
+Now we can mount a filesystem with block-group-tree feature and
+clear_mount option:
+
+  $ mkfs.btrfs  -O block-group-tree /dev/test/scratch1  -f
+  $ sudo mount /dev/test/scratch1 /mnt/btrfs -o clear_cache
+  $ sudo dmesg -t | head -n 5
+  BTRFS info (device dm-1): force clearing of disk cache
+  BTRFS info (device dm-1): using free space tree
+  BTRFS info (device dm-1): auto enabling async discard
+  BTRFS info (device dm-1): rebuilding free space tree
+  BTRFS info (device dm-1): checking UUID tree
+
+CC: stable@vger.kernel.org # 6.1+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/disk-io.c         |   25 ++++++++++++++++------
+ fs/btrfs/free-space-tree.c |   50 ++++++++++++++++++++++++++++++++++++++++++++-
+ fs/btrfs/free-space-tree.h |    3 +-
+ fs/btrfs/super.c           |    3 --
+ 4 files changed, 70 insertions(+), 11 deletions(-)
 
-diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
-index 2bdeb89352e7a..be49be366c05c 100644
---- a/tools/perf/util/pmu.c
-+++ b/tools/perf/util/pmu.c
-@@ -1833,7 +1833,7 @@ static int perf_pmu__new_caps(struct list_head *list, char *name, char *value)
- 	return 0;
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3306,23 +3306,34 @@ int btrfs_start_pre_rw_mount(struct btrf
+ {
+ 	int ret;
+ 	const bool cache_opt = btrfs_test_opt(fs_info, SPACE_CACHE);
+-	bool clear_free_space_tree = false;
++	bool rebuild_free_space_tree = false;
  
- free_name:
--	zfree(caps->name);
-+	zfree(&caps->name);
- free_caps:
- 	free(caps);
+ 	if (btrfs_test_opt(fs_info, CLEAR_CACHE) &&
+ 	    btrfs_fs_compat_ro(fs_info, FREE_SPACE_TREE)) {
+-		clear_free_space_tree = true;
++		rebuild_free_space_tree = true;
+ 	} else if (btrfs_fs_compat_ro(fs_info, FREE_SPACE_TREE) &&
+ 		   !btrfs_fs_compat_ro(fs_info, FREE_SPACE_TREE_VALID)) {
+ 		btrfs_warn(fs_info, "free space tree is invalid");
+-		clear_free_space_tree = true;
++		rebuild_free_space_tree = true;
+ 	}
  
--- 
-2.39.2
-
+-	if (clear_free_space_tree) {
+-		btrfs_info(fs_info, "clearing free space tree");
+-		ret = btrfs_clear_free_space_tree(fs_info);
++	if (rebuild_free_space_tree) {
++		btrfs_info(fs_info, "rebuilding free space tree");
++		ret = btrfs_rebuild_free_space_tree(fs_info);
+ 		if (ret) {
+ 			btrfs_warn(fs_info,
+-				   "failed to clear free space tree: %d", ret);
++				   "failed to rebuild free space tree: %d", ret);
++			goto out;
++		}
++	}
++
++	if (btrfs_fs_compat_ro(fs_info, FREE_SPACE_TREE) &&
++	    !btrfs_test_opt(fs_info, FREE_SPACE_TREE)) {
++		btrfs_info(fs_info, "disabling free space tree");
++		ret = btrfs_delete_free_space_tree(fs_info);
++		if (ret) {
++			btrfs_warn(fs_info,
++				   "failed to disable free space tree: %d", ret);
+ 			goto out;
+ 		}
+ 	}
+--- a/fs/btrfs/free-space-tree.c
++++ b/fs/btrfs/free-space-tree.c
+@@ -1252,7 +1252,7 @@ out:
+ 	return ret;
+ }
+ 
+-int btrfs_clear_free_space_tree(struct btrfs_fs_info *fs_info)
++int btrfs_delete_free_space_tree(struct btrfs_fs_info *fs_info)
+ {
+ 	struct btrfs_trans_handle *trans;
+ 	struct btrfs_root *tree_root = fs_info->tree_root;
+@@ -1295,6 +1295,54 @@ int btrfs_clear_free_space_tree(struct b
+ abort:
+ 	btrfs_abort_transaction(trans, ret);
+ 	btrfs_end_transaction(trans);
++	return ret;
++}
++
++int btrfs_rebuild_free_space_tree(struct btrfs_fs_info *fs_info)
++{
++	struct btrfs_trans_handle *trans;
++	struct btrfs_key key = {
++		.objectid = BTRFS_FREE_SPACE_TREE_OBJECTID,
++		.type = BTRFS_ROOT_ITEM_KEY,
++		.offset = 0,
++	};
++	struct btrfs_root *free_space_root = btrfs_global_root(fs_info, &key);
++	struct rb_node *node;
++	int ret;
++
++	trans = btrfs_start_transaction(free_space_root, 1);
++	if (IS_ERR(trans))
++		return PTR_ERR(trans);
++
++	set_bit(BTRFS_FS_CREATING_FREE_SPACE_TREE, &fs_info->flags);
++	set_bit(BTRFS_FS_FREE_SPACE_TREE_UNTRUSTED, &fs_info->flags);
++
++	ret = clear_free_space_tree(trans, free_space_root);
++	if (ret)
++		goto abort;
++
++	node = rb_first_cached(&fs_info->block_group_cache_tree);
++	while (node) {
++		struct btrfs_block_group *block_group;
++
++		block_group = rb_entry(node, struct btrfs_block_group,
++				       cache_node);
++		ret = populate_free_space_tree(trans, block_group);
++		if (ret)
++			goto abort;
++		node = rb_next(node);
++	}
++
++	btrfs_set_fs_compat_ro(fs_info, FREE_SPACE_TREE);
++	btrfs_set_fs_compat_ro(fs_info, FREE_SPACE_TREE_VALID);
++	clear_bit(BTRFS_FS_CREATING_FREE_SPACE_TREE, &fs_info->flags);
++
++	ret = btrfs_commit_transaction(trans);
++	clear_bit(BTRFS_FS_FREE_SPACE_TREE_UNTRUSTED, &fs_info->flags);
++	return ret;
++abort:
++	btrfs_abort_transaction(trans, ret);
++	btrfs_end_transaction(trans);
+ 	return ret;
+ }
+ 
+--- a/fs/btrfs/free-space-tree.h
++++ b/fs/btrfs/free-space-tree.h
+@@ -18,7 +18,8 @@ struct btrfs_caching_control;
+ 
+ void set_free_space_tree_thresholds(struct btrfs_block_group *block_group);
+ int btrfs_create_free_space_tree(struct btrfs_fs_info *fs_info);
+-int btrfs_clear_free_space_tree(struct btrfs_fs_info *fs_info);
++int btrfs_delete_free_space_tree(struct btrfs_fs_info *fs_info);
++int btrfs_rebuild_free_space_tree(struct btrfs_fs_info *fs_info);
+ int load_free_space_tree(struct btrfs_caching_control *caching_ctl);
+ int add_block_group_free_space(struct btrfs_trans_handle *trans,
+ 			       struct btrfs_block_group *block_group);
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -827,8 +827,7 @@ out:
+ 		ret = -EINVAL;
+ 	}
+ 	if (btrfs_fs_compat_ro(info, BLOCK_GROUP_TREE) &&
+-	    (btrfs_test_opt(info, CLEAR_CACHE) ||
+-	     !btrfs_test_opt(info, FREE_SPACE_TREE))) {
++	     !btrfs_test_opt(info, FREE_SPACE_TREE)) {
+ 		btrfs_err(info, "cannot disable free space tree with block-group-tree feature");
+ 		ret = -EINVAL;
+ 	}
 
 
