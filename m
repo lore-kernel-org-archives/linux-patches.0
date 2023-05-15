@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4181FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0097DC433A0;
-	Mon, 15 May 2023 16:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3506FBF5
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFD4C4339C;
+	Mon, 15 May 2023 16:32:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168354;
-	bh=B1D0B69W3ayQ+VLKZmFFAwMOKcHG+IM3AFk1dqjbArk=;
+	s=korg; t=1684168357;
+	bh=7sDGfqqB93+wDCNe7B9fAfRtAoB0k44USpmUZAWrtsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cwZNzQp1015qgQt25VdDoU+kVshGDYNParZQkdu+1XKuCwPzmwTCyFqrCktwwqBKD
-	 JnEncijzmscz/pjkdZ/BHzlxPtjfE3lhPmr1zKh9NCZvq6Mct+3JJPeo6QakgPuTVW
-	 O+CXty5tDy0oZvR+MQZf0b2Ah4St45kBfLcWWubo=
+	b=QzLnwRHIFHwtW/cyeD+16+sFDvcSuLeOWdz1HuTsaY1B/7NqExtRYdUDgts3V3fx2
+	 W+qNEj4U1xEwoy6mAPWU+vIyeEl2an9lnorcBYgTFL5MVzK1VYJHNzAPTfb//EXLKr
+	 eOgwtMIxErkDPaDgXmweLgBWLarWnwbAv8GAOM5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 022/116] media: av7110: prevent underflow in write_ts_to_decoder()
-Date: Mon, 15 May 2023 18:25:19 +0200
-Message-Id: <20230515161659.020265396@linuxfoundation.org>
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.14 003/116] USB: serial: option: add UNISOC vendor and TOZED LT70C product
+Date: Mon, 15 May 2023 18:25:00 +0200
+Message-Id: <20230515161658.365753805@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -36,47 +34,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit eed9496a0501357aa326ddd6b71408189ed872eb ]
+commit a095edfc15f0832e046ae23964e249ef5c95af87 upstream.
 
-The buf[4] value comes from the user via ts_play().  It is a value in
-the u8 range.  The final length we pass to av7110_ipack_instant_repack()
-is "len - (buf[4] + 1) - 4" so add a check to ensure that the length is
-not negative.  It's not clear that passing a negative len value does
-anything bad necessarily, but it's not best practice.
+Add UNISOC vendor ID and TOZED LT70-C modem which is based from UNISOC
+SL8563. The modem supports the NCM mode. Interface 0 is used for running
+the AT commands. Interface 12 is the ADB interface.
 
-With the new bounds checking the "if (!len)" condition is no longer
-possible or required so remove that.
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  6 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1782 ProdID=4055 Rev=04.04
+S:  Manufacturer=Unisoc Phone
+S:  Product=Unisoc Phone
+S:  SerialNumber=<redacted>
+C:  #Ifs=14 Cfg#= 1 Atr=c0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#=10 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#=11 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#=12 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#=13 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
+E:  Ad=84(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 3 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
+E:  Ad=86(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 5 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
+E:  Ad=88(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 7 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Fixes: fd46d16d602a ("V4L/DVB (11759): dvb-ttpci: Add TS replay capability")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20230417152003.243248-1-arinc.unal@arinc9.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/ttpci/av7110_av.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/serial/option.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/media/pci/ttpci/av7110_av.c b/drivers/media/pci/ttpci/av7110_av.c
-index 2aa4ba675194e..43b780aadf5fe 100644
---- a/drivers/media/pci/ttpci/av7110_av.c
-+++ b/drivers/media/pci/ttpci/av7110_av.c
-@@ -836,10 +836,10 @@ static int write_ts_to_decoder(struct av7110 *av7110, int type, const u8 *buf, s
- 		av7110_ipack_flush(ipack);
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -598,6 +598,11 @@ static void option_instat_callback(struc
+ #define SIERRA_VENDOR_ID			0x1199
+ #define SIERRA_PRODUCT_EM9191			0x90d3
  
- 	if (buf[3] & ADAPT_FIELD) {
-+		if (buf[4] > len - 1 - 4)
-+			return 0;
- 		len -= buf[4] + 1;
- 		buf += buf[4] + 1;
--		if (!len)
--			return 0;
- 	}
++/* UNISOC (Spreadtrum) products */
++#define UNISOC_VENDOR_ID			0x1782
++/* TOZED LT70-C based on UNISOC SL8563 uses UNISOC's vendor ID */
++#define TOZED_PRODUCT_LT70C			0x4055
++
+ /* Device flags */
  
- 	av7110_ipack_instant_repack(buf + 4, len - 4, ipack);
--- 
-2.39.2
-
+ /* Highest interface number which can be used with NCTRL() and RSVD() */
+@@ -2227,6 +2232,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
