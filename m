@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0CF4FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C654C433EF;
-	Mon, 15 May 2023 17:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CA8FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE48C433EF;
+	Mon, 15 May 2023 17:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172126;
-	bh=CvsiyN6r35BiEnxj4nB1pc3uZT5MEDCVhCqQLb3dVWs=;
+	s=korg; t=1684172129;
+	bh=0kM0V+605O1M1znJUIHIVJQociBMYCy5OXAFrQeck+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oAhSjhrrYKqlzFG2Ul79ZI0RMR6JIxvhodFh1Z+88ENWD96/1y0d+uBtVbODx8cJl
-	 kUIFAQxmTedI69YkhakKhWJJ73+1zqLNJi324fLD7T8GSQIQSvnnDBwWrwVyuiqH71
-	 ESJbz3RkljW0p8Qknm75y1UkmG31Iig/nmcRHIIY=
+	b=xsg7Hi9S+qi6BkJnwyHVVcrijnjOftqGg3W4ta7whnJbj5u83mdIKZ6FAW6FUJXs6
+	 Ag1VZ44eSM2/lvRm1dRl45ui6BKhXXtzanx6ZC6kGIvDX/vjxCca5yqoeuRk4xzpx/
+	 RO9H+3MPh4ALt0Wu0Mc0rqei1gqFZFV+M4UoWbZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 053/381] nilfs2: do not write dirty data after degenerating to read-only
-Date: Mon, 15 May 2023 18:25:04 +0200
-Message-Id: <20230515161739.221039570@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Thierry Reding <thierry.reding@gmail.com>
+Subject: [PATCH 5.10 036/381] pwm: meson: Fix g12a ao clk81 name
+Date: Mon, 15 May 2023 18:24:47 +0200
+Message-Id: <20230515161738.438355183@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,61 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 28a65b49eb53e172d23567005465019658bfdb4d upstream.
+commit 9e4fa80ab7ef9eb4f7b1ea9fc31e0eb040e85e25 upstream.
 
-According to syzbot's report, mark_buffer_dirty() called from
-nilfs_segctor_do_construct() outputs a warning with some patterns after
-nilfs2 detects metadata corruption and degrades to read-only mode.
+Fix the name of the aoclk81 clock. Apparently name aoclk81 as used by
+the vendor driver was changed when mainlining the g12a clock driver.
 
-After such read-only degeneration, page cache data may be cleared through
-nilfs_clear_dirty_page() which may also clear the uptodate flag for their
-buffer heads.  However, even after the degeneration, log writes are still
-performed by unmount processing etc., which causes mark_buffer_dirty() to
-be called for buffer heads without the "uptodate" flag and causes the
-warning.
-
-Since any writes should not be done to a read-only file system in the
-first place, this fixes the warning in mark_buffer_dirty() by letting
-nilfs_segctor_do_construct() abort early if in read-only mode.
-
-This also changes the retry check of nilfs_segctor_write_out() to avoid
-unnecessary log write retries if it detects -EROFS that
-nilfs_segctor_do_construct() returned.
-
-Link: https://lkml.kernel.org/r/20230427011526.13457-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+2af3bc9585be7f23f290@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=2af3bc9585be7f23f290
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: f41efceb46e6 ("pwm: meson: Add clock source configuration for Meson G12A")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/segment.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-meson.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -2044,6 +2044,9 @@ static int nilfs_segctor_do_construct(st
- 	struct the_nilfs *nilfs = sci->sc_super->s_fs_info;
- 	int err;
+--- a/drivers/pwm/pwm-meson.c
++++ b/drivers/pwm/pwm-meson.c
+@@ -433,7 +433,7 @@ static const struct meson_pwm_data pwm_a
+ };
  
-+	if (sb_rdonly(sci->sc_super))
-+		return -EROFS;
-+
- 	nilfs_sc_cstage_set(sci, NILFS_ST_INIT);
- 	sci->sc_cno = nilfs->ns_cno;
+ static const char * const pwm_g12a_ao_ab_parent_names[] = {
+-	"xtal", "aoclk81", "fclk_div4", "fclk_div5"
++	"xtal", "g12a_ao_clk81", "fclk_div4", "fclk_div5"
+ };
  
-@@ -2729,7 +2732,7 @@ static void nilfs_segctor_write_out(stru
+ static const struct meson_pwm_data pwm_g12a_ao_ab_data = {
+@@ -442,7 +442,7 @@ static const struct meson_pwm_data pwm_g
+ };
  
- 		flush_work(&sci->sc_iput_work);
+ static const char * const pwm_g12a_ao_cd_parent_names[] = {
+-	"xtal", "aoclk81",
++	"xtal", "g12a_ao_clk81",
+ };
  
--	} while (ret && retrycount-- > 0);
-+	} while (ret && ret != -EROFS && retrycount-- > 0);
- }
- 
- /**
+ static const struct meson_pwm_data pwm_g12a_ao_cd_data = {
 
 
