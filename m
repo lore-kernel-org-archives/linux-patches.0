@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFFFFBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:05:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C2ADC433D2;
-	Mon, 15 May 2023 17:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD84DFBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:05:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AAF5C433EF;
+	Mon, 15 May 2023 17:05:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170344;
-	bh=8Lgu7rcqPYGGGIGRc7qodfM48wMhsSauvbe+6XYwy8M=;
+	s=korg; t=1684170347;
+	bh=fstE5RAMwP9NDgNnHSYs7qdyFlSfN6BLs2XFwadM2ko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1npMDIjbJIGMJpiJQcgKAXjtBeowKtraunTquIGj16ZCTc0mBEV4Wl4C3Nd6w3tz5
-	 MEZuVanCtejY/Ua/UxvGfUDTBjLbjZ9dE03xv/tDT+TnlIWmr6qrxw2GlQ3v0atywX
-	 4pvUlDpN5tSxe2rvp/HEuW+iwKP3YKLDVxvHTkVg=
+	b=bb0M7lSScKu/P0JM+4YArgyLifIG+0Fa1r568PT2j3ucqQ9m5e3uL3FCLRVwEztOt
+	 MFn9XTpPdNVTwejHe3xcvAN2E/pRHuMml17e0HPZaEfTaB54ELrWmbPKj/0rT9Qzk9
+	 rfWg/qXbNzZ/+8PEQoS7t0xcdmF48/i+lbK5Fww8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylvain Ouellet <souellet@genetec.com>,
-	Olivier Bacon <obacon@genetec.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/239] crypto: engine - fix crypto_queue backlog handling
-Date: Mon, 15 May 2023 18:26:05 +0200
-Message-Id: <20230515161724.742706737@linuxfoundation.org>
+Subject: [PATCH 6.1 085/239] net: dsa: mt7530: fix network connectivity with multiple CPU ports
+Date: Mon, 15 May 2023 18:25:48 +0200
+Message-Id: <20230515161724.227888806@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,85 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Bacon <olivierb89@gmail.com>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-[ Upstream commit 4140aafcff167b5b9e8dae6a1709a6de7cac6f74 ]
+[ Upstream commit 120a56b01beed51ab5956a734adcfd2760307107 ]
 
-CRYPTO_TFM_REQ_MAY_BACKLOG tells the crypto driver that it should
-internally backlog requests until the crypto hw's queue becomes
-full. At that point, crypto_engine backlogs the request and returns
--EBUSY. Calling driver such as dm-crypt then waits until the
-complete() function is called with a status of -EINPROGRESS before
-sending a new request.
+On mt753x_cpu_port_enable() there's code that enables flooding for the CPU
+port only. Since mt753x_cpu_port_enable() runs twice when both CPU ports
+are enabled, port 6 becomes the only port to forward the frames to. But
+port 5 is the active port, so no frames received from the user ports will
+be forwarded to port 5 which breaks network connectivity.
 
-The problem lies in the call to complete() with a value of -EINPROGRESS
-that is made when a backlog item is present on the queue. The call is
-done before the successful execution of the crypto request. In the case
-that do_one_request() returns < 0 and the retry support is available,
-the request is put back in the queue. This leads upper drivers to send
-a new request even if the queue is still full.
+Every bit of the BC_FFP, UNM_FFP, and UNU_FFP bits represents a port. Fix
+this issue by setting the bit that corresponds to the CPU port without
+overwriting the other bits.
 
-The problem can be reproduced by doing a large dd into a crypto
-dm-crypt device. This is pretty easy to see when using
-Freescale CAAM crypto driver and SWIOTLB dma. Since the actual amount
-of requests that can be hold in the queue is unlimited we get IOs error
-and dma allocation.
+Clear the bits beforehand only for the MT7531 switch. According to the
+documents MT7621 Giga Switch Programming Guide v0.3 and MT7531 Reference
+Manual for Development Board v1.0, after reset, the BC_FFP, UNM_FFP, and
+UNU_FFP bits are set to 1 for MT7531, 0 for MT7530.
 
-The fix is to call complete with a value of -EINPROGRESS only if
-the request is not enqueued back in crypto_queue. This is done
-by calling complete() later in the code. In order to delay the decision,
-crypto_queue is modified to correctly set the backlog pointer
-when a request is enqueued back.
+The commit 5e5502e012b8 ("net: dsa: mt7530: fix roaming from DSA user
+ports") silently changed the method to set the bits on the MT7530_MFC.
+Instead of clearing the relevant bits before mt7530_cpu_port_enable()
+which runs under a for loop, the commit started doing it on
+mt7530_cpu_port_enable().
 
-Fixes: 6a89f492f8e5 ("crypto: engine - support for parallel requests based on retry mechanism")
-Co-developed-by: Sylvain Ouellet <souellet@genetec.com>
-Signed-off-by: Sylvain Ouellet <souellet@genetec.com>
-Signed-off-by: Olivier Bacon <obacon@genetec.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Back then, this didn't really matter as only a single CPU port could be
+used since the CPU port number was hardcoded. The driver was later changed
+with commit 1f9a6abecf53 ("net: dsa: mt7530: get cpu-port via dp->cpu_dp
+instead of constant") to retrieve the CPU port via dp->cpu_dp. With that,
+this silent change became an issue for when using multiple CPU ports.
+
+Fixes: 5e5502e012b8 ("net: dsa: mt7530: fix roaming from DSA user ports")
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algapi.c        | 3 +++
- crypto/crypto_engine.c | 6 +++---
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/dsa/mt7530.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/crypto/algapi.c b/crypto/algapi.c
-index c72622f20f52b..8c3a869cc43a9 100644
---- a/crypto/algapi.c
-+++ b/crypto/algapi.c
-@@ -944,6 +944,9 @@ EXPORT_SYMBOL_GPL(crypto_enqueue_request);
- void crypto_enqueue_request_head(struct crypto_queue *queue,
- 				 struct crypto_async_request *request)
- {
-+	if (unlikely(queue->qlen >= queue->max_qlen))
-+		queue->backlog = queue->backlog->prev;
-+
- 	queue->qlen++;
- 	list_add(&request->list, &queue->list);
- }
-diff --git a/crypto/crypto_engine.c b/crypto/crypto_engine.c
-index 48c15f4079bb8..50bac2ab55f17 100644
---- a/crypto/crypto_engine.c
-+++ b/crypto/crypto_engine.c
-@@ -129,9 +129,6 @@ static void crypto_pump_requests(struct crypto_engine *engine,
- 	if (!engine->retry_support)
- 		engine->cur_req = async_req;
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 4e63f14c42228..855220c5ce339 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -1015,9 +1015,9 @@ mt753x_cpu_port_enable(struct dsa_switch *ds, int port)
+ 	mt7530_write(priv, MT7530_PVC_P(port),
+ 		     PORT_SPEC_TAG);
  
--	if (backlog)
--		crypto_request_complete(backlog, -EINPROGRESS);
--
- 	if (engine->busy)
- 		was_busy = true;
- 	else
-@@ -217,6 +214,9 @@ static void crypto_pump_requests(struct crypto_engine *engine,
- 	crypto_request_complete(async_req, ret);
+-	/* Disable flooding by default */
+-	mt7530_rmw(priv, MT7530_MFC, BC_FFP_MASK | UNM_FFP_MASK | UNU_FFP_MASK,
+-		   BC_FFP(BIT(port)) | UNM_FFP(BIT(port)) | UNU_FFP(BIT(port)));
++	/* Enable flooding on the CPU port */
++	mt7530_set(priv, MT7530_MFC, BC_FFP(BIT(port)) | UNM_FFP(BIT(port)) |
++		   UNU_FFP(BIT(port)));
  
- retry:
-+	if (backlog)
-+		crypto_request_complete(backlog, -EINPROGRESS);
+ 	/* Set CPU port number */
+ 	if (priv->id == ID_MT7621)
+@@ -2331,6 +2331,10 @@ mt7531_setup_common(struct dsa_switch *ds)
+ 	/* Enable and reset MIB counters */
+ 	mt7530_mib_reset(ds);
+ 
++	/* Disable flooding on all ports */
++	mt7530_clear(priv, MT7530_MFC, BC_FFP_MASK | UNM_FFP_MASK |
++		     UNU_FFP_MASK);
 +
- 	/* If retry mechanism is supported, send new requests to engine */
- 	if (engine->retry_support) {
- 		spin_lock_irqsave(&engine->queue_lock, flags);
+ 	for (i = 0; i < MT7530_NUM_PORTS; i++) {
+ 		/* Disable forwarding by default on all ports */
+ 		mt7530_rmw(priv, MT7530_PCR_P(i), PCR_MATRIX_MASK,
 -- 
 2.39.2
 
