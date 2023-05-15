@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F83FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDD0C433A1;
-	Mon, 15 May 2023 17:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D1CFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20541C4339B;
+	Mon, 15 May 2023 17:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171470;
-	bh=XURPeCvrUWTcOcQM7aBFDLH+SOba1tSvMHlhrbFXblE=;
+	s=korg; t=1684171473;
+	bh=1VZ9z9YU8Bg3+XNRgYWsjrs9Iwk/RKfesX+KPNNud44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X/itHRE/O3eVeE6iBu/eSSwtyHTBjdPlIzWkLXw8ZMxjHAzfx44EakDgvegFSMigE
-	 yBRsQcn4qpyM5ZV8BcRAH8kED6RwWYphcydghjojSZY9NcpxjPJ2cyUug0y8JQ0M49
-	 4Umzs5RtUSB6ICY2VrJe4RL2yGFGjQ4Kib6jrsW0=
+	b=CRAcC4BALeH4BWrtrLu/FseT3fjEkW1UHHoE77KNFfYsX3cmuyPZ0tJE7dBsAzCgF
+	 TjdJclO1x20rT00my23y8g7mTGvZwaqLOE3ubkBS33FNE6wBSlvfI9wr0aSo/FWfYF
+	 dbpC58fW1C87cUcefCP2CDHVt+6ecG0wlOjBFZRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 202/242] drm/amd/pm: avoid potential UBSAN issue on legacy asics
-Date: Mon, 15 May 2023 18:28:48 +0200
-Message-Id: <20230515161728.001211007@linuxfoundation.org>
+	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alan Liu <HaoPing.Liu@amd.com>,
+	Leo Chen <sancchen@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 220/242] drm/amd/display: Change default Z8 watermark values
+Date: Mon, 15 May 2023 18:29:06 +0200
+Message-Id: <20230515161728.523848201@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,51 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Leo Chen <sancchen@amd.com>
 
-commit 5247f05eadf1081a74b2233f291cee2efed25e3a upstream.
+[ Upstream commit 8f586cc16c1fc3c2202c9d54563db8c7ed365f82 ]
 
-Prevent further dpm casting on legacy asics without od_enabled in
-amdgpu_dpm_is_overdrive_supported. This can avoid UBSAN complain
-in init sequence.
+[Why & How]
+Previous Z8 watermark values were causing flickering and OTC underflow.
+Updating Z8 watermark values based on the measurement.
 
-v2: add a macro to check legacy dpm instead of checking asic family/type
-v3: refine macro name for naming consistency
-
-Suggested-by: Evan Quan <evan.quan@amd.com>
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Alan Liu <HaoPing.Liu@amd.com>
+Signed-off-by: Leo Chen <sancchen@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -36,6 +36,8 @@
- #define amdgpu_dpm_enable_bapm(adev, e) \
- 		((adev)->powerplay.pp_funcs->enable_bapm((adev)->powerplay.pp_handle, (e)))
- 
-+#define amdgpu_dpm_is_legacy_dpm(adev) ((adev)->powerplay.pp_handle == (adev))
-+
- int amdgpu_dpm_get_sclk(struct amdgpu_device *adev, bool low)
- {
- 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
-@@ -1421,8 +1423,11 @@ int amdgpu_dpm_is_overdrive_supported(st
- 	} else {
- 		struct pp_hwmgr *hwmgr;
- 
--		/* SI asic does not carry od_enabled */
--		if (adev->family == AMDGPU_FAMILY_SI)
-+		/*
-+		 * dpm on some legacy asics don't carry od_enabled member
-+		 * as its pp_handle is casted directly from adev.
-+		 */
-+		if (amdgpu_dpm_is_legacy_dpm(adev))
- 			return false;
- 
- 		hwmgr = (struct pp_hwmgr *)adev->powerplay.pp_handle;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
+index 0c91d8a3de4c3..db06f3b9e637e 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
+@@ -149,8 +149,8 @@ struct _vcs_dpi_soc_bounding_box_st dcn3_14_soc = {
+ 	.num_states = 5,
+ 	.sr_exit_time_us = 16.5,
+ 	.sr_enter_plus_exit_time_us = 18.5,
+-	.sr_exit_z8_time_us = 210.0,
+-	.sr_enter_plus_exit_z8_time_us = 310.0,
++	.sr_exit_z8_time_us = 268.0,
++	.sr_enter_plus_exit_z8_time_us = 393.0,
+ 	.writeback_latency_us = 12.0,
+ 	.dram_channel_width_bytes = 4,
+ 	.round_trip_ping_latency_dcfclk_cycles = 106,
+-- 
+2.39.2
+
 
 
