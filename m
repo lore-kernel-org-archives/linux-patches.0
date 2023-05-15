@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC55FFBFD
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:08:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D837C4339B;
-	Mon, 15 May 2023 17:08:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D854FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:09:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D995C433D2;
+	Mon, 15 May 2023 17:09:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170538;
-	bh=Ij2MPBpicVaoUxHh4iI46HT+B/nAyHsmpx57MDj6Woo=;
+	s=korg; t=1684170541;
+	bh=mkROcgeKf/QVqMyGvbpMUEjcile4IozeG0H2SKuWYIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRsREMEp3mOV5LtZ0+/EOQCy8xMrRiyZ52se9SIcEK2lqzbHx9pA+eH7AXQogBcvF
-	 UlxHgvhr4SgVLTZprSorZ9u4dSHWRTvbiZrIQtsB6OnbfpNtLlxCl2hwtyv8ahJYI0
-	 /TH7bxLO1xgpewK5X8fQ8DMmw8aurhspkJFh/gu0=
+	b=bFYNGEOGLV65JD+Dd5QY92mXNSxIDrKZo1d+bb11vLGMC5rkUmEzvj8JEHzisjN90
+	 qPxJJCVnrtd0JXbuxA2PS4PUpQlKRe/pX5jiP3iZ17zUrloC8h0521faU88iI8eUox
+	 SeKWFu+1v9tuUDyaDHZU5848GpQo/BWDDFekmwpU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Alan Liu <HaoPing.Liu@amd.com>,
-	Samson Tam <Samson.Tam@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 163/239] drm/amd/display: filter out invalid bits in pipe_fuses
-Date: Mon, 15 May 2023 18:27:06 +0200
-Message-Id: <20230515161726.562064875@linuxfoundation.org>
+Subject: [PATCH 6.1 164/239] drm/amd/display: fix flickering caused by S/G mode
+Date: Mon, 15 May 2023 18:27:07 +0200
+Message-Id: <20230515161726.591642735@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,80 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samson Tam <Samson.Tam@amd.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-commit 682439fffad9fa9a38d37dd1b1318e9374232213 upstream.
+commit 08da182175db4c7f80850354849d95f2670e8cd9 upstream.
 
-[Why]
-Reading pipe_fuses from register may have invalid bits set, which may
- affect the num_pipes erroneously.
+Currently, on a handful of ASICs. We allow the framebuffer for a given
+plane to exist in either VRAM or GTT. However, if the plane's new
+framebuffer is in a different memory domain than it's previous
+framebuffer, flipping between them can cause the screen to flicker. So,
+to fix this, don't perform an immediate flip in the aforementioned case.
 
-[How]
-Add read_pipes_fuses() call and filter bits based on expected number
- of pipes.
-
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
-Acked-by: Alan Liu <HaoPing.Liu@amd.com>
-Signed-off-by: Samson Tam <Samson.Tam@amd.com>
+Cc: stable@vger.kernel.org
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2354
+Reviewed-by: Roman Li <Roman.Li@amd.com>
+Fixes: 81d0bcf99009 ("drm/amdgpu: make display pinning more flexible (v2)")
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c   |   10 +++++++++-
- drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c |   10 +++++++++-
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -2037,6 +2037,14 @@ static struct resource_funcs dcn32_res_p
- 	.remove_phantom_pipes = dcn32_remove_phantom_pipes,
- };
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -7593,6 +7593,13 @@ static void amdgpu_dm_commit_cursors(str
+ 			handle_cursor_update(plane, old_plane_state);
+ }
  
-+static uint32_t read_pipe_fuses(struct dc_context *ctx)
++static inline uint32_t get_mem_type(struct drm_framebuffer *fb)
 +{
-+	uint32_t value = REG_READ(CC_DC_PIPE_DIS);
-+	/* DCN32 support max 4 pipes */
-+	value = value & 0xf;
-+	return value;
++	struct amdgpu_bo *abo = gem_to_amdgpu_bo(fb->obj[0]);
++
++	return abo->tbo.resource ? abo->tbo.resource->mem_type : 0;
 +}
 +
+ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
+ 				    struct dc_state *dc_state,
+ 				    struct drm_device *dev,
+@@ -7710,11 +7717,13 @@ static void amdgpu_dm_commit_planes(stru
  
- static bool dcn32_resource_construct(
- 	uint8_t num_virtual_links,
-@@ -2079,7 +2087,7 @@ static bool dcn32_resource_construct(
- 	pool->base.res_cap = &res_cap_dcn32;
- 	/* max number of pipes for ASIC before checking for pipe fuses */
- 	num_pipes  = pool->base.res_cap->num_timing_generator;
--	pipe_fuses = REG_READ(CC_DC_PIPE_DIS);
-+	pipe_fuses = read_pipe_fuses(ctx);
+ 		/*
+ 		 * Only allow immediate flips for fast updates that don't
+-		 * change FB pitch, DCC state, rotation or mirroing.
++		 * change memory domain, FB pitch, DCC state, rotation or
++		 * mirroring.
+ 		 */
+ 		bundle->flip_addrs[planes_count].flip_immediate =
+ 			crtc->state->async_flip &&
+-			acrtc_state->update_type == UPDATE_TYPE_FAST;
++			acrtc_state->update_type == UPDATE_TYPE_FAST &&
++			get_mem_type(old_plane_state->fb) == get_mem_type(fb);
  
- 	for (i = 0; i < pool->base.res_cap->num_timing_generator; i++)
- 		if (pipe_fuses & 1 << i)
---- a/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
-@@ -1621,6 +1621,14 @@ static struct resource_funcs dcn321_res_
- 	.remove_phantom_pipes = dcn32_remove_phantom_pipes,
- };
- 
-+static uint32_t read_pipe_fuses(struct dc_context *ctx)
-+{
-+	uint32_t value = REG_READ(CC_DC_PIPE_DIS);
-+	/* DCN321 support max 4 pipes */
-+	value = value & 0xf;
-+	return value;
-+}
-+
- 
- static bool dcn321_resource_construct(
- 	uint8_t num_virtual_links,
-@@ -1663,7 +1671,7 @@ static bool dcn321_resource_construct(
- 	pool->base.res_cap = &res_cap_dcn321;
- 	/* max number of pipes for ASIC before checking for pipe fuses */
- 	num_pipes  = pool->base.res_cap->num_timing_generator;
--	pipe_fuses = REG_READ(CC_DC_PIPE_DIS);
-+	pipe_fuses = read_pipe_fuses(ctx);
- 
- 	for (i = 0; i < pool->base.res_cap->num_timing_generator; i++)
- 		if (pipe_fuses & 1 << i)
+ 		timestamp_ns = ktime_get_ns();
+ 		bundle->flip_addrs[planes_count].flip_timestamp_in_us = div_u64(timestamp_ns, 1000);
 
 
