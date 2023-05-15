@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913FCFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91C9C433EF;
-	Mon, 15 May 2023 17:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57D0FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E6DC433D2;
+	Mon, 15 May 2023 17:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171551;
-	bh=CO+ruu5NkpRgtRYA3hftMbSIOvFlNRVgiGKt7J7EbIA=;
+	s=korg; t=1684171554;
+	bh=Kra88e1xBRKhOzdO16W7/YyxQdwURgp/5mQpythfczo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSrR5wsbTz9oyrzmAzt/ZyytjOK/RMAIQSxOocVoCdbdgzfd1HtcN4uU8rNeD4U9A
-	 HsOn7wzDgiJcuF2GMn4wp3OAhajhdEKrcUKlNf7Ljz5waQLPA5txLyv/OjADfc9id2
-	 WWSSn9k2bc0bsfXXSGiaVlPheUwnk5P/oOuVMVvA=
+	b=L/AVd73ezf8v2ZUMifPwNX/KszOXvqzDzcMuUuV2WMi5wuDyk4PN3dnA+kf9OeSZj
+	 2Y06avF6s1sFCxOSFDCRAgYr2UFW3xwNrrXn8nxmhYRhIS+0QmqjcvW87wyKm1Ed7q
+	 crIJOwzK3XMGF5Ga9aqyE2QqLk8SHK+ZqMgnWyy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.2 238/242] x86/amd_nb: Add PCI ID for family 19h model 78h
-Date: Mon, 15 May 2023 18:29:24 +0200
-Message-Id: <20230515161729.046210396@linuxfoundation.org>
+	syzbot+1966db24521e5f6e23f7@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.2 232/242] ext4: add bounds checking in get_max_inline_xattr_value_size()
+Date: Mon, 15 May 2023 18:29:18 +0200
+Message-Id: <20230515161728.872985190@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,61 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 23a5b8bb022c1e071ca91b1a9c10f0ad6a0966e9 upstream.
+commit 2220eaf90992c11d888fe771055d4de330385f01 upstream.
 
-Commit
+Normally the extended attributes in the inode body would have been
+checked when the inode is first opened, but if someone is writing to
+the block device while the file system is mounted, it's possible for
+the inode table to get corrupted.  Add bounds checking to avoid
+reading beyond the end of allocated memory if this happens.
 
-  310e782a99c7 ("platform/x86/amd: pmc: Utilize SMN index 0 for driver probe")
-
-switched to using amd_smn_read() which relies upon the misc PCI ID used
-by DF function 3 being included in a table.  The ID for model 78h is
-missing in that table, so amd_smn_read() doesn't work.
-
-Add the missing ID into amd_nb, restoring s2idle on this system.
-
-  [ bp: Simplify commit message. ]
-
-Fixes: 310e782a99c7 ("platform/x86/amd: pmc: Utilize SMN index 0 for driver probe")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>  # pci_ids.h
-Acked-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230427053338.16653-2-mario.limonciello@amd.com
+Reported-by: syzbot+1966db24521e5f6e23f7@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=1966db24521e5f6e23f7
+Cc: stable@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/amd_nb.c |    2 ++
- include/linux/pci_ids.h  |    1 +
- 2 files changed, 3 insertions(+)
+ fs/ext4/inline.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/amd_nb.c
-+++ b/arch/x86/kernel/amd_nb.c
-@@ -36,6 +36,7 @@
- #define PCI_DEVICE_ID_AMD_19H_M50H_DF_F4 0x166e
- #define PCI_DEVICE_ID_AMD_19H_M60H_DF_F4 0x14e4
- #define PCI_DEVICE_ID_AMD_19H_M70H_DF_F4 0x14f4
-+#define PCI_DEVICE_ID_AMD_19H_M78H_DF_F4 0x12fc
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -34,6 +34,7 @@ static int get_max_inline_xattr_value_si
+ 	struct ext4_xattr_ibody_header *header;
+ 	struct ext4_xattr_entry *entry;
+ 	struct ext4_inode *raw_inode;
++	void *end;
+ 	int free, min_offs;
  
- /* Protect the PCI config register pairs used for SMN. */
- static DEFINE_MUTEX(smn_mutex);
-@@ -79,6 +80,7 @@ static const struct pci_device_id amd_nb
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M50H_DF_F3) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M60H_DF_F3) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M70H_DF_F3) },
-+	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
- 	{}
- };
+ 	if (!EXT4_INODE_HAS_XATTR_SPACE(inode))
+@@ -57,14 +58,23 @@ static int get_max_inline_xattr_value_si
+ 	raw_inode = ext4_raw_inode(iloc);
+ 	header = IHDR(inode, raw_inode);
+ 	entry = IFIRST(header);
++	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
  
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -567,6 +567,7 @@
- #define PCI_DEVICE_ID_AMD_19H_M50H_DF_F3 0x166d
- #define PCI_DEVICE_ID_AMD_19H_M60H_DF_F3 0x14e3
- #define PCI_DEVICE_ID_AMD_19H_M70H_DF_F3 0x14f3
-+#define PCI_DEVICE_ID_AMD_19H_M78H_DF_F3 0x12fb
- #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
- #define PCI_DEVICE_ID_AMD_LANCE		0x2000
- #define PCI_DEVICE_ID_AMD_LANCE_HOME	0x2001
+ 	/* Compute min_offs. */
+-	for (; !IS_LAST_ENTRY(entry); entry = EXT4_XATTR_NEXT(entry)) {
++	while (!IS_LAST_ENTRY(entry)) {
++		void *next = EXT4_XATTR_NEXT(entry);
++
++		if (next >= end) {
++			EXT4_ERROR_INODE(inode,
++					 "corrupt xattr in inline inode");
++			return 0;
++		}
+ 		if (!entry->e_value_inum && entry->e_value_size) {
+ 			size_t offs = le16_to_cpu(entry->e_value_offs);
+ 			if (offs < min_offs)
+ 				min_offs = offs;
+ 		}
++		entry = next;
+ 	}
+ 	free = min_offs -
+ 		((void *)entry - (void *)IFIRST(header)) - sizeof(__u32);
 
 
