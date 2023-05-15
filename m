@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB35101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:54:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBAAAC433D2;
-	Mon, 15 May 2023 17:54:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC59101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:54:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E9EC433D2;
+	Mon, 15 May 2023 17:54:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173246;
-	bh=PfyDjqO/6tcjDC+GDrPObxuTvMlznqvtvK2/x5DRIuU=;
+	s=korg; t=1684173249;
+	bh=DoeMCd1uStccZCBdClFYyd9psEmXblRdmGQVJ48UocU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WqH2E/JdlZkGt11urPmA8XbAdSl2G1WIEYNgozV1XPe39MJfgwCIC5/gp/ehxz0MN
-	 monmMP3w2zbYjAljhVnEVZzJ4Ync22ziD/Xz7s66GlzvDmt+RN6lcvsug2r16WqLks
-	 bUUjzY4dSf/uLGojBmtLl72TItdpZNeqfjeoBrTQ=
+	b=SHlh9fLewjLGQ1vXZ0VWG/3EsU1vck1xMRqJSozTho4DIGzElaoARs4xN+/1nxTok
+	 XXLEupbcxOOwlfRdtghIyaSCtJzqiio+te3BS4swWV0xjrrH1IXhPWGWmlMcCcSBVe
+	 uKQiJsmQm1ByRF2C93MePsNYXJI5Swg4g2FmamKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 032/282] tpm, tpm_tis: Do not skip reset of original interrupt vector
-Date: Mon, 15 May 2023 18:26:50 +0200
-Message-Id: <20230515161723.238443849@linuxfoundation.org>
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+aafb3f37cfeb6534c4ac@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 033/282] erofs: stop parsing non-compact HEAD index if clusterofs is invalid
+Date: Mon, 15 May 2023 18:26:51 +0200
+Message-Id: <20230515161723.267554103@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,111 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Gao Xiang <hsiangkao@linux.alibaba.com>
 
-[ Upstream commit ed9be0e6c892a783800d77a41ca4c7255c6af8c5 ]
+[ Upstream commit cc4efd3dd2ac9f89143e5d881609747ecff04164 ]
 
-If in tpm_tis_probe_irq_single() an error occurs after the original
-interrupt vector has been read, restore the interrupts before the error is
-returned.
+Syzbot generated a crafted image [1] with a non-compact HEAD index of
+clusterofs 33024 while valid numbers should be 0 ~ lclustersize-1,
+which causes the following unexpected behavior as below:
 
-Since the caller does not check the error value, return -1 in any case that
-the TPM_CHIP_FLAG_IRQ flag is not set. Since the return value of function
-tpm_tis_gen_interrupt() is not longer used, make it a void function.
+ BUG: unable to handle page fault for address: fffff52101a3fff9
+ #PF: supervisor read access in kernel mode
+ #PF: error_code(0x0000) - not-present page
+ PGD 23ffed067 P4D 23ffed067 PUD 0
+ Oops: 0000 [#1] PREEMPT SMP KASAN
+ CPU: 1 PID: 4398 Comm: kworker/u5:1 Not tainted 6.3.0-rc6-syzkaller-g09a9639e56c0 #0
+ Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+ Workqueue: erofs_worker z_erofs_decompressqueue_work
+ RIP: 0010:z_erofs_decompress_queue+0xb7e/0x2b40
+ ...
+ Call Trace:
+  <TASK>
+  z_erofs_decompressqueue_work+0x99/0xe0
+  process_one_work+0x8f6/0x1170
+  worker_thread+0xa63/0x1210
+  kthread+0x270/0x300
+  ret_from_fork+0x1f/0x30
 
-Fixes: 1107d065fdf1 ("tpm_tis: Introduce intermediate layer for TPM access")
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Note that normal images or images using compact indexes are not
+impacted.  Let's fix this now.
+
+[1] https://lore.kernel.org/r/000000000000ec75b005ee97fbaa@google.com
+
+Reported-and-tested-by: syzbot+aafb3f37cfeb6534c4ac@syzkaller.appspotmail.com
+Fixes: 02827e1796b3 ("staging: erofs: add erofs_map_blocks_iter")
+Fixes: 152a333a5895 ("staging: erofs: add compacted compression indexes support")
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20230410173714.104604-1-hsiangkao@linux.alibaba.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 29 +++++++++++------------------
- 1 file changed, 11 insertions(+), 18 deletions(-)
+ fs/erofs/zmap.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 70f7859942287..cb0660304e480 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -613,7 +613,7 @@ static irqreturn_t tis_int_handler(int dummy, void *dev_id)
- 	return IRQ_HANDLED;
- }
- 
--static int tpm_tis_gen_interrupt(struct tpm_chip *chip)
-+static void tpm_tis_gen_interrupt(struct tpm_chip *chip)
- {
- 	const char *desc = "attempting to generate an interrupt";
- 	u32 cap2;
-@@ -622,7 +622,7 @@ static int tpm_tis_gen_interrupt(struct tpm_chip *chip)
- 
- 	ret = request_locality(chip, 0);
- 	if (ret < 0)
--		return ret;
-+		return;
- 
- 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
- 		ret = tpm2_get_tpm_pt(chip, 0x100, &cap2, desc);
-@@ -630,8 +630,6 @@ static int tpm_tis_gen_interrupt(struct tpm_chip *chip)
- 		ret = tpm1_getcap(chip, TPM_CAP_PROP_TIS_TIMEOUT, &cap, desc, 0);
- 
- 	release_locality(chip, 0);
--
--	return ret;
- }
- 
- /* Register the IRQ and issue a command that will cause an interrupt. If an
-@@ -661,42 +659,37 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
- 
- 	rc = tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality), irq);
- 	if (rc < 0)
--		return rc;
-+		goto restore_irqs;
- 
- 	rc = tpm_tis_read32(priv, TPM_INT_STATUS(priv->locality), &int_status);
- 	if (rc < 0)
--		return rc;
-+		goto restore_irqs;
- 
- 	/* Clear all existing */
- 	rc = tpm_tis_write32(priv, TPM_INT_STATUS(priv->locality), int_status);
- 	if (rc < 0)
--		return rc;
--
-+		goto restore_irqs;
- 	/* Turn on */
- 	rc = tpm_tis_write32(priv, TPM_INT_ENABLE(priv->locality),
- 			     intmask | TPM_GLOBAL_INT_ENABLE);
- 	if (rc < 0)
--		return rc;
-+		goto restore_irqs;
- 
- 	priv->irq_tested = false;
- 
- 	/* Generate an interrupt by having the core call through to
- 	 * tpm_tis_send
- 	 */
--	rc = tpm_tis_gen_interrupt(chip);
--	if (rc < 0)
--		return rc;
-+	tpm_tis_gen_interrupt(chip);
- 
-+restore_irqs:
- 	/* tpm_tis_send will either confirm the interrupt is working or it
- 	 * will call disable_irq which undoes all of the above.
- 	 */
- 	if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
--		rc = tpm_tis_write8(priv, original_int_vec,
--				TPM_INT_VECTOR(priv->locality));
--		if (rc < 0)
--			return rc;
--
--		return 1;
-+		tpm_tis_write8(priv, original_int_vec,
-+			       TPM_INT_VECTOR(priv->locality));
-+		return -1;
- 	}
- 
- 	return 0;
+diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
+index fff5741007214..b5ee58fdd82f3 100644
+--- a/fs/erofs/zmap.c
++++ b/fs/erofs/zmap.c
+@@ -179,6 +179,10 @@ static int vle_legacy_load_cluster_from_disk(struct z_erofs_maprecorder *m,
+ 	case Z_EROFS_VLE_CLUSTER_TYPE_PLAIN:
+ 	case Z_EROFS_VLE_CLUSTER_TYPE_HEAD:
+ 		m->clusterofs = le16_to_cpu(di->di_clusterofs);
++		if (m->clusterofs >= 1 << vi->z_logical_clusterbits) {
++			DBG_BUGON(1);
++			return -EFSCORRUPTED;
++		}
+ 		m->pblk = le32_to_cpu(di->di_u.blkaddr);
+ 		break;
+ 	default:
 -- 
 2.39.2
 
