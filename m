@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD77FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:55:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429CAC433A0;
-	Mon, 15 May 2023 16:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC61EFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:55:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53C5EC433D2;
+	Mon, 15 May 2023 16:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169747;
-	bh=CT4FyBRv6zvpjFV7hoAeHAaUF0sHSKetItBxJCBNlCQ=;
+	s=korg; t=1684169750;
+	bh=mblPHaVTzJFd9zvtR/j6mmAdK23F7mYATGqoMeeeZ2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JXOwTNnIsg0+1cFyIuR6JcvPq2H1Qt1pfs6FbjX3getPv4CfLyT1S/q+bqWvlTtZl
-	 pO2wzTOjlU1ibCHfk4z6PhgHB/D9McHJNANCp1Z8YOr+wYrGxU2D2KJChpwrUB/k4w
-	 wUhVoyLv+Yk1dxXfdS0iz33X/dhdCdGKrfU6slcY=
+	b=eUZVH0koD0mIKfkmx0BxDPGQYuuVE5KnWp82W6tp5HE3fmZuLP9uQ7Xejm0f2oIOg
+	 q5aXnQSZxk3E9MSR6O7sBCenPewte0b3RF/yAi8cWV6e37jFIIUYl43tXKW2auiLD+
+	 gipAq8LbP1DuqTnKQXxuurrMsp5Lt41Hivsog2YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Bharath SM <bharathsm@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 150/246] SMB3: force unmount was failing to close deferred close files
-Date: Mon, 15 May 2023 18:26:02 +0200
-Message-Id: <20230515161727.052596831@linuxfoundation.org>
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>
+Subject: [PATCH 6.3 159/246] remoteproc: imx_dsp_rproc: Call of_node_put() on iteration error
+Date: Mon, 15 May 2023 18:26:11 +0200
+Message-Id: <20230515161727.326800799@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -35,49 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Mathieu Poirier <mathieu.poirier@linaro.org>
 
-commit 2cb6f968775a9fd60c90a6042b9550bcec3ea087 upstream.
+commit e0e01de8ee146986872e54e8365f4b4654819412 upstream.
 
-In investigating a failure with xfstest generic/392 it
-was noticed that mounts were reusing a superblock that should
-already have been freed. This turned out to be related to
-deferred close files keeping a reference count until the
-closetimeo expired.
+Function of_phandle_iterator_next() calls of_node_put() on the last
+device_node it iterated over, but when the loop exits prematurely it has
+to be called explicitly.
 
-Currently the only way an fs knows that mount is beginning is
-when force unmount is called, but when this, ie umount_begin(),
-is called all deferred close files on the share (tree
-connection) should be closed immediately (unless shared by
-another mount) to avoid using excess resources on the server
-and to avoid reusing a superblock which should already be freed.
-
-In umount_begin, close all deferred close handles for that
-share if this is the last mount using that share on this
-client (ie send the SMB3 close request over the wire for those
-that have been already closed by the app but that we have
-kept a handle lease open for and have not sent closes to the
-server for yet).
-
-Reported-by: David Howells <dhowells@redhat.com>
-Acked-by: Bharath SM <bharathsm@microsoft.com>
-Cc: <stable@vger.kernel.org>
-Fixes: 78c09634f7dc ("Cifs: Fix kernel oops caused by deferred close for files.")
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: ec0e5549f358 ("remoteproc: imx_dsp_rproc: Add remoteproc driver for DSP on i.MX")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Link: https://lore.kernel.org/r/20230320221826.2728078-6-mathieu.poirier@linaro.org
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsfs.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/remoteproc/imx_dsp_rproc.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -744,6 +744,7 @@ static void cifs_umount_begin(struct sup
- 	spin_unlock(&tcon->tc_lock);
- 	spin_unlock(&cifs_tcp_ses_lock);
+--- a/drivers/remoteproc/imx_dsp_rproc.c
++++ b/drivers/remoteproc/imx_dsp_rproc.c
+@@ -627,15 +627,19 @@ static int imx_dsp_rproc_add_carveout(st
  
-+	cifs_close_all_deferred_files(tcon);
- 	/* cancel_brl_requests(tcon); */ /* BB mark all brl mids as exiting */
- 	/* cancel_notify_requests(tcon); */
- 	if (tcon->ses && tcon->ses->server) {
+ 		rmem = of_reserved_mem_lookup(it.node);
+ 		if (!rmem) {
++			of_node_put(it.node);
+ 			dev_err(dev, "unable to acquire memory-region\n");
+ 			return -EINVAL;
+ 		}
+ 
+-		if (imx_dsp_rproc_sys_to_da(priv, rmem->base, rmem->size, &da))
++		if (imx_dsp_rproc_sys_to_da(priv, rmem->base, rmem->size, &da)) {
++			of_node_put(it.node);
+ 			return -EINVAL;
++		}
+ 
+ 		cpu_addr = devm_ioremap_wc(dev, rmem->base, rmem->size);
+ 		if (!cpu_addr) {
++			of_node_put(it.node);
+ 			dev_err(dev, "failed to map memory %p\n", &rmem->base);
+ 			return -ENOMEM;
+ 		}
+@@ -644,10 +648,12 @@ static int imx_dsp_rproc_add_carveout(st
+ 		mem = rproc_mem_entry_init(dev, (void __force *)cpu_addr, (dma_addr_t)rmem->base,
+ 					   rmem->size, da, NULL, NULL, it.node->name);
+ 
+-		if (mem)
++		if (mem) {
+ 			rproc_coredump_add_segment(rproc, da, rmem->size);
+-		else
++		} else {
++			of_node_put(it.node);
+ 			return -ENOMEM;
++		}
+ 
+ 		rproc_add_carveout(rproc, mem);
+ 	}
 
 
