@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AFF0E547
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:44:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1864C433EF;
-	Mon, 15 May 2023 16:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BAADE547
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:44:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C16ADC433EF;
+	Mon, 15 May 2023 16:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169089;
-	bh=2HkCgxJREfkIZLneWIq6ABUfuSB7MwQjqJo1CSLLubI=;
+	s=korg; t=1684169092;
+	bh=kyb/I7Mzgm0bTHBTnzEi4Yt4j235MBOV9bVe4+dv6F4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0QrJ0Vmi7WpbdRIAWT3RuNY9zwlqiblF6GiqJJbuwR8ZKUdMYA7Hmcg1pKf0xLaMD
-	 OrFeYufzTndP9FktAGJfx/WLb3T2EwtfK1p4gibxOnrXIkbQ83F3WhMMpYC1HUN9zp
-	 cLYo9MGZhue1llq72sy7d+Od/qTSV+EKQXhfQEgg=
+	b=PRv9XM24/S6uXgxUdx5ULGOya0PTM20qwBManqthk4D8+qmwCFT7kPxPabgwXvhBl
+	 8uT0UBBTjVeo1iLVnDPCh6+J88cwPyS3WvjsHcr8YqCAmhB11BDeGne9O9RQDzQxlR
+	 myPnvPzBg7ZcssYlA6VuZKixct7QWfANwtS5RwQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jitao Shi <jitao.shi@mediatek.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 121/191] pwm: mtk-disp: Adjust the clocks to avoid them mismatch
-Date: Mon, 15 May 2023 18:25:58 +0200
-Message-Id: <20230515161711.683785268@linuxfoundation.org>
+Subject: [PATCH 4.19 139/191] nohz: Add TICK_DEP_BIT_RCU
+Date: Mon, 15 May 2023 18:26:16 +0200
+Message-Id: <20230515161712.456744188@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,196 +35,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jitao Shi <jitao.shi@mediatek.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit d7a4e582587d97a586b1f7709e3bddcf35928e96 ]
+[ Upstream commit 01b4c39901e087ceebae2733857248de81476bd8 ]
 
-The clks "main" and "mm" are prepared in .probe() (and unprepared in
-.remove()). This results in the clocks being on during suspend which
-results in unnecessarily increased power consumption.
+If a nohz_full CPU is looping in the kernel, the scheduling-clock tick
+might nevertheless remain disabled.  In !PREEMPT kernels, this can
+prevent RCU's attempts to enlist the aid of that CPU's executions of
+cond_resched(), which can in turn result in an arbitrarily delayed grace
+period and thus an OOM.  RCU therefore needs a way to enable a holdout
+nohz_full CPU's scheduler-clock interrupt.
 
-Remove the clock operations from .probe() and .remove(). Add the
-clk_prepare_enable() in .enable() and the clk_disable_unprepare() in
-.disable().
+This commit therefore provides a new TICK_DEP_BIT_RCU value which RCU can
+pass to tick_dep_set_cpu() and friends to force on the scheduler-clock
+interrupt for a specified CPU or task.  In some cases, rcutorture needs
+to turn on the scheduler-clock tick, so this commit also exports the
+relevant symbols to GPL-licensed modules.
 
-Signed-off-by: Jitao Shi <jitao.shi@mediatek.com>
-[thierry.reding@gmail.com: squashed in fixup patch]
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 36dd7f530ae7 ("pwm: mtk-disp: Disable shadow registers before setting backlight values")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: 58d766824264 ("tick/nohz: Fix cpu_is_hotpluggable() by checking with nohz subsystem")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 91 +++++++++++++++++---------------------
- 1 file changed, 41 insertions(+), 50 deletions(-)
+ include/linux/tick.h         | 7 ++++++-
+ include/trace/events/timer.h | 3 ++-
+ kernel/time/tick-sched.c     | 7 +++++++
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index dd31a00d6326c..6d08938866048 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -82,6 +82,19 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	u64 div, rate;
- 	int err;
+diff --git a/include/linux/tick.h b/include/linux/tick.h
+index 55388ab45fd4d..965163bdfe412 100644
+--- a/include/linux/tick.h
++++ b/include/linux/tick.h
+@@ -102,7 +102,8 @@ enum tick_dep_bits {
+ 	TICK_DEP_BIT_POSIX_TIMER	= 0,
+ 	TICK_DEP_BIT_PERF_EVENTS	= 1,
+ 	TICK_DEP_BIT_SCHED		= 2,
+-	TICK_DEP_BIT_CLOCK_UNSTABLE	= 3
++	TICK_DEP_BIT_CLOCK_UNSTABLE	= 3,
++	TICK_DEP_BIT_RCU		= 4
+ };
  
-+	err = clk_prepare_enable(mdp->clk_main);
-+	if (err < 0) {
-+		dev_err(chip->dev, "Can't enable mdp->clk_main: %pe\n", ERR_PTR(err));
-+		return err;
+ #define TICK_DEP_MASK_NONE		0
+@@ -110,6 +111,7 @@ enum tick_dep_bits {
+ #define TICK_DEP_MASK_PERF_EVENTS	(1 << TICK_DEP_BIT_PERF_EVENTS)
+ #define TICK_DEP_MASK_SCHED		(1 << TICK_DEP_BIT_SCHED)
+ #define TICK_DEP_MASK_CLOCK_UNSTABLE	(1 << TICK_DEP_BIT_CLOCK_UNSTABLE)
++#define TICK_DEP_MASK_RCU		(1 << TICK_DEP_BIT_RCU)
+ 
+ #ifdef CONFIG_NO_HZ_COMMON
+ extern bool tick_nohz_enabled;
+@@ -257,6 +259,9 @@ static inline bool tick_nohz_full_enabled(void) { return false; }
+ static inline bool tick_nohz_full_cpu(int cpu) { return false; }
+ static inline void tick_nohz_full_add_cpus_to(struct cpumask *mask) { }
+ 
++static inline void tick_nohz_dep_set_cpu(int cpu, enum tick_dep_bits bit) { }
++static inline void tick_nohz_dep_clear_cpu(int cpu, enum tick_dep_bits bit) { }
++
+ static inline void tick_dep_set(enum tick_dep_bits bit) { }
+ static inline void tick_dep_clear(enum tick_dep_bits bit) { }
+ static inline void tick_dep_set_cpu(int cpu, enum tick_dep_bits bit) { }
+diff --git a/include/trace/events/timer.h b/include/trace/events/timer.h
+index a57e4ee989d62..350b046e7576c 100644
+--- a/include/trace/events/timer.h
++++ b/include/trace/events/timer.h
+@@ -362,7 +362,8 @@ TRACE_EVENT(itimer_expire,
+ 		tick_dep_name(POSIX_TIMER)		\
+ 		tick_dep_name(PERF_EVENTS)		\
+ 		tick_dep_name(SCHED)			\
+-		tick_dep_name_end(CLOCK_UNSTABLE)
++		tick_dep_name(CLOCK_UNSTABLE)		\
++		tick_dep_name_end(RCU)
+ 
+ #undef tick_dep_name
+ #undef tick_dep_mask_name
+diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
+index 48403fb653c2f..7228bdd2eabe2 100644
+--- a/kernel/time/tick-sched.c
++++ b/kernel/time/tick-sched.c
+@@ -199,6 +199,11 @@ static bool check_tick_dependency(atomic_t *dep)
+ 		return true;
+ 	}
+ 
++	if (val & TICK_DEP_MASK_RCU) {
++		trace_tick_stop(0, TICK_DEP_MASK_RCU);
++		return true;
 +	}
 +
-+	err = clk_prepare_enable(mdp->clk_mm);
-+	if (err < 0) {
-+		dev_err(chip->dev, "Can't enable mdp->clk_mm: %pe\n", ERR_PTR(err));
-+		clk_disable_unprepare(mdp->clk_main);
-+		return err;
-+	}
-+
- 	/*
- 	 * Find period, high_width and clk_div to suit duty_ns and period_ns.
- 	 * Calculate proper div value to keep period value in the bound.
-@@ -95,8 +108,11 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	rate = clk_get_rate(mdp->clk_main);
- 	clk_div = div_u64(rate * period_ns, NSEC_PER_SEC) >>
- 			  PWM_PERIOD_BIT_WIDTH;
--	if (clk_div > PWM_CLKDIV_MAX)
-+	if (clk_div > PWM_CLKDIV_MAX) {
-+		clk_disable_unprepare(mdp->clk_mm);
-+		clk_disable_unprepare(mdp->clk_main);
- 		return -EINVAL;
-+	}
+ 	return false;
+ }
  
- 	div = NSEC_PER_SEC * (clk_div + 1);
- 	period = div64_u64(rate * period_ns, div);
-@@ -106,16 +122,6 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	high_width = div64_u64(rate * duty_ns, div);
- 	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
- 
--	err = clk_enable(mdp->clk_main);
--	if (err < 0)
--		return err;
--
--	err = clk_enable(mdp->clk_mm);
--	if (err < 0) {
--		clk_disable(mdp->clk_main);
--		return err;
--	}
--
- 	mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
- 				 PWM_CLKDIV_MASK,
- 				 clk_div << PWM_CLKDIV_SHIFT);
-@@ -130,10 +136,21 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 		mtk_disp_pwm_update_bits(mdp, mdp->data->commit,
- 					 mdp->data->commit_mask,
- 					 0x0);
-+	} else {
-+		/*
-+		 * For MT2701, disable double buffer before writing register
-+		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
-+		 */
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
-+					 mdp->data->bls_debug_mask,
-+					 mdp->data->bls_debug_mask);
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
-+					 mdp->data->con0_sel,
-+					 mdp->data->con0_sel);
+@@ -325,6 +330,7 @@ void tick_nohz_dep_set_cpu(int cpu, enum tick_dep_bits bit)
+ 		preempt_enable();
  	}
- 
--	clk_disable(mdp->clk_mm);
--	clk_disable(mdp->clk_main);
-+	clk_disable_unprepare(mdp->clk_mm);
-+	clk_disable_unprepare(mdp->clk_main);
- 
- 	return 0;
  }
-@@ -143,13 +160,16 @@ static int mtk_disp_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	struct mtk_disp_pwm *mdp = to_mtk_disp_pwm(chip);
- 	int err;
++EXPORT_SYMBOL_GPL(tick_nohz_dep_set_cpu);
  
--	err = clk_enable(mdp->clk_main);
--	if (err < 0)
-+	err = clk_prepare_enable(mdp->clk_main);
-+	if (err < 0) {
-+		dev_err(chip->dev, "Can't enable mdp->clk_main: %pe\n", ERR_PTR(err));
- 		return err;
-+	}
+ void tick_nohz_dep_clear_cpu(int cpu, enum tick_dep_bits bit)
+ {
+@@ -332,6 +338,7 @@ void tick_nohz_dep_clear_cpu(int cpu, enum tick_dep_bits bit)
  
--	err = clk_enable(mdp->clk_mm);
-+	err = clk_prepare_enable(mdp->clk_mm);
- 	if (err < 0) {
--		clk_disable(mdp->clk_main);
-+		dev_err(chip->dev, "Can't enable mdp->clk_mm: %pe\n", ERR_PTR(err));
-+		clk_disable_unprepare(mdp->clk_main);
- 		return err;
- 	}
- 
-@@ -166,8 +186,8 @@ static void mtk_disp_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
- 	mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
- 				 0x0);
- 
--	clk_disable(mdp->clk_mm);
--	clk_disable(mdp->clk_main);
-+	clk_disable_unprepare(mdp->clk_mm);
-+	clk_disable_unprepare(mdp->clk_main);
+ 	atomic_andnot(BIT(bit), &ts->tick_dep_mask);
  }
++EXPORT_SYMBOL_GPL(tick_nohz_dep_clear_cpu);
  
- static const struct pwm_ops mtk_disp_pwm_ops = {
-@@ -202,14 +222,6 @@ static int mtk_disp_pwm_probe(struct platform_device *pdev)
- 	if (IS_ERR(mdp->clk_mm))
- 		return PTR_ERR(mdp->clk_mm);
- 
--	ret = clk_prepare(mdp->clk_main);
--	if (ret < 0)
--		return ret;
--
--	ret = clk_prepare(mdp->clk_mm);
--	if (ret < 0)
--		goto disable_clk_main;
--
- 	mdp->chip.dev = &pdev->dev;
- 	mdp->chip.ops = &mtk_disp_pwm_ops;
- 	mdp->chip.base = -1;
-@@ -217,32 +229,13 @@ static int mtk_disp_pwm_probe(struct platform_device *pdev)
- 
- 	ret = pwmchip_add(&mdp->chip);
- 	if (ret < 0) {
--		dev_err(&pdev->dev, "pwmchip_add() failed: %d\n", ret);
--		goto disable_clk_mm;
-+		dev_err(&pdev->dev, "pwmchip_add() failed: %pe\n", ERR_PTR(ret));
-+		return ret;
- 	}
- 
- 	platform_set_drvdata(pdev, mdp);
- 
--	/*
--	 * For MT2701, disable double buffer before writing register
--	 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
--	 */
--	if (!mdp->data->has_commit) {
--		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
--					 mdp->data->bls_debug_mask,
--					 mdp->data->bls_debug_mask);
--		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
--					 mdp->data->con0_sel,
--					 mdp->data->con0_sel);
--	}
--
- 	return 0;
--
--disable_clk_mm:
--	clk_unprepare(mdp->clk_mm);
--disable_clk_main:
--	clk_unprepare(mdp->clk_main);
--	return ret;
- }
- 
- static int mtk_disp_pwm_remove(struct platform_device *pdev)
-@@ -250,8 +243,6 @@ static int mtk_disp_pwm_remove(struct platform_device *pdev)
- 	struct mtk_disp_pwm *mdp = platform_get_drvdata(pdev);
- 
- 	pwmchip_remove(&mdp->chip);
--	clk_unprepare(mdp->clk_mm);
--	clk_unprepare(mdp->clk_main);
- 
- 	return 0;
- }
+ /*
+  * Set a per-task tick dependency. Posix CPU timers need this in order to elapse
 -- 
 2.39.2
 
