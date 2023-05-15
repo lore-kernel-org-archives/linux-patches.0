@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC44FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3C5AC433D2;
-	Mon, 15 May 2023 17:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F0FFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF043C433D2;
+	Mon, 15 May 2023 17:25:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171529;
-	bh=6bc4r8hhPwLpn7u/K2gooVQoh0VagQRG8DT/taaWISk=;
+	s=korg; t=1684171532;
+	bh=TifXGaWGBWlm68FOaLPEkkCtywDrgJcuZ+MEP8HwFis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=as8XZoejRq+EaiHNFos9ShTahpiRirVqO3t3b/97O/UIku9WOEOaVAGA4sQXWXUdv
-	 Plk4BM0LZgernK7Si+4zORTFD3Naa6xlNayjkyvwaT+5Dkco0/3DWwZECF9taA/p/W
-	 mtQOIW5E/2Va2Da3FeSk2zULAOYM1+8trNe+UVlw=
+	b=AivxRLC95WMoUgUuPXcZIzYG//l9rozsfZp84gf15uQnqB5Yp93qPHnf/FHz7IStA
+	 m2rML0l8GGUR09IvT52rf5zKd/tuYNtLQvZNoO3q/1lrBf56Jbbu+RBbafhDHWnoJR
+	 RMZR71DbVG1NbSkP8mTAVwLOnb3KZ+I+8cKzwdOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 6.2 209/242] drm/msm/adreno: adreno_gpu: Use suspend() instead of idle() on load error
-Date: Mon, 15 May 2023 18:28:55 +0200
-Message-Id: <20230515161728.204147882@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.2 200/242] drm/amd/pm: parse pp_handle under appropriate conditions
+Date: Mon, 15 May 2023 18:28:46 +0200
+Message-Id: <20230515161727.943827582@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,58 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Guchun Chen <guchun.chen@amd.com>
 
-commit 3eeca5e5f3100435b06a5b5d86daa3d135a8a4bd upstream.
+commit 58d9b9a14b47c2a3da6effcbb01607ad7edc0275 upstream.
 
-The adreno_load_gpu() path is guarded by an error check on
-adreno_load_fw(). This function is responsible for loading
-Qualcomm-only-signed binaries (e.g. SQE and GMU FW for A6XX), but it
-does not take the vendor-signed ZAP blob into account.
+amdgpu_dpm_is_overdrive_supported is a common API across all
+asics, so we should cast pp_handle into correct structure
+under different power frameworks.
 
-By embedding the SQE (and GMU, if necessary) firmware into the
-initrd/kernel, we can trigger and unfortunate path that would not bail
-out early and proceed with gpu->hw_init(). That will fail, as the ZAP
-loader path will not find the firmware and return back to
-adreno_load_gpu().
+v2: using return directly to simplify code
+v3: SI asic does not carry od_enabled member in pp_handle, and update Fixes tag
 
-This error path involves pm_runtime_put_sync() which then calls idle()
-instead of suspend(). This is suboptimal, as it means that we're not
-going through the clean shutdown sequence. With at least A619_holi, this
-makes the GPU not wake up until it goes through at least one more
-start-fail-stop cycle. The pm_runtime_put_sync that appears in the error
-path actually does not guarantee that because of the earlier enabling of
-runtime autosuspend.
-
-Fix that by using pm_runtime_put_sync_suspend to force a clean shutdown.
-
-Test cases:
-1. All firmware baked into kernel
-2. error loading ZAP fw in initrd -> load from rootfs at DE start
-
-Both succeed on A619_holi (SM6375) and A630 (SDM845).
-
-Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu load")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Patchwork: https://patchwork.freedesktop.org/patch/530001/
-Link: https://lore.kernel.org/r/20230330231517.2747024-1-konrad.dybcio@linaro.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2541
+Fixes: eb4900aa4c49 ("drm/amdgpu: Fix kernel NULL pointer dereference in dpm functions")
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -465,7 +465,7 @@ struct msm_gpu *adreno_load_gpu(struct d
- 	return gpu;
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -1414,15 +1414,21 @@ int amdgpu_dpm_get_smu_prv_buf_details(s
  
- err_put_rpm:
--	pm_runtime_put_sync(&pdev->dev);
-+	pm_runtime_put_sync_suspend(&pdev->dev);
- err_disable_rpm:
- 	pm_runtime_disable(&pdev->dev);
+ int amdgpu_dpm_is_overdrive_supported(struct amdgpu_device *adev)
+ {
+-	struct pp_hwmgr *hwmgr = adev->powerplay.pp_handle;
+-	struct smu_context *smu = adev->powerplay.pp_handle;
++	if (is_support_sw_smu(adev)) {
++		struct smu_context *smu = adev->powerplay.pp_handle;
  
+-	if ((is_support_sw_smu(adev) && smu->od_enabled) ||
+-	    (is_support_sw_smu(adev) && smu->is_apu) ||
+-		(!is_support_sw_smu(adev) && hwmgr->od_enabled))
+-		return true;
++		return (smu->od_enabled || smu->is_apu);
++	} else {
++		struct pp_hwmgr *hwmgr;
+ 
+-	return false;
++		/* SI asic does not carry od_enabled */
++		if (adev->family == AMDGPU_FAMILY_SI)
++			return false;
++
++		hwmgr = (struct pp_hwmgr *)adev->powerplay.pp_handle;
++
++		return hwmgr->od_enabled;
++	}
+ }
+ 
+ int amdgpu_dpm_set_pp_table(struct amdgpu_device *adev,
 
 
