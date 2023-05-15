@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A349D507
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:58:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFA1C433D2;
-	Mon, 15 May 2023 17:58:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EDA101CF
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:58:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1FAC433D2;
+	Mon, 15 May 2023 17:58:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173509;
-	bh=F0D29cH+R5sLsaxDjg/0W1w+R8wbJpNL23Fn3mRPq0E=;
+	s=korg; t=1684173512;
+	bh=h4P1oZyGi8cssGckqf6CN2b6xUXBvd7blVRw1mkbgSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHPzOfbIPwEdgQRw26y0DHf2lg0Fd29NyFYu1UkHqlVNKOkcYehPZJw4HeLUml50K
-	 jdLUI0mFgxm7qjj6p9dYVb5Lu+Fw3eeLfyJrRLNdl2Vc7+uOj0L5o3JsVGOTIH2voH
-	 SLzg7xdrDB4g8WkcciSAOfyXKK4nYk/T8THMHhbs=
+	b=cn5cek2+o5s/E7idhUMG6oZ1a6LYzds4PTtbt7ATnZR5HfkrZmiow/awtCUxjtjhV
+	 pj6h1yv/g9aiUzbQ/ottUFskea41i4sHoOIvVvjRzkFDenp0snF3HkUGRFnzzTDtDI
+	 vo0K/Q6lQheza9OYCLOATUyfct5VxV/01F1egScU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Marco Pagani <marpagan@redhat.com>,
+	Tom Rix <trix@redhat.com>,
+	Xu Yilun <yilun.xu@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 118/282] usb: host: xhci-rcar: remove leftover quirk handling
-Date: Mon, 15 May 2023 18:28:16 +0200
-Message-Id: <20230515161725.775408125@linuxfoundation.org>
+Subject: [PATCH 5.4 119/282] fpga: bridge: fix kernel-doc parameter description
+Date: Mon, 15 May 2023 18:28:17 +0200
+Message-Id: <20230515161725.804474099@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,44 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Marco Pagani <marpagan@redhat.com>
 
-[ Upstream commit 5d67f4861884762ebc2bddb5d667444e45f25782 ]
+[ Upstream commit 7ef1a2c1c9dffa177ecc3ea50b7f5ee63a621137 ]
 
-Loading V3 firmware does not need a quirk anymore, remove the leftover
-code.
+Fix the kernel-doc description for the "struct fpga_image_info *info"
+parameter of the fpga_bridge_get() function.
 
-Fixes: ed8603e11124 ("usb: host: xhci-rcar: Simplify getting the firmware name for R-Car Gen3")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20230307163041.3815-10-wsa+renesas@sang-engineering.com
+Fixes: 060ac5c8fa7b ("fpga: bridge: kernel-doc fixes")
+Signed-off-by: Marco Pagani <marpagan@redhat.com>
+Reviewed-by: Tom Rix <trix@redhat.com>
+Acked-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20230301140309.512578-1-marpagan@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-rcar.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/fpga/fpga-bridge.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-rcar.c b/drivers/usb/host/xhci-rcar.c
-index 3da75b367f952..5d78352992454 100644
---- a/drivers/usb/host/xhci-rcar.c
-+++ b/drivers/usb/host/xhci-rcar.c
-@@ -74,7 +74,6 @@ MODULE_FIRMWARE(XHCI_RCAR_FIRMWARE_NAME_V3);
- 
- /* For soc_device_attribute */
- #define RCAR_XHCI_FIRMWARE_V2   BIT(0) /* FIRMWARE V2 */
--#define RCAR_XHCI_FIRMWARE_V3   BIT(1) /* FIRMWARE V3 */
- 
- static const struct soc_device_attribute rcar_quirks_match[]  = {
- 	{
-@@ -147,8 +146,6 @@ static int xhci_rcar_download_firmware(struct usb_hcd *hcd)
- 
- 	if (quirks & RCAR_XHCI_FIRMWARE_V2)
- 		firmware_name = XHCI_RCAR_FIRMWARE_NAME_V2;
--	else if (quirks & RCAR_XHCI_FIRMWARE_V3)
--		firmware_name = XHCI_RCAR_FIRMWARE_NAME_V3;
- 	else
- 		firmware_name = priv->firmware_name;
- 
+diff --git a/drivers/fpga/fpga-bridge.c b/drivers/fpga/fpga-bridge.c
+index 4bab9028940a8..aea4ceeed5363 100644
+--- a/drivers/fpga/fpga-bridge.c
++++ b/drivers/fpga/fpga-bridge.c
+@@ -115,7 +115,7 @@ static int fpga_bridge_dev_match(struct device *dev, const void *data)
+ /**
+  * fpga_bridge_get - get an exclusive reference to a fpga bridge
+  * @dev:	parent device that fpga bridge was registered with
+- * @info:	fpga manager info
++ * @info:	fpga image specific information
+  *
+  * Given a device, get an exclusive reference to a fpga bridge.
+  *
 -- 
 2.39.2
 
