@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F5DFC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:42:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87FFC433EF;
-	Mon, 15 May 2023 17:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A6EFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:42:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9BFAC433D2;
+	Mon, 15 May 2023 17:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172565;
-	bh=NZhi0xVtW7EMChztBxbN0pyviFRvH+2jLhEiS908OSw=;
+	s=korg; t=1684172568;
+	bh=fe7sGE9lyb+RnOuNKcxZYY1n64TPwilUqX94op1b630=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gt3Aa/Jzqnq/4GwNY/rHEXVb4MkucQgeYoK8TFoHe34X/cCRfWydaYMA+U7sQwVhG
-	 J8fV/KJ6cUmE7Bzwk71Br9X1t3QPoMrLbb8t3Ay7G500/De0nz3++AkDSfEwCSJ4vn
-	 fduGUhuErPG8udPIbbea00I4X+ltZHI94jZIVrz8=
+	b=BbqAWb57Jo8cVNF10+CYJ8aPq56wcFv9EZN183p740ur1TA7Vldgo9WnC74eNROh9
+	 ouBtMzYwsqqz4gom2TYWhQBEiR7jMEEO8UeEsJ8vXHPflqWIiwXB0Lw7NG8oevZgSe
+	 F5wIukBVP+3p9M6rZMKXG2S2/BVa4/0NR25Ppj1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuchang Li <lishuchang@hust.edu.cn>,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 166/381] scsi: lpfc: Fix ioremap issues in lpfc_sli4_pci_mem_setup()
-Date: Mon, 15 May 2023 18:26:57 +0200
-Message-Id: <20230515161744.307520978@linuxfoundation.org>
+Subject: [PATCH 5.10 167/381] net: ethernet: stmmac: dwmac-rk: fix optional phy regulator handling
+Date: Mon, 15 May 2023 18:26:58 +0200
+Message-Id: <20230515161744.352537972@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,68 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuchang Li <lishuchang@hust.edu.cn>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit 91a0c0c1413239d0548b5aac4c82f38f6d53a91e ]
+[ Upstream commit db21973263f8c56750cb610f1d5e8bee00a513b9 ]
 
-When if_type equals zero and pci_resource_start(pdev, PCI_64BIT_BAR4)
-returns false, drbl_regs_memmap_p is not remapped. This passes a NULL
-pointer to iounmap(), which can trigger a WARN() on certain arches.
+The usual devm_regulator_get() call already handles "optional"
+regulators by returning a valid dummy and printing a warning
+that the dummy regulator should be described properly. This
+code open coded the same behaviour, but masked any errors that
+are not -EPROBE_DEFER and is quite noisy.
 
-When if_type equals six and pci_resource_start(pdev, PCI_64BIT_BAR4)
-returns true, drbl_regs_memmap_p may has been remapped and
-ctrl_regs_memmap_p is not remapped. This is a resource leak and passes a
-NULL pointer to iounmap().
+This change effectively unmasks and propagates regulators errors
+not involving -ENODEV, downgrades the error print to warning level
+if no regulator is specified and captures the probe defer message
+for /sys/kernel/debug/devices_deferred.
 
-To fix these issues, we need to add null checks before iounmap(), and
-change some goto labels.
-
-Fixes: 1351e69fc6db ("scsi: lpfc: Add push-to-adapter support to sli4")
-Signed-off-by: Shuchang Li <lishuchang@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230404072133.1022-1-lishuchang@hust.edu.cn
-Reviewed-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 2e12f536635f ("net: stmmac: dwmac-rk: Use standard devicetree property for phy regulator")
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_init.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c | 14 ++++----------
+ 1 file changed, 4 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
-index 17200b453cbbb..1bb3c96a04bd6 100644
---- a/drivers/scsi/lpfc/lpfc_init.c
-+++ b/drivers/scsi/lpfc/lpfc_init.c
-@@ -10477,7 +10477,7 @@ lpfc_sli4_pci_mem_setup(struct lpfc_hba *phba)
- 				goto out_iounmap_all;
- 		} else {
- 			error = -ENOMEM;
--			goto out_iounmap_all;
-+			goto out_iounmap_ctrl;
- 		}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+index e7fbc9b30bf96..d0d47d91b460c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-rk.c
+@@ -1194,9 +1194,6 @@ static int phy_power_on(struct rk_priv_data *bsp_priv, bool enable)
+ 	int ret;
+ 	struct device *dev = &bsp_priv->pdev->dev;
+ 
+-	if (!ldo)
+-		return 0;
+-
+ 	if (enable) {
+ 		ret = regulator_enable(ldo);
+ 		if (ret)
+@@ -1227,14 +1224,11 @@ static struct rk_priv_data *rk_gmac_setup(struct platform_device *pdev,
+ 	of_get_phy_mode(dev->of_node, &bsp_priv->phy_iface);
+ 	bsp_priv->ops = ops;
+ 
+-	bsp_priv->regulator = devm_regulator_get_optional(dev, "phy");
++	bsp_priv->regulator = devm_regulator_get(dev, "phy");
+ 	if (IS_ERR(bsp_priv->regulator)) {
+-		if (PTR_ERR(bsp_priv->regulator) == -EPROBE_DEFER) {
+-			dev_err(dev, "phy regulator is not available yet, deferred probing\n");
+-			return ERR_PTR(-EPROBE_DEFER);
+-		}
+-		dev_err(dev, "no regulator found\n");
+-		bsp_priv->regulator = NULL;
++		ret = PTR_ERR(bsp_priv->regulator);
++		dev_err_probe(dev, ret, "failed to get phy regulator\n");
++		return ERR_PTR(ret);
  	}
  
-@@ -10495,7 +10495,7 @@ lpfc_sli4_pci_mem_setup(struct lpfc_hba *phba)
- 			dev_err(&pdev->dev,
- 			   "ioremap failed for SLI4 HBA dpp registers.\n");
- 			error = -ENOMEM;
--			goto out_iounmap_ctrl;
-+			goto out_iounmap_all;
- 		}
- 		phba->pci_bar4_memmap_p = phba->sli4_hba.dpp_regs_memmap_p;
- 	}
-@@ -10520,9 +10520,11 @@ lpfc_sli4_pci_mem_setup(struct lpfc_hba *phba)
- 	return 0;
- 
- out_iounmap_all:
--	iounmap(phba->sli4_hba.drbl_regs_memmap_p);
-+	if (phba->sli4_hba.drbl_regs_memmap_p)
-+		iounmap(phba->sli4_hba.drbl_regs_memmap_p);
- out_iounmap_ctrl:
--	iounmap(phba->sli4_hba.ctrl_regs_memmap_p);
-+	if (phba->sli4_hba.ctrl_regs_memmap_p)
-+		iounmap(phba->sli4_hba.ctrl_regs_memmap_p);
- out_iounmap_conf:
- 	iounmap(phba->sli4_hba.conf_regs_memmap_p);
- 
+ 	ret = of_property_read_string(dev->of_node, "clock_in_out", &strings);
 -- 
 2.39.2
 
