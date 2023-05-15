@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2C6D2EF
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:38:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D2EC433EF;
-	Mon, 15 May 2023 16:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C742BD2EF
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:38:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30600C433EF;
+	Mon, 15 May 2023 16:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168691;
-	bh=+KbmFZzYrNuG+t5ps9os/xQxJJuh1jlvzESQfWYjl08=;
+	s=korg; t=1684168694;
+	bh=sypC027um3qpwnK/xf8twdB7zMhShxVJ1WGqkiTBpIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q7iVgr7Fy9wY6UbbRLTwk9Toao8nSjXvRw4LB/Y1XO1k/7W34qeqy2kAgOFpYWpye
-	 fxAA+C4Wo8EWcju9QWuHgO+kDNn+u8P6h1IjcH2nQASmk6X56IfesOROihk3bi27Rk
-	 ZjurHBjuBbj1mbYjvbCDgqBOSYjpgkZXjqkJhxEA=
+	b=BeI4WTA/L1F8dMzmPvcVRVc2+dO20Jlcyyy81o+zpoMWqLUzBsuZH5zORSExOEsgz
+	 3Aq6kCN5Z6bnPM56tg9M+OjnVuGPj5qf2Hslz8TQ9h2z74ITgkSPZAJvvbE4kRhcoR
+	 P90MylIbb1On6meUsyKUOKkkqk6yR2m7O9YRSOoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 4.19 011/191] debugfs: regset32: Add Runtime PM support
-Date: Mon, 15 May 2023 18:24:08 +0200
-Message-Id: <20230515161707.624352739@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 4.19 012/191] xhci: fix debugfs register accesses while suspended
+Date: Mon, 15 May 2023 18:24:09 +0200
+Message-Id: <20230515161707.662761001@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,65 +33,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 30332eeefec8f83afcea00c360f99ef64b87f220 upstream.
+commit 735baf1b23458f71a8b15cb924af22c9ff9cd125 upstream.
 
-Hardware registers of devices under control of power management cannot
-be accessed at all times.  If such a device is suspended, register
-accesses may lead to undefined behavior, like reading bogus values, or
-causing exceptions or system lock-ups.
+Wire up the debugfs regset device pointer so that the controller is
+resumed before accessing registers to avoid crashing or locking up if it
+happens to be runtime suspended.
 
-Extend struct debugfs_regset32 with an optional field to let device
-drivers specify the device the registers in the set belong to.  This
-allows debugfs_show_regset32() to make sure the device is resumed while
-its registers are being read.
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Niklas Söderlund <niklas.soderlund@ragnatech.se>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 02b6fdc2a153 ("usb: xhci: Add debugfs interface for xHCI driver")
+Cc: stable@vger.kernel.org # 4.15: 30332eeefec8: debugfs: regset32: Add Runtime PM support
+Cc: stable@vger.kernel.org # 4.15
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230405090342.7363-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/debugfs/file.c       |    8 ++++++++
- include/linux/debugfs.h |    1 +
- 2 files changed, 9 insertions(+)
+ drivers/usb/host/xhci-debugfs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -18,6 +18,7 @@
- #include <linux/slab.h>
- #include <linux/atomic.h>
- #include <linux/device.h>
-+#include <linux/pm_runtime.h>
- #include <linux/poll.h>
+--- a/drivers/usb/host/xhci-debugfs.c
++++ b/drivers/usb/host/xhci-debugfs.c
+@@ -132,6 +132,7 @@ static void xhci_debugfs_regset(struct x
+ 	regset->regs = regs;
+ 	regset->nregs = nregs;
+ 	regset->base = hcd->regs + base;
++	regset->dev = hcd->self.controller;
  
- #include "internal.h"
-@@ -1084,7 +1085,14 @@ static int debugfs_show_regset32(struct
- {
- 	struct debugfs_regset32 *regset = s->private;
- 
-+	if (regset->dev)
-+		pm_runtime_get_sync(regset->dev);
-+
- 	debugfs_print_regs32(s, regset->regs, regset->nregs, regset->base, "");
-+
-+	if (regset->dev)
-+		pm_runtime_put(regset->dev);
-+
- 	return 0;
+ 	debugfs_create_regset32((const char *)rgs->name, 0444, parent, regset);
  }
- 
---- a/include/linux/debugfs.h
-+++ b/include/linux/debugfs.h
-@@ -35,6 +35,7 @@ struct debugfs_regset32 {
- 	const struct debugfs_reg32 *regs;
- 	int nregs;
- 	void __iomem *base;
-+	struct device *dev;	/* Optional device for Runtime PM */
- };
- 
- extern struct dentry *arch_debugfs_dir;
 
 
