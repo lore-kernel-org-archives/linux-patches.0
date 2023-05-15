@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7DEFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D03C1C4339B;
-	Mon, 15 May 2023 16:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA8EFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38F2C433D2;
+	Mon, 15 May 2023 16:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169862;
-	bh=PtXfU9XZ99giHsN57o7gksXNtphka7orWQzhN12a0jA=;
+	s=korg; t=1684169865;
+	bh=QZhYRkOFQiVLrhGHtoI9Hs0G+I1WS7Z++H6m1o4v2zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=USCt2DE5kDDO09bSpUyr5sVOKgEQo72juJisjygIjfaEAEzR9Lk76vgM7tKBto8rv
-	 BjybqO5QPB5nTjCRc0kDH7/hv3XU4er8xJkQppD3tBdYLEBfXlI0PouhD2GI7U/SJG
-	 xMQmlnRVeyv3YmHWlR/HDuMsPvvmkmRPSxmFlGUY=
+	b=R+nj5ymwtZB5kuksfO243/fuDZ+RhFF72DL9hWCse/I0wabtUOxxBTT9m0DWnFH7i
+	 R/QkQKGqGQxh2bWhdPCguTnzjvmV3BM1IC1ckSw/UeT+8UARVjZDCtOqUkZECMyktP
+	 +3BqlXzOAbqr51OVoAUroeDuPmGPI49zntew3gJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guchun Chen <guchun.chen@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 195/246] drm/amdgpu: drop redundant sched job cleanup when cs is aborted
-Date: Mon, 15 May 2023 18:26:47 +0200
-Message-Id: <20230515161728.465097267@linuxfoundation.org>
+	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Alan Liu <HaoPing.Liu@amd.com>,
+	Leo Chen <sancchen@amd.com>
+Subject: [PATCH 6.3 196/246] drm/amd/display: Change default Z8 watermark values
+Date: Mon, 15 May 2023 18:26:48 +0200
+Message-Id: <20230515161728.494225171@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -35,62 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Leo Chen <sancchen@amd.com>
 
-commit 1253685f0d3eb3eab0bfc4bf15ab341a5f3da0c8 upstream.
+commit 8f586cc16c1fc3c2202c9d54563db8c7ed365f82 upstream.
 
-Once command submission failed due to userptr invalidation in
-amdgpu_cs_submit, legacy code will perform cleanup of scheduler
-job. However, it's not needed at all, as former commit has integrated
-job cleanup stuff into amdgpu_job_free. Otherwise, because of double
-free, a NULL pointer dereference will occur in such scenario.
+[Why & How]
+Previous Z8 watermark values were causing flickering and OTC underflow.
+Updating Z8 watermark values based on the measurement.
 
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2457
-Fixes: f7d66fb2ea43 ("drm/amdgpu: cleanup scheduler job initialization v2")
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
+Acked-by: Alan Liu <HaoPing.Liu@amd.com>
+Signed-off-by: Leo Chen <sancchen@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c |   13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_cs.c
-@@ -1276,7 +1276,7 @@ static int amdgpu_cs_submit(struct amdgp
- 		r = drm_sched_job_add_dependency(&leader->base, fence);
- 		if (r) {
- 			dma_fence_put(fence);
--			goto error_cleanup;
-+			return r;
- 		}
- 	}
- 
-@@ -1303,7 +1303,8 @@ static int amdgpu_cs_submit(struct amdgp
- 	}
- 	if (r) {
- 		r = -EAGAIN;
--		goto error_unlock;
-+		mutex_unlock(&p->adev->notifier_lock);
-+		return r;
- 	}
- 
- 	p->fence = dma_fence_get(&leader->base.s_fence->finished);
-@@ -1350,14 +1351,6 @@ static int amdgpu_cs_submit(struct amdgp
- 	mutex_unlock(&p->adev->notifier_lock);
- 	mutex_unlock(&p->bo_list->bo_list_mutex);
- 	return 0;
--
--error_unlock:
--	mutex_unlock(&p->adev->notifier_lock);
--
--error_cleanup:
--	for (i = 0; i < p->gang_size; ++i)
--		drm_sched_job_cleanup(&p->jobs[i]->base);
--	return r;
- }
- 
- /* Cleanup the parser structure */
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
+@@ -149,8 +149,8 @@ struct _vcs_dpi_soc_bounding_box_st dcn3
+ 	.num_states = 5,
+ 	.sr_exit_time_us = 16.5,
+ 	.sr_enter_plus_exit_time_us = 18.5,
+-	.sr_exit_z8_time_us = 210.0,
+-	.sr_enter_plus_exit_z8_time_us = 310.0,
++	.sr_exit_z8_time_us = 268.0,
++	.sr_enter_plus_exit_z8_time_us = 393.0,
+ 	.writeback_latency_us = 12.0,
+ 	.dram_channel_width_bytes = 4,
+ 	.round_trip_ping_latency_dcfclk_cycles = 106,
 
 
