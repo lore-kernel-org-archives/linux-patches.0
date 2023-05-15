@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200D6101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762EDC433D2;
-	Mon, 15 May 2023 17:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D23D101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E01C433EF;
+	Mon, 15 May 2023 17:52:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173134;
-	bh=tp/0cWuUERJ12V2jc6o9JHb12llyta2euiwz+DHhDsI=;
+	s=korg; t=1684173138;
+	bh=5Ppl7cbmrqBLbKZsDq11q8n894s1dlMntoQ63KsogeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSRNKTZSGOp3ngIV6udev5iS5x0SgHEK+7LxSbjPngNLQ77hMHrH8MKGf+U1Sk3ul
-	 FeIlnHRxHQ8HQBoSwXCWWRs1YM0EUp7JLpxdA4G5+J0zoaFhjDV6PYASm8xGN8jUPe
-	 K3ojiuBf2Dj6FpeIELMkN7Cejy0343m+VyhBhsqU=
+	b=PlEIWnwMNXreqzZUbJxI6m7Cy6csNJ7lVTbfDJFolGcNLGnbDL0/hw6nGSipXxpZ7
+	 ih4o9B4PFIHr8SXH8aOevuvwBmV72sWf3FUjIE8uEHStRb1rVTkhy990HnsbwrXuG+
+	 JDyoNXKJH5VVNn/Eqq9EXfx6h08izF3c0kihBwno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Rothwell <sfr@canb.auug.org.au>,
-	David Woodhouse <dwmw2@infradead.org>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Rishabh Bhatnagar <risbhat@amazon.com>,
-	Allen Pais <apais@linux.microsoft.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 5.10 377/381] KVM: x86: move guest_pv_has out of user_access section
-Date: Mon, 15 May 2023 18:30:28 +0200
-Message-Id: <20230515161753.987849668@linuxfoundation.org>
+	John Ogness <john.ogness@linutronix.de>,
+	Petr Mladek <pmladek@suse.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Subject: [PATCH 5.10 378/381] printk: declare printk_deferred_{enter,safe}() in include/linux/printk.h
+Date: Mon, 15 May 2023 18:30:29 +0200
+Message-Id: <20230515161754.030008297@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -38,60 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rishabh Bhatnagar <risbhat@amazon.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+commit 85e3e7fbbb720b9897fba9a99659e31cbd1c082e upstream.
 
-commit 3e067fd8503d6205aa0c1c8f48f6b209c592d19c upstream.
+[This patch implements subset of original commit 85e3e7fbbb72 ("printk:
+remove NMI tracking") where commit 1007843a9190 ("mm/page_alloc: fix
+potential deadlock on zonelist_update_seq seqlock") depends on, for
+commit 3d36424b3b58 ("mm/page_alloc: fix race condition between
+build_all_zonelists and page allocation") was backported to stable.]
 
-When UBSAN is enabled, the code emitted for the call to guest_pv_has
-includes a call to __ubsan_handle_load_invalid_value.  objtool
-complains that this call happens with UACCESS enabled; to avoid
-the warning, pull the calls to user_access_begin into both arms
-of the "if" statement, after the check for guest_pv_has.
+All NMI contexts are handled the same as the safe context: store the
+message and defer printing. There is no need to have special NMI
+context tracking for this. Using in_nmi() is enough.
 
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Cc: David Woodhouse <dwmw2@infradead.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Rishabh Bhatnagar <risbhat@amazon.com>
-Tested-by: Allen Pais <apais@linux.microsoft.com>
-Acked-by: Sean Christopherson <seanjc@google.com>
+There are several parts of the kernel that are manually calling into
+the printk NMI context tracking in order to cause general printk
+deferred printing:
+
+    arch/arm/kernel/smp.c
+    arch/powerpc/kexec/crash.c
+    kernel/trace/trace.c
+
+For arm/kernel/smp.c and powerpc/kexec/crash.c, provide a new
+function pair printk_deferred_enter/exit that explicitly achieves the
+same objective.
+
+For ftrace, remove the printk context manipulation completely. It was
+added in commit 03fc7f9c99c1 ("printk/nmi: Prevent deadlock when
+accessing the main log buffer in NMI"). The purpose was to enforce
+storing messages directly into the ring buffer even in NMI context.
+It really should have only modified the behavior in NMI context.
+There is no need for a special behavior any longer. All messages are
+always stored directly now. The console deferring is handled
+transparently in vprintk().
+
+Signed-off-by: John Ogness <john.ogness@linutronix.de>
+[pmladek@suse.com: Remove special handling in ftrace.c completely.
+Signed-off-by: Petr Mladek <pmladek@suse.com>
+Link: https://lore.kernel.org/r/20210715193359.25946-5-john.ogness@linutronix.de
+[penguin-kernel: Copy only printk_deferred_{enter,safe}() definition ]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ include/linux/printk.h |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -3049,9 +3049,6 @@ static void record_steal_time(struct kvm
- 	}
+--- a/include/linux/printk.h
++++ b/include/linux/printk.h
+@@ -623,4 +623,23 @@ static inline void print_hex_dump_debug(
+ #define print_hex_dump_bytes(prefix_str, prefix_type, buf, len)	\
+ 	print_hex_dump_debug(prefix_str, prefix_type, 16, 1, buf, len, true)
  
- 	st = (struct kvm_steal_time __user *)ghc->hva;
--	if (!user_access_begin(st, sizeof(*st)))
--		return;
--
- 	/*
- 	 * Doing a TLB flush here, on the guest's behalf, can avoid
- 	 * expensive IPIs.
-@@ -3060,6 +3057,9 @@ static void record_steal_time(struct kvm
- 		u8 st_preempted = 0;
- 		int err = -EFAULT;
- 
-+		if (!user_access_begin(st, sizeof(*st)))
-+			return;
++#ifdef CONFIG_PRINTK
++extern void __printk_safe_enter(void);
++extern void __printk_safe_exit(void);
++/*
++ * The printk_deferred_enter/exit macros are available only as a hack for
++ * some code paths that need to defer all printk console printing. Interrupts
++ * must be disabled for the deferred duration.
++ */
++#define printk_deferred_enter __printk_safe_enter
++#define printk_deferred_exit __printk_safe_exit
++#else
++static inline void printk_deferred_enter(void)
++{
++}
++static inline void printk_deferred_exit(void)
++{
++}
++#endif
 +
- 		asm volatile("1: xchgb %0, %2\n"
- 			     "xor %1, %1\n"
- 			     "2:\n"
-@@ -3082,6 +3082,9 @@ static void record_steal_time(struct kvm
- 		if (!user_access_begin(st, sizeof(*st)))
- 			goto dirty;
- 	} else {
-+		if (!user_access_begin(st, sizeof(*st)))
-+			return;
-+
- 		unsafe_put_user(0, &st->preempted, out);
- 		vcpu->arch.st.preempted = 0;
- 	}
+ #endif
 
 
