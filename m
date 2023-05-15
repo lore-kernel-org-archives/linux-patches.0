@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FA5FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A775C433D2;
-	Mon, 15 May 2023 17:23:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F53FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6CFCC433EF;
+	Mon, 15 May 2023 17:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171401;
-	bh=IcUzBw2bJUhkxixdzg5JVu4DLN2PnXV8cHT1T81XTTk=;
+	s=korg; t=1684171404;
+	bh=lFfp8ZK99F994HHbaPDQwXDJ9WN83dsAtNZdn4qFWXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snOPAKMlNmMp7DLHbL/g9Yvc/UOZNxNNxmPgZOVzqitfpiTxJzDz1E9lIZAz2NrqT
-	 u4wWVHxpApTKlRZj1gERV/FpFLWdcg3SAQ+v/I+82rBFeqiHbm8inxPI+7Y98uoXYc
-	 0JKkBudfEYM/0GMno48lc4De1sGLpXOxIPEWvHwk=
+	b=QKyFgXYS2sjxA6VeZq9eZ+Tk4dxsGpVwlQN9Dc7S0X4uQj3qTTs4lodpFFiZ4lLFl
+	 m4DCWc/bTwXeB8ok3gYqsVvdrOJybVYfZhhnTDjP83//3q60UbtobQI+H+6ARCnmGN
+	 0oRkg1jK5vUz4bJnb1ef/WCu3ZEs6gQLpcOxMNoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Animesh Manna <animesh.manna@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.2 170/242] drm/i915/color: Fix typo for Plane CSC indexes
-Date: Mon, 15 May 2023 18:28:16 +0200
-Message-Id: <20230515161726.980272377@linuxfoundation.org>
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Yogesh Mohan Marimuthu <Yogesh.Mohanmarimuthu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Tim Huang <Tim.Huang@amd.com>
+Subject: [PATCH 6.2 197/242] drm/amdgpu: change gfx 11.0.4 external_id range
+Date: Mon, 15 May 2023 18:28:43 +0200
+Message-Id: <20230515161727.856586190@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,40 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-commit 2efc8e1001acfdc143cf2d25a08a4974c322e2a8 upstream.
+commit 996e93a3fe74dcf9d467ae3020aea42cc3ff65e3 upstream.
 
-Replace _PLANE_INPUT_CSC_RY_GY_2_* with _PLANE_CSC_RY_GY_2_*
-for Plane CSC
+gfx 11.0.4 range starts from 0x80.
 
-Fixes: 6eba56f64d5d ("drm/i915/pxp: black pixels on pxp disabled")
-
-Cc: <stable@vger.kernel.org>
-
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Signed-off-by: Animesh Manna <animesh.manna@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230330150104.2923519-1-chaitanya.kumar.borah@intel.com
-(cherry picked from commit e39c76b2160bbd005587f978d29603ef790aefcd)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 311d52367d0a ("drm/amdgpu: add soc21 common ip block support for GC 11.0.4")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reported-by: Yogesh Mohan Marimuthu <Yogesh.Mohanmarimuthu@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_reg.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc21.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/i915_reg.h
-+++ b/drivers/gpu/drm/i915/i915_reg.h
-@@ -7612,8 +7612,8 @@ enum skl_power_gate {
+--- a/drivers/gpu/drm/amd/amdgpu/soc21.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
+@@ -777,7 +777,7 @@ static int soc21_common_early_init(void
+ 			AMD_PG_SUPPORT_VCN_DPG |
+ 			AMD_PG_SUPPORT_GFX_PG |
+ 			AMD_PG_SUPPORT_JPEG;
+-		adev->external_rev_id = adev->rev_id + 0x1;
++		adev->external_rev_id = adev->rev_id + 0x80;
+ 		break;
  
- #define _PLANE_CSC_RY_GY_1(pipe)	_PIPE(pipe, _PLANE_CSC_RY_GY_1_A, \
- 					      _PLANE_CSC_RY_GY_1_B)
--#define _PLANE_CSC_RY_GY_2(pipe)	_PIPE(pipe, _PLANE_INPUT_CSC_RY_GY_2_A, \
--					      _PLANE_INPUT_CSC_RY_GY_2_B)
-+#define _PLANE_CSC_RY_GY_2(pipe)	_PIPE(pipe, _PLANE_CSC_RY_GY_2_A, \
-+					      _PLANE_CSC_RY_GY_2_B)
- #define PLANE_CSC_COEFF(pipe, plane, index)	_MMIO_PLANE(plane, \
- 							    _PLANE_CSC_RY_GY_1(pipe) +  (index) * 4, \
- 							    _PLANE_CSC_RY_GY_2(pipe) + (index) * 4)
+ 	default:
 
 
