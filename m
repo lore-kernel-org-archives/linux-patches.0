@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CECAFBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:56:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4ADC433D2;
-	Mon, 15 May 2023 17:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3EBFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:56:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF097C433D2;
+	Mon, 15 May 2023 17:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173370;
-	bh=hFv2u4Yusf1LDohkO2kSi+L5bR7samG9gkIredYcF90=;
+	s=korg; t=1684173373;
+	bh=VVKvGG66qTJJUYrbzzAd0DHnH88KLqLcxDTYWKu/A2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiSa1jko1xM/avOAD9MlVlp4HmZuCafgEaRREbmpENM7K2/aIEQf3cOMRVdSmgYNU
-	 em+FrRFH4wbYR39B6oVDSSaVK2Vy9qDwByhqOUUbdT+Rld9heKmiHmc2UCqO4Xfg3q
-	 qq817d9MjxRkX+G4Jza637IVXfpXckGwNKdQYhug=
+	b=WTySumpBUPCZ7m5W3GHjwkDE1Tz623vimCkXvx7FB7UZ9FDJjDnzTXXBB9OdMMo5E
+	 ArPafn3Z4bhMQFt0KKZWgRgpLTM2AeSq0rNYJuWvuJd+Cz3vZ41L5ZhaeqMVbkJRyi
+	 BRFLTFJHQ2YCv27qcK0aF1A+usrr9jQcCmBC8OAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 043/282] ARM: dts: qcom: ipq8064: Fix the PCI I/O port range
-Date: Mon, 15 May 2023 18:27:01 +0200
-Message-Id: <20230515161723.555718569@linuxfoundation.org>
+Subject: [PATCH 5.4 044/282] media: bdisp: Add missing check for create_workqueue
+Date: Mon, 15 May 2023 18:27:02 +0200
+Message-Id: <20230515161723.584840212@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,66 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 0b16b34e491629016109e56747ad64588074194b ]
+[ Upstream commit 2371adeab717d8fe32144a84f3491a03c5838cfb ]
 
-For 64KiB of the I/O region, the I/O ports of the legacy PCI devices are
-located in the range of 0x0 to 0x10000. Hence, fix the bogus PCI addresses
-(0x0fe00000, 0x31e00000, 0x35e00000) specified in the ranges property for
-I/O region.
+Add the check for the return value of the create_workqueue
+in order to avoid NULL pointer dereference.
 
-While at it, let's use the missing 0x prefix for the addresses.
-
-Fixes: 93241840b664 ("ARM: dts: qcom: Add pcie nodes for ipq8064")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230228164752.55682-17-manivannan.sadhasivam@linaro.org
+Fixes: 28ffeebbb7bd ("[media] bdisp: 2D blitter driver using v4l2 mem2mem framework")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-ipq8064.dtsi | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/media/platform/sti/bdisp/bdisp-v4l2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-ipq8064.dtsi b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-index f2653600f47f8..976a8a1fa9535 100644
---- a/arch/arm/boot/dts/qcom-ipq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-ipq8064.dtsi
-@@ -451,8 +451,8 @@
- 			#address-cells = <3>;
- 			#size-cells = <2>;
+diff --git a/drivers/media/platform/sti/bdisp/bdisp-v4l2.c b/drivers/media/platform/sti/bdisp/bdisp-v4l2.c
+index 16a097f93b423..2485a3657c891 100644
+--- a/drivers/media/platform/sti/bdisp/bdisp-v4l2.c
++++ b/drivers/media/platform/sti/bdisp/bdisp-v4l2.c
+@@ -1308,6 +1308,8 @@ static int bdisp_probe(struct platform_device *pdev)
+ 	init_waitqueue_head(&bdisp->irq_queue);
+ 	INIT_DELAYED_WORK(&bdisp->timeout_work, bdisp_irq_timeout);
+ 	bdisp->work_queue = create_workqueue(BDISP_NAME);
++	if (!bdisp->work_queue)
++		return -ENOMEM;
  
--			ranges = <0x81000000 0 0x0fe00000 0x0fe00000 0 0x00010000   /* downstream I/O */
--				  0x82000000 0 0x08000000 0x08000000 0 0x07e00000>; /* non-prefetchable memory */
-+			ranges = <0x81000000 0x0 0x00000000 0x0fe00000 0x0 0x00010000   /* I/O */
-+				  0x82000000 0x0 0x08000000 0x08000000 0x0 0x07e00000>; /* MEM */
- 
- 			interrupts = <GIC_SPI 35 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi";
-@@ -502,8 +502,8 @@
- 			#address-cells = <3>;
- 			#size-cells = <2>;
- 
--			ranges = <0x81000000 0 0x31e00000 0x31e00000 0 0x00010000   /* downstream I/O */
--				  0x82000000 0 0x2e000000 0x2e000000 0 0x03e00000>; /* non-prefetchable memory */
-+			ranges = <0x81000000 0x0 0x00000000 0x31e00000 0x0 0x00010000   /* I/O */
-+				  0x82000000 0x0 0x2e000000 0x2e000000 0x0 0x03e00000>; /* MEM */
- 
- 			interrupts = <GIC_SPI 57 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi";
-@@ -553,8 +553,8 @@
- 			#address-cells = <3>;
- 			#size-cells = <2>;
- 
--			ranges = <0x81000000 0 0x35e00000 0x35e00000 0 0x00010000   /* downstream I/O */
--				  0x82000000 0 0x32000000 0x32000000 0 0x03e00000>; /* non-prefetchable memory */
-+			ranges = <0x81000000 0x0 0x00000000 0x35e00000 0x0 0x00010000   /* I/O */
-+				  0x82000000 0x0 0x32000000 0x32000000 0x0 0x03e00000>; /* MEM */
- 
- 			interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "msi";
+ 	spin_lock_init(&bdisp->slock);
+ 	mutex_init(&bdisp->lock);
 -- 
 2.39.2
 
