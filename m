@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47BDFBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339B0C433EF;
-	Mon, 15 May 2023 17:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27B53FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:04:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B91CC433EF;
+	Mon, 15 May 2023 17:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170248;
-	bh=k+H5OkRSfoOMeCwAw7iGPs2b0KLH/JBLoO2rkJw9hYI=;
+	s=korg; t=1684170252;
+	bh=m2lkswpJOp0oKDZg8Uah530RHxko+TYz2w3YLEY3548=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvs+oC4cEhlZ2uMufhQgaHl6YwkXJSbLWXS9Iu1zt6cev49YXIJvXeLjSCpyg+gRb
-	 qlqgsWJbipfVHlqFhbZe4DkafO8IqAOXysXxOr7IypPv1L1p8l/OvztbMO8lI9ioRj
-	 dX9XdZf0D8D35g7CJdPqlvHu51bat7LEB3IG3m9w=
+	b=qMH9R63mTgtTJK6tBLNShnzZw/NeLE6SjrK0oygUiV/pN5FxfYq867Kk3FiP8NLQT
+	 72nco0OPLz9qjoT+Ij5cb3s0LqUc4/xaUYtJGYiYPpbpmWaIgAfhKvAUSzD9ISOx5r
+	 wxzXtawegxbKTdl76UuEPp4H31vFujZpzXJTRYI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	Sai Krishna <saikrishnag@marvell.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/239] watchdog: dw_wdt: Fix the error handling path of dw_wdt_drv_probe()
-Date: Mon, 15 May 2023 18:25:16 +0200
-Message-Id: <20230515161723.298144314@linuxfoundation.org>
+Subject: [PATCH 6.1 071/239] octeontx2-af: Update/Fix NPC field hash extract feature
+Date: Mon, 15 May 2023 18:25:34 +0200
+Message-Id: <20230515161723.821731298@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -37,57 +38,195 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 7f5390750645756bd5da2b24fac285f2654dd922 ]
+[ Upstream commit 406bed11fb91a0b35c26fe633d8700febaec6439 ]
 
-The commit in Fixes has only updated the remove function and missed the
-error handling path of the probe.
+1. As per previous implementation, mask and control parameter to
+generate the field hash value was not passed to the caller program.
+Updated the secret key mbox to share that information as well,
+as a part of the fix.
+2. Earlier implementation did not consider hash reduction of both
+source and destination IPv6 addresses. Only source IPv6 address
+was considered. This fix solves that and provides option to hash
 
-Add the missing reset_control_assert() call.
-
-Fixes: 65a3b6935d92 ("watchdog: dw_wdt: get reset lines from dt")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/fbb650650bbb33a8fa2fd028c23157bedeed50e1.1682491863.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 56d9f5fd2246 ("octeontx2-af: Use hashed field in MCAM key")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
+Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/dw_wdt.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/mbox.h  | 16 +++++---
+ .../marvell/octeontx2/af/rvu_npc_hash.c       | 37 ++++++++++++-------
+ .../marvell/octeontx2/af/rvu_npc_hash.h       |  6 +++
+ 3 files changed, 41 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/watchdog/dw_wdt.c b/drivers/watchdog/dw_wdt.c
-index 52962e8d11a6f..61af5d1332ac6 100644
---- a/drivers/watchdog/dw_wdt.c
-+++ b/drivers/watchdog/dw_wdt.c
-@@ -635,7 +635,7 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+index c7c92c7510fa6..5921a78661e41 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+@@ -242,9 +242,9 @@ M(NPC_MCAM_READ_BASE_RULE, 0x6011, npc_read_base_steer_rule,            \
+ M(NPC_MCAM_GET_STATS, 0x6012, npc_mcam_entry_stats,                     \
+ 				   npc_mcam_get_stats_req,              \
+ 				   npc_mcam_get_stats_rsp)              \
+-M(NPC_GET_SECRET_KEY, 0x6013, npc_get_secret_key,                     \
+-				   npc_get_secret_key_req,              \
+-				   npc_get_secret_key_rsp)              \
++M(NPC_GET_FIELD_HASH_INFO, 0x6013, npc_get_field_hash_info,                     \
++				   npc_get_field_hash_info_req,              \
++				   npc_get_field_hash_info_rsp)              \
+ M(NPC_GET_FIELD_STATUS, 0x6014, npc_get_field_status,                     \
+ 				   npc_get_field_status_req,              \
+ 				   npc_get_field_status_rsp)              \
+@@ -1513,14 +1513,20 @@ struct npc_mcam_get_stats_rsp {
+ 	u8 stat_ena; /* enabled */
+ };
  
- 	ret = dw_wdt_init_timeouts(dw_wdt, dev);
- 	if (ret)
--		goto out_disable_clk;
-+		goto out_assert_rst;
+-struct npc_get_secret_key_req {
++struct npc_get_field_hash_info_req {
+ 	struct mbox_msghdr hdr;
+ 	u8 intf;
+ };
  
- 	wdd = &dw_wdt->wdd;
- 	wdd->ops = &dw_wdt_ops;
-@@ -666,12 +666,15 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
+-struct npc_get_secret_key_rsp {
++struct npc_get_field_hash_info_rsp {
+ 	struct mbox_msghdr hdr;
+ 	u64 secret_key[3];
++#define NPC_MAX_HASH 2
++#define NPC_MAX_HASH_MASK 2
++	/* NPC_AF_INTF(0..1)_HASH(0..1)_MASK(0..1) */
++	u64 hash_mask[NPC_MAX_INTF][NPC_MAX_HASH][NPC_MAX_HASH_MASK];
++	/* NPC_AF_INTF(0..1)_HASH(0..1)_RESULT_CTRL */
++	u64 hash_ctrl[NPC_MAX_INTF][NPC_MAX_HASH];
+ };
  
- 	ret = watchdog_register_device(wdd);
- 	if (ret)
--		goto out_disable_pclk;
-+		goto out_assert_rst;
+ enum ptp_op {
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+index 5aed3dbf3b991..18f12f9156544 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+@@ -110,8 +110,8 @@ static u64 npc_update_use_hash(int lt, int ld)
+ 		 * in KEX_LD_CFG
+ 		 */
+ 		cfg = KEX_LD_CFG_USE_HASH(0x1, 0x03,
+-					  ld ? 0x8 : 0x18,
+-					  0x1, 0x0, 0x10);
++					  ld ? 0x18 : 0x8,
++					  0x1, 0x0, ld ? 0x14 : 0x10);
+ 		break;
+ 	}
  
- 	dw_wdt_dbgfs_init(dw_wdt);
+@@ -134,7 +134,6 @@ static void npc_program_mkex_hash_rx(struct rvu *rvu, int blkaddr,
+ 				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
+ 					u64 cfg = npc_update_use_hash(lt, ld);
  
- 	return 0;
+-					hash_cnt++;
+ 					if (hash_cnt == NPC_MAX_HASH)
+ 						return;
  
-+out_assert_rst:
-+	reset_control_assert(dw_wdt->rst);
+@@ -149,6 +148,8 @@ static void npc_program_mkex_hash_rx(struct rvu *rvu, int blkaddr,
+ 							     mkex_hash->hash_mask[intf][ld][1]);
+ 					SET_KEX_LD_HASH_CTRL(intf, ld,
+ 							     mkex_hash->hash_ctrl[intf][ld]);
 +
- out_disable_pclk:
- 	clk_disable_unprepare(dw_wdt->pclk);
++					hash_cnt++;
+ 				}
+ 			}
+ 		}
+@@ -171,7 +172,6 @@ static void npc_program_mkex_hash_tx(struct rvu *rvu, int blkaddr,
+ 				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
+ 					u64 cfg = npc_update_use_hash(lt, ld);
  
+-					hash_cnt++;
+ 					if (hash_cnt == NPC_MAX_HASH)
+ 						return;
+ 
+@@ -187,8 +187,6 @@ static void npc_program_mkex_hash_tx(struct rvu *rvu, int blkaddr,
+ 					SET_KEX_LD_HASH_CTRL(intf, ld,
+ 							     mkex_hash->hash_ctrl[intf][ld]);
+ 					hash_cnt++;
+-					if (hash_cnt == NPC_MAX_HASH)
+-						return;
+ 				}
+ 		}
+ 	}
+@@ -242,8 +240,8 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
+ 			   struct flow_msg *omask)
+ {
+ 	struct npc_mcam_kex_hash *mkex_hash = rvu->kpu.mkex_hash;
+-	struct npc_get_secret_key_req req;
+-	struct npc_get_secret_key_rsp rsp;
++	struct npc_get_field_hash_info_req req;
++	struct npc_get_field_hash_info_rsp rsp;
+ 	u64 ldata[2], cfg;
+ 	u32 field_hash;
+ 	u8 hash_idx;
+@@ -254,7 +252,7 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
+ 	}
+ 
+ 	req.intf = intf;
+-	rvu_mbox_handler_npc_get_secret_key(rvu, &req, &rsp);
++	rvu_mbox_handler_npc_get_field_hash_info(rvu, &req, &rsp);
+ 
+ 	for (hash_idx = 0; hash_idx < NPC_MAX_HASH; hash_idx++) {
+ 		cfg = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_CFG(intf, hash_idx));
+@@ -315,13 +313,13 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
+ 	}
+ }
+ 
+-int rvu_mbox_handler_npc_get_secret_key(struct rvu *rvu,
+-					struct npc_get_secret_key_req *req,
+-					struct npc_get_secret_key_rsp *rsp)
++int rvu_mbox_handler_npc_get_field_hash_info(struct rvu *rvu,
++					     struct npc_get_field_hash_info_req *req,
++					     struct npc_get_field_hash_info_rsp *rsp)
+ {
+ 	u64 *secret_key = rsp->secret_key;
+ 	u8 intf = req->intf;
+-	int blkaddr;
++	int i, j, blkaddr;
+ 
+ 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
+ 	if (blkaddr < 0) {
+@@ -333,6 +331,19 @@ int rvu_mbox_handler_npc_get_secret_key(struct rvu *rvu,
+ 	secret_key[1] = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY1(intf));
+ 	secret_key[2] = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY2(intf));
+ 
++	for (i = 0; i < NPC_MAX_HASH; i++) {
++		for (j = 0; j < NPC_MAX_HASH_MASK; j++) {
++			rsp->hash_mask[NIX_INTF_RX][i][j] =
++				GET_KEX_LD_HASH_MASK(NIX_INTF_RX, i, j);
++			rsp->hash_mask[NIX_INTF_TX][i][j] =
++				GET_KEX_LD_HASH_MASK(NIX_INTF_TX, i, j);
++		}
++	}
++
++	for (i = 0; i < NPC_MAX_INTF; i++)
++		for (j = 0; j < NPC_MAX_HASH; j++)
++			rsp->hash_ctrl[i][j] = GET_KEX_LD_HASH_CTRL(i, j);
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
+index 3efeb09c58dec..65936f4aeaacf 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
+@@ -31,6 +31,12 @@
+ 	rvu_write64(rvu, blkaddr,	\
+ 		    NPC_AF_INTFX_HASHX_MASKX(intf, ld, mask_idx), cfg)
+ 
++#define GET_KEX_LD_HASH_CTRL(intf, ld)	\
++	rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_RESULT_CTRL(intf, ld))
++
++#define GET_KEX_LD_HASH_MASK(intf, ld, mask_idx)	\
++	rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_MASKX(intf, ld, mask_idx))
++
+ #define SET_KEX_LD_HASH_CTRL(intf, ld, cfg) \
+ 	rvu_write64(rvu, blkaddr,	\
+ 		    NPC_AF_INTFX_HASHX_RESULT_CTRL(intf, ld), cfg)
 -- 
 2.39.2
 
