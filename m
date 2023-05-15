@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09620FC10
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3138EC433D2;
-	Mon, 15 May 2023 17:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3448DFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EC4AC433EF;
+	Mon, 15 May 2023 17:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172154;
-	bh=tABDN212CA76MVrgvoONGmEu4F/MywUwtIQNv3n17ak=;
+	s=korg; t=1684172158;
+	bh=TnlvqDMMSK26SQ9lQeKyCYCFbtqYADCFrHvek/Y2gA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tORNrjtt4wBCZ63vshW5hhOVR48y8hOUsTYFmG3q8onjhvu3VwitlNW2fe0Bf2Ffw
-	 F3gFicmzvDAjmv5VLgZ7qxZIchRbUU682Dwb9BzV9876IfqE1n0jubyGbNLPH95g1m
-	 DLfZjrYNMbxyFgtVBMG8JKGQYRH25cF4nSh0IhCc=
+	b=wmlUSOxeWU7pXBPlHVFAXqdIvho6qh1G9ANtw4XNRIKLgt2JN7CjWEZkE5QCLGCTl
+	 uQIJpZLmiiOfRv0JGLET/30uSVV9gDAAPUyeJTpwxbr795DbNXmSgQcOTj/5FLxdtn
+	 UxeSX9FAReJYOgVmY6HkrK4ydC4ZUqipKWRqnp9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Reinette Chatre <reinette.chatre@intel.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 061/381] selftests/resctrl: Return NULL if malloc_and_init_memory() did not alloc mem
-Date: Mon, 15 May 2023 18:25:12 +0200
-Message-Id: <20230515161739.581049583@linuxfoundation.org>
+Subject: [PATCH 5.10 062/381] selftests/resctrl: Check for return value after write_schemata()
+Date: Mon, 15 May 2023 18:25:13 +0200
+Message-Id: <20230515161739.629713876@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -39,15 +39,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 22a8be280383812235131dda18a8212a59fadd2d ]
+[ Upstream commit 0d45c83b95da414e98ad333e723141a94f6e2c64 ]
 
-malloc_and_init_memory() in fill_buf isn't checking if memalign()
-successfully allocated memory or not before accessing the memory.
+MBA test case writes schemata but it does not check if the write is
+successful or not.
 
-Check the return value of memalign() and return NULL if allocating
-aligned memory fails.
+Add the error check and return error properly.
 
-Fixes: a2561b12fe39 ("selftests/resctrl: Add built in benchmark")
+Fixes: 01fee6b4d1f9 ("selftests/resctrl: Add MBA test")
 Co-developed-by: Fenghua Yu <fenghua.yu@intel.com>
 Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
@@ -55,22 +54,34 @@ Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/fill_buf.c | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/testing/selftests/resctrl/mba_test.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
-index 56ccbeae0638d..c20d0a7ecbe63 100644
---- a/tools/testing/selftests/resctrl/fill_buf.c
-+++ b/tools/testing/selftests/resctrl/fill_buf.c
-@@ -68,6 +68,8 @@ static void *malloc_and_init_memory(size_t s)
- 	size_t s64;
+diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
+index 6449fbd96096a..6cfddd1d43558 100644
+--- a/tools/testing/selftests/resctrl/mba_test.c
++++ b/tools/testing/selftests/resctrl/mba_test.c
+@@ -28,6 +28,7 @@ static int mba_setup(int num, ...)
+ 	struct resctrl_val_param *p;
+ 	char allocation_str[64];
+ 	va_list param;
++	int ret;
  
- 	void *p = memalign(PAGE_SIZE, s);
-+	if (!p)
-+		return NULL;
+ 	va_start(param, num);
+ 	p = va_arg(param, struct resctrl_val_param *);
+@@ -45,7 +46,11 @@ static int mba_setup(int num, ...)
  
- 	p64 = (uint64_t *)p;
- 	s64 = s / sizeof(uint64_t);
+ 	sprintf(allocation_str, "%d", allocation);
+ 
+-	write_schemata(p->ctrlgrp, allocation_str, p->cpu_no, p->resctrl_val);
++	ret = write_schemata(p->ctrlgrp, allocation_str, p->cpu_no,
++			     p->resctrl_val);
++	if (ret < 0)
++		return ret;
++
+ 	allocation -= ALLOCATION_STEP;
+ 
+ 	return 0;
 -- 
 2.39.2
 
