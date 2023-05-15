@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C5E6101E0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:58:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73431C433D2;
-	Mon, 15 May 2023 17:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AF64101E0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 765ECC433D2;
+	Mon, 15 May 2023 17:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173536;
-	bh=WFQnpNTPm2uaBhxj81J8obnxWg3tkgv69QgGoHfyuic=;
+	s=korg; t=1684173539;
+	bh=4VBJ3DC6bUdKQc5dDuqbBzvoxBPYpqgRMQH1oI8FVXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twOfXDerVwQc0Lq3bodr00z7+1gmg6UZqcQaFN6p/6fNoBv7zI/48omUChupmhSGe
-	 OBT11XL9tSKlIMD5LYAr5wRfJNXgnWXOgAX7OPLP9i1aJzzhPQXzMcQ2ZDk+yZ6O/J
-	 kBAt4FIfEGSEYEiaNGx9p0ospPAweuZe64sGB/TI=
+	b=fsQmobwQbOCQKRaebiZEYoer4Iu17mqnySDZgVrfby/X4UYYNgu6PhjnEQoc+bG46
+	 Ggbv5euXjkOzbQiejwMgSzw3tTvL1noMHe/Mghg9JpyjPY0Ygdj7kNIG9G3y1d9as5
+	 JQHUF4JfHsbX+lNMBWDTN5n1KmgBkobJJ+hwREVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Richard Zhu <hongxing.zhu@nxp.com>,
+	Barry Song <song.bao.hua@hisilicon.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	dmitry.torokhov@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 126/282] PCI: imx6: Install the fault handler only on compatible match
-Date: Mon, 15 May 2023 18:28:24 +0200
-Message-Id: <20230515161726.008720152@linuxfoundation.org>
+Subject: [PATCH 5.4 127/282] genirq: Add IRQF_NO_AUTOEN for request_irq/nmi()
+Date: Mon, 15 May 2023 18:28:25 +0200
+Message-Id: <20230515161726.036932795@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,76 +37,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: H. Nikolaus Schaller <hns@goldelico.com>
+From: Barry Song <song.bao.hua@hisilicon.com>
 
-[ Upstream commit 5f5ac460dfe7f4e11f99de9870f240e39189cf72 ]
+[ Upstream commit cbe16f35bee6880becca6f20d2ebf6b457148552 ]
 
-commit bb38919ec56e ("PCI: imx6: Add support for i.MX6 PCIe controller")
-added a fault hook to this driver in the probe function. So it was only
-installed if needed.
+Many drivers don't want interrupts enabled automatically via request_irq().
+So they are handling this issue by either way of the below two:
 
-commit bde4a5a00e76 ("PCI: imx6: Allow probe deferral by reset GPIO")
-moved it from probe to driver init which installs the hook unconditionally
-as soon as the driver is compiled into a kernel.
+(1)
+  irq_set_status_flags(irq, IRQ_NOAUTOEN);
+  request_irq(dev, irq...);
 
-When this driver is compiled as a module, the hook is not registered
-until after the driver has been matched with a .compatible and
-loaded.
+(2)
+  request_irq(dev, irq...);
+  disable_irq(irq);
 
-commit 415b6185c541 ("PCI: imx6: Fix config read timeout handling")
-extended the fault handling code.
+The code in the second way is silly and unsafe. In the small time gap
+between request_irq() and disable_irq(), interrupts can still come.
 
-commit 2d8ed461dbc9 ("PCI: imx6: Add support for i.MX8MQ")
-added some protection for non-ARM architectures, but this does not
-protect non-i.MX ARM architectures.
+The code in the first way is safe though it's subobtimal.
 
-Since fault handlers can be triggered on any architecture for different
-reasons, there is no guarantee that they will be triggered only for the
-assumed situation, leading to improper error handling (i.MX6-specific
-imx6q_pcie_abort_handler) on foreign systems.
+Add a new IRQF_NO_AUTOEN flag which can be handed in by drivers to
+request_irq() and request_nmi(). It prevents the automatic enabling of the
+requested interrupt/nmi in the same safe way as #1 above. With that the
+various usage sites of #1 and #2 above can be simplified and corrected.
 
-I had seen strange L3 imprecise external abort messages several times on
-OMAP4 and OMAP5 devices and couldn't make sense of them until I realized
-they were related to this unused imx6q driver because I had
-CONFIG_PCI_IMX6=y.
-
-Note that CONFIG_PCI_IMX6=y is useful for kernel binaries that are designed
-to run on different ARM SoC and be differentiated only by device tree
-binaries. So turning off CONFIG_PCI_IMX6 is not a solution.
-
-Therefore we check the compatible in the init function before registering
-the fault handler.
-
-Link: https://lore.kernel.org/r/e1bcfc3078c82b53aa9b78077a89955abe4ea009.1678380991.git.hns@goldelico.com
-Fixes: bde4a5a00e76 ("PCI: imx6: Allow probe deferral by reset GPIO")
-Fixes: 415b6185c541 ("PCI: imx6: Fix config read timeout handling")
-Fixes: 2d8ed461dbc9 ("PCI: imx6: Add support for i.MX8MQ")
-Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Richard Zhu <hongxing.zhu@nxp.com>
+Signed-off-by: Barry Song <song.bao.hua@hisilicon.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: dmitry.torokhov@gmail.com
+Link: https://lore.kernel.org/r/20210302224916.13980-2-song.bao.hua@hisilicon.com
+Stable-dep-of: 39db65a0a17b ("ASoC: es8316: Handle optional IRQ assignment")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-imx6.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ include/linux/interrupt.h |  4 ++++
+ kernel/irq/manage.c       | 11 +++++++++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-imx6.c b/drivers/pci/controller/dwc/pci-imx6.c
-index b34b52b364d5f..30c259f63239d 100644
---- a/drivers/pci/controller/dwc/pci-imx6.c
-+++ b/drivers/pci/controller/dwc/pci-imx6.c
-@@ -1295,6 +1295,13 @@ DECLARE_PCI_FIXUP_CLASS_HEADER(PCI_VENDOR_ID_SYNOPSYS, 0xabcd,
- static int __init imx6_pcie_init(void)
- {
- #ifdef CONFIG_ARM
-+	struct device_node *np;
-+
-+	np = of_find_matching_node(NULL, imx6_pcie_of_match);
-+	if (!np)
-+		return -ENODEV;
-+	of_node_put(np);
-+
- 	/*
- 	 * Since probe() can be deferred we need to make sure that
- 	 * hook_fault_code is not called after __init memory is freed
+diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
+index 30e92536c78cc..01517747214a4 100644
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -61,6 +61,9 @@
+  *                interrupt handler after suspending interrupts. For system
+  *                wakeup devices users need to implement wakeup detection in
+  *                their interrupt handlers.
++ * IRQF_NO_AUTOEN - Don't enable IRQ or NMI automatically when users request it.
++ *                Users will enable it explicitly by enable_irq() or enable_nmi()
++ *                later.
+  */
+ #define IRQF_SHARED		0x00000080
+ #define IRQF_PROBE_SHARED	0x00000100
+@@ -74,6 +77,7 @@
+ #define IRQF_NO_THREAD		0x00010000
+ #define IRQF_EARLY_RESUME	0x00020000
+ #define IRQF_COND_SUSPEND	0x00040000
++#define IRQF_NO_AUTOEN		0x00080000
+ 
+ #define IRQF_TIMER		(__IRQF_TIMER | IRQF_NO_SUSPEND | IRQF_NO_THREAD)
+ 
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index 79214f9836243..2a8a5e1779c9c 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -1610,7 +1610,8 @@ __setup_irq(unsigned int irq, struct irq_desc *desc, struct irqaction *new)
+ 			irqd_set(&desc->irq_data, IRQD_NO_BALANCING);
+ 		}
+ 
+-		if (irq_settings_can_autoenable(desc)) {
++		if (!(new->flags & IRQF_NO_AUTOEN) &&
++		    irq_settings_can_autoenable(desc)) {
+ 			irq_startup(desc, IRQ_RESEND, IRQ_START_COND);
+ 		} else {
+ 			/*
+@@ -2041,10 +2042,15 @@ int request_threaded_irq(unsigned int irq, irq_handler_t handler,
+ 	 * which interrupt is which (messes up the interrupt freeing
+ 	 * logic etc).
+ 	 *
++	 * Also shared interrupts do not go well with disabling auto enable.
++	 * The sharing interrupt might request it while it's still disabled
++	 * and then wait for interrupts forever.
++	 *
+ 	 * Also IRQF_COND_SUSPEND only makes sense for shared interrupts and
+ 	 * it cannot be set along with IRQF_NO_SUSPEND.
+ 	 */
+ 	if (((irqflags & IRQF_SHARED) && !dev_id) ||
++	    ((irqflags & IRQF_SHARED) && (irqflags & IRQF_NO_AUTOEN)) ||
+ 	    (!(irqflags & IRQF_SHARED) && (irqflags & IRQF_COND_SUSPEND)) ||
+ 	    ((irqflags & IRQF_NO_SUSPEND) && (irqflags & IRQF_COND_SUSPEND)))
+ 		return -EINVAL;
+@@ -2200,7 +2206,8 @@ int request_nmi(unsigned int irq, irq_handler_t handler,
+ 
+ 	desc = irq_to_desc(irq);
+ 
+-	if (!desc || irq_settings_can_autoenable(desc) ||
++	if (!desc || (irq_settings_can_autoenable(desc) &&
++	    !(irqflags & IRQF_NO_AUTOEN)) ||
+ 	    !irq_settings_can_request(desc) ||
+ 	    WARN_ON(irq_settings_is_per_cpu_devid(desc)) ||
+ 	    !irq_supports_nmi(desc))
 -- 
 2.39.2
 
