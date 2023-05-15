@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAAF1772F
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:03:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B71C433D2;
-	Mon, 15 May 2023 18:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ACC11772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:03:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8D7C433B4;
+	Mon, 15 May 2023 18:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173824;
-	bh=M9yqysfw/5Vvct5UEvqlOd2Sb0EqDJLAgTJ1+E6GX5I=;
+	s=korg; t=1684173827;
+	bh=a8QJ9EJzBTlBqhii5F/12mBnvY5NzPBsT+SUedInjb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RcKaoY1aS3nfGSGlH24+zZbIay0qjc56uhws1RdT82ppJQX8M/VEJm6Bo7L5RletO
-	 8JtdY3ZvpWVkzmjMh2tuSfBndbThcAm6d1jmtwYOSJy9s2InPOr3SZm9WiUqaHn2IF
-	 MDQquphsnbp8HRKNUmXMZOqmrH1nggsf3+8OyDSc=
+	b=WyMKS8iPDe6PN228c25bNDP+u9uEeVa8fRXfwc1d6TtoFcfPmd/Rf7k6PVa2W2/ZE
+	 auFJT5ImOIpMQghVx8c5iISHBvgaeWktpk4vkR4K9kBKwxk3Q4SJVJU5gWKQDd3yHN
+	 z9ioJcIRU5gQmaDxuo22uUlnhu9zWn7t7GAZ8KEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 201/282] btrfs: scrub: reject unsupported scrub flags
-Date: Mon, 15 May 2023 18:29:39 +0200
-Message-Id: <20230515161728.278110442@linuxfoundation.org>
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Jens Axboe <axboe@kernel.dk>,
+	Jann Horn <jannh@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 5.4 219/282] kernel/relay.c: fix read_pos error when multiple readers
+Date: Mon, 15 May 2023 18:29:57 +0200
+Message-Id: <20230515161728.798725193@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,57 +39,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-commit 604e6681e114d05a2e384c4d1e8ef81918037ef5 upstream.
+[ Upstream commit 341a7213e5c1ce274cc0f02270054905800ea660 ]
 
-Since the introduction of scrub interface, the only flag that we support
-is BTRFS_SCRUB_READONLY.  Thus there is no sanity checks, if there are
-some undefined flags passed in, we just ignore them.
+When reading, read_pos should start with bytes_consumed, not file->f_pos.
+Because when there is more than one reader, the read_pos corresponding to
+file->f_pos may have been consumed, which will cause the data that has
+been consumed to be read and the bytes_consumed update error.
 
-This is problematic if we want to introduce new scrub flags, as we have
-no way to determine if such flags are supported.
-
-Address the problem by introducing a check for the flags, and if
-unsupported flags are set, return -EOPNOTSUPP to inform the user space.
-
-This check should be backported for all supported kernels before any new
-scrub flags are introduced.
-
-CC: stable@vger.kernel.org # 4.14+
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>e
+Link: http://lkml.kernel.org/r/1579691175-28949-1-git-send-email-yangpc@wangsu.com
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Stable-dep-of: 43ec16f1450f ("relayfs: fix out-of-bounds access in relay_file_read")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ioctl.c           |    5 +++++
- include/uapi/linux/btrfs.h |    1 +
- 2 files changed, 6 insertions(+)
+ kernel/relay.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -4339,6 +4339,11 @@ static long btrfs_ioctl_scrub(struct fil
- 	if (IS_ERR(sa))
- 		return PTR_ERR(sa);
+diff --git a/kernel/relay.c b/kernel/relay.c
+index 9b1cfcd8dc6b1..989f78f16ad5c 100644
+--- a/kernel/relay.c
++++ b/kernel/relay.c
+@@ -997,14 +997,14 @@ static void relay_file_read_consume(struct rchan_buf *buf,
+ /*
+  *	relay_file_read_avail - boolean, are there unconsumed bytes available?
+  */
+-static int relay_file_read_avail(struct rchan_buf *buf, size_t read_pos)
++static int relay_file_read_avail(struct rchan_buf *buf)
+ {
+ 	size_t subbuf_size = buf->chan->subbuf_size;
+ 	size_t n_subbufs = buf->chan->n_subbufs;
+ 	size_t produced = buf->subbufs_produced;
+ 	size_t consumed = buf->subbufs_consumed;
  
-+	if (sa->flags & ~BTRFS_SCRUB_SUPPORTED_FLAGS) {
-+		ret = -EOPNOTSUPP;
-+		goto out;
-+	}
-+
- 	if (!(sa->flags & BTRFS_SCRUB_READONLY)) {
- 		ret = mnt_want_write_file(file);
- 		if (ret)
---- a/include/uapi/linux/btrfs.h
-+++ b/include/uapi/linux/btrfs.h
-@@ -162,6 +162,7 @@ struct btrfs_scrub_progress {
- };
+-	relay_file_read_consume(buf, read_pos, 0);
++	relay_file_read_consume(buf, 0, 0);
  
- #define BTRFS_SCRUB_READONLY	1
-+#define BTRFS_SCRUB_SUPPORTED_FLAGS	(BTRFS_SCRUB_READONLY)
- struct btrfs_ioctl_scrub_args {
- 	__u64 devid;				/* in */
- 	__u64 start;				/* in */
+ 	consumed = buf->subbufs_consumed;
+ 
+@@ -1065,23 +1065,20 @@ static size_t relay_file_read_subbuf_avail(size_t read_pos,
+ 
+ /**
+  *	relay_file_read_start_pos - find the first available byte to read
+- *	@read_pos: file read position
+  *	@buf: relay channel buffer
+  *
+- *	If the @read_pos is in the middle of padding, return the
++ *	If the read_pos is in the middle of padding, return the
+  *	position of the first actually available byte, otherwise
+  *	return the original value.
+  */
+-static size_t relay_file_read_start_pos(size_t read_pos,
+-					struct rchan_buf *buf)
++static size_t relay_file_read_start_pos(struct rchan_buf *buf)
+ {
+ 	size_t read_subbuf, padding, padding_start, padding_end;
+ 	size_t subbuf_size = buf->chan->subbuf_size;
+ 	size_t n_subbufs = buf->chan->n_subbufs;
+ 	size_t consumed = buf->subbufs_consumed % n_subbufs;
++	size_t read_pos = consumed * subbuf_size + buf->bytes_consumed;
+ 
+-	if (!read_pos)
+-		read_pos = consumed * subbuf_size + buf->bytes_consumed;
+ 	read_subbuf = read_pos / subbuf_size;
+ 	padding = buf->padding[read_subbuf];
+ 	padding_start = (read_subbuf + 1) * subbuf_size - padding;
+@@ -1137,10 +1134,10 @@ static ssize_t relay_file_read(struct file *filp,
+ 	do {
+ 		void *from;
+ 
+-		if (!relay_file_read_avail(buf, *ppos))
++		if (!relay_file_read_avail(buf))
+ 			break;
+ 
+-		read_start = relay_file_read_start_pos(*ppos, buf);
++		read_start = relay_file_read_start_pos(buf);
+ 		avail = relay_file_read_subbuf_avail(read_start, buf);
+ 		if (!avail)
+ 			break;
+-- 
+2.39.2
+
 
 
