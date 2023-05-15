@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBE8101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:53:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9578FC4339B;
-	Mon, 15 May 2023 17:53:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511D5101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:53:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F61C433EF;
+	Mon, 15 May 2023 17:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173200;
-	bh=sGvibZQMDl70DnUqxuUn/KMt8+kmCazGz7WApHPzLpA=;
+	s=korg; t=1684173203;
+	bh=nmFQvOCzYYwpWKQu+Di3E93wuWGc7ZqlPuGOy0C+7c0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UJCTV6QIKIS2XK1t6wdjCtpelHviiFIWjnLMm2xe3hytIN3I3Kyt0DPiYDuPX5/dw
-	 m4XC0Vxw5ttPnrqEMDVaggdotfknofBJEsPPLhtzbPxgq++pwh3TLOACVIQ1L80k7D
-	 rMpw/vZW1+veDLBRmnEQUPEddCaMrlTHY1+PhOa4=
+	b=sXh7G5Vu6VhyCjtfQWzSvU6TcCkgKZQmdcqLEX0tPB4B0+zD2dlPBxJOcZvdwIi5E
+	 +6sSQOxfFrOqXYycR3PYLP7QUO7orehZd9NiFkVnZpLpAocE2Qp0W9Rxh3Nv0CFvlG
+	 PpE9zNjiou+wqriNICJhyWr9wafEdt0OiCTXDf2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
-	Corey Minyard <minyard@acm.org>
-Subject: [PATCH 5.4 018/282] ipmi: fix SSIF not responding under certain cond.
-Date: Mon, 15 May 2023 18:26:36 +0200
-Message-Id: <20230515161722.812534575@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.4 019/282] kheaders: Use array declaration instead of char
+Date: Mon, 15 May 2023 18:26:37 +0200
+Message-Id: <20230515161722.851502942@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -34,73 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 6d2555cde2918409b0331560e66f84a0ad4849c6 upstream.
+commit b69edab47f1da8edd8e7bfdf8c70f51a2a5d89fb upstream.
 
-The ipmi communication is not restored after a specific version of BMC is
-upgraded on our server.
-The ipmi driver does not respond after printing the following log:
+Under CONFIG_FORTIFY_SOURCE, memcpy() will check the size of destination
+and source buffers. Defining kernel_headers_data as "char" would trip
+this check. Since these addresses are treated as byte arrays, define
+them as arrays (as done everywhere else).
 
-    ipmi_ssif: Invalid response getting flags: 1c 1
+This was seen with:
 
-I found that after entering this branch, ssif_info->ssif_state always
-holds SSIF_GETTING_FLAGS and never return to IDLE.
+  $ cat /sys/kernel/kheaders.tar.xz >> /dev/null
 
-As a result, the driver cannot be loaded, because the driver status is
-checked during the unload process and must be IDLE in shutdown_ssif():
+  detected buffer overflow in memcpy
+  kernel BUG at lib/string_helpers.c:1027!
+  ...
+  RIP: 0010:fortify_panic+0xf/0x20
+  [...]
+  Call Trace:
+   <TASK>
+   ikheaders_read+0x45/0x50 [kheaders]
+   kernfs_fop_read_iter+0x1a4/0x2f0
+  ...
 
-        while (ssif_info->ssif_state != SSIF_IDLE)
-                schedule_timeout(1);
-
-The process trigger this problem is:
-
-1. One msg timeout and next msg start send, and call
-ssif_set_need_watch().
-
-2. ssif_set_need_watch()->watch_timeout()->start_flag_fetch() change
-ssif_state to SSIF_GETTING_FLAGS.
-
-3. In msg_done_handler() ssif_state == SSIF_GETTING_FLAGS, if an error
-message is received, the second branch does not modify the ssif_state.
-
-4. All retry action need IS_SSIF_IDLE() == True. Include retry action in
-watch_timeout(), msg_done_handler(). Sending msg does not work either.
-SSIF_IDLE is also checked in start_next_msg().
-
-5. The only thing that can be triggered in the SSIF driver is
-watch_timeout(), after destory_user(), this timer will stop too.
-
-So, if enter this branch, the ssif_state will remain SSIF_GETTING_FLAGS
-and can't send msg, no timer started, can't unload.
-
-We did a comparative test before and after adding this patch, and the
-result is effective.
-
-Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
-
+Reported-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/bpf/20230302112130.6e402a98@kernel.org/
+Acked-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Tested-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 43d8ce9d65a5 ("Provide in-kernel headers to make extending kernel easier")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
-Message-Id: <20230412074907.80046-1-zhangyuchen.lcr@bytedance.com>
-Signed-off-by: Corey Minyard <minyard@acm.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230302224946.never.243-kees@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/kheaders.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -791,9 +791,9 @@ static void msg_done_handler(struct ssif
- 		} else if (data[0] != (IPMI_NETFN_APP_REQUEST | 1) << 2
- 			   || data[1] != IPMI_GET_MSG_FLAGS_CMD) {
- 			/*
--			 * Don't abort here, maybe it was a queued
--			 * response to a previous command.
-+			 * Recv error response, give up.
- 			 */
-+			ssif_info->ssif_state = SSIF_IDLE;
- 			ipmi_ssif_unlock_cond(ssif_info, flags);
- 			dev_warn(&ssif_info->client->dev,
- 				 "Invalid response getting flags: %x %x\n",
+diff --git a/kernel/kheaders.c b/kernel/kheaders.c
+index 8f69772af77b..42163c9e94e5 100644
+--- a/kernel/kheaders.c
++++ b/kernel/kheaders.c
+@@ -26,15 +26,15 @@ asm (
+ "	.popsection				\n"
+ );
+ 
+-extern char kernel_headers_data;
+-extern char kernel_headers_data_end;
++extern char kernel_headers_data[];
++extern char kernel_headers_data_end[];
+ 
+ static ssize_t
+ ikheaders_read(struct file *file,  struct kobject *kobj,
+ 	       struct bin_attribute *bin_attr,
+ 	       char *buf, loff_t off, size_t len)
+ {
+-	memcpy(buf, &kernel_headers_data + off, len);
++	memcpy(buf, &kernel_headers_data[off], len);
+ 	return len;
+ }
+ 
+@@ -48,8 +48,8 @@ static struct bin_attribute kheaders_attr __ro_after_init = {
+ 
+ static int __init ikheaders_init(void)
+ {
+-	kheaders_attr.size = (&kernel_headers_data_end -
+-			      &kernel_headers_data);
++	kheaders_attr.size = (kernel_headers_data_end -
++			      kernel_headers_data);
+ 	return sysfs_create_bin_file(kernel_kobj, &kheaders_attr);
+ }
+ 
+-- 
+2.40.1
+
 
 
