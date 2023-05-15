@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB155FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61325C4339C;
-	Mon, 15 May 2023 17:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01582FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A557C433EF;
+	Mon, 15 May 2023 17:30:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171821;
-	bh=ottE5QWQiIf3uSEP06BoiryjS3ZwZtXTCpmSy97BjrY=;
+	s=korg; t=1684171824;
+	bh=9JocLLhjUGRPiDlQgVLXCCxvhK53WTs2yG+5ioh7kZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WP/Xa6XKoDTae727W7aPN8AkobbB7pHFNfWNZ3JYpsyQYYF5xzLajgf33Uvd6esWL
-	 d+6khFh6zK9I+ugf+hxh9C+vCmPoYpa4sC5Tm0EpGnIyK4yBnxkWufPejstz1eX/Pi
-	 Rn0fLbHfH9rrniPAYQMYXjf5nEtL9j/O4Xifb9O4=
+	b=ppbTmqO2cKF0odIO4zFtv/RiKAd38zK69F7rezP/auLhe9VKqG4d3S7fCHbHJp/Qz
+	 jAz7EZNYB9wzx+uSkQo0HDo1Tz8pqWWRItafp2PVOWaolkta7lG6PTUZEFkp6NnF2O
+	 uxXknaIZmzgfxJ9QnI32vTvsqFCH7+RbJNIh8m3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 090/134] drm/amdgpu: fix an amdgpu_irq_put() issue in gmc_v9_0_hw_fini()
-Date: Mon, 15 May 2023 18:29:27 +0200
-Message-Id: <20230515161706.159179279@linuxfoundation.org>
+Subject: [PATCH 5.15 091/134] drm/amdgpu/gfx: disable gfx9 cp_ecc_error_irq only when enabling legacy gfx ras
+Date: Mon, 15 May 2023 18:29:28 +0200
+Message-Id: <20230515161706.198232756@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -35,36 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Guchun Chen <guchun.chen@amd.com>
 
-commit 922a76ba31adf84e72bc947267385be420c689ee upstream.
+commit 4a76680311330aefe5074bed8f06afa354b85c48 upstream.
 
-As made mention of in commit 08c677cb0b43 ("drm/amdgpu: fix
-amdgpu_irq_put call trace in gmc_v10_0_hw_fini") and commit 13af556104fa
-("drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v11_0_hw_fini"). It
-is meaningless to call amdgpu_irq_put() for gmc.ecc_irq. So, remove it
-from gmc_v9_0_hw_fini().
+gfx9 cp_ecc_error_irq is only enabled when legacy gfx ras is assert.
+So in gfx_v9_0_hw_fini, interrupt disablement for cp_ecc_error_irq
+should be executed under such condition, otherwise, an amdgpu_irq_put
+calltrace will occur.
+
+[ 7283.170322] RIP: 0010:amdgpu_irq_put+0x45/0x70 [amdgpu]
+[ 7283.170964] RSP: 0018:ffff9a5fc3967d00 EFLAGS: 00010246
+[ 7283.170967] RAX: ffff98d88afd3040 RBX: ffff98d89da20000 RCX: 0000000000000000
+[ 7283.170969] RDX: 0000000000000000 RSI: ffff98d89da2bef8 RDI: ffff98d89da20000
+[ 7283.170971] RBP: ffff98d89da20000 R08: ffff98d89da2ca18 R09: 0000000000000006
+[ 7283.170973] R10: ffffd5764243c008 R11: 0000000000000000 R12: 0000000000001050
+[ 7283.170975] R13: ffff98d89da38978 R14: ffffffff999ae15a R15: ffff98d880130105
+[ 7283.170978] FS:  0000000000000000(0000) GS:ffff98d996f00000(0000) knlGS:0000000000000000
+[ 7283.170981] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 7283.170983] CR2: 00000000f7a9d178 CR3: 00000001c42ea000 CR4: 00000000003506e0
+[ 7283.170986] Call Trace:
+[ 7283.170988]  <TASK>
+[ 7283.170989]  gfx_v9_0_hw_fini+0x1c/0x6d0 [amdgpu]
+[ 7283.171655]  amdgpu_device_ip_suspend_phase2+0x101/0x1a0 [amdgpu]
+[ 7283.172245]  amdgpu_device_suspend+0x103/0x180 [amdgpu]
+[ 7283.172823]  amdgpu_pmops_freeze+0x21/0x60 [amdgpu]
+[ 7283.173412]  pci_pm_freeze+0x54/0xc0
+[ 7283.173419]  ? __pfx_pci_pm_freeze+0x10/0x10
+[ 7283.173425]  dpm_run_callback+0x98/0x200
+[ 7283.173430]  __device_suspend+0x164/0x5f0
+
+v2: drop gfx11 as it's fixed in a different solution by retiring cp_ecc_irq funcs(Hawking)
 
 Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
-Fixes: 3029c855d79f ("drm/amdgpu: Fix desktop freezed after gpu-reset")
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-@@ -1819,7 +1819,6 @@ static int gmc_v9_0_hw_fini(void *handle
- 		return 0;
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v9_0.c
+@@ -4018,7 +4018,8 @@ static int gfx_v9_0_hw_fini(void *handle
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
  
--	amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
- 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
+-	amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
++	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__GFX))
++		amdgpu_irq_put(adev, &adev->gfx.cp_ecc_error_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gfx.priv_reg_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gfx.priv_inst_irq, 0);
  
- 	return 0;
 
 
