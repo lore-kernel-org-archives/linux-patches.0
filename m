@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B6A2D507
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:58:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98645C4339B;
-	Mon, 15 May 2023 17:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BD0D507
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:58:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7083EC433D2;
+	Mon, 15 May 2023 17:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173482;
-	bh=t3HksqggWWqKlzkJo9evKIUOtv6TPlQa/XMBnvOdHs8=;
+	s=korg; t=1684173487;
+	bh=eP7M5tbt1UT/9QWihuWEcTM3Samz3XX4fCBMh8rfkw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W8xMhLaLmJOT7eQssZpCPXSz8VmIIdo7yEw7gJ6oTUj1sly2LZqk3WvUD12qDFpUG
-	 Y5iN8H/TDk/L0Y+XwkXyRUvEXFq60uRajLAKaMHNXD2zPoxyEf/mDoNuq2xDNyBUhV
-	 NIenhK2WHKgy3dAQ2UrUroar/tX/LBoJYWL+ZkYk=
+	b=DhfOGHpxXM2jsOIwIbg3thz0ZGDnJtukBkuMs8anbDx8rYxkLzkaeI8zM1zRCJogw
+	 NiSiOj62V8zZwxedWZj7eIinul3pm+r52h3y3ieBljl0HcefvP+PiYo2mCinSUVlJe
+	 4ffDZnkYrMaOw6Sd/sqITk7tN1gxpnY/W2DIUWwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfeng Ye <yeyunfeng@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 070/282] tick/sched: Reduce seqcount held scope in tick_do_update_jiffies64()
-Date: Mon, 15 May 2023 18:27:28 +0200
-Message-Id: <20230515161724.332012350@linuxfoundation.org>
+Subject: [PATCH 5.4 111/282] netfilter: nf_tables: dont write table validation state without mutex
+Date: Mon, 15 May 2023 18:28:09 +0200
+Message-Id: <20230515161725.574332643@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,93 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfeng Ye <yeyunfeng@huawei.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 94ad2e3cedb82af034f6d97c58022f162b669f9b ]
+[ Upstream commit 9a32e9850686599ed194ccdceb6cd3dd56b2d9b9 ]
 
-If jiffies are up to date already (caller lost the race against another
-CPU) there is no point to change the sequence count. Doing that just forces
-other CPUs into the seqcount retry loop in tick_nohz_next_event() for
-nothing.
+The ->cleanup callback needs to be removed, this doesn't work anymore as
+the transaction mutex is already released in the ->abort function.
 
-Just bail out early.
+Just do it after a successful validation pass, this either happens
+from commit or abort phases where transaction mutex is held.
 
-[ tglx: Rewrote most of it ]
-
-Signed-off-by: Yunfeng Ye <yeyunfeng@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20201117132006.462195901@linutronix.de
-Stable-dep-of: e9523a0d8189 ("tick/common: Align tick period with the HZ tick.")
+Fixes: f102d66b335a ("netfilter: nf_tables: use dedicated mutex to guard transactions")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-sched.c | 47 +++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 25 deletions(-)
+ include/linux/netfilter/nfnetlink.h | 1 -
+ net/netfilter/nf_tables_api.c       | 8 ++------
+ net/netfilter/nfnetlink.c           | 2 --
+ 3 files changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
-index 1dfa53494164a..eaeeb4bb1f8ab 100644
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -84,38 +84,35 @@ static void tick_do_update_jiffies64(ktime_t now)
+diff --git a/include/linux/netfilter/nfnetlink.h b/include/linux/netfilter/nfnetlink.h
+index f6267e2883f26..41de4156540a9 100644
+--- a/include/linux/netfilter/nfnetlink.h
++++ b/include/linux/netfilter/nfnetlink.h
+@@ -39,7 +39,6 @@ struct nfnetlink_subsystem {
+ 	int (*commit)(struct net *net, struct sk_buff *skb);
+ 	int (*abort)(struct net *net, struct sk_buff *skb,
+ 		     enum nfnl_abort_action action);
+-	void (*cleanup)(struct net *net);
+ 	bool (*valid_genid)(struct net *net, u32 genid);
+ };
  
- 	/* Reevaluate with jiffies_lock held */
- 	raw_spin_lock(&jiffies_lock);
-+	if (ktime_before(now, tick_next_period)) {
-+		raw_spin_unlock(&jiffies_lock);
-+		return;
-+	}
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 140c24f1b6c60..1a5294eb340c0 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6491,6 +6491,8 @@ static int nf_tables_validate(struct net *net)
+ 			if (nft_table_validate(net, table) < 0)
+ 				return -EAGAIN;
+ 		}
 +
- 	write_seqcount_begin(&jiffies_seq);
++		nft_validate_state_update(net, NFT_VALIDATE_SKIP);
+ 		break;
+ 	}
  
--	delta = ktime_sub(now, last_jiffies_update);
--	if (delta >= tick_period) {
-+	last_jiffies_update = ktime_add(last_jiffies_update, tick_period);
+@@ -7172,11 +7174,6 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 	return 0;
+ }
  
--		delta = ktime_sub(delta, tick_period);
--		last_jiffies_update = ktime_add(last_jiffies_update,
--						tick_period);
-+	delta = ktime_sub(now, tick_next_period);
-+	if (unlikely(delta >= tick_period)) {
-+		/* Slow path for long idle sleep times */
-+		s64 incr = ktime_to_ns(tick_period);
+-static void nf_tables_cleanup(struct net *net)
+-{
+-	nft_validate_state_update(net, NFT_VALIDATE_SKIP);
+-}
+-
+ static int nf_tables_abort(struct net *net, struct sk_buff *skb,
+ 			   enum nfnl_abort_action action)
+ {
+@@ -7208,7 +7205,6 @@ static const struct nfnetlink_subsystem nf_tables_subsys = {
+ 	.cb		= nf_tables_cb,
+ 	.commit		= nf_tables_commit,
+ 	.abort		= nf_tables_abort,
+-	.cleanup	= nf_tables_cleanup,
+ 	.valid_genid	= nf_tables_valid_genid,
+ 	.owner		= THIS_MODULE,
+ };
+diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
+index 81c86a156c6c0..e3f6e27a9a06d 100644
+--- a/net/netfilter/nfnetlink.c
++++ b/net/netfilter/nfnetlink.c
+@@ -512,8 +512,6 @@ static void nfnetlink_rcv_batch(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 			goto replay_abort;
+ 		}
+ 	}
+-	if (ss->cleanup)
+-		ss->cleanup(net);
  
--		/* Slow path for long timeouts */
--		if (unlikely(delta >= tick_period)) {
--			s64 incr = ktime_to_ns(tick_period);
-+		ticks = ktime_divns(delta, incr);
- 
--			ticks = ktime_divns(delta, incr);
-+		last_jiffies_update = ktime_add_ns(last_jiffies_update,
-+						   incr * ticks);
-+	}
- 
--			last_jiffies_update = ktime_add_ns(last_jiffies_update,
--							   incr * ticks);
--		}
--		do_timer(++ticks);
-+	do_timer(++ticks);
-+
-+	/*
-+	 * Keep the tick_next_period variable up to date.  WRITE_ONCE()
-+	 * pairs with the READ_ONCE() in the lockless quick check above.
-+	 */
-+	WRITE_ONCE(tick_next_period,
-+		   ktime_add(last_jiffies_update, tick_period));
- 
--		/*
--		 * Keep the tick_next_period variable up to date.
--		 * WRITE_ONCE() pairs with the READ_ONCE() in the lockless
--		 * quick check above.
--		 */
--		WRITE_ONCE(tick_next_period,
--			   ktime_add(last_jiffies_update, tick_period));
--	} else {
--		write_seqcount_end(&jiffies_seq);
--		raw_spin_unlock(&jiffies_lock);
--		return;
--	}
- 	write_seqcount_end(&jiffies_seq);
- 	raw_spin_unlock(&jiffies_lock);
- 	update_wall_time();
+ 	nfnl_err_deliver(&err_list, oskb);
+ 	kfree_skb(skb);
 -- 
 2.39.2
 
