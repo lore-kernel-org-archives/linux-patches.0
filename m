@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EEFCFC1C
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7804C433EF;
-	Mon, 15 May 2023 17:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 421FEFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7C9BC4339B;
+	Mon, 15 May 2023 17:47:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172852;
-	bh=CbPa/T7RSdsT7jwmm4TRkQaMDMwJ8Ohjp90lkVrAC9g=;
+	s=korg; t=1684172855;
+	bh=E96wm37hDQN0w5JwnNAUziKWKUfQ63CLexhqGYF9EUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWEvBMurD2mnJZNv+eN99DnyFk7vnAfYgh4TjkWdubhTToniDBkuZMbv/n351UwwG
-	 +HAELdUwAa54E5iSLDnVuvU/O0BLMN9iTAcQV6AwOgROjG4Bpy6mwBilSvlUqO8VzA
-	 gRQllxWX4z3SgntFjDnatKRGVqzGr3Xt45T62v4Q=
+	b=F4T+gwMOP1RDEDptyy7EbzPwI3wKzzvAfY8RW2bfJJ/wGA735//GOwWMdB2AP0vOc
+	 6wmMsgLPnR6CIKt0tc9uFfTqOsQiDQV9dtv42p1yaDDm5giiYGujPdWt1PYWH3FI/E
+	 WHA5artDy04MHlwCEloILSo2gM3HFtSHkzk76ygs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helen Chao <helen.chao@oracle.com>,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 257/381] SUNRPC: remove the maximum number of retries in call_bind_status
-Date: Mon, 15 May 2023 18:28:28 +0200
-Message-Id: <20230515161748.334613205@linuxfoundation.org>
+Subject: [PATCH 5.10 258/381] RDMA/mlx5: Use correct device num_ports when modify DC
+Date: Mon, 15 May 2023 18:28:29 +0200
+Message-Id: <20230515161748.382059558@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,72 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit 691d0b782066a6eeeecbfceb7910a8f6184e6105 ]
+[ Upstream commit 746aa3c8cb1a650ff2583497ac646e505831b9b9 ]
 
-Currently call_bind_status places a hard limit of 3 to the number of
-retries on EACCES error. This limit was done to prevent NLM unlock
-requests from being hang forever when the server keeps returning garbage.
-However this change causes problem for cases when NLM service takes
-longer than 9 seconds to register with the port mapper after a restart.
+Just like other QP types, when modify DC, the port_num should be compared
+with dev->num_ports, instead of HCA_CAP.num_ports.  Otherwise Multi-port
+vHCA on DC may not work.
 
-This patch removes this hard coded limit and let the RPC handles
-the retry based on the standard hard/soft task semantics.
-
-Fixes: 0b760113a3a1 ("NLM: Don't hang forever on NLM unlock requests")
-Reported-by: Helen Chao <helen.chao@oracle.com>
-Tested-by: Helen Chao <helen.chao@oracle.com>
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: 776a3906b692 ("IB/mlx5: Add support for DC target QP")
+Link: https://lore.kernel.org/r/20230420013906.1244185-1-markzhang@nvidia.com
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/sched.h | 3 +--
- net/sunrpc/clnt.c            | 3 ---
- net/sunrpc/sched.c           | 1 -
- 3 files changed, 1 insertion(+), 6 deletions(-)
+ drivers/infiniband/hw/mlx5/qp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/sunrpc/sched.h b/include/linux/sunrpc/sched.h
-index df696efdd6753..256dff36cf720 100644
---- a/include/linux/sunrpc/sched.h
-+++ b/include/linux/sunrpc/sched.h
-@@ -90,8 +90,7 @@ struct rpc_task {
- #endif
- 	unsigned char		tk_priority : 2,/* Task priority */
- 				tk_garb_retry : 2,
--				tk_cred_retry : 2,
--				tk_rebind_retry : 2;
-+				tk_cred_retry : 2;
- };
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 0caff276f2c18..0c47e3e24b2a4 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -4164,7 +4164,7 @@ static int mlx5_ib_modify_dct(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 			return -EINVAL;
  
- typedef void			(*rpc_action)(struct rpc_task *);
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index c6e8bd78e35d6..e1ce0f261f0be 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -1967,9 +1967,6 @@ call_bind_status(struct rpc_task *task)
- 			status = -EOPNOTSUPP;
- 			break;
- 		}
--		if (task->tk_rebind_retry == 0)
--			break;
--		task->tk_rebind_retry--;
- 		rpc_delay(task, 3*HZ);
- 		goto retry_timeout;
- 	case -ENOBUFS:
-diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
-index f0f55fbd13752..a00890962e115 100644
---- a/net/sunrpc/sched.c
-+++ b/net/sunrpc/sched.c
-@@ -796,7 +796,6 @@ rpc_init_task_statistics(struct rpc_task *task)
- 	/* Initialize retry counters */
- 	task->tk_garb_retry = 2;
- 	task->tk_cred_retry = 2;
--	task->tk_rebind_retry = 2;
- 
- 	/* starting timestamp */
- 	task->tk_start = ktime_get();
+ 		if (attr->port_num == 0 ||
+-		    attr->port_num > MLX5_CAP_GEN(dev->mdev, num_ports)) {
++		    attr->port_num > dev->num_ports) {
+ 			mlx5_ib_dbg(dev, "invalid port number %d. number of ports is %d\n",
+ 				    attr->port_num, dev->num_ports);
+ 			return -EINVAL;
 -- 
 2.39.2
 
