@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57CCFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:02:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B386C433D2;
-	Mon, 15 May 2023 17:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7BBFBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:02:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7CEC433EF;
+	Mon, 15 May 2023 17:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170164;
-	bh=rCR/umXWjr3fBettugLtcE2iJQTWkq6+wtzDClOh1uI=;
+	s=korg; t=1684170167;
+	bh=ZBvlOsmz4MsLZEZpRFTs+H7/qkACKyv0mddzZ+kk0s4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ig7FQOcZtYaaxDsgpMVqohA58Y6rvQ+yY9yMrT268jqPSIiyStPl6IjXAcKkvqdhD
-	 h69ik/cI6K8583vC1NVnjRLrC5FheETK7vqNWIcPOUD6DWCgik8RL6M8p97ZRBL6wv
-	 8VrF8NnKJntZq42PEMnSAqqJg4i091LZo4DMoeNg=
+	b=qP9Ver4tbKtB7FDiT0LCEM549IrxuLYUUb0sRPfQmki+pjddL02dumHsVS0nYUFGx
+	 r2p3s1dOHUq7r0JgIAHJt4wVvTpQ8u8ZTooy7LpV0IlpWQDPglvc6uc1XwnN8FkAbu
+	 oQ5dG+kNTjGOG3Q1QqoDRYkflgZB0fhkfCHs0L0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmo Chou <chou.cosmo@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Coco Li <lixiaoyan@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/239] net/ncsi: clear Tx enable mode when handling a Config required AEN
-Date: Mon, 15 May 2023 18:25:07 +0200
-Message-Id: <20230515161723.032642999@linuxfoundation.org>
+Subject: [PATCH 6.1 045/239] tcp: fix skb_copy_ubufs() vs BIG TCP
+Date: Mon, 15 May 2023 18:25:08 +0200
+Message-Id: <20230515161723.062033721@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,39 +39,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cosmo Chou <chou.cosmo@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6f75cd166a5a3c0bc50441faa8b8304f60522fdd ]
+[ Upstream commit 7e692df3933628d974acb9f5b334d2b3e885e2a6 ]
 
-ncsi_channel_is_tx() determines whether a given channel should be
-used for Tx or not. However, when reconfiguring the channel by
-handling a Configuration Required AEN, there is a misjudgment that
-the channel Tx has already been enabled, which results in the Enable
-Channel Network Tx command not being sent.
+David Ahern reported crashes in skb_copy_ubufs() caused by TCP tx zerocopy
+using hugepages, and skb length bigger than ~68 KB.
 
-Clear the channel Tx enable flag before reconfiguring the channel to
-avoid the misjudgment.
+skb_copy_ubufs() assumed it could copy all payload using up to
+MAX_SKB_FRAGS order-0 pages.
 
-Fixes: 8d951a75d022 ("net/ncsi: Configure multi-package, multi-channel modes with failover")
-Signed-off-by: Cosmo Chou <chou.cosmo@gmail.com>
+This assumption broke when BIG TCP was able to put up to 512 KB per skb.
+
+We did not hit this bug at Google because we use CONFIG_MAX_SKB_FRAGS=45
+and limit gso_max_size to 180000.
+
+A solution is to use higher order pages if needed.
+
+v2: add missing __GFP_COMP, or we leak memory.
+
+Fixes: 7c4e983c4f3c ("net: allow gso_max_size to exceed 65536")
+Reported-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/netdev/c70000f6-baa4-4a05-46d0-4b3e0dc1ccc8@gmail.com/T/
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Xin Long <lucien.xin@gmail.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Cc: Coco Li <lixiaoyan@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ncsi/ncsi-aen.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/skbuff.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/net/ncsi/ncsi-aen.c b/net/ncsi/ncsi-aen.c
-index b635c194f0a85..62fb1031763d1 100644
---- a/net/ncsi/ncsi-aen.c
-+++ b/net/ncsi/ncsi-aen.c
-@@ -165,6 +165,7 @@ static int ncsi_aen_handler_cr(struct ncsi_dev_priv *ndp,
- 	nc->state = NCSI_CHANNEL_INACTIVE;
- 	list_add_tail_rcu(&nc->link, &ndp->channel_queue);
- 	spin_unlock_irqrestore(&ndp->lock, flags);
-+	nc->modes[NCSI_MODE_TX_ENABLE].enable = 0;
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 597c1f17d3889..ccfd9053754a9 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1544,7 +1544,7 @@ int skb_copy_ubufs(struct sk_buff *skb, gfp_t gfp_mask)
+ {
+ 	int num_frags = skb_shinfo(skb)->nr_frags;
+ 	struct page *page, *head = NULL;
+-	int i, new_frags;
++	int i, order, psize, new_frags;
+ 	u32 d_off;
  
- 	return ncsi_process_next_channel(ndp);
- }
+ 	if (skb_shared(skb) || skb_unclone(skb, gfp_mask))
+@@ -1553,9 +1553,17 @@ int skb_copy_ubufs(struct sk_buff *skb, gfp_t gfp_mask)
+ 	if (!num_frags)
+ 		goto release;
+ 
+-	new_frags = (__skb_pagelen(skb) + PAGE_SIZE - 1) >> PAGE_SHIFT;
++	/* We might have to allocate high order pages, so compute what minimum
++	 * page order is needed.
++	 */
++	order = 0;
++	while ((PAGE_SIZE << order) * MAX_SKB_FRAGS < __skb_pagelen(skb))
++		order++;
++	psize = (PAGE_SIZE << order);
++
++	new_frags = (__skb_pagelen(skb) + psize - 1) >> (PAGE_SHIFT + order);
+ 	for (i = 0; i < new_frags; i++) {
+-		page = alloc_page(gfp_mask);
++		page = alloc_pages(gfp_mask | __GFP_COMP, order);
+ 		if (!page) {
+ 			while (head) {
+ 				struct page *next = (struct page *)page_private(head);
+@@ -1582,11 +1590,11 @@ int skb_copy_ubufs(struct sk_buff *skb, gfp_t gfp_mask)
+ 			vaddr = kmap_atomic(p);
+ 
+ 			while (done < p_len) {
+-				if (d_off == PAGE_SIZE) {
++				if (d_off == psize) {
+ 					d_off = 0;
+ 					page = (struct page *)page_private(page);
+ 				}
+-				copy = min_t(u32, PAGE_SIZE - d_off, p_len - done);
++				copy = min_t(u32, psize - d_off, p_len - done);
+ 				memcpy(page_address(page) + d_off,
+ 				       vaddr + p_off + done, copy);
+ 				done += copy;
+@@ -1602,7 +1610,7 @@ int skb_copy_ubufs(struct sk_buff *skb, gfp_t gfp_mask)
+ 
+ 	/* skb frags point to kernel buffers */
+ 	for (i = 0; i < new_frags - 1; i++) {
+-		__skb_fill_page_desc(skb, i, head, 0, PAGE_SIZE);
++		__skb_fill_page_desc(skb, i, head, 0, psize);
+ 		head = (struct page *)page_private(head);
+ 	}
+ 	__skb_fill_page_desc(skb, new_frags - 1, head, 0, d_off);
 -- 
 2.39.2
 
