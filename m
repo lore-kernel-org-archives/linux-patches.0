@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148B8E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 816F9C433D2;
-	Mon, 15 May 2023 16:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A46E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9D9C433D2;
+	Mon, 15 May 2023 16:42:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168927;
-	bh=GnuTKGySGlfr07daI7HAiFk0boCdBF/4zjHSMFSEV+4=;
+	s=korg; t=1684168931;
+	bh=2jKY1/179qpq2ZVzQZz149nKEOdMd25p5WMRsYK9gjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwTIC4XKqdsNIkumCSV4/32VCJ7wjjUWO2LJYyKgN5ZOTHcVDmcc3OGPgM+pJaFY/
-	 qF2DaCCOa4RLe0mrifWN3Wp2rNqdWCjOZGi8FfT2h3/DSnm/lNxWeKfOHmkTruxucm
-	 q0BZ1hcOn/2+t5h7RVv1rI6hGp6Z6TMW6UWMZZXA=
+	b=zl0LPt8eQeZOw5aIO08N0B1wFZKUKQL0qbMuo8yfSl2nTNGhcLUTTq/m4wfcxeJC5
+	 JVBfPJH4Y6qtTLOJo5JuNfmIjnmF0E6qWw/hr8OZHimGETE0pvR2G6+/MKyWvxSybt
+	 5xbkb8G3PYEJwYBz1geQQqFC7y++9+3Duz+LZ5uU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	dri-devel@lists.freedesktop.org,
-	linux-fbdev@vger.kernel.org,
+	Danila Chernetsov <listdansp@mail.ru>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 085/191] linux/vt_buffer.h: allow either builtin or modular for macros
-Date: Mon, 15 May 2023 18:25:22 +0200
-Message-Id: <20230515161710.354269644@linuxfoundation.org>
+Subject: [PATCH 4.19 058/191] scsi: megaraid: Fix mega_cmd_done() CMDID_INT_CMDS
+Date: Mon, 15 May 2023 18:24:55 +0200
+Message-Id: <20230515161709.312979345@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -37,56 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit 2b76ffe81e32afd6d318dc4547e2ba8c46207b77 ]
+[ Upstream commit 75cb113cd43f06aaf4f1bda0069cfd5b98e909eb ]
 
-Fix build errors on ARCH=alpha when CONFIG_MDA_CONSOLE=m.
-This allows the ARCH macros to be the only ones defined.
+When cmdid == CMDID_INT_CMDS, the 'cmds' pointer is NULL but is
+dereferenced below.
 
-In file included from ../drivers/video/console/mdacon.c:37:
-../arch/alpha/include/asm/vga.h:17:40: error: expected identifier or '(' before 'volatile'
-   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
-      |                                        ^~~~~~~~
-../include/linux/vt_buffer.h:24:34: note: in definition of macro 'scr_writew'
-   24 | #define scr_writew(val, addr) (*(addr) = (val))
-      |                                  ^~~~
-../include/linux/vt_buffer.h:24:40: error: expected ')' before '=' token
-   24 | #define scr_writew(val, addr) (*(addr) = (val))
-      |                                        ^
-../arch/alpha/include/asm/vga.h:17:20: note: in expansion of macro 'scr_writew'
-   17 | static inline void scr_writew(u16 val, volatile u16 *addr)
-      |                    ^~~~~~~~~~
-../arch/alpha/include/asm/vga.h:25:29: error: expected identifier or '(' before 'volatile'
-   25 | static inline u16 scr_readw(volatile const u16 *addr)
-      |                             ^~~~~~~~
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: dri-devel@lists.freedesktop.org
-Cc: linux-fbdev@vger.kernel.org
-Link: https://lore.kernel.org/r/20230329021529.16188-1-rdunlap@infradead.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0f2bb84d2a68 ("[SCSI] megaraid: simplify internal command handling")
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Link: https://lore.kernel.org/r/20230317175109.18585-1-listdansp@mail.ru
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/vt_buffer.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/megaraid.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/linux/vt_buffer.h b/include/linux/vt_buffer.h
-index 848db1b1569ff..919d999a8c1db 100644
---- a/include/linux/vt_buffer.h
-+++ b/include/linux/vt_buffer.h
-@@ -16,7 +16,7 @@
+diff --git a/drivers/scsi/megaraid.c b/drivers/scsi/megaraid.c
+index 7352d46ebb093..44d648baabd87 100644
+--- a/drivers/scsi/megaraid.c
++++ b/drivers/scsi/megaraid.c
+@@ -1444,6 +1444,7 @@ mega_cmd_done(adapter_t *adapter, u8 completed[], int nstatus, int status)
+ 		 */
+ 		if (cmdid == CMDID_INT_CMDS) {
+ 			scb = &adapter->int_scb;
++			cmd = scb->cmd;
  
- #include <linux/string.h>
- 
--#if defined(CONFIG_VGA_CONSOLE) || defined(CONFIG_MDA_CONSOLE)
-+#if IS_ENABLED(CONFIG_VGA_CONSOLE) || IS_ENABLED(CONFIG_MDA_CONSOLE)
- #include <asm/vga.h>
- #endif
- 
+ 			list_del_init(&scb->list);
+ 			scb->state = SCB_FREE;
 -- 
 2.39.2
 
