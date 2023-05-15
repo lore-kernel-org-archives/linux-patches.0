@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702D217730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:07:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E366BC433D2;
-	Mon, 15 May 2023 18:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F45617730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:07:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F51C433EF;
+	Mon, 15 May 2023 18:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684174045;
-	bh=3RDzR2M24iuajjTUPCCSKWYArwSnVgoVdBcrM8iFaL4=;
+	s=korg; t=1684174048;
+	bh=cmv/ioBSGh8j6CYkbtqwYEgY2oRSxkfXWxybtkzBzXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcubOBwwgf6HHsOnc89PQ6kHvnkbUejxn/DYe3XcZ54+JkNVm+j/MRx6capuVBdfh
-	 kv2WilM54HFHXAGHuL2ogc2g7/rTli6P+hH4v3fa92wT5hdW8Olzs1pah55K1oyZPb
-	 YYDQ78DJ+EZyqDAhmwp8RoyOXfsTZmWN+j0GQW1I=
+	b=KZdNVFV5yyy/U/NQuVNRPpWjtbgZshDVIDK8v4plJOBoyM/SqyS9gwCmeCUlRolBr
+	 Lm9x0ygsu/DwIlK2oNb66zEjPZvr8xTuSuYW/jHNdkxasJEHjyYRcRlrHyHS7ZwVat
+	 jkBGryxADWEUvgOjA2ksSffa/gjXGVgMxtpbM0rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.4 269/282] serial: 8250: Fix serial8250_tx_empty() race with DMA Tx
-Date: Mon, 15 May 2023 18:30:47 +0200
-Message-Id: <20230515161730.379893816@linuxfoundation.org>
+	syzbot+fc51227e7100c9294894@syzkaller.appspotmail.com,
+	syzbot+8785e41224a3afd04321@syzkaller.appspotmail.com,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.4 260/282] ext4: avoid a potential slab-out-of-bounds in ext4_group_desc_csum
+Date: Mon, 15 May 2023 18:30:38 +0200
+Message-Id: <20230515161730.083309414@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -33,95 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Ilpo J�rvinen" <ilpo.jarvinen@linux.intel.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-There's a potential race before THRE/TEMT deasserts when DMA Tx is
-starting up (or the next batch of continuous Tx is being submitted).
-This can lead to misdetecting Tx empty condition.
+commit 4f04351888a83e595571de672e0a4a8b74f4fb31 upstream.
 
-It is entirely normal for THRE/TEMT to be set for some time after the
-DMA Tx had been setup in serial8250_tx_dma(). As Tx side is definitely
-not empty at that point, it seems incorrect for serial8250_tx_empty()
-claim Tx is empty.
+When modifying the block device while it is mounted by the filesystem,
+syzbot reported the following:
 
-Fix the race by also checking in serial8250_tx_empty() whether there's
-DMA Tx active.
+BUG: KASAN: slab-out-of-bounds in crc16+0x206/0x280 lib/crc16.c:58
+Read of size 1 at addr ffff888075f5c0a8 by task syz-executor.2/15586
 
-Note: This fix only addresses in-kernel race mainly to make using
-TCSADRAIN/FLUSH robust. Userspace can still cause other races but they
-seem userspace concurrency control problems.
+CPU: 1 PID: 15586 Comm: syz-executor.2 Not tainted 6.2.0-rc5-syzkaller-00205-gc96618275234 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x290 lib/dump_stack.c:106
+ print_address_description+0x74/0x340 mm/kasan/report.c:306
+ print_report+0x107/0x1f0 mm/kasan/report.c:417
+ kasan_report+0xcd/0x100 mm/kasan/report.c:517
+ crc16+0x206/0x280 lib/crc16.c:58
+ ext4_group_desc_csum+0x81b/0xb20 fs/ext4/super.c:3187
+ ext4_group_desc_csum_set+0x195/0x230 fs/ext4/super.c:3210
+ ext4_mb_clear_bb fs/ext4/mballoc.c:6027 [inline]
+ ext4_free_blocks+0x191a/0x2810 fs/ext4/mballoc.c:6173
+ ext4_remove_blocks fs/ext4/extents.c:2527 [inline]
+ ext4_ext_rm_leaf fs/ext4/extents.c:2710 [inline]
+ ext4_ext_remove_space+0x24ef/0x46a0 fs/ext4/extents.c:2958
+ ext4_ext_truncate+0x177/0x220 fs/ext4/extents.c:4416
+ ext4_truncate+0xa6a/0xea0 fs/ext4/inode.c:4342
+ ext4_setattr+0x10c8/0x1930 fs/ext4/inode.c:5622
+ notify_change+0xe50/0x1100 fs/attr.c:482
+ do_truncate+0x200/0x2f0 fs/open.c:65
+ handle_truncate fs/namei.c:3216 [inline]
+ do_open fs/namei.c:3561 [inline]
+ path_openat+0x272b/0x2dd0 fs/namei.c:3714
+ do_filp_open+0x264/0x4f0 fs/namei.c:3741
+ do_sys_openat2+0x124/0x4e0 fs/open.c:1310
+ do_sys_open fs/open.c:1326 [inline]
+ __do_sys_creat fs/open.c:1402 [inline]
+ __se_sys_creat fs/open.c:1396 [inline]
+ __x64_sys_creat+0x11f/0x160 fs/open.c:1396
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f72f8a8c0c9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f72f97e3168 EFLAGS: 00000246 ORIG_RAX: 0000000000000055
+RAX: ffffffffffffffda RBX: 00007f72f8bac050 RCX: 00007f72f8a8c0c9
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000280
+RBP: 00007f72f8ae7ae9 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ffd165348bf R14: 00007f72f97e3300 R15: 0000000000022000
 
-Fixes: 9ee4b83e51f74 ("serial: 8250: Add support for dmaengine")
+Replace
+	le16_to_cpu(sbi->s_es->s_desc_size)
+with
+	sbi->s_desc_size
+
+It reduces ext4's compiled text size, and makes the code more efficient
+(we remove an extra indirect reference and a potential byte
+swap on big endian systems), and there is no downside. It also avoids the
+potential KASAN / syzkaller failure, as a bonus.
+
+Reported-by: syzbot+fc51227e7100c9294894@syzkaller.appspotmail.com
+Reported-by: syzbot+8785e41224a3afd04321@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=70d28d11ab14bd7938f3e088365252aa923cff42
+Link: https://syzkaller.appspot.com/bug?id=b85721b38583ecc6b5e72ff524c67302abbc30f3
+Link: https://lore.kernel.org/all/000000000000ece18705f3b20934@google.com/
+Fixes: 717d50e4971b ("Ext4: Uninitialized Block Groups")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230317113318.31327-3-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-(cherry picked from commit 146a37e05d620cef4ad430e5d1c9c077fe6fa76f)
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20230504121525.3275886-1-tudor.ambarus@linaro.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250.h      |   12 ++++++++++++
- drivers/tty/serial/8250/8250_port.c |   12 +++++++++---
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ fs/ext4/super.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/8250/8250.h
-+++ b/drivers/tty/serial/8250/8250.h
-@@ -305,6 +305,13 @@ extern int serial8250_rx_dma(struct uart
- extern void serial8250_rx_dma_flush(struct uart_8250_port *);
- extern int serial8250_request_dma(struct uart_8250_port *);
- extern void serial8250_release_dma(struct uart_8250_port *);
-+
-+static inline bool serial8250_tx_dma_running(struct uart_8250_port *p)
-+{
-+	struct uart_8250_dma *dma = p->dma;
-+
-+	return dma && dma->tx_running;
-+}
- #else
- static inline int serial8250_tx_dma(struct uart_8250_port *p)
- {
-@@ -320,6 +327,11 @@ static inline int serial8250_request_dma
- 	return -1;
- }
- static inline void serial8250_release_dma(struct uart_8250_port *p) { }
-+
-+static inline bool serial8250_tx_dma_running(struct uart_8250_port *p)
-+{
-+	return false;
-+}
- #endif
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -2475,11 +2475,9 @@ static __le16 ext4_group_desc_csum(struc
+ 	crc = crc16(crc, (__u8 *)gdp, offset);
+ 	offset += sizeof(gdp->bg_checksum); /* skip checksum */
+ 	/* for checksum of struct ext4_group_desc do the rest...*/
+-	if (ext4_has_feature_64bit(sb) &&
+-	    offset < le16_to_cpu(sbi->s_es->s_desc_size))
++	if (ext4_has_feature_64bit(sb) && offset < sbi->s_desc_size)
+ 		crc = crc16(crc, (__u8 *)gdp + offset,
+-			    le16_to_cpu(sbi->s_es->s_desc_size) -
+-				offset);
++			    sbi->s_desc_size - offset);
  
- static inline int ns16550a_goto_highspeed(struct uart_8250_port *up)
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1922,19 +1922,25 @@ static int serial8250_tx_threshold_handl
- static unsigned int serial8250_tx_empty(struct uart_port *port)
- {
- 	struct uart_8250_port *up = up_to_u8250p(port);
-+	unsigned int result = 0;
- 	unsigned long flags;
- 	unsigned int lsr;
- 
- 	serial8250_rpm_get(up);
- 
- 	spin_lock_irqsave(&port->lock, flags);
--	lsr = serial_port_in(port, UART_LSR);
--	up->lsr_saved_flags |= lsr & LSR_SAVE_FLAGS;
-+	if (!serial8250_tx_dma_running(up)) {
-+		lsr = serial_port_in(port, UART_LSR);
-+		up->lsr_saved_flags |= lsr & LSR_SAVE_FLAGS;
-+
-+		if ((lsr & BOTH_EMPTY) == BOTH_EMPTY)
-+			result = TIOCSER_TEMT;
-+	}
- 	spin_unlock_irqrestore(&port->lock, flags);
- 
- 	serial8250_rpm_put(up);
- 
--	return (lsr & BOTH_EMPTY) == BOTH_EMPTY ? TIOCSER_TEMT : 0;
-+	return result;
- }
- 
- unsigned int serial8250_do_get_mctrl(struct uart_port *port)
+ out:
+ 	return cpu_to_le16(crc);
 
 
