@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 596ACFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2FC8C433EF;
-	Mon, 15 May 2023 17:28:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F065FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A3AC433EF;
+	Mon, 15 May 2023 17:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171691;
-	bh=hQl1vF4EDF9oLu7f1wQ5MfUEadqEOU6zE5pIzOerR9E=;
+	s=korg; t=1684171694;
+	bh=3vLdLPB3pcM1IWnqjkfSjDouRNOjFoxsNHVOaWvc284=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xh7wNwT/VloF8TcycoJoxGl8xnbDVQ2RRRXlPkiJ61LIi4LhptQBB9M+hyqtZ2Q0l
-	 VPmdct1A8Fw8ASb0y1y75JUICoyI29i36oSfnb5stpo74k4SN/82nIIRMZKS200v5L
-	 kdP2hkwPU7D4wQYC3n1vucVtBjphfvzFACx/uHmg=
+	b=xT1hfVtbySch8e5ZCCfxE7TkyOL7C0917GkrC+Au2DJ20XJMELOwWDwvJsWVAh9BX
+	 2iC7+rFEyY7l21vHWLpsoO8SrM4Mu+LLhfyETS+rHC/HkW0/+HmbHJa9+OTfPt/XQM
+	 fVTDOEO827ZpsEtG2S8w/rhrDRIIMM3tOFEzByTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Dexuan Cui <decui@microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 017/134] fs/ntfs3: Fix null-ptr-deref on inode->i_op in ntfs_lookup()
-Date: Mon, 15 May 2023 18:28:14 +0200
-Message-Id: <20230515161703.574773196@linuxfoundation.org>
+Subject: [PATCH 5.15 018/134] drm/hyperv: Dont overwrite dirt_needed value set by host
+Date: Mon, 15 May 2023 18:28:15 +0200
+Message-Id: <20230515161703.604152837@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -36,78 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit 254e69f284d7270e0abdc023ee53b71401c3ba0c ]
+[ Upstream commit 19b5e6659eaf537ebeac90ae30c7df0296fe5ab9 ]
 
-Syzbot reported a null-ptr-deref bug:
+Existing code is causing a race condition where dirt_needed value is
+already set by the host and gets overwritten with default value. Remove
+this default setting of dirt_needed, to avoid overwriting the value
+received in the channel callback set by vmbus_open. Removing this
+setting also means the default value for dirt_needed is changed to false
+as it's allocated by kzalloc which is similar to legacy hyperv_fb driver.
 
-ntfs3: loop0: Different NTFS' sector size (1024) and media sector size
-(512)
-ntfs3: loop0: Mark volume as dirty due to NTFS errors
-general protection fault, probably for non-canonical address
-0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-RIP: 0010:d_flags_for_inode fs/dcache.c:1980 [inline]
-RIP: 0010:__d_add+0x5ce/0x800 fs/dcache.c:2796
-Call Trace:
- <TASK>
- d_splice_alias+0x122/0x3b0 fs/dcache.c:3191
- lookup_open fs/namei.c:3391 [inline]
- open_last_lookups fs/namei.c:3481 [inline]
- path_openat+0x10e6/0x2df0 fs/namei.c:3688
- do_filp_open+0x264/0x4f0 fs/namei.c:3718
- do_sys_openat2+0x124/0x4e0 fs/open.c:1310
- do_sys_open fs/open.c:1326 [inline]
- __do_sys_open fs/open.c:1334 [inline]
- __se_sys_open fs/open.c:1330 [inline]
- __x64_sys_open+0x221/0x270 fs/open.c:1330
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-If the MFT record of ntfs inode is not a base record, inode->i_op can be
-NULL. And a null-ptr-deref may happen:
-
-ntfs_lookup()
-    dir_search_u() # inode->i_op is set to NULL
-    d_splice_alias()
-        __d_add()
-            d_flags_for_inode() # inode->i_op->get_link null-ptr-deref
-
-Fix this by adding a Check on inode->i_op before calling the
-d_splice_alias() function.
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Reviewed-by: Dexuan Cui <decui@microsoft.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/1662996766-19304-1-git-send-email-ssengar@linux.microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/namei.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/hyperv/hyperv_drm_drv.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index bc741213ad848..29fd76d94c744 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -86,6 +86,16 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
- 		__putname(uni);
- 	}
+diff --git a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+index 00e53de4812bb..584d3a73db96c 100644
+--- a/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
++++ b/drivers/gpu/drm/hyperv/hyperv_drm_drv.c
+@@ -198,8 +198,6 @@ static int hyperv_vmbus_probe(struct hv_device *hdev,
+ 	if (ret)
+ 		drm_warn(dev, "Failed to update vram location.\n");
  
-+	/*
-+	 * Check for a null pointer
-+	 * If the MFT record of ntfs inode is not a base record, inode->i_op can be NULL.
-+	 * This causes null pointer dereference in d_splice_alias().
-+	 */
-+	if (!IS_ERR(inode) && inode->i_op == NULL) {
-+		iput(inode);
-+		inode = ERR_PTR(-EINVAL);
-+	}
-+
- 	return d_splice_alias(inode, dentry);
- }
- 
+-	hv->dirt_needed = true;
+-
+ 	ret = hyperv_mode_config_init(hv);
+ 	if (ret)
+ 		goto err_vmbus_close;
 -- 
 2.39.2
 
