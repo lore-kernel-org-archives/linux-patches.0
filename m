@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7017101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D9BC433EF;
-	Mon, 15 May 2023 17:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE07D101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B62C433EF;
+	Mon, 15 May 2023 17:52:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173165;
-	bh=GpBjsQ9kooTuzGBYrdhJAtXh/wgV9R/SB4IaQ3iNHVo=;
+	s=korg; t=1684173168;
+	bh=0e1hVz1OfnBNAurXHdnbrowvGPbmelbq7rWmCHDdTWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdUACPgva6Fqj+Dzr6twTR5zV97Cn6aD+LceFfVeW2aG+9a0uprjd5U3I1OcYcMuW
-	 rNCVziuO71+7GXRys8VoUWUoHjQ8bfTK2NAmFrakjx0l6CGDHU1AC6fofYdIqwgSzH
-	 gWSfYfq10iNpiAmjPxFt88/iaCeon7qnXcZR1e0c=
+	b=JuNCk5q2vf3H4Z3BS5WPD6V2BF/RNiZt2x3+yBTwkjaO121Xksg19OqdME/sO+Qjf
+	 zgn+kDY1kO+WQlap2QLwHpWQQ0V7MfSdVEU3QwmGvqFHjIH1rk13PUTw4L5z8DYO3t
+	 G7OMESg1VCi7626gi6wjxGu3Rfi2olIg8veJIUzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 381/381] drm/amd/display: Fix hang when skipping modeset
-Date: Mon, 15 May 2023 18:30:32 +0200
-Message-Id: <20230515161754.180201208@linuxfoundation.org>
+	Tian Tao <tiantao6@hisilicon.com>,
+	Inki Dae <inki.dae@samsung.com>
+Subject: [PATCH 5.10 379/381] drm/exynos: move to use request_irq by IRQF_NO_AUTOEN flag
+Date: Mon, 15 May 2023 18:30:30 +0200
+Message-Id: <20230515161754.079396066@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,60 +34,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aurabindo Pillai <aurabindo.pillai@amd.com>
+From: Tian Tao <tiantao6@hisilicon.com>
 
-commit da5e14909776edea4462672fb4a3007802d262e7 upstream.
+commit a4e5eed2c6a689ef2b6ad8d7ae86665c69039379 upstream.
 
-[Why&How]
+After this patch cbe16f35bee68 genirq: Add IRQF_NO_AUTOEN for
+request_irq/nmi() is merged. request_irq() after setting
+IRQ_NOAUTOEN as below
 
-When skipping full modeset since the only state change was a front porch
-change, the DC commit sequence requires extra checks to handle non
-existant plane states being asked to be removed from context.
+irq_set_status_flags(irq, IRQ_NOAUTOEN);
+request_irq(dev, irq...);
+can be replaced by request_irq() with IRQF_NO_AUTOEN flag.
 
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+v2:
+Fix the problem of using wrong flags
+
+Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 ++++-
- drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    3 +++
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/exynos/exynos5433_drm_decon.c |    4 ++--
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c       |    7 +++----
+ 2 files changed, 5 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7248,6 +7248,8 @@ static void amdgpu_dm_commit_planes(stru
- 			continue;
- 
- 		dc_plane = dm_new_plane_state->dc_state;
-+		if (!dc_plane)
-+			continue;
- 
- 		bundle->surface_updates[planes_count].surface = dc_plane;
- 		if (new_pcrtc_state->color_mgmt_changed) {
-@@ -8562,8 +8564,9 @@ static int dm_update_plane_state(struct
- 			return -EINVAL;
+--- a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
++++ b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
+@@ -775,8 +775,8 @@ static int decon_conf_irq(struct decon_c
+ 			return irq;
  		}
+ 	}
+-	irq_set_status_flags(irq, IRQ_NOAUTOEN);
+-	ret = devm_request_irq(ctx->dev, irq, handler, flags, "drm_decon", ctx);
++	ret = devm_request_irq(ctx->dev, irq, handler,
++			       flags | IRQF_NO_AUTOEN, "drm_decon", ctx);
+ 	if (ret < 0) {
+ 		dev_err(ctx->dev, "IRQ %s request failed\n", name);
+ 		return ret;
+--- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
+@@ -1353,10 +1353,9 @@ static int exynos_dsi_register_te_irq(st
+ 	}
  
-+		if (dm_old_plane_state->dc_state)
-+			dc_plane_state_release(dm_old_plane_state->dc_state);
+ 	te_gpio_irq = gpio_to_irq(dsi->te_gpio);
+-	irq_set_status_flags(te_gpio_irq, IRQ_NOAUTOEN);
  
--		dc_plane_state_release(dm_old_plane_state->dc_state);
- 		dm_new_plane_state->dc_state = NULL;
+ 	ret = request_threaded_irq(te_gpio_irq, exynos_dsi_te_irq_handler, NULL,
+-					IRQF_TRIGGER_RISING, "TE", dsi);
++				   IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN, "TE", dsi);
+ 	if (ret) {
+ 		dev_err(dsi->dev, "request interrupt failed with %d\n", ret);
+ 		gpio_free(dsi->te_gpio);
+@@ -1802,9 +1801,9 @@ static int exynos_dsi_probe(struct platf
+ 	if (dsi->irq < 0)
+ 		return dsi->irq;
  
- 		*lock_and_validation_needed = true;
---- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
-@@ -1502,6 +1502,9 @@ bool dc_remove_plane_from_context(
- 	struct dc_stream_status *stream_status = NULL;
- 	struct resource_pool *pool = dc->res_pool;
- 
-+	if (!plane_state)
-+		return true;
-+
- 	for (i = 0; i < context->stream_count; i++)
- 		if (context->streams[i] == stream) {
- 			stream_status = &context->stream_status[i];
+-	irq_set_status_flags(dsi->irq, IRQ_NOAUTOEN);
+ 	ret = devm_request_threaded_irq(dev, dsi->irq, NULL,
+-					exynos_dsi_irq, IRQF_ONESHOT,
++					exynos_dsi_irq,
++					IRQF_ONESHOT | IRQF_NO_AUTOEN,
+ 					dev_name(dev), dsi);
+ 	if (ret) {
+ 		dev_err(dev, "failed to request dsi irq\n");
 
 
