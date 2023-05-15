@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1039CE57E
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FC0C4339C;
-	Mon, 15 May 2023 16:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379528BF4
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9046AC433EF;
+	Mon, 15 May 2023 16:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168384;
-	bh=Gfho95/6K/uX3oq47MASCSU2N5nvK8dGz+S4g0TJR08=;
+	s=korg; t=1684168388;
+	bh=U0MFm+//bs8H8UtF/UNLuHVEYwO6v/YHt4yfLLZsFNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8os+phwYP80/CI57p7vXu5thgrPyyPPXaU2dHzR9XGmUuG4vb9ed9VEAgfHA/n46
-	 XygCp00jTJpAgN8sFUDtQSzXT3fTLVmOZ3hFuiuudOO54hz/KZe78sXdWLdJevzyCG
-	 5xLANR/g91QVHYz/76gEIj1KCDqlM89wODaPWwHU=
+	b=jSfQFepscGTwbVfdgZHaFCvhMRytcECtUf3v5mKqlNTmOSfbrh/4w+/jAl25JbQ4P
+	 VKjO8FYeXV9Z/Pk5tD3DfKjt+EfgEc7yJi9+CpGpNUkz4JILrIZNIKP9iOK6rUtnQ2
+	 i1rn0pepEo9FOoGitv5/Tl0V6jnx5uPtD2mPLTJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 033/116] net/packet: convert po->auxdata to an atomic flag
-Date: Mon, 15 May 2023 18:25:30 +0200
-Message-Id: <20230515161659.365914465@linuxfoundation.org>
+Subject: [PATCH 4.14 034/116] scsi: target: iscsit: Fix TAS handling during conn cleanup
+Date: Mon, 15 May 2023 18:25:31 +0200
+Message-Id: <20230515161659.404583375@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -35,93 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit fd53c297aa7b077ae98a3d3d2d3aa278a1686ba6 ]
+[ Upstream commit cc79da306ebb2edb700c3816b90219223182ac3c ]
 
-po->auxdata can be read while another thread
-is changing its value, potentially raising KCSAN splat.
+Fix a bug added in commit f36199355c64 ("scsi: target: iscsi: Fix cmd abort
+fabric stop race").
 
-Convert it to PACKET_SOCK_AUXDATA flag.
+If CMD_T_TAS is set on the se_cmd we must call iscsit_free_cmd() to do the
+last put on the cmd and free it, because the connection is down and we will
+not up sending the response and doing the put from the normal I/O
+path.
 
-Fixes: 8dc419447415 ("[PACKET]: Add optional checksum computation for recvmsg")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Add a check for CMD_T_TAS in iscsit_release_commands_from_conn() so we now
+detect this case and run iscsit_free_cmd().
+
+Fixes: f36199355c64 ("scsi: target: iscsi: Fix cmd abort fabric stop race")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-9-michael.christie@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 8 +++-----
- net/packet/diag.c      | 2 +-
- net/packet/internal.h  | 4 ++--
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ drivers/target/iscsi/iscsi_target.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index ce6afdb50933b..8b44ad304a656 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -3480,7 +3480,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
- 		memcpy(msg->msg_name, &PACKET_SKB_CB(skb)->sa, copy_len);
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index d9fcef82ddf59..d801f5b388b8a 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4088,9 +4088,12 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
+ 	list_for_each_entry_safe(cmd, cmd_tmp, &tmp_list, i_conn_node) {
+ 		struct se_cmd *se_cmd = &cmd->se_cmd;
+ 
+-		if (se_cmd->se_tfo != NULL) {
+-			spin_lock_irq(&se_cmd->t_state_lock);
+-			if (se_cmd->transport_state & CMD_T_ABORTED) {
++		if (!se_cmd->se_tfo)
++			continue;
++
++		spin_lock_irq(&se_cmd->t_state_lock);
++		if (se_cmd->transport_state & CMD_T_ABORTED) {
++			if (!(se_cmd->transport_state & CMD_T_TAS))
+ 				/*
+ 				 * LIO's abort path owns the cleanup for this,
+ 				 * so put it back on the list and let
+@@ -4098,11 +4101,10 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
+ 				 */
+ 				list_move_tail(&cmd->i_conn_node,
+ 					       &conn->conn_cmd_list);
+-			} else {
+-				se_cmd->transport_state |= CMD_T_FABRIC_STOP;
+-			}
+-			spin_unlock_irq(&se_cmd->t_state_lock);
++		} else {
++			se_cmd->transport_state |= CMD_T_FABRIC_STOP;
+ 		}
++		spin_unlock_irq(&se_cmd->t_state_lock);
  	}
+ 	spin_unlock_bh(&conn->cmd_lock);
  
--	if (pkt_sk(sk)->auxdata) {
-+	if (packet_sock_flag(pkt_sk(sk), PACKET_SOCK_AUXDATA)) {
- 		struct tpacket_auxdata aux;
- 
- 		aux.tp_status = TP_STATUS_USER;
-@@ -3865,9 +3865,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, char __user *optv
- 		if (copy_from_user(&val, optval, sizeof(val)))
- 			return -EFAULT;
- 
--		lock_sock(sk);
--		po->auxdata = !!val;
--		release_sock(sk);
-+		packet_sock_flag_set(po, PACKET_SOCK_AUXDATA, val);
- 		return 0;
- 	}
- 	case PACKET_ORIGDEV:
-@@ -4009,7 +4007,7 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
- 
- 		break;
- 	case PACKET_AUXDATA:
--		val = po->auxdata;
-+		val = packet_sock_flag(po, PACKET_SOCK_AUXDATA);
- 		break;
- 	case PACKET_ORIGDEV:
- 		val = packet_sock_flag(po, PACKET_SOCK_ORIGDEV);
-diff --git a/net/packet/diag.c b/net/packet/diag.c
-index bf5928e5df035..d9f912ad23dfa 100644
---- a/net/packet/diag.c
-+++ b/net/packet/diag.c
-@@ -22,7 +22,7 @@ static int pdiag_put_info(const struct packet_sock *po, struct sk_buff *nlskb)
- 	pinfo.pdi_flags = 0;
- 	if (po->running)
- 		pinfo.pdi_flags |= PDI_RUNNING;
--	if (po->auxdata)
-+	if (packet_sock_flag(po, PACKET_SOCK_AUXDATA))
- 		pinfo.pdi_flags |= PDI_AUXDATA;
- 	if (packet_sock_flag(po, PACKET_SOCK_ORIGDEV))
- 		pinfo.pdi_flags |= PDI_ORIGDEV;
-diff --git a/net/packet/internal.h b/net/packet/internal.h
-index f39dcc7608bc6..3d871cae85b8c 100644
---- a/net/packet/internal.h
-+++ b/net/packet/internal.h
-@@ -117,8 +117,7 @@ struct packet_sock {
- 	struct mutex		pg_vec_lock;
- 	unsigned long		flags;
- 	unsigned int		running;	/* bind_lock must be held */
--	unsigned int		auxdata:1,	/* writer must hold sock lock */
--				has_vnet_hdr:1,
-+	unsigned int		has_vnet_hdr:1, /* writer must hold sock lock */
- 				tp_loss:1,
- 				tp_tx_has_off:1;
- 	int			pressure;
-@@ -144,6 +143,7 @@ static struct packet_sock *pkt_sk(struct sock *sk)
- 
- enum packet_sock_flags {
- 	PACKET_SOCK_ORIGDEV,
-+	PACKET_SOCK_AUXDATA,
- };
- 
- static inline void packet_sock_flag_set(struct packet_sock *po,
 -- 
 2.39.2
 
