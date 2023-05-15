@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F17BE573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048B7C433D2;
-	Mon, 15 May 2023 16:40:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D56E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4768BC433EF;
+	Mon, 15 May 2023 16:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168828;
-	bh=5Xz6DNewh+6cg6nd7xwBDceSdpGCKhYyujgZh2gky+s=;
+	s=korg; t=1684168831;
+	bh=iJbzYw6RmxdfyncJqJbNK5q/D6ZHfDuaKk4WM23dIOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q2FT/oSZW8DXz0mvj+nCf7Y6FZL+e7eHGUYx1gU3F+kUfe66orPcHEQ9HMcyJY4h0
-	 7qIJ2WjB4io4zk63Y22tmJq+aYtvzqmTMJrLz+14++lOBrwMW27f9tVnRo4kxW5a5j
-	 +YXOehS+2OwfY9HS0GPC/sBSaD3z3nF8JopPFkxk=
+	b=yHP+DqiOXP/Ip0zwcySQsZYHjd6RuS9LUxu6K4Pp0GuXtGxCfjE69UX9Sy/smyRSK
+	 Wsa8N1E9EFimBrOvMCaTEhyMdsaCC+53voriECndwML4IXU9U0cRbvkXcglM64x1Lp
+	 a2JwaZE/XVuF5JF4BpkCUigBgx70/HUlv8eCwm7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
-	Paul Moore <paul@paul-moore.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dom Cobley <popcornmix@gmail.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 053/191] scm: fix MSG_CTRUNC setting condition for SO_PASSSEC
-Date: Mon, 15 May 2023 18:24:50 +0200
-Message-Id: <20230515161709.138140642@linuxfoundation.org>
+Subject: [PATCH 4.19 027/191] drm/probe-helper: Cancel previous job before starting new one
+Date: Mon, 15 May 2023 18:24:24 +0200
+Message-Id: <20230515161708.158022145@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -40,75 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+From: Dom Cobley <popcornmix@gmail.com>
 
-[ Upstream commit a02d83f9947d8f71904eda4de046630c3eb6802c ]
+[ Upstream commit a8e47884f1906cd7440fafa056adc8817568e73e ]
 
-Currently, kernel would set MSG_CTRUNC flag if msg_control buffer
-wasn't provided and SO_PASSCRED was set or if there was pending SCM_RIGHTS.
+Currently we schedule a call to output_poll_execute from
+drm_kms_helper_poll_enable for 10s in future. Later we try to replace
+that in drm_helper_probe_single_connector_modes with a 0s schedule with
+delayed_event set.
 
-For some reason we have no corresponding check for SO_PASSSEC.
+But as there is already a job in the queue this fails, and the immediate
+job we wanted with delayed_event set doesn't occur until 10s later.
 
-In the recvmsg(2) doc we have:
-       MSG_CTRUNC
-              indicates that some control data was discarded due to lack
-              of space in the buffer for ancillary data.
+And that call acts as if connector state has changed, reprobing modes.
+This has a side effect of waking up a display that has been blanked.
 
-So, we need to set MSG_CTRUNC flag for all types of SCM.
+Make sure we cancel the old job before submitting the immediate one.
 
-This change can break applications those don't check MSG_CTRUNC flag.
-
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-
-v2:
-- commit message was rewritten according to Eric's suggestion
-Acked-by: Paul Moore <paul@paul-moore.com>
-
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 162b6a57ac50 ("drm/probe-helper: don't lose hotplug event")
+Acked-by: Daniel Vetter <daniel@ffwll.ch>
+Signed-off-by: Dom Cobley <popcornmix@gmail.com>
+[Maxime: Switched to mod_delayed_work]
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230127154052.452524-1-maxime@cerno.tech
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/scm.h | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_probe_helper.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/scm.h b/include/net/scm.h
-index 1ce365f4c2560..585adc1346bd0 100644
---- a/include/net/scm.h
-+++ b/include/net/scm.h
-@@ -105,16 +105,27 @@ static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct sc
- 		}
+diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
+index c0b26135dbd5b..f9e0594ee7024 100644
+--- a/drivers/gpu/drm/drm_probe_helper.c
++++ b/drivers/gpu/drm/drm_probe_helper.c
+@@ -459,8 +459,9 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
+ 		 */
+ 		dev->mode_config.delayed_event = true;
+ 		if (dev->mode_config.poll_enabled)
+-			schedule_delayed_work(&dev->mode_config.output_poll_work,
+-					      0);
++			mod_delayed_work(system_wq,
++					 &dev->mode_config.output_poll_work,
++					 0);
  	}
- }
-+
-+static inline bool scm_has_secdata(struct socket *sock)
-+{
-+	return test_bit(SOCK_PASSSEC, &sock->flags);
-+}
- #else
- static inline void scm_passec(struct socket *sock, struct msghdr *msg, struct scm_cookie *scm)
- { }
-+
-+static inline bool scm_has_secdata(struct socket *sock)
-+{
-+	return false;
-+}
- #endif /* CONFIG_SECURITY_NETWORK */
  
- static __inline__ void scm_recv(struct socket *sock, struct msghdr *msg,
- 				struct scm_cookie *scm, int flags)
- {
- 	if (!msg->msg_control) {
--		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp)
-+		if (test_bit(SOCK_PASSCRED, &sock->flags) || scm->fp ||
-+		    scm_has_secdata(sock))
- 			msg->msg_flags |= MSG_CTRUNC;
- 		scm_destroy(scm);
- 		return;
+ 	/* Re-enable polling in case the global poll config changed. */
 -- 
 2.39.2
 
