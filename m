@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FEF9FBF8
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:16:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A1F6C433EF;
-	Mon, 15 May 2023 17:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0753FFBF6;
+	Mon, 15 May 2023 17:16:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B452C433D2;
+	Mon, 15 May 2023 17:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170968;
-	bh=qTsrLSqGAkEBd9UiyRLMI7cQ0VBHbsj8urXUfkpEl78=;
+	s=korg; t=1684170971;
+	bh=pNiizyDEe5fd2zn2IYaro9F9LlUAbjtfNlsCfxVgYGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V6eN5e7+Y5Pm9O7NK814EJH9b1qhYWGS2/FP90yu7JFkFu7Ts+tFHh0si6kT/npiP
-	 mmYRRAMdIE1eOHQLALgxsIqmxZMD+QslVKKqE1EYwksjsOxcdE/ZqkrAv35SO8/uWM
-	 EQ9gr4f8XSmar2SqD9NtHlEO5LCSOvI+hqdutias=
+	b=JeCjWOiMBm8OA0HTiJiq5MJERD8jZLfutsQrVJfTEUg77zNnr5WMWq/5/yQGRKNn3
+	 uBUZFMQJcT5Kv+4Q2+QtS41hiZt867aOiX6IOGP2JaX5V6TqtfrXHHb+vsdggylIPm
+	 ZX4BXR20lUV48XhNqrqMX+Z8Py4kVp3AIi3BNyuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Geetha sowjanya <gakula@marvell.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
+	linux-afs@lists.infradead.org,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 041/242] octeontx2-pf: mcs: Do not reset PN while updating secy
-Date: Mon, 15 May 2023 18:26:07 +0200
-Message-Id: <20230515161723.150463653@linuxfoundation.org>
+Subject: [PATCH 6.2 059/242] rxrpc: Fix hard call timeout units
+Date: Mon, 15 May 2023 18:26:25 +0200
+Message-Id: <20230515161723.676271897@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -38,64 +42,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 3c99bace4ad08ad0264285ba8ad73117560992c2 ]
+[ Upstream commit 0d098d83c5d9e107b2df7f5e11f81492f56d2fe7 ]
 
-After creating SecYs, SCs and SAs a SecY can be modified
-to change attributes like validation mode, protect frames
-mode etc. During this SecY update, packet number is reset to
-initial user given value by mistake. Hence do not reset
-PN when updating SecY parameters.
+The hard call timeout is specified in the RXRPC_SET_CALL_TIMEOUT cmsg in
+seconds, so fix the point at which sendmsg() applies it to the call to
+convert to jiffies from seconds, not milliseconds.
 
-Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a158bdd3247b ("rxrpc: Fix timeout of a call that hasn't yet been granted a channel")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: Eric Dumazet <edumazet@google.com>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: linux-afs@lists.infradead.org
+cc: netdev@vger.kernel.org
+cc: linux-kernel@vger.kernel.org
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeontx2/nic/cn10k_macsec.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ net/rxrpc/sendmsg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-index 3ad8d7ef20be6..a487a98eac88c 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-@@ -1134,6 +1134,7 @@ static int cn10k_mdo_upd_secy(struct macsec_context *ctx)
- 	struct macsec_secy *secy = ctx->secy;
- 	struct macsec_tx_sa *sw_tx_sa;
- 	struct cn10k_mcs_txsc *txsc;
-+	bool active;
- 	u8 sa_num;
- 	int err;
- 
-@@ -1141,15 +1142,19 @@ static int cn10k_mdo_upd_secy(struct macsec_context *ctx)
- 	if (!txsc)
- 		return -ENOENT;
- 
--	txsc->encoding_sa = secy->tx_sc.encoding_sa;
--
--	sa_num = txsc->encoding_sa;
--	sw_tx_sa = rcu_dereference_bh(secy->tx_sc.sa[sa_num]);
-+	/* Encoding SA got changed */
-+	if (txsc->encoding_sa != secy->tx_sc.encoding_sa) {
-+		txsc->encoding_sa = secy->tx_sc.encoding_sa;
-+		sa_num = txsc->encoding_sa;
-+		sw_tx_sa = rcu_dereference_bh(secy->tx_sc.sa[sa_num]);
-+		active = sw_tx_sa ? sw_tx_sa->active : false;
-+		cn10k_mcs_link_tx_sa2sc(pfvf, secy, txsc, sa_num, active);
-+	}
- 
- 	if (netif_running(secy->netdev)) {
- 		cn10k_mcs_sync_stats(pfvf, secy, txsc);
- 
--		err = cn10k_mcs_secy_tx_cfg(pfvf, secy, txsc, sw_tx_sa, sa_num);
-+		err = cn10k_mcs_secy_tx_cfg(pfvf, secy, txsc, NULL, 0);
- 		if (err)
- 			return err;
- 	}
+diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
+index 6caa47d352ed6..7498a77b5d397 100644
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -699,7 +699,7 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
+ 		fallthrough;
+ 	case 1:
+ 		if (p.call.timeouts.hard > 0) {
+-			j = msecs_to_jiffies(p.call.timeouts.hard);
++			j = p.call.timeouts.hard * HZ;
+ 			now = jiffies;
+ 			j += now;
+ 			WRITE_ONCE(call->expect_term_by, j);
 -- 
 2.39.2
 
