@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02F4FD507
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:58:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59458C433EF;
-	Mon, 15 May 2023 17:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AD5D507
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:58:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B13AC433EF;
+	Mon, 15 May 2023 17:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173530;
-	bh=cUS1mMZozDiwnkpvOUWviuk1NW9RwkBcnue7RJ2BCMQ=;
+	s=korg; t=1684173533;
+	bh=bytP8vB1a2TeHforezdUiqz809KZLXw9PXJJoinF+BA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oegobrcPeDANxqDM3rD5GNi+jVUGdM1lgK5oFuZlD1+jDkYCUJ6nNTEJS41MOwjv1
-	 4DpfwnUBtvf7lj75IyrnPr8f1BcJymSQa5o29wp/mlb9+vOn3EnMlJ0NzfpFcX6SeP
-	 ITuXP1U3IjzOdASkEtTwL94Z6kkFPA7th7v5Tg8I=
+	b=BxpoH3pSZ8AMglML3s9OGGircvnffQgf/W/lGPSo4UxsrNFKQHsGIdMd3dmIvL0AW
+	 GLY7LU1r+9ToRhDir++VggfB/ZVVWDCBzh2litEmH4CRb2JGkQMs8VooQdLJ62n7DQ
+	 3M73yK13wy73dvlTpFRtrcIZCGbkBQEgNpeZqZTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 124/282] spi: imx: Dont skip cleanup in removes error path
-Date: Mon, 15 May 2023 18:28:22 +0200
-Message-Id: <20230515161725.950767812@linuxfoundation.org>
+Subject: [PATCH 5.4 125/282] usb: gadget: udc: renesas_usb3: Fix use after free bug in renesas_usb3_remove due to race condition
+Date: Mon, 15 May 2023 18:28:23 +0200
+Message-Id: <20230515161725.979853777@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,47 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 11951c9e3f364d7ae3b568a0e52c8335d43066b5 ]
+[ Upstream commit 2b947f8769be8b8181dc795fd292d3e7120f5204 ]
 
-Returning early in a platform driver's remove callback is wrong. In this
-case the dma resources are not released in the error path. this is never
-retried later and so this is a permanent leak. To fix this, only skip
-hardware disabling if waking the device fails.
+In renesas_usb3_probe, role_work is bound with renesas_usb3_role_work.
+renesas_usb3_start will be called to start the work.
 
-Fixes: d593574aff0a ("spi: imx: do not access registers while clocks disabled")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230306065733.2170662-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+If we remove the driver which will call usbhs_remove, there may be
+an unfinished work. The possible sequence is as follows:
+
+CPU0                  			CPU1
+
+                    			 renesas_usb3_role_work
+renesas_usb3_remove
+usb_role_switch_unregister
+device_unregister
+kfree(sw)
+//free usb3->role_sw
+                    			 usb_role_switch_set_role
+                    			 //use usb3->role_sw
+
+The usb3->role_sw could be freed under such circumstance and then
+used in usb_role_switch_set_role.
+
+This bug was found by static analysis. And note that removing a
+driver is a root-only operation, and should never happen in normal
+case. But the root user may directly remove the device which
+will also trigger the remove function.
+
+Fix it by canceling the work before cleanup in the renesas_usb3_remove.
+
+Fixes: 39facfa01c9f ("usb: gadget: udc: renesas_usb3: Add register of usb role switch")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20230320062931.505170-1-zyytlz.wz@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-imx.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/usb/gadget/udc/renesas_usb3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index 780c234257ca8..ffd370abdab35 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -1737,13 +1737,11 @@ static int spi_imx_remove(struct platform_device *pdev)
+diff --git a/drivers/usb/gadget/udc/renesas_usb3.c b/drivers/usb/gadget/udc/renesas_usb3.c
+index 0bbd180022aa7..e04acf2dfa65d 100644
+--- a/drivers/usb/gadget/udc/renesas_usb3.c
++++ b/drivers/usb/gadget/udc/renesas_usb3.c
+@@ -2553,6 +2553,7 @@ static int renesas_usb3_remove(struct platform_device *pdev)
+ 	debugfs_remove_recursive(usb3->dentry);
+ 	device_remove_file(&pdev->dev, &dev_attr_role);
  
- 	spi_bitbang_stop(&spi_imx->bitbang);
++	cancel_work_sync(&usb3->role_work);
+ 	usb_role_switch_unregister(usb3->role_sw);
  
--	ret = pm_runtime_resume_and_get(spi_imx->dev);
--	if (ret < 0) {
--		dev_err(spi_imx->dev, "failed to enable clock\n");
--		return ret;
--	}
--
--	writel(0, spi_imx->base + MXC_CSPICTRL);
-+	ret = pm_runtime_get_sync(spi_imx->dev);
-+	if (ret >= 0)
-+		writel(0, spi_imx->base + MXC_CSPICTRL);
-+	else
-+		dev_warn(spi_imx->dev, "failed to enable clock, skip hw disable\n");
- 
- 	pm_runtime_dont_use_autosuspend(spi_imx->dev);
- 	pm_runtime_put_sync(spi_imx->dev);
+ 	usb_del_gadget_udc(&usb3->gadget);
 -- 
 2.39.2
 
