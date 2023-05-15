@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF8C101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:55:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 039B6C433EF;
-	Mon, 15 May 2023 17:55:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896E9FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:55:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E327EC433D2;
+	Mon, 15 May 2023 17:55:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173321;
-	bh=6eqivIqvpxUu+r7ZqA75Z123J5fIEiGHt3lkV2+eWjw=;
+	s=korg; t=1684173324;
+	bh=7dmUiiLIqmSJh3Nu5guEigdCSnBpIDB7gUp91C6eAcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0/QFQU1mVqbfH6odO3cGY1h3sTj7sTeLlAZ5Wpj2HSx4uUV7j7AD448m/TzYD04H
-	 hupdnPurcZnmXhi3oMPAcGG76plhJpFgug7nAsFlGQIGGMJjR2q1uYSIBQ8ycASkav
-	 aX10P177namUnYOxdJa5RO/lXWiB0oexG1FlKaqk=
+	b=iogGTG4gx3hgvYMKfAg/WXR6rNYcoDxAngJUYggaaWE6Sc3c56WgVrbUGcnb/Rvrp
+	 W0ps7FAk5qbxQA34liT5hAYQTeKJruxHbYocHZyln1zUJ5OvcN4f/nChv7ECllDjon
+	 jzhHrUI5DoM9wfQ88XGr8H0boM+zZeA1ddUQSufE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Feng Xu <feng.f.xu@intel.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 057/282] media: saa7134: fix use after free bug in saa7134_finidev due to race condition
-Date: Mon, 15 May 2023 18:27:15 +0200
-Message-Id: <20230515161723.957109748@linuxfoundation.org>
+Subject: [PATCH 5.4 040/282] EDAC/skx: Fix overflows on the DRAM row address mapping arrays
+Date: Mon, 15 May 2023 18:26:58 +0200
+Message-Id: <20230515161723.469621926@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,83 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit 30cf57da176cca80f11df0d9b7f71581fe601389 ]
+[ Upstream commit 71b1e3ba3fed5a34c5fac6d3a15c2634b04c1eb7 ]
 
-In saa7134_initdev, it will call saa7134_hwinit1. There are three
-function invoking here: saa7134_video_init1, saa7134_ts_init1
-and saa7134_vbi_init1.
+The current DRAM row address mapping arrays skx_{open,close}_row[]
+only support ranks with sizes up to 16G. Decoding a rank address
+to a DRAM row address for a 32G rank by using either one of the
+above arrays by the skx_edac driver, will result in an overflow on
+the array.
 
-All of them will init a timer with same function. Take
-saa7134_video_init1 as an example. It'll bound &dev->video_q.timeout
-with saa7134_buffer_timeout.
+For a 32G rank, the most significant DRAM row address bit (the
+bit17) is mapped from the bit34 of the rank address. Add this new
+mapping item to both arrays to fix the overflow issue.
 
-In buffer_activate, the timer funtcion is started.
-
-If we remove the module or device which will call saa7134_finidev
-to make cleanup, there may be a unfinished work. The
-possible sequence is as follows, which will cause a
-typical UAF bug.
-
-Fix it by canceling the timer works accordingly before cleanup in
-saa7134_finidev.
-
-CPU0                  CPU1
-
-                    |saa7134_buffer_timeout
-saa7134_finidev     |
-  kfree(dev);       |
-                    |
-                    | saa7134_buffer_next
-                    | //use dev
-
-Fixes: 1e7126b4a86a ("media: saa7134: Convert timers to use timer_setup()")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 4ec656bdf43a ("EDAC, skx_edac: Add EDAC driver for Skylake")
+Reported-by: Feng Xu <feng.f.xu@intel.com>
+Tested-by: Feng Xu <feng.f.xu@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/all/20230211011728.71764-1-qiuxu.zhuo@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7134/saa7134-ts.c    | 1 +
- drivers/media/pci/saa7134/saa7134-vbi.c   | 1 +
- drivers/media/pci/saa7134/saa7134-video.c | 1 +
- 3 files changed, 3 insertions(+)
+ drivers/edac/skx_base.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/saa7134/saa7134-ts.c b/drivers/media/pci/saa7134/saa7134-ts.c
-index 6a5053126237f..437dbe5e75e29 100644
---- a/drivers/media/pci/saa7134/saa7134-ts.c
-+++ b/drivers/media/pci/saa7134/saa7134-ts.c
-@@ -300,6 +300,7 @@ int saa7134_ts_start(struct saa7134_dev *dev)
- 
- int saa7134_ts_fini(struct saa7134_dev *dev)
- {
-+	del_timer_sync(&dev->ts_q.timeout);
- 	saa7134_pgtable_free(dev->pci, &dev->ts_q.pt);
- 	return 0;
- }
-diff --git a/drivers/media/pci/saa7134/saa7134-vbi.c b/drivers/media/pci/saa7134/saa7134-vbi.c
-index 3f0b0933eed69..3e773690468bd 100644
---- a/drivers/media/pci/saa7134/saa7134-vbi.c
-+++ b/drivers/media/pci/saa7134/saa7134-vbi.c
-@@ -185,6 +185,7 @@ int saa7134_vbi_init1(struct saa7134_dev *dev)
- int saa7134_vbi_fini(struct saa7134_dev *dev)
- {
- 	/* nothing */
-+	del_timer_sync(&dev->vbi_q.timeout);
- 	return 0;
+diff --git a/drivers/edac/skx_base.c b/drivers/edac/skx_base.c
+index b1d717cb8df9f..f382cc70f9aaa 100644
+--- a/drivers/edac/skx_base.c
++++ b/drivers/edac/skx_base.c
+@@ -459,7 +459,7 @@ static bool skx_rir_decode(struct decoded_addr *res)
  }
  
-diff --git a/drivers/media/pci/saa7134/saa7134-video.c b/drivers/media/pci/saa7134/saa7134-video.c
-index e454a288229b8..ea26c8c57494f 100644
---- a/drivers/media/pci/saa7134/saa7134-video.c
-+++ b/drivers/media/pci/saa7134/saa7134-video.c
-@@ -2154,6 +2154,7 @@ int saa7134_video_init1(struct saa7134_dev *dev)
+ static u8 skx_close_row[] = {
+-	15, 16, 17, 18, 20, 21, 22, 28, 10, 11, 12, 13, 29, 30, 31, 32, 33
++	15, 16, 17, 18, 20, 21, 22, 28, 10, 11, 12, 13, 29, 30, 31, 32, 33, 34
+ };
  
- void saa7134_video_fini(struct saa7134_dev *dev)
- {
-+	del_timer_sync(&dev->video_q.timeout);
- 	/* free stuff */
- 	vb2_queue_release(&dev->video_vbq);
- 	saa7134_pgtable_free(dev->pci, &dev->video_q.pt);
+ static u8 skx_close_column[] = {
+@@ -467,7 +467,7 @@ static u8 skx_close_column[] = {
+ };
+ 
+ static u8 skx_open_row[] = {
+-	14, 15, 16, 20, 28, 21, 22, 23, 24, 25, 26, 27, 29, 30, 31, 32, 33
++	14, 15, 16, 20, 28, 21, 22, 23, 24, 25, 26, 27, 29, 30, 31, 32, 33, 34
+ };
+ 
+ static u8 skx_open_column[] = {
 -- 
 2.39.2
 
