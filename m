@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90B3FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:47:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F21C433EF;
-	Mon, 15 May 2023 16:47:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B71FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232F8C433EF;
+	Mon, 15 May 2023 16:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169278;
-	bh=Oxm6zcFUt0i3P6Kq1dvEAUv3ijIXeY7QiQnwrPW2fRg=;
+	s=korg; t=1684169281;
+	bh=eneSfdHZZIigCbK4uJJvxm1G7RJebvwOZ+fvEna6Sew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJf3jovCkR19pNIU0J7PoIwyMpZ76G5XM/3zpmLqeqkL5TKglY11iI/9pFrRlle9w
-	 jDeXfjOu9TrXufckKD3uE5Z7fQ7VaDh/Ir98xnl8NHDZ55vLVAPrea0q3zzNE5gYsK
-	 WUi+YIP7SXcn+qIAAmf+kQTVlCUVAMGzUdarD5ys=
+	b=b+ngNw+s/MfOO6hAN3eTzspspRfe8AO9C89qFkv9sJ6srd4EZEDfXz4QccoB0ANPv
+	 +vhYIha1CSrOakuA+9P3QT2HXgUAwg+vHz2p4DE/BiUNMJNaOqQQ2VI1sr54N3OH6j
+	 P/05eMs4KRb+uVP6mPpLXbpaWi9xgG4vYDzqVvuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+64b645917ce07d89bde5@syzkaller.appspotmail.com,
-	syzbot+0d042627c4f2ad332195@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.19 184/191] ext4: fix invalid free tracking in ext4_xattr_move_to_block()
-Date: Mon, 15 May 2023 18:27:01 +0200
-Message-Id: <20230515161714.172862462@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 001/246] USB: dwc3: gadget: drop dead hibernation code
+Date: Mon, 15 May 2023 18:23:33 +0200
+Message-Id: <20230515161722.658179152@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
-References: <20230515161707.203549282@linuxfoundation.org>
+In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
+References: <20230515161722.610123835@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,62 +37,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit b87c7cdf2bed4928b899e1ce91ef0d147017ba45 upstream.
+[ Upstream commit bdb19d01026a5cccfa437be8adcf2df472c5889e ]
 
-In ext4_xattr_move_to_block(), the value of the extended attribute
-which we need to move to an external block may be allocated by
-kvmalloc() if the value is stored in an external inode.  So at the end
-of the function the code tried to check if this was the case by
-testing entry->e_value_inum.
+The hibernation code is broken and has never been enabled in mainline
+and should thus be dropped.
 
-However, at this point, the pointer to the xattr entry is no longer
-valid, because it was removed from the original location where it had
-been stored.  So we could end up calling kvfree() on a pointer which
-was not allocated by kvmalloc(); or we could also potentially leak
-memory by not freeing the buffer when it should be freed.  Fix this by
-storing whether it should be freed in a separate variable.
+Remove the hibernation bits from the gadget code, which effectively
+reverts commits e1dadd3b0f27 ("usb: dwc3: workaround: bogus hibernation
+events") and 7b2a0368bbc9 ("usb: dwc3: gadget: set KEEP_CONNECT in case
+of hibernation") except for the spurious interrupt warning.
 
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230430160426.581366-1-tytso@mit.edu
-Link: https://syzkaller.appspot.com/bug?id=5c2aee8256e30b55ccf57312c16d88417adbd5e1
-Link: https://syzkaller.appspot.com/bug?id=41a6b5d4917c0412eb3b3c3c604965bed7d7420b
-Reported-by: syzbot+64b645917ce07d89bde5@syzkaller.appspotmail.com
-Reported-by: syzbot+0d042627c4f2ad332195@syzkaller.appspotmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230404072524.19014-5-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 39674be56fba ("usb: dwc3: gadget: Execute gadget stop after halting the controller")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/gadget.c | 46 +++++----------------------------------
+ 1 file changed, 6 insertions(+), 40 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -2573,6 +2573,7 @@ static int ext4_xattr_move_to_block(hand
- 		.in_inode = !!entry->e_value_inum,
- 	};
- 	struct ext4_xattr_ibody_header *header = IHDR(inode, raw_inode);
-+	int needs_kvfree = 0;
- 	int error;
+diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+index 3faac3244c7db..a995e3f4df37f 100644
+--- a/drivers/usb/dwc3/gadget.c
++++ b/drivers/usb/dwc3/gadget.c
+@@ -2478,7 +2478,7 @@ static void __dwc3_gadget_set_speed(struct dwc3 *dwc)
+ 	dwc3_writel(dwc->regs, DWC3_DCFG, reg);
+ }
  
- 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
-@@ -2595,7 +2596,7 @@ static int ext4_xattr_move_to_block(hand
- 			error = -ENOMEM;
- 			goto out;
- 		}
+-static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
++static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on)
+ {
+ 	u32			reg;
+ 	u32			timeout = 2000;
+@@ -2497,17 +2497,11 @@ static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
+ 			reg &= ~DWC3_DCTL_KEEP_CONNECT;
+ 		reg |= DWC3_DCTL_RUN_STOP;
+ 
+-		if (dwc->has_hibernation)
+-			reg |= DWC3_DCTL_KEEP_CONNECT;
 -
-+		needs_kvfree = 1;
- 		error = ext4_xattr_inode_get(inode, entry, buffer, value_size);
- 		if (error)
- 			goto out;
-@@ -2634,7 +2635,7 @@ static int ext4_xattr_move_to_block(hand
+ 		__dwc3_gadget_set_speed(dwc);
+ 		dwc->pullups_connected = true;
+ 	} else {
+ 		reg &= ~DWC3_DCTL_RUN_STOP;
  
- out:
- 	kfree(b_entry_name);
--	if (entry->e_value_inum && buffer)
-+	if (needs_kvfree && buffer)
- 		kvfree(buffer);
- 	if (is)
- 		brelse(is->iloc.bh);
+-		if (dwc->has_hibernation && !suspend)
+-			reg &= ~DWC3_DCTL_KEEP_CONNECT;
+-
+ 		dwc->pullups_connected = false;
+ 	}
+ 
+@@ -2589,7 +2583,7 @@ static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
+ 	 * remaining event generated by the controller while polling for
+ 	 * DSTS.DEVCTLHLT.
+ 	 */
+-	return dwc3_gadget_run_stop(dwc, false, false);
++	return dwc3_gadget_run_stop(dwc, false);
+ }
+ 
+ static int dwc3_gadget_pullup(struct usb_gadget *g, int is_on)
+@@ -2643,7 +2637,7 @@ static int dwc3_gadget_pullup(struct usb_gadget *g, int is_on)
+ 
+ 		dwc3_event_buffers_setup(dwc);
+ 		__dwc3_gadget_start(dwc);
+-		ret = dwc3_gadget_run_stop(dwc, true, false);
++		ret = dwc3_gadget_run_stop(dwc, true);
+ 	}
+ 
+ 	pm_runtime_put(dwc->dev);
+@@ -4210,30 +4204,6 @@ static void dwc3_gadget_suspend_interrupt(struct dwc3 *dwc,
+ 	dwc->link_state = next;
+ }
+ 
+-static void dwc3_gadget_hibernation_interrupt(struct dwc3 *dwc,
+-		unsigned int evtinfo)
+-{
+-	unsigned int is_ss = evtinfo & BIT(4);
+-
+-	/*
+-	 * WORKAROUND: DWC3 revision 2.20a with hibernation support
+-	 * have a known issue which can cause USB CV TD.9.23 to fail
+-	 * randomly.
+-	 *
+-	 * Because of this issue, core could generate bogus hibernation
+-	 * events which SW needs to ignore.
+-	 *
+-	 * Refers to:
+-	 *
+-	 * STAR#9000546576: Device Mode Hibernation: Issue in USB 2.0
+-	 * Device Fallback from SuperSpeed
+-	 */
+-	if (is_ss ^ (dwc->speed == USB_SPEED_SUPER))
+-		return;
+-
+-	/* enter hibernation here */
+-}
+-
+ static void dwc3_gadget_interrupt(struct dwc3 *dwc,
+ 		const struct dwc3_event_devt *event)
+ {
+@@ -4251,11 +4221,7 @@ static void dwc3_gadget_interrupt(struct dwc3 *dwc,
+ 		dwc3_gadget_wakeup_interrupt(dwc);
+ 		break;
+ 	case DWC3_DEVICE_EVENT_HIBER_REQ:
+-		if (dev_WARN_ONCE(dwc->dev, !dwc->has_hibernation,
+-					"unexpected hibernation event\n"))
+-			break;
+-
+-		dwc3_gadget_hibernation_interrupt(dwc, event->event_info);
++		dev_WARN_ONCE(dwc->dev, true, "unexpected hibernation event\n");
+ 		break;
+ 	case DWC3_DEVICE_EVENT_LINK_STATUS_CHANGE:
+ 		dwc3_gadget_linksts_change_interrupt(dwc, event->event_info);
+@@ -4592,7 +4558,7 @@ int dwc3_gadget_suspend(struct dwc3 *dwc)
+ 	if (!dwc->gadget_driver)
+ 		return 0;
+ 
+-	dwc3_gadget_run_stop(dwc, false, false);
++	dwc3_gadget_run_stop(dwc, false);
+ 
+ 	spin_lock_irqsave(&dwc->lock, flags);
+ 	dwc3_disconnect_gadget(dwc);
+@@ -4613,7 +4579,7 @@ int dwc3_gadget_resume(struct dwc3 *dwc)
+ 	if (ret < 0)
+ 		goto err0;
+ 
+-	ret = dwc3_gadget_run_stop(dwc, true, false);
++	ret = dwc3_gadget_run_stop(dwc, true);
+ 	if (ret < 0)
+ 		goto err1;
+ 
+-- 
+2.39.2
+
 
 
