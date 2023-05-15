@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D30FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264EBC433D2;
-	Mon, 15 May 2023 16:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5FDFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F86DC4339B;
+	Mon, 15 May 2023 16:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169657;
-	bh=FsPrgsFNzHbbngytaK5Rjwhhpx0OGkf70uSG4ycAFxI=;
+	s=korg; t=1684169660;
+	bh=crE+3prRPrVEAyoNqBZ/oDDymuz63sBm4m/fZgJ+fw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rlu4u8XO1My+ltnB0xnPwn2gwhE0Ut3rvT99aevAVAGBYbCX7cHqCxBD7P8m/HeqD
-	 xR9qrShnq7IhiiN9Lu/RCXgmOrzva4vSI+CTg98xNV5QAXw5x3S2JjcuqVISEj0fEr
-	 ZocSfU1mlNT8eJOaowpS9A89Es4PBhtDe9hHTKWg=
+	b=buM4IeWNKuw9xSXrMR/44h5nfwAwhY/c1CELdFCc9RkDpDzSvKoOmGJkHHVBMYDMH
+	 Tv5ewNaz0uGu6jG6m3d3uI9xzqIs2/CQ56LLeI2Xl1KwxVz4tPLMNudZ6zi7ao7m++
+	 Asw0tcd/uZOxEO2XGvgZfVQ11YybuBtCI0cP/AJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
+	xiaoshoukui <xiaoshoukui@ruijie.com.cn>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.3 129/246] btrfs: properly reject clear_cache and v1 cache for block-group-tree
-Date: Mon, 15 May 2023 18:25:41 +0200
-Message-Id: <20230515161726.433200448@linuxfoundation.org>
+Subject: [PATCH 6.3 130/246] btrfs: fix assertion of exclop condition when starting balance
+Date: Mon, 15 May 2023 18:25:42 +0200
+Message-Id: <20230515161726.462887377@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,72 +34,180 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: xiaoshoukui <xiaoshoukui@gmail.com>
 
-commit 64b5d5b2852661284ccbb038c697562cc56231bf upstream.
+commit ac868bc9d136cde6e3eb5de77019a63d57a540ff upstream.
 
-[BUG]
-With block-group-tree feature enabled, mounting it with clear_cache
-would cause the following transaction abort at mount or remount:
+Balance as exclusive state is compatible with paused balance and device
+add, which makes some things more complicated. The assertion of valid
+states when starting from paused balance needs to take into account two
+more states, the combinations can be hit when there are several threads
+racing to start balance and device add. This won't typically happen when
+the commands are started from command line.
 
-  BTRFS info (device dm-4): force clearing of disk cache
-  BTRFS info (device dm-4): using free space tree
-  BTRFS info (device dm-4): auto enabling async discard
-  BTRFS info (device dm-4): clearing free space tree
-  BTRFS info (device dm-4): clearing compat-ro feature flag for FREE_SPACE_TREE (0x1)
-  BTRFS info (device dm-4): clearing compat-ro feature flag for FREE_SPACE_TREE_VALID (0x2)
-  BTRFS error (device dm-4): block-group-tree feature requires fres-space-tree and no-holes
-  BTRFS error (device dm-4): super block corruption detected before writing it to disk
-  BTRFS: error (device dm-4) in write_all_supers:4288: errno=-117 Filesystem corrupted (unexpected superblock corruption detected)
-  BTRFS warning (device dm-4: state E): Skipping commit of aborted transaction.
+Scenario 1: With exclusive_operation state == BTRFS_EXCLOP_NONE.
 
-[CAUSE]
-For block-group-tree feature, we have an artificial dependency on
-free-space-tree.
+Concurrently adding multiple devices to the same mount point and
+btrfs_exclop_finish executed finishes before assertion in
+btrfs_exclop_balance, exclusive_operation will changed to
+BTRFS_EXCLOP_NONE state which lead to assertion failed:
 
-This means if we detect block-group-tree without v2 cache, we consider
-it a corruption and cause the problem.
+  fs_info->exclusive_operation == BTRFS_EXCLOP_BALANCE ||
+  fs_info->exclusive_operation == BTRFS_EXCLOP_DEV_ADD,
+  in fs/btrfs/ioctl.c:456
+  Call Trace:
+   <TASK>
+   btrfs_exclop_balance+0x13c/0x310
+   ? memdup_user+0xab/0xc0
+   ? PTR_ERR+0x17/0x20
+   btrfs_ioctl_add_dev+0x2ee/0x320
+   btrfs_ioctl+0x9d5/0x10d0
+   ? btrfs_ioctl_encoded_write+0xb80/0xb80
+   __x64_sys_ioctl+0x197/0x210
+   do_syscall_64+0x3c/0xb0
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-For clear_cache mount option, it would temporary disable v2 cache, then
-re-enable it.
+Scenario 2: With exclusive_operation state == BTRFS_EXCLOP_BALANCE_PAUSED.
 
-But unfortunately for that temporary v2 cache disabled status, we refuse
-to write a superblock with bg tree only flag, thus leads to the above
-transaction abortion.
+Concurrently adding multiple devices to the same mount point and
+btrfs_exclop_balance executed finish before the latter thread execute
+assertion in btrfs_exclop_balance, exclusive_operation will changed to
+BTRFS_EXCLOP_BALANCE_PAUSED state which lead to assertion failed:
 
-[FIX]
-For now, just reject clear_cache and v1 cache mount option for block
-group tree.  So now we got a graceful rejection other than a transaction
-abort:
+  fs_info->exclusive_operation == BTRFS_EXCLOP_BALANCE ||
+  fs_info->exclusive_operation == BTRFS_EXCLOP_DEV_ADD ||
+  fs_info->exclusive_operation == BTRFS_EXCLOP_NONE,
+  fs/btrfs/ioctl.c:458
+  Call Trace:
+   <TASK>
+   btrfs_exclop_balance+0x240/0x410
+   ? memdup_user+0xab/0xc0
+   ? PTR_ERR+0x17/0x20
+   btrfs_ioctl_add_dev+0x2ee/0x320
+   btrfs_ioctl+0x9d5/0x10d0
+   ? btrfs_ioctl_encoded_write+0xb80/0xb80
+   __x64_sys_ioctl+0x197/0x210
+   do_syscall_64+0x3c/0xb0
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-  BTRFS info (device dm-4): force clearing of disk cache
-  BTRFS error (device dm-4): cannot disable free space tree with block-group-tree feature
-  BTRFS error (device dm-4): open_ctree failed
+An example of the failed assertion is below, which shows that the
+paused balance is also needed to be checked.
 
+  root@syzkaller:/home/xsk# ./repro
+  Failed to add device /dev/vda, errno 14
+  Failed to add device /dev/vda, errno 14
+  Failed to add device /dev/vda, errno 14
+  Failed to add device /dev/vda, errno 14
+  Failed to add device /dev/vda, errno 14
+  Failed to add device /dev/vda, errno 14
+  Failed to add device /dev/vda, errno 14
+  Failed to add device /dev/vda, errno 14
+  Failed to add device /dev/vda, errno 14
+  [  416.611428][ T7970] BTRFS info (device loop0): fs_info exclusive_operation: 0
+  Failed to add device /dev/vda, errno 14
+  [  416.613973][ T7971] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.615456][ T7972] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.617528][ T7973] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.618359][ T7974] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.622589][ T7975] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.624034][ T7976] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.626420][ T7977] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.627643][ T7978] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.629006][ T7979] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  [  416.630298][ T7980] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  Failed to add device /dev/vda, errno 14
+  [  416.632787][ T7981] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.634282][ T7982] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  Failed to add device /dev/vda, errno 14
+  [  416.636202][ T7983] BTRFS info (device loop0): fs_info exclusive_operation: 3
+  [  416.637012][ T7984] BTRFS info (device loop0): fs_info exclusive_operation: 1
+  Failed to add device /dev/vda, errno 14
+  [  416.637759][ T7984] assertion failed: fs_info->exclusive_operation ==
+  BTRFS_EXCLOP_BALANCE || fs_info->exclusive_operation ==
+  BTRFS_EXCLOP_DEV_ADD || fs_info->exclusive_operation ==
+  BTRFS_EXCLOP_NONE, in fs/btrfs/ioctl.c:458
+  [  416.639845][ T7984] invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+  [  416.640485][ T7984] CPU: 0 PID: 7984 Comm: repro Not tainted 6.2.0 #7
+  [  416.641172][ T7984] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+  [  416.642090][ T7984] RIP: 0010:btrfs_assertfail+0x2c/0x2e
+  [  416.644423][ T7984] RSP: 0018:ffffc90003ea7e28 EFLAGS: 00010282
+  [  416.645018][ T7984] RAX: 00000000000000cc RBX: 0000000000000000 RCX: 0000000000000000
+  [  416.645763][ T7984] RDX: ffff88801d030000 RSI: ffffffff81637e7c RDI: fffff520007d4fb7
+  [  416.646554][ T7984] RBP: ffffffff8a533de0 R08: 00000000000000cc R09: 0000000000000000
+  [  416.647299][ T7984] R10: 0000000000000001 R11: 0000000000000001 R12: ffffffff8a533da0
+  [  416.648041][ T7984] R13: 00000000000001ca R14: 000000005000940a R15: 0000000000000000
+  [  416.648785][ T7984] FS:  00007fa2985d4640(0000) GS:ffff88802cc00000(0000) knlGS:0000000000000000
+  [  416.649616][ T7984] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [  416.650238][ T7984] CR2: 0000000000000000 CR3: 0000000018e5e000 CR4: 0000000000750ef0
+  [  416.650980][ T7984] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  [  416.651725][ T7984] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  [  416.652502][ T7984] PKRU: 55555554
+  [  416.652888][ T7984] Call Trace:
+  [  416.653241][ T7984]  <TASK>
+  [  416.653527][ T7984]  btrfs_exclop_balance+0x240/0x410
+  [  416.654036][ T7984]  ? memdup_user+0xab/0xc0
+  [  416.654465][ T7984]  ? PTR_ERR+0x17/0x20
+  [  416.654874][ T7984]  btrfs_ioctl_add_dev+0x2ee/0x320
+  [  416.655380][ T7984]  btrfs_ioctl+0x9d5/0x10d0
+  [  416.655822][ T7984]  ? btrfs_ioctl_encoded_write+0xb80/0xb80
+  [  416.656400][ T7984]  __x64_sys_ioctl+0x197/0x210
+  [  416.656874][ T7984]  do_syscall_64+0x3c/0xb0
+  [  416.657346][ T7984]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  [  416.657922][ T7984] RIP: 0033:0x4546af
+  [  416.660170][ T7984] RSP: 002b:00007fa2985d4150 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  [  416.660972][ T7984] RAX: ffffffffffffffda RBX: 00007fa2985d4640 RCX: 00000000004546af
+  [  416.661714][ T7984] RDX: 0000000000000000 RSI: 000000005000940a RDI: 0000000000000003
+  [  416.662449][ T7984] RBP: 00007fa2985d41d0 R08: 0000000000000000 R09: 00007ffee37a4c4f
+  [  416.663195][ T7984] R10: 0000000000000000 R11: 0000000000000246 R12: 00007fa2985d4640
+  [  416.663951][ T7984] R13: 0000000000000009 R14: 000000000041b320 R15: 00007fa297dd4000
+  [  416.664703][ T7984]  </TASK>
+  [  416.665040][ T7984] Modules linked in:
+  [  416.665590][ T7984] ---[ end trace 0000000000000000 ]---
+  [  416.666176][ T7984] RIP: 0010:btrfs_assertfail+0x2c/0x2e
+  [  416.668775][ T7984] RSP: 0018:ffffc90003ea7e28 EFLAGS: 00010282
+  [  416.669425][ T7984] RAX: 00000000000000cc RBX: 0000000000000000 RCX: 0000000000000000
+  [  416.670235][ T7984] RDX: ffff88801d030000 RSI: ffffffff81637e7c RDI: fffff520007d4fb7
+  [  416.671050][ T7984] RBP: ffffffff8a533de0 R08: 00000000000000cc R09: 0000000000000000
+  [  416.671867][ T7984] R10: 0000000000000001 R11: 0000000000000001 R12: ffffffff8a533da0
+  [  416.672685][ T7984] R13: 00000000000001ca R14: 000000005000940a R15: 0000000000000000
+  [  416.673501][ T7984] FS:  00007fa2985d4640(0000) GS:ffff88802cc00000(0000) knlGS:0000000000000000
+  [  416.674425][ T7984] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [  416.675114][ T7984] CR2: 0000000000000000 CR3: 0000000018e5e000 CR4: 0000000000750ef0
+  [  416.675933][ T7984] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  [  416.676760][ T7984] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+
+Link: https://lore.kernel.org/linux-btrfs/20230324031611.98986-1-xiaoshoukui@gmail.com/
 CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: xiaoshoukui <xiaoshoukui@ruijie.com.cn>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/super.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/btrfs/ioctl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -826,7 +826,12 @@ out:
- 	    !btrfs_test_opt(info, CLEAR_CACHE)) {
- 		btrfs_err(info, "cannot disable free space tree");
- 		ret = -EINVAL;
--
-+	}
-+	if (btrfs_fs_compat_ro(info, BLOCK_GROUP_TREE) &&
-+	    (btrfs_test_opt(info, CLEAR_CACHE) ||
-+	     !btrfs_test_opt(info, FREE_SPACE_TREE))) {
-+		btrfs_err(info, "cannot disable free space tree with block-group-tree feature");
-+		ret = -EINVAL;
- 	}
- 	if (!ret)
- 		ret = btrfs_check_mountopts_zoned(info);
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -454,7 +454,9 @@ void btrfs_exclop_balance(struct btrfs_f
+ 	case BTRFS_EXCLOP_BALANCE_PAUSED:
+ 		spin_lock(&fs_info->super_lock);
+ 		ASSERT(fs_info->exclusive_operation == BTRFS_EXCLOP_BALANCE ||
+-		       fs_info->exclusive_operation == BTRFS_EXCLOP_DEV_ADD);
++		       fs_info->exclusive_operation == BTRFS_EXCLOP_DEV_ADD ||
++		       fs_info->exclusive_operation == BTRFS_EXCLOP_NONE ||
++		       fs_info->exclusive_operation == BTRFS_EXCLOP_BALANCE_PAUSED);
+ 		fs_info->exclusive_operation = BTRFS_EXCLOP_BALANCE_PAUSED;
+ 		spin_unlock(&fs_info->super_lock);
+ 		break;
 
 
