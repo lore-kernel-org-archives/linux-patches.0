@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3E7FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D69C433EF;
-	Mon, 15 May 2023 17:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A9AFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B918DC433EF;
+	Mon, 15 May 2023 17:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171576;
-	bh=T0CeFnq3CHc5Xe1O31FYeiX17Q66noo5q2ST0EwTdNY=;
+	s=korg; t=1684171579;
+	bh=Sl9uHhQsKqr1GZzNJuE9C36hdrfw1GyfWUq3AnEfEj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tKbjGFAE0rFXzKIE7/QZQHE6oapGQhKc67gkRFCCa23lsq0fxNP80yfGuORtEtK9S
-	 wntnIuTfk6vyNgG1uh1LxL+uatFF0xN2nJjxi9JhML0WO6hpd5e/yU7TV9VZt8adkO
-	 uW5WLV08PTxjfOwPMU5fya9pc/74+in5wnSBgl2I=
+	b=sVMwsXGIjmG6fmPTra2qnlQpoRwFkPpdW6OyAaymMQOdMOYe/plIE1s3zawT7j8ci
+	 OFBaNC0BBhGmPZvgO0qdhkTXCyqHk3kCx/vf81nS9kNyCmTfvlIuDpfNw4p9Df+gc8
+	 IhmZx1X/GTJkoqZXEWBs5YBiaABxGPbVdNj7ml+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 002/134] crypto: ccp - Clear PSP interrupt status register before calling handler
-Date: Mon, 15 May 2023 18:27:59 +0200
-Message-Id: <20230515161702.993604989@linuxfoundation.org>
+Subject: [PATCH 5.15 003/134] ubifs: Fix AA deadlock when setting xattr for encrypted file
+Date: Mon, 15 May 2023 18:28:00 +0200
+Message-Id: <20230515161703.024684686@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -36,71 +35,184 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-[ Upstream commit 45121ad4a1750ca47ce3f32bd434bdb0cdbf0043 ]
+[ Upstream commit a0c51565730729f0df2ee886e34b4da6d359a10b ]
 
-The PSP IRQ is edge-triggered (MSI or MSI-X) in all cases supported by
-the psp module so clear the interrupt status register early in the
-handler to prevent missed interrupts. sev_irq_handler() calls wake_up()
-on a wait queue, which can result in a new command being submitted from
-a different CPU. This then races with the clearing of isr and can result
-in missed interrupts. A missed interrupt results in a command waiting
-until it times out, which results in the psp being declared dead.
+Following process:
+vfs_setxattr(host)
+  ubifs_xattr_set
+    down_write(host_ui->xattr_sem)   <- lock first time
+      create_xattr
+        ubifs_new_inode(host)
+          fscrypt_prepare_new_inode(host)
+            fscrypt_policy_to_inherit(host)
+              if (IS_ENCRYPTED(inode))
+                fscrypt_require_key(host)
+                  fscrypt_get_encryption_info(host)
+                    ubifs_xattr_get(host)
+                      down_read(host_ui->xattr_sem) <- AA deadlock
 
-This is unlikely on bare metal, but has been observed when running
-virtualized. In the cases where this is observed, sev->cmdresp_reg has
-PSP_CMDRESP_RESP set which indicates that the command was processed
-correctly but no interrupt was asserted.
+, which may trigger an AA deadlock problem:
 
-The full sequence of events looks like this:
+[  102.620871] INFO: task setfattr:1599 blocked for more than 10 seconds.
+[  102.625298]       Not tainted 5.19.0-rc7-00001-gb666b6823ce0-dirty #711
+[  102.628732] task:setfattr        state:D stack:    0 pid: 1599
+[  102.628749] Call Trace:
+[  102.628753]  <TASK>
+[  102.628776]  __schedule+0x482/0x1060
+[  102.629964]  schedule+0x92/0x1a0
+[  102.629976]  rwsem_down_read_slowpath+0x287/0x8c0
+[  102.629996]  down_read+0x84/0x170
+[  102.630585]  ubifs_xattr_get+0xd1/0x370 [ubifs]
+[  102.630730]  ubifs_crypt_get_context+0x1f/0x30 [ubifs]
+[  102.630791]  fscrypt_get_encryption_info+0x7d/0x1c0
+[  102.630810]  fscrypt_policy_to_inherit+0x56/0xc0
+[  102.630817]  fscrypt_prepare_new_inode+0x35/0x160
+[  102.630830]  ubifs_new_inode+0xcc/0x4b0 [ubifs]
+[  102.630873]  ubifs_xattr_set+0x591/0x9f0 [ubifs]
+[  102.630961]  xattr_set+0x8c/0x3e0 [ubifs]
+[  102.631003]  __vfs_setxattr+0x71/0xc0
+[  102.631026]  vfs_setxattr+0x105/0x270
+[  102.631034]  do_setxattr+0x6d/0x110
+[  102.631041]  setxattr+0xa0/0xd0
+[  102.631087]  __x64_sys_setxattr+0x2f/0x40
 
-CPU 1: submits SEV cmd #1
-CPU 1: calls wait_event_timeout()
-CPU 0: enters psp_irq_handler()
-CPU 0: calls sev_handler()->wake_up()
-CPU 1: wakes up; finishes processing cmd #1
-CPU 1: submits SEV cmd #2
-CPU 1: calls wait_event_timeout()
-PSP:   finishes processing cmd #2; interrupt status is still set; no interrupt
-CPU 0: clears intsts
-CPU 0: exits psp_irq_handler()
-CPU 1: wait_event_timeout() times out; psp_dead=true
+Fetch a reproducer in [Link].
 
-Fixes: 200664d5237f ("crypto: ccp: Add Secure Encrypted Virtualization (SEV) command support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Just like ext4 does, which skips encrypting for inode with
+EXT4_EA_INODE_FL flag. Stop encypting xattr inode for ubifs.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216260
+Fixes: f4e3634a3b64222 ("ubifs: Fix races between xattr_{set|get} ...")
+Fixes: d475a507457b5ca ("ubifs: Add skeleton for fscrypto")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Richard Weinberger <richard@nod.at>
+Stable-dep-of: 3a36d20e0129 ("ubifs: Fix memory leak in do_rename")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/psp-dev.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ubifs/dir.c   | 25 ++++++++++++++-----------
+ fs/ubifs/ubifs.h |  2 +-
+ fs/ubifs/xattr.c |  2 +-
+ 3 files changed, 16 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/crypto/ccp/psp-dev.c b/drivers/crypto/ccp/psp-dev.c
-index ae7b445999144..4bf9eaab4456f 100644
---- a/drivers/crypto/ccp/psp-dev.c
-+++ b/drivers/crypto/ccp/psp-dev.c
-@@ -42,6 +42,9 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
- 	/* Read the interrupt status: */
- 	status = ioread32(psp->io_regs + psp->vdata->intsts_reg);
+diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
+index 7717d23906dbe..005566bc6dc13 100644
+--- a/fs/ubifs/dir.c
++++ b/fs/ubifs/dir.c
+@@ -68,13 +68,14 @@ static int inherit_flags(const struct inode *dir, umode_t mode)
+  * @c: UBIFS file-system description object
+  * @dir: parent directory inode
+  * @mode: inode mode flags
++ * @is_xattr: whether the inode is xattr inode
+  *
+  * This function finds an unused inode number, allocates new inode and
+  * initializes it. Returns new inode in case of success and an error code in
+  * case of failure.
+  */
+ struct inode *ubifs_new_inode(struct ubifs_info *c, struct inode *dir,
+-			      umode_t mode)
++			      umode_t mode, bool is_xattr)
+ {
+ 	int err;
+ 	struct inode *inode;
+@@ -99,10 +100,12 @@ struct inode *ubifs_new_inode(struct ubifs_info *c, struct inode *dir,
+ 			 current_time(inode);
+ 	inode->i_mapping->nrpages = 0;
  
-+	/* Clear the interrupt status by writing the same value we read. */
-+	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
-+
- 	/* invoke subdevice interrupt handlers */
- 	if (status) {
- 		if (psp->sev_irq_handler)
-@@ -51,9 +54,6 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
- 			psp->tee_irq_handler(irq, psp->tee_irq_data, status);
+-	err = fscrypt_prepare_new_inode(dir, inode, &encrypted);
+-	if (err) {
+-		ubifs_err(c, "fscrypt_prepare_new_inode failed: %i", err);
+-		goto out_iput;
++	if (!is_xattr) {
++		err = fscrypt_prepare_new_inode(dir, inode, &encrypted);
++		if (err) {
++			ubifs_err(c, "fscrypt_prepare_new_inode failed: %i", err);
++			goto out_iput;
++		}
  	}
  
--	/* Clear the interrupt status by writing the same value we read. */
--	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
--
- 	return IRQ_HANDLED;
- }
+ 	switch (mode & S_IFMT) {
+@@ -309,7 +312,7 @@ static int ubifs_create(struct user_namespace *mnt_userns, struct inode *dir,
  
+ 	sz_change = CALC_DENT_SIZE(fname_len(&nm));
+ 
+-	inode = ubifs_new_inode(c, dir, mode);
++	inode = ubifs_new_inode(c, dir, mode, false);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+ 		goto out_fname;
+@@ -370,7 +373,7 @@ static struct inode *create_whiteout(struct inode *dir, struct dentry *dentry)
+ 	if (err)
+ 		return ERR_PTR(err);
+ 
+-	inode = ubifs_new_inode(c, dir, mode);
++	inode = ubifs_new_inode(c, dir, mode, false);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+ 		goto out_free;
+@@ -462,7 +465,7 @@ static int ubifs_tmpfile(struct user_namespace *mnt_userns, struct inode *dir,
+ 		return err;
+ 	}
+ 
+-	inode = ubifs_new_inode(c, dir, mode);
++	inode = ubifs_new_inode(c, dir, mode, false);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+ 		goto out_budg;
+@@ -1005,7 +1008,7 @@ static int ubifs_mkdir(struct user_namespace *mnt_userns, struct inode *dir,
+ 
+ 	sz_change = CALC_DENT_SIZE(fname_len(&nm));
+ 
+-	inode = ubifs_new_inode(c, dir, S_IFDIR | mode);
++	inode = ubifs_new_inode(c, dir, S_IFDIR | mode, false);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+ 		goto out_fname;
+@@ -1092,7 +1095,7 @@ static int ubifs_mknod(struct user_namespace *mnt_userns, struct inode *dir,
+ 
+ 	sz_change = CALC_DENT_SIZE(fname_len(&nm));
+ 
+-	inode = ubifs_new_inode(c, dir, mode);
++	inode = ubifs_new_inode(c, dir, mode, false);
+ 	if (IS_ERR(inode)) {
+ 		kfree(dev);
+ 		err = PTR_ERR(inode);
+@@ -1174,7 +1177,7 @@ static int ubifs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
+ 
+ 	sz_change = CALC_DENT_SIZE(fname_len(&nm));
+ 
+-	inode = ubifs_new_inode(c, dir, S_IFLNK | S_IRWXUGO);
++	inode = ubifs_new_inode(c, dir, S_IFLNK | S_IRWXUGO, false);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+ 		goto out_fname;
+diff --git a/fs/ubifs/ubifs.h b/fs/ubifs/ubifs.h
+index efbb4554a4a6f..398551bef5986 100644
+--- a/fs/ubifs/ubifs.h
++++ b/fs/ubifs/ubifs.h
+@@ -2002,7 +2002,7 @@ int ubifs_update_time(struct inode *inode, struct timespec64 *time, int flags);
+ 
+ /* dir.c */
+ struct inode *ubifs_new_inode(struct ubifs_info *c, struct inode *dir,
+-			      umode_t mode);
++			      umode_t mode, bool is_xattr);
+ int ubifs_getattr(struct user_namespace *mnt_userns, const struct path *path, struct kstat *stat,
+ 		  u32 request_mask, unsigned int flags);
+ int ubifs_check_dir_empty(struct inode *dir);
+diff --git a/fs/ubifs/xattr.c b/fs/ubifs/xattr.c
+index e4f193eae4b2b..9ff2614bdeca0 100644
+--- a/fs/ubifs/xattr.c
++++ b/fs/ubifs/xattr.c
+@@ -110,7 +110,7 @@ static int create_xattr(struct ubifs_info *c, struct inode *host,
+ 	if (err)
+ 		return err;
+ 
+-	inode = ubifs_new_inode(c, host, S_IFREG | S_IRWXUGO);
++	inode = ubifs_new_inode(c, host, S_IFREG | S_IRWXUGO, true);
+ 	if (IS_ERR(inode)) {
+ 		err = PTR_ERR(inode);
+ 		goto out_budg;
 -- 
 2.39.2
 
