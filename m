@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3410FFC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:31:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B11C433EF;
-	Mon, 15 May 2023 17:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9C4FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:31:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5F4C433D2;
+	Mon, 15 May 2023 17:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171897;
-	bh=+RcXgZWucDgFeNxbckfTTeHe5CcUbJD+uKE0L5JPzRQ=;
+	s=korg; t=1684171900;
+	bh=OS/0TrytQFg/zb1q7nr/0ZmHojUHwONBC8iw3eH7D8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGnL+mKLEOjwsCNrE62ikj96T0duAgvfnm8Kt8zSzxgVIwKMpWbJp0thZ/Fk8clPz
-	 B0WcNLjCVfZqxPAUBti/xMrW4d8bdnieMd6LBkhRBlWuEq6ZxocjZbRNN5PCcrQsKS
-	 D0SdFKmZcwIZP/82xuUOAjWyc8PAsnBWhIYUkL24=
+	b=bW/7DNRDLSHXofSRfs+6WkcgcDqTJF59/vAYh1Y/k0taHulQciWN66thWfsHGVci9
+	 BihNOzsp7k/02cttTmzNAvnr6Ms+rLOwYVZbSsXRp6/0WYQXcG0iAvaOFas5RMKKUY
+	 /0rKmf4xe9DQKvi359AsNCNKH1JteucVQjyL5Yvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.15 083/134] ARM: dts: s5pv210: correct MIPI CSIS clock name
-Date: Mon, 15 May 2023 18:29:20 +0200
-Message-Id: <20230515161705.940390474@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>
+Subject: [PATCH 5.15 084/134] drm/bridge: lt8912b: Fix DSI Video Mode
+Date: Mon, 15 May 2023 18:29:21 +0200
+Message-Id: <20230515161705.970534179@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -33,32 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-commit 665b9459bb53b8f19bd1541567e1fe9782c83c4b upstream.
+commit f435b7ef3b360d689df2ffa8326352cd07940d92 upstream.
 
-The Samsung S5P/Exynos MIPI CSIS bindings and Linux driver expect first
-clock name to be "csis".  Otherwise the driver fails to probe.
+LT8912 DSI port supports only Non-Burst mode video operation with Sync
+Events and continuous clock on clock lane, correct dsi mode flags
+according to that removing MIPI_DSI_MODE_VIDEO_BURST flag.
 
-Fixes: 94ad0f6d9278 ("ARM: dts: Add Device tree for s5pv210 SoC")
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230212185818.43503-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230330093131.424828-1-francesco@dolcini.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/s5pv210.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/arm/boot/dts/s5pv210.dtsi
-+++ b/arch/arm/boot/dts/s5pv210.dtsi
-@@ -582,7 +582,7 @@
- 				interrupts = <29>;
- 				clocks = <&clocks CLK_CSIS>,
- 						<&clocks SCLK_CSIS>;
--				clock-names = "clk_csis",
-+				clock-names = "csis",
- 						"sclk_csis";
- 				bus-width = <4>;
- 				status = "disabled";
+--- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
++++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+@@ -494,7 +494,6 @@ static int lt8912_attach_dsi(struct lt89
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
+ 
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
+-			  MIPI_DSI_MODE_VIDEO_BURST |
+ 			  MIPI_DSI_MODE_LPM |
+ 			  MIPI_DSI_MODE_NO_EOT_PACKET;
+ 
 
 
