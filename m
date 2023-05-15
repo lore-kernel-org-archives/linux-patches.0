@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9C6FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:50:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1097CC433A1;
-	Mon, 15 May 2023 17:50:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF981FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:50:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 067A9C433EF;
+	Mon, 15 May 2023 17:50:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173018;
-	bh=Nc25TSkVxVrXY64easAv0Dysj5N+r+hR4Ws0zUbzFD0=;
+	s=korg; t=1684173021;
+	bh=MSzEmfhV34/Qm08lf+S6uzObVmbAM0f4IvMleLVFik8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hjBBp9HhybFxUIezyrOPZKa4MmQB8QD5/bHDbsDkWTU8he+Rj1PheKgMRpNytcC95
-	 7PhpzBLVxl2ruK/o2BNe+BMA3DZqdsatJqQRuENxuQ049vYL7Xfi3MlKUaQMtVCrAb
-	 ErXmzdLAEWQXxnjt6o165M7/MvUUdwA3xjDYuLfc=
+	b=AG+RfBT2NNpS0Xalx5HsCZSnIUXUIce/HuH1xH5xjR99cgB5378POwZOIiJUcCitA
+	 AOcL7ywbdH7UNj/if1OQ4z9a6ILqwEF7v72AFmOfTOdfkRDi6lDYP36jFQcHVRTIRV
+	 4dOjCORf6ThUcIr+V8xUcDKVHWgbA+SL/XZ11nAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
 	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Yoshinori Sato <ysato@users.sourceforge.jp>,
 	Rich Felker <dalias@libc.org>,
-	linux-sh@vger.kernel.org,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 5.10 341/381] sh: math-emu: fix macro redefined warning
-Date: Mon, 15 May 2023 18:29:52 +0200
-Message-Id: <20230515161752.265104703@linuxfoundation.org>
+	Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: [PATCH 5.10 342/381] sh: mcount.S: fix build error when PRINTK is not enabled
+Date: Mon, 15 May 2023 18:29:53 +0200
+Message-Id: <20230515161752.310148076@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -41,45 +39,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 58a49ad90939386a8682e842c474a0d2c00ec39c upstream.
+commit c2bd1e18c6f85c0027da2e5e7753b9bfd9f8e6dc upstream.
 
-Fix a warning that was reported by the kernel test robot:
+Fix a build error in mcount.S when CONFIG_PRINTK is not enabled.
+Fixes this build error:
 
-In file included from ../include/math-emu/soft-fp.h:27,
-                 from ../arch/sh/math-emu/math.c:22:
-../arch/sh/include/asm/sfp-machine.h:17: warning: "__BYTE_ORDER" redefined
-   17 | #define __BYTE_ORDER __BIG_ENDIAN
-In file included from ../arch/sh/math-emu/math.c:21:
-../arch/sh/math-emu/sfp-util.h:71: note: this is the location of the previous definition
-   71 | #define __BYTE_ORDER __LITTLE_ENDIAN
+sh2-linux-ld: arch/sh/lib/mcount.o: in function `stack_panic':
+(.text+0xec): undefined reference to `dump_stack'
 
-Fixes: b929926f01f2 ("sh: define __BIG_ENDIAN for math-emu")
+Fixes: e460ab27b6c3 ("sh: Fix up stack overflow check with ftrace disabled.")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: lore.kernel.org/r/202111121827.6v6SXtVv-lkp@intel.com
 Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
 Cc: Rich Felker <dalias@libc.org>
-Cc: linux-sh@vger.kernel.org
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Cc: stable@vger.kernel.org
 Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230306040037.20350-5-rdunlap@infradead.org
+Link: https://lore.kernel.org/r/20230306040037.20350-8-rdunlap@infradead.org
 Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/math-emu/sfp-util.h |    4 ----
- 1 file changed, 4 deletions(-)
+ arch/sh/Kconfig.debug |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/sh/math-emu/sfp-util.h
-+++ b/arch/sh/math-emu/sfp-util.h
-@@ -67,7 +67,3 @@
-   } while (0)
+--- a/arch/sh/Kconfig.debug
++++ b/arch/sh/Kconfig.debug
+@@ -18,7 +18,7 @@ config SH_STANDARD_BIOS
  
- #define abort()	return 0
--
--#define __BYTE_ORDER __LITTLE_ENDIAN
--
--
+ config STACK_DEBUG
+ 	bool "Check for stack overflows"
+-	depends on DEBUG_KERNEL
++	depends on DEBUG_KERNEL && PRINTK
+ 	help
+ 	  This option will cause messages to be printed if free stack space
+ 	  drops below a certain limit. Saying Y here will add overhead to
 
 
