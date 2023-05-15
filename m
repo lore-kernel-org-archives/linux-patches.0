@@ -1,27 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B65FC12
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEFA9C433EF;
-	Mon, 15 May 2023 17:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86509FC12
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B62C433EF;
+	Mon, 15 May 2023 17:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172095;
-	bh=vA0zeCbEd66IIZ09tbi0zkeB5Meh+dk0ngEv/bIiDe0=;
+	s=korg; t=1684172098;
+	bh=1L+js1GhTKXMZLzjfudpMc84XvzveXumNSn2H3wo5go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqqrXFevGjyOknM/7yV2+itLC9jL4pTSpm4903DmYzcgEPPvH1/VnUtoROKiSeKpF
-	 psi93Aowk5dRgLit5fMXEzMAfwWpR7xNwLNQVhISqnUihkhzSBK0dbUT7n+ak/6ciM
-	 wy4aGt15s6EzstmFoh/r1/+mjcSlIOMXbk8+iBSM=
+	b=a1uR7PZK8kgoIIwPZoP8lirXQ3Q3euOcQKqyve2cuSaK7+cImszO2hUKj7Wr9O5WX
+	 H6IHH3nIyf+SqNceAAq4jh3it3k7Kt7Dl+cVD1R+m8FuvjAfizXX6M9jxLInZpKZFL
+	 fmOVCnaPTDpnVeinAlloeISO3AXfR5brnk5eZeoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Thierry Reding <thierry.reding@gmail.com>
-Subject: [PATCH 5.10 035/381] pwm: meson: Fix axg ao mux parents
-Date: Mon, 15 May 2023 18:24:46 +0200
-Message-Id: <20230515161738.394144812@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Tejun Heo <tj@kernel.org>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Christian Brauner <brauner@kernel.org>,
+	Dennis Zhou <dennis@kernel.org>,
+	Hou Tao <houtao1@huawei.com>,
+	yangerkun <yangerkun@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 044/381] writeback, cgroup: fix null-ptr-deref write in bdi_split_work_to_wbs
+Date: Mon, 15 May 2023 18:24:55 +0200
+Message-Id: <20230515161738.835477841@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,36 +45,175 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit eb411c0cf59ae6344b34bc6f0d298a22b300627e upstream.
+[ Upstream commit 1ba1199ec5747f475538c0d25a32804e5ba1dfde ]
 
-This fix is basically the same as 9bce02ef0dfa ("pwm: meson: Fix the
-G12A AO clock parents order"). Vendor driver referenced there has
-xtal as first parent also for axg ao. In addition fix the name
-of the aoclk81 clock. Apparently name aoclk81 as used by the vendor
-driver was changed when mainlining the axg clock driver.
+KASAN report null-ptr-deref:
+==================================================================
+BUG: KASAN: null-ptr-deref in bdi_split_work_to_wbs+0x5c5/0x7b0
+Write of size 8 at addr 0000000000000000 by task sync/943
+CPU: 5 PID: 943 Comm: sync Tainted: 6.3.0-rc5-next-20230406-dirty #461
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7f/0xc0
+ print_report+0x2ba/0x340
+ kasan_report+0xc4/0x120
+ kasan_check_range+0x1b7/0x2e0
+ __kasan_check_write+0x24/0x40
+ bdi_split_work_to_wbs+0x5c5/0x7b0
+ sync_inodes_sb+0x195/0x630
+ sync_inodes_one_sb+0x3a/0x50
+ iterate_supers+0x106/0x1b0
+ ksys_sync+0x98/0x160
+[...]
+==================================================================
 
-Fixes: bccaa3f917c9 ("pwm: meson: Add clock source configuration for Meson-AXG")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The race that causes the above issue is as follows:
+
+           cpu1                     cpu2
+-------------------------|-------------------------
+inode_switch_wbs
+ INIT_WORK(&isw->work, inode_switch_wbs_work_fn)
+ queue_rcu_work(isw_wq, &isw->work)
+ // queue_work async
+  inode_switch_wbs_work_fn
+   wb_put_many(old_wb, nr_switched)
+    percpu_ref_put_many
+     ref->data->release(ref)
+     cgwb_release
+      queue_work(cgwb_release_wq, &wb->release_work)
+      // queue_work async
+       &wb->release_work
+       cgwb_release_workfn
+                            ksys_sync
+                             iterate_supers
+                              sync_inodes_one_sb
+                               sync_inodes_sb
+                                bdi_split_work_to_wbs
+                                 kmalloc(sizeof(*work), GFP_ATOMIC)
+                                 // alloc memory failed
+        percpu_ref_exit
+         ref->data = NULL
+         kfree(data)
+                                 wb_get(wb)
+                                  percpu_ref_get(&wb->refcnt)
+                                   percpu_ref_get_many(ref, 1)
+                                    atomic_long_add(nr, &ref->data->count)
+                                     atomic64_add(i, v)
+                                     // trigger null-ptr-deref
+
+bdi_split_work_to_wbs() traverses &bdi->wb_list to split work into all
+wbs.  If the allocation of new work fails, the on-stack fallback will be
+used and the reference count of the current wb is increased afterwards.
+If cgroup writeback membership switches occur before getting the reference
+count and the current wb is released as old_wd, then calling wb_get() or
+wb_put() will trigger the null pointer dereference above.
+
+This issue was introduced in v4.3-rc7 (see fix tag1).  Both
+sync_inodes_sb() and __writeback_inodes_sb_nr() calls to
+bdi_split_work_to_wbs() can trigger this issue.  For scenarios called via
+sync_inodes_sb(), originally commit 7fc5854f8c6e ("writeback: synchronize
+sync(2) against cgroup writeback membership switches") reduced the
+possibility of the issue by adding wb_switch_rwsem, but in v5.14-rc1 (see
+fix tag2) removed the "inode_io_list_del_locked(inode, old_wb)" from
+inode_switch_wbs_work_fn() so that wb->state contains WB_has_dirty_io,
+thus old_wb is not skipped when traversing wbs in bdi_split_work_to_wbs(),
+and the issue becomes easily reproducible again.
+
+To solve this problem, percpu_ref_exit() is called under RCU protection to
+avoid race between cgwb_release_workfn() and bdi_split_work_to_wbs().
+Moreover, replace wb_get() with wb_tryget() in bdi_split_work_to_wbs(),
+and skip the current wb if wb_tryget() fails because the wb has already
+been shutdown.
+
+Link: https://lkml.kernel.org/r/20230410130826.1492525-1-libaokun1@huawei.com
+Fixes: b817525a4a80 ("writeback: bdi_writeback iteration must not skip dying ones")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Acked-by: Tejun Heo <tj@kernel.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Dennis Zhou <dennis@kernel.org>
+Cc: Hou Tao <houtao1@huawei.com>
+Cc: yangerkun <yangerkun@huawei.com>
+Cc: Zhang Yi <yi.zhang@huawei.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-meson.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/fs-writeback.c | 17 ++++++++++-------
+ mm/backing-dev.c  | 11 ++++++++++-
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -424,7 +424,7 @@ static const struct meson_pwm_data pwm_a
- };
+diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
+index 46c15dd2405c6..6f18459f5e381 100644
+--- a/fs/fs-writeback.c
++++ b/fs/fs-writeback.c
+@@ -884,6 +884,16 @@ static void bdi_split_work_to_wbs(struct backing_dev_info *bdi,
+ 			continue;
+ 		}
  
- static const char * const pwm_axg_ao_parent_names[] = {
--	"aoclk81", "xtal", "fclk_div4", "fclk_div5"
-+	"xtal", "axg_ao_clk81", "fclk_div4", "fclk_div5"
- };
++		/*
++		 * If wb_tryget fails, the wb has been shutdown, skip it.
++		 *
++		 * Pin @wb so that it stays on @bdi->wb_list.  This allows
++		 * continuing iteration from @wb after dropping and
++		 * regrabbing rcu read lock.
++		 */
++		if (!wb_tryget(wb))
++			continue;
++
+ 		/* alloc failed, execute synchronously using on-stack fallback */
+ 		work = &fallback_work;
+ 		*work = *base_work;
+@@ -892,13 +902,6 @@ static void bdi_split_work_to_wbs(struct backing_dev_info *bdi,
+ 		work->done = &fallback_work_done;
  
- static const struct meson_pwm_data pwm_axg_ao_data = {
+ 		wb_queue_work(wb, work);
+-
+-		/*
+-		 * Pin @wb so that it stays on @bdi->wb_list.  This allows
+-		 * continuing iteration from @wb after dropping and
+-		 * regrabbing rcu read lock.
+-		 */
+-		wb_get(wb);
+ 		last_wb = wb;
+ 
+ 		rcu_read_unlock();
+diff --git a/mm/backing-dev.c b/mm/backing-dev.c
+index ca770a783a9f9..b28f629c35271 100644
+--- a/mm/backing-dev.c
++++ b/mm/backing-dev.c
+@@ -378,6 +378,15 @@ static void wb_exit(struct bdi_writeback *wb)
+ static DEFINE_SPINLOCK(cgwb_lock);
+ static struct workqueue_struct *cgwb_release_wq;
+ 
++static void cgwb_free_rcu(struct rcu_head *rcu_head)
++{
++	struct bdi_writeback *wb = container_of(rcu_head,
++			struct bdi_writeback, rcu);
++
++	percpu_ref_exit(&wb->refcnt);
++	kfree(wb);
++}
++
+ static void cgwb_release_workfn(struct work_struct *work)
+ {
+ 	struct bdi_writeback *wb = container_of(work, struct bdi_writeback,
+@@ -397,7 +406,7 @@ static void cgwb_release_workfn(struct work_struct *work)
+ 	fprop_local_destroy_percpu(&wb->memcg_completions);
+ 	percpu_ref_exit(&wb->refcnt);
+ 	wb_exit(wb);
+-	kfree_rcu(wb, rcu);
++	call_rcu(&wb->rcu, cgwb_free_rcu);
+ }
+ 
+ static void cgwb_release(struct percpu_ref *refcnt)
+-- 
+2.39.2
+
 
 
