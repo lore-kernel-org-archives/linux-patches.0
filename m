@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6BEFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35218C433D2;
-	Mon, 15 May 2023 17:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9ABFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB45C4339B;
+	Mon, 15 May 2023 17:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171613;
-	bh=vYQUcLPMTRVFgU2TgOleFQK6YisZAf2Z3MsTK94EWuo=;
+	s=korg; t=1684171616;
+	bh=LLezx0IRucv1RV+3noGzzS8zmfu+BNHnm6724uHKmY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1If3tvMu8DaYpJYz4UL++PgfRK1SdqNz+tasjVY5GrKh0uKt61tpGuMh5YnvIQENf
-	 AHOfYwEBDb6HkeDHpqMVk3uVaOAa4fkloXHQ0lLFD8pz7rEAE96qlwm9ThApxV3c/0
-	 HXfaAbdRtSQCtfC1I9kAm0Wasxp4FHNvQMNvBD6U=
+	b=RaMrPKYxJ2PWy3P1ASOpKyV6uHNuO6Noz4fKirFLUsdd8ozaUuWJ5sK/zRlIM0ntU
+	 MamGFZQ3x+0eTvRfTFaRgLIyVy2HIuJiVAJ/Nk43Vqy+6ifGvY0RMI57YxsytXVgLJ
+	 2oGCob/tiJOrzmyNiC2lNQxow6VrMVs8g3//xk6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	David Ahern <dsahern@kernel.org>,
+	Angelo Dureghello <angelo.dureghello@timesys.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/134] selftests: srv6: make srv6_end_dt46_l3vpn_test more robust
-Date: Mon, 15 May 2023 18:28:20 +0200
-Message-Id: <20230515161703.772716105@linuxfoundation.org>
+Subject: [PATCH 5.15 024/134] net: dsa: mv88e6xxx: add mv88e6321 rsvd2cpu
+Date: Mon, 15 May 2023 18:28:21 +0200
+Message-Id: <20230515161703.820875491@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -37,59 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Angelo Dureghello <angelo.dureghello@timesys.com>
 
-[ Upstream commit 46ef24c60f8ee70662968ac55325297ed4624d61 ]
+[ Upstream commit 6686317855c6997671982d4489ccdd946f644957 ]
 
-On some distributions, the rp_filter is automatically set (=1) by
-default on a netdev basis (also on VRFs).
-In an SRv6 End.DT46 behavior, decapsulated IPv4 packets are routed using
-the table associated with the VRF bound to that tunnel. During lookup
-operations, the rp_filter can lead to packet loss when activated on the
-VRF.
-Therefore, we chose to make this selftest more robust by explicitly
-disabling the rp_filter during tests (as it is automatically set by some
-Linux distributions).
+Add rsvd2cpu capability for mv88e6321 model, to allow proper bpdu
+processing.
 
-Fixes: 03a0b567a03d ("selftests: seg6: add selftest for SRv6 End.DT46 Behavior")
-Reported-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Tested-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Angelo Dureghello <angelo.dureghello@timesys.com>
+Fixes: 51c901a775621 ("net: dsa: mv88e6xxx: distinguish Global 2 Rsvd2CPU")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/srv6_end_dt46_l3vpn_test.sh  | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/net/srv6_end_dt46_l3vpn_test.sh b/tools/testing/selftests/net/srv6_end_dt46_l3vpn_test.sh
-index aebaab8ce44cb..441eededa0312 100755
---- a/tools/testing/selftests/net/srv6_end_dt46_l3vpn_test.sh
-+++ b/tools/testing/selftests/net/srv6_end_dt46_l3vpn_test.sh
-@@ -292,6 +292,11 @@ setup_hs()
- 	ip netns exec ${hsname} sysctl -wq net.ipv6.conf.all.accept_dad=0
- 	ip netns exec ${hsname} sysctl -wq net.ipv6.conf.default.accept_dad=0
- 
-+	# disable the rp_filter otherwise the kernel gets confused about how
-+	# to route decap ipv4 packets.
-+	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
-+	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.default.rp_filter=0
-+
- 	ip -netns ${hsname} link add veth0 type veth peer name ${rtveth}
- 	ip -netns ${hsname} link set ${rtveth} netns ${rtname}
- 	ip -netns ${hsname} addr add ${IPv6_HS_NETWORK}::${hs}/64 dev veth0 nodad
-@@ -316,11 +321,6 @@ setup_hs()
- 	ip netns exec ${rtname} sysctl -wq net.ipv6.conf.${rtveth}.proxy_ndp=1
- 	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.proxy_arp=1
- 
--	# disable the rp_filter otherwise the kernel gets confused about how
--	# to route decap ipv4 packets.
--	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
--	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.rp_filter=0
--
- 	ip netns exec ${rtname} sh -c "echo 1 > /proc/sys/net/vrf/strict_mode"
- }
- 
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index bc363fca2895f..b33aee4404de2 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -4575,6 +4575,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	.set_cpu_port = mv88e6095_g1_set_cpu_port,
+ 	.set_egress_port = mv88e6095_g1_set_egress_port,
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
++	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.reset = mv88e6352_g1_reset,
+ 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+ 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
 -- 
 2.39.2
 
