@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4449FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:10:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A100FC433D2;
-	Mon, 15 May 2023 17:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4AFFFBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:10:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19747C433EF;
+	Mon, 15 May 2023 17:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170620;
-	bh=in+w6K3fjxmyFwk71DdaAfdlQ01O4kvSwjjehtxMYv0=;
+	s=korg; t=1684170623;
+	bh=FNxsBtphh2BOEWK9HVw+90AG3qzM8POaUZ6FlbdtfXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sUUjf4bdBE4giWO4LO6PcQI8U5RzYcVZhCbph+JQ9U62IWBESSH7O28vCd7oOnJwG
-	 exaNSk/tS7MsVgJ7y0E2xIwUG/dqd6GWISD6kcpXm1Wrf8tm4DQkVul1iZRCixS5l3
-	 eG9XFZdrUfn7QESGLBXoODQxZ4M/tpGz3VwBPt+c=
+	b=2X2T9jbnEcYKVjmwB7EJOybDPhS+a8aiA7w0zlAf7bUiPv9cPb3fp5BehAcVjRhSD
+	 J/VsKUlaBphxdDyHAhm60jQpWiq8VQ7FbfM5FetUvrwn4aLMl76EN3eM2qjnKO9w8T
+	 I4/fRNErKqx9MQSLpz76zrReQUMBFNg3QsqQx1Co=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 189/239] f2fs: factor out victim_entry usage from general rb_tree use
-Date: Mon, 15 May 2023 18:27:32 +0200
-Message-Id: <20230515161727.327219425@linuxfoundation.org>
+Subject: [PATCH 6.1 190/239] drm/msm/adreno: Simplify read64/write64 helpers
+Date: Mon, 15 May 2023 18:27:33 +0200
+Message-Id: <20230515161727.356262050@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,425 +36,291 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 043d2d00b44310f84c0593c63e51fae88c829cdd ]
+[ Upstream commit cade05b2a88558847984287dd389fae0c7de31d6 ]
 
-Let's reduce the complexity of mixed use of rb_tree in victim_entry from
-extent_cache and discard_cmd.
+The _HI reg is always following the _LO reg, so no need to pass these
+offsets seprately.
 
-This should fix arm32 memory alignment issue caused by shared rb_entry.
-
-[struct victim_entry]              [struct rb_entry]
-[0] struct rb_node rb_node;        [0] struct rb_node rb_node;
-                                       union {
-                                         struct {
-                                           unsigned int ofs;
-                                           unsigned int len;
-                                         };
-[16] unsigned long long mtime;     [12] unsigned long long key;
-                                       } __packed;
-
-Cc: <stable@vger.kernel.org>
-Fixes: 093749e296e2 ("f2fs: support age threshold based garbage collection")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/511581/
+Link: https://lore.kernel.org/r/20221114193049.1533391-2-robdclark@gmail.com
+Stable-dep-of: ca090c837b43 ("drm/msm: fix missing wq allocation error handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/extent_cache.c |  36 +----------
- fs/f2fs/f2fs.h         |  15 +----
- fs/f2fs/gc.c           | 139 +++++++++++++++++++++++++----------------
- fs/f2fs/gc.h           |  14 +----
- fs/f2fs/segment.c      |   4 +-
- 5 files changed, 93 insertions(+), 115 deletions(-)
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c       |  3 +--
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c       | 27 ++++++++-------------
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |  4 +--
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       | 24 ++++++------------
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |  3 +--
+ drivers/gpu/drm/msm/msm_gpu.h               | 12 ++++-----
+ 6 files changed, 27 insertions(+), 46 deletions(-)
 
-diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
-index 794a8134687ae..cb8fb2fdfce2a 100644
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -149,29 +149,6 @@ struct rb_entry *f2fs_lookup_rb_tree(struct rb_root_cached *root,
- 	return re;
- }
+diff --git a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+index 7cb8d9849c073..a10feb8a4194a 100644
+--- a/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a4xx_gpu.c
+@@ -606,8 +606,7 @@ static int a4xx_pm_suspend(struct msm_gpu *gpu) {
  
--struct rb_node **f2fs_lookup_rb_tree_ext(struct f2fs_sb_info *sbi,
--					struct rb_root_cached *root,
--					struct rb_node **parent,
--					unsigned long long key, bool *leftmost)
--{
--	struct rb_node **p = &root->rb_root.rb_node;
--	struct rb_entry *re;
--
--	while (*p) {
--		*parent = *p;
--		re = rb_entry(*parent, struct rb_entry, rb_node);
--
--		if (key < re->key) {
--			p = &(*p)->rb_left;
--		} else {
--			p = &(*p)->rb_right;
--			*leftmost = false;
--		}
--	}
--
--	return p;
--}
--
- struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
- 				struct rb_root_cached *root,
- 				struct rb_node **parent,
-@@ -280,7 +257,7 @@ struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
- }
- 
- bool f2fs_check_rb_tree_consistence(struct f2fs_sb_info *sbi,
--				struct rb_root_cached *root, bool check_key)
-+				struct rb_root_cached *root)
+ static int a4xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
  {
- #ifdef CONFIG_F2FS_CHECK_FS
- 	struct rb_node *cur = rb_first_cached(root), *next;
-@@ -297,23 +274,12 @@ bool f2fs_check_rb_tree_consistence(struct f2fs_sb_info *sbi,
- 		cur_re = rb_entry(cur, struct rb_entry, rb_node);
- 		next_re = rb_entry(next, struct rb_entry, rb_node);
+-	*value = gpu_read64(gpu, REG_A4XX_RBBM_PERFCTR_CP_0_LO,
+-		REG_A4XX_RBBM_PERFCTR_CP_0_HI);
++	*value = gpu_read64(gpu, REG_A4XX_RBBM_PERFCTR_CP_0_LO);
  
--		if (check_key) {
--			if (cur_re->key > next_re->key) {
--				f2fs_info(sbi, "inconsistent rbtree, "
--					"cur(%llu) next(%llu)",
--					cur_re->key, next_re->key);
--				return false;
--			}
--			goto next;
--		}
--
- 		if (cur_re->ofs + cur_re->len > next_re->ofs) {
- 			f2fs_info(sbi, "inconsistent rbtree, cur(%u, %u) next(%u, %u)",
- 				  cur_re->ofs, cur_re->len,
- 				  next_re->ofs, next_re->len);
- 			return false;
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+index 02ff306f96f42..24feae285ccd6 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_gpu.c
+@@ -605,11 +605,9 @@ static int a5xx_ucode_init(struct msm_gpu *gpu)
+ 		a5xx_ucode_check_version(a5xx_gpu, a5xx_gpu->pfp_bo);
+ 	}
+ 
+-	gpu_write64(gpu, REG_A5XX_CP_ME_INSTR_BASE_LO,
+-		REG_A5XX_CP_ME_INSTR_BASE_HI, a5xx_gpu->pm4_iova);
++	gpu_write64(gpu, REG_A5XX_CP_ME_INSTR_BASE_LO, a5xx_gpu->pm4_iova);
+ 
+-	gpu_write64(gpu, REG_A5XX_CP_PFP_INSTR_BASE_LO,
+-		REG_A5XX_CP_PFP_INSTR_BASE_HI, a5xx_gpu->pfp_iova);
++	gpu_write64(gpu, REG_A5XX_CP_PFP_INSTR_BASE_LO, a5xx_gpu->pfp_iova);
+ 
+ 	return 0;
+ }
+@@ -868,8 +866,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+ 	 * memory rendering at this point in time and we don't want to block off
+ 	 * part of the virtual memory space.
+ 	 */
+-	gpu_write64(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO,
+-		REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_HI, 0x00000000);
++	gpu_write64(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO, 0x00000000);
+ 	gpu_write(gpu, REG_A5XX_RBBM_SECVID_TSB_TRUSTED_SIZE, 0x00000000);
+ 
+ 	/* Put the GPU into 64 bit by default */
+@@ -908,8 +905,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
+ 		return ret;
+ 
+ 	/* Set the ringbuffer address */
+-	gpu_write64(gpu, REG_A5XX_CP_RB_BASE, REG_A5XX_CP_RB_BASE_HI,
+-		gpu->rb[0]->iova);
++	gpu_write64(gpu, REG_A5XX_CP_RB_BASE, gpu->rb[0]->iova);
+ 
+ 	/*
+ 	 * If the microcode supports the WHERE_AM_I opcode then we can use that
+@@ -936,7 +932,7 @@ static int a5xx_hw_init(struct msm_gpu *gpu)
  		}
--next:
- 		cur = next;
- 	}
- #endif
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 3fc9d98112166..6fb08b3520a68 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -612,13 +612,8 @@ enum extent_type {
  
- struct rb_entry {
- 	struct rb_node rb_node;		/* rb node located in rb-tree */
--	union {
--		struct {
--			unsigned int ofs;	/* start offset of the entry */
--			unsigned int len;	/* length of the entry */
--		};
--		unsigned long long key;		/* 64-bits key */
--	} __packed;
-+	unsigned int ofs;		/* start offset of the entry */
-+	unsigned int len;		/* length of the entry */
- };
+ 		gpu_write64(gpu, REG_A5XX_CP_RB_RPTR_ADDR,
+-			REG_A5XX_CP_RB_RPTR_ADDR_HI, shadowptr(a5xx_gpu, gpu->rb[0]));
++			    shadowptr(a5xx_gpu, gpu->rb[0]));
+ 	} else if (gpu->nr_rings > 1) {
+ 		/* Disable preemption if WHERE_AM_I isn't available */
+ 		a5xx_preempt_fini(gpu);
+@@ -1239,9 +1235,9 @@ static void a5xx_fault_detect_irq(struct msm_gpu *gpu)
+ 		gpu_read(gpu, REG_A5XX_RBBM_STATUS),
+ 		gpu_read(gpu, REG_A5XX_CP_RB_RPTR),
+ 		gpu_read(gpu, REG_A5XX_CP_RB_WPTR),
+-		gpu_read64(gpu, REG_A5XX_CP_IB1_BASE, REG_A5XX_CP_IB1_BASE_HI),
++		gpu_read64(gpu, REG_A5XX_CP_IB1_BASE),
+ 		gpu_read(gpu, REG_A5XX_CP_IB1_BUFSZ),
+-		gpu_read64(gpu, REG_A5XX_CP_IB2_BASE, REG_A5XX_CP_IB2_BASE_HI),
++		gpu_read64(gpu, REG_A5XX_CP_IB2_BASE),
+ 		gpu_read(gpu, REG_A5XX_CP_IB2_BUFSZ));
  
- struct extent_info {
-@@ -4132,10 +4127,6 @@ void f2fs_leave_shrinker(struct f2fs_sb_info *sbi);
-  */
- struct rb_entry *f2fs_lookup_rb_tree(struct rb_root_cached *root,
- 				struct rb_entry *cached_re, unsigned int ofs);
--struct rb_node **f2fs_lookup_rb_tree_ext(struct f2fs_sb_info *sbi,
--				struct rb_root_cached *root,
--				struct rb_node **parent,
--				unsigned long long key, bool *left_most);
- struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
- 				struct rb_root_cached *root,
- 				struct rb_node **parent,
-@@ -4146,7 +4137,7 @@ struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
- 		struct rb_node ***insert_p, struct rb_node **insert_parent,
- 		bool force, bool *leftmost);
- bool f2fs_check_rb_tree_consistence(struct f2fs_sb_info *sbi,
--				struct rb_root_cached *root, bool check_key);
-+				struct rb_root_cached *root);
- void f2fs_init_extent_tree(struct inode *inode);
- void f2fs_drop_extent_tree(struct inode *inode);
- void f2fs_destroy_extent_node(struct inode *inode);
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 543de12bf88c2..5cd19fdc10596 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -389,40 +389,95 @@ static unsigned int count_bits(const unsigned long *addr,
- 	return sum;
- }
+ 	/* Turn off the hangcheck timer to keep it from bothering us */
+@@ -1427,8 +1423,7 @@ static int a5xx_pm_suspend(struct msm_gpu *gpu)
  
--static struct victim_entry *attach_victim_entry(struct f2fs_sb_info *sbi,
--				unsigned long long mtime, unsigned int segno,
--				struct rb_node *parent, struct rb_node **p,
--				bool left_most)
-+static bool f2fs_check_victim_tree(struct f2fs_sb_info *sbi,
-+				struct rb_root_cached *root)
-+{
-+#ifdef CONFIG_F2FS_CHECK_FS
-+	struct rb_node *cur = rb_first_cached(root), *next;
-+	struct victim_entry *cur_ve, *next_ve;
-+
-+	while (cur) {
-+		next = rb_next(cur);
-+		if (!next)
-+			return true;
-+
-+		cur_ve = rb_entry(cur, struct victim_entry, rb_node);
-+		next_ve = rb_entry(next, struct victim_entry, rb_node);
-+
-+		if (cur_ve->mtime > next_ve->mtime) {
-+			f2fs_info(sbi, "broken victim_rbtree, "
-+				"cur_mtime(%llu) next_mtime(%llu)",
-+				cur_ve->mtime, next_ve->mtime);
-+			return false;
-+		}
-+		cur = next;
-+	}
-+#endif
-+	return true;
-+}
-+
-+static struct victim_entry *__lookup_victim_entry(struct f2fs_sb_info *sbi,
-+					unsigned long long mtime)
-+{
-+	struct atgc_management *am = &sbi->am;
-+	struct rb_node *node = am->root.rb_root.rb_node;
-+	struct victim_entry *ve = NULL;
-+
-+	while (node) {
-+		ve = rb_entry(node, struct victim_entry, rb_node);
-+
-+		if (mtime < ve->mtime)
-+			node = node->rb_left;
-+		else
-+			node = node->rb_right;
-+	}
-+	return ve;
-+}
-+
-+static struct victim_entry *__create_victim_entry(struct f2fs_sb_info *sbi,
-+		unsigned long long mtime, unsigned int segno)
+ static int a5xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
  {
- 	struct atgc_management *am = &sbi->am;
- 	struct victim_entry *ve;
+-	*value = gpu_read64(gpu, REG_A5XX_RBBM_ALWAYSON_COUNTER_LO,
+-		REG_A5XX_RBBM_ALWAYSON_COUNTER_HI);
++	*value = gpu_read64(gpu, REG_A5XX_RBBM_ALWAYSON_COUNTER_LO);
  
--	ve =  f2fs_kmem_cache_alloc(victim_entry_slab,
--				GFP_NOFS, true, NULL);
-+	ve =  f2fs_kmem_cache_alloc(victim_entry_slab, GFP_NOFS, true, NULL);
- 
- 	ve->mtime = mtime;
- 	ve->segno = segno;
- 
--	rb_link_node(&ve->rb_node, parent, p);
--	rb_insert_color_cached(&ve->rb_node, &am->root, left_most);
--
- 	list_add_tail(&ve->list, &am->victim_list);
--
- 	am->victim_count++;
- 
- 	return ve;
+ 	return 0;
  }
+@@ -1465,8 +1460,7 @@ static int a5xx_crashdumper_run(struct msm_gpu *gpu,
+ 	if (IS_ERR_OR_NULL(dumper->ptr))
+ 		return -EINVAL;
  
--static void insert_victim_entry(struct f2fs_sb_info *sbi,
-+static void __insert_victim_entry(struct f2fs_sb_info *sbi,
- 				unsigned long long mtime, unsigned int segno)
+-	gpu_write64(gpu, REG_A5XX_CP_CRASH_SCRIPT_BASE_LO,
+-		REG_A5XX_CP_CRASH_SCRIPT_BASE_HI, dumper->iova);
++	gpu_write64(gpu, REG_A5XX_CP_CRASH_SCRIPT_BASE_LO, dumper->iova);
+ 
+ 	gpu_write(gpu, REG_A5XX_CP_CRASH_DUMP_CNTL, 1);
+ 
+@@ -1666,8 +1660,7 @@ static u64 a5xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
  {
- 	struct atgc_management *am = &sbi->am;
--	struct rb_node **p;
-+	struct rb_root_cached *root = &am->root;
-+	struct rb_node **p = &root->rb_root.rb_node;
- 	struct rb_node *parent = NULL;
-+	struct victim_entry *ve;
- 	bool left_most = true;
+ 	u64 busy_cycles;
  
--	p = f2fs_lookup_rb_tree_ext(sbi, &am->root, &parent, mtime, &left_most);
--	attach_victim_entry(sbi, mtime, segno, parent, p, left_most);
-+	/* look up rb tree to find parent node */
-+	while (*p) {
-+		parent = *p;
-+		ve = rb_entry(parent, struct victim_entry, rb_node);
-+
-+		if (mtime < ve->mtime) {
-+			p = &(*p)->rb_left;
-+		} else {
-+			p = &(*p)->rb_right;
-+			left_most = false;
-+		}
-+	}
-+
-+	ve = __create_victim_entry(sbi, mtime, segno);
-+
-+	rb_link_node(&ve->rb_node, parent, p);
-+	rb_insert_color_cached(&ve->rb_node, root, left_most);
- }
+-	busy_cycles = gpu_read64(gpu, REG_A5XX_RBBM_PERFCTR_RBBM_0_LO,
+-			REG_A5XX_RBBM_PERFCTR_RBBM_0_HI);
++	busy_cycles = gpu_read64(gpu, REG_A5XX_RBBM_PERFCTR_RBBM_0_LO);
+ 	*out_sample_rate = clk_get_rate(gpu->core_clk);
  
- static void add_victim_entry(struct f2fs_sb_info *sbi,
-@@ -458,19 +513,7 @@ static void add_victim_entry(struct f2fs_sb_info *sbi,
- 	if (sit_i->dirty_max_mtime - mtime < p->age_threshold)
- 		return;
+ 	return busy_cycles;
+diff --git a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+index e0eef47dae632..f58dd564d122b 100644
+--- a/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
++++ b/drivers/gpu/drm/msm/adreno/a5xx_preempt.c
+@@ -137,7 +137,6 @@ void a5xx_preempt_trigger(struct msm_gpu *gpu)
  
--	insert_victim_entry(sbi, mtime, segno);
--}
--
--static struct rb_node *lookup_central_victim(struct f2fs_sb_info *sbi,
--						struct victim_sel_policy *p)
--{
--	struct atgc_management *am = &sbi->am;
--	struct rb_node *parent = NULL;
--	bool left_most;
--
--	f2fs_lookup_rb_tree_ext(sbi, &am->root, &parent, p->age, &left_most);
--
--	return parent;
-+	__insert_victim_entry(sbi, mtime, segno);
- }
+ 	/* Set the address of the incoming preemption record */
+ 	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_RESTORE_ADDR_LO,
+-		REG_A5XX_CP_CONTEXT_SWITCH_RESTORE_ADDR_HI,
+ 		a5xx_gpu->preempt_iova[ring->id]);
  
- static void atgc_lookup_victim(struct f2fs_sb_info *sbi,
-@@ -480,7 +523,6 @@ static void atgc_lookup_victim(struct f2fs_sb_info *sbi,
- 	struct atgc_management *am = &sbi->am;
- 	struct rb_root_cached *root = &am->root;
- 	struct rb_node *node;
--	struct rb_entry *re;
- 	struct victim_entry *ve;
- 	unsigned long long total_time;
- 	unsigned long long age, u, accu;
-@@ -507,12 +549,10 @@ static void atgc_lookup_victim(struct f2fs_sb_info *sbi,
- 
- 	node = rb_first_cached(root);
- next:
--	re = rb_entry_safe(node, struct rb_entry, rb_node);
--	if (!re)
-+	ve = rb_entry_safe(node, struct victim_entry, rb_node);
-+	if (!ve)
- 		return;
- 
--	ve = (struct victim_entry *)re;
--
- 	if (ve->mtime >= max_mtime || ve->mtime < min_mtime)
- 		goto skip;
- 
-@@ -554,8 +594,6 @@ static void atssr_lookup_victim(struct f2fs_sb_info *sbi,
- {
- 	struct sit_info *sit_i = SIT_I(sbi);
- 	struct atgc_management *am = &sbi->am;
--	struct rb_node *node;
--	struct rb_entry *re;
- 	struct victim_entry *ve;
- 	unsigned long long age;
- 	unsigned long long max_mtime = sit_i->dirty_max_mtime;
-@@ -565,25 +603,22 @@ static void atssr_lookup_victim(struct f2fs_sb_info *sbi,
- 	unsigned int dirty_threshold = max(am->max_candidate_count,
- 					am->candidate_ratio *
- 					am->victim_count / 100);
--	unsigned int cost;
--	unsigned int iter = 0;
-+	unsigned int cost, iter;
- 	int stage = 0;
- 
- 	if (max_mtime < min_mtime)
- 		return;
- 	max_mtime += 1;
- next_stage:
--	node = lookup_central_victim(sbi, p);
-+	iter = 0;
-+	ve = __lookup_victim_entry(sbi, p->age);
- next_node:
--	re = rb_entry_safe(node, struct rb_entry, rb_node);
--	if (!re) {
--		if (stage == 0)
--			goto skip_stage;
-+	if (!ve) {
-+		if (stage++ == 0)
-+			goto next_stage;
- 		return;
+ 	a5xx_gpu->next_ring = ring;
+@@ -212,8 +211,7 @@ void a5xx_preempt_hw_init(struct msm_gpu *gpu)
  	}
  
--	ve = (struct victim_entry *)re;
--
- 	if (ve->mtime >= max_mtime || ve->mtime < min_mtime)
- 		goto skip_node;
+ 	/* Write a 0 to signal that we aren't switching pagetables */
+-	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_LO,
+-		REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_HI, 0);
++	gpu_write64(gpu, REG_A5XX_CP_CONTEXT_SWITCH_SMMU_INFO_LO, 0);
  
-@@ -609,24 +644,20 @@ static void atssr_lookup_victim(struct f2fs_sb_info *sbi,
- 	}
- skip_node:
- 	if (iter < dirty_threshold) {
--		if (stage == 0)
--			node = rb_prev(node);
--		else if (stage == 1)
--			node = rb_next(node);
-+		ve = rb_entry(stage == 0 ? rb_prev(&ve->rb_node) :
-+					rb_next(&ve->rb_node),
-+					struct victim_entry, rb_node);
- 		goto next_node;
- 	}
--skip_stage:
--	if (stage < 1) {
--		stage++;
--		iter = 0;
-+
-+	if (stage++ == 0)
- 		goto next_stage;
--	}
+ 	/* Reset the preemption state */
+ 	set_preempt_state(a5xx_gpu, PREEMPT_NONE);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 9d7fc44c1e2a9..dc53466864b05 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -247,8 +247,7 @@ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+ 	OUT_RING(ring, submit->seqno);
+ 
+ 	trace_msm_gpu_submit_flush(submit,
+-		gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO,
+-			REG_A6XX_CP_ALWAYS_ON_COUNTER_HI));
++		gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO));
+ 
+ 	a6xx_flush(gpu, ring);
  }
-+
- static void lookup_victim_by_age(struct f2fs_sb_info *sbi,
- 						struct victim_sel_policy *p)
+@@ -947,8 +946,7 @@ static int a6xx_ucode_init(struct msm_gpu *gpu)
+ 		}
+ 	}
+ 
+-	gpu_write64(gpu, REG_A6XX_CP_SQE_INSTR_BASE,
+-		REG_A6XX_CP_SQE_INSTR_BASE+1, a6xx_gpu->sqe_iova);
++	gpu_write64(gpu, REG_A6XX_CP_SQE_INSTR_BASE, a6xx_gpu->sqe_iova);
+ 
+ 	return 0;
+ }
+@@ -999,8 +997,7 @@ static int hw_init(struct msm_gpu *gpu)
+ 	 * memory rendering at this point in time and we don't want to block off
+ 	 * part of the virtual memory space.
+ 	 */
+-	gpu_write64(gpu, REG_A6XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO,
+-		REG_A6XX_RBBM_SECVID_TSB_TRUSTED_BASE_HI, 0x00000000);
++	gpu_write64(gpu, REG_A6XX_RBBM_SECVID_TSB_TRUSTED_BASE_LO, 0x00000000);
+ 	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_TRUSTED_SIZE, 0x00000000);
+ 
+ 	/* Turn on 64 bit addressing for all blocks */
+@@ -1049,11 +1046,9 @@ static int hw_init(struct msm_gpu *gpu)
+ 
+ 	if (!adreno_is_a650_family(adreno_gpu)) {
+ 		/* Set the GMEM VA range [0x100000:0x100000 + gpu->gmem - 1] */
+-		gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MIN_LO,
+-			REG_A6XX_UCHE_GMEM_RANGE_MIN_HI, 0x00100000);
++		gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MIN_LO, 0x00100000);
+ 
+ 		gpu_write64(gpu, REG_A6XX_UCHE_GMEM_RANGE_MAX_LO,
+-			REG_A6XX_UCHE_GMEM_RANGE_MAX_HI,
+ 			0x00100000 + adreno_gpu->gmem - 1);
+ 	}
+ 
+@@ -1145,8 +1140,7 @@ static int hw_init(struct msm_gpu *gpu)
+ 		goto out;
+ 
+ 	/* Set the ringbuffer address */
+-	gpu_write64(gpu, REG_A6XX_CP_RB_BASE, REG_A6XX_CP_RB_BASE_HI,
+-		gpu->rb[0]->iova);
++	gpu_write64(gpu, REG_A6XX_CP_RB_BASE, gpu->rb[0]->iova);
+ 
+ 	/* Targets that support extended APRIV can use the RPTR shadow from
+ 	 * hardware but all the other ones need to disable the feature. Targets
+@@ -1178,7 +1172,6 @@ static int hw_init(struct msm_gpu *gpu)
+ 		}
+ 
+ 		gpu_write64(gpu, REG_A6XX_CP_RB_RPTR_ADDR_LO,
+-			REG_A6XX_CP_RB_RPTR_ADDR_HI,
+ 			shadowptr(a6xx_gpu, gpu->rb[0]));
+ 	}
+ 
+@@ -1506,9 +1499,9 @@ static void a6xx_fault_detect_irq(struct msm_gpu *gpu)
+ 		gpu_read(gpu, REG_A6XX_RBBM_STATUS),
+ 		gpu_read(gpu, REG_A6XX_CP_RB_RPTR),
+ 		gpu_read(gpu, REG_A6XX_CP_RB_WPTR),
+-		gpu_read64(gpu, REG_A6XX_CP_IB1_BASE, REG_A6XX_CP_IB1_BASE_HI),
++		gpu_read64(gpu, REG_A6XX_CP_IB1_BASE),
+ 		gpu_read(gpu, REG_A6XX_CP_IB1_REM_SIZE),
+-		gpu_read64(gpu, REG_A6XX_CP_IB2_BASE, REG_A6XX_CP_IB2_BASE_HI),
++		gpu_read64(gpu, REG_A6XX_CP_IB2_BASE),
+ 		gpu_read(gpu, REG_A6XX_CP_IB2_REM_SIZE));
+ 
+ 	/* Turn off the hangcheck timer to keep it from bothering us */
+@@ -1719,8 +1712,7 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+ 	/* Force the GPU power on so we can read this register */
+ 	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+ 
+-	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO,
+-			    REG_A6XX_CP_ALWAYS_ON_COUNTER_HI);
++	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO);
+ 
+ 	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+ 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index a5c3d1ed255a6..a023d5f962dce 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -147,8 +147,7 @@ static int a6xx_crashdumper_run(struct msm_gpu *gpu,
+ 	/* Make sure all pending memory writes are posted */
+ 	wmb();
+ 
+-	gpu_write64(gpu, REG_A6XX_CP_CRASH_SCRIPT_BASE_LO,
+-		REG_A6XX_CP_CRASH_SCRIPT_BASE_HI, dumper->iova);
++	gpu_write64(gpu, REG_A6XX_CP_CRASH_SCRIPT_BASE_LO, dumper->iova);
+ 
+ 	gpu_write(gpu, REG_A6XX_CP_CRASH_DUMP_CNTL, 1);
+ 
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index a89bfdc3d7f90..7a36e0784f067 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -548,7 +548,7 @@ static inline void gpu_rmw(struct msm_gpu *gpu, u32 reg, u32 mask, u32 or)
+ 	msm_rmw(gpu->mmio + (reg << 2), mask, or);
+ }
+ 
+-static inline u64 gpu_read64(struct msm_gpu *gpu, u32 lo, u32 hi)
++static inline u64 gpu_read64(struct msm_gpu *gpu, u32 reg)
  {
--	f2fs_bug_on(sbi, !f2fs_check_rb_tree_consistence(sbi,
--						&sbi->am.root, true));
-+	f2fs_bug_on(sbi, !f2fs_check_victim_tree(sbi, &sbi->am.root));
+ 	u64 val;
  
- 	if (p->gc_mode == GC_AT)
- 		atgc_lookup_victim(sbi, p);
-diff --git a/fs/f2fs/gc.h b/fs/f2fs/gc.h
-index 19b956c2d697a..ca84024b9c9e7 100644
---- a/fs/f2fs/gc.h
-+++ b/fs/f2fs/gc.h
-@@ -55,20 +55,10 @@ struct gc_inode_list {
- 	struct radix_tree_root iroot;
- };
+@@ -566,17 +566,17 @@ static inline u64 gpu_read64(struct msm_gpu *gpu, u32 lo, u32 hi)
+ 	 * when the lo is read, so make sure to read the lo first to trigger
+ 	 * that
+ 	 */
+-	val = (u64) msm_readl(gpu->mmio + (lo << 2));
+-	val |= ((u64) msm_readl(gpu->mmio + (hi << 2)) << 32);
++	val = (u64) msm_readl(gpu->mmio + (reg << 2));
++	val |= ((u64) msm_readl(gpu->mmio + ((reg + 1) << 2)) << 32);
  
--struct victim_info {
--	unsigned long long mtime;	/* mtime of section */
--	unsigned int segno;		/* section No. */
--};
--
- struct victim_entry {
- 	struct rb_node rb_node;		/* rb node located in rb-tree */
--	union {
--		struct {
--			unsigned long long mtime;	/* mtime of section */
--			unsigned int segno;		/* segment No. */
--		};
--		struct victim_info vi;	/* victim info */
--	};
-+	unsigned long long mtime;	/* mtime of section */
-+	unsigned int segno;		/* segment No. */
- 	struct list_head list;
- };
+ 	return val;
+ }
  
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 7d5bea9d92641..cbbf95b995414 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -1474,7 +1474,7 @@ static int __issue_discard_cmd(struct f2fs_sb_info *sbi,
- 			goto next;
- 		if (unlikely(dcc->rbtree_check))
- 			f2fs_bug_on(sbi, !f2fs_check_rb_tree_consistence(sbi,
--							&dcc->root, false));
-+							&dcc->root));
- 		blk_start_plug(&plug);
- 		list_for_each_entry_safe(dc, tmp, pend_list, list) {
- 			f2fs_bug_on(sbi, dc->state != D_PREP);
-@@ -3002,7 +3002,7 @@ static unsigned int __issue_discard_cmd_range(struct f2fs_sb_info *sbi,
- 	mutex_lock(&dcc->cmd_lock);
- 	if (unlikely(dcc->rbtree_check))
- 		f2fs_bug_on(sbi, !f2fs_check_rb_tree_consistence(sbi,
--							&dcc->root, false));
-+							&dcc->root));
+-static inline void gpu_write64(struct msm_gpu *gpu, u32 lo, u32 hi, u64 val)
++static inline void gpu_write64(struct msm_gpu *gpu, u32 reg, u64 val)
+ {
+ 	/* Why not a writeq here? Read the screed above */
+-	msm_writel(lower_32_bits(val), gpu->mmio + (lo << 2));
+-	msm_writel(upper_32_bits(val), gpu->mmio + (hi << 2));
++	msm_writel(lower_32_bits(val), gpu->mmio + (reg << 2));
++	msm_writel(upper_32_bits(val), gpu->mmio + ((reg + 1) << 2));
+ }
  
- 	dc = (struct discard_cmd *)f2fs_lookup_rb_tree_ret(&dcc->root,
- 					NULL, start,
+ int msm_gpu_pm_suspend(struct msm_gpu *gpu);
 -- 
 2.39.2
 
