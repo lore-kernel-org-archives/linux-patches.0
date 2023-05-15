@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADE1FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B77E6C433EF;
-	Mon, 15 May 2023 17:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CB9FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F27C433D2;
+	Mon, 15 May 2023 17:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171295;
-	bh=2X4k2/iIks3FseQkiid0IWUxRMlvGIKBkbXIxiXk09Q=;
+	s=korg; t=1684171298;
+	bh=TU+tnQ2Ae9mEfDDSV50Mz2VLeYfxmFTYpNP8fYWtdf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWIEPfju1U/C/u5a/g8G0WqrYbfh4vqOsweihS5fYkKbT+D0XzNQi/H33iu8vAsz4
-	 TlxaiG5pYIG4GqFRm3pGTyMAFHN8VFyzC5rZbPRLynRwimWlbS7ysfrdwDnhNTNW5P
-	 EqYaJsMO9QAsTMqeDq8EjNhYTC93q64PUynWpRUM=
+	b=twSXhjtLzlT9C0SKVqt3lKIpX0vqwV0lVBeohqjDpyHa6fuIGMJhobykVYUkDSvD8
+	 KpM9O7A8FUm6UuWWbPS+Punhh1bLjqHwOUIenCaYPVHtpgMYD7zK0v5iCMxZxuvWUW
+	 DntimVD7OW3tfvPrW9Wgg3KGJLTg9A8H5eaVozFg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6.2 163/242] sysctl: clarify register_sysctl_init() base directory order
-Date: Mon, 15 May 2023 18:28:09 +0200
-Message-Id: <20230515161726.772831631@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.2 137/242] btrfs: fix space cache inconsistency after error loading it from disk
+Date: Mon, 15 May 2023 18:27:43 +0200
+Message-Id: <20230515161726.012955435@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,42 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luis Chamberlain <mcgrof@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 228b09de936395ddd740df3522ea35ae934830d8 upstream.
+commit 0004ff15ea26015a0a3a6182dca3b9d1df32e2b7 upstream.
 
-Relatively new docs which I added which hinted the base directories needed
-to be created before is wrong, remove that incorrect comment. This has been
-hinted before by Eric twice already [0] [1], I had just not verified that
-until now. Now that I've verified that updates the docs to relax the context
-described.
+When loading a free space cache from disk, at __load_free_space_cache(),
+if we fail to insert a bitmap entry, we still increment the number of
+total bitmaps in the btrfs_free_space_ctl structure, which is incorrect
+since we failed to add the bitmap entry. On error we then empty the
+cache by calling __btrfs_remove_free_space_cache(), which will result
+in getting the total bitmaps counter set to 1.
 
-[0] https://lkml.kernel.org/r/875ys0azt8.fsf@email.froward.int.ebiederm.org
-[1] https://lkml.kernel.org/r/87ftbiud6s.fsf@x220.int.ebiederm.org
+A failure to load a free space cache is not critical, so if a failure
+happens we just rebuild the cache by scanning the extent tree, which
+happens at block-group.c:caching_thread(). Yet the failure will result
+in having the total bitmaps of the btrfs_free_space_ctl always bigger
+by 1 then the number of bitmap entries we have. So fix this by having
+the total bitmaps counter be incremented only if we successfully added
+the bitmap entry.
 
-Cc: stable@vger.kernel.org # v5.17
-Cc: Christian Brauner <brauner@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Suggested-by: Eric W. Biederman <ebiederm@xmission.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Fixes: a67509c30079 ("Btrfs: add a io_ctl struct and helpers for dealing with the space cache")
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+CC: stable@vger.kernel.org # 4.4+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/proc_sysctl.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ fs/btrfs/free-space-cache.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -1445,10 +1445,7 @@ EXPORT_SYMBOL(register_sysctl);
-  * register_sysctl() failing on init are extremely low, and so for both reasons
-  * this function does not return any error as it is used by initialization code.
-  *
-- * Context: Can only be called after your respective sysctl base path has been
-- * registered. So for instance, most base directories are registered early on
-- * init before init levels are processed through proc_sys_init() and
-- * sysctl_init_bases().
-+ * Context: if your base directory does not exist it will be created for you.
-  */
- void __init __register_sysctl_init(const char *path, struct ctl_table *table,
- 				 const char *table_name)
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -870,15 +870,16 @@ static int __load_free_space_cache(struc
+ 			}
+ 			spin_lock(&ctl->tree_lock);
+ 			ret = link_free_space(ctl, e);
+-			ctl->total_bitmaps++;
+-			recalculate_thresholds(ctl);
+-			spin_unlock(&ctl->tree_lock);
+ 			if (ret) {
++				spin_unlock(&ctl->tree_lock);
+ 				btrfs_err(fs_info,
+ 					"Duplicate entries in free space cache, dumping");
+ 				kmem_cache_free(btrfs_free_space_cachep, e);
+ 				goto free_cache;
+ 			}
++			ctl->total_bitmaps++;
++			recalculate_thresholds(ctl);
++			spin_unlock(&ctl->tree_lock);
+ 			list_add_tail(&e->list, &bitmaps);
+ 		}
+ 
 
 
