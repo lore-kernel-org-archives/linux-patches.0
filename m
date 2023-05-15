@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE212FBEF
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F03EC4339C;
-	Mon, 15 May 2023 16:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23E1BFBEB
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 778C5C4339B;
+	Mon, 15 May 2023 16:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168363;
-	bh=UGgqEjEj8efqEMywn/MDqgyqgronnWtnQ7Lhoz27O1M=;
+	s=korg; t=1684168367;
+	bh=tt/2gS8U7sQTmTMFd0sPLzI5CfcICp6nHFZCtsEDrks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olMTozFpcSRMP8Dfbl1CPx636WHvBIVXiUU66ykgg46+KR/KSvkxYHlfR1zNEBibF
-	 gLQFfSyIExtvraSNHokBYGesKzx/Kl1chbSGmRmcB7tkgKIWSDHpC2Q7m5FU/p0sdG
-	 /JfCw110CXACXxA6ohIQZDquqjcf40OL1Wf34SHk=
+	b=QeD0WE21H6XU1t09hw95nA49XyNxVTuLmTk7fiaVzlaDJy7GXrsEujJ4ccv0zL2F2
+	 py7YvW5iEZxEU0+pfB+rgto1BaXdmZa//HibqdyZiVbxyXlp/vR3ajn6L9toiNJxoz
+	 q5JeuqPKaXYfgWZ/MeO69EIWb2v8srhzqMbd2qcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Fabio Estevam <festevam@gmail.com>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	linux-um@lists.infradead.org,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 4.14 005/116] IMA: allow/fix UML builds
-Date: Mon, 15 May 2023 18:25:02 +0200
-Message-Id: <20230515161658.433624318@linuxfoundation.org>
+	Li Jun <jun.li@nxp.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 4.14 006/116] USB: dwc3: fix runtime pm imbalance on unbind
+Date: Mon, 15 May 2023 18:25:03 +0200
+Message-Id: <20230515161658.473998112@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -39,51 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 644f17412f5acf01a19af9d04a921937a2bc86c6 upstream.
+commit 44d257e9012ee8040e41d224d0e5bfb5ef5427ea upstream.
 
-UML supports HAS_IOMEM since 0bbadafdc49d (um: allow disabling
-NO_IOMEM).
+Make sure to balance the runtime PM usage count on driver unbind by
+adding back the pm_runtime_allow() call that had been erroneously
+removed.
 
-Current IMA build on UML fails on allmodconfig (with TCG_TPM=m):
-
-ld: security/integrity/ima/ima_queue.o: in function `ima_add_template_entry':
-ima_queue.c:(.text+0x2d9): undefined reference to `tpm_pcr_extend'
-ld: security/integrity/ima/ima_init.o: in function `ima_init':
-ima_init.c:(.init.text+0x43f): undefined reference to `tpm_default_chip'
-ld: security/integrity/ima/ima_crypto.o: in function `ima_calc_boot_aggregate_tfm':
-ima_crypto.c:(.text+0x1044): undefined reference to `tpm_pcr_read'
-ld: ima_crypto.c:(.text+0x10d8): undefined reference to `tpm_pcr_read'
-
-Modify the IMA Kconfig entry so that it selects TCG_TPM if HAS_IOMEM
-is set, regardless of the UML Kconfig setting.
-This updates TCG_TPM from =m to =y and fixes the linker errors.
-
-Fixes: f4a0391dfa91 ("ima: fix Kconfig dependencies")
-Cc: Stable <stable@vger.kernel.org> # v5.14+
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-um@lists.infradead.org
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: 266d0493900a ("usb: dwc3: core: don't trigger runtime pm when remove driver")
+Cc: stable@vger.kernel.org	# 5.9
+Cc: Li Jun <jun.li@nxp.com>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230404072524.19014-3-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/dwc3/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/security/integrity/ima/Kconfig
-+++ b/security/integrity/ima/Kconfig
-@@ -8,7 +8,7 @@ config IMA
- 	select CRYPTO_MD5
- 	select CRYPTO_SHA1
- 	select CRYPTO_HASH_INFO
--	select TCG_TPM if HAS_IOMEM && !UML
-+	select TCG_TPM if HAS_IOMEM
- 	select TCG_TIS if TCG_TPM && X86
- 	select TCG_CRB if TCG_TPM && ACPI
- 	select TCG_IBMVTPM if TCG_TPM && PPC_PSERIES
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1348,6 +1348,7 @@ static int dwc3_remove(struct platform_d
+ 	dwc3_core_exit(dwc);
+ 	dwc3_ulpi_exit(dwc);
+ 
++	pm_runtime_allow(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
 
 
