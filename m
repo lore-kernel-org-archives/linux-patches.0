@@ -1,28 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959AAFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:47:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE3EC433EF;
-	Mon, 15 May 2023 16:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF07DFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:47:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE388C433D2;
+	Mon, 15 May 2023 16:47:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169266;
-	bh=heserXd+5bjBJq2dzPhBrYFhXa8E0HyyClOlmrPz1VY=;
+	s=korg; t=1684169269;
+	bh=o3YB1xV6iXKTe1k4DdbOyZrufvXZLO2gUM4rMHUq6hI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eiWKo0ya6AYYV17fe+s2xMwjmGozjnQOYOsb60BbcFQF8hhACEs5e54Yy/8VwJ0Wo
-	 YZuP1G247oS1x3DyUb3PfujWFzahZRESx89TJ2btUbqfX9TR1GjKz296lVaVTW8B5e
-	 1M+2ggU4G3HOpUQNoTRmQs+xhCREwRp45d34MaW0=
+	b=nxj7T1Bz4ZbvWPyEgzFzRxX6CCupF9lPQRsyQ7OTGBlkSGAJzBZDvzBk2AHKG74m7
+	 VTfY2fuJMN9g3p3hEclRAABzn2J8OxtML6mmXLjI0GJOwbtBesdsbD23HyWXi4c1N7
+	 QsrPAzru/gYICxYBEHha7mz9b2KqAbcKIbzU6Vnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Theodore Tso" <tytso@mit.edu>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Michael Haeuptle <michael.haeuptle@hpe.com>,
+	Ian May <ian.may@canonical.com>,
+	Andrey Grodzovsky <andrey2805@gmail.com>,
+	Rahul Kumar <rahul.kumar1@amd.com>,
+	Jialin Zhang <zhangjialin11@huawei.com>,
+	Anatoli Antonovitch <Anatoli.Antonovitch@amd.com>,
+	Lukas Wunner <lukas@wunner.de>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 4.19 188/191] PCI: pciehp: Use down_read/write_nested(reset_lock) to fix lockdep errors
-Date: Mon, 15 May 2023 18:27:05 +0200
-Message-Id: <20230515161714.329149687@linuxfoundation.org>
+	Dan Stein <dstein@hpe.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Alex Michon <amichon@kalrayinc.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Sathyanarayanan Kuppuswamy <sathyanarayanan.kuppuswamy@linux.intel.com>
+Subject: [PATCH 4.19 189/191] PCI: pciehp: Fix AB-BA deadlock between reset_lock and device_lock
+Date: Mon, 15 May 2023 18:27:06 +0200
+Message-Id: <20230515161714.360430742@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,183 +47,178 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 085a9f43433f30cbe8a1ade62d9d7827c3217f4d upstream.
+commit f5eff5591b8f9c5effd25c92c758a127765f74c1 upstream.
 
-Use down_read_nested() and down_write_nested() when taking the
-ctrl->reset_lock rw-sem, passing the number of PCIe hotplug controllers in
-the path to the PCI root bus as lock subclass parameter.
+In 2013, commits
 
-This fixes the following false-positive lockdep report when unplugging a
-Lenovo X1C8 from a Lenovo 2nd gen TB3 dock:
+  2e35afaefe64 ("PCI: pciehp: Add reset_slot() method")
+  608c388122c7 ("PCI: Add slot reset option to pci_dev_reset()")
 
-  pcieport 0000:06:01.0: pciehp: Slot(1): Link Down
-  pcieport 0000:06:01.0: pciehp: Slot(1): Card not present
-  ============================================
-  WARNING: possible recursive locking detected
-  5.16.0-rc2+ #621 Not tainted
-  --------------------------------------------
-  irq/124-pciehp/86 is trying to acquire lock:
-  ffff8e5ac4299ef8 (&ctrl->reset_lock){.+.+}-{3:3}, at: pciehp_check_presence+0x23/0x80
+amended PCIe hotplug to mask Presence Detect Changed events during a
+Secondary Bus Reset.  The reset thus no longer causes gratuitous slot
+bringdown and bringup.
 
-  but task is already holding lock:
-  ffff8e5ac4298af8 (&ctrl->reset_lock){.+.+}-{3:3}, at: pciehp_ist+0xf3/0x180
+However the commits neglected to serialize reset with code paths reading
+slot registers.  For instance, a slot bringup due to an earlier hotplug
+event may see the Presence Detect State bit cleared during a concurrent
+Secondary Bus Reset.
 
-   other info that might help us debug this:
-   Possible unsafe locking scenario:
+In 2018, commit
 
-	 CPU0
-	 ----
-    lock(&ctrl->reset_lock);
-    lock(&ctrl->reset_lock);
+  5b3f7b7d062b ("PCI: pciehp: Avoid slot access during reset")
 
-   *** DEADLOCK ***
+retrofitted the missing locking.  It introduced a reset_lock which
+serializes a Secondary Bus Reset with other parts of pciehp.
 
-   May be due to missing lock nesting notation
+Unfortunately the locking turns out to be overzealous:  reset_lock is
+held for the entire enumeration and de-enumeration of hotplugged devices,
+including driver binding and unbinding.
 
-  3 locks held by irq/124-pciehp/86:
-   #0: ffff8e5ac4298af8 (&ctrl->reset_lock){.+.+}-{3:3}, at: pciehp_ist+0xf3/0x180
-   #1: ffffffffa3b024e8 (pci_rescan_remove_lock){+.+.}-{3:3}, at: pciehp_unconfigure_device+0x31/0x110
-   #2: ffff8e5ac1ee2248 (&dev->mutex){....}-{3:3}, at: device_release_driver+0x1c/0x40
+Driver binding and unbinding acquires device_lock while the reset_lock
+of the ancestral hotplug port is held.  A concurrent Secondary Bus Reset
+acquires the ancestral reset_lock while already holding the device_lock.
+The asymmetric locking order in the two code paths can lead to AB-BA
+deadlocks.
 
-  stack backtrace:
-  CPU: 4 PID: 86 Comm: irq/124-pciehp Not tainted 5.16.0-rc2+ #621
-  Hardware name: LENOVO 20U90SIT19/20U90SIT19, BIOS N2WET30W (1.20 ) 08/26/2021
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x59/0x73
-   __lock_acquire.cold+0xc5/0x2c6
-   lock_acquire+0xb5/0x2b0
-   down_read+0x3e/0x50
-   pciehp_check_presence+0x23/0x80
-   pciehp_runtime_resume+0x5c/0xa0
-   device_for_each_child+0x45/0x70
-   pcie_port_device_runtime_resume+0x20/0x30
-   pci_pm_runtime_resume+0xa7/0xc0
-   __rpm_callback+0x41/0x110
-   rpm_callback+0x59/0x70
-   rpm_resume+0x512/0x7b0
-   __pm_runtime_resume+0x4a/0x90
-   __device_release_driver+0x28/0x240
-   device_release_driver+0x26/0x40
-   pci_stop_bus_device+0x68/0x90
-   pci_stop_bus_device+0x2c/0x90
-   pci_stop_and_remove_bus_device+0xe/0x20
-   pciehp_unconfigure_device+0x6c/0x110
-   pciehp_disable_slot+0x5b/0xe0
-   pciehp_handle_presence_or_link_change+0xc3/0x2f0
-   pciehp_ist+0x179/0x180
+Michael Haeuptle reports such deadlocks on simultaneous hot-removal and
+vfio release (the latter implies a Secondary Bus Reset):
 
-This lockdep warning is triggered because with Thunderbolt, hotplug ports
-are nested. When removing multiple devices in a daisy-chain, each hotplug
-port's reset_lock may be acquired recursively. It's never the same lock, so
-the lockdep splat is a false positive.
+  pciehp_ist()                                    # down_read(reset_lock)
+    pciehp_handle_presence_or_link_change()
+      pciehp_disable_slot()
+        __pciehp_disable_slot()
+          remove_board()
+            pciehp_unconfigure_device()
+              pci_stop_and_remove_bus_device()
+                pci_stop_bus_device()
+                  pci_stop_dev()
+                    device_release_driver()
+                      device_release_driver_internal()
+                        __device_driver_lock()    # device_lock()
 
-Because locks at the same hierarchy level are never acquired recursively, a
-per-level lockdep class is sufficient to fix the lockdep warning.
+  SYS_munmap()
+    vfio_device_fops_release()
+      vfio_device_group_close()
+        vfio_device_close()
+          vfio_device_last_close()
+            vfio_pci_core_close_device()
+              vfio_pci_core_disable()             # device_lock()
+                __pci_reset_function_locked()
+                  pci_reset_bus_function()
+                    pci_dev_reset_slot_function()
+                      pci_reset_hotplug_slot()
+                        pciehp_reset_slot()       # down_write(reset_lock)
 
-The choice to use one lockdep subclass per pcie-hotplug controller in the
-path to the root-bus was made to conserve class keys because their number
-is limited and the complexity grows quadratically with number of keys
-according to Documentation/locking/lockdep-design.rst.
+Ian May reports the same deadlock on simultaneous hot-removal and an
+AER-induced Secondary Bus Reset:
 
-Link: https://lore.kernel.org/linux-pci/20190402021933.GA2966@mit.edu/
-Link: https://lore.kernel.org/linux-pci/de684a28-9038-8fc6-27ca-3f6f2f6400d7@redhat.com/
-Link: https://lore.kernel.org/r/20211217141709.379663-1-hdegoede@redhat.com
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=208855
-Reported-by: "Theodore Ts'o" <tytso@mit.edu>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org
-[lukas: backport to v4.19-stable]
+  aer_recover_work_func()
+    pcie_do_recovery()
+      aer_root_reset()
+        pci_bus_error_reset()
+          pci_slot_reset()
+            pci_slot_lock()                       # device_lock()
+            pci_reset_hotplug_slot()
+              pciehp_reset_slot()                 # down_write(reset_lock)
+
+Fix by releasing the reset_lock during driver binding and unbinding,
+thereby splitting and shrinking the critical section.
+
+Driver binding and unbinding is protected by the device_lock() and thus
+serialized with a Secondary Bus Reset.  There's no need to additionally
+protect it with the reset_lock.  However, pciehp does not bind and
+unbind devices directly, but rather invokes PCI core functions which
+also perform certain enumeration and de-enumeration steps.
+
+The reset_lock's purpose is to protect slot registers, not enumeration
+and de-enumeration of hotplugged devices.  That would arguably be the
+job of the PCI core, not the PCIe hotplug driver.  After all, an
+AER-induced Secondary Bus Reset may as well happen during boot-time
+enumeration of the PCI hierarchy and there's no locking to prevent that
+either.
+
+Exempting *de-enumeration* from the reset_lock is relatively harmless:
+A concurrent Secondary Bus Reset may foil config space accesses such as
+PME interrupt disablement.  But if the device is physically gone, those
+accesses are pointless anyway.  If the device is physically present and
+only logically removed through an Attention Button press or the sysfs
+"power" attribute, PME interrupts as well as DMA cannot come through
+because pciehp_unconfigure_device() disables INTx and Bus Master bits.
+That's still protected by the reset_lock in the present commit.
+
+Exempting *enumeration* from the reset_lock also has limited impact:
+The exempted call to pci_bus_add_device() may perform device accesses
+through pcibios_bus_add_device() and pci_fixup_device() which are now
+no longer protected from a concurrent Secondary Bus Reset.  Otherwise
+there should be no impact.
+
+In essence, the present commit seeks to fix the AB-BA deadlocks while
+still retaining a best-effort reset protection for enumeration and
+de-enumeration of hotplugged devices -- until a general solution is
+implemented in the PCI core.
+
+Link: https://lore.kernel.org/linux-pci/CS1PR8401MB0728FC6FDAB8A35C22BD90EC95F10@CS1PR8401MB0728.NAMPRD84.PROD.OUTLOOK.COM
+Link: https://lore.kernel.org/linux-pci/20200615143250.438252-1-ian.may@canonical.com
+Link: https://lore.kernel.org/linux-pci/ce878dab-c0c4-5bd0-a725-9805a075682d@amd.com
+Link: https://lore.kernel.org/linux-pci/ed831249-384a-6d35-0831-70af191e9bce@huawei.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=215590
+Fixes: 5b3f7b7d062b ("PCI: pciehp: Avoid slot access during reset")
+Link: https://lore.kernel.org/r/fef2b2e9edf245c049a8c5b94743c0f74ff5008a.1681191902.git.lukas@wunner.de
+Reported-by: Michael Haeuptle <michael.haeuptle@hpe.com>
+Reported-by: Ian May <ian.may@canonical.com>
+Reported-by: Andrey Grodzovsky <andrey2805@gmail.com>
+Reported-by: Rahul Kumar <rahul.kumar1@amd.com>
+Reported-by: Jialin Zhang <zhangjialin11@huawei.com>
+Tested-by: Anatoli Antonovitch <Anatoli.Antonovitch@amd.com>
 Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org # v4.19+
+Cc: Dan Stein <dstein@hpe.com>
+Cc: Ashok Raj <ashok.raj@intel.com>
+Cc: Alex Michon <amichon@kalrayinc.com>
+Cc: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>
+Cc: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: Sathyanarayanan Kuppuswamy <sathyanarayanan.kuppuswamy@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/hotplug/pciehp.h      |    3 +++
- drivers/pci/hotplug/pciehp_core.c |    2 +-
- drivers/pci/hotplug/pciehp_hpc.c  |   19 +++++++++++++++++--
- 3 files changed, 21 insertions(+), 3 deletions(-)
+ drivers/pci/hotplug/pciehp_pci.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/pci/hotplug/pciehp.h
-+++ b/drivers/pci/hotplug/pciehp.h
-@@ -84,6 +84,8 @@ struct slot {
-  * @reset_lock: prevents access to the Data Link Layer Link Active bit in the
-  *	Link Status register and to the Presence Detect State bit in the Slot
-  *	Status register during a slot reset which may cause them to flap
-+ * @depth: Number of additional hotplug ports in the path to the root bus,
-+ *	used as lock subclass for @reset_lock
-  * @slot: pointer to the controller's slot structure
-  * @queue: wait queue to wake up on reception of a Command Completed event,
-  *	used for synchronous writes to the Slot Control register
-@@ -115,6 +117,7 @@ struct controller {
- 	struct mutex ctrl_lock;
- 	struct pcie_device *pcie;
- 	struct rw_semaphore reset_lock;
-+	unsigned int depth;
- 	struct slot *slot;
- 	wait_queue_head_t queue;
- 	u32 slot_cap;
---- a/drivers/pci/hotplug/pciehp_core.c
-+++ b/drivers/pci/hotplug/pciehp_core.c
-@@ -215,7 +215,7 @@ static void pciehp_check_presence(struct
- 	struct slot *slot = ctrl->slot;
- 	u8 occupied;
+--- a/drivers/pci/hotplug/pciehp_pci.c
++++ b/drivers/pci/hotplug/pciehp_pci.c
+@@ -55,7 +55,14 @@ int pciehp_configure_device(struct slot
  
--	down_read(&ctrl->reset_lock);
+ 	pci_assign_unassigned_bridge_resources(bridge);
+ 	pcie_bus_configure_settings(parent);
++
++	/*
++	 * Release reset_lock during driver binding
++	 * to avoid AB-BA deadlock with device_lock.
++	 */
++	up_read(&ctrl->reset_lock);
+ 	pci_bus_add_devices(parent);
 +	down_read_nested(&ctrl->reset_lock, ctrl->depth);
- 	mutex_lock(&slot->lock);
  
- 	pciehp_get_adapter_status(slot, &occupied);
---- a/drivers/pci/hotplug/pciehp_hpc.c
-+++ b/drivers/pci/hotplug/pciehp_hpc.c
-@@ -674,7 +674,7 @@ static irqreturn_t pciehp_ist(int irq, v
- 	 * Disable requests have higher priority than Presence Detect Changed
- 	 * or Data Link Layer State Changed events.
- 	 */
--	down_read(&ctrl->reset_lock);
-+	down_read_nested(&ctrl->reset_lock, ctrl->depth);
- 	if (events & DISABLE_SLOT)
- 		pciehp_handle_disable_request(slot);
- 	else if (events & (PCI_EXP_SLTSTA_PDC | PCI_EXP_SLTSTA_DLLSC))
-@@ -785,7 +785,7 @@ int pciehp_reset_slot(struct slot *slot,
- 	if (probe)
- 		return 0;
- 
--	down_write(&ctrl->reset_lock);
-+	down_write_nested(&ctrl->reset_lock, ctrl->depth);
- 
- 	if (!ATTN_BUTTN(ctrl)) {
- 		ctrl_mask |= PCI_EXP_SLTCTL_PDCE;
-@@ -872,6 +872,20 @@ static inline void dbg_ctrl(struct contr
- 
- #define FLAG(x, y)	(((x) & (y)) ? '+' : '-')
- 
-+static inline int pcie_hotplug_depth(struct pci_dev *dev)
-+{
-+	struct pci_bus *bus = dev->bus;
-+	int depth = 0;
+  out:
+ 	pci_unlock_rescan_remove();
+@@ -91,7 +98,15 @@ void pciehp_unconfigure_device(struct sl
+ 				pci_walk_bus(dev->subordinate,
+ 					     pci_dev_set_disconnected, NULL);
+ 		}
 +
-+	while (bus->parent) {
-+		bus = bus->parent;
-+		if (bus->self && bus->self->is_hotplug_bridge)
-+			depth++;
-+	}
++		/*
++		 * Release reset_lock during driver unbinding
++		 * to avoid AB-BA deadlock with device_lock.
++		 */
++		up_read(&ctrl->reset_lock);
+ 		pci_stop_and_remove_bus_device(dev);
++		down_read_nested(&ctrl->reset_lock, ctrl->depth);
 +
-+	return depth;
-+}
-+
- struct controller *pcie_init(struct pcie_device *dev)
- {
- 	struct controller *ctrl;
-@@ -884,6 +898,7 @@ struct controller *pcie_init(struct pcie
- 		goto abort;
- 
- 	ctrl->pcie = dev;
-+	ctrl->depth = pcie_hotplug_depth(dev->port);
- 	pcie_capability_read_dword(pdev, PCI_EXP_SLTCAP, &slot_cap);
- 
- 	if (pdev->hotplug_user_indicators)
+ 		/*
+ 		 * Ensure that no new Requests will be generated from
+ 		 * the device.
 
 
