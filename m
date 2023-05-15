@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C91FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8D9C433D2;
-	Mon, 15 May 2023 17:37:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5BEFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AB69C4339B;
+	Mon, 15 May 2023 17:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172270;
-	bh=U9UFjfNFrQBsyQeUKVZNgfvgzfrgTvWmmBXozIiD7Mw=;
+	s=korg; t=1684172272;
+	bh=Dk3JdR2G+491PHOOQvvFUi1KjknDUYJ54gzcEzTSg+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KivczN2jp2gNqiBEIcSVxv+S4+mqXro4sCXzLS7MhrYdysQT0rz46ZEGCcsO9PLes
-	 1vNe6+HI5MHaeRqaIsdAZEDc2Tti3iHOoZRrrYyqBGCWvdFA4F1yAJtYAp7+MYxxas
-	 w9SQ5Fe4K7AcGD6nByhnQnnxKGglcVLz01HeB2SA=
+	b=GKjdSYTT9QGeNZAdbopdKsoQpPd7pxiCjCMc1ju5SaVAk5uXboD091aP+32L2J5Di
+	 b5tZB3keNHAGKAvihpOsuHC001uibtnuXXKVXFLOhWcp0RikAsaeE8S5n0l36Q0+uV
+	 frCX865gMgWFPbs9rpfasnOZCPagTdaenGZ0+bKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Rob Clark <robdclark@chromium.org>,
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/381] drm/msm/adreno: drop bogus pm_runtime_set_active()
-Date: Mon, 15 May 2023 18:25:48 +0200
-Message-Id: <20230515161741.195917292@linuxfoundation.org>
+Subject: [PATCH 5.10 070/381] tpm, tpm_tis: Claim locality when interrupts are reenabled on resume
+Date: Mon, 15 May 2023 18:25:21 +0200
+Message-Id: <20230515161739.980711239@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,40 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit db7662d076c973072d788bd0e8130e04430307a1 ]
+[ Upstream commit 955df4f87760b3bb2af253d3fbb12fb712b3ffa6 ]
 
-The runtime PM status can only be updated while runtime PM is disabled.
+In tpm_tis_resume() make sure that the locality has been claimed when
+tpm_tis_reenable_interrupts() is called. Otherwise the writings to the
+register might not have any effect.
 
-Drop the bogus pm_runtime_set_active() call that was made after enabling
-runtime PM and which (incidentally but correctly) left the runtime PM
-status set to 'suspended'.
-
-Fixes: 2c087a336676 ("drm/msm/adreno: Load the firmware before bringing up the hardware")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Patchwork: https://patchwork.freedesktop.org/patch/524972/
-Link: https://lore.kernel.org/r/20230303164807.13124-4-johan+linaro@kernel.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: 45baa1d1fa39 ("tpm_tis: Re-enable interrupts upon (S3) resume")
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index c06202b9243c4..760687f66ae5b 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -307,9 +307,6 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
- 	 */
- 	pm_runtime_enable(&pdev->dev);
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 3ea0fff30273e..d65fff4e2ebe9 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -1173,28 +1173,27 @@ int tpm_tis_resume(struct device *dev)
+ 	struct tpm_chip *chip = dev_get_drvdata(dev);
+ 	int ret;
  
--	/* Make sure pm runtime is active and reset any previous errors */
--	pm_runtime_set_active(&pdev->dev);
++	ret = tpm_tis_request_locality(chip, 0);
++	if (ret < 0)
++		return ret;
++
+ 	if (chip->flags & TPM_CHIP_FLAG_IRQ)
+ 		tpm_tis_reenable_interrupts(chip);
+ 
+ 	ret = tpm_pm_resume(dev);
+ 	if (ret)
+-		return ret;
++		goto out;
+ 
+ 	/*
+ 	 * TPM 1.2 requires self-test on resume. This function actually returns
+ 	 * an error code but for unknown reason it isn't handled.
+ 	 */
+-	if (!(chip->flags & TPM_CHIP_FLAG_TPM2)) {
+-		ret = tpm_tis_request_locality(chip, 0);
+-		if (ret < 0)
+-			return ret;
 -
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0) {
- 		pm_runtime_put_sync(&pdev->dev);
++	if (!(chip->flags & TPM_CHIP_FLAG_TPM2))
+ 		tpm1_do_selftest(chip);
++out:
++	tpm_tis_relinquish_locality(chip, 0);
+ 
+-		tpm_tis_relinquish_locality(chip, 0);
+-	}
+-
+-	return 0;
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(tpm_tis_resume);
+ #endif
 -- 
 2.39.2
 
