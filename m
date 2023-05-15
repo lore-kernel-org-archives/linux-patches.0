@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF955FC12
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51752C4339B;
-	Mon, 15 May 2023 17:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCFEFC12
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641B1C433EF;
+	Mon, 15 May 2023 17:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172070;
-	bh=zOMtrZwVaZkKZq0gweW1/PlI8MYXNXMIIBzhw41tmg8=;
+	s=korg; t=1684172073;
+	bh=I3liXfzhcubWUArSIqYShYhEWxsWBCNHe+zM7ilHZK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEMbhIwvafav6Sg4ABmH9aqV27RyyRNGEghKBj3UOSKslkHsogz/nbeMP5AzT7Q2g
-	 bRkcfp382VVEJQKeUQccCJwJFlrUsMCRDfZTcBH7zJ7FK42gX+3Du1/BpNOSyOFSjt
-	 lX1R9Gdc3fbiNkmkCfeVxYEB0ZNgDAL5zHRjwQzk=
+	b=kBjlil14FqtgXxfjN+jh8QAutmgMb8GKpNgc49smbfjgB96Cb08dlu6bi7/OeFqM8
+	 B1LlRRU8F0ZoGZ4l4ESVmT4GMAUueomZxsL5HDTtgBN/0cL8PAvKfveGk0Rq7cZ31z
+	 TF1WSVfvY0l4wqoOS0tFqbOCxbLYTyRDzhslYhdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
-	Corey Minyard <minyard@acm.org>
-Subject: [PATCH 5.10 033/381] ipmi: fix SSIF not responding under certain cond.
-Date: Mon, 15 May 2023 18:24:44 +0200
-Message-Id: <20230515161738.298893779@linuxfoundation.org>
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 5.10 006/381] bluetooth: Perform careful capability checks in hci_sock_ioctl()
+Date: Mon, 15 May 2023 18:24:17 +0200
+Message-Id: <20230515161737.059788627@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,73 +34,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-commit 6d2555cde2918409b0331560e66f84a0ad4849c6 upstream.
+commit 25c150ac103a4ebeed0319994c742a90634ddf18 upstream.
 
-The ipmi communication is not restored after a specific version of BMC is
-upgraded on our server.
-The ipmi driver does not respond after printing the following log:
+Previously, capability was checked using capable(), which verified that the
+caller of the ioctl system call had the required capability. In addition,
+the result of the check would be stored in the HCI_SOCK_TRUSTED flag,
+making it persistent for the socket.
 
-    ipmi_ssif: Invalid response getting flags: 1c 1
+However, malicious programs can abuse this approach by deliberately sharing
+an HCI socket with a privileged task. The HCI socket will be marked as
+trusted when the privileged task occasionally makes an ioctl call.
 
-I found that after entering this branch, ssif_info->ssif_state always
-holds SSIF_GETTING_FLAGS and never return to IDLE.
-
-As a result, the driver cannot be loaded, because the driver status is
-checked during the unload process and must be IDLE in shutdown_ssif():
-
-        while (ssif_info->ssif_state != SSIF_IDLE)
-                schedule_timeout(1);
-
-The process trigger this problem is:
-
-1. One msg timeout and next msg start send, and call
-ssif_set_need_watch().
-
-2. ssif_set_need_watch()->watch_timeout()->start_flag_fetch() change
-ssif_state to SSIF_GETTING_FLAGS.
-
-3. In msg_done_handler() ssif_state == SSIF_GETTING_FLAGS, if an error
-message is received, the second branch does not modify the ssif_state.
-
-4. All retry action need IS_SSIF_IDLE() == True. Include retry action in
-watch_timeout(), msg_done_handler(). Sending msg does not work either.
-SSIF_IDLE is also checked in start_next_msg().
-
-5. The only thing that can be triggered in the SSIF driver is
-watch_timeout(), after destory_user(), this timer will stop too.
-
-So, if enter this branch, the ssif_state will remain SSIF_GETTING_FLAGS
-and can't send msg, no timer started, can't unload.
-
-We did a comparative test before and after adding this patch, and the
-result is effective.
-
-Fixes: 259307074bfc ("ipmi: Add SMBus interface driver (SSIF)")
+This problem can be solved by using sk_capable() to check capability, which
+ensures that not only the current task but also the socket opener has the
+specified capability, thus reducing the risk of privilege escalation
+through the previously identified vulnerability.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
-Message-Id: <20230412074907.80046-1-zhangyuchen.lcr@bytedance.com>
-Signed-off-by: Corey Minyard <minyard@acm.org>
+Fixes: f81f5b2db869 ("Bluetooth: Send control open and close messages for HCI raw sockets")
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_ssif.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sock.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_ssif.c
-+++ b/drivers/char/ipmi/ipmi_ssif.c
-@@ -794,9 +794,9 @@ static void msg_done_handler(struct ssif
- 		} else if (data[0] != (IPMI_NETFN_APP_REQUEST | 1) << 2
- 			   || data[1] != IPMI_GET_MSG_FLAGS_CMD) {
- 			/*
--			 * Don't abort here, maybe it was a queued
--			 * response to a previous command.
-+			 * Recv error response, give up.
- 			 */
-+			ssif_info->ssif_state = SSIF_IDLE;
- 			ipmi_ssif_unlock_cond(ssif_info, flags);
- 			dev_warn(&ssif_info->client->dev,
- 				 "Invalid response getting flags: %x %x\n",
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -996,7 +996,14 @@ static int hci_sock_ioctl(struct socket
+ 	if (hci_sock_gen_cookie(sk)) {
+ 		struct sk_buff *skb;
+ 
+-		if (capable(CAP_NET_ADMIN))
++		/* Perform careful checks before setting the HCI_SOCK_TRUSTED
++		 * flag. Make sure that not only the current task but also
++		 * the socket opener has the required capability, since
++		 * privileged programs can be tricked into making ioctl calls
++		 * on HCI sockets, and the socket should not be marked as
++		 * trusted simply because the ioctl caller is privileged.
++		 */
++		if (sk_capable(sk, CAP_NET_ADMIN))
+ 			hci_sock_set_flag(sk, HCI_SOCK_TRUSTED);
+ 
+ 		/* Send event to monitor */
 
 
