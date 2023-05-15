@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36796FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E6E0C433D2;
-	Mon, 15 May 2023 17:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63F32FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4EDC433EF;
+	Mon, 15 May 2023 17:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172282;
-	bh=u0AHYLcq0MBZHsu/eAdcqKYs7Ls9S2oGI6u6xYagcx4=;
+	s=korg; t=1684172285;
+	bh=yHoZdrMyzojXfxJn9OcPDeX0pm/49ACkVoyILodDSBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kIIrHgpRXz1J5FnVG3/KSl8XPx/gEI7rSOYa/Ep0y5lUggrRssaflXtA8pOJ97mqL
-	 RIszfbLMaJv8UOSkxvjkuLfuHazyGNqt/W4bAVNd7shEys59hk/agZ2T+ko9easWzQ
-	 rgpIF+Tw9dD1XmTWG4+8eck+cixU9pujmHLz6AYU=
+	b=HLLGmGP2JEjY4pvP0mC2i/EGIeo7zrErvstm/zF9t/Awz5BeKNyGGz58CgPsep1+7
+	 FYq7ov8tsMQq+Jde3WNYHrBFYZVWrfQ6NfbweNKdsOmYgenN+D2sDBcdrlIUdVa21H
+	 LzWTuRU9hXyZ6hATpoJdFLIXr4zuTicc3jAHt3Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Heiko Stuebner <heiko@sntech.de>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 073/381] drm/rockchip: Drop unbalanced obj unref
-Date: Mon, 15 May 2023 18:25:24 +0200
-Message-Id: <20230515161740.116727722@linuxfoundation.org>
+Subject: [PATCH 5.10 074/381] drm/vgem: add missing mutex_destroy
+Date: Mon, 15 May 2023 18:25:25 +0200
+Message-Id: <20230515161740.168597157@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,36 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 8ee3b0e85f6ccd9e6c527bc50eaba774c3bb18d0 ]
+[ Upstream commit 7c18189b14b33c1fbf76480b1bd217877c086e67 ]
 
-In the error path, rockchip_drm_gem_object_mmap() is dropping an obj
-reference that it doesn't own.
+vgem_fence_open() instantiates a mutex for a particular fence
+instance, but never destroys it by calling mutex_destroy() in
+vgem_fence_close().
 
-Fixes: 41315b793e13 ("drm/rockchip: use drm_gem_mmap helpers")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230119231734.2884543-1-robdclark@gmail.com
+So, add the missing mutex_destroy() to guarantee proper resource
+destruction.
+
+Fixes: 407779848445 ("drm/vgem: Attach sw fences to exported vGEM dma-buf (ioctl)")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Signed-off-by: Maíra Canal <mairacanal@riseup.net>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230202125517.427976-1-mcanal@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_gem.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/vgem/vgem_fence.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-index 62e5d0970525e..22ff4a5929768 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_gem.c
-@@ -250,9 +250,6 @@ static int rockchip_drm_gem_object_mmap(struct drm_gem_object *obj,
- 	else
- 		ret = rockchip_drm_gem_object_mmap_dma(obj, vma);
- 
--	if (ret)
--		drm_gem_vm_close(vma);
--
- 	return ret;
+diff --git a/drivers/gpu/drm/vgem/vgem_fence.c b/drivers/gpu/drm/vgem/vgem_fence.c
+index 17f32f550dd99..575bc331716e8 100644
+--- a/drivers/gpu/drm/vgem/vgem_fence.c
++++ b/drivers/gpu/drm/vgem/vgem_fence.c
+@@ -249,4 +249,5 @@ void vgem_fence_close(struct vgem_file *vfile)
+ {
+ 	idr_for_each(&vfile->fence_idr, __vgem_fence_idr_fini, vfile);
+ 	idr_destroy(&vfile->fence_idr);
++	mutex_destroy(&vfile->fence_mutex);
  }
- 
 -- 
 2.39.2
 
