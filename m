@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD964FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:45:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35CA1C4339B;
-	Mon, 15 May 2023 17:45:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB0CFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:45:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CCDFC433D2;
+	Mon, 15 May 2023 17:45:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172709;
-	bh=/wXyAaDEVcjCdwyKN8Nli+AOqcWw9TEOKqmSVBsIuPM=;
+	s=korg; t=1684172712;
+	bh=KLuqx3kSjc5fXA3+Hmba1xj5yoG/W0abJhg6nF1O4Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ele8y36wOzC20uTJK1pNXOWh4SVUAF1wSyhQpapm15NbF9uqHcL6RZkJ7ju0ByX7g
-	 Z5kiLniujdx/pAYkWj/xqlVIZDm2FWCG/IPROm8nLb6BWFpUvuB0keAyXxDXZzsAMM
-	 9hsPVtcGLG+5nH43ks9s3qFmVFT/a59ymMNpy6ZU=
+	b=waM+iwQ+F2n6sqnlJzkCV/dOU/koDf6cYE+NslY1HNzoDj/HiLM9sc+BBh7os7WrA
+	 Q19N7xQhfm/U+o0gGUOBw6eLalKiY/Pb+GTp6jXQTwexUWL6wsszdKW5KOO1K+kDDW
+	 oqvaR2rN4btyYQvOcsRx1qcUvLLYr1KceoF1PpJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 241/381] RDMA/mlx4: Prevent shift wrapping in set_user_sq_size()
-Date: Mon, 15 May 2023 18:28:12 +0200
-Message-Id: <20230515161747.588226808@linuxfoundation.org>
+Subject: [PATCH 5.10 242/381] rtc: meson-vrtc: Use ktime_get_real_ts64() to get the current time
+Date: Mon, 15 May 2023 18:28:13 +0200
+Message-Id: <20230515161747.637457226@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,44 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit d50b3c73f1ac20dabc53dc6e9d64ce9c79a331eb ]
+[ Upstream commit 0e6255fa3f649170da6bd1a544680589cfae1131 ]
 
-The ucmd->log_sq_bb_count variable is controlled by the user so this
-shift can wrap.  Fix it by using check_shl_overflow() in the same way
-that it was done in commit 515f60004ed9 ("RDMA/hns: Prevent undefined
-behavior in hns_roce_set_user_sq_size()").
+The VRTC alarm register can be programmed with an amount of seconds
+after which the SoC will be woken up by the VRTC timer again. We are
+already converting the alarm time from meson_vrtc_set_alarm() to
+"seconds since 1970". This means we also need to use "seconds since
+1970" for the current time.
 
-Fixes: 839041329fd3 ("IB/mlx4: Sanity check userspace send queue sizes")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/a8dfbd1d-c019-4556-930b-bab1ded73b10@kili.mountain
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+This fixes a problem where setting the alarm to one minute in the future
+results in the firmware (which handles wakeup) to output (on the serial
+console) that the system will be woken up in billions of seconds.
+ktime_get_raw_ts64() returns the time since boot, not since 1970. Switch
+to ktime_get_real_ts64() to fix the calculation of the alarm time and to
+make the SoC wake up at the specified date/time. Also the firmware
+(which manages suspend) now prints either 59 or 60 seconds until wakeup
+(depending on how long it takes for the system to enter suspend).
+
+Fixes: 6ef35398e827 ("rtc: Add Amlogic Virtual Wake RTC")
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Kevin Hilman <khilman@baylibre.com>
+Link: https://lore.kernel.org/r/20230320212142.2355062-1-martin.blumenstingl@googlemail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/qp.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-meson-vrtc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
-index c6a815a705fef..255194029e2d8 100644
---- a/drivers/infiniband/hw/mlx4/qp.c
-+++ b/drivers/infiniband/hw/mlx4/qp.c
-@@ -412,9 +412,13 @@ static int set_user_sq_size(struct mlx4_ib_dev *dev,
- 			    struct mlx4_ib_qp *qp,
- 			    struct mlx4_ib_create_qp *ucmd)
- {
-+	u32 cnt;
-+
- 	/* Sanity check SQ size before proceeding */
--	if ((1 << ucmd->log_sq_bb_count) > dev->dev->caps.max_wqes	 ||
--	    ucmd->log_sq_stride >
-+	if (check_shl_overflow(1, ucmd->log_sq_bb_count, &cnt) ||
-+	    cnt > dev->dev->caps.max_wqes)
-+		return -EINVAL;
-+	if (ucmd->log_sq_stride >
- 		ilog2(roundup_pow_of_two(dev->dev->caps.max_sq_desc_sz)) ||
- 	    ucmd->log_sq_stride < MLX4_IB_MIN_SQ_STRIDE)
- 		return -EINVAL;
+diff --git a/drivers/rtc/rtc-meson-vrtc.c b/drivers/rtc/rtc-meson-vrtc.c
+index e6bd0808a092b..18ff8439b5bb5 100644
+--- a/drivers/rtc/rtc-meson-vrtc.c
++++ b/drivers/rtc/rtc-meson-vrtc.c
+@@ -23,7 +23,7 @@ static int meson_vrtc_read_time(struct device *dev, struct rtc_time *tm)
+ 	struct timespec64 time;
+ 
+ 	dev_dbg(dev, "%s\n", __func__);
+-	ktime_get_raw_ts64(&time);
++	ktime_get_real_ts64(&time);
+ 	rtc_time64_to_tm(time.tv_sec, tm);
+ 
+ 	return 0;
+@@ -96,7 +96,7 @@ static int __maybe_unused meson_vrtc_suspend(struct device *dev)
+ 		long alarm_secs;
+ 		struct timespec64 time;
+ 
+-		ktime_get_raw_ts64(&time);
++		ktime_get_real_ts64(&time);
+ 		local_time = time.tv_sec;
+ 
+ 		dev_dbg(dev, "alarm_time = %lus, local_time=%lus\n",
 -- 
 2.39.2
 
