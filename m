@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F49FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D19E8C433D2;
-	Mon, 15 May 2023 17:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB528FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CF4C433EF;
+	Mon, 15 May 2023 17:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171760;
-	bh=4lPZSqgKYP1OTvSzvcfeyhcDLndJdaVW6IyNcZ5JejA=;
+	s=korg; t=1684171763;
+	bh=hwUZ9YVafrpiG1N1lIpwutibPFDmewnCBy5rSOHCh9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1g3u4ZiHyg6PMhGsPTHV/JB2dMKNq3RF4HHjfItVfI21dnOCoBAgyK8qbkhiNtXp
-	 pJMdoUbYMlBacuRNfLyv+duC6Myk2oY6YSBH6aJvf+OloCnCzvUwqW8Mgp+VLW7XSO
-	 7Qb3XhlOlmzL1i0BsVQGjActFCLTjdDBO644RLNI=
+	b=0eTTNLHkqUvgxJEaeHbuKSJ3eGE4Kv8AsmEwQUWzuHJz8epJstc+tGuBklGvyRUF8
+	 KNLiwaOB6JNCaOxeJGNUUeV5J1BQ+MDVEZ55WfuJmlz3+BXfc/I4lJJTfqtTEOw1SW
+	 9XMNR9tdo/X5+G1Y1LnHgtFH80iff4o2GNGVbCc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 069/134] cifs: release leases for deferred close handles when freezing
-Date: Mon, 15 May 2023 18:29:06 +0200
-Message-Id: <20230515161705.453385939@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.15 070/134] platform/x86: touchscreen_dmi: Add upside-down quirk for GDIX1002 ts on the Juno Tablet
+Date: Mon, 15 May 2023 18:29:07 +0200
+Message-Id: <20230515161705.493725004@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -34,53 +33,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit d39fc592ef8ae9a89c5e85c8d9f760937a57d5ba upstream.
+commit 6abfa99ce52f61a31bcfc2aaaae09006f5665495 upstream.
 
-We should not be caching closed files when freeze is invoked on an fs
-(so we can release resources more gracefully).
+The Juno Computers Juno Tablet has an upside-down mounted Goodix
+touchscreen. Add a quirk to invert both axis to correct for this.
 
-Fixes xfstests generic/068 generic/390 generic/491
-
-Reviewed-by: David Howells <dhowells@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://junocomputers.com/us/product/juno-tablet/
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230505210323.43177-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsfs.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/platform/x86/touchscreen_dmi.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -730,6 +730,20 @@ static void cifs_umount_begin(struct sup
- 	return;
- }
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -381,6 +381,11 @@ static const struct ts_dmi_data glavey_t
+ 	.properties	= glavey_tm800a550l_props,
+ };
  
-+static int cifs_freeze(struct super_block *sb)
-+{
-+	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
-+	struct cifs_tcon *tcon;
++static const struct ts_dmi_data gdix1002_00_upside_down_data = {
++	.acpi_name	= "GDIX1002:00",
++	.properties	= gdix1001_upside_down_props,
++};
 +
-+	if (cifs_sb == NULL)
-+		return 0;
-+
-+	tcon = cifs_sb_master_tcon(cifs_sb);
-+
-+	cifs_close_all_deferred_files(tcon);
-+	return 0;
-+}
-+
- #ifdef CONFIG_CIFS_STATS2
- static int cifs_show_stats(struct seq_file *s, struct dentry *root)
- {
-@@ -761,6 +775,7 @@ static const struct super_operations cif
- 	as opens */
- 	.show_options = cifs_show_options,
- 	.umount_begin   = cifs_umount_begin,
-+	.freeze_fs      = cifs_freeze,
- #ifdef CONFIG_CIFS_STATS2
- 	.show_stats = cifs_show_stats,
- #endif
+ static const struct property_entry gp_electronic_t701_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-size-x", 960),
+ 	PROPERTY_ENTRY_U32("touchscreen-size-y", 640),
+@@ -1281,6 +1286,18 @@ const struct dmi_system_id touchscreen_d
+ 		},
+ 	},
+ 	{
++		/* Juno Tablet */
++		.driver_data = (void *)&gdix1002_00_upside_down_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Default string"),
++			/* Both product- and board-name being "Default string" is somewhat rare */
++			DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
++			DMI_MATCH(DMI_BOARD_NAME, "Default string"),
++			/* Above matches are too generic, add partial bios-version match */
++			DMI_MATCH(DMI_BIOS_VERSION, "JP2V1."),
++		},
++	},
++	{
+ 		/* Mediacom WinPad 7.0 W700 (same hw as Wintron surftab 7") */
+ 		.driver_data = (void *)&trekstor_surftab_wintron70_data,
+ 		.matches = {
 
 
