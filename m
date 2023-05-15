@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B75FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD50C433D2;
-	Mon, 15 May 2023 17:38:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB46FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353DAC433EF;
+	Mon, 15 May 2023 17:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172318;
-	bh=clBBDFwernhtCC9RalsshTgN0xPKDakN/yU9b828QbY=;
+	s=korg; t=1684172321;
+	bh=Ey9SXtDm4MHsmW8U53wHZ768rSca/8UKbYWuPhjr9AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TFrq9E0vh03Z8cpQr0bEFwjQddcT1FIOYdbEaPbg5nfiuBJj110bDiK/Y1QoyXZFq
-	 dY+AzwY5C/DpyGJn4FlRWcHGgDK9G44fwTw444z/51OkkyerGYzV0A5U4CZkiL6Y3V
-	 rrIim1d8ICIktadf64pvw4OddaxhKHnTMUF1EOSA=
+	b=QCF6e1LwBIgjhEdyEM2PwpPR5QSGb9WCVq7MPD6siX5+QfLERkn5j/+fKWBKQ9Y4c
+	 0/bU+K4KHWoerB/nja4CQcO2xtu/LO46BnyZ/wwd4T/NkyR7m01aABf7PIWqZabcW0
+	 7mg8Ua+0nCJP+FcwN7oc77kdJVrqLlO9DKzO1SfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Stanimir Varbanov <stanimir.varbanov@linaro.org>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/381] media: venus: vdec: Fix non reliable setting of LAST flag
-Date: Mon, 15 May 2023 18:26:06 +0200
-Message-Id: <20230515161742.021636010@linuxfoundation.org>
+Subject: [PATCH 5.10 116/381] media: venus: vdec: Make decoder return LAST flag for sufficient event
+Date: Mon, 15 May 2023 18:26:07 +0200
+Message-Id: <20230515161742.068836796@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,182 +37,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 
-[ Upstream commit acf8a57d8caf5ceabbe50774953fe04745ad1a50 ]
+[ Upstream commit a4ca67af8b831a781ac53060c5d5c3dccaf7676e ]
 
-In real use of dynamic-resolution-change it is observed that the
-LAST buffer flag (which marks the last decoded buffer with the
-resolution before the resolution-change event) is not reliably set.
-
-Fix this by set the LAST buffer flag on next queued capture buffer
-after the resolution-change event.
+This makes the decoder to behaives equally for sufficient and
+insufficient events. After this change the LAST buffer flag will be set
+when the new resolution (in dynamic-resolution-change state) is smaller
+then the old bitstream resolution.
 
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Stable-dep-of: 50248ad9f190 ("media: venus: dec: Fix handling of the start cmd")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/core.h    |  5 +--
- drivers/media/platform/qcom/venus/helpers.c |  6 +++
- drivers/media/platform/qcom/venus/vdec.c    | 45 ++++++++++++---------
- 3 files changed, 33 insertions(+), 23 deletions(-)
+ drivers/media/platform/qcom/venus/vdec.c | 42 ++++++++++++++++--------
+ 1 file changed, 28 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index f2a0ef9ee884e..f78eed2c243a8 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -283,7 +283,6 @@ enum venus_dec_state {
- 	VENUS_DEC_STATE_DRAIN		= 5,
- 	VENUS_DEC_STATE_DECODING	= 6,
- 	VENUS_DEC_STATE_DRC		= 7,
--	VENUS_DEC_STATE_DRC_FLUSH_DONE	= 8,
- };
- 
- struct venus_ts_metadata {
-@@ -348,7 +347,7 @@ struct venus_ts_metadata {
-  * @priv:	a private for HFI operations callbacks
-  * @session_type:	the type of the session (decoder or encoder)
-  * @hprop:	a union used as a holder by get property
-- * @last_buf:	last capture buffer for dynamic-resoluton-change
-+ * @next_buf_last: a flag to mark next queued capture buffer as last
-  */
- struct venus_inst {
- 	struct list_head list;
-@@ -410,7 +409,7 @@ struct venus_inst {
- 	union hfi_get_property hprop;
- 	unsigned int core_acquired: 1;
- 	unsigned int bit_depth;
--	struct vb2_buffer *last_buf;
-+	bool next_buf_last;
- };
- 
- #define IS_V1(core)	((core)->res->hfi_version == HFI_VERSION_1XX)
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 50439eb1ffeaa..5ca3920237c5a 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -1347,6 +1347,12 @@ void venus_helper_vb2_buf_queue(struct vb2_buffer *vb)
- 
- 	v4l2_m2m_buf_queue(m2m_ctx, vbuf);
- 
-+	/* Skip processing queued capture buffers after LAST flag */
-+	if (inst->session_type == VIDC_SESSION_TYPE_DEC &&
-+	    V4L2_TYPE_IS_CAPTURE(vb->vb2_queue->type) &&
-+	    inst->codec_state == VENUS_DEC_STATE_DRC)
-+		goto unlock;
-+
- 	cache_payload(inst, vb);
- 
- 	if (inst->session_type == VIDC_SESSION_TYPE_ENC &&
 diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index de34a87d1130e..b6b5ae0a457bb 100644
+index b6b5ae0a457bb..3adff10fce6a7 100644
 --- a/drivers/media/platform/qcom/venus/vdec.c
 +++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -916,10 +916,6 @@ static int vdec_start_capture(struct venus_inst *inst)
- 		return 0;
- 
- reconfigure:
--	ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, true);
--	if (ret)
--		return ret;
--
- 	ret = vdec_output_conf(inst);
- 	if (ret)
- 		return ret;
-@@ -947,6 +943,8 @@ static int vdec_start_capture(struct venus_inst *inst)
- 
- 	venus_pm_load_scale(inst);
- 
-+	inst->next_buf_last = false;
-+
- 	ret = hfi_session_continue(inst);
- 	if (ret)
- 		goto free_dpb_bufs;
-@@ -987,6 +985,7 @@ static int vdec_start_output(struct venus_inst *inst)
- 	venus_helper_init_instance(inst);
- 	inst->sequence_out = 0;
- 	inst->reconfig = false;
-+	inst->next_buf_last = false;
- 
- 	ret = vdec_set_properties(inst);
- 	if (ret)
-@@ -1080,9 +1079,7 @@ static int vdec_stop_capture(struct venus_inst *inst)
- 		inst->codec_state = VENUS_DEC_STATE_STOPPED;
- 		break;
- 	case VENUS_DEC_STATE_DRC:
--		WARN_ON(1);
--		fallthrough;
--	case VENUS_DEC_STATE_DRC_FLUSH_DONE:
-+		ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, true);
- 		inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
- 		venus_helper_free_dpb_bufs(inst);
- 		break;
-@@ -1206,9 +1203,28 @@ static void vdec_buf_cleanup(struct vb2_buffer *vb)
- static void vdec_vb2_buf_queue(struct vb2_buffer *vb)
+@@ -636,6 +636,7 @@ static int vdec_output_conf(struct venus_inst *inst)
  {
- 	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
-+	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
-+	static const struct v4l2_event eos = { .type = V4L2_EVENT_EOS };
+ 	struct venus_core *core = inst->core;
+ 	struct hfi_enable en = { .enable = 1 };
++	struct hfi_buffer_requirements bufreq;
+ 	u32 width = inst->out_width;
+ 	u32 height = inst->out_height;
+ 	u32 out_fmt, out2_fmt;
+@@ -711,6 +712,23 @@ static int vdec_output_conf(struct venus_inst *inst)
+ 	}
  
- 	vdec_pm_get_put(inst);
- 
-+	mutex_lock(&inst->lock);
+ 	if (IS_V3(core) || IS_V4(core)) {
++		ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
++		if (ret)
++			return ret;
 +
-+	if (inst->next_buf_last && V4L2_TYPE_IS_CAPTURE(vb->vb2_queue->type) &&
-+	    inst->codec_state == VENUS_DEC_STATE_DRC) {
-+		vbuf->flags |= V4L2_BUF_FLAG_LAST;
-+		vbuf->sequence = inst->sequence_cap++;
-+		vbuf->field = V4L2_FIELD_NONE;
-+		vb2_set_plane_payload(vb, 0, 0);
-+		v4l2_m2m_buf_done(vbuf, VB2_BUF_STATE_DONE);
-+		v4l2_event_queue_fh(&inst->fh, &eos);
-+		inst->next_buf_last = false;
-+		mutex_unlock(&inst->lock);
-+		return;
-+	}
++		if (bufreq.size > inst->output_buf_size)
++			return -EINVAL;
 +
-+	mutex_unlock(&inst->lock);
++		if (inst->dpb_fmt) {
++			ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT2,
++						      &bufreq);
++			if (ret)
++				return ret;
 +
- 	venus_helper_vb2_buf_queue(vb);
- }
++			if (bufreq.size > inst->output2_buf_size)
++				return -EINVAL;
++		}
++
+ 		if (inst->output2_buf_size) {
+ 			ret = venus_helper_set_bufsize(inst,
+ 						       inst->output2_buf_size,
+@@ -1330,19 +1348,15 @@ static void vdec_event_change(struct venus_inst *inst,
+ 	dev_dbg(dev, VDBGM "event %s sufficient resources (%ux%u)\n",
+ 		sufficient ? "" : "not", ev_data->width, ev_data->height);
  
-@@ -1252,13 +1268,6 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 		vb->timestamp = timestamp_us * NSEC_PER_USEC;
- 		vbuf->sequence = inst->sequence_cap++;
- 
--		if (inst->last_buf == vb) {
--			inst->last_buf = NULL;
--			vbuf->flags |= V4L2_BUF_FLAG_LAST;
--			vb2_set_plane_payload(vb, 0, 0);
--			vb->timestamp = 0;
+-	if (sufficient) {
+-		hfi_session_continue(inst);
+-	} else {
+-		switch (inst->codec_state) {
+-		case VENUS_DEC_STATE_INIT:
+-			inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
+-			break;
+-		case VENUS_DEC_STATE_DECODING:
+-			inst->codec_state = VENUS_DEC_STATE_DRC;
+-			break;
+-		default:
+-			break;
 -		}
--
- 		if (vbuf->flags & V4L2_BUF_FLAG_LAST) {
- 			const struct v4l2_event ev = { .type = V4L2_EVENT_EOS };
++	switch (inst->codec_state) {
++	case VENUS_DEC_STATE_INIT:
++		inst->codec_state = VENUS_DEC_STATE_CAPTURE_SETUP;
++		break;
++	case VENUS_DEC_STATE_DECODING:
++		inst->codec_state = VENUS_DEC_STATE_DRC;
++		break;
++	default:
++		break;
+ 	}
  
-@@ -1343,12 +1352,9 @@ static void vdec_event_change(struct venus_inst *inst,
+ 	/*
+@@ -1351,7 +1365,7 @@ static void vdec_event_change(struct venus_inst *inst,
+ 	 * itself doesn't mark the last decoder output buffer with HFI EOS flag.
  	 */
  
- 	if (!sufficient && inst->codec_state == VENUS_DEC_STATE_DRC) {
--		struct vb2_v4l2_buffer *last;
+-	if (!sufficient && inst->codec_state == VENUS_DEC_STATE_DRC) {
++	if (inst->codec_state == VENUS_DEC_STATE_DRC) {
  		int ret;
  
--		last = v4l2_m2m_last_dst_buf(inst->m2m_ctx);
--		if (last)
--			inst->last_buf = &last->vb2_buf;
-+		inst->next_buf_last = true;
- 
- 		ret = hfi_session_flush(inst, HFI_FLUSH_OUTPUT, false);
- 		if (ret)
-@@ -1397,8 +1403,7 @@ static void vdec_event_notify(struct venus_inst *inst, u32 event,
- 
- static void vdec_flush_done(struct venus_inst *inst)
- {
--	if (inst->codec_state == VENUS_DEC_STATE_DRC)
--		inst->codec_state = VENUS_DEC_STATE_DRC_FLUSH_DONE;
-+	dev_dbg(inst->core->dev_dec, VDBGH "flush done\n");
- }
- 
- static const struct hfi_inst_ops vdec_hfi_ops = {
+ 		inst->next_buf_last = true;
 -- 
 2.39.2
 
