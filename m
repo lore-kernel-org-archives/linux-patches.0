@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C82E2FBFA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:20:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5BEC4339B;
-	Mon, 15 May 2023 17:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC581FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:20:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC81C433D2;
+	Mon, 15 May 2023 17:20:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171236;
-	bh=v0LR2KYR8PyyF39lOMybbrGeHTn4QIJZBer4850tj4c=;
+	s=korg; t=1684171239;
+	bh=IbIuFBY39dut/B58uONInkPlM9KkZKRci1tFVb1Rc3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1iOhxvMnValwFOPjrUJBfTjFaRSTXQyynCDsmEXUiohsM/JEheQPeshscqjcUq/V
-	 q27HBK6tsSc2pB44/wpX8G30m9+zs7JqTv0jM2zrgYNCaAx2M/UzWpKteaRTxzoHrn
-	 OAb6vXGOTdTdaK/VeeKCPyvXPhK+u5hMBOo2p+CU=
+	b=n9VnK1tgcGeGsPwSVcDJPfqslZREdC4/+JwDb773EgcOv49cvHFhENvQMjFtbWZSA
+	 wG/0dccZhdH5cio2fX0ebQaMA+0e7/XkEQqvgkKv6s+Sa2xdi4tQYxcNUDKpnLqnLB
+	 UuF8BegVW7GSezfXcZ/JAbCn3rCFhV2rR27VHcMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Fae <faenkhauser@gmail.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.2 145/242] platform/x86: thinkpad_acpi: Fix platform profiles on T490
-Date: Mon, 15 May 2023 18:27:51 +0200
-Message-Id: <20230515161726.249615394@linuxfoundation.org>
+Subject: [PATCH 6.2 146/242] platform/x86: hp-wmi: add micmute to hp_wmi_keymap struct
+Date: Mon, 15 May 2023 18:27:52 +0200
+Message-Id: <20230515161726.277902835@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -34,47 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Fae <faenkhauser@gmail.com>
 
-commit 0c0cd3e25a5b64b541dd83ba6e032475a9d77432 upstream.
+commit decab2825c3ef9b154c6f76bce40872ffb41c36f upstream.
 
-I had incorrectly thought that PSC profiles were not usable on Intel
-platforms so had blocked them in the driver initialistion. This broke
-platform profiles on the T490.
+Fixes micmute key of HP Envy X360 ey0xxx.
 
-After discussion with the FW team PSC does work on Intel platforms and
-should be allowed.
-
-Note - it's possible this may impact other platforms where it is advertised
-but special driver support that only Windows has is needed. But if it does
-then they will need fixing via quirks. Please report any issues to me so I
-can get them addressed - but I haven't found any problems in testing...yet
-
-Fixes: bce6243f767f ("platform/x86: thinkpad_acpi: do not use PSC mode on Intel platforms")
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2177962
+Signed-off-by: Fae <faenkhauser@gmail.com>
+Link: https://lore.kernel.org/r/20230425063644.11828-1-faenkhauser@gmail.com
 Cc: stable@vger.kernel.org
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://lore.kernel.org/r/20230505132523.214338-1-mpearson-lenovo@squebb.ca
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/platform/x86/hp/hp-wmi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -10593,11 +10593,6 @@ static int tpacpi_dytc_profile_init(stru
- 				dytc_mmc_get_available = true;
- 		}
- 	} else if (dytc_capabilities & BIT(DYTC_FC_PSC)) { /* PSC MODE */
--		/* Support for this only works on AMD platforms */
--		if (boot_cpu_data.x86_vendor != X86_VENDOR_AMD) {
--			dbg_printk(TPACPI_DBG_INIT, "PSC not support on Intel platforms\n");
--			return -ENODEV;
--		}
- 		pr_debug("PSC is supported\n");
- 	} else {
- 		dbg_printk(TPACPI_DBG_INIT, "No DYTC support available\n");
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -211,6 +211,7 @@ struct bios_rfkill2_state {
+ static const struct key_entry hp_wmi_keymap[] = {
+ 	{ KE_KEY, 0x02,    { KEY_BRIGHTNESSUP } },
+ 	{ KE_KEY, 0x03,    { KEY_BRIGHTNESSDOWN } },
++	{ KE_KEY, 0x270,   { KEY_MICMUTE } },
+ 	{ KE_KEY, 0x20e6,  { KEY_PROG1 } },
+ 	{ KE_KEY, 0x20e8,  { KEY_MEDIA } },
+ 	{ KE_KEY, 0x2142,  { KEY_MEDIA } },
 
 
