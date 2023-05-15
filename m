@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957ECFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:49:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B94CFC433EF;
-	Mon, 15 May 2023 16:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D10FDF53
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:49:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E605EC433EF;
+	Mon, 15 May 2023 16:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169372;
-	bh=IH9iwk9BVxbL63OTDuc7CZwBqRuE+xwme9GMYrJzLAY=;
+	s=korg; t=1684169375;
+	bh=vYQUcLPMTRVFgU2TgOleFQK6YisZAf2Z3MsTK94EWuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cd5VTwlQaZ/TF0tfGlDsBwhcMXk8CtxjWXbUI/ATeVFj3wiI0z0WmUU3vYkUvmrX5
-	 uT+QznBjIbo9fU0SfuGIQF5kijH3DK8Pm4+PLMLOc2DJ+xAlu8B6tcR9Elw993Pha9
-	 /cYlr1gUuM4/cMQs0i9Gegmd1BMAp9GH/Nqt6mPQ=
+	b=zm8FNo6WYtLu+2KMDf+fmQNeZXSGkblwi5akwAUGfY3ZvodfeNJF1ykvT4jMQbsx7
+	 Px/gnFM/VC0CS39gpykeUeamqVwwhQqrc4yViAmxoocvCHAJGvp3cjlaF7s94omtcL
+	 lALMbODVYqIcn4U7AtNmLlSgOuteSg9Ukf5czwEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palash Oswal <oswalpalash@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Cong Wang <cong.wang@bytedance.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	David Ahern <dsahern@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 037/246] sit: update dev->needed_headroom in ipip6_tunnel_bind_dev()
-Date: Mon, 15 May 2023 18:24:09 +0200
-Message-Id: <20230515161723.710740204@linuxfoundation.org>
+Subject: [PATCH 6.3 038/246] selftests: srv6: make srv6_end_dt46_l3vpn_test more robust
+Date: Mon, 15 May 2023 18:24:10 +0200
+Message-Id: <20230515161723.740321724@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -38,67 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-[ Upstream commit c88f8d5cd95fd039cff95d682b8e71100c001df0 ]
+[ Upstream commit 46ef24c60f8ee70662968ac55325297ed4624d61 ]
 
-When a tunnel device is bound with the underlying device, its
-dev->needed_headroom needs to be updated properly. IPv4 tunnels
-already do the same in ip_tunnel_bind_dev(). Otherwise we may
-not have enough header room for skb, especially after commit
-b17f709a2401 ("gue: TX support for using remote checksum offload option").
+On some distributions, the rp_filter is automatically set (=1) by
+default on a netdev basis (also on VRFs).
+In an SRv6 End.DT46 behavior, decapsulated IPv4 packets are routed using
+the table associated with the VRF bound to that tunnel. During lookup
+operations, the rp_filter can lead to packet loss when activated on the
+VRF.
+Therefore, we chose to make this selftest more robust by explicitly
+disabling the rp_filter during tests (as it is automatically set by some
+Linux distributions).
 
-Fixes: 32b8a8e59c9c ("sit: add IPv4 over IPv4 support")
-Reported-by: Palash Oswal <oswalpalash@gmail.com>
-Link: https://lore.kernel.org/netdev/CAGyP=7fDcSPKu6nttbGwt7RXzE3uyYxLjCSE97J64pRxJP8jPA@mail.gmail.com/
-Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Fixes: 03a0b567a03d ("selftests: seg6: add selftest for SRv6 End.DT46 Behavior")
+Reported-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Tested-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/sit.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ .../testing/selftests/net/srv6_end_dt46_l3vpn_test.sh  | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index 70d81bba50939..3ffb6a5b1f82a 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -1095,12 +1095,13 @@ static netdev_tx_t sit_tunnel_xmit(struct sk_buff *skb,
+diff --git a/tools/testing/selftests/net/srv6_end_dt46_l3vpn_test.sh b/tools/testing/selftests/net/srv6_end_dt46_l3vpn_test.sh
+index aebaab8ce44cb..441eededa0312 100755
+--- a/tools/testing/selftests/net/srv6_end_dt46_l3vpn_test.sh
++++ b/tools/testing/selftests/net/srv6_end_dt46_l3vpn_test.sh
+@@ -292,6 +292,11 @@ setup_hs()
+ 	ip netns exec ${hsname} sysctl -wq net.ipv6.conf.all.accept_dad=0
+ 	ip netns exec ${hsname} sysctl -wq net.ipv6.conf.default.accept_dad=0
  
- static void ipip6_tunnel_bind_dev(struct net_device *dev)
- {
-+	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	int t_hlen = tunnel->hlen + sizeof(struct iphdr);
- 	struct net_device *tdev = NULL;
--	struct ip_tunnel *tunnel;
-+	int hlen = LL_MAX_HEADER;
- 	const struct iphdr *iph;
- 	struct flowi4 fl4;
++	# disable the rp_filter otherwise the kernel gets confused about how
++	# to route decap ipv4 packets.
++	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
++	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.default.rp_filter=0
++
+ 	ip -netns ${hsname} link add veth0 type veth peer name ${rtveth}
+ 	ip -netns ${hsname} link set ${rtveth} netns ${rtname}
+ 	ip -netns ${hsname} addr add ${IPv6_HS_NETWORK}::${hs}/64 dev veth0 nodad
+@@ -316,11 +321,6 @@ setup_hs()
+ 	ip netns exec ${rtname} sysctl -wq net.ipv6.conf.${rtveth}.proxy_ndp=1
+ 	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.proxy_arp=1
  
--	tunnel = netdev_priv(dev);
- 	iph = &tunnel->parms.iph;
- 
- 	if (iph->daddr) {
-@@ -1123,14 +1124,15 @@ static void ipip6_tunnel_bind_dev(struct net_device *dev)
- 		tdev = __dev_get_by_index(tunnel->net, tunnel->parms.link);
- 
- 	if (tdev && !netif_is_l3_master(tdev)) {
--		int t_hlen = tunnel->hlen + sizeof(struct iphdr);
- 		int mtu;
- 
- 		mtu = tdev->mtu - t_hlen;
- 		if (mtu < IPV6_MIN_MTU)
- 			mtu = IPV6_MIN_MTU;
- 		WRITE_ONCE(dev->mtu, mtu);
-+		hlen = tdev->hard_header_len + tdev->needed_headroom;
- 	}
-+	dev->needed_headroom = t_hlen + hlen;
+-	# disable the rp_filter otherwise the kernel gets confused about how
+-	# to route decap ipv4 packets.
+-	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
+-	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.rp_filter=0
+-
+ 	ip netns exec ${rtname} sh -c "echo 1 > /proc/sys/net/vrf/strict_mode"
  }
  
- static void ipip6_tunnel_update(struct ip_tunnel *t, struct ip_tunnel_parm *p,
 -- 
 2.39.2
 
