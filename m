@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C12FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94AAC433D2;
-	Mon, 15 May 2023 16:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 863A2DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E371AC433EF;
+	Mon, 15 May 2023 16:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168962;
-	bh=jhwoTrPPu2RtxRkqPXUUvMt+macYXPq8cG78PwMI8tQ=;
+	s=korg; t=1684168965;
+	bh=f7bSYF2SpCnQ7McMyy2TC/ZB4laYArSsBbv1RkvwSJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ywsuQOvW/FniBybNeanYPkq0y9Yas2a81DxzjKl5zajiSFqzht7c96bZ7MZcOmFm+
-	 nU1JlB6SeBozqWx5Tt16H2ks8biqqkb/6IFZT2PjaPPFemo2am3kXsc8h5f9h9H5Hs
-	 MRqhXmQlk+YajjYQDT+FGuMPi2dkJdDEEbISHHUQ=
+	b=YS8eUAJ0iv827o/6913RJ5IYrM7Xg9VY6qs1FWNVkfvNimAj6udKFAmStWxqaQAEo
+	 KCLL0CU4JCzcKzFDpDZQesoeHV7n3qdasC5GK406EpCpy2OmZY2i1oSg8sZalae88A
+	 EnZaIaqyi9oUmrF7Jx+ogOmu/g2l5l1KN15nOhaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Peter Chen <peter.chen@kernel.org>,
+	Yinhao Hu <dddddd@hust.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 098/191] sh: sq: Fix incorrect element size for allocating bitmap buffer
-Date: Mon, 15 May 2023 18:25:35 +0200
-Message-Id: <20230515161710.826827767@linuxfoundation.org>
+Subject: [PATCH 4.19 099/191] usb: chipidea: fix missing goto in `ci_hdrc_probe`
+Date: Mon, 15 May 2023 18:25:36 +0200
+Message-Id: <20230515161710.858903204@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,42 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+From: Yinhao Hu <dddddd@hust.edu.cn>
 
-[ Upstream commit 80f746e2bd0e1da3fdb49a53570e54a1a225faac ]
+[ Upstream commit d6f712f53b79f5017cdcefafb7a5aea9ec52da5d ]
 
-The Store Queue code allocates a bitmap buffer with the size of
-multiple of sizeof(long) in sq_api_init(). While the buffer size
-is calculated correctly, the code uses the wrong element size to
-allocate the buffer which results in the allocated bitmap buffer
-being too small.
+>From the comment of ci_usb_phy_init, it returns an error code if
+usb_phy_init has failed, and it should do some clean up, not just
+return directly.
 
-Fix this by allocating the buffer with kcalloc() with element size
-sizeof(long) instead of kzalloc() whose elements size defaults to
-sizeof(char).
+Fix this by goto the error handling.
 
-Fixes: d7c30c682a27 ("sh: Store Queue API rework.")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230419114854.528677-1-glaubitz@physik.fu-berlin.de
+Fixes: 74475ede784d ("usb: chipidea: move PHY operation to core")
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Acked-by: Peter Chen <peter.chen@kernel.org>
+Signed-off-by: Yinhao Hu <dddddd@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230412055852.971991-1-dddddd@hust.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/sh/kernel/cpu/sh4/sq.c | 2 +-
+ drivers/usb/chipidea/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/sh/kernel/cpu/sh4/sq.c b/arch/sh/kernel/cpu/sh4/sq.c
-index 4ca78ed71ad2c..c218bae8fe208 100644
---- a/arch/sh/kernel/cpu/sh4/sq.c
-+++ b/arch/sh/kernel/cpu/sh4/sq.c
-@@ -383,7 +383,7 @@ static int __init sq_api_init(void)
- 	if (unlikely(!sq_cache))
- 		return ret;
+diff --git a/drivers/usb/chipidea/core.c b/drivers/usb/chipidea/core.c
+index 3fd1073a345db..9f6a52ed038e2 100644
+--- a/drivers/usb/chipidea/core.c
++++ b/drivers/usb/chipidea/core.c
+@@ -984,7 +984,7 @@ static int ci_hdrc_probe(struct platform_device *pdev)
+ 	ret = ci_usb_phy_init(ci);
+ 	if (ret) {
+ 		dev_err(dev, "unable to init phy: %d\n", ret);
+-		return ret;
++		goto ulpi_exit;
+ 	}
  
--	sq_bitmap = kzalloc(size, GFP_KERNEL);
-+	sq_bitmap = kcalloc(size, sizeof(long), GFP_KERNEL);
- 	if (unlikely(!sq_bitmap))
- 		goto out;
- 
+ 	ci->hw_bank.phys = res->start;
 -- 
 2.39.2
 
