@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3DEFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A760C433D2;
-	Mon, 15 May 2023 17:29:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48304FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788A0C4339B;
+	Mon, 15 May 2023 17:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171775;
-	bh=S8m6ri7NQ+2GPJoA6oG4oZ704b1jhgM6NeY7xB2y71A=;
+	s=korg; t=1684171779;
+	bh=76PnOE9v75Y2guwF1juenUlk/2HA0gRnsoBcKDL3FqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sIVqSOl2uv3vQRqIup395985docdbyTU1XoVEQqt+inhoCVoPbUSNfPBQ2mnSNF9r
-	 XGVA+7Lun2LmGB4qw6KtLnCwWKDwNGj6B5WncEz8hQ0rELDbZI4lIsoCcQ/gpzQxGL
-	 k+86aSQmkLb+zJVePyF3HTOz9SkTt34Eym+8Fkp4=
+	b=VBzYc16oKD7MQwQdK4PU5jiw5ryuHGz7YsypZNRFOt0tNm+aEqCgGH+N4vIGjVM+6
+	 Gj7+fzm87mVGmr+DcbrocAYWw0NiXj8GRM5EWeu48sY7Dp3BTraTW1GfKfvRD16ISB
+	 eCovD0FWLvm+slXalJBw9A1R03lwlimtiNUcStMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 047/134] net: enetc: check the index of the SFI rather than the handle
-Date: Mon, 15 May 2023 18:28:44 +0200
-Message-Id: <20230515161704.712190619@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 074/134] SMB3: force unmount was failing to close deferred close files
+Date: Mon, 15 May 2023 18:29:11 +0200
+Message-Id: <20230515161705.634771653@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -36,38 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 299efdc2380aac588557f4d0b2ce7bee05bd0cf2 ]
+commit 2cb6f968775a9fd60c90a6042b9550bcec3ea087 upstream.
 
-We should check whether the current SFI (Stream Filter Instance) table
-is full before creating a new SFI entry. However, the previous logic
-checks the handle by mistake and might lead to unpredictable behavior.
+In investigating a failure with xfstest generic/392 it
+was noticed that mounts were reusing a superblock that should
+already have been freed. This turned out to be related to
+deferred close files keeping a reference count until the
+closetimeo expired.
 
-Fixes: 888ae5a3952b ("net: enetc: add tc flower psfp offload driver")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Currently the only way an fs knows that mount is beginning is
+when force unmount is called, but when this, ie umount_begin(),
+is called all deferred close files on the share (tree
+connection) should be closed immediately (unless shared by
+another mount) to avoid using excess resources on the server
+and to avoid reusing a superblock which should already be freed.
+
+In umount_begin, close all deferred close handles for that
+share if this is the last mount using that share on this
+client (ie send the SMB3 close request over the wire for those
+that have been already closed by the app but that we have
+kept a handle lease open for and have not sent closes to the
+server for yet).
+
+Reported-by: David Howells <dhowells@redhat.com>
+Acked-by: Bharath SM <bharathsm@microsoft.com>
+Cc: <stable@vger.kernel.org>
+Fixes: 78c09634f7dc ("Cifs: Fix kernel oops caused by deferred close for files.")
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_qos.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/cifsfs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc_qos.c b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-index ba51fb381f0cb..4e9cb1deaf810 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
-@@ -1270,7 +1270,7 @@ static int enetc_psfp_parse_clsflower(struct enetc_ndev_priv *priv,
- 		int index;
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -715,6 +715,7 @@ static void cifs_umount_begin(struct sup
+ 		tcon->tidStatus = CifsExiting;
+ 	spin_unlock(&cifs_tcp_ses_lock);
  
- 		index = enetc_get_free_index(priv);
--		if (sfi->handle < 0) {
-+		if (index < 0) {
- 			NL_SET_ERR_MSG_MOD(extack, "No Stream Filter resource!");
- 			err = -ENOSPC;
- 			goto free_fmi;
--- 
-2.39.2
-
++	cifs_close_all_deferred_files(tcon);
+ 	/* cancel_brl_requests(tcon); */ /* BB mark all brl mids as exiting */
+ 	/* cancel_notify_requests(tcon); */
+ 	if (tcon->ses && tcon->ses->server) {
 
 
