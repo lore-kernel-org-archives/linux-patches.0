@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E54FBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0132DC4339B;
-	Mon, 15 May 2023 17:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73E4FBEC
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42983C4339C;
+	Mon, 15 May 2023 17:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172956;
-	bh=cyChaYvj51cFxDn4xEgEXRLhmxA4nvUJY/q76OQu4oM=;
+	s=korg; t=1684172959;
+	bh=SMyDjsvPg0O3gSLkeDUOVPBL2g1q2ESth9owsfqiEPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQnI6zs0L73+b93lNe2+yugLGaTyyv/ZBPkM9TYg1g0xrpC/YkCHgK6X1vXXtlPQS
-	 E7mMeIrwB9EgrkhyG6CiTOZTzvAcd1YviufUbbB2XZOXGwjskH16+4jzZej066MkWo
-	 cRrd14EdU/Sy71FMq2hNp344sj2DvIyibLjD5AOg=
+	b=2aeI3p+ywmiu/Hwd4BalsYmMdopVvEsJaRrsrChFhLe7yRUxAr3rJuaOHUgxhthfn
+	 I/YDCyUOH/X41m9NaTHPVk/pXcGCE5YORndc++U6mLRerV1LdT1eZvRMf3dqyUSI9y
+	 euI+V3A6drPvuP18gc8mL9z8qhE72GybmIk6O2Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miles Chen <miles.chen@mediatek.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 292/381] sound/oss/dmasound: fix dmasound_setup defined but not used
-Date: Mon, 15 May 2023 18:29:03 +0200
-Message-Id: <20230515161749.977774996@linuxfoundation.org>
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.10 293/381] arm64: dts: qcom: sdm845: correct dynamic power coefficients - again
+Date: Mon, 15 May 2023 18:29:04 +0200
+Message-Id: <20230515161750.024507265@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,38 +34,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miles Chen <miles.chen@mediatek.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-commit 357ad4d898286b94aaae0cb7e3f573459e5b98b9 upstream.
+commit 44750f153699b6e4f851a399287e5c8df208d696 upstream.
 
-We observed: 'dmasound_setup' defined but not used error with
-COMPILER=gcc ARCH=m68k DEFCONFIG=allmodconfig build.
+While stressing EAS on my dragonboard RB3, I have noticed that LITTLE cores
+where never selected as the most energy efficient CPU whatever the
+utilization level of waking task.
 
-Fix it by adding __maybe_unused to dmasound_setup.
+energy model framework uses its cost field to estimate the energy with
+the formula:
 
-Error(s):
-sound/oss/dmasound/dmasound_core.c:1431:12: error: 'dmasound_setup' defined but not used [-Werror=unused-function]
+  nrg = cost of the selected OPP * utilization / CPU's max capacity
 
-Fixes: 9dd7c46346ca ("sound/oss/dmasound: fix build when drivers are mixed =y/=m")
-Signed-off-by: Miles Chen <miles.chen@mediatek.com>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20220414091940.2216-1-miles.chen@mediatek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+which ends up selecting the CPU with lowest cost / max capacity ration
+as long as the utilization fits in the OPP's capacity.
+
+If we compare the cost of a little OPP with similar capacity of a big OPP
+like :
+       OPP(kHz)   OPP capacity    cost     max capacity   cost/max capacity
+LITTLE 1766400    407             351114   407            863
+big    1056000    408             520267   1024           508
+
+This can be interpreted as the LITTLE core consumes 70% more than big core
+for the same compute capacity.
+
+According to [1], LITTLE consumes 10% less than big core for Coremark
+benchmark at those OPPs. If we consider that everything else stays
+unchanged, the dynamic-power-coefficient of LITTLE core should be
+only 53% of the current value: 290 * 53% = 154
+
+Set the dynamic-power-coefficient of CPU0-3 to 154 to fix the energy model.
+
+[1] https://github.com/kdrag0n/freqbench/tree/master/results/sdm845/main
+
+Fixes: 0e0a8e35d725 ("arm64: dts: qcom: sdm845: correct dynamic power coefficients")
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230106164618.1845281-1-vincent.guittot@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/oss/dmasound/dmasound_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/sound/oss/dmasound/dmasound_core.c
-+++ b/sound/oss/dmasound/dmasound_core.c
-@@ -1442,7 +1442,7 @@ void dmasound_deinit(void)
- 		unregister_sound_dsp(sq_unit);
- }
- 
--static int dmasound_setup(char *str)
-+static int __maybe_unused dmasound_setup(char *str)
- {
- 	int ints[6], size;
- 
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -197,7 +197,7 @@
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			capacity-dmips-mhz = <611>;
+-			dynamic-power-coefficient = <290>;
++			dynamic-power-coefficient = <154>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -222,7 +222,7 @@
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			capacity-dmips-mhz = <611>;
+-			dynamic-power-coefficient = <290>;
++			dynamic-power-coefficient = <154>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -244,7 +244,7 @@
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			capacity-dmips-mhz = <611>;
+-			dynamic-power-coefficient = <290>;
++			dynamic-power-coefficient = <154>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
+@@ -266,7 +266,7 @@
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+ 			capacity-dmips-mhz = <611>;
+-			dynamic-power-coefficient = <290>;
++			dynamic-power-coefficient = <154>;
+ 			qcom,freq-domain = <&cpufreq_hw 0>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gladiator_noc MASTER_APPSS_PROC 3 &mem_noc SLAVE_EBI1 3>,
 
 
