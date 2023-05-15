@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448F0FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:02:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E725C433EF;
-	Mon, 15 May 2023 17:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AF4FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:02:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B153CC433D2;
+	Mon, 15 May 2023 17:02:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170152;
-	bh=RcMf99sVVFYOzFuBxPyij6kdwnRsBoKd96FJsfVFXdc=;
+	s=korg; t=1684170155;
+	bh=9rT+Y6aXRDPTKiDPkTYJnkAxv0bUZFtppkSXbIrdG60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pgLvl+MlTjSMQt5xIAyi9Q9vJD9rVnSHZb0eSqD54mWkwE5AVWdLZ+MRn76R+83Eh
-	 1F4FvPNrfVmMcsVTJkeO0dLBue6n2WigIOinalCEIse7G0ryDXSUtM6thE5lDEWAZ1
-	 EUBBSCyi7wLnLMi+HxOeZH8u/iYSbATErR21eZC0=
+	b=vyK3VCCQ5qvD/fzDfV3Lao+TSaQLcO7czZMV0PUrCmqX9fYHjivnEMgIM22VEBy1N
+	 oX1X2alJuJSq6wwWr+8UlrbgHVdoCy+6pcMTP8OehLVaDBm7X15pYnBV/1n22Qx4zE
+	 /PN0dtjbPrcTLqJCnQFZlp6RjxEgNs2Dqnen3sVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Leon Romanovsky <leonro@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/239] octeontx2-pf: mcs: Match macsec ethertype along with DMAC
-Date: Mon, 15 May 2023 18:25:03 +0200
-Message-Id: <20230515161722.916194523@linuxfoundation.org>
+Subject: [PATCH 6.1 041/239] octeontx2-pf: mcs: Clear stats before freeing resource
+Date: Mon, 15 May 2023 18:25:04 +0200
+Message-Id: <20230515161722.944950111@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -40,15 +40,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-[ Upstream commit 57d00d4364f314485092667d2a48718985515deb ]
+[ Upstream commit 815debbbf7b52026462c37eea3be70d6377a7a9a ]
 
-On CN10KB silicon a single hardware macsec block is
-present and offloads macsec operations for all the
-ethernet LMACs. TCAM match with macsec ethertype 0x88e5
-alone at RX side is not sufficient to distinguish all the
-macsec interfaces created on top of netdevs. Hence append
-the DMAC of the macsec interface too. Otherwise the first
-created macsec interface only receives all the macsec traffic.
+When freeing MCS hardware resources like SecY, SC and
+SA the corresponding stats needs to be cleared. Otherwise
+previous stats are shown in newly created macsec interfaces.
 
 Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
 Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
@@ -58,50 +54,34 @@ Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c  | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c    | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
 diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-index 9ec5f38d38a84..f699209978fef 100644
+index f699209978fef..13faca9add9f4 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-@@ -9,6 +9,7 @@
- #include <net/macsec.h>
- #include "otx2_common.h"
- 
-+#define MCS_TCAM0_MAC_DA_MASK		GENMASK_ULL(47, 0)
- #define MCS_TCAM0_MAC_SA_MASK		GENMASK_ULL(63, 48)
- #define MCS_TCAM1_MAC_SA_MASK		GENMASK_ULL(31, 0)
- #define MCS_TCAM1_ETYPE_MASK		GENMASK_ULL(47, 32)
-@@ -237,8 +238,10 @@ static int cn10k_mcs_write_rx_flowid(struct otx2_nic *pfvf,
- 				     struct cn10k_mcs_rxsc *rxsc, u8 hw_secy_id)
+@@ -150,11 +150,20 @@ static void cn10k_mcs_free_rsrc(struct otx2_nic *pfvf, enum mcs_direction dir,
+ 				enum mcs_rsrc_type type, u16 hw_rsrc_id,
+ 				bool all)
  {
- 	struct macsec_rx_sc *sw_rx_sc = rxsc->sw_rxsc;
-+	struct macsec_secy *secy = rxsc->sw_secy;
- 	struct mcs_flowid_entry_write_req *req;
++	struct mcs_clear_stats *clear_req;
  	struct mbox *mbox = &pfvf->mbox;
-+	u64 mac_da;
- 	int ret;
+ 	struct mcs_free_rsrc_req *req;
  
  	mutex_lock(&mbox->lock);
-@@ -249,11 +252,16 @@ static int cn10k_mcs_write_rx_flowid(struct otx2_nic *pfvf,
+ 
++	clear_req = otx2_mbox_alloc_msg_mcs_clear_stats(mbox);
++	if (!clear_req)
++		goto fail;
++
++	clear_req->id = hw_rsrc_id;
++	clear_req->type = type;
++	clear_req->dir = dir;
++
+ 	req = otx2_mbox_alloc_msg_mcs_free_resources(mbox);
+ 	if (!req)
  		goto fail;
- 	}
- 
-+	mac_da = ether_addr_to_u64(secy->netdev->dev_addr);
-+
-+	req->data[0] = FIELD_PREP(MCS_TCAM0_MAC_DA_MASK, mac_da);
-+	req->mask[0] = ~0ULL;
-+	req->mask[0] = ~MCS_TCAM0_MAC_DA_MASK;
-+
- 	req->data[1] = FIELD_PREP(MCS_TCAM1_ETYPE_MASK, ETH_P_MACSEC);
- 	req->mask[1] = ~0ULL;
- 	req->mask[1] &= ~MCS_TCAM1_ETYPE_MASK;
- 
--	req->mask[0] = ~0ULL;
- 	req->mask[2] = ~0ULL;
- 	req->mask[3] = ~0ULL;
- 
 -- 
 2.39.2
 
