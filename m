@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEDBFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3420C433EF;
-	Mon, 15 May 2023 16:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D82BFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFFEAC433EF;
+	Mon, 15 May 2023 16:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169856;
-	bh=uj+gcVHHknqsuUYqH19xmCR92HGJ0Y0REI1UsmLYbgs=;
+	s=korg; t=1684169859;
+	bh=WhJmU4UPNbZ5wmS/+60eLNGwmxsUCwTfY1t/nFxjuew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OyTVa2ETnu/Ql6S5m4Hx8rLo3x39+RTflx0F9Q3jmKZkGbc/+zbJuvJVtRMs5KJq/
-	 kYhqvFYKbZX9p+5l8H3mXunsDP66zrZZYmYy4ww4g8gFK+SeQIX9oDcUoFDWXnQelC
-	 B2Y9DwOQu99VwU0fsoA/YY4c/4+svA0xo0r+ExwE=
+	b=GLt4z2LoSL9xt5f+DEBH0bJl1l8PAJ0qD9iisHDObln/RF+GdBex0++dWW5DKsaPb
+	 UyYMDVKaG4hYPH55DAkbv36RdUGh9kmh0fs44YYzoXU65WeIQjPIaKStCj6zFAmmZR
+	 +99VFyYvnz2XYubTtOLDV2tgFXa+vz3fhO3v3l2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nikl=C4=81vs=20Ko=C4=BCes=C5=86ikovs?= <89q1r14hd@relay.firefox.com>,
-	Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Roman Li <Roman.Li@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 193/246] drm/amd/display: fix access hdcp_workqueue assert
-Date: Mon, 15 May 2023 18:26:45 +0200
-Message-Id: <20230515161728.406610761@linuxfoundation.org>
+Subject: [PATCH 6.3 194/246] drm/amd/display: fix flickering caused by S/G mode
+Date: Mon, 15 May 2023 18:26:46 +0200
+Message-Id: <20230515161728.436069812@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -38,78 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hersen Wu <hersenxs.wu@amd.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-commit 3cf7cd3f770a0b89dc5f06e19edb52e65b93b214 upstream.
+commit 08da182175db4c7f80850354849d95f2670e8cd9 upstream.
 
-[Why] hdcp are enabled for asics from raven. for old asics
-which hdcp are not enabled, hdcp_workqueue are null. some
-access to hdcp work queue are not guarded with pointer check.
+Currently, on a handful of ASICs. We allow the framebuffer for a given
+plane to exist in either VRAM or GTT. However, if the plane's new
+framebuffer is in a different memory domain than it's previous
+framebuffer, flipping between them can cause the screen to flicker. So,
+to fix this, don't perform an immediate flip in the aforementioned case.
 
-[How] add hdcp_workqueue pointer check before access workqueue.
-
-Fixes: 82986fd631fa ("drm/amd/display: save restore hdcp state when display is unplugged from mst hub")
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2444
-Reported-by: Niklāvs Koļesņikovs <89q1r14hd@relay.firefox.com>
-Reviewed-by: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2354
+Reviewed-by: Roman Li <Roman.Li@amd.com>
+Fixes: 81d0bcf99009 ("drm/amdgpu: make display pinning more flexible (v2)")
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c           |    6 ++++
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   16 +++++++-----
- 2 files changed, 16 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
 --- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
 +++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -8533,6 +8533,9 @@ static void amdgpu_dm_atomic_commit_tail
- 		struct amdgpu_crtc *acrtc = to_amdgpu_crtc(dm_new_con_state->base.crtc);
- 		struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
+@@ -7876,6 +7876,13 @@ static void amdgpu_dm_commit_cursors(str
+ 			handle_cursor_update(plane, old_plane_state);
+ }
  
-+		if (!adev->dm.hdcp_workqueue)
-+			continue;
++static inline uint32_t get_mem_type(struct drm_framebuffer *fb)
++{
++	struct amdgpu_bo *abo = gem_to_amdgpu_bo(fb->obj[0]);
 +
- 		pr_debug("[HDCP_DM] -------------- i : %x ----------\n", i);
- 
- 		if (!connector)
-@@ -8581,6 +8584,9 @@ static void amdgpu_dm_atomic_commit_tail
- 		struct amdgpu_crtc *acrtc = to_amdgpu_crtc(dm_new_con_state->base.crtc);
- 		struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
- 
-+		if (!adev->dm.hdcp_workqueue)
-+			continue;
++	return abo->tbo.resource ? abo->tbo.resource->mem_type : 0;
++}
 +
- 		new_crtc_state = NULL;
- 		old_crtc_state = NULL;
+ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
+ 				    struct dc_state *dc_state,
+ 				    struct drm_device *dev,
+@@ -8016,11 +8023,13 @@ static void amdgpu_dm_commit_planes(stru
  
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -385,13 +385,17 @@ static int dm_dp_mst_get_modes(struct dr
- 		if (aconnector->dc_sink && connector->state) {
- 			struct drm_device *dev = connector->dev;
- 			struct amdgpu_device *adev = drm_to_adev(dev);
--			struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
--			struct hdcp_workqueue *hdcp_w = &hdcp_work[aconnector->dc_link->link_index];
+ 		/*
+ 		 * Only allow immediate flips for fast updates that don't
+-		 * change FB pitch, DCC state, rotation or mirroing.
++		 * change memory domain, FB pitch, DCC state, rotation or
++		 * mirroring.
+ 		 */
+ 		bundle->flip_addrs[planes_count].flip_immediate =
+ 			crtc->state->async_flip &&
+-			acrtc_state->update_type == UPDATE_TYPE_FAST;
++			acrtc_state->update_type == UPDATE_TYPE_FAST &&
++			get_mem_type(old_plane_state->fb) == get_mem_type(fb);
  
--			connector->state->hdcp_content_type =
--			hdcp_w->hdcp_content_type[connector->index];
--			connector->state->content_protection =
--			hdcp_w->content_protection[connector->index];
-+			if (adev->dm.hdcp_workqueue) {
-+				struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
-+				struct hdcp_workqueue *hdcp_w =
-+					&hdcp_work[aconnector->dc_link->link_index];
-+
-+				connector->state->hdcp_content_type =
-+				hdcp_w->hdcp_content_type[connector->index];
-+				connector->state->content_protection =
-+				hdcp_w->content_protection[connector->index];
-+			}
- 		}
- #endif
- 
+ 		timestamp_ns = ktime_get_ns();
+ 		bundle->flip_addrs[planes_count].flip_timestamp_in_us = div_u64(timestamp_ns, 1000);
 
 
