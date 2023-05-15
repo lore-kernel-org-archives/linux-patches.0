@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EA3FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:02:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165B1C4339C;
-	Mon, 15 May 2023 17:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16D4FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:02:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 409F0C433EF;
+	Mon, 15 May 2023 17:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170145;
-	bh=jj5JZiR+OLZzBZ+k3qtOnGQ9jDuRXAXPo3Qghqv6rvA=;
+	s=korg; t=1684170148;
+	bh=eDxwM3/Hn0xTNge5K13nN5bHQHIJbyWyRCYNILT2scQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2WEuwKP816LmcI/jKnklvFrYCWiwwsZetmU/lINTVVIy6uwZBdzLeoUD04w0s17tv
-	 7lSAbepYPnon1slbpkB/soBjeYayO+TevzZq4/0QJM5ndLU3OTjorXq2rCF/Gv/k/W
-	 I5fO5kbzrV62nNCxSUw5Mr8jnBPUj/Xw9SNXlMTI=
+	b=NcPmsh83HYqHStJaVIspUrTbgwzXFUK+iknmBSedqXYcOimf1sI7FtN0WeJbujxsh
+	 Srb61+NWSj5nFhHfS4kimtm0gksy+4Ng12JfpReaQRivxeE7lf037dmVAhHEELh3zC
+	 ov+mGAvVxttp7wqXnvmTDlhHzX+unN8NiAtJ4pZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Geetha sowjanya <gakula@marvell.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mathias Krause <minipli@grsecurity.net>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/239] octeontx2-pf: mcs: Fix NULL pointer dereferences
-Date: Mon, 15 May 2023 18:25:02 +0200
-Message-Id: <20230515161722.886944910@linuxfoundation.org>
+Subject: [PATCH 6.1 022/239] KVM: x86: Make use of kvm_read_cr*_bits() when testing bits
+Date: Mon, 15 May 2023 18:24:45 +0200
+Message-Id: <20230515161722.253792439@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -38,102 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: Mathias Krause <minipli@grsecurity.net>
 
-[ Upstream commit 699af748c61574125d269db260dabbe20436d74e ]
+[ Upstream commit 74cdc836919bf34684ef66f995273f35e2189daf ]
 
-When system is rebooted after creating macsec interface
-below NULL pointer dereference crashes occurred. This
-patch fixes those crashes by using correct order of teardown
+Make use of the kvm_read_cr{0,4}_bits() helper functions when we only
+want to know the state of certain bits instead of the whole register.
 
-[ 3324.406942] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[ 3324.415726] Mem abort info:
-[ 3324.418510]   ESR = 0x96000006
-[ 3324.421557]   EC = 0x25: DABT (current EL), IL = 32 bits
-[ 3324.426865]   SET = 0, FnV = 0
-[ 3324.429913]   EA = 0, S1PTW = 0
-[ 3324.433047] Data abort info:
-[ 3324.435921]   ISV = 0, ISS = 0x00000006
-[ 3324.439748]   CM = 0, WnR = 0
-....
-[ 3324.575915] Call trace:
-[ 3324.578353]  cn10k_mdo_del_secy+0x24/0x180
-[ 3324.582440]  macsec_common_dellink+0xec/0x120
-[ 3324.586788]  macsec_notify+0x17c/0x1c0
-[ 3324.590529]  raw_notifier_call_chain+0x50/0x70
-[ 3324.594965]  call_netdevice_notifiers_info+0x34/0x7c
-[ 3324.599921]  rollback_registered_many+0x354/0x5bc
-[ 3324.604616]  unregister_netdevice_queue+0x88/0x10c
-[ 3324.609399]  unregister_netdev+0x20/0x30
-[ 3324.613313]  otx2_remove+0x8c/0x310
-[ 3324.616794]  pci_device_shutdown+0x30/0x70
-[ 3324.620882]  device_shutdown+0x11c/0x204
+This not only makes the intent cleaner, it also avoids a potential
+VMREAD in case the tested bits aren't guest owned.
 
-[  966.664930] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-[  966.673712] Mem abort info:
-[  966.676497]   ESR = 0x96000006
-[  966.679543]   EC = 0x25: DABT (current EL), IL = 32 bits
-[  966.684848]   SET = 0, FnV = 0
-[  966.687895]   EA = 0, S1PTW = 0
-[  966.691028] Data abort info:
-[  966.693900]   ISV = 0, ISS = 0x00000006
-[  966.697729]   CM = 0, WnR = 0
-[  966.833467] Call trace:
-[  966.835904]  cn10k_mdo_stop+0x20/0xa0
-[  966.839557]  macsec_dev_stop+0xe8/0x11c
-[  966.843384]  __dev_close_many+0xbc/0x140
-[  966.847298]  dev_close_many+0x84/0x120
-[  966.851039]  rollback_registered_many+0x114/0x5bc
-[  966.855735]  unregister_netdevice_many.part.0+0x14/0xa0
-[  966.860952]  unregister_netdevice_many+0x18/0x24
-[  966.865560]  macsec_notify+0x1ac/0x1c0
-[  966.869303]  raw_notifier_call_chain+0x50/0x70
-[  966.873738]  call_netdevice_notifiers_info+0x34/0x7c
-[  966.878694]  rollback_registered_many+0x354/0x5bc
-[  966.883390]  unregister_netdevice_queue+0x88/0x10c
-[  966.888173]  unregister_netdev+0x20/0x30
-[  966.892090]  otx2_remove+0x8c/0x310
-[  966.895571]  pci_device_shutdown+0x30/0x70
-[  966.899660]  device_shutdown+0x11c/0x204
-[  966.903574]  __do_sys_reboot+0x208/0x290
-[  966.907487]  __arm64_sys_reboot+0x20/0x30
-[  966.911489]  el0_svc_handler+0x80/0x1c0
-[  966.915316]  el0_svc+0x8/0x180
-[  966.918362] Code: f9400000 f9400a64 91220014 f94b3403 (f9400060)
-[  966.924448] ---[ end trace 341778e799c3d8d7 ]---
-
-Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Link: https://lore.kernel.org/r/20230322013731.102955-5-minipli@grsecurity.net
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/kvm/pmu.c     | 4 ++--
+ arch/x86/kvm/vmx/vmx.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-index 303930499a4c0..2221220abcaae 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_pf.c
-@@ -3069,8 +3069,6 @@ static void otx2_remove(struct pci_dev *pdev)
- 		otx2_config_pause_frm(pf);
- 	}
+diff --git a/arch/x86/kvm/pmu.c b/arch/x86/kvm/pmu.c
+index de1fd73697365..20cd746cf4678 100644
+--- a/arch/x86/kvm/pmu.c
++++ b/arch/x86/kvm/pmu.c
+@@ -418,9 +418,9 @@ int kvm_pmu_rdpmc(struct kvm_vcpu *vcpu, unsigned idx, u64 *data)
+ 	if (!pmc)
+ 		return 1;
  
--	cn10k_mcs_free(pf);
--
- #ifdef CONFIG_DCB
- 	/* Disable PFC config */
- 	if (pf->pfc_en) {
-@@ -3084,6 +3082,7 @@ static void otx2_remove(struct pci_dev *pdev)
+-	if (!(kvm_read_cr4(vcpu) & X86_CR4_PCE) &&
++	if (!(kvm_read_cr4_bits(vcpu, X86_CR4_PCE)) &&
+ 	    (static_call(kvm_x86_get_cpl)(vcpu) != 0) &&
+-	    (kvm_read_cr0(vcpu) & X86_CR0_PE))
++	    (kvm_read_cr0_bits(vcpu, X86_CR0_PE)))
+ 		return 1;
  
- 	otx2_unregister_dl(pf);
- 	unregister_netdev(netdev);
-+	cn10k_mcs_free(pf);
- 	otx2_sriov_disable(pf->pdev);
- 	otx2_sriov_vfcfg_cleanup(pf);
- 	if (pf->otx2_wq)
+ 	*data = pmc_read_counter(pmc) & mask;
+diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
+index 5db21d9ef6710..4984357c5d441 100644
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -5417,7 +5417,7 @@ static int handle_cr(struct kvm_vcpu *vcpu)
+ 		break;
+ 	case 3: /* lmsw */
+ 		val = (exit_qualification >> LMSW_SOURCE_DATA_SHIFT) & 0x0f;
+-		trace_kvm_cr_write(0, (kvm_read_cr0(vcpu) & ~0xful) | val);
++		trace_kvm_cr_write(0, (kvm_read_cr0_bits(vcpu, ~0xful) | val));
+ 		kvm_lmsw(vcpu, val);
+ 
+ 		return kvm_skip_emulated_instruction(vcpu);
+@@ -7496,7 +7496,7 @@ static u8 vmx_get_mt_mask(struct kvm_vcpu *vcpu, gfn_t gfn, bool is_mmio)
+ 	if (!kvm_arch_has_noncoherent_dma(vcpu->kvm))
+ 		return (MTRR_TYPE_WRBACK << VMX_EPT_MT_EPTE_SHIFT) | VMX_EPT_IPAT_BIT;
+ 
+-	if (kvm_read_cr0(vcpu) & X86_CR0_CD) {
++	if (kvm_read_cr0_bits(vcpu, X86_CR0_CD)) {
+ 		if (kvm_check_has_quirk(vcpu->kvm, KVM_X86_QUIRK_CD_NW_CLEARED))
+ 			cache = MTRR_TYPE_WRBACK;
+ 		else
 -- 
 2.39.2
 
