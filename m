@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18300101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F501C433EF;
-	Mon, 15 May 2023 17:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18146101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 808C8C433EF;
+	Mon, 15 May 2023 17:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173103;
-	bh=NhlN2J9UxnBXyxVlHB232bOccYT4ZPsUWaTPP5Srdlk=;
+	s=korg; t=1684173106;
+	bh=GRUH1tIDHiz5AAxJ4ZV3myH5g57WXTXJrzGFleRoYHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iBdS6LSSgPIyfyMUBIJDeSmBjkmTuBOUw7rOYSVzNJ01U+u76dEe0i8DF11STefeP
-	 xPnwU/uNhyl/Eg2SQ3+95a8eWXEoC440q0ag2WcgzY37bPghchxLwxpPXf+0odgR0G
-	 Wc7M05R/jPV/15YMbAj5i7ZUoTE8UTvUAr0mNaNg=
+	b=n/EOG54IpfTNSAPufvgUBPjxzRXfYm7jq+y6yBypKzNhSpf1GQbM6SbMFt5WcfJzH
+	 dVl3EbBM96K6OX0Tsy7gVex3hQZPxZ+zRW4fsl47vWJlM4GTrcXQH1Hf1uo9Q1Q693
+	 NGfeWgKpqg18kg39tDaBD6D5S1NQnn6QEpG4YBAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.10 368/381] serial: 8250: Fix serial8250_tx_empty() race with DMA Tx
-Date: Mon, 15 May 2023 18:30:19 +0200
-Message-Id: <20230515161753.542434702@linuxfoundation.org>
+	Christoph Hellwig <hch@infradead.org>,
+	Thomas Voegtle <tv@lio96.de>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 369/381] drbd: correctly submit flush bio on barrier
+Date: Mon, 15 May 2023 18:30:20 +0200
+Message-Id: <20230515161753.591120467@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -33,95 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
 
-commit 146a37e05d620cef4ad430e5d1c9c077fe6fa76f upstream.
+commit 3899d94e3831ee07ea6821c032dc297aec80586a upstream.
 
-There's a potential race before THRE/TEMT deasserts when DMA Tx is
-starting up (or the next batch of continuous Tx is being submitted).
-This can lead to misdetecting Tx empty condition.
+When we receive a flush command (or "barrier" in DRBD), we currently use
+a REQ_OP_FLUSH with the REQ_PREFLUSH flag set.
 
-It is entirely normal for THRE/TEMT to be set for some time after the
-DMA Tx had been setup in serial8250_tx_dma(). As Tx side is definitely
-not empty at that point, it seems incorrect for serial8250_tx_empty()
-claim Tx is empty.
+The correct way to submit a flush bio is by using a REQ_OP_WRITE without
+any data, and set the REQ_PREFLUSH flag.
 
-Fix the race by also checking in serial8250_tx_empty() whether there's
-DMA Tx active.
+Since commit b4a6bb3a67aa ("block: add a sanity check for non-write
+flush/fua bios"), this triggers a warning in the block layer, but this
+has been broken for quite some time before that.
 
-Note: This fix only addresses in-kernel race mainly to make using
-TCSADRAIN/FLUSH robust. Userspace can still cause other races but they
-seem userspace concurrency control problems.
+So use the correct set of flags to actually make the flush happen.
 
-Fixes: 9ee4b83e51f74 ("serial: 8250: Add support for dmaengine")
+Cc: Christoph Hellwig <hch@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230317113318.31327-3-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f9ff0da56437 ("drbd: allow parallel flushes for multi-volume resources")
+Reported-by: Thomas Voegtle <tv@lio96.de>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20230503121937.17232-1-christoph.boehmwalder@linbit.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250.h      |   12 ++++++++++++
- drivers/tty/serial/8250/8250_port.c |   12 +++++++++---
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ drivers/block/drbd/drbd_receiver.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250.h
-+++ b/drivers/tty/serial/8250/8250.h
-@@ -330,6 +330,13 @@ extern int serial8250_rx_dma(struct uart
- extern void serial8250_rx_dma_flush(struct uart_8250_port *);
- extern int serial8250_request_dma(struct uart_8250_port *);
- extern void serial8250_release_dma(struct uart_8250_port *);
-+
-+static inline bool serial8250_tx_dma_running(struct uart_8250_port *p)
-+{
-+	struct uart_8250_dma *dma = p->dma;
-+
-+	return dma && dma->tx_running;
-+}
- #else
- static inline int serial8250_tx_dma(struct uart_8250_port *p)
- {
-@@ -345,6 +352,11 @@ static inline int serial8250_request_dma
- 	return -1;
- }
- static inline void serial8250_release_dma(struct uart_8250_port *p) { }
-+
-+static inline bool serial8250_tx_dma_running(struct uart_8250_port *p)
-+{
-+	return false;
-+}
- #endif
+--- a/drivers/block/drbd/drbd_receiver.c
++++ b/drivers/block/drbd/drbd_receiver.c
+@@ -1299,7 +1299,7 @@ static void submit_one_flush(struct drbd
+ 	bio_set_dev(bio, device->ldev->backing_bdev);
+ 	bio->bi_private = octx;
+ 	bio->bi_end_io = one_flush_endio;
+-	bio->bi_opf = REQ_OP_FLUSH | REQ_PREFLUSH;
++	bio->bi_opf = REQ_OP_WRITE | REQ_PREFLUSH;
  
- static inline int ns16550a_goto_highspeed(struct uart_8250_port *up)
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -1971,19 +1971,25 @@ static int serial8250_tx_threshold_handl
- static unsigned int serial8250_tx_empty(struct uart_port *port)
- {
- 	struct uart_8250_port *up = up_to_u8250p(port);
-+	unsigned int result = 0;
- 	unsigned long flags;
- 	unsigned int lsr;
- 
- 	serial8250_rpm_get(up);
- 
- 	spin_lock_irqsave(&port->lock, flags);
--	lsr = serial_port_in(port, UART_LSR);
--	up->lsr_saved_flags |= lsr & LSR_SAVE_FLAGS;
-+	if (!serial8250_tx_dma_running(up)) {
-+		lsr = serial_port_in(port, UART_LSR);
-+		up->lsr_saved_flags |= lsr & LSR_SAVE_FLAGS;
-+
-+		if ((lsr & BOTH_EMPTY) == BOTH_EMPTY)
-+			result = TIOCSER_TEMT;
-+	}
- 	spin_unlock_irqrestore(&port->lock, flags);
- 
- 	serial8250_rpm_put(up);
- 
--	return (lsr & BOTH_EMPTY) == BOTH_EMPTY ? TIOCSER_TEMT : 0;
-+	return result;
- }
- 
- unsigned int serial8250_do_get_mctrl(struct uart_port *port)
+ 	device->flush_jif = jiffies;
+ 	set_bit(FLUSH_PENDING, &device->flags);
 
 
