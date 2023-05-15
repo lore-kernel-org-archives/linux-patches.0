@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E37FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:46:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3EDFC433D2;
-	Mon, 15 May 2023 16:46:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F33FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:46:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D66C433D2;
+	Mon, 15 May 2023 16:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169181;
-	bh=ssgSVG3ia+fo3vsUV4rKrbwTfMtiCcmBF3U9aWDIi3Q=;
+	s=korg; t=1684169184;
+	bh=1+ek0pwc4M/7kpXzv5zWbQ0/4c81qnRBOxqrN7QvPKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VSMsY1l9/mL/UUNK+K55VqlPHCCc6UL6xY+EVrzVk4FOSIhEbuJjduxH4qvGLgqqD
-	 DSyEjqpwJmL9ieeuSNuVUpb1oe9TwDVYcdpDOitcpT3V5d2NbC1kYYAVizQ0fOeKAH
-	 3dkz0yB0q8WdLZ/cjCEmGPcMhU4zaQsYpPZ2vqdk=
+	b=Ea30PpbKgAiLYDDRD3Wmqy025nK1XLoWmebL1Omf6F6/cTeWxXOiiFsPfBpuNR7/y
+	 BPEVmB+0PZiThJRjev02D/L7x1Q/YIe9+btoH3HnrCZUYcmcmA4GcueQ93Vj9nMV+P
+	 yE1VDvb4kvvttY9lt7zdsl4lu1uPmtr8sZxjxg0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Witek <pawel.ireneusz.witek@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 4.19 169/191] cifs: fix pcchunk length type in smb2_copychunk_range
-Date: Mon, 15 May 2023 18:26:46 +0200
-Message-Id: <20230515161713.567518267@linuxfoundation.org>
+	Andrey Avdeev <jamesstoun@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 4.19 170/191] platform/x86: touchscreen_dmi: Add info for the Dexp Ursus KX210i
+Date: Mon, 15 May 2023 18:26:47 +0200
+Message-Id: <20230515161713.605714471@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -34,34 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Witek <pawel.ireneusz.witek@gmail.com>
+From: Andrey Avdeev <jamesstoun@gmail.com>
 
-commit d66cde50c3c868af7abddafce701bb86e4a93039 upstream.
+commit 4b65f95c87c35699bc6ad540d6b9dd7f950d0924 upstream.
 
-Change type of pcchunk->Length from u32 to u64 to match
-smb2_copychunk_range arguments type. Fixes the problem where performing
-server-side copy with CIFS_IOC_COPYCHUNK_FILE ioctl resulted in incomplete
-copy of large files while returning -EINVAL.
+Add touchscreen info for the Dexp Ursus KX210i
 
-Fixes: 9bf0c9cd4314 ("CIFS: Fix SMB2/SMB3 Copy offload support (refcopy) for large files")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Pawel Witek <pawel.ireneusz.witek@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Andrey Avdeev <jamesstoun@gmail.com>
+Link: https://lore.kernel.org/r/ZE4gRgzRQCjXFYD0@avdeevavpc
+Cc: stable@vger.kernel.org
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/touchscreen_dmi.c |   24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -1180,7 +1180,7 @@ smb2_copychunk_range(const unsigned int
- 		pcchunk->SourceOffset = cpu_to_le64(src_off);
- 		pcchunk->TargetOffset = cpu_to_le64(dest_off);
- 		pcchunk->Length =
--			cpu_to_le32(min_t(u32, len, tcon->max_bytes_chunk));
-+			cpu_to_le32(min_t(u64, len, tcon->max_bytes_chunk));
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -147,6 +147,22 @@ static const struct ts_dmi_data dexp_urs
+ 	.properties	= dexp_ursus_7w_props,
+ };
  
- 		/* Request server copy to target from src identified by key */
- 		kfree(retbuf);
++static const struct property_entry dexp_ursus_kx210i_props[] = {
++	PROPERTY_ENTRY_U32("touchscreen-min-x", 5),
++	PROPERTY_ENTRY_U32("touchscreen-min-y",  2),
++	PROPERTY_ENTRY_U32("touchscreen-size-x", 1720),
++	PROPERTY_ENTRY_U32("touchscreen-size-y", 1137),
++	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-dexp-ursus-kx210i.fw"),
++	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
++	PROPERTY_ENTRY_BOOL("silead,home-button"),
++	{ }
++};
++
++static const struct ts_dmi_data dexp_ursus_kx210i_data = {
++	.acpi_name	= "MSSL1680:00",
++	.properties	= dexp_ursus_kx210i_props,
++};
++
+ static const struct property_entry digma_citi_e200_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1980),
+ 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1500),
+@@ -503,6 +519,14 @@ static const struct dmi_system_id touchs
+ 		},
+ 	},
+ 	{
++		/* DEXP Ursus KX210i */
++		.driver_data = (void *)&dexp_ursus_kx210i_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "INSYDE Corp."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "S107I"),
++		},
++	},
++	{
+ 		/* Digma Citi E200 */
+ 		.driver_data = (void *)&digma_citi_e200_data,
+ 		.matches = {
 
 
