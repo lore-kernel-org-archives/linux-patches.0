@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9585DFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B61C4339B;
-	Mon, 15 May 2023 16:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEDBFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3420C433EF;
+	Mon, 15 May 2023 16:57:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169853;
-	bh=8JDlbxaHCXppQq+a//4xQ21vo96uMP4M8S8H5M7uD7s=;
+	s=korg; t=1684169856;
+	bh=uj+gcVHHknqsuUYqH19xmCR92HGJ0Y0REI1UsmLYbgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJeG3loql8oJC7YkVZs3e3GwIUWRxRkzsfiGC6+Xg7/htPJTVjpfBpkPnFkmlGnmw
-	 WkFVGA5F9Qk9AfgbXW4nbVhhwbA1rBklN0slSQfuap3WM6CSkH5JZViPCdwvfRxWyh
-	 9Mh2GQuPD0dJ5fsh7A3tEIsOSzvMkUAYV4jg9AnQ=
+	b=OyTVa2ETnu/Ql6S5m4Hx8rLo3x39+RTflx0F9Q3jmKZkGbc/+zbJuvJVtRMs5KJq/
+	 kYhqvFYKbZX9p+5l8H3mXunsDP66zrZZYmYy4ww4g8gFK+SeQIX9oDcUoFDWXnQelC
+	 B2Y9DwOQu99VwU0fsoA/YY4c/4+svA0xo0r+ExwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Alan Liu <HaoPing.Liu@amd.com>,
-	Samson Tam <Samson.Tam@amd.com>,
+	=?UTF-8?q?Nikl=C4=81vs=20Ko=C4=BCes=C5=86ikovs?= <89q1r14hd@relay.firefox.com>,
+	Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 192/246] drm/amd/display: filter out invalid bits in pipe_fuses
-Date: Mon, 15 May 2023 18:26:44 +0200
-Message-Id: <20230515161728.376460027@linuxfoundation.org>
+Subject: [PATCH 6.3 193/246] drm/amd/display: fix access hdcp_workqueue assert
+Date: Mon, 15 May 2023 18:26:45 +0200
+Message-Id: <20230515161728.406610761@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,80 +38,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samson Tam <Samson.Tam@amd.com>
+From: Hersen Wu <hersenxs.wu@amd.com>
 
-commit 682439fffad9fa9a38d37dd1b1318e9374232213 upstream.
+commit 3cf7cd3f770a0b89dc5f06e19edb52e65b93b214 upstream.
 
-[Why]
-Reading pipe_fuses from register may have invalid bits set, which may
- affect the num_pipes erroneously.
+[Why] hdcp are enabled for asics from raven. for old asics
+which hdcp are not enabled, hdcp_workqueue are null. some
+access to hdcp work queue are not guarded with pointer check.
 
-[How]
-Add read_pipes_fuses() call and filter bits based on expected number
- of pipes.
+[How] add hdcp_workqueue pointer check before access workqueue.
 
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
-Acked-by: Alan Liu <HaoPing.Liu@amd.com>
-Signed-off-by: Samson Tam <Samson.Tam@amd.com>
+Fixes: 82986fd631fa ("drm/amd/display: save restore hdcp state when display is unplugged from mst hub")
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2444
+Reported-by: Niklāvs Koļesņikovs <89q1r14hd@relay.firefox.com>
+Reviewed-by: Bhawanpreet Lakha <Bhawanpreet.Lakha@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c   |   10 +++++++++-
- drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c |   10 +++++++++-
- 2 files changed, 18 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c           |    6 ++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |   16 +++++++-----
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -2077,6 +2077,14 @@ static struct resource_funcs dcn32_res_p
- 	.restore_mall_state = dcn32_restore_mall_state,
- };
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8533,6 +8533,9 @@ static void amdgpu_dm_atomic_commit_tail
+ 		struct amdgpu_crtc *acrtc = to_amdgpu_crtc(dm_new_con_state->base.crtc);
+ 		struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
  
-+static uint32_t read_pipe_fuses(struct dc_context *ctx)
-+{
-+	uint32_t value = REG_READ(CC_DC_PIPE_DIS);
-+	/* DCN32 support max 4 pipes */
-+	value = value & 0xf;
-+	return value;
-+}
++		if (!adev->dm.hdcp_workqueue)
++			continue;
 +
+ 		pr_debug("[HDCP_DM] -------------- i : %x ----------\n", i);
  
- static bool dcn32_resource_construct(
- 	uint8_t num_virtual_links,
-@@ -2119,7 +2127,7 @@ static bool dcn32_resource_construct(
- 	pool->base.res_cap = &res_cap_dcn32;
- 	/* max number of pipes for ASIC before checking for pipe fuses */
- 	num_pipes  = pool->base.res_cap->num_timing_generator;
--	pipe_fuses = REG_READ(CC_DC_PIPE_DIS);
-+	pipe_fuses = read_pipe_fuses(ctx);
+ 		if (!connector)
+@@ -8581,6 +8584,9 @@ static void amdgpu_dm_atomic_commit_tail
+ 		struct amdgpu_crtc *acrtc = to_amdgpu_crtc(dm_new_con_state->base.crtc);
+ 		struct amdgpu_dm_connector *aconnector = to_amdgpu_dm_connector(connector);
  
- 	for (i = 0; i < pool->base.res_cap->num_timing_generator; i++)
- 		if (pipe_fuses & 1 << i)
---- a/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn321/dcn321_resource.c
-@@ -1626,6 +1626,14 @@ static struct resource_funcs dcn321_res_
- 	.restore_mall_state = dcn32_restore_mall_state,
- };
- 
-+static uint32_t read_pipe_fuses(struct dc_context *ctx)
-+{
-+	uint32_t value = REG_READ(CC_DC_PIPE_DIS);
-+	/* DCN321 support max 4 pipes */
-+	value = value & 0xf;
-+	return value;
-+}
++		if (!adev->dm.hdcp_workqueue)
++			continue;
 +
+ 		new_crtc_state = NULL;
+ 		old_crtc_state = NULL;
  
- static bool dcn321_resource_construct(
- 	uint8_t num_virtual_links,
-@@ -1668,7 +1676,7 @@ static bool dcn321_resource_construct(
- 	pool->base.res_cap = &res_cap_dcn321;
- 	/* max number of pipes for ASIC before checking for pipe fuses */
- 	num_pipes  = pool->base.res_cap->num_timing_generator;
--	pipe_fuses = REG_READ(CC_DC_PIPE_DIS);
-+	pipe_fuses = read_pipe_fuses(ctx);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -385,13 +385,17 @@ static int dm_dp_mst_get_modes(struct dr
+ 		if (aconnector->dc_sink && connector->state) {
+ 			struct drm_device *dev = connector->dev;
+ 			struct amdgpu_device *adev = drm_to_adev(dev);
+-			struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
+-			struct hdcp_workqueue *hdcp_w = &hdcp_work[aconnector->dc_link->link_index];
  
- 	for (i = 0; i < pool->base.res_cap->num_timing_generator; i++)
- 		if (pipe_fuses & 1 << i)
+-			connector->state->hdcp_content_type =
+-			hdcp_w->hdcp_content_type[connector->index];
+-			connector->state->content_protection =
+-			hdcp_w->content_protection[connector->index];
++			if (adev->dm.hdcp_workqueue) {
++				struct hdcp_workqueue *hdcp_work = adev->dm.hdcp_workqueue;
++				struct hdcp_workqueue *hdcp_w =
++					&hdcp_work[aconnector->dc_link->link_index];
++
++				connector->state->hdcp_content_type =
++				hdcp_w->hdcp_content_type[connector->index];
++				connector->state->content_protection =
++				hdcp_w->content_protection[connector->index];
++			}
+ 		}
+ #endif
+ 
 
 
