@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E45FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565A6C4339B;
-	Mon, 15 May 2023 17:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365F8FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DD6C433D2;
+	Mon, 15 May 2023 17:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171815;
-	bh=tnC4lwuwPgeTeCfB1Zpo5LYpopv1f3DDYtn2ZhIv9BQ=;
+	s=korg; t=1684171818;
+	bh=6bctev+LNjdgklSrPVNVRyazqJmMW3HyfO4Z3Gg8d1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ju49CPokQYOro5DkPWz79wnWCA+RybXOSrS863WmUewZQGu+DVyPTUct0n3K+pXML
-	 FX/b5iWNPXWv11ObIwD3lQDqK3DB5WeTtzVuXgfFlUg8C71FuEhDyEsNyRR+nxNhoU
-	 DhwoAiCTQH+CmIFBubftInmy89T7MNw5UDZ4yoSA=
+	b=B0myDoD3fTRFE4mRyR9LftS/ZC29O3yMNskW2LSI+4yc8Yi3fSyL5fEMIwqJJ0PNp
+	 Tmn5Vv4V975P/jOsB818Iopa0oEgB9AL5nOMUC2CvujrHrsOXdH0BUCT/mwcREZ8gY
+	 MtVkIMDLCBNhAH0lmx9hhLZaON4xTLk8qhQ1cJqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Cowgill <james.cowgill@blaize.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.15 088/134] drm/panel: otm8009a: Set backlight parent to panel device
-Date: Mon, 15 May 2023 18:29:25 +0200
-Message-Id: <20230515161706.091600184@linuxfoundation.org>
+	Roman Li <Roman.Li@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 089/134] drm/amd/display: fix flickering caused by S/G mode
+Date: Mon, 15 May 2023 18:29:26 +0200
+Message-Id: <20230515161706.120897336@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -34,37 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Cowgill <james.cowgill@blaize.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-commit ab4f869fba6119997f7630d600049762a2b014fa upstream.
+commit 08da182175db4c7f80850354849d95f2670e8cd9 upstream.
 
-This is the logical place to put the backlight device, and it also
-fixes a kernel crash if the MIPI host is removed. Previously the
-backlight device would be unregistered twice when this happened - once
-as a child of the MIPI host through `mipi_dsi_host_unregister`, and
-once when the panel device is destroyed.
+Currently, on a handful of ASICs. We allow the framebuffer for a given
+plane to exist in either VRAM or GTT. However, if the plane's new
+framebuffer is in a different memory domain than it's previous
+framebuffer, flipping between them can cause the screen to flicker. So,
+to fix this, don't perform an immediate flip in the aforementioned case.
 
-Fixes: 12a6cbd4f3f1 ("drm/panel: otm8009a: Use new backlight API")
-Signed-off-by: James Cowgill <james.cowgill@blaize.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230412173450.199592-1-james.cowgill@blaize.com
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2354
+Reviewed-by: Roman Li <Roman.Li@amd.com>
+Fixes: 81d0bcf99009 ("drm/amdgpu: make display pinning more flexible (v2)")
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-orisetech-otm8009a.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/panel/panel-orisetech-otm8009a.c
-+++ b/drivers/gpu/drm/panel/panel-orisetech-otm8009a.c
-@@ -444,7 +444,7 @@ static int otm8009a_probe(struct mipi_ds
- 		       DRM_MODE_CONNECTOR_DSI);
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8944,6 +8944,13 @@ static void amdgpu_dm_commit_cursors(str
+ 			handle_cursor_update(plane, old_plane_state);
+ }
  
- 	ctx->bl_dev = devm_backlight_device_register(dev, dev_name(dev),
--						     dsi->host->dev, ctx,
-+						     dev, ctx,
- 						     &otm8009a_backlight_ops,
- 						     NULL);
- 	if (IS_ERR(ctx->bl_dev)) {
++static inline uint32_t get_mem_type(struct drm_framebuffer *fb)
++{
++	struct amdgpu_bo *abo = gem_to_amdgpu_bo(fb->obj[0]);
++
++	return abo->tbo.resource ? abo->tbo.resource->mem_type : 0;
++}
++
+ static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
+ 				    struct dc_state *dc_state,
+ 				    struct drm_device *dev,
+@@ -9064,11 +9071,13 @@ static void amdgpu_dm_commit_planes(stru
+ 
+ 		/*
+ 		 * Only allow immediate flips for fast updates that don't
+-		 * change FB pitch, DCC state, rotation or mirroing.
++		 * change memory domain, FB pitch, DCC state, rotation or
++		 * mirroring.
+ 		 */
+ 		bundle->flip_addrs[planes_count].flip_immediate =
+ 			crtc->state->async_flip &&
+-			acrtc_state->update_type == UPDATE_TYPE_FAST;
++			acrtc_state->update_type == UPDATE_TYPE_FAST &&
++			get_mem_type(old_plane_state->fb) == get_mem_type(fb);
+ 
+ 		timestamp_ns = ktime_get_ns();
+ 		bundle->flip_addrs[planes_count].flip_timestamp_in_us = div_u64(timestamp_ns, 1000);
 
 
