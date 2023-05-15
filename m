@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A4EFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:58:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28821C4339B;
-	Mon, 15 May 2023 16:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0187FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:58:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55992C433EF;
+	Mon, 15 May 2023 16:58:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169905;
-	bh=RRCHnRLvmXe8vFF6MWW3DzFpgyYCrh1f8rtPxmOFv2k=;
+	s=korg; t=1684169908;
+	bh=JW545nhLk1RCYnKAJDDWHqWoYnPRADpqDVQ/UZpANlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BNwxtmv4HbCZIyInFY9N5J7AXTrav4XY0jaLWhaXpjsFJn4TlQkkkOAd1gIuXU39t
-	 kbXhf4/4FRpDC3Mq2E2gGLHsTPQoMS9Pg1o/znjTfjLXfMBRw2MjywJu8Q57vuJ3xt
-	 ubcIIfeYIgeTiFhHNZ1c9sWu9H0HP6oYjjyHI2Zg=
+	b=rWKoO8PpgAqzQTVDDnPoa15uIN5o2wgGqVk6GLf3AIhPMmXAf2B9fqb9pdFbAl5rS
+	 yxXg6bIUkDv8Q1HBD3rt1G8mYKPpNppNIcFDxFP0P3hK5b6oaOqI7zF6UIpQtvHTSA
+	 pPsDj84XRnpltK7EkmcQHMWfHl59PSwH8Gr4gSEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 208/246] drm/amd/pm: avoid potential UBSAN issue on legacy asics
-Date: Mon, 15 May 2023 18:27:00 +0200
-Message-Id: <20230515161728.842814535@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Subject: [PATCH 6.3 209/246] firewire: net: fix unexpected release of object for asynchronous request packet
+Date: Mon, 15 May 2023 18:27:01 +0200
+Message-Id: <20230515161728.871413483@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,51 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-commit 5247f05eadf1081a74b2233f291cee2efed25e3a upstream.
+commit f7dcc5e33c1e4b0d278a30f7d2f0c9a63d7b40ca upstream.
 
-Prevent further dpm casting on legacy asics without od_enabled in
-amdgpu_dpm_is_overdrive_supported. This can avoid UBSAN complain
-in init sequence.
+The lifetime of object for asynchronous request packet is now maintained
+by reference counting, while current implementation of firewire-net
+releases the passed object in the handler.
 
-v2: add a macro to check legacy dpm instead of checking asic family/type
-v3: refine macro name for naming consistency
+This commit fixes the bug.
 
-Suggested-by: Evan Quan <evan.quan@amd.com>
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/lkml/Y%2Fymx6WZIAlrtjLc@workstation/
+Fixes: 13a55d6bb15f ("firewire: core: use kref structure to maintain lifetime of data for fw_request structure")
+Link: https://lore.kernel.org/lkml/20230510031205.782032-1-o-takashi@sakamocchi.jp/
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_dpm.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/firewire/net.c | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
-@@ -36,6 +36,8 @@
- #define amdgpu_dpm_enable_bapm(adev, e) \
- 		((adev)->powerplay.pp_funcs->enable_bapm((adev)->powerplay.pp_handle, (e)))
+diff --git a/drivers/firewire/net.c b/drivers/firewire/net.c
+index af22be84034b..538bd677c254 100644
+--- a/drivers/firewire/net.c
++++ b/drivers/firewire/net.c
+@@ -706,21 +706,22 @@ static void fwnet_receive_packet(struct fw_card *card, struct fw_request *r,
+ 	int rcode;
  
-+#define amdgpu_dpm_is_legacy_dpm(adev) ((adev)->powerplay.pp_handle == (adev))
-+
- int amdgpu_dpm_get_sclk(struct amdgpu_device *adev, bool low)
- {
- 	const struct amd_pm_funcs *pp_funcs = adev->powerplay.pp_funcs;
-@@ -1439,8 +1441,11 @@ int amdgpu_dpm_is_overdrive_supported(st
- 	} else {
- 		struct pp_hwmgr *hwmgr;
+ 	if (destination == IEEE1394_ALL_NODES) {
+-		kfree(r);
+-
+-		return;
+-	}
+-
+-	if (offset != dev->handler.offset)
++		// Although the response to the broadcast packet is not necessarily required, the
++		// fw_send_response() function should still be called to maintain the reference
++		// counting of the object. In the case, the call of function just releases the
++		// object as a result to decrease the reference counting.
++		rcode = RCODE_COMPLETE;
++	} else if (offset != dev->handler.offset) {
+ 		rcode = RCODE_ADDRESS_ERROR;
+-	else if (tcode != TCODE_WRITE_BLOCK_REQUEST)
++	} else if (tcode != TCODE_WRITE_BLOCK_REQUEST) {
+ 		rcode = RCODE_TYPE_ERROR;
+-	else if (fwnet_incoming_packet(dev, payload, length,
+-				       source, generation, false) != 0) {
++	} else if (fwnet_incoming_packet(dev, payload, length,
++					 source, generation, false) != 0) {
+ 		dev_err(&dev->netdev->dev, "incoming packet failure\n");
+ 		rcode = RCODE_CONFLICT_ERROR;
+-	} else
++	} else {
+ 		rcode = RCODE_COMPLETE;
++	}
  
--		/* SI asic does not carry od_enabled */
--		if (adev->family == AMDGPU_FAMILY_SI)
-+		/*
-+		 * dpm on some legacy asics don't carry od_enabled member
-+		 * as its pp_handle is casted directly from adev.
-+		 */
-+		if (amdgpu_dpm_is_legacy_dpm(adev))
- 			return false;
- 
- 		hwmgr = (struct pp_hwmgr *)adev->powerplay.pp_handle;
+ 	fw_send_response(card, r, rcode);
+ }
+-- 
+2.40.1
+
 
 
