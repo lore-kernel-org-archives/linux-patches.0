@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA8EFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38F2C433D2;
-	Mon, 15 May 2023 16:57:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC7EEFBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32869C433EF;
+	Mon, 15 May 2023 16:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169865;
-	bh=QZhYRkOFQiVLrhGHtoI9Hs0G+I1WS7Z++H6m1o4v2zc=;
+	s=korg; t=1684169868;
+	bh=9XZYfh5Y6D33K/YCtQ50BEh6Fn790iBO4eePjlDvSgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R+nj5ymwtZB5kuksfO243/fuDZ+RhFF72DL9hWCse/I0wabtUOxxBTT9m0DWnFH7i
-	 R/QkQKGqGQxh2bWhdPCguTnzjvmV3BM1IC1ckSw/UeT+8UARVjZDCtOqUkZECMyktP
-	 +3BqlXzOAbqr51OVoAUroeDuPmGPI49zntew3gJ0=
+	b=Rub44JHGQDHQFKA8XQCCxw2HoACaa7toGGAZosvZ5ke4CokytnNed1jzjdxGz5edj
+	 yerJCAZK906k6/DlhLeMTl1efgqNtmFN4SZfylBUNZaahX6XbQLwTSJCjAD/VHM9hh
+	 gLiKU9VsoNQ64NNan101adiZ3Vn6e7CUwU37NFW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alan Liu <HaoPing.Liu@amd.com>,
-	Leo Chen <sancchen@amd.com>
-Subject: [PATCH 6.3 196/246] drm/amd/display: Change default Z8 watermark values
-Date: Mon, 15 May 2023 18:26:48 +0200
-Message-Id: <20230515161728.494225171@linuxfoundation.org>
+	Horatio Zhang <Hongkun.Zhang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.3 197/246] drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v10_0_hw_fini
+Date: Mon, 15 May 2023 18:26:49 +0200
+Message-Id: <20230515161728.523599263@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -37,38 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Chen <sancchen@amd.com>
+From: Horatio Zhang <Hongkun.Zhang@amd.com>
 
-commit 8f586cc16c1fc3c2202c9d54563db8c7ed365f82 upstream.
+commit 08c677cb0b436a96a836792bb35a8ec5de4999c2 upstream.
 
-[Why & How]
-Previous Z8 watermark values were causing flickering and OTC underflow.
-Updating Z8 watermark values based on the measurement.
+The gmc.ecc_irq is enabled by firmware per IFWI setting,
+and the host driver is not privileged to enable/disable
+the interrupt. So, it is meaningless to use the amdgpu_irq_put
+function in gmc_v10_0_hw_fini, which also leads to the call
+trace.
 
-Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Alan Liu <HaoPing.Liu@amd.com>
-Signed-off-by: Leo Chen <sancchen@amd.com>
+[   82.340264] Call Trace:
+[   82.340265]  <TASK>
+[   82.340269]  gmc_v10_0_hw_fini+0x83/0xa0 [amdgpu]
+[   82.340447]  gmc_v10_0_suspend+0xe/0x20 [amdgpu]
+[   82.340623]  amdgpu_device_ip_suspend_phase2+0x127/0x1c0 [amdgpu]
+[   82.340789]  amdgpu_device_ip_suspend+0x3d/0x80 [amdgpu]
+[   82.340955]  amdgpu_device_pre_asic_reset+0xdd/0x2b0 [amdgpu]
+[   82.341122]  amdgpu_device_gpu_recover.cold+0x4dd/0xbb2 [amdgpu]
+[   82.341359]  amdgpu_debugfs_reset_work+0x4c/0x70 [amdgpu]
+[   82.341529]  process_one_work+0x21d/0x3f0
+[   82.341535]  worker_thread+0x1fa/0x3c0
+[   82.341538]  ? process_one_work+0x3f0/0x3f0
+[   82.341540]  kthread+0xff/0x130
+[   82.341544]  ? kthread_complete_and_exit+0x20/0x20
+[   82.341547]  ret_from_fork+0x22/0x30
+
+Signed-off-by: Horatio Zhang <Hongkun.Zhang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Guchun Chen <guchun.chen@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
+Fixes: c8b5a95b5709 ("drm/amdgpu: Fix desktop freezed after gpu-reset")
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-@@ -149,8 +149,8 @@ struct _vcs_dpi_soc_bounding_box_st dcn3
- 	.num_states = 5,
- 	.sr_exit_time_us = 16.5,
- 	.sr_enter_plus_exit_time_us = 18.5,
--	.sr_exit_z8_time_us = 210.0,
--	.sr_enter_plus_exit_z8_time_us = 310.0,
-+	.sr_exit_z8_time_us = 268.0,
-+	.sr_enter_plus_exit_z8_time_us = 393.0,
- 	.writeback_latency_us = 12.0,
- 	.dram_channel_width_bytes = 4,
- 	.round_trip_ping_latency_dcfclk_cycles = 106,
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+@@ -1161,7 +1161,6 @@ static int gmc_v10_0_hw_fini(void *handl
+ 		return 0;
+ 	}
+ 
+-	amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
+ 
+ 	return 0;
 
 
