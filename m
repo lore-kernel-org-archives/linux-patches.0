@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44AFAFBEF
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:31:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D6EC4339B;
-	Mon, 15 May 2023 16:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BD7FBEB
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CCAC433D2;
+	Mon, 15 May 2023 16:31:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168317;
-	bh=p9ehA8kDIhNZ/CZqFEVodDpkS0KwISdHL5eMKx61uGc=;
+	s=korg; t=1684168320;
+	bh=KI276+lpF1XU45m5pNAD3raNqll+L3b0/3IqPnJ2URA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9LFaTFp/2EoPMo36c4CsK7nM5sTLnC7yPYNBnn/Pml60DhulJrnbYcTDuIA/zAFp
-	 OJ11fgsRdAgj/FHw6DkqP7edfPqHsxbgDdsIQUAMdt20dwNzhvvCY6c6SnfiR97M4Z
-	 pMHKu8IFXx4ptTGGBVxy6O1iKWX4kX0c5cBm1tno=
+	b=pz/x0XnRxi2oAZtga52/QjqUb1X7Me29MZoZjSllNIFCY7+zrV8zOawrqNsbCGtWK
+	 4Zb0CK4MLsGvr31/D6zkMbKoj2LV6M0jFdJBkSteWIQIVuKpuUxPPt74aUgf89VSSF
+	 C7AsvKrRVZyecplc17Ew75EJB9TUxByJ9hq3eDl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 4.14 011/116] reiserfs: Add security prefix to xattr name in reiserfs_security_write()
-Date: Mon, 15 May 2023 18:25:08 +0200
-Message-Id: <20230515161658.661872060@linuxfoundation.org>
+	Reid Tonking <reidt@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 4.14 012/116] i2c: omap: Fix standard mode false ACK readings
+Date: Mon, 15 May 2023 18:25:09 +0200
+Message-Id: <20230515161658.706723725@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -34,54 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Reid Tonking <reidt@ti.com>
 
-commit d82dcd9e21b77d338dc4875f3d4111f0db314a7c upstream.
+commit c770657bd2611b077ec1e7b1fe6aa92f249399bd upstream.
 
-Reiserfs sets a security xattr at inode creation time in two stages: first,
-it calls reiserfs_security_init() to obtain the xattr from active LSMs;
-then, it calls reiserfs_security_write() to actually write that xattr.
+Using standard mode, rare false ACK responses were appearing with
+i2cdetect tool. This was happening due to NACK interrupt triggering
+ISR thread before register access interrupt was ready. Removing the
+NACK interrupt's ability to trigger ISR thread lets register access
+ready interrupt do this instead.
 
-Unfortunately, it seems there is a wrong expectation that LSMs provide the
-full xattr name in the form 'security.<suffix>'. However, LSMs always
-provided just the suffix, causing reiserfs to not write the xattr at all
-(if the suffix is shorter than the prefix), or to write an xattr with the
-wrong name.
-
-Add a temporary buffer in reiserfs_security_write(), and write to it the
-full xattr name, before passing it to reiserfs_xattr_set_handle().
-
-Also replace the name length check with a check that the full xattr name is
-not larger than XATTR_NAME_MAX.
-
-Cc: stable@vger.kernel.org # v2.6.x
-Fixes: 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes during inode creation")
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Cc: <stable@vger.kernel.org> # v3.7+
+Fixes: 3b2f8f82dad7 ("i2c: omap: switch to threaded IRQ support")
+Signed-off-by: Reid Tonking <reidt@ti.com>
+Acked-by: Vignesh Raghavendra <vigneshr@ti.com>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/reiserfs/xattr_security.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-omap.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/reiserfs/xattr_security.c
-+++ b/fs/reiserfs/xattr_security.c
-@@ -81,11 +81,15 @@ int reiserfs_security_write(struct reise
- 			    struct inode *inode,
- 			    struct reiserfs_security_handle *sec)
- {
-+	char xattr_name[XATTR_NAME_MAX + 1] = XATTR_SECURITY_PREFIX;
- 	int error;
--	if (strlen(sec->name) < sizeof(XATTR_SECURITY_PREFIX))
-+
-+	if (XATTR_SECURITY_PREFIX_LEN + strlen(sec->name) > XATTR_NAME_MAX)
- 		return -EINVAL;
+--- a/drivers/i2c/busses/i2c-omap.c
++++ b/drivers/i2c/busses/i2c-omap.c
+@@ -1030,7 +1030,7 @@ omap_i2c_isr(int irq, void *dev_id)
+ 	u16 stat;
  
--	error = reiserfs_xattr_set_handle(th, inode, sec->name, sec->value,
-+	strlcat(xattr_name, sec->name, sizeof(xattr_name));
-+
-+	error = reiserfs_xattr_set_handle(th, inode, xattr_name, sec->value,
- 					  sec->length, XATTR_CREATE);
- 	if (error == -ENODATA || error == -EOPNOTSUPP)
- 		error = 0;
+ 	stat = omap_i2c_read_reg(omap, OMAP_I2C_STAT_REG);
+-	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG);
++	mask = omap_i2c_read_reg(omap, OMAP_I2C_IE_REG) & ~OMAP_I2C_STAT_NACK;
+ 
+ 	if (stat & mask)
+ 		ret = IRQ_WAKE_THREAD;
 
 
