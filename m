@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45BAFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:27:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B50C433D2;
-	Mon, 15 May 2023 17:27:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B38FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:27:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 288EDC433D2;
+	Mon, 15 May 2023 17:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171625;
-	bh=v2FjJd2V0/+q+5jzoEIchjJyOj54CXhm1HIZf4Bg5J8=;
+	s=korg; t=1684171628;
+	bh=6W29fSeSyzvOM+ICrtyaVKnQ2zicK2xwA5B+OI+gm3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjdPHOoWPv+il/WNhEFxPZ8zvxsbpQhg+Z8tZpcKd3HVQaYDao+im4tZWvkbBcOLe
-	 A+MSWNLsfArPtUgFPoSn8SscNe9SA57jptsaptMb1z5w652NxBRtSixyWiZ1D50i3x
-	 PDvo0P1YWe3M2gh+pWm0ok4bmkucIsXWAmyg3g2E=
+	b=wTQobRZ8iYpMiuLp62BJBd7ZdibdZ3donOwACHNtOdolFbOgq90C8cXzHAe5eNJqB
+	 DO7xWSkcgIAU1x32JrjONefiyTAxq1gJ4DREPyBDu1iWCGv2I24iToRYMXU6BsrkUd
+	 WWfGjjQZ2blRubaPFptY6hfeDyeiHVZx1R+457jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sia Jee Heng <jeeheng.sia@starfivetech.com>,
-	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
-	Mason Huo <mason.huo@starfivetech.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/134] RISC-V: mm: Enable huge page support to kernel_page_present() function
-Date: Mon, 15 May 2023 18:28:24 +0200
-Message-Id: <20230515161703.948112652@linuxfoundation.org>
+Subject: [PATCH 5.15 028/134] net/sched: act_mirred: Add carrier check
+Date: Mon, 15 May 2023 18:28:25 +0200
+Message-Id: <20230515161703.987063989@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -39,60 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit a15c90b67a662c75f469822a7f95c7aaa049e28f ]
+[ Upstream commit 526f28bd0fbdc699cda31426928802650c1528e5 ]
 
-Currently kernel_page_present() function doesn't support huge page
-detection causes the function to mistakenly return false to the
-hibernation core.
+There are cases where the device is adminstratively UP, but operationally
+down. For example, we have a physical device (Nvidia ConnectX-6 Dx, 25Gbps)
+who's cable was pulled out, here is its ip link output:
 
-Add huge page detection to the function to solve the problem.
+5: ens2f1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DEFAULT group default qlen 1000
+    link/ether b8:ce:f6:4b:68:35 brd ff:ff:ff:ff:ff:ff
+    altname enp179s0f1np1
 
-Fixes: 9e953cda5cdf ("riscv: Introduce huge page support for 32/64bit kernel")
-Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Reviewed-by: Ley Foon Tan <leyfoon.tan@starfivetech.com>
-Reviewed-by: Mason Huo <mason.huo@starfivetech.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Link: https://lore.kernel.org/r/20230330064321.1008373-4-jeeheng.sia@starfivetech.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+As you can see, it's administratively UP but operationally down.
+In this case, sending a packet to this port caused a nasty kernel hang (so
+nasty that we were unable to capture it). Aborting a transmit based on
+operational status (in addition to administrative status) fixes the issue.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+v1->v2: Add fixes tag
+v2->v3: Remove blank line between tags + add change log, suggested by Leon
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/mm/pageattr.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/sched/act_mirred.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/mm/pageattr.c b/arch/riscv/mm/pageattr.c
-index 86c56616e5dea..ea3d61de065b3 100644
---- a/arch/riscv/mm/pageattr.c
-+++ b/arch/riscv/mm/pageattr.c
-@@ -217,18 +217,26 @@ bool kernel_page_present(struct page *page)
- 	pgd = pgd_offset_k(addr);
- 	if (!pgd_present(*pgd))
- 		return false;
-+	if (pgd_leaf(*pgd))
-+		return true;
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index 6f39789d9d14b..97cd4b2377d69 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -261,7 +261,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
+ 		goto out;
+ 	}
  
- 	p4d = p4d_offset(pgd, addr);
- 	if (!p4d_present(*p4d))
- 		return false;
-+	if (p4d_leaf(*p4d))
-+		return true;
- 
- 	pud = pud_offset(p4d, addr);
- 	if (!pud_present(*pud))
- 		return false;
-+	if (pud_leaf(*pud))
-+		return true;
- 
- 	pmd = pmd_offset(pud, addr);
- 	if (!pmd_present(*pmd))
- 		return false;
-+	if (pmd_leaf(*pmd))
-+		return true;
- 
- 	pte = pte_offset_kernel(pmd, addr);
- 	return pte_present(*pte);
+-	if (unlikely(!(dev->flags & IFF_UP))) {
++	if (unlikely(!(dev->flags & IFF_UP)) || !netif_carrier_ok(dev)) {
+ 		net_notice_ratelimited("tc mirred to Houston: device %s is down\n",
+ 				       dev->name);
+ 		goto out;
 -- 
 2.39.2
 
