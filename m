@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A46E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E9D9C433D2;
-	Mon, 15 May 2023 16:42:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387C1E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905C8C433D2;
+	Mon, 15 May 2023 16:42:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168931;
-	bh=2jKY1/179qpq2ZVzQZz149nKEOdMd25p5WMRsYK9gjQ=;
+	s=korg; t=1684168934;
+	bh=veYD+4PevfusWGxRwTuaB9iExzKQrbneJclZimclK68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zl0LPt8eQeZOw5aIO08N0B1wFZKUKQL0qbMuo8yfSl2nTNGhcLUTTq/m4wfcxeJC5
-	 JVBfPJH4Y6qtTLOJo5JuNfmIjnmF0E6qWw/hr8OZHimGETE0pvR2G6+/MKyWvxSybt
-	 5xbkb8G3PYEJwYBz1geQQqFC7y++9+3Duz+LZ5uU=
+	b=zr3BGCS6yYKCS020jgQINEk0Qby2OfwW/Yq3Wdu7sICr7mntQrs63Gn26wUDC9Wvz
+	 AxuLRx9Mjw6tH8lc+JJviEiUnY+iRXYIxhR54tiAcS4/eFhf2+dnyZUxrImNXzkwjp
+	 aEkCTnAjTeyRMr0Nhb41a+UK5X+A2xluSvuvhiOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danila Chernetsov <listdansp@mail.ru>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Kalle Valo <kvalo@codeaurora.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 058/191] scsi: megaraid: Fix mega_cmd_done() CMDID_INT_CMDS
-Date: Mon, 15 May 2023 18:24:55 +0200
-Message-Id: <20230515161709.312979345@linuxfoundation.org>
+Subject: [PATCH 4.19 059/191] rtlwifi: rtl_pci: Fix memory leak when hardware init fails
+Date: Mon, 15 May 2023 18:24:56 +0200
+Message-Id: <20230515161709.352046710@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,36 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Danila Chernetsov <listdansp@mail.ru>
+From: Larry Finger <Larry.Finger@lwfinger.net>
 
-[ Upstream commit 75cb113cd43f06aaf4f1bda0069cfd5b98e909eb ]
+[ Upstream commit 8cc782cd997dc4eb3ac183228d563727884ba874 ]
 
-When cmdid == CMDID_INT_CMDS, the 'cmds' pointer is NULL but is
-dereferenced below.
+If the call to hw_init() fails for any of the drivers, the driver will
+leak memory that was allocated in BT coexistence setup. Technically, each
+of the drivers should have done this free; however placing it in rtl_pci
+fixes all the drivers with only a single patch.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 0f2bb84d2a68 ("[SCSI] megaraid: simplify internal command handling")
-Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
-Link: https://lore.kernel.org/r/20230317175109.18585-1-listdansp@mail.ru
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
+Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+Stable-dep-of: 905a9241e4e8 ("wifi: rtlwifi: fix incorrect error codes in rtl_debugfs_set_write_rfreg()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/megaraid.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtlwifi/pci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/megaraid.c b/drivers/scsi/megaraid.c
-index 7352d46ebb093..44d648baabd87 100644
---- a/drivers/scsi/megaraid.c
-+++ b/drivers/scsi/megaraid.c
-@@ -1444,6 +1444,7 @@ mega_cmd_done(adapter_t *adapter, u8 completed[], int nstatus, int status)
- 		 */
- 		if (cmdid == CMDID_INT_CMDS) {
- 			scb = &adapter->int_scb;
-+			cmd = scb->cmd;
- 
- 			list_del_init(&scb->list);
- 			scb->state = SCB_FREE;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/pci.c b/drivers/net/wireless/realtek/rtlwifi/pci.c
+index 83749578fa8b3..8bda1104bda85 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/pci.c
++++ b/drivers/net/wireless/realtek/rtlwifi/pci.c
+@@ -1817,6 +1817,8 @@ static int rtl_pci_start(struct ieee80211_hw *hw)
+ 	if (err) {
+ 		RT_TRACE(rtlpriv, COMP_INIT, DBG_DMESG,
+ 			 "Failed to config hardware!\n");
++		kfree(rtlpriv->btcoexist.btc_context);
++		kfree(rtlpriv->btcoexist.wifi_only_context);
+ 		return err;
+ 	}
+ 	rtlpriv->cfg->ops->set_hw_reg(hw, HW_VAR_RETRY_LIMIT,
 -- 
 2.39.2
 
