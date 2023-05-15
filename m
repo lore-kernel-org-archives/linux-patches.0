@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E9C17730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:06:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48417C433EF;
-	Mon, 15 May 2023 18:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC54F17730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:06:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41441C433D2;
+	Mon, 15 May 2023 18:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173992;
-	bh=hl9vzCAsU9Az0KVa3Dc/YpZ515dHP0/OSCoEPFeIqHw=;
+	s=korg; t=1684173995;
+	bh=2z0p8WY8f22KF0zur3OdAoOOhfM6vd530y5pF3u+5Lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjxKPdkZoRrv5TncxZjlp8EwgLXKogUkkhnXVS5Nmg5T3y+VT3cRY+oMED+hEiKmw
-	 9EFlfs1DFuORh+cJ+g9+KLIpfdByaXzlKJwf7RQB8APXHZr119gfmw3i0jw0gWj8jq
-	 QxqFM54D/u33edrWMEO2ZCDC3B22yWycG+eiEOBg=
+	b=X0tw35CsmgAGhtx+JLLrWy8nyuYR9JbvluBeV/5IF+yA3d44Hd7uxslrnnMJ5k6qj
+	 oSVVlrsQGyStdNAU+eUZrDYPCdNxd3LYHik2Mg/CtyT5WTAdnNi50iRgavJOvOz4Hv
+	 UGelxGuz8L8phbPgn3I3AoGf+zE+ufeAn0q0yTJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Subject: [PATCH 5.4 273/282] printk: declare printk_deferred_{enter,safe}() in include/linux/printk.h
-Date: Mon, 15 May 2023 18:30:51 +0200
-Message-Id: <20230515161730.551867453@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.4 274/282] PM: domains: Restore comment indentation for generic_pm_domain.child_links
+Date: Mon, 15 May 2023 18:30:52 +0200
+Message-Id: <20230515161730.586930205@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,77 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 85e3e7fbbb720b9897fba9a99659e31cbd1c082e upstream.
+commit afb0367a80553e795e7ad055299096544454f3f6 upstream.
 
-[This patch implements subset of original commit 85e3e7fbbb72 ("printk:
-remove NMI tracking") where commit 1007843a9190 ("mm/page_alloc: fix
-potential deadlock on zonelist_update_seq seqlock") depends on, for
-commit 3d36424b3b58 ("mm/page_alloc: fix race condition between
-build_all_zonelists and page allocation") was backported to stable.]
+The rename of generic_pm_domain.slave_links to
+generic_pm_domain.child_links accidentally dropped the TAB to align the
+member's comment.  Re-add the lost TAB to restore indentation.
 
-All NMI contexts are handled the same as the safe context: store the
-message and defer printing. There is no need to have special NMI
-context tracking for this. Using in_nmi() is enough.
-
-There are several parts of the kernel that are manually calling into
-the printk NMI context tracking in order to cause general printk
-deferred printing:
-
-    arch/arm/kernel/smp.c
-    arch/powerpc/kexec/crash.c
-    kernel/trace/trace.c
-
-For arm/kernel/smp.c and powerpc/kexec/crash.c, provide a new
-function pair printk_deferred_enter/exit that explicitly achieves the
-same objective.
-
-For ftrace, remove the printk context manipulation completely. It was
-added in commit 03fc7f9c99c1 ("printk/nmi: Prevent deadlock when
-accessing the main log buffer in NMI"). The purpose was to enforce
-storing messages directly into the ring buffer even in NMI context.
-It really should have only modified the behavior in NMI context.
-There is no need for a special behavior any longer. All messages are
-always stored directly now. The console deferring is handled
-transparently in vprintk().
-
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-[pmladek@suse.com: Remove special handling in ftrace.c completely.
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20210715193359.25946-5-john.ogness@linutronix.de
-[penguin-kernel: Copy only printk_deferred_{enter,safe}() definition ]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Fixes: 8d87ae48ced2dffd ("PM: domains: Fix up terminology with parent/child")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+[ rjw: Minor subject edit ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/printk.h |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ include/linux/pm_domain.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/linux/printk.h
-+++ b/include/linux/printk.h
-@@ -529,4 +529,23 @@ static inline void print_hex_dump_debug(
- #define print_hex_dump_bytes(prefix_str, prefix_type, buf, len)	\
- 	print_hex_dump_debug(prefix_str, prefix_type, 16, 1, buf, len, true)
- 
-+#ifdef CONFIG_PRINTK
-+extern void __printk_safe_enter(void);
-+extern void __printk_safe_exit(void);
-+/*
-+ * The printk_deferred_enter/exit macros are available only as a hack for
-+ * some code paths that need to defer all printk console printing. Interrupts
-+ * must be disabled for the deferred duration.
-+ */
-+#define printk_deferred_enter __printk_safe_enter
-+#define printk_deferred_exit __printk_safe_exit
-+#else
-+static inline void printk_deferred_enter(void)
-+{
-+}
-+static inline void printk_deferred_exit(void)
-+{
-+}
-+#endif
-+
- #endif
+--- a/include/linux/pm_domain.h
++++ b/include/linux/pm_domain.h
+@@ -96,7 +96,7 @@ struct generic_pm_domain {
+ 	struct dev_pm_domain domain;	/* PM domain operations */
+ 	struct list_head gpd_list_node;	/* Node in the global PM domains list */
+ 	struct list_head parent_links;	/* Links with PM domain as a parent */
+-	struct list_head child_links;/* Links with PM domain as a child */
++	struct list_head child_links;	/* Links with PM domain as a child */
+ 	struct list_head dev_list;	/* List of devices */
+ 	struct dev_power_governor *gov;
+ 	struct work_struct power_off_work;
 
 
