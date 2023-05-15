@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67E1FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 244B2C433D2;
-	Mon, 15 May 2023 16:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D223DFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43962C433EF;
+	Mon, 15 May 2023 16:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169290;
-	bh=TPCEFs6Gs0KWg4bFSeNpTS70JR5mYKAK7iYjeH5spc8=;
+	s=korg; t=1684169293;
+	bh=+2yp2JZNnH3vb7kUTFV1x1f0Lj4yA0UeVTtFeSiOoFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdvKH+7k4bCI0R+vPtVkyN3gKwhXRQoJ8r95tBh8XrrwTejzPyFCb1JcghcCBb8Vs
-	 U5IwpnqVbvB/cM8Olv4FnJ1tLKf8Z3Tt5rfSQ8YOULWzD5cR60KwQjEWmUNbNq3Gsk
-	 eFZi8hrt2S2ydqyUnbXYVyDPwKf4gPNmg1EibM2Q=
+	b=ahuz9yrsKmQWw7ldpw4ZX6y9Pt3twwQf5urLDkD974y4ccPALjHkIob3vbDAurjVa
+	 jzBWVM9enbn0pqQl1HB4yJYsAE5VoCPfnFgLu4GE6ASxhJpvS+bCqVG83gOltjsHBP
+	 Kg6dCeWcpAgyCgBQwQOLzbmQrQNERi83tjlRrJUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Can Guo <quic_cang@quicinc.com>,
+	Stanley Chu <stanley.chu@mediatek.com>,
+	Alice Chao <alice.chao@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 012/246] ASoC: Intel: soc-acpi-byt: Fix "WM510205" match no longer working
-Date: Mon, 15 May 2023 18:23:44 +0200
-Message-Id: <20230515161722.983067055@linuxfoundation.org>
+Subject: [PATCH 6.3 013/246] scsi: ufs: core: mcq: Fix &hwq->cq_lock deadlock issue
+Date: Mon, 15 May 2023 18:23:45 +0200
+Message-Id: <20230515161723.012143659@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,40 +39,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Alice Chao <alice.chao@mediatek.com>
 
-[ Upstream commit c963e2ec095cb3f855890be53f56f5a6c6fbe371 ]
+[ Upstream commit 948afc69615167a3c82430f99bfd046332b89912 ]
 
-Commit 7e1d728a94ca ("ASoC: Intel: soc-acpi-byt: Add new WM5102 ACPI HID")
-added an extra HID to wm5102_comp_ids.codecs, but it forgot to bump
-wm5102_comp_ids.num_codecs, causing the last codec HID in the codecs list
-to no longer work.
+When ufshcd_err_handler() is executed, CQ event interrupt can enter waiting
+for the same lock. This can happen in ufshcd_handle_mcq_cq_events() and
+also in ufs_mtk_mcq_intr(). The following warning message will be generated
+when &hwq->cq_lock is used in IRQ context with IRQ enabled. Use
+ufshcd_mcq_poll_cqe_lock() with spin_lock_irqsave instead of spin_lock to
+resolve the deadlock issue.
 
-Bump wm5102_comp_ids.num_codecs to fix this.
+[name:lockdep&]WARNING: inconsistent lock state
+[name:lockdep&]--------------------------------
+[name:lockdep&]inconsistent {IN-HARDIRQ-W} -> {HARDIRQ-ON-W} usage.
+[name:lockdep&]kworker/u16:4/260 [HC0[0]:SC0[0]:HE1:SE1] takes:
+  ffffff8028444600 (&hwq->cq_lock){?.-.}-{2:2}, at:
+ufshcd_mcq_poll_cqe_lock+0x30/0xe0
+[name:lockdep&]{IN-HARDIRQ-W} state was registered at:
+  lock_acquire+0x17c/0x33c
+  _raw_spin_lock+0x5c/0x7c
+  ufshcd_mcq_poll_cqe_lock+0x30/0xe0
+  ufs_mtk_mcq_intr+0x60/0x1bc [ufs_mediatek_mod]
+  __handle_irq_event_percpu+0x140/0x3ec
+  handle_irq_event+0x50/0xd8
+  handle_fasteoi_irq+0x148/0x2b0
+  generic_handle_domain_irq+0x4c/0x6c
+  gic_handle_irq+0x58/0x134
+  call_on_irq_stack+0x40/0x74
+  do_interrupt_handler+0x84/0xe4
+  el1_interrupt+0x3c/0x78
+<snip>
 
-Fixes: 7e1d728a94ca ("ASoC: Intel: soc-acpi-byt: Add new WM5102 ACPI HID")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230421183714.35186-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Possible unsafe locking scenario:
+       CPU0
+       ----
+  lock(&hwq->cq_lock);
+  <Interrupt>
+    lock(&hwq->cq_lock);
+  *** DEADLOCK ***
+2 locks held by kworker/u16:4/260:
+
+[name:lockdep&]
+ stack backtrace:
+CPU: 7 PID: 260 Comm: kworker/u16:4 Tainted: G S      W  OE
+6.1.17-mainline-android14-2-g277223301adb #1
+Workqueue: ufs_eh_wq_0 ufshcd_err_handler
+
+ Call trace:
+  dump_backtrace+0x10c/0x160
+  show_stack+0x20/0x30
+  dump_stack_lvl+0x98/0xd8
+  dump_stack+0x20/0x60
+  print_usage_bug+0x584/0x76c
+  mark_lock_irq+0x488/0x510
+  mark_lock+0x1ec/0x25c
+  __lock_acquire+0x4d8/0xffc
+  lock_acquire+0x17c/0x33c
+  _raw_spin_lock+0x5c/0x7c
+  ufshcd_mcq_poll_cqe_lock+0x30/0xe0
+  ufshcd_poll+0x68/0x1b0
+  ufshcd_transfer_req_compl+0x9c/0xc8
+  ufshcd_err_handler+0x3bc/0xea0
+  process_one_work+0x2f4/0x7e8
+  worker_thread+0x234/0x450
+  kthread+0x110/0x134
+  ret_from_fork+0x10/0x20
+
+Fixes: ed975065c31c ("scsi: ufs: core: mcq: Add completion support in poll")
+Reviewed-by: Can Guo <quic_cang@quicinc.com>
+Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
+Signed-off-by: Alice Chao <alice.chao@mediatek.com>
+Link: https://lore.kernel.org/r/20230424080400.8955-1-alice.chao@mediatek.com
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/common/soc-acpi-intel-byt-match.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufs-mcq.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-byt-match.c b/sound/soc/intel/common/soc-acpi-intel-byt-match.c
-index db5a92b9875a8..87c44f284971a 100644
---- a/sound/soc/intel/common/soc-acpi-intel-byt-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-byt-match.c
-@@ -124,7 +124,7 @@ static const struct snd_soc_acpi_codecs rt5640_comp_ids = {
- };
+diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+index 31df052fbc417..202ff71e1b582 100644
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -299,11 +299,11 @@ EXPORT_SYMBOL_GPL(ufshcd_mcq_poll_cqe_nolock);
+ unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+ 				       struct ufs_hw_queue *hwq)
+ {
+-	unsigned long completed_reqs;
++	unsigned long completed_reqs, flags;
  
- static const struct snd_soc_acpi_codecs wm5102_comp_ids = {
--	.num_codecs = 2,
-+	.num_codecs = 3,
- 	.codecs = { "10WM5102", "WM510204", "WM510205"},
- };
+-	spin_lock(&hwq->cq_lock);
++	spin_lock_irqsave(&hwq->cq_lock, flags);
+ 	completed_reqs = ufshcd_mcq_poll_cqe_nolock(hba, hwq);
+-	spin_unlock(&hwq->cq_lock);
++	spin_unlock_irqrestore(&hwq->cq_lock, flags);
  
+ 	return completed_reqs;
+ }
 -- 
 2.39.2
 
