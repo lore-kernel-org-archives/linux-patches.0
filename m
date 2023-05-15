@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4D7107AA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E524C433EF;
-	Mon, 15 May 2023 17:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1332C1078D
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E859C4339B;
+	Mon, 15 May 2023 17:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173573;
-	bh=wf/CQwrXobsqVKvFfWAkYSPY5nTGIq93eNoEZI8vWsE=;
+	s=korg; t=1684173576;
+	bh=dkFXUhD0YoqFVX1VrVWTr5uc9++mJyTLDhh5R0bxMfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hgLTK6SpLpvBmeCU7g9ISlxnjt8x18+hNXbsVZanLaJRJS9DFus605B3R1cI9oLMJ
-	 Az/hZsuyrl26/uzsHf4fRE4o4jdDwkaGz9Zh6c7LQLUW0wg4q4KSRkLCatvSeVfNCz
-	 3tgbu4dYiGDe3wqcIhzPRthNX0567aTku+mrWM7E=
+	b=WsfqOONqjzWdfEuAIR52FLx7BExHy5YEOXI7VFk2i2nbHHoeZZAZZ/Dd2DZayXOAk
+	 BYbh3o4yLyOUmIrsFRE3f8acDcIkmDhgG8t/UpqwlhTRSAbhhxExziVn4WDSrOvkmO
+	 bJdAjCSH6gxUv7DNj7who+tt5qSrWm3aEnYGYQBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Stanislav Fomichev <sdf@google.com>,
+	syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com,
+	Hsin-Wei Hung <hsinweih@uci.edu>,
+	Xin Liu <liuxin350@huawei.com>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 110/282] bpf: Dont EFAULT for getsockopt with optval=NULL
-Date: Mon, 15 May 2023 18:28:08 +0200
-Message-Id: <20230515161725.544573215@linuxfoundation.org>
+Subject: [PATCH 5.4 101/282] bpf, sockmap: Revert buggy deadlock fix in the sockhash and sockmap
+Date: Mon, 15 May 2023 18:27:59 +0200
+Message-Id: <20230515161725.283165554@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,53 +38,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 00e74ae0863827d944e36e56a4ce1e77e50edb91 ]
+[ Upstream commit 8c5c2a4898e3d6bad86e29d471e023c8a19ba799 ]
 
-Some socket options do getsockopt with optval=NULL to estimate the size
-of the final buffer (which is returned via optlen). This breaks BPF
-getsockopt assumptions about permitted optval buffer size. Let's enforce
-these assumptions only when non-NULL optval is provided.
+syzbot reported a splat and bisected it to recent commit ed17aa92dc56 ("bpf,
+sockmap: fix deadlocks in the sockhash and sockmap"):
 
-Fixes: 0d01da6afc54 ("bpf: implement getsockopt and setsockopt hooks")
-Reported-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
+  [...]
+  WARNING: CPU: 1 PID: 9280 at kernel/softirq.c:376 __local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
+  Modules linked in:
+  CPU: 1 PID: 9280 Comm: syz-executor.1 Not tainted 6.2.0-syzkaller-13249-gd319f344561d #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+  RIP: 0010:__local_bh_enable_ip+0xbe/0x130 kernel/softirq.c:376
+  [...]
+  Call Trace:
+  <TASK>
+  spin_unlock_bh include/linux/spinlock.h:395 [inline]
+  sock_map_del_link+0x2ea/0x510 net/core/sock_map.c:165
+  sock_map_unref+0xb0/0x1d0 net/core/sock_map.c:184
+  sock_hash_delete_elem+0x1ec/0x2a0 net/core/sock_map.c:945
+  map_delete_elem kernel/bpf/syscall.c:1536 [inline]
+  __sys_bpf+0x2edc/0x53e0 kernel/bpf/syscall.c:5053
+  __do_sys_bpf kernel/bpf/syscall.c:5166 [inline]
+  __se_sys_bpf kernel/bpf/syscall.c:5164 [inline]
+  __x64_sys_bpf+0x79/0xc0 kernel/bpf/syscall.c:5164
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  RIP: 0033:0x7fe8f7c8c169
+  </TASK>
+  [...]
+
+Revert for now until we have a proper solution.
+
+Fixes: ed17aa92dc56 ("bpf, sockmap: fix deadlocks in the sockhash and sockmap")
+Reported-by: syzbot+49f6cef45247ff249498@syzkaller.appspotmail.com
+Cc: Hsin-Wei Hung <hsinweih@uci.edu>
+Cc: Xin Liu <liuxin350@huawei.com>
+Cc: John Fastabend <john.fastabend@gmail.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/ZD7Js4fj5YyI2oLd@google.com/T/#mb68daf700f87a9244a15d01d00c3f0e5b08f49f7
-Link: https://lore.kernel.org/bpf/20230418225343.553806-2-sdf@google.com
+Link: https://lore.kernel.org/bpf/000000000000f1db9605f939720e@google.com/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/core/sock_map.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/cgroup.c b/kernel/bpf/cgroup.c
-index c2f0aa818b7af..08c1246c758ea 100644
---- a/kernel/bpf/cgroup.c
-+++ b/kernel/bpf/cgroup.c
-@@ -1131,7 +1131,7 @@ int __cgroup_bpf_run_filter_getsockopt(struct sock *sk, int level,
- 		goto out;
- 	}
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 78f2b6b265b2a..5bce6d4d20573 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -322,9 +322,8 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+ {
+ 	struct sock *sk;
+ 	int err = 0;
+-	unsigned long flags;
  
--	if (ctx.optlen > max_optlen || ctx.optlen < 0) {
-+	if (optval && (ctx.optlen > max_optlen || ctx.optlen < 0)) {
- 		ret = -EFAULT;
- 		goto out;
- 	}
-@@ -1145,8 +1145,11 @@ int __cgroup_bpf_run_filter_getsockopt(struct sock *sk, int level,
- 	}
+-	raw_spin_lock_irqsave(&stab->lock, flags);
++	raw_spin_lock_bh(&stab->lock);
+ 	sk = *psk;
+ 	if (!sk_test || sk_test == sk)
+ 		sk = xchg(psk, NULL);
+@@ -334,7 +333,7 @@ static int __sock_map_delete(struct bpf_stab *stab, struct sock *sk_test,
+ 	else
+ 		err = -EINVAL;
  
- 	if (ctx.optlen != 0) {
--		if (copy_to_user(optval, ctx.optval, ctx.optlen) ||
--		    put_user(ctx.optlen, optlen)) {
-+		if (optval && copy_to_user(optval, ctx.optval, ctx.optlen)) {
-+			ret = -EFAULT;
-+			goto out;
-+		}
-+		if (put_user(ctx.optlen, optlen)) {
- 			ret = -EFAULT;
- 			goto out;
- 		}
+-	raw_spin_unlock_irqrestore(&stab->lock, flags);
++	raw_spin_unlock_bh(&stab->lock);
+ 	return err;
+ }
+ 
+@@ -656,12 +655,11 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
+ 	struct bpf_htab_bucket *bucket;
+ 	struct bpf_htab_elem *elem;
+ 	int ret = -ENOENT;
+-	unsigned long flags;
+ 
+ 	hash = sock_hash_bucket_hash(key, key_size);
+ 	bucket = sock_hash_select_bucket(htab, hash);
+ 
+-	raw_spin_lock_irqsave(&bucket->lock, flags);
++	raw_spin_lock_bh(&bucket->lock);
+ 	elem = sock_hash_lookup_elem_raw(&bucket->head, hash, key, key_size);
+ 	if (elem) {
+ 		hlist_del_rcu(&elem->node);
+@@ -669,7 +667,7 @@ static int sock_hash_delete_elem(struct bpf_map *map, void *key)
+ 		sock_hash_free_elem(htab, elem);
+ 		ret = 0;
+ 	}
+-	raw_spin_unlock_irqrestore(&bucket->lock, flags);
++	raw_spin_unlock_bh(&bucket->lock);
+ 	return ret;
+ }
+ 
 -- 
 2.39.2
 
