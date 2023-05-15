@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913D8101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:54:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA55DC433D2;
-	Mon, 15 May 2023 17:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8C2101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:54:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E446CC433D2;
+	Mon, 15 May 2023 17:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173287;
-	bh=8aLaGvCxyMHhpuSJf95pFB+rwa37xHUxg58lShunst0=;
+	s=korg; t=1684173290;
+	bh=lRukkDglGnUHTkphld9K3dAtwLcdzjjJI/P3vU7DcyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T00av6kbXZ8sOPf+XZ8bq+lVmuIh/McmOt08nZYsQzYMYYu2z31hRMWAqT/a2JqtF
-	 saE/54oannGHhtnG+7t0w3ZT/iZuUCRY4iCmzz4j0wlNBWyXYzEQGcg47oNzrY3+av
-	 9fiENYY1fe4YvCkY0/+tsq1DHqNwZgc2ZdlytnmE=
+	b=HwcbFZH+lja1awwd1jOmeasWdaegsqet67wuRVk1mQTjrLgkbJLlivhgS8V7q/riL
+	 Ss8+KYAXY+G+QKPhQV/kZubuGvTLfEtK6xppJhfqD3uYDIqwQqP1QLONDRHw0lejKC
+	 yOUMMpi9rKJ3rAeP89RplyaMlX/xI/BSQ3UfOt+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 007/282] ASoC: Intel: bytcr_rt5640: Add quirk for the Acer Iconia One 7 B1-750
-Date: Mon, 15 May 2023 18:26:25 +0200
-Message-Id: <20230515161722.478137806@linuxfoundation.org>
+Subject: [PATCH 5.4 039/282] arm64: dts: renesas: r8a774c0: Remove bogus voltages from OPP table
+Date: Mon, 15 May 2023 18:26:57 +0200
+Message-Id: <20230515161723.440848299@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,48 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit e38c5e80c3d293a883c6f1d553f2146ec0bda35e ]
+[ Upstream commit 554edc3e9239bb81e61be9f0f5dbbeb528a69e72 ]
 
-The Acer Iconia One 7 B1-750 tablet mostly works fine with the defaults
-for an Bay Trail CR tablet. Except for the internal mic, instead of
-an analog mic on IN3 a digital mic on DMIC1 is uses.
+According to the RZ/G Series, 2nd Generation Hardware User’s Manual
+Rev. 1.11, the System CPU cores on RZ/G2E do not have their own power
+supply, but use the common internal power supply (typical 1.03V).
 
-Add a quirk with these settings for this tablet.
+Hence remove the "opp-microvolt" properties from the Operating
+Performance Points table.  They are optional, and unused, when none of
+the CPU nodes is tied to a regulator using the "cpu-supply" property.
 
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230322145332.131525-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 231d8908a66fa98f ("arm64: dts: renesas: r8a774c0: Add OPPs table for cpu devices")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/8348e18a011ded94e35919cd8e17c0be1f9acf2f.1676560856.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ arch/arm64/boot/dts/renesas/r8a774c0.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 6a8edb0a559de..df3b370fe7292 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -391,6 +391,18 @@ static int byt_rt5640_aif1_hw_params(struct snd_pcm_substream *substream,
- 
- /* Please keep this list alphabetically sorted */
- static const struct dmi_system_id byt_rt5640_quirk_table[] = {
-+	{	/* Acer Iconia One 7 B1-750 */
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Insyde"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "VESPA2"),
-+		},
-+		.driver_data = (void *)(BYT_RT5640_DMIC1_MAP |
-+					BYT_RT5640_JD_SRC_JD1_IN4P |
-+					BYT_RT5640_OVCD_TH_1500UA |
-+					BYT_RT5640_OVCD_SF_0P75 |
-+					BYT_RT5640_SSP0_AIF1 |
-+					BYT_RT5640_MCLK_EN),
-+	},
- 	{	/* Acer Iconia Tab 8 W1-810 */
- 		.matches = {
- 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
+diff --git a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
+index 73ded80a79ba0..1de7891c658cf 100644
+--- a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
+@@ -49,17 +49,14 @@
+ 		opp-shared;
+ 		opp-800000000 {
+ 			opp-hz = /bits/ 64 <800000000>;
+-			opp-microvolt = <820000>;
+ 			clock-latency-ns = <300000>;
+ 		};
+ 		opp-1000000000 {
+ 			opp-hz = /bits/ 64 <1000000000>;
+-			opp-microvolt = <820000>;
+ 			clock-latency-ns = <300000>;
+ 		};
+ 		opp-1200000000 {
+ 			opp-hz = /bits/ 64 <1200000000>;
+-			opp-microvolt = <820000>;
+ 			clock-latency-ns = <300000>;
+ 			opp-suspend;
+ 		};
 -- 
 2.39.2
 
