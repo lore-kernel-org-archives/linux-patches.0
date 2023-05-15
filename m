@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D453FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:39:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1600DC433EF;
-	Mon, 15 May 2023 17:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF94FFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:39:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12802C433D2;
+	Mon, 15 May 2023 17:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172359;
-	bh=H/1+UzPVQdy96Xry1hn8eJduxdk5b7vEs+RxRYk77Oo=;
+	s=korg; t=1684172362;
+	bh=zk9Jyo8/fRwSURC+qwqYC3LUIM9U8e0I1+C/EqnAThc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xgE4EThv12HxB6KJiYU+YHOwIIuFOlFjtLl03zb+8QWbCzXf1M/658raNx1wtOVo2
-	 dOq+ofU9m6gR7ZBQYXYDwFii/kN723LfpJM9LMyYc5g3rc/pf9yHoCFarnvjX6JF20
-	 Ix+SpCeukbEyGhXDmcMUv7NqYoE1bEXdGnTmWZEI=
+	b=hRIQ8xzX65l1EF1O+9cbI/Ia9DR7VSGGMzb/ivIuiEXPkv6SDEu8312JddJP2a9wL
+	 9phrhkoXl+smdPq06iTV+YyvTGDSPFyNnamETV0xFXlgGhcniS+aowE1Ou5POQOta1
+	 XPOFjswTYDCTtgxKyArWHSWLH8yNu69v7x7uKinQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
+	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Andreas Kemnade <andreas@kemnade.info>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/381] tick/sched: Optimize tick_do_update_jiffies64() further
-Date: Mon, 15 May 2023 18:26:18 +0200
-Message-Id: <20230515161742.566080592@linuxfoundation.org>
+Subject: [PATCH 5.10 101/381] ARM: dts: gta04: fix excess dma channel usage
+Date: Mon, 15 May 2023 18:25:52 +0200
+Message-Id: <20230515161741.363996644@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,60 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: H. Nikolaus Schaller <hns@goldelico.com>
 
-[ Upstream commit 7a35bf2a6a871cd0252cd371d741e7d070b53af9 ]
+[ Upstream commit a622310f7f0185da02e42cdb06475f533efaae60 ]
 
-Now that it's clear that there is always one tick to account, simplify the
-calculations some more.
+OMAP processors support 32 channels but there is no check or
+inspect this except booting a device and looking at dmesg reports
+of not available channels.
 
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20201117132006.565663056@linutronix.de
-Stable-dep-of: e9523a0d8189 ("tick/common: Align tick period with the HZ tick.")
+Recently some more subsystems with DMA (aes1+2) were added filling
+the list of dma channels beyond the limit of 32 (even if other
+parameters indicate 96 or 128 channels). This leads to random
+subsystem failures i(e.g. mcbsp for audio) after boot or boot
+messages that DMA can not be initialized.
+
+Another symptom is that
+
+/sys/kernel/debug/dmaengine/summary
+
+has 32 entries and does not show all required channels.
+
+Fix by disabling unused (on the GTA04 hardware) mcspi1...4.
+Each SPI channel allocates 4 DMA channels rapidly filling
+the available ones.
+
+Disabling unused SPI modules on the OMAP3 SoC may also save
+some energy (has not been checked).
+
+Fixes: c312f066314e ("ARM: dts: omap3: Migrate AES from hwmods to sysc-omap2")
+Signed-off-by: H. Nikolaus Schaller <hns@goldelico.com>
+[re-enabled aes2, improved commit subject line]
+Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
+Message-Id: <20230113211151.2314874-1-andreas@kemnade.info>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-sched.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ arch/arm/boot/dts/omap3-gta04.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/kernel/time/tick-sched.c b/kernel/time/tick-sched.c
-index ac9953f6f92ce..5c3d4355266db 100644
---- a/kernel/time/tick-sched.c
-+++ b/kernel/time/tick-sched.c
-@@ -53,7 +53,7 @@ static ktime_t last_jiffies_update;
-  */
- static void tick_do_update_jiffies64(ktime_t now)
- {
--	unsigned long ticks = 0;
-+	unsigned long ticks = 1;
- 	ktime_t delta;
+diff --git a/arch/arm/boot/dts/omap3-gta04.dtsi b/arch/arm/boot/dts/omap3-gta04.dtsi
+index cc8a378dd076e..e61e5ddbf2027 100644
+--- a/arch/arm/boot/dts/omap3-gta04.dtsi
++++ b/arch/arm/boot/dts/omap3-gta04.dtsi
+@@ -609,6 +609,22 @@
+ 	clock-frequency = <100000>;
+ };
  
- 	/*
-@@ -91,20 +91,21 @@ static void tick_do_update_jiffies64(ktime_t now)
- 
- 	write_seqcount_begin(&jiffies_seq);
- 
--	last_jiffies_update = ktime_add(last_jiffies_update, tick_period);
--
- 	delta = ktime_sub(now, tick_next_period);
- 	if (unlikely(delta >= tick_period)) {
- 		/* Slow path for long idle sleep times */
- 		s64 incr = ktime_to_ns(tick_period);
- 
--		ticks = ktime_divns(delta, incr);
-+		ticks += ktime_divns(delta, incr);
- 
- 		last_jiffies_update = ktime_add_ns(last_jiffies_update,
- 						   incr * ticks);
-+	} else {
-+		last_jiffies_update = ktime_add(last_jiffies_update,
-+						tick_period);
- 	}
- 
--	do_timer(++ticks);
-+	do_timer(ticks);
- 
- 	/*
- 	 * Keep the tick_next_period variable up to date.  WRITE_ONCE()
++&mcspi1 {
++	status = "disabled";
++};
++
++&mcspi2 {
++	status = "disabled";
++};
++
++&mcspi3 {
++	status = "disabled";
++};
++
++&mcspi4 {
++	status = "disabled";
++};
++
+ &usb_otg_hs {
+ 	interface-type = <0>;
+ 	usb-phy = <&usb2_phy>;
 -- 
 2.39.2
 
