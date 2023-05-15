@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02166FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B740C433EF;
-	Mon, 15 May 2023 17:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18048FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:29:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E05FC433EF;
+	Mon, 15 May 2023 17:29:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171769;
-	bh=ecRzZTC14Y082V1XWJK204NohrP7IYeyAEnOOPYXe8A=;
+	s=korg; t=1684171772;
+	bh=6gtk6LyTUMC8jMZLMLOjkNWVEDgMLHSqs1GlV7ggfUw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b1amepVMtpBdxtJvhAbc/03hG8SFdbfi70up5a8VRRehdNgcSkhtMVjab8EQuzrq5
-	 QRV94W0SqkmpQRh3u/mGY8kkLEYgiIiGL8qIfNmUsScLKplhhIYoYPniFgM2S//q+e
-	 hWbdEGix2OieuanHENpM+VVYy+DjAr9oslYfIn7I=
+	b=cdTHdQfCzdCLqZm4yK5GopLinZv2wEJnRMRpHCJlxd73sOYTwyFHVroB1Ny6czuXJ
+	 274NpgjgMBmGkdxEah3KySAY4jr7bTArTgymMYy6MAkNSjVfsOJ6ba4lr8oKXpM6mB
+	 dHgQqqAZTppmjZxH0jbXtV0cxv47PideZo3777D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4a06d4373fd52f0b2f9c@syzkaller.appspotmail.com,
-	Amir Goldstein <amir73il@gmail.com>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.15 072/134] inotify: Avoid reporting event with invalid wd
-Date: Mon, 15 May 2023 18:29:09 +0200
-Message-Id: <20230515161705.567268107@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 073/134] smb3: fix problem remounting a share after shutdown
+Date: Mon, 15 May 2023 18:29:10 +0200
+Message-Id: <20230515161705.596866127@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -35,61 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Steve French <stfrench@microsoft.com>
 
-commit c915d8f5918bea7c3962b09b8884ca128bfd9b0c upstream.
+commit 716a3cf317456fa01d54398bb14ab354f50ed6a2 upstream.
 
-When inotify_freeing_mark() races with inotify_handle_inode_event() it
-can happen that inotify_handle_inode_event() sees that i_mark->wd got
-already reset to -1 and reports this value to userspace which can
-confuse the inotify listener. Avoid the problem by validating that wd is
-sensible (and pretend the mark got removed before the event got
-generated otherwise).
+xfstests generic/392 showed a problem where even after a
+shutdown call was made on a mount, we would still attempt
+to use the (now inaccessible) superblock if another mount
+was attempted for the same share.
 
-CC: stable@vger.kernel.org
-Fixes: 7e790dd5fc93 ("inotify: fix error paths in inotify_update_watch")
-Message-Id: <20230424163219.9250-1-jack@suse.cz>
-Reported-by: syzbot+4a06d4373fd52f0b2f9c@syzkaller.appspotmail.com
-Reviewed-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Reported-by: David Howells <dhowells@redhat.com>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Cc: <stable@vger.kernel.org>
+Fixes: 087f757b0129 ("cifs: add shutdown support")
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/notify/inotify/inotify_fsnotify.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/cifs/connect.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/notify/inotify/inotify_fsnotify.c
-+++ b/fs/notify/inotify/inotify_fsnotify.c
-@@ -65,7 +65,7 @@ int inotify_handle_inode_event(struct fs
- 	struct fsnotify_event *fsn_event;
- 	struct fsnotify_group *group = inode_mark->group;
- 	int ret;
--	int len = 0;
-+	int len = 0, wd;
- 	int alloc_len = sizeof(struct inotify_event_info);
- 	struct mem_cgroup *old_memcg;
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -2474,6 +2474,13 @@ cifs_match_super(struct super_block *sb,
  
-@@ -81,6 +81,13 @@ int inotify_handle_inode_event(struct fs
- 			      fsn_mark);
- 
- 	/*
-+	 * We can be racing with mark being detached. Don't report event with
-+	 * invalid wd.
-+	 */
-+	wd = READ_ONCE(i_mark->wd);
-+	if (wd == -1)
+ 	spin_lock(&cifs_tcp_ses_lock);
+ 	cifs_sb = CIFS_SB(sb);
++
++	/* We do not want to use a superblock that has been shutdown */
++	if (CIFS_MOUNT_SHUTDOWN & cifs_sb->mnt_cifs_flags) {
++		spin_unlock(&cifs_tcp_ses_lock);
 +		return 0;
-+	/*
- 	 * Whoever is interested in the event, pays for the allocation. Do not
- 	 * trigger OOM killer in the target monitoring memcg as it may have
- 	 * security repercussion.
-@@ -110,7 +117,7 @@ int inotify_handle_inode_event(struct fs
- 	fsn_event = &event->fse;
- 	fsnotify_init_event(fsn_event);
- 	event->mask = mask;
--	event->wd = i_mark->wd;
-+	event->wd = wd;
- 	event->sync_cookie = cookie;
- 	event->name_len = len;
- 	if (len)
++	}
++
+ 	tlink = cifs_get_tlink(cifs_sb_master_tlink(cifs_sb));
+ 	if (tlink == NULL) {
+ 		/* can not match superblock if tlink were ever null */
 
 
