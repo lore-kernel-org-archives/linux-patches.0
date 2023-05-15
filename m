@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8664FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16774C433EF;
-	Mon, 15 May 2023 16:56:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3306FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28095C433A4;
+	Mon, 15 May 2023 16:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169778;
-	bh=C1EHBejhltQUJsb+n597kPRcWUmcmrDTBbB4j7w2Thc=;
+	s=korg; t=1684169781;
+	bh=Nc25TSkVxVrXY64easAv0Dysj5N+r+hR4Ws0zUbzFD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tY0RhuhfUsAXXlmq7EHFF0drLJkwDW8aUeasLiRGgPNATnut+IfIXeJTmitsUp/Ni
-	 o8zrf4tp7qLV3LF2zuCY64lppvxKhw42FVCrHSxMtaLvLqUYCdMECDStyMaZuv7pae
-	 qzN0yR1evFBZ8xyJ4CEIY8PCo+EG8dyS9DShT77g=
+	b=QRSWXCh95R53OJM6SadulcdDc3Q6Bz3en5cdI6uFfqzKddWdiF9Z55vS+rggHvrQZ
+	 LqOHccjZP3nc/pGk1drKTqVyJFjJU+TM2EJ/yJ/WLQKl1jonyeCij5MCT08mv42UQi
+	 uJMBeQBGN4ytA/pvEY0shiq7kXK08gGocEXQUVqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Robert Foss <rfoss@kernel.org>
-Subject: [PATCH 6.3 168/246] drm/bridge: lt8912b: Fix DSI Video Mode
-Date: Mon, 15 May 2023 18:26:20 +0200
-Message-Id: <20230515161727.673967895@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>,
+	Rich Felker <dalias@libc.org>,
+	linux-sh@vger.kernel.org,
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 6.3 151/246] sh: math-emu: fix macro redefined warning
+Date: Mon, 15 May 2023 18:26:03 +0200
+Message-Id: <20230515161727.081528476@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,34 +39,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit f435b7ef3b360d689df2ffa8326352cd07940d92 upstream.
+commit 58a49ad90939386a8682e842c474a0d2c00ec39c upstream.
 
-LT8912 DSI port supports only Non-Burst mode video operation with Sync
-Events and continuous clock on clock lane, correct dsi mode flags
-according to that removing MIPI_DSI_MODE_VIDEO_BURST flag.
+Fix a warning that was reported by the kernel test robot:
 
-Cc: <stable@vger.kernel.org>
-Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230330093131.424828-1-francesco@dolcini.it
+In file included from ../include/math-emu/soft-fp.h:27,
+                 from ../arch/sh/math-emu/math.c:22:
+../arch/sh/include/asm/sfp-machine.h:17: warning: "__BYTE_ORDER" redefined
+   17 | #define __BYTE_ORDER __BIG_ENDIAN
+In file included from ../arch/sh/math-emu/math.c:21:
+../arch/sh/math-emu/sfp-util.h:71: note: this is the location of the previous definition
+   71 | #define __BYTE_ORDER __LITTLE_ENDIAN
+
+Fixes: b929926f01f2 ("sh: define __BIG_ENDIAN for math-emu")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: lore.kernel.org/r/202111121827.6v6SXtVv-lkp@intel.com
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+Cc: Rich Felker <dalias@libc.org>
+Cc: linux-sh@vger.kernel.org
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: stable@vger.kernel.org
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230306040037.20350-5-rdunlap@infradead.org
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c |    1 -
- 1 file changed, 1 deletion(-)
+ arch/sh/math-emu/sfp-util.h |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -504,7 +504,6 @@ static int lt8912_attach_dsi(struct lt89
- 	dsi->format = MIPI_DSI_FMT_RGB888;
+--- a/arch/sh/math-emu/sfp-util.h
++++ b/arch/sh/math-emu/sfp-util.h
+@@ -67,7 +67,3 @@
+   } while (0)
  
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
--			  MIPI_DSI_MODE_VIDEO_BURST |
- 			  MIPI_DSI_MODE_LPM |
- 			  MIPI_DSI_MODE_NO_EOT_PACKET;
- 
+ #define abort()	return 0
+-
+-#define __BYTE_ORDER __LITTLE_ENDIAN
+-
+-
 
 
