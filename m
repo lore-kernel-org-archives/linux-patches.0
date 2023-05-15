@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BC0FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:04:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C33DC433EF;
-	Mon, 15 May 2023 17:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB66DFBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:04:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62256C433D2;
+	Mon, 15 May 2023 17:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170291;
-	bh=xXMg8H4778BHXAIrTllZarOGafqqA8tPug/nW6gchgY=;
+	s=korg; t=1684170294;
+	bh=HvzSm/epUKNwnJdp2bgRuoIQRYV5cW5poApStixrwI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mmImPM6MJi3OBweGD9qHQHEkAcsumd3WbaORq/pFgw0U4a/gclS6TC/R8yXYvLFDZ
-	 yqnmQk5u3Pf9lcJYYUf0OuWpZGGDGd7kW3CUCQCRvSMG5eTRgnQZhW80uM8LUoj0lD
-	 Qn0oiHGm2De2upu3tD3JiTXP5aaRrgkl0ODXN55g=
+	b=0MjdnsdxPebmkjbStdIMw/b6NuZLvLZRlHWTz0ffLjNUE8pImmFjkABty9o5W7v2o
+	 xk1x+srxr86Tz5Uc5CiCLFgvH2IpY9lWd9xth3aj7Yce73sOUs/hn/I8piAoJ9zPam
+	 8F6n8bJCGFMB5/Eq4muM+muz3qsxCcw4zptyGRgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/239] i2c: tegra: Fix PEC support for SMBUS block read
-Date: Mon, 15 May 2023 18:25:18 +0200
-Message-Id: <20230515161723.356410431@linuxfoundation.org>
+Subject: [PATCH 6.1 056/239] net/sched: act_mirred: Add carrier check
+Date: Mon, 15 May 2023 18:25:19 +0200
+Message-Id: <20230515161723.385740834@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,125 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akhil R <akhilrajeev@nvidia.com>
+From: Victor Nogueira <victor@mojatatu.com>
 
-[ Upstream commit 9f855779a3874eee70e9f6be57b5f7774f14e510 ]
+[ Upstream commit 526f28bd0fbdc699cda31426928802650c1528e5 ]
 
-Update the msg->len value correctly for SMBUS block read. The discrepancy
-went unnoticed as msg->len is used in SMBUS transfers only when a PEC
-byte is added.
+There are cases where the device is adminstratively UP, but operationally
+down. For example, we have a physical device (Nvidia ConnectX-6 Dx, 25Gbps)
+who's cable was pulled out, here is its ip link output:
 
-Fixes: d7583c8a5748 ("i2c: tegra: Add SMBus block read function")
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+5: ens2f1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DEFAULT group default qlen 1000
+    link/ether b8:ce:f6:4b:68:35 brd ff:ff:ff:ff:ff:ff
+    altname enp179s0f1np1
+
+As you can see, it's administratively UP but operationally down.
+In this case, sending a packet to this port caused a nasty kernel hang (so
+nasty that we were unable to capture it). Aborting a transmit based on
+operational status (in addition to administrative status) fixes the issue.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+v1->v2: Add fixes tag
+v2->v3: Remove blank line between tags + add change log, suggested by Leon
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-tegra.c | 40 +++++++++++++++++++++++-----------
- 1 file changed, 27 insertions(+), 13 deletions(-)
+ net/sched/act_mirred.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
-index 3869c258a5296..2bc40f957e509 100644
---- a/drivers/i2c/busses/i2c-tegra.c
-+++ b/drivers/i2c/busses/i2c-tegra.c
-@@ -242,9 +242,10 @@ struct tegra_i2c_hw_feature {
-  * @is_dvc: identifies the DVC I2C controller, has a different register layout
-  * @is_vi: identifies the VI I2C controller, has a different register layout
-  * @msg_complete: transfer completion notifier
-+ * @msg_buf_remaining: size of unsent data in the message buffer
-+ * @msg_len: length of message in current transfer
-  * @msg_err: error code for completed message
-  * @msg_buf: pointer to current message data
-- * @msg_buf_remaining: size of unsent data in the message buffer
-  * @msg_read: indicates that the transfer is a read access
-  * @timings: i2c timings information like bus frequency
-  * @multimaster_mode: indicates that I2C controller is in multi-master mode
-@@ -277,6 +278,7 @@ struct tegra_i2c_dev {
- 
- 	struct completion msg_complete;
- 	size_t msg_buf_remaining;
-+	unsigned int msg_len;
- 	int msg_err;
- 	u8 *msg_buf;
- 
-@@ -1169,7 +1171,7 @@ static void tegra_i2c_push_packet_header(struct tegra_i2c_dev *i2c_dev,
- 	else
- 		i2c_writel(i2c_dev, packet_header, I2C_TX_FIFO);
- 
--	packet_header = msg->len - 1;
-+	packet_header = i2c_dev->msg_len - 1;
- 
- 	if (i2c_dev->dma_mode && !i2c_dev->msg_read)
- 		*dma_buf++ = packet_header;
-@@ -1242,20 +1244,32 @@ static int tegra_i2c_xfer_msg(struct tegra_i2c_dev *i2c_dev,
- 		return err;
- 
- 	i2c_dev->msg_buf = msg->buf;
-+	i2c_dev->msg_len = msg->len;
- 
--	/* The condition true implies smbus block read and len is already read */
--	if (msg->flags & I2C_M_RECV_LEN && end_state != MSG_END_CONTINUE)
--		i2c_dev->msg_buf = msg->buf + 1;
--
--	i2c_dev->msg_buf_remaining = msg->len;
- 	i2c_dev->msg_err = I2C_ERR_NONE;
- 	i2c_dev->msg_read = !!(msg->flags & I2C_M_RD);
- 	reinit_completion(&i2c_dev->msg_complete);
- 
-+	/*
-+	 * For SMBUS block read command, read only 1 byte in the first transfer.
-+	 * Adjust that 1 byte for the next transfer in the msg buffer and msg
-+	 * length.
-+	 */
-+	if (msg->flags & I2C_M_RECV_LEN) {
-+		if (end_state == MSG_END_CONTINUE) {
-+			i2c_dev->msg_len = 1;
-+		} else {
-+			i2c_dev->msg_buf += 1;
-+			i2c_dev->msg_len -= 1;
-+		}
-+	}
-+
-+	i2c_dev->msg_buf_remaining = i2c_dev->msg_len;
-+
- 	if (i2c_dev->msg_read)
--		xfer_size = msg->len;
-+		xfer_size = i2c_dev->msg_len;
- 	else
--		xfer_size = msg->len + I2C_PACKET_HEADER_SIZE;
-+		xfer_size = i2c_dev->msg_len + I2C_PACKET_HEADER_SIZE;
- 
- 	xfer_size = ALIGN(xfer_size, BYTES_PER_FIFO_WORD);
- 
-@@ -1295,7 +1309,7 @@ static int tegra_i2c_xfer_msg(struct tegra_i2c_dev *i2c_dev,
- 	if (!i2c_dev->msg_read) {
- 		if (i2c_dev->dma_mode) {
- 			memcpy(i2c_dev->dma_buf + I2C_PACKET_HEADER_SIZE,
--			       msg->buf, msg->len);
-+			       msg->buf, i2c_dev->msg_len);
- 
- 			dma_sync_single_for_device(i2c_dev->dma_dev,
- 						   i2c_dev->dma_phys,
-@@ -1352,7 +1366,7 @@ static int tegra_i2c_xfer_msg(struct tegra_i2c_dev *i2c_dev,
- 						i2c_dev->dma_phys,
- 						xfer_size, DMA_FROM_DEVICE);
- 
--			memcpy(i2c_dev->msg_buf, i2c_dev->dma_buf, msg->len);
-+			memcpy(i2c_dev->msg_buf, i2c_dev->dma_buf, i2c_dev->msg_len);
- 		}
+diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
+index baeae5e5c8f0c..36395e5db3b40 100644
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -262,7 +262,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
+ 		goto out;
  	}
  
-@@ -1408,8 +1422,8 @@ static int tegra_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[],
- 			ret = tegra_i2c_xfer_msg(i2c_dev, &msgs[i], MSG_END_CONTINUE);
- 			if (ret)
- 				break;
--			/* Set the read byte as msg len */
--			msgs[i].len = msgs[i].buf[0];
-+			/* Set the msg length from first byte */
-+			msgs[i].len += msgs[i].buf[0];
- 			dev_dbg(i2c_dev->dev, "reading %d bytes\n", msgs[i].len);
- 		}
- 		ret = tegra_i2c_xfer_msg(i2c_dev, &msgs[i], end_type);
+-	if (unlikely(!(dev->flags & IFF_UP))) {
++	if (unlikely(!(dev->flags & IFF_UP)) || !netif_carrier_ok(dev)) {
+ 		net_notice_ratelimited("tc mirred to Houston: device %s is down\n",
+ 				       dev->name);
+ 		goto out;
 -- 
 2.39.2
 
