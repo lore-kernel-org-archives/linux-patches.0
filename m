@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EB0FBFE
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:12:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2982C433D2;
-	Mon, 15 May 2023 17:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F106FBFE
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:12:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E4DC433EF;
+	Mon, 15 May 2023 17:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170768;
-	bh=CO+ruu5NkpRgtRYA3hftMbSIOvFlNRVgiGKt7J7EbIA=;
+	s=korg; t=1684170771;
+	bh=jdE4W9sWacXA89HjHKlWdnHP9Iwudj0NT5QRXnKOz/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VOhufAFdpVkf5KWYQPoRPrxm+bVJq6r2jS6OUH/YxnL51/rL4SQM6hT5/tUd76hx/
-	 xrrlSz2GTk+uC8fBVnUJcrvMMC6D2WbAUuAbaf59A6NIkjmqCNJtEi7k1uKEDbuec/
-	 3XeMprTlbTVo2oOT3tIbcXnnSphB9dEqvRgJ96PE=
+	b=XQjrPhaVCsHS+0Far2moV41gElks3MmhSismVaZQ7MqcQ9F0ZvLdpBZul5FIBfYHY
+	 hdqY/F5oyF2uJSeabvvzQroge9WF71w/j4bTgCWNTkt6yFvKvEHvAslb4yGMwTDYri
+	 dQ+bw63r9g/b6rzufjcfUG78xLJPpNErw29+CGJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.1 235/239] x86/amd_nb: Add PCI ID for family 19h model 78h
-Date: Mon, 15 May 2023 18:28:18 +0200
-Message-Id: <20230515161728.758591816@linuxfoundation.org>
+	Dawei Li <set_pte_at@outlook.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 212/239] ksmbd: Implements sess->ksmbd_chann_list as xarray
+Date: Mon, 15 May 2023 18:27:55 +0200
+Message-Id: <20230515161728.087986944@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,61 +36,278 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Dawei Li <set_pte_at@outlook.com>
 
-commit 23a5b8bb022c1e071ca91b1a9c10f0ad6a0966e9 upstream.
+[ Upstream commit 1d9c4172110e645b383ff13eee759728d74f1a5d ]
 
-Commit
+For some ops on channel:
+1. lookup_chann_list(), possibly on high frequency.
+2. ksmbd_chann_del().
 
-  310e782a99c7 ("platform/x86/amd: pmc: Utilize SMN index 0 for driver probe")
+Connection is used as indexing key to lookup channel, in that case,
+linear search based on list may suffer a bit for performance.
 
-switched to using amd_smn_read() which relies upon the misc PCI ID used
-by DF function 3 being included in a table.  The ID for model 78h is
-missing in that table, so amd_smn_read() doesn't work.
+Implements sess->ksmbd_chann_list as xarray.
 
-Add the missing ID into amd_nb, restoring s2idle on this system.
-
-  [ bp: Simplify commit message. ]
-
-Fixes: 310e782a99c7 ("platform/x86/amd: pmc: Utilize SMN index 0 for driver probe")
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Bjorn Helgaas <bhelgaas@google.com>  # pci_ids.h
-Acked-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230427053338.16653-2-mario.limonciello@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dawei Li <set_pte_at@outlook.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: f5c779b7ddbd ("ksmbd: fix racy issue from session setup and logoff")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/amd_nb.c |    2 ++
- include/linux/pci_ids.h  |    1 +
- 2 files changed, 3 insertions(+)
+ fs/ksmbd/mgmt/user_session.c | 61 ++++++++++++++----------------------
+ fs/ksmbd/mgmt/user_session.h |  4 +--
+ fs/ksmbd/smb2pdu.c           | 34 +++-----------------
+ 3 files changed, 30 insertions(+), 69 deletions(-)
 
---- a/arch/x86/kernel/amd_nb.c
-+++ b/arch/x86/kernel/amd_nb.c
-@@ -36,6 +36,7 @@
- #define PCI_DEVICE_ID_AMD_19H_M50H_DF_F4 0x166e
- #define PCI_DEVICE_ID_AMD_19H_M60H_DF_F4 0x14e4
- #define PCI_DEVICE_ID_AMD_19H_M70H_DF_F4 0x14f4
-+#define PCI_DEVICE_ID_AMD_19H_M78H_DF_F4 0x12fc
+diff --git a/fs/ksmbd/mgmt/user_session.c b/fs/ksmbd/mgmt/user_session.c
+index 92b1603b5abeb..a2b128dedcfcf 100644
+--- a/fs/ksmbd/mgmt/user_session.c
++++ b/fs/ksmbd/mgmt/user_session.c
+@@ -30,15 +30,15 @@ struct ksmbd_session_rpc {
  
- /* Protect the PCI config register pairs used for SMN. */
- static DEFINE_MUTEX(smn_mutex);
-@@ -79,6 +80,7 @@ static const struct pci_device_id amd_nb
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M50H_DF_F3) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M60H_DF_F3) },
- 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M70H_DF_F3) },
-+	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_19H_M78H_DF_F3) },
- 	{}
+ static void free_channel_list(struct ksmbd_session *sess)
+ {
+-	struct channel *chann, *tmp;
++	struct channel *chann;
++	unsigned long index;
+ 
+-	write_lock(&sess->chann_lock);
+-	list_for_each_entry_safe(chann, tmp, &sess->ksmbd_chann_list,
+-				 chann_list) {
+-		list_del(&chann->chann_list);
++	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
++		xa_erase(&sess->ksmbd_chann_list, index);
+ 		kfree(chann);
+ 	}
+-	write_unlock(&sess->chann_lock);
++
++	xa_destroy(&sess->ksmbd_chann_list);
+ }
+ 
+ static void __session_rpc_close(struct ksmbd_session *sess,
+@@ -190,21 +190,15 @@ int ksmbd_session_register(struct ksmbd_conn *conn,
+ 
+ static int ksmbd_chann_del(struct ksmbd_conn *conn, struct ksmbd_session *sess)
+ {
+-	struct channel *chann, *tmp;
+-
+-	write_lock(&sess->chann_lock);
+-	list_for_each_entry_safe(chann, tmp, &sess->ksmbd_chann_list,
+-				 chann_list) {
+-		if (chann->conn == conn) {
+-			list_del(&chann->chann_list);
+-			kfree(chann);
+-			write_unlock(&sess->chann_lock);
+-			return 0;
+-		}
+-	}
+-	write_unlock(&sess->chann_lock);
++	struct channel *chann;
++
++	chann = xa_erase(&sess->ksmbd_chann_list, (long)conn);
++	if (!chann)
++		return -ENOENT;
+ 
+-	return -ENOENT;
++	kfree(chann);
++
++	return 0;
+ }
+ 
+ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
+@@ -234,7 +228,7 @@ void ksmbd_sessions_deregister(struct ksmbd_conn *conn)
+ 	return;
+ 
+ sess_destroy:
+-	if (list_empty(&sess->ksmbd_chann_list)) {
++	if (xa_empty(&sess->ksmbd_chann_list)) {
+ 		xa_erase(&conn->sessions, sess->id);
+ 		ksmbd_session_destroy(sess);
+ 	}
+@@ -320,6 +314,9 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	struct ksmbd_session *sess;
+ 	int ret;
+ 
++	if (protocol != CIFDS_SESSION_FLAG_SMB2)
++		return NULL;
++
+ 	sess = kzalloc(sizeof(struct ksmbd_session), GFP_KERNEL);
+ 	if (!sess)
+ 		return NULL;
+@@ -329,30 +326,20 @@ static struct ksmbd_session *__session_create(int protocol)
+ 
+ 	set_session_flag(sess, protocol);
+ 	xa_init(&sess->tree_conns);
+-	INIT_LIST_HEAD(&sess->ksmbd_chann_list);
++	xa_init(&sess->ksmbd_chann_list);
+ 	INIT_LIST_HEAD(&sess->rpc_handle_list);
+ 	sess->sequence_number = 1;
+-	rwlock_init(&sess->chann_lock);
+-
+-	switch (protocol) {
+-	case CIFDS_SESSION_FLAG_SMB2:
+-		ret = __init_smb2_session(sess);
+-		break;
+-	default:
+-		ret = -EINVAL;
+-		break;
+-	}
+ 
++	ret = __init_smb2_session(sess);
+ 	if (ret)
+ 		goto error;
+ 
+ 	ida_init(&sess->tree_conn_ida);
+ 
+-	if (protocol == CIFDS_SESSION_FLAG_SMB2) {
+-		down_write(&sessions_table_lock);
+-		hash_add(sessions_table, &sess->hlist, sess->id);
+-		up_write(&sessions_table_lock);
+-	}
++	down_write(&sessions_table_lock);
++	hash_add(sessions_table, &sess->hlist, sess->id);
++	up_write(&sessions_table_lock);
++
+ 	return sess;
+ 
+ error:
+diff --git a/fs/ksmbd/mgmt/user_session.h b/fs/ksmbd/mgmt/user_session.h
+index 8934b8ee275ba..44a3c67b2bd92 100644
+--- a/fs/ksmbd/mgmt/user_session.h
++++ b/fs/ksmbd/mgmt/user_session.h
+@@ -21,7 +21,6 @@ struct ksmbd_file_table;
+ struct channel {
+ 	__u8			smb3signingkey[SMB3_SIGN_KEY_SIZE];
+ 	struct ksmbd_conn	*conn;
+-	struct list_head	chann_list;
  };
  
---- a/include/linux/pci_ids.h
-+++ b/include/linux/pci_ids.h
-@@ -567,6 +567,7 @@
- #define PCI_DEVICE_ID_AMD_19H_M50H_DF_F3 0x166d
- #define PCI_DEVICE_ID_AMD_19H_M60H_DF_F3 0x14e3
- #define PCI_DEVICE_ID_AMD_19H_M70H_DF_F3 0x14f3
-+#define PCI_DEVICE_ID_AMD_19H_M78H_DF_F3 0x12fb
- #define PCI_DEVICE_ID_AMD_CNB17H_F3	0x1703
- #define PCI_DEVICE_ID_AMD_LANCE		0x2000
- #define PCI_DEVICE_ID_AMD_LANCE_HOME	0x2001
+ struct preauth_session {
+@@ -50,8 +49,7 @@ struct ksmbd_session {
+ 	char				sess_key[CIFS_KEY_SIZE];
+ 
+ 	struct hlist_node		hlist;
+-	rwlock_t			chann_lock;
+-	struct list_head		ksmbd_chann_list;
++	struct xarray			ksmbd_chann_list;
+ 	struct xarray			tree_conns;
+ 	struct ida			tree_conn_ida;
+ 	struct list_head		rpc_handle_list;
+diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
+index acd66fb40c5f0..ac79d4c86067f 100644
+--- a/fs/ksmbd/smb2pdu.c
++++ b/fs/ksmbd/smb2pdu.c
+@@ -74,14 +74,7 @@ static inline bool check_session_id(struct ksmbd_conn *conn, u64 id)
+ 
+ struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn *conn)
+ {
+-	struct channel *chann;
+-
+-	list_for_each_entry(chann, &sess->ksmbd_chann_list, chann_list) {
+-		if (chann->conn == conn)
+-			return chann;
+-	}
+-
+-	return NULL;
++	return xa_load(&sess->ksmbd_chann_list, (long)conn);
+ }
+ 
+ /**
+@@ -592,6 +585,7 @@ static void destroy_previous_session(struct ksmbd_conn *conn,
+ 	struct ksmbd_session *prev_sess = ksmbd_session_lookup_slowpath(id);
+ 	struct ksmbd_user *prev_user;
+ 	struct channel *chann;
++	long index;
+ 
+ 	if (!prev_sess)
+ 		return;
+@@ -605,10 +599,8 @@ static void destroy_previous_session(struct ksmbd_conn *conn,
+ 		return;
+ 
+ 	prev_sess->state = SMB2_SESSION_EXPIRED;
+-	write_lock(&prev_sess->chann_lock);
+-	list_for_each_entry(chann, &prev_sess->ksmbd_chann_list, chann_list)
++	xa_for_each(&prev_sess->ksmbd_chann_list, index, chann)
+ 		chann->conn->status = KSMBD_SESS_EXITING;
+-	write_unlock(&prev_sess->chann_lock);
+ }
+ 
+ /**
+@@ -1520,19 +1512,14 @@ static int ntlm_authenticate(struct ksmbd_work *work)
+ 
+ binding_session:
+ 	if (conn->dialect >= SMB30_PROT_ID) {
+-		read_lock(&sess->chann_lock);
+ 		chann = lookup_chann_list(sess, conn);
+-		read_unlock(&sess->chann_lock);
+ 		if (!chann) {
+ 			chann = kmalloc(sizeof(struct channel), GFP_KERNEL);
+ 			if (!chann)
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
+-			INIT_LIST_HEAD(&chann->chann_list);
+-			write_lock(&sess->chann_lock);
+-			list_add(&chann->chann_list, &sess->ksmbd_chann_list);
+-			write_unlock(&sess->chann_lock);
++			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, GFP_KERNEL);
+ 		}
+ 	}
+ 
+@@ -1606,19 +1593,14 @@ static int krb5_authenticate(struct ksmbd_work *work)
+ 	}
+ 
+ 	if (conn->dialect >= SMB30_PROT_ID) {
+-		read_lock(&sess->chann_lock);
+ 		chann = lookup_chann_list(sess, conn);
+-		read_unlock(&sess->chann_lock);
+ 		if (!chann) {
+ 			chann = kmalloc(sizeof(struct channel), GFP_KERNEL);
+ 			if (!chann)
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
+-			INIT_LIST_HEAD(&chann->chann_list);
+-			write_lock(&sess->chann_lock);
+-			list_add(&chann->chann_list, &sess->ksmbd_chann_list);
+-			write_unlock(&sess->chann_lock);
++			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, GFP_KERNEL);
+ 		}
+ 	}
+ 
+@@ -8428,14 +8410,11 @@ int smb3_check_sign_req(struct ksmbd_work *work)
+ 	if (le16_to_cpu(hdr->Command) == SMB2_SESSION_SETUP_HE) {
+ 		signing_key = work->sess->smb3signingkey;
+ 	} else {
+-		read_lock(&work->sess->chann_lock);
+ 		chann = lookup_chann_list(work->sess, conn);
+ 		if (!chann) {
+-			read_unlock(&work->sess->chann_lock);
+ 			return 0;
+ 		}
+ 		signing_key = chann->smb3signingkey;
+-		read_unlock(&work->sess->chann_lock);
+ 	}
+ 
+ 	if (!signing_key) {
+@@ -8495,14 +8474,11 @@ void smb3_set_sign_rsp(struct ksmbd_work *work)
+ 	    le16_to_cpu(hdr->Command) == SMB2_SESSION_SETUP_HE) {
+ 		signing_key = work->sess->smb3signingkey;
+ 	} else {
+-		read_lock(&work->sess->chann_lock);
+ 		chann = lookup_chann_list(work->sess, work->conn);
+ 		if (!chann) {
+-			read_unlock(&work->sess->chann_lock);
+ 			return;
+ 		}
+ 		signing_key = chann->smb3signingkey;
+-		read_unlock(&work->sess->chann_lock);
+ 	}
+ 
+ 	if (!signing_key)
+-- 
+2.39.2
+
 
 
