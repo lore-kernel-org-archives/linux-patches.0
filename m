@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E679AFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:44:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DF3C433EF;
-	Mon, 15 May 2023 16:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 046FBFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:44:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758CCC433EF;
+	Mon, 15 May 2023 16:44:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169079;
-	bh=dmsKnl24JXvUHTbFJilFHC1wQqrXFqe+duimmLnkt8o=;
+	s=korg; t=1684169082;
+	bh=2vfoooX6IhvEmM2mujXCsv3TM1IFWjRCEjiGHsVuOfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zF9gQzZNbJmmcp4RsZGsCGuuFy8qPZwtZ+qMZJTuCWXoAaymuCbb1z3ryUnF/mcSP
-	 dJhgmEMf/ZIuPtgXk2Cu0+3JhhBfYUn8YxyTj1K3VZgsXQPoM7bzMZoJJP7q+4UJqx
-	 vcMUphl52CCh2JfXpRKMRLDEC4uBfF7mddDJQy9Y=
+	b=ARCnQxam51rQQzT4s5dklueVep2g/0uI7B4joDy3n+Ogeyc62Eb2d5cSJ2is9Lzan
+	 Is9sY3piepPPbkV6MctcA10UtQ8YWdjtR/AQrD99ukTX7HuihV/D2zQinv/BJI6PQu
+	 xXMQX+fUmrPW1DC5Jpk+nt8Y+Ms16LIZdkbVx7Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 4.19 136/191] perf auxtrace: Fix address filter entire kernel size
-Date: Mon, 15 May 2023 18:26:13 +0200
-Message-Id: <20230515161712.323065125@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 4.19 137/191] debugobject: Ensure pool refill (again)
+Date: Mon, 15 May 2023 18:26:14 +0200
+Message-Id: <20230515161712.373109664@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -37,65 +34,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 1f9f33ccf0320be21703d9195dd2b36a1c9a07cb upstream.
+commit 0af462f19e635ad522f28981238334620881badc upstream.
 
-kallsyms is not completely in address order.
+The recent fix to ensure atomicity of lookup and allocation inadvertently
+broke the pool refill mechanism.
 
-In find_entire_kern_cb(), calculate the kernel end from the maximum
-address not the last symbol.
+Prior to that change debug_objects_activate() and debug_objecs_assert_init()
+invoked debug_objecs_init() to set up the tracking object for statically
+initialized objects. That's not longer the case and debug_objecs_init() is
+now the only place which does pool refills.
 
-Example:
+Depending on the number of statically initialized objects this can be
+enough to actually deplete the pool, which was observed by Ido via a
+debugobjects OOM warning.
 
- Before:
+Restore the old behaviour by adding explicit refill opportunities to
+debug_objects_activate() and debug_objecs_assert_init().
 
-    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | tail -1
-    ffffffffc00b8bd0 t bpf_prog_6deef7357e7b4530    [bpf]
-    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | sort | tail -1
-    ffffffffc15e0cc0 t iwl_mvm_exit [iwlmvm]
-    $ perf.d093603a05aa record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
-    Address filter: filter 0xffffffff93200000/0x2ceba000
-
- After:
-
-    $ perf.8fb0f7a01f8e record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
-    Address filter: filter 0xffffffff93200000/0x2e3e2000
-
-Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230403154831.8651-2-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 63a759694eed ("debugobject: Prevent init race with static objects")
+Reported-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://lore.kernel.org/r/871qk05a9d.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/auxtrace.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ lib/debugobjects.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -1793,6 +1793,7 @@ static int find_entire_kern_cb(void *arg
- 			       char type, u64 start)
- {
- 	struct sym_args *args = arg;
-+	u64 size;
- 
- 	if (!kallsyms__is_function(type))
- 		return 0;
-@@ -1802,7 +1803,9 @@ static int find_entire_kern_cb(void *arg
- 		args->start = start;
- 	}
- 	/* Don't know exactly where the kernel ends, so we add a page */
--	args->size = round_up(start, page_size) + page_size - args->start;
-+	size = round_up(start, page_size) + page_size - args->start;
-+	if (size > args->size)
-+		args->size = size;
- 
- 	return 0;
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -460,6 +460,16 @@ static struct debug_obj *lookup_object_o
+ 	return NULL;
  }
+ 
++static void debug_objects_fill_pool(void)
++{
++	/*
++	 * On RT enabled kernels the pool refill must happen in preemptible
++	 * context:
++	 */
++	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible())
++		fill_pool();
++}
++
+ static void
+ __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
+ {
+@@ -468,7 +478,7 @@ __debug_object_init(void *addr, struct d
+ 	struct debug_obj *obj;
+ 	unsigned long flags;
+ 
+-	fill_pool();
++	debug_objects_fill_pool();
+ 
+ 	db = get_bucket((unsigned long) addr);
+ 
+@@ -553,6 +563,8 @@ int debug_object_activate(void *addr, st
+ 	if (!debug_objects_enabled)
+ 		return 0;
+ 
++	debug_objects_fill_pool();
++
+ 	db = get_bucket((unsigned long) addr);
+ 
+ 	raw_spin_lock_irqsave(&db->lock, flags);
+@@ -762,6 +774,8 @@ void debug_object_assert_init(void *addr
+ 	if (!debug_objects_enabled)
+ 		return;
+ 
++	debug_objects_fill_pool();
++
+ 	db = get_bucket((unsigned long) addr);
+ 
+ 	raw_spin_lock_irqsave(&db->lock, flags);
 
 
