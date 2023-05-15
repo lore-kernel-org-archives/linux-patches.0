@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CEBDF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:39:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9A6C433EF;
-	Mon, 15 May 2023 16:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3920BDF53
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:39:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D885C433EF;
+	Mon, 15 May 2023 16:39:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168773;
-	bh=grx8F4N+VDnBePEeWy6jqceCHQ7OGokjSWBsZQTCjRY=;
+	s=korg; t=1684168776;
+	bh=N5hqo7c0icuJv8vUBc6mUJchXYaP8Dzkb0wFJ5KCdZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QhvrjvF9iPvpVXEm8FRksHriYwaoC1E2FOvkGwj0GOBxV13DIh8Fyxwj4Yg0wAA72
-	 0kPnIhpCtxU4wTLrCRD7T5a2MkWZqRLqFbXLaFZt+MfOZSbNnBDDVWb3kz6vZUyo7b
-	 DEfOu719f8FI5t7rR8WXIh+LVSFffoeGNh0G2ydI=
+	b=puPFuLAq6lqZhjd2uALrrN0kMf8R/z7o0GwGVx7hYjSYwp4StlTzBr8Q8PjYqmL73
+	 rbpPySXTpANsOe+6Z4KA26uHr6f1R7lHJzXv9DnOXGm9FyXpT9htuj7+mUP4hw2NIB
+	 949IV5cBqE6zXoqipzSIxwxlwUVUS++rL7Vf4qM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Uros Bizjak <ubizjak@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 037/191] x86/apic: Fix atomic update of offset in reserve_eilvt_offset()
-Date: Mon, 15 May 2023 18:24:34 +0200
-Message-Id: <20230515161708.534257105@linuxfoundation.org>
+Subject: [PATCH 4.19 038/191] media: dm1105: Fix use after free bug in dm1105_remove due to race condition
+Date: Mon, 15 May 2023 18:24:35 +0200
+Message-Id: <20230515161708.563213990@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,47 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit f96fb2df3eb31ede1b34b0521560967310267750 ]
+[ Upstream commit 5abda7a16698d4d1f47af1168d8fa2c640116b4a ]
 
-The detection of atomic update failure in reserve_eilvt_offset() is
-not correct. The value returned by atomic_cmpxchg() should be compared
-to the old value from the location to be updated.
+In dm1105_probe, it called dm1105_ir_init and bound
+&dm1105->ir.work with dm1105_emit_key.
+When it handles IRQ request with dm1105_irq,
+it may call schedule_work to start the work.
 
-If these two are the same, then atomic update succeeded and
-"eilvt_offsets[offset]" location is updated to "new" in an atomic way.
+When we call dm1105_remove to remove the driver, there
+may be a sequence as follows:
 
-Otherwise, the atomic update failed and it should be retried with the
-value from "eilvt_offsets[offset]" - exactly what atomic_try_cmpxchg()
-does in a correct and more optimal way.
+Fix it by finishing the work before cleanup in dm1105_remove
 
-Fixes: a68c439b1966c ("apic, x86: Check if EILVT APIC registers are available (AMD only)")
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230227160917.107820-1-ubizjak@gmail.com
+CPU0                  CPU1
+
+                    |dm1105_emit_key
+dm1105_remove      |
+  dm1105_ir_exit       |
+    rc_unregister_device |
+    rc_free_device  |
+    rc_dev_release  |
+    kfree(dev);     |
+                    |
+                    | rc_keydown
+                    |   //use
+
+Fixes: 34d2f9bf189c ("V4L/DVB: dm1105: use dm1105_dev & dev instead of dm1105dvb")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/apic/apic.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/media/pci/dm1105/dm1105.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/kernel/apic/apic.c b/arch/x86/kernel/apic/apic.c
-index 926939978c1c3..9318fe7d850e3 100644
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -403,10 +403,9 @@ static unsigned int reserve_eilvt_offset(int offset, unsigned int new)
- 		if (vector && !eilvt_entry_is_changeable(vector, new))
- 			/* may not change if vectors are different */
- 			return rsvd;
--		rsvd = atomic_cmpxchg(&eilvt_offsets[offset], rsvd, new);
--	} while (rsvd != new);
-+	} while (!atomic_try_cmpxchg(&eilvt_offsets[offset], &rsvd, new));
+diff --git a/drivers/media/pci/dm1105/dm1105.c b/drivers/media/pci/dm1105/dm1105.c
+index 1ddb0576fb7b1..dc3fc69e44806 100644
+--- a/drivers/media/pci/dm1105/dm1105.c
++++ b/drivers/media/pci/dm1105/dm1105.c
+@@ -1188,6 +1188,7 @@ static void dm1105_remove(struct pci_dev *pdev)
+ 	struct dvb_demux *dvbdemux = &dev->demux;
+ 	struct dmx_demux *dmx = &dvbdemux->dmx;
  
--	rsvd &= ~APIC_EILVT_MASKED;
-+	rsvd = new & ~APIC_EILVT_MASKED;
- 	if (rsvd && rsvd != vector)
- 		pr_info("LVT offset %d assigned for vector 0x%02x\n",
- 			offset, rsvd);
++	cancel_work_sync(&dev->ir.work);
+ 	dm1105_ir_exit(dev);
+ 	dmx->close(dmx);
+ 	dvb_net_release(&dev->dvbnet);
 -- 
 2.39.2
 
