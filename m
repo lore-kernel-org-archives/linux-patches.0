@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97C7FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461EEC433EF;
-	Mon, 15 May 2023 17:35:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180C6FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712B9C433EF;
+	Mon, 15 May 2023 17:35:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172132;
-	bh=/psOibmtnnkcz1+tirmhsBiDgkCvd5+0ZG4x9ICNoaM=;
+	s=korg; t=1684172135;
+	bh=yjSMFh2lDx9zW9UwJoL3rkqVvGKryu1CEZqvhD2/m5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YToaXaL2r5U+O/oWqQWlGhpTxLF6a9QLdTv0tI1IQ4dov/KK4S/jXO2oVCop4CHr7
-	 c9NLpyB8m10wBAReI2H53EkdVfMQUm/W67DZ2eBbSk4pT+98AHDS5C5QwFqHFrjtXr
-	 MqQUcKVpTCN1tNQHP8XMoL6O3mir9EMf+M6KNcv8=
+	b=Y/6TMh21eEC+xkkjGuJ4amkyNmEOI8WU5e1TN1YpGSXVmupiOZEudh6GsErjpBal3
+	 fgcWMoTGKXIhqn4yDrEheHHtsZMjaEGInrRW94GDYFCQIBsc2T04mv3B9QHythIdTc
+	 +Zxq4vd5+nkY2jxZbTO6Ks67yD1qxxAExxyJEVUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 054/381] nilfs2: fix infinite loop in nilfs_mdt_get_block()
-Date: Mon, 15 May 2023 18:25:05 +0200
-Message-Id: <20230515161739.268467383@linuxfoundation.org>
+	Li Nan <linan122@huawei.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 5.10 055/381] md/raid10: fix null-ptr-deref in raid10_sync_request
+Date: Mon, 15 May 2023 18:25:06 +0200
+Message-Id: <20230515161739.316982436@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,71 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Li Nan <linan122@huawei.com>
 
-commit a6a491c048882e7e424d407d32cba0b52d9ef2bf upstream.
+commit a405c6f0229526160aa3f177f65e20c86fce84c5 upstream.
 
-If the disk image that nilfs2 mounts is corrupted and a virtual block
-address obtained by block lookup for a metadata file is invalid,
-nilfs_bmap_lookup_at_level() may return the same internal return code as
--ENOENT, meaning the block does not exist in the metadata file.
+init_resync() inits mempool and sets conf->have_replacemnt at the beginning
+of sync, close_sync() frees the mempool when sync is completed.
 
-This duplication of return codes confuses nilfs_mdt_get_block(), causing
-it to read and create a metadata block indefinitely.
+After [1] recovery might be skipped and init_resync() is called but
+close_sync() is not. null-ptr-deref occurs with r10bio->dev[i].repl_bio.
 
-In particular, if this happens to the inode metadata file, ifile,
-semaphore i_rwsem can be left held, causing task hangs in lock_mount.
+The following is one way to reproduce the issue.
 
-Fix this issue by making nilfs_bmap_lookup_at_level() treat virtual block
-address translation failures with -ENOENT as metadata corruption instead
-of returning the error code.
+  1) create a array, wait for resync to complete, mddev->recovery_cp is set
+     to MaxSector.
+  2) recovery is woken and it is skipped. conf->have_replacement is set to
+     0 in init_resync(). close_sync() not called.
+  3) some io errors and rdev A is set to WantReplacement.
+  4) a new device is added and set to A's replacement.
+  5) recovery is woken, A have replacement, but conf->have_replacemnt is
+     0. r10bio->dev[i].repl_bio will not be alloced and null-ptr-deref
+     occurs.
 
-Link: https://lkml.kernel.org/r/20230430193046.6769-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com
-  Link: https://syzkaller.appspot.com/bug?extid=221d75710bde87fa0e97
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fix it by not calling init_resync() if recovery skipped.
+
+[1] commit 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
+Fixes: 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Nan <linan122@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230222041000.3341651-3-linan666@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/bmap.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/md/raid10.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/nilfs2/bmap.c
-+++ b/fs/nilfs2/bmap.c
-@@ -67,20 +67,28 @@ int nilfs_bmap_lookup_at_level(struct ni
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -2900,10 +2900,6 @@ static sector_t raid10_sync_request(stru
+ 	sector_t chunk_mask = conf->geo.chunk_mask;
+ 	int page_idx = 0;
  
- 	down_read(&bmap->b_sem);
- 	ret = bmap->b_ops->bop_lookup(bmap, key, level, ptrp);
--	if (ret < 0) {
--		ret = nilfs_bmap_convert_error(bmap, __func__, ret);
-+	if (ret < 0)
- 		goto out;
--	}
-+
- 	if (NILFS_BMAP_USE_VBN(bmap)) {
- 		ret = nilfs_dat_translate(nilfs_bmap_get_dat(bmap), *ptrp,
- 					  &blocknr);
- 		if (!ret)
- 			*ptrp = blocknr;
-+		else if (ret == -ENOENT) {
-+			/*
-+			 * If there was no valid entry in DAT for the block
-+			 * address obtained by b_ops->bop_lookup, then pass
-+			 * internal code -EINVAL to nilfs_bmap_convert_error
-+			 * to treat it as metadata corruption.
-+			 */
-+			ret = -EINVAL;
-+		}
+-	if (!mempool_initialized(&conf->r10buf_pool))
+-		if (init_resync(conf))
+-			return 0;
+-
+ 	/*
+ 	 * Allow skipping a full rebuild for incremental assembly
+ 	 * of a clean array, like RAID1 does.
+@@ -2919,6 +2915,10 @@ static sector_t raid10_sync_request(stru
+ 		return mddev->dev_sectors - sector_nr;
  	}
  
-  out:
- 	up_read(&bmap->b_sem);
--	return ret;
-+	return nilfs_bmap_convert_error(bmap, __func__, ret);
- }
- 
- int nilfs_bmap_lookup_contig(struct nilfs_bmap *bmap, __u64 key, __u64 *ptrp,
++	if (!mempool_initialized(&conf->r10buf_pool))
++		if (init_resync(conf))
++			return 0;
++
+  skipped:
+ 	max_sector = mddev->dev_sectors;
+ 	if (test_bit(MD_RECOVERY_SYNC, &mddev->recovery) ||
 
 
