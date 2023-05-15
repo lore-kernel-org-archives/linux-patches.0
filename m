@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6359FBF8
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:13:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDDCC4339B;
-	Mon, 15 May 2023 17:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20753FBF8
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:13:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F8EBC433D2;
+	Mon, 15 May 2023 17:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170811;
-	bh=aebu5AmRjdAg2J39aY6IJOnUyymxxJWQF3A/gRu9Hm8=;
+	s=korg; t=1684170815;
+	bh=/G/kat3/EVFVq40tGfSYWvnXpO4BwYJ+wVxdSxVdJrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbVMLVs1vYcmPd5HZLhkE2MzK0GD46oBasCJS78VE+CFbemh/1ZxWaEV6qKcyQvdC
-	 cJLZB2MJ+S/jN5zgGg2x8WxaClpGQwCQ1T8O0K9TzEyZ5rAqlOPKKhqtQq8OT2WsPy
-	 F+yDW4KayjRQYATcNf1V+kCoJtegfkTd4GoU3uWo=
+	b=Q9TY5yZpq2+/LyHAozw3ETOh//xNxnCmy8bgOyrcsyv81A9sUukrbVd2p7kY1hB+x
+	 4EaGJBKTFoVTY5c7/ZL12gzsmPofD9MabRg6ZmIpiFL0/9/MHzExDGQ6oH+p9F8vaH
+	 z4KIM/NP0XG7AXhqTdaWmXOJwgsazPbqNVIWDzw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Wesley Cheng <quic_wcheng@quicinc.com>,
+	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 002/242] usb: dwc3: gadget: Execute gadget stop after halting the controller
-Date: Mon, 15 May 2023 18:25:28 +0200
-Message-Id: <20230515161721.879805810@linuxfoundation.org>
+Subject: [PATCH 6.2 003/242] crypto: ccp - Clear PSP interrupt status register before calling handler
+Date: Mon, 15 May 2023 18:25:29 +0200
+Message-Id: <20230515161721.909598527@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,59 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Cheng <quic_wcheng@quicinc.com>
+From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
 
-[ Upstream commit 39674be56fba1cd3a03bf4617f523a35f85fd2c1 ]
+[ Upstream commit 45121ad4a1750ca47ce3f32bd434bdb0cdbf0043 ]
 
-Do not call gadget stop until the poll for controller halt is
-completed.  DEVTEN is cleared as part of gadget stop, so the intention to
-allow ep0 events to continue while waiting for controller halt is not
-happening.
+The PSP IRQ is edge-triggered (MSI or MSI-X) in all cases supported by
+the psp module so clear the interrupt status register early in the
+handler to prevent missed interrupts. sev_irq_handler() calls wake_up()
+on a wait queue, which can result in a new command being submitted from
+a different CPU. This then races with the clearing of isr and can result
+in missed interrupts. A missed interrupt results in a command waiting
+until it times out, which results in the psp being declared dead.
 
-Fixes: c96683798e27 ("usb: dwc3: ep0: Don't prepare beyond Setup stage")
+This is unlikely on bare metal, but has been observed when running
+virtualized. In the cases where this is observed, sev->cmdresp_reg has
+PSP_CMDRESP_RESP set which indicates that the command was processed
+correctly but no interrupt was asserted.
+
+The full sequence of events looks like this:
+
+CPU 1: submits SEV cmd #1
+CPU 1: calls wait_event_timeout()
+CPU 0: enters psp_irq_handler()
+CPU 0: calls sev_handler()->wake_up()
+CPU 1: wakes up; finishes processing cmd #1
+CPU 1: submits SEV cmd #2
+CPU 1: calls wait_event_timeout()
+PSP:   finishes processing cmd #2; interrupt status is still set; no interrupt
+CPU 0: clears intsts
+CPU 0: exits psp_irq_handler()
+CPU 1: wait_event_timeout() times out; psp_dead=true
+
+Fixes: 200664d5237f ("crypto: ccp: Add Secure Encrypted Virtualization (SEV) command support")
 Cc: stable@vger.kernel.org
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Wesley Cheng <quic_wcheng@quicinc.com>
-Link: https://lore.kernel.org/r/20230420212759.29429-2-quic_wcheng@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/gadget.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ drivers/crypto/ccp/psp-dev.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-index a995e3f4df37f..e63700937ba8c 100644
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -2546,7 +2546,6 @@ static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
- 	 * bit.
- 	 */
- 	dwc3_stop_active_transfers(dwc);
--	__dwc3_gadget_stop(dwc);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
+diff --git a/drivers/crypto/ccp/psp-dev.c b/drivers/crypto/ccp/psp-dev.c
+index c9c741ac84421..949a3fa0b94a9 100644
+--- a/drivers/crypto/ccp/psp-dev.c
++++ b/drivers/crypto/ccp/psp-dev.c
+@@ -42,6 +42,9 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
+ 	/* Read the interrupt status: */
+ 	status = ioread32(psp->io_regs + psp->vdata->intsts_reg);
  
- 	/*
-@@ -2583,7 +2582,19 @@ static int dwc3_gadget_soft_disconnect(struct dwc3 *dwc)
- 	 * remaining event generated by the controller while polling for
- 	 * DSTS.DEVCTLHLT.
- 	 */
--	return dwc3_gadget_run_stop(dwc, false);
-+	ret = dwc3_gadget_run_stop(dwc, false);
++	/* Clear the interrupt status by writing the same value we read. */
++	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
 +
-+	/*
-+	 * Stop the gadget after controller is halted, so that if needed, the
-+	 * events to update EP0 state can still occur while the run/stop
-+	 * routine polls for the halted state.  DEVTEN is cleared as part of
-+	 * gadget stop.
-+	 */
-+	spin_lock_irqsave(&dwc->lock, flags);
-+	__dwc3_gadget_stop(dwc);
-+	spin_unlock_irqrestore(&dwc->lock, flags);
-+
-+	return ret;
+ 	/* invoke subdevice interrupt handlers */
+ 	if (status) {
+ 		if (psp->sev_irq_handler)
+@@ -51,9 +54,6 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
+ 			psp->tee_irq_handler(irq, psp->tee_irq_data, status);
+ 	}
+ 
+-	/* Clear the interrupt status by writing the same value we read. */
+-	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
+-
+ 	return IRQ_HANDLED;
  }
  
- static int dwc3_gadget_pullup(struct usb_gadget *g, int is_on)
 -- 
 2.39.2
 
