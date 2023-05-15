@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDA1FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13305C433EF;
-	Mon, 15 May 2023 17:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADC3FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 403C0C433AA;
+	Mon, 15 May 2023 17:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170008;
-	bh=C9NqJ/XM3DvZ12PBA5SStdrYT+fZS8XNvP0Acs9n2gQ=;
+	s=korg; t=1684170011;
+	bh=HBeguLkvqwmESsAcM+3GWYQltD5pdUwiFwgU7sAlujk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jP3QDxIrcdCicLvLYkpYafvMpYGElz3eutsyfoiZ4E6Zx4Wq4IpYzVfIAZ2ityw0e
-	 1waGW0NJEzJJq/HFPPh/dVz1Thov1AIkMfGQNkfiRwfnjAhq9yqpxgNQYzsNQzJFiM
-	 AiZ7kchzau06vzF0ryFQF5cIv5h3ICzUhEW23WkI=
+	b=l15I6VD63HVAbc+d42UEymketWARxx1q9tVcT54XxNSVYvcSkqaPUMHzoUuzkcc1j
+	 dOCdesbyK9QwMs3GOBpZfsEgIhR6XuN/GGfDuYlppF7l4vbi4OMTMRa+NZ0qCvzF0O
+	 wXjcrX7mRUy26lgiqN1xzA1g7xbExshcmVvqfNRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Wenjing Liu <Wenjing.Liu@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Robin Chen <robin.chen@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Anusha Srivatsa <anusha.srivatsa@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 216/246] drm/amd/display: hpd rx irq not working with eDP interface
-Date: Mon, 15 May 2023 18:27:08 +0200
-Message-Id: <20230515161729.076296251@linuxfoundation.org>
+Subject: [PATCH 6.3 217/246] drm/i915: Add _PICK_EVEN_2RANGES()
+Date: Mon, 15 May 2023 18:27:09 +0200
+Message-Id: <20230515161729.105836992@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -39,81 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robin Chen <robin.chen@amd.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit eeefe7c4820b6baa0462a8b723ea0a3b5846ccae ]
+[ Upstream commit 357513233d6456c9f99e34794897efd4ae907e83 ]
 
-[Why]
-This is the fix for the defect of commit ab144f0b4ad6
-("drm/amd/display: Allow individual control of eDP hotplug support").
+It's a constant pattern in the driver to need to use 2 ranges of MMIOs
+based on port, phy, pll, etc. When that happens, instead of using
+_PICK_EVEN(), _PICK() needs to be used.  Using _PICK() is discouraged
+due to some reasons like:
 
-[How]
-To revise the default eDP hotplug setting and use the enum to git rid
-of the magic number for different options.
+1) It increases the code size since the array is declared
+   in each call site
+2) Developers need to be careful not to incur an
+   out-of-bounds array access
+3) Developers need to be careful that the indexes match the
+   table. For that it may be that the table needs to contain
+   holes, making (1) even worse.
 
-Fixes: ab144f0b4ad6 ("drm/amd/display: Allow individual control of eDP hotplug support")
-Cc: stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Wenjing Liu <Wenjing.Liu@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Robin Chen <robin.chen@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Add a variant of _PICK_EVEN() that works with 2 ranges and selects which
+one to use depending on the index value.
+
+v2: Fix the address expansion in the example (Anusha)
+v3: Also rename macro to _PICK_EVEN_2RANGES() in the documentation
+    and reword it to clarify what ranges are chosen based on the index
+    (Jani)
+
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Anusha Srivatsa <anusha.srivatsa@intel.com>
+Acked-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230125182403.7526-1-lucas.demarchi@intel.com
+Stable-dep-of: 214b09db6197 ("drm/msm: fix drm device leak on bind errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc_types.h          | 7 +++++++
- drivers/gpu/drm/amd/display/dc/link/link_factory.c | 9 +++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/i915_reg_defs.h | 29 ++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc_types.h b/drivers/gpu/drm/amd/display/dc/dc_types.h
-index f28b8597cc1e6..cba65766ef47b 100644
---- a/drivers/gpu/drm/amd/display/dc/dc_types.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc_types.h
-@@ -1086,4 +1086,11 @@ struct dc_dpia_bw_alloc {
- };
+diff --git a/drivers/gpu/drm/i915/i915_reg_defs.h b/drivers/gpu/drm/i915/i915_reg_defs.h
+index be43580a69793..983c5aa3045b3 100644
+--- a/drivers/gpu/drm/i915/i915_reg_defs.h
++++ b/drivers/gpu/drm/i915/i915_reg_defs.h
+@@ -119,6 +119,35 @@
+  */
+ #define _PICK_EVEN(__index, __a, __b) ((__a) + (__index) * ((__b) - (__a)))
  
- #define MAX_SINKS_PER_LINK 4
++/*
++ * Like _PICK_EVEN(), but supports 2 ranges of evenly spaced address offsets.
++ * @__c_index corresponds to the index in which the second range starts to be
++ * used. Using math interval notation, the first range is used for indexes [ 0,
++ * @__c_index), while the second range is used for [ @__c_index, ... ). Example:
++ *
++ * #define _FOO_A			0xf000
++ * #define _FOO_B			0xf004
++ * #define _FOO_C			0xf008
++ * #define _SUPER_FOO_A			0xa000
++ * #define _SUPER_FOO_B			0xa100
++ * #define FOO(x)			_MMIO(_PICK_EVEN_2RANGES(x, 3,		\
++ *					      _FOO_A, _FOO_B,			\
++ *					      _SUPER_FOO_A, _SUPER_FOO_B))
++ *
++ * This expands to:
++ *	0: 0xf000,
++ *	1: 0xf004,
++ *	2: 0xf008,
++ *	3: 0xa000,
++ *	4: 0xa100,
++ *	5: 0xa200,
++ *	...
++ */
++#define _PICK_EVEN_2RANGES(__index, __c_index, __a, __b, __c, __d)		\
++	(BUILD_BUG_ON_ZERO(!__is_constexpr(__c_index)) +			\
++	 ((__index) < (__c_index) ? _PICK_EVEN(__index, __a, __b) :		\
++				   _PICK_EVEN((__index) - (__c_index), __c, __d)))
 +
-+enum dc_hpd_enable_select {
-+	HPD_EN_FOR_ALL_EDP = 0,
-+	HPD_EN_FOR_PRIMARY_EDP_ONLY,
-+	HPD_EN_FOR_SECONDARY_EDP_ONLY,
-+};
-+
- #endif /* DC_TYPES_H_ */
-diff --git a/drivers/gpu/drm/amd/display/dc/link/link_factory.c b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
-index aeb26a4d539e9..8aaf14afa4271 100644
---- a/drivers/gpu/drm/amd/display/dc/link/link_factory.c
-+++ b/drivers/gpu/drm/amd/display/dc/link/link_factory.c
-@@ -274,14 +274,18 @@ static bool dc_link_construct_phy(struct dc_link *link,
- 				link->irq_source_hpd = DC_IRQ_SOURCE_INVALID;
- 
- 			switch (link->dc->config.allow_edp_hotplug_detection) {
--			case 1: // only the 1st eDP handles hotplug
-+			case HPD_EN_FOR_ALL_EDP:
-+				link->irq_source_hpd_rx =
-+						dal_irq_get_rx_source(link->hpd_gpio);
-+				break;
-+			case HPD_EN_FOR_PRIMARY_EDP_ONLY:
- 				if (link->link_index == 0)
- 					link->irq_source_hpd_rx =
- 						dal_irq_get_rx_source(link->hpd_gpio);
- 				else
- 					link->irq_source_hpd = DC_IRQ_SOURCE_INVALID;
- 				break;
--			case 2: // only the 2nd eDP handles hotplug
-+			case HPD_EN_FOR_SECONDARY_EDP_ONLY:
- 				if (link->link_index == 1)
- 					link->irq_source_hpd_rx =
- 						dal_irq_get_rx_source(link->hpd_gpio);
-@@ -289,6 +293,7 @@ static bool dc_link_construct_phy(struct dc_link *link,
- 					link->irq_source_hpd = DC_IRQ_SOURCE_INVALID;
- 				break;
- 			default:
-+				link->irq_source_hpd = DC_IRQ_SOURCE_INVALID;
- 				break;
- 			}
- 		}
+ /*
+  * Given the arbitrary numbers in varargs, pick the 0-based __index'th number.
+  *
 -- 
 2.39.2
 
