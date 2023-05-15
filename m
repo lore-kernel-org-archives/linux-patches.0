@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8ECADF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DA98C433D2;
-	Mon, 15 May 2023 16:36:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B96DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA01C433D2;
+	Mon, 15 May 2023 16:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168582;
-	bh=wfiNyLTaZ7nyVC3zFX/VtZjmfpkaYyoxJaQ/w6IGVt8=;
+	s=korg; t=1684168586;
+	bh=/UwcKq3xHbPFW3dvyImAJscEsUBc7iF3s3BiRikiwN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TrlYx7Mm1tuAwGpPajJYyCRgL3cUL8BrTvnVbV+qITiftMNKy0UemSK0EHakH12iE
-	 m/fjrkMyGY3+UrXQBmTZ409RxCSA4cjmg3fHSD/hA//ZbqbOZttbCx8OX8vq/DjF80
-	 eLtkrpKiobwrUMa+fzym5CCKROcmNVcZrcx9cTfc=
+	b=V0HylB0OGX8fZFakKVLQDZVQnWWNZXWTXDopZK5Cn7soLWYcLkffO8L/A7YowNOjl
+	 9uGFrgOkbzXVCDvjrUbTrMhmtuSwxNGgu+XQpG2Io6+Fms7yQbRDyh/6DHaFlzzNFF
+	 do514JmSMcAxEZZSPhI4dRZGF5mQnXPmjFwfUX4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palash Oswal <oswalpalash@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Cong Wang <cong.wang@bytedance.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 089/116] sit: update dev->needed_headroom in ipip6_tunnel_bind_dev()
-Date: Mon, 15 May 2023 18:26:26 +0200
-Message-Id: <20230515161701.229290912@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Anastasia Belova <abelova@astralinux.ru>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.14 098/116] btrfs: print-tree: parent bytenr must be aligned to sector size
+Date: Mon, 15 May 2023 18:26:35 +0200
+Message-Id: <20230515161701.505595210@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -38,69 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-[ Upstream commit c88f8d5cd95fd039cff95d682b8e71100c001df0 ]
+commit c87f318e6f47696b4040b58f460d5c17ea0280e6 upstream.
 
-When a tunnel device is bound with the underlying device, its
-dev->needed_headroom needs to be updated properly. IPv4 tunnels
-already do the same in ip_tunnel_bind_dev(). Otherwise we may
-not have enough header room for skb, especially after commit
-b17f709a2401 ("gue: TX support for using remote checksum offload option").
+Check nodesize to sectorsize in alignment check in print_extent_item.
+The comment states that and this is correct, similar check is done
+elsewhere in the functions.
 
-Fixes: 32b8a8e59c9c ("sit: add IPv4 over IPv4 support")
-Reported-by: Palash Oswal <oswalpalash@gmail.com>
-Link: https://lore.kernel.org/netdev/CAGyP=7fDcSPKu6nttbGwt7RXzE3uyYxLjCSE97J64pRxJP8jPA@mail.gmail.com/
-Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: ea57788eb76d ("btrfs: require only sector size alignment for parent eb bytenr")
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/sit.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/btrfs/print-tree.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index e5baf5e4782b0..f24a6cd0d15a3 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -1039,12 +1039,13 @@ static netdev_tx_t sit_tunnel_xmit(struct sk_buff *skb,
- 
- static void ipip6_tunnel_bind_dev(struct net_device *dev)
- {
-+	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	int t_hlen = tunnel->hlen + sizeof(struct iphdr);
- 	struct net_device *tdev = NULL;
--	struct ip_tunnel *tunnel;
-+	int hlen = LL_MAX_HEADER;
- 	const struct iphdr *iph;
- 	struct flowi4 fl4;
- 
--	tunnel = netdev_priv(dev);
- 	iph = &tunnel->parms.iph;
- 
- 	if (iph->daddr) {
-@@ -1067,14 +1068,15 @@ static void ipip6_tunnel_bind_dev(struct net_device *dev)
- 		tdev = __dev_get_by_index(tunnel->net, tunnel->parms.link);
- 
- 	if (tdev && !netif_is_l3_master(tdev)) {
--		int t_hlen = tunnel->hlen + sizeof(struct iphdr);
- 		int mtu;
- 
- 		mtu = tdev->mtu - t_hlen;
- 		if (mtu < IPV6_MIN_MTU)
- 			mtu = IPV6_MIN_MTU;
- 		WRITE_ONCE(dev->mtu, mtu);
-+		hlen = tdev->hard_header_len + tdev->needed_headroom;
- 	}
-+	dev->needed_headroom = t_hlen + hlen;
- }
- 
- static void ipip6_tunnel_update(struct ip_tunnel *t, struct ip_tunnel_parm *p,
--- 
-2.39.2
-
+--- a/fs/btrfs/print-tree.c
++++ b/fs/btrfs/print-tree.c
+@@ -130,10 +130,10 @@ static void print_extent_item(struct ext
+ 			pr_cont("shared data backref parent %llu count %u\n",
+ 			       offset, btrfs_shared_data_ref_count(eb, sref));
+ 			/*
+-			 * offset is supposed to be a tree block which
+-			 * must be aligned to nodesize.
++			 * Offset is supposed to be a tree block which must be
++			 * aligned to sectorsize.
+ 			 */
+-			if (!IS_ALIGNED(offset, eb->fs_info->nodesize))
++			if (!IS_ALIGNED(offset, eb->fs_info->sectorsize))
+ 				pr_info(
+ 			"\t\t\t(parent %llu not aligned to sectorsize %u)\n",
+ 				     offset, eb->fs_info->sectorsize);
 
 
