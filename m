@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4070D1772F
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B97C433D2;
-	Mon, 15 May 2023 18:01:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531481772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9843C433D2;
+	Mon, 15 May 2023 18:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173708;
-	bh=iyJuJzaFG49nd/WlcG0bPHlJ9D8zDCOWs63HpxlQM00=;
+	s=korg; t=1684173711;
+	bh=UAkM6BCan3pd27mE2CCWJeWMMJYX22ZFb7/qO9LiNVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFyvZ3HfL5HbUDe0mRy+t1eP9BZn1wKLKMcrGBp8H4C8eq3kxGlX+zzSWqMKZoHZG
-	 ezgTe9ddQR1cQKyWvViLa2V3fK70VufBhSNvdxiED5L5vJbjfY+JMhCmJnHfHn/wi/
-	 HQib68WyVurEDFZVHWldnM/fSD1IiQKHFKlZdZ7M=
+	b=aB1MEi6/yJV0ERttopRE83orP8mtmQqQZWmTqaJ7mnXPTLuIoaiaiOoO8atyz8yxW
+	 6rrzBi0Mpur9OfHnqY6sN8i2wG/PgjKmAffItrQiFuTdWNP7FmlH7Nw/1emhzbKkQV
+	 ibfHWrG0s1TmGgK3qCFC3v5JLmXqawhNNXnwYqiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Pavel Machek <pavel@ucw.cz>,
-	Lee Jones <lee@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 182/282] leds: TI_LMU_COMMON: select REGMAP instead of depending on it
-Date: Mon, 15 May 2023 18:29:20 +0200
-Message-Id: <20230515161727.731112432@linuxfoundation.org>
+Subject: [PATCH 5.4 183/282] dmaengine: mv_xor_v2: Fix an error code.
+Date: Mon, 15 May 2023 18:29:21 +0200
+Message-Id: <20230515161727.760075188@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,44 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit a61079efc87888587e463afaed82417b162fbd69 ]
+[ Upstream commit 827026ae2e56ec05ef1155661079badbbfc0b038 ]
 
-REGMAP is a hidden (not user visible) symbol. Users cannot set it
-directly thru "make *config", so drivers should select it instead of
-depending on it if they need it.
+If the probe is deferred, -EPROBE_DEFER should be returned, not
++EPROBE_DEFER.
 
-Consistently using "select" or "depends on" can also help reduce
-Kconfig circular dependency issues.
-
-Therefore, change the use of "depends on REGMAP" to "select REGMAP".
-
-Fixes: 3fce8e1eb994 ("leds: TI LMU: Add common code for TI LMU devices")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Acked-by: Pavel Machek <pavel@ucw.cz>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230226053953.4681-5-rdunlap@infradead.org
+Fixes: 3cd2c313f1d6 ("dmaengine: mv_xor_v2: Fix clock resource by adding a register clock")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Link: https://lore.kernel.org/r/201170dff832a3c496d125772e10070cd834ebf2.1679814350.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/Kconfig | 2 +-
+ drivers/dma/mv_xor_v2.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/Kconfig b/drivers/leds/Kconfig
-index 2cbf66d1c3000..34334adcad014 100644
---- a/drivers/leds/Kconfig
-+++ b/drivers/leds/Kconfig
-@@ -802,7 +802,7 @@ config LEDS_SPI_BYTE
- config LEDS_TI_LMU_COMMON
- 	tristate "LED driver for TI LMU"
- 	depends on LEDS_CLASS
--	depends on REGMAP
-+	select REGMAP
- 	help
- 	  Say Y to enable the LED driver for TI LMU devices.
- 	  This supports common features between the TI LM3532, LM3631, LM3632,
--- 
-2.39.2
-
+--- a/drivers/dma/mv_xor_v2.c
++++ b/drivers/dma/mv_xor_v2.c
+@@ -751,7 +751,7 @@ static int mv_xor_v2_probe(struct platfo
+ 
+ 	xor_dev->clk = devm_clk_get(&pdev->dev, NULL);
+ 	if (IS_ERR(xor_dev->clk) && PTR_ERR(xor_dev->clk) == -EPROBE_DEFER) {
+-		ret = EPROBE_DEFER;
++		ret = -EPROBE_DEFER;
+ 		goto disable_reg_clk;
+ 	}
+ 	if (!IS_ERR(xor_dev->clk)) {
 
 
