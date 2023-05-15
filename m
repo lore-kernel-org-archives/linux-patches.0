@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DABFFBF5
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37F4C4339E;
-	Mon, 15 May 2023 16:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068C9FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6853EC433EF;
+	Mon, 15 May 2023 16:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168370;
-	bh=sm0lFB1Hn23gvq32Ugr83/HZ6PHLx2Be4MFFqTicPKI=;
+	s=korg; t=1684168372;
+	bh=vBCVjWzm28MTEHQH14k0JqRjTe+pDho04M57ldsocto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8zDOgUO6u85CXKb0wZbVZSKH9TwnyR4jB+7BJkcsaNHUtog1dC6RPkc2fwYt9cEQ
-	 xaec87QPDGmUtXBDusK7T8vjGtrRAC0zHeHdQpJ0LLQGyqr7OA+c7DLFvi99yBZZO7
-	 so6A0O83I25PHbv76P+CyOrlal6Je2tjKs4pSF1Q=
+	b=OJbaJAn4HVGjbLgxcyEh9/m3mmrJUSXzTw/PMtOExzi/sWk8DSBco4aKHKVIWeU9y
+	 zFhN8MPkRkB16Pa6D6EvI9OKI8g0Je54REm+OWZ1gjm8ZKmhovopfBauvjEanpMBSg
+	 v3mRWZkNmF/pnIR9tSQDh1ytuujqhLhNsXw7gGPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 4.14 007/116] perf sched: Cast PTHREAD_STACK_MIN to int as it may turn into sysconf(__SC_THREAD_STACK_MIN_VALUE)
-Date: Mon, 15 May 2023 18:25:04 +0200
-Message-Id: <20230515161658.507043042@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>
+Subject: [PATCH 4.14 008/116] staging: iio: resolver: ads1210: fix config mode
+Date: Mon, 15 May 2023 18:25:05 +0200
+Message-Id: <20230515161658.549574437@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -34,49 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-commit d08c84e01afa7a7eee6badab25d5420fa847f783 upstream.
+commit 16313403d873ff17a587818b61f84c8cb4971cef upstream.
 
-In fedora rawhide the PTHREAD_STACK_MIN define may end up expanded to a
-sysconf() call, and that will return 'long int', breaking the build:
+As stated in the device datasheet [1], bits a0 and a1 have to be set to
+1 for the configuration mode.
 
-    45 fedora:rawhide                : FAIL gcc version 11.1.1 20210623 (Red Hat 11.1.1-6) (GCC)
-      builtin-sched.c: In function 'create_tasks':
-      /git/perf-5.14.0-rc1/tools/include/linux/kernel.h:43:24: error: comparison of distinct pointer types lacks a cast [-Werror]
-         43 |         (void) (&_max1 == &_max2);              \
-            |                        ^~
-      builtin-sched.c:673:34: note: in expansion of macro 'max'
-        673 |                         (size_t) max(16 * 1024, PTHREAD_STACK_MIN));
-            |                                  ^~~
-      cc1: all warnings being treated as errors
+[1]: https://www.analog.com/media/en/technical-documentation/data-sheets/ad2s1210.pdf
 
-  $ grep __sysconf /usr/include/*/*.h
-  /usr/include/bits/pthread_stack_min-dynamic.h:extern long int __sysconf (int __name) __THROW;
-  /usr/include/bits/pthread_stack_min-dynamic.h:#   define PTHREAD_STACK_MIN __sysconf (__SC_THREAD_STACK_MIN_VALUE)
-  /usr/include/bits/time.h:extern long int __sysconf (int);
-  /usr/include/bits/time.h:# define CLK_TCK ((__clock_t) __sysconf (2))	/* 2 is _SC_CLK_TCK */
-  $
-
-So cast it to int to cope with that.
-
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Guenter Roeck <linux@roeck-us.net>
+Fixes: b19e9ad5e2cb9 ("staging:iio:resolver:ad2s1210 general driver cleanup")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20230327145414.1505537-1-nuno.sa@analog.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/builtin-sched.c |    2 +-
+ drivers/staging/iio/resolver/ad2s1210.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/perf/builtin-sched.c
-+++ b/tools/perf/builtin-sched.c
-@@ -655,7 +655,7 @@ static void create_tasks(struct perf_sch
- 	err = pthread_attr_init(&attr);
- 	BUG_ON(err);
- 	err = pthread_attr_setstacksize(&attr,
--			(size_t) max(16 * 1024, PTHREAD_STACK_MIN));
-+			(size_t) max(16 * 1024, (int)PTHREAD_STACK_MIN));
- 	BUG_ON(err);
- 	err = pthread_mutex_lock(&sched->start_work_mutex);
- 	BUG_ON(err);
+--- a/drivers/staging/iio/resolver/ad2s1210.c
++++ b/drivers/staging/iio/resolver/ad2s1210.c
+@@ -96,7 +96,7 @@ struct ad2s1210_state {
+ static const int ad2s1210_mode_vals[4][2] = {
+ 	[MOD_POS] = { 0, 0 },
+ 	[MOD_VEL] = { 0, 1 },
+-	[MOD_CONFIG] = { 1, 0 },
++	[MOD_CONFIG] = { 1, 1 },
+ };
+ 
+ static inline void ad2s1210_set_mode(enum ad2s1210_mode mode,
 
 
