@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC21FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:46:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7440C433D2;
-	Mon, 15 May 2023 16:46:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80B7FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:46:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AB39C4339B;
+	Mon, 15 May 2023 16:46:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169209;
-	bh=BwYT73xwdthnzvDS6ng1VE+R84Jlz0YoN9RssxTebfo=;
+	s=korg; t=1684169212;
+	bh=PCE4pqc7Fg6c5zmfm/FITt7XXyRe0MP/Ux3oDH/ReoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qfm+MRIZ2PaG41CeMNwaHkz338qX/krQ2/xhtkHt+XCaEZuqILbGLSwDuU8S+djid
-	 zGYefZJjoup9LsGSUMmqLv7ffMXbrAJLZh9trAwtnlZf6FgpnvqvyEUWP30l8prs6G
-	 47VPhF8BeKO0W5Kw27G0NZiavIgIxgX73yUa/1aQ=
+	b=gM2yudxDZxQq/+qFTXzcYTpP9t5+sfwFpyfHbevCTzt3S6IjkJlfDwS9v4fw0XsPW
+	 H2lU8HRaGvTHCC7inAqaWjoTolomnas1yaIJIV4Bpuib26bkcRIEnMAsfyLxjePSTQ
+	 ykeqO75NTHdz+Qgj3FrugT32awyAu3aQOsV0hkoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Subject: [PATCH 4.19 177/191] HID: wacom: Set a default resolution for older tablets
-Date: Mon, 15 May 2023 18:26:54 +0200
-Message-Id: <20230515161713.878860428@linuxfoundation.org>
+	stable@kernel.org,
+	syzbot+68223fe9f6c95ad43bed@syzkaller.appspotmail.com,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 178/191] ext4: fix WARNING in mb_find_extent
+Date: Mon, 15 May 2023 18:26:55 +0200
+Message-Id: <20230515161713.928275683@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -34,48 +37,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping Cheng <pinglinux@gmail.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 08a46b4190d345544d04ce4fe2e1844b772b8535 upstream.
+commit fa08a7b61dff8a4df11ff1e84abfc214b487caf7 upstream.
 
-Some older tablets may not report physical maximum for X/Y
-coordinates. Set a default to prevent undefined resolution.
+Syzbot found the following issue:
 
-Signed-off-by: Ping Cheng <ping.cheng@wacom.com>
-Link: https://lore.kernel.org/r/20230409164229.29777-1-ping.cheng@wacom.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+EXT4-fs: Warning: mounting with data=journal disables delayed allocation, dioread_nolock, O_DIRECT and fast_commit support!
+EXT4-fs (loop0): orphan cleanup on readonly fs
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 5067 at fs/ext4/mballoc.c:1869 mb_find_extent+0x8a1/0xe30
+Modules linked in:
+CPU: 1 PID: 5067 Comm: syz-executor307 Not tainted 6.2.0-rc1-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+RIP: 0010:mb_find_extent+0x8a1/0xe30 fs/ext4/mballoc.c:1869
+RSP: 0018:ffffc90003c9e098 EFLAGS: 00010293
+RAX: ffffffff82405731 RBX: 0000000000000041 RCX: ffff8880783457c0
+RDX: 0000000000000000 RSI: 0000000000000041 RDI: 0000000000000040
+RBP: 0000000000000040 R08: ffffffff82405723 R09: ffffed10053c9402
+R10: ffffed10053c9402 R11: 1ffff110053c9401 R12: 0000000000000000
+R13: ffffc90003c9e538 R14: dffffc0000000000 R15: ffffc90003c9e2cc
+FS:  0000555556665300(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 000056312f6796f8 CR3: 0000000022437000 CR4: 00000000003506e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ ext4_mb_complex_scan_group+0x353/0x1100 fs/ext4/mballoc.c:2307
+ ext4_mb_regular_allocator+0x1533/0x3860 fs/ext4/mballoc.c:2735
+ ext4_mb_new_blocks+0xddf/0x3db0 fs/ext4/mballoc.c:5605
+ ext4_ext_map_blocks+0x1868/0x6880 fs/ext4/extents.c:4286
+ ext4_map_blocks+0xa49/0x1cc0 fs/ext4/inode.c:651
+ ext4_getblk+0x1b9/0x770 fs/ext4/inode.c:864
+ ext4_bread+0x2a/0x170 fs/ext4/inode.c:920
+ ext4_quota_write+0x225/0x570 fs/ext4/super.c:7105
+ write_blk fs/quota/quota_tree.c:64 [inline]
+ get_free_dqblk+0x34a/0x6d0 fs/quota/quota_tree.c:130
+ do_insert_tree+0x26b/0x1aa0 fs/quota/quota_tree.c:340
+ do_insert_tree+0x722/0x1aa0 fs/quota/quota_tree.c:375
+ do_insert_tree+0x722/0x1aa0 fs/quota/quota_tree.c:375
+ do_insert_tree+0x722/0x1aa0 fs/quota/quota_tree.c:375
+ dq_insert_tree fs/quota/quota_tree.c:401 [inline]
+ qtree_write_dquot+0x3b6/0x530 fs/quota/quota_tree.c:420
+ v2_write_dquot+0x11b/0x190 fs/quota/quota_v2.c:358
+ dquot_acquire+0x348/0x670 fs/quota/dquot.c:444
+ ext4_acquire_dquot+0x2dc/0x400 fs/ext4/super.c:6740
+ dqget+0x999/0xdc0 fs/quota/dquot.c:914
+ __dquot_initialize+0x3d0/0xcf0 fs/quota/dquot.c:1492
+ ext4_process_orphan+0x57/0x2d0 fs/ext4/orphan.c:329
+ ext4_orphan_cleanup+0xb60/0x1340 fs/ext4/orphan.c:474
+ __ext4_fill_super fs/ext4/super.c:5516 [inline]
+ ext4_fill_super+0x81cd/0x8700 fs/ext4/super.c:5644
+ get_tree_bdev+0x400/0x620 fs/super.c:1282
+ vfs_get_tree+0x88/0x270 fs/super.c:1489
+ do_new_mount+0x289/0xad0 fs/namespace.c:3145
+ do_mount fs/namespace.c:3488 [inline]
+ __do_sys_mount fs/namespace.c:3697 [inline]
+ __se_sys_mount+0x2d3/0x3c0 fs/namespace.c:3674
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Add some debug information:
+mb_find_extent: mb_find_extent block=41, order=0 needed=64 next=0 ex=0/41/1@3735929054 64 64 7
+block_bitmap: ff 3f 0c 00 fc 01 00 00 d2 3d 00 00 00 00 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+
+Acctually, blocks per group is 64, but block bitmap indicate at least has
+128 blocks. Now, ext4_validate_block_bitmap() didn't check invalid block's
+bitmap if set.
+To resolve above issue, add check like fsck "Padding at end of block bitmap is
+not set".
+
+Cc: stable@kernel.org
+Reported-by: syzbot+68223fe9f6c95ad43bed@syzkaller.appspotmail.com
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20230116020015.1506120-1-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/ext4/balloc.c |   25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -1791,6 +1791,7 @@ static void wacom_map_usage(struct input
- 	int fmax = field->logical_maximum;
- 	unsigned int equivalent_usage = wacom_equivalent_usage(usage->hid);
- 	int resolution_code = code;
-+	int resolution = hidinput_calc_abs_res(field, resolution_code);
+--- a/fs/ext4/balloc.c
++++ b/fs/ext4/balloc.c
+@@ -303,6 +303,22 @@ struct ext4_group_desc * ext4_get_group_
+ 	return desc;
+ }
  
- 	if (equivalent_usage == HID_DG_TWIST) {
- 		resolution_code = ABS_RZ;
-@@ -1813,8 +1814,15 @@ static void wacom_map_usage(struct input
- 	switch (type) {
- 	case EV_ABS:
- 		input_set_abs_params(input, code, fmin, fmax, fuzz, 0);
--		input_abs_set_res(input, code,
--				  hidinput_calc_abs_res(field, resolution_code));
++static ext4_fsblk_t ext4_valid_block_bitmap_padding(struct super_block *sb,
++						    ext4_group_t block_group,
++						    struct buffer_head *bh)
++{
++	ext4_grpblk_t next_zero_bit;
++	unsigned long bitmap_size = sb->s_blocksize * 8;
++	unsigned int offset = num_clusters_in_group(sb, block_group);
 +
-+		/* older tablet may miss physical usage */
-+		if ((code == ABS_X || code == ABS_Y) && !resolution) {
-+			resolution = WACOM_INTUOS_RES;
-+			hid_warn(input,
-+				 "Wacom usage (%d) missing resolution \n",
-+				 code);
-+		}
-+		input_abs_set_res(input, code, resolution);
- 		break;
- 	case EV_KEY:
- 		input_set_capability(input, EV_KEY, code);
++	if (bitmap_size <= offset)
++		return 0;
++
++	next_zero_bit = ext4_find_next_zero_bit(bh->b_data, bitmap_size, offset);
++
++	return (next_zero_bit < bitmap_size ? next_zero_bit : 0);
++}
++
+ /*
+  * Return the block number which was discovered to be invalid, or 0 if
+  * the block bitmap is valid.
+@@ -395,6 +411,15 @@ static int ext4_validate_block_bitmap(st
+ 					EXT4_GROUP_INFO_BBITMAP_CORRUPT);
+ 		return -EFSCORRUPTED;
+ 	}
++	blk = ext4_valid_block_bitmap_padding(sb, block_group, bh);
++	if (unlikely(blk != 0)) {
++		ext4_unlock_group(sb, block_group);
++		ext4_error(sb, "bg %u: block %llu: padding at end of block bitmap is not set",
++			   block_group, blk);
++		ext4_mark_group_bitmap_corrupted(sb, block_group,
++						 EXT4_GROUP_INFO_BBITMAP_CORRUPT);
++		return -EFSCORRUPTED;
++	}
+ 	set_buffer_verified(bh);
+ verified:
+ 	ext4_unlock_group(sb, block_group);
 
 
