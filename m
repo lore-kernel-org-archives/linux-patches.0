@@ -1,26 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9329317730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:06:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE679C433EF;
-	Mon, 15 May 2023 18:06:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4FD117730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:07:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC8B5C433D2;
+	Mon, 15 May 2023 18:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684174017;
-	bh=3BlsnDXcYCnJiZYAu6Ms81QqM4FSNcNiTtEGLRtmxSQ=;
+	s=korg; t=1684174020;
+	bh=sLBgVwLQ1/NwkgMJoCu914AkWZ4lW8x4D8RJDEAfrHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jiGncT98x8ax3BfUiciYxHnepm89rL43IECkQhcxNQEsfJY5rq6cXvt07eYcEZxWD
-	 JTNcEK/BjbeIaxqQpBfNiar/RBT6SrDVXH2ZktO2JwY77VkGtprRSAd7BpIQWJ7nUK
-	 KE2b4oWi3RnZNoXmIfZ53rioztwQWQGYag8bDE00=
+	b=jI1jeQ4C/shxstd1mihNR2L3cf9dJpFiiX2GLLzXx4ZBurqHVkc2T5vDvqStxcMd9
+	 qFqoohj+mddNxaHJcYxjGcAh6R0HCh4V7l5OPhdnI8+p9xXkGSebtVGIxxGOMcPuCt
+	 wMjEk8NL6Qtzwe9uUOW3Tfm6MBBZ/mZT4HI8aN8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tian Tao <tiantao6@hisilicon.com>,
-	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 5.4 280/282] drm/exynos: move to use request_irq by IRQF_NO_AUTOEN flag
-Date: Mon, 15 May 2023 18:30:58 +0200
-Message-Id: <20230515161730.777970735@linuxfoundation.org>
+	syzbot <syzbot+223c7461c58c58a4cb10@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Michal Hocko <mhocko@suse.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Petr Mladek <pmladek@suse.com>,
+	David Hildenbrand <david@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	Patrick Daly <quic_pdaly@quicinc.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 281/282] mm/page_alloc: fix potential deadlock on zonelist_update_seq seqlock
+Date: Mon, 15 May 2023 18:30:59 +0200
+Message-Id: <20230515161730.815284577@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -34,67 +44,181 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tian Tao <tiantao6@hisilicon.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit a4e5eed2c6a689ef2b6ad8d7ae86665c69039379 upstream.
+commit 1007843a91909a4995ee78a538f62d8665705b66 upstream.
 
-After this patch cbe16f35bee68 genirq: Add IRQF_NO_AUTOEN for
-request_irq/nmi() is merged. request_irq() after setting
-IRQ_NOAUTOEN as below
+syzbot is reporting circular locking dependency which involves
+zonelist_update_seq seqlock [1], for this lock is checked by memory
+allocation requests which do not need to be retried.
 
-irq_set_status_flags(irq, IRQ_NOAUTOEN);
-request_irq(dev, irq...);
-can be replaced by request_irq() with IRQF_NO_AUTOEN flag.
+One deadlock scenario is kmalloc(GFP_ATOMIC) from an interrupt handler.
 
-v2:
-Fix the problem of using wrong flags
+  CPU0
+  ----
+  __build_all_zonelists() {
+    write_seqlock(&zonelist_update_seq); // makes zonelist_update_seq.seqcount odd
+    // e.g. timer interrupt handler runs at this moment
+      some_timer_func() {
+        kmalloc(GFP_ATOMIC) {
+          __alloc_pages_slowpath() {
+            read_seqbegin(&zonelist_update_seq) {
+              // spins forever because zonelist_update_seq.seqcount is odd
+            }
+          }
+        }
+      }
+    // e.g. timer interrupt handler finishes
+    write_sequnlock(&zonelist_update_seq); // makes zonelist_update_seq.seqcount even
+  }
 
-Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+This deadlock scenario can be easily eliminated by not calling
+read_seqbegin(&zonelist_update_seq) from !__GFP_DIRECT_RECLAIM allocation
+requests, for retry is applicable to only __GFP_DIRECT_RECLAIM allocation
+requests.  But Michal Hocko does not know whether we should go with this
+approach.
+
+Another deadlock scenario which syzbot is reporting is a race between
+kmalloc(GFP_ATOMIC) from tty_insert_flip_string_and_push_buffer() with
+port->lock held and printk() from __build_all_zonelists() with
+zonelist_update_seq held.
+
+  CPU0                                   CPU1
+  ----                                   ----
+  pty_write() {
+    tty_insert_flip_string_and_push_buffer() {
+                                         __build_all_zonelists() {
+                                           write_seqlock(&zonelist_update_seq);
+                                           build_zonelists() {
+                                             printk() {
+                                               vprintk() {
+                                                 vprintk_default() {
+                                                   vprintk_emit() {
+                                                     console_unlock() {
+                                                       console_flush_all() {
+                                                         console_emit_next_record() {
+                                                           con->write() = serial8250_console_write() {
+      spin_lock_irqsave(&port->lock, flags);
+      tty_insert_flip_string() {
+        tty_insert_flip_string_fixed_flag() {
+          __tty_buffer_request_room() {
+            tty_buffer_alloc() {
+              kmalloc(GFP_ATOMIC | __GFP_NOWARN) {
+                __alloc_pages_slowpath() {
+                  zonelist_iter_begin() {
+                    read_seqbegin(&zonelist_update_seq); // spins forever because zonelist_update_seq.seqcount is odd
+                                                             spin_lock_irqsave(&port->lock, flags); // spins forever because port->lock is held
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      spin_unlock_irqrestore(&port->lock, flags);
+                                                             // message is printed to console
+                                                             spin_unlock_irqrestore(&port->lock, flags);
+                                                           }
+                                                         }
+                                                       }
+                                                     }
+                                                   }
+                                                 }
+                                               }
+                                             }
+                                           }
+                                           write_sequnlock(&zonelist_update_seq);
+                                         }
+    }
+  }
+
+This deadlock scenario can be eliminated by
+
+  preventing interrupt context from calling kmalloc(GFP_ATOMIC)
+
+and
+
+  preventing printk() from calling console_flush_all()
+
+while zonelist_update_seq.seqcount is odd.
+
+Since Petr Mladek thinks that __build_all_zonelists() can become a
+candidate for deferring printk() [2], let's address this problem by
+
+  disabling local interrupts in order to avoid kmalloc(GFP_ATOMIC)
+
+and
+
+  disabling synchronous printk() in order to avoid console_flush_all()
+
+.
+
+As a side effect of minimizing duration of zonelist_update_seq.seqcount
+being odd by disabling synchronous printk(), latency at
+read_seqbegin(&zonelist_update_seq) for both !__GFP_DIRECT_RECLAIM and
+__GFP_DIRECT_RECLAIM allocation requests will be reduced.  Although, from
+lockdep perspective, not calling read_seqbegin(&zonelist_update_seq) (i.e.
+do not record unnecessary locking dependency) from interrupt context is
+still preferable, even if we don't allow calling kmalloc(GFP_ATOMIC)
+inside
+write_seqlock(&zonelist_update_seq)/write_sequnlock(&zonelist_update_seq)
+section...
+
+Link: https://lkml.kernel.org/r/8796b95c-3da3-5885-fddd-6ef55f30e4d3@I-love.SAKURA.ne.jp
+Fixes: 3d36424b3b58 ("mm/page_alloc: fix race condition between build_all_zonelists and page allocation")
+Link: https://lkml.kernel.org/r/ZCrs+1cDqPWTDFNM@alley [2]
+Reported-by: syzbot <syzbot+223c7461c58c58a4cb10@syzkaller.appspotmail.com>
+  Link: https://syzkaller.appspot.com/bug?extid=223c7461c58c58a4cb10 [1]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: Patrick Daly <quic_pdaly@quicinc.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos5433_drm_decon.c |    4 ++--
- drivers/gpu/drm/exynos/exynos_drm_dsi.c       |    7 +++----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ mm/page_alloc.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-@@ -775,8 +775,8 @@ static int decon_conf_irq(struct decon_c
- 			return irq;
- 		}
- 	}
--	irq_set_status_flags(irq, IRQ_NOAUTOEN);
--	ret = devm_request_irq(ctx->dev, irq, handler, flags, "drm_decon", ctx);
-+	ret = devm_request_irq(ctx->dev, irq, handler,
-+			       flags | IRQF_NO_AUTOEN, "drm_decon", ctx);
- 	if (ret < 0) {
- 		dev_err(ctx->dev, "IRQ %s request failed\n", name);
- 		return ret;
---- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-@@ -1350,10 +1350,9 @@ static int exynos_dsi_register_te_irq(st
- 	}
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -5816,7 +5816,21 @@ static void __build_all_zonelists(void *
+ 	int nid;
+ 	int __maybe_unused cpu;
+ 	pg_data_t *self = data;
++	unsigned long flags;
  
- 	te_gpio_irq = gpio_to_irq(dsi->te_gpio);
--	irq_set_status_flags(te_gpio_irq, IRQ_NOAUTOEN);
++	/*
++	 * Explicitly disable this CPU's interrupts before taking seqlock
++	 * to prevent any IRQ handler from calling into the page allocator
++	 * (e.g. GFP_ATOMIC) that could hit zonelist_iter_begin and livelock.
++	 */
++	local_irq_save(flags);
++	/*
++	 * Explicitly disable this CPU's synchronous printk() before taking
++	 * seqlock to prevent any printk() from trying to hold port->lock, for
++	 * tty_insert_flip_string_and_push_buffer() on other CPU might be
++	 * calling kmalloc(GFP_ATOMIC | __GFP_NOWARN) with port->lock held.
++	 */
++	printk_deferred_enter();
+ 	write_seqlock(&zonelist_update_seq);
  
- 	ret = request_threaded_irq(te_gpio_irq, exynos_dsi_te_irq_handler, NULL,
--					IRQF_TRIGGER_RISING, "TE", dsi);
-+				   IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN, "TE", dsi);
- 	if (ret) {
- 		dev_err(dsi->dev, "request interrupt failed with %d\n", ret);
- 		gpio_free(dsi->te_gpio);
-@@ -1792,9 +1791,9 @@ static int exynos_dsi_probe(struct platf
- 		return dsi->irq;
+ #ifdef CONFIG_NUMA
+@@ -5851,6 +5865,8 @@ static void __build_all_zonelists(void *
  	}
  
--	irq_set_status_flags(dsi->irq, IRQ_NOAUTOEN);
- 	ret = devm_request_threaded_irq(dev, dsi->irq, NULL,
--					exynos_dsi_irq, IRQF_ONESHOT,
-+					exynos_dsi_irq,
-+					IRQF_ONESHOT | IRQF_NO_AUTOEN,
- 					dev_name(dev), dsi);
- 	if (ret) {
- 		dev_err(dev, "failed to request dsi irq\n");
+ 	write_sequnlock(&zonelist_update_seq);
++	printk_deferred_exit();
++	local_irq_restore(flags);
+ }
+ 
+ static noinline void __init
 
 
