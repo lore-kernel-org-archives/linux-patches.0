@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C53D52B
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:58:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BD0C433D2;
-	Mon, 15 May 2023 16:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87939D52B
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:58:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE93BC433EF;
+	Mon, 15 May 2023 16:58:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169893;
-	bh=UFMDJh7KJWjZHQPcpfDQDnUz68/Uyt3gAUDuOqNaUAc=;
+	s=korg; t=1684169896;
+	bh=kewpXlK0JDFtRsuBvkage/Kpsy3PG8r0SvYbjvEL6eY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIGCGnD2uOEJTmLVpW/WwikFLVOtrz4PT1G9DrDsbqBpeR1yImG0U6+NauyrnKr3a
-	 s/RLojX/m180YMVIyhGxAj/F2IwOjgyMSdkazSLEz0/FS/NuGFW0EYyTPTlDLVl9Ev
-	 KquIpaRZcyZdGMQtlah9ISDSB8G9A5LzNxHcBdjs=
+	b=UnRUTYyUcxSL0q5qBghB47y0K/0gMy3VsMqfnGpQIrCfduhiRWh0wb0NO6/DG9QKe
+	 d22wFX7eMDYMm6ZSeTDW5b3IFFI58rmC90SIV2yMlpS/TI5unOOCJ+Y9nBGpPiK9Dn
+	 sEnfaxnZfEKkQmwjwROJGVpAaS9SW+wxqDtUZi1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nevenko Stupar <Nevenko.Stupar@amd.com>,
-	Jun Lei <Jun.Lei@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.3 204/246] drm/amd/display: Enforce 60us prefetch for 200Mhz DCFCLK modes
-Date: Mon, 15 May 2023 18:26:56 +0200
-Message-Id: <20230515161728.727247271@linuxfoundation.org>
+	Guchun Chen <guchun.chen@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.3 205/246] drm/amd/pm: parse pp_handle under appropriate conditions
+Date: Mon, 15 May 2023 18:26:57 +0200
+Message-Id: <20230515161728.756132208@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -39,64 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvin Lee <Alvin.Lee2@amd.com>
+From: Guchun Chen <guchun.chen@amd.com>
 
-commit b504f99ccaa64da364443431e388ecf30b604e38 upstream.
+commit 58d9b9a14b47c2a3da6effcbb01607ad7edc0275 upstream.
 
-[Description]
-- Due to bandwidth / arbitration issues at 200Mhz DCFCLK,
-  we want to enforce minimum 60us of prefetch to avoid
-  intermittent underflow issues
-- Since 60us prefetch is already enforced for UCLK DPM0,
-  and many DCFCLK's > 200Mhz are mapped to UCLK DPM1, in
-  theory there should not be any UCLK DPM regressions by
-  enforcing greater prefetch
+amdgpu_dpm_is_overdrive_supported is a common API across all
+asics, so we should cast pp_handle into correct structure
+under different power frameworks.
 
-Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alvin Lee <Alvin.Lee2@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+v2: using return directly to simplify code
+v3: SI asic does not carry od_enabled member in pp_handle, and update Fixes tag
+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2541
+Fixes: eb4900aa4c49 ("drm/amdgpu: Fix kernel NULL pointer dereference in dpm functions")
+Suggested-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c |    5 +++--
- drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h |    1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/amdgpu_dpm.c |   20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-@@ -810,7 +810,8 @@ static void DISPCLKDPPCLKDCFCLKDeepSleep
- 					v->SwathHeightY[k],
- 					v->SwathHeightC[k],
- 					TWait,
--					v->DRAMSpeedPerState[mode_lib->vba.VoltageLevel] <= MEM_STROBE_FREQ_MHZ ?
-+					(v->DRAMSpeedPerState[mode_lib->vba.VoltageLevel] <= MEM_STROBE_FREQ_MHZ ||
-+						v->DCFCLKPerState[mode_lib->vba.VoltageLevel] <= MIN_DCFCLK_FREQ_MHZ) ?
- 							mode_lib->vba.ip.min_prefetch_in_strobe_us : 0,
- 					/* Output */
- 					&v->DSTXAfterScaler[k],
-@@ -3309,7 +3310,7 @@ void dml32_ModeSupportAndSystemConfigura
- 							v->swath_width_chroma_ub_this_state[k],
- 							v->SwathHeightYThisState[k],
- 							v->SwathHeightCThisState[k], v->TWait,
--							v->DRAMSpeedPerState[i] <= MEM_STROBE_FREQ_MHZ ?
-+							(v->DRAMSpeedPerState[i] <= MEM_STROBE_FREQ_MHZ || v->DCFCLKState[i][j] <= MIN_DCFCLK_FREQ_MHZ) ?
- 									mode_lib->vba.ip.min_prefetch_in_strobe_us : 0,
+--- a/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
++++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm.c
+@@ -1432,15 +1432,21 @@ int amdgpu_dpm_get_smu_prv_buf_details(s
  
- 							/* Output */
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h
-@@ -53,6 +53,7 @@
- #define BPP_BLENDED_PIPE 0xffffffff
+ int amdgpu_dpm_is_overdrive_supported(struct amdgpu_device *adev)
+ {
+-	struct pp_hwmgr *hwmgr = adev->powerplay.pp_handle;
+-	struct smu_context *smu = adev->powerplay.pp_handle;
++	if (is_support_sw_smu(adev)) {
++		struct smu_context *smu = adev->powerplay.pp_handle;
  
- #define MEM_STROBE_FREQ_MHZ 1600
-+#define MIN_DCFCLK_FREQ_MHZ 200
- #define MEM_STROBE_MAX_DELIVERY_TIME_US 60.0
+-	if ((is_support_sw_smu(adev) && smu->od_enabled) ||
+-	    (is_support_sw_smu(adev) && smu->is_apu) ||
+-		(!is_support_sw_smu(adev) && hwmgr->od_enabled))
+-		return true;
++		return (smu->od_enabled || smu->is_apu);
++	} else {
++		struct pp_hwmgr *hwmgr;
  
- struct display_mode_lib;
+-	return false;
++		/* SI asic does not carry od_enabled */
++		if (adev->family == AMDGPU_FAMILY_SI)
++			return false;
++
++		hwmgr = (struct pp_hwmgr *)adev->powerplay.pp_handle;
++
++		return hwmgr->od_enabled;
++	}
+ }
+ 
+ int amdgpu_dpm_set_pp_table(struct amdgpu_device *adev,
 
 
