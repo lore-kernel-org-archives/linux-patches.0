@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B47CFBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:15:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F4A0C433EF;
-	Mon, 15 May 2023 17:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BEDFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:15:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEE5C4339B;
+	Mon, 15 May 2023 17:15:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170909;
-	bh=RcMf99sVVFYOzFuBxPyij6kdwnRsBoKd96FJsfVFXdc=;
+	s=korg; t=1684170912;
+	bh=UPH5NuXGGWxvXv6CzMqfeSXJjpRorXtzNNpw0szeM1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nnuQwEz9VjSnmn+vgdQgl7dtVqYIHTOJCsBGIkj4qXHpn1XzRlx0Dq4vge37l6HAw
-	 j4LRuOmpQqJxS/eCqxclHsuvbKI0hjvJQVQjQxc2wk/9aepvXwiIePSH3uMCY21Q5Y
-	 5xXj0g6cQgXw8MaAEnxbmvkIY5WnRXtB8XJVTjTs=
+	b=Di49yLQPmBOttnYmjhqAWXfHaqx9Jf8phuQJ9zytpk752HF1KN/w6uNTywd+jPypW
+	 9UlHWZGHRAvdQpdOeUjFbyBCSH6ABbOmWI4pkU7IV64KDK5HZ4GgWeDW9f7oWKFjwG
+	 QAyMAISvoCgc44Jl4tE59suDWOAkNb45zeBgYNpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Geetha sowjanya <gakula@marvell.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Tanmay Shah <tanmay.shah@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 038/242] octeontx2-pf: mcs: Match macsec ethertype along with DMAC
-Date: Mon, 15 May 2023 18:26:04 +0200
-Message-Id: <20230515161723.061955871@linuxfoundation.org>
+Subject: [PATCH 6.2 011/242] mailbox: zynqmp: Fix counts of child nodes
+Date: Mon, 15 May 2023 18:25:37 +0200
+Message-Id: <20230515161722.152684389@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -38,70 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: Tanmay Shah <tanmay.shah@amd.com>
 
-[ Upstream commit 57d00d4364f314485092667d2a48718985515deb ]
+[ Upstream commit f72f805e72882c361e2a612c64a6e549f3da7152 ]
 
-On CN10KB silicon a single hardware macsec block is
-present and offloads macsec operations for all the
-ethernet LMACs. TCAM match with macsec ethertype 0x88e5
-alone at RX side is not sufficient to distinguish all the
-macsec interfaces created on top of netdevs. Hence append
-the DMAC of the macsec interface too. Otherwise the first
-created macsec interface only receives all the macsec traffic.
+If child mailbox node status is disabled it causes
+crash in interrupt handler. Fix this by assigning
+only available child node during driver probe.
 
-Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230311012407.1292118-2-tanmay.shah@amd.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c  | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-index 9ec5f38d38a84..f699209978fef 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-@@ -9,6 +9,7 @@
- #include <net/macsec.h>
- #include "otx2_common.h"
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index 29f09ded6e739..d097f45b0e5f5 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -634,7 +634,12 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
+ 	struct zynqmp_ipi_mbox *mbox;
+ 	int num_mboxes, ret = -EINVAL;
  
-+#define MCS_TCAM0_MAC_DA_MASK		GENMASK_ULL(47, 0)
- #define MCS_TCAM0_MAC_SA_MASK		GENMASK_ULL(63, 48)
- #define MCS_TCAM1_MAC_SA_MASK		GENMASK_ULL(31, 0)
- #define MCS_TCAM1_ETYPE_MASK		GENMASK_ULL(47, 32)
-@@ -237,8 +238,10 @@ static int cn10k_mcs_write_rx_flowid(struct otx2_nic *pfvf,
- 				     struct cn10k_mcs_rxsc *rxsc, u8 hw_secy_id)
- {
- 	struct macsec_rx_sc *sw_rx_sc = rxsc->sw_rxsc;
-+	struct macsec_secy *secy = rxsc->sw_secy;
- 	struct mcs_flowid_entry_write_req *req;
- 	struct mbox *mbox = &pfvf->mbox;
-+	u64 mac_da;
- 	int ret;
- 
- 	mutex_lock(&mbox->lock);
-@@ -249,11 +252,16 @@ static int cn10k_mcs_write_rx_flowid(struct otx2_nic *pfvf,
- 		goto fail;
- 	}
- 
-+	mac_da = ether_addr_to_u64(secy->netdev->dev_addr);
+-	num_mboxes = of_get_child_count(np);
++	num_mboxes = of_get_available_child_count(np);
++	if (num_mboxes == 0) {
++		dev_err(dev, "mailbox nodes not available\n");
++		return -EINVAL;
++	}
 +
-+	req->data[0] = FIELD_PREP(MCS_TCAM0_MAC_DA_MASK, mac_da);
-+	req->mask[0] = ~0ULL;
-+	req->mask[0] = ~MCS_TCAM0_MAC_DA_MASK;
-+
- 	req->data[1] = FIELD_PREP(MCS_TCAM1_ETYPE_MASK, ETH_P_MACSEC);
- 	req->mask[1] = ~0ULL;
- 	req->mask[1] &= ~MCS_TCAM1_ETYPE_MASK;
- 
--	req->mask[0] = ~0ULL;
- 	req->mask[2] = ~0ULL;
- 	req->mask[3] = ~0ULL;
- 
+ 	pdata = devm_kzalloc(dev, struct_size(pdata, ipi_mboxes, num_mboxes),
+ 			     GFP_KERNEL);
+ 	if (!pdata)
 -- 
 2.39.2
 
