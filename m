@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CB9FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:09:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04B47C433D2;
-	Mon, 15 May 2023 17:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B110CFBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:09:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B9FC4339C;
+	Mon, 15 May 2023 17:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170560;
-	bh=NHei2NybN9r+q927sZxt70uyRTOZvmNHiajD31oWn0A=;
+	s=korg; t=1684170563;
+	bh=YqDo/tczgT6Erja8rEHFm2scRcY6JC5nKPwxOy0rONA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jFM6CEW0DiYQ0ItD/IUD2qHV20NQrghoUrSdVwXO/60qlQ6WnT/Q0/mfTlxiGTIPu
-	 OTIu3gtMJ45lGd8JSGuiNVsHx6ZaKMH+4c2wZGdJkklVTGCAOuhiTuMuAQXdhOhJg9
-	 Z+ufDwxg7dh6M6ElS9USSH8mJbbRC149MZdTg40s=
+	b=PpJRDL85IETwVdA58qPMq3vfGIvwb9GIIDQW8NOYnhfIIljYvxZxCAmDwkZGPJzp9
+	 boBFSium1cJhuPom0DTC0mdzWAEdtYqPS7J/6OTu0tM1iZ3zFUZk+L9FqEcJ9Bri4c
+	 Oe7hnhSgwE1gP7+zGGumzQ2k63DtTwIpm6/hm53k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
-	Veerabadhran Gopalakrishnan <Veerabadhran.Gopalakrishnan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 169/239] drm/amdgpu/jpeg: Remove harvest checking for JPEG3
-Date: Mon, 15 May 2023 18:27:12 +0200
-Message-Id: <20230515161726.741819495@linuxfoundation.org>
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Yogesh Mohan Marimuthu <Yogesh.Mohanmarimuthu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Tim Huang <Tim.Huang@amd.com>
+Subject: [PATCH 6.1 170/239] drm/amdgpu: change gfx 11.0.4 external_id range
+Date: Mon, 15 May 2023 18:27:13 +0200
+Message-Id: <20230515161726.771738201@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,35 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-commit 5b94db73e45e2e6c2840f39c022fd71dfa47fc58 upstream.
+commit 996e93a3fe74dcf9d467ae3020aea42cc3ff65e3 upstream.
 
-Register CC_UVD_HARVESTING is obsolete for JPEG 3.1.2
+gfx 11.0.4 range starts from 0x80.
 
-Signed-off-by: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
-Reviewed-by: Veerabadhran Gopalakrishnan <Veerabadhran.Gopalakrishnan@amd.com>
+Fixes: 311d52367d0a ("drm/amdgpu: add soc21 common ip block support for GC 11.0.4")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reported-by: Yogesh Mohan Marimuthu <Yogesh.Mohanmarimuthu@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/soc21.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-index c55e09432e26..1c2292cc5f2c 100644
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-@@ -54,6 +54,7 @@ static int jpeg_v3_0_early_init(void *handle)
- 
- 	switch (adev->ip_versions[UVD_HWIP][0]) {
- 	case IP_VERSION(3, 1, 1):
-+	case IP_VERSION(3, 1, 2):
+--- a/drivers/gpu/drm/amd/amdgpu/soc21.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
+@@ -715,7 +715,7 @@ static int soc21_common_early_init(void
+ 			AMD_PG_SUPPORT_VCN_DPG |
+ 			AMD_PG_SUPPORT_GFX_PG |
+ 			AMD_PG_SUPPORT_JPEG;
+-		adev->external_rev_id = adev->rev_id + 0x1;
++		adev->external_rev_id = adev->rev_id + 0x80;
  		break;
+ 
  	default:
- 		harvest = RREG32_SOC15(JPEG, 0, mmCC_UVD_HARVESTING);
--- 
-2.40.1
-
 
 
