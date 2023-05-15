@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8627F1772F
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:03:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBDC2C4339E;
-	Mon, 15 May 2023 18:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957941772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:03:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8FEC433EF;
+	Mon, 15 May 2023 18:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173792;
-	bh=1JuHoCrWGSj9a/hNc6qqQA8GgVYNnLtLYeeOwpKw+Ac=;
+	s=korg; t=1684173795;
+	bh=4DM2dKMkIn4b7wyuY4d2AyBJeREPzhW4s2s1OeksAVg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mICW3qnB6O+6Ti8AfHRn3i34WIZZHPbRnYc37JlsPKQYvILxdVoI7NYxRt+XtN9Qn
-	 Tc5Z1pHemCF0b9aJi+ymnlp2gInPqeoc5eeVFPFIb7gUGlFK9b+onCbCw09c4XcRaA
-	 +hXmwhKIKzMG580SBOXpWkQdHoHPxX6rLub2At+Y=
+	b=WpNmTCOtFKf+ImfFDZlurx9R07JoqUyXnllZ1CmX+3jQj+/pPZZ1PGjRxKJ/QYQN+
+	 NU7mJVtOtSHsD5MvZiHVxVgiN1mAk8pA8KGP5uamm6QclNCb0INWiX3zzbRXlqW1aR
+	 O2/RAxOV3uqo/z+iT+zi1axz3CRUmebl1SBBHp+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.4 209/282] debugobject: Ensure pool refill (again)
-Date: Mon, 15 May 2023 18:29:47 +0200
-Message-Id: <20230515161728.510092111@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.4 210/282] netfilter: nf_tables: deactivate anonymous set from preparation phase
+Date: Mon, 15 May 2023 18:29:48 +0200
+Message-Id: <20230515161728.538626660@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -34,80 +33,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 0af462f19e635ad522f28981238334620881badc upstream.
+commit c1592a89942e9678f7d9c8030efa777c0d57edab upstream.
 
-The recent fix to ensure atomicity of lookup and allocation inadvertently
-broke the pool refill mechanism.
+Toggle deleted anonymous sets as inactive in the next generation, so
+users cannot perform any update on it. Clear the generation bitmask
+in case the transaction is aborted.
 
-Prior to that change debug_objects_activate() and debug_objecs_assert_init()
-invoked debug_objecs_init() to set up the tracking object for statically
-initialized objects. That's not longer the case and debug_objecs_init() is
-now the only place which does pool refills.
+The following KASAN splat shows a set element deletion for a bound
+anonymous set that has been already removed in the same transaction.
 
-Depending on the number of statically initialized objects this can be
-enough to actually deplete the pool, which was observed by Ido via a
-debugobjects OOM warning.
+[   64.921510] ==================================================================
+[   64.923123] BUG: KASAN: wild-memory-access in nf_tables_commit+0xa24/0x1490 [nf_tables]
+[   64.924745] Write of size 8 at addr dead000000000122 by task test/890
+[   64.927903] CPU: 3 PID: 890 Comm: test Not tainted 6.3.0+ #253
+[   64.931120] Call Trace:
+[   64.932699]  <TASK>
+[   64.934292]  dump_stack_lvl+0x33/0x50
+[   64.935908]  ? nf_tables_commit+0xa24/0x1490 [nf_tables]
+[   64.937551]  kasan_report+0xda/0x120
+[   64.939186]  ? nf_tables_commit+0xa24/0x1490 [nf_tables]
+[   64.940814]  nf_tables_commit+0xa24/0x1490 [nf_tables]
+[   64.942452]  ? __kasan_slab_alloc+0x2d/0x60
+[   64.944070]  ? nf_tables_setelem_notify+0x190/0x190 [nf_tables]
+[   64.945710]  ? kasan_set_track+0x21/0x30
+[   64.947323]  nfnetlink_rcv_batch+0x709/0xd90 [nfnetlink]
+[   64.948898]  ? nfnetlink_rcv_msg+0x480/0x480 [nfnetlink]
 
-Restore the old behaviour by adding explicit refill opportunities to
-debug_objects_activate() and debug_objecs_assert_init().
-
-Fixes: 63a759694eed ("debugobject: Prevent init race with static objects")
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/871qk05a9d.ffs@tglx
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ include/net/netfilter/nf_tables.h |    1 +
+ net/netfilter/nf_tables_api.c     |   12 ++++++++++++
+ net/netfilter/nft_dynset.c        |    2 +-
+ net/netfilter/nft_lookup.c        |    2 +-
+ net/netfilter/nft_objref.c        |    2 +-
+ 5 files changed, 16 insertions(+), 3 deletions(-)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -563,6 +563,16 @@ static struct debug_obj *lookup_object_o
- 	return NULL;
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -493,6 +493,7 @@ struct nft_set_binding {
+ };
+ 
+ enum nft_trans_phase;
++void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set);
+ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 			      struct nft_set_binding *binding,
+ 			      enum nft_trans_phase phase);
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3909,12 +3909,24 @@ static void nf_tables_unbind_set(const s
+ 	}
  }
  
-+static void debug_objects_fill_pool(void)
++void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set)
 +{
-+	/*
-+	 * On RT enabled kernels the pool refill must happen in preemptible
-+	 * context:
-+	 */
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible())
-+		fill_pool();
++	if (nft_set_is_anonymous(set))
++		nft_clear(ctx->net, set);
++
++	set->use++;
 +}
++EXPORT_SYMBOL_GPL(nf_tables_activate_set);
 +
- static void
- __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
+ void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
+ 			      struct nft_set_binding *binding,
+ 			      enum nft_trans_phase phase)
  {
-@@ -571,7 +581,7 @@ __debug_object_init(void *addr, struct d
- 	struct debug_obj *obj;
- 	unsigned long flags;
- 
--	fill_pool();
-+	debug_objects_fill_pool();
- 
- 	db = get_bucket((unsigned long) addr);
- 
-@@ -656,6 +666,8 @@ int debug_object_activate(void *addr, st
- 	if (!debug_objects_enabled)
- 		return 0;
- 
-+	debug_objects_fill_pool();
+ 	switch (phase) {
+ 	case NFT_TRANS_PREPARE:
++		if (nft_set_is_anonymous(set))
++			nft_deactivate_next(ctx->net, set);
 +
- 	db = get_bucket((unsigned long) addr);
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
-@@ -865,6 +877,8 @@ void debug_object_assert_init(void *addr
- 	if (!debug_objects_enabled)
+ 		set->use--;
  		return;
+ 	case NFT_TRANS_ABORT:
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -259,7 +259,7 @@ static void nft_dynset_activate(const st
+ {
+ 	struct nft_dynset *priv = nft_expr_priv(expr);
  
-+	debug_objects_fill_pool();
-+
- 	db = get_bucket((unsigned long) addr);
+-	priv->set->use++;
++	nf_tables_activate_set(ctx, priv->set);
+ }
  
- 	raw_spin_lock_irqsave(&db->lock, flags);
+ static void nft_dynset_destroy(const struct nft_ctx *ctx,
+--- a/net/netfilter/nft_lookup.c
++++ b/net/netfilter/nft_lookup.c
+@@ -129,7 +129,7 @@ static void nft_lookup_activate(const st
+ {
+ 	struct nft_lookup *priv = nft_expr_priv(expr);
+ 
+-	priv->set->use++;
++	nf_tables_activate_set(ctx, priv->set);
+ }
+ 
+ static void nft_lookup_destroy(const struct nft_ctx *ctx,
+--- a/net/netfilter/nft_objref.c
++++ b/net/netfilter/nft_objref.c
+@@ -180,7 +180,7 @@ static void nft_objref_map_activate(cons
+ {
+ 	struct nft_objref_map *priv = nft_expr_priv(expr);
+ 
+-	priv->set->use++;
++	nf_tables_activate_set(ctx, priv->set);
+ }
+ 
+ static void nft_objref_map_destroy(const struct nft_ctx *ctx,
 
 
