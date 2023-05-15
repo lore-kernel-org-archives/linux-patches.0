@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A48FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:59:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F80DC433D2;
-	Mon, 15 May 2023 16:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17024FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:59:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733E5C433EF;
+	Mon, 15 May 2023 16:59:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169996;
-	bh=WChcO2BEzLe/4FNxulPQ+wAtj0Ph2Ry9S5Mq1MViCzY=;
+	s=korg; t=1684169998;
+	bh=bMM3M3/6iaUkQz5bnBelOCDckOMOPVJg0H7sSqX7GwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OcpvHlA4Rmc3OptsOmQsXx+DGOg9sio+rUPb/uwtBQZQSZN5nQI4/ymYX/Icn8nTv
-	 RYzKyxrSdQq9pfwCB3qdXuvo2gMoKfQVFWhm4EVYN73tgV5SFy1zYF601Dp5HeWTyB
-	 1PfYFtmHqI026RjdDXa9KHeyfdmifGWGrCttddSs=
+	b=jRwIRVo15Tb4e4974rwKZjINGnPRgyOjRmLQVBkmPt912hUIENdjsS0qH2l3vMDrb
+	 0a5msoa83f/UVmgjTiKDnjauiqw0ybXK89zdD/5rfibkPM9RBl6NJ40Ee2j4Lemciz
+	 Ge93pA5spqHFMRfjrEU4KA8ugZL4u7EJ0eIBO328=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
-	syzbot+6b7df7d5506b32467149@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	syzbot+e2efa3efc15a1c9e95c3@syzkaller.appspotmail.com,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.3 237/246] ext4: fix lockdep warning when enabling MMP
-Date: Mon, 15 May 2023 18:27:29 +0200
-Message-Id: <20230515161729.755712466@linuxfoundation.org>
+Subject: [PATCH 6.3 238/246] ext4: remove a BUG_ON in ext4_mb_release_group_pa()
+Date: Mon, 15 May 2023 18:27:30 +0200
+Message-Id: <20230515161729.784477072@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -37,89 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Theodore Ts'o <tytso@mit.edu>
 
-commit 949f95ff39bf188e594e7ecd8e29b82eb108f5bf upstream.
+commit 463808f237cf73e98a1a45ff7460c2406a150a0b upstream.
 
-When we enable MMP in ext4_multi_mount_protect() during mount or
-remount, we end up calling sb_start_write() from write_mmp_block(). This
-triggers lockdep warning because freeze protection ranks above s_umount
-semaphore we are holding during mount / remount. The problem is harmless
-because we are guaranteed the filesystem is not frozen during mount /
-remount but still let's fix the warning by not grabbing freeze
-protection from ext4_multi_mount_protect().
+If a malicious fuzzer overwrites the ext4 superblock while it is
+mounted such that the s_first_data_block is set to a very large
+number, the calculation of the block group can underflow, and trigger
+a BUG_ON check.  Change this to be an ext4_warning so that we don't
+crash the kernel.
 
 Cc: stable@kernel.org
-Reported-by: syzbot+6b7df7d5506b32467149@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=ab7e5b6f400b7778d46f01841422e5718fb81843
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Link: https://lore.kernel.org/r/20230411121019.21940-1-jack@suse.cz
+Link: https://lore.kernel.org/r/20230430154311.579720-3-tytso@mit.edu
+Reported-by: syzbot+e2efa3efc15a1c9e95c3@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=69b28112e098b070f639efb356393af3ffec4220
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mmp.c |   30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ fs/ext4/mballoc.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/mmp.c
-+++ b/fs/ext4/mmp.c
-@@ -39,28 +39,36 @@ static void ext4_mmp_csum_set(struct sup
-  * Write the MMP block using REQ_SYNC to try to get the block on-disk
-  * faster.
-  */
--static int write_mmp_block(struct super_block *sb, struct buffer_head *bh)
-+static int write_mmp_block_thawed(struct super_block *sb,
-+				  struct buffer_head *bh)
- {
- 	struct mmp_struct *mmp = (struct mmp_struct *)(bh->b_data);
- 
--	/*
--	 * We protect against freezing so that we don't create dirty buffers
--	 * on frozen filesystem.
--	 */
--	sb_start_write(sb);
- 	ext4_mmp_csum_set(sb, mmp);
- 	lock_buffer(bh);
- 	bh->b_end_io = end_buffer_write_sync;
- 	get_bh(bh);
- 	submit_bh(REQ_OP_WRITE | REQ_SYNC | REQ_META | REQ_PRIO, bh);
- 	wait_on_buffer(bh);
--	sb_end_write(sb);
- 	if (unlikely(!buffer_uptodate(bh)))
- 		return -EIO;
--
- 	return 0;
- }
- 
-+static int write_mmp_block(struct super_block *sb, struct buffer_head *bh)
-+{
-+	int err;
-+
-+	/*
-+	 * We protect against freezing so that we don't create dirty buffers
-+	 * on frozen filesystem.
-+	 */
-+	sb_start_write(sb);
-+	err = write_mmp_block_thawed(sb, bh);
-+	sb_end_write(sb);
-+	return err;
-+}
-+
- /*
-  * Read the MMP block. It _must_ be read from disk and hence we clear the
-  * uptodate flag on the buffer.
-@@ -340,7 +348,11 @@ skip:
- 	seq = mmp_new_seq();
- 	mmp->mmp_seq = cpu_to_le32(seq);
- 
--	retval = write_mmp_block(sb, bh);
-+	/*
-+	 * On mount / remount we are protected against fs freezing (by s_umount
-+	 * semaphore) and grabbing freeze protection upsets lockdep
-+	 */
-+	retval = write_mmp_block_thawed(sb, bh);
- 	if (retval)
- 		goto failed;
- 
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -4820,7 +4820,11 @@ ext4_mb_release_group_pa(struct ext4_bud
+ 	trace_ext4_mb_release_group_pa(sb, pa);
+ 	BUG_ON(pa->pa_deleted == 0);
+ 	ext4_get_group_no_and_offset(sb, pa->pa_pstart, &group, &bit);
+-	BUG_ON(group != e4b->bd_group && pa->pa_len != 0);
++	if (unlikely(group != e4b->bd_group && pa->pa_len != 0)) {
++		ext4_warning(sb, "bad group: expected %u, group %u, pa_start %llu",
++			     e4b->bd_group, group, pa->pa_pstart);
++		return 0;
++	}
+ 	mb_free_blocks(pa->pa_inode, e4b, bit, pa->pa_len);
+ 	atomic_add(pa->pa_len, &EXT4_SB(sb)->s_mb_discarded);
+ 	trace_ext4_mballoc_discard(sb, NULL, group, bit, pa->pa_len);
 
 
