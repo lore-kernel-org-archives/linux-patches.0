@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23667DF5E
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9492BC433D2;
-	Mon, 15 May 2023 16:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A248DF5E
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A423AC433D2;
+	Mon, 15 May 2023 16:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169476;
-	bh=EnQHNNnWRJ9wA3vFxST/Puftf64q6UJyO9WhgEOAGFI=;
+	s=korg; t=1684169479;
+	bh=38VOvIjYb8mF1p9TGzQuNVI0AQz2UA/nhKziWfKr+Gc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KIAxQolfgCJ4NaBGvZwH/jSzGiTYV22XrPJcjEHjJvN5t5IxolRUlhctBL3Hi1KDq
-	 3aslsMEnHdf5fKskf1nS0Zez8aWkH5QkiBzBBm1Hf60yMsf5Ay7gcB8//y4uh5uW/u
-	 zMPYEPaQT9o5ASr3dK6XspIjch2s3trIZytwCi9M=
+	b=Sq5QpIYo1n+35TgaesQhQACzL1MFEyGMbHLwHHDR/uo4UmyygNaqPo6N4phKXzxy4
+	 xrSiGHQsWWzS6ImxUI+RbhnPoMJAzhBPJCvcxl8g0YhoJ2+6LaQUfAQoAX3K7lrnWb
+	 h6DCuqcrOUpZ8iuC5bIA+N1M4Pff+d3SRRdh7z8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suman Ghosh <sumang@marvell.com>,
+	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
 	Sai Krishna <saikrishnag@marvell.com>,
 	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 070/246] octeontx2-af: Update correct mask to filter IPv4 fragments
-Date: Mon, 15 May 2023 18:24:42 +0200
-Message-Id: <20230515161724.674108191@linuxfoundation.org>
+Subject: [PATCH 6.3 071/246] octeontx2-af: Update/Fix NPC field hash extract feature
+Date: Mon, 15 May 2023 18:24:43 +0200
+Message-Id: <20230515161724.702958908@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -38,39 +38,195 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Suman Ghosh <sumang@marvell.com>
+From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit 2075bf150ddf320df02c05e242774dc0f73be1a1 ]
+[ Upstream commit 406bed11fb91a0b35c26fe633d8700febaec6439 ]
 
-During the initial design, the IPv4 ip_flag mask was set to 0xff.
-Which results to filter only fragmets with (fragment_offset == 0).
-As part of the fix, updated the mask to 0x20 to filter all the
-fragmented packets irrespective of the fragment_offset value.
+1. As per previous implementation, mask and control parameter to
+generate the field hash value was not passed to the caller program.
+Updated the secret key mbox to share that information as well,
+as a part of the fix.
+2. Earlier implementation did not consider hash reduction of both
+source and destination IPv6 addresses. Only source IPv6 address
+was considered. This fix solves that and provides option to hash
 
-Fixes: c672e3727989 ("octeontx2-pf: Add support to filter packet based on IP fragment")
-Signed-off-by: Suman Ghosh <sumang@marvell.com>
+Fixes: 56d9f5fd2246 ("octeontx2-af: Use hashed field in MCAM key")
+Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
 Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
 Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
 Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/af/mbox.h  | 16 +++++---
+ .../marvell/octeontx2/af/rvu_npc_hash.c       | 37 ++++++++++++-------
+ .../marvell/octeontx2/af/rvu_npc_hash.h       |  6 +++
+ 3 files changed, 41 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-index 044cc211424ed..8392f63e433fc 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_tc.c
-@@ -544,7 +544,7 @@ static int otx2_tc_prepare_flow(struct otx2_nic *nic, struct otx2_tc_flow *node,
- 		if (match.mask->flags & FLOW_DIS_IS_FRAGMENT) {
- 			if (ntohs(flow_spec->etype) == ETH_P_IP) {
- 				flow_spec->ip_flag = IPV4_FLAG_MORE;
--				flow_mask->ip_flag = 0xff;
-+				flow_mask->ip_flag = IPV4_FLAG_MORE;
- 				req->features |= BIT_ULL(NPC_IPFRAG_IPV4);
- 			} else if (ntohs(flow_spec->etype) == ETH_P_IPV6) {
- 				flow_spec->next_header = IPPROTO_FRAGMENT;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+index 5727d67e0259c..0ce533848536e 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+@@ -245,9 +245,9 @@ M(NPC_MCAM_READ_BASE_RULE, 0x6011, npc_read_base_steer_rule,            \
+ M(NPC_MCAM_GET_STATS, 0x6012, npc_mcam_entry_stats,                     \
+ 				   npc_mcam_get_stats_req,              \
+ 				   npc_mcam_get_stats_rsp)              \
+-M(NPC_GET_SECRET_KEY, 0x6013, npc_get_secret_key,                     \
+-				   npc_get_secret_key_req,              \
+-				   npc_get_secret_key_rsp)              \
++M(NPC_GET_FIELD_HASH_INFO, 0x6013, npc_get_field_hash_info,                     \
++				   npc_get_field_hash_info_req,              \
++				   npc_get_field_hash_info_rsp)              \
+ M(NPC_GET_FIELD_STATUS, 0x6014, npc_get_field_status,                     \
+ 				   npc_get_field_status_req,              \
+ 				   npc_get_field_status_rsp)              \
+@@ -1524,14 +1524,20 @@ struct npc_mcam_get_stats_rsp {
+ 	u8 stat_ena; /* enabled */
+ };
+ 
+-struct npc_get_secret_key_req {
++struct npc_get_field_hash_info_req {
+ 	struct mbox_msghdr hdr;
+ 	u8 intf;
+ };
+ 
+-struct npc_get_secret_key_rsp {
++struct npc_get_field_hash_info_rsp {
+ 	struct mbox_msghdr hdr;
+ 	u64 secret_key[3];
++#define NPC_MAX_HASH 2
++#define NPC_MAX_HASH_MASK 2
++	/* NPC_AF_INTF(0..1)_HASH(0..1)_MASK(0..1) */
++	u64 hash_mask[NPC_MAX_INTF][NPC_MAX_HASH][NPC_MAX_HASH_MASK];
++	/* NPC_AF_INTF(0..1)_HASH(0..1)_RESULT_CTRL */
++	u64 hash_ctrl[NPC_MAX_INTF][NPC_MAX_HASH];
+ };
+ 
+ enum ptp_op {
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+index 6597af84aa367..68f813040363d 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
+@@ -110,8 +110,8 @@ static u64 npc_update_use_hash(int lt, int ld)
+ 		 * in KEX_LD_CFG
+ 		 */
+ 		cfg = KEX_LD_CFG_USE_HASH(0x1, 0x03,
+-					  ld ? 0x8 : 0x18,
+-					  0x1, 0x0, 0x10);
++					  ld ? 0x18 : 0x8,
++					  0x1, 0x0, ld ? 0x14 : 0x10);
+ 		break;
+ 	}
+ 
+@@ -134,7 +134,6 @@ static void npc_program_mkex_hash_rx(struct rvu *rvu, int blkaddr,
+ 				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
+ 					u64 cfg = npc_update_use_hash(lt, ld);
+ 
+-					hash_cnt++;
+ 					if (hash_cnt == NPC_MAX_HASH)
+ 						return;
+ 
+@@ -149,6 +148,8 @@ static void npc_program_mkex_hash_rx(struct rvu *rvu, int blkaddr,
+ 							     mkex_hash->hash_mask[intf][ld][1]);
+ 					SET_KEX_LD_HASH_CTRL(intf, ld,
+ 							     mkex_hash->hash_ctrl[intf][ld]);
++
++					hash_cnt++;
+ 				}
+ 			}
+ 		}
+@@ -171,7 +172,6 @@ static void npc_program_mkex_hash_tx(struct rvu *rvu, int blkaddr,
+ 				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
+ 					u64 cfg = npc_update_use_hash(lt, ld);
+ 
+-					hash_cnt++;
+ 					if (hash_cnt == NPC_MAX_HASH)
+ 						return;
+ 
+@@ -187,8 +187,6 @@ static void npc_program_mkex_hash_tx(struct rvu *rvu, int blkaddr,
+ 					SET_KEX_LD_HASH_CTRL(intf, ld,
+ 							     mkex_hash->hash_ctrl[intf][ld]);
+ 					hash_cnt++;
+-					if (hash_cnt == NPC_MAX_HASH)
+-						return;
+ 				}
+ 		}
+ 	}
+@@ -238,8 +236,8 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
+ 			   struct flow_msg *omask)
+ {
+ 	struct npc_mcam_kex_hash *mkex_hash = rvu->kpu.mkex_hash;
+-	struct npc_get_secret_key_req req;
+-	struct npc_get_secret_key_rsp rsp;
++	struct npc_get_field_hash_info_req req;
++	struct npc_get_field_hash_info_rsp rsp;
+ 	u64 ldata[2], cfg;
+ 	u32 field_hash;
+ 	u8 hash_idx;
+@@ -250,7 +248,7 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
+ 	}
+ 
+ 	req.intf = intf;
+-	rvu_mbox_handler_npc_get_secret_key(rvu, &req, &rsp);
++	rvu_mbox_handler_npc_get_field_hash_info(rvu, &req, &rsp);
+ 
+ 	for (hash_idx = 0; hash_idx < NPC_MAX_HASH; hash_idx++) {
+ 		cfg = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_CFG(intf, hash_idx));
+@@ -311,13 +309,13 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
+ 	}
+ }
+ 
+-int rvu_mbox_handler_npc_get_secret_key(struct rvu *rvu,
+-					struct npc_get_secret_key_req *req,
+-					struct npc_get_secret_key_rsp *rsp)
++int rvu_mbox_handler_npc_get_field_hash_info(struct rvu *rvu,
++					     struct npc_get_field_hash_info_req *req,
++					     struct npc_get_field_hash_info_rsp *rsp)
+ {
+ 	u64 *secret_key = rsp->secret_key;
+ 	u8 intf = req->intf;
+-	int blkaddr;
++	int i, j, blkaddr;
+ 
+ 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NPC, 0);
+ 	if (blkaddr < 0) {
+@@ -329,6 +327,19 @@ int rvu_mbox_handler_npc_get_secret_key(struct rvu *rvu,
+ 	secret_key[1] = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY1(intf));
+ 	secret_key[2] = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_SECRET_KEY2(intf));
+ 
++	for (i = 0; i < NPC_MAX_HASH; i++) {
++		for (j = 0; j < NPC_MAX_HASH_MASK; j++) {
++			rsp->hash_mask[NIX_INTF_RX][i][j] =
++				GET_KEX_LD_HASH_MASK(NIX_INTF_RX, i, j);
++			rsp->hash_mask[NIX_INTF_TX][i][j] =
++				GET_KEX_LD_HASH_MASK(NIX_INTF_TX, i, j);
++		}
++	}
++
++	for (i = 0; i < NPC_MAX_INTF; i++)
++		for (j = 0; j < NPC_MAX_HASH; j++)
++			rsp->hash_ctrl[i][j] = GET_KEX_LD_HASH_CTRL(i, j);
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
+index 3efeb09c58dec..65936f4aeaacf 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
+@@ -31,6 +31,12 @@
+ 	rvu_write64(rvu, blkaddr,	\
+ 		    NPC_AF_INTFX_HASHX_MASKX(intf, ld, mask_idx), cfg)
+ 
++#define GET_KEX_LD_HASH_CTRL(intf, ld)	\
++	rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_RESULT_CTRL(intf, ld))
++
++#define GET_KEX_LD_HASH_MASK(intf, ld, mask_idx)	\
++	rvu_read64(rvu, blkaddr, NPC_AF_INTFX_HASHX_MASKX(intf, ld, mask_idx))
++
+ #define SET_KEX_LD_HASH_CTRL(intf, ld, cfg) \
+ 	rvu_write64(rvu, blkaddr,	\
+ 		    NPC_AF_INTFX_HASHX_RESULT_CTRL(intf, ld), cfg)
 -- 
 2.39.2
 
