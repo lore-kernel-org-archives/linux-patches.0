@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC47D512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:43:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4F3C433A0;
-	Mon, 15 May 2023 16:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12390FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:43:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D1CC433EF;
+	Mon, 15 May 2023 16:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169030;
-	bh=fDiyMmzZzNjL7Xn24NtQe04Kj+sEmH8335wkk1d2YuQ=;
+	s=korg; t=1684169033;
+	bh=joWalmMrIBCwoP/BEsDAGdHUxeygABLKTljEnT0fvTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ni3bl5b2rgrXxgJw/PwTlgkrQm8wOOhtRkSDimDEE3jBgIQdjGFpJNqWM7Oy3L1af
-	 DQr8jhdjoB21UOrDZvES2e87YkoLmAFLAJhwoTwBJx936sLKISvO93IkW0By928Dmx
-	 3TGIPYROETvzg3XEaL5b90e5QrP1TDkzCutY+k+0=
+	b=e57BTY5XqZ7xoKbbrouEQUte0NbUIKSDZ+bLmM2SCcoKMx6U/ddpXVLApzRKw+I9p
+	 lO0bYJjMS0PMcGknZ6W3voC2J4v9mgaQ1t5xhK7cfre9jfFxm0iVdqkWY4TxlVQouU
+	 +8jRMIdP0KcM7xpN0mdCoD4a7TVqQ7OOokl/OCSQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Peter Chen <peter.chen@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Rob Herring <robh@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 118/191] RDMA/mlx5: Use correct device num_ports when modify DC
-Date: Mon, 15 May 2023 18:25:55 +0200
-Message-Id: <20230515161711.564116981@linuxfoundation.org>
+Subject: [PATCH 4.19 090/191] of: Fix modalias string generation
+Date: Mon, 15 May 2023 18:25:27 +0200
+Message-Id: <20230515161710.520118565@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,37 +38,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-[ Upstream commit 746aa3c8cb1a650ff2583497ac646e505831b9b9 ]
+[ Upstream commit b19a4266c52de78496fe40f0b37580a3b762e67d ]
 
-Just like other QP types, when modify DC, the port_num should be compared
-with dev->num_ports, instead of HCA_CAP.num_ports.  Otherwise Multi-port
-vHCA on DC may not work.
+The helper generating an OF based modalias (of_device_get_modalias())
+works fine, but due to the use of snprintf() internally it needs a
+buffer one byte longer than what should be needed just for the entire
+string (excluding the '\0'). Most users of this helper are sysfs hooks
+providing the modalias string to users. They all provide a PAGE_SIZE
+buffer which is way above the number of bytes required to fit the
+modalias string and hence do not suffer from this issue.
 
-Fixes: 776a3906b692 ("IB/mlx5: Add support for DC target QP")
-Link: https://lore.kernel.org/r/20230420013906.1244185-1-markzhang@nvidia.com
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+There is another user though, of_device_request_module(), which is only
+called by drivers/usb/common/ulpi.c. This request module function is
+faulty, but maybe because in most cases there is an alternative, ULPI
+driver users have not noticed it.
+
+In this function, of_device_get_modalias() is called twice. The first
+time without buffer just to get the number of bytes required by the
+modalias string (excluding the null byte), and a second time, after
+buffer allocation, to fill the buffer. The allocation asks for an
+additional byte, in order to store the trailing '\0'. However, the
+buffer *length* provided to of_device_get_modalias() excludes this extra
+byte. The internal use of snprintf() with a length that is exactly the
+number of bytes to be written has the effect of using the last available
+byte to store a '\0', which then smashes the last character of the
+modalias string.
+
+Provide the actual size of the buffer to of_device_get_modalias() to fix
+this issue.
+
+Note: the "str[size - 1] = '\0';" line is not really needed as snprintf
+will anyway end the string with a null byte, but there is a possibility
+that this function might be called on a struct device_node without
+compatible, in this case snprintf() would not be executed. So we keep it
+just to avoid possible unbounded strings.
+
+Cc: Stephen Boyd <sboyd@kernel.org>
+Cc: Peter Chen <peter.chen@kernel.org>
+Fixes: 9c829c097f2f ("of: device: Support loading a module with OF based modalias")
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230404172148.82422-2-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/of/device.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index 1520a3098f7dc..0455abfba41c2 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -3350,7 +3350,7 @@ static int mlx5_ib_modify_dct(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 			return -EINVAL;
+diff --git a/drivers/of/device.c b/drivers/of/device.c
+index 258742830e366..566d8af05157d 100644
+--- a/drivers/of/device.c
++++ b/drivers/of/device.c
+@@ -258,12 +258,15 @@ int of_device_request_module(struct device *dev)
+ 	if (size < 0)
+ 		return size;
  
- 		if (attr->port_num == 0 ||
--		    attr->port_num > MLX5_CAP_GEN(dev->mdev, num_ports)) {
-+		    attr->port_num > dev->num_ports) {
- 			mlx5_ib_dbg(dev, "invalid port number %d. number of ports is %d\n",
- 				    attr->port_num, dev->num_ports);
- 			return -EINVAL;
+-	str = kmalloc(size + 1, GFP_KERNEL);
++	/* Reserve an additional byte for the trailing '\0' */
++	size++;
++
++	str = kmalloc(size, GFP_KERNEL);
+ 	if (!str)
+ 		return -ENOMEM;
+ 
+ 	of_device_get_modalias(dev, str, size);
+-	str[size] = '\0';
++	str[size - 1] = '\0';
+ 	ret = request_module(str);
+ 	kfree(str);
+ 
 -- 
 2.39.2
 
