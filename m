@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA93FBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82252C433EF;
-	Mon, 15 May 2023 17:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5340AFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A400AC4339C;
+	Mon, 15 May 2023 17:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172975;
-	bh=ue84VWn1JiGKIYJfQd6jviRx6bF2sXBYN8dq0fzynZE=;
+	s=korg; t=1684172981;
+	bh=U9qx+ifQoZ7uv2bs2PKuSK28mVnmWzYBkQtrGK9XWUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oy/wYcepQ5blfo/lb0FHce7WDtz3diVpGKKiUwxhqfNIGsqlMLJicpfmb7O/0H7cn
-	 YcgThtwczPKXKva6wANLkMjxehYiIbMpBOBz8aJS3MQ2imH7x2QT63RPNywITbCzfe
-	 y/LE3IDFfBe19hdNh0uvmFpK2pUdkCQBqmVmT57A=
+	b=rc99ZjHoSkbPImYJu6iFbJRP3rm7uBgy7qbQlHJy1JidZB3NHgY4rHYqOcwwqt/nM
+	 gxIXyjXCeHbjCnasdSv4htnPdxHchzOsr+WiIZjQ5MTeJj9PBUU2v+W/q+qXx08gKd
+	 lOj1HUuKTafPWS1CEO6JMj2uaET3uO1Np4EGvnI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 328/381] net: bcmgenet: Remove phy_stop() from bcmgenet_netif_stop()
-Date: Mon, 15 May 2023 18:29:39 +0200
-Message-Id: <20230515161751.623223787@linuxfoundation.org>
+Subject: [PATCH 5.10 330/381] perf pmu: zfree() expects a pointer to a pointer to zero it after freeing its contents
+Date: Mon, 15 May 2023 18:29:41 +0200
+Message-Id: <20230515161751.721756031@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,34 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Arnaldo Carvalho de Melo <acme@redhat.com>
 
-[ Upstream commit 93e0401e0fc0c54b0ac05b687cd135c2ac38187c ]
+[ Upstream commit 57f14b5ae1a97537f2abd2828ee7212cada7036e ]
 
-The call to phy_stop() races with the later call to phy_disconnect(),
-resulting in concurrent phy_suspend() calls being run from different
-CPUs. The final call to phy_disconnect() ensures that the PHY is
-stopped and suspended, too.
+An audit showed just this one problem with zfree(), fix it.
 
-Fixes: c96e731c93ff ("net: bcmgenet: connect and disconnect from the PHY state machine")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9fbc61f832ebf432 ("perf pmu: Add support for PMU capabilities")
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 1 -
- 1 file changed, 1 deletion(-)
+ tools/perf/util/pmu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 7667cbb5adfd6..20b161620fee9 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3412,7 +3412,6 @@ static void bcmgenet_netif_stop(struct net_device *dev)
- 	/* Disable MAC transmit. TX DMA disabled must be done before this */
- 	umac_enable_set(priv, CMD_TX_EN, false);
+diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
+index ac45da0302a73..d322305bc1828 100644
+--- a/tools/perf/util/pmu.c
++++ b/tools/perf/util/pmu.c
+@@ -1670,7 +1670,7 @@ static int perf_pmu__new_caps(struct list_head *list, char *name, char *value)
+ 	return 0;
  
--	phy_stop(dev->phydev);
- 	bcmgenet_disable_rx_napi(priv);
- 	bcmgenet_intr_disable(priv);
+ free_name:
+-	zfree(caps->name);
++	zfree(&caps->name);
+ free_caps:
+ 	free(caps);
  
 -- 
 2.39.2
