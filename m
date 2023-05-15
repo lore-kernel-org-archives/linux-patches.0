@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF92FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:08:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B65AC433D2;
-	Mon, 15 May 2023 17:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294ADFBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:08:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDD6C433D2;
+	Mon, 15 May 2023 17:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170522;
-	bh=Q78DGS2MyicXtrjFMWMxC3toSrSzxb74uLDbtfm8efw=;
+	s=korg; t=1684170526;
+	bh=skQYMjmRef3pQ5yEGXaWwy4FSTWVgS6pCs51XXt4lWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/eZM6QlrOWVt8bJwnW0VFO46nt1HiVuhKyjUhWUbq+f+tKZFvE9F3SM5fOEa+oSh
-	 av19sKVefEzthdwDHOP2cu0Qt/Ht9bYS/zAoMWJy9IbfRfXCK7cMRP6Y+fiXetgfDx
-	 bSFRopX2ert+Jh133LD/seBz+OU7GERDm6TUIJ7I=
+	b=PAeXxiFgyOlckysihmyDvuYfmV6hc6LZCcwsKkXHjDvN14tIZw/4M7LweSEHKOcNh
+	 fiQZW30Gp6NSDjo/hYJh4dUEeh5PfO4PAaC9iKfIh7NQwPd5MSqPFEvR47DEk6qN/f
+	 VQhTpRTjWHGFymdepZ4AIu7mg4uR4GhI+ejDOUz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jianmin Lv <lvjianmin@loongson.cn>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 158/239] irqchip/loongson-pch-pic: Fix pch_pic_acpi_init calling
-Date: Mon, 15 May 2023 18:27:01 +0200
-Message-Id: <20230515161726.416922652@linuxfoundation.org>
+Subject: [PATCH 6.1 159/239] irqchip/loongson-eiointc: Fix returned value on parsing MADT
+Date: Mon, 15 May 2023 18:27:02 +0200
+Message-Id: <20230515161726.446849818@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,66 +36,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Jianmin Lv <lvjianmin@loongson.cn>
 
-commit 48ce2d722f7f108f27bedddf54bee3423a57ce57 upstream.
+commit 112eaa8fec5ea75f1be003ec55760b09a86799f8 upstream.
 
-For dual-bridges scenario, pch_pic_acpi_init() will be called
-in following path:
+In pch_pic_parse_madt(), a NULL parent pointer will be
+returned from acpi_get_vec_parent() for second pch-pic domain
+related to second bridge while calling eiointc_acpi_init() at
+first time, where the parent of it has not been initialized
+yet, and will be initialized during second time calling
+eiointc_acpi_init(). So, it's reasonable to return zero so
+that failure of acpi_table_parse_madt() will be avoided, or else
+acpi_cascade_irqdomain_init() will return and initialization of
+followed pch_msi domain will be skipped.
 
-cpuintc_acpi_init
-  acpi_cascade_irqdomain_init(in cpuintc driver)
-    acpi_table_parse_madt
-      eiointc_parse_madt
-        eiointc_acpi_init /* this will be called two times
-                             correspondingto parsing two
-                             eiointc entries in MADT under
-                             dual-bridges scenario*/
-          acpi_cascade_irqdomain_init(in eiointc driver)
-            acpi_table_parse_madt
-              pch_pic_parse_madt
-                pch_pic_acpi_init /* this will be called depend
-                                     on valid parent IRQ domain
-                                     handle for one or two times
-                                     corresponding to parsing
-                                     two pchpic entries in MADT
-                                     druring calling
-                                     eiointc_acpi_init() under
-                                     dual-bridges scenario*/
-
-During the first eiointc_acpi_init() calling, the
-pch_pic_acpi_init() will be called just one time since only
-one valid parent IRQ domain handle will be found for current
-eiointc IRQ domain.
-
-During the second eiointc_acpi_init() calling, the
-pch_pic_acpi_init() will be called two times since two valid
-parent IRQ domain handles will be found. So in pch_pic_acpi_init(),
-we must have a reasonable way to prevent from creating second same
-pch_pic IRQ domain.
-
-The patch matches gsi base information in created pch_pic IRQ
-domains to check if the target domain has been created to avoid the
-bug mentioned above.
+Although it does not matter when pch_msi_parse_madt() returns
+-EINVAL if no invalid parent is found, it's also reasonable to
+return zero for that.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230407083453.6305-6-lvjianmin@loongson.cn
+Link: https://lore.kernel.org/r/20230407083453.6305-2-lvjianmin@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-loongson-pch-pic.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/irqchip/irq-loongson-eiointc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-loongson-pch-pic.c
-+++ b/drivers/irqchip/irq-loongson-pch-pic.c
-@@ -350,6 +350,9 @@ int __init pch_pic_acpi_init(struct irq_
- 	int ret, vec_base;
- 	struct fwnode_handle *domain_handle;
+--- a/drivers/irqchip/irq-loongson-eiointc.c
++++ b/drivers/irqchip/irq-loongson-eiointc.c
+@@ -312,7 +312,7 @@ pch_pic_parse_madt(union acpi_subtable_h
+ 	if (parent)
+ 		return pch_pic_acpi_init(parent, pchpic_entry);
  
-+	if (find_pch_pic(acpi_pchpic->gsi_base) >= 0)
-+		return 0;
-+
- 	vec_base = acpi_pchpic->gsi_base - GSI_MIN_PCH_IRQ;
+-	return -EINVAL;
++	return 0;
+ }
  
- 	domain_handle = irq_domain_alloc_fwnode(&acpi_pchpic->address);
+ static int __init
+@@ -325,7 +325,7 @@ pch_msi_parse_madt(union acpi_subtable_h
+ 	if (parent)
+ 		return pch_msi_acpi_init(parent, pchmsi_entry);
+ 
+-	return -EINVAL;
++	return 0;
+ }
+ 
+ static int __init acpi_cascade_irqdomain_init(void)
 
 
