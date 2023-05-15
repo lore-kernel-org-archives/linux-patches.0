@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D06C8E3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC3FC433D2;
-	Mon, 15 May 2023 18:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A974EC8E3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACA9C433EF;
+	Mon, 15 May 2023 18:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173680;
-	bh=iE0wZMksM6a9tSftIOGq0hN69rU1j92IRkBBYfHFQZM=;
+	s=korg; t=1684173683;
+	bh=F2bk/Jm4kI5G11EZsiHj/7AQDrYV4wdbsdMZWkeXlAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MOjjv4wHTo4RF1YtAeX6jHdYYb1MeZo8zRCD6nZi0TWNpJxajJIDAdQLvGFQpSPHw
-	 CZUQExzvVdY1tUlBNJUTZRF2tlu6Bmtla+EanwudveBsKFWqWVSREdeVQUZ3t1E76B
-	 kbdhsCZomQWNQXJY5YiHDADZY+RK/DScW/kthBCk=
+	b=yXbI7aGrltDnkQjdMRJEc/7BLZlBr6OphYxLWUHBG035EfGeg1xK7Y7De4MC4EYZC
+	 ir1OqVDp3bRRG72CYSdT1gRcGOGS7Du7+TRuoGAkC06FE7obWbHRkh8JmCV9iVWAzd
+	 WvByFoFEKwYInxOQyOP69usL1cxQObVbOs4aeTA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Joakim Tjernlund <Joakim.Tjernlund@infinera.com>,
-	Mark Brown <broonie@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Sebastian Reichel <sre@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 132/282] spi: fsl-spi: Fix CPM/QE mode Litte Endian
-Date: Mon, 15 May 2023 18:28:30 +0200
-Message-Id: <20230515161726.181212525@linuxfoundation.org>
+Subject: [PATCH 5.4 166/282] power: supply: generic-adc-battery: fix unit scaling
+Date: Mon, 15 May 2023 18:29:04 +0200
+Message-Id: <20230515161727.189352899@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,68 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Sebastian Reichel <sre@kernel.org>
 
-[ Upstream commit c20c57d9868d7f9fd1b2904c7801b07e128f6322 ]
+[ Upstream commit 44263f50065969f2344808388bd589740f026167 ]
 
-CPM has the same problem as QE so for CPM also use the fix added
-by commit 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian"):
+power-supply properties are reported in µV, µA and µW.
+The IIO API provides mV, mA, mW, so the values need to
+be multiplied by 1000.
 
-  CPM mode uses Little Endian so words > 8 bits are byte swapped.
-  Workaround this by always enforcing wordsize 8 for 16 and 32 bits
-  words. Unfortunately this will not work for LSB transfers
-  where wordsize is > 8 bits so disable these for now.
-
-Also limit the workaround to 16 and 32 bits words because it can
-only work for multiples of 8-bits.
-
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
-Fixes: 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian")
-Link: https://lore.kernel.org/r/1b7d3e84b1128f42c1887dd2fb9cdf390f541bc1.1680371809.git.christophe.leroy@csgroup.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e60fea794e6e ("power: battery: Generic battery driver using IIO")
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Signed-off-by: Sebastian Reichel <sre@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-spi.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/power/supply/generic-adc-battery.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
-index 02b999d48ca19..ae805f91eafa5 100644
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -208,8 +208,8 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
- 				struct spi_device *spi,
- 				int bits_per_word)
- {
--	/* QE uses Little Endian for words > 8
--	 * so transform all words > 8 into 8 bits
-+	/* CPM/QE uses Little Endian for words > 8
-+	 * so transform 16 and 32 bits words into 8 bits
- 	 * Unfortnatly that doesn't work for LSB so
- 	 * reject these for now */
- 	/* Note: 32 bits word, LSB works iff
-@@ -217,9 +217,11 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
- 	if (spi->mode & SPI_LSB_FIRST &&
- 	    bits_per_word > 8)
- 		return -EINVAL;
--	if (bits_per_word > 8)
-+	if (bits_per_word <= 8)
-+		return bits_per_word;
-+	if (bits_per_word == 16 || bits_per_word == 32)
- 		return 8; /* pretend its 8 bits */
--	return bits_per_word;
-+	return -EINVAL;
- }
- 
- static int fsl_spi_setup_transfer(struct spi_device *spi,
-@@ -249,7 +251,7 @@ static int fsl_spi_setup_transfer(struct spi_device *spi,
- 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
- 							   mpc8xxx_spi,
- 							   bits_per_word);
--	else if (mpc8xxx_spi->flags & SPI_QE)
+diff --git a/drivers/power/supply/generic-adc-battery.c b/drivers/power/supply/generic-adc-battery.c
+index 97b0e873e87d2..c2d6378bb897d 100644
+--- a/drivers/power/supply/generic-adc-battery.c
++++ b/drivers/power/supply/generic-adc-battery.c
+@@ -138,6 +138,9 @@ static int read_channel(struct gab *adc_bat, enum power_supply_property psp,
+ 			result);
+ 	if (ret < 0)
+ 		pr_err("read channel error\n");
 +	else
- 		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
- 							  bits_per_word);
++		*result *= 1000;
++
+ 	return ret;
+ }
  
 -- 
 2.39.2
