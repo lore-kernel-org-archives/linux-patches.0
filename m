@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2F4FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05C18C433EF;
-	Mon, 15 May 2023 17:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB54BFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D12C433D2;
+	Mon, 15 May 2023 17:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171451;
-	bh=JFEmUAFbvR1GozaB9PYdzBfxPtxuIWcR5UcXntMwvrk=;
+	s=korg; t=1684171454;
+	bh=PndzXQRV4rJJ2mtSel8n2VvNLFHkLZi3sczPFZej3/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uJ3OVHFLWya1E2izS2JPyuaZ2Cm++TvLfnxdrt9YH0b76l0NSGpej4LFU0QwPOYPR
-	 kQbCQS3vpHErjJcDmPHZqVQyHDlEe6VMQZMhlUT9/DOFrfYGRprspngXrupxC0uvBE
-	 q5WnZQBF+Mpc7iS20Thjxuy6mpxdNDGyvLhbChjM=
+	b=o5BqEAvJ7J+lzAm5g37Yd7PsJ8hMTiKrKgHRcePP5MtIk0oeZuoEnRTdp88BeHvXq
+	 JrfuAffha6IyxgQYWRJfVO7Xa+7ezu+IM6heZHabxyWh10dLfzW1b1GRD41JNOIGH2
+	 W0I/qKL3iuwi8JG6L88TPp7JfFsQCw2aM/d2B8K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Zwisler <zwisler@google.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 214/242] drm/i915: Check pipe source size when using skl+ scalers
-Date: Mon, 15 May 2023 18:29:00 +0200
-Message-Id: <20230515161728.348164855@linuxfoundation.org>
+Subject: [PATCH 6.2 215/242] drm/amd/display: Fix Z8 support configurations
+Date: Mon, 15 May 2023 18:29:01 +0200
+Message-Id: <20230515161728.376736865@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -37,66 +38,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit d944eafed618a8507270b324ad9d5405bb7f0b3e ]
+[ Upstream commit 73dd4ca4b5a01235607231839bd351bbef75a1d2 ]
 
-The skl+ scalers only sample 12 bits of PIPESRC so we can't
-do any plane scaling at all when the pipe source size is >4k.
+[Why]
+It's not supported in multi-display, but it is supported in 2nd eDP
+screen only.
 
-Make sure the pipe source size is also below the scaler's src
-size limits. Might not be 100% accurate, but should at least be
-safe. We can refine the limits later if we discover that recent
-hw is less restricted.
+[How]
+Remove multi display support, restrict number of planes for all
+z-states support, but still allow Z8 if we're not using PWRSEQ0.
 
-Cc: stable@vger.kernel.org
-Tested-by: Ross Zwisler <zwisler@google.com>
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8357
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230418175528.13117-2-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 691248d4135fe3fae64b4ee0676bc96a7fd6950c)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: d893f39320e1 ("drm/amd/display: Lowering min Z8 residency time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/skl_scaler.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ .../gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c   | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/skl_scaler.c b/drivers/gpu/drm/i915/display/skl_scaler.c
-index 01e8812936126..fe5c47672580b 100644
---- a/drivers/gpu/drm/i915/display/skl_scaler.c
-+++ b/drivers/gpu/drm/i915/display/skl_scaler.c
-@@ -107,6 +107,8 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
- 	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
- 	const struct drm_display_mode *adjusted_mode =
- 		&crtc_state->hw.adjusted_mode;
-+	int pipe_src_w = drm_rect_width(&crtc_state->pipe_src);
-+	int pipe_src_h = drm_rect_height(&crtc_state->pipe_src);
- 	int min_src_w, min_src_h, min_dst_w, min_dst_h;
- 	int max_src_w, max_src_h, max_dst_w, max_dst_h;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
+index c26da3bb2892b..859dc67a1fb6b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
+@@ -949,7 +949,6 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ 	int plane_count;
+ 	int i;
+ 	unsigned int optimized_min_dst_y_next_start_us;
+-	bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > 1000.0;
  
-@@ -198,6 +200,21 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
- 		return -EINVAL;
- 	}
+ 	plane_count = 0;
+ 	optimized_min_dst_y_next_start_us = 0;
+@@ -974,6 +973,8 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ 	else if (context->stream_count == 1 &&  context->streams[0]->signal == SIGNAL_TYPE_EDP) {
+ 		struct dc_link *link = context->streams[0]->sink->link;
+ 		struct dc_stream_status *stream_status = &context->stream_status[0];
++		bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > 1000.0;
++		bool is_pwrseq0 = link->link_index == 0;
  
-+	/*
-+	 * The pipe scaler does not use all the bits of PIPESRC, at least
-+	 * on the earlier platforms. So even when we're scaling a plane
-+	 * the *pipe* source size must not be too large. For simplicity
-+	 * we assume the limits match the scaler source size limits. Might
-+	 * not be 100% accurate on all platforms, but good enough for now.
-+	 */
-+	if (pipe_src_w > max_src_w || pipe_src_h > max_src_h) {
-+		drm_dbg_kms(&dev_priv->drm,
-+			    "scaler_user index %u.%u: pipe src size %ux%u "
-+			    "is out of scaler range\n",
-+			    crtc->pipe, scaler_user, pipe_src_w, pipe_src_h);
-+		return -EINVAL;
-+	}
+ 		if (dc_extended_blank_supported(dc)) {
+ 			for (i = 0; i < dc->res_pool->pipe_count; i++) {
+@@ -986,18 +987,17 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ 				}
+ 			}
+ 		}
+-		/* zstate only supported on PWRSEQ0  and when there's <2 planes*/
+-		if (link->link_index != 0 || stream_status->plane_count > 1)
 +
- 	/* mark this plane as a scaler user in crtc_state */
- 	scaler_state->scaler_users |= (1 << scaler_user);
- 	drm_dbg_kms(&dev_priv->drm, "scaler_user index %u.%u: "
++		/* Don't support multi-plane configurations */
++		if (stream_status->plane_count > 1)
+ 			return DCN_ZSTATE_SUPPORT_DISALLOW;
+ 
+-		if (context->bw_ctx.dml.vba.StutterPeriod > 5000.0 || optimized_min_dst_y_next_start_us > 5000)
++		if (is_pwrseq0 && (context->bw_ctx.dml.vba.StutterPeriod > 5000.0 || optimized_min_dst_y_next_start_us > 5000))
+ 			return DCN_ZSTATE_SUPPORT_ALLOW;
+-		else if (link->psr_settings.psr_version == DC_PSR_VERSION_1 && !link->panel_config.psr.disable_psr)
++		else if (is_pwrseq0 && link->psr_settings.psr_version == DC_PSR_VERSION_1 && !link->panel_config.psr.disable_psr)
+ 			return allow_z8 ? DCN_ZSTATE_SUPPORT_ALLOW_Z8_Z10_ONLY : DCN_ZSTATE_SUPPORT_ALLOW_Z10_ONLY;
+ 		else
+ 			return allow_z8 ? DCN_ZSTATE_SUPPORT_ALLOW_Z8_ONLY : DCN_ZSTATE_SUPPORT_DISALLOW;
+-	} else if (allow_z8) {
+-		return DCN_ZSTATE_SUPPORT_ALLOW_Z8_ONLY;
+ 	} else {
+ 		return DCN_ZSTATE_SUPPORT_DISALLOW;
+ 	}
 -- 
 2.39.2
 
