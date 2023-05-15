@@ -1,30 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFC5BFC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3763FC433D2;
-	Mon, 15 May 2023 17:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A18FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64491C433EF;
+	Mon, 15 May 2023 17:30:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171809;
-	bh=FWrdJUOVDUfaF82ePCRRUrLyhKUa8xyRp8tooUuq0sk=;
+	s=korg; t=1684171812;
+	bh=fKXsQulyUmq4G4GyCRYypy3whMKce68MjiMjZeK6LZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hj689cbq7clSdkznzG0doK/FbfFy7gRgEEGbZWldBMBBteHkSX6eaqWDSlAukeCoz
-	 h2Tt1UZ+3j4e4Qt6ez5NIngwfmkmCo8gUhGOq83fNxSPnN2WDrMGh6E9jxlwlYXhu0
-	 qzPyJzn6IaYjNsfCUE0sRMfpYXauLyDj6YepJSvE=
+	b=FPbvWwKdwbTSvEW3axXqz+GOFFZtqPGnUk/Rm2Gy306zY+Uscz+Z+O7q30LBz0z7A
+	 18bJ98+Ij/t+qpN/rw8Jeuh7FRchivb943gloWipVEkt3sphi0BlY7b+Y77vqJChKq
+	 LFNHBqB3AQC3Gc5R20u5IZzBOkEL3ix39ZyMZlpo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Igor Zhbanov <izh1979@gmail.com>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Rich Felker <dalias@libc.org>,
-	linux-sh@vger.kernel.org
-Subject: [PATCH 5.15 078/134] sh: nmi_debug: fix return value of __setup handler
-Date: Mon, 15 May 2023 18:29:15 +0200
-Message-Id: <20230515161705.779834317@linuxfoundation.org>
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 5.15 087/134] f2fs: fix potential corruption when moving a directory
+Date: Mon, 15 May 2023 18:29:24 +0200
+Message-Id: <20230515161706.064355034@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -38,53 +33,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit d1155e4132de712a9d3066e2667ceaad39a539c5 upstream.
+commit d94772154e524b329a168678836745d2773a6e02 upstream.
 
-__setup() handlers should return 1 to obsolete_checksetup() in
-init/main.c to indicate that the boot option has been handled.
-A return of 0 causes the boot option/value to be listed as an Unknown
-kernel parameter and added to init's (limited) argument or environment
-strings. Also, error return codes don't mean anything to
-obsolete_checksetup() -- only non-zero (usually 1) or zero.
-So return 1 from nmi_debug_setup().
+F2FS has the same issue in ext4_rename causing crash revealed by
+xfstests/generic/707.
 
-Fixes: 1e1030dccb10 ("sh: nmi_debug support.")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: Igor Zhbanov <izh1979@gmail.com>
-Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-Cc: Rich Felker <dalias@libc.org>
-Cc: linux-sh@vger.kernel.org
-Cc: stable@vger.kernel.org
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230306040037.20350-3-rdunlap@infradead.org
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+See also commit 0813299c586b ("ext4: Fix possible corruption when moving a directory")
+
+CC: stable@vger.kernel.org
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/kernel/nmi_debug.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/namei.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/arch/sh/kernel/nmi_debug.c
-+++ b/arch/sh/kernel/nmi_debug.c
-@@ -49,7 +49,7 @@ static int __init nmi_debug_setup(char *
- 	register_die_notifier(&nmi_debug_nb);
- 
- 	if (*str != '=')
--		return 0;
-+		return 1;
- 
- 	for (p = str + 1; *p; p = sep + 1) {
- 		sep = strchr(p, ',');
-@@ -70,6 +70,6 @@ static int __init nmi_debug_setup(char *
- 			break;
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -991,12 +991,20 @@ static int f2fs_rename(struct inode *old
+ 			goto out;
  	}
  
--	return 0;
-+	return 1;
- }
- __setup("nmi_debug", nmi_debug_setup);
++	/*
++	 * Copied from ext4_rename: we need to protect against old.inode
++	 * directory getting converted from inline directory format into
++	 * a normal one.
++	 */
++	if (S_ISDIR(old_inode->i_mode))
++		inode_lock_nested(old_inode, I_MUTEX_NONDIR2);
++
+ 	err = -ENOENT;
+ 	old_entry = f2fs_find_entry(old_dir, &old_dentry->d_name, &old_page);
+ 	if (!old_entry) {
+ 		if (IS_ERR(old_page))
+ 			err = PTR_ERR(old_page);
+-		goto out;
++		goto out_unlock_old;
+ 	}
+ 
+ 	if (S_ISDIR(old_inode->i_mode)) {
+@@ -1104,6 +1112,9 @@ static int f2fs_rename(struct inode *old
+ 
+ 	f2fs_unlock_op(sbi);
+ 
++	if (S_ISDIR(old_inode->i_mode))
++		inode_unlock(old_inode);
++
+ 	if (IS_DIRSYNC(old_dir) || IS_DIRSYNC(new_dir))
+ 		f2fs_sync_fs(sbi->sb, 1);
+ 
+@@ -1118,6 +1129,9 @@ out_dir:
+ 		f2fs_put_page(old_dir_page, 0);
+ out_old:
+ 	f2fs_put_page(old_page, 0);
++out_unlock_old:
++	if (S_ISDIR(old_inode->i_mode))
++		inode_unlock(old_inode);
+ out:
+ 	if (whiteout)
+ 		iput(whiteout);
 
 
