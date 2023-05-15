@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE59FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B0B6C433EF;
-	Mon, 15 May 2023 17:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC73FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50E4C433D2;
+	Mon, 15 May 2023 17:24:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171458;
-	bh=ySzyVxVmWL0qF749aKDXnCtw9gVgM89n6QudJK/XpVk=;
+	s=korg; t=1684171461;
+	bh=ZMX+6VCsk0s6IWj3CXak9DmdIvIZ9lQkcAfmdJj3zcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JS//GIfS/u0b10PSZvc736xwFH+cosD02wr1s1NMPLeb0+4j1sY5RMks5OY0m2G9c
-	 48SDhfGWnZsnANnmwEE75oRD8psyAhNVaEtJqZua587kKL8bakCpuyDU+6vsgHRebZ
-	 hxxeyuDFeLfMs3pRzOpijXZAPyy4YtVK3dr+M+ks=
+	b=UF4VWz2AUoUMvMPQ7Fg0zips0Sh5QgsFbyL8ahUNNzPDP5Iv8tGGz4W4C11YDe9bP
+	 xewHBmL5E+q+8tKw4biiombuRvbZt8zKVZbsO4mmRpOUiq+zUMnwMdJsSDpdIADg+z
+	 qV1RcB5j/yyMJbsyGB/Qv/Y1VlBV7HYOyO7GBGpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 216/242] drm/amd/display: Add minimum Z8 residency debug option
-Date: Mon, 15 May 2023 18:29:02 +0200
-Message-Id: <20230515161728.406005756@linuxfoundation.org>
+Subject: [PATCH 6.2 217/242] drm/amd/display: Update minimum stutter residency for DCN314 Z8
+Date: Mon, 15 May 2023 18:29:03 +0200
+Message-Id: <20230515161728.435277909@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -40,14 +40,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 0db13eae41fcc67f408dbb3dfda59633c4fa03fb ]
+[ Upstream commit 0215ce9057edf69aff9c1a32f4254e1ec297db31 ]
 
 [Why]
-Allows finer control and tuning for debug and profiling.
+Block periods that are too short as they have the potential to
+currently cause hangs in other firmware components on the system.
 
 [How]
-Add the debug option into DC. The default remains the same as before
-for now.
+Update the threshold, mostly targeting a block of 4k and downscaling.
 
 Reviewed-by: Jun Lei <Jun.Lei@amd.com>
 Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
@@ -57,49 +57,22 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: d893f39320e1 ("drm/amd/display: Lowering min Z8 residency time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dc.h                     | 1 +
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c | 1 +
- drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c    | 3 ++-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
-index 37998dc0fc144..b519602c054b2 100644
---- a/drivers/gpu/drm/amd/display/dc/dc.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc.h
-@@ -796,6 +796,7 @@ struct dc_debug_options {
- 	unsigned int force_odm_combine; //bit vector based on otg inst
- 	unsigned int seamless_boot_odm_combine;
- 	unsigned int force_odm_combine_4to1; //bit vector based on otg inst
-+	int minimum_z8_residency_time;
- 	bool disable_z9_mpc;
- 	unsigned int force_fclk_khz;
- 	bool enable_tri_buf;
 diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-index 9ffba4c6fe550..5c23c934c9751 100644
+index 5c23c934c9751..33d8188d076ab 100644
 --- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
 +++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-@@ -887,6 +887,7 @@ static const struct dc_plane_cap plane_cap = {
+@@ -887,7 +887,7 @@ static const struct dc_plane_cap plane_cap = {
  static const struct dc_debug_options debug_defaults_drv = {
  	.disable_z10 = false,
  	.enable_z9_disable_interface = true,
-+	.minimum_z8_residency_time = 1000,
+-	.minimum_z8_residency_time = 1000,
++	.minimum_z8_residency_time = 3080,
  	.psr_skip_crtc_disable = true,
  	.disable_dmcu = true,
  	.force_abm_enable = false,
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-index 859dc67a1fb6b..b6b8be74ee0ea 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
-@@ -973,7 +973,8 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
- 	else if (context->stream_count == 1 &&  context->streams[0]->signal == SIGNAL_TYPE_EDP) {
- 		struct dc_link *link = context->streams[0]->sink->link;
- 		struct dc_stream_status *stream_status = &context->stream_status[0];
--		bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > 1000.0;
-+		int minmum_z8_residency = dc->debug.minimum_z8_residency_time > 0 ? dc->debug.minimum_z8_residency_time : 1000;
-+		bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > (double)minmum_z8_residency;
- 		bool is_pwrseq0 = link->link_index == 0;
- 
- 		if (dc_extended_blank_supported(dc)) {
 -- 
 2.39.2
 
