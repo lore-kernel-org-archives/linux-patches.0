@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 240FCFBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:10:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFACC433D2;
-	Mon, 15 May 2023 17:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7C9FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:10:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E63BC4339B;
+	Mon, 15 May 2023 17:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170611;
-	bh=TXKItwxrTfBoYe0oOuo94XUFSly+tpmtflGT5Hiac+A=;
+	s=korg; t=1684170614;
+	bh=ZjGJnrsQOBRnvi2od35x2ihN9KRPXfLa2dOw0BLSXYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lmvpnbU13l8BbRMGIKclgwfzFmDtxPy3wM5FuMgcq80NBxKEo3rN9yeh8JaZXciNI
-	 +nWRBnz+dXSOQ1tpgY2+owhbC2Q2zE+1MA63/VQul4Lq4pHZotum86VXsWNiEUkVCq
-	 98la7gxW/EHhxrIvD3fJ5nuiwyM/jf7V7IpZniA8=
+	b=XrVTgJBETFAhwr7YiowXzvcsOJc+Lk6YvkVPvNdfcbw+k9vlaq25eYHgRgtaExI7J
+	 s584puYxZpDUTczKcarDdI7m6fof4Q4f1j73flf0Sz+ncWi0yeeghyVYOqRl2gkAdR
+	 1F51nrW4DRR426DqcrBmhLDAbABz/Lhtq0le9l08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zev Weiss <zev@bewilderbeest.net>,
-	Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 6.1 146/239] ARM: dts: aspeed: romed8hm3: Fix GPIO polarity of system-fault LED
-Date: Mon, 15 May 2023 18:26:49 +0200
-Message-Id: <20230515161726.063522150@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 179/239] drm/amd: Use `amdgpu_ucode_*` helpers for MES
+Date: Mon, 15 May 2023 18:27:22 +0200
+Message-Id: <20230515161727.037220396@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -34,32 +35,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zev Weiss <zev@bewilderbeest.net>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit a3fd10732d276d7cf372c6746a78a1c8b6aa7541 upstream.
+commit 11e0b0067ec0707e8e598a5f9a547ab618ae7982 upstream.
 
-Turns out it's in fact not the same as the heartbeat LED.
+The `amdgpu_ucode_request` helper will ensure that the return code for
+missing firmware is -ENODEV so that early_init can fail.
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Cc: stable@vger.kernel.org # v5.18+
-Fixes: a9a3d60b937a ("ARM: dts: aspeed: Add ASRock ROMED8HM3 BMC")
-Link: https://lore.kernel.org/r/20230224000400.12226-2-zev@bewilderbeest.net
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+The `amdgpu_ucode_release` helper provides symmetry for releasing firmware.
+
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |   10 ++--------
+ drivers/gpu/drm/amd/amdgpu/mes_v10_1.c  |   10 +---------
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c  |   10 +---------
+ 3 files changed, 4 insertions(+), 26 deletions(-)
 
---- a/arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts
-@@ -31,7 +31,7 @@
- 		};
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+@@ -1438,11 +1438,7 @@ int amdgpu_mes_init_microcode(struct amd
+ 	snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_mes%s.bin",
+ 		ucode_prefix,
+ 		pipe == AMDGPU_MES_SCHED_PIPE ? "" : "1");
+-	r = request_firmware(&adev->mes.fw[pipe], fw_name, adev->dev);
+-	if (r)
+-		goto out;
+-
+-	r = amdgpu_ucode_validate(adev->mes.fw[pipe]);
++	r = amdgpu_ucode_request(adev, &adev->mes.fw[pipe], fw_name);
+ 	if (r)
+ 		goto out;
  
- 		system-fault {
--			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_LOW>;
-+			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_HIGH>;
- 			panic-indicator;
- 		};
- 	};
+@@ -1482,9 +1478,7 @@ int amdgpu_mes_init_microcode(struct amd
+ 	}
+ 
+ 	return 0;
+-
+ out:
+-	release_firmware(adev->mes.fw[pipe]);
+-	adev->mes.fw[pipe] = NULL;
++	amdgpu_ucode_release(&adev->mes.fw[pipe]);
+ 	return r;
+ }
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v10_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v10_1.c
+@@ -375,13 +375,6 @@ static const struct amdgpu_mes_funcs mes
+ 	.resume_gang = mes_v10_1_resume_gang,
+ };
+ 
+-static void mes_v10_1_free_microcode(struct amdgpu_device *adev,
+-				     enum admgpu_mes_pipe pipe)
+-{
+-	release_firmware(adev->mes.fw[pipe]);
+-	adev->mes.fw[pipe] = NULL;
+-}
+-
+ static int mes_v10_1_allocate_ucode_buffer(struct amdgpu_device *adev,
+ 					   enum admgpu_mes_pipe pipe)
+ {
+@@ -975,8 +968,7 @@ static int mes_v10_1_sw_fini(void *handl
+ 		amdgpu_bo_free_kernel(&adev->mes.eop_gpu_obj[pipe],
+ 				      &adev->mes.eop_gpu_addr[pipe],
+ 				      NULL);
+-
+-		mes_v10_1_free_microcode(adev, pipe);
++		amdgpu_ucode_release(&adev->mes.fw[pipe]);
+ 	}
+ 
+ 	amdgpu_bo_free_kernel(&adev->gfx.kiq.ring.mqd_obj,
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -453,13 +453,6 @@ static const struct amdgpu_mes_funcs mes
+ 	.misc_op = mes_v11_0_misc_op,
+ };
+ 
+-static void mes_v11_0_free_microcode(struct amdgpu_device *adev,
+-				     enum admgpu_mes_pipe pipe)
+-{
+-	release_firmware(adev->mes.fw[pipe]);
+-	adev->mes.fw[pipe] = NULL;
+-}
+-
+ static int mes_v11_0_allocate_ucode_buffer(struct amdgpu_device *adev,
+ 					   enum admgpu_mes_pipe pipe)
+ {
+@@ -1063,8 +1056,7 @@ static int mes_v11_0_sw_fini(void *handl
+ 		amdgpu_bo_free_kernel(&adev->mes.eop_gpu_obj[pipe],
+ 				      &adev->mes.eop_gpu_addr[pipe],
+ 				      NULL);
+-
+-		mes_v11_0_free_microcode(adev, pipe);
++		amdgpu_ucode_release(&adev->mes.fw[pipe]);
+ 	}
+ 
+ 	amdgpu_bo_free_kernel(&adev->gfx.kiq.ring.mqd_obj,
 
 
