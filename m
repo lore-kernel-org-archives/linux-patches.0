@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0839DFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62A3CC433EF;
-	Mon, 15 May 2023 17:28:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5BAFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A633AC433D2;
+	Mon, 15 May 2023 17:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171706;
-	bh=D3uckklQ1UeCpHz7LholJ0IBq7LyCObOReAb7nvozY0=;
+	s=korg; t=1684171710;
+	bh=869JPjm8BrTCNzpF2FJl580eYMjSJ9ykLkFepzB+MFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xmqKjDGnoyAGIDcQL+VQPcNqPQk7dba+fKeHUl6lpPaq0awSNQ+7Syvvc9REjUUFZ
-	 kWwwv70W5fCfbJHkILck1UzwRiGOvLCzKtV0ZNs1SMV21kFwYjT7XVo30a/WVy7yBy
-	 Y2/ZS/4jdjo+NusEhpHuY1wmeWXdhmRr1PAm8J2k=
+	b=uRYTy2FoqoUlW5D5hcyEmklPzv+KbAleKo2yus95UNqRgXCxHPx/WyPdeUNVimNYV
+	 ruCbd+EzQyAOjn5eZPqQBFO3CpbC1qsNZtsmr/oWI91wM+PtmR/SsalmWUzUUYuYT7
+	 z5YWCbOIaf2577VT9y6i3qMhObj5aef9fjtg29a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/134] virtio_net: split free_unused_bufs()
-Date: Mon, 15 May 2023 18:28:42 +0200
-Message-Id: <20230515161704.639534608@linuxfoundation.org>
+Subject: [PATCH 5.15 054/134] crypto: engine - check if BH is disabled during completion
+Date: Mon, 15 May 2023 18:28:51 +0200
+Message-Id: <20230515161704.950352944@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -36,89 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit 6e345f8c7cd029ad3aaece15ad4425ac26e4eb63 ]
+[ Upstream commit 4058cf08945c18a6de193f4118fd05d83d3d4285 ]
 
-This patch separates two functions for freeing sq buf and rq buf from
-free_unused_bufs().
+When doing iperf over ipsec with crypto hardware sun8i-ce, I hit some
+spinlock recursion bug.
 
-When supporting the enable/disable tx/rq queue in the future, it is
-necessary to support separate recovery of a sq buf or a rq buf.
+This is due to completion function called with enabled BH.
 
-Signed-off-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20220801063902.129329-40-xuanzhuo@linux.alibaba.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Stable-dep-of: f8bb51043945 ("virtio_net: suppress cpu stall when free_unused_bufs")
+Add check a to detect this.
+
+Fixes: 735d37b5424b ("crypto: engine - Introduce the block request crypto engine framework")
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 4140aafcff16 ("crypto: engine - fix crypto_queue backlog handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 41 ++++++++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 16 deletions(-)
+ crypto/crypto_engine.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 8a380086ac257..cff3e2a7ce7fc 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -2814,6 +2814,27 @@ static void free_receive_page_frags(struct virtnet_info *vi)
- 			put_page(vi->rq[i].alloc_frag.page);
- }
- 
-+static void virtnet_sq_free_unused_buf(struct virtqueue *vq, void *buf)
-+{
-+	if (!is_xdp_frame(buf))
-+		dev_kfree_skb(buf);
-+	else
-+		xdp_return_frame(ptr_to_xdp(buf));
-+}
-+
-+static void virtnet_rq_free_unused_buf(struct virtqueue *vq, void *buf)
-+{
-+	struct virtnet_info *vi = vq->vdev->priv;
-+	int i = vq2rxq(vq);
-+
-+	if (vi->mergeable_rx_bufs)
-+		put_page(virt_to_head_page(buf));
-+	else if (vi->big_packets)
-+		give_pages(&vi->rq[i], buf);
-+	else
-+		put_page(virt_to_head_page(buf));
-+}
-+
- static void free_unused_bufs(struct virtnet_info *vi)
- {
- 	void *buf;
-@@ -2821,26 +2842,14 @@ static void free_unused_bufs(struct virtnet_info *vi)
- 
- 	for (i = 0; i < vi->max_queue_pairs; i++) {
- 		struct virtqueue *vq = vi->sq[i].vq;
--		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL) {
--			if (!is_xdp_frame(buf))
--				dev_kfree_skb(buf);
--			else
--				xdp_return_frame(ptr_to_xdp(buf));
--		}
-+		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL)
-+			virtnet_sq_free_unused_buf(vq, buf);
+diff --git a/crypto/crypto_engine.c b/crypto/crypto_engine.c
+index cff21f4e03e32..fecf6baaa4f7d 100644
+--- a/crypto/crypto_engine.c
++++ b/crypto/crypto_engine.c
+@@ -53,6 +53,7 @@ static void crypto_finalize_request(struct crypto_engine *engine,
+ 				dev_err(engine->dev, "failed to unprepare request\n");
+ 		}
  	}
++	lockdep_assert_in_softirq();
+ 	req->complete(req, err);
  
- 	for (i = 0; i < vi->max_queue_pairs; i++) {
- 		struct virtqueue *vq = vi->rq[i].vq;
--
--		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL) {
--			if (vi->mergeable_rx_bufs) {
--				put_page(virt_to_head_page(buf));
--			} else if (vi->big_packets) {
--				give_pages(&vi->rq[i], buf);
--			} else {
--				put_page(virt_to_head_page(buf));
--			}
--		}
-+		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL)
-+			virtnet_rq_free_unused_buf(vq, buf);
- 	}
- }
- 
+ 	kthread_queue_work(engine->kworker, &engine->pump_requests);
 -- 
 2.39.2
 
