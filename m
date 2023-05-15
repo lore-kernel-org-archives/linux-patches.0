@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7021FFBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:15:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC1EC433D2;
-	Mon, 15 May 2023 17:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BDFFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:15:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E6FC433D2;
+	Mon, 15 May 2023 17:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170940;
-	bh=ZfuOEwzso9eUrzVpijLnAEZz+BpJGGdeeAj+TpbY8EA=;
+	s=korg; t=1684170943;
+	bh=k+H5OkRSfoOMeCwAw7iGPs2b0KLH/JBLoO2rkJw9hYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3ForZBTEsDkJJe/docrTQHGj6l/Z5vaXmY/lK4+FZaHXX7Bk/dIl+JIKkksWK5hN
-	 EGTLd17spEMPlqQgJfowl5AqqOF0p0Mt+IDmlhTyBZL6HEZHtaPwPibOpeZ88BTOML
-	 R2QlzeMF3+WV/r7RrV9Mkxl4P6qPfhxd6zGoWEG4=
+	b=FTtN9ohniyXYzjG/pRRTYppNvjoecpyIfYlyY0ehMIAAHBC8qGo8NI/4Hkbb89R1i
+	 mZxoNrGNbNMqhx7BGm/FeywGne/uKAdkZOEEiXicR09EmScEgtH8lUBM052L9tDDXb
+	 42TcVV7vE5UlC++zywqU+asJshZMWLf97v3piZxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiangfei Ma <xiangfeix.ma@intel.com>,
-	Farrah Chen <farrah.chen@intel.com>,
-	Tao Su <tao1.su@linux.intel.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>,
-	Yu Kuai <yukuai3@huawei.com>
-Subject: [PATCH 6.2 050/242] block: Skip destroyed blkg when restart in blkg_destroy_all()
-Date: Mon, 15 May 2023 18:26:16 +0200
-Message-Id: <20230515161723.413933635@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 051/242] watchdog: dw_wdt: Fix the error handling path of dw_wdt_drv_probe()
+Date: Mon, 15 May 2023 18:26:17 +0200
+Message-Id: <20230515161723.443765903@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -38,46 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tao Su <tao1.su@linux.intel.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 8176080d59e6d4ff9fc97ae534063073b4f7a715 ]
+[ Upstream commit 7f5390750645756bd5da2b24fac285f2654dd922 ]
 
-Kernel hang in blkg_destroy_all() when total blkg greater than
-BLKG_DESTROY_BATCH_SIZE, because of not removing destroyed blkg in
-blkg_list. So the size of blkg_list is same after destroying a
-batch of blkg, and the infinite 'restart' occurs.
+The commit in Fixes has only updated the remove function and missed the
+error handling path of the probe.
 
-Since blkg should stay on the queue list until blkg_free_workfn(),
-skip destroyed blkg when restart a new round, which will solve this
-kernel hang issue and satisfy the previous will to restart.
+Add the missing reset_control_assert() call.
 
-Reported-by: Xiangfei Ma <xiangfeix.ma@intel.com>
-Tested-by: Xiangfei Ma <xiangfeix.ma@intel.com>
-Tested-by: Farrah Chen <farrah.chen@intel.com>
-Signed-off-by: Tao Su <tao1.su@linux.intel.com>
-Fixes: f1c006f1c685 ("blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
-Suggested-and-reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20230428045149.1310073-1-tao1.su@linux.intel.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 65a3b6935d92 ("watchdog: dw_wdt: get reset lines from dt")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/fbb650650bbb33a8fa2fd028c23157bedeed50e1.1682491863.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/watchdog/dw_wdt.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 9ac1efb053e08..2d8a28e4e22f7 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -501,6 +501,9 @@ static void blkg_destroy_all(struct gendisk *disk)
- 	list_for_each_entry_safe(blkg, n, &q->blkg_list, q_node) {
- 		struct blkcg *blkcg = blkg->blkcg;
+diff --git a/drivers/watchdog/dw_wdt.c b/drivers/watchdog/dw_wdt.c
+index 52962e8d11a6f..61af5d1332ac6 100644
+--- a/drivers/watchdog/dw_wdt.c
++++ b/drivers/watchdog/dw_wdt.c
+@@ -635,7 +635,7 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
  
-+		if (hlist_unhashed(&blkg->blkcg_node))
-+			continue;
+ 	ret = dw_wdt_init_timeouts(dw_wdt, dev);
+ 	if (ret)
+-		goto out_disable_clk;
++		goto out_assert_rst;
+ 
+ 	wdd = &dw_wdt->wdd;
+ 	wdd->ops = &dw_wdt_ops;
+@@ -666,12 +666,15 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
+ 
+ 	ret = watchdog_register_device(wdd);
+ 	if (ret)
+-		goto out_disable_pclk;
++		goto out_assert_rst;
+ 
+ 	dw_wdt_dbgfs_init(dw_wdt);
+ 
+ 	return 0;
+ 
++out_assert_rst:
++	reset_control_assert(dw_wdt->rst);
 +
- 		spin_lock(&blkcg->lock);
- 		blkg_destroy(blkg);
- 		spin_unlock(&blkcg->lock);
+ out_disable_pclk:
+ 	clk_disable_unprepare(dw_wdt->pclk);
+ 
 -- 
 2.39.2
 
