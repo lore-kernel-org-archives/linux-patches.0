@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC260FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEFDC433D2;
-	Mon, 15 May 2023 17:28:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E03FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F548C433EF;
+	Mon, 15 May 2023 17:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171728;
-	bh=MtZwK8BTjzPfeJwOrAKTVFPXSV69ddWzzsccmMzuM4g=;
+	s=korg; t=1684171732;
+	bh=Gw8siu7O+Q7FYr7IxAJzgCPDb4KZfSIPACSgkHZyJo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2TUbbXd1rfLOeTBE2dDsiNEPffGo000W/Eenh6cSoLpDV+j6mrMBTeI8T8Am2U+Nn
-	 mUWlzwxM4LgBm3A3fT0d1Zv+0BBcBB5Dt7hMLaGne1kGUwb8RHUCjajzgYNJBlCwFh
-	 BEAvMzcIl+MAZUoyPvieoUY86BcHbGjEiqu2e6xc=
+	b=aOTGNGHk0yYRKMQN0gu3s9skLOLIef73N9021Fq539if/b8g/5/du+VY2cUSSnnqV
+	 Jvy3yBzdhlO9gSaHOO1PN5zHRjDJEH3Q5Tja1g10/sB2JsZT1/4LDNYZVvPXrAoK0W
+	 Ao03VFcuPcGjKXe1iL+qVuyVQ5nnN5TTTDKvZjnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Song Liu <song@kernel.org>,
-	Dmitrii Dolgov <9erthalion6@gmail.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 060/134] perf stat: Separate bperf from bpf_profiler
-Date: Mon, 15 May 2023 18:28:57 +0200
-Message-Id: <20230515161705.147662198@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 061/134] btrfs: fix btrfs_prev_leaf() to not return the same key twice
+Date: Mon, 15 May 2023 18:28:58 +0200
+Message-Id: <20230515161705.178253869@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -40,103 +35,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitrii Dolgov <9erthalion6@gmail.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit ecc68ee216c6c5b2f84915e1441adf436f1b019b ]
+commit 6f932d4ef007d6a4ae03badcb749fbb8f49196f6 upstream.
 
-It seems that perf stat -b <prog id> doesn't produce any results:
+A call to btrfs_prev_leaf() may end up returning a path that points to the
+same item (key) again. This happens if while btrfs_prev_leaf(), after we
+release the path, a concurrent insertion happens, which moves items off
+from a sibling into the front of the previous leaf, and an item with the
+computed previous key does not exists.
 
-    $ perf stat -e cycles -b 4 -I 10000 -vvv
-    Control descriptor is not initialized
-    cycles: 0 0 0
-                time        counts unit      events
-	10.007641640    <not supported>      cycles
+For example, suppose we have the two following leaves:
 
-Looks like this happens because fentry/fexit progs are getting loaded, but the
-corresponding perf event is not enabled and not added into the events bpf map.
-I think there is some mixing up between two type of bpf support, one for bperf
-and one for bpf_profiler. Both are identified via evsel__is_bpf, based on which
-perf events are enabled, but for the latter (bpf_profiler) a perf event is
-required. Using evsel__is_bperf to check only bperf produces expected results:
+  Leaf A
 
-    $ perf stat -e cycles -b 4 -I 10000 -vvv
-    Control descriptor is not initialized
-    ------------------------------------------------------------
-    perf_event_attr:
-      size                             136
-      sample_type                      IDENTIFIER
-      read_format                      TOTAL_TIME_ENABLED|TOTAL_TIME_RUNNING
-      disabled                         1
-      exclude_guest                    1
-    ------------------------------------------------------------
-    sys_perf_event_open: pid -1  cpu 0  group_fd -1  flags 0x8 = 3
-    ------------------------------------------------------------
-    [...perf_event_attr for other CPUs...]
-    ------------------------------------------------------------
-    cycles: 309426 169009 169009
-		time             counts unit events
-	10.010091271             309426      cycles
+  -------------------------------------------------------------
+  | ...   key (300 96 10)   key (300 96 15)   key (300 96 16) |
+  -------------------------------------------------------------
+              slot 20             slot 21             slot 22
 
-The final numbers correspond (at least in the level of magnitude) to the
-same metric obtained via bpftool.
+  Leaf B
 
-Fixes: 112cb56164bc2108 ("perf stat: Introduce config stat.bpf-counter-events")
-Reviewed-by: Song Liu <song@kernel.org>
-Signed-off-by: Dmitrii Dolgov <9erthalion6@gmail.com>
-Tested-by: Song Liu <song@kernel.org>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230412182316.11628-1-9erthalion6@gmail.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  -------------------------------------------------------------
+  | key (300 96 20)   key (300 96 21)   key (300 96 22)   ... |
+  -------------------------------------------------------------
+      slot 0             slot 1             slot 2
+
+If we call btrfs_prev_leaf(), from btrfs_previous_item() for example, with
+a path pointing to leaf B and slot 0 and the following happens:
+
+1) At btrfs_prev_leaf() we compute the previous key to search as:
+   (300 96 19), which is a key that does not exists in the tree;
+
+2) Then we call btrfs_release_path() at btrfs_prev_leaf();
+
+3) Some other task inserts a key at leaf A, that sorts before the key at
+   slot 20, for example it has an objectid of 299. In order to make room
+   for the new key, the key at slot 22 is moved to the front of leaf B.
+   This happens at push_leaf_right(), called from split_leaf().
+
+   After this leaf B now looks like:
+
+  --------------------------------------------------------------------------------
+  | key (300 96 16)    key (300 96 20)   key (300 96 21)   key (300 96 22)   ... |
+  --------------------------------------------------------------------------------
+       slot 0              slot 1             slot 2             slot 3
+
+4) At btrfs_prev_leaf() we call btrfs_search_slot() for the computed
+   previous key: (300 96 19). Since the key does not exists,
+   btrfs_search_slot() returns 1 and with a path pointing to leaf B
+   and slot 1, the item with key (300 96 20);
+
+5) This makes btrfs_prev_leaf() return a path that points to slot 1 of
+   leaf B, the same key as before it was called, since the key at slot 0
+   of leaf B (300 96 16) is less than the computed previous key, which is
+   (300 96 19);
+
+6) As a consequence btrfs_previous_item() returns a path that points again
+   to the item with key (300 96 20).
+
+For some users of btrfs_prev_leaf() or btrfs_previous_item() this may not
+be functional a problem, despite not making sense to return a new path
+pointing again to the same item/key. However for a caller such as
+tree-log.c:log_dir_items(), this has a bad consequence, as it can result
+in not logging some dir index deletions in case the directory is being
+logged without holding the inode's VFS lock (logging triggered while
+logging a child inode for example) - for the example scenario above, in
+case the dir index keys 17, 18 and 19 were deleted in the current
+transaction.
+
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/builtin-stat.c | 4 ++--
- tools/perf/util/evsel.h   | 5 +++++
- 2 files changed, 7 insertions(+), 2 deletions(-)
+ fs/btrfs/ctree.c |   32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index 4ccd0c7c13ea1..efae2998a472f 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -791,7 +791,7 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 		counter->reset_group = false;
- 		if (bpf_counter__load(counter, &target))
- 			return -1;
--		if (!evsel__is_bpf(counter))
-+		if (!(evsel__is_bperf(counter)))
- 			all_counters_use_bpf = false;
- 	}
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -4189,10 +4189,12 @@ int btrfs_del_items(struct btrfs_trans_h
+ int btrfs_prev_leaf(struct btrfs_root *root, struct btrfs_path *path)
+ {
+ 	struct btrfs_key key;
++	struct btrfs_key orig_key;
+ 	struct btrfs_disk_key found_key;
+ 	int ret;
  
-@@ -807,7 +807,7 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
+ 	btrfs_item_key_to_cpu(path->nodes[0], &key, 0);
++	orig_key = key;
  
- 		if (counter->reset_group || counter->errored)
- 			continue;
--		if (evsel__is_bpf(counter))
-+		if (evsel__is_bperf(counter))
- 			continue;
- try_again:
- 		if (create_perf_stat_counter(counter, &stat_config, &target,
-diff --git a/tools/perf/util/evsel.h b/tools/perf/util/evsel.h
-index 9372ddd369ef4..0492cafac4430 100644
---- a/tools/perf/util/evsel.h
-+++ b/tools/perf/util/evsel.h
-@@ -248,6 +248,11 @@ static inline bool evsel__is_bpf(struct evsel *evsel)
- 	return evsel->bpf_counter_ops != NULL;
- }
+ 	if (key.offset > 0) {
+ 		key.offset--;
+@@ -4209,8 +4211,36 @@ int btrfs_prev_leaf(struct btrfs_root *r
  
-+static inline bool evsel__is_bperf(struct evsel *evsel)
-+{
-+	return evsel->bpf_counter_ops != NULL && list_empty(&evsel->bpf_counter_list);
-+}
+ 	btrfs_release_path(path);
+ 	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
+-	if (ret < 0)
++	if (ret <= 0)
+ 		return ret;
 +
- #define EVSEL__MAX_ALIASES 8
- 
- extern const char *evsel__hw_cache[PERF_COUNT_HW_CACHE_MAX][EVSEL__MAX_ALIASES];
--- 
-2.39.2
-
++	/*
++	 * Previous key not found. Even if we were at slot 0 of the leaf we had
++	 * before releasing the path and calling btrfs_search_slot(), we now may
++	 * be in a slot pointing to the same original key - this can happen if
++	 * after we released the path, one of more items were moved from a
++	 * sibling leaf into the front of the leaf we had due to an insertion
++	 * (see push_leaf_right()).
++	 * If we hit this case and our slot is > 0 and just decrement the slot
++	 * so that the caller does not process the same key again, which may or
++	 * may not break the caller, depending on its logic.
++	 */
++	if (path->slots[0] < btrfs_header_nritems(path->nodes[0])) {
++		btrfs_item_key(path->nodes[0], &found_key, path->slots[0]);
++		ret = comp_keys(&found_key, &orig_key);
++		if (ret == 0) {
++			if (path->slots[0] > 0) {
++				path->slots[0]--;
++				return 0;
++			}
++			/*
++			 * At slot 0, same key as before, it means orig_key is
++			 * the lowest, leftmost, key in the tree. We're done.
++			 */
++			return 1;
++		}
++	}
++
+ 	btrfs_item_key(path->nodes[0], &found_key, 0);
+ 	ret = comp_keys(&found_key, &key);
+ 	/*
 
 
