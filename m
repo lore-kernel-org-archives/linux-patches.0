@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB76FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8AD9C433EF;
-	Mon, 15 May 2023 17:38:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABD2FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:38:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE47C433EF;
+	Mon, 15 May 2023 17:38:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172303;
-	bh=FKQliO2HJDCQSwslC89Yr+EOytJmpJIXDvsUaNIGtNY=;
+	s=korg; t=1684172306;
+	bh=vUbmRgim1kETq3YPGbaFg29SWmckLqVs8dPyiZMW6Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PQweJNv9mBXDCATg1DWINlRgqm/PXK2+3XjE9Zqz2YQ6Mm6Jn8cT9C17DN4RJpI5J
-	 UczetwXVIg0asMeaDFfkwciuWxulbv1SRRsQYJWlfIC+mdci7QUb+VeSdtZtRUW2IB
-	 YJnfGxoPVCCX81xasDZDl54EiDwVOsmcjYES3SUE=
+	b=zYQf5vyvPoFba+fN/R8DpcxbGl9+R15GgUSnUVPTiK31ZKnUqN9gSR7nZ0lxc+jhU
+	 U9wTxmwtIc1YISa6aPvQs78E9/9tFaEWS7WtrAopNWtzR0stCff1J5BlBMm/z5oNOQ
+	 YwTSAqXSI1x8wzJ64fFjlquXSLadaDzyeLF/q7/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Cai Huoqing <caihuoqing@baidu.com>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 110/381] media: rcar_fdp1: fix pm_runtime_get_sync() usage count
-Date: Mon, 15 May 2023 18:26:01 +0200
-Message-Id: <20230515161741.778817016@linuxfoundation.org>
+Subject: [PATCH 5.10 111/381] media: rcar_fdp1: Make use of the helper function devm_platform_ioremap_resource()
+Date: Mon, 15 May 2023 18:26:02 +0200
+Message-Id: <20230515161741.827520088@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,73 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+From: Cai Huoqing <caihuoqing@baidu.com>
 
-[ Upstream commit 45e75a8c6fa455a5909ac04db76a4b15d6bb8368 ]
+[ Upstream commit 736cce12fa630e28705de06570d74f0513d948d5 ]
 
-The pm_runtime_get_sync() internally increments the
-dev->power.usage_count without decrementing it, even on errors.
-Replace it by the new pm_runtime_resume_and_get(), introduced by:
-commit dd8088d5a896 ("PM: runtime: Add pm_runtime_resume_and_get to deal with usage counter")
-in order to properly decrement the usage counter, avoiding
-a potential PM usage counter leak.
+Use the devm_platform_ioremap_resource() helper instead of
+calling platform_get_resource() and devm_ioremap_resource()
+separately
 
-Also, right now, the driver is ignoring any troubles when
-trying to do PM resume. So, add the proper error handling
-for the code.
-
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Stable-dep-of: c766c90faf93 ("media: rcar_fdp1: Fix refcount leak in probe and remove function")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/rcar_fdp1.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/media/platform/rcar_fdp1.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/media/platform/rcar_fdp1.c b/drivers/media/platform/rcar_fdp1.c
-index ac2e7b2c60829..cedae184c6ad4 100644
+index cedae184c6ad4..782e805b85da2 100644
 --- a/drivers/media/platform/rcar_fdp1.c
 +++ b/drivers/media/platform/rcar_fdp1.c
-@@ -2139,7 +2139,9 @@ static int fdp1_open(struct file *file)
- 	}
+@@ -2260,7 +2260,6 @@ static int fdp1_probe(struct platform_device *pdev)
+ 	struct fdp1_dev *fdp1;
+ 	struct video_device *vfd;
+ 	struct device_node *fcp_node;
+-	struct resource *res;
+ 	struct clk *clk;
+ 	unsigned int i;
  
- 	/* Perform any power management required */
--	pm_runtime_get_sync(fdp1->dev);
-+	ret = pm_runtime_resume_and_get(fdp1->dev);
-+	if (ret < 0)
-+		goto error_pm;
+@@ -2287,8 +2286,7 @@ static int fdp1_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, fdp1);
  
- 	v4l2_fh_add(&ctx->fh);
- 
-@@ -2149,6 +2151,8 @@ static int fdp1_open(struct file *file)
- 	mutex_unlock(&fdp1->dev_mutex);
- 	return 0;
- 
-+error_pm:
-+       v4l2_m2m_ctx_release(ctx->fh.m2m_ctx);
- error_ctx:
- 	v4l2_ctrl_handler_free(&ctx->hdl);
- 	kfree(ctx);
-@@ -2356,7 +2360,9 @@ static int fdp1_probe(struct platform_device *pdev)
- 
- 	/* Power up the cells to read HW */
- 	pm_runtime_enable(&pdev->dev);
--	pm_runtime_get_sync(fdp1->dev);
-+	ret = pm_runtime_resume_and_get(fdp1->dev);
-+	if (ret < 0)
-+		goto disable_pm;
- 
- 	hw_version = fdp1_read(fdp1, FD1_IP_INTDATA);
- 	switch (hw_version) {
-@@ -2385,6 +2391,9 @@ static int fdp1_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
-+disable_pm:
-+	pm_runtime_disable(fdp1->dev);
-+
- release_m2m:
- 	v4l2_m2m_release(fdp1->m2m_dev);
+ 	/* Memory-mapped registers */
+-	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-	fdp1->regs = devm_ioremap_resource(&pdev->dev, res);
++	fdp1->regs = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(fdp1->regs))
+ 		return PTR_ERR(fdp1->regs);
  
 -- 
 2.39.2
