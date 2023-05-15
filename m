@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DB4FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:32:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB9DC433D2;
-	Mon, 15 May 2023 17:32:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9894CFC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:32:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F24F2C433EF;
+	Mon, 15 May 2023 17:32:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171950;
-	bh=OOSk6E47L5v3k5q8JitSU3+y696+rg94U0EanL7ixHA=;
+	s=korg; t=1684171953;
+	bh=De2i338n1K5D4zknbNCI2ER3uADqMbvgJ82boCtVRfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BwComZpCrLUsAlUBjXPLUTlVC0BX10xxxqTGnPlEMaYiRYgRDxA67EPeLzfcWWAsc
-	 CGM8/TYrcjWRGs1xt6xqbmcgQOJ+jo3HB7s/I2Gcu0wm8WjlsJQjKREuYPN6QA7Ok5
-	 imjtzsJ0NntME0ZzXK8Cl49jumz//3XfMJzBvXYo=
+	b=M97zvLlCWCUhENro4q1D1YJBeyzpHyPlvLuc0Rl/nCYu1ZDmQGFE6JpoYUMtBrxTV
+	 l7OiYKhkbT/BAevnjcx8b/D3A+NSZ+RE9nPuBZ/7/FS9zTbhohKzjarz5hKYmERimy
+	 OpzTTajzmdVA2yJPohCBdBE+IrCkTN4XtCT6RGQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 5.15 130/134] drm/msm/adreno: adreno_gpu: Use suspend() instead of idle() on load error
-Date: Mon, 15 May 2023 18:30:07 +0200
-Message-Id: <20230515161707.492696259@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 5.15 131/134] serial: 8250: Fix serial8250_tx_empty() race with DMA Tx
+Date: Mon, 15 May 2023 18:30:08 +0200
+Message-Id: <20230515161707.532154260@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -35,58 +33,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 3eeca5e5f3100435b06a5b5d86daa3d135a8a4bd upstream.
+commit 146a37e05d620cef4ad430e5d1c9c077fe6fa76f upstream.
 
-The adreno_load_gpu() path is guarded by an error check on
-adreno_load_fw(). This function is responsible for loading
-Qualcomm-only-signed binaries (e.g. SQE and GMU FW for A6XX), but it
-does not take the vendor-signed ZAP blob into account.
+There's a potential race before THRE/TEMT deasserts when DMA Tx is
+starting up (or the next batch of continuous Tx is being submitted).
+This can lead to misdetecting Tx empty condition.
 
-By embedding the SQE (and GMU, if necessary) firmware into the
-initrd/kernel, we can trigger and unfortunate path that would not bail
-out early and proceed with gpu->hw_init(). That will fail, as the ZAP
-loader path will not find the firmware and return back to
-adreno_load_gpu().
+It is entirely normal for THRE/TEMT to be set for some time after the
+DMA Tx had been setup in serial8250_tx_dma(). As Tx side is definitely
+not empty at that point, it seems incorrect for serial8250_tx_empty()
+claim Tx is empty.
 
-This error path involves pm_runtime_put_sync() which then calls idle()
-instead of suspend(). This is suboptimal, as it means that we're not
-going through the clean shutdown sequence. With at least A619_holi, this
-makes the GPU not wake up until it goes through at least one more
-start-fail-stop cycle. The pm_runtime_put_sync that appears in the error
-path actually does not guarantee that because of the earlier enabling of
-runtime autosuspend.
+Fix the race by also checking in serial8250_tx_empty() whether there's
+DMA Tx active.
 
-Fix that by using pm_runtime_put_sync_suspend to force a clean shutdown.
+Note: This fix only addresses in-kernel race mainly to make using
+TCSADRAIN/FLUSH robust. Userspace can still cause other races but they
+seem userspace concurrency control problems.
 
-Test cases:
-1. All firmware baked into kernel
-2. error loading ZAP fw in initrd -> load from rootfs at DE start
-
-Both succeed on A619_holi (SM6375) and A630 (SDM845).
-
-Fixes: 0d997f95b70f ("drm/msm/adreno: fix runtime PM imbalance at gpu load")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Patchwork: https://patchwork.freedesktop.org/patch/530001/
-Link: https://lore.kernel.org/r/20230330231517.2747024-1-konrad.dybcio@linaro.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: 9ee4b83e51f74 ("serial: 8250: Add support for dmaengine")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230317113318.31327-3-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250.h      |   12 ++++++++++++
+ drivers/tty/serial/8250/8250_port.c |   12 +++++++++---
+ 2 files changed, 21 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -431,7 +431,7 @@ struct msm_gpu *adreno_load_gpu(struct d
- 	return gpu;
+--- a/drivers/tty/serial/8250/8250.h
++++ b/drivers/tty/serial/8250/8250.h
+@@ -349,6 +349,13 @@ static inline void serial8250_do_prepare
+ 	if (dma->prepare_rx_dma)
+ 		dma->prepare_rx_dma(p);
+ }
++
++static inline bool serial8250_tx_dma_running(struct uart_8250_port *p)
++{
++	struct uart_8250_dma *dma = p->dma;
++
++	return dma && dma->tx_running;
++}
+ #else
+ static inline int serial8250_tx_dma(struct uart_8250_port *p)
+ {
+@@ -364,6 +371,11 @@ static inline int serial8250_request_dma
+ 	return -1;
+ }
+ static inline void serial8250_release_dma(struct uart_8250_port *p) { }
++
++static inline bool serial8250_tx_dma_running(struct uart_8250_port *p)
++{
++	return false;
++}
+ #endif
  
- err_put_rpm:
--	pm_runtime_put_sync(&pdev->dev);
-+	pm_runtime_put_sync_suspend(&pdev->dev);
- err_disable_rpm:
- 	pm_runtime_disable(&pdev->dev);
+ static inline int ns16550a_goto_highspeed(struct uart_8250_port *up)
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -1988,19 +1988,25 @@ static int serial8250_tx_threshold_handl
+ static unsigned int serial8250_tx_empty(struct uart_port *port)
+ {
+ 	struct uart_8250_port *up = up_to_u8250p(port);
++	unsigned int result = 0;
+ 	unsigned long flags;
+ 	unsigned int lsr;
  
+ 	serial8250_rpm_get(up);
+ 
+ 	spin_lock_irqsave(&port->lock, flags);
+-	lsr = serial_port_in(port, UART_LSR);
+-	up->lsr_saved_flags |= lsr & LSR_SAVE_FLAGS;
++	if (!serial8250_tx_dma_running(up)) {
++		lsr = serial_port_in(port, UART_LSR);
++		up->lsr_saved_flags |= lsr & LSR_SAVE_FLAGS;
++
++		if ((lsr & BOTH_EMPTY) == BOTH_EMPTY)
++			result = TIOCSER_TEMT;
++	}
+ 	spin_unlock_irqrestore(&port->lock, flags);
+ 
+ 	serial8250_rpm_put(up);
+ 
+-	return (lsr & BOTH_EMPTY) == BOTH_EMPTY ? TIOCSER_TEMT : 0;
++	return result;
+ }
+ 
+ unsigned int serial8250_do_get_mctrl(struct uart_port *port)
 
 
