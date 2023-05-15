@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E117A101EF
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45E04C4339B;
-	Mon, 15 May 2023 17:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F218810785
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F81C433D2;
+	Mon, 15 May 2023 17:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173552;
-	bh=d2g8r34r6Fykdy3qK+w4b5Jn62s9byIjD07l5jtW9SA=;
+	s=korg; t=1684173555;
+	bh=bLOFcSDJlx27G5t8NnVELt9F4INSGapGUYqKqCBbQrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kxPLv0YztSL9ppEND8/dLB/FzN3VN3gW70ruoFH3nGrkgorOhJ3dqul1BHXEJ52sD
-	 2TwA1LO01oNL5d1MSieF5yoJig2ogYmnkfe7olne7edIirmvigXryPKh7TEEMhg7au
-	 8F/yfNLm1NMLEb/QZ5cNPkF3OGcyKcBGMOEva+zo=
+	b=lUf3/y30tObnDnCHKl8mAAH47g0/Cs258sl0LeVwXacujCVUseuBOHsM8z17YEJwK
+	 9LzxYNFS3xzNxk4WDiQgmOIXI/iMdenQkwrAPWyL/LOAy4blltY5980ZffRcRCqxlB
+	 sp4LvZEYCE4sxSZ/yZIowE8ofO7xJSgcil3fnIn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Song Liu <song@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 104/282] md: update the optimal I/O size on reshape
-Date: Mon, 15 May 2023 18:28:02 +0200
-Message-Id: <20230515161725.370156269@linuxfoundation.org>
+Subject: [PATCH 5.4 131/282] spi: qup: Dont skip cleanup in removes error path
+Date: Mon, 15 May 2023 18:28:29 +0200
+Message-Id: <20230515161726.151994422@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -38,117 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 16ef510139315a2147ee7525796f8dbd4e4b7864 ]
+[ Upstream commit 61f49171a43ab1f80c73c5c88c508770c461e0f2 ]
 
-The raid5 and raid10 drivers currently update the read-ahead size,
-but not the optimal I/O size on reshape.  To prepare for deriving the
-read-ahead size from the optimal I/O size make sure it is updated
-as well.
+Returning early in a platform driver's remove callback is wrong. In this
+case the dma resources are not released in the error path. this is never
+retried later and so this is a permanent leak. To fix this, only skip
+hardware disabling if waking the device fails.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Acked-by: Song Liu <song@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: f0ddb83da3cb ("md/raid10: fix memleak of md thread")
+Fixes: 64ff247a978f ("spi: Add Qualcomm QUP SPI controller support")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20230330210341.2459548-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 22 ++++++++++++++--------
- drivers/md/raid5.c  | 10 ++++++++--
- 2 files changed, 22 insertions(+), 10 deletions(-)
+ drivers/spi/spi-qup.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 68447e1525057..b37e3cd4e3673 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -3735,10 +3735,20 @@ static struct r10conf *setup_conf(struct mddev *mddev)
- 	return ERR_PTR(err);
- }
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index ead6c211047d5..ebcf9f4d5679e 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1276,18 +1276,22 @@ static int spi_qup_remove(struct platform_device *pdev)
+ 	struct spi_qup *controller = spi_master_get_devdata(master);
+ 	int ret;
  
-+static void raid10_set_io_opt(struct r10conf *conf)
-+{
-+	int raid_disks = conf->geo.raid_disks;
-+
-+	if (!(conf->geo.raid_disks % conf->geo.near_copies))
-+		raid_disks /= conf->geo.near_copies;
-+	blk_queue_io_opt(conf->mddev->queue, (conf->mddev->chunk_sectors << 9) *
-+			 raid_disks);
-+}
-+
- static int raid10_run(struct mddev *mddev)
- {
- 	struct r10conf *conf;
--	int i, disk_idx, chunk_size;
-+	int i, disk_idx;
- 	struct raid10_info *disk;
- 	struct md_rdev *rdev;
- 	sector_t size;
-@@ -3774,18 +3784,13 @@ static int raid10_run(struct mddev *mddev)
- 	mddev->thread = conf->thread;
- 	conf->thread = NULL;
+-	ret = pm_runtime_resume_and_get(&pdev->dev);
+-	if (ret < 0)
+-		return ret;
++	ret = pm_runtime_get_sync(&pdev->dev);
  
--	chunk_size = mddev->chunk_sectors << 9;
- 	if (mddev->queue) {
- 		blk_queue_max_discard_sectors(mddev->queue,
- 					      mddev->chunk_sectors);
- 		blk_queue_max_write_same_sectors(mddev->queue, 0);
- 		blk_queue_max_write_zeroes_sectors(mddev->queue, 0);
--		blk_queue_io_min(mddev->queue, chunk_size);
--		if (conf->geo.raid_disks % conf->geo.near_copies)
--			blk_queue_io_opt(mddev->queue, chunk_size * conf->geo.raid_disks);
--		else
--			blk_queue_io_opt(mddev->queue, chunk_size *
--					 (conf->geo.raid_disks / conf->geo.near_copies));
-+		blk_queue_io_min(mddev->queue, mddev->chunk_sectors << 9);
-+		raid10_set_io_opt(conf);
- 	}
+-	ret = spi_qup_set_state(controller, QUP_STATE_RESET);
+-	if (ret)
+-		return ret;
++	if (ret >= 0) {
++		ret = spi_qup_set_state(controller, QUP_STATE_RESET);
++		if (ret)
++			dev_warn(&pdev->dev, "failed to reset controller (%pe)\n",
++				 ERR_PTR(ret));
  
- 	rdev_for_each(rdev, mddev) {
-@@ -4748,6 +4753,7 @@ static void end_reshape(struct r10conf *conf)
- 		stripe /= conf->geo.near_copies;
- 		if (conf->mddev->queue->backing_dev_info->ra_pages < 2 * stripe)
- 			conf->mddev->queue->backing_dev_info->ra_pages = 2 * stripe;
-+		raid10_set_io_opt(conf);
- 	}
- 	conf->fullsync = 0;
- }
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index d0c3f49c8c162..113ba084fab45 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -7159,6 +7159,12 @@ static int only_parity(int raid_disk, int algo, int raid_disks, int max_degraded
- 	return 0;
- }
+-	spi_qup_release_dma(master);
++		clk_disable_unprepare(controller->cclk);
++		clk_disable_unprepare(controller->iclk);
++	} else {
++		dev_warn(&pdev->dev, "failed to resume, skip hw disable (%pe)\n",
++			 ERR_PTR(ret));
++	}
  
-+static void raid5_set_io_opt(struct r5conf *conf)
-+{
-+	blk_queue_io_opt(conf->mddev->queue, (conf->chunk_sectors << 9) *
-+			 (conf->raid_disks - conf->max_degraded));
-+}
-+
- static int raid5_run(struct mddev *mddev)
- {
- 	struct r5conf *conf;
-@@ -7448,8 +7454,7 @@ static int raid5_run(struct mddev *mddev)
+-	clk_disable_unprepare(controller->cclk);
+-	clk_disable_unprepare(controller->iclk);
++	spi_qup_release_dma(master);
  
- 		chunk_size = mddev->chunk_sectors << 9;
- 		blk_queue_io_min(mddev->queue, chunk_size);
--		blk_queue_io_opt(mddev->queue, chunk_size *
--				 (conf->raid_disks - conf->max_degraded));
-+		raid5_set_io_opt(conf);
- 		mddev->queue->limits.raid_partial_stripes_expensive = 1;
- 		/*
- 		 * We can only discard a whole stripe. It doesn't make sense to
-@@ -8043,6 +8048,7 @@ static void end_reshape(struct r5conf *conf)
- 						   / PAGE_SIZE);
- 			if (conf->mddev->queue->backing_dev_info->ra_pages < 2 * stripe)
- 				conf->mddev->queue->backing_dev_info->ra_pages = 2 * stripe;
-+			raid5_set_io_opt(conf);
- 		}
- 	}
- }
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
 -- 
 2.39.2
 
