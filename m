@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AE15FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A14C433D2;
-	Mon, 15 May 2023 16:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3540BFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5AFC4339B;
+	Mon, 15 May 2023 16:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169497;
-	bh=juZNPdt5hU6FDOsjoQpmESqHEDUkTdRiXZU6y7P/2+M=;
+	s=korg; t=1684169501;
+	bh=gbvDJcgdwIrhoDmWaxHzrev8B3cRtuP47LC7W19xLiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4Ayk2sOXHP4wGTCmR8HdJ5m13AxXbcpFpeTQNjBB5WkFTMBqv/NvaQSRKf47lxxL
-	 QHWesxpUZG6uCPQ366dwPTSWFXZhZ485VIl2ehh/x/QpeIaL3qML0081/lohAPkBJ+
-	 D/ysiBy2VqW+wZCtdVflddbhUi5HO0L6fwPK8KjA=
+	b=EIFZpwxpCSl36UEeipBbo4Atscc/TTdAwB2EWZz2XezU0Ewf+AMsh2QIguyFnftqG
+	 L/Jw8P8c+RV2TWiy0urCmdHvmHleML3jhZPUcdup0GNDUt5fvyCxhVKVTEfRhGevbi
+	 p5Af3QpvloxwMA+HUnriW0oEJYYA48mqVQZDqs5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Hayes Wang <hayeswang@realtek.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 076/246] ionic: remove noise from ethtool rxnfc error msg
-Date: Mon, 15 May 2023 18:24:48 +0200
-Message-Id: <20230515161724.851654860@linuxfoundation.org>
+Subject: [PATCH 6.3 077/246] r8152: fix the autosuspend doesnt work
+Date: Mon, 15 May 2023 18:24:49 +0200
+Message-Id: <20230515161724.880284047@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,36 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shannon Nelson <shannon.nelson@amd.com>
+From: Hayes Wang <hayeswang@realtek.com>
 
-[ Upstream commit 3711d44fac1f80ea69ecb7315fed05b3812a7401 ]
+[ Upstream commit 0fbd79c01a9a657348f7032df70c57a406468c86 ]
 
-It seems that ethtool is calling into .get_rxnfc more often with
-ETHTOOL_GRXCLSRLCNT which ionic doesn't know about.  We don't
-need to log a message about it, just return not supported.
+Set supports_autosuspend = 1 for the rtl8152_cfgselector_driver.
 
-Fixes: aa3198819bea6 ("ionic: Add RSS support")
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Fixes: ec51fbd1b8a2 ("r8152: add USB device driver for config selection")
+Signed-off-by: Hayes Wang <hayeswang@realtek.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_ethtool.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/r8152.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-index cf33503468a3d..9b2b96fa36af8 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_ethtool.c
-@@ -794,7 +794,7 @@ static int ionic_get_rxnfc(struct net_device *netdev,
- 		info->data = lif->nxqs;
- 		break;
- 	default:
--		netdev_err(netdev, "Command parameter %d is not supported\n",
-+		netdev_dbg(netdev, "Command parameter %d is not supported\n",
- 			   info->cmd);
- 		err = -EOPNOTSUPP;
- 	}
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 755b0f72dd44f..0999a58ca9d26 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -9910,6 +9910,7 @@ static struct usb_device_driver rtl8152_cfgselector_driver = {
+ 	.probe =	rtl8152_cfgselector_probe,
+ 	.id_table =	rtl8152_table,
+ 	.generic_subclass = 1,
++	.supports_autosuspend = 1,
+ };
+ 
+ static int __init rtl8152_driver_init(void)
 -- 
 2.39.2
 
