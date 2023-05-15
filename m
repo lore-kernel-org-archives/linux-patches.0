@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3C6F156E8
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:00:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1D47C433EF;
-	Mon, 15 May 2023 18:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95DEC8E3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:00:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1054FC433D2;
+	Mon, 15 May 2023 18:00:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173655;
-	bh=96ri945r7+nJC4Ob5qW2MqOtvCBFydGQhJiyymX/5Mw=;
+	s=korg; t=1684173658;
+	bh=lXrRkdfjtDzDD/obIOP2P/PnycCKMgmaigQzPVNxdRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGaDpvn2IFKORth/VTSuJJROfsPj9F0/C5qspeo2EclNyUiHW6jfqbtejEsOxXUoh
-	 zZal2xIM/m9mG6OaOuy2sfBanstugiBtHa7B7QBsYRvSvAKxG7ZfdpHTmz8XRuGV5W
-	 14Rot+qE+pdSFv9mAw+a+rauSU0fdvCg0YDRAqO4=
+	b=tokv+96c6xzUaqB7490NUNI4tP2jmAvOeVTvUku5GAQn5atxgX+DS0Ho44aaQ3BJP
+	 R0Az2FBoyGCMrHLEeXXAaeo6F0tkZznlYsmxlGhQLYgQNelzy1b/aoy1BctSHcLy86
+	 eUytrmqkwHDwIhUBbIkhjr6RviTSNV2jLOzCsf2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 163/282] rtc: omap: include header for omap_rtc_power_off_program prototype
-Date: Mon, 15 May 2023 18:29:01 +0200
-Message-Id: <20230515161727.097539075@linuxfoundation.org>
+Subject: [PATCH 5.4 164/282] RDMA/mlx4: Prevent shift wrapping in set_user_sq_size()
+Date: Mon, 15 May 2023 18:29:02 +0200
+Message-Id: <20230515161727.127066666@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,35 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit f69c2b5420497b7a54181ce170d682cbeb1f119f ]
+[ Upstream commit d50b3c73f1ac20dabc53dc6e9d64ce9c79a331eb ]
 
-Non-static functions should have a prototype:
+The ucmd->log_sq_bb_count variable is controlled by the user so this
+shift can wrap.  Fix it by using check_shl_overflow() in the same way
+that it was done in commit 515f60004ed9 ("RDMA/hns: Prevent undefined
+behavior in hns_roce_set_user_sq_size()").
 
-  drivers/rtc/rtc-omap.c:410:5: error: no previous prototype for ‘omap_rtc_power_off_program’ [-Werror=missing-prototypes]
-
-Fixes: 6256f7f7f217 ("rtc: OMAP: Add support for rtc-only mode")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20230311094021.79730-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 839041329fd3 ("IB/mlx4: Sanity check userspace send queue sizes")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/a8dfbd1d-c019-4556-930b-bab1ded73b10@kili.mountain
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-omap.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/mlx4/qp.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-omap.c b/drivers/rtc/rtc-omap.c
-index a2941c875a064..bf502fcd60772 100644
---- a/drivers/rtc/rtc-omap.c
-+++ b/drivers/rtc/rtc-omap.c
-@@ -26,6 +26,7 @@
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
- #include <linux/rtc.h>
-+#include <linux/rtc/rtc-omap.h>
- 
- /*
-  * The OMAP RTC is a year/month/day/hours/minutes/seconds BCD clock
+diff --git a/drivers/infiniband/hw/mlx4/qp.c b/drivers/infiniband/hw/mlx4/qp.c
+index bca5358f3ef29..4523eb85ec698 100644
+--- a/drivers/infiniband/hw/mlx4/qp.c
++++ b/drivers/infiniband/hw/mlx4/qp.c
+@@ -438,9 +438,13 @@ static int set_user_sq_size(struct mlx4_ib_dev *dev,
+ 			    struct mlx4_ib_qp *qp,
+ 			    struct mlx4_ib_create_qp *ucmd)
+ {
++	u32 cnt;
++
+ 	/* Sanity check SQ size before proceeding */
+-	if ((1 << ucmd->log_sq_bb_count) > dev->dev->caps.max_wqes	 ||
+-	    ucmd->log_sq_stride >
++	if (check_shl_overflow(1, ucmd->log_sq_bb_count, &cnt) ||
++	    cnt > dev->dev->caps.max_wqes)
++		return -EINVAL;
++	if (ucmd->log_sq_stride >
+ 		ilog2(roundup_pow_of_two(dev->dev->caps.max_sq_desc_sz)) ||
+ 	    ucmd->log_sq_stride < MLX4_IB_MIN_SQ_STRIDE)
+ 		return -EINVAL;
 -- 
 2.39.2
 
