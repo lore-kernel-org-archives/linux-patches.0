@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC96FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A29BBC433D2;
-	Mon, 15 May 2023 17:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA18FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6EFEC433EF;
+	Mon, 15 May 2023 17:33:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172018;
-	bh=qtwkD26VeVQY/ry07ujbaLlqs2Jxqddl2erI/AeLXuE=;
+	s=korg; t=1684172021;
+	bh=YMEdYDbQVsik8l5zNnyCGvPlrLXTOFZqmdM9+fTUcyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mP86dV2dfxQpv4C3qmN6cgRwSwrboP+N+miPKxdvgDv9wScD8S0RH8r7nNnhmzJYi
-	 pM5cCAvFa7ifDeeTN8v6klTf8zKU2O3XFC2ZjSXnn7exISR0s587RltYeUn4GZ9xn5
-	 Z/DUelHxoHh6KEuoBmmvezmwHrYuIzkbZc0XUvmA=
+	b=bbL8TDR7FoQchPUIP9BHVhs3rf8a9HUgqUIaTTylWiemUwRdzz0GTOwGQwvUng20R
+	 yFPRpNHu6ucqANutlrE9brZ4CzxUjJ6OUHKjZWGdDuAzYtBuc2CEcnVUkfKdcgrErN
+	 Irmg9o8MhX0mYboZoJpX44VezD6PSVL+AsU8qiLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roger Quadros <rogerq@ti.com>,
+	Li Jun <jun.li@nxp.com>,
 	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH 5.10 018/381] USB: dwc3: fix runtime pm imbalance on probe errors
-Date: Mon, 15 May 2023 18:24:29 +0200
-Message-Id: <20230515161737.586991260@linuxfoundation.org>
+Subject: [PATCH 5.10 019/381] USB: dwc3: fix runtime pm imbalance on unbind
+Date: Mon, 15 May 2023 18:24:30 +0200
+Message-Id: <20230515161737.636425705@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,55 +37,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 9a8ad10c9f2e0925ff26308ec6756b93fc2f4977 upstream.
+commit 44d257e9012ee8040e41d224d0e5bfb5ef5427ea upstream.
 
-Make sure not to suspend the device when probe fails to avoid disabling
-clocks and phys multiple times.
+Make sure to balance the runtime PM usage count on driver unbind by
+adding back the pm_runtime_allow() call that had been erroneously
+removed.
 
-Fixes: 328082376aea ("usb: dwc3: fix runtime PM in error path")
-Cc: stable@vger.kernel.org      # 4.8
-Cc: Roger Quadros <rogerq@ti.com>
+Fixes: 266d0493900a ("usb: dwc3: core: don't trigger runtime pm when remove driver")
+Cc: stable@vger.kernel.org	# 5.9
+Cc: Li Jun <jun.li@nxp.com>
 Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20230404072524.19014-2-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20230404072524.19014-3-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/core.c |   14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/usb/dwc3/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/drivers/usb/dwc3/core.c
 +++ b/drivers/usb/dwc3/core.c
-@@ -1567,13 +1567,11 @@ static int dwc3_probe(struct platform_de
- 	spin_lock_init(&dwc->lock);
- 	mutex_init(&dwc->mutex);
+@@ -1655,6 +1655,7 @@ static int dwc3_remove(struct platform_d
+ 	dwc3_core_exit(dwc);
+ 	dwc3_ulpi_exit(dwc);
  
-+	pm_runtime_get_noresume(dev);
- 	pm_runtime_set_active(dev);
- 	pm_runtime_use_autosuspend(dev);
- 	pm_runtime_set_autosuspend_delay(dev, DWC3_DEFAULT_AUTOSUSPEND_DELAY);
- 	pm_runtime_enable(dev);
--	ret = pm_runtime_get_sync(dev);
--	if (ret < 0)
--		goto err1;
- 
- 	pm_runtime_forbid(dev);
- 
-@@ -1633,12 +1631,10 @@ err3:
- 	dwc3_free_event_buffers(dwc);
- 
- err2:
--	pm_runtime_allow(&pdev->dev);
--
--err1:
--	pm_runtime_put_sync(&pdev->dev);
--	pm_runtime_disable(&pdev->dev);
--
-+	pm_runtime_allow(dev);
-+	pm_runtime_disable(dev);
-+	pm_runtime_set_suspended(dev);
-+	pm_runtime_put_noidle(dev);
- disable_clks:
- 	clk_bulk_disable_unprepare(dwc->num_clks, dwc->clks);
- assert_reset:
++	pm_runtime_allow(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
 
 
