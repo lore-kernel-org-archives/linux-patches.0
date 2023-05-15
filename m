@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C17BC1772F
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36562C4339C;
-	Mon, 15 May 2023 18:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1B21772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37921C433EF;
+	Mon, 15 May 2023 18:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173726;
-	bh=HibkFFaDIeEug2W6/0dp0JOubJ2brmBiumJ33xsNx4o=;
+	s=korg; t=1684173729;
+	bh=6dZ/mLd3qDd+5Fm4P1rrPdOTdWh6FPgK0FXXpWbhzto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QxtGfIKbYq1AOkhRq0+26BXVVp14MUyobu3+dyx86Lbr0sQTfvAcOK8vpZUwfp77y
-	 Yl2e3N5Y5PDb6Oiy/ixLzZaSwBkEzTq7jBK1109Oudln7a8pYYkQbuBWybBB7zNgY1
-	 KNHrgthvxA/l3hhYZdrvVaI4LJpTfiIZSqgPHJrg=
+	b=nWMftZqvX3uI8L2IWAa+Ps36zIuxUPF6amIV92RWVHoDeeaX5EL8Slexe0HescDGa
+	 2/zM7bcYfWYaWnQk3/ctsFWMG9oLfVeeoFyD0QJBU8xrt22Pb9p+O0IXGZBw7/jZ5e
+	 b20/m7ygmONhloyO8kPSEL5dGxCcY69vHNxw/6cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Shunsuke Mie <mie@igel.co.jp>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 187/282] phy: tegra: xusb: Add missing tegra_xusb_port_unregister for usb2_port and ulpi_port
-Date: Mon, 15 May 2023 18:29:25 +0200
-Message-Id: <20230515161727.875959089@linuxfoundation.org>
+Subject: [PATCH 5.4 188/282] dmaengine: dw-edma: Fix to change for continuous transfer
+Date: Mon, 15 May 2023 18:29:26 +0200
+Message-Id: <20230515161727.904718566@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,44 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Shunsuke Mie <mie@igel.co.jp>
 
-[ Upstream commit e024854048e733391b31fe5a398704b31b9af803 ]
+[ Upstream commit a251994a441ee0a69ba7062c8cd2d08ead3db379 ]
 
-The tegra_xusb_port_unregister should be called when usb2_port
-and ulpi_port map fails in tegra_xusb_add_usb2_port() or in
-tegra_xusb_add_ulpi_port(), fix it.
+The dw-edma driver stops after processing a DMA request even if a request
+remains in the issued queue, which is not the expected behavior. The DMA
+engine API requires continuous processing.
 
-Fixes: 53d2a715c240 ("phy: Add Tegra XUSB pad controller support")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://lore.kernel.org/r/20221129111634.1547747-1-cuigaosheng1@huawei.com
+Add a trigger to start after one processing finished if there are requests
+remain.
+
+Fixes: e63d79d1ffcd ("dmaengine: Add Synopsys eDMA IP core driver")
+Signed-off-by: Shunsuke Mie <mie@igel.co.jp>
+Link: https://lore.kernel.org/r/20230411101758.438472-1-mie@igel.co.jp
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/tegra/xusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/dma/dw-edma/dw-edma-core.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/phy/tegra/xusb.c b/drivers/phy/tegra/xusb.c
-index bf5d80b97597b..efe7abf459fda 100644
---- a/drivers/phy/tegra/xusb.c
-+++ b/drivers/phy/tegra/xusb.c
-@@ -606,6 +606,7 @@ static int tegra_xusb_add_usb2_port(struct tegra_xusb_padctl *padctl,
- 	usb2->base.lane = usb2->base.ops->map(&usb2->base);
- 	if (IS_ERR(usb2->base.lane)) {
- 		err = PTR_ERR(usb2->base.lane);
-+		tegra_xusb_port_unregister(&usb2->base);
- 		goto out;
- 	}
+diff --git a/drivers/dma/dw-edma/dw-edma-core.c b/drivers/dma/dw-edma/dw-edma-core.c
+index afbd1a4590192..ff6e8cf641dbc 100644
+--- a/drivers/dma/dw-edma/dw-edma-core.c
++++ b/drivers/dma/dw-edma/dw-edma-core.c
+@@ -165,7 +165,7 @@ static void vchan_free_desc(struct virt_dma_desc *vdesc)
+ 	dw_edma_free_desc(vd2dw_edma_desc(vdesc));
+ }
  
-@@ -658,6 +659,7 @@ static int tegra_xusb_add_ulpi_port(struct tegra_xusb_padctl *padctl,
- 	ulpi->base.lane = ulpi->base.ops->map(&ulpi->base);
- 	if (IS_ERR(ulpi->base.lane)) {
- 		err = PTR_ERR(ulpi->base.lane);
-+		tegra_xusb_port_unregister(&ulpi->base);
- 		goto out;
- 	}
+-static void dw_edma_start_transfer(struct dw_edma_chan *chan)
++static int dw_edma_start_transfer(struct dw_edma_chan *chan)
+ {
+ 	struct dw_edma_chunk *child;
+ 	struct dw_edma_desc *desc;
+@@ -173,16 +173,16 @@ static void dw_edma_start_transfer(struct dw_edma_chan *chan)
  
+ 	vd = vchan_next_desc(&chan->vc);
+ 	if (!vd)
+-		return;
++		return 0;
+ 
+ 	desc = vd2dw_edma_desc(vd);
+ 	if (!desc)
+-		return;
++		return 0;
+ 
+ 	child = list_first_entry_or_null(&desc->chunk->list,
+ 					 struct dw_edma_chunk, list);
+ 	if (!child)
+-		return;
++		return 0;
+ 
+ 	dw_edma_v0_core_start(child, !desc->xfer_sz);
+ 	desc->xfer_sz += child->ll_region.sz;
+@@ -190,6 +190,8 @@ static void dw_edma_start_transfer(struct dw_edma_chan *chan)
+ 	list_del(&child->list);
+ 	kfree(child);
+ 	desc->chunks_alloc--;
++
++	return 1;
+ }
+ 
+ static int dw_edma_device_config(struct dma_chan *dchan,
+@@ -483,14 +485,14 @@ static void dw_edma_done_interrupt(struct dw_edma_chan *chan)
+ 		switch (chan->request) {
+ 		case EDMA_REQ_NONE:
+ 			desc = vd2dw_edma_desc(vd);
+-			if (desc->chunks_alloc) {
+-				chan->status = EDMA_ST_BUSY;
+-				dw_edma_start_transfer(chan);
+-			} else {
++			if (!desc->chunks_alloc) {
+ 				list_del(&vd->node);
+ 				vchan_cookie_complete(vd);
+-				chan->status = EDMA_ST_IDLE;
+ 			}
++
++			/* Continue transferring if there are remaining chunks or issued requests.
++			 */
++			chan->status = dw_edma_start_transfer(chan) ? EDMA_ST_BUSY : EDMA_ST_IDLE;
+ 			break;
+ 
+ 		case EDMA_REQ_STOP:
 -- 
 2.39.2
 
