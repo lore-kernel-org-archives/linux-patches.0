@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF048FBFE
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:12:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9B4C433EF;
-	Mon, 15 May 2023 17:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E6EFBFE
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:12:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C18C433D2;
+	Mon, 15 May 2023 17:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170746;
-	bh=TWL+qJQugE93zVVjjl/DucUP3g1jjUx+LRRUZuSZzDg=;
+	s=korg; t=1684170749;
+	bh=lDTQYbdc1BGD6M667YgLb39vXyQ/4IshAFZ7gVNmv8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wwwi80CWxehsdAWcuVEsCDCvxL6xAg+1jOrTxfCSW8/sbjWnLFwonZFZ6nms3hoip
-	 EXaRFpgCwwsOppAdlJ6kaYhstqK8AzuGQ962UHUc6yJY9GNs1fnnQT1yMycdgFhI9f
-	 27ikXe8PgkbbWIS95pGFmEK/otCDWRlwLieZeN4A=
+	b=p1ZGmU4Jxi2komr/7La7AIVKdhTYGOr2nZFsR1arYfwR2JL1LPyXcdRhhdHOCPAPY
+	 aqAImgCgLmfSWHu4DDH5Pn5YQdvT9JffghEWxEjGL61dQ41rbZl9OoiSKvekdO5CHZ
+	 DLhc7qBzP4k8Cy1uE+f4IyDUk0Bn0BCEdU0zvBpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alan Liu <HaoPing.Liu@amd.com>,
-	Leo Chen <sancchen@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 211/239] drm/amd/display: Change default Z8 watermark values
-Date: Mon, 15 May 2023 18:27:54 +0200
-Message-Id: <20230515161728.057662301@linuxfoundation.org>
+	stable@kernel.org,
+	syzbot+6b7df7d5506b32467149@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 229/239] ext4: fix lockdep warning when enabling MMP
+Date: Mon, 15 May 2023 18:28:12 +0200
+Message-Id: <20230515161728.583672604@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -38,43 +37,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Chen <sancchen@amd.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 8f586cc16c1fc3c2202c9d54563db8c7ed365f82 ]
+commit 949f95ff39bf188e594e7ecd8e29b82eb108f5bf upstream.
 
-[Why & How]
-Previous Z8 watermark values were causing flickering and OTC underflow.
-Updating Z8 watermark values based on the measurement.
+When we enable MMP in ext4_multi_mount_protect() during mount or
+remount, we end up calling sb_start_write() from write_mmp_block(). This
+triggers lockdep warning because freeze protection ranks above s_umount
+semaphore we are holding during mount / remount. The problem is harmless
+because we are guaranteed the filesystem is not frozen during mount /
+remount but still let's fix the warning by not grabbing freeze
+protection from ext4_multi_mount_protect().
 
-Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Alan Liu <HaoPing.Liu@amd.com>
-Signed-off-by: Leo Chen <sancchen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Reported-by: syzbot+6b7df7d5506b32467149@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=ab7e5b6f400b7778d46f01841422e5718fb81843
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Link: https://lore.kernel.org/r/20230411121019.21940-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/mmp.c |   30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-index 2c99193b63fa6..4f91e64754239 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
-@@ -148,8 +148,8 @@ struct _vcs_dpi_soc_bounding_box_st dcn3_14_soc = {
- 	.num_states = 5,
- 	.sr_exit_time_us = 16.5,
- 	.sr_enter_plus_exit_time_us = 18.5,
--	.sr_exit_z8_time_us = 210.0,
--	.sr_enter_plus_exit_z8_time_us = 310.0,
-+	.sr_exit_z8_time_us = 268.0,
-+	.sr_enter_plus_exit_z8_time_us = 393.0,
- 	.writeback_latency_us = 12.0,
- 	.dram_channel_width_bytes = 4,
- 	.round_trip_ping_latency_dcfclk_cycles = 106,
--- 
-2.39.2
-
+--- a/fs/ext4/mmp.c
++++ b/fs/ext4/mmp.c
+@@ -39,28 +39,36 @@ static void ext4_mmp_csum_set(struct sup
+  * Write the MMP block using REQ_SYNC to try to get the block on-disk
+  * faster.
+  */
+-static int write_mmp_block(struct super_block *sb, struct buffer_head *bh)
++static int write_mmp_block_thawed(struct super_block *sb,
++				  struct buffer_head *bh)
+ {
+ 	struct mmp_struct *mmp = (struct mmp_struct *)(bh->b_data);
+ 
+-	/*
+-	 * We protect against freezing so that we don't create dirty buffers
+-	 * on frozen filesystem.
+-	 */
+-	sb_start_write(sb);
+ 	ext4_mmp_csum_set(sb, mmp);
+ 	lock_buffer(bh);
+ 	bh->b_end_io = end_buffer_write_sync;
+ 	get_bh(bh);
+ 	submit_bh(REQ_OP_WRITE | REQ_SYNC | REQ_META | REQ_PRIO, bh);
+ 	wait_on_buffer(bh);
+-	sb_end_write(sb);
+ 	if (unlikely(!buffer_uptodate(bh)))
+ 		return -EIO;
+-
+ 	return 0;
+ }
+ 
++static int write_mmp_block(struct super_block *sb, struct buffer_head *bh)
++{
++	int err;
++
++	/*
++	 * We protect against freezing so that we don't create dirty buffers
++	 * on frozen filesystem.
++	 */
++	sb_start_write(sb);
++	err = write_mmp_block_thawed(sb, bh);
++	sb_end_write(sb);
++	return err;
++}
++
+ /*
+  * Read the MMP block. It _must_ be read from disk and hence we clear the
+  * uptodate flag on the buffer.
+@@ -346,7 +354,11 @@ skip:
+ 	seq = mmp_new_seq();
+ 	mmp->mmp_seq = cpu_to_le32(seq);
+ 
+-	retval = write_mmp_block(sb, bh);
++	/*
++	 * On mount / remount we are protected against fs freezing (by s_umount
++	 * semaphore) and grabbing freeze protection upsets lockdep
++	 */
++	retval = write_mmp_block_thawed(sb, bh);
+ 	if (retval)
+ 		goto failed;
+ 
 
 
