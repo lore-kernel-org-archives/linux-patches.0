@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E49101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:54:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C49DC433EF;
-	Mon, 15 May 2023 17:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F180D101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:54:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC6BC433EF;
+	Mon, 15 May 2023 17:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173296;
-	bh=oxbkovJ8M6W6IRNG7/pcCKJfZDqZDmvLaKOoWW1VSoQ=;
+	s=korg; t=1684173299;
+	bh=S36NYVKjfmDx6sKc59U5sRs1sjbL0bkuQywxhdOvNYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iSBd6VaEUhsIUNdCcFElGTwwGVLeZCXvyPs4/CpN94fuf2K2m+/+vpNv5BW1Mu6gW
-	 t4UpfXK1V3w14NE9Xd8Tk1mZS0i077IikLdXG9xwz5RZXq3ofmvPlclbc0iYaDppc9
-	 9S6L0W5ZuRvzQW+0EOri878DXUexU55I51bfsLms=
+	b=axUAmskcWGbdsDuvL7w5OEUt4ubJX2y5BKJiL8TEvCI6isD+vmVcC9iNGVhOJl678
+	 29yDIcJNdW1KFaH4JdVhh+vJQRNdbZKKuMxyiZAZNwqLhvmwYocp9R0BET5vyLqna+
+	 9c1wO9+17AUdloy0C83lgpRgAzBj5VDqOkJNqhdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Johan Hovold <johan+linaro@kernel.org>,
 	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 049/282] drm/msm/adreno: Defer enabling runpm until hw_init()
-Date: Mon, 15 May 2023 18:27:07 +0200
-Message-Id: <20230515161723.728461669@linuxfoundation.org>
+Subject: [PATCH 5.4 050/282] drm/msm/adreno: drop bogus pm_runtime_set_active()
+Date: Mon, 15 May 2023 18:27:08 +0200
+Message-Id: <20230515161723.756531172@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -34,60 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 4b18299b33655fa9672b774b6df774dc03d6aee8 ]
+[ Upstream commit db7662d076c973072d788bd0e8130e04430307a1 ]
 
-To avoid preventing the display from coming up before the rootfs is
-mounted, without resorting to packing fw in the initrd, the GPU has
-this limbo state where the device is probed, but we aren't ready to
-start sending commands to it.  This is particularly problematic for
-a6xx, since the GMU (which requires fw to be loaded) is the one that
-is controlling the power/clk/icc votes.
+The runtime PM status can only be updated while runtime PM is disabled.
 
-So defer enabling runpm until we are ready to call gpu->hw_init(),
-as that is a point where we know we have all the needed fw and are
-ready to start sending commands to the coproc's.
+Drop the bogus pm_runtime_set_active() call that was made after enabling
+runtime PM and which (incidentally but correctly) left the runtime PM
+status set to 'suspended'.
 
+Fixes: 2c087a336676 ("drm/msm/adreno: Load the firmware before bringing up the hardware")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/524972/
+Link: https://lore.kernel.org/r/20230303164807.13124-4-johan+linaro@kernel.org
 Signed-off-by: Rob Clark <robdclark@chromium.org>
-Patchwork: https://patchwork.freedesktop.org/patch/489337/
-Link: https://lore.kernel.org/r/20220613182036.2567963-1-robdclark@gmail.com
-Stable-dep-of: db7662d076c9 ("drm/msm/adreno: drop bogus pm_runtime_set_active()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 6 ++++++
- drivers/gpu/drm/msm/adreno/adreno_gpu.c    | 1 -
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 0888e0df660dd..6ad9d2de07ed6 100644
+index 6ad9d2de07ed6..2a727ab0faf75 100644
 --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
 +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -233,6 +233,12 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
- 	if (ret)
- 		return NULL;
+@@ -239,9 +239,6 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
+ 	 */
+ 	pm_runtime_enable(&pdev->dev);
  
-+	/*
-+	 * Now that we have firmware loaded, and are ready to begin
-+	 * booting the gpu, go ahead and enable runpm:
-+	 */
-+	pm_runtime_enable(&pdev->dev);
-+
- 	/* Make sure pm runtime is active and reset any previous errors */
- 	pm_runtime_set_active(&pdev->dev);
- 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-index 0d9404d2afe4e..b472cbe6adff6 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-@@ -899,7 +899,6 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 	pm_runtime_set_autosuspend_delay(&pdev->dev,
- 		adreno_gpu->info->inactive_period);
- 	pm_runtime_use_autosuspend(&pdev->dev);
--	pm_runtime_enable(&pdev->dev);
- 
- 	return msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
- 			adreno_gpu->info->name, &adreno_gpu_config);
+-	/* Make sure pm runtime is active and reset any previous errors */
+-	pm_runtime_set_active(&pdev->dev);
+-
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+ 	if (ret < 0) {
+ 		pm_runtime_put_sync(&pdev->dev);
 -- 
 2.39.2
 
