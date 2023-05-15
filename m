@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47B62FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A253CC433D2;
-	Mon, 15 May 2023 16:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60652FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9340C433EF;
+	Mon, 15 May 2023 16:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169692;
-	bh=eKQTzNkDPlpFS0u0krFUxnshIYg0Iw4CLhcxanMiZrY=;
+	s=korg; t=1684169695;
+	bh=pf6+SKiWM4pVf5L2+Cue4JEmUJowG91OBj+W4/tfvNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ftzR97a8X8csDOHcqnjf6VpNeOEtiPMg/DsAjhRQNOp/PUAiKHR/tRl4wfjUjnD28
-	 6cc0ftp5YyfzUnK1++qwyYpDjeBYftV1kxH2BUhCmwQrYCdCpMdi83E4CQBgYqwVa6
-	 6x+iu60f4SmOfRIT0JSVMx+mLQARMNqmizEahqus=
+	b=t3nfcOCeVl/cVBGPfxwbZycXxtqgpQW1McTgvVcS7F7BeRHFBeOaF83h+jd/T5/5z
+	 MIxfKvYlqWrdDoz1xSecOFF7JGoWFARYjnApxEgkVvFUiw5H9JLUbgbz9yjXn3chKZ
+	 3pf5vuMOtYmhUSM04YZ9KEsTIWyV8yEgfoZq4C7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Panteleev <git@vladimir.panteleev.md>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.3 139/246] btrfs: fix backref walking not returning all inode refs
-Date: Mon, 15 May 2023 18:25:51 +0200
-Message-Id: <20230515161726.735769738@linuxfoundation.org>
+	Pawel Witek <pawel.ireneusz.witek@gmail.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.3 140/246] cifs: fix pcchunk length type in smb2_copychunk_range
+Date: Mon, 15 May 2023 18:25:52 +0200
+Message-Id: <20230515161726.765073609@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -35,170 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Pawel Witek <pawel.ireneusz.witek@gmail.com>
 
-commit 0cad8f14d70cfeb5173dce93cafeba665a95430e upstream.
+commit d66cde50c3c868af7abddafce701bb86e4a93039 upstream.
 
-When using the logical to ino ioctl v2, if the flag to ignore offsets of
-file extent items (BTRFS_LOGICAL_INO_ARGS_IGNORE_OFFSET) is given, the
-backref walking code ends up not returning references for all file offsets
-of an inode that point to the given logical bytenr. This happens since
-kernel 6.2, commit 6ce6ba534418 ("btrfs: use a single argument for extent
-offset in backref walking functions") because:
+Change type of pcchunk->Length from u32 to u64 to match
+smb2_copychunk_range arguments type. Fixes the problem where performing
+server-side copy with CIFS_IOC_COPYCHUNK_FILE ioctl resulted in incomplete
+copy of large files while returning -EINVAL.
 
-1) It mistakenly skipped the search for file extent items in a leaf that
-   point to the target extent if that flag is given. Instead it should
-   only skip the filtering done by check_extent_in_eb() - that is, it
-   should not avoid the calls to that function (or find_extent_in_eb(),
-   which uses it).
-
-2) It was also not building a list of inode extent elements (struct
-   extent_inode_elem) if we have multiple inode references for an extent
-   when the ignore offset flag is given to the logical to ino ioctl - it
-   would leave a single element, only the last one that was found.
-
-These stem from the confusing old interface for backref walking functions
-where we had an extent item offset argument that was a pointer to a u64
-and another boolean argument that indicated if the offset should be
-ignored, but the pointer could be NULL. That NULL case is used by
-relocation, qgroup extent accounting and fiemap, simply to avoid building
-the inode extent list for each reference, as it's not necessary for those
-use cases and therefore avoids memory allocations and some computations.
-
-Fix this by adding a boolean argument to the backref walk context
-structure to indicate that the inode extent list should not be built,
-make relocation set that argument to true and fix the backref walking
-logic to skip the calls to check_extent_in_eb() and find_extent_in_eb()
-only if this new argument is true, instead of 'ignore_extent_item_pos'
-being true.
-
-A test case for fstests will be added soon, to provide cover not only
-for these cases but to the logical to ino ioctl in general as well, as
-currently we do not have a test case for it.
-
-Reported-by: Vladimir Panteleev <git@vladimir.panteleev.md>
-Link: https://lore.kernel.org/linux-btrfs/CAHhfkvwo=nmzrJSqZ2qMfF-rZB-ab6ahHnCD_sq9h4o8v+M7QQ@mail.gmail.com/
-Fixes: 6ce6ba534418 ("btrfs: use a single argument for extent offset in backref walking functions")
-CC: stable@vger.kernel.org # 6.2+
-Tested-by: Vladimir Panteleev <git@vladimir.panteleev.md>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 9bf0c9cd4314 ("CIFS: Fix SMB2/SMB3 Copy offload support (refcopy) for large files")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Pawel Witek <pawel.ireneusz.witek@gmail.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/backref.c    |   19 ++++++++++---------
- fs/btrfs/backref.h    |    6 ++++++
- fs/btrfs/relocation.c |    2 +-
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ fs/cifs/smb2ops.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/backref.c
-+++ b/fs/btrfs/backref.c
-@@ -45,7 +45,8 @@ static int check_extent_in_eb(struct btr
- 	int root_count;
- 	bool cached;
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -1682,7 +1682,7 @@ smb2_copychunk_range(const unsigned int
+ 		pcchunk->SourceOffset = cpu_to_le64(src_off);
+ 		pcchunk->TargetOffset = cpu_to_le64(dest_off);
+ 		pcchunk->Length =
+-			cpu_to_le32(min_t(u32, len, tcon->max_bytes_chunk));
++			cpu_to_le32(min_t(u64, len, tcon->max_bytes_chunk));
  
--	if (!btrfs_file_extent_compression(eb, fi) &&
-+	if (!ctx->ignore_extent_item_pos &&
-+	    !btrfs_file_extent_compression(eb, fi) &&
- 	    !btrfs_file_extent_encryption(eb, fi) &&
- 	    !btrfs_file_extent_other_encoding(eb, fi)) {
- 		u64 data_offset;
-@@ -552,7 +553,7 @@ static int add_all_parents(struct btrfs_
- 				count++;
- 			else
- 				goto next;
--			if (!ctx->ignore_extent_item_pos) {
-+			if (!ctx->skip_inode_ref_list) {
- 				ret = check_extent_in_eb(ctx, &key, eb, fi, &eie);
- 				if (ret == BTRFS_ITERATE_EXTENT_INODES_STOP ||
- 				    ret < 0)
-@@ -564,7 +565,7 @@ static int add_all_parents(struct btrfs_
- 						  eie, (void **)&old, GFP_NOFS);
- 			if (ret < 0)
- 				break;
--			if (!ret && !ctx->ignore_extent_item_pos) {
-+			if (!ret && !ctx->skip_inode_ref_list) {
- 				while (old->next)
- 					old = old->next;
- 				old->next = eie;
-@@ -1606,7 +1607,7 @@ again:
- 				goto out;
- 		}
- 		if (ref->count && ref->parent) {
--			if (!ctx->ignore_extent_item_pos && !ref->inode_list &&
-+			if (!ctx->skip_inode_ref_list && !ref->inode_list &&
- 			    ref->level == 0) {
- 				struct btrfs_tree_parent_check check = { 0 };
- 				struct extent_buffer *eb;
-@@ -1647,7 +1648,7 @@ again:
- 						  (void **)&eie, GFP_NOFS);
- 			if (ret < 0)
- 				goto out;
--			if (!ret && !ctx->ignore_extent_item_pos) {
-+			if (!ret && !ctx->skip_inode_ref_list) {
- 				/*
- 				 * We've recorded that parent, so we must extend
- 				 * its inode list here.
-@@ -1743,7 +1744,7 @@ int btrfs_find_all_leafs(struct btrfs_ba
- static int btrfs_find_all_roots_safe(struct btrfs_backref_walk_ctx *ctx)
- {
- 	const u64 orig_bytenr = ctx->bytenr;
--	const bool orig_ignore_extent_item_pos = ctx->ignore_extent_item_pos;
-+	const bool orig_skip_inode_ref_list = ctx->skip_inode_ref_list;
- 	bool roots_ulist_allocated = false;
- 	struct ulist_iterator uiter;
- 	int ret = 0;
-@@ -1764,7 +1765,7 @@ static int btrfs_find_all_roots_safe(str
- 		roots_ulist_allocated = true;
- 	}
- 
--	ctx->ignore_extent_item_pos = true;
-+	ctx->skip_inode_ref_list = true;
- 
- 	ULIST_ITER_INIT(&uiter);
- 	while (1) {
-@@ -1789,7 +1790,7 @@ static int btrfs_find_all_roots_safe(str
- 	ulist_free(ctx->refs);
- 	ctx->refs = NULL;
- 	ctx->bytenr = orig_bytenr;
--	ctx->ignore_extent_item_pos = orig_ignore_extent_item_pos;
-+	ctx->skip_inode_ref_list = orig_skip_inode_ref_list;
- 
- 	return ret;
- }
-@@ -1912,7 +1913,7 @@ int btrfs_is_data_extent_shared(struct b
- 		goto out_trans;
- 	}
- 
--	walk_ctx.ignore_extent_item_pos = true;
-+	walk_ctx.skip_inode_ref_list = true;
- 	walk_ctx.trans = trans;
- 	walk_ctx.fs_info = fs_info;
- 	walk_ctx.refs = &ctx->refs;
---- a/fs/btrfs/backref.h
-+++ b/fs/btrfs/backref.h
-@@ -60,6 +60,12 @@ struct btrfs_backref_walk_ctx {
- 	 * @extent_item_pos is ignored.
- 	 */
- 	bool ignore_extent_item_pos;
-+	/*
-+	 * If true and bytenr corresponds to a data extent, then the inode list
-+	 * (each member describing inode number, file offset and root) is not
-+	 * added to each reference added to the @refs ulist.
-+	 */
-+	bool skip_inode_ref_list;
- 	/* A valid transaction handle or NULL. */
- 	struct btrfs_trans_handle *trans;
- 	/*
---- a/fs/btrfs/relocation.c
-+++ b/fs/btrfs/relocation.c
-@@ -3422,7 +3422,7 @@ int add_data_references(struct reloc_con
- 	btrfs_release_path(path);
- 
- 	ctx.bytenr = extent_key->objectid;
--	ctx.ignore_extent_item_pos = true;
-+	ctx.skip_inode_ref_list = true;
- 	ctx.fs_info = rc->extent_root->fs_info;
- 
- 	ret = btrfs_find_all_leafs(&ctx);
+ 		/* Request server copy to target from src identified by key */
+ 		kfree(retbuf);
 
 
