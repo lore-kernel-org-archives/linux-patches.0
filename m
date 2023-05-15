@@ -1,35 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50528FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:05:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE45C433A0;
-	Mon, 15 May 2023 17:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456E4FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:05:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC54FC4339B;
+	Mon, 15 May 2023 17:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170354;
-	bh=NaZNEGS6O5ILStabR1IvWojNITJtGUYuoha+BNTrc/A=;
+	s=korg; t=1684170357;
+	bh=AovBjcm575drtSAMWsgUVVIaPf/JuNRsqrdn/SXp38o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FS+Wyxsmm2JdM8nNFHoD2bCm7i4JVV0mlVMAAeTm+zM91/m8nzqEPEXWu2p0Zz/x0
-	 UzMUMmgvrEPsZWvgHcMGB/hC5Q5N30YCyDVxfjybnFE9e0KU9+xf5od17cTmGCejMX
-	 pG3aYDoGd9PTGB7yb+fGx1vVGV7PL0E7TjA1z48o=
+	b=BAVOb4Sz9X/g5fQ16ytqn+gldZo9zUtnoHAeDb6G3YVyFs05HXG9BeH4lnROoGmYa
+	 VFJV5FrX9Iqz+gw1PZgMbKmpXz+i57A0o1HAJH/Ez81GH+YS5b+o6DAGa0SJzW6bxb
+	 8ksWo/movsPyN2bBPBNhIjfiSAmnfiq5ub6fDLvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Song Liu <song@kernel.org>,
+	Dmitrii Dolgov <9erthalion6@gmail.com>,
 	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/239] perf tracepoint: Fix memory leak in is_valid_tracepoint()
-Date: Mon, 15 May 2023 18:26:07 +0200
-Message-Id: <20230515161724.805432096@linuxfoundation.org>
+Subject: [PATCH 6.1 105/239] perf stat: Separate bperf from bpf_profiler
+Date: Mon, 15 May 2023 18:26:08 +0200
+Message-Id: <20230515161724.849239141@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -43,42 +40,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Dmitrii Dolgov <9erthalion6@gmail.com>
 
-[ Upstream commit 9b86c49710eec7b4fbb78a0232b2dd0972a2b576 ]
+[ Upstream commit ecc68ee216c6c5b2f84915e1441adf436f1b019b ]
 
-When is_valid_tracepoint() returns 1, need to call put_events_file() to
-free `dir_path`.
+It seems that perf stat -b <prog id> doesn't produce any results:
 
-Fixes: 25a7d914274de386 ("perf parse-events: Use get/put_events_file()")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+    $ perf stat -e cycles -b 4 -I 10000 -vvv
+    Control descriptor is not initialized
+    cycles: 0 0 0
+                time        counts unit      events
+	10.007641640    <not supported>      cycles
+
+Looks like this happens because fentry/fexit progs are getting loaded, but the
+corresponding perf event is not enabled and not added into the events bpf map.
+I think there is some mixing up between two type of bpf support, one for bperf
+and one for bpf_profiler. Both are identified via evsel__is_bpf, based on which
+perf events are enabled, but for the latter (bpf_profiler) a perf event is
+required. Using evsel__is_bperf to check only bperf produces expected results:
+
+    $ perf stat -e cycles -b 4 -I 10000 -vvv
+    Control descriptor is not initialized
+    ------------------------------------------------------------
+    perf_event_attr:
+      size                             136
+      sample_type                      IDENTIFIER
+      read_format                      TOTAL_TIME_ENABLED|TOTAL_TIME_RUNNING
+      disabled                         1
+      exclude_guest                    1
+    ------------------------------------------------------------
+    sys_perf_event_open: pid -1  cpu 0  group_fd -1  flags 0x8 = 3
+    ------------------------------------------------------------
+    [...perf_event_attr for other CPUs...]
+    ------------------------------------------------------------
+    cycles: 309426 169009 169009
+		time             counts unit events
+	10.010091271             309426      cycles
+
+The final numbers correspond (at least in the level of magnitude) to the
+same metric obtained via bpftool.
+
+Fixes: 112cb56164bc2108 ("perf stat: Introduce config stat.bpf-counter-events")
+Reviewed-by: Song Liu <song@kernel.org>
+Signed-off-by: Dmitrii Dolgov <9erthalion6@gmail.com>
+Tested-by: Song Liu <song@kernel.org>
 Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230421025953.173826-1-yangjihong1@huawei.com
+Cc: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230412182316.11628-1-9erthalion6@gmail.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/tracepoint.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/perf/builtin-stat.c | 4 ++--
+ tools/perf/util/evsel.h   | 5 +++++
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/tracepoint.c b/tools/perf/util/tracepoint.c
-index 89ef56c433110..92dd8b455b902 100644
---- a/tools/perf/util/tracepoint.c
-+++ b/tools/perf/util/tracepoint.c
-@@ -50,6 +50,7 @@ int is_valid_tracepoint(const char *event_string)
- 				 sys_dirent->d_name, evt_dirent->d_name);
- 			if (!strcmp(evt_path, event_string)) {
- 				closedir(evt_dir);
-+				put_events_file(dir_path);
- 				closedir(sys_dir);
- 				return 1;
- 			}
+diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
+index f6427e3a47421..a2c74a34e4a44 100644
+--- a/tools/perf/builtin-stat.c
++++ b/tools/perf/builtin-stat.c
+@@ -765,7 +765,7 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
+ 		counter->reset_group = false;
+ 		if (bpf_counter__load(counter, &target))
+ 			return -1;
+-		if (!evsel__is_bpf(counter))
++		if (!(evsel__is_bperf(counter)))
+ 			all_counters_use_bpf = false;
+ 	}
+ 
+@@ -781,7 +781,7 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
+ 
+ 		if (counter->reset_group || counter->errored)
+ 			continue;
+-		if (evsel__is_bpf(counter))
++		if (evsel__is_bperf(counter))
+ 			continue;
+ try_again:
+ 		if (create_perf_stat_counter(counter, &stat_config, &target,
+diff --git a/tools/perf/util/evsel.h b/tools/perf/util/evsel.h
+index 989865e16aadd..8ce30329a0772 100644
+--- a/tools/perf/util/evsel.h
++++ b/tools/perf/util/evsel.h
+@@ -263,6 +263,11 @@ static inline bool evsel__is_bpf(struct evsel *evsel)
+ 	return evsel->bpf_counter_ops != NULL;
+ }
+ 
++static inline bool evsel__is_bperf(struct evsel *evsel)
++{
++	return evsel->bpf_counter_ops != NULL && list_empty(&evsel->bpf_counter_list);
++}
++
+ #define EVSEL__MAX_ALIASES 8
+ 
+ extern const char *const evsel__hw_cache[PERF_COUNT_HW_CACHE_MAX][EVSEL__MAX_ALIASES];
 -- 
 2.39.2
 
