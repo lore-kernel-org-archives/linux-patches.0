@@ -1,134 +1,100 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F45617730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:07:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F51C433EF;
-	Mon, 15 May 2023 18:07:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684174048;
-	bh=cmv/ioBSGh8j6CYkbtqwYEgY2oRSxkfXWxybtkzBzXw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZdNVFV5yyy/U/NQuVNRPpWjtbgZshDVIDK8v4plJOBoyM/SqyS9gwCmeCUlRolBr
-	 Lm9x0ygsu/DwIlK2oNb66zEjPZvr8xTuSuYW/jHNdkxasJEHjyYRcRlrHyHS7ZwVat
-	 jkBGryxADWEUvgOjA2ksSffa/gjXGVgMxtpbM0rQ=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+fc51227e7100c9294894@syzkaller.appspotmail.com,
-	syzbot+8785e41224a3afd04321@syzkaller.appspotmail.com,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.4 260/282] ext4: avoid a potential slab-out-of-bounds in ext4_group_desc_csum
-Date: Mon, 15 May 2023 18:30:38 +0200
-Message-Id: <20230515161730.083309414@linuxfoundation.org>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
-References: <20230515161722.146344674@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B01DFC16
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:09:24 +0000 (UTC)
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-965ab8ed1fcso2424757766b.2
+        for <patches@lists.linux.dev>; Mon, 15 May 2023 11:09:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=metaspace-dk.20221208.gappssmtp.com; s=20221208; t=1684174162; x=1686766162;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xmonrEr4WjNysQoQ1LLwqU/RtcUbfFNLN3JcLmX+2Vw=;
+        b=N5uK4Rw1dAlrxwugTedYBk3M57qUMUBdF+8n4U7MPPM0L4RynTMTFQLRGN93J9kYPd
+         kiU8MzbSz+iS8H645FC4vKFetClKBouuHaufmIQ+PsMLQBsuLwBJkxxBhmMGc77LWoyV
+         LHeGzdo6gRIH/EhTzLBo1RhjLxgVvGqEaBq5cXdsjHQt7Woe8pXXrXb/1VVSXz4v0soI
+         Z8C2YOMMHMtiBaaVeyMH4Dx5ovMv9IJ0ZPhTMn7frPUocv2N43aD0Hp3qkkpy0kvQS9P
+         VOckrsW/QVMasDiMmZoEk3CU8u8DuOAEE4g5su43zHfWrg2KlSwkZNwvaCQ4Jj8yhDD8
+         Rydw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684174162; x=1686766162;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=xmonrEr4WjNysQoQ1LLwqU/RtcUbfFNLN3JcLmX+2Vw=;
+        b=VFiaeAuYjvtSwmN7zwitJLRNjDr/3hZOABu3UVYyOp0/NeyoU6Laov+EhilKgGyqbe
+         QPENcbE/+OhE075AiNOlnnOl7wb0fVoy3AdbCIca0Erd8Q23JNBCIjM2ngfR4209uA5O
+         CBcPphZbJ3Uy6RfOK6m3gZOzXyX8LceaTKZ75z6jEvQMSY4s2m3SzRiEiqqkz2XXtKMM
+         mgkaOXB1UusyD46GGzjW64oxUWv/KFMEhhHyvLz/TN1TPzzsoJOsqZIhZuyj9r0DHU3A
+         auf7i/WkdF1OvhOZtg68maudc/2D9IAuN2aaLfm1FfE7a/nk372NNdMSr3d90rkGRhZQ
+         CKuw==
+X-Gm-Message-State: AC+VfDxQ4klLpb918qXprieZZKb7NOzy7ruKGXXRHS/xOdCHfC6e8bfQ
+	5yRpGYptr4weGwKmai04xM03SaGZ0mqxSsw+CZY=
+X-Google-Smtp-Source: ACHHUZ76HaIUpf67gxgtS7EJZc1ON+7z1VLJeepcLysf2WuddzZ35bUQJSDvp61O08LMhuH4BsiomQ==
+X-Received: by 2002:a17:907:7b9c:b0:966:7a0a:28c0 with SMTP id ne28-20020a1709077b9c00b009667a0a28c0mr26586892ejc.58.1684174162347;
+        Mon, 15 May 2023 11:09:22 -0700 (PDT)
+Received: from localhost ([79.142.230.34])
+        by smtp.gmail.com with ESMTPSA id x13-20020aa7cd8d000000b0050488d1d376sm7204332edv.0.2023.05.15.11.09.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 May 2023 11:09:22 -0700 (PDT)
+References: <20230508124701.443ba331.gary@garyguo.net>
+ <20230509080700.1608146-1-aliceryhl@google.com>
+ <2023050937-scouring-truck-d7c0@gregkh>
+ <CANiq72=g=CnEQTkc50qozUdOBZECr7Jr2NCRfGFaKh751i6Sww@mail.gmail.com>
+User-agent: mu4e 1.10.3; emacs 28.2.50
+From: Andreas Hindborg <nmi@metaspace.dk>
+To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Cc: Greg KH <gregkh@linuxfoundation.org>, Alice Ryhl <aliceryhl@google.com>,
+ gary@garyguo.net, alex.gaynor@gmail.com, benno.lossin@proton.me,
+ bjorn3_gh@protonmail.com, boqun.feng@gmail.com,
+ linux-kernel@vger.kernel.org, ojeda@kernel.org, patches@lists.linux.dev,
+ rust-for-linux@vger.kernel.org, wedsonaf@gmail.com
+Subject: Re: [PATCH v2] rust: error: add missing error codes
+Date: Mon, 15 May 2023 20:07:12 +0200
+In-reply-to: <CANiq72=g=CnEQTkc50qozUdOBZECr7Jr2NCRfGFaKh751i6Sww@mail.gmail.com>
+Message-ID: <875y8teab3.fsf@metaspace.dk>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit 4f04351888a83e595571de672e0a4a8b74f4fb31 upstream.
+Miguel Ojeda <miguel.ojeda.sandonis@gmail.com> writes:
 
-When modifying the block device while it is mounted by the filesystem,
-syzbot reported the following:
+> On Tue, May 9, 2023 at 10:46=E2=80=AFAM Greg KH <gregkh@linuxfoundation.o=
+rg> wrote:
+>>
+>> It depends on which arch you are building for.  That's why we have
+>> per-platform errno.h files, the values are different for different ones.
+>> So you need to handle them all properly somehow.  How is rust going to
+>> handle per-arch stuff like this?
+>
+> We can do conditional compilation in the same file, possibly with a
+> Rust macro which takes a nice table that shows all arches at once.
+>
+> We can also split into files like C and move it to each `arch/`, there
+> are a couple of approaches for this. This is best for `MAINTAINERS`,
+> although these headers almost never change, so it is not a big
+> advantage.
+>
+> We could also automatically do everything based on the C headers, too.
+> Back then it felt to me like too much complexity for little gain,
+> given those C headers almost never change, but now it may be worth it.
+> Or, instead, having a test that verifies they are the same instead,
+> and that way we don't introduce complexity for the build itself.
+>
+> Alice only needs `ERESTARTSYS` so far, as far as I understand, so
+> perhaps it is simplest to only add the rest of the non-generic ones
+> for the moment; and gather opinions on the approaches above meanwhile.
 
-BUG: KASAN: slab-out-of-bounds in crc16+0x206/0x280 lib/crc16.c:58
-Read of size 1 at addr ffff888075f5c0a8 by task syz-executor.2/15586
+Let's add the ones we need for now. When we need target specific error
+codes we can have a `mod` for each arch, gate behind the target
+feature and conditionally reexport them.
 
-CPU: 1 PID: 15586 Comm: syz-executor.2 Not tainted 6.2.0-rc5-syzkaller-00205-gc96618275234 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1b1/0x290 lib/dump_stack.c:106
- print_address_description+0x74/0x340 mm/kasan/report.c:306
- print_report+0x107/0x1f0 mm/kasan/report.c:417
- kasan_report+0xcd/0x100 mm/kasan/report.c:517
- crc16+0x206/0x280 lib/crc16.c:58
- ext4_group_desc_csum+0x81b/0xb20 fs/ext4/super.c:3187
- ext4_group_desc_csum_set+0x195/0x230 fs/ext4/super.c:3210
- ext4_mb_clear_bb fs/ext4/mballoc.c:6027 [inline]
- ext4_free_blocks+0x191a/0x2810 fs/ext4/mballoc.c:6173
- ext4_remove_blocks fs/ext4/extents.c:2527 [inline]
- ext4_ext_rm_leaf fs/ext4/extents.c:2710 [inline]
- ext4_ext_remove_space+0x24ef/0x46a0 fs/ext4/extents.c:2958
- ext4_ext_truncate+0x177/0x220 fs/ext4/extents.c:4416
- ext4_truncate+0xa6a/0xea0 fs/ext4/inode.c:4342
- ext4_setattr+0x10c8/0x1930 fs/ext4/inode.c:5622
- notify_change+0xe50/0x1100 fs/attr.c:482
- do_truncate+0x200/0x2f0 fs/open.c:65
- handle_truncate fs/namei.c:3216 [inline]
- do_open fs/namei.c:3561 [inline]
- path_openat+0x272b/0x2dd0 fs/namei.c:3714
- do_filp_open+0x264/0x4f0 fs/namei.c:3741
- do_sys_openat2+0x124/0x4e0 fs/open.c:1310
- do_sys_open fs/open.c:1326 [inline]
- __do_sys_creat fs/open.c:1402 [inline]
- __se_sys_creat fs/open.c:1396 [inline]
- __x64_sys_creat+0x11f/0x160 fs/open.c:1396
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f72f8a8c0c9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f72f97e3168 EFLAGS: 00000246 ORIG_RAX: 0000000000000055
-RAX: ffffffffffffffda RBX: 00007f72f8bac050 RCX: 00007f72f8a8c0c9
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000280
-RBP: 00007f72f8ae7ae9 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007ffd165348bf R14: 00007f72f97e3300 R15: 0000000000022000
-
-Replace
-	le16_to_cpu(sbi->s_es->s_desc_size)
-with
-	sbi->s_desc_size
-
-It reduces ext4's compiled text size, and makes the code more efficient
-(we remove an extra indirect reference and a potential byte
-swap on big endian systems), and there is no downside. It also avoids the
-potential KASAN / syzkaller failure, as a bonus.
-
-Reported-by: syzbot+fc51227e7100c9294894@syzkaller.appspotmail.com
-Reported-by: syzbot+8785e41224a3afd04321@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=70d28d11ab14bd7938f3e088365252aa923cff42
-Link: https://syzkaller.appspot.com/bug?id=b85721b38583ecc6b5e72ff524c67302abbc30f3
-Link: https://lore.kernel.org/all/000000000000ece18705f3b20934@google.com/
-Fixes: 717d50e4971b ("Ext4: Uninitialized Block Groups")
-Cc: stable@vger.kernel.org
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Link: https://lore.kernel.org/r/20230504121525.3275886-1-tudor.ambarus@linaro.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/ext4/super.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
-
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2475,11 +2475,9 @@ static __le16 ext4_group_desc_csum(struc
- 	crc = crc16(crc, (__u8 *)gdp, offset);
- 	offset += sizeof(gdp->bg_checksum); /* skip checksum */
- 	/* for checksum of struct ext4_group_desc do the rest...*/
--	if (ext4_has_feature_64bit(sb) &&
--	    offset < le16_to_cpu(sbi->s_es->s_desc_size))
-+	if (ext4_has_feature_64bit(sb) && offset < sbi->s_desc_size)
- 		crc = crc16(crc, (__u8 *)gdp + offset,
--			    le16_to_cpu(sbi->s_es->s_desc_size) -
--				offset);
-+			    sbi->s_desc_size - offset);
- 
- out:
- 	return cpu_to_le16(crc);
-
+BR Andreas
 
