@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DB3DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBAEDC433D2;
-	Mon, 15 May 2023 16:35:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFC4DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AEDC433D2;
+	Mon, 15 May 2023 16:35:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168536;
-	bh=zyUepHXMET1ZGEUmAZbr4sBlTCktaNs+51GnCsq9Z5c=;
+	s=korg; t=1684168539;
+	bh=bWTEZj0+X4yIFUJTsuf0oUXxSSD0CE1N/62KF8kIN2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNBRK5wfyVdr/xxOzh+d31ZFI0dgDWRKjNJVJgeA5zKrP0cmB+S9AO2VwShWcwsLE
-	 xEXuykCFXh0ApQXNXDa+qKhdc/TVkCKn3EFZ3AsekxLDIH3p54EfT5g05Kp1JNODQB
-	 Bn+OBBXC9L4Z4oLuBo5V+PwDcwKXGLKmzxybGOus=
+	b=eTjPrZ6ug/otTAt1jWgMVni4h5S8ikxtzFTmyQdXT/oitTKHf4lM5gKOYUBP7yKeK
+	 gkHU6xr3Xtu7ngn60UBW8dDMXIDRPjnffAQ5zmineFHpxvE46eRJ9N8+lViG8HLj58
+	 3SHYze6Tibmlqs2ZQKsfPmBv9pIZKSqa5pyD9qTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Zhang <zheng.zhang@email.ucr.edu>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.14 081/116] dm ioctl: fix nested locking in table_clear() to remove deadlock concern
-Date: Mon, 15 May 2023 18:26:18 +0200
-Message-Id: <20230515161700.965006577@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 4.14 082/116] perf auxtrace: Fix address filter entire kernel size
+Date: Mon, 15 May 2023 18:26:19 +0200
+Message-Id: <20230515161700.995259060@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -34,58 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 3d32aaa7e66d5c1479a3c31d6c2c5d45dd0d3b89 upstream.
+commit 1f9f33ccf0320be21703d9195dd2b36a1c9a07cb upstream.
 
-syzkaller found the following problematic rwsem locking (with write
-lock already held):
+kallsyms is not completely in address order.
 
- down_read+0x9d/0x450 kernel/locking/rwsem.c:1509
- dm_get_inactive_table+0x2b/0xc0 drivers/md/dm-ioctl.c:773
- __dev_status+0x4fd/0x7c0 drivers/md/dm-ioctl.c:844
- table_clear+0x197/0x280 drivers/md/dm-ioctl.c:1537
+In find_entire_kern_cb(), calculate the kernel end from the maximum
+address not the last symbol.
 
-In table_clear, it first acquires a write lock
-https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L1520
-down_write(&_hash_lock);
+Example:
 
-Then before the lock is released at L1539, there is a path shown above:
-table_clear -> __dev_status -> dm_get_inactive_table ->  down_read
-https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L773
-down_read(&_hash_lock);
+ Before:
 
-It tries to acquire the same read lock again, resulting in the deadlock
-problem.
+    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | tail -1
+    ffffffffc00b8bd0 t bpf_prog_6deef7357e7b4530    [bpf]
+    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | sort | tail -1
+    ffffffffc15e0cc0 t iwl_mvm_exit [iwlmvm]
+    $ perf.d093603a05aa record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
+    Address filter: filter 0xffffffff93200000/0x2ceba000
 
-Fix this by moving table_clear()'s __dev_status() call to after its
-up_write(&_hash_lock);
+ After:
 
+    $ perf.8fb0f7a01f8e record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
+    Address filter: filter 0xffffffff93200000/0x2e3e2000
+
+Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: stable@vger.kernel.org
-Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20230403154831.8651-2-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/perf/util/auxtrace.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1409,11 +1409,12 @@ static int table_clear(struct file *filp
- 		hc->new_map = NULL;
- 	}
+--- a/tools/perf/util/auxtrace.c
++++ b/tools/perf/util/auxtrace.c
+@@ -1776,6 +1776,7 @@ static int find_entire_kern_cb(void *arg
+ 			       char type, u64 start)
+ {
+ 	struct sym_args *args = arg;
++	u64 size;
  
--	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
--
--	__dev_status(hc->md, param);
- 	md = hc->md;
- 	up_write(&_hash_lock);
-+
-+	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
-+	__dev_status(md, param);
-+
- 	if (old_map) {
- 		dm_sync_table(md);
- 		dm_table_destroy(old_map);
+ 	if (!symbol_type__is_a(type, MAP__FUNCTION))
+ 		return 0;
+@@ -1785,7 +1786,9 @@ static int find_entire_kern_cb(void *arg
+ 		args->start = start;
+ 	}
+ 	/* Don't know exactly where the kernel ends, so we add a page */
+-	args->size = round_up(start, page_size) + page_size - args->start;
++	size = round_up(start, page_size) + page_size - args->start;
++	if (size > args->size)
++		args->size = size;
+ 
+ 	return 0;
+ }
 
 
