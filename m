@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FEBDF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39179C433D2;
-	Mon, 15 May 2023 16:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA31DF53
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE36C433A0;
+	Mon, 15 May 2023 16:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168803;
-	bh=1N7eNSNY1ukaWHXW3Xn2yQuREBJugGp2vtfk62fbrx8=;
+	s=korg; t=1684168806;
+	bh=uzq4aPehbbdJafRA1N8FOe67STDHL5AMwt8vRel3zJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jvym79zmUitlcH2cfFihMBuPgJp85Asza9IoIqmpPucEn/BZwQGPHa5otBD7+WUos
-	 KLkB5Y14cRQn6Mn0klJkoXTLb4FJ+gvQwBgO6XUx5tu7m9OveUA7GkS1v1GclzGjq8
-	 gnOXFeV//4Eq+hY60kvFsMFluk3Vrr4HoKfyYCBA=
+	b=Mz2/rAb2s61md+CYCywpOd/rgjzMkuF15OX6yPJfawImuKlXPkzd+MALs7sSnbFpU
+	 nXiWtHP5nEObfOVMYR8N6LtROOTXh1NoYO5Wl+2fwDDfkNcn20K+/VenEpX1Vy5cjj
+	 4rMDaovEXmfZvhGKPweTKNJl7cnhIUjYcTJZfDqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
+	syzbot+5093ba19745994288b53@syzkaller.appspotmail.com,
 	Thomas Gleixner <tglx@linutronix.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Yang Shi <yang.shi@linux.alibaba.com>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Qian Cai <cai@gmx.us>,
-	Zhong Jiang <zhongjiang@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 046/191] debugobjects: Move printk out of db->lock critical sections
-Date: Mon, 15 May 2023 18:24:43 +0200
-Message-Id: <20230515161708.872191992@linuxfoundation.org>
+	Stephen Boyd <swboyd@chromium.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Schspa Shi <schspa@gmail.com>
+Subject: [PATCH 4.19 047/191] debugobject: Prevent init race with static objects
+Date: Mon, 15 May 2023 18:24:44 +0200
+Message-Id: <20230515161708.902562816@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -40,254 +37,281 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit d5f34153e526903abe71869dbbc898bfc0f69373 ]
+[ Upstream commit 63a759694eed61025713b3e14dd827c8548daadc ]
 
-The db->lock is a raw spinlock and so the lock hold time is supposed
-to be short. This will not be the case when printk() is being involved
-in some of the critical sections. In order to avoid the long hold time,
-in case some messages need to be printed, the debug_object_is_on_stack()
-and debug_print_object() calls are now moved out of those critical
-sections.
+Statically initialized objects are usually not initialized via the init()
+function of the subsystem. They are special cased and the subsystem
+provides a function to validate whether an object which is not yet tracked
+by debugobjects is statically initialized. This means the object is started
+to be tracked on first use, e.g. activation.
 
-Signed-off-by: Waiman Long <longman@redhat.com>
+This works perfectly fine, unless there are two concurrent operations on
+that object. Schspa decoded the problem:
+
+T0 	          	    	    T1
+
+debug_object_assert_init(addr)
+  lock_hash_bucket()
+  obj = lookup_object(addr);
+  if (!obj) {
+  	unlock_hash_bucket();
+	- > preemption
+			            lock_subsytem_object(addr);
+				      activate_object(addr)
+				      lock_hash_bucket();
+				      obj = lookup_object(addr);
+				      if (!obj) {
+				    	unlock_hash_bucket();
+					if (is_static_object(addr))
+					   init_and_track(addr);
+				      lock_hash_bucket();
+				      obj = lookup_object(addr);
+				      obj->state = ACTIVATED;
+				      unlock_hash_bucket();
+
+				    subsys function modifies content of addr,
+				    so static object detection does
+				    not longer work.
+
+				    unlock_subsytem_object(addr);
+
+        if (is_static_object(addr)) <- Fails
+
+	  debugobject emits a warning and invokes the fixup function which
+	  reinitializes the already active object in the worst case.
+
+This race exists forever, but was never observed until mod_timer() got a
+debug_object_assert_init() added which is outside of the timer base lock
+held section right at the beginning of the function to cover the lockless
+early exit points too.
+
+Rework the code so that the lookup, the static object check and the
+tracking object association happens atomically under the hash bucket
+lock. This prevents the issue completely as all callers are serialized on
+the hash bucket lock and therefore cannot observe inconsistent state.
+
+Fixes: 3ac7fe5a4aab ("infrastructure to debug (dynamic) objects")
+Reported-by: syzbot+5093ba19745994288b53@syzkaller.appspotmail.com
+Debugged-by: Schspa Shi <schspa@gmail.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Yang Shi <yang.shi@linux.alibaba.com>
-Cc: "Joel Fernandes (Google)" <joel@joelfernandes.org>
-Cc: Qian Cai <cai@gmx.us>
-Cc: Zhong Jiang <zhongjiang@huawei.com>
-Link: https://lkml.kernel.org/r/20190520141450.7575-6-longman@redhat.com
-Stable-dep-of: 63a759694eed ("debugobject: Prevent init race with static objects")
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://syzkaller.appspot.com/bug?id=22c8a5938eab640d1c6bcc0e3dc7be519d878462
+Link: https://lore.kernel.org/lkml/20230303161906.831686-1-schspa@gmail.com
+Link: https://lore.kernel.org/r/87zg7dzgao.ffs@tglx
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c | 58 +++++++++++++++++++++++++++++++---------------
- 1 file changed, 39 insertions(+), 19 deletions(-)
+ lib/debugobjects.c | 125 ++++++++++++++++++++++++---------------------
+ 1 file changed, 66 insertions(+), 59 deletions(-)
 
 diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 6e2baf9e9eb27..6909a6e51de83 100644
+index 6909a6e51de83..2315a75c45c3b 100644
 --- a/lib/debugobjects.c
 +++ b/lib/debugobjects.c
-@@ -429,6 +429,7 @@ static void
+@@ -196,10 +196,6 @@ static struct debug_obj *__alloc_object(struct hlist_head *list)
+ 	return obj;
+ }
+ 
+-/*
+- * Allocate a new object. If the pool is empty, switch off the debugger.
+- * Must be called with interrupts disabled.
+- */
+ static struct debug_obj *
+ alloc_object(void *addr, struct debug_bucket *b, struct debug_obj_descr *descr)
+ {
+@@ -425,11 +421,49 @@ static void debug_object_is_on_stack(void *addr, int onstack)
+ 	WARN_ON(1);
+ }
+ 
++static struct debug_obj *lookup_object_or_alloc(void *addr, struct debug_bucket *b,
++						struct debug_obj_descr *descr,
++						bool onstack, bool alloc_ifstatic)
++{
++	struct debug_obj *obj = lookup_object(addr, b);
++	enum debug_obj_state state = ODEBUG_STATE_NONE;
++
++	if (likely(obj))
++		return obj;
++
++	/*
++	 * debug_object_init() unconditionally allocates untracked
++	 * objects. It does not matter whether it is a static object or
++	 * not.
++	 *
++	 * debug_object_assert_init() and debug_object_activate() allow
++	 * allocation only if the descriptor callback confirms that the
++	 * object is static and considered initialized. For non-static
++	 * objects the allocation needs to be done from the fixup callback.
++	 */
++	if (unlikely(alloc_ifstatic)) {
++		if (!descr->is_static_object || !descr->is_static_object(addr))
++			return ERR_PTR(-ENOENT);
++		/* Statically allocated objects are considered initialized */
++		state = ODEBUG_STATE_INIT;
++	}
++
++	obj = alloc_object(addr, b, descr);
++	if (likely(obj)) {
++		obj->state = state;
++		debug_object_is_on_stack(addr, onstack);
++		return obj;
++	}
++
++	/* Out of memory. Do the cleanup outside of the locked region */
++	debug_objects_enabled = 0;
++	return NULL;
++}
++
+ static void
  __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
  {
  	enum debug_obj_state state;
-+	bool check_stack = false;
+-	bool check_stack = false;
  	struct debug_bucket *db;
  	struct debug_obj *obj;
  	unsigned long flags;
-@@ -448,7 +449,7 @@ __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
- 			debug_objects_oom();
- 			return;
- 		}
--		debug_object_is_on_stack(addr, onstack);
-+		check_stack = true;
+@@ -440,16 +474,11 @@ __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
+ 
+ 	raw_spin_lock_irqsave(&db->lock, flags);
+ 
+-	obj = lookup_object(addr, db);
+-	if (!obj) {
+-		obj = alloc_object(addr, db, descr);
+-		if (!obj) {
+-			debug_objects_enabled = 0;
+-			raw_spin_unlock_irqrestore(&db->lock, flags);
+-			debug_objects_oom();
+-			return;
+-		}
+-		check_stack = true;
++	obj = lookup_object_or_alloc(addr, db, descr, onstack, false);
++	if (unlikely(!obj)) {
++		raw_spin_unlock_irqrestore(&db->lock, flags);
++		debug_objects_oom();
++		return;
  	}
  
  	switch (obj->state) {
-@@ -459,20 +460,23 @@ __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
- 		break;
- 
- 	case ODEBUG_STATE_ACTIVE:
--		debug_print_object(obj, "init");
- 		state = obj->state;
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
-+		debug_print_object(obj, "init");
- 		debug_object_fixup(descr->fixup_init, addr, state);
- 		return;
- 
- 	case ODEBUG_STATE_DESTROYED:
-+		raw_spin_unlock_irqrestore(&db->lock, flags);
- 		debug_print_object(obj, "init");
--		break;
-+		return;
- 	default:
- 		break;
+@@ -475,8 +504,6 @@ __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
  	}
  
  	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	if (check_stack)
-+		debug_object_is_on_stack(addr, onstack);
+-	if (check_stack)
+-		debug_object_is_on_stack(addr, onstack);
  }
  
  /**
-@@ -530,6 +534,8 @@ int debug_object_activate(void *addr, struct debug_obj_descr *descr)
+@@ -516,14 +543,12 @@ EXPORT_SYMBOL_GPL(debug_object_init_on_stack);
+  */
+ int debug_object_activate(void *addr, struct debug_obj_descr *descr)
+ {
++	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
+ 	enum debug_obj_state state;
+ 	struct debug_bucket *db;
+ 	struct debug_obj *obj;
+ 	unsigned long flags;
+ 	int ret;
+-	struct debug_obj o = { .object = addr,
+-			       .state = ODEBUG_STATE_NOTAVAILABLE,
+-			       .descr = descr };
  
- 	obj = lookup_object(addr, db);
- 	if (obj) {
-+		bool print_object = false;
-+
+ 	if (!debug_objects_enabled)
+ 		return 0;
+@@ -532,8 +557,8 @@ int debug_object_activate(void *addr, struct debug_obj_descr *descr)
+ 
+ 	raw_spin_lock_irqsave(&db->lock, flags);
+ 
+-	obj = lookup_object(addr, db);
+-	if (obj) {
++	obj = lookup_object_or_alloc(addr, db, descr, false, true);
++	if (likely(!IS_ERR_OR_NULL(obj))) {
+ 		bool print_object = false;
+ 
  		switch (obj->state) {
- 		case ODEBUG_STATE_INIT:
- 		case ODEBUG_STATE_INACTIVE:
-@@ -538,14 +544,14 @@ int debug_object_activate(void *addr, struct debug_obj_descr *descr)
- 			break;
- 
- 		case ODEBUG_STATE_ACTIVE:
--			debug_print_object(obj, "activate");
- 			state = obj->state;
- 			raw_spin_unlock_irqrestore(&db->lock, flags);
-+			debug_print_object(obj, "activate");
- 			ret = debug_object_fixup(descr->fixup_activate, addr, state);
- 			return ret ? 0 : -EINVAL;
- 
- 		case ODEBUG_STATE_DESTROYED:
--			debug_print_object(obj, "activate");
-+			print_object = true;
- 			ret = -EINVAL;
- 			break;
- 		default:
-@@ -553,10 +559,13 @@ int debug_object_activate(void *addr, struct debug_obj_descr *descr)
- 			break;
- 		}
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
-+		if (print_object)
-+			debug_print_object(obj, "activate");
- 		return ret;
- 	}
+@@ -566,24 +591,16 @@ int debug_object_activate(void *addr, struct debug_obj_descr *descr)
  
  	raw_spin_unlock_irqrestore(&db->lock, flags);
-+
- 	/*
- 	 * We are here when a static object is activated. We
- 	 * let the type specific code confirm whether this is
-@@ -588,6 +597,7 @@ void debug_object_deactivate(void *addr, struct debug_obj_descr *descr)
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
-+	bool print_object = false;
  
- 	if (!debug_objects_enabled)
- 		return;
-@@ -605,24 +615,27 @@ void debug_object_deactivate(void *addr, struct debug_obj_descr *descr)
- 			if (!obj->astate)
- 				obj->state = ODEBUG_STATE_INACTIVE;
- 			else
--				debug_print_object(obj, "deactivate");
-+				print_object = true;
- 			break;
- 
- 		case ODEBUG_STATE_DESTROYED:
--			debug_print_object(obj, "deactivate");
-+			print_object = true;
- 			break;
- 		default:
- 			break;
- 		}
+-	/*
+-	 * We are here when a static object is activated. We
+-	 * let the type specific code confirm whether this is
+-	 * true or not. if true, we just make sure that the
+-	 * static object is tracked in the object tracker. If
+-	 * not, this must be a bug, so we try to fix it up.
+-	 */
+-	if (descr->is_static_object && descr->is_static_object(addr)) {
+-		/* track this static object */
+-		debug_object_init(addr, descr);
+-		debug_object_activate(addr, descr);
 -	} else {
-+	}
-+
-+	raw_spin_unlock_irqrestore(&db->lock, flags);
+-		debug_print_object(&o, "activate");
+-		ret = debug_object_fixup(descr->fixup_activate, addr,
+-					ODEBUG_STATE_NOTAVAILABLE);
+-		return ret ? 0 : -EINVAL;
++	/* If NULL the allocation has hit OOM */
 +	if (!obj) {
- 		struct debug_obj o = { .object = addr,
- 				       .state = ODEBUG_STATE_NOTAVAILABLE,
- 				       .descr = descr };
- 
- 		debug_print_object(&o, "deactivate");
-+	} else if (print_object) {
-+		debug_print_object(obj, "deactivate");
++		debug_objects_oom();
++		return 0;
  	}
--
--	raw_spin_unlock_irqrestore(&db->lock, flags);
+-	return 0;
++
++	/* Object is neither static nor tracked. It's not initialized */
++	debug_print_object(&o, "activate");
++	ret = debug_object_fixup(descr->fixup_activate, addr, ODEBUG_STATE_NOTAVAILABLE);
++	return ret ? 0 : -EINVAL;
  }
- EXPORT_SYMBOL_GPL(debug_object_deactivate);
+ EXPORT_SYMBOL_GPL(debug_object_activate);
  
-@@ -637,6 +650,7 @@ void debug_object_destroy(void *addr, struct debug_obj_descr *descr)
+@@ -737,6 +754,7 @@ EXPORT_SYMBOL_GPL(debug_object_free);
+  */
+ void debug_object_assert_init(void *addr, struct debug_obj_descr *descr)
+ {
++	struct debug_obj o = { .object = addr, .state = ODEBUG_STATE_NOTAVAILABLE, .descr = descr };
  	struct debug_bucket *db;
  	struct debug_obj *obj;
  	unsigned long flags;
-+	bool print_object = false;
+@@ -747,31 +765,20 @@ void debug_object_assert_init(void *addr, struct debug_obj_descr *descr)
+ 	db = get_bucket((unsigned long) addr);
  
- 	if (!debug_objects_enabled)
- 		return;
-@@ -656,20 +670,22 @@ void debug_object_destroy(void *addr, struct debug_obj_descr *descr)
- 		obj->state = ODEBUG_STATE_DESTROYED;
- 		break;
- 	case ODEBUG_STATE_ACTIVE:
--		debug_print_object(obj, "destroy");
- 		state = obj->state;
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
-+		debug_print_object(obj, "destroy");
- 		debug_object_fixup(descr->fixup_destroy, addr, state);
- 		return;
- 
- 	case ODEBUG_STATE_DESTROYED:
--		debug_print_object(obj, "destroy");
-+		print_object = true;
- 		break;
- 	default:
- 		break;
- 	}
- out_unlock:
- 	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	if (print_object)
-+		debug_print_object(obj, "destroy");
- }
- EXPORT_SYMBOL_GPL(debug_object_destroy);
- 
-@@ -698,9 +714,9 @@ void debug_object_free(void *addr, struct debug_obj_descr *descr)
- 
- 	switch (obj->state) {
- 	case ODEBUG_STATE_ACTIVE:
--		debug_print_object(obj, "free");
- 		state = obj->state;
- 		raw_spin_unlock_irqrestore(&db->lock, flags);
-+		debug_print_object(obj, "free");
- 		debug_object_fixup(descr->fixup_free, addr, state);
- 		return;
- 	default:
-@@ -773,6 +789,7 @@ debug_object_active_state(void *addr, struct debug_obj_descr *descr,
- 	struct debug_bucket *db;
- 	struct debug_obj *obj;
- 	unsigned long flags;
-+	bool print_object = false;
- 
- 	if (!debug_objects_enabled)
- 		return;
-@@ -788,22 +805,25 @@ debug_object_active_state(void *addr, struct debug_obj_descr *descr,
- 			if (obj->astate == expect)
- 				obj->astate = next;
- 			else
--				debug_print_object(obj, "active_state");
-+				print_object = true;
- 			break;
- 
- 		default:
--			debug_print_object(obj, "active_state");
-+			print_object = true;
- 			break;
- 		}
--	} else {
-+	}
-+
+ 	raw_spin_lock_irqsave(&db->lock, flags);
++	obj = lookup_object_or_alloc(addr, db, descr, false, true);
 +	raw_spin_unlock_irqrestore(&db->lock, flags);
-+	if (!obj) {
- 		struct debug_obj o = { .object = addr,
- 				       .state = ODEBUG_STATE_NOTAVAILABLE,
- 				       .descr = descr };
++	if (likely(!IS_ERR_OR_NULL(obj)))
++		return;
  
- 		debug_print_object(&o, "active_state");
-+	} else if (print_object) {
-+		debug_print_object(obj, "active_state");
- 	}
+-	obj = lookup_object(addr, db);
++	/* If NULL the allocation has hit OOM */
+ 	if (!obj) {
+-		struct debug_obj o = { .object = addr,
+-				       .state = ODEBUG_STATE_NOTAVAILABLE,
+-				       .descr = descr };
 -
+-		raw_spin_unlock_irqrestore(&db->lock, flags);
+-		/*
+-		 * Maybe the object is static, and we let the type specific
+-		 * code confirm. Track this static object if true, else invoke
+-		 * fixup.
+-		 */
+-		if (descr->is_static_object && descr->is_static_object(addr)) {
+-			/* Track this static object */
+-			debug_object_init(addr, descr);
+-		} else {
+-			debug_print_object(&o, "assert_init");
+-			debug_object_fixup(descr->fixup_assert_init, addr,
+-					   ODEBUG_STATE_NOTAVAILABLE);
+-		}
++		debug_objects_oom();
+ 		return;
+ 	}
+ 
 -	raw_spin_unlock_irqrestore(&db->lock, flags);
++	/* Object is neither tracked nor static. It's not initialized. */
++	debug_print_object(&o, "assert_init");
++	debug_object_fixup(descr->fixup_assert_init, addr, ODEBUG_STATE_NOTAVAILABLE);
  }
- EXPORT_SYMBOL_GPL(debug_object_active_state);
+ EXPORT_SYMBOL_GPL(debug_object_assert_init);
  
-@@ -839,10 +859,10 @@ static void __debug_check_no_obj_freed(const void *address, unsigned long size)
- 
- 			switch (obj->state) {
- 			case ODEBUG_STATE_ACTIVE:
--				debug_print_object(obj, "free");
- 				descr = obj->descr;
- 				state = obj->state;
- 				raw_spin_unlock_irqrestore(&db->lock, flags);
-+				debug_print_object(obj, "free");
- 				debug_object_fixup(descr->fixup_free,
- 						   (void *) oaddr, state);
- 				goto repeat;
 -- 
 2.39.2
 
