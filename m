@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F50D512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981D3C433D2;
-	Mon, 15 May 2023 17:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4F9D512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FD1C433D2;
+	Mon, 15 May 2023 17:00:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170057;
-	bh=kltuW1aT/nc6YOfj7X4MjHR1svWrsydIFor7E6q6lyQ=;
+	s=korg; t=1684170059;
+	bh=nJe+X2bM9zLk4kuu4yUqHs1q6HgFYD1IAaiSczd0B7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AEwneCItm+eBlAn4L0eRxPMXrQu0Lr9I2+77dO6mlzQGoOJ8clUA3n+7VMeY7Wt1t
-	 OqbnHqQTmqr3D3MjQ+IXbXQKYx2HD5Je5/KFqmboVW/J0K8sQ7AnCADrJGgWxE7+mm
-	 btFWMlRV3sNkfK+5Z5aFS4czJCm4dgIbzmpfxUIY=
+	b=v3K+40gqk02hO9CSUXwL8bMHo7IhpIW1wBoZhhYoizK48Ume64a9EOxxI2LVPotLa
+	 VVuHTWA+PYu4KFCxJhUPVkD2A3D6ug9nrFnM6UPAlvKmFlaUVKNjfPoLUdYOCbHS6o
+	 4psd8ra9Rs9u/VbcbOTpmjgR1EN5Sbub5M0gsyi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/239] mtd: spi-nor: Add a RWW flag
-Date: Mon, 15 May 2023 18:24:34 +0200
-Message-Id: <20230515161721.929383534@linuxfoundation.org>
+Subject: [PATCH 6.1 012/239] mtd: spi-nor: spansion: Enable JFFS2 write buffer for Infineon s28hx SEMPER flash
+Date: Mon, 15 May 2023 18:24:35 +0200
+Message-Id: <20230515161721.959323449@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,81 +35,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miquel Raynal <miquel.raynal@bootlin.com>
+From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
 
-[ Upstream commit 4eddee70140b3ae183398b246a609756546c51f1 ]
+[ Upstream commit 9fd0945fe6fadfb6b54a9cd73be101c02b3e8134 ]
 
-Introduce a new (no SFDP) flag for the feature that we are about to
-support: Read While Write. This means, if the chip has several banks and
-supports RWW, once a page of data to write has been transferred into the
-chip's internal SRAM, another read operation happening on a different
-bank can be performed during the tPROG delay.
+Infineon(Cypress) SEMPER NOR flash family has on-die ECC and its program
+granularity is 16-byte ECC data unit size. JFFS2 supports write buffer
+mode for ECC'd NOR flash. Provide a way to clear the MTD_BIT_WRITEABLE
+flag in order to enable JFFS2 write buffer mode support.
 
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20230328154105.448540-7-miquel.raynal@bootlin.com
+A new SNOR_F_ECC flag is introduced to determine if the part has on-die
+ECC and if it has, MTD_BIT_WRITEABLE is unset.
+
+In vendor specific driver, a common cypress_nor_ecc_init() helper is
+added. This helper takes care for ECC related initialization for SEMPER
+flash family by setting up params->writesize and SNOR_F_ECC.
+
+Fixes: c3266af101f2 ("mtd: spi-nor: spansion: add support for Cypress Semper flash")
+Suggested-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/d586723f6f12aaff44fbcd7b51e674b47ed554ed.1680760742.git.Takahiro.Kuwano@infineon.com
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Stable-dep-of: 9fd0945fe6fa ("mtd: spi-nor: spansion: Enable JFFS2 write buffer for Infineon s28hx SEMPER flash")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/core.c    | 3 +++
- drivers/mtd/spi-nor/core.h    | 3 +++
- drivers/mtd/spi-nor/debugfs.c | 1 +
- 3 files changed, 7 insertions(+)
+ drivers/mtd/spi-nor/core.c     |  3 +++
+ drivers/mtd/spi-nor/core.h     |  1 +
+ drivers/mtd/spi-nor/debugfs.c  |  1 +
+ drivers/mtd/spi-nor/spansion.c | 13 ++++++++++++-
+ 4 files changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 88da4a125c743..621e9ad4bcc39 100644
+index 621e9ad4bcc39..dc4d86ceee447 100644
 --- a/drivers/mtd/spi-nor/core.c
 +++ b/drivers/mtd/spi-nor/core.c
-@@ -2440,6 +2440,9 @@ static void spi_nor_init_flags(struct spi_nor *nor)
- 
- 	if (flags & NO_CHIP_ERASE)
- 		nor->flags |= SNOR_F_NO_OP_CHIP_ERASE;
-+
-+	if (flags & SPI_NOR_RWW)
-+		nor->flags |= SNOR_F_RWW;
- }
- 
- /**
+@@ -2942,6 +2942,9 @@ static void spi_nor_set_mtd_info(struct spi_nor *nor)
+ 		mtd->name = dev_name(dev);
+ 	mtd->type = MTD_NORFLASH;
+ 	mtd->flags = MTD_CAP_NORFLASH;
++	/* Unset BIT_WRITEABLE to enable JFFS2 write buffer for ECC'd NOR */
++	if (nor->flags & SNOR_F_ECC)
++		mtd->flags &= ~MTD_BIT_WRITEABLE;
+ 	if (nor->info->flags & SPI_NOR_NO_ERASE)
+ 		mtd->flags |= MTD_NO_ERASE;
+ 	else
 diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
-index 8a846ad86d298..f23d1e77199e5 100644
+index f23d1e77199e5..290613fd63ae7 100644
 --- a/drivers/mtd/spi-nor/core.h
 +++ b/drivers/mtd/spi-nor/core.h
-@@ -130,6 +130,7 @@ enum spi_nor_option_flags {
- 	SNOR_F_IO_MODE_EN_VOLATILE = BIT(11),
+@@ -131,6 +131,7 @@ enum spi_nor_option_flags {
  	SNOR_F_SOFT_RESET	= BIT(12),
  	SNOR_F_SWP_IS_VOLATILE	= BIT(13),
-+	SNOR_F_RWW		= BIT(14),
+ 	SNOR_F_RWW		= BIT(14),
++	SNOR_F_ECC		= BIT(15),
  };
  
  struct spi_nor_read_command {
-@@ -459,6 +460,7 @@ struct spi_nor_fixups {
-  *   NO_CHIP_ERASE:           chip does not support chip erase.
-  *   SPI_NOR_NO_FR:           can't do fastread.
-  *   SPI_NOR_QUAD_PP:         flash supports Quad Input Page Program.
-+ *   SPI_NOR_RWW:             flash supports reads while write.
-  *
-  * @no_sfdp_flags:  flags that indicate support that can be discovered via SFDP.
-  *                  Used when SFDP tables are not defined in the flash. These
-@@ -509,6 +511,7 @@ struct flash_info {
- #define NO_CHIP_ERASE			BIT(7)
- #define SPI_NOR_NO_FR			BIT(8)
- #define SPI_NOR_QUAD_PP			BIT(9)
-+#define SPI_NOR_RWW			BIT(10)
- 
- 	u8 no_sfdp_flags;
- #define SPI_NOR_SKIP_SFDP		BIT(0)
 diff --git a/drivers/mtd/spi-nor/debugfs.c b/drivers/mtd/spi-nor/debugfs.c
-index 5f56b23205d8b..8b4922a1aafb9 100644
+index 8b4922a1aafb9..6d6bd559db8fd 100644
 --- a/drivers/mtd/spi-nor/debugfs.c
 +++ b/drivers/mtd/spi-nor/debugfs.c
-@@ -25,6 +25,7 @@ static const char *const snor_f_names[] = {
- 	SNOR_F_NAME(IO_MODE_EN_VOLATILE),
+@@ -26,6 +26,7 @@ static const char *const snor_f_names[] = {
  	SNOR_F_NAME(SOFT_RESET),
  	SNOR_F_NAME(SWP_IS_VOLATILE),
-+	SNOR_F_NAME(RWW),
+ 	SNOR_F_NAME(RWW),
++	SNOR_F_NAME(ECC),
  };
  #undef SNOR_F_NAME
  
+diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
+index 6bbbfc9c215b8..581f209c27347 100644
+--- a/drivers/mtd/spi-nor/spansion.c
++++ b/drivers/mtd/spi-nor/spansion.c
+@@ -212,6 +212,17 @@ static int cypress_nor_set_page_size(struct spi_nor *nor)
+ 	return 0;
+ }
+ 
++static void cypress_nor_ecc_init(struct spi_nor *nor)
++{
++	/*
++	 * Programming is supported only in 16-byte ECC data unit granularity.
++	 * Byte-programming, bit-walking, or multiple program operations to the
++	 * same ECC data unit without an erase are not allowed.
++	 */
++	nor->params->writesize = 16;
++	nor->flags |= SNOR_F_ECC;
++}
++
+ static int
+ s25hx_t_post_bfpt_fixup(struct spi_nor *nor,
+ 			const struct sfdp_parameter_header *bfpt_header,
+@@ -318,7 +329,7 @@ static int s28hs512t_post_bfpt_fixup(struct spi_nor *nor,
+ static void s28hs512t_late_init(struct spi_nor *nor)
+ {
+ 	nor->params->octal_dtr_enable = cypress_nor_octal_dtr_enable;
+-	nor->params->writesize = 16;
++	cypress_nor_ecc_init(nor);
+ }
+ 
+ static const struct spi_nor_fixups s28hs512t_fixups = {
 -- 
 2.39.2
 
