@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BC3C8E3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8E1EC4339B;
-	Mon, 15 May 2023 18:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59767C8E3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9199C433D2;
+	Mon, 15 May 2023 18:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173671;
-	bh=hmdACvyceHtfwG6iZa0TlefPkqSpVkF36kkn55rWHqs=;
+	s=korg; t=1684173674;
+	bh=zo37aPDYpKcKIGu6einCXQ7darDwIG+7T0vNAxGMWsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wMuuH83IQs8T/ThWno6Y4h6DyakEfUKFu7r3ghhySbEOe4P/U+bAEbpMTlYScaNj6
-	 +yh9UijOWsB4G1t5Xt/mU9BEGzPAodnscTv4VXTmEEww7iWdiDSVjsxGpbZTokSnPg
-	 JpMKP19mxjJkEc1aSd6vHwuMZ+xIjaCFOBhFukZc=
+	b=1sRM8Dnp8G020VS+v2h1/z4V6x1JWAoK3GdtJFlVdJY8YW56ua+ozOuTp5WNoMvX7
+	 8X1q8PPKFtiFnYh40RfyZCM/GB82aY5WFWJqd2vYyipsVVlBNhvP9AOYte79aP+2Ll
+	 dy7lkwB6q8W5A6ZeVan/cVjIk9Bq5b4Qhw2UPqq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Kieran Bingham <kbingham@kernel.org>,
-	Leonard Crestez <leonard.crestez@nxp.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 139/282] scripts/gdb: bail early if there are no generic PD
-Date: Mon, 15 May 2023 18:28:37 +0200
-Message-Id: <20230515161726.385827166@linuxfoundation.org>
+Subject: [PATCH 5.4 140/282] mtd: spi-nor: cadence-quadspi: Make driver independent of flash geometry
+Date: Mon, 15 May 2023 18:28:38 +0200
+Message-Id: <20230515161726.419768597@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -39,58 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-[ Upstream commit f19c3c2959e465209ade1a7a699e6cbf4359ce78 ]
+[ Upstream commit 834b4e8d344139ba64cda22099b2b2ef6c9a542d ]
 
-Avoid generating an exception if there are no generic power domain(s)
-registered:
+Drop configuration of Flash size, erase size and page size
+configuration. Flash size is needed only if using AHB decoder (BIT 23 of
+CONFIG_REG) which is not used by the driver.
+Erase size and page size are needed if IP is configured to send WREN
+automatically. But since SPI NOR layer takes care of sending WREN, there
+is no need to configure these fields either.
 
-(gdb) lx-genpd-summary
-domain                          status          children
-    /device                                             runtime status
-----------------------------------------------------------------------
-Python Exception <class 'gdb.error'>: No symbol "gpd_list" in current context.
-Error occurred in Python: No symbol "gpd_list" in current context.
-(gdb) quit
+Therefore drop these in preparation to move the driver to spi-mem
+framework where flash geometry is not visible to controller driver.
 
-[f.fainelli@gmail.com: correctly invoke gdb_eval_or_none]
-  Link: https://lkml.kernel.org/r/20230327185746.3856407-1-f.fainelli@gmail.com
-Link: https://lkml.kernel.org/r/20230323231659.3319941-1-f.fainelli@gmail.com
-Fixes: 8207d4a88e1e ("scripts/gdb: add lx-genpd-summary command")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Cc: Jan Kiszka <jan.kiszka@siemens.com>
-Cc: Kieran Bingham <kbingham@kernel.org>
-Cc: Leonard Crestez <leonard.crestez@nxp.com>
-Cc: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Acked-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Link: https://lore.kernel.org/r/20200601070444.16923-2-vigneshr@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 2087e85bb66e ("spi: cadence-quadspi: fix suspend-resume implementations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gdb/linux/genpd.py | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/cadence-quadspi.c | 36 +--------------------------
+ 1 file changed, 1 insertion(+), 35 deletions(-)
 
-diff --git a/scripts/gdb/linux/genpd.py b/scripts/gdb/linux/genpd.py
-index 39cd1abd85590..b53649c0a77a6 100644
---- a/scripts/gdb/linux/genpd.py
-+++ b/scripts/gdb/linux/genpd.py
-@@ -5,7 +5,7 @@
- import gdb
- import sys
+diff --git a/drivers/mtd/spi-nor/cadence-quadspi.c b/drivers/mtd/spi-nor/cadence-quadspi.c
+index 97a5e1eaeefdf..d680e4a272a13 100644
+--- a/drivers/mtd/spi-nor/cadence-quadspi.c
++++ b/drivers/mtd/spi-nor/cadence-quadspi.c
+@@ -77,9 +77,6 @@ struct cqspi_st {
+ 	dma_addr_t		mmap_phys_base;
  
--from linux.utils import CachedType
-+from linux.utils import CachedType, gdb_eval_or_none
- from linux.lists import list_for_each_entry
+ 	int			current_cs;
+-	int			current_page_size;
+-	int			current_erase_size;
+-	int			current_addr_width;
+ 	unsigned long		master_ref_clk_hz;
+ 	bool			is_decoded_cs;
+ 	u32			fifo_depth;
+@@ -736,32 +733,6 @@ static void cqspi_chipselect(struct spi_nor *nor)
+ 	writel(reg, reg_base + CQSPI_REG_CONFIG);
+ }
  
- generic_pm_domain_type = CachedType('struct generic_pm_domain')
-@@ -70,6 +70,8 @@ Output is similar to /sys/kernel/debug/pm_genpd/pm_genpd_summary'''
-             gdb.write('    %-50s  %s\n' % (kobj_path, rtpm_status_str(dev)))
+-static void cqspi_configure_cs_and_sizes(struct spi_nor *nor)
+-{
+-	struct cqspi_flash_pdata *f_pdata = nor->priv;
+-	struct cqspi_st *cqspi = f_pdata->cqspi;
+-	void __iomem *iobase = cqspi->iobase;
+-	unsigned int reg;
+-
+-	/* configure page size and block size. */
+-	reg = readl(iobase + CQSPI_REG_SIZE);
+-	reg &= ~(CQSPI_REG_SIZE_PAGE_MASK << CQSPI_REG_SIZE_PAGE_LSB);
+-	reg &= ~(CQSPI_REG_SIZE_BLOCK_MASK << CQSPI_REG_SIZE_BLOCK_LSB);
+-	reg &= ~CQSPI_REG_SIZE_ADDRESS_MASK;
+-	reg |= (nor->page_size << CQSPI_REG_SIZE_PAGE_LSB);
+-	reg |= (ilog2(nor->mtd.erasesize) << CQSPI_REG_SIZE_BLOCK_LSB);
+-	reg |= (nor->addr_width - 1);
+-	writel(reg, iobase + CQSPI_REG_SIZE);
+-
+-	/* configure the chip select */
+-	cqspi_chipselect(nor);
+-
+-	/* Store the new configuration of the controller */
+-	cqspi->current_page_size = nor->page_size;
+-	cqspi->current_erase_size = nor->mtd.erasesize;
+-	cqspi->current_addr_width = nor->addr_width;
+-}
+-
+ static unsigned int calculate_ticks_for_ns(const unsigned int ref_clk_hz,
+ 					   const unsigned int ns_val)
+ {
+@@ -867,18 +838,13 @@ static void cqspi_configure(struct spi_nor *nor)
+ 	int switch_cs = (cqspi->current_cs != f_pdata->cs);
+ 	int switch_ck = (cqspi->sclk != sclk);
  
-     def invoke(self, arg, from_tty):
-+        if gdb_eval_or_none("&gpd_list") is None:
-+            raise gdb.GdbError("No power domain(s) registered")
-         gdb.write('domain                          status          children\n');
-         gdb.write('    /device                                             runtime status\n');
-         gdb.write('----------------------------------------------------------------------\n');
+-	if ((cqspi->current_page_size != nor->page_size) ||
+-	    (cqspi->current_erase_size != nor->mtd.erasesize) ||
+-	    (cqspi->current_addr_width != nor->addr_width))
+-		switch_cs = 1;
+-
+ 	if (switch_cs || switch_ck)
+ 		cqspi_controller_enable(cqspi, 0);
+ 
+ 	/* Switch chip select. */
+ 	if (switch_cs) {
+ 		cqspi->current_cs = f_pdata->cs;
+-		cqspi_configure_cs_and_sizes(nor);
++		cqspi_chipselect(nor);
+ 	}
+ 
+ 	/* Setup baudrate divisor and delays */
 -- 
 2.39.2
 
