@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BDC31078D
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6B8C433EF;
-	Mon, 15 May 2023 17:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B9FC8C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7746EC433D2;
+	Mon, 15 May 2023 17:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173579;
-	bh=xRFaHS4/wjGE5zx1LGGL8Td5VLHMsORKnRWuBboN0hk=;
+	s=korg; t=1684173583;
+	bh=2FfGZjo7FUDhoZyMq1/9/RTqCi78hbp+/9MCOs6k9zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ofgQGxx67U3NVvqqr66LnHNrpDhqTwYREqadmV/WSkB58tqm5bFGl16aUEEhuXKlN
-	 i+zTAGHdVkgoRo1x2ia18EDPQr90aOHxNRycyce6MaTp3y1yUgNJiUsycLxWERFlnQ
-	 0YoHmbUW8rT4Biz7gqGM3RzwH0GK3NQbsUHkPqxY=
+	b=rbMRUPy+9XbUKZi5rjLYGlqNzG+3bSC/Ao1tJPNX2480/ZYwia5OhS6dkCtnAh3yy
+	 2ZLIfwiVeqn04bqUip5hC4Iiq6X4K+3xZ/Y5R9EvCnAEeOPtvYhurQP4x2arOH7ZES
+	 LKMzSixdCvJQM+S4lCUxdON6vlqhqC2eRzRGfjts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dae R. Jeong" <threeearcat@gmail.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 133/282] vmci_host: fix a race condition in vmci_host_poll() causing GPF
-Date: Mon, 15 May 2023 18:28:31 +0200
-Message-Id: <20230515161726.210625146@linuxfoundation.org>
+Subject: [PATCH 5.4 142/282] mtd: spi-nor: cadence-quadspi: Dont initialize rx_dma_complete on failure
+Date: Mon, 15 May 2023 18:28:40 +0200
+Message-Id: <20230515161726.479400492@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -34,93 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dae R. Jeong <threeearcat@gmail.com>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-[ Upstream commit ae13381da5ff0e8e084c0323c3cc0a945e43e9c7 ]
+[ Upstream commit 48aae57f0f9f57797772bd462b4d64902b1b4ae1 ]
 
-During fuzzing, a general protection fault is observed in
-vmci_host_poll().
+If driver fails to acquire DMA channel then don't initialize
+rx_dma_complete struct as it won't be used.
 
-general protection fault, probably for non-canonical address 0xdffffc0000000019: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x00000000000000c8-0x00000000000000cf]
-RIP: 0010:__lock_acquire+0xf3/0x5e00 kernel/locking/lockdep.c:4926
-<- omitting registers ->
-Call Trace:
- <TASK>
- lock_acquire+0x1a4/0x4a0 kernel/locking/lockdep.c:5672
- __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
- _raw_spin_lock_irqsave+0xb3/0x100 kernel/locking/spinlock.c:162
- add_wait_queue+0x3d/0x260 kernel/sched/wait.c:22
- poll_wait include/linux/poll.h:49 [inline]
- vmci_host_poll+0xf8/0x2b0 drivers/misc/vmw_vmci/vmci_host.c:174
- vfs_poll include/linux/poll.h:88 [inline]
- do_pollfd fs/select.c:873 [inline]
- do_poll fs/select.c:921 [inline]
- do_sys_poll+0xc7c/0x1aa0 fs/select.c:1015
- __do_sys_ppoll fs/select.c:1121 [inline]
- __se_sys_ppoll+0x2cc/0x330 fs/select.c:1101
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x4e/0xa0 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Example thread interleaving that causes the general protection fault
-is as follows:
-
-CPU1 (vmci_host_poll)               CPU2 (vmci_host_do_init_context)
------                               -----
-// Read uninitialized context
-context = vmci_host_dev->context;
-                                    // Initialize context
-                                    vmci_host_dev->context = vmci_ctx_create();
-                                    vmci_host_dev->ct_type = VMCIOBJ_CONTEXT;
-
-if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
-    // Dereferencing the wrong pointer
-    poll_wait(..., &context->host_context);
-}
-
-In this scenario, vmci_host_poll() reads vmci_host_dev->context first,
-and then reads vmci_host_dev->ct_type to check that
-vmci_host_dev->context is initialized. However, since these two reads
-are not atomically executed, there is a chance of a race condition as
-described above.
-
-To fix this race condition, read vmci_host_dev->context after checking
-the value of vmci_host_dev->ct_type so that vmci_host_poll() always
-reads an initialized context.
-
-Reported-by: Dae R. Jeong <threeearcat@gmail.com>
-Fixes: 8bf503991f87 ("VMCI: host side driver implementation.")
-Signed-off-by: Dae R. Jeong <threeearcat@gmail.com>
-Link: https://lore.kernel.org/r/ZCGFsdBAU4cYww5l@dragonet
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Acked-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Link: https://lore.kernel.org/r/20200601070444.16923-4-vigneshr@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 2087e85bb66e ("spi: cadence-quadspi: fix suspend-resume implementations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/vmw_vmci/vmci_host.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/cadence-quadspi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/misc/vmw_vmci/vmci_host.c b/drivers/misc/vmw_vmci/vmci_host.c
-index 833e2bd248a57..8ff8d649d9b3a 100644
---- a/drivers/misc/vmw_vmci/vmci_host.c
-+++ b/drivers/misc/vmw_vmci/vmci_host.c
-@@ -160,10 +160,16 @@ static int vmci_host_close(struct inode *inode, struct file *filp)
- static __poll_t vmci_host_poll(struct file *filp, poll_table *wait)
- {
- 	struct vmci_host_dev *vmci_host_dev = filp->private_data;
--	struct vmci_ctx *context = vmci_host_dev->context;
-+	struct vmci_ctx *context;
- 	__poll_t mask = 0;
- 
- 	if (vmci_host_dev->ct_type == VMCIOBJ_CONTEXT) {
-+		/*
-+		 * Read context only if ct_type == VMCIOBJ_CONTEXT to make
-+		 * sure that context is initialized
-+		 */
-+		context = vmci_host_dev->context;
-+
- 		/* Check for VMCI calls to this VM context. */
- 		if (wait)
- 			poll_wait(filp, &context->host_context.wait_queue,
+diff --git a/drivers/mtd/spi-nor/cadence-quadspi.c b/drivers/mtd/spi-nor/cadence-quadspi.c
+index 7e7736bbbfb3b..ad27d3e4c5dbc 100644
+--- a/drivers/mtd/spi-nor/cadence-quadspi.c
++++ b/drivers/mtd/spi-nor/cadence-quadspi.c
+@@ -1179,6 +1179,7 @@ static void cqspi_request_mmap_dma(struct cqspi_st *cqspi)
+ 	if (IS_ERR(cqspi->rx_chan)) {
+ 		dev_err(&cqspi->pdev->dev, "No Rx DMA available\n");
+ 		cqspi->rx_chan = NULL;
++		return;
+ 	}
+ 	init_completion(&cqspi->rx_dma_complete);
+ }
 -- 
 2.39.2
 
