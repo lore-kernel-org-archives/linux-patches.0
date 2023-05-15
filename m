@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCFE17730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:04:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40395C433EF;
-	Mon, 15 May 2023 18:04:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2DF17730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:04:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 524B2C433EF;
+	Mon, 15 May 2023 18:04:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173884;
-	bh=re1681Jx3Nx40Lypy9e/Zv2rVsgmImruh54jTh2vkkM=;
+	s=korg; t=1684173887;
+	bh=vhJbw+03avHVyCltzDRAQfywqkct5JjC8kU5BqUgtQ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxOvjgA+tisR1wG1U8lDRuFp8tca79cUNx2ZcXrRXIWVMMW6Q3Fg8S6rnvpRqcLO1
-	 OfsQDZRRbKEqonpUks85JRDJKk7ypO+0Ilaq/bRaBFNNeJ9Ivra4wn8gThEFcZ6Q14
-	 c01i+F5k8mUxHZbcPgaziQb82puWVMw/Dj5Po6fQ=
+	b=00ul+FNMu5+T/SYGjVy+cy6r5MExKclcNIE5/naanmL1Bcs5bn+cvyGJsvFZcge5X
+	 2NccNGyB2eNCmH3TDoEB2EctGQOaeIAPvueyJBUWKeQdotqkfVwxQKtcmK79bmkgjn
+	 Qg3aNZ2mDVRY0XV+77OUf03XOFC0Adev0E6dnKeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Zhang <zheng.zhang@email.ucr.edu>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.4 206/282] dm ioctl: fix nested locking in table_clear() to remove deadlock concern
-Date: Mon, 15 May 2023 18:29:44 +0200
-Message-Id: <20230515161728.423035746@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 5.4 207/282] perf auxtrace: Fix address filter entire kernel size
+Date: Mon, 15 May 2023 18:29:45 +0200
+Message-Id: <20230515161728.451691555@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -34,58 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 3d32aaa7e66d5c1479a3c31d6c2c5d45dd0d3b89 upstream.
+commit 1f9f33ccf0320be21703d9195dd2b36a1c9a07cb upstream.
 
-syzkaller found the following problematic rwsem locking (with write
-lock already held):
+kallsyms is not completely in address order.
 
- down_read+0x9d/0x450 kernel/locking/rwsem.c:1509
- dm_get_inactive_table+0x2b/0xc0 drivers/md/dm-ioctl.c:773
- __dev_status+0x4fd/0x7c0 drivers/md/dm-ioctl.c:844
- table_clear+0x197/0x280 drivers/md/dm-ioctl.c:1537
+In find_entire_kern_cb(), calculate the kernel end from the maximum
+address not the last symbol.
 
-In table_clear, it first acquires a write lock
-https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L1520
-down_write(&_hash_lock);
+Example:
 
-Then before the lock is released at L1539, there is a path shown above:
-table_clear -> __dev_status -> dm_get_inactive_table ->  down_read
-https://elixir.bootlin.com/linux/v6.2/source/drivers/md/dm-ioctl.c#L773
-down_read(&_hash_lock);
+ Before:
 
-It tries to acquire the same read lock again, resulting in the deadlock
-problem.
+    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | tail -1
+    ffffffffc00b8bd0 t bpf_prog_6deef7357e7b4530    [bpf]
+    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | sort | tail -1
+    ffffffffc15e0cc0 t iwl_mvm_exit [iwlmvm]
+    $ perf.d093603a05aa record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
+    Address filter: filter 0xffffffff93200000/0x2ceba000
 
-Fix this by moving table_clear()'s __dev_status() call to after its
-up_write(&_hash_lock);
+ After:
 
+    $ perf.8fb0f7a01f8e record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
+    Address filter: filter 0xffffffff93200000/0x2e3e2000
+
+Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: stable@vger.kernel.org
-Reported-by: Zheng Zhang <zheng.zhang@email.ucr.edu>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20230403154831.8651-2-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-ioctl.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/perf/util/auxtrace.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-ioctl.c
-+++ b/drivers/md/dm-ioctl.c
-@@ -1435,11 +1435,12 @@ static int table_clear(struct file *filp
- 		hc->new_map = NULL;
- 	}
+--- a/tools/perf/util/auxtrace.c
++++ b/tools/perf/util/auxtrace.c
+@@ -1825,6 +1825,7 @@ static int find_entire_kern_cb(void *arg
+ 			       char type, u64 start)
+ {
+ 	struct sym_args *args = arg;
++	u64 size;
  
--	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
--
--	__dev_status(hc->md, param);
- 	md = hc->md;
- 	up_write(&_hash_lock);
-+
-+	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
-+	__dev_status(md, param);
-+
- 	if (old_map) {
- 		dm_sync_table(md);
- 		dm_table_destroy(old_map);
+ 	if (!kallsyms__is_function(type))
+ 		return 0;
+@@ -1834,7 +1835,9 @@ static int find_entire_kern_cb(void *arg
+ 		args->start = start;
+ 	}
+ 	/* Don't know exactly where the kernel ends, so we add a page */
+-	args->size = round_up(start, page_size) + page_size - args->start;
++	size = round_up(start, page_size) + page_size - args->start;
++	if (size > args->size)
++		args->size = size;
+ 
+ 	return 0;
+ }
 
 
