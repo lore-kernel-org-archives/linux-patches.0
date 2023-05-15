@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F09FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39440C433D2;
-	Mon, 15 May 2023 16:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C5FFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1B2C433EF;
+	Mon, 15 May 2023 16:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169784;
-	bh=gHwocGite3FnJHIeWjDsd9hljM4pRdYxv0OaXT2IviM=;
+	s=korg; t=1684169787;
+	bh=zlfmBqNfLI6nFzxmNcngerFzuFKfYe+Gi2PP/BZxpNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nYLtXjErXZD3dJxlFo7ukqCOy8VjZnp0sURV+EDJcH4/8ZDSlI6V3rnfhtQVeNacK
-	 40bCmO6/qJCb1UNbKcaPm/hKvqoA64hFLly6Wpg1yvmdW7TDbID+LwVszPaeRKKA6k
-	 KOdPIfClu4JR4l9u//NIV8BjIU5u0z4OZGsrhi2A=
+	b=gGCU1+zrour5waYfYozcus2xSi6XpxP/bTWoFcmldx/3b7nBZH43WkSMs9ItBEwOM
+	 SHF4FM2GrlPHdGLyYhM+I9+SeH955lKUsh6RPUuR+akMHDuF8jST6OiNU9YgBWAXa8
+	 70clwbhRAJdSi/Gn5FQkMv/8ijIxBFWMaZzCPPyQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Animesh Manna <animesh.manna@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.3 169/246] drm/i915/color: Fix typo for Plane CSC indexes
-Date: Mon, 15 May 2023 18:26:21 +0200
-Message-Id: <20230515161727.703043200@linuxfoundation.org>
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.3 170/246] drm/msm: fix NULL-deref on snapshot tear down
+Date: Mon, 15 May 2023 18:26:22 +0200
+Message-Id: <20230515161727.732105584@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,40 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 2efc8e1001acfdc143cf2d25a08a4974c322e2a8 upstream.
+commit a465353b9250802f87b97123e33a17f51277f0b1 upstream.
 
-Replace _PLANE_INPUT_CSC_RY_GY_2_* with _PLANE_CSC_RY_GY_2_*
-for Plane CSC
+In case of early initialisation errors and on platforms that do not use
+the DPU controller, the deinitilisation code can be called with the kms
+pointer set to NULL.
 
-Fixes: 6eba56f64d5d ("drm/i915/pxp: black pixels on pxp disabled")
-
-Cc: <stable@vger.kernel.org>
-
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Reviewed-by: Uma Shankar <uma.shankar@intel.com>
-Signed-off-by: Animesh Manna <animesh.manna@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230330150104.2923519-1-chaitanya.kumar.borah@intel.com
-(cherry picked from commit e39c76b2160bbd005587f978d29603ef790aefcd)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Cc: stable@vger.kernel.org      # 5.14
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/525099/
+Link: https://lore.kernel.org/r/20230306100722.28485-4-johan+linaro@kernel.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_reg.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/i915_reg.h
-+++ b/drivers/gpu/drm/i915/i915_reg.h
-@@ -7596,8 +7596,8 @@ enum skl_power_gate {
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -242,7 +242,8 @@ static int msm_drm_uninit(struct device
+ 		msm_fbdev_free(ddev);
+ #endif
  
- #define _PLANE_CSC_RY_GY_1(pipe)	_PIPE(pipe, _PLANE_CSC_RY_GY_1_A, \
- 					      _PLANE_CSC_RY_GY_1_B)
--#define _PLANE_CSC_RY_GY_2(pipe)	_PIPE(pipe, _PLANE_INPUT_CSC_RY_GY_2_A, \
--					      _PLANE_INPUT_CSC_RY_GY_2_B)
-+#define _PLANE_CSC_RY_GY_2(pipe)	_PIPE(pipe, _PLANE_CSC_RY_GY_2_A, \
-+					      _PLANE_CSC_RY_GY_2_B)
- #define PLANE_CSC_COEFF(pipe, plane, index)	_MMIO_PLANE(plane, \
- 							    _PLANE_CSC_RY_GY_1(pipe) +  (index) * 4, \
- 							    _PLANE_CSC_RY_GY_2(pipe) + (index) * 4)
+-	msm_disp_snapshot_destroy(ddev);
++	if (kms)
++		msm_disp_snapshot_destroy(ddev);
+ 
+ 	drm_mode_config_cleanup(ddev);
+ 
 
 
