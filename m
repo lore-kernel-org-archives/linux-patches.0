@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60291DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73DDC4339B;
-	Mon, 15 May 2023 16:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384C1DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9AFCC433D2;
+	Mon, 15 May 2023 16:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168527;
-	bh=wFvb5tOdCs9SeX4MFn6uNWnKovlGstNK94yc/JYN31Y=;
+	s=korg; t=1684168530;
+	bh=im5u4CIuJbEd32Wd0Kya0qIJll9Co8yj1+jo09QPIPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sqaFUBaaj/WEaxuY+JMP405mUgpwumQXImAEGtYyXDHEgkBS9OqyOyP34u3nS4Zo1
-	 Zt3DaKkSRkbt7R0sxaKngaAunT7hQKPmD/nE42lc40md/ya5nsqQw7rtSY4FACEi4o
-	 MQQJ2m+KprJ3eMaXZ1iuQO0JdXkPwiLiCKdrlri4=
+	b=lDrO2LJxQHbHrvgG2VxnYnS4qEfZQacSzvBnd2Ix2b2if4NkbgedGc9tjxL1qIs7/
+	 /WORw0Hq2YzrYYbf5/RbaDLXMrqB4cRiW8PGG6Agf9ZVycy1nmQLLH5fOUDxSSiVl1
+	 YwWzTQp6ol0s/22mMr/0pV+tlRiOwmPUEqWykJbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 4.14 078/116] s390/dasd: fix hanging blockdevice after request requeue
-Date: Mon, 15 May 2023 18:26:15 +0200
-Message-Id: <20230515161700.869889393@linuxfoundation.org>
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 4.14 079/116] dm integrity: call kmem_cache_destroy() in dm_integrity_init() error path
+Date: Mon, 15 May 2023 18:26:16 +0200
+Message-Id: <20230515161700.906262573@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -36,39 +33,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit d8898ee50edecacdf0141f26fd90acf43d7e9cd7 upstream.
+commit 6b79a428c02769f2a11f8ae76bf866226d134887 upstream.
 
-The DASD driver does not kick the requeue list when requeuing IO requests
-to the blocklayer. This might lead to hanging blockdevice when there is
-no other trigger for this.
+Otherwise the journal_io_cache will leak if dm_register_target() fails.
 
-Fix by automatically kick the requeue list when requeuing DASD requests
-to the blocklayer.
-
-Fixes: e443343e509a ("s390/dasd: blk-mq conversion")
-CC: stable@vger.kernel.org # 4.14+
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230405142017.2446986-8-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm-integrity.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/s390/block/dasd.c
-+++ b/drivers/s390/block/dasd.c
-@@ -2899,7 +2899,7 @@ static int _dasd_requeue_request(struct
- 		return 0;
- 	spin_lock_irq(&cqr->dq->lock);
- 	req = (struct request *) cqr->callback_data;
--	blk_mq_requeue_request(req, false);
-+	blk_mq_requeue_request(req, true);
- 	spin_unlock_irq(&cqr->dq->lock);
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -3274,11 +3274,13 @@ int __init dm_integrity_init(void)
+ 	}
  
- 	return 0;
+ 	r = dm_register_target(&integrity_target);
+-
+-	if (r < 0)
++	if (r < 0) {
+ 		DMERR("register failed %d", r);
++		kmem_cache_destroy(journal_io_cache);
++		return r;
++	}
+ 
+-	return r;
++	return 0;
+ }
+ 
+ void dm_integrity_exit(void)
 
 
