@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366B7FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:40:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF65C433D2;
-	Mon, 15 May 2023 17:40:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F265FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:40:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB476C433D2;
+	Mon, 15 May 2023 17:40:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172427;
-	bh=+y7JLNAjO6la8KeQ+fdhh58yI33xeahQTFITsw/3CU8=;
+	s=korg; t=1684172430;
+	bh=dH3gZaElN7JUs6BTUoNgRwFU8t2AxyDypjCk+FQvRpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZdcOdwkxBydWu0i9L32vNsdP3QT7n2SvkDvDpZICI7GAYi3b/6ZLlKDFyyXHyspV
-	 DVRLjrFokSySRtG0oZSk15F2E2TDjBnJ1sClBooeyzmfBmA6BvVX6LcXdM0F6az9J5
-	 Zd26QeBZ6fv+vA2o49nK27DjSCTwt0OML2R/vX7I=
+	b=w5zrbB3FoZWj8qie3rssQ/IjW4ugfCL1RxCrijmY0Lk6o0N9MWzsi7ypib1pfVCAG
+	 TCOmRJanL93lqsan431o304CA08ueorqPZN8e9eEcCK0XHudcqJUWiUVJZBgjrCtX7
+	 DXvGfI+oLstAdfgd7YQAj6wBBZhqScnUiYNh2sz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
+	Danila Chernetsov <listdansp@mail.ru>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 149/381] scsi: target: iscsit: Fix TAS handling during conn cleanup
-Date: Mon, 15 May 2023 18:26:40 +0200
-Message-Id: <20230515161743.574253677@linuxfoundation.org>
+Subject: [PATCH 5.10 150/381] scsi: megaraid: Fix mega_cmd_done() CMDID_INT_CMDS
+Date: Mon, 15 May 2023 18:26:41 +0200
+Message-Id: <20230515161743.614221085@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,65 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Danila Chernetsov <listdansp@mail.ru>
 
-[ Upstream commit cc79da306ebb2edb700c3816b90219223182ac3c ]
+[ Upstream commit 75cb113cd43f06aaf4f1bda0069cfd5b98e909eb ]
 
-Fix a bug added in commit f36199355c64 ("scsi: target: iscsi: Fix cmd abort
-fabric stop race").
+When cmdid == CMDID_INT_CMDS, the 'cmds' pointer is NULL but is
+dereferenced below.
 
-If CMD_T_TAS is set on the se_cmd we must call iscsit_free_cmd() to do the
-last put on the cmd and free it, because the connection is down and we will
-not up sending the response and doing the put from the normal I/O
-path.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Add a check for CMD_T_TAS in iscsit_release_commands_from_conn() so we now
-detect this case and run iscsit_free_cmd().
-
-Fixes: f36199355c64 ("scsi: target: iscsi: Fix cmd abort fabric stop race")
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20230319015620.96006-9-michael.christie@oracle.com
+Fixes: 0f2bb84d2a68 ("[SCSI] megaraid: simplify internal command handling")
+Signed-off-by: Danila Chernetsov <listdansp@mail.ru>
+Link: https://lore.kernel.org/r/20230317175109.18585-1-listdansp@mail.ru
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/scsi/megaraid.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index a237f1cf9bd60..6bb8403580729 100644
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -4084,9 +4084,12 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
- 	list_for_each_entry_safe(cmd, cmd_tmp, &tmp_list, i_conn_node) {
- 		struct se_cmd *se_cmd = &cmd->se_cmd;
+diff --git a/drivers/scsi/megaraid.c b/drivers/scsi/megaraid.c
+index daffa36988aee..810d803406761 100644
+--- a/drivers/scsi/megaraid.c
++++ b/drivers/scsi/megaraid.c
+@@ -1443,6 +1443,7 @@ mega_cmd_done(adapter_t *adapter, u8 completed[], int nstatus, int status)
+ 		 */
+ 		if (cmdid == CMDID_INT_CMDS) {
+ 			scb = &adapter->int_scb;
++			cmd = scb->cmd;
  
--		if (se_cmd->se_tfo != NULL) {
--			spin_lock_irq(&se_cmd->t_state_lock);
--			if (se_cmd->transport_state & CMD_T_ABORTED) {
-+		if (!se_cmd->se_tfo)
-+			continue;
-+
-+		spin_lock_irq(&se_cmd->t_state_lock);
-+		if (se_cmd->transport_state & CMD_T_ABORTED) {
-+			if (!(se_cmd->transport_state & CMD_T_TAS))
- 				/*
- 				 * LIO's abort path owns the cleanup for this,
- 				 * so put it back on the list and let
-@@ -4094,11 +4097,10 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
- 				 */
- 				list_move_tail(&cmd->i_conn_node,
- 					       &conn->conn_cmd_list);
--			} else {
--				se_cmd->transport_state |= CMD_T_FABRIC_STOP;
--			}
--			spin_unlock_irq(&se_cmd->t_state_lock);
-+		} else {
-+			se_cmd->transport_state |= CMD_T_FABRIC_STOP;
- 		}
-+		spin_unlock_irq(&se_cmd->t_state_lock);
- 	}
- 	spin_unlock_bh(&conn->cmd_lock);
- 
+ 			list_del_init(&scb->list);
+ 			scb->state = SCB_FREE;
 -- 
 2.39.2
 
