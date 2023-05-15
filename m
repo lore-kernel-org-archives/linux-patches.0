@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B801FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:10:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8466EC433EF;
-	Mon, 15 May 2023 17:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88594FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:10:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09F3C433D2;
+	Mon, 15 May 2023 17:10:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170642;
-	bh=Gh/QbhWTrUr/l0iHos07jUWH4qymi1LKmFW4D2kfl7c=;
+	s=korg; t=1684170645;
+	bh=dScFn4ME3So5oDV5jvUIrwvQzi80Cv6skmAGjmzvfK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dc2AwvZ6txntFjwjg3kyVgtj5poYiTDD2ircui4Hvn/5iMqu+zrn6XR4ZtCmol4X9
-	 XmIaD+vDGFBMshBNPOl5GafhjW7lUs6W33P0tPrnXghVizkQtnF1JkzGG8f1Hr9g5O
-	 BSWw+aHOtUZaCcmOvEtFOdUx4C1RFNnufq9RbV8Q=
+	b=HQwqiXbCocA+xk/dvUK2dkFzAXB37nZizfgV961GAdwX5Gm3MhRlbYyTezJa6hKWW
+	 rUDqNwb511JcgEzXPOPOF6RNcyZKQEo5W/Byvs0zs+g61JjDUXUrwdQlIoq+ErBUFn
+	 sdmEEbUQawEwthzrId9Mn2cKKh3BLvv406VFURAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Alexandru gagniuc <mr.nuke.me@gmail.com>,
-	Larry Finger <Larry.Finger@lwfinger.net>,
-	ValdikSS <iam@valdikss.org.ru>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	=?UTF-8?q?Jos=C3=A9=20Roberto=20de=20Souza?= <jose.souza@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Luca Coelho <luciano.coelho@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 196/239] wifi: rtw88: rtw8821c: Fix rfe_option field width
-Date: Mon, 15 May 2023 18:27:39 +0200
-Message-Id: <20230515161727.614175892@linuxfoundation.org>
+Subject: [PATCH 6.1 197/239] drm/i915/mtl: update scaler source and destination limits for MTL
+Date: Mon, 15 May 2023 18:27:40 +0200
+Message-Id: <20230515161727.643480643@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -39,58 +38,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Animesh Manna <animesh.manna@intel.com>
 
-[ Upstream commit 14705f969d98187a1cc2682e0c9bd2e230b8098f ]
+[ Upstream commit f840834a8b60ffd305f03a53007605ba4dfbbc4b ]
 
-On my RTW8821CU chipset rfe_option reads as 0x22. Looking at the
-vendor driver suggests that the field width of rfe_option is 5 bit,
-so rfe_option should be masked with 0x1f.
+The max source and destination limits for scalers in MTL have changed.
+Use the new values accordingly.
 
-Without this the rfe_option comparisons with 2 further down the
-driver evaluate as false when they should really evaluate as true.
-The effect is that 2G channels do not work.
-
-rfe_option is also used as an array index into rtw8821c_rfe_defs[].
-rtw8821c_rfe_defs[34] (0x22) was added as part of adding USB support,
-likely because rfe_option reads as 0x22. As this now becomes 0x2,
-rtw8821c_rfe_defs[34] is no longer used and can be removed.
-
-Note that this might not be the whole truth. In the vendor driver
-there are indeed places where the unmasked rfe_option value is used.
-However, the driver has several places where rfe_option is tested
-with the pattern if (rfe_option == 2 || rfe_option == 0x22) or
-if (rfe_option == 4 || rfe_option == 0x24), so that rfe_option BIT(5)
-has no influence on the code path taken. We therefore mask BIT(5)
-out from rfe_option entirely until this assumption is proved wrong
-by some chip variant we do not know yet.
-
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Tested-by: Alexandru gagniuc <mr.nuke.me@gmail.com>
-Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
-Tested-by: ValdikSS <iam@valdikss.org.ru>
-Cc: stable@vger.kernel.org
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230417140358.2240429-3-s.hauer@pengutronix.de
+Signed-off-by: José Roberto de Souza <jose.souza@intel.com>
+Signed-off-by: Animesh Manna <animesh.manna@intel.com>
+Signed-off-by: Luca Coelho <luciano.coelho@intel.com>
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Signed-off-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221223130509.43245-3-luciano.coelho@intel.com
+Stable-dep-of: d944eafed618 ("drm/i915: Check pipe source size when using skl+ scalers")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/rtw8821c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/skl_scaler.c | 40 ++++++++++++++++++-----
+ 1 file changed, 32 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/rtw8821c.c b/drivers/net/wireless/realtek/rtw88/rtw8821c.c
-index 9afdc5ce86b43..609a2b86330d8 100644
---- a/drivers/net/wireless/realtek/rtw88/rtw8821c.c
-+++ b/drivers/net/wireless/realtek/rtw88/rtw8821c.c
-@@ -41,7 +41,7 @@ static int rtw8821c_read_efuse(struct rtw_dev *rtwdev, u8 *log_map)
+diff --git a/drivers/gpu/drm/i915/display/skl_scaler.c b/drivers/gpu/drm/i915/display/skl_scaler.c
+index 4092679be21ec..e6ec5ed0d00ec 100644
+--- a/drivers/gpu/drm/i915/display/skl_scaler.c
++++ b/drivers/gpu/drm/i915/display/skl_scaler.c
+@@ -85,6 +85,10 @@ static u16 skl_scaler_calc_phase(int sub, int scale, bool chroma_cosited)
+ #define ICL_MAX_SRC_H 4096
+ #define ICL_MAX_DST_W 5120
+ #define ICL_MAX_DST_H 4096
++#define MTL_MAX_SRC_W 4096
++#define MTL_MAX_SRC_H 8192
++#define MTL_MAX_DST_W 8192
++#define MTL_MAX_DST_H 8192
+ #define SKL_MIN_YUV_420_SRC_W 16
+ #define SKL_MIN_YUV_420_SRC_H 16
  
- 	map = (struct rtw8821c_efuse *)log_map;
+@@ -101,6 +105,8 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
+ 	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
+ 	const struct drm_display_mode *adjusted_mode =
+ 		&crtc_state->hw.adjusted_mode;
++	int min_src_w, min_src_h, min_dst_w, min_dst_h;
++	int max_src_w, max_src_h, max_dst_w, max_dst_h;
  
--	efuse->rfe_option = map->rfe_option;
-+	efuse->rfe_option = map->rfe_option & 0x1f;
- 	efuse->rf_board_option = map->rf_board_option;
- 	efuse->crystal_cap = map->xtal_k;
- 	efuse->pa_type_2g = map->pa_type;
+ 	/*
+ 	 * Src coordinates are already rotated by 270 degrees for
+@@ -155,15 +161,33 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
+ 		return -EINVAL;
+ 	}
+ 
++	min_src_w = SKL_MIN_SRC_W;
++	min_src_h = SKL_MIN_SRC_H;
++	min_dst_w = SKL_MIN_DST_W;
++	min_dst_h = SKL_MIN_DST_H;
++
++	if (DISPLAY_VER(dev_priv) < 11) {
++		max_src_w = SKL_MAX_SRC_W;
++		max_src_h = SKL_MAX_SRC_H;
++		max_dst_w = SKL_MAX_DST_W;
++		max_dst_h = SKL_MAX_DST_H;
++	} else if (DISPLAY_VER(dev_priv) < 14) {
++		max_src_w = ICL_MAX_SRC_W;
++		max_src_h = ICL_MAX_SRC_H;
++		max_dst_w = ICL_MAX_DST_W;
++		max_dst_h = ICL_MAX_DST_H;
++	} else {
++		max_src_w = MTL_MAX_SRC_W;
++		max_src_h = MTL_MAX_SRC_H;
++		max_dst_w = MTL_MAX_DST_W;
++		max_dst_h = MTL_MAX_DST_H;
++	}
++
+ 	/* range checks */
+-	if (src_w < SKL_MIN_SRC_W || src_h < SKL_MIN_SRC_H ||
+-	    dst_w < SKL_MIN_DST_W || dst_h < SKL_MIN_DST_H ||
+-	    (DISPLAY_VER(dev_priv) >= 11 &&
+-	     (src_w > ICL_MAX_SRC_W || src_h > ICL_MAX_SRC_H ||
+-	      dst_w > ICL_MAX_DST_W || dst_h > ICL_MAX_DST_H)) ||
+-	    (DISPLAY_VER(dev_priv) < 11 &&
+-	     (src_w > SKL_MAX_SRC_W || src_h > SKL_MAX_SRC_H ||
+-	      dst_w > SKL_MAX_DST_W || dst_h > SKL_MAX_DST_H)))	{
++	if (src_w < min_src_w || src_h < min_src_h ||
++	    dst_w < min_dst_w || dst_h < min_dst_h ||
++	    src_w > max_src_w || src_h > max_src_h ||
++	    dst_w > max_dst_w || dst_h > max_dst_h) {
+ 		drm_dbg_kms(&dev_priv->drm,
+ 			    "scaler_user index %u.%u: src %ux%u dst %ux%u "
+ 			    "size is out of scaler range\n",
 -- 
 2.39.2
 
