@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE07D101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43B62C433EF;
-	Mon, 15 May 2023 17:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ACA101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FAF0C4339C;
+	Mon, 15 May 2023 17:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173168;
-	bh=0e1hVz1OfnBNAurXHdnbrowvGPbmelbq7rWmCHDdTWo=;
+	s=korg; t=1684173171;
+	bh=T/Zz5UIkW10aOfxXBaq89zgCFFGHVwIPW8esAUjMMGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuNCk5q2vf3H4Z3BS5WPD6V2BF/RNiZt2x3+yBTwkjaO121Xksg19OqdME/sO+Qjf
-	 zgn+kDY1kO+WQlap2QLwHpWQQ0V7MfSdVEU3QwmGvqFHjIH1rk13PUTw4L5z8DYO3t
-	 G7OMESg1VCi7626gi6wjxGu3Rfi2olIg8veJIUzE=
+	b=nWQIrT7PHTB87IET381gBjzh7/lhej5jtnHPCbxu6ery5ycMdpqU4Ti44zV7RQ2af
+	 7ra9Nha9eQ3JCgBt8eN4JVFSJjLanjcEZCT/K0jslB6uCWwoa1j8jHAXGUm77H2BHY
+	 2M8c7AHJJnD6DZitExyuyZAIi3Q22j9U1u3mPJj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tian Tao <tiantao6@hisilicon.com>,
-	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 5.10 379/381] drm/exynos: move to use request_irq by IRQF_NO_AUTOEN flag
-Date: Mon, 15 May 2023 18:30:30 +0200
-Message-Id: <20230515161754.079396066@linuxfoundation.org>
+	William Breathitt Gray <william.gray@linaro.org>
+Subject: [PATCH 5.4 001/282] counter: 104-quad-8: Fix race condition between FLAG and CNTR reads
+Date: Mon, 15 May 2023 18:26:19 +0200
+Message-Id: <20230515161722.202667889@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
-References: <20230515161736.775969473@linuxfoundation.org>
+In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
+References: <20230515161722.146344674@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,67 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tian Tao <tiantao6@hisilicon.com>
+From: William Breathitt Gray <william.gray@linaro.org>
 
-commit a4e5eed2c6a689ef2b6ad8d7ae86665c69039379 upstream.
+commit 4aa3b75c74603c3374877d5fd18ad9cc3a9a62ed upstream.
 
-After this patch cbe16f35bee68 genirq: Add IRQF_NO_AUTOEN for
-request_irq/nmi() is merged. request_irq() after setting
-IRQ_NOAUTOEN as below
+The Counter (CNTR) register is 24 bits wide, but we can have an
+effective 25-bit count value by setting bit 24 to the XOR of the Borrow
+flag and Carry flag. The flags can be read from the FLAG register, but a
+race condition exists: the Borrow flag and Carry flag are instantaneous
+and could change by the time the count value is read from the CNTR
+register.
 
-irq_set_status_flags(irq, IRQ_NOAUTOEN);
-request_irq(dev, irq...);
-can be replaced by request_irq() with IRQF_NO_AUTOEN flag.
+Since the race condition could result in an incorrect 25-bit count
+value, remove support for 25-bit count values from this driver;
+hard-coded maximum count values are replaced by a LS7267_CNTR_MAX define
+for consistency and clarity.
 
-v2:
-Fix the problem of using wrong flags
-
-Signed-off-by: Tian Tao <tiantao6@hisilicon.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Fixes: 28e5d3bb0325 ("iio: 104-quad-8: Add IIO support for the ACCES 104-QUAD-8")
+Cc: <stable@vger.kernel.org> # 6.1.x
+Cc: <stable@vger.kernel.org> # 6.2.x
+Link: https://lore.kernel.org/r/20230312231554.134858-1-william.gray@linaro.org/
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos5433_drm_decon.c |    4 ++--
- drivers/gpu/drm/exynos/exynos_drm_dsi.c       |    7 +++----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/counter/104-quad-8.c |   30 ++++--------------------------
+ 1 file changed, 4 insertions(+), 26 deletions(-)
 
---- a/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-+++ b/drivers/gpu/drm/exynos/exynos5433_drm_decon.c
-@@ -775,8 +775,8 @@ static int decon_conf_irq(struct decon_c
- 			return irq;
+--- a/drivers/counter/104-quad-8.c
++++ b/drivers/counter/104-quad-8.c
+@@ -57,10 +57,6 @@ struct quad8_iio {
+ 
+ #define QUAD8_REG_CHAN_OP 0x11
+ #define QUAD8_REG_INDEX_INPUT_LEVELS 0x16
+-/* Borrow Toggle flip-flop */
+-#define QUAD8_FLAG_BT BIT(0)
+-/* Carry Toggle flip-flop */
+-#define QUAD8_FLAG_CT BIT(1)
+ /* Error flag */
+ #define QUAD8_FLAG_E BIT(4)
+ /* Up/Down flag */
+@@ -97,9 +93,6 @@ static int quad8_read_raw(struct iio_dev
+ {
+ 	struct quad8_iio *const priv = iio_priv(indio_dev);
+ 	const int base_offset = priv->base + 2 * chan->channel;
+-	unsigned int flags;
+-	unsigned int borrow;
+-	unsigned int carry;
+ 	int i;
+ 
+ 	switch (mask) {
+@@ -110,12 +103,7 @@ static int quad8_read_raw(struct iio_dev
+ 			return IIO_VAL_INT;
  		}
- 	}
--	irq_set_status_flags(irq, IRQ_NOAUTOEN);
--	ret = devm_request_irq(ctx->dev, irq, handler, flags, "drm_decon", ctx);
-+	ret = devm_request_irq(ctx->dev, irq, handler,
-+			       flags | IRQF_NO_AUTOEN, "drm_decon", ctx);
- 	if (ret < 0) {
- 		dev_err(ctx->dev, "IRQ %s request failed\n", name);
- 		return ret;
---- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-@@ -1353,10 +1353,9 @@ static int exynos_dsi_register_te_irq(st
- 	}
  
- 	te_gpio_irq = gpio_to_irq(dsi->te_gpio);
--	irq_set_status_flags(te_gpio_irq, IRQ_NOAUTOEN);
+-		flags = inb(base_offset + 1);
+-		borrow = flags & QUAD8_FLAG_BT;
+-		carry = !!(flags & QUAD8_FLAG_CT);
+-
+-		/* Borrow XOR Carry effectively doubles count range */
+-		*val = (borrow ^ carry) << 24;
++		*val = 0;
  
- 	ret = request_threaded_irq(te_gpio_irq, exynos_dsi_te_irq_handler, NULL,
--					IRQF_TRIGGER_RISING, "TE", dsi);
-+				   IRQF_TRIGGER_RISING | IRQF_NO_AUTOEN, "TE", dsi);
- 	if (ret) {
- 		dev_err(dsi->dev, "request interrupt failed with %d\n", ret);
- 		gpio_free(dsi->te_gpio);
-@@ -1802,9 +1801,9 @@ static int exynos_dsi_probe(struct platf
- 	if (dsi->irq < 0)
- 		return dsi->irq;
+ 		mutex_lock(&priv->lock);
  
--	irq_set_status_flags(dsi->irq, IRQ_NOAUTOEN);
- 	ret = devm_request_threaded_irq(dev, dsi->irq, NULL,
--					exynos_dsi_irq, IRQF_ONESHOT,
-+					exynos_dsi_irq,
-+					IRQF_ONESHOT | IRQF_NO_AUTOEN,
- 					dev_name(dev), dsi);
- 	if (ret) {
- 		dev_err(dev, "failed to request dsi irq\n");
+@@ -639,19 +627,9 @@ static int quad8_count_read(struct count
+ {
+ 	struct quad8_iio *const priv = counter->priv;
+ 	const int base_offset = priv->base + 2 * count->id;
+-	unsigned int flags;
+-	unsigned int borrow;
+-	unsigned int carry;
+-	unsigned long position;
++	unsigned long position = 0;
+ 	int i;
+ 
+-	flags = inb(base_offset + 1);
+-	borrow = flags & QUAD8_FLAG_BT;
+-	carry = !!(flags & QUAD8_FLAG_CT);
+-
+-	/* Borrow XOR Carry effectively doubles count range */
+-	position = (unsigned long)(borrow ^ carry) << 24;
+-
+ 	mutex_lock(&priv->lock);
+ 
+ 	/* Reset Byte Pointer; transfer Counter to Output Latch */
+@@ -1204,8 +1182,8 @@ static ssize_t quad8_count_ceiling_read(
+ 
+ 	mutex_unlock(&priv->lock);
+ 
+-	/* By default 0x1FFFFFF (25 bits unsigned) is maximum count */
+-	return sprintf(buf, "33554431\n");
++	/* By default 0xFFFFFF (24 bits unsigned) is maximum count */
++	return sprintf(buf, "16777215\n");
+ }
+ 
+ static ssize_t quad8_count_ceiling_write(struct counter_device *counter,
 
 
