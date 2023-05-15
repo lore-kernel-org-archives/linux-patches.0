@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAA81772F
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB672C433D2;
-	Mon, 15 May 2023 18:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EFE1772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:01:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9E4C433EF;
+	Mon, 15 May 2023 18:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173714;
-	bh=Tsm850rU7/rC7EYIcmSHAI2raHqCOV1CYD7LlqRaxOs=;
+	s=korg; t=1684173717;
+	bh=G0tGC8k0SBDCDGJ6Iv4A5FGuN2gQNmpMbtGLNVHDqD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNnEexubjGdeG14jjk4j2gO/cqO5A9Z0t6G9iHfjLZr1pr7mcLF35xlwN3kkoT0YR
-	 2tDU9rzT9gYUb3so5/dJ8fldtdOqr5cUZXG9jOlcIUHrUKfkVvxy3ey+dmIYefUaTM
-	 cpDr1cjax3luUTRP76iougPkRcc+ZkAS1r4DCeok=
+	b=hh3Cit5jdj6/8oqUP+ll+73C3B+VadPGV92PbXNOCmd3an6crfe3rIWBtVag5hiSg
+	 KlTcLmIaONLyUjzE4J1UasP2EEmLyRdcH5tRxQoU4VHeZAkc3tOPmR4Z786tkOi4Zg
+	 SqNiDyMcuk/PVglCdXRtZ6EGdFPZh7ItpIDKJTeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 184/282] pwm: mtk-disp: Dont check the return code of pwmchip_remove()
-Date: Mon, 15 May 2023 18:29:22 +0200
-Message-Id: <20230515161727.789210341@linuxfoundation.org>
+Subject: [PATCH 5.4 167/282] clk: add missing of_node_put() in "assigned-clocks" property parsing
+Date: Mon, 15 May 2023 18:29:05 +0200
+Message-Id: <20230515161727.219072066@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,42 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Clément Léger <clement.leger@bootlin.com>
 
-[ Upstream commit 9b7b5736ffd5da6f8f6329ebe5f1829cbcf8afae ]
+[ Upstream commit 27a6e1b09a782517fddac91259970ac466a3f7b6 ]
 
-pwmchip_remove() returns always 0. Don't use the value to make it
-possible to eventually change the function to return void. Also the
-driver core ignores the return value of mtk_disp_pwm_remove().
+When returning from of_parse_phandle_with_args(), the np member of the
+of_phandle_args structure should be put after usage. Add missing
+of_node_put() calls in both __set_clk_parents() and __set_clk_rates().
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
-Stable-dep-of: 36dd7f530ae7 ("pwm: mtk-disp: Disable shadow registers before setting backlight values")
+Fixes: 86be408bfbd8 ("clk: Support for clock parents and rates assigned from device tree")
+Signed-off-by: Clément Léger <clement.leger@bootlin.com>
+Link: https://lore.kernel.org/r/20230131083227.10990-1-clement.leger@bootlin.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/clk/clk-conf.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index 83b8be0209b74..af63aaab8e153 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -240,13 +240,12 @@ static int mtk_disp_pwm_probe(struct platform_device *pdev)
- static int mtk_disp_pwm_remove(struct platform_device *pdev)
- {
- 	struct mtk_disp_pwm *mdp = platform_get_drvdata(pdev);
--	int ret;
+diff --git a/drivers/clk/clk-conf.c b/drivers/clk/clk-conf.c
+index 2ef819606c417..1a4e6340f95ce 100644
+--- a/drivers/clk/clk-conf.c
++++ b/drivers/clk/clk-conf.c
+@@ -33,9 +33,12 @@ static int __set_clk_parents(struct device_node *node, bool clk_supplier)
+ 			else
+ 				return rc;
+ 		}
+-		if (clkspec.np == node && !clk_supplier)
++		if (clkspec.np == node && !clk_supplier) {
++			of_node_put(clkspec.np);
+ 			return 0;
++		}
+ 		pclk = of_clk_get_from_provider(&clkspec);
++		of_node_put(clkspec.np);
+ 		if (IS_ERR(pclk)) {
+ 			if (PTR_ERR(pclk) != -EPROBE_DEFER)
+ 				pr_warn("clk: couldn't get parent clock %d for %pOF\n",
+@@ -48,10 +51,12 @@ static int __set_clk_parents(struct device_node *node, bool clk_supplier)
+ 		if (rc < 0)
+ 			goto err;
+ 		if (clkspec.np == node && !clk_supplier) {
++			of_node_put(clkspec.np);
+ 			rc = 0;
+ 			goto err;
+ 		}
+ 		clk = of_clk_get_from_provider(&clkspec);
++		of_node_put(clkspec.np);
+ 		if (IS_ERR(clk)) {
+ 			if (PTR_ERR(clk) != -EPROBE_DEFER)
+ 				pr_warn("clk: couldn't get assigned clock %d for %pOF\n",
+@@ -93,10 +98,13 @@ static int __set_clk_rates(struct device_node *node, bool clk_supplier)
+ 				else
+ 					return rc;
+ 			}
+-			if (clkspec.np == node && !clk_supplier)
++			if (clkspec.np == node && !clk_supplier) {
++				of_node_put(clkspec.np);
+ 				return 0;
++			}
  
--	ret = pwmchip_remove(&mdp->chip);
-+	pwmchip_remove(&mdp->chip);
- 	clk_unprepare(mdp->clk_mm);
- 	clk_unprepare(mdp->clk_main);
- 
--	return ret;
-+	return 0;
- }
- 
- static const struct mtk_pwm_data mt2701_pwm_data = {
+ 			clk = of_clk_get_from_provider(&clkspec);
++			of_node_put(clkspec.np);
+ 			if (IS_ERR(clk)) {
+ 				if (PTR_ERR(clk) != -EPROBE_DEFER)
+ 					pr_warn("clk: couldn't get clock %d for %pOF\n",
 -- 
 2.39.2
 
