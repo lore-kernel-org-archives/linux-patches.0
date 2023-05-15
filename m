@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54A9AFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B918DC433EF;
-	Mon, 15 May 2023 17:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C354FFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8A9CC43445;
+	Mon, 15 May 2023 17:26:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171579;
-	bh=Sl9uHhQsKqr1GZzNJuE9C36hdrfw1GyfWUq3AnEfEj4=;
+	s=korg; t=1684171582;
+	bh=bx0eOU8cEHI1Pi1NmAnC/S05NUAKobA7I3BEL882X5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sVMwsXGIjmG6fmPTra2qnlQpoRwFkPpdW6OyAaymMQOdMOYe/plIE1s3zawT7j8ci
-	 OFBaNC0BBhGmPZvgO0qdhkTXCyqHk3kCx/vf81nS9kNyCmTfvlIuDpfNw4p9Df+gc8
-	 IhmZx1X/GTJkoqZXEWBs5YBiaABxGPbVdNj7ml+E=
+	b=JHBA9k0ul0m5u93e1vdWFKNQCBmNLquBTG+ZAlERuhREFppAzVzcBJ1sQwMNOB488
+	 ZxPp0B4Xutt0hQHHdeWlt2QNNJGf4DIaX9M3nVUJLJtmJsO/7YrjwEPbm+kjJK1wMF
+	 A+f1Q9u8CPN0jBPTr1mlfaCu9EGgl/5RC45qN+IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhihao Cheng <chengzhihao1@huawei.com>,
+	=?UTF-8?q?M=C3=A5rten=20Lindahl?= <marten.lindahl@axis.com>,
 	Richard Weinberger <richard@nod.at>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/134] ubifs: Fix AA deadlock when setting xattr for encrypted file
-Date: Mon, 15 May 2023 18:28:00 +0200
-Message-Id: <20230515161703.024684686@linuxfoundation.org>
+Subject: [PATCH 5.15 004/134] ubifs: Fix memory leak in do_rename
+Date: Mon, 15 May 2023 18:28:01 +0200
+Message-Id: <20230515161703.060935007@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -35,184 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Mårten Lindahl <marten.lindahl@axis.com>
 
-[ Upstream commit a0c51565730729f0df2ee886e34b4da6d359a10b ]
+[ Upstream commit 3a36d20e012903f45714df2731261fdefac900cb ]
 
-Following process:
-vfs_setxattr(host)
-  ubifs_xattr_set
-    down_write(host_ui->xattr_sem)   <- lock first time
-      create_xattr
-        ubifs_new_inode(host)
-          fscrypt_prepare_new_inode(host)
-            fscrypt_policy_to_inherit(host)
-              if (IS_ENCRYPTED(inode))
-                fscrypt_require_key(host)
-                  fscrypt_get_encryption_info(host)
-                    ubifs_xattr_get(host)
-                      down_read(host_ui->xattr_sem) <- AA deadlock
+If renaming a file in an encrypted directory, function
+fscrypt_setup_filename allocates memory for a file name. This name is
+never used, and before returning to the caller the memory for it is not
+freed.
 
-, which may trigger an AA deadlock problem:
+When running kmemleak on it we see that it is registered as a leak. The
+report below is triggered by a simple program 'rename' that renames a
+file in an encrypted directory:
 
-[  102.620871] INFO: task setfattr:1599 blocked for more than 10 seconds.
-[  102.625298]       Not tainted 5.19.0-rc7-00001-gb666b6823ce0-dirty #711
-[  102.628732] task:setfattr        state:D stack:    0 pid: 1599
-[  102.628749] Call Trace:
-[  102.628753]  <TASK>
-[  102.628776]  __schedule+0x482/0x1060
-[  102.629964]  schedule+0x92/0x1a0
-[  102.629976]  rwsem_down_read_slowpath+0x287/0x8c0
-[  102.629996]  down_read+0x84/0x170
-[  102.630585]  ubifs_xattr_get+0xd1/0x370 [ubifs]
-[  102.630730]  ubifs_crypt_get_context+0x1f/0x30 [ubifs]
-[  102.630791]  fscrypt_get_encryption_info+0x7d/0x1c0
-[  102.630810]  fscrypt_policy_to_inherit+0x56/0xc0
-[  102.630817]  fscrypt_prepare_new_inode+0x35/0x160
-[  102.630830]  ubifs_new_inode+0xcc/0x4b0 [ubifs]
-[  102.630873]  ubifs_xattr_set+0x591/0x9f0 [ubifs]
-[  102.630961]  xattr_set+0x8c/0x3e0 [ubifs]
-[  102.631003]  __vfs_setxattr+0x71/0xc0
-[  102.631026]  vfs_setxattr+0x105/0x270
-[  102.631034]  do_setxattr+0x6d/0x110
-[  102.631041]  setxattr+0xa0/0xd0
-[  102.631087]  __x64_sys_setxattr+0x2f/0x40
+  unreferenced object 0xffff888101502840 (size 32):
+    comm "rename", pid 9404, jiffies 4302582475 (age 435.735s)
+    backtrace:
+      __kmem_cache_alloc_node
+      __kmalloc
+      fscrypt_setup_filename
+      do_rename
+      ubifs_rename
+      vfs_rename
+      do_renameat2
 
-Fetch a reproducer in [Link].
+To fix this we can remove the call to fscrypt_setup_filename as it's not
+needed.
 
-Just like ext4 does, which skips encrypting for inode with
-EXT4_EA_INODE_FL flag. Stop encypting xattr inode for ubifs.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216260
-Fixes: f4e3634a3b64222 ("ubifs: Fix races between xattr_{set|get} ...")
-Fixes: d475a507457b5ca ("ubifs: Add skeleton for fscrypto")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Fixes: 278d9a243635f26 ("ubifs: Rename whiteout atomically")
+Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Signed-off-by: Mårten Lindahl <marten.lindahl@axis.com>
+Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Richard Weinberger <richard@nod.at>
-Stable-dep-of: 3a36d20e0129 ("ubifs: Fix memory leak in do_rename")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ubifs/dir.c   | 25 ++++++++++++++-----------
- fs/ubifs/ubifs.h |  2 +-
- fs/ubifs/xattr.c |  2 +-
- 3 files changed, 16 insertions(+), 13 deletions(-)
+ fs/ubifs/dir.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
 diff --git a/fs/ubifs/dir.c b/fs/ubifs/dir.c
-index 7717d23906dbe..005566bc6dc13 100644
+index 005566bc6dc13..6a054df8b991d 100644
 --- a/fs/ubifs/dir.c
 +++ b/fs/ubifs/dir.c
-@@ -68,13 +68,14 @@ static int inherit_flags(const struct inode *dir, umode_t mode)
-  * @c: UBIFS file-system description object
-  * @dir: parent directory inode
-  * @mode: inode mode flags
-+ * @is_xattr: whether the inode is xattr inode
-  *
-  * This function finds an unused inode number, allocates new inode and
-  * initializes it. Returns new inode in case of success and an error code in
-  * case of failure.
-  */
- struct inode *ubifs_new_inode(struct ubifs_info *c, struct inode *dir,
--			      umode_t mode)
-+			      umode_t mode, bool is_xattr)
- {
- 	int err;
+@@ -358,7 +358,6 @@ static struct inode *create_whiteout(struct inode *dir, struct dentry *dentry)
+ 	umode_t mode = S_IFCHR | WHITEOUT_MODE;
  	struct inode *inode;
-@@ -99,10 +100,12 @@ struct inode *ubifs_new_inode(struct ubifs_info *c, struct inode *dir,
- 			 current_time(inode);
- 	inode->i_mapping->nrpages = 0;
+ 	struct ubifs_info *c = dir->i_sb->s_fs_info;
+-	struct fscrypt_name nm;
  
--	err = fscrypt_prepare_new_inode(dir, inode, &encrypted);
--	if (err) {
--		ubifs_err(c, "fscrypt_prepare_new_inode failed: %i", err);
--		goto out_iput;
-+	if (!is_xattr) {
-+		err = fscrypt_prepare_new_inode(dir, inode, &encrypted);
-+		if (err) {
-+			ubifs_err(c, "fscrypt_prepare_new_inode failed: %i", err);
-+			goto out_iput;
-+		}
- 	}
+ 	/*
+ 	 * Create an inode('nlink = 1') for whiteout without updating journal,
+@@ -369,10 +368,6 @@ static struct inode *create_whiteout(struct inode *dir, struct dentry *dentry)
+ 	dbg_gen("dent '%pd', mode %#hx in dir ino %lu",
+ 		dentry, mode, dir->i_ino);
  
- 	switch (mode & S_IFMT) {
-@@ -309,7 +312,7 @@ static int ubifs_create(struct user_namespace *mnt_userns, struct inode *dir,
- 
- 	sz_change = CALC_DENT_SIZE(fname_len(&nm));
- 
--	inode = ubifs_new_inode(c, dir, mode);
-+	inode = ubifs_new_inode(c, dir, mode, false);
+-	err = fscrypt_setup_filename(dir, &dentry->d_name, 0, &nm);
+-	if (err)
+-		return ERR_PTR(err);
+-
+ 	inode = ubifs_new_inode(c, dir, mode, false);
  	if (IS_ERR(inode)) {
  		err = PTR_ERR(inode);
- 		goto out_fname;
-@@ -370,7 +373,7 @@ static struct inode *create_whiteout(struct inode *dir, struct dentry *dentry)
- 	if (err)
- 		return ERR_PTR(err);
- 
--	inode = ubifs_new_inode(c, dir, mode);
-+	inode = ubifs_new_inode(c, dir, mode, false);
- 	if (IS_ERR(inode)) {
- 		err = PTR_ERR(inode);
- 		goto out_free;
-@@ -462,7 +465,7 @@ static int ubifs_tmpfile(struct user_namespace *mnt_userns, struct inode *dir,
- 		return err;
- 	}
- 
--	inode = ubifs_new_inode(c, dir, mode);
-+	inode = ubifs_new_inode(c, dir, mode, false);
- 	if (IS_ERR(inode)) {
- 		err = PTR_ERR(inode);
- 		goto out_budg;
-@@ -1005,7 +1008,7 @@ static int ubifs_mkdir(struct user_namespace *mnt_userns, struct inode *dir,
- 
- 	sz_change = CALC_DENT_SIZE(fname_len(&nm));
- 
--	inode = ubifs_new_inode(c, dir, S_IFDIR | mode);
-+	inode = ubifs_new_inode(c, dir, S_IFDIR | mode, false);
- 	if (IS_ERR(inode)) {
- 		err = PTR_ERR(inode);
- 		goto out_fname;
-@@ -1092,7 +1095,7 @@ static int ubifs_mknod(struct user_namespace *mnt_userns, struct inode *dir,
- 
- 	sz_change = CALC_DENT_SIZE(fname_len(&nm));
- 
--	inode = ubifs_new_inode(c, dir, mode);
-+	inode = ubifs_new_inode(c, dir, mode, false);
- 	if (IS_ERR(inode)) {
- 		kfree(dev);
- 		err = PTR_ERR(inode);
-@@ -1174,7 +1177,7 @@ static int ubifs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
- 
- 	sz_change = CALC_DENT_SIZE(fname_len(&nm));
- 
--	inode = ubifs_new_inode(c, dir, S_IFLNK | S_IRWXUGO);
-+	inode = ubifs_new_inode(c, dir, S_IFLNK | S_IRWXUGO, false);
- 	if (IS_ERR(inode)) {
- 		err = PTR_ERR(inode);
- 		goto out_fname;
-diff --git a/fs/ubifs/ubifs.h b/fs/ubifs/ubifs.h
-index efbb4554a4a6f..398551bef5986 100644
---- a/fs/ubifs/ubifs.h
-+++ b/fs/ubifs/ubifs.h
-@@ -2002,7 +2002,7 @@ int ubifs_update_time(struct inode *inode, struct timespec64 *time, int flags);
- 
- /* dir.c */
- struct inode *ubifs_new_inode(struct ubifs_info *c, struct inode *dir,
--			      umode_t mode);
-+			      umode_t mode, bool is_xattr);
- int ubifs_getattr(struct user_namespace *mnt_userns, const struct path *path, struct kstat *stat,
- 		  u32 request_mask, unsigned int flags);
- int ubifs_check_dir_empty(struct inode *dir);
-diff --git a/fs/ubifs/xattr.c b/fs/ubifs/xattr.c
-index e4f193eae4b2b..9ff2614bdeca0 100644
---- a/fs/ubifs/xattr.c
-+++ b/fs/ubifs/xattr.c
-@@ -110,7 +110,7 @@ static int create_xattr(struct ubifs_info *c, struct inode *host,
- 	if (err)
- 		return err;
- 
--	inode = ubifs_new_inode(c, host, S_IFREG | S_IRWXUGO);
-+	inode = ubifs_new_inode(c, host, S_IFREG | S_IRWXUGO, true);
- 	if (IS_ERR(inode)) {
- 		err = PTR_ERR(inode);
- 		goto out_budg;
+@@ -395,7 +390,6 @@ static struct inode *create_whiteout(struct inode *dir, struct dentry *dentry)
+ 	make_bad_inode(inode);
+ 	iput(inode);
+ out_free:
+-	fscrypt_free_filename(&nm);
+ 	ubifs_err(c, "cannot create whiteout file, error %d", err);
+ 	return ERR_PTR(err);
+ }
 -- 
 2.39.2
 
