@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A637FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F80C433D2;
-	Mon, 15 May 2023 17:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629A2FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C24C433D2;
+	Mon, 15 May 2023 17:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171347;
-	bh=tPSVz4NBhSMOYeOgTzwDoMxs1IxWrZOBVBJI9KE2Op8=;
+	s=korg; t=1684171351;
+	bh=ryAdVc9K59P8Wlf7GrkyPM5m24cLx8P0TkQ/L740pGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g6ktQme2uEGEHXhgkqROzEKKBOFaeGxz3QcztTH11EHXEeuzkauq05atl71hG4UG5
-	 wO5ahVMeDnaNXHM6CPlkRxb4G5yTAJbZpAd6bM1SXqwfa4CK3P8byBGeEjEZ7mAnqZ
-	 iHo9ubEH9cKAw43Sm52aZZIt+IuUCycWvF0IIIuU=
+	b=Xa3D18qXBW3AkZ0Lda65nJS8UH5HU5Lv0XXtUsQo3dzsZGgUvsKB3nedtb2LybLPp
+	 BrfM/AigmLawQRBoqlWIgYR9eXHywgkvfDRMKxYGDgN4sBa7NltqwRdwj/LSlXrYXB
+	 /p9Pk2fSyQx6RewjUGYTsIyVR9j222G7lA8suUog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jianmin Lv <lvjianmin@loongson.cn>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.2 181/242] irqchip/loongson-pch-pic: Fix pch_pic_acpi_init calling
-Date: Mon, 15 May 2023 18:28:27 +0200
-Message-Id: <20230515161727.304047490@linuxfoundation.org>
+Subject: [PATCH 6.2 182/242] irqchip/loongson-pch-pic: Fix registration of syscore_ops
+Date: Mon, 15 May 2023 18:28:28 +0200
+Message-Id: <20230515161727.332873295@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,66 +36,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Jianmin Lv <lvjianmin@loongson.cn>
 
-commit 48ce2d722f7f108f27bedddf54bee3423a57ce57 upstream.
+commit c84efbba46901b187994558ee0edb15f7076c9a7 upstream.
 
-For dual-bridges scenario, pch_pic_acpi_init() will be called
-in following path:
+When support suspend/resume for loongson-pch-pic, the syscore_ops
+is registered twice in dual-bridges machines where there are two
+pch-pic IRQ domains. Repeated registration of an same syscore_ops
+broke syscore_ops_list, so the patch will corret it.
 
-cpuintc_acpi_init
-  acpi_cascade_irqdomain_init(in cpuintc driver)
-    acpi_table_parse_madt
-      eiointc_parse_madt
-        eiointc_acpi_init /* this will be called two times
-                             correspondingto parsing two
-                             eiointc entries in MADT under
-                             dual-bridges scenario*/
-          acpi_cascade_irqdomain_init(in eiointc driver)
-            acpi_table_parse_madt
-              pch_pic_parse_madt
-                pch_pic_acpi_init /* this will be called depend
-                                     on valid parent IRQ domain
-                                     handle for one or two times
-                                     corresponding to parsing
-                                     two pchpic entries in MADT
-                                     druring calling
-                                     eiointc_acpi_init() under
-                                     dual-bridges scenario*/
-
-During the first eiointc_acpi_init() calling, the
-pch_pic_acpi_init() will be called just one time since only
-one valid parent IRQ domain handle will be found for current
-eiointc IRQ domain.
-
-During the second eiointc_acpi_init() calling, the
-pch_pic_acpi_init() will be called two times since two valid
-parent IRQ domain handles will be found. So in pch_pic_acpi_init(),
-we must have a reasonable way to prevent from creating second same
-pch_pic IRQ domain.
-
-The patch matches gsi base information in created pch_pic IRQ
-domains to check if the target domain has been created to avoid the
-bug mentioned above.
-
+Fixes: 1ed008a2c331 ("irqchip/loongson-pch-pic: Add suspend/resume support")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230407083453.6305-6-lvjianmin@loongson.cn
+Link: https://lore.kernel.org/r/20230407083453.6305-5-lvjianmin@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-loongson-pch-pic.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/irqchip/irq-loongson-pch-pic.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/irqchip/irq-loongson-pch-pic.c b/drivers/irqchip/irq-loongson-pch-pic.c
+index 437f1af693d0..64fa67d4ee7a 100644
 --- a/drivers/irqchip/irq-loongson-pch-pic.c
 +++ b/drivers/irqchip/irq-loongson-pch-pic.c
-@@ -403,6 +403,9 @@ int __init pch_pic_acpi_init(struct irq_
- 	int ret, vec_base;
- 	struct fwnode_handle *domain_handle;
+@@ -311,7 +311,8 @@ static int pch_pic_init(phys_addr_t addr, unsigned long size, int vec_base,
+ 	pch_pic_handle[nr_pics] = domain_handle;
+ 	pch_pic_priv[nr_pics++] = priv;
  
-+	if (find_pch_pic(acpi_pchpic->gsi_base) >= 0)
-+		return 0;
-+
- 	vec_base = acpi_pchpic->gsi_base - GSI_MIN_PCH_IRQ;
+-	register_syscore_ops(&pch_pic_syscore_ops);
++	if (nr_pics == 1)
++		register_syscore_ops(&pch_pic_syscore_ops);
  
- 	domain_handle = irq_domain_alloc_fwnode(&acpi_pchpic->address);
+ 	return 0;
+ 
+-- 
+2.40.1
+
 
 
