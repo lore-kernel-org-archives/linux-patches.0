@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C454BFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:55:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320A6C4339B;
-	Mon, 15 May 2023 16:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD77FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:55:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429CAC433A0;
+	Mon, 15 May 2023 16:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169744;
-	bh=neLtdfMpmsdmBRxTrUgi8t5twzINJSbSqDdLgByc4zY=;
+	s=korg; t=1684169747;
+	bh=CT4FyBRv6zvpjFV7hoAeHAaUF0sHSKetItBxJCBNlCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q2+zsi3NApGtWI0RzZIY4LupRk7/2bvsmeYx5IR95C3bJ9r5iKv6Hah413V3ks0Yg
-	 SebMRLHNLD1DfpNAUmMZMB3ppfpghfRYUGAla+TwqItI5+yvY5Rhff7u4ia73+GGhD
-	 Tj59OeT6eQRveLEa28ZIhwYt/GD9BCllOI133TXw=
+	b=JXOwTNnIsg0+1cFyIuR6JcvPq2H1Qt1pfs6FbjX3getPv4CfLyT1S/q+bqWvlTtZl
+	 pO2wzTOjlU1ibCHfk4z6PhgHB/D9McHJNANCp1Z8YOr+wYrGxU2D2KJChpwrUB/k4w
+	 wUhVoyLv+Yk1dxXfdS0iz33X/dhdCdGKrfU6slcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylvain Ouellet <souellet@genetec.com>,
-	Olivier Bacon <obacon@genetec.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 117/246] crypto: engine - fix crypto_queue backlog handling
-Date: Mon, 15 May 2023 18:25:29 +0200
-Message-Id: <20230515161726.082523473@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Bharath SM <bharathsm@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.3 150/246] SMB3: force unmount was failing to close deferred close files
+Date: Mon, 15 May 2023 18:26:02 +0200
+Message-Id: <20230515161727.052596831@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,87 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Bacon <olivierb89@gmail.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 4140aafcff167b5b9e8dae6a1709a6de7cac6f74 ]
+commit 2cb6f968775a9fd60c90a6042b9550bcec3ea087 upstream.
 
-CRYPTO_TFM_REQ_MAY_BACKLOG tells the crypto driver that it should
-internally backlog requests until the crypto hw's queue becomes
-full. At that point, crypto_engine backlogs the request and returns
--EBUSY. Calling driver such as dm-crypt then waits until the
-complete() function is called with a status of -EINPROGRESS before
-sending a new request.
+In investigating a failure with xfstest generic/392 it
+was noticed that mounts were reusing a superblock that should
+already have been freed. This turned out to be related to
+deferred close files keeping a reference count until the
+closetimeo expired.
 
-The problem lies in the call to complete() with a value of -EINPROGRESS
-that is made when a backlog item is present on the queue. The call is
-done before the successful execution of the crypto request. In the case
-that do_one_request() returns < 0 and the retry support is available,
-the request is put back in the queue. This leads upper drivers to send
-a new request even if the queue is still full.
+Currently the only way an fs knows that mount is beginning is
+when force unmount is called, but when this, ie umount_begin(),
+is called all deferred close files on the share (tree
+connection) should be closed immediately (unless shared by
+another mount) to avoid using excess resources on the server
+and to avoid reusing a superblock which should already be freed.
 
-The problem can be reproduced by doing a large dd into a crypto
-dm-crypt device. This is pretty easy to see when using
-Freescale CAAM crypto driver and SWIOTLB dma. Since the actual amount
-of requests that can be hold in the queue is unlimited we get IOs error
-and dma allocation.
+In umount_begin, close all deferred close handles for that
+share if this is the last mount using that share on this
+client (ie send the SMB3 close request over the wire for those
+that have been already closed by the app but that we have
+kept a handle lease open for and have not sent closes to the
+server for yet).
 
-The fix is to call complete with a value of -EINPROGRESS only if
-the request is not enqueued back in crypto_queue. This is done
-by calling complete() later in the code. In order to delay the decision,
-crypto_queue is modified to correctly set the backlog pointer
-when a request is enqueued back.
-
-Fixes: 6a89f492f8e5 ("crypto: engine - support for parallel requests based on retry mechanism")
-Co-developed-by: Sylvain Ouellet <souellet@genetec.com>
-Signed-off-by: Sylvain Ouellet <souellet@genetec.com>
-Signed-off-by: Olivier Bacon <obacon@genetec.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: David Howells <dhowells@redhat.com>
+Acked-by: Bharath SM <bharathsm@microsoft.com>
+Cc: <stable@vger.kernel.org>
+Fixes: 78c09634f7dc ("Cifs: Fix kernel oops caused by deferred close for files.")
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- crypto/algapi.c        | 3 +++
- crypto/crypto_engine.c | 6 +++---
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ fs/cifs/cifsfs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/crypto/algapi.c b/crypto/algapi.c
-index 9de0677b3643d..60b98d2c400e3 100644
---- a/crypto/algapi.c
-+++ b/crypto/algapi.c
-@@ -963,6 +963,9 @@ EXPORT_SYMBOL_GPL(crypto_enqueue_request);
- void crypto_enqueue_request_head(struct crypto_queue *queue,
- 				 struct crypto_async_request *request)
- {
-+	if (unlikely(queue->qlen >= queue->max_qlen))
-+		queue->backlog = queue->backlog->prev;
-+
- 	queue->qlen++;
- 	list_add(&request->list, &queue->list);
- }
-diff --git a/crypto/crypto_engine.c b/crypto/crypto_engine.c
-index 21f7916151145..74fcc08970411 100644
---- a/crypto/crypto_engine.c
-+++ b/crypto/crypto_engine.c
-@@ -129,9 +129,6 @@ static void crypto_pump_requests(struct crypto_engine *engine,
- 	if (!engine->retry_support)
- 		engine->cur_req = async_req;
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -744,6 +744,7 @@ static void cifs_umount_begin(struct sup
+ 	spin_unlock(&tcon->tc_lock);
+ 	spin_unlock(&cifs_tcp_ses_lock);
  
--	if (backlog)
--		crypto_request_complete(backlog, -EINPROGRESS);
--
- 	if (engine->busy)
- 		was_busy = true;
- 	else
-@@ -217,6 +214,9 @@ static void crypto_pump_requests(struct crypto_engine *engine,
- 	crypto_request_complete(async_req, ret);
- 
- retry:
-+	if (backlog)
-+		crypto_request_complete(backlog, -EINPROGRESS);
-+
- 	/* If retry mechanism is supported, send new requests to engine */
- 	if (engine->retry_support) {
- 		spin_lock_irqsave(&engine->queue_lock, flags);
--- 
-2.39.2
-
++	cifs_close_all_deferred_files(tcon);
+ 	/* cancel_brl_requests(tcon); */ /* BB mark all brl mids as exiting */
+ 	/* cancel_notify_requests(tcon); */
+ 	if (tcon->ses && tcon->ses->server) {
 
 
