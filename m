@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D76BFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED4CC433EF;
-	Mon, 15 May 2023 16:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41D7FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04846C433D2;
+	Mon, 15 May 2023 16:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168953;
-	bh=p5zsU5kZrxZpViCNFvKDg1mDCLuxn649sm/xwYbrpAs=;
+	s=korg; t=1684168956;
+	bh=z5BKu/m3p22eDF8lFsgJC456G83HtzdywNYcJohi4GI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=noed4WteVt9m0SFZxzJxJfWgItQIdlkZD0144/o7YdEeUY6F7zaLrig8JRcSiUOfT
-	 lbCgls3jO2/6Isx+QWTSvLceM/lnyjTSkw/xaKMd33lvVFeXdd+V57k/KWTX/bcJvS
-	 ozl5MwsnKBeDnyRL+8xSdJZQnvtgc33s1HOnbf44=
+	b=dH9qfGCUZcaG882XeQNFk3tGlV4dwwoD7SuqH16O+rJAd3KfynVIZ4u2WRT8ihpGc
+	 sMO7x1VdNeZ6rAt9mz2Qy+foXR5plmPA9MmUvFzyNa48ExYmS4Lk8MvizEMJqdbwvc
+	 aGjzi8DjaRXEtCDwoAUU2br5sHKqaU/go1oArlFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Dhruva Gole <d-gole@ti.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 087/191] spi: qup: Dont skip cleanup in removes error path
-Date: Mon, 15 May 2023 18:25:24 +0200
-Message-Id: <20230515161710.430919100@linuxfoundation.org>
+Subject: [PATCH 4.19 096/191] spi: cadence-quadspi: fix suspend-resume implementations
+Date: Mon, 15 May 2023 18:25:33 +0200
+Message-Id: <20230515161710.768034154@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,60 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Dhruva Gole <d-gole@ti.com>
 
-[ Upstream commit 61f49171a43ab1f80c73c5c88c508770c461e0f2 ]
+[ Upstream commit 2087e85bb66ee3652dafe732bb9b9b896229eafc ]
 
-Returning early in a platform driver's remove callback is wrong. In this
-case the dma resources are not released in the error path. this is never
-retried later and so this is a permanent leak. To fix this, only skip
-hardware disabling if waking the device fails.
+The cadence QSPI driver misbehaves after performing a full system suspend
+resume:
+...
+spi-nor spi0.0: resume() failed
+...
+This results in a flash connected via OSPI interface after system suspend-
+resume to be unusable.
+fix these suspend and resume functions.
 
-Fixes: 64ff247a978f ("spi: Add Qualcomm QUP SPI controller support")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230330210341.2459548-2-u.kleine-koenig@pengutronix.de
+Fixes: 140623410536 ("mtd: spi-nor: Add driver for Cadence Quad SPI Flash Controller")
+Signed-off-by: Dhruva Gole <d-gole@ti.com>
+Link: https://lore.kernel.org/r/20230417091027.966146-3-d-gole@ti.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qup.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/mtd/spi-nor/cadence-quadspi.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index e8009f8c212c0..defe959884dae 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -1249,18 +1249,22 @@ static int spi_qup_remove(struct platform_device *pdev)
- 	struct spi_qup *controller = spi_master_get_devdata(master);
- 	int ret;
+diff --git a/drivers/mtd/spi-nor/cadence-quadspi.c b/drivers/mtd/spi-nor/cadence-quadspi.c
+index 16ac2e3c351df..d5c6b91fd1139 100644
+--- a/drivers/mtd/spi-nor/cadence-quadspi.c
++++ b/drivers/mtd/spi-nor/cadence-quadspi.c
+@@ -1412,17 +1412,30 @@ static int cqspi_remove(struct platform_device *pdev)
+ static int cqspi_suspend(struct device *dev)
+ {
+ 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
++	struct spi_master *master = dev_get_drvdata(dev);
++	int ret;
  
--	ret = pm_runtime_resume_and_get(&pdev->dev);
--	if (ret < 0)
--		return ret;
-+	ret = pm_runtime_get_sync(&pdev->dev);
++	ret = spi_master_suspend(master);
+ 	cqspi_controller_enable(cqspi, 0);
+-	return 0;
++
++	clk_disable_unprepare(cqspi->clk);
++
++	return ret;
+ }
  
--	ret = spi_qup_set_state(controller, QUP_STATE_RESET);
--	if (ret)
--		return ret;
-+	if (ret >= 0) {
-+		ret = spi_qup_set_state(controller, QUP_STATE_RESET);
-+		if (ret)
-+			dev_warn(&pdev->dev, "failed to reset controller (%pe)\n",
-+				 ERR_PTR(ret));
+ static int cqspi_resume(struct device *dev)
+ {
+ 	struct cqspi_st *cqspi = dev_get_drvdata(dev);
++	struct spi_master *master = dev_get_drvdata(dev);
  
--	spi_qup_release_dma(master);
-+		clk_disable_unprepare(controller->cclk);
-+		clk_disable_unprepare(controller->iclk);
-+	} else {
-+		dev_warn(&pdev->dev, "failed to resume, skip hw disable (%pe)\n",
-+			 ERR_PTR(ret));
-+	}
+-	cqspi_controller_enable(cqspi, 1);
+-	return 0;
++	clk_prepare_enable(cqspi->clk);
++	cqspi_wait_idle(cqspi);
++	cqspi_controller_init(cqspi);
++
++	cqspi->current_cs = -1;
++	cqspi->sclk = 0;
++
++	return spi_master_resume(master);
+ }
  
--	clk_disable_unprepare(controller->cclk);
--	clk_disable_unprepare(controller->iclk);
-+	spi_qup_release_dma(master);
- 
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+ static const struct dev_pm_ops cqspi__dev_pm_ops = {
 -- 
 2.39.2
 
