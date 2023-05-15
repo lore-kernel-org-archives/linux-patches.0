@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1F1FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:55:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8934C433EF;
-	Mon, 15 May 2023 16:55:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7803DFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3599C4339C;
+	Mon, 15 May 2023 16:55:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169757;
-	bh=1KPsK5CooWq2LIUUkVehmIvDtU8paAYcvb+8wlSp0d0=;
+	s=korg; t=1684169760;
+	bh=2X4k2/iIks3FseQkiid0IWUxRMlvGIKBkbXIxiXk09Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwb0Px5oEdmD/jC/6T8bdoO+BjG41ofUhiRaCINFHOVXx5xJe7kWFzfgG39KYVNGR
-	 OvJ1M6fBsbCPdde3ZJInMPSviSZ+GfteXNw5secp0CXQ4lj0TjZu6xf3k4p0C2QdZ1
-	 K5foV9SJmcpqjEQx4cKV0/qTBdEqdLSwyrKALL54=
+	b=L1+0kBjcf8+AAXeRgGb004ZX54MiEY0LwL8VpDYCYLmAItBHR+ru8OcDCiJTcQVSd
+	 a7C+C8ha4c1d0WB8gSisoUjLN3iTfT0DcCzbKSTtMwnZqzP4h/yIJIrFu2Nsv5kd9f
+	 eY9TQEV77kUC3L1SYWVujWvBzu5trEa/dUpzlGbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.3 161/246] remoteproc: rcar_rproc: Call of_node_put() on iteration error
-Date: Mon, 15 May 2023 18:26:13 +0200
-Message-Id: <20230515161727.466467941@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 6.3 162/246] sysctl: clarify register_sysctl_init() base directory order
+Date: Mon, 15 May 2023 18:26:14 +0200
+Message-Id: <20230515161727.495484545@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -33,55 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathieu Poirier <mathieu.poirier@linaro.org>
+From: Luis Chamberlain <mcgrof@kernel.org>
 
-commit f8bae637d3d5e082b4ced71e28b16eb3ee0683c1 upstream.
+commit 228b09de936395ddd740df3522ea35ae934830d8 upstream.
 
-Function of_phandle_iterator_next() calls of_node_put() on the last
-device_node it iterated over, but when the loop exits prematurely it has
-to be called explicitly.
+Relatively new docs which I added which hinted the base directories needed
+to be created before is wrong, remove that incorrect comment. This has been
+hinted before by Eric twice already [0] [1], I had just not verified that
+until now. Now that I've verified that updates the docs to relax the context
+described.
 
-Fixes: 285892a74f13 ("remoteproc: Add Renesas rcar driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Link: https://lore.kernel.org/r/20230320221826.2728078-4-mathieu.poirier@linaro.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+[0] https://lkml.kernel.org/r/875ys0azt8.fsf@email.froward.int.ebiederm.org
+[1] https://lkml.kernel.org/r/87ftbiud6s.fsf@x220.int.ebiederm.org
+
+Cc: stable@vger.kernel.org # v5.17
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Suggested-by: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/rcar_rproc.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/proc/proc_sysctl.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
---- a/drivers/remoteproc/rcar_rproc.c
-+++ b/drivers/remoteproc/rcar_rproc.c
-@@ -62,13 +62,16 @@ static int rcar_rproc_prepare(struct rpr
- 
- 		rmem = of_reserved_mem_lookup(it.node);
- 		if (!rmem) {
-+			of_node_put(it.node);
- 			dev_err(&rproc->dev,
- 				"unable to acquire memory-region\n");
- 			return -EINVAL;
- 		}
- 
--		if (rmem->base > U32_MAX)
-+		if (rmem->base > U32_MAX) {
-+			of_node_put(it.node);
- 			return -EINVAL;
-+		}
- 
- 		/* No need to translate pa to da, R-Car use same map */
- 		da = rmem->base;
-@@ -79,8 +82,10 @@ static int rcar_rproc_prepare(struct rpr
- 					   rcar_rproc_mem_release,
- 					   it.node->name);
- 
--		if (!mem)
-+		if (!mem) {
-+			of_node_put(it.node);
- 			return -ENOMEM;
-+		}
- 
- 		rproc_add_carveout(rproc, mem);
- 	}
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -1445,10 +1445,7 @@ EXPORT_SYMBOL(register_sysctl);
+  * register_sysctl() failing on init are extremely low, and so for both reasons
+  * this function does not return any error as it is used by initialization code.
+  *
+- * Context: Can only be called after your respective sysctl base path has been
+- * registered. So for instance, most base directories are registered early on
+- * init before init levels are processed through proc_sys_init() and
+- * sysctl_init_bases().
++ * Context: if your base directory does not exist it will be created for you.
+  */
+ void __init __register_sysctl_init(const char *path, struct ctl_table *table,
+ 				 const char *table_name)
 
 
