@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 274FFDF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:43:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 891C0C433D2;
-	Mon, 15 May 2023 16:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D85DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:43:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB91C433D2;
+	Mon, 15 May 2023 16:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168984;
-	bh=XnOG/vF+ep9a0a+mcPnHZaKF1qiIkYB0kfNRk3wVojU=;
+	s=korg; t=1684168987;
+	bh=YJTuHAm5gZhb505aLdBMGVtXd/cNLHfe1Y27md1sYkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fH0nZdrd6wXP7O2u+19PG0ZExd08uKbtjrHqKTLKrMIQ+zqh5A1JgrAZ31fN5ddvj
-	 zuqfRZhyZ4YYDU3S3sZFgD6RkjjE6fjLEv8XXIHqc/jC214uXoNSMrhbMp+UvIiU4v
-	 N9wE2yxCIUwuAMBp/K16JsilNd22/pzR4QveDKPA=
+	b=nZTKv+Bh1orB1BpMAmf94ZVIaT7ySSbRVj6U4QtMx13qD9zORbXw2QWgs7IRk/lr2
+	 KonF0qTdjihH29UhKHbmvmqdL7PwPG+TK1iqLkRN3023Ajk4Z785dPPpg/7Fgu+tWs
+	 A/IGh+UGWLbXeaiEpWs2BKlLTwNYOaZJl+o+9plE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Joakim Tjernlund <Joakim.Tjernlund@infinera.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 105/191] powerpc/mpc512x: fix resource printk format warning
-Date: Mon, 15 May 2023 18:25:42 +0200
-Message-Id: <20230515161711.065495987@linuxfoundation.org>
+Subject: [PATCH 4.19 088/191] spi: fsl-spi: Fix CPM/QE mode Litte Endian
+Date: Mon, 15 May 2023 18:25:25 +0200
+Message-Id: <20230515161710.461599830@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,44 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 7538c97e2b80ff6b7a8ea2ecf16a04355461b439 ]
+[ Upstream commit c20c57d9868d7f9fd1b2904c7801b07e128f6322 ]
 
-Use "%pa" format specifier for resource_size_t to avoid a compiler
-printk format warning.
+CPM has the same problem as QE so for CPM also use the fix added
+by commit 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian"):
 
-../arch/powerpc/platforms/512x/clock-commonclk.c: In function 'mpc5121_clk_provide_backwards_compat':
-../arch/powerpc/platforms/512x/clock-commonclk.c:989:44: error: format '%x' expects argument of type 'unsigned int', but argument 4 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
-  989 |         snprintf(devname, sizeof(devname), "%08x.%s", res.start, np->name); \
-      |                                            ^~~~~~~~~  ~~~~~~~~~
-      |                                                          |
-      |                                                          resource_size_t {aka long long unsigned int}
+  CPM mode uses Little Endian so words > 8 bits are byte swapped.
+  Workaround this by always enforcing wordsize 8 for 16 and 32 bits
+  words. Unfortunately this will not work for LSB transfers
+  where wordsize is > 8 bits so disable these for now.
 
-Prevents 24 such warnings.
+Also limit the workaround to 16 and 32 bits words because it can
+only work for multiples of 8-bits.
 
-Fixes: 01f25c371658 ("clk: mpc512x: add backwards compat to the CCF code")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230223070116.660-2-rdunlap@infradead.org
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
+Fixes: 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian")
+Link: https://lore.kernel.org/r/1b7d3e84b1128f42c1887dd2fb9cdf390f541bc1.1680371809.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/512x/clock-commonclk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-fsl-spi.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/platforms/512x/clock-commonclk.c b/arch/powerpc/platforms/512x/clock-commonclk.c
-index b3097fe6441b9..1019d78e44bb4 100644
---- a/arch/powerpc/platforms/512x/clock-commonclk.c
-+++ b/arch/powerpc/platforms/512x/clock-commonclk.c
-@@ -985,7 +985,7 @@ static void mpc5121_clk_provide_migration_support(void)
+diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
+index cd784552de7f1..479d10dc6cb84 100644
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -205,8 +205,8 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 				struct spi_device *spi,
+ 				int bits_per_word)
+ {
+-	/* QE uses Little Endian for words > 8
+-	 * so transform all words > 8 into 8 bits
++	/* CPM/QE uses Little Endian for words > 8
++	 * so transform 16 and 32 bits words into 8 bits
+ 	 * Unfortnatly that doesn't work for LSB so
+ 	 * reject these for now */
+ 	/* Note: 32 bits word, LSB works iff
+@@ -214,9 +214,11 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 	if (spi->mode & SPI_LSB_FIRST &&
+ 	    bits_per_word > 8)
+ 		return -EINVAL;
+-	if (bits_per_word > 8)
++	if (bits_per_word <= 8)
++		return bits_per_word;
++	if (bits_per_word == 16 || bits_per_word == 32)
+ 		return 8; /* pretend its 8 bits */
+-	return bits_per_word;
++	return -EINVAL;
+ }
  
- #define NODE_PREP do { \
- 	of_address_to_resource(np, 0, &res); \
--	snprintf(devname, sizeof(devname), "%08x.%s", res.start, np->name); \
-+	snprintf(devname, sizeof(devname), "%pa.%s", &res.start, np->name); \
- } while (0)
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+@@ -246,7 +248,7 @@ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else if (mpc8xxx_spi->flags & SPI_QE)
++	else
+ 		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+ 							  bits_per_word);
  
- #define NODE_CHK(clkname, clkitem, regnode, regflag) do { \
 -- 
 2.39.2
 
