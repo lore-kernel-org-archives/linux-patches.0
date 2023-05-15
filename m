@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C84FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226B2C433EF;
-	Mon, 15 May 2023 17:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10017FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB53C43443;
+	Mon, 15 May 2023 17:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171435;
-	bh=ZnrBVfKxTl5Xc6ux1pwz3Ml/tdKN1jh9iMv8venI6NI=;
+	s=korg; t=1684171438;
+	bh=DvYH+xywGVlj2g5KbP5pThjfVBI9x7bOPqcNU1w3PP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSi6+SyKfoEJQKw4bwjYGeCf00jLqPQYhF1LMcZpCdY+R9hmT0vPO7ujHn5nIe8/n
-	 5nj08pdh4Qqg1BoiEtcjxF8KBFm/WYhOZ6zUhnBN4C+45J5AWmHQYm/plvq5Sf0ZwU
-	 GnKQV2ZsXODKc9bMbunTMYtuJdqLKtuDn4bOhH2A=
+	b=jXpJDYvmjnUZffB6tsNhZsbW+r7NTOe4u+hUtZqNUB77vFJp4+ClvucOYPEGKKIN+
+	 yD1IsP/zmGB0ExYd2CFsiHH/4+d/Od1IjOUNz8rEXVSntnj1vINKBnnkZaaTKWcqKX
+	 VB1WFVLnyLa9V5UQ4OF28G2cdiGn34jZE1ORfwoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guchun Chen <guchun.chen@amd.com>,
-	Tao Zhou <tao.zhou1@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 201/242] drm/amdgpu: disable sdma ecc irq only when sdma RAS is enabled in suspend
-Date: Mon, 15 May 2023 18:28:47 +0200
-Message-Id: <20230515161727.972635679@linuxfoundation.org>
+	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
+	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 210/242] drm/i915/mtl: Add workarounds Wa_14017066071 and Wa_14017654203
+Date: Mon, 15 May 2023 18:28:56 +0200
+Message-Id: <20230515161728.232788770@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,60 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
 
-commit 8b229ada2669b74fdae06c83fbfda5a5a99fc253 upstream.
+[ Upstream commit 5fba65efa7cfb8cef227a2c555deb10327a5e27b ]
 
-sdma_v4_0_ip is shared on a few asics, but in sdma_v4_0_hw_fini,
-driver unconditionally disables ecc_irq which is only enabled on
-those asics enabling sdma ecc. This will introduce a warning in
-suspend cycle on those chips with sdma ip v4.0, while without
-sdma ecc. So this patch correct this.
+Both workarounds require the same implementation and apply to MTL P and
+M from stepping A0 to B0 (exclusive).
 
-[ 7283.166354] RIP: 0010:amdgpu_irq_put+0x45/0x70 [amdgpu]
-[ 7283.167001] RSP: 0018:ffff9a5fc3967d08 EFLAGS: 00010246
-[ 7283.167019] RAX: ffff98d88afd3770 RBX: 0000000000000001 RCX: 0000000000000000
-[ 7283.167023] RDX: 0000000000000000 RSI: ffff98d89da30390 RDI: ffff98d89da20000
-[ 7283.167025] RBP: ffff98d89da20000 R08: 0000000000036838 R09: 0000000000000006
-[ 7283.167028] R10: ffffd5764243c008 R11: 0000000000000000 R12: ffff98d89da30390
-[ 7283.167030] R13: ffff98d89da38978 R14: ffffffff999ae15a R15: ffff98d880130105
-[ 7283.167032] FS:  0000000000000000(0000) GS:ffff98d996f00000(0000) knlGS:0000000000000000
-[ 7283.167036] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[ 7283.167039] CR2: 00000000f7a9d178 CR3: 00000001c42ea000 CR4: 00000000003506e0
-[ 7283.167041] Call Trace:
-[ 7283.167046]  <TASK>
-[ 7283.167048]  sdma_v4_0_hw_fini+0x38/0xa0 [amdgpu]
-[ 7283.167704]  amdgpu_device_ip_suspend_phase2+0x101/0x1a0 [amdgpu]
-[ 7283.168296]  amdgpu_device_suspend+0x103/0x180 [amdgpu]
-[ 7283.168875]  amdgpu_pmops_freeze+0x21/0x60 [amdgpu]
-[ 7283.169464]  pci_pm_freeze+0x54/0xc0
+v2:
+  - Remove unrelated brace removal. (Matt)
 
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Signed-off-by: Gustavo Sousa <gustavo.sousa@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230329212336.106161-2-gustavo.sousa@intel.com
+Stable-dep-of: 81900e3a3775 ("drm/i915: disable sampler indirect state in bindless heap")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_gt_regs.h     | 1 +
+ drivers/gpu/drm/i915/gt/intel_workarounds.c | 9 +++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-@@ -1941,9 +1941,11 @@ static int sdma_v4_0_hw_fini(void *handl
- 		return 0;
- 	}
+diff --git a/drivers/gpu/drm/i915/gt/intel_gt_regs.h b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
+index 9758b0b635601..cd45a45066ccb 100644
+--- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
++++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
+@@ -1135,6 +1135,7 @@
+ #define   ENABLE_SMALLPL			REG_BIT(15)
+ #define   SC_DISABLE_POWER_OPTIMIZATION_EBB	REG_BIT(9)
+ #define   GEN11_SAMPLER_ENABLE_HEADLESS_MSG	REG_BIT(5)
++#define   MTL_DISABLE_SAMPLER_SC_OOO		REG_BIT(3)
  
--	for (i = 0; i < adev->sdma.num_instances; i++) {
--		amdgpu_irq_put(adev, &adev->sdma.ecc_irq,
--			       AMDGPU_SDMA_IRQ_INSTANCE0 + i);
-+	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__SDMA)) {
-+		for (i = 0; i < adev->sdma.num_instances; i++) {
-+			amdgpu_irq_put(adev, &adev->sdma.ecc_irq,
-+				       AMDGPU_SDMA_IRQ_INSTANCE0 + i);
-+		}
- 	}
+ #define GEN9_HALF_SLICE_CHICKEN7		MCR_REG(0xe194)
+ #define   DG2_DISABLE_ROUND_ENABLE_ALLOW_FOR_SSLA	REG_BIT(15)
+diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+index e13052c5dae19..526fb9cc36b9b 100644
+--- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
++++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+@@ -3035,6 +3035,15 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
  
- 	sdma_v4_0_ctx_switch_enable(adev, false);
+ 	add_render_compute_tuning_settings(i915, wal);
+ 
++	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
++	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0))
++		/*
++		 * Wa_14017066071
++		 * Wa_14017654203
++		 */
++		wa_mcr_masked_en(wal, GEN10_SAMPLER_MODE,
++				 MTL_DISABLE_SAMPLER_SC_OOO);
++
+ 	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_A0, STEP_B0) ||
+ 	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_A0, STEP_B0) ||
+ 	    IS_PONTEVECCHIO(i915) ||
+-- 
+2.39.2
+
 
 
