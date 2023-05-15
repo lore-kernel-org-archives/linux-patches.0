@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F530E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D65C4339C;
-	Mon, 15 May 2023 16:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB8BE573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3165C4339B;
+	Mon, 15 May 2023 16:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168884;
-	bh=VsvzTLDXIyPS11hJuMqiKHSPQymeF0caxBlFAaDbF7k=;
+	s=korg; t=1684168887;
+	bh=hAABR0kpMdIctDfWtCBTGa0StvGurFhcmCnd/RuacnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ekh1qEhszWSXZP1LjNi0n+JrNSEEUOKkmB1SWQdZvoo8IuGYuI5Nq3pyIfvTs4Be3
-	 nngg8nNNOlZrFjRXGPycdQ/fkwsl0rpDLIdPEY3eK02+hd4HtuCwYkuTA6hw4cioyi
-	 KVAPKfO9gFNeYNqH2t89RH0gbhMGJow3qbanEqeI=
+	b=XfFof/ngL6nVc+QXz4ruULl/jXHWrlOh9XIVeyqXKY2y6FSBRw/Vb9E9+qjJwok89
+	 73ftSgbYG1iYXjGanwOfCpvLhtREF1fM6tTMyH0r4lVHsBld8JutmnxZniLMXgancb
+	 cLQRHfzjRUfjJzKR2gICnNz4fROFE/WY0VvV5M3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <jdamato@fastly.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 4.19 073/191] ixgbe: Allow flow hash to be set via ethtool
-Date: Mon, 15 May 2023 18:25:10 +0200
-Message-Id: <20230515161709.910037182@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 056/191] net/packet: convert po->auxdata to an atomic flag
+Date: Mon, 15 May 2023 18:24:53 +0200
+Message-Id: <20230515161709.249420244@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -37,66 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Damato <jdamato@fastly.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4f3ed1293feb9502dc254b05802faf1ad3317ac6 ]
+[ Upstream commit fd53c297aa7b077ae98a3d3d2d3aa278a1686ba6 ]
 
-ixgbe currently returns `EINVAL` whenever the flowhash it set by ethtool
-because the ethtool code in the kernel passes a non-zero value for hfunc
-that ixgbe should allow.
+po->auxdata can be read while another thread
+is changing its value, potentially raising KCSAN splat.
 
-When ethtool is called with `ETHTOOL_SRXFHINDIR`,
-`ethtool_set_rxfh_indir` will call ixgbe's set_rxfh function
-with `ETH_RSS_HASH_NO_CHANGE`. This value should be accepted.
+Convert it to PACKET_SOCK_AUXDATA flag.
 
-When ethtool is called with `ETHTOOL_SRSSH`, `ethtool_set_rxfh` will
-call ixgbe's set_rxfh function with `rxfh.hfunc`, which appears to be
-hardcoded in ixgbe to always be `ETH_RSS_HASH_TOP`. This value should
-also be accepted.
-
-Before this patch:
-
-$ sudo ethtool -L eth1 combined 10
-$ sudo ethtool -X eth1 default
-Cannot set RX flow hash configuration: Invalid argument
-
-After this patch:
-
-$ sudo ethtool -L eth1 combined 10
-$ sudo ethtool -X eth1 default
-$ sudo ethtool -x eth1
-RX flow hash indirection table for eth1 with 10 RX ring(s):
-    0:      0     1     2     3     4     5     6     7
-    8:      8     9     0     1     2     3     4     5
-   16:      6     7     8     9     0     1     2     3
-   24:      4     5     6     7     8     9     0     1
-   ...
-
-Fixes: 1c7cf0784e4d ("ixgbe: support for ethtool set_rxfh")
-Signed-off-by: Joe Damato <jdamato@fastly.com>
-Reviewed-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 8dc419447415 ("[PACKET]: Add optional checksum computation for recvmsg")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c | 8 +++-----
+ net/packet/diag.c      | 2 +-
+ net/packet/internal.h  | 4 ++--
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-index 8829bd95d0d36..a852f9c920742 100644
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_ethtool.c
-@@ -3005,8 +3005,8 @@ static int ixgbe_set_rxfh(struct net_device *netdev, const u32 *indir,
- 	int i;
- 	u32 reta_entries = ixgbe_rss_indir_tbl_entries(adapter);
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index 91c35d45e43ca..60986c209311f 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -3444,7 +3444,7 @@ static int packet_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
+ 		memcpy(msg->msg_name, &PACKET_SKB_CB(skb)->sa, copy_len);
+ 	}
  
--	if (hfunc)
--		return -EINVAL;
-+	if (hfunc != ETH_RSS_HASH_NO_CHANGE && hfunc != ETH_RSS_HASH_TOP)
-+		return -EOPNOTSUPP;
+-	if (pkt_sk(sk)->auxdata) {
++	if (packet_sock_flag(pkt_sk(sk), PACKET_SOCK_AUXDATA)) {
+ 		struct tpacket_auxdata aux;
  
- 	/* Fill out the redirection table */
- 	if (indir) {
+ 		aux.tp_status = TP_STATUS_USER;
+@@ -3827,9 +3827,7 @@ packet_setsockopt(struct socket *sock, int level, int optname, char __user *optv
+ 		if (copy_from_user(&val, optval, sizeof(val)))
+ 			return -EFAULT;
+ 
+-		lock_sock(sk);
+-		po->auxdata = !!val;
+-		release_sock(sk);
++		packet_sock_flag_set(po, PACKET_SOCK_AUXDATA, val);
+ 		return 0;
+ 	}
+ 	case PACKET_ORIGDEV:
+@@ -3971,7 +3969,7 @@ static int packet_getsockopt(struct socket *sock, int level, int optname,
+ 
+ 		break;
+ 	case PACKET_AUXDATA:
+-		val = po->auxdata;
++		val = packet_sock_flag(po, PACKET_SOCK_AUXDATA);
+ 		break;
+ 	case PACKET_ORIGDEV:
+ 		val = packet_sock_flag(po, PACKET_SOCK_ORIGDEV);
+diff --git a/net/packet/diag.c b/net/packet/diag.c
+index bf5928e5df035..d9f912ad23dfa 100644
+--- a/net/packet/diag.c
++++ b/net/packet/diag.c
+@@ -22,7 +22,7 @@ static int pdiag_put_info(const struct packet_sock *po, struct sk_buff *nlskb)
+ 	pinfo.pdi_flags = 0;
+ 	if (po->running)
+ 		pinfo.pdi_flags |= PDI_RUNNING;
+-	if (po->auxdata)
++	if (packet_sock_flag(po, PACKET_SOCK_AUXDATA))
+ 		pinfo.pdi_flags |= PDI_AUXDATA;
+ 	if (packet_sock_flag(po, PACKET_SOCK_ORIGDEV))
+ 		pinfo.pdi_flags |= PDI_ORIGDEV;
+diff --git a/net/packet/internal.h b/net/packet/internal.h
+index f39dcc7608bc6..3d871cae85b8c 100644
+--- a/net/packet/internal.h
++++ b/net/packet/internal.h
+@@ -117,8 +117,7 @@ struct packet_sock {
+ 	struct mutex		pg_vec_lock;
+ 	unsigned long		flags;
+ 	unsigned int		running;	/* bind_lock must be held */
+-	unsigned int		auxdata:1,	/* writer must hold sock lock */
+-				has_vnet_hdr:1,
++	unsigned int		has_vnet_hdr:1, /* writer must hold sock lock */
+ 				tp_loss:1,
+ 				tp_tx_has_off:1;
+ 	int			pressure;
+@@ -144,6 +143,7 @@ static struct packet_sock *pkt_sk(struct sock *sk)
+ 
+ enum packet_sock_flags {
+ 	PACKET_SOCK_ORIGDEV,
++	PACKET_SOCK_AUXDATA,
+ };
+ 
+ static inline void packet_sock_flag_set(struct packet_sock *po,
 -- 
 2.39.2
 
