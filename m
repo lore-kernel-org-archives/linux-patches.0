@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C851FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:59:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE557C433EF;
-	Mon, 15 May 2023 16:58:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B3EFBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:59:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0456C433EF;
+	Mon, 15 May 2023 16:59:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169940;
-	bh=aD/UzSRZXTpj3ZsYw23CWW6F91Ss7u2tnKo3ViXMz7g=;
+	s=korg; t=1684169943;
+	bh=Vagv3USjgjEaM/bYDesxtVCTp3u/4PufHwxGFTPcGzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jCDTWlhqi7n/g2CCxSo+oPN6nzDvRxDART7se5cnuLDK/rxAZMi+V83zMOw2QkJtp
-	 nO1cXVDtlUpf0bhXHEhCHgOM12eD5iYgbkqWsjcDHJuTgsKEDpuoo+DSPquQvDYu3g
-	 yByEKakVmb7KFqj2FbJav9pSUB7Q0wupV9/GHHVQ=
+	b=RIL1fvFRAGyd9wgOG9EDZPluiIrpoR16e8upApdotYvFWpFuvy1x8vxNXoB8d4Fob
+	 1wjMCL3YjbLwlxRJkiZgN2ftb0keBrP2jSZdisd9ysn0sQBLuBSaN7wZTqdUZJjMqe
+	 a3j4U9GMAe5V0+z+/dLjMBInpEH3EhPWo6wj2NP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Charlene Liu <Charlene.Liu@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 190/246] drm/amd/display: Add NULL plane_state check for cursor disable logic
-Date: Mon, 15 May 2023 18:26:42 +0200
-Message-Id: <20230515161728.317501655@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.3 181/246] f2fs: remove entire rb_entry sharing
+Date: Mon, 15 May 2023 18:26:33 +0200
+Message-Id: <20230515161728.056886457@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -38,43 +34,324 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit d29fb7baab09b6a1dc484c9c67933253883e770a upstream.
+commit bf21acf9959a48d90dd32869a0649525eb21be56 upstream.
 
-[Why]
-While scanning the top_pipe connections we can run into a case where
-the bottom pipe is still connected to a top_pipe but with a NULL
-plane_state.
+This is a last part to remove the memory sharing for rb_tree in extent_cache.
 
-[How]
-Treat a NULL plane_state the same as the plane being invisible for
-pipe cursor disable logic.
+This should also fix arm32 memory alignment issue.
 
-Cc: stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[struct extent_node]               [struct rb_entry]
+[0] struct rb_node rb_node;        [0] struct rb_node rb_node;
+  union {                              union {
+    struct {                             struct {
+[16]  unsigned int fofs;           [12]    unsigned int ofs;
+      unsigned int len;                    unsigned int len;
+                                         };
+                                         unsigned long long key;
+                                       } __packed;
+
+Cc: <stable@vger.kernel.org>
+Fixes: 13054c548a1c ("f2fs: introduce infra macro and data structure of rb-tree extent cache")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/extent_cache.c |  177 +++++++++++++++++++------------------------------
+ fs/f2fs/f2fs.h         |    6 -
+ 2 files changed, 71 insertions(+), 112 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
-@@ -3385,7 +3385,9 @@ static bool dcn10_can_pipe_disable_curso
- 	for (test_pipe = pipe_ctx->top_pipe; test_pipe;
- 	     test_pipe = test_pipe->top_pipe) {
- 		// Skip invisible layer and pipe-split plane on same layer
--		if (!test_pipe->plane_state->visible || test_pipe->plane_state->layer_index == cur_layer)
-+		if (!test_pipe->plane_state ||
-+		    !test_pipe->plane_state->visible ||
-+		    test_pipe->plane_state->layer_index == cur_layer)
- 			continue;
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -161,95 +161,52 @@ static bool __is_front_mergeable(struct
+ 	return __is_extent_mergeable(cur, front, type);
+ }
  
- 		r2 = test_pipe->plane_res.scl_data.recout;
+-static struct rb_entry *__lookup_rb_tree_fast(struct rb_entry *cached_re,
+-							unsigned int ofs)
+-{
+-	if (cached_re) {
+-		if (cached_re->ofs <= ofs &&
+-				cached_re->ofs + cached_re->len > ofs) {
+-			return cached_re;
+-		}
+-	}
+-	return NULL;
+-}
+-
+-static struct rb_entry *__lookup_rb_tree_slow(struct rb_root_cached *root,
+-							unsigned int ofs)
++static struct extent_node *__lookup_extent_node(struct rb_root_cached *root,
++			struct extent_node *cached_en, unsigned int fofs)
+ {
+ 	struct rb_node *node = root->rb_root.rb_node;
+-	struct rb_entry *re;
++	struct extent_node *en;
++
++	/* check a cached entry */
++	if (cached_en && cached_en->ei.fofs <= fofs &&
++			cached_en->ei.fofs + cached_en->ei.len > fofs)
++		return cached_en;
+ 
++	/* check rb_tree */
+ 	while (node) {
+-		re = rb_entry(node, struct rb_entry, rb_node);
++		en = rb_entry(node, struct extent_node, rb_node);
+ 
+-		if (ofs < re->ofs)
++		if (fofs < en->ei.fofs)
+ 			node = node->rb_left;
+-		else if (ofs >= re->ofs + re->len)
++		else if (fofs >= en->ei.fofs + en->ei.len)
+ 			node = node->rb_right;
+ 		else
+-			return re;
++			return en;
+ 	}
+ 	return NULL;
+ }
+ 
+-static struct rb_entry *f2fs_lookup_rb_tree(struct rb_root_cached *root,
+-				struct rb_entry *cached_re, unsigned int ofs)
+-{
+-	struct rb_entry *re;
+-
+-	re = __lookup_rb_tree_fast(cached_re, ofs);
+-	if (!re)
+-		return __lookup_rb_tree_slow(root, ofs);
+-
+-	return re;
+-}
+-
+-static struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
+-				struct rb_root_cached *root,
+-				struct rb_node **parent,
+-				unsigned int ofs, bool *leftmost)
+-{
+-	struct rb_node **p = &root->rb_root.rb_node;
+-	struct rb_entry *re;
+-
+-	while (*p) {
+-		*parent = *p;
+-		re = rb_entry(*parent, struct rb_entry, rb_node);
+-
+-		if (ofs < re->ofs) {
+-			p = &(*p)->rb_left;
+-		} else if (ofs >= re->ofs + re->len) {
+-			p = &(*p)->rb_right;
+-			*leftmost = false;
+-		} else {
+-			f2fs_bug_on(sbi, 1);
+-		}
+-	}
+-
+-	return p;
+-}
+-
+ /*
+- * lookup rb entry in position of @ofs in rb-tree,
++ * lookup rb entry in position of @fofs in rb-tree,
+  * if hit, return the entry, otherwise, return NULL
+- * @prev_ex: extent before ofs
+- * @next_ex: extent after ofs
+- * @insert_p: insert point for new extent at ofs
++ * @prev_ex: extent before fofs
++ * @next_ex: extent after fofs
++ * @insert_p: insert point for new extent at fofs
+  * in order to simplify the insertion after.
+  * tree must stay unchanged between lookup and insertion.
+  */
+-static struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
+-				struct rb_entry *cached_re,
+-				unsigned int ofs,
+-				struct rb_entry **prev_entry,
+-				struct rb_entry **next_entry,
++static struct extent_node *__lookup_extent_node_ret(struct rb_root_cached *root,
++				struct extent_node *cached_en,
++				unsigned int fofs,
++				struct extent_node **prev_entry,
++				struct extent_node **next_entry,
+ 				struct rb_node ***insert_p,
+ 				struct rb_node **insert_parent,
+-				bool force, bool *leftmost)
++				bool *leftmost)
+ {
+ 	struct rb_node **pnode = &root->rb_root.rb_node;
+ 	struct rb_node *parent = NULL, *tmp_node;
+-	struct rb_entry *re = cached_re;
++	struct extent_node *en = cached_en;
+ 
+ 	*insert_p = NULL;
+ 	*insert_parent = NULL;
+@@ -259,24 +216,20 @@ static struct rb_entry *f2fs_lookup_rb_t
+ 	if (RB_EMPTY_ROOT(&root->rb_root))
+ 		return NULL;
+ 
+-	if (re) {
+-		if (re->ofs <= ofs && re->ofs + re->len > ofs)
+-			goto lookup_neighbors;
+-	}
++	if (en && en->ei.fofs <= fofs && en->ei.fofs + en->ei.len > fofs)
++		goto lookup_neighbors;
+ 
+-	if (leftmost)
+-		*leftmost = true;
++	*leftmost = true;
+ 
+ 	while (*pnode) {
+ 		parent = *pnode;
+-		re = rb_entry(*pnode, struct rb_entry, rb_node);
++		en = rb_entry(*pnode, struct extent_node, rb_node);
+ 
+-		if (ofs < re->ofs) {
++		if (fofs < en->ei.fofs) {
+ 			pnode = &(*pnode)->rb_left;
+-		} else if (ofs >= re->ofs + re->len) {
++		} else if (fofs >= en->ei.fofs + en->ei.len) {
+ 			pnode = &(*pnode)->rb_right;
+-			if (leftmost)
+-				*leftmost = false;
++			*leftmost = false;
+ 		} else {
+ 			goto lookup_neighbors;
+ 		}
+@@ -285,30 +238,32 @@ static struct rb_entry *f2fs_lookup_rb_t
+ 	*insert_p = pnode;
+ 	*insert_parent = parent;
+ 
+-	re = rb_entry(parent, struct rb_entry, rb_node);
++	en = rb_entry(parent, struct extent_node, rb_node);
+ 	tmp_node = parent;
+-	if (parent && ofs > re->ofs)
++	if (parent && fofs > en->ei.fofs)
+ 		tmp_node = rb_next(parent);
+-	*next_entry = rb_entry_safe(tmp_node, struct rb_entry, rb_node);
++	*next_entry = rb_entry_safe(tmp_node, struct extent_node, rb_node);
+ 
+ 	tmp_node = parent;
+-	if (parent && ofs < re->ofs)
++	if (parent && fofs < en->ei.fofs)
+ 		tmp_node = rb_prev(parent);
+-	*prev_entry = rb_entry_safe(tmp_node, struct rb_entry, rb_node);
++	*prev_entry = rb_entry_safe(tmp_node, struct extent_node, rb_node);
+ 	return NULL;
+ 
+ lookup_neighbors:
+-	if (ofs == re->ofs || force) {
++	if (fofs == en->ei.fofs) {
+ 		/* lookup prev node for merging backward later */
+-		tmp_node = rb_prev(&re->rb_node);
+-		*prev_entry = rb_entry_safe(tmp_node, struct rb_entry, rb_node);
++		tmp_node = rb_prev(&en->rb_node);
++		*prev_entry = rb_entry_safe(tmp_node,
++					struct extent_node, rb_node);
+ 	}
+-	if (ofs == re->ofs + re->len - 1 || force) {
++	if (fofs == en->ei.fofs + en->ei.len - 1) {
+ 		/* lookup next node for merging frontward later */
+-		tmp_node = rb_next(&re->rb_node);
+-		*next_entry = rb_entry_safe(tmp_node, struct rb_entry, rb_node);
++		tmp_node = rb_next(&en->rb_node);
++		*next_entry = rb_entry_safe(tmp_node,
++					struct extent_node, rb_node);
+ 	}
+-	return re;
++	return en;
+ }
+ 
+ static struct kmem_cache *extent_tree_slab;
+@@ -523,8 +478,7 @@ static bool __lookup_extent_tree(struct
+ 		goto out;
+ 	}
+ 
+-	en = (struct extent_node *)f2fs_lookup_rb_tree(&et->root,
+-				(struct rb_entry *)et->cached_en, pgofs);
++	en = __lookup_extent_node(&et->root, et->cached_en, pgofs);
+ 	if (!en)
+ 		goto out;
+ 
+@@ -598,7 +552,7 @@ static struct extent_node *__insert_exte
+ 				bool leftmost)
+ {
+ 	struct extent_tree_info *eti = &sbi->extent_tree[et->type];
+-	struct rb_node **p;
++	struct rb_node **p = &et->root.rb_root.rb_node;
+ 	struct rb_node *parent = NULL;
+ 	struct extent_node *en = NULL;
+ 
+@@ -610,8 +564,21 @@ static struct extent_node *__insert_exte
+ 
+ 	leftmost = true;
+ 
+-	p = f2fs_lookup_rb_tree_for_insert(sbi, &et->root, &parent,
+-						ei->fofs, &leftmost);
++	/* look up extent_node in the rb tree */
++	while (*p) {
++		parent = *p;
++		en = rb_entry(parent, struct extent_node, rb_node);
++
++		if (ei->fofs < en->ei.fofs) {
++			p = &(*p)->rb_left;
++		} else if (ei->fofs >= en->ei.fofs + en->ei.len) {
++			p = &(*p)->rb_right;
++			leftmost = false;
++		} else {
++			f2fs_bug_on(sbi, 1);
++		}
++	}
++
+ do_insert:
+ 	en = __attach_extent_node(sbi, et, ei, parent, p, leftmost);
+ 	if (!en)
+@@ -670,11 +637,10 @@ static void __update_extent_tree_range(s
+ 	}
+ 
+ 	/* 1. lookup first extent node in range [fofs, fofs + len - 1] */
+-	en = (struct extent_node *)f2fs_lookup_rb_tree_ret(&et->root,
+-					(struct rb_entry *)et->cached_en, fofs,
+-					(struct rb_entry **)&prev_en,
+-					(struct rb_entry **)&next_en,
+-					&insert_p, &insert_parent, false,
++	en = __lookup_extent_node_ret(&et->root,
++					et->cached_en, fofs,
++					&prev_en, &next_en,
++					&insert_p, &insert_parent,
+ 					&leftmost);
+ 	if (!en)
+ 		en = next_en;
+@@ -812,12 +778,11 @@ void f2fs_update_read_extent_tree_range_
+ 
+ 	write_lock(&et->lock);
+ 
+-	en = (struct extent_node *)f2fs_lookup_rb_tree_ret(&et->root,
+-				(struct rb_entry *)et->cached_en, fofs,
+-				(struct rb_entry **)&prev_en,
+-				(struct rb_entry **)&next_en,
+-				&insert_p, &insert_parent, false,
+-				&leftmost);
++	en = __lookup_extent_node_ret(&et->root,
++					et->cached_en, fofs,
++					&prev_en, &next_en,
++					&insert_p, &insert_parent,
++					&leftmost);
+ 	if (en)
+ 		goto unlock_out;
+ 
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -620,12 +620,6 @@ enum extent_type {
+ 	NR_EXTENT_CACHES,
+ };
+ 
+-struct rb_entry {
+-	struct rb_node rb_node;		/* rb node located in rb-tree */
+-	unsigned int ofs;		/* start offset of the entry */
+-	unsigned int len;		/* length of the entry */
+-};
+-
+ struct extent_info {
+ 	unsigned int fofs;		/* start offset in a file */
+ 	unsigned int len;		/* length of the extent */
 
 
