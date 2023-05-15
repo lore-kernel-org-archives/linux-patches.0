@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B72FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:43:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B63EC433D2;
-	Mon, 15 May 2023 17:43:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C6AFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:43:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF2BC433EF;
+	Mon, 15 May 2023 17:43:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172595;
-	bh=z8XfetHkFZzR3qr+OmK+bDbCz2burq1nYoHSYsrEfiw=;
+	s=korg; t=1684172598;
+	bh=7Dse9Mo4Bl2qyQdAHwynYAxizlp7dspDsUDbsWpPqTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dLiixEfwHIPOXZu9Vzp4/7Wrq/l5TRwNeRFCemubF0CAjbdqLgfH/kOXVfu8QG/gR
-	 JLvDoaGaRdOj7I9uKCtdjTtoYsgcvXLpT9Pb8DUMI/pbM5oP4ysjueroMkNzgMRqdr
-	 qL/v2cLsQa1Qtq95fymET3MVw5TGaPaSEMoicZPA=
+	b=z5mcOZS37umCck79orurv+ugcW1kgtEW62tSm3njdkGnXkqg0o7nSZR3oak/5IZVi
+	 MC3Ifa5fKGCuCGZ1doOk+vcm66hbt2AzzVXI4c5V3/UDEDQzL+aN6I1zB1mSZX3NBE
+	 eKCBkI3H7JLBauEpqkxu2iano4I5OL19mpgCGYZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Joakim Tjernlund <Joakim.Tjernlund@infinera.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 205/381] spi: qup: Dont skip cleanup in removes error path
-Date: Mon, 15 May 2023 18:27:36 +0200
-Message-Id: <20230515161746.062116309@linuxfoundation.org>
+Subject: [PATCH 5.10 206/381] spi: fsl-spi: Fix CPM/QE mode Litte Endian
+Date: Mon, 15 May 2023 18:27:37 +0200
+Message-Id: <20230515161746.101369774@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,60 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 61f49171a43ab1f80c73c5c88c508770c461e0f2 ]
+[ Upstream commit c20c57d9868d7f9fd1b2904c7801b07e128f6322 ]
 
-Returning early in a platform driver's remove callback is wrong. In this
-case the dma resources are not released in the error path. this is never
-retried later and so this is a permanent leak. To fix this, only skip
-hardware disabling if waking the device fails.
+CPM has the same problem as QE so for CPM also use the fix added
+by commit 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian"):
 
-Fixes: 64ff247a978f ("spi: Add Qualcomm QUP SPI controller support")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230330210341.2459548-2-u.kleine-koenig@pengutronix.de
+  CPM mode uses Little Endian so words > 8 bits are byte swapped.
+  Workaround this by always enforcing wordsize 8 for 16 and 32 bits
+  words. Unfortunately this will not work for LSB transfers
+  where wordsize is > 8 bits so disable these for now.
+
+Also limit the workaround to 16 and 32 bits words because it can
+only work for multiples of 8-bits.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Cc: Joakim Tjernlund <Joakim.Tjernlund@infinera.com>
+Fixes: 0398fb70940e ("spi/spi_mpc8xxx: Fix QE mode Litte Endian")
+Link: https://lore.kernel.org/r/1b7d3e84b1128f42c1887dd2fb9cdf390f541bc1.1680371809.git.christophe.leroy@csgroup.eu
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qup.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/spi/spi-fsl-spi.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index f3877eeb3da65..8bf58510cca6d 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -1276,18 +1276,22 @@ static int spi_qup_remove(struct platform_device *pdev)
- 	struct spi_qup *controller = spi_master_get_devdata(master);
- 	int ret;
+diff --git a/drivers/spi/spi-fsl-spi.c b/drivers/spi/spi-fsl-spi.c
+index bdf94cc7be1af..1bad0ceac81b4 100644
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -207,8 +207,8 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 				struct spi_device *spi,
+ 				int bits_per_word)
+ {
+-	/* QE uses Little Endian for words > 8
+-	 * so transform all words > 8 into 8 bits
++	/* CPM/QE uses Little Endian for words > 8
++	 * so transform 16 and 32 bits words into 8 bits
+ 	 * Unfortnatly that doesn't work for LSB so
+ 	 * reject these for now */
+ 	/* Note: 32 bits word, LSB works iff
+@@ -216,9 +216,11 @@ static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+ 	if (spi->mode & SPI_LSB_FIRST &&
+ 	    bits_per_word > 8)
+ 		return -EINVAL;
+-	if (bits_per_word > 8)
++	if (bits_per_word <= 8)
++		return bits_per_word;
++	if (bits_per_word == 16 || bits_per_word == 32)
+ 		return 8; /* pretend its 8 bits */
+-	return bits_per_word;
++	return -EINVAL;
+ }
  
--	ret = pm_runtime_resume_and_get(&pdev->dev);
--	if (ret < 0)
--		return ret;
-+	ret = pm_runtime_get_sync(&pdev->dev);
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+@@ -248,7 +250,7 @@ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else if (mpc8xxx_spi->flags & SPI_QE)
++	else
+ 		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+ 							  bits_per_word);
  
--	ret = spi_qup_set_state(controller, QUP_STATE_RESET);
--	if (ret)
--		return ret;
-+	if (ret >= 0) {
-+		ret = spi_qup_set_state(controller, QUP_STATE_RESET);
-+		if (ret)
-+			dev_warn(&pdev->dev, "failed to reset controller (%pe)\n",
-+				 ERR_PTR(ret));
- 
--	spi_qup_release_dma(master);
-+		clk_disable_unprepare(controller->cclk);
-+		clk_disable_unprepare(controller->iclk);
-+	} else {
-+		dev_warn(&pdev->dev, "failed to resume, skip hw disable (%pe)\n",
-+			 ERR_PTR(ret));
-+	}
- 
--	clk_disable_unprepare(controller->cclk);
--	clk_disable_unprepare(controller->iclk);
-+	spi_qup_release_dma(master);
- 
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
 -- 
 2.39.2
 
