@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D82DFBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:04:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E992C433D2;
-	Mon, 15 May 2023 17:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF70FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:04:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C48EC4339B;
+	Mon, 15 May 2023 17:04:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170254;
-	bh=ZNiOVn9pj0qNG+LSc9/f+L5ZZ6jpNKP+uXswzCFoyFc=;
+	s=korg; t=1684170257;
+	bh=tNeEEp2LzwwdK64OimRkCqQZ1myENsl9Yb4d5zpEyt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y9vMMyh33/8z0TrKfdsqQzDVXSEKHCHYMA4C9P3A87jytyYMwRwPyP/Z02KhVBHi/
-	 4sltAoPON02Zf2m+/Fw58769eV0K2NHxQvZORWJXs0BLBGgcYJB4wIIL+y6z0GszEU
-	 yTw9ZczeV5HKsLs3uSYMA/mw5DJBFVTiOGIPQ2+8=
+	b=a8zGloeYLxk/ZLSis62EH8X/xmWWS/9HHwl3L0u1eyr7bU1TP2eSsNWdLS9OOuzwq
+	 Ud3HF10yyscOgNRIgcqwj8qR2yP7m8Bw5Qhp8RsKba7GsROnYZcrWU4AUro/u1nG67
+	 bjf/6vZ9rzt8AJ1Qk03L69dtceO5hUjyFTU7c73Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,12 +19,11 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ratheesh Kannoth <rkannoth@marvell.com>,
 	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
 	Sai Krishna <saikrishnag@marvell.com>,
-	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/239] octeontx2-af: Fix issues with NPC field hash extract
-Date: Mon, 15 May 2023 18:25:35 +0200
-Message-Id: <20230515161723.850568605@linuxfoundation.org>
+Subject: [PATCH 6.1 073/239] octeontx2-af: Skip PFs if not enabled
+Date: Mon, 15 May 2023 18:25:36 +0200
+Message-Id: <20230515161723.878865935@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -40,269 +39,192 @@ Content-Transfer-Encoding: 8bit
 
 From: Ratheesh Kannoth <rkannoth@marvell.com>
 
-[ Upstream commit f66155905959076619c9c519fb099e8ae6cb6f7b ]
+[ Upstream commit 5eb1b7220948a69298a436148a735f32ec325289 ]
 
-1. Allow field hash configuration for both source and destination IPv6.
-2. Configure hardware parser based on hash extract feature enable flag
-   for IPv6.
-3. Fix IPv6 endianness issue while updating the source/destination IP
-   address via ntuple rule.
+Firmware enables PFs and allocate mbox resources for each of the PFs.
+Currently PF driver configures mbox resources without checking whether
+PF is enabled or not. This results in crash. This patch fixes this issue
+by skipping disabled PF's mbox initialization.
 
-Fixes: 56d9f5fd2246 ("octeontx2-af: Use hashed field in MCAM key")
+Fixes: 9bdc47a6e328 ("octeontx2-af: Mbox communication support btw AF and it's VFs")
 Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
 Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
 Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/af/rvu_npc_fs.c         | 23 +++--
- .../marvell/octeontx2/af/rvu_npc_fs.h         |  4 +
- .../marvell/octeontx2/af/rvu_npc_hash.c       | 88 ++++++++++---------
- .../marvell/octeontx2/af/rvu_npc_hash.h       |  4 +-
- 4 files changed, 69 insertions(+), 50 deletions(-)
+ .../net/ethernet/marvell/octeontx2/af/mbox.c  |  5 +-
+ .../net/ethernet/marvell/octeontx2/af/mbox.h  |  3 +-
+ .../net/ethernet/marvell/octeontx2/af/rvu.c   | 49 +++++++++++++++----
+ 3 files changed, 46 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-index 0a3b591c1ef5a..1eb5eb29a2ba6 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.c
-@@ -13,11 +13,6 @@
- #include "rvu_npc_fs.h"
- #include "rvu_npc_hash.h"
- 
--#define NPC_BYTESM		GENMASK_ULL(19, 16)
--#define NPC_HDR_OFFSET		GENMASK_ULL(15, 8)
--#define NPC_KEY_OFFSET		GENMASK_ULL(5, 0)
--#define NPC_LDATA_EN		BIT_ULL(7)
--
- static const char * const npc_flow_names[] = {
- 	[NPC_DMAC]	= "dmac",
- 	[NPC_SMAC]	= "smac",
-@@ -440,6 +435,7 @@ static void npc_handle_multi_layer_fields(struct rvu *rvu, int blkaddr, u8 intf)
- static void npc_scan_ldata(struct rvu *rvu, int blkaddr, u8 lid,
- 			   u8 lt, u64 cfg, u8 intf)
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.c b/drivers/net/ethernet/marvell/octeontx2/af/mbox.c
+index 2898931d5260a..9690ac01f02c8 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.c
+@@ -157,7 +157,7 @@ EXPORT_SYMBOL(otx2_mbox_init);
+  */
+ int otx2_mbox_regions_init(struct otx2_mbox *mbox, void **hwbase,
+ 			   struct pci_dev *pdev, void *reg_base,
+-			   int direction, int ndevs)
++			   int direction, int ndevs, unsigned long *pf_bmap)
  {
-+	struct npc_mcam_kex_hash *mkex_hash = rvu->kpu.mkex_hash;
- 	struct npc_mcam *mcam = &rvu->hw->mcam;
- 	u8 hdr, key, nr_bytes, bit_offset;
- 	u8 la_ltype, la_start;
-@@ -486,8 +482,21 @@ do {									       \
- 	NPC_SCAN_HDR(NPC_TOS, NPC_LID_LC, NPC_LT_LC_IP, 1, 1);
- 	NPC_SCAN_HDR(NPC_SIP_IPV4, NPC_LID_LC, NPC_LT_LC_IP, 12, 4);
- 	NPC_SCAN_HDR(NPC_DIP_IPV4, NPC_LID_LC, NPC_LT_LC_IP, 16, 4);
--	NPC_SCAN_HDR(NPC_SIP_IPV6, NPC_LID_LC, NPC_LT_LC_IP6, 8, 16);
--	NPC_SCAN_HDR(NPC_DIP_IPV6, NPC_LID_LC, NPC_LT_LC_IP6, 24, 16);
-+	if (rvu->hw->cap.npc_hash_extract) {
-+		if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][0])
-+			NPC_SCAN_HDR(NPC_SIP_IPV6, NPC_LID_LC, NPC_LT_LC_IP6, 8, 4);
-+		else
-+			NPC_SCAN_HDR(NPC_SIP_IPV6, NPC_LID_LC, NPC_LT_LC_IP6, 8, 16);
+ 	struct otx2_mbox_dev *mdev;
+ 	int devid, err;
+@@ -169,6 +169,9 @@ int otx2_mbox_regions_init(struct otx2_mbox *mbox, void **hwbase,
+ 	mbox->hwbase = hwbase[0];
+ 
+ 	for (devid = 0; devid < ndevs; devid++) {
++		if (!test_bit(devid, pf_bmap))
++			continue;
 +
-+		if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][1])
-+			NPC_SCAN_HDR(NPC_DIP_IPV6, NPC_LID_LC, NPC_LT_LC_IP6, 24, 4);
-+		else
-+			NPC_SCAN_HDR(NPC_DIP_IPV6, NPC_LID_LC, NPC_LT_LC_IP6, 24, 16);
-+	} else {
-+		NPC_SCAN_HDR(NPC_SIP_IPV6, NPC_LID_LC, NPC_LT_LC_IP6, 8, 16);
-+		NPC_SCAN_HDR(NPC_DIP_IPV6, NPC_LID_LC, NPC_LT_LC_IP6, 24, 16);
+ 		mdev = &mbox->dev[devid];
+ 		mdev->mbase = hwbase[devid];
+ 		mdev->hwbase = hwbase[devid];
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+index 5921a78661e41..11eeb36cf9a54 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
++++ b/drivers/net/ethernet/marvell/octeontx2/af/mbox.h
+@@ -96,9 +96,10 @@ void otx2_mbox_destroy(struct otx2_mbox *mbox);
+ int otx2_mbox_init(struct otx2_mbox *mbox, void __force *hwbase,
+ 		   struct pci_dev *pdev, void __force *reg_base,
+ 		   int direction, int ndevs);
++
+ int otx2_mbox_regions_init(struct otx2_mbox *mbox, void __force **hwbase,
+ 			   struct pci_dev *pdev, void __force *reg_base,
+-			   int direction, int ndevs);
++			   int direction, int ndevs, unsigned long *bmap);
+ void otx2_mbox_msg_send(struct otx2_mbox *mbox, int devid);
+ int otx2_mbox_wait_for_rsp(struct otx2_mbox *mbox, int devid);
+ int otx2_mbox_busy_poll_for_rsp(struct otx2_mbox *mbox, int devid);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+index 3f5e09b77d4bd..873f081c030de 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu.c
+@@ -2274,7 +2274,7 @@ static inline void rvu_afvf_mbox_up_handler(struct work_struct *work)
+ }
+ 
+ static int rvu_get_mbox_regions(struct rvu *rvu, void **mbox_addr,
+-				int num, int type)
++				int num, int type, unsigned long *pf_bmap)
+ {
+ 	struct rvu_hwinfo *hw = rvu->hw;
+ 	int region;
+@@ -2286,6 +2286,9 @@ static int rvu_get_mbox_regions(struct rvu *rvu, void **mbox_addr,
+ 	 */
+ 	if (type == TYPE_AFVF) {
+ 		for (region = 0; region < num; region++) {
++			if (!test_bit(region, pf_bmap))
++				continue;
++
+ 			if (hw->cap.per_pf_mbox_regs) {
+ 				bar4 = rvu_read64(rvu, BLKADDR_RVUM,
+ 						  RVU_AF_PFX_BAR4_ADDR(0)) +
+@@ -2307,6 +2310,9 @@ static int rvu_get_mbox_regions(struct rvu *rvu, void **mbox_addr,
+ 	 * RVU_AF_PF_BAR4_ADDR register.
+ 	 */
+ 	for (region = 0; region < num; region++) {
++		if (!test_bit(region, pf_bmap))
++			continue;
++
+ 		if (hw->cap.per_pf_mbox_regs) {
+ 			bar4 = rvu_read64(rvu, BLKADDR_RVUM,
+ 					  RVU_AF_PFX_BAR4_ADDR(region));
+@@ -2335,20 +2341,41 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
+ 	int err = -EINVAL, i, dir, dir_up;
+ 	void __iomem *reg_base;
+ 	struct rvu_work *mwork;
++	unsigned long *pf_bmap;
+ 	void **mbox_regions;
+ 	const char *name;
++	u64 cfg;
+ 
+-	mbox_regions = kcalloc(num, sizeof(void *), GFP_KERNEL);
+-	if (!mbox_regions)
++	pf_bmap = bitmap_zalloc(num, GFP_KERNEL);
++	if (!pf_bmap)
+ 		return -ENOMEM;
+ 
++	/* RVU VFs */
++	if (type == TYPE_AFVF)
++		bitmap_set(pf_bmap, 0, num);
++
++	if (type == TYPE_AFPF) {
++		/* Mark enabled PFs in bitmap */
++		for (i = 0; i < num; i++) {
++			cfg = rvu_read64(rvu, BLKADDR_RVUM, RVU_PRIV_PFX_CFG(i));
++			if (cfg & BIT_ULL(20))
++				set_bit(i, pf_bmap);
++		}
 +	}
 +
- 	NPC_SCAN_HDR(NPC_SPORT_UDP, NPC_LID_LD, NPC_LT_LD_UDP, 0, 2);
- 	NPC_SCAN_HDR(NPC_DPORT_UDP, NPC_LID_LD, NPC_LT_LD_UDP, 2, 2);
- 	NPC_SCAN_HDR(NPC_SPORT_TCP, NPC_LID_LD, NPC_LT_LD_TCP, 0, 2);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.h
-index bdd65ce56a32d..3f5c9042d10e7 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_fs.h
-@@ -9,6 +9,10 @@
- #define __RVU_NPC_FS_H
++	mbox_regions = kcalloc(num, sizeof(void *), GFP_KERNEL);
++	if (!mbox_regions) {
++		err = -ENOMEM;
++		goto free_bitmap;
++	}
++
+ 	switch (type) {
+ 	case TYPE_AFPF:
+ 		name = "rvu_afpf_mailbox";
+ 		dir = MBOX_DIR_AFPF;
+ 		dir_up = MBOX_DIR_AFPF_UP;
+ 		reg_base = rvu->afreg_base;
+-		err = rvu_get_mbox_regions(rvu, mbox_regions, num, TYPE_AFPF);
++		err = rvu_get_mbox_regions(rvu, mbox_regions, num, TYPE_AFPF, pf_bmap);
+ 		if (err)
+ 			goto free_regions;
+ 		break;
+@@ -2357,7 +2384,7 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
+ 		dir = MBOX_DIR_PFVF;
+ 		dir_up = MBOX_DIR_PFVF_UP;
+ 		reg_base = rvu->pfreg_base;
+-		err = rvu_get_mbox_regions(rvu, mbox_regions, num, TYPE_AFVF);
++		err = rvu_get_mbox_regions(rvu, mbox_regions, num, TYPE_AFVF, pf_bmap);
+ 		if (err)
+ 			goto free_regions;
+ 		break;
+@@ -2388,16 +2415,19 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
+ 	}
  
- #define IPV6_WORDS	4
-+#define NPC_BYTESM	GENMASK_ULL(19, 16)
-+#define NPC_HDR_OFFSET	GENMASK_ULL(15, 8)
-+#define NPC_KEY_OFFSET	GENMASK_ULL(5, 0)
-+#define NPC_LDATA_EN	BIT_ULL(7)
+ 	err = otx2_mbox_regions_init(&mw->mbox, mbox_regions, rvu->pdev,
+-				     reg_base, dir, num);
++				     reg_base, dir, num, pf_bmap);
+ 	if (err)
+ 		goto exit;
  
- void npc_update_entry(struct rvu *rvu, enum key_fields type,
- 		      struct mcam_entry *entry, u64 val_lo,
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-index 18f12f9156544..3182adb7b9a80 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.c
-@@ -78,42 +78,43 @@ static u32 rvu_npc_toeplitz_hash(const u64 *data, u64 *key, size_t data_bit_len,
- 	return hash_out;
+ 	err = otx2_mbox_regions_init(&mw->mbox_up, mbox_regions, rvu->pdev,
+-				     reg_base, dir_up, num);
++				     reg_base, dir_up, num, pf_bmap);
+ 	if (err)
+ 		goto exit;
+ 
+ 	for (i = 0; i < num; i++) {
++		if (!test_bit(i, pf_bmap))
++			continue;
++
+ 		mwork = &mw->mbox_wrk[i];
+ 		mwork->rvu = rvu;
+ 		INIT_WORK(&mwork->work, mbox_handler);
+@@ -2406,8 +2436,7 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
+ 		mwork->rvu = rvu;
+ 		INIT_WORK(&mwork->work, mbox_up_handler);
+ 	}
+-	kfree(mbox_regions);
+-	return 0;
++	goto free_regions;
+ 
+ exit:
+ 	destroy_workqueue(mw->mbox_wq);
+@@ -2416,6 +2445,8 @@ static int rvu_mbox_init(struct rvu *rvu, struct mbox_wq_info *mw,
+ 		iounmap((void __iomem *)mbox_regions[num]);
+ free_regions:
+ 	kfree(mbox_regions);
++free_bitmap:
++	bitmap_free(pf_bmap);
+ 	return err;
  }
  
--u32 npc_field_hash_calc(u64 *ldata, struct npc_mcam_kex_hash *mkex_hash,
--			u64 *secret_key, u8 intf, u8 hash_idx)
-+u32 npc_field_hash_calc(u64 *ldata, struct npc_get_field_hash_info_rsp rsp,
-+			u8 intf, u8 hash_idx)
- {
- 	u64 hash_key[3];
- 	u64 data_padded[2];
- 	u32 field_hash;
- 
--	hash_key[0] = secret_key[1] << 31;
--	hash_key[0] |= secret_key[2];
--	hash_key[1] = secret_key[1] >> 33;
--	hash_key[1] |= secret_key[0] << 31;
--	hash_key[2] = secret_key[0] >> 33;
-+	hash_key[0] = rsp.secret_key[1] << 31;
-+	hash_key[0] |= rsp.secret_key[2];
-+	hash_key[1] = rsp.secret_key[1] >> 33;
-+	hash_key[1] |= rsp.secret_key[0] << 31;
-+	hash_key[2] = rsp.secret_key[0] >> 33;
- 
--	data_padded[0] = mkex_hash->hash_mask[intf][hash_idx][0] & ldata[0];
--	data_padded[1] = mkex_hash->hash_mask[intf][hash_idx][1] & ldata[1];
-+	data_padded[0] = rsp.hash_mask[intf][hash_idx][0] & ldata[0];
-+	data_padded[1] = rsp.hash_mask[intf][hash_idx][1] & ldata[1];
- 	field_hash = rvu_npc_toeplitz_hash(data_padded, hash_key, 128, 159);
- 
--	field_hash &= mkex_hash->hash_ctrl[intf][hash_idx] >> 32;
--	field_hash |= mkex_hash->hash_ctrl[intf][hash_idx];
-+	field_hash &= FIELD_GET(GENMASK(63, 32), rsp.hash_ctrl[intf][hash_idx]);
-+	field_hash += FIELD_GET(GENMASK(31, 0), rsp.hash_ctrl[intf][hash_idx]);
- 	return field_hash;
- }
- 
--static u64 npc_update_use_hash(int lt, int ld)
-+static u64 npc_update_use_hash(struct rvu *rvu, int blkaddr,
-+			       u8 intf, int lid, int lt, int ld)
- {
--	u64 cfg = 0;
--
--	switch (lt) {
--	case NPC_LT_LC_IP6:
--		/* Update use_hash(bit-20) and bytesm1 (bit-16:19)
--		 * in KEX_LD_CFG
--		 */
--		cfg = KEX_LD_CFG_USE_HASH(0x1, 0x03,
--					  ld ? 0x18 : 0x8,
--					  0x1, 0x0, ld ? 0x14 : 0x10);
--		break;
--	}
-+	u8 hdr, key;
-+	u64 cfg;
-+
-+	cfg = rvu_read64(rvu, blkaddr, NPC_AF_INTFX_LIDX_LTX_LDX_CFG(intf, lid, lt, ld));
-+	hdr = FIELD_GET(NPC_HDR_OFFSET, cfg);
-+	key = FIELD_GET(NPC_KEY_OFFSET, cfg);
-+
-+	/* Update use_hash(bit-20) to 'true' and
-+	 * bytesm1(bit-16:19) to '0x3' in KEX_LD_CFG
-+	 */
-+	cfg = KEX_LD_CFG_USE_HASH(0x1, 0x03,
-+				  hdr, 0x1, 0x0, key);
- 
- 	return cfg;
- }
-@@ -132,11 +133,13 @@ static void npc_program_mkex_hash_rx(struct rvu *rvu, int blkaddr,
- 		for (lt = 0; lt < NPC_MAX_LT; lt++) {
- 			for (ld = 0; ld < NPC_MAX_LD; ld++) {
- 				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
--					u64 cfg = npc_update_use_hash(lt, ld);
-+					u64 cfg;
- 
- 					if (hash_cnt == NPC_MAX_HASH)
- 						return;
- 
-+					cfg = npc_update_use_hash(rvu, blkaddr,
-+								  intf, lid, lt, ld);
- 					/* Set updated KEX configuration */
- 					SET_KEX_LD(intf, lid, lt, ld, cfg);
- 					/* Set HASH configuration */
-@@ -170,11 +173,13 @@ static void npc_program_mkex_hash_tx(struct rvu *rvu, int blkaddr,
- 		for (lt = 0; lt < NPC_MAX_LT; lt++) {
- 			for (ld = 0; ld < NPC_MAX_LD; ld++)
- 				if (mkex_hash->lid_lt_ld_hash_en[intf][lid][lt][ld]) {
--					u64 cfg = npc_update_use_hash(lt, ld);
-+					u64 cfg;
- 
- 					if (hash_cnt == NPC_MAX_HASH)
- 						return;
- 
-+					cfg = npc_update_use_hash(rvu, blkaddr,
-+								  intf, lid, lt, ld);
- 					/* Set updated KEX configuration */
- 					SET_KEX_LD(intf, lid, lt, ld, cfg);
- 					/* Set HASH configuration */
-@@ -268,44 +273,45 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
- 				 * is hashed to 32 bit value.
- 				 */
- 				case NPC_LT_LC_IP6:
--					if (features & BIT_ULL(NPC_SIP_IPV6)) {
-+					/* ld[0] == hash_idx[0] == Source IPv6
-+					 * ld[1] == hash_idx[1] == Destination IPv6
-+					 */
-+					if ((features & BIT_ULL(NPC_SIP_IPV6)) && !hash_idx) {
- 						u32 src_ip[IPV6_WORDS];
- 
- 						be32_to_cpu_array(src_ip, pkt->ip6src, IPV6_WORDS);
--						ldata[0] = (u64)src_ip[0] << 32 | src_ip[1];
--						ldata[1] = (u64)src_ip[2] << 32 | src_ip[3];
-+						ldata[1] = (u64)src_ip[0] << 32 | src_ip[1];
-+						ldata[0] = (u64)src_ip[2] << 32 | src_ip[3];
- 						field_hash = npc_field_hash_calc(ldata,
--										 mkex_hash,
--										 rsp.secret_key,
-+										 rsp,
- 										 intf,
- 										 hash_idx);
- 						npc_update_entry(rvu, NPC_SIP_IPV6, entry,
--								 field_hash, 0, 32, 0, intf);
-+								 field_hash, 0,
-+								 GENMASK(31, 0), 0, intf);
- 						memcpy(&opkt->ip6src, &pkt->ip6src,
- 						       sizeof(pkt->ip6src));
- 						memcpy(&omask->ip6src, &mask->ip6src,
- 						       sizeof(mask->ip6src));
--						break;
--					}
--
--					if (features & BIT_ULL(NPC_DIP_IPV6)) {
-+					} else if ((features & BIT_ULL(NPC_DIP_IPV6)) && hash_idx) {
- 						u32 dst_ip[IPV6_WORDS];
- 
- 						be32_to_cpu_array(dst_ip, pkt->ip6dst, IPV6_WORDS);
--						ldata[0] = (u64)dst_ip[0] << 32 | dst_ip[1];
--						ldata[1] = (u64)dst_ip[2] << 32 | dst_ip[3];
-+						ldata[1] = (u64)dst_ip[0] << 32 | dst_ip[1];
-+						ldata[0] = (u64)dst_ip[2] << 32 | dst_ip[3];
- 						field_hash = npc_field_hash_calc(ldata,
--										 mkex_hash,
--										 rsp.secret_key,
-+										 rsp,
- 										 intf,
- 										 hash_idx);
- 						npc_update_entry(rvu, NPC_DIP_IPV6, entry,
--								 field_hash, 0, 32, 0, intf);
-+								 field_hash, 0,
-+								 GENMASK(31, 0), 0, intf);
- 						memcpy(&opkt->ip6dst, &pkt->ip6dst,
- 						       sizeof(pkt->ip6dst));
- 						memcpy(&omask->ip6dst, &mask->ip6dst,
- 						       sizeof(mask->ip6dst));
- 					}
-+
- 					break;
- 				}
- 			}
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-index 65936f4aeaacf..a1c3d987b8044 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_npc_hash.h
-@@ -62,8 +62,8 @@ void npc_update_field_hash(struct rvu *rvu, u8 intf,
- 			   struct flow_msg *omask);
- void npc_config_secret_key(struct rvu *rvu, int blkaddr);
- void npc_program_mkex_hash(struct rvu *rvu, int blkaddr);
--u32 npc_field_hash_calc(u64 *ldata, struct npc_mcam_kex_hash *mkex_hash,
--			u64 *secret_key, u8 intf, u8 hash_idx);
-+u32 npc_field_hash_calc(u64 *ldata, struct npc_get_field_hash_info_rsp rsp,
-+			u8 intf, u8 hash_idx);
- 
- static struct npc_mcam_kex_hash npc_mkex_hash_default __maybe_unused = {
- 	.lid_lt_ld_hash_en = {
 -- 
 2.39.2
 
