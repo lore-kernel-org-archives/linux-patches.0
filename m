@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A5BFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D1FC433EF;
-	Mon, 15 May 2023 16:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19454FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:48:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72ADBC433D2;
+	Mon, 15 May 2023 16:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169296;
-	bh=Z5nvmuWjD93nU6MrRfTc/LCR9a3YHv8eUz1pCtH2154=;
+	s=korg; t=1684169299;
+	bh=8e4YA33vgLUYXKPtW7j+Y7qdMP1hdQK6O3SG0vW0ssE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZXRzpZ9x+gQUiG2ZGxKku1icqqnMJ0IFN5rgNNNOy9FE67JThBtPRz7quWADNhYKO
-	 hXleMDDmVcvjoUl6lSuRA811vp79F1QpC02I65MTbNPQgFBVs6LvdbMdimEXU9M72u
-	 hFStYYQGIHqsIflWWEmTlY0Apb+kirn4Qkfwdn3E=
+	b=HSQiJMGmaaClxRhczrUYGkp8IvPWkQzacEdff9fOj7qtqO/pMMSMC7AZKbkTrl6Bh
+	 Me64qes18XIGASDOBVqVz1RI8inPDqPEC2ih3LUBf+47Yr0O+x9uCxCp/VZTB5a04f
+	 s5/jWCPciqi3HVYiidXWkXdF5LAzI1VRcFZboWbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Manish Rangankar <mrangankar@marvell.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Neeraj Upadhyay <quic_neeraju@quicinc.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 014/246] scsi: qedi: Fix use after free bug in qedi_remove()
-Date: Mon, 15 May 2023 18:23:46 +0200
-Message-Id: <20230515161723.040854366@linuxfoundation.org>
+Subject: [PATCH 6.3 015/246] arm64: Fix label placement in record_mmu_state()
+Date: Mon, 15 May 2023 18:23:47 +0200
+Message-Id: <20230515161723.069855342@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -37,60 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Neeraj Upadhyay <quic_neeraju@quicinc.com>
 
-[ Upstream commit c5749639f2d0a1f6cbe187d05f70c2e7c544d748 ]
+[ Upstream commit 4e8f6e44bce8da3b0e2df37b12839f4bc9c9cabe ]
 
-In qedi_probe() we call __qedi_probe() which initializes
-&qedi->recovery_work with qedi_recovery_handler() and
-&qedi->board_disable_work with qedi_board_disable_work().
+Fix label so that pre_disable_mmu_workaround() is called
+before clearing sctlr_el1.M.
 
-When qedi_schedule_recovery_handler() is called, schedule_delayed_work()
-will finally start the work.
-
-In qedi_remove(), which is called to remove the driver, the following
-sequence may be observed:
-
-Fix this by finishing the work before cleanup in qedi_remove().
-
-CPU0                  CPU1
-
-                     |qedi_recovery_handler
-qedi_remove          |
-  __qedi_remove      |
-iscsi_host_free      |
-scsi_host_put        |
-//free shost         |
-                     |iscsi_host_for_each_session
-                     |//use qedi->shost
-
-Cancel recovery_work and board_disable_work in __qedi_remove().
-
-Fixes: 4b1068f5d74b ("scsi: qedi: Add MFW error recovery process")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Link: https://lore.kernel.org/r/20230413033422.28003-1-zyytlz.wz@163.com
-Acked-by: Manish Rangankar <mrangankar@marvell.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 2ced0f30a426 ("arm64: head: Switch endianness before populating the ID map")
+Signed-off-by: Neeraj Upadhyay <quic_neeraju@quicinc.com>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Link: https://lore.kernel.org/r/20230425095700.22005-1-quic_neeraju@quicinc.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedi/qedi_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/kernel/head.S | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/qedi/qedi_main.c b/drivers/scsi/qedi/qedi_main.c
-index f2ee49756df8d..45d3595541820 100644
---- a/drivers/scsi/qedi/qedi_main.c
-+++ b/drivers/scsi/qedi/qedi_main.c
-@@ -2450,6 +2450,9 @@ static void __qedi_remove(struct pci_dev *pdev, int mode)
- 		qedi_ops->ll2->stop(qedi->cdev);
- 	}
- 
-+	cancel_delayed_work_sync(&qedi->recovery_work);
-+	cancel_delayed_work_sync(&qedi->board_disable_work);
-+
- 	qedi_free_iscsi_pf_param(qedi);
- 
- 	rval = qedi_ops->common->update_drv_state(qedi->cdev, false);
+diff --git a/arch/arm64/kernel/head.S b/arch/arm64/kernel/head.S
+index b98970907226b..e92caebff46a0 100644
+--- a/arch/arm64/kernel/head.S
++++ b/arch/arm64/kernel/head.S
+@@ -150,8 +150,8 @@ CPU_BE( tbz	x19, #SCTLR_ELx_EE_SHIFT, 1f	)
+ 	pre_disable_mmu_workaround
+ 	msr	sctlr_el2, x19
+ 	b	3f
+-	pre_disable_mmu_workaround
+-2:	msr	sctlr_el1, x19
++2:	pre_disable_mmu_workaround
++	msr	sctlr_el1, x19
+ 3:	isb
+ 	mov	x19, xzr
+ 	ret
 -- 
 2.39.2
 
