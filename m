@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB74FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73499C433D2;
-	Mon, 15 May 2023 17:33:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27537FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:33:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DB62C433EF;
+	Mon, 15 May 2023 17:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171999;
-	bh=V6Ny1NJ/GvtGEhkh20qJcpxqEEJMH7RqmcRl3CsCd9M=;
+	s=korg; t=1684172003;
+	bh=1eO2mQahIqPUHlcx0RY6P55blfFH5Nk26/p9x67hqlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OmAY7FBFnG9T5l2VJqIHxaD3twgWpb8MfOdYxWR+VkQxelwM8zvjj6xM9SBVGsOWP
-	 +0DrpMCFRVcZ93w+TqN8nZ9XZSSP/GZtAAJZJjRifkHQ3MH93cSDCdCHKVTGL0LrFK
-	 Co+g5Hul1bgi/cuOwHrTcheqzwFiZihcl64B1K6w=
+	b=h5jVS0Yomu84M1bC0BYWwadFtvUjBHn8DODN0PltiJoQYLh/Df8XvuDLdrGwmcdVp
+	 oWOqNgi2/+fXD1UjlOw8L352b1ybWnhootp+/XcKT7WImFDZis8nuBtVqnEPneEeMJ
+	 3mHyaEUCKJrakNym32mKiE/jU8KTY0jr3Ub4ZQ5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 012/381] ASoC: Intel: bytcr_rt5640: Add quirk for the Acer Iconia One 7 B1-750
-Date: Mon, 15 May 2023 18:24:23 +0200
-Message-Id: <20230515161737.305139199@linuxfoundation.org>
+Subject: [PATCH 5.10 013/381] asm-generic/io.h: suppress endianness warnings for readq() and writeq()
+Date: Mon, 15 May 2023 18:24:24 +0200
+Message-Id: <20230515161737.350877017@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,48 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit e38c5e80c3d293a883c6f1d553f2146ec0bda35e ]
+[ Upstream commit d564fa1ff19e893e2971d66e5c8f49dc1cdc8ffc ]
 
-The Acer Iconia One 7 B1-750 tablet mostly works fine with the defaults
-for an Bay Trail CR tablet. Except for the internal mic, instead of
-an analog mic on IN3 a digital mic on DMIC1 is uses.
+Commit c1d55d50139b ("asm-generic/io.h: Fix sparse warnings on
+big-endian architectures") missed fixing the 64-bit accessors.
 
-Add a quirk with these settings for this tablet.
+Arnd explains in the attached link why the casts are necessary, even if
+__raw_readq() and __raw_writeq() do not take endian-specific types.
 
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230322145332.131525-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/lkml/9105d6fc-880b-4734-857d-e3d30b87ccf6@app.fastmail.com/
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/asm-generic/io.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 8a99cb6dfcd69..9a5ab96f917d3 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -393,6 +393,18 @@ static int byt_rt5640_aif1_hw_params(struct snd_pcm_substream *substream,
+diff --git a/include/asm-generic/io.h b/include/asm-generic/io.h
+index 9ea83d80eb6f9..dcbd41048b4e7 100644
+--- a/include/asm-generic/io.h
++++ b/include/asm-generic/io.h
+@@ -190,7 +190,7 @@ static inline u64 readq(const volatile void __iomem *addr)
+ 	u64 val;
  
- /* Please keep this list alphabetically sorted */
- static const struct dmi_system_id byt_rt5640_quirk_table[] = {
-+	{	/* Acer Iconia One 7 B1-750 */
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Insyde"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "VESPA2"),
-+		},
-+		.driver_data = (void *)(BYT_RT5640_DMIC1_MAP |
-+					BYT_RT5640_JD_SRC_JD1_IN4P |
-+					BYT_RT5640_OVCD_TH_1500UA |
-+					BYT_RT5640_OVCD_SF_0P75 |
-+					BYT_RT5640_SSP0_AIF1 |
-+					BYT_RT5640_MCLK_EN),
-+	},
- 	{	/* Acer Iconia Tab 8 W1-810 */
- 		.matches = {
- 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Acer"),
+ 	__io_br();
+-	val = __le64_to_cpu(__raw_readq(addr));
++	val = __le64_to_cpu((__le64 __force)__raw_readq(addr));
+ 	__io_ar(val);
+ 	return val;
+ }
+@@ -233,7 +233,7 @@ static inline void writel(u32 value, volatile void __iomem *addr)
+ static inline void writeq(u64 value, volatile void __iomem *addr)
+ {
+ 	__io_bw();
+-	__raw_writeq(__cpu_to_le64(value), addr);
++	__raw_writeq((u64 __force)__cpu_to_le64(value), addr);
+ 	__io_aw();
+ }
+ #endif
 -- 
 2.39.2
 
