@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8351772F
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FA7C433D2;
-	Mon, 15 May 2023 18:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749111772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A86C433EF;
+	Mon, 15 May 2023 18:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173755;
-	bh=sraKeo25oCEdIPlE/2+gjB6EOJuLMCWEpZ8JyLg5YzY=;
+	s=korg; t=1684173758;
+	bh=ZEvsQuva0xNOrYGykGwpQjElS5A1ix7RmXvxqguUFJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yKxpKijwhdtEAtDbG7/x2hEWdlDVlYieMuUjrmGhJ6CVFvY9GzQNfGseNLAmBqmST
-	 UmGieYPhRSIEobJfMIV+UvVHO2uDUjd1K4wnoorKCybW5o85IkfdnzkQpfz+p6BkB8
-	 8MzCscLzgaMF8S3X7p07EM2aQZdPWkBh74Uagy/0=
+	b=FFiYMEfVFOsO4yEWJbhDNRS9q0vKN6Cm++84KwCHigR816D72sn40EqT2rKk1qqMK
+	 DpVtnEtunOP8+mzr8zaR6BC13gPcjIJx453vp8HoT4LcVo65jiH6Qtq1GIBUPgarXQ
+	 5iT+Zg47f2dxaFVgSYa239NKyYyFoozzcwchNVKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 5.4 195/282] md/raid10: fix null-ptr-deref in raid10_sync_request
-Date: Mon, 15 May 2023 18:29:33 +0200
-Message-Id: <20230515161728.105334151@linuxfoundation.org>
+	Tanmay Shah <tanmay.shah@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 5.4 196/282] mailbox: zynqmp: Fix IPI isr handling
+Date: Mon, 15 May 2023 18:29:34 +0200
+Message-Id: <20230515161728.133273066@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -34,64 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Nan <linan122@huawei.com>
+From: Tanmay Shah <tanmay.shah@amd.com>
 
-commit a405c6f0229526160aa3f177f65e20c86fce84c5 upstream.
+commit 74ad37a30ffee3643bc34f9ca7225b20a66abaaf upstream.
 
-init_resync() inits mempool and sets conf->have_replacemnt at the beginning
-of sync, close_sync() frees the mempool when sync is completed.
+Multiple IPI channels are mapped to same interrupt handler.
+Current isr implementation handles only one channel per isr.
+Fix this behavior by checking isr status bit of all child
+mailbox nodes.
 
-After [1] recovery might be skipped and init_resync() is called but
-close_sync() is not. null-ptr-deref occurs with r10bio->dev[i].repl_bio.
-
-The following is one way to reproduce the issue.
-
-  1) create a array, wait for resync to complete, mddev->recovery_cp is set
-     to MaxSector.
-  2) recovery is woken and it is skipped. conf->have_replacement is set to
-     0 in init_resync(). close_sync() not called.
-  3) some io errors and rdev A is set to WantReplacement.
-  4) a new device is added and set to A's replacement.
-  5) recovery is woken, A have replacement, but conf->have_replacemnt is
-     0. r10bio->dev[i].repl_bio will not be alloced and null-ptr-deref
-     occurs.
-
-Fix it by not calling init_resync() if recovery skipped.
-
-[1] commit 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
-Fixes: 7e83ccbecd60 ("md/raid10: Allow skipping recovery when clean arrays are assembled")
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Li Nan <linan122@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230222041000.3341651-3-linan666@huaweicloud.com
+Link: https://lore.kernel.org/r/20230311012407.1292118-3-tanmay.shah@amd.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/raid10.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -2920,10 +2920,6 @@ static sector_t raid10_sync_request(stru
- 	sector_t chunk_mask = conf->geo.chunk_mask;
- 	int page_idx = 0;
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -152,7 +152,7 @@ static irqreturn_t zynqmp_ipi_interrupt(
+ 	struct zynqmp_ipi_message *msg;
+ 	u64 arg0, arg3;
+ 	struct arm_smccc_res res;
+-	int ret, i;
++	int ret, i, status = IRQ_NONE;
  
--	if (!mempool_initialized(&conf->r10buf_pool))
--		if (init_resync(conf))
--			return 0;
--
- 	/*
- 	 * Allow skipping a full rebuild for incremental assembly
- 	 * of a clean array, like RAID1 does.
-@@ -2939,6 +2935,10 @@ static sector_t raid10_sync_request(stru
- 		return mddev->dev_sectors - sector_nr;
+ 	(void)irq;
+ 	arg0 = SMC_IPI_MAILBOX_STATUS_ENQUIRY;
+@@ -170,11 +170,11 @@ static irqreturn_t zynqmp_ipi_interrupt(
+ 				memcpy_fromio(msg->data, mchan->req_buf,
+ 					      msg->len);
+ 				mbox_chan_received_data(chan, (void *)msg);
+-				return IRQ_HANDLED;
++				status = IRQ_HANDLED;
+ 			}
+ 		}
  	}
+-	return IRQ_NONE;
++	return status;
+ }
  
-+	if (!mempool_initialized(&conf->r10buf_pool))
-+		if (init_resync(conf))
-+			return 0;
-+
-  skipped:
- 	max_sector = mddev->dev_sectors;
- 	if (test_bit(MD_RECOVERY_SYNC, &mddev->recovery) ||
+ /**
 
 
