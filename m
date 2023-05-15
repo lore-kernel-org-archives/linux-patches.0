@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A089FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:45:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E265AC433EF;
-	Mon, 15 May 2023 16:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84176FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:45:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABF4C4339B;
+	Mon, 15 May 2023 16:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169123;
-	bh=AFlvIgK/QkSQ699RdT3w4uSjBWj3q2yRfnspFuSCokc=;
+	s=korg; t=1684169126;
+	bh=mu54pJhOjKOJ7r4NOIwIpjAK16d13l+HAmwmvzPDDmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=it2GLPB11Zd0AKhe0U4mhCrwIFZzQ3+o3YUqVv1L8cKWGJY/AW10ymjaPoF5dSR4c
-	 OL7Lnhd6MGT30ukikEpvvkO/7NjT8lXY59hQ+iM9eoB8HRFhyRY2dWSxOyO9RULGAZ
-	 MytnHAHEJOj4/yJnhFb/ZIlVym9Tc8j8k43rv3zc=
+	b=YKB8wYH1nsgkQh10wYCwOpxs3idOx/XDYTqrgZ9czTaGLbULa7gLsMCDR+dj+hgQD
+	 Xvd/kzps2206x8mHSLMXaMk41rzqAq6H1LBiP2KR4TGn333/uOt8DkPpCVdTKXXwZ0
+	 CCvGtyV19qacJsEbUFqwQ99j0r/LNSwD3TGUU9bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
-	Alexandre Mergnat <amergnat@baylibre.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Palash Oswal <oswalpalash@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Cong Wang <cong.wang@bytedance.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 122/191] pwm: mtk-disp: Disable shadow registers before setting backlight values
-Date: Mon, 15 May 2023 18:25:59 +0200
-Message-Id: <20230515161711.717933988@linuxfoundation.org>
+Subject: [PATCH 4.19 149/191] sit: update dev->needed_headroom in ipip6_tunnel_bind_dev()
+Date: Mon, 15 May 2023 18:26:26 +0200
+Message-Id: <20230515161712.833010788@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -37,68 +38,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 36dd7f530ae7d9ce9e853ffb8aa337de65c6600b ]
+[ Upstream commit c88f8d5cd95fd039cff95d682b8e71100c001df0 ]
 
-If shadow registers usage is not desired, disable that before performing
-any write to CON0/1 registers in the .apply() callback, otherwise we may
-lose clkdiv or period/width updates.
+When a tunnel device is bound with the underlying device, its
+dev->needed_headroom needs to be updated properly. IPv4 tunnels
+already do the same in ip_tunnel_bind_dev(). Otherwise we may
+not have enough header room for skb, especially after commit
+b17f709a2401 ("gue: TX support for using remote checksum offload option").
 
-Fixes: cd4b45ac449a ("pwm: Add MediaTek MT2701 display PWM driver support")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
-Tested-by: Alexandre Mergnat <amergnat@baylibre.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 32b8a8e59c9c ("sit: add IPv4 over IPv4 support")
+Reported-by: Palash Oswal <oswalpalash@gmail.com>
+Link: https://lore.kernel.org/netdev/CAGyP=7fDcSPKu6nttbGwt7RXzE3uyYxLjCSE97J64pRxJP8jPA@mail.gmail.com/
+Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
+Cc: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ net/ipv6/sit.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index 6d08938866048..c49b1e696b8c4 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -122,6 +122,19 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 	high_width = div64_u64(rate * duty_ns, div);
- 	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index df734fe64d10a..ec1de1e6b8e3c 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1053,12 +1053,13 @@ static netdev_tx_t sit_tunnel_xmit(struct sk_buff *skb,
  
-+	if (mdp->data->bls_debug && !mdp->data->has_commit) {
-+		/*
-+		 * For MT2701, disable double buffer before writing register
-+		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
-+		 */
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
-+					 mdp->data->bls_debug_mask,
-+					 mdp->data->bls_debug_mask);
-+		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
-+					 mdp->data->con0_sel,
-+					 mdp->data->con0_sel);
-+	}
-+
- 	mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
- 				 PWM_CLKDIV_MASK,
- 				 clk_div << PWM_CLKDIV_SHIFT);
-@@ -136,17 +149,6 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 		mtk_disp_pwm_update_bits(mdp, mdp->data->commit,
- 					 mdp->data->commit_mask,
- 					 0x0);
--	} else {
--		/*
--		 * For MT2701, disable double buffer before writing register
--		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
--		 */
--		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
--					 mdp->data->bls_debug_mask,
--					 mdp->data->bls_debug_mask);
--		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
--					 mdp->data->con0_sel,
--					 mdp->data->con0_sel);
+ static void ipip6_tunnel_bind_dev(struct net_device *dev)
+ {
++	struct ip_tunnel *tunnel = netdev_priv(dev);
++	int t_hlen = tunnel->hlen + sizeof(struct iphdr);
+ 	struct net_device *tdev = NULL;
+-	struct ip_tunnel *tunnel;
++	int hlen = LL_MAX_HEADER;
+ 	const struct iphdr *iph;
+ 	struct flowi4 fl4;
+ 
+-	tunnel = netdev_priv(dev);
+ 	iph = &tunnel->parms.iph;
+ 
+ 	if (iph->daddr) {
+@@ -1081,14 +1082,15 @@ static void ipip6_tunnel_bind_dev(struct net_device *dev)
+ 		tdev = __dev_get_by_index(tunnel->net, tunnel->parms.link);
+ 
+ 	if (tdev && !netif_is_l3_master(tdev)) {
+-		int t_hlen = tunnel->hlen + sizeof(struct iphdr);
+ 		int mtu;
+ 
+ 		mtu = tdev->mtu - t_hlen;
+ 		if (mtu < IPV6_MIN_MTU)
+ 			mtu = IPV6_MIN_MTU;
+ 		WRITE_ONCE(dev->mtu, mtu);
++		hlen = tdev->hard_header_len + tdev->needed_headroom;
  	}
++	dev->needed_headroom = t_hlen + hlen;
+ }
  
- 	clk_disable_unprepare(mdp->clk_mm);
+ static void ipip6_tunnel_update(struct ip_tunnel *t, struct ip_tunnel_parm *p,
 -- 
 2.39.2
 
