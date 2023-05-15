@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E0FFBF8
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:14:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90625C4339C;
-	Mon, 15 May 2023 17:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62728FBF8
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:14:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA075C433EF;
+	Mon, 15 May 2023 17:14:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170862;
-	bh=iQ3HDiREP0Ftd7cnshrGMCZqeYryZg0Ez9zNd+ibgOY=;
+	s=korg; t=1684170865;
+	bh=IklGXwQ+QJmxQIBDYl7m1zus3zXQsMX+ouWyA8WQFns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l+CELe7ZGksE3JkNQgenXgVpbLuQdwvZai2y79JljfhliWhHV7VMzTXjUgqsiELLd
-	 BstoKswRZLkAwDE/rEWvzbJYgJrVX5UYQVYWDk1sYmytngtbrgBqZ7+2Kb148o85pp
-	 bUolo8klpXjGotuNBZdKG+cjk7G7mktum5dtU9ro=
+	b=OeEuGKOPTt324XMh8HHAVOaQjzxfApZgMatrCAH9pfAojMhLLF7o4BOoM8+tRFC2N
+	 bRQGJTdQP8ZjnugaZ9N8HYsBCfoNktE8vbBwq4aS1pNgyc6lEJAwsT7Z5dLGAY7f5x
+	 35yGrm/mxIA5G62wiefwcLtlUE18wgiWBZDZUngc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 025/242] drm/amd/display: Add missing WA and MCLK validation
-Date: Mon, 15 May 2023 18:25:51 +0200
-Message-Id: <20230515161722.685127566@linuxfoundation.org>
+Subject: [PATCH 6.2 026/242] drm/amd/display: Return error code on DSC atomic check failure
+Date: Mon, 15 May 2023 18:25:52 +0200
+Message-Id: <20230515161722.713818103@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -37,87 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Hersen Wu <hersenxs.wu@amd.com>
 
-[ Upstream commit 822b84ecfc646da0f87fd947fa00dc3be5e45ecc ]
+[ Upstream commit dd24662d9dfbad281bbf030f06d68c7938fa0c66 ]
 
-When the commit fff7eb56b376 ("drm/amd/display: Don't set dram clock
-change requirement for SubVP") was merged, we missed some parts
-associated with the MCLK switch. This commit adds all the missing parts.
+[Why&How]
+We were not returning -EINVAL on DSC atomic check fail. Add it.
 
-Fixes: fff7eb56b376 ("drm/amd/display: Don't set dram clock change requirement for SubVP")
+Fixes: 71be4b16d39a ("drm/amd/display: dsc validate fail not pass to atomic check")
 Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Hersen Wu <hersenxs.wu@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c |  1 +
- .../drm/amd/display/dc/dcn32/dcn32_resource.c  |  2 +-
- .../drm/amd/display/dc/dml/dcn30/dcn30_fpu.c   | 18 +++++++++++++++++-
- 3 files changed, 19 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c           | 1 +
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-index 30d15a94f720d..578a715040ac3 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_hwseq.c
-@@ -992,6 +992,7 @@ void dcn32_init_hw(struct dc *dc)
- 	if (dc->ctx->dmub_srv) {
- 		dc_dmub_srv_query_caps_cmd(dc->ctx->dmub_srv->dmub);
- 		dc->caps.dmub_caps.psr = dc->ctx->dmub_srv->dmub->feature_caps.psr;
-+		dc->caps.dmub_caps.mclk_sw = dc->ctx->dmub_srv->dmub->feature_caps.fw_assisted_mclk_switch;
- 	}
- }
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 58fdd39f5bde9..324cfaeb744cd 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9859,6 +9859,7 @@ static int amdgpu_dm_atomic_check(struct drm_device *dev,
+ 		ret = compute_mst_dsc_configs_for_state(state, dm_state->context, vars);
+ 		if (ret) {
+ 			DRM_DEBUG_DRIVER("compute_mst_dsc_configs_for_state() failed\n");
++			ret = -EINVAL;
+ 			goto fail;
+ 		}
  
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-index 6187aba1362b8..41c3620546c2b 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -2021,7 +2021,7 @@ int dcn32_populate_dml_pipes_from_context(
- 	// In general cases we want to keep the dram clock change requirement
- 	// (prefer configs that support MCLK switch). Only override to false
- 	// for SubVP
--	if (subvp_in_use)
-+	if (context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching || subvp_in_use)
- 		context->bw_ctx.dml.soc.dram_clock_change_requirement_final = false;
- 	else
- 		context->bw_ctx.dml.soc.dram_clock_change_requirement_final = true;
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/dcn30_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/dcn30_fpu.c
-index 4fa6363647937..fdfb19337ea6e 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/dcn30_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/dcn30_fpu.c
-@@ -368,7 +368,9 @@ void dcn30_fpu_update_soc_for_wm_a(struct dc *dc, struct dc_state *context)
- 	dc_assert_fp_enabled();
- 
- 	if (dc->clk_mgr->bw_params->wm_table.nv_entries[WM_A].valid) {
--		context->bw_ctx.dml.soc.dram_clock_change_latency_us = dc->clk_mgr->bw_params->wm_table.nv_entries[WM_A].dml_input.pstate_latency_us;
-+		if (!context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching ||
-+				context->bw_ctx.dml.soc.dram_clock_change_latency_us == 0)
-+			context->bw_ctx.dml.soc.dram_clock_change_latency_us = dc->clk_mgr->bw_params->wm_table.nv_entries[WM_A].dml_input.pstate_latency_us;
- 		context->bw_ctx.dml.soc.sr_enter_plus_exit_time_us = dc->clk_mgr->bw_params->wm_table.nv_entries[WM_A].dml_input.sr_enter_plus_exit_time_us;
- 		context->bw_ctx.dml.soc.sr_exit_time_us = dc->clk_mgr->bw_params->wm_table.nv_entries[WM_A].dml_input.sr_exit_time_us;
- 	}
-@@ -520,6 +522,20 @@ void dcn30_fpu_calculate_wm_and_dlg(
- 		pipe_idx++;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+index 60dd88666437d..994a37003217d 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1375,6 +1375,7 @@ int pre_validate_dsc(struct drm_atomic_state *state,
+ 	ret = pre_compute_mst_dsc_configs_for_state(state, local_dc_state, vars);
+ 	if (ret != 0) {
+ 		DRM_INFO_ONCE("pre_compute_mst_dsc_configs_for_state() failed\n");
++		ret = -EINVAL;
+ 		goto clean_exit;
  	}
  
-+	// WA: restrict FPO to use first non-strobe mode (NV24 BW issue)
-+	if (context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching &&
-+			dc->dml.soc.num_chans <= 4 &&
-+			context->bw_ctx.dml.vba.DRAMSpeed <= 1700 &&
-+			context->bw_ctx.dml.vba.DRAMSpeed >= 1500) {
-+
-+		for (i = 0; i < dc->dml.soc.num_states; i++) {
-+			if (dc->dml.soc.clock_limits[i].dram_speed_mts > 1700) {
-+				context->bw_ctx.dml.vba.DRAMSpeed = dc->dml.soc.clock_limits[i].dram_speed_mts;
-+				break;
-+			}
-+		}
-+	}
-+
- 	dcn20_calculate_dlg_params(dc, context, pipes, pipe_cnt, vlevel);
- 
- 	if (!pstate_en)
 -- 
 2.39.2
 
