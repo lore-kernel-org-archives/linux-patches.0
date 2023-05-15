@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D854FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:09:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D995C433D2;
-	Mon, 15 May 2023 17:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C311FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:09:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88CECC433D2;
+	Mon, 15 May 2023 17:09:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170541;
-	bh=mkROcgeKf/QVqMyGvbpMUEjcile4IozeG0H2SKuWYIA=;
+	s=korg; t=1684170545;
+	bh=PbZZuSH1PYVFxlTFOMPW56lB9p0Nk3XQKPBB3OSagGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bFYNGEOGLV65JD+Dd5QY92mXNSxIDrKZo1d+bb11vLGMC5rkUmEzvj8JEHzisjN90
-	 qPxJJCVnrtd0JXbuxA2PS4PUpQlKRe/pX5jiP3iZ17zUrloC8h0521faU88iI8eUox
-	 SeKWFu+1v9tuUDyaDHZU5848GpQo/BWDDFekmwpU=
+	b=s2qbYOg3TVUsxEJkQQdOmF/Zv+Fp0edfSeDjaUyPLQ6NbpAa8VOEdL4SmMVhSBOH5
+	 pb1qUasqFo//wEo2jp3Yit9YiC0RSqRQgCq2LuEI519/m0KJydkjabEKvxEOFXxGui
+	 X++IPpW/ti1bISUHDyd0/1xB3BGhF8Xm+96LaiTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <Roman.Li@amd.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Horatio Zhang <Hongkun.Zhang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 164/239] drm/amd/display: fix flickering caused by S/G mode
-Date: Mon, 15 May 2023 18:27:07 +0200
-Message-Id: <20230515161726.591642735@linuxfoundation.org>
+Subject: [PATCH 6.1 165/239] drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v10_0_hw_fini
+Date: Mon, 15 May 2023 18:27:08 +0200
+Message-Id: <20230515161726.625408478@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,58 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hamza Mahfooz <hamza.mahfooz@amd.com>
+From: Horatio Zhang <Hongkun.Zhang@amd.com>
 
-commit 08da182175db4c7f80850354849d95f2670e8cd9 upstream.
+commit 08c677cb0b436a96a836792bb35a8ec5de4999c2 upstream.
 
-Currently, on a handful of ASICs. We allow the framebuffer for a given
-plane to exist in either VRAM or GTT. However, if the plane's new
-framebuffer is in a different memory domain than it's previous
-framebuffer, flipping between them can cause the screen to flicker. So,
-to fix this, don't perform an immediate flip in the aforementioned case.
+The gmc.ecc_irq is enabled by firmware per IFWI setting,
+and the host driver is not privileged to enable/disable
+the interrupt. So, it is meaningless to use the amdgpu_irq_put
+function in gmc_v10_0_hw_fini, which also leads to the call
+trace.
 
-Cc: stable@vger.kernel.org
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2354
-Reviewed-by: Roman Li <Roman.Li@amd.com>
-Fixes: 81d0bcf99009 ("drm/amdgpu: make display pinning more flexible (v2)")
-Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+[   82.340264] Call Trace:
+[   82.340265]  <TASK>
+[   82.340269]  gmc_v10_0_hw_fini+0x83/0xa0 [amdgpu]
+[   82.340447]  gmc_v10_0_suspend+0xe/0x20 [amdgpu]
+[   82.340623]  amdgpu_device_ip_suspend_phase2+0x127/0x1c0 [amdgpu]
+[   82.340789]  amdgpu_device_ip_suspend+0x3d/0x80 [amdgpu]
+[   82.340955]  amdgpu_device_pre_asic_reset+0xdd/0x2b0 [amdgpu]
+[   82.341122]  amdgpu_device_gpu_recover.cold+0x4dd/0xbb2 [amdgpu]
+[   82.341359]  amdgpu_debugfs_reset_work+0x4c/0x70 [amdgpu]
+[   82.341529]  process_one_work+0x21d/0x3f0
+[   82.341535]  worker_thread+0x1fa/0x3c0
+[   82.341538]  ? process_one_work+0x3f0/0x3f0
+[   82.341540]  kthread+0xff/0x130
+[   82.341544]  ? kthread_complete_and_exit+0x20/0x20
+[   82.341547]  ret_from_fork+0x22/0x30
+
+Signed-off-by: Horatio Zhang <Hongkun.Zhang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Guchun Chen <guchun.chen@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
+Fixes: c8b5a95b5709 ("drm/amdgpu: Fix desktop freezed after gpu-reset")
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -7593,6 +7593,13 @@ static void amdgpu_dm_commit_cursors(str
- 			handle_cursor_update(plane, old_plane_state);
- }
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
+@@ -1142,7 +1142,6 @@ static int gmc_v10_0_hw_fini(void *handl
+ 		return 0;
+ 	}
  
-+static inline uint32_t get_mem_type(struct drm_framebuffer *fb)
-+{
-+	struct amdgpu_bo *abo = gem_to_amdgpu_bo(fb->obj[0]);
-+
-+	return abo->tbo.resource ? abo->tbo.resource->mem_type : 0;
-+}
-+
- static void amdgpu_dm_commit_planes(struct drm_atomic_state *state,
- 				    struct dc_state *dc_state,
- 				    struct drm_device *dev,
-@@ -7710,11 +7717,13 @@ static void amdgpu_dm_commit_planes(stru
+-	amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
  
- 		/*
- 		 * Only allow immediate flips for fast updates that don't
--		 * change FB pitch, DCC state, rotation or mirroing.
-+		 * change memory domain, FB pitch, DCC state, rotation or
-+		 * mirroring.
- 		 */
- 		bundle->flip_addrs[planes_count].flip_immediate =
- 			crtc->state->async_flip &&
--			acrtc_state->update_type == UPDATE_TYPE_FAST;
-+			acrtc_state->update_type == UPDATE_TYPE_FAST &&
-+			get_mem_type(old_plane_state->fb) == get_mem_type(fb);
- 
- 		timestamp_ns = ktime_get_ns();
- 		bundle->flip_addrs[planes_count].flip_timestamp_in_us = div_u64(timestamp_ns, 1000);
+ 	return 0;
 
 
