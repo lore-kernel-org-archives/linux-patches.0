@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DA6FBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CE7C433D2;
-	Mon, 15 May 2023 17:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E54FBEC
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0132DC4339B;
+	Mon, 15 May 2023 17:49:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172953;
-	bh=Ci6EsZHvwy2O+Pq23OjtiVozcA6n0rlDyVZSmzborLM=;
+	s=korg; t=1684172956;
+	bh=cyChaYvj51cFxDn4xEgEXRLhmxA4nvUJY/q76OQu4oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIGwD6hQCq/XG+f5t+bqcIYNNDzxUH7KIYNEaYkZCcWkZ89y7q1/ZCVSDOBsJROhE
-	 UIfTm9T5VkCuq9d3op8GIqjLpmoK3R6hqLeg9/knbXQYQ83HyYys8nFHzFr/fZPCjk
-	 KGEi2cyeSV2RWn5l/pY+Gri8k7ZlW5VJRsJCdWT4=
+	b=GQnI6zs0L73+b93lNe2+yugLGaTyyv/ZBPkM9TYg1g0xrpC/YkCHgK6X1vXXtlPQS
+	 E7mMeIrwB9EgrkhyG6CiTOZTzvAcd1YviufUbbB2XZOXGwjskH16+4jzZej066MkWo
+	 cRrd14EdU/Sy71FMq2hNp344sj2DvIyibLjD5AOg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.10 291/381] debugobject: Ensure pool refill (again)
-Date: Mon, 15 May 2023 18:29:02 +0200
-Message-Id: <20230515161749.929215903@linuxfoundation.org>
+	Miles Chen <miles.chen@mediatek.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 292/381] sound/oss/dmasound: fix dmasound_setup defined but not used
+Date: Mon, 15 May 2023 18:29:03 +0200
+Message-Id: <20230515161749.977774996@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,80 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Miles Chen <miles.chen@mediatek.com>
 
-commit 0af462f19e635ad522f28981238334620881badc upstream.
+commit 357ad4d898286b94aaae0cb7e3f573459e5b98b9 upstream.
 
-The recent fix to ensure atomicity of lookup and allocation inadvertently
-broke the pool refill mechanism.
+We observed: 'dmasound_setup' defined but not used error with
+COMPILER=gcc ARCH=m68k DEFCONFIG=allmodconfig build.
 
-Prior to that change debug_objects_activate() and debug_objecs_assert_init()
-invoked debug_objecs_init() to set up the tracking object for statically
-initialized objects. That's not longer the case and debug_objecs_init() is
-now the only place which does pool refills.
+Fix it by adding __maybe_unused to dmasound_setup.
 
-Depending on the number of statically initialized objects this can be
-enough to actually deplete the pool, which was observed by Ido via a
-debugobjects OOM warning.
+Error(s):
+sound/oss/dmasound/dmasound_core.c:1431:12: error: 'dmasound_setup' defined but not used [-Werror=unused-function]
 
-Restore the old behaviour by adding explicit refill opportunities to
-debug_objects_activate() and debug_objecs_assert_init().
-
-Fixes: 63a759694eed ("debugobject: Prevent init race with static objects")
-Reported-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://lore.kernel.org/r/871qk05a9d.ffs@tglx
+Fixes: 9dd7c46346ca ("sound/oss/dmasound: fix build when drivers are mixed =y/=m")
+Signed-off-by: Miles Chen <miles.chen@mediatek.com>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20220414091940.2216-1-miles.chen@mediatek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ sound/oss/dmasound/dmasound_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -590,6 +590,16 @@ static struct debug_obj *lookup_object_o
- 	return NULL;
+--- a/sound/oss/dmasound/dmasound_core.c
++++ b/sound/oss/dmasound/dmasound_core.c
+@@ -1442,7 +1442,7 @@ void dmasound_deinit(void)
+ 		unregister_sound_dsp(sq_unit);
  }
  
-+static void debug_objects_fill_pool(void)
-+{
-+	/*
-+	 * On RT enabled kernels the pool refill must happen in preemptible
-+	 * context:
-+	 */
-+	if (!IS_ENABLED(CONFIG_PREEMPT_RT) || preemptible())
-+		fill_pool();
-+}
-+
- static void
- __debug_object_init(void *addr, const struct debug_obj_descr *descr, int onstack)
+-static int dmasound_setup(char *str)
++static int __maybe_unused dmasound_setup(char *str)
  {
-@@ -598,7 +608,7 @@ __debug_object_init(void *addr, const st
- 	struct debug_obj *obj;
- 	unsigned long flags;
+ 	int ints[6], size;
  
--	fill_pool();
-+	debug_objects_fill_pool();
- 
- 	db = get_bucket((unsigned long) addr);
- 
-@@ -683,6 +693,8 @@ int debug_object_activate(void *addr, co
- 	if (!debug_objects_enabled)
- 		return 0;
- 
-+	debug_objects_fill_pool();
-+
- 	db = get_bucket((unsigned long) addr);
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
-@@ -892,6 +904,8 @@ void debug_object_assert_init(void *addr
- 	if (!debug_objects_enabled)
- 		return;
- 
-+	debug_objects_fill_pool();
-+
- 	db = get_bucket((unsigned long) addr);
- 
- 	raw_spin_lock_irqsave(&db->lock, flags);
 
 
