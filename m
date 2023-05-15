@@ -1,37 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58FECFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:18:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D82C433D2;
-	Mon, 15 May 2023 17:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A14DFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:18:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CFC6C433D2;
+	Mon, 15 May 2023 17:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171131;
-	bh=m7i8Y8IHu/njLCDUUr8smsA3tgSYIqo4RuzfNnHOmXg=;
+	s=korg; t=1684171134;
+	bh=Y+w30pJKtWGAnRmDY6vHttfs1LLqjtgvgMI7JVb7v/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFJ5tLgwB1NhI8rxr5I8C4CxZSefwT86YLjyZAKECPkqr4O9Tsew7Q/WkcD8LB+L6
-	 mwBNx5yGRLY5SkMGv5vBmbZMhsRsjhGbKITdhylGtHZ3fOP9EolbFkRH6BoOo87sDC
-	 e/QfgRREx4sWOerR0a6lwkpYXUZhbBGqFmS7C42E=
+	b=s8wBUuuW91i4sx7xUNT9G5rq3fefT5YTLI5Nuv227MrBOUR+CVKMT/fhM3TvrSQHW
+	 ilaQc7zWYZVSKHzPnNopzt4B7vMmrUzjjAtv+u9kDcM0l9jbXAn8CmCinkUK3TVY0i
+	 NbDSlWhZ6LuHL3uQ9R2CX9gt5XB3rknJ27a05bT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	elfring@users.sourceforge.net,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	German Gomez <german.gomez@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	David Matlack <dmatlack@google.com>,
+	Kai Huang <kai.huang@intel.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 103/242] perf map: Delete two variable initialisations before null pointer checks in sort__sym_from_cmp()
-Date: Mon, 15 May 2023 18:27:09 +0200
-Message-Id: <20230515161724.992300832@linuxfoundation.org>
+Subject: [PATCH 6.2 112/242] KVM: x86/mmu: Change tdp_mmu to a read-only parameter
+Date: Mon, 15 May 2023 18:27:18 +0200
+Message-Id: <20230515161725.268129156@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -45,54 +36,322 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Elfring <Markus.Elfring@web.de>
+From: David Matlack <dmatlack@google.com>
 
-[ Upstream commit c160118a90d4acf335993d8d59b02ae2147a524e ]
+[ Upstream commit 3af15ff47c4df3af7b36ea8315f43c6b0af49253 ]
 
-Addresses of two data structure members were determined before
-corresponding null pointer checks in the implementation of the function
-“sort__sym_from_cmp”.
+Change tdp_mmu to a read-only parameter and drop the per-vm
+tdp_mmu_enabled. For 32-bit KVM, make tdp_mmu_enabled a macro that is
+always false so that the compiler can continue omitting cals to the TDP
+MMU.
 
-Thus avoid the risk for undefined behaviour by removing extra
-initialisations for the local variables “from_l” and “from_r” (also
-because they were already reassigned with the same value behind this
-pointer check).
+The TDP MMU was introduced in 5.10 and has been enabled by default since
+5.15. At this point there are no known functionality gaps between the
+TDP MMU and the shadow MMU, and the TDP MMU uses less memory and scales
+better with the number of vCPUs. In other words, there is no good reason
+to disable the TDP MMU on a live system.
 
-This issue was detected by using the Coccinelle software.
+Purposely do not drop tdp_mmu=N support (i.e. do not force 64-bit KVM to
+always use the TDP MMU) since tdp_mmu=N is still used to get test
+coverage of KVM's shadow MMU TDP support, which is used in 32-bit KVM.
 
-Fixes: 1b9e97a2a95e4941 ("perf tools: Fix report -F symbol_from for data without branch info")
-Signed-off-by: <elfring@users.sourceforge.net>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/cocci/54a21fea-64e3-de67-82ef-d61b90ffad05@web.de/
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: David Matlack <dmatlack@google.com>
+Reviewed-by: Kai Huang <kai.huang@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Message-Id: <20220921173546.2674386-2-dmatlack@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: edbdb43fc96b ("KVM: x86: Preserve TDP MMU roots until they are explicitly invalidated")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/sort.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/include/asm/kvm_host.h | 13 ++-------
+ arch/x86/kvm/mmu.h              |  6 ++--
+ arch/x86/kvm/mmu/mmu.c          | 51 ++++++++++++++++++++++-----------
+ arch/x86/kvm/mmu/tdp_mmu.c      |  9 ++----
+ 4 files changed, 41 insertions(+), 38 deletions(-)
 
-diff --git a/tools/perf/util/sort.c b/tools/perf/util/sort.c
-index 2bf3f88276972..22808643ab725 100644
---- a/tools/perf/util/sort.c
-+++ b/tools/perf/util/sort.c
-@@ -966,8 +966,7 @@ static int hist_entry__dso_to_filter(struct hist_entry *he, int type,
- static int64_t
- sort__sym_from_cmp(struct hist_entry *left, struct hist_entry *right)
- {
--	struct addr_map_symbol *from_l = &left->branch_info->from;
--	struct addr_map_symbol *from_r = &right->branch_info->from;
-+	struct addr_map_symbol *from_l, *from_r;
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index 24480b4f1c575..adc3149c833a9 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1342,21 +1342,12 @@ struct kvm_arch {
+ 	struct task_struct *nx_huge_page_recovery_thread;
  
- 	if (!left->branch_info || !right->branch_info)
- 		return cmp_null(left->branch_info, right->branch_info);
+ #ifdef CONFIG_X86_64
+-	/*
+-	 * Whether the TDP MMU is enabled for this VM. This contains a
+-	 * snapshot of the TDP MMU module parameter from when the VM was
+-	 * created and remains unchanged for the life of the VM. If this is
+-	 * true, TDP MMU handler functions will run for various MMU
+-	 * operations.
+-	 */
+-	bool tdp_mmu_enabled;
+-
+ 	/* The number of TDP MMU pages across all roots. */
+ 	atomic64_t tdp_mmu_pages;
+ 
+ 	/*
+-	 * List of kvm_mmu_page structs being used as roots.
+-	 * All kvm_mmu_page structs in the list should have
++	 * List of struct kvm_mmu_pages being used as roots.
++	 * All struct kvm_mmu_pages in the list should have
+ 	 * tdp_mmu_page set.
+ 	 *
+ 	 * For reads, this list is protected by:
+diff --git a/arch/x86/kvm/mmu.h b/arch/x86/kvm/mmu.h
+index 59804be91b5b0..0f38b78ab04b7 100644
+--- a/arch/x86/kvm/mmu.h
++++ b/arch/x86/kvm/mmu.h
+@@ -254,14 +254,14 @@ static inline bool kvm_shadow_root_allocated(struct kvm *kvm)
+ }
+ 
+ #ifdef CONFIG_X86_64
+-static inline bool is_tdp_mmu_enabled(struct kvm *kvm) { return kvm->arch.tdp_mmu_enabled; }
++extern bool tdp_mmu_enabled;
+ #else
+-static inline bool is_tdp_mmu_enabled(struct kvm *kvm) { return false; }
++#define tdp_mmu_enabled false
+ #endif
+ 
+ static inline bool kvm_memslots_have_rmaps(struct kvm *kvm)
+ {
+-	return !is_tdp_mmu_enabled(kvm) || kvm_shadow_root_allocated(kvm);
++	return !tdp_mmu_enabled || kvm_shadow_root_allocated(kvm);
+ }
+ 
+ static inline gfn_t gfn_to_index(gfn_t gfn, gfn_t base_gfn, int level)
+diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+index ce135539145fd..583979755bd4f 100644
+--- a/arch/x86/kvm/mmu/mmu.c
++++ b/arch/x86/kvm/mmu/mmu.c
+@@ -99,6 +99,13 @@ module_param_named(flush_on_reuse, force_flush_and_sync_on_reuse, bool, 0644);
+  */
+ bool tdp_enabled = false;
+ 
++bool __ro_after_init tdp_mmu_allowed;
++
++#ifdef CONFIG_X86_64
++bool __read_mostly tdp_mmu_enabled = true;
++module_param_named(tdp_mmu, tdp_mmu_enabled, bool, 0444);
++#endif
++
+ static int max_huge_page_level __read_mostly;
+ static int tdp_root_level __read_mostly;
+ static int max_tdp_level __read_mostly;
+@@ -1293,7 +1300,7 @@ static void kvm_mmu_write_protect_pt_masked(struct kvm *kvm,
+ {
+ 	struct kvm_rmap_head *rmap_head;
+ 
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		kvm_tdp_mmu_clear_dirty_pt_masked(kvm, slot,
+ 				slot->base_gfn + gfn_offset, mask, true);
+ 
+@@ -1326,7 +1333,7 @@ static void kvm_mmu_clear_dirty_pt_masked(struct kvm *kvm,
+ {
+ 	struct kvm_rmap_head *rmap_head;
+ 
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		kvm_tdp_mmu_clear_dirty_pt_masked(kvm, slot,
+ 				slot->base_gfn + gfn_offset, mask, false);
+ 
+@@ -1409,7 +1416,7 @@ bool kvm_mmu_slot_gfn_write_protect(struct kvm *kvm,
+ 		}
+ 	}
+ 
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		write_protected |=
+ 			kvm_tdp_mmu_write_protect_gfn(kvm, slot, gfn, min_level);
+ 
+@@ -1572,7 +1579,7 @@ bool kvm_unmap_gfn_range(struct kvm *kvm, struct kvm_gfn_range *range)
+ 	if (kvm_memslots_have_rmaps(kvm))
+ 		flush = kvm_handle_gfn_range(kvm, range, kvm_zap_rmap);
+ 
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		flush = kvm_tdp_mmu_unmap_gfn_range(kvm, range, flush);
+ 
+ 	return flush;
+@@ -1585,7 +1592,7 @@ bool kvm_set_spte_gfn(struct kvm *kvm, struct kvm_gfn_range *range)
+ 	if (kvm_memslots_have_rmaps(kvm))
+ 		flush = kvm_handle_gfn_range(kvm, range, kvm_set_pte_rmap);
+ 
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		flush |= kvm_tdp_mmu_set_spte_gfn(kvm, range);
+ 
+ 	return flush;
+@@ -1660,7 +1667,7 @@ bool kvm_age_gfn(struct kvm *kvm, struct kvm_gfn_range *range)
+ 	if (kvm_memslots_have_rmaps(kvm))
+ 		young = kvm_handle_gfn_range(kvm, range, kvm_age_rmap);
+ 
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		young |= kvm_tdp_mmu_age_gfn_range(kvm, range);
+ 
+ 	return young;
+@@ -1673,7 +1680,7 @@ bool kvm_test_age_gfn(struct kvm *kvm, struct kvm_gfn_range *range)
+ 	if (kvm_memslots_have_rmaps(kvm))
+ 		young = kvm_handle_gfn_range(kvm, range, kvm_test_age_rmap);
+ 
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		young |= kvm_tdp_mmu_test_age_gfn(kvm, range);
+ 
+ 	return young;
+@@ -3610,7 +3617,7 @@ static int mmu_alloc_direct_roots(struct kvm_vcpu *vcpu)
+ 	if (r < 0)
+ 		goto out_unlock;
+ 
+-	if (is_tdp_mmu_enabled(vcpu->kvm)) {
++	if (tdp_mmu_enabled) {
+ 		root = kvm_tdp_mmu_get_vcpu_root_hpa(vcpu);
+ 		mmu->root.hpa = root;
+ 	} else if (shadow_root_level >= PT64_ROOT_4LEVEL) {
+@@ -5743,6 +5750,9 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
+ 	tdp_root_level = tdp_forced_root_level;
+ 	max_tdp_level = tdp_max_root_level;
+ 
++#ifdef CONFIG_X86_64
++	tdp_mmu_enabled = tdp_mmu_allowed && tdp_enabled;
++#endif
+ 	/*
+ 	 * max_huge_page_level reflects KVM's MMU capabilities irrespective
+ 	 * of kernel support, e.g. KVM may be capable of using 1GB pages when
+@@ -5990,7 +6000,7 @@ static void kvm_mmu_zap_all_fast(struct kvm *kvm)
+ 	 * write and in the same critical section as making the reload request,
+ 	 * e.g. before kvm_zap_obsolete_pages() could drop mmu_lock and yield.
+ 	 */
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		kvm_tdp_mmu_invalidate_all_roots(kvm);
+ 
+ 	/*
+@@ -6015,7 +6025,7 @@ static void kvm_mmu_zap_all_fast(struct kvm *kvm)
+ 	 * Deferring the zap until the final reference to the root is put would
+ 	 * lead to use-after-free.
+ 	 */
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		kvm_tdp_mmu_zap_invalidated_roots(kvm);
+ }
+ 
+@@ -6127,7 +6137,7 @@ void kvm_zap_gfn_range(struct kvm *kvm, gfn_t gfn_start, gfn_t gfn_end)
+ 
+ 	flush = kvm_rmap_zap_gfn_range(kvm, gfn_start, gfn_end);
+ 
+-	if (is_tdp_mmu_enabled(kvm)) {
++	if (tdp_mmu_enabled) {
+ 		for (i = 0; i < KVM_ADDRESS_SPACE_NUM; i++)
+ 			flush = kvm_tdp_mmu_zap_leafs(kvm, i, gfn_start,
+ 						      gfn_end, true, flush);
+@@ -6160,7 +6170,7 @@ void kvm_mmu_slot_remove_write_access(struct kvm *kvm,
+ 		write_unlock(&kvm->mmu_lock);
+ 	}
+ 
+-	if (is_tdp_mmu_enabled(kvm)) {
++	if (tdp_mmu_enabled) {
+ 		read_lock(&kvm->mmu_lock);
+ 		kvm_tdp_mmu_wrprot_slot(kvm, memslot, start_level);
+ 		read_unlock(&kvm->mmu_lock);
+@@ -6403,7 +6413,7 @@ void kvm_mmu_try_split_huge_pages(struct kvm *kvm,
+ 				   u64 start, u64 end,
+ 				   int target_level)
+ {
+-	if (!is_tdp_mmu_enabled(kvm))
++	if (!tdp_mmu_enabled)
+ 		return;
+ 
+ 	if (kvm_memslots_have_rmaps(kvm))
+@@ -6424,7 +6434,7 @@ void kvm_mmu_slot_try_split_huge_pages(struct kvm *kvm,
+ 	u64 start = memslot->base_gfn;
+ 	u64 end = start + memslot->npages;
+ 
+-	if (!is_tdp_mmu_enabled(kvm))
++	if (!tdp_mmu_enabled)
+ 		return;
+ 
+ 	if (kvm_memslots_have_rmaps(kvm)) {
+@@ -6507,7 +6517,7 @@ void kvm_mmu_zap_collapsible_sptes(struct kvm *kvm,
+ 		write_unlock(&kvm->mmu_lock);
+ 	}
+ 
+-	if (is_tdp_mmu_enabled(kvm)) {
++	if (tdp_mmu_enabled) {
+ 		read_lock(&kvm->mmu_lock);
+ 		kvm_tdp_mmu_zap_collapsible_sptes(kvm, slot);
+ 		read_unlock(&kvm->mmu_lock);
+@@ -6542,7 +6552,7 @@ void kvm_mmu_slot_leaf_clear_dirty(struct kvm *kvm,
+ 		write_unlock(&kvm->mmu_lock);
+ 	}
+ 
+-	if (is_tdp_mmu_enabled(kvm)) {
++	if (tdp_mmu_enabled) {
+ 		read_lock(&kvm->mmu_lock);
+ 		kvm_tdp_mmu_clear_dirty_slot(kvm, memslot);
+ 		read_unlock(&kvm->mmu_lock);
+@@ -6577,7 +6587,7 @@ void kvm_mmu_zap_all(struct kvm *kvm)
+ 
+ 	kvm_mmu_commit_zap_page(kvm, &invalid_list);
+ 
+-	if (is_tdp_mmu_enabled(kvm))
++	if (tdp_mmu_enabled)
+ 		kvm_tdp_mmu_zap_all(kvm);
+ 
+ 	write_unlock(&kvm->mmu_lock);
+@@ -6742,6 +6752,13 @@ void __init kvm_mmu_x86_module_init(void)
+ 	if (nx_huge_pages == -1)
+ 		__set_nx_huge_pages(get_nx_auto_mode());
+ 
++	/*
++	 * Snapshot userspace's desire to enable the TDP MMU. Whether or not the
++	 * TDP MMU is actually enabled is determined in kvm_configure_mmu()
++	 * when the vendor module is loaded.
++	 */
++	tdp_mmu_allowed = tdp_mmu_enabled;
++
+ 	kvm_mmu_spte_module_init();
+ }
+ 
+diff --git a/arch/x86/kvm/mmu/tdp_mmu.c b/arch/x86/kvm/mmu/tdp_mmu.c
+index d6df38d371a00..03511e83050fa 100644
+--- a/arch/x86/kvm/mmu/tdp_mmu.c
++++ b/arch/x86/kvm/mmu/tdp_mmu.c
+@@ -10,23 +10,18 @@
+ #include <asm/cmpxchg.h>
+ #include <trace/events/kvm.h>
+ 
+-static bool __read_mostly tdp_mmu_enabled = true;
+-module_param_named(tdp_mmu, tdp_mmu_enabled, bool, 0644);
+-
+ /* Initializes the TDP MMU for the VM, if enabled. */
+ int kvm_mmu_init_tdp_mmu(struct kvm *kvm)
+ {
+ 	struct workqueue_struct *wq;
+ 
+-	if (!tdp_enabled || !READ_ONCE(tdp_mmu_enabled))
++	if (!tdp_mmu_enabled)
+ 		return 0;
+ 
+ 	wq = alloc_workqueue("kvm", WQ_UNBOUND|WQ_MEM_RECLAIM|WQ_CPU_INTENSIVE, 0);
+ 	if (!wq)
+ 		return -ENOMEM;
+ 
+-	/* This should not be changed for the lifetime of the VM. */
+-	kvm->arch.tdp_mmu_enabled = true;
+ 	INIT_LIST_HEAD(&kvm->arch.tdp_mmu_roots);
+ 	spin_lock_init(&kvm->arch.tdp_mmu_pages_lock);
+ 	kvm->arch.tdp_mmu_zap_wq = wq;
+@@ -47,7 +42,7 @@ static __always_inline bool kvm_lockdep_assert_mmu_lock_held(struct kvm *kvm,
+ 
+ void kvm_mmu_uninit_tdp_mmu(struct kvm *kvm)
+ {
+-	if (!kvm->arch.tdp_mmu_enabled)
++	if (!tdp_mmu_enabled)
+ 		return;
+ 
+ 	/* Also waits for any queued work items.  */
 -- 
 2.39.2
 
