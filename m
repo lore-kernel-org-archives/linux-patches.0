@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DE9FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:42:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B35C433D2;
-	Mon, 15 May 2023 17:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F5DFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:42:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87FFC433EF;
+	Mon, 15 May 2023 17:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172562;
-	bh=Tg+tl9AP14ckMuqAgef54ar+JhIYxUs7Pg3x8AV+pis=;
+	s=korg; t=1684172565;
+	bh=NZhi0xVtW7EMChztBxbN0pyviFRvH+2jLhEiS908OSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dRvXfE3QUwtJzTWO0WJjm73fQyqwmzKS9151Yy8eZuAEzFbLf286HyawU3O7P00Om
-	 WI8dVYgmFhojOu/gfXn/IwPMdt6D8ZV9PqehObaRUorPMYkBbIJFg+XOn855qXYT8q
-	 SbYhZ4RY5zNUBzL4J6n831F08LSoqliQK0klh+U0=
+	b=gt3Aa/Jzqnq/4GwNY/rHEXVb4MkucQgeYoK8TFoHe34X/cCRfWydaYMA+U7sQwVhG
+	 J8fV/KJ6cUmE7Bzwk71Br9X1t3QPoMrLbb8t3Ay7G500/De0nz3++AkDSfEwCSJ4vn
+	 fduGUhuErPG8udPIbbea00I4X+ltZHI94jZIVrz8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Shuchang Li <lishuchang@hust.edu.cn>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 165/381] f2fs: fix to avoid use-after-free for cached IPU bio
-Date: Mon, 15 May 2023 18:26:56 +0200
-Message-Id: <20230515161744.258928136@linuxfoundation.org>
+Subject: [PATCH 5.10 166/381] scsi: lpfc: Fix ioremap issues in lpfc_sli4_pci_mem_setup()
+Date: Mon, 15 May 2023 18:26:57 +0200
+Message-Id: <20230515161744.307520978@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,73 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Shuchang Li <lishuchang@hust.edu.cn>
 
-[ Upstream commit 5cdb422c839134273866208dad5360835ddb9794 ]
+[ Upstream commit 91a0c0c1413239d0548b5aac4c82f38f6d53a91e ]
 
-xfstest generic/019 reports a bug:
+When if_type equals zero and pci_resource_start(pdev, PCI_64BIT_BAR4)
+returns false, drbl_regs_memmap_p is not remapped. This passes a NULL
+pointer to iounmap(), which can trigger a WARN() on certain arches.
 
-kernel BUG at mm/filemap.c:1619!
-RIP: 0010:folio_end_writeback+0x8a/0x90
-Call Trace:
- end_page_writeback+0x1c/0x60
- f2fs_write_end_io+0x199/0x420
- bio_endio+0x104/0x180
- submit_bio_noacct+0xa5/0x510
- submit_bio+0x48/0x80
- f2fs_submit_write_bio+0x35/0x300
- f2fs_submit_merged_ipu_write+0x2a0/0x2b0
- f2fs_write_single_data_page+0x838/0x8b0
- f2fs_write_cache_pages+0x379/0xa30
- f2fs_write_data_pages+0x30c/0x340
- do_writepages+0xd8/0x1b0
- __writeback_single_inode+0x44/0x370
- writeback_sb_inodes+0x233/0x4d0
- __writeback_inodes_wb+0x56/0xf0
- wb_writeback+0x1dd/0x2d0
- wb_workfn+0x367/0x4a0
- process_one_work+0x21d/0x430
- worker_thread+0x4e/0x3c0
- kthread+0x103/0x130
- ret_from_fork+0x2c/0x50
+When if_type equals six and pci_resource_start(pdev, PCI_64BIT_BAR4)
+returns true, drbl_regs_memmap_p may has been remapped and
+ctrl_regs_memmap_p is not remapped. This is a resource leak and passes a
+NULL pointer to iounmap().
 
-The root cause is: after cp_error is set, f2fs_submit_merged_ipu_write()
-in f2fs_write_single_data_page() tries to flush IPU bio in cache, however
-f2fs_submit_merged_ipu_write() missed to check validity of @bio parameter,
-result in submitting random cached bio which belong to other IO context,
-then it will cause use-after-free issue, fix it by adding additional
-validity check.
+To fix these issues, we need to add null checks before iounmap(), and
+change some goto labels.
 
-Fixes: 0b20fcec8651 ("f2fs: cache global IPU bio")
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 1351e69fc6db ("scsi: lpfc: Add push-to-adapter support to sli4")
+Signed-off-by: Shuchang Li <lishuchang@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230404072133.1022-1-lishuchang@hust.edu.cn
+Reviewed-by: Justin Tee <justin.tee@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_init.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index db26e87b8f0dd..e9481c940895c 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -849,6 +849,8 @@ void f2fs_submit_merged_ipu_write(struct f2fs_sb_info *sbi,
- 	bool found = false;
- 	struct bio *target = bio ? *bio : NULL;
- 
-+	f2fs_bug_on(sbi, !target && !page);
-+
- 	for (temp = HOT; temp < NR_TEMP_TYPE && !found; temp++) {
- 		struct f2fs_bio_info *io = sbi->write_io[DATA] + temp;
- 		struct list_head *head = &io->bio_list;
-@@ -2917,7 +2919,8 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
- 
- 	if (unlikely(f2fs_cp_error(sbi))) {
- 		f2fs_submit_merged_write(sbi, DATA);
--		f2fs_submit_merged_ipu_write(sbi, bio, NULL);
-+		if (bio && *bio)
-+			f2fs_submit_merged_ipu_write(sbi, bio, NULL);
- 		submitted = NULL;
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 17200b453cbbb..1bb3c96a04bd6 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -10477,7 +10477,7 @@ lpfc_sli4_pci_mem_setup(struct lpfc_hba *phba)
+ 				goto out_iounmap_all;
+ 		} else {
+ 			error = -ENOMEM;
+-			goto out_iounmap_all;
++			goto out_iounmap_ctrl;
+ 		}
  	}
+ 
+@@ -10495,7 +10495,7 @@ lpfc_sli4_pci_mem_setup(struct lpfc_hba *phba)
+ 			dev_err(&pdev->dev,
+ 			   "ioremap failed for SLI4 HBA dpp registers.\n");
+ 			error = -ENOMEM;
+-			goto out_iounmap_ctrl;
++			goto out_iounmap_all;
+ 		}
+ 		phba->pci_bar4_memmap_p = phba->sli4_hba.dpp_regs_memmap_p;
+ 	}
+@@ -10520,9 +10520,11 @@ lpfc_sli4_pci_mem_setup(struct lpfc_hba *phba)
+ 	return 0;
+ 
+ out_iounmap_all:
+-	iounmap(phba->sli4_hba.drbl_regs_memmap_p);
++	if (phba->sli4_hba.drbl_regs_memmap_p)
++		iounmap(phba->sli4_hba.drbl_regs_memmap_p);
+ out_iounmap_ctrl:
+-	iounmap(phba->sli4_hba.ctrl_regs_memmap_p);
++	if (phba->sli4_hba.ctrl_regs_memmap_p)
++		iounmap(phba->sli4_hba.ctrl_regs_memmap_p);
+ out_iounmap_conf:
+ 	iounmap(phba->sli4_hba.conf_regs_memmap_p);
  
 -- 
 2.39.2
