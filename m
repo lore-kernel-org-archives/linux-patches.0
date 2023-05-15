@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0C5FC1B
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D0BFC433D2;
-	Mon, 15 May 2023 17:47:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1375FC1B
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F425C4339B;
+	Mon, 15 May 2023 17:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172873;
-	bh=c0q4Pa9RUsjPwM87U5v9KA9oRJzlW1FsOsEQ21jYaaE=;
+	s=korg; t=1684172876;
+	bh=oJS4S/x6wRok+G8dpID+Ve5Eo482i+91oGF8GCbNMwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lASWbWB4WsLfqztbxf77KVNW8FWVMGQVKhZU07ERrNJp0OfT3poa6Cx4q00pu6bkr
-	 T0RcWBJzkY8L2h346kf6fy+0lDOxYwNdqAhLeqTinMPOZg3xdQHOi/LMFfvxVCtXPX
-	 Fo5BXpTr9JzuMwmZ0Qa7pkBBPZsSCU5IF4lQ4DJI=
+	b=tnKQN+qVmUGy6BciQ4h/IsUb4jviZ8qjKEB7k2DNwHTKK13ofAzQhE8SlkWbuxGrh
+	 ae6mnNps7+huXgsqlpFQUjoq1vL8GJ31FdsK3MCE73Y491iYZeRILcYtwW0O6nLy5L
+	 fkbKQusOxv/t2VTLGBXoyYzUOy7MfDfQ1fIDh+rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.10 295/381] netfilter: nf_tables: deactivate anonymous set from preparation phase
-Date: Mon, 15 May 2023 18:29:06 +0200
-Message-Id: <20230515161750.120782998@linuxfoundation.org>
+	Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>,
+	Jiri Slaby <jirislaby@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 296/381] tty: create internal tty.h file
+Date: Mon, 15 May 2023 18:29:07 +0200
+Message-Id: <20230515161750.168975425@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -33,113 +35,157 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit c1592a89942e9678f7d9c8030efa777c0d57edab upstream.
+[ Upstream commit 98602c010ceba82f2c2384122dbd07bc965fd367 ]
 
-Toggle deleted anonymous sets as inactive in the next generation, so
-users cannot perform any update on it. Clear the generation bitmask
-in case the transaction is aborted.
+There are a number of functions and #defines in include/linux/tty.h that
+do not belong there as they are private to the tty core code.
 
-The following KASAN splat shows a set element deletion for a bound
-anonymous set that has been already removed in the same transaction.
+Create an initial drivers/tty/tty.h file and copy the odd "tty logging"
+macros into it to seed the file with some initial things that we know
+nothing outside of the tty core should be calling.
 
-[   64.921510] ==================================================================
-[   64.923123] BUG: KASAN: wild-memory-access in nf_tables_commit+0xa24/0x1490 [nf_tables]
-[   64.924745] Write of size 8 at addr dead000000000122 by task test/890
-[   64.927903] CPU: 3 PID: 890 Comm: test Not tainted 6.3.0+ #253
-[   64.931120] Call Trace:
-[   64.932699]  <TASK>
-[   64.934292]  dump_stack_lvl+0x33/0x50
-[   64.935908]  ? nf_tables_commit+0xa24/0x1490 [nf_tables]
-[   64.937551]  kasan_report+0xda/0x120
-[   64.939186]  ? nf_tables_commit+0xa24/0x1490 [nf_tables]
-[   64.940814]  nf_tables_commit+0xa24/0x1490 [nf_tables]
-[   64.942452]  ? __kasan_slab_alloc+0x2d/0x60
-[   64.944070]  ? nf_tables_setelem_notify+0x190/0x190 [nf_tables]
-[   64.945710]  ? kasan_set_track+0x21/0x30
-[   64.947323]  nfnetlink_rcv_batch+0x709/0xd90 [nfnetlink]
-[   64.948898]  ? nfnetlink_rcv_msg+0x480/0x480 [nfnetlink]
-
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Tetsuo Handa <penguin-kernel@i-love.sakura.ne.jp>
+Cc: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20210408125134.3016837-2-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 094fb49a2d0d ("tty: Prevent writing chars during tcsetattr TCSADRAIN/FLUSH")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |    1 +
- net/netfilter/nf_tables_api.c     |   12 ++++++++++++
- net/netfilter/nft_dynset.c        |    2 +-
- net/netfilter/nft_lookup.c        |    2 +-
- net/netfilter/nft_objref.c        |    2 +-
- 5 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/tty/n_tty.c       |  1 +
+ drivers/tty/pty.c         |  1 +
+ drivers/tty/tty.h         | 21 +++++++++++++++++++++
+ drivers/tty/tty_io.c      |  1 +
+ drivers/tty/tty_jobctrl.c |  1 +
+ drivers/tty/tty_ldisc.c   |  1 +
+ drivers/tty/tty_port.c    |  1 +
+ include/linux/tty.h       | 12 ------------
+ 8 files changed, 27 insertions(+), 12 deletions(-)
+ create mode 100644 drivers/tty/tty.h
 
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -507,6 +507,7 @@ struct nft_set_binding {
- };
+diff --git a/drivers/tty/n_tty.c b/drivers/tty/n_tty.c
+index 12dde01e576b5..8e7931d935438 100644
+--- a/drivers/tty/n_tty.c
++++ b/drivers/tty/n_tty.c
+@@ -49,6 +49,7 @@
+ #include <linux/module.h>
+ #include <linux/ratelimit.h>
+ #include <linux/vmalloc.h>
++#include "tty.h"
  
- enum nft_trans_phase;
-+void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set);
- void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
- 			      struct nft_set_binding *binding,
- 			      enum nft_trans_phase phase);
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -4479,12 +4479,24 @@ static void nf_tables_unbind_set(const s
- 	}
- }
+ /*
+  * Until this number of characters is queued in the xmit buffer, select will
+diff --git a/drivers/tty/pty.c b/drivers/tty/pty.c
+index 16498f5fba64d..ca3e5a6c1a497 100644
+--- a/drivers/tty/pty.c
++++ b/drivers/tty/pty.c
+@@ -29,6 +29,7 @@
+ #include <linux/file.h>
+ #include <linux/ioctl.h>
+ #include <linux/compat.h>
++#include "tty.h"
  
-+void nf_tables_activate_set(const struct nft_ctx *ctx, struct nft_set *set)
-+{
-+	if (nft_set_is_anonymous(set))
-+		nft_clear(ctx->net, set);
+ #undef TTY_DEBUG_HANGUP
+ #ifdef TTY_DEBUG_HANGUP
+diff --git a/drivers/tty/tty.h b/drivers/tty/tty.h
+new file mode 100644
+index 0000000000000..f4cd20261e914
+--- /dev/null
++++ b/drivers/tty/tty.h
+@@ -0,0 +1,21 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++/*
++ * TTY core internal functions
++ */
 +
-+	set->use++;
-+}
-+EXPORT_SYMBOL_GPL(nf_tables_activate_set);
++#ifndef _TTY_INTERNAL_H
++#define _TTY_INTERNAL_H
 +
- void nf_tables_deactivate_set(const struct nft_ctx *ctx, struct nft_set *set,
- 			      struct nft_set_binding *binding,
- 			      enum nft_trans_phase phase)
- {
- 	switch (phase) {
- 	case NFT_TRANS_PREPARE:
-+		if (nft_set_is_anonymous(set))
-+			nft_deactivate_next(ctx->net, set);
++#define tty_msg(fn, tty, f, ...) \
++	fn("%s %s: " f, tty_driver_name(tty), tty_name(tty), ##__VA_ARGS__)
 +
- 		set->use--;
- 		return;
- 	case NFT_TRANS_ABORT:
---- a/net/netfilter/nft_dynset.c
-+++ b/net/netfilter/nft_dynset.c
-@@ -233,7 +233,7 @@ static void nft_dynset_activate(const st
++#define tty_debug(tty, f, ...)	tty_msg(pr_debug, tty, f, ##__VA_ARGS__)
++#define tty_info(tty, f, ...)	tty_msg(pr_info, tty, f, ##__VA_ARGS__)
++#define tty_notice(tty, f, ...)	tty_msg(pr_notice, tty, f, ##__VA_ARGS__)
++#define tty_warn(tty, f, ...)	tty_msg(pr_warn, tty, f, ##__VA_ARGS__)
++#define tty_err(tty, f, ...)	tty_msg(pr_err, tty, f, ##__VA_ARGS__)
++
++#define tty_info_ratelimited(tty, f, ...) \
++		tty_msg(pr_info_ratelimited, tty, f, ##__VA_ARGS__)
++
++#endif
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index c37d2657308cd..86fbfe42ce0ac 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -108,6 +108,7 @@
+ 
+ #include <linux/kmod.h>
+ #include <linux/nsproxy.h>
++#include "tty.h"
+ 
+ #undef TTY_DEBUG_HANGUP
+ #ifdef TTY_DEBUG_HANGUP
+diff --git a/drivers/tty/tty_jobctrl.c b/drivers/tty/tty_jobctrl.c
+index aa6d0537b379e..95d67613b25b6 100644
+--- a/drivers/tty/tty_jobctrl.c
++++ b/drivers/tty/tty_jobctrl.c
+@@ -11,6 +11,7 @@
+ #include <linux/tty.h>
+ #include <linux/fcntl.h>
+ #include <linux/uaccess.h>
++#include "tty.h"
+ 
+ static int is_ignored(int sig)
  {
- 	struct nft_dynset *priv = nft_expr_priv(expr);
+diff --git a/drivers/tty/tty_ldisc.c b/drivers/tty/tty_ldisc.c
+index fe37ec331289b..c23938b8628d1 100644
+--- a/drivers/tty/tty_ldisc.c
++++ b/drivers/tty/tty_ldisc.c
+@@ -19,6 +19,7 @@
+ #include <linux/seq_file.h>
+ #include <linux/uaccess.h>
+ #include <linux/ratelimit.h>
++#include "tty.h"
  
--	priv->set->use++;
-+	nf_tables_activate_set(ctx, priv->set);
- }
+ #undef LDISC_DEBUG_HANGUP
  
- static void nft_dynset_destroy(const struct nft_ctx *ctx,
---- a/net/netfilter/nft_lookup.c
-+++ b/net/netfilter/nft_lookup.c
-@@ -132,7 +132,7 @@ static void nft_lookup_activate(const st
- {
- 	struct nft_lookup *priv = nft_expr_priv(expr);
+diff --git a/drivers/tty/tty_port.c b/drivers/tty/tty_port.c
+index ea80bf872f543..cbb56f725bc4a 100644
+--- a/drivers/tty/tty_port.c
++++ b/drivers/tty/tty_port.c
+@@ -18,6 +18,7 @@
+ #include <linux/delay.h>
+ #include <linux/module.h>
+ #include <linux/serdev.h>
++#include "tty.h"
  
--	priv->set->use++;
-+	nf_tables_activate_set(ctx, priv->set);
- }
+ static int tty_port_default_receive_buf(struct tty_port *port,
+ 					const unsigned char *p,
+diff --git a/include/linux/tty.h b/include/linux/tty.h
+index 5972f43b9d5ae..9e3725589214e 100644
+--- a/include/linux/tty.h
++++ b/include/linux/tty.h
+@@ -786,16 +786,4 @@ static inline void proc_tty_register_driver(struct tty_driver *d) {}
+ static inline void proc_tty_unregister_driver(struct tty_driver *d) {}
+ #endif
  
- static void nft_lookup_destroy(const struct nft_ctx *ctx,
---- a/net/netfilter/nft_objref.c
-+++ b/net/netfilter/nft_objref.c
-@@ -180,7 +180,7 @@ static void nft_objref_map_activate(cons
- {
- 	struct nft_objref_map *priv = nft_expr_priv(expr);
- 
--	priv->set->use++;
-+	nf_tables_activate_set(ctx, priv->set);
- }
- 
- static void nft_objref_map_destroy(const struct nft_ctx *ctx,
+-#define tty_msg(fn, tty, f, ...) \
+-	fn("%s %s: " f, tty_driver_name(tty), tty_name(tty), ##__VA_ARGS__)
+-
+-#define tty_debug(tty, f, ...)	tty_msg(pr_debug, tty, f, ##__VA_ARGS__)
+-#define tty_info(tty, f, ...)	tty_msg(pr_info, tty, f, ##__VA_ARGS__)
+-#define tty_notice(tty, f, ...)	tty_msg(pr_notice, tty, f, ##__VA_ARGS__)
+-#define tty_warn(tty, f, ...)	tty_msg(pr_warn, tty, f, ##__VA_ARGS__)
+-#define tty_err(tty, f, ...)	tty_msg(pr_err, tty, f, ##__VA_ARGS__)
+-
+-#define tty_info_ratelimited(tty, f, ...) \
+-		tty_msg(pr_info_ratelimited, tty, f, ##__VA_ARGS__)
+-
+ #endif
+-- 
+2.39.2
+
 
 
