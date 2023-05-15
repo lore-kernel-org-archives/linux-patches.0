@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2A18FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64491C433EF;
-	Mon, 15 May 2023 17:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02E45FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 565A6C4339B;
+	Mon, 15 May 2023 17:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171812;
-	bh=fKXsQulyUmq4G4GyCRYypy3whMKce68MjiMjZeK6LZc=;
+	s=korg; t=1684171815;
+	bh=tnC4lwuwPgeTeCfB1Zpo5LYpopv1f3DDYtn2ZhIv9BQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FPbvWwKdwbTSvEW3axXqz+GOFFZtqPGnUk/Rm2Gy306zY+Uscz+Z+O7q30LBz0z7A
-	 18bJ98+Ij/t+qpN/rw8Jeuh7FRchivb943gloWipVEkt3sphi0BlY7b+Y77vqJChKq
-	 LFNHBqB3AQC3Gc5R20u5IZzBOkEL3ix39ZyMZlpo=
+	b=Ju49CPokQYOro5DkPWz79wnWCA+RybXOSrS863WmUewZQGu+DVyPTUct0n3K+pXML
+	 FX/b5iWNPXWv11ObIwD3lQDqK3DB5WeTtzVuXgfFlUg8C71FuEhDyEsNyRR+nxNhoU
+	 DhwoAiCTQH+CmIFBubftInmy89T7MNw5UDZ4yoSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 5.15 087/134] f2fs: fix potential corruption when moving a directory
-Date: Mon, 15 May 2023 18:29:24 +0200
-Message-Id: <20230515161706.064355034@linuxfoundation.org>
+	James Cowgill <james.cowgill@blaize.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.15 088/134] drm/panel: otm8009a: Set backlight parent to panel device
+Date: Mon, 15 May 2023 18:29:25 +0200
+Message-Id: <20230515161706.091600184@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -33,65 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: James Cowgill <james.cowgill@blaize.com>
 
-commit d94772154e524b329a168678836745d2773a6e02 upstream.
+commit ab4f869fba6119997f7630d600049762a2b014fa upstream.
 
-F2FS has the same issue in ext4_rename causing crash revealed by
-xfstests/generic/707.
+This is the logical place to put the backlight device, and it also
+fixes a kernel crash if the MIPI host is removed. Previously the
+backlight device would be unregistered twice when this happened - once
+as a child of the MIPI host through `mipi_dsi_host_unregister`, and
+once when the panel device is destroyed.
 
-See also commit 0813299c586b ("ext4: Fix possible corruption when moving a directory")
-
-CC: stable@vger.kernel.org
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 12a6cbd4f3f1 ("drm/panel: otm8009a: Use new backlight API")
+Signed-off-by: James Cowgill <james.cowgill@blaize.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230412173450.199592-1-james.cowgill@blaize.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/namei.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-orisetech-otm8009a.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -991,12 +991,20 @@ static int f2fs_rename(struct inode *old
- 			goto out;
- 	}
+--- a/drivers/gpu/drm/panel/panel-orisetech-otm8009a.c
++++ b/drivers/gpu/drm/panel/panel-orisetech-otm8009a.c
+@@ -444,7 +444,7 @@ static int otm8009a_probe(struct mipi_ds
+ 		       DRM_MODE_CONNECTOR_DSI);
  
-+	/*
-+	 * Copied from ext4_rename: we need to protect against old.inode
-+	 * directory getting converted from inline directory format into
-+	 * a normal one.
-+	 */
-+	if (S_ISDIR(old_inode->i_mode))
-+		inode_lock_nested(old_inode, I_MUTEX_NONDIR2);
-+
- 	err = -ENOENT;
- 	old_entry = f2fs_find_entry(old_dir, &old_dentry->d_name, &old_page);
- 	if (!old_entry) {
- 		if (IS_ERR(old_page))
- 			err = PTR_ERR(old_page);
--		goto out;
-+		goto out_unlock_old;
- 	}
- 
- 	if (S_ISDIR(old_inode->i_mode)) {
-@@ -1104,6 +1112,9 @@ static int f2fs_rename(struct inode *old
- 
- 	f2fs_unlock_op(sbi);
- 
-+	if (S_ISDIR(old_inode->i_mode))
-+		inode_unlock(old_inode);
-+
- 	if (IS_DIRSYNC(old_dir) || IS_DIRSYNC(new_dir))
- 		f2fs_sync_fs(sbi->sb, 1);
- 
-@@ -1118,6 +1129,9 @@ out_dir:
- 		f2fs_put_page(old_dir_page, 0);
- out_old:
- 	f2fs_put_page(old_page, 0);
-+out_unlock_old:
-+	if (S_ISDIR(old_inode->i_mode))
-+		inode_unlock(old_inode);
- out:
- 	if (whiteout)
- 		iput(whiteout);
+ 	ctx->bl_dev = devm_backlight_device_register(dev, dev_name(dev),
+-						     dsi->host->dev, ctx,
++						     dev, ctx,
+ 						     &otm8009a_backlight_ops,
+ 						     NULL);
+ 	if (IS_ERR(ctx->bl_dev)) {
 
 
