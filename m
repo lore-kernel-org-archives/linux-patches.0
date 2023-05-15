@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FE7D2EF
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:37:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B04C433EF;
-	Mon, 15 May 2023 16:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F2ED52B
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:37:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D27C433D2;
+	Mon, 15 May 2023 16:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168673;
-	bh=40M+xB/fuSSfJIjyLfTJmG+/vSy0aupAeyf6Rts+hnQ=;
+	s=korg; t=1684168676;
+	bh=yTkGq3kBrx12LOsynq87csKMe2VWng1RFiNeptlLsEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F9jbXjMpCAErh3h2z8tv77G1/CFqDpfI+K4ShYmDzfWI3jmT4hd6YkPtM3o2Xg1L/
-	 7GfKbKBD0+4C0EF5N1y0bIWxfRFmnitU107maM56+o7L9XYjbp+XiNVWfSkQMw9qjG
-	 nNFnOxz3NLYzEvyF18YjEpSL/2z21Te27lDAUsKg=
+	b=r1zsiJ0iDgCiy/UpGdaZygJTytDvxA2uxvwpne/kkLplwkyy0cC40CbGGdxXGCxDk
+	 8rKKuwdSYEI+0lqvm+J1fNBPfCcAzKmMNOvdEm4yS6PRBqPOTg7fHou4I6z2jVdabC
+	 7CQf3j3yNFU+8yZQq0xw1rWZqoZ5+mF0pS7Ux2q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	elfring@users.sourceforge.net,
-	Ian Rogers <irogers@google.com>,
+	Will Ochowicz <Will.Ochowicz@genusplc.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	German Gomez <german.gomez@arm.com>,
+	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Leo Yan <leo.yan@linaro.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 095/116] perf map: Delete two variable initialisations before null pointer checks in sort__sym_from_cmp()
-Date: Mon, 15 May 2023 18:26:32 +0200
-Message-Id: <20230515161701.407449124@linuxfoundation.org>
+Subject: [PATCH 4.14 096/116] perf symbols: Fix return incorrect build_id size in elf_read_build_id()
+Date: Mon, 15 May 2023 18:26:33 +0200
+Message-Id: <20230515161701.437585649@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -45,56 +46,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Elfring <Markus.Elfring@web.de>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit c160118a90d4acf335993d8d59b02ae2147a524e ]
+[ Upstream commit 1511e4696acb715a4fe48be89e1e691daec91c0e ]
 
-Addresses of two data structure members were determined before
-corresponding null pointer checks in the implementation of the function
-“sort__sym_from_cmp”.
+In elf_read_build_id(), if gnu build_id is found, should return the size of
+the actually copied data. If descsz is greater thanBuild_ID_SIZE,
+write_buildid data access may occur.
 
-Thus avoid the risk for undefined behaviour by removing extra
-initialisations for the local variables “from_l” and “from_r” (also
-because they were already reassigned with the same value behind this
-pointer check).
-
-This issue was detected by using the Coccinelle software.
-
-Fixes: 1b9e97a2a95e4941 ("perf tools: Fix report -F symbol_from for data without branch info")
-Signed-off-by: <elfring@users.sourceforge.net>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: be96ea8ffa788dcc ("perf symbols: Fix issue with binaries using 16-bytes buildids (v2)")
+Reported-by: Will Ochowicz <Will.Ochowicz@genusplc.com>
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Tested-by: Will Ochowicz <Will.Ochowicz@genusplc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: German Gomez <german.gomez@arm.com>
+Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
+Cc: Leo Yan <leo.yan@linaro.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/cocci/54a21fea-64e3-de67-82ef-d61b90ffad05@web.de/
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/lkml/CWLP265MB49702F7BA3D6D8F13E4B1A719C649@CWLP265MB4970.GBRP265.PROD.OUTLOOK.COM/T/
+Link: https://lore.kernel.org/r/20230427012841.231729-1-yangjihong1@huawei.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/sort.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/perf/util/symbol-elf.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/sort.c b/tools/perf/util/sort.c
-index cd870129131e1..4fe2f3f92ab11 100644
---- a/tools/perf/util/sort.c
-+++ b/tools/perf/util/sort.c
-@@ -753,8 +753,7 @@ static int hist_entry__dso_to_filter(struct hist_entry *he, int type,
- static int64_t
- sort__sym_from_cmp(struct hist_entry *left, struct hist_entry *right)
- {
--	struct addr_map_symbol *from_l = &left->branch_info->from;
--	struct addr_map_symbol *from_r = &right->branch_info->from;
-+	struct addr_map_symbol *from_l, *from_r;
- 
- 	if (!left->branch_info || !right->branch_info)
- 		return cmp_null(left->branch_info, right->branch_info);
--- 
-2.39.2
-
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -504,7 +504,7 @@ static int elf_read_build_id(Elf *elf, v
+ 				size_t sz = min(size, descsz);
+ 				memcpy(bf, ptr, sz);
+ 				memset(bf + sz, 0, size - sz);
+-				err = descsz;
++				err = sz;
+ 				break;
+ 			}
+ 		}
 
 
