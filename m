@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B176FBFE
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:12:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C557C4339B;
-	Mon, 15 May 2023 17:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48ED5FBFE
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:12:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FE62C433EF;
+	Mon, 15 May 2023 17:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170759;
-	bh=M7GBqfX5ce6zJ8h0MOog4Pd7G7biwvALEcKTt4Qkmj8=;
+	s=korg; t=1684170762;
+	bh=28zpl+vi9TUr1cBvEqV4Hs4FqPM7lFkNXM+E3bBIidI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gp5vTH5p3Cn09F08K6ev+J4L/Q6x0OP7L4NmB6VvsXXc3RsxDvByjwBNgFIEnS3lr
-	 S/5zhobu+lEiFqI4I639u4dIzY8dONf6teV22lrHI/kfc1esfO84pH2sErBcFuu5br
-	 Yt0ba4eqL9ibPVmFjRfnM0uH2Xcp4do50AgXo9Io=
+	b=B3J8KSkH1VytSZHeC7/E+rfHTi9YgrzlMlQi/6zrhhrdsWnX7sSSVqfPtjqwHsbyO
+	 rKYC5GeL27UfEV5tr4vwi29FZkGwrKcMCEncnznfbWqib2gxShBFRZABLSvHnrZ/YY
+	 m2MmiTw8BlvDM32UKUo3KCX4vAECN9Ly3AZedvtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Govindapillai <vinod.govindapillai@intel.com>,
-	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Subject: [PATCH 6.1 232/239] drm/dsc: fix DP_DSC_MAX_BPP_DELTA_* macro values
-Date: Mon, 15 May 2023 18:28:15 +0200
-Message-Id: <20230515161728.670688559@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 233/239] f2fs: fix to do sanity check on extent cache correctly
+Date: Mon, 15 May 2023 18:28:16 +0200
+Message-Id: <20230515161728.699732174@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,35 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Chao Yu <chao@kernel.org>
 
-commit 0d68683838f2850dd8ff31f1121e05bfb7a2def0 upstream.
+commit d48a7b3a72f121655d95b5157c32c7d555e44c05 upstream.
 
-The macro values just don't match the specs. Fix them.
+In do_read_inode(), sanity_check_inode() should be called after
+f2fs_init_read_extent_tree(), fix it.
 
-Fixes: 1482ec00be4a ("drm: Add missing DP DSC extended capability definitions.")
-Cc: Vinod Govindapillai <vinod.govindapillai@intel.com>
-Cc: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230406134615.1422509-2-jani.nikula@intel.com
+Fixes: 72840cccc0a1 ("f2fs: allocate the extent_cache by default")
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/display/drm_dp.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/inode.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
---- a/include/drm/display/drm_dp.h
-+++ b/include/drm/display/drm_dp.h
-@@ -286,8 +286,8 @@
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -413,12 +413,6 @@ static int do_read_inode(struct inode *i
+ 		fi->i_inline_xattr_size = 0;
+ 	}
  
- #define DP_DSC_MAX_BITS_PER_PIXEL_HI        0x068   /* eDP 1.4 */
- # define DP_DSC_MAX_BITS_PER_PIXEL_HI_MASK  (0x3 << 0)
--# define DP_DSC_MAX_BPP_DELTA_VERSION_MASK  0x06
--# define DP_DSC_MAX_BPP_DELTA_AVAILABILITY  0x08
-+# define DP_DSC_MAX_BPP_DELTA_VERSION_MASK  (0x3 << 5)	/* eDP 1.5 & DP 2.0 */
-+# define DP_DSC_MAX_BPP_DELTA_AVAILABILITY  (1 << 7)	/* eDP 1.5 & DP 2.0 */
+-	if (!sanity_check_inode(inode, node_page)) {
+-		f2fs_put_page(node_page, 1);
+-		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
+-		return -EFSCORRUPTED;
+-	}
+-
+ 	/* check data exist */
+ 	if (f2fs_has_inline_data(inode) && !f2fs_exist_data(inode))
+ 		__recover_inline_status(inode, node_page);
+@@ -481,6 +475,12 @@ static int do_read_inode(struct inode *i
+ 	/* Need all the flag bits */
+ 	f2fs_init_read_extent_tree(inode, node_page);
  
- #define DP_DSC_DEC_COLOR_FORMAT_CAP         0x069
- # define DP_DSC_RGB                         (1 << 0)
++	if (!sanity_check_inode(inode, node_page)) {
++		f2fs_put_page(node_page, 1);
++		f2fs_handle_error(sbi, ERROR_CORRUPTED_INODE);
++		return -EFSCORRUPTED;
++	}
++
+ 	f2fs_put_page(node_page, 1);
+ 
+ 	stat_inc_inline_xattr(inode);
 
 
