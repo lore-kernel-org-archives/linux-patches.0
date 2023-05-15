@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D61FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:31:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E931C4339C;
-	Mon, 15 May 2023 17:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB0BFC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:31:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF38C4339C;
+	Mon, 15 May 2023 17:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171913;
-	bh=IuT6VT8cO0s+LNNGeM2dvXeCDMlYaLoGJ6DUaWOCU7M=;
+	s=korg; t=1684171916;
+	bh=TCQQnSasydCQ5wxSBIl047QD0iixlF1+uc/WvUJnj/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xhC3srkjiv3ThytyUIMo7yy33O0sLO9V/PQwCSZcRAsg8e4lNRRDT2BJjaqRQ63ps
-	 IfclUiCo8BS0iDu7J9URG85w0IWmfp0Fn7SNpfdksmVhlfzoqXAYiosLCQl1ka8Aud
-	 PX9q19kuEUO81nGkLBeNDe6q7QpBrSnygRB6GEWE=
+	b=uWyr2SWVSjpHHA1GB49irkFQ7Yl0ZxO7A/TADFOsvb1mddFbaqWrE1iXZyhkfNRDY
+	 DaoVJCFQK2H86J+Iou7T5yxUfeYJdYjdUFK0DQXflIfxZxHu24tVmF8sxCFA4lp2YQ
+	 LJn14XXgcCsonEtw7jD7kvqg/iQO0Dc3dae78R1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ziwei Xie <zw.xie@high-flyer.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 111/134] ksmbd: fix multi session connection failure
-Date: Mon, 15 May 2023 18:29:48 +0200
-Message-Id: <20230515161706.828233414@linuxfoundation.org>
+	syzbot+fc51227e7100c9294894@syzkaller.appspotmail.com,
+	syzbot+8785e41224a3afd04321@syzkaller.appspotmail.com,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 120/134] ext4: avoid a potential slab-out-of-bounds in ext4_group_desc_csum
+Date: Mon, 15 May 2023 18:29:57 +0200
+Message-Id: <20230515161707.135368981@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -36,241 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit ce53d365378cde71bb6596d79c257e600d951d29 ]
+commit 4f04351888a83e595571de672e0a4a8b74f4fb31 upstream.
 
-When RSS mode is enable, windows client do simultaneously send several
-session requests to server. There is racy issue using
-sess->ntlmssp.cryptkey on N connection : 1 session. So authetication
-failed using wrong cryptkey on some session. This patch move cryptkey
-to ksmbd_conn structure to use each cryptkey on connection.
+When modifying the block device while it is mounted by the filesystem,
+syzbot reported the following:
 
-Tested-by: Ziwei Xie <zw.xie@high-flyer.cn>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Stable-dep-of: 7b4323373d84 ("ksmbd: fix deadlock in ksmbd_find_crypto_ctx()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+BUG: KASAN: slab-out-of-bounds in crc16+0x206/0x280 lib/crc16.c:58
+Read of size 1 at addr ffff888075f5c0a8 by task syz-executor.2/15586
+
+CPU: 1 PID: 15586 Comm: syz-executor.2 Not tainted 6.2.0-rc5-syzkaller-00205-gc96618275234 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x290 lib/dump_stack.c:106
+ print_address_description+0x74/0x340 mm/kasan/report.c:306
+ print_report+0x107/0x1f0 mm/kasan/report.c:417
+ kasan_report+0xcd/0x100 mm/kasan/report.c:517
+ crc16+0x206/0x280 lib/crc16.c:58
+ ext4_group_desc_csum+0x81b/0xb20 fs/ext4/super.c:3187
+ ext4_group_desc_csum_set+0x195/0x230 fs/ext4/super.c:3210
+ ext4_mb_clear_bb fs/ext4/mballoc.c:6027 [inline]
+ ext4_free_blocks+0x191a/0x2810 fs/ext4/mballoc.c:6173
+ ext4_remove_blocks fs/ext4/extents.c:2527 [inline]
+ ext4_ext_rm_leaf fs/ext4/extents.c:2710 [inline]
+ ext4_ext_remove_space+0x24ef/0x46a0 fs/ext4/extents.c:2958
+ ext4_ext_truncate+0x177/0x220 fs/ext4/extents.c:4416
+ ext4_truncate+0xa6a/0xea0 fs/ext4/inode.c:4342
+ ext4_setattr+0x10c8/0x1930 fs/ext4/inode.c:5622
+ notify_change+0xe50/0x1100 fs/attr.c:482
+ do_truncate+0x200/0x2f0 fs/open.c:65
+ handle_truncate fs/namei.c:3216 [inline]
+ do_open fs/namei.c:3561 [inline]
+ path_openat+0x272b/0x2dd0 fs/namei.c:3714
+ do_filp_open+0x264/0x4f0 fs/namei.c:3741
+ do_sys_openat2+0x124/0x4e0 fs/open.c:1310
+ do_sys_open fs/open.c:1326 [inline]
+ __do_sys_creat fs/open.c:1402 [inline]
+ __se_sys_creat fs/open.c:1396 [inline]
+ __x64_sys_creat+0x11f/0x160 fs/open.c:1396
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f72f8a8c0c9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f72f97e3168 EFLAGS: 00000246 ORIG_RAX: 0000000000000055
+RAX: ffffffffffffffda RBX: 00007f72f8bac050 RCX: 00007f72f8a8c0c9
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000280
+RBP: 00007f72f8ae7ae9 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ffd165348bf R14: 00007f72f97e3300 R15: 0000000000022000
+
+Replace
+	le16_to_cpu(sbi->s_es->s_desc_size)
+with
+	sbi->s_desc_size
+
+It reduces ext4's compiled text size, and makes the code more efficient
+(we remove an extra indirect reference and a potential byte
+swap on big endian systems), and there is no downside. It also avoids the
+potential KASAN / syzkaller failure, as a bonus.
+
+Reported-by: syzbot+fc51227e7100c9294894@syzkaller.appspotmail.com
+Reported-by: syzbot+8785e41224a3afd04321@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=70d28d11ab14bd7938f3e088365252aa923cff42
+Link: https://syzkaller.appspot.com/bug?id=b85721b38583ecc6b5e72ff524c67302abbc30f3
+Link: https://lore.kernel.org/all/000000000000ece18705f3b20934@google.com/
+Fixes: 717d50e4971b ("Ext4: Uninitialized Block Groups")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20230504121525.3275886-1-tudor.ambarus@linaro.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/auth.c              | 27 ++++++++++++++-------------
- fs/ksmbd/auth.h              | 10 +++++-----
- fs/ksmbd/connection.h        |  7 +------
- fs/ksmbd/mgmt/user_session.h |  1 -
- fs/ksmbd/smb2pdu.c           |  8 ++++----
- 5 files changed, 24 insertions(+), 29 deletions(-)
+ fs/ext4/super.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ksmbd/auth.c b/fs/ksmbd/auth.c
-index b962b16e5aeb7..4867da417c23a 100644
---- a/fs/ksmbd/auth.c
-+++ b/fs/ksmbd/auth.c
-@@ -215,7 +215,7 @@ static int calc_ntlmv2_hash(struct ksmbd_session *sess, char *ntlmv2_hash,
-  * Return:	0 on success, error number on error
-  */
- int ksmbd_auth_ntlmv2(struct ksmbd_session *sess, struct ntlmv2_resp *ntlmv2,
--		      int blen, char *domain_name)
-+		      int blen, char *domain_name, char *cryptkey)
- {
- 	char ntlmv2_hash[CIFS_ENCPWD_SIZE];
- 	char ntlmv2_rsp[CIFS_HMAC_MD5_HASH_SIZE];
-@@ -256,7 +256,7 @@ int ksmbd_auth_ntlmv2(struct ksmbd_session *sess, struct ntlmv2_resp *ntlmv2,
- 		goto out;
- 	}
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -2836,11 +2836,9 @@ static __le16 ext4_group_desc_csum(struc
+ 	crc = crc16(crc, (__u8 *)gdp, offset);
+ 	offset += sizeof(gdp->bg_checksum); /* skip checksum */
+ 	/* for checksum of struct ext4_group_desc do the rest...*/
+-	if (ext4_has_feature_64bit(sb) &&
+-	    offset < le16_to_cpu(sbi->s_es->s_desc_size))
++	if (ext4_has_feature_64bit(sb) && offset < sbi->s_desc_size)
+ 		crc = crc16(crc, (__u8 *)gdp + offset,
+-			    le16_to_cpu(sbi->s_es->s_desc_size) -
+-				offset);
++			    sbi->s_desc_size - offset);
  
--	memcpy(construct, sess->ntlmssp.cryptkey, CIFS_CRYPTO_KEY_SIZE);
-+	memcpy(construct, cryptkey, CIFS_CRYPTO_KEY_SIZE);
- 	memcpy(construct + CIFS_CRYPTO_KEY_SIZE, &ntlmv2->blob_signature, blen);
- 
- 	rc = crypto_shash_update(CRYPTO_HMACMD5(ctx), construct, len);
-@@ -295,7 +295,8 @@ int ksmbd_auth_ntlmv2(struct ksmbd_session *sess, struct ntlmv2_resp *ntlmv2,
-  * Return:	0 on success, error number on error
-  */
- int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
--				   int blob_len, struct ksmbd_session *sess)
-+				   int blob_len, struct ksmbd_conn *conn,
-+				   struct ksmbd_session *sess)
- {
- 	char *domain_name;
- 	unsigned int nt_off, dn_off;
-@@ -325,7 +326,7 @@ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
- 
- 	/* TODO : use domain name that imported from configuration file */
- 	domain_name = smb_strndup_from_utf16((const char *)authblob + dn_off,
--					     dn_len, true, sess->conn->local_nls);
-+					     dn_len, true, conn->local_nls);
- 	if (IS_ERR(domain_name))
- 		return PTR_ERR(domain_name);
- 
-@@ -334,7 +335,7 @@ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
- 		    domain_name);
- 	ret = ksmbd_auth_ntlmv2(sess, (struct ntlmv2_resp *)((char *)authblob + nt_off),
- 				nt_len - CIFS_ENCPWD_SIZE,
--				domain_name);
-+				domain_name, conn->ntlmssp.cryptkey);
- 	kfree(domain_name);
- 	return ret;
- }
-@@ -348,7 +349,7 @@ int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
-  *
-  */
- int ksmbd_decode_ntlmssp_neg_blob(struct negotiate_message *negblob,
--				  int blob_len, struct ksmbd_session *sess)
-+				  int blob_len, struct ksmbd_conn *conn)
- {
- 	if (blob_len < sizeof(struct negotiate_message)) {
- 		ksmbd_debug(AUTH, "negotiate blob len %d too small\n",
-@@ -362,7 +363,7 @@ int ksmbd_decode_ntlmssp_neg_blob(struct negotiate_message *negblob,
- 		return -EINVAL;
- 	}
- 
--	sess->ntlmssp.client_flags = le32_to_cpu(negblob->NegotiateFlags);
-+	conn->ntlmssp.client_flags = le32_to_cpu(negblob->NegotiateFlags);
- 	return 0;
- }
- 
-@@ -376,14 +377,14 @@ int ksmbd_decode_ntlmssp_neg_blob(struct negotiate_message *negblob,
-  */
- unsigned int
- ksmbd_build_ntlmssp_challenge_blob(struct challenge_message *chgblob,
--				   struct ksmbd_session *sess)
-+				   struct ksmbd_conn *conn)
- {
- 	struct target_info *tinfo;
- 	wchar_t *name;
- 	__u8 *target_name;
- 	unsigned int flags, blob_off, blob_len, type, target_info_len = 0;
- 	int len, uni_len, conv_len;
--	int cflags = sess->ntlmssp.client_flags;
-+	int cflags = conn->ntlmssp.client_flags;
- 
- 	memcpy(chgblob->Signature, NTLMSSP_SIGNATURE, 8);
- 	chgblob->MessageType = NtLmChallenge;
-@@ -404,7 +405,7 @@ ksmbd_build_ntlmssp_challenge_blob(struct challenge_message *chgblob,
- 	if (cflags & NTLMSSP_REQUEST_TARGET)
- 		flags |= NTLMSSP_REQUEST_TARGET;
- 
--	if (sess->conn->use_spnego &&
-+	if (conn->use_spnego &&
- 	    (cflags & NTLMSSP_NEGOTIATE_EXTENDED_SEC))
- 		flags |= NTLMSSP_NEGOTIATE_EXTENDED_SEC;
- 
-@@ -415,7 +416,7 @@ ksmbd_build_ntlmssp_challenge_blob(struct challenge_message *chgblob,
- 		return -ENOMEM;
- 
- 	conv_len = smb_strtoUTF16((__le16 *)name, ksmbd_netbios_name(), len,
--				  sess->conn->local_nls);
-+				  conn->local_nls);
- 	if (conv_len < 0 || conv_len > len) {
- 		kfree(name);
- 		return -EINVAL;
-@@ -431,8 +432,8 @@ ksmbd_build_ntlmssp_challenge_blob(struct challenge_message *chgblob,
- 	chgblob->TargetName.BufferOffset = cpu_to_le32(blob_off);
- 
- 	/* Initialize random conn challenge */
--	get_random_bytes(sess->ntlmssp.cryptkey, sizeof(__u64));
--	memcpy(chgblob->Challenge, sess->ntlmssp.cryptkey,
-+	get_random_bytes(conn->ntlmssp.cryptkey, sizeof(__u64));
-+	memcpy(chgblob->Challenge, conn->ntlmssp.cryptkey,
- 	       CIFS_CRYPTO_KEY_SIZE);
- 
- 	/* Add Target Information to security buffer */
-diff --git a/fs/ksmbd/auth.h b/fs/ksmbd/auth.h
-index 9c2d4badd05d1..95629651cf266 100644
---- a/fs/ksmbd/auth.h
-+++ b/fs/ksmbd/auth.h
-@@ -38,16 +38,16 @@ struct kvec;
- int ksmbd_crypt_message(struct ksmbd_conn *conn, struct kvec *iov,
- 			unsigned int nvec, int enc);
- void ksmbd_copy_gss_neg_header(void *buf);
--int ksmbd_auth_ntlm(struct ksmbd_session *sess, char *pw_buf);
- int ksmbd_auth_ntlmv2(struct ksmbd_session *sess, struct ntlmv2_resp *ntlmv2,
--		      int blen, char *domain_name);
-+		      int blen, char *domain_name, char *cryptkey);
- int ksmbd_decode_ntlmssp_auth_blob(struct authenticate_message *authblob,
--				   int blob_len, struct ksmbd_session *sess);
-+				   int blob_len, struct ksmbd_conn *conn,
-+				   struct ksmbd_session *sess);
- int ksmbd_decode_ntlmssp_neg_blob(struct negotiate_message *negblob,
--				  int blob_len, struct ksmbd_session *sess);
-+				  int blob_len, struct ksmbd_conn *conn);
- unsigned int
- ksmbd_build_ntlmssp_challenge_blob(struct challenge_message *chgblob,
--				   struct ksmbd_session *sess);
-+				   struct ksmbd_conn *conn);
- int ksmbd_krb5_authenticate(struct ksmbd_session *sess, char *in_blob,
- 			    int in_len,	char *out_blob, int *out_len);
- int ksmbd_sign_smb2_pdu(struct ksmbd_conn *conn, char *key, struct kvec *iov,
-diff --git a/fs/ksmbd/connection.h b/fs/ksmbd/connection.h
-index 4b15c5e673d92..f3367d7760d7e 100644
---- a/fs/ksmbd/connection.h
-+++ b/fs/ksmbd/connection.h
-@@ -72,12 +72,7 @@ struct ksmbd_conn {
- 	int				connection_type;
- 	struct ksmbd_stats		stats;
- 	char				ClientGUID[SMB2_CLIENT_GUID_SIZE];
--	union {
--		/* pending trans request table */
--		struct trans_state	*recent_trans;
--		/* Used by ntlmssp */
--		char			*ntlmssp_cryptkey;
--	};
-+	struct ntlmssp_auth		ntlmssp;
- 
- 	spinlock_t			llist_lock;
- 	struct list_head		lock_list;
-diff --git a/fs/ksmbd/mgmt/user_session.h b/fs/ksmbd/mgmt/user_session.h
-index 82289c3cbd2bc..e241f16a38512 100644
---- a/fs/ksmbd/mgmt/user_session.h
-+++ b/fs/ksmbd/mgmt/user_session.h
-@@ -45,7 +45,6 @@ struct ksmbd_session {
- 	int				state;
- 	__u8				*Preauth_HashValue;
- 
--	struct ntlmssp_auth		ntlmssp;
- 	char				sess_key[CIFS_KEY_SIZE];
- 
- 	struct hlist_node		hlist;
-diff --git a/fs/ksmbd/smb2pdu.c b/fs/ksmbd/smb2pdu.c
-index c8c2b326ee042..bb8126deeaf29 100644
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -1316,7 +1316,7 @@ static int ntlm_negotiate(struct ksmbd_work *work,
- 	int sz, rc;
- 
- 	ksmbd_debug(SMB, "negotiate phase\n");
--	rc = ksmbd_decode_ntlmssp_neg_blob(negblob, negblob_len, work->sess);
-+	rc = ksmbd_decode_ntlmssp_neg_blob(negblob, negblob_len, work->conn);
- 	if (rc)
- 		return rc;
- 
-@@ -1326,7 +1326,7 @@ static int ntlm_negotiate(struct ksmbd_work *work,
- 	memset(chgblob, 0, sizeof(struct challenge_message));
- 
- 	if (!work->conn->use_spnego) {
--		sz = ksmbd_build_ntlmssp_challenge_blob(chgblob, work->sess);
-+		sz = ksmbd_build_ntlmssp_challenge_blob(chgblob, work->conn);
- 		if (sz < 0)
- 			return -ENOMEM;
- 
-@@ -1342,7 +1342,7 @@ static int ntlm_negotiate(struct ksmbd_work *work,
- 		return -ENOMEM;
- 
- 	chgblob = (struct challenge_message *)neg_blob;
--	sz = ksmbd_build_ntlmssp_challenge_blob(chgblob, work->sess);
-+	sz = ksmbd_build_ntlmssp_challenge_blob(chgblob, work->conn);
- 	if (sz < 0) {
- 		rc = -ENOMEM;
- 		goto out;
-@@ -1480,7 +1480,7 @@ static int ntlm_authenticate(struct ksmbd_work *work)
- 
- 		authblob = user_authblob(conn, req);
- 		sz = le16_to_cpu(req->SecurityBufferLength);
--		rc = ksmbd_decode_ntlmssp_auth_blob(authblob, sz, sess);
-+		rc = ksmbd_decode_ntlmssp_auth_blob(authblob, sz, conn, sess);
- 		if (rc) {
- 			set_user_flag(sess->user, KSMBD_USER_FLAG_BAD_PASSWORD);
- 			ksmbd_debug(SMB, "authentication failed\n");
--- 
-2.39.2
-
+ out:
+ 	return cpu_to_le16(crc);
 
 
