@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FDDFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0955EC4339C;
-	Mon, 15 May 2023 16:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C13FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D210C433EF;
+	Mon, 15 May 2023 16:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169682;
-	bh=NaZNEGS6O5ILStabR1IvWojNITJtGUYuoha+BNTrc/A=;
+	s=korg; t=1684169685;
+	bh=a52zrwDBx/yFl//l8hqYrIDIjGhWl1TWQchmfB2dWnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzXXay/b/Rs65hTH1ucG3havTA+AtX662Vfqp1EIBdWx1Etfu/tpWTJruKqEvcFhS
-	 YP0JKYuEczpMssCVEhc/IlevXT/cvtifXgIXi5lwCmdsWdn/7m6RvVCWPBK1u1puvv
-	 2EdRIIhjb5FRCZB7eyt2yWH05C70iNsOI08zXbh4=
+	b=e8XQFWwBd1g7CCsJk8PenX7Te7rf+6HWmdoBGYrzkPdQw5XyQ1DBwxgejyGj4hq1i
+	 2LVtvXPo5Upn07sAWzn16ou923XDmR4hDvj6TRcGboTP8cQzq9omBgpM3wjEm7Q93L
+	 o6j/LntmGEjoebZ1nGq0em9uT4vD+TsTJBsSNGx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 119/246] perf tracepoint: Fix memory leak in is_valid_tracepoint()
-Date: Mon, 15 May 2023 18:25:31 +0200
-Message-Id: <20230515161726.140668182@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.3 137/246] btrfs: zoned: zone finish data relocation BG with last IO
+Date: Mon, 15 May 2023 18:25:49 +0200
+Message-Id: <20230515161726.675809164@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -43,44 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Naohiro Aota <Naohiro.Aota@wdc.com>
 
-[ Upstream commit 9b86c49710eec7b4fbb78a0232b2dd0972a2b576 ]
+commit f84353c7c20536ea7e01eca79430eccdf3cc7348 upstream.
 
-When is_valid_tracepoint() returns 1, need to call put_events_file() to
-free `dir_path`.
+For data block groups, we zone finish a zone (or, just deactivate it) when
+seeing the last IO in btrfs_finish_ordered_io(). That is only called for
+IOs using ZONE_APPEND, but we use a regular WRITE command for data
+relocation IOs. Detect it and call btrfs_zone_finish_endio() properly.
 
-Fixes: 25a7d914274de386 ("perf parse-events: Use get/put_events_file()")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20230421025953.173826-1-yangjihong1@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: be1a1d7a5d24 ("btrfs: zoned: finish fully written block group")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/tracepoint.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/perf/util/tracepoint.c b/tools/perf/util/tracepoint.c
-index 89ef56c433110..92dd8b455b902 100644
---- a/tools/perf/util/tracepoint.c
-+++ b/tools/perf/util/tracepoint.c
-@@ -50,6 +50,7 @@ int is_valid_tracepoint(const char *event_string)
- 				 sys_dirent->d_name, evt_dirent->d_name);
- 			if (!strcmp(evt_path, event_string)) {
- 				closedir(evt_dir);
-+				put_events_file(dir_path);
- 				closedir(sys_dir);
- 				return 1;
- 			}
--- 
-2.39.2
-
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -3167,6 +3167,9 @@ int btrfs_finish_ordered_io(struct btrfs
+ 		btrfs_rewrite_logical_zoned(ordered_extent);
+ 		btrfs_zone_finish_endio(fs_info, ordered_extent->disk_bytenr,
+ 					ordered_extent->disk_num_bytes);
++	} else if (btrfs_is_data_reloc_root(inode->root)) {
++		btrfs_zone_finish_endio(fs_info, ordered_extent->disk_bytenr,
++					ordered_extent->disk_num_bytes);
+ 	}
+ 
+ 	if (test_bit(BTRFS_ORDERED_TRUNCATED, &ordered_extent->flags)) {
 
 
