@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CEB9FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62F6C4339B;
-	Mon, 15 May 2023 17:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B3E7FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3D69C433EF;
+	Mon, 15 May 2023 17:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171573;
-	bh=KKwPQ8kao6k5K4eGOxs7YwsiIPpaz3Tj3lI6CqRGrYQ=;
+	s=korg; t=1684171576;
+	bh=T0CeFnq3CHc5Xe1O31FYeiX17Q66noo5q2ST0EwTdNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOePyzu0j7Z4nfL+h40XMhc7ggHdUVxLq3nBut06H3mgC0ArxqH/FT0U2IEeF3g7b
-	 WlZ2BGvGCNvsd0DLF4h67VmPCq9cwAnNwULzDJ4GsTuNLhcbqbS8pY91yRFUsWKWwp
-	 XGvjVwpsAv1dBf1C34k8pTjt31BhDMQ64SdRYRHw=
+	b=tKbjGFAE0rFXzKIE7/QZQHE6oapGQhKc67gkRFCCa23lsq0fxNP80yfGuORtEtK9S
+	 wntnIuTfk6vyNgG1uh1LxL+uatFF0xN2nJjxi9JhML0WO6hpd5e/yU7TV9VZt8adkO
+	 uW5WLV08PTxjfOwPMU5fya9pc/74+in5wnSBgl2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tanmay Shah <tanmay.shah@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 010/134] mailbox: zynqmp: Fix counts of child nodes
-Date: Mon, 15 May 2023 18:28:07 +0200
-Message-Id: <20230515161703.302570091@linuxfoundation.org>
+Subject: [PATCH 5.15 002/134] crypto: ccp - Clear PSP interrupt status register before calling handler
+Date: Mon, 15 May 2023 18:27:59 +0200
+Message-Id: <20230515161702.993604989@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -36,43 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tanmay Shah <tanmay.shah@amd.com>
+From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
 
-[ Upstream commit f72f805e72882c361e2a612c64a6e549f3da7152 ]
+[ Upstream commit 45121ad4a1750ca47ce3f32bd434bdb0cdbf0043 ]
 
-If child mailbox node status is disabled it causes
-crash in interrupt handler. Fix this by assigning
-only available child node during driver probe.
+The PSP IRQ is edge-triggered (MSI or MSI-X) in all cases supported by
+the psp module so clear the interrupt status register early in the
+handler to prevent missed interrupts. sev_irq_handler() calls wake_up()
+on a wait queue, which can result in a new command being submitted from
+a different CPU. This then races with the clearing of isr and can result
+in missed interrupts. A missed interrupt results in a command waiting
+until it times out, which results in the psp being declared dead.
 
-Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
-Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
+This is unlikely on bare metal, but has been observed when running
+virtualized. In the cases where this is observed, sev->cmdresp_reg has
+PSP_CMDRESP_RESP set which indicates that the command was processed
+correctly but no interrupt was asserted.
+
+The full sequence of events looks like this:
+
+CPU 1: submits SEV cmd #1
+CPU 1: calls wait_event_timeout()
+CPU 0: enters psp_irq_handler()
+CPU 0: calls sev_handler()->wake_up()
+CPU 1: wakes up; finishes processing cmd #1
+CPU 1: submits SEV cmd #2
+CPU 1: calls wait_event_timeout()
+PSP:   finishes processing cmd #2; interrupt status is still set; no interrupt
+CPU 0: clears intsts
+CPU 0: exits psp_irq_handler()
+CPU 1: wait_event_timeout() times out; psp_dead=true
+
+Fixes: 200664d5237f ("crypto: ccp: Add Secure Encrypted Virtualization (SEV) command support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230311012407.1292118-2-tanmay.shah@amd.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/zynqmp-ipi-mailbox.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/crypto/ccp/psp-dev.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
-index 136a84ad871cc..be06de791c544 100644
---- a/drivers/mailbox/zynqmp-ipi-mailbox.c
-+++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
-@@ -634,7 +634,12 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
- 	struct zynqmp_ipi_mbox *mbox;
- 	int num_mboxes, ret = -EINVAL;
+diff --git a/drivers/crypto/ccp/psp-dev.c b/drivers/crypto/ccp/psp-dev.c
+index ae7b445999144..4bf9eaab4456f 100644
+--- a/drivers/crypto/ccp/psp-dev.c
++++ b/drivers/crypto/ccp/psp-dev.c
+@@ -42,6 +42,9 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
+ 	/* Read the interrupt status: */
+ 	status = ioread32(psp->io_regs + psp->vdata->intsts_reg);
  
--	num_mboxes = of_get_child_count(np);
-+	num_mboxes = of_get_available_child_count(np);
-+	if (num_mboxes == 0) {
-+		dev_err(dev, "mailbox nodes not available\n");
-+		return -EINVAL;
-+	}
++	/* Clear the interrupt status by writing the same value we read. */
++	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
 +
- 	pdata = devm_kzalloc(dev, struct_size(pdata, ipi_mboxes, num_mboxes),
- 			     GFP_KERNEL);
- 	if (!pdata)
+ 	/* invoke subdevice interrupt handlers */
+ 	if (status) {
+ 		if (psp->sev_irq_handler)
+@@ -51,9 +54,6 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
+ 			psp->tee_irq_handler(irq, psp->tee_irq_data, status);
+ 	}
+ 
+-	/* Clear the interrupt status by writing the same value we read. */
+-	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
+-
+ 	return IRQ_HANDLED;
+ }
+ 
 -- 
 2.39.2
 
