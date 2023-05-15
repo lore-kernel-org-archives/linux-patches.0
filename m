@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07D1FBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186ABC433EF;
-	Mon, 15 May 2023 17:49:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D392FBEC
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BBFC433EF;
+	Mon, 15 May 2023 17:49:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172943;
-	bh=hCrY4jyxNQ4CJJLdiS9xm5clus0qWcE3FDl2BQsYHoc=;
+	s=korg; t=1684172946;
+	bh=r6KVSG6H5mECMJ8cou6lSc555P9voLPje+R49bY+H/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QlHClz24Siy9OdvaT9gT9jQhhh6OkwBfSavZMYoSR1QQ3g8IMs7yqKRPh9WrnQq6b
-	 Ieehm+J1zJYon2PLJAOtsR/OKmcnxMHodGTxnVO+CBQfnN32bhWUr/XBA0eTGJzJfT
-	 bcCRc9rZzWB09fgvEgScoLQyx8lA5rqRnBD04Gu0=
+	b=tGq6U4WeuqHBv2BrZIULjZKPR8CT751yHRxTgcMXSYp68rPAitsC00I/mc9H5A6nZ
+	 xhaO+U0UElY9Lwm4n0rdXwwP1GzocAEbmZzJbQwNKAnHZYxt+QO0rb3xTpjGtefIJM
+	 1l9N+zm9Uqd2plEwcBEl5zOais4/aNojLYTKiIn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Moreton <andy.moreton@amd.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 316/381] sfc: Fix module EEPROM reporting for QSFP modules
-Date: Mon, 15 May 2023 18:29:27 +0200
-Message-Id: <20230515161751.091158216@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Kees Cook <keescook@chromium.org>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 5.10 289/381] arm64: Always load shadow stack pointer directly from the task struct
+Date: Mon, 15 May 2023 18:29:00 +0200
+Message-Id: <20230515161749.839128505@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,59 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Moreton <andy.moreton@amd.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 281900a923d4c50df109b52a22ae3cdac150159b ]
+commit 2198d07c509f1db4a1185d1f65aaada794c6ea59 upstream.
 
-The sfc driver does not report QSFP module EEPROM contents correctly
-as only the first page is fetched from hardware.
+All occurrences of the scs_load macro load the value of the shadow call
+stack pointer from the task which is current at that point. So instead
+of taking a task struct register argument in the scs_load macro to
+specify the task struct to load from, let's always reference the current
+task directly. This should make it much harder to exploit any
+instruction sequences reloading the shadow call stack pointer register
+from memory.
 
-Commit 0e1a2a3e6e7d ("ethtool: Add SFF-8436 and SFF-8636 max EEPROM
-length definitions") added ETH_MODULE_SFF_8436_MAX_LEN for the overall
-size of the EEPROM info, so use that to report the full EEPROM contents.
-
-Fixes: 9b17010da57a ("sfc: Add ethtool -m support for QSFP modules")
-Signed-off-by: Andy Moreton <andy.moreton@amd.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230109174800.3286265-2-ardb@kernel.org
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/sfc/mcdi_port_common.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ arch/arm64/include/asm/scs.h |    7 ++++---
+ arch/arm64/kernel/entry.S    |    4 ++--
+ arch/arm64/kernel/head.S     |    2 +-
+ 3 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/mcdi_port_common.c b/drivers/net/ethernet/sfc/mcdi_port_common.c
-index c4fe3c48ac46a..eccb97a5d9387 100644
---- a/drivers/net/ethernet/sfc/mcdi_port_common.c
-+++ b/drivers/net/ethernet/sfc/mcdi_port_common.c
-@@ -974,12 +974,15 @@ static u32 efx_mcdi_phy_module_type(struct efx_nic *efx)
+--- a/arch/arm64/include/asm/scs.h
++++ b/arch/arm64/include/asm/scs.h
+@@ -9,15 +9,16 @@
+ #ifdef CONFIG_SHADOW_CALL_STACK
+ 	scs_sp	.req	x18
  
- 	/* A QSFP+ NIC may actually have an SFP+ module attached.
- 	 * The ID is page 0, byte 0.
-+	 * QSFP28 is of type SFF_8636, however, this is treated
-+	 * the same by ethtool, so we can also treat them the same.
- 	 */
- 	switch (efx_mcdi_phy_get_module_eeprom_byte(efx, 0, 0)) {
--	case 0x3:
-+	case 0x3: /* SFP */
- 		return MC_CMD_MEDIA_SFP_PLUS;
--	case 0xc:
--	case 0xd:
-+	case 0xc: /* QSFP */
-+	case 0xd: /* QSFP+ */
-+	case 0x11: /* QSFP28 */
- 		return MC_CMD_MEDIA_QSFP_PLUS;
- 	default:
- 		return 0;
-@@ -1077,7 +1080,7 @@ int efx_mcdi_phy_get_module_info(struct efx_nic *efx, struct ethtool_modinfo *mo
+-	.macro scs_load tsk, tmp
+-	ldr	scs_sp, [\tsk, #TSK_TI_SCS_SP]
++	.macro scs_load_current
++	get_current_task scs_sp
++	ldr	scs_sp, [scs_sp, #TSK_TI_SCS_SP]
+ 	.endm
  
- 	case MC_CMD_MEDIA_QSFP_PLUS:
- 		modinfo->type = ETH_MODULE_SFF_8436;
--		modinfo->eeprom_len = ETH_MODULE_SFF_8436_LEN;
-+		modinfo->eeprom_len = ETH_MODULE_SFF_8436_MAX_LEN;
- 		break;
+ 	.macro scs_save tsk, tmp
+ 	str	scs_sp, [\tsk, #TSK_TI_SCS_SP]
+ 	.endm
+ #else
+-	.macro scs_load tsk, tmp
++	.macro scs_load_current
+ 	.endm
  
- 	default:
--- 
-2.39.2
-
+ 	.macro scs_save tsk, tmp
+--- a/arch/arm64/kernel/entry.S
++++ b/arch/arm64/kernel/entry.S
+@@ -221,7 +221,7 @@ alternative_else_nop_endif
+ 
+ 	ptrauth_keys_install_kernel tsk, x20, x22, x23
+ 
+-	scs_load tsk, x20
++	scs_load_current
+ 	.else
+ 	add	x21, sp, #S_FRAME_SIZE
+ 	get_current_task tsk
+@@ -1025,7 +1025,7 @@ SYM_FUNC_START(cpu_switch_to)
+ 	msr	sp_el0, x1
+ 	ptrauth_keys_install_kernel x1, x8, x9, x10
+ 	scs_save x0, x8
+-	scs_load x1, x8
++	scs_load_current
+ 	ret
+ SYM_FUNC_END(cpu_switch_to)
+ NOKPROBE(cpu_switch_to)
+--- a/arch/arm64/kernel/head.S
++++ b/arch/arm64/kernel/head.S
+@@ -747,7 +747,7 @@ SYM_FUNC_START_LOCAL(__secondary_switche
+ 	ldr	x2, [x0, #CPU_BOOT_TASK]
+ 	cbz	x2, __secondary_too_slow
+ 	msr	sp_el0, x2
+-	scs_load x2, x3
++	scs_load_current
+ 	mov	x29, #0
+ 	mov	x30, #0
+ 
 
 
