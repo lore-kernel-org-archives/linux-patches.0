@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA88FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:03:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E34C433EF;
-	Mon, 15 May 2023 17:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6139BFBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:03:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8975C4339B;
+	Mon, 15 May 2023 17:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170196;
-	bh=XcddAwIZZOax9ORc0ZUH0QwO7cooyu+6ToCAIe0GRm4=;
+	s=korg; t=1684170199;
+	bh=fZdalSZx9f05/xM4dMXYGpKWjeIT09FQ9n2JRDfWyqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fV5gRwe//EVcguR1r0CQT3yJQVEDJzq2m9MdvLqPFd06ALIji2mYdwVUyw6mHEtwu
-	 78qjuoLUrKnIyBMWJKIDyPUCLUNgYpWOojtaZHI1PcaLAdyHg6DumtwxlvaWMHj/eW
-	 RALBGs09YcSQx2w7oV4nZUZ3Ggq7V/eHSKsL6WCc=
+	b=kf3oe7tOj08szhTJF9YIqRoh0OWaJw0+nagaLFQYArQYDKXO6V3V+XB0c5dmjU8qL
+	 /thc7uq9JiHxYUxkLEkQmu3mGqUcDpp60GCeEgGMXQQYtdyXjwHgNZTkMV1j54eUt3
+	 Nwwz1kW/VfIp89PWyiPbId71qfP+dAujsR03m80w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Manish Rangankar <mrangankar@marvell.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Mark Broadworth <mark.broadworth@amd.com>,
+	Nevenko Stupar <Nevenko.Stupar@amd.com>,
+	Jun Lei <Jun.Lei@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/239] scsi: qedi: Fix use after free bug in qedi_remove()
-Date: Mon, 15 May 2023 18:24:49 +0200
-Message-Id: <20230515161722.478235615@linuxfoundation.org>
+Subject: [PATCH 6.1 027/239] drm/amd/display: Remove FPU guards from the DML folder
+Date: Mon, 15 May 2023 18:24:50 +0200
+Message-Id: <20230515161722.507625437@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -37,60 +38,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit c5749639f2d0a1f6cbe187d05f70c2e7c544d748 ]
+[ Upstream commit bbfbf09d193ac831c40db50ef4b31d11548a9eef ]
 
-In qedi_probe() we call __qedi_probe() which initializes
-&qedi->recovery_work with qedi_recovery_handler() and
-&qedi->board_disable_work with qedi_board_disable_work().
+As part of the programming expectation for using DML functions, DC
+requires that any DML function invoked outside DML uses:
 
-When qedi_schedule_recovery_handler() is called, schedule_delayed_work()
-will finally start the work.
+ DC_FP_START();
+ ... dml function ...
+ DC_FP_END();
 
-In qedi_remove(), which is called to remove the driver, the following
-sequence may be observed:
+Additionally, all the DML functions that can be invoked outside the DML
+folder call the function dc_assert_fp_enabled(), which is responsible
+for triggering a warning in the case that the DML function was not
+guarded by the DC_FP_START/END. For this reason, call DC_FP_START/END
+inside DML is wrong, and this commit removes all of those references.
 
-Fix this by finishing the work before cleanup in qedi_remove().
-
-CPU0                  CPU1
-
-                     |qedi_recovery_handler
-qedi_remove          |
-  __qedi_remove      |
-iscsi_host_free      |
-scsi_host_put        |
-//free shost         |
-                     |iscsi_host_for_each_session
-                     |//use qedi->shost
-
-Cancel recovery_work and board_disable_work in __qedi_remove().
-
-Fixes: 4b1068f5d74b ("scsi: qedi: Add MFW error recovery process")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Link: https://lore.kernel.org/r/20230413033422.28003-1-zyytlz.wz@163.com
-Acked-by: Manish Rangankar <mrangankar@marvell.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Tested-by: Mark Broadworth <mark.broadworth@amd.com>
+Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
+Reviewed-by: Jun Lei <Jun.Lei@amd.com>
+Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 822b84ecfc64 ("drm/amd/display: Add missing WA and MCLK validation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedi/qedi_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../drm/amd/display/dc/dml/dcn30/dcn30_fpu.c    |  2 --
+ .../drm/amd/display/dc/dml/dcn32/dcn32_fpu.c    | 17 +----------------
+ 2 files changed, 1 insertion(+), 18 deletions(-)
 
-diff --git a/drivers/scsi/qedi/qedi_main.c b/drivers/scsi/qedi/qedi_main.c
-index df2fe7bd26d1b..f530bb0364939 100644
---- a/drivers/scsi/qedi/qedi_main.c
-+++ b/drivers/scsi/qedi/qedi_main.c
-@@ -2450,6 +2450,9 @@ static void __qedi_remove(struct pci_dev *pdev, int mode)
- 		qedi_ops->ll2->stop(qedi->cdev);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn30/dcn30_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn30/dcn30_fpu.c
+index 990dbd736e2ce..4fa6363647937 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn30/dcn30_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn30/dcn30_fpu.c
+@@ -520,9 +520,7 @@ void dcn30_fpu_calculate_wm_and_dlg(
+ 		pipe_idx++;
  	}
  
-+	cancel_delayed_work_sync(&qedi->recovery_work);
-+	cancel_delayed_work_sync(&qedi->board_disable_work);
-+
- 	qedi_free_iscsi_pf_param(qedi);
+-	DC_FP_START();
+ 	dcn20_calculate_dlg_params(dc, context, pipes, pipe_cnt, vlevel);
+-	DC_FP_END();
  
- 	rval = qedi_ops->common->update_drv_state(qedi->cdev, false);
+ 	if (!pstate_en)
+ 		/* Restore full p-state latency */
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index e22b4b3880af9..d2b184fdd7e02 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -1200,9 +1200,7 @@ static void dcn32_full_validate_bw_helper(struct dc *dc,
+ 			}
+ 		} else {
+ 			// Most populate phantom DLG params before programming hardware / timing for phantom pipe
+-			DC_FP_START();
+ 			dcn32_helper_populate_phantom_dlg_params(dc, context, pipes, *pipe_cnt);
+-			DC_FP_END();
+ 
+ 			/* Call validate_apply_pipe_split flags after calling DML getters for
+ 			 * phantom dlg params, or some of the VBA params indicating pipe split
+@@ -1503,11 +1501,8 @@ bool dcn32_internal_validate_bw(struct dc *dc,
+ 
+ 	dml_log_pipe_params(&context->bw_ctx.dml, pipes, pipe_cnt);
+ 
+-	if (!fast_validate) {
+-		DC_FP_START();
++	if (!fast_validate)
+ 		dcn32_full_validate_bw_helper(dc, context, pipes, &vlevel, split, merge, &pipe_cnt);
+-		DC_FP_END();
+-	}
+ 
+ 	if (fast_validate ||
+ 			(dc->debug.dml_disallow_alternate_prefetch_modes &&
+@@ -2172,9 +2167,7 @@ static int build_synthetic_soc_states(struct clk_bw_params *bw_params,
+ 		entry.fabricclk_mhz = 0;
+ 		entry.dram_speed_mts = 0;
+ 
+-		DC_FP_START();
+ 		insert_entry_into_table_sorted(table, num_entries, &entry);
+-		DC_FP_END();
+ 	}
+ 
+ 	// Insert the max DCFCLK
+@@ -2182,9 +2175,7 @@ static int build_synthetic_soc_states(struct clk_bw_params *bw_params,
+ 	entry.fabricclk_mhz = 0;
+ 	entry.dram_speed_mts = 0;
+ 
+-	DC_FP_START();
+ 	insert_entry_into_table_sorted(table, num_entries, &entry);
+-	DC_FP_END();
+ 
+ 	// Insert the UCLK DPMS
+ 	for (i = 0; i < num_uclk_dpms; i++) {
+@@ -2192,9 +2183,7 @@ static int build_synthetic_soc_states(struct clk_bw_params *bw_params,
+ 		entry.fabricclk_mhz = 0;
+ 		entry.dram_speed_mts = bw_params->clk_table.entries[i].memclk_mhz * 16;
+ 
+-		DC_FP_START();
+ 		insert_entry_into_table_sorted(table, num_entries, &entry);
+-		DC_FP_END();
+ 	}
+ 
+ 	// If FCLK is coarse grained, insert individual DPMs.
+@@ -2204,9 +2193,7 @@ static int build_synthetic_soc_states(struct clk_bw_params *bw_params,
+ 			entry.fabricclk_mhz = bw_params->clk_table.entries[i].fclk_mhz;
+ 			entry.dram_speed_mts = 0;
+ 
+-			DC_FP_START();
+ 			insert_entry_into_table_sorted(table, num_entries, &entry);
+-			DC_FP_END();
+ 		}
+ 	}
+ 	// If FCLK fine grained, only insert max
+@@ -2215,9 +2202,7 @@ static int build_synthetic_soc_states(struct clk_bw_params *bw_params,
+ 		entry.fabricclk_mhz = max_fclk_mhz;
+ 		entry.dram_speed_mts = 0;
+ 
+-		DC_FP_START();
+ 		insert_entry_into_table_sorted(table, num_entries, &entry);
+-		DC_FP_END();
+ 	}
+ 
+ 	// At this point, the table contains all "points of interest" based on
 -- 
 2.39.2
 
