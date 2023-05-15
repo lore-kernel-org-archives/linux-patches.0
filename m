@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4860BFC12
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E69BC433EF;
-	Mon, 15 May 2023 17:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D6CFC12
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9356C433D2;
+	Mon, 15 May 2023 17:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172080;
-	bh=oV2Sx8WR+OBUk97E11P04I05mKcvjMkEKE2O3zCZ1d0=;
+	s=korg; t=1684172083;
+	bh=5lgoWjr6u1HjwgKvn1QmygnDtV1Wjk204QbyvoihS+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eipeR5a5dOIcTtIpuoQZEK5scaanWpavUVJEwo0Ko0HFfiu8aQZgeI0TMWFYAXUxC
-	 YY7JX2GodTRh7aGicDoxERvLg0zJ6uygKQ8VgQqU0Y+iMZZonxVsh3wB6x+lQGcpfv
-	 qXs+6NwJe3aGfHGPZ/L/xVATjFoZ/6Tw0TbvVdgQ=
+	b=J+C3jH1DENN204+hElvVUHB6CSVkskm3yNo8Xeb/E9bVBq+bLIq9kYCtNRnRqM03f
+	 B0fOByWkl7SAQa+745jTTFcLpQ+EhMvqW10H3lmwM6h5HzdYbU0v/GdnigAda24Je8
+	 RedrmM8RWKj3xXPNcxJKVGiXdlyPgSXN8f9ngrNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 008/381] USB: serial: option: add UNISOC vendor and TOZED LT70C product
-Date: Mon, 15 May 2023 18:24:19 +0200
-Message-Id: <20230515161737.136928608@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Brian Norris <briannorris@chromium.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Stephen Boyd <swboyd@chromium.org>
+Subject: [PATCH 5.10 009/381] driver core: Dont require dynamic_debug for initcall_debug probe timing
+Date: Mon, 15 May 2023 18:24:20 +0200
+Message-Id: <20230515161737.186518673@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,90 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arınç ÜNAL <arinc.unal@arinc9.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-commit a095edfc15f0832e046ae23964e249ef5c95af87 upstream.
+commit e2f06aa885081e1391916367f53bad984714b4db upstream.
 
-Add UNISOC vendor ID and TOZED LT70-C modem which is based from UNISOC
-SL8563. The modem supports the NCM mode. Interface 0 is used for running
-the AT commands. Interface 12 is the ADB interface.
+Don't require the use of dynamic debug (or modification of the kernel to
+add a #define DEBUG to the top of this file) to get the printk message
+about driver probe timing. This printk is only emitted when
+initcall_debug is enabled on the kernel commandline, and it isn't
+immediately obvious that you have to do something else to debug boot
+timing issues related to driver probe. Add a comment too so it doesn't
+get converted back to pr_debug().
 
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  6 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1782 ProdID=4055 Rev=04.04
-S:  Manufacturer=Unisoc Phone
-S:  Product=Unisoc Phone
-S:  SerialNumber=<redacted>
-C:  #Ifs=14 Cfg#= 1 Atr=c0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
-E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#=10 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#=11 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#=12 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
-E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#=13 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 2 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
-E:  Ad=84(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 3 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
-E:  Ad=86(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 5 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 6 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
-E:  Ad=88(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
-I:  If#= 7 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/r/20230417152003.243248-1-arinc.unal@arinc9.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: eb7fbc9fb118 ("driver core: Add missing '\n' in log messages")
+Cc: stable <stable@kernel.org>
+Cc: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: Brian Norris <briannorris@chromium.org>
+Reviewed-by: Brian Norris <briannorris@chromium.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20230412225842.3196599-1-swboyd@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/base/dd.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -595,6 +595,11 @@ static void option_instat_callback(struc
- #define SIERRA_VENDOR_ID			0x1199
- #define SIERRA_PRODUCT_EM9191			0x90d3
- 
-+/* UNISOC (Spreadtrum) products */
-+#define UNISOC_VENDOR_ID			0x1782
-+/* TOZED LT70-C based on UNISOC SL8563 uses UNISOC's vendor ID */
-+#define TOZED_PRODUCT_LT70C			0x4055
-+
- /* Device flags */
- 
- /* Highest interface number which can be used with NCTRL() and RSVD() */
-@@ -2225,6 +2230,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
- 	{ } /* Terminating entry */
- };
- MODULE_DEVICE_TABLE(usb, option_ids);
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -677,7 +677,12 @@ static int really_probe_debug(struct dev
+ 	calltime = ktime_get();
+ 	ret = really_probe(dev, drv);
+ 	rettime = ktime_get();
+-	pr_debug("probe of %s returned %d after %lld usecs\n",
++	/*
++	 * Don't change this to pr_debug() because that requires
++	 * CONFIG_DYNAMIC_DEBUG and we want a simple 'initcall_debug' on the
++	 * kernel commandline to print this all the time at the debug level.
++	 */
++	printk(KERN_DEBUG "probe of %s returned %d after %lld usecs\n",
+ 		 dev_name(dev), ret, ktime_us_delta(rettime, calltime));
+ 	return ret;
+ }
 
 
