@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2C0FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:11:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FA2C433EF;
-	Mon, 15 May 2023 17:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 635ECFBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:11:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1DCAC433D2;
+	Mon, 15 May 2023 17:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170661;
-	bh=XyTnWezu4Wzp2XNXIbDjPpvShOHaObxFKdHQfyq6PM0=;
+	s=korg; t=1684170664;
+	bh=t4wfhlhv0WB64ZrugnH109btefTtEgBncFuv009EILA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oR4VQy+9g+C1rHMooJlgZD2LOgkk34lxD2WxEGnrb9/9yXd//HHEcq1d8SEewi044
-	 Q2h0S7bl7bsEtOS5m2g5Atu882dgHgcBiSAn4tM8sQUbvQz1Jskh3gMJb3J2fGv6Xq
-	 uKKdYncrt0C4NHE9RN9BHgMroQLCSKwO9TzIIltY=
+	b=ErE7YqlXY7Gsb4O6PfaGk57GX25Sx4Wbg1RP5pMKNfMQIhgEhNlp6jMYkcl6N/IhY
+	 6z5vBSe/6PrrEz1/Wh2ez6UV1de/U7ynFi7v1pppcD+g/lG3TN4TEXUz2y8kTfrgG+
+	 W8kWr0ecL4m6Pjk4H8m8kBgjemiFU88prRM4Naho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Chen <robin.chen@amd.com>,
-	Stylon Wang <stylon.wang@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 201/239] drm/amd/display: Add debug option to skip PSR CRTC disable
-Date: Mon, 15 May 2023 18:27:44 +0200
-Message-Id: <20230515161727.761444706@linuxfoundation.org>
+Subject: [PATCH 6.1 202/239] drm/amd/display: Fix Z8 support configurations
+Date: Mon, 15 May 2023 18:27:45 +0200
+Message-Id: <20230515161727.791262434@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -40,68 +40,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 00812bfc7bcb02faf127ee05f6ac27a5581eb701 ]
+[ Upstream commit 73dd4ca4b5a01235607231839bd351bbef75a1d2 ]
 
 [Why]
-It's currently tied to Z10 support, and is required for Z10, but
-we can still support Z10 display off without PSR.
-
-We currently need to skip the PSR CRTC disable to prevent stuttering
-and underflow from occuring during PSR-SU.
+It's not supported in multi-display, but it is supported in 2nd eDP
+screen only.
 
 [How]
-Add a debug option to allow specifying this separately.
+Remove multi display support, restrict number of planes for all
+z-states support, but still allow Z8 if we're not using PWRSEQ0.
 
-Reviewed-by: Robin Chen <robin.chen@amd.com>
-Acked-by: Stylon Wang <stylon.wang@amd.com>
+Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: d893f39320e1 ("drm/amd/display: Lowering min Z8 residency time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_link.c           | 2 +-
- drivers/gpu/drm/amd/display/dc/dc.h                     | 1 +
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c | 1 +
- 3 files changed, 3 insertions(+), 1 deletion(-)
+ .../gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c   | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link.c b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-index bf7fcd268cb47..6299130663a3d 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-@@ -3381,7 +3381,7 @@ bool dc_link_setup_psr(struct dc_link *link,
- 		case FAMILY_YELLOW_CARP:
- 		case AMDGPU_FAMILY_GC_10_3_6:
- 		case AMDGPU_FAMILY_GC_11_0_1:
--			if (dc->debug.disable_z10)
-+			if (dc->debug.disable_z10 || dc->debug.psr_skip_crtc_disable)
- 				psr_context->psr_level.bits.SKIP_CRTC_DISABLE = true;
- 			break;
- 		default:
-diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
-index 6d64d3b0dc211..e038a180b941d 100644
---- a/drivers/gpu/drm/amd/display/dc/dc.h
-+++ b/drivers/gpu/drm/amd/display/dc/dc.h
-@@ -829,6 +829,7 @@ struct dc_debug_options {
- 	int crb_alloc_policy_min_disp_count;
- 	bool disable_z10;
- 	bool enable_z9_disable_interface;
-+	bool psr_skip_crtc_disable;
- 	union dpia_debug_options dpia_debug;
- 	bool disable_fixed_vs_aux_timeout_wa;
- 	bool force_disable_subvp;
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-index 94a90c8f3abbe..58931df853f1e 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-@@ -884,6 +884,7 @@ static const struct dc_plane_cap plane_cap = {
- static const struct dc_debug_options debug_defaults_drv = {
- 	.disable_z10 = false,
- 	.enable_z9_disable_interface = true,
-+	.psr_skip_crtc_disable = true,
- 	.disable_dmcu = true,
- 	.force_abm_enable = false,
- 	.timing_trace = false,
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
+index feef0a75878f9..6a7bcba4a7dad 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
+@@ -949,7 +949,6 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ 	int plane_count;
+ 	int i;
+ 	unsigned int optimized_min_dst_y_next_start_us;
+-	bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > 1000.0;
+ 
+ 	plane_count = 0;
+ 	optimized_min_dst_y_next_start_us = 0;
+@@ -974,6 +973,8 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ 	else if (context->stream_count == 1 &&  context->streams[0]->signal == SIGNAL_TYPE_EDP) {
+ 		struct dc_link *link = context->streams[0]->sink->link;
+ 		struct dc_stream_status *stream_status = &context->stream_status[0];
++		bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > 1000.0;
++		bool is_pwrseq0 = link->link_index == 0;
+ 
+ 		if (dc_extended_blank_supported(dc)) {
+ 			for (i = 0; i < dc->res_pool->pipe_count; i++) {
+@@ -986,18 +987,17 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ 				}
+ 			}
+ 		}
+-		/* zstate only supported on PWRSEQ0  and when there's <2 planes*/
+-		if (link->link_index != 0 || stream_status->plane_count > 1)
++
++		/* Don't support multi-plane configurations */
++		if (stream_status->plane_count > 1)
+ 			return DCN_ZSTATE_SUPPORT_DISALLOW;
+ 
+-		if (context->bw_ctx.dml.vba.StutterPeriod > 5000.0 || optimized_min_dst_y_next_start_us > 5000)
++		if (is_pwrseq0 && (context->bw_ctx.dml.vba.StutterPeriod > 5000.0 || optimized_min_dst_y_next_start_us > 5000))
+ 			return DCN_ZSTATE_SUPPORT_ALLOW;
+-		else if (link->psr_settings.psr_version == DC_PSR_VERSION_1 && !link->panel_config.psr.disable_psr)
++		else if (is_pwrseq0 && link->psr_settings.psr_version == DC_PSR_VERSION_1 && !link->panel_config.psr.disable_psr)
+ 			return allow_z8 ? DCN_ZSTATE_SUPPORT_ALLOW_Z8_Z10_ONLY : DCN_ZSTATE_SUPPORT_ALLOW_Z10_ONLY;
+ 		else
+ 			return allow_z8 ? DCN_ZSTATE_SUPPORT_ALLOW_Z8_ONLY : DCN_ZSTATE_SUPPORT_DISALLOW;
+-	} else if (allow_z8) {
+-		return DCN_ZSTATE_SUPPORT_ALLOW_Z8_ONLY;
+ 	} else {
+ 		return DCN_ZSTATE_SUPPORT_DISALLOW;
+ 	}
 -- 
 2.39.2
 
