@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118BAFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DE2C433D2;
-	Mon, 15 May 2023 17:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F847FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7974AC433EF;
+	Mon, 15 May 2023 17:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171366;
-	bh=C1EHBejhltQUJsb+n597kPRcWUmcmrDTBbB4j7w2Thc=;
+	s=korg; t=1684171370;
+	bh=l+DUNJZdsrHBF2n3nCYILiQtCsdLztOz8uylbk2lkIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byfZaCS2kJqF14lHEtuzKGOmSM1BP/tH86KaN/V7ILbFOdBmEERSuveFSorU1OsnO
-	 SgyLouZNqN7SggaJpOB+dNwc/2rh38XliQWGLfFuL7z1tNHVyoHQfn50j6u0zeKgEv
-	 bg6DFpbSz4/ibaR4Y4JNtZkwN8Vieq3bDCZrwRlM=
+	b=2sMWvzFxc8zAH2iCV0Ur7/77TTsdrWe1WHz/KmTcxowaiuqpZWdKf06nThVJFxuq4
+	 Kh3J7r83UEZhb7BCXdzyPsVRqUgGCZAQkBCbUInJOqenW/6nYyK7NNL/4ljEJJn7k7
+	 K92KdAOdWbPvAH0jRMfVZirnL0Ltay/alkLD7H1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Robert Foss <rfoss@kernel.org>
-Subject: [PATCH 6.2 169/242] drm/bridge: lt8912b: Fix DSI Video Mode
-Date: Mon, 15 May 2023 18:28:15 +0200
-Message-Id: <20230515161726.951290831@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Charlene Liu <Charlene.Liu@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.2 187/242] drm/amd/display: Add NULL plane_state check for cursor disable logic
+Date: Mon, 15 May 2023 18:28:33 +0200
+Message-Id: <20230515161727.557992166@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -34,34 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francesco Dolcini <francesco.dolcini@toradex.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-commit f435b7ef3b360d689df2ffa8326352cd07940d92 upstream.
+commit d29fb7baab09b6a1dc484c9c67933253883e770a upstream.
 
-LT8912 DSI port supports only Non-Burst mode video operation with Sync
-Events and continuous clock on clock lane, correct dsi mode flags
-according to that removing MIPI_DSI_MODE_VIDEO_BURST flag.
+[Why]
+While scanning the top_pipe connections we can run into a case where
+the bottom pipe is still connected to a top_pipe but with a NULL
+plane_state.
 
-Cc: <stable@vger.kernel.org>
-Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230330093131.424828-1-francesco@dolcini.it
+[How]
+Treat a NULL plane_state the same as the plane being invisible for
+pipe cursor disable logic.
+
+Cc: stable@vger.kernel.org
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Charlene Liu <Charlene.Liu@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt8912b.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
-@@ -504,7 +504,6 @@ static int lt8912_attach_dsi(struct lt89
- 	dsi->format = MIPI_DSI_FMT_RGB888;
+--- a/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn10/dcn10_hw_sequencer.c
+@@ -3383,7 +3383,9 @@ static bool dcn10_can_pipe_disable_curso
+ 	for (test_pipe = pipe_ctx->top_pipe; test_pipe;
+ 	     test_pipe = test_pipe->top_pipe) {
+ 		// Skip invisible layer and pipe-split plane on same layer
+-		if (!test_pipe->plane_state->visible || test_pipe->plane_state->layer_index == cur_layer)
++		if (!test_pipe->plane_state ||
++		    !test_pipe->plane_state->visible ||
++		    test_pipe->plane_state->layer_index == cur_layer)
+ 			continue;
  
- 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
--			  MIPI_DSI_MODE_VIDEO_BURST |
- 			  MIPI_DSI_MODE_LPM |
- 			  MIPI_DSI_MODE_NO_EOT_PACKET;
- 
+ 		r2 = test_pipe->plane_res.scl_data.recout;
 
 
