@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D23D101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E01C433EF;
-	Mon, 15 May 2023 17:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2946101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77593C433EF;
+	Mon, 15 May 2023 17:52:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173138;
-	bh=5Ppl7cbmrqBLbKZsDq11q8n894s1dlMntoQ63KsogeI=;
+	s=korg; t=1684173140;
+	bh=ievWxEhbBq7mV8V6xO4LaLgceP9f+5E9mizu868TEKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlEIWnwMNXreqzZUbJxI6m7Cy6csNJ7lVTbfDJFolGcNLGnbDL0/hw6nGSipXxpZ7
-	 ih4o9B4PFIHr8SXH8aOevuvwBmV72sWf3FUjIE8uEHStRb1rVTkhy990HnsbwrXuG+
-	 JDyoNXKJH5VVNn/Eqq9EXfx6h08izF3c0kihBwno=
+	b=Rj8zFWbJYBdP7xKN8OAOfA1f5P37BWfDbel53QdESk/OsopqdG01ikedHezG18Qq1
+	 P0Ciw9KLlz9ddV1b+rdv2MjA5b76KuRe20Kt98bHUXsKT0hfB2IRrA3Azo5qs/D0lD
+	 lb6tE/3TYaV6R8GFfKJYm686N8KrHpA7UQgRfqxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ogness <john.ogness@linutronix.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Subject: [PATCH 5.10 378/381] printk: declare printk_deferred_{enter,safe}() in include/linux/printk.h
-Date: Mon, 15 May 2023 18:30:29 +0200
-Message-Id: <20230515161754.030008297@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 351/381] drm/amdgpu: fix an amdgpu_irq_put() issue in gmc_v9_0_hw_fini()
+Date: Mon, 15 May 2023 18:30:02 +0200
+Message-Id: <20230515161752.726160368@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,77 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-commit 85e3e7fbbb720b9897fba9a99659e31cbd1c082e upstream.
+commit 922a76ba31adf84e72bc947267385be420c689ee upstream.
 
-[This patch implements subset of original commit 85e3e7fbbb72 ("printk:
-remove NMI tracking") where commit 1007843a9190 ("mm/page_alloc: fix
-potential deadlock on zonelist_update_seq seqlock") depends on, for
-commit 3d36424b3b58 ("mm/page_alloc: fix race condition between
-build_all_zonelists and page allocation") was backported to stable.]
+As made mention of in commit 08c677cb0b43 ("drm/amdgpu: fix
+amdgpu_irq_put call trace in gmc_v10_0_hw_fini") and commit 13af556104fa
+("drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v11_0_hw_fini"). It
+is meaningless to call amdgpu_irq_put() for gmc.ecc_irq. So, remove it
+from gmc_v9_0_hw_fini().
 
-All NMI contexts are handled the same as the safe context: store the
-message and defer printing. There is no need to have special NMI
-context tracking for this. Using in_nmi() is enough.
-
-There are several parts of the kernel that are manually calling into
-the printk NMI context tracking in order to cause general printk
-deferred printing:
-
-    arch/arm/kernel/smp.c
-    arch/powerpc/kexec/crash.c
-    kernel/trace/trace.c
-
-For arm/kernel/smp.c and powerpc/kexec/crash.c, provide a new
-function pair printk_deferred_enter/exit that explicitly achieves the
-same objective.
-
-For ftrace, remove the printk context manipulation completely. It was
-added in commit 03fc7f9c99c1 ("printk/nmi: Prevent deadlock when
-accessing the main log buffer in NMI"). The purpose was to enforce
-storing messages directly into the ring buffer even in NMI context.
-It really should have only modified the behavior in NMI context.
-There is no need for a special behavior any longer. All messages are
-always stored directly now. The console deferring is handled
-transparently in vprintk().
-
-Signed-off-by: John Ogness <john.ogness@linutronix.de>
-[pmladek@suse.com: Remove special handling in ftrace.c completely.
-Signed-off-by: Petr Mladek <pmladek@suse.com>
-Link: https://lore.kernel.org/r/20210715193359.25946-5-john.ogness@linutronix.de
-[penguin-kernel: Copy only printk_deferred_{enter,safe}() definition ]
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
+Fixes: 3029c855d79f ("drm/amdgpu: Fix desktop freezed after gpu-reset")
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/printk.h |   19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/include/linux/printk.h
-+++ b/include/linux/printk.h
-@@ -623,4 +623,23 @@ static inline void print_hex_dump_debug(
- #define print_hex_dump_bytes(prefix_str, prefix_type, buf, len)	\
- 	print_hex_dump_debug(prefix_str, prefix_type, 16, 1, buf, len, true)
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -1686,7 +1686,6 @@ static int gmc_v9_0_hw_fini(void *handle
+ 		return 0;
+ 	}
  
-+#ifdef CONFIG_PRINTK
-+extern void __printk_safe_enter(void);
-+extern void __printk_safe_exit(void);
-+/*
-+ * The printk_deferred_enter/exit macros are available only as a hack for
-+ * some code paths that need to defer all printk console printing. Interrupts
-+ * must be disabled for the deferred duration.
-+ */
-+#define printk_deferred_enter __printk_safe_enter
-+#define printk_deferred_exit __printk_safe_exit
-+#else
-+static inline void printk_deferred_enter(void)
-+{
-+}
-+static inline void printk_deferred_exit(void)
-+{
-+}
-+#endif
-+
- #endif
+-	amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
+ 
+ 	return 0;
 
 
