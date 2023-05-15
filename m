@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4320CFC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:41:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DCC3C433D2;
-	Mon, 15 May 2023 17:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5807EFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:42:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDCFC433D2;
+	Mon, 15 May 2023 17:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172519;
-	bh=Do4W/MMIjeRqXdmG2MP+NGl+aJN4qHyN3/szobTp1Bs=;
+	s=korg; t=1684172522;
+	bh=oLxQ6V22vMl3WyI8oM7fPVfVMSHUqVLB9KOIEKESpg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8CZ4gMzSVRtcnxcXTPujWvI7DezcUvZXZl2IdzexLH/5FmC+UNgtd+Hc9vaHyeEl
-	 GnSH58T3QKMBKJ/7w/d8ipazzVWqcepDXIXNIewfF9ZGz+oMpj7vGE4ZXNItpTM06O
-	 4Wzkjt6pgdZ36w+xTIqAosEOwQtjon6LwMo3faj8=
+	b=x+XqBP2ElzNFeDxZ7XmO94eXtJ41tMOwsCyVGTkUoOvKqqDz//7MwivEzzE53fDjS
+	 7bnbsQXjLwrjeIrcc0L27gj/Wa8/f3FOFvf4Wyi0MiyqRYgaGEtwSpAeGIxefs7N2t
+	 PeSpXQPA/b93z5qb1dF3wPk5AUgWcjrKClp8lT/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolai Stange <nstange@suse.de>,
-	=?UTF-8?q?Stephan=20M=C3=BCller?= <smueller@chronox.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 162/381] crypto: drbg - make drbg_prepare_hrng() handle jent instantiation errors
-Date: Mon, 15 May 2023 18:26:53 +0200
-Message-Id: <20230515161744.130357486@linuxfoundation.org>
+Subject: [PATCH 5.10 180/381] wifi: iwlwifi: mvm: check firmware response size
+Date: Mon, 15 May 2023 18:27:11 +0200
+Message-Id: <20230515161744.948600231@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,62 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolai Stange <nstange@suse.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 559edd47cce4cc407d606b4d7f376822816fd4b8 ]
+[ Upstream commit 13513cec93ac9902d0b896976d8bab3758a9881c ]
 
-Now that drbg_prepare_hrng() doesn't do anything but to instantiate a
-jitterentropy crypto_rng instance, it looks a little odd to have the
-related error handling at its only caller, drbg_instantiate().
+Check the firmware response size for responses to the
+memory read/write command in debugfs before using it.
 
-Move the handling of jitterentropy allocation failures from
-drbg_instantiate() close to the allocation itself in drbg_prepare_hrng().
-
-There is no change in behaviour.
-
-Signed-off-by: Nicolai Stange <nstange@suse.de>
-Reviewed-by: Stephan Müller <smueller@chronox.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 686cd976b6dd ("crypto: drbg - Only fail when jent is unavailable in FIPS mode")
+Fixes: 2b55f43f8e47 ("iwlwifi: mvm: Add mem debugfs entry")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230417113648.0d56fcaf68ee.I70e9571f3ed7263929b04f8fabad23c9b999e4ea@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/drbg.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/crypto/drbg.c b/crypto/drbg.c
-index a4b5d6dbe99d3..ecc6b167b89e2 100644
---- a/crypto/drbg.c
-+++ b/crypto/drbg.c
-@@ -1515,6 +1515,14 @@ static int drbg_prepare_hrng(struct drbg_state *drbg)
- 		return 0;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+index 3395c46759883..36f75d5946304 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
+@@ -1885,6 +1885,11 @@ static ssize_t iwl_dbgfs_mem_read(struct file *file, char __user *user_buf,
+ 	if (ret < 0)
+ 		return ret;
  
- 	drbg->jent = crypto_alloc_rng("jitterentropy_rng", 0, 0);
-+	if (IS_ERR(drbg->jent)) {
-+		const int err = PTR_ERR(drbg->jent);
-+
-+		drbg->jent = NULL;
-+		if (fips_enabled || err != -ENOENT)
-+			return err;
-+		pr_info("DRBG: Continuing without Jitter RNG\n");
++	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
++		ret = -EIO;
++		goto out;
 +	}
++
+ 	rsp = (void *)hcmd.resp_pkt->data;
+ 	if (le32_to_cpu(rsp->status) != DEBUG_MEM_STATUS_SUCCESS) {
+ 		ret = -ENXIO;
+@@ -1962,6 +1967,11 @@ static ssize_t iwl_dbgfs_mem_write(struct file *file,
+ 	if (ret < 0)
+ 		return ret;
  
- 	return 0;
- }
-@@ -1570,14 +1578,6 @@ static int drbg_instantiate(struct drbg_state *drbg, struct drbg_string *pers,
- 		if (ret)
- 			goto free_everything;
- 
--		if (IS_ERR(drbg->jent)) {
--			ret = PTR_ERR(drbg->jent);
--			drbg->jent = NULL;
--			if (fips_enabled || ret != -ENOENT)
--				goto free_everything;
--			pr_info("DRBG: Continuing without Jitter RNG\n");
--		}
--
- 		reseed = false;
- 	}
- 
++	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
++		ret = -EIO;
++		goto out;
++	}
++
+ 	rsp = (void *)hcmd.resp_pkt->data;
+ 	if (rsp->status != DEBUG_MEM_STATUS_SUCCESS) {
+ 		ret = -ENXIO;
 -- 
 2.39.2
 
