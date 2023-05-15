@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F3DDF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDE4C433EF;
-	Mon, 15 May 2023 16:39:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FEBDF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39179C433D2;
+	Mon, 15 May 2023 16:40:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168800;
-	bh=iKjmHaqOrxb3L09j0BuS3vequ9ACYlcpmnmjftN2+ts=;
+	s=korg; t=1684168803;
+	bh=1N7eNSNY1ukaWHXW3Xn2yQuREBJugGp2vtfk62fbrx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ba6vL+qSddL+O3AT03yLIOKAnc5uPiHJ9JfKtFZdZgcwaAEZ1sPWdPPQ5zNWbNiyp
-	 E1mmjLFhWCA6dOqO7mEY0CoA3GSjC2lgCf0PxOSfEahTIEm19vG3FZkp1TqrPaprg0
-	 /N6mucCIy397NBSpgptv4EhkxVmSQyeDhfS0uwSM=
+	b=jvym79zmUitlcH2cfFihMBuPgJp85Asza9IoIqmpPucEn/BZwQGPHa5otBD7+WUos
+	 KLkB5Y14cRQn6Mn0klJkoXTLb4FJ+gvQwBgO6XUx5tu7m9OveUA7GkS1v1GclzGjq8
+	 gnOXFeV//4Eq+hY60kvFsMFluk3Vrr4HoKfyYCBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -24,9 +24,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qian Cai <cai@gmx.us>,
 	Zhong Jiang <zhongjiang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 045/191] debugobjects: Add percpu free pools
-Date: Mon, 15 May 2023 18:24:42 +0200
-Message-Id: <20230515161708.841675721@linuxfoundation.org>
+Subject: [PATCH 4.19 046/191] debugobjects: Move printk out of db->lock critical sections
+Date: Mon, 15 May 2023 18:24:43 +0200
+Message-Id: <20230515161708.872191992@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -42,24 +42,14 @@ Content-Transfer-Encoding: 8bit
 
 From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit d86998b17a01050c0232231fa481e65ef8171ca6 ]
+[ Upstream commit d5f34153e526903abe71869dbbc898bfc0f69373 ]
 
-When a multi-threaded workload does a lot of small memory object
-allocations and deallocations, it may cause the allocation and freeing of
-many debug objects. This will make the global pool_lock a bottleneck in the
-performance of the workload.  Since interrupts are disabled when acquiring
-the pool_lock, it may even cause hard lockups to happen.
-
-To reduce contention of the global pool_lock, add a percpu debug object
-free pool that can be used to buffer some of the debug object allocation
-and freeing requests without acquiring the pool_lock.  Each CPU will now
-have a percpu free pool that can hold up to a maximum of 64 debug
-objects. Allocation and freeing requests will go to the percpu free pool
-first. If that fails, the pool_lock will be taken and the global free pool
-will be used.
-
-The presence or absence of obj_cache is used as a marker to see if the
-percpu cache should be used.
+The db->lock is a raw spinlock and so the lock hold time is supposed
+to be short. This will not be the case when printk() is being involved
+in some of the critical sections. In order to avoid the long hold time,
+in case some messages need to be printed, the debug_object_is_on_stack()
+and debug_print_object() calls are now moved out of those critical
+sections.
 
 Signed-off-by: Waiman Long <longman@redhat.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
@@ -68,231 +58,236 @@ Cc: Yang Shi <yang.shi@linux.alibaba.com>
 Cc: "Joel Fernandes (Google)" <joel@joelfernandes.org>
 Cc: Qian Cai <cai@gmx.us>
 Cc: Zhong Jiang <zhongjiang@huawei.com>
-Link: https://lkml.kernel.org/r/20190520141450.7575-2-longman@redhat.com
+Link: https://lkml.kernel.org/r/20190520141450.7575-6-longman@redhat.com
 Stable-dep-of: 63a759694eed ("debugobject: Prevent init race with static objects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c | 115 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 91 insertions(+), 24 deletions(-)
+ lib/debugobjects.c | 58 +++++++++++++++++++++++++++++++---------------
+ 1 file changed, 39 insertions(+), 19 deletions(-)
 
 diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 14afeeb7d6ef5..6e2baf9e9eb27 100644
+index 6e2baf9e9eb27..6909a6e51de83 100644
 --- a/lib/debugobjects.c
 +++ b/lib/debugobjects.c
-@@ -25,6 +25,7 @@
- 
- #define ODEBUG_POOL_SIZE	1024
- #define ODEBUG_POOL_MIN_LEVEL	256
-+#define ODEBUG_POOL_PERCPU_SIZE	64
- 
- #define ODEBUG_CHUNK_SHIFT	PAGE_SHIFT
- #define ODEBUG_CHUNK_SIZE	(1 << ODEBUG_CHUNK_SHIFT)
-@@ -35,6 +36,17 @@ struct debug_bucket {
- 	raw_spinlock_t		lock;
- };
- 
-+/*
-+ * Debug object percpu free list
-+ * Access is protected by disabling irq
-+ */
-+struct debug_percpu_free {
-+	struct hlist_head	free_objs;
-+	int			obj_free;
-+};
-+
-+static DEFINE_PER_CPU(struct debug_percpu_free, percpu_obj_pool);
-+
- static struct debug_bucket	obj_hash[ODEBUG_HASH_SIZE];
- 
- static struct debug_obj		obj_static_pool[ODEBUG_POOL_SIZE] __initdata;
-@@ -44,13 +56,19 @@ static DEFINE_RAW_SPINLOCK(pool_lock);
- static HLIST_HEAD(obj_pool);
- static HLIST_HEAD(obj_to_free);
- 
-+/*
-+ * Because of the presence of percpu free pools, obj_pool_free will
-+ * under-count those in the percpu free pools. Similarly, obj_pool_used
-+ * will over-count those in the percpu free pools. Adjustments will be
-+ * made at debug_stats_show(). Both obj_pool_min_free and obj_pool_max_used
-+ * can be off.
-+ */
- static int			obj_pool_min_free = ODEBUG_POOL_SIZE;
- static int			obj_pool_free = ODEBUG_POOL_SIZE;
- static int			obj_pool_used;
- static int			obj_pool_max_used;
- /* The number of objs on the global free list */
- static int			obj_nr_tofree;
--static struct kmem_cache	*obj_cache;
- 
- static int			debug_objects_maxchain __read_mostly;
- static int __maybe_unused	debug_objects_maxchecked __read_mostly;
-@@ -63,6 +81,7 @@ static int			debug_objects_pool_size __read_mostly
- static int			debug_objects_pool_min_level __read_mostly
- 				= ODEBUG_POOL_MIN_LEVEL;
- static struct debug_obj_descr	*descr_test  __read_mostly;
-+static struct kmem_cache	*obj_cache __read_mostly;
- 
- /*
-  * Track numbers of kmem_cache_alloc()/free() calls done.
-@@ -162,6 +181,21 @@ static struct debug_obj *lookup_object(void *addr, struct debug_bucket *b)
- 	return NULL;
- }
- 
-+/*
-+ * Allocate a new object from the hlist
-+ */
-+static struct debug_obj *__alloc_object(struct hlist_head *list)
-+{
-+	struct debug_obj *obj = NULL;
-+
-+	if (list->first) {
-+		obj = hlist_entry(list->first, typeof(*obj), node);
-+		hlist_del(&obj->node);
-+	}
-+
-+	return obj;
-+}
-+
- /*
-  * Allocate a new object. If the pool is empty, switch off the debugger.
-  * Must be called with interrupts disabled.
-@@ -169,20 +203,21 @@ static struct debug_obj *lookup_object(void *addr, struct debug_bucket *b)
- static struct debug_obj *
- alloc_object(void *addr, struct debug_bucket *b, struct debug_obj_descr *descr)
+@@ -429,6 +429,7 @@ static void
+ __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
  {
--	struct debug_obj *obj = NULL;
--
--	raw_spin_lock(&pool_lock);
--	if (obj_pool.first) {
--		obj	    = hlist_entry(obj_pool.first, typeof(*obj), node);
--
--		obj->object = addr;
--		obj->descr  = descr;
--		obj->state  = ODEBUG_STATE_NONE;
--		obj->astate = 0;
--		hlist_del(&obj->node);
-+	struct debug_percpu_free *percpu_pool;
-+	struct debug_obj *obj;
- 
--		hlist_add_head(&obj->node, &b->list);
-+	if (likely(obj_cache)) {
-+		percpu_pool = this_cpu_ptr(&percpu_obj_pool);
-+		obj = __alloc_object(&percpu_pool->free_objs);
-+		if (obj) {
-+			percpu_pool->obj_free--;
-+			goto init_obj;
-+		}
-+	}
- 
-+	raw_spin_lock(&pool_lock);
-+	obj = __alloc_object(&obj_pool);
-+	if (obj) {
- 		obj_pool_used++;
- 		if (obj_pool_used > obj_pool_max_used)
- 			obj_pool_max_used = obj_pool_used;
-@@ -193,6 +228,14 @@ alloc_object(void *addr, struct debug_bucket *b, struct debug_obj_descr *descr)
- 	}
- 	raw_spin_unlock(&pool_lock);
- 
-+init_obj:
-+	if (obj) {
-+		obj->object = addr;
-+		obj->descr  = descr;
-+		obj->state  = ODEBUG_STATE_NONE;
-+		obj->astate = 0;
-+		hlist_add_head(&obj->node, &b->list);
-+	}
- 	return obj;
- }
- 
-@@ -247,8 +290,21 @@ static bool __free_object(struct debug_obj *obj)
- {
+ 	enum debug_obj_state state;
++	bool check_stack = false;
+ 	struct debug_bucket *db;
+ 	struct debug_obj *obj;
  	unsigned long flags;
- 	bool work;
-+	struct debug_percpu_free *percpu_pool;
- 
--	raw_spin_lock_irqsave(&pool_lock, flags);
-+	local_irq_save(flags);
-+	/*
-+	 * Try to free it into the percpu pool first.
-+	 */
-+	percpu_pool = this_cpu_ptr(&percpu_obj_pool);
-+	if (obj_cache && percpu_pool->obj_free < ODEBUG_POOL_PERCPU_SIZE) {
-+		hlist_add_head(&obj->node, &percpu_pool->free_objs);
-+		percpu_pool->obj_free++;
-+		local_irq_restore(flags);
-+		return false;
-+	}
-+
-+	raw_spin_lock(&pool_lock);
- 	work = (obj_pool_free > debug_objects_pool_size) && obj_cache;
- 	obj_pool_used--;
- 
-@@ -259,7 +315,8 @@ static bool __free_object(struct debug_obj *obj)
- 		obj_pool_free++;
- 		hlist_add_head(&obj->node, &obj_pool);
+@@ -448,7 +449,7 @@ __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
+ 			debug_objects_oom();
+ 			return;
+ 		}
+-		debug_object_is_on_stack(addr, onstack);
++		check_stack = true;
  	}
--	raw_spin_unlock_irqrestore(&pool_lock, flags);
-+	raw_spin_unlock(&pool_lock);
-+	local_irq_restore(flags);
- 	return work;
- }
  
-@@ -822,13 +879,19 @@ void debug_check_no_obj_freed(const void *address, unsigned long size)
+ 	switch (obj->state) {
+@@ -459,20 +460,23 @@ __debug_object_init(void *addr, struct debug_obj_descr *descr, int onstack)
+ 		break;
  
- static int debug_stats_show(struct seq_file *m, void *v)
- {
-+	int cpu, obj_percpu_free = 0;
-+
-+	for_each_possible_cpu(cpu)
-+		obj_percpu_free += per_cpu(percpu_obj_pool.obj_free, cpu);
-+
- 	seq_printf(m, "max_chain     :%d\n", debug_objects_maxchain);
- 	seq_printf(m, "max_checked   :%d\n", debug_objects_maxchecked);
- 	seq_printf(m, "warnings      :%d\n", debug_objects_warnings);
- 	seq_printf(m, "fixups        :%d\n", debug_objects_fixups);
--	seq_printf(m, "pool_free     :%d\n", obj_pool_free);
-+	seq_printf(m, "pool_free     :%d\n", obj_pool_free + obj_percpu_free);
-+	seq_printf(m, "pool_pcp_free :%d\n", obj_percpu_free);
- 	seq_printf(m, "pool_min_free :%d\n", obj_pool_min_free);
--	seq_printf(m, "pool_used     :%d\n", obj_pool_used);
-+	seq_printf(m, "pool_used     :%d\n", obj_pool_used - obj_percpu_free);
- 	seq_printf(m, "pool_max_used :%d\n", obj_pool_max_used);
- 	seq_printf(m, "on_free_list  :%d\n", obj_nr_tofree);
- 	seq_printf(m, "objs_allocated:%d\n", debug_objects_allocated);
-@@ -1177,9 +1240,20 @@ static int __init debug_objects_replace_static_objects(void)
-  */
- void __init debug_objects_mem_init(void)
- {
-+	int cpu;
-+
- 	if (!debug_objects_enabled)
+ 	case ODEBUG_STATE_ACTIVE:
+-		debug_print_object(obj, "init");
+ 		state = obj->state;
+ 		raw_spin_unlock_irqrestore(&db->lock, flags);
++		debug_print_object(obj, "init");
+ 		debug_object_fixup(descr->fixup_init, addr, state);
  		return;
  
-+	/*
-+	 * Initialize the percpu object pools
-+	 *
-+	 * Initialization is not strictly necessary, but was done for
-+	 * completeness.
-+	 */
-+	for_each_possible_cpu(cpu)
-+		INIT_HLIST_HEAD(&per_cpu(percpu_obj_pool.free_objs, cpu));
-+
- 	obj_cache = kmem_cache_create("debug_objects_cache",
- 				      sizeof (struct debug_obj), 0,
- 				      SLAB_DEBUG_OBJECTS | SLAB_NOLEAKTRACE,
-@@ -1191,11 +1265,4 @@ void __init debug_objects_mem_init(void)
- 		pr_warn("out of memory.\n");
- 	} else
- 		debug_objects_selftest();
--
--	/*
--	 * Increase the thresholds for allocating and freeing objects
--	 * according to the number of possible CPUs available in the system.
--	 */
--	debug_objects_pool_size += num_possible_cpus() * 32;
--	debug_objects_pool_min_level += num_possible_cpus() * 4;
+ 	case ODEBUG_STATE_DESTROYED:
++		raw_spin_unlock_irqrestore(&db->lock, flags);
+ 		debug_print_object(obj, "init");
+-		break;
++		return;
+ 	default:
+ 		break;
+ 	}
+ 
+ 	raw_spin_unlock_irqrestore(&db->lock, flags);
++	if (check_stack)
++		debug_object_is_on_stack(addr, onstack);
  }
+ 
+ /**
+@@ -530,6 +534,8 @@ int debug_object_activate(void *addr, struct debug_obj_descr *descr)
+ 
+ 	obj = lookup_object(addr, db);
+ 	if (obj) {
++		bool print_object = false;
++
+ 		switch (obj->state) {
+ 		case ODEBUG_STATE_INIT:
+ 		case ODEBUG_STATE_INACTIVE:
+@@ -538,14 +544,14 @@ int debug_object_activate(void *addr, struct debug_obj_descr *descr)
+ 			break;
+ 
+ 		case ODEBUG_STATE_ACTIVE:
+-			debug_print_object(obj, "activate");
+ 			state = obj->state;
+ 			raw_spin_unlock_irqrestore(&db->lock, flags);
++			debug_print_object(obj, "activate");
+ 			ret = debug_object_fixup(descr->fixup_activate, addr, state);
+ 			return ret ? 0 : -EINVAL;
+ 
+ 		case ODEBUG_STATE_DESTROYED:
+-			debug_print_object(obj, "activate");
++			print_object = true;
+ 			ret = -EINVAL;
+ 			break;
+ 		default:
+@@ -553,10 +559,13 @@ int debug_object_activate(void *addr, struct debug_obj_descr *descr)
+ 			break;
+ 		}
+ 		raw_spin_unlock_irqrestore(&db->lock, flags);
++		if (print_object)
++			debug_print_object(obj, "activate");
+ 		return ret;
+ 	}
+ 
+ 	raw_spin_unlock_irqrestore(&db->lock, flags);
++
+ 	/*
+ 	 * We are here when a static object is activated. We
+ 	 * let the type specific code confirm whether this is
+@@ -588,6 +597,7 @@ void debug_object_deactivate(void *addr, struct debug_obj_descr *descr)
+ 	struct debug_bucket *db;
+ 	struct debug_obj *obj;
+ 	unsigned long flags;
++	bool print_object = false;
+ 
+ 	if (!debug_objects_enabled)
+ 		return;
+@@ -605,24 +615,27 @@ void debug_object_deactivate(void *addr, struct debug_obj_descr *descr)
+ 			if (!obj->astate)
+ 				obj->state = ODEBUG_STATE_INACTIVE;
+ 			else
+-				debug_print_object(obj, "deactivate");
++				print_object = true;
+ 			break;
+ 
+ 		case ODEBUG_STATE_DESTROYED:
+-			debug_print_object(obj, "deactivate");
++			print_object = true;
+ 			break;
+ 		default:
+ 			break;
+ 		}
+-	} else {
++	}
++
++	raw_spin_unlock_irqrestore(&db->lock, flags);
++	if (!obj) {
+ 		struct debug_obj o = { .object = addr,
+ 				       .state = ODEBUG_STATE_NOTAVAILABLE,
+ 				       .descr = descr };
+ 
+ 		debug_print_object(&o, "deactivate");
++	} else if (print_object) {
++		debug_print_object(obj, "deactivate");
+ 	}
+-
+-	raw_spin_unlock_irqrestore(&db->lock, flags);
+ }
+ EXPORT_SYMBOL_GPL(debug_object_deactivate);
+ 
+@@ -637,6 +650,7 @@ void debug_object_destroy(void *addr, struct debug_obj_descr *descr)
+ 	struct debug_bucket *db;
+ 	struct debug_obj *obj;
+ 	unsigned long flags;
++	bool print_object = false;
+ 
+ 	if (!debug_objects_enabled)
+ 		return;
+@@ -656,20 +670,22 @@ void debug_object_destroy(void *addr, struct debug_obj_descr *descr)
+ 		obj->state = ODEBUG_STATE_DESTROYED;
+ 		break;
+ 	case ODEBUG_STATE_ACTIVE:
+-		debug_print_object(obj, "destroy");
+ 		state = obj->state;
+ 		raw_spin_unlock_irqrestore(&db->lock, flags);
++		debug_print_object(obj, "destroy");
+ 		debug_object_fixup(descr->fixup_destroy, addr, state);
+ 		return;
+ 
+ 	case ODEBUG_STATE_DESTROYED:
+-		debug_print_object(obj, "destroy");
++		print_object = true;
+ 		break;
+ 	default:
+ 		break;
+ 	}
+ out_unlock:
+ 	raw_spin_unlock_irqrestore(&db->lock, flags);
++	if (print_object)
++		debug_print_object(obj, "destroy");
+ }
+ EXPORT_SYMBOL_GPL(debug_object_destroy);
+ 
+@@ -698,9 +714,9 @@ void debug_object_free(void *addr, struct debug_obj_descr *descr)
+ 
+ 	switch (obj->state) {
+ 	case ODEBUG_STATE_ACTIVE:
+-		debug_print_object(obj, "free");
+ 		state = obj->state;
+ 		raw_spin_unlock_irqrestore(&db->lock, flags);
++		debug_print_object(obj, "free");
+ 		debug_object_fixup(descr->fixup_free, addr, state);
+ 		return;
+ 	default:
+@@ -773,6 +789,7 @@ debug_object_active_state(void *addr, struct debug_obj_descr *descr,
+ 	struct debug_bucket *db;
+ 	struct debug_obj *obj;
+ 	unsigned long flags;
++	bool print_object = false;
+ 
+ 	if (!debug_objects_enabled)
+ 		return;
+@@ -788,22 +805,25 @@ debug_object_active_state(void *addr, struct debug_obj_descr *descr,
+ 			if (obj->astate == expect)
+ 				obj->astate = next;
+ 			else
+-				debug_print_object(obj, "active_state");
++				print_object = true;
+ 			break;
+ 
+ 		default:
+-			debug_print_object(obj, "active_state");
++			print_object = true;
+ 			break;
+ 		}
+-	} else {
++	}
++
++	raw_spin_unlock_irqrestore(&db->lock, flags);
++	if (!obj) {
+ 		struct debug_obj o = { .object = addr,
+ 				       .state = ODEBUG_STATE_NOTAVAILABLE,
+ 				       .descr = descr };
+ 
+ 		debug_print_object(&o, "active_state");
++	} else if (print_object) {
++		debug_print_object(obj, "active_state");
+ 	}
+-
+-	raw_spin_unlock_irqrestore(&db->lock, flags);
+ }
+ EXPORT_SYMBOL_GPL(debug_object_active_state);
+ 
+@@ -839,10 +859,10 @@ static void __debug_check_no_obj_freed(const void *address, unsigned long size)
+ 
+ 			switch (obj->state) {
+ 			case ODEBUG_STATE_ACTIVE:
+-				debug_print_object(obj, "free");
+ 				descr = obj->descr;
+ 				state = obj->state;
+ 				raw_spin_unlock_irqrestore(&db->lock, flags);
++				debug_print_object(obj, "free");
+ 				debug_object_fixup(descr->fixup_free,
+ 						   (void *) oaddr, state);
+ 				goto repeat;
 -- 
 2.39.2
 
