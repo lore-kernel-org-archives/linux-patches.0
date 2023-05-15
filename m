@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EF2DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B042DC433D2;
-	Mon, 15 May 2023 16:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD1EADF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45A9CC433D2;
+	Mon, 15 May 2023 16:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168592;
-	bh=Nc25TSkVxVrXY64easAv0Dysj5N+r+hR4Ws0zUbzFD0=;
+	s=korg; t=1684168594;
+	bh=Na2VM1Wf6BrkX347llMLUoTmaOF8sVJrWPnjz0Eqzv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KpmpWG9t+DSdw9kZLUXidcUo/OiE0s203Bhs6CGpJb2fhDpLXwPr4v22r1CH8iUcA
-	 7STfMJDjqtFl0idIoKfSQZGxQ1192WDxvGrWL4NJ884RL5wcNdzLBiilF+7dhGgzrF
-	 jLzjuar8mF6wUNpBHKRrQWCY2x1p2+zwanBNfoXs=
+	b=YVpvdBOmsiuvtaJ0/pREOdWBxwNvuWJN9H8HGSUIjL/77Uxhr9GixXdPHVnjFK7VP
+	 J1rafyCNabuC8NKJi5A4e+/KhcpdmUb2IDWfFpir50+8fE8wZffqDiSYhf7ltw/lqa
+	 aCIKI3i23iNxR6ecoERFPeHKCVNs5hj1Fy1OX9zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
+	Igor Zhbanov <izh1979@gmail.com>,
 	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Yoshinori Sato <ysato@users.sourceforge.jp>,
 	Rich Felker <dalias@libc.org>,
-	linux-sh@vger.kernel.org,
-	Geert Uytterhoeven <geert+renesas@glider.be>
-Subject: [PATCH 4.14 100/116] sh: math-emu: fix macro redefined warning
-Date: Mon, 15 May 2023 18:26:37 +0200
-Message-Id: <20230515161701.575680024@linuxfoundation.org>
+	linux-sh@vger.kernel.org
+Subject: [PATCH 4.14 101/116] sh: nmi_debug: fix return value of __setup handler
+Date: Mon, 15 May 2023 18:26:38 +0200
+Message-Id: <20230515161701.606314874@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -41,45 +40,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Randy Dunlap <rdunlap@infradead.org>
 
-commit 58a49ad90939386a8682e842c474a0d2c00ec39c upstream.
+commit d1155e4132de712a9d3066e2667ceaad39a539c5 upstream.
 
-Fix a warning that was reported by the kernel test robot:
+__setup() handlers should return 1 to obsolete_checksetup() in
+init/main.c to indicate that the boot option has been handled.
+A return of 0 causes the boot option/value to be listed as an Unknown
+kernel parameter and added to init's (limited) argument or environment
+strings. Also, error return codes don't mean anything to
+obsolete_checksetup() -- only non-zero (usually 1) or zero.
+So return 1 from nmi_debug_setup().
 
-In file included from ../include/math-emu/soft-fp.h:27,
-                 from ../arch/sh/math-emu/math.c:22:
-../arch/sh/include/asm/sfp-machine.h:17: warning: "__BYTE_ORDER" redefined
-   17 | #define __BYTE_ORDER __BIG_ENDIAN
-In file included from ../arch/sh/math-emu/math.c:21:
-../arch/sh/math-emu/sfp-util.h:71: note: this is the location of the previous definition
-   71 | #define __BYTE_ORDER __LITTLE_ENDIAN
-
-Fixes: b929926f01f2 ("sh: define __BIG_ENDIAN for math-emu")
+Fixes: 1e1030dccb10 ("sh: nmi_debug support.")
 Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: lore.kernel.org/r/202111121827.6v6SXtVv-lkp@intel.com
+Reported-by: Igor Zhbanov <izh1979@gmail.com>
+Link: lore.kernel.org/r/64644a2f-4a20-bab3-1e15-3b2cdd0defe3@omprussia.ru
 Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
 Cc: Rich Felker <dalias@libc.org>
 Cc: linux-sh@vger.kernel.org
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Cc: stable@vger.kernel.org
 Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230306040037.20350-5-rdunlap@infradead.org
+Link: https://lore.kernel.org/r/20230306040037.20350-3-rdunlap@infradead.org
 Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/math-emu/sfp-util.h |    4 ----
- 1 file changed, 4 deletions(-)
+ arch/sh/kernel/nmi_debug.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/sh/math-emu/sfp-util.h
-+++ b/arch/sh/math-emu/sfp-util.h
-@@ -67,7 +67,3 @@
-   } while (0)
+--- a/arch/sh/kernel/nmi_debug.c
++++ b/arch/sh/kernel/nmi_debug.c
+@@ -52,7 +52,7 @@ static int __init nmi_debug_setup(char *
+ 	register_die_notifier(&nmi_debug_nb);
  
- #define abort()	return 0
--
--#define __BYTE_ORDER __LITTLE_ENDIAN
--
--
+ 	if (*str != '=')
+-		return 0;
++		return 1;
+ 
+ 	for (p = str + 1; *p; p = sep + 1) {
+ 		sep = strchr(p, ',');
+@@ -73,6 +73,6 @@ static int __init nmi_debug_setup(char *
+ 			break;
+ 	}
+ 
+-	return 0;
++	return 1;
+ }
+ __setup("nmi_debug", nmi_debug_setup);
 
 
