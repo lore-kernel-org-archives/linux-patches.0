@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E84DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD5BC433EF;
-	Mon, 15 May 2023 16:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A43DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:35:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF20AC4339B;
+	Mon, 15 May 2023 16:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168521;
-	bh=BNJKIOqeBt8Z7lpK3IXOcm7FDwevV8NJ0fhruZtqx5M=;
+	s=korg; t=1684168524;
+	bh=fPMY8DUmeIXb2/hGuzOQ8DnAu+Y2EKJOtaLUF/Kxjf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SMEWbXlLMtHrCRhr+ILct9/lZwtoVUzQGFZyTvo9KIgskB4uNnStYdEJK2I1WHVtS
-	 NerzCvA8t+2X1IqwAk2rO6rw9IRLSzidMXzxxO+Ha/OgBeBmPYG9hDxEC/J6dEK4z9
-	 A/LylTYqksmeSdWv/olst+SDpoUS456MtIywZLZc=
+	b=NNJ9hojGI/ht2hSEUZ5UVbBMiTcOWWa9owkvjSPdXW76EMZlqtVYnlW+NYdaRlLfd
+	 Orz+rQZ4FolxxlgPsD0t+pEp8W8Q1HcX/R24cwpjpigZ/aY/BNQDU31jjsxcgS5Xmm
+	 +kf0iVCEFrFBKk0pZ4GFPDIBZ5r+/50zS71/DL/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quentin Schulz <quentin.schulz@theobroma-systems.com>,
-	Heiko Stuebner <heiko@sntech.de>
-Subject: [PATCH 4.14 076/116] clk: rockchip: rk3399: allow clk_cifout to force clk_cifout_src to reparent
-Date: Mon, 15 May 2023 18:26:13 +0200
-Message-Id: <20230515161700.806774848@linuxfoundation.org>
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.14 077/116] btrfs: scrub: reject unsupported scrub flags
+Date: Mon, 15 May 2023 18:26:14 +0200
+Message-Id: <20230515161700.839828188@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -34,39 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Quentin Schulz <quentin.schulz@theobroma-systems.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 933bf364e152cd60902cf9585c2ba310d593e69f upstream.
+commit 604e6681e114d05a2e384c4d1e8ef81918037ef5 upstream.
 
-clk_cifout is derived from clk_cifout_src through an integer divider
-limited to 32. clk_cifout_src is a child of either cpll, gpll or npll
-without any possibility of a divider of any sort. The default clock
-parent is cpll.
+Since the introduction of scrub interface, the only flag that we support
+is BTRFS_SCRUB_READONLY.  Thus there is no sanity checks, if there are
+some undefined flags passed in, we just ignore them.
 
-Let's allow clk_cifout to ask its parent clk_cifout_src to reparent in
-order to find the real closest possible rate for clk_cifout and not one
-derived from cpll only.
+This is problematic if we want to introduce new scrub flags, as we have
+no way to determine if such flags are supported.
 
-Cc: stable@vger.kernel.org # 4.10+
-Fixes: fd8bc829336a ("clk: rockchip: fix the rk3399 cifout clock")
-Signed-off-by: Quentin Schulz <quentin.schulz@theobroma-systems.com>
-Link: https://lore.kernel.org/r/20221117-rk3399-cifout-set-rate-parent-v1-0-432548d04081@theobroma-systems.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Address the problem by introducing a check for the flags, and if
+unsupported flags are set, return -EOPNOTSUPP to inform the user space.
+
+This check should be backported for all supported kernels before any new
+scrub flags are introduced.
+
+CC: stable@vger.kernel.org # 4.14+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/rockchip/clk-rk3399.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/ioctl.c           |    5 +++++
+ include/uapi/linux/btrfs.h |    1 +
+ 2 files changed, 6 insertions(+)
 
---- a/drivers/clk/rockchip/clk-rk3399.c
-+++ b/drivers/clk/rockchip/clk-rk3399.c
-@@ -1266,7 +1266,7 @@ static struct rockchip_clk_branch rk3399
- 			RK3399_CLKSEL_CON(56), 6, 2, MFLAGS,
- 			RK3399_CLKGATE_CON(10), 7, GFLAGS),
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -4442,6 +4442,11 @@ static long btrfs_ioctl_scrub(struct fil
+ 	if (IS_ERR(sa))
+ 		return PTR_ERR(sa);
  
--	COMPOSITE_NOGATE(SCLK_CIF_OUT, "clk_cifout", mux_clk_cif_p, 0,
-+	COMPOSITE_NOGATE(SCLK_CIF_OUT, "clk_cifout", mux_clk_cif_p, CLK_SET_RATE_PARENT,
- 			 RK3399_CLKSEL_CON(56), 5, 1, MFLAGS, 0, 5, DFLAGS),
++	if (sa->flags & ~BTRFS_SCRUB_SUPPORTED_FLAGS) {
++		ret = -EOPNOTSUPP;
++		goto out;
++	}
++
+ 	if (!(sa->flags & BTRFS_SCRUB_READONLY)) {
+ 		ret = mnt_want_write_file(file);
+ 		if (ret)
+--- a/include/uapi/linux/btrfs.h
++++ b/include/uapi/linux/btrfs.h
+@@ -161,6 +161,7 @@ struct btrfs_scrub_progress {
+ };
  
- 	/* gic */
+ #define BTRFS_SCRUB_READONLY	1
++#define BTRFS_SCRUB_SUPPORTED_FLAGS	(BTRFS_SCRUB_READONLY)
+ struct btrfs_ioctl_scrub_args {
+ 	__u64 devid;				/* in */
+ 	__u64 start;				/* in */
 
 
