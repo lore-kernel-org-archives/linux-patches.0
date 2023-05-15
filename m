@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080CCFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6EBC433EF;
-	Mon, 15 May 2023 17:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEB04FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:26:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55991C433EF;
+	Mon, 15 May 2023 17:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171594;
-	bh=h2QFjIm59nKokyUrM+ryKTECJHQlFV1sMOYRVEy13GE=;
+	s=korg; t=1684171597;
+	bh=Dxv0V0djtdYeLj6z8vYogg+s4bQ8ZSK+opspWFTIT50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mT9IwHsh+T00Dp3/2oNeFRsH2NFXCr/u8OtFGG2kMfDdUTt1RSl3E1wcoClVo2ERh
-	 aDga5E83grDhmp1FaQOOKaH6fK8GIxtjBgr9Z1lv4FmUJE/rzP+j3QQ23B2P0aMGAx
-	 o5WZZqacfAN1FmoOmGOOkV+fEeKdbqwYEMaLI5Gk=
+	b=HwEsDmgwo2xIsugmGhMcH1H8gJboC5W2b7tkYzZmbQlVmY4FtqWe16nDWD3+ckWjL
+	 N/KMDcC5iTL4LEs2NOrgtHgkB1T6VICYQHS66WKoxldJ/4UdkpRB3w7YUUg5dCOqzU
+	 HLss90kie2MnsnXfXmXwELvHQybPFerp1PSWefd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeffrey Hugo <quic_jhugo@quicinc.com>,
-	Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/134] bus: mhi: host: Range check CHDBOFF and ERDBOFF
-Date: Mon, 15 May 2023 18:28:05 +0200
-Message-Id: <20230515161703.220699221@linuxfoundation.org>
+Subject: [PATCH 5.15 009/134] mailbox: zynq: Switch to flexible array to simplify code
+Date: Mon, 15 May 2023 18:28:06 +0200
+Message-Id: <20230515161703.264578625@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -37,57 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeffrey Hugo <quic_jhugo@quicinc.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 6a0c637bfee69a74c104468544d9f2a6579626d0 ]
+[ Upstream commit 043f85ce81cb1714e14d31c322c5646513dde3fb ]
 
-If the value read from the CHDBOFF and ERDBOFF registers is outside the
-range of the MHI register space then an invalid address might be computed
-which later causes a kernel panic.  Range check the read value to prevent
-a crash due to bad data from the device.
+Using flexible array is more straight forward. It
+  - saves 1 pointer in the 'zynqmp_ipi_pdata' structure
+  - saves an indirection when using this array
+  - saves some LoC and avoids some always spurious pointer arithmetic
 
-Fixes: 6cd330ae76ff ("bus: mhi: core: Add support for ringing channel/event ring doorbells")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://lore.kernel.org/r/1679674384-27209-1-git-send-email-quic_jhugo@quicinc.com
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Stable-dep-of: f72f805e7288 ("mailbox: zynqmp: Fix counts of child nodes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bus/mhi/host/init.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index d8787aaa176ba..829d4fca7ddc9 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -517,6 +517,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
- 		return -EIO;
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index 05e36229622e3..136a84ad871cc 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -110,7 +110,7 @@ struct zynqmp_ipi_pdata {
+ 	unsigned int method;
+ 	u32 local_id;
+ 	int num_mboxes;
+-	struct zynqmp_ipi_mbox *ipi_mboxes;
++	struct zynqmp_ipi_mbox ipi_mboxes[];
+ };
+ 
+ static struct device_driver zynqmp_ipi_mbox_driver = {
+@@ -635,7 +635,7 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
+ 	int num_mboxes, ret = -EINVAL;
+ 
+ 	num_mboxes = of_get_child_count(np);
+-	pdata = devm_kzalloc(dev, sizeof(*pdata) + (num_mboxes * sizeof(*mbox)),
++	pdata = devm_kzalloc(dev, struct_size(pdata, ipi_mboxes, num_mboxes),
+ 			     GFP_KERNEL);
+ 	if (!pdata)
+ 		return -ENOMEM;
+@@ -649,8 +649,6 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
  	}
  
-+	if (val >= mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB)) {
-+		dev_err(dev, "CHDB offset: 0x%x is out of range: 0x%zx\n",
-+			val, mhi_cntrl->reg_len - (8 * MHI_DEV_WAKE_DB));
-+		return -ERANGE;
-+	}
-+
- 	/* Setup wake db */
- 	mhi_cntrl->wake_db = base + val + (8 * MHI_DEV_WAKE_DB);
- 	mhi_cntrl->wake_set = false;
-@@ -534,6 +540,12 @@ int mhi_init_mmio(struct mhi_controller *mhi_cntrl)
- 		return -EIO;
- 	}
+ 	pdata->num_mboxes = num_mboxes;
+-	pdata->ipi_mboxes = (struct zynqmp_ipi_mbox *)
+-			    ((char *)pdata + sizeof(*pdata));
  
-+	if (val >= mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings)) {
-+		dev_err(dev, "ERDB offset: 0x%x is out of range: 0x%zx\n",
-+			val, mhi_cntrl->reg_len - (8 * mhi_cntrl->total_ev_rings));
-+		return -ERANGE;
-+	}
-+
- 	/* Setup event db address for each ev_ring */
- 	mhi_event = mhi_cntrl->mhi_event;
- 	for (i = 0; i < mhi_cntrl->total_ev_rings; i++, val += 8, mhi_event++) {
+ 	mbox = pdata->ipi_mboxes;
+ 	for_each_available_child_of_node(np, nc) {
 -- 
 2.39.2
 
