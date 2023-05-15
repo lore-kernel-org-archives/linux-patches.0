@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8C2101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:54:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E446CC433D2;
-	Mon, 15 May 2023 17:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE889101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:54:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF2CC433EF;
+	Mon, 15 May 2023 17:54:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173290;
-	bh=lRukkDglGnUHTkphld9K3dAtwLcdzjjJI/P3vU7DcyA=;
+	s=korg; t=1684173293;
+	bh=BG3VbXaaP09v2r5gAoMl/EaB3F5K05BetpdD9xNbNyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HwcbFZH+lja1awwd1jOmeasWdaegsqet67wuRVk1mQTjrLgkbJLlivhgS8V7q/riL
-	 Ss8+KYAXY+G+QKPhQV/kZubuGvTLfEtK6xppJhfqD3uYDIqwQqP1QLONDRHw0lejKC
-	 yOUMMpi9rKJ3rAeP89RplyaMlX/xI/BSQ3UfOt+k=
+	b=dj19aXXzM9S98uf4cYmQbB5AaX94HG9iVnsuJHnAU/QDlU+7S/t2+cVd7OOZMlkdk
+	 l/WR9crYRc+2yO94WDvi6Ys1uKkKOrBkHdd+u/mIhMTgEsmZKOQSScYwf4odAR8GJt
+	 ImaRcxrnQcQWH6Vq/nLYyY8MNcRUgPtJGZ7JjXQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 039/282] arm64: dts: renesas: r8a774c0: Remove bogus voltages from OPP table
-Date: Mon, 15 May 2023 18:26:57 +0200
-Message-Id: <20230515161723.440848299@linuxfoundation.org>
+Subject: [PATCH 5.4 048/282] drm/msm: fix unbalanced pm_runtime_enable in adreno_gpu_{init, cleanup}
+Date: Mon, 15 May 2023 18:27:06 +0200
+Message-Id: <20230515161723.699648622@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -34,48 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Jonathan Marek <jonathan@marek.ca>
 
-[ Upstream commit 554edc3e9239bb81e61be9f0f5dbbeb528a69e72 ]
+[ Upstream commit 17e822f7591fb66162aca07685dc0b01468e5480 ]
 
-According to the RZ/G Series, 2nd Generation Hardware User’s Manual
-Rev. 1.11, the System CPU cores on RZ/G2E do not have their own power
-supply, but use the common internal power supply (typical 1.03V).
+adreno_gpu_init calls pm_runtime_enable, so adreno_gpu_cleanup needs to
+call pm_runtime_disable.
 
-Hence remove the "opp-microvolt" properties from the Operating
-Performance Points table.  They are optional, and unused, when none of
-the CPU nodes is tied to a regulator using the "cpu-supply" property.
-
-Fixes: 231d8908a66fa98f ("arm64: dts: renesas: r8a774c0: Add OPPs table for cpu devices")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/r/8348e18a011ded94e35919cd8e17c0be1f9acf2f.1676560856.git.geert+renesas@glider.be
+Signed-off-by: Jonathan Marek <jonathan@marek.ca>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Stable-dep-of: db7662d076c9 ("drm/msm/adreno: drop bogus pm_runtime_set_active()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a774c0.dtsi | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
-index 73ded80a79ba0..1de7891c658cf 100644
---- a/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a774c0.dtsi
-@@ -49,17 +49,14 @@
- 		opp-shared;
- 		opp-800000000 {
- 			opp-hz = /bits/ 64 <800000000>;
--			opp-microvolt = <820000>;
- 			clock-latency-ns = <300000>;
- 		};
- 		opp-1000000000 {
- 			opp-hz = /bits/ 64 <1000000000>;
--			opp-microvolt = <820000>;
- 			clock-latency-ns = <300000>;
- 		};
- 		opp-1200000000 {
- 			opp-hz = /bits/ 64 <1200000000>;
--			opp-microvolt = <820000>;
- 			clock-latency-ns = <300000>;
- 			opp-suspend;
- 		};
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 3802ad38c519c..0d9404d2afe4e 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -908,11 +908,14 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
+ void adreno_gpu_cleanup(struct adreno_gpu *adreno_gpu)
+ {
+ 	struct msm_gpu *gpu = &adreno_gpu->base;
++	struct msm_drm_private *priv = gpu->dev->dev_private;
+ 	unsigned int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(adreno_gpu->info->fw); i++)
+ 		release_firmware(adreno_gpu->fw[i]);
+ 
++	pm_runtime_disable(&priv->gpu_pdev->dev);
++
+ 	icc_put(gpu->icc_path);
+ 
+ 	msm_gpu_cleanup(&adreno_gpu->base);
 -- 
 2.39.2
 
