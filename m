@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B5AFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADB7C4339C;
-	Mon, 15 May 2023 17:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 232A8FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8507BC4339C;
+	Mon, 15 May 2023 17:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170020;
-	bh=Ban5jE4pIxsntXhPB9Yi+3jRDbCveSFmTqqK0SbGjzE=;
+	s=korg; t=1684170024;
+	bh=9El609+Nibho81bobFPB1/SB183PIIVPQUPL50EmM54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0estiR/kbnh3BdelUsPY003nuy2yMmm/NuC7h6krxUlQ3w7BRMtYXSK54oo0xuKre
-	 DxxSfzZzvnshIv2gmartF9esHmx4wf7CENoWZasio2lRNTj8SHZbKXx3ncAH402Kep
-	 4WADNEQLqOLgtBbF/GGYvYfpxgupHoaKfDW2R9V4=
+	b=rvX5Y84UbdSl08pxLhOFXkCJll/XEdtTrXWnhhPnq5upBGSZPhadsDwMVeI9cRptt
+	 QIsSDMxDTpbomRVCsYGF1FDx2Kn4wuYR879aP7OwSmlrA/i4fKlFrGKjXjWw5DM8E3
+	 yQEA5+vJjk9dE+nx3yqyoQWBzyveHnApi0QHy0Vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lionel Landwerlin <lionel.g.landwerlin@intel.com>,
-	Haridhar Kalvala <haridhar.kalvala@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Jun Lei <Jun.Lei@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 220/246] drm/i915: disable sampler indirect state in bindless heap
-Date: Mon, 15 May 2023 18:27:12 +0200
-Message-Id: <20230515161729.193254692@linuxfoundation.org>
+Subject: [PATCH 6.3 221/246] drm/amd/display: Add minimum Z8 residency debug option
+Date: Mon, 15 May 2023 18:27:13 +0200
+Message-Id: <20230515161729.223087980@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -37,79 +38,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 81900e3a37750d8c6ad705045310e002f6dd0356 ]
+[ Upstream commit 0db13eae41fcc67f408dbb3dfda59633c4fa03fb ]
 
-By default the indirect state sampler data (border colors) are stored
-in the same heap as the SAMPLER_STATE structure. For userspace drivers
-that can be 2 different heaps (dynamic state heap & bindless sampler
-state heap). This means that border colors have to copied in 2
-different places so that the same SAMPLER_STATE structure find the
-right data.
+[Why]
+Allows finer control and tuning for debug and profiling.
 
-This change is forcing the indirect state sampler data to only be in
-the dynamic state pool (more convenient for userspace drivers, they
-only have to have one copy of the border colors). This is reproducing
-the behavior of the Windows drivers.
+[How]
+Add the debug option into DC. The default remains the same as before
+for now.
 
-BSpec: 46052
-
-Signed-off-by: Lionel Landwerlin <lionel.g.landwerlin@intel.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Haridhar Kalvala <haridhar.kalvala@intel.com>
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230407093237.3296286-1-lionel.g.landwerlin@intel.com
-(cherry picked from commit 16fc9c08f0ec7b1c95f1ea4a16097acdb3fc943d)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Reviewed-by: Jun Lei <Jun.Lei@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: d893f39320e1 ("drm/amd/display: Lowering min Z8 residency time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_gt_regs.h     |  1 +
- drivers/gpu/drm/i915/gt/intel_workarounds.c | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dc.h                     | 1 +
+ drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c | 1 +
+ drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c    | 3 ++-
+ 3 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_gt_regs.h b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-index 72275749686aa..e54891b0e2f43 100644
---- a/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-+++ b/drivers/gpu/drm/i915/gt/intel_gt_regs.h
-@@ -1146,6 +1146,7 @@
- #define   SC_DISABLE_POWER_OPTIMIZATION_EBB	REG_BIT(9)
- #define   GEN11_SAMPLER_ENABLE_HEADLESS_MSG	REG_BIT(5)
- #define   MTL_DISABLE_SAMPLER_SC_OOO		REG_BIT(3)
-+#define   GEN11_INDIRECT_STATE_BASE_ADDR_OVERRIDE	REG_BIT(0)
+diff --git a/drivers/gpu/drm/amd/display/dc/dc.h b/drivers/gpu/drm/amd/display/dc/dc.h
+index 84caf1f6b9e0e..3fb868f2f6f5b 100644
+--- a/drivers/gpu/drm/amd/display/dc/dc.h
++++ b/drivers/gpu/drm/amd/display/dc/dc.h
+@@ -795,6 +795,7 @@ struct dc_debug_options {
+ 	unsigned int force_odm_combine; //bit vector based on otg inst
+ 	unsigned int seamless_boot_odm_combine;
+ 	unsigned int force_odm_combine_4to1; //bit vector based on otg inst
++	int minimum_z8_residency_time;
+ 	bool disable_z9_mpc;
+ 	unsigned int force_fclk_khz;
+ 	bool enable_tri_buf;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
+index 9ffba4c6fe550..5c23c934c9751 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
+@@ -887,6 +887,7 @@ static const struct dc_plane_cap plane_cap = {
+ static const struct dc_debug_options debug_defaults_drv = {
+ 	.disable_z10 = false,
+ 	.enable_z9_disable_interface = true,
++	.minimum_z8_residency_time = 1000,
+ 	.psr_skip_crtc_disable = true,
+ 	.disable_dmcu = true,
+ 	.force_abm_enable = false,
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
+index d3ba65efe1d2e..f3cfc144e3587 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn20/dcn20_fpu.c
+@@ -973,7 +973,8 @@ static enum dcn_zstate_support_state  decide_zstate_support(struct dc *dc, struc
+ 	else if (context->stream_count == 1 &&  context->streams[0]->signal == SIGNAL_TYPE_EDP) {
+ 		struct dc_link *link = context->streams[0]->sink->link;
+ 		struct dc_stream_status *stream_status = &context->stream_status[0];
+-		bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > 1000.0;
++		int minmum_z8_residency = dc->debug.minimum_z8_residency_time > 0 ? dc->debug.minimum_z8_residency_time : 1000;
++		bool allow_z8 = context->bw_ctx.dml.vba.StutterPeriod > (double)minmum_z8_residency;
+ 		bool is_pwrseq0 = link->link_index == 0;
  
- #define GEN9_HALF_SLICE_CHICKEN7		MCR_REG(0xe194)
- #define   DG2_DISABLE_ROUND_ENABLE_ALLOW_FOR_SSLA	REG_BIT(15)
-diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-index b7c6c078dcc02..14f92a8082857 100644
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -3015,6 +3015,25 @@ general_render_compute_wa_init(struct intel_engine_cs *engine, struct i915_wa_li
- 
- 	add_render_compute_tuning_settings(i915, wal);
- 
-+	if (GRAPHICS_VER(i915) >= 11) {
-+		/* This is not a Wa (although referred to as
-+		 * WaSetInidrectStateOverride in places), this allows
-+		 * applications that reference sampler states through
-+		 * the BindlessSamplerStateBaseAddress to have their
-+		 * border color relative to DynamicStateBaseAddress
-+		 * rather than BindlessSamplerStateBaseAddress.
-+		 *
-+		 * Otherwise SAMPLER_STATE border colors have to be
-+		 * copied in multiple heaps (DynamicStateBaseAddress &
-+		 * BindlessSamplerStateBaseAddress)
-+		 *
-+		 * BSpec: 46052
-+		 */
-+		wa_mcr_masked_en(wal,
-+				 GEN10_SAMPLER_MODE,
-+				 GEN11_INDIRECT_STATE_BASE_ADDR_OVERRIDE);
-+	}
-+
- 	if (IS_MTL_GRAPHICS_STEP(i915, M, STEP_B0, STEP_FOREVER) ||
- 	    IS_MTL_GRAPHICS_STEP(i915, P, STEP_B0, STEP_FOREVER))
- 		/* Wa_14017856879 */
+ 		if (dc_extended_blank_supported(dc)) {
 -- 
 2.39.2
 
