@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A6DFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F31C433D2;
-	Mon, 15 May 2023 17:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A637FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F80C433D2;
+	Mon, 15 May 2023 17:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171344;
-	bh=SPAUAf67WE2Vxmvuh/d3ACbrEuk+O/gls5VYcUdHucY=;
+	s=korg; t=1684171347;
+	bh=tPSVz4NBhSMOYeOgTzwDoMxs1IxWrZOBVBJI9KE2Op8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUUpdHnno5y6+CO6k3I5iCOQgkOUyRiDku1hzzcBcuiqcDQwezxcCo9didKXoWwWa
-	 3cXAkQjEjK32LznjZb0d7WvbmIX+exYyI5zJsSw5pKkqxSvPl1COOIuveVCg1Vs1SV
-	 j7fQbhBwyfOfD75AkK4KxZNurU19pEGSHYIrcBKY=
+	b=g6ktQme2uEGEHXhgkqROzEKKBOFaeGxz3QcztTH11EHXEeuzkauq05atl71hG4UG5
+	 wO5ahVMeDnaNXHM6CPlkRxb4G5yTAJbZpAd6bM1SXqwfa4CK3P8byBGeEjEZ7mAnqZ
+	 iHo9ubEH9cKAw43Sm52aZZIt+IuUCycWvF0IIIuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.2 180/242] f2fs: fix potential corruption when moving a directory
-Date: Mon, 15 May 2023 18:28:26 +0200
-Message-Id: <20230515161727.274719137@linuxfoundation.org>
+	Jianmin Lv <lvjianmin@loongson.cn>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.2 181/242] irqchip/loongson-pch-pic: Fix pch_pic_acpi_init calling
+Date: Mon, 15 May 2023 18:28:27 +0200
+Message-Id: <20230515161727.304047490@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -33,65 +34,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Jianmin Lv <lvjianmin@loongson.cn>
 
-commit d94772154e524b329a168678836745d2773a6e02 upstream.
+commit 48ce2d722f7f108f27bedddf54bee3423a57ce57 upstream.
 
-F2FS has the same issue in ext4_rename causing crash revealed by
-xfstests/generic/707.
+For dual-bridges scenario, pch_pic_acpi_init() will be called
+in following path:
 
-See also commit 0813299c586b ("ext4: Fix possible corruption when moving a directory")
+cpuintc_acpi_init
+  acpi_cascade_irqdomain_init(in cpuintc driver)
+    acpi_table_parse_madt
+      eiointc_parse_madt
+        eiointc_acpi_init /* this will be called two times
+                             correspondingto parsing two
+                             eiointc entries in MADT under
+                             dual-bridges scenario*/
+          acpi_cascade_irqdomain_init(in eiointc driver)
+            acpi_table_parse_madt
+              pch_pic_parse_madt
+                pch_pic_acpi_init /* this will be called depend
+                                     on valid parent IRQ domain
+                                     handle for one or two times
+                                     corresponding to parsing
+                                     two pchpic entries in MADT
+                                     druring calling
+                                     eiointc_acpi_init() under
+                                     dual-bridges scenario*/
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+During the first eiointc_acpi_init() calling, the
+pch_pic_acpi_init() will be called just one time since only
+one valid parent IRQ domain handle will be found for current
+eiointc IRQ domain.
+
+During the second eiointc_acpi_init() calling, the
+pch_pic_acpi_init() will be called two times since two valid
+parent IRQ domain handles will be found. So in pch_pic_acpi_init(),
+we must have a reasonable way to prevent from creating second same
+pch_pic IRQ domain.
+
+The patch matches gsi base information in created pch_pic IRQ
+domains to check if the target domain has been created to avoid the
+bug mentioned above.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230407083453.6305-6-lvjianmin@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/namei.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-loongson-pch-pic.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -998,12 +998,20 @@ static int f2fs_rename(struct user_names
- 			goto out;
- 	}
+--- a/drivers/irqchip/irq-loongson-pch-pic.c
++++ b/drivers/irqchip/irq-loongson-pch-pic.c
+@@ -403,6 +403,9 @@ int __init pch_pic_acpi_init(struct irq_
+ 	int ret, vec_base;
+ 	struct fwnode_handle *domain_handle;
  
-+	/*
-+	 * Copied from ext4_rename: we need to protect against old.inode
-+	 * directory getting converted from inline directory format into
-+	 * a normal one.
-+	 */
-+	if (S_ISDIR(old_inode->i_mode))
-+		inode_lock_nested(old_inode, I_MUTEX_NONDIR2);
++	if (find_pch_pic(acpi_pchpic->gsi_base) >= 0)
++		return 0;
 +
- 	err = -ENOENT;
- 	old_entry = f2fs_find_entry(old_dir, &old_dentry->d_name, &old_page);
- 	if (!old_entry) {
- 		if (IS_ERR(old_page))
- 			err = PTR_ERR(old_page);
--		goto out;
-+		goto out_unlock_old;
- 	}
+ 	vec_base = acpi_pchpic->gsi_base - GSI_MIN_PCH_IRQ;
  
- 	if (S_ISDIR(old_inode->i_mode)) {
-@@ -1111,6 +1119,9 @@ static int f2fs_rename(struct user_names
- 
- 	f2fs_unlock_op(sbi);
- 
-+	if (S_ISDIR(old_inode->i_mode))
-+		inode_unlock(old_inode);
-+
- 	if (IS_DIRSYNC(old_dir) || IS_DIRSYNC(new_dir))
- 		f2fs_sync_fs(sbi->sb, 1);
- 
-@@ -1125,6 +1136,9 @@ out_dir:
- 		f2fs_put_page(old_dir_page, 0);
- out_old:
- 	f2fs_put_page(old_page, 0);
-+out_unlock_old:
-+	if (S_ISDIR(old_inode->i_mode))
-+		inode_unlock(old_inode);
- out:
- 	iput(whiteout);
- 	return err;
+ 	domain_handle = irq_domain_alloc_fwnode(&acpi_pchpic->address);
 
 
