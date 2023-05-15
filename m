@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62745FC1B
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABF8C433D2;
-	Mon, 15 May 2023 17:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 896D3FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01933C433EF;
+	Mon, 15 May 2023 17:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172861;
-	bh=R5mcXfsMV5E2Ph6G2ic/R5BwFJ9bP0IcdoSm7AUCUv4=;
+	s=korg; t=1684172864;
+	bh=FuBBhW+Fb+wpfcQoxvDf4Xp4kQxaDmn4xLUi0Qa+KpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4RBfCbYQGmxH3BZ+/HxHR3Z9iep2sEhBZMl3R/+HNo6GXIVc8FRNVABoRIWuwQHq
-	 0M4vd0CBr7r+Fx8V5EoWDSwUKY2hyDFVFtgC/od75h97Oe2lZ5FyQWWaxa3T+bC5DT
-	 P/HohaSfhFpLS7MYz+/H9dwrFIUMUJTxsK2hnV30=
+	b=bk8Obo4biXZw6TnuzamXcVkQRqOZEt0fUyih9cA8U6JK9vGXuhnWIvt6ibLyuewbx
+	 eoZSymEAnpmUN16JCUyd7KhEo+LuMOQfxfEcn0O8W6Bj2gcuXwu05rkdwL5c73BvAu
+	 uPuZyOfycr3Me48MkmmzrVPma08D79QToJaqA7Js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stafford Horne <shorne@gmail.com>,
+	syzbot+bf4bb7731ef73b83a3b4@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
+	Ye Bin <yebin10@huawei.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 260/381] openrisc: Properly store r31 to pt_regs on unhandled exceptions
-Date: Mon, 15 May 2023 18:28:31 +0200
-Message-Id: <20230515161748.470935316@linuxfoundation.org>
+Subject: [PATCH 5.10 261/381] ext4: fix use-after-free read in ext4_find_extent for bigalloc + inline
+Date: Mon, 15 May 2023 18:28:32 +0200
+Message-Id: <20230515161748.521117945@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,54 +38,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stafford Horne <shorne@gmail.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit 812489ac4dd91144a74ce65ecf232252a2e406fb ]
+[ Upstream commit 835659598c67907b98cd2aa57bb951dfaf675c69 ]
 
-In commit 91993c8c2ed5 ("openrisc: use shadow registers to save regs on
-exception") the unhandled exception path was changed to do an early
-store of r30 instead of r31.  The entry code was not updated and r31 is
-not getting stored to pt_regs.
+Syzbot found the following issue:
+loop0: detected capacity change from 0 to 2048
+EXT4-fs (loop0): mounted filesystem 00000000-0000-0000-0000-000000000000 without journal. Quota mode: none.
+==================================================================
+BUG: KASAN: use-after-free in ext4_ext_binsearch_idx fs/ext4/extents.c:768 [inline]
+BUG: KASAN: use-after-free in ext4_find_extent+0x76e/0xd90 fs/ext4/extents.c:931
+Read of size 4 at addr ffff888073644750 by task syz-executor420/5067
 
-This patch updates the entry handler to store r31 instead of r30.  We
-also remove some misleading commented out store r30 and r31
-instructrions.
+CPU: 0 PID: 5067 Comm: syz-executor420 Not tainted 6.2.0-rc1-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x290 lib/dump_stack.c:106
+ print_address_description+0x74/0x340 mm/kasan/report.c:306
+ print_report+0x107/0x1f0 mm/kasan/report.c:417
+ kasan_report+0xcd/0x100 mm/kasan/report.c:517
+ ext4_ext_binsearch_idx fs/ext4/extents.c:768 [inline]
+ ext4_find_extent+0x76e/0xd90 fs/ext4/extents.c:931
+ ext4_clu_mapped+0x117/0x970 fs/ext4/extents.c:5809
+ ext4_insert_delayed_block fs/ext4/inode.c:1696 [inline]
+ ext4_da_map_blocks fs/ext4/inode.c:1806 [inline]
+ ext4_da_get_block_prep+0x9e8/0x13c0 fs/ext4/inode.c:1870
+ ext4_block_write_begin+0x6a8/0x2290 fs/ext4/inode.c:1098
+ ext4_da_write_begin+0x539/0x760 fs/ext4/inode.c:3082
+ generic_perform_write+0x2e4/0x5e0 mm/filemap.c:3772
+ ext4_buffered_write_iter+0x122/0x3a0 fs/ext4/file.c:285
+ ext4_file_write_iter+0x1d0/0x18f0
+ call_write_iter include/linux/fs.h:2186 [inline]
+ new_sync_write fs/read_write.c:491 [inline]
+ vfs_write+0x7dc/0xc50 fs/read_write.c:584
+ ksys_write+0x177/0x2a0 fs/read_write.c:637
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f4b7a9737b9
+RSP: 002b:00007ffc5cac3668 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f4b7a9737b9
+RDX: 00000000175d9003 RSI: 0000000020000200 RDI: 0000000000000004
+RBP: 00007f4b7a933050 R08: 0000000000000000 R09: 0000000000000000
+R10: 000000000000079f R11: 0000000000000246 R12: 00007f4b7a9330e0
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
 
-I noticed this while working on adding floating point exception
-handling,  This issue probably would never impact anything since we kill
-the process or Oops right away on unhandled exceptions.
+Above issue is happens when enable bigalloc and inline data feature. As
+commit 131294c35ed6 fixed delayed allocation bug in ext4_clu_mapped for
+bigalloc + inline. But it only resolved issue when has inline data, if
+inline data has been converted to extent(ext4_da_convert_inline_data_to_extent)
+before writepages, there is no EXT4_STATE_MAY_INLINE_DATA flag. However
+i_data is still store inline data in this scene. Then will trigger UAF
+when find extent.
+To resolve above issue, there is need to add judge "ext4_has_inline_data(inode)"
+in ext4_clu_mapped().
 
-Fixes: 91993c8c2ed5 ("openrisc: use shadow registers to save regs on exception")
-Signed-off-by: Stafford Horne <shorne@gmail.com>
+Fixes: 131294c35ed6 ("ext4: fix delayed allocation bug in ext4_clu_mapped for bigalloc + inline")
+Reported-by: syzbot+bf4bb7731ef73b83a3b4@syzkaller.appspotmail.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Tested-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20230406111627.1916759-1-tudor.ambarus@linaro.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/openrisc/kernel/entry.S | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ext4/extents.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/openrisc/kernel/entry.S b/arch/openrisc/kernel/entry.S
-index b42d32d79b2e6..7257e942731df 100644
---- a/arch/openrisc/kernel/entry.S
-+++ b/arch/openrisc/kernel/entry.S
-@@ -173,7 +173,6 @@ handler:							;\
- 	l.sw    PT_GPR28(r1),r28					;\
- 	l.sw    PT_GPR29(r1),r29					;\
- 	/* r30 already save */					;\
--/*        l.sw    PT_GPR30(r1),r30*/					;\
- 	l.sw    PT_GPR31(r1),r31					;\
- 	TRACE_IRQS_OFF_ENTRY						;\
- 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
-@@ -211,9 +210,8 @@ handler:							;\
- 	l.sw    PT_GPR27(r1),r27					;\
- 	l.sw    PT_GPR28(r1),r28					;\
- 	l.sw    PT_GPR29(r1),r29					;\
--	/* r31 already saved */					;\
--	l.sw    PT_GPR30(r1),r30					;\
--/*        l.sw    PT_GPR31(r1),r31	*/				;\
-+	/* r30 already saved */						;\
-+	l.sw    PT_GPR31(r1),r31					;\
- 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
- 	l.addi	r30,r0,-1					;\
- 	l.sw	PT_ORIG_GPR11(r1),r30				;\
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 6c06ce9dd6bd8..2c2e1cc43e0e8 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5805,7 +5805,8 @@ int ext4_clu_mapped(struct inode *inode, ext4_lblk_t lclu)
+ 	 * mapped - no physical clusters have been allocated, and the
+ 	 * file has no extents
+ 	 */
+-	if (ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
++	if (ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA) ||
++	    ext4_has_inline_data(inode))
+ 		return 0;
+ 
+ 	/* search for the extent closest to the first block in the cluster */
 -- 
 2.39.2
 
