@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C124FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60B5C433D2;
-	Mon, 15 May 2023 17:37:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBEAFC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F082DC433D2;
+	Mon, 15 May 2023 17:37:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172257;
-	bh=r+YNDgjg7nyw20RRfHzwRBdZLi+agzniOoFuWwGal9E=;
+	s=korg; t=1684172260;
+	bh=kMUztMBB9S30K7crN/JZ6oSouslX9ZY4hJy38IEpb5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ir+jCntGL2CQG/OQFiIKwbW2NOpMtmjxXQHcPFmFW5GnvrX0Qyj+LWgCwlwMRc6W
-	 7BOAEh0nPbjU8yqna3C9Y9/f5a7lwjwHpvQhxwcY5fB9xNVh1ebGAdZngbfGRLVf/A
-	 1ZXfaHepvISXxiOVM6c4SRznYjrOd+qkQ0rNUCgY=
+	b=jPRbupH59cVmYwLkPILVK0zvu3gBRlyooqPH2it1/yb17l0DckDs/bke1D5lIgtUq
+	 LU549fjdkdiftoDpnp51Sna6j1ruO08Uayj9xxVxCak1uFgekxt42f7cX/lQfD7ETf
+	 zVyiAuNDObvsVuJHF4vrqCvnzsSxdcSklbuxTxHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Foss <rfoss@kernel.org>,
-	Adam Ford <aford173@gmail.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 094/381] drm/bridge: adv7533: Fix adv7533_mode_valid for adv7533 and adv7535
-Date: Mon, 15 May 2023 18:25:45 +0200
-Message-Id: <20230515161741.056796995@linuxfoundation.org>
+Subject: [PATCH 5.10 095/381] media: max9286: Free control handler
+Date: Mon, 15 May 2023 18:25:46 +0200
+Message-Id: <20230515161741.104668485@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,67 +38,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adam Ford <aford173@gmail.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit ee0285e13455fdbce5de315bdbe91b5f198a2a06 ]
+[ Upstream commit bfce6a12e5ba1edde95126aa06778027f16115d4 ]
 
-When dynamically switching lanes was removed, the intent of the code
-was to check to make sure that higher speed items used 4 lanes, but
-it had the unintended consequence of removing the slower speeds for
-4-lane users.
+The control handler is leaked in some probe-time error paths, as well as
+in the remove path. Fix it.
 
-This attempts to remedy this by doing a check to see that the
-max frequency doesn't exceed the chip limit, and a second
-check to make sure that the max bit-rate doesn't exceed the
-number of lanes * max bit rate / lane.
-
-Fixes: 9a0cdcd6649b ("drm/bridge: adv7533: remove dynamic lane switching from adv7533 bridge")
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230319125524.58803-1-aford173@gmail.com
+Fixes: 66d8c9d2422d ("media: i2c: Add MAX9286 driver")
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/adv7511/adv7533.c | 25 +++++++++++-------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ drivers/media/i2c/max9286.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/adv7511/adv7533.c b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-index f304a5ff8e596..e0bdedf22390c 100644
---- a/drivers/gpu/drm/bridge/adv7511/adv7533.c
-+++ b/drivers/gpu/drm/bridge/adv7511/adv7533.c
-@@ -103,22 +103,19 @@ void adv7533_dsi_power_off(struct adv7511 *adv)
- enum drm_mode_status adv7533_mode_valid(struct adv7511 *adv,
- 					const struct drm_display_mode *mode)
+diff --git a/drivers/media/i2c/max9286.c b/drivers/media/i2c/max9286.c
+index 79a11c0184c65..62ce27552dd3c 100644
+--- a/drivers/media/i2c/max9286.c
++++ b/drivers/media/i2c/max9286.c
+@@ -899,6 +899,7 @@ static int max9286_v4l2_register(struct max9286_priv *priv)
+ static void max9286_v4l2_unregister(struct max9286_priv *priv)
  {
--	int lanes;
-+	unsigned long max_lane_freq;
- 	struct mipi_dsi_device *dsi = adv->dsi;
-+	u8 bpp = mipi_dsi_pixel_format_to_bpp(dsi->format);
- 
--	if (mode->clock > 80000)
--		lanes = 4;
--	else
--		lanes = 3;
--
--	/*
--	 * TODO: add support for dynamic switching of lanes
--	 * by using the bridge pre_enable() op . Till then filter
--	 * out the modes which shall need different number of lanes
--	 * than what was configured in the device tree.
--	 */
--	if (lanes != dsi->lanes)
--		return MODE_BAD;
-+	/* Check max clock for either 7533 or 7535 */
-+	if (mode->clock > (adv->type == ADV7533 ? 80000 : 148500))
-+		return MODE_CLOCK_HIGH;
-+
-+	/* Check max clock for each lane */
-+	max_lane_freq = (adv->type == ADV7533 ? 800000 : 891000);
-+
-+	if (mode->clock * bpp > max_lane_freq * adv->num_dsi_lanes)
-+		return MODE_CLOCK_HIGH;
- 
- 	return MODE_OK;
+ 	fwnode_handle_put(priv->sd.fwnode);
++	v4l2_ctrl_handler_free(&priv->ctrls);
+ 	v4l2_async_unregister_subdev(&priv->sd);
+ 	max9286_v4l2_notifier_unregister(priv);
  }
 -- 
 2.39.2
