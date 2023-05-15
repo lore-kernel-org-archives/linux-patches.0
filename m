@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E020AFC1C
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241D9C4339B;
-	Mon, 15 May 2023 17:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97869FC1C
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001A0C433EF;
+	Mon, 15 May 2023 17:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172931;
-	bh=F0/iKoKK+rYRy98tX+Oscg8cDkhQjRp9Y5lvvVhZhQ4=;
+	s=korg; t=1684172934;
+	bh=d7RI03HynCAR1+H3PVW5/R2mgra1sr+H/qsTWV8+sro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ruG5w3EnWXADJ7FO6TyOHtC7zWq+SeUDWrMIP6B+vJ0AT4nBVRWtGA79UOZ0mgboY
-	 g9dVblU8Twr53D5VAVscSRHSLreYUykxUpQyS+GwdnvTkQAm1k7G1cvXpmobCxAwPW
-	 sXVFw9jWc0Cra9XKUHv6CEqPQLHmwqWUIZbRt0Ng=
+	b=EquzfYdTeO/yxCxXGPaJYEKmLhqBOwhPgPdfVHlFnStMgLstjPVViHYTHFHAtroKj
+	 H8bUnmPbOEqNrvuGBChRStlocv9ZsmFlyfW6FLfKurEoAU0e1trF/BZiiVB/LpFHOq
+	 lM+SJYOF7Hz9hjD20vjSkh7KfezhrxRotcsr82bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 313/381] writeback: fix call of incorrect macro
-Date: Mon, 15 May 2023 18:29:24 +0200
-Message-Id: <20230515161750.971828195@linuxfoundation.org>
+Subject: [PATCH 5.10 314/381] watchdog: dw_wdt: Fix the error handling path of dw_wdt_drv_probe()
+Date: Mon, 15 May 2023 18:29:25 +0200
+Message-Id: <20230515161751.005319190@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,38 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 3e46c89c74f2c38e5337d2cf44b0b551adff1cb4 ]
+[ Upstream commit 7f5390750645756bd5da2b24fac285f2654dd922 ]
 
- the variable 'history' is of type u16, it may be an error
- that the hweight32 macro was used for it
- I guess macro hweight16 should be used
+The commit in Fixes has only updated the remove function and missed the
+error handling path of the probe.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Add the missing reset_control_assert() call.
 
-Fixes: 2a81490811d0 ("writeback: implement foreign cgroup inode detection")
-Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230119104443.3002-1-korotkov.maxim.s@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 65a3b6935d92 ("watchdog: dw_wdt: get reset lines from dt")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/fbb650650bbb33a8fa2fd028c23157bedeed50e1.1682491863.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fs-writeback.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/dw_wdt.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/fs-writeback.c b/fs/fs-writeback.c
-index 6f18459f5e381..045a3bd520cae 100644
---- a/fs/fs-writeback.c
-+++ b/fs/fs-writeback.c
-@@ -700,7 +700,7 @@ void wbc_detach_inode(struct writeback_control *wbc)
- 		 * is okay.  The main goal is avoiding keeping an inode on
- 		 * the wrong wb for an extended period of time.
- 		 */
--		if (hweight32(history) > WB_FRN_HIST_THR_SLOTS)
-+		if (hweight16(history) > WB_FRN_HIST_THR_SLOTS)
- 			inode_switch_wbs(inode, max_id);
- 	}
+diff --git a/drivers/watchdog/dw_wdt.c b/drivers/watchdog/dw_wdt.c
+index 32d0e1781e63c..3cd1182819809 100644
+--- a/drivers/watchdog/dw_wdt.c
++++ b/drivers/watchdog/dw_wdt.c
+@@ -638,7 +638,7 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
+ 
+ 	ret = dw_wdt_init_timeouts(dw_wdt, dev);
+ 	if (ret)
+-		goto out_disable_clk;
++		goto out_assert_rst;
+ 
+ 	wdd = &dw_wdt->wdd;
+ 	wdd->ops = &dw_wdt_ops;
+@@ -669,12 +669,15 @@ static int dw_wdt_drv_probe(struct platform_device *pdev)
+ 
+ 	ret = watchdog_register_device(wdd);
+ 	if (ret)
+-		goto out_disable_pclk;
++		goto out_assert_rst;
+ 
+ 	dw_wdt_dbgfs_init(dw_wdt);
+ 
+ 	return 0;
+ 
++out_assert_rst:
++	reset_control_assert(dw_wdt->rst);
++
+ out_disable_pclk:
+ 	clk_disable_unprepare(dw_wdt->pclk);
  
 -- 
 2.39.2
