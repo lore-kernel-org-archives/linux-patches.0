@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6D0FE573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E824C433D2;
-	Mon, 15 May 2023 16:41:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B244E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65C02C433D2;
+	Mon, 15 May 2023 16:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168893;
-	bh=KdGpZpbIX6f0OquNJ5x7N6DyhgBfakoFzDaoFMxzAdw=;
+	s=korg; t=1684168896;
+	bh=7TCib7Mqjnb9zL/g5LibbbyadAqnb2d60jGunbRat4M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xGsm7MWbyzaPopASC0oe8oxbcKr/mOjbrmcxOt+124kIA/wnwfc2aBSPgASHnholk
-	 rt6zXSXAdD9rmEz2QSkvREAZhgKTdK+VvUlmWneiQLRlOjXOPKfhpcEX+5OUTtjE4Z
-	 Z3B8St5v2y3f2zUOmszX0N36frCoz9oj3ZVzzdWA=
+	b=SFVg1Kj/FzwAu8Bb41UZvjoMMgX8R4nKVVdthMG8x3CaToUZe5JmbHBXvMIPCpKfD
+	 yQ+r7ljQDtaEsIyzq/ZOQBfkQOkq+uUZrnkFKO2n0pXNkie3USsosTzLZoK5UCXhs8
+	 66hLZ30eh5NF3LOcKTm1n5qa9naB3jBsYpd2fRHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 075/191] netfilter: nf_tables: dont write table validation state without mutex
-Date: Mon, 15 May 2023 18:25:12 +0200
-Message-Id: <20230515161709.993295539@linuxfoundation.org>
+Subject: [PATCH 4.19 076/191] ipv4: Fix potential uninit variable access bug in __ip_make_skb()
+Date: Mon, 15 May 2023 18:25:13 +0200
+Message-Id: <20230515161710.033897952@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,84 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 9a32e9850686599ed194ccdceb6cd3dd56b2d9b9 ]
+[ Upstream commit 99e5acae193e369b71217efe6f1dad42f3f18815 ]
 
-The ->cleanup callback needs to be removed, this doesn't work anymore as
-the transaction mutex is already released in the ->abort function.
+Like commit ea30388baebc ("ipv6: Fix an uninit variable access bug in
+__ip6_make_skb()"). icmphdr does not in skb linear region under the
+scenario of SOCK_RAW socket. Access icmp_hdr(skb)->type directly will
+trigger the uninit variable access bug.
 
-Just do it after a successful validation pass, this either happens
-from commit or abort phases where transaction mutex is held.
+Use a local variable icmp_type to carry the correct value in different
+scenarios.
 
-Fixes: f102d66b335a ("netfilter: nf_tables: use dedicated mutex to guard transactions")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 96793b482540 ("[IPV4]: Add ICMPMsgStats MIB (RFC 4293)")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netfilter/nfnetlink.h | 1 -
- net/netfilter/nf_tables_api.c       | 8 ++------
- net/netfilter/nfnetlink.c           | 2 --
- 3 files changed, 2 insertions(+), 9 deletions(-)
+ net/ipv4/ip_output.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/netfilter/nfnetlink.h b/include/linux/netfilter/nfnetlink.h
-index e713476ff29db..a806803fbe37a 100644
---- a/include/linux/netfilter/nfnetlink.h
-+++ b/include/linux/netfilter/nfnetlink.h
-@@ -32,7 +32,6 @@ struct nfnetlink_subsystem {
- 	struct module *owner;
- 	int (*commit)(struct net *net, struct sk_buff *skb);
- 	int (*abort)(struct net *net, struct sk_buff *skb);
--	void (*cleanup)(struct net *net);
- 	bool (*valid_genid)(struct net *net, u32 genid);
- };
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index 06a981676356c..92fa11e75a4d0 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -1443,9 +1443,19 @@ struct sk_buff *__ip_make_skb(struct sock *sk,
+ 	cork->dst = NULL;
+ 	skb_dst_set(skb, &rt->dst);
  
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 079f768496937..d7a082d5cd70e 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6241,6 +6241,8 @@ static int nf_tables_validate(struct net *net)
- 			if (nft_table_validate(net, table) < 0)
- 				return -EAGAIN;
- 		}
+-	if (iph->protocol == IPPROTO_ICMP)
+-		icmp_out_count(net, ((struct icmphdr *)
+-			skb_transport_header(skb))->type);
++	if (iph->protocol == IPPROTO_ICMP) {
++		u8 icmp_type;
 +
-+		nft_validate_state_update(net, NFT_VALIDATE_SKIP);
- 		break;
- 	}
++		/* For such sockets, transhdrlen is zero when do ip_append_data(),
++		 * so icmphdr does not in skb linear region and can not get icmp_type
++		 * by icmp_hdr(skb)->type.
++		 */
++		if (sk->sk_type == SOCK_RAW && !inet_sk(sk)->hdrincl)
++			icmp_type = fl4->fl4_icmp_type;
++		else
++			icmp_type = icmp_hdr(skb)->type;
++		icmp_out_count(net, icmp_type);
++	}
  
-@@ -6767,11 +6769,6 @@ static int __nf_tables_abort(struct net *net)
- 	return 0;
- }
- 
--static void nf_tables_cleanup(struct net *net)
--{
--	nft_validate_state_update(net, NFT_VALIDATE_SKIP);
--}
--
- static int nf_tables_abort(struct net *net, struct sk_buff *skb)
- {
- 	int ret = __nf_tables_abort(net);
-@@ -6802,7 +6799,6 @@ static const struct nfnetlink_subsystem nf_tables_subsys = {
- 	.cb		= nf_tables_cb,
- 	.commit		= nf_tables_commit,
- 	.abort		= nf_tables_abort,
--	.cleanup	= nf_tables_cleanup,
- 	.valid_genid	= nf_tables_valid_genid,
- 	.owner		= THIS_MODULE,
- };
-diff --git a/net/netfilter/nfnetlink.c b/net/netfilter/nfnetlink.c
-index 9bacddc761ba4..39e369e18cb87 100644
---- a/net/netfilter/nfnetlink.c
-+++ b/net/netfilter/nfnetlink.c
-@@ -495,8 +495,6 @@ static void nfnetlink_rcv_batch(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	} else {
- 		ss->abort(net, oskb);
- 	}
--	if (ss->cleanup)
--		ss->cleanup(net);
- 
- 	nfnl_err_deliver(&err_list, oskb);
- 	kfree_skb(skb);
+ 	ip_cork_release(cork);
+ out:
 -- 
 2.39.2
 
