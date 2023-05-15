@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C765FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:45:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F297EC433EF;
-	Mon, 15 May 2023 16:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A089FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:45:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E265AC433EF;
+	Mon, 15 May 2023 16:45:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169120;
-	bh=/QulOi7+fE1eoYHinXQW0+mbuiHyaqniPBcWHZ+EyI0=;
+	s=korg; t=1684169123;
+	bh=AFlvIgK/QkSQ699RdT3w4uSjBWj3q2yRfnspFuSCokc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GE0ymM+zdX0bp1nKVRN8JG1gPzOcld6N6qlJUs8/w0DUaNlXNkQSIcw1jAYOKjbWh
-	 ZvnREa3Omi8EFWsWL57E+jqxvLLrb7SyWwDTeKLCGQri7BrWil5OjzySK1La411iwa
-	 0h5uQKQlekRw3DbW++Ifza1npA3S445O3E6VJLtg=
+	b=it2GLPB11Zd0AKhe0U4mhCrwIFZzQ3+o3YUqVv1L8cKWGJY/AW10ymjaPoF5dSR4c
+	 OL7Lnhd6MGT30ukikEpvvkO/7NjT8lXY59hQ+iM9eoB8HRFhyRY2dWSxOyO9RULGAZ
+	 MytnHAHEJOj4/yJnhFb/ZIlVym9Tc8j8k43rv3zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zhengming <zhang.zhengming@h3c.com>,
-	Zhao Lei <zhao_lei1@hoperun.com>,
-	Zhou Kete <zhou.kete@h3c.com>,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	Alexandre Mergnat <amergnat@baylibre.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 148/191] relayfs: fix out-of-bounds access in relay_file_read
-Date: Mon, 15 May 2023 18:26:25 +0200
-Message-Id: <20230515161712.802927764@linuxfoundation.org>
+Subject: [PATCH 4.19 122/191] pwm: mtk-disp: Disable shadow registers before setting backlight values
+Date: Mon, 15 May 2023 18:25:59 +0200
+Message-Id: <20230515161711.717933988@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -39,80 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Zhengming <zhang.zhengming@h3c.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 43ec16f1450f4936025a9bdf1a273affdb9732c1 ]
+[ Upstream commit 36dd7f530ae7d9ce9e853ffb8aa337de65c6600b ]
 
-There is a crash in relay_file_read, as the var from
-point to the end of last subbuf.
+If shadow registers usage is not desired, disable that before performing
+any write to CON0/1 registers in the .apply() callback, otherwise we may
+lose clkdiv or period/width updates.
 
-The oops looks something like:
-pc : __arch_copy_to_user+0x180/0x310
-lr : relay_file_read+0x20c/0x2c8
-Call trace:
- __arch_copy_to_user+0x180/0x310
- full_proxy_read+0x68/0x98
- vfs_read+0xb0/0x1d0
- ksys_read+0x6c/0xf0
- __arm64_sys_read+0x20/0x28
- el0_svc_common.constprop.3+0x84/0x108
- do_el0_svc+0x74/0x90
- el0_svc+0x1c/0x28
- el0_sync_handler+0x88/0xb0
- el0_sync+0x148/0x180
-
-We get the condition by analyzing the vmcore:
-
-1). The last produced byte and last consumed byte
-    both at the end of the last subbuf
-
-2). A softirq calls function(e.g __blk_add_trace)
-    to write relay buffer occurs when an program is calling
-    relay_file_read_avail().
-
-        relay_file_read
-                relay_file_read_avail
-                        relay_file_read_consume(buf, 0, 0);
-                        //interrupted by softirq who will write subbuf
-                        ....
-                        return 1;
-                //read_start point to the end of the last subbuf
-                read_start = relay_file_read_start_pos
-                //avail is equal to subsize
-                avail = relay_file_read_subbuf_avail
-                //from  points to an invalid memory address
-                from = buf->start + read_start
-                //system is crashed
-                copy_to_user(buffer, from, avail)
-
-Link: https://lkml.kernel.org/r/20230419040203.37676-1-zhang.zhengming@h3c.com
-Fixes: 8d62fdebdaf9 ("relay file read: start-pos fix")
-Signed-off-by: Zhang Zhengming <zhang.zhengming@h3c.com>
-Reviewed-by: Zhao Lei <zhao_lei1@hoperun.com>
-Reviewed-by: Zhou Kete <zhou.kete@h3c.com>
-Reviewed-by: Pengcheng Yang <yangpc@wangsu.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: cd4b45ac449a ("pwm: Add MediaTek MT2701 display PWM driver support")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Reviewed-by: Alexandre Mergnat <amergnat@baylibre.com>
+Tested-by: Alexandre Mergnat <amergnat@baylibre.com>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/relay.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-mtk-disp.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/relay.c b/kernel/relay.c
-index 0f027e04b0094..e6f70f4c41a36 100644
---- a/kernel/relay.c
-+++ b/kernel/relay.c
-@@ -1077,7 +1077,8 @@ static size_t relay_file_read_start_pos(struct rchan_buf *buf)
- 	size_t subbuf_size = buf->chan->subbuf_size;
- 	size_t n_subbufs = buf->chan->n_subbufs;
- 	size_t consumed = buf->subbufs_consumed % n_subbufs;
--	size_t read_pos = consumed * subbuf_size + buf->bytes_consumed;
-+	size_t read_pos = (consumed * subbuf_size + buf->bytes_consumed)
-+			% (n_subbufs * subbuf_size);
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index 6d08938866048..c49b1e696b8c4 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -122,6 +122,19 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 	high_width = div64_u64(rate * duty_ns, div);
+ 	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
  
- 	read_subbuf = read_pos / subbuf_size;
- 	padding = buf->padding[read_subbuf];
++	if (mdp->data->bls_debug && !mdp->data->has_commit) {
++		/*
++		 * For MT2701, disable double buffer before writing register
++		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
++		 */
++		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
++					 mdp->data->bls_debug_mask,
++					 mdp->data->bls_debug_mask);
++		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
++					 mdp->data->con0_sel,
++					 mdp->data->con0_sel);
++	}
++
+ 	mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
+ 				 PWM_CLKDIV_MASK,
+ 				 clk_div << PWM_CLKDIV_SHIFT);
+@@ -136,17 +149,6 @@ static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+ 		mtk_disp_pwm_update_bits(mdp, mdp->data->commit,
+ 					 mdp->data->commit_mask,
+ 					 0x0);
+-	} else {
+-		/*
+-		 * For MT2701, disable double buffer before writing register
+-		 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
+-		 */
+-		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
+-					 mdp->data->bls_debug_mask,
+-					 mdp->data->bls_debug_mask);
+-		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
+-					 mdp->data->con0_sel,
+-					 mdp->data->con0_sel);
+ 	}
+ 
+ 	clk_disable_unprepare(mdp->clk_mm);
 -- 
 2.39.2
 
