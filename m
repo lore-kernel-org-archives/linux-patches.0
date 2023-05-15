@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E395FBF7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDB5C433D2;
-	Mon, 15 May 2023 16:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E43FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:32:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F030C4339B;
+	Mon, 15 May 2023 16:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168342;
-	bh=8MMw1qJItkVGzptmwgs/wPL7txms2bN5uqcgKcnPnp8=;
+	s=korg; t=1684168345;
+	bh=AZPaWz8cjjPsH865qv27vpARIgJYDeSRyz701rdqte4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iMRAqEAHjGR2iQyACrym2WIDzqgTsK0/x25sHF8gnF4Y1eYzBM8E1W6AdC1PG3KeY
-	 tnpvxadW5sYgc4/pqnfqxQcnHBvn2awe27UQ2Zxt4HBSlTGSx7BeRW/nMAXk/r67sB
-	 iFQADlGttjO8QIb/Oa0wAaFk0+srCY2ab1zei2fg=
+	b=TtqiJ5rMz+tNVm+HvradLQu0Xcl5WyzGFVfJPTmiId7xmIIqO2tV3dmHccYtT+M+4
+	 +t9dsAC527dgJhTyE/S2SqwyOeNfoJYZQHtk/0Mda195Nu+AEDmPLj+jBbdk+kGw5S
+	 5Og3yHXj+dM5jDM75z7hivRB6ie8b0wGN9yw3oW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mairacanal@riseup.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 019/116] drm/vgem: add missing mutex_destroy
-Date: Mon, 15 May 2023 18:25:16 +0200
-Message-Id: <20230515161658.931400518@linuxfoundation.org>
+	Ruihan Li <lrh2000@pku.edu.cn>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 4.14 002/116] bluetooth: Perform careful capability checks in hci_sock_ioctl()
+Date: Mon, 15 May 2023 18:24:59 +0200
+Message-Id: <20230515161658.322526375@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -36,39 +34,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Ruihan Li <lrh2000@pku.edu.cn>
 
-[ Upstream commit 7c18189b14b33c1fbf76480b1bd217877c086e67 ]
+commit 25c150ac103a4ebeed0319994c742a90634ddf18 upstream.
 
-vgem_fence_open() instantiates a mutex for a particular fence
-instance, but never destroys it by calling mutex_destroy() in
-vgem_fence_close().
+Previously, capability was checked using capable(), which verified that the
+caller of the ioctl system call had the required capability. In addition,
+the result of the check would be stored in the HCI_SOCK_TRUSTED flag,
+making it persistent for the socket.
 
-So, add the missing mutex_destroy() to guarantee proper resource
-destruction.
+However, malicious programs can abuse this approach by deliberately sharing
+an HCI socket with a privileged task. The HCI socket will be marked as
+trusted when the privileged task occasionally makes an ioctl call.
 
-Fixes: 407779848445 ("drm/vgem: Attach sw fences to exported vGEM dma-buf (ioctl)")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
-Signed-off-by: Maíra Canal <mairacanal@riseup.net>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230202125517.427976-1-mcanal@igalia.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This problem can be solved by using sk_capable() to check capability, which
+ensures that not only the current task but also the socket opener has the
+specified capability, thus reducing the risk of privilege escalation
+through the previously identified vulnerability.
+
+Cc: stable@vger.kernel.org
+Fixes: f81f5b2db869 ("Bluetooth: Send control open and close messages for HCI raw sockets")
+Signed-off-by: Ruihan Li <lrh2000@pku.edu.cn>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vgem/vgem_fence.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_sock.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vgem/vgem_fence.c b/drivers/gpu/drm/vgem/vgem_fence.c
-index 8fd52f211e9d9..673db9bf3c5d1 100644
---- a/drivers/gpu/drm/vgem/vgem_fence.c
-+++ b/drivers/gpu/drm/vgem/vgem_fence.c
-@@ -280,4 +280,5 @@ void vgem_fence_close(struct vgem_file *vfile)
- {
- 	idr_for_each(&vfile->fence_idr, __vgem_fence_idr_fini, vfile);
- 	idr_destroy(&vfile->fence_idr);
-+	mutex_destroy(&vfile->fence_mutex);
- }
--- 
-2.39.2
-
+--- a/net/bluetooth/hci_sock.c
++++ b/net/bluetooth/hci_sock.c
+@@ -984,7 +984,14 @@ static int hci_sock_ioctl(struct socket
+ 	if (hci_sock_gen_cookie(sk)) {
+ 		struct sk_buff *skb;
+ 
+-		if (capable(CAP_NET_ADMIN))
++		/* Perform careful checks before setting the HCI_SOCK_TRUSTED
++		 * flag. Make sure that not only the current task but also
++		 * the socket opener has the required capability, since
++		 * privileged programs can be tricked into making ioctl calls
++		 * on HCI sockets, and the socket should not be marked as
++		 * trusted simply because the ioctl caller is privileged.
++		 */
++		if (sk_capable(sk, CAP_NET_ADMIN))
+ 			hci_sock_set_flag(sk, HCI_SOCK_TRUSTED);
+ 
+ 		/* Send event to monitor */
 
 
