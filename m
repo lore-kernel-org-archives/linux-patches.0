@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492B3D512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:34:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A054EC433D2;
-	Mon, 15 May 2023 16:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFF8D512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:34:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3312C433D2;
+	Mon, 15 May 2023 16:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168442;
-	bh=oNM/izLDmQLO3kpHMB3zXirc+0XPTXVGIvKHjaxYtKQ=;
+	s=korg; t=1684168445;
+	bh=jhwoTrPPu2RtxRkqPXUUvMt+macYXPq8cG78PwMI8tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msXs48ECF7yRp/zWg4OHjZ/GrdUclypXFVBQ6vRZpzJAGHRinpbQpxUt6eD7fAOXi
-	 aLcNtQiyXBI1UyIfJVIYyFvzNCtOnTJ+yuXbKMUwud5n7lXxRlOQ6HR6XgaGuoblqZ
-	 gq+Vg6a2zWLm5U4pOX4eyIB3xx+JykeABusKnh1A=
+	b=OKV20AkRmj8aVpy9AsZocbogFO9J2YmYlaFFuMONljHUAQ5AQZcEyX0XrUw6aUxrA
+	 zsQrFwMAn9b3OZoQUiIe6BsSNZxShlMHWpPdXtXLxppkoKF9EGUAPf2baRYlYyxBu6
+	 iV1szr9ZOqf6jTSo79BpOtL2l4NCNJ+sXc8zSuaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Brodsky <kevin.brodsky@arm.com>,
-	Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>,
-	Petr Vorel <pvorel@suse.cz>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 050/116] uapi/linux/const.h: prefer ISO-friendly __typeof__
-Date: Mon, 15 May 2023 18:25:47 +0200
-Message-Id: <20230515161659.927671613@linuxfoundation.org>
+Subject: [PATCH 4.14 051/116] sh: sq: Fix incorrect element size for allocating bitmap buffer
+Date: Mon, 15 May 2023 18:25:48 +0200
+Message-Id: <20230515161659.960412625@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -39,63 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kevin Brodsky <kevin.brodsky@arm.com>
+From: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 
-[ Upstream commit 31088f6f7906253ef4577f6a9b84e2d42447dba0 ]
+[ Upstream commit 80f746e2bd0e1da3fdb49a53570e54a1a225faac ]
 
-typeof is (still) a GNU extension, which means that it cannot be used when
-building ISO C (e.g.  -std=c99).  It should therefore be avoided in uapi
-headers in favour of the ISO-friendly __typeof__.
+The Store Queue code allocates a bitmap buffer with the size of
+multiple of sizeof(long) in sq_api_init(). While the buffer size
+is calculated correctly, the code uses the wrong element size to
+allocate the buffer which results in the allocated bitmap buffer
+being too small.
 
-Unfortunately this issue could not be detected by
-CONFIG_UAPI_HEADER_TEST=y as the __ALIGN_KERNEL() macro is not expanded in
-any uapi header.
+Fix this by allocating the buffer with kcalloc() with element size
+sizeof(long) instead of kzalloc() whose elements size defaults to
+sizeof(char).
 
-This matters from a userspace perspective, not a kernel one. uapi
-headers and their contents are expected to be usable in a variety of
-situations, and in particular when building ISO C applications (with
--std=c99 or similar).
-
-This particular problem can be reproduced by trying to use the
-__ALIGN_KERNEL macro directly in application code, say:
-
-#include <linux/const.h>
-
-int align(int x, int a)
-{
-	return __KERNEL_ALIGN(x, a);
-}
-
-and trying to build that with -std=c99.
-
-Link: https://lkml.kernel.org/r/20230411092747.3759032-1-kevin.brodsky@arm.com
-Fixes: a79ff731a1b2 ("netfilter: xtables: make XT_ALIGN() usable in exported headers by exporting __ALIGN_KERNEL()")
-Signed-off-by: Kevin Brodsky <kevin.brodsky@arm.com>
-Reported-by: Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>
-Tested-by: Ruben Ayrapetyan <ruben.ayrapetyan@arm.com>
-Reviewed-by: Petr Vorel <pvorel@suse.cz>
-Tested-by: Petr Vorel <pvorel@suse.cz>
-Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Sam Ravnborg <sam@ravnborg.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d7c30c682a27 ("sh: Store Queue API rework.")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230419114854.528677-1-glaubitz@physik.fu-berlin.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/const.h | 2 +-
+ arch/sh/kernel/cpu/sh4/sq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/linux/const.h b/include/uapi/linux/const.h
-index 0bd39530b2e38..4ef7c87d12492 100644
---- a/include/uapi/linux/const.h
-+++ b/include/uapi/linux/const.h
-@@ -28,7 +28,7 @@
- #define _BITUL(x)	(_AC(1,UL) << (x))
- #define _BITULL(x)	(_AC(1,ULL) << (x))
+diff --git a/arch/sh/kernel/cpu/sh4/sq.c b/arch/sh/kernel/cpu/sh4/sq.c
+index 4ca78ed71ad2c..c218bae8fe208 100644
+--- a/arch/sh/kernel/cpu/sh4/sq.c
++++ b/arch/sh/kernel/cpu/sh4/sq.c
+@@ -383,7 +383,7 @@ static int __init sq_api_init(void)
+ 	if (unlikely(!sq_cache))
+ 		return ret;
  
--#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (typeof(x))(a) - 1)
-+#define __ALIGN_KERNEL(x, a)		__ALIGN_KERNEL_MASK(x, (__typeof__(x))(a) - 1)
- #define __ALIGN_KERNEL_MASK(x, mask)	(((x) + (mask)) & ~(mask))
+-	sq_bitmap = kzalloc(size, GFP_KERNEL);
++	sq_bitmap = kcalloc(size, sizeof(long), GFP_KERNEL);
+ 	if (unlikely(!sq_bitmap))
+ 		goto out;
  
- #define __KERNEL_DIV_ROUND_UP(n, d) (((n) + (d) - 1) / (d))
 -- 
 2.39.2
 
