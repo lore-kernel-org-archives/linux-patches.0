@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54259E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6234C433EF;
-	Mon, 15 May 2023 16:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEC5E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7793C433D2;
+	Mon, 15 May 2023 16:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168909;
-	bh=mbDebCj3pqJVusJbFWAgowxo5RCkuViN6m/EFdjNSuQ=;
+	s=korg; t=1684168912;
+	bh=RETydS2WhO8BHTIZvVcuOofMQcvxYdqOjTMw5QOfR54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oqVwvthFAP7Al9OW7EEHxZeZ0kRro5XH4KDrVo4XWdXOMdu7Af4hAT9lIK+4riPDR
-	 VIAtPb/Grye2vZ77M3kRg0xohNPJbQCn/QlhUOeNfmdr4khkeBAouUbeFR/fEZYYgY
-	 D+PAlEPqWRYhPSuuJF2YPeL85j7VSJT3ZuLxVde4=
+	b=thLw5n5N9IJTyXwXxfEnShurbGFBQeoKppU9lxryG6zFm7UiqKEWxg8RrX9O77dV5
+	 M6DmwqB6AXzC39/CBY8LGcQz5HirHyrA8XTX8DlmAK+8SQWpv4ImuUGsO3ms90hDt1
+	 Ueogv/w5nYPBNWZ2KSExYjGRomUYTBb+SBr/AUvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Wei Wang <wvw@google.com>,
+	Midas Chien <midaschieh@google.com>,
+	=?UTF-8?q?Chunhui=20Li=20 ?= <chunhui.li@mediatek.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Kees Cook <keescook@chromium.org>,
+	Anton Vorontsov <anton@enomsg.org>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Tony Luck <tony.luck@intel.com>,
+	kernel-team@android.com,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 080/191] tcp/udp: Fix memleaks of sk and zerocopy skbs with TX timestamp.
-Date: Mon, 15 May 2023 18:25:17 +0200
-Message-Id: <20230515161710.182101199@linuxfoundation.org>
+Subject: [PATCH 4.19 081/191] pstore: Revert pmsg_lock back to a normal mutex
+Date: Mon, 15 May 2023 18:25:18 +0200
+Message-Id: <20230515161710.212636310@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -37,123 +43,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 50749f2dd6854a41830996ad302aef2ffaf011d8 ]
+[ Upstream commit 5239a89b06d6b199f133bf0ffea421683187f257 ]
 
-syzkaller reported [0] memory leaks of an UDP socket and ZEROCOPY
-skbs.  We can reproduce the problem with these sequences:
+This reverts commit 76d62f24db07f22ccf9bc18ca793c27d4ebef721.
 
-  sk = socket(AF_INET, SOCK_DGRAM, 0)
-  sk.setsockopt(SOL_SOCKET, SO_TIMESTAMPING, SOF_TIMESTAMPING_TX_SOFTWARE)
-  sk.setsockopt(SOL_SOCKET, SO_ZEROCOPY, 1)
-  sk.sendto(b'', MSG_ZEROCOPY, ('127.0.0.1', 53))
-  sk.close()
+So while priority inversion on the pmsg_lock is an occasional
+problem that an rt_mutex would help with, in uses where logging
+is writing to pmsg heavily from multiple threads, the pmsg_lock
+can be heavily contended.
 
-sendmsg() calls msg_zerocopy_alloc(), which allocates a skb, sets
-skb->cb->ubuf.refcnt to 1, and calls sock_hold().  Here, struct
-ubuf_info_msgzc indirectly holds a refcnt of the socket.  When the
-skb is sent, __skb_tstamp_tx() clones it and puts the clone into
-the socket's error queue with the TX timestamp.
+After this change landed, it was reported that cases where the
+mutex locking overhead was commonly adding on the order of 10s
+of usecs delay had suddenly jumped to ~msec delay with rtmutex.
 
-When the original skb is received locally, skb_copy_ubufs() calls
-skb_unclone(), and pskb_expand_head() increments skb->cb->ubuf.refcnt.
-This additional count is decremented while freeing the skb, but struct
-ubuf_info_msgzc still has a refcnt, so __msg_zerocopy_callback() is
-not called.
+It seems the slight differences in the locks under this level
+of contention causes the normal mutexes to utilize the spinning
+optimizations, while the rtmutexes end up in the sleeping
+slowpath (which allows additional threads to pile on trying
+to take the lock).
 
-The last refcnt is not released unless we retrieve the TX timestamped
-skb by recvmsg().  Since we clear the error queue in inet_sock_destruct()
-after the socket's refcnt reaches 0, there is a circular dependency.
-If we close() the socket holding such skbs, we never call sock_put()
-and leak the count, sk, and skb.
+In this case, it devolves to a worse case senerio where the lock
+acquisition and scheduling overhead dominates, and each thread
+is waiting on the order of ~ms to do ~us of work.
 
-TCP has the same problem, and commit e0c8bccd40fc ("net: stream:
-purge sk_error_queue in sk_stream_kill_queues()") tried to fix it
-by calling skb_queue_purge() during close().  However, there is a
-small chance that skb queued in a qdisc or device could be put
-into the error queue after the skb_queue_purge() call.
+Obviously, having tons of threads all contending on a single
+lock for logging is non-optimal, so the proper fix is probably
+reworking pstore pmsg to have per-cpu buffers so we don't have
+contention.
 
-In __skb_tstamp_tx(), the cloned skb should not have a reference
-to the ubuf to remove the circular dependency, but skb_clone() does
-not call skb_copy_ubufs() for zerocopy skb.  So, we need to call
-skb_orphan_frags_rx() for the cloned skb to call skb_copy_ubufs().
+Additionally, Steven Rostedt has provided some furhter
+optimizations for rtmutexes that improves the rtmutex spinning
+path, but at least in my testing, I still see the test tripping
+into the sleeping path on rtmutexes while utilizing the spinning
+path with mutexes.
 
-[0]:
-BUG: memory leak
-unreferenced object 0xffff88800c6d2d00 (size 1152):
-  comm "syz-executor392", pid 264, jiffies 4294785440 (age 13.044s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 cd af e8 81 00 00 00 00  ................
-    02 00 07 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
-  backtrace:
-    [<0000000055636812>] sk_prot_alloc+0x64/0x2a0 net/core/sock.c:2024
-    [<0000000054d77b7a>] sk_alloc+0x3b/0x800 net/core/sock.c:2083
-    [<0000000066f3c7e0>] inet_create net/ipv4/af_inet.c:319 [inline]
-    [<0000000066f3c7e0>] inet_create+0x31e/0xe40 net/ipv4/af_inet.c:245
-    [<000000009b83af97>] __sock_create+0x2ab/0x550 net/socket.c:1515
-    [<00000000b9b11231>] sock_create net/socket.c:1566 [inline]
-    [<00000000b9b11231>] __sys_socket_create net/socket.c:1603 [inline]
-    [<00000000b9b11231>] __sys_socket_create net/socket.c:1588 [inline]
-    [<00000000b9b11231>] __sys_socket+0x138/0x250 net/socket.c:1636
-    [<000000004fb45142>] __do_sys_socket net/socket.c:1649 [inline]
-    [<000000004fb45142>] __se_sys_socket net/socket.c:1647 [inline]
-    [<000000004fb45142>] __x64_sys_socket+0x73/0xb0 net/socket.c:1647
-    [<0000000066999e0e>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<0000000066999e0e>] do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
-    [<0000000017f238c1>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+But in the short term, lets revert the change to the rt_mutex
+and go back to normal mutexes to avoid a potentially major
+performance regression. And we can work on optimizations to both
+rtmutexes and finer-grained locking for pstore pmsg in the
+future.
 
-BUG: memory leak
-unreferenced object 0xffff888017633a00 (size 240):
-  comm "syz-executor392", pid 264, jiffies 4294785440 (age 13.044s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 2d 6d 0c 80 88 ff ff  .........-m.....
-  backtrace:
-    [<000000002b1c4368>] __alloc_skb+0x229/0x320 net/core/skbuff.c:497
-    [<00000000143579a6>] alloc_skb include/linux/skbuff.h:1265 [inline]
-    [<00000000143579a6>] sock_omalloc+0xaa/0x190 net/core/sock.c:2596
-    [<00000000be626478>] msg_zerocopy_alloc net/core/skbuff.c:1294 [inline]
-    [<00000000be626478>] msg_zerocopy_realloc+0x1ce/0x7f0 net/core/skbuff.c:1370
-    [<00000000cbfc9870>] __ip_append_data+0x2adf/0x3b30 net/ipv4/ip_output.c:1037
-    [<0000000089869146>] ip_make_skb+0x26c/0x2e0 net/ipv4/ip_output.c:1652
-    [<00000000098015c2>] udp_sendmsg+0x1bac/0x2390 net/ipv4/udp.c:1253
-    [<0000000045e0e95e>] inet_sendmsg+0x10a/0x150 net/ipv4/af_inet.c:819
-    [<000000008d31bfde>] sock_sendmsg_nosec net/socket.c:714 [inline]
-    [<000000008d31bfde>] sock_sendmsg+0x141/0x190 net/socket.c:734
-    [<0000000021e21aa4>] __sys_sendto+0x243/0x360 net/socket.c:2117
-    [<00000000ac0af00c>] __do_sys_sendto net/socket.c:2129 [inline]
-    [<00000000ac0af00c>] __se_sys_sendto net/socket.c:2125 [inline]
-    [<00000000ac0af00c>] __x64_sys_sendto+0xe1/0x1c0 net/socket.c:2125
-    [<0000000066999e0e>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-    [<0000000066999e0e>] do_syscall_64+0x38/0x90 arch/x86/entry/common.c:80
-    [<0000000017f238c1>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: f214f915e7db ("tcp: enable MSG_ZEROCOPY")
-Fixes: b5947e5d1e71 ("udp: msg_zerocopy")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: Wei Wang <wvw@google.com>
+Cc: Midas Chien<midaschieh@google.com>
+Cc: "Chunhui Li (李春辉)" <chunhui.li@mediatek.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Anton Vorontsov <anton@enomsg.org>
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: kernel-team@android.com
+Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
+Reported-by: "Chunhui Li (李春辉)" <chunhui.li@mediatek.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230308204043.2061631-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/pstore/pmsg.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 7f501dff4501c..5ae62d7433575 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4445,6 +4445,9 @@ void __skb_tstamp_tx(struct sk_buff *orig_skb,
- 			skb = alloc_skb(0, GFP_ATOMIC);
- 	} else {
- 		skb = skb_clone(orig_skb, GFP_ATOMIC);
-+
-+		if (skb_orphan_frags_rx(skb, GFP_ATOMIC))
-+			return;
- 	}
- 	if (!skb)
- 		return;
+diff --git a/fs/pstore/pmsg.c b/fs/pstore/pmsg.c
+index ffc13ea196d2a..24db02de17874 100644
+--- a/fs/pstore/pmsg.c
++++ b/fs/pstore/pmsg.c
+@@ -15,10 +15,9 @@
+ #include <linux/device.h>
+ #include <linux/fs.h>
+ #include <linux/uaccess.h>
+-#include <linux/rtmutex.h>
+ #include "internal.h"
+ 
+-static DEFINE_RT_MUTEX(pmsg_lock);
++static DEFINE_MUTEX(pmsg_lock);
+ 
+ static ssize_t write_pmsg(struct file *file, const char __user *buf,
+ 			  size_t count, loff_t *ppos)
+@@ -37,9 +36,9 @@ static ssize_t write_pmsg(struct file *file, const char __user *buf,
+ 	if (!access_ok(VERIFY_READ, buf, count))
+ 		return -EFAULT;
+ 
+-	rt_mutex_lock(&pmsg_lock);
++	mutex_lock(&pmsg_lock);
+ 	ret = psinfo->write_user(&record, buf);
+-	rt_mutex_unlock(&pmsg_lock);
++	mutex_unlock(&pmsg_lock);
+ 	return ret ? ret : count;
+ }
+ 
 -- 
 2.39.2
 
