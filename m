@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54530FBE7;
-	Mon, 15 May 2023 17:27:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ADAFC433D2;
-	Mon, 15 May 2023 17:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CBFBFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:27:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D5DC433A0;
+	Mon, 15 May 2023 17:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171647;
-	bh=43pq+UjSaKTzdKcTZSc3BjZWUVTfug1scezW8PiZqrk=;
+	s=korg; t=1684171650;
+	bh=TwDghPsd+u4A7TMfe/2NGDLvGnp9p4577uj5/Spb6Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpvNX+YaG4tJFhX2g+ta2Lqd9ttaBntmdSfOrmrkY7aEGcTxyzXlcD3EZB3yHD+Hk
-	 3yjGOczbSA/wFXK4bdAiutdai1L9kf9sETK0MltEP1VeWS7hiL24IruwpOHUGWxDKD
-	 b4HYyFnL7fEbP8VTH8Vk75cHc1BuEu7CKM/Buqt4=
+	b=mzaZ4+jOk0NI6RptW7Qi52pADkLHwETLNI8IVp9vVBRoGS5Jbo47TIaebQ6jsfsJN
+	 NnunH0fXuC0OTHDopcjO57vWcEhn28V+3tmb0zOQib1JX4AgHcfIHGXqi0dje0GJrv
+	 /LEsPbKo0hps8HVZNHh0FllvE9yHjX3b/qgLuJPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Sunil Kovvuri Goutham <sgoutham@marvell.com>,
+	Sai Krishna <saikrishnag@marvell.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/134] rxrpc: Fix hard call timeout units
-Date: Mon, 15 May 2023 18:28:30 +0200
-Message-Id: <20230515161704.200160555@linuxfoundation.org>
+Subject: [PATCH 5.15 034/134] octeontx2-af: Secure APR table update with the lock
+Date: Mon, 15 May 2023 18:28:31 +0200
+Message-Id: <20230515161704.241517030@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -42,43 +38,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 0d098d83c5d9e107b2df7f5e11f81492f56d2fe7 ]
+[ Upstream commit 048486f81d01db4d100af021ee2ea211d19732a0 ]
 
-The hard call timeout is specified in the RXRPC_SET_CALL_TIMEOUT cmsg in
-seconds, so fix the point at which sendmsg() applies it to the call to
-convert to jiffies from seconds, not milliseconds.
+APR table contains the lmtst base address of PF/VFs. These entries
+are updated by the PF/VF during the device probe. The lmtst address
+is fetched from HW using "TXN_REQ" and "ADDR_RSP_STS" registers.
+The lock tries to protect these registers from getting overwritten
+when multiple PFs invokes rvu_get_lmtaddr() simultaneously.
 
-Fixes: a158bdd3247b ("rxrpc: Fix timeout of a call that hasn't yet been granted a channel")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: "David S. Miller" <davem@davemloft.net>
-cc: Eric Dumazet <edumazet@google.com>
-cc: Jakub Kicinski <kuba@kernel.org>
-cc: Paolo Abeni <pabeni@redhat.com>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
-cc: linux-kernel@vger.kernel.org
+For example, if PF1 submit the request and got permitted before it
+reads the response and PF2 got scheduled submit the request then the
+response of PF1 is overwritten by the PF2 response.
+
+Fixes: 893ae97214c3 ("octeontx2-af: cn10k: Support configurable LMTST regions")
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Signed-off-by: Sunil Kovvuri Goutham <sgoutham@marvell.com>
+Signed-off-by: Sai Krishna <saikrishnag@marvell.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/sendmsg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/marvell/octeontx2/af/rvu_cn10k.c   | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index d4e4e94f4f987..71e40f91dd398 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -736,7 +736,7 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- 		fallthrough;
- 	case 1:
- 		if (p.call.timeouts.hard > 0) {
--			j = msecs_to_jiffies(p.call.timeouts.hard);
-+			j = p.call.timeouts.hard * HZ;
- 			now = jiffies;
- 			j += now;
- 			WRITE_ONCE(call->expect_term_by, j);
+diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c
+index 46a41cfff5751..25713287a288f 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c
++++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_cn10k.c
+@@ -60,13 +60,14 @@ static int rvu_get_lmtaddr(struct rvu *rvu, u16 pcifunc,
+ 			   u64 iova, u64 *lmt_addr)
+ {
+ 	u64 pa, val, pf;
+-	int err;
++	int err = 0;
+ 
+ 	if (!iova) {
+ 		dev_err(rvu->dev, "%s Requested Null address for transulation\n", __func__);
+ 		return -EINVAL;
+ 	}
+ 
++	mutex_lock(&rvu->rsrc_lock);
+ 	rvu_write64(rvu, BLKADDR_RVUM, RVU_AF_SMMU_ADDR_REQ, iova);
+ 	pf = rvu_get_pf(pcifunc) & 0x1F;
+ 	val = BIT_ULL(63) | BIT_ULL(14) | BIT_ULL(13) | pf << 8 |
+@@ -76,12 +77,13 @@ static int rvu_get_lmtaddr(struct rvu *rvu, u16 pcifunc,
+ 	err = rvu_poll_reg(rvu, BLKADDR_RVUM, RVU_AF_SMMU_ADDR_RSP_STS, BIT_ULL(0), false);
+ 	if (err) {
+ 		dev_err(rvu->dev, "%s LMTLINE iova transulation failed\n", __func__);
+-		return err;
++		goto exit;
+ 	}
+ 	val = rvu_read64(rvu, BLKADDR_RVUM, RVU_AF_SMMU_ADDR_RSP_STS);
+ 	if (val & ~0x1ULL) {
+ 		dev_err(rvu->dev, "%s LMTLINE iova transulation failed err:%llx\n", __func__, val);
+-		return -EIO;
++		err = -EIO;
++		goto exit;
+ 	}
+ 	/* PA[51:12] = RVU_AF_SMMU_TLN_FLIT0[57:18]
+ 	 * PA[11:0] = IOVA[11:0]
+@@ -89,8 +91,9 @@ static int rvu_get_lmtaddr(struct rvu *rvu, u16 pcifunc,
+ 	pa = rvu_read64(rvu, BLKADDR_RVUM, RVU_AF_SMMU_TLN_FLIT0) >> 18;
+ 	pa &= GENMASK_ULL(39, 0);
+ 	*lmt_addr = (pa << 12) | (iova  & 0xFFF);
+-
+-	return 0;
++exit:
++	mutex_unlock(&rvu->rsrc_lock);
++	return err;
+ }
+ 
+ static int rvu_update_lmtaddr(struct rvu *rvu, u16 pcifunc, u64 lmt_addr)
 -- 
 2.39.2
 
