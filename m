@@ -1,32 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830B5FC12
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F671C4339B;
-	Mon, 15 May 2023 17:35:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0493FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12740C433D2;
+	Mon, 15 May 2023 17:35:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172120;
-	bh=qG3t6hDwXvIDoNWas+q3ijmmtyRvzXYKHav44WDZj9w=;
+	s=korg; t=1684172123;
+	bh=4ZDjMyZlTE9Oi+5UsaZHV9CcbRHm4y+tdZZZXlM/SyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YlQRs5nY3tc8qqGMKAnoEbKTxzv9H9J10FZsbcsRKO0ycpKe0A7tm4Pwxyb/mv0Bw
-	 exKPvo/dcc90G16VdrPWgI/v+hJzPrRGaZIVkWW2zvNMdjOZ3gsisAO2stWBq3+HRU
-	 GTICCUnv++7NAha5uAA53Nyh6/pSCiBWlvHYFPrg=
+	b=GRDc0SP4r1cc6aZ9Wk2FacI+DJyBJ9I6fsCiApgBW+N0fowPxN1OsFIu9jyQGdVOs
+	 nGmZix0W2oGx1SmNSyPt/h0F7VQ0kyyTsP4tehjjQBe94+PoNBDjo7D7EJVt23SsqR
+	 1jJAD9ZKjmWu5ctzB+PC8Hpa5+/yJrbr0Eiekjzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	alsa-devel@alsa-project.org,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 051/381] sound/oss/dmasound: fix build when drivers are mixed =y/=m
-Date: Mon, 15 May 2023 18:25:02 +0200
-Message-Id: <20230515161739.138348227@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 052/381] parisc: Fix argument pointer in real64_call_asm()
+Date: Mon, 15 May 2023 18:25:03 +0200
+Message-Id: <20230515161739.186432324@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -40,166 +33,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Helge Deller <deller@gmx.de>
 
-commit 9dd7c46346ca4390f84a7ea9933005eb1b175c15 upstream.
+commit 6e3220ba3323a2c24be834aebf5d6e9f89d0993f upstream.
 
-When CONFIG_DMASOUND_ATARI=m and CONFIG_DMASOUND_Q40=y (or vice versa),
-dmasound_core.o can be built without dmasound_deinit() being defined,
-causing a build error:
+Fix the argument pointer (ap) to point to real-mode memory
+instead of virtual memory.
 
-ERROR: modpost: "dmasound_deinit" [sound/oss/dmasound/dmasound_atari.ko] undefined!
+It's interesting that this issue hasn't shown up earlier, as this could
+have happened with any 64-bit PDC ROM code.
 
-Modify dmasound_core.c and dmasound.h so that dmasound_deinit() is
-always available.
+I just noticed it because I suddenly faced a HPMC while trying to execute
+the 64-bit STI ROM code of an Visualize-FXe graphics card for the STI
+text console.
 
-The mixed modes (=y/=m) also mean that several variables and structs
-have to be declared in all cases.
-
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Link: lore.kernel.org/r/202204032138.EFT9qGEd-lkp@intel.com
-Cc: Geert Uytterhoeven <geert@linux-m68k.org>
-Cc: Jaroslav Kysela <perex@perex.cz>
-Cc: Takashi Iwai <tiwai@suse.com>
-Cc: alsa-devel@alsa-project.org
-Link: https://lore.kernel.org/r/20220405234118.24830-1-rdunlap@infradead.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/oss/dmasound/dmasound.h      |    6 ------
- sound/oss/dmasound/dmasound_core.c |   24 +-----------------------
- 2 files changed, 1 insertion(+), 29 deletions(-)
+ arch/parisc/kernel/real2.S |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/sound/oss/dmasound/dmasound.h
-+++ b/sound/oss/dmasound/dmasound.h
-@@ -88,11 +88,7 @@ static inline int ioctl_return(int __use
-      */
+--- a/arch/parisc/kernel/real2.S
++++ b/arch/parisc/kernel/real2.S
+@@ -248,9 +248,6 @@ ENTRY_CFI(real64_call_asm)
+ 	/* save fn */
+ 	copy	%arg2, %r31
  
- extern int dmasound_init(void);
--#ifdef MODULE
- extern void dmasound_deinit(void);
--#else
--#define dmasound_deinit()	do { } while (0)
--#endif
- 
- /* description of the set-up applies to either hard or soft settings */
- 
-@@ -114,9 +110,7 @@ typedef struct {
-     void *(*dma_alloc)(unsigned int, gfp_t);
-     void (*dma_free)(void *, unsigned int);
-     int (*irqinit)(void);
--#ifdef MODULE
-     void (*irqcleanup)(void);
--#endif
-     void (*init)(void);
-     void (*silence)(void);
-     int (*setFormat)(int);
---- a/sound/oss/dmasound/dmasound_core.c
-+++ b/sound/oss/dmasound/dmasound_core.c
-@@ -206,12 +206,10 @@ module_param(writeBufSize, int, 0);
- 
- MODULE_LICENSE("GPL");
- 
--#ifdef MODULE
- static int sq_unit = -1;
- static int mixer_unit = -1;
- static int state_unit = -1;
- static int irq_installed;
--#endif /* MODULE */
- 
- /* control over who can modify resources shared between play/record */
- static fmode_t shared_resource_owner;
-@@ -391,9 +389,6 @@ static const struct file_operations mixe
- 
- static void mixer_init(void)
- {
--#ifndef MODULE
--	int mixer_unit;
--#endif
- 	mixer_unit = register_sound_mixer(&mixer_fops, -1);
- 	if (mixer_unit < 0)
- 		return;
-@@ -1176,9 +1171,6 @@ static const struct file_operations sq_f
- static int sq_init(void)
- {
- 	const struct file_operations *fops = &sq_fops;
--#ifndef MODULE
--	int sq_unit;
--#endif
- 
- 	sq_unit = register_sound_dsp(fops, -1);
- 	if (sq_unit < 0) {
-@@ -1380,9 +1372,6 @@ static const struct file_operations stat
- 
- static int state_init(void)
- {
--#ifndef MODULE
--	int state_unit;
--#endif
- 	state_unit = register_sound_special(&state_fops, SND_DEV_STATUS);
- 	if (state_unit < 0)
- 		return state_unit ;
-@@ -1400,10 +1389,9 @@ static int state_init(void)
- int dmasound_init(void)
- {
- 	int res ;
--#ifdef MODULE
-+
- 	if (irq_installed)
- 		return -EBUSY;
--#endif
- 
- 	/* Set up sound queue, /dev/audio and /dev/dsp. */
- 
-@@ -1422,9 +1410,7 @@ int dmasound_init(void)
- 		printk(KERN_ERR "DMA sound driver: Interrupt initialization failed\n");
- 		return -ENODEV;
- 	}
--#ifdef MODULE
- 	irq_installed = 1;
--#endif
- 
- 	printk(KERN_INFO "%s DMA sound driver rev %03d installed\n",
- 		dmasound.mach.name, (DMASOUND_CORE_REVISION<<4) +
-@@ -1438,8 +1424,6 @@ int dmasound_init(void)
- 	return 0;
- }
- 
--#ifdef MODULE
+-	/* set up the new ap */
+-	ldo	64(%arg1), %r29
 -
- void dmasound_deinit(void)
- {
- 	if (irq_installed) {
-@@ -1458,8 +1442,6 @@ void dmasound_deinit(void)
- 		unregister_sound_dsp(sq_unit);
- }
+ 	/* load up the arg registers from the saved arg area */
+ 	/* 32-bit calling convention passes first 4 args in registers */
+ 	ldd	0*REG_SZ(%arg1), %arg0		/* note overwriting arg0 */
+@@ -262,7 +259,9 @@ ENTRY_CFI(real64_call_asm)
+ 	ldd	7*REG_SZ(%arg1), %r19
+ 	ldd	1*REG_SZ(%arg1), %arg1		/* do this one last! */
  
--#else /* !MODULE */
--
- static int dmasound_setup(char *str)
- {
- 	int ints[6], size;
-@@ -1503,8 +1485,6 @@ static int dmasound_setup(char *str)
++	/* set up real-mode stack and real-mode ap */
+ 	tophys_r1 %sp
++	ldo	-16(%sp), %r29			/* Reference param save area */
  
- __setup("dmasound=", dmasound_setup);
- 
--#endif /* !MODULE */
--
-     /*
-      *  Conversion tables
-      */
-@@ -1591,9 +1571,7 @@ char dmasound_alaw2dma8[] = {
- 
- EXPORT_SYMBOL(dmasound);
- EXPORT_SYMBOL(dmasound_init);
--#ifdef MODULE
- EXPORT_SYMBOL(dmasound_deinit);
--#endif
- EXPORT_SYMBOL(dmasound_write_sq);
- EXPORT_SYMBOL(dmasound_catchRadius);
- #ifdef HAS_8BIT_TABLES
+ 	b,l	rfi_virt2real,%r2
+ 	nop
 
 
