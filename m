@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F032DFBF8
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:14:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3559FC433D2;
-	Mon, 15 May 2023 17:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE072FBF8
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:14:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD7EC433D2;
+	Mon, 15 May 2023 17:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170846;
-	bh=eV07xSRNLhte9c73M6SfOKOpux8alZZFXYqdV0ZCBDw=;
+	s=korg; t=1684170849;
+	bh=xNOXRCWgfnAYfImjNtYYaDmHq3W8p9M3utCo1WQo9NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rAw/CbEl9UhMiJQaZNGMtwTWcDqsY55vjyAtqKNdGaXgduCGQWMKxnkvPr/i5+BIL
-	 m4jDiRra5HWPuePoxhzwsIMfN2wQxUXyfT2T5fTkulIAJW+jbnQC2l6an/CQ4smsc1
-	 Sw5XRb9/wGycRMhjjkUkjn7o+r03h4ePvBV0im8I=
+	b=VnZTtwicJW1DotXl1ExIzTTTrr4KaicU+NWesIiWYtOG10ovcDjvsgDkHVMVmW4d3
+	 4mwv0rPnoP4Zgk/UlldUjSV+Ron+cCpj3mnXSALTlAsx+aylgHqdAXqrleWMC+lUAw
+	 rWsxvvV9RQFUv8m/RMYOmeYpEX/ic1ywgEnHvP3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Bob Pearson <rpearsonhpe@gmail.com>,
-	Devesh Sharma <devesh.s.sharma@oracle.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 020/242] RDMA/rxe: Remove rxe_alloc()
-Date: Mon, 15 May 2023 18:25:46 +0200
-Message-Id: <20230515161722.539186970@linuxfoundation.org>
+Subject: [PATCH 6.2 021/242] RDMA/rxe: Change rxe_dbg to rxe_dbg_dev
+Date: Mon, 15 May 2023 18:25:47 +0200
+Message-Id: <20230515161722.568185664@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -39,247 +37,271 @@ Content-Transfer-Encoding: 8bit
 
 From: Bob Pearson <rpearsonhpe@gmail.com>
 
-[ Upstream commit 72a03627443d5bc7032ab98bd784740cd8a76f8a ]
+[ Upstream commit a9fb3287211e64b94ceb2b6b4791cc2b829d0d56 ]
 
-Currently all the object types in the rxe driver are allocated in
-rdma-core except for MRs. By moving tha kzalloc() call outside of
-the pool code the rxe_alloc() subroutine can be eliminated and code
-checking for MR as a special case can be removed.
+Replace the name rxe_dbg with rxe_dbg_dev which better matches
+the remaining rxe_dbg_xxx macros for debug messages with a
+rxe device parameter. Reuse the name rxe_dbg for debug messages
+which do not have a rxe device parameter.
 
-This patch moves the kzalloc() and kfree_rcu() calls into the mr
-registration and destruction verbs. It removes that code from
-rxe_pool.c including the rxe_alloc() subroutine which is no longer
-used.
-
-Link: https://lore.kernel.org/r/20230213225551.12437-1-rpearsonhpe@gmail.com
+Link: https://lore.kernel.org/r/20230303221623.8053-3-rpearsonhpe@gmail.com
 Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
-Reviewed-by: Devesh Sharma <devesh.s.sharma@oracle.com>
-Reviewed-by: Devesh Sharma <devesh.s.sharma@oracle.com>
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Stable-dep-of: 78b26a335310 ("RDMA/rxe: Remove tasklet call from rxe_cq.c")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mr.c    |  2 +-
- drivers/infiniband/sw/rxe/rxe_pool.c  | 46 ---------------------
- drivers/infiniband/sw/rxe/rxe_pool.h  |  3 --
- drivers/infiniband/sw/rxe/rxe_verbs.c | 59 +++++++++++++++++++--------
- 4 files changed, 44 insertions(+), 66 deletions(-)
+ drivers/infiniband/sw/rxe/rxe.c       |  2 +-
+ drivers/infiniband/sw/rxe/rxe.h       |  3 ++-
+ drivers/infiniband/sw/rxe/rxe_cq.c    |  6 +++---
+ drivers/infiniband/sw/rxe/rxe_icrc.c  |  4 ++--
+ drivers/infiniband/sw/rxe/rxe_mmap.c  |  6 +++---
+ drivers/infiniband/sw/rxe/rxe_net.c   |  4 ++--
+ drivers/infiniband/sw/rxe/rxe_qp.c    | 16 ++++++++--------
+ drivers/infiniband/sw/rxe/rxe_srq.c   |  6 +++---
+ drivers/infiniband/sw/rxe/rxe_verbs.c |  2 +-
+ 9 files changed, 25 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
-index 5e9a03831bf9f..b10aa1580a644 100644
---- a/drivers/infiniband/sw/rxe/rxe_mr.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mr.c
-@@ -731,7 +731,7 @@ int rxe_dereg_mr(struct ib_mr *ibmr, struct ib_udata *udata)
- 		return -EINVAL;
+diff --git a/drivers/infiniband/sw/rxe/rxe.c b/drivers/infiniband/sw/rxe/rxe.c
+index a3f05fdd9fac2..d57ba7a5964b9 100644
+--- a/drivers/infiniband/sw/rxe/rxe.c
++++ b/drivers/infiniband/sw/rxe/rxe.c
+@@ -187,7 +187,7 @@ static int rxe_newlink(const char *ibdev_name, struct net_device *ndev)
+ 	rxe = rxe_get_dev_from_net(ndev);
+ 	if (rxe) {
+ 		ib_device_put(&rxe->ib_dev);
+-		rxe_dbg(rxe, "already configured on %s\n", ndev->name);
++		rxe_dbg_dev(rxe, "already configured on %s\n", ndev->name);
+ 		err = -EEXIST;
+ 		goto err;
+ 	}
+diff --git a/drivers/infiniband/sw/rxe/rxe.h b/drivers/infiniband/sw/rxe/rxe.h
+index 2415f3704f576..0757acc381038 100644
+--- a/drivers/infiniband/sw/rxe/rxe.h
++++ b/drivers/infiniband/sw/rxe/rxe.h
+@@ -38,7 +38,8 @@
  
- 	rxe_cleanup(mr);
--
-+	kfree_rcu(mr);
- 	return 0;
- }
+ #define RXE_ROCE_V2_SPORT		(0xc000)
  
-diff --git a/drivers/infiniband/sw/rxe/rxe_pool.c b/drivers/infiniband/sw/rxe/rxe_pool.c
-index 1151c0b5cceab..6215c6de3a840 100644
---- a/drivers/infiniband/sw/rxe/rxe_pool.c
-+++ b/drivers/infiniband/sw/rxe/rxe_pool.c
-@@ -116,55 +116,12 @@ void rxe_pool_cleanup(struct rxe_pool *pool)
- 	WARN_ON(!xa_empty(&pool->xa));
- }
+-#define rxe_dbg(rxe, fmt, ...) ibdev_dbg(&(rxe)->ib_dev,		\
++#define rxe_dbg(fmt, ...) pr_debug("%s: " fmt "\n", __func__, ##__VA_ARGS__)
++#define rxe_dbg_dev(rxe, fmt, ...) ibdev_dbg(&(rxe)->ib_dev,		\
+ 		"%s: " fmt, __func__, ##__VA_ARGS__)
+ #define rxe_dbg_uc(uc, fmt, ...) ibdev_dbg((uc)->ibuc.device,		\
+ 		"uc#%d %s: " fmt, (uc)->elem.index, __func__, ##__VA_ARGS__)
+diff --git a/drivers/infiniband/sw/rxe/rxe_cq.c b/drivers/infiniband/sw/rxe/rxe_cq.c
+index faf49c50bbaba..519ddec29b4ba 100644
+--- a/drivers/infiniband/sw/rxe/rxe_cq.c
++++ b/drivers/infiniband/sw/rxe/rxe_cq.c
+@@ -14,12 +14,12 @@ int rxe_cq_chk_attr(struct rxe_dev *rxe, struct rxe_cq *cq,
+ 	int count;
  
--void *rxe_alloc(struct rxe_pool *pool)
--{
--	struct rxe_pool_elem *elem;
--	void *obj;
--	int err;
--
--	if (WARN_ON(!(pool->type == RXE_TYPE_MR)))
--		return NULL;
--
--	if (atomic_inc_return(&pool->num_elem) > pool->max_elem)
--		goto err_cnt;
--
--	obj = kzalloc(pool->elem_size, GFP_KERNEL);
--	if (!obj)
--		goto err_cnt;
--
--	elem = (struct rxe_pool_elem *)((u8 *)obj + pool->elem_offset);
--
--	elem->pool = pool;
--	elem->obj = obj;
--	kref_init(&elem->ref_cnt);
--	init_completion(&elem->complete);
--
--	/* allocate index in array but leave pointer as NULL so it
--	 * can't be looked up until rxe_finalize() is called
--	 */
--	err = xa_alloc_cyclic(&pool->xa, &elem->index, NULL, pool->limit,
--			      &pool->next, GFP_KERNEL);
--	if (err < 0)
--		goto err_free;
--
--	return obj;
--
--err_free:
--	kfree(obj);
--err_cnt:
--	atomic_dec(&pool->num_elem);
--	return NULL;
--}
--
- int __rxe_add_to_pool(struct rxe_pool *pool, struct rxe_pool_elem *elem,
- 				bool sleepable)
+ 	if (cqe <= 0) {
+-		rxe_dbg(rxe, "cqe(%d) <= 0\n", cqe);
++		rxe_dbg_dev(rxe, "cqe(%d) <= 0\n", cqe);
+ 		goto err1;
+ 	}
+ 
+ 	if (cqe > rxe->attr.max_cqe) {
+-		rxe_dbg(rxe, "cqe(%d) > max_cqe(%d)\n",
++		rxe_dbg_dev(rxe, "cqe(%d) > max_cqe(%d)\n",
+ 				cqe, rxe->attr.max_cqe);
+ 		goto err1;
+ 	}
+@@ -50,7 +50,7 @@ int rxe_cq_from_init(struct rxe_dev *rxe, struct rxe_cq *cq, int cqe,
+ 	cq->queue = rxe_queue_init(rxe, &cqe,
+ 			sizeof(struct rxe_cqe), type);
+ 	if (!cq->queue) {
+-		rxe_dbg(rxe, "unable to create cq\n");
++		rxe_dbg_dev(rxe, "unable to create cq\n");
+ 		return -ENOMEM;
+ 	}
+ 
+diff --git a/drivers/infiniband/sw/rxe/rxe_icrc.c b/drivers/infiniband/sw/rxe/rxe_icrc.c
+index 71bc2c1895888..fdf5f08cd8f17 100644
+--- a/drivers/infiniband/sw/rxe/rxe_icrc.c
++++ b/drivers/infiniband/sw/rxe/rxe_icrc.c
+@@ -21,7 +21,7 @@ int rxe_icrc_init(struct rxe_dev *rxe)
+ 
+ 	tfm = crypto_alloc_shash("crc32", 0, 0);
+ 	if (IS_ERR(tfm)) {
+-		rxe_dbg(rxe, "failed to init crc32 algorithm err: %ld\n",
++		rxe_dbg_dev(rxe, "failed to init crc32 algorithm err: %ld\n",
+ 			       PTR_ERR(tfm));
+ 		return PTR_ERR(tfm);
+ 	}
+@@ -51,7 +51,7 @@ static __be32 rxe_crc32(struct rxe_dev *rxe, __be32 crc, void *next, size_t len)
+ 	*(__be32 *)shash_desc_ctx(shash) = crc;
+ 	err = crypto_shash_update(shash, next, len);
+ 	if (unlikely(err)) {
+-		rxe_dbg(rxe, "failed crc calculation, err: %d\n", err);
++		rxe_dbg_dev(rxe, "failed crc calculation, err: %d\n", err);
+ 		return (__force __be32)crc32_le((__force u32)crc, next, len);
+ 	}
+ 
+diff --git a/drivers/infiniband/sw/rxe/rxe_mmap.c b/drivers/infiniband/sw/rxe/rxe_mmap.c
+index a47d72dbc5376..6b7f2bd698799 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mmap.c
++++ b/drivers/infiniband/sw/rxe/rxe_mmap.c
+@@ -79,7 +79,7 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 
+ 		/* Don't allow a mmap larger than the object. */
+ 		if (size > ip->info.size) {
+-			rxe_dbg(rxe, "mmap region is larger than the object!\n");
++			rxe_dbg_dev(rxe, "mmap region is larger than the object!\n");
+ 			spin_unlock_bh(&rxe->pending_lock);
+ 			ret = -EINVAL;
+ 			goto done;
+@@ -87,7 +87,7 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 
+ 		goto found_it;
+ 	}
+-	rxe_dbg(rxe, "unable to find pending mmap info\n");
++	rxe_dbg_dev(rxe, "unable to find pending mmap info\n");
+ 	spin_unlock_bh(&rxe->pending_lock);
+ 	ret = -EINVAL;
+ 	goto done;
+@@ -98,7 +98,7 @@ int rxe_mmap(struct ib_ucontext *context, struct vm_area_struct *vma)
+ 
+ 	ret = remap_vmalloc_range(vma, ip->obj, 0);
+ 	if (ret) {
+-		rxe_dbg(rxe, "err %d from remap_vmalloc_range\n", ret);
++		rxe_dbg_dev(rxe, "err %d from remap_vmalloc_range\n", ret);
+ 		goto done;
+ 	}
+ 
+diff --git a/drivers/infiniband/sw/rxe/rxe_net.c b/drivers/infiniband/sw/rxe/rxe_net.c
+index e02e1624bcf4d..a2ace42e95366 100644
+--- a/drivers/infiniband/sw/rxe/rxe_net.c
++++ b/drivers/infiniband/sw/rxe/rxe_net.c
+@@ -596,7 +596,7 @@ static int rxe_notify(struct notifier_block *not_blk,
+ 		rxe_port_down(rxe);
+ 		break;
+ 	case NETDEV_CHANGEMTU:
+-		rxe_dbg(rxe, "%s changed mtu to %d\n", ndev->name, ndev->mtu);
++		rxe_dbg_dev(rxe, "%s changed mtu to %d\n", ndev->name, ndev->mtu);
+ 		rxe_set_mtu(rxe, ndev->mtu);
+ 		break;
+ 	case NETDEV_CHANGE:
+@@ -608,7 +608,7 @@ static int rxe_notify(struct notifier_block *not_blk,
+ 	case NETDEV_CHANGENAME:
+ 	case NETDEV_FEAT_CHANGE:
+ 	default:
+-		rxe_dbg(rxe, "ignoring netdev event = %ld for %s\n",
++		rxe_dbg_dev(rxe, "ignoring netdev event = %ld for %s\n",
+ 			event, ndev->name);
+ 		break;
+ 	}
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index 13283ec06f95e..d5de5ba6940f1 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -19,33 +19,33 @@ static int rxe_qp_chk_cap(struct rxe_dev *rxe, struct ib_qp_cap *cap,
+ 			  int has_srq)
  {
- 	int err;
- 	gfp_t gfp_flags;
+ 	if (cap->max_send_wr > rxe->attr.max_qp_wr) {
+-		rxe_dbg(rxe, "invalid send wr = %u > %d\n",
++		rxe_dbg_dev(rxe, "invalid send wr = %u > %d\n",
+ 			 cap->max_send_wr, rxe->attr.max_qp_wr);
+ 		goto err1;
+ 	}
  
--	if (WARN_ON(pool->type == RXE_TYPE_MR))
--		return -EINVAL;
--
- 	if (atomic_inc_return(&pool->num_elem) > pool->max_elem)
- 		goto err_cnt;
+ 	if (cap->max_send_sge > rxe->attr.max_send_sge) {
+-		rxe_dbg(rxe, "invalid send sge = %u > %d\n",
++		rxe_dbg_dev(rxe, "invalid send sge = %u > %d\n",
+ 			 cap->max_send_sge, rxe->attr.max_send_sge);
+ 		goto err1;
+ 	}
  
-@@ -275,9 +232,6 @@ int __rxe_cleanup(struct rxe_pool_elem *elem, bool sleepable)
- 	if (pool->cleanup)
- 		pool->cleanup(elem);
+ 	if (!has_srq) {
+ 		if (cap->max_recv_wr > rxe->attr.max_qp_wr) {
+-			rxe_dbg(rxe, "invalid recv wr = %u > %d\n",
++			rxe_dbg_dev(rxe, "invalid recv wr = %u > %d\n",
+ 				 cap->max_recv_wr, rxe->attr.max_qp_wr);
+ 			goto err1;
+ 		}
  
--	if (pool->type == RXE_TYPE_MR)
--		kfree_rcu(elem->obj);
--
- 	atomic_dec(&pool->num_elem);
+ 		if (cap->max_recv_sge > rxe->attr.max_recv_sge) {
+-			rxe_dbg(rxe, "invalid recv sge = %u > %d\n",
++			rxe_dbg_dev(rxe, "invalid recv sge = %u > %d\n",
+ 				 cap->max_recv_sge, rxe->attr.max_recv_sge);
+ 			goto err1;
+ 		}
+ 	}
  
- 	return err;
-diff --git a/drivers/infiniband/sw/rxe/rxe_pool.h b/drivers/infiniband/sw/rxe/rxe_pool.h
-index 9d83cb32092ff..b42e26427a702 100644
---- a/drivers/infiniband/sw/rxe/rxe_pool.h
-+++ b/drivers/infiniband/sw/rxe/rxe_pool.h
-@@ -54,9 +54,6 @@ void rxe_pool_init(struct rxe_dev *rxe, struct rxe_pool *pool,
- /* free resources from object pool */
- void rxe_pool_cleanup(struct rxe_pool *pool);
+ 	if (cap->max_inline_data > rxe->max_inline_data) {
+-		rxe_dbg(rxe, "invalid max inline data = %u > %d\n",
++		rxe_dbg_dev(rxe, "invalid max inline data = %u > %d\n",
+ 			 cap->max_inline_data, rxe->max_inline_data);
+ 		goto err1;
+ 	}
+@@ -73,7 +73,7 @@ int rxe_qp_chk_init(struct rxe_dev *rxe, struct ib_qp_init_attr *init)
+ 	}
  
--/* allocate an object from pool */
--void *rxe_alloc(struct rxe_pool *pool);
--
- /* connect already allocated object to pool */
- int __rxe_add_to_pool(struct rxe_pool *pool, struct rxe_pool_elem *elem,
- 				bool sleepable);
+ 	if (!init->recv_cq || !init->send_cq) {
+-		rxe_dbg(rxe, "missing cq\n");
++		rxe_dbg_dev(rxe, "missing cq\n");
+ 		goto err1;
+ 	}
+ 
+@@ -82,14 +82,14 @@ int rxe_qp_chk_init(struct rxe_dev *rxe, struct ib_qp_init_attr *init)
+ 
+ 	if (init->qp_type == IB_QPT_GSI) {
+ 		if (!rdma_is_port_valid(&rxe->ib_dev, port_num)) {
+-			rxe_dbg(rxe, "invalid port = %d\n", port_num);
++			rxe_dbg_dev(rxe, "invalid port = %d\n", port_num);
+ 			goto err1;
+ 		}
+ 
+ 		port = &rxe->port;
+ 
+ 		if (init->qp_type == IB_QPT_GSI && port->qp_gsi_index) {
+-			rxe_dbg(rxe, "GSI QP exists for port %d\n", port_num);
++			rxe_dbg_dev(rxe, "GSI QP exists for port %d\n", port_num);
+ 			goto err1;
+ 		}
+ 	}
+diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
+index 82e37a41ced40..27ca82ec0826b 100644
+--- a/drivers/infiniband/sw/rxe/rxe_srq.c
++++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+@@ -13,13 +13,13 @@ int rxe_srq_chk_init(struct rxe_dev *rxe, struct ib_srq_init_attr *init)
+ 	struct ib_srq_attr *attr = &init->attr;
+ 
+ 	if (attr->max_wr > rxe->attr.max_srq_wr) {
+-		rxe_dbg(rxe, "max_wr(%d) > max_srq_wr(%d)\n",
++		rxe_dbg_dev(rxe, "max_wr(%d) > max_srq_wr(%d)\n",
+ 			attr->max_wr, rxe->attr.max_srq_wr);
+ 		goto err1;
+ 	}
+ 
+ 	if (attr->max_wr <= 0) {
+-		rxe_dbg(rxe, "max_wr(%d) <= 0\n", attr->max_wr);
++		rxe_dbg_dev(rxe, "max_wr(%d) <= 0\n", attr->max_wr);
+ 		goto err1;
+ 	}
+ 
+@@ -27,7 +27,7 @@ int rxe_srq_chk_init(struct rxe_dev *rxe, struct ib_srq_init_attr *init)
+ 		attr->max_wr = RXE_MIN_SRQ_WR;
+ 
+ 	if (attr->max_sge > rxe->attr.max_srq_sge) {
+-		rxe_dbg(rxe, "max_sge(%d) > max_srq_sge(%d)\n",
++		rxe_dbg_dev(rxe, "max_sge(%d) > max_srq_sge(%d)\n",
+ 			attr->max_sge, rxe->attr.max_srq_sge);
+ 		goto err1;
+ 	}
 diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
-index 9ae7cf93365c7..6803ac76ae572 100644
+index 6803ac76ae572..a40a6d0581500 100644
 --- a/drivers/infiniband/sw/rxe/rxe_verbs.c
 +++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
-@@ -867,10 +867,17 @@ static struct ib_mr *rxe_get_dma_mr(struct ib_pd *ibpd, int access)
- 	struct rxe_dev *rxe = to_rdev(ibpd->device);
- 	struct rxe_pd *pd = to_rpd(ibpd);
- 	struct rxe_mr *mr;
-+	int err;
+@@ -1093,7 +1093,7 @@ int rxe_register_device(struct rxe_dev *rxe, const char *ibdev_name)
  
--	mr = rxe_alloc(&rxe->mr_pool);
--	if (!mr)
--		return ERR_PTR(-ENOMEM);
-+	mr = kzalloc(sizeof(*mr), GFP_KERNEL);
-+	if (!mr) {
-+		err = -ENOMEM;
-+		goto err_out;
-+	}
-+
-+	err = rxe_add_to_pool(&rxe->mr_pool, mr);
-+	if (err)
-+		goto err_free;
- 
- 	rxe_get(pd);
- 	mr->ibmr.pd = ibpd;
-@@ -878,8 +885,12 @@ static struct ib_mr *rxe_get_dma_mr(struct ib_pd *ibpd, int access)
- 
- 	rxe_mr_init_dma(access, mr);
- 	rxe_finalize(mr);
--
- 	return &mr->ibmr;
-+
-+err_free:
-+	kfree(mr);
-+err_out:
-+	return ERR_PTR(err);
- }
- 
- static struct ib_mr *rxe_reg_user_mr(struct ib_pd *ibpd,
-@@ -893,9 +904,15 @@ static struct ib_mr *rxe_reg_user_mr(struct ib_pd *ibpd,
- 	struct rxe_pd *pd = to_rpd(ibpd);
- 	struct rxe_mr *mr;
- 
--	mr = rxe_alloc(&rxe->mr_pool);
--	if (!mr)
--		return ERR_PTR(-ENOMEM);
-+	mr = kzalloc(sizeof(*mr), GFP_KERNEL);
-+	if (!mr) {
-+		err = -ENOMEM;
-+		goto err_out;
-+	}
-+
-+	err = rxe_add_to_pool(&rxe->mr_pool, mr);
-+	if (err)
-+		goto err_free;
- 
- 	rxe_get(pd);
- 	mr->ibmr.pd = ibpd;
-@@ -903,14 +920,16 @@ static struct ib_mr *rxe_reg_user_mr(struct ib_pd *ibpd,
- 
- 	err = rxe_mr_init_user(rxe, start, length, iova, access, mr);
+ 	err = ib_register_device(dev, ibdev_name, NULL);
  	if (err)
--		goto err1;
-+		goto err_cleanup;
+-		rxe_dbg(rxe, "failed with error %d\n", err);
++		rxe_dbg_dev(rxe, "failed with error %d\n", err);
  
- 	rxe_finalize(mr);
--
- 	return &mr->ibmr;
- 
--err1:
-+err_cleanup:
- 	rxe_cleanup(mr);
-+err_free:
-+	kfree(mr);
-+err_out:
- 	return ERR_PTR(err);
- }
- 
-@@ -925,9 +944,15 @@ static struct ib_mr *rxe_alloc_mr(struct ib_pd *ibpd, enum ib_mr_type mr_type,
- 	if (mr_type != IB_MR_TYPE_MEM_REG)
- 		return ERR_PTR(-EINVAL);
- 
--	mr = rxe_alloc(&rxe->mr_pool);
--	if (!mr)
--		return ERR_PTR(-ENOMEM);
-+	mr = kzalloc(sizeof(*mr), GFP_KERNEL);
-+	if (!mr) {
-+		err = -ENOMEM;
-+		goto err_out;
-+	}
-+
-+	err = rxe_add_to_pool(&rxe->mr_pool, mr);
-+	if (err)
-+		goto err_free;
- 
- 	rxe_get(pd);
- 	mr->ibmr.pd = ibpd;
-@@ -935,14 +960,16 @@ static struct ib_mr *rxe_alloc_mr(struct ib_pd *ibpd, enum ib_mr_type mr_type,
- 
- 	err = rxe_mr_init_fast(max_num_sg, mr);
- 	if (err)
--		goto err1;
-+		goto err_cleanup;
- 
- 	rxe_finalize(mr);
--
- 	return &mr->ibmr;
- 
--err1:
-+err_cleanup:
- 	rxe_cleanup(mr);
-+err_free:
-+	kfree(mr);
-+err_out:
- 	return ERR_PTR(err);
- }
- 
+ 	/*
+ 	 * Note that rxe may be invalid at this point if another thread
 -- 
 2.39.2
 
