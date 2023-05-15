@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE78D512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:50:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C28C433EF;
-	Mon, 15 May 2023 16:50:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9777D512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:50:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E26DC433D2;
+	Mon, 15 May 2023 16:50:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169445;
-	bh=RcMf99sVVFYOzFuBxPyij6kdwnRsBoKd96FJsfVFXdc=;
+	s=korg; t=1684169448;
+	bh=BrgvXij3p0YCVC0fEjMbECjcdxKbY6oYm2mV2Bbpu8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UdXMbEkO0k/dG0n4aoFFq9Ng3Xyuh9YX59s51rLXWEFFtcqp7w+mRExZhgbYHzElc
-	 WaTusAVWl1lrKXwp4lDFkQ8hkMYqBtpku+2TogdFok9USRqr7LPkJKfpMr/NFrqrCx
-	 iaVFqrmYM48OVXC/i4DAsa3SW2c9+J8WueUOeuwU=
+	b=2HT3F1TkZGFLHFKOdp8T6wXA2jBec00qk6f90a2E+chzAcmMaqEa4aMatMLF424f3
+	 wIKeNg66oPM6DgePsEjup2QCtTi+3sQFTrk/KtNw10I77DNE+olLP3LqFKRP/Y6SQq
+	 y2TbwYK8w4MPD/vw1eD6uDi697okRiL79B9L6Vgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Subbaraya Sundeep <sbhatta@marvell.com>,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Geetha sowjanya <gakula@marvell.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Leo Li <sunpeng.li@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 030/246] octeontx2-pf: mcs: Match macsec ethertype along with DMAC
-Date: Mon, 15 May 2023 18:24:02 +0200
-Message-Id: <20230515161723.509277307@linuxfoundation.org>
+Subject: [PATCH 6.3 021/246] drm/amd/display: Update bounding box values for DCN321
+Date: Mon, 15 May 2023 18:23:53 +0200
+Message-Id: <20230515161723.245346828@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -38,70 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Subbaraya Sundeep <sbhatta@marvell.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit 57d00d4364f314485092667d2a48718985515deb ]
+[ Upstream commit 989cd3e76a4aab76fe7dd50090ac3fa501c537f6 ]
 
-On CN10KB silicon a single hardware macsec block is
-present and offloads macsec operations for all the
-ethernet LMACs. TCAM match with macsec ethertype 0x88e5
-alone at RX side is not sufficient to distinguish all the
-macsec interfaces created on top of netdevs. Hence append
-the DMAC of the macsec interface too. Otherwise the first
-created macsec interface only receives all the macsec traffic.
+[Why&how]
 
-Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
-Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Update bounding box values as per hardware spec
+
+Fixes: 197485c69543 ("drm/amd/display: Create dcn321_fpu file")
+Acked-by: Leo Li <sunpeng.li@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c  | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ .../amd/display/dc/dml/dcn321/dcn321_fpu.c    | 24 +++++++++----------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-index 9ec5f38d38a84..f699209978fef 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
-@@ -9,6 +9,7 @@
- #include <net/macsec.h>
- #include "otx2_common.h"
- 
-+#define MCS_TCAM0_MAC_DA_MASK		GENMASK_ULL(47, 0)
- #define MCS_TCAM0_MAC_SA_MASK		GENMASK_ULL(63, 48)
- #define MCS_TCAM1_MAC_SA_MASK		GENMASK_ULL(31, 0)
- #define MCS_TCAM1_ETYPE_MASK		GENMASK_ULL(47, 32)
-@@ -237,8 +238,10 @@ static int cn10k_mcs_write_rx_flowid(struct otx2_nic *pfvf,
- 				     struct cn10k_mcs_rxsc *rxsc, u8 hw_secy_id)
- {
- 	struct macsec_rx_sc *sw_rx_sc = rxsc->sw_rxsc;
-+	struct macsec_secy *secy = rxsc->sw_secy;
- 	struct mcs_flowid_entry_write_req *req;
- 	struct mbox *mbox = &pfvf->mbox;
-+	u64 mac_da;
- 	int ret;
- 
- 	mutex_lock(&mbox->lock);
-@@ -249,11 +252,16 @@ static int cn10k_mcs_write_rx_flowid(struct otx2_nic *pfvf,
- 		goto fail;
- 	}
- 
-+	mac_da = ether_addr_to_u64(secy->netdev->dev_addr);
-+
-+	req->data[0] = FIELD_PREP(MCS_TCAM0_MAC_DA_MASK, mac_da);
-+	req->mask[0] = ~0ULL;
-+	req->mask[0] = ~MCS_TCAM0_MAC_DA_MASK;
-+
- 	req->data[1] = FIELD_PREP(MCS_TCAM1_ETYPE_MASK, ETH_P_MACSEC);
- 	req->mask[1] = ~0ULL;
- 	req->mask[1] &= ~MCS_TCAM1_ETYPE_MASK;
- 
--	req->mask[0] = ~0ULL;
- 	req->mask[2] = ~0ULL;
- 	req->mask[3] = ~0ULL;
- 
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
+index b80cef70fa60f..383a409a3f54c 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn321/dcn321_fpu.c
+@@ -106,16 +106,16 @@ struct _vcs_dpi_soc_bounding_box_st dcn3_21_soc = {
+ 	.clock_limits = {
+ 		{
+ 			.state = 0,
+-			.dcfclk_mhz = 1564.0,
+-			.fabricclk_mhz = 400.0,
+-			.dispclk_mhz = 2150.0,
+-			.dppclk_mhz = 2150.0,
++			.dcfclk_mhz = 1434.0,
++			.fabricclk_mhz = 2250.0,
++			.dispclk_mhz = 1720.0,
++			.dppclk_mhz = 1720.0,
+ 			.phyclk_mhz = 810.0,
+ 			.phyclk_d18_mhz = 667.0,
+-			.phyclk_d32_mhz = 625.0,
++			.phyclk_d32_mhz = 313.0,
+ 			.socclk_mhz = 1200.0,
+-			.dscclk_mhz = 716.667,
+-			.dram_speed_mts = 1600.0,
++			.dscclk_mhz = 573.333,
++			.dram_speed_mts = 16000.0,
+ 			.dtbclk_mhz = 1564.0,
+ 		},
+ 	},
+@@ -125,14 +125,14 @@ struct _vcs_dpi_soc_bounding_box_st dcn3_21_soc = {
+ 	.sr_exit_z8_time_us = 285.0,
+ 	.sr_enter_plus_exit_z8_time_us = 320,
+ 	.writeback_latency_us = 12.0,
+-	.round_trip_ping_latency_dcfclk_cycles = 263,
++	.round_trip_ping_latency_dcfclk_cycles = 207,
+ 	.urgent_latency_pixel_data_only_us = 4,
+ 	.urgent_latency_pixel_mixed_with_vm_data_us = 4,
+ 	.urgent_latency_vm_data_only_us = 4,
+-	.fclk_change_latency_us = 20,
+-	.usr_retraining_latency_us = 2,
+-	.smn_latency_us = 2,
+-	.mall_allocated_for_dcn_mbytes = 64,
++	.fclk_change_latency_us = 7,
++	.usr_retraining_latency_us = 0,
++	.smn_latency_us = 0,
++	.mall_allocated_for_dcn_mbytes = 32,
+ 	.urgent_out_of_order_return_per_channel_pixel_only_bytes = 4096,
+ 	.urgent_out_of_order_return_per_channel_pixel_and_vm_bytes = 4096,
+ 	.urgent_out_of_order_return_per_channel_vm_only_bytes = 4096,
 -- 
 2.39.2
 
