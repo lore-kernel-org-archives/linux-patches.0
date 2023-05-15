@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF30FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:03:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949FCC433D2;
-	Mon, 15 May 2023 17:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA88FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:03:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E34C433EF;
+	Mon, 15 May 2023 17:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170193;
-	bh=TPCEFs6Gs0KWg4bFSeNpTS70JR5mYKAK7iYjeH5spc8=;
+	s=korg; t=1684170196;
+	bh=XcddAwIZZOax9ORc0ZUH0QwO7cooyu+6ToCAIe0GRm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mh4GlOvMVqmJUEx5sEcfAd4mr2gT0XxxgVl4tiijT3+LO9MItX7+FrfXsTVbttvpr
-	 6yJFe1ceP4iMpgpfePuwo7xuCwKJTumGfa2nMw5Z9M9tc7bcLM3noTJqiKIZJ1Ek1C
-	 cz8q77B/znF3G0yvl7FpWA8U8nWufH++dtKYmpuQ=
+	b=fV5gRwe//EVcguR1r0CQT3yJQVEDJzq2m9MdvLqPFd06ALIji2mYdwVUyw6mHEtwu
+	 78qjuoLUrKnIyBMWJKIDyPUCLUNgYpWOojtaZHI1PcaLAdyHg6DumtwxlvaWMHj/eW
+	 RALBGs09YcSQx2w7oV4nZUZ3Ggq7V/eHSKsL6WCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Manish Rangankar <mrangankar@marvell.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/239] ASoC: Intel: soc-acpi-byt: Fix "WM510205" match no longer working
-Date: Mon, 15 May 2023 18:24:48 +0200
-Message-Id: <20230515161722.343995397@linuxfoundation.org>
+Subject: [PATCH 6.1 026/239] scsi: qedi: Fix use after free bug in qedi_remove()
+Date: Mon, 15 May 2023 18:24:49 +0200
+Message-Id: <20230515161722.478235615@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,40 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit c963e2ec095cb3f855890be53f56f5a6c6fbe371 ]
+[ Upstream commit c5749639f2d0a1f6cbe187d05f70c2e7c544d748 ]
 
-Commit 7e1d728a94ca ("ASoC: Intel: soc-acpi-byt: Add new WM5102 ACPI HID")
-added an extra HID to wm5102_comp_ids.codecs, but it forgot to bump
-wm5102_comp_ids.num_codecs, causing the last codec HID in the codecs list
-to no longer work.
+In qedi_probe() we call __qedi_probe() which initializes
+&qedi->recovery_work with qedi_recovery_handler() and
+&qedi->board_disable_work with qedi_board_disable_work().
 
-Bump wm5102_comp_ids.num_codecs to fix this.
+When qedi_schedule_recovery_handler() is called, schedule_delayed_work()
+will finally start the work.
 
-Fixes: 7e1d728a94ca ("ASoC: Intel: soc-acpi-byt: Add new WM5102 ACPI HID")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230421183714.35186-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+In qedi_remove(), which is called to remove the driver, the following
+sequence may be observed:
+
+Fix this by finishing the work before cleanup in qedi_remove().
+
+CPU0                  CPU1
+
+                     |qedi_recovery_handler
+qedi_remove          |
+  __qedi_remove      |
+iscsi_host_free      |
+scsi_host_put        |
+//free shost         |
+                     |iscsi_host_for_each_session
+                     |//use qedi->shost
+
+Cancel recovery_work and board_disable_work in __qedi_remove().
+
+Fixes: 4b1068f5d74b ("scsi: qedi: Add MFW error recovery process")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Link: https://lore.kernel.org/r/20230413033422.28003-1-zyytlz.wz@163.com
+Acked-by: Manish Rangankar <mrangankar@marvell.com>
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/common/soc-acpi-intel-byt-match.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/qedi/qedi_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/intel/common/soc-acpi-intel-byt-match.c b/sound/soc/intel/common/soc-acpi-intel-byt-match.c
-index db5a92b9875a8..87c44f284971a 100644
---- a/sound/soc/intel/common/soc-acpi-intel-byt-match.c
-+++ b/sound/soc/intel/common/soc-acpi-intel-byt-match.c
-@@ -124,7 +124,7 @@ static const struct snd_soc_acpi_codecs rt5640_comp_ids = {
- };
+diff --git a/drivers/scsi/qedi/qedi_main.c b/drivers/scsi/qedi/qedi_main.c
+index df2fe7bd26d1b..f530bb0364939 100644
+--- a/drivers/scsi/qedi/qedi_main.c
++++ b/drivers/scsi/qedi/qedi_main.c
+@@ -2450,6 +2450,9 @@ static void __qedi_remove(struct pci_dev *pdev, int mode)
+ 		qedi_ops->ll2->stop(qedi->cdev);
+ 	}
  
- static const struct snd_soc_acpi_codecs wm5102_comp_ids = {
--	.num_codecs = 2,
-+	.num_codecs = 3,
- 	.codecs = { "10WM5102", "WM510204", "WM510205"},
- };
++	cancel_delayed_work_sync(&qedi->recovery_work);
++	cancel_delayed_work_sync(&qedi->board_disable_work);
++
+ 	qedi_free_iscsi_pf_param(qedi);
  
+ 	rval = qedi_ops->common->update_drv_state(qedi->cdev, false);
 -- 
 2.39.2
 
