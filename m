@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6CF101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E53CC4339B;
-	Mon, 15 May 2023 17:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58540101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF91FC433EF;
+	Mon, 15 May 2023 17:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173082;
-	bh=994bLZ6xYpG9IVG5u4Bcw1lhScoZ5z/znVyaG6bZU00=;
+	s=korg; t=1684173085;
+	bh=+SOGQE0DgX13jVQ0Tn87AsDmy9C8r4Qo2nsoo/oOqTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDjsQiIzM90Bd7SQcjBEazJhx7VPKfRsed6voa3az/vDRtrjkg4U3JONarshzw/lf
-	 kchQrm+upm/72OaKBJZ7RQW8QbRV8ehC28uOZ8j1LXTByifyxfKPF7NkgBSF5ivk6z
-	 zjZOcEAX1GhOblCaUwatm495nlahdD0W+OrD2SyU=
+	b=oWNdo4OUDk49cdUQ3eR4ljVsbrEb8KFUz7IJZ5200f01Hpen4TlY6kBYkvNCWGdxi
+	 5OHTlv3FExcIGFxK7/In5WZvs95ZarP6VuBx20qPhJpYfC2yVxBENswaIAPGZU2Nsy
+	 3qbOL0OclzFjdKwxdNftRPOG7qasbiIFJXpsWoEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
+	syzbot+91dccab7c64e2850a4e5@syzkaller.appspotmail.com,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 362/381] ext4: improve error recovery code paths in __ext4_remount()
-Date: Mon, 15 May 2023 18:30:13 +0200
-Message-Id: <20230515161753.262138976@linuxfoundation.org>
+Subject: [PATCH 5.10 363/381] ext4: fix deadlock when converting an inline directory in nojournal mode
+Date: Mon, 15 May 2023 18:30:14 +0200
+Message-Id: <20230515161753.310726298@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,60 +37,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Theodore Ts'o <tytso@mit.edu>
 
-commit 4c0b4818b1f636bc96359f7817a2d8bab6370162 upstream.
+commit f4ce24f54d9cca4f09a395f3eecce20d6bec4663 upstream.
 
-If there are failures while changing the mount options in
-__ext4_remount(), we need to restore the old mount options.
+In no journal mode, ext4_finish_convert_inline_dir() can self-deadlock
+by calling ext4_handle_dirty_dirblock() when it already has taken the
+directory lock.  There is a similar self-deadlock in
+ext4_incvert_inline_data_nolock() for data files which we'll fix at
+the same time.
 
-This commit fixes two problem.  The first is there is a chance that we
-will free the old quota file names before a potential failure leading
-to a use-after-free.  The second problem addressed in this commit is
-if there is a failed read/write to read-only transition, if the quota
-has already been suspended, we need to renable quota handling.
+A simple reproducer demonstrating the problem:
+
+    mke2fs -Fq -t ext2 -O inline_data -b 4k /dev/vdc 64
+    mount -t ext4 -o dirsync /dev/vdc /vdc
+    cd /vdc
+    mkdir file0
+    cd file0
+    touch file0
+    touch file1
+    attr -s BurnSpaceInEA -V abcde .
+    touch supercalifragilisticexpialidocious
 
 Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230506142419.984260-2-tytso@mit.edu
+Link: https://lore.kernel.org/r/20230507021608.1290720-1-tytso@mit.edu
+Reported-by: syzbot+91dccab7c64e2850a4e5@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=ba84cc80a9491d65416bc7877e1650c87530fe8a
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ fs/ext4/inline.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6028,9 +6028,6 @@ static int ext4_remount(struct super_blo
+--- a/fs/ext4/inline.c
++++ b/fs/ext4/inline.c
+@@ -1172,6 +1172,7 @@ static int ext4_finish_convert_inline_di
+ 		ext4_initialize_dirent_tail(dir_block,
+ 					    inode->i_sb->s_blocksize);
+ 	set_buffer_uptodate(dir_block);
++	unlock_buffer(dir_block);
+ 	err = ext4_handle_dirty_dirblock(handle, inode, dir_block);
+ 	if (err)
+ 		return err;
+@@ -1245,6 +1246,7 @@ static int ext4_convert_inline_data_nolo
+ 	if (!S_ISDIR(inode->i_mode)) {
+ 		memcpy(data_bh->b_data, buf, inline_size);
+ 		set_buffer_uptodate(data_bh);
++		unlock_buffer(data_bh);
+ 		error = ext4_handle_dirty_metadata(handle,
+ 						   inode, data_bh);
+ 	} else {
+@@ -1252,7 +1254,6 @@ static int ext4_convert_inline_data_nolo
+ 						       buf, inline_size);
  	}
  
- #ifdef CONFIG_QUOTA
--	/* Release old quota file names */
--	for (i = 0; i < EXT4_MAXQUOTAS; i++)
--		kfree(old_opts.s_qf_names[i]);
- 	if (enable_quota) {
- 		if (sb_any_quota_suspended(sb))
- 			dquot_resume(sb, -1);
-@@ -6040,6 +6037,9 @@ static int ext4_remount(struct super_blo
- 				goto restore_opts;
- 		}
- 	}
-+	/* Release old quota file names */
-+	for (i = 0; i < EXT4_MAXQUOTAS; i++)
-+		kfree(old_opts.s_qf_names[i]);
- #endif
- 	if (!test_opt(sb, BLOCK_VALIDITY) && sbi->s_system_blks)
- 		ext4_release_system_zone(sb);
-@@ -6059,6 +6059,13 @@ static int ext4_remount(struct super_blo
- 	return 0;
- 
- restore_opts:
-+	/*
-+	 * If there was a failing r/w to ro transition, we may need to
-+	 * re-enable quota
-+	 */
-+	if ((sb->s_flags & SB_RDONLY) && !(old_sb_flags & SB_RDONLY) &&
-+	    sb_any_quota_suspended(sb))
-+		dquot_resume(sb, -1);
- 	sb->s_flags = old_sb_flags;
- 	sbi->s_mount_opt = old_opts.s_mount_opt;
- 	sbi->s_mount_opt2 = old_opts.s_mount_opt2;
+-	unlock_buffer(data_bh);
+ out_restore:
+ 	if (error)
+ 		ext4_restore_inline_data(handle, inode, iloc, buf, inline_size);
 
 
