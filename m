@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95472FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:56:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AE79C433EF;
-	Mon, 15 May 2023 17:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFD9FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:56:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C45C433EF;
+	Mon, 15 May 2023 17:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173382;
-	bh=dikgG2imwo+P3cxb8MSGyr4TvK+hb3NCmkiOM0+zx7s=;
+	s=korg; t=1684173385;
+	bh=bEIKGAQbp/KphUsam3+MFK8xuifrtlvo7EjO6XbEiwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3E5anmBQs45sbL1GyWTr97cqj3uw6sZULnsQB1jf2LQwbvcXdWQLImjQvUk822NZ
-	 tACynN52HSg8DWbs/RyES0fYkEnKAU3ieKgejN5QtFxXvXOjbmBkIzT9OLI04Uf6Co
-	 M58D/DpXHncRHNzl0OjTKx6U4qIhtfFQK4TYL3to=
+	b=nvdlS1RuIZZkWT5sL1lgFLzemyejXi5cZZJIrBJMUtkRV1YSjqR0wKDcCtV497+zW
+	 LI7bfxmzduOAhh61kvfPidqrRZ8pOgG2nCAWpvFtaVnFdqtGtXOsxFx79hxhTOyZBh
+	 +Lrx/e0rCoovhyS4D6N0xLlX5dbmxz+UBuVWalRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 047/282] firmware: qcom_scm: Clear download bit during reboot
-Date: Mon, 15 May 2023 18:27:05 +0200
-Message-Id: <20230515161723.670847006@linuxfoundation.org>
+Subject: [PATCH 5.4 038/282] arm64: dts: renesas: r8a77990: Remove bogus voltages from OPP table
+Date: Mon, 15 May 2023 18:26:56 +0200
+Message-Id: <20230515161723.412051162@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,37 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mukesh Ojha <quic_mojha@quicinc.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 781d32d1c9709fd25655c4e3e3e15370ae4ae4db ]
+[ Upstream commit fb76b0fae3ca880363214e1dcd6513ab8bd529e7 ]
 
-During normal restart of a system download bit should
-be cleared irrespective of whether download mode is
-set or not.
+According to the R-Car Series, 3rd Generation Hardware User’s Manual
+Rev. 2.30, the System CPU cores on R-Car E3 do not have their own power
+supply, but use the common internal power supply (typical 1.03V).
 
-Fixes: 8c1b7dc9ba22 ("firmware: qcom: scm: Expose download-mode control")
-Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/1678979666-551-1-git-send-email-quic_mojha@quicinc.com
+Hence remove the "opp-microvolt" properties from the Operating
+Performance Points table.  They are optional, and unused, when none of
+the CPU nodes is tied to a regulator using the "cpu-supply" property.
+
+Fixes: dd7188eb4ed128dc ("arm64: dts: renesas: r8a77990: Add OPPs table for cpu devices")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/9232578d9d395d529f64db3333a371e31327f459.1676560856.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/qcom_scm.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/arm64/boot/dts/renesas/r8a77990.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index b9fdc20b4eb9b..eda25d506059b 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -585,8 +585,7 @@ static int qcom_scm_probe(struct platform_device *pdev)
- static void qcom_scm_shutdown(struct platform_device *pdev)
- {
- 	/* Clean shutdown, disable download mode to allow normal restart */
--	if (download_mode)
--		qcom_scm_set_download_mode(false);
-+	qcom_scm_set_download_mode(false);
- }
- 
- static const struct of_device_id qcom_scm_dt_match[] = {
+diff --git a/arch/arm64/boot/dts/renesas/r8a77990.dtsi b/arch/arm64/boot/dts/renesas/r8a77990.dtsi
+index dabee157119f9..82efc8a3627d9 100644
+--- a/arch/arm64/boot/dts/renesas/r8a77990.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a77990.dtsi
+@@ -60,17 +60,14 @@
+ 		opp-shared;
+ 		opp-800000000 {
+ 			opp-hz = /bits/ 64 <800000000>;
+-			opp-microvolt = <820000>;
+ 			clock-latency-ns = <300000>;
+ 		};
+ 		opp-1000000000 {
+ 			opp-hz = /bits/ 64 <1000000000>;
+-			opp-microvolt = <820000>;
+ 			clock-latency-ns = <300000>;
+ 		};
+ 		opp-1200000000 {
+ 			opp-hz = /bits/ 64 <1200000000>;
+-			opp-microvolt = <820000>;
+ 			clock-latency-ns = <300000>;
+ 			opp-suspend;
+ 		};
 -- 
 2.39.2
 
