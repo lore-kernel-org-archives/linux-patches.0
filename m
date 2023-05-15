@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB1E17730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:04:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1094C433D2;
-	Mon, 15 May 2023 18:04:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECB417730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:05:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F55C433EF;
+	Mon, 15 May 2023 18:04:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173897;
-	bh=nQORE5W4ginFr1jU/UwbyPYMhs+f07NBBLHya7FjedA=;
+	s=korg; t=1684173900;
+	bh=E2LngIcH5FPyqbbjVe7W+U69rqjM/pwlC9qSjWZBaE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4rvml0d1A0yc83Q8DIqUYDN6KLwHBtfieNNFWNMhpkxyDF10ErRR7EfqH6UOGcgf
-	 SA75KAkWXtnItTotlzholy0X1VBWuOSPKkLNmvm72uXSEFYc6rsIGO9WRuN2n1zOyf
-	 ak6WJkcERIba15y7vX3FCUOZ9ELpHaQCz9Qng0zU=
+	b=MSXxfEoOOyIry+LfuUTko2B+9/iB8s30/tPYJlssCTCzfGXErdZkLOOuvcSf16Xpy
+	 U082NN2SBcLJFm+jWfrDU+o8ES4Bv73BG684THxobyGpS/jLB+ZiOWjb11hqLs8nnY
+	 lJj5QSQOyOnwpfjcIX3pNb+5vV1ehv0wmm5ni3TI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenliang Wang <wangwenliang.1995@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 234/282] virtio_net: suppress cpu stall when free_unused_bufs
-Date: Mon, 15 May 2023 18:30:12 +0200
-Message-Id: <20230515161729.238567164@linuxfoundation.org>
+	Andrey Avdeev <jamesstoun@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.4 243/282] platform/x86: touchscreen_dmi: Add info for the Dexp Ursus KX210i
+Date: Mon, 15 May 2023 18:30:21 +0200
+Message-Id: <20230515161729.541311641@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -36,44 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenliang Wang <wangwenliang.1995@bytedance.com>
+From: Andrey Avdeev <jamesstoun@gmail.com>
 
-[ Upstream commit f8bb5104394560e29017c25bcade4c6b7aabd108 ]
+commit 4b65f95c87c35699bc6ad540d6b9dd7f950d0924 upstream.
 
-For multi-queue and large ring-size use case, the following error
-occurred when free_unused_bufs:
-rcu: INFO: rcu_sched self-detected stall on CPU.
+Add touchscreen info for the Dexp Ursus KX210i
 
-Fixes: 986a4f4d452d ("virtio_net: multiqueue support")
-Signed-off-by: Wenliang Wang <wangwenliang.1995@bytedance.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Andrey Avdeev <jamesstoun@gmail.com>
+Link: https://lore.kernel.org/r/ZE4gRgzRQCjXFYD0@avdeevavpc
+Cc: stable@vger.kernel.org
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/virtio_net.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/touchscreen_dmi.c |   24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index b77181f04b119..7922e833620e8 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -2822,12 +2822,14 @@ static void free_unused_bufs(struct virtnet_info *vi)
- 		struct virtqueue *vq = vi->sq[i].vq;
- 		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL)
- 			virtnet_sq_free_unused_buf(vq, buf);
-+		cond_resched();
- 	}
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -232,6 +232,22 @@ static const struct ts_dmi_data dexp_urs
+ 	.properties	= dexp_ursus_7w_props,
+ };
  
- 	for (i = 0; i < vi->max_queue_pairs; i++) {
- 		struct virtqueue *vq = vi->rq[i].vq;
- 		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL)
- 			virtnet_rq_free_unused_buf(vq, buf);
-+		cond_resched();
- 	}
- }
- 
--- 
-2.39.2
-
++static const struct property_entry dexp_ursus_kx210i_props[] = {
++	PROPERTY_ENTRY_U32("touchscreen-min-x", 5),
++	PROPERTY_ENTRY_U32("touchscreen-min-y",  2),
++	PROPERTY_ENTRY_U32("touchscreen-size-x", 1720),
++	PROPERTY_ENTRY_U32("touchscreen-size-y", 1137),
++	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-dexp-ursus-kx210i.fw"),
++	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
++	PROPERTY_ENTRY_BOOL("silead,home-button"),
++	{ }
++};
++
++static const struct ts_dmi_data dexp_ursus_kx210i_data = {
++	.acpi_name	= "MSSL1680:00",
++	.properties	= dexp_ursus_kx210i_props,
++};
++
+ static const struct property_entry digma_citi_e200_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1980),
+ 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1500),
+@@ -774,6 +790,14 @@ static const struct dmi_system_id touchs
+ 		},
+ 	},
+ 	{
++		/* DEXP Ursus KX210i */
++		.driver_data = (void *)&dexp_ursus_kx210i_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "INSYDE Corp."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "S107I"),
++		},
++	},
++	{
+ 		/* Digma Citi E200 */
+ 		.driver_data = (void *)&digma_citi_e200_data,
+ 		.matches = {
 
 
