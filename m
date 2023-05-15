@@ -1,35 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7994FBF0;
-	Mon, 15 May 2023 16:52:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B5AC433D2;
-	Mon, 15 May 2023 16:52:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202DFFBF0;
+	Mon, 15 May 2023 16:52:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C56CC433EF;
+	Mon, 15 May 2023 16:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169568;
-	bh=wtIg1Lf9d2g+/GUmNSXOd+V3StUGkLws2IW+9IiGITU=;
+	s=korg; t=1684169571;
+	bh=oGbSyybgHOiv+yB1HSOexqXpS711Yac1vMP33T06qQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F64AwF5La1ZTiYRg8+9NX4QMOhLFQ5tVci7VIcsJg0qNp/2I2jQFC4TCcD+uVImMj
-	 JAVlyRr3GydNypcfasziC3DPayiw0qI9rhFI3H4pR5mkmmLF6GcmNGTrJQQZh36Za+
-	 HhB5RwWeOLAdUxNcEkg2XJ+XwGXO9EVdZnj1HYB0=
+	b=kl8SwcAsHfNFr8WWeUaSPyte9sTxgdd12aXeQ2JoTY8Ji0kmUcoDyo7/5e2GI+pSl
+	 LPZbwW+zxFW1bbhZSoz770AZ+915IoR5FIIOb9z+xCAEupiM/ieL2qbx3DJ+nC77GF
+	 EahAo1OIIUCTNqBdfLu+3nI1Htw06McXwrPlo3rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
 	Ian Rogers <irogers@google.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andres Freund <andres@anarazel.de>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
 	Mark Rutland <mark.rutland@arm.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	=?UTF-8?q?Martin=20Li=C5=A1ka?= <mliska@suse.cz>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Pavithra Gurushankar <gpavithrasha@gmail.com>,
 	Peter Zijlstra <peterz@infradead.org>,
-	bpf@vger.kernel.org,
+	Quentin Monnet <quentin@isovalent.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Stephane Eranian <eranian@google.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Tom Rix <trix@redhat.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	llvm@lists.linux.dev,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 100/246] perf lock contention: Fix compiler builtin detection
-Date: Mon, 15 May 2023 18:25:12 +0200
-Message-Id: <20230515161725.583644601@linuxfoundation.org>
+Subject: [PATCH 6.3 101/246] perf build: Support python/perf.so testing
+Date: Mon, 15 May 2023 18:25:13 +0200
+Message-Id: <20230515161725.613015792@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -45,49 +57,100 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 17535a33a9c1e4fb52f3db1d72a7ddbe4cea1a2e ]
+[ Upstream commit 7a9b223ca0761a7c7c72e569b86b84a907aa0f92 ]
 
-__has_builtin was passed the macro rather than the actual builtin
-feature. The builtin test isn't sufficient and a clang version test
-also needs to be performed.
+Add a build target to echo the python/perf.so's name from
+Makefile.perf. Use it in tests/make so the correct target is built and
+tested for.
 
-Fixes: 1bece1351c653c3d ("perf lock contention: Support old rw_semaphore type")
-Reviewed-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: caec54705adb73b0 ("perf build: Fix python/perf.so library's name")
 Signed-off-by: Ian Rogers <irogers@google.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andres Freund <andres@anarazel.de>
+Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Martin KaFai Lau <martin.lau@kernel.org>
+Cc: Martin Liška <mliska@suse.cz>
 Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Nathan Chancellor <nathan@kernel.org>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Pavithra Gurushankar <gpavithrasha@gmail.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: bpf@vger.kernel.org
-Link: https://lore.kernel.org/r/20230308003020.3653271-1-irogers@google.com
+Cc: Quentin Monnet <quentin@isovalent.com>
+Cc: Roberto Sassu <roberto.sassu@huawei.com>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Cc: Tom Rix <trix@redhat.com>
+Cc: Yang Jihong <yangjihong1@huawei.com>
+Cc: llvm@lists.linux.dev
+Link: https://lore.kernel.org/r/20230311065753.3012826-2-irogers@google.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf_skel/lock_contention.bpf.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/Makefile.perf | 7 +++++--
+ tools/perf/tests/make    | 5 +++--
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/util/bpf_skel/lock_contention.bpf.c b/tools/perf/util/bpf_skel/lock_contention.bpf.c
-index e6007eaeda1a6..141b36d13b19a 100644
---- a/tools/perf/util/bpf_skel/lock_contention.bpf.c
-+++ b/tools/perf/util/bpf_skel/lock_contention.bpf.c
-@@ -182,7 +182,13 @@ static inline struct task_struct *get_lock_owner(__u64 lock, __u32 flags)
- 		struct mutex *mutex = (void *)lock;
- 		owner = BPF_CORE_READ(mutex, owner.counter);
- 	} else if (flags == LCB_F_READ || flags == LCB_F_WRITE) {
--#if __has_builtin(bpf_core_type_matches)
-+	/*
-+	 * Support for the BPF_TYPE_MATCHES argument to the
-+	 * __builtin_preserve_type_info builtin was added at some point during
-+	 * development of clang 15 and it's what is needed for
-+	 * bpf_core_type_matches.
-+	 */
-+#if __has_builtin(__builtin_preserve_type_info) && __clang_major__ >= 15
- 		if (bpf_core_type_matches(struct rw_semaphore___old)) {
- 			struct rw_semaphore___old *rwsem = (void *)lock;
- 			owner = (unsigned long)BPF_CORE_READ(rwsem, owner);
+diff --git a/tools/perf/Makefile.perf b/tools/perf/Makefile.perf
+index bac9272682b75..2fcee585b225d 100644
+--- a/tools/perf/Makefile.perf
++++ b/tools/perf/Makefile.perf
+@@ -647,13 +647,16 @@ all: shell_compatibility_test $(ALL_PROGRAMS) $(LANG_BINDINGS) $(OTHER_PROGRAMS)
+ # Create python binding output directory if not already present
+ _dummy := $(shell [ -d '$(OUTPUT)python' ] || mkdir -p '$(OUTPUT)python')
+ 
+-$(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX): $(PYTHON_EXT_SRCS) $(PYTHON_EXT_DEPS) $(LIBPERF)
++$(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX): $(PYTHON_EXT_SRCS) $(PYTHON_EXT_DEPS) $(LIBPERF) $(LIBSUBCMD)
+ 	$(QUIET_GEN)LDSHARED="$(CC) -pthread -shared" \
+         CFLAGS='$(CFLAGS)' LDFLAGS='$(LDFLAGS)' \
+ 	  $(PYTHON_WORD) util/setup.py \
+ 	  --quiet build_ext; \
+ 	cp $(PYTHON_EXTBUILD_LIB)perf*.so $(OUTPUT)python/
+ 
++python_perf_target:
++	@echo "Target is: $(OUTPUT)python/perf$(PYTHON_EXTENSION_SUFFIX)"
++
+ please_set_SHELL_PATH_to_a_more_modern_shell:
+ 	$(Q)$$(:)
+ 
+@@ -1152,7 +1155,7 @@ FORCE:
+ .PHONY: all install clean config-clean strip install-gtk
+ .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
+ .PHONY: .FORCE-PERF-VERSION-FILE TAGS tags cscope FORCE prepare
+-.PHONY: archheaders
++.PHONY: archheaders python_perf_target
+ 
+ endif # force_fixdep
+ 
+diff --git a/tools/perf/tests/make b/tools/perf/tests/make
+index 009d6efb673ce..deb37fb982e97 100644
+--- a/tools/perf/tests/make
++++ b/tools/perf/tests/make
+@@ -62,10 +62,11 @@ lib = lib
+ endif
+ 
+ has = $(shell which $1 2>/dev/null)
++python_perf_so := $(shell $(MAKE) python_perf_target|grep "Target is:"|awk '{print $$3}')
+ 
+ # standard single make variable specified
+ make_clean_all      := clean all
+-make_python_perf_so := python/perf.so
++make_python_perf_so := $(python_perf_so)
+ make_debug          := DEBUG=1
+ make_no_libperl     := NO_LIBPERL=1
+ make_no_libpython   := NO_LIBPYTHON=1
+@@ -204,7 +205,7 @@ test_make_doc    := $(test_ok)
+ test_make_help_O := $(test_ok)
+ test_make_doc_O  := $(test_ok)
+ 
+-test_make_python_perf_so := test -f $(PERF_O)/python/perf.so
++test_make_python_perf_so := test -f $(PERF_O)/$(python_perf_so)
+ 
+ test_make_perf_o           := test -f $(PERF_O)/perf.o
+ test_make_util_map_o       := test -f $(PERF_O)/util/map.o
 -- 
 2.39.2
 
