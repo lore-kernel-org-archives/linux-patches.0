@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06670E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620F4C433D2;
-	Mon, 15 May 2023 16:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D55FE573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CE3C433D2;
+	Mon, 15 May 2023 16:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168921;
-	bh=7d2QRqwq1SzFZRmBVYbxz9gYBoj1JEiV7lYWBs8fBS0=;
+	s=korg; t=1684168925;
+	bh=KWvhPX1ixnFSOGoaO/lkNV+DjU9KFtgggDeBOTyELKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qey3WnU1f29LLADWfepgIAyio+6RQQLxC+YnreFkFsLk+vAdd5RGgazhogss59UKY
-	 6Q4wrmYxUOO64Qy7n3rqCAckMWYeqqR8QGFs3zlvoRDpC27pMKFUf34XT45+6LdOUS
-	 RT2XcsIqCEwTrPLZ05ifdVKZeAJoaFVgM92rTg/0=
+	b=pawv6Z16ChBibbY3MY//QwdHy9VnJpHufcFO/XpMhsqs6It4sRb8DbvrtY8Xiq7dL
+	 yEF4gdoQeDFSHgIWZvmXhoCOxoSU4/armhXiLeUpqIaXPCFGqM3H5O4P83QmFy0A+6
+	 opkgPOVr/ykDDuh9eEulNOf9/jyO860MdLg0j+tU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 057/191] scsi: target: iscsit: Fix TAS handling during conn cleanup
-Date: Mon, 15 May 2023 18:24:54 +0200
-Message-Id: <20230515161709.283519994@linuxfoundation.org>
+Subject: [PATCH 4.19 084/191] usb: gadget: udc: renesas_usb3: Fix use after free bug in renesas_usb3_remove due to race condition
+Date: Mon, 15 May 2023 18:25:21 +0200
+Message-Id: <20230515161710.324100110@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,65 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Christie <michael.christie@oracle.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit cc79da306ebb2edb700c3816b90219223182ac3c ]
+[ Upstream commit 2b947f8769be8b8181dc795fd292d3e7120f5204 ]
 
-Fix a bug added in commit f36199355c64 ("scsi: target: iscsi: Fix cmd abort
-fabric stop race").
+In renesas_usb3_probe, role_work is bound with renesas_usb3_role_work.
+renesas_usb3_start will be called to start the work.
 
-If CMD_T_TAS is set on the se_cmd we must call iscsit_free_cmd() to do the
-last put on the cmd and free it, because the connection is down and we will
-not up sending the response and doing the put from the normal I/O
-path.
+If we remove the driver which will call usbhs_remove, there may be
+an unfinished work. The possible sequence is as follows:
 
-Add a check for CMD_T_TAS in iscsit_release_commands_from_conn() so we now
-detect this case and run iscsit_free_cmd().
+CPU0                  			CPU1
 
-Fixes: f36199355c64 ("scsi: target: iscsi: Fix cmd abort fabric stop race")
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20230319015620.96006-9-michael.christie@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+                    			 renesas_usb3_role_work
+renesas_usb3_remove
+usb_role_switch_unregister
+device_unregister
+kfree(sw)
+//free usb3->role_sw
+                    			 usb_role_switch_set_role
+                    			 //use usb3->role_sw
+
+The usb3->role_sw could be freed under such circumstance and then
+used in usb_role_switch_set_role.
+
+This bug was found by static analysis. And note that removing a
+driver is a root-only operation, and should never happen in normal
+case. But the root user may directly remove the device which
+will also trigger the remove function.
+
+Fix it by canceling the work before cleanup in the renesas_usb3_remove.
+
+Fixes: 39facfa01c9f ("usb: gadget: udc: renesas_usb3: Add register of usb role switch")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Link: https://lore.kernel.org/r/20230320062931.505170-1-zyytlz.wz@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target.c | 16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ drivers/usb/gadget/udc/renesas_usb3.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index 58ccded1be857..7738e249c4a24 100644
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -4056,9 +4056,12 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
- 	list_for_each_entry_safe(cmd, cmd_tmp, &tmp_list, i_conn_node) {
- 		struct se_cmd *se_cmd = &cmd->se_cmd;
+diff --git a/drivers/usb/gadget/udc/renesas_usb3.c b/drivers/usb/gadget/udc/renesas_usb3.c
+index c17d7a71e29a3..013db752d55da 100644
+--- a/drivers/usb/gadget/udc/renesas_usb3.c
++++ b/drivers/usb/gadget/udc/renesas_usb3.c
+@@ -2478,6 +2478,7 @@ static int renesas_usb3_remove(struct platform_device *pdev)
+ 	debugfs_remove_recursive(usb3->dentry);
+ 	device_remove_file(&pdev->dev, &dev_attr_role);
  
--		if (se_cmd->se_tfo != NULL) {
--			spin_lock_irq(&se_cmd->t_state_lock);
--			if (se_cmd->transport_state & CMD_T_ABORTED) {
-+		if (!se_cmd->se_tfo)
-+			continue;
-+
-+		spin_lock_irq(&se_cmd->t_state_lock);
-+		if (se_cmd->transport_state & CMD_T_ABORTED) {
-+			if (!(se_cmd->transport_state & CMD_T_TAS))
- 				/*
- 				 * LIO's abort path owns the cleanup for this,
- 				 * so put it back on the list and let
-@@ -4066,11 +4069,10 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
- 				 */
- 				list_move_tail(&cmd->i_conn_node,
- 					       &conn->conn_cmd_list);
--			} else {
--				se_cmd->transport_state |= CMD_T_FABRIC_STOP;
--			}
--			spin_unlock_irq(&se_cmd->t_state_lock);
-+		} else {
-+			se_cmd->transport_state |= CMD_T_FABRIC_STOP;
- 		}
-+		spin_unlock_irq(&se_cmd->t_state_lock);
- 	}
- 	spin_unlock_bh(&conn->cmd_lock);
++	cancel_work_sync(&usb3->role_work);
+ 	usb_role_switch_unregister(usb3->role_sw);
  
+ 	usb_del_gadget_udc(&usb3->gadget);
 -- 
 2.39.2
 
