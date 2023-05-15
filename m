@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B87FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89314C433EF;
-	Mon, 15 May 2023 17:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FA5FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A775C433D2;
+	Mon, 15 May 2023 17:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171398;
-	bh=doUGeYeK5D6hC+5KFMRRy2mVHjf3LgxF2nqwGpUT1Cs=;
+	s=korg; t=1684171401;
+	bh=IcUzBw2bJUhkxixdzg5JVu4DLN2PnXV8cHT1T81XTTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1QuLC0j4ry3mxTN0qIExh5gl155ft2NtKhIBwW2D1gXzBvVRJu6rYIotuWIFUk9t
-	 11fQzusdatBckcVWvOED8O2GxAOxA3kvk93KunL0+fekN37M96tPWoNAC37kkKlHbg
-	 GBRhBkRQjw/rJciapZ1535lRvWHimKffGId9ClI8=
+	b=snOPAKMlNmMp7DLHbL/g9Yvc/UOZNxNNxmPgZOVzqitfpiTxJzDz1E9lIZAz2NrqT
+	 u4wWVHxpApTKlRZj1gERV/FpFLWdcg3SAQ+v/I+82rBFeqiHbm8inxPI+7Y98uoXYc
+	 0JKkBudfEYM/0GMno48lc4De1sGLpXOxIPEWvHwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
-	Veerabadhran Gopalakrishnan <Veerabadhran.Gopalakrishnan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 196/242] drm/amdgpu/jpeg: Remove harvest checking for JPEG3
-Date: Mon, 15 May 2023 18:28:42 +0200
-Message-Id: <20230515161727.825961259@linuxfoundation.org>
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Uma Shankar <uma.shankar@intel.com>,
+	Animesh Manna <animesh.manna@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.2 170/242] drm/i915/color: Fix typo for Plane CSC indexes
+Date: Mon, 15 May 2023 18:28:16 +0200
+Message-Id: <20230515161726.980272377@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,30 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-commit 5b94db73e45e2e6c2840f39c022fd71dfa47fc58 upstream.
+commit 2efc8e1001acfdc143cf2d25a08a4974c322e2a8 upstream.
 
-Register CC_UVD_HARVESTING is obsolete for JPEG 3.1.2
+Replace _PLANE_INPUT_CSC_RY_GY_2_* with _PLANE_CSC_RY_GY_2_*
+for Plane CSC
 
-Signed-off-by: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
-Reviewed-by: Veerabadhran Gopalakrishnan <Veerabadhran.Gopalakrishnan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+Fixes: 6eba56f64d5d ("drm/i915/pxp: black pixels on pxp disabled")
+
+Cc: <stable@vger.kernel.org>
+
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Reviewed-by: Uma Shankar <uma.shankar@intel.com>
+Signed-off-by: Animesh Manna <animesh.manna@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230330150104.2923519-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit e39c76b2160bbd005587f978d29603ef790aefcd)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/i915_reg.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/jpeg_v3_0.c
-@@ -54,6 +54,7 @@ static int jpeg_v3_0_early_init(void *ha
+--- a/drivers/gpu/drm/i915/i915_reg.h
++++ b/drivers/gpu/drm/i915/i915_reg.h
+@@ -7612,8 +7612,8 @@ enum skl_power_gate {
  
- 	switch (adev->ip_versions[UVD_HWIP][0]) {
- 	case IP_VERSION(3, 1, 1):
-+	case IP_VERSION(3, 1, 2):
- 		break;
- 	default:
- 		harvest = RREG32_SOC15(JPEG, 0, mmCC_UVD_HARVESTING);
+ #define _PLANE_CSC_RY_GY_1(pipe)	_PIPE(pipe, _PLANE_CSC_RY_GY_1_A, \
+ 					      _PLANE_CSC_RY_GY_1_B)
+-#define _PLANE_CSC_RY_GY_2(pipe)	_PIPE(pipe, _PLANE_INPUT_CSC_RY_GY_2_A, \
+-					      _PLANE_INPUT_CSC_RY_GY_2_B)
++#define _PLANE_CSC_RY_GY_2(pipe)	_PIPE(pipe, _PLANE_CSC_RY_GY_2_A, \
++					      _PLANE_CSC_RY_GY_2_B)
+ #define PLANE_CSC_COEFF(pipe, plane, index)	_MMIO_PLANE(plane, \
+ 							    _PLANE_CSC_RY_GY_1(pipe) +  (index) * 4, \
+ 							    _PLANE_CSC_RY_GY_2(pipe) + (index) * 4)
 
 
