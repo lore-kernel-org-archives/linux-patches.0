@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B94F9FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DEAC433EF;
-	Mon, 15 May 2023 16:51:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BFDFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7997C433D2;
+	Mon, 15 May 2023 16:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169513;
-	bh=kRa/bjtKIZol98kBkfkNCuv5f4XFIPOMp9eF/zVnAq0=;
+	s=korg; t=1684169516;
+	bh=2CpyPyxBfC2wsCt3WW3S9wDelkzwsiNvUhAcLcGys0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lKyLUECQ+U0+RB3QymbMaoOsS5qYTrXb242uW+018zPNzTeOmcRwDsWzn3Ro+zOWC
-	 kGhCqw1ITwm3ooSjRtZJb9KtZsf0+G5oJqS5OPjqM5640sIDbl7+ivnO0AymevXn88
-	 S+DEJkt4phkRd7o/dgchY1f5XmOk+afRdJRbqwZc=
+	b=Bltw/BdZvq3yh6jVyoJAcaWRpp7RdO7pVtHNHtNgMQXebnQ5RHdiIfo/o6KaNmCMO
+	 w/0Lq1Q2jUeOvZrPIg5S7cWtq1CdZftQuO5JLwDe/VpyDuLp8Je2dRTWUwoQoXzdNg
+	 RNn5SfuPTyNXESYuOLS4KHRb6wBV4LjnAOBfRMaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rvfg <i@rvf6.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nick Hawkins <nick.hawkins@hpe.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 081/246] netfilter: nf_tables: fix ct untracked match breakage
-Date: Mon, 15 May 2023 18:24:53 +0200
-Message-Id: <20230515161725.009039005@linuxfoundation.org>
+Subject: [PATCH 6.3 082/246] i2c: gxp: fix build failure without CONFIG_I2C_SLAVE
+Date: Mon, 15 May 2023 18:24:54 +0200
+Message-Id: <20230515161725.038027340@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,55 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit f057b63bc11d86a98176de31b437e46789f44d8f ]
+[ Upstream commit 5d388143fa6c351d985ffd23ea50c91c8839141b ]
 
-"ct untracked" no longer works properly due to erroneous NFT_BREAK.
-We have to check ctinfo enum first.
+The gxp_i2c_slave_irq_handler() is hidden in an #ifdef, but the
+caller uses an IS_ENABLED() check:
 
-Fixes: d9e789147605 ("netfilter: nf_tables: avoid retpoline overhead for some ct expression calls")
-Reported-by: Rvfg <i@rvf6.com>
-Link: https://marc.info/?l=netfilter&m=168294996212038&w=2
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+drivers/i2c/busses/i2c-gxp.c: In function 'gxp_i2c_irq_handler':
+drivers/i2c/busses/i2c-gxp.c:467:29: error: implicit declaration of function 'gxp_i2c_slave_irq_handler'; did you mean 'gxp_i2c_irq_handler'? [-Werror=implicit-function-declaration]
+
+It has to consistently use one method or the other to avoid warnings,
+so move to IS_ENABLED() here for readability and build coverage, and
+move the #ifdef in linux/i2c.h to allow building it as dead code.
+
+Fixes: 4a55ed6f89f5 ("i2c: Add GXP SoC I2C Controller")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Nick Hawkins <nick.hawkins@hpe.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct_fast.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-gxp.c | 2 --
+ include/linux/i2c.h          | 4 ++--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_ct_fast.c b/net/netfilter/nft_ct_fast.c
-index 89983b0613fa3..e684c8a918487 100644
---- a/net/netfilter/nft_ct_fast.c
-+++ b/net/netfilter/nft_ct_fast.c
-@@ -15,10 +15,6 @@ void nft_ct_get_fast_eval(const struct nft_expr *expr,
- 	unsigned int state;
+diff --git a/drivers/i2c/busses/i2c-gxp.c b/drivers/i2c/busses/i2c-gxp.c
+index d4b55d989a268..8ea3fb5e4c7f7 100644
+--- a/drivers/i2c/busses/i2c-gxp.c
++++ b/drivers/i2c/busses/i2c-gxp.c
+@@ -353,7 +353,6 @@ static void gxp_i2c_chk_data_ack(struct gxp_i2c_drvdata *drvdata)
+ 	writew(value, drvdata->base + GXP_I2CMCMD);
+ }
  
- 	ct = nf_ct_get(pkt->skb, &ctinfo);
--	if (!ct) {
--		regs->verdict.code = NFT_BREAK;
--		return;
--	}
+-#if IS_ENABLED(CONFIG_I2C_SLAVE)
+ static bool gxp_i2c_slave_irq_handler(struct gxp_i2c_drvdata *drvdata)
+ {
+ 	u8 value;
+@@ -437,7 +436,6 @@ static bool gxp_i2c_slave_irq_handler(struct gxp_i2c_drvdata *drvdata)
  
- 	switch (priv->key) {
- 	case NFT_CT_STATE:
-@@ -30,6 +26,16 @@ void nft_ct_get_fast_eval(const struct nft_expr *expr,
- 			state = NF_CT_STATE_INVALID_BIT;
- 		*dest = state;
- 		return;
-+	default:
-+		break;
-+	}
-+
-+	if (!ct) {
-+		regs->verdict.code = NFT_BREAK;
-+		return;
-+	}
-+
-+	switch (priv->key) {
- 	case NFT_CT_DIRECTION:
- 		nft_reg_store8(dest, CTINFO2DIR(ctinfo));
- 		return;
+ 	return true;
+ }
+-#endif
+ 
+ static irqreturn_t gxp_i2c_irq_handler(int irq, void *_drvdata)
+ {
+diff --git a/include/linux/i2c.h b/include/linux/i2c.h
+index 5ba89663ea865..13a1ce38cb0c5 100644
+--- a/include/linux/i2c.h
++++ b/include/linux/i2c.h
+@@ -385,7 +385,6 @@ static inline void i2c_set_clientdata(struct i2c_client *client, void *data)
+ 
+ /* I2C slave support */
+ 
+-#if IS_ENABLED(CONFIG_I2C_SLAVE)
+ enum i2c_slave_event {
+ 	I2C_SLAVE_READ_REQUESTED,
+ 	I2C_SLAVE_WRITE_REQUESTED,
+@@ -396,9 +395,10 @@ enum i2c_slave_event {
+ 
+ int i2c_slave_register(struct i2c_client *client, i2c_slave_cb_t slave_cb);
+ int i2c_slave_unregister(struct i2c_client *client);
+-bool i2c_detect_slave_mode(struct device *dev);
+ int i2c_slave_event(struct i2c_client *client,
+ 		    enum i2c_slave_event event, u8 *val);
++#if IS_ENABLED(CONFIG_I2C_SLAVE)
++bool i2c_detect_slave_mode(struct device *dev);
+ #else
+ static inline bool i2c_detect_slave_mode(struct device *dev) { return false; }
+ #endif
 -- 
 2.39.2
 
