@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70947FBFE
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:11:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A0BC433D2;
-	Mon, 15 May 2023 17:11:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB55FBFE
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:12:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00458C433EF;
+	Mon, 15 May 2023 17:12:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170718;
-	bh=wSUrz+NeO/lYyL3E4TXSTgZljsA16Z692dL1f7VyAE0=;
+	s=korg; t=1684170721;
+	bh=+7DkxtFzIOdif4hJ3kBkuIPQItBnwBZBBIBsXhy3dsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e1BRbMF0Ad6O5eGqLntJlNSScEqG6GT4zsBF5LLKbTTlnrPakX/QoRxCFoz6VzQnK
-	 6WeFh1/ct+lmaZn3NbSfhbwoXvu46ySdDUPID0Z4JDLA2OzNfpQGTzzLMe2bxzc+Er
-	 F2WYcYxTf9/YxV03dnJgsB1DqJA2SS7HGLJjH+LE=
+	b=Y6OKsOSuW64exRTdcACGJCGeVD1V7zF3cufxh+d/MMIa9qgPR03a/G+wDK5gNxi37
+	 60I6pk8NqkrUxHfLRV8FhHkcL5MdMOV29rV0EoWHNE7unJiELOCz6f/D2W8AQVd8wH
+	 2x1ZXnE6GXFpVmuavcizXqJHgjmH/3Imkrcs4iXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+68223fe9f6c95ad43bed@syzkaller.appspotmail.com,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	syzbot+fc51227e7100c9294894@syzkaller.appspotmail.com,
+	syzbot+8785e41224a3afd04321@syzkaller.appspotmail.com,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 220/239] ext4: fix WARNING in mb_find_extent
-Date: Mon, 15 May 2023 18:28:03 +0200
-Message-Id: <20230515161728.324346265@linuxfoundation.org>
+Subject: [PATCH 6.1 221/239] ext4: avoid a potential slab-out-of-bounds in ext4_group_desc_csum
+Date: Mon, 15 May 2023 18:28:04 +0200
+Message-Id: <20230515161728.353293001@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -37,129 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit fa08a7b61dff8a4df11ff1e84abfc214b487caf7 upstream.
+commit 4f04351888a83e595571de672e0a4a8b74f4fb31 upstream.
 
-Syzbot found the following issue:
+When modifying the block device while it is mounted by the filesystem,
+syzbot reported the following:
 
-EXT4-fs: Warning: mounting with data=journal disables delayed allocation, dioread_nolock, O_DIRECT and fast_commit support!
-EXT4-fs (loop0): orphan cleanup on readonly fs
-------------[ cut here ]------------
-WARNING: CPU: 1 PID: 5067 at fs/ext4/mballoc.c:1869 mb_find_extent+0x8a1/0xe30
-Modules linked in:
-CPU: 1 PID: 5067 Comm: syz-executor307 Not tainted 6.2.0-rc1-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:mb_find_extent+0x8a1/0xe30 fs/ext4/mballoc.c:1869
-RSP: 0018:ffffc90003c9e098 EFLAGS: 00010293
-RAX: ffffffff82405731 RBX: 0000000000000041 RCX: ffff8880783457c0
-RDX: 0000000000000000 RSI: 0000000000000041 RDI: 0000000000000040
-RBP: 0000000000000040 R08: ffffffff82405723 R09: ffffed10053c9402
-R10: ffffed10053c9402 R11: 1ffff110053c9401 R12: 0000000000000000
-R13: ffffc90003c9e538 R14: dffffc0000000000 R15: ffffc90003c9e2cc
-FS:  0000555556665300(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000056312f6796f8 CR3: 0000000022437000 CR4: 00000000003506e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+BUG: KASAN: slab-out-of-bounds in crc16+0x206/0x280 lib/crc16.c:58
+Read of size 1 at addr ffff888075f5c0a8 by task syz-executor.2/15586
+
+CPU: 1 PID: 15586 Comm: syz-executor.2 Not tainted 6.2.0-rc5-syzkaller-00205-gc96618275234 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
 Call Trace:
  <TASK>
- ext4_mb_complex_scan_group+0x353/0x1100 fs/ext4/mballoc.c:2307
- ext4_mb_regular_allocator+0x1533/0x3860 fs/ext4/mballoc.c:2735
- ext4_mb_new_blocks+0xddf/0x3db0 fs/ext4/mballoc.c:5605
- ext4_ext_map_blocks+0x1868/0x6880 fs/ext4/extents.c:4286
- ext4_map_blocks+0xa49/0x1cc0 fs/ext4/inode.c:651
- ext4_getblk+0x1b9/0x770 fs/ext4/inode.c:864
- ext4_bread+0x2a/0x170 fs/ext4/inode.c:920
- ext4_quota_write+0x225/0x570 fs/ext4/super.c:7105
- write_blk fs/quota/quota_tree.c:64 [inline]
- get_free_dqblk+0x34a/0x6d0 fs/quota/quota_tree.c:130
- do_insert_tree+0x26b/0x1aa0 fs/quota/quota_tree.c:340
- do_insert_tree+0x722/0x1aa0 fs/quota/quota_tree.c:375
- do_insert_tree+0x722/0x1aa0 fs/quota/quota_tree.c:375
- do_insert_tree+0x722/0x1aa0 fs/quota/quota_tree.c:375
- dq_insert_tree fs/quota/quota_tree.c:401 [inline]
- qtree_write_dquot+0x3b6/0x530 fs/quota/quota_tree.c:420
- v2_write_dquot+0x11b/0x190 fs/quota/quota_v2.c:358
- dquot_acquire+0x348/0x670 fs/quota/dquot.c:444
- ext4_acquire_dquot+0x2dc/0x400 fs/ext4/super.c:6740
- dqget+0x999/0xdc0 fs/quota/dquot.c:914
- __dquot_initialize+0x3d0/0xcf0 fs/quota/dquot.c:1492
- ext4_process_orphan+0x57/0x2d0 fs/ext4/orphan.c:329
- ext4_orphan_cleanup+0xb60/0x1340 fs/ext4/orphan.c:474
- __ext4_fill_super fs/ext4/super.c:5516 [inline]
- ext4_fill_super+0x81cd/0x8700 fs/ext4/super.c:5644
- get_tree_bdev+0x400/0x620 fs/super.c:1282
- vfs_get_tree+0x88/0x270 fs/super.c:1489
- do_new_mount+0x289/0xad0 fs/namespace.c:3145
- do_mount fs/namespace.c:3488 [inline]
- __do_sys_mount fs/namespace.c:3697 [inline]
- __se_sys_mount+0x2d3/0x3c0 fs/namespace.c:3674
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x290 lib/dump_stack.c:106
+ print_address_description+0x74/0x340 mm/kasan/report.c:306
+ print_report+0x107/0x1f0 mm/kasan/report.c:417
+ kasan_report+0xcd/0x100 mm/kasan/report.c:517
+ crc16+0x206/0x280 lib/crc16.c:58
+ ext4_group_desc_csum+0x81b/0xb20 fs/ext4/super.c:3187
+ ext4_group_desc_csum_set+0x195/0x230 fs/ext4/super.c:3210
+ ext4_mb_clear_bb fs/ext4/mballoc.c:6027 [inline]
+ ext4_free_blocks+0x191a/0x2810 fs/ext4/mballoc.c:6173
+ ext4_remove_blocks fs/ext4/extents.c:2527 [inline]
+ ext4_ext_rm_leaf fs/ext4/extents.c:2710 [inline]
+ ext4_ext_remove_space+0x24ef/0x46a0 fs/ext4/extents.c:2958
+ ext4_ext_truncate+0x177/0x220 fs/ext4/extents.c:4416
+ ext4_truncate+0xa6a/0xea0 fs/ext4/inode.c:4342
+ ext4_setattr+0x10c8/0x1930 fs/ext4/inode.c:5622
+ notify_change+0xe50/0x1100 fs/attr.c:482
+ do_truncate+0x200/0x2f0 fs/open.c:65
+ handle_truncate fs/namei.c:3216 [inline]
+ do_open fs/namei.c:3561 [inline]
+ path_openat+0x272b/0x2dd0 fs/namei.c:3714
+ do_filp_open+0x264/0x4f0 fs/namei.c:3741
+ do_sys_openat2+0x124/0x4e0 fs/open.c:1310
+ do_sys_open fs/open.c:1326 [inline]
+ __do_sys_creat fs/open.c:1402 [inline]
+ __se_sys_creat fs/open.c:1396 [inline]
+ __x64_sys_creat+0x11f/0x160 fs/open.c:1396
  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
  do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7f72f8a8c0c9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f72f97e3168 EFLAGS: 00000246 ORIG_RAX: 0000000000000055
+RAX: ffffffffffffffda RBX: 00007f72f8bac050 RCX: 00007f72f8a8c0c9
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000020000280
+RBP: 00007f72f8ae7ae9 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ffd165348bf R14: 00007f72f97e3300 R15: 0000000000022000
 
-Add some debug information:
-mb_find_extent: mb_find_extent block=41, order=0 needed=64 next=0 ex=0/41/1@3735929054 64 64 7
-block_bitmap: ff 3f 0c 00 fc 01 00 00 d2 3d 00 00 00 00 00 00 ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+Replace
+	le16_to_cpu(sbi->s_es->s_desc_size)
+with
+	sbi->s_desc_size
 
-Acctually, blocks per group is 64, but block bitmap indicate at least has
-128 blocks. Now, ext4_validate_block_bitmap() didn't check invalid block's
-bitmap if set.
-To resolve above issue, add check like fsck "Padding at end of block bitmap is
-not set".
+It reduces ext4's compiled text size, and makes the code more efficient
+(we remove an extra indirect reference and a potential byte
+swap on big endian systems), and there is no downside. It also avoids the
+potential KASAN / syzkaller failure, as a bonus.
 
-Cc: stable@kernel.org
-Reported-by: syzbot+68223fe9f6c95ad43bed@syzkaller.appspotmail.com
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20230116020015.1506120-1-yebin@huaweicloud.com
+Reported-by: syzbot+fc51227e7100c9294894@syzkaller.appspotmail.com
+Reported-by: syzbot+8785e41224a3afd04321@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=70d28d11ab14bd7938f3e088365252aa923cff42
+Link: https://syzkaller.appspot.com/bug?id=b85721b38583ecc6b5e72ff524c67302abbc30f3
+Link: https://lore.kernel.org/all/000000000000ece18705f3b20934@google.com/
+Fixes: 717d50e4971b ("Ext4: Uninitialized Block Groups")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lore.kernel.org/r/20230504121525.3275886-1-tudor.ambarus@linaro.org
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/balloc.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ fs/ext4/super.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/balloc.c
-+++ b/fs/ext4/balloc.c
-@@ -303,6 +303,22 @@ struct ext4_group_desc * ext4_get_group_
- 	return desc;
- }
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -3195,11 +3195,9 @@ static __le16 ext4_group_desc_csum(struc
+ 	crc = crc16(crc, (__u8 *)gdp, offset);
+ 	offset += sizeof(gdp->bg_checksum); /* skip checksum */
+ 	/* for checksum of struct ext4_group_desc do the rest...*/
+-	if (ext4_has_feature_64bit(sb) &&
+-	    offset < le16_to_cpu(sbi->s_es->s_desc_size))
++	if (ext4_has_feature_64bit(sb) && offset < sbi->s_desc_size)
+ 		crc = crc16(crc, (__u8 *)gdp + offset,
+-			    le16_to_cpu(sbi->s_es->s_desc_size) -
+-				offset);
++			    sbi->s_desc_size - offset);
  
-+static ext4_fsblk_t ext4_valid_block_bitmap_padding(struct super_block *sb,
-+						    ext4_group_t block_group,
-+						    struct buffer_head *bh)
-+{
-+	ext4_grpblk_t next_zero_bit;
-+	unsigned long bitmap_size = sb->s_blocksize * 8;
-+	unsigned int offset = num_clusters_in_group(sb, block_group);
-+
-+	if (bitmap_size <= offset)
-+		return 0;
-+
-+	next_zero_bit = ext4_find_next_zero_bit(bh->b_data, bitmap_size, offset);
-+
-+	return (next_zero_bit < bitmap_size ? next_zero_bit : 0);
-+}
-+
- /*
-  * Return the block number which was discovered to be invalid, or 0 if
-  * the block bitmap is valid.
-@@ -401,6 +417,15 @@ static int ext4_validate_block_bitmap(st
- 					EXT4_GROUP_INFO_BBITMAP_CORRUPT);
- 		return -EFSCORRUPTED;
- 	}
-+	blk = ext4_valid_block_bitmap_padding(sb, block_group, bh);
-+	if (unlikely(blk != 0)) {
-+		ext4_unlock_group(sb, block_group);
-+		ext4_error(sb, "bg %u: block %llu: padding at end of block bitmap is not set",
-+			   block_group, blk);
-+		ext4_mark_group_bitmap_corrupted(sb, block_group,
-+						 EXT4_GROUP_INFO_BBITMAP_CORRUPT);
-+		return -EFSCORRUPTED;
-+	}
- 	set_buffer_verified(bh);
- verified:
- 	ext4_unlock_group(sb, block_group);
+ out:
+ 	return cpu_to_le16(crc);
 
 
