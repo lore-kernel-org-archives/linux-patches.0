@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16036101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 878BCC433D2;
-	Mon, 15 May 2023 17:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25616101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:51:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD68C433D2;
+	Mon, 15 May 2023 17:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173094;
-	bh=dbioeZD80QGJiAVPO1qyKT8fDeCAUEE1jA1jbClvWAw=;
+	s=korg; t=1684173098;
+	bh=iitImpDgGmwmMZHxjqTf7HR7xO/FUPNLehp02kgZ0ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvQqV1rgVCyEtssy6SWK5RQpCCqWS8Z1CgMTJNbBKrkm6aBFbL1sIA9pNPc7p5/iD
-	 E8g7r7HMc4Jaly4t4gpTB/rM047lZZ9dVKiz1UPBtM0GS2cO9eGTmtB/PqFXNH9WZ7
-	 29kvvrb6yCOmyYjzD1jDQLVkgD/M5ZKgBLV/kQbI=
+	b=GLieDViwgt1nYwXEyaEV0EeKp74qDZg954MUkPphp/+7yjL1hObmKgbeVyf795655
+	 gzF8/kCIoGV+KopA5of2sJciQY1pGHfBD7WGSXiELYs6KtNFnu8KCjBZLGmDy7sgAV
+	 4Ys0OLC9Aor+6Z2UCzwuTgzxkQjA8vEaaTRx2wTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+e2efa3efc15a1c9e95c3@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.10 366/381] ext4: remove a BUG_ON in ext4_mb_release_group_pa()
-Date: Mon, 15 May 2023 18:30:17 +0200
-Message-Id: <20230515161753.444227206@linuxfoundation.org>
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 5.10 349/381] f2fs: fix potential corruption when moving a directory
+Date: Mon, 15 May 2023 18:30:00 +0200
+Message-Id: <20230515161752.627711794@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,40 +33,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 463808f237cf73e98a1a45ff7460c2406a150a0b upstream.
+commit d94772154e524b329a168678836745d2773a6e02 upstream.
 
-If a malicious fuzzer overwrites the ext4 superblock while it is
-mounted such that the s_first_data_block is set to a very large
-number, the calculation of the block group can underflow, and trigger
-a BUG_ON check.  Change this to be an ext4_warning so that we don't
-crash the kernel.
+F2FS has the same issue in ext4_rename causing crash revealed by
+xfstests/generic/707.
 
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230430154311.579720-3-tytso@mit.edu
-Reported-by: syzbot+e2efa3efc15a1c9e95c3@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=69b28112e098b070f639efb356393af3ffec4220
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+See also commit 0813299c586b ("ext4: Fix possible corruption when moving a directory")
+
+CC: stable@vger.kernel.org
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/f2fs/namei.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -4250,7 +4250,11 @@ ext4_mb_release_group_pa(struct ext4_bud
- 	trace_ext4_mb_release_group_pa(sb, pa);
- 	BUG_ON(pa->pa_deleted == 0);
- 	ext4_get_group_no_and_offset(sb, pa->pa_pstart, &group, &bit);
--	BUG_ON(group != e4b->bd_group && pa->pa_len != 0);
-+	if (unlikely(group != e4b->bd_group && pa->pa_len != 0)) {
-+		ext4_warning(sb, "bad group: expected %u, group %u, pa_start %llu",
-+			     e4b->bd_group, group, pa->pa_pstart);
-+		return 0;
-+	}
- 	mb_free_blocks(pa->pa_inode, e4b, bit, pa->pa_len);
- 	atomic_add(pa->pa_len, &EXT4_SB(sb)->s_mb_discarded);
- 	trace_ext4_mballoc_discard(sb, NULL, group, bit, pa->pa_len);
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -969,12 +969,20 @@ static int f2fs_rename(struct inode *old
+ 			goto out;
+ 	}
+ 
++	/*
++	 * Copied from ext4_rename: we need to protect against old.inode
++	 * directory getting converted from inline directory format into
++	 * a normal one.
++	 */
++	if (S_ISDIR(old_inode->i_mode))
++		inode_lock_nested(old_inode, I_MUTEX_NONDIR2);
++
+ 	err = -ENOENT;
+ 	old_entry = f2fs_find_entry(old_dir, &old_dentry->d_name, &old_page);
+ 	if (!old_entry) {
+ 		if (IS_ERR(old_page))
+ 			err = PTR_ERR(old_page);
+-		goto out;
++		goto out_unlock_old;
+ 	}
+ 
+ 	if (S_ISDIR(old_inode->i_mode)) {
+@@ -1082,6 +1090,9 @@ static int f2fs_rename(struct inode *old
+ 
+ 	f2fs_unlock_op(sbi);
+ 
++	if (S_ISDIR(old_inode->i_mode))
++		inode_unlock(old_inode);
++
+ 	if (IS_DIRSYNC(old_dir) || IS_DIRSYNC(new_dir))
+ 		f2fs_sync_fs(sbi->sb, 1);
+ 
+@@ -1096,6 +1107,9 @@ out_dir:
+ 		f2fs_put_page(old_dir_page, 0);
+ out_old:
+ 	f2fs_put_page(old_page, 0);
++out_unlock_old:
++	if (S_ISDIR(old_inode->i_mode))
++		inode_unlock(old_inode);
+ out:
+ 	if (whiteout)
+ 		iput(whiteout);
 
 
