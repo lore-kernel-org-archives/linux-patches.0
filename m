@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CA8FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE48C433EF;
-	Mon, 15 May 2023 17:35:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E97C7FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461EEC433EF;
+	Mon, 15 May 2023 17:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172129;
-	bh=0kM0V+605O1M1znJUIHIVJQociBMYCy5OXAFrQeck+o=;
+	s=korg; t=1684172132;
+	bh=/psOibmtnnkcz1+tirmhsBiDgkCvd5+0ZG4x9ICNoaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xsg7Hi9S+qi6BkJnwyHVVcrijnjOftqGg3W4ta7whnJbj5u83mdIKZ6FAW6FUJXs6
-	 Ag1VZ44eSM2/lvRm1dRl45ui6BKhXXtzanx6ZC6kGIvDX/vjxCca5yqoeuRk4xzpx/
-	 RO9H+3MPh4ALt0Wu0Mc0rqei1gqFZFV+M4UoWbZg=
+	b=YToaXaL2r5U+O/oWqQWlGhpTxLF6a9QLdTv0tI1IQ4dov/KK4S/jXO2oVCop4CHr7
+	 c9NLpyB8m10wBAReI2H53EkdVfMQUm/W67DZ2eBbSk4pT+98AHDS5C5QwFqHFrjtXr
+	 MqQUcKVpTCN1tNQHP8XMoL6O3mir9EMf+M6KNcv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Thierry Reding <thierry.reding@gmail.com>
-Subject: [PATCH 5.10 036/381] pwm: meson: Fix g12a ao clk81 name
-Date: Mon, 15 May 2023 18:24:47 +0200
-Message-Id: <20230515161738.438355183@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 054/381] nilfs2: fix infinite loop in nilfs_mdt_get_block()
+Date: Mon, 15 May 2023 18:25:05 +0200
+Message-Id: <20230515161739.268467383@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,42 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 9e4fa80ab7ef9eb4f7b1ea9fc31e0eb040e85e25 upstream.
+commit a6a491c048882e7e424d407d32cba0b52d9ef2bf upstream.
 
-Fix the name of the aoclk81 clock. Apparently name aoclk81 as used by
-the vendor driver was changed when mainlining the g12a clock driver.
+If the disk image that nilfs2 mounts is corrupted and a virtual block
+address obtained by block lookup for a metadata file is invalid,
+nilfs_bmap_lookup_at_level() may return the same internal return code as
+-ENOENT, meaning the block does not exist in the metadata file.
 
-Fixes: f41efceb46e6 ("pwm: meson: Add clock source configuration for Meson G12A")
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+This duplication of return codes confuses nilfs_mdt_get_block(), causing
+it to read and create a metadata block indefinitely.
+
+In particular, if this happens to the inode metadata file, ifile,
+semaphore i_rwsem can be left held, causing task hangs in lock_mount.
+
+Fix this issue by making nilfs_bmap_lookup_at_level() treat virtual block
+address translation failures with -ENOENT as metadata corruption instead
+of returning the error code.
+
+Link: https://lkml.kernel.org/r/20230430193046.6769-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+221d75710bde87fa0e97@syzkaller.appspotmail.com
+  Link: https://syzkaller.appspot.com/bug?extid=221d75710bde87fa0e97
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pwm/pwm-meson.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nilfs2/bmap.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/pwm/pwm-meson.c
-+++ b/drivers/pwm/pwm-meson.c
-@@ -433,7 +433,7 @@ static const struct meson_pwm_data pwm_a
- };
+--- a/fs/nilfs2/bmap.c
++++ b/fs/nilfs2/bmap.c
+@@ -67,20 +67,28 @@ int nilfs_bmap_lookup_at_level(struct ni
  
- static const char * const pwm_g12a_ao_ab_parent_names[] = {
--	"xtal", "aoclk81", "fclk_div4", "fclk_div5"
-+	"xtal", "g12a_ao_clk81", "fclk_div4", "fclk_div5"
- };
+ 	down_read(&bmap->b_sem);
+ 	ret = bmap->b_ops->bop_lookup(bmap, key, level, ptrp);
+-	if (ret < 0) {
+-		ret = nilfs_bmap_convert_error(bmap, __func__, ret);
++	if (ret < 0)
+ 		goto out;
+-	}
++
+ 	if (NILFS_BMAP_USE_VBN(bmap)) {
+ 		ret = nilfs_dat_translate(nilfs_bmap_get_dat(bmap), *ptrp,
+ 					  &blocknr);
+ 		if (!ret)
+ 			*ptrp = blocknr;
++		else if (ret == -ENOENT) {
++			/*
++			 * If there was no valid entry in DAT for the block
++			 * address obtained by b_ops->bop_lookup, then pass
++			 * internal code -EINVAL to nilfs_bmap_convert_error
++			 * to treat it as metadata corruption.
++			 */
++			ret = -EINVAL;
++		}
+ 	}
  
- static const struct meson_pwm_data pwm_g12a_ao_ab_data = {
-@@ -442,7 +442,7 @@ static const struct meson_pwm_data pwm_g
- };
+  out:
+ 	up_read(&bmap->b_sem);
+-	return ret;
++	return nilfs_bmap_convert_error(bmap, __func__, ret);
+ }
  
- static const char * const pwm_g12a_ao_cd_parent_names[] = {
--	"xtal", "aoclk81",
-+	"xtal", "g12a_ao_clk81",
- };
- 
- static const struct meson_pwm_data pwm_g12a_ao_cd_data = {
+ int nilfs_bmap_lookup_contig(struct nilfs_bmap *bmap, __u64 key, __u64 *ptrp,
 
 
