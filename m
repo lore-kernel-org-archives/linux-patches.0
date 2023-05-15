@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A952FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D503C433D2;
-	Mon, 15 May 2023 17:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A83EFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9ABC433EF;
+	Mon, 15 May 2023 17:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171510;
-	bh=m/jFLvKIQTPU0pAeXn3u6KckevLTwYF9dNl3BQzSJt8=;
+	s=korg; t=1684171514;
+	bh=voNhrY9iVz3g/RvhPe6ae7dSu7mgql45PL/RHZR6XXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqX1MfNITaz5QQlBC22b9QcQdUBLzYS6N5Y6WoEJxV2diHHaH/Qz9k1vGl0mnF9FD
-	 UsCUjQlrJZUobawTmtrBJSMtp23uKAL+wI8O74Vp0KmtShw5WClAxI9eMqQQ9ZlUEw
-	 ENUNLlc6yIO6Mm9zVWFLY1u2ngdD6riB3a6eY3Zw=
+	b=FwnEAqjLXwvrMtkcym5CINSZiK50AHweSb/75Cp93mjDZgdpbMnlZp070BbU8G1sr
+	 2I9jTTkg2RuxnKR3Xmto9q+g4/a/2AGqNYqAVXy8wCkudJpls12iGmE5xaMyKSUWf5
+	 XXsVhNLgLgZf0h/V8U7KRGDtsnmssaYVtt3VSe50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+91dccab7c64e2850a4e5@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.2 231/242] ext4: fix deadlock when converting an inline directory in nojournal mode
-Date: Mon, 15 May 2023 18:29:17 +0200
-Message-Id: <20230515161728.843947735@linuxfoundation.org>
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.2 204/242] drm/amd: Add a new helper for loading/validating microcode
+Date: Mon, 15 May 2023 18:28:50 +0200
+Message-Id: <20230515161728.059316817@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,63 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit f4ce24f54d9cca4f09a395f3eecce20d6bec4663 upstream.
+commit 2210af50ae7f4104269dfde7bafbbfbacdbe1a2b upstream.
 
-In no journal mode, ext4_finish_convert_inline_dir() can self-deadlock
-by calling ext4_handle_dirty_dirblock() when it already has taken the
-directory lock.  There is a similar self-deadlock in
-ext4_incvert_inline_data_nolock() for data files which we'll fix at
-the same time.
+All microcode runs a basic validation after it's been loaded. Each
+IP block as part of init will run both.
 
-A simple reproducer demonstrating the problem:
+Introduce a wrapper for request_firmware and amdgpu_ucode_validate.
+This wrapper will also remap any error codes from request_firmware
+to -ENODEV.  This is so that early_init will fail if firmware couldn't
+be loaded instead of the IP block being disabled.
 
-    mke2fs -Fq -t ext2 -O inline_data -b 4k /dev/vdc 64
-    mount -t ext4 -o dirsync /dev/vdc /vdc
-    cd /vdc
-    mkdir file0
-    cd file0
-    touch file0
-    touch file1
-    attr -s BurnSpaceInEA -V abcde .
-    touch supercalifragilisticexpialidocious
-
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230507021608.1290720-1-tytso@mit.edu
-Reported-by: syzbot+91dccab7c64e2850a4e5@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=ba84cc80a9491d65416bc7877e1650c87530fe8a
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inline.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c |   36 ++++++++++++++++++++++++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h |    3 ++
+ 2 files changed, 39 insertions(+)
 
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -1177,6 +1177,7 @@ static int ext4_finish_convert_inline_di
- 		ext4_initialize_dirent_tail(dir_block,
- 					    inode->i_sb->s_blocksize);
- 	set_buffer_uptodate(dir_block);
-+	unlock_buffer(dir_block);
- 	err = ext4_handle_dirty_dirblock(handle, inode, dir_block);
- 	if (err)
- 		return err;
-@@ -1251,6 +1252,7 @@ static int ext4_convert_inline_data_nolo
- 	if (!S_ISDIR(inode->i_mode)) {
- 		memcpy(data_bh->b_data, buf, inline_size);
- 		set_buffer_uptodate(data_bh);
-+		unlock_buffer(data_bh);
- 		error = ext4_handle_dirty_metadata(handle,
- 						   inode, data_bh);
- 	} else {
-@@ -1258,7 +1260,6 @@ static int ext4_convert_inline_data_nolo
- 						       buf, inline_size);
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
+@@ -1091,3 +1091,39 @@ void amdgpu_ucode_ip_version_decode(stru
  
--	unlock_buffer(data_bh);
- out_restore:
- 	if (error)
- 		ext4_restore_inline_data(handle, inode, iloc, buf, inline_size);
+ 	snprintf(ucode_prefix, len, "%s_%d_%d_%d", ip_name, maj, min, rev);
+ }
++
++/*
++ * amdgpu_ucode_request - Fetch and validate amdgpu microcode
++ *
++ * @adev: amdgpu device
++ * @fw: pointer to load firmware to
++ * @fw_name: firmware to load
++ *
++ * This is a helper that will use request_firmware and amdgpu_ucode_validate
++ * to load and run basic validation on firmware. If the load fails, remap
++ * the error code to -ENODEV, so that early_init functions will fail to load.
++ */
++int amdgpu_ucode_request(struct amdgpu_device *adev, const struct firmware **fw,
++			 const char *fw_name)
++{
++	int err = request_firmware(fw, fw_name, adev->dev);
++
++	if (err)
++		return -ENODEV;
++	err = amdgpu_ucode_validate(*fw);
++	if (err)
++		dev_dbg(adev->dev, "\"%s\" failed to validate\n", fw_name);
++
++	return err;
++}
++
++/*
++ * amdgpu_ucode_release - Release firmware microcode
++ *
++ * @fw: pointer to firmware to release
++ */
++void amdgpu_ucode_release(const struct firmware **fw)
++{
++	release_firmware(*fw);
++	*fw = NULL;
++}
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h
+@@ -544,6 +544,9 @@ void amdgpu_ucode_print_sdma_hdr(const s
+ void amdgpu_ucode_print_psp_hdr(const struct common_firmware_header *hdr);
+ void amdgpu_ucode_print_gpu_info_hdr(const struct common_firmware_header *hdr);
+ int amdgpu_ucode_validate(const struct firmware *fw);
++int amdgpu_ucode_request(struct amdgpu_device *adev, const struct firmware **fw,
++			 const char *fw_name);
++void amdgpu_ucode_release(const struct firmware **fw);
+ bool amdgpu_ucode_hdr_version(union amdgpu_firmware_header *hdr,
+ 				uint16_t hdr_major, uint16_t hdr_minor);
+ 
 
 
