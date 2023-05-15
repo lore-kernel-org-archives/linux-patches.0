@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE3DAFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D4BC433D2;
-	Mon, 15 May 2023 17:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7AD5FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:21:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1904CC433D2;
+	Mon, 15 May 2023 17:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171307;
-	bh=OPVuo+IubyEzmIK31J2qWvvUjhxo+wHgQdAXGBTYA8I=;
+	s=korg; t=1684171310;
+	bh=pIPvubYYlFwqIDsTuQne2PmSoCPFylk2EjmZ1tbL87E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LFS4J1fCwqDEWTV3wEIVwfpBJ+BQR9RdnVdmisliNRv2giquvOppZXVh03klEukJH
-	 dyc0OHQjalq5em3tYbFFn9d3gnNUcc82//9ziwMQ+aGFGssUtYIVFbCWSw6kKAl5d3
-	 +LgNQGq6wUjR/wXHgK7/1mYntrjtaWei0o8u/IdI=
+	b=rQgSlzQfWHif7+eZS/9G5samBmCMahzeXoAj08MzOQ1/RiNp6exKnn+EvTBXnLn0r
+	 /E2EogtqVY7o3YRIfm3f9OKH16oIyTHvBddn8xrKXhDD1Nc8QYZcaJYgiR940DOWq8
+	 fZl2YLXHAflJgn3xYVekrPSoVI3V4WV4RD1zzP/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.2 166/242] ARM: dts: s5pv210: correct MIPI CSIS clock name
-Date: Mon, 15 May 2023 18:28:12 +0200
-Message-Id: <20230515161726.861027476@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.2 138/242] btrfs: zoned: zone finish data relocation BG with last IO
+Date: Mon, 15 May 2023 18:27:44 +0200
+Message-Id: <20230515161726.043531246@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -33,32 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Naohiro Aota <Naohiro.Aota@wdc.com>
 
-commit 665b9459bb53b8f19bd1541567e1fe9782c83c4b upstream.
+commit f84353c7c20536ea7e01eca79430eccdf3cc7348 upstream.
 
-The Samsung S5P/Exynos MIPI CSIS bindings and Linux driver expect first
-clock name to be "csis".  Otherwise the driver fails to probe.
+For data block groups, we zone finish a zone (or, just deactivate it) when
+seeing the last IO in btrfs_finish_ordered_io(). That is only called for
+IOs using ZONE_APPEND, but we use a regular WRITE command for data
+relocation IOs. Detect it and call btrfs_zone_finish_endio() properly.
 
-Fixes: 94ad0f6d9278 ("ARM: dts: Add Device tree for s5pv210 SoC")
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230212185818.43503-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: be1a1d7a5d24 ("btrfs: zoned: finish fully written block group")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/s5pv210.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/arm/boot/dts/s5pv210.dtsi
-+++ b/arch/arm/boot/dts/s5pv210.dtsi
-@@ -566,7 +566,7 @@
- 				interrupts = <29>;
- 				clocks = <&clocks CLK_CSIS>,
- 						<&clocks SCLK_CSIS>;
--				clock-names = "clk_csis",
-+				clock-names = "csis",
- 						"sclk_csis";
- 				bus-width = <4>;
- 				status = "disabled";
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -3264,6 +3264,9 @@ int btrfs_finish_ordered_io(struct btrfs
+ 		btrfs_rewrite_logical_zoned(ordered_extent);
+ 		btrfs_zone_finish_endio(fs_info, ordered_extent->disk_bytenr,
+ 					ordered_extent->disk_num_bytes);
++	} else if (btrfs_is_data_reloc_root(inode->root)) {
++		btrfs_zone_finish_endio(fs_info, ordered_extent->disk_bytenr,
++					ordered_extent->disk_num_bytes);
+ 	}
+ 
+ 	btrfs_free_io_failure_record(inode, start, end);
 
 
