@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A701FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:44:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49C5C433EF;
-	Mon, 15 May 2023 17:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B397FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:44:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C631AC433D2;
+	Mon, 15 May 2023 17:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172685;
-	bh=XzJ+DE1pKchvye9Q+bugsdyvn2RHAXqGcfyPvhS3E0w=;
+	s=korg; t=1684172688;
+	bh=I6yqmYBMNEpvE9R22snnsr6NUl0kAUZqPsFUsdLaLLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4qvkLS4DjfxRA0ZLZr1MJYLxUSVEcxgwFkcnIdYi6HvEZ6lXMe52oxxRMoTOvoCn
-	 KwsB/LGoqs3iPNHd569Z5k8HduRFMXoArWvk4BUgun38gl65GdAndnujjq3w9Oqsdy
-	 btoKHYIfVZ5/Ww58GzGM4HtutAT6Ma9pIE4CQofM=
+	b=TwIZ07GYXLzP28J1PWgVmDMXisCIxGTyfxjflTHibqBtexC+Q/hcZ4uoymJAwWJjd
+	 bhWRocpYiWbTpOwUaGLe+4VEp1YzOJ5ud3OOel/B1AacKE775paMuOXMhAGsN3pmgB
+	 QVD64h7lzihIkOqmt2tyxYG0G95fDhMwtCgm/yK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 234/381] perf/core: Fix hardlockup failure caused by perf throttle
-Date: Mon, 15 May 2023 18:28:05 +0200
-Message-Id: <20230515161747.278006756@linuxfoundation.org>
+Subject: [PATCH 5.10 235/381] clk: at91: clk-sam9x60-pll: fix return value check
+Date: Mon, 15 May 2023 18:28:06 +0200
+Message-Id: <20230515161747.317860386@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,49 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 15def34e2635ab7e0e96f1bc32e1b69609f14942 ]
+[ Upstream commit 1bd8e27fd0db0fe7f489213836dcbab92934f8fa ]
 
-commit e050e3f0a71bf ("perf: Fix broken interrupt rate throttling")
-introduces a change in throttling threshold judgment. Before this,
-compare hwc->interrupts and max_samples_per_tick, then increase
-hwc->interrupts by 1, but this commit reverses order of these two
-behaviors, causing the semantics of max_samples_per_tick to change.
-In literal sense of "max_samples_per_tick", if hwc->interrupts ==
-max_samples_per_tick, it should not be throttled, therefore, the judgment
-condition should be changed to "hwc->interrupts > max_samples_per_tick".
+sam9x60_frac_pll_compute_mul_frac() can't return zero. Remove the check
+against zero to reflect this.
 
-In fact, this may cause the hardlockup to fail, The minimum value of
-max_samples_per_tick may be 1, in this case, the return value of
-__perf_event_account_interrupt function is 1.
-As a result, nmi_watchdog gets throttled, which would stop PMU (Use x86
-architecture as an example, see x86_pmu_handle_irq).
-
-Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20230227023508.102230-1-yangjihong1@huawei.com
+Fixes: 43b1bb4a9b3e ("clk: at91: clk-sam9x60-pll: re-factor to support plls with multiple outputs")
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230227105931.2812412-1-claudiu.beznea@microchip.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/at91/clk-sam9x60-pll.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index f0df3bc0e6415..53f36bbaf0c66 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -8925,8 +8925,8 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
- 		hwc->interrupts = 1;
- 	} else {
- 		hwc->interrupts++;
--		if (unlikely(throttle
--			     && hwc->interrupts >= max_samples_per_tick)) {
-+		if (unlikely(throttle &&
-+			     hwc->interrupts > max_samples_per_tick)) {
- 			__this_cpu_inc(perf_throttled_count);
- 			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
- 			hwc->interrupts = MAX_INTERRUPTS;
+diff --git a/drivers/clk/at91/clk-sam9x60-pll.c b/drivers/clk/at91/clk-sam9x60-pll.c
+index 5a9daa3643a72..5fe50ba173a80 100644
+--- a/drivers/clk/at91/clk-sam9x60-pll.c
++++ b/drivers/clk/at91/clk-sam9x60-pll.c
+@@ -452,7 +452,7 @@ sam9x60_clk_register_frac_pll(struct regmap *regmap, spinlock_t *lock,
+ 
+ 		ret = sam9x60_frac_pll_compute_mul_frac(&frac->core, FCORE_MIN,
+ 							parent_rate, true);
+-		if (ret <= 0) {
++		if (ret < 0) {
+ 			hw = ERR_PTR(ret);
+ 			goto free;
+ 		}
 -- 
 2.39.2
 
