@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B3DFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:46:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3006C4339B;
-	Mon, 15 May 2023 16:45:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B9AFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:46:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2CCBC433D2;
+	Mon, 15 May 2023 16:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169160;
-	bh=2R0IC72LIR6W0D47EIvhmqARl4fveDZyScq3LHY8iG4=;
+	s=korg; t=1684169163;
+	bh=nCxRayotihsDDsKhagEX5TmcyVywQKCDnsWucwN4T9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nxxODwYkMCsCXVeAV5V82C31I9VMNDfEpJfDrJOSBAFo/HUVsWE8gTS0GL/9JZe+v
-	 P/r85AaeUv1oA2c4zm17C0WBNHFJlSGyHG9f08eBXOovKWya1Ag4YYwVuk37NXD3sV
-	 +O3rPA0lMPhqFfoG0VT9emzws0s647syBQvoink4=
+	b=H3xccNrB5dk+dgpIlfBiZgTgMqJzxS/uiY1QJvXoONHOYFcZ2EluPEhWv/EnlI0wJ
+	 P40ldmTXhBMzBMO+/w3YxPlufRHjhF16oOgwCdjwB/7fp51zDfGBmXF0bXB/JISwEA
+	 ZNXMM+NPrqgoybn05kuFTmHhIIwjHVrs27XU15cM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenliang Wang <wangwenliang.1995@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 162/191] virtio_net: suppress cpu stall when free_unused_bufs
-Date: Mon, 15 May 2023 18:26:39 +0200
-Message-Id: <20230515161713.314846970@linuxfoundation.org>
+Subject: [PATCH 4.19 163/191] net: bcmgenet: Remove phy_stop() from bcmgenet_netif_stop()
+Date: Mon, 15 May 2023 18:26:40 +0200
+Message-Id: <20230515161713.356981889@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,41 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenliang Wang <wangwenliang.1995@bytedance.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit f8bb5104394560e29017c25bcade4c6b7aabd108 ]
+[ Upstream commit 93e0401e0fc0c54b0ac05b687cd135c2ac38187c ]
 
-For multi-queue and large ring-size use case, the following error
-occurred when free_unused_bufs:
-rcu: INFO: rcu_sched self-detected stall on CPU.
+The call to phy_stop() races with the later call to phy_disconnect(),
+resulting in concurrent phy_suspend() calls being run from different
+CPUs. The final call to phy_disconnect() ensures that the PHY is
+stopped and suspended, too.
 
-Fixes: 986a4f4d452d ("virtio_net: multiqueue support")
-Signed-off-by: Wenliang Wang <wangwenliang.1995@bytedance.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: c96e731c93ff ("net: bcmgenet: connect and disconnect from the PHY state machine")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 9b72b3f0b5bf9..d45e8de79f286 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -2685,12 +2685,14 @@ static void free_unused_bufs(struct virtnet_info *vi)
- 		struct virtqueue *vq = vi->sq[i].vq;
- 		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL)
- 			virtnet_sq_free_unused_buf(vq, buf);
-+		cond_resched();
- 	}
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index 84bcb3ce00f73..b3dedd56a9882 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -2995,7 +2995,6 @@ static void bcmgenet_netif_stop(struct net_device *dev)
+ 	/* Disable MAC transmit. TX DMA disabled must be done before this */
+ 	umac_enable_set(priv, CMD_TX_EN, false);
  
- 	for (i = 0; i < vi->max_queue_pairs; i++) {
- 		struct virtqueue *vq = vi->rq[i].vq;
- 		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL)
- 			virtnet_rq_free_unused_buf(vq, buf);
-+		cond_resched();
- 	}
- }
+-	phy_stop(dev->phydev);
+ 	bcmgenet_disable_rx_napi(priv);
+ 	bcmgenet_intr_disable(priv);
  
 -- 
 2.39.2
