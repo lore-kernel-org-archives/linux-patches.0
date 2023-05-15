@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C255FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:53:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EC5C433A4;
-	Mon, 15 May 2023 16:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C509FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31BDC433EF;
+	Mon, 15 May 2023 16:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169639;
-	bh=NN9GOSAuHKThjvnR6uFWGjSNsX+kWax74oxN4HVnx98=;
+	s=korg; t=1684169642;
+	bh=EdbdcxLCgpRLldHzyXdYLzpytgPKm9ZI8KG3OD2TxDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNW+NCDOjOZwZqklHjORVBpIbWc2vzNGXJiloCv8JEPmQYAISaKoqyexYeRVG3c9q
-	 liG8m/cgazzSAQcl8k4l5P5diaWzC5+8MCHrQp4ia1KfFQdURnAVu2G3zc+kJB0/0G
-	 ecUu39As4OERwDUM9HIXe901oOYn+xI+QTZDJbhY=
+	b=e09IHU7HomiIpvuRX66+w5EeTxJY7GpaYLINZoKO8BCx7+bJp5aG8i5QbaiSPOSd0
+	 uyuIexL94EYneu+yPN0XGT++gYv0k1vNlguYdFU76RtLMCivitpUfg5kX4t7gnqIpz
+	 Gr4j+wCwiLL0rbRMIzjh32viZPYV3XaBieTJ6PFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenliang Wang <wangwenliang.1995@bytedance.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Wei Fang <wei.fang@nxp.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 093/246] virtio_net: suppress cpu stall when free_unused_bufs
-Date: Mon, 15 May 2023 18:25:05 +0200
-Message-Id: <20230515161725.371767085@linuxfoundation.org>
+Subject: [PATCH 6.3 094/246] net: enetc: check the index of the SFI rather than the handle
+Date: Mon, 15 May 2023 18:25:06 +0200
+Message-Id: <20230515161725.401169146@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,42 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenliang Wang <wangwenliang.1995@bytedance.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit f8bb5104394560e29017c25bcade4c6b7aabd108 ]
+[ Upstream commit 299efdc2380aac588557f4d0b2ce7bee05bd0cf2 ]
 
-For multi-queue and large ring-size use case, the following error
-occurred when free_unused_bufs:
-rcu: INFO: rcu_sched self-detected stall on CPU.
+We should check whether the current SFI (Stream Filter Instance) table
+is full before creating a new SFI entry. However, the previous logic
+checks the handle by mistake and might lead to unpredictable behavior.
 
-Fixes: 986a4f4d452d ("virtio_net: multiqueue support")
-Signed-off-by: Wenliang Wang <wangwenliang.1995@bytedance.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 888ae5a3952b ("net: enetc: add tc flower psfp offload driver")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc_qos.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index ea1bd4bb326d1..744bdc8a1abd2 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -3559,12 +3559,14 @@ static void free_unused_bufs(struct virtnet_info *vi)
- 		struct virtqueue *vq = vi->sq[i].vq;
- 		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL)
- 			virtnet_sq_free_unused_buf(vq, buf);
-+		cond_resched();
- 	}
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc_qos.c b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+index 130ebf6853e61..83c27bbbc6edf 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc_qos.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc_qos.c
+@@ -1247,7 +1247,7 @@ static int enetc_psfp_parse_clsflower(struct enetc_ndev_priv *priv,
+ 		int index;
  
- 	for (i = 0; i < vi->max_queue_pairs; i++) {
- 		struct virtqueue *vq = vi->rq[i].vq;
- 		while ((buf = virtqueue_detach_unused_buf(vq)) != NULL)
- 			virtnet_rq_free_unused_buf(vq, buf);
-+		cond_resched();
- 	}
- }
- 
+ 		index = enetc_get_free_index(priv);
+-		if (sfi->handle < 0) {
++		if (index < 0) {
+ 			NL_SET_ERR_MSG_MOD(extack, "No Stream Filter resource!");
+ 			err = -ENOSPC;
+ 			goto free_fmi;
 -- 
 2.39.2
 
