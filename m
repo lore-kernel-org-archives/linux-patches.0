@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD4CFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:47:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A461C433EF;
-	Mon, 15 May 2023 16:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C38FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:47:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F1BC433EF;
+	Mon, 15 May 2023 16:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169250;
-	bh=WCzTwfT1bT2CnQ/Si6jMLvKGx1tZwSHCkr8xf633Rdw=;
+	s=korg; t=1684169253;
+	bh=10PrFOX4WF5f8/43rF2h3WrMmn/LvJNR/3zPcqbrsbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tJa0nP2dvJeXMJpQzFUUqEhBvv8dshec+wIyzk9+K9VRxy5tFNXlkSExqxsH+NasC
-	 UaS8xcsHuP5zYLwDQp5M4iaum63m+1x03KuGkxUvrvsLA/L0Ib5jwnjHMUDjK/WqND
-	 kRsLQlDPlZal+OqZUnsqyaqSwZI5uNPNlxlpUN+U=
+	b=2UGJD8AdsPy8iRG5q9ePJH7/Uv1xw/Zr2NfTEzuea9c1aEebmZOF1JEYODc8opKEH
+	 9gxqo0XKeWEjq/o+3LcRN6DT86LBFAk1gaGFfJ/b0Vb4Cmb+t9tll6gTg/qSDajX2w
+	 jdTkl6LgKR9S68ZllKO8hoOE+okhP6gMyq8X+BoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ruliang Lin <u202112092@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Daniel Mack <daniel@zonque.org>,
-	Takashi Iwai <tiwai@suse.de>,
+	Angelo Dureghello <angelo.dureghello@timesys.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 160/191] ALSA: caiaq: input: Add error handling for unsupported input methods in `snd_usb_caiaq_input_init`
-Date: Mon, 15 May 2023 18:26:37 +0200
-Message-Id: <20230515161713.232534664@linuxfoundation.org>
+Subject: [PATCH 4.19 151/191] net: dsa: mv88e6xxx: add mv88e6321 rsvd2cpu
+Date: Mon, 15 May 2023 18:26:28 +0200
+Message-Id: <20230515161712.898675370@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -37,41 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ruliang Lin <u202112092@hust.edu.cn>
+From: Angelo Dureghello <angelo.dureghello@timesys.com>
 
-[ Upstream commit 0d727e1856ef22dd9337199430258cb64cbbc658 ]
+[ Upstream commit 6686317855c6997671982d4489ccdd946f644957 ]
 
-Smatch complains that:
-snd_usb_caiaq_input_init() warn: missing error code 'ret'
+Add rsvd2cpu capability for mv88e6321 model, to allow proper bpdu
+processing.
 
-This patch adds a new case to handle the situation where the
-device does not support any input methods in the
-`snd_usb_caiaq_input_init` function. It returns an `-EINVAL` error code
-to indicate that no input methods are supported on the device.
-
-Fixes: 523f1dce3743 ("[ALSA] Add Native Instrument usb audio device support")
-Signed-off-by: Ruliang Lin <u202112092@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Acked-by: Daniel Mack <daniel@zonque.org>
-Link: https://lore.kernel.org/r/20230504065054.3309-1-u202112092@hust.edu.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Angelo Dureghello <angelo.dureghello@timesys.com>
+Fixes: 51c901a775621 ("net: dsa: mv88e6xxx: distinguish Global 2 Rsvd2CPU")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/caiaq/input.c | 1 +
+ drivers/net/dsa/mv88e6xxx/chip.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
-index e883659ea6e77..19951e1dbbb01 100644
---- a/sound/usb/caiaq/input.c
-+++ b/sound/usb/caiaq/input.c
-@@ -817,6 +817,7 @@ int snd_usb_caiaq_input_init(struct snd_usb_caiaqdev *cdev)
- 
- 	default:
- 		/* no input methods supported on this device */
-+		ret = -EINVAL;
- 		goto exit_free_idev;
- 	}
- 
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index fddd7e4f3de71..b593e4d85e9c0 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3645,6 +3645,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	.set_cpu_port = mv88e6095_g1_set_cpu_port,
+ 	.set_egress_port = mv88e6095_g1_set_egress_port,
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
++	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.reset = mv88e6352_g1_reset,
+ 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+ 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
 -- 
 2.39.2
 
