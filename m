@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6361ED512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D382BC4339B;
-	Mon, 15 May 2023 16:33:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F785D512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7318C433EF;
+	Mon, 15 May 2023 16:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168417;
-	bh=A4F215oP5dIpPPJXa/5J33Q3CBbcXbt4jrnhYhaHTt0=;
+	s=korg; t=1684168420;
+	bh=9Ew0Z4GvGT1idRXRSUmaiQGiEpcbYCEd36ai2ZMxikA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zW0H4JpZgTb59nh5A2nlnnByWdU0mv4SkxalsXF5nZ1TWRn3qwiN0YwVzPQRDTplM
-	 BuZnZGguZ4MLbQRKF622kVN9eHl9azWDulxMMA51D1/pIWh06S1JzPtlCUsVKSkAYL
-	 2TIHov/cQrxkqlSRaxU681jMVHhdb/GgdGMq24sU=
+	b=kBgRSy37bCyDz68rlLqpHcd06RtQbEKaM/ghP6lgz18eF/DUgP80BvxvXBKG2XMhS
+	 /umgq9bQgC0SuYXfP+pK0oaGs9GtRPjmR7yQZrzY/J6TEb4TIllggPg+mMKJkv/mk2
+	 hbmy6cib0SBERW7XYRNftWqqCc5uh/658JhUJQ2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurabh Sengar <ssengar@linux.microsoft.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Gan Gecen <gangecen@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 025/116] x86/ioapic: Dont return 0 from arch_dynirq_lower_bound()
-Date: Mon, 15 May 2023 18:25:22 +0200
-Message-Id: <20230515161659.115303160@linuxfoundation.org>
+Subject: [PATCH 4.14 043/116] net: amd: Fix link leak when verifying config failed
+Date: Mon, 15 May 2023 18:25:40 +0200
+Message-Id: <20230515161659.688513237@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -35,70 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saurabh Sengar <ssengar@linux.microsoft.com>
+From: Gencen Gan <gangecen@hust.edu.cn>
 
-[ Upstream commit 5af507bef93c09a94fb8f058213b489178f4cbe5 ]
+[ Upstream commit d325c34d9e7e38d371c0a299d415e9b07f66a1fb ]
 
-arch_dynirq_lower_bound() is invoked by the core interrupt code to
-retrieve the lowest possible Linux interrupt number for dynamically
-allocated interrupts like MSI.
+After failing to verify configuration, it returns directly without
+releasing link, which may cause memory leak.
 
-The x86 implementation uses this to exclude the IO/APIC GSI space.
-This works correctly as long as there is an IO/APIC registered, but
-returns 0 if not. This has been observed in VMs where the BIOS does
-not advertise an IO/APIC.
+Paolo Abeni thinks that the whole code of this driver is quite
+"suboptimal" and looks unmainatained since at least ~15y, so he
+suggests that we could simply remove the whole driver, please
+take it into consideration.
 
-0 is an invalid interrupt number except for the legacy timer interrupt
-on x86. The return value is unchecked in the core code, so it ends up
-to allocate interrupt number 0 which is subsequently considered to be
-invalid by the caller, e.g. the MSI allocation code.
+Simon Horman suggests that the fix label should be set to
+"Linux-2.6.12-rc2" considering that the problem has existed
+since the driver was introduced and the commit above doesn't
+seem to exist in net/net-next.
 
-The function has already a check for 0 in the case that an IO/APIC is
-registered, as ioapic_dynirq_base is 0 in case of device tree setups.
-
-Consolidate this and zero check for both ioapic_dynirq_base and gsi_top,
-which is used in the case that no IO/APIC is registered.
-
-Fixes: 3e5bedc2c258 ("x86/apic: Fix arch_dynirq_lower_bound() bug for DT enabled machines")
-Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/1679988604-20308-1-git-send-email-ssengar@linux.microsoft.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Gan Gecen <gangecen@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/apic/io_apic.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/amd/nmclan_cs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/apic/io_apic.c b/arch/x86/kernel/apic/io_apic.c
-index de74bca6a8ff6..1cceb30357aaf 100644
---- a/arch/x86/kernel/apic/io_apic.c
-+++ b/arch/x86/kernel/apic/io_apic.c
-@@ -2357,17 +2357,21 @@ static int io_apic_get_redir_entries(int ioapic)
+diff --git a/drivers/net/ethernet/amd/nmclan_cs.c b/drivers/net/ethernet/amd/nmclan_cs.c
+index 9c152d85840d7..c9d2a6f150624 100644
+--- a/drivers/net/ethernet/amd/nmclan_cs.c
++++ b/drivers/net/ethernet/amd/nmclan_cs.c
+@@ -652,7 +652,7 @@ static int nmclan_config(struct pcmcia_device *link)
+     } else {
+       pr_notice("mace id not found: %x %x should be 0x40 0x?9\n",
+ 		sig[0], sig[1]);
+-      return -ENODEV;
++      goto failed;
+     }
+   }
  
- unsigned int arch_dynirq_lower_bound(unsigned int from)
- {
-+	unsigned int ret;
-+
- 	/*
- 	 * dmar_alloc_hwirq() may be called before setup_IO_APIC(), so use
- 	 * gsi_top if ioapic_dynirq_base hasn't been initialized yet.
- 	 */
--	if (!ioapic_initialized)
--		return gsi_top;
-+	ret = ioapic_dynirq_base ? : gsi_top;
-+
- 	/*
--	 * For DT enabled machines ioapic_dynirq_base is irrelevant and not
--	 * updated. So simply return @from if ioapic_dynirq_base == 0.
-+	 * For DT enabled machines ioapic_dynirq_base is irrelevant and
-+	 * always 0. gsi_top can be 0 if there is no IO/APIC registered.
-+	 * 0 is an invalid interrupt number for dynamic allocations. Return
-+	 * @from instead.
- 	 */
--	return ioapic_dynirq_base ? : from;
-+	return ret ? : from;
- }
- 
- #ifdef CONFIG_X86_32
 -- 
 2.39.2
 
