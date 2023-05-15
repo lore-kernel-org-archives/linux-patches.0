@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13EAFC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:40:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03943C433EF;
-	Mon, 15 May 2023 17:40:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08334FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:40:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB5AC433D2;
+	Mon, 15 May 2023 17:40:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172436;
-	bh=8pheqfXlrK/DiiC0qNh4dzm6be2O6GH7yg1yNkeodiQ=;
+	s=korg; t=1684172439;
+	bh=AYUbjVUOT2T80hzUaozC0IaD8c8ASV7KErZs5rrwn+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDF6a0CeSqf7t9RNnS6i3VGR5qfTHV9sr27zUvNV3gLZIgJvafLQK5wOqMaE8r5SC
-	 PVL4UzBDeKOqncILgGZT3C2+O5zKWfoMCddTSu+Yk9ZXgMOXzwiQEGlIp9rC69YnYL
-	 Zaffgm7DsoHsiicbY57MZidFdsthB2uJU/5GclVw=
+	b=B6QpcIggXIe6G3Z8RrF7WxOvJJFisVTLRxDaa7k8mt9087HfMbefJkdYLeEbArBMm
+	 TzlJKz/fRlZ98bkaA1pS10STOeiBQRqypyBBkEYIxr+n/kjNvb5+F/N2oATyyU7iBC
+	 EghuFb7rOCUYAWTOSvcNGE1xGRlJtz6Nq6DVHHiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 152/381] f2fs: enforce single zone capacity
-Date: Mon, 15 May 2023 18:26:43 +0200
-Message-Id: <20230515161743.699303067@linuxfoundation.org>
+Subject: [PATCH 5.10 153/381] f2fs: apply zone capacity to all zone type
+Date: Mon, 15 May 2023 18:26:44 +0200
+Message-Id: <20230515161743.731518204@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,182 +37,136 @@ Content-Transfer-Encoding: 8bit
 
 From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit b771aadc6e4c221a468fe4a2dfcfffec01a06722 ]
+[ Upstream commit 0b37ed21e3367539b79284e0b0af2246ffcf0dca ]
 
-In order to simplify the complicated per-zone capacity, let's support
-only one capacity for entire zoned device.
+If we manage the zone capacity per zone type, it'll break the GC assumption.
+And, the current logic complains valid block count mismatch.
+Let's apply zone capacity to all zone type, if specified.
 
+Fixes: de881df97768 ("f2fs: support zone capacity less than zone size")
 Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 0b37ed21e336 ("f2fs: apply zone capacity to all zone type")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h    |  2 +-
- fs/f2fs/segment.c | 19 ++++++-------------
+ fs/f2fs/segment.c | 65 +++--------------------------------------------
  fs/f2fs/segment.h |  3 +++
- fs/f2fs/super.c   | 33 ++++++++++++---------------------
- 4 files changed, 22 insertions(+), 35 deletions(-)
+ 2 files changed, 7 insertions(+), 61 deletions(-)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index c03fdda1bddf6..62b7848f1f71e 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -1153,7 +1153,6 @@ struct f2fs_dev_info {
- #ifdef CONFIG_BLK_DEV_ZONED
- 	unsigned int nr_blkz;		/* Total number of zones */
- 	unsigned long *blkz_seq;	/* Bitmap indicating sequential zones */
--	block_t *zone_capacity_blocks;  /* Array of zone capacity in blks */
- #endif
- };
- 
-@@ -1422,6 +1421,7 @@ struct f2fs_sb_info {
- 	unsigned int meta_ino_num;		/* meta inode number*/
- 	unsigned int log_blocks_per_seg;	/* log2 blocks per segment */
- 	unsigned int blocks_per_seg;		/* blocks per segment */
-+	unsigned int unusable_blocks_per_sec;	/* unusable blocks per section */
- 	unsigned int segs_per_sec;		/* segments per section */
- 	unsigned int secs_per_zone;		/* sections per zone */
- 	unsigned int total_sections;		/* total section count */
 diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 7c90d93f4e435..5305913fe0d58 100644
+index 5305913fe0d58..a27a934292715 100644
 --- a/fs/f2fs/segment.c
 +++ b/fs/f2fs/segment.c
-@@ -4982,7 +4982,7 @@ static unsigned int get_zone_idx(struct f2fs_sb_info *sbi, unsigned int secno,
- static inline unsigned int f2fs_usable_zone_segs_in_sec(
- 		struct f2fs_sb_info *sbi, unsigned int segno)
- {
--	unsigned int dev_idx, zone_idx, unusable_segs_in_sec;
-+	unsigned int dev_idx, zone_idx;
- 
- 	dev_idx = f2fs_target_device_index(sbi, START_BLOCK(sbi, segno));
- 	zone_idx = get_zone_idx(sbi, GET_SEC_FROM_SEG(sbi, segno), dev_idx);
-@@ -4991,18 +4991,12 @@ static inline unsigned int f2fs_usable_zone_segs_in_sec(
- 	if (is_conv_zone(sbi, zone_idx, dev_idx))
- 		return sbi->segs_per_sec;
- 
--	/*
--	 * If the zone_capacity_blocks array is NULL, then zone capacity
--	 * is equal to the zone size for all zones
--	 */
--	if (!FDEV(dev_idx).zone_capacity_blocks)
-+	if (!sbi->unusable_blocks_per_sec)
- 		return sbi->segs_per_sec;
- 
- 	/* Get the segment count beyond zone capacity block */
--	unusable_segs_in_sec = (sbi->blocks_per_blkz -
--				FDEV(dev_idx).zone_capacity_blocks[zone_idx]) >>
--				sbi->log_blocks_per_seg;
--	return sbi->segs_per_sec - unusable_segs_in_sec;
-+	return sbi->segs_per_sec - (sbi->unusable_blocks_per_sec >>
-+						sbi->log_blocks_per_seg);
+@@ -4957,48 +4957,6 @@ int f2fs_check_write_pointer(struct f2fs_sb_info *sbi)
+ 	return 0;
  }
  
+-static bool is_conv_zone(struct f2fs_sb_info *sbi, unsigned int zone_idx,
+-						unsigned int dev_idx)
+-{
+-	if (!bdev_is_zoned(FDEV(dev_idx).bdev))
+-		return true;
+-	return !test_bit(zone_idx, FDEV(dev_idx).blkz_seq);
+-}
+-
+-/* Return the zone index in the given device */
+-static unsigned int get_zone_idx(struct f2fs_sb_info *sbi, unsigned int secno,
+-					int dev_idx)
+-{
+-	block_t sec_start_blkaddr = START_BLOCK(sbi, GET_SEG_FROM_SEC(sbi, secno));
+-
+-	return (sec_start_blkaddr - FDEV(dev_idx).start_blk) >>
+-						sbi->log_blocks_per_blkz;
+-}
+-
+-/*
+- * Return the usable segments in a section based on the zone's
+- * corresponding zone capacity. Zone is equal to a section.
+- */
+-static inline unsigned int f2fs_usable_zone_segs_in_sec(
+-		struct f2fs_sb_info *sbi, unsigned int segno)
+-{
+-	unsigned int dev_idx, zone_idx;
+-
+-	dev_idx = f2fs_target_device_index(sbi, START_BLOCK(sbi, segno));
+-	zone_idx = get_zone_idx(sbi, GET_SEC_FROM_SEG(sbi, segno), dev_idx);
+-
+-	/* Conventional zone's capacity is always equal to zone size */
+-	if (is_conv_zone(sbi, zone_idx, dev_idx))
+-		return sbi->segs_per_sec;
+-
+-	if (!sbi->unusable_blocks_per_sec)
+-		return sbi->segs_per_sec;
+-
+-	/* Get the segment count beyond zone capacity block */
+-	return sbi->segs_per_sec - (sbi->unusable_blocks_per_sec >>
+-						sbi->log_blocks_per_seg);
+-}
+-
  /*
-@@ -5031,12 +5025,11 @@ static inline unsigned int f2fs_usable_zone_blks_in_seg(
- 	if (is_conv_zone(sbi, zone_idx, dev_idx))
+  * Return the number of usable blocks in a segment. The number of blocks
+  * returned is always equal to the number of blocks in a segment for
+@@ -5011,23 +4969,13 @@ static inline unsigned int f2fs_usable_zone_blks_in_seg(
+ 			struct f2fs_sb_info *sbi, unsigned int segno)
+ {
+ 	block_t seg_start, sec_start_blkaddr, sec_cap_blkaddr;
+-	unsigned int zone_idx, dev_idx, secno;
+-
+-	secno = GET_SEC_FROM_SEG(sbi, segno);
+-	seg_start = START_BLOCK(sbi, segno);
+-	dev_idx = f2fs_target_device_index(sbi, seg_start);
+-	zone_idx = get_zone_idx(sbi, secno, dev_idx);
+-
+-	/*
+-	 * Conventional zone's capacity is always equal to zone size,
+-	 * so, blocks per segment is unchanged.
+-	 */
+-	if (is_conv_zone(sbi, zone_idx, dev_idx))
+-		return sbi->blocks_per_seg;
++	unsigned int secno;
+ 
+ 	if (!sbi->unusable_blocks_per_sec)
  		return sbi->blocks_per_seg;
  
--	if (!FDEV(dev_idx).zone_capacity_blocks)
-+	if (!sbi->unusable_blocks_per_sec)
- 		return sbi->blocks_per_seg;
- 
++	secno = GET_SEC_FROM_SEG(sbi, segno);
++	seg_start = START_BLOCK(sbi, segno);
  	sec_start_blkaddr = START_BLOCK(sbi, GET_SEG_FROM_SEC(sbi, secno));
--	sec_cap_blkaddr = sec_start_blkaddr +
--				FDEV(dev_idx).zone_capacity_blocks[zone_idx];
-+	sec_cap_blkaddr = sec_start_blkaddr + CAP_BLKS_PER_SEC(sbi);
+ 	sec_cap_blkaddr = sec_start_blkaddr + CAP_BLKS_PER_SEC(sbi);
  
- 	/*
- 	 * If segment starts before zone capacity and spans beyond
+@@ -5061,11 +5009,6 @@ static inline unsigned int f2fs_usable_zone_blks_in_seg(struct f2fs_sb_info *sbi
+ 	return 0;
+ }
+ 
+-static inline unsigned int f2fs_usable_zone_segs_in_sec(struct f2fs_sb_info *sbi,
+-							unsigned int segno)
+-{
+-	return 0;
+-}
+ #endif
+ unsigned int f2fs_usable_blks_in_seg(struct f2fs_sb_info *sbi,
+ 					unsigned int segno)
+@@ -5080,7 +5023,7 @@ unsigned int f2fs_usable_segs_in_sec(struct f2fs_sb_info *sbi,
+ 					unsigned int segno)
+ {
+ 	if (f2fs_sb_has_blkzoned(sbi))
+-		return f2fs_usable_zone_segs_in_sec(sbi, segno);
++		return CAP_SEGS_PER_SEC(sbi);
+ 
+ 	return sbi->segs_per_sec;
+ }
 diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index eafd89f0c77e8..aca6c9a3aad0b 100644
+index aca6c9a3aad0b..979296b835b5a 100644
 --- a/fs/f2fs/segment.h
 +++ b/fs/f2fs/segment.h
-@@ -101,6 +101,9 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
- 		GET_SEGNO_FROM_SEG0(sbi, blk_addr)))
- #define BLKS_PER_SEC(sbi)					\
- 	((sbi)->segs_per_sec * (sbi)->blocks_per_seg)
-+#define CAP_BLKS_PER_SEC(sbi)					\
-+	((sbi)->segs_per_sec * (sbi)->blocks_per_seg -		\
-+	 (sbi)->unusable_blocks_per_sec)
+@@ -104,6 +104,9 @@ static inline void sanity_check_seg_type(struct f2fs_sb_info *sbi,
+ #define CAP_BLKS_PER_SEC(sbi)					\
+ 	((sbi)->segs_per_sec * (sbi)->blocks_per_seg -		\
+ 	 (sbi)->unusable_blocks_per_sec)
++#define CAP_SEGS_PER_SEC(sbi)					\
++	((sbi)->segs_per_sec - ((sbi)->unusable_blocks_per_sec >>\
++	(sbi)->log_blocks_per_seg))
  #define GET_SEC_FROM_SEG(sbi, segno)				\
  	(((segno) == -1) ? -1: (segno) / (sbi)->segs_per_sec)
  #define GET_SEG_FROM_SEC(sbi, secno)				\
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 0bba5c72fc77e..9a74d60f61dba 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -1242,7 +1242,6 @@ static void destroy_device_list(struct f2fs_sb_info *sbi)
- 		blkdev_put(FDEV(i).bdev, FMODE_EXCL);
- #ifdef CONFIG_BLK_DEV_ZONED
- 		kvfree(FDEV(i).blkz_seq);
--		kfree(FDEV(i).zone_capacity_blocks);
- #endif
- 	}
- 	kvfree(sbi->devs);
-@@ -3199,24 +3198,29 @@ static int init_percpu_info(struct f2fs_sb_info *sbi)
- #ifdef CONFIG_BLK_DEV_ZONED
- 
- struct f2fs_report_zones_args {
-+	struct f2fs_sb_info *sbi;
- 	struct f2fs_dev_info *dev;
--	bool zone_cap_mismatch;
- };
- 
- static int f2fs_report_zone_cb(struct blk_zone *zone, unsigned int idx,
- 			      void *data)
- {
- 	struct f2fs_report_zones_args *rz_args = data;
-+	block_t unusable_blocks = (zone->len - zone->capacity) >>
-+					F2FS_LOG_SECTORS_PER_BLOCK;
- 
- 	if (zone->type == BLK_ZONE_TYPE_CONVENTIONAL)
- 		return 0;
- 
- 	set_bit(idx, rz_args->dev->blkz_seq);
--	rz_args->dev->zone_capacity_blocks[idx] = zone->capacity >>
--						F2FS_LOG_SECTORS_PER_BLOCK;
--	if (zone->len != zone->capacity && !rz_args->zone_cap_mismatch)
--		rz_args->zone_cap_mismatch = true;
--
-+	if (!rz_args->sbi->unusable_blocks_per_sec) {
-+		rz_args->sbi->unusable_blocks_per_sec = unusable_blocks;
-+		return 0;
-+	}
-+	if (rz_args->sbi->unusable_blocks_per_sec != unusable_blocks) {
-+		f2fs_err(rz_args->sbi, "F2FS supports single zone capacity\n");
-+		return -EINVAL;
-+	}
- 	return 0;
- }
- 
-@@ -3250,26 +3254,13 @@ static int init_blkz_info(struct f2fs_sb_info *sbi, int devi)
- 	if (!FDEV(devi).blkz_seq)
- 		return -ENOMEM;
- 
--	/* Get block zones type and zone-capacity */
--	FDEV(devi).zone_capacity_blocks = f2fs_kzalloc(sbi,
--					FDEV(devi).nr_blkz * sizeof(block_t),
--					GFP_KERNEL);
--	if (!FDEV(devi).zone_capacity_blocks)
--		return -ENOMEM;
--
-+	rep_zone_arg.sbi = sbi;
- 	rep_zone_arg.dev = &FDEV(devi);
--	rep_zone_arg.zone_cap_mismatch = false;
- 
- 	ret = blkdev_report_zones(bdev, 0, BLK_ALL_ZONES, f2fs_report_zone_cb,
- 				  &rep_zone_arg);
- 	if (ret < 0)
- 		return ret;
--
--	if (!rep_zone_arg.zone_cap_mismatch) {
--		kfree(FDEV(devi).zone_capacity_blocks);
--		FDEV(devi).zone_capacity_blocks = NULL;
--	}
--
- 	return 0;
- }
- #endif
 -- 
 2.39.2
 
