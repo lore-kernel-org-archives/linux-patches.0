@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1284E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64615C433EF;
-	Mon, 15 May 2023 16:41:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06670E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:42:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 620F4C433D2;
+	Mon, 15 May 2023 16:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168918;
-	bh=owxnvc9dbeU66QE9VZST8VtAbpLCLsfBM9MGS8LJDB8=;
+	s=korg; t=1684168921;
+	bh=7d2QRqwq1SzFZRmBVYbxz9gYBoj1JEiV7lYWBs8fBS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wTIGh5NAwmpdAijIpVNKQX4XswuWsVxDiNqMtjxbeEnNagg9OBA++YvPSz35buOvI
-	 Da5o4R+/8fBEyMQyw0NV/iPm2Fey6f+KfhEmlUATHJyziXo4x5RHBUF8lzELE8F+aJ
-	 WwRz4Z1oYznHITXJaaxkriisswsWzovBiI7Wbo0k=
+	b=Qey3WnU1f29LLADWfepgIAyio+6RQQLxC+YnreFkFsLk+vAdd5RGgazhogss59UKY
+	 6Q4wrmYxUOO64Qy7n3rqCAckMWYeqqR8QGFs3zlvoRDpC27pMKFUf34XT45+6LdOUS
+	 RT2XcsIqCEwTrPLZ05ifdVKZeAJoaFVgM92rTg/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Pagani <marpagan@redhat.com>,
-	Tom Rix <trix@redhat.com>,
-	Xu Yilun <yilun.xu@intel.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 083/191] fpga: bridge: fix kernel-doc parameter description
-Date: Mon, 15 May 2023 18:25:20 +0200
-Message-Id: <20230515161710.294131183@linuxfoundation.org>
+Subject: [PATCH 4.19 057/191] scsi: target: iscsit: Fix TAS handling during conn cleanup
+Date: Mon, 15 May 2023 18:24:54 +0200
+Message-Id: <20230515161709.283519994@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,37 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Pagani <marpagan@redhat.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 7ef1a2c1c9dffa177ecc3ea50b7f5ee63a621137 ]
+[ Upstream commit cc79da306ebb2edb700c3816b90219223182ac3c ]
 
-Fix the kernel-doc description for the "struct fpga_image_info *info"
-parameter of the fpga_bridge_get() function.
+Fix a bug added in commit f36199355c64 ("scsi: target: iscsi: Fix cmd abort
+fabric stop race").
 
-Fixes: 060ac5c8fa7b ("fpga: bridge: kernel-doc fixes")
-Signed-off-by: Marco Pagani <marpagan@redhat.com>
-Reviewed-by: Tom Rix <trix@redhat.com>
-Acked-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20230301140309.512578-1-marpagan@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+If CMD_T_TAS is set on the se_cmd we must call iscsit_free_cmd() to do the
+last put on the cmd and free it, because the connection is down and we will
+not up sending the response and doing the put from the normal I/O
+path.
+
+Add a check for CMD_T_TAS in iscsit_release_commands_from_conn() so we now
+detect this case and run iscsit_free_cmd().
+
+Fixes: f36199355c64 ("scsi: target: iscsi: Fix cmd abort fabric stop race")
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-9-michael.christie@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fpga/fpga-bridge.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/fpga/fpga-bridge.c b/drivers/fpga/fpga-bridge.c
-index c983dac97501b..c7db12192facd 100644
---- a/drivers/fpga/fpga-bridge.c
-+++ b/drivers/fpga/fpga-bridge.c
-@@ -121,7 +121,7 @@ static int fpga_bridge_dev_match(struct device *dev, const void *data)
- /**
-  * fpga_bridge_get - get an exclusive reference to a fpga bridge
-  * @dev:	parent device that fpga bridge was registered with
-- * @info:	fpga manager info
-+ * @info:	fpga image specific information
-  *
-  * Given a device, get an exclusive reference to a fpga bridge.
-  *
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 58ccded1be857..7738e249c4a24 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4056,9 +4056,12 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
+ 	list_for_each_entry_safe(cmd, cmd_tmp, &tmp_list, i_conn_node) {
+ 		struct se_cmd *se_cmd = &cmd->se_cmd;
+ 
+-		if (se_cmd->se_tfo != NULL) {
+-			spin_lock_irq(&se_cmd->t_state_lock);
+-			if (se_cmd->transport_state & CMD_T_ABORTED) {
++		if (!se_cmd->se_tfo)
++			continue;
++
++		spin_lock_irq(&se_cmd->t_state_lock);
++		if (se_cmd->transport_state & CMD_T_ABORTED) {
++			if (!(se_cmd->transport_state & CMD_T_TAS))
+ 				/*
+ 				 * LIO's abort path owns the cleanup for this,
+ 				 * so put it back on the list and let
+@@ -4066,11 +4069,10 @@ static void iscsit_release_commands_from_conn(struct iscsi_conn *conn)
+ 				 */
+ 				list_move_tail(&cmd->i_conn_node,
+ 					       &conn->conn_cmd_list);
+-			} else {
+-				se_cmd->transport_state |= CMD_T_FABRIC_STOP;
+-			}
+-			spin_unlock_irq(&se_cmd->t_state_lock);
++		} else {
++			se_cmd->transport_state |= CMD_T_FABRIC_STOP;
+ 		}
++		spin_unlock_irq(&se_cmd->t_state_lock);
+ 	}
+ 	spin_unlock_bh(&conn->cmd_lock);
+ 
 -- 
 2.39.2
 
