@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F3EFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:55:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A68C433D2;
-	Mon, 15 May 2023 16:55:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C454BFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:55:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 320A6C4339B;
+	Mon, 15 May 2023 16:55:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169741;
-	bh=/4Cmt3xNe5p47FhOZ2B3mNMwtPAWH2t44j6oe8ANPCs=;
+	s=korg; t=1684169744;
+	bh=neLtdfMpmsdmBRxTrUgi8t5twzINJSbSqDdLgByc4zY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cr6IOwzWgxpUPyObQB398jnewTuh36u62g0prB/Vrn2G+6ecKyqJqDEl4fuAIOFxv
-	 ZqRalilv2TOa9qx9uxgFwid25L2xYOclrHsP/X3lxvvdaFHqSHCb5zlOyTe55qfy9+
-	 1NiXUTBuFdZTlDRkvKhZYC0AMxgg38rSDE3oaO1E=
+	b=Q2+zsi3NApGtWI0RzZIY4LupRk7/2bvsmeYx5IR95C3bJ9r5iKv6Hah413V3ks0Yg
+	 SebMRLHNLD1DfpNAUmMZMB3ppfpghfRYUGAla+TwqItI5+yvY5Rhff7u4ia73+GGhD
+	 Tj59OeT6eQRveLEa28ZIhwYt/GD9BCllOI133TXw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	stable@kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.3 126/246] x86/retbleed: Fix return thunk alignment
-Date: Mon, 15 May 2023 18:25:38 +0200
-Message-Id: <20230515161726.343984343@linuxfoundation.org>
+	Sylvain Ouellet <souellet@genetec.com>,
+	Olivier Bacon <obacon@genetec.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 117/246] crypto: engine - fix crypto_queue backlog handling
+Date: Mon, 15 May 2023 18:25:29 +0200
+Message-Id: <20230515161726.082523473@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,48 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Borislav Petkov (AMD) <bp@alien8.de>
+From: Olivier Bacon <olivierb89@gmail.com>
 
-commit 9a48d604672220545d209e9996c2a1edbb5637f6 upstream.
+[ Upstream commit 4140aafcff167b5b9e8dae6a1709a6de7cac6f74 ]
 
-SYM_FUNC_START_LOCAL_NOALIGN() adds an endbr leading to this layout
-(leaving only the last 2 bytes of the address):
+CRYPTO_TFM_REQ_MAY_BACKLOG tells the crypto driver that it should
+internally backlog requests until the crypto hw's queue becomes
+full. At that point, crypto_engine backlogs the request and returns
+-EBUSY. Calling driver such as dm-crypt then waits until the
+complete() function is called with a status of -EINPROGRESS before
+sending a new request.
 
-  3bff <zen_untrain_ret>:
-  3bff:       f3 0f 1e fa             endbr64
-  3c03:       f6                      test   $0xcc,%bl
+The problem lies in the call to complete() with a value of -EINPROGRESS
+that is made when a backlog item is present on the queue. The call is
+done before the successful execution of the crypto request. In the case
+that do_one_request() returns < 0 and the retry support is available,
+the request is put back in the queue. This leads upper drivers to send
+a new request even if the queue is still full.
 
-  3c04 <__x86_return_thunk>:
-  3c04:       c3                      ret
-  3c05:       cc                      int3
-  3c06:       0f ae e8                lfence
+The problem can be reproduced by doing a large dd into a crypto
+dm-crypt device. This is pretty easy to see when using
+Freescale CAAM crypto driver and SWIOTLB dma. Since the actual amount
+of requests that can be hold in the queue is unlimited we get IOs error
+and dma allocation.
 
-However, "the RET at __x86_return_thunk must be on a 64 byte boundary,
-for alignment within the BTB."
+The fix is to call complete with a value of -EINPROGRESS only if
+the request is not enqueued back in crypto_queue. This is done
+by calling complete() later in the code. In order to delay the decision,
+crypto_queue is modified to correctly set the backlog pointer
+when a request is enqueued back.
 
-Use SYM_START instead.
-
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: <stable@kernel.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6a89f492f8e5 ("crypto: engine - support for parallel requests based on retry mechanism")
+Co-developed-by: Sylvain Ouellet <souellet@genetec.com>
+Signed-off-by: Sylvain Ouellet <souellet@genetec.com>
+Signed-off-by: Olivier Bacon <obacon@genetec.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/retpoline.S |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ crypto/algapi.c        | 3 +++
+ crypto/crypto_engine.c | 6 +++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
---- a/arch/x86/lib/retpoline.S
-+++ b/arch/x86/lib/retpoline.S
-@@ -144,8 +144,8 @@ SYM_CODE_END(__x86_indirect_jump_thunk_a
-  */
- 	.align 64
- 	.skip 63, 0xcc
--SYM_FUNC_START_NOALIGN(zen_untrain_ret);
+diff --git a/crypto/algapi.c b/crypto/algapi.c
+index 9de0677b3643d..60b98d2c400e3 100644
+--- a/crypto/algapi.c
++++ b/crypto/algapi.c
+@@ -963,6 +963,9 @@ EXPORT_SYMBOL_GPL(crypto_enqueue_request);
+ void crypto_enqueue_request_head(struct crypto_queue *queue,
+ 				 struct crypto_async_request *request)
+ {
++	if (unlikely(queue->qlen >= queue->max_qlen))
++		queue->backlog = queue->backlog->prev;
++
+ 	queue->qlen++;
+ 	list_add(&request->list, &queue->list);
+ }
+diff --git a/crypto/crypto_engine.c b/crypto/crypto_engine.c
+index 21f7916151145..74fcc08970411 100644
+--- a/crypto/crypto_engine.c
++++ b/crypto/crypto_engine.c
+@@ -129,9 +129,6 @@ static void crypto_pump_requests(struct crypto_engine *engine,
+ 	if (!engine->retry_support)
+ 		engine->cur_req = async_req;
+ 
+-	if (backlog)
+-		crypto_request_complete(backlog, -EINPROGRESS);
 -
-+SYM_START(zen_untrain_ret, SYM_L_GLOBAL, SYM_A_NONE)
-+	ANNOTATE_NOENDBR
- 	/*
- 	 * As executed from zen_untrain_ret, this is:
- 	 *
+ 	if (engine->busy)
+ 		was_busy = true;
+ 	else
+@@ -217,6 +214,9 @@ static void crypto_pump_requests(struct crypto_engine *engine,
+ 	crypto_request_complete(async_req, ret);
+ 
+ retry:
++	if (backlog)
++		crypto_request_complete(backlog, -EINPROGRESS);
++
+ 	/* If retry mechanism is supported, send new requests to engine */
+ 	if (engine->retry_support) {
+ 		spin_lock_irqsave(&engine->queue_lock, flags);
+-- 
+2.39.2
+
 
 
