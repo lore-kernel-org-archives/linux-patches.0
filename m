@@ -1,28 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2443AFBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:43:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 746EDC433EF;
-	Mon, 15 May 2023 17:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A791FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:43:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F9BC433EF;
+	Mon, 15 May 2023 17:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172610;
-	bh=V2P2IWRP2SkXaZu2UiuELMz/7c/Jx9eLzPAf4iEWwT8=;
+	s=korg; t=1684172614;
+	bh=aOzlE+ANOfR7mTJy+fxUnHQ1jqdFhdAPuhJ7O6Q5pnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMCKHQ3KG7jBq+/H/OsdhdbGfyo4qU73GivG6yokFIL7L6+p2tASKc3XgjHaSUQ6g
-	 wGqwrWFh/eBTNHRhwcbTWlfet9q5dvuBNpwFHW03P7XOaJ2kxwu5C6P/7KkO8/3mXM
-	 crhfdOqyWsMvqgVT5NzRFe8XAzmK6uN4r65WTOeY=
+	b=yYM39DMuyP1NwoXLkIvE8qlezVu9MRs3JNMOGz4czv/O+MzKpLeEvM4aJ1B+iDMmU
+	 C/o+Hp093DZK/85pmNQs1XSz3euEH+AN97X8p30H7TuQyG+jvag2Or0LeJnuhJzphq
+	 1J6xadtHnKApP9UhY9cSYzczHNn2ln47nyE0Gn7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Wei Wang <wvw@google.com>,
+	Midas Chien <midaschieh@google.com>,
+	=?UTF-8?q?Chunhui=20Li=20 ?= <chunhui.li@mediatek.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Kees Cook <keescook@chromium.org>,
+	Anton Vorontsov <anton@enomsg.org>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Tony Luck <tony.luck@intel.com>,
+	kernel-team@android.com,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 210/381] ia64: mm/contig: fix section mismatch warning/error
-Date: Mon, 15 May 2023 18:27:41 +0200
-Message-Id: <20230515161746.281920216@linuxfoundation.org>
+Subject: [PATCH 5.10 193/381] pstore: Revert pmsg_lock back to a normal mutex
+Date: Mon, 15 May 2023 18:27:24 +0200
+Message-Id: <20230515161745.536242073@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,39 +43,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 58deeb4ef3b054498747d0929d94ac53ab90981f ]
+[ Upstream commit 5239a89b06d6b199f133bf0ffea421683187f257 ]
 
-alloc_per_cpu_data() is called by find_memory(), which is marked as
-__init.  Therefore alloc_per_cpu_data() can also be marked as __init to
-remedy this modpost problem.
+This reverts commit 76d62f24db07f22ccf9bc18ca793c27d4ebef721.
 
-WARNING: modpost: vmlinux.o: section mismatch in reference: alloc_per_cpu_data (section: .text) -> memblock_alloc_try_nid (section: .init.text)
+So while priority inversion on the pmsg_lock is an occasional
+problem that an rt_mutex would help with, in uses where logging
+is writing to pmsg heavily from multiple threads, the pmsg_lock
+can be heavily contended.
 
-Link: https://lkml.kernel.org/r/20230223034258.12917-1-rdunlap@infradead.org
-Fixes: 4b9ddc7cf272 ("[IA64] Fix section mismatch in contig.c version of per_cpu_init()")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+After this change landed, it was reported that cases where the
+mutex locking overhead was commonly adding on the order of 10s
+of usecs delay had suddenly jumped to ~msec delay with rtmutex.
+
+It seems the slight differences in the locks under this level
+of contention causes the normal mutexes to utilize the spinning
+optimizations, while the rtmutexes end up in the sleeping
+slowpath (which allows additional threads to pile on trying
+to take the lock).
+
+In this case, it devolves to a worse case senerio where the lock
+acquisition and scheduling overhead dominates, and each thread
+is waiting on the order of ~ms to do ~us of work.
+
+Obviously, having tons of threads all contending on a single
+lock for logging is non-optimal, so the proper fix is probably
+reworking pstore pmsg to have per-cpu buffers so we don't have
+contention.
+
+Additionally, Steven Rostedt has provided some furhter
+optimizations for rtmutexes that improves the rtmutex spinning
+path, but at least in my testing, I still see the test tripping
+into the sleeping path on rtmutexes while utilizing the spinning
+path with mutexes.
+
+But in the short term, lets revert the change to the rt_mutex
+and go back to normal mutexes to avoid a potentially major
+performance regression. And we can work on optimizations to both
+rtmutexes and finer-grained locking for pstore pmsg in the
+future.
+
+Cc: Wei Wang <wvw@google.com>
+Cc: Midas Chien<midaschieh@google.com>
+Cc: "Chunhui Li (李春辉)" <chunhui.li@mediatek.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Anton Vorontsov <anton@enomsg.org>
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: kernel-team@android.com
+Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
+Reported-by: "Chunhui Li (李春辉)" <chunhui.li@mediatek.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20230308204043.2061631-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/ia64/mm/contig.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/pstore/pmsg.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/ia64/mm/contig.c b/arch/ia64/mm/contig.c
-index e30e360beef84..c638e012ad051 100644
---- a/arch/ia64/mm/contig.c
-+++ b/arch/ia64/mm/contig.c
-@@ -79,7 +79,7 @@ void *per_cpu_init(void)
- 	return __per_cpu_start + __per_cpu_offset[smp_processor_id()];
+diff --git a/fs/pstore/pmsg.c b/fs/pstore/pmsg.c
+index 18cf94b597e05..d8542ec2f38c6 100644
+--- a/fs/pstore/pmsg.c
++++ b/fs/pstore/pmsg.c
+@@ -7,10 +7,9 @@
+ #include <linux/device.h>
+ #include <linux/fs.h>
+ #include <linux/uaccess.h>
+-#include <linux/rtmutex.h>
+ #include "internal.h"
+ 
+-static DEFINE_RT_MUTEX(pmsg_lock);
++static DEFINE_MUTEX(pmsg_lock);
+ 
+ static ssize_t write_pmsg(struct file *file, const char __user *buf,
+ 			  size_t count, loff_t *ppos)
+@@ -29,9 +28,9 @@ static ssize_t write_pmsg(struct file *file, const char __user *buf,
+ 	if (!access_ok(buf, count))
+ 		return -EFAULT;
+ 
+-	rt_mutex_lock(&pmsg_lock);
++	mutex_lock(&pmsg_lock);
+ 	ret = psinfo->write_user(&record, buf);
+-	rt_mutex_unlock(&pmsg_lock);
++	mutex_unlock(&pmsg_lock);
+ 	return ret ? ret : count;
  }
  
--static inline void
-+static inline __init void
- alloc_per_cpu_data(void)
- {
- 	size_t size = PERCPU_PAGE_SIZE * num_possible_cpus();
 -- 
 2.39.2
 
