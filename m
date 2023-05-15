@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5807EFC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:42:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFDCFC433D2;
-	Mon, 15 May 2023 17:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A895FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:42:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05FBC4339B;
+	Mon, 15 May 2023 17:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172522;
-	bh=oLxQ6V22vMl3WyI8oM7fPVfVMSHUqVLB9KOIEKESpg0=;
+	s=korg; t=1684172525;
+	bh=kUrKhhjbrNgLmWrEkrLqnjT5n441ieTdGqorhDsJrRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+XqBP2ElzNFeDxZ7XmO94eXtJ41tMOwsCyVGTkUoOvKqqDz//7MwivEzzE53fDjS
-	 7bnbsQXjLwrjeIrcc0L27gj/Wa8/f3FOFvf4Wyi0MiyqRYgaGEtwSpAeGIxefs7N2t
-	 PeSpXQPA/b93z5qb1dF3wPk5AUgWcjrKClp8lT/k=
+	b=Q6dliw0Ov+p+gdmAe7xFXvmR2c73V++jEm+AIjkHxdum77F30UWZy4Q/Waf5fS6d5
+	 yuN0yyuFRhebOKgPKs8/972pghMRLjDkPf52iQbc4n3TL9Mx6zJtXE77VnlQ7Igru6
+	 lR4Wdw0m+yNzhFqws9PTxaOfaWmzDsEBurEBvjI4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 180/381] wifi: iwlwifi: mvm: check firmware response size
-Date: Mon, 15 May 2023 18:27:11 +0200
-Message-Id: <20230515161744.948600231@linuxfoundation.org>
+Subject: [PATCH 5.10 181/381] wifi: iwlwifi: fw: fix memory leak in debugfs
+Date: Mon, 15 May 2023 18:27:12 +0200
+Message-Id: <20230515161744.998557331@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,49 +37,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 13513cec93ac9902d0b896976d8bab3758a9881c ]
+[ Upstream commit 3d90d2f4a018fe8cfd65068bc6350b6222be4852 ]
 
-Check the firmware response size for responses to the
-memory read/write command in debugfs before using it.
+Fix a memory leak that occurs when reading the fw_info
+file all the way, since we return NULL indicating no
+more data, but don't free the status tracking object.
 
-Fixes: 2b55f43f8e47 ("iwlwifi: mvm: Add mem debugfs entry")
+Fixes: 36dfe9ac6e8b ("iwlwifi: dump api version in yaml format")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230417113648.0d56fcaf68ee.I70e9571f3ed7263929b04f8fabad23c9b999e4ea@changeid
+Link: https://lore.kernel.org/r/20230418122405.239e501b3b8d.I4268f87809ef91209cbcd748eee0863195e70fa2@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/fw/debugfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
-index 3395c46759883..36f75d5946304 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/debugfs.c
-@@ -1885,6 +1885,11 @@ static ssize_t iwl_dbgfs_mem_read(struct file *file, char __user *user_buf,
- 	if (ret < 0)
- 		return ret;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
+index 267ad4eddb5c0..24d6ed3513ce5 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/debugfs.c
+@@ -344,8 +344,10 @@ static void *iwl_dbgfs_fw_info_seq_next(struct seq_file *seq,
+ 	const struct iwl_fw *fw = priv->fwrt->fw;
  
-+	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
-+		ret = -EIO;
-+		goto out;
+ 	*pos = ++state->pos;
+-	if (*pos >= fw->ucode_capa.n_cmd_versions)
++	if (*pos >= fw->ucode_capa.n_cmd_versions) {
++		kfree(state);
+ 		return NULL;
 +	}
-+
- 	rsp = (void *)hcmd.resp_pkt->data;
- 	if (le32_to_cpu(rsp->status) != DEBUG_MEM_STATUS_SUCCESS) {
- 		ret = -ENXIO;
-@@ -1962,6 +1967,11 @@ static ssize_t iwl_dbgfs_mem_write(struct file *file,
- 	if (ret < 0)
- 		return ret;
  
-+	if (iwl_rx_packet_payload_len(hcmd.resp_pkt) < sizeof(*rsp)) {
-+		ret = -EIO;
-+		goto out;
-+	}
-+
- 	rsp = (void *)hcmd.resp_pkt->data;
- 	if (rsp->status != DEBUG_MEM_STATUS_SUCCESS) {
- 		ret = -ENXIO;
+ 	return state;
+ }
 -- 
 2.39.2
 
