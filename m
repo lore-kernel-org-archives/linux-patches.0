@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AEF4E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70DF6C433D2;
-	Mon, 15 May 2023 16:41:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41565E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:41:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C16FC433EF;
+	Mon, 15 May 2023 16:41:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168868;
-	bh=l4ITO5OxDbfFKfqcTCi87A7yudRGRnWreC/wF/p7tS0=;
+	s=korg; t=1684168872;
+	bh=fD5fFE/54KK6kzuq40YbVMa5Zr/0hSlbC44Yt7RNeUI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewTHNNhXqepMXLG5pEmz4uYR0i3zQM3OhM5aVQssmTLCDdVWLF63jU/ZSzfnn1FV6
-	 3Gw5n2HELTcaX3VfD9acSiqcbrxBlQ7K9nMPZJiA0QhMwfMnrPcGaoAUdTc0p7ZAhr
-	 Us6qxCa8MkIn4/wkmpH8m3EpPUBqsypObB6gdd5Q=
+	b=v3bF+FXQihNtjQszJltO2w6mvJUPmaikI8Q3ixrUG5Dh3HUfF+1a0XwV5vHlVRhco
+	 Jxs0mE2KXEAZLIt2jxA8gIJFuiD5JMz75Uox6IpprvfqumhE0TUQZp3nsPIJGztl6I
+	 ixiaBrQ/10DTEb9OGbmg7A3/AdTH7F6GzoO4hEBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Song Liu <song@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 068/191] md/raid10: fix memleak for conf->bio_split
-Date: Mon, 15 May 2023 18:25:05 +0200
-Message-Id: <20230515161709.696684699@linuxfoundation.org>
+Subject: [PATCH 4.19 069/191] md: update the optimal I/O size on reshape
+Date: Mon, 15 May 2023 18:25:06 +0200
+Message-Id: <20230515161709.746381761@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,94 +38,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit c9ac2acde53f5385de185bccf6aaa91cf9ac1541 ]
+[ Upstream commit 16ef510139315a2147ee7525796f8dbd4e4b7864 ]
 
-In the error path of raid10_run(), 'conf' need be freed, however,
-'conf->bio_split' is missed and memory will be leaked.
+The raid5 and raid10 drivers currently update the read-ahead size,
+but not the optimal I/O size on reshape.  To prepare for deriving the
+read-ahead size from the optimal I/O size make sure it is updated
+as well.
 
-Since there are 3 places to free 'conf', factor out a helper to fix the
-problem.
-
-Fixes: fc9977dd069e ("md/raid10: simplify the splitting of requests.")
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230310073855.1337560-6-yukuai1@huaweicloud.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Acked-by: Song Liu <song@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: f0ddb83da3cb ("md/raid10: fix memleak of md thread")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid10.c | 37 +++++++++++++++++--------------------
- 1 file changed, 17 insertions(+), 20 deletions(-)
+ drivers/md/raid10.c | 22 ++++++++++++++--------
+ drivers/md/raid5.c  | 10 ++++++++--
+ 2 files changed, 22 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index 8181d9a375f0b..fca95eb3cb1f3 100644
+index fca95eb3cb1f3..2a7f9df5b82c6 100644
 --- a/drivers/md/raid10.c
 +++ b/drivers/md/raid10.c
-@@ -3671,6 +3671,20 @@ static int setup_geo(struct geom *geo, struct mddev *mddev, enum geo_type new)
- 	return nc*fc;
- }
- 
-+static void raid10_free_conf(struct r10conf *conf)
-+{
-+	if (!conf)
-+		return;
-+
-+	mempool_exit(&conf->r10bio_pool);
-+	kfree(conf->mirrors);
-+	kfree(conf->mirrors_old);
-+	kfree(conf->mirrors_new);
-+	safe_put_page(conf->tmppage);
-+	bioset_exit(&conf->bio_split);
-+	kfree(conf);
-+}
-+
- static struct r10conf *setup_conf(struct mddev *mddev)
- {
- 	struct r10conf *conf = NULL;
-@@ -3753,13 +3767,7 @@ static struct r10conf *setup_conf(struct mddev *mddev)
- 	return conf;
- 
-  out:
--	if (conf) {
--		mempool_exit(&conf->r10bio_pool);
--		kfree(conf->mirrors);
--		safe_put_page(conf->tmppage);
--		bioset_exit(&conf->bio_split);
--		kfree(conf);
--	}
-+	raid10_free_conf(conf);
+@@ -3771,10 +3771,20 @@ static struct r10conf *setup_conf(struct mddev *mddev)
  	return ERR_PTR(err);
  }
  
-@@ -3973,10 +3981,7 @@ static int raid10_run(struct mddev *mddev)
- 
- out_free_conf:
- 	md_unregister_thread(&mddev->thread);
--	mempool_exit(&conf->r10bio_pool);
--	safe_put_page(conf->tmppage);
--	kfree(conf->mirrors);
--	kfree(conf);
-+	raid10_free_conf(conf);
- 	mddev->private = NULL;
- out:
- 	return -EIO;
-@@ -3984,15 +3989,7 @@ static int raid10_run(struct mddev *mddev)
- 
- static void raid10_free(struct mddev *mddev, void *priv)
++static void raid10_set_io_opt(struct r10conf *conf)
++{
++	int raid_disks = conf->geo.raid_disks;
++
++	if (!(conf->geo.raid_disks % conf->geo.near_copies))
++		raid_disks /= conf->geo.near_copies;
++	blk_queue_io_opt(conf->mddev->queue, (conf->mddev->chunk_sectors << 9) *
++			 raid_disks);
++}
++
+ static int raid10_run(struct mddev *mddev)
  {
--	struct r10conf *conf = priv;
--
--	mempool_exit(&conf->r10bio_pool);
--	safe_put_page(conf->tmppage);
--	kfree(conf->mirrors);
--	kfree(conf->mirrors_old);
--	kfree(conf->mirrors_new);
--	bioset_exit(&conf->bio_split);
--	kfree(conf);
-+	raid10_free_conf(priv);
+ 	struct r10conf *conf;
+-	int i, disk_idx, chunk_size;
++	int i, disk_idx;
+ 	struct raid10_info *disk;
+ 	struct md_rdev *rdev;
+ 	sector_t size;
+@@ -3810,18 +3820,13 @@ static int raid10_run(struct mddev *mddev)
+ 	mddev->thread = conf->thread;
+ 	conf->thread = NULL;
+ 
+-	chunk_size = mddev->chunk_sectors << 9;
+ 	if (mddev->queue) {
+ 		blk_queue_max_discard_sectors(mddev->queue,
+ 					      mddev->chunk_sectors);
+ 		blk_queue_max_write_same_sectors(mddev->queue, 0);
+ 		blk_queue_max_write_zeroes_sectors(mddev->queue, 0);
+-		blk_queue_io_min(mddev->queue, chunk_size);
+-		if (conf->geo.raid_disks % conf->geo.near_copies)
+-			blk_queue_io_opt(mddev->queue, chunk_size * conf->geo.raid_disks);
+-		else
+-			blk_queue_io_opt(mddev->queue, chunk_size *
+-					 (conf->geo.raid_disks / conf->geo.near_copies));
++		blk_queue_io_min(mddev->queue, mddev->chunk_sectors << 9);
++		raid10_set_io_opt(conf);
+ 	}
+ 
+ 	rdev_for_each(rdev, mddev) {
+@@ -4724,6 +4729,7 @@ static void end_reshape(struct r10conf *conf)
+ 		stripe /= conf->geo.near_copies;
+ 		if (conf->mddev->queue->backing_dev_info->ra_pages < 2 * stripe)
+ 			conf->mddev->queue->backing_dev_info->ra_pages = 2 * stripe;
++		raid10_set_io_opt(conf);
+ 	}
+ 	conf->fullsync = 0;
+ }
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 7fe0619c487ae..7eeae0301ccc6 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -7153,6 +7153,12 @@ static int only_parity(int raid_disk, int algo, int raid_disks, int max_degraded
+ 	return 0;
  }
  
- static void raid10_quiesce(struct mddev *mddev, int quiesce)
++static void raid5_set_io_opt(struct r5conf *conf)
++{
++	blk_queue_io_opt(conf->mddev->queue, (conf->chunk_sectors << 9) *
++			 (conf->raid_disks - conf->max_degraded));
++}
++
+ static int raid5_run(struct mddev *mddev)
+ {
+ 	struct r5conf *conf;
+@@ -7442,8 +7448,7 @@ static int raid5_run(struct mddev *mddev)
+ 
+ 		chunk_size = mddev->chunk_sectors << 9;
+ 		blk_queue_io_min(mddev->queue, chunk_size);
+-		blk_queue_io_opt(mddev->queue, chunk_size *
+-				 (conf->raid_disks - conf->max_degraded));
++		raid5_set_io_opt(conf);
+ 		mddev->queue->limits.raid_partial_stripes_expensive = 1;
+ 		/*
+ 		 * We can only discard a whole stripe. It doesn't make sense to
+@@ -8037,6 +8042,7 @@ static void end_reshape(struct r5conf *conf)
+ 						   / PAGE_SIZE);
+ 			if (conf->mddev->queue->backing_dev_info->ra_pages < 2 * stripe)
+ 				conf->mddev->queue->backing_dev_info->ra_pages = 2 * stripe;
++			raid5_set_io_opt(conf);
+ 		}
+ 	}
+ }
 -- 
 2.39.2
 
