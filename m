@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47950D2EF
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:37:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE97C433EF;
-	Mon, 15 May 2023 16:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84FBD2EF
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:37:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4029C4339B;
+	Mon, 15 May 2023 16:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168664;
-	bh=Q2r45nfW1/gV7vRc29mKbsjPabQvVoN8pep8FUNsDgw=;
+	s=korg; t=1684168667;
+	bh=yY9eDA1nuYZABo8CIHXT8N890+Brn+Jhhwlkvv9RZWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pqvwX0JuxA/3US7YfNmy/Td30YDw7bBuD4Pn40C69gJZyo1t3LqPIzS/kjfjp1xMI
-	 xC7VjSrod79tK6UD/Ms480qh+op3ZY49ETwN/UiA4AKEgD54fI0UvKoMMzzE3stXPO
-	 KS2Jz2RsjFb90VyziY+gV4DuX+K/hLKEhlp5kQZ8=
+	b=NrWw0MJOWWcOrkYowEL6YaJ5Od82DRRCb+Ap/NzUu/WMLYAv60Y/17aunBEi0gEq8
+	 GtQGx77XvxR/Dg2WDO1WC70b84WkZjVaLN3cP5hTdkcsbiEh7jC1FlxMDhOgRQqGmJ
+	 Gfh0ILVzD/YnOU8YYa9EdIudLYMDbL87Ec72i7U8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ruliang Lin <u202112092@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Daniel Mack <daniel@zonque.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 092/116] af_packet: Dont send zero-byte data in packet_sendmsg_spkt().
-Date: Mon, 15 May 2023 18:26:29 +0200
-Message-Id: <20230515161701.319468579@linuxfoundation.org>
+Subject: [PATCH 4.14 093/116] ALSA: caiaq: input: Add error handling for unsupported input methods in `snd_usb_caiaq_input_init`
+Date: Mon, 15 May 2023 18:26:30 +0200
+Message-Id: <20230515161701.348454743@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -37,109 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Ruliang Lin <u202112092@hust.edu.cn>
 
-[ Upstream commit 6a341729fb31b4c5df9f74f24b4b1c98410c9b87 ]
+[ Upstream commit 0d727e1856ef22dd9337199430258cb64cbbc658 ]
 
-syzkaller reported a warning below [0].
+Smatch complains that:
+snd_usb_caiaq_input_init() warn: missing error code 'ret'
 
-We can reproduce it by sending 0-byte data from the (AF_PACKET,
-SOCK_PACKET) socket via some devices whose dev->hard_header_len
-is 0.
+This patch adds a new case to handle the situation where the
+device does not support any input methods in the
+`snd_usb_caiaq_input_init` function. It returns an `-EINVAL` error code
+to indicate that no input methods are supported on the device.
 
-    struct sockaddr_pkt addr = {
-        .spkt_family = AF_PACKET,
-        .spkt_device = "tun0",
-    };
-    int fd;
-
-    fd = socket(AF_PACKET, SOCK_PACKET, 0);
-    sendto(fd, NULL, 0, 0, (struct sockaddr *)&addr, sizeof(addr));
-
-We have a similar fix for the (AF_PACKET, SOCK_RAW) socket as
-commit dc633700f00f ("net/af_packet: check len when min_header_len
-equals to 0").
-
-Let's add the same test for the SOCK_PACKET socket.
-
-[0]:
-skb_assert_len
-WARNING: CPU: 1 PID: 19945 at include/linux/skbuff.h:2552 skb_assert_len include/linux/skbuff.h:2552 [inline]
-WARNING: CPU: 1 PID: 19945 at include/linux/skbuff.h:2552 __dev_queue_xmit+0x1f26/0x31d0 net/core/dev.c:4159
-Modules linked in:
-CPU: 1 PID: 19945 Comm: syz-executor.0 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-RIP: 0010:skb_assert_len include/linux/skbuff.h:2552 [inline]
-RIP: 0010:__dev_queue_xmit+0x1f26/0x31d0 net/core/dev.c:4159
-Code: 89 de e8 1d a2 85 fd 84 db 75 21 e8 64 a9 85 fd 48 c7 c6 80 2a 1f 86 48 c7 c7 c0 06 1f 86 c6 05 23 cf 27 04 01 e8 fa ee 56 fd <0f> 0b e8 43 a9 85 fd 0f b6 1d 0f cf 27 04 31 ff 89 de e8 e3 a1 85
-RSP: 0018:ffff8880217af6e0 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffc90001133000
-RDX: 0000000000040000 RSI: ffffffff81186922 RDI: 0000000000000001
-RBP: ffff8880217af8b0 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000001 R12: ffff888030045640
-R13: ffff8880300456b0 R14: ffff888030045650 R15: ffff888030045718
-FS:  00007fc5864da640(0000) GS:ffff88806cd00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020005740 CR3: 000000003f856003 CR4: 0000000000770ee0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- dev_queue_xmit include/linux/netdevice.h:3085 [inline]
- packet_sendmsg_spkt+0xc4b/0x1230 net/packet/af_packet.c:2066
- sock_sendmsg_nosec net/socket.c:724 [inline]
- sock_sendmsg+0x1b4/0x200 net/socket.c:747
- ____sys_sendmsg+0x331/0x970 net/socket.c:2503
- ___sys_sendmsg+0x11d/0x1c0 net/socket.c:2557
- __sys_sendmmsg+0x18c/0x430 net/socket.c:2643
- __do_sys_sendmmsg net/socket.c:2672 [inline]
- __se_sys_sendmmsg net/socket.c:2669 [inline]
- __x64_sys_sendmmsg+0x9c/0x100 net/socket.c:2669
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3c/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-RIP: 0033:0x7fc58791de5d
-Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 73 9f 1b 00 f7 d8 64 89 01 48
-RSP: 002b:00007fc5864d9cc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000133
-RAX: ffffffffffffffda RBX: 00000000004bbf80 RCX: 00007fc58791de5d
-RDX: 0000000000000001 RSI: 0000000020005740 RDI: 0000000000000004
-RBP: 00000000004bbf80 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000000000b R14: 00007fc58797e530 R15: 0000000000000000
- </TASK>
----[ end trace 0000000000000000 ]---
-skb len=0 headroom=16 headlen=0 tailroom=304
-mac=(16,0) net=(16,-1) trans=-1
-shinfo(txflags=0 nr_frags=0 gso(size=0 type=0 segs=0))
-csum(0x0 ip_summed=0 complete_sw=0 valid=0 level=0)
-hash(0x0 sw=0 l4=0) proto=0x0000 pkttype=0 iif=0
-dev name=sit0 feat=0x00000006401d7869
-sk family=17 type=10 proto=0
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 523f1dce3743 ("[ALSA] Add Native Instrument usb audio device support")
+Signed-off-by: Ruliang Lin <u202112092@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Acked-by: Daniel Mack <daniel@zonque.org>
+Link: https://lore.kernel.org/r/20230504065054.3309-1-u202112092@hust.edu.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/caiaq/input.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 8b44ad304a656..2089da69da103 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1995,7 +1995,7 @@ static int packet_sendmsg_spkt(struct socket *sock, struct msghdr *msg,
- 		goto retry;
+diff --git a/sound/usb/caiaq/input.c b/sound/usb/caiaq/input.c
+index 4b3fb91deecdf..0898d2dd14e40 100644
+--- a/sound/usb/caiaq/input.c
++++ b/sound/usb/caiaq/input.c
+@@ -808,6 +808,7 @@ int snd_usb_caiaq_input_init(struct snd_usb_caiaqdev *cdev)
+ 
+ 	default:
+ 		/* no input methods supported on this device */
++		ret = -EINVAL;
+ 		goto exit_free_idev;
  	}
  
--	if (!dev_validate_header(dev, skb->data, len)) {
-+	if (!dev_validate_header(dev, skb->data, len) || !skb->len) {
- 		err = -EINVAL;
- 		goto out_unlock;
- 	}
 -- 
 2.39.2
 
