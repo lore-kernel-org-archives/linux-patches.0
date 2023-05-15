@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E627FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:18:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1ECC433EF;
-	Mon, 15 May 2023 17:18:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8685DFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:19:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DE5C4339B;
+	Mon, 15 May 2023 17:18:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171137;
-	bh=WWm1e4X6FZkoCIAqPMw3RQVHBSQtlnzoJPRmGDNyKEo=;
+	s=korg; t=1684171140;
+	bh=v1rj7E7XGwnPY6b+0GXVEqNUPOMJaPmgGWT6TblS49I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ghvmeAo0E0EDSsRCvWRETUV/p+s2Va/4q08z1Drye35B5SkLed5OQWToZhW2plxO4
-	 oQSYO+Vrlre+pCnnkwSVp/ysmePis+mgqLbvaV+Tz9ugpIPlsbQZzLNgC1jz5ViqOk
-	 mqR3SRDx+/74csZQIzCntrsI9K6XEhbjeMz5fxLg=
+	b=EekGEagWx+rW4VjTcSQd9kFlf1xmaqnwjFZdUu1WLhd2DtAJ1a4VcHqIg2i12EGcU
+	 OAI+zZFfpIU52Cqb2w+Lvq/1mNOVB5LI/6eAGgsRog/GcDa+xcdFac1xdv+M952Soi
+	 gRWYNVVJJ+Ud5JCMhB6WiOFlS6VGGrXAA0ITM8h0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Matlack <dmatlack@google.com>,
-	Isaku Yamahata <isaku.yamahata@intel.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 113/242] KVM: x86/mmu: Move TDP MMU VM init/uninit behind tdp_mmu_enabled
-Date: Mon, 15 May 2023 18:27:19 +0200
-Message-Id: <20230515161725.296901564@linuxfoundation.org>
+Subject: [PATCH 6.2 114/242] KVM: x86/mmu: Replace open coded usage of tdp_mmu_page with is_tdp_mmu_page()
+Date: Mon, 15 May 2023 18:27:20 +0200
+Message-Id: <20230515161725.330191101@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,120 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Matlack <dmatlack@google.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 991c8047b740f192a057d5f22df2f91f087cdb72 ]
+[ Upstream commit aeb568a1a6041e3d69def54046747bbd989bc4ed ]
 
-Move kvm_mmu_{init,uninit}_tdp_mmu() behind tdp_mmu_enabled. This makes
-these functions consistent with the rest of the calls into the TDP MMU
-from mmu.c, and which is now possible since tdp_mmu_enabled is only
-modified when the x86 vendor module is loaded. i.e. It will never change
-during the lifetime of a VM.
-
-This change also enabled removing the stub definitions for 32-bit KVM,
-as the compiler will just optimize the calls out like it does for all
-the other TDP MMU functions.
+Use is_tdp_mmu_page() instead of querying sp->tdp_mmu_page directly so
+that all users benefit if KVM ever finds a way to optimize the logic.
 
 No functional change intended.
 
-Signed-off-by: David Matlack <dmatlack@google.com>
-Reviewed-by: Isaku Yamahata <isaku.yamahata@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-Id: <20220921173546.2674386-3-dmatlack@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20221012181702.3663607-10-seanjc@google.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Stable-dep-of: edbdb43fc96b ("KVM: x86: Preserve TDP MMU roots until they are explicitly invalidated")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c     | 11 +++++++----
- arch/x86/kvm/mmu/tdp_mmu.c |  6 ------
- arch/x86/kvm/mmu/tdp_mmu.h |  7 +++----
- 3 files changed, 10 insertions(+), 14 deletions(-)
+ arch/x86/kvm/mmu/mmu.c     | 2 +-
+ arch/x86/kvm/mmu/tdp_mmu.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index 583979755bd4f..8666e8ff48a6e 100644
+index 8666e8ff48a6e..dcca08a08bd0c 100644
 --- a/arch/x86/kvm/mmu/mmu.c
 +++ b/arch/x86/kvm/mmu/mmu.c
-@@ -6051,9 +6051,11 @@ int kvm_mmu_init_vm(struct kvm *kvm)
- 	INIT_LIST_HEAD(&kvm->arch.possible_nx_huge_pages);
- 	spin_lock_init(&kvm->arch.mmu_unsync_pages_lock);
+@@ -1942,7 +1942,7 @@ static bool is_obsolete_sp(struct kvm *kvm, struct kvm_mmu_page *sp)
+ 		return true;
  
--	r = kvm_mmu_init_tdp_mmu(kvm);
--	if (r < 0)
--		return r;
-+	if (tdp_mmu_enabled) {
-+		r = kvm_mmu_init_tdp_mmu(kvm);
-+		if (r < 0)
-+			return r;
-+	}
- 
- 	node->track_write = kvm_mmu_pte_write;
- 	node->track_flush_slot = kvm_mmu_invalidate_zap_pages_in_memslot;
-@@ -6083,7 +6085,8 @@ void kvm_mmu_uninit_vm(struct kvm *kvm)
- 
- 	kvm_page_track_unregister_notifier(kvm, node);
- 
--	kvm_mmu_uninit_tdp_mmu(kvm);
-+	if (tdp_mmu_enabled)
-+		kvm_mmu_uninit_tdp_mmu(kvm);
- 
- 	mmu_free_vm_memory_caches(kvm);
+ 	/* TDP MMU pages do not use the MMU generation. */
+-	return !sp->tdp_mmu_page &&
++	return !is_tdp_mmu_page(sp) &&
+ 	       unlikely(sp->mmu_valid_gen != kvm->arch.mmu_valid_gen);
  }
+ 
 diff --git a/arch/x86/kvm/mmu/tdp_mmu.c b/arch/x86/kvm/mmu/tdp_mmu.c
-index 03511e83050fa..7e5952e95d3bf 100644
+index 7e5952e95d3bf..cc1fb9a656201 100644
 --- a/arch/x86/kvm/mmu/tdp_mmu.c
 +++ b/arch/x86/kvm/mmu/tdp_mmu.c
-@@ -15,9 +15,6 @@ int kvm_mmu_init_tdp_mmu(struct kvm *kvm)
- {
- 	struct workqueue_struct *wq;
+@@ -133,7 +133,7 @@ void kvm_tdp_mmu_put_root(struct kvm *kvm, struct kvm_mmu_page *root,
+ 	if (!refcount_dec_and_test(&root->tdp_mmu_root_count))
+ 		return;
  
--	if (!tdp_mmu_enabled)
--		return 0;
--
- 	wq = alloc_workqueue("kvm", WQ_UNBOUND|WQ_MEM_RECLAIM|WQ_CPU_INTENSIVE, 0);
- 	if (!wq)
- 		return -ENOMEM;
-@@ -42,9 +39,6 @@ static __always_inline bool kvm_lockdep_assert_mmu_lock_held(struct kvm *kvm,
+-	WARN_ON(!root->tdp_mmu_page);
++	WARN_ON(!is_tdp_mmu_page(root));
  
- void kvm_mmu_uninit_tdp_mmu(struct kvm *kvm)
- {
--	if (!tdp_mmu_enabled)
--		return;
--
- 	/* Also waits for any queued work items.  */
- 	destroy_workqueue(kvm->arch.tdp_mmu_zap_wq);
- 
-diff --git a/arch/x86/kvm/mmu/tdp_mmu.h b/arch/x86/kvm/mmu/tdp_mmu.h
-index d3714200b932a..e4ab2dac269d6 100644
---- a/arch/x86/kvm/mmu/tdp_mmu.h
-+++ b/arch/x86/kvm/mmu/tdp_mmu.h
-@@ -7,6 +7,9 @@
- 
- #include "spte.h"
- 
-+int kvm_mmu_init_tdp_mmu(struct kvm *kvm);
-+void kvm_mmu_uninit_tdp_mmu(struct kvm *kvm);
-+
- hpa_t kvm_tdp_mmu_get_vcpu_root_hpa(struct kvm_vcpu *vcpu);
- 
- __must_check static inline bool kvm_tdp_mmu_get_root(struct kvm_mmu_page *root)
-@@ -68,8 +71,6 @@ u64 *kvm_tdp_mmu_fast_pf_get_last_sptep(struct kvm_vcpu *vcpu, u64 addr,
- 					u64 *spte);
- 
- #ifdef CONFIG_X86_64
--int kvm_mmu_init_tdp_mmu(struct kvm *kvm);
--void kvm_mmu_uninit_tdp_mmu(struct kvm *kvm);
- static inline bool is_tdp_mmu_page(struct kvm_mmu_page *sp) { return sp->tdp_mmu_page; }
- 
- static inline bool is_tdp_mmu(struct kvm_mmu *mmu)
-@@ -89,8 +90,6 @@ static inline bool is_tdp_mmu(struct kvm_mmu *mmu)
- 	return sp && is_tdp_mmu_page(sp) && sp->root_count;
- }
- #else
--static inline int kvm_mmu_init_tdp_mmu(struct kvm *kvm) { return 0; }
--static inline void kvm_mmu_uninit_tdp_mmu(struct kvm *kvm) {}
- static inline bool is_tdp_mmu_page(struct kvm_mmu_page *sp) { return false; }
- static inline bool is_tdp_mmu(struct kvm_mmu *mmu) { return false; }
- #endif
+ 	/*
+ 	 * The root now has refcount=0.  It is valid, but readers already
 -- 
 2.39.2
 
