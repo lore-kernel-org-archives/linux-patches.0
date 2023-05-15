@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C68FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D252AC4339B;
-	Mon, 15 May 2023 17:23:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2C84FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 226B2C433EF;
+	Mon, 15 May 2023 17:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171432;
-	bh=TXKItwxrTfBoYe0oOuo94XUFSly+tpmtflGT5Hiac+A=;
+	s=korg; t=1684171435;
+	bh=ZnrBVfKxTl5Xc6ux1pwz3Ml/tdKN1jh9iMv8venI6NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phWteSYhvCFts+RnKdMrZPYoqY/bGkGCZAmUEd3XyNvjGTW7JRQh8lyYRSvyejo9q
-	 h01AshVUkl46JhqSjBL9MPu6JM86j+uhEavLpM72OPlR6UNukDIL+FUtbcIWEnx9/e
-	 /flBsrumShZlG0m0Msi06/C95JhcUj6FqpDmlb6s=
+	b=aSi6+SyKfoEJQKw4bwjYGeCf00jLqPQYhF1LMcZpCdY+R9hmT0vPO7ujHn5nIe8/n
+	 5nj08pdh4Qqg1BoiEtcjxF8KBFm/WYhOZ6zUhnBN4C+45J5AWmHQYm/plvq5Sf0ZwU
+	 GnKQV2ZsXODKc9bMbunTMYtuJdqLKtuDn4bOhH2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zev Weiss <zev@bewilderbeest.net>,
-	Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 6.2 167/242] ARM: dts: aspeed: romed8hm3: Fix GPIO polarity of system-fault LED
-Date: Mon, 15 May 2023 18:28:13 +0200
-Message-Id: <20230515161726.890305419@linuxfoundation.org>
+	Guchun Chen <guchun.chen@amd.com>,
+	Tao Zhou <tao.zhou1@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.2 201/242] drm/amdgpu: disable sdma ecc irq only when sdma RAS is enabled in suspend
+Date: Mon, 15 May 2023 18:28:47 +0200
+Message-Id: <20230515161727.972635679@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -34,32 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zev Weiss <zev@bewilderbeest.net>
+From: Guchun Chen <guchun.chen@amd.com>
 
-commit a3fd10732d276d7cf372c6746a78a1c8b6aa7541 upstream.
+commit 8b229ada2669b74fdae06c83fbfda5a5a99fc253 upstream.
 
-Turns out it's in fact not the same as the heartbeat LED.
+sdma_v4_0_ip is shared on a few asics, but in sdma_v4_0_hw_fini,
+driver unconditionally disables ecc_irq which is only enabled on
+those asics enabling sdma ecc. This will introduce a warning in
+suspend cycle on those chips with sdma ip v4.0, while without
+sdma ecc. So this patch correct this.
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Cc: stable@vger.kernel.org # v5.18+
-Fixes: a9a3d60b937a ("ARM: dts: aspeed: Add ASRock ROMED8HM3 BMC")
-Link: https://lore.kernel.org/r/20230224000400.12226-2-zev@bewilderbeest.net
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+[ 7283.166354] RIP: 0010:amdgpu_irq_put+0x45/0x70 [amdgpu]
+[ 7283.167001] RSP: 0018:ffff9a5fc3967d08 EFLAGS: 00010246
+[ 7283.167019] RAX: ffff98d88afd3770 RBX: 0000000000000001 RCX: 0000000000000000
+[ 7283.167023] RDX: 0000000000000000 RSI: ffff98d89da30390 RDI: ffff98d89da20000
+[ 7283.167025] RBP: ffff98d89da20000 R08: 0000000000036838 R09: 0000000000000006
+[ 7283.167028] R10: ffffd5764243c008 R11: 0000000000000000 R12: ffff98d89da30390
+[ 7283.167030] R13: ffff98d89da38978 R14: ffffffff999ae15a R15: ffff98d880130105
+[ 7283.167032] FS:  0000000000000000(0000) GS:ffff98d996f00000(0000) knlGS:0000000000000000
+[ 7283.167036] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 7283.167039] CR2: 00000000f7a9d178 CR3: 00000001c42ea000 CR4: 00000000003506e0
+[ 7283.167041] Call Trace:
+[ 7283.167046]  <TASK>
+[ 7283.167048]  sdma_v4_0_hw_fini+0x38/0xa0 [amdgpu]
+[ 7283.167704]  amdgpu_device_ip_suspend_phase2+0x101/0x1a0 [amdgpu]
+[ 7283.168296]  amdgpu_device_suspend+0x103/0x180 [amdgpu]
+[ 7283.168875]  amdgpu_pmops_freeze+0x21/0x60 [amdgpu]
+[ 7283.169464]  pci_pm_freeze+0x54/0xc0
+
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Tao Zhou <tao.zhou1@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts
-@@ -31,7 +31,7 @@
- 		};
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
+@@ -1941,9 +1941,11 @@ static int sdma_v4_0_hw_fini(void *handl
+ 		return 0;
+ 	}
  
- 		system-fault {
--			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_LOW>;
-+			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_HIGH>;
- 			panic-indicator;
- 		};
- 	};
+-	for (i = 0; i < adev->sdma.num_instances; i++) {
+-		amdgpu_irq_put(adev, &adev->sdma.ecc_irq,
+-			       AMDGPU_SDMA_IRQ_INSTANCE0 + i);
++	if (amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__SDMA)) {
++		for (i = 0; i < adev->sdma.num_instances; i++) {
++			amdgpu_irq_put(adev, &adev->sdma.ecc_irq,
++				       AMDGPU_SDMA_IRQ_INSTANCE0 + i);
++		}
+ 	}
+ 
+ 	sdma_v4_0_ctx_switch_enable(adev, false);
 
 
