@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A9FFC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AACD7C433D2;
-	Mon, 15 May 2023 17:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60741FC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBE1AC433EF;
+	Mon, 15 May 2023 17:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172052;
-	bh=FCO+mQ7M3QwYjQeEpbF4qYkU0s0b3eMBg1HLdPwqYy4=;
+	s=korg; t=1684172055;
+	bh=ka65zs60x+QSe9eH/Rob1ZLl2kjLhdUvHSAhUNgccDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVgMz7fRNU03IZ7wK1R/xyOtvqN3oFxBGZMdSV/NymXjd6f6+T4aV7yaYvHeNSeVr
-	 fP5H5NpY2jg0wRrjcdCvzL2dffohzBB5fHPX+ImPaSLpNGPcIRDJZRrwk9cM7W++bT
-	 tg/5E/ylT5rhP5AP+zdMQCggPemerMkErpF8TuYA=
+	b=orOM1Uie3UzzUnJMjPlXWFxGQToVKg9Fab8NBumNkFv0up7+enOD3E4u0vyup7vrY
+	 kLhkbz2rc2V2JKZQqgo9HJZ9eaByf8LUQR998nyECIXDAfkUlls/rqd6pMSjFUgTgO
+	 ANj/yFsZZredgpo85Lj5hzmK3/5eAQsS+ImncPOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>
-Subject: [PATCH 5.10 028/381] staging: iio: resolver: ads1210: fix config mode
-Date: Mon, 15 May 2023 18:24:39 +0200
-Message-Id: <20230515161738.056386182@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH 5.10 029/381] xhci: fix debugfs register accesses while suspended
+Date: Mon, 15 May 2023 18:24:40 +0200
+Message-Id: <20230515161738.104205111@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,34 +33,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 16313403d873ff17a587818b61f84c8cb4971cef upstream.
+commit 735baf1b23458f71a8b15cb924af22c9ff9cd125 upstream.
 
-As stated in the device datasheet [1], bits a0 and a1 have to be set to
-1 for the configuration mode.
+Wire up the debugfs regset device pointer so that the controller is
+resumed before accessing registers to avoid crashing or locking up if it
+happens to be runtime suspended.
 
-[1]: https://www.analog.com/media/en/technical-documentation/data-sheets/ad2s1210.pdf
-
-Fixes: b19e9ad5e2cb9 ("staging:iio:resolver:ad2s1210 general driver cleanup")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20230327145414.1505537-1-nuno.sa@analog.com
+Fixes: 02b6fdc2a153 ("usb: xhci: Add debugfs interface for xHCI driver")
+Cc: stable@vger.kernel.org # 4.15: 30332eeefec8: debugfs: regset32: Add Runtime PM support
+Cc: stable@vger.kernel.org # 4.15
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20230405090342.7363-1-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/iio/resolver/ad2s1210.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-debugfs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/staging/iio/resolver/ad2s1210.c
-+++ b/drivers/staging/iio/resolver/ad2s1210.c
-@@ -101,7 +101,7 @@ struct ad2s1210_state {
- static const int ad2s1210_mode_vals[4][2] = {
- 	[MOD_POS] = { 0, 0 },
- 	[MOD_VEL] = { 0, 1 },
--	[MOD_CONFIG] = { 1, 0 },
-+	[MOD_CONFIG] = { 1, 1 },
- };
+--- a/drivers/usb/host/xhci-debugfs.c
++++ b/drivers/usb/host/xhci-debugfs.c
+@@ -133,6 +133,7 @@ static void xhci_debugfs_regset(struct x
+ 	regset->regs = regs;
+ 	regset->nregs = nregs;
+ 	regset->base = hcd->regs + base;
++	regset->dev = hcd->self.controller;
  
- static inline void ad2s1210_set_mode(enum ad2s1210_mode mode,
+ 	debugfs_create_regset32((const char *)rgs->name, 0444, parent, regset);
+ }
 
 
