@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC08FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9943C433D2;
-	Mon, 15 May 2023 17:37:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F818FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:37:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0F98C433EF;
+	Mon, 15 May 2023 17:37:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172226;
-	bh=GRAp6G09t2sgX4GclXVAB9EEaG+zp8++UYu3MuIzjUs=;
+	s=korg; t=1684172229;
+	bh=zNLmtlvE92e+a6GUH7QTXZjn1URMTLYoWikuSwWheO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZkmOYI1QU568BDB12mC4LIQstCS1RxiibOiP9dt5N+12GkrErQ2uDMLketr91idX
-	 sjztYPFQBEHUp/H9Y7Hs2lZaI5TPK8Gy5OrARC1e+DZQJeRvuyCFdlYiOXa1VxGfVA
-	 nfKOflAy4H1Rwfc1xz9yVLblru3+oZrVnRKJzRe4=
+	b=wBz4phU0C5D+gS23jW24TRVT2XabFuafvb3f2rwYYvL/VZvSs5BWf98JW86Cysofu
+	 RvdHJ1W8QFjnloOcBsiQjDlSEwXajqB6C+ecN0I+McaCcb25CN6j3XanSCLpKz7s+p
+	 5uM0nUPpbVSpG7674pQfSJN6vPOKNPYx8/Jznyg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 085/381] arm64: dts: qcom: msm8998: Fix the PCI I/O port range
-Date: Mon, 15 May 2023 18:25:36 +0200
-Message-Id: <20230515161740.645472923@linuxfoundation.org>
+Subject: [PATCH 5.10 068/381] tpm, tpm_tis: Claim locality before writing interrupt registers
+Date: Mon, 15 May 2023 18:25:19 +0200
+Message-Id: <20230515161739.884029290@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,39 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit c30a27dcfe4545edbda1578b3a63ed6147519cdd ]
+[ Upstream commit 15d7aa4e46eba87242a320f39773aa16faddadee ]
 
-For 1MiB of the I/O region, the I/O ports of the legacy PCI devices are
-located in the range of 0x0 to 0x100000. Hence, fix the bogus PCI address
-(0x1b200000) specified in the ranges property for I/O region.
+In tpm_tis_probe_single_irq() interrupt registers TPM_INT_VECTOR,
+TPM_INT_STATUS and TPM_INT_ENABLE are modified to setup the interrupts.
+Currently these modifications are done without holding a locality thus they
+have no effect. Fix this by claiming the (default) locality before the
+registers are written.
 
-Fixes: b84dfd175c09 ("arm64: dts: qcom: msm8998: Add PCIe PHY and RC nodes")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/linux-arm-msm/7c5dfa87-41df-4ba7-b0e4-72c8386402a8@app.fastmail.com/
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230228164752.55682-3-manivannan.sadhasivam@linaro.org
+Since now tpm_tis_gen_interrupt() is called with the locality already
+claimed remove locality request and release from this function.
+
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Stable-dep-of: 955df4f87760 ("tpm, tpm_tis: Claim locality when interrupts are reenabled on resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/tpm/tpm_tis_core.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 0ea4c9e7e1800..7c8d69ca91cf4 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -942,7 +942,7 @@
- 			phys = <&pciephy>;
- 			phy-names = "pciephy";
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 99cbf6fb062ce..52826a7edf800 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -721,16 +721,10 @@ static void tpm_tis_gen_interrupt(struct tpm_chip *chip)
+ 	cap_t cap;
+ 	int ret;
  
--			ranges = <0x01000000 0x0 0x1b200000 0x1b200000 0x0 0x100000>,
-+			ranges = <0x01000000 0x0 0x00000000 0x1b200000 0x0 0x100000>,
- 				 <0x02000000 0x0 0x1b300000 0x1b300000 0x0 0xd00000>;
+-	ret = request_locality(chip, 0);
+-	if (ret < 0)
+-		return;
+-
+ 	if (chip->flags & TPM_CHIP_FLAG_TPM2)
+ 		ret = tpm2_get_tpm_pt(chip, 0x100, &cap2, desc);
+ 	else
+ 		ret = tpm1_getcap(chip, TPM_CAP_PROP_TIS_TIMEOUT, &cap, desc, 0);
+-
+-	release_locality(chip, 0);
+ }
  
- 			#interrupt-cells = <1>;
+ /* Register the IRQ and issue a command that will cause an interrupt. If an
+@@ -753,10 +747,16 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	}
+ 	priv->irq = irq;
+ 
++	rc = request_locality(chip, 0);
++	if (rc < 0)
++		return rc;
++
+ 	rc = tpm_tis_read8(priv, TPM_INT_VECTOR(priv->locality),
+ 			   &original_int_vec);
+-	if (rc < 0)
++	if (rc < 0) {
++		release_locality(chip, priv->locality);
+ 		return rc;
++	}
+ 
+ 	rc = tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality), irq);
+ 	if (rc < 0)
+@@ -790,10 +790,12 @@ static int tpm_tis_probe_irq_single(struct tpm_chip *chip, u32 intmask,
+ 	if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
+ 		tpm_tis_write8(priv, original_int_vec,
+ 			       TPM_INT_VECTOR(priv->locality));
+-		return -1;
++		rc = -1;
+ 	}
+ 
+-	return 0;
++	release_locality(chip, priv->locality);
++
++	return rc;
+ }
+ 
+ /* Try to find the IRQ the TPM is using. This is for legacy x86 systems that
 -- 
 2.39.2
 
