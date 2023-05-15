@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958F2FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:03:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECBDBC433EF;
-	Mon, 15 May 2023 17:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A3DFBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:03:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DE4C433EF;
+	Mon, 15 May 2023 17:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170208;
-	bh=raCX9WUgfqOZi14x93hzX1BIg0zygivWFbyyPr6PfVc=;
+	s=korg; t=1684170211;
+	bh=rbgR+y/r5Bn95AFcuQOb5aSCzNnLEgagLuLujUbnlqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uY0EfPWCXBhAilJsJsK3LeKhO3Y2C46WS5t17ggMGI0gEKTDqpBi1by0ZoV5BJpZh
-	 LZxrpNq8o5LReKcLEB0x8smYdJXOAOY9kFO1KotltrrGS7XsoJc9N0c3P8QIj3RXoO
-	 yPEyYBJ/ciuQJwbPMmmdkO1ml/vuKgDBOrRnUDRE=
+	b=jvSm575TR7nCZGRTHbTQMDPMZcry1yX6wQFW3H08sPT71poLqkgsMUj4yrjObjThM
+	 z4FZe0Eg1Jy3iWK1C++SOzWFXuCU9jqvqfnEsS3X/UUSRPmxPYDc3vCpGFdfxcNJ1K
+	 gsNIOl7WkH2MlFkgCrgSncUZmHFIPqeomVBj/04g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Mathias Krause <minipli@grsecurity.net>,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/239] KVM: x86/mmu: Avoid indirect call for get_cr3
-Date: Mon, 15 May 2023 18:24:43 +0200
-Message-Id: <20230515161722.194357382@linuxfoundation.org>
+	Xiangfei Ma <xiangfeix.ma@intel.com>,
+	Farrah Chen <farrah.chen@intel.com>,
+	Tao Su <tao1.su@linux.intel.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>
+Subject: [PATCH 6.1 052/239] block: Skip destroyed blkg when restart in blkg_destroy_all()
+Date: Mon, 15 May 2023 18:25:15 +0200
+Message-Id: <20230515161723.267970209@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,130 +38,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Tao Su <tao1.su@linux.intel.com>
 
-[ Upstream commit 2fdcc1b324189b5fb20655baebd40cd82e2bdf0c ]
+[ Upstream commit 8176080d59e6d4ff9fc97ae534063073b4f7a715 ]
 
-Most of the time, calls to get_guest_pgd result in calling
-kvm_read_cr3 (the exception is only nested TDP).  Hardcode
-the default instead of using the get_cr3 function, avoiding
-a retpoline if they are enabled.
+Kernel hang in blkg_destroy_all() when total blkg greater than
+BLKG_DESTROY_BATCH_SIZE, because of not removing destroyed blkg in
+blkg_list. So the size of blkg_list is same after destroying a
+batch of blkg, and the infinite 'restart' occurs.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20230322013731.102955-2-minipli@grsecurity.net
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>	# backport to v6.1.x
+Since blkg should stay on the queue list until blkg_free_workfn(),
+skip destroyed blkg when restart a new round, which will solve this
+kernel hang issue and satisfy the previous will to restart.
+
+Reported-by: Xiangfei Ma <xiangfeix.ma@intel.com>
+Tested-by: Xiangfei Ma <xiangfeix.ma@intel.com>
+Tested-by: Farrah Chen <farrah.chen@intel.com>
+Signed-off-by: Tao Su <tao1.su@linux.intel.com>
+Fixes: f1c006f1c685 ("blk-cgroup: synchronize pd_free_fn() from blkg_free_workfn() and blkcg_deactivate_policy()")
+Suggested-and-reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20230428045149.1310073-1-tao1.su@linux.intel.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu/mmu.c         | 31 ++++++++++++++++++++-----------
- arch/x86/kvm/mmu/paging_tmpl.h |  2 +-
- 2 files changed, 21 insertions(+), 12 deletions(-)
+ block/blk-cgroup.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index b6f96d47e596d..f2a10c7d13697 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -232,6 +232,20 @@ static struct kvm_mmu_role_regs vcpu_to_role_regs(struct kvm_vcpu *vcpu)
- 	return regs;
- }
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index 7c91d9195da8d..60f366f98fa2b 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -468,6 +468,9 @@ static void blkg_destroy_all(struct gendisk *disk)
+ 	list_for_each_entry_safe(blkg, n, &q->blkg_list, q_node) {
+ 		struct blkcg *blkcg = blkg->blkcg;
  
-+static unsigned long get_guest_cr3(struct kvm_vcpu *vcpu)
-+{
-+	return kvm_read_cr3(vcpu);
-+}
++		if (hlist_unhashed(&blkg->blkcg_node))
++			continue;
 +
-+static inline unsigned long kvm_mmu_get_guest_pgd(struct kvm_vcpu *vcpu,
-+						  struct kvm_mmu *mmu)
-+{
-+	if (IS_ENABLED(CONFIG_RETPOLINE) && mmu->get_guest_pgd == get_guest_cr3)
-+		return kvm_read_cr3(vcpu);
-+
-+	return mmu->get_guest_pgd(vcpu);
-+}
-+
- static inline bool kvm_available_flush_tlb_with_range(void)
- {
- 	return kvm_x86_ops.tlb_remote_flush_with_range;
-@@ -3661,7 +3675,7 @@ static int mmu_alloc_shadow_roots(struct kvm_vcpu *vcpu)
- 	int quadrant, i, r;
- 	hpa_t root;
- 
--	root_pgd = mmu->get_guest_pgd(vcpu);
-+	root_pgd = kvm_mmu_get_guest_pgd(vcpu, mmu);
- 	root_gfn = root_pgd >> PAGE_SHIFT;
- 
- 	if (mmu_check_root(vcpu, root_gfn))
-@@ -4112,7 +4126,7 @@ static bool kvm_arch_setup_async_pf(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
- 	arch.token = alloc_apf_token(vcpu);
- 	arch.gfn = gfn;
- 	arch.direct_map = vcpu->arch.mmu->root_role.direct;
--	arch.cr3 = vcpu->arch.mmu->get_guest_pgd(vcpu);
-+	arch.cr3 = kvm_mmu_get_guest_pgd(vcpu, vcpu->arch.mmu);
- 
- 	return kvm_setup_async_pf(vcpu, cr2_or_gpa,
- 				  kvm_vcpu_gfn_to_hva(vcpu, gfn), &arch);
-@@ -4131,7 +4145,7 @@ void kvm_arch_async_page_ready(struct kvm_vcpu *vcpu, struct kvm_async_pf *work)
- 		return;
- 
- 	if (!vcpu->arch.mmu->root_role.direct &&
--	      work->arch.cr3 != vcpu->arch.mmu->get_guest_pgd(vcpu))
-+	      work->arch.cr3 != kvm_mmu_get_guest_pgd(vcpu, vcpu->arch.mmu))
- 		return;
- 
- 	kvm_mmu_do_page_fault(vcpu, work->cr2_or_gpa, 0, true);
-@@ -4488,11 +4502,6 @@ void kvm_mmu_new_pgd(struct kvm_vcpu *vcpu, gpa_t new_pgd)
- }
- EXPORT_SYMBOL_GPL(kvm_mmu_new_pgd);
- 
--static unsigned long get_cr3(struct kvm_vcpu *vcpu)
--{
--	return kvm_read_cr3(vcpu);
--}
--
- static bool sync_mmio_spte(struct kvm_vcpu *vcpu, u64 *sptep, gfn_t gfn,
- 			   unsigned int access)
- {
-@@ -5043,7 +5052,7 @@ static void init_kvm_tdp_mmu(struct kvm_vcpu *vcpu,
- 	context->page_fault = kvm_tdp_page_fault;
- 	context->sync_page = nonpaging_sync_page;
- 	context->invlpg = NULL;
--	context->get_guest_pgd = get_cr3;
-+	context->get_guest_pgd = get_guest_cr3;
- 	context->get_pdptr = kvm_pdptr_read;
- 	context->inject_page_fault = kvm_inject_page_fault;
- 
-@@ -5193,7 +5202,7 @@ static void init_kvm_softmmu(struct kvm_vcpu *vcpu,
- 
- 	kvm_init_shadow_mmu(vcpu, cpu_role);
- 
--	context->get_guest_pgd     = get_cr3;
-+	context->get_guest_pgd     = get_guest_cr3;
- 	context->get_pdptr         = kvm_pdptr_read;
- 	context->inject_page_fault = kvm_inject_page_fault;
- }
-@@ -5207,7 +5216,7 @@ static void init_kvm_nested_mmu(struct kvm_vcpu *vcpu,
- 		return;
- 
- 	g_context->cpu_role.as_u64   = new_mode.as_u64;
--	g_context->get_guest_pgd     = get_cr3;
-+	g_context->get_guest_pgd     = get_guest_cr3;
- 	g_context->get_pdptr         = kvm_pdptr_read;
- 	g_context->inject_page_fault = kvm_inject_page_fault;
- 
-diff --git a/arch/x86/kvm/mmu/paging_tmpl.h b/arch/x86/kvm/mmu/paging_tmpl.h
-index 5ab5f94dcb6fd..1f4f5e703f136 100644
---- a/arch/x86/kvm/mmu/paging_tmpl.h
-+++ b/arch/x86/kvm/mmu/paging_tmpl.h
-@@ -324,7 +324,7 @@ static int FNAME(walk_addr_generic)(struct guest_walker *walker,
- 	trace_kvm_mmu_pagetable_walk(addr, access);
- retry_walk:
- 	walker->level = mmu->cpu_role.base.level;
--	pte           = mmu->get_guest_pgd(vcpu);
-+	pte           = kvm_mmu_get_guest_pgd(vcpu, mmu);
- 	have_ad       = PT_HAVE_ACCESSED_DIRTY(mmu);
- 
- #if PTTYPE == 64
+ 		spin_lock(&blkcg->lock);
+ 		blkg_destroy(blkg);
+ 		spin_unlock(&blkcg->lock);
 -- 
 2.39.2
 
