@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3E2FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:44:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C434FC433D2;
-	Mon, 15 May 2023 17:44:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63482FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:44:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD0BAC433D2;
+	Mon, 15 May 2023 17:44:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172645;
-	bh=yVHtOSh96vcPvf96GHnuM9QQ9aFcp3NBW3kwfes67Uc=;
+	s=korg; t=1684172648;
+	bh=RJTPGN6oEi6Yos+3WycusWIvGhfbzMyFii435hEou30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mVIql56zIUoZvM2UNfgP03IfXdgWCWcRDuHSSSHkdINhMqB+ezFtEi+gmGYdfMcks
-	 niVQpvgYq0nnVgIIPTMI66Sg5dGzcCU+2UQ3ttOU0ZDV08IOE1/F6AmvS4SJbnxQ8Y
-	 scRRRYnwxEvGydgPJnikjvJMmQwXXPXuxlw0lk+k=
+	b=0jIPSwVwIN4ZSkjy2RsbD27Mg4YMohk7tVsj4SMaoW4jOSkomkaCUWAOc+pzUGM2d
+	 snsbm6KlU/o7QgAiNObwIpFAimeaVSUo/uap4pF91us1746zLzTI0dBFi/sbk+5xgZ
+	 NoHcKXK5AC38GDlgnWKHtDci3Mvqtvnl/5bPXZzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
-	Jon Hunter <jonathanh@nvidia.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 220/381] usb: gadget: tegra-xudc: Fix crash in vbus_draw
-Date: Mon, 15 May 2023 18:27:51 +0200
-Message-Id: <20230515161746.680241993@linuxfoundation.org>
+Subject: [PATCH 5.10 194/381] usb: host: xhci-rcar: remove leftover quirk handling
+Date: Mon, 15 May 2023 18:27:25 +0200
+Message-Id: <20230515161745.584547368@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,41 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 5629d31955297ca47b9283c64fff70f2f34aa528 ]
+[ Upstream commit 5d67f4861884762ebc2bddb5d667444e45f25782 ]
 
-Commit ac82b56bda5f ("usb: gadget: tegra-xudc: Add vbus_draw support")
-populated the vbus_draw callback for the Tegra XUDC driver. The function
-tegra_xudc_gadget_vbus_draw(), that was added by this commit, assumes
-that the pointer 'curr_usbphy' has been initialised, which is not always
-the case because this is only initialised when the USB role is updated.
-Fix this crash, by checking that the 'curr_usbphy' is valid before
-dereferencing.
+Loading V3 firmware does not need a quirk anymore, remove the leftover
+code.
 
-Fixes: ac82b56bda5f ("usb: gadget: tegra-xudc: Add vbus_draw support")
-Reviewed-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Link: https://lore.kernel.org/r/20230405181854.42355-1-jonathanh@nvidia.com
+Fixes: ed8603e11124 ("usb: host: xhci-rcar: Simplify getting the firmware name for R-Car Gen3")
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20230307163041.3815-10-wsa+renesas@sang-engineering.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/tegra-xudc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/host/xhci-rcar.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/tegra-xudc.c b/drivers/usb/gadget/udc/tegra-xudc.c
-index 3ebc8c5416e30..66d5f6a85c848 100644
---- a/drivers/usb/gadget/udc/tegra-xudc.c
-+++ b/drivers/usb/gadget/udc/tegra-xudc.c
-@@ -2154,7 +2154,7 @@ static int tegra_xudc_gadget_vbus_draw(struct usb_gadget *gadget,
+diff --git a/drivers/usb/host/xhci-rcar.c b/drivers/usb/host/xhci-rcar.c
+index 9888ba7d85b6a..cfafa1c50adea 100644
+--- a/drivers/usb/host/xhci-rcar.c
++++ b/drivers/usb/host/xhci-rcar.c
+@@ -75,7 +75,6 @@ MODULE_FIRMWARE(XHCI_RCAR_FIRMWARE_NAME_V3);
  
- 	dev_dbg(xudc->dev, "%s: %u mA\n", __func__, m_a);
+ /* For soc_device_attribute */
+ #define RCAR_XHCI_FIRMWARE_V2   BIT(0) /* FIRMWARE V2 */
+-#define RCAR_XHCI_FIRMWARE_V3   BIT(1) /* FIRMWARE V3 */
  
--	if (xudc->curr_usbphy->chg_type == SDP_TYPE)
-+	if (xudc->curr_usbphy && xudc->curr_usbphy->chg_type == SDP_TYPE)
- 		ret = usb_phy_set_power(xudc->curr_usbphy, m_a);
+ static const struct soc_device_attribute rcar_quirks_match[]  = {
+ 	{
+@@ -147,8 +146,6 @@ static int xhci_rcar_download_firmware(struct usb_hcd *hcd)
  
- 	return ret;
+ 	if (quirks & RCAR_XHCI_FIRMWARE_V2)
+ 		firmware_name = XHCI_RCAR_FIRMWARE_NAME_V2;
+-	else if (quirks & RCAR_XHCI_FIRMWARE_V3)
+-		firmware_name = XHCI_RCAR_FIRMWARE_NAME_V3;
+ 	else
+ 		firmware_name = priv->firmware_name;
+ 
 -- 
 2.39.2
 
