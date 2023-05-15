@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4F9D512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75FD1C433D2;
-	Mon, 15 May 2023 17:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC43D512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:01:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2412C433EF;
+	Mon, 15 May 2023 17:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170059;
-	bh=nJe+X2bM9zLk4kuu4yUqHs1q6HgFYD1IAaiSczd0B7s=;
+	s=korg; t=1684170063;
+	bh=/d+DYCyv4m8AS9PiBWghviGaVmP0w+vgpbRIo1+x38c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v3K+40gqk02hO9CSUXwL8bMHo7IhpIW1wBoZhhYoizK48Ume64a9EOxxI2LVPotLa
-	 VVuHTWA+PYu4KFCxJhUPVkD2A3D6ug9nrFnM6UPAlvKmFlaUVKNjfPoLUdYOCbHS6o
-	 4psd8ra9Rs9u/VbcbOTpmjgR1EN5Sbub5M0gsyi8=
+	b=lOGb+I924k5V+e1DcUSrZ9dxSElNMKBnX+2xr8kusDYU3pmLuAvlHw4sjalW6u59O
+	 EIsyMR54/k3s3vZONQVKJjLrjYw/HD7hx25LLdftl+Cjp79a5dho9g4I6bbWYMU0bv
+	 7ZIFK2nmpbF22hFVgURC6zHxp4Oxo/OHzBwIMTPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/239] mtd: spi-nor: spansion: Enable JFFS2 write buffer for Infineon s28hx SEMPER flash
-Date: Mon, 15 May 2023 18:24:35 +0200
-Message-Id: <20230515161721.959323449@linuxfoundation.org>
+	Luca Weiss <luca.weiss@fairphone.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 6.1 013/239] qcom: llcc/edac: Support polling mode for ECC handling
+Date: Mon, 15 May 2023 18:24:36 +0200
+Message-Id: <20230515161721.988274855@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,105 +39,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 9fd0945fe6fadfb6b54a9cd73be101c02b3e8134 ]
+[ Upstream commit 721d3e91bfc93975c5e1a76c7d588dd8df5d82da ]
 
-Infineon(Cypress) SEMPER NOR flash family has on-die ECC and its program
-granularity is 16-byte ECC data unit size. JFFS2 supports write buffer
-mode for ECC'd NOR flash. Provide a way to clear the MTD_BIT_WRITEABLE
-flag in order to enable JFFS2 write buffer mode support.
+Not all Qcom platforms support IRQ mode for ECC handling. For those
+platforms, the current EDAC driver will not be probed due to missing ECC
+IRQ in devicetree.
 
-A new SNOR_F_ECC flag is introduced to determine if the part has on-die
-ECC and if it has, MTD_BIT_WRITEABLE is unset.
+So add support for polling mode so that the EDAC driver can be used on all
+Qcom platforms supporting LLCC.
 
-In vendor specific driver, a common cypress_nor_ecc_init() helper is
-added. This helper takes care for ECC related initialization for SEMPER
-flash family by setting up params->writesize and SNOR_F_ECC.
+The polling delay of 5000ms is chosen based on Qcom downstream/vendor
+driver.
 
-Fixes: c3266af101f2 ("mtd: spi-nor: spansion: add support for Cypress Semper flash")
-Suggested-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/d586723f6f12aaff44fbcd7b51e674b47ed554ed.1680760742.git.Takahiro.Kuwano@infineon.com
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+Tested-by: Luca Weiss <luca.weiss@fairphone.com>
+Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230314080443.64635-14-manivannan.sadhasivam@linaro.org
+Stable-dep-of: cca94f1dd6d0 ("soc: qcom: llcc: Do not create EDAC platform device on SDM845")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/core.c     |  3 +++
- drivers/mtd/spi-nor/core.h     |  1 +
- drivers/mtd/spi-nor/debugfs.c  |  1 +
- drivers/mtd/spi-nor/spansion.c | 13 ++++++++++++-
- 4 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/edac/qcom_edac.c     | 50 +++++++++++++++++++++---------------
+ drivers/soc/qcom/llcc-qcom.c | 13 +++++-----
+ 2 files changed, 35 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 621e9ad4bcc39..dc4d86ceee447 100644
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -2942,6 +2942,9 @@ static void spi_nor_set_mtd_info(struct spi_nor *nor)
- 		mtd->name = dev_name(dev);
- 	mtd->type = MTD_NORFLASH;
- 	mtd->flags = MTD_CAP_NORFLASH;
-+	/* Unset BIT_WRITEABLE to enable JFFS2 write buffer for ECC'd NOR */
-+	if (nor->flags & SNOR_F_ECC)
-+		mtd->flags &= ~MTD_BIT_WRITEABLE;
- 	if (nor->info->flags & SPI_NOR_NO_ERASE)
- 		mtd->flags |= MTD_NO_ERASE;
- 	else
-diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
-index f23d1e77199e5..290613fd63ae7 100644
---- a/drivers/mtd/spi-nor/core.h
-+++ b/drivers/mtd/spi-nor/core.h
-@@ -131,6 +131,7 @@ enum spi_nor_option_flags {
- 	SNOR_F_SOFT_RESET	= BIT(12),
- 	SNOR_F_SWP_IS_VOLATILE	= BIT(13),
- 	SNOR_F_RWW		= BIT(14),
-+	SNOR_F_ECC		= BIT(15),
- };
+diff --git a/drivers/edac/qcom_edac.c b/drivers/edac/qcom_edac.c
+index c45519f59dc11..2c91ceff8a9ca 100644
+--- a/drivers/edac/qcom_edac.c
++++ b/drivers/edac/qcom_edac.c
+@@ -76,6 +76,8 @@
+ #define DRP0_INTERRUPT_ENABLE           BIT(6)
+ #define SB_DB_DRP_INTERRUPT_ENABLE      0x3
  
- struct spi_nor_read_command {
-diff --git a/drivers/mtd/spi-nor/debugfs.c b/drivers/mtd/spi-nor/debugfs.c
-index 8b4922a1aafb9..6d6bd559db8fd 100644
---- a/drivers/mtd/spi-nor/debugfs.c
-+++ b/drivers/mtd/spi-nor/debugfs.c
-@@ -26,6 +26,7 @@ static const char *const snor_f_names[] = {
- 	SNOR_F_NAME(SOFT_RESET),
- 	SNOR_F_NAME(SWP_IS_VOLATILE),
- 	SNOR_F_NAME(RWW),
-+	SNOR_F_NAME(ECC),
- };
- #undef SNOR_F_NAME
- 
-diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
-index 6bbbfc9c215b8..581f209c27347 100644
---- a/drivers/mtd/spi-nor/spansion.c
-+++ b/drivers/mtd/spi-nor/spansion.c
-@@ -212,6 +212,17 @@ static int cypress_nor_set_page_size(struct spi_nor *nor)
- 	return 0;
++#define ECC_POLL_MSEC			5000
++
+ enum {
+ 	LLCC_DRAM_CE = 0,
+ 	LLCC_DRAM_UE,
+@@ -285,8 +287,7 @@ dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
+ 	return ret;
  }
  
-+static void cypress_nor_ecc_init(struct spi_nor *nor)
+-static irqreturn_t
+-llcc_ecc_irq_handler(int irq, void *edev_ctl)
++static irqreturn_t llcc_ecc_irq_handler(int irq, void *edev_ctl)
+ {
+ 	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
+ 	struct llcc_drv_data *drv = edac_dev_ctl->dev->platform_data;
+@@ -332,6 +333,11 @@ llcc_ecc_irq_handler(int irq, void *edev_ctl)
+ 	return irq_rc;
+ }
+ 
++static void llcc_ecc_check(struct edac_device_ctl_info *edev_ctl)
 +{
-+	/*
-+	 * Programming is supported only in 16-byte ECC data unit granularity.
-+	 * Byte-programming, bit-walking, or multiple program operations to the
-+	 * same ECC data unit without an erase are not allowed.
-+	 */
-+	nor->params->writesize = 16;
-+	nor->flags |= SNOR_F_ECC;
++	llcc_ecc_irq_handler(0, edev_ctl);
 +}
 +
- static int
- s25hx_t_post_bfpt_fixup(struct spi_nor *nor,
- 			const struct sfdp_parameter_header *bfpt_header,
-@@ -318,7 +329,7 @@ static int s28hs512t_post_bfpt_fixup(struct spi_nor *nor,
- static void s28hs512t_late_init(struct spi_nor *nor)
+ static int qcom_llcc_edac_probe(struct platform_device *pdev)
  {
- 	nor->params->octal_dtr_enable = cypress_nor_octal_dtr_enable;
--	nor->params->writesize = 16;
-+	cypress_nor_ecc_init(nor);
- }
+ 	struct llcc_drv_data *llcc_driv_data = pdev->dev.platform_data;
+@@ -359,29 +365,31 @@ static int qcom_llcc_edac_probe(struct platform_device *pdev)
+ 	edev_ctl->ctl_name = "llcc";
+ 	edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
  
- static const struct spi_nor_fixups s28hs512t_fixups = {
+-	rc = edac_device_add_device(edev_ctl);
+-	if (rc)
+-		goto out_mem;
+-
+-	platform_set_drvdata(pdev, edev_ctl);
+-
+-	/* Request for ecc irq */
++	/* Check if LLCC driver has passed ECC IRQ */
+ 	ecc_irq = llcc_driv_data->ecc_irq;
+-	if (ecc_irq < 0) {
+-		rc = -ENODEV;
+-		goto out_dev;
+-	}
+-	rc = devm_request_irq(dev, ecc_irq, llcc_ecc_irq_handler,
++	if (ecc_irq > 0) {
++		/* Use interrupt mode if IRQ is available */
++		rc = devm_request_irq(dev, ecc_irq, llcc_ecc_irq_handler,
+ 			      IRQF_TRIGGER_HIGH, "llcc_ecc", edev_ctl);
+-	if (rc)
+-		goto out_dev;
++		if (!rc) {
++			edac_op_state = EDAC_OPSTATE_INT;
++			goto irq_done;
++		}
++	}
+ 
+-	return rc;
++	/* Fall back to polling mode otherwise */
++	edev_ctl->poll_msec = ECC_POLL_MSEC;
++	edev_ctl->edac_check = llcc_ecc_check;
++	edac_op_state = EDAC_OPSTATE_POLL;
+ 
+-out_dev:
+-	edac_device_del_device(edev_ctl->dev);
+-out_mem:
+-	edac_device_free_ctl_info(edev_ctl);
++irq_done:
++	rc = edac_device_add_device(edev_ctl);
++	if (rc) {
++		edac_device_free_ctl_info(edev_ctl);
++		return rc;
++	}
++
++	platform_set_drvdata(pdev, edev_ctl);
+ 
+ 	return rc;
+ }
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index 9c6cf2f5d77ce..63a08635fc159 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -850,13 +850,12 @@ static int qcom_llcc_probe(struct platform_device *pdev)
+ 		goto err;
+ 
+ 	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
+-	if (drv_data->ecc_irq >= 0) {
+-		llcc_edac = platform_device_register_data(&pdev->dev,
+-						"qcom_llcc_edac", -1, drv_data,
+-						sizeof(*drv_data));
+-		if (IS_ERR(llcc_edac))
+-			dev_err(dev, "Failed to register llcc edac driver\n");
+-	}
++
++	llcc_edac = platform_device_register_data(&pdev->dev,
++					"qcom_llcc_edac", -1, drv_data,
++					sizeof(*drv_data));
++	if (IS_ERR(llcc_edac))
++		dev_err(dev, "Failed to register llcc edac driver\n");
+ 
+ 	return 0;
+ err:
 -- 
 2.39.2
 
