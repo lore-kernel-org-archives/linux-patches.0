@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC4AFC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:36:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85A90C4339B;
-	Mon, 15 May 2023 17:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209F1FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:36:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800B1C433EF;
+	Mon, 15 May 2023 17:36:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172161;
-	bh=XztfB7Qx+D59FHCVeF15EkOwyW2YVPvU5kTPFQJA1sI=;
+	s=korg; t=1684172163;
+	bh=nvpK3xtzGPEVfwmc8hR9Ood9k+o3Hlt9ZxIpL473IDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHsfMh7DzTvPD91SBOKcTv3X2FN6Y4ebnJ/2Gl4l5JHtzs9mFsc0twj0sNTTEB6CY
-	 WHWWfguxbJA8ydwpgJFjOjMaYlXUJ5qdfLOPgRu+OC8nsYyHvnKExpgBqY8dpRl27x
-	 eMj9jSr7xPzPL3huS2BZZLy/7tC9T1VKUNo1tHU8=
+	b=j3A0EiqS38Guowl07Bq+5mNW51cSOqhlgXFPaG78A8RVh3HQHxYBRZgi4r76fJ8NM
+	 ihwiNY6bgoI+0TjwkY6hbgswXgSMEx+lJn0Cf9k1gyS5ExdcsGs+ghkVCuq+wZlYOr
+	 8slfRp+FZhsReFSSbkPWka6UXZim0dJohKaY3eLM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ondrej Mosnacek <omosnace@redhat.com>,
-	Stephen Smalley <stephen.smalley.work@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 063/381] selinux: fix Makefile dependencies of flask.h
-Date: Mon, 15 May 2023 18:25:14 +0200
-Message-Id: <20230515161739.669855193@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 037/381] ring-buffer: Sync IRQ works before buffer destruction
+Date: Mon, 15 May 2023 18:24:48 +0200
+Message-Id: <20230515161738.486991176@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,43 +35,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ondrej Mosnacek <omosnace@redhat.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit bcab1adeaad4b39a1e04cb98979a367d08253f03 ]
+commit 675751bb20634f981498c7d66161584080cc061e upstream.
 
-Make the flask.h target depend on the genheaders binary instead of
-classmap.h to ensure that it is rebuilt if any of the dependencies of
-genheaders are changed.
+If something was written to the buffer just before destruction,
+it may be possible (maybe not in a real system, but it did
+happen in ARCH=um with time-travel) to destroy the ringbuffer
+before the IRQ work ran, leading this KASAN report (or a crash
+without KASAN):
 
-Notably this fixes flask.h not being rebuilt when
-initial_sid_to_string.h is modified.
+    BUG: KASAN: slab-use-after-free in irq_work_run_list+0x11a/0x13a
+    Read of size 8 at addr 000000006d640a48 by task swapper/0
 
-Fixes: 8753f6bec352 ("selinux: generate flask headers during kernel build")
-Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
-Acked-by: Stephen Smalley <stephen.smalley.work@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    CPU: 0 PID: 0 Comm: swapper Tainted: G        W  O       6.3.0-rc1 #7
+    Stack:
+     60c4f20f 0c203d48 41b58ab3 60f224fc
+     600477fa 60f35687 60c4f20f 601273dd
+     00000008 6101eb00 6101eab0 615be548
+    Call Trace:
+     [<60047a58>] show_stack+0x25e/0x282
+     [<60c609e0>] dump_stack_lvl+0x96/0xfd
+     [<60c50d4c>] print_report+0x1a7/0x5a8
+     [<603078d3>] kasan_report+0xc1/0xe9
+     [<60308950>] __asan_report_load8_noabort+0x1b/0x1d
+     [<60232844>] irq_work_run_list+0x11a/0x13a
+     [<602328b4>] irq_work_tick+0x24/0x34
+     [<6017f9dc>] update_process_times+0x162/0x196
+     [<6019f335>] tick_sched_handle+0x1a4/0x1c3
+     [<6019fd9e>] tick_sched_timer+0x79/0x10c
+     [<601812b9>] __hrtimer_run_queues.constprop.0+0x425/0x695
+     [<60182913>] hrtimer_interrupt+0x16c/0x2c4
+     [<600486a3>] um_timer+0x164/0x183
+     [...]
+
+    Allocated by task 411:
+     save_stack_trace+0x99/0xb5
+     stack_trace_save+0x81/0x9b
+     kasan_save_stack+0x2d/0x54
+     kasan_set_track+0x34/0x3e
+     kasan_save_alloc_info+0x25/0x28
+     ____kasan_kmalloc+0x8b/0x97
+     __kasan_kmalloc+0x10/0x12
+     __kmalloc+0xb2/0xe8
+     load_elf_phdrs+0xee/0x182
+     [...]
+
+    The buggy address belongs to the object at 000000006d640800
+     which belongs to the cache kmalloc-1k of size 1024
+    The buggy address is located 584 bytes inside of
+     freed 1024-byte region [000000006d640800, 000000006d640c00)
+
+Add the appropriate irq_work_sync() so the work finishes before
+the buffers are destroyed.
+
+Prior to the commit in the Fixes tag below, there was only a
+single global IRQ work, so this issue didn't exist.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230427175920.a76159263122.I8295e405c44362a86c995e9c2c37e3e03810aa56@changeid
+
+Cc: stable@vger.kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Fixes: 15693458c4bc ("tracing/ring-buffer: Move poll wake ups into ring buffer code")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/selinux/Makefile | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/ring_buffer.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/security/selinux/Makefile b/security/selinux/Makefile
-index 4d8e0e8adf0b1..47e4aba3a868d 100644
---- a/security/selinux/Makefile
-+++ b/security/selinux/Makefile
-@@ -21,8 +21,8 @@ ccflags-y := -I$(srctree)/security/selinux -I$(srctree)/security/selinux/include
- $(addprefix $(obj)/,$(selinux-y)): $(obj)/flask.h
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -1644,6 +1644,8 @@ static void rb_free_cpu_buffer(struct ri
+ 	struct list_head *head = cpu_buffer->pages;
+ 	struct buffer_page *bpage, *tmp;
  
- quiet_cmd_flask = GEN     $(obj)/flask.h $(obj)/av_permissions.h
--      cmd_flask = scripts/selinux/genheaders/genheaders $(obj)/flask.h $(obj)/av_permissions.h
-+      cmd_flask = $< $(obj)/flask.h $(obj)/av_permissions.h
++	irq_work_sync(&cpu_buffer->irq_work.work);
++
+ 	free_buffer_page(cpu_buffer->reader_page);
  
- targets += flask.h av_permissions.h
--$(obj)/flask.h: $(src)/include/classmap.h FORCE
-+$(obj)/flask.h: scripts/selinux/genheaders/genheaders FORCE
- 	$(call if_changed,flask)
--- 
-2.39.2
-
+ 	if (head) {
+@@ -1750,6 +1752,8 @@ ring_buffer_free(struct trace_buffer *bu
+ 
+ 	cpuhp_state_remove_instance(CPUHP_TRACE_RB_PREPARE, &buffer->node);
+ 
++	irq_work_sync(&buffer->irq_work.work);
++
+ 	for_each_buffer_cpu(buffer, cpu)
+ 		rb_free_cpu_buffer(buffer->buffers[cpu]);
+ 
 
 
