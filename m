@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A57D0FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E6DC433D2;
-	Mon, 15 May 2023 17:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1121FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AB9C433EF;
+	Mon, 15 May 2023 17:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171554;
-	bh=Kra88e1xBRKhOzdO16W7/YyxQdwURgp/5mQpythfczo=;
+	s=korg; t=1684171557;
+	bh=25k/maKvTjokGF7S74GJjyHlScOMw2b5fZgwxGk+au4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/AVd73ezf8v2ZUMifPwNX/KszOXvqzDzcMuUuV2WMi5wuDyk4PN3dnA+kf9OeSZj
-	 2Y06avF6s1sFCxOSFDCRAgYr2UFW3xwNrrXn8nxmhYRhIS+0QmqjcvW87wyKm1Ed7q
-	 crIJOwzK3XMGF5Ga9aqyE2QqLk8SHK+ZqMgnWyy0=
+	b=gINXnYXDHPmYCYW29IMTJ8aAI7qF+7gwWhUDu4EhQBiG72FWlaBEFS+ZPXOP5zvRF
+	 f//ZIgixm3R/2KY/9fUiglBkHeH3VKqKVEJwu8NE0E4PALAmhBcgqlOqbyUX5VRg1M
+	 zNc1fzoUQhxC02/SPdviQe34EpvjEzfcp6pBUtBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1966db24521e5f6e23f7@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.2 232/242] ext4: add bounds checking in get_max_inline_xattr_value_size()
-Date: Mon, 15 May 2023 18:29:18 +0200
-Message-Id: <20230515161728.872985190@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.2 240/242] spi: fsl-spi: Re-organise transfer bits_per_word adaptation
+Date: Mon, 15 May 2023 18:29:26 +0200
+Message-Id: <20230515161729.105662463@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,59 +34,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 2220eaf90992c11d888fe771055d4de330385f01 upstream.
+commit 8a5299a1278eadf1e08a598a5345c376206f171e upstream.
 
-Normally the extended attributes in the inode body would have been
-checked when the inode is first opened, but if someone is writing to
-the block device while the file system is mounted, it's possible for
-the inode table to get corrupted.  Add bounds checking to avoid
-reading beyond the end of allocated memory if this happens.
+For different reasons, fsl-spi driver performs bits_per_word
+modifications for different reasons:
+- On CPU mode, to minimise amount of interrupts
+- On CPM/QE mode to work around controller byte order
 
-Reported-by: syzbot+1966db24521e5f6e23f7@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=1966db24521e5f6e23f7
-Cc: stable@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+For CPU mode that's done in fsl_spi_prepare_message() while
+for CPM mode that's done in fsl_spi_setup_transfer().
+
+Reunify all of it in fsl_spi_prepare_message(), and catch
+impossible cases early through master's bits_per_word_mask
+instead of returning EINVAL later.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/0ce96fe96e8b07cba0613e4097cfd94d09b8919a.1680371809.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inline.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-spi.c |   46 +++++++++++++++++++++-------------------------
+ 1 file changed, 21 insertions(+), 25 deletions(-)
 
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -34,6 +34,7 @@ static int get_max_inline_xattr_value_si
- 	struct ext4_xattr_ibody_header *header;
- 	struct ext4_xattr_entry *entry;
- 	struct ext4_inode *raw_inode;
-+	void *end;
- 	int free, min_offs;
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -177,26 +177,6 @@ static int mspi_apply_cpu_mode_quirks(st
+ 	return bits_per_word;
+ }
  
- 	if (!EXT4_INODE_HAS_XATTR_SPACE(inode))
-@@ -57,14 +58,23 @@ static int get_max_inline_xattr_value_si
- 	raw_inode = ext4_raw_inode(iloc);
- 	header = IHDR(inode, raw_inode);
- 	entry = IFIRST(header);
-+	end = (void *)raw_inode + EXT4_SB(inode->i_sb)->s_inode_size;
+-static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+-				struct spi_device *spi,
+-				int bits_per_word)
+-{
+-	/* CPM/QE uses Little Endian for words > 8
+-	 * so transform 16 and 32 bits words into 8 bits
+-	 * Unfortnatly that doesn't work for LSB so
+-	 * reject these for now */
+-	/* Note: 32 bits word, LSB works iff
+-	 * tfcr/rfcr is set to CPMFCR_GBL */
+-	if (spi->mode & SPI_LSB_FIRST &&
+-	    bits_per_word > 8)
+-		return -EINVAL;
+-	if (bits_per_word <= 8)
+-		return bits_per_word;
+-	if (bits_per_word == 16 || bits_per_word == 32)
+-		return 8; /* pretend its 8 bits */
+-	return -EINVAL;
+-}
+-
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 					struct spi_transfer *t)
+ {
+@@ -224,9 +204,6 @@ static int fsl_spi_setup_transfer(struct
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else
+-		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+-							  bits_per_word);
  
- 	/* Compute min_offs. */
--	for (; !IS_LAST_ENTRY(entry); entry = EXT4_XATTR_NEXT(entry)) {
-+	while (!IS_LAST_ENTRY(entry)) {
-+		void *next = EXT4_XATTR_NEXT(entry);
-+
-+		if (next >= end) {
-+			EXT4_ERROR_INODE(inode,
-+					 "corrupt xattr in inline inode");
-+			return 0;
-+		}
- 		if (!entry->e_value_inum && entry->e_value_size) {
- 			size_t offs = le16_to_cpu(entry->e_value_offs);
- 			if (offs < min_offs)
- 				min_offs = offs;
+ 	if (bits_per_word < 0)
+ 		return bits_per_word;
+@@ -361,6 +338,19 @@ static int fsl_spi_prepare_message(struc
+ 				t->bits_per_word = 32;
+ 			else if ((t->len & 1) == 0)
+ 				t->bits_per_word = 16;
++		} else {
++			/*
++			 * CPM/QE uses Little Endian for words > 8
++			 * so transform 16 and 32 bits words into 8 bits
++			 * Unfortnatly that doesn't work for LSB so
++			 * reject these for now
++			 * Note: 32 bits word, LSB works iff
++			 * tfcr/rfcr is set to CPMFCR_GBL
++			 */
++			if (m->spi->mode & SPI_LSB_FIRST && t->bits_per_word > 8)
++				return -EINVAL;
++			if (t->bits_per_word == 16 || t->bits_per_word == 32)
++				t->bits_per_word = 8; /* pretend its 8 bits */
  		}
-+		entry = next;
  	}
- 	free = min_offs -
- 		((void *)entry - (void *)IFIRST(header)) - sizeof(__u32);
+ 	return fsl_spi_setup_transfer(m->spi, first);
+@@ -594,8 +584,14 @@ static struct spi_master *fsl_spi_probe(
+ 	if (mpc8xxx_spi->type == TYPE_GRLIB)
+ 		fsl_spi_grlib_probe(dev);
+ 
+-	master->bits_per_word_mask =
+-		(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32)) &
++	if (mpc8xxx_spi->flags & SPI_CPM_MODE)
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 8) | SPI_BPW_MASK(16) | SPI_BPW_MASK(32));
++	else
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32));
++
++	master->bits_per_word_mask &=
+ 		SPI_BPW_RANGE_MASK(1, mpc8xxx_spi->max_bits_per_word);
+ 
+ 	if (mpc8xxx_spi->flags & SPI_QE_CPU_MODE)
 
 
