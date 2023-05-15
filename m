@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B6F4FC08
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:40:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703E9C4339B;
-	Mon, 15 May 2023 17:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41097FC08
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:40:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B373CC433D2;
+	Mon, 15 May 2023 17:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172443;
-	bh=192leasKzAIc4vYdJBRT3H2H51t6sT8tDQzqUBjRRQ4=;
+	s=korg; t=1684172446;
+	bh=47PjqLfcZgiKyQ0PMPKM0AsUk2PMYL3XT6IbAyVxork=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FfphZw8tMbndtGP/rNq6IVWn10u5rKxcNcR6f00yRWlGVbGVr/HZMbi4bJKcgiw34
-	 jYYOw/Nb8evxJ9BxM1kMzNP1Zz04QJmNOXzxNTcMNUYoFsi31N2uoaug11kOYnT/2V
-	 hpCpeZ665sqVA8fUu5+/f0Ddm8wzJuWewslz7Qsk=
+	b=RGH2JxcP4xlFD3kp0xl5wf3OzRTwKyMPGXYED849da47+UmrL7gAD/6aAkXRBeiCz
+	 g++Ncs91ZV20vcL3hVd/PSEIVfBfMa2LWWrKZ8351JUDrP1M+MbI+VyHHS/tDTgkny
+	 EaTE/FeVDVYJanX1Yxfjiv+r7yfBbf+57z5+p9Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Qi Han <hanqi@vivo.com>,
-	Yangtao Li <frank.li@vivo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Gaurav Jain <gaurav.jain@nxp.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 154/381] f2fs: compress: fix to call f2fs_wait_on_page_writeback() in f2fs_write_raw_pages()
-Date: Mon, 15 May 2023 18:26:45 +0200
-Message-Id: <20230515161743.779320364@linuxfoundation.org>
+Subject: [PATCH 5.10 155/381] crypto: caam - Clear some memory in instantiate_rng
+Date: Mon, 15 May 2023 18:26:46 +0200
+Message-Id: <20230515161743.827390111@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -38,96 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit babedcbac164cec970872b8097401ca913a80e61 ]
+[ Upstream commit 9c19fb86a8cb2ee82a832c95e139f29ea05c4d08 ]
 
-BUG_ON() will be triggered when writing files concurrently,
-because the same page is writtenback multiple times.
+According to the comment at the end of the 'for' loop just a few lines
+below, it looks needed to clear 'desc'.
 
-1597 void folio_end_writeback(struct folio *folio)
-1598 {
-		......
-1618     if (!__folio_end_writeback(folio))
-1619         BUG();
-		......
-1625 }
+So it should also be cleared for the first iteration.
 
-kernel BUG at mm/filemap.c:1619!
-Call Trace:
- <TASK>
- f2fs_write_end_io+0x1a0/0x370
- blk_update_request+0x6c/0x410
- blk_mq_end_request+0x15/0x130
- blk_complete_reqs+0x3c/0x50
- __do_softirq+0xb8/0x29b
- ? sort_range+0x20/0x20
- run_ksoftirqd+0x19/0x20
- smpboot_thread_fn+0x10b/0x1d0
- kthread+0xde/0x110
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x22/0x30
- </TASK>
+Move the memset() to the beginning of the loop to be safe.
 
-Below is the concurrency scenario:
-
-[Process A]		[Process B]		[Process C]
-f2fs_write_raw_pages()
-  - redirty_page_for_writepage()
-  - unlock page()
-			f2fs_do_write_data_page()
-			  - lock_page()
-			  - clear_page_dirty_for_io()
-			  - set_page_writeback() [1st writeback]
-			    .....
-			    - unlock page()
-
-						generic_perform_write()
-						  - f2fs_write_begin()
-						    - wait_for_stable_page()
-
-						  - f2fs_write_end()
-						    - set_page_dirty()
-
-  - lock_page()
-    - f2fs_do_write_data_page()
-      - set_page_writeback() [2st writeback]
-
-This problem was introduced by the previous commit 7377e853967b ("f2fs:
-compress: fix potential deadlock of compress file"). All pagelocks were
-released in f2fs_write_raw_pages(), but whether the page was
-in the writeback state was ignored in the subsequent writing process.
-Let's fix it by waiting for the page to writeback before writing.
-
-Cc: Christoph Hellwig <hch@lst.de>
-Fixes: 4c8ff7095bef ("f2fs: support data compression")
-Fixes: 7377e853967b ("f2fs: compress: fix potential deadlock of compress file")
-Signed-off-by: Qi Han <hanqi@vivo.com>
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 281922a1d4f5 ("crypto: caam - add support for SEC v5.x RNG4")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Gaurav Jain <gaurav.jain@nxp.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/crypto/caam/ctrl.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index 1541da5ace85e..1be9de40f0b5a 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -1391,6 +1391,12 @@ static int f2fs_write_raw_pages(struct compress_ctx *cc,
- 		if (!PageDirty(cc->rpages[i]))
- 			goto continue_unlock;
- 
-+		if (PageWriteback(cc->rpages[i])) {
-+			if (wbc->sync_mode == WB_SYNC_NONE)
-+				goto continue_unlock;
-+			f2fs_wait_on_page_writeback(cc->rpages[i], DATA, true, true);
-+		}
+diff --git a/drivers/crypto/caam/ctrl.c b/drivers/crypto/caam/ctrl.c
+index f87aa2169e5f5..f9a1ec3c84851 100644
+--- a/drivers/crypto/caam/ctrl.c
++++ b/drivers/crypto/caam/ctrl.c
+@@ -284,6 +284,10 @@ static int instantiate_rng(struct device *ctrldev, int state_handle_mask,
+ 		const u32 rdsta_if = RDSTA_IF0 << sh_idx;
+ 		const u32 rdsta_pr = RDSTA_PR0 << sh_idx;
+ 		const u32 rdsta_mask = rdsta_if | rdsta_pr;
 +
- 		if (!clear_page_dirty_for_io(cc->rpages[i]))
- 			goto continue_unlock;
++		/* Clear the contents before using the descriptor */
++		memset(desc, 0x00, CAAM_CMD_SZ * 7);
++
+ 		/*
+ 		 * If the corresponding bit is set, this state handle
+ 		 * was initialized by somebody else, so it's left alone.
+@@ -327,8 +331,6 @@ static int instantiate_rng(struct device *ctrldev, int state_handle_mask,
+ 		}
  
+ 		dev_info(ctrldev, "Instantiated RNG4 SH%d\n", sh_idx);
+-		/* Clear the contents before recreating the descriptor */
+-		memset(desc, 0x00, CAAM_CMD_SZ * 7);
+ 	}
+ 
+ 	kfree(desc);
 -- 
 2.39.2
 
