@@ -1,45 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C06FBFA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:19:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC8E3C433D2;
-	Mon, 15 May 2023 17:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19BAFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:19:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454C1C433EF;
+	Mon, 15 May 2023 17:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171165;
-	bh=c/fsEZ+3vJxSHyI38WB2qcTWVoPPXqmXN7hk+/8zkKU=;
+	s=korg; t=1684171168;
+	bh=W5PsV+3Yq3Z8XY+NSLRAjCZWEhpuHTyBF5RUo0GglHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ifdnGzWNoWANXhhp6QGFf4bVMab37EF+wNKX3t03MDdPsIhCHqUlCV7L51sVFnxf3
-	 u/CXlbFEa7tXdUC2F1YfGRZ+mYcvSvCaqbgqwPLEuZiQtYsqSw5qrjppSZB3cns/zw
-	 XDcv3jfKCUAxaAN52Ubomzn2cgHhCfffqko7AG/M=
+	b=wUBvTB8ZA0boezzwr3idNNSNBbR5w5Yx9PKQ12UTzWyedUHOABbfKqnIHL/87SvLr
+	 c1k4D+NUGEON0+wXf6nrZkh2Y1Pc+o1BJqCG4fRxJN00rrlAisbcwNXfAccPtqLMX4
+	 6WVNtNjzyFo2hkY1iwOk71YZImSRTdYMPdRxx/NE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shi <shy828301@gmail.com>,
-	James Clark <james.clark@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	John Garry <john.g.garry@oracle.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Mike Leach <mike.leach@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Suzuki Poulouse <suzuki.poulose@arm.com>,
-	Will Deacon <will@kernel.org>,
-	coresight@lists.linaro.org,
-	denik@google.com,
-	linux-arm-kernel@lists.infradead.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@manguebit.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 104/242] perf cs-etm: Fix timeless decode mode detection
-Date: Mon, 15 May 2023 18:27:10 +0200
-Message-Id: <20230515161725.022111650@linuxfoundation.org>
+Subject: [PATCH 6.2 122/242] cifs: check only tcon status on tcon related functions
+Date: Mon, 15 May 2023 18:27:28 +0200
+Message-Id: <20230515161725.565508791@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -53,119 +36,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Clark <james.clark@arm.com>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit 449067f3fc9f340da54e383738286881e6634d0b ]
+[ Upstream commit 2f0e4f0342201fe2228fcc2301cc2b42ae04b8e3 ]
 
-In this context, timeless refers to the trace data rather than the perf
-event data. But when detecting whether there are timestamps in the trace
-data or not, the presence of a timestamp flag on any perf event is used.
+We had a couple of checks for session in cifs_tree_connect
+and cifs_mark_open_files_invalid, which were unnecessary.
+And that was done with ses_lock. Changed that to tc_lock too.
 
-Since commit f42c0ce573df ("perf record: Always get text_poke events
-with --kcore option") timestamps were added to a tracking event when
---kcore is used which breaks this detection mechanism. Fix it by
-detecting if trace timestamps exist by looking at the ETM config flags.
-This would have always been a more accurate way of doing it anyway.
-
-This fixes the following error message when using --kcore with
-Coresight:
-
-  $ perf record --kcore -e cs_etm// --per-thread
-  $ perf report
-  The perf.data/data data has no samples!
-
-Fixes: f42c0ce573df79d1 ("perf record: Always get text_poke events with --kcore option")
-Reported-by: Yang Shi <shy828301@gmail.com>
-Signed-off-by: James Clark <james.clark@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: John Garry <john.g.garry@oracle.com>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Mike Leach <mike.leach@linaro.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Suzuki Poulouse <suzuki.poulose@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Cc: coresight@lists.linaro.org
-Cc: denik@google.com
-Cc: linux-arm-kernel@lists.infradead.org
-Link: https://lore.kernel.org/lkml/CAHbLzkrJQTrYBtPkf=jf3OpQ-yBcJe7XkvQstX9j2frz4WF-SQ@mail.gmail.com/
-Link: https://lore.kernel.org/r/20230424134748.228137-2-james.clark@arm.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@manguebit.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 6be2ea33a409 ("cifs: avoid potential races when handling multiple dfs tcons")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/cs-etm.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ fs/cifs/connect.c   | 10 +++++++---
+ fs/cifs/dfs.c       | 10 +++++++---
+ fs/cifs/dfs_cache.c |  2 +-
+ fs/cifs/file.c      |  8 ++++----
+ 4 files changed, 19 insertions(+), 11 deletions(-)
 
-diff --git a/tools/perf/util/cs-etm.c b/tools/perf/util/cs-etm.c
-index 33303d03c2fa4..2f327986090e1 100644
---- a/tools/perf/util/cs-etm.c
-+++ b/tools/perf/util/cs-etm.c
-@@ -2488,26 +2488,29 @@ static int cs_etm__process_auxtrace_event(struct perf_session *session,
- 	return 0;
- }
+diff --git a/fs/cifs/connect.c b/fs/cifs/connect.c
+index 87527512c2660..af491ae70678a 100644
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -4119,9 +4119,13 @@ int cifs_tree_connect(const unsigned int xid, struct cifs_tcon *tcon, const stru
  
--static bool cs_etm__is_timeless_decoding(struct cs_etm_auxtrace *etm)
-+static int cs_etm__setup_timeless_decoding(struct cs_etm_auxtrace *etm)
- {
- 	struct evsel *evsel;
- 	struct evlist *evlist = etm->session->evlist;
--	bool timeless_decoding = true;
- 
- 	/* Override timeless mode with user input from --itrace=Z */
--	if (etm->synth_opts.timeless_decoding)
--		return true;
-+	if (etm->synth_opts.timeless_decoding) {
-+		etm->timeless_decoding = true;
-+		return 0;
+ 	/* only send once per connect */
+ 	spin_lock(&tcon->tc_lock);
+-	if (tcon->ses->ses_status != SES_GOOD ||
+-	    (tcon->status != TID_NEW &&
+-	    tcon->status != TID_NEED_TCON)) {
++	if (tcon->status != TID_NEW &&
++	    tcon->status != TID_NEED_TCON) {
++		spin_unlock(&tcon->tc_lock);
++		return -EHOSTDOWN;
 +	}
- 
- 	/*
--	 * Circle through the list of event and complain if we find one
--	 * with the time bit set.
-+	 * Find the cs_etm evsel and look at what its timestamp setting was
- 	 */
--	evlist__for_each_entry(evlist, evsel) {
--		if ((evsel->core.attr.sample_type & PERF_SAMPLE_TIME))
--			timeless_decoding = false;
--	}
-+	evlist__for_each_entry(evlist, evsel)
-+		if (cs_etm__evsel_is_auxtrace(etm->session, evsel)) {
-+			etm->timeless_decoding =
-+				!(evsel->core.attr.config & BIT(ETM_OPT_TS));
-+			return 0;
-+		}
- 
--	return timeless_decoding;
-+	pr_err("CS ETM: Couldn't find ETM evsel\n");
-+	return -EINVAL;
- }
- 
- /*
-@@ -2884,7 +2887,6 @@ int cs_etm__process_auxtrace_info_full(union perf_event *event,
- 	etm->snapshot_mode = (ptr[CS_ETM_SNAPSHOT] != 0);
- 	etm->metadata = metadata;
- 	etm->auxtrace_type = auxtrace_info->type;
--	etm->timeless_decoding = cs_etm__is_timeless_decoding(etm);
- 
- 	etm->auxtrace.process_event = cs_etm__process_event;
- 	etm->auxtrace.process_auxtrace_event = cs_etm__process_auxtrace_event;
-@@ -2894,6 +2896,10 @@ int cs_etm__process_auxtrace_info_full(union perf_event *event,
- 	etm->auxtrace.evsel_is_auxtrace = cs_etm__evsel_is_auxtrace;
- 	session->auxtrace = &etm->auxtrace;
- 
-+	err = cs_etm__setup_timeless_decoding(etm);
-+	if (err)
-+		return err;
 +
- 	etm->unknown_thread = thread__new(999999999, 999999999);
- 	if (!etm->unknown_thread) {
- 		err = -ENOMEM;
++	if (tcon->status == TID_GOOD) {
+ 		spin_unlock(&tcon->tc_lock);
+ 		return 0;
+ 	}
+diff --git a/fs/cifs/dfs.c b/fs/cifs/dfs.c
+index 4c392bde24066..f02f8d3b92ee8 100644
+--- a/fs/cifs/dfs.c
++++ b/fs/cifs/dfs.c
+@@ -571,9 +571,13 @@ int cifs_tree_connect(const unsigned int xid, struct cifs_tcon *tcon, const stru
+ 
+ 	/* only send once per connect */
+ 	spin_lock(&tcon->tc_lock);
+-	if (tcon->ses->ses_status != SES_GOOD ||
+-	    (tcon->status != TID_NEW &&
+-	    tcon->status != TID_NEED_TCON)) {
++	if (tcon->status != TID_NEW &&
++	    tcon->status != TID_NEED_TCON) {
++		spin_unlock(&tcon->tc_lock);
++		return -EHOSTDOWN;
++	}
++
++	if (tcon->status == TID_GOOD) {
+ 		spin_unlock(&tcon->tc_lock);
+ 		return 0;
+ 	}
+diff --git a/fs/cifs/dfs_cache.c b/fs/cifs/dfs_cache.c
+index 9ccaa0c7ac943..6557d7b2798a0 100644
+--- a/fs/cifs/dfs_cache.c
++++ b/fs/cifs/dfs_cache.c
+@@ -1191,7 +1191,7 @@ static int __refresh_tcon(const char *path, struct cifs_tcon *tcon, bool force_r
+ 	}
+ 
+ 	spin_lock(&ipc->tc_lock);
+-	if (ses->ses_status != SES_GOOD || ipc->status != TID_GOOD) {
++	if (ipc->status != TID_GOOD) {
+ 		spin_unlock(&ipc->tc_lock);
+ 		cifs_dbg(FYI, "%s: skip cache refresh due to disconnected ipc\n", __func__);
+ 		goto out;
+diff --git a/fs/cifs/file.c b/fs/cifs/file.c
+index bef7c335ccc6e..d037366fcc5ee 100644
+--- a/fs/cifs/file.c
++++ b/fs/cifs/file.c
+@@ -48,13 +48,13 @@ cifs_mark_open_files_invalid(struct cifs_tcon *tcon)
+ 	struct list_head *tmp1;
+ 
+ 	/* only send once per connect */
+-	spin_lock(&tcon->ses->ses_lock);
+-	if ((tcon->ses->ses_status != SES_GOOD) || (tcon->status != TID_NEED_RECON)) {
+-		spin_unlock(&tcon->ses->ses_lock);
++	spin_lock(&tcon->tc_lock);
++	if (tcon->status != TID_NEED_RECON) {
++		spin_unlock(&tcon->tc_lock);
+ 		return;
+ 	}
+ 	tcon->status = TID_IN_FILES_INVALIDATE;
+-	spin_unlock(&tcon->ses->ses_lock);
++	spin_unlock(&tcon->tc_lock);
+ 
+ 	/* list all files open on tree connection and mark them invalid */
+ 	spin_lock(&tcon->open_file_lock);
 -- 
 2.39.2
 
