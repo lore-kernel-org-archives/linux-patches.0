@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DAAFC1C
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11BDC4339E;
-	Mon, 15 May 2023 17:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9246FFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F272DC433EF;
+	Mon, 15 May 2023 17:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172910;
-	bh=UqsV6kpN6V5dhZKIggXFyrj9RMxF6R5AszPr6eTzBb0=;
+	s=korg; t=1684172913;
+	bh=8gJnnmseKkIWzQfGlrPXjzycTu+gTOhiXSp3C6TcOzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qyctGcJEDZaJCEo4jUcG4ZdH2wiNGb+NwZYrLqnlMUxPp9J1x0Z2h1ap52bNsvip8
-	 zayO36oR5+co4fKtJvqSfXG9uFzTvTrQkcEmXflt0ycWwZgpKAF41t/DLEONwL6ztR
-	 h0qTq5hBaptXvQPN1BHCtA6jFJ7OyytasMm6affg=
+	b=ltAuZ2haffaEoZO/epz4GN4AgMk5pZsiL1ZGBpig9d0l4HafJ5T6r6jQ9xIQiTPH/
+	 Q+glqU7NAS88SO9CDY0pYvM3t4jTkOdrNR4HLaxtvxnjH8TVgulAZzbWl4O/x2+CDl
+	 E3f1i3Ic/47E72pgsZ/QKXlACbCU9EXy7UwnK18c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Akilesh Kailash <akailash@google.com>,
-	Mike Snitzer <snitzer@redhat.com>,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Yeongjin Gil <youngjin.gil@samsung.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 306/381] dm verity: skip redundant verity_handle_err() on I/O errors
-Date: Mon, 15 May 2023 18:29:17 +0200
-Message-Id: <20230515161750.661730862@linuxfoundation.org>
+Subject: [PATCH 5.10 307/381] dm verity: fix error handling for check_at_most_once on FEC
+Date: Mon, 15 May 2023 18:29:18 +0200
+Message-Id: <20230515161750.705280788@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,60 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akilesh Kailash <akailash@google.com>
+From: Yeongjin Gil <youngjin.gil@samsung.com>
 
-[ Upstream commit 2c0468e054c0adb660ac055fc396622ec7235df9 ]
+[ Upstream commit e8c5d45f82ce0c238a4817739892fe8897a3dcc3 ]
 
-Without FEC, dm-verity won't call verity_handle_err() when I/O fails,
-but with FEC enabled, it currently does even if an I/O error has
-occurred.
+In verity_end_io(), if bi_status is not BLK_STS_OK, it can be return
+directly. But if FEC configured, it is desired to correct the data page
+through verity_verify_io. And the return value will be converted to
+blk_status and passed to verity_finish_io().
 
-If there is an I/O error and FEC correction fails, return the error
-instead of calling verity_handle_err() again.
+BTW, when a bit is set in v->validated_blocks, verity_verify_io() skips
+verification regardless of I/O error for the corresponding bio. In this
+case, the I/O error could not be returned properly, and as a result,
+there is a problem that abnormal data could be read for the
+corresponding block.
 
-Suggested-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Akilesh Kailash <akailash@google.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Mike Snitzer <snitzer@redhat.com>
-Stable-dep-of: e8c5d45f82ce ("dm verity: fix error handling for check_at_most_once on FEC")
+To fix this problem, when an I/O error occurs, do not skip verification
+even if the bit related is set in v->validated_blocks.
+
+Fixes: 843f38d382b1 ("dm verity: add 'check_at_most_once' option to only validate hashes once")
+Cc: stable@vger.kernel.org
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Yeongjin Gil <youngjin.gil@samsung.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-verity-target.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/md/dm-verity-target.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/md/dm-verity-target.c b/drivers/md/dm-verity-target.c
-index c801f6b93b7b4..d9c388e6ce76c 100644
+index d9c388e6ce76c..0c2048d2b847e 100644
 --- a/drivers/md/dm-verity-target.c
 +++ b/drivers/md/dm-verity-target.c
-@@ -475,6 +475,7 @@ static int verity_verify_io(struct dm_verity_io *io)
- 	struct bvec_iter start;
- 	unsigned b;
- 	struct crypto_wait wait;
-+	struct bio *bio = dm_bio_from_per_bio_data(io, v->ti->per_io_data_size);
+@@ -482,7 +482,7 @@ static int verity_verify_io(struct dm_verity_io *io)
+ 		sector_t cur_block = io->block + b;
+ 		struct ahash_request *req = verity_io_hash_req(v, io);
  
- 	for (b = 0; b < io->n_blocks; b++) {
- 		int r;
-@@ -529,9 +530,17 @@ static int verity_verify_io(struct dm_verity_io *io)
- 		else if (verity_fec_decode(v, io, DM_VERITY_BLOCK_TYPE_DATA,
- 					   cur_block, NULL, &start) == 0)
+-		if (v->validated_blocks &&
++		if (v->validated_blocks && bio->bi_status == BLK_STS_OK &&
+ 		    likely(test_bit(cur_block, v->validated_blocks))) {
+ 			verity_bv_skip_block(v, io, &io->iter);
  			continue;
--		else if (verity_handle_err(v, DM_VERITY_BLOCK_TYPE_DATA,
--					   cur_block))
--			return -EIO;
-+		else {
-+			if (bio->bi_status) {
-+				/*
-+				 * Error correction failed; Just return error
-+				 */
-+				return -EIO;
-+			}
-+			if (verity_handle_err(v, DM_VERITY_BLOCK_TYPE_DATA,
-+					      cur_block))
-+				return -EIO;
-+		}
- 	}
- 
- 	return 0;
 -- 
 2.39.2
 
