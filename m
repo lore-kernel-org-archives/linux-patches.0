@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA91FBFA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:20:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B35EEC433D2;
-	Mon, 15 May 2023 17:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F31FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:20:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E22C433D2;
+	Mon, 15 May 2023 17:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171206;
-	bh=XGM6gZJzD88LVq2+6ZwZ204UFWDDs4SgUijuLLH/l70=;
+	s=korg; t=1684171209;
+	bh=phV9mAp46YRgXmsCAh0zCANCV/rtaTL/l9opcLFudXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+2mNA//LFgbkVWjaq2LUkG9gBkIbtfGU/rkc/ISMEI7m7LyCpo2HpHNZQeMUfR1i
-	 wp60UxsrW+iVX7ukgAPcleoFtiWKUAMzwYpYsvKfG0V9TE1Ng1nzEydAQBbGc0W0yQ
-	 kfvH5D9jeodiQUg7fYxxc5UkN6KYjSJucDMkq5sw=
+	b=JfGO9sUk7CFtGR8E0QYZZ3zAx+C/fJjNaMjffvy26E571FKOdfiROX8osBDjllm+2
+	 kfaoX/05cAPyTY/795oZkC4zZsR+RxZTclCqKUw3/c5FqVTS7rN9EjCPS2thiv5lJg
+	 Qu0s2HvzMZWLT26G8NvDxCDuLMDsTP4vfnZYu/Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.2 133/242] btrfs: dont free qgroup space unless specified
-Date: Mon, 15 May 2023 18:27:39 +0200
-Message-Id: <20230515161725.893426566@linuxfoundation.org>
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.2 106/242] crypto: api - Add scaffolding to change completion function signature
+Date: Mon, 15 May 2023 18:27:12 +0200
+Message-Id: <20230515161725.081105591@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,87 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit d246331b78cbef86237f9c22389205bc9b4e1cc1 upstream.
+[ Upstream commit c35e03eaece71101ff6cbf776b86403860ac8cc3 ]
 
-Boris noticed in his simple quotas testing that he was getting a leak
-with Sweet Tea's change to subvol create that stopped doing a
-transaction commit.  This was just a side effect of that change.
+The crypto completion function currently takes a pointer to a
+struct crypto_async_request object.  However, in reality the API
+does not allow the use of any part of the object apart from the
+data field.  For example, ahash/shash will create a fake object
+on the stack to pass along a different data field.
 
-In the delayed inode code we have an optimization that will free extra
-reservations if we think we can pack a dir item into an already modified
-leaf.  Previously this wouldn't be triggered in the subvolume create
-case because we'd commit the transaction, it was still possible but
-much harder to trigger.  It could actually be triggered if we did a
-mkdir && subvol create with qgroups enabled.
+This leads to potential bugs where the user may try to dereference
+or otherwise use the crypto_async_request object.
 
-This occurs because in btrfs_insert_delayed_dir_index(), which gets
-called when we're adding the dir item, we do the following:
+This patch adds some temporary scaffolding so that the completion
+function can take a void * instead.  Once affected users have been
+converted this can be removed.
 
-  btrfs_block_rsv_release(fs_info, trans->block_rsv, bytes, NULL);
+The helper crypto_request_complete will remain even after the
+conversion is complete.  It should be used instead of calling
+the completion function directly.
 
-if we're able to skip reserving space.
-
-The problem here is that trans->block_rsv points at the temporary block
-rsv for the subvolume create, which has qgroup reservations in the block
-rsv.
-
-This is a problem because btrfs_block_rsv_release() will do the
-following:
-
-  if (block_rsv->qgroup_rsv_reserved >= block_rsv->qgroup_rsv_size) {
-	  qgroup_to_release = block_rsv->qgroup_rsv_reserved -
-		  block_rsv->qgroup_rsv_size;
-	  block_rsv->qgroup_rsv_reserved = block_rsv->qgroup_rsv_size;
-  }
-
-The temporary block rsv just has ->qgroup_rsv_reserved set,
-->qgroup_rsv_size == 0.  The optimization in
-btrfs_insert_delayed_dir_index() sets ->qgroup_rsv_reserved = 0.  Then
-later on when we call btrfs_subvolume_release_metadata() which has
-
-  btrfs_block_rsv_release(fs_info, rsv, (u64)-1, &qgroup_to_release);
-  btrfs_qgroup_convert_reserved_meta(root, qgroup_to_release);
-
-qgroup_to_release is set to 0, and we do not convert the reserved
-metadata space.
-
-The problem here is that the block rsv code has been unconditionally
-messing with ->qgroup_rsv_reserved, because the main place this is used
-is delalloc, and any time we call btrfs_block_rsv_release() we do it
-with qgroup_to_release set, and thus do the proper accounting.
-
-The subvolume code is the only other code that uses the qgroup
-reservation stuff, but it's intermingled with the above optimization,
-and thus was getting its reservation freed out from underneath it and
-thus leaking the reserved space.
-
-The solution is to simply not mess with the qgroup reservations if we
-don't have qgroup_to_release set.  This works with the existing code as
-anything that messes with the delalloc reservations always have
-qgroup_to_release set.  This fixes the leak that Boris was observing.
-
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Reviewed-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: 4140aafcff16 ("crypto: engine - fix crypto_queue backlog handling")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-rsv.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/crypto/algapi.h | 7 +++++++
+ include/linux/crypto.h  | 6 ++++++
+ 2 files changed, 13 insertions(+)
 
---- a/fs/btrfs/block-rsv.c
-+++ b/fs/btrfs/block-rsv.c
-@@ -124,7 +124,8 @@ static u64 block_rsv_release_bytes(struc
- 	} else {
- 		num_bytes = 0;
- 	}
--	if (block_rsv->qgroup_rsv_reserved >= block_rsv->qgroup_rsv_size) {
-+	if (qgroup_to_release_ret &&
-+	    block_rsv->qgroup_rsv_reserved >= block_rsv->qgroup_rsv_size) {
- 		qgroup_to_release = block_rsv->qgroup_rsv_reserved -
- 				    block_rsv->qgroup_rsv_size;
- 		block_rsv->qgroup_rsv_reserved = block_rsv->qgroup_rsv_size;
+diff --git a/include/crypto/algapi.h b/include/crypto/algapi.h
+index 61b327206b557..1fd81e74a174f 100644
+--- a/include/crypto/algapi.h
++++ b/include/crypto/algapi.h
+@@ -302,4 +302,11 @@ enum {
+ 	CRYPTO_MSG_ALG_LOADED,
+ };
+ 
++static inline void crypto_request_complete(struct crypto_async_request *req,
++					   int err)
++{
++	crypto_completion_t complete = req->complete;
++	complete(req, err);
++}
++
+ #endif	/* _CRYPTO_ALGAPI_H */
+diff --git a/include/linux/crypto.h b/include/linux/crypto.h
+index 5d1e961f810ec..b18f6e669fb10 100644
+--- a/include/linux/crypto.h
++++ b/include/linux/crypto.h
+@@ -176,6 +176,7 @@ struct crypto_async_request;
+ struct crypto_tfm;
+ struct crypto_type;
+ 
++typedef struct crypto_async_request crypto_completion_data_t;
+ typedef void (*crypto_completion_t)(struct crypto_async_request *req, int err);
+ 
+ /**
+@@ -595,6 +596,11 @@ struct crypto_wait {
+ /*
+  * Async ops completion helper functioons
+  */
++static inline void *crypto_get_completion_data(crypto_completion_data_t *req)
++{
++	return req->data;
++}
++
+ void crypto_req_done(struct crypto_async_request *req, int err);
+ 
+ static inline int crypto_wait_req(int err, struct crypto_wait *wait)
+-- 
+2.39.2
+
 
 
