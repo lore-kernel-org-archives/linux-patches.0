@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B110CFBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:09:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B9FC4339C;
-	Mon, 15 May 2023 17:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9DEFBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:09:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28947C433D2;
+	Mon, 15 May 2023 17:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170563;
-	bh=YqDo/tczgT6Erja8rEHFm2scRcY6JC5nKPwxOy0rONA=;
+	s=korg; t=1684170566;
+	bh=7CcgZ+EbgcYVHvFBCtgsjJy9Qw4JfDR0nUUgQWpqON0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PpJRDL85IETwVdA58qPMq3vfGIvwb9GIIDQW8NOYnhfIIljYvxZxCAmDwkZGPJzp9
-	 boBFSium1cJhuPom0DTC0mdzWAEdtYqPS7J/6OTu0tM1iZ3zFUZk+L9FqEcJ9Bri4c
-	 Oe7hnhSgwE1gP7+zGGumzQ2k63DtTwIpm6/hm53k=
+	b=cDzstCVQnMbWbcBxCjsWN6dnG3jYSDoac5j4++pl/i/enDoF/XuDP/7c7xGBfXoWZ
+	 To3/gudPPJTGJYyABCA06NzviPz01lD890LIuZOvmQ1QizCG1gGGBRQEbXaS5Vx9Ml
+	 or8PLNx3kbnijWA3ZnGEhy7M9dVvO2rHknc4lD/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Yogesh Mohan Marimuthu <Yogesh.Mohanmarimuthu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Tim Huang <Tim.Huang@amd.com>
-Subject: [PATCH 6.1 170/239] drm/amdgpu: change gfx 11.0.4 external_id range
-Date: Mon, 15 May 2023 18:27:13 +0200
-Message-Id: <20230515161726.771738201@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	"Lin.Cao" <lincao12@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 171/239] drm/amdgpu: Fix vram recover doesnt work after whole GPU reset (v2)
+Date: Mon, 15 May 2023 18:27:14 +0200
+Message-Id: <20230515161726.801364251@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,34 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yifan Zhang <yifan1.zhang@amd.com>
+From: Lin.Cao <lincao12@amd.com>
 
-commit 996e93a3fe74dcf9d467ae3020aea42cc3ff65e3 upstream.
+commit 6c032c37ac3ef3b7df30937c785ecc4da428edc0 upstream.
 
-gfx 11.0.4 range starts from 0x80.
+v1: Vmbo->shadow is used to back vram bo up when vram lost. So that we
+should set shadow as vmbo->shadow to recover vmbo->bo
+v2: Modify if(vmbo->shadow) shadow = vmbo->shadow as if(!vmbo->shadow)
+continue;
 
-Fixes: 311d52367d0a ("drm/amdgpu: add soc21 common ip block support for GC 11.0.4")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reported-by: Yogesh Mohan Marimuthu <Yogesh.Mohanmarimuthu@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Tim Huang <Tim.Huang@amd.com>
+Fixes: e18aaea733da ("drm/amdgpu: move shadow_list to amdgpu_bo_vm")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Lin.Cao <lincao12@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/soc21.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -715,7 +715,7 @@ static int soc21_common_early_init(void
- 			AMD_PG_SUPPORT_VCN_DPG |
- 			AMD_PG_SUPPORT_GFX_PG |
- 			AMD_PG_SUPPORT_JPEG;
--		adev->external_rev_id = adev->rev_id + 0x1;
-+		adev->external_rev_id = adev->rev_id + 0x80;
- 		break;
- 
- 	default:
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4483,7 +4483,11 @@ static int amdgpu_device_recover_vram(st
+ 	dev_info(adev->dev, "recover vram bo from shadow start\n");
+ 	mutex_lock(&adev->shadow_list_lock);
+ 	list_for_each_entry(vmbo, &adev->shadow_list, shadow_list) {
+-		shadow = &vmbo->bo;
++		/* If vm is compute context or adev is APU, shadow will be NULL */
++		if (!vmbo->shadow)
++			continue;
++		shadow = vmbo->shadow;
++
+ 		/* No need to recover an evicted BO */
+ 		if (shadow->tbo.resource->mem_type != TTM_PL_TT ||
+ 		    shadow->tbo.resource->start == AMDGPU_BO_INVALID_OFFSET ||
 
 
