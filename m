@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E535FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BFBC4339B;
-	Mon, 15 May 2023 16:57:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395DAFBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:57:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DDBC433EF;
+	Mon, 15 May 2023 16:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169844;
-	bh=V+LebuTAQf3IroqiJmTNAP7rY7/JNxVn3Zv3axklaOw=;
+	s=korg; t=1684169847;
+	bh=q4w0+U513VitpwFD4lMi/QpdKyHY0TOfvVAnetzZqeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uc0tq8P4u0UU8L5U5BtTVp2f0OjgApOKzONNxdlpO9iM908Z20HtolPRUPfviOUG0
-	 x7kwhkD9R2HTD7PhpRWUbqUlIBlVtMrhGkL+4HXATNn6J0oZE51/3MRYdrKiWziT2D
-	 j+W0x+uIcaHEkVjLvzvHhxB6yHr8vLuFJ5xvi2KA=
+	b=ojjVJmf1zgJSpy/NaWPJl3AoajMCtYVg/LRUNecO23MfW54vDyIBkdJbceztf513X
+	 4uD96/Y2UwJbJeBIVTOoLXDXPDoyCBwUp+4b+dDph2P1GVehuNswdUCsSluzdxCE3Z
+	 x9Wctbn6+XtbtNCAkLEs0qkImzyqsNbMT9n1EdDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 149/246] smb3: fix problem remounting a share after shutdown
-Date: Mon, 15 May 2023 18:26:01 +0200
-Message-Id: <20230515161727.024289599@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.3 182/246] f2fs: fix null pointer panic in tracepoint in __replace_atomic_write_block
+Date: Mon, 15 May 2023 18:26:34 +0200
+Message-Id: <20230515161728.087770326@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,40 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit 716a3cf317456fa01d54398bb14ab354f50ed6a2 upstream.
+commit da6ea0b050fa720302b56fbb59307e7c7531a342 upstream.
 
-xfstests generic/392 showed a problem where even after a
-shutdown call was made on a mount, we would still attempt
-to use the (now inaccessible) superblock if another mount
-was attempted for the same share.
+We got a kernel panic if old_addr is NULL.
 
-Reported-by: David Howells <dhowells@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
+https://bugzilla.kernel.org/show_bug.cgi?id=217266
+
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+ Call Trace:
+  <TASK>
+  f2fs_commit_atomic_write+0x619/0x990 [f2fs a1b985b80f5babd6f3ea778384908880812bfa43]
+  __f2fs_ioctl+0xd8e/0x4080 [f2fs a1b985b80f5babd6f3ea778384908880812bfa43]
+  ? vfs_write+0x2ae/0x3f0
+  ? vfs_write+0x2ae/0x3f0
+  __x64_sys_ioctl+0x91/0xd0
+  do_syscall_64+0x5c/0x90
+  entry_SYSCALL_64_after_hwframe+0x72/0xdc
+ RIP: 0033:0x7f69095fe53f
+
+Fixes: 2f3a9ae990a7 ("f2fs: introduce trace_f2fs_replace_atomic_write_block")
 Cc: <stable@vger.kernel.org>
-Fixes: 087f757b0129 ("cifs: add shutdown support")
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/connect.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/f2fs/segment.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -2705,6 +2705,13 @@ cifs_match_super(struct super_block *sb,
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -263,7 +263,7 @@ retry:
+ 	f2fs_put_dnode(&dn);
  
- 	spin_lock(&cifs_tcp_ses_lock);
- 	cifs_sb = CIFS_SB(sb);
-+
-+	/* We do not want to use a superblock that has been shutdown */
-+	if (CIFS_MOUNT_SHUTDOWN & cifs_sb->mnt_cifs_flags) {
-+		spin_unlock(&cifs_tcp_ses_lock);
-+		return 0;
-+	}
-+
- 	tlink = cifs_get_tlink(cifs_sb_master_tlink(cifs_sb));
- 	if (tlink == NULL) {
- 		/* can not match superblock if tlink were ever null */
+ 	trace_f2fs_replace_atomic_write_block(inode, F2FS_I(inode)->cow_inode,
+-					index, *old_addr, new_addr, recover);
++			index, old_addr ? *old_addr : 0, new_addr, recover);
+ 	return 0;
+ }
+ 
 
 
