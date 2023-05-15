@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868D5C8E3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:00:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91BCCC433D2;
-	Mon, 15 May 2023 18:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C2A156E8
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:00:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE959C433D2;
+	Mon, 15 May 2023 18:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173643;
-	bh=jSO2BYCzP7BEVDhHLIiMB7h+/bx50X2MnGdydZfFt2w=;
+	s=korg; t=1684173649;
+	bh=v0IrvVKjkf/iUVncVD5oSy3gCk3TCo5gKDf0waE2AMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zTpuFviNnYfRE1UAc8zswLXMGpS+yN/YS3N+CCLNX4o7nx234L6PiNFX8EHIURRtE
-	 SYLP8LAlT6m+9OmXdt6nmMktuSxDzka+zyNQBmCBWjSZttaeGwaTAcj16BADLUKgpt
-	 DLTGaDmzQtiXD/nmjYGHx2fzLJv3f+b9zwHCai84=
+	b=bhipV4srfX4DfNfE5na1Ncg7VdXKdcqXbQFPRd87Dl4dC4+a4RIZn6o3WNJVUb3ke
+	 uqSop7xGFipGMkcedooKW6wxhYTFXVEYiZmjoPhIz/bZHWi0WMIeAyjOkmot8KGMwY
+	 zIeJHfil8f6Sinhegj+sTZPi+rU4guZ8wBE4Aadk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 160/282] perf/core: Fix hardlockup failure caused by perf throttle
-Date: Mon, 15 May 2023 18:28:58 +0200
-Message-Id: <20230515161727.010774518@linuxfoundation.org>
+Subject: [PATCH 5.4 135/282] ia64: mm/contig: fix section mismatch warning/error
+Date: Mon, 15 May 2023 18:28:33 +0200
+Message-Id: <20230515161726.268610076@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,49 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 15def34e2635ab7e0e96f1bc32e1b69609f14942 ]
+[ Upstream commit 58deeb4ef3b054498747d0929d94ac53ab90981f ]
 
-commit e050e3f0a71bf ("perf: Fix broken interrupt rate throttling")
-introduces a change in throttling threshold judgment. Before this,
-compare hwc->interrupts and max_samples_per_tick, then increase
-hwc->interrupts by 1, but this commit reverses order of these two
-behaviors, causing the semantics of max_samples_per_tick to change.
-In literal sense of "max_samples_per_tick", if hwc->interrupts ==
-max_samples_per_tick, it should not be throttled, therefore, the judgment
-condition should be changed to "hwc->interrupts > max_samples_per_tick".
+alloc_per_cpu_data() is called by find_memory(), which is marked as
+__init.  Therefore alloc_per_cpu_data() can also be marked as __init to
+remedy this modpost problem.
 
-In fact, this may cause the hardlockup to fail, The minimum value of
-max_samples_per_tick may be 1, in this case, the return value of
-__perf_event_account_interrupt function is 1.
-As a result, nmi_watchdog gets throttled, which would stop PMU (Use x86
-architecture as an example, see x86_pmu_handle_irq).
+WARNING: modpost: vmlinux.o: section mismatch in reference: alloc_per_cpu_data (section: .text) -> memblock_alloc_try_nid (section: .init.text)
 
-Fixes: e050e3f0a71b ("perf: Fix broken interrupt rate throttling")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20230227023508.102230-1-yangjihong1@huawei.com
+Link: https://lkml.kernel.org/r/20230223034258.12917-1-rdunlap@infradead.org
+Fixes: 4b9ddc7cf272 ("[IA64] Fix section mismatch in contig.c version of per_cpu_init()")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/ia64/mm/contig.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 1ef924d6a385e..41a8a5f749409 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -8166,8 +8166,8 @@ __perf_event_account_interrupt(struct perf_event *event, int throttle)
- 		hwc->interrupts = 1;
- 	} else {
- 		hwc->interrupts++;
--		if (unlikely(throttle
--			     && hwc->interrupts >= max_samples_per_tick)) {
-+		if (unlikely(throttle &&
-+			     hwc->interrupts > max_samples_per_tick)) {
- 			__this_cpu_inc(perf_throttled_count);
- 			tick_dep_set_cpu(smp_processor_id(), TICK_DEP_BIT_PERF_EVENTS);
- 			hwc->interrupts = MAX_INTERRUPTS;
+diff --git a/arch/ia64/mm/contig.c b/arch/ia64/mm/contig.c
+index 5b00dc3898e19..f2b40bcd2495d 100644
+--- a/arch/ia64/mm/contig.c
++++ b/arch/ia64/mm/contig.c
+@@ -81,7 +81,7 @@ void *per_cpu_init(void)
+ 	return __per_cpu_start + __per_cpu_offset[smp_processor_id()];
+ }
+ 
+-static inline void
++static inline __init void
+ alloc_per_cpu_data(void)
+ {
+ 	size_t size = PERCPU_PAGE_SIZE * num_possible_cpus();
 -- 
 2.39.2
 
