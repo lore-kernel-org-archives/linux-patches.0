@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47758FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C88C433EF;
-	Mon, 15 May 2023 17:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6853AFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C207EC433D2;
+	Mon, 15 May 2023 17:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172889;
-	bh=HxTpez4AvTPhBGrFVc6ecMQA14m6wMPfZjCGYr3B/XM=;
+	s=korg; t=1684172892;
+	bh=QQBEp5i7ROCH6hrCJjJJ6bTfN34uM97nfboYK1Sn2aE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1WjhK/d7RtdGNMmK48LM7JzlAgpDYXN3/iZBgIt/nJk9XvlMOkmjo6k1qoI9tiNOP
-	 Se/tLhqDqVEA2hEr/xgA3wFvLpPAhNMBLTfiZ0TxJ0pKYS/HTvJF5ZLWMPYCROEHoJ
-	 BrIGZ6eJ7Md5lA48YrYXO7tnzUPKOKzy0VkdRI8E=
+	b=NW7EquGs+ZYWjDl0i0I6dwFPlpQa55lGrqz+HkZhlscz/vhTxOM8osWvstXtEen2s
+	 Eaa3cdPtsFOewlptls+wLZdoWoZmx8Ic2ATLcgj28Ht96TvUs6QEfeQm3x8PUbFSs0
+	 0WrNpFlpI/FUqQzObBcDVAOkXZeez+UCA8lxVwQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 300/381] tty: clean include/linux/tty.h up
-Date: Mon, 15 May 2023 18:29:11 +0200
-Message-Id: <20230515161750.356864513@linuxfoundation.org>
+Subject: [PATCH 5.10 301/381] tty: Prevent writing chars during tcsetattr TCSADRAIN/FLUSH
+Date: Mon, 15 May 2023 18:29:12 +0200
+Message-Id: <20230515161750.408389029@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,199 +34,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 5ffa6e344a1c92a27c242f500fc74e6eb361a4bc ]
+[ Upstream commit 094fb49a2d0d6827c86d2e0840873e6db0c491d2 ]
 
-There are a lot of tty-core-only functions that are listed in
-include/linux/tty.h.  Move them to drivers/tty/tty.h so that no one else
-can accidentally call them or think that they are public functions.
+If userspace races tcsetattr() with a write, the drained condition
+might not be guaranteed by the kernel. There is a race window after
+checking Tx is empty before tty_set_termios() takes termios_rwsem for
+write. During that race window, more characters can be queued by a
+racing writer.
 
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20210408125134.3016837-14-gregkh@linuxfoundation.org
+Any ongoing transmission might produce garbage during HW's
+->set_termios() call. The intent of TCSADRAIN/FLUSH seems to be
+preventing such a character corruption. If those flags are set, take
+tty's write lock to stop any writer before performing the lower layer
+Tx empty check and wait for the pending characters to be sent (if any).
+
+The initial wait for all-writers-done must be placed outside of tty's
+write lock to avoid deadlock which makes it impossible to use
+tty_wait_until_sent(). The write lock is retried if a racing write is
+detected.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230317113318.31327-2-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 094fb49a2d0d ("tty: Prevent writing chars during tcsetattr TCSADRAIN/FLUSH")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/n_gsm.c        |  1 +
- drivers/tty/n_hdlc.c       |  1 +
- drivers/tty/tty.h          | 37 +++++++++++++++++++++++++++++++++++++
- drivers/tty/tty_baudrate.c |  1 +
- include/linux/tty.h        | 33 ---------------------------------
- 5 files changed, 40 insertions(+), 33 deletions(-)
+ drivers/tty/tty.h       |  2 ++
+ drivers/tty/tty_io.c    |  4 ++--
+ drivers/tty/tty_ioctl.c | 45 ++++++++++++++++++++++++++++++-----------
+ 3 files changed, 37 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/tty/n_gsm.c b/drivers/tty/n_gsm.c
-index f5063499f9cf6..23b014b8c9199 100644
---- a/drivers/tty/n_gsm.c
-+++ b/drivers/tty/n_gsm.c
-@@ -50,6 +50,7 @@
- #include <linux/netdevice.h>
- #include <linux/etherdevice.h>
- #include <linux/gsmmux.h>
-+#include "tty.h"
- 
- static int debug;
- module_param(debug, int, 0600);
-diff --git a/drivers/tty/n_hdlc.c b/drivers/tty/n_hdlc.c
-index 48c64e68017cd..697199a3ca019 100644
---- a/drivers/tty/n_hdlc.c
-+++ b/drivers/tty/n_hdlc.c
-@@ -100,6 +100,7 @@
- 
- #include <asm/termios.h>
- #include <linux/uaccess.h>
-+#include "tty.h"
- 
- /*
-  * Buffers for individual HDLC frames
 diff --git a/drivers/tty/tty.h b/drivers/tty/tty.h
-index 9eda9e5f8ad5e..74ed99bc5449a 100644
+index 74ed99bc5449a..1908f27a795a0 100644
 --- a/drivers/tty/tty.h
 +++ b/drivers/tty/tty.h
-@@ -59,6 +59,43 @@ static inline void tty_set_flow_change(struct tty_struct *tty, int val)
- int tty_ldisc_lock(struct tty_struct *tty, unsigned long timeout);
- void tty_ldisc_unlock(struct tty_struct *tty);
+@@ -63,6 +63,8 @@ int __tty_check_change(struct tty_struct *tty, int sig);
+ int tty_check_change(struct tty_struct *tty);
+ void __stop_tty(struct tty_struct *tty);
+ void __start_tty(struct tty_struct *tty);
++void tty_write_unlock(struct tty_struct *tty);
++int tty_write_lock(struct tty_struct *tty, int ndelay);
+ void tty_vhangup_session(struct tty_struct *tty);
+ void tty_open_proc_set_tty(struct file *filp, struct tty_struct *tty);
+ int tty_signal_session_leader(struct tty_struct *tty, int exit_session);
+diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
+index 86fbfe42ce0ac..094e82a12d298 100644
+--- a/drivers/tty/tty_io.c
++++ b/drivers/tty/tty_io.c
+@@ -942,13 +942,13 @@ static ssize_t tty_read(struct kiocb *iocb, struct iov_iter *to)
+ 	return i;
+ }
  
-+int __tty_check_change(struct tty_struct *tty, int sig);
-+int tty_check_change(struct tty_struct *tty);
-+void __stop_tty(struct tty_struct *tty);
-+void __start_tty(struct tty_struct *tty);
-+void tty_vhangup_session(struct tty_struct *tty);
-+void tty_open_proc_set_tty(struct file *filp, struct tty_struct *tty);
-+int tty_signal_session_leader(struct tty_struct *tty, int exit_session);
-+void session_clear_tty(struct pid *session);
-+void tty_buffer_free_all(struct tty_port *port);
-+void tty_buffer_flush(struct tty_struct *tty, struct tty_ldisc *ld);
-+void tty_buffer_init(struct tty_port *port);
-+void tty_buffer_set_lock_subclass(struct tty_port *port);
-+bool tty_buffer_restart_work(struct tty_port *port);
-+bool tty_buffer_cancel_work(struct tty_port *port);
-+void tty_buffer_flush_work(struct tty_port *port);
-+speed_t tty_termios_input_baud_rate(struct ktermios *termios);
-+void tty_ldisc_hangup(struct tty_struct *tty, bool reset);
-+int tty_ldisc_reinit(struct tty_struct *tty, int disc);
-+long tty_ioctl(struct file *file, unsigned int cmd, unsigned long arg);
-+long tty_jobctrl_ioctl(struct tty_struct *tty, struct tty_struct *real_tty,
-+		       struct file *file, unsigned int cmd, unsigned long arg);
-+void tty_default_fops(struct file_operations *fops);
-+struct tty_struct *alloc_tty_struct(struct tty_driver *driver, int idx);
-+int tty_alloc_file(struct file *file);
-+void tty_add_file(struct tty_struct *tty, struct file *file);
-+void tty_free_file(struct file *file);
-+int tty_release(struct inode *inode, struct file *filp);
+-static void tty_write_unlock(struct tty_struct *tty)
++void tty_write_unlock(struct tty_struct *tty)
+ {
+ 	mutex_unlock(&tty->atomic_write_lock);
+ 	wake_up_interruptible_poll(&tty->write_wait, EPOLLOUT);
+ }
+ 
+-static int tty_write_lock(struct tty_struct *tty, int ndelay)
++int tty_write_lock(struct tty_struct *tty, int ndelay)
+ {
+ 	if (!mutex_trylock(&tty->atomic_write_lock)) {
+ 		if (ndelay)
+diff --git a/drivers/tty/tty_ioctl.c b/drivers/tty/tty_ioctl.c
+index 50e65784fbf77..68b07250dcb60 100644
+--- a/drivers/tty/tty_ioctl.c
++++ b/drivers/tty/tty_ioctl.c
+@@ -398,21 +398,42 @@ static int set_termios(struct tty_struct *tty, void __user *arg, int opt)
+ 	tmp_termios.c_ispeed = tty_termios_input_baud_rate(&tmp_termios);
+ 	tmp_termios.c_ospeed = tty_termios_baud_rate(&tmp_termios);
+ 
+-	ld = tty_ldisc_ref(tty);
++	if (opt & (TERMIOS_FLUSH|TERMIOS_WAIT)) {
++retry_write_wait:
++		retval = wait_event_interruptible(tty->write_wait, !tty_chars_in_buffer(tty));
++		if (retval < 0)
++			return retval;
+ 
+-	if (ld != NULL) {
+-		if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
+-			ld->ops->flush_buffer(tty);
+-		tty_ldisc_deref(ld);
+-	}
++		if (tty_write_lock(tty, 0) < 0)
++			goto retry_write_wait;
+ 
+-	if (opt & TERMIOS_WAIT) {
+-		tty_wait_until_sent(tty, 0);
+-		if (signal_pending(current))
+-			return -ERESTARTSYS;
+-	}
++		/* Racing writer? */
++		if (tty_chars_in_buffer(tty)) {
++			tty_write_unlock(tty);
++			goto retry_write_wait;
++		}
+ 
+-	tty_set_termios(tty, &tmp_termios);
++		ld = tty_ldisc_ref(tty);
++		if (ld != NULL) {
++			if ((opt & TERMIOS_FLUSH) && ld->ops->flush_buffer)
++				ld->ops->flush_buffer(tty);
++			tty_ldisc_deref(ld);
++		}
 +
-+#define tty_is_writelocked(tty)  (mutex_is_locked(&tty->atomic_write_lock))
++		if ((opt & TERMIOS_WAIT) && tty->ops->wait_until_sent) {
++			tty->ops->wait_until_sent(tty, 0);
++			if (signal_pending(current)) {
++				tty_write_unlock(tty);
++				return -ERESTARTSYS;
++			}
++		}
 +
-+int tty_ldisc_setup(struct tty_struct *tty, struct tty_struct *o_tty);
-+void tty_ldisc_release(struct tty_struct *tty);
-+int __must_check tty_ldisc_init(struct tty_struct *tty);
-+void tty_ldisc_deinit(struct tty_struct *tty);
++		tty_set_termios(tty, &tmp_termios);
 +
-+void tty_sysctl_init(void);
-+
- /* tty_audit.c */
- #ifdef CONFIG_AUDIT
- void tty_audit_add_data(struct tty_struct *tty, const void *data, size_t size);
-diff --git a/drivers/tty/tty_baudrate.c b/drivers/tty/tty_baudrate.c
-index 84fec3c62d6a4..9d0093d84e085 100644
---- a/drivers/tty/tty_baudrate.c
-+++ b/drivers/tty/tty_baudrate.c
-@@ -8,6 +8,7 @@
- #include <linux/termios.h>
- #include <linux/tty.h>
- #include <linux/export.h>
-+#include "tty.h"
++		tty_write_unlock(tty);
++	} else {
++		tty_set_termios(tty, &tmp_termios);
++	}
  
- 
- /*
-diff --git a/include/linux/tty.h b/include/linux/tty.h
-index a641fc6a7fa8b..e51d75f5165b5 100644
---- a/include/linux/tty.h
-+++ b/include/linux/tty.h
-@@ -432,11 +432,7 @@ static inline struct tty_struct *tty_kref_get(struct tty_struct *tty)
- 
- extern const char *tty_driver_name(const struct tty_struct *tty);
- extern void tty_wait_until_sent(struct tty_struct *tty, long timeout);
--extern int __tty_check_change(struct tty_struct *tty, int sig);
--extern int tty_check_change(struct tty_struct *tty);
--extern void __stop_tty(struct tty_struct *tty);
- extern void stop_tty(struct tty_struct *tty);
--extern void __start_tty(struct tty_struct *tty);
- extern void start_tty(struct tty_struct *tty);
- extern int tty_register_driver(struct tty_driver *driver);
- extern int tty_unregister_driver(struct tty_driver *driver);
-@@ -461,23 +457,11 @@ extern int tty_do_resize(struct tty_struct *tty, struct winsize *ws);
- extern int is_current_pgrp_orphaned(void);
- extern void tty_hangup(struct tty_struct *tty);
- extern void tty_vhangup(struct tty_struct *tty);
--extern void tty_vhangup_session(struct tty_struct *tty);
- extern int tty_hung_up_p(struct file *filp);
- extern void do_SAK(struct tty_struct *tty);
- extern void __do_SAK(struct tty_struct *tty);
--extern void tty_open_proc_set_tty(struct file *filp, struct tty_struct *tty);
--extern int tty_signal_session_leader(struct tty_struct *tty, int exit_session);
--extern void session_clear_tty(struct pid *session);
- extern void no_tty(void);
--extern void tty_buffer_free_all(struct tty_port *port);
--extern void tty_buffer_flush(struct tty_struct *tty, struct tty_ldisc *ld);
--extern void tty_buffer_init(struct tty_port *port);
--extern void tty_buffer_set_lock_subclass(struct tty_port *port);
--extern bool tty_buffer_restart_work(struct tty_port *port);
--extern bool tty_buffer_cancel_work(struct tty_port *port);
--extern void tty_buffer_flush_work(struct tty_port *port);
- extern speed_t tty_termios_baud_rate(struct ktermios *termios);
--extern speed_t tty_termios_input_baud_rate(struct ktermios *termios);
- extern void tty_termios_encode_baud_rate(struct ktermios *termios,
- 						speed_t ibaud, speed_t obaud);
- extern void tty_encode_baud_rate(struct tty_struct *tty,
-@@ -505,27 +489,16 @@ extern int tty_set_termios(struct tty_struct *tty, struct ktermios *kt);
- extern struct tty_ldisc *tty_ldisc_ref(struct tty_struct *);
- extern void tty_ldisc_deref(struct tty_ldisc *);
- extern struct tty_ldisc *tty_ldisc_ref_wait(struct tty_struct *);
--extern void tty_ldisc_hangup(struct tty_struct *tty, bool reset);
--extern int tty_ldisc_reinit(struct tty_struct *tty, int disc);
- extern const struct seq_operations tty_ldiscs_seq_ops;
- 
- extern void tty_wakeup(struct tty_struct *tty);
- extern void tty_ldisc_flush(struct tty_struct *tty);
- 
--extern long tty_ioctl(struct file *file, unsigned int cmd, unsigned long arg);
- extern int tty_mode_ioctl(struct tty_struct *tty, struct file *file,
- 			unsigned int cmd, unsigned long arg);
--extern long tty_jobctrl_ioctl(struct tty_struct *tty, struct tty_struct *real_tty,
--			      struct file *file, unsigned int cmd, unsigned long arg);
- extern int tty_perform_flush(struct tty_struct *tty, unsigned long arg);
--extern void tty_default_fops(struct file_operations *fops);
--extern struct tty_struct *alloc_tty_struct(struct tty_driver *driver, int idx);
--extern int tty_alloc_file(struct file *file);
--extern void tty_add_file(struct tty_struct *tty, struct file *file);
--extern void tty_free_file(struct file *file);
- extern struct tty_struct *tty_init_dev(struct tty_driver *driver, int idx);
- extern void tty_release_struct(struct tty_struct *tty, int idx);
--extern int tty_release(struct inode *inode, struct file *filp);
- extern void tty_init_termios(struct tty_struct *tty);
- extern void tty_save_termios(struct tty_struct *tty);
- extern int tty_standard_install(struct tty_driver *driver,
-@@ -533,8 +506,6 @@ extern int tty_standard_install(struct tty_driver *driver,
- 
- extern struct mutex tty_mutex;
- 
--#define tty_is_writelocked(tty)  (mutex_is_locked(&tty->atomic_write_lock))
--
- extern void tty_port_init(struct tty_port *port);
- extern void tty_port_link_device(struct tty_port *port,
- 		struct tty_driver *driver, unsigned index);
-@@ -672,10 +643,6 @@ static inline int tty_port_users(struct tty_port *port)
- extern int tty_register_ldisc(int disc, struct tty_ldisc_ops *new_ldisc);
- extern int tty_unregister_ldisc(int disc);
- extern int tty_set_ldisc(struct tty_struct *tty, int disc);
--extern int tty_ldisc_setup(struct tty_struct *tty, struct tty_struct *o_tty);
--extern void tty_ldisc_release(struct tty_struct *tty);
--extern int __must_check tty_ldisc_init(struct tty_struct *tty);
--extern void tty_ldisc_deinit(struct tty_struct *tty);
- extern int tty_ldisc_receive_buf(struct tty_ldisc *ld, const unsigned char *p,
- 				 char *f, int count);
- 
+ 	/* FIXME: Arguably if tmp_termios == tty->termios AND the
+ 	   actual requested termios was not tmp_termios then we may
 -- 
 2.39.2
 
