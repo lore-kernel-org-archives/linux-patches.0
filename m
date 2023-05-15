@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB5ADF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:39:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52ED2C433D2;
-	Mon, 15 May 2023 16:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25CEBDF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:39:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9A6C433EF;
+	Mon, 15 May 2023 16:39:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168769;
-	bh=cr2EG/vIZ8hnNdAuvjvMvr5H3eALVt9l5CavgR+kWX4=;
+	s=korg; t=1684168773;
+	bh=grx8F4N+VDnBePEeWy6jqceCHQ7OGokjSWBsZQTCjRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VqvUyI5ppwxzFIcvnj3zwW2MBM//pboBklJ1wIgcVOAWI/OMi4lXNFRdywFr7ddq4
-	 5QiU7kH8S56ABxUw9xzy1Vz2XCv6pdEpyiVnzYXSZVjPZ6oynttgArWNi7AAYp3Ezn
-	 Rl063+GKKVTdOqbw2X3W+3R/0+qDakzXrRb3+hDQ=
+	b=QhvrjvF9iPvpVXEm8FRksHriYwaoC1E2FOvkGwj0GOBxV13DIh8Fyxwj4Yg0wAA72
+	 0kPnIhpCtxU4wTLrCRD7T5a2MkWZqRLqFbXLaFZt+MfOZSbNnBDDVWb3kz6vZUyo7b
+	 DEfOu719f8FI5t7rR8WXIh+LVSFffoeGNh0G2ydI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Rob Clark <robdclark@chromium.org>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 036/191] drm/msm/adreno: drop bogus pm_runtime_set_active()
-Date: Mon, 15 May 2023 18:24:33 +0200
-Message-Id: <20230515161708.504426918@linuxfoundation.org>
+Subject: [PATCH 4.19 037/191] x86/apic: Fix atomic update of offset in reserve_eilvt_offset()
+Date: Mon, 15 May 2023 18:24:34 +0200
+Message-Id: <20230515161708.534257105@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -35,40 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Uros Bizjak <ubizjak@gmail.com>
 
-[ Upstream commit db7662d076c973072d788bd0e8130e04430307a1 ]
+[ Upstream commit f96fb2df3eb31ede1b34b0521560967310267750 ]
 
-The runtime PM status can only be updated while runtime PM is disabled.
+The detection of atomic update failure in reserve_eilvt_offset() is
+not correct. The value returned by atomic_cmpxchg() should be compared
+to the old value from the location to be updated.
 
-Drop the bogus pm_runtime_set_active() call that was made after enabling
-runtime PM and which (incidentally but correctly) left the runtime PM
-status set to 'suspended'.
+If these two are the same, then atomic update succeeded and
+"eilvt_offsets[offset]" location is updated to "new" in an atomic way.
 
-Fixes: 2c087a336676 ("drm/msm/adreno: Load the firmware before bringing up the hardware")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Patchwork: https://patchwork.freedesktop.org/patch/524972/
-Link: https://lore.kernel.org/r/20230303164807.13124-4-johan+linaro@kernel.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Otherwise, the atomic update failed and it should be retried with the
+value from "eilvt_offsets[offset]" - exactly what atomic_try_cmpxchg()
+does in a correct and more optimal way.
+
+Fixes: a68c439b1966c ("apic, x86: Check if EILVT APIC registers are available (AMD only)")
+Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20230227160917.107820-1-ubizjak@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c | 3 ---
- 1 file changed, 3 deletions(-)
+ arch/x86/kernel/apic/apic.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-index 0275be7e13b19..7acb53a907e5c 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -196,9 +196,6 @@ struct msm_gpu *adreno_load_gpu(struct drm_device *dev)
- 	 */
- 	pm_runtime_enable(&pdev->dev);
+diff --git a/arch/x86/kernel/apic/apic.c b/arch/x86/kernel/apic/apic.c
+index 926939978c1c3..9318fe7d850e3 100644
+--- a/arch/x86/kernel/apic/apic.c
++++ b/arch/x86/kernel/apic/apic.c
+@@ -403,10 +403,9 @@ static unsigned int reserve_eilvt_offset(int offset, unsigned int new)
+ 		if (vector && !eilvt_entry_is_changeable(vector, new))
+ 			/* may not change if vectors are different */
+ 			return rsvd;
+-		rsvd = atomic_cmpxchg(&eilvt_offsets[offset], rsvd, new);
+-	} while (rsvd != new);
++	} while (!atomic_try_cmpxchg(&eilvt_offsets[offset], &rsvd, new));
  
--	/* Make sure pm runtime is active and reset any previous errors */
--	pm_runtime_set_active(&pdev->dev);
--
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0) {
- 		dev_err(dev->dev, "Couldn't power up the GPU: %d\n", ret);
+-	rsvd &= ~APIC_EILVT_MASKED;
++	rsvd = new & ~APIC_EILVT_MASKED;
+ 	if (rsvd && rsvd != vector)
+ 		pr_info("LVT offset %d assigned for vector 0x%02x\n",
+ 			offset, rsvd);
 -- 
 2.39.2
 
