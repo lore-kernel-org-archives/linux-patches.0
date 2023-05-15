@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5735BFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:51:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BC3C4339E;
-	Mon, 15 May 2023 16:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CA73FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:52:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B607BC433D2;
+	Mon, 15 May 2023 16:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169519;
-	bh=buCMsnkulrN59PinINyRwl0QNRr3T1CU3NXhNO1B6EM=;
+	s=korg; t=1684169522;
+	bh=V81hWTmd0fhMNn6pO1pcM+wbPP2grJbG/ksdSvviqRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t2mQBF++YvbDQj4iHBxZ4VYd8XL0kaA4b/4wTXtxDR0iaKXKfkZ+TDp83pVphCG7K
-	 0AE5gSYmC8MHT77MtikcxJgwGJIJEsJ4god8fKFNbqOy4uJQPp3CLracT5g+wmgUHS
-	 pSJ+yoaIj5L1HA4S9AslaRZnaNzUf/w8Bxhi2zMc=
+	b=kqDts810HTSYamid4tVcm37Pi9OVJYyI54eCPybYfVf1HmqJvjDhiCxqDIoxuqA5l
+	 hdZyycabTkFWf13IXw2qA/Y8jTun/PgkL8OK2qgoORVH3FhutpHvt0WOzRZ5PW8Zcw
+	 P7616ssRXjYxNSS+dgtlW+d1jK4op4C0ikCHMIww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Wunderlich <frank-w@public-files.de>,
-	Felix Fietkau <nbd@nbd.name>,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 056/246] net: ethernet: mtk_eth_soc: drop generic vlan rx offload, only use DSA untagging
-Date: Mon, 15 May 2023 18:24:28 +0200
-Message-Id: <20230515161724.259262860@linuxfoundation.org>
+Subject: [PATCH 6.3 083/246] ublk: add timeout handler
+Date: Mon, 15 May 2023 18:24:55 +0200
+Message-Id: <20230515161725.070616334@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -37,218 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit c6d96df9fa2c1d19525239d4262889cce594ce6c ]
+[ Upstream commit c0b79b0ff53be5b05be98e3caaa6a39de1fe9520 ]
 
-Through testing I found out that hardware vlan rx offload support seems to
-have some hardware issues. At least when using multiple MACs and when
-receiving tagged packets on the secondary MAC, the hardware can sometimes
-start to emit wrong tags on the first MAC as well.
+Add timeout handler, so that we can provide forward progress guarantee for
+unprivileged ublk, which can't be trusted.
 
-In order to avoid such issues, drop the feature configuration and use
-the offload feature only for DSA hardware untagging on MT7621/MT7622
-devices where this feature works properly.
+One thing is that sync() calls sync_bdevs(wait) for all block devices after
+running sync_bdevs(no_wait), and if one device can't move on, the sync() won't
+return any more.
 
-Fixes: 08666cbb7dd5 ("net: ethernet: mtk_eth_soc: add support for configuring vlan rx offload")
-Tested-by: Frank Wunderlich <frank-w@public-files.de>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
-Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Acked-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Link: https://lore.kernel.org/r/20230426172153.8352-1-linux@fw-web.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Add timeout for unprivileged ublk to avoid such affect for other users which call
+sync() syscall.
+
+Meantime clear UBLK_F_USER_RECOVERY_REISSUE for unprivileged ublk since
+that feature may cause IO hang too.
+
+Fixes: 4093cb5a0634 ("ublk_drv: add mechanism for supporting unprivileged ublk device")
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20230502024231.888498-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 106 ++++++++------------
- drivers/net/ethernet/mediatek/mtk_eth_soc.h |   1 -
- 2 files changed, 40 insertions(+), 67 deletions(-)
+ drivers/block/ublk_drv.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index e14050e178624..c9fb1d7084d57 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -1921,9 +1921,7 @@ static int mtk_poll_rx(struct napi_struct *napi, int budget,
- 
- 	while (done < budget) {
- 		unsigned int pktlen, *rxdcsum;
--		bool has_hwaccel_tag = false;
- 		struct net_device *netdev;
--		u16 vlan_proto, vlan_tci;
- 		dma_addr_t dma_addr;
- 		u32 hash, reason;
- 		int mac = 0;
-@@ -2058,31 +2056,16 @@ static int mtk_poll_rx(struct napi_struct *napi, int budget,
- 			skb_checksum_none_assert(skb);
- 		skb->protocol = eth_type_trans(skb, netdev);
- 
--		if (netdev->features & NETIF_F_HW_VLAN_CTAG_RX) {
--			if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
--				if (trxd.rxd3 & RX_DMA_VTAG_V2) {
--					vlan_proto = RX_DMA_VPID(trxd.rxd4);
--					vlan_tci = RX_DMA_VID(trxd.rxd4);
--					has_hwaccel_tag = true;
--				}
--			} else if (trxd.rxd2 & RX_DMA_VTAG) {
--				vlan_proto = RX_DMA_VPID(trxd.rxd3);
--				vlan_tci = RX_DMA_VID(trxd.rxd3);
--				has_hwaccel_tag = true;
--			}
--		}
--
- 		/* When using VLAN untagging in combination with DSA, the
- 		 * hardware treats the MTK special tag as a VLAN and untags it.
- 		 */
--		if (has_hwaccel_tag && netdev_uses_dsa(netdev)) {
--			unsigned int port = vlan_proto & GENMASK(2, 0);
-+		if (!MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2) &&
-+		    (trxd.rxd2 & RX_DMA_VTAG) && netdev_uses_dsa(netdev)) {
-+			unsigned int port = RX_DMA_VPID(trxd.rxd3) & GENMASK(2, 0);
- 
- 			if (port < ARRAY_SIZE(eth->dsa_meta) &&
- 			    eth->dsa_meta[port])
- 				skb_dst_set_noref(skb, &eth->dsa_meta[port]->dst);
--		} else if (has_hwaccel_tag) {
--			__vlan_hwaccel_put_tag(skb, htons(vlan_proto), vlan_tci);
- 		}
- 
- 		if (reason == MTK_PPE_CPU_REASON_HIT_UNBIND_RATE_REACHED)
-@@ -2910,29 +2893,11 @@ static netdev_features_t mtk_fix_features(struct net_device *dev,
- 
- static int mtk_set_features(struct net_device *dev, netdev_features_t features)
- {
--	struct mtk_mac *mac = netdev_priv(dev);
--	struct mtk_eth *eth = mac->hw;
- 	netdev_features_t diff = dev->features ^ features;
--	int i;
- 
- 	if ((diff & NETIF_F_LRO) && !(features & NETIF_F_LRO))
- 		mtk_hwlro_netdev_disable(dev);
- 
--	/* Set RX VLAN offloading */
--	if (!(diff & NETIF_F_HW_VLAN_CTAG_RX))
--		return 0;
--
--	mtk_w32(eth, !!(features & NETIF_F_HW_VLAN_CTAG_RX),
--		MTK_CDMP_EG_CTRL);
--
--	/* sync features with other MAC */
--	for (i = 0; i < MTK_MAC_COUNT; i++) {
--		if (!eth->netdev[i] || eth->netdev[i] == dev)
--			continue;
--		eth->netdev[i]->features &= ~NETIF_F_HW_VLAN_CTAG_RX;
--		eth->netdev[i]->features |= features & NETIF_F_HW_VLAN_CTAG_RX;
--	}
--
- 	return 0;
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index 604c1a13c76ef..41c35ab2c25a1 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -128,6 +128,7 @@ struct ublk_queue {
+ 	unsigned long io_addr;	/* mapped vm address */
+ 	unsigned int max_io_sz;
+ 	bool force_abort;
++	bool timeout;
+ 	unsigned short nr_io_ready;	/* how many ios setup */
+ 	struct ublk_device *dev;
+ 	struct ublk_io ios[];
+@@ -900,6 +901,22 @@ static void ublk_queue_cmd(struct ublk_queue *ubq, struct request *rq)
+ 	}
  }
  
-@@ -3250,30 +3215,6 @@ static int mtk_open(struct net_device *dev)
- 	struct mtk_eth *eth = mac->hw;
- 	int i, err;
- 
--	if (mtk_uses_dsa(dev) && !eth->prog) {
--		for (i = 0; i < ARRAY_SIZE(eth->dsa_meta); i++) {
--			struct metadata_dst *md_dst = eth->dsa_meta[i];
--
--			if (md_dst)
--				continue;
--
--			md_dst = metadata_dst_alloc(0, METADATA_HW_PORT_MUX,
--						    GFP_KERNEL);
--			if (!md_dst)
--				return -ENOMEM;
--
--			md_dst->u.port_info.port_id = i;
--			eth->dsa_meta[i] = md_dst;
--		}
--	} else {
--		/* Hardware special tag parsing needs to be disabled if at least
--		 * one MAC does not use DSA.
--		 */
--		u32 val = mtk_r32(eth, MTK_CDMP_IG_CTRL);
--		val &= ~MTK_CDMP_STAG_EN;
--		mtk_w32(eth, val, MTK_CDMP_IG_CTRL);
--	}
--
- 	err = phylink_of_phy_connect(mac->phylink, mac->of_node, 0);
- 	if (err) {
- 		netdev_err(dev, "%s: could not attach PHY: %d\n", __func__,
-@@ -3312,6 +3253,40 @@ static int mtk_open(struct net_device *dev)
- 	phylink_start(mac->phylink);
- 	netif_tx_start_all_queues(dev);
- 
-+	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2))
-+		return 0;
++static enum blk_eh_timer_return ublk_timeout(struct request *rq)
++{
++	struct ublk_queue *ubq = rq->mq_hctx->driver_data;
 +
-+	if (mtk_uses_dsa(dev) && !eth->prog) {
-+		for (i = 0; i < ARRAY_SIZE(eth->dsa_meta); i++) {
-+			struct metadata_dst *md_dst = eth->dsa_meta[i];
-+
-+			if (md_dst)
-+				continue;
-+
-+			md_dst = metadata_dst_alloc(0, METADATA_HW_PORT_MUX,
-+						    GFP_KERNEL);
-+			if (!md_dst)
-+				return -ENOMEM;
-+
-+			md_dst->u.port_info.port_id = i;
-+			eth->dsa_meta[i] = md_dst;
++	if (ubq->flags & UBLK_F_UNPRIVILEGED_DEV) {
++		if (!ubq->timeout) {
++			send_sig(SIGKILL, ubq->ubq_daemon, 0);
++			ubq->timeout = true;
 +		}
-+	} else {
-+		/* Hardware special tag parsing needs to be disabled if at least
-+		 * one MAC does not use DSA.
-+		 */
-+		u32 val = mtk_r32(eth, MTK_CDMP_IG_CTRL);
 +
-+		val &= ~MTK_CDMP_STAG_EN;
-+		mtk_w32(eth, val, MTK_CDMP_IG_CTRL);
-+
-+		val = mtk_r32(eth, MTK_CDMQ_IG_CTRL);
-+		val &= ~MTK_CDMQ_STAG_EN;
-+		mtk_w32(eth, val, MTK_CDMQ_IG_CTRL);
-+
-+		mtk_w32(eth, 0, MTK_CDMP_EG_CTRL);
++		return BLK_EH_DONE;
 +	}
 +
- 	return 0;
- }
++	return BLK_EH_RESET_TIMER;
++}
++
+ static blk_status_t ublk_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 		const struct blk_mq_queue_data *bd)
+ {
+@@ -959,6 +976,7 @@ static const struct blk_mq_ops ublk_mq_ops = {
+ 	.queue_rq       = ublk_queue_rq,
+ 	.init_hctx	= ublk_init_hctx,
+ 	.init_request   = ublk_init_rq,
++	.timeout	= ublk_timeout,
+ };
  
-@@ -3796,10 +3771,9 @@ static int mtk_hw_init(struct mtk_eth *eth, bool reset)
- 	if (!MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
- 		val = mtk_r32(eth, MTK_CDMP_IG_CTRL);
- 		mtk_w32(eth, val | MTK_CDMP_STAG_EN, MTK_CDMP_IG_CTRL);
--	}
+ static int ublk_ch_open(struct inode *inode, struct file *filp)
+@@ -1721,6 +1739,18 @@ static int ublk_ctrl_add_dev(struct io_uring_cmd *cmd)
+ 	else if (!(info.flags & UBLK_F_UNPRIVILEGED_DEV))
+ 		return -EPERM;
  
--	/* Enable RX VLan Offloading */
--	mtk_w32(eth, 1, MTK_CDMP_EG_CTRL);
-+		mtk_w32(eth, 1, MTK_CDMP_EG_CTRL);
-+	}
++	/*
++	 * unprivileged device can't be trusted, but RECOVERY and
++	 * RECOVERY_REISSUE still may hang error handling, so can't
++	 * support recovery features for unprivileged ublk now
++	 *
++	 * TODO: provide forward progress for RECOVERY handler, so that
++	 * unprivileged device can benefit from it
++	 */
++	if (info.flags & UBLK_F_UNPRIVILEGED_DEV)
++		info.flags &= ~(UBLK_F_USER_RECOVERY_REISSUE |
++				UBLK_F_USER_RECOVERY);
++
+ 	/* the created device is always owned by current user */
+ 	ublk_store_owner_uid_gid(&info.owner_uid, &info.owner_gid);
  
- 	/* set interrupt delays based on current Net DIM sample */
- 	mtk_dim_rx(&eth->rx_dim.work);
-@@ -4437,7 +4411,7 @@ static int mtk_add_mac(struct mtk_eth *eth, struct device_node *np)
- 		eth->netdev[id]->hw_features |= NETIF_F_LRO;
+@@ -1989,6 +2019,7 @@ static void ublk_queue_reinit(struct ublk_device *ub, struct ublk_queue *ubq)
+ 	put_task_struct(ubq->ubq_daemon);
+ 	/* We have to reset it to NULL, otherwise ub won't accept new FETCH_REQ */
+ 	ubq->ubq_daemon = NULL;
++	ubq->timeout = false;
  
- 	eth->netdev[id]->vlan_features = eth->soc->hw_features &
--		~(NETIF_F_HW_VLAN_CTAG_TX | NETIF_F_HW_VLAN_CTAG_RX);
-+		~NETIF_F_HW_VLAN_CTAG_TX;
- 	eth->netdev[id]->features |= eth->soc->hw_features;
- 	eth->netdev[id]->ethtool_ops = &mtk_ethtool_ops;
- 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index 084a6badef6d9..ac57dc87c59a3 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -48,7 +48,6 @@
- #define MTK_HW_FEATURES		(NETIF_F_IP_CSUM | \
- 				 NETIF_F_RXCSUM | \
- 				 NETIF_F_HW_VLAN_CTAG_TX | \
--				 NETIF_F_HW_VLAN_CTAG_RX | \
- 				 NETIF_F_SG | NETIF_F_TSO | \
- 				 NETIF_F_TSO6 | \
- 				 NETIF_F_IPV6_CSUM |\
+ 	for (i = 0; i < ubq->q_depth; i++) {
+ 		struct ublk_io *io = &ubq->ios[i];
 -- 
 2.39.2
 
