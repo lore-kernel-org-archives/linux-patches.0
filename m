@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F4E2D534
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DFFC4339B;
-	Mon, 15 May 2023 16:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2B1FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:50:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069C6C433EF;
+	Mon, 15 May 2023 16:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169414;
-	bh=TCgXeyIv7mi0iT01dbtjL/dta3cQvkXmJn8yfuKwnDM=;
+	s=korg; t=1684169417;
+	bh=uDRo++hqK3SzFxaKPIVM1dD1G5nxJYJJupxA11R3zyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g8TeteKUUUedjsPWvznKDFtZtW6BPqiWhAA0JHw2Fk4Hodok6rot05u4w/28Nzqsk
-	 0p68nzqUURltqobhNXKSYV+yGSxxGZuTiZKYJBv4yXL8abP9MnjJwmuBeLTGvWV5nD
-	 K1wrMUDZsAZhGJHzUcVPiZ/ShvKma4z7SM0zrmXA=
+	b=VpouEtLu4+t1qH7eIhQM6dJYSdw3JcoN060L8u5Kg1Lc3sw8cPgPFVjFEcdAjeemu
+	 JcnTaNFyoQkTbtmCLkjDmlFU75nBdaHPGJCXfRoTSM0ztEqRvU0QKN19HB5pL7QHF6
+	 Eao8n4GXihqxjzcUSH4f59ggIac5AZC7wtKvEMpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hayes Wang <hayeswang@realtek.com>,
+	Andy Moreton <andy.moreton@amd.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 049/246] r8152: move setting r8153b_rx_agg_chg_indicate()
-Date: Mon, 15 May 2023 18:24:21 +0200
-Message-Id: <20230515161724.056157856@linuxfoundation.org>
+Subject: [PATCH 6.3 050/246] sfc: Fix module EEPROM reporting for QSFP modules
+Date: Mon, 15 May 2023 18:24:22 +0200
+Message-Id: <20230515161724.085019633@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -35,63 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hayes Wang <hayeswang@realtek.com>
+From: Andy Moreton <andy.moreton@amd.com>
 
-[ Upstream commit cce8334f4aacd9936309a002d4a4de92a07cd2c2 ]
+[ Upstream commit 281900a923d4c50df109b52a22ae3cdac150159b ]
 
-Move setting r8153b_rx_agg_chg_indicate() for 2.5G devices. The
-r8153b_rx_agg_chg_indicate() has to be called after enabling tx/rx.
-Otherwise, the coalescing settings are useless.
+The sfc driver does not report QSFP module EEPROM contents correctly
+as only the first page is fetched from hardware.
 
-Fixes: 195aae321c82 ("r8152: support new chips")
-Signed-off-by: Hayes Wang <hayeswang@realtek.com>
+Commit 0e1a2a3e6e7d ("ethtool: Add SFF-8436 and SFF-8636 max EEPROM
+length definitions") added ETH_MODULE_SFF_8436_MAX_LEN for the overall
+size of the EEPROM info, so use that to report the full EEPROM contents.
+
+Fixes: 9b17010da57a ("sfc: Add ethtool -m support for QSFP modules")
+Signed-off-by: Andy Moreton <andy.moreton@amd.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/r8152.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/sfc/mcdi_port_common.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
-index 58670a65b840d..755b0f72dd44f 100644
---- a/drivers/net/usb/r8152.c
-+++ b/drivers/net/usb/r8152.c
-@@ -3027,12 +3027,16 @@ static int rtl_enable(struct r8152 *tp)
- 	ocp_write_byte(tp, MCU_TYPE_PLA, PLA_CR, ocp_data);
+diff --git a/drivers/net/ethernet/sfc/mcdi_port_common.c b/drivers/net/ethernet/sfc/mcdi_port_common.c
+index 899cc16710048..0ab14f3d01d4d 100644
+--- a/drivers/net/ethernet/sfc/mcdi_port_common.c
++++ b/drivers/net/ethernet/sfc/mcdi_port_common.c
+@@ -972,12 +972,15 @@ static u32 efx_mcdi_phy_module_type(struct efx_nic *efx)
  
- 	switch (tp->version) {
--	case RTL_VER_08:
--	case RTL_VER_09:
--	case RTL_VER_14:
--		r8153b_rx_agg_chg_indicate(tp);
-+	case RTL_VER_01:
-+	case RTL_VER_02:
-+	case RTL_VER_03:
-+	case RTL_VER_04:
-+	case RTL_VER_05:
-+	case RTL_VER_06:
-+	case RTL_VER_07:
- 		break;
+ 	/* A QSFP+ NIC may actually have an SFP+ module attached.
+ 	 * The ID is page 0, byte 0.
++	 * QSFP28 is of type SFF_8636, however, this is treated
++	 * the same by ethtool, so we can also treat them the same.
+ 	 */
+ 	switch (efx_mcdi_phy_get_module_eeprom_byte(efx, 0, 0)) {
+-	case 0x3:
++	case 0x3: /* SFP */
+ 		return MC_CMD_MEDIA_SFP_PLUS;
+-	case 0xc:
+-	case 0xd:
++	case 0xc: /* QSFP */
++	case 0xd: /* QSFP+ */
++	case 0x11: /* QSFP28 */
+ 		return MC_CMD_MEDIA_QSFP_PLUS;
  	default:
-+		r8153b_rx_agg_chg_indicate(tp);
- 		break;
- 	}
+ 		return 0;
+@@ -1075,7 +1078,7 @@ int efx_mcdi_phy_get_module_info(struct efx_nic *efx, struct ethtool_modinfo *mo
  
-@@ -3086,7 +3090,6 @@ static void r8153_set_rx_early_timeout(struct r8152 *tp)
- 			       640 / 8);
- 		ocp_write_word(tp, MCU_TYPE_USB, USB_RX_EXTRA_AGGR_TMR,
- 			       ocp_data);
--		r8153b_rx_agg_chg_indicate(tp);
+ 	case MC_CMD_MEDIA_QSFP_PLUS:
+ 		modinfo->type = ETH_MODULE_SFF_8436;
+-		modinfo->eeprom_len = ETH_MODULE_SFF_8436_LEN;
++		modinfo->eeprom_len = ETH_MODULE_SFF_8436_MAX_LEN;
  		break;
  
  	default:
-@@ -3120,7 +3123,6 @@ static void r8153_set_rx_early_size(struct r8152 *tp)
- 	case RTL_VER_15:
- 		ocp_write_word(tp, MCU_TYPE_USB, USB_RX_EARLY_SIZE,
- 			       ocp_data / 8);
--		r8153b_rx_agg_chg_indicate(tp);
- 		break;
- 	default:
- 		WARN_ON_ONCE(1);
 -- 
 2.39.2
 
