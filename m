@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45ADCFBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:10:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11F3C433D2;
-	Mon, 15 May 2023 17:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4449FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:10:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A100FC433D2;
+	Mon, 15 May 2023 17:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170617;
-	bh=NdQC4j9rbfzgrqJC26PMtR0k2cueOUmcn8kcyzR3voM=;
+	s=korg; t=1684170620;
+	bh=in+w6K3fjxmyFwk71DdaAfdlQ01O4kvSwjjehtxMYv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wMm1VHc3HWvxPqO19AU2etdAYlwmW3qeqpWl3NUbqAJgy3CXGxOhf9Re+V5A3huy4
-	 xbqwyNHVSPkEklcR+0rKC4HWo6oLxsvGpx5RHPxP99egf2uMfjXZ4rhRfcn63WdcMI
-	 VUC7P3PipjPGKQNCuzH5OcyFAB3LeYZ3RWTDsj+0=
+	b=sUUjf4bdBE4giWO4LO6PcQI8U5RzYcVZhCbph+JQ9U62IWBESSH7O28vCd7oOnJwG
+	 exaNSk/tS7MsVgJ7y0E2xIwUG/dqd6GWISD6kcpXm1Wrf8tm4DQkVul1iZRCixS5l3
+	 eG9XFZdrUfn7QESGLBXoODQxZ4M/tpGz3VwBPt+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 188/239] f2fs: allocate the extent_cache by default
-Date: Mon, 15 May 2023 18:27:31 +0200
-Message-Id: <20230515161727.298043912@linuxfoundation.org>
+Subject: [PATCH 6.1 189/239] f2fs: factor out victim_entry usage from general rb_tree use
+Date: Mon, 15 May 2023 18:27:32 +0200
+Message-Id: <20230515161727.327219425@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,181 +37,423 @@ Content-Transfer-Encoding: 8bit
 
 From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit 72840cccc0a1a0a0dc1bb27b669a9111be6d0f6a ]
+[ Upstream commit 043d2d00b44310f84c0593c63e51fae88c829cdd ]
 
-Let's allocate it to remove the runtime complexity.
+Let's reduce the complexity of mixed use of rb_tree in victim_entry from
+extent_cache and discard_cmd.
 
+This should fix arm32 memory alignment issue caused by shared rb_entry.
+
+[struct victim_entry]              [struct rb_entry]
+[0] struct rb_node rb_node;        [0] struct rb_node rb_node;
+                                       union {
+                                         struct {
+                                           unsigned int ofs;
+                                           unsigned int len;
+                                         };
+[16] unsigned long long mtime;     [12] unsigned long long key;
+                                       } __packed;
+
+Cc: <stable@vger.kernel.org>
+Fixes: 093749e296e2 ("f2fs: support age threshold based garbage collection")
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 043d2d00b443 ("f2fs: factor out victim_entry usage from general rb_tree use")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/extent_cache.c | 38 +++++++++++++++++++-------------------
- fs/f2fs/f2fs.h         |  3 ++-
- fs/f2fs/inode.c        |  6 ++++--
- fs/f2fs/namei.c        |  4 ++--
- 4 files changed, 27 insertions(+), 24 deletions(-)
+ fs/f2fs/extent_cache.c |  36 +----------
+ fs/f2fs/f2fs.h         |  15 +----
+ fs/f2fs/gc.c           | 139 +++++++++++++++++++++++++----------------
+ fs/f2fs/gc.h           |  14 +----
+ fs/f2fs/segment.c      |   4 +-
+ 5 files changed, 93 insertions(+), 115 deletions(-)
 
 diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
-index 4217076df1024..794a8134687ae 100644
+index 794a8134687ae..cb8fb2fdfce2a 100644
 --- a/fs/f2fs/extent_cache.c
 +++ b/fs/f2fs/extent_cache.c
-@@ -47,20 +47,23 @@ static bool __may_read_extent_tree(struct inode *inode)
- 	return S_ISREG(inode->i_mode);
+@@ -149,29 +149,6 @@ struct rb_entry *f2fs_lookup_rb_tree(struct rb_root_cached *root,
+ 	return re;
  }
  
--static bool __may_extent_tree(struct inode *inode, enum extent_type type)
-+static bool __init_may_extent_tree(struct inode *inode, enum extent_type type)
- {
--	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
-+	if (type == EX_READ)
-+		return __may_read_extent_tree(inode);
-+	return false;
-+}
- 
-+static bool __may_extent_tree(struct inode *inode, enum extent_type type)
-+{
- 	/*
- 	 * for recovered files during mount do not create extents
- 	 * if shrinker is not registered.
- 	 */
--	if (list_empty(&sbi->s_list))
-+	if (list_empty(&F2FS_I_SB(inode)->s_list))
- 		return false;
- 
--	if (type == EX_READ)
--		return __may_read_extent_tree(inode);
--	return false;
-+	return __init_may_extent_tree(inode, type);
- }
- 
- static void __try_update_largest_extent(struct extent_tree *et,
-@@ -439,20 +442,18 @@ static void __drop_largest_extent(struct extent_tree *et,
- 	}
- }
- 
--/* return true, if inode page is changed */
--static void __f2fs_init_extent_tree(struct inode *inode, struct page *ipage,
--							enum extent_type type)
-+void f2fs_init_read_extent_tree(struct inode *inode, struct page *ipage)
- {
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
--	struct extent_tree_info *eti = &sbi->extent_tree[type];
--	struct f2fs_extent *i_ext = ipage ? &F2FS_INODE(ipage)->i_ext : NULL;
-+	struct extent_tree_info *eti = &sbi->extent_tree[EX_READ];
-+	struct f2fs_extent *i_ext = &F2FS_INODE(ipage)->i_ext;
- 	struct extent_tree *et;
- 	struct extent_node *en;
- 	struct extent_info ei;
- 
--	if (!__may_extent_tree(inode, type)) {
-+	if (!__may_extent_tree(inode, EX_READ)) {
- 		/* drop largest read extent */
--		if (type == EX_READ && i_ext && i_ext->len) {
-+		if (i_ext && i_ext->len) {
- 			f2fs_wait_on_page_writeback(ipage, NODE, true, true);
- 			i_ext->len = 0;
- 			set_page_dirty(ipage);
-@@ -460,13 +461,11 @@ static void __f2fs_init_extent_tree(struct inode *inode, struct page *ipage,
- 		goto out;
- 	}
- 
--	et = __grab_extent_tree(inode, type);
-+	et = __grab_extent_tree(inode, EX_READ);
- 
- 	if (!i_ext || !i_ext->len)
- 		goto out;
- 
--	BUG_ON(type != EX_READ);
+-struct rb_node **f2fs_lookup_rb_tree_ext(struct f2fs_sb_info *sbi,
+-					struct rb_root_cached *root,
+-					struct rb_node **parent,
+-					unsigned long long key, bool *leftmost)
+-{
+-	struct rb_node **p = &root->rb_root.rb_node;
+-	struct rb_entry *re;
 -
- 	get_read_extent_info(&ei, i_ext);
- 
- 	write_lock(&et->lock);
-@@ -486,14 +485,15 @@ static void __f2fs_init_extent_tree(struct inode *inode, struct page *ipage,
- unlock_out:
- 	write_unlock(&et->lock);
- out:
--	if (type == EX_READ && !F2FS_I(inode)->extent_tree[EX_READ])
-+	if (!F2FS_I(inode)->extent_tree[EX_READ])
- 		set_inode_flag(inode, FI_NO_EXTENT);
+-	while (*p) {
+-		*parent = *p;
+-		re = rb_entry(*parent, struct rb_entry, rb_node);
+-
+-		if (key < re->key) {
+-			p = &(*p)->rb_left;
+-		} else {
+-			p = &(*p)->rb_right;
+-			*leftmost = false;
+-		}
+-	}
+-
+-	return p;
+-}
+-
+ struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
+ 				struct rb_root_cached *root,
+ 				struct rb_node **parent,
+@@ -280,7 +257,7 @@ struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
  }
  
--void f2fs_init_extent_tree(struct inode *inode, struct page *ipage)
-+void f2fs_init_extent_tree(struct inode *inode)
+ bool f2fs_check_rb_tree_consistence(struct f2fs_sb_info *sbi,
+-				struct rb_root_cached *root, bool check_key)
++				struct rb_root_cached *root)
  {
- 	/* initialize read cache */
--	__f2fs_init_extent_tree(inode, ipage, EX_READ);
-+	if (__init_may_extent_tree(inode, EX_READ))
-+		__grab_extent_tree(inode, EX_READ);
- }
+ #ifdef CONFIG_F2FS_CHECK_FS
+ 	struct rb_node *cur = rb_first_cached(root), *next;
+@@ -297,23 +274,12 @@ bool f2fs_check_rb_tree_consistence(struct f2fs_sb_info *sbi,
+ 		cur_re = rb_entry(cur, struct rb_entry, rb_node);
+ 		next_re = rb_entry(next, struct rb_entry, rb_node);
  
- static bool __lookup_extent_tree(struct inode *inode, pgoff_t pgofs,
+-		if (check_key) {
+-			if (cur_re->key > next_re->key) {
+-				f2fs_info(sbi, "inconsistent rbtree, "
+-					"cur(%llu) next(%llu)",
+-					cur_re->key, next_re->key);
+-				return false;
+-			}
+-			goto next;
+-		}
+-
+ 		if (cur_re->ofs + cur_re->len > next_re->ofs) {
+ 			f2fs_info(sbi, "inconsistent rbtree, cur(%u, %u) next(%u, %u)",
+ 				  cur_re->ofs, cur_re->len,
+ 				  next_re->ofs, next_re->len);
+ 			return false;
+ 		}
+-next:
+ 		cur = next;
+ 	}
+ #endif
 diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index cf45af3a44a7a..3fc9d98112166 100644
+index 3fc9d98112166..6fb08b3520a68 100644
 --- a/fs/f2fs/f2fs.h
 +++ b/fs/f2fs/f2fs.h
-@@ -4147,7 +4147,7 @@ struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
+@@ -612,13 +612,8 @@ enum extent_type {
+ 
+ struct rb_entry {
+ 	struct rb_node rb_node;		/* rb node located in rb-tree */
+-	union {
+-		struct {
+-			unsigned int ofs;	/* start offset of the entry */
+-			unsigned int len;	/* length of the entry */
+-		};
+-		unsigned long long key;		/* 64-bits key */
+-	} __packed;
++	unsigned int ofs;		/* start offset of the entry */
++	unsigned int len;		/* length of the entry */
+ };
+ 
+ struct extent_info {
+@@ -4132,10 +4127,6 @@ void f2fs_leave_shrinker(struct f2fs_sb_info *sbi);
+  */
+ struct rb_entry *f2fs_lookup_rb_tree(struct rb_root_cached *root,
+ 				struct rb_entry *cached_re, unsigned int ofs);
+-struct rb_node **f2fs_lookup_rb_tree_ext(struct f2fs_sb_info *sbi,
+-				struct rb_root_cached *root,
+-				struct rb_node **parent,
+-				unsigned long long key, bool *left_most);
+ struct rb_node **f2fs_lookup_rb_tree_for_insert(struct f2fs_sb_info *sbi,
+ 				struct rb_root_cached *root,
+ 				struct rb_node **parent,
+@@ -4146,7 +4137,7 @@ struct rb_entry *f2fs_lookup_rb_tree_ret(struct rb_root_cached *root,
+ 		struct rb_node ***insert_p, struct rb_node **insert_parent,
  		bool force, bool *leftmost);
  bool f2fs_check_rb_tree_consistence(struct f2fs_sb_info *sbi,
- 				struct rb_root_cached *root, bool check_key);
--void f2fs_init_extent_tree(struct inode *inode, struct page *ipage);
-+void f2fs_init_extent_tree(struct inode *inode);
+-				struct rb_root_cached *root, bool check_key);
++				struct rb_root_cached *root);
+ void f2fs_init_extent_tree(struct inode *inode);
  void f2fs_drop_extent_tree(struct inode *inode);
  void f2fs_destroy_extent_node(struct inode *inode);
- void f2fs_destroy_extent_tree(struct inode *inode);
-@@ -4156,6 +4156,7 @@ int __init f2fs_create_extent_cache(void);
- void f2fs_destroy_extent_cache(void);
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 543de12bf88c2..5cd19fdc10596 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -389,40 +389,95 @@ static unsigned int count_bits(const unsigned long *addr,
+ 	return sum;
+ }
  
- /* read extent cache ops */
-+void f2fs_init_read_extent_tree(struct inode *inode, struct page *ipage);
- bool f2fs_lookup_read_extent_cache(struct inode *inode, pgoff_t pgofs,
- 			struct extent_info *ei);
- void f2fs_update_read_extent_cache(struct dnode_of_data *dn);
-diff --git a/fs/f2fs/inode.c b/fs/f2fs/inode.c
-index 7bfe29626024d..2bda4e73fc1ce 100644
---- a/fs/f2fs/inode.c
-+++ b/fs/f2fs/inode.c
-@@ -392,8 +392,6 @@ static int do_read_inode(struct inode *inode)
- 	fi->i_pino = le32_to_cpu(ri->i_pino);
- 	fi->i_dir_level = ri->i_dir_level;
+-static struct victim_entry *attach_victim_entry(struct f2fs_sb_info *sbi,
+-				unsigned long long mtime, unsigned int segno,
+-				struct rb_node *parent, struct rb_node **p,
+-				bool left_most)
++static bool f2fs_check_victim_tree(struct f2fs_sb_info *sbi,
++				struct rb_root_cached *root)
++{
++#ifdef CONFIG_F2FS_CHECK_FS
++	struct rb_node *cur = rb_first_cached(root), *next;
++	struct victim_entry *cur_ve, *next_ve;
++
++	while (cur) {
++		next = rb_next(cur);
++		if (!next)
++			return true;
++
++		cur_ve = rb_entry(cur, struct victim_entry, rb_node);
++		next_ve = rb_entry(next, struct victim_entry, rb_node);
++
++		if (cur_ve->mtime > next_ve->mtime) {
++			f2fs_info(sbi, "broken victim_rbtree, "
++				"cur_mtime(%llu) next_mtime(%llu)",
++				cur_ve->mtime, next_ve->mtime);
++			return false;
++		}
++		cur = next;
++	}
++#endif
++	return true;
++}
++
++static struct victim_entry *__lookup_victim_entry(struct f2fs_sb_info *sbi,
++					unsigned long long mtime)
++{
++	struct atgc_management *am = &sbi->am;
++	struct rb_node *node = am->root.rb_root.rb_node;
++	struct victim_entry *ve = NULL;
++
++	while (node) {
++		ve = rb_entry(node, struct victim_entry, rb_node);
++
++		if (mtime < ve->mtime)
++			node = node->rb_left;
++		else
++			node = node->rb_right;
++	}
++	return ve;
++}
++
++static struct victim_entry *__create_victim_entry(struct f2fs_sb_info *sbi,
++		unsigned long long mtime, unsigned int segno)
+ {
+ 	struct atgc_management *am = &sbi->am;
+ 	struct victim_entry *ve;
  
--	f2fs_init_extent_tree(inode, node_page);
+-	ve =  f2fs_kmem_cache_alloc(victim_entry_slab,
+-				GFP_NOFS, true, NULL);
++	ve =  f2fs_kmem_cache_alloc(victim_entry_slab, GFP_NOFS, true, NULL);
+ 
+ 	ve->mtime = mtime;
+ 	ve->segno = segno;
+ 
+-	rb_link_node(&ve->rb_node, parent, p);
+-	rb_insert_color_cached(&ve->rb_node, &am->root, left_most);
 -
- 	get_inline_info(inode, ri);
+ 	list_add_tail(&ve->list, &am->victim_list);
+-
+ 	am->victim_count++;
  
- 	fi->i_extra_isize = f2fs_has_extra_attr(inode) ?
-@@ -479,6 +477,10 @@ static int do_read_inode(struct inode *inode)
+ 	return ve;
+ }
+ 
+-static void insert_victim_entry(struct f2fs_sb_info *sbi,
++static void __insert_victim_entry(struct f2fs_sb_info *sbi,
+ 				unsigned long long mtime, unsigned int segno)
+ {
+ 	struct atgc_management *am = &sbi->am;
+-	struct rb_node **p;
++	struct rb_root_cached *root = &am->root;
++	struct rb_node **p = &root->rb_root.rb_node;
+ 	struct rb_node *parent = NULL;
++	struct victim_entry *ve;
+ 	bool left_most = true;
+ 
+-	p = f2fs_lookup_rb_tree_ext(sbi, &am->root, &parent, mtime, &left_most);
+-	attach_victim_entry(sbi, mtime, segno, parent, p, left_most);
++	/* look up rb tree to find parent node */
++	while (*p) {
++		parent = *p;
++		ve = rb_entry(parent, struct victim_entry, rb_node);
++
++		if (mtime < ve->mtime) {
++			p = &(*p)->rb_left;
++		} else {
++			p = &(*p)->rb_right;
++			left_most = false;
++		}
++	}
++
++	ve = __create_victim_entry(sbi, mtime, segno);
++
++	rb_link_node(&ve->rb_node, parent, p);
++	rb_insert_color_cached(&ve->rb_node, root, left_most);
+ }
+ 
+ static void add_victim_entry(struct f2fs_sb_info *sbi,
+@@ -458,19 +513,7 @@ static void add_victim_entry(struct f2fs_sb_info *sbi,
+ 	if (sit_i->dirty_max_mtime - mtime < p->age_threshold)
+ 		return;
+ 
+-	insert_victim_entry(sbi, mtime, segno);
+-}
+-
+-static struct rb_node *lookup_central_victim(struct f2fs_sb_info *sbi,
+-						struct victim_sel_policy *p)
+-{
+-	struct atgc_management *am = &sbi->am;
+-	struct rb_node *parent = NULL;
+-	bool left_most;
+-
+-	f2fs_lookup_rb_tree_ext(sbi, &am->root, &parent, p->age, &left_most);
+-
+-	return parent;
++	__insert_victim_entry(sbi, mtime, segno);
+ }
+ 
+ static void atgc_lookup_victim(struct f2fs_sb_info *sbi,
+@@ -480,7 +523,6 @@ static void atgc_lookup_victim(struct f2fs_sb_info *sbi,
+ 	struct atgc_management *am = &sbi->am;
+ 	struct rb_root_cached *root = &am->root;
+ 	struct rb_node *node;
+-	struct rb_entry *re;
+ 	struct victim_entry *ve;
+ 	unsigned long long total_time;
+ 	unsigned long long age, u, accu;
+@@ -507,12 +549,10 @@ static void atgc_lookup_victim(struct f2fs_sb_info *sbi,
+ 
+ 	node = rb_first_cached(root);
+ next:
+-	re = rb_entry_safe(node, struct rb_entry, rb_node);
+-	if (!re)
++	ve = rb_entry_safe(node, struct victim_entry, rb_node);
++	if (!ve)
+ 		return;
+ 
+-	ve = (struct victim_entry *)re;
+-
+ 	if (ve->mtime >= max_mtime || ve->mtime < min_mtime)
+ 		goto skip;
+ 
+@@ -554,8 +594,6 @@ static void atssr_lookup_victim(struct f2fs_sb_info *sbi,
+ {
+ 	struct sit_info *sit_i = SIT_I(sbi);
+ 	struct atgc_management *am = &sbi->am;
+-	struct rb_node *node;
+-	struct rb_entry *re;
+ 	struct victim_entry *ve;
+ 	unsigned long long age;
+ 	unsigned long long max_mtime = sit_i->dirty_max_mtime;
+@@ -565,25 +603,22 @@ static void atssr_lookup_victim(struct f2fs_sb_info *sbi,
+ 	unsigned int dirty_threshold = max(am->max_candidate_count,
+ 					am->candidate_ratio *
+ 					am->victim_count / 100);
+-	unsigned int cost;
+-	unsigned int iter = 0;
++	unsigned int cost, iter;
+ 	int stage = 0;
+ 
+ 	if (max_mtime < min_mtime)
+ 		return;
+ 	max_mtime += 1;
+ next_stage:
+-	node = lookup_central_victim(sbi, p);
++	iter = 0;
++	ve = __lookup_victim_entry(sbi, p->age);
+ next_node:
+-	re = rb_entry_safe(node, struct rb_entry, rb_node);
+-	if (!re) {
+-		if (stage == 0)
+-			goto skip_stage;
++	if (!ve) {
++		if (stage++ == 0)
++			goto next_stage;
+ 		return;
  	}
  
- 	init_idisk_time(inode);
-+
-+	/* Need all the flag bits */
-+	f2fs_init_read_extent_tree(inode, node_page);
-+
- 	f2fs_put_page(node_page, 1);
- 
- 	stat_inc_inline_xattr(inode);
-diff --git a/fs/f2fs/namei.c b/fs/f2fs/namei.c
-index 51d0030bddb27..d879a295b688e 100644
---- a/fs/f2fs/namei.c
-+++ b/fs/f2fs/namei.c
-@@ -258,8 +258,6 @@ static struct inode *f2fs_new_inode(struct user_namespace *mnt_userns,
- 	}
- 	F2FS_I(inode)->i_inline_xattr_size = xattr_size;
- 
--	f2fs_init_extent_tree(inode, NULL);
+-	ve = (struct victim_entry *)re;
 -
- 	F2FS_I(inode)->i_flags =
- 		f2fs_mask_flags(mode, F2FS_I(dir)->i_flags & F2FS_FL_INHERITED);
+ 	if (ve->mtime >= max_mtime || ve->mtime < min_mtime)
+ 		goto skip_node;
  
-@@ -282,6 +280,8 @@ static struct inode *f2fs_new_inode(struct user_namespace *mnt_userns,
- 
- 	f2fs_set_inode_flags(inode);
- 
-+	f2fs_init_extent_tree(inode);
+@@ -609,24 +644,20 @@ static void atssr_lookup_victim(struct f2fs_sb_info *sbi,
+ 	}
+ skip_node:
+ 	if (iter < dirty_threshold) {
+-		if (stage == 0)
+-			node = rb_prev(node);
+-		else if (stage == 1)
+-			node = rb_next(node);
++		ve = rb_entry(stage == 0 ? rb_prev(&ve->rb_node) :
++					rb_next(&ve->rb_node),
++					struct victim_entry, rb_node);
+ 		goto next_node;
+ 	}
+-skip_stage:
+-	if (stage < 1) {
+-		stage++;
+-		iter = 0;
 +
- 	trace_f2fs_new_inode(inode, 0);
- 	return inode;
++	if (stage++ == 0)
+ 		goto next_stage;
+-	}
+ }
++
+ static void lookup_victim_by_age(struct f2fs_sb_info *sbi,
+ 						struct victim_sel_policy *p)
+ {
+-	f2fs_bug_on(sbi, !f2fs_check_rb_tree_consistence(sbi,
+-						&sbi->am.root, true));
++	f2fs_bug_on(sbi, !f2fs_check_victim_tree(sbi, &sbi->am.root));
  
+ 	if (p->gc_mode == GC_AT)
+ 		atgc_lookup_victim(sbi, p);
+diff --git a/fs/f2fs/gc.h b/fs/f2fs/gc.h
+index 19b956c2d697a..ca84024b9c9e7 100644
+--- a/fs/f2fs/gc.h
++++ b/fs/f2fs/gc.h
+@@ -55,20 +55,10 @@ struct gc_inode_list {
+ 	struct radix_tree_root iroot;
+ };
+ 
+-struct victim_info {
+-	unsigned long long mtime;	/* mtime of section */
+-	unsigned int segno;		/* section No. */
+-};
+-
+ struct victim_entry {
+ 	struct rb_node rb_node;		/* rb node located in rb-tree */
+-	union {
+-		struct {
+-			unsigned long long mtime;	/* mtime of section */
+-			unsigned int segno;		/* segment No. */
+-		};
+-		struct victim_info vi;	/* victim info */
+-	};
++	unsigned long long mtime;	/* mtime of section */
++	unsigned int segno;		/* segment No. */
+ 	struct list_head list;
+ };
+ 
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 7d5bea9d92641..cbbf95b995414 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -1474,7 +1474,7 @@ static int __issue_discard_cmd(struct f2fs_sb_info *sbi,
+ 			goto next;
+ 		if (unlikely(dcc->rbtree_check))
+ 			f2fs_bug_on(sbi, !f2fs_check_rb_tree_consistence(sbi,
+-							&dcc->root, false));
++							&dcc->root));
+ 		blk_start_plug(&plug);
+ 		list_for_each_entry_safe(dc, tmp, pend_list, list) {
+ 			f2fs_bug_on(sbi, dc->state != D_PREP);
+@@ -3002,7 +3002,7 @@ static unsigned int __issue_discard_cmd_range(struct f2fs_sb_info *sbi,
+ 	mutex_lock(&dcc->cmd_lock);
+ 	if (unlikely(dcc->rbtree_check))
+ 		f2fs_bug_on(sbi, !f2fs_check_rb_tree_consistence(sbi,
+-							&dcc->root, false));
++							&dcc->root));
+ 
+ 	dc = (struct discard_cmd *)f2fs_lookup_rb_tree_ret(&dcc->root,
+ 					NULL, start,
 -- 
 2.39.2
 
