@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D4BFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:03:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A69FC433D2;
-	Mon, 15 May 2023 17:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AF30FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:03:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949FCC433D2;
+	Mon, 15 May 2023 17:03:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170189;
-	bh=eMpT1V1CNJgou5QBJf+328WeHt7PDecm+q7xRUhkzTY=;
+	s=korg; t=1684170193;
+	bh=TPCEFs6Gs0KWg4bFSeNpTS70JR5mYKAK7iYjeH5spc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mWyRkgJ0tkx14lNAZrfIzEpYgok4KJ4nQM3r83EysTQbXMp3x8WxMAPMv5X+FnR84
-	 r7EBZl/o0Zel2Z5X0qpF4OVqTcVrzueHQO9WU715apDBD3DQGntjU6fFl26Upzqwvv
-	 Lo0Ko/ctdAxHsYteWfvB2IJB+mkTA7X7jDmu8I2k=
+	b=mh4GlOvMVqmJUEx5sEcfAd4mr2gT0XxxgVl4tiijT3+LO9MItX7+FrfXsTVbttvpr
+	 6yJFe1ceP4iMpgpfePuwo7xuCwKJTumGfa2nMw5Z9M9tc7bcLM3noTJqiKIZJ1Ek1C
+	 cz8q77B/znF3G0yvl7FpWA8U8nWufH++dtKYmpuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Krause <minipli@grsecurity.net>,
-	Sean Christopherson <seanjc@google.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/239] KVM: x86/mmu: Refresh CR0.WP prior to checking for emulated permission faults
-Date: Mon, 15 May 2023 18:24:47 +0200
-Message-Id: <20230515161722.313656903@linuxfoundation.org>
+Subject: [PATCH 6.1 025/239] ASoC: Intel: soc-acpi-byt: Fix "WM510205" match no longer working
+Date: Mon, 15 May 2023 18:24:48 +0200
+Message-Id: <20230515161722.343995397@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -35,114 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit cf9f4c0eb1699d306e348b1fd0225af7b2c282d3 ]
+[ Upstream commit c963e2ec095cb3f855890be53f56f5a6c6fbe371 ]
 
-Refresh the MMU's snapshot of the vCPU's CR0.WP prior to checking for
-permission faults when emulating a guest memory access and CR0.WP may be
-guest owned.  If the guest toggles only CR0.WP and triggers emulation of
-a supervisor write, e.g. when KVM is emulating UMIP, KVM may consume a
-stale CR0.WP, i.e. use stale protection bits metadata.
+Commit 7e1d728a94ca ("ASoC: Intel: soc-acpi-byt: Add new WM5102 ACPI HID")
+added an extra HID to wm5102_comp_ids.codecs, but it forgot to bump
+wm5102_comp_ids.num_codecs, causing the last codec HID in the codecs list
+to no longer work.
 
-Note, KVM passes through CR0.WP if and only if EPT is enabled as CR0.WP
-is part of the MMU role for legacy shadow paging, and SVM (NPT) doesn't
-support per-bit interception controls for CR0.  Don't bother checking for
-EPT vs. NPT as the "old == new" check will always be true under NPT, i.e.
-the only cost is the read of vcpu->arch.cr4 (SVM unconditionally grabs CR0
-from the VMCB on VM-Exit).
+Bump wm5102_comp_ids.num_codecs to fix this.
 
-Reported-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lkml.kernel.org/r/677169b4-051f-fcae-756b-9a3e1bb9f8fe%40grsecurity.net
-Fixes: fb509f76acc8 ("KVM: VMX: Make CR0.WP a guest owned bit")
-Tested-by: Mathias Krause <minipli@grsecurity.net>
-Link: https://lore.kernel.org/r/20230405002608.418442-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Mathias Krause <minipli@grsecurity.net>	# backport to v6.1.x
+Fixes: 7e1d728a94ca ("ASoC: Intel: soc-acpi-byt: Add new WM5102 ACPI HID")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230421183714.35186-1-hdegoede@redhat.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/mmu.h     | 26 +++++++++++++++++++++++++-
- arch/x86/kvm/mmu/mmu.c | 15 +++++++++++++++
- 2 files changed, 40 insertions(+), 1 deletion(-)
+ sound/soc/intel/common/soc-acpi-intel-byt-match.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kvm/mmu.h b/arch/x86/kvm/mmu.h
-index 6bdaacb6faa07..59804be91b5b0 100644
---- a/arch/x86/kvm/mmu.h
-+++ b/arch/x86/kvm/mmu.h
-@@ -113,6 +113,8 @@ void kvm_init_shadow_ept_mmu(struct kvm_vcpu *vcpu, bool execonly,
- bool kvm_can_do_async_pf(struct kvm_vcpu *vcpu);
- int kvm_handle_page_fault(struct kvm_vcpu *vcpu, u64 error_code,
- 				u64 fault_address, char *insn, int insn_len);
-+void __kvm_mmu_refresh_passthrough_bits(struct kvm_vcpu *vcpu,
-+					struct kvm_mmu *mmu);
+diff --git a/sound/soc/intel/common/soc-acpi-intel-byt-match.c b/sound/soc/intel/common/soc-acpi-intel-byt-match.c
+index db5a92b9875a8..87c44f284971a 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-byt-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-byt-match.c
+@@ -124,7 +124,7 @@ static const struct snd_soc_acpi_codecs rt5640_comp_ids = {
+ };
  
- int kvm_mmu_load(struct kvm_vcpu *vcpu);
- void kvm_mmu_unload(struct kvm_vcpu *vcpu);
-@@ -153,6 +155,24 @@ static inline void kvm_mmu_load_pgd(struct kvm_vcpu *vcpu)
- 					  vcpu->arch.mmu->root_role.level);
- }
+ static const struct snd_soc_acpi_codecs wm5102_comp_ids = {
+-	.num_codecs = 2,
++	.num_codecs = 3,
+ 	.codecs = { "10WM5102", "WM510204", "WM510205"},
+ };
  
-+static inline void kvm_mmu_refresh_passthrough_bits(struct kvm_vcpu *vcpu,
-+						    struct kvm_mmu *mmu)
-+{
-+	/*
-+	 * When EPT is enabled, KVM may passthrough CR0.WP to the guest, i.e.
-+	 * @mmu's snapshot of CR0.WP and thus all related paging metadata may
-+	 * be stale.  Refresh CR0.WP and the metadata on-demand when checking
-+	 * for permission faults.  Exempt nested MMUs, i.e. MMUs for shadowing
-+	 * nEPT and nNPT, as CR0.WP is ignored in both cases.  Note, KVM does
-+	 * need to refresh nested_mmu, a.k.a. the walker used to translate L2
-+	 * GVAs to GPAs, as that "MMU" needs to honor L2's CR0.WP.
-+	 */
-+	if (!tdp_enabled || mmu == &vcpu->arch.guest_mmu)
-+		return;
-+
-+	__kvm_mmu_refresh_passthrough_bits(vcpu, mmu);
-+}
-+
- /*
-  * Check if a given access (described through the I/D, W/R and U/S bits of a
-  * page fault error code pfec) causes a permission fault with the given PTE
-@@ -184,8 +204,12 @@ static inline u8 permission_fault(struct kvm_vcpu *vcpu, struct kvm_mmu *mmu,
- 	u64 implicit_access = access & PFERR_IMPLICIT_ACCESS;
- 	bool not_smap = ((rflags & X86_EFLAGS_AC) | implicit_access) == X86_EFLAGS_AC;
- 	int index = (pfec + (not_smap << PFERR_RSVD_BIT)) >> 1;
--	bool fault = (mmu->permissions[index] >> pte_access) & 1;
- 	u32 errcode = PFERR_PRESENT_MASK;
-+	bool fault;
-+
-+	kvm_mmu_refresh_passthrough_bits(vcpu, mmu);
-+
-+	fault = (mmu->permissions[index] >> pte_access) & 1;
- 
- 	WARN_ON(pfec & (PFERR_PK_MASK | PFERR_RSVD_MASK));
- 	if (unlikely(mmu->pkru_mask)) {
-diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
-index f2a10c7d13697..230108a90cf39 100644
---- a/arch/x86/kvm/mmu/mmu.c
-+++ b/arch/x86/kvm/mmu/mmu.c
-@@ -5005,6 +5005,21 @@ kvm_calc_cpu_role(struct kvm_vcpu *vcpu, const struct kvm_mmu_role_regs *regs)
- 	return role;
- }
- 
-+void __kvm_mmu_refresh_passthrough_bits(struct kvm_vcpu *vcpu,
-+					struct kvm_mmu *mmu)
-+{
-+	const bool cr0_wp = !!kvm_read_cr0_bits(vcpu, X86_CR0_WP);
-+
-+	BUILD_BUG_ON((KVM_MMU_CR0_ROLE_BITS & KVM_POSSIBLE_CR0_GUEST_BITS) != X86_CR0_WP);
-+	BUILD_BUG_ON((KVM_MMU_CR4_ROLE_BITS & KVM_POSSIBLE_CR4_GUEST_BITS));
-+
-+	if (is_cr0_wp(mmu) == cr0_wp)
-+		return;
-+
-+	mmu->cpu_role.base.cr0_wp = cr0_wp;
-+	reset_guest_paging_metadata(vcpu, mmu);
-+}
-+
- static inline int kvm_mmu_get_tdp_level(struct kvm_vcpu *vcpu)
- {
- 	/* tdp_root_level is architecture forced level, use it if nonzero */
 -- 
 2.39.2
 
