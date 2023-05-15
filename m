@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D56E573
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4768BC433EF;
-	Mon, 15 May 2023 16:40:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184A9E573
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70EFBC433D2;
+	Mon, 15 May 2023 16:40:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168831;
-	bh=iJbzYw6RmxdfyncJqJbNK5q/D6ZHfDuaKk4WM23dIOw=;
+	s=korg; t=1684168834;
+	bh=CcNRIHoQon4UbB5J5qZeKiIBNv/kTAdr7r1q7AaNHDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yHP+DqiOXP/Ip0zwcySQsZYHjd6RuS9LUxu6K4Pp0GuXtGxCfjE69UX9Sy/smyRSK
-	 Wsa8N1E9EFimBrOvMCaTEhyMdsaCC+53voriECndwML4IXU9U0cRbvkXcglM64x1Lp
-	 a2JwaZE/XVuF5JF4BpkCUigBgx70/HUlv8eCwm7c=
+	b=YT0k6a06o6HwLYyAJKvm7S4Vk+PdiPHveJjdpSbUgej2lMh2ftXh0N+zzug7Lp/Vj
+	 mZd3bTq4ZbJiDywN+xE5kI7ofJ903tAOIGyPmvnuQ72a9udJLoAs1E39pIbROZAPSY
+	 r2tmV98IB7orSdwpuKi+dWo91RQdAr5nt+ks55og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Dom Cobley <popcornmix@gmail.com>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 027/191] drm/probe-helper: Cancel previous job before starting new one
-Date: Mon, 15 May 2023 18:24:24 +0200
-Message-Id: <20230515161708.158022145@linuxfoundation.org>
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Borislav Petkov <bp@suse.de>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	arozansk@redhat.com,
+	linux-edac <linux-edac@vger.kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH 4.19 028/191] EDAC, skx: Move debugfs node under EDACs hierarchy
+Date: Mon, 15 May 2023 18:24:25 +0200
+Message-Id: <20230515161708.196893993@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -36,50 +39,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dom Cobley <popcornmix@gmail.com>
+From: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
 
-[ Upstream commit a8e47884f1906cd7440fafa056adc8817568e73e ]
+[ Upstream commit 85b9c8bfee67ed151c44861c71adc816fc1b46a9 ]
 
-Currently we schedule a call to output_poll_execute from
-drm_kms_helper_poll_enable for 10s in future. Later we try to replace
-that in drm_helper_probe_single_connector_modes with a 0s schedule with
-delayed_event set.
+The debugfs node is /sys/kernel/debug/skx_edac_test. Rename it and move
+under EDAC debugfs root directory. Remove the unused 'skx_fake_addr' and
+remove the 'skx_test' on error.
 
-But as there is already a job in the queue this fails, and the immediate
-job we wanted with delayed_event set doesn't occur until 10s later.
-
-And that call acts as if connector state has changed, reprobing modes.
-This has a side effect of waking up a display that has been blanked.
-
-Make sure we cancel the old job before submitting the immediate one.
-
-Fixes: 162b6a57ac50 ("drm/probe-helper: don't lose hotplug event")
-Acked-by: Daniel Vetter <daniel@ffwll.ch>
-Signed-off-by: Dom Cobley <popcornmix@gmail.com>
-[Maxime: Switched to mod_delayed_work]
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230127154052.452524-1-maxime@cerno.tech
+Co-developed-by: Tony Luck <tony.luck@intel.com>
+Signed-off-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+CC: Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: arozansk@redhat.com
+CC: linux-edac <linux-edac@vger.kernel.org>
+Link: http://lkml.kernel.org/r/1542353684-13496-1-git-send-email-qiuxu.zhuo@intel.com
+Stable-dep-of: 71b1e3ba3fed ("EDAC/skx: Fix overflows on the DRAM row address mapping arrays")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_probe_helper.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/edac/skx_edac.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_probe_helper.c b/drivers/gpu/drm/drm_probe_helper.c
-index c0b26135dbd5b..f9e0594ee7024 100644
---- a/drivers/gpu/drm/drm_probe_helper.c
-+++ b/drivers/gpu/drm/drm_probe_helper.c
-@@ -459,8 +459,9 @@ int drm_helper_probe_single_connector_modes(struct drm_connector *connector,
- 		 */
- 		dev->mode_config.delayed_event = true;
- 		if (dev->mode_config.poll_enabled)
--			schedule_delayed_work(&dev->mode_config.output_poll_work,
--					      0);
-+			mod_delayed_work(system_wq,
-+					 &dev->mode_config.output_poll_work,
-+					 0);
- 	}
+diff --git a/drivers/edac/skx_edac.c b/drivers/edac/skx_edac.c
+index dd209e0dd9abb..b97803580d70f 100644
+--- a/drivers/edac/skx_edac.c
++++ b/drivers/edac/skx_edac.c
+@@ -896,12 +896,11 @@ static bool skx_decode(struct decoded_addr *res)
  
- 	/* Re-enable polling in case the global poll config changed. */
+ #ifdef CONFIG_EDAC_DEBUG
+ /*
+- * Debug feature. Make /sys/kernel/debug/skx_edac_test/addr.
+- * Write an address to this file to exercise the address decode
+- * logic in this driver.
++ * Debug feature.
++ * Exercise the address decode logic by writing an address to
++ * /sys/kernel/debug/edac/skx_test/addr.
+  */
+ static struct dentry *skx_test;
+-static u64 skx_fake_addr;
+ 
+ static int debugfs_u64_set(void *data, u64 val)
+ {
+@@ -912,19 +911,19 @@ static int debugfs_u64_set(void *data, u64 val)
+ 
+ 	return 0;
+ }
+-
+ DEFINE_SIMPLE_ATTRIBUTE(fops_u64_wo, NULL, debugfs_u64_set, "%llu\n");
+ 
+-static struct dentry *mydebugfs_create(const char *name, umode_t mode,
+-				       struct dentry *parent, u64 *value)
+-{
+-	return debugfs_create_file(name, mode, parent, value, &fops_u64_wo);
+-}
+-
+ static void setup_skx_debug(void)
+ {
+-	skx_test = debugfs_create_dir("skx_edac_test", NULL);
+-	mydebugfs_create("addr", S_IWUSR, skx_test, &skx_fake_addr);
++	skx_test = edac_debugfs_create_dir("skx_test");
++	if (!skx_test)
++		return;
++
++	if (!edac_debugfs_create_file("addr", 0200, skx_test,
++				      NULL, &fops_u64_wo)) {
++		debugfs_remove(skx_test);
++		skx_test = NULL;
++	}
+ }
+ 
+ static void teardown_skx_debug(void)
 -- 
 2.39.2
 
