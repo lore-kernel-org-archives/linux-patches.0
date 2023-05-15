@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D250DFBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:15:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BF1C433EF;
-	Mon, 15 May 2023 17:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4C1FBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:15:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61475C433EF;
+	Mon, 15 May 2023 17:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170918;
-	bh=TK7+vglgGcrJ+yIpt4V833bB+fthppqXYskoSxF1zO8=;
+	s=korg; t=1684170921;
+	bh=y1OoO1JxQZYli/Db7UQi/zrERtly5GFjUhpdPADO2pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T1sERZlRV6i5LJsj6Q1llBNnri75CIkx1C7RG2ZmZMc8BZWNT8eznZ+aXz6iioj4s
-	 1HgzWjoiJ4Xy6UBphQSktROyoIrjsQmXh382vRvaD8xuU3zGUf/93b3zuDu46pj7Q1
-	 /+oeFkjJsKtQroldJxpuUX4+ivBhl4MHDQwyNOqY=
+	b=JaWTsTtLS2hGespVPt7NyZa0C/JrpF6apL5laSxCfyze5Hmb5OC55IgFZ1P6c6sno
+	 RmbSkGJB1tLHcMasGDtwmOCeAp7v1o3zUZoHDOnXmJbGNC3fSxKSXh2vLQCdqbGjYL
+	 GI3QuNWq6vKd1MeREhc1iHmYZ/LYCUemfUdy8qkU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Jerry Zuo <Jerry.Zuo@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Ryan Lin <tsung-hua.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 013/242] fs/ntfs3: Fix null-ptr-deref on inode->i_op in ntfs_lookup()
-Date: Mon, 15 May 2023 18:25:39 +0200
-Message-Id: <20230515161722.211617441@linuxfoundation.org>
+Subject: [PATCH 6.2 014/242] drm/amd/display: Ext displays with dock cant recognized after resume
+Date: Mon, 15 May 2023 18:25:40 +0200
+Message-Id: <20230515161722.250726436@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,78 +38,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Ryan Lin <tsung-hua.lin@amd.com>
 
-[ Upstream commit 254e69f284d7270e0abdc023ee53b71401c3ba0c ]
+[ Upstream commit 1e5d4d8eb8c0f15d90c50e7abd686c980e54e42e ]
 
-Syzbot reported a null-ptr-deref bug:
+[Why]
+Needs to set the default value of the LTTPR timeout after resume.
 
-ntfs3: loop0: Different NTFS' sector size (1024) and media sector size
-(512)
-ntfs3: loop0: Mark volume as dirty due to NTFS errors
-general protection fault, probably for non-canonical address
-0xdffffc0000000001: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000008-0x000000000000000f]
-RIP: 0010:d_flags_for_inode fs/dcache.c:1980 [inline]
-RIP: 0010:__d_add+0x5ce/0x800 fs/dcache.c:2796
-Call Trace:
- <TASK>
- d_splice_alias+0x122/0x3b0 fs/dcache.c:3191
- lookup_open fs/namei.c:3391 [inline]
- open_last_lookups fs/namei.c:3481 [inline]
- path_openat+0x10e6/0x2df0 fs/namei.c:3688
- do_filp_open+0x264/0x4f0 fs/namei.c:3718
- do_sys_openat2+0x124/0x4e0 fs/open.c:1310
- do_sys_open fs/open.c:1326 [inline]
- __do_sys_open fs/open.c:1334 [inline]
- __se_sys_open fs/open.c:1330 [inline]
- __x64_sys_open+0x221/0x270 fs/open.c:1330
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[How]
+Set the default (3.2ms) timeout at resuming if the sink supports
+LTTPR
 
-If the MFT record of ntfs inode is not a base record, inode->i_op can be
-NULL. And a null-ptr-deref may happen:
-
-ntfs_lookup()
-    dir_search_u() # inode->i_op is set to NULL
-    d_splice_alias()
-        __d_add()
-            d_flags_for_inode() # inode->i_op->get_link null-ptr-deref
-
-Fix this by adding a Check on inode->i_op before calling the
-d_splice_alias() function.
-
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Reported-by: syzbot+a8f26a403c169b7593fe@syzkaller.appspotmail.com
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reviewed-by: Jerry Zuo <Jerry.Zuo@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Ryan Lin <tsung-hua.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/namei.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/ntfs3/namei.c b/fs/ntfs3/namei.c
-index c8db35e2ae172..3db34d5c03dc7 100644
---- a/fs/ntfs3/namei.c
-+++ b/fs/ntfs3/namei.c
-@@ -88,6 +88,16 @@ static struct dentry *ntfs_lookup(struct inode *dir, struct dentry *dentry,
- 		__putname(uni);
- 	}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 422909d1f352b..58fdd39f5bde9 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -39,6 +39,7 @@
+ #include "dc/dc_edid_parser.h"
+ #include "dc/dc_stat.h"
+ #include "amdgpu_dm_trace.h"
++#include "dc/inc/dc_link_ddc.h"
  
-+	/*
-+	 * Check for a null pointer
-+	 * If the MFT record of ntfs inode is not a base record, inode->i_op can be NULL.
-+	 * This causes null pointer dereference in d_splice_alias().
-+	 */
-+	if (!IS_ERR(inode) && inode->i_op == NULL) {
-+		iput(inode);
-+		inode = ERR_PTR(-EINVAL);
-+	}
+ #include "vid.h"
+ #include "amdgpu.h"
+@@ -2262,6 +2263,14 @@ static void s3_handle_mst(struct drm_device *dev, bool suspend)
+ 		if (suspend) {
+ 			drm_dp_mst_topology_mgr_suspend(mgr);
+ 		} else {
++			/* if extended timeout is supported in hardware,
++			 * default to LTTPR timeout (3.2ms) first as a W/A for DP link layer
++			 * CTS 4.2.1.1 regression introduced by CTS specs requirement update.
++			 */
++			dc_link_aux_try_to_configure_timeout(aconnector->dc_link->ddc, LINK_AUX_DEFAULT_LTTPR_TIMEOUT_PERIOD);
++			if (!dp_is_lttpr_present(aconnector->dc_link))
++				dc_link_aux_try_to_configure_timeout(aconnector->dc_link->ddc, LINK_AUX_DEFAULT_TIMEOUT_PERIOD);
 +
- 	return d_splice_alias(inode, dentry);
- }
- 
+ 			ret = drm_dp_mst_topology_mgr_resume(mgr, true);
+ 			if (ret < 0) {
+ 				dm_helpers_dp_mst_stop_top_mgr(aconnector->dc_link->ctx,
 -- 
 2.39.2
 
