@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5FDFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F86DC4339B;
-	Mon, 15 May 2023 16:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A792FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:54:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DB9C433D2;
+	Mon, 15 May 2023 16:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169660;
-	bh=crE+3prRPrVEAyoNqBZ/oDDymuz63sBm4m/fZgJ+fw4=;
+	s=korg; t=1684169663;
+	bh=VbmG4b/PP0cMZbKPa6u8FDsjcWq3UUmX/mC1ek3GoNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=buM4IeWNKuw9xSXrMR/44h5nfwAwhY/c1CELdFCc9RkDpDzSvKoOmGJkHHVBMYDMH
-	 Tv5ewNaz0uGu6jG6m3d3uI9xzqIs2/CQ56LLeI2Xl1KwxVz4tPLMNudZ6zi7ao7m++
-	 Asw0tcd/uZOxEO2XGvgZfVQ11YybuBtCI0cP/AJ0=
+	b=jpkWDqD6gRlXJ6VJBddxGIOx42w4ki79tpKX9mobRepMkmQd43rvqyOriEXgvWeiw
+	 3I24mv4J8ST1RiDxAGG++kdV/QgIdg+IJ26X8vCa2v2g59llB3bYZ2rUb8TZMER7qO
+	 NrtQCA5X8kvO8klytGXRzJ8Aydaiy/kFpRGoNh1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xiaoshoukui <xiaoshoukui@ruijie.com.cn>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Boris Burkov <boris@bur.io>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.3 130/246] btrfs: fix assertion of exclop condition when starting balance
-Date: Mon, 15 May 2023 18:25:42 +0200
-Message-Id: <20230515161726.462887377@linuxfoundation.org>
+Subject: [PATCH 6.3 131/246] btrfs: fix encoded write i_size corruption with no-holes
+Date: Mon, 15 May 2023 18:25:43 +0200
+Message-Id: <20230515161726.492376808@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,180 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xiaoshoukui <xiaoshoukui@gmail.com>
+From: Boris Burkov <boris@bur.io>
 
-commit ac868bc9d136cde6e3eb5de77019a63d57a540ff upstream.
+commit e7db9e5c6b9615b287d01f0231904fbc1fbde9c5 upstream.
 
-Balance as exclusive state is compatible with paused balance and device
-add, which makes some things more complicated. The assertion of valid
-states when starting from paused balance needs to take into account two
-more states, the combinations can be hit when there are several threads
-racing to start balance and device add. This won't typically happen when
-the commands are started from command line.
+We have observed a btrfs filesystem corruption on workloads using
+no-holes and encoded writes via send stream v2. The symptom is that a
+file appears to be truncated to the end of its last aligned extent, even
+though the final unaligned extent and even the file extent and otherwise
+correctly updated inode item have been written.
 
-Scenario 1: With exclusive_operation state == BTRFS_EXCLOP_NONE.
+So if we were writing out a 1MiB+X file via 8 128K extents and one
+extent of length X, i_size would be set to 1MiB, but the ninth extent,
+nbyte, etc. would all appear correct otherwise.
 
-Concurrently adding multiple devices to the same mount point and
-btrfs_exclop_finish executed finishes before assertion in
-btrfs_exclop_balance, exclusive_operation will changed to
-BTRFS_EXCLOP_NONE state which lead to assertion failed:
+The source of the race is a narrow (one line of code) window in which a
+no-holes fs has read in an updated i_size, but has not yet set a shared
+disk_i_size variable to write. Therefore, if two ordered extents run in
+parallel (par for the course for receive workloads), the following
+sequence can play out: (following "threads" a bit loosely, since there
+are callbacks involved for endio but extra threads aren't needed to
+cause the issue)
 
-  fs_info->exclusive_operation == BTRFS_EXCLOP_BALANCE ||
-  fs_info->exclusive_operation == BTRFS_EXCLOP_DEV_ADD,
-  in fs/btrfs/ioctl.c:456
-  Call Trace:
-   <TASK>
-   btrfs_exclop_balance+0x13c/0x310
-   ? memdup_user+0xab/0xc0
-   ? PTR_ERR+0x17/0x20
-   btrfs_ioctl_add_dev+0x2ee/0x320
-   btrfs_ioctl+0x9d5/0x10d0
-   ? btrfs_ioctl_encoded_write+0xb80/0xb80
-   __x64_sys_ioctl+0x197/0x210
-   do_syscall_64+0x3c/0xb0
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  ENC-WR1 (second to last)                                         ENC-WR2 (last)
+  -------                                                          -------
+  btrfs_do_encoded_write
+    set i_size = 1M
+    submit bio B1 ending at 1M
+  endio B1
+  btrfs_inode_safe_disk_i_size_write
+    local i_size = 1M
+    falls off a cliff for some reason
+							      btrfs_do_encoded_write
+								set i_size = 1M+X
+								submit bio B2 ending at 1M+X
+							      endio B2
+							      btrfs_inode_safe_disk_i_size_write
+								local i_size = 1M+X
+								disk_i_size = 1M+X
+    disk_i_size = 1M
+							      btrfs_delayed_update_inode
+    btrfs_delayed_update_inode
 
-Scenario 2: With exclusive_operation state == BTRFS_EXCLOP_BALANCE_PAUSED.
+And the delayed inode ends up filled with nbytes=1M+X and isize=1M, and
+writes respect i_size and present a corrupted file missing its last
+extents.
 
-Concurrently adding multiple devices to the same mount point and
-btrfs_exclop_balance executed finish before the latter thread execute
-assertion in btrfs_exclop_balance, exclusive_operation will changed to
-BTRFS_EXCLOP_BALANCE_PAUSED state which lead to assertion failed:
+Fix this by holding the inode lock in the no-holes case so that a thread
+can't sneak in a write to disk_i_size that gets overwritten with an out
+of date i_size.
 
-  fs_info->exclusive_operation == BTRFS_EXCLOP_BALANCE ||
-  fs_info->exclusive_operation == BTRFS_EXCLOP_DEV_ADD ||
-  fs_info->exclusive_operation == BTRFS_EXCLOP_NONE,
-  fs/btrfs/ioctl.c:458
-  Call Trace:
-   <TASK>
-   btrfs_exclop_balance+0x240/0x410
-   ? memdup_user+0xab/0xc0
-   ? PTR_ERR+0x17/0x20
-   btrfs_ioctl_add_dev+0x2ee/0x320
-   btrfs_ioctl+0x9d5/0x10d0
-   ? btrfs_ioctl_encoded_write+0xb80/0xb80
-   __x64_sys_ioctl+0x197/0x210
-   do_syscall_64+0x3c/0xb0
-   entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-An example of the failed assertion is below, which shows that the
-paused balance is also needed to be checked.
-
-  root@syzkaller:/home/xsk# ./repro
-  Failed to add device /dev/vda, errno 14
-  Failed to add device /dev/vda, errno 14
-  Failed to add device /dev/vda, errno 14
-  Failed to add device /dev/vda, errno 14
-  Failed to add device /dev/vda, errno 14
-  Failed to add device /dev/vda, errno 14
-  Failed to add device /dev/vda, errno 14
-  Failed to add device /dev/vda, errno 14
-  Failed to add device /dev/vda, errno 14
-  [  416.611428][ T7970] BTRFS info (device loop0): fs_info exclusive_operation: 0
-  Failed to add device /dev/vda, errno 14
-  [  416.613973][ T7971] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.615456][ T7972] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.617528][ T7973] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.618359][ T7974] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.622589][ T7975] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.624034][ T7976] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.626420][ T7977] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.627643][ T7978] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.629006][ T7979] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  [  416.630298][ T7980] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  Failed to add device /dev/vda, errno 14
-  [  416.632787][ T7981] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.634282][ T7982] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  Failed to add device /dev/vda, errno 14
-  [  416.636202][ T7983] BTRFS info (device loop0): fs_info exclusive_operation: 3
-  [  416.637012][ T7984] BTRFS info (device loop0): fs_info exclusive_operation: 1
-  Failed to add device /dev/vda, errno 14
-  [  416.637759][ T7984] assertion failed: fs_info->exclusive_operation ==
-  BTRFS_EXCLOP_BALANCE || fs_info->exclusive_operation ==
-  BTRFS_EXCLOP_DEV_ADD || fs_info->exclusive_operation ==
-  BTRFS_EXCLOP_NONE, in fs/btrfs/ioctl.c:458
-  [  416.639845][ T7984] invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-  [  416.640485][ T7984] CPU: 0 PID: 7984 Comm: repro Not tainted 6.2.0 #7
-  [  416.641172][ T7984] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-  [  416.642090][ T7984] RIP: 0010:btrfs_assertfail+0x2c/0x2e
-  [  416.644423][ T7984] RSP: 0018:ffffc90003ea7e28 EFLAGS: 00010282
-  [  416.645018][ T7984] RAX: 00000000000000cc RBX: 0000000000000000 RCX: 0000000000000000
-  [  416.645763][ T7984] RDX: ffff88801d030000 RSI: ffffffff81637e7c RDI: fffff520007d4fb7
-  [  416.646554][ T7984] RBP: ffffffff8a533de0 R08: 00000000000000cc R09: 0000000000000000
-  [  416.647299][ T7984] R10: 0000000000000001 R11: 0000000000000001 R12: ffffffff8a533da0
-  [  416.648041][ T7984] R13: 00000000000001ca R14: 000000005000940a R15: 0000000000000000
-  [  416.648785][ T7984] FS:  00007fa2985d4640(0000) GS:ffff88802cc00000(0000) knlGS:0000000000000000
-  [  416.649616][ T7984] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [  416.650238][ T7984] CR2: 0000000000000000 CR3: 0000000018e5e000 CR4: 0000000000750ef0
-  [  416.650980][ T7984] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  [  416.651725][ T7984] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-  [  416.652502][ T7984] PKRU: 55555554
-  [  416.652888][ T7984] Call Trace:
-  [  416.653241][ T7984]  <TASK>
-  [  416.653527][ T7984]  btrfs_exclop_balance+0x240/0x410
-  [  416.654036][ T7984]  ? memdup_user+0xab/0xc0
-  [  416.654465][ T7984]  ? PTR_ERR+0x17/0x20
-  [  416.654874][ T7984]  btrfs_ioctl_add_dev+0x2ee/0x320
-  [  416.655380][ T7984]  btrfs_ioctl+0x9d5/0x10d0
-  [  416.655822][ T7984]  ? btrfs_ioctl_encoded_write+0xb80/0xb80
-  [  416.656400][ T7984]  __x64_sys_ioctl+0x197/0x210
-  [  416.656874][ T7984]  do_syscall_64+0x3c/0xb0
-  [  416.657346][ T7984]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  [  416.657922][ T7984] RIP: 0033:0x4546af
-  [  416.660170][ T7984] RSP: 002b:00007fa2985d4150 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-  [  416.660972][ T7984] RAX: ffffffffffffffda RBX: 00007fa2985d4640 RCX: 00000000004546af
-  [  416.661714][ T7984] RDX: 0000000000000000 RSI: 000000005000940a RDI: 0000000000000003
-  [  416.662449][ T7984] RBP: 00007fa2985d41d0 R08: 0000000000000000 R09: 00007ffee37a4c4f
-  [  416.663195][ T7984] R10: 0000000000000000 R11: 0000000000000246 R12: 00007fa2985d4640
-  [  416.663951][ T7984] R13: 0000000000000009 R14: 000000000041b320 R15: 00007fa297dd4000
-  [  416.664703][ T7984]  </TASK>
-  [  416.665040][ T7984] Modules linked in:
-  [  416.665590][ T7984] ---[ end trace 0000000000000000 ]---
-  [  416.666176][ T7984] RIP: 0010:btrfs_assertfail+0x2c/0x2e
-  [  416.668775][ T7984] RSP: 0018:ffffc90003ea7e28 EFLAGS: 00010282
-  [  416.669425][ T7984] RAX: 00000000000000cc RBX: 0000000000000000 RCX: 0000000000000000
-  [  416.670235][ T7984] RDX: ffff88801d030000 RSI: ffffffff81637e7c RDI: fffff520007d4fb7
-  [  416.671050][ T7984] RBP: ffffffff8a533de0 R08: 00000000000000cc R09: 0000000000000000
-  [  416.671867][ T7984] R10: 0000000000000001 R11: 0000000000000001 R12: ffffffff8a533da0
-  [  416.672685][ T7984] R13: 00000000000001ca R14: 000000005000940a R15: 0000000000000000
-  [  416.673501][ T7984] FS:  00007fa2985d4640(0000) GS:ffff88802cc00000(0000) knlGS:0000000000000000
-  [  416.674425][ T7984] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [  416.675114][ T7984] CR2: 0000000000000000 CR3: 0000000018e5e000 CR4: 0000000000750ef0
-  [  416.675933][ T7984] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-  [  416.676760][ T7984] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-
-Link: https://lore.kernel.org/linux-btrfs/20230324031611.98986-1-xiaoshoukui@gmail.com/
-CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: xiaoshoukui <xiaoshoukui@ruijie.com.cn>
+Fixes: 41a2ee75aab0 ("btrfs: introduce per-inode file extent tree")
+CC: stable@vger.kernel.org # 5.10+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/file-item.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -454,7 +454,9 @@ void btrfs_exclop_balance(struct btrfs_f
- 	case BTRFS_EXCLOP_BALANCE_PAUSED:
- 		spin_lock(&fs_info->super_lock);
- 		ASSERT(fs_info->exclusive_operation == BTRFS_EXCLOP_BALANCE ||
--		       fs_info->exclusive_operation == BTRFS_EXCLOP_DEV_ADD);
-+		       fs_info->exclusive_operation == BTRFS_EXCLOP_DEV_ADD ||
-+		       fs_info->exclusive_operation == BTRFS_EXCLOP_NONE ||
-+		       fs_info->exclusive_operation == BTRFS_EXCLOP_BALANCE_PAUSED);
- 		fs_info->exclusive_operation = BTRFS_EXCLOP_BALANCE_PAUSED;
- 		spin_unlock(&fs_info->super_lock);
- 		break;
+--- a/fs/btrfs/file-item.c
++++ b/fs/btrfs/file-item.c
+@@ -52,13 +52,13 @@ void btrfs_inode_safe_disk_i_size_write(
+ 	u64 start, end, i_size;
+ 	int ret;
+ 
++	spin_lock(&inode->lock);
+ 	i_size = new_i_size ?: i_size_read(&inode->vfs_inode);
+ 	if (btrfs_fs_incompat(fs_info, NO_HOLES)) {
+ 		inode->disk_i_size = i_size;
+-		return;
++		goto out_unlock;
+ 	}
+ 
+-	spin_lock(&inode->lock);
+ 	ret = find_contiguous_extent_bit(&inode->file_extent_tree, 0, &start,
+ 					 &end, EXTENT_DIRTY);
+ 	if (!ret && start == 0)
+@@ -66,6 +66,7 @@ void btrfs_inode_safe_disk_i_size_write(
+ 	else
+ 		i_size = 0;
+ 	inode->disk_i_size = i_size;
++out_unlock:
+ 	spin_unlock(&inode->lock);
+ }
+ 
 
 
