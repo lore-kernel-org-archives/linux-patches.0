@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A67FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:07:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C06C433EF;
-	Mon, 15 May 2023 17:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC665FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:07:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A1CC4339B;
+	Mon, 15 May 2023 17:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170444;
-	bh=h5mK51aebmM7frvlZj9/VAIXXGKmEyWTQHFtggW+AO4=;
+	s=korg; t=1684170447;
+	bh=IjVjrGqUqlz/HbTKVP7yRxR8vh2CL5JyH8u8VhL2FIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TUUex4b+EBVZSy5aCJ4ugxmMLgITfSGXFhnfrrNiH2GVkg946j0O4BSyETxD78HqG
-	 sIav+/u1PBHfUcmAn2QutjTvKUwYPoXRrS87z4hJTr3RmalU1a88F2rQq73dhVp4HH
-	 s+iHM6TdUoksFmQ++gIrAGIQ/27dL96OZF3MY0cI=
+	b=ynf9IoAk+KQoSVvciQFrFwwPtQUWWdt++Rj6OEvtdb3kZlyXi4+75ah26+kGwl0JE
+	 /WgCF1maAYg6zkLFZtH2UPzlYzZwCzLCLnvh/U6W3uRfbDyOxRp0s1zS5pr+c/Dyhc
+	 +5WyMGmPRFQL+Cd8csL2pXd6YFZMVStYI5yRgbbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Rob Herring <robh+dt@kernel.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	devicetree@vger.kernel.org,
-	Rich Felker <dalias@libc.org>,
-	Yoshinori Sato <ysato@users.sourceforge.jp>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
-	linux-sh@vger.kernel.org
-Subject: [PATCH 6.1 133/239] sh: init: use OF_EARLY_FLATTREE for early init
-Date: Mon, 15 May 2023 18:26:36 +0200
-Message-Id: <20230515161725.683902109@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 116/239] btrfs: make clear_cache mount option to rebuild FST without disabling it
+Date: Mon, 15 May 2023 18:26:19 +0200
+Message-Id: <20230515161725.183133534@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -41,89 +34,181 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 6cba655543c7959f8a6d2979b9d40a6a66b7ed4f upstream.
+commit 1d6a4fc85717677e00fefffd847a50fc5928ce69 upstream.
 
-When CONFIG_OF_EARLY_FLATTREE and CONFIG_SH_DEVICE_TREE are not set,
-SH3 build fails with a call to early_init_dt_scan(), so in
-arch/sh/kernel/setup.c and arch/sh/kernel/head_32.S, use
-CONFIG_OF_EARLY_FLATTREE instead of CONFIG_OF_FLATTREE.
+Previously clear_cache mount option would simply disable free-space-tree
+feature temporarily then re-enable it to rebuild the whole free space
+tree.
 
-Fixes this build error:
-../arch/sh/kernel/setup.c: In function 'sh_fdt_init':
-../arch/sh/kernel/setup.c:262:26: error: implicit declaration of function 'early_init_dt_scan' [-Werror=implicit-function-declaration]
-  262 |         if (!dt_virt || !early_init_dt_scan(dt_virt)) {
+But this is problematic for block-group-tree feature, as we have an
+artificial dependency on free-space-tree feature.
 
-Fixes: 03767daa1387 ("sh: fix build regression with CONFIG_OF && !CONFIG_OF_FLATTREE")
-Fixes: eb6b6930a70f ("sh: fix memory corruption of unflattened device tree")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Suggested-by: Rob Herring <robh+dt@kernel.org>
-Cc: Frank Rowand <frowand.list@gmail.com>
-Cc: devicetree@vger.kernel.org
-Cc: Rich Felker <dalias@libc.org>
-Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
-Cc: Geert Uytterhoeven <geert+renesas@glider.be>
-Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Cc: linux-sh@vger.kernel.org
-Cc: stable@vger.kernel.org
-Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
-Link: https://lore.kernel.org/r/20230306040037.20350-4-rdunlap@infradead.org
-Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+If we go the existing method, after clearing the free-space-tree
+feature, we would flip the filesystem to read-only mode, as we detect a
+super block write with block-group-tree but no free-space-tree feature.
+
+This patch would change the behavior by properly rebuilding the free
+space tree without disabling this feature, thus allowing clear_cache
+mount option to work with block group tree.
+
+Now we can mount a filesystem with block-group-tree feature and
+clear_mount option:
+
+  $ mkfs.btrfs  -O block-group-tree /dev/test/scratch1  -f
+  $ sudo mount /dev/test/scratch1 /mnt/btrfs -o clear_cache
+  $ sudo dmesg -t | head -n 5
+  BTRFS info (device dm-1): force clearing of disk cache
+  BTRFS info (device dm-1): using free space tree
+  BTRFS info (device dm-1): auto enabling async discard
+  BTRFS info (device dm-1): rebuilding free space tree
+  BTRFS info (device dm-1): checking UUID tree
+
+CC: stable@vger.kernel.org # 6.1+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/sh/kernel/head_32.S |    6 +++---
- arch/sh/kernel/setup.c   |    4 ++--
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ fs/btrfs/disk-io.c         |   25 ++++++++++++++++------
+ fs/btrfs/free-space-tree.c |   50 ++++++++++++++++++++++++++++++++++++++++++++-
+ fs/btrfs/free-space-tree.h |    3 +-
+ fs/btrfs/super.c           |    3 --
+ 4 files changed, 70 insertions(+), 11 deletions(-)
 
---- a/arch/sh/kernel/head_32.S
-+++ b/arch/sh/kernel/head_32.S
-@@ -64,7 +64,7 @@ ENTRY(_stext)
- 	ldc	r0, r6_bank
- #endif
- 
--#ifdef CONFIG_OF_FLATTREE
-+#ifdef CONFIG_OF_EARLY_FLATTREE
- 	mov	r4, r12		! Store device tree blob pointer in r12
- #endif
- 	
-@@ -315,7 +315,7 @@ ENTRY(_stext)
- 10:		
- #endif
- 
--#ifdef CONFIG_OF_FLATTREE
-+#ifdef CONFIG_OF_EARLY_FLATTREE
- 	mov.l	8f, r0		! Make flat device tree available early.
- 	jsr	@r0
- 	 mov	r12, r4
-@@ -346,7 +346,7 @@ ENTRY(stack_start)
- 5:	.long	start_kernel
- 6:	.long	cpu_init
- 7:	.long	init_thread_union
--#if defined(CONFIG_OF_FLATTREE)
-+#if defined(CONFIG_OF_EARLY_FLATTREE)
- 8:	.long	sh_fdt_init
- #endif
- 
---- a/arch/sh/kernel/setup.c
-+++ b/arch/sh/kernel/setup.c
-@@ -244,7 +244,7 @@ void __init __weak plat_early_device_set
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -3215,23 +3215,34 @@ int btrfs_start_pre_rw_mount(struct btrf
  {
+ 	int ret;
+ 	const bool cache_opt = btrfs_test_opt(fs_info, SPACE_CACHE);
+-	bool clear_free_space_tree = false;
++	bool rebuild_free_space_tree = false;
+ 
+ 	if (btrfs_test_opt(fs_info, CLEAR_CACHE) &&
+ 	    btrfs_fs_compat_ro(fs_info, FREE_SPACE_TREE)) {
+-		clear_free_space_tree = true;
++		rebuild_free_space_tree = true;
+ 	} else if (btrfs_fs_compat_ro(fs_info, FREE_SPACE_TREE) &&
+ 		   !btrfs_fs_compat_ro(fs_info, FREE_SPACE_TREE_VALID)) {
+ 		btrfs_warn(fs_info, "free space tree is invalid");
+-		clear_free_space_tree = true;
++		rebuild_free_space_tree = true;
+ 	}
+ 
+-	if (clear_free_space_tree) {
+-		btrfs_info(fs_info, "clearing free space tree");
+-		ret = btrfs_clear_free_space_tree(fs_info);
++	if (rebuild_free_space_tree) {
++		btrfs_info(fs_info, "rebuilding free space tree");
++		ret = btrfs_rebuild_free_space_tree(fs_info);
+ 		if (ret) {
+ 			btrfs_warn(fs_info,
+-				   "failed to clear free space tree: %d", ret);
++				   "failed to rebuild free space tree: %d", ret);
++			goto out;
++		}
++	}
++
++	if (btrfs_fs_compat_ro(fs_info, FREE_SPACE_TREE) &&
++	    !btrfs_test_opt(fs_info, FREE_SPACE_TREE)) {
++		btrfs_info(fs_info, "disabling free space tree");
++		ret = btrfs_delete_free_space_tree(fs_info);
++		if (ret) {
++			btrfs_warn(fs_info,
++				   "failed to disable free space tree: %d", ret);
+ 			goto out;
+ 		}
+ 	}
+--- a/fs/btrfs/free-space-tree.c
++++ b/fs/btrfs/free-space-tree.c
+@@ -1247,7 +1247,7 @@ out:
+ 	return ret;
  }
  
--#ifdef CONFIG_OF_FLATTREE
-+#ifdef CONFIG_OF_EARLY_FLATTREE
- void __ref sh_fdt_init(phys_addr_t dt_phys)
+-int btrfs_clear_free_space_tree(struct btrfs_fs_info *fs_info)
++int btrfs_delete_free_space_tree(struct btrfs_fs_info *fs_info)
  {
- 	static int done = 0;
-@@ -326,7 +326,7 @@ void __init setup_arch(char **cmdline_p)
- 	/* Let earlyprintk output early console messages */
- 	sh_early_platform_driver_probe("earlyprintk", 1, 1);
+ 	struct btrfs_trans_handle *trans;
+ 	struct btrfs_root *tree_root = fs_info->tree_root;
+@@ -1290,6 +1290,54 @@ int btrfs_clear_free_space_tree(struct b
+ abort:
+ 	btrfs_abort_transaction(trans, ret);
+ 	btrfs_end_transaction(trans);
++	return ret;
++}
++
++int btrfs_rebuild_free_space_tree(struct btrfs_fs_info *fs_info)
++{
++	struct btrfs_trans_handle *trans;
++	struct btrfs_key key = {
++		.objectid = BTRFS_FREE_SPACE_TREE_OBJECTID,
++		.type = BTRFS_ROOT_ITEM_KEY,
++		.offset = 0,
++	};
++	struct btrfs_root *free_space_root = btrfs_global_root(fs_info, &key);
++	struct rb_node *node;
++	int ret;
++
++	trans = btrfs_start_transaction(free_space_root, 1);
++	if (IS_ERR(trans))
++		return PTR_ERR(trans);
++
++	set_bit(BTRFS_FS_CREATING_FREE_SPACE_TREE, &fs_info->flags);
++	set_bit(BTRFS_FS_FREE_SPACE_TREE_UNTRUSTED, &fs_info->flags);
++
++	ret = clear_free_space_tree(trans, free_space_root);
++	if (ret)
++		goto abort;
++
++	node = rb_first_cached(&fs_info->block_group_cache_tree);
++	while (node) {
++		struct btrfs_block_group *block_group;
++
++		block_group = rb_entry(node, struct btrfs_block_group,
++				       cache_node);
++		ret = populate_free_space_tree(trans, block_group);
++		if (ret)
++			goto abort;
++		node = rb_next(node);
++	}
++
++	btrfs_set_fs_compat_ro(fs_info, FREE_SPACE_TREE);
++	btrfs_set_fs_compat_ro(fs_info, FREE_SPACE_TREE_VALID);
++	clear_bit(BTRFS_FS_CREATING_FREE_SPACE_TREE, &fs_info->flags);
++
++	ret = btrfs_commit_transaction(trans);
++	clear_bit(BTRFS_FS_FREE_SPACE_TREE_UNTRUSTED, &fs_info->flags);
++	return ret;
++abort:
++	btrfs_abort_transaction(trans, ret);
++	btrfs_end_transaction(trans);
+ 	return ret;
+ }
  
--#ifdef CONFIG_OF_FLATTREE
-+#ifdef CONFIG_OF_EARLY_FLATTREE
- #ifdef CONFIG_USE_BUILTIN_DTB
- 	unflatten_and_copy_device_tree();
- #else
+--- a/fs/btrfs/free-space-tree.h
++++ b/fs/btrfs/free-space-tree.h
+@@ -18,7 +18,8 @@ struct btrfs_caching_control;
+ 
+ void set_free_space_tree_thresholds(struct btrfs_block_group *block_group);
+ int btrfs_create_free_space_tree(struct btrfs_fs_info *fs_info);
+-int btrfs_clear_free_space_tree(struct btrfs_fs_info *fs_info);
++int btrfs_delete_free_space_tree(struct btrfs_fs_info *fs_info);
++int btrfs_rebuild_free_space_tree(struct btrfs_fs_info *fs_info);
+ int load_free_space_tree(struct btrfs_caching_control *caching_ctl);
+ int add_block_group_free_space(struct btrfs_trans_handle *trans,
+ 			       struct btrfs_block_group *block_group);
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -1138,8 +1138,7 @@ out:
+ 		ret = -EINVAL;
+ 	}
+ 	if (btrfs_fs_compat_ro(info, BLOCK_GROUP_TREE) &&
+-	    (btrfs_test_opt(info, CLEAR_CACHE) ||
+-	     !btrfs_test_opt(info, FREE_SPACE_TREE))) {
++	     !btrfs_test_opt(info, FREE_SPACE_TREE)) {
+ 		btrfs_err(info, "cannot disable free space tree with block-group-tree feature");
+ 		ret = -EINVAL;
+ 	}
 
 
