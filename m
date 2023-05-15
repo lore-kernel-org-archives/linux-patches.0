@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A156FBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:01:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2653C433EF;
-	Mon, 15 May 2023 17:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36A4FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:01:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C62C4339B;
+	Mon, 15 May 2023 17:01:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170095;
-	bh=/G/kat3/EVFVq40tGfSYWvnXpO4BwYJ+wVxdSxVdJrE=;
+	s=korg; t=1684170098;
+	bh=0vKsgebch6DEWlrLqP/YWvpz1W9QeBIdoiMAiDGI8yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nyY9iQiPtCx7rpU1d0N5A/3AZo46uDu5Cukdl13puv4wW2Dj2nOWzmco/QFYZh29U
-	 ghdp7xWFx3ZKToPWstmko4KXh3eFBodwnnyDUCJV/c3aZOVzFp4c9+zwjFVkXFr5Tb
-	 nbcKoTScFP9GEZbCv23bBC9HyYgHhtLf+DR+Ufh8=
+	b=ppTbNTDMepMRWVCPlNPI9NNeWxRDZGAXOMpxSRIKKLZfDLpEDLFn4Sje6rP8C5UqL
+	 T32/V6L903L5YUytD7gA/58WRYAqSncDmmztzFx8h8uAk2X+5uTtmN/EbPcYUDkA+5
+	 ba8wPo1je8DHOGI+B0KYof0J9g4OXad6dCbfx5/o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/239] crypto: ccp - Clear PSP interrupt status register before calling handler
-Date: Mon, 15 May 2023 18:24:28 +0200
-Message-Id: <20230515161721.729294303@linuxfoundation.org>
+Subject: [PATCH 6.1 006/239] perf/x86/core: Zero @lbr instead of returning -1 in x86_perf_get_lbr() stub
+Date: Mon, 15 May 2023 18:24:29 +0200
+Message-Id: <20230515161721.764288785@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,71 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 45121ad4a1750ca47ce3f32bd434bdb0cdbf0043 ]
+[ Upstream commit 0b9ca98b722969660ad98b39f766a561ccb39f5f ]
 
-The PSP IRQ is edge-triggered (MSI or MSI-X) in all cases supported by
-the psp module so clear the interrupt status register early in the
-handler to prevent missed interrupts. sev_irq_handler() calls wake_up()
-on a wait queue, which can result in a new command being submitted from
-a different CPU. This then races with the clearing of isr and can result
-in missed interrupts. A missed interrupt results in a command waiting
-until it times out, which results in the psp being declared dead.
+Drop the return value from x86_perf_get_lbr() and have the stub zero out
+the @lbr structure instead of returning -1 to indicate "no LBR support".
+KVM doesn't actually check the return value, and instead subtly relies on
+zeroing the number of LBRs in intel_pmu_init().
 
-This is unlikely on bare metal, but has been observed when running
-virtualized. In the cases where this is observed, sev->cmdresp_reg has
-PSP_CMDRESP_RESP set which indicates that the command was processed
-correctly but no interrupt was asserted.
+Formalize "nr=0 means unsupported" so that KVM doesn't need to add a
+pointless check on the return value to fix KVM's benign bug.
 
-The full sequence of events looks like this:
+Note, the stub is necessary even though KVM x86 selects PERF_EVENTS and
+the caller exists only when CONFIG_KVM_INTEL=y.  Despite the name,
+KVM_INTEL doesn't strictly require CPU_SUP_INTEL, it can be built with
+any of INTEL || CENTAUR || ZHAOXIN CPUs.
 
-CPU 1: submits SEV cmd #1
-CPU 1: calls wait_event_timeout()
-CPU 0: enters psp_irq_handler()
-CPU 0: calls sev_handler()->wake_up()
-CPU 1: wakes up; finishes processing cmd #1
-CPU 1: submits SEV cmd #2
-CPU 1: calls wait_event_timeout()
-PSP:   finishes processing cmd #2; interrupt status is still set; no interrupt
-CPU 0: clears intsts
-CPU 0: exits psp_irq_handler()
-CPU 1: wait_event_timeout() times out; psp_dead=true
-
-Fixes: 200664d5237f ("crypto: ccp: Add Secure Encrypted Virtualization (SEV) command support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Message-Id: <20221006000314.73240-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Stable-dep-of: 098f4c061ea1 ("KVM: x86/pmu: Disallow legacy LBRs if architectural LBRs are available")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccp/psp-dev.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/events/intel/lbr.c       | 6 +-----
+ arch/x86/include/asm/perf_event.h | 6 +++---
+ arch/x86/kvm/vmx/capabilities.h   | 3 ++-
+ 3 files changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/crypto/ccp/psp-dev.c b/drivers/crypto/ccp/psp-dev.c
-index c9c741ac84421..949a3fa0b94a9 100644
---- a/drivers/crypto/ccp/psp-dev.c
-+++ b/drivers/crypto/ccp/psp-dev.c
-@@ -42,6 +42,9 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
- 	/* Read the interrupt status: */
- 	status = ioread32(psp->io_regs + psp->vdata->intsts_reg);
+diff --git a/arch/x86/events/intel/lbr.c b/arch/x86/events/intel/lbr.c
+index 8259d725054d0..4dbde69c423ba 100644
+--- a/arch/x86/events/intel/lbr.c
++++ b/arch/x86/events/intel/lbr.c
+@@ -1603,10 +1603,8 @@ void __init intel_pmu_arch_lbr_init(void)
+  * x86_perf_get_lbr - get the LBR records information
+  *
+  * @lbr: the caller's memory to store the LBR records information
+- *
+- * Returns: 0 indicates the LBR info has been successfully obtained
+  */
+-int x86_perf_get_lbr(struct x86_pmu_lbr *lbr)
++void x86_perf_get_lbr(struct x86_pmu_lbr *lbr)
+ {
+ 	int lbr_fmt = x86_pmu.intel_cap.lbr_format;
  
-+	/* Clear the interrupt status by writing the same value we read. */
-+	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
-+
- 	/* invoke subdevice interrupt handlers */
- 	if (status) {
- 		if (psp->sev_irq_handler)
-@@ -51,9 +54,6 @@ static irqreturn_t psp_irq_handler(int irq, void *data)
- 			psp->tee_irq_handler(irq, psp->tee_irq_data, status);
- 	}
- 
--	/* Clear the interrupt status by writing the same value we read. */
--	iowrite32(status, psp->io_regs + psp->vdata->intsts_reg);
+@@ -1614,8 +1612,6 @@ int x86_perf_get_lbr(struct x86_pmu_lbr *lbr)
+ 	lbr->from = x86_pmu.lbr_from;
+ 	lbr->to = x86_pmu.lbr_to;
+ 	lbr->info = (lbr_fmt == LBR_FORMAT_INFO) ? x86_pmu.lbr_info : 0;
 -
- 	return IRQ_HANDLED;
+-	return 0;
  }
+ EXPORT_SYMBOL_GPL(x86_perf_get_lbr);
  
+diff --git a/arch/x86/include/asm/perf_event.h b/arch/x86/include/asm/perf_event.h
+index 9ac46dbe57d48..5d0f6891ae611 100644
+--- a/arch/x86/include/asm/perf_event.h
++++ b/arch/x86/include/asm/perf_event.h
+@@ -543,12 +543,12 @@ static inline void perf_check_microcode(void) { }
+ 
+ #if defined(CONFIG_PERF_EVENTS) && defined(CONFIG_CPU_SUP_INTEL)
+ extern struct perf_guest_switch_msr *perf_guest_get_msrs(int *nr, void *data);
+-extern int x86_perf_get_lbr(struct x86_pmu_lbr *lbr);
++extern void x86_perf_get_lbr(struct x86_pmu_lbr *lbr);
+ #else
+ struct perf_guest_switch_msr *perf_guest_get_msrs(int *nr, void *data);
+-static inline int x86_perf_get_lbr(struct x86_pmu_lbr *lbr)
++static inline void x86_perf_get_lbr(struct x86_pmu_lbr *lbr)
+ {
+-	return -1;
++	memset(lbr, 0, sizeof(*lbr));
+ }
+ #endif
+ 
+diff --git a/arch/x86/kvm/vmx/capabilities.h b/arch/x86/kvm/vmx/capabilities.h
+index 07254314f3dd5..479124e49bbda 100644
+--- a/arch/x86/kvm/vmx/capabilities.h
++++ b/arch/x86/kvm/vmx/capabilities.h
+@@ -407,7 +407,8 @@ static inline u64 vmx_get_perf_capabilities(void)
+ 	if (boot_cpu_has(X86_FEATURE_PDCM))
+ 		rdmsrl(MSR_IA32_PERF_CAPABILITIES, host_perf_cap);
+ 
+-	if (x86_perf_get_lbr(&lbr) >= 0 && lbr.nr)
++	x86_perf_get_lbr(&lbr);
++	if (lbr.nr)
+ 		perf_cap |= host_perf_cap & PMU_CAP_LBR_FMT;
+ 
+ 	if (vmx_pebs_supported()) {
 -- 
 2.39.2
 
