@@ -1,25 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C492F101C0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2795FC4339B;
-	Mon, 15 May 2023 17:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E5C101C0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:52:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC0EC433EF;
+	Mon, 15 May 2023 17:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173159;
-	bh=vStKJEne7Ft5xib0WFgd4nHsqJtxaId9XuTiXPhH6oo=;
+	s=korg; t=1684173162;
+	bh=+28jkNsrK/0scMDBy9hhAUAmqy7z6nnSeB5z4AHDkjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ajbc/w/8SVJC5KEgFJVSsB7uN54aNikpGxQSTXOCklzM+mGn2QjPSRHXnOcnUEdo6
-	 EOwe8UEDL0NSlrmV41yV3VR3kL+qWHjNdkIx1vvEspKUhbApw+gmKHCaCw+rtL8KEc
-	 KRwYfR7mz/2AgbrR3vDnUMqC44+YB/fBuqwfIqpE=
+	b=tFvjMHpr7b9XKt5n90WG9JTI/Fx0LDgH0TEHQRm+Ps0uXjXc1KJ7YNtCUiihit0rF
+	 uwPy3jGWMOBT41489ywLMTgAhR6k4YshhK6tlW6VkVxQrsj3ww2QZdTUBk8C6zB5QD
+	 0H0Ud++QA0Xl74UD2N8RCMtIYb99KBRz/5e3sb+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.10 347/381] ARM: dts: exynos: fix WM8960 clock name in Itop Elite
-Date: Mon, 15 May 2023 18:29:58 +0200
-Message-Id: <20230515161752.533439093@linuxfoundation.org>
+	syzbot <syzbot+223c7461c58c58a4cb10@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Michal Hocko <mhocko@suse.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Petr Mladek <pmladek@suse.com>,
+	David Hildenbrand <david@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	John Ogness <john.ogness@linutronix.de>,
+	Patrick Daly <quic_pdaly@quicinc.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 380/381] mm/page_alloc: fix potential deadlock on zonelist_update_seq seqlock
+Date: Mon, 15 May 2023 18:30:31 +0200
+Message-Id: <20230515161754.129554997@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -33,32 +44,181 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit 6c950c20da38debf1ed531e0b972bd8b53d1c11f upstream.
+commit 1007843a91909a4995ee78a538f62d8665705b66 upstream.
 
-The WM8960 Linux driver expects the clock to be named "mclk".  Otherwise
-the clock will be ignored and not prepared/enabled by the driver.
+syzbot is reporting circular locking dependency which involves
+zonelist_update_seq seqlock [1], for this lock is checked by memory
+allocation requests which do not need to be retried.
 
+One deadlock scenario is kmalloc(GFP_ATOMIC) from an interrupt handler.
+
+  CPU0
+  ----
+  __build_all_zonelists() {
+    write_seqlock(&zonelist_update_seq); // makes zonelist_update_seq.seqcount odd
+    // e.g. timer interrupt handler runs at this moment
+      some_timer_func() {
+        kmalloc(GFP_ATOMIC) {
+          __alloc_pages_slowpath() {
+            read_seqbegin(&zonelist_update_seq) {
+              // spins forever because zonelist_update_seq.seqcount is odd
+            }
+          }
+        }
+      }
+    // e.g. timer interrupt handler finishes
+    write_sequnlock(&zonelist_update_seq); // makes zonelist_update_seq.seqcount even
+  }
+
+This deadlock scenario can be easily eliminated by not calling
+read_seqbegin(&zonelist_update_seq) from !__GFP_DIRECT_RECLAIM allocation
+requests, for retry is applicable to only __GFP_DIRECT_RECLAIM allocation
+requests.  But Michal Hocko does not know whether we should go with this
+approach.
+
+Another deadlock scenario which syzbot is reporting is a race between
+kmalloc(GFP_ATOMIC) from tty_insert_flip_string_and_push_buffer() with
+port->lock held and printk() from __build_all_zonelists() with
+zonelist_update_seq held.
+
+  CPU0                                   CPU1
+  ----                                   ----
+  pty_write() {
+    tty_insert_flip_string_and_push_buffer() {
+                                         __build_all_zonelists() {
+                                           write_seqlock(&zonelist_update_seq);
+                                           build_zonelists() {
+                                             printk() {
+                                               vprintk() {
+                                                 vprintk_default() {
+                                                   vprintk_emit() {
+                                                     console_unlock() {
+                                                       console_flush_all() {
+                                                         console_emit_next_record() {
+                                                           con->write() = serial8250_console_write() {
+      spin_lock_irqsave(&port->lock, flags);
+      tty_insert_flip_string() {
+        tty_insert_flip_string_fixed_flag() {
+          __tty_buffer_request_room() {
+            tty_buffer_alloc() {
+              kmalloc(GFP_ATOMIC | __GFP_NOWARN) {
+                __alloc_pages_slowpath() {
+                  zonelist_iter_begin() {
+                    read_seqbegin(&zonelist_update_seq); // spins forever because zonelist_update_seq.seqcount is odd
+                                                             spin_lock_irqsave(&port->lock, flags); // spins forever because port->lock is held
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      spin_unlock_irqrestore(&port->lock, flags);
+                                                             // message is printed to console
+                                                             spin_unlock_irqrestore(&port->lock, flags);
+                                                           }
+                                                         }
+                                                       }
+                                                     }
+                                                   }
+                                                 }
+                                               }
+                                             }
+                                           }
+                                           write_sequnlock(&zonelist_update_seq);
+                                         }
+    }
+  }
+
+This deadlock scenario can be eliminated by
+
+  preventing interrupt context from calling kmalloc(GFP_ATOMIC)
+
+and
+
+  preventing printk() from calling console_flush_all()
+
+while zonelist_update_seq.seqcount is odd.
+
+Since Petr Mladek thinks that __build_all_zonelists() can become a
+candidate for deferring printk() [2], let's address this problem by
+
+  disabling local interrupts in order to avoid kmalloc(GFP_ATOMIC)
+
+and
+
+  disabling synchronous printk() in order to avoid console_flush_all()
+
+.
+
+As a side effect of minimizing duration of zonelist_update_seq.seqcount
+being odd by disabling synchronous printk(), latency at
+read_seqbegin(&zonelist_update_seq) for both !__GFP_DIRECT_RECLAIM and
+__GFP_DIRECT_RECLAIM allocation requests will be reduced.  Although, from
+lockdep perspective, not calling read_seqbegin(&zonelist_update_seq) (i.e.
+do not record unnecessary locking dependency) from interrupt context is
+still preferable, even if we don't allow calling kmalloc(GFP_ATOMIC)
+inside
+write_seqlock(&zonelist_update_seq)/write_sequnlock(&zonelist_update_seq)
+section...
+
+Link: https://lkml.kernel.org/r/8796b95c-3da3-5885-fddd-6ef55f30e4d3@I-love.SAKURA.ne.jp
+Fixes: 3d36424b3b58 ("mm/page_alloc: fix race condition between build_all_zonelists and page allocation")
+Link: https://lkml.kernel.org/r/ZCrs+1cDqPWTDFNM@alley [2]
+Reported-by: syzbot <syzbot+223c7461c58c58a4cb10@syzkaller.appspotmail.com>
+  Link: https://syzkaller.appspot.com/bug?extid=223c7461c58c58a4cb10 [1]
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Acked-by: Mel Gorman <mgorman@techsingularity.net>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Cc: John Ogness <john.ogness@linutronix.de>
+Cc: Patrick Daly <quic_pdaly@quicinc.com>
+Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
 Cc: <stable@vger.kernel.org>
-Fixes: 339b2fb36a67 ("ARM: dts: exynos: Add TOPEET itop elite based board")
-Link: https://lore.kernel.org/r/20230217150627.779764-3-krzysztof.kozlowski@linaro.org
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/exynos4412-itop-elite.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/page_alloc.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/arch/arm/boot/dts/exynos4412-itop-elite.dts
-+++ b/arch/arm/boot/dts/exynos4412-itop-elite.dts
-@@ -179,7 +179,7 @@
- 		compatible = "wlf,wm8960";
- 		reg = <0x1a>;
- 		clocks = <&pmu_system_controller 0>;
--		clock-names = "MCLK1";
-+		clock-names = "mclk";
- 		wlf,shared-lrclk;
- 		#sound-dai-cells = <0>;
- 	};
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -5973,7 +5973,21 @@ static void __build_all_zonelists(void *
+ 	int nid;
+ 	int __maybe_unused cpu;
+ 	pg_data_t *self = data;
++	unsigned long flags;
+ 
++	/*
++	 * Explicitly disable this CPU's interrupts before taking seqlock
++	 * to prevent any IRQ handler from calling into the page allocator
++	 * (e.g. GFP_ATOMIC) that could hit zonelist_iter_begin and livelock.
++	 */
++	local_irq_save(flags);
++	/*
++	 * Explicitly disable this CPU's synchronous printk() before taking
++	 * seqlock to prevent any printk() from trying to hold port->lock, for
++	 * tty_insert_flip_string_and_push_buffer() on other CPU might be
++	 * calling kmalloc(GFP_ATOMIC | __GFP_NOWARN) with port->lock held.
++	 */
++	printk_deferred_enter();
+ 	write_seqlock(&zonelist_update_seq);
+ 
+ #ifdef CONFIG_NUMA
+@@ -6008,6 +6022,8 @@ static void __build_all_zonelists(void *
+ 	}
+ 
+ 	write_sequnlock(&zonelist_update_seq);
++	printk_deferred_exit();
++	local_irq_restore(flags);
+ }
+ 
+ static noinline void __init
 
 
