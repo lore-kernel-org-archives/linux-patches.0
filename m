@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457A8FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EE3AC433D2;
-	Mon, 15 May 2023 17:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8454CFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF09BC433D2;
+	Mon, 15 May 2023 17:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171410;
-	bh=n9qPg8YDBuATL63fuxweux1pB0Yu8n5yzAX8U/Y7gcA=;
+	s=korg; t=1684171413;
+	bh=Pyqsw5IXrPmyOBnapPVlztltsAHgDZ2SFc8qaCQf+fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZKTdTl5/qmgC/A7Z2drvv7bRK5GKx5HlOqAZKfAydVy4/4Z+DuQ93oGenunkskktX
-	 CZ91md///cYRD9wBkHbNCCJg8ozi3By1pQq9V7P1WnMlXVLRd+12Gdb4A40x05Wcmy
-	 hAzz+p7gWxbwIxYcmv9QdjLuu9n/sAFVqPSmvEhU=
+	b=Uv8cSkXVo1MhI9LMWiDP0v9TQlZj2d/LjzXxZLGekhZJJIw7TryII3fe7o0Tsxi/Q
+	 WenXIOVsc+IxRC2PQ8UwDA3DGBz6tl5i4c3KSeyCn2pnOJsAujx4e1SBMjn0JYIstb
+	 mKnHpE6332IDEQXckNa5oZmwPYXNvR7hsxTmkAR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nevenko Stupar <Nevenko.Stupar@amd.com>,
-	Jun Lei <Jun.Lei@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.2 199/242] drm/amd/display: Enforce 60us prefetch for 200Mhz DCFCLK modes
-Date: Mon, 15 May 2023 18:28:45 +0200
-Message-Id: <20230515161727.914816557@linuxfoundation.org>
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.2 171/242] drm/msm: fix NULL-deref on snapshot tear down
+Date: Mon, 15 May 2023 18:28:17 +0200
+Message-Id: <20230515161727.009032843@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -39,64 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alvin Lee <Alvin.Lee2@amd.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit b504f99ccaa64da364443431e388ecf30b604e38 upstream.
+commit a465353b9250802f87b97123e33a17f51277f0b1 upstream.
 
-[Description]
-- Due to bandwidth / arbitration issues at 200Mhz DCFCLK,
-  we want to enforce minimum 60us of prefetch to avoid
-  intermittent underflow issues
-- Since 60us prefetch is already enforced for UCLK DPM0,
-  and many DCFCLK's > 200Mhz are mapped to UCLK DPM1, in
-  theory there should not be any UCLK DPM regressions by
-  enforcing greater prefetch
+In case of early initialisation errors and on platforms that do not use
+the DPU controller, the deinitilisation code can be called with the kms
+pointer set to NULL.
 
-Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Alvin Lee <Alvin.Lee2@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 98659487b845 ("drm/msm: add support to take dpu snapshot")
+Cc: stable@vger.kernel.org      # 5.14
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/525099/
+Link: https://lore.kernel.org/r/20230306100722.28485-4-johan+linaro@kernel.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c |    5 +++--
- drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h |    1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/msm_drv.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-@@ -807,7 +807,8 @@ static void DISPCLKDPPCLKDCFCLKDeepSleep
- 					v->SwathHeightY[k],
- 					v->SwathHeightC[k],
- 					TWait,
--					v->DRAMSpeedPerState[mode_lib->vba.VoltageLevel] <= MEM_STROBE_FREQ_MHZ ?
-+					(v->DRAMSpeedPerState[mode_lib->vba.VoltageLevel] <= MEM_STROBE_FREQ_MHZ ||
-+						v->DCFCLKPerState[mode_lib->vba.VoltageLevel] <= MIN_DCFCLK_FREQ_MHZ) ?
- 							mode_lib->vba.ip.min_prefetch_in_strobe_us : 0,
- 					/* Output */
- 					&v->DSTXAfterScaler[k],
-@@ -3289,7 +3290,7 @@ void dml32_ModeSupportAndSystemConfigura
- 							v->swath_width_chroma_ub_this_state[k],
- 							v->SwathHeightYThisState[k],
- 							v->SwathHeightCThisState[k], v->TWait,
--							v->DRAMSpeedPerState[i] <= MEM_STROBE_FREQ_MHZ ?
-+							(v->DRAMSpeedPerState[i] <= MEM_STROBE_FREQ_MHZ || v->DCFCLKState[i][j] <= MIN_DCFCLK_FREQ_MHZ) ?
- 									mode_lib->vba.ip.min_prefetch_in_strobe_us : 0,
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -241,7 +241,8 @@ static int msm_drm_uninit(struct device
+ 		msm_fbdev_free(ddev);
+ #endif
  
- 							/* Output */
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.h
-@@ -52,6 +52,7 @@
- #define BPP_BLENDED_PIPE 0xffffffff
+-	msm_disp_snapshot_destroy(ddev);
++	if (kms)
++		msm_disp_snapshot_destroy(ddev);
  
- #define MEM_STROBE_FREQ_MHZ 1600
-+#define MIN_DCFCLK_FREQ_MHZ 200
- #define MEM_STROBE_MAX_DELIVERY_TIME_US 60.0
+ 	drm_mode_config_cleanup(ddev);
  
- struct display_mode_lib;
 
 
