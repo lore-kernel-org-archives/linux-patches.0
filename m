@@ -1,38 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5BFFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:20:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26575C4339B;
-	Mon, 15 May 2023 17:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC411FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:20:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F075C4339B;
+	Mon, 15 May 2023 17:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171218;
-	bh=hafvI/zUuC2woK9AnCuIrElYgzbF2rJS2LgSZxzF5ww=;
+	s=korg; t=1684171221;
+	bh=NaZNEGS6O5ILStabR1IvWojNITJtGUYuoha+BNTrc/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZUnW6b2cN6WgO1ashbljD8gx/v/D2FpSG6B2MjTc/ahfn7XZMY1aRFT8Ipc0Mwxai
-	 WhXWoL7Vc59JzHt0iov1uY0M3UYd1FK33Te/5Z1VcCt0Wfl/6Kd1VMnQpn+2jvV43Q
-	 RmZhRvDKmpJIHRqqrJ4hBvWZGjSTaET9c0o9ikaw=
+	b=D2GTd86xPSbsRHv3TioftFtzFFjewYSQevfMQoxLBq7qo+xDM4ENXSJYx1CUHZ8zp
+	 BQhqW5f5oZeBDNWFEpJ/9dAdM3Zf58JOjysy6sOko9iCuSV1V19DA3FY4PR/C2sOyQ
+	 WAWVclDfU3oJcho5yXELWSU2XTRH32wbywHzs2/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Will Ochowicz <Will.Ochowicz@genusplc.com>,
 	Yang Jihong <yangjihong1@huawei.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
 	Ian Rogers <irogers@google.com>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
-	Stephane Eranian <eranian@google.com>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 109/242] perf symbols: Fix return incorrect build_id size in elf_read_build_id()
-Date: Mon, 15 May 2023 18:27:15 +0200
-Message-Id: <20230515161725.175612000@linuxfoundation.org>
+Subject: [PATCH 6.2 110/242] perf tracepoint: Fix memory leak in is_valid_tracepoint()
+Date: Mon, 15 May 2023 18:27:16 +0200
+Message-Id: <20230515161725.205385778@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -48,47 +45,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 1511e4696acb715a4fe48be89e1e691daec91c0e ]
+[ Upstream commit 9b86c49710eec7b4fbb78a0232b2dd0972a2b576 ]
 
-In elf_read_build_id(), if gnu build_id is found, should return the size of
-the actually copied data. If descsz is greater thanBuild_ID_SIZE,
-write_buildid data access may occur.
+When is_valid_tracepoint() returns 1, need to call put_events_file() to
+free `dir_path`.
 
-Fixes: be96ea8ffa788dcc ("perf symbols: Fix issue with binaries using 16-bytes buildids (v2)")
-Reported-by: Will Ochowicz <Will.Ochowicz@genusplc.com>
+Fixes: 25a7d914274de386 ("perf parse-events: Use get/put_events_file()")
 Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Tested-by: Will Ochowicz <Will.Ochowicz@genusplc.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Cc: Ian Rogers <irogers@google.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Stephane Eranian <eranian@google.com>
-Link: https://lore.kernel.org/lkml/CWLP265MB49702F7BA3D6D8F13E4B1A719C649@CWLP265MB4970.GBRP265.PROD.OUTLOOK.COM/T/
-Link: https://lore.kernel.org/r/20230427012841.231729-1-yangjihong1@huawei.com
+Link: https://lore.kernel.org/r/20230421025953.173826-1-yangjihong1@huawei.com
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/util/tracepoint.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 96767d1b3f1c2..714fd9d0b51ef 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -581,7 +581,7 @@ static int elf_read_build_id(Elf *elf, void *bf, size_t size)
- 				size_t sz = min(size, descsz);
- 				memcpy(bf, ptr, sz);
- 				memset(bf + sz, 0, size - sz);
--				err = descsz;
-+				err = sz;
- 				break;
+diff --git a/tools/perf/util/tracepoint.c b/tools/perf/util/tracepoint.c
+index 89ef56c433110..92dd8b455b902 100644
+--- a/tools/perf/util/tracepoint.c
++++ b/tools/perf/util/tracepoint.c
+@@ -50,6 +50,7 @@ int is_valid_tracepoint(const char *event_string)
+ 				 sys_dirent->d_name, evt_dirent->d_name);
+ 			if (!strcmp(evt_path, event_string)) {
+ 				closedir(evt_dir);
++				put_events_file(dir_path);
+ 				closedir(sys_dir);
+ 				return 1;
  			}
- 		}
 -- 
 2.39.2
 
