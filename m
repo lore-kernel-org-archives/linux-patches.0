@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08F0FBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A202C433D2;
-	Mon, 15 May 2023 17:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07D1FBEC
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:49:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186ABC433EF;
+	Mon, 15 May 2023 17:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172940;
-	bh=fqyMnX2k1AQC0aLBmx/PR7ZIjhMvQdJX0EDqSpAkiUQ=;
+	s=korg; t=1684172943;
+	bh=hCrY4jyxNQ4CJJLdiS9xm5clus0qWcE3FDl2BQsYHoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qULh44KK63kqSY8qbfRMqxcGRV/JO28pMsUGiwfUzrz783CZPwfAlOcPwbqgFzzXL
-	 D++YD8G4aCMnl7ti122oAHynE5cogufGJlgAtMFGQQ22MCUWIGUyWAyjTrXjlcGcvA
-	 U7SW/G11iMeLH+4Q0Nk7XGElvFtFgbLMKnB45hm8=
+	b=QlHClz24Siy9OdvaT9gT9jQhhh6OkwBfSavZMYoSR1QQ3g8IMs7yqKRPh9WrnQq6b
+	 Ieehm+J1zJYon2PLJAOtsR/OKmcnxMHodGTxnVO+CBQfnN32bhWUr/XBA0eTGJzJfT
+	 bcCRc9rZzWB09fgvEgScoLQyx8lA5rqRnBD04Gu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Victor Nogueira <victor@mojatatu.com>,
+	Andy Moreton <andy.moreton@amd.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 315/381] net/sched: act_mirred: Add carrier check
-Date: Mon, 15 May 2023 18:29:26 +0200
-Message-Id: <20230515161751.045491017@linuxfoundation.org>
+Subject: [PATCH 5.10 316/381] sfc: Fix module EEPROM reporting for QSFP modules
+Date: Mon, 15 May 2023 18:29:27 +0200
+Message-Id: <20230515161751.091158216@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,47 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Andy Moreton <andy.moreton@amd.com>
 
-[ Upstream commit 526f28bd0fbdc699cda31426928802650c1528e5 ]
+[ Upstream commit 281900a923d4c50df109b52a22ae3cdac150159b ]
 
-There are cases where the device is adminstratively UP, but operationally
-down. For example, we have a physical device (Nvidia ConnectX-6 Dx, 25Gbps)
-who's cable was pulled out, here is its ip link output:
+The sfc driver does not report QSFP module EEPROM contents correctly
+as only the first page is fetched from hardware.
 
-5: ens2f1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN mode DEFAULT group default qlen 1000
-    link/ether b8:ce:f6:4b:68:35 brd ff:ff:ff:ff:ff:ff
-    altname enp179s0f1np1
+Commit 0e1a2a3e6e7d ("ethtool: Add SFF-8436 and SFF-8636 max EEPROM
+length definitions") added ETH_MODULE_SFF_8436_MAX_LEN for the overall
+size of the EEPROM info, so use that to report the full EEPROM contents.
 
-As you can see, it's administratively UP but operationally down.
-In this case, sending a packet to this port caused a nasty kernel hang (so
-nasty that we were unable to capture it). Aborting a transmit based on
-operational status (in addition to administrative status) fixes the issue.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-v1->v2: Add fixes tag
-v2->v3: Remove blank line between tags + add change log, suggested by Leon
+Fixes: 9b17010da57a ("sfc: Add ethtool -m support for QSFP modules")
+Signed-off-by: Andy Moreton <andy.moreton@amd.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_mirred.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/sfc/mcdi_port_common.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/net/sched/act_mirred.c b/net/sched/act_mirred.c
-index 24d561d8d9c97..25dad1921baf2 100644
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -244,7 +244,7 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
- 		goto out;
- 	}
+diff --git a/drivers/net/ethernet/sfc/mcdi_port_common.c b/drivers/net/ethernet/sfc/mcdi_port_common.c
+index c4fe3c48ac46a..eccb97a5d9387 100644
+--- a/drivers/net/ethernet/sfc/mcdi_port_common.c
++++ b/drivers/net/ethernet/sfc/mcdi_port_common.c
+@@ -974,12 +974,15 @@ static u32 efx_mcdi_phy_module_type(struct efx_nic *efx)
  
--	if (unlikely(!(dev->flags & IFF_UP))) {
-+	if (unlikely(!(dev->flags & IFF_UP)) || !netif_carrier_ok(dev)) {
- 		net_notice_ratelimited("tc mirred to Houston: device %s is down\n",
- 				       dev->name);
- 		goto out;
+ 	/* A QSFP+ NIC may actually have an SFP+ module attached.
+ 	 * The ID is page 0, byte 0.
++	 * QSFP28 is of type SFF_8636, however, this is treated
++	 * the same by ethtool, so we can also treat them the same.
+ 	 */
+ 	switch (efx_mcdi_phy_get_module_eeprom_byte(efx, 0, 0)) {
+-	case 0x3:
++	case 0x3: /* SFP */
+ 		return MC_CMD_MEDIA_SFP_PLUS;
+-	case 0xc:
+-	case 0xd:
++	case 0xc: /* QSFP */
++	case 0xd: /* QSFP+ */
++	case 0x11: /* QSFP28 */
+ 		return MC_CMD_MEDIA_QSFP_PLUS;
+ 	default:
+ 		return 0;
+@@ -1077,7 +1080,7 @@ int efx_mcdi_phy_get_module_info(struct efx_nic *efx, struct ethtool_modinfo *mo
+ 
+ 	case MC_CMD_MEDIA_QSFP_PLUS:
+ 		modinfo->type = ETH_MODULE_SFF_8436;
+-		modinfo->eeprom_len = ETH_MODULE_SFF_8436_LEN;
++		modinfo->eeprom_len = ETH_MODULE_SFF_8436_MAX_LEN;
+ 		break;
+ 
+ 	default:
 -- 
 2.39.2
 
