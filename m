@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 020F3FBEC
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:50:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A43C433A0;
-	Mon, 15 May 2023 17:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E1CFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:50:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82676C433EF;
+	Mon, 15 May 2023 17:50:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173005;
-	bh=FowtQaz1nJYoTfNE5gy61S5PKrMyX5xjKgKq3thAIO8=;
+	s=korg; t=1684173009;
+	bh=eIYs8AfAg/HsEMcGbPVAm9N5AKO8kVoOWq1wa+zfFM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6vwVXfn6Zf+0sctsKOOOzWbMkH4GWENsBdS5oR0joQ3dWqqTGT7m87rybDcBvOGS
-	 QrvVS0L4p6JL8s3LYNL0RULLUFpe/XTRls2utiFGDlRxUranVI1fGCS6cKxKQxNRdP
-	 I73N6qN3IQurHpBIfJOo6MO+CtncwgYxv1SGY1tA=
+	b=xlUHq+JzzDwZkxGbG0O8U+yab1yp2RXySC/wOLU+jWity22az9gkPmP6uDpHc07lg
+	 Bjr+lzslibQrBf2mjnn8ghyiz3ArUR4inX8MOxGS1sZN6psg2bK1zf7KqUPhB5SPAG
+	 BohnjijccheKSKrryGJp0kbVXxGJs2n5mX+xUL8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Witek <pawel.ireneusz.witek@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.10 337/381] cifs: fix pcchunk length type in smb2_copychunk_range
-Date: Mon, 15 May 2023 18:29:48 +0200
-Message-Id: <20230515161752.065440318@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.10 338/381] platform/x86: touchscreen_dmi: Add upside-down quirk for GDIX1002 ts on the Juno Tablet
+Date: Mon, 15 May 2023 18:29:49 +0200
+Message-Id: <20230515161752.113540346@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,34 +33,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Witek <pawel.ireneusz.witek@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit d66cde50c3c868af7abddafce701bb86e4a93039 upstream.
+commit 6abfa99ce52f61a31bcfc2aaaae09006f5665495 upstream.
 
-Change type of pcchunk->Length from u32 to u64 to match
-smb2_copychunk_range arguments type. Fixes the problem where performing
-server-side copy with CIFS_IOC_COPYCHUNK_FILE ioctl resulted in incomplete
-copy of large files while returning -EINVAL.
+The Juno Computers Juno Tablet has an upside-down mounted Goodix
+touchscreen. Add a quirk to invert both axis to correct for this.
 
-Fixes: 9bf0c9cd4314 ("CIFS: Fix SMB2/SMB3 Copy offload support (refcopy) for large files")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Pawel Witek <pawel.ireneusz.witek@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Link: https://junocomputers.com/us/product/juno-tablet/
+Cc: stable@vger.kernel.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230505210323.43177-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/touchscreen_dmi.c |   17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -1784,7 +1784,7 @@ smb2_copychunk_range(const unsigned int
- 		pcchunk->SourceOffset = cpu_to_le64(src_off);
- 		pcchunk->TargetOffset = cpu_to_le64(dest_off);
- 		pcchunk->Length =
--			cpu_to_le32(min_t(u32, len, tcon->max_bytes_chunk));
-+			cpu_to_le32(min_t(u64, len, tcon->max_bytes_chunk));
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -381,6 +381,11 @@ static const struct ts_dmi_data glavey_t
+ 	.properties	= glavey_tm800a550l_props,
+ };
  
- 		/* Request server copy to target from src identified by key */
- 		kfree(retbuf);
++static const struct ts_dmi_data gdix1002_00_upside_down_data = {
++	.acpi_name	= "GDIX1002:00",
++	.properties	= gdix1001_upside_down_props,
++};
++
+ static const struct property_entry gp_electronic_t701_props[] = {
+ 	PROPERTY_ENTRY_U32("touchscreen-size-x", 960),
+ 	PROPERTY_ENTRY_U32("touchscreen-size-y", 640),
+@@ -1228,6 +1233,18 @@ const struct dmi_system_id touchscreen_d
+ 		},
+ 	},
+ 	{
++		/* Juno Tablet */
++		.driver_data = (void *)&gdix1002_00_upside_down_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Default string"),
++			/* Both product- and board-name being "Default string" is somewhat rare */
++			DMI_MATCH(DMI_PRODUCT_NAME, "Default string"),
++			DMI_MATCH(DMI_BOARD_NAME, "Default string"),
++			/* Above matches are too generic, add partial bios-version match */
++			DMI_MATCH(DMI_BIOS_VERSION, "JP2V1."),
++		},
++	},
++	{
+ 		/* Mediacom WinPad 7.0 W700 (same hw as Wintron surftab 7") */
+ 		.driver_data = (void *)&trekstor_surftab_wintron70_data,
+ 		.matches = {
 
 
