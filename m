@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006D9FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57AE4C433EF;
-	Mon, 15 May 2023 17:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 118BAFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:22:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68DE2C433D2;
+	Mon, 15 May 2023 17:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171363;
-	bh=hAmmsQLFELuxXA9xinP0kXxf6Fq6ko4yDpQQjzvSkjo=;
+	s=korg; t=1684171366;
+	bh=C1EHBejhltQUJsb+n597kPRcWUmcmrDTBbB4j7w2Thc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hbIFggLH5NeHGhNMNH0y6x3NmvulmR4JtvaPD/W9F0G/t/euzyGfPX8sBkn3mMpdF
-	 6mqKmf1lOXmAFvTp4sbBZlNnDV+IG8VKoKJPzOoLbsyfD2I1uu/5YS0CrefyU4J/Yl
-	 7MWDB6OI7PmmuaMkWxYHyV1n5Snswq+8ub76ooGI=
+	b=byfZaCS2kJqF14lHEtuzKGOmSM1BP/tH86KaN/V7ILbFOdBmEERSuveFSorU1OsnO
+	 SgyLouZNqN7SggaJpOB+dNwc/2rh38XliQWGLfFuL7z1tNHVyoHQfn50j6u0zeKgEv
+	 bg6DFpbSz4/ibaR4Y4JNtZkwN8Vieq3bDCZrwRlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Cowgill <james.cowgill@blaize.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.2 186/242] drm/panel: otm8009a: Set backlight parent to panel device
-Date: Mon, 15 May 2023 18:28:32 +0200
-Message-Id: <20230515161727.528556634@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>
+Subject: [PATCH 6.2 169/242] drm/bridge: lt8912b: Fix DSI Video Mode
+Date: Mon, 15 May 2023 18:28:15 +0200
+Message-Id: <20230515161726.951290831@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -34,37 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Cowgill <james.cowgill@blaize.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-commit ab4f869fba6119997f7630d600049762a2b014fa upstream.
+commit f435b7ef3b360d689df2ffa8326352cd07940d92 upstream.
 
-This is the logical place to put the backlight device, and it also
-fixes a kernel crash if the MIPI host is removed. Previously the
-backlight device would be unregistered twice when this happened - once
-as a child of the MIPI host through `mipi_dsi_host_unregister`, and
-once when the panel device is destroyed.
+LT8912 DSI port supports only Non-Burst mode video operation with Sync
+Events and continuous clock on clock lane, correct dsi mode flags
+according to that removing MIPI_DSI_MODE_VIDEO_BURST flag.
 
-Fixes: 12a6cbd4f3f1 ("drm/panel: otm8009a: Use new backlight API")
-Signed-off-by: James Cowgill <james.cowgill@blaize.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230412173450.199592-1-james.cowgill@blaize.com
+Cc: <stable@vger.kernel.org>
+Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230330093131.424828-1-francesco@dolcini.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-orisetech-otm8009a.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/panel/panel-orisetech-otm8009a.c
-+++ b/drivers/gpu/drm/panel/panel-orisetech-otm8009a.c
-@@ -471,7 +471,7 @@ static int otm8009a_probe(struct mipi_ds
- 		       DRM_MODE_CONNECTOR_DSI);
+--- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
++++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+@@ -504,7 +504,6 @@ static int lt8912_attach_dsi(struct lt89
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
  
- 	ctx->bl_dev = devm_backlight_device_register(dev, dev_name(dev),
--						     dsi->host->dev, ctx,
-+						     dev, ctx,
- 						     &otm8009a_backlight_ops,
- 						     NULL);
- 	if (IS_ERR(ctx->bl_dev)) {
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
+-			  MIPI_DSI_MODE_VIDEO_BURST |
+ 			  MIPI_DSI_MODE_LPM |
+ 			  MIPI_DSI_MODE_NO_EOT_PACKET;
+ 
 
 
