@@ -1,26 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDECFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:46:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B384C433D2;
-	Mon, 15 May 2023 16:46:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCAEFBE7;
+	Mon, 15 May 2023 16:47:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AD44C4339B;
+	Mon, 15 May 2023 16:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169219;
-	bh=YJPGlHisMi3ANpCU6yLFOAHTjr+R8QcDCxbjs/YcfcE=;
+	s=korg; t=1684169221;
+	bh=zh/9JYGvcoSVjQ7npxV+BgPxVQexxuYJ23M0md2Kmdw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WFl9TENsQtHjS9xSkKztyUdTZ5OawyGAHoJ2WLTUv0T+4R5CeoqVDqlGLuq9nharc
-	 yUFvGOKJhMMzUlnNwMMshN/WFToi8YwXIXFVOI02i4G4bge3VXErLmVlsTbh7kufvw
-	 qwedFGNYZ85yz/X031ZxqSf3bT8nFgFctNLYJS7c=
+	b=cIslEs2yQMckXwL5/Na8/0ePoLj2OJS9gernvA5rFeBS1JZvh+z6sn4u18xMqrlTi
+	 9X96zOY7e96hlRRQSRciZ5yArXIfqc8dZP2Q48BjUjG/eSz2Kiz5XuWZEZghy7gNHe
+	 NgLt94Xd8Ntq4UHii/+vj9y76A0oB0YRxXP/+PTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.19 180/191] ext4: improve error recovery code paths in __ext4_remount()
-Date: Mon, 15 May 2023 18:26:57 +0200
-Message-Id: <20230515161714.017061793@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	linux-afs@lists.infradead.org,
+	netdev@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 154/191] rxrpc: Fix hard call timeout units
+Date: Mon, 15 May 2023 18:26:31 +0200
+Message-Id: <20230515161713.016576684@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -34,62 +42,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: David Howells <dhowells@redhat.com>
 
-commit 4c0b4818b1f636bc96359f7817a2d8bab6370162 upstream.
+[ Upstream commit 0d098d83c5d9e107b2df7f5e11f81492f56d2fe7 ]
 
-If there are failures while changing the mount options in
-__ext4_remount(), we need to restore the old mount options.
+The hard call timeout is specified in the RXRPC_SET_CALL_TIMEOUT cmsg in
+seconds, so fix the point at which sendmsg() applies it to the call to
+convert to jiffies from seconds, not milliseconds.
 
-This commit fixes two problem.  The first is there is a chance that we
-will free the old quota file names before a potential failure leading
-to a use-after-free.  The second problem addressed in this commit is
-if there is a failed read/write to read-only transition, if the quota
-has already been suspended, we need to renable quota handling.
-
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230506142419.984260-2-tytso@mit.edu
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a158bdd3247b ("rxrpc: Fix timeout of a call that hasn't yet been granted a channel")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: "David S. Miller" <davem@davemloft.net>
+cc: Eric Dumazet <edumazet@google.com>
+cc: Jakub Kicinski <kuba@kernel.org>
+cc: Paolo Abeni <pabeni@redhat.com>
+cc: linux-afs@lists.infradead.org
+cc: netdev@vger.kernel.org
+cc: linux-kernel@vger.kernel.org
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c |   13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/rxrpc/sendmsg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5501,9 +5501,6 @@ static int ext4_remount(struct super_blo
- 	}
- 
- #ifdef CONFIG_QUOTA
--	/* Release old quota file names */
--	for (i = 0; i < EXT4_MAXQUOTAS; i++)
--		kfree(old_opts.s_qf_names[i]);
- 	if (enable_quota) {
- 		if (sb_any_quota_suspended(sb))
- 			dquot_resume(sb, -1);
-@@ -5513,6 +5510,9 @@ static int ext4_remount(struct super_blo
- 				goto restore_opts;
- 		}
- 	}
-+	/* Release old quota file names */
-+	for (i = 0; i < EXT4_MAXQUOTAS; i++)
-+		kfree(old_opts.s_qf_names[i]);
- #endif
- 	if (!test_opt(sb, BLOCK_VALIDITY) && sbi->system_blks)
- 		ext4_release_system_zone(sb);
-@@ -5529,6 +5529,13 @@ static int ext4_remount(struct super_blo
- 	return 0;
- 
- restore_opts:
-+	/*
-+	 * If there was a failing r/w to ro transition, we may need to
-+	 * re-enable quota
-+	 */
-+	if ((sb->s_flags & SB_RDONLY) && !(old_sb_flags & SB_RDONLY) &&
-+	    sb_any_quota_suspended(sb))
-+		dquot_resume(sb, -1);
- 	sb->s_flags = old_sb_flags;
- 	sbi->s_mount_opt = old_opts.s_mount_opt;
- 	sbi->s_mount_opt2 = old_opts.s_mount_opt2;
+diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
+index a7a09eb04d93b..eaa032c498c96 100644
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -709,7 +709,7 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
+ 		/* Fall through */
+ 	case 1:
+ 		if (p.call.timeouts.hard > 0) {
+-			j = msecs_to_jiffies(p.call.timeouts.hard);
++			j = p.call.timeouts.hard * HZ;
+ 			now = jiffies;
+ 			j += now;
+ 			WRITE_ONCE(call->expect_term_by, j);
+-- 
+2.39.2
+
 
 
