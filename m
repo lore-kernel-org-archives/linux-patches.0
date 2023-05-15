@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A83EFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9ABC433EF;
-	Mon, 15 May 2023 17:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46774FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:25:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E013C433D2;
+	Mon, 15 May 2023 17:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171514;
-	bh=voNhrY9iVz3g/RvhPe6ae7dSu7mgql45PL/RHZR6XXc=;
+	s=korg; t=1684171517;
+	bh=5r3Jdb8FnxwJfoi2+Lhyq/bTS7b1dyUlxUs3I53yp+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FwnEAqjLXwvrMtkcym5CINSZiK50AHweSb/75Cp93mjDZgdpbMnlZp070BbU8G1sr
-	 2I9jTTkg2RuxnKR3Xmto9q+g4/a/2AGqNYqAVXy8wCkudJpls12iGmE5xaMyKSUWf5
-	 XXsVhNLgLgZf0h/V8U7KRGDtsnmssaYVtt3VSe50=
+	b=B4NC1EmY63kUPBZ8oMl7fqZsN8OqZ07yiaYIgNHzyk7n0ARcFr/ffi8xb3U+7e7dI
+	 DCk6VcEa7/U5JQgN3+FLr5b/0cMWCrgYgRTHQzoHJfSOX2uAsCrbpVPx6PJNfqx4qX
+	 gMbdwlHn7MSXQiOjMd0XoLlhmzoI0HHC11bBeiGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
 	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.2 204/242] drm/amd: Add a new helper for loading/validating microcode
-Date: Mon, 15 May 2023 18:28:50 +0200
-Message-Id: <20230515161728.059316817@linuxfoundation.org>
+Subject: [PATCH 6.2 205/242] drm/amd: Use `amdgpu_ucode_*` helpers for MES
+Date: Mon, 15 May 2023 18:28:51 +0200
+Message-Id: <20230515161728.088766717@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -37,79 +37,101 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 2210af50ae7f4104269dfde7bafbbfbacdbe1a2b upstream.
+commit 11e0b0067ec0707e8e598a5f9a547ab618ae7982 upstream.
 
-All microcode runs a basic validation after it's been loaded. Each
-IP block as part of init will run both.
+The `amdgpu_ucode_request` helper will ensure that the return code for
+missing firmware is -ENODEV so that early_init can fail.
 
-Introduce a wrapper for request_firmware and amdgpu_ucode_validate.
-This wrapper will also remap any error codes from request_firmware
-to -ENODEV.  This is so that early_init will fail if firmware couldn't
-be loaded instead of the IP block being disabled.
+The `amdgpu_ucode_release` helper provides symmetry for releasing firmware.
 
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
 Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c |   36 ++++++++++++++++++++++++++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h |    3 ++
- 2 files changed, 39 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |   10 ++--------
+ drivers/gpu/drm/amd/amdgpu/mes_v10_1.c  |   10 +---------
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c  |   10 +---------
+ 3 files changed, 4 insertions(+), 26 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.c
-@@ -1091,3 +1091,39 @@ void amdgpu_ucode_ip_version_decode(stru
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
+@@ -1438,11 +1438,7 @@ int amdgpu_mes_init_microcode(struct amd
+ 	snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_mes%s.bin",
+ 		ucode_prefix,
+ 		pipe == AMDGPU_MES_SCHED_PIPE ? "" : "1");
+-	r = request_firmware(&adev->mes.fw[pipe], fw_name, adev->dev);
+-	if (r)
+-		goto out;
+-
+-	r = amdgpu_ucode_validate(adev->mes.fw[pipe]);
++	r = amdgpu_ucode_request(adev, &adev->mes.fw[pipe], fw_name);
+ 	if (r)
+ 		goto out;
  
- 	snprintf(ucode_prefix, len, "%s_%d_%d_%d", ip_name, maj, min, rev);
+@@ -1482,9 +1478,7 @@ int amdgpu_mes_init_microcode(struct amd
+ 	}
+ 
+ 	return 0;
+-
+ out:
+-	release_firmware(adev->mes.fw[pipe]);
+-	adev->mes.fw[pipe] = NULL;
++	amdgpu_ucode_release(&adev->mes.fw[pipe]);
+ 	return r;
  }
-+
-+/*
-+ * amdgpu_ucode_request - Fetch and validate amdgpu microcode
-+ *
-+ * @adev: amdgpu device
-+ * @fw: pointer to load firmware to
-+ * @fw_name: firmware to load
-+ *
-+ * This is a helper that will use request_firmware and amdgpu_ucode_validate
-+ * to load and run basic validation on firmware. If the load fails, remap
-+ * the error code to -ENODEV, so that early_init functions will fail to load.
-+ */
-+int amdgpu_ucode_request(struct amdgpu_device *adev, const struct firmware **fw,
-+			 const char *fw_name)
-+{
-+	int err = request_firmware(fw, fw_name, adev->dev);
-+
-+	if (err)
-+		return -ENODEV;
-+	err = amdgpu_ucode_validate(*fw);
-+	if (err)
-+		dev_dbg(adev->dev, "\"%s\" failed to validate\n", fw_name);
-+
-+	return err;
-+}
-+
-+/*
-+ * amdgpu_ucode_release - Release firmware microcode
-+ *
-+ * @fw: pointer to firmware to release
-+ */
-+void amdgpu_ucode_release(const struct firmware **fw)
-+{
-+	release_firmware(*fw);
-+	*fw = NULL;
-+}
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ucode.h
-@@ -544,6 +544,9 @@ void amdgpu_ucode_print_sdma_hdr(const s
- void amdgpu_ucode_print_psp_hdr(const struct common_firmware_header *hdr);
- void amdgpu_ucode_print_gpu_info_hdr(const struct common_firmware_header *hdr);
- int amdgpu_ucode_validate(const struct firmware *fw);
-+int amdgpu_ucode_request(struct amdgpu_device *adev, const struct firmware **fw,
-+			 const char *fw_name);
-+void amdgpu_ucode_release(const struct firmware **fw);
- bool amdgpu_ucode_hdr_version(union amdgpu_firmware_header *hdr,
- 				uint16_t hdr_major, uint16_t hdr_minor);
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v10_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v10_1.c
+@@ -379,13 +379,6 @@ static const struct amdgpu_mes_funcs mes
+ 	.resume_gang = mes_v10_1_resume_gang,
+ };
  
+-static void mes_v10_1_free_microcode(struct amdgpu_device *adev,
+-				     enum admgpu_mes_pipe pipe)
+-{
+-	release_firmware(adev->mes.fw[pipe]);
+-	adev->mes.fw[pipe] = NULL;
+-}
+-
+ static int mes_v10_1_allocate_ucode_buffer(struct amdgpu_device *adev,
+ 					   enum admgpu_mes_pipe pipe)
+ {
+@@ -979,8 +972,7 @@ static int mes_v10_1_sw_fini(void *handl
+ 		amdgpu_bo_free_kernel(&adev->mes.eop_gpu_obj[pipe],
+ 				      &adev->mes.eop_gpu_addr[pipe],
+ 				      NULL);
+-
+-		mes_v10_1_free_microcode(adev, pipe);
++		amdgpu_ucode_release(&adev->mes.fw[pipe]);
+ 	}
+ 
+ 	amdgpu_bo_free_kernel(&adev->gfx.kiq.ring.mqd_obj,
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -460,13 +460,6 @@ static const struct amdgpu_mes_funcs mes
+ 	.misc_op = mes_v11_0_misc_op,
+ };
+ 
+-static void mes_v11_0_free_microcode(struct amdgpu_device *adev,
+-				     enum admgpu_mes_pipe pipe)
+-{
+-	release_firmware(adev->mes.fw[pipe]);
+-	adev->mes.fw[pipe] = NULL;
+-}
+-
+ static int mes_v11_0_allocate_ucode_buffer(struct amdgpu_device *adev,
+ 					   enum admgpu_mes_pipe pipe)
+ {
+@@ -1070,8 +1063,7 @@ static int mes_v11_0_sw_fini(void *handl
+ 		amdgpu_bo_free_kernel(&adev->mes.eop_gpu_obj[pipe],
+ 				      &adev->mes.eop_gpu_addr[pipe],
+ 				      NULL);
+-
+-		mes_v11_0_free_microcode(adev, pipe);
++		amdgpu_ucode_release(&adev->mes.fw[pipe]);
+ 	}
+ 
+ 	amdgpu_bo_free_kernel(&adev->gfx.kiq.ring.mqd_obj,
 
 
