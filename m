@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99776DF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:39:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E82C433EF;
-	Mon, 15 May 2023 16:39:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F3DDF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:40:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CDE4C433EF;
+	Mon, 15 May 2023 16:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168797;
-	bh=KpME67pG9ORsPNnLkZxMYRv1H1BJO5ATgK4Y5USyRN4=;
+	s=korg; t=1684168800;
+	bh=iKjmHaqOrxb3L09j0BuS3vequ9ACYlcpmnmjftN2+ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z0zBal9iOU7wBN7ORt/xa8DdV8SFsP9xd8i/TTvJG155T5pp2Vbtsi2t8H3p2K4o8
-	 nkqxrkRVVBaNk2z8JbH087UF+sbgTzlD2qrSdbiewRMi72/mY+RCYDg0Y7s2NRhJbZ
-	 H3Kv5tV0NwrWDZC9/wk5fzGDdhiVzOWwln9m5ZHE=
+	b=ba6vL+qSddL+O3AT03yLIOKAnc5uPiHJ9JfKtFZdZgcwaAEZ1sPWdPPQ5zNWbNiyp
+	 E1mmjLFhWCA6dOqO7mEY0CoA3GSjC2lgCf0PxOSfEahTIEm19vG3FZkp1TqrPaprg0
+	 /N6mucCIy397NBSpgptv4EhkxVmSQyeDhfS0uwSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Li <liwei391@huawei.com>,
-	Sumit Garg <sumit.garg@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	Will Deacon <will@kernel.org>,
+	Waiman Long <longman@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Qian Cai <cai@gmx.us>,
+	Zhong Jiang <zhongjiang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 044/191] arm64: kgdb: Set PSTATE.SS to 1 to re-enable single-step
-Date: Mon, 15 May 2023 18:24:41 +0200
-Message-Id: <20230515161708.793862741@linuxfoundation.org>
+Subject: [PATCH 4.19 045/191] debugobjects: Add percpu free pools
+Date: Mon, 15 May 2023 18:24:42 +0200
+Message-Id: <20230515161708.841675721@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
 References: <20230515161707.203549282@linuxfoundation.org>
@@ -38,126 +40,259 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sumit Garg <sumit.garg@linaro.org>
+From: Waiman Long <longman@redhat.com>
 
-[ Upstream commit af6c0bd59f4f3ad5daad2f7b777954b1954551d5 ]
+[ Upstream commit d86998b17a01050c0232231fa481e65ef8171ca6 ]
 
-Currently only the first attempt to single-step has any effect. After
-that all further stepping remains "stuck" at the same program counter
-value.
+When a multi-threaded workload does a lot of small memory object
+allocations and deallocations, it may cause the allocation and freeing of
+many debug objects. This will make the global pool_lock a bottleneck in the
+performance of the workload.  Since interrupts are disabled when acquiring
+the pool_lock, it may even cause hard lockups to happen.
 
-Refer to the ARM Architecture Reference Manual (ARM DDI 0487E.a) D2.12,
-PSTATE.SS=1 should be set at each step before transferring the PE to the
-'Active-not-pending' state. The problem here is PSTATE.SS=1 is not set
-since the second single-step.
+To reduce contention of the global pool_lock, add a percpu debug object
+free pool that can be used to buffer some of the debug object allocation
+and freeing requests without acquiring the pool_lock.  Each CPU will now
+have a percpu free pool that can hold up to a maximum of 64 debug
+objects. Allocation and freeing requests will go to the percpu free pool
+first. If that fails, the pool_lock will be taken and the global free pool
+will be used.
 
-After the first single-step, the PE transferes to the 'Inactive' state,
-with PSTATE.SS=0 and MDSCR.SS=1, thus PSTATE.SS won't be set to 1 due to
-kernel_active_single_step()=true. Then the PE transferes to the
-'Active-pending' state when ERET and returns to the debugger by step
-exception.
+The presence or absence of obj_cache is used as a marker to see if the
+percpu cache should be used.
 
-Before this patch:
-==================
-Entering kdb (current=0xffff3376039f0000, pid 1) on processor 0 due to Keyboard Entry
-[0]kdb>
-
-[0]kdb>
-[0]kdb> bp write_sysrq_trigger
-Instruction(i) BP #0 at 0xffffa45c13d09290 (write_sysrq_trigger)
-    is enabled   addr at ffffa45c13d09290, hardtype=0 installed=0
-
-[0]kdb> go
-$ echo h > /proc/sysrq-trigger
-
-Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to Breakpoint @ 0xffffad651a309290
-[1]kdb> ss
-
-Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to SS trap @ 0xffffad651a309294
-[1]kdb> ss
-
-Entering kdb (current=0xffff4f7e453f8000, pid 175) on processor 1 due to SS trap @ 0xffffad651a309294
-[1]kdb>
-
-After this patch:
-=================
-Entering kdb (current=0xffff6851c39f0000, pid 1) on processor 0 due to Keyboard Entry
-[0]kdb> bp write_sysrq_trigger
-Instruction(i) BP #0 at 0xffffc02d2dd09290 (write_sysrq_trigger)
-    is enabled   addr at ffffc02d2dd09290, hardtype=0 installed=0
-
-[0]kdb> go
-$ echo h > /proc/sysrq-trigger
-
-Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to Breakpoint @ 0xffffc02d2dd09290
-[1]kdb> ss
-
-Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd09294
-[1]kdb> ss
-
-Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd09298
-[1]kdb> ss
-
-Entering kdb (current=0xffff6851c53c1840, pid 174) on processor 1 due to SS trap @ 0xffffc02d2dd0929c
-[1]kdb>
-
-Fixes: 44679a4f142b ("arm64: KGDB: Add step debugging support")
-Co-developed-by: Wei Li <liwei391@huawei.com>
-Signed-off-by: Wei Li <liwei391@huawei.com>
-Signed-off-by: Sumit Garg <sumit.garg@linaro.org>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Daniel Thompson <daniel.thompson@linaro.org>
-Tested-by: Daniel Thompson <daniel.thompson@linaro.org>
-Link: https://lore.kernel.org/r/20230202073148.657746-3-sumit.garg@linaro.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
+Cc: "Joel Fernandes (Google)" <joel@joelfernandes.org>
+Cc: Qian Cai <cai@gmx.us>
+Cc: Zhong Jiang <zhongjiang@huawei.com>
+Link: https://lkml.kernel.org/r/20190520141450.7575-2-longman@redhat.com
+Stable-dep-of: 63a759694eed ("debugobject: Prevent init race with static objects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/debug-monitors.h | 1 +
- arch/arm64/kernel/debug-monitors.c      | 5 +++++
- arch/arm64/kernel/kgdb.c                | 2 ++
- 3 files changed, 8 insertions(+)
+ lib/debugobjects.c | 115 +++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 91 insertions(+), 24 deletions(-)
 
-diff --git a/arch/arm64/include/asm/debug-monitors.h b/arch/arm64/include/asm/debug-monitors.h
-index 41b065f1be88c..13630e8078ff4 100644
---- a/arch/arm64/include/asm/debug-monitors.h
-+++ b/arch/arm64/include/asm/debug-monitors.h
-@@ -125,6 +125,7 @@ void user_regs_reset_single_step(struct user_pt_regs *regs,
- void kernel_enable_single_step(struct pt_regs *regs);
- void kernel_disable_single_step(void);
- int kernel_active_single_step(void);
-+void kernel_rewind_single_step(struct pt_regs *regs);
+diff --git a/lib/debugobjects.c b/lib/debugobjects.c
+index 14afeeb7d6ef5..6e2baf9e9eb27 100644
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -25,6 +25,7 @@
  
- #ifdef CONFIG_HAVE_HW_BREAKPOINT
- int reinstall_suspended_bps(struct pt_regs *regs);
-diff --git a/arch/arm64/kernel/debug-monitors.c b/arch/arm64/kernel/debug-monitors.c
-index 501e835c65007..f5837937cd932 100644
---- a/arch/arm64/kernel/debug-monitors.c
-+++ b/arch/arm64/kernel/debug-monitors.c
-@@ -437,6 +437,11 @@ int kernel_active_single_step(void)
+ #define ODEBUG_POOL_SIZE	1024
+ #define ODEBUG_POOL_MIN_LEVEL	256
++#define ODEBUG_POOL_PERCPU_SIZE	64
+ 
+ #define ODEBUG_CHUNK_SHIFT	PAGE_SHIFT
+ #define ODEBUG_CHUNK_SIZE	(1 << ODEBUG_CHUNK_SHIFT)
+@@ -35,6 +36,17 @@ struct debug_bucket {
+ 	raw_spinlock_t		lock;
+ };
+ 
++/*
++ * Debug object percpu free list
++ * Access is protected by disabling irq
++ */
++struct debug_percpu_free {
++	struct hlist_head	free_objs;
++	int			obj_free;
++};
++
++static DEFINE_PER_CPU(struct debug_percpu_free, percpu_obj_pool);
++
+ static struct debug_bucket	obj_hash[ODEBUG_HASH_SIZE];
+ 
+ static struct debug_obj		obj_static_pool[ODEBUG_POOL_SIZE] __initdata;
+@@ -44,13 +56,19 @@ static DEFINE_RAW_SPINLOCK(pool_lock);
+ static HLIST_HEAD(obj_pool);
+ static HLIST_HEAD(obj_to_free);
+ 
++/*
++ * Because of the presence of percpu free pools, obj_pool_free will
++ * under-count those in the percpu free pools. Similarly, obj_pool_used
++ * will over-count those in the percpu free pools. Adjustments will be
++ * made at debug_stats_show(). Both obj_pool_min_free and obj_pool_max_used
++ * can be off.
++ */
+ static int			obj_pool_min_free = ODEBUG_POOL_SIZE;
+ static int			obj_pool_free = ODEBUG_POOL_SIZE;
+ static int			obj_pool_used;
+ static int			obj_pool_max_used;
+ /* The number of objs on the global free list */
+ static int			obj_nr_tofree;
+-static struct kmem_cache	*obj_cache;
+ 
+ static int			debug_objects_maxchain __read_mostly;
+ static int __maybe_unused	debug_objects_maxchecked __read_mostly;
+@@ -63,6 +81,7 @@ static int			debug_objects_pool_size __read_mostly
+ static int			debug_objects_pool_min_level __read_mostly
+ 				= ODEBUG_POOL_MIN_LEVEL;
+ static struct debug_obj_descr	*descr_test  __read_mostly;
++static struct kmem_cache	*obj_cache __read_mostly;
+ 
+ /*
+  * Track numbers of kmem_cache_alloc()/free() calls done.
+@@ -162,6 +181,21 @@ static struct debug_obj *lookup_object(void *addr, struct debug_bucket *b)
+ 	return NULL;
  }
- NOKPROBE_SYMBOL(kernel_active_single_step);
  
-+void kernel_rewind_single_step(struct pt_regs *regs)
++/*
++ * Allocate a new object from the hlist
++ */
++static struct debug_obj *__alloc_object(struct hlist_head *list)
 +{
-+	set_regs_spsr_ss(regs);
++	struct debug_obj *obj = NULL;
++
++	if (list->first) {
++		obj = hlist_entry(list->first, typeof(*obj), node);
++		hlist_del(&obj->node);
++	}
++
++	return obj;
 +}
 +
- /* ptrace API */
- void user_enable_single_step(struct task_struct *task)
+ /*
+  * Allocate a new object. If the pool is empty, switch off the debugger.
+  * Must be called with interrupts disabled.
+@@ -169,20 +203,21 @@ static struct debug_obj *lookup_object(void *addr, struct debug_bucket *b)
+ static struct debug_obj *
+ alloc_object(void *addr, struct debug_bucket *b, struct debug_obj_descr *descr)
  {
-diff --git a/arch/arm64/kernel/kgdb.c b/arch/arm64/kernel/kgdb.c
-index 8815b5457dd0b..d7847ef10e9d3 100644
---- a/arch/arm64/kernel/kgdb.c
-+++ b/arch/arm64/kernel/kgdb.c
-@@ -234,6 +234,8 @@ int kgdb_arch_handle_exception(int exception_vector, int signo,
- 		 */
- 		if (!kernel_active_single_step())
- 			kernel_enable_single_step(linux_regs);
-+		else
-+			kernel_rewind_single_step(linux_regs);
- 		err = 0;
- 		break;
- 	default:
+-	struct debug_obj *obj = NULL;
+-
+-	raw_spin_lock(&pool_lock);
+-	if (obj_pool.first) {
+-		obj	    = hlist_entry(obj_pool.first, typeof(*obj), node);
+-
+-		obj->object = addr;
+-		obj->descr  = descr;
+-		obj->state  = ODEBUG_STATE_NONE;
+-		obj->astate = 0;
+-		hlist_del(&obj->node);
++	struct debug_percpu_free *percpu_pool;
++	struct debug_obj *obj;
+ 
+-		hlist_add_head(&obj->node, &b->list);
++	if (likely(obj_cache)) {
++		percpu_pool = this_cpu_ptr(&percpu_obj_pool);
++		obj = __alloc_object(&percpu_pool->free_objs);
++		if (obj) {
++			percpu_pool->obj_free--;
++			goto init_obj;
++		}
++	}
+ 
++	raw_spin_lock(&pool_lock);
++	obj = __alloc_object(&obj_pool);
++	if (obj) {
+ 		obj_pool_used++;
+ 		if (obj_pool_used > obj_pool_max_used)
+ 			obj_pool_max_used = obj_pool_used;
+@@ -193,6 +228,14 @@ alloc_object(void *addr, struct debug_bucket *b, struct debug_obj_descr *descr)
+ 	}
+ 	raw_spin_unlock(&pool_lock);
+ 
++init_obj:
++	if (obj) {
++		obj->object = addr;
++		obj->descr  = descr;
++		obj->state  = ODEBUG_STATE_NONE;
++		obj->astate = 0;
++		hlist_add_head(&obj->node, &b->list);
++	}
+ 	return obj;
+ }
+ 
+@@ -247,8 +290,21 @@ static bool __free_object(struct debug_obj *obj)
+ {
+ 	unsigned long flags;
+ 	bool work;
++	struct debug_percpu_free *percpu_pool;
+ 
+-	raw_spin_lock_irqsave(&pool_lock, flags);
++	local_irq_save(flags);
++	/*
++	 * Try to free it into the percpu pool first.
++	 */
++	percpu_pool = this_cpu_ptr(&percpu_obj_pool);
++	if (obj_cache && percpu_pool->obj_free < ODEBUG_POOL_PERCPU_SIZE) {
++		hlist_add_head(&obj->node, &percpu_pool->free_objs);
++		percpu_pool->obj_free++;
++		local_irq_restore(flags);
++		return false;
++	}
++
++	raw_spin_lock(&pool_lock);
+ 	work = (obj_pool_free > debug_objects_pool_size) && obj_cache;
+ 	obj_pool_used--;
+ 
+@@ -259,7 +315,8 @@ static bool __free_object(struct debug_obj *obj)
+ 		obj_pool_free++;
+ 		hlist_add_head(&obj->node, &obj_pool);
+ 	}
+-	raw_spin_unlock_irqrestore(&pool_lock, flags);
++	raw_spin_unlock(&pool_lock);
++	local_irq_restore(flags);
+ 	return work;
+ }
+ 
+@@ -822,13 +879,19 @@ void debug_check_no_obj_freed(const void *address, unsigned long size)
+ 
+ static int debug_stats_show(struct seq_file *m, void *v)
+ {
++	int cpu, obj_percpu_free = 0;
++
++	for_each_possible_cpu(cpu)
++		obj_percpu_free += per_cpu(percpu_obj_pool.obj_free, cpu);
++
+ 	seq_printf(m, "max_chain     :%d\n", debug_objects_maxchain);
+ 	seq_printf(m, "max_checked   :%d\n", debug_objects_maxchecked);
+ 	seq_printf(m, "warnings      :%d\n", debug_objects_warnings);
+ 	seq_printf(m, "fixups        :%d\n", debug_objects_fixups);
+-	seq_printf(m, "pool_free     :%d\n", obj_pool_free);
++	seq_printf(m, "pool_free     :%d\n", obj_pool_free + obj_percpu_free);
++	seq_printf(m, "pool_pcp_free :%d\n", obj_percpu_free);
+ 	seq_printf(m, "pool_min_free :%d\n", obj_pool_min_free);
+-	seq_printf(m, "pool_used     :%d\n", obj_pool_used);
++	seq_printf(m, "pool_used     :%d\n", obj_pool_used - obj_percpu_free);
+ 	seq_printf(m, "pool_max_used :%d\n", obj_pool_max_used);
+ 	seq_printf(m, "on_free_list  :%d\n", obj_nr_tofree);
+ 	seq_printf(m, "objs_allocated:%d\n", debug_objects_allocated);
+@@ -1177,9 +1240,20 @@ static int __init debug_objects_replace_static_objects(void)
+  */
+ void __init debug_objects_mem_init(void)
+ {
++	int cpu;
++
+ 	if (!debug_objects_enabled)
+ 		return;
+ 
++	/*
++	 * Initialize the percpu object pools
++	 *
++	 * Initialization is not strictly necessary, but was done for
++	 * completeness.
++	 */
++	for_each_possible_cpu(cpu)
++		INIT_HLIST_HEAD(&per_cpu(percpu_obj_pool.free_objs, cpu));
++
+ 	obj_cache = kmem_cache_create("debug_objects_cache",
+ 				      sizeof (struct debug_obj), 0,
+ 				      SLAB_DEBUG_OBJECTS | SLAB_NOLEAKTRACE,
+@@ -1191,11 +1265,4 @@ void __init debug_objects_mem_init(void)
+ 		pr_warn("out of memory.\n");
+ 	} else
+ 		debug_objects_selftest();
+-
+-	/*
+-	 * Increase the thresholds for allocating and freeing objects
+-	 * according to the number of possible CPUs available in the system.
+-	 */
+-	debug_objects_pool_size += num_possible_cpus() * 32;
+-	debug_objects_pool_min_level += num_possible_cpus() * 4;
+ }
 -- 
 2.39.2
 
