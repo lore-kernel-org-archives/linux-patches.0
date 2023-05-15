@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9ADFBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2190AC433EF;
-	Mon, 15 May 2023 16:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8664FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16774C433EF;
+	Mon, 15 May 2023 16:56:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169775;
-	bh=q6AzAGrTG8ArFQN82EMIcsu59wUViAOx8XuiCJeb2zI=;
+	s=korg; t=1684169778;
+	bh=C1EHBejhltQUJsb+n597kPRcWUmcmrDTBbB4j7w2Thc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=114sC34HKtWYa10gC5S40U5aOG63hjwf5HG4vu8o4IN96se6TGn/mLlVaBuHpIHwg
-	 pVnjzg2W3OuAaQbFb8NgT+Bhi85T68//kg9ONAJySgdJKHAwAx2A8GQTfHrx7yBheM
-	 QYH+ipBcxn5Z8oyrLbFE5CzYaizcmcoeGJn7xZsw=
+	b=tY0RhuhfUsAXXlmq7EHFF0drLJkwDW8aUeasLiRGgPNATnut+IfIXeJTmitsUp/Ni
+	 o8zrf4tp7qLV3LF2zuCY64lppvxKhw42FVCrHSxMtaLvLqUYCdMECDStyMaZuv7pae
+	 qzN0yR1evFBZ8xyJ4CEIY8PCo+EG8dyS9DShT77g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 6.3 167/246] drm/msm/adreno: fix runtime PM imbalance at gpu load
-Date: Mon, 15 May 2023 18:26:19 +0200
-Message-Id: <20230515161727.644129478@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Robert Foss <rfoss@kernel.org>
+Subject: [PATCH 6.3 168/246] drm/bridge: lt8912b: Fix DSI Video Mode
+Date: Mon, 15 May 2023 18:26:20 +0200
+Message-Id: <20230515161727.673967895@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,71 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-commit 0d997f95b70f98987ae031a89677c13e0e223670 upstream.
+commit f435b7ef3b360d689df2ffa8326352cd07940d92 upstream.
 
-A recent commit moved enabling of runtime PM to GPU load time (first
-open()) but failed to update the error paths so that runtime PM is
-disabled if initialisation of the GPU fails. This would trigger a
-warning about the unbalanced disable count on the next open() attempt.
+LT8912 DSI port supports only Non-Burst mode video operation with Sync
+Events and continuous clock on clock lane, correct dsi mode flags
+according to that removing MIPI_DSI_MODE_VIDEO_BURST flag.
 
-Note that pm_runtime_put_noidle() is sufficient to balance the usage
-count when pm_runtime_put_sync() fails (and is chosen over
-pm_runtime_resume_and_get() for consistency reasons).
-
-Fixes: 4b18299b3365 ("drm/msm/adreno: Defer enabling runpm until hw_init()")
-Cc: stable@vger.kernel.org      # 6.0
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Patchwork: https://patchwork.freedesktop.org/patch/524971/
-Link: https://lore.kernel.org/r/20230303164807.13124-3-johan+linaro@kernel.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Cc: <stable@vger.kernel.org>
+Fixes: 30e2ae943c26 ("drm/bridge: Introduce LT8912B DSI to HDMI bridge")
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Reviewed-by: Robert Foss <rfoss@kernel.org>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230330093131.424828-1-francesco@dolcini.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_device.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/lontium-lt8912b.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-+++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-@@ -440,20 +440,21 @@ struct msm_gpu *adreno_load_gpu(struct d
+--- a/drivers/gpu/drm/bridge/lontium-lt8912b.c
++++ b/drivers/gpu/drm/bridge/lontium-lt8912b.c
+@@ -504,7 +504,6 @@ static int lt8912_attach_dsi(struct lt89
+ 	dsi->format = MIPI_DSI_FMT_RGB888;
  
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0) {
--		pm_runtime_put_sync(&pdev->dev);
-+		pm_runtime_put_noidle(&pdev->dev);
- 		DRM_DEV_ERROR(dev->dev, "Couldn't power up the GPU: %d\n", ret);
--		return NULL;
-+		goto err_disable_rpm;
- 	}
+ 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
+-			  MIPI_DSI_MODE_VIDEO_BURST |
+ 			  MIPI_DSI_MODE_LPM |
+ 			  MIPI_DSI_MODE_NO_EOT_PACKET;
  
- 	mutex_lock(&gpu->lock);
- 	ret = msm_gpu_hw_init(gpu);
- 	mutex_unlock(&gpu->lock);
--	pm_runtime_put_autosuspend(&pdev->dev);
- 	if (ret) {
- 		DRM_DEV_ERROR(dev->dev, "gpu hw init failed: %d\n", ret);
--		return NULL;
-+		goto err_put_rpm;
- 	}
- 
-+	pm_runtime_put_autosuspend(&pdev->dev);
-+
- #ifdef CONFIG_DEBUG_FS
- 	if (gpu->funcs->debugfs_init) {
- 		gpu->funcs->debugfs_init(gpu, dev->primary);
-@@ -462,6 +463,13 @@ struct msm_gpu *adreno_load_gpu(struct d
- #endif
- 
- 	return gpu;
-+
-+err_put_rpm:
-+	pm_runtime_put_sync(&pdev->dev);
-+err_disable_rpm:
-+	pm_runtime_disable(&pdev->dev);
-+
-+	return NULL;
- }
- 
- static int find_chipid(struct device *dev, struct adreno_rev *rev)
 
 
