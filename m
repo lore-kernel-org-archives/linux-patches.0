@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05E6D512
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17FB5C433EF;
-	Mon, 15 May 2023 16:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6361ED512
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:33:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D382BC4339B;
+	Mon, 15 May 2023 16:33:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168413;
-	bh=d9P0oSvCc74Gj+kWRbi7jGzC0aVuIpRL7lB0mWSqU7A=;
+	s=korg; t=1684168417;
+	bh=A4F215oP5dIpPPJXa/5J33Q3CBbcXbt4jrnhYhaHTt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nig7tHkpx3YP3+sZkqtHXffvJIpzLMyE8ZCHxcUZG5ULUhFBi6FVk0uu6NdpSBTGv
-	 c53Cyqw4GSPzyGSCdTY7qHShS7xicQjJd0ltzziEnNspkMg8j/ZdgLaHKbIzJ3pdzV
-	 R1fgoUHuTuSzfxi9FODeb3LoBM/sjYwWiz1wwkQw=
+	b=zW0H4JpZgTb59nh5A2nlnnByWdU0mv4SkxalsXF5nZ1TWRn3qwiN0YwVzPQRDTplM
+	 BuZnZGguZ4MLbQRKF622kVN9eHl9azWDulxMMA51D1/pIWh06S1JzPtlCUsVKSkAYL
+	 2TIHov/cQrxkqlSRaxU681jMVHhdb/GgdGMq24sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Jian <liujian56@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Saurabh Sengar <ssengar@linux.microsoft.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 042/116] Revert "Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work"
-Date: Mon, 15 May 2023 18:25:39 +0200
-Message-Id: <20230515161659.658406662@linuxfoundation.org>
+Subject: [PATCH 4.14 025/116] x86/ioapic: Dont return 0 from arch_dynirq_lower_bound()
+Date: Mon, 15 May 2023 18:25:22 +0200
+Message-Id: <20230515161659.115303160@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -35,36 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Jian <liujian56@huawei.com>
+From: Saurabh Sengar <ssengar@linux.microsoft.com>
 
-[ Upstream commit db2bf510bd5d57f064d9e1db395ed86a08320c54 ]
+[ Upstream commit 5af507bef93c09a94fb8f058213b489178f4cbe5 ]
 
-This reverts commit 1e9ac114c4428fdb7ff4635b45d4f46017e8916f.
+arch_dynirq_lower_bound() is invoked by the core interrupt code to
+retrieve the lowest possible Linux interrupt number for dynamically
+allocated interrupts like MSI.
 
-This patch introduces a possible null-ptr-def problem. Revert it. And the
-fixed bug by this patch have resolved by commit 73f7b171b7c0 ("Bluetooth:
-btsdio: fix use after free bug in btsdio_remove due to race condition").
+The x86 implementation uses this to exclude the IO/APIC GSI space.
+This works correctly as long as there is an IO/APIC registered, but
+returns 0 if not. This has been observed in VMs where the BIOS does
+not advertise an IO/APIC.
 
-Fixes: 1e9ac114c442 ("Bluetooth: btsdio: fix use after free bug in btsdio_remove due to unfinished work")
-Signed-off-by: Liu Jian <liujian56@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+0 is an invalid interrupt number except for the legacy timer interrupt
+on x86. The return value is unchecked in the core code, so it ends up
+to allocate interrupt number 0 which is subsequently considered to be
+invalid by the caller, e.g. the MSI allocation code.
+
+The function has already a check for 0 in the case that an IO/APIC is
+registered, as ioapic_dynirq_base is 0 in case of device tree setups.
+
+Consolidate this and zero check for both ioapic_dynirq_base and gsi_top,
+which is used in the case that no IO/APIC is registered.
+
+Fixes: 3e5bedc2c258 ("x86/apic: Fix arch_dynirq_lower_bound() bug for DT enabled machines")
+Signed-off-by: Saurabh Sengar <ssengar@linux.microsoft.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/1679988604-20308-1-git-send-email-ssengar@linux.microsoft.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btsdio.c | 1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/kernel/apic/io_apic.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/bluetooth/btsdio.c b/drivers/bluetooth/btsdio.c
-index bd55bf7a9914c..20142bc77554c 100644
---- a/drivers/bluetooth/btsdio.c
-+++ b/drivers/bluetooth/btsdio.c
-@@ -353,7 +353,6 @@ static void btsdio_remove(struct sdio_func *func)
+diff --git a/arch/x86/kernel/apic/io_apic.c b/arch/x86/kernel/apic/io_apic.c
+index de74bca6a8ff6..1cceb30357aaf 100644
+--- a/arch/x86/kernel/apic/io_apic.c
++++ b/arch/x86/kernel/apic/io_apic.c
+@@ -2357,17 +2357,21 @@ static int io_apic_get_redir_entries(int ioapic)
  
- 	BT_DBG("func %p", func);
+ unsigned int arch_dynirq_lower_bound(unsigned int from)
+ {
++	unsigned int ret;
++
+ 	/*
+ 	 * dmar_alloc_hwirq() may be called before setup_IO_APIC(), so use
+ 	 * gsi_top if ioapic_dynirq_base hasn't been initialized yet.
+ 	 */
+-	if (!ioapic_initialized)
+-		return gsi_top;
++	ret = ioapic_dynirq_base ? : gsi_top;
++
+ 	/*
+-	 * For DT enabled machines ioapic_dynirq_base is irrelevant and not
+-	 * updated. So simply return @from if ioapic_dynirq_base == 0.
++	 * For DT enabled machines ioapic_dynirq_base is irrelevant and
++	 * always 0. gsi_top can be 0 if there is no IO/APIC registered.
++	 * 0 is an invalid interrupt number for dynamic allocations. Return
++	 * @from instead.
+ 	 */
+-	return ioapic_dynirq_base ? : from;
++	return ret ? : from;
+ }
  
--	cancel_work_sync(&data->work);
- 	if (!data)
- 		return;
- 
+ #ifdef CONFIG_X86_32
 -- 
 2.39.2
 
