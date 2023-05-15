@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9C6CFBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:56:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F498C433D2;
-	Mon, 15 May 2023 17:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0295DFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:56:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58460C433EF;
+	Mon, 15 May 2023 17:56:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173416;
-	bh=hi7LJQ2+6JSwMNxWkh1xoasVnLLqu12APp6YoL8cFmQ=;
+	s=korg; t=1684173419;
+	bh=+fVUNjXPeKO/Yn37AQ4KTkdEeM7tuGu+wFdR2FaG9vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9xsUsFvEGAbg04vfMH3Z3lG0P+6E8lm1yx7PsPZlmvpFdynIVAEPJtMuu4P7u3qw
-	 9qPFJQb0xiBIAx4WgHR5XDvlbuF6+TO02wbVk2nHf9STQRr2+EtLd68W0RwecYL4+u
-	 z4qIucdh08gfYZEWTP2jH7E9Iv7Zemajjxp3DTk8=
+	b=el7Cl1iKjp6u8r5FUDyAjLEwIWEGB3E+nR8P/SUp6mDVmaF+wbMphtfb1PWwnnoSP
+	 g6KezLmTSe1yzuIPV1oacgPuWgEmn93OX6mUxehUiZZWKmbicJZWsfPpk53gzD7ypD
+	 e7FUIblzaMhbpQGLpMoEMQDOw4AqQiD/XbHamEeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangtao Li <frank.li@vivo.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Kalle Valo <kvalo@codeaurora.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 088/282] f2fs: handle dqget error in f2fs_transfer_project_quota()
-Date: Mon, 15 May 2023 18:27:46 +0200
-Message-Id: <20230515161724.906275160@linuxfoundation.org>
+Subject: [PATCH 5.4 089/282] rtlwifi: Start changing RT_TRACE into rtl_dbg
+Date: Mon, 15 May 2023 18:27:47 +0200
+Message-Id: <20230515161724.935111325@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,48 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Larry Finger <Larry.Finger@lwfinger.net>
 
-[ Upstream commit 8051692f5f23260215bfe9a72e712d93606acc5f ]
+[ Upstream commit 78a7245d84300cd616dbce26e6fc42a039a62279 ]
 
-We should set the error code when dqget() failed.
+The macro name RT_TRACE makes it seem that it is used for tracing, when
+is actually used for debugging. Change the name to RT_DEBUG.
 
-Fixes: 2c1d03056991 ("f2fs: support F2FS_IOC_FS{GET,SET}XATTR")
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+This step creates the new macro while keeping the old RT_TRACE to allow
+building. It will be removed at the end of the patch series.
+
+Signed-off-by: Larry Finger <Larry.Finger@lwfinger.net>
+Signed-off-by: Kalle Valo <kvalo@codeaurora.org>
+Link: https://lore.kernel.org/r/20200723204244.24457-2-Larry.Finger@lwfinger.net
+Stable-dep-of: 905a9241e4e8 ("wifi: rtlwifi: fix incorrect error codes in rtl_debugfs_set_write_rfreg()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/file.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/wireless/realtek/rtlwifi/debug.h | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
-index ef08ef0170306..8d4e66f36cf7e 100644
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -2821,15 +2821,16 @@ int f2fs_transfer_project_quota(struct inode *inode, kprojid_t kprojid)
- 	struct dquot *transfer_to[MAXQUOTAS] = {};
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	struct super_block *sb = sbi->sb;
--	int err = 0;
-+	int err;
+diff --git a/drivers/net/wireless/realtek/rtlwifi/debug.h b/drivers/net/wireless/realtek/rtlwifi/debug.h
+index 69f169d4d4aec..dbfb4d67ca31f 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/debug.h
++++ b/drivers/net/wireless/realtek/rtlwifi/debug.h
+@@ -160,6 +160,10 @@ void _rtl_dbg_print_data(struct rtl_priv *rtlpriv, u64 comp, int level,
+ 			 const char *titlestring,
+ 			 const void *hexdata, int hexdatalen);
  
- 	transfer_to[PRJQUOTA] = dqget(sb, make_kqid_projid(kprojid));
--	if (!IS_ERR(transfer_to[PRJQUOTA])) {
--		err = __dquot_transfer(inode, transfer_to);
--		if (err)
--			set_sbi_flag(sbi, SBI_QUOTA_NEED_REPAIR);
--		dqput(transfer_to[PRJQUOTA]);
--	}
-+	if (IS_ERR(transfer_to[PRJQUOTA]))
-+		return PTR_ERR(transfer_to[PRJQUOTA]);
++#define rtl_dbg(rtlpriv, comp, level, fmt, ...)			\
++	_rtl_dbg_trace(rtlpriv, comp, level,				\
++		       fmt, ##__VA_ARGS__)
 +
-+	err = __dquot_transfer(inode, transfer_to);
-+	if (err)
-+		set_sbi_flag(sbi, SBI_QUOTA_NEED_REPAIR);
-+	dqput(transfer_to[PRJQUOTA]);
- 	return err;
- }
+ #define RT_TRACE(rtlpriv, comp, level, fmt, ...)			\
+ 	_rtl_dbg_trace(rtlpriv, comp, level,				\
+ 		       fmt, ##__VA_ARGS__)
+@@ -176,6 +180,13 @@ void _rtl_dbg_print_data(struct rtl_priv *rtlpriv, u64 comp, int level,
  
+ struct rtl_priv;
+ 
++__printf(4, 5)
++static inline void rtl_dbg(struct rtl_priv *rtlpriv,
++			   u64 comp, int level,
++			   const char *fmt, ...)
++{
++}
++
+ __printf(4, 5)
+ static inline void RT_TRACE(struct rtl_priv *rtlpriv,
+ 			    u64 comp, int level,
 -- 
 2.39.2
 
