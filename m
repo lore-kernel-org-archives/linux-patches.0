@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549A7FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:15:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE992C433A7;
-	Mon, 15 May 2023 17:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853DDFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:15:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA651C433D2;
+	Mon, 15 May 2023 17:15:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170931;
-	bh=1JrCvhACJG3XIdoGF23okqvudLlr2PKQ40wi+gkY0zA=;
+	s=korg; t=1684170934;
+	bh=D+nVR6YJ6wziewKaom6jQtPAN2+qliognPODIvsi3EE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFZaMkstn7As5wFuVQ0u0yuCpBt/pvfCmc+m3I/fzzYgwlInnfULV0WxbBgbSlx47
-	 0HUH08rb6q6tp92PYPA24QOSng/jURBKe+b3YaAfuKSUovzcJC51QWV+99yPS0vDDz
-	 gIjZ8JD8/bmoKSujqobSywx+83G8uJGUovWtPCPA=
+	b=MzAQFrV3F7019OxfuoHItjZHcW2QshyLTnmqtqbAjbphwhXmbSVOj/M1eMQ4bqUwf
+	 TeVuhQH5fXshqULuxUSyQMHODpdYAl53w6L9ZmazrvDkHVyhWs6y7nXDQmtkiF6H5w
+	 TjZvFnFfna7AxswHksoGyiVKstx8qehEv2rAaO0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
+	Subbaraya Sundeep <sbhatta@marvell.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Geetha sowjanya <gakula@marvell.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 007/242] mtd: spi-nor: spansion: Enable JFFS2 write buffer for Infineon s28hx SEMPER flash
-Date: Mon, 15 May 2023 18:25:33 +0200
-Message-Id: <20230515161722.033603276@linuxfoundation.org>
+Subject: [PATCH 6.2 040/242] octeontx2-pf: mcs: Fix shared counters logic
+Date: Mon, 15 May 2023 18:26:06 +0200
+Message-Id: <20230515161723.121451298@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -35,105 +38,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+From: Subbaraya Sundeep <sbhatta@marvell.com>
 
-[ Upstream commit 9fd0945fe6fadfb6b54a9cd73be101c02b3e8134 ]
+[ Upstream commit 9bdfe61054fb2b989eb58df20bf99c0cf67e3038 ]
 
-Infineon(Cypress) SEMPER NOR flash family has on-die ECC and its program
-granularity is 16-byte ECC data unit size. JFFS2 supports write buffer
-mode for ECC'd NOR flash. Provide a way to clear the MTD_BIT_WRITEABLE
-flag in order to enable JFFS2 write buffer mode support.
+Macsec stats like InPktsLate and InPktsDelayed share
+same counter in hardware. If SecY replay_protect is true
+then counter represents InPktsLate otherwise InPktsDelayed.
+This mode change was tracked based on protect_frames
+instead of replay_protect mistakenly. Similarly InPktsUnchecked
+and InPktsOk share same counter and mode change was tracked
+based on validate_check instead of validate_disabled.
+This patch fixes those problems.
 
-A new SNOR_F_ECC flag is introduced to determine if the part has on-die
-ECC and if it has, MTD_BIT_WRITEABLE is unset.
-
-In vendor specific driver, a common cypress_nor_ecc_init() helper is
-added. This helper takes care for ECC related initialization for SEMPER
-flash family by setting up params->writesize and SNOR_F_ECC.
-
-Fixes: c3266af101f2 ("mtd: spi-nor: spansion: add support for Cypress Semper flash")
-Suggested-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Signed-off-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/d586723f6f12aaff44fbcd7b51e674b47ed554ed.1680760742.git.Takahiro.Kuwano@infineon.com
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Fixes: c54ffc73601c ("octeontx2-pf: mcs: Introduce MACSEC hardware offloading")
+Signed-off-by: Subbaraya Sundeep <sbhatta@marvell.com>
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/spi-nor/core.c     |  3 +++
- drivers/mtd/spi-nor/core.h     |  1 +
- drivers/mtd/spi-nor/debugfs.c  |  1 +
- drivers/mtd/spi-nor/spansion.c | 13 ++++++++++++-
- 4 files changed, 17 insertions(+), 1 deletion(-)
+ .../ethernet/marvell/octeontx2/nic/cn10k_macsec.c  | 14 +++++++-------
+ .../ethernet/marvell/octeontx2/nic/otx2_common.h   |  2 +-
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 767b1faa32b0e..d75db50767938 100644
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -2983,6 +2983,9 @@ static void spi_nor_set_mtd_info(struct spi_nor *nor)
- 		mtd->name = dev_name(dev);
- 	mtd->type = MTD_NORFLASH;
- 	mtd->flags = MTD_CAP_NORFLASH;
-+	/* Unset BIT_WRITEABLE to enable JFFS2 write buffer for ECC'd NOR */
-+	if (nor->flags & SNOR_F_ECC)
-+		mtd->flags &= ~MTD_BIT_WRITEABLE;
- 	if (nor->info->flags & SPI_NOR_NO_ERASE)
- 		mtd->flags |= MTD_NO_ERASE;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
+index 13faca9add9f4..3ad8d7ef20be6 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/cn10k_macsec.c
+@@ -1014,7 +1014,7 @@ static void cn10k_mcs_sync_stats(struct otx2_nic *pfvf, struct macsec_secy *secy
+ 
+ 	/* Check if sync is really needed */
+ 	if (secy->validate_frames == txsc->last_validate_frames &&
+-	    secy->protect_frames == txsc->last_protect_frames)
++	    secy->replay_protect == txsc->last_replay_protect)
+ 		return;
+ 
+ 	cn10k_mcs_secy_stats(pfvf, txsc->hw_secy_id_rx, &rx_rsp, MCS_RX, true);
+@@ -1036,19 +1036,19 @@ static void cn10k_mcs_sync_stats(struct otx2_nic *pfvf, struct macsec_secy *secy
+ 		rxsc->stats.InPktsInvalid += sc_rsp.pkt_invalid_cnt;
+ 		rxsc->stats.InPktsNotValid += sc_rsp.pkt_notvalid_cnt;
+ 
+-		if (txsc->last_protect_frames)
++		if (txsc->last_replay_protect)
+ 			rxsc->stats.InPktsLate += sc_rsp.pkt_late_cnt;
+ 		else
+ 			rxsc->stats.InPktsDelayed += sc_rsp.pkt_late_cnt;
+ 
+-		if (txsc->last_validate_frames == MACSEC_VALIDATE_CHECK)
++		if (txsc->last_validate_frames == MACSEC_VALIDATE_DISABLED)
+ 			rxsc->stats.InPktsUnchecked += sc_rsp.pkt_unchecked_cnt;
+ 		else
+ 			rxsc->stats.InPktsOK += sc_rsp.pkt_unchecked_cnt;
+ 	}
+ 
+ 	txsc->last_validate_frames = secy->validate_frames;
+-	txsc->last_protect_frames = secy->protect_frames;
++	txsc->last_replay_protect = secy->replay_protect;
+ }
+ 
+ static int cn10k_mdo_open(struct macsec_context *ctx)
+@@ -1117,7 +1117,7 @@ static int cn10k_mdo_add_secy(struct macsec_context *ctx)
+ 	txsc->sw_secy = secy;
+ 	txsc->encoding_sa = secy->tx_sc.encoding_sa;
+ 	txsc->last_validate_frames = secy->validate_frames;
+-	txsc->last_protect_frames = secy->protect_frames;
++	txsc->last_replay_protect = secy->replay_protect;
+ 
+ 	list_add(&txsc->entry, &cfg->txsc_list);
+ 
+@@ -1538,12 +1538,12 @@ static int cn10k_mdo_get_rx_sc_stats(struct macsec_context *ctx)
+ 	rxsc->stats.InPktsInvalid += rsp.pkt_invalid_cnt;
+ 	rxsc->stats.InPktsNotValid += rsp.pkt_notvalid_cnt;
+ 
+-	if (secy->protect_frames)
++	if (secy->replay_protect)
+ 		rxsc->stats.InPktsLate += rsp.pkt_late_cnt;
  	else
-diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
-index 57e8916965ea8..75ec2e5604247 100644
---- a/drivers/mtd/spi-nor/core.h
-+++ b/drivers/mtd/spi-nor/core.h
-@@ -131,6 +131,7 @@ enum spi_nor_option_flags {
- 	SNOR_F_SOFT_RESET	= BIT(12),
- 	SNOR_F_SWP_IS_VOLATILE	= BIT(13),
- 	SNOR_F_RWW		= BIT(14),
-+	SNOR_F_ECC		= BIT(15),
- };
+ 		rxsc->stats.InPktsDelayed += rsp.pkt_late_cnt;
  
- struct spi_nor_read_command {
-diff --git a/drivers/mtd/spi-nor/debugfs.c b/drivers/mtd/spi-nor/debugfs.c
-index bd8a18da49c04..285bdcbaa1134 100644
---- a/drivers/mtd/spi-nor/debugfs.c
-+++ b/drivers/mtd/spi-nor/debugfs.c
-@@ -26,6 +26,7 @@ static const char *const snor_f_names[] = {
- 	SNOR_F_NAME(SOFT_RESET),
- 	SNOR_F_NAME(SWP_IS_VOLATILE),
- 	SNOR_F_NAME(RWW),
-+	SNOR_F_NAME(ECC),
- };
- #undef SNOR_F_NAME
- 
-diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
-index 07fe0f6fdfe3e..f4e9a1738234a 100644
---- a/drivers/mtd/spi-nor/spansion.c
-+++ b/drivers/mtd/spi-nor/spansion.c
-@@ -218,6 +218,17 @@ static int cypress_nor_set_page_size(struct spi_nor *nor)
- 	return 0;
- }
- 
-+static void cypress_nor_ecc_init(struct spi_nor *nor)
-+{
-+	/*
-+	 * Programming is supported only in 16-byte ECC data unit granularity.
-+	 * Byte-programming, bit-walking, or multiple program operations to the
-+	 * same ECC data unit without an erase are not allowed.
-+	 */
-+	nor->params->writesize = 16;
-+	nor->flags |= SNOR_F_ECC;
-+}
-+
- static int
- s25hx_t_post_bfpt_fixup(struct spi_nor *nor,
- 			const struct sfdp_parameter_header *bfpt_header,
-@@ -324,7 +335,7 @@ static int s28hx_t_post_bfpt_fixup(struct spi_nor *nor,
- static void s28hx_t_late_init(struct spi_nor *nor)
- {
- 	nor->params->octal_dtr_enable = cypress_nor_octal_dtr_enable;
--	nor->params->writesize = 16;
-+	cypress_nor_ecc_init(nor);
- }
- 
- static const struct spi_nor_fixups s28hx_t_fixups = {
+-	if (secy->validate_frames == MACSEC_VALIDATE_CHECK)
++	if (secy->validate_frames == MACSEC_VALIDATE_DISABLED)
+ 		rxsc->stats.InPktsUnchecked += rsp.pkt_unchecked_cnt;
+ 	else
+ 		rxsc->stats.InPktsOK += rsp.pkt_unchecked_cnt;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
+index 3d22cc6a2804a..f42b2b65bfd7b 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
+@@ -389,7 +389,7 @@ struct cn10k_mcs_txsc {
+ 	struct cn10k_txsc_stats stats;
+ 	struct list_head entry;
+ 	enum macsec_validation_type last_validate_frames;
+-	bool last_protect_frames;
++	bool last_replay_protect;
+ 	u16 hw_secy_id_tx;
+ 	u16 hw_secy_id_rx;
+ 	u16 hw_flow_id;
 -- 
 2.39.2
 
