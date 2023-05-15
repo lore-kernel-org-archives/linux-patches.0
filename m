@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA24FC12
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 752D6C433D2;
-	Mon, 15 May 2023 17:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4860BFC12
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:34:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E69BC433EF;
+	Mon, 15 May 2023 17:34:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172076;
-	bh=mpGZfNNpTVB1GcfiV8cMRKxM2uPd48Abw51BIuSbG80=;
+	s=korg; t=1684172080;
+	bh=oV2Sx8WR+OBUk97E11P04I05mKcvjMkEKE2O3zCZ1d0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWX9Rg6fLb7B3FnnN7jZpOA7sbemRCUruq4cFMUE9KWrYEpskTuBmRadtqC/9Ss6j
-	 5rLRa/ds/H9VDa9X0XUuzMLK56hr525YrYgbPD6jUhg6ecXfAFSZ5EtU5e8DuGqVd1
-	 QnPyiZPoeFIFtSDnOujw3J27yKivfAoldNN/OxoA=
+	b=eipeR5a5dOIcTtIpuoQZEK5scaanWpavUVJEwo0Ko0HFfiu8aQZgeI0TMWFYAXUxC
+	 YY7JX2GodTRh7aGicDoxERvLg0zJ6uygKQ8VgQqU0Y+iMZZonxVsh3wB6x+lQGcpfv
+	 qXs+6NwJe3aGfHGPZ/L/xVATjFoZ/6Tw0TbvVdgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Borislav Petkov <bp@suse.de>,
-	Can Sun <cansun@arista.com>
-Subject: [PATCH 5.10 007/381] x86/fpu: Prevent FPU state corruption
-Date: Mon, 15 May 2023 18:24:18 +0200
-Message-Id: <20230515161737.089517956@linuxfoundation.org>
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 008/381] USB: serial: option: add UNISOC vendor and TOZED LT70C product
+Date: Mon, 15 May 2023 18:24:19 +0200
+Message-Id: <20230515161737.136928608@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -36,142 +34,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Arınç ÜNAL <arinc.unal@arinc9.com>
 
-commit 59f5ede3bc0f00eb856425f636dab0c10feb06d8 upstream.
+commit a095edfc15f0832e046ae23964e249ef5c95af87 upstream.
 
-The FPU usage related to task FPU management is either protected by
-disabling interrupts (switch_to, return to user) or via fpregs_lock() which
-is a wrapper around local_bh_disable(). When kernel code wants to use the
-FPU then it has to check whether it is possible by calling irq_fpu_usable().
+Add UNISOC vendor ID and TOZED LT70-C modem which is based from UNISOC
+SL8563. The modem supports the NCM mode. Interface 0 is used for running
+the AT commands. Interface 12 is the ADB interface.
 
-But the condition in irq_fpu_usable() is wrong. It allows FPU to be used
-when:
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  6 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1782 ProdID=4055 Rev=04.04
+S:  Manufacturer=Unisoc Phone
+S:  Product=Unisoc Phone
+S:  SerialNumber=<redacted>
+C:  #Ifs=14 Cfg#= 1 Atr=c0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
+E:  Ad=82(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#=10 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#=11 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8c(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#=12 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=(none)
+E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8d(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#=13 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8e(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 2 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
+E:  Ad=84(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 3 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
+E:  Ad=86(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 5 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 6 Alt= 0 #EPs= 1 Cls=02(commc) Sub=0d Prot=00 Driver=cdc_ncm
+E:  Ad=88(I) Atr=03(Int.) MxPS=  16 Ivl=32ms
+I:  If#= 7 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=01 Driver=cdc_ncm
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=89(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 9 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-   !in_interrupt() || interrupted_user_mode() || interrupted_kernel_fpu_idle()
-
-The latter is checking whether some other context already uses FPU in the
-kernel, but if that's not the case then it allows FPU to be used
-unconditionally even if the calling context interrupted a fpregs_lock()
-critical region. If that happens then the FPU state of the interrupted
-context becomes corrupted.
-
-Allow in kernel FPU usage only when no other context has in kernel FPU
-usage and either the calling context is not hard interrupt context or the
-hard interrupt did not interrupt a local bottomhalf disabled region.
-
-It's hard to find a proper Fixes tag as the condition was broken in one way
-or the other for a very long time and the eager/lazy FPU changes caused a
-lot of churn. Picked something remotely connected from the history.
-
-This survived undetected for quite some time as FPU usage in interrupt
-context is rare, but the recent changes to the random code unearthed it at
-least on a kernel which had FPU debugging enabled. There is probably a
-higher rate of silent corruption as not all issues can be detected by the
-FPU debugging code. This will be addressed in a subsequent change.
-
-Fixes: 5d2bd7009f30 ("x86, fpu: decouple non-lazy/eager fpu restore from xsave")
-Reported-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: Borislav Petkov <bp@suse.de>
+Signed-off-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Link: https://lore.kernel.org/r/20230417152003.243248-1-arinc.unal@arinc9.com
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20220501193102.588689270@linutronix.de
-Signed-off-by: Can Sun <cansun@arista.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
 ---
- arch/x86/kernel/fpu/core.c |   67 +++++++++++++++++----------------------------
- 1 file changed, 26 insertions(+), 41 deletions(-)
+ drivers/usb/serial/option.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -25,17 +25,7 @@
-  */
- union fpregs_state init_fpstate __read_mostly;
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -595,6 +595,11 @@ static void option_instat_callback(struc
+ #define SIERRA_VENDOR_ID			0x1199
+ #define SIERRA_PRODUCT_EM9191			0x90d3
  
--/*
-- * Track whether the kernel is using the FPU state
-- * currently.
-- *
-- * This flag is used:
-- *
-- *   - by IRQ context code to potentially use the FPU
-- *     if it's unused.
-- *
-- *   - to debug kernel_fpu_begin()/end() correctness
-- */
-+/* Track in-kernel FPU usage */
- static DEFINE_PER_CPU(bool, in_kernel_fpu);
- 
- /*
-@@ -43,42 +33,37 @@ static DEFINE_PER_CPU(bool, in_kernel_fp
-  */
- DEFINE_PER_CPU(struct fpu *, fpu_fpregs_owner_ctx);
- 
--static bool kernel_fpu_disabled(void)
--{
--	return this_cpu_read(in_kernel_fpu);
--}
--
--static bool interrupted_kernel_fpu_idle(void)
--{
--	return !kernel_fpu_disabled();
--}
--
--/*
-- * Were we in user mode (or vm86 mode) when we were
-- * interrupted?
-- *
-- * Doing kernel_fpu_begin/end() is ok if we are running
-- * in an interrupt context from user mode - we'll just
-- * save the FPU state as required.
-- */
--static bool interrupted_user_mode(void)
--{
--	struct pt_regs *regs = get_irq_regs();
--	return regs && user_mode(regs);
--}
--
- /*
-  * Can we use the FPU in kernel mode with the
-  * whole "kernel_fpu_begin/end()" sequence?
-- *
-- * It's always ok in process context (ie "not interrupt")
-- * but it is sometimes ok even from an irq.
-  */
- bool irq_fpu_usable(void)
- {
--	return !in_interrupt() ||
--		interrupted_user_mode() ||
--		interrupted_kernel_fpu_idle();
-+	if (WARN_ON_ONCE(in_nmi()))
-+		return false;
++/* UNISOC (Spreadtrum) products */
++#define UNISOC_VENDOR_ID			0x1782
++/* TOZED LT70-C based on UNISOC SL8563 uses UNISOC's vendor ID */
++#define TOZED_PRODUCT_LT70C			0x4055
 +
-+	/* In kernel FPU usage already active? */
-+	if (this_cpu_read(in_kernel_fpu))
-+		return false;
-+
-+	/*
-+	 * When not in NMI or hard interrupt context, FPU can be used in:
-+	 *
-+	 * - Task context except from within fpregs_lock()'ed critical
-+	 *   regions.
-+	 *
-+	 * - Soft interrupt processing context which cannot happen
-+	 *   while in a fpregs_lock()'ed critical region.
-+	 */
-+	if (!in_irq())
-+		return true;
-+
-+	/*
-+	 * In hard interrupt context it's safe when soft interrupts
-+	 * are enabled, which means the interrupt did not hit in
-+	 * a fpregs_lock()'ed critical region.
-+	 */
-+	return !softirq_count();
- }
- EXPORT_SYMBOL(irq_fpu_usable);
+ /* Device flags */
  
+ /* Highest interface number which can be used with NCTRL() and RSVD() */
+@@ -2225,6 +2230,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(OPPO_VENDOR_ID, OPPO_PRODUCT_R11, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(SIERRA_VENDOR_ID, SIERRA_PRODUCT_EM9191, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(UNISOC_VENDOR_ID, TOZED_PRODUCT_LT70C, 0xff, 0, 0) },
+ 	{ } /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, option_ids);
 
 
