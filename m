@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F218810785
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56F81C433D2;
-	Mon, 15 May 2023 17:59:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DDAE556
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:59:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 806FDC433EF;
+	Mon, 15 May 2023 17:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173555;
-	bh=bLOFcSDJlx27G5t8NnVELt9F4INSGapGUYqKqCBbQrc=;
+	s=korg; t=1684173559;
+	bh=ArgVO4AARk7EI8t4T8olVXhukXhYiLt/ouggLhzTVHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lUf3/y30tObnDnCHKl8mAAH47g0/Cs258sl0LeVwXacujCVUseuBOHsM8z17YEJwK
-	 9LzxYNFS3xzNxk4WDiQgmOIXI/iMdenQkwrAPWyL/LOAy4blltY5980ZffRcRCqxlB
-	 sp4LvZEYCE4sxSZ/yZIowE8ofO7xJSgcil3fnIn0=
+	b=gJe5/j7nl2ZJW2f5o+a1qsAkoqaDCJRGgNoq1pFXrOoNQ2k//23ceE8eE0vn9DCsA
+	 JdyUiKBzTAuyRMDYQiQRKO8g8R35or+EZnI6FG8rToUI36pa1Gi8U3kqSjeLn3FxfY
+	 ygluTdfs67Wf8ubRoxPBhTbIZFXlZx+o1lK71W6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 131/282] spi: qup: Dont skip cleanup in removes error path
-Date: Mon, 15 May 2023 18:28:29 +0200
-Message-Id: <20230515161726.151994422@linuxfoundation.org>
+Subject: [PATCH 5.4 105/282] md/raid10: fix memleak of md thread
+Date: Mon, 15 May 2023 18:28:03 +0200
+Message-Id: <20230515161725.398883056@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,60 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 61f49171a43ab1f80c73c5c88c508770c461e0f2 ]
+[ Upstream commit f0ddb83da3cbbf8a1f9087a642c448ff52ee9abd ]
 
-Returning early in a platform driver's remove callback is wrong. In this
-case the dma resources are not released in the error path. this is never
-retried later and so this is a permanent leak. To fix this, only skip
-hardware disabling if waking the device fails.
+In raid10_run(), if setup_conf() succeed and raid10_run() failed before
+setting 'mddev->thread', then in the error path 'conf->thread' is not
+freed.
 
-Fixes: 64ff247a978f ("spi: Add Qualcomm QUP SPI controller support")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20230330210341.2459548-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fix the problem by setting 'mddev->thread' right after setup_conf().
+
+Fixes: 43a521238aca ("md-cluster: choose correct label when clustered layout is not supported")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20230310073855.1337560-7-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-qup.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ drivers/md/raid10.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
-index ead6c211047d5..ebcf9f4d5679e 100644
---- a/drivers/spi/spi-qup.c
-+++ b/drivers/spi/spi-qup.c
-@@ -1276,18 +1276,22 @@ static int spi_qup_remove(struct platform_device *pdev)
- 	struct spi_qup *controller = spi_master_get_devdata(master);
- 	int ret;
+diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
+index b37e3cd4e3673..c792683a0dea2 100644
+--- a/drivers/md/raid10.c
++++ b/drivers/md/raid10.c
+@@ -3769,6 +3769,9 @@ static int raid10_run(struct mddev *mddev)
+ 	if (!conf)
+ 		goto out;
  
--	ret = pm_runtime_resume_and_get(&pdev->dev);
--	if (ret < 0)
--		return ret;
-+	ret = pm_runtime_get_sync(&pdev->dev);
++	mddev->thread = conf->thread;
++	conf->thread = NULL;
++
+ 	if (mddev_is_clustered(conf->mddev)) {
+ 		int fc, fo;
  
--	ret = spi_qup_set_state(controller, QUP_STATE_RESET);
--	if (ret)
--		return ret;
-+	if (ret >= 0) {
-+		ret = spi_qup_set_state(controller, QUP_STATE_RESET);
-+		if (ret)
-+			dev_warn(&pdev->dev, "failed to reset controller (%pe)\n",
-+				 ERR_PTR(ret));
+@@ -3781,9 +3784,6 @@ static int raid10_run(struct mddev *mddev)
+ 		}
+ 	}
  
--	spi_qup_release_dma(master);
-+		clk_disable_unprepare(controller->cclk);
-+		clk_disable_unprepare(controller->iclk);
-+	} else {
-+		dev_warn(&pdev->dev, "failed to resume, skip hw disable (%pe)\n",
-+			 ERR_PTR(ret));
-+	}
- 
--	clk_disable_unprepare(controller->cclk);
--	clk_disable_unprepare(controller->iclk);
-+	spi_qup_release_dma(master);
- 
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
+-	mddev->thread = conf->thread;
+-	conf->thread = NULL;
+-
+ 	if (mddev->queue) {
+ 		blk_queue_max_discard_sectors(mddev->queue,
+ 					      mddev->chunk_sectors);
 -- 
 2.39.2
 
