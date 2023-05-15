@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D8FFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 512E5C433EF;
-	Mon, 15 May 2023 17:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93399FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:00:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B44DC433D2;
+	Mon, 15 May 2023 17:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170042;
-	bh=A7FgWNYxsxpW5HK7ZS2NjPW6neCkqv8cP4h2DlUMRu4=;
+	s=korg; t=1684170046;
+	bh=0Ca6o7MerjoONvrrCE6Rs9ivjhwaCw7VSA468KWqP3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WsYWICmtFR031isXIXAeIvFBvyANLcMoNNuxUW/RyBksCd1L6tbragW0ug/dkkA6D
-	 MRwBnQREQxcq/r3Ze1B4Ul1dFtIfivU+yy29Dd4tjyC1qEg+SzAtGnVLfGSCtZyfTu
-	 5QSgQkVY2OsXiArlaiGauz1XB5TTsM83PkLaIdoI=
+	b=A3m5aXDQNN7Wi6X4p09ZLlRu5mZdCq5EduU+yWTvI/zVGBAmDVcGdhwvZZGD+KpoS
+	 DeMEzbXU4/W3J5tIVLveowwBrUDEfeL+yN7yHYCLFtoRTU4MCqIFRTJf001qg3qOq+
+	 eQIV3+7nAxE3mUKbyx2ZsfcRv3axSFRKsUiYlZ10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.3 245/246] s390/mm: fix direct map accounting
-Date: Mon, 15 May 2023 18:27:37 +0200
-Message-Id: <20230515161730.020103570@linuxfoundation.org>
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.3 246/246] drm/amd/display: Fix hang when skipping modeset
+Date: Mon, 15 May 2023 18:27:38 +0200
+Message-Id: <20230515161730.050115476@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -35,142 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Aurabindo Pillai <aurabindo.pillai@amd.com>
 
-[ Upstream commit 81e8479649853ffafc714aca4a9c0262efd3160a ]
+commit da5e14909776edea4462672fb4a3007802d262e7 upstream.
 
-Commit bb1520d581a3 ("s390/mm: start kernel with DAT enabled") did not
-implement direct map accounting in the early page table setup code. In
-result the reported values are bogus now:
+[Why&How]
 
-$cat /proc/meminfo
-...
-DirectMap4k:        5120 kB
-DirectMap1M:    18446744073709546496 kB
-DirectMap2G:           0 kB
+When skipping full modeset since the only state change was a front porch
+change, the DC commit sequence requires extra checks to handle non
+existant plane states being asked to be removed from context.
 
-Fix this by adding the missing accounting. The result looks sane again:
-
-$cat /proc/meminfo
-...
-DirectMap4k:        6156 kB
-DirectMap1M:     2091008 kB
-DirectMap2G:     6291456 kB
-
-Fixes: bb1520d581a3 ("s390/mm: start kernel with DAT enabled")
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/boot/vmem.c           |   19 ++++++++++++++++---
- arch/s390/include/asm/pgtable.h |    2 +-
- arch/s390/mm/pageattr.c         |    2 +-
- 3 files changed, 18 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    5 ++++-
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    3 +++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/s390/boot/vmem.c
-+++ b/arch/s390/boot/vmem.c
-@@ -10,6 +10,10 @@
- #include "decompressor.h"
- #include "boot.h"
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -7957,6 +7957,8 @@ static void amdgpu_dm_commit_planes(stru
+ 			continue;
  
-+#ifdef CONFIG_PROC_FS
-+atomic_long_t __bootdata_preserved(direct_pages_count[PG_DIRECT_MAP_MAX]);
-+#endif
+ 		dc_plane = dm_new_plane_state->dc_state;
++		if (!dc_plane)
++			continue;
+ 
+ 		bundle->surface_updates[planes_count].surface = dc_plane;
+ 		if (new_pcrtc_state->color_mgmt_changed) {
+@@ -9616,8 +9618,9 @@ static int dm_update_plane_state(struct
+ 			return -EINVAL;
+ 		}
+ 
++		if (dm_old_plane_state->dc_state)
++			dc_plane_state_release(dm_old_plane_state->dc_state);
+ 
+-		dc_plane_state_release(dm_old_plane_state->dc_state);
+ 		dm_new_plane_state->dc_state = NULL;
+ 
+ 		*lock_and_validation_needed = true;
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -1707,6 +1707,9 @@ bool dc_remove_plane_from_context(
+ 	struct dc_stream_status *stream_status = NULL;
+ 	struct resource_pool *pool = dc->res_pool;
+ 
++	if (!plane_state)
++		return true;
 +
- #define init_mm			(*(struct mm_struct *)vmlinux.init_mm_off)
- #define swapper_pg_dir		vmlinux.swapper_pg_dir_off
- #define invalid_pg_dir		vmlinux.invalid_pg_dir_off
-@@ -126,7 +130,7 @@ static bool can_large_pmd(pmd_t *pm_dir,
- static void pgtable_pte_populate(pmd_t *pmd, unsigned long addr, unsigned long end,
- 				 enum populate_mode mode)
- {
--	unsigned long next;
-+	unsigned long pages = 0;
- 	pte_t *pte, entry;
- 
- 	pte = pte_offset_kernel(pmd, addr);
-@@ -135,14 +139,17 @@ static void pgtable_pte_populate(pmd_t *
- 			entry = __pte(_pa(addr, mode));
- 			entry = set_pte_bit(entry, PAGE_KERNEL_EXEC);
- 			set_pte(pte, entry);
-+			pages++;
- 		}
- 	}
-+	if (mode == POPULATE_DIRECT)
-+		update_page_count(PG_DIRECT_MAP_4K, pages);
- }
- 
- static void pgtable_pmd_populate(pud_t *pud, unsigned long addr, unsigned long end,
- 				 enum populate_mode mode)
- {
--	unsigned long next;
-+	unsigned long next, pages = 0;
- 	pmd_t *pmd, entry;
- 	pte_t *pte;
- 
-@@ -154,6 +161,7 @@ static void pgtable_pmd_populate(pud_t *
- 				entry = __pmd(_pa(addr, mode));
- 				entry = set_pmd_bit(entry, SEGMENT_KERNEL_EXEC);
- 				set_pmd(pmd, entry);
-+				pages++;
- 				continue;
- 			}
- 			pte = boot_pte_alloc();
-@@ -163,12 +171,14 @@ static void pgtable_pmd_populate(pud_t *
- 		}
- 		pgtable_pte_populate(pmd, addr, next, mode);
- 	}
-+	if (mode == POPULATE_DIRECT)
-+		update_page_count(PG_DIRECT_MAP_1M, pages);
- }
- 
- static void pgtable_pud_populate(p4d_t *p4d, unsigned long addr, unsigned long end,
- 				 enum populate_mode mode)
- {
--	unsigned long next;
-+	unsigned long next, pages = 0;
- 	pud_t *pud, entry;
- 	pmd_t *pmd;
- 
-@@ -180,6 +190,7 @@ static void pgtable_pud_populate(p4d_t *
- 				entry = __pud(_pa(addr, mode));
- 				entry = set_pud_bit(entry, REGION3_KERNEL_EXEC);
- 				set_pud(pud, entry);
-+				pages++;
- 				continue;
- 			}
- 			pmd = boot_crst_alloc(_SEGMENT_ENTRY_EMPTY);
-@@ -189,6 +200,8 @@ static void pgtable_pud_populate(p4d_t *
- 		}
- 		pgtable_pmd_populate(pud, addr, next, mode);
- 	}
-+	if (mode == POPULATE_DIRECT)
-+		update_page_count(PG_DIRECT_MAP_2G, pages);
- }
- 
- static void pgtable_p4d_populate(pgd_t *pgd, unsigned long addr, unsigned long end,
---- a/arch/s390/include/asm/pgtable.h
-+++ b/arch/s390/include/asm/pgtable.h
-@@ -34,7 +34,7 @@ enum {
- 	PG_DIRECT_MAP_MAX
- };
- 
--extern atomic_long_t direct_pages_count[PG_DIRECT_MAP_MAX];
-+extern atomic_long_t __bootdata_preserved(direct_pages_count[PG_DIRECT_MAP_MAX]);
- 
- static inline void update_page_count(int level, long count)
- {
---- a/arch/s390/mm/pageattr.c
-+++ b/arch/s390/mm/pageattr.c
-@@ -41,7 +41,7 @@ void __storage_key_init_range(unsigned l
- }
- 
- #ifdef CONFIG_PROC_FS
--atomic_long_t direct_pages_count[PG_DIRECT_MAP_MAX];
-+atomic_long_t __bootdata_preserved(direct_pages_count[PG_DIRECT_MAP_MAX]);
- 
- void arch_report_meminfo(struct seq_file *m)
- {
+ 	for (i = 0; i < context->stream_count; i++)
+ 		if (context->streams[i] == stream) {
+ 			stream_status = &context->stream_status[i];
 
 
