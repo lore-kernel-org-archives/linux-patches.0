@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB30FFBF3
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:58:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E37BCC433EF;
-	Mon, 15 May 2023 16:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38796FBF3
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:58:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 913A0C433D2;
+	Mon, 15 May 2023 16:58:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169924;
-	bh=4m9WUvZG61KQPOHZvdylmdVpjIVfjslntFbLEp/+F18=;
+	s=korg; t=1684169928;
+	bh=0M0FAuG3Qyhr2jqM0j3vbsgcmFZMleMWj3HaMudskG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ap+9Xb1SjlIyoHOU5rpADeJjevVNmG0xTlh3Imo39AROG0G2r/OFRer+V3ga67/sg
-	 89Zjaa47RZvffT5kG0uFl6LbMR076NoHifCpVTBrD2Lqa+RGcFu/ty0fjPRZ5Avbye
-	 5KwuojrnKyd9a0ZYEMgbOreQyIcmlEpgO1tGLfqE=
+	b=EOv9tAFQNkeFzLM6dmAzdoHvV/ZVzCrA7trFrtDGdZotxcqdUP1PhOf79i7lSvBG7
+	 VFvEj+vZg5tQKZMqsSDb8lE+DlP3DuD6ZUXb4OWAZZXNVwn8HM6SOBT5FPKP2wfJdq
+	 3iQ8x2XX9wShfiC8+UX8sY8hT5qCRNaXBZz3Cc3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jianmin Lv <lvjianmin@loongson.cn>,
 	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.3 185/246] irqchip/loongson-pch-pic: Fix registration of syscore_ops
-Date: Mon, 15 May 2023 18:26:37 +0200
-Message-Id: <20230515161728.173914179@linuxfoundation.org>
+Subject: [PATCH 6.3 186/246] irqchip/loongson-eiointc: Fix returned value on parsing MADT
+Date: Mon, 15 May 2023 18:26:38 +0200
+Message-Id: <20230515161728.202725194@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -36,34 +36,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Jianmin Lv <lvjianmin@loongson.cn>
 
-commit c84efbba46901b187994558ee0edb15f7076c9a7 upstream.
+commit 112eaa8fec5ea75f1be003ec55760b09a86799f8 upstream.
 
-When support suspend/resume for loongson-pch-pic, the syscore_ops
-is registered twice in dual-bridges machines where there are two
-pch-pic IRQ domains. Repeated registration of an same syscore_ops
-broke syscore_ops_list, so the patch will corret it.
+In pch_pic_parse_madt(), a NULL parent pointer will be
+returned from acpi_get_vec_parent() for second pch-pic domain
+related to second bridge while calling eiointc_acpi_init() at
+first time, where the parent of it has not been initialized
+yet, and will be initialized during second time calling
+eiointc_acpi_init(). So, it's reasonable to return zero so
+that failure of acpi_table_parse_madt() will be avoided, or else
+acpi_cascade_irqdomain_init() will return and initialization of
+followed pch_msi domain will be skipped.
 
-Fixes: 1ed008a2c331 ("irqchip/loongson-pch-pic: Add suspend/resume support")
+Although it does not matter when pch_msi_parse_madt() returns
+-EINVAL if no invalid parent is found, it's also reasonable to
+return zero for that.
+
 Cc: stable@vger.kernel.org
 Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230407083453.6305-5-lvjianmin@loongson.cn
+Link: https://lore.kernel.org/r/20230407083453.6305-2-lvjianmin@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-loongson-pch-pic.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-loongson-eiointc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-loongson-pch-pic.c
-+++ b/drivers/irqchip/irq-loongson-pch-pic.c
-@@ -311,7 +311,8 @@ static int pch_pic_init(phys_addr_t addr
- 	pch_pic_handle[nr_pics] = domain_handle;
- 	pch_pic_priv[nr_pics++] = priv;
+--- a/drivers/irqchip/irq-loongson-eiointc.c
++++ b/drivers/irqchip/irq-loongson-eiointc.c
+@@ -343,7 +343,7 @@ static int __init pch_pic_parse_madt(uni
+ 	if (parent)
+ 		return pch_pic_acpi_init(parent, pchpic_entry);
  
--	register_syscore_ops(&pch_pic_syscore_ops);
-+	if (nr_pics == 1)
-+		register_syscore_ops(&pch_pic_syscore_ops);
+-	return -EINVAL;
++	return 0;
+ }
  
- 	return 0;
+ static int __init pch_msi_parse_madt(union acpi_subtable_headers *header,
+@@ -355,7 +355,7 @@ static int __init pch_msi_parse_madt(uni
+ 	if (parent)
+ 		return pch_msi_acpi_init(parent, pchmsi_entry);
  
+-	return -EINVAL;
++	return 0;
+ }
+ 
+ static int __init acpi_cascade_irqdomain_init(void)
 
 
