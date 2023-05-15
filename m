@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C811FC1B
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA715C4339C;
-	Mon, 15 May 2023 17:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62745FC1B
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:47:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABF8C433D2;
+	Mon, 15 May 2023 17:47:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172858;
-	bh=rIQeblNjgmVgd2TYruXgnKIbYnJiSQrez73lvWcUA0k=;
+	s=korg; t=1684172861;
+	bh=R5mcXfsMV5E2Ph6G2ic/R5BwFJ9bP0IcdoSm7AUCUv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eRwvR+VqZZg5fuTFS5gSF+CQq63YwkvMVC9PPYSc1HLH3Oy7jhw2Jq5S5zSFAwm3j
-	 F7TqEDbGRIr+FPzOqdk6FnocDpUSJTxkjmd+PpA17iJJTpIDpuYT5rdemvJiETm3hz
-	 S/5je8uaMR13NaMMYEw85l59fbNExd4OLlIZcnY8=
+	b=W4RBfCbYQGmxH3BZ+/HxHR3Z9iep2sEhBZMl3R/+HNo6GXIVc8FRNVABoRIWuwQHq
+	 0M4vd0CBr7r+Fx8V5EoWDSwUKY2hyDFVFtgC/od75h97Oe2lZ5FyQWWaxa3T+bC5DT
+	 P/HohaSfhFpLS7MYz+/H9dwrFIUMUJTxsK2hnV30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qinrun Dai <flno@hust.edu.cn>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Stafford Horne <shorne@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 259/381] clocksource/drivers/davinci: Fix memory leak in davinci_timer_register when init fails
-Date: Mon, 15 May 2023 18:28:30 +0200
-Message-Id: <20230515161748.420593779@linuxfoundation.org>
+Subject: [PATCH 5.10 260/381] openrisc: Properly store r31 to pt_regs on unhandled exceptions
+Date: Mon, 15 May 2023 18:28:31 +0200
+Message-Id: <20230515161748.470935316@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -35,98 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qinrun Dai <flno@hust.edu.cn>
+From: Stafford Horne <shorne@gmail.com>
 
-[ Upstream commit fb73556386e074e9bee9fa2d253aeaefe4e063e0 ]
+[ Upstream commit 812489ac4dd91144a74ce65ecf232252a2e406fb ]
 
-Smatch reports:
-drivers/clocksource/timer-davinci.c:332 davinci_timer_register()
-warn: 'base' from ioremap() not released on lines: 274.
+In commit 91993c8c2ed5 ("openrisc: use shadow registers to save regs on
+exception") the unhandled exception path was changed to do an early
+store of r30 instead of r31.  The entry code was not updated and r31 is
+not getting stored to pt_regs.
 
-Fix this and other potential memory leak problems
-by adding a set of corresponding exit lables.
+This patch updates the entry handler to store r31 instead of r30.  We
+also remove some misleading commented out store r30 and r31
+instructrions.
 
-Fixes: 721154f972aa ("clocksource/drivers/davinci: Add support for clockevents")
-Signed-off-by: Qinrun Dai <flno@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230413135037.1505799-1-flno@hust.edu.cn
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+I noticed this while working on adding floating point exception
+handling,  This issue probably would never impact anything since we kill
+the process or Oops right away on unhandled exceptions.
+
+Fixes: 91993c8c2ed5 ("openrisc: use shadow registers to save regs on exception")
+Signed-off-by: Stafford Horne <shorne@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-davinci.c | 30 +++++++++++++++++++++++------
- 1 file changed, 24 insertions(+), 6 deletions(-)
+ arch/openrisc/kernel/entry.S | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clocksource/timer-davinci.c b/drivers/clocksource/timer-davinci.c
-index bb4eee31ae082..3dc0c6ceed027 100644
---- a/drivers/clocksource/timer-davinci.c
-+++ b/drivers/clocksource/timer-davinci.c
-@@ -258,21 +258,25 @@ int __init davinci_timer_register(struct clk *clk,
- 				resource_size(&timer_cfg->reg),
- 				"davinci-timer")) {
- 		pr_err("Unable to request memory region\n");
--		return -EBUSY;
-+		rv = -EBUSY;
-+		goto exit_clk_disable;
- 	}
- 
- 	base = ioremap(timer_cfg->reg.start, resource_size(&timer_cfg->reg));
- 	if (!base) {
- 		pr_err("Unable to map the register range\n");
--		return -ENOMEM;
-+		rv = -ENOMEM;
-+		goto exit_mem_region;
- 	}
- 
- 	davinci_timer_init(base);
- 	tick_rate = clk_get_rate(clk);
- 
- 	clockevent = kzalloc(sizeof(*clockevent), GFP_KERNEL);
--	if (!clockevent)
--		return -ENOMEM;
-+	if (!clockevent) {
-+		rv = -ENOMEM;
-+		goto exit_iounmap_base;
-+	}
- 
- 	clockevent->dev.name = "tim12";
- 	clockevent->dev.features = CLOCK_EVT_FEAT_ONESHOT;
-@@ -297,7 +301,7 @@ int __init davinci_timer_register(struct clk *clk,
- 			 "clockevent/tim12", clockevent);
- 	if (rv) {
- 		pr_err("Unable to request the clockevent interrupt\n");
--		return rv;
-+		goto exit_free_clockevent;
- 	}
- 
- 	davinci_clocksource.dev.rating = 300;
-@@ -324,13 +328,27 @@ int __init davinci_timer_register(struct clk *clk,
- 	rv = clocksource_register_hz(&davinci_clocksource.dev, tick_rate);
- 	if (rv) {
- 		pr_err("Unable to register clocksource\n");
--		return rv;
-+		goto exit_free_irq;
- 	}
- 
- 	sched_clock_register(davinci_timer_read_sched_clock,
- 			     DAVINCI_TIMER_CLKSRC_BITS, tick_rate);
- 
- 	return 0;
-+
-+exit_free_irq:
-+	free_irq(timer_cfg->irq[DAVINCI_TIMER_CLOCKEVENT_IRQ].start,
-+			clockevent);
-+exit_free_clockevent:
-+	kfree(clockevent);
-+exit_iounmap_base:
-+	iounmap(base);
-+exit_mem_region:
-+	release_mem_region(timer_cfg->reg.start,
-+			   resource_size(&timer_cfg->reg));
-+exit_clk_disable:
-+	clk_disable_unprepare(clk);
-+	return rv;
- }
- 
- static int __init of_davinci_timer_register(struct device_node *np)
+diff --git a/arch/openrisc/kernel/entry.S b/arch/openrisc/kernel/entry.S
+index b42d32d79b2e6..7257e942731df 100644
+--- a/arch/openrisc/kernel/entry.S
++++ b/arch/openrisc/kernel/entry.S
+@@ -173,7 +173,6 @@ handler:							;\
+ 	l.sw    PT_GPR28(r1),r28					;\
+ 	l.sw    PT_GPR29(r1),r29					;\
+ 	/* r30 already save */					;\
+-/*        l.sw    PT_GPR30(r1),r30*/					;\
+ 	l.sw    PT_GPR31(r1),r31					;\
+ 	TRACE_IRQS_OFF_ENTRY						;\
+ 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
+@@ -211,9 +210,8 @@ handler:							;\
+ 	l.sw    PT_GPR27(r1),r27					;\
+ 	l.sw    PT_GPR28(r1),r28					;\
+ 	l.sw    PT_GPR29(r1),r29					;\
+-	/* r31 already saved */					;\
+-	l.sw    PT_GPR30(r1),r30					;\
+-/*        l.sw    PT_GPR31(r1),r31	*/				;\
++	/* r30 already saved */						;\
++	l.sw    PT_GPR31(r1),r31					;\
+ 	/* Store -1 in orig_gpr11 for non-syscall exceptions */	;\
+ 	l.addi	r30,r0,-1					;\
+ 	l.sw	PT_ORIG_GPR11(r1),r30				;\
 -- 
 2.39.2
 
