@@ -1,28 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50BD6FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B91C433D2;
-	Mon, 15 May 2023 17:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AB4FBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:28:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D35C433D2;
+	Mon, 15 May 2023 17:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171719;
-	bh=xS8Fkiw7ULzBFl0HKCG2ZAWwt5ZWmSH7c1+ChkT9Uik=;
+	s=korg; t=1684171722;
+	bh=2BTqrsOuX2qndCyFcL+iyjJMwm6ee14bEwr9jjFRtts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fH9qF857vUbUbsHLfWhtzuYZp4ADmKryT4VEiJjM5j5fuMHuVN4BScIDKOOI3cW4M
-	 /8DBk0yey7DSdeckeerbhgS563og34GEmrUOltOVaKX1oOAt07TZzC/xCtVvooV6nB
-	 0HQ1oR/+qNBc59gqTPd7XSwAmwOwIOmfnJCz+tvI=
+	b=PSbGbA1ePKA196ZAhqhyDLfXVf6mVgk23urOzZuxh9Jrf3SoGjzP+z/wkSdQ1GZa5
+	 2ZwC3lQJDvy85RGRytQjdjMKj8L2w0j4fhzjvMXNqCaEq3KbxQD6bmxbWgmu+9kRJG
+	 j4GaVaAUbrdqS2FWVsnsQ40KMntWazhMdvx2mO5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylvain Ouellet <souellet@genetec.com>,
-	Olivier Bacon <obacon@genetec.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Will Ochowicz <Will.Ochowicz@genusplc.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 057/134] crypto: engine - fix crypto_queue backlog handling
-Date: Mon, 15 May 2023 18:28:54 +0200
-Message-Id: <20230515161705.056978256@linuxfoundation.org>
+Subject: [PATCH 5.15 058/134] perf symbols: Fix return incorrect build_id size in elf_read_build_id()
+Date: Mon, 15 May 2023 18:28:55 +0200
+Message-Id: <20230515161705.086872464@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -36,85 +46,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Bacon <olivierb89@gmail.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit 4140aafcff167b5b9e8dae6a1709a6de7cac6f74 ]
+[ Upstream commit 1511e4696acb715a4fe48be89e1e691daec91c0e ]
 
-CRYPTO_TFM_REQ_MAY_BACKLOG tells the crypto driver that it should
-internally backlog requests until the crypto hw's queue becomes
-full. At that point, crypto_engine backlogs the request and returns
--EBUSY. Calling driver such as dm-crypt then waits until the
-complete() function is called with a status of -EINPROGRESS before
-sending a new request.
+In elf_read_build_id(), if gnu build_id is found, should return the size of
+the actually copied data. If descsz is greater thanBuild_ID_SIZE,
+write_buildid data access may occur.
 
-The problem lies in the call to complete() with a value of -EINPROGRESS
-that is made when a backlog item is present on the queue. The call is
-done before the successful execution of the crypto request. In the case
-that do_one_request() returns < 0 and the retry support is available,
-the request is put back in the queue. This leads upper drivers to send
-a new request even if the queue is still full.
-
-The problem can be reproduced by doing a large dd into a crypto
-dm-crypt device. This is pretty easy to see when using
-Freescale CAAM crypto driver and SWIOTLB dma. Since the actual amount
-of requests that can be hold in the queue is unlimited we get IOs error
-and dma allocation.
-
-The fix is to call complete with a value of -EINPROGRESS only if
-the request is not enqueued back in crypto_queue. This is done
-by calling complete() later in the code. In order to delay the decision,
-crypto_queue is modified to correctly set the backlog pointer
-when a request is enqueued back.
-
-Fixes: 6a89f492f8e5 ("crypto: engine - support for parallel requests based on retry mechanism")
-Co-developed-by: Sylvain Ouellet <souellet@genetec.com>
-Signed-off-by: Sylvain Ouellet <souellet@genetec.com>
-Signed-off-by: Olivier Bacon <obacon@genetec.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: be96ea8ffa788dcc ("perf symbols: Fix issue with binaries using 16-bytes buildids (v2)")
+Reported-by: Will Ochowicz <Will.Ochowicz@genusplc.com>
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Tested-by: Will Ochowicz <Will.Ochowicz@genusplc.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Link: https://lore.kernel.org/lkml/CWLP265MB49702F7BA3D6D8F13E4B1A719C649@CWLP265MB4970.GBRP265.PROD.OUTLOOK.COM/T/
+Link: https://lore.kernel.org/r/20230427012841.231729-1-yangjihong1@huawei.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/algapi.c        | 3 +++
- crypto/crypto_engine.c | 6 +++---
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ tools/perf/util/symbol-elf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/crypto/algapi.c b/crypto/algapi.c
-index c1af76ec65f51..3920c4b1e9c13 100644
---- a/crypto/algapi.c
-+++ b/crypto/algapi.c
-@@ -920,6 +920,9 @@ EXPORT_SYMBOL_GPL(crypto_enqueue_request);
- void crypto_enqueue_request_head(struct crypto_queue *queue,
- 				 struct crypto_async_request *request)
- {
-+	if (unlikely(queue->qlen >= queue->max_qlen))
-+		queue->backlog = queue->backlog->prev;
-+
- 	queue->qlen++;
- 	list_add(&request->list, &queue->list);
- }
-diff --git a/crypto/crypto_engine.c b/crypto/crypto_engine.c
-index 43fe324b9521b..34effd4826c03 100644
---- a/crypto/crypto_engine.c
-+++ b/crypto/crypto_engine.c
-@@ -129,9 +129,6 @@ static void crypto_pump_requests(struct crypto_engine *engine,
- 	if (!engine->retry_support)
- 		engine->cur_req = async_req;
- 
--	if (backlog)
--		crypto_request_complete(backlog, -EINPROGRESS);
--
- 	if (engine->busy)
- 		was_busy = true;
- 	else
-@@ -217,6 +214,9 @@ static void crypto_pump_requests(struct crypto_engine *engine,
- 	crypto_request_complete(async_req, ret);
- 
- retry:
-+	if (backlog)
-+		crypto_request_complete(backlog, -EINPROGRESS);
-+
- 	/* If retry mechanism is supported, send new requests to engine */
- 	if (engine->retry_support) {
- 		spin_lock_irqsave(&engine->queue_lock, flags);
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index fd42f768e5848..bbc3a150597a4 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -553,7 +553,7 @@ static int elf_read_build_id(Elf *elf, void *bf, size_t size)
+ 				size_t sz = min(size, descsz);
+ 				memcpy(bf, ptr, sz);
+ 				memset(bf + sz, 0, size - sz);
+-				err = descsz;
++				err = sz;
+ 				break;
+ 			}
+ 		}
 -- 
 2.39.2
 
