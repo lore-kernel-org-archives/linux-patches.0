@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC73FBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50E4C433D2;
-	Mon, 15 May 2023 17:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573DCFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:24:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A6EC433D2;
+	Mon, 15 May 2023 17:24:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171461;
-	bh=ZMX+6VCsk0s6IWj3CXak9DmdIvIZ9lQkcAfmdJj3zcI=;
+	s=korg; t=1684171464;
+	bh=NID4KUmXriX4ekkz0vYmBRkVlbhxHL5dCiwxSe+d5tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UF4VWz2AUoUMvMPQ7Fg0zips0Sh5QgsFbyL8ahUNNzPDP5Iv8tGGz4W4C11YDe9bP
-	 xewHBmL5E+q+8tKw4biiombuRvbZt8zKVZbsO4mmRpOUiq+zUMnwMdJsSDpdIADg+z
-	 qV1RcB5j/yyMJbsyGB/Qv/Y1VlBV7HYOyO7GBGpM=
+	b=FoCOyLA/QCy9ej42qPKh8oOyZdG17z4c58DcqIEQ2DSympvRVLIU8uqupBdGu+rNs
+	 vLU2maLSLKQgEgSSHZvZs3m06OpLXS+43ViTt0GPNGXbLlmHmL1UeEatHSO/qDAyZU
+	 lX6ONM31L3r3zHrbm8fjMf2o3Is5Oo/7CHODZApk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Lei <Jun.Lei@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Leo Chen <sancchen@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 217/242] drm/amd/display: Update minimum stutter residency for DCN314 Z8
-Date: Mon, 15 May 2023 18:29:03 +0200
-Message-Id: <20230515161728.435277909@linuxfoundation.org>
+Subject: [PATCH 6.2 218/242] drm/amd/display: Lowering min Z8 residency time
+Date: Mon, 15 May 2023 18:29:04 +0200
+Message-Id: <20230515161728.464253574@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -38,38 +38,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Leo Chen <sancchen@amd.com>
 
-[ Upstream commit 0215ce9057edf69aff9c1a32f4254e1ec297db31 ]
+[ Upstream commit d893f39320e1248d1c97fde0d6e51e5ea008a76b ]
 
-[Why]
-Block periods that are too short as they have the potential to
-currently cause hangs in other firmware components on the system.
+[Why & How]
+Per HW team request, we're lowering the minimum Z8
+residency time to 2000us. This enables Z8 support for additional
+modes we were previously blocking like 2k>60hz
 
-[How]
-Update the threshold, mostly targeting a block of 4k and downscaling.
-
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Cc: stable@vger.kernel.org
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Acked-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Leo Chen <sancchen@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: d893f39320e1 ("drm/amd/display: Lowering min Z8 residency time")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-index 5c23c934c9751..33d8188d076ab 100644
+index 33d8188d076ab..30129fb9c27a9 100644
 --- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
 +++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
 @@ -887,7 +887,7 @@ static const struct dc_plane_cap plane_cap = {
  static const struct dc_debug_options debug_defaults_drv = {
  	.disable_z10 = false,
  	.enable_z9_disable_interface = true,
--	.minimum_z8_residency_time = 1000,
-+	.minimum_z8_residency_time = 3080,
+-	.minimum_z8_residency_time = 3080,
++	.minimum_z8_residency_time = 2000,
  	.psr_skip_crtc_disable = true,
  	.disable_dmcu = true,
  	.force_abm_enable = false,
