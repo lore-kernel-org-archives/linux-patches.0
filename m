@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DE1FBF6
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C367C4339B;
-	Mon, 15 May 2023 17:48:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F11BFC1B
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:48:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7A09C4339C;
+	Mon, 15 May 2023 17:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172904;
-	bh=dxE7b+oUl3C5TqZsSOiwmGns69pX3zl/GEHd48kOND0=;
+	s=korg; t=1684172907;
+	bh=KKwPQ8kao6k5K4eGOxs7YwsiIPpaz3Tj3lI6CqRGrYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GYVnzh+uhBTCxcR0jivdNzQ92jPLvz73Y0LAhNSBywcIB9300M8AOjyBjNWG3hlRA
-	 PAV2AuS1+w9Br0jtPGdDc40RZgwVn5h5/aY4Zl3CD6ItyuO3VkgO3HHHQkY/pvCAFu
-	 36JYoPRxVRxD6ZHfsXbo6RzludZYiBhMNCaMpwKY=
+	b=EZA5/vvMIXmvwba0hDqRMCbnqW9O11VO0hane6d5Xwz6X7gxWGDAWyqKHgSdCgvov
+	 0iiAh05rk61XWUW3LbYHx0hJgadVCbOhIuRKWbYeppAFbf/Fl2g0ujL6+uffjPgdmo
+	 5dYyNfDyqBjHVXDP2sLdqnTqIsStEfrzici1RoUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 5.10 287/381] perf auxtrace: Fix address filter entire kernel size
-Date: Mon, 15 May 2023 18:28:58 +0200
-Message-Id: <20230515161749.753008003@linuxfoundation.org>
+	Tanmay Shah <tanmay.shah@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 305/381] mailbox: zynqmp: Fix counts of child nodes
+Date: Mon, 15 May 2023 18:29:16 +0200
+Message-Id: <20230515161750.612369176@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -37,65 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Tanmay Shah <tanmay.shah@amd.com>
 
-commit 1f9f33ccf0320be21703d9195dd2b36a1c9a07cb upstream.
+[ Upstream commit f72f805e72882c361e2a612c64a6e549f3da7152 ]
 
-kallsyms is not completely in address order.
+If child mailbox node status is disabled it causes
+crash in interrupt handler. Fix this by assigning
+only available child node during driver probe.
 
-In find_entire_kern_cb(), calculate the kernel end from the maximum
-address not the last symbol.
-
-Example:
-
- Before:
-
-    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | tail -1
-    ffffffffc00b8bd0 t bpf_prog_6deef7357e7b4530    [bpf]
-    $ sudo cat /proc/kallsyms | grep ' [twTw] ' | sort | tail -1
-    ffffffffc15e0cc0 t iwl_mvm_exit [iwlmvm]
-    $ perf.d093603a05aa record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
-    Address filter: filter 0xffffffff93200000/0x2ceba000
-
- After:
-
-    $ perf.8fb0f7a01f8e record -v --kcore -e intel_pt// --filter 'filter *' -- uname |& grep filter
-    Address filter: filter 0xffffffff93200000/0x2e3e2000
-
-Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Tanmay Shah <tanmay.shah@amd.com>
+Acked-by: Michal Simek <michal.simek@amd.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230403154831.8651-2-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230311012407.1292118-2-tanmay.shah@amd.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/auxtrace.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -2279,6 +2279,7 @@ static int find_entire_kern_cb(void *arg
- 			       char type, u64 start)
- {
- 	struct sym_args *args = arg;
-+	u64 size;
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index 136a84ad871cc..be06de791c544 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -634,7 +634,12 @@ static int zynqmp_ipi_probe(struct platform_device *pdev)
+ 	struct zynqmp_ipi_mbox *mbox;
+ 	int num_mboxes, ret = -EINVAL;
  
- 	if (!kallsyms__is_function(type))
- 		return 0;
-@@ -2288,7 +2289,9 @@ static int find_entire_kern_cb(void *arg
- 		args->start = start;
- 	}
- 	/* Don't know exactly where the kernel ends, so we add a page */
--	args->size = round_up(start, page_size) + page_size - args->start;
-+	size = round_up(start, page_size) + page_size - args->start;
-+	if (size > args->size)
-+		args->size = size;
- 
- 	return 0;
- }
+-	num_mboxes = of_get_child_count(np);
++	num_mboxes = of_get_available_child_count(np);
++	if (num_mboxes == 0) {
++		dev_err(dev, "mailbox nodes not available\n");
++		return -EINVAL;
++	}
++
+ 	pdata = devm_kzalloc(dev, struct_size(pdata, ipi_mboxes, num_mboxes),
+ 			     GFP_KERNEL);
+ 	if (!pdata)
+-- 
+2.39.2
+
 
 
