@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597C317730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:05:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B052DC4339B;
-	Mon, 15 May 2023 18:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6908717730
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:05:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C148CC433EF;
+	Mon, 15 May 2023 18:05:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173934;
-	bh=B7tV84oscsb2bWeMieYBYBgMZVw1d95Rty4xFOFqe2c=;
+	s=korg; t=1684173937;
+	bh=yaqMYtu0XgIKdhrQ30qY3AmH0IThbLFP5OQtdmoaLyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=luzfl0hUdqITZxQAwZGMQEEi/eFJHVAlEqn699b4ESnWFqbQfr4xRGcO2tqEU3ydI
-	 b1jz+xoYJMNW/3oKso7UZrHsM6F2gQB9f/ocgVui9A1PsGv0Jh7bbwBzjemo5In0MB
-	 Vl4c27+MlbIh/+UU1ZaNXXUQgiqQuTtvkynhVvkw=
+	b=rOZq7fEKP0XHGpd5ZjFew3tNJOxAmHwgIeOB0bcz1Z7zT+rqf5wZZfmLg5TkCsAwL
+	 rXY1NKhnHLfQDkeF1laG5HbP9mGLbbm1/d1B3F8HbCDf/daKWgjSilx2DoLldut5dk
+	 T/zvjvQqGb9LhWWvKaKMJ1yzch4eNb8Z7SeJ+emE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Cowgill <james.cowgill@blaize.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.4 253/282] drm/panel: otm8009a: Set backlight parent to panel device
-Date: Mon, 15 May 2023 18:30:31 +0200
-Message-Id: <20230515161729.867725600@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.4 254/282] drm/amdgpu: fix an amdgpu_irq_put() issue in gmc_v9_0_hw_fini()
+Date: Mon, 15 May 2023 18:30:32 +0200
+Message-Id: <20230515161729.896488987@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -34,37 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Cowgill <james.cowgill@blaize.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-commit ab4f869fba6119997f7630d600049762a2b014fa upstream.
+commit 922a76ba31adf84e72bc947267385be420c689ee upstream.
 
-This is the logical place to put the backlight device, and it also
-fixes a kernel crash if the MIPI host is removed. Previously the
-backlight device would be unregistered twice when this happened - once
-as a child of the MIPI host through `mipi_dsi_host_unregister`, and
-once when the panel device is destroyed.
+As made mention of in commit 08c677cb0b43 ("drm/amdgpu: fix
+amdgpu_irq_put call trace in gmc_v10_0_hw_fini") and commit 13af556104fa
+("drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v11_0_hw_fini"). It
+is meaningless to call amdgpu_irq_put() for gmc.ecc_irq. So, remove it
+from gmc_v9_0_hw_fini().
 
-Fixes: 12a6cbd4f3f1 ("drm/panel: otm8009a: Use new backlight API")
-Signed-off-by: James Cowgill <james.cowgill@blaize.com>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
+Fixes: 3029c855d79f ("drm/amdgpu: Fix desktop freezed after gpu-reset")
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230412173450.199592-1-james.cowgill@blaize.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-orisetech-otm8009a.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/panel/panel-orisetech-otm8009a.c
-+++ b/drivers/gpu/drm/panel/panel-orisetech-otm8009a.c
-@@ -460,7 +460,7 @@ static int otm8009a_probe(struct mipi_ds
- 	ctx->panel.funcs = &otm8009a_drm_funcs;
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -1534,7 +1534,6 @@ static int gmc_v9_0_hw_fini(void *handle
+ 		return 0;
+ 	}
  
- 	ctx->bl_dev = devm_backlight_device_register(dev, dev_name(dev),
--						     dsi->host->dev, ctx,
-+						     dev, ctx,
- 						     &otm8009a_backlight_ops,
- 						     NULL);
- 	if (IS_ERR(ctx->bl_dev)) {
+-	amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
+ 	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
+ 
+ 	return 0;
 
 
