@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA591772F
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0079FC433EF;
-	Mon, 15 May 2023 18:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A0C1772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:02:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F61BC433EF;
+	Mon, 15 May 2023 18:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173764;
-	bh=4jZS4/7cSvQYJyhGaZdVRbyRbuYHV9RLtKh3jRDH1wo=;
+	s=korg; t=1684173767;
+	bh=l6ye6TfyFQb9mPeoyzn1gGY0j7UuOkKnZ81XqGUi+Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x99A/1oIaOfVUJnuBD6ipmEgmmHmzUXfFViTxMGIqRQZky4FU/rs2IT57wd/27WQv
-	 82NnVHo+6lCFf7EMYEyVzMSN3xO91854rmTM2202yOnYLeCsCFxBhSDadzRWF+oA6i
-	 ThNScc/woZUrpmFHRHugoEnNZCOERoksxJjmBSpY=
+	b=zuaaW8hBkyixi2zf23nc5hh3oLRnnxQRKYzd9rM8BNh4Aj6cbSVJpL+vhHLmgIECT
+	 U8FR9SZ4YqsvufMMAJuwGCPd1l3yI4hgn0ZUQ/o1F6uVcjFhxWMAqmotWFe3qYK0Sg
+	 WGUmYw26euBxhkLvgxa1SXLZZM0NfxPTqwptpvAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Jes Sorensen <jes@trained-monkey.org>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.4 198/282] wifi: rtl8xxxu: RTL8192EU always needs full init
-Date: Mon, 15 May 2023 18:29:36 +0200
-Message-Id: <20230515161728.190989428@linuxfoundation.org>
+	Brendan Cunningham <bcunningham@cornelisnetworks.com>,
+	Patrick Kelsey <pat.kelsey@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 169/282] IB/hfi1: Fix SDMA mmu_rb_node not being evicted in LRU order
+Date: Mon, 15 May 2023 18:29:07 +0200
+Message-Id: <20230515161727.276972317@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -35,43 +37,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
 
-commit d46e04ccd40457a0119b76e11ab64a2ad403e138 upstream.
+[ Upstream commit 9fe8fec5e43d5a80f43cbf61aaada1b047a1eb61 ]
 
-Always run the entire init sequence (rtl8xxxu_init_device()) for
-RTL8192EU. It's what the vendor driver does too.
+hfi1_mmu_rb_remove_unless_exact() did not move mmu_rb_node objects in
+mmu_rb_handler->lru_list after getting a cache hit on an mmu_rb_node.
 
-This fixes a bug where the device is unable to connect after
-rebooting:
+As a result, hfi1_mmu_rb_evict() was not guaranteed to evict truly
+least-recently used nodes.
 
-wlp3s0f3u2: send auth to ... (try 1/3)
-wlp3s0f3u2: send auth to ... (try 2/3)
-wlp3s0f3u2: send auth to ... (try 3/3)
-wlp3s0f3u2: authentication with ... timed out
+This could be a performance issue for an application when that
+application:
+- Uses some long-lived buffers frequently.
+- Uses a large number of buffers once.
+- Hits the mmu_rb_handler cache size or pinned-page limits, forcing
+  mmu_rb_handler cache entries to be evicted.
 
-Rebooting leaves the device powered on (partially? at least the
-firmware is still running), but not really in a working state.
+In this case, the one-time use buffers cause the long-lived buffer
+entries to eventually filter to the end of the LRU list where
+hfi1_mmu_rb_evict() will consider evicting a frequently-used long-lived
+entry instead of evicting one of the one-time use entries.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Acked-by: Jes Sorensen <jes@trained-monkey.org>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/4eb111a9-d4c4-37d0-b376-4e202de7153c@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by inserting new mmu_rb_node at the tail of
+mmu_rb_handler->lru_list and move mmu_rb_ndoe to the tail of
+mmu_rb_handler->lru_list when the mmu_rb_node is a hit in
+hfi1_mmu_rb_remove_unless_exact(). Change hfi1_mmu_rb_evict() to evict
+from the head of mmu_rb_handler->lru_list instead of the tail.
+
+Fixes: 0636e9ab8355 ("IB/hfi1: Add cache evict LRU list")
+Signed-off-by: Brendan Cunningham <bcunningham@cornelisnetworks.com>
+Signed-off-by: Patrick Kelsey <pat.kelsey@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Link: https://lore.kernel.org/r/168088635931.3027109.10423156330761536044.stgit@252.162.96.66.static.eigbox.net
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/hfi1/mmu_rb.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_8192e.c
-@@ -1702,6 +1702,7 @@ struct rtl8xxxu_fileops rtl8192eu_fops =
- 	.rx_desc_size = sizeof(struct rtl8xxxu_rxdesc24),
- 	.has_s0s1 = 0,
- 	.gen2_thermal_meter = 1,
-+	.needs_full_init = 1,
- 	.adda_1t_init = 0x0fc01616,
- 	.adda_1t_path_on = 0x0fc01616,
- 	.adda_2t_path_on_a = 0x0fc01616,
+diff --git a/drivers/infiniband/hw/hfi1/mmu_rb.c b/drivers/infiniband/hw/hfi1/mmu_rb.c
+index 14d2a90964c3c..a5631286c8e05 100644
+--- a/drivers/infiniband/hw/hfi1/mmu_rb.c
++++ b/drivers/infiniband/hw/hfi1/mmu_rb.c
+@@ -173,7 +173,7 @@ int hfi1_mmu_rb_insert(struct mmu_rb_handler *handler,
+ 		goto unlock;
+ 	}
+ 	__mmu_int_rb_insert(mnode, &handler->root);
+-	list_add(&mnode->list, &handler->lru_list);
++	list_add_tail(&mnode->list, &handler->lru_list);
+ 
+ 	ret = handler->ops->insert(handler->ops_arg, mnode);
+ 	if (ret) {
+@@ -220,8 +220,10 @@ bool hfi1_mmu_rb_remove_unless_exact(struct mmu_rb_handler *handler,
+ 	spin_lock_irqsave(&handler->lock, flags);
+ 	node = __mmu_rb_search(handler, addr, len);
+ 	if (node) {
+-		if (node->addr == addr && node->len == len)
++		if (node->addr == addr && node->len == len) {
++			list_move_tail(&node->list, &handler->lru_list);
+ 			goto unlock;
++		}
+ 		__mmu_int_rb_remove(node, &handler->root);
+ 		list_del(&node->list); /* remove from LRU list */
+ 		ret = true;
+@@ -242,8 +244,7 @@ void hfi1_mmu_rb_evict(struct mmu_rb_handler *handler, void *evict_arg)
+ 	INIT_LIST_HEAD(&del_list);
+ 
+ 	spin_lock_irqsave(&handler->lock, flags);
+-	list_for_each_entry_safe_reverse(rbnode, ptr, &handler->lru_list,
+-					 list) {
++	list_for_each_entry_safe(rbnode, ptr, &handler->lru_list, list) {
+ 		if (handler->ops->evict(handler->ops_arg, rbnode, evict_arg,
+ 					&stop)) {
+ 			__mmu_int_rb_remove(rbnode, &handler->root);
+@@ -255,9 +256,7 @@ void hfi1_mmu_rb_evict(struct mmu_rb_handler *handler, void *evict_arg)
+ 	}
+ 	spin_unlock_irqrestore(&handler->lock, flags);
+ 
+-	while (!list_empty(&del_list)) {
+-		rbnode = list_first_entry(&del_list, struct mmu_rb_node, list);
+-		list_del(&rbnode->list);
++	list_for_each_entry_safe(rbnode, ptr, &del_list, list) {
+ 		handler->ops->remove(handler->ops_arg, rbnode);
+ 	}
+ }
+-- 
+2.39.2
+
 
 
