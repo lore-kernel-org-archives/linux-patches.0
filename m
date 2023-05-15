@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 200F9FC06
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:45:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77358C4339B;
-	Mon, 15 May 2023 17:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67B5CFBF6
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:45:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC548C4339B;
+	Mon, 15 May 2023 17:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684172746;
-	bh=iK+CidoE+HPcOHQudZh1Z1GBJuZuCBRNeI8SHRik0J8=;
+	s=korg; t=1684172750;
+	bh=B0dc+X20qnU9diwPfh02fiSyjPTI2BGH3xj9ZDXA+i0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tsGa3+hxwtcam5A9K4OKD1+GMeX7joMe3jvDxWzYPmjtG5dAcigM3bk4Si/PefaW/
-	 9QYlRBRu0B0Cczy+Wvsuh9kj7ccnILdwLh7vwtMmh0W5i+wT+eNKWIN6SK2AK0N+JY
-	 dZN9PM8R5ImWtgdpQ98z9USM8/UXphwOdT0bicBc=
+	b=dRWCVEQcpbUjJ4RjfpcN1PDQZt33/K+rPcQPOO+AOOcnxHHzVpwTHnDU/3OaD0DeR
+	 qelin9cm92vYwj30U75PT/9q+mXZY1irJuWjF5dV4ah9AgboRNK6RaqETeCsnIOHOU
+	 tptrTzKPNM7FWsPoeo0qwQ9dKuSCAJ0eVMnZRJjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Philipp Hortmann <philipp.g.hortmann@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 225/381] serial: 8250: Add missing wakeup event reporting
-Date: Mon, 15 May 2023 18:27:56 +0200
-Message-Id: <20230515161746.879497561@linuxfoundation.org>
+Subject: [PATCH 5.10 226/381] staging: rtl8192e: Fix W_DISABLE# does not work after stop/start
+Date: Mon, 15 May 2023 18:27:57 +0200
+Message-Id: <20230515161746.926079841@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 References: <20230515161736.775969473@linuxfoundation.org>
@@ -34,51 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Philipp Hortmann <philipp.g.hortmann@gmail.com>
 
-[ Upstream commit 0ba9e3a13c6adfa99e32b2576d20820ab10ad48a ]
+[ Upstream commit 3fac2397f562eb669ddc2f45867a253f3fc26184 ]
 
-An 8250 UART configured as a wake-up source would not have reported
-itself through sysfs as being the source of wake-up, correct that.
+When loading the driver for rtl8192e, the W_DISABLE# switch is working as
+intended. But when the WLAN is turned off in software and then turned on
+again the W_DISABLE# does not work anymore. Reason for this is that in
+the function _rtl92e_dm_check_rf_ctrl_gpio() the bfirst_after_down is
+checked and returned when true. bfirst_after_down is set true when
+switching the WLAN off in software. But it is not set to false again
+when WLAN is turned on again.
 
-Fixes: b3b708fa2780 ("wake up from a serial port")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230414170241.2016255-1-f.fainelli@gmail.com
+Add bfirst_after_down = false in _rtl92e_sta_up to reset bit and fix
+above described bug.
+
+Fixes: 94a799425eee ("From: wlanfae <wlanfae@realtek.com> [PATCH 1/8] rtl8192e: Import new version of driver from realtek")
+Signed-off-by: Philipp Hortmann <philipp.g.hortmann@gmail.com>
+Link: https://lore.kernel.org/r/20230418200201.GA17398@matrix-ESPRIMO-P710
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_port.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/staging/rtl8192e/rtl8192e/rtl_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/8250/8250_port.c b/drivers/tty/serial/8250/8250_port.c
-index 1f231fcda657b..1f9e4b87387b5 100644
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -15,6 +15,7 @@
- #include <linux/moduleparam.h>
- #include <linux/ioport.h>
- #include <linux/init.h>
-+#include <linux/irq.h>
- #include <linux/console.h>
- #include <linux/gpio/consumer.h>
- #include <linux/sysrq.h>
-@@ -1889,6 +1890,7 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
- 	unsigned char status;
- 	unsigned long flags;
- 	struct uart_8250_port *up = up_to_u8250p(port);
-+	struct tty_port *tport = &port->state->port;
- 	bool skip_rx = false;
+diff --git a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
+index 99c27d6b42333..291f98251f7f7 100644
+--- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
++++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
+@@ -770,6 +770,7 @@ static int _rtl92e_sta_up(struct net_device *dev, bool is_silent_reset)
+ 	else
+ 		netif_wake_queue(dev);
  
- 	if (iir & UART_IIR_NO_INT)
-@@ -1912,6 +1914,8 @@ int serial8250_handle_irq(struct uart_port *port, unsigned int iir)
- 		skip_rx = true;
++	priv->bfirst_after_down = false;
+ 	return 0;
+ }
  
- 	if (status & (UART_LSR_DR | UART_LSR_BI) && !skip_rx) {
-+		if (irqd_is_wakeup_set(irq_get_irq_data(port->irq)))
-+			pm_wakeup_event(tport->tty->dev, 0);
- 		if (!up->dma || handle_rx_dma(up, iir))
- 			status = serial8250_rx_chars(up, status);
- 	}
 -- 
 2.39.2
 
