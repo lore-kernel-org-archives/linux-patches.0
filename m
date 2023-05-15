@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5E3FBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:08:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F00C433D2;
-	Mon, 15 May 2023 17:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C73FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:08:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28AB1C433A1;
+	Mon, 15 May 2023 17:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170516;
-	bh=Q0Q/HeCr8mcdtW5tfcSV5cPQZvWce90CbPisAugHgpk=;
+	s=korg; t=1684170519;
+	bh=LVpWq8KK4eavK1xI6jm03aQP/9kRIgTgC9yVhjwlqBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jb+bLUMYZadzzzm5QsVE2fUdPcC044UnlFw02HaKRdARVpHIfXh54NZHyV2WJKrA6
-	 xY3Jb82x/aHEKG5qgRQzRK+X2YXpLgezaFo/IVFT1Xwe0QIxwayvYC6rTrVBRo0+f1
-	 dfrFmfg7Pz+Fb2bOcbuGpXXIrvPUauLWvlRvbR4Y=
+	b=H8u0LDBTSyDrjr+mGwLPw63EJedUQOmUOwZAfZYE7IVomYcnd2ksGpavGOYVr/0xs
+	 GkYQMgkRMLNz5VF4qLoSHqhP1GazxdXbvAnVACKjonFPCldd2jCSSuOEQVOiT5DX8C
+	 sAURYPqaOQE7N17y0274DKzhYFLfBTHrkQ8K5miE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.1 156/239] f2fs: fix null pointer panic in tracepoint in __replace_atomic_write_block
-Date: Mon, 15 May 2023 18:26:59 +0200
-Message-Id: <20230515161726.360003422@linuxfoundation.org>
+Subject: [PATCH 6.1 157/239] f2fs: fix potential corruption when moving a directory
+Date: Mon, 15 May 2023 18:27:00 +0200
+Message-Id: <20230515161726.388432173@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,43 +35,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit da6ea0b050fa720302b56fbb59307e7c7531a342 upstream.
+commit d94772154e524b329a168678836745d2773a6e02 upstream.
 
-We got a kernel panic if old_addr is NULL.
+F2FS has the same issue in ext4_rename causing crash revealed by
+xfstests/generic/707.
 
-https://bugzilla.kernel.org/show_bug.cgi?id=217266
+See also commit 0813299c586b ("ext4: Fix possible corruption when moving a directory")
 
-BUG: kernel NULL pointer dereference, address: 0000000000000000
- Call Trace:
-  <TASK>
-  f2fs_commit_atomic_write+0x619/0x990 [f2fs a1b985b80f5babd6f3ea778384908880812bfa43]
-  __f2fs_ioctl+0xd8e/0x4080 [f2fs a1b985b80f5babd6f3ea778384908880812bfa43]
-  ? vfs_write+0x2ae/0x3f0
-  ? vfs_write+0x2ae/0x3f0
-  __x64_sys_ioctl+0x91/0xd0
-  do_syscall_64+0x5c/0x90
-  entry_SYSCALL_64_after_hwframe+0x72/0xdc
- RIP: 0033:0x7f69095fe53f
-
-Fixes: 2f3a9ae990a7 ("f2fs: introduce trace_f2fs_replace_atomic_write_block")
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Chao Yu <chao@kernel.org>
+CC: stable@vger.kernel.org
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/segment.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/namei.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -262,7 +262,7 @@ retry:
- 	f2fs_put_dnode(&dn);
+--- a/fs/f2fs/namei.c
++++ b/fs/f2fs/namei.c
+@@ -1002,12 +1002,20 @@ static int f2fs_rename(struct user_names
+ 			goto out;
+ 	}
  
- 	trace_f2fs_replace_atomic_write_block(inode, F2FS_I(inode)->cow_inode,
--					index, *old_addr, new_addr, recover);
-+			index, old_addr ? *old_addr : 0, new_addr, recover);
- 	return 0;
- }
++	/*
++	 * Copied from ext4_rename: we need to protect against old.inode
++	 * directory getting converted from inline directory format into
++	 * a normal one.
++	 */
++	if (S_ISDIR(old_inode->i_mode))
++		inode_lock_nested(old_inode, I_MUTEX_NONDIR2);
++
+ 	err = -ENOENT;
+ 	old_entry = f2fs_find_entry(old_dir, &old_dentry->d_name, &old_page);
+ 	if (!old_entry) {
+ 		if (IS_ERR(old_page))
+ 			err = PTR_ERR(old_page);
+-		goto out;
++		goto out_unlock_old;
+ 	}
  
+ 	if (S_ISDIR(old_inode->i_mode)) {
+@@ -1115,6 +1123,9 @@ static int f2fs_rename(struct user_names
+ 
+ 	f2fs_unlock_op(sbi);
+ 
++	if (S_ISDIR(old_inode->i_mode))
++		inode_unlock(old_inode);
++
+ 	if (IS_DIRSYNC(old_dir) || IS_DIRSYNC(new_dir))
+ 		f2fs_sync_fs(sbi->sb, 1);
+ 
+@@ -1129,6 +1140,9 @@ out_dir:
+ 		f2fs_put_page(old_dir_page, 0);
+ out_old:
+ 	f2fs_put_page(old_page, 0);
++out_unlock_old:
++	if (S_ISDIR(old_inode->i_mode))
++		inode_unlock(old_inode);
+ out:
+ 	iput(whiteout);
+ 	return err;
 
 
