@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5327FDF40
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C068DC433EF;
-	Mon, 15 May 2023 16:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34EF2DF40
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:36:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B042DC433D2;
+	Mon, 15 May 2023 16:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684168589;
-	bh=47Qq9YGyc2+RMo/Jv2IB7YbEBCDWSNTUn8njPrawwZg=;
+	s=korg; t=1684168592;
+	bh=Nc25TSkVxVrXY64easAv0Dysj5N+r+hR4Ws0zUbzFD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rVljTsDBdr2yIY3HmWwobspLmfzT5WZerQMA2pRGYREbwhhOHRnM7txiDfaGrUQ6P
-	 XLSm3wVlh0fdmGy3OJ0yrReR4Ov2yOepAkEdrABt9WkrWnp8PLn+QIZ9J9D/TccEqV
-	 RNOPDvdo8wSjxep3uBUebH+f7dziAyxM39xDDZZY=
+	b=KpmpWG9t+DSdw9kZLUXidcUo/OiE0s203Bhs6CGpJb2fhDpLXwPr4v22r1CH8iUcA
+	 7STfMJDjqtFl0idIoKfSQZGxQ1192WDxvGrWL4NJ884RL5wcNdzLBiilF+7dhGgzrF
+	 jLzjuar8mF6wUNpBHKRrQWCY2x1p2+zwanBNfoXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pawel Witek <pawel.ireneusz.witek@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 4.14 099/116] cifs: fix pcchunk length type in smb2_copychunk_range
-Date: Mon, 15 May 2023 18:26:36 +0200
-Message-Id: <20230515161701.536095572@linuxfoundation.org>
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>,
+	Yoshinori Sato <ysato@users.sourceforge.jp>,
+	Rich Felker <dalias@libc.org>,
+	linux-sh@vger.kernel.org,
+	Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH 4.14 100/116] sh: math-emu: fix macro redefined warning
+Date: Mon, 15 May 2023 18:26:37 +0200
+Message-Id: <20230515161701.575680024@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 References: <20230515161658.228491273@linuxfoundation.org>
@@ -34,34 +39,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Witek <pawel.ireneusz.witek@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-commit d66cde50c3c868af7abddafce701bb86e4a93039 upstream.
+commit 58a49ad90939386a8682e842c474a0d2c00ec39c upstream.
 
-Change type of pcchunk->Length from u32 to u64 to match
-smb2_copychunk_range arguments type. Fixes the problem where performing
-server-side copy with CIFS_IOC_COPYCHUNK_FILE ioctl resulted in incomplete
-copy of large files while returning -EINVAL.
+Fix a warning that was reported by the kernel test robot:
 
-Fixes: 9bf0c9cd4314 ("CIFS: Fix SMB2/SMB3 Copy offload support (refcopy) for large files")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Pawel Witek <pawel.ireneusz.witek@gmail.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+In file included from ../include/math-emu/soft-fp.h:27,
+                 from ../arch/sh/math-emu/math.c:22:
+../arch/sh/include/asm/sfp-machine.h:17: warning: "__BYTE_ORDER" redefined
+   17 | #define __BYTE_ORDER __BIG_ENDIAN
+In file included from ../arch/sh/math-emu/math.c:21:
+../arch/sh/math-emu/sfp-util.h:71: note: this is the location of the previous definition
+   71 | #define __BYTE_ORDER __LITTLE_ENDIAN
+
+Fixes: b929926f01f2 ("sh: define __BIG_ENDIAN for math-emu")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: lore.kernel.org/r/202111121827.6v6SXtVv-lkp@intel.com
+Cc: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Cc: Yoshinori Sato <ysato@users.sourceforge.jp>
+Cc: Rich Felker <dalias@libc.org>
+Cc: linux-sh@vger.kernel.org
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: stable@vger.kernel.org
+Reviewed-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
+Link: https://lore.kernel.org/r/20230306040037.20350-5-rdunlap@infradead.org
+Signed-off-by: John Paul Adrian Glaubitz <glaubitz@physik.fu-berlin.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb2ops.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/sh/math-emu/sfp-util.h |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -891,7 +891,7 @@ smb2_copychunk_range(const unsigned int
- 		pcchunk->SourceOffset = cpu_to_le64(src_off);
- 		pcchunk->TargetOffset = cpu_to_le64(dest_off);
- 		pcchunk->Length =
--			cpu_to_le32(min_t(u32, len, tcon->max_bytes_chunk));
-+			cpu_to_le32(min_t(u64, len, tcon->max_bytes_chunk));
+--- a/arch/sh/math-emu/sfp-util.h
++++ b/arch/sh/math-emu/sfp-util.h
+@@ -67,7 +67,3 @@
+   } while (0)
  
- 		/* Request server copy to target from src identified by key */
- 		kfree(retbuf);
+ #define abort()	return 0
+-
+-#define __BYTE_ORDER __LITTLE_ENDIAN
+-
+-
 
 
