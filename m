@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE1DBFBE7
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10F68C433EF;
-	Mon, 15 May 2023 17:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD8FBFBE7
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:23:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23645C433D2;
+	Mon, 15 May 2023 17:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171385;
-	bh=///zHZg4pXoJKgurYXlA50L1XGwpvcc8o1dla1oLyCE=;
+	s=korg; t=1684171388;
+	bh=KuEl3I79LaBi7SqK/raDUlCtJXUfEp1kHM1zSWQhnyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFdtsL4R7n8x5afKlVN47gL9LxfkSvCEAQDvoaw4sPHTLSJwPjw/rC67lpOIfylBv
-	 /A2+17g9g+u7yS/x7b0ktD547vMxBHgZ82ooWQJHkH7hHQ/70UoVzD8adlcNfTEjQ/
-	 0KrBnq+9+kemOLS4UlGZKFuYXn1ykGVaw4ceVrHg=
+	b=aQIGEKffvSPNs0Bfz8feCK4o8X+pSltTfitOc3AvLGnL0zbRtAEJ7HonXSYZh/Wo4
+	 WJMZqTKsf3cJQGJlvWiIPd3/apV6+QhxPr5/hOOEAe/Fhc6Fz55KizkmpDIsITiILS
+	 y7ypM/fFZw/u3sHSqC2wT9LNzteK/VAGaE5p7ORg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatio Zhang <Hongkun.Zhang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.2 192/242] drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v10_0_hw_fini
-Date: Mon, 15 May 2023 18:28:38 +0200
-Message-Id: <20230515161727.709069097@linuxfoundation.org>
+Subject: [PATCH 6.2 193/242] drm/amdgpu: fix an amdgpu_irq_put() issue in gmc_v9_0_hw_fini()
+Date: Mon, 15 May 2023 18:28:39 +0200
+Message-Id: <20230515161727.738049312@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
 References: <20230515161721.802179972@linuxfoundation.org>
@@ -36,49 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Horatio Zhang <Hongkun.Zhang@amd.com>
+From: Hamza Mahfooz <hamza.mahfooz@amd.com>
 
-commit 08c677cb0b436a96a836792bb35a8ec5de4999c2 upstream.
+commit 922a76ba31adf84e72bc947267385be420c689ee upstream.
 
-The gmc.ecc_irq is enabled by firmware per IFWI setting,
-and the host driver is not privileged to enable/disable
-the interrupt. So, it is meaningless to use the amdgpu_irq_put
-function in gmc_v10_0_hw_fini, which also leads to the call
-trace.
+As made mention of in commit 08c677cb0b43 ("drm/amdgpu: fix
+amdgpu_irq_put call trace in gmc_v10_0_hw_fini") and commit 13af556104fa
+("drm/amdgpu: fix amdgpu_irq_put call trace in gmc_v11_0_hw_fini"). It
+is meaningless to call amdgpu_irq_put() for gmc.ecc_irq. So, remove it
+from gmc_v9_0_hw_fini().
 
-[   82.340264] Call Trace:
-[   82.340265]  <TASK>
-[   82.340269]  gmc_v10_0_hw_fini+0x83/0xa0 [amdgpu]
-[   82.340447]  gmc_v10_0_suspend+0xe/0x20 [amdgpu]
-[   82.340623]  amdgpu_device_ip_suspend_phase2+0x127/0x1c0 [amdgpu]
-[   82.340789]  amdgpu_device_ip_suspend+0x3d/0x80 [amdgpu]
-[   82.340955]  amdgpu_device_pre_asic_reset+0xdd/0x2b0 [amdgpu]
-[   82.341122]  amdgpu_device_gpu_recover.cold+0x4dd/0xbb2 [amdgpu]
-[   82.341359]  amdgpu_debugfs_reset_work+0x4c/0x70 [amdgpu]
-[   82.341529]  process_one_work+0x21d/0x3f0
-[   82.341535]  worker_thread+0x1fa/0x3c0
-[   82.341538]  ? process_one_work+0x3f0/0x3f0
-[   82.341540]  kthread+0xff/0x130
-[   82.341544]  ? kthread_complete_and_exit+0x20/0x20
-[   82.341547]  ret_from_fork+0x22/0x30
-
-Signed-off-by: Horatio Zhang <Hongkun.Zhang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Guchun Chen <guchun.chen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2522
-Fixes: c8b5a95b5709 ("drm/amdgpu: Fix desktop freezed after gpu-reset")
+Fixes: 3029c855d79f ("drm/amdgpu: Fix desktop freezed after gpu-reset")
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c |    1 -
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |    1 -
  1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v10_0.c
-@@ -1145,7 +1145,6 @@ static int gmc_v10_0_hw_fini(void *handl
- 		return 0;
- 	}
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -1963,7 +1963,6 @@ static int gmc_v9_0_hw_fini(void *handle
+ 	if (adev->mmhub.funcs->update_power_gating)
+ 		adev->mmhub.funcs->update_power_gating(adev, false);
  
 -	amdgpu_irq_put(adev, &adev->gmc.ecc_irq, 0);
  	amdgpu_irq_put(adev, &adev->gmc.vm_fault, 0);
