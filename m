@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24DFDFBEA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:07:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D04CC4339B;
-	Mon, 15 May 2023 17:07:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E77FBEA
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:07:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C64C433EF;
+	Mon, 15 May 2023 17:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684170432;
-	bh=KDtz098cXIIKYANo2u+ugNLKs1oF2Xks42v7J5v9TV4=;
+	s=korg; t=1684170435;
+	bh=e4QBGwX+Izxjh1QZWTpkp9px+pDzxg0KWgSxmDigml8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Av3bqlVsQz6N3BBkCXVi6oVcsVRwUIL/J2r2trBNtHVVfTMvJSvGbWREiaEqxKTjU
-	 FGzf1CUPlLJZPykeQMGsbyIXA+AWPoOOuEBJ+nZYVQkJDy1e1FLKba4heFUJkGWKr5
-	 8F93dNP0L+AsSHlG/QPXvHC8Wi7k5HuC9Ri3bSsw=
+	b=h9y4h9FGCQbDeAWE/GuoT1EtWguihFEeUEoBcVd/rO2stJIp4Gc7HkRRxqevVpBJX
+	 p1L+zQYmLo4dV/utXNZgyYsMGEuPL4tTaLnaP/X1djUxvY/LkI155IDHRqdV82Y78X
+	 sDo/max3NjhbpWFjcIAK6zN9PQ8g2uMvLpvmb+FA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Howells <dhowells@redhat.com>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 129/239] smb3: fix problem remounting a share after shutdown
-Date: Mon, 15 May 2023 18:26:32 +0200
-Message-Id: <20230515161725.567180306@linuxfoundation.org>
+Subject: [PATCH 6.1 130/239] SMB3: force unmount was failing to close deferred close files
+Date: Mon, 15 May 2023 18:26:33 +0200
+Message-Id: <20230515161725.595698424@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
 References: <20230515161721.545370111@linuxfoundation.org>
@@ -36,38 +37,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Steve French <stfrench@microsoft.com>
 
-commit 716a3cf317456fa01d54398bb14ab354f50ed6a2 upstream.
+commit 2cb6f968775a9fd60c90a6042b9550bcec3ea087 upstream.
 
-xfstests generic/392 showed a problem where even after a
-shutdown call was made on a mount, we would still attempt
-to use the (now inaccessible) superblock if another mount
-was attempted for the same share.
+In investigating a failure with xfstest generic/392 it
+was noticed that mounts were reusing a superblock that should
+already have been freed. This turned out to be related to
+deferred close files keeping a reference count until the
+closetimeo expired.
+
+Currently the only way an fs knows that mount is beginning is
+when force unmount is called, but when this, ie umount_begin(),
+is called all deferred close files on the share (tree
+connection) should be closed immediately (unless shared by
+another mount) to avoid using excess resources on the server
+and to avoid reusing a superblock which should already be freed.
+
+In umount_begin, close all deferred close handles for that
+share if this is the last mount using that share on this
+client (ie send the SMB3 close request over the wire for those
+that have been already closed by the app but that we have
+kept a handle lease open for and have not sent closes to the
+server for yet).
 
 Reported-by: David Howells <dhowells@redhat.com>
-Reviewed-by: David Howells <dhowells@redhat.com>
+Acked-by: Bharath SM <bharathsm@microsoft.com>
 Cc: <stable@vger.kernel.org>
-Fixes: 087f757b0129 ("cifs: add shutdown support")
+Fixes: 78c09634f7dc ("Cifs: Fix kernel oops caused by deferred close for files.")
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/connect.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/cifs/cifsfs.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -2742,6 +2742,13 @@ cifs_match_super(struct super_block *sb,
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -743,6 +743,7 @@ static void cifs_umount_begin(struct sup
+ 	spin_unlock(&tcon->tc_lock);
+ 	spin_unlock(&cifs_tcp_ses_lock);
  
- 	spin_lock(&cifs_tcp_ses_lock);
- 	cifs_sb = CIFS_SB(sb);
-+
-+	/* We do not want to use a superblock that has been shutdown */
-+	if (CIFS_MOUNT_SHUTDOWN & cifs_sb->mnt_cifs_flags) {
-+		spin_unlock(&cifs_tcp_ses_lock);
-+		return 0;
-+	}
-+
- 	tlink = cifs_get_tlink(cifs_sb_master_tlink(cifs_sb));
- 	if (tlink == NULL) {
- 		/* can not match superblock if tlink were ever null */
++	cifs_close_all_deferred_files(tcon);
+ 	/* cancel_brl_requests(tcon); */ /* BB mark all brl mids as exiting */
+ 	/* cancel_notify_requests(tcon); */
+ 	if (tcon->ses && tcon->ses->server) {
 
 
