@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE25E17730
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:04:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5147DC4339C;
-	Mon, 15 May 2023 18:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B091772F
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 18:04:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9526AC4339C;
+	Mon, 15 May 2023 18:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684173840;
-	bh=+wQUliwoEx1aSXOW1Gof6dQlnDJBMayJeZJHinckJgY=;
+	s=korg; t=1684173844;
+	bh=DxfaVIai1PkiD7G2jWhf4OqeyHIXupmlQ/nSx/+sDHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ys8vEEbQ1pTWstTEmFsHCVIFlQ5FE6bM97yju6VzOY2v/i7h48J1GV+5iJXQgqaEO
-	 3iEL+Cm+UE1XQcPY3Py5R+rotGVKjjaFJwO3A7L6/vDy22MMPp4BIyUGUkxZTsDYIC
-	 C47zz46TXeM5e47B+hbEGpZxwTU7mZdSYMkH/B00=
+	b=0MnWiomJ2tv+TdCEliSeGWkHxn551380mBZgyMf1O+Y+auleLQzTsrXGMF39f2NvX
+	 0aDBRysMvE1dUxO9kWcHGyrJVFffFgTVbEo28AVNL0E/Dyeb9/93dg70Mcsyd9Xx5l
+	 xy8FkbU5WLLmFQq38JPix9bVGBaN5GOSAXUAhsmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Palash Oswal <oswalpalash@gmail.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Cong Wang <cong.wang@bytedance.com>,
+	Angelo Dureghello <angelo.dureghello@timesys.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 223/282] sit: update dev->needed_headroom in ipip6_tunnel_bind_dev()
-Date: Mon, 15 May 2023 18:30:01 +0200
-Message-Id: <20230515161728.915678504@linuxfoundation.org>
+Subject: [PATCH 5.4 224/282] net: dsa: mv88e6xxx: add mv88e6321 rsvd2cpu
+Date: Mon, 15 May 2023 18:30:02 +0200
+Message-Id: <20230515161728.944860348@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 References: <20230515161722.146344674@linuxfoundation.org>
@@ -38,67 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Angelo Dureghello <angelo.dureghello@timesys.com>
 
-[ Upstream commit c88f8d5cd95fd039cff95d682b8e71100c001df0 ]
+[ Upstream commit 6686317855c6997671982d4489ccdd946f644957 ]
 
-When a tunnel device is bound with the underlying device, its
-dev->needed_headroom needs to be updated properly. IPv4 tunnels
-already do the same in ip_tunnel_bind_dev(). Otherwise we may
-not have enough header room for skb, especially after commit
-b17f709a2401 ("gue: TX support for using remote checksum offload option").
+Add rsvd2cpu capability for mv88e6321 model, to allow proper bpdu
+processing.
 
-Fixes: 32b8a8e59c9c ("sit: add IPv4 over IPv4 support")
-Reported-by: Palash Oswal <oswalpalash@gmail.com>
-Link: https://lore.kernel.org/netdev/CAGyP=7fDcSPKu6nttbGwt7RXzE3uyYxLjCSE97J64pRxJP8jPA@mail.gmail.com/
-Cc: Kuniyuki Iwashima <kuniyu@amazon.com>
-Cc: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Angelo Dureghello <angelo.dureghello@timesys.com>
+Fixes: 51c901a775621 ("net: dsa: mv88e6xxx: distinguish Global 2 Rsvd2CPU")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/sit.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/dsa/mv88e6xxx/chip.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
-index 1179608955f5f..8d704ea946933 100644
---- a/net/ipv6/sit.c
-+++ b/net/ipv6/sit.c
-@@ -1054,12 +1054,13 @@ static netdev_tx_t sit_tunnel_xmit(struct sk_buff *skb,
- 
- static void ipip6_tunnel_bind_dev(struct net_device *dev)
- {
-+	struct ip_tunnel *tunnel = netdev_priv(dev);
-+	int t_hlen = tunnel->hlen + sizeof(struct iphdr);
- 	struct net_device *tdev = NULL;
--	struct ip_tunnel *tunnel;
-+	int hlen = LL_MAX_HEADER;
- 	const struct iphdr *iph;
- 	struct flowi4 fl4;
- 
--	tunnel = netdev_priv(dev);
- 	iph = &tunnel->parms.iph;
- 
- 	if (iph->daddr) {
-@@ -1082,14 +1083,15 @@ static void ipip6_tunnel_bind_dev(struct net_device *dev)
- 		tdev = __dev_get_by_index(tunnel->net, tunnel->parms.link);
- 
- 	if (tdev && !netif_is_l3_master(tdev)) {
--		int t_hlen = tunnel->hlen + sizeof(struct iphdr);
- 		int mtu;
- 
- 		mtu = tdev->mtu - t_hlen;
- 		if (mtu < IPV6_MIN_MTU)
- 			mtu = IPV6_MIN_MTU;
- 		WRITE_ONCE(dev->mtu, mtu);
-+		hlen = tdev->hard_header_len + tdev->needed_headroom;
- 	}
-+	dev->needed_headroom = t_hlen + hlen;
- }
- 
- static void ipip6_tunnel_update(struct ip_tunnel *t, struct ip_tunnel_parm *p,
+diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
+index ea32be579e7b1..3a8a49b7ec3d9 100644
+--- a/drivers/net/dsa/mv88e6xxx/chip.c
++++ b/drivers/net/dsa/mv88e6xxx/chip.c
+@@ -3876,6 +3876,7 @@ static const struct mv88e6xxx_ops mv88e6321_ops = {
+ 	.set_cpu_port = mv88e6095_g1_set_cpu_port,
+ 	.set_egress_port = mv88e6095_g1_set_egress_port,
+ 	.watchdog_ops = &mv88e6390_watchdog_ops,
++	.mgmt_rsvd2cpu = mv88e6352_g2_mgmt_rsvd2cpu,
+ 	.reset = mv88e6352_g1_reset,
+ 	.vtu_getnext = mv88e6185_g1_vtu_getnext,
+ 	.vtu_loadpurge = mv88e6185_g1_vtu_loadpurge,
 -- 
 2.39.2
 
