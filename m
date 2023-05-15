@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83228FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:53:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CDFC4339B;
-	Mon, 15 May 2023 16:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 367F4FBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:53:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70887C433D2;
+	Mon, 15 May 2023 16:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169605;
-	bh=HmDcSOsLgumo/hdJPNunpB1OKIdG4bdJ8yeX5eqGbEg=;
+	s=korg; t=1684169609;
+	bh=q7uSRsJsO29IA51Q1xdw9dYkw7E3rxMHB33ck/9LeZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cIcF/YTIY0/mrgApvDrLPmxPwOzJHQQYELHe6i23KrfGSkVe+jydlVmmHEpVBYn2g
-	 m15Uk8nPm9RYIS7CEME8Z8F/TbQg2p8ZuEQl/dimHgGo6lWuSLMDBekfUjIxPfzCzC
-	 ScPNnIxMVhLJ4PJQBSXjIIuz5m3Dy9tp0BASIay8=
+	b=HrV9y7Ml1KFda22FQKhiISpsxDtGdYZAROx/yflumlGkrJusFgxLXtv6qR+jAHSV/
+	 JHrx0bYWTsniDBJZw9k+LQ9IkKkcRGrWolXdtMyFy8UMotxDSQWaAwIA/+UahCrgUS
+	 CMbnG+MODP0eyyztPxus10isz4FOpSvXcBz5oFiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Namhyung Kim <namhyung@kernel.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 111/246] perf symbols: Fix use-after-free in get_plt_got_name()
-Date: Mon, 15 May 2023 18:25:23 +0200
-Message-Id: <20230515161725.906448252@linuxfoundation.org>
+Subject: [PATCH 6.3 112/246] perf symbols: Fix unaligned access in get_x86_64_plt_disp()
+Date: Mon, 15 May 2023 18:25:24 +0200
+Message-Id: <20230515161725.935895692@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -41,9 +41,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit c8bb2d76a40ac0ccf6303d369e536fddcde847fb ]
+[ Upstream commit a2410b579c72242ac0f77b3768093d8c1b48012e ]
 
-Fix use-after-free in get_plt_got_name().
+Use memcpy() to avoid unaligned access.
 
 Discovered using EXTRA_CFLAGS="-fsanitize=undefined -fsanitize=address".
 
@@ -63,30 +63,23 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 41882ae8452e5..98a18fb854180 100644
+index 98a18fb854180..42b83bef67aaf 100644
 --- a/tools/perf/util/symbol-elf.c
 +++ b/tools/perf/util/symbol-elf.c
-@@ -580,6 +580,7 @@ static bool get_plt_got_name(GElf_Shdr *shdr, size_t i,
- 	const char *sym_name;
- 	char *demangled;
- 	GElf_Sym sym;
-+	bool result;
- 	u32 disp;
- 
- 	if (!di->sorted)
-@@ -606,9 +607,11 @@ static bool get_plt_got_name(GElf_Shdr *shdr, size_t i,
- 
- 	snprintf(buf, buf_sz, "%s@plt", sym_name);
- 
-+	result = *sym_name;
+@@ -565,9 +565,12 @@ static u32 get_x86_64_plt_disp(const u8 *p)
+ 		n += 1;
+ 	/* jmp with 4-byte displacement */
+ 	if (p[n] == 0xff && p[n + 1] == 0x25) {
++		u32 disp;
 +
- 	free(demangled);
- 
--	return *sym_name;
-+	return result;
+ 		n += 2;
+ 		/* Also add offset from start of entry to end of instruction */
+-		return n + 4 + le32toh(*(const u32 *)(p + n));
++		memcpy(&disp, p + n, sizeof(disp));
++		return n + 4 + le32toh(disp);
+ 	}
+ 	return 0;
  }
- 
- static int dso__synthesize_plt_got_symbols(struct dso *dso, Elf *elf,
 -- 
 2.39.2
 
