@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C66FBF0
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52380C433D2;
-	Mon, 15 May 2023 16:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9ADFBF0
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 16:56:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2190AC433EF;
+	Mon, 15 May 2023 16:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684169772;
-	bh=TXKItwxrTfBoYe0oOuo94XUFSly+tpmtflGT5Hiac+A=;
+	s=korg; t=1684169775;
+	bh=q6AzAGrTG8ArFQN82EMIcsu59wUViAOx8XuiCJeb2zI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wbql/Gl2bTCg7RkKey7LgkWMXOo8OlGK3rBSk51IkCtSYcQYDh5pqR4jiWRuwV3wD
-	 ciyhNp6XB+K2cQG8gq5PIoBjpZKOkBjSSRslypHyk1aK1WCIt3mZiQRZunPTewuYg8
-	 /v2+dlOJQyIhsmKqQoz/6CFuO6A5xxF1aDBeHad0=
+	b=114sC34HKtWYa10gC5S40U5aOG63hjwf5HG4vu8o4IN96se6TGn/mLlVaBuHpIHwg
+	 pVnjzg2W3OuAaQbFb8NgT+Bhi85T68//kg9ONAJySgdJKHAwAx2A8GQTfHrx7yBheM
+	 QYH+ipBcxn5Z8oyrLbFE5CzYaizcmcoeGJn7xZsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zev Weiss <zev@bewilderbeest.net>,
-	Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 6.3 166/246] ARM: dts: aspeed: romed8hm3: Fix GPIO polarity of system-fault LED
-Date: Mon, 15 May 2023 18:26:18 +0200
-Message-Id: <20230515161727.613802135@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Rob Clark <robdclark@chromium.org>
+Subject: [PATCH 6.3 167/246] drm/msm/adreno: fix runtime PM imbalance at gpu load
+Date: Mon, 15 May 2023 18:26:19 +0200
+Message-Id: <20230515161727.644129478@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 References: <20230515161722.610123835@linuxfoundation.org>
@@ -34,32 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zev Weiss <zev@bewilderbeest.net>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit a3fd10732d276d7cf372c6746a78a1c8b6aa7541 upstream.
+commit 0d997f95b70f98987ae031a89677c13e0e223670 upstream.
 
-Turns out it's in fact not the same as the heartbeat LED.
+A recent commit moved enabling of runtime PM to GPU load time (first
+open()) but failed to update the error paths so that runtime PM is
+disabled if initialisation of the GPU fails. This would trigger a
+warning about the unbalanced disable count on the next open() attempt.
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Cc: stable@vger.kernel.org # v5.18+
-Fixes: a9a3d60b937a ("ARM: dts: aspeed: Add ASRock ROMED8HM3 BMC")
-Link: https://lore.kernel.org/r/20230224000400.12226-2-zev@bewilderbeest.net
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+Note that pm_runtime_put_noidle() is sufficient to balance the usage
+count when pm_runtime_put_sync() fails (and is chosen over
+pm_runtime_resume_and_get() for consistency reasons).
+
+Fixes: 4b18299b3365 ("drm/msm/adreno: Defer enabling runpm until hw_init()")
+Cc: stable@vger.kernel.org      # 6.0
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Patchwork: https://patchwork.freedesktop.org/patch/524971/
+Link: https://lore.kernel.org/r/20230303164807.13124-3-johan+linaro@kernel.org
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/adreno_device.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-asrock-romed8hm3.dts
-@@ -31,7 +31,7 @@
- 		};
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -440,20 +440,21 @@ struct msm_gpu *adreno_load_gpu(struct d
  
- 		system-fault {
--			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_LOW>;
-+			gpios = <&gpio ASPEED_GPIO(Z, 2) GPIO_ACTIVE_HIGH>;
- 			panic-indicator;
- 		};
- 	};
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+ 	if (ret < 0) {
+-		pm_runtime_put_sync(&pdev->dev);
++		pm_runtime_put_noidle(&pdev->dev);
+ 		DRM_DEV_ERROR(dev->dev, "Couldn't power up the GPU: %d\n", ret);
+-		return NULL;
++		goto err_disable_rpm;
+ 	}
+ 
+ 	mutex_lock(&gpu->lock);
+ 	ret = msm_gpu_hw_init(gpu);
+ 	mutex_unlock(&gpu->lock);
+-	pm_runtime_put_autosuspend(&pdev->dev);
+ 	if (ret) {
+ 		DRM_DEV_ERROR(dev->dev, "gpu hw init failed: %d\n", ret);
+-		return NULL;
++		goto err_put_rpm;
+ 	}
+ 
++	pm_runtime_put_autosuspend(&pdev->dev);
++
+ #ifdef CONFIG_DEBUG_FS
+ 	if (gpu->funcs->debugfs_init) {
+ 		gpu->funcs->debugfs_init(gpu, dev->primary);
+@@ -462,6 +463,13 @@ struct msm_gpu *adreno_load_gpu(struct d
+ #endif
+ 
+ 	return gpu;
++
++err_put_rpm:
++	pm_runtime_put_sync(&pdev->dev);
++err_disable_rpm:
++	pm_runtime_disable(&pdev->dev);
++
++	return NULL;
+ }
+ 
+ static int find_chipid(struct device *dev, struct adreno_rev *rev)
 
 
