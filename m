@@ -1,37 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72044FC00
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A3BC4339B;
-	Mon, 15 May 2023 17:29:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C72DFC00
+	for <patches@lists.linux.dev>; Mon, 15 May 2023 17:30:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D408AC4339B;
+	Mon, 15 May 2023 17:30:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684171800;
-	bh=pj0kDBaCy7ECh9q6njUY6bdeNB/dOZlVpGDCznG8/bo=;
+	s=korg; t=1684171803;
+	bh=9dNCFdcbj4sG5xdcKXS+glwPFLlv9F0uT9RfLy7Ksfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vNPprpAX/OFjZi8M6RBi87k55uo8rRjV7dp7YllGwWk7tulEAUguwXDNa25Oj+TYU
-	 +mFHZQPzgn9KuokE4C62O7dVBPk1/HAH6kArGRygK6OgL2Msnq//xX/k48qz0G7KxR
-	 Ns7fGz+k4peNXc6zM84shqfW3MuGuROf3MRII0xE=
+	b=2nR9fUjw2oiT36gBRS4MafdL5zpEUGgqO/wP6GbT9vnoG117zPyliTt618dkeFrPg
+	 5Fe2YCI44LXdGJC/ouMEBK4IKJLOxIX8+Q6lkXXtsE1/DejEi5RpgBwMjxcUXtDAKE
+	 hGL6vq/xGcKKmqWkAX/b7J/dZgO9Ittjw1phbR2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	elfring@users.sourceforge.net,
-	Ian Rogers <irogers@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	German Gomez <german.gomez@arm.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 052/134] perf map: Delete two variable initialisations before null pointer checks in sort__sym_from_cmp()
-Date: Mon, 15 May 2023 18:28:49 +0200
-Message-Id: <20230515161704.881517720@linuxfoundation.org>
+Subject: [PATCH 5.15 053/134] crypto: sun8i-ss - Fix a test in sun8i_ss_setup_ivs()
+Date: Mon, 15 May 2023 18:28:50 +0200
+Message-Id: <20230515161704.911562055@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
 References: <20230515161702.887638251@linuxfoundation.org>
@@ -45,54 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Elfring <Markus.Elfring@web.de>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit c160118a90d4acf335993d8d59b02ae2147a524e ]
+[ Upstream commit 8fd91151ebcb21b3f2f2bf158ac6092192550b2b ]
 
-Addresses of two data structure members were determined before
-corresponding null pointer checks in the implementation of the function
-“sort__sym_from_cmp”.
+SS_ENCRYPTION is (0 << 7 = 0), so the test can never be true.
+Use a direct comparison to SS_ENCRYPTION instead.
 
-Thus avoid the risk for undefined behaviour by removing extra
-initialisations for the local variables “from_l” and “from_r” (also
-because they were already reassigned with the same value behind this
-pointer check).
+The same king of test is already done the same way in sun8i_ss_run_task().
 
-This issue was detected by using the Coccinelle software.
-
-Fixes: 1b9e97a2a95e4941 ("perf tools: Fix report -F symbol_from for data without branch info")
-Signed-off-by: <elfring@users.sourceforge.net>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/cocci/54a21fea-64e3-de67-82ef-d61b90ffad05@web.de/
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 359e893e8af4 ("crypto: sun8i-ss - rework handling of IV")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/sort.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/sort.c b/tools/perf/util/sort.c
-index a111065b484ef..a4f2ffe2bdb6d 100644
---- a/tools/perf/util/sort.c
-+++ b/tools/perf/util/sort.c
-@@ -876,8 +876,7 @@ static int hist_entry__dso_to_filter(struct hist_entry *he, int type,
- static int64_t
- sort__sym_from_cmp(struct hist_entry *left, struct hist_entry *right)
- {
--	struct addr_map_symbol *from_l = &left->branch_info->from;
--	struct addr_map_symbol *from_r = &right->branch_info->from;
-+	struct addr_map_symbol *from_l, *from_r;
- 
- 	if (!left->branch_info || !right->branch_info)
- 		return cmp_null(left->branch_info, right->branch_info);
+diff --git a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+index 005eefecfdf59..0cc8cafdde27c 100644
+--- a/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
++++ b/drivers/crypto/allwinner/sun8i-ss/sun8i-ss-cipher.c
+@@ -132,7 +132,7 @@ static int sun8i_ss_setup_ivs(struct skcipher_request *areq)
+ 		}
+ 		rctx->p_iv[i] = a;
+ 		/* we need to setup all others IVs only in the decrypt way */
+-		if (rctx->op_dir & SS_ENCRYPTION)
++		if (rctx->op_dir == SS_ENCRYPTION)
+ 			return 0;
+ 		todo = min(len, sg_dma_len(sg));
+ 		len -= todo;
 -- 
 2.39.2
 
