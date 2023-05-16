@@ -1,68 +1,287 @@
-Received: from manchmal.in-ulm.de (manchmal.in-ulm.de [217.10.9.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5B7134CEB
-	for <patches@lists.linux.dev>; Tue, 16 May 2023 11:39:53 +0000 (UTC)
-Date: Tue, 16 May 2023 13:29:42 +0200
-From: Christoph Biedl <linux-kernel.bfrz@manchmal.in-ulm.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>, Helge Deller <deller@gmx.de>
-Subject: Re: [PATCH 6.3 224/246] parisc: Fix encoding of swp_entry due to
- added SWP_EXCLUSIVE flag
-Message-ID: <1684236494@msgid.manchmal.in-ulm.de>
-References: <20230515161722.610123835@linuxfoundation.org>
- <20230515161729.309596490@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD37624EA6
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 12:04:20 +0000 (UTC)
+Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-77d049b9040so3228557241.1
+        for <patches@lists.linux.dev>; Tue, 16 May 2023 05:04:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684238659; x=1686830659;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ClAd7kaJxhhiqMPyIHCwtBikQzkldIOZUtX2fRaU4lE=;
+        b=QZo9npq+JCKzLkhoeg9ayogi3R2kQI9jOax1xXK2LQYuOAm+L/a7U4lTUZtboluA72
+         zw65D5qmoQTPVhGBC1pg2YqlOxgLt0n44P9t5+cU0XJCeC4PDC1HNk00vtO81LluJRqg
+         HsWLjLhlvDIsBUQu5ELGimSe6Nt+mIJscHmh2APyq+3YaN615xFfnVBHjfOQ9gD7TpSm
+         HubM8U87Md8+wzhM8pyVzdbTiLiutaeFOdU7x7rQR//cx7zYqBxQTzXa4mr/kBuFhkf6
+         uS5K9NNQGvQen4dqQlBf16yezfy7brVyXmQH5dwO/Gm9aYb5ZLXRtVC2Hpflvbbp4GeL
+         ZVzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684238659; x=1686830659;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ClAd7kaJxhhiqMPyIHCwtBikQzkldIOZUtX2fRaU4lE=;
+        b=XzhNfFbNDmoR7g9qbv60D1phXrCaHCDRWk+a3wUvIGQwvWgNe0JoUlLFnwm9JGC8s5
+         f5SI489RnEqQhfE0SORPSHfBbIkKEpiCSD08awRAkiT71FmaaW/eU2tLg215AV+jAuAL
+         C6+6ss7Y7Wc1Xmw8EROAXg8i4Z5uDplWSkjtPi4nWqwFEi2UYKIlXjZ6caQ1SeG4149M
+         4wgm+87TcAN4YPAZbaoG2RPjGCztD0GVAxlzw/VLgE276BRoAuQ4UEK5I/CFk0BZ0rP0
+         Yy6U1VF+dJdWVBFX1lL3x07JZlZenEM/GYBWwHbJL3vB8UYfNKBfFHqw111DVuTDOtg3
+         WV5g==
+X-Gm-Message-State: AC+VfDzch/ckD5R8byrisq35NhBvwgZsJSWY+9pMqa5+yNL8q4ezBGDk
+	468uJfI7wd+aNV7tpQZsK05lRoNnKSu93g9fi/AYJg==
+X-Google-Smtp-Source: ACHHUZ49uZYsYDaDRYtoIDZDcaWVG4RZfAPVRGC5Hy5OgI916EGbdwAu0anrxy5g4iK+N/xyPuYR0pqw/cAGNNf2HP0=
+X-Received: by 2002:a05:6102:6d0:b0:436:50b6:efdb with SMTP id
+ m16-20020a05610206d000b0043650b6efdbmr4247374vsg.3.1684238659339; Tue, 16 May
+ 2023 05:04:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="P15Zl2i1L+IUdXCm"
-Content-Disposition: inline
-In-Reply-To: <20230515161729.309596490@linuxfoundation.org>
-
-
---P15Zl2i1L+IUdXCm
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20230515161721.802179972@linuxfoundation.org>
+In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 16 May 2023 17:34:08 +0530
+Message-ID: <CA+G9fYt6ZCmUykF3TLvgwCh7EdERDeN9ZgmGmjm54o1QgpOWZA@mail.gmail.com>
+Subject: Re: [PATCH 6.2 000/242] 6.2.16-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Greg Kroah-Hartman wrote...
+On Mon, 15 May 2023 at 22:43, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.2.16 release.
+> There are 242 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.2.16-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.2.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-> commit 6f9e98849edaa8aefc4030ff3500e41556e83ff7 upstream.
->=20
-> Fix the __swp_offset() and __swp_entry() macros due to commit 6d239fc78c0b
-> ("parisc/mm: support __HAVE_ARCH_PTE_SWP_EXCLUSIVE") which introduced the
-> SWP_EXCLUSIVE flag by reusing the _PAGE_ACCESSED flag.
+Results from Linaro=E2=80=99s test farm.
+Regressions on arm, x86_64, and i386.
 
-Sucessfully re-tested for 6.3.3-rc1.
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-For the better-safe-than-sorry department,
+LTP commands test case mkfs01_ntfs_sh fails on following stable-rc
+ - 6.2.16-rc1.
+ - 6.1.29-rc1
+ - 5.15.112-rc1
+ - 5.10.180-rc1
+ - 5.4.243-rc1
+ - 4.19.283-rc1
+ - 4.14.315-rc1
 
-    Christoph
+LTP commands,
+  - mkfs01_ntfs_sh
+
+Test log:
+=3D=3D=3D=3D=3D=3D=3D
+tst_device.c:93:[  147.226163] loop0: detected capacity change from 0 to 61=
+4400
+ TINFO: Found free device 0 '/dev/loop0'
+mkfs01 1 TINFO: timeout per run is 0h 50m 0s
+mkfs01 1 TPASS: 'mkfs -t ntfs  /dev/loop0 ' passed.
+mkfs01 2 TINFO: Mounting device: mount -t ntfs /dev/loop0
+/scratch/ltp-zKu0Zn6L6o/LTP_mkfs01.ULVi9nN6XF/mntpoint
+modprobe: FATAL: Module fuse not found in directory /lib/modules/6.2.16-rc1
+ntfs-3g-mount: fuse device is missing, try 'modprobe fuse' as root
+mkfs01 2 TBROK: Failed to mount device ntfs type: mount exit =3D 21
+[  166.420602] I/O error, dev loop0, sector 614272 op 0x0:(READ) flags
+0x80700 phys_seg 1 prio class 2
 
 
---P15Zl2i1L+IUdXCm
-Content-Type: application/pgp-signature; name="signature.asc"
+Test log:
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.=
+2.15-243-g704eace42a14/testrun/17019981/suite/ltp-commands/test/mkfs01_ntfs=
+_sh/log
 
------BEGIN PGP SIGNATURE-----
+Test history:
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
+1.28-240-gb82733c0ff99/testrun/17019910/suite/ltp-commands/test/mkfs01_ntfs=
+_sh/history/
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.=
+2.15-243-g704eace42a14/testrun/17020198/suite/ltp-commands/test/mkfs01_ntfs=
+_sh/history/
 
-iQIzBAABCgAdFiEEWXMI+726A12MfJXdxCxY61kUkv0FAmRjaSMACgkQxCxY61kU
-kv213BAA0vcpmLNjIBEXOXZlhsDTRuEaofITrERmG5ypLQ2fClisx5uicJ1ePm/T
-DO8L2sMNw7SCABNjme6VnCoaLFdmozxtpDxmgKAOI//75glNlrSuzRwp0z0RNWde
-DWoGC/6MQkZOIlk704LGnTRPVK+UCxbV+R0zxZpWKiwyelBd3kmOBAkasyJFC2Dw
-/cuQnD0LnCQKNDXY0oqHPCpOAWO36HNOzfwMhZToHWmE7iLpfQKjOhDvYJuV6lIr
-5GRSKD5D2WKrAgIpFJY6byjI5xkNANK72lLHhoyMV6wX6dsd4vNAt9lUhHq0xftO
-7XkIBy4Xrf8BLF50f8hWuqQ68Oz6VaSnfXmo09dDy9vjQ3jybMtjmLmEMz0R5N8G
-TpaEVjPyEIFIauferuy5TnMrlcg6EupOyIKBPAhuK3X6GTw1/Y4M34oICnNfs2QQ
-zZ5qTUhae2HEVDcDvGN4FESqywByhUI8y+9WPcvg6nuBccuwU154ClpNGuJ8D9Oj
-DGj5V3G7DzWV3u/CU+zN6GGoINzVNc6PnGqKzJVyWXWpmtYxlSZRweOXPg5WeaRD
-gFxA4KtqLiSgjaoJuVGbfqS7DXT8jKH2DbulkKttzhk+Hh92adbFMqyh6SFjCd/w
-xSawA7nRMevkQ+1WJzZI6qoq5RlGhXl0AMrkyArm6jSoHsKse/Y=
-=go7u
------END PGP SIGNATURE-----
 
---P15Zl2i1L+IUdXCm--
+## Build
+* kernel: 6.2.16-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.2.y
+* git commit: 704eace42a1426c1ef49afee9db673752a7b7c73
+* git describe: v6.2.15-243-g704eace42a14
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.2.1=
+5-243-g704eace42a14
+
+## Test Regressions (compared to v6.2.15)
+
+* x15, ltp-commands
+  - mkfs01_ntfs_sh
+
+* x86, ltp-commands
+  - mkfs01_ntfs_sh
+
+
+* x86-kasan, ltp-commands
+  - mkfs01_ntfs_sh
+
+* x86_64-clang, ltp-commands
+  - mkfs01_ntfs_sh
+
+
+## Metric Regressions (compared to v6.2.15)
+
+## Test Fixes (compared to v6.2.15)
+
+## Metric Fixes (compared to v6.2.15)
+
+## Test result summary
+total: 178929, pass: 153909, fail: 3053, skip: 21665, xfail: 302
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 145 total, 142 passed, 3 failed
+* arm64: 54 total, 53 passed, 1 failed
+* i386: 41 total, 38 passed, 3 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 38 total, 36 passed, 2 failed
+* riscv: 26 total, 25 passed, 1 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 7 passed, 1 failed
+* x86_64: 46 total, 46 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-vm
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bo[
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
