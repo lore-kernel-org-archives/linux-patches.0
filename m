@@ -1,52 +1,52 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5762A34CD4
-	for <patches@lists.linux.dev>; Tue, 16 May 2023 17:34:01 +0000 (UTC)
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-44fd15d6824so5108095e0c.3
-        for <patches@lists.linux.dev>; Tue, 16 May 2023 10:34:01 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881C6101CF
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 18:04:08 +0000 (UTC)
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-4363ba01c0dso3761419137.0
+        for <patches@lists.linux.dev>; Tue, 16 May 2023 11:04:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684258440; x=1686850440;
+        d=linaro.org; s=google; t=1684260247; x=1686852247;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CLMEKMBrgw9RbU/hZXO4mG7XXZKQ76MkcdKnMFy+hfY=;
-        b=KRatI7Sgf8h87eDFgChPOpHPWXS1V7gITx7aG7QiTTtmQF/n8Xu9un+E+c4fjBZAo/
-         R5IpKpW7F0j4o8c3FLGfJ0WOQsAQyRYlBl+2/rkmCrD8pp1WR/S6v4v4mK0dTeh1tSYR
-         ZNK0g/lia9RgkXpPNpoWdn3tdQEyKrpl3m7rm6x1MzAD8QmR4NVTVD5R+RkV5/GexwQF
-         RRKJi895OqLqVuIFY0E0lAG0FOBIqu5MLHiojekTrSQ8ld39PNUPgcU8AYttzkUF6FLW
-         gKIq3gxbrmAUZphUzfxPvXocTqwrajIAPmreMZ5UvVB/ZN7TqGxgjnrwEGFDuDPeOXfm
-         t0tg==
+        bh=Vvzg25v2oIEfNdNdkr9ntW85A+SET9yRI5a0pRi7L/0=;
+        b=sEdkWnYfz1zslsG4WM18jSxyezgQrNq463fZoa8yCdWUxYbfMTl0vdCbxMmpaTSNub
+         u6qn2ZO84qSn6oRYdupCOT6b2cNJSzhwxup1lB4OIFwpwUJPfgXrRwQa32vpPgTPpDSH
+         bH6XrJinPH8xYTT8EW6qgBaCo2RYV+gQ1es7P6Xn6mgUZpK6fAAoqDlqe0IeCd4Ty8C1
+         kdIDNyMqLmVdhvImg8TMZNqpDQozc1sma2EyiW2XUpcxH65NLDr6+GHP8ZKFYyWEricc
+         FnH1efXODtqTImOEADh97BKcJvJlJPNw3+eMqQwWeCuAME/rHjTZ9QSJ06rBndqllLn7
+         3TKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684258440; x=1686850440;
+        d=1e100.net; s=20221208; t=1684260247; x=1686852247;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CLMEKMBrgw9RbU/hZXO4mG7XXZKQ76MkcdKnMFy+hfY=;
-        b=AOwHzXKvrm3eSoTFDPgT9aY2vGiQ5CC1JX4A1Nx5LDqY4G7NJ5chV5JxgZR4XmF4PS
-         /etTzUc0Zh9uGTmVFJfiA6E3iqAgogzdfX1FMq5eJyoeqYnaGfrhnySpxlcoUdSCIHAS
-         K3sCv08A2LC69OiFFYQxFDGtTxO/rTyhXUJaX6Lo3NPsy2x91UgCgWMBXymzFkFFM29i
-         A55Q8W+mPBoz+4Cce6/+hlySV+onExjiJ6BZcyXiaME2BplFK4xlI4nAZ2WNi3UQ2WcL
-         yVSqlZpHra+oKwTFHyAj3FHnVLiesf1UpF/X8Sb7tjDJez32RQS833CcpLqMXBPeHVQa
-         Q87w==
-X-Gm-Message-State: AC+VfDyHXvH1CKHWpBTpfMFAR7ph1n7dnHIGffvj/nRppgWXk742Y43a
-	st034jEW3SvYJmJUPrPfn0N0Ea8kDtGl7qjKA/7hMg==
-X-Google-Smtp-Source: ACHHUZ4e2EQb1Dc1LF//Gk/kjUytnWpxK5PxZvQ52iMpvJYfWkKpTaOFisuD30qijWcxQAAEdcNgQEWkCf84UZ4EIBU=
-X-Received: by 2002:a1f:62c5:0:b0:44f:acc2:1279 with SMTP id
- w188-20020a1f62c5000000b0044facc21279mr12120062vkb.8.1684258440003; Tue, 16
- May 2023 10:34:00 -0700 (PDT)
+        bh=Vvzg25v2oIEfNdNdkr9ntW85A+SET9yRI5a0pRi7L/0=;
+        b=fTjBbWVvMlBIbs55zY7Od2SYdBGT6L9UF/RTJSVLclvrvV4+tZ3Sc3y5UgItB+4dK7
+         qzuG3vySTxtAmC6Ze0KfKK/wPgDfK8lXLNfccgS4ht3xeEaevwhzBFrRTf67Ku6k8BQl
+         6UqhLIALsygIEpE3Sl1rT1Q0Xp97EE1l6xLS+Cg09B4KsG9gmgHhDqs2I3falKpuE/bG
+         Q90m8Ly1rJgaG/mCjlFBaJC85MLX2qXyJ7w0YUvWu9rpqjKOyed8iRbD/P27Vq6RTtHH
+         eEgiGVHZhRXkaulHQKtOsjRfuJ6qtPpC9+wlP4go5AoljktZE+NXMFJzLAi4EtHSLB2/
+         +BaA==
+X-Gm-Message-State: AC+VfDwkSpfku7glnlbBkuSnOhwuy0Ijra80JAltTYXyxygBt1zcokqy
+	Ly3Xv5ZDm4E/i7Zgs4G78zES/f4D8zFSqqM+xkI2Z9kzjpixskXp95w=
+X-Google-Smtp-Source: ACHHUZ4dCOV4LauCVxAwh+D6cPCaNzdjf9tHbKfIBWRaLaT+SOP3CuFj1esRSO97triBxPPZXU/cNH8fWdGrpVBvIVQ=
+X-Received: by 2002:a05:6102:3cd:b0:42e:63a5:b711 with SMTP id
+ n13-20020a05610203cd00b0042e63a5b711mr16338138vsq.10.1684260247144; Tue, 16
+ May 2023 11:04:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230515161702.887638251@linuxfoundation.org>
-In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
+References: <20230515161736.775969473@linuxfoundation.org>
+In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 16 May 2023 23:03:48 +0530
-Message-ID: <CA+G9fYtS3dv8YYgK4LFZLa7H45SE2n9upY-_hTe8p+PJde5esg@mail.gmail.com>
-Subject: Re: [PATCH 5.15 000/134] 5.15.112-rc1 review
+Date: Tue, 16 May 2023 23:33:55 +0530
+Message-ID: <CA+G9fYsCjQPQxde3-vw6SKmPPr16Gy4-P4uOCh7r6iEDwDpf9w@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/381] 5.10.180-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
@@ -57,11 +57,11 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 15 May 2023 at 22:56, Greg Kroah-Hartman
+On Mon, 15 May 2023 at 23:03, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.15.112 release.
-> There are 134 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.10.180 release.
+> There are 381 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -70,10 +70,10 @@ On Mon, 15 May 2023 at 22:56, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.15.112-rc1.gz
+5.10.180-rc1.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.15.y
+-rc.git linux-5.10.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -87,7 +87,7 @@ Regressions on arm64, arm, x86_64 and i386.
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
 We have recently upgraded our selftest sources to stable-rc 6.3 and
-running on stable rc 6.2, 6.1, 5.15, 5.10, 5.4, 4.19 and 4.14 kernels.
+running on stable rc 6.1, 5.15, 5.10, 5.4, 4.19 and 4.14 kernels.
 
 List of test regressions:
 =3D=3D=3D=3D=3D=3D=3D=3D
@@ -102,30 +102,26 @@ kselftest-rseq
   - rseq_basic_test
 
  kselftest-kvm
-  - kvm_hyperv_features
   - kvm_xapic_state_test
 
-ltp-commands
-  - mkfs01_ntfs_sh
 
 NOTE:
 The logs are the same as reported on other email reports.
-
 link,
-https://lore.kernel.org/stable/CA+G9fYu6ZOu_We2GMP0sFnSovOsqd6waW7oKS-Y1VPr=
-jdibu5Q@mail.gmail.com/
+ - https://lore.kernel.org/stable/CA+G9fYu6ZOu_We2GMP0sFnSovOsqd6waW7oKS-Y1=
+VPrjdibu5Q@mail.gmail.com/
 
 ## Build
-* kernel: 5.15.112-rc1
+* kernel: 5.10.180-rc1
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.15.y
-* git commit: 070cc2c270b16bbdaf1701b7ade29ab4475f9423
-* git describe: v5.15.111-135-g070cc2c270b1
+* git branch: linux-5.10.y
+* git commit: 065b6901e6dab7dcc7c8884779b96269724c7201
+* git describe: v5.10.179-382-g065b6901e6da
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
-.111-135-g070cc2c270b1
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.179-382-g065b6901e6da
 
-## Test Regressions (compared to v5.15.111)
+## Test Regressions (compared to v5.10.176-363-g1ef2000b94cb)
 * bcm2711-rpi-4-b, kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
   - membarrier_membarrier_test_single_thread
@@ -143,16 +139,6 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
 * dragonboard-410c, kselftest-memfd
   - memfd_memfd_test
 
-* dragonboard-410c, kselftest-rseq
-  - rseq_basic_test
-
-* fvp-aemva, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* fvp-aemva, kselftest-memfd
-  - memfd_memfd_test
-
 * i386, kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
   - membarrier_membarrier_test_single_thread
@@ -164,9 +150,6 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
   - rseq_basic_test
   - rseq_run_param_test_sh
 
-* i386, ltp-commands
-  - mkfs01_ntfs_sh
-
 * juno-r2, kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
   - membarrier_membarrier_test_single_thread
@@ -176,34 +159,6 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
 
 * juno-r2, kselftest-rseq
   - rseq_basic_test
-
-* qemu-arm64, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu-arm64, kselftest-memfd
-  - memfd_memfd_test
-
-* qemu-armv7, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu-i386, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu-i386, kselftest-memfd
-  - memfd_memfd_test
-
-* qemu-i386, kselftest-rseq
-  - rseq_basic_test
-
-* qemu-x86_64, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu-x86_64, kselftest-memfd
-  - memfd_memfd_test
 
 * qemu_i386, kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
@@ -216,13 +171,6 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
   - rseq_basic_test
   - rseq_run_param_test_sh
 
-* qemu_i386, log-parser-boot
-  - check-kernel-bug
-  - check-kernel-kfence
-
-* qemu_i386, log-parser-test
-  - check-kernel-warning
-
 * qemu_x86_64, kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
   - membarrier_membarrier_test_single_thread
@@ -234,14 +182,14 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
   - rseq_basic_test
   - rseq_run_param_test_sh
 
+* x15, kselftest-membarrier
+  - membarrier_membarrier_test_multi_thread
+  - membarrier_membarrier_test_single_thread
+
 * x15, kselftest-rseq
   - rseq_basic_test
 
-* x15, ltp-commands
-  - mkfs01_ntfs_sh
-
 * x86, kselftest-kvm
-  - kvm_hyperv_features
   - kvm_xapic_state_test
 
 * x86, kselftest-membarrier
@@ -255,28 +203,25 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
   - rseq_basic_test
   - rseq_run_param_test_sh
 
-* x86-kasan, ltp-commands
-  - mkfs01_ntfs_sh
+## Metric Regressions (compared to v5.10.176-363-g1ef2000b94cb)
 
-## Metric Regressions (compared to v5.15.111)
+## Test Fixes (compared to v5.10.176-363-g1ef2000b94cb)
 
-## Test Fixes (compared to v5.15.111)
-
-## Metric Fixes (compared to v5.15.111)
+## Metric Fixes (compared to v5.10.176-363-g1ef2000b94cb)
 
 ## Test result summary
-total: 127590, pass: 106736, fail: 3622, skip: 17042, xfail: 190
+total: 126856, pass: 105919, fail: 3576, skip: 17174, xfail: 187
 
 ## Build Summary
 * arc: 5 total, 5 passed, 0 failed
 * arm: 117 total, 116 passed, 1 failed
-* arm64: 45 total, 43 passed, 2 failed
-* i386: 35 total, 32 passed, 3 failed
+* arm64: 45 total, 42 passed, 3 failed
+* i386: 35 total, 33 passed, 2 failed
 * mips: 27 total, 26 passed, 1 failed
 * parisc: 8 total, 8 passed, 0 failed
-* powerpc: 27 total, 26 passed, 1 failed
-* riscv: 11 total, 11 passed, 0 failed
-* s390: 12 total, 11 passed, 1 failed
+* powerpc: 26 total, 20 passed, 6 failed
+* riscv: 12 total, 11 passed, 1 failed
+* s390: 12 total, 12 passed, 0 failed
 * sh: 14 total, 12 passed, 2 failed
 * sparc: 8 total, 8 passed, 0 failed
 * x86_64: 38 total, 36 passed, 2 failed
@@ -331,13 +276,8 @@ total: 127590, pass: 106736, fail: 3622, skip: 17042, xfail: 190
 * kselftest-ptrace
 * kselftest-rseq
 * kselftest-rtc
-* kselftest-seccomp
 * kselftest-sigaltstack
 * kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
 * kselftest-tc-testing
 * kselftest-timens
 * kselftest-timers
