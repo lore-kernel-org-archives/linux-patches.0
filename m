@@ -1,18 +1,18 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C583823D6
-	for <patches@lists.linux.dev>; Tue, 16 May 2023 07:19:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D896FC433EF;
-	Tue, 16 May 2023 07:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E81A23D6
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 07:20:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E89DC433D2;
+	Tue, 16 May 2023 07:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684221574;
-	bh=wmYkRYF+yvLqVr17NTcRzLuGmJoYEiXBVSA6nlwZa/E=;
+	s=korg; t=1684221624;
+	bh=Qu52g/Pzv/8QqouVKWHSuOZf3mL4XggmKpomj4KjwiY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=yWDAfthObouQH2Q6b3T03jnrd18pQVwk1QpB2A/o1rsSsRxe3EOsgEMQDPaxTdOIS
-	 m/+BMisJ7Afsp4QZnYwJk1K0x9hqeEAAqTYaW7GUQXQ8RosY1dQVqaRe7fxxr5RBPp
-	 i81B460/GSrTD6O3834RXmtzmXzYGI1vusKxSGLQ=
-Date: Tue, 16 May 2023 09:19:31 +0200
+	b=WSlfBcTq3jA/CWiQEdEeUTtKM/YVlM0oSOcSc7Vb3csB15uCH2JL8HObtyOq3LkOm
+	 rU8tT6faqBXd4pBpzkMZRNFpJRIBplAonoNTIhVoAqttKWex6TaPN9U554vPmz70dM
+	 96Ncuq6NdM/u3I8SvOjNRISxeeIusRcq9qgjY7UA=
+Date: Tue, 16 May 2023 09:20:22 +0200
 From: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>
 To: "Coelho, Luciano" <luciano.coelho@intel.com>
 Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
@@ -22,12 +22,12 @@ Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
 	"Manna, Animesh" <animesh.manna@intel.com>,
 	"Lisovskiy, Stanislav" <stanislav.lisovskiy@intel.com>,
 	"Souza, Jose" <jose.souza@intel.com>
-Subject: Re: [PATCH 6.2 213/242] drm/i915/mtl: update scaler source and
+Subject: Re: [PATCH 6.1 197/239] drm/i915/mtl: update scaler source and
  destination limits for MTL
-Message-ID: <2023051607-rocker-refinish-8c6c@gregkh>
-References: <20230515161721.802179972@linuxfoundation.org>
- <20230515161728.319620707@linuxfoundation.org>
- <51bf59b96c22c2e79d81e38c3dc1b006959a14c8.camel@intel.com>
+Message-ID: <2023051652-corrode-grape-809e@gregkh>
+References: <20230515161721.545370111@linuxfoundation.org>
+ <20230515161727.643480643@linuxfoundation.org>
+ <d3bb810d9b1bc5d210ab414d7eed140be62e97e2.camel@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,10 +37,10 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <51bf59b96c22c2e79d81e38c3dc1b006959a14c8.camel@intel.com>
+In-Reply-To: <d3bb810d9b1bc5d210ab414d7eed140be62e97e2.camel@intel.com>
 
-On Tue, May 16, 2023 at 07:13:42AM +0000, Coelho, Luciano wrote:
-> On Mon, 2023-05-15 at 18:28 +0200, Greg Kroah-Hartman wrote:
+On Tue, May 16, 2023 at 07:13:05AM +0000, Coelho, Luciano wrote:
+> On Mon, 2023-05-15 at 18:27 +0200, Greg Kroah-Hartman wrote:
 > > From: Animesh Manna <animesh.manna@intel.com>
 > > 
 > > [ Upstream commit f840834a8b60ffd305f03a53007605ba4dfbbc4b ]
@@ -59,10 +59,10 @@ On Tue, May 16, 2023 at 07:13:42AM +0000, Coelho, Luciano wrote:
 > > ---
 > 
 > This patch is only relevant for MTL, which is not fully supported on
-> v6.2 yet, so I don't think we need to cherry-pick it to v6.2.
+> v6.1 yet, so I don't think we need to cherry-pick it to v6.1.
 
-Does it break anything on 6.2?  If not, I think you want it as it is a
-dependancy for another fix, right?
+Again, this is a dependency for a different fix, which I think is
+relevant for 6.1.y, right?
 
 thanks,
 
