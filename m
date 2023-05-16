@@ -1,287 +1,83 @@
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD37624EA6
-	for <patches@lists.linux.dev>; Tue, 16 May 2023 12:04:20 +0000 (UTC)
-Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-77d049b9040so3228557241.1
-        for <patches@lists.linux.dev>; Tue, 16 May 2023 05:04:20 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19EB24EA6
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 12:04:27 +0000 (UTC)
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-6ab1942ea59so5711744a34.0
+        for <patches@lists.linux.dev>; Tue, 16 May 2023 05:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684238659; x=1686830659;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ClAd7kaJxhhiqMPyIHCwtBikQzkldIOZUtX2fRaU4lE=;
-        b=QZo9npq+JCKzLkhoeg9ayogi3R2kQI9jOax1xXK2LQYuOAm+L/a7U4lTUZtboluA72
-         zw65D5qmoQTPVhGBC1pg2YqlOxgLt0n44P9t5+cU0XJCeC4PDC1HNk00vtO81LluJRqg
-         HsWLjLhlvDIsBUQu5ELGimSe6Nt+mIJscHmh2APyq+3YaN615xFfnVBHjfOQ9gD7TpSm
-         HubM8U87Md8+wzhM8pyVzdbTiLiutaeFOdU7x7rQR//cx7zYqBxQTzXa4mr/kBuFhkf6
-         uS5K9NNQGvQen4dqQlBf16yezfy7brVyXmQH5dwO/Gm9aYb5ZLXRtVC2Hpflvbbp4GeL
-         ZVzg==
+        d=linuxtx.org; s=google; t=1684238667; x=1686830667;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kJosZkuHbiv9aC0zid4KAAbdE5AYoHy0os35a+6yEh4=;
+        b=Hcjeuhev/jBUZbhhXSUbEKHdp1VBSFZN5JNVv5uUtxT099arEEawMJcrkMjcuzn6/5
+         xjtNCsEK4UxMhhGHiO0vk04bpev1//ZxPGcPUTUvWVtMShJE2H7X4Y//7mGc+pCLmaYa
+         WDiRJKeeXeGbNi2tR8PKFFd4nC7Y7p4FVwlUA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684238659; x=1686830659;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1684238667; x=1686830667;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ClAd7kaJxhhiqMPyIHCwtBikQzkldIOZUtX2fRaU4lE=;
-        b=XzhNfFbNDmoR7g9qbv60D1phXrCaHCDRWk+a3wUvIGQwvWgNe0JoUlLFnwm9JGC8s5
-         f5SI489RnEqQhfE0SORPSHfBbIkKEpiCSD08awRAkiT71FmaaW/eU2tLg215AV+jAuAL
-         C6+6ss7Y7Wc1Xmw8EROAXg8i4Z5uDplWSkjtPi4nWqwFEi2UYKIlXjZ6caQ1SeG4149M
-         4wgm+87TcAN4YPAZbaoG2RPjGCztD0GVAxlzw/VLgE276BRoAuQ4UEK5I/CFk0BZ0rP0
-         Yy6U1VF+dJdWVBFX1lL3x07JZlZenEM/GYBWwHbJL3vB8UYfNKBfFHqw111DVuTDOtg3
-         WV5g==
-X-Gm-Message-State: AC+VfDzch/ckD5R8byrisq35NhBvwgZsJSWY+9pMqa5+yNL8q4ezBGDk
-	468uJfI7wd+aNV7tpQZsK05lRoNnKSu93g9fi/AYJg==
-X-Google-Smtp-Source: ACHHUZ49uZYsYDaDRYtoIDZDcaWVG4RZfAPVRGC5Hy5OgI916EGbdwAu0anrxy5g4iK+N/xyPuYR0pqw/cAGNNf2HP0=
-X-Received: by 2002:a05:6102:6d0:b0:436:50b6:efdb with SMTP id
- m16-20020a05610206d000b0043650b6efdbmr4247374vsg.3.1684238659339; Tue, 16 May
- 2023 05:04:19 -0700 (PDT)
+        bh=kJosZkuHbiv9aC0zid4KAAbdE5AYoHy0os35a+6yEh4=;
+        b=FhvsVT+bQ8VpIl0NiW5vSK02TXKNTocvx/9/MSsq6oM9VDqdZAofiZ9ig3MTAb/8cB
+         zeFxy50pvrZ5XV+5cG6aN3HZ4T7QYm1YlMXvtZNw6oaq0g//ZEPBwOWcAuDuSQkhSzd3
+         avcncz3hDWZ/2yWtXKI/L6gSWi8q7BbEw3aYf5LtJ07BnoiYeFdpb+kMztu/p2irNYxv
+         Dn9qOXBdVpJpT8MXNUADNh6eMlWXZP1eWHQ347xLEwaR+BzCDZgOseXu7YwQlHCP7v4V
+         kfqLB/6MKBc0VVvOgfeyBEQe8Uzu3X8PFP8hQtwfuxAMB2dTpJzwQ9nkAxpABMYdTN1I
+         a7kg==
+X-Gm-Message-State: AC+VfDxVCwchFm5Zm6FH/3XYpmyhF9VEmExC80oM1uqWaNOqPJIIRrch
+	w4DYdH77GXrXxcaHtpj6bo5FLQ==
+X-Google-Smtp-Source: ACHHUZ7H25k9zBFLAifLfWin8oqXETP7UGnj9dxYlhdJA5TKaEpBbP9ob2KBM3FhI0weuJw9l8GF4Q==
+X-Received: by 2002:aca:2301:0:b0:38d:ed4a:52eb with SMTP id e1-20020aca2301000000b0038ded4a52ebmr12456332oie.38.1684238665298;
+        Tue, 16 May 2023 05:04:25 -0700 (PDT)
+Received: from fedora64.linuxtx.org ([99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id u14-20020a4ad0ce000000b0054f9f229bddsm8082829oor.15.2023.05.16.05.04.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 May 2023 05:04:24 -0700 (PDT)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Tue, 16 May 2023 07:04:23 -0500
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.3 000/246] 6.3.3-rc1 review
+Message-ID: <ZGNxR9S9pNU2+BiP@fedora64.linuxtx.org>
+References: <20230515161722.610123835@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230515161721.802179972@linuxfoundation.org>
-In-Reply-To: <20230515161721.802179972@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 16 May 2023 17:34:08 +0530
-Message-ID: <CA+G9fYt6ZCmUykF3TLvgwCh7EdERDeN9ZgmGmjm54o1QgpOWZA@mail.gmail.com>
-Subject: Re: [PATCH 6.2 000/242] 6.2.16-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
 
-On Mon, 15 May 2023 at 22:43, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.2.16 release.
-> There are 242 patches in this series, all will be posted as a response
+On Mon, May 15, 2023 at 06:23:32PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.3.3 release.
+> There are 246 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.2.16-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.3-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.2.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
 
-Results from Linaro=E2=80=99s test farm.
-Regressions on arm, x86_64, and i386.
+Tested rc1 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-LTP commands test case mkfs01_ntfs_sh fails on following stable-rc
- - 6.2.16-rc1.
- - 6.1.29-rc1
- - 5.15.112-rc1
- - 5.10.180-rc1
- - 5.4.243-rc1
- - 4.19.283-rc1
- - 4.14.315-rc1
-
-LTP commands,
-  - mkfs01_ntfs_sh
-
-Test log:
-=3D=3D=3D=3D=3D=3D=3D
-tst_device.c:93:[  147.226163] loop0: detected capacity change from 0 to 61=
-4400
- TINFO: Found free device 0 '/dev/loop0'
-mkfs01 1 TINFO: timeout per run is 0h 50m 0s
-mkfs01 1 TPASS: 'mkfs -t ntfs  /dev/loop0 ' passed.
-mkfs01 2 TINFO: Mounting device: mount -t ntfs /dev/loop0
-/scratch/ltp-zKu0Zn6L6o/LTP_mkfs01.ULVi9nN6XF/mntpoint
-modprobe: FATAL: Module fuse not found in directory /lib/modules/6.2.16-rc1
-ntfs-3g-mount: fuse device is missing, try 'modprobe fuse' as root
-mkfs01 2 TBROK: Failed to mount device ntfs type: mount exit =3D 21
-[  166.420602] I/O error, dev loop0, sector 614272 op 0x0:(READ) flags
-0x80700 phys_seg 1 prio class 2
-
-
-Test log:
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.=
-2.15-243-g704eace42a14/testrun/17019981/suite/ltp-commands/test/mkfs01_ntfs=
-_sh/log
-
-Test history:
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17019910/suite/ltp-commands/test/mkfs01_ntfs=
-_sh/history/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.=
-2.15-243-g704eace42a14/testrun/17020198/suite/ltp-commands/test/mkfs01_ntfs=
-_sh/history/
-
-
-## Build
-* kernel: 6.2.16-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.2.y
-* git commit: 704eace42a1426c1ef49afee9db673752a7b7c73
-* git describe: v6.2.15-243-g704eace42a14
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.2.y/build/v6.2.1=
-5-243-g704eace42a14
-
-## Test Regressions (compared to v6.2.15)
-
-* x15, ltp-commands
-  - mkfs01_ntfs_sh
-
-* x86, ltp-commands
-  - mkfs01_ntfs_sh
-
-
-* x86-kasan, ltp-commands
-  - mkfs01_ntfs_sh
-
-* x86_64-clang, ltp-commands
-  - mkfs01_ntfs_sh
-
-
-## Metric Regressions (compared to v6.2.15)
-
-## Test Fixes (compared to v6.2.15)
-
-## Metric Fixes (compared to v6.2.15)
-
-## Test result summary
-total: 178929, pass: 153909, fail: 3053, skip: 21665, xfail: 302
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 145 total, 142 passed, 3 failed
-* arm64: 54 total, 53 passed, 1 failed
-* i386: 41 total, 38 passed, 3 failed
-* mips: 30 total, 28 passed, 2 failed
-* parisc: 8 total, 8 passed, 0 failed
-* powerpc: 38 total, 36 passed, 2 failed
-* riscv: 26 total, 25 passed, 1 failed
-* s390: 16 total, 16 passed, 0 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 7 passed, 1 failed
-* x86_64: 46 total, 46 passed, 0 failed
-
-## Test suites summary
-* boot
-* fwts
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-vm
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bo[
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
