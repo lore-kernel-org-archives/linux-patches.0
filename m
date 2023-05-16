@@ -1,97 +1,129 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE382C722
-	for <patches@lists.linux.dev>; Tue, 16 May 2023 08:38:06 +0000 (UTC)
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-1aaff9c93a5so94071005ad.2
-        for <patches@lists.linux.dev>; Tue, 16 May 2023 01:38:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684226286; x=1686818286;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=p6qgMTiGfTOjO4Az9M0tBWQM4kE9jUb98Hvvr2Dd14U=;
-        b=L0wKrC1sqm1vgpHnX/VSCU0Ht22Dn4rRzmk2cN2RK4B7ESr2i1I/pBFOIuvEiK9JQ8
-         nrA+lgV7L3HO0ndIc0HbjjvI5KRMcKbcwS1wReOp2kOJEzzQzFKd+zaFD3gSljPHOCNJ
-         kdZWuaJ3n3rSCZd4d+DrSorfVB2WNyDS8dEeIL+B42YdVAIVX6+xYPNW/Vw0/jXm4lCo
-         NQT1jB+7bB+v6x6QstQCfhDyJb1lu/3pQxXVn8NhHmx4tjQsKoqnK/kdpBvFWYlIzwFl
-         TJ4AWisg0BSnOHiN4vqXGA0qlB4MrM7mKjiKFCF5NLKRLDO0VQYiW8azt8m49pjmYmzL
-         WB1w==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49335238
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 08:47:26 +0000 (UTC)
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-b9e27684b53so12327534276.0
+        for <patches@lists.linux.dev>; Tue, 16 May 2023 01:47:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684226286; x=1686818286;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p6qgMTiGfTOjO4Az9M0tBWQM4kE9jUb98Hvvr2Dd14U=;
-        b=BFcxxEMHg4LRe6y8E8aj2t6IInX04pQm76bAOeENX/JdkqvHM4CJorm8mO9WztigYi
-         jlfEx1Oogfb8TCqqVpIRa0bu8ZD6n3aIo/Fg9eA3U9jIZoRnh0vdR2ouLYIyrxQRhoQh
-         brkr3xtGTjdTJlaMWvDg+fNwkXKgeO0Cn9lDBY+a28PGoOMyyYBMd6kIS9xflEBYHpZK
-         wV0jBKJay7vOhFgdZiRMHHyvWi5c4RPyYHg0UmkOExLevE6F94PTjRjPPs/Geq2mSmYM
-         M9fmIaaxlqDE2xDvOGjwVT3+1ce9CLxzHI/qYvlcIi1kCRwn0Fcc78QkYLPBYJ3gphsW
-         mv5A==
-X-Gm-Message-State: AC+VfDy4VJKWukNN3Wo1pC5ASEZ6Pt62cPxyatAf+/nDMIN5yIoPxEgt
-	gLS3X+SMxKtPFyvSzp4bPew=
-X-Google-Smtp-Source: ACHHUZ4NLCDr3uSPDvh1PDR3J5WLSWBC8JyDzmhzlTw538rMify+xCVMjxZiW45ML81UIYmBz0T0jw==
-X-Received: by 2002:a17:902:7d95:b0:1ae:3036:b594 with SMTP id a21-20020a1709027d9500b001ae3036b594mr2351744plm.49.1684226285831;
-        Tue, 16 May 2023 01:38:05 -0700 (PDT)
-Received: from debian.me (subs03-180-214-233-73.three.co.id. [180.214.233.73])
-        by smtp.gmail.com with ESMTPSA id j9-20020a17090276c900b001aaeaa27dd5sm14804581plt.252.2023.05.16.01.38.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 May 2023 01:38:05 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-	id 11CAB106219; Tue, 16 May 2023 15:38:01 +0700 (WIB)
-Date: Tue, 16 May 2023 15:38:01 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/239] 6.1.29-rc1 review
-Message-ID: <ZGNA6UuDUDvztdJ5@debian.me>
-References: <20230515161721.545370111@linuxfoundation.org>
+        d=1e100.net; s=20221208; t=1684226845; x=1686818845;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=g5Fr1JqN2Ov4AHR8zy4YwIGPB2ZpmLeycQl8ETfUv/E=;
+        b=Ocb0Xp5xpxIHb+oR0wlACD9zpmdxNG0GUBysO93Qxn9wnSC4msnV42tLKU2IWrTsx0
+         TIzOjlMd5967hvE1ofFDkuzVsmzazz2lHD8zkduzu/ZWlEf3tEzniKZFgCGpxbexdyrT
+         TMxs8GB6REcLI4B+vRJg0ETZTk52qX+NAlL1rTuXCcwZTescgT4X+7Q3nv96weWCBx0D
+         AA13yo6vDgSL1Z35NcfgxTFBHdfDRikLQrGxnbdFUKu5vqpXnHXLoG4Xd4pqiIthwOZV
+         TlhnEY6RYkOoYHN/0NTP7U3IFcmTFOLBZbv3cMp5NRAlyvMtFmnmwQ0+2qo/niKqLX4Y
+         tyhQ==
+X-Gm-Message-State: AC+VfDzzsR6N63O5kU4k5Okw1VTB3SPY9iGq8LL3zohxj3TGetl0zAds
+	4VpduHN19z1DDHLNozvHtsGyL/N+ERbM8w==
+X-Google-Smtp-Source: ACHHUZ5xhTDI8IaDMcxbEultyzQ5RYhUmcHG63HfP64hBd5G1AkcDzumi6qu4gh1b+5jsVeZSNOhxA==
+X-Received: by 2002:a25:760c:0:b0:ba8:1961:28c8 with SMTP id r12-20020a25760c000000b00ba8196128c8mr1203554ybc.7.1684226845597;
+        Tue, 16 May 2023 01:47:25 -0700 (PDT)
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com. [209.85.128.173])
+        by smtp.gmail.com with ESMTPSA id d11-20020a25824b000000b00b92426aba45sm334456ybn.57.2023.05.16.01.47.24
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 May 2023 01:47:25 -0700 (PDT)
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-55a8019379fso127966347b3.0
+        for <patches@lists.linux.dev>; Tue, 16 May 2023 01:47:24 -0700 (PDT)
+X-Received: by 2002:a0d:d4c3:0:b0:55a:9d84:2e4e with SMTP id
+ w186-20020a0dd4c3000000b0055a9d842e4emr32699001ywd.18.1684226844519; Tue, 16
+ May 2023 01:47:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Wnijbk97kKjImdqo"
-Content-Disposition: inline
-In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
-
-
---Wnijbk97kKjImdqo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20230515161707.203549282@linuxfoundation.org> <20230515161707.460071056@linuxfoundation.org>
+In-Reply-To: <20230515161707.460071056@linuxfoundation.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Tue, 16 May 2023 10:47:13 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdWjkZ-FAKrwQkoyZRHLpyvaVYT0NvAUwaCs+30qC2VZmA@mail.gmail.com>
+Message-ID: <CAMuHMdWjkZ-FAKrwQkoyZRHLpyvaVYT0NvAUwaCs+30qC2VZmA@mail.gmail.com>
+Subject: Re: [PATCH 4.19 007/191] IMA: allow/fix UML builds
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Randy Dunlap <rdunlap@infradead.org>, Fabio Estevam <festevam@gmail.com>, 
+	Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, 
+	Johannes Berg <johannes@sipsolutions.net>, linux-um@lists.infradead.org, 
+	Mimi Zohar <zohar@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 15, 2023 at 06:24:23PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.29 release.
-> There are 239 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
+Hi Greg,
 
-Successfully compiled and installed bindeb-pkgs on my computer (Acer
-Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
+On Mon, May 15, 2023 at 6:39=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+> From: Randy Dunlap <rdunlap@infradead.org>
+>
+> commit 644f17412f5acf01a19af9d04a921937a2bc86c6 upstream.
+>
+> UML supports HAS_IOMEM since 0bbadafdc49d (um: allow disabling
+> NO_IOMEM).
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+0bbadafdc49d is in v5.14.
+Was it backported to older versions?
+
+>
+> Current IMA build on UML fails on allmodconfig (with TCG_TPM=3Dm):
+>
+> ld: security/integrity/ima/ima_queue.o: in function `ima_add_template_ent=
+ry':
+> ima_queue.c:(.text+0x2d9): undefined reference to `tpm_pcr_extend'
+> ld: security/integrity/ima/ima_init.o: in function `ima_init':
+> ima_init.c:(.init.text+0x43f): undefined reference to `tpm_default_chip'
+> ld: security/integrity/ima/ima_crypto.o: in function `ima_calc_boot_aggre=
+gate_tfm':
+> ima_crypto.c:(.text+0x1044): undefined reference to `tpm_pcr_read'
+> ld: ima_crypto.c:(.text+0x10d8): undefined reference to `tpm_pcr_read'
+>
+> Modify the IMA Kconfig entry so that it selects TCG_TPM if HAS_IOMEM
+> is set, regardless of the UML Kconfig setting.
+> This updates TCG_TPM from =3Dm to =3Dy and fixes the linker errors.
+>
+> Fixes: f4a0391dfa91 ("ima: fix Kconfig dependencies")
+> Cc: Stable <stable@vger.kernel.org> # v5.14+
+
+"v5.14+"
+
+> Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+> Cc: Fabio Estevam <festevam@gmail.com>
+> Cc: Richard Weinberger <richard@nod.at>
+> Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+> Cc: Johannes Berg <johannes@sipsolutions.net>
+> Cc: linux-um@lists.infradead.org
+> Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  security/integrity/ima/Kconfig |    2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> --- a/security/integrity/ima/Kconfig
+> +++ b/security/integrity/ima/Kconfig
+> @@ -7,7 +7,7 @@ config IMA
+>         select CRYPTO_HMAC
+>         select CRYPTO_SHA1
+>         select CRYPTO_HASH_INFO
+> -       select TCG_TPM if HAS_IOMEM && !UML
+> +       select TCG_TPM if HAS_IOMEM
+>         select TCG_TIS if TCG_TPM && X86
+>         select TCG_CRB if TCG_TPM && ACPI
+>         select TCG_IBMVTPM if TCG_TPM && PPC_PSERIES
+
+Gr{oetje,eeting}s,
+
+                        Geert
 
 --=20
-An old man doll... just what I always wanted! - Clara
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
 
---Wnijbk97kKjImdqo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZGNA4gAKCRD2uYlJVVFO
-oxlmAQCYmB4H34ftBhyQeVDd3S6nA2MKGfV0chHYHP+EO1nqXgD/es71Yp1gwdm0
-0LlVS2ehKMtbC79esxoNAonNS9n/dAM=
-=a4k+
------END PGP SIGNATURE-----
-
---Wnijbk97kKjImdqo--
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
