@@ -1,67 +1,68 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 881C6101CF
-	for <patches@lists.linux.dev>; Tue, 16 May 2023 18:04:08 +0000 (UTC)
-Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-4363ba01c0dso3761419137.0
-        for <patches@lists.linux.dev>; Tue, 16 May 2023 11:04:08 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C058482
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 19:10:55 +0000 (UTC)
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-45682803452so6950e0c.2
+        for <patches@lists.linux.dev>; Tue, 16 May 2023 12:10:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684260247; x=1686852247;
+        d=linaro.org; s=google; t=1684264254; x=1686856254;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Vvzg25v2oIEfNdNdkr9ntW85A+SET9yRI5a0pRi7L/0=;
-        b=sEdkWnYfz1zslsG4WM18jSxyezgQrNq463fZoa8yCdWUxYbfMTl0vdCbxMmpaTSNub
-         u6qn2ZO84qSn6oRYdupCOT6b2cNJSzhwxup1lB4OIFwpwUJPfgXrRwQa32vpPgTPpDSH
-         bH6XrJinPH8xYTT8EW6qgBaCo2RYV+gQ1es7P6Xn6mgUZpK6fAAoqDlqe0IeCd4Ty8C1
-         kdIDNyMqLmVdhvImg8TMZNqpDQozc1sma2EyiW2XUpcxH65NLDr6+GHP8ZKFYyWEricc
-         FnH1efXODtqTImOEADh97BKcJvJlJPNw3+eMqQwWeCuAME/rHjTZ9QSJ06rBndqllLn7
-         3TKw==
+        bh=V8x8LxGklgASWXZfIUthjDXUkwKPEritGvTuKqAgnQ0=;
+        b=rz08wUqcXD8OcEBKedTtkVBhAppQzz0VK+GCNxbHThHVOIRTsMYRL1MHxURw/W83Q0
+         F4SrKTApeZZAms45OIqzawbeo9YDium1biqIPXbvvk4kOos7ZnUesA2cIr2NsUM0em+P
+         4tKwJ/jNzZvYwksMA4rXMGtSUEIhvsK/KUz2BtooZ3fOKggdH3SCcz8cf3vOxOdejLPV
+         vG5F4pW5InAGmbhNbVm80ANfjfqngP72I25Rv8waFPlOvGt7f6HzT8hPO562ejb1ZKQR
+         FKpbQnsGkyH63Da/a3y/koig1lujZt2Zk8/sLpGofC/LhGpGGemNR7nPedZS69NAJKcf
+         8j4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684260247; x=1686852247;
+        d=1e100.net; s=20221208; t=1684264254; x=1686856254;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Vvzg25v2oIEfNdNdkr9ntW85A+SET9yRI5a0pRi7L/0=;
-        b=fTjBbWVvMlBIbs55zY7Od2SYdBGT6L9UF/RTJSVLclvrvV4+tZ3Sc3y5UgItB+4dK7
-         qzuG3vySTxtAmC6Ze0KfKK/wPgDfK8lXLNfccgS4ht3xeEaevwhzBFrRTf67Ku6k8BQl
-         6UqhLIALsygIEpE3Sl1rT1Q0Xp97EE1l6xLS+Cg09B4KsG9gmgHhDqs2I3falKpuE/bG
-         Q90m8Ly1rJgaG/mCjlFBaJC85MLX2qXyJ7w0YUvWu9rpqjKOyed8iRbD/P27Vq6RTtHH
-         eEgiGVHZhRXkaulHQKtOsjRfuJ6qtPpC9+wlP4go5AoljktZE+NXMFJzLAi4EtHSLB2/
-         +BaA==
-X-Gm-Message-State: AC+VfDwkSpfku7glnlbBkuSnOhwuy0Ijra80JAltTYXyxygBt1zcokqy
-	Ly3Xv5ZDm4E/i7Zgs4G78zES/f4D8zFSqqM+xkI2Z9kzjpixskXp95w=
-X-Google-Smtp-Source: ACHHUZ4dCOV4LauCVxAwh+D6cPCaNzdjf9tHbKfIBWRaLaT+SOP3CuFj1esRSO97triBxPPZXU/cNH8fWdGrpVBvIVQ=
-X-Received: by 2002:a05:6102:3cd:b0:42e:63a5:b711 with SMTP id
- n13-20020a05610203cd00b0042e63a5b711mr16338138vsq.10.1684260247144; Tue, 16
- May 2023 11:04:07 -0700 (PDT)
+        bh=V8x8LxGklgASWXZfIUthjDXUkwKPEritGvTuKqAgnQ0=;
+        b=ZV1zvnqaIu99AQ5Ju+OlulxYhU2JccxHRMMvMXt5IqAxGgA9g4mjVejJjmW44PSf7e
+         bBPHFzTnpPsIkpLn5cERd5T+ejv5p7RnHWWEpLwGeOnTU4VwbcL/Ie27TTL1hH/PXoYD
+         x1xYDetBACPtLJ0bLvWA1OcNalU+PUnv9BXZUIU+vj/xsflyigNSf2Z1cI+us5oWnuJm
+         AU8grG3TDynyZ1kHVv00hf1uAi4xpameN3M+nYDqS0PQfwgkdfkLjOPWVDx7L9D08wZa
+         4taTn+2sgBijnaUOWT5AA0ujZ9rjQSSc1p2RdLDsUte8KQzvROKOEgCoxpcp3dUV3D6K
+         AFJA==
+X-Gm-Message-State: AC+VfDxe9m0XfN9eXxAfDnAMFZyditn1LiP6SciKAnI1nvthAz7WK4ep
+	C1AalZCqNQh/uxpYPGZLVhND8tSr8TlnIy5CDRVdHw==
+X-Google-Smtp-Source: ACHHUZ6dGkU+ycU8IPZ+Acm/4+36px6HNGpUVUCJH2Zo0BZ4QFgRC7w8fTc46inQ4m60BrVWOuQBG/kmEohIUsgwlso=
+X-Received: by 2002:a1f:e601:0:b0:3ea:7af1:9ea4 with SMTP id
+ d1-20020a1fe601000000b003ea7af19ea4mr12398365vkh.12.1684264254241; Tue, 16
+ May 2023 12:10:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230515161736.775969473@linuxfoundation.org>
-In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
+References: <20230515161722.146344674@linuxfoundation.org>
+In-Reply-To: <20230515161722.146344674@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 16 May 2023 23:33:55 +0530
-Message-ID: <CA+G9fYsCjQPQxde3-vw6SKmPPr16Gy4-P4uOCh7r6iEDwDpf9w@mail.gmail.com>
-Subject: Re: [PATCH 5.10 000/381] 5.10.180-rc1 review
+Date: Wed, 17 May 2023 00:40:42 +0530
+Message-ID: <CA+G9fYv8K9D-fYghwQxLUZKJ1B3=+HC+u5zy3nrNWUN5sMwtZw@mail.gmail.com>
+Subject: Re: [PATCH 5.4 000/282] 5.4.243-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
+	srw@sladewatkins.net, rwarsow@gmx.de, Tobias Klauser <tklauser@distanz.ch>, 
+	Christian Brauner <brauner@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 15 May 2023 at 23:03, Greg Kroah-Hartman
+On Mon, 15 May 2023 at 23:23, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.10.180 release.
-> There are 381 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.4.243 release.
+> There are 282 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -70,16 +71,15 @@ On Mon, 15 May 2023 at 23:03, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.10.180-rc1.gz
+5.4.243-rc1.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.10.y
+-rc.git linux-5.4.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
-
 
 Results from Linaro=E2=80=99s test farm.
 Regressions on arm64, arm, x86_64 and i386.
@@ -91,6 +91,10 @@ running on stable rc 6.1, 5.15, 5.10, 5.4, 4.19 and 4.14 kernels.
 
 List of test regressions:
 =3D=3D=3D=3D=3D=3D=3D=3D
+
+kselftest-clone3
+  - clone3_clone3
+
 kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
   - membarrier_membarrier_test_single_thread
@@ -105,32 +109,49 @@ kselftest-rseq
   - kvm_xapic_state_test
 
 
+Test log:
+-------
+kselftest-clone3
+  - clone3_clone3
+
+# selftests: clone3: clone3
+# TAP version 13
+# 1..18
+# # clone3() syscall supported
+...
+# # [1352] Trying clone3() with flags 0x80 (size 0)
+# # Invalid argument - Failed to create new process
+# # [1352] clone3() with flags says: -22 expected 0
+# not ok 18 [1352] Result (-22) is different than expected (0)
+# # Totals: pass:17 fail:1 xfail:0 xpass:0 skip:0 error:0
+not ok 1 selftests: clone3: clone3 # exit=3D1
+
+links,
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.=
+4.242-283-gb6ac0ac1f533/testrun/17021938/suite/kselftest-clone3/test/clone3=
+_clone3/history/
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.=
+4.242-283-gb6ac0ac1f533/testrun/17021938/suite/kselftest-clone3/test/clone3=
+_clone3/log
+
 NOTE:
 The logs are the same as reported on other email reports.
 link,
  - https://lore.kernel.org/stable/CA+G9fYu6ZOu_We2GMP0sFnSovOsqd6waW7oKS-Y1=
 VPrjdibu5Q@mail.gmail.com/
 
+
 ## Build
-* kernel: 5.10.180-rc1
+* kernel: 5.4.243-rc1
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.10.y
-* git commit: 065b6901e6dab7dcc7c8884779b96269724c7201
-* git describe: v5.10.179-382-g065b6901e6da
+* git branch: linux-5.4.y
+* git commit: b6ac0ac1f533c625d5f4a295133abc8c9e4635ea
+* git describe: v5.4.242-283-gb6ac0ac1f533
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
-.179-382-g065b6901e6da
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.2=
+42-283-gb6ac0ac1f533
 
-## Test Regressions (compared to v5.10.176-363-g1ef2000b94cb)
-* bcm2711-rpi-4-b, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* bcm2711-rpi-4-b, kselftest-memfd
-  - memfd_memfd_test
-
-* bcm2711-rpi-4-b, kselftest-rseq
-  - rseq_basic_test
+## Test Regressions (compared to v5.4.238-245-g41e24252f52b)
 
 * dragonboard-410c, kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
@@ -139,8 +160,10 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
 * dragonboard-410c, kselftest-memfd
   - memfd_memfd_test
 
+* dragonboard-410c, kselftest-rseq
+  - rseq_basic_test
+
 * i386, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
   - membarrier_membarrier_test_single_thread
 
 * i386, kselftest-memfd
@@ -149,6 +172,9 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
 * i386, kselftest-rseq
   - rseq_basic_test
   - rseq_run_param_test_sh
+
+* juno-r2, kselftest-clone3
+  - clone3_clone3
 
 * juno-r2, kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
@@ -160,16 +186,15 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
 * juno-r2, kselftest-rseq
   - rseq_basic_test
 
-* qemu_i386, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu_i386, kselftest-memfd
-  - memfd_memfd_test
+* qemu_i386, kselftest-clone3
+  - clone3_clone3
 
 * qemu_i386, kselftest-rseq
   - rseq_basic_test
   - rseq_run_param_test_sh
+
+* qemu_x86_64, kselftest-clone3
+  - clone3_clone3
 
 * qemu_x86_64, kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
@@ -180,7 +205,9 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
 
 * qemu_x86_64, kselftest-rseq
   - rseq_basic_test
-  - rseq_run_param_test_sh
+
+* x15, kselftest-clone3
+  - clone3_clone3
 
 * x15, kselftest-membarrier
   - membarrier_membarrier_test_multi_thread
@@ -188,6 +215,9 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
 
 * x15, kselftest-rseq
   - rseq_basic_test
+
+* x86, kselftest-clone3
+  - clone3_clone3
 
 * x86, kselftest-kvm
   - kvm_xapic_state_test
@@ -201,30 +231,29 @@ https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
 
 * x86, kselftest-rseq
   - rseq_basic_test
-  - rseq_run_param_test_sh
 
-## Metric Regressions (compared to v5.10.176-363-g1ef2000b94cb)
+## Metric Regressions (compared to v5.4.238-245-g41e24252f52b)
 
-## Test Fixes (compared to v5.10.176-363-g1ef2000b94cb)
+## Test Fixes (compared to v5.4.238-245-g41e24252f52b)
 
-## Metric Fixes (compared to v5.10.176-363-g1ef2000b94cb)
+## Metric Fixes (compared to v5.4.238-245-g41e24252f52b)
 
 ## Test result summary
-total: 126856, pass: 105919, fail: 3576, skip: 17174, xfail: 187
+total: 129092, pass: 109664, fail: 3182, skip: 16058, xfail: 188
 
 ## Build Summary
 * arc: 5 total, 5 passed, 0 failed
-* arm: 117 total, 116 passed, 1 failed
-* arm64: 45 total, 42 passed, 3 failed
-* i386: 35 total, 33 passed, 2 failed
-* mips: 27 total, 26 passed, 1 failed
+* arm: 148 total, 147 passed, 1 failed
+* arm64: 48 total, 42 passed, 6 failed
+* i386: 30 total, 22 passed, 8 failed
+* mips: 30 total, 29 passed, 1 failed
 * parisc: 8 total, 8 passed, 0 failed
-* powerpc: 26 total, 20 passed, 6 failed
-* riscv: 12 total, 11 passed, 1 failed
-* s390: 12 total, 12 passed, 0 failed
+* powerpc: 33 total, 32 passed, 1 failed
+* riscv: 15 total, 12 passed, 3 failed
+* s390: 8 total, 8 passed, 0 failed
 * sh: 14 total, 12 passed, 2 failed
 * sparc: 8 total, 8 passed, 0 failed
-* x86_64: 38 total, 36 passed, 2 failed
+* x86_64: 41 total, 39 passed, 2 failed
 
 ## Test suites summary
 * boot
@@ -265,7 +294,6 @@ total: 126856, pass: 105919, fail: 3576, skip: 17174, xfail: 187
 * kselftest-mqueue
 * kselftest-net
 * kselftest-net-forwarding
-* kselftest-net-mptcp
 * kselftest-netfilter
 * kselftest-nsfs
 * kselftest-openat2
