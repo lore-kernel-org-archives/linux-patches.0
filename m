@@ -1,69 +1,68 @@
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
+Received: from mail-ua1-f45.google.com (mail-ua1-f45.google.com [209.85.222.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 532DA79E0
-	for <patches@lists.linux.dev>; Tue, 16 May 2023 19:39:18 +0000 (UTC)
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-44fd6524c36so21773e0c.0
-        for <patches@lists.linux.dev>; Tue, 16 May 2023 12:39:18 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B60290FE
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 20:08:59 +0000 (UTC)
+Received: by mail-ua1-f45.google.com with SMTP id a1e0cc1a2514c-783e5f8717aso25864241.2
+        for <patches@lists.linux.dev>; Tue, 16 May 2023 13:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684265957; x=1686857957;
+        d=linaro.org; s=google; t=1684267738; x=1686859738;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bl0KxKY/sUcM54GB5tUsJdCgfaOj1mAl6bkpff/gM1k=;
-        b=dsbLYDRucXeFfy0Q/wCYCvEpNLRRzLYvTikvSdUg55vOz24AO+E/QwEMZYFCLgsIUL
-         TP2kqL/XSO9xo4qYSlxpIMcnDRh93iGsYH1x1Of0ShspCO1GxrShBtdFerCbFQ7XNOOS
-         h1ROfA6eOs4GIHyR6q/h/4u+C8FOWvtUBAr35zxQeSISTQ+fm7utqJjvjB9bP+jW+ys1
-         oT2uZk/G+oUv+KhJPlOiv/tHPy5vl/Y6MWIsLReICSp28OninHw7eMvOT97IJ4XYogrk
-         fq5n2E8l+4lUW3JwfVBNlMCpWk91W3x46+13OI/IntSRkIJHnKz2tn+HbVkm/e/9QXEi
-         ZVSQ==
+        bh=7DBoVho2ELfwf8xFod3p2Xy8hTGWnwzQmWp1BhB8w9o=;
+        b=o9t4f7WwcdoQ/ufMDCYBJxxJoWiDW5b99hO3LW4Ce1Cwer2T6WUpp+kfMFQQ0uT+qE
+         Y3EH15M0VA1ESBSdgY3oduuSTbfbn7tM0exdZfeY7zNIrDMomucT2eiwndZvn/06svnC
+         mFeRrdTZdr4M/BHzNxusseXjUMwOB+iivcQ8qSfSpXnaXh1xNWwjMRLcxLnBBXHYUBcD
+         ez+kdMdBA16XYBvX1o4n7B0AR5aWdQk577fGEgW9BZk1POai7M6gH7y/7ANQ5XVtoXyf
+         5Wspxm7dmTyPDjGWYQStWk13FRwfFxh2j/bkovfedC7PrJU9EBUA7k9MdVsMqykQGl/m
+         laEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684265957; x=1686857957;
+        d=1e100.net; s=20221208; t=1684267738; x=1686859738;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bl0KxKY/sUcM54GB5tUsJdCgfaOj1mAl6bkpff/gM1k=;
-        b=Xh2RS89774Q8LL0lzHm7HF2HPsUPlB1uxqMVHE/MKZGv3eke8U/Kvd1VcBcpVPUKRA
-         p6k+sV/YxC+xVMykFokzl++cvHaxNwCC7ny82BWxPon74fcRfWbydJtdPrPerQ+htG3y
-         pKjD74pzHLfSkOff+FTDvVHVR76JkEJGOv0UnMeDWzD35IfUvxhsz2hv4ZVGtUtndLIF
-         lvLM+qS3Cj6MTtOmMYcc4oz9i9KKrtVCGdMjpnrkY9ew0I5wmNDJEDyILFHhnlFKz28x
-         907xNSL2e+QddG5vlm9feBpOmpJmcXoKq2a8/gNZ9za/NOxHFmgbcxg8n9nKCvuXkjEI
-         zKAQ==
-X-Gm-Message-State: AC+VfDyODx78cVMCyIDJgL3NYNzX8KZB2S2oLioO11sJ7mhif5NZkUEX
-	JUDl1viTV3RGKYln12mFJT/Me1FGcR5Lk3ckT9yPGQ==
-X-Google-Smtp-Source: ACHHUZ5vIZUSmno0LG6tQNjwPdpLccVbcF3x/foJyasbY5MnT2o8uMNXCaMfo51qg7XyO1B4jwPULmnkSizsP8h04ik=
-X-Received: by 2002:a1f:bf47:0:b0:453:9057:1693 with SMTP id
- p68-20020a1fbf47000000b0045390571693mr7211731vkf.5.1684265956844; Tue, 16 May
- 2023 12:39:16 -0700 (PDT)
+        bh=7DBoVho2ELfwf8xFod3p2Xy8hTGWnwzQmWp1BhB8w9o=;
+        b=gZGjLAowWvyYkVEEUM5P2JWo1XbexY94UXnzww1YSRK5udoVN9sLC0f7x08wD4WIzp
+         DjbNoVDh/zr60XWrouAAz8rRTneXMScfeOBxqmOxD5972gScLVyERwO0aO5pi3RePV3U
+         da98fBBmfSqRFWrnKU2PMuMz97nUvC2pr9W8j5Ueia23FOKWqbQIYg+9YfnAhuYkrfdY
+         6fMwvD8NKftGFjf7dZd14mcyZzqn6+aQ0XWiR438rImijK7SetvSD/YUL3JfT/sWjc8e
+         IUiSgnnifqp8KYAgsYrDMS/K0gPlLmqVdCrYSQRL+0j7x/H0SsXjsRQrxScUNVTGj05i
+         /oHg==
+X-Gm-Message-State: AC+VfDyHW3hlRR99R6WPHatQy+As4vL8d7j73980spJHn8Btnivg+dl4
+	52mjohzUfdO/SlEtQpV0T/MhLZWT3efEu0Fm2+j5zA==
+X-Google-Smtp-Source: ACHHUZ4qyeqQ2VF116h5i3lUPhXtdRr98E0TNIbj6xeeFCRymVRG6Qo8zUoadLuHlDfIbPZk39vCIUi319M/Na5Pz9E=
+X-Received: by 2002:a67:e9c6:0:b0:436:18b:6a32 with SMTP id
+ q6-20020a67e9c6000000b00436018b6a32mr13567983vso.30.1684267737751; Tue, 16
+ May 2023 13:08:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230515161707.203549282@linuxfoundation.org>
-In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
+References: <20230515161658.228491273@linuxfoundation.org>
+In-Reply-To: <20230515161658.228491273@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 17 May 2023 01:09:05 +0530
-Message-ID: <CA+G9fYtjmJS893BLx7ggwMXvqzqpiRU7BrvgRjE8d+epJYLrGQ@mail.gmail.com>
-Subject: Re: [PATCH 4.19 000/191] 4.19.283-rc1 review
+Date: Wed, 17 May 2023 01:38:46 +0530
+Message-ID: <CA+G9fYthEih_mti7PdjCjif9crHqWV_erk-05iWUgD7wMJTtkQ@mail.gmail.com>
+Subject: Re: [PATCH 4.14 000/116] 4.14.315-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, "Theodore Ts'o" <tytso@mit.edu>, 
-	Andreas Dilger <adilger.kernel@dilger.ca>, linux-ext4 <linux-ext4@vger.kernel.org>, 
-	linux-cifs@vger.kernel.org
+	srw@sladewatkins.net, rwarsow@gmx.de, linux-ext4 <linux-ext4@vger.kernel.org>, 
+	linux-cifs@vger.kernel.org, "Theodore Ts'o" <tytso@mit.edu>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, 15 May 2023 at 22:09, Greg Kroah-Hartman
+On Mon, 15 May 2023 at 22:03, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 4.19.283 release.
-> There are 191 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 4.14.315 release.
+> There are 116 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -72,167 +71,121 @@ On Mon, 15 May 2023 at 22:09, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
-4.19.283-rc1.gz
+4.14.315-rc1.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-4.19.y
+-rc.git linux-4.14.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
+
 Results from Linaro=E2=80=99s test farm.
 Regressions on arm64, arm, x86_64 and i386.
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-1) ltp-syscalls fallocate06 - FAILS on arm and arm64 on 4.19 and 4.14.
-
-2) We have recently upgraded our selftest sources to stable-rc 6.3 and
+We have recently upgraded our selftest sources to stable-rc 6.3 and
 running on stable rc 6.1, 5.15, 5.10, 5.4, 4.19 and 4.14 kernels.
 
 List of test regressions:
 =3D=3D=3D=3D=3D=3D=3D=3D
 
 ltp-syscalls
-  - fallocate06
+  - fallocate06 - FAILS on arm and arm64.
 
-kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-kselftest-memfd
-  - memfd_memfd_test
-
-kselftest-rseq
-  - rseq_basic_test
-
- kselftest-kvm
-  - kvm_xapic_state_test
+kselftest-kvm
+  - kvm_xapic_state_test - FAILS on x86.
 
 =3D=3D=3D=3D=3D=3D
 
 ltp-syscalls
-  - fallocate06 - FAILS on arm and arm64 on 4.19 and 4.14
+  - fallocate06 - FAILS on arm and arm64.
 
 fallocate06.c:155: TFAIL: fallocate(FALLOC_FL_PUNCH_HOLE |
 FALLOC_FL_KEEP_SIZE) failed unexpectedly: ENOSPC (28)
 
 Test log links,
 =3D=3D=3D=3D=3D=3D=3D=3D
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4=
-.19.282-192-g373cdd8d6123/testrun/17027069/suite/ltp-syscalls/test/fallocat=
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4=
+.14.314-117-g854d9237fbd3/testrun/17026942/suite/ltp-syscalls/test/fallocat=
 e06/history/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4=
-.19.282-192-g373cdd8d6123/testrun/17027069/suite/ltp-syscalls/test/fallocat=
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4=
+.14.314-117-g854d9237fbd3/testrun/17026942/suite/ltp-syscalls/test/fallocat=
 e06/log
 
-NOTE:
-The logs are the same as reported on other email reports.
-link,
- - https://lore.kernel.org/stable/CA+G9fYu6ZOu_We2GMP0sFnSovOsqd6waW7oKS-Y1=
-VPrjdibu5Q@mail.gmail.com/
+=3D=3D=3D=3D=3D=3D=3D=3D=3D
+kselftest-kvm
+  - kvm_xapic_state_test - - FAILS on x86.
+
+# selftests: kvm: xapic_state_test
+# =3D=3D=3D=3D Test Assertion Failure =3D=3D=3D=3D
+#   x86_64/xapic_state_test.c:147: apic_id =3D=3D expected
+#   pid=3D4581 tid=3D4581 errno=3D4 - Interrupted system call
+#      1 0x0000000000402bac: ?? ??:0
+#      2 0x00000000004025ba: ?? ??:0
+#      3 0x00007f8bc10e557a: ?? ??:0
+#      4 0x00007f8bc10e562f: ?? ??:0
+#      5 0x0000000000402624: ?? ??:0
+#   APIC_ID not set back to xAPIC format; wanted =3D 1000000, got =3D 1
+not ok 46 selftests: kvm: xapic_state_test # exit=3D254
+
+Test log links,
+=3D=3D=3D=3D=3D=3D=3D=3D
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4=
+.14.314-117-g854d9237fbd3/testrun/17025913/suite/kselftest-kvm/test/kvm_xap=
+ic_state_test/history/
+ - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4=
+.14.314-117-g854d9237fbd3/testrun/17025913/suite/kselftest-kvm/test/kvm_xap=
+ic_state_test/log
 
 ## Build
-* kernel: 4.19.283-rc1
+* kernel: 4.14.315-rc1
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-4.19.y
-* git commit: 373cdd8d6123d6ed489c5a5b91a0ab5b206ba0e4
-* git describe: v4.19.282-192-g373cdd8d6123
+* git branch: linux-4.14.y
+* git commit: 854d9237fbd3cc4b72183256a0fa5edf2f967d88
+* git describe: v4.14.314-117-g854d9237fbd3
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19=
-.282-192-g373cdd8d6123
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4.14=
+.314-117-g854d9237fbd3
 
-## Test Regressions (compared to v4.19.279-173-g8ca3c8d28616)
-
-* dragonboard-410c, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* dragonboard-410c, kselftest-rseq
-  - rseq_basic_test
+## Test Regressions (compared to v4.14.311-134-g05f80276ba11)
 
 * dragonboard-410c, ltp-syscalls
   - fallocate06
 
-* i386, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* i386, kselftest-rseq
-  - rseq_basic_test
-  - rseq_run_param_test_sh
-
-* juno-r2, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* juno-r2, kselftest-rseq
-  - rseq_basic_test
-
 * juno-r2, ltp-syscalls
-  - fallocate06
-
-* juno-r2-compat, ltp-syscalls
   - fallocate06
 
 * juno-r2-kasan, ltp-syscalls
   - fallocate06
 
-* qemu_i386, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu_i386, kselftest-rseq
-  - rseq_basic_test
-  - rseq_run_param_test_sh
-
-* qemu_x86_64, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu_x86_64, kselftest-rseq
-  - rseq_basic_test
-
-* x15, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* x15, kselftest-rseq
-  - rseq_basic_test
-
 * x86, kselftest-kvm
   - kvm_xapic_state_test
 
-* x86, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
+## Metric Regressions (compared to v4.14.311-134-g05f80276ba11)
 
-* x86, kselftest-rseq
-  - rseq_basic_test
+## Test Fixes (compared to v4.14.311-134-g05f80276ba11)
 
-## Metric Regressions (compared to v4.19.279-173-g8ca3c8d28616)
-
-## Test Fixes (compared to v4.19.279-173-g8ca3c8d28616)
-
-## Metric Fixes (compared to v4.19.279-173-g8ca3c8d28616)
+## Metric Fixes (compared to v4.14.311-134-g05f80276ba11)
 
 ## Test result summary
-total: 80130, pass: 68396, fail: 2694, skip: 8901, xfail: 139
+total: 79873, pass: 67657, fail: 2892, skip: 9170, xfail: 154
 
 ## Build Summary
 * arc: 10 total, 10 passed, 0 failed
-* arm: 111 total, 106 passed, 5 failed
-* arm64: 37 total, 32 passed, 5 failed
+* arm: 108 total, 104 passed, 4 failed
+* arm64: 35 total, 31 passed, 4 failed
 * i386: 21 total, 18 passed, 3 failed
-* mips: 22 total, 22 passed, 0 failed
+* mips: 21 total, 21 passed, 0 failed
 * parisc: 6 total, 6 passed, 0 failed
-* powerpc: 24 total, 24 passed, 0 failed
-* s390: 6 total, 6 passed, 0 failed
+* powerpc: 8 total, 7 passed, 1 failed
+* s390: 6 total, 5 passed, 1 failed
 * sh: 12 total, 12 passed, 0 failed
 * sparc: 6 total, 6 passed, 0 failed
-* x86_64: 31 total, 26 passed, 5 failed
+* x86_64: 27 total, 23 passed, 4 failed
 
 ## Test suites summary
 * boot
@@ -265,11 +218,6 @@ total: 80130, pass: 68396, fail: 2694, skip: 8901, xfail: 139
 * kselftest-lib
 * kselftest-livepatch
 * kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
 * kselftest-net
 * kselftest-net-forwarding
 * kselftest-netfilter
