@@ -1,562 +1,207 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374E434CD9
-	for <patches@lists.linux.dev>; Tue, 16 May 2023 13:54:19 +0000 (UTC)
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-43476bbec67so9090914137.2
-        for <patches@lists.linux.dev>; Tue, 16 May 2023 06:54:19 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5EA882A
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 16:47:10 +0000 (UTC)
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GG4BTE010949;
+	Tue, 16 May 2023 16:46:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2023-03-30;
+ bh=SY4OnLXjREU64NZKMME87FpqbViYP1EqD3HB/r2dsMg=;
+ b=jWJVHlj7G8ZfdgfPI3WGoug6gP/pWQMsqeeb+jBMF5/SPw80Um3EAMoH8VssFtmZ2e9Y
+ F9CCCumWL30BcCn+YC9l6xAZzKlu1CUsfjElyL4ZYRWjO8R4FkSFigawntjPv+CM0QjR
+ CYyBOHm/LIHASgELDGIPAsXjBmd8JnfqxZxO6VZD7tCzWaGO4aLoJv3s8p+xvt2Y6Z3f
+ nJwTnK7PD3D4CdFX0+OAiC+Jk5EPpm0ts1HXuSLEbUQULdnbjPy1FvO0slpOYHOPaIp2
+ 0MMRVau9WT5Q+uxtRWR7nJMc8Kh/Qt9Iid4ml+zx229q23fGmhK4Rg0m/A/UG/Vqm6Ae Sg== 
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3qj25u3gbt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 16 May 2023 16:46:53 +0000
+Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.17.1.19/8.17.1.19) with ESMTP id 34GFLBub004244;
+	Tue, 16 May 2023 16:46:53 GMT
+Received: from nam10-mw2-obe.outbound.protection.outlook.com (mail-mw2nam10lp2102.outbound.protection.outlook.com [104.47.55.102])
+	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 3qj10akn8n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 16 May 2023 16:46:53 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=KtY1OfJIK1X0HlBBPHcgNwOAlWin1TEW42MpBhADZyIk2wnEr1OobmIilWiOVlNuzrqDM500JmSyKsAabI0iW2TPksPjGds/hrq1pJJeX4OBUosujf8+zL9CU85pNmnPeKpko4CLWZqiwmVLHyWLs5jF/25RGg/xZvBge8DGFyYTNFZ5MCM4F91Cu9O/JSu6p6F3BqRiIYu5z8emNJlrl0xRTMTXPRQzLOd0a3Zk790jBdiGgS28ehbg/O1PjNjixXjcXTri2ozfMKZ5G8LePH9vG4Zk+5AICMYjIYfv2EL48R8IlnRH7MX0ytSgOu5/JkT6RtLLZKWWENvDwE9RWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SY4OnLXjREU64NZKMME87FpqbViYP1EqD3HB/r2dsMg=;
+ b=D9VPcY0oaagchQztiQV9MxxOyfqgDgxlt0ge1c32kSN5zHYELP5pBY1MSeeyTVx4Y5PhlXA4fB6ZXkZMr2kGsEq2uTWcg35AGVS3tifNwhowTjUYtVcBNfMmBQ54BjfztCrd0kg/O8aO69GzrtNxqAMUcrMvlCGMoX24xlQsypV3a5gbc6fTM6Le81jv5teXHTi67CCO3BaUCfp/eJIs1K0FudW7II0nrVoKRnqCTQ58RcyX49RGlo6xtNJ1WZZx7b3fakOoIiNFUWtKRnt4QGNji8bmjRkNHK/et2pjJ6aF3tUZEwl2F+UlX3sxD4IM/XtIJR9pKiCRVSCTJGcFRg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684245258; x=1686837258;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VhWShmDJ2D9NIRvijbp0Qn/QaA9taQvDt1a8RmXcogw=;
-        b=O57DIxjy1Xc3sNHH0MrW/WE8dMYKOZhPCEm95bbd6gXjAe7C3Hf9/JdwDat3Qo+I6C
-         QJh2GRdeODfjeM691TTXSLJ7YtOPMzeQX8AcJsWpVQ2O9ts95Bd0HBHISkK1GnlfyHns
-         ntIZg//0TjIvnp7qNpfiOSMkkW1MqAPn7LP7hKDQF5MiVNG6KAu1Pir6d3RnL8BVUpOY
-         46WTugftDmyMr2PvjeXEuFKd/MS8TRoBpBdueHya/lVJNlnn+eii7FUN7pRj7Oxh9xSk
-         gKNyXY94vWKQg0KJI2sa6KCO7cIPNYoOyZkxoiNgsHNrRh6JXg7g8vPxPSeybyzSu5MB
-         +3kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684245258; x=1686837258;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VhWShmDJ2D9NIRvijbp0Qn/QaA9taQvDt1a8RmXcogw=;
-        b=UJBBPIGA1L5AgDMIRWe5L3uZzgXVUCNMcpzbGLqpuBQ5gCN8WYijvLt6RiN+rs2z3p
-         v+egCxEI18cAOuMjmruwiwyqt+/fXm93ICBAky+iWZkAwRoLdVnPp63K/mwDa/F9EhYY
-         Giwjx+x224oP+AKt3kiCGD67FaBQ4MEHCj3Gv+LjoiZwMIz/c3DPy9ulIrvKSJmBI6Xw
-         DGSxRgL85u3CuqZYemYgisZ/b/LKWm2mNn88z4fBzAjIc9WcTcc+KemT9N2HRiCoESPj
-         8xYUACSOJGq2ch5aLhcIVi5vSOhBGLgqHBWRtlIdbHGX4+D+4IR70Xs6WGHrYmDYUWRj
-         fLZQ==
-X-Gm-Message-State: AC+VfDyTbqtKtFBQz+Hf1D53FzQZVIrTVt/iw78T7ZOkNEYtEuzswe87
-	njm3uu/1CaKPU91xzU9AgdQWWwhxT30Aubi0m/VCzQ==
-X-Google-Smtp-Source: ACHHUZ6PPXq7zfVMp+g4ZtdyK7QvqxUi0r8kPWInCXLO7YN83y3cyeiX80bd2YkHWnNP+WAscugxKswDI1eA0AvyprA=
-X-Received: by 2002:a67:f3cb:0:b0:434:4deb:e89 with SMTP id
- j11-20020a67f3cb000000b004344deb0e89mr14769682vsn.12.1684245257777; Tue, 16
- May 2023 06:54:17 -0700 (PDT)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SY4OnLXjREU64NZKMME87FpqbViYP1EqD3HB/r2dsMg=;
+ b=yJrEqJKI7Uq0+qexiI0AGocS2ic6fimSpWOeLfWce9gDEudUwhawG6LKtsALUtJtwJQJ8WYSI02Fb2Egtq/T0XiJeqoUKp0swEpoQyBEn6NbuaMDKaixamwa8h6Q/wPyHnyH8h2hrrlymgEhcMhABf2FqHQhWm485Df/CCnyBkk=
+Received: from PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
+ by CY8PR10MB7146.namprd10.prod.outlook.com (2603:10b6:930:74::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6387.33; Tue, 16 May
+ 2023 16:46:50 +0000
+Received: from PH8PR10MB6290.namprd10.prod.outlook.com
+ ([fe80::68c5:330c:d234:3834]) by PH8PR10MB6290.namprd10.prod.outlook.com
+ ([fe80::68c5:330c:d234:3834%7]) with mapi id 15.20.6387.032; Tue, 16 May 2023
+ 16:46:50 +0000
+Message-ID: <761cdedc-ec81-99ca-a890-5058b0d2d372@oracle.com>
+Date: Tue, 16 May 2023 22:16:37 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.1
+Subject: Re: [PATCH 5.15 000/134] 5.15.112-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        torvalds@linux-foundation.org, akpm@linux-foundation.org,
+        linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+        lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+        f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+        rwarsow@gmx.de, Vegard Nossum <vegard.nossum@oracle.com>,
+        Darren Kenny <darren.kenny@oracle.com>
+References: <20230515161702.887638251@linuxfoundation.org>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+In-Reply-To: <20230515161702.887638251@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: TYAPR01CA0016.jpnprd01.prod.outlook.com (2603:1096:404::28)
+ To PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230515161721.545370111@linuxfoundation.org>
-In-Reply-To: <20230515161721.545370111@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 16 May 2023 19:24:06 +0530
-Message-ID: <CA+G9fYu6ZOu_We2GMP0sFnSovOsqd6waW7oKS-Y1VPrjdibu5Q@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/239] 6.1.29-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, 
-	Michal Clapinski <mclapinski@google.com>, Ingo Molnar <mingo@kernel.org>, 
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>, "Paul E. McKenney" <paulmck@kernel.org>, 
-	LTP List <ltp@lists.linux.it>, Aaron Lewis <aaronlewis@google.com>, 
-	Sean Christopherson <seanjc@google.com>, 
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>, 
-	Rudi Heitbaum <rudi@heitbaum.com>, ZhangPeng <zhangpeng362@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR10MB6290:EE_|CY8PR10MB7146:EE_
+X-MS-Office365-Filtering-Correlation-Id: b3ec79a7-eee3-4152-0810-08db562d2540
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	Z2aC9pGmsaxMKSutBzMpLU4xJlf2j1xQySfDyENQHMtkpjMTXiEiUu47URUvN8imanOpyzlFE2BYLosHFFz/FsBXj0ERvS4ll/ejYjwJ05QU6Cht97dGSn7fXsIVR/ho+848nheCaVL60Cvm5ugHD/O06FQTjeo8r+B9WJGst87OPcOlGa4sdEH+1Nvx4SfMxC6ZuyKn0Qh8c1yHo5ZD9IHe7vXHxxBk5XxofN5yH8TY2fkj0GesHtRQfEx5Q7oLGnk0luDNsLgCvKi1DqUnJognDpWFmZCmF6ZzM/yimHopYoiG8dw3Ej1oJ7SlFvSsq+Ro9bJQai6xIcrk+4z6t8vd+XkI2oHqbF9kkB0DmPru931oBMyj0HUKXZ7KhkyziIgtweOd6MhOwZiE2A4Ij8wG6zq7qqoMJWpcjurv2WytXqJ0Gecd98NyQMl7Xc8IwiACkR0YD1i4NzvdvVFmO81JgNQhlXZzxfv7rmKC1vMFhkpTNfjZpvUKaaMvn1vMHD7XUvg26L2hjjAotanIf5N+493kaIW32PdByuf8zm97piqibMZ3qkV4hhGmb+L6XgIIeu6ewnuvk4gmpfWy8CijL5PR3zAZmdcNaCPIE+7u+iqMpB6+NMfyE0AgaR/vuZu3PO2QziC/GxARFfM+9w==
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR10MB6290.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(346002)(376002)(396003)(39860400002)(366004)(136003)(451199021)(4326008)(36756003)(4744005)(2906002)(31686004)(7416002)(8676002)(5660300002)(86362001)(8936002)(41300700001)(66476007)(66556008)(316002)(66946007)(54906003)(478600001)(6486002)(6666004)(107886003)(26005)(31696002)(6506007)(6512007)(53546011)(2616005)(966005)(186003)(38100700002)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?RDhDTmVodzE5NHhCNXZROEpDcVlvaVFveW95RFdlQWJlVG90UDVjeWNab2lk?=
+ =?utf-8?B?SG13bHR6THhBY1h0ckZpTm9uYytHLzg0clg4cVRES0w4dkxwVUtkcVRsMno2?=
+ =?utf-8?B?ejdMWkVLS0dVNi9LRnV1emxGa0ZDTkVwZUZsb3JVNDdtaG9JeG94Vkl0eGpP?=
+ =?utf-8?B?KzJuS2dLZHdSU3lmZGRvbk12UjQ5UHZIRDg0THNMVVdudWVMWVhwSTBXZnlN?=
+ =?utf-8?B?VjFXbHZPY1dxL0F4anlBQ1ZhTzlBMmowNGt6U1NQYUJveU90czJIU0ZVY0lk?=
+ =?utf-8?B?cVdQZTEwbzZod00vQUlHczNtc0VWTDhkOFBuT21QMjJWSWh3MXRSWFRwM2dq?=
+ =?utf-8?B?RDRYMy8zdFVzNk1sYWpCN2l2Ym1Zam56czNCT2pSNUxmYU12bFI4NkFhTGYv?=
+ =?utf-8?B?UlBFczJkVFBnYjBHbURGWGxmWW9uVU9Eb3FXM1hVU1MyS2pJSDQ1RGNIL3lL?=
+ =?utf-8?B?ZjdzQ3ltMlA2RldPdE4vSzFqRTdLenAxSWhPQkdnbHRYSkxPSTlHTnJxRXU4?=
+ =?utf-8?B?ZlRRRnhBdTR3UkZZcUZQeUROYmdMY3l3S2V6eFBYMEpYQzh2a2xROFdMQkc2?=
+ =?utf-8?B?dzRDQ295UzFCOG5MclE1bVk0ZTNZb1pNSzdFTW9vajllY3NkSUdERUNVS2ZD?=
+ =?utf-8?B?clE5UmEwRWN3bDBZbjFxeU9vKzR6a0pHc3VzdmtaSzF5anFzRGVsS3AwV3Ex?=
+ =?utf-8?B?NyttWEhYUm1uS055ZnFCZ2VzK01QUEJrUDc3RmE1SlRHNm95dzNCM0JiUVpt?=
+ =?utf-8?B?Y0p3ZTNldjhRdjFwSDBMT2J3d0VNQWdJNXVkQTIzSDZHeDYyWXNOWXFoaTY5?=
+ =?utf-8?B?eUpaSUpTbzdHeXJQOElwbUxvOTRsYWNvTzJTZ3ZuOEdGN3A2MGxUVDNGaVJM?=
+ =?utf-8?B?aC8xdmkrem04WVFNNHUyQWhDZ0tFZWV2d2JRc0FzSmo0WkN6VkMxUDdaNytP?=
+ =?utf-8?B?eUVBOWkvR01oVjJLejA1NithUmFFWmhUZk1aUDVkaHFTK1hOWWhqeHVqZ1Ay?=
+ =?utf-8?B?YjVaRERFM2RIclVHN21sZ3FHVkwxY2VsK3h6N0hlTjl3RXJQZUJMdDlQYndx?=
+ =?utf-8?B?WWNVcjZYTjhGbjJtdkpZWHI5MTYyRFFPbmxUejVFQkloMDVyM25WcGZOMmox?=
+ =?utf-8?B?bEdMRjNKZ295WEw0cXNkYk1VUzZOeThFL1JFNVZiWDhIcWpGdmdaL3ArY1ZH?=
+ =?utf-8?B?RXlNUk8xc2JWQ0N6Z3Q2Y2d0RzFMbnA5d1J2Uit1RXNOTkV0akZxWFJnWXNk?=
+ =?utf-8?B?VHpjZnFwVHRqNVFYQ2Z3NzBVY2drRFpDQVpTTEprcEhtQjRkS1lISzF1SS9m?=
+ =?utf-8?B?UHVvVEhWcTk1ak1JMjVkMU5IS01Vd0xWVlowV2ZiQUVnVEF4ZzkySnpLZnkz?=
+ =?utf-8?B?TUQ3WVZuNVJnKzV1Zkc5Mmc5ZzF1VUxEK0FqZW9PUjNrYzM5SnkvbU9PSzk2?=
+ =?utf-8?B?WkZRVWxPQWlyYVFCOWtKZ2gvb3FSVTVJZHdpWU51bHRHTnJxUW5HR1FJR2l6?=
+ =?utf-8?B?dWN5b1VnZnorQi9DenFxUkVWK0RwZ3d1amFHNmVMVUpac0t6RklTN09SRmhC?=
+ =?utf-8?B?YStFeXNHY0R2TStaZVN5dUJ0VkJmK08zWm12TWVQWmh1UFBVeEhzNFJNelZq?=
+ =?utf-8?B?cWpjditnOUd1MCtKcFdJUHBtNzhFak8rQ0hBR216R1I3WmJpR0M0QlV2cGNQ?=
+ =?utf-8?B?UkUwVXBIUk1KUXR6RlFRMlFuQVVLKzhUM212VkhraGo1akYvT0xkQnZDUk9D?=
+ =?utf-8?B?TmdvUUEyN3R4T0JRYmx0ZVFzbnhFRFFxRG8yWkVDZWlhbkRtdU1RWExKZnRM?=
+ =?utf-8?B?aFYxQ0FBaGVJbzAya3pCcVZrMlRyMDAvNTRuME16aWcvY3pkNTV3TjFGMW91?=
+ =?utf-8?B?cTcrR0xnazV3R2QrR0dnQytSRk5QYmMwOVVIMGpYTjFrZVowKzJ4a00zRExp?=
+ =?utf-8?B?RGJZempFVkZlSEFKV3pNMEpKRitYakJZVVd6dVkwbm94T1Nhc2tRdUZsL0Zw?=
+ =?utf-8?B?NGt3WTF1Y241bWNxYjV6dHN6YUxtVlNpRHF6YlJHZkdTak82cUlDQWd3a1VU?=
+ =?utf-8?B?OS9SaVNPWXE1Z3ZRdTU4bUYvSDBheDl5b09ib1R2R2dqTytZenJYWXFSWlBK?=
+ =?utf-8?B?eERoeVF1bGk3NUVOdzhCNTk2MU00UFhlenNxMkx3UlBlLy9zRDVkam1DOE9h?=
+ =?utf-8?Q?6Em6/U0iDL7Cy5M5e4iCckE=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	=?utf-8?B?ZXA4K2kwbG1jOTdaY1dYczVqdHBNSDhwek0wUC9NdDBWQ1p6ZVhWWGZLenRL?=
+ =?utf-8?B?TWErVEwvVDlNZSs4QnFFSTVCNzdJa1h1YUxQc3YwUDFHeWc4QWYrUkVWMFp3?=
+ =?utf-8?B?d3NEQ010eXkvUXFnUmYwbkZMQ2RkS1JSY3NoK1NuWFZwT2pPOWJOUDFxWnNz?=
+ =?utf-8?B?Z0YyNVVNbkc1RngxaFRjNDYzVU9UdC9vQ3pFdS84MUd1V2dzUE9nQUE4RU9N?=
+ =?utf-8?B?b2lSYXZHSlU4Y2Rzc21xV3JZZlBhTG1aNm1NV2grMkxmYnB0RlM1Vkl6c2h4?=
+ =?utf-8?B?NTJxK1c2S2pmNmdUcVdJSDh3MmNXb2RsWHB3bnlGdWtCSXYzb29xUnhLT0c5?=
+ =?utf-8?B?blhSaUlUZnhQelZLVEVCVVFJc01PbU1wbWJxUFZzd3hQeVoxVjhLR1ovSVBt?=
+ =?utf-8?B?RHVJSjBmaWJhdlBaeXFpaEZXMk5jOHN1clIwTWZvT1AzRk9rbFBEd3dHeDA5?=
+ =?utf-8?B?VFdVVzUwbzUrNFZmUTl6SFJmV2lMM0dDVy9scnBkOW9uYXIvUmJkYmZzS255?=
+ =?utf-8?B?RkdkQU0yVlhJTnpCS2NPNjhHVE41QmVwMm0vaW0rV3BiR0VYZ1BHdEk4VmNC?=
+ =?utf-8?B?RUtmeS85emgzYlg0YllQU2xTazNJNmc5enVQdm1Oc20wL2VteEZIYVViWG91?=
+ =?utf-8?B?VXJ1Z3hEMDVCaUpETnlTaHM4S3J0SFppdGNqbllkekRSakRQMlc5UFMvRi9Q?=
+ =?utf-8?B?MjBkSDNQQkx3MndBQS9tK1ZucWphdTBqb0dZaCtpZjNqUWZlZEUwV003WmRn?=
+ =?utf-8?B?dHBWQ3pMRzNCYU80c1ZFOU9ZQ3J2a0Uxa2wyM1ZXcUFmWHI4LzFaVVgrcEpV?=
+ =?utf-8?B?SkVCVGFjRE84QS9ZdjFvaUJRWko2ZEhKKzB0Y1d6ZUhBN1ppU0JjZzgxdTZr?=
+ =?utf-8?B?WTZ5dng0U2NoS3BTbzV4cmNIUTBBS2NwZE5NTk9EQnBhdmY2ZVVTOE5MNkpV?=
+ =?utf-8?B?WHhKMDRiNktOTTMyMXdaMFBhV0RKNzVqSVE5NEhCbS96Z1lJZVdaVWJHWTBh?=
+ =?utf-8?B?a1dxa0FreVhkaXEzeU1zNmp1QmV5cW1aV0FJYUtVbjVMaWxrZDZQWlh1MnVE?=
+ =?utf-8?B?OWJadVArT3BCbWY4TURraUhYTlNIaUlSQVpndTlFUDZON1l6ZUdiRWdmUklP?=
+ =?utf-8?B?QThpV0ZYS2tBbExMbjlaTVRMcGxzMHVsOTdmQ3FxVXp4a1U4L1pySm0xb2xK?=
+ =?utf-8?B?bDRsMHJGVHJZMUlQM2ZBUFV6cDhqcG1CVnRQclgwak5DUmVVQzZ1Qy8xWVNy?=
+ =?utf-8?B?ZFl1TUlzMlYwUHlZc3hGQW9vM2hCQVZMck96UCtEaWh4Mitsc0V6RjdqalJp?=
+ =?utf-8?B?b204Y2NJWFpWU1RxdmdPSExzcW9aejMyTXRuS2l5VlVTQ1U0azRCNlVUSzcr?=
+ =?utf-8?B?S01PQ0Q5eTJyZ1FqK2Nvam1SRmtKT1hJdnNoMnFaaFJUSFVmZ2ZqWSsvMnB4?=
+ =?utf-8?B?S0RrS21jTk5VejZHVXgremNLYnYrSVp4b0gwTkY5WG5BNWs0b0dWWm92Qm4x?=
+ =?utf-8?B?QjJYaGxhOFVaWEw4QS9DaHdiRndPczRjWkhKdm1tTzlPekNrdXBUS0l6aVpp?=
+ =?utf-8?Q?EtreI442hA7a/8uFtHbwn4f4NHVokviLkjUx5h7v1g4Zqe?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3ec79a7-eee3-4152-0810-08db562d2540
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR10MB6290.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2023 16:46:50.3441
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: BS5NIhlVNdEZQFfamrHfju0oEbAgqAW9uCSbt+kcAKMtshiSDFLicz36AdQLbVZ4cE31WxMVyN5Mi+7N6TdKRBuOrckiQZDvV/gSzBUb6RZdaRXLl8k8vp5wkff+llgn
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR10MB7146
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-16_09,2023-05-16_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 spamscore=0
+ mlxlogscore=998 malwarescore=0 bulkscore=0 adultscore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305160142
+X-Proofpoint-ORIG-GUID: KpDVYeAUXavOK668KgsqrVUDqOkc14cy
+X-Proofpoint-GUID: KpDVYeAUXavOK668KgsqrVUDqOkc14cy
 
-On Mon, 15 May 2023 at 22:31, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.29 release.
-> There are 239 patches in this series, all will be posted as a response
+Hi Greg,
+
+On 15/05/23 9:57 pm, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.112 release.
+> There are 134 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
+
+No problems seen on x86_64 and aarch64.
+
+Tested-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+
+Thanks,
+Harshit
+
 > Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
 > Anything received after that time might be too late.
->
+> 
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.29-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.112-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
->
+> 
 > thanks,
->
+> 
 > greg k-h
-
-
-Results from Linaro=E2=80=99s test farm.
-Regressions on arm64, arm, x86_64, and i386.
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-We have recently upgraded our selftest sources to stable-rc 6.3 and
-running on stable rc 6.1 kernel.
-
-List of test regressions:
-=3D=3D=3D=3D=3D=3D=3D=3D
-kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-kselftest-memfd
-  - memfd_memfd_test
-
-kselftest-rseq
-  - rseq_basic_test
-
- kselftest-kvm
-  - kvm_hyperv_features
-  - kvm_xapic_state_test
-
-ltp-commands
-  - mkfs01_ntfs_sh
-
-Details:
-=3D=3D=3D=3D=3D
-
-# selftests: membarrier: membarrier_test_single_thread
-# TAP version 13
-# 1..18
-# Bail out! sys membarrier MEMBARRIER_CMD_GET_REGISTRATIONS test:
-flags =3D 0, errno =3D 22
-# # Planned tests !=3D run tests (18 !=3D 0)
-# # Totals: pass:0 fail:0 xfail:0 xpass:0 skip:0 error:0
-not ok 1 selftests: membarrier: membarrier_test_single_thread # exit=3D1
-# selftests: membarrier: membarrier_test_multi_thread
-# TAP version 13
-# 1..16
-# ok 1 sys_membarrier available
-# ok 2 sys membarrier invalid command test: command =3D -1, flags =3D 0,
-errno =3D 22. Failed as expected
-# ok 3 sys membarrier MEMBARRIER_CMD_QUERY invalid flags test: flags =3D
-1, errno =3D 22. Failed as expected
-# ok 4 sys membarrier MEMBARRIER_CMD_PRIVATE_EXPEDITED not registered
-failure test: flags =3D 0, errno =3D 1
-# ok 5 sys membarrier MEMBARRIER_CMD_PRIVATE_EXPEDITED_SYNC_CORE not
-registered failure test: flags =3D 0, errno =3D 1
-# ok 6 sys membarrier MEMBARRIER_CMD_GLOBAL test: flags =3D 0
-# ok 7 sys membarrier MEMBARRIER_CMD_REGISTER_PRIVATE_EXPEDITED test: flags=
- =3D 0
-# Bail out! sys membarrier MEMBARRIER_CMD_GET_REGISTRATIONS test:
-flags =3D 0, errno =3D 22
-# # Planned tests !=3D run tests (16 !=3D 7)
-# # Totals: pass:7 fail:0 xfail:0 xpass:0 skip:0 error:0
-not ok 2 selftests: membarrier: membarrier_test_multi_thread # exit=3D1
-
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-kselftest: Running tests in memfd
-TAP version 13
-1..3
-# selftests: memfd: memfd_test
-# Aborted
-not ok 1 selftests: memfd: memfd_test # exit=3D134
-
-=3D=3D=3D=3D=3D=3D=3D=3D
-
-kselftest: Running tests in rseq
-TAP version 13
-1..9
-# selftests: rseq: basic_test
-# basic_test: rseq.h:204: rseq_current_node_id: Assertion
-`rseq_node_id_available()' failed.
-# ./kselftest/runner.sh: line 35:  1709 Aborted
-         /usr/bin/timeout --foreground \"$kselftest_timeout\" $1
-not ok 1 selftests: rseq: basic_test # exit=3D134
-# selftests: rseq: basic_percpu_ops_test
-# spinlock
-# percpu_list
-ok 2 selftests: rseq: basic_percpu_ops_test
-# selftests: rseq: basic_percpu_ops_mm_cid_test
-# spinlock
-# percpu_list
-ok 3 selftests: rseq: basic_percpu_ops_mm_cid_test
-# selftests: rseq: param_test
-ok 4 selftests: rseq: param_test
-# selftests: rseq: param_test_benchmark
-ok 5 selftests: rseq: param_test_benchmark
-# selftests: rseq: param_test_compare_twice
-ok 6 selftests: rseq: param_test_compare_twice
-# selftests: rseq: param_test_mm_cid
-# Error: cpu id getter unavailable
-not ok 7 selftests: rseq: param_test_mm_cid # exit=3D255
-# selftests: rseq: param_test_mm_cid_benchmark
-# Error: cpu id getter unavailable
-not ok 8 selftests: rseq: param_test_mm_cid_benchmark # exit=3D255
-# selftests: rseq: param_test_mm_cid_compare_twice
-# Error: cpu id getter unavailable
-not ok 9 selftests: rseq: param_test_mm_cid_compare_twice # exit=3D255
-
-=3D=3D=3D=3D=3D=3D
-
-# selftests: kvm: hyperv_features
-# Testing access to Hyper-V specific MSRs
-# =3D=3D=3D=3D Test Assertion Failure =3D=3D=3D=3D
-#   x86_64/hyperv_features.c:498: false
-#   pid=3D1043 tid=3D1043 errno=3D4 - Interrupted system call
-#      1 0x0000000000403722: ?? ??:0
-#      2 0x00007fc1e890157a: ?? ??:0
-#      3 0x00007fc1e890162f: ?? ??:0
-#      4 0x00000000004037c4: ?? ??:0
-#   Failed guest assert: !vector at x86_64/hyperv_features.c:58
-# MSR =3D 40000118, arg1 =3D d, arg2 =3D 0
-not ok 10 selftests: kvm: hyperv_features # exit=3D254
-
-# selftests: kvm: xapic_state_test
-# =3D=3D=3D=3D Test Assertion Failure =3D=3D=3D=3D
-#   x86_64/xapic_state_test.c:147: apic_id =3D=3D expected
-#   pid=3D2175 tid=3D2175 errno=3D4 - Interrupted system call
-#      1 0x0000000000402bac: ?? ??:0
-#      2 0x00000000004025ba: ?? ??:0
-#      3 0x00007f0040cd457a: ?? ??:0
-#      4 0x00007f0040cd462f: ?? ??:0
-#      5 0x0000000000402624: ?? ??:0
-#   APIC_ID not set back to xAPIC format; wanted =3D 1000000, got =3D 1
-not ok 46 selftests: kvm: xapic_state_test # exit=3D254
-
-=3D=3D=3D=3D
-
-tst_device.c:93:[  147.226163] loop0: detected capacity change from 0 to 61=
-4400
- TINFO: Found free device 0 '/dev/loop0'
-mkfs01 1 TINFO: timeout per run is 0h 50m 0s
-mkfs01 1 TPASS: 'mkfs -t ntfs  /dev/loop0 ' passed.
-mkfs01 2 TINFO: Mounting device: mount -t ntfs /dev/loop0
-/scratch/ltp-zKu0Zn6L6o/LTP_mkfs01.ULVi9nN6XF/mntpoint
-modprobe: FATAL: Module fuse not found in directory /lib/modules/6.2.16-rc1
-ntfs-3g-mount: fuse device is missing, try 'modprobe fuse' as root
-mkfs01 2 TBROK: Failed to mount device ntfs type: mount exit =3D 21
-[  166.420602] I/O error, dev loop0, sector 614272 op 0x0:(READ) flags
-0x80700 phys_seg 1 prio class 2
-
-Steps to reproduce:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-# To install tuxrun on your system globally:
-# sudo pip3 install -U tuxrun=3D=3D0.42.0
-#
-# See https://tuxrun.org/ for complete documentation.
-
-tuxrun   \
- --runtime podman   \
- --device qemu-x86_64   \
- --boot-args rw   \
- --kernel https://storage.tuxsuite.com/public/linaro/lkft/builds/2Pq4UnS1BC=
-krcnT51kVe9rFF0k1/bzImage
-  \
- --modules https://storage.tuxsuite.com/public/linaro/lkft/builds/2Pq4UnS1B=
-CkrcnT51kVe9rFF0k1/modules.tar.xz
-  \
- --rootfs https://storage.tuxboot.com/debian/bookworm/amd64/rootfs.ext4.xz =
-  \
- --parameters SKIPFILE=3Dskipfile-lkft.yaml   \
- --parameters KSELFTEST=3Dhttps://storage.tuxsuite.com/public/linaro/lkft/b=
-uilds/2PeR5CFkuV3xkzzYLrOV8JHT9ie/kselftest.tar.xz
-  \
- --image docker.io/lavasoftware/lava-dispatcher:2023.01.0020.gc1598238f   \
- --tests kselftest-membarrier   \
- --timeouts boot=3D15
-
-Test log links and details,
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-
-membarrier: test_multi_thread:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
- - https://lkft.validation.linaro.org/scheduler/job/6427965#L1776
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17020997/suite/kselftest-membarrier/test/mem=
-barrier_membarrier_test_multi_thread/history/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17021028/suite/kselftest-membarrier/test/mem=
-barrier_membarrier_test_multi_thread/details/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17020997/suite/kselftest-membarrier/tests/
-
-
-memfd_test:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17020879/suite/kselftest-memfd/test/memfd_me=
-mfd_test/history/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17007742/suite/kselftest-memfd/tests/
-
-rseq_basic_test:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17020993/suite/kselftest-rseq/test/rseq_basi=
-c_test/history/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17020993/suite/kselftest-rseq/test/rseq_basi=
-c_test/log
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17020993/suite/kselftest-rseq/test/rseq_basi=
-c_test/details/
-
-
-kvm: kvm_hyperv_features and kvm_xapic_state_test:
-=3D=3D=3D=3D=3D=3D=3D=3D=3D
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17020070/suite/kselftest-kvm/test/kvm_hyperv=
-_features/history/
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17020070/suite/kselftest-kvm/test/kvm_hyperv=
-_features/log
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17020070/suite/kselftest-kvm/test/kvm_xapic_=
-state_test/history/
-
-ltp-commands: mkfs01_ntfs_sh:
-=3D=3D=3D=3D=3D=3D=3D=3D
- - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.=
-1.28-240-gb82733c0ff99/testrun/17019910/suite/ltp-commands/test/mkfs01_ntfs=
-_sh/history/
-
-## Build
-* kernel: 6.1.29-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.1.y
-* git commit: b82733c0ff99435bb7eb5ed4ea2e1c1fd69e7ebb
-* git describe: v6.1.28-240-gb82733c0ff99
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.2=
-8-240-gb82733c0ff99
-
-## Test Regressions (compared to v6.1.28)
-
-* bcm2711-rpi-4-b, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* bcm2711-rpi-4-b, kselftest-memfd
-  - memfd_memfd_test
-
-* dragonboard-410c, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* dragonboard-410c, kselftest-memfd
-  - memfd_memfd_test
-
-* fvp-aemva, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* fvp-aemva, kselftest-memfd
-  - memfd_memfd_test
-
-* i386, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* i386, kselftest-memfd
-  - memfd_memfd_test
-
-* juno-r2, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* juno-r2, kselftest-memfd
-  - memfd_memfd_test
-
-* qemu-arm64, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu-arm64, kselftest-memfd
-  - memfd_memfd_test
-
-* qemu-armv7, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu-i386, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu-i386, kselftest-memfd
-  - memfd_memfd_test
-
-* qemu-x86_64, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu-x86_64, kselftest-memfd
-  - memfd_memfd_test
-
-* qemu_i386, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu_i386, kselftest-memfd
-  - memfd_memfd_test
-
-* qemu_x86_64, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* qemu_x86_64, kselftest-memfd
-  - memfd_memfd_test
-
-* x15, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* x15, kselftest-rseq
-  - rseq_basic_test
-
-* x15, ltp-commands
-  - mkfs01_ntfs_sh
-
-* x86, kselftest-kvm
-  - kvm_hyperv_features
-  - kvm_xapic_state_test
-
-* x86, kselftest-membarrier
-  - membarrier_membarrier_test_multi_thread
-  - membarrier_membarrier_test_single_thread
-
-* x86, kselftest-memfd
-  - memfd_memfd_test
-
-* x86, kselftest-rseq
-  - rseq_basic_test
-  - rseq_run_param_test_sh
-
-* x86-kasan, ltp-commands
-  - mkfs01_ntfs_sh
-
-
-## Metric Regressions (compared to v6.1.28)
-
-## Test Fixes (compared to v6.1.28)
-
-## Metric Fixes (compared to v6.1.28)
-
-## Test result summary
-total: 161145, pass: 139501, fail: 3428, skip: 17949, xfail: 267
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 151 total, 150 passed, 1 failed
-* arm64: 54 total, 53 passed, 1 failed
-* i386: 41 total, 38 passed, 3 failed
-* mips: 30 total, 28 passed, 2 failed
-* parisc: 8 total, 8 passed, 0 failed
-* powerpc: 38 total, 36 passed, 2 failed
-* riscv: 16 total, 15 passed, 1 failed
-* s390: 16 total, 16 passed, 0 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 46 total, 46 passed, 0 failed
-
-## Test suites summary
-* boot
-* fwts
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+> 
