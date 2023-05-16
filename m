@@ -1,141 +1,160 @@
-Received: from JPN01-OS0-obe.outbound.protection.outlook.com (mail-os0jpn01on2139.outbound.protection.outlook.com [40.107.113.139])
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B9419BAA
-	for <patches@lists.linux.dev>; Mon, 15 May 2023 20:30:19 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XUr/JDBFuhhxt0o8Kbkl2x6f6Umct2lPizj1ts4Fcx8QAIpKH81jGivUERL2emaAvrn27I6LEX/ow8IKOYIe8HE3hDeJE+S/6IALOZkFtH5e41wfNU7O88tDCRS3ns850z0zdhDdvGR/ItHYt+4FGg/OP/y6oN5NJShpxgY/vgYKSsrUVaoXTNARFiYoMCNpFKnk8249zqlzWijohFv0xzCk1qmwJsEK8S23XSM9ir2yLwME0jz8e4R08miwsM0k9zdw+HHC5pTcxOT2RCRnzoIKi+2oDim8ewgU5jOhoYfXrr3GapKL7bRtCPd3LeUMeN82AZFMKGGV0FtUlOnNNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hNrmG3QrZgb9zWol/+7LxSaX6mjFEtk4oB1AvFDyO3U=;
- b=I3bdrEhf2MNcCKeLdVOYPZWOBX6BflUCKmMAu1qw9qpsYZOMzp5CJDeBl2/pl9yGbllCOUNm5OKC9UnCwTU5141ruunS4Zh9O8dI7/jWGzpHuMqUoCsYk4s/aLyLBP/jgZcnFKEZzRlfG9fNNlW7XELeYjbpTktHOQ37fNnjeyoDEYARC2tryKoMAxlBPGlXum5usq29/n8hJmY0WlagrSnJBQkISNjjoAGtqBz1SdGlOgmkt/U3sZJx3d24wu8/BCxP505gGr22yC9LVEFCM9ezZAtRJlDM1zgoRw8sAX6zPw0ZtnpSjWkX2qS/VUT6VIW+yvlhcOfgrqfXwQ2RpA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hNrmG3QrZgb9zWol/+7LxSaX6mjFEtk4oB1AvFDyO3U=;
- b=CdICbDfafSTAKWxMybj+vPYmOq8H2A0GoI0bn43viKHyVOQd/ZxVKYF4IEqLOO0hZ5EvpGPr5f6dM3oEBcBDO7A31IQYk+IcUAwFE0NGUzueXjiDGO35aDgPMqX6QfLh3yqVv3ZiuycRYdkvogMoT6x4OLb5XxtWMuwGtfzNyiM=
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
- by TYWPR01MB12072.jpnprd01.prod.outlook.com (2603:1096:400:443::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6387.30; Mon, 15 May
- 2023 20:30:15 +0000
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a7d8:4c3a:9cfd:2e79]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a7d8:4c3a:9cfd:2e79%4]) with mapi id 15.20.6387.030; Mon, 15 May 2023
- 20:30:15 +0000
-From: Chris Paterson <Chris.Paterson2@renesas.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CC51FB0
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 01:17:16 +0000 (UTC)
+Received: from epcas1p4.samsung.com (unknown [182.195.41.48])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20230516010937epoutp03aa83ff62ad079748df3b1ecf76b0ce8e~femkTtily1389913899epoutp036
+	for <patches@lists.linux.dev>; Tue, 16 May 2023 01:09:37 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20230516010937epoutp03aa83ff62ad079748df3b1ecf76b0ce8e~femkTtily1389913899epoutp036
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1684199377;
+	bh=O+iOB5oA8PL36Tgptx1DPTVH7ixNY4am+/sSLQJKE3Y=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=LXvDRjr+1M8ixJCCslwouRrnIm/M9zQSmdL36BnIYV4RSYLdG0yo8Ugf47HN5Q3wg
+	 dsdaXYHVIBSOFmJbuxDx19C3avI2eIjel690KfRHRwMLQC32bmrwFxvJ6eVGNuX1YA
+	 BfZQMDEbtaSgdWDAyuvAvNp+lsAU0hx1iNUbKuTI=
+Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
+	epcas1p3.samsung.com (KnoxPortal) with ESMTP id
+	20230516010937epcas1p3bca2d40439d1d065813cf2e611db1039~femkCWbos0479104791epcas1p3G;
+	Tue, 16 May 2023 01:09:37 +0000 (GMT)
+Received: from epsmges1p5.samsung.com (unknown [182.195.38.241]) by
+	epsnrtp3.localdomain (Postfix) with ESMTP id 4QKynX4dpdz4x9QC; Tue, 16 May
+	2023 01:09:36 +0000 (GMT)
+Received: from epcas1p2.samsung.com ( [182.195.41.46]) by
+	epsmges1p5.samsung.com (Symantec Messaging Gateway) with SMTP id
+	70.BC.39132.EC7D2646; Tue, 16 May 2023 10:09:34 +0900 (KST)
+Received: from epsmtrp2.samsung.com (unknown [182.195.40.14]) by
+	epcas1p2.samsung.com (KnoxPortal) with ESMTPA id
+	20230516010934epcas1p215fb52c0c1302c0eb9b7b863149fa09e~femhpMd9Y1470914709epcas1p2x;
+	Tue, 16 May 2023 01:09:34 +0000 (GMT)
+Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
+	epsmtrp2.samsung.com (KnoxPortal) with ESMTP id
+	20230516010934epsmtrp297dd7733a389953b79f6423afbf95e6f~femhoZPsC1082210822epsmtrp2m;
+	Tue, 16 May 2023 01:09:34 +0000 (GMT)
+X-AuditID: b6c32a39-e23fa700000098dc-68-6462d7ce1f48
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+	epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
+	EC.A8.28392.EC7D2646; Tue, 16 May 2023 10:09:34 +0900 (KST)
+Received: from youngjingil02 (unknown [10.253.98.199]) by
+	epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+	20230516010934epsmtip2fde469a231e5af08a37594a4e2aa9fb7~femhbQkal3002330023epsmtip2j;
+	Tue, 16 May 2023 01:09:34 +0000 (GMT)
+From: "Yeongjin Gil" <youngjin.gil@samsung.com>
+To: "'Greg Kroah-Hartman'" <gregkh@linuxfoundation.org>,
 	<stable@vger.kernel.org>
-CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
-	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
-	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
-	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
-	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
-	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
-	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
-	"rwarsow@gmx.de" <rwarsow@gmx.de>
-Subject: RE: [PATCH 4.19 000/191] 4.19.283-rc1 review
-Thread-Topic: [PATCH 4.19 000/191] 4.19.283-rc1 review
-Thread-Index: AQHZh0vQqDBn+/X68UCAvZKv1Eoesa9bwcFQ
-Date: Mon, 15 May 2023 20:30:15 +0000
-Message-ID:
- <TY2PR01MB378816E32F1493DEF02A95D7B7789@TY2PR01MB3788.jpnprd01.prod.outlook.com>
-References: <20230515161707.203549282@linuxfoundation.org>
-In-Reply-To: <20230515161707.203549282@linuxfoundation.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|TYWPR01MB12072:EE_
-x-ms-office365-filtering-correlation-id: 4fe9552f-1862-445a-3ebf-08db5583311c
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- h0wM7Z51oSjmbuf/5OR/liaWnj56N2Qimvd/78Dd7xhN9Tgeo74N23n08G5wnKkUsmnqziJ67LrCxasgg3ZpLsEnxnb5N6wJ76iuc5rI40MovMUQ0DluN/FL7KMKkptkpZrrLryUy8qkS+tmrAEson4qzvkH9ipUCFdEzEEiqAmA7bshK2W2psgXzIuac8HyoU+WG00a7QO28Mw+exbSd2YZRFWdQn1p/szd/b2ZC17+7DLBOixKCgUfcQbABKlH0TipQsnip/7Q+jCeDYMQaV+AgLp5kfRO/urP0gIdEWip6wVj+x/pKNATuuiM6YmeiGFI7FrnM/MaVu94tb//j7Mr2VRmzn1Xyw+TivRIhPSxOQJn3JqypfC8NDnoOiY+tUw2B2CYIQd9VxlAgOCbVZ/8kOJH3XDSX9wLrXnTxkd/TRYbLWCEbkWgTd2LmgkxlsYDHUN3MZfVrG/Z0ohOsZOoVEp+AcjpV8mSGGAYoY6b8pgIdhaDTPSPklExn7OMifidrFOiNnr9TQe5wHICZYmHg/y7+vjq6DxZ2MWxZzvlQqYPCikoRh3WVwxeaiLb1NpnPT95pUsWOrlWH7ZEG08luigUblNuPklIXyce51STthySKwTKP4J3Qw6/gRePW3o/k30fH3i/jQMvNGFmcQ==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(366004)(346002)(376002)(39860400002)(396003)(451199021)(66556008)(64756008)(66446008)(66476007)(4326008)(478600001)(76116006)(66946007)(110136005)(54906003)(9686003)(6506007)(186003)(38100700002)(38070700005)(8936002)(8676002)(2906002)(55016003)(71200400001)(7696005)(316002)(966005)(33656002)(86362001)(5660300002)(122000001)(41300700001)(7416002)(4744005)(52536014)(26005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?Windows-1252?Q?3GlbiWiocxbIWYuGlO5ec/tDrrYCnsIVjrUvbmEY+V+HpYvgs4TGWNIL?=
- =?Windows-1252?Q?sI9YdAo+i2GLl7d2w0MVOYppyImbv/0DQW2BR+e/U3f+3Xo7FsljAOFm?=
- =?Windows-1252?Q?5CwTtBFqqkKDYG5ED2/PngUQUypyR7rdszup0UdSy/ld1+z/ZdOLxowl?=
- =?Windows-1252?Q?n9OOMNQbTYXee1M6+0PbitAka3lcPEWZWQ7XTqIzicYZngP3PhmROKLu?=
- =?Windows-1252?Q?tDJF/kK34GA3ptLKfWQM6tLX9qv9IiBJbx8SNKlpRCq/YCXmdrHv9kpz?=
- =?Windows-1252?Q?++woZdJ/ZDwh2Z3fY9H4+G1eiIp4u0pRXQL4ALieafN3ws6WM2V812FK?=
- =?Windows-1252?Q?Ld66dJsAGVuQLDjOBIRMMJrPJKGQS+db/lXd+gqc32BBEaPLl7MGyMf5?=
- =?Windows-1252?Q?iLxiQnixMM1pyVnfq8i0G1N5Hn/DpIlUFxssbz40U+FUqedTsm/1L34Q?=
- =?Windows-1252?Q?Q+YzD6IqH2+lDrytVFz70p+ME3IX2yHeXZ8k7cdEWI1Wn8zv19+z4J6t?=
- =?Windows-1252?Q?CqOxljV3972riYEj6c4u/8jWnJYkubwvjhKkLb00e+c07UvGZHQ4XdYk?=
- =?Windows-1252?Q?D3S/F9S5gfWiTSwalbhUcyWSC5tj+yh47QfebjgHo+hyEjp8lWfoCc0p?=
- =?Windows-1252?Q?63F/s5k4TZ5iQ3Pi46ubbgJScpHbQzsBv/21dfVW5TgeP/p6P4+ulSuh?=
- =?Windows-1252?Q?cWKt2XJFbNm8l0KVgdQEjhi1BwJ6nhinMf89SSH3AQ2q7PWuai007qFI?=
- =?Windows-1252?Q?pg5iKhBNMWCIZQKIhY/j9cHTvSVhOUsC9vtcQL0krejeVHvL/5gzuZcG?=
- =?Windows-1252?Q?WDw9x48UbCxoK2QX4fsLJh9Ld9RZyR7bh8YOQM0BVNKd6DwgdCyuHwBK?=
- =?Windows-1252?Q?XOkxXz2uJdGKGXLvwQnlySIEkfAhOTpxfAnO3d5dArTHm5low8mzOM16?=
- =?Windows-1252?Q?xcsRBF7XM5dVfILacmbcMDncGD6SLjLD0dk8F9t6h9AycpO8iAn/K6Or?=
- =?Windows-1252?Q?ci1DBPSUq5N2Un9eXVojstIA1SXfR5EbPKVKs+gHSx9P8JU8dDMkWNKK?=
- =?Windows-1252?Q?YsfXgl0L4O9OgAQaVYWxvSUN+9ppyghLu7on82FWzdeLjMf/T1Lhr/Qd?=
- =?Windows-1252?Q?eVTliIxcA48FAklj/HxnTQJ1dLEIKdpq1869jiK9BL7wHI9ff5IngWpk?=
- =?Windows-1252?Q?3nKIeLRYBTfUFK8wM99rzURS7UaXAhmQJLAxVj3rm0ZrG6qo4VcYNSwY?=
- =?Windows-1252?Q?6ySFJeA5XunJ5qzY4fCGn1m2CgexW50N5KfmPplLv0oUvsK3x8W2pAeY?=
- =?Windows-1252?Q?GT5nKhpGT8mpPD12DFFqp9w0Mnzm8yZS1Bnui3YIqUBE5aXDsrUIAND7?=
- =?Windows-1252?Q?YQYyJAiXEYsxEJskTl/gUZdXtFBj3Dr3ily2JamRj28yybb6jYznvyaY?=
- =?Windows-1252?Q?KwUP6yU3XG1uFOf7aUITm+EbI5mUkbK6V8sSP4+nOx1xqC6O+Fx1fwIu?=
- =?Windows-1252?Q?qa3Ola5zJXzNQyKY1DTUz2lykbdzamT9E8a2RIj/+pkAaA38q/ii/Eot?=
- =?Windows-1252?Q?DanHQTb+SpCtj+lS41RzKqY5qLihpTlSGHdPE7Gvc39uBwtuBE1wjRtq?=
- =?Windows-1252?Q?O5/LcgtrTtiIZe6clC/xwH7KnOJz1mAbLDcf1BOrFRnNQ0q4At2JYcK9?=
- =?Windows-1252?Q?h1z0nWNsnGdbQ9jwLOSfn3DlpLO2GgTyOTvVaIpTxmDyHzvO8z+6+A?=
- =?Windows-1252?Q?=3D=3D?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+Cc: <patches@lists.linux.dev>, "'Sungjong Seo'" <sj1557.seo@samsung.com>,
+	"'Mike Snitzer'" <snitzer@kernel.org>, "'Sasha Levin'" <sashal@kernel.org>
+In-Reply-To: <20230515161750.705280788@linuxfoundation.org>
+Subject: RE: [PATCH 5.10 307/381] dm verity: fix error handling for
+ check_at_most_once on FEC
+Date: Tue, 16 May 2023 10:09:34 +0900
+Message-ID: <075701d98793$13bf59b0$3b3e0d10$@samsung.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4fe9552f-1862-445a-3ebf-08db5583311c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 15 May 2023 20:30:15.5955
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: U1ikhDsZhJBO8siWsSKnjjuVLUCKjVXib0O3XiPsPTOhKTURx8Dj/ijv4t75gXUHfbDDwUN2VgBMmK52/NTClHouuXkszVPxrvJn/6L41cI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB12072
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 15.0
+Thread-Index: AQG2PVCkGRo76yUkNrMaiZ51e2bR8AGzewWsAhkyfjSvhEUqMA==
+Content-Language: ko
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrOJsWRmVeSWpSXmKPExsWy7bCmnu6560kpBg2TLCyaF69ns7h84hKj
+	xaY119gstvw7wmpx4pa0xYKNjxgd2Dw2repk89g/dw27x4vNMxk9+rasYvT4vEkugDWqgdEm
+	sSg5I7MsVSE1Lzk/JTMv3VYpNMRN10JJISO/uMRWKdrQ0EjP0MBcz8jISM/UKNbKyFRJIS8x
+	N9VWqUIXqldJoSi5AKg2t7IYaEBOqh5UXK84NS/FISu/FORqveLE3OLSvHS95PxcJYWyxJxS
+	oBFK+gnfGDMW/jrDWrBPoOLkil0sDYwHebsYOTgkBEwkOmeldjFycQgJ7GCUePX5ExOE84lR
+	4mv/XRYI5zOjxK9/p1i7GDnBOlac7Yeq2sUo0TZ7OyNIQkjgNaNE13cvEJtNQF/i17FzLCC2
+	iECwxJeL+5hBGpgFpjFKrHzTwgKym1PAWuLHNHaQGmGBeIkbSzaA1bMIqEr8eT2NGcTmFbCU
+	OLxnCjuELShxcuYTsBpmAXmJ7W/nMEMcpCCx+9NRVohdThI7znxhhKgRkZjd2Qa2V0JgIofE
+	g667TBANLhIdd9dDNQtLvDq+hR3ClpL4/G4vG0RDO6PEiodzGCGcGYwSf9/fh/rfXqK5tZkN
+	5ANmAU2J9bv0IcKKEjt/z4XazCfx7msPVLmgxOlr3cyQwOaV6GgTggirSVyZ9It1AqPyLCS/
+	zULy2ywkP8xCWLaAkWUVo1hqQXFuemqxYYEpcoRvYgSnWS3LHYzT337QO8TIxMF4iFGCg1lJ
+	hLd9ZnyKEG9KYmVValF+fFFpTmrxIcZkYGhPZJYSTc4HJvq8knhDMzNLC0sjE0NjM0NDwsIm
+	lgYmZkYmFsaWxmZK4rxfnmqnCAmkJ5akZqemFqQWwWxh4uCUamBqesT7Z2HzskU/+/0Mlqso
+	3be3VohKrjY4JKsiszw1fnZBMsvFmTbXJ/N83y+h8eL/kSav0CsTFvz3nl74faXx32W7/yjF
+	Xpx5j3XFmtMGIS9m7i+tnh71j/dZd/CR9/MipQ+pGs5mWZjnvUNQWnXtj8TVXGsvyDb6Z7kn
+	79tr4X7JKXtnkPDf26/Fgv9Hl//IF9Xf8twzyOvEx48rf0kvux4RyV75svx8xZbKDQdYpnhE
+	9S91cvoSyrhy4ze3TY7X375hPHvZb/W6aWkhX+P3lhi9Ucl7f9/159Z+nbt1Yea5uy/MubZz
+	3catrdv5L3RySHb2zr2x/deXVb8444oY7nl9PM7wTPv69QoP5Zm5vEosxRmJhlrMRcWJANWN
+	4RJqBAAA
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFvrLLMWRmVeSWpSXmKPExsWy7bCSvO6560kpBld3iFs0L17PZnH5xCVG
+	i01rrrFZbPl3hNXixC1piwUbHzE6sHlsWtXJ5rF/7hp2jxebZzJ69G1ZxejxeZNcAGsUl01K
+	ak5mWWqRvl0CV8bCX2dYC/YJVJxcsYulgfEgbxcjJ4eEgInEirP9TF2MXBxCAjsYJWbcfc4G
+	kZCR+DPxPZDNAWQLSxw+XAxR85JRYtnmKUwgNWwC+hK/jp1jAbFFBIIlvlzcxwxSxCwwi1Fi
+	4d7fzBAduxkl1u2fyAIyiVPAWuLHNHaQBmGBWIlHnX+ZQWwWAVWJP6+ngdm8ApYSh/dMYYew
+	BSVOznwCtoBZQFui92ErI4QtL7H97RxmiEMVJHZ/OsoKcYSTxI4zX6BqRCRmd7YxT2AUnoVk
+	1Cwko2YhGTULScsCRpZVjJKpBcW56bnFhgVGeanlesWJucWleel6yfm5mxjBMaSltYNxz6oP
+	eocYmTgYDzFKcDArifC2z4xPEeJNSaysSi3Kjy8qzUktPsQozcGiJM57oetkvJBAemJJanZq
+	akFqEUyWiYNTqoFJabWA2y+pRdy/9pRKT2QR/BoWGgn01gfzippl8dkGtsu/mnxLP/R5VXLi
+	lUMbthYvWHHlTBbjji+aJst2uLz+n9zxwkLidpCUsWjUkZ+bbikdO3a46+ScyRrOSz/1rb3A
+	vHDdgS4lTvFFriKq5hsk9UxFf7UpfnR6HGe0dKq+VaGq1RpD7476rPDnKjfMdi85u9ugPdq7
+	7dSGDd4/l01zUTX9HHxwh+DTBsG/C2QWP/1e8n8F69wlM6bEN62oLtA8L2/pUv+/07LCsl+i
+	Yw/vy6C3fNJH/kkvfSnGbW0Y2Oq2672E6+2OfN2pk7/KRWYX7EqvkorKeHRVnTssZebDa0fZ
+	eyMe3r/f/vbwxfVKLMUZiYZazEXFiQBuK6qqEAMAAA==
+X-CMS-MailID: 20230516010934epcas1p215fb52c0c1302c0eb9b7b863149fa09e
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: SVC_REQ_APPROVE
+CMS-TYPE: 101P
+X-ArchiveUser: EV
+DLP-Filter: Pass
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20230515174837epcas1p3624d7b3e158107dd951fc08a777bd8c2
+References: <20230515161736.775969473@linuxfoundation.org>
+	<CGME20230515174837epcas1p3624d7b3e158107dd951fc08a777bd8c2@epcas1p3.samsung.com>
+	<20230515161750.705280788@linuxfoundation.org>
 
-Hello Greg,
+> From: Yeongjin Gil <youngjin.gil@samsung.com>
+> 
+> [ Upstream commit e8c5d45f82ce0c238a4817739892fe8897a3dcc3 ]
+> 
+> In verity_end_io(), if bi_status is not BLK_STS_OK, it can be return
+> directly. But if FEC configured, it is desired to correct the data page
+> through verity_verify_io. And the return value will be converted to
+> blk_status and passed to verity_finish_io().
+> 
+> BTW, when a bit is set in v->validated_blocks, verity_verify_io() skips
+> verification regardless of I/O error for the corresponding bio. In this
+> case, the I/O error could not be returned properly, and as a result, there
+> is a problem that abnormal data could be read for the corresponding block.
+> 
+> To fix this problem, when an I/O error occurs, do not skip verification
+> even if the bit related is set in v->validated_blocks.
+> 
+> Fixes: 843f38d382b1 ("dm verity: add 'check_at_most_once' option to only
+> validate hashes once")
+> Cc: stable@vger.kernel.org
+> Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+> Signed-off-by: Yeongjin Gil <youngjin.gil@samsung.com>
+> Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+Hello Greg.
+This patch is the wrong patch I mentioned :(
+Please check the v2 patch I sent yesterday.
+If you are still confused, would it be better to change mail subject and
+send v3?
+>  drivers/md/dm-verity-target.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/md/dm-verity-target.c b/drivers/md/dm-verity-target.c
+> index d9c388e6ce76c..0c2048d2b847e 100644
+> --- a/drivers/md/dm-verity-target.c
+> +++ b/drivers/md/dm-verity-target.c
+> @@ -482,7 +482,7 @@ static int verity_verify_io(struct dm_verity_io *io)
+>  		sector_t cur_block = io->block + b;
+>  		struct ahash_request *req = verity_io_hash_req(v, io);
+> 
+> -		if (v->validated_blocks &&
+> +		if (v->validated_blocks && bio->bi_status == BLK_STS_OK &&
+>  		    likely(test_bit(cur_block, v->validated_blocks))) {
+>  			verity_bv_skip_block(v, io, &io->iter);
+>  			continue;
+> --
+> 2.39.2
+> 
+> 
 
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Sent: Monday, May 15, 2023 5:24 PM
->=20
-> This is the start of the stable review cycle for the 4.19.283 release.
-> There are 191 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
-> Anything received after that time might be too late.
 
-CIP configurations built and booted with Linux 4.19.283-rc1 (373cdd8d6123):
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/8=
-67957606
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
-ux-4.19.y
-
-Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
-
-Kind regards, Chris
