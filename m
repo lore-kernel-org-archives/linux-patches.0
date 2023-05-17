@@ -1,85 +1,98 @@
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63013AD28
-	for <patches@lists.linux.dev>; Wed, 17 May 2023 20:48:07 +0000 (UTC)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 7CBD05C01B0;
-	Wed, 17 May 2023 16:48:06 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Wed, 17 May 2023 16:48:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm1; t=
-	1684356486; x=1684442886; bh=pFDxtEWtnh290gDvTyGldDFfJHa7QfMoAy8
-	KN2pcuoM=; b=ho1lGA42K+++lh3DRebdBMTa8hAFcGZw8+B388bX/1twYA356Ul
-	F2u+2k5eFCFgj6QxUTX+ghZ1NV/z3W6ffM4qBNpFdoa807YhQSOyLBLKzlbLG2rB
-	5+EipP87o4IFKNnC3pi83HNeSF9d9PJczDcDI5dbPc2TFuJBXUPupI8B4KEHG8vW
-	aWbVsK9850VQ1NhuWVGFsWai907TN7nj6bu52dnKJzFpU22jO/F3LchcJ+SDQ06P
-	abVMscG9c7XRdH1pjwpbraRoD2we1kyulX4JfCDLeGENxiR2gCz9ZA0memZmID4t
-	4jmKcniQCs8lFa9LUjz3Jj7S7w9LB45H2fg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1684356486; x=1684442886; bh=pFDxtEWtnh290gDvTyGldDFfJHa7QfMoAy8
-	KN2pcuoM=; b=sq6wlRfDxWkqzVIcrW40qVuiFKM50HlA6QZ1rrzTwgbKYgMApRS
-	MPk5ifV8ZsWj4ZbWgb42N7u5Rs74aCuUC+vhkx6y8iIyVlcK1ov+/Z9HVC5OQI3T
-	3XZcOIyQ3gQ0uBMxNxphTkoy9qfG5Sl2hEDGY4qXm+y/gAQdm0OVPQzYd+nyPF95
-	9pUQwlQ0j79C5fRBG9vv6caAWIIHr7ZhiEogFQbK4VNWuFu0V2GbSeaBZn4ypQRc
-	fdcDQ2oI8/IAvFyLWkY3NvgELki1CHQhah1LScmzzrxMcZ7US7jujiSBeaTCiddF
-	akSQvqOQTFl/8Fn/MtWJCd63VY10UX/2R4A==
-X-ME-Sender: <xms:hj1lZPjBgI-4JfDPkUPDIb82KeFJkqkp8NYseoIMBqvZNoCTHnuH1A>
-    <xme:hj1lZMCCrfCNvI2gEfYaTWcmnsUB7w8IsC3uRAYF2FX7l6-VAMeVsm-mxdJCJGVwv
-    xGgxkUVVIrw5n5AqA>
-X-ME-Received: <xmr:hj1lZPGDuV0iXK31YEyD66fF8SGKf3GriE1S7DuMmMvn0IPbK2HVIPCOlx2J5ZQkfFDPfubHSpUu0E_gXDdIwzrucUIXou8FHvuFxw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeeiuddgudehfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheptehl
-    ihgtvgcutfihhhhluceorghlihgtvgesrhihhhhlrdhioheqnecuggftrfgrthhtvghrnh
-    epheduuddvteekvdektdduledugfffhfdugeejgeeuvdevtdetveejheehiefffeegnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvg
-    esrhihhhhlrdhioh
-X-ME-Proxy: <xmx:hj1lZMQfl3mHoVAqzDwqZ9S4Ch7zmIcXQ8rWOg0Q3ROhZAZD6dAh1Q>
-    <xmx:hj1lZMxi1ghKAAOc0-ByjnwkkOP3_DFv9KXjyNRPUzfNRItNAfROcA>
-    <xmx:hj1lZC71Ad3G8jm0ClJ7RuJw0EK4m4NQFwxxvo_VbBgQlPBPbp3nSw>
-    <xmx:hj1lZLlKBaDy1FpoZeRwVBGqcDzfoAPnX4rD2I12DtxkhUtuRlFi0A>
-Feedback-ID: i56684263:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 17 May 2023 16:48:04 -0400 (EDT)
-Message-ID: <706ec8e9-6c85-a2d3-1d7b-729d6de4893d@ryhl.io>
-Date: Wed, 17 May 2023 22:48:35 +0200
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8348B33F6
+	for <patches@lists.linux.dev>; Wed, 17 May 2023 21:48:22 +0000 (UTC)
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-253570deb8dso403579a91.1
+        for <patches@lists.linux.dev>; Wed, 17 May 2023 14:48:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684360102; x=1686952102;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FStjf9C3WAEWXLqC6o0Who1T5bvYtIEGryJ/iVLlrM0=;
+        b=AC9jzisVW8MFHxu7vJg4gBMsQyCMhJgz8aL2Y6dD29NXcqJfdot/KWUc41EBB9WCYy
+         XxUz0HJOc4js3aTYnmwHr+z3xqHtpSp1lIHvD2kiq0xlRIlDDu1kH04RRqTtbV74ZHWQ
+         YhLd2PT+w5huyT2CQu6thlNr5yox+ZIKGLw5wmQvxj++XeCIpup4RTfO2wIwTPAfZh1u
+         gsKPVg9QSMnoKPKgKEfoHpCMTgRugvSusdvgs9Pq084gfGa9ntFKQG3PgjaL49GnKfMY
+         NlLS16gxgTIQ4YsmRbu7yJynAJOnq8nlZaonCLymc6P099hu5XAJo2ZnRL7bffHsFrY8
+         jajw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684360102; x=1686952102;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FStjf9C3WAEWXLqC6o0Who1T5bvYtIEGryJ/iVLlrM0=;
+        b=jBkiwovr5cJqgqAGkGj0e7KwnQlZETq43ZQs3W6M9ezFg6FySMGogANbDVOgBwTi1B
+         BMqyJAz9Dp7yOpacF+8pFaLAPahv1W2kGqzoxHnJWpbboz60AD4ctluzcg0o2WuCo0fD
+         0+dsfpPf4OD5QRKb57GsGIMa8WkUugKxRNdgVPpIpfewN10UHF2D9Q8PcQIuct6Xbohu
+         rhdtyKdhe9NMxP+nnbPoN60ac8T8XD4Mg+MUDps37M25GDebN3WBIT67MkSJEhxc28wg
+         d1N2aCHWuj9JwG5RjfJhbI09A8PnOsQKR7tW6qEZYPvHfuhtvMIxx2XGbox302FzTrbz
+         oF5w==
+X-Gm-Message-State: AC+VfDx6J27NIJ0ikwcyjgsDCXLYFtNlU1K31A2WkV+bT0veQiHlg5T6
+	lUt1K02I7fQcGC3srwJ/UH0=
+X-Google-Smtp-Source: ACHHUZ6652DzpGfHOi7OAYBq+TgOZQNW0wXBYSOttt6rDSYXPr3C1VNh7PjvQlrvz/zDcwGJQ1spKQ==
+X-Received: by 2002:a17:902:ee42:b0:1ac:753a:7933 with SMTP id 2-20020a170902ee4200b001ac753a7933mr205075plo.39.1684360101434;
+        Wed, 17 May 2023 14:48:21 -0700 (PDT)
+Received: from localhost (2603-800c-1a02-1bae-a7fa-157f-969a-4cde.res6.spectrum.com. [2603:800c:1a02:1bae:a7fa:157f:969a:4cde])
+        by smtp.gmail.com with ESMTPSA id u16-20020a17090341d000b001a98f064a2asm18129670ple.48.2023.05.17.14.48.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 May 2023 14:48:21 -0700 (PDT)
+Sender: Tejun Heo <htejun@gmail.com>
+Date: Wed, 17 May 2023 11:48:19 -1000
+From: Tejun Heo <tj@kernel.org>
+To: Alice Ryhl <aliceryhl@google.com>
+Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Lai Jiangshan <jiangshanlai@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v1 0/7] Bindings for the workqueue
+Message-ID: <ZGVLo1V4kjx_lep5@slm.duckdns.org>
+References: <20230517203119.3160435-1-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH 4/4] rust: init: update macro expansion example in docs
-Content-Language: en-US
-To: Benno Lossin <benno.lossin@proton.me>
-Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
- =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-References: <20230424081112.99890-1-benno.lossin@proton.me>
- <20230424081112.99890-4-benno.lossin@proton.me>
-From: Alice Ryhl <alice@ryhl.io>
-In-Reply-To: <20230424081112.99890-4-benno.lossin@proton.me>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230517203119.3160435-1-aliceryhl@google.com>
 
-On 4/24/23 10:11, Benno Lossin wrote:
-> Also improve the explaining comments.
+Hello, Alice.
+
+On Wed, May 17, 2023 at 08:31:12PM +0000, Alice Ryhl wrote:
+> This patchset contains bindings for the kernel workqueue.
 > 
-> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
+> One of the primary goals behind the design used in this patch is that we
+> must support embedding the `work_struct` as a field in user-provided
+> types, because this allows you to submit things to the workqueue without
+> having to allocate, making the submission infallible. If we didn't have
+> to support this, then the patch would be much simpler. One of the main
+> things that make it complicated is that we must ensure that the function
+> pointer in the `work_struct` is compatible with the struct it is
+> contained within.
+> 
+> This patch could be significantly simplified if we already had the field
+> projection bindings. However, we have decided to upstream the current
+> version that does not depend on field projection first - the PR that
+> introduces field projections will then include a commit that simplifies
+> the workqueue implementation. (In particular, it would simplify the 5th
+> patch in this series.)
+> 
+> The first version of the workqueue bindings was written by Wedson, but
+> I have rewritten much of it so that it uses the pin-init infrastructure
+> and can be used with containers other than `Arc`.
 
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+I tried to read the patches but am too dumb to understand much. Any chance
+you can provide some examples so that I can at least imagine how workqueue
+would be used from rust side?
+
+Thanks.
+
+-- 
+tejun
