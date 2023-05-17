@@ -1,92 +1,102 @@
-Received: from mail-ej1-f74.google.com (mail-ej1-f74.google.com [209.85.218.74])
+Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com [209.85.208.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36960111AD
-	for <patches@lists.linux.dev>; Wed, 17 May 2023 20:08:38 +0000 (UTC)
-Received: by mail-ej1-f74.google.com with SMTP id a640c23a62f3a-96625ceef6cso132292066b.0
-        for <patches@lists.linux.dev>; Wed, 17 May 2023 13:08:38 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA6A449B2
+	for <patches@lists.linux.dev>; Wed, 17 May 2023 20:31:22 +0000 (UTC)
+Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-510e51cb569so30583a12.3
+        for <patches@lists.linux.dev>; Wed, 17 May 2023 13:31:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684354116; x=1686946116;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8iJR0huTfHVTodkNfO2dbFSpbRb6U9pb/v/u0biFupw=;
-        b=bWzM94fINtOQiMgIeij8r/YgZ5x9bR/Dr9fiTQjsYbOEc/EG/KK3e24KYDbSbKNXFq
-         q0JETAcKy8aAdEveycELSQP0Ii/yRJnHVk4NKArscNFWSTQkCbq1VcORowwK/6Ou8Yb8
-         0s6z4qC2HG4wsDP+zgctkD2KNiocsj8sZviKvuD+KSI518NxZvqsWzw8HUxm1BcPU4eJ
-         S3tGklnk97V3591mhv9OhfHFl38eoUwDL0WA8VbW30AEVdqh1K736UaBB1EKE5aaAvRJ
-         RpxcN2gss1FGPI7JNDtmlPhXfX8KVUsqBfnaRMg0dauYa+JFHyIAHP4RRisrg0k+L8XF
-         1ugw==
+        d=google.com; s=20221208; t=1684355481; x=1686947481;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lH+GB88mGkyXoacAsII55I8gutXKBDvKTQDFdPjI6tA=;
+        b=iA2BlPMqXXvqmmp3XPbvS7PLetJ5ETCu6u7dP0UxkrlowV8oa2J3RE2PCj8b/Qpxxu
+         U6IF3gWzURzAG9NFlWH1u/zSdMyiL08wwcLJNrZKdYlzpVAGnlv8ndQrnJlPcD0SVME/
+         VChEVvPcEWnniohJDXcaCGfRWgicgKyXck88tVTYfzygqlSwkdfZCNMonNMrQ7tNjjhj
+         UTWPo7cs+3zWxknZ6ZtvRw8SC/fAIjuZiS54vc6APSnRpga9SKVmAhj+d0coqTkc5OLj
+         jXpU2I+e18A0d2/tTlASL7C9q0TrS9/sPTOMfsyPdttoIoKk1xl/KgkWH67RraMnNaNS
+         LDFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684354116; x=1686946116;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8iJR0huTfHVTodkNfO2dbFSpbRb6U9pb/v/u0biFupw=;
-        b=eAcCvqwXlIzunoMyH9SJDf5yJyvgGDJ0ohnG383p7cNYGT4zNw8HmElRzrJqnG5dEL
-         NeTLKGvj+IpZD75Wi+LndWvp4P1UKqo4XiEc7y9eY5cMXtiQ+w3rH0/wjpPMU6C0z/nH
-         mrP4HkxuftwirMlB/gy0LjV7Pcgji/H5Je0t98kL0w21S/Yym0pD/hbYPVsoYkWiCyJO
-         U/2sD214QERqkfcaPk3eQ+s8NQHAtyXiaAbmk96xQbiFQoLNRw0Woch/uW8Ov489zpqb
-         lWwA+EQPOtGVqOmTBY4QK1eUyYLFB5EdXb4XnCXwWlzo/iqzgZalso4Er0o1wAIJiaN4
-         I5eg==
-X-Gm-Message-State: AC+VfDyACztCytuuQymigbrxa/nJG6wrx/QDdBe3cNVyEbcXiFW4fpyL
-	mL0hWG082cEQKsh6nHfkd+x/R5xJEwuIyKU=
-X-Google-Smtp-Source: ACHHUZ4YGLtjd/kuG8qRx/nnMKQbJbKmU6GNX6G9qK33HW2/6o/Jr8uWhpPLl4A/zXlgMGnERgXqzW6IE9wZdio=
+        d=1e100.net; s=20221208; t=1684355481; x=1686947481;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lH+GB88mGkyXoacAsII55I8gutXKBDvKTQDFdPjI6tA=;
+        b=iQf+XsPYZQqqcxYsW3zstaE1dXLd/X4fAmDrRwQqB6ngr+2etIeRXPE2NoCNDqaJ0k
+         YIYIRgUNOHiU9eTYDPab3OqFfQjFsQsM22eodn66qXVqDc2cOKinIwdHZSvDUwzjVguM
+         JmnaGoSraF0u69bPPkv9osqnRkGbYHi6kaop7AmSFieQ7eCOwrVzIdSPtO6NAe4/dfZZ
+         tDX0ULBwIunTmlmMfar6vYc+eYB0D10vALaGxPaQOal9EibPnVFw6CxgcWBX8WFiC/fv
+         qyO2PrNaUQuBMKzDpwl6gNb70byrlzkSCtdLLiGLMlB+7usa+hGNARLm9Se5GUr/UagY
+         txoA==
+X-Gm-Message-State: AC+VfDzrZegEsc+Hkt+g3VjjLw1/KnXDKtw7g0xb1A7yHrlBOGS40sH1
+	7/TXY/oytXiGrv0x5qU+A4LLaU9yy/qpr80=
+X-Google-Smtp-Source: ACHHUZ5NQv9HGjuTBobENJHcvpXZZpSXuuO1c8KW0QDXzB22J46Eslk8NvD3T8PrLP+VbYTzkg6vTUpii/ZwK4M=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a17:906:847a:b0:969:fc90:bf94 with SMTP
- id hx26-20020a170906847a00b00969fc90bf94mr9978929ejc.8.1684354116437; Wed, 17
- May 2023 13:08:36 -0700 (PDT)
-Date: Wed, 17 May 2023 20:08:14 +0000
-In-Reply-To: <20230517200814.3157916-1-aliceryhl@google.com>
+ (user=aliceryhl job=sendgmr) by 2002:a50:8d1b:0:b0:504:7684:a23c with SMTP id
+ s27-20020a508d1b000000b005047684a23cmr1511969eds.8.1684355481334; Wed, 17 May
+ 2023 13:31:21 -0700 (PDT)
+Date: Wed, 17 May 2023 20:31:12 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20230517200814.3157916-1-aliceryhl@google.com>
 X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230517200814.3157916-2-aliceryhl@google.com>
-Subject: [PATCH v1 2/2] rust: sync: implement `AsRef<T>` for `Arc<T>`
+Message-ID: <20230517203119.3160435-1-aliceryhl@google.com>
+Subject: [PATCH v1 0/7] Bindings for the workqueue
 From: Alice Ryhl <aliceryhl@google.com>
-To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+To: rust-for-linux@vger.kernel.org
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, 
+	Lai Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
 	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
-	Will Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
-	Mark Rutland <mark.rutland@arm.com>, Alice Ryhl <aliceryhl@google.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Wedson Almeida Filho <walmeida@microsoft.com>
+	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 
-This trait lets you use `Arc<T>` in code that is generic over smart
-pointer types.
+This patchset contains bindings for the kernel workqueue.
 
-The `AsRef` trait should be implemented on all smart pointers. The
-standard library also implements it on the ordinary `Arc`.
+One of the primary goals behind the design used in this patch is that we
+must support embedding the `work_struct` as a field in user-provided
+types, because this allows you to submit things to the workqueue without
+having to allocate, making the submission infallible. If we didn't have
+to support this, then the patch would be much simpler. One of the main
+things that make it complicated is that we must ensure that the function
+pointer in the `work_struct` is compatible with the struct it is
+contained within.
 
-Co-developed-by: Wedson Almeida Filho <walmeida@microsoft.com>
-Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
----
- rust/kernel/sync/arc.rs | 6 ++++++
- 1 file changed, 6 insertions(+)
+This patch could be significantly simplified if we already had the field
+projection bindings. However, we have decided to upstream the current
+version that does not depend on field projection first - the PR that
+introduces field projections will then include a commit that simplifies
+the workqueue implementation. (In particular, it would simplify the 5th
+patch in this series.)
 
-diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-index 274febe3bb06..9ec911e4a0c7 100644
---- a/rust/kernel/sync/arc.rs
-+++ b/rust/kernel/sync/arc.rs
-@@ -264,6 +264,12 @@ impl<T: ?Sized> Deref for Arc<T> {
-     }
- }
- 
-+impl<T: ?Sized> AsRef<T> for Arc<T> {
-+    fn as_ref(&self) -> &T {
-+        self.deref()
-+    }
-+}
-+
- impl<T: ?Sized> Clone for Arc<T> {
-     fn clone(&self) -> Self {
-         // INVARIANT: C `refcount_inc` saturates the refcount, so it cannot overflow to zero.
+The first version of the workqueue bindings was written by Wedson, but
+I have rewritten much of it so that it uses the pin-init infrastructure
+and can be used with containers other than `Arc`.
+
+Alice Ryhl (4):
+  rust: workqueue: add low-level workqueue bindings
+  rust: workqueue: add helper for defining work_struct fields
+  rust: workqueue: add safe API to workqueue
+  rust: workqueue: add `try_spawn` helper method
+
+Wedson Almeida Filho (3):
+  rust: add offset_of! macro
+  rust: sync: add `Arc::{from_raw, into_raw}`
+  rust: workqueue: define built-in queues
+
+ rust/helpers.c           |   8 +
+ rust/kernel/lib.rs       |  37 ++
+ rust/kernel/sync/arc.rs  |  44 +++
+ rust/kernel/workqueue.rs | 715 +++++++++++++++++++++++++++++++++++++++
+ scripts/Makefile.build   |   2 +-
+ 5 files changed, 805 insertions(+), 1 deletion(-)
+ create mode 100644 rust/kernel/workqueue.rs
+
+
+base-commit: ac9a78681b921877518763ba0e89202254349d1b
 -- 
 2.40.1.606.ga4b1b128d6-goog
 
