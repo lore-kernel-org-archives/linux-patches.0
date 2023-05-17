@@ -1,160 +1,85 @@
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2083.outbound.protection.outlook.com [40.107.237.83])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A694AD21
-	for <patches@lists.linux.dev>; Wed, 17 May 2023 08:00:05 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JGjITytBBwYBlTdWOv/o8uBK7FWCHAxUmq3UAu/yWdBAFxDSxN2HDOYhEpxne6860m/aWtcgu4LCN1Yw1q3VktY7xiKIY4qm6yYfQIEKko500Fq5xPBmIwAywwRX8wPH++uwsW7CdmwxFVGiN7wd8z6VVpiHO8pkhUwKVi2fFmc9cOvgaDQSP6XT0JbPJfg0YJQui63w30NFbNdRuqnpCwtgUXxL6Ef48j8gS2fhVwuB++KNqm/qHvM+NPE1zITNbnerI1WWELlClv/5++vxttAteD/tmdfFa6iY3MUnFDdicCtsBSRQn53abEt116KV9lZVNqJipMXqtvbIvb+qiA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PSFUkbHoU23sFDkWeMb5RNj9vJHGz9+mn5rwbSMxnRg=;
- b=EavJXw444snX8XDsaYwA69/ibgXnHOJ8IzgREcJBF9AHhu0/dRRAbNQgwIRH8RdLOTJrlgwrrQ7LIzi+aeR/YwB9/TjICEovFM39ZIVWfguimD1zNm4jb26hKumNnwyeXh/6t9DU/+rhR5YvuLFvy/chAt0xLmzuzcv61zA3oE+7X0YLr6WzZLF38Tr9TWwVSpOHLtdi/BwXhrjk7sFv/CnloxEIdwB+PNYDJHx227eQ4fsazpGtjrrHi3Dqj9x7EYwRxljSW6RvqN4f6AehT58id95tC9SfPqymva2qYbYbNPdhfjyUPwqBSn2/60wl578xuvPsdsq6ImkCXsY8jw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PSFUkbHoU23sFDkWeMb5RNj9vJHGz9+mn5rwbSMxnRg=;
- b=CKlVK1oO7baBhH+cjhV8kjJ3SGB/X0Z0SfQN/JnDUz62nxNRn3tde/uiuGQq3k2phFdU0u8VXbbLyjB+1mipiO8vkryDk2M9p7eT6KHyqtLDUeMWOcbyI7vSmLo1N4ulP6/PDFqDdvOXSXMarzB8mxPLV5iMOCotRQ92eExOilJn2GjKvlPxQ85hNo6LhyGWSvp2Rma4KqrfrvSB1cWKyTj4XzWuWYkWkv8MMnlg+HIZaLqthwxjRaPs1CzQCtrEM8QA3nFEyN0a9D23ioiAgjT+A27Kkk7kObnxOFZDloZxDdi4JiN3DDh/QWwDBkUmI6yPsNYNIPiGCJXn1GKHWg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com (2603:10b6:5:35e::8) by
- PH8PR12MB6962.namprd12.prod.outlook.com (2603:10b6:510:1bd::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6387.24; Wed, 17 May
- 2023 08:00:00 +0000
-Received: from CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::21ef:9d59:5b2d:f1e8]) by CO6PR12MB5444.namprd12.prod.outlook.com
- ([fe80::21ef:9d59:5b2d:f1e8%4]) with mapi id 15.20.6387.033; Wed, 17 May 2023
- 08:00:00 +0000
-Message-ID: <986717de-89d7-0167-a09e-b1031bd9dde7@nvidia.com>
-Date: Wed, 17 May 2023 08:59:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 6.3 000/246] 6.3.3-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, f.fainelli@gmail.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>
-References: <20230515161722.610123835@linuxfoundation.org>
-From: Jon Hunter <jonathanh@nvidia.com>
-In-Reply-To: <20230515161722.610123835@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0675.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:351::19) To CO6PR12MB5444.namprd12.prod.outlook.com
- (2603:10b6:5:35e::8)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3471549F
+	for <patches@lists.linux.dev>; Wed, 17 May 2023 08:25:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF939C433D2;
+	Wed, 17 May 2023 08:25:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1684311916;
+	bh=D4xYj/ffWaf6yFGrSCStz7pFKHZB3TOO0GJfC1pppgU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=LqrWgC9VxAQC35NdfAAssqVV+TJ+7Jt2cSmTvmKGx0TDMOr/k05l765D5/26HGP79
+	 Aa/lQOUjwerywVg66ukujU87tqdO4Ppp4s5py0opqWqPzt36Lg4R9TQySz1RtPaleH
+	 LFcc1sDSn1O9ExvSq8juLoDwpWRZlsxEgrEAzV8M=
+Date: Wed, 17 May 2023 10:25:13 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.4 000/282] 5.4.243-rc1 review
+Message-ID: <2023051738-bullfrog-dreamily-79a4@gregkh>
+References: <20230515161722.146344674@linuxfoundation.org>
+ <739bd109-b32d-46f1-b382-e55f34efc11a@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO6PR12MB5444:EE_|PH8PR12MB6962:EE_
-X-MS-Office365-Filtering-Correlation-Id: 077f7042-dba5-4117-f76e-08db56acb694
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	7G90Yq2TQxa3eea1vTDzKky+qUzxZDmY2rJwIKUQcFpfA4OAUzlC1fFXzamxu5c7dwUESeqW/9ojAiRtlS867lNeqzM6Ovn7cFBcn1d32oab9waeZjRkQFW4nRfpxQ6yrN2w3Lco6JullOq/Cp+VwkP5VetPPhQaP5jJnipsFArpLRRSHZZfCGUHhWUh0LsvX07ZtYePQUYERu3f8+8IDDWJX+Mnnmb9rACHjYBO/KFgyRCvYWAZNUvTqlKZ3jfxSK7M06JrZ6Gdn2fCSesrpHscFi2rfPTN1NJE+r/3Ix1X+Kn2DAxr7CicTuOErejy9Dbb4TNKGxbcgXNaBKO/CfjTDK7qSFMa/37vkII25zTfxZcE/Gy48deXTpSqo7yKXJ8IIqEWhfJ70OW6wfvQ/biR5JI2cJMTki46aNLdLXL2y/S/X9AGh4HuvWiCMPk+oKF7tnI4lcLrZdybBJiWC95cBYXj5oARfNYA190DqeRdn5EKSBW55X/sEgAI36wsoJTeDxWPSF4O5EZe4SDngYcZ7r3kDBkXmPbSj6iPClLb1n12Xxpg1tzGbP0vmJYorJ0jAC+DZHa41UZAlqFnpVc7Zoh0C1gtGgX03CoQmtVFuevzAhJRYgg1f9oPBrVWaY2Yu7cWhvD4tHwtZgNM7DuxhoFkmhjK4RxOGbqlIX8KKgmiGpeMNpaDWE8J1r6V
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO6PR12MB5444.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(366004)(396003)(376002)(136003)(346002)(451199021)(2616005)(6512007)(186003)(53546011)(2906002)(38100700002)(6506007)(31696002)(8676002)(8936002)(966005)(6666004)(7416002)(316002)(4326008)(41300700001)(5660300002)(66946007)(66476007)(36756003)(66556008)(6486002)(31686004)(478600001)(86362001)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?OEsrNVdJK1dQYmNTc2EzZjNNVVViK0EzMEF2bTFGazA5VFNVZFR2Q3pWNStj?=
- =?utf-8?B?Nm5IT1Q2SGRVZTNJeCtZRXJiQTU4blNBYytJODhXVUZFbEZxd2Y3U2k2eGlH?=
- =?utf-8?B?UGtYWllTRjhpeTFYcUhjT1ZoNENjTkZXcUFzWG16aUEvMnpaUkx3VkNseldC?=
- =?utf-8?B?OEdVdFVQN3VSQTAyL0ZQMXErUktBeHpNTXZvV3RGOXBWTGFSRlVNdmxiVHBl?=
- =?utf-8?B?dDRKWHpiWjlORXBJQWRMYWt4Mzc2QnJPUUxiOWoxRk1DV2drUG9GVnQ4ZkJl?=
- =?utf-8?B?QzN1bkpiUVpCdEIxZFREWVB0OUIxMDcvVitQaHMzbHpQUEViQzlSMDNyRjRL?=
- =?utf-8?B?YTJZa0RwRDR6ZU1ONVdza1E4NnRXeXoyOHkrYjdKSDdoaUhnNkJpaFJrb3py?=
- =?utf-8?B?UG1TL1dQNGZTMWRzNEtlVmc5QUluejd1ZGtlWWJOaGJrZ3pTbm8vS1g0Tzkv?=
- =?utf-8?B?UzUrTzNCaTE5NlFHRmlYaTllQUdLdFRJVDJjeFYxYlcrTVJoMExXSzNDS0VW?=
- =?utf-8?B?N1h6Q2tnTnBNR2hqWjM1ajV4aG5GUGE1RjB3UmUvS3BsYWxQT010QVpGelJK?=
- =?utf-8?B?dzR2RWtxVUdhNVZ1Z1FGZnhRS2x0Q3I0TThvV3A1Y3pKM2I0aE5yaGlCM3Bk?=
- =?utf-8?B?Qk8wVHNvUkIzc2NRWGp2STY2eUJKOVJGdlJmRFNsNnlDMjU5M3o2eHFTbFYr?=
- =?utf-8?B?V2hlL0JISURVRm5NRDBiem5rRXhKNzRkM2pMemwxQlRleVJ6NXp0Sk9IL2FK?=
- =?utf-8?B?ZXNJUmY0dVZNN0tQNVpyTXJQR1loeTZMN2ZyR3VDb3VQUHd5bkg1R2lCU0li?=
- =?utf-8?B?QWVEQlpJL2sxZHd5dEpFTXR4aXpMNG1qbzZuY1dyRmMxNXRRcUNiQzRha2hj?=
- =?utf-8?B?dUJNa09sdjN5ZVROaGFYMEc0djBFcWZQZDVDS2x1V1BjV0hIOFFKSXZsTElG?=
- =?utf-8?B?ZzRCOFpvSXpBRHNNRUI2eHFEQjFQeWdmMVJSaG4xQTJHLzZ0SVZpQWpEeFUy?=
- =?utf-8?B?SGoxMWtoMkp6NXRzelM4VFl3SE5VUDJjQU5UQWJTS3FsSXBRb09GVnZuT1Fq?=
- =?utf-8?B?Q2ozRTd2eWtRZHRCbWpTNDlnY0V5ajN5QWF3Z0tIVHJZeVZnTmw0bnFnKzZG?=
- =?utf-8?B?MmxGU2Q2UGxaVWw5STQvVlBDOUVydFlVYVg5M2pqN0t1SCtNcXEwWEFmOXc1?=
- =?utf-8?B?RU9BOXVFaXB0ck9Ma3k1VXNkSUxpTzBIQXJ6RkhJWXhqOTNFdUxkQlJ0dlhv?=
- =?utf-8?B?ZVZXRSt4Tkp0SkRBZm1VTEkzWVRHQlJSMjUxN1dNclUvRUw5OUpnREtkQ0Ex?=
- =?utf-8?B?YUdtYTZzOHozdFpkNHJtVU8wTzhqU3E5dTRJYnhkVXovNW5PR0tvdTd6OXZ6?=
- =?utf-8?B?MUY3V3dGNXRGMHk1WlVzaFE2TkdTUUJvTk1UR3NhcWhkdTNIMjBhZjd2cHlI?=
- =?utf-8?B?ak5iOCtRa0MzVkJ3RTJJWW5lblhqdnY2eXdXOElYei9BTHlvWGNPekJYUGp6?=
- =?utf-8?B?OUdReU94V0hYSDk0b3ZkdStmQ2UwSTBKM1dFR09TYWxBcTdNdzdHZHBLSVB0?=
- =?utf-8?B?L3RaRU5uLy91OHAzbEh6Mi9tb2ZIUEVuSC9KbGFZdHNuY3RCQmJReWowOHJO?=
- =?utf-8?B?SFZRcyt3bmJPV0J3WWI3cEY0b2ZGRUxsSVZ1QTZ3aHdodkZpTHJqbldNM0VD?=
- =?utf-8?B?WCtsbDBYczBsYUY4blZJUXFpbzA5L0MrQzFCK1IxeVVhV295Z1lDWlNUSnlx?=
- =?utf-8?B?UVAwampWcnNxZUdJT0FlN05Wc1pzYnlXVS9wS3grZm5zRVNTM0xhL051V2hl?=
- =?utf-8?B?aURId0xzMVFQV0JRVjY0NXdyZHQ4TC80VG9ORTVLOGNabmJzQlcxQXgzMFF4?=
- =?utf-8?B?QkhGdU91dXFRellEWEdBMkMzUW00b3Q1bmpuTW9UcWhRbTExdnhxMHFTeDhi?=
- =?utf-8?B?V0dXSzZyeVRwUEZtVjZjanpjdHAxK1B6bFVlbG83S2VpdndIN0VsZUFOSyt1?=
- =?utf-8?B?RmtYUThEVVNKNFZDOE5yUDA0bmZ1OVFYUzNtQVpkWEhvTUlNbWdMQWQ0dm43?=
- =?utf-8?B?VGl0RE9OczhtWlBwWEd5OWxkR1BIUzJTK29GMkVVZUdKNnJZQmhhMS9EZDVl?=
- =?utf-8?B?TzFWY3gwZHFsVExWMjZ3dzFvU2FJSGFWRUE2QnZPVkxma01Ba0dpcjZHaTFP?=
- =?utf-8?B?bUc0WlQ0Y25jN1B2ZWpBdCtGa3NVZTJTclYvdWZxN3VUc2QrdHpvUFAwSmt2?=
- =?utf-8?B?TUZNdGJvenFhWUgrQ3JWVCtUWWFRPT0=?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 077f7042-dba5-4117-f76e-08db56acb694
-X-MS-Exchange-CrossTenant-AuthSource: CO6PR12MB5444.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 May 2023 08:00:00.4799
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: eR54CqBwtC0UamtakFK/aNBZVr89FiXsuH8yTZZW7cJ/51bYLQ4rzcAIRkxS9gg8MyRFJIu0uYajH456xhCrIg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6962
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <739bd109-b32d-46f1-b382-e55f34efc11a@roeck-us.net>
 
-
-On 15/05/2023 17:23, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.3 release.
-> There are 246 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, May 16, 2023 at 08:52:13PM -0700, Guenter Roeck wrote:
+> On Mon, May 15, 2023 at 06:26:18PM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.4.243 release.
+> > There are 282 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
+> > Anything received after that time might be too late.
+> > 
 > 
-> Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
-> Anything received after that time might be too late.
+> Build results:
+> 	total: 159 pass: 159 fail: 0
+> Qemu test results:
+> 	total: 455 pass: 454 fail: 1
+> Failed tests:
+> 	arm:sabrelite:multi_v7_defconfig:mtd2:mem256:net,default:imx6dl-sabrelite:rootfs
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.3-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
-> and the diffstat can be found below.
+> As far as I can see, the second SPI interface fails to instantiate.
 > 
-> thanks,
+> [   21.491528] spi_imx 2008000.spi: bitbang start failed with -22
 > 
-> greg k-h
+> There are also various new warnings in clock code.
+> 
+> [   21.492631] WARNING: CPU: 0 PID: 1 at drivers/clk/clk.c:986 clk_core_disable+0x124/0x2e4
+> [   21.497524] WARNING: CPU: 0 PID: 1 at drivers/clk/clk.c:845 clk_core_unprepare+0x268/0x388
+> 
+> The warnings in clock code are gone after reverting all changes introducing
+> PM support for imx spi code. The boot failure is gone after reverting the
+> gpio conversion. In total, I reverted the following patches to fix the
+> boot and warning problems.
+> 
+> d6fcaa127cc6 Revert "spi: imx/fsl-lpspi: Convert to GPIO descriptors"
+> 9783b21b591d Revert "spi: imx: enable runtime pm support"
+> 4a8bdbf7462b Revert "spi: spi-imx: using pm_runtime_resume_and_get instead of pm_runtime_get_sync"
+> e6c5f497ff35 Revert "spi: imx: Don't skip cleanup in remove's error path"
+> d6ea758df74f Revert "spi: imx: fix runtime pm support for !CONFIG_PM"
+> b9dbd028c970 Revert "spi: imx: fix reference leak in two imx operations"
+> 
+> Is this really 5.4 material ?
 
+You are right, this isn't 5.4 material (and really not 5.10 either for
+some of these changes.)  I'll go drop them all from 5.4.y and 5.10.y and
+push out -rc2 releases soon.
 
-All tests passing for Tegra ...
+Thanks for the testing and review.
 
-Test results for stable-v6.3:
-     10 builds:	10 pass, 0 fail
-     28 boots:	28 pass, 0 fail
-     130 tests:	130 pass, 0 fail
-
-Linux version:	6.3.3-rc1-g5a952cfef67c
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                 tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                 tegra20-ventana, tegra210-p2371-2180,
-                 tegra210-p3450-0000, tegra30-cardhu-a04
-
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-
-Jon
-
--- 
-nvpublic
+greg k-h
