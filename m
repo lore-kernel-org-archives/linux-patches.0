@@ -1,128 +1,87 @@
-Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17E7449BB
-	for <patches@lists.linux.dev>; Wed, 17 May 2023 20:31:39 +0000 (UTC)
-Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-ba82ed6e450so2069798276.2
-        for <patches@lists.linux.dev>; Wed, 17 May 2023 13:31:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684355498; x=1686947498;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jLXiUUyXZrTzMck4adUmLD4E9Fc4RhEDENIXEJkaNoM=;
-        b=znudaE6IMsPT1uZOZAWZvlBQ4z18gWvrpr8fQ4zqjHZn7//aWo6ZQ16KmYAioUALok
-         80CFBTCmDmR4fNUzZUBj27X6ZgckRry3Fu5AZp45GYmXV2veHpWjjyrtCSQoQqXfFt1B
-         4Ij33s7K67FQEiNQAKgTwoZzNOk6K5OasuA+WzfFmKEab16aipOvC9AC4a0oMtyQ6k7d
-         0k7oZtWs6TculeG1g/RbFchNLUWoLMWBAR5qgp3kvjsBryBPOkhTeRwWPYYZyfgxVK1t
-         k9AxgpmoHL+5TCJq+1CuAf/e7QXSrYKn7oaL9C7P43K27eB9YFHabF88nKM/ykhEAczq
-         6k0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684355498; x=1686947498;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jLXiUUyXZrTzMck4adUmLD4E9Fc4RhEDENIXEJkaNoM=;
-        b=f7YTTWkVJzfmqQYQyfSVM2iTlWrPixeInkaQlQIIE6G26kh788chfKtTbhWyw+chsb
-         0a1mYxYHDHA4YFMntUB01S2OgFUUUxWJfGwrTO0CQDygRcXhDqcTApYk6ZSTHc59WUEe
-         1UdEVkjf7UV7+Wfu7qsu/oebGIl9eIwoNZ48z8Zbw7k8vSG5a+KupmiFsWOoYmeQzLvS
-         sVpLe9iCJ8xVMBbW1LKYPBIZj480GGg18OevDT20fBWYRQHX20RxPF2f7IIB1qKQfeDm
-         21LYO6HXvS8wxH5BXV8wu7Y3NPVe3GE3iS+TFoSk2SWSv8KHu2kbZXmTenv51eakbG5M
-         Jzqw==
-X-Gm-Message-State: AC+VfDzMpSMtn0ol6AYuwbh3bzLX5ZYEQOKQlQoV0vXTdLeXf9dzDMfo
-	JCsqB24T0WYWXsLsy1yal7rrg5qAQfmAX38=
-X-Google-Smtp-Source: ACHHUZ5tmViXv0Bqs6ow3OaP3sc8at0uvRWvWrrBDcPlcxzghI4kY4ZB84bf1guzl4ZHc3sj/NZqh2+ej0dk5OY=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a25:9309:0:b0:ba8:2e79:c193 with SMTP id
- f9-20020a259309000000b00ba82e79c193mr2630490ybo.12.1684355498779; Wed, 17 May
- 2023 13:31:38 -0700 (PDT)
-Date: Wed, 17 May 2023 20:31:19 +0000
-In-Reply-To: <20230517203119.3160435-1-aliceryhl@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CE1101ED
+	for <patches@lists.linux.dev>; Wed, 17 May 2023 20:40:43 +0000 (UTC)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 8BF705C01B9;
+	Wed, 17 May 2023 16:40:42 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Wed, 17 May 2023 16:40:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm1; t=
+	1684356042; x=1684442442; bh=ghk7mGsvuQGuVrjeRiTDYinTiiFkqaw9VUe
+	QsZ2qew8=; b=rkqF1pWbMBTeBx4H44JeGXZ4V4sev7qMDienTltUrQ/wbVIpMx5
+	lpyR8VEPGxcs6yizyn1BE5lXEjUIFjImSzP41ATpqCwz38owd5hZ/87LCXz9FgLG
+	/qEUnd5eMa9FUmtoDONmqgYJgEuUxyrp8xMYLeNNivKA2lptKAAKEtxaHFqnLNXS
+	qoSjN8CYLZ5crbZDulVL/ZHqCeeSc9Q0bIXeXzuBiYWt/R1wnGWvXAry669vdeRB
+	UPrf6VSTKKKDKegDWx0uDzipS3E7/h3hZNQ+EznVljoGyXTuvuXZLRkZ9ZkJQX6S
+	YxNdUzZskIKM29C7JfYUx1Gd9e/MIfax/VA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1684356042; x=1684442442; bh=ghk7mGsvuQGuVrjeRiTDYinTiiFkqaw9VUe
+	QsZ2qew8=; b=tv1dhMRYaY4wvGP3WdQW34d9yLhX6PzGXpvJaD3qjha0RL3Ew6R
+	fBmuYbesXTH1LCRh3JJim/saMJzYGWStsZeQTzIzMIsw5J+zCmtUlzfITOHYnFav
+	ucOb6mxNbGQuPcWXxPhzXNiLN4kPM1KOafRFWGjrpN034/ZgWegGG4HEGFnsvAFd
+	swP3qrviYiNgVUHegCMV/4xZ5WKNHDYC00RTxKpAIdanIpsKRvly1VhNtH5bT4eI
+	s6MYaczfXmw5Z8hJbAcV/p8+Ggg6SwFyBMO2aVNo5sDNH+xUCfxqz6pQjhKlDgef
+	CdoP/vLgsTG+f927I9sXXixWUoewOR8AhIw==
+X-ME-Sender: <xms:yTtlZBgoJackQwN4zJeCH7oYaek36RvPdKOTrXcW-iSaswORYqbwow>
+    <xme:yTtlZGC-7Zr4wg0WC7-vXHvxDs3nkR_2wpx1UX2leC_3uiIHa5yC2XSNmctwIA-dk
+    ZJQUBMQCPnKHrfWrQ>
+X-ME-Received: <xmr:yTtlZBGnJEhz4cv9V2bY1NHW9kuRDWc8ZEnJN2tHdIsXQu96imyRcYQ5Vmgvz2-Up9u76Kzf5C5LwhJ5isImvaF8Onw36cF7qMYnIQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeeiuddgudehvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheptehl
+    ihgtvgcutfihhhhluceorghlihgtvgesrhihhhhlrdhioheqnecuggftrfgrthhtvghrnh
+    epheduuddvteekvdektdduledugfffhfdugeejgeeuvdevtdetveejheehiefffeegnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvg
+    esrhihhhhlrdhioh
+X-ME-Proxy: <xmx:yTtlZGTUQ6zxCsEaeFPoHk5uoejU72xydi14pkEbau10L6HilMpDyg>
+    <xmx:yTtlZOwKJwq_UA8OXQk1ROIp3fGDpjkhU6v8r9gfieYzO_eCRkOwEQ>
+    <xmx:yTtlZM5K5qDhv4qMQh24ufgG4Js_oiHL6P6cdsqFrkn0bR7w5HJKXg>
+    <xmx:yjtlZNl1_-V269yvRtAcu738AyLDPo87TKEIYL1Y6iHhln5kSc-kyA>
+Feedback-ID: i56684263:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 17 May 2023 16:40:40 -0400 (EDT)
+Message-ID: <83744422-a332-5b3e-8269-73b2f2ce281e@ryhl.io>
+Date: Wed, 17 May 2023 22:41:10 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20230517203119.3160435-1-aliceryhl@google.com>
-X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230517203119.3160435-8-aliceryhl@google.com>
-Subject: [PATCH v1 7/7] rust: workqueue: add `try_spawn` helper method
-From: Alice Ryhl <aliceryhl@google.com>
-To: rust-for-linux@vger.kernel.org
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, 
-	Lai Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
-	Alice Ryhl <aliceryhl@google.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 1/4] rust: macros: fix usage of `#[allow]` in `quote!`
+Content-Language: en-US
+To: Benno Lossin <benno.lossin@proton.me>
+Cc: rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, Miguel Ojeda <ojeda@kernel.org>,
+ Alex Gaynor <alex.gaynor@gmail.com>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng
+ <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+References: <20230424081112.99890-1-benno.lossin@proton.me>
+From: Alice Ryhl <alice@ryhl.io>
+In-Reply-To: <20230424081112.99890-1-benno.lossin@proton.me>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-This adds a convenience method that lets you spawn a closure for
-execution on a workqueue. This will be the most convenient way to use
-workqueues, but it is fallible because it needs to allocate memory.
+On 4/24/23 10:11, Benno Lossin wrote:
+> When using `quote!` as part of an expression that was not the last one
+> in a function, the `#[allow(clippy::vec_init_then_push)]` attribute
+> would be present on an expression, which is not allowed.
+> This patch refactors that part of the macro to use a statement instead.
+> 
+> Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
----
- rust/kernel/workqueue.rs | 40 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
-
-diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-index 007005ddcaf0..303b72efd95f 100644
---- a/rust/kernel/workqueue.rs
-+++ b/rust/kernel/workqueue.rs
-@@ -57,6 +57,42 @@ impl Queue {
-             })
-         }
-     }
-+
-+    /// Tries to spawn the given function or closure as a work item.
-+    ///
-+    /// This method can fail because it allocates memory to store the work item.
-+    pub fn try_spawn<T: 'static + Send + Fn()>(&self, func: T) -> Result {
-+        let init = pin_init!(ClosureWork {
-+            work <- Work::new(),
-+            func: Some(func),
-+        });
-+
-+        self.enqueue(Box::pin_init(init)?);
-+        Ok(())
-+    }
-+}
-+
-+/// A helper type used in `try_spawn`.
-+#[pin_data]
-+struct ClosureWork<T> {
-+    #[pin]
-+    work: Work<Pin<Box<ClosureWork<T>>>>,
-+    func: Option<T>,
-+}
-+
-+impl<T> ClosureWork<T> {
-+    fn project(self: Pin<&mut Self>) -> &mut Option<T> {
-+        // SAFETY: The `func` field is not structurally pinned.
-+        unsafe { &mut self.get_unchecked_mut().func }
-+    }
-+}
-+
-+impl<T: FnOnce()> BoxWorkItem for ClosureWork<T> {
-+    fn run(mut self: Pin<Box<Self>>) {
-+        if let Some(func) = self.as_mut().project().take() {
-+            (func)()
-+        }
-+    }
- }
- 
- /// A work item.
-@@ -280,6 +316,10 @@ macro_rules! impl_has_work {
-     )*};
- }
- 
-+impl_has_work! {
-+    impl<T> HasWork<Pin<Box<Self>>> for ClosureWork<T> { self.work }
-+}
-+
- /// Declares that [`Arc<Self>`] should implement [`WorkItem`].
- ///
- /// # Examples
--- 
-2.40.1.606.ga4b1b128d6-goog
-
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
