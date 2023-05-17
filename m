@@ -1,87 +1,95 @@
-Received: from mail-yw1-f202.google.com (mail-yw1-f202.google.com [209.85.128.202])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [95.217.213.242])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831F15258
-	for <patches@lists.linux.dev>; Wed, 17 May 2023 09:59:18 +0000 (UTC)
-Received: by mail-yw1-f202.google.com with SMTP id 00721157ae682-5618b2341d9so7338877b3.2
-        for <patches@lists.linux.dev>; Wed, 17 May 2023 02:59:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684317557; x=1686909557;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J+riL/nvu1twHwHqCACNcwNJex8EunROGCv0pZTyq3c=;
-        b=3SFYtDlzFGF0m5RFD90h5jV9WZN4ZQwsCYqL/L/KzsZpuhNTLNtc4NH8KkUmRUjhHw
-         yU+/GY4lHVLt8d1eTEBvKc6iGCGTvz6I045YZE8Ng2XHGgSWo+1d0F2TwuhQuaeomJDH
-         i/6cV5XiGTYvBIxkfd7/+PUO2skxtNeaGRppfUZYo2OsYGRYf/AbtvCjVoszYi4K7rMv
-         NyCLauJl4qVfLHNz0jiJglxu5L01hZP5yijMYDdXMXBUcLgeVuKltS5XBDCm6fa/qfAn
-         Dbzm2INF6PUBvWIX8Q1PMEbamATl0vdm0foAco2RbUnHFx4WCbE6oar+BGe9b+EwsDiJ
-         KJ+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684317557; x=1686909557;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J+riL/nvu1twHwHqCACNcwNJex8EunROGCv0pZTyq3c=;
-        b=lWLaC9VY5EDU2GjrD4sIW4xAMjUGY1dn9po/IpyvEGKVh4zIUXxXzUGcfhKrnu4Xyx
-         gaw8N29G0lR5fmUfjPg85+PWvCcHgLgBJveP40cL1PRPbdnYIQkHh+B4yE/gc2vcUwAh
-         9JmRg0Ev+Vno4m+6aGQy3P+nJqz2orcJ1765kAzZqfuY9Flvt7KH3Q+cfJJSnzHy/duT
-         wf74XhCB4f7wJasQPCIEel4dVgBoJ3JBxzSTyr6NxNErthy0bcfeb5NvSyWoy/FramtK
-         mAyGzVXJzqzfsIn5aRFEvnuABAsJtGt4LctvoP6s80szlbQPrspGezDzuLi0FfF3+kWi
-         DJHw==
-X-Gm-Message-State: AC+VfDytbu3Abc4ns8umBGbJPMv2o1Z3sjM9J+HsW0sn68wcw1Ablxo6
-	ILuuw4bKjPmc41hjKo2kGExTpbp2TTGUmZ8=
-X-Google-Smtp-Source: ACHHUZ60EDILvcrgq8I5bNFxfKYG43DpQ8rRj9CmpjDxgovsZUytRTZqwAp2m8+fTB4YrFpINFTOmK2/L+22Ghk=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a81:400c:0:b0:560:c30c:75f7 with SMTP id
- l12-20020a81400c000000b00560c30c75f7mr15720009ywn.2.1684317557527; Wed, 17
- May 2023 02:59:17 -0700 (PDT)
-Date: Wed, 17 May 2023 09:59:05 +0000
-In-Reply-To: <20230517095905.3548100-1-aliceryhl@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F6B18B0D
+	for <patches@lists.linux.dev>; Wed, 17 May 2023 13:25:26 +0000 (UTC)
+Received: from [213.219.167.32] (helo=deadeye)
+	by maynard with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1pzGhj-0006ek-3f; Wed, 17 May 2023 14:56:31 +0200
+Received: from ben by deadeye with local (Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1pzGhi-00Ars2-2v;
+	Wed, 17 May 2023 14:56:30 +0200
+Message-ID: <80d3ba7a1b8b7d65713f66ca3562a5ec4971c5ee.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 076/529] crypto: ccp: Use the stack for small SEV
+ command buffers
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Sean Christopherson <seanjc@google.com>, 
+ Brijesh Singh <brijesh.singh@amd.com>, Tom Lendacky
+ <thomas.lendacky@amd.com>, Paolo Bonzini <pbonzini@redhat.com>, Sasha Levin
+ <sashal@kernel.org>, Julien Cristau <jcristau@debian.org>
+Date: Wed, 17 May 2023 14:56:21 +0200
+In-Reply-To: <20230310133808.495306749@linuxfoundation.org>
+References: <20230310133804.978589368@linuxfoundation.org>
+	 <20230310133808.495306749@linuxfoundation.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-zgyW4vL2SFqadL66P0cX"
+User-Agent: Evolution 3.46.4-1 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20230517095905.3548100-1-aliceryhl@google.com>
-X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230517095905.3548100-2-aliceryhl@google.com>
-Subject: [PATCH v1 2/2] rust: task: add `Send` marker to `Task`
-From: Alice Ryhl <aliceryhl@google.com>
-To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Alex Gaynor <alex.gaynor@gmail.com>
-Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	"=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?=" <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, 
-	Alice Ryhl <aliceryhl@google.com>, Ingo Molnar <mingo@redhat.com>, 
-	Peter Zijlstra <peterz@infradead.org>, Will Deacon <will@kernel.org>, 
-	Mark Rutland <mark.rutland@arm.com>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+MIME-Version: 1.0
+X-SA-Exim-Connect-IP: 213.219.167.32
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
+
+
+--=-zgyW4vL2SFqadL66P0cX
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When a type also implements `Sync`, the meaning of `Send` is just "this
-type may be accessed mutably from threads other than the one it is
-created on". That's ok for this type.
+On Fri, 2023-03-10 at 14:33 +0100, Greg Kroah-Hartman wrote:
+> From: Sean Christopherson <seanjc@google.com>
+>=20
+> [ Upstream commit e4a9af799e5539b0feb99571f0aaed5a3c81dc5a ]
+>=20
+> For commands with small input/output buffers, use the local stack to
+> "allocate" the structures used to communicate with the PSP.   Now that
+> __sev_do_cmd_locked() gracefully handles vmalloc'd buffers, there's no
+> reason to avoid using the stack, e.g. CONFIG_VMAP_STACK=3Dy will just wor=
+k.
+[...]
 
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
----
- rust/kernel/task.rs | 5 +++++
- 1 file changed, 5 insertions(+)
+Julien Cristau reported a regression in ccp - the
+WARN_ON_ONCE(!virt_addr_valid(data)) is now being triggered.  I believe
+this was introduced by the above commit, which depends on:
 
-diff --git a/rust/kernel/task.rs b/rust/kernel/task.rs
-index 526d29a0ae27..4f1fe9aa9f6e 100644
---- a/rust/kernel/task.rs
-+++ b/rust/kernel/task.rs
-@@ -64,6 +64,11 @@ macro_rules! current {
- #[repr(transparent)]
- pub struct Task(pub(crate) Opaque<bindings::task_struct>);
- 
-+// SAFETY: The only situation in which this can be accessed mutably is when the refcount drops to
-+// zero and the destructor runs. It is safe for that to happen on any thread, so it is ok for this
-+// type to be `Send`.
-+unsafe impl Send for Task {}
-+
- // SAFETY: It's OK to access `Task` through references from other threads because we're either
- // accessing properties that don't change (e.g., `pid`, `group_leader`) or that are properly
- // synchronised by C code (e.g., `signal_pending`).
--- 
-2.40.1.606.ga4b1b128d6-goog
+commit 8347b99473a313be6549a5b940bc3c56a71be81c
+Author: Sean Christopherson <seanjc@google.com>
+Date:   Tue Apr 6 15:49:48 2021 -0700
+=20
+    crypto: ccp: Play nice with vmalloc'd memory for SEV command structs
 
+Ben.
+
+--=20
+Ben Hutchings
+The two most common things in the universe are hydrogen and stupidity.
+
+--=-zgyW4vL2SFqadL66P0cX
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmRkzvUACgkQ57/I7JWG
+EQkkMg//RUl7/6vp8OIA+Wt8Ty2kxl4iA7gXe1a+FN3lFH2dKSzfHJN38yIRWYO4
+kCjk8askHFe86TJNGNTez2NQJxbzTUEOLxiOD4BBUhGuP1W3ZcszIP3/oMushw+9
+9kFCx8+5WA5Nhf7QVg3K229sE8hoBCI/rc89evfw4K/xSpgwXr29IUfLCvTI8N1h
+LZe5uuZ8th4y8nziupev/QWsiJ1nVgOHSquWDRUT9GVBcNv4XinELRjd4d1ez/ln
+jCWcXv9QXZTMu1NqYiGer2lhXcvJ1cDCd/sQgidYqZPMHOVNndO5rlxML4RRbJvs
+3yN72WtRd0D3r0RBbQOI/aZR7Z/UxoxJ1Omted78gGB5xdyYgJitg6VwNFg9TGc/
+YGtHARF5SGdLRaahIcaMlRnZPmQrqur87Gv0ZRFfaP4Y/VOwknxARatnJZMYUoXI
+eZfHYKCX2I/+obRRdWLbaEQhmjcYxrsvpIUoMoQ3xIiaQfO84haJrQC82ZfKm618
+dfPXp4m0i4UuWVuczB+WgX9Axgx2aAuV8FEXsITQs0lylpyNw9WvR4Wunv/V8NJQ
+3f806X2e/aHLtDdplWqytVAe+I226UmelrGWGC/cPjsgBs7pL57HcqWaWvpliuO5
+d2hx7kzmSFCK1f1jWQ/mk09srmb232s0mwFlByThaAsTdK2f3Xg=
+=qllS
+-----END PGP SIGNATURE-----
+
+--=-zgyW4vL2SFqadL66P0cX--
