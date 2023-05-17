@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DDDAD2E
-	for <patches@lists.linux.dev>; Wed, 17 May 2023 08:28:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37D46C4339C;
-	Wed, 17 May 2023 08:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4D73D62
+	for <patches@lists.linux.dev>; Wed, 17 May 2023 08:51:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B5EC433EF;
+	Wed, 17 May 2023 08:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684312101;
-	bh=Dk3FoDyyLxuyBINUs34Am5WqC6Ckf7i4P5ahfp4vBmU=;
+	s=korg; t=1684313466;
+	bh=8BhycqlJAWzVNQ8w1EwRwdnYUlS3UWhW4kfx4xXZ0b8=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mXNT9PQdfqj5oEOTaB1+pMn1PrkbyvYRtTuhQc4us6r1FiPtpKQAhzFnzwN2JIfr5
-	 r1K7CZJ3sofH0+G6vz8v83SO0SGrLr3SLuDunhNXwEeYfSat1G7d42U+553yZdlr3J
-	 MElFjy+8mshbqgyIkAyHkaA7ZFBMVjHeMWaNZ2lE=
-Date: Wed, 17 May 2023 10:28:19 +0200
+	b=sOjSHfCZ48rD2SR98tO++PRNtsXhs6EKNm0br8Hqx+xvy5HUKhtRxZCbI3YATetfY
+	 fRdfyk4RlHM6Yk2pAk11e9YOWJQj/3k+vMoO1UX97D1QBScn7FYIi5/9YZ5CBX1EFd
+	 Z5zMgsNwvdAlS9M8CizEpLOeM2qjnZqmIR+5ipYI=
+Date: Wed, 17 May 2023 10:51:03 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Salvatore Bonaccorso <carnil@debian.org>
+To: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de
 Subject: Re: [PATCH 5.10 000/381] 5.10.180-rc1 review
-Message-ID: <2023051756-shield-reenter-80fe@gregkh>
+Message-ID: <2023051711-thespian-sponsor-8878@gregkh>
 References: <20230515161736.775969473@linuxfoundation.org>
- <ZGNATKe3U0oXHICX@eldamar.lan>
+ <ZGNJfAPd8eeVoCJ3@debian>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZGNATKe3U0oXHICX@eldamar.lan>
+In-Reply-To: <ZGNJfAPd8eeVoCJ3@debian>
 
-On Tue, May 16, 2023 at 10:35:24AM +0200, Salvatore Bonaccorso wrote:
+On Tue, May 16, 2023 at 10:14:36AM +0100, Sudip Mukherjee (Codethink) wrote:
 > Hi Greg,
 > 
 > On Mon, May 15, 2023 at 06:24:11PM +0200, Greg Kroah-Hartman wrote:
@@ -44,27 +43,33 @@ On Tue, May 16, 2023 at 10:35:24AM +0200, Salvatore Bonaccorso wrote:
 > > There are 381 patches in this series, all will be posted as a response
 > > to this one.  If anyone has any issues with these being applied, please
 > > let me know.
-> > 
-> > Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
-> > Anything received after that time might be too late.
 > 
-> The build fails here with:
+> Build test (gcc version 11.3.1 20230511):
+> mips: 63 configs -> no failure
+> arm: 104 configs -> no failure
+> arm64: 3 configs -> 1 failure
+> x86_64: 4 configs -> no failure
+> alpha allmodconfig -> no failure
+> powerpc allmodconfig -> no failure
+> riscv allmodconfig -> no failure
+> s390 allmodconfig -> no failure
+> xtensa allmodconfig -> no failure
 > 
-> sound/soc/intel/boards/sof_sdw.c:187:6: error: ‘RT711_JD2_100K’ undeclared here (not in a function)
->   187 |      RT711_JD2_100K),
->       |      ^~~~~~~~~~~~~~
-> make[7]: *** [scripts/Makefile.build:286: sound/soc/intel/boards/sof_sdw.o] Error 1
-> make[6]: *** [scripts/Makefile.build:503: sound/soc/intel/boards] Error 2
-> make[5]: *** [scripts/Makefile.build:503: sound/soc/intel] Error 2
-> make[4]: *** [scripts/Makefile.build:503: sound/soc] Error 2
-> make[3]: *** [Makefile:1828: sound] Error 2
+> arm64 allmodconfig build fails with the error:
 > 
-> I did mention it in
-> https://lore.kernel.org/stable/ZFuHEML1r5Xd6S7g@eldamar.lan/ as well but I
-> guess it felt trough the cracks back then.
+> /gcc/bin/aarch64-linux-ld: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.o: in function `__kvm_nvhe___kvm_tlb_flush_vmid_ipa':
+> (.hyp.text+0x1a4c): undefined reference to `__kvm_nvhe_memset'
+> /gcc/bin/aarch64-linux-ld: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.o: in function `__kvm_nvhe___kvm_tlb_flush_vmid':
+> (.hyp.text+0x1b20): undefined reference to `__kvm_nvhe_memset'
+> /gcc/bin/aarch64-linux-ld: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.o: in function `__kvm_nvhe___kvm_flush_cpu_context':
+> (.hyp.text+0x1b80): undefined reference to `__kvm_nvhe_memset'
 
-Sorry I missed this back then, now dropped.  Interesting that almost no
-other build testing caught this, it's a hard driver to enable...
+That's odd, I don't see that symbol anywhere in the tree at all.
+
+And the only arm-related kvm changes don't have those symbols either
+(the other kvm changes are x86-only)
+
+Also, no one else has seen this issue.  Can you bisect?
 
 thanks,
 
