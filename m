@@ -1,40 +1,40 @@
-Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
+Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com [209.85.208.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882B4449B1
-	for <patches@lists.linux.dev>; Wed, 17 May 2023 20:31:30 +0000 (UTC)
-Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-9659dfe60bcso69353066b.1
-        for <patches@lists.linux.dev>; Wed, 17 May 2023 13:31:30 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC1C449B3
+	for <patches@lists.linux.dev>; Wed, 17 May 2023 20:31:32 +0000 (UTC)
+Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-50bc456a94dso1283226a12.1
+        for <patches@lists.linux.dev>; Wed, 17 May 2023 13:31:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684355489; x=1686947489;
+        d=google.com; s=20221208; t=1684355491; x=1686947491;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=1m2NIZThmeCBayz0liS/tGETC/9gj7ELeSxPKaC6Yh8=;
-        b=BnGU93/l6zgPX74n1BWhPYto1+DmrAaRJmje1ktjtxvvMVe5/ufxtkwfhHuGWoWdhk
-         sTD0ze0cB+pBIMUh0eC20QGkHMtXngl1qheah8sXtY3xJUm4p2C/jy+3agGa/nXWMaBI
-         cjXQYFgEMFGWjq0AK5WF2hb3rxsDq2qWXzEhoziYVq2kaalDDx9UX4nj4NQFwlvAumU+
-         X8d+B3yeLFzGBO3Z8qQeVsV6ID5+4q96aaX8eg1fnDPAsOkB3kNDdNSo2o+kmZH4J8aw
-         91bpLwB4E7EfRot8PStAuoblk4n4X2GSjicq/7i8QVuKgUhHDcQKGNJycsRIbr49laKs
-         oJ7g==
+        bh=aOsrinT2/iaeBb0WCg7wbvs+eW6FJ9BpP6VKG3yyBao=;
+        b=H6PERSAkTTYE2cWlo4VM3SlqSWM7x5pxRQ0xuWDg3VOBNyhF2hvGKULDhDPgLi2z3g
+         B6Z0eUxWVpg5g5oXZLmaug777isU03Z+nfEJ5ms9qAPmuVNsFW1fc8qMU7nD99034pQy
+         JBR5MzZlyYJrWwX4d7Pd79YdlG1fLg6EbSOgLlcg8D+RArG3dkHGoOpFv7Or62NCvRzf
+         ULBHvzIUC6W1xuBIfvCrqHqTKetHK8rZJFGSh+P0Z8yHzoPYw5anwwjpuCKLIgGlnJaH
+         caRHHNXst0n42JTDJdFiZhG2I1wLxulOebTtWnSeGO+dGTMUCBk6ViszJYZzaZ9AxwrI
+         enWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684355489; x=1686947489;
+        d=1e100.net; s=20221208; t=1684355491; x=1686947491;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1m2NIZThmeCBayz0liS/tGETC/9gj7ELeSxPKaC6Yh8=;
-        b=JKwqCuP62BaTFXlzCVmE3uIvZIZppwe+SxJrh15k3SJX0pjkjXhKeFP4w1peHCKHwR
-         AarSr54C5UYg5n3oM1hCel5xsgkF3CCHPVMMsoPNuYs5ZqejBrifhFBPs+9ZR6mbq572
-         T/z0r3lYPcDosHaGNRqHF3ZrQMp1DUrTnxI+Q9SftC582REQ0xvGN1Wsuc4zLMIFNt0A
-         UNFOkI4FTfUiwUkzvSax6WIjqwA0strUS+2K4dbMekPLvjj/kHPryD1pM6hXDYs0Ua40
-         A3HRFCNhvvp19czCl/CGxxiNxWQ4iazrCfQjvNcjLlj2OerRMWKHABPpqiTJIjYQnHTL
-         Uyzg==
-X-Gm-Message-State: AC+VfDz3fVtXSBBMlfrK0ojgffF7lr9UA0weea0RsOaYgqnLCMGPcSEM
-	MfclRsKBPS/zrYobb80Sj2RASD7Ob32ZUhk=
-X-Google-Smtp-Source: ACHHUZ6sg88Il3pJwgEPwAiDSK3Ct7Xt3RuoovGGygDfZP0R/TVVkjhn15R+rZzdr/rlqagjcoaYfOdz6TWU5JQ=
+        bh=aOsrinT2/iaeBb0WCg7wbvs+eW6FJ9BpP6VKG3yyBao=;
+        b=PqSPsmIEfG1ujQg7voRoDRIrZgx1EGYQWDhNBkwBgkde32K77KOrAoFRYEVDWVhhBd
+         0Yg2XokTAekYce0B+Nn7GsaQxw4DxJvCKbISAmk2F8bYc2fNz7eUt0VP/b9vnJizxNYp
+         hnGplGeagmXQhrSUm6Hg8MzIGoXWtj2QHsnNNpu/AAkZ/Dm717LPCuoxNyi5p9A5ICpt
+         EztRaHTFJRLwCLQ/4Ub9LbZS5ucwC0079Sd71t0dXtzV1X2Y4qmNBzu9rDzuWBwEfXoO
+         +P/rzhjbd7pC2hq9DV0oFhcYZLNr5FTqEGPxUPm0S5LzDE8WMjUBWGCg5ITUVrLqk+E3
+         yy2w==
+X-Gm-Message-State: AC+VfDxncC/G7S/OmgTK2FHHnplpBY9BP6deCUSrU7KO9J8z3lbh6hgH
+	VyqjSPNwmAimaPq229C6+u9caGJSJlEcLZ0=
+X-Google-Smtp-Source: ACHHUZ7n3lEpyHrn8lVJb9kMGCyUFSu3fVlXDWiAjcH2k80JTEv/xTBS0iudv7fOHA1JEPF5qkMBmU5dogljNJM=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a17:907:2bf5:b0:94e:dcd5:2429 with SMTP
- id gv53-20020a1709072bf500b0094edcd52429mr1413196ejc.3.1684355488912; Wed, 17
- May 2023 13:31:28 -0700 (PDT)
-Date: Wed, 17 May 2023 20:31:15 +0000
+ (user=aliceryhl job=sendgmr) by 2002:a50:f610:0:b0:50b:d648:a963 with SMTP id
+ c16-20020a50f610000000b0050bd648a963mr1508053edn.6.1684355491066; Wed, 17 May
+ 2023 13:31:31 -0700 (PDT)
+Date: Wed, 17 May 2023 20:31:16 +0000
 In-Reply-To: <20230517203119.3160435-1-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,8 +44,8 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20230517203119.3160435-1-aliceryhl@google.com>
 X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230517203119.3160435-4-aliceryhl@google.com>
-Subject: [PATCH v1 3/7] rust: sync: add `Arc::{from_raw, into_raw}`
+Message-ID: <20230517203119.3160435-5-aliceryhl@google.com>
+Subject: [PATCH v1 4/7] rust: workqueue: define built-in queues
 From: Alice Ryhl <aliceryhl@google.com>
 To: rust-for-linux@vger.kernel.org
 Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, 
@@ -58,91 +58,94 @@ Content-Type: text/plain; charset="UTF-8"
 
 From: Wedson Almeida Filho <walmeida@microsoft.com>
 
-These methods can be used to turn an `Arc` into a raw pointer and back,
-in a way that preserves the metadata for fat pointers.
+We provide these methods because it lets us access these queues from
+Rust without using unsafe code.
 
-This is done using the unstable ptr_metadata feature [1]. However, it
-could also be done using the unstable pointer_byte_offsets feature [2],
-which is likely to have a shorter path to stabilization than
-ptr_metadata.
+These methods return `&'static Queue`. References annotated with the
+'static lifetime are used when the referent will stay alive forever.
+That is ok for these queues because they are global variables and cannot
+be destroyed.
 
-Link: https://github.com/rust-lang/rust/issues/81513 [1]
-Link: https://github.com/rust-lang/rust/issues/96283 [2]
 Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
 Co-developed-by: Alice Ryhl <aliceryhl@google.com>
 Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 ---
- rust/kernel/lib.rs      |  1 +
- rust/kernel/sync/arc.rs | 44 +++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+)
+ rust/kernel/workqueue.rs | 65 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 65 insertions(+)
 
-diff --git a/rust/kernel/lib.rs b/rust/kernel/lib.rs
-index cdf9fe999328..82854c86e65d 100644
---- a/rust/kernel/lib.rs
-+++ b/rust/kernel/lib.rs
-@@ -22,6 +22,7 @@
- #![feature(generic_associated_types)]
- #![feature(new_uninit)]
- #![feature(pin_macro)]
-+#![feature(ptr_metadata)]
- #![feature(receiver_trait)]
- #![feature(unsize)]
- 
-diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
-index e6d206242465..7c55a9178dfb 100644
---- a/rust/kernel/sync/arc.rs
-+++ b/rust/kernel/sync/arc.rs
-@@ -210,6 +210,50 @@ impl<T: ?Sized> Arc<T> {
-         }
-     }
- 
-+    /// Convert the [`Arc`] into a raw pointer.
-+    ///
-+    /// The raw pointer has ownership of the refcount that this Arc object owned.
-+    pub fn into_raw(self) -> *const T {
-+        let ptr = self.ptr.as_ptr();
-+        core::mem::forget(self);
-+        // SAFETY: The pointer is valid.
-+        unsafe { core::ptr::addr_of!((*ptr).data) }
-+    }
+diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
+index e66b6b50dfae..22205d3bda72 100644
+--- a/rust/kernel/workqueue.rs
++++ b/rust/kernel/workqueue.rs
+@@ -97,3 +97,68 @@ pub unsafe trait WorkItem {
+     where
+         F: FnOnce(*mut bindings::work_struct) -> bool;
+ }
 +
-+    /// Recreates an [`Arc`] instance previously deconstructed via [`Arc::into_raw`].
-+    ///
-+    /// This code relies on the `repr(C)` layout of structs as described in
-+    /// <https://doc.rust-lang.org/reference/type-layout.html#reprc-structs>.
-+    ///
-+    /// # Safety
-+    ///
-+    /// `ptr` must have been returned by a previous call to [`Arc::into_raw`]. Additionally, it
-+    /// can only be called once for each previous call to [`Arc::into_raw`].
-+    pub unsafe fn from_raw(ptr: *const T) -> Self {
-+        // SAFETY: The safety requirement ensures that the pointer is valid.
-+        let val_align = core::mem::align_of_val(unsafe { &*ptr });
-+        let refcount_size = core::mem::size_of::<Opaque<bindings::refcount_t>>();
++/// Returns the system work queue (`system_wq`).
++///
++/// It is the one used by `schedule[_delayed]_work[_on]()`. Multi-CPU multi-threaded. There are
++/// users which expect relatively short queue flush time.
++///
++/// Callers shouldn't queue work items which can run for too long.
++pub fn system() -> &'static Queue {
++    // SAFETY: `system_wq` is a C global, always available.
++    unsafe { Queue::from_raw(bindings::system_wq) }
++}
 +
-+        // Use the `repr(C)` algorithm to compute the offset of `data` in `ArcInner`.
-+        //
-+        // Pseudo-code for the `#[repr(C)]` algorithm can be found here:
-+        // <https://doc.rust-lang.org/reference/type-layout.html#reprc-structs>
-+        let mut val_offset = refcount_size;
-+        let val_misalign = val_offset % val_align;
-+        if val_misalign > 0 {
-+            val_offset += val_align - val_misalign;
-+        }
++/// Returns the system high-priority work queue (`system_highpri_wq`).
++///
++/// It is similar to the one returned by [`system`] but for work items which require higher
++/// scheduling priority.
++pub fn system_highpri() -> &'static Queue {
++    // SAFETY: `system_highpri_wq` is a C global, always available.
++    unsafe { Queue::from_raw(bindings::system_highpri_wq) }
++}
 +
-+        // This preserves the metadata in the pointer, if any.
-+        let metadata = core::ptr::metadata(ptr as *const ArcInner<T>);
-+        let ptr = (ptr as *mut u8).wrapping_sub(val_offset) as *mut ();
-+        let ptr = core::ptr::from_raw_parts_mut(ptr, metadata);
++/// Returns the system work queue for potentially long-running work items (`system_long_wq`).
++///
++/// It is similar to the one returned by [`system`] but may host long running work items. Queue
++/// flushing might take relatively long.
++pub fn system_long() -> &'static Queue {
++    // SAFETY: `system_long_wq` is a C global, always available.
++    unsafe { Queue::from_raw(bindings::system_long_wq) }
++}
 +
-+        // SAFETY: By the safety requirements we know that `ptr` came from `Arc::into_raw`, so the
-+        // reference count held then will be owned by the new `Arc` object.
-+        unsafe { Self::from_inner(NonNull::new_unchecked(ptr)) }
-+    }
++/// Returns the system unbound work queue (`system_unbound_wq`).
++///
++/// Workers are not bound to any specific CPU, not concurrency managed, and all queued work items
++/// are executed immediately as long as `max_active` limit is not reached and resources are
++/// available.
++pub fn system_unbound() -> &'static Queue {
++    // SAFETY: `system_unbound_wq` is a C global, always available.
++    unsafe { Queue::from_raw(bindings::system_unbound_wq) }
++}
 +
-     /// Returns an [`ArcBorrow`] from the given [`Arc`].
-     ///
-     /// This is useful when the argument of a function call is an [`ArcBorrow`] (e.g., in a method
++/// Returns the system freezable work queue (`system_freezable_wq`).
++///
++/// It is equivalent to the one returned by [`system`] except that it's freezable.
++pub fn system_freezable() -> &'static Queue {
++    // SAFETY: `system_freezable_wq` is a C global, always available.
++    unsafe { Queue::from_raw(bindings::system_freezable_wq) }
++}
++
++/// Returns the system power-efficient work queue (`system_power_efficient_wq`).
++///
++/// It is inclined towards saving power and is converted to "unbound" variants if the
++/// `workqueue.power_efficient` kernel parameter is specified; otherwise, it is similar to the one
++/// returned by [`system`].
++pub fn system_power_efficient() -> &'static Queue {
++    // SAFETY: `system_power_efficient_wq` is a C global, always available.
++    unsafe { Queue::from_raw(bindings::system_power_efficient_wq) }
++}
++
++/// Returns the system freezable power-efficient work queue (`system_freezable_power_efficient_wq`).
++///
++/// It is similar to the one returned by [`system_power_efficient`] except that is freezable.
++pub fn system_freezable_power_efficient() -> &'static Queue {
++    // SAFETY: `system_freezable_power_efficient_wq` is a C global, always available.
++    unsafe { Queue::from_raw(bindings::system_freezable_power_efficient_wq) }
++}
 -- 
 2.40.1.606.ga4b1b128d6-goog
 
