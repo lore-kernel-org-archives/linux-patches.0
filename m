@@ -1,40 +1,40 @@
 Received: from mail-ed1-f73.google.com (mail-ed1-f73.google.com [209.85.208.73])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC1C449B3
-	for <patches@lists.linux.dev>; Wed, 17 May 2023 20:31:32 +0000 (UTC)
-Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-50bc456a94dso1283226a12.1
-        for <patches@lists.linux.dev>; Wed, 17 May 2023 13:31:32 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464B7449BB
+	for <patches@lists.linux.dev>; Wed, 17 May 2023 20:31:35 +0000 (UTC)
+Received: by mail-ed1-f73.google.com with SMTP id 4fb4d7f45d1cf-510d0afb740so1164384a12.0
+        for <patches@lists.linux.dev>; Wed, 17 May 2023 13:31:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684355491; x=1686947491;
+        d=google.com; s=20221208; t=1684355493; x=1686947493;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aOsrinT2/iaeBb0WCg7wbvs+eW6FJ9BpP6VKG3yyBao=;
-        b=H6PERSAkTTYE2cWlo4VM3SlqSWM7x5pxRQ0xuWDg3VOBNyhF2hvGKULDhDPgLi2z3g
-         B6Z0eUxWVpg5g5oXZLmaug777isU03Z+nfEJ5ms9qAPmuVNsFW1fc8qMU7nD99034pQy
-         JBR5MzZlyYJrWwX4d7Pd79YdlG1fLg6EbSOgLlcg8D+RArG3dkHGoOpFv7Or62NCvRzf
-         ULBHvzIUC6W1xuBIfvCrqHqTKetHK8rZJFGSh+P0Z8yHzoPYw5anwwjpuCKLIgGlnJaH
-         caRHHNXst0n42JTDJdFiZhG2I1wLxulOebTtWnSeGO+dGTMUCBk6ViszJYZzaZ9AxwrI
-         enWA==
+        bh=/ed87iA39b46/wbybn6KAMFj/986EKOHM/Dtt+HZtew=;
+        b=nXa/1h2AGviWC4V/Xefyq0aHpIWoGu8VQkwlrEvRjpoLHDtlcGW8h0bJUrizBgt3B8
+         /LDdZMVr02UYquwmjhEobVQydx7CWgdO8mSMpx3mGUUrr46nRkOpmYY2MO41xI19ZBzt
+         iHlRD56GyICHxUfGCxwOcCTSxBmMpqw8cSVG7MciW8Bjwh7mPT1MRjIFNekKYU3F5XnJ
+         k9NX+qxB62RlnpdM0W17Nzx6Yv0mdX/dAwsL6oJqm40cOXjIq1VX8tJsobMHMJW1otPx
+         q84k2Sou+Y0dbYVilH+urESzPX3rlWz2anjgsXwt4UmO0KOi5qu5kd1PIyIhGBMC6LZw
+         wKjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684355491; x=1686947491;
+        d=1e100.net; s=20221208; t=1684355493; x=1686947493;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aOsrinT2/iaeBb0WCg7wbvs+eW6FJ9BpP6VKG3yyBao=;
-        b=PqSPsmIEfG1ujQg7voRoDRIrZgx1EGYQWDhNBkwBgkde32K77KOrAoFRYEVDWVhhBd
-         0Yg2XokTAekYce0B+Nn7GsaQxw4DxJvCKbISAmk2F8bYc2fNz7eUt0VP/b9vnJizxNYp
-         hnGplGeagmXQhrSUm6Hg8MzIGoXWtj2QHsnNNpu/AAkZ/Dm717LPCuoxNyi5p9A5ICpt
-         EztRaHTFJRLwCLQ/4Ub9LbZS5ucwC0079Sd71t0dXtzV1X2Y4qmNBzu9rDzuWBwEfXoO
-         +P/rzhjbd7pC2hq9DV0oFhcYZLNr5FTqEGPxUPm0S5LzDE8WMjUBWGCg5ITUVrLqk+E3
-         yy2w==
-X-Gm-Message-State: AC+VfDxncC/G7S/OmgTK2FHHnplpBY9BP6deCUSrU7KO9J8z3lbh6hgH
-	VyqjSPNwmAimaPq229C6+u9caGJSJlEcLZ0=
-X-Google-Smtp-Source: ACHHUZ7n3lEpyHrn8lVJb9kMGCyUFSu3fVlXDWiAjcH2k80JTEv/xTBS0iudv7fOHA1JEPF5qkMBmU5dogljNJM=
+        bh=/ed87iA39b46/wbybn6KAMFj/986EKOHM/Dtt+HZtew=;
+        b=O2x9/LgtvbJ/bIOuDuvKjFWYCz2ADmU1KfFcZMkoaKHRCllh3jxM9Xcii14r8zqh5i
+         ps3tFDMRfY5qx60w/KpR+EHLActrGmk5KcA8L+k0KV2EVYnn3VEfRzYQQDJbuwkq2SWY
+         GZA4kxn8MfM2HJSz2Mq75sMSDEwmuhv4Pltcr7iOHz9koiBY7edLfwHe/bDNoHH4zg+V
+         OefokPiKilzGiS5Lg08lrBCJU646GV2ZXVLTOOiF1gvhkQ+nAwppJLM9HtTACJoC5i3Z
+         v6Nr3UHgeIcrZbBJcymzDS+jj0eTHNwwX2ytVg1XMqIGHfl51BiVyQF1Sq7uuOqf8OGk
+         XM8w==
+X-Gm-Message-State: AC+VfDye9E65FTFfb6VArIif+eVt0Am4HYT8Emk8gtFI9Hh/I2qKWOvj
+	Fosn7QyMRVI4EDRq1mI0s0Lv4EDBJzB5D+Q=
+X-Google-Smtp-Source: ACHHUZ46p6616l7pT0xUAVK+rWf3LN8YW2N4I9Nxhvoo17VZeLSQSAKpXe2iJImDlnTBMuTyE/DlJZZ9KVQZP90=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a50:f610:0:b0:50b:d648:a963 with SMTP id
- c16-20020a50f610000000b0050bd648a963mr1508053edn.6.1684355491066; Wed, 17 May
- 2023 13:31:31 -0700 (PDT)
-Date: Wed, 17 May 2023 20:31:16 +0000
+ (user=aliceryhl job=sendgmr) by 2002:a50:aa9d:0:b0:510:d8d6:93c9 with SMTP id
+ q29-20020a50aa9d000000b00510d8d693c9mr837868edc.0.1684355493654; Wed, 17 May
+ 2023 13:31:33 -0700 (PDT)
+Date: Wed, 17 May 2023 20:31:17 +0000
 In-Reply-To: <20230517203119.3160435-1-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,8 +44,8 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20230517203119.3160435-1-aliceryhl@google.com>
 X-Mailer: git-send-email 2.40.1.606.ga4b1b128d6-goog
-Message-ID: <20230517203119.3160435-5-aliceryhl@google.com>
-Subject: [PATCH v1 4/7] rust: workqueue: define built-in queues
+Message-ID: <20230517203119.3160435-6-aliceryhl@google.com>
+Subject: [PATCH v1 5/7] rust: workqueue: add helper for defining work_struct fields
 From: Alice Ryhl <aliceryhl@google.com>
 To: rust-for-linux@vger.kernel.org
 Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, 
@@ -56,96 +56,314 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 
-From: Wedson Almeida Filho <walmeida@microsoft.com>
+The main challenge with defining `work_struct` fields is making sure
+that the function pointer stored in the `work_struct` is appropriate for
+the work item type it is embedded in. It needs to know the offset of the
+`work_struct` field being used (even if there are several!) so that it
+can do a `container_of`, and it needs to know the type of the work item
+so that it can call into the right user-provided code. All of this needs
+to happen in a way that provides a safe API to the user, so that users
+of the workqueue cannot mix up the function pointers.
 
-We provide these methods because it lets us access these queues from
-Rust without using unsafe code.
+There are three important pieces that are relevant when doing this. This
+commit will use traits so that they know about each other according to
+the following cycle:
 
-These methods return `&'static Queue`. References annotated with the
-'static lifetime are used when the referent will stay alive forever.
-That is ok for these queues because they are global variables and cannot
-be destroyed.
+ * The pointer type. It knows the type of the work item struct.
+ * The work item struct. It knows the offset of its `work_struct` field.
+ * The `work_struct` field. It knows the pointer type.
 
-Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
-Co-developed-by: Alice Ryhl <aliceryhl@google.com>
+There's nothing special about making the pointer type know the type of
+the struct it points at. Pointers generally always know that
+information.
+
+However, making the `work_struct` field know about the pointer type is
+less commonly seen. This is done by using a generic parameter: the
+`work_struct` field will have the type `Work<T>`, where T will be the
+pointer type in use. The pointer type is required to implement the
+`WorkItemAdapter` trait, which defines the function pointer to store in
+the `work_struct` field. The `Work<T>` type guarantees that the
+`work_struct` inside it uses `<T as WorkItemAdapter>::run` as its
+function pointer.
+
+Finally, to make the work item struct know the offset of its
+`work_struct` field, we use a trait called `HasWork<T>`. If a type
+implements this trait, then the type declares that, at the given offset,
+there is a field of type `Work<T>`. The trait is marked unsafe because
+the OFFSET constant must be correct, but we provide an `impl_has_work!`
+macro that can safely implement `HasWork<T>` on a type. The macro
+expands to something that only compiles if the specified field really
+has the type `Work<T>`. It is used like this:
+
+```
+struct MyWorkItem {
+    work_field: Work<Arc<MyWorkItem>>,
+}
+
+impl_has_work! {
+    impl HasWork<Arc<MyWorkItem>> for MyWorkItem { self.work_field }
+}
+```
+
+So to summarize, given a pointer to an allocation containing a work
+item, you can use the `HasWork<T>` trait to offset the pointer to the
+`work_struct` field. The function pointer in the `work_struct` field is
+guaranteed to be a function that knows what the original pointer type
+was, and using that information, it can undo the offset operation by
+looking up what the offset was via the `HasWork<T>` trait.
+
+This design supports work items with multiple `work_struct` fields by
+using different pointer types. For example, you might define structs
+like these:
+
+```
+struct MyPointer1(Arc<MyWorkItem>);
+struct MyPointer2(Arc<MyWorkItem>);
+
+struct MyWorkItem {
+    work1: Work<MyPointer1>,
+    work2: Work<MyPointer2>,
+}
+```
+
+Then, the wrapper structs `MyPointer1` and `MyPointer2` will take the
+role as the pointer type. By using one or the other, you tell the
+workqueue which `work_struct` field to use. This pattern is called the
+"newtype" pattern.
+
 Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 ---
- rust/kernel/workqueue.rs | 65 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 65 insertions(+)
+ rust/helpers.c           |   8 ++
+ rust/kernel/workqueue.rs | 183 ++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 190 insertions(+), 1 deletion(-)
 
+diff --git a/rust/helpers.c b/rust/helpers.c
+index 81e80261d597..7f0c2fe2fbeb 100644
+--- a/rust/helpers.c
++++ b/rust/helpers.c
+@@ -26,6 +26,7 @@
+ #include <linux/spinlock.h>
+ #include <linux/sched/signal.h>
+ #include <linux/wait.h>
++#include <linux/workqueue.h>
+ 
+ __noreturn void rust_helper_BUG(void)
+ {
+@@ -128,6 +129,13 @@ void rust_helper_put_task_struct(struct task_struct *t)
+ }
+ EXPORT_SYMBOL_GPL(rust_helper_put_task_struct);
+ 
++void rust_helper___INIT_WORK(struct work_struct *work, work_func_t func,
++			     bool on_stack)
++{
++	__INIT_WORK(work, func, on_stack);
++}
++EXPORT_SYMBOL_GPL(rust_helper___INIT_WORK);
++
+ /*
+  * We use `bindgen`'s `--size_t-is-usize` option to bind the C `size_t` type
+  * as the Rust `usize` type, so we can use it in contexts where Rust
 diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-index e66b6b50dfae..22205d3bda72 100644
+index 22205d3bda72..7509618af252 100644
 --- a/rust/kernel/workqueue.rs
 +++ b/rust/kernel/workqueue.rs
-@@ -97,3 +97,68 @@ pub unsafe trait WorkItem {
-     where
+@@ -4,7 +4,8 @@
+ //!
+ //! C header: [`include/linux/workqueue.h`](../../../../include/linux/workqueue.h)
+ 
+-use crate::{bindings, types::Opaque};
++use crate::{bindings, prelude::*, types::Opaque};
++use core::marker::{PhantomData, PhantomPinned};
+ 
+ /// A kernel work queue.
+ ///
+@@ -98,6 +99,186 @@ pub unsafe trait WorkItem {
          F: FnOnce(*mut bindings::work_struct) -> bool;
  }
-+
-+/// Returns the system work queue (`system_wq`).
+ 
++/// Defines the method that should be called when a work item is executed.
 +///
-+/// It is the one used by `schedule[_delayed]_work[_on]()`. Multi-CPU multi-threaded. There are
-+/// users which expect relatively short queue flush time.
++/// This trait is used when the `work_struct` field is defined using the [`Work`] helper.
 +///
-+/// Callers shouldn't queue work items which can run for too long.
-+pub fn system() -> &'static Queue {
-+    // SAFETY: `system_wq` is a C global, always available.
-+    unsafe { Queue::from_raw(bindings::system_wq) }
++/// # Safety
++///
++/// Implementers must ensure that [`__enqueue`] uses a `work_struct` initialized with the [`run`]
++/// method of this trait as the function pointer.
++///
++/// [`__enqueue`]: WorkItem::__enqueue
++/// [`run`]: WorkItemAdapter::run
++pub unsafe trait WorkItemAdapter: WorkItem {
++    /// Run this work item.
++    ///
++    /// # Safety
++    ///
++    /// Must only be called via the function pointer that [`__enqueue`] provides to the
++    /// `queue_work_on` closure, and only as described in the documentation of `queue_work_on`.
++    ///
++    /// [`__enqueue`]: WorkItem::__enqueue
++    unsafe extern "C" fn run(ptr: *mut bindings::work_struct);
 +}
 +
-+/// Returns the system high-priority work queue (`system_highpri_wq`).
++/// Links for a work item.
 +///
-+/// It is similar to the one returned by [`system`] but for work items which require higher
-+/// scheduling priority.
-+pub fn system_highpri() -> &'static Queue {
-+    // SAFETY: `system_highpri_wq` is a C global, always available.
-+    unsafe { Queue::from_raw(bindings::system_highpri_wq) }
++/// This struct contains a function pointer to the `T::run` function from the [`WorkItemAdapter`]
++/// trait, and defines the linked list pointers necessary to enqueue a work item in a workqueue.
++///
++/// Wraps the kernel's C `struct work_struct`.
++///
++/// This is a helper type used to associate a `work_struct` with the [`WorkItemAdapter`] that uses
++/// it.
++#[repr(transparent)]
++pub struct Work<T: ?Sized> {
++    work: Opaque<bindings::work_struct>,
++    _pin: PhantomPinned,
++    _adapter: PhantomData<T>,
 +}
 +
-+/// Returns the system work queue for potentially long-running work items (`system_long_wq`).
-+///
-+/// It is similar to the one returned by [`system`] but may host long running work items. Queue
-+/// flushing might take relatively long.
-+pub fn system_long() -> &'static Queue {
-+    // SAFETY: `system_long_wq` is a C global, always available.
-+    unsafe { Queue::from_raw(bindings::system_long_wq) }
++// SAFETY: Kernel work items are usable from any thread.
++//
++// We do not need to constrain `T` since the work item does not actually contain a `T`.
++unsafe impl<T: ?Sized> Send for Work<T> {}
++// SAFETY: Kernel work items are usable from any thread.
++//
++// We do not need to constrain `T` since the work item does not actually contain a `T`.
++unsafe impl<T: ?Sized> Sync for Work<T> {}
++
++impl<T: ?Sized> Work<T> {
++    /// Creates a new instance of [`Work`].
++    #[inline]
++    #[allow(clippy::new_ret_no_self)]
++    pub fn new() -> impl PinInit<Self>
++    where
++        T: WorkItemAdapter,
++    {
++        // SAFETY: The `WorkItemAdapter` implementation promises that `T::run` can be used as the
++        // work item function.
++        unsafe {
++            kernel::init::pin_init_from_closure(move |slot| {
++                bindings::__INIT_WORK(Self::raw_get(slot), Some(T::run), false);
++                Ok(())
++            })
++        }
++    }
++
++    /// Get a pointer to the inner `work_struct`.
++    ///
++    /// # Safety
++    ///
++    /// The provided pointer must not be dangling. (But it need not be initialized.)
++    #[inline]
++    pub unsafe fn raw_get(ptr: *const Self) -> *mut bindings::work_struct {
++        // SAFETY: The caller promises that the pointer is valid.
++        //
++        // A pointer cast would also be ok due to `#[repr(transparent)]`. We use `addr_of!` so that
++        // the compiler does not complain that `work` is unused.
++        unsafe { Opaque::raw_get(core::ptr::addr_of!((*ptr).work)) }
++    }
 +}
 +
-+/// Returns the system unbound work queue (`system_unbound_wq`).
++/// Declares that a type has a [`Work<T>`] field.
 +///
-+/// Workers are not bound to any specific CPU, not concurrency managed, and all queued work items
-+/// are executed immediately as long as `max_active` limit is not reached and resources are
-+/// available.
-+pub fn system_unbound() -> &'static Queue {
-+    // SAFETY: `system_unbound_wq` is a C global, always available.
-+    unsafe { Queue::from_raw(bindings::system_unbound_wq) }
++/// # Safety
++///
++/// The [`OFFSET`] constant must be the offset of a field in Self of type [`Work<T>`]. The methods on
++/// this trait must have exactly the behavior that the definitions given below have.
++///
++/// [`Work<T>`]: Work
++/// [`OFFSET`]: HasWork::OFFSET
++pub unsafe trait HasWork<T> {
++    /// The offset of the [`Work<T>`] field.
++    ///
++    /// [`Work<T>`]: Work
++    const OFFSET: usize;
++
++    /// Returns the offset of the [`Work<T>`] field.
++    ///
++    /// This method exists because the [`OFFSET`] constant cannot be accessed if the type is not Sized.
++    ///
++    /// [`Work<T>`]: Work
++    /// [`OFFSET`]: HasWork::OFFSET
++    #[inline]
++    fn get_work_offset(&self) -> usize {
++        Self::OFFSET
++    }
++
++    /// Returns a pointer to the [`Work<T>`] field.
++    ///
++    /// # Safety
++    ///
++    /// The pointer must not be dangling. (But the memory need not be initialized.)
++    ///
++    /// [`Work<T>`]: Work
++    #[inline]
++    unsafe fn raw_get_work(ptr: *mut Self) -> *mut Work<T>
++    where
++        Self: Sized,
++    {
++        // SAFETY: The caller promises that the pointer is not dangling.
++        unsafe { (ptr as *mut u8).add(Self::OFFSET) as *mut Work<T> }
++    }
++
++    /// Returns a pointer to the struct containing the [`Work<T>`] field.
++    ///
++    /// # Safety
++    ///
++    /// The pointer must not be dangling. (But the memory need not be initialized.)
++    ///
++    /// [`Work<T>`]: Work
++    #[inline]
++    unsafe fn work_container_of(ptr: *mut Work<T>) -> *mut Self
++    where
++        Self: Sized,
++    {
++        // SAFETY: The caller promises that the pointer is not dangling.
++        unsafe { (ptr as *mut u8).sub(Self::OFFSET) as *mut Self }
++    }
 +}
 +
-+/// Returns the system freezable work queue (`system_freezable_wq`).
++/// Used to safely implement the [`HasWork<T>`] trait.
 +///
-+/// It is equivalent to the one returned by [`system`] except that it's freezable.
-+pub fn system_freezable() -> &'static Queue {
-+    // SAFETY: `system_freezable_wq` is a C global, always available.
-+    unsafe { Queue::from_raw(bindings::system_freezable_wq) }
++/// # Examples
++///
++/// ```
++/// use kernel::sync::Arc;
++///
++/// struct MyStruct {
++///     work_field: Work<Arc<MyStruct>>,
++/// }
++///
++/// impl_has_work! {
++///     impl HasWork<Arc<MyStruct>> for MyStruct { self.work_field }
++/// }
++/// ```
++///
++/// [`HasWork<T>`]: HasWork
++#[macro_export]
++macro_rules! impl_has_work {
++    ($(impl$(<$($implarg:ident),*>)?
++       HasWork<$work_type:ty>
++       for $self:ident $(<$($selfarg:ident),*>)?
++       { self.$field:ident }
++    )*) => {$(
++        // SAFETY: The implementation of `raw_get_work` only compiles if the field has the right
++        // type.
++        unsafe impl$(<$($implarg),*>)? $crate::workqueue::HasWork<$work_type> for $self $(<$($selfarg),*>)? {
++            const OFFSET: usize = $crate::offset_of!(Self, $field) as usize;
++
++            #[inline]
++            unsafe fn raw_get_work(ptr: *mut Self) -> *mut $crate::workqueue::Work<$work_type> {
++                // SAFETY: The caller promises that the pointer is not dangling.
++                unsafe {
++                    ::core::ptr::addr_of_mut!((*ptr).$field)
++                }
++            }
++        }
++    )*};
 +}
 +
-+/// Returns the system power-efficient work queue (`system_power_efficient_wq`).
-+///
-+/// It is inclined towards saving power and is converted to "unbound" variants if the
-+/// `workqueue.power_efficient` kernel parameter is specified; otherwise, it is similar to the one
-+/// returned by [`system`].
-+pub fn system_power_efficient() -> &'static Queue {
-+    // SAFETY: `system_power_efficient_wq` is a C global, always available.
-+    unsafe { Queue::from_raw(bindings::system_power_efficient_wq) }
-+}
-+
-+/// Returns the system freezable power-efficient work queue (`system_freezable_power_efficient_wq`).
-+///
-+/// It is similar to the one returned by [`system_power_efficient`] except that is freezable.
-+pub fn system_freezable_power_efficient() -> &'static Queue {
-+    // SAFETY: `system_freezable_power_efficient_wq` is a C global, always available.
-+    unsafe { Queue::from_raw(bindings::system_freezable_power_efficient_wq) }
-+}
+ /// Returns the system work queue (`system_wq`).
+ ///
+ /// It is the one used by `schedule[_delayed]_work[_on]()`. Multi-CPU multi-threaded. There are
 -- 
 2.40.1.606.ga4b1b128d6-goog
 
