@@ -1,80 +1,150 @@
-Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339C78C16
-	for <patches@lists.linux.dev>; Fri, 19 May 2023 12:04:44 +0000 (UTC)
-Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-19a500ca4a3so693723fac.3
-        for <patches@lists.linux.dev>; Fri, 19 May 2023 05:04:44 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52463D39B
+	for <patches@lists.linux.dev>; Sat, 20 May 2023 21:39:13 +0000 (UTC)
+Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-561f201a646so63153437b3.1
+        for <patches@lists.linux.dev>; Sat, 20 May 2023 14:39:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684497883; x=1687089883;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0jmpizCaVOeCP1r1p2VyeIJckntY5BckfPqM9Nsz8n4=;
-        b=V/Yn4/NxgQPXvWF8hVm4JaNB0A7WHvHdopqNl/U/yuGD4//t6lFyb0d6MhEuhy41Z6
-         BS8LJsvDFBbOUxV/1EQzeCx8Wc6vIMIU6THXj2CUofkjq722/e+L/q1DhdiUac2x2HuN
-         twqL5w6vzUTTycYx0gbjfrTpx5FuB0LZG1uOVO27oizvAmX34QlXMtwjf8aOMkdnH1zS
-         lglD5aoNF65wVXriGzrJ0acuJYeLdWzzhjfBKYTyWdwQnQINA1KyJC+JfvAspTfSVAVj
-         99P11UrSB46FDXp7rU+uF1qKhXXcSc2g1BLQ5C3AnBBCqUU1zjTFi5BPwS9fnnw7DG+v
-         Sg+g==
+        d=google.com; s=20221208; t=1684618752; x=1687210752;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=skIbHQXL89xTcGXjMUySFNmB7v0Lz7PRThViE6J7dUY=;
+        b=XOhjWMQCujbQihpjnwMiF/SfmTXnOhr/Ys+ogxPguM/2oUktHMtmWjf0aUhcRyzCBh
+         /kEz89yUIxWvTiuBpO6/Wjfh6R5quIC8RrwBjsMz56N1Y2yK9n3Cj9SRiHdx2dwl6IxK
+         Le1AiISUDlsAWmd2yStz5460GT9pE4x2v1mY830nZULv4KAUzKO4xLF0NpKPOt7W9XFZ
+         cvTCRVOpI2oh0KmGEIhbI/RnUkApGY6MlYpTXol3S0DG9VxNlofkeMqz3w/mMlc8bNhg
+         +g6lwMsJQn6eGGP2hsP/o91kkTkhD689u5GWS8emvFQWY54mktJXLQtS/S2hKgd91VrV
+         8TgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684497883; x=1687089883;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0jmpizCaVOeCP1r1p2VyeIJckntY5BckfPqM9Nsz8n4=;
-        b=H8jqQggzGLF36Uijgt+UtUZ6nYdT2mEtwSAlQQYzailAcc6ImriX/kHf8R+atcUOnV
-         HwbNHK4xjneaENG5ORDbmYqweduTiaFoIC7PaF9oebY9AJYDTZLWBHXEgvShjpzJA1R1
-         2LmSC2dPEBIbrBFctyGlOby2f0fOyVyCFwnkdAkQfrg6Fz647pRNxOCXvpZ5FUnJsWvM
-         BYCdaCGpHQc7fmMN2ZedbTr6LS+TXX1kWI7iZSBh55u03x3lO8UQh1a2QDowEhaEPmeM
-         PRrbkUo0eWttR4//wgRNf2ENVGLYrmn5oJilRLTv2sUTzpmTBMRIAdmHq906qlmeG66e
-         Ay0Q==
-X-Gm-Message-State: AC+VfDxfSxvBMd0Vbec/l+nyagLTVPjEnmv5IKwCn8+uew9N5F4LD9L8
-	5tp7YFxR3vJltasN1qg6ojM=
-X-Google-Smtp-Source: ACHHUZ6jWONxjseiTxpvmAU7vOOx9nwPIKW7k7HlSt6MQyAC7YvKhLNkrZPKsdvwRNbVhk+geIoX+g==
-X-Received: by 2002:a05:6870:7406:b0:18e:2f29:1099 with SMTP id x6-20020a056870740600b0018e2f291099mr869338oam.53.1684497883167;
-        Fri, 19 May 2023 05:04:43 -0700 (PDT)
-Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id b1-20020a05687061c100b00199be6e2b75sm1832109oah.41.2023.05.19.05.04.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 05:04:42 -0700 (PDT)
-Message-ID: <beb2932e-7f16-e368-9cb5-edbe115fcb67@gmail.com>
-Date: Fri, 19 May 2023 09:04:38 -0300
+        d=1e100.net; s=20221208; t=1684618752; x=1687210752;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=skIbHQXL89xTcGXjMUySFNmB7v0Lz7PRThViE6J7dUY=;
+        b=A8Nh4RtEAkk3lsheRDTlaXtFHuju8PAUOxVHqX3HfqIerf01KtDFt1v4V57AG+M8ro
+         lcxThTuSkfTG5LGvR5IzDEjuYTNviXQWECghVyXcO+GkBXmxEQsC0dbb8RfWVsXqVeOm
+         kPRnvGNdLLz6vc0P9gBX3CSJ3mNeN8T/YQFE3/V2tjqMw6km8UGHIc00rfNGqevClDxH
+         CQK72w10fatododHTFcK2HQdyp6XXcL56RJkAzF1czKU3tRVN42sqjFyA5XCNKPBfslz
+         iOzHSuoqjAVUXHW+sucmK0OmK8Aag1gwjKre9/s58BuC5yoIWoj4FVBZIVOd78Hk+KSP
+         L5mw==
+X-Gm-Message-State: AC+VfDzLDG227UQF02LgKcYX+/pWEeKjTJqeFBewYEBSacpYS619q2Mz
+	myh7cNN1Xr+6d7vhmTWzUxpxcc5l+vTg
+X-Google-Smtp-Source: ACHHUZ5NT94sAhhBSYkBg9+aQOzjs7EaWrlC4HRCrVmXKqfpsmVjx6ZkufUyOOHq8ozbnDIs1+yqYhmL4bo5
+X-Received: from gthelen2.svl.corp.google.com ([2620:15c:2d4:203:988d:5c18:d518:3f0b])
+ (user=gthelen job=sendgmr) by 2002:a81:ad50:0:b0:559:f89f:bc81 with SMTP id
+ l16-20020a81ad50000000b00559f89fbc81mr3705340ywk.6.1684618752673; Sat, 20 May
+ 2023 14:39:12 -0700 (PDT)
+Date: Sat, 20 May 2023 14:39:10 -0700
+In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v1 1/7] rust: workqueue: add low-level workqueue bindings
-Content-Language: en-US
-To: Alice Ryhl <aliceryhl@google.com>
-Cc: alex.gaynor@gmail.com, benno.lossin@proton.me, bjorn3_gh@protonmail.com,
- boqun.feng@gmail.com, gary@garyguo.net, jiangshanlai@gmail.com,
- linux-kernel@vger.kernel.org, ojeda@kernel.org, patches@lists.linux.dev,
- rust-for-linux@vger.kernel.org, tj@kernel.org, wedsonaf@gmail.com
-References: <8e42aad3-d94e-3cb4-ee59-90ded31cea9e@gmail.com>
- <20230519094042.3432952-1-aliceryhl@google.com>
-From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230519094042.3432952-1-aliceryhl@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0
+References: <20230515161736.775969473@linuxfoundation.org>
+Message-ID: <xr93jzx2el8h.fsf@gthelen2.svl.corp.google.com>
+Subject: Re: [PATCH 5.10 000/381] 5.10.180-rc1 review
+From: Greg Thelen <gthelen@google.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-On 5/19/23 06:40, Alice Ryhl wrote:
-> On 5/18/23 16:51, Martin Rodriguez Reboredo wrote:
->> On 5/17/23 17:31, Alice Ryhl wrote:
->>> +    /// Enqueues a work item.
->>> +    ///
->>> +    /// This may fail if the work item is already enqueued in a workqueue.
->>
->> Wouldn't be worth to mention that, if not implied, the item it's going
->> to be worked on an unbound CPU?
-> 
-> I'm not really sure what you mean. Can you elaborate?
-> 
-> Alice
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
 
-I've meant that if it's good to mention that `queue_work_on` is going
-to be called with `WORK_CPU_UNBOUND` so that API users know about it.
+> This is the start of the stable review cycle for the 5.10.180 release.
+> There are 381 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.180-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
+> Pseudo-Shortlog of commits:
+
+[...]
+
+> Baokun Li <libaokun1@huawei.com>
+>     writeback, cgroup: fix null-ptr-deref write in bdi_split_work_to_wbs
+
+Sorry for not noticing this sooner, but I think there's a benign issue
+in this backport.
+
+v5.10.180 commit 2b00b2a0e642 ("writeback, cgroup: fix null-ptr-deref
+write in bdi_split_work_to_wbs") contains:
+
++static void cgwb_free_rcu(struct rcu_head *rcu_head)
++{
++       struct bdi_writeback *wb = container_of(rcu_head,
++                       struct bdi_writeback, rcu);
++
++       percpu_ref_exit(&wb->refcnt);
++       kfree(wb);
++}
+
+[...]
+
+@@ -397,7 +406,7 @@ static void cgwb_release_workfn(struct work_struct *work)
+        fprop_local_destroy_percpu(&wb->memcg_completions);
+        percpu_ref_exit(&wb->refcnt);
+        wb_exit(wb);
+-       kfree_rcu(wb, rcu);
++       call_rcu(&wb->rcu, cgwb_free_rcu);
+ }
+
+Notice there are now 2 percpu_ref_exit() calls. The upstream, and 5.15.y
+patches remove the cgwb_release_workfn() calls to percpu_ref_exit(). The
+5.10.y fixup is below. It's not essential but might be worth applying to
+track upstream.
+
+From 416e0e8ab5ff41676d04dc819bd667c6ad3f7555 Mon Sep 17 00:00:00 2001
+From: Greg Thelen <gthelen@google.com>
+Date: Sat, 20 May 2023 12:46:24 -0700
+Subject: [PATCH] writeback, cgroup: remove extra percpu_ref_exit()
+
+5.10 stable commit 2b00b2a0e642 ("writeback, cgroup: fix null-ptr-deref
+write in bdi_split_work_to_wbs") is a backport of upstream 6.3 commit
+1ba1199ec574.
+
+In the 5.10 stable commit backport percpu_ref_exit() is called twice:
+first in cgwb_release_workfn() and then in cgwb_free_rcu(). The 2nd call
+is benign as percpu_ref_exit() internally detects there's nothing to do.
+
+This fixes an non-upstream issue that only applies to 5.10.y.
+
+Fixes: 2b00b2a0e642 ("writeback, cgroup: fix null-ptr-deref write in bdi_split_work_to_wbs")
+Signed-off-by: Greg Thelen <gthelen@google.com>
+---
+ mm/backing-dev.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/mm/backing-dev.c b/mm/backing-dev.c
+index b28f629c3527..dd08ab928e07 100644
+--- a/mm/backing-dev.c
++++ b/mm/backing-dev.c
+@@ -404,7 +404,6 @@ static void cgwb_release_workfn(struct work_struct *work)
+ 	blkcg_unpin_online(blkcg);
+ 
+ 	fprop_local_destroy_percpu(&wb->memcg_completions);
+-	percpu_ref_exit(&wb->refcnt);
+ 	wb_exit(wb);
+ 	call_rcu(&wb->rcu, cgwb_free_rcu);
+ }
+-- 
+2.40.1.698.g37aff9b760-goog
