@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B222C171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 265B8C433D2;
-	Mon, 22 May 2023 19:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA80E171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BF2C433EF;
+	Mon, 22 May 2023 19:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783852;
-	bh=/k3TNA+CcleNPbJ1Ggjc/xh8IdZdDWiNa5L6RcmBp8M=;
+	s=korg; t=1684783855;
+	bh=OpM/K83vbyk3flTN4EZuq0lkbTySTdaWAbjN8VMccNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n35QL90Bx7QUCvEfnPaxv4nvxnjeCYtWuLmn+YjUOxVUW+Hki21o39tmIbunYiHBL
-	 /6lyYtV63FCIEnkt4ODdNlxVq7GMV+9JySalvG23cyVTdqcWWfuXB8PrvuNft+jkI7
-	 l3TBgJ1c7brwy8Jv+JDfiDzMRf3u6vmy6wKQMruQ=
+	b=v2oRExn7O07utQL9DnQ4t42v+dbQfQjqegqzw9GVmsYdd/TZhdrSvhT9u+7mFlLA8
+	 VNRQtSNscfRbNDXpwj9TpoUNs7KH8Y0cl48PtwlZsaOMsafP53KZPjHDtNfR7bHt+8
+	 ISmWH9Nw/QwbyLuiKP+RMF2xoWypYjiZGIWwDjrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
+	Jijie Shao <shaojijie@huawei.com>,
 	Hao Lan <lanhao@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 183/292] net: hns3: fix reset delay time to avoid configuration timeout
-Date: Mon, 22 May 2023 20:09:00 +0100
-Message-Id: <20230522190410.537344062@linuxfoundation.org>
+Subject: [PATCH 6.1 184/292] net: hns3: fix reset timeout when enable full VF
+Date: Mon, 22 May 2023 20:09:01 +0100
+Message-Id: <20230522190410.561967631@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,42 +36,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit 814d0c786068e858d889ada3153bff82f64223ad ]
+[ Upstream commit 6b45d5ff8c2c61baddd67d7510075ae121c5e704 ]
 
-Currently the hns3 vf function reset delays 5000ms before vf rebuild
-process. In product applications, this delay is too long for application
-configurations and causes configuration timeout.
+The timeout of the cmdq reset command has been increased to
+resolve the reset timeout issue in the full VF scenario.
+The timeout of other cmdq commands remains unchanged.
 
-According to the tests, 500ms delay is enough for reset process except PF
-FLR. So this patch modifies delay to 500ms in these scenarios.
-
-Fixes: 6988eb2a9b77 ("net: hns3: Add support to reset the enet/ring mgmt layer")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Fixes: 8d307f8e8cf1 ("net: hns3: create new set of unified hclge_comm_cmd_send APIs")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
 Signed-off-by: Hao Lan <lanhao@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../hns3/hns3_common/hclge_comm_cmd.c         | 25 ++++++++++++++++---
+ .../hns3/hns3_common/hclge_comm_cmd.h         |  8 +++++-
+ 2 files changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index e84e5be8e59ed..b1b14850e958f 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -1436,7 +1436,10 @@ static int hclgevf_reset_wait(struct hclgevf_dev *hdev)
- 	 * might happen in case reset assertion was made by PF. Yes, this also
- 	 * means we might end up waiting bit more even for VF reset.
- 	 */
--	msleep(5000);
-+	if (hdev->reset_type == HNAE3_VF_FULL_RESET)
-+		msleep(5000);
-+	else
-+		msleep(500);
- 
- 	return 0;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c
+index f671a63cecde4..c797d54f98caa 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c
+@@ -330,9 +330,25 @@ static int hclge_comm_cmd_csq_done(struct hclge_comm_hw *hw)
+ 	return head == hw->cmq.csq.next_to_use;
  }
+ 
+-static void hclge_comm_wait_for_resp(struct hclge_comm_hw *hw,
++static u32 hclge_get_cmdq_tx_timeout(u16 opcode, u32 tx_timeout)
++{
++	static const struct hclge_cmdq_tx_timeout_map cmdq_tx_timeout_map[] = {
++		{HCLGE_OPC_CFG_RST_TRIGGER, HCLGE_COMM_CMDQ_TX_TIMEOUT_500MS},
++	};
++	u32 i;
++
++	for (i = 0; i < ARRAY_SIZE(cmdq_tx_timeout_map); i++)
++		if (cmdq_tx_timeout_map[i].opcode == opcode)
++			return cmdq_tx_timeout_map[i].tx_timeout;
++
++	return tx_timeout;
++}
++
++static void hclge_comm_wait_for_resp(struct hclge_comm_hw *hw, u16 opcode,
+ 				     bool *is_completed)
+ {
++	u32 cmdq_tx_timeout = hclge_get_cmdq_tx_timeout(opcode,
++							hw->cmq.tx_timeout);
+ 	u32 timeout = 0;
+ 
+ 	do {
+@@ -342,7 +358,7 @@ static void hclge_comm_wait_for_resp(struct hclge_comm_hw *hw,
+ 		}
+ 		udelay(1);
+ 		timeout++;
+-	} while (timeout < hw->cmq.tx_timeout);
++	} while (timeout < cmdq_tx_timeout);
+ }
+ 
+ static int hclge_comm_cmd_convert_err_code(u16 desc_ret)
+@@ -406,7 +422,8 @@ static int hclge_comm_cmd_check_result(struct hclge_comm_hw *hw,
+ 	 * if multi descriptors to be sent, use the first one to check
+ 	 */
+ 	if (HCLGE_COMM_SEND_SYNC(le16_to_cpu(desc->flag)))
+-		hclge_comm_wait_for_resp(hw, &is_completed);
++		hclge_comm_wait_for_resp(hw, le16_to_cpu(desc->opcode),
++					 &is_completed);
+ 
+ 	if (!is_completed)
+ 		ret = -EBADE;
+@@ -528,7 +545,7 @@ int hclge_comm_cmd_queue_init(struct pci_dev *pdev, struct hclge_comm_hw *hw)
+ 	cmdq->crq.desc_num = HCLGE_COMM_NIC_CMQ_DESC_NUM;
+ 
+ 	/* Setup Tx write back timeout */
+-	cmdq->tx_timeout = HCLGE_COMM_CMDQ_TX_TIMEOUT;
++	cmdq->tx_timeout = HCLGE_COMM_CMDQ_TX_TIMEOUT_DEFAULT;
+ 
+ 	/* Setup queue rings */
+ 	ret = hclge_comm_alloc_cmd_queue(hw, HCLGE_COMM_TYPE_CSQ);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.h b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.h
+index b1f9383b418f4..2b2928c6dccfc 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.h
+@@ -54,7 +54,8 @@
+ #define HCLGE_COMM_NIC_SW_RST_RDY		BIT(HCLGE_COMM_NIC_SW_RST_RDY_B)
+ #define HCLGE_COMM_NIC_CMQ_DESC_NUM_S		3
+ #define HCLGE_COMM_NIC_CMQ_DESC_NUM		1024
+-#define HCLGE_COMM_CMDQ_TX_TIMEOUT		30000
++#define HCLGE_COMM_CMDQ_TX_TIMEOUT_DEFAULT	30000
++#define HCLGE_COMM_CMDQ_TX_TIMEOUT_500MS	500000
+ 
+ enum hclge_opcode_type {
+ 	/* Generic commands */
+@@ -357,6 +358,11 @@ struct hclge_comm_caps_bit_map {
+ 	u16 local_bit;
+ };
+ 
++struct hclge_cmdq_tx_timeout_map {
++	u32 opcode;
++	u32 tx_timeout;
++};
++
+ struct hclge_comm_firmware_compat_cmd {
+ 	__le32 compat;
+ 	u8 rsv[20];
 -- 
 2.39.2
 
