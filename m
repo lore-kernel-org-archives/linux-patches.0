@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB477171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:54:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E5CC433D2;
-	Mon, 22 May 2023 19:54:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD38171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:54:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF2ADC433D2;
+	Mon, 22 May 2023 19:54:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785256;
-	bh=j+o9PJ7QEnX9bYBbmVNQmkxlyPS35gxytrtl2LC+IWs=;
+	s=korg; t=1684785259;
+	bh=K13WyvsTQCDWMfOVfJ2WIZu1auSPFasF4FzVq/oUDaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjWwZ/jDXUUmK8ObgGyHLos7W6uQOXaouOsT8tRDE5oIBDHz3oRiWT+AqH3OdfDII
-	 XPUgfQkT7cRHm79Sb/kNWKgl9u7XQdZVJ4TZ+XYdjoX7+fpY9azLIettNK51z4UC96
-	 cIoP9zddYP0Ko9Mdk21eyI5/ysT5p4RDGTwkjSUw=
+	b=1LSaCJwvB1boR7fl1TYMqrvTuLeCOzCzqt/3K3ZzNKncm1/RpaguinlgRzMfzhhy3
+	 QaCDGFx3ggPxMNZSMAVNf181TzjNtd1cxByK9dfsTrJ6JmfQ8udUZAA3rdLiYMHa5N
+	 2cUJeiEvCZfy9DAN8vbazOrcn/KQYSlh+K/+a6og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Batra <gbatra@linux.vnet.ibm.com>,
-	Greg Joyce <gjoyce@linux.vnet.ibm.com>,
-	Brian King <brking@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.3 345/364] powerpc/iommu: DMA address offset is incorrectly calculated with 2MB TCEs
-Date: Mon, 22 May 2023 20:10:50 +0100
-Message-Id: <20230522190421.415635435@linuxfoundation.org>
+	Li Ma <li.ma@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.3 363/364] drm/amdgpu: reserve the old gc_11_0_*_mes.bin
+Date: Mon, 22 May 2023 20:11:08 +0100
+Message-Id: <20230522190421.844467065@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,77 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaurav Batra <gbatra@linux.vnet.ibm.com>
+From: Li Ma <li.ma@amd.com>
 
-commit 096339ab84f36beae0b1db25e0ce63fb3873e8b2 upstream.
+commit 8855818ce7554fb7420200187fac9c3b69500da0 upstream.
 
-When DMA window is backed by 2MB TCEs, the DMA address for the mapped
-page should be the offset of the page relative to the 2MB TCE. The code
-was incorrectly setting the DMA address to the beginning of the TCE
-range.
+Reserve the MOUDLE_FIRMWARE declaration of gc_11_0_*_mes.bin
+to fix falling back to old mes bin on failure via autoload.
 
-Mellanox driver is reporting timeout trying to ENABLE_HCA for an SR-IOV
-ethernet port, when DMA window is backed by 2MB TCEs.
-
-Fixes: 387273118714 ("powerps/pseries/dma: Add support for 2M IOMMU page size")
-Cc: stable@vger.kernel.org # v5.16+
-Signed-off-by: Gaurav Batra <gbatra@linux.vnet.ibm.com>
-Reviewed-by: Greg Joyce <gjoyce@linux.vnet.ibm.com>
-Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230504175913.83844-1-gbatra@linux.vnet.ibm.com
+Fixes: 97998b893c30 ("drm/amd/amdgpu: introduce gc_*_mes_2.bin v2")
+Signed-off-by: Li Ma <li.ma@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/iommu.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/powerpc/kernel/iommu.c
-+++ b/arch/powerpc/kernel/iommu.c
-@@ -517,7 +517,7 @@ int ppc_iommu_map_sg(struct device *dev,
- 		/* Convert entry to a dma_addr_t */
- 		entry += tbl->it_offset;
- 		dma_addr = entry << tbl->it_page_shift;
--		dma_addr |= (s->offset & ~IOMMU_PAGE_MASK(tbl));
-+		dma_addr |= (vaddr & ~IOMMU_PAGE_MASK(tbl));
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -32,14 +32,19 @@
+ #include "v11_structs.h"
+ #include "mes_v11_api_def.h"
  
- 		DBG("  - %lu pages, entry: %lx, dma_addr: %lx\n",
- 			    npages, entry, dma_addr);
-@@ -904,6 +904,7 @@ void *iommu_alloc_coherent(struct device
- 	unsigned int order;
- 	unsigned int nio_pages, io_order;
- 	struct page *page;
-+	int tcesize = (1 << tbl->it_page_shift);
++MODULE_FIRMWARE("amdgpu/gc_11_0_0_mes.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_0_mes_2.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_0_mes1.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_1_mes.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_1_mes_2.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_1_mes1.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_2_mes.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_2_mes_2.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_2_mes1.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_3_mes.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_3_mes_2.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_3_mes1.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_4_mes.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_4_mes_2.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_4_mes1.bin");
  
- 	size = PAGE_ALIGN(size);
- 	order = get_order(size);
-@@ -930,7 +931,8 @@ void *iommu_alloc_coherent(struct device
- 	memset(ret, 0, size);
- 
- 	/* Set up tces to cover the allocated range */
--	nio_pages = size >> tbl->it_page_shift;
-+	nio_pages = IOMMU_PAGE_ALIGN(size, tbl) >> tbl->it_page_shift;
-+
- 	io_order = get_iommu_order(size, tbl);
- 	mapping = iommu_alloc(dev, tbl, ret, nio_pages, DMA_BIDIRECTIONAL,
- 			      mask >> tbl->it_page_shift, io_order, 0);
-@@ -938,7 +940,8 @@ void *iommu_alloc_coherent(struct device
- 		free_pages((unsigned long)ret, order);
- 		return NULL;
- 	}
--	*dma_handle = mapping;
-+
-+	*dma_handle = mapping | ((u64)ret & (tcesize - 1));
- 	return ret;
- }
- 
-@@ -949,7 +952,7 @@ void iommu_free_coherent(struct iommu_ta
- 		unsigned int nio_pages;
- 
- 		size = PAGE_ALIGN(size);
--		nio_pages = size >> tbl->it_page_shift;
-+		nio_pages = IOMMU_PAGE_ALIGN(size, tbl) >> tbl->it_page_shift;
- 		iommu_free(tbl, dma_handle, nio_pages);
- 		size = PAGE_ALIGN(size);
- 		free_pages((unsigned long)vaddr, get_order(size));
 
 
