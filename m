@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69C14171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB198C433D2;
-	Mon, 22 May 2023 19:39:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEDD171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF6BC433D2;
+	Mon, 22 May 2023 19:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784373;
-	bh=pkAJcn2bsmGeFnBFIbKnsi7Rkz/T8PhoD8Cbw3O+WJc=;
+	s=korg; t=1684784379;
+	bh=RFVlgyhxwUQJIhdXGqc6jx8gvREuS8wXR3AUcR5x+4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1kliUDPvK1kfsf7PaA8ilKYz48kVVFoXEtnJ3G6/lBWClKMM8LkaR6tBLj0LH3WYv
-	 k0x3SWQARqUOa4Z2MszhVHS3mmReNQIg5B8pnrJklBBykavsQ77CXrpXuaieP5qrUT
-	 DPicR3dfyGkHOlxt4Ez2MuSUgCpqdwOuPachwz10=
+	b=x64FWh19RFBdk/yYgH9E2l86M0YOHqkQgs9D+FIEGehi/a7jqJoQzxZ86F606n7VX
+	 YHQdwdyM3/tvoJdsG3Ry7JkjCSkyqboWLuMaj7q9E1DdzRic3XjEFjHgT/BOAxDmUK
+	 OWejWVyLxebn+JsbB7d0wU4RCsV7QlXTdmJQfpqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 033/364] drm/i915/dp: prevent potential div-by-zero
-Date: Mon, 22 May 2023 20:05:38 +0100
-Message-Id: <20230522190413.660936878@linuxfoundation.org>
+Subject: [PATCH 6.3 061/364] platform/x86/intel: vsec: Explicitly enable capabilities
+Date: Mon, 22 May 2023 20:06:06 +0100
+Message-Id: <20230522190414.315347813@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,48 +36,195 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: David E. Box <david.e.box@linux.intel.com>
 
-[ Upstream commit 0ff80028e2702c7c3d78b69705dc47c1ccba8c39 ]
+[ Upstream commit 3f95ecf2a3e4db09e58d307932037e8f1210d6e7 ]
 
-drm_dp_dsc_sink_max_slice_count() may return 0 if something goes
-wrong on the part of the DSC sink and its DPCD register. This null
-value may be later used as a divisor in intel_dsc_compute_params(),
-which will lead to an error.
-In the unlikely event that this issue occurs, fix it by testing the
-return value of drm_dp_dsc_sink_max_slice_count() against zero.
+Discovered Intel VSEC/DVSEC capabilities are enabled by default and only
+get disabled by quirk. Instead, remove such quirks and only enable support
+for capabilities that have been explicitly added to a new capabilities
+field. While here, also reorder the device info structures alphabetically.
 
-Found by Linux Verification Center (linuxtesting.org) with static
-analysis tool SVACE.
-
-Fixes: a4a157777c80 ("drm/i915/dp: Compute DSC pipe config in atomic check")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230418140430.69902-1-n.zhandarovich@fintech.ru
-(cherry picked from commit 51f7008239de011370c5067bbba07f0207f06b72)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: David E. Box <david.e.box@linux.intel.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Link: https://lore.kernel.org/r/20230316224628.2855884-1-david.e.box@linux.intel.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/platform/x86/intel/vsec.c | 69 ++++++++++++++-----------------
+ drivers/platform/x86/intel/vsec.h |  9 +++-
+ 2 files changed, 38 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 62cbab7402e93..c1825f8f885c2 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -1533,6 +1533,11 @@ int intel_dp_dsc_compute_config(struct intel_dp *intel_dp,
- 		pipe_config->dsc.slice_count =
- 			drm_dp_dsc_sink_max_slice_count(intel_dp->dsc_dpcd,
- 							true);
-+		if (!pipe_config->dsc.slice_count) {
-+			drm_dbg_kms(&dev_priv->drm, "Unsupported Slice Count %d\n",
-+				    pipe_config->dsc.slice_count);
-+			return -EINVAL;
-+		}
- 	} else {
- 		u16 dsc_max_output_bpp = 0;
- 		u8 dsc_dp_slice_count;
+diff --git a/drivers/platform/x86/intel/vsec.c b/drivers/platform/x86/intel/vsec.c
+index 2311c16cb975d..91be391bba3f7 100644
+--- a/drivers/platform/x86/intel/vsec.c
++++ b/drivers/platform/x86/intel/vsec.c
+@@ -67,14 +67,6 @@ enum intel_vsec_id {
+ 	VSEC_ID_TPMI		= 66,
+ };
+ 
+-static enum intel_vsec_id intel_vsec_allow_list[] = {
+-	VSEC_ID_TELEMETRY,
+-	VSEC_ID_WATCHER,
+-	VSEC_ID_CRASHLOG,
+-	VSEC_ID_SDSI,
+-	VSEC_ID_TPMI,
+-};
+-
+ static const char *intel_vsec_name(enum intel_vsec_id id)
+ {
+ 	switch (id) {
+@@ -98,26 +90,19 @@ static const char *intel_vsec_name(enum intel_vsec_id id)
+ 	}
+ }
+ 
+-static bool intel_vsec_allowed(u16 id)
+-{
+-	int i;
+-
+-	for (i = 0; i < ARRAY_SIZE(intel_vsec_allow_list); i++)
+-		if (intel_vsec_allow_list[i] == id)
+-			return true;
+-
+-	return false;
+-}
+-
+-static bool intel_vsec_disabled(u16 id, unsigned long quirks)
++static bool intel_vsec_supported(u16 id, unsigned long caps)
+ {
+ 	switch (id) {
++	case VSEC_ID_TELEMETRY:
++		return !!(caps & VSEC_CAP_TELEMETRY);
+ 	case VSEC_ID_WATCHER:
+-		return !!(quirks & VSEC_QUIRK_NO_WATCHER);
+-
++		return !!(caps & VSEC_CAP_WATCHER);
+ 	case VSEC_ID_CRASHLOG:
+-		return !!(quirks & VSEC_QUIRK_NO_CRASHLOG);
+-
++		return !!(caps & VSEC_CAP_CRASHLOG);
++	case VSEC_ID_SDSI:
++		return !!(caps & VSEC_CAP_SDSI);
++	case VSEC_ID_TPMI:
++		return !!(caps & VSEC_CAP_TPMI);
+ 	default:
+ 		return false;
+ 	}
+@@ -206,7 +191,7 @@ static int intel_vsec_add_dev(struct pci_dev *pdev, struct intel_vsec_header *he
+ 	unsigned long quirks = info->quirks;
+ 	int i;
+ 
+-	if (!intel_vsec_allowed(header->id) || intel_vsec_disabled(header->id, quirks))
++	if (!intel_vsec_supported(header->id, info->caps))
+ 		return -EINVAL;
+ 
+ 	if (!header->num_entries) {
+@@ -261,14 +246,14 @@ static int intel_vsec_add_dev(struct pci_dev *pdev, struct intel_vsec_header *he
+ static bool intel_vsec_walk_header(struct pci_dev *pdev,
+ 				   struct intel_vsec_platform_info *info)
+ {
+-	struct intel_vsec_header **header = info->capabilities;
++	struct intel_vsec_header **header = info->headers;
+ 	bool have_devices = false;
+ 	int ret;
+ 
+ 	for ( ; *header; header++) {
+ 		ret = intel_vsec_add_dev(pdev, *header, info);
+ 		if (ret)
+-			dev_info(&pdev->dev, "Could not add device for DVSEC id %d\n",
++			dev_info(&pdev->dev, "Could not add device for VSEC id %d\n",
+ 				 (*header)->id);
+ 		else
+ 			have_devices = true;
+@@ -403,14 +388,8 @@ static int intel_vsec_pci_probe(struct pci_dev *pdev, const struct pci_device_id
+ 	return 0;
+ }
+ 
+-/* TGL info */
+-static const struct intel_vsec_platform_info tgl_info = {
+-	.quirks = VSEC_QUIRK_NO_WATCHER | VSEC_QUIRK_NO_CRASHLOG |
+-		  VSEC_QUIRK_TABLE_SHIFT | VSEC_QUIRK_EARLY_HW,
+-};
+-
+ /* DG1 info */
+-static struct intel_vsec_header dg1_telemetry = {
++static struct intel_vsec_header dg1_header = {
+ 	.length = 0x10,
+ 	.id = 2,
+ 	.num_entries = 1,
+@@ -419,19 +398,31 @@ static struct intel_vsec_header dg1_telemetry = {
+ 	.offset = 0x466000,
+ };
+ 
+-static struct intel_vsec_header *dg1_capabilities[] = {
+-	&dg1_telemetry,
++static struct intel_vsec_header *dg1_headers[] = {
++	&dg1_header,
+ 	NULL
+ };
+ 
+ static const struct intel_vsec_platform_info dg1_info = {
+-	.capabilities = dg1_capabilities,
++	.caps = VSEC_CAP_TELEMETRY,
++	.headers = dg1_headers,
+ 	.quirks = VSEC_QUIRK_NO_DVSEC | VSEC_QUIRK_EARLY_HW,
+ };
+ 
+ /* MTL info */
+ static const struct intel_vsec_platform_info mtl_info = {
+-	.quirks = VSEC_QUIRK_NO_WATCHER | VSEC_QUIRK_NO_CRASHLOG,
++	.caps = VSEC_CAP_TELEMETRY,
++};
++
++/* OOBMSM info */
++static const struct intel_vsec_platform_info oobmsm_info = {
++	.caps = VSEC_CAP_TELEMETRY | VSEC_CAP_SDSI | VSEC_CAP_TPMI,
++};
++
++/* TGL info */
++static const struct intel_vsec_platform_info tgl_info = {
++	.caps = VSEC_CAP_TELEMETRY,
++	.quirks = VSEC_QUIRK_TABLE_SHIFT | VSEC_QUIRK_EARLY_HW,
+ };
+ 
+ #define PCI_DEVICE_ID_INTEL_VSEC_ADL		0x467d
+@@ -446,7 +437,7 @@ static const struct pci_device_id intel_vsec_pci_ids[] = {
+ 	{ PCI_DEVICE_DATA(INTEL, VSEC_DG1, &dg1_info) },
+ 	{ PCI_DEVICE_DATA(INTEL, VSEC_MTL_M, &mtl_info) },
+ 	{ PCI_DEVICE_DATA(INTEL, VSEC_MTL_S, &mtl_info) },
+-	{ PCI_DEVICE_DATA(INTEL, VSEC_OOBMSM, &(struct intel_vsec_platform_info) {}) },
++	{ PCI_DEVICE_DATA(INTEL, VSEC_OOBMSM, &oobmsm_info) },
+ 	{ PCI_DEVICE_DATA(INTEL, VSEC_RPL, &tgl_info) },
+ 	{ PCI_DEVICE_DATA(INTEL, VSEC_TGL, &tgl_info) },
+ 	{ }
+diff --git a/drivers/platform/x86/intel/vsec.h b/drivers/platform/x86/intel/vsec.h
+index ae8fe92c5595b..0fd042c171ba0 100644
+--- a/drivers/platform/x86/intel/vsec.h
++++ b/drivers/platform/x86/intel/vsec.h
+@@ -5,6 +5,12 @@
+ #include <linux/auxiliary_bus.h>
+ #include <linux/bits.h>
+ 
++#define VSEC_CAP_TELEMETRY	BIT(0)
++#define VSEC_CAP_WATCHER	BIT(1)
++#define VSEC_CAP_CRASHLOG	BIT(2)
++#define VSEC_CAP_SDSI		BIT(3)
++#define VSEC_CAP_TPMI		BIT(4)
++
+ struct pci_dev;
+ struct resource;
+ 
+@@ -27,7 +33,8 @@ enum intel_vsec_quirks {
+ 
+ /* Platform specific data */
+ struct intel_vsec_platform_info {
+-	struct intel_vsec_header **capabilities;
++	struct intel_vsec_header **headers;
++	unsigned long caps;
+ 	unsigned long quirks;
+ };
+ 
 -- 
 2.39.2
 
