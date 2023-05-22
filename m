@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE6F171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C26EC433D2;
-	Mon, 22 May 2023 19:17:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFCC171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78555C433D2;
+	Mon, 22 May 2023 19:17:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783064;
-	bh=0kR2X7R7X2+FhuBa7KITDNbnWCUhGlNxT+h3KLbxdy4=;
+	s=korg; t=1684783067;
+	bh=Yux8nf1Du0qzBZe3abSH0wU1WPcxOHXYz3L4KpTe2T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYt3U4v7bKuFzLQs7kPlj9QoSePncDwuOjGNMzpFs8PJ6CkKuad9KM57hjxdFPnE3
-	 dlTC0gGrpr6Vm/FejWKXOyM5/a0rMrDGs94lrT9HfLKFh299r9FT3DaZZz/9yN4udT
-	 4Xi2OrLdCvzLQVCEcAb2L87wBqvQO7qBCuFxeuDI=
+	b=NqHnVRgPrzK3YITmMmcZyoU1HK8eoYupjovOmrKLQkBKDQFAdX0VaYoN/IU8lb575
+	 8dL3t+wghgPrDgZUUudG4zShPqZmHOUQoqpLN46zN6mYxDcC4r3zgWV7gNL7XsuhM1
+	 3RiwrCVvmClxdKKzYGoxGGV4Skl+5RcArU38ClDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Traynor <ktraynor@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	William Tu <u9012063@gmail.com>,
+	Jie Wang <wangjie125@huawei.com>,
+	Hao Lan <lanhao@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/203] erspan: get the proto with the md version for collect_md
-Date: Mon, 22 May 2023 20:09:12 +0100
-Message-Id: <20230522190358.515404564@linuxfoundation.org>
+Subject: [PATCH 5.15 129/203] net: hns3: fix output information incomplete for dumping tx queue info with debugfs
+Date: Mon, 22 May 2023 20:09:13 +0100
+Message-Id: <20230522190358.543918239@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -38,79 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit d80fc101d2eb9b3188c228d61223890aeea480a4 ]
+[ Upstream commit 89f6bfb071182f05d7188c255b0e7251c3806f16 ]
 
-In commit 20704bd1633d ("erspan: build the header with the right proto
-according to erspan_ver"), it gets the proto with t->parms.erspan_ver,
-but t->parms.erspan_ver is not used by collect_md branch, and instead
-it should get the proto with md->version for collect_md.
+In function hns3_dump_tx_queue_info, The print buffer is not enough when
+the tx BD number is configured to 32760. As a result several BD
+information wouldn't be displayed.
 
-Thanks to Kevin for pointing this out.
+So fix it by increasing the tx queue print buffer length.
 
-Fixes: 20704bd1633d ("erspan: build the header with the right proto according to erspan_ver")
-Fixes: 94d7d8f29287 ("ip6_gre: add erspan v2 support")
-Reported-by: Kevin Traynor <ktraynor@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: William Tu <u9012063@gmail.com>
+Fixes: 630a6738da82 ("net: hns3: adjust string spaces of some parameters of tx bd info in debugfs")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c | 2 +-
+ drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index a91f93ec7d2b4..0b041ab79ad90 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1015,12 +1015,14 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 					    ntohl(tun_id),
- 					    ntohl(md->u.index), truncate,
- 					    false);
-+			proto = htons(ETH_P_ERSPAN);
- 		} else if (md->version == 2) {
- 			erspan_build_header_v2(skb,
- 					       ntohl(tun_id),
- 					       md->u.md2.dir,
- 					       get_hwid(&md->u.md2),
- 					       truncate, false);
-+			proto = htons(ETH_P_ERSPAN2);
- 		} else {
- 			goto tx_err;
- 		}
-@@ -1043,24 +1045,25 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 			break;
- 		}
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+index 15ce1a33649ee..3158c08a3aa9c 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+@@ -123,7 +123,7 @@ static struct hns3_dbg_cmd_info hns3_dbg_cmd[] = {
+ 		.name = "tx_bd_queue",
+ 		.cmd = HNAE3_DBG_CMD_TX_BD,
+ 		.dentry = HNS3_DBG_DENTRY_TX_BD,
+-		.buf_len = HNS3_DBG_READ_LEN_4MB,
++		.buf_len = HNS3_DBG_READ_LEN_5MB,
+ 		.init = hns3_dbg_bd_file_init,
+ 	},
+ 	{
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h
+index 814f7491ca08d..fb0c907cec852 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h
+@@ -8,6 +8,7 @@
+ #define HNS3_DBG_READ_LEN_128KB	0x20000
+ #define HNS3_DBG_READ_LEN_1MB	0x100000
+ #define HNS3_DBG_READ_LEN_4MB	0x400000
++#define HNS3_DBG_READ_LEN_5MB	0x500000
+ #define HNS3_DBG_WRITE_LEN	1024
  
--		if (t->parms.erspan_ver == 1)
-+		if (t->parms.erspan_ver == 1) {
- 			erspan_build_header(skb, ntohl(t->parms.o_key),
- 					    t->parms.index,
- 					    truncate, false);
--		else if (t->parms.erspan_ver == 2)
-+			proto = htons(ETH_P_ERSPAN);
-+		} else if (t->parms.erspan_ver == 2) {
- 			erspan_build_header_v2(skb, ntohl(t->parms.o_key),
- 					       t->parms.dir,
- 					       t->parms.hwid,
- 					       truncate, false);
--		else
-+			proto = htons(ETH_P_ERSPAN2);
-+		} else {
- 			goto tx_err;
-+		}
- 
- 		fl6.daddr = t->parms.raddr;
- 	}
- 
- 	/* Push GRE header. */
--	proto = (t->parms.erspan_ver == 1) ? htons(ETH_P_ERSPAN)
--					   : htons(ETH_P_ERSPAN2);
- 	gre_build_header(skb, 8, TUNNEL_SEQ, proto, 0, htonl(atomic_fetch_inc(&t->o_seqno)));
- 
- 	/* TooBig packet may have updated dst->dev's mtu */
+ #define HNS3_DBG_DATA_STR_LEN	32
 -- 
 2.39.2
 
