@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCA5171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:54:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EEEC433D2;
-	Mon, 22 May 2023 19:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E818171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:54:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7E7C433D2;
+	Mon, 22 May 2023 19:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785276;
-	bh=pTB2crwC1cHJYOGMLJrzpKch14Nvu3b5igGgPiZutfY=;
+	s=korg; t=1684785279;
+	bh=la59xoWC6QSWnaNVuqh2zFhi0gli+BszRWQZvSq6b88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yETI99uInEnDpcrbTeDf4YDNOdzBsH3/0jINdOOs+kghin68B2xjTLRtB579yIyq3
-	 YqhG+OaBvX/5CREsAqdH7lykUIbJpew8AqFIn2hgoMTFZEo97wU3FtWllm6dhtp6ET
-	 A+EuAbgx5YNWQRhSfm/LcvGu3/TDJnOVxved+iMY=
+	b=jre29ZFsoHcWiEA0aKH0pM9JIPh7XTMVcoab7XoO9pxfxk1Nd5Eu/m2si6JLJtdy+
+	 xr7ZLG6954AMDLXfPxaOad76iwnN81Gp/KTwWBmI4iC2vXRqmDqo5O5Rjgbdg/jV+e
+	 Z9Aar1AxTbCrBAOvGaLOY/RG0N0mAY0HZ6kJSKwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huayu Chen <huayu.chen@corigine.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Louis Peens <louis.peens@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.3 350/364] nfp: fix NFP_NET_MAX_DSCP definition error
-Date: Mon, 22 May 2023 20:10:55 +0100
-Message-Id: <20230522190421.534393266@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.3 351/364] nilfs2: fix use-after-free bug of nilfs_root in nilfs_evict_inode()
+Date: Mon, 22 May 2023 20:10:56 +0100
+Message-Id: <20230522190421.556901815@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,42 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huayu Chen <huayu.chen@corigine.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit de9c1a23add9e7842ce63ce6f498a05c66344311 upstream.
+commit 9b5a04ac3ad9898c4745cba46ea26de74ba56a8e upstream.
 
-The patch corrects the NFP_NET_MAX_DSCP definition in the main.h file.
+During unmount process of nilfs2, nothing holds nilfs_root structure after
+nilfs2 detaches its writer in nilfs_detach_log_writer().  However, since
+nilfs_evict_inode() uses nilfs_root for some cleanup operations, it may
+cause use-after-free read if inodes are left in "garbage_list" and
+released by nilfs_dispose_list() at the end of nilfs_detach_log_writer().
 
-The incorrect definition result DSCP bits not being mapped properly when
-DCB is set. When NFP_NET_MAX_DSCP was defined as 4, the next 60 DSCP
-bits failed to be set.
+Fix this issue by modifying nilfs_evict_inode() to only clear inode
+without additional metadata changes that use nilfs_root if the file system
+is degraded to read-only or the writer is detached.
 
-Fixes: 9b7fe8046d74 ("nfp: add DCB IEEE support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Huayu Chen <huayu.chen@corigine.com>
-Acked-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: Louis Peens <louis.peens@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lkml.kernel.org/r/20230509152956.8313-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/00000000000099e5ac05fb1c3b85@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/netronome/nfp/nic/main.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nilfs2/inode.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nic/main.h b/drivers/net/ethernet/netronome/nfp/nic/main.h
-index 094374df42b8..38b8b10b03cd 100644
---- a/drivers/net/ethernet/netronome/nfp/nic/main.h
-+++ b/drivers/net/ethernet/netronome/nfp/nic/main.h
-@@ -8,7 +8,7 @@
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -917,6 +917,7 @@ void nilfs_evict_inode(struct inode *ino
+ 	struct nilfs_transaction_info ti;
+ 	struct super_block *sb = inode->i_sb;
+ 	struct nilfs_inode_info *ii = NILFS_I(inode);
++	struct the_nilfs *nilfs;
+ 	int ret;
  
- #ifdef CONFIG_DCB
- /* DCB feature definitions */
--#define NFP_NET_MAX_DSCP	4
-+#define NFP_NET_MAX_DSCP	64
- #define NFP_NET_MAX_TC		IEEE_8021QAZ_MAX_TCS
- #define NFP_NET_MAX_PRIO	8
- #define NFP_DCB_CFG_STRIDE	256
--- 
-2.40.1
-
+ 	if (inode->i_nlink || !ii->i_root || unlikely(is_bad_inode(inode))) {
+@@ -929,6 +930,23 @@ void nilfs_evict_inode(struct inode *ino
+ 
+ 	truncate_inode_pages_final(&inode->i_data);
+ 
++	nilfs = sb->s_fs_info;
++	if (unlikely(sb_rdonly(sb) || !nilfs->ns_writer)) {
++		/*
++		 * If this inode is about to be disposed after the file system
++		 * has been degraded to read-only due to file system corruption
++		 * or after the writer has been detached, do not make any
++		 * changes that cause writes, just clear it.
++		 * Do this check after read-locking ns_segctor_sem by
++		 * nilfs_transaction_begin() in order to avoid a race with
++		 * the writer detach operation.
++		 */
++		clear_inode(inode);
++		nilfs_clear_inode(inode);
++		nilfs_transaction_abort(sb);
++		return;
++	}
++
+ 	/* TODO: some of the following operations may fail.  */
+ 	nilfs_truncate_bmap(ii, 0);
+ 	nilfs_mark_inode_dirty(inode);
 
 
