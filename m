@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644F6171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:47:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7178C433D2;
-	Mon, 22 May 2023 19:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34900171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:47:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E23C433EF;
+	Mon, 22 May 2023 19:47:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784854;
-	bh=BKofLqGdi6II8Kub78pbjSyhPM9gTB218B6bMVdh/D0=;
+	s=korg; t=1684784863;
+	bh=7sG3qalha1xhNGipSnhZPjI9JikH2aXgQbyJG0AhEd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOo1bjYMexdJ5R8kNZY8QjDowrqTM/u/LnVU+Fjf8BRFGbz5PPduQ5lKPLYAxCGCF
-	 gQKDN/relfjP4yTx5LaUN/94mvkQJktI2UY80pBpphQmGJgkrKEh2Xe7o8/UqtLE51
-	 okE8g2WW7JG7u2HZgmC74Jp1hu31NHKa6wUJl9nw=
+	b=KLfOlbQzswjmAvmqfwAY9zRAgySQyV0NLH+x+C6/nME+2C2yal8QsgYrdn9zZGClB
+	 Sc3qxDZe73rqSiln+CBTCk9Hyjjb3ws7hkW7k1vRX7QSOWwZl3n5lBvmxU6p0vVRQB
+	 pNoCYYBmbMY/O4GfwlZ1iFGbdWP1jMpSuW3zVSm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Brunner <tobias@strongswan.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 218/364] xfrm: Reject optional tunnel/BEET mode templates in outbound policies
-Date: Mon, 22 May 2023 20:08:43 +0100
-Message-Id: <20230522190418.161172683@linuxfoundation.org>
+Subject: [PATCH 6.3 227/364] wifi: mt76: connac: fix stats->tx_bytes calculation
+Date: Mon, 22 May 2023 20:08:52 +0100
+Message-Id: <20230522190418.376429735@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,90 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Brunner <tobias@strongswan.org>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 3d776e31c841ba2f69895d2255a49320bec7cea6 ]
+[ Upstream commit c7ab7a29ef5c0779574120d922256ce4651555d3 ]
 
-xfrm_state_find() uses `encap_family` of the current template with
-the passed local and remote addresses to find a matching state.
-If an optional tunnel or BEET mode template is skipped in a mixed-family
-scenario, there could be a mismatch causing an out-of-bounds read as
-the addresses were not replaced to match the family of the next template.
+The stats->tx_bytes shall subtract retry byte from tx byte.
 
-While there are theoretical use cases for optional templates in outbound
-policies, the only practical one is to skip IPComp states in inbound
-policies if uncompressed packets are received that are handled by an
-implicitly created IPIP state instead.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Tobias Brunner <tobias@strongswan.org>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 43eaa3689507 ("wifi: mt76: add PPDU based TxS support for WED device")
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/b3cd45596943cf5a06b2e08e2fe732ab0b51311b.1682285873.git.ryder.lee@mediatek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76_connac2_mac.h | 2 +-
+ drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c  | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index af8fbcbfbe691..6794b9dea27aa 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -1768,7 +1768,7 @@ static void copy_templates(struct xfrm_policy *xp, struct xfrm_user_tmpl *ut,
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac2_mac.h b/drivers/net/wireless/mediatek/mt76/mt76_connac2_mac.h
+index f33171bcd3432..c3b692eac6f65 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac2_mac.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac2_mac.h
+@@ -163,7 +163,7 @@ enum {
+ #define MT_TXS5_MPDU_TX_CNT		GENMASK(31, 23)
  
- static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
--			 struct netlink_ext_ack *extack)
-+			 int dir, struct netlink_ext_ack *extack)
- {
- 	u16 prev_family;
- 	int i;
-@@ -1794,6 +1794,10 @@ static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
- 		switch (ut[i].mode) {
- 		case XFRM_MODE_TUNNEL:
- 		case XFRM_MODE_BEET:
-+			if (ut[i].optional && dir == XFRM_POLICY_OUT) {
-+				NL_SET_ERR_MSG(extack, "Mode in optional template not allowed in outbound policy");
-+				return -EINVAL;
-+			}
- 			break;
- 		default:
- 			if (ut[i].family != prev_family) {
-@@ -1831,7 +1835,7 @@ static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
- }
+ #define MT_TXS6_MPDU_FAIL_CNT		GENMASK(31, 23)
+-
++#define MT_TXS7_MPDU_RETRY_BYTE		GENMASK(22, 0)
+ #define MT_TXS7_MPDU_RETRY_CNT		GENMASK(31, 23)
  
- static int copy_from_user_tmpl(struct xfrm_policy *pol, struct nlattr **attrs,
--			       struct netlink_ext_ack *extack)
-+			       int dir, struct netlink_ext_ack *extack)
- {
- 	struct nlattr *rt = attrs[XFRMA_TMPL];
- 
-@@ -1842,7 +1846,7 @@ static int copy_from_user_tmpl(struct xfrm_policy *pol, struct nlattr **attrs,
- 		int nr = nla_len(rt) / sizeof(*utmpl);
- 		int err;
- 
--		err = validate_tmpl(nr, utmpl, pol->family, extack);
-+		err = validate_tmpl(nr, utmpl, pol->family, dir, extack);
- 		if (err)
- 			return err;
- 
-@@ -1919,7 +1923,7 @@ static struct xfrm_policy *xfrm_policy_construct(struct net *net,
- 	if (err)
- 		goto error;
- 
--	if (!(err = copy_from_user_tmpl(xp, attrs, extack)))
-+	if (!(err = copy_from_user_tmpl(xp, attrs, p->dir, extack)))
- 		err = copy_from_user_sec_ctx(xp, attrs);
- 	if (err)
- 		goto error;
-@@ -3498,7 +3502,7 @@ static struct xfrm_policy *xfrm_compile_policy(struct sock *sk, int opt,
- 		return NULL;
- 
- 	nr = ((len - sizeof(*p)) / sizeof(*ut));
--	if (validate_tmpl(nr, ut, p->sel.family, NULL))
-+	if (validate_tmpl(nr, ut, p->sel.family, p->dir, NULL))
- 		return NULL;
- 
- 	if (p->dir > XFRM_POLICY_OUT)
+ /* RXD DW1 */
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
+index 82aac0a04655f..e57eade24ae56 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
+@@ -576,7 +576,8 @@ bool mt76_connac2_mac_fill_txs(struct mt76_dev *dev, struct mt76_wcid *wcid,
+ 	/* PPDU based reporting */
+ 	if (FIELD_GET(MT_TXS0_TXS_FORMAT, txs) > 1) {
+ 		stats->tx_bytes +=
+-			le32_get_bits(txs_data[5], MT_TXS5_MPDU_TX_BYTE);
++			le32_get_bits(txs_data[5], MT_TXS5_MPDU_TX_BYTE) -
++			le32_get_bits(txs_data[7], MT_TXS7_MPDU_RETRY_BYTE);
+ 		stats->tx_packets +=
+ 			le32_get_bits(txs_data[5], MT_TXS5_MPDU_TX_CNT);
+ 		stats->tx_failed +=
 -- 
 2.39.2
 
