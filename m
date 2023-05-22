@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534F1168DC
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDA3C433EF;
-	Mon, 22 May 2023 19:28:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8445168DC
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9A9C433EF;
+	Mon, 22 May 2023 19:28:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783684;
-	bh=/O/XkNe3bHehvczqzHylKHJi+VXkUeymg+W/IzhvROw=;
+	s=korg; t=1684783687;
+	bh=GDJqL3ApqS/ZnDifmDg2sYO6N0TYZCUCDJ0ATatYnFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2iOlrmM5Ko8jNpwqdwcFZviY2EhovDTRhPnxinXCzlWZEgi3oOZ6iQUub9z8QRF0
-	 rSaUTD8j9rwxjEeL+EF6ETsm40mXLiYKWwv+pwzbJmK4r0Y4KHVnEa7n4DNRctRbux
-	 FqIU3L7+VuGfzHJf+KUAtaT50POSNBEzI9cGeyTI=
+	b=Op303no6XfEvRmvR435ysqy5VLaBK4GM26F3DX3/xwGnredmlcujhQOMauigeH5J7
+	 p3XlsHui3mGjj1zhe5EanJqKN/623nEGqWagsc3bt+LZiIlzy7SKxC4TaJGLbu00Kx
+	 ViWU4/A8XdydoHm5zfUnmE1TYaxkVu3Y2AA6t4fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fred Oh <fred.oh@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Cem Kaya <cemkaya.boun@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 128/292] ALSA: hda: LNL: add HD Audio PCI ID
-Date: Mon, 22 May 2023 20:08:05 +0100
-Message-Id: <20230522190409.168857070@linuxfoundation.org>
+Subject: [PATCH 6.1 129/292] ASoC: amd: Add Dell G15 5525 to quirks list
+Date: Mon, 22 May 2023 20:08:06 +0100
+Message-Id: <20230522190409.193842021@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -38,37 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fred Oh <fred.oh@linux.intel.com>
+From: Cem Kaya <cemkaya.boun@gmail.com>
 
-[ Upstream commit 714b2f025d767e7df1fe9da18bd70537d64cc157 ]
+[ Upstream commit faf15233e59052f4d61cad2da6e56daf33124d96 ]
 
-Add HD Audio PCI ID for Intel Lunarlake platform.
+Add Dell G15 5525 Ryzen Edition to quirks list for acp6x so that
+internal mic works.
 
-Signed-off-by: Fred Oh <fred.oh@linux.intel.com>
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20230406152500.15104-1-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217155
+Signed-off-by: Cem Kaya <cemkaya.boun@gmail.com>
+Link: https://lore.kernel.org/r/20230410183814.260518-1-cemkaya.boun@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_intel.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 77a592f219472..881b2f3a1551f 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -2528,6 +2528,9 @@ static const struct pci_device_id azx_ids[] = {
- 	/* Meteorlake-P */
- 	{ PCI_DEVICE(0x8086, 0x7e28),
- 	  .driver_data = AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE},
-+	/* Lunarlake-P */
-+	{ PCI_DEVICE(0x8086, 0xa828),
-+	  .driver_data = AZX_DRIVER_SKL | AZX_DCAPS_INTEL_SKYLAKE},
- 	/* Broxton-P(Apollolake) */
- 	{ PCI_DEVICE(0x8086, 0x5a98),
- 	  .driver_data = AZX_DRIVER_SKL | AZX_DCAPS_INTEL_BROXTON },
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index a428e17f03259..1d59163a882ca 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -45,6 +45,13 @@ static struct snd_soc_card acp6x_card = {
+ };
+ 
+ static const struct dmi_system_id yc_acp_quirk_table[] = {
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Dell G15 5525"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.39.2
 
