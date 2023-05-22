@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFF32171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16365C433D2;
-	Mon, 22 May 2023 19:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B522171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:51:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08726C433EF;
+	Mon, 22 May 2023 19:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785058;
-	bh=RCCRH6mQYxR8mwPl/kBgiq2iUnY0i6b7DXYcv6g+2Tc=;
+	s=korg; t=1684785061;
+	bh=4MsZa2lGNPONwW+8JbO5BksSHquiMX4cWychEnOJgqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zjmqZmR+3oZ2iit2MMl3Fka7qkxIZwadHEpAuN5RPyStownUP/O4rmWYm0/5Rps3m
-	 zEDPh7ZjxIou/9pMdXL1GMbyWTSg9hQzUt0H8FBiK1xGEKSkGj/7poIg1CakQXZCwH
-	 65STgCl4vXAGLJzwsSrjXfaUC1Fz+LqikM9aZSK8=
+	b=dhxml+C4SqMSkUqmFpM3OFtxf+2VPvF72e40Qmwi/D4s/9Y9F+km0vy26Ys7LyPTR
+	 6sNfwPqxe4g0BaVwLSkK0rqOrhQoAE43vJikYqio39E0GLBYHVe7TiRtSl0vPGmOJJ
+	 gJX+3v2HHO/WjvzJygRzdYEkyxCmy13WW8tRukys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Udipto Goswami <quic_ugoswami@quicinc.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.3 294/364] usb: dwc3: debugfs: Resume dwc3 before accessing registers
-Date: Mon, 22 May 2023 20:09:59 +0100
-Message-Id: <20230522190420.121948333@linuxfoundation.org>
+	=?UTF-8?q?Konrad=20Gr=C3=A4fe?= <k.graefe@gateware.de>
+Subject: [PATCH 6.3 295/364] usb: gadget: u_ether: Fix host MAC address case
+Date: Mon, 22 May 2023 20:10:00 +0100
+Message-Id: <20230522190420.147839610@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,379 +33,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Udipto Goswami <quic_ugoswami@quicinc.com>
+From: Konrad Gräfe <k.graefe@gateware.de>
 
-commit 614ce6a2ea50068b45339257891e51e639ac9001 upstream.
+commit 3c0f4f09c063e143822393d99cb2b19a85451c07 upstream.
 
-When the dwc3 device is runtime suspended, various required clocks are in
-disabled state and it is not guaranteed that access to any registers would
-work. Depending on the SoC glue, a register read could be as benign as
-returning 0 or be fatal enough to hang the system.
+The CDC-ECM specification [1] requires to send the host MAC address as
+an uppercase hexadecimal string in chapter "5.4 Ethernet Networking
+Functional Descriptor":
+    The Unicode character is chosen from the set of values 30h through
+    39h and 41h through 46h (0-9 and A-F).
 
-In order to prevent such scenarios of fatal errors, make sure to resume
-dwc3 then allow the function to proceed.
+However, snprintf(.., "%pm", ..) generates a lowercase MAC address
+string. While most host drivers are tolerant to this, UsbNcm.sys on
+Windows 10 is not. Instead it uses a different MAC address with all
+bytes set to zero including and after the first byte containing a
+lowercase letter. On Windows 11 Microsoft fixed it, but apparently they
+did not backport the fix.
 
-Fixes: 72246da40f37 ("usb: Introduce DesignWare USB3 DRD Driver")
-Cc: stable@vger.kernel.org #3.2: 30332eeefec8: debugfs: regset32: Add Runtime PM support
-Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/20230509144836.6803-1-quic_ugoswami@quicinc.com
+This change fixes the issue by upper-casing the MAC to comply with the
+specification.
+
+[1]: https://www.usb.org/document-library/class-definitions-communication-devices-12, file ECM120.pdf
+
+Fixes: bcd4a1c40bee ("usb: gadget: u_ether: construct with default values and add setters/getters")
+Cc: stable@vger.kernel.org
+Signed-off-by: Konrad Gräfe <k.graefe@gateware.de>
+Link: https://lore.kernel.org/r/20230505143640.443014-1-k.graefe@gateware.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/debugfs.c |  109 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 109 insertions(+)
+ drivers/usb/gadget/function/u_ether.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/dwc3/debugfs.c
-+++ b/drivers/usb/dwc3/debugfs.c
-@@ -327,6 +327,11 @@ static int dwc3_lsp_show(struct seq_file
- 	unsigned int		current_mode;
- 	unsigned long		flags;
- 	u32			reg;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -17,6 +17,7 @@
+ #include <linux/etherdevice.h>
+ #include <linux/ethtool.h>
+ #include <linux/if_vlan.h>
++#include <linux/string_helpers.h>
+ #include <linux/usb/composite.h>
  
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_GSTS);
-@@ -345,6 +350,8 @@ static int dwc3_lsp_show(struct seq_file
- 	}
- 	spin_unlock_irqrestore(&dwc->lock, flags);
+ #include "u_ether.h"
+@@ -942,6 +943,8 @@ int gether_get_host_addr_cdc(struct net_
+ 	dev = netdev_priv(net);
+ 	snprintf(host_addr, len, "%pm", dev->host_mac);
  
-+	pm_runtime_put_sync(dwc->dev);
++	string_upper(host_addr, host_addr);
 +
- 	return 0;
+ 	return strlen(host_addr);
  }
- 
-@@ -390,6 +397,11 @@ static int dwc3_mode_show(struct seq_fil
- 	struct dwc3		*dwc = s->private;
- 	unsigned long		flags;
- 	u32			reg;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_GCTL);
-@@ -409,6 +421,8 @@ static int dwc3_mode_show(struct seq_fil
- 		seq_printf(s, "UNKNOWN %08x\n", DWC3_GCTL_PRTCAP(reg));
- 	}
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -458,6 +472,11 @@ static int dwc3_testmode_show(struct seq
- 	struct dwc3		*dwc = s->private;
- 	unsigned long		flags;
- 	u32			reg;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
-@@ -488,6 +507,8 @@ static int dwc3_testmode_show(struct seq
- 		seq_printf(s, "UNKNOWN %d\n", reg);
- 	}
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -504,6 +525,7 @@ static ssize_t dwc3_testmode_write(struc
- 	unsigned long		flags;
- 	u32			testmode = 0;
- 	char			buf[32];
-+	int			ret;
- 
- 	if (copy_from_user(&buf, ubuf, min_t(size_t, sizeof(buf) - 1, count)))
- 		return -EFAULT;
-@@ -521,10 +543,16 @@ static ssize_t dwc3_testmode_write(struc
- 	else
- 		testmode = 0;
- 
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	dwc3_gadget_set_test_mode(dwc, testmode);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return count;
- }
- 
-@@ -543,12 +571,18 @@ static int dwc3_link_state_show(struct s
- 	enum dwc3_link_state	state;
- 	u32			reg;
- 	u8			speed;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_GSTS);
- 	if (DWC3_GSTS_CURMOD(reg) != DWC3_GSTS_CURMOD_DEVICE) {
- 		seq_puts(s, "Not available\n");
- 		spin_unlock_irqrestore(&dwc->lock, flags);
-+		pm_runtime_put_sync(dwc->dev);
- 		return 0;
- 	}
- 
-@@ -561,6 +595,8 @@ static int dwc3_link_state_show(struct s
- 		   dwc3_gadget_hs_link_string(state));
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -579,6 +615,7 @@ static ssize_t dwc3_link_state_write(str
- 	char			buf[32];
- 	u32			reg;
- 	u8			speed;
-+	int			ret;
- 
- 	if (copy_from_user(&buf, ubuf, min_t(size_t, sizeof(buf) - 1, count)))
- 		return -EFAULT;
-@@ -598,10 +635,15 @@ static ssize_t dwc3_link_state_write(str
- 	else
- 		return -EINVAL;
- 
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
-+
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = dwc3_readl(dwc->regs, DWC3_GSTS);
- 	if (DWC3_GSTS_CURMOD(reg) != DWC3_GSTS_CURMOD_DEVICE) {
- 		spin_unlock_irqrestore(&dwc->lock, flags);
-+		pm_runtime_put_sync(dwc->dev);
- 		return -EINVAL;
- 	}
- 
-@@ -611,12 +653,15 @@ static ssize_t dwc3_link_state_write(str
- 	if (speed < DWC3_DSTS_SUPERSPEED &&
- 	    state != DWC3_LINK_STATE_RECOV) {
- 		spin_unlock_irqrestore(&dwc->lock, flags);
-+		pm_runtime_put_sync(dwc->dev);
- 		return -EINVAL;
- 	}
- 
- 	dwc3_gadget_set_link_state(dwc, state);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return count;
- }
- 
-@@ -640,6 +685,11 @@ static int dwc3_tx_fifo_size_show(struct
- 	unsigned long		flags;
- 	u32			mdwidth;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_TXFIFO);
-@@ -652,6 +702,8 @@ static int dwc3_tx_fifo_size_show(struct
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -662,6 +714,11 @@ static int dwc3_rx_fifo_size_show(struct
- 	unsigned long		flags;
- 	u32			mdwidth;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_RXFIFO);
-@@ -674,6 +731,8 @@ static int dwc3_rx_fifo_size_show(struct
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -683,12 +742,19 @@ static int dwc3_tx_request_queue_show(st
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_TXREQQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -698,12 +764,19 @@ static int dwc3_rx_request_queue_show(st
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_RXREQQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -713,12 +786,19 @@ static int dwc3_rx_info_queue_show(struc
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_RXINFOQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -728,12 +808,19 @@ static int dwc3_descriptor_fetch_queue_s
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_DESCFETCHQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -743,12 +830,19 @@ static int dwc3_event_queue_show(struct
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	u32			val;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	val = dwc3_core_fifo_space(dep, DWC3_EVENTQ);
- 	seq_printf(s, "%u\n", val);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -793,6 +887,11 @@ static int dwc3_trb_ring_show(struct seq
- 	struct dwc3		*dwc = dep->dwc;
- 	unsigned long		flags;
- 	int			i;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	if (dep->number <= 1) {
-@@ -822,6 +921,8 @@ static int dwc3_trb_ring_show(struct seq
- out:
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -834,6 +935,11 @@ static int dwc3_ep_info_register_show(st
- 	u32			lower_32_bits;
- 	u32			upper_32_bits;
- 	u32			reg;
-+	int			ret;
-+
-+	ret = pm_runtime_resume_and_get(dwc->dev);
-+	if (ret < 0)
-+		return ret;
- 
- 	spin_lock_irqsave(&dwc->lock, flags);
- 	reg = DWC3_GDBGLSPMUX_EPSELECT(dep->number);
-@@ -846,6 +952,8 @@ static int dwc3_ep_info_register_show(st
- 	seq_printf(s, "0x%016llx\n", ep_info);
- 	spin_unlock_irqrestore(&dwc->lock, flags);
- 
-+	pm_runtime_put_sync(dwc->dev);
-+
- 	return 0;
- }
- 
-@@ -905,6 +1013,7 @@ void dwc3_debugfs_init(struct dwc3 *dwc)
- 	dwc->regset->regs = dwc3_regs;
- 	dwc->regset->nregs = ARRAY_SIZE(dwc3_regs);
- 	dwc->regset->base = dwc->regs - DWC3_GLOBALS_REGS_START;
-+	dwc->regset->dev = dwc->dev;
- 
- 	root = debugfs_create_dir(dev_name(dwc->dev), usb_debug_root);
- 	dwc->debug_root = root;
+ EXPORT_SYMBOL_GPL(gether_get_host_addr_cdc);
 
 
