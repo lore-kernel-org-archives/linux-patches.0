@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2076D171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:22:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED57C433EF;
-	Mon, 22 May 2023 19:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 498BC171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:22:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5E4C433EF;
+	Mon, 22 May 2023 19:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783333;
-	bh=8AjTZa78PBqcCmBPcMReAytf1Kk5ESN+SBF14i7/yC0=;
+	s=korg; t=1684783336;
+	bh=IdVt9EID+sh18zsIXhi5nhq/d3Y/idBOj8szCQu65bQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ItMfAVPJR1COpbE/LDeRVK0sF1JyWbIYcbqgXgU/66sjHMrJauG2HQX3FWyTPFVSU
-	 h/04ipUemqExpqG1faP7UsYi88dopwlFqajrIx8STR+waKmOq0BETUSL457fL9JyLc
-	 em1/deqHi3fnB7jlD0+LO/aywyxwxNHnFajyF5Ik=
+	b=yuX7dm1vmRyLNH5hAh4WadfK5f6RLcBkRV1EEosxpWxldP8r3UXanVNfE1hWGWge5
+	 nONDg0v25n2egGnHJlxdPJK1NziWPBGrnjCz4txDmwGDdjm/2ubPXMyiyTRjfdJX4U
+	 5TwCoW50PQ3lBbdDjdiYYLKpHUJFTmYgpe/uw51Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/292] net: Fix load-tearing on sk->sk_stamp in sock_recv_cmsgs().
-Date: Mon, 22 May 2023 20:06:07 +0100
-Message-Id: <20230522190406.148867874@linuxfoundation.org>
+Subject: [PATCH 6.1 011/292] net: phy: bcm7xx: Correct read from expansion register
+Date: Mon, 22 May 2023 20:06:08 +0100
+Message-Id: <20230522190406.173755454@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -37,80 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit dfd9248c071a3710c24365897459538551cb7167 ]
+[ Upstream commit 582dbb2cc1a0a7427840f5b1e3c65608e511b061 ]
 
-KCSAN found a data race in sock_recv_cmsgs() where the read access
-to sk->sk_stamp needs READ_ONCE().
+Since the driver works in the "legacy" addressing mode, we need to write
+to the expansion register (0x17) with bits 11:8 set to 0xf to properly
+select the expansion register passed as argument.
 
-BUG: KCSAN: data-race in packet_recvmsg / packet_recvmsg
-
-write (marked) to 0xffff88803c81f258 of 8 bytes by task 19171 on cpu 0:
- sock_write_timestamp include/net/sock.h:2670 [inline]
- sock_recv_cmsgs include/net/sock.h:2722 [inline]
- packet_recvmsg+0xb97/0xd00 net/packet/af_packet.c:3489
- sock_recvmsg_nosec net/socket.c:1019 [inline]
- sock_recvmsg+0x11a/0x130 net/socket.c:1040
- sock_read_iter+0x176/0x220 net/socket.c:1118
- call_read_iter include/linux/fs.h:1845 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x5e0/0x630 fs/read_write.c:470
- ksys_read+0x163/0x1a0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x41/0x50 fs/read_write.c:621
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-read to 0xffff88803c81f258 of 8 bytes by task 19183 on cpu 1:
- sock_recv_cmsgs include/net/sock.h:2721 [inline]
- packet_recvmsg+0xb64/0xd00 net/packet/af_packet.c:3489
- sock_recvmsg_nosec net/socket.c:1019 [inline]
- sock_recvmsg+0x11a/0x130 net/socket.c:1040
- sock_read_iter+0x176/0x220 net/socket.c:1118
- call_read_iter include/linux/fs.h:1845 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x5e0/0x630 fs/read_write.c:470
- ksys_read+0x163/0x1a0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x41/0x50 fs/read_write.c:621
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0xffffffffc4653600 -> 0x0000000000000000
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 19183 Comm: syz-executor.5 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 6c7c98bad488 ("sock: avoid dirtying sk_stamp, if possible")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230508175543.55756-1-kuniyu@amazon.com
+Fixes: f68d08c437f9 ("net: phy: bcm7xxx: Add EPHY entry for 72165")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230508231749.1681169-1-f.fainelli@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/bcm-phy-lib.h | 5 +++++
+ drivers/net/phy/bcm7xxx.c     | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 832a4a51de4d9..beb1b747fb09d 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2744,7 +2744,7 @@ static inline void sock_recv_cmsgs(struct msghdr *msg, struct sock *sk,
- 		__sock_recv_cmsgs(msg, sk, skb);
- 	else if (unlikely(sock_flag(sk, SOCK_TIMESTAMP)))
- 		sock_write_timestamp(sk, skb->tstamp);
--	else if (unlikely(sk->sk_stamp == SK_DEFAULT_STAMP))
-+	else if (unlikely(sock_read_timestamp(sk) == SK_DEFAULT_STAMP))
- 		sock_write_timestamp(sk, 0);
+diff --git a/drivers/net/phy/bcm-phy-lib.h b/drivers/net/phy/bcm-phy-lib.h
+index 9902fb1820997..729db441797a0 100644
+--- a/drivers/net/phy/bcm-phy-lib.h
++++ b/drivers/net/phy/bcm-phy-lib.h
+@@ -40,6 +40,11 @@ static inline int bcm_phy_write_exp_sel(struct phy_device *phydev,
+ 	return bcm_phy_write_exp(phydev, reg | MII_BCM54XX_EXP_SEL_ER, val);
  }
  
++static inline int bcm_phy_read_exp_sel(struct phy_device *phydev, u16 reg)
++{
++	return bcm_phy_read_exp(phydev, reg | MII_BCM54XX_EXP_SEL_ER);
++}
++
+ int bcm54xx_auxctl_write(struct phy_device *phydev, u16 regnum, u16 val);
+ int bcm54xx_auxctl_read(struct phy_device *phydev, u16 regnum);
+ 
+diff --git a/drivers/net/phy/bcm7xxx.c b/drivers/net/phy/bcm7xxx.c
+index 75593e7d1118f..6cebf3aaa621f 100644
+--- a/drivers/net/phy/bcm7xxx.c
++++ b/drivers/net/phy/bcm7xxx.c
+@@ -487,7 +487,7 @@ static int bcm7xxx_16nm_ephy_afe_config(struct phy_device *phydev)
+ 	bcm_phy_write_misc(phydev, 0x0038, 0x0002, 0xede0);
+ 
+ 	/* Read CORE_EXPA9 */
+-	tmp = bcm_phy_read_exp(phydev, 0x00a9);
++	tmp = bcm_phy_read_exp_sel(phydev, 0x00a9);
+ 	/* CORE_EXPA9[6:1] is rcalcode[5:0] */
+ 	rcalcode = (tmp & 0x7e) / 2;
+ 	/* Correct RCAL code + 1 is -1% rprogr, LP: +16 */
 -- 
 2.39.2
 
