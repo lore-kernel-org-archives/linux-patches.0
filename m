@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85196171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DCE8C433EF;
-	Mon, 22 May 2023 19:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5813C171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8956C433EF;
+	Mon, 22 May 2023 19:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783693;
-	bh=MZJ2JwlXV8zGvhVnxDuxi244EYHKpQcGwxk41dx1clw=;
+	s=korg; t=1684783696;
+	bh=CAdlU3Z26SdXFJkED29iRmn5fBKbSOBOXN5QDzuIAvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mte6sfpRNunctonjGyQObNQTJtPKIS36HNaI5GM75h/oe0zydVuTjV1KQ/bxz/Gnd
-	 XOS8rbbHZivisEz+V7V/PqVYkE7VN+LrS/kL/noeaLsieVFNTddII3ACDWRxIr4q0Y
-	 pDfQ7c3LnLGxb3U+78eoBiRf8HKs+bx+tODznqFo=
+	b=fFd7bobmMw3226tThn02xUXTzEBD4sK6e5aB4F11Fjv3q2fKbVI0XCxyBdcGXiPd6
+	 saYIiMzLhbVI7amAAFTxVU/NH3ULCKTbsQqXc2mwBys73izguQAItHtcRRLPvxsDqL
+	 M35twahQ6Z+CCMgjM+n9inBdw2jGq9BVJI0fS4bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Max Chou <max.chou@realtek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 131/292] HID: apple: Set the tilde quirk flag on the Geyser 3
-Date: Mon, 22 May 2023 20:08:08 +0100
-Message-Id: <20230522190409.243271721@linuxfoundation.org>
+Subject: [PATCH 6.1 114/292] Bluetooth: btrtl: check for NULL in btrtl_set_quirks()
+Date: Mon, 22 May 2023 20:07:51 +0100
+Message-Id: <20230522190408.815326024@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,39 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Henrie <alexhenrie24@gmail.com>
+From: Max Chou <max.chou@realtek.com>
 
-[ Upstream commit 29e1ecc197d410ee59c8877098d54cf417075f7d ]
+[ Upstream commit 253cf30e8d3d001850a95c4729d668f916b037ab ]
 
-I was finally able to obtain a MacBook1,1 to test and I've now confirmed
-that it has the tilde key quirk as well:
+The btrtl_set_quirks() has accessed btrtl_dev->ic_info->lmp_subver since
+b8e482d02513. However, if installing a Realtek Bluetooth controller
+without the driver supported, it will hit the NULL point accessed.
 
-Product    Model  Year  System      CPU    Shape  Labels     Country  Quirky
-============================================================================
-05ac:0218  A1181  2006  MacBook1,1  T2500  ISO    British    13       Yes
+Add a check for NULL to avoid the Kernel Oops.
 
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-Link: https://lore.kernel.org/r/20230404024829.13982-1-alexhenrie24@gmail.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Max Chou <max.chou@realtek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-apple.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/bluetooth/btrtl.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index f21b1c4ca8254..37b2ce9b50fe8 100644
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -854,7 +854,8 @@ static const struct hid_device_id apple_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER3_ANSI),
- 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER3_ISO),
--		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
-+		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
-+			APPLE_ISO_TILDE_QUIRK },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER3_JIS),
- 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
- 			APPLE_RDESC_JIS },
+diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
+index 6b3755345427a..88f8c604d70a2 100644
+--- a/drivers/bluetooth/btrtl.c
++++ b/drivers/bluetooth/btrtl.c
+@@ -882,6 +882,9 @@ void btrtl_set_quirks(struct hci_dev *hdev, struct btrtl_device_info *btrtl_dev)
+ 		break;
+ 	}
+ 
++	if (!btrtl_dev->ic_info)
++		return;
++
+ 	switch (btrtl_dev->ic_info->lmp_subver) {
+ 	case RTL_ROM_LMP_8703B:
+ 		/* 8723CS reports two pages for local ext features,
 -- 
 2.39.2
 
