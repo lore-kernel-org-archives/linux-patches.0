@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C612168DC
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D5EC433D2;
-	Mon, 22 May 2023 19:39:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64321171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA8CC433EF;
+	Mon, 22 May 2023 19:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784394;
-	bh=NB5iOtNdCWYvMdtsTnFc19JsfSOCZQl5SyQZV27mq00=;
+	s=korg; t=1684784397;
+	bh=YqSv9tBf9Gzwzl+jYcsq1B3Xa5jimxbqgJeXbG9/8XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=17153cV4lRqV5E2rK+ejI/HvuVuAcHpzhBltkXz1tI7ki5xrsq4ZrhNxV0Zg3zcQv
-	 nvj19apxHTjgukPyzG67ui9qFrtsFG2M5Poa9m3SfH8qOjG0O58FPHuTOMuHah3fSy
-	 CXBuyc1NpiOsjEOjySgMt6K/YRa6cnf8Iozbw3LM=
+	b=BN3/gAmpyeqxK8nfshmQfPuxLGcln2qKeG9knk/+xggANFSlvrQSp/2Tn39Y/lynf
+	 VaDkIXc0ZxX+Dt0UNd8IYskxZ/NxxP/yLu6/oP0msOQjkOVNypRR26HfAUONiBSfe7
+	 vqKoC7PWqtIacN5QwckkiCOfFFEallQs/tGjYe+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
+	stable@kernel.org,
+	syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 036/364] ext4: reflect error codes from ext4_multi_mount_protect() to its callers
-Date: Mon, 22 May 2023 20:05:41 +0100
-Message-Id: <20230522190413.735965375@linuxfoundation.org>
+Subject: [PATCH 6.3 037/364] ext4: dont clear SB_RDONLY when remounting r/w until quota is re-enabled
+Date: Mon, 22 May 2023 20:05:42 +0100
+Message-Id: <20230522190413.761306075@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -37,123 +38,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit 3b50d5018ed06a647bb26c44bb5ae74e59c903c7 ]
+[ Upstream commit a44be64bbecb15a452496f60db6eacfee2b59c79 ]
 
-This will allow more fine-grained errno codes to be returned by the
-mount system call.
+When a file system currently mounted read/only is remounted
+read/write, if we clear the SB_RDONLY flag too early, before the quota
+is initialized, and there is another process/thread constantly
+attempting to create a directory, it's possible to trigger the
 
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+	WARN_ON_ONCE(dquot_initialize_needed(inode));
+
+in ext4_xattr_block_set(), with the following stack trace:
+
+   WARNING: CPU: 0 PID: 5338 at fs/ext4/xattr.c:2141 ext4_xattr_block_set+0x2ef2/0x3680
+   RIP: 0010:ext4_xattr_block_set+0x2ef2/0x3680 fs/ext4/xattr.c:2141
+   Call Trace:
+    ext4_xattr_set_handle+0xcd4/0x15c0 fs/ext4/xattr.c:2458
+    ext4_initxattrs+0xa3/0x110 fs/ext4/xattr_security.c:44
+    security_inode_init_security+0x2df/0x3f0 security/security.c:1147
+    __ext4_new_inode+0x347e/0x43d0 fs/ext4/ialloc.c:1324
+    ext4_mkdir+0x425/0xce0 fs/ext4/namei.c:2992
+    vfs_mkdir+0x29d/0x450 fs/namei.c:4038
+    do_mkdirat+0x264/0x520 fs/namei.c:4061
+    __do_sys_mkdirat fs/namei.c:4076 [inline]
+    __se_sys_mkdirat fs/namei.c:4074 [inline]
+    __x64_sys_mkdirat+0x89/0xa0 fs/namei.c:4074
+
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20230506142419.984260-1-tytso@mit.edu
+Reported-by: syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=6513f6cb5cd6b5fc9f37e3bb70d273b94be9c34c
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting r/w until quota is re-enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mmp.c   |  9 ++++++++-
- fs/ext4/super.c | 16 +++++++++-------
- 2 files changed, 17 insertions(+), 8 deletions(-)
+ fs/ext4/super.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/mmp.c b/fs/ext4/mmp.c
-index 46735ce315b5a..0aaf38ffcb6ec 100644
---- a/fs/ext4/mmp.c
-+++ b/fs/ext4/mmp.c
-@@ -290,6 +290,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 	if (mmp_block < le32_to_cpu(es->s_first_data_block) ||
- 	    mmp_block >= ext4_blocks_count(es)) {
- 		ext4_warning(sb, "Invalid MMP block in superblock");
-+		retval = -EINVAL;
- 		goto failed;
- 	}
- 
-@@ -315,6 +316,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 
- 	if (seq == EXT4_MMP_SEQ_FSCK) {
- 		dump_mmp_msg(sb, mmp, "fsck is running on the filesystem");
-+		retval = -EBUSY;
- 		goto failed;
- 	}
- 
-@@ -328,6 +330,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 
- 	if (schedule_timeout_interruptible(HZ * wait_time) != 0) {
- 		ext4_warning(sb, "MMP startup interrupted, failing mount\n");
-+		retval = -ETIMEDOUT;
- 		goto failed;
- 	}
- 
-@@ -338,6 +341,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 	if (seq != le32_to_cpu(mmp->mmp_seq)) {
- 		dump_mmp_msg(sb, mmp,
- 			     "Device is already active on another node.");
-+		retval = -EBUSY;
- 		goto failed;
- 	}
- 
-@@ -361,6 +365,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 	 */
- 	if (schedule_timeout_interruptible(HZ * wait_time) != 0) {
- 		ext4_warning(sb, "MMP startup interrupted, failing mount");
-+		retval = -ETIMEDOUT;
- 		goto failed;
- 	}
- 
-@@ -371,6 +376,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 	if (seq != le32_to_cpu(mmp->mmp_seq)) {
- 		dump_mmp_msg(sb, mmp,
- 			     "Device is already active on another node.");
-+		retval = -EBUSY;
- 		goto failed;
- 	}
- 
-@@ -390,6 +396,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 		EXT4_SB(sb)->s_mmp_tsk = NULL;
- 		ext4_warning(sb, "Unable to create kmmpd thread for %s.",
- 			     sb->s_id);
-+		retval = -ENOMEM;
- 		goto failed;
- 	}
- 
-@@ -397,5 +404,5 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 
- failed:
- 	brelse(bh);
--	return 1;
-+	return retval;
- }
 diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index d6ac61f43ac35..7b36089394175 100644
+index 7b36089394175..7c45ab1dbd34e 100644
 --- a/fs/ext4/super.c
 +++ b/fs/ext4/super.c
-@@ -5264,9 +5264,11 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
- 			  ext4_has_feature_orphan_present(sb) ||
- 			  ext4_has_feature_journal_needs_recovery(sb));
- 
--	if (ext4_has_feature_mmp(sb) && !sb_rdonly(sb))
--		if (ext4_multi_mount_protect(sb, le64_to_cpu(es->s_mmp_block)))
-+	if (ext4_has_feature_mmp(sb) && !sb_rdonly(sb)) {
-+		err = ext4_multi_mount_protect(sb, le64_to_cpu(es->s_mmp_block));
-+		if (err)
- 			goto failed_mount3a;
-+	}
- 
- 	/*
- 	 * The first inode we look at is the journal inode.  Don't try
-@@ -6537,12 +6539,12 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
+@@ -6352,6 +6352,7 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
+ 	struct ext4_mount_options old_opts;
+ 	ext4_group_t g;
+ 	int err = 0;
++	int enable_rw = 0;
+ #ifdef CONFIG_QUOTA
+ 	int enable_quota = 0;
+ 	int i, j;
+@@ -6538,7 +6539,7 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
+ 			if (err)
  				goto restore_opts;
  
- 			sb->s_flags &= ~SB_RDONLY;
--			if (ext4_has_feature_mmp(sb))
--				if (ext4_multi_mount_protect(sb,
--						le64_to_cpu(es->s_mmp_block))) {
--					err = -EROFS;
-+			if (ext4_has_feature_mmp(sb)) {
-+				err = ext4_multi_mount_protect(sb,
-+						le64_to_cpu(es->s_mmp_block));
-+				if (err)
- 					goto restore_opts;
--				}
-+			}
- #ifdef CONFIG_QUOTA
- 			enable_quota = 1;
- #endif
+-			sb->s_flags &= ~SB_RDONLY;
++			enable_rw = 1;
+ 			if (ext4_has_feature_mmp(sb)) {
+ 				err = ext4_multi_mount_protect(sb,
+ 						le64_to_cpu(es->s_mmp_block));
+@@ -6597,6 +6598,9 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
+ 	if (!test_opt(sb, BLOCK_VALIDITY) && sbi->s_system_blks)
+ 		ext4_release_system_zone(sb);
+ 
++	if (enable_rw)
++		sb->s_flags &= ~SB_RDONLY;
++
+ 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
+ 		ext4_stop_mmpd(sbi);
+ 
 -- 
 2.39.2
 
