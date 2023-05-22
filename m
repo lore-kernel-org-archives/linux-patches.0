@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B88171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F9CC433EF;
-	Mon, 22 May 2023 19:42:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70E9171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 469FFC433D2;
+	Mon, 22 May 2023 19:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784574;
-	bh=rODhLvb/3BHH0R7bwoUoNz3H/GtIGxQi5NfMdYLCNc8=;
+	s=korg; t=1684784577;
+	bh=TvdQX2XdC6Rd+gjChtYgSXmDF+mK9u/JwUqgSIU98/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kGW1eM9Q/VEyMDaBoGhBfqjFO6Y4PVRXx8GT/nf8EkwLYoN7VVm3+xOKUBzXGlEld
-	 qPFKOhNUGwSzmGuVPH5NAVK3VP9MB2UkmIVZjQ50amoru7J2mOubVIPO6t97HPQkM6
-	 pXHWv6JSIjGKdGNUlH4mgIVfNugGp5Md9jefDTUY=
+	b=sq8akBO1xVzULITu1YOOFyH+2P0PAI8PVmH2rPH1o9CRP/34tbedgKM3Qmh7AoPuP
+	 ejjFV9tBQVArk9E+/TKf+e/IrhKolxEc+N9FxRbvyYK4eVitrqebzypcQi46NjLvIQ
+	 7tsu5whvAoMhJ8SewPr0SGScbBLozMKHUjm6NEKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Ming Lei <ming.lei@redhat.com>,
-	Nitesh Shetty <nj.shetty@samsung.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Vladis Dronov <vdronov@redhat.com>,
+	Stephan Mueller <smueller@chronox.de>,
+	Marcelo Henrique Cerri <marcelo.cerri@canonical.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 129/364] null_blk: Always check queue mode setting from configfs
-Date: Mon, 22 May 2023 20:07:14 +0100
-Message-Id: <20230522190416.021479173@linuxfoundation.org>
+Subject: [PATCH 6.3 112/364] crypto: jitter - permanent and intermittent health errors
+Date: Mon, 22 May 2023 20:06:57 +0100
+Message-Id: <20230522190415.577158921@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -38,84 +37,393 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Stephan Müller <smueller@chronox.de>
 
-[ Upstream commit 63f8793ee60513a09f110ea460a6ff2c33811cdb ]
+[ Upstream commit 3fde2fe99aa6dacd4151c87382b07ce7f30f0a52 ]
 
-Make sure to check device queue mode in the null_validate_conf() and
-return error for NULL_Q_RQ as we don't allow legacy I/O path, without
-this patch we get OOPs when queue mode is set to 1 from configfs,
-following are repro steps :-
+According to SP800-90B, two health failures are allowed: the intermittend
+and the permanent failure. So far, only the intermittent failure was
+implemented. The permanent failure was achieved by resetting the entire
+entropy source including its health test state and waiting for two or
+more back-to-back health errors.
 
-modprobe null_blk nr_devices=0
-mkdir config/nullb/nullb0
-echo 1 > config/nullb/nullb0/memory_backed
-echo 4096 > config/nullb/nullb0/blocksize
-echo 20480 > config/nullb/nullb0/size
-echo 1 > config/nullb/nullb0/queue_mode
-echo 1 > config/nullb/nullb0/power
+This approach is appropriate for RCT, but not for APT as APT has a
+non-linear cutoff value. Thus, this patch implements 2 cutoff values
+for both RCT/APT. This implies that the health state is left untouched
+when an intermittent failure occurs. The noise source is reset
+and a new APT powerup-self test is performed. Yet, whith the unchanged
+health test state, the counting of failures continues until a permanent
+failure is reached.
 
-Entering kdb (current=0xffff88810acdd080, pid 2372) on processor 42 Oops: (null)
-due to oops @ 0xffffffffc041c329
-CPU: 42 PID: 2372 Comm: sh Tainted: G           O     N 6.3.0-rc5lblk+ #5
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-RIP: 0010:null_add_dev.part.0+0xd9/0x720 [null_blk]
-Code: 01 00 00 85 d2 0f 85 a1 03 00 00 48 83 bb 08 01 00 00 00 0f 85 f7 03 00 00 80 bb 62 01 00 00 00 48 8b 75 20 0f 85 6d 02 00 00 <48> 89 6e 60 48 8b 75 20 bf 06 00 00 00 e8 f5 37 2c c1 48 8b 75 20
-RSP: 0018:ffffc900052cbde0 EFLAGS: 00010246
-RAX: 0000000000000001 RBX: ffff88811084d800 RCX: 0000000000000001
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff888100042e00
-RBP: ffff8881053d8200 R08: ffffc900052cbd68 R09: ffff888105db2000
-R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000002
-R13: ffff888104765200 R14: ffff88810eec1748 R15: ffff88810eec1740
-FS:  00007fd445fd1740(0000) GS:ffff8897dfc80000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000000000060 CR3: 0000000166a00000 CR4: 0000000000350ee0
-DR0: ffffffff8437a488 DR1: ffffffff8437a489 DR2: ffffffff8437a48a
-DR3: ffffffff8437a48b DR6: 00000000ffff0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- nullb_device_power_store+0xd1/0x120 [null_blk]
- configfs_write_iter+0xb4/0x120
- vfs_write+0x2ba/0x3c0
- ksys_write+0x5f/0xe0
- do_syscall_64+0x3b/0x90
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-RIP: 0033:0x7fd4460c57a7
-Code: 0d 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
-RSP: 002b:00007ffd3792a4a8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000000002 RCX: 00007fd4460c57a7
-RDX: 0000000000000002 RSI: 000055b43c02e4c0 RDI: 0000000000000001
-RBP: 000055b43c02e4c0 R08: 000000000000000a R09: 00007fd44615b4e0
-R10: 00007fd44615b3e0 R11: 0000000000000246 R12: 0000000000000002
-R13: 00007fd446198520 R14: 0000000000000002 R15: 00007fd446198700
- </TASK>
+Any non-failing raw entropy value causes the health tests to reset.
 
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
-Link: https://lore.kernel.org/r/20230416220339.43845-1-kch@nvidia.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+The intermittent error has an unchanged significance level of 2^-30.
+The permanent error has a significance level of 2^-60. Considering that
+this level also indicates a false-positive rate (see SP800-90B section 4.2)
+a false-positive must only be incurred with a low probability when
+considering a fleet of Linux kernels as a whole. Hitting the permanent
+error may cause a panic(), the following calculation applies: Assuming
+that a fleet of 10^9 Linux kernels run concurrently with this patch in
+FIPS mode and on each kernel 2 health tests are performed every minute
+for one year, the chances of a false positive is about 1:1000
+based on the binomial distribution.
+
+In addition, any power-up health test errors triggered with
+jent_entropy_init are treated as permanent errors.
+
+A permanent failure causes the entire entropy source to permanently
+return an error. This implies that a caller can only remedy the situation
+by re-allocating a new instance of the Jitter RNG. In a subsequent
+patch, a transparent re-allocation will be provided which also changes
+the implied heuristic entropy assessment.
+
+In addition, when the kernel is booted with fips=1, the Jitter RNG
+is defined to be part of a FIPS module. The permanent error of the
+Jitter RNG is translated as a FIPS module error. In this case, the entire
+FIPS module must cease operation. This is implemented in the kernel by
+invoking panic().
+
+The patch also fixes an off-by-one in the RCT cutoff value which is now
+set to 30 instead of 31. This is because the counting of the values
+starts with 0.
+
+Reviewed-by: Vladis Dronov <vdronov@redhat.com>
+Signed-off-by: Stephan Mueller <smueller@chronox.de>
+Reviewed-by: Marcelo Henrique Cerri <marcelo.cerri@canonical.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/null_blk/main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ crypto/jitterentropy-kcapi.c |  51 ++++++-------
+ crypto/jitterentropy.c       | 144 +++++++++++++----------------------
+ crypto/jitterentropy.h       |   1 -
+ 3 files changed, 76 insertions(+), 120 deletions(-)
 
-diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
-index 9e6b032c8ecc2..14491952047f5 100644
---- a/drivers/block/null_blk/main.c
-+++ b/drivers/block/null_blk/main.c
-@@ -1964,6 +1964,11 @@ static int null_init_tag_set(struct nullb *nullb, struct blk_mq_tag_set *set)
+diff --git a/crypto/jitterentropy-kcapi.c b/crypto/jitterentropy-kcapi.c
+index 2d115bec15aeb..b9edfaa51b273 100644
+--- a/crypto/jitterentropy-kcapi.c
++++ b/crypto/jitterentropy-kcapi.c
+@@ -37,6 +37,7 @@
+  * DAMAGE.
+  */
  
- static int null_validate_conf(struct nullb_device *dev)
++#include <linux/fips.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+@@ -59,11 +60,6 @@ void jent_zfree(void *ptr)
+ 	kfree_sensitive(ptr);
+ }
+ 
+-void jent_panic(char *s)
+-{
+-	panic("%s", s);
+-}
+-
+ void jent_memcpy(void *dest, const void *src, unsigned int n)
  {
-+	if (dev->queue_mode == NULL_Q_RQ) {
-+		pr_err("legacy IO path is no longer available\n");
-+		return -EINVAL;
-+	}
+ 	memcpy(dest, src, n);
+@@ -102,7 +98,6 @@ void jent_get_nstime(__u64 *out)
+ struct jitterentropy {
+ 	spinlock_t jent_lock;
+ 	struct rand_data *entropy_collector;
+-	unsigned int reset_cnt;
+ };
+ 
+ static int jent_kcapi_init(struct crypto_tfm *tfm)
+@@ -138,32 +133,30 @@ static int jent_kcapi_random(struct crypto_rng *tfm,
+ 
+ 	spin_lock(&rng->jent_lock);
+ 
+-	/* Return a permanent error in case we had too many resets in a row. */
+-	if (rng->reset_cnt > (1<<10)) {
+-		ret = -EFAULT;
+-		goto out;
+-	}
+-
+ 	ret = jent_read_entropy(rng->entropy_collector, rdata, dlen);
+ 
+-	/* Reset RNG in case of health failures */
+-	if (ret < -1) {
+-		pr_warn_ratelimited("Reset Jitter RNG due to health test failure: %s failure\n",
+-				    (ret == -2) ? "Repetition Count Test" :
+-						  "Adaptive Proportion Test");
+-
+-		rng->reset_cnt++;
+-
++	if (ret == -3) {
++		/* Handle permanent health test error */
++		/*
++		 * If the kernel was booted with fips=1, it implies that
++		 * the entire kernel acts as a FIPS 140 module. In this case
++		 * an SP800-90B permanent health test error is treated as
++		 * a FIPS module error.
++		 */
++		if (fips_enabled)
++			panic("Jitter RNG permanent health test failure\n");
 +
- 	dev->blocksize = round_down(dev->blocksize, 512);
- 	dev->blocksize = clamp_t(unsigned int, dev->blocksize, 512, 4096);
++		pr_err("Jitter RNG permanent health test failure\n");
++		ret = -EFAULT;
++	} else if (ret == -2) {
++		/* Handle intermittent health test error */
++		pr_warn_ratelimited("Reset Jitter RNG due to intermittent health test failure\n");
+ 		ret = -EAGAIN;
+-	} else {
+-		rng->reset_cnt = 0;
+-
+-		/* Convert the Jitter RNG error into a usable error code */
+-		if (ret == -1)
+-			ret = -EINVAL;
++	} else if (ret == -1) {
++		/* Handle other errors */
++		ret = -EINVAL;
+ 	}
+ 
+-out:
+ 	spin_unlock(&rng->jent_lock);
+ 
+ 	return ret;
+@@ -197,6 +190,10 @@ static int __init jent_mod_init(void)
+ 
+ 	ret = jent_entropy_init();
+ 	if (ret) {
++		/* Handle permanent health test error */
++		if (fips_enabled)
++			panic("jitterentropy: Initialization failed with host not compliant with requirements: %d\n", ret);
++
+ 		pr_info("jitterentropy: Initialization failed with host not compliant with requirements: %d\n", ret);
+ 		return -EFAULT;
+ 	}
+diff --git a/crypto/jitterentropy.c b/crypto/jitterentropy.c
+index 93bff32138238..22f48bf4c6f57 100644
+--- a/crypto/jitterentropy.c
++++ b/crypto/jitterentropy.c
+@@ -85,10 +85,14 @@ struct rand_data {
+ 				      * bit generation */
+ 
+ 	/* Repetition Count Test */
+-	int rct_count;			/* Number of stuck values */
++	unsigned int rct_count;			/* Number of stuck values */
+ 
+-	/* Adaptive Proportion Test for a significance level of 2^-30 */
++	/* Intermittent health test failure threshold of 2^-30 */
++#define JENT_RCT_CUTOFF		30	/* Taken from SP800-90B sec 4.4.1 */
+ #define JENT_APT_CUTOFF		325	/* Taken from SP800-90B sec 4.4.2 */
++	/* Permanent health test failure threshold of 2^-60 */
++#define JENT_RCT_CUTOFF_PERMANENT	60
++#define JENT_APT_CUTOFF_PERMANENT	355
+ #define JENT_APT_WINDOW_SIZE	512	/* Data window size */
+ 	/* LSB of time stamp to process */
+ #define JENT_APT_LSB		16
+@@ -97,8 +101,6 @@ struct rand_data {
+ 	unsigned int apt_count;		/* APT counter */
+ 	unsigned int apt_base;		/* APT base reference */
+ 	unsigned int apt_base_set:1;	/* APT base reference set? */
+-
+-	unsigned int health_failure:1;	/* Permanent health failure */
+ };
+ 
+ /* Flags that can be used to initialize the RNG */
+@@ -169,19 +171,26 @@ static void jent_apt_insert(struct rand_data *ec, unsigned int delta_masked)
+ 		return;
+ 	}
+ 
+-	if (delta_masked == ec->apt_base) {
++	if (delta_masked == ec->apt_base)
+ 		ec->apt_count++;
+ 
+-		if (ec->apt_count >= JENT_APT_CUTOFF)
+-			ec->health_failure = 1;
+-	}
+-
+ 	ec->apt_observations++;
+ 
+ 	if (ec->apt_observations >= JENT_APT_WINDOW_SIZE)
+ 		jent_apt_reset(ec, delta_masked);
+ }
+ 
++/* APT health test failure detection */
++static int jent_apt_permanent_failure(struct rand_data *ec)
++{
++	return (ec->apt_count >= JENT_APT_CUTOFF_PERMANENT) ? 1 : 0;
++}
++
++static int jent_apt_failure(struct rand_data *ec)
++{
++	return (ec->apt_count >= JENT_APT_CUTOFF) ? 1 : 0;
++}
++
+ /***************************************************************************
+  * Stuck Test and its use as Repetition Count Test
+  *
+@@ -206,55 +215,14 @@ static void jent_apt_insert(struct rand_data *ec, unsigned int delta_masked)
+  */
+ static void jent_rct_insert(struct rand_data *ec, int stuck)
+ {
+-	/*
+-	 * If we have a count less than zero, a previous RCT round identified
+-	 * a failure. We will not overwrite it.
+-	 */
+-	if (ec->rct_count < 0)
+-		return;
+-
+ 	if (stuck) {
+ 		ec->rct_count++;
+-
+-		/*
+-		 * The cutoff value is based on the following consideration:
+-		 * alpha = 2^-30 as recommended in FIPS 140-2 IG 9.8.
+-		 * In addition, we require an entropy value H of 1/OSR as this
+-		 * is the minimum entropy required to provide full entropy.
+-		 * Note, we collect 64 * OSR deltas for inserting them into
+-		 * the entropy pool which should then have (close to) 64 bits
+-		 * of entropy.
+-		 *
+-		 * Note, ec->rct_count (which equals to value B in the pseudo
+-		 * code of SP800-90B section 4.4.1) starts with zero. Hence
+-		 * we need to subtract one from the cutoff value as calculated
+-		 * following SP800-90B.
+-		 */
+-		if ((unsigned int)ec->rct_count >= (31 * ec->osr)) {
+-			ec->rct_count = -1;
+-			ec->health_failure = 1;
+-		}
+ 	} else {
++		/* Reset RCT */
+ 		ec->rct_count = 0;
+ 	}
+ }
+ 
+-/*
+- * Is there an RCT health test failure?
+- *
+- * @ec [in] Reference to entropy collector
+- *
+- * @return
+- * 	0 No health test failure
+- * 	1 Permanent health test failure
+- */
+-static int jent_rct_failure(struct rand_data *ec)
+-{
+-	if (ec->rct_count < 0)
+-		return 1;
+-	return 0;
+-}
+-
+ static inline __u64 jent_delta(__u64 prev, __u64 next)
+ {
+ #define JENT_UINT64_MAX		(__u64)(~((__u64) 0))
+@@ -303,18 +271,26 @@ static int jent_stuck(struct rand_data *ec, __u64 current_delta)
+ 	return 0;
+ }
+ 
+-/*
+- * Report any health test failures
+- *
+- * @ec [in] Reference to entropy collector
+- *
+- * @return
+- * 	0 No health test failure
+- * 	1 Permanent health test failure
+- */
++/* RCT health test failure detection */
++static int jent_rct_permanent_failure(struct rand_data *ec)
++{
++	return (ec->rct_count >= JENT_RCT_CUTOFF_PERMANENT) ? 1 : 0;
++}
++
++static int jent_rct_failure(struct rand_data *ec)
++{
++	return (ec->rct_count >= JENT_RCT_CUTOFF) ? 1 : 0;
++}
++
++/* Report of health test failures */
+ static int jent_health_failure(struct rand_data *ec)
+ {
+-	return ec->health_failure;
++	return jent_rct_failure(ec) | jent_apt_failure(ec);
++}
++
++static int jent_permanent_health_failure(struct rand_data *ec)
++{
++	return jent_rct_permanent_failure(ec) | jent_apt_permanent_failure(ec);
+ }
+ 
+ /***************************************************************************
+@@ -600,8 +576,8 @@ static void jent_gen_entropy(struct rand_data *ec)
+  *
+  * The following error codes can occur:
+  *	-1	entropy_collector is NULL
+- *	-2	RCT failed
+- *	-3	APT test failed
++ *	-2	Intermittent health failure
++ *	-3	Permanent health failure
+  */
+ int jent_read_entropy(struct rand_data *ec, unsigned char *data,
+ 		      unsigned int len)
+@@ -616,39 +592,23 @@ int jent_read_entropy(struct rand_data *ec, unsigned char *data,
+ 
+ 		jent_gen_entropy(ec);
+ 
+-		if (jent_health_failure(ec)) {
+-			int ret;
+-
+-			if (jent_rct_failure(ec))
+-				ret = -2;
+-			else
+-				ret = -3;
+-
++		if (jent_permanent_health_failure(ec)) {
+ 			/*
+-			 * Re-initialize the noise source
+-			 *
+-			 * If the health test fails, the Jitter RNG remains
+-			 * in failure state and will return a health failure
+-			 * during next invocation.
++			 * At this point, the Jitter RNG instance is considered
++			 * as a failed instance. There is no rerun of the
++			 * startup test any more, because the caller
++			 * is assumed to not further use this instance.
+ 			 */
+-			if (jent_entropy_init())
+-				return ret;
+-
+-			/* Set APT to initial state */
+-			jent_apt_reset(ec, 0);
+-			ec->apt_base_set = 0;
+-
+-			/* Set RCT to initial state */
+-			ec->rct_count = 0;
+-
+-			/* Re-enable Jitter RNG */
+-			ec->health_failure = 0;
+-
++			return -3;
++		} else if (jent_health_failure(ec)) {
+ 			/*
+-			 * Return the health test failure status to the
+-			 * caller as the generated value is not appropriate.
++			 * Perform startup health tests and return permanent
++			 * error if it fails.
+ 			 */
+-			return ret;
++			if (jent_entropy_init())
++				return -3;
++
++			return -2;
+ 		}
+ 
+ 		if ((DATA_SIZE_BITS / 8) < len)
+diff --git a/crypto/jitterentropy.h b/crypto/jitterentropy.h
+index b7397b617ef05..5cc583f6bc6b8 100644
+--- a/crypto/jitterentropy.h
++++ b/crypto/jitterentropy.h
+@@ -2,7 +2,6 @@
+ 
+ extern void *jent_zalloc(unsigned int len);
+ extern void jent_zfree(void *ptr);
+-extern void jent_panic(char *s);
+ extern void jent_memcpy(void *dest, const void *src, unsigned int n);
+ extern void jent_get_nstime(__u64 *out);
  
 -- 
 2.39.2
