@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB861171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C860C433D2;
-	Mon, 22 May 2023 19:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE6C171CB
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F53C4339B;
+	Mon, 22 May 2023 19:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785142;
-	bh=YoNZArswi4ZteFHkGmgQifHy3hElhvDwZMGXpzxhzBA=;
+	s=korg; t=1684785145;
+	bh=9h0NbQsjcf5HPhKlD5P7WLD280VAh3M6PhCfsMUhqmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kW8KWCcsrLq8Cvd96At9RgHUrEotDcEmSvvkmc7wuZBz4ykuX1/W7k4NxHYV/0whf
-	 hPnVcq7idOwcLhAHCxT+yOMCWABz2+dv0l12+7kgDcuuC6vFFPVdkjin3+Sg5pEGqb
-	 8MutY0BJdTVgMtonB6SRGMrUDXqrcBlYBRRVOBdg=
+	b=AVH5SQTeQabedK16pokwCcDSMKQgPmIWfzUWUVR+IoLvEiJ+bmFtq4rJ17Z6Z+xJb
+	 SMZaAcpd1sxOrzTGDlkzzeiQ3GPhtrXWapIyabAKAZbmhk2vYCzYYwc7eQmtA60ksY
+	 upfjMTa+2tQfHzb2g+gVgOP5T76dGjB5TvMi/RIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Yen Chang <cc85nod@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.3 324/364] ksmbd: fix global-out-of-bounds in smb2_find_context_vals
-Date: Mon, 22 May 2023 20:10:29 +0100
-Message-Id: <20230522190420.874177909@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.3 325/364] KVM: arm64: Infer the PA offset from IPA in stage-2 map walker
+Date: Mon, 22 May 2023 20:10:30 +0100
+Message-Id: <20230522190420.900649356@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,144 +34,161 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chih-Yen Chang <cc85nod@gmail.com>
+From: Oliver Upton <oliver.upton@linux.dev>
 
-commit 02f76c401d17e409ed45bf7887148fcc22c93c85 upstream.
+commit 1f0f4a2ef7a5693b135ce174e71f116db4bd684d upstream.
 
-Add tag_len argument in smb2_find_context_vals() to avoid out-of-bound
-read when create_context's name_len is larger than tag length.
+Until now, the page table walker counted increments to the PA and IPA
+of a walk in two separate places. While the PA is incremented as soon as
+a leaf PTE is installed in stage2_map_walker_try_leaf(), the IPA is
+actually bumped in the generic table walker context. Critically,
+__kvm_pgtable_visit() rereads the PTE after the LEAF callback returns
+to work out if a table or leaf was installed, and only bumps the IPA for
+a leaf PTE.
 
-[    7.995411] ==================================================================
-[    7.995866] BUG: KASAN: global-out-of-bounds in memcmp+0x83/0xa0
-[    7.996248] Read of size 8 at addr ffffffff8258d940 by task kworker/0:0/7
-...
-[    7.998191] Call Trace:
-[    7.998358]  <TASK>
-[    7.998503]  dump_stack_lvl+0x33/0x50
-[    7.998743]  print_report+0xcc/0x620
-[    7.999458]  kasan_report+0xae/0xe0
-[    7.999895]  kasan_check_range+0x35/0x1b0
-[    8.000152]  memcmp+0x83/0xa0
-[    8.000347]  smb2_find_context_vals+0xf7/0x1e0
-[    8.000635]  smb2_open+0x1df2/0x43a0
-[    8.006398]  handle_ksmbd_work+0x274/0x810
-[    8.006666]  process_one_work+0x419/0x760
-[    8.006922]  worker_thread+0x2a2/0x6f0
-[    8.007429]  kthread+0x160/0x190
-[    8.007946]  ret_from_fork+0x1f/0x30
-[    8.008181]  </TASK>
+This arrangement worked fine when we handled faults behind the write lock,
+as the walker had exclusive access to the stage-2 page tables. However,
+commit 1577cb5823ce ("KVM: arm64: Handle stage-2 faults in parallel")
+started handling all stage-2 faults behind the read lock, opening up a
+race where a walker could increment the PA but not the IPA of a walk.
+Nothing good ensues, as the walker starts mapping with the incorrect
+IPA -> PA relationship.
+
+For example, assume that two vCPUs took a data abort on the same IPA.
+One observes that dirty logging is disabled, and the other observed that
+it is enabled:
+
+  vCPU attempting PMD mapping		  vCPU attempting PTE mapping
+  ======================================  =====================================
+  /* install PMD */
+  stage2_make_pte(ctx, leaf);
+  data->phys += granule;
+  					  /* replace PMD with a table */
+  					  stage2_try_break_pte(ctx, data->mmu);
+					  stage2_make_pte(ctx, table);
+  /* table is observed */
+  ctx.old = READ_ONCE(*ptep);
+  table = kvm_pte_table(ctx.old, level);
+
+  /*
+   * map walk continues w/o incrementing
+   * IPA.
+   */
+   __kvm_pgtable_walk(..., level + 1);
+
+Bring an end to the whole mess by using the IPA as the single source of
+truth for how far along a walk has gotten. Work out the correct PA to
+map by calculating the IPA offset from the beginning of the walk and add
+that to the starting physical address.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Chih-Yen Chang <cc85nod@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 1577cb5823ce ("KVM: arm64: Handle stage-2 faults in parallel")
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230421071606.1603916-2-oliver.upton@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/oplock.c  |    5 +++--
- fs/ksmbd/oplock.h  |    2 +-
- fs/ksmbd/smb2pdu.c |   14 +++++++-------
- 3 files changed, 11 insertions(+), 10 deletions(-)
+ arch/arm64/include/asm/kvm_pgtable.h |  1 +
+ arch/arm64/kvm/hyp/pgtable.c         | 32 ++++++++++++++++++++++++----
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
---- a/fs/ksmbd/oplock.c
-+++ b/fs/ksmbd/oplock.c
-@@ -1449,11 +1449,12 @@ struct lease_ctx_info *parse_lease_state
-  * smb2_find_context_vals() - find a particular context info in open request
-  * @open_req:	buffer containing smb2 file open(create) request
-  * @tag:	context name to search for
-+ * @tag_len:	the length of tag
-  *
-  * Return:	pointer to requested context, NULL if @str context not found
-  *		or error pointer if name length is invalid.
-  */
--struct create_context *smb2_find_context_vals(void *open_req, const char *tag)
-+struct create_context *smb2_find_context_vals(void *open_req, const char *tag, int tag_len)
+diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
+index 4cd6762bda80..dc3c072e862f 100644
+--- a/arch/arm64/include/asm/kvm_pgtable.h
++++ b/arch/arm64/include/asm/kvm_pgtable.h
+@@ -209,6 +209,7 @@ struct kvm_pgtable_visit_ctx {
+ 	kvm_pte_t				old;
+ 	void					*arg;
+ 	struct kvm_pgtable_mm_ops		*mm_ops;
++	u64					start;
+ 	u64					addr;
+ 	u64					end;
+ 	u32					level;
+diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
+index 3d61bd3e591d..140f82300db5 100644
+--- a/arch/arm64/kvm/hyp/pgtable.c
++++ b/arch/arm64/kvm/hyp/pgtable.c
+@@ -58,6 +58,7 @@
+ struct kvm_pgtable_walk_data {
+ 	struct kvm_pgtable_walker	*walker;
+ 
++	u64				start;
+ 	u64				addr;
+ 	u64				end;
+ };
+@@ -201,6 +202,7 @@ static inline int __kvm_pgtable_visit(struct kvm_pgtable_walk_data *data,
+ 		.old	= READ_ONCE(*ptep),
+ 		.arg	= data->walker->arg,
+ 		.mm_ops	= mm_ops,
++		.start	= data->start,
+ 		.addr	= data->addr,
+ 		.end	= data->end,
+ 		.level	= level,
+@@ -293,6 +295,7 @@ int kvm_pgtable_walk(struct kvm_pgtable *pgt, u64 addr, u64 size,
+ 		     struct kvm_pgtable_walker *walker)
  {
- 	struct create_context *cc;
- 	unsigned int next = 0;
-@@ -1492,7 +1493,7 @@ struct create_context *smb2_find_context
- 			return ERR_PTR(-EINVAL);
+ 	struct kvm_pgtable_walk_data walk_data = {
++		.start	= ALIGN_DOWN(addr, PAGE_SIZE),
+ 		.addr	= ALIGN_DOWN(addr, PAGE_SIZE),
+ 		.end	= PAGE_ALIGN(walk_data.addr + size),
+ 		.walker	= walker,
+@@ -794,20 +797,43 @@ static bool stage2_pte_executable(kvm_pte_t pte)
+ 	return !(pte & KVM_PTE_LEAF_ATTR_HI_S2_XN);
+ }
  
- 		name = (char *)cc + name_off;
--		if (memcmp(name, tag, name_len) == 0)
-+		if (name_len == tag_len && !memcmp(name, tag, name_len))
- 			return cc;
++static u64 stage2_map_walker_phys_addr(const struct kvm_pgtable_visit_ctx *ctx,
++				       const struct stage2_map_data *data)
++{
++	u64 phys = data->phys;
++
++	/*
++	 * Stage-2 walks to update ownership data are communicated to the map
++	 * walker using an invalid PA. Avoid offsetting an already invalid PA,
++	 * which could overflow and make the address valid again.
++	 */
++	if (!kvm_phys_is_valid(phys))
++		return phys;
++
++	/*
++	 * Otherwise, work out the correct PA based on how far the walk has
++	 * gotten.
++	 */
++	return phys + (ctx->addr - ctx->start);
++}
++
+ static bool stage2_leaf_mapping_allowed(const struct kvm_pgtable_visit_ctx *ctx,
+ 					struct stage2_map_data *data)
+ {
++	u64 phys = stage2_map_walker_phys_addr(ctx, data);
++
+ 	if (data->force_pte && (ctx->level < (KVM_PGTABLE_MAX_LEVELS - 1)))
+ 		return false;
  
- 		remain_len -= next;
---- a/fs/ksmbd/oplock.h
-+++ b/fs/ksmbd/oplock.h
-@@ -118,7 +118,7 @@ void create_durable_v2_rsp_buf(char *cc,
- void create_mxac_rsp_buf(char *cc, int maximal_access);
- void create_disk_id_rsp_buf(char *cc, __u64 file_id, __u64 vol_id);
- void create_posix_rsp_buf(char *cc, struct ksmbd_file *fp);
--struct create_context *smb2_find_context_vals(void *open_req, const char *str);
-+struct create_context *smb2_find_context_vals(void *open_req, const char *tag, int tag_len);
- struct oplock_info *lookup_lease_in_table(struct ksmbd_conn *conn,
- 					  char *lease_key);
- int find_same_lease_key(struct ksmbd_session *sess, struct ksmbd_inode *ci,
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -2491,7 +2491,7 @@ static int smb2_create_sd_buffer(struct
- 		return -ENOENT;
+-	return kvm_block_mapping_supported(ctx, data->phys);
++	return kvm_block_mapping_supported(ctx, phys);
+ }
  
- 	/* Parse SD BUFFER create contexts */
--	context = smb2_find_context_vals(req, SMB2_CREATE_SD_BUFFER);
-+	context = smb2_find_context_vals(req, SMB2_CREATE_SD_BUFFER, 4);
- 	if (!context)
- 		return -ENOENT;
- 	else if (IS_ERR(context))
-@@ -2693,7 +2693,7 @@ int smb2_open(struct ksmbd_work *work)
+ static int stage2_map_walker_try_leaf(const struct kvm_pgtable_visit_ctx *ctx,
+ 				      struct stage2_map_data *data)
+ {
+ 	kvm_pte_t new;
+-	u64 granule = kvm_granule_size(ctx->level), phys = data->phys;
++	u64 phys = stage2_map_walker_phys_addr(ctx, data);
++	u64 granule = kvm_granule_size(ctx->level);
+ 	struct kvm_pgtable *pgt = data->mmu->pgt;
+ 	struct kvm_pgtable_mm_ops *mm_ops = ctx->mm_ops;
  
- 	if (req->CreateContextsOffset) {
- 		/* Parse non-durable handle create contexts */
--		context = smb2_find_context_vals(req, SMB2_CREATE_EA_BUFFER);
-+		context = smb2_find_context_vals(req, SMB2_CREATE_EA_BUFFER, 4);
- 		if (IS_ERR(context)) {
- 			rc = PTR_ERR(context);
- 			goto err_out1;
-@@ -2713,7 +2713,7 @@ int smb2_open(struct ksmbd_work *work)
- 		}
+@@ -841,8 +867,6 @@ static int stage2_map_walker_try_leaf(const struct kvm_pgtable_visit_ctx *ctx,
  
- 		context = smb2_find_context_vals(req,
--						 SMB2_CREATE_QUERY_MAXIMAL_ACCESS_REQUEST);
-+						 SMB2_CREATE_QUERY_MAXIMAL_ACCESS_REQUEST, 4);
- 		if (IS_ERR(context)) {
- 			rc = PTR_ERR(context);
- 			goto err_out1;
-@@ -2724,7 +2724,7 @@ int smb2_open(struct ksmbd_work *work)
- 		}
+ 	stage2_make_pte(ctx, new);
  
- 		context = smb2_find_context_vals(req,
--						 SMB2_CREATE_TIMEWARP_REQUEST);
-+						 SMB2_CREATE_TIMEWARP_REQUEST, 4);
- 		if (IS_ERR(context)) {
- 			rc = PTR_ERR(context);
- 			goto err_out1;
-@@ -2736,7 +2736,7 @@ int smb2_open(struct ksmbd_work *work)
+-	if (kvm_phys_is_valid(phys))
+-		data->phys += granule;
+ 	return 0;
+ }
  
- 		if (tcon->posix_extensions) {
- 			context = smb2_find_context_vals(req,
--							 SMB2_CREATE_TAG_POSIX);
-+							 SMB2_CREATE_TAG_POSIX, 16);
- 			if (IS_ERR(context)) {
- 				rc = PTR_ERR(context);
- 				goto err_out1;
-@@ -3135,7 +3135,7 @@ int smb2_open(struct ksmbd_work *work)
- 		struct create_alloc_size_req *az_req;
- 
- 		az_req = (struct create_alloc_size_req *)smb2_find_context_vals(req,
--					SMB2_CREATE_ALLOCATION_SIZE);
-+					SMB2_CREATE_ALLOCATION_SIZE, 4);
- 		if (IS_ERR(az_req)) {
- 			rc = PTR_ERR(az_req);
- 			goto err_out;
-@@ -3162,7 +3162,7 @@ int smb2_open(struct ksmbd_work *work)
- 					    err);
- 		}
- 
--		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID);
-+		context = smb2_find_context_vals(req, SMB2_CREATE_QUERY_ON_DISK_ID, 4);
- 		if (IS_ERR(context)) {
- 			rc = PTR_ERR(context);
- 			goto err_out;
+-- 
+2.40.1
+
 
 
