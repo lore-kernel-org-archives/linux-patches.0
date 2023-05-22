@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D334171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:26:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E29C433D2;
-	Mon, 22 May 2023 19:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEFC171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:26:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60B8C433D2;
+	Mon, 22 May 2023 19:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783593;
-	bh=UitNJATXfwLU//5VZHJZ1rqVgYxAGa2r5kH97N86JqI=;
+	s=korg; t=1684783596;
+	bh=3GSBUhY4XFVwAmzrq8kLTerlqC+UbOa971PCDsctxdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K8hEUdJMsUOa3MoQniNNH4XhLIKvUuDh3fWL3VIUuOuqarTHQidklT5B9JMetSb39
-	 J7PlErpcGeEH2nzgGN3/Nhqv4MRlnZ/GwhAoX+X21SO7gmap55OIwzjHxjmGASkVQZ
-	 mpT+7Atxc+LHl2lIJkGNsb8/fw1Pja4M5SjSr3Qg=
+	b=XOZ5VdiKCF8eZTpeCibdwPa++sHrCTred4gE7tiUy8eoakDpejS0ax2OuiNIPlLy2
+	 9MEtTe6x7yZ+mLTZS3WvI7Xy4CVfbzPw5yqImkYL3NZSZ9VhhUQdoythOCZ4dnmpZC
+	 UdSfIrLlCfQ4jmnWozh+CxtML2IAqNJYRYG7uMII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Daniel Gabay <daniel.gabay@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/292] md: fix soft lockup in status_resync
-Date: Mon, 22 May 2023 20:07:34 +0100
-Message-Id: <20230522190408.396795454@linuxfoundation.org>
+Subject: [PATCH 6.1 098/292] wifi: iwlwifi: pcie: fix possible NULL pointer dereference
+Date: Mon, 22 May 2023 20:07:35 +0100
+Message-Id: <20230522190408.421141746@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,62 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Daniel Gabay <daniel.gabay@intel.com>
 
-[ Upstream commit 6efddf1e32e2a264694766ca485a4f5e04ee82a7 ]
+[ Upstream commit b655b9a9f8467684cfa8906713d33b71ea8c8f54 ]
 
-status_resync() will calculate 'curr_resync - recovery_active' to show
-user a progress bar like following:
+It is possible that iwl_pci_probe() will fail and free the trans,
+then afterwards iwl_pci_remove() will be called and crash by trying
+to access trans which is already freed, fix it.
 
-[============>........]  resync = 61.4%
+iwlwifi 0000:01:00.0: Detected crf-id 0xa5a5a5a2, cnv-id 0xa5a5a5a2
+		      wfpm id 0xa5a5a5a2
+iwlwifi 0000:01:00.0: Can't find a correct rfid for crf id 0x5a2
+...
+BUG: kernel NULL pointer dereference, address: 0000000000000028
+...
+RIP: 0010:iwl_pci_remove+0x12/0x30 [iwlwifi]
+pci_device_remove+0x3e/0xb0
+device_release_driver_internal+0x103/0x1f0
+driver_detach+0x4c/0x90
+bus_remove_driver+0x5c/0xd0
+driver_unregister+0x31/0x50
+pci_unregister_driver+0x40/0x90
+iwl_pci_unregister_driver+0x15/0x20 [iwlwifi]
+__exit_compat+0x9/0x98 [iwlwifi]
+__x64_sys_delete_module+0x147/0x260
 
-'curr_resync' and 'recovery_active' is updated in md_do_sync(), and
-status_resync() can read them concurrently, hence it's possible that
-'curr_resync - recovery_active' can overflow to a huge number. In this
-case status_resync() will be stuck in the loop to print a large amount
-of '=', which will end up soft lockup.
-
-Fix the problem by setting 'resync' to MD_RESYNC_ACTIVE in this case,
-this way resync in progress will be reported to user.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20230310073855.1337560-3-yukuai1@huaweicloud.com
+Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230413213309.082f6e21341b.I0db21d7fa9a828d571ca886713bd0b5d0b6e1e5c@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index d5c362b1602b6..bb73a541bb193 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -8028,16 +8028,16 @@ static int status_resync(struct seq_file *seq, struct mddev *mddev)
- 	} else if (resync > max_sectors) {
- 		resync = max_sectors;
- 	} else {
--		resync -= atomic_read(&mddev->recovery_active);
--		if (resync < MD_RESYNC_ACTIVE) {
--			/*
--			 * Resync has started, but the subtraction has
--			 * yielded one of the special values. Force it
--			 * to active to ensure the status reports an
--			 * active resync.
--			 */
-+		res = atomic_read(&mddev->recovery_active);
-+		/*
-+		 * Resync has started, but the subtraction has overflowed or
-+		 * yielded one of the special values. Force it to active to
-+		 * ensure the status reports an active resync.
-+		 */
-+		if (resync < res || resync - res < MD_RESYNC_ACTIVE)
- 			resync = MD_RESYNC_ACTIVE;
--		}
-+		else
-+			resync -= res;
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+index 85fadd1ef1ff3..afe6cc15c845f 100644
+--- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
++++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
+@@ -1685,6 +1685,9 @@ static void iwl_pci_remove(struct pci_dev *pdev)
+ {
+ 	struct iwl_trans *trans = pci_get_drvdata(pdev);
  
- 	if (resync == MD_RESYNC_NONE) {
++	if (!trans)
++		return;
++
+ 	iwl_drv_stop(trans->drv);
+ 
+ 	iwl_trans_pcie_free(trans);
 -- 
 2.39.2
 
