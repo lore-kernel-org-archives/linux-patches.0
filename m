@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F8A171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A13DCC433EF;
-	Mon, 22 May 2023 19:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7724171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3634CC433D2;
+	Mon, 22 May 2023 19:53:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785200;
-	bh=6/bRcj6aba7/nElgoIi5a3GBsW3PnTVqoNdwfBf/kYk=;
+	s=korg; t=1684785203;
+	bh=s72tG+owOxd2jQa0PcjeIq9KRK2nC41g3mGC1A/T7x0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vnMdBtQY0r1nsB9hl+hBT6zTeuhHhkQe5FYkSppQP7qCUx7kspaqtddIkqBQZwxOs
-	 AIang4ZI3l0se1HUFMEq38gq05oQolLQoa9kkepx5x3Sq1ZLmkpBp0j9vB+ZXM1tpz
-	 9ZtOCyq6397OXQo2JY40MFrlL2elt3LsMweRz2SM=
+	b=J+fqwJSUX52Fjp3dUFWoY2U4tXSj8wDN4+AW4Ovo4BETOV7V+1i1P+goLwxZD33G1
+	 vo7exf15HYDEKai83sL2XOpLtmaE2JfdI20OkQFab0s7cOSeXMzhUGSp9K7BcdIlof
+	 1VqaxPkW9cw2uPUzDC2xy4COAvof08UFMEXinI4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 342/364] drm/amdgpu/gfx11: update gpu_clock_counter logic
-Date: Mon, 22 May 2023 20:10:47 +0100
-Message-Id: <20230522190421.317142180@linuxfoundation.org>
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.3 315/364] can: kvaser_pciefd: Disable interrupts in probe error path
+Date: Mon, 22 May 2023 20:10:20 +0100
+Message-Id: <20230522190420.649251956@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -34,61 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-commit d5aa417808cf14c052ca042920b3c6b9f1dc6aa4 upstream.
+commit 11164bc39459335ab93c6e99d53b7e4292fba38b upstream.
 
-This code was written prior to previous updates to this
-logic for other chips.  The RSC registers are part of
-SMUIO which is an always on block so there is no need
-to disable gfxoff.  Additionally add the carryover and
-preemption checks.
+Disable interrupts in error path of probe function.
 
-v2: rebase
-
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.y: 5591a051b86b: drm/amdgpu: refine get gpu clock counter method
-Cc: stable@vger.kernel.org # 6.2.y: 5591a051b86b: drm/amdgpu: refine get gpu clock counter method
-Cc: stable@vger.kernel.org # 6.3.y: 5591a051b86b: drm/amdgpu: refine get gpu clock counter method
+Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/r/20230516134318.104279-7-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/can/kvaser_pciefd.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -4665,24 +4665,27 @@ static uint64_t gfx_v11_0_get_gpu_clock_
- 	uint64_t clock;
- 	uint64_t clock_counter_lo, clock_counter_hi_pre, clock_counter_hi_after;
+--- a/drivers/net/can/kvaser_pciefd.c
++++ b/drivers/net/can/kvaser_pciefd.c
+@@ -1861,6 +1861,8 @@ static int kvaser_pciefd_probe(struct pc
+ 	return 0;
  
--	amdgpu_gfx_off_ctrl(adev, false);
--	mutex_lock(&adev->gfx.gpu_clock_mutex);
- 	if (amdgpu_sriov_vf(adev)) {
-+		amdgpu_gfx_off_ctrl(adev, false);
-+		mutex_lock(&adev->gfx.gpu_clock_mutex);
- 		clock_counter_hi_pre = (uint64_t)RREG32_SOC15(GC, 0, regCP_MES_MTIME_HI);
- 		clock_counter_lo = (uint64_t)RREG32_SOC15(GC, 0, regCP_MES_MTIME_LO);
- 		clock_counter_hi_after = (uint64_t)RREG32_SOC15(GC, 0, regCP_MES_MTIME_HI);
- 		if (clock_counter_hi_pre != clock_counter_hi_after)
- 			clock_counter_lo = (uint64_t)RREG32_SOC15(GC, 0, regCP_MES_MTIME_LO);
-+		mutex_unlock(&adev->gfx.gpu_clock_mutex);
-+		amdgpu_gfx_off_ctrl(adev, true);
- 	} else {
-+		preempt_disable();
- 		clock_counter_hi_pre = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_UPPER);
- 		clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_LOWER);
- 		clock_counter_hi_after = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_UPPER);
- 		if (clock_counter_hi_pre != clock_counter_hi_after)
- 			clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_LOWER);
-+		preempt_enable();
- 	}
- 	clock = clock_counter_lo | (clock_counter_hi_after << 32ULL);
--	mutex_unlock(&adev->gfx.gpu_clock_mutex);
--	amdgpu_gfx_off_ctrl(adev, true);
-+
- 	return clock;
- }
+ err_free_irq:
++	/* Disable PCI interrupts */
++	iowrite32(0, pcie->reg_base + KVASER_PCIEFD_IEN_REG);
+ 	free_irq(pcie->pci->irq, pcie);
  
+ err_teardown_can_ctrls:
 
 
