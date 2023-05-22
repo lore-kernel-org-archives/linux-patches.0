@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C27171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:32:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF6CC433D2;
-	Mon, 22 May 2023 19:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFF0171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A45C433A1;
+	Mon, 22 May 2023 19:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783977;
-	bh=dooPtXEJUL5ytiVVHMkifK3C+J6gkt0g5l+CaQGU/io=;
+	s=korg; t=1684783980;
+	bh=dnDgplo1uMeqHjMk2ufEQfH9n0t5o/a1L47gNe7tN24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=feK0XXiCI7TKk3nSbkbGgkYz2xMIqQe/cgghOGYlW5sbWPu7wuNRSpa7e+tin2bP4
-	 Mrtp25gDaJwb6COvZ7bE1p8pIzT88RBUt1Qamq880fa3EX4c4IIdPjdftrcpZgbeLP
-	 Uz7hDiWyuvzvmXP7OREBTdnyv5/5z2sygKJkT6F0=
+	b=mrg5Zsdg9x/GUVVl0O4whsbtVxS3bz8ytSibuglp60VQSFB4z5XacI/LZ+SwS9LJm
+	 0RW3MV/eoMAT0/3ndHrnA6OcDia10/8BzG401/zic+1Xqu5mUFOEGQ2YvURqf/Dizq
+	 XclVRgDtzVlLvJ+npNp5W46gUZ2w7jntCsz1VZms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 223/292] netfilter: nf_tables: fix nft_trans type confusion
-Date: Mon, 22 May 2023 20:09:40 +0100
-Message-Id: <20230522190411.528773960@linuxfoundation.org>
+Subject: [PATCH 6.1 224/292] netfilter: nft_set_rbtree: fix null deref on element insertion
+Date: Mon, 22 May 2023 20:09:41 +0100
+Message-Id: <20230522190411.553737446@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,39 +36,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit e3c361b8acd636f5fe80c02849ca175201edf10c ]
+[ Upstream commit 61ae320a29b0540c16931816299eb86bf2b66c08 ]
 
-nft_trans_FOO objects all share a common nft_trans base structure, but
-trailing fields depend on the real object size. Access is only safe after
-trans->msg_type check.
+There is no guarantee that rb_prev() will not return NULL in nft_rbtree_gc_elem():
 
-Check for rule type first.  Found by code inspection.
+general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
+ nft_add_set_elem+0x14b0/0x2990
+  nf_tables_newsetelem+0x528/0xb30
 
-Fixes: 1a94e38d254b ("netfilter: nf_tables: add NFTA_RULE_ID attribute")
+Furthermore, there is a possible use-after-free while iterating,
+'node' can be free'd so we need to cache the next value to use.
+
+Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index f663262df6987..31775d54f4b40 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3692,12 +3692,10 @@ static struct nft_rule *nft_rule_lookup_byid(const struct net *net,
- 	struct nft_trans *trans;
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 19ea4d3c35535..2f114aa10f1a7 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -221,7 +221,7 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ {
+ 	struct nft_set *set = (struct nft_set *)__set;
+ 	struct rb_node *prev = rb_prev(&rbe->node);
+-	struct nft_rbtree_elem *rbe_prev;
++	struct nft_rbtree_elem *rbe_prev = NULL;
+ 	struct nft_set_gc_batch *gcb;
  
- 	list_for_each_entry(trans, &nft_net->commit_list, list) {
--		struct nft_rule *rule = nft_trans_rule(trans);
--
- 		if (trans->msg_type == NFT_MSG_NEWRULE &&
- 		    trans->ctx.chain == chain &&
- 		    id == nft_trans_rule_id(trans))
--			return rule;
-+			return nft_trans_rule(trans);
- 	}
- 	return ERR_PTR(-ENOENT);
- }
+ 	gcb = nft_set_gc_batch_check(set, NULL, GFP_ATOMIC);
+@@ -229,17 +229,21 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
+ 		return -ENOMEM;
+ 
+ 	/* search for expired end interval coming before this element. */
+-	do {
++	while (prev) {
+ 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
+ 		if (nft_rbtree_interval_end(rbe_prev))
+ 			break;
+ 
+ 		prev = rb_prev(prev);
+-	} while (prev != NULL);
++	}
++
++	if (rbe_prev) {
++		rb_erase(&rbe_prev->node, &priv->root);
++		atomic_dec(&set->nelems);
++	}
+ 
+-	rb_erase(&rbe_prev->node, &priv->root);
+ 	rb_erase(&rbe->node, &priv->root);
+-	atomic_sub(2, &set->nelems);
++	atomic_dec(&set->nelems);
+ 
+ 	nft_set_gc_batch_add(gcb, rbe);
+ 	nft_set_gc_batch_complete(gcb);
+@@ -268,7 +272,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 			       struct nft_set_ext **ext)
+ {
+ 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
+-	struct rb_node *node, *parent, **p, *first = NULL;
++	struct rb_node *node, *next, *parent, **p, *first = NULL;
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	u8 genmask = nft_genmask_next(net);
+ 	int d, err;
+@@ -307,7 +311,9 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 	 * Values stored in the tree are in reversed order, starting from
+ 	 * highest to lowest value.
+ 	 */
+-	for (node = first; node != NULL; node = rb_next(node)) {
++	for (node = first; node != NULL; node = next) {
++		next = rb_next(node);
++
+ 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
+ 
+ 		if (!nft_set_elem_active(&rbe->ext, genmask))
 -- 
 2.39.2
 
