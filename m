@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5813C171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8956C433EF;
-	Mon, 22 May 2023 19:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB90171B7
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A27C4339C;
+	Mon, 22 May 2023 19:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783696;
-	bh=CAdlU3Z26SdXFJkED29iRmn5fBKbSOBOXN5QDzuIAvE=;
+	s=korg; t=1684783699;
+	bh=c/a3JV+DuMpapt3xFP+7mtUKZthOgdy9mcqEhIw8SXQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFd7bobmMw3226tThn02xUXTzEBD4sK6e5aB4F11Fjv3q2fKbVI0XCxyBdcGXiPd6
-	 saYIiMzLhbVI7amAAFTxVU/NH3ULCKTbsQqXc2mwBys73izguQAItHtcRRLPvxsDqL
-	 M35twahQ6Z+CCMgjM+n9inBdw2jGq9BVJI0fS4bw=
+	b=0tosg6HT8m6LNzMWa4lp2v235Luusz8DIviEtyzbzsBq7Ck0G48qTqCQMfk1yP5iv
+	 qh6NMBz/hSeRWjCVxg/9YTfFhd1/DDhcdaM7ZEerkhC/8vksE+ZBcpbMj5OtOLYbvG
+	 HTqwRT5sZ0C6tVFJkqevegI2mLGfC3f4nF4yHcNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Chou <max.chou@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	weiliang1503 <weiliang1503@gmail.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 114/292] Bluetooth: btrtl: check for NULL in btrtl_set_quirks()
-Date: Mon, 22 May 2023 20:07:51 +0100
-Message-Id: <20230522190408.815326024@linuxfoundation.org>
+Subject: [PATCH 6.1 132/292] HID: Ignore battery for ELAN touchscreen on ROG Flow X13 GV301RA
+Date: Mon, 22 May 2023 20:08:09 +0100
+Message-Id: <20230522190409.267828347@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,37 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Chou <max.chou@realtek.com>
+From: weiliang1503 <weiliang1503@gmail.com>
 
-[ Upstream commit 253cf30e8d3d001850a95c4729d668f916b037ab ]
+[ Upstream commit 35903009dbde804a1565dc89e431c0f15179f054 ]
 
-The btrtl_set_quirks() has accessed btrtl_dev->ic_info->lmp_subver since
-b8e482d02513. However, if installing a Realtek Bluetooth controller
-without the driver supported, it will hit the NULL point accessed.
+Ignore the reported battery level of the built-in touchscreen to suppress
+battery warnings when a stylus is used. The device ID was added and the
+battery ignore quirk was enabled.
 
-Add a check for NULL to avoid the Kernel Oops.
-
-Signed-off-by: Max Chou <max.chou@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: weiliang1503 <weiliang1503@gmail.com>
+Link: https://lore.kernel.org/r/20230330115638.16146-1-weiliang1503@gmail.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btrtl.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/hid/hid-ids.h   | 1 +
+ drivers/hid/hid-input.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index 6b3755345427a..88f8c604d70a2 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -882,6 +882,9 @@ void btrtl_set_quirks(struct hci_dev *hdev, struct btrtl_device_info *btrtl_dev)
- 		break;
- 	}
- 
-+	if (!btrtl_dev->ic_info)
-+		return;
-+
- 	switch (btrtl_dev->ic_info->lmp_subver) {
- 	case RTL_ROM_LMP_8703B:
- 		/* 8723CS reports two pages for local ext features,
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 2235d78784b1b..53c6692d77714 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -415,6 +415,7 @@
+ #define I2C_DEVICE_ID_HP_SPECTRE_X360_15	0x2817
+ #define I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG  0x29DF
+ #define I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN 0x2BC8
++#define I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN 0x2C82
+ #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
+ #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
+ #define I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN	0x261A
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index c3f80b516f398..3acaaca888acd 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -372,6 +372,8 @@ static const struct hid_device_id hid_battery_quirks[] = {
+ 	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN),
+ 	  HID_BATTERY_QUIRK_IGNORE },
++	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN),
++	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN),
+ 	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN),
 -- 
 2.39.2
 
