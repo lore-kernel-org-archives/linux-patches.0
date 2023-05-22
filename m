@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013DE171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A970C433EF;
-	Mon, 22 May 2023 19:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09914171B7
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D021C4339B;
+	Mon, 22 May 2023 19:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783983;
-	bh=XS8NOe42e6gQdhzW5ZEjWVqzcRzVWw2b7iG97AjDV84=;
+	s=korg; t=1684783986;
+	bh=Lj6y5/ZDCi8049j3TmWq+PNufsrkcBoUS5JNDHkPoCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TRV2W3mkQnXAHG7oVqGOi749gX0wOoUJSgJsuN1tFTRe2KwaNuU+FJlXAAsQPE3K
-	 yxV2gQ9QBnxXTRHeIOnQpJ1dErWcYCq9v18DQLSPAJmgJTEavOYe8sqjLZOYkXGafD
-	 Pd4X2nrrDew97Rjm6yEahAfyoH2Tax+WPASLOkl4=
+	b=zmqYJDC2pIjCAQxr6CViisD1J7aNuMkdsftNII9CGig8BABRRngPK7FDY8zY2V6CO
+	 THpuYCyQOOH/zpiNh0pHuh9krHl03HYFL5lpdSYpY/b0x5GSvP31j6yfkAmprNPNkF
+	 Gd8bDz3+WTnIGNwG4ITssN+1XmKgT1SD+kEbqmgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 225/292] bridge: always declare tunnel functions
-Date: Mon, 22 May 2023 20:09:42 +0100
-Message-Id: <20230522190411.579598997@linuxfoundation.org>
+	John Humlick <john@humlick.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 226/292] ALSA: usb-audio: Add a sample rate workaround for Line6 Pod Go
+Date: Mon, 22 May 2023 20:09:43 +0100
+Message-Id: <20230522190411.604788641@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,61 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 89dcd87ce534a3a7f267cfd58505803006f51301 ]
+commit 359b4315471181f108723c61612d96e383e56179 upstream.
 
-When CONFIG_BRIDGE_VLAN_FILTERING is disabled, two functions are still
-defined but have no prototype or caller. This causes a W=1 warning for
-the missing prototypes:
+Line6 Pod Go (0e41:424b) requires the similar workaround for the fixed
+48k sample rate like other Line6 models.  This patch adds the
+corresponding entry to line6_parse_audio_format_rate_quirk().
 
-net/bridge/br_netlink_tunnel.c:29:6: error: no previous prototype for 'vlan_tunid_inrange' [-Werror=missing-prototypes]
-net/bridge/br_netlink_tunnel.c:199:5: error: no previous prototype for 'br_vlan_tunnel_info' [-Werror=missing-prototypes]
-
-The functions are already contitional on CONFIG_BRIDGE_VLAN_FILTERING,
-and I coulnd't easily figure out the right set of #ifdefs, so just
-move the declarations out of the #ifdef to avoid the warning,
-at a small cost in code size over a more elaborate fix.
-
-Fixes: 188c67dd1906 ("net: bridge: vlan options: add support for tunnel id dumping")
-Fixes: 569da0822808 ("net: bridge: vlan options: add support for tunnel mapping set/del")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230516194625.549249-3-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: John Humlick <john@humlick.org>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230512075858.22813-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bridge/br_private_tunnel.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/usb/format.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/bridge/br_private_tunnel.h b/net/bridge/br_private_tunnel.h
-index 2b053289f0166..efb096025151a 100644
---- a/net/bridge/br_private_tunnel.h
-+++ b/net/bridge/br_private_tunnel.h
-@@ -27,6 +27,10 @@ int br_process_vlan_tunnel_info(const struct net_bridge *br,
- int br_get_vlan_tunnel_info_size(struct net_bridge_vlan_group *vg);
- int br_fill_vlan_tunnel_info(struct sk_buff *skb,
- 			     struct net_bridge_vlan_group *vg);
-+bool vlan_tunid_inrange(const struct net_bridge_vlan *v_curr,
-+			const struct net_bridge_vlan *v_last);
-+int br_vlan_tunnel_info(const struct net_bridge_port *p, int cmd,
-+			u16 vid, u32 tun_id, bool *changed);
- 
- #ifdef CONFIG_BRIDGE_VLAN_FILTERING
- /* br_vlan_tunnel.c */
-@@ -43,10 +47,6 @@ void br_handle_ingress_vlan_tunnel(struct sk_buff *skb,
- 				   struct net_bridge_vlan_group *vg);
- int br_handle_egress_vlan_tunnel(struct sk_buff *skb,
- 				 struct net_bridge_vlan *vlan);
--bool vlan_tunid_inrange(const struct net_bridge_vlan *v_curr,
--			const struct net_bridge_vlan *v_last);
--int br_vlan_tunnel_info(const struct net_bridge_port *p, int cmd,
--			u16 vid, u32 tun_id, bool *changed);
- #else
- static inline int vlan_tunnel_init(struct net_bridge_vlan_group *vg)
- {
--- 
-2.39.2
-
+--- a/sound/usb/format.c
++++ b/sound/usb/format.c
+@@ -423,6 +423,7 @@ static int line6_parse_audio_format_rate
+ 	case USB_ID(0x0e41, 0x4248): /* Line6 Helix >= fw 2.82 */
+ 	case USB_ID(0x0e41, 0x4249): /* Line6 Helix Rack >= fw 2.82 */
+ 	case USB_ID(0x0e41, 0x424a): /* Line6 Helix LT >= fw 2.82 */
++	case USB_ID(0x0e41, 0x424b): /* Line6 Pod Go */
+ 	case USB_ID(0x19f7, 0x0011): /* Rode Rodecaster Pro */
+ 		return set_fixed_rate(fp, 48000, SNDRV_PCM_RATE_48000);
+ 	}
 
 
