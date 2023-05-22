@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF26171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A38A1C433D2;
-	Mon, 22 May 2023 19:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABDB171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D68AC433D2;
+	Mon, 22 May 2023 19:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783468;
-	bh=EILApsTD5zoyiHGM2TCOuHpmc5KWU3n4Y6td/myyRz0=;
+	s=korg; t=1684783471;
+	bh=sxFjk/OYel8w86FBx3c5fHxBKmbupi9RSffqReml0tI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cnKwaoIcqdAsxwb//oM9G9DcUkLaRBvyMy7qQ83w0Gv7S+5jg78By+FO9Fdns7OSm
-	 +k5UjLjuG+9YFiPSr9tA8X7PHt7CSa6hpeIBUhzj4363E3ihtHLLalERJFFSroU8q+
-	 bZHXln2VCK7iyzufH5BrRpqvAgl/tUQ7jNXGiJlk=
+	b=DeOBne7OGLtwDMjBbNa12CR6S62jl9/rJDYIQcl4odaUDtcASJT5A/zqRef6ypRAM
+	 GbdfNA+MIabQsth1WEs2wVuGQx6L0tSnyGABQG3AzgZnHMXX9ExipHaaV0mVkGfbPG
+	 jbDKumemmi0wFzzvdre4b+RKGbyw1YDBIvXh2fC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/292] af_unix: Fix data races around sk->sk_shutdown.
-Date: Mon, 22 May 2023 20:06:22 +0100
-Message-Id: <20230522190406.523927251@linuxfoundation.org>
+Subject: [PATCH 6.1 026/292] drm/i915/guc: Dont capture Gen8 regs on Xe devices
+Date: Mon, 22 May 2023 20:06:23 +0100
+Message-Id: <20230522190406.548263801@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -38,151 +42,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit e1d09c2c2f5793474556b60f83900e088d0d366d ]
+[ Upstream commit 275dac1f7f5e9c2a2e806b34d3b10804eec0ac3c ]
 
-KCSAN found a data race around sk->sk_shutdown where unix_release_sock()
-and unix_shutdown() update it under unix_state_lock(), OTOH unix_poll()
-and unix_dgram_poll() read it locklessly.
+A pair of pre-Xe registers were being included in the Xe capture list.
+GuC was rejecting those as being invalid and logging errors about
+them. So, stop doing it.
 
-We need to annotate the writes and reads with WRITE_ONCE() and READ_ONCE().
-
-BUG: KCSAN: data-race in unix_poll / unix_release_sock
-
-write to 0xffff88800d0f8aec of 1 bytes by task 264 on cpu 0:
- unix_release_sock+0x75c/0x910 net/unix/af_unix.c:631
- unix_release+0x59/0x80 net/unix/af_unix.c:1042
- __sock_release+0x7d/0x170 net/socket.c:653
- sock_close+0x19/0x30 net/socket.c:1397
- __fput+0x179/0x5e0 fs/file_table.c:321
- ____fput+0x15/0x20 fs/file_table.c:349
- task_work_run+0x116/0x1a0 kernel/task_work.c:179
- resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
- exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
- exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
- __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
- syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
- do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-read to 0xffff88800d0f8aec of 1 bytes by task 222 on cpu 1:
- unix_poll+0xa3/0x2a0 net/unix/af_unix.c:3170
- sock_poll+0xcf/0x2b0 net/socket.c:1385
- vfs_poll include/linux/poll.h:88 [inline]
- ep_item_poll.isra.0+0x78/0xc0 fs/eventpoll.c:855
- ep_send_events fs/eventpoll.c:1694 [inline]
- ep_poll fs/eventpoll.c:1823 [inline]
- do_epoll_wait+0x6c4/0xea0 fs/eventpoll.c:2258
- __do_sys_epoll_wait fs/eventpoll.c:2270 [inline]
- __se_sys_epoll_wait fs/eventpoll.c:2265 [inline]
- __x64_sys_epoll_wait+0xcc/0x190 fs/eventpoll.c:2265
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0x00 -> 0x03
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 222 Comm: dbus-broker Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 3c73419c09a5 ("af_unix: fix 'poll for write'/ connected DGRAM sockets")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
+Fixes: dce2bd542337 ("drm/i915/guc: Add Gen9 registers for GuC error state capture.")
+Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
+Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230428185636.457407-2-John.C.Harrison@Intel.com
+(cherry picked from commit b049132d61336f643d8faf2f6574b063667088cf)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 3b292a7a1fa58..70eb3bc67126d 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -602,7 +602,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
- 	/* Clear state */
- 	unix_state_lock(sk);
- 	sock_orphan(sk);
--	sk->sk_shutdown = SHUTDOWN_MASK;
-+	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
- 	path	     = u->path;
- 	u->path.dentry = NULL;
- 	u->path.mnt = NULL;
-@@ -627,7 +627,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
- 		if (sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET) {
- 			unix_state_lock(skpair);
- 			/* No more writes */
--			skpair->sk_shutdown = SHUTDOWN_MASK;
-+			WRITE_ONCE(skpair->sk_shutdown, SHUTDOWN_MASK);
- 			if (!skb_queue_empty(&sk->sk_receive_queue) || embrion)
- 				skpair->sk_err = ECONNRESET;
- 			unix_state_unlock(skpair);
-@@ -3007,7 +3007,7 @@ static int unix_shutdown(struct socket *sock, int mode)
- 	++mode;
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
+index 1e1fa20fb41c9..18a8466f85917 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
+@@ -30,12 +30,14 @@
+ 	{ FORCEWAKE_MT,             0,      0, "FORCEWAKE" }
  
- 	unix_state_lock(sk);
--	sk->sk_shutdown |= mode;
-+	WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | mode);
- 	other = unix_peer(sk);
- 	if (other)
- 		sock_hold(other);
-@@ -3027,7 +3027,7 @@ static int unix_shutdown(struct socket *sock, int mode)
- 		if (mode&SEND_SHUTDOWN)
- 			peer_mode |= RCV_SHUTDOWN;
- 		unix_state_lock(other);
--		other->sk_shutdown |= peer_mode;
-+		WRITE_ONCE(other->sk_shutdown, other->sk_shutdown | peer_mode);
- 		unix_state_unlock(other);
- 		other->sk_state_change(other);
- 		if (peer_mode == SHUTDOWN_MASK)
-@@ -3159,16 +3159,18 @@ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wa
- {
- 	struct sock *sk = sock->sk;
- 	__poll_t mask;
-+	u8 shutdown;
+ #define COMMON_GEN9BASE_GLOBAL \
+-	{ GEN8_FAULT_TLB_DATA0,     0,      0, "GEN8_FAULT_TLB_DATA0" }, \
+-	{ GEN8_FAULT_TLB_DATA1,     0,      0, "GEN8_FAULT_TLB_DATA1" }, \
+ 	{ ERROR_GEN6,               0,      0, "ERROR_GEN6" }, \
+ 	{ DONE_REG,                 0,      0, "DONE_REG" }, \
+ 	{ HSW_GTT_CACHE_EN,         0,      0, "HSW_GTT_CACHE_EN" }
  
- 	sock_poll_wait(file, sock, wait);
- 	mask = 0;
-+	shutdown = READ_ONCE(sk->sk_shutdown);
++#define GEN9_GLOBAL \
++	{ GEN8_FAULT_TLB_DATA0,     0,      0, "GEN8_FAULT_TLB_DATA0" }, \
++	{ GEN8_FAULT_TLB_DATA1,     0,      0, "GEN8_FAULT_TLB_DATA1" }
++
+ #define COMMON_GEN12BASE_GLOBAL \
+ 	{ GEN12_FAULT_TLB_DATA0,    0,      0, "GEN12_FAULT_TLB_DATA0" }, \
+ 	{ GEN12_FAULT_TLB_DATA1,    0,      0, "GEN12_FAULT_TLB_DATA1" }, \
+@@ -136,6 +138,7 @@ static const struct __guc_mmio_reg_descr xe_lpd_blt_inst_regs[] = {
+ static const struct __guc_mmio_reg_descr default_global_regs[] = {
+ 	COMMON_BASE_GLOBAL,
+ 	COMMON_GEN9BASE_GLOBAL,
++	GEN9_GLOBAL,
+ };
  
- 	/* exceptional events? */
- 	if (sk->sk_err)
- 		mask |= EPOLLERR;
--	if (sk->sk_shutdown == SHUTDOWN_MASK)
-+	if (shutdown == SHUTDOWN_MASK)
- 		mask |= EPOLLHUP;
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
- 
- 	/* readable? */
-@@ -3202,18 +3204,20 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
- 	struct sock *sk = sock->sk, *other;
- 	unsigned int writable;
- 	__poll_t mask;
-+	u8 shutdown;
- 
- 	sock_poll_wait(file, sock, wait);
- 	mask = 0;
-+	shutdown = READ_ONCE(sk->sk_shutdown);
- 
- 	/* exceptional events? */
- 	if (sk->sk_err || !skb_queue_empty_lockless(&sk->sk_error_queue))
- 		mask |= EPOLLERR |
- 			(sock_flag(sk, SOCK_SELECT_ERR_QUEUE) ? EPOLLPRI : 0);
- 
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
--	if (sk->sk_shutdown == SHUTDOWN_MASK)
-+	if (shutdown == SHUTDOWN_MASK)
- 		mask |= EPOLLHUP;
- 
- 	/* readable? */
+ static const struct __guc_mmio_reg_descr default_rc_class_regs[] = {
 -- 
 2.39.2
 
