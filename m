@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCED171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:51:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE36DC433EF;
-	Mon, 22 May 2023 19:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04660171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:51:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85086C433D2;
+	Mon, 22 May 2023 19:51:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785076;
-	bh=wuHmmLkS8W2cfFBEZ3HsDYaIpXG2kp+BhOwGoGdxJq8=;
+	s=korg; t=1684785078;
+	bh=sTuj3ei2lDhSaY/Jg9fiq38PXsbWMwL54EJ9obXaM94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3EOg7brY/5S32gmSGNEd7flJG2Td9EAIbE5MCBOPb4gWe8BySSlympKWCZfOyXP5
-	 jsouGkqBE0X8a750SlugckRqXxFT5iEKS0u8c+6/2HSW1jbY6EfMojd5BGX9JsvS9J
-	 KxgAodikcNMl9kjL8V2CwtpQr31eLA1hhJcsxmrw=
+	b=uOvXyllkem8yDnUxXw6VC+vwsY1DY5ezbEAaZOBtZGSNgYTwfRrnTDZk3CI1dpIas
+	 6k8B8VTg6MZm257tjjSExulBX79/iTiVT8al0maAn011enR1kty+AYUXlD8YBmoMBc
+	 5eHTpkAol/p59Sv4prfsUyAVaDqcu3nvcw32LvRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miller Hunter <MillerH@hearthnhome.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.3 300/364] xhci: Fix incorrect tracking of free space on transfer rings
-Date: Mon, 22 May 2023 20:10:05 +0100
-Message-Id: <20230522190420.272742714@linuxfoundation.org>
+	Samuel Wein PhD <sam@samwein.com>,
+	M Chetan Kumar <m.chetan.kumar@linux.intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 283/364] net: wwan: iosm: fix NULL pointer dereference when removing device
+Date: Mon, 22 May 2023 20:09:48 +0100
+Message-Id: <20230522190419.804747256@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -34,90 +37,154 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
 
-commit fe82f16aafdaf8002281d3b9524291d4a4a28460 upstream.
+[ Upstream commit 60829145f1e2650b31ebe6a0ec70a9725b38fa2c ]
 
-This incorrect tracking caused unnecessary ring expansion in some
-usecases which over days of use consume a lot of memory.
+In suspend and resume cycle, the removal and rescan of device ends
+up in NULL pointer dereference.
 
-xhci driver tries to keep track of free transfer blocks (TRBs) on the
-ring buffer, but failed to add back some cancelled transfers that were
-turned into no-op operations instead of just moving past them.
+During driver initialization, if the ipc_imem_wwan_channel_init()
+fails to get the valid device capabilities it returns an error and
+further no resource (wwan struct) will be allocated. Now in this
+situation if driver removal procedure is initiated it would result
+in NULL pointer exception since unallocated wwan struct is dereferenced
+inside ipc_wwan_deinit().
 
-This can happen if there are several queued pending transfers which
-then are cancelled in reverse order.
+ipc_imem_run_state_worker() to handle the called functions return value
+and to release the resource in failure case. It also reports the link
+down event in failure cases. The user space application can handle this
+event to do a device reset for restoring the device communication.
 
-Solve this by counting the numer of steps we move the dequeue pointer
-once we complete a transfer, and add it to the number of free trbs
-instead of just adding the trb number of the current transfer.
-This way we ensure we count the no-op trbs on the way as well.
-
-Fixes: 55f6153d8cc8 ("xhci: remove extra loop in interrupt context")
-Cc: stable@vger.kernel.org
-Reported-by: Miller Hunter <MillerH@hearthnhome.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217242
-Tested-by: Miller Hunter <MillerH@hearthnhome.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230515134059.161110-3-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3670970dd8c6 ("net: iosm: shared memory IPC interface")
+Reported-by: Samuel Wein PhD <sam@samwein.com>
+Closes: https://lore.kernel.org/netdev/20230427140819.1310f4bd@kernel.org/T/
+Signed-off-by: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c |   29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ drivers/net/wwan/iosm/iosm_ipc_imem.c     | 27 ++++++++++++++++++-----
+ drivers/net/wwan/iosm/iosm_ipc_imem_ops.c | 12 ++++++----
+ drivers/net/wwan/iosm/iosm_ipc_imem_ops.h |  6 +++--
+ 3 files changed, 33 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -276,6 +276,26 @@ static void inc_enq(struct xhci_hcd *xhc
- 	trace_xhci_inc_enq(ring);
- }
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_imem.c b/drivers/net/wwan/iosm/iosm_ipc_imem.c
+index c066b0040a3fe..829515a601b37 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_imem.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_imem.c
+@@ -565,24 +565,32 @@ static void ipc_imem_run_state_worker(struct work_struct *instance)
+ 	struct ipc_mux_config mux_cfg;
+ 	struct iosm_imem *ipc_imem;
+ 	u8 ctrl_chl_idx = 0;
++	int ret;
  
-+static int xhci_num_trbs_to(struct xhci_segment *start_seg, union xhci_trb *start,
-+			    struct xhci_segment *end_seg, union xhci_trb *end,
-+			    unsigned int num_segs)
-+{
-+	union xhci_trb *last_on_seg;
-+	int num = 0;
-+	int i = 0;
-+
-+	do {
-+		if (start_seg == end_seg && end >= start)
-+			return num + (end - start);
-+		last_on_seg = &start_seg->trbs[TRBS_PER_SEGMENT - 1];
-+		num += last_on_seg - start;
-+		start_seg = start_seg->next;
-+		start = start_seg->trbs;
-+	} while (i++ <= num_segs);
-+
-+	return -EINVAL;
-+}
-+
- /*
-  * Check to see if there's room to enqueue num_trbs on the ring and make sure
-  * enqueue pointer will not advance into dequeue segment. See rules above.
-@@ -2140,6 +2160,7 @@ static int finish_td(struct xhci_hcd *xh
- 		     u32 trb_comp_code)
- {
- 	struct xhci_ep_ctx *ep_ctx;
-+	int trbs_freed;
+ 	ipc_imem = container_of(instance, struct iosm_imem, run_state_worker);
  
- 	ep_ctx = xhci_get_ep_ctx(xhci, ep->vdev->out_ctx, ep->ep_index);
- 
-@@ -2209,9 +2230,15 @@ static int finish_td(struct xhci_hcd *xh
+ 	if (ipc_imem->phase != IPC_P_RUN) {
+ 		dev_err(ipc_imem->dev,
+ 			"Modem link down. Exit run state worker.");
+-		return;
++		goto err_out;
  	}
  
- 	/* Update ring dequeue pointer */
-+	trbs_freed = xhci_num_trbs_to(ep_ring->deq_seg, ep_ring->dequeue,
-+				      td->last_trb_seg, td->last_trb,
-+				      ep_ring->num_segs);
-+	if (trbs_freed < 0)
-+		xhci_dbg(xhci, "Failed to count freed trbs at TD finish\n");
-+	else
-+		ep_ring->num_trbs_free += trbs_freed;
- 	ep_ring->dequeue = td->last_trb;
- 	ep_ring->deq_seg = td->last_trb_seg;
--	ep_ring->num_trbs_free += td->num_trbs - 1;
- 	inc_deq(xhci, ep_ring);
+ 	if (test_and_clear_bit(IOSM_DEVLINK_INIT, &ipc_imem->flag))
+ 		ipc_devlink_deinit(ipc_imem->ipc_devlink);
  
- 	return xhci_td_cleanup(xhci, td, ep_ring, td->status);
+-	if (!ipc_imem_setup_cp_mux_cap_init(ipc_imem, &mux_cfg))
+-		ipc_imem->mux = ipc_mux_init(&mux_cfg, ipc_imem);
++	ret = ipc_imem_setup_cp_mux_cap_init(ipc_imem, &mux_cfg);
++	if (ret < 0)
++		goto err_out;
++
++	ipc_imem->mux = ipc_mux_init(&mux_cfg, ipc_imem);
++	if (!ipc_imem->mux)
++		goto err_out;
++
++	ret = ipc_imem_wwan_channel_init(ipc_imem, mux_cfg.protocol);
++	if (ret < 0)
++		goto err_ipc_mux_deinit;
+ 
+-	ipc_imem_wwan_channel_init(ipc_imem, mux_cfg.protocol);
+-	if (ipc_imem->mux)
+-		ipc_imem->mux->wwan = ipc_imem->wwan;
++	ipc_imem->mux->wwan = ipc_imem->wwan;
+ 
+ 	while (ctrl_chl_idx < IPC_MEM_MAX_CHANNELS) {
+ 		if (!ipc_chnl_cfg_get(&chnl_cfg_port, ctrl_chl_idx)) {
+@@ -622,6 +630,13 @@ static void ipc_imem_run_state_worker(struct work_struct *instance)
+ 
+ 	/* Complete all memory stores after setting bit */
+ 	smp_mb__after_atomic();
++
++	return;
++
++err_ipc_mux_deinit:
++	ipc_mux_deinit(ipc_imem->mux);
++err_out:
++	ipc_uevent_send(ipc_imem->dev, UEVENT_CD_READY_LINK_DOWN);
+ }
+ 
+ static void ipc_imem_handle_irq(struct iosm_imem *ipc_imem, int irq)
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_imem_ops.c b/drivers/net/wwan/iosm/iosm_ipc_imem_ops.c
+index 66b90cc4c3460..109cf89304888 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_imem_ops.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_imem_ops.c
+@@ -77,8 +77,8 @@ int ipc_imem_sys_wwan_transmit(struct iosm_imem *ipc_imem,
+ }
+ 
+ /* Initialize wwan channel */
+-void ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
+-				enum ipc_mux_protocol mux_type)
++int ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
++			       enum ipc_mux_protocol mux_type)
+ {
+ 	struct ipc_chnl_cfg chnl_cfg = { 0 };
+ 
+@@ -87,7 +87,7 @@ void ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
+ 	/* If modem version is invalid (0xffffffff), do not initialize WWAN. */
+ 	if (ipc_imem->cp_version == -1) {
+ 		dev_err(ipc_imem->dev, "invalid CP version");
+-		return;
++		return -EIO;
+ 	}
+ 
+ 	ipc_chnl_cfg_get(&chnl_cfg, ipc_imem->nr_of_channels);
+@@ -104,9 +104,13 @@ void ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
+ 
+ 	/* WWAN registration. */
+ 	ipc_imem->wwan = ipc_wwan_init(ipc_imem, ipc_imem->dev);
+-	if (!ipc_imem->wwan)
++	if (!ipc_imem->wwan) {
+ 		dev_err(ipc_imem->dev,
+ 			"failed to register the ipc_wwan interfaces");
++		return -ENOMEM;
++	}
++
++	return 0;
+ }
+ 
+ /* Map SKB to DMA for transfer */
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_imem_ops.h b/drivers/net/wwan/iosm/iosm_ipc_imem_ops.h
+index f8afb217d9e2f..026c5bd0f9992 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_imem_ops.h
++++ b/drivers/net/wwan/iosm/iosm_ipc_imem_ops.h
+@@ -91,9 +91,11 @@ int ipc_imem_sys_wwan_transmit(struct iosm_imem *ipc_imem, int if_id,
+  *				MUX.
+  * @ipc_imem:		Pointer to iosm_imem struct.
+  * @mux_type:		Type of mux protocol.
++ *
++ * Return: 0 on success and failure value on error
+  */
+-void ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
+-				enum ipc_mux_protocol mux_type);
++int ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
++			       enum ipc_mux_protocol mux_type);
+ 
+ /**
+  * ipc_imem_sys_devlink_open - Open a Flash/CD Channel link to CP
+-- 
+2.39.2
+
 
 
