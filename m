@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8821171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:21:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DEC0C433EF;
-	Mon, 22 May 2023 19:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6BD171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:22:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456C1C433EF;
+	Mon, 22 May 2023 19:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783319;
-	bh=cb7aqYljqCAssm8eJcAFsWCaMqpLtRttikRJcxlpB6g=;
+	s=korg; t=1684783323;
+	bh=GxD2ID5KVjq+cl2uQ1Hw2o5l7NRbIEZADlSPJtVSHac=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvgeUxyQVVYzPGJjncdeC5h8u4RSO2VxdtXiWaYb1KdUkurW+Gb6thsQYe8ucstaQ
-	 3yxnYEdKpgSey1D+H90waY5ldC6RBpMMHE9Upr23STPczs2IrDtKHDFNMxHbJP4mjn
-	 sUrhvTCPIweRE2WJDrUs4pZicUqGAFfeB5140Jds=
+	b=nyKv110frojzncjTkEaCplsOwuURQnaVvwTrLknllcwfJQzC9SaH3oHZv7vizNbp7
+	 R2qKWevKZdMnIZwYjw+p3URluauROghE6wzdObaogWA9yZx2RkAcL8bqyGomFvK7I5
+	 iPePUfGY6BZvXuJb/lupFzog4+mgQbKj0PMrb0lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gustav Johansson <gustajo@axis.com>,
+	Chih-Yen Chang <cc85nod@gmail.com>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 185/203] ksmbd: smb2: Allow messages padded to 8byte boundary
-Date: Mon, 22 May 2023 20:10:09 +0100
-Message-Id: <20230522190400.132016337@linuxfoundation.org>
+Subject: [PATCH 5.15 186/203] ksmbd: allocate one more byte for implied bcc[0]
+Date: Mon, 22 May 2023 20:10:10 +0100
+Message-Id: <20230522190400.163664397@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,42 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gustav Johansson <gustajo@axis.com>
+From: Chih-Yen Chang <cc85nod@gmail.com>
 
-commit e7b8b8ed9960bf699bf4029f482d9e869c094ed6 upstream.
+commit 443d61d1fa9faa60ef925513d83742902390100f upstream.
 
-clc length is now accepted to <= 8 less than length,
-rather than < 8.
-
-Solve issues on some of Axis's smb clients which send
-messages where clc length is 8 bytes less than length.
-
-The specific client was running kernel 4.19.217 with
-smb dialect 3.0.2 on armv7l.
+ksmbd_smb2_check_message allows client to return one byte more, so we
+need to allocate additional memory in ksmbd_conn_handler_loop to avoid
+out-of-bound access.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Gustav Johansson <gustajo@axis.com>
+Signed-off-by: Chih-Yen Chang <cc85nod@gmail.com>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2misc.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/ksmbd/connection.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ksmbd/smb2misc.c
-+++ b/fs/ksmbd/smb2misc.c
-@@ -422,8 +422,11 @@ int ksmbd_smb2_check_message(struct ksmb
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -320,7 +320,8 @@ int ksmbd_conn_handler_loop(void *p)
+ 			break;
  
- 		/*
- 		 * Allow a message that padded to 8byte boundary.
-+		 * Linux 4.19.217 with smb 3.0.2 are sometimes
-+		 * sending messages where the cls_len is exactly
-+		 * 8 bytes less than len.
- 		 */
--		if (clc_len < len && (len - clc_len) < 8)
-+		if (clc_len < len && (len - clc_len) <= 8)
- 			goto validate_credit;
- 
- 		pr_err_ratelimited(
+ 		/* 4 for rfc1002 length field */
+-		size = pdu_size + 4;
++		/* 1 for implied bcc[0] */
++		size = pdu_size + 4 + 1;
+ 		conn->request_buf = kvmalloc(size, GFP_KERNEL);
+ 		if (!conn->request_buf)
+ 			break;
 
 
