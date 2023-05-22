@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ABDB171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D68AC433D2;
-	Mon, 22 May 2023 19:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2283F171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96A29C433D2;
+	Mon, 22 May 2023 19:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783471;
-	bh=sxFjk/OYel8w86FBx3c5fHxBKmbupi9RSffqReml0tI=;
+	s=korg; t=1684783474;
+	bh=kY9ROL/ajKrc6AW3nYuqoAAPqXA3n3Uo3N7sV13DZbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DeOBne7OGLtwDMjBbNa12CR6S62jl9/rJDYIQcl4odaUDtcASJT5A/zqRef6ypRAM
-	 GbdfNA+MIabQsth1WEs2wVuGQx6L0tSnyGABQG3AzgZnHMXX9ExipHaaV0mVkGfbPG
-	 jbDKumemmi0wFzzvdre4b+RKGbyw1YDBIvXh2fC0=
+	b=r2pAq9uNjHqgfk6RCaXugO6yoPRobT5GV45Fj7w2TSvnwcP1H+HSXB0+QGfJ7ChqW
+	 F3orekX7OGK93VC0UA7Di8aHQtLZHP3c/lvIr13KZdZWzp9jIsmzgXGePD1OtxwbLk
+	 u4/uP8LAVAphtYQRLvCrqj40RP2wuTd5s+UyZezk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
 	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/292] drm/i915/guc: Dont capture Gen8 regs on Xe devices
-Date: Mon, 22 May 2023 20:06:23 +0100
-Message-Id: <20230522190406.548263801@linuxfoundation.org>
+Subject: [PATCH 6.1 027/292] drm/i915: Fix NULL ptr deref by checking new_crtc_state
+Date: Mon, 22 May 2023 20:06:24 +0100
+Message-Id: <20230522190406.572404616@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -42,62 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
 
-[ Upstream commit 275dac1f7f5e9c2a2e806b34d3b10804eec0ac3c ]
+[ Upstream commit a41d985902c153c31c616fe183cf2ee331e95ecb ]
 
-A pair of pre-Xe registers were being included in the Xe capture list.
-GuC was rejecting those as being invalid and logging errors about
-them. So, stop doing it.
+intel_atomic_get_new_crtc_state can return NULL, unless crtc state wasn't
+obtained previously with intel_atomic_get_crtc_state, so we must check it
+for NULLness here, just as in many other places, where we can't guarantee
+that intel_atomic_get_crtc_state was called.
+We are currently getting NULL ptr deref because of that, so this fix was
+confirmed to help.
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Fixes: dce2bd542337 ("drm/i915/guc: Add Gen9 registers for GuC error state capture.")
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230428185636.457407-2-John.C.Harrison@Intel.com
-(cherry picked from commit b049132d61336f643d8faf2f6574b063667088cf)
+Fixes: 74a75dc90869 ("drm/i915/display: move plane prepare/cleanup to intel_atomic_plane.c")
+Signed-off-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230505082212.27089-1-stanislav.lisovskiy@intel.com
+(cherry picked from commit 1d5b09f8daf859247a1ea65b0d732a24d88980d8)
 Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_atomic_plane.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-index 1e1fa20fb41c9..18a8466f85917 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-@@ -30,12 +30,14 @@
- 	{ FORCEWAKE_MT,             0,      0, "FORCEWAKE" }
+diff --git a/drivers/gpu/drm/i915/display/intel_atomic_plane.c b/drivers/gpu/drm/i915/display/intel_atomic_plane.c
+index aaa6708256d58..82826454b5e83 100644
+--- a/drivers/gpu/drm/i915/display/intel_atomic_plane.c
++++ b/drivers/gpu/drm/i915/display/intel_atomic_plane.c
+@@ -988,7 +988,7 @@ intel_prepare_plane_fb(struct drm_plane *_plane,
+ 	int ret;
  
- #define COMMON_GEN9BASE_GLOBAL \
--	{ GEN8_FAULT_TLB_DATA0,     0,      0, "GEN8_FAULT_TLB_DATA0" }, \
--	{ GEN8_FAULT_TLB_DATA1,     0,      0, "GEN8_FAULT_TLB_DATA1" }, \
- 	{ ERROR_GEN6,               0,      0, "ERROR_GEN6" }, \
- 	{ DONE_REG,                 0,      0, "DONE_REG" }, \
- 	{ HSW_GTT_CACHE_EN,         0,      0, "HSW_GTT_CACHE_EN" }
+ 	if (old_obj) {
+-		const struct intel_crtc_state *crtc_state =
++		const struct intel_crtc_state *new_crtc_state =
+ 			intel_atomic_get_new_crtc_state(state,
+ 							to_intel_crtc(old_plane_state->hw.crtc));
  
-+#define GEN9_GLOBAL \
-+	{ GEN8_FAULT_TLB_DATA0,     0,      0, "GEN8_FAULT_TLB_DATA0" }, \
-+	{ GEN8_FAULT_TLB_DATA1,     0,      0, "GEN8_FAULT_TLB_DATA1" }
-+
- #define COMMON_GEN12BASE_GLOBAL \
- 	{ GEN12_FAULT_TLB_DATA0,    0,      0, "GEN12_FAULT_TLB_DATA0" }, \
- 	{ GEN12_FAULT_TLB_DATA1,    0,      0, "GEN12_FAULT_TLB_DATA1" }, \
-@@ -136,6 +138,7 @@ static const struct __guc_mmio_reg_descr xe_lpd_blt_inst_regs[] = {
- static const struct __guc_mmio_reg_descr default_global_regs[] = {
- 	COMMON_BASE_GLOBAL,
- 	COMMON_GEN9BASE_GLOBAL,
-+	GEN9_GLOBAL,
- };
- 
- static const struct __guc_mmio_reg_descr default_rc_class_regs[] = {
+@@ -1003,7 +1003,7 @@ intel_prepare_plane_fb(struct drm_plane *_plane,
+ 		 * This should only fail upon a hung GPU, in which case we
+ 		 * can safely continue.
+ 		 */
+-		if (intel_crtc_needs_modeset(crtc_state)) {
++		if (new_crtc_state && intel_crtc_needs_modeset(new_crtc_state)) {
+ 			ret = i915_sw_fence_await_reservation(&state->commit_ready,
+ 							      old_obj->base.resv, NULL,
+ 							      false, 0,
 -- 
 2.39.2
 
