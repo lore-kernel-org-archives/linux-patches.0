@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11ED9171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86BADC433D2;
-	Mon, 22 May 2023 19:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BDC171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E2BC433EF;
+	Mon, 22 May 2023 19:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783479;
-	bh=HjV7t6wRaGmPsGpISVlSU6zwaJWXLyMNRroorwprgT0=;
+	s=korg; t=1684783482;
+	bh=ktFo/b9bmKnW94LuXy3iwj65bbvj5syCofriKODXs5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=upozaEPHGMQkUF6wV+mc/yA5xc5/AfHEzXuzdOpL59Sc7Q+hIzGkM88+YEVkBS1OO
-	 X75+TTjzQqkMal1qXDXezoWZYcwtdxZAGynjdLiypQxWsH0Aes5kJJRRvRD+J5Mec8
-	 UZLoiXO7AryMnyazW/XuLt9Uuf2KjEjH8gT3jFMk=
+	b=F29eTdQovE6I/AZz9MtqFLRFMCDj4n/ZPDFW0DFFHHZavXpr9ew+CO5KoUwuHxoBd
+	 cOcWZtgEoAjzaAGnBs9+pJsPoup5fgAruMBjrllURWX2HL19i/PORvK/bio/tgvxZT
+	 at7LapdefPp0oXVe1wgNkyuSiIJAV4f3nC2lGjPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dave Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Jani Nikula <jani.nikula@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/292] drm/i915: Expand force_probe to block probe of devices as well.
-Date: Mon, 22 May 2023 20:06:26 +0100
-Message-Id: <20230522190406.621982636@linuxfoundation.org>
+Subject: [PATCH 6.1 030/292] drm/i915: taint kernel when force probing unsupported devices
+Date: Mon, 22 May 2023 20:06:27 +0100
+Message-Id: <20230522190406.645615157@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,176 +40,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodrigo Vivi <rodrigo.vivi@intel.com>
+From: Jani Nikula <jani.nikula@intel.com>
 
-[ Upstream commit 157821fb3e9aaa07cf408686b08d117bf27b7de1 ]
+[ Upstream commit 79c901c93562bdf1c84ce6c1b744fbbe4389a6eb ]
 
-There are new cases where we want to block i915 probe, such
-as when experimenting or developing the new Xe driver.
+For development and testing purposes, the i915.force_probe module
+parameter and DRM_I915_FORCE_PROBE kconfig option allow probing of
+devices that aren't supported by the driver.
 
-But also, with the new hybrid cards, users or developers might
-want to use i915 only on integrated and fully block the probe
-of the i915 for the discrete. Or vice versa.
+The i915.force_probe module parameter is "unsafe" and setting it taints
+the kernel. However, using the kconfig option does not.
 
-There are even older development and validation reasons,
-like when you use some distro where the modprobe.blacklist is
-not present.
+Always taint the kernel when force probing a device that is not
+supported.
 
-But in any case, let's introduce a more granular control, but without
-introducing yet another parameter, but using the existent force_probe
-one.
+v2: Drop "depends on EXPERT" to avoid build breakage (kernel test robot)
 
-Just by adding a ! in the begin of the id in the force_probe, like
-in this case where we would block the probe for Alder Lake:
-
-$ insmod i915.ko force_probe='!46a6'
-
-v2: Take care of '*' and  '!*' cases as pointed out by
-    Gustavo and Jani.
-
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Gustavo Sousa <gustavo.sousa@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Acked-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230103194701.1492984-1-rodrigo.vivi@intel.com
-Stable-dep-of: 79c901c93562 ("drm/i915: taint kernel when force probing unsupported devices")
+Fixes: 7ef5ef5cdead ("drm/i915: add force_probe module parameter to replace alpha_support")
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Dave Airlie <airlied@gmail.com>
+Acked-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230504103508.1818540-1-jani.nikula@intel.com
+(cherry picked from commit 3312bb4ad09ca6423bd4a5b15a94588a8962fb8e)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/Kconfig       | 15 +++++++++++---
- drivers/gpu/drm/i915/i915_params.c |  2 +-
- drivers/gpu/drm/i915/i915_pci.c    | 33 +++++++++++++++++++++++++-----
- 3 files changed, 41 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/i915/Kconfig    | 12 +++++++-----
+ drivers/gpu/drm/i915/i915_pci.c |  6 ++++++
+ 2 files changed, 13 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
-index 3a6e176d77aa5..e04715fa5bc4c 100644
+index e04715fa5bc4c..6b10868ec72ff 100644
 --- a/drivers/gpu/drm/i915/Kconfig
 +++ b/drivers/gpu/drm/i915/Kconfig
-@@ -54,24 +54,33 @@ config DRM_I915
- 	  If "M" is selected, the module will be called i915.
- 
- config DRM_I915_FORCE_PROBE
--	string "Force probe driver for selected new Intel hardware"
-+	string "Force probe i915 for selected Intel hardware IDs"
- 	depends on DRM_I915
- 	help
+@@ -60,10 +60,11 @@ config DRM_I915_FORCE_PROBE
  	  This is the default value for the i915.force_probe module
  	  parameter. Using the module parameter overrides this option.
  
--	  Force probe the driver for new Intel graphics devices that are
-+	  Force probe the i915 for Intel graphics devices that are
- 	  recognized but not properly supported by this kernel version. It is
- 	  recommended to upgrade to a kernel version with proper support as soon
- 	  as it is available.
+-	  Force probe the i915 for Intel graphics devices that are
+-	  recognized but not properly supported by this kernel version. It is
+-	  recommended to upgrade to a kernel version with proper support as soon
+-	  as it is available.
++	  Force probe the i915 driver for Intel graphics devices that are
++	  recognized but not properly supported by this kernel version. Force
++	  probing an unsupported device taints the kernel. It is recommended to
++	  upgrade to a kernel version with proper support as soon as it is
++	  available.
  
-+	  It can also be used to block the probe of recognized and fully
-+	  supported devices.
-+
- 	  Use "" to disable force probe. If in doubt, use this.
- 
--	  Use "<pci-id>[,<pci-id>,...]" to force probe the driver for listed
-+	  Use "<pci-id>[,<pci-id>,...]" to force probe the i915 for listed
+ 	  It can also be used to block the probe of recognized and fully
+ 	  supported devices.
+@@ -73,7 +74,8 @@ config DRM_I915_FORCE_PROBE
+ 	  Use "<pci-id>[,<pci-id>,...]" to force probe the i915 for listed
  	  devices. For example, "4500" or "4500,4571".
  
- 	  Use "*" to force probe the driver for all known devices.
+-	  Use "*" to force probe the driver for all known devices.
++	  Use "*" to force probe the driver for all known devices. Not
++	  recommended.
  
-+	  Use "!" right before the ID to block the probe of the device. For
-+	  example, "4500,!4571" forces the probe of 4500 and blocks the probe of
-+	  4571.
-+
-+	  Use "!*" to block the probe of the driver for all known devices.
-+
- config DRM_I915_CAPTURE_ERROR
- 	bool "Enable capturing GPU state following a hang"
- 	depends on DRM_I915
-diff --git a/drivers/gpu/drm/i915/i915_params.c b/drivers/gpu/drm/i915/i915_params.c
-index d1e4d528cb174..5b24dd50fb6a4 100644
---- a/drivers/gpu/drm/i915/i915_params.c
-+++ b/drivers/gpu/drm/i915/i915_params.c
-@@ -122,7 +122,7 @@ i915_param_named_unsafe(enable_psr2_sel_fetch, bool, 0400,
- 	"Default: 0");
- 
- i915_param_named_unsafe(force_probe, charp, 0400,
--	"Force probe the driver for specified devices. "
-+	"Force probe options for specified supported devices. "
- 	"See CONFIG_DRM_I915_FORCE_PROBE for details.");
- 
- i915_param_named_unsafe(disable_power_well, int, 0400,
+ 	  Use "!" right before the ID to block the probe of the device. For
+ 	  example, "4500,!4571" forces the probe of 4500 and blocks the probe of
 diff --git a/drivers/gpu/drm/i915/i915_pci.c b/drivers/gpu/drm/i915/i915_pci.c
-index a2efc0b9d50c8..1fa4a5813683f 100644
+index 1fa4a5813683f..efa80475fbfed 100644
 --- a/drivers/gpu/drm/i915/i915_pci.c
 +++ b/drivers/gpu/drm/i915/i915_pci.c
-@@ -1252,7 +1252,7 @@ static void i915_pci_remove(struct pci_dev *pdev)
- }
- 
- /* is device_id present in comma separated list of ids */
--static bool force_probe(u16 device_id, const char *devices)
-+static bool device_id_in_list(u16 device_id, const char *devices, bool negative)
- {
- 	char *s, *p, *tok;
- 	bool ret;
-@@ -1261,7 +1261,9 @@ static bool force_probe(u16 device_id, const char *devices)
- 		return false;
- 
- 	/* match everything */
--	if (strcmp(devices, "*") == 0)
-+	if (negative && strcmp(devices, "!*") == 0)
-+		return true;
-+	if (!negative && strcmp(devices, "*") == 0)
- 		return true;
- 
- 	s = kstrdup(devices, GFP_KERNEL);
-@@ -1271,6 +1273,12 @@ static bool force_probe(u16 device_id, const char *devices)
- 	for (p = s, ret = false; (tok = strsep(&p, ",")) != NULL; ) {
- 		u16 val;
- 
-+		if (negative && tok[0] == '!')
-+			tok++;
-+		else if ((negative && tok[0] != '!') ||
-+			 (!negative && tok[0] == '!'))
-+			continue;
-+
- 		if (kstrtou16(tok, 16, &val) == 0 && val == device_id) {
- 			ret = true;
- 			break;
-@@ -1282,6 +1290,16 @@ static bool force_probe(u16 device_id, const char *devices)
- 	return ret;
- }
- 
-+static bool id_forced(u16 device_id)
-+{
-+	return device_id_in_list(device_id, i915_modparams.force_probe, false);
-+}
-+
-+static bool id_blocked(u16 device_id)
-+{
-+	return device_id_in_list(device_id, i915_modparams.force_probe, true);
-+}
-+
- bool i915_pci_resource_valid(struct pci_dev *pdev, int bar)
- {
- 	if (!pci_resource_flags(pdev, bar))
-@@ -1309,10 +1327,9 @@ static int i915_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		(struct intel_device_info *) ent->driver_data;
- 	int err;
- 
--	if (intel_info->require_force_probe &&
--	    !force_probe(pdev->device, i915_modparams.force_probe)) {
-+	if (intel_info->require_force_probe && !id_forced(pdev->device)) {
- 		dev_info(&pdev->dev,
--			 "Your graphics device %04x is not properly supported by the driver in this\n"
-+			 "Your graphics device %04x is not properly supported by i915 in this\n"
- 			 "kernel version. To force driver probe anyway, use i915.force_probe=%04x\n"
- 			 "module parameter or CONFIG_DRM_I915_FORCE_PROBE=%04x configuration option,\n"
- 			 "or (recommended) check for kernel updates.\n",
-@@ -1320,6 +1337,12 @@ static int i915_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+@@ -1343,6 +1343,12 @@ static int i915_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  		return -ENODEV;
  	}
  
-+	if (id_blocked(pdev->device)) {
-+		dev_info(&pdev->dev, "I915 probe blocked for Device ID %04x.\n",
++	if (intel_info->require_force_probe) {
++		dev_info(&pdev->dev, "Force probing unsupported Device ID %04x, tainting kernel\n",
 +			 pdev->device);
-+		return -ENODEV;
++		add_taint(TAINT_USER, LOCKDEP_STILL_OK);
 +	}
 +
  	/* Only bind to function 0 of the device. Early generations
