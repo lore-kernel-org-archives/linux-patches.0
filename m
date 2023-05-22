@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D6D171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E23AC433D2;
-	Mon, 22 May 2023 19:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A1C171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1EDAC433EF;
+	Mon, 22 May 2023 19:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784515;
-	bh=hH/l81anuCs6BR9skkB2qfBrEHiihE5JzFvsKGzSM9I=;
+	s=korg; t=1684784518;
+	bh=JIQfiJRR8Qc+Y36j36yjNp/OGMv0j8pwpjokVNFvSkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrrCLXSn9+zJuqWJKBJonbuNqomFOaU2mIHzAh2SuymxSSyaW/F8A/RJfMRxg2rDW
-	 cJ1hyitgzHirD3PV0ulFGwcw8ZogTdsouRbzYFcsZdVBbMMht0QbtdRy/XN5VribpM
-	 MBEKwDFUZU6A805Nt/Gqej38j1UTvzFPIuadcoIw=
+	b=SfV3MzW6Ha2F3Cn3RRBH2J2t202o/fYRnJhQ5Uh5J+1P1RGvaK/yTxJB7wn7P5ZIz
+	 Iaj5l+rJeQh7uRItLJ2Cyiuwvt6FC+m8F4PhYUdqIJVLxn+Sx4KLYs1Jk7MxLWEpOv
+	 EQHP8M279eA+LvKj0H1ltpfGADypcRFcHM1z1O5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+45d4691b1ed3c48eba05@syzkaller.appspotmail.com,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 107/364] gfs2: Fix inode height consistency check
-Date: Mon, 22 May 2023 20:06:52 +0100
-Message-Id: <20230522190415.443191015@linuxfoundation.org>
+Subject: [PATCH 6.3 108/364] scsi: ufs: ufs-pci: Add support for Intel Lunar Lake
+Date: Mon, 22 May 2023 20:06:53 +0100
+Message-Id: <20230522190415.471110624@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,46 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit cfcdb5bad34f600aed7613c3c1a5e618111f77b7 ]
+[ Upstream commit 0a07d3c7a1d205b47d9f3608ff4e9d1065d63b6d ]
 
-The maximum allowed height of an inode's metadata tree depends on the
-filesystem block size; it is lower for bigger-block filesystems.  When
-reading in an inode, make sure that the height doesn't exceed the
-maximum allowed height.
+Add PCI ID to support Intel Lunar Lake, same as MTL.
 
-Arrays like sd_heightsize are sized to be big enough for any filesystem
-block size; they will often be slightly bigger than what's needed for a
-specific filesystem.
-
-Reported-by: syzbot+45d4691b1ed3c48eba05@syzkaller.appspotmail.com
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lore.kernel.org/r/20230328105832.3495-1-adrian.hunter@intel.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glops.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ufs/host/ufshcd-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
-index 4d99cc77a29b7..b65950e76be5a 100644
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -396,6 +396,7 @@ static int inode_go_demote_ok(const struct gfs2_glock *gl)
- 
- static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- {
-+	struct gfs2_sbd *sdp = GFS2_SB(&ip->i_inode);
- 	const struct gfs2_dinode *str = buf;
- 	struct timespec64 atime;
- 	u16 height, depth;
-@@ -442,7 +443,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
- 	/* i_diskflags and i_eattr must be set before gfs2_set_inode_flags() */
- 	gfs2_set_inode_flags(inode);
- 	height = be16_to_cpu(str->di_height);
--	if (unlikely(height > GFS2_MAX_META_HEIGHT))
-+	if (unlikely(height > sdp->sd_max_height))
- 		goto corrupt;
- 	ip->i_height = (u8)height;
+diff --git a/drivers/ufs/host/ufshcd-pci.c b/drivers/ufs/host/ufshcd-pci.c
+index 1c91f43e15c8e..9c911787f84c6 100644
+--- a/drivers/ufs/host/ufshcd-pci.c
++++ b/drivers/ufs/host/ufshcd-pci.c
+@@ -607,6 +607,7 @@ static const struct pci_device_id ufshcd_pci_tbl[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x51FF), (kernel_ulong_t)&ufs_intel_adl_hba_vops },
+ 	{ PCI_VDEVICE(INTEL, 0x54FF), (kernel_ulong_t)&ufs_intel_adl_hba_vops },
+ 	{ PCI_VDEVICE(INTEL, 0x7E47), (kernel_ulong_t)&ufs_intel_mtl_hba_vops },
++	{ PCI_VDEVICE(INTEL, 0xA847), (kernel_ulong_t)&ufs_intel_mtl_hba_vops },
+ 	{ }	/* terminate list */
+ };
  
 -- 
 2.39.2
