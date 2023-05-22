@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75366171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:15:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D39C4339B;
-	Mon, 22 May 2023 19:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C0B171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65053C433D2;
+	Mon, 22 May 2023 19:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782958;
-	bh=md2nOAsUB65InNrnStU66YPlEd6VHnLXSPWZRXYJOR0=;
+	s=korg; t=1684782960;
+	bh=iqEGhcmnC9N81FJnowv8a1aG1lQGPLyxF963jezKm6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ef5w6KPhgF752tdU+piA/18yMdM8AWYc1rnWDNITv0hI1LcBArpJGbMTY+rZSIBuR
-	 EU/bO2qf1fkmfOQtLcdSvAZgxlxMJ2H69zn5TQHeqGQyVPigG/425ptHiaTJCRIGGh
-	 SlpNbjc4bd2YSqNJfOUNjED6zEGjKisamKa02efs=
+	b=pcakH2w1eXk9MJI1c0O4fsUD7NIoAPdjUL9tV3tgkc1NKhqXE1oCURanCQKL8uf4y
+	 MXGPIhtqcFx57o9OjlOkcHd8Z/EEs8UhkW/5K9VuBNg6iElPALmYRQZmV50IU3KHHG
+	 DQJPR6IMNk3yy1UUqulBEp0LT0T0tyN4CJ+tQ8hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 062/203] ext4: set goal start correctly in ext4_mb_normalize_request
-Date: Mon, 22 May 2023 20:08:06 +0100
-Message-Id: <20230522190356.710658975@linuxfoundation.org>
+Subject: [PATCH 5.15 063/203] ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()
+Date: Mon, 22 May 2023 20:08:07 +0100
+Message-Id: <20230522190356.736796199@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,70 +37,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 
-[ Upstream commit b07ffe6927c75d99af534d685282ea188d9f71a6 ]
+[ Upstream commit 93cdf49f6eca5e23f6546b8f28457b2e6a6961d9 ]
 
-We need to set ac_g_ex to notify the goal start used in
-ext4_mb_find_by_goal. Set ac_g_ex instead of ac_f_ex in
-ext4_mb_normalize_request.
-Besides we should assure goal start is in range [first_data_block,
-blocks_count) as ext4_mb_initialize_context does.
+When the length of best extent found is less than the length of goal extent
+we need to make sure that the best extent atleast covers the start of the
+original request. This is done by adjusting the ac_b_ex.fe_logical (logical
+start) of the extent.
 
-[ Added a check to make sure size is less than ar->pright; otherwise
-  we could end up passing an underflowed value of ar->pright - size to
-  ext4_get_group_no_and_offset(), which will trigger a BUG_ON later on.
-  - TYT ]
+While doing so, the current logic sometimes results in the best extent's
+logical range overflowing the goal extent. Since this best extent is later
+added to the inode preallocation list, we have a possibility of introducing
+overlapping preallocations. This is discussed in detail here [1].
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+As per Jan's suggestion, to fix this, replace the existing logic with the
+below logic for adjusting best extent as it keeps fragmentation in check
+while ensuring logical range of best extent doesn't overflow out of goal
+extent:
+
+1. Check if best extent can be kept at end of goal range and still cover
+   original start.
+2. Else, check if best extent can be kept at start of goal range and still
+   cover original start.
+3. Else, keep the best extent at start of original request.
+
+Also, add a few extra BUG_ONs that might help catch errors faster.
+
+[1] https://lore.kernel.org/r/Y+OGkVvzPN0RMv0O@li-bb2b2a4c-3307-11b2-a85c-8fa5c3a69313.ibm.com
+
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20230303172120.3800725-2-shikemeng@huaweicloud.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/f96aca6d415b36d1f90db86c1a8cd7e2e9d7ab0e.1679731817.git.ojaswin@linux.ibm.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ fs/ext4/mballoc.c | 49 ++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 31 insertions(+), 18 deletions(-)
 
 diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 4cc635633f789..de51963c701f7 100644
+index de51963c701f7..e8f5f05bddb3f 100644
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -4045,6 +4045,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
- 				struct ext4_allocation_request *ar)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
-+	struct ext4_super_block *es = sbi->s_es;
- 	int bsbits, max;
- 	ext4_lblk_t end;
- 	loff_t size, start_off;
-@@ -4225,18 +4226,21 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
- 	ac->ac_g_ex.fe_len = EXT4_NUM_B2C(sbi, size);
+@@ -4333,6 +4333,7 @@ static void ext4_mb_use_inode_pa(struct ext4_allocation_context *ac,
+ 	BUG_ON(start < pa->pa_pstart);
+ 	BUG_ON(end > pa->pa_pstart + EXT4_C2B(sbi, pa->pa_len));
+ 	BUG_ON(pa->pa_free < len);
++	BUG_ON(ac->ac_b_ex.fe_len <= 0);
+ 	pa->pa_free -= len;
  
- 	/* define goal start in order to merge */
--	if (ar->pright && (ar->lright == (start + size))) {
-+	if (ar->pright && (ar->lright == (start + size)) &&
-+	    ar->pright >= size &&
-+	    ar->pright - size >= le32_to_cpu(es->s_first_data_block)) {
- 		/* merge to the right */
- 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pright - size,
--						&ac->ac_f_ex.fe_group,
--						&ac->ac_f_ex.fe_start);
-+						&ac->ac_g_ex.fe_group,
-+						&ac->ac_g_ex.fe_start);
- 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
- 	}
--	if (ar->pleft && (ar->lleft + 1 == start)) {
-+	if (ar->pleft && (ar->lleft + 1 == start) &&
-+	    ar->pleft + 1 < ext4_blocks_count(es)) {
- 		/* merge to the left */
- 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pleft + 1,
--						&ac->ac_f_ex.fe_group,
--						&ac->ac_f_ex.fe_start);
-+						&ac->ac_g_ex.fe_group,
-+						&ac->ac_g_ex.fe_start);
- 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
+ 	mb_debug(ac->ac_sb, "use %llu/%d from inode pa %p\n", start, len, pa);
+@@ -4662,10 +4663,8 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
+ 	pa = ac->ac_pa;
+ 
+ 	if (ac->ac_b_ex.fe_len < ac->ac_g_ex.fe_len) {
+-		int winl;
+-		int wins;
+-		int win;
+-		int offs;
++		int new_bex_start;
++		int new_bex_end;
+ 
+ 		/* we can't allocate as much as normalizer wants.
+ 		 * so, found space must get proper lstart
+@@ -4673,26 +4672,40 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
+ 		BUG_ON(ac->ac_g_ex.fe_logical > ac->ac_o_ex.fe_logical);
+ 		BUG_ON(ac->ac_g_ex.fe_len < ac->ac_o_ex.fe_len);
+ 
+-		/* we're limited by original request in that
+-		 * logical block must be covered any way
+-		 * winl is window we can move our chunk within */
+-		winl = ac->ac_o_ex.fe_logical - ac->ac_g_ex.fe_logical;
++		/*
++		 * Use the below logic for adjusting best extent as it keeps
++		 * fragmentation in check while ensuring logical range of best
++		 * extent doesn't overflow out of goal extent:
++		 *
++		 * 1. Check if best ex can be kept at end of goal and still
++		 *    cover original start
++		 * 2. Else, check if best ex can be kept at start of goal and
++		 *    still cover original start
++		 * 3. Else, keep the best ex at start of original request.
++		 */
++		new_bex_end = ac->ac_g_ex.fe_logical +
++			EXT4_C2B(sbi, ac->ac_g_ex.fe_len);
++		new_bex_start = new_bex_end - EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
++		if (ac->ac_o_ex.fe_logical >= new_bex_start)
++			goto adjust_bex;
+ 
+-		/* also, we should cover whole original request */
+-		wins = EXT4_C2B(sbi, ac->ac_b_ex.fe_len - ac->ac_o_ex.fe_len);
++		new_bex_start = ac->ac_g_ex.fe_logical;
++		new_bex_end =
++			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
++		if (ac->ac_o_ex.fe_logical < new_bex_end)
++			goto adjust_bex;
+ 
+-		/* the smallest one defines real window */
+-		win = min(winl, wins);
++		new_bex_start = ac->ac_o_ex.fe_logical;
++		new_bex_end =
++			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
+ 
+-		offs = ac->ac_o_ex.fe_logical %
+-			EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
+-		if (offs && offs < win)
+-			win = offs;
++adjust_bex:
++		ac->ac_b_ex.fe_logical = new_bex_start;
+ 
+-		ac->ac_b_ex.fe_logical = ac->ac_o_ex.fe_logical -
+-			EXT4_NUM_B2C(sbi, win);
+ 		BUG_ON(ac->ac_o_ex.fe_logical < ac->ac_b_ex.fe_logical);
+ 		BUG_ON(ac->ac_o_ex.fe_len > ac->ac_b_ex.fe_len);
++		BUG_ON(new_bex_end > (ac->ac_g_ex.fe_logical +
++				      EXT4_C2B(sbi, ac->ac_g_ex.fe_len)));
  	}
  
+ 	/* preallocation can change ac_b_ex, thus we store actually
 -- 
 2.39.2
 
