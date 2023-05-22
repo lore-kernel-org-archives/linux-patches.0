@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D79C7171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:15:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68556C433EF;
-	Mon, 22 May 2023 19:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C406171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:15:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF20C433D2;
+	Mon, 22 May 2023 19:15:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782948;
-	bh=U1T2evskaLiklMZRE+CQy1wv86bZejcZV645N5cjG6c=;
+	s=korg; t=1684782951;
+	bh=sxrXFG9zskyTrjrIVOYCIzQ7hBRzHxYT6ADBMRecYQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gB/KRHKlmeSMjfsaYvFxuzx2FOHyek6h3DgR6ef/qpcAdNQO1LZq6kkAMNcMKrGfZ
-	 Yd73Sun4J7PQ7vXmR9exIA5AnUOz++QU3BulIWfzqhS62kNEEbHo/mWMVuVH4/3GL3
-	 pzBUaoEeBUHuUdById3gd04DAPxuiLWg1t1EWMQQ=
+	b=0G8KTrcnc4waSIcT23j1ocJBT0HXBmBaCUBEwFPy+pEkEZ54bvZTWdHklDGCQdZ6F
+	 7yqUkC15WsXldiJqyeUApMnlyHZ5XZWqfYnoU/8U0AhH8DqWM8ruvs6kXsmExcX4m8
+	 VoFz7BO9nJPwZSACnQ0JDLwaI2WLTtHzTsGh08uw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
-	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
-	Johannes Thumshirn <jth@kernel.org>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 085/203] mcb-pci: Reallocate memory region to avoid memory overlapping
-Date: Mon, 22 May 2023 20:08:29 +0100
-Message-Id: <20230522190357.342449010@linuxfoundation.org>
+Subject: [PATCH 5.15 059/203] scsi: message: mptlan: Fix use after free bug in mptlan_remove() due to race condition
+Date: Mon, 22 May 2023 20:08:03 +0100
+Message-Id: <20230522190356.628289619@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,73 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 9be24faadd085c284890c3afcec7a0184642315a ]
+[ Upstream commit f486893288f3e9b171b836f43853a6426515d800 ]
 
-mcb-pci requests a fixed-size memory region to parse the chameleon
-table, however, if the chameleon table is smaller that the allocated
-region, it could overlap with the IP Cores' memory regions.
+mptlan_probe() calls mpt_register_lan_device() which initializes the
+&priv->post_buckets_task workqueue. A call to
+mpt_lan_wake_post_buckets_task() will subsequently start the work.
 
-After parsing the chameleon table, drop/reallocate the memory region
-with the actual chameleon table size.
+During driver unload in mptlan_remove() the following race may occur:
 
-Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/20230411083329.4506-3-jth@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CPU0                  CPU1
+
+                    |mpt_lan_post_receive_buckets_work()
+mptlan_remove()     |
+  free_netdev()     |
+    kfree(dev);     |
+                    |
+                    | dev->mtu
+                    |   //use
+
+Fix this by finishing the work prior to cleaning up in mptlan_remove().
+
+[mkp: we really should remove mptlan instead of attempting to fix it]
+
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Link: https://lore.kernel.org/r/20230318081635.796479-1-zyytlz.wz@163.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-pci.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ drivers/message/fusion/mptlan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mcb/mcb-pci.c b/drivers/mcb/mcb-pci.c
-index dc88232d9af83..53d9202ff9a7c 100644
---- a/drivers/mcb/mcb-pci.c
-+++ b/drivers/mcb/mcb-pci.c
-@@ -31,7 +31,7 @@ static int mcb_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+diff --git a/drivers/message/fusion/mptlan.c b/drivers/message/fusion/mptlan.c
+index 3261cac762def..ec3ee356078db 100644
+--- a/drivers/message/fusion/mptlan.c
++++ b/drivers/message/fusion/mptlan.c
+@@ -1427,7 +1427,9 @@ mptlan_remove(struct pci_dev *pdev)
  {
- 	struct resource *res;
- 	struct priv *priv;
--	int ret;
-+	int ret, table_size;
- 	unsigned long flags;
+ 	MPT_ADAPTER 		*ioc = pci_get_drvdata(pdev);
+ 	struct net_device	*dev = ioc->netdev;
++	struct mpt_lan_priv *priv = netdev_priv(dev);
  
- 	priv = devm_kzalloc(&pdev->dev, sizeof(struct priv), GFP_KERNEL);
-@@ -90,7 +90,30 @@ static int mcb_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (ret < 0)
- 		goto out_mcb_bus;
- 
--	dev_dbg(&pdev->dev, "Found %d cells\n", ret);
-+	table_size = ret;
-+
-+	if (table_size < CHAM_HEADER_SIZE) {
-+		/* Release the previous resources */
-+		devm_iounmap(&pdev->dev, priv->base);
-+		devm_release_mem_region(&pdev->dev, priv->mapbase, CHAM_HEADER_SIZE);
-+
-+		/* Then, allocate it again with the actual chameleon table size */
-+		res = devm_request_mem_region(&pdev->dev, priv->mapbase,
-+						table_size,
-+						KBUILD_MODNAME);
-+		if (!res) {
-+			dev_err(&pdev->dev, "Failed to request PCI memory\n");
-+			ret = -EBUSY;
-+			goto out_mcb_bus;
-+		}
-+
-+		priv->base = devm_ioremap(&pdev->dev, priv->mapbase, table_size);
-+		if (!priv->base) {
-+			dev_err(&pdev->dev, "Cannot ioremap\n");
-+			ret = -ENOMEM;
-+			goto out_mcb_bus;
-+		}
-+	}
- 
- 	mcb_bus_add_devices(priv->bus);
- 
++	cancel_delayed_work_sync(&priv->post_buckets_task);
+ 	if(dev != NULL) {
+ 		unregister_netdev(dev);
+ 		free_netdev(dev);
 -- 
 2.39.2
 
