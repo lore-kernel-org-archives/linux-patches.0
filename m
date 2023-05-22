@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1F1C171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302E3C4339B;
-	Mon, 22 May 2023 19:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916BD171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC47C433D2;
+	Mon, 22 May 2023 19:28:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783716;
-	bh=tU2A4wj5lvfjaL193dHua5J4mUq9RDcdrukuxdAY/Zk=;
+	s=korg; t=1684783719;
+	bh=V+SRqTeOIQkCJr1YG3oqjich7N1hefNlgQc35gKG3p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cep/bgEFe1tscatrVz4P/e0a4tjQM7UM9Jp2/iPqnyTZcTD0TShL8o4LFeDZB0ucT
-	 J+rrGTge5htDHOZnVgXtu4a42HfFOcW5ANer3cMkc5Zz9s8Z4PvotPI9vgzwjvou0u
-	 UMfemYzomaZS8+KLt9Woc7sb00179HoYTgO1Ll1s=
+	b=RqlXdZ8xtzllhzcTeIRbWMm7mT+NxHxu8H9Pcp6jTPpGvKdA/4S5/pdN5utk09Xy4
+	 Z7EcBQruoG82VH0HJ+49NT5I/zyoCIaLNX8L0MOLk7k+kbIqtPeKrsyJcBC3NCVGxL
+	 Z1hT8fCEJRXG1REp7xNNHg9ij3OuPOJtZHt1WdK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hao Zeng <zenghao@kylinos.cn>,
+	Steven Rostedt <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/292] lkdtm/stackleak: Fix noinstr violation
-Date: Mon, 22 May 2023 20:08:15 +0100
-Message-Id: <20230522190409.414157406@linuxfoundation.org>
+Subject: [PATCH 6.1 139/292] recordmcount: Fix memory leaks in the uwrite function
+Date: Mon, 22 May 2023 20:08:16 +0100
+Message-Id: <20230522190409.439296305@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,64 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Hao Zeng <zenghao@kylinos.cn>
 
-[ Upstream commit f571da059f86fd9d432aea32c9c7e5aaa53245d8 ]
+[ Upstream commit fa359d068574d29e7d2f0fdd0ebe4c6a12b5cfb9 ]
 
-Fixes the following warning:
+Common realloc mistake: 'file_append' nulled but not freed upon failure
 
-  vmlinux.o: warning: objtool: check_stackleak_irqoff+0x2b6: call to _printk() leaves .noinstr.text section
+Link: https://lkml.kernel.org/r/20230426010527.703093-1-zenghao@kylinos.cn
 
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/ee5209f53aa0a62aea58be18f2b78b17606779a6.1681320026.git.jpoimboe@kernel.org
+Signed-off-by: Hao Zeng <zenghao@kylinos.cn>
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/lkdtm/stackleak.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ scripts/recordmcount.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/misc/lkdtm/stackleak.c b/drivers/misc/lkdtm/stackleak.c
-index 025b133297a6b..f1d0221609138 100644
---- a/drivers/misc/lkdtm/stackleak.c
-+++ b/drivers/misc/lkdtm/stackleak.c
-@@ -43,12 +43,14 @@ static void noinstr check_stackleak_irqoff(void)
- 	 * STACK_END_MAGIC, and in either casee something is seriously wrong.
- 	 */
- 	if (current_sp < task_stack_low || current_sp >= task_stack_high) {
-+		instrumentation_begin();
- 		pr_err("FAIL: current_stack_pointer (0x%lx) outside of task stack bounds [0x%lx..0x%lx]\n",
- 		       current_sp, task_stack_low, task_stack_high - 1);
- 		test_failed = true;
- 		goto out;
- 	}
- 	if (lowest_sp < task_stack_low || lowest_sp >= task_stack_high) {
-+		instrumentation_begin();
- 		pr_err("FAIL: current->lowest_stack (0x%lx) outside of task stack bounds [0x%lx..0x%lx]\n",
- 		       lowest_sp, task_stack_low, task_stack_high - 1);
- 		test_failed = true;
-@@ -86,11 +88,14 @@ static void noinstr check_stackleak_irqoff(void)
- 		if (*(unsigned long *)poison_low == STACKLEAK_POISON)
- 			continue;
+diff --git a/scripts/recordmcount.c b/scripts/recordmcount.c
+index cce12e1971d85..ec692af8ce9eb 100644
+--- a/scripts/recordmcount.c
++++ b/scripts/recordmcount.c
+@@ -102,6 +102,7 @@ static ssize_t uwrite(void const *const buf, size_t const count)
+ {
+ 	size_t cnt = count;
+ 	off_t idx = 0;
++	void *p = NULL;
  
-+		instrumentation_begin();
- 		pr_err("FAIL: non-poison value %lu bytes below poison boundary: 0x%lx\n",
- 		       poison_high - poison_low, *(unsigned long *)poison_low);
- 		test_failed = true;
-+		goto out;
- 	}
+ 	file_updated = 1;
  
-+	instrumentation_begin();
- 	pr_info("stackleak stack usage:\n"
- 		"  high offset: %lu bytes\n"
- 		"  current:     %lu bytes\n"
-@@ -113,6 +118,7 @@ static void noinstr check_stackleak_irqoff(void)
- 	} else {
- 		pr_info("OK: the rest of the thread stack is properly erased\n");
- 	}
-+	instrumentation_end();
- }
+@@ -109,7 +110,10 @@ static ssize_t uwrite(void const *const buf, size_t const count)
+ 		off_t aoffset = (file_ptr + count) - file_end;
  
- static void lkdtm_STACKLEAK_ERASING(void)
+ 		if (aoffset > file_append_size) {
+-			file_append = realloc(file_append, aoffset);
++			p = realloc(file_append, aoffset);
++			if (!p)
++				free(file_append);
++			file_append = p;
+ 			file_append_size = aoffset;
+ 		}
+ 		if (!file_append) {
 -- 
 2.39.2
 
