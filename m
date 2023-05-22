@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57377171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8BC2C433EF;
-	Mon, 22 May 2023 19:29:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88081171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029DBC433D2;
+	Mon, 22 May 2023 19:29:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783782;
-	bh=e3DlYdMN5nOnkMxi/UlFn0nyDlahxCLf6yyQE3Zp/gE=;
+	s=korg; t=1684783785;
+	bh=BHQh01yXH/sEZyTZkdbBqgBKswF9gB9kcJkbIBvd1F4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knU6K7+LXfnJm0NBx+zvZTSsHoLvVzkTm6HsCN3/4Lnl1F2vLlqhB8XlDp6tBYZKN
-	 tvOrIXQKvCZ5rFrXDyn51wp5FJGcS2BUhuGb0XW0ZPp2O/YNVLUj8yQCTuLDXWWU8H
-	 esT1GwhyQuaNw0lCSkOcw9f/lEhIoInuCtQfsuzU=
+	b=DcmUBxsQbtxJa9g67znNtJec+4xsGHAEKh0soe4Zr6u6hLU1K9ZViLfsTIZqu96hj
+	 7H+C8NwHSOxPRdRnuQZ+TZhWuZQCXemButpitoYWe9BbVSe/tXjB5eTtpwknPJo2ob
+	 +lt+f41YOuuOevurC+pw2F018NcZNaozsUdXWufI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Brunner <tobias@strongswan.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/292] xfrm: Reject optional tunnel/BEET mode templates in outbound policies
-Date: Mon, 22 May 2023 20:08:38 +0100
-Message-Id: <20230522190409.990216052@linuxfoundation.org>
+Subject: [PATCH 6.1 144/292] mfd: intel_soc_pmic_chtwc: Add Lenovo Yoga Book X90F to intel_cht_wc_models
+Date: Mon, 22 May 2023 20:08:21 +0100
+Message-Id: <20230522190409.562632270@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,90 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Brunner <tobias@strongswan.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 3d776e31c841ba2f69895d2255a49320bec7cea6 ]
+[ Upstream commit ded99b89d25fd73a1d7bd910378e0339fd9d4c4a ]
 
-xfrm_state_find() uses `encap_family` of the current template with
-the passed local and remote addresses to find a matching state.
-If an optional tunnel or BEET mode template is skipped in a mixed-family
-scenario, there could be a mismatch causing an out-of-bounds read as
-the addresses were not replaced to match the family of the next template.
+The Android Lenovo Yoga Book X90F / X90L uses the same charger / fuelgauge
+setup as the already supported Windows Lenovo Yoga Book X91F/L, add
+a DMI match for this to intel_cht_wc_models with driver_data
+set to INTEL_CHT_WC_LENOVO_YOGABOOK1.
 
-While there are theoretical use cases for optional templates in outbound
-policies, the only practical one is to skip IPComp states in inbound
-policies if uncompressed packets are received that are handled by an
-implicitly created IPIP state instead.
+When the quirk for the X91F/L was initially added it was written to
+also apply to the X90F/L but this does not work because the Android
+version of the Yoga Book uses completely different DMI strings.
+Also adjust the X91F/L quirk to reflect that it only applies to
+the X91F/L models.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Tobias Brunner <tobias@strongswan.org>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230301095402.28582-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/mfd/intel_soc_pmic_chtwc.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 83f35ecacf24f..2d68a173b2273 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -1743,7 +1743,7 @@ static void copy_templates(struct xfrm_policy *xp, struct xfrm_user_tmpl *ut,
- }
- 
- static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
--			 struct netlink_ext_ack *extack)
-+			 int dir, struct netlink_ext_ack *extack)
- {
- 	u16 prev_family;
- 	int i;
-@@ -1769,6 +1769,10 @@ static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
- 		switch (ut[i].mode) {
- 		case XFRM_MODE_TUNNEL:
- 		case XFRM_MODE_BEET:
-+			if (ut[i].optional && dir == XFRM_POLICY_OUT) {
-+				NL_SET_ERR_MSG(extack, "Mode in optional template not allowed in outbound policy");
-+				return -EINVAL;
-+			}
- 			break;
- 		default:
- 			if (ut[i].family != prev_family) {
-@@ -1806,7 +1810,7 @@ static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
- }
- 
- static int copy_from_user_tmpl(struct xfrm_policy *pol, struct nlattr **attrs,
--			       struct netlink_ext_ack *extack)
-+			       int dir, struct netlink_ext_ack *extack)
- {
- 	struct nlattr *rt = attrs[XFRMA_TMPL];
- 
-@@ -1817,7 +1821,7 @@ static int copy_from_user_tmpl(struct xfrm_policy *pol, struct nlattr **attrs,
- 		int nr = nla_len(rt) / sizeof(*utmpl);
- 		int err;
- 
--		err = validate_tmpl(nr, utmpl, pol->family, extack);
-+		err = validate_tmpl(nr, utmpl, pol->family, dir, extack);
- 		if (err)
- 			return err;
- 
-@@ -1894,7 +1898,7 @@ static struct xfrm_policy *xfrm_policy_construct(struct net *net,
- 	if (err)
- 		goto error;
- 
--	if (!(err = copy_from_user_tmpl(xp, attrs, extack)))
-+	if (!(err = copy_from_user_tmpl(xp, attrs, p->dir, extack)))
- 		err = copy_from_user_sec_ctx(xp, attrs);
- 	if (err)
- 		goto error;
-@@ -3443,7 +3447,7 @@ static struct xfrm_policy *xfrm_compile_policy(struct sock *sk, int opt,
- 		return NULL;
- 
- 	nr = ((len - sizeof(*p)) / sizeof(*ut));
--	if (validate_tmpl(nr, ut, p->sel.family, NULL))
-+	if (validate_tmpl(nr, ut, p->sel.family, p->dir, NULL))
- 		return NULL;
- 
- 	if (p->dir > XFRM_POLICY_OUT)
+diff --git a/drivers/mfd/intel_soc_pmic_chtwc.c b/drivers/mfd/intel_soc_pmic_chtwc.c
+index 9216f0d34206c..a82b7cb661b7b 100644
+--- a/drivers/mfd/intel_soc_pmic_chtwc.c
++++ b/drivers/mfd/intel_soc_pmic_chtwc.c
+@@ -159,11 +159,19 @@ static const struct dmi_system_id cht_wc_model_dmi_ids[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Mipad2"),
+ 		},
+ 	}, {
+-		/* Lenovo Yoga Book X90F / X91F / X91L */
++		/* Lenovo Yoga Book X90F / X90L */
+ 		.driver_data = (void *)(long)INTEL_CHT_WC_LENOVO_YOGABOOK1,
+ 		.matches = {
+-			/* Non exact match to match all versions */
+-			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X9"),
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
++		},
++	}, {
++		/* Lenovo Yoga Book X91F / X91L */
++		.driver_data = (void *)(long)INTEL_CHT_WC_LENOVO_YOGABOOK1,
++		.matches = {
++			/* Non exact match to match F + L versions */
++			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
+ 		},
+ 	},
+ 	{ }
 -- 
 2.39.2
 
