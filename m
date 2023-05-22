@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80151171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A6AC433D2;
-	Mon, 22 May 2023 19:41:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C449171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F699C433EF;
+	Mon, 22 May 2023 19:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784509;
-	bh=m8VNee3bA+lgpiWAyRUMwnimPC/EadPMf/JdyNqFKu0=;
+	s=korg; t=1684784512;
+	bh=jKJQM7Amchlo/TIBhIhoRm4akaWOf6RtKsRisaHbqM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CPVVkTblP178B0tztuXwSnU8GI9ClkgtyGtOu5YHRXR9tpv3tqtnxHvnvKkdjdW3t
-	 n/KXs4qCrSXtPlqgcv6W72dX2plXMxTQzMi5yOeDxn9q7M6pjPAQRwzXy2Gv/aREoh
-	 KffMaOyxVYeJJ+yRfQc0mi6xtypVvpkcBcsRnzrM=
+	b=XK0SE681/+vXAYl3QufYSVtza8l93c7Znm6cjajPh0kGHCepy3JtHQMmQx8jSa2OP
+	 119nheHJakvrBEYZ3ShyMrlcDUbQY+3n27beW0UiarLWXarqT2pbU/+muHxrx2ETcE
+	 AK2yHHbq4UCNVD5yk9fVKHt0fU0ezHtfmwB569fI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Eli Cohen <elic@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 105/364] lib: cpu_rmap: Avoid use after free on rmap->obj array entries
-Date: Mon, 22 May 2023 20:06:50 +0100
-Message-Id: <20230522190415.386190738@linuxfoundation.org>
+Subject: [PATCH 6.3 106/364] scsi: message: mptlan: Fix use after free bug in mptlan_remove() due to race condition
+Date: Mon, 22 May 2023 20:06:51 +0100
+Message-Id: <20230522190415.414343857@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -37,65 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eli Cohen <elic@nvidia.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 4e0473f1060aa49621d40a113afde24818101d37 ]
+[ Upstream commit f486893288f3e9b171b836f43853a6426515d800 ]
 
-When calling irq_set_affinity_notifier() with NULL at the notify
-argument, it will cause freeing of the glue pointer in the
-corresponding array entry but will leave the pointer in the array. A
-subsequent call to free_irq_cpu_rmap() will try to free this entry again
-leading to possible use after free.
+mptlan_probe() calls mpt_register_lan_device() which initializes the
+&priv->post_buckets_task workqueue. A call to
+mpt_lan_wake_post_buckets_task() will subsequently start the work.
 
-Fix that by setting NULL to the array entry and checking that we have
-non-zero at the array entry when iterating over the array in
-free_irq_cpu_rmap().
+During driver unload in mptlan_remove() the following race may occur:
 
-The current code does not suffer from this since there are no cases
-where irq_set_affinity_notifier(irq, NULL) (note the NULL passed for the
-notify arg) is called, followed by a call to free_irq_cpu_rmap() so we
-don't hit and issue. Subsequent patches in this series excersize this
-flow, hence the required fix.
+CPU0                  CPU1
 
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Eli Cohen <elic@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+                    |mpt_lan_post_receive_buckets_work()
+mptlan_remove()     |
+  free_netdev()     |
+    kfree(dev);     |
+                    |
+                    | dev->mtu
+                    |   //use
+
+Fix this by finishing the work prior to cleaning up in mptlan_remove().
+
+[mkp: we really should remove mptlan instead of attempting to fix it]
+
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Link: https://lore.kernel.org/r/20230318081635.796479-1-zyytlz.wz@163.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/cpu_rmap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/message/fusion/mptlan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/lib/cpu_rmap.c b/lib/cpu_rmap.c
-index f08d9c56f712e..e77f12bb3c774 100644
---- a/lib/cpu_rmap.c
-+++ b/lib/cpu_rmap.c
-@@ -232,7 +232,8 @@ void free_irq_cpu_rmap(struct cpu_rmap *rmap)
+diff --git a/drivers/message/fusion/mptlan.c b/drivers/message/fusion/mptlan.c
+index 142eb5d5d9df6..de2e7bcf47847 100644
+--- a/drivers/message/fusion/mptlan.c
++++ b/drivers/message/fusion/mptlan.c
+@@ -1433,7 +1433,9 @@ mptlan_remove(struct pci_dev *pdev)
+ {
+ 	MPT_ADAPTER 		*ioc = pci_get_drvdata(pdev);
+ 	struct net_device	*dev = ioc->netdev;
++	struct mpt_lan_priv *priv = netdev_priv(dev);
  
- 	for (index = 0; index < rmap->used; index++) {
- 		glue = rmap->obj[index];
--		irq_set_affinity_notifier(glue->notify.irq, NULL);
-+		if (glue)
-+			irq_set_affinity_notifier(glue->notify.irq, NULL);
- 	}
- 
- 	cpu_rmap_put(rmap);
-@@ -268,6 +269,7 @@ static void irq_cpu_rmap_release(struct kref *ref)
- 		container_of(ref, struct irq_glue, notify.kref);
- 
- 	cpu_rmap_put(glue->rmap);
-+	glue->rmap->obj[glue->index] = NULL;
- 	kfree(glue);
- }
- 
-@@ -297,6 +299,7 @@ int irq_cpu_rmap_add(struct cpu_rmap *rmap, int irq)
- 	rc = irq_set_affinity_notifier(irq, &glue->notify);
- 	if (rc) {
- 		cpu_rmap_put(glue->rmap);
-+		rmap->obj[glue->index] = NULL;
- 		kfree(glue);
- 	}
- 	return rc;
++	cancel_delayed_work_sync(&priv->post_buckets_task);
+ 	if(dev != NULL) {
+ 		unregister_netdev(dev);
+ 		free_netdev(dev);
 -- 
 2.39.2
 
