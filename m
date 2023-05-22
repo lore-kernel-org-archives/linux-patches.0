@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FA3171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:31:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9391DC4339C;
-	Mon, 22 May 2023 19:31:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCA93171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:31:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A86C433D2;
+	Mon, 22 May 2023 19:31:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783911;
-	bh=VDNU54/BjLgh76FFL22BvmbunxZGvzVquXxCLaGrwvg=;
+	s=korg; t=1684783914;
+	bh=eCTwl5Q1pEoTUsB7q3IJ2NISdFBW52+rtrWJOG/VU5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpR6Kyt2U/mmnsT1MOudIa2KIDFMyI82pQ7WGIVeKoXLLuaS5oypp3zKqA6WNLqsx
-	 L8r9KCqagHdaU048M/kG70gCLsDJp2BH+Xl9/Djp/BoAVAXHZlo8MwTtOF+G5OKC/f
-	 JXhQznZXrm9NZR5xKLErxFvKPPjIVa8953RznAtQ=
+	b=btzbHQMmvhZL989q+H9Fx36oWXiaansQMLPmhRTbOb1Nz5Dq888urxT4RBDgq8A/6
+	 Jf6jOomv2Aslp4A94hNhVFCTs8hUPXv2oml7JDgFL43vagwttwZmhO3pTslagJFIMz
+	 X94b9q7ZJCNwXbdDQOmhK00rwUiEWnem4rWS7J/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Marek Szlosek <marek.szlosek@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	XuDong Liu <m202071377@hust.edu.cn>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 202/292] ice: introduce clear_reset_state operation
-Date: Mon, 22 May 2023 20:09:19 +0100
-Message-Id: <20230522190411.007111245@linuxfoundation.org>
+Subject: [PATCH 6.1 176/292] serial: 8250_bcm7271: fix leak in `brcmuart_probe`
+Date: Mon, 22 May 2023 20:08:53 +0100
+Message-Id: <20230522190410.363327167@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -37,152 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jacob Keller <jacob.e.keller@intel.com>
+From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit fa4a15c85c849e92257da6dbffeb1e3a6399fd7b ]
+[ Upstream commit f264f2f6f4788dc031cef60a0cf2881902736709 ]
 
-When hardware is reset, the VF relies on the VFGEN_RSTAT register to detect
-when the VF is finished resetting. This is a tri-state register where 0
-indicates a reset is in progress, 1 indicates the hardware is done
-resetting, and 2 indicates that the software is done resetting.
+Smatch reports:
+drivers/tty/serial/8250/8250_bcm7271.c:1120 brcmuart_probe() warn:
+'baud_mux_clk' from clk_prepare_enable() not released on lines: 1032.
 
-Currently the PF driver relies on the device hardware resetting VFGEN_RSTAT
-when a global reset occurs. This works ok, but it does mean that the VF
-might not immediately notice a reset when the driver first detects that the
-global reset is occurring.
+The issue is fixed by using a managed clock.
 
-This is also problematic for Scalable IOV, because there is no read/write
-equivalent VFGEN_RSTAT register for the Scalable VSI type. Instead, the
-Scalable IOV VFs will need to emulate this register.
-
-To support this, introduce a new VF operation, clear_reset_state, which is
-called when the PF driver first detects a global reset. The Single Root IOV
-implementation can just write to VFGEN_RSTAT to ensure it's cleared
-immediately, without waiting for the actual hardware reset to begin. The
-Scalable IOV implementation will use this as part of its tracking of the
-reset status to allow properly reporting the emulated VFGEN_RSTAT to the VF
-driver.
-
-Signed-off-by: Jacob Keller <jacob.e.keller@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Marek Szlosek <marek.szlosek@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Stable-dep-of: 7255355a0636 ("ice: Fix ice VF reset during iavf initialization")
+Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
+Reported-by: XuDong Liu <m202071377@hust.edu.cn>
+Link: https://lore.kernel.org/lkml/20230424125100.4783-1-m202071377@hust.edu.cn/
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230427181916.2983697-3-opendmb@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c   |  2 +-
- drivers/net/ethernet/intel/ice/ice_sriov.c  | 16 ++++++++++++++++
- drivers/net/ethernet/intel/ice/ice_vf_lib.c | 12 +++++++++++-
- drivers/net/ethernet/intel/ice/ice_vf_lib.h |  5 +++--
- 4 files changed, 31 insertions(+), 4 deletions(-)
+ drivers/tty/serial/8250/8250_bcm7271.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index cfc57cfc46e42..6a50f8ba3940c 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -573,7 +573,7 @@ ice_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
- 	/* Disable VFs until reset is completed */
- 	mutex_lock(&pf->vfs.table_lock);
- 	ice_for_each_vf(pf, bkt, vf)
--		ice_set_vf_state_qs_dis(vf);
-+		ice_set_vf_state_dis(vf);
- 	mutex_unlock(&pf->vfs.table_lock);
+diff --git a/drivers/tty/serial/8250/8250_bcm7271.c b/drivers/tty/serial/8250/8250_bcm7271.c
+index 1f0095cf57a7e..ffc7f67e27e35 100644
+--- a/drivers/tty/serial/8250/8250_bcm7271.c
++++ b/drivers/tty/serial/8250/8250_bcm7271.c
+@@ -1014,7 +1014,7 @@ static int brcmuart_probe(struct platform_device *pdev)
+ 	of_property_read_u32(np, "clock-frequency", &clk_rate);
  
- 	if (ice_is_eswitch_mode_switchdev(pf)) {
-diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index b3849bc3d4fc6..b719e9a771e36 100644
---- a/drivers/net/ethernet/intel/ice/ice_sriov.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -696,6 +696,21 @@ static void ice_sriov_free_vf(struct ice_vf *vf)
- 	kfree_rcu(vf, rcu);
- }
- 
-+/**
-+ * ice_sriov_clear_reset_state - clears VF Reset status register
-+ * @vf: the vf to configure
-+ */
-+static void ice_sriov_clear_reset_state(struct ice_vf *vf)
-+{
-+	struct ice_hw *hw = &vf->pf->hw;
-+
-+	/* Clear the reset status register so that VF immediately sees that
-+	 * the device is resetting, even if hardware hasn't yet gotten around
-+	 * to clearing VFGEN_RSTAT for us.
-+	 */
-+	wr32(hw, VFGEN_RSTAT(vf->vf_id), VIRTCHNL_VFR_INPROGRESS);
-+}
-+
- /**
-  * ice_sriov_clear_mbx_register - clears SRIOV VF's mailbox registers
-  * @vf: the vf to configure
-@@ -835,6 +850,7 @@ static void ice_sriov_post_vsi_rebuild(struct ice_vf *vf)
- static const struct ice_vf_ops ice_sriov_vf_ops = {
- 	.reset_type = ICE_VF_RESET,
- 	.free = ice_sriov_free_vf,
-+	.clear_reset_state = ice_sriov_clear_reset_state,
- 	.clear_mbx_register = ice_sriov_clear_mbx_register,
- 	.trigger_reset_register = ice_sriov_trigger_reset_register,
- 	.poll_reset_status = ice_sriov_poll_reset_status,
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index 1c51778db951b..86abbcb480d9d 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -673,7 +673,7 @@ int ice_reset_vf(struct ice_vf *vf, u32 flags)
-  * ice_set_vf_state_qs_dis - Set VF queues state to disabled
-  * @vf: pointer to the VF structure
-  */
--void ice_set_vf_state_qs_dis(struct ice_vf *vf)
-+static void ice_set_vf_state_qs_dis(struct ice_vf *vf)
- {
- 	/* Clear Rx/Tx enabled queues flag */
- 	bitmap_zero(vf->txq_ena, ICE_MAX_RSS_QS_PER_VF);
-@@ -681,6 +681,16 @@ void ice_set_vf_state_qs_dis(struct ice_vf *vf)
- 	clear_bit(ICE_VF_STATE_QS_ENA, vf->vf_states);
- }
- 
-+/**
-+ * ice_set_vf_state_dis - Set VF state to disabled
-+ * @vf: pointer to the VF structure
-+ */
-+void ice_set_vf_state_dis(struct ice_vf *vf)
-+{
-+	ice_set_vf_state_qs_dis(vf);
-+	vf->vf_ops->clear_reset_state(vf);
-+}
-+
- /* Private functions only accessed from other virtualization files */
- 
- /**
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.h b/drivers/net/ethernet/intel/ice/ice_vf_lib.h
-index 52bd9a3816bf2..9f7fcd8e5714b 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.h
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.h
-@@ -56,6 +56,7 @@ struct ice_mdd_vf_events {
- struct ice_vf_ops {
- 	enum ice_disq_rst_src reset_type;
- 	void (*free)(struct ice_vf *vf);
-+	void (*clear_reset_state)(struct ice_vf *vf);
- 	void (*clear_mbx_register)(struct ice_vf *vf);
- 	void (*trigger_reset_register)(struct ice_vf *vf, bool is_vflr);
- 	bool (*poll_reset_status)(struct ice_vf *vf);
-@@ -213,7 +214,7 @@ u16 ice_get_num_vfs(struct ice_pf *pf);
- struct ice_vsi *ice_get_vf_vsi(struct ice_vf *vf);
- bool ice_is_vf_disabled(struct ice_vf *vf);
- int ice_check_vf_ready_for_cfg(struct ice_vf *vf);
--void ice_set_vf_state_qs_dis(struct ice_vf *vf);
-+void ice_set_vf_state_dis(struct ice_vf *vf);
- bool ice_is_any_vf_in_unicast_promisc(struct ice_pf *pf);
- void
- ice_vf_get_promisc_masks(struct ice_vf *vf, struct ice_vsi *vsi,
-@@ -259,7 +260,7 @@ static inline int ice_check_vf_ready_for_cfg(struct ice_vf *vf)
- 	return -EOPNOTSUPP;
- }
- 
--static inline void ice_set_vf_state_qs_dis(struct ice_vf *vf)
-+static inline void ice_set_vf_state_dis(struct ice_vf *vf)
- {
- }
- 
+ 	/* See if a Baud clock has been specified */
+-	baud_mux_clk = of_clk_get_by_name(np, "sw_baud");
++	baud_mux_clk = devm_clk_get(dev, "sw_baud");
+ 	if (IS_ERR(baud_mux_clk)) {
+ 		if (PTR_ERR(baud_mux_clk) == -EPROBE_DEFER) {
+ 			ret = -EPROBE_DEFER;
 -- 
 2.39.2
 
