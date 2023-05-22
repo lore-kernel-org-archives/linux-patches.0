@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A9F171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5DC433D2;
-	Mon, 22 May 2023 19:53:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B310F171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE40C433D2;
+	Mon, 22 May 2023 19:53:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785232;
-	bh=37Jz2q5LnE30Jaq36bR14GBbqujFZ79ISbhheOxvte8=;
+	s=korg; t=1684785235;
+	bh=tHvbrKaDWbQt9QwH8eTMg7E/1JBLU9QnR4lEkXdRb1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGJwt3mu/AhLsrJCR69MrQn/otHmbpDOJkA3lPpMIuXGkAyMN3XQFBM0vGfw8B4XU
-	 eXyfvPANaWPsNMOnqrs6kF1UGOr7Pr6ZEm1Fqj9viqlHCDcVoVJD7r77UiwU8jWczA
-	 NsImgNc+WPIaDnWd1VhSE4EUN+KE1c+vJrR6fyxw=
+	b=Ju2l69rcBioSvtMRnJzeW3nNB65h4NnsHF9lK4m2sMnxjoIGvdRR5f1aPahnNaZBb
+	 RI896hXwJGygl9/lqVhOg79PtJdwB+IRRFF86ccBKXXsS7GAAQi/XhtYRyTAdQ4N/t
+	 PKhwJOMBm7HSkl87gTvX8o9EDZeWNc/WEUTCZ3bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Steffen Maier <maier@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.3 354/364] s390/qdio: fix do_sqbs() inline assembly constraint
-Date: Mon, 22 May 2023 20:10:59 +0100
-Message-Id: <20230522190421.626130502@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.3 355/364] arm64: Also reset KASAN tag if page is not PG_mte_tagged
+Date: Mon, 22 May 2023 20:11:00 +0100
+Message-Id: <20230522190421.649617293@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,61 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Peter Collingbourne <pcc@google.com>
 
-commit 2862a2fdfae875888e3c1c3634e3422e01d98147 upstream.
+commit 2efbafb91e12ff5a16cbafb0085e4c10c3fca493 upstream.
 
-Use "a" constraint instead of "d" constraint to pass the state parameter to
-the do_sqbs() inline assembly. This prevents that general purpose register
-zero is used for the state parameter.
+Consider the following sequence of events:
 
-If the compiler would select general purpose register zero this would be
-problematic for the used instruction in rsy format: the register used for
-the state parameter is a base register. If the base register is general
-purpose register zero the contents of the register are unexpectedly ignored
-when the instruction is executed.
+1) A page in a PROT_READ|PROT_WRITE VMA is faulted.
+2) Page migration allocates a page with the KASAN allocator,
+   causing it to receive a non-match-all tag, and uses it
+   to replace the page faulted in 1.
+3) The program uses mprotect() to enable PROT_MTE on the page faulted in 1.
 
-This only applies to z/VM guests using QIOASSIST with dedicated (pass through)
-QDIO-based devices such as FCP [zfcp driver] as well as real OSA or
-HiperSockets [qeth driver].
+As a result of step 3, we are left with a non-match-all tag for a page
+with tags accessible to userspace, which can lead to the same kind of
+tag check faults that commit e74a68468062 ("arm64: Reset KASAN tag in
+copy_highpage with HW tags only") intended to fix.
 
-A possible symptom for this case using zfcp is the following repeating kernel
-message pattern:
+The general invariant that we have for pages in a VMA with VM_MTE_ALLOWED
+is that they cannot have a non-match-all tag. As a result of step 2, the
+invariant is broken. This means that the fix in the referenced commit
+was incomplete and we also need to reset the tag for pages without
+PG_mte_tagged.
 
-zfcp <devbusid>: A QDIO problem occurred
-zfcp <devbusid>: A QDIO problem occurred
-zfcp <devbusid>: qdio: ZFCP on SC <sc> using AI:1 QEBSM:1 PRI:1 TDD:1 SIGA: W
-zfcp <devbusid>: A QDIO problem occurred
-zfcp <devbusid>: A QDIO problem occurred
-
-Each of the qdio problem message can be accompanied by the following entries
-for the affected subchannel <sc> in
-/sys/kernel/debug/s390dbf/qdio_error/hex_ascii for zfcp or qeth:
-
-<sc> ccq: 69....
-<sc> SQBS ERROR.
-
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Cc: Steffen Maier <maier@linux.ibm.com>
-Fixes: 8129ee164267 ("[PATCH] s390: qdio V=V pass-through")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: e5b8d9218951 ("arm64: mte: reset the page tag in page->flags")
+Cc: <stable@vger.kernel.org> # 5.15
+Link: https://linux-review.googlesource.com/id/I7409cdd41acbcb215c2a7417c1e50d37b875beff
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20230420210945.2313627-1-pcc@google.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/qdio.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/mm/copypage.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/s390/cio/qdio.h
-+++ b/drivers/s390/cio/qdio.h
-@@ -95,7 +95,7 @@ static inline int do_sqbs(u64 token, uns
- 		"	lgr	1,%[token]\n"
- 		"	.insn	rsy,0xeb000000008a,%[qs],%[ccq],0(%[state])"
- 		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart)
--		: [state] "d" ((unsigned long)state), [token] "d" (token)
-+		: [state] "a" ((unsigned long)state), [token] "d" (token)
- 		: "memory", "cc", "1");
- 	*count = _ccq & 0xff;
- 	*start = _queuestart & 0xff;
+--- a/arch/arm64/mm/copypage.c
++++ b/arch/arm64/mm/copypage.c
+@@ -21,9 +21,10 @@ void copy_highpage(struct page *to, stru
+ 
+ 	copy_page(kto, kfrom);
+ 
++	if (kasan_hw_tags_enabled())
++		page_kasan_tag_reset(to);
++
+ 	if (system_supports_mte() && page_mte_tagged(from)) {
+-		if (kasan_hw_tags_enabled())
+-			page_kasan_tag_reset(to);
+ 		/* It's a new page, shouldn't have been tagged yet */
+ 		WARN_ON_ONCE(!try_page_mte_tagging(to));
+ 		mte_copy_page_tags(kto, kfrom);
 
 
