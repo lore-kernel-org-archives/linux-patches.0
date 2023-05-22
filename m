@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD34171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:20:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F48EC433EF;
-	Mon, 22 May 2023 19:20:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80299171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:20:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED492C433EF;
+	Mon, 22 May 2023 19:20:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783227;
-	bh=fOwIFYWjJIRFJ2uBBoNzjUgcDBx6eU7xuY2CunyT2nM=;
+	s=korg; t=1684783230;
+	bh=LWKYDZPw56ysd+OlgRNoVjRw+jbHYGUeWBgLsS8860g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kUbgRWBHJPrhE5NCRLrQhE1VDp585xVNv14z5VrAMf6vPb4MqEbpdJrmk1bRGW+oo
-	 VOOWlStQuZ9fYMNVd4MVFheVPmRJ2PsEKK8M+YvY8huAZXCb4u3b5vQf0ZhvWsVVdO
-	 pibecJ/sdRJOvoUUDfRKox8uj67rfwVa5UZ7HsNo=
+	b=MWoXXVu5/pICLdbreR/JHBH5k+45PBMkbQzq38x8c7LM2jODRd/4prlls/DmBT1qG
+	 bE4mbRU23yH5Yt/56sQuQpLPboN7rDBuzeKvwrXz0pdEaHd0EmIIepaEpb0ItPeOz4
+	 LjOq22ChC+7AhuB03LQbM8C+Lmiocx/vY/ClqFp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Starks <jostarks@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 153/203] scsi: storvsc: Dont pass unused PFNs to Hyper-V host
-Date: Mon, 22 May 2023 20:09:37 +0100
-Message-Id: <20230522190359.213126672@linuxfoundation.org>
+Subject: [PATCH 5.15 154/203] cassini: Fix a memory leak in the error handling path of cas_init_one()
+Date: Mon, 22 May 2023 20:09:38 +0100
+Message-Id: <20230522190359.240149248@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,63 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 4e81a6cba517cb33584308a331f14f5e3fec369b ]
+[ Upstream commit 412cd77a2c24b191c65ea53025222418db09817c ]
 
-In a SCSI request, storvsc pre-allocates space for up to
-MAX_PAGE_BUFFER_COUNT physical frame numbers to be passed to Hyper-V.  If
-the size of the I/O request requires more PFNs, a separate memory area of
-exactly the correct size is dynamically allocated.
+cas_saturn_firmware_init() allocates some memory using vmalloc(). This
+memory is freed in the .remove() function but not it the error handling
+path of the probe.
 
-But when the pre-allocated area is used, current code always passes
-MAX_PAGE_BUFFER_COUNT PFNs to Hyper-V, even if fewer are needed.  While
-this doesn't break anything because the additional PFNs are always zero,
-more bytes than necessary are copied into the VMBus channel ring buffer.
-This takes CPU cycles and wastes space in the ring buffer. For a typical 4
-Kbyte I/O that requires only a single PFN, 248 unnecessary bytes are
-copied.
+Add the missing vfree() to avoid a memory leak, should an error occur.
 
-Fix this by setting the payload_sz based on the actual number of PFNs
-required, not the size of the pre-allocated space.
-
-Reported-by: John Starks <jostarks@microsoft.com>
-Fixes: 8f43710543ef ("scsi: storvsc: Support PAGE_SIZE larger than 4K")
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1684171241-16209-1-git-send-email-mikelley@microsoft.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: fcaa40669cd7 ("cassini: use request_firmware")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/sun/cassini.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index 83a3d9f085d84..c9b1500c2ab87 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1843,7 +1843,7 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
+diff --git a/drivers/net/ethernet/sun/cassini.c b/drivers/net/ethernet/sun/cassini.c
+index 6472425539e15..21e4df8466c91 100644
+--- a/drivers/net/ethernet/sun/cassini.c
++++ b/drivers/net/ethernet/sun/cassini.c
+@@ -5123,6 +5123,8 @@ static int cas_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 		cas_shutdown(cp);
+ 	mutex_unlock(&cp->pm_mutex);
  
- 	length = scsi_bufflen(scmnd);
- 	payload = (struct vmbus_packet_mpb_array *)&cmd_request->mpb;
--	payload_sz = sizeof(cmd_request->mpb);
-+	payload_sz = 0;
++	vfree(cp->fw_data);
++
+ 	pci_iounmap(pdev, cp->regs);
  
- 	if (sg_count) {
- 		unsigned int hvpgoff, hvpfns_to_add;
-@@ -1851,10 +1851,10 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
- 		unsigned int hvpg_count = HVPFN_UP(offset_in_hvpg + length);
- 		u64 hvpfn;
  
--		if (hvpg_count > MAX_PAGE_BUFFER_COUNT) {
-+		payload_sz = (hvpg_count * sizeof(u64) +
-+			      sizeof(struct vmbus_packet_mpb_array));
- 
--			payload_sz = (hvpg_count * sizeof(u64) +
--				      sizeof(struct vmbus_packet_mpb_array));
-+		if (hvpg_count > MAX_PAGE_BUFFER_COUNT) {
- 			payload = kzalloc(payload_sz, GFP_ATOMIC);
- 			if (!payload)
- 				return SCSI_MLQUEUE_DEVICE_BUSY;
 -- 
 2.39.2
 
