@@ -1,150 +1,95 @@
-Received: from mail-yw1-f201.google.com (mail-yw1-f201.google.com [209.85.128.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52463D39B
-	for <patches@lists.linux.dev>; Sat, 20 May 2023 21:39:13 +0000 (UTC)
-Received: by mail-yw1-f201.google.com with SMTP id 00721157ae682-561f201a646so63153437b3.1
-        for <patches@lists.linux.dev>; Sat, 20 May 2023 14:39:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684618752; x=1687210752;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=skIbHQXL89xTcGXjMUySFNmB7v0Lz7PRThViE6J7dUY=;
-        b=XOhjWMQCujbQihpjnwMiF/SfmTXnOhr/Ys+ogxPguM/2oUktHMtmWjf0aUhcRyzCBh
-         /kEz89yUIxWvTiuBpO6/Wjfh6R5quIC8RrwBjsMz56N1Y2yK9n3Cj9SRiHdx2dwl6IxK
-         Le1AiISUDlsAWmd2yStz5460GT9pE4x2v1mY830nZULv4KAUzKO4xLF0NpKPOt7W9XFZ
-         cvTCRVOpI2oh0KmGEIhbI/RnUkApGY6MlYpTXol3S0DG9VxNlofkeMqz3w/mMlc8bNhg
-         +g6lwMsJQn6eGGP2hsP/o91kkTkhD689u5GWS8emvFQWY54mktJXLQtS/S2hKgd91VrV
-         8TgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684618752; x=1687210752;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=skIbHQXL89xTcGXjMUySFNmB7v0Lz7PRThViE6J7dUY=;
-        b=A8Nh4RtEAkk3lsheRDTlaXtFHuju8PAUOxVHqX3HfqIerf01KtDFt1v4V57AG+M8ro
-         lcxThTuSkfTG5LGvR5IzDEjuYTNviXQWECghVyXcO+GkBXmxEQsC0dbb8RfWVsXqVeOm
-         kPRnvGNdLLz6vc0P9gBX3CSJ3mNeN8T/YQFE3/V2tjqMw6km8UGHIc00rfNGqevClDxH
-         CQK72w10fatododHTFcK2HQdyp6XXcL56RJkAzF1czKU3tRVN42sqjFyA5XCNKPBfslz
-         iOzHSuoqjAVUXHW+sucmK0OmK8Aag1gwjKre9/s58BuC5yoIWoj4FVBZIVOd78Hk+KSP
-         L5mw==
-X-Gm-Message-State: AC+VfDzLDG227UQF02LgKcYX+/pWEeKjTJqeFBewYEBSacpYS619q2Mz
-	myh7cNN1Xr+6d7vhmTWzUxpxcc5l+vTg
-X-Google-Smtp-Source: ACHHUZ5NT94sAhhBSYkBg9+aQOzjs7EaWrlC4HRCrVmXKqfpsmVjx6ZkufUyOOHq8ozbnDIs1+yqYhmL4bo5
-X-Received: from gthelen2.svl.corp.google.com ([2620:15c:2d4:203:988d:5c18:d518:3f0b])
- (user=gthelen job=sendgmr) by 2002:a81:ad50:0:b0:559:f89f:bc81 with SMTP id
- l16-20020a81ad50000000b00559f89fbc81mr3705340ywk.6.1684618752673; Sat, 20 May
- 2023 14:39:12 -0700 (PDT)
-Date: Sat, 20 May 2023 14:39:10 -0700
-In-Reply-To: <20230515161736.775969473@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FBB168AF
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 18:58:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17778C433EF;
+	Mon, 22 May 2023 18:58:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1684781926;
+	bh=A9BiorKEzoVHUnT2JtkigBVL2qLAn4Nit7bapPjzZ5U=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=mF9crdwvpFoTJMaShPm/o/AUtJeq+vNlOPALaAjKxYEiNsLbVp2BHLVTN+3hhFu2B
+	 97jLspIlMzb9m6jWNtblpIgBX4c89CqB6TE6GzZl6+rZYc+TJqhUHDgKAGaY9+k6rq
+	 SN13lW67hGKTVJ1UmCDss7IBp9c+wtYJN1r2GIk0=
+Date: Mon, 22 May 2023 19:58:44 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/381] 5.10.180-rc1 review
+Message-ID: <2023052235-doing-launch-c511@gregkh>
+References: <20230515161736.775969473@linuxfoundation.org>
+ <ZGNJfAPd8eeVoCJ3@debian>
+ <2023051711-thespian-sponsor-8878@gregkh>
+ <CA+G9fYvw6HJopruUn4QKPCcqbdgw++AFf1wnwMP9hP1rJsmq3g@mail.gmail.com>
+ <2023051704-catnip-vitality-d6cb@gregkh>
+ <ZGUwiOkAc25BPi7M@debian>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <20230515161736.775969473@linuxfoundation.org>
-Message-ID: <xr93jzx2el8h.fsf@gthelen2.svl.corp.google.com>
-Subject: Re: [PATCH 5.10 000/381] 5.10.180-rc1 review
-From: Greg Thelen <gthelen@google.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZGUwiOkAc25BPi7M@debian>
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Wed, May 17, 2023 at 08:52:40PM +0100, Sudip Mukherjee (Codethink) wrote:
+> On Wed, May 17, 2023 at 11:51:21AM +0200, Greg Kroah-Hartman wrote:
+> > On Wed, May 17, 2023 at 03:11:48PM +0530, Naresh Kamboju wrote:
+> > > On Wed, 17 May 2023 at 14:21, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > >
+> > > > On Tue, May 16, 2023 at 10:14:36AM +0100, Sudip Mukherjee (Codethink) wrote:
+> > > > > Hi Greg,
+> > > > >
+> > > > > On Mon, May 15, 2023 at 06:24:11PM +0200, Greg Kroah-Hartman wrote:
+> > > > > > This is the start of the stable review cycle for the 5.10.180 release.
+> > > > > > There are 381 patches in this series, all will be posted as a response
+> > > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > > let me know.
+> > > > >
+> > > > > Build test (gcc version 11.3.1 20230511):
+> > > > > mips: 63 configs -> no failure
+> > > > > arm: 104 configs -> no failure
+> > > > > arm64: 3 configs -> 1 failure
+> > > > > x86_64: 4 configs -> no failure
+> > > > > alpha allmodconfig -> no failure
+> > > > > powerpc allmodconfig -> no failure
+> > > > > riscv allmodconfig -> no failure
+> > > > > s390 allmodconfig -> no failure
+> > > > > xtensa allmodconfig -> no failure
+> > > > >
+> > > > > arm64 allmodconfig build fails with the error:
+> > > > >
+> > > > > /gcc/bin/aarch64-linux-ld: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.o: in function `__kvm_nvhe___kvm_tlb_flush_vmid_ipa':
+> > > > > (.hyp.text+0x1a4c): undefined reference to `__kvm_nvhe_memset'
+> > > > > /gcc/bin/aarch64-linux-ld: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.o: in function `__kvm_nvhe___kvm_tlb_flush_vmid':
+> > > > > (.hyp.text+0x1b20): undefined reference to `__kvm_nvhe_memset'
+> > > > > /gcc/bin/aarch64-linux-ld: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.o: in function `__kvm_nvhe___kvm_flush_cpu_context':
+> > > > > (.hyp.text+0x1b80): undefined reference to `__kvm_nvhe_memset'
+> > > >
+> > > > That's odd, I don't see that symbol anywhere in the tree at all.
+> > > >
+> > > > And the only arm-related kvm changes don't have those symbols either
+> > > > (the other kvm changes are x86-only)
+> > > >
+> > > > Also, no one else has seen this issue.  Can you bisect?
+> > > 
+> > > This is an old issue,
+> > > Many other reported long back [1]
+> > > 
+> > > [1] https://lore.kernel.org/stable/CADYN=9KSKQx816id-zWepV-E3ozph3k2_i9Rhs6QseFv0hkPfg@mail.gmail.com/
+> > 
+> > Then maybe someone should submit it properly for inclusion?
+> 
+> Attached the backported patch. Also verified that my build failure is fixed with it.
 
-> This is the start of the stable review cycle for the 5.10.180 release.
-> There are 381 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.180-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-> Pseudo-Shortlog of commits:
+Thanks, now queued up.
 
-[...]
-
-> Baokun Li <libaokun1@huawei.com>
->     writeback, cgroup: fix null-ptr-deref write in bdi_split_work_to_wbs
-
-Sorry for not noticing this sooner, but I think there's a benign issue
-in this backport.
-
-v5.10.180 commit 2b00b2a0e642 ("writeback, cgroup: fix null-ptr-deref
-write in bdi_split_work_to_wbs") contains:
-
-+static void cgwb_free_rcu(struct rcu_head *rcu_head)
-+{
-+       struct bdi_writeback *wb = container_of(rcu_head,
-+                       struct bdi_writeback, rcu);
-+
-+       percpu_ref_exit(&wb->refcnt);
-+       kfree(wb);
-+}
-
-[...]
-
-@@ -397,7 +406,7 @@ static void cgwb_release_workfn(struct work_struct *work)
-        fprop_local_destroy_percpu(&wb->memcg_completions);
-        percpu_ref_exit(&wb->refcnt);
-        wb_exit(wb);
--       kfree_rcu(wb, rcu);
-+       call_rcu(&wb->rcu, cgwb_free_rcu);
- }
-
-Notice there are now 2 percpu_ref_exit() calls. The upstream, and 5.15.y
-patches remove the cgwb_release_workfn() calls to percpu_ref_exit(). The
-5.10.y fixup is below. It's not essential but might be worth applying to
-track upstream.
-
-From 416e0e8ab5ff41676d04dc819bd667c6ad3f7555 Mon Sep 17 00:00:00 2001
-From: Greg Thelen <gthelen@google.com>
-Date: Sat, 20 May 2023 12:46:24 -0700
-Subject: [PATCH] writeback, cgroup: remove extra percpu_ref_exit()
-
-5.10 stable commit 2b00b2a0e642 ("writeback, cgroup: fix null-ptr-deref
-write in bdi_split_work_to_wbs") is a backport of upstream 6.3 commit
-1ba1199ec574.
-
-In the 5.10 stable commit backport percpu_ref_exit() is called twice:
-first in cgwb_release_workfn() and then in cgwb_free_rcu(). The 2nd call
-is benign as percpu_ref_exit() internally detects there's nothing to do.
-
-This fixes an non-upstream issue that only applies to 5.10.y.
-
-Fixes: 2b00b2a0e642 ("writeback, cgroup: fix null-ptr-deref write in bdi_split_work_to_wbs")
-Signed-off-by: Greg Thelen <gthelen@google.com>
----
- mm/backing-dev.c | 1 -
- 1 file changed, 1 deletion(-)
-
-diff --git a/mm/backing-dev.c b/mm/backing-dev.c
-index b28f629c3527..dd08ab928e07 100644
---- a/mm/backing-dev.c
-+++ b/mm/backing-dev.c
-@@ -404,7 +404,6 @@ static void cgwb_release_workfn(struct work_struct *work)
- 	blkcg_unpin_online(blkcg);
- 
- 	fprop_local_destroy_percpu(&wb->memcg_completions);
--	percpu_ref_exit(&wb->refcnt);
- 	wb_exit(wb);
- 	call_rcu(&wb->rcu, cgwb_free_rcu);
- }
--- 
-2.40.1.698.g37aff9b760-goog
+greg k-h
