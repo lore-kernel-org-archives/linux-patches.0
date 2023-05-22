@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9DD171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:35:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0779CC433EF;
-	Mon, 22 May 2023 19:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E64171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:35:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967E2C433D2;
+	Mon, 22 May 2023 19:35:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784128;
-	bh=uuO2L/NIq/nMVZPZi7LFumN8mAwh2IvzP50feO5GFoI=;
+	s=korg; t=1684784131;
+	bh=Dz2h0j/taNHTx9pulEE36O3/2RqDjd3RzWpzrtTeOts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U5ORpXVuO9LE7cGmtRLSj8Fu/p8lEe64T2X052Gty876OxQJTfdYXV7akmzHBm5KJ
-	 s2ouhhcoLC0CRRmdrdKQ6wsEkyQjuIQ93dqyMp8nUOVyMmxGIGxcvMAV9KFjEeOWsu
-	 1nGMUmbKnL2IDGQYO2JA2ZGpfcMqVaWVOjPv6R14=
+	b=fGygIV7tmFzr/x3eqNSazyQo4s7RrKFmKLFZE3W498qhuGwa22krJKLgMIdspYmzZ
+	 7YDKrdyYMbqWRbcpRNhKxQytamjh6pITuD3sbNA4QUvRvu0uKWw0segGPAgCPr+pdQ
+	 7+YmSmeGhcieEiNskL5NLAGqZ+DqRIWSg70MgrfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.1 265/292] serial: 8250_exar: Add support for USR298x PCI Modems
-Date: Mon, 22 May 2023 20:10:22 +0100
-Message-Id: <20230522190412.565650982@linuxfoundation.org>
+	Tong Liu01 <Tong.Liu01@amd.com>,
+	Luben Tuikov <luben.tuikov@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 274/292] drm/amdgpu: refine get gpu clock counter method
+Date: Mon, 22 May 2023 20:10:31 +0100
+Message-Id: <20230522190412.789310645@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,73 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Davis <afd@ti.com>
+From: Tong Liu01 <Tong.Liu01@amd.com>
 
-commit 95d698869b404772cc8b72560df71548491c10bc upstream.
+commit 5591a051b86be170a84943698ab140342602ff7b upstream.
 
-Possibly the last PCI controller-based (i.e. not a soft/winmodem)
-dial-up modem one can still buy.
+[why]
+regGOLDEN_TSC_COUNT_LOWER/regGOLDEN_TSC_COUNT_UPPER are protected and
+unaccessible under sriov.
+The clock counter high bit may update during reading process.
 
-Looks to have a stock XR17C154 PCI UART chip for communication, but for
-some reason when provisioning the PCI IDs they swapped the vendor and
-subvendor IDs. Otherwise this card would have worked out of the box.
+[How]
+Replace regGOLDEN_TSC_COUNT_LOWER/regGOLDEN_TSC_COUNT_UPPER with
+regCP_MES_MTIME_LO/regCP_MES_MTIME_HI to get gpu clock under sriov.
+Refine get gpu clock counter method to make the result more precise.
 
-Searching online, some folks seem to not have this issue and others do,
-so it is possible only some batches of cards have this error.
-
-Create a new macro to handle the switched IDs and add support here.
-
-Signed-off-by: Andrew Davis <afd@ti.com>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230420160209.28221-1-afd@ti.com
+Signed-off-by: Tong Liu01 <Tong.Liu01@amd.com>
+Acked-by: Luben Tuikov <luben.tuikov@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_exar.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -40,9 +40,13 @@
- #define PCI_DEVICE_ID_COMMTECH_4224PCIE		0x0020
- #define PCI_DEVICE_ID_COMMTECH_4228PCIE		0x0021
- #define PCI_DEVICE_ID_COMMTECH_4222PCIE		0x0022
-+
- #define PCI_DEVICE_ID_EXAR_XR17V4358		0x4358
- #define PCI_DEVICE_ID_EXAR_XR17V8358		0x8358
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -4641,11 +4641,24 @@ static int gfx_v11_0_post_soft_reset(voi
+ static uint64_t gfx_v11_0_get_gpu_clock_counter(struct amdgpu_device *adev)
+ {
+ 	uint64_t clock;
++	uint64_t clock_counter_lo, clock_counter_hi_pre, clock_counter_hi_after;
  
-+#define PCI_SUBDEVICE_ID_USR_2980		0x0128
-+#define PCI_SUBDEVICE_ID_USR_2981		0x0129
-+
- #define PCI_DEVICE_ID_SEALEVEL_710xC		0x1001
- #define PCI_DEVICE_ID_SEALEVEL_720xC		0x1002
- #define PCI_DEVICE_ID_SEALEVEL_740xC		0x1004
-@@ -829,6 +833,15 @@ static const struct exar8250_board pbn_e
- 		(kernel_ulong_t)&bd			\
- 	}
- 
-+#define USR_DEVICE(devid, sdevid, bd) {			\
-+	PCI_DEVICE_SUB(					\
-+		PCI_VENDOR_ID_USR,			\
-+		PCI_DEVICE_ID_EXAR_##devid,		\
-+		PCI_VENDOR_ID_EXAR,			\
-+		PCI_SUBDEVICE_ID_USR_##sdevid), 0, 0,	\
-+		(kernel_ulong_t)&bd			\
+ 	amdgpu_gfx_off_ctrl(adev, false);
+ 	mutex_lock(&adev->gfx.gpu_clock_mutex);
+-	clock = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_LOWER) |
+-		((uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_UPPER) << 32ULL);
++	if (amdgpu_sriov_vf(adev)) {
++		clock_counter_hi_pre = (uint64_t)RREG32_SOC15(GC, 0, regCP_MES_MTIME_HI);
++		clock_counter_lo = (uint64_t)RREG32_SOC15(GC, 0, regCP_MES_MTIME_LO);
++		clock_counter_hi_after = (uint64_t)RREG32_SOC15(GC, 0, regCP_MES_MTIME_HI);
++		if (clock_counter_hi_pre != clock_counter_hi_after)
++			clock_counter_lo = (uint64_t)RREG32_SOC15(GC, 0, regCP_MES_MTIME_LO);
++	} else {
++		clock_counter_hi_pre = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_UPPER);
++		clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_LOWER);
++		clock_counter_hi_after = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_UPPER);
++		if (clock_counter_hi_pre != clock_counter_hi_after)
++			clock_counter_lo = (uint64_t)RREG32_SOC15(SMUIO, 0, regGOLDEN_TSC_COUNT_LOWER);
 +	}
-+
- static const struct pci_device_id exar_pci_tbl[] = {
- 	EXAR_DEVICE(ACCESSIO, COM_2S, pbn_exar_XR17C15x),
- 	EXAR_DEVICE(ACCESSIO, COM_4S, pbn_exar_XR17C15x),
-@@ -853,6 +866,10 @@ static const struct pci_device_id exar_p
- 
- 	IBM_DEVICE(XR17C152, SATURN_SERIAL_ONE_PORT, pbn_exar_ibm_saturn),
- 
-+	/* USRobotics USR298x-OEM PCI Modems */
-+	USR_DEVICE(XR17C152, 2980, pbn_exar_XR17C15x),
-+	USR_DEVICE(XR17C152, 2981, pbn_exar_XR17C15x),
-+
- 	/* Exar Corp. XR17C15[248] Dual/Quad/Octal UART */
- 	EXAR_DEVICE(EXAR, XR17C152, pbn_exar_XR17C15x),
- 	EXAR_DEVICE(EXAR, XR17C154, pbn_exar_XR17C15x),
++	clock = clock_counter_lo | (clock_counter_hi_after << 32ULL);
+ 	mutex_unlock(&adev->gfx.gpu_clock_mutex);
+ 	amdgpu_gfx_off_ctrl(adev, true);
+ 	return clock;
 
 
