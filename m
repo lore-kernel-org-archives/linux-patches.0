@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2619C171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:31:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFF4C433EF;
-	Mon, 22 May 2023 19:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65C9171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:31:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDEDC433D2;
+	Mon, 22 May 2023 19:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783867;
-	bh=8jAK1g4IWc/nXB/nAp+hI7amq2P/fiWBb5Ae2b7BvxY=;
+	s=korg; t=1684783870;
+	bh=jTIOnGzw/SlQXZEzUa/0ijpcRNdmZjfajWdtQebMZxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oMVzyd5Bh66dWPyAbaraJ1bqtzhmZM/OtOPhZu3eTwRLy6qj5KG8DFDhCsnO5Q4Te
-	 gMdMBRBArYpHB+YFBODcrNG4hZrGFIzJ++czWX8KqLHtit1TnYQpeeoWs+FwAt37qf
-	 yJ5cJLHy7NB2JBbE08sTptTMw+3tYEfDRZ3Ny6eY=
+	b=RGgIZyDN5od05gOMpPfoMmTTLxMOvvl9luvhxl4i/MQrek33Vy6SstTJv2X89iegx
+	 xT8rC7+3y2vRGDLsLcJO9LVFkR33bK5c1+rHHcdTvzB1SW45pAhnHVNntJBvgNLIOX
+	 iO4Klqc1+pxSk+uIaFrhb54qak4EbbzfruWnAWTE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 188/292] SUNRPC: Fix trace_svc_register() call site
-Date: Mon, 22 May 2023 20:09:05 +0100
-Message-Id: <20230522190410.660348501@linuxfoundation.org>
+Subject: [PATCH 6.1 189/292] ASoC: mediatek: mt8186: Fix use-after-free in driver remove path
+Date: Mon, 22 May 2023 20:09:06 +0100
+Message-Id: <20230522190410.684302600@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -34,33 +33,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 07a27305938559fb35f7a46fb90a5e37728bdee6 ]
+[ Upstream commit a93d2afd3f77a7331271a0f25c6a11003db69b3c ]
 
-The trace event recorded incorrect values for the registered family,
-protocol, and port because the arguments are in the wrong order.
+When devm runs function in the "remove" path for a device it runs them
+in the reverse order. That means that if you have parts of your driver
+that aren't using devm or are using "roll your own" devm w/
+devm_add_action_or_reset() you need to keep that in mind.
 
-Fixes: b4af59328c25 ("SUNRPC: Trace server-side rpcbind registration events")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+The mt8186 audio driver didn't quite get this right. Specifically, in
+mt8186_init_clock() it called mt8186_audsys_clk_register() and then
+went on to call a bunch of other devm function. The caller of
+mt8186_init_clock() used devm_add_action_or_reset() to call
+mt8186_deinit_clock() but, because of the intervening devm functions,
+the order was wrong.
+
+Specifically at probe time, the order was:
+1. mt8186_audsys_clk_register()
+2. afe_priv->clk = devm_kcalloc(...)
+3. afe_priv->clk[i] = devm_clk_get(...)
+
+At remove time, the order (which should have been 3, 2, 1) was:
+1. mt8186_audsys_clk_unregister()
+3. Free all of afe_priv->clk[i]
+2. Free afe_priv->clk
+
+The above seemed to be causing a use-after-free. Luckily, it's easy to
+fix this by simply using devm more correctly. Let's move the
+devm_add_action_or_reset() to the right place. In addition to fixing
+the use-after-free, code inspection shows that this fixes a leak
+(missing call to mt8186_audsys_clk_unregister()) that would have
+happened if any of the syscon_regmap_lookup_by_phandle() calls in
+mt8186_init_clock() had failed.
+
+Fixes: 55b423d5623c ("ASoC: mediatek: mt8186: support audio clock control in platform driver")
+Signed-off-by: Douglas Anderson <dianders@chromium.org
+Link: https://lore.kernel.org/r/20230511092437.1.I31cceffc8c45bb1af16eb613e197b3df92cdc19e@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8186/mt8186-afe-clk.c    |  6 ---
+ sound/soc/mediatek/mt8186/mt8186-afe-clk.h    |  1 -
+ sound/soc/mediatek/mt8186/mt8186-afe-pcm.c    |  4 --
+ sound/soc/mediatek/mt8186/mt8186-audsys-clk.c | 46 ++++++++++---------
+ sound/soc/mediatek/mt8186/mt8186-audsys-clk.h |  1 -
+ 5 files changed, 24 insertions(+), 34 deletions(-)
 
-diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index 9ee32e06f877e..9b0b21cccca9a 100644
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -1007,7 +1007,7 @@ static int __svc_register(struct net *net, const char *progname,
- #endif
+diff --git a/sound/soc/mediatek/mt8186/mt8186-afe-clk.c b/sound/soc/mediatek/mt8186/mt8186-afe-clk.c
+index a6b4f29049bbc..539e3a023bc4e 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-afe-clk.c
++++ b/sound/soc/mediatek/mt8186/mt8186-afe-clk.c
+@@ -644,9 +644,3 @@ int mt8186_init_clock(struct mtk_base_afe *afe)
+ 
+ 	return 0;
+ }
+-
+-void mt8186_deinit_clock(void *priv)
+-{
+-	struct mtk_base_afe *afe = priv;
+-	mt8186_audsys_clk_unregister(afe);
+-}
+diff --git a/sound/soc/mediatek/mt8186/mt8186-afe-clk.h b/sound/soc/mediatek/mt8186/mt8186-afe-clk.h
+index d5988717d8f2d..a9d59e506d9af 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-afe-clk.h
++++ b/sound/soc/mediatek/mt8186/mt8186-afe-clk.h
+@@ -81,7 +81,6 @@ enum {
+ struct mtk_base_afe;
+ int mt8186_set_audio_int_bus_parent(struct mtk_base_afe *afe, int clk_id);
+ int mt8186_init_clock(struct mtk_base_afe *afe);
+-void mt8186_deinit_clock(void *priv);
+ int mt8186_afe_enable_cgs(struct mtk_base_afe *afe);
+ void mt8186_afe_disable_cgs(struct mtk_base_afe *afe);
+ int mt8186_afe_enable_clock(struct mtk_base_afe *afe);
+diff --git a/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c b/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c
+index d7e94e6a19c70..0e3792ccd49f6 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c
++++ b/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c
+@@ -2847,10 +2847,6 @@ static int mt8186_afe_pcm_dev_probe(struct platform_device *pdev)
+ 		return ret;
  	}
  
--	trace_svc_register(progname, version, protocol, port, family, error);
-+	trace_svc_register(progname, version, family, protocol, port, error);
- 	return error;
+-	ret = devm_add_action_or_reset(dev, mt8186_deinit_clock, (void *)afe);
+-	if (ret)
+-		return ret;
+-
+ 	/* init memif */
+ 	afe->memif_32bit_supported = 0;
+ 	afe->memif_size = MT8186_MEMIF_NUM;
+diff --git a/sound/soc/mediatek/mt8186/mt8186-audsys-clk.c b/sound/soc/mediatek/mt8186/mt8186-audsys-clk.c
+index 578969ca91c8e..5666be6b1bd2e 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-audsys-clk.c
++++ b/sound/soc/mediatek/mt8186/mt8186-audsys-clk.c
+@@ -84,6 +84,29 @@ static const struct afe_gate aud_clks[CLK_AUD_NR_CLK] = {
+ 	GATE_AUD2(CLK_AUD_ETDM_OUT1_BCLK, "aud_etdm_out1_bclk", "top_audio", 24),
+ };
+ 
++static void mt8186_audsys_clk_unregister(void *data)
++{
++	struct mtk_base_afe *afe = data;
++	struct mt8186_afe_private *afe_priv = afe->platform_priv;
++	struct clk *clk;
++	struct clk_lookup *cl;
++	int i;
++
++	if (!afe_priv)
++		return;
++
++	for (i = 0; i < CLK_AUD_NR_CLK; i++) {
++		cl = afe_priv->lookup[i];
++		if (!cl)
++			continue;
++
++		clk = cl->clk;
++		clk_unregister_gate(clk);
++
++		clkdev_drop(cl);
++	}
++}
++
+ int mt8186_audsys_clk_register(struct mtk_base_afe *afe)
+ {
+ 	struct mt8186_afe_private *afe_priv = afe->platform_priv;
+@@ -124,27 +147,6 @@ int mt8186_audsys_clk_register(struct mtk_base_afe *afe)
+ 		afe_priv->lookup[i] = cl;
+ 	}
+ 
+-	return 0;
++	return devm_add_action_or_reset(afe->dev, mt8186_audsys_clk_unregister, afe);
  }
  
+-void mt8186_audsys_clk_unregister(struct mtk_base_afe *afe)
+-{
+-	struct mt8186_afe_private *afe_priv = afe->platform_priv;
+-	struct clk *clk;
+-	struct clk_lookup *cl;
+-	int i;
+-
+-	if (!afe_priv)
+-		return;
+-
+-	for (i = 0; i < CLK_AUD_NR_CLK; i++) {
+-		cl = afe_priv->lookup[i];
+-		if (!cl)
+-			continue;
+-
+-		clk = cl->clk;
+-		clk_unregister_gate(clk);
+-
+-		clkdev_drop(cl);
+-	}
+-}
+diff --git a/sound/soc/mediatek/mt8186/mt8186-audsys-clk.h b/sound/soc/mediatek/mt8186/mt8186-audsys-clk.h
+index b8d6a06e11e8d..897a2914dc191 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-audsys-clk.h
++++ b/sound/soc/mediatek/mt8186/mt8186-audsys-clk.h
+@@ -10,6 +10,5 @@
+ #define _MT8186_AUDSYS_CLK_H_
+ 
+ int mt8186_audsys_clk_register(struct mtk_base_afe *afe);
+-void mt8186_audsys_clk_unregister(struct mtk_base_afe *afe);
+ 
+ #endif
 -- 
 2.39.2
 
