@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1B9168DC
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D0BC433EF;
-	Mon, 22 May 2023 19:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6251F168DC
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2012C433EF;
+	Mon, 22 May 2023 19:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784049;
-	bh=h7dh3KkyJjGKYQdkWqhkbHfMUiiUp9Fd9wZiShJylW8=;
+	s=korg; t=1684784052;
+	bh=8vu415bm7cRMTv6jb4cllI2JnLcimu50U+uPxJ2hhJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txPSY4VSqUHFU1NgnFRUlGzox7Y/awZQfdEOWWSy/xpOpmgTNrjt4jDefSNEwz7Ut
-	 ooDK57pSAxS6O2VzvD1jiLXOy9uYUZqVejboH2P0RD6naJyz4J/VIo2CBNDrEXbxFJ
-	 Ll1UHmxRT6Kb+cG+PhsUwQsDAO+qYttNxWYvWBgU=
+	b=hKc8Kdw1P+2cK1Hmzfk7eRdodrn2vfPlZdGPkEO5/Yg1hFAiTFcT2xK9rWslLHhGI
+	 Awr9uWlV1ibyYfQGhddJpsxibWSJpoG7OwEfNAG570svc+Srhz4NjNCK/KKZrau6uX
+	 fehi0l/FVLGA6zdCKlzJ5o78L4aueT7yWBaxr60k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jimmy Assarsson <extja@kvaser.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 247/292] can: kvaser_pciefd: Set CAN_STATE_STOPPED in kvaser_pciefd_stop()
-Date: Mon, 22 May 2023 20:10:04 +0100
-Message-Id: <20230522190412.123797830@linuxfoundation.org>
+Subject: [PATCH 6.1 248/292] can: kvaser_pciefd: Call request_irq() before enabling interrupts
+Date: Mon, 22 May 2023 20:10:05 +0100
+Message-Id: <20230522190412.147894432@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,31 +36,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Jimmy Assarsson <extja@kvaser.com>
 
-commit aed0e6ca7dbb8fbea9bc69c9ac663d5533c8c5d8 upstream.
+commit 84762d8da89d29ba842317eb842973e628c27391 upstream.
 
-Set can.state to CAN_STATE_STOPPED in kvaser_pciefd_stop().
-Without this fix, wrong CAN state was repported after the interface was
-brought down.
+Make sure the interrupt handler is registered before enabling interrupts.
 
 Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/r/20230516134318.104279-2-extja@kvaser.com
+Link: https://lore.kernel.org/r/20230516134318.104279-4-extja@kvaser.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/kvaser_pciefd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/kvaser_pciefd.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 --- a/drivers/net/can/kvaser_pciefd.c
 +++ b/drivers/net/can/kvaser_pciefd.c
-@@ -719,6 +719,7 @@ static int kvaser_pciefd_stop(struct net
- 		iowrite32(0, can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
- 		del_timer(&can->bec_poll_timer);
- 	}
-+	can->can.state = CAN_STATE_STOPPED;
- 	close_candev(netdev);
+@@ -1825,6 +1825,11 @@ static int kvaser_pciefd_probe(struct pc
+ 	if (err)
+ 		goto err_teardown_can_ctrls;
  
- 	return ret;
++	err = request_irq(pcie->pci->irq, kvaser_pciefd_irq_handler,
++			  IRQF_SHARED, KVASER_PCIEFD_DRV_NAME, pcie);
++	if (err)
++		goto err_teardown_can_ctrls;
++
+ 	iowrite32(KVASER_PCIEFD_SRB_IRQ_DPD0 | KVASER_PCIEFD_SRB_IRQ_DPD1,
+ 		  pcie->reg_base + KVASER_PCIEFD_SRB_IRQ_REG);
+ 
+@@ -1845,11 +1850,6 @@ static int kvaser_pciefd_probe(struct pc
+ 	iowrite32(KVASER_PCIEFD_SRB_CMD_RDB1,
+ 		  pcie->reg_base + KVASER_PCIEFD_SRB_CMD_REG);
+ 
+-	err = request_irq(pcie->pci->irq, kvaser_pciefd_irq_handler,
+-			  IRQF_SHARED, KVASER_PCIEFD_DRV_NAME, pcie);
+-	if (err)
+-		goto err_teardown_can_ctrls;
+-
+ 	err = kvaser_pciefd_reg_candev(pcie);
+ 	if (err)
+ 		goto err_free_irq;
 
 
