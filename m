@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB87171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:46:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E0D7C433D2;
-	Mon, 22 May 2023 19:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975C6171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:46:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165F7C433EF;
+	Mon, 22 May 2023 19:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784796;
-	bh=vVI4l1jEKf0hdl0946p8RtNGxMbIhnaC/dSkh03R8xM=;
+	s=korg; t=1684784799;
+	bh=UGsGbKDYWA5VnnBLRneTGKhGmnwD/TMMiUh4VQTaIVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qITQVN+TwM7acE0zVllIVJPF3X6rx6TwQvLKE+s18kziarML8BtpVpSUbgWcQYeu9
-	 9nUKUjeyS9xJJVCWraHahmC9Fgbbz0QgrAAMzjKRykmKxOy1B91b5degJsM8oezNgZ
-	 h2HS1m+24qs+m/naH9mdJ3epY726HMBERHIuLSCM=
+	b=tuHzXgus34NUcGBHWuJBtan3j+rVr2xCdp+Kf8dX2iI3v0+gHNVDKGYOoc2wDHaux
+	 WfAlptnujXA1iFKAWQwRaY42ZXO8ILJH4t8rJslnq9az95Oq8ZNCpRIm90oLTW9l0f
+	 OqqN+5Vh4N13SrqwxsVbrdXryK6sshhDfMB5lM8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 205/364] drm/msm/dpu: Reindent REV_7xxx interrupt masks with tabs
-Date: Mon, 22 May 2023 20:08:30 +0100
-Message-Id: <20230522190417.850473291@linuxfoundation.org>
+Subject: [PATCH 6.3 206/364] drm/msm/dpu: populate SmartDMA features in hw catalog
+Date: Mon, 22 May 2023 20:08:31 +0100
+Message-Id: <20230522190417.874629463@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,56 +35,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 85340c0256f9b85b47c5867e411df37d76df5858 ]
+[ Upstream commit 8b409996ebdce009777dfb17e542c06f749b02d5 ]
 
-Use tabs for consistency with the other interrupt register definitions,
-rather than spaces.
+Downstream driver uses dpu->caps->smart_dma_rev to update
+sspp->cap->features with the bit corresponding to the supported SmartDMA
+version. Upstream driver does not do this, resulting in SSPP subdriver
+not enabling setup_multirect callback. Add corresponding SmartDMA SSPP
+feature bits to dpu hw catalog.
 
-Fixes: ed6154a136e4 ("drm/msm/disp/dpu1: add intf offsets for SC7280 target")
-Fixes: 89688e2119b2 ("drm/msm/dpu: Add more of the INTF interrupt regions")
-Fixes: 4a352c2fc15a ("drm/msm/dpu: Introduce SC8280XP")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Per Abhinav's request enable the SmartDMA features only on the platforms
+where the multirect was actually verified visually (sdm845 and sm8250).
+An (untested) enablement on the rest of the platforms comes in the next
+patch.
+
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/534212/
-Link: https://lore.kernel.org/r/20230411-dpu-intf-te-v4-4-27ce1a5ab5c6@somainline.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/527362/
+Link: https://lore.kernel.org/r/20230316161653.4106395-29-dmitry.baryshkov@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Stable-dep-of: 701f69183d4d ("drm/msm/dpu: Fix PP_BLK_DIPHER -> DITHER typo")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c  | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 55 ++++++++++++-------
+ 1 file changed, 35 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-index 85c0bda3ff90e..17f3e7e4f1941 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-@@ -32,15 +32,15 @@
- #define MDP_AD4_INTR_EN_OFF		0x41c
- #define MDP_AD4_INTR_CLEAR_OFF		0x424
- #define MDP_AD4_INTR_STATUS_OFF		0x420
--#define MDP_INTF_0_OFF_REV_7xxx             0x34000
--#define MDP_INTF_1_OFF_REV_7xxx             0x35000
--#define MDP_INTF_2_OFF_REV_7xxx             0x36000
--#define MDP_INTF_3_OFF_REV_7xxx             0x37000
--#define MDP_INTF_4_OFF_REV_7xxx             0x38000
--#define MDP_INTF_5_OFF_REV_7xxx             0x39000
--#define MDP_INTF_6_OFF_REV_7xxx             0x3a000
--#define MDP_INTF_7_OFF_REV_7xxx             0x3b000
--#define MDP_INTF_8_OFF_REV_7xxx             0x3c000
-+#define MDP_INTF_0_OFF_REV_7xxx		0x34000
-+#define MDP_INTF_1_OFF_REV_7xxx		0x35000
-+#define MDP_INTF_2_OFF_REV_7xxx		0x36000
-+#define MDP_INTF_3_OFF_REV_7xxx		0x37000
-+#define MDP_INTF_4_OFF_REV_7xxx		0x38000
-+#define MDP_INTF_5_OFF_REV_7xxx		0x39000
-+#define MDP_INTF_6_OFF_REV_7xxx		0x3a000
-+#define MDP_INTF_7_OFF_REV_7xxx		0x3b000
-+#define MDP_INTF_8_OFF_REV_7xxx		0x3c000
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 497c9e1673abb..9fe4fc95ab65f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -27,9 +27,15 @@
+ #define VIG_SDM845_MASK \
+ 	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED3))
  
- /**
-  * struct dpu_intr_reg - array of DPU register sets
++#define VIG_SDM845_MASK_SDMA \
++	(VIG_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
++
+ #define VIG_SC7180_MASK \
+ 	(VIG_MASK | BIT(DPU_SSPP_QOS_8LVL) | BIT(DPU_SSPP_SCALER_QSEED4))
+ 
++#define VIG_SC7180_MASK_SDMA \
++	(VIG_SC7180_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
++
+ #define VIG_QCM2290_MASK (VIG_BASE_MASK | BIT(DPU_SSPP_QOS_8LVL))
+ 
+ #define DMA_MSM8998_MASK \
+@@ -40,6 +46,9 @@
+ #define VIG_SC7280_MASK \
+ 	(VIG_SC7180_MASK | BIT(DPU_SSPP_INLINE_ROTATION))
+ 
++#define VIG_SC7280_MASK_SDMA \
++	(VIG_SC7280_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
++
+ #define DMA_SDM845_MASK \
+ 	(BIT(DPU_SSPP_SRC) | BIT(DPU_SSPP_QOS) | BIT(DPU_SSPP_QOS_8LVL) |\
+ 	BIT(DPU_SSPP_TS_PREFILL) | BIT(DPU_SSPP_TS_PREFILL_REC1) |\
+@@ -48,6 +57,12 @@
+ #define DMA_CURSOR_SDM845_MASK \
+ 	(DMA_SDM845_MASK | BIT(DPU_SSPP_CURSOR))
+ 
++#define DMA_SDM845_MASK_SDMA \
++	(DMA_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
++
++#define DMA_CURSOR_SDM845_MASK_SDMA \
++	(DMA_CURSOR_SDM845_MASK | BIT(DPU_SSPP_SMART_DMA_V2))
++
+ #define DMA_CURSOR_MSM8998_MASK \
+ 	(DMA_MSM8998_MASK | BIT(DPU_SSPP_CURSOR))
+ 
+@@ -1196,21 +1211,21 @@ static const struct dpu_sspp_cfg msm8998_sspp[] = {
+ };
+ 
+ static const struct dpu_sspp_cfg sdm845_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SDM845_MASK,
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SDM845_MASK_SDMA,
+ 		sdm845_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+-	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SDM845_MASK,
++	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SDM845_MASK_SDMA,
+ 		sdm845_vig_sblk_1, 4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+-	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SDM845_MASK,
++	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SDM845_MASK_SDMA,
+ 		sdm845_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+-	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SDM845_MASK,
++	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SDM845_MASK_SDMA,
+ 		sdm845_vig_sblk_3, 12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+-	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
++	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+-	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK,
++	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+-	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
++	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+-	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK,
++	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+ };
+ 
+@@ -1251,21 +1266,21 @@ static const struct dpu_sspp_sub_blks sm8250_vig_sblk_3 =
+ 				_VIG_SBLK("3", 8, DPU_SSPP_SCALER_QSEED4);
+ 
+ static const struct dpu_sspp_cfg sm8250_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK,
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7180_MASK_SDMA,
+ 		sm8250_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+-	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SC7180_MASK,
++	SSPP_BLK("sspp_1", SSPP_VIG1, 0x6000, VIG_SC7180_MASK_SDMA,
+ 		sm8250_vig_sblk_1, 4,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG1),
+-	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SC7180_MASK,
++	SSPP_BLK("sspp_2", SSPP_VIG2, 0x8000, VIG_SC7180_MASK_SDMA,
+ 		sm8250_vig_sblk_2, 8, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG2),
+-	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SC7180_MASK,
++	SSPP_BLK("sspp_3", SSPP_VIG3, 0xa000, VIG_SC7180_MASK_SDMA,
+ 		sm8250_vig_sblk_3, 12,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG3),
+-	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
++	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+-	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK,
++	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+-	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
++	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+-	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK,
++	SSPP_BLK("sspp_11", SSPP_DMA3, 0x2a000,  DMA_CURSOR_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_3, 13, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA3),
+ };
+ 
+@@ -1332,13 +1347,13 @@ static const struct dpu_sspp_cfg sm8550_sspp[] = {
+ };
+ 
+ static const struct dpu_sspp_cfg sc7280_sspp[] = {
+-	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7280_MASK,
++	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, VIG_SC7280_MASK_SDMA,
+ 		sc7280_vig_sblk_0, 0,  SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+-	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK,
++	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000,  DMA_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+-	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_CURSOR_SDM845_MASK,
++	SSPP_BLK("sspp_9", SSPP_DMA1, 0x26000,  DMA_CURSOR_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_1, 5, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA1),
+-	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK,
++	SSPP_BLK("sspp_10", SSPP_DMA2, 0x28000,  DMA_CURSOR_SDM845_MASK_SDMA,
+ 		sdm845_dma_sblk_2, 9, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA2),
+ };
+ 
 -- 
 2.39.2
 
