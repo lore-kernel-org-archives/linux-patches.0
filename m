@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6D8171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ED66C4339B;
-	Mon, 22 May 2023 19:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E103171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B03BFC433D2;
+	Mon, 22 May 2023 19:17:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783028;
-	bh=cbub/WuzpW8apRWPgbsfqYmzWdPLROE4q4Mnsb75sSY=;
+	s=korg; t=1684783031;
+	bh=bEhwPFSgAYO/aqAW7KRCo0ZzgXMoNX9Suxcuu8HfMqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fucloeRr+wG+1RtGnt0ZdFeOn/TPKbK1FFQN5HrR0/XaCtklYizxLW3shOIARpAj5
-	 4RBpGt9aU9u7Qj4vkW8sndVWHlI5fDlGrR3tO1Y6Qq0Famt1nhuLKHKXCd9+quEiJm
-	 MemB5mOJc/C18Pm7EIp2/DrvfbPS1tlR/iIMjfQ4=
+	b=sIkl4h7uJzEMhK7eS/tg66vRhgruSn7MX2mu0efzcHK34kJ2ljYuxrWJpdbhvBWvQ
+	 RV6KjjKY4CDEHCIx1CX8GUxBh9eaFlUznuiUWgeFuFEV58VHSf7m/sDAdl01/EIzqX
+	 21M3QbkHSahAXJNT151mxEx0Awg/PuGY7UUbGs4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Renninger <trenn@suse.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	Wyes Karny <wyes.karny@amd.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 115/203] cpupower: Make TSC read per CPU for Mperf monitor
-Date: Mon, 22 May 2023 20:08:59 +0100
-Message-Id: <20230522190358.164763466@linuxfoundation.org>
+Subject: [PATCH 5.15 089/203] iommu/arm-smmu-qcom: Limit the SMR groups to 128
+Date: Mon, 22 May 2023 20:08:33 +0100
+Message-Id: <20230522190357.451383912@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -38,157 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wyes Karny <wyes.karny@amd.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit c2adb1877b76fc81ae041e1db1a6ed2078c6746b ]
+[ Upstream commit 12261134732689b7e30c59db9978f81230965181 ]
 
-System-wide TSC read could cause a drift in C0 percentage calculation.
-Because if first TSC is read and then one by one mperf is read for all
-cpus, this introduces drift between mperf reading of later CPUs and TSC
-reading.  To lower this drift read TSC per CPU and also just after mperf
-read.  This technique improves C0 percentage calculation in Mperf monitor.
+Some platforms support more than 128 stream matching groups than what is
+defined by the ARM SMMU architecture specification. But due to some unknown
+reasons, those additional groups don't exhibit the same behavior as the
+architecture supported ones.
 
-Before fix: (System 100% busy)
+For instance, the additional groups will not detect the quirky behavior of
+some firmware versions intercepting writes to S2CR register, thus skipping
+the quirk implemented in the driver and causing boot crash.
 
-              | Mperf              || RAPL        || Idle_Stats
- PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
-   0|   0|   0| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   0| 256| 84.62| 15.38|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   1|   1| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   1| 257| 84.08| 15.92|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   2|   2| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   2| 258| 83.26| 16.74|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   3|   3| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   3| 259| 83.60| 16.40|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   4|   4| 86.33| 13.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   4| 260| 83.33| 16.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   5|   5| 86.06| 13.94|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   5| 261| 83.05| 16.95|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   6|   6| 85.51| 14.49|  2695||168659003|3970468||  0.00|  0.00| 0.00
+So let's limit the groups to 128 for now until the issue with those groups
+are fixed and issue a notice to users in that case.
 
-After fix: (System 100% busy)
-
-             | Mperf              || RAPL        || Idle_Stats
- PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
-   0|   0|   0| 98.03|  1.97|  2415||163295480|3811189||  0.00|  0.00| 0.00
-   0|   0| 256| 98.50|  1.50|  2394||163295480|3811189||  0.00|  0.00| 0.00
-   0|   1|   1| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   1| 257| 99.99|  0.01|  2375||163295480|3811189||  0.00|  0.00| 0.00
-   0|   2|   2| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   2| 258|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   3|   3|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   3| 259| 99.99|  0.01|  2435||163295480|3811189||  0.00|  0.00| 0.00
-   0|   4|   4|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   4| 260|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
-   0|   5|   5| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   5| 261|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
-   0|   6|   6|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   6| 262|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
-
-Cc: Thomas Renninger <trenn@suse.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Dominik Brodowski <linux@dominikbrodowski.net>
-
-Fixes: 7fe2f6399a84 ("cpupowerutils - cpufrequtils extended with quite some features")
-Signed-off-by: Wyes Karny <wyes.karny@amd.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20230327080029.11584-1-manivannan.sadhasivam@linaro.org
+[will: Reworded the comment slightly]
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../utils/idle_monitor/mperf_monitor.c        | 31 +++++++++----------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index e7d48cb563c0e..ae6af354a81db 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -70,8 +70,8 @@ static int max_freq_mode;
-  */
- static unsigned long max_frequency;
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index c998960495b4e..50453d38400c5 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -247,12 +247,26 @@ static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
  
--static unsigned long long tsc_at_measure_start;
--static unsigned long long tsc_at_measure_end;
-+static unsigned long long *tsc_at_measure_start;
-+static unsigned long long *tsc_at_measure_end;
- static unsigned long long *mperf_previous_count;
- static unsigned long long *aperf_previous_count;
- static unsigned long long *mperf_current_count;
-@@ -169,7 +169,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
- 	aperf_diff = aperf_current_count[cpu] - aperf_previous_count[cpu];
- 
- 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
--		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
-+		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
- 		*percent = 100.0 * mperf_diff / tsc_diff;
- 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
- 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
-@@ -206,7 +206,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- 
- 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
- 		/* Calculate max_freq from TSC count */
--		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
-+		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
- 		time_diff = timespec_diff_us(time_start, time_end);
- 		max_frequency = tsc_diff / time_diff;
- 	}
-@@ -225,33 +225,27 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- static int mperf_start(void)
+ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
  {
- 	int cpu;
--	unsigned long long dbg;
+-	unsigned int last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
+ 	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
++	unsigned int last_s2cr;
+ 	u32 reg;
+ 	u32 smr;
+ 	int i;
  
- 	clock_gettime(CLOCK_REALTIME, &time_start);
--	mperf_get_tsc(&tsc_at_measure_start);
- 
--	for (cpu = 0; cpu < cpu_count; cpu++)
-+	for (cpu = 0; cpu < cpu_count; cpu++) {
-+		mperf_get_tsc(&tsc_at_measure_start[cpu]);
- 		mperf_init_stats(cpu);
++	/*
++	 * Some platforms support more than the Arm SMMU architected maximum of
++	 * 128 stream matching groups. For unknown reasons, the additional
++	 * groups don't exhibit the same behavior as the architected registers,
++	 * so limit the groups to 128 until the behavior is fixed for the other
++	 * groups.
++	 */
++	if (smmu->num_mapping_groups > 128) {
++		dev_notice(smmu->dev, "\tLimiting the stream matching groups to 128\n");
++		smmu->num_mapping_groups = 128;
 +	}
- 
--	mperf_get_tsc(&dbg);
--	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_start);
- 	return 0;
- }
- 
- static int mperf_stop(void)
- {
--	unsigned long long dbg;
- 	int cpu;
- 
--	for (cpu = 0; cpu < cpu_count; cpu++)
-+	for (cpu = 0; cpu < cpu_count; cpu++) {
- 		mperf_measure_stats(cpu);
-+		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+	}
- 
--	mperf_get_tsc(&tsc_at_measure_end);
- 	clock_gettime(CLOCK_REALTIME, &time_end);
--
--	mperf_get_tsc(&dbg);
--	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_end);
--
- 	return 0;
- }
- 
-@@ -353,7 +347,8 @@ struct cpuidle_monitor *mperf_register(void)
- 	aperf_previous_count = calloc(cpu_count, sizeof(unsigned long long));
- 	mperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
- 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
--
-+	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
-+	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
- 	mperf_monitor.name_len = strlen(mperf_monitor.name);
- 	return &mperf_monitor;
- }
-@@ -364,6 +359,8 @@ void mperf_unregister(void)
- 	free(aperf_previous_count);
- 	free(mperf_current_count);
- 	free(aperf_current_count);
-+	free(tsc_at_measure_start);
-+	free(tsc_at_measure_end);
- 	free(is_valid);
- }
- 
++
++	last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
++
+ 	/*
+ 	 * With some firmware versions writes to S2CR of type FAULT are
+ 	 * ignored, and writing BYPASS will end up written as FAULT in the
 -- 
 2.39.2
 
