@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4112A171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C62C433EF;
-	Mon, 22 May 2023 19:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C26171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AAFC4339B;
+	Mon, 22 May 2023 19:45:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784746;
-	bh=cpPJWJSWWa9E4BUMA9J+31Go0wT6pdtTmADwTloNQ+Y=;
+	s=korg; t=1684784752;
+	bh=P5ivba9gumA2UcxGHtlpk95oKdDDDBgLq15B3cr2szc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RckgUE95336hgi/q+fOBjbpWG+wXeRa1UwWyfGJjN9z1olAczVh9rPKFb0exliUdV
-	 63NJS0amflazaaQNBfU2as9BKlcYVyArGpeVBzi0LO62wzg36ZfQQIsCMq19fYThag
-	 Yw1bKrxXyxDP/CZgr47Y6oWm8qsI64xhfG4M3K4c=
+	b=dtNGlspCfOVW3kVNabGhPX2EwaX6opj/foaY++Kilknjq1yQLTvS8i+NvfUFCSA7O
+	 69BmZSymt48mfDnh+/maxoKE3q11qeh+0ryxcTqYb66j31/1me4HzMUPVrOCiTvKAW
+	 7HjlkJM6gTuLCZV+B2X5dRypEuVL4E7Jn0rZngfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Syed Saba Kareem <Syed.SabaKareem@amd.com>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	weiliang1503 <weiliang1503@gmail.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 160/364] ASoC: amd: Add check for acp config flags
-Date: Mon, 22 May 2023 20:07:45 +0100
-Message-Id: <20230522190416.741142489@linuxfoundation.org>
+Subject: [PATCH 6.3 162/364] HID: Ignore battery for ELAN touchscreen on ROG Flow X13 GV301RA
+Date: Mon, 22 May 2023 20:07:47 +0100
+Message-Id: <20230522190416.787524852@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,116 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Syed Saba Kareem <Syed.SabaKareem@amd.com>
+From: weiliang1503 <weiliang1503@gmail.com>
 
-[ Upstream commit bddcfb0802eb69b0f51293eab5db33d344c0262f ]
+[ Upstream commit 35903009dbde804a1565dc89e431c0f15179f054 ]
 
-We have SOF and generic ACP support enabled for Rembrandt and
-pheonix platforms on some machines. Since we have same PCI id
-used for probing, add check for machine configuration flag to
-avoid conflict with newer pci drivers. Such machine flag has
-been initialized via dmi match on few Chrome machines. If no
-flag is specified probe and register older platform device.
+Ignore the reported battery level of the built-in touchscreen to suppress
+battery warnings when a stylus is used. The device ID was added and the
+battery ignore quirk was enabled.
 
-Signed-off-by: Syed Saba Kareem <Syed.SabaKareem@amd.com>
-Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://lore.kernel.org/r/20230412091638.1158901-1-Syed.SabaKareem@amd.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: weiliang1503 <weiliang1503@gmail.com>
+Link: https://lore.kernel.org/r/20230330115638.16146-1-weiliang1503@gmail.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/Kconfig        | 2 ++
- sound/soc/amd/ps/acp63.h     | 2 ++
- sound/soc/amd/ps/pci-ps.c    | 8 +++++++-
- sound/soc/amd/yc/acp6x.h     | 3 +++
- sound/soc/amd/yc/pci-acp6x.c | 8 +++++++-
- 5 files changed, 21 insertions(+), 2 deletions(-)
+ drivers/hid/hid-ids.h   | 1 +
+ drivers/hid/hid-input.c | 2 ++
+ 2 files changed, 3 insertions(+)
 
-diff --git a/sound/soc/amd/Kconfig b/sound/soc/amd/Kconfig
-index c88ebd84bdd50..08e42082f5e96 100644
---- a/sound/soc/amd/Kconfig
-+++ b/sound/soc/amd/Kconfig
-@@ -90,6 +90,7 @@ config SND_SOC_AMD_VANGOGH_MACH
- 
- config SND_SOC_AMD_ACP6x
- 	tristate "AMD Audio Coprocessor-v6.x Yellow Carp support"
-+	select SND_AMD_ACP_CONFIG
- 	depends on X86 && PCI
- 	help
- 	  This option enables Audio Coprocessor i.e ACP v6.x support on
-@@ -130,6 +131,7 @@ config SND_SOC_AMD_RPL_ACP6x
- 
- config SND_SOC_AMD_PS
-         tristate "AMD Audio Coprocessor-v6.3 Pink Sardine support"
-+	select SND_AMD_ACP_CONFIG
-         depends on X86 && PCI && ACPI
-         help
-           This option enables Audio Coprocessor i.e ACP v6.3 support on
-diff --git a/sound/soc/amd/ps/acp63.h b/sound/soc/amd/ps/acp63.h
-index 6bf29b520511d..dd36790b25aef 100644
---- a/sound/soc/amd/ps/acp63.h
-+++ b/sound/soc/amd/ps/acp63.h
-@@ -111,3 +111,5 @@ struct acp63_dev_data {
- 	u16 pdev_count;
- 	u16 pdm_dev_index;
- };
-+
-+int snd_amd_acp_find_config(struct pci_dev *pci);
-diff --git a/sound/soc/amd/ps/pci-ps.c b/sound/soc/amd/ps/pci-ps.c
-index 688a1d4643d91..afddb9a77ba49 100644
---- a/sound/soc/amd/ps/pci-ps.c
-+++ b/sound/soc/amd/ps/pci-ps.c
-@@ -247,11 +247,17 @@ static int snd_acp63_probe(struct pci_dev *pci,
- {
- 	struct acp63_dev_data *adata;
- 	u32 addr;
--	u32 irqflags;
-+	u32 irqflags, flag;
- 	int val;
- 	int ret;
- 
- 	irqflags = IRQF_SHARED;
-+
-+	/* Return if acp config flag is defined */
-+	flag = snd_amd_acp_find_config(pci);
-+	if (flag)
-+		return -ENODEV;
-+
- 	/* Pink Sardine device check */
- 	switch (pci->revision) {
- 	case 0x63:
-diff --git a/sound/soc/amd/yc/acp6x.h b/sound/soc/amd/yc/acp6x.h
-index 036207568c048..2de7d1edf00b7 100644
---- a/sound/soc/amd/yc/acp6x.h
-+++ b/sound/soc/amd/yc/acp6x.h
-@@ -105,3 +105,6 @@ static inline void acp6x_writel(u32 val, void __iomem *base_addr)
- {
- 	writel(val, base_addr - ACP6x_PHY_BASE_ADDRESS);
- }
-+
-+int snd_amd_acp_find_config(struct pci_dev *pci);
-+
-diff --git a/sound/soc/amd/yc/pci-acp6x.c b/sound/soc/amd/yc/pci-acp6x.c
-index 77c5fa1f7af14..7af6a349b1d41 100644
---- a/sound/soc/amd/yc/pci-acp6x.c
-+++ b/sound/soc/amd/yc/pci-acp6x.c
-@@ -149,10 +149,16 @@ static int snd_acp6x_probe(struct pci_dev *pci,
- 	int index = 0;
- 	int val = 0x00;
- 	u32 addr;
--	unsigned int irqflags;
-+	unsigned int irqflags, flag;
- 	int ret;
- 
- 	irqflags = IRQF_SHARED;
-+
-+	/* Return if acp config flag is defined */
-+	flag = snd_amd_acp_find_config(pci);
-+	if (flag)
-+		return -ENODEV;
-+
- 	/* Yellow Carp device check */
- 	switch (pci->revision) {
- 	case 0x60:
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index c2e9b6d1fd7d3..8f3e0a5d5f834 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -415,6 +415,7 @@
+ #define I2C_DEVICE_ID_HP_SPECTRE_X360_15	0x2817
+ #define I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG  0x29DF
+ #define I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN 0x2BC8
++#define I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN 0x2C82
+ #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
+ #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
+ #define I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN	0x261A
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index 5c65a584b3fa0..5a88866505eab 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -372,6 +372,8 @@ static const struct hid_device_id hid_battery_quirks[] = {
+ 	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN),
+ 	  HID_BATTERY_QUIRK_IGNORE },
++	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN),
++	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN),
+ 	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN),
 -- 
 2.39.2
 
