@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9209171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:44:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E86C433EF;
-	Mon, 22 May 2023 19:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C622D171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:44:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F2CC433EF;
+	Mon, 22 May 2023 19:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784647;
-	bh=VRBMOAthZcWh7p7Zd4HD+qU//YN0XSOn9uaq3l6VrNo=;
+	s=korg; t=1684784650;
+	bh=DJugA/gi0HDfnlA98AYwhyAVdhZMFQgHuFck+8tKJ40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zYWIxOmZbdHrUmptOUHfQ+toQjr6aAXbq847v+R2VyXQ48ZOJdlUtPGRH7OVW3Y3M
-	 G33cAV5/7LTrKlOxCjC6nWyrwWsrAgxFvySHo/yjHIjq5baofX516RmLmHorSJDLtW
-	 iMmRvF9miLHIqfYBpk5gmk5TFzjnbo7IIgbasgCk=
+	b=WKwcpjZmqNSdL3KIKNXIpWIXOE0ZzVRmbdqroh300WiUbTpMCXgI76+Z8pyXNbkai
+	 nPYwgCpF1z3cX1a/Ko7TsSLi4hYTmhwt3ijhbdr8qSRhfpyqkRUDU+hiowH+6TqYLw
+	 S6AlPlCf6GUf5sfactcAmKAfFWbr3LsMAcAHVQjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josue David Hernandez Gutierrez <josue.d.hernandez.gutierrez@intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 150/364] xhci: Avoid PCI MSI/MSIX interrupt reinitialization at resume
-Date: Mon, 22 May 2023 20:07:35 +0100
-Message-Id: <20230522190416.505102998@linuxfoundation.org>
+Subject: [PATCH 6.3 151/364] spi: intel-pci: Add support for Meteor Lake-S SPI serial flash
+Date: Mon, 22 May 2023 20:07:36 +0100
+Message-Id: <20230522190416.530096545@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,121 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josue David Hernandez Gutierrez <josue.d.hernandez.gutierrez@intel.com>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-[ Upstream commit 944e7deb4238d10cd16905474574236ac8a8e847 ]
+[ Upstream commit c2912d42e86e494935722669e4d9eade69649072 ]
 
-xhci MSI setup is currently done at the same time as xHC host is started
-in xhci_run(). This couples the generic xhci code with PCI, and will
-reconfigure MSI/MSIX interrupts every time xHC is started.
+Intel Meteor Lake-S has the same SPI serial flash controller as Meteor
+Lake-P. Add Meteor Lake-S PCI ID to the driver list of supported
+devices.
 
-Decouple MSI/MSIX configuration from generic xhci code by moving MSI/MSIX
-part to a PCI specific xhci_pci_run() function overriding xhci_run().
-
-This allows us to remove unnecessay MSI/MSIX reconfiguration done every
-time PCI xhci resumes from suspend. i.e. remove the xhci_cleanup_msix()
-call from xhci_resume() and the xhci_try_enale_msi() call in xhci_run()
-called a bit later by xhci_resume()
-
-[minor changes and commit message rewrite -Mathias]
-
-Signed-off-by: Josue David Hernandez Gutierrez <josue.d.hernandez.gutierrez@intel.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230317154715.535523-10-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lore.kernel.org/r/20230331052812.39983-1-mika.westerberg@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-pci.c | 15 +++++++++++++++
- drivers/usb/host/xhci.c     |  8 ++------
- drivers/usb/host/xhci.h     |  1 +
- 3 files changed, 18 insertions(+), 6 deletions(-)
+ drivers/spi/spi-intel-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/host/xhci-pci.c b/drivers/usb/host/xhci-pci.c
-index 6db07ca419c31..8060782a2367d 100644
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -78,14 +78,29 @@ static const char hcd_name[] = "xhci_hcd";
- static struct hc_driver __read_mostly xhci_pci_hc_driver;
- 
- static int xhci_pci_setup(struct usb_hcd *hcd);
-+static int xhci_pci_run(struct usb_hcd *hcd);
- static int xhci_pci_update_hub_device(struct usb_hcd *hcd, struct usb_device *hdev,
- 				      struct usb_tt *tt, gfp_t mem_flags);
- 
- static const struct xhci_driver_overrides xhci_pci_overrides __initconst = {
- 	.reset = xhci_pci_setup,
-+	.start = xhci_pci_run,
- 	.update_hub_device = xhci_pci_update_hub_device,
+diff --git a/drivers/spi/spi-intel-pci.c b/drivers/spi/spi-intel-pci.c
+index 4d69e320d0185..a7381e774b953 100644
+--- a/drivers/spi/spi-intel-pci.c
++++ b/drivers/spi/spi-intel-pci.c
+@@ -83,6 +83,7 @@ static const struct pci_device_id intel_spi_pci_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, 0xa2a4), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0xa324), (unsigned long)&cnl_info },
+ 	{ PCI_VDEVICE(INTEL, 0xa3a4), (unsigned long)&cnl_info },
++	{ PCI_VDEVICE(INTEL, 0xae23), (unsigned long)&cnl_info },
+ 	{ },
  };
- 
-+static int xhci_pci_run(struct usb_hcd *hcd)
-+{
-+	int ret;
-+
-+	if (usb_hcd_is_primary_hcd(hcd)) {
-+		ret = xhci_try_enable_msi(hcd);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	return xhci_run(hcd);
-+}
-+
- /* called after powerup, by probe or system-pm "wakeup" */
- static int xhci_pci_reinit(struct xhci_hcd *xhci, struct pci_dev *pdev)
- {
-diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
-index 6307bae9cddff..f498df6b02c80 100644
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -436,7 +436,7 @@ static void __maybe_unused xhci_msix_sync_irqs(struct xhci_hcd *xhci)
- 	}
- }
- 
--static int xhci_try_enable_msi(struct usb_hcd *hcd)
-+int xhci_try_enable_msi(struct usb_hcd *hcd)
- {
- 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
- 	struct pci_dev  *pdev;
-@@ -490,6 +490,7 @@ static int xhci_try_enable_msi(struct usb_hcd *hcd)
- 	hcd->irq = pdev->irq;
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(xhci_try_enable_msi);
- 
- #else
- 
-@@ -705,10 +706,6 @@ int xhci_run(struct usb_hcd *hcd)
- 
- 	xhci_dbg_trace(xhci, trace_xhci_dbg_init, "xhci_run");
- 
--	ret = xhci_try_enable_msi(hcd);
--	if (ret)
--		return ret;
--
- 	temp_64 = xhci_read_64(xhci, &ir->ir_set->erst_dequeue);
- 	temp_64 &= ~ERST_PTR_MASK;
- 	xhci_dbg_trace(xhci, trace_xhci_dbg_init,
-@@ -1250,7 +1247,6 @@ int xhci_resume(struct xhci_hcd *xhci, bool hibernated)
- 		spin_unlock_irq(&xhci->lock);
- 		if (retval)
- 			return retval;
--		xhci_cleanup_msix(xhci);
- 
- 		xhci_dbg(xhci, "// Disabling event ring interrupts\n");
- 		temp = readl(&xhci->op_regs->status);
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index 786002bb35db0..26fccc8d90556 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -2143,6 +2143,7 @@ int xhci_resume(struct xhci_hcd *xhci, bool hibernated);
- 
- irqreturn_t xhci_irq(struct usb_hcd *hcd);
- irqreturn_t xhci_msi_irq(int irq, void *hcd);
-+int xhci_try_enable_msi(struct usb_hcd *hcd);
- int xhci_alloc_dev(struct usb_hcd *hcd, struct usb_device *udev);
- int xhci_alloc_tt_info(struct xhci_hcd *xhci,
- 		struct xhci_virt_device *virt_dev,
+ MODULE_DEVICE_TABLE(pci, intel_spi_pci_ids);
 -- 
 2.39.2
 
