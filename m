@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE6C171CB
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F53C4339B;
-	Mon, 22 May 2023 19:52:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B6F171C9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCFDC4339E;
+	Mon, 22 May 2023 19:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785145;
-	bh=9h0NbQsjcf5HPhKlD5P7WLD280VAh3M6PhCfsMUhqmc=;
+	s=korg; t=1684785148;
+	bh=htlI4za3gKjBv5m6UvLOQwSbmK4MTdqbzzNeY+eG3TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVH5SQTeQabedK16pokwCcDSMKQgPmIWfzUWUVR+IoLvEiJ+bmFtq4rJ17Z6Z+xJb
-	 SMZaAcpd1sxOrzTGDlkzzeiQ3GPhtrXWapIyabAKAZbmhk2vYCzYYwc7eQmtA60ksY
-	 upfjMTa+2tQfHzb2g+gVgOP5T76dGjB5TvMi/RIg=
+	b=FxSiPCM8x8RxF7dxDUxj+DkwmOQ5T0k9kYLZtTl+yVFqfx9y7zUFugxH6iPKy96RT
+	 Ht51+nx3q72j1O/kFRzJ4kZG8dr86zx6FqIqpFZRlWBs7nWd0FpXgmypN7HcovuaK/
+	 xJc5rvMnYcqDSrIkqQnxF0B8aVhXFaFr7SJ5p23U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.3 325/364] KVM: arm64: Infer the PA offset from IPA in stage-2 map walker
-Date: Mon, 22 May 2023 20:10:30 +0100
-Message-Id: <20230522190420.900649356@linuxfoundation.org>
+	Michal Luczaj <mhal@rbox.co>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.3 326/364] KVM: Fix vcpu_array[0] races
+Date: Mon, 22 May 2023 20:10:31 +0100
+Message-Id: <20230522190420.924376537@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -34,161 +34,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Upton <oliver.upton@linux.dev>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit 1f0f4a2ef7a5693b135ce174e71f116db4bd684d upstream.
+commit afb2acb2e3a32e4d56f7fbd819769b98ed1b7520 upstream.
 
-Until now, the page table walker counted increments to the PA and IPA
-of a walk in two separate places. While the PA is incremented as soon as
-a leaf PTE is installed in stage2_map_walker_try_leaf(), the IPA is
-actually bumped in the generic table walker context. Critically,
-__kvm_pgtable_visit() rereads the PTE after the LEAF callback returns
-to work out if a table or leaf was installed, and only bumps the IPA for
-a leaf PTE.
+In kvm_vm_ioctl_create_vcpu(), add vcpu to vcpu_array iff it's safe to
+access vcpu via kvm_get_vcpu() and kvm_for_each_vcpu(), i.e. when there's
+no failure path requiring vcpu removal and destruction. Such order is
+important because vcpu_array accessors may end up referencing vcpu at
+vcpu_array[0] even before online_vcpus is set to 1.
 
-This arrangement worked fine when we handled faults behind the write lock,
-as the walker had exclusive access to the stage-2 page tables. However,
-commit 1577cb5823ce ("KVM: arm64: Handle stage-2 faults in parallel")
-started handling all stage-2 faults behind the read lock, opening up a
-race where a walker could increment the PA but not the IPA of a walk.
-Nothing good ensues, as the walker starts mapping with the incorrect
-IPA -> PA relationship.
+When online_vcpus=0, any call to kvm_get_vcpu() goes through
+array_index_nospec() and ends with an attempt to xa_load(vcpu_array, 0):
 
-For example, assume that two vCPUs took a data abort on the same IPA.
-One observes that dirty logging is disabled, and the other observed that
-it is enabled:
+	int num_vcpus = atomic_read(&kvm->online_vcpus);
+	i = array_index_nospec(i, num_vcpus);
+	return xa_load(&kvm->vcpu_array, i);
 
-  vCPU attempting PMD mapping		  vCPU attempting PTE mapping
-  ======================================  =====================================
-  /* install PMD */
-  stage2_make_pte(ctx, leaf);
-  data->phys += granule;
-  					  /* replace PMD with a table */
-  					  stage2_try_break_pte(ctx, data->mmu);
-					  stage2_make_pte(ctx, table);
-  /* table is observed */
-  ctx.old = READ_ONCE(*ptep);
-  table = kvm_pte_table(ctx.old, level);
+Similarly, when online_vcpus=0, a kvm_for_each_vcpu() does not iterate over
+an "empty" range, but actually [0, ULONG_MAX]:
 
-  /*
-   * map walk continues w/o incrementing
-   * IPA.
-   */
-   __kvm_pgtable_walk(..., level + 1);
+	xa_for_each_range(&kvm->vcpu_array, idx, vcpup, 0, \
+			  (atomic_read(&kvm->online_vcpus) - 1))
 
-Bring an end to the whole mess by using the IPA as the single source of
-truth for how far along a walk has gotten. Work out the correct PA to
-map by calculating the IPA offset from the beginning of the walk and add
-that to the starting physical address.
+In both cases, such online_vcpus=0 edge case, even if leading to
+unnecessary calls to XArray API, should not be an issue; requesting
+unpopulated indexes/ranges is handled by xa_load() and xa_for_each_range().
 
+However, this means that when the first vCPU is created and inserted in
+vcpu_array *and* before online_vcpus is incremented, code calling
+kvm_get_vcpu()/kvm_for_each_vcpu() already has access to that first vCPU.
+
+This should not pose a problem assuming that once a vcpu is stored in
+vcpu_array, it will remain there, but that's not the case:
+kvm_vm_ioctl_create_vcpu() first inserts to vcpu_array, then requests a
+file descriptor. If create_vcpu_fd() fails, newly inserted vcpu is removed
+from the vcpu_array, then destroyed:
+
+	vcpu->vcpu_idx = atomic_read(&kvm->online_vcpus);
+	r = xa_insert(&kvm->vcpu_array, vcpu->vcpu_idx, vcpu, GFP_KERNEL_ACCOUNT);
+	kvm_get_kvm(kvm);
+	r = create_vcpu_fd(vcpu);
+	if (r < 0) {
+		xa_erase(&kvm->vcpu_array, vcpu->vcpu_idx);
+		kvm_put_kvm_no_destroy(kvm);
+		goto unlock_vcpu_destroy;
+	}
+	atomic_inc(&kvm->online_vcpus);
+
+This results in a possible race condition when a reference to a vcpu is
+acquired (via kvm_get_vcpu() or kvm_for_each_vcpu()) moments before said
+vcpu is destroyed.
+
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Message-Id: <20230510140410.1093987-2-mhal@rbox.co>
 Cc: stable@vger.kernel.org
-Fixes: 1577cb5823ce ("KVM: arm64: Handle stage-2 faults in parallel")
-Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230421071606.1603916-2-oliver.upton@linux.dev
+Fixes: c5b077549136 ("KVM: Convert the kvm->vcpus array to a xarray", 2021-12-08)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_pgtable.h |  1 +
- arch/arm64/kvm/hyp/pgtable.c         | 32 ++++++++++++++++++++++++----
- 2 files changed, 29 insertions(+), 4 deletions(-)
+ virt/kvm/kvm_main.c |   16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/include/asm/kvm_pgtable.h b/arch/arm64/include/asm/kvm_pgtable.h
-index 4cd6762bda80..dc3c072e862f 100644
---- a/arch/arm64/include/asm/kvm_pgtable.h
-+++ b/arch/arm64/include/asm/kvm_pgtable.h
-@@ -209,6 +209,7 @@ struct kvm_pgtable_visit_ctx {
- 	kvm_pte_t				old;
- 	void					*arg;
- 	struct kvm_pgtable_mm_ops		*mm_ops;
-+	u64					start;
- 	u64					addr;
- 	u64					end;
- 	u32					level;
-diff --git a/arch/arm64/kvm/hyp/pgtable.c b/arch/arm64/kvm/hyp/pgtable.c
-index 3d61bd3e591d..140f82300db5 100644
---- a/arch/arm64/kvm/hyp/pgtable.c
-+++ b/arch/arm64/kvm/hyp/pgtable.c
-@@ -58,6 +58,7 @@
- struct kvm_pgtable_walk_data {
- 	struct kvm_pgtable_walker	*walker;
+--- a/virt/kvm/kvm_main.c
++++ b/virt/kvm/kvm_main.c
+@@ -3959,18 +3959,19 @@ static int kvm_vm_ioctl_create_vcpu(stru
+ 	}
  
-+	u64				start;
- 	u64				addr;
- 	u64				end;
- };
-@@ -201,6 +202,7 @@ static inline int __kvm_pgtable_visit(struct kvm_pgtable_walk_data *data,
- 		.old	= READ_ONCE(*ptep),
- 		.arg	= data->walker->arg,
- 		.mm_ops	= mm_ops,
-+		.start	= data->start,
- 		.addr	= data->addr,
- 		.end	= data->end,
- 		.level	= level,
-@@ -293,6 +295,7 @@ int kvm_pgtable_walk(struct kvm_pgtable *pgt, u64 addr, u64 size,
- 		     struct kvm_pgtable_walker *walker)
- {
- 	struct kvm_pgtable_walk_data walk_data = {
-+		.start	= ALIGN_DOWN(addr, PAGE_SIZE),
- 		.addr	= ALIGN_DOWN(addr, PAGE_SIZE),
- 		.end	= PAGE_ALIGN(walk_data.addr + size),
- 		.walker	= walker,
-@@ -794,20 +797,43 @@ static bool stage2_pte_executable(kvm_pte_t pte)
- 	return !(pte & KVM_PTE_LEAF_ATTR_HI_S2_XN);
- }
+ 	vcpu->vcpu_idx = atomic_read(&kvm->online_vcpus);
+-	r = xa_insert(&kvm->vcpu_array, vcpu->vcpu_idx, vcpu, GFP_KERNEL_ACCOUNT);
+-	BUG_ON(r == -EBUSY);
++	r = xa_reserve(&kvm->vcpu_array, vcpu->vcpu_idx, GFP_KERNEL_ACCOUNT);
+ 	if (r)
+ 		goto unlock_vcpu_destroy;
  
-+static u64 stage2_map_walker_phys_addr(const struct kvm_pgtable_visit_ctx *ctx,
-+				       const struct stage2_map_data *data)
-+{
-+	u64 phys = data->phys;
+ 	/* Now it's all set up, let userspace reach it */
+ 	kvm_get_kvm(kvm);
+ 	r = create_vcpu_fd(vcpu);
+-	if (r < 0) {
+-		xa_erase(&kvm->vcpu_array, vcpu->vcpu_idx);
+-		kvm_put_kvm_no_destroy(kvm);
+-		goto unlock_vcpu_destroy;
++	if (r < 0)
++		goto kvm_put_xa_release;
 +
-+	/*
-+	 * Stage-2 walks to update ownership data are communicated to the map
-+	 * walker using an invalid PA. Avoid offsetting an already invalid PA,
-+	 * which could overflow and make the address valid again.
-+	 */
-+	if (!kvm_phys_is_valid(phys))
-+		return phys;
-+
-+	/*
-+	 * Otherwise, work out the correct PA based on how far the walk has
-+	 * gotten.
-+	 */
-+	return phys + (ctx->addr - ctx->start);
-+}
-+
- static bool stage2_leaf_mapping_allowed(const struct kvm_pgtable_visit_ctx *ctx,
- 					struct stage2_map_data *data)
- {
-+	u64 phys = stage2_map_walker_phys_addr(ctx, data);
-+
- 	if (data->force_pte && (ctx->level < (KVM_PGTABLE_MAX_LEVELS - 1)))
- 		return false;
++	if (KVM_BUG_ON(!!xa_store(&kvm->vcpu_array, vcpu->vcpu_idx, vcpu, 0), kvm)) {
++		r = -EINVAL;
++		goto kvm_put_xa_release;
+ 	}
  
--	return kvm_block_mapping_supported(ctx, data->phys);
-+	return kvm_block_mapping_supported(ctx, phys);
- }
+ 	/*
+@@ -3985,6 +3986,9 @@ static int kvm_vm_ioctl_create_vcpu(stru
+ 	kvm_create_vcpu_debugfs(vcpu);
+ 	return r;
  
- static int stage2_map_walker_try_leaf(const struct kvm_pgtable_visit_ctx *ctx,
- 				      struct stage2_map_data *data)
- {
- 	kvm_pte_t new;
--	u64 granule = kvm_granule_size(ctx->level), phys = data->phys;
-+	u64 phys = stage2_map_walker_phys_addr(ctx, data);
-+	u64 granule = kvm_granule_size(ctx->level);
- 	struct kvm_pgtable *pgt = data->mmu->pgt;
- 	struct kvm_pgtable_mm_ops *mm_ops = ctx->mm_ops;
- 
-@@ -841,8 +867,6 @@ static int stage2_map_walker_try_leaf(const struct kvm_pgtable_visit_ctx *ctx,
- 
- 	stage2_make_pte(ctx, new);
- 
--	if (kvm_phys_is_valid(phys))
--		data->phys += granule;
- 	return 0;
- }
- 
--- 
-2.40.1
-
++kvm_put_xa_release:
++	kvm_put_kvm_no_destroy(kvm);
++	xa_release(&kvm->vcpu_array, vcpu->vcpu_idx);
+ unlock_vcpu_destroy:
+ 	mutex_unlock(&kvm->lock);
+ 	kvm_dirty_ring_free(&vcpu->dirty_ring);
 
 
