@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D361171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:54:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20E44C433EF;
-	Mon, 22 May 2023 19:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCA5171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:54:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EEEC433D2;
+	Mon, 22 May 2023 19:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785273;
-	bh=ZIhOo5a8ii1giV5C9jOVgmOnC11PTazzk8auFES1zyc=;
+	s=korg; t=1684785276;
+	bh=pTB2crwC1cHJYOGMLJrzpKch14Nvu3b5igGgPiZutfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=prHi2oz6VAyBaQhkbXY23s/XkLAKhKiWZEMMjYGcBYMDH3RO8F1jt1UcDXd+Z0D8t
-	 ieAANJi+RXov9mPDa3FijTbTRUV08oegqirHJqibw3yR50Ev5IOA8w1k5wzl0lu4LM
-	 W2e4UA+RpXbPeIl5jeFO4+XLwBCYLMCKZSqHFr6g=
+	b=yETI99uInEnDpcrbTeDf4YDNOdzBsH3/0jINdOOs+kghin68B2xjTLRtB579yIyq3
+	 YqhG+OaBvX/5CREsAqdH7lykUIbJpew8AqFIn2hgoMTFZEo97wU3FtWllm6dhtp6ET
+	 A+EuAbgx5YNWQRhSfm/LcvGu3/TDJnOVxved+iMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.3 349/364] powerpc/bpf: populate extable entries only during the last pass
-Date: Mon, 22 May 2023 20:10:54 +0100
-Message-Id: <20230522190421.510500235@linuxfoundation.org>
+	Huayu Chen <huayu.chen@corigine.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.3 350/364] nfp: fix NFP_NET_MAX_DSCP definition error
+Date: Mon, 22 May 2023 20:10:55 +0100
+Message-Id: <20230522190421.534393266@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,39 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hari Bathini <hbathini@linux.ibm.com>
+From: Huayu Chen <huayu.chen@corigine.com>
 
-commit 35a4b8ce4ac00e940b46b1034916ccb22ce9bdef upstream.
+commit de9c1a23add9e7842ce63ce6f498a05c66344311 upstream.
 
-Since commit 85e031154c7c ("powerpc/bpf: Perform complete extra passes
-to update addresses"), two additional passes are performed to avoid
-space and CPU time wastage on powerpc. But these extra passes led to
-WARN_ON_ONCE() hits in bpf_add_extable_entry() as extable entries are
-populated again, during the extra pass, without resetting the index.
-Fix it by resetting entry index before repopulating extable entries,
-if and when there is an additional pass.
+The patch corrects the NFP_NET_MAX_DSCP definition in the main.h file.
 
-Fixes: 85e031154c7c ("powerpc/bpf: Perform complete extra passes to update addresses")
-Cc: stable@vger.kernel.org # v6.3+
-Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
-Reviewed-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230425065829.18189-1-hbathini@linux.ibm.com
+The incorrect definition result DSCP bits not being mapped properly when
+DCB is set. When NFP_NET_MAX_DSCP was defined as 4, the next 60 DSCP
+bits failed to be set.
+
+Fixes: 9b7fe8046d74 ("nfp: add DCB IEEE support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Huayu Chen <huayu.chen@corigine.com>
+Acked-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Louis Peens <louis.peens@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/net/bpf_jit_comp.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/netronome/nfp/nic/main.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/net/bpf_jit_comp.c
-+++ b/arch/powerpc/net/bpf_jit_comp.c
-@@ -101,6 +101,8 @@ struct bpf_prog *bpf_int_jit_compile(str
- 		bpf_hdr = jit_data->header;
- 		proglen = jit_data->proglen;
- 		extra_pass = true;
-+		/* During extra pass, ensure index is reset before repopulating extable entries */
-+		cgctx.exentry_idx = 0;
- 		goto skip_init_ctx;
- 	}
+diff --git a/drivers/net/ethernet/netronome/nfp/nic/main.h b/drivers/net/ethernet/netronome/nfp/nic/main.h
+index 094374df42b8..38b8b10b03cd 100644
+--- a/drivers/net/ethernet/netronome/nfp/nic/main.h
++++ b/drivers/net/ethernet/netronome/nfp/nic/main.h
+@@ -8,7 +8,7 @@
  
+ #ifdef CONFIG_DCB
+ /* DCB feature definitions */
+-#define NFP_NET_MAX_DSCP	4
++#define NFP_NET_MAX_DSCP	64
+ #define NFP_NET_MAX_TC		IEEE_8021QAZ_MAX_TCS
+ #define NFP_NET_MAX_PRIO	8
+ #define NFP_DCB_CFG_STRIDE	256
+-- 
+2.40.1
+
 
 
