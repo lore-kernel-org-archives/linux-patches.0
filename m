@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3842E171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A924EC433D2;
-	Mon, 22 May 2023 19:53:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A9F171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE5DC433D2;
+	Mon, 22 May 2023 19:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785230;
-	bh=sGEfzEU4J9EVVpL60o5S2n9YBq1DDYpJhnVnfCVv1ug=;
+	s=korg; t=1684785232;
+	bh=37Jz2q5LnE30Jaq36bR14GBbqujFZ79ISbhheOxvte8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Va5Dr2Awaj7QT/eU66EB5W9M13G2XRIh4vsunCYU0Y8n9FH13JGOO3kY1mEwMueiR
-	 zQsoS3GE7AZCthjVqeV1tpowjaurKXRY/PSq3ngsFhPq7rGQfpMugGb0hWJK17UAYR
-	 3BICEzDQGJzG2JP5H27YMguD/LqEstHtQqlkN2EU=
+	b=pGJwt3mu/AhLsrJCR69MrQn/otHmbpDOJkA3lPpMIuXGkAyMN3XQFBM0vGfw8B4XU
+	 eXyfvPANaWPsNMOnqrs6kF1UGOr7Pr6ZEm1Fqj9viqlHCDcVoVJD7r77UiwU8jWczA
+	 NsImgNc+WPIaDnWd1VhSE4EUN+KE1c+vJrR6fyxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Hartmayer <mhartmay@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Steffen Maier <maier@linux.ibm.com>,
 	Heiko Carstens <hca@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.3 353/364] s390/crypto: use vector instructions only if available for ChaCha20
-Date: Mon, 22 May 2023 20:10:58 +0100
-Message-Id: <20230522190421.602879302@linuxfoundation.org>
+Subject: [PATCH 6.3 354/364] s390/qdio: fix do_sqbs() inline assembly constraint
+Date: Mon, 22 May 2023 20:10:59 +0100
+Message-Id: <20230522190421.626130502@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -38,65 +38,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 8703dd6b238da0ec6c276e53836f8200983d3d9b upstream.
+commit 2862a2fdfae875888e3c1c3634e3422e01d98147 upstream.
 
-Commit 349d03ffd5f6 ("crypto: s390 - add crypto library interface for
-ChaCha20") added a library interface to the s390 specific ChaCha20
-implementation. However no check was added to verify if the required
-facilities are installed before branching into the assembler code.
+Use "a" constraint instead of "d" constraint to pass the state parameter to
+the do_sqbs() inline assembly. This prevents that general purpose register
+zero is used for the state parameter.
 
-If compiled into the kernel, this will lead to the following crash,
-if vector instructions are not available:
+If the compiler would select general purpose register zero this would be
+problematic for the used instruction in rsy format: the register used for
+the state parameter is a base register. If the base register is general
+purpose register zero the contents of the register are unexpectedly ignored
+when the instruction is executed.
 
-data exception: 0007 ilc:3 [#1] SMP
-Modules linked in:
-CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.3.0-rc7+ #11
-Hardware name: IBM 3931 A01 704 (KVM/Linux)
-Krnl PSW : 0704e00180000000 000000001857277a (chacha20_vx+0x32/0x818)
-           R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:2 PM:0 RI:0 EA:3
-Krnl GPRS: 0000037f0000000a ffffffffffffff60 000000008184b000 0000000019f5c8e6
-           0000000000000109 0000037fffb13c58 0000037fffb13c78 0000000019bb1780
-           0000037fffb13c58 0000000019f5c8e6 000000008184b000 0000000000000109
-           00000000802d8000 0000000000000109 0000000018571ebc 0000037fffb13718
-Krnl Code: 000000001857276a: c07000b1f80b        larl    %r7,0000000019bb1780
-           0000000018572770: a708000a            lhi     %r0,10
-          #0000000018572774: e78950000c36        vlm     %v24,%v25,0(%r5),0
-          >000000001857277a: e7a060000806        vl      %v26,0(%r6),0
-           0000000018572780: e7bf70004c36        vlm     %v27,%v31,0(%r7),4
-           0000000018572786: e70b00000456        vlr     %v0,%v27
-           000000001857278c: e71800000456        vlr     %v1,%v24
-           0000000018572792: e74b00000456        vlr     %v4,%v27
-Call Trace:
- [<000000001857277a>] chacha20_vx+0x32/0x818
-Last Breaking-Event-Address:
- [<0000000018571eb6>] chacha20_crypt_s390.constprop.0+0x6e/0xd8
----[ end trace 0000000000000000 ]---
-Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+This only applies to z/VM guests using QIOASSIST with dedicated (pass through)
+QDIO-based devices such as FCP [zfcp driver] as well as real OSA or
+HiperSockets [qeth driver].
 
-Fix this by adding a missing MACHINE_HAS_VX check.
+A possible symptom for this case using zfcp is the following repeating kernel
+message pattern:
 
-Fixes: 349d03ffd5f6 ("crypto: s390 - add crypto library interface for ChaCha20")
-Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
-Cc: <stable@vger.kernel.org> # 5.19+
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-[agordeev@linux.ibm.com: remove duplicates in commit message]
+zfcp <devbusid>: A QDIO problem occurred
+zfcp <devbusid>: A QDIO problem occurred
+zfcp <devbusid>: qdio: ZFCP on SC <sc> using AI:1 QEBSM:1 PRI:1 TDD:1 SIGA: W
+zfcp <devbusid>: A QDIO problem occurred
+zfcp <devbusid>: A QDIO problem occurred
+
+Each of the qdio problem message can be accompanied by the following entries
+for the affected subchannel <sc> in
+/sys/kernel/debug/s390dbf/qdio_error/hex_ascii for zfcp or qeth:
+
+<sc> ccq: 69....
+<sc> SQBS ERROR.
+
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Cc: Steffen Maier <maier@linux.ibm.com>
+Fixes: 8129ee164267 ("[PATCH] s390: qdio V=V pass-through")
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/chacha-glue.c |    2 +-
+ drivers/s390/cio/qdio.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/crypto/chacha-glue.c
-+++ b/arch/s390/crypto/chacha-glue.c
-@@ -82,7 +82,7 @@ void chacha_crypt_arch(u32 *state, u8 *d
- 	 * it cannot handle a block of data or less, but otherwise
- 	 * it can handle data of arbitrary size
- 	 */
--	if (bytes <= CHACHA_BLOCK_SIZE || nrounds != 20)
-+	if (bytes <= CHACHA_BLOCK_SIZE || nrounds != 20 || !MACHINE_HAS_VX)
- 		chacha_crypt_generic(state, dst, src, bytes, nrounds);
- 	else
- 		chacha20_crypt_s390(state, dst, src, bytes,
+--- a/drivers/s390/cio/qdio.h
++++ b/drivers/s390/cio/qdio.h
+@@ -95,7 +95,7 @@ static inline int do_sqbs(u64 token, uns
+ 		"	lgr	1,%[token]\n"
+ 		"	.insn	rsy,0xeb000000008a,%[qs],%[ccq],0(%[state])"
+ 		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart)
+-		: [state] "d" ((unsigned long)state), [token] "d" (token)
++		: [state] "a" ((unsigned long)state), [token] "d" (token)
+ 		: "memory", "cc", "1");
+ 	*count = _ccq & 0xff;
+ 	*start = _queuestart & 0xff;
 
 
