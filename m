@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C21171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8360BC4339C;
-	Mon, 22 May 2023 19:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7085171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F4DC433D2;
+	Mon, 22 May 2023 19:50:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785035;
-	bh=zCkeMoQYaZSK3g+MQsHJxfqpCL+dh4JwrfE7xTCi+Hk=;
+	s=korg; t=1684785043;
+	bh=ueyEfP2NTjol+XB7hPp+1HvJlvZbTcXgw0f7TazNQiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UiCcTqEdTxhP2w9t4Puo1yiwExSCblDxnOxSP3LGS8E2hp/X/ZjBpXvepwMf9oTsw
-	 ahNDc1g9r4uGus56b0lsq2vfzMnBToDrSlqS2vsuTQg+emqA1ux4owFOp8xicAHpNP
-	 PXHBPDb0wSGrQq67FZk/65ZmImdUSWm2fMFu/R1s=
+	b=jAMTbeepOzy0kCo4suY1lL36mh1HFreF1m2UQDuAn6NKE7j+hJsFCSprMpiJMjGlC
+	 669EnFTlW8pP98oIzyy/2pANuhcQXc31NKe+ya6kM58L25nj2N+yQoss4rd9s1mvil
+	 NByiNiT2UZWO7jSKDZ/wUe4/3uv9SZqA0HAKjmp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Jon Maloy <jmaloy@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 258/364] tipc: check the bearer min mtu properly when setting it by netlink
-Date: Mon, 22 May 2023 20:09:23 +0100
-Message-Id: <20230522190419.153465564@linuxfoundation.org>
+Subject: [PATCH 6.3 249/364] ASoC: SOF: ipc3-topology: Make sure that only one cmd is sent in dai_config
+Date: Mon, 22 May 2023 20:09:14 +0100
+Message-Id: <20230522190418.921103774@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,43 +33,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 35a089b5d793d2bfd2cc7cfa6104545184de2ce7 ]
+[ Upstream commit 4708449eafe60742334606168926985798c9c9b8 ]
 
-Checking the bearer min mtu with tipc_udp_mtu_bad() only works for
-IPv4 UDP bearer, and IPv6 UDP bearer has a different value for the
-min mtu. This patch checks with encap_hlen + TIPC_MIN_BEARER_MTU
-for min mtu, which works for both IPv4 and IPv6 UDP bearer.
+The commands in sof_ipc_dai_config.flags are encoded as bits:
+1 (bit0) - hw_params
+2 (bit1) - hw_free
+4 (bit2) - pause
 
-Note that tipc_udp_mtu_bad() is still used to check media min mtu
-in __tipc_nl_media_set(), as m->mtu currently is only used by the
-IPv4 UDP bearer as its default mtu value.
+These are commands, they cannot be combined as one would assume, for
+example
+3 (bit0 | bit1) is invalid.
 
-Fixes: 682cd3cf946b ("tipc: confgiure and apply UDP bearer MTU on running links")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This can happen right at the second start of a stream as at the end of the
+first stream we set the hw_free command (bit1) and on the second start we
+would OR on top of it the hw_params (bit0).
+
+Fixes: b66bfc3a9810 ("ASoC: SOF: sof-audio: Fix broken early bclk feature for SSP")
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com
+Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com
+Link: https://lore.kernel.org/r/20230512110317.5180-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bearer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/sof/ipc3-topology.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index 0e9a29e1536b7..53881406e2006 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -1151,8 +1151,8 @@ int __tipc_nl_bearer_set(struct sk_buff *skb, struct genl_info *info)
- 				return -EINVAL;
- 			}
- #ifdef CONFIG_TIPC_MEDIA_UDP
--			if (tipc_udp_mtu_bad(nla_get_u32
--					     (props[TIPC_NLA_PROP_MTU]))) {
-+			if (nla_get_u32(props[TIPC_NLA_PROP_MTU]) <
-+			    b->encap_hlen + TIPC_MIN_BEARER_MTU) {
- 				NL_SET_ERR_MSG(info->extack,
- 					       "MTU value is out-of-range");
- 				return -EINVAL;
+diff --git a/sound/soc/sof/ipc3-topology.c b/sound/soc/sof/ipc3-topology.c
+index b1f425b39db94..ffa4c6dea752a 100644
+--- a/sound/soc/sof/ipc3-topology.c
++++ b/sound/soc/sof/ipc3-topology.c
+@@ -2111,10 +2111,13 @@ static int sof_ipc3_dai_config(struct snd_sof_dev *sdev, struct snd_sof_widget *
+ 	 * For the case of PAUSE/HW_FREE, since there are no quirks, flags can be used as is.
+ 	 */
+ 
+-	if (flags & SOF_DAI_CONFIG_FLAGS_HW_PARAMS)
++	if (flags & SOF_DAI_CONFIG_FLAGS_HW_PARAMS) {
++		/* Clear stale command */
++		config->flags &= ~SOF_DAI_CONFIG_FLAGS_CMD_MASK;
+ 		config->flags |= flags;
+-	else
++	} else {
+ 		config->flags = flags;
++	}
+ 
+ 	/* only send the IPC if the widget is set up in the DSP */
+ 	if (swidget->use_count > 0) {
 -- 
 2.39.2
 
