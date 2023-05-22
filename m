@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E2B171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44E0C433D2;
-	Mon, 22 May 2023 19:33:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CBD171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DF7C433EF;
+	Mon, 22 May 2023 19:33:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784028;
-	bh=Qiq8JinTG1xVOvAAUVF/QILIKE1b2itUzLVSAyVn2eo=;
+	s=korg; t=1684784031;
+	bh=t57ZLfvKZuwunwkVf+J/BTaHltgieYMHQMGd9Lc+QOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fjtOOfUvb+dxoscJBQbubAlGFhCdK0K++QnBivTLXAjovv02AD8X+jlx05dNf+I1t
-	 wLStIPs4Z9G7nPT3B1cg0KYb31KvvAQBAGl0jYcnVEvXv8mcT5v44MrIr7DJkiyDXz
-	 A42E4yrUVrO2DsbtoSMb8oVcDBrnuG1wo5/0H05Q=
+	b=xOrsI15gvC0ZM1Yw4TIX75NmSWiFJlyuV7UlJpfVHcObB8W6fkVrQ903mQfSnXPVo
+	 9U/+FwLEe2DvOYJOEJPuk1xyFda57GxtsMnpNZFsKy7U7wL+q1uEdP63XxRdSyqTtF
+	 vOZogFa/IaOrvvIrIVwvhytFcVESTryQnTK9bheM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Dawid Wesierski <dawidx.wesierski@intel.com>,
+	Kamil Maziarz <kamil.maziarz@intel.com>,
+	Jacob Keller <Jacob.e.keller@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 212/292] wifi: iwlwifi: mvm: dont trust firmware n_channels
-Date: Mon, 22 May 2023 20:09:29 +0100
-Message-Id: <20230522190411.257393468@linuxfoundation.org>
+Subject: [PATCH 6.1 203/292] ice: Fix ice VF reset during iavf initialization
+Date: Mon, 22 May 2023 20:09:20 +0100
+Message-Id: <20230522190411.032295534@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,58 +38,166 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Dawid Wesierski <dawidx.wesierski@intel.com>
 
-[ Upstream commit 682b6dc29d98e857e6ca4bbc077c7dc2899b7473 ]
+[ Upstream commit 7255355a0636b4eff08d5e8139c77d98f151c4fc ]
 
-If the firmware sends us a corrupted MCC response with
-n_channels much larger than the command response can be,
-we might copy far too much (uninitialized) memory and
-even crash if the n_channels is large enough to make it
-run out of the one page allocated for the FW response.
+Fix the current implementation that causes ice_trigger_vf_reset()
+to start resetting the VF even when the VF-NIC is still initializing.
 
-Fix that by checking the lengths. Doing a < comparison
-would be sufficient, but the firmware should be doing
-it correctly, so check more strictly.
+When we reset NIC with ice driver it can interfere with
+iavf-vf initialization e.g. during consecutive resets induced by ice
 
-Fixes: dcaf9f5ecb6f ("iwlwifi: mvm: add MCC update FW API")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230514120631.d7b233139eb4.I51fd319df8e9d41881fc8450e83d78049518a79a@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+iavf                ice
+  |                  |
+  |<-----------------|
+  |            ice resets vf
+ iavf                |
+ reset               |
+ start               |
+  |<-----------------|
+  |             ice resets vf
+  |             causing iavf
+  |             initialization
+  |             error
+  |                  |
+ iavf
+ reset
+ end
+
+This leads to a series of -53 errors
+(failed to init adminq) from the IAVF.
+
+Change the state of the vf_state field to be not active when the IAVF
+is still initializing. Make sure to wait until receiving the message on
+the message box to ensure that the vf is ready and initializded.
+
+In simple terms we use the ACTIVE flag to make sure that the ice
+driver knows if the iavf is ready for another reset
+
+  iavf                  ice
+    |                    |
+    |                    |
+    |<------------- ice resets vf
+  iavf           vf_state != ACTIVE
+  reset                  |
+  start                  |
+    |                    |
+    |                    |
+  iavf                   |
+  reset-------> vf_state == ACTIVE
+  end              ice resets vf
+    |                    |
+    |                    |
+
+Fixes: c54d209c78b8 ("ice: Wait for VF to be reset/ready before configuration")
+Signed-off-by: Dawid Wesierski <dawidx.wesierski@intel.com>
+Signed-off-by: Kamil Maziarz <kamil.maziarz@intel.com>
+Acked-by: Jacob Keller <Jacob.e.keller@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/nvm.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_sriov.c    |  8 ++++----
+ drivers/net/ethernet/intel/ice/ice_vf_lib.c   | 19 +++++++++++++++++++
+ drivers/net/ethernet/intel/ice/ice_vf_lib.h   |  1 +
+ drivers/net/ethernet/intel/ice/ice_virtchnl.c |  1 +
+ 4 files changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c b/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c
-index 6d18a1fd649b9..fdf60afb0f3f2 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c
-@@ -445,6 +445,11 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
- 		struct iwl_mcc_update_resp *mcc_resp = (void *)pkt->data;
+diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
+index b719e9a771e36..b8c31bf721ad1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_sriov.c
++++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
+@@ -1240,7 +1240,7 @@ int ice_set_vf_spoofchk(struct net_device *netdev, int vf_id, bool ena)
+ 	if (!vf)
+ 		return -EINVAL;
  
- 		n_channels =  __le32_to_cpu(mcc_resp->n_channels);
-+		if (iwl_rx_packet_payload_len(pkt) !=
-+		    struct_size(mcc_resp, channels, n_channels)) {
-+			resp_cp = ERR_PTR(-EINVAL);
-+			goto exit;
-+		}
- 		resp_len = sizeof(struct iwl_mcc_update_resp) +
- 			   n_channels * sizeof(__le32);
- 		resp_cp = kmemdup(mcc_resp, resp_len, GFP_KERNEL);
-@@ -456,6 +461,11 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
- 		struct iwl_mcc_update_resp_v3 *mcc_resp_v3 = (void *)pkt->data;
+-	ret = ice_check_vf_ready_for_cfg(vf);
++	ret = ice_check_vf_ready_for_reset(vf);
+ 	if (ret)
+ 		goto out_put_vf;
  
- 		n_channels =  __le32_to_cpu(mcc_resp_v3->n_channels);
-+		if (iwl_rx_packet_payload_len(pkt) !=
-+		    struct_size(mcc_resp_v3, channels, n_channels)) {
-+			resp_cp = ERR_PTR(-EINVAL);
-+			goto exit;
-+		}
- 		resp_len = sizeof(struct iwl_mcc_update_resp) +
- 			   n_channels * sizeof(__le32);
- 		resp_cp = kzalloc(resp_len, GFP_KERNEL);
+@@ -1355,7 +1355,7 @@ int ice_set_vf_mac(struct net_device *netdev, int vf_id, u8 *mac)
+ 		goto out_put_vf;
+ 	}
+ 
+-	ret = ice_check_vf_ready_for_cfg(vf);
++	ret = ice_check_vf_ready_for_reset(vf);
+ 	if (ret)
+ 		goto out_put_vf;
+ 
+@@ -1409,7 +1409,7 @@ int ice_set_vf_trust(struct net_device *netdev, int vf_id, bool trusted)
+ 		return -EOPNOTSUPP;
+ 	}
+ 
+-	ret = ice_check_vf_ready_for_cfg(vf);
++	ret = ice_check_vf_ready_for_reset(vf);
+ 	if (ret)
+ 		goto out_put_vf;
+ 
+@@ -1722,7 +1722,7 @@ ice_set_vf_port_vlan(struct net_device *netdev, int vf_id, u16 vlan_id, u8 qos,
+ 	if (!vf)
+ 		return -EINVAL;
+ 
+-	ret = ice_check_vf_ready_for_cfg(vf);
++	ret = ice_check_vf_ready_for_reset(vf);
+ 	if (ret)
+ 		goto out_put_vf;
+ 
+diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
+index 86abbcb480d9d..71047fc341392 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
++++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
+@@ -185,6 +185,25 @@ int ice_check_vf_ready_for_cfg(struct ice_vf *vf)
+ 	return 0;
+ }
+ 
++/**
++ * ice_check_vf_ready_for_reset - check if VF is ready to be reset
++ * @vf: VF to check if it's ready to be reset
++ *
++ * The purpose of this function is to ensure that the VF is not in reset,
++ * disabled, and is both initialized and active, thus enabling us to safely
++ * initialize another reset.
++ */
++int ice_check_vf_ready_for_reset(struct ice_vf *vf)
++{
++	int ret;
++
++	ret = ice_check_vf_ready_for_cfg(vf);
++	if (!ret && !test_bit(ICE_VF_STATE_ACTIVE, vf->vf_states))
++		ret = -EAGAIN;
++
++	return ret;
++}
++
+ /**
+  * ice_trigger_vf_reset - Reset a VF on HW
+  * @vf: pointer to the VF structure
+diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.h b/drivers/net/ethernet/intel/ice/ice_vf_lib.h
+index 9f7fcd8e5714b..e5bed85724622 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vf_lib.h
++++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.h
+@@ -214,6 +214,7 @@ u16 ice_get_num_vfs(struct ice_pf *pf);
+ struct ice_vsi *ice_get_vf_vsi(struct ice_vf *vf);
+ bool ice_is_vf_disabled(struct ice_vf *vf);
+ int ice_check_vf_ready_for_cfg(struct ice_vf *vf);
++int ice_check_vf_ready_for_reset(struct ice_vf *vf);
+ void ice_set_vf_state_dis(struct ice_vf *vf);
+ bool ice_is_any_vf_in_unicast_promisc(struct ice_pf *pf);
+ void
+diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+index 2b4c791b6cbad..ef3c709d6a750 100644
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
+@@ -3722,6 +3722,7 @@ void ice_vc_process_vf_msg(struct ice_pf *pf, struct ice_rq_event_info *event)
+ 		ice_vc_notify_vf_link_state(vf);
+ 		break;
+ 	case VIRTCHNL_OP_RESET_VF:
++		clear_bit(ICE_VF_STATE_ACTIVE, vf->vf_states);
+ 		ops->reset_vf(vf);
+ 		break;
+ 	case VIRTCHNL_OP_ADD_ETH_ADDR:
 -- 
 2.39.2
 
