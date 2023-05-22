@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62C7171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:14:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758F4C433EF;
-	Mon, 22 May 2023 19:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808FB171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:14:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF0AC433EF;
+	Mon, 22 May 2023 19:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782891;
-	bh=KjgtbDCxzQ4M6up/uMs1fEi+aKQ1FBB5mGRllVZiH8M=;
+	s=korg; t=1684782894;
+	bh=FVGeJdPlv4hjJDz3BId893dBH5exQXoy0bO+inVEjGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eLY9pIrC9XQAaPOU8GNtrHba+xG/CvCFr4EdevIfcWiKdo9OoUc8hZmz6CKpEH4d3
-	 2chv8YjdUJvHGQwfpdT9ZteWQCx9v/WDmjxCA3ZtB4Lhl5bDfPEcafHTLgXsvPaoI4
-	 gdjn3Emy8mpOZvjTIbpE+keoMw325TnFfXuwe9y8=
+	b=t9RPKMccxtx0zWDfWSpvG17iuIxYFgR9aeOBAaZd4em/H2Hu2Gb4MSpLKzsEpECJ1
+	 6g+PfbGZ+aolCIXfShyZkI0lBXvgBA/8yLogu2DIUGifo5B5on52bNQDfCD2h5C8Z8
+	 0nIfxLF0tgPg6xg6ccElB6CNJYk4oQQD9YkLpMqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Mark Brown <broonie@kernel.org>,
+	stable@kernel.org,
+	syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/203] regmap: cache: Return error in cache sync operations for REGCACHE_NONE
-Date: Mon, 22 May 2023 20:07:39 +0100
-Message-Id: <20230522190355.941960083@linuxfoundation.org>
+Subject: [PATCH 5.15 026/203] ext4: dont clear SB_RDONLY when remounting r/w until quota is re-enabled
+Date: Mon, 22 May 2023 20:07:30 +0100
+Message-Id: <20230522190355.686982119@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,46 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit fd883d79e4dcd2417c2b80756f22a2ff03b0f6e0 ]
+[ Upstream commit a44be64bbecb15a452496f60db6eacfee2b59c79 ]
 
-There is no sense in doing a cache sync on REGCACHE_NONE regmaps.
-Instead of panicking the kernel due to missing cache_ops, return an error
-to client driver.
+When a file system currently mounted read/only is remounted
+read/write, if we clear the SB_RDONLY flag too early, before the quota
+is initialized, and there is another process/thread constantly
+attempting to create a directory, it's possible to trigger the
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20230313071812.13577-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	WARN_ON_ONCE(dquot_initialize_needed(inode));
+
+in ext4_xattr_block_set(), with the following stack trace:
+
+   WARNING: CPU: 0 PID: 5338 at fs/ext4/xattr.c:2141 ext4_xattr_block_set+0x2ef2/0x3680
+   RIP: 0010:ext4_xattr_block_set+0x2ef2/0x3680 fs/ext4/xattr.c:2141
+   Call Trace:
+    ext4_xattr_set_handle+0xcd4/0x15c0 fs/ext4/xattr.c:2458
+    ext4_initxattrs+0xa3/0x110 fs/ext4/xattr_security.c:44
+    security_inode_init_security+0x2df/0x3f0 security/security.c:1147
+    __ext4_new_inode+0x347e/0x43d0 fs/ext4/ialloc.c:1324
+    ext4_mkdir+0x425/0xce0 fs/ext4/namei.c:2992
+    vfs_mkdir+0x29d/0x450 fs/namei.c:4038
+    do_mkdirat+0x264/0x520 fs/namei.c:4061
+    __do_sys_mkdirat fs/namei.c:4076 [inline]
+    __se_sys_mkdirat fs/namei.c:4074 [inline]
+    __x64_sys_mkdirat+0x89/0xa0 fs/namei.c:4074
+
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20230506142419.984260-1-tytso@mit.edu
+Reported-by: syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=6513f6cb5cd6b5fc9f37e3bb70d273b94be9c34c
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/ext4/super.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index f2469d3435ca3..0b517a83c4493 100644
---- a/drivers/base/regmap/regcache.c
-+++ b/drivers/base/regmap/regcache.c
-@@ -343,6 +343,9 @@ int regcache_sync(struct regmap *map)
- 	const char *name;
- 	bool bypass;
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index d062bad1384be..c527ec2b041fb 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5746,6 +5746,7 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
+ 	struct ext4_mount_options old_opts;
+ 	ext4_group_t g;
+ 	int err = 0;
++	int enable_rw = 0;
+ #ifdef CONFIG_QUOTA
+ 	int enable_quota = 0;
+ 	int i, j;
+@@ -5946,7 +5947,7 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
+ 			if (err)
+ 				goto restore_opts;
  
-+	if (WARN_ON(map->cache_type == REGCACHE_NONE))
-+		return -EINVAL;
+-			sb->s_flags &= ~SB_RDONLY;
++			enable_rw = 1;
+ 			if (ext4_has_feature_mmp(sb)) {
+ 				err = ext4_multi_mount_protect(sb,
+ 						le64_to_cpu(es->s_mmp_block));
+@@ -6005,6 +6006,9 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
+ 	if (!test_opt(sb, BLOCK_VALIDITY) && sbi->s_system_blks)
+ 		ext4_release_system_zone(sb);
+ 
++	if (enable_rw)
++		sb->s_flags &= ~SB_RDONLY;
 +
- 	BUG_ON(!map->cache_ops);
+ 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
+ 		ext4_stop_mmpd(sbi);
  
- 	map->lock(map->lock_arg);
-@@ -412,6 +415,9 @@ int regcache_sync_region(struct regmap *map, unsigned int min,
- 	const char *name;
- 	bool bypass;
- 
-+	if (WARN_ON(map->cache_type == REGCACHE_NONE))
-+		return -EINVAL;
-+
- 	BUG_ON(!map->cache_ops);
- 
- 	map->lock(map->lock_arg);
 -- 
 2.39.2
 
