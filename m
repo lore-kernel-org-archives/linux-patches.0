@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B9F171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E27C433EF;
-	Mon, 22 May 2023 19:30:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0834A171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E34CC433D2;
+	Mon, 22 May 2023 19:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783816;
-	bh=u0ete4/L9qEG1j1eaFaM6cfkD+hUhRBYlzGermRhDww=;
+	s=korg; t=1684783819;
+	bh=m4T4wpyQCQgdJqiEPvFCSaUMvmA4Ris8Ph6gOl5wHjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yOS6j9It7ldy80Zs12fH3RrXb+y23qIsUeegJPVD+c05CkSeyFr/HDpUl+q3b96lt
-	 SUd0i8puQNuf0jxT+6TcjX3MpXNv7leituWLd3q3C8StPJQ/DdmKN8L8IamMsUNCFa
-	 BkGwPOXkJ2TPcw+QrbZKRsLwZG0Gai9JDI5AcD7U=
+	b=V0b+PYlWyXSsfRGbdG/z9rIyVkLbhBcMNP5AkqwlQb32HAmUk2MwiOXQx0pp/8RBA
+	 6LPFAVdmnlzRCe03K2r2ifPQ697cjSqZFWxg1jEdGaXtfgDO2FYpVNVPlz1DYE9O4j
+	 hLF6L0waFc84+C7MQOykfmQeqCg1fZMzsK8ytM+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ning <qning0106@126.com>,
-	Lee Jones <lee@kernel.org>,
+	Zhuang Shengen <zhuangshengen@huawei.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/292] mfd: dln2: Fix memory leak in dln2_probe()
-Date: Mon, 22 May 2023 20:08:22 +0100
-Message-Id: <20230522190409.587614661@linuxfoundation.org>
+Subject: [PATCH 6.1 172/292] vsock: avoid to close connected socket after the timeout
+Date: Mon, 22 May 2023 20:08:49 +0100
+Message-Id: <20230522190410.263166510@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,36 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiang Ning <qning0106@126.com>
+From: Zhuang Shengen <zhuangshengen@huawei.com>
 
-[ Upstream commit 96da8f148396329ba769246cb8ceaa35f1ddfc48 ]
+[ Upstream commit 6d4486efe9c69626cab423456169e250a5cd3af5 ]
 
-When dln2_setup_rx_urbs() in dln2_probe() fails, error out_free forgets
-to call usb_put_dev() to decrease the refcount of dln2->usb_dev.
+When client and server establish a connection through vsock,
+the client send a request to the server to initiate the connection,
+then start a timer to wait for the server's response. When the server's
+RESPONSE message arrives, the timer also times out and exits. The
+server's RESPONSE message is processed first, and the connection is
+established. However, the client's timer also times out, the original
+processing logic of the client is to directly set the state of this vsock
+to CLOSE and return ETIMEDOUT. It will not notify the server when the port
+is released, causing the server port remain.
+when client's vsock_connect timeout，it should check sk state is
+ESTABLISHED or not. if sk state is ESTABLISHED, it means the connection
+is established, the client should not set the sk state to CLOSE
 
-Fix this by adding usb_put_dev() in the error handling code of
-dln2_probe().
+Note: I encountered this issue on kernel-4.18, which can be fixed by
+this patch. Then I checked the latest code in the community
+and found similar issue.
 
-Signed-off-by: Qiang Ning <qning0106@126.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230330024353.4503-1-qning0106@126.com
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Signed-off-by: Zhuang Shengen <zhuangshengen@huawei.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/dln2.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/vmw_vsock/af_vsock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/dln2.c b/drivers/mfd/dln2.c
-index 6cd0b0c752d6e..c3149729cec2e 100644
---- a/drivers/mfd/dln2.c
-+++ b/drivers/mfd/dln2.c
-@@ -827,6 +827,7 @@ static int dln2_probe(struct usb_interface *interface,
- 	dln2_stop_rx_urbs(dln2);
- 
- out_free:
-+	usb_put_dev(dln2->usb_dev);
- 	dln2_free(dln2);
- 
- 	return ret;
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 884eca7f6743a..8360c790a8a01 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1427,7 +1427,7 @@ static int vsock_connect(struct socket *sock, struct sockaddr *addr,
+ 			vsock_transport_cancel_pkt(vsk);
+ 			vsock_remove_connected(vsk);
+ 			goto out_wait;
+-		} else if (timeout == 0) {
++		} else if ((sk->sk_state != TCP_ESTABLISHED) && (timeout == 0)) {
+ 			err = -ETIMEDOUT;
+ 			sk->sk_state = TCP_CLOSE;
+ 			sock->state = SS_UNCONNECTED;
 -- 
 2.39.2
 
