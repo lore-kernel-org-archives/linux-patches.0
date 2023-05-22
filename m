@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 412A4171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2A7CC433D2;
-	Mon, 22 May 2023 19:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E31D171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F68C433D2;
+	Mon, 22 May 2023 19:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785021;
-	bh=LJOQ8Ufeho3fWvulnkSqpY0O/5nhclBqnBoeXTiMXI8=;
+	s=korg; t=1684785024;
+	bh=0WnkKj5M+LxC1wqQrmFpIQm+dlwfx9PBn2RL/tPeOE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rdo7vCWHxPu9609GwHskjQtf7+1sU3Y0ALAcIQDnajU2x31FKnq9fBKvax8hziecl
-	 MJ69ztICXAMOlFFmFXoSVJBTli78NjwVRV7eRywOz/GFKrwMX7WMADiuyLqyAxUDF5
-	 2zrbhvdvXTefwMCy+Bdqbdv3MGA6BJJhkS8t0kvY=
+	b=j3TpHXkKvPgc90rC4h6pxQr5DvY4he+77QKnFDFFhgM85U/iCTpZ1g3t1Gmtrk01S
+	 zsiu0Aoy0ueTQsmku1EAiwo57RAHRnpm2gB5IcaES8fFcMsx7gt62YDzJBiTwJVO67
+	 RUrp3799aJ6hrNPH63S+07iHLDAlcYVdul6Poeyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+632b5d9964208bfef8c0@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Dong Chenchen <dongchenchen2@huawei.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 253/364] net: nsh: Use correct mac_offset to unwind gso skb in nsh_gso_segment()
-Date: Mon, 22 May 2023 20:09:18 +0100
-Message-Id: <20230522190419.028095253@linuxfoundation.org>
+Subject: [PATCH 6.3 254/364] net: fec: remove the xdp_return_frame when lack of tx BDs
+Date: Mon, 22 May 2023 20:09:19 +0100
+Message-Id: <20230522190419.054295526@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -37,98 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dong Chenchen <dongchenchen2@huawei.com>
+From: Shenwei Wang <shenwei.wang@nxp.com>
 
-[ Upstream commit c83b49383b595be50647f0c764a48c78b5f3c4f8 ]
+[ Upstream commit 6ead9c98cafcbc6992cf35f0ca393df2c03e3316 ]
 
-As the call trace shows, skb_panic was caused by wrong skb->mac_header
-in nsh_gso_segment():
+In the implementation, the sent_frame count does not increment when
+transmit errors occur. Therefore, bq_xmit_all() will take care of
+returning the XDP frames.
 
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
-CPU: 3 PID: 2737 Comm: syz Not tainted 6.3.0-next-20230505 #1
-RIP: 0010:skb_panic+0xda/0xe0
-call Trace:
- skb_push+0x91/0xa0
- nsh_gso_segment+0x4f3/0x570
- skb_mac_gso_segment+0x19e/0x270
- __skb_gso_segment+0x1e8/0x3c0
- validate_xmit_skb+0x452/0x890
- validate_xmit_skb_list+0x99/0xd0
- sch_direct_xmit+0x294/0x7c0
- __dev_queue_xmit+0x16f0/0x1d70
- packet_xmit+0x185/0x210
- packet_snd+0xc15/0x1170
- packet_sendmsg+0x7b/0xa0
- sock_sendmsg+0x14f/0x160
-
-The root cause is:
-nsh_gso_segment() use skb->network_header - nhoff to reset mac_header
-in skb_gso_error_unwind() if inner-layer protocol gso fails.
-However, skb->network_header may be reset by inner-layer protocol
-gso function e.g. mpls_gso_segment. skb->mac_header reset by the
-inaccurate network_header will be larger than skb headroom.
-
-nsh_gso_segment
-    nhoff = skb->network_header - skb->mac_header;
-    __skb_pull(skb,nsh_len)
-    skb_mac_gso_segment
-        mpls_gso_segment
-            skb_reset_network_header(skb);//skb->network_header+=nsh_len
-            return -EINVAL;
-    skb_gso_error_unwind
-        skb_push(skb, nsh_len);
-        skb->mac_header = skb->network_header - nhoff;
-        // skb->mac_header > skb->headroom, cause skb_push panic
-
-Use correct mac_offset to restore mac_header and get rid of nhoff.
-
-Fixes: c411ed854584 ("nsh: add GSO support")
-Reported-by: syzbot+632b5d9964208bfef8c0@syzkaller.appspotmail.com
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Fixes: 26312c685ae0 ("net: fec: correct the counting of XDP sent frames")
+Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nsh/nsh.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/nsh/nsh.c b/net/nsh/nsh.c
-index e9ca007718b7e..0f23e5e8e03eb 100644
---- a/net/nsh/nsh.c
-+++ b/net/nsh/nsh.c
-@@ -77,13 +77,12 @@ static struct sk_buff *nsh_gso_segment(struct sk_buff *skb,
- 				       netdev_features_t features)
- {
- 	struct sk_buff *segs = ERR_PTR(-EINVAL);
-+	u16 mac_offset = skb->mac_header;
- 	unsigned int nsh_len, mac_len;
- 	__be16 proto;
--	int nhoff;
- 
- 	skb_reset_network_header(skb);
- 
--	nhoff = skb->network_header - skb->mac_header;
- 	mac_len = skb->mac_len;
- 
- 	if (unlikely(!pskb_may_pull(skb, NSH_BASE_HDR_LEN)))
-@@ -108,15 +107,14 @@ static struct sk_buff *nsh_gso_segment(struct sk_buff *skb,
- 	segs = skb_mac_gso_segment(skb, features);
- 	if (IS_ERR_OR_NULL(segs)) {
- 		skb_gso_error_unwind(skb, htons(ETH_P_NSH), nsh_len,
--				     skb->network_header - nhoff,
--				     mac_len);
-+				     mac_offset, mac_len);
- 		goto out;
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 241df41d500f1..577d94821b3e7 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3798,7 +3798,6 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
+ 	entries_free = fec_enet_get_free_txdesc_num(txq);
+ 	if (entries_free < MAX_SKB_FRAGS + 1) {
+ 		netdev_err(fep->netdev, "NOT enough BD for SG!\n");
+-		xdp_return_frame(frame);
+ 		return NETDEV_TX_BUSY;
  	}
  
- 	for (skb = segs; skb; skb = skb->next) {
- 		skb->protocol = htons(ETH_P_NSH);
- 		__skb_push(skb, nsh_len);
--		skb_set_mac_header(skb, -nhoff);
-+		skb->mac_header = mac_offset;
- 		skb->network_header = skb->mac_header + mac_len;
- 		skb->mac_len = mac_len;
- 	}
 -- 
 2.39.2
 
