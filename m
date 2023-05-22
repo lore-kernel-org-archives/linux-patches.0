@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED06171B8
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688DBC4339B;
-	Mon, 22 May 2023 19:45:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4112A171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77C62C433EF;
+	Mon, 22 May 2023 19:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784749;
-	bh=rHX3+4HNWpaIyjXC4vG2Ai1ck+Uw7+0j3VesE1SKAFk=;
+	s=korg; t=1684784746;
+	bh=cpPJWJSWWa9E4BUMA9J+31Go0wT6pdtTmADwTloNQ+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVZU0m/yTaiZdI5cR2TIbSbl5XqgvXZrqUMlyG2IUCfFiE/bfItuY/yUsjtjBywQZ
-	 XU1MFXUu64mmIXXN6V6qrLQZQutxBJNRY1cKqE8dl935zGh8g4DxN2iOlBgBOlzShg
-	 lmOHIezBMss6JQ04kGBM59sjUyCQ+H2tFrsb/58w=
+	b=RckgUE95336hgi/q+fOBjbpWG+wXeRa1UwWyfGJjN9z1olAczVh9rPKFb0exliUdV
+	 63NJS0amflazaaQNBfU2as9BKlcYVyArGpeVBzi0LO62wzg36ZfQQIsCMq19fYThag
+	 Yw1bKrxXyxDP/CZgr47Y6oWm8qsI64xhfG4M3K4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Henrie <alexhenrie24@gmail.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Syed Saba Kareem <Syed.SabaKareem@amd.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 161/364] HID: apple: Set the tilde quirk flag on the Geyser 3
-Date: Mon, 22 May 2023 20:07:46 +0100
-Message-Id: <20230522190416.764238317@linuxfoundation.org>
+Subject: [PATCH 6.3 160/364] ASoC: amd: Add check for acp config flags
+Date: Mon, 22 May 2023 20:07:45 +0100
+Message-Id: <20230522190416.741142489@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,39 +36,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Henrie <alexhenrie24@gmail.com>
+From: Syed Saba Kareem <Syed.SabaKareem@amd.com>
 
-[ Upstream commit 29e1ecc197d410ee59c8877098d54cf417075f7d ]
+[ Upstream commit bddcfb0802eb69b0f51293eab5db33d344c0262f ]
 
-I was finally able to obtain a MacBook1,1 to test and I've now confirmed
-that it has the tilde key quirk as well:
+We have SOF and generic ACP support enabled for Rembrandt and
+pheonix platforms on some machines. Since we have same PCI id
+used for probing, add check for machine configuration flag to
+avoid conflict with newer pci drivers. Such machine flag has
+been initialized via dmi match on few Chrome machines. If no
+flag is specified probe and register older platform device.
 
-Product    Model  Year  System      CPU    Shape  Labels     Country  Quirky
-============================================================================
-05ac:0218  A1181  2006  MacBook1,1  T2500  ISO    British    13       Yes
-
-Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
-Link: https://lore.kernel.org/r/20230404024829.13982-1-alexhenrie24@gmail.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Syed Saba Kareem <Syed.SabaKareem@amd.com>
+Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://lore.kernel.org/r/20230412091638.1158901-1-Syed.SabaKareem@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-apple.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/amd/Kconfig        | 2 ++
+ sound/soc/amd/ps/acp63.h     | 2 ++
+ sound/soc/amd/ps/pci-ps.c    | 8 +++++++-
+ sound/soc/amd/yc/acp6x.h     | 3 +++
+ sound/soc/amd/yc/pci-acp6x.c | 8 +++++++-
+ 5 files changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index 5c145775482bc..e2c73a78b5972 100644
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -875,7 +875,8 @@ static const struct hid_device_id apple_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER3_ANSI),
- 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER3_ISO),
--		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
-+		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
-+			APPLE_ISO_TILDE_QUIRK },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER3_JIS),
- 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
- 			APPLE_RDESC_JIS },
+diff --git a/sound/soc/amd/Kconfig b/sound/soc/amd/Kconfig
+index c88ebd84bdd50..08e42082f5e96 100644
+--- a/sound/soc/amd/Kconfig
++++ b/sound/soc/amd/Kconfig
+@@ -90,6 +90,7 @@ config SND_SOC_AMD_VANGOGH_MACH
+ 
+ config SND_SOC_AMD_ACP6x
+ 	tristate "AMD Audio Coprocessor-v6.x Yellow Carp support"
++	select SND_AMD_ACP_CONFIG
+ 	depends on X86 && PCI
+ 	help
+ 	  This option enables Audio Coprocessor i.e ACP v6.x support on
+@@ -130,6 +131,7 @@ config SND_SOC_AMD_RPL_ACP6x
+ 
+ config SND_SOC_AMD_PS
+         tristate "AMD Audio Coprocessor-v6.3 Pink Sardine support"
++	select SND_AMD_ACP_CONFIG
+         depends on X86 && PCI && ACPI
+         help
+           This option enables Audio Coprocessor i.e ACP v6.3 support on
+diff --git a/sound/soc/amd/ps/acp63.h b/sound/soc/amd/ps/acp63.h
+index 6bf29b520511d..dd36790b25aef 100644
+--- a/sound/soc/amd/ps/acp63.h
++++ b/sound/soc/amd/ps/acp63.h
+@@ -111,3 +111,5 @@ struct acp63_dev_data {
+ 	u16 pdev_count;
+ 	u16 pdm_dev_index;
+ };
++
++int snd_amd_acp_find_config(struct pci_dev *pci);
+diff --git a/sound/soc/amd/ps/pci-ps.c b/sound/soc/amd/ps/pci-ps.c
+index 688a1d4643d91..afddb9a77ba49 100644
+--- a/sound/soc/amd/ps/pci-ps.c
++++ b/sound/soc/amd/ps/pci-ps.c
+@@ -247,11 +247,17 @@ static int snd_acp63_probe(struct pci_dev *pci,
+ {
+ 	struct acp63_dev_data *adata;
+ 	u32 addr;
+-	u32 irqflags;
++	u32 irqflags, flag;
+ 	int val;
+ 	int ret;
+ 
+ 	irqflags = IRQF_SHARED;
++
++	/* Return if acp config flag is defined */
++	flag = snd_amd_acp_find_config(pci);
++	if (flag)
++		return -ENODEV;
++
+ 	/* Pink Sardine device check */
+ 	switch (pci->revision) {
+ 	case 0x63:
+diff --git a/sound/soc/amd/yc/acp6x.h b/sound/soc/amd/yc/acp6x.h
+index 036207568c048..2de7d1edf00b7 100644
+--- a/sound/soc/amd/yc/acp6x.h
++++ b/sound/soc/amd/yc/acp6x.h
+@@ -105,3 +105,6 @@ static inline void acp6x_writel(u32 val, void __iomem *base_addr)
+ {
+ 	writel(val, base_addr - ACP6x_PHY_BASE_ADDRESS);
+ }
++
++int snd_amd_acp_find_config(struct pci_dev *pci);
++
+diff --git a/sound/soc/amd/yc/pci-acp6x.c b/sound/soc/amd/yc/pci-acp6x.c
+index 77c5fa1f7af14..7af6a349b1d41 100644
+--- a/sound/soc/amd/yc/pci-acp6x.c
++++ b/sound/soc/amd/yc/pci-acp6x.c
+@@ -149,10 +149,16 @@ static int snd_acp6x_probe(struct pci_dev *pci,
+ 	int index = 0;
+ 	int val = 0x00;
+ 	u32 addr;
+-	unsigned int irqflags;
++	unsigned int irqflags, flag;
+ 	int ret;
+ 
+ 	irqflags = IRQF_SHARED;
++
++	/* Return if acp config flag is defined */
++	flag = snd_amd_acp_find_config(pci);
++	if (flag)
++		return -ENODEV;
++
+ 	/* Yellow Carp device check */
+ 	switch (pci->revision) {
+ 	case 0x60:
 -- 
 2.39.2
 
