@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E674A171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:44:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC6FC433EF;
-	Mon, 22 May 2023 19:44:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6EEC171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:44:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58541C4339C;
+	Mon, 22 May 2023 19:44:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784641;
-	bh=FVIp0F2gnFLeA4VU9rwR397kVxDgw3cesSKY8g34k2w=;
+	s=korg; t=1684784644;
+	bh=ZLstmkcMECDDArpQ6DLYrocfev0GPlF0EHnKwbXjUiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULHhzeepOc81cIXGuZv+1Z0DtbNYf3AhO+gWw1jp+EGa+TiS/UP3YM2FjztdVLgUY
-	 kt+mpKUMtexP8YeySIQTDOiBLwyb6rQ7crot7snlINrSaQYukyM45A30EMTf0W5NTh
-	 FliAI5AIHCT45VRfM/KGkwaOpPdfoeIC3nxqxwPI=
+	b=uX+bQir4X4ZTSRiGX56KbLS8vlvahBeBlAjb4d64LumkNki+Dlp3Thx78CI3lr2J5
+	 bt6aTHG2YIXUVLaeqBmt9uYT9iVOmwP3X7fqNYzNjHPTup7Dc3+Wt/GQJ/4RLlDzYF
+	 DdrtCY4WNQjwUEYryHhFTxnbmnFSg8TGgtLqHt4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 149/364] xhci: mem: Carefully calculate size for memory allocations
-Date: Mon, 22 May 2023 20:07:34 +0100
-Message-Id: <20230522190416.481550519@linuxfoundation.org>
+Subject: [PATCH 6.3 114/364] f2fs: fix to drop all dirty pages during umount() if cp_error is set
+Date: Mon, 22 May 2023 20:06:59 +0100
+Message-Id: <20230522190415.630095706@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,70 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 347284984f415e52590373253c6943bbdc806ebf ]
+[ Upstream commit c9b3649a934d131151111354bcbb638076f03a30 ]
 
-Carefully calculate size for memory allocations, i.e. with help
-of size_mul() macro from overflow.h.
+xfstest generic/361 reports a bug as below:
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230317154715.535523-2-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+f2fs_bug_on(sbi, sbi->fsync_node_num);
+
+kernel BUG at fs/f2fs/super.c:1627!
+RIP: 0010:f2fs_put_super+0x3a8/0x3b0
+Call Trace:
+ generic_shutdown_super+0x8c/0x1b0
+ kill_block_super+0x2b/0x60
+ kill_f2fs_super+0x87/0x110
+ deactivate_locked_super+0x39/0x80
+ deactivate_super+0x46/0x50
+ cleanup_mnt+0x109/0x170
+ __cleanup_mnt+0x16/0x20
+ task_work_run+0x65/0xa0
+ exit_to_user_mode_prepare+0x175/0x190
+ syscall_exit_to_user_mode+0x25/0x50
+ do_syscall_64+0x4c/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+During umount(), if cp_error is set, f2fs_wait_on_all_pages() should
+not stop waiting all F2FS_WB_CP_DATA pages to be writebacked, otherwise,
+fsync_node_num can be non-zero after f2fs_wait_on_all_pages() causing
+this bug.
+
+In this case, to avoid deadloop in f2fs_wait_on_all_pages(), it needs
+to drop all dirty pages rather than redirtying them.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mem.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ fs/f2fs/checkpoint.c | 12 ++++++++++--
+ fs/f2fs/data.c       |  3 ++-
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
-index d0a9467aa5fc4..c385513ad00b6 100644
---- a/drivers/usb/host/xhci-mem.c
-+++ b/drivers/usb/host/xhci-mem.c
-@@ -9,6 +9,7 @@
-  */
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index c3e058e0a0188..96af24c394c39 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -325,8 +325,15 @@ static int __f2fs_write_meta_page(struct page *page,
  
- #include <linux/usb.h>
-+#include <linux/overflow.h>
- #include <linux/pci.h>
- #include <linux/slab.h>
- #include <linux/dmapool.h>
-@@ -568,7 +569,7 @@ static struct xhci_stream_ctx *xhci_alloc_stream_ctx(struct xhci_hcd *xhci,
- 		gfp_t mem_flags)
- {
- 	struct device *dev = xhci_to_hcd(xhci)->self.sysdev;
--	size_t size = sizeof(struct xhci_stream_ctx) * num_stream_ctxs;
-+	size_t size = size_mul(sizeof(struct xhci_stream_ctx), num_stream_ctxs);
+ 	trace_f2fs_writepage(page, META);
  
- 	if (size > MEDIUM_STREAM_ARRAY_SIZE)
- 		return dma_alloc_coherent(dev, size,
-@@ -1660,7 +1661,7 @@ static int scratchpad_alloc(struct xhci_hcd *xhci, gfp_t flags)
- 		goto fail_sp;
+-	if (unlikely(f2fs_cp_error(sbi)))
++	if (unlikely(f2fs_cp_error(sbi))) {
++		if (is_sbi_flag_set(sbi, SBI_IS_CLOSE)) {
++			ClearPageUptodate(page);
++			dec_page_count(sbi, F2FS_DIRTY_META);
++			unlock_page(page);
++			return 0;
++		}
+ 		goto redirty_out;
++	}
+ 	if (unlikely(is_sbi_flag_set(sbi, SBI_POR_DOING)))
+ 		goto redirty_out;
+ 	if (wbc->for_reclaim && page->index < GET_SUM_BLOCK(sbi, 0))
+@@ -1306,7 +1313,8 @@ void f2fs_wait_on_all_pages(struct f2fs_sb_info *sbi, int type)
+ 		if (!get_pages(sbi, type))
+ 			break;
  
- 	xhci->scratchpad->sp_array = dma_alloc_coherent(dev,
--				     num_sp * sizeof(u64),
-+				     size_mul(sizeof(u64), num_sp),
- 				     &xhci->scratchpad->sp_dma, flags);
- 	if (!xhci->scratchpad->sp_array)
- 		goto fail_sp2;
-@@ -1799,7 +1800,7 @@ int xhci_alloc_erst(struct xhci_hcd *xhci,
- 	struct xhci_segment *seg;
- 	struct xhci_erst_entry *entry;
+-		if (unlikely(f2fs_cp_error(sbi)))
++		if (unlikely(f2fs_cp_error(sbi) &&
++			!is_sbi_flag_set(sbi, SBI_IS_CLOSE)))
+ 			break;
  
--	size = sizeof(struct xhci_erst_entry) * evt_ring->num_segs;
-+	size = size_mul(sizeof(struct xhci_erst_entry), evt_ring->num_segs);
- 	erst->entries = dma_alloc_coherent(xhci_to_hcd(xhci)->self.sysdev,
- 					   size, &erst->erst_dma_addr, flags);
- 	if (!erst->entries)
-@@ -1830,7 +1831,7 @@ xhci_free_interrupter(struct xhci_hcd *xhci, struct xhci_interrupter *ir)
- 	if (!ir)
- 		return;
- 
--	erst_size = sizeof(struct xhci_erst_entry) * (ir->erst.num_entries);
-+	erst_size = sizeof(struct xhci_erst_entry) * ir->erst.num_entries;
- 	if (ir->erst.entries)
- 		dma_free_coherent(dev, erst_size,
- 				  ir->erst.entries,
+ 		if (type == F2FS_DIRTY_META)
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 1034912a61b30..68feb015cfa3a 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2800,7 +2800,8 @@ int f2fs_write_single_data_page(struct page *page, int *submitted,
+ 		 * don't drop any dirty dentry pages for keeping lastest
+ 		 * directory structure.
+ 		 */
+-		if (S_ISDIR(inode->i_mode))
++		if (S_ISDIR(inode->i_mode) &&
++				!is_sbi_flag_set(sbi, SBI_IS_CLOSE))
+ 			goto redirty_out;
+ 		goto out;
+ 	}
 -- 
 2.39.2
 
