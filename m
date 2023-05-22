@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26A4C171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:15:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7492C433D2;
-	Mon, 22 May 2023 19:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8321A171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:15:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18CD9C433EF;
+	Mon, 22 May 2023 19:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782919;
-	bh=0vnWX0MVgGb7iZDFbJNjeohEnUpVDAWB+6di4E0lEvI=;
+	s=korg; t=1684782921;
+	bh=+96Mq4ggXsx7WcB6BZtFOmiAWeqBv5VKnktfiAdc368=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C6rhQwpXGIcK9LGkyJd3M4zvXYYCQ1Y9yvHDUT6zRgw+rCb28IDKbnPyyFGLeRMFJ
-	 tIdl0NOq9uySBA3owEEVoIigFWNkWD6f6UdghkxOrPobcUy9NAVte9j0Wp0VZJzGTC
-	 TLOTpe9IQUDAVD1JpBVO87KbOiPE62U2Om9eTMW8=
+	b=HsuMEX3bMZQsw2U8xHEL2FRd3QwZbLJE12j8a9HlObeAxoHg0S19K2/xujaICHz72
+	 lZwObRa24Qh95v1+jA4OBhpK9D8ipj9F+TZU7cNB9SVQT9PpuWIL0CAGxz2R3Eccpj
+	 kfg5aE3ff314IHXNIpHxMNfWEA/PmPaHrYB2Scbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Chethan T N <chethan.tumkur.narayan@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/203] ipvs: Update width of source for ip_vs_sync_conn_options
-Date: Mon, 22 May 2023 20:08:18 +0100
-Message-Id: <20230522190357.037167052@linuxfoundation.org>
+Subject: [PATCH 5.15 075/203] Bluetooth: btintel: Add LE States quirk support
+Date: Mon, 22 May 2023 20:08:19 +0100
+Message-Id: <20230522190357.064277708@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,88 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Horman <horms@kernel.org>
+From: Chethan T N <chethan.tumkur.narayan@intel.com>
 
-[ Upstream commit e3478c68f6704638d08f437cbc552ca5970c151a ]
+[ Upstream commit 77f542b10c535c9a93bf8afdd2665524935807c2 ]
 
-In ip_vs_sync_conn_v0() copy is made to struct ip_vs_sync_conn_options.
-That structure looks like this:
+Basically all Intel controllers support both Central/Peripheral
+LE states.
 
-struct ip_vs_sync_conn_options {
-        struct ip_vs_seq        in_seq;
-        struct ip_vs_seq        out_seq;
-};
+This patch enables the LE States quirk by default on all
+Solar and Magnertor Intel controllers.
 
-The source of the copy is the in_seq field of struct ip_vs_conn.  Whose
-type is struct ip_vs_seq. Thus we can see that the source - is not as
-wide as the amount of data copied, which is the width of struct
-ip_vs_sync_conn_option.
-
-The copy is safe because the next field in is another struct ip_vs_seq.
-Make use of struct_group() to annotate this.
-
-Flagged by gcc-13 as:
-
- In file included from ./include/linux/string.h:254,
-                  from ./include/linux/bitmap.h:11,
-                  from ./include/linux/cpumask.h:12,
-                  from ./arch/x86/include/asm/paravirt.h:17,
-                  from ./arch/x86/include/asm/cpuid.h:62,
-                  from ./arch/x86/include/asm/processor.h:19,
-                  from ./arch/x86/include/asm/timex.h:5,
-                  from ./include/linux/timex.h:67,
-                  from ./include/linux/time32.h:13,
-                  from ./include/linux/time.h:60,
-                  from ./include/linux/stat.h:19,
-                  from ./include/linux/module.h:13,
-                  from net/netfilter/ipvs/ip_vs_sync.c:38:
- In function 'fortify_memcpy_chk',
-     inlined from 'ip_vs_sync_conn_v0' at net/netfilter/ipvs/ip_vs_sync.c:606:3:
- ./include/linux/fortify-string.h:529:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
-   529 |                         __read_overflow2_field(q_size_field, size);
-       |
-
-Compile tested only.
-
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Chethan T N <chethan.tumkur.narayan@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h             | 6 ++++--
- net/netfilter/ipvs/ip_vs_sync.c | 2 +-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btintel.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index 7cb5a1aace40d..59f8412de45ac 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -549,8 +549,10 @@ struct ip_vs_conn {
- 	 */
- 	struct ip_vs_app        *app;           /* bound ip_vs_app object */
- 	void                    *app_data;      /* Application private data */
--	struct ip_vs_seq        in_seq;         /* incoming seq. struct */
--	struct ip_vs_seq        out_seq;        /* outgoing seq. struct */
-+	struct_group(sync_conn_opt,
-+		struct ip_vs_seq  in_seq;       /* incoming seq. struct */
-+		struct ip_vs_seq  out_seq;      /* outgoing seq. struct */
-+	);
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index d707aa63e9441..2a4cc5d8c2d40 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -2381,9 +2381,8 @@ static int btintel_setup_combined(struct hci_dev *hdev)
+ 		 */
+ 		set_bit(HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED, &hdev->quirks);
  
- 	const struct ip_vs_pe	*pe;
- 	char			*pe_data;
-diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
-index a56fd0b5a430a..0d89e68dc9d18 100644
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -603,7 +603,7 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
- 		struct ip_vs_sync_conn_options *opt =
- 			(struct ip_vs_sync_conn_options *)&s[1];
--		memcpy(opt, &cp->in_seq, sizeof(*opt));
-+		memcpy(opt, &cp->sync_conn_opt, sizeof(*opt));
- 	}
+-		/* Valid LE States quirk for GfP */
+-		if (INTEL_HW_VARIANT(ver_tlv.cnvi_bt) == 0x18)
+-			set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
++		/* Apply LE States quirk from solar onwards */
++		set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
  
- 	m->nr_conns++;
+ 		/* Setup MSFT Extension support */
+ 		btintel_set_msft_opcode(hdev,
 -- 
 2.39.2
 
