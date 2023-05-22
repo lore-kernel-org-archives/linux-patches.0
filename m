@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7922C171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15FEC433EF;
-	Mon, 22 May 2023 19:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AB2171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA01CC433D2;
+	Mon, 22 May 2023 19:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784495;
-	bh=bkD6hVU+8F90R1FdgY0SO//u+++2L4MdapcaIwB2BL8=;
+	s=korg; t=1684784498;
+	bh=100CBOEQouBGkjLwQkhKz1BrM0aikwl8UCC1w0QAoBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBkcqYOjQbVJ5xP++tfxxQwfCrxR13SKr+0x4UKH6cdGR9ld6Arpu1As1Z3HZ41ko
-	 ZXBi6hodYcx2f6EtMQcIyedBQkTVHUGWV+E2HtgBn3KtXhPo4mYwlXZ0tfwYcZIEwU
-	 g7SBFX6JbQvTiA/TAb9vu6FrIjcMesUnNponZ8Jg=
+	b=B9+aXFaG7E24hLXi7vOkVgo81n4docm2yvsgaUz3aKFnW9ddpO8SQEPAKt7EWhate
+	 Ebp5dEnUj+TJHWF5ZUyjBfowSVB1ey2VCDyzp7RdFHmatYmlR1aDmy7pH/GdkteO22
+	 eQpGukr4bsGuHF4iNMCwF9BE37j+iTQxzVXkO0FM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rajat Soni <quic_rajson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Piotr Raczynski <piotr.raczynski@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 101/364] wifi: ath12k: fix memory leak in ath12k_qmi_driver_event_work()
-Date: Mon, 22 May 2023 20:06:46 +0100
-Message-Id: <20230522190415.278511134@linuxfoundation.org>
+Subject: [PATCH 6.3 102/364] net: Catch invalid index in XPS mapping
+Date: Mon, 22 May 2023 20:06:47 +0100
+Message-Id: <20230522190415.305033152@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,48 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rajat Soni <quic_rajson@quicinc.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit 960412bee0ea75f6b3c2dca4a3535795ee84c47a ]
+[ Upstream commit 5dd0dfd55baec0742ba8f5625a0dd064aca7db16 ]
 
-Currently the buffer pointed by event is not freed in case
-ATH12K_FLAG_UNREGISTERING bit is set, this causes memory leak.
+When setting the XPS value of a TX queue, warn the user once if the
+index of the queue is greater than the number of allocated TX queues.
 
-Add a goto skip instead of return, to ensure event and all the
-list entries are freed properly.
+Previously, this scenario went uncaught. In the best case, it resulted
+in unnecessary allocations. In the worst case, it resulted in
+out-of-bounds memory references through calls to `netdev_get_tx_queue(
+dev, index)`. Therefore, it is important to inform the user but not
+worth returning an error and risk downing the netdevice.
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
-
-Signed-off-by: Rajat Soni <quic_rajson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230315090632.15065-1-quic_rajson@quicinc.com
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
+Link: https://lore.kernel.org/r/20230321150725.127229-1-nnac123@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/qmi.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/core/dev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
-index 979a63f2e2ab8..03ba245fbee92 100644
---- a/drivers/net/wireless/ath/ath12k/qmi.c
-+++ b/drivers/net/wireless/ath/ath12k/qmi.c
-@@ -2991,7 +2991,7 @@ static void ath12k_qmi_driver_event_work(struct work_struct *work)
- 		spin_unlock(&qmi->event_lock);
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 8fbd241849c01..b3d8e74fcaf06 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2535,6 +2535,8 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
+ 	struct xps_map *map, *new_map;
+ 	unsigned int nr_ids;
  
- 		if (test_bit(ATH12K_FLAG_UNREGISTERING, &ab->dev_flags))
--			return;
-+			goto skip;
- 
- 		switch (event->type) {
- 		case ATH12K_QMI_EVENT_SERVER_ARRIVE:
-@@ -3032,6 +3032,8 @@ static void ath12k_qmi_driver_event_work(struct work_struct *work)
- 			ath12k_warn(ab, "invalid event type: %d", event->type);
- 			break;
- 		}
++	WARN_ON_ONCE(index >= dev->num_tx_queues);
 +
-+skip:
- 		kfree(event);
- 		spin_lock(&qmi->event_lock);
- 	}
+ 	if (dev->num_tc) {
+ 		/* Do not allow XPS on subordinate device directly */
+ 		num_tc = dev->num_tc;
 -- 
 2.39.2
 
