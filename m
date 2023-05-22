@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F55168DC
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:35:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0C79C433D2;
-	Mon, 22 May 2023 19:35:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BA7168DC
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:36:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108BFC433D2;
+	Mon, 22 May 2023 19:36:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784159;
-	bh=sGEfzEU4J9EVVpL60o5S2n9YBq1DDYpJhnVnfCVv1ug=;
+	s=korg; t=1684784162;
+	bh=1H1O7hRRDTGEhMSxk7tJL5AgpIz6DvSVlwSEEQtssZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLmaHUZDiPRaTShvR83Bng3Bvx3s4u9suxKzXfVrhY43KJYiYli2iy6eINXSp66yi
-	 jvqkSiWPScveXUAmT7JBuuncFxIthmlMqGZXvvBlKbYvGm0ctnbCBQMn86p15drt7v
-	 NIDFDwR5aWphl2ChdqGsWDTB+OtdwtDC4ccDFt+g=
+	b=pkL+PLFEE6ObHh65rFrQonGXHRY2uuri4apGHw6RJdzczHlJZGRxEw3sozE3HeiPP
+	 qbGgxWKpQoERCq4rCROF1Mws5+AnZ6NVBAzqaCZjroVGDPSD3Rou/q2LgPvgqIdzgf
+	 rmZXXW7meNX1XMe7NZQZbaV1y6e0gUy4upAm6+Vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Hartmayer <mhartmay@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.1 283/292] s390/crypto: use vector instructions only if available for ChaCha20
-Date: Mon, 22 May 2023 20:10:40 +0100
-Message-Id: <20230522190413.018489207@linuxfoundation.org>
+	Stephen Boyd <swboyd@chromium.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.1 266/292] serial: qcom-geni: fix enabling deactivated interrupt
+Date: Mon, 22 May 2023 20:10:23 +0100
+Message-Id: <20230522190412.590080757@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,67 +34,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 8703dd6b238da0ec6c276e53836f8200983d3d9b upstream.
+commit 5f949f140f73696f64acb89a1f16ff9153d017e0 upstream.
 
-Commit 349d03ffd5f6 ("crypto: s390 - add crypto library interface for
-ChaCha20") added a library interface to the s390 specific ChaCha20
-implementation. However no check was added to verify if the required
-facilities are installed before branching into the assembler code.
+The driver have a race, experienced only with PREEMPT_RT patchset:
 
-If compiled into the kernel, this will lead to the following crash,
-if vector instructions are not available:
+CPU0                         | CPU1
+==================================================================
+qcom_geni_serial_probe       |
+  uart_add_one_port          |
+                             | serdev_drv_probe
+                             |   qca_serdev_probe
+                             |     serdev_device_open
+                             |       uart_open
+                             |         uart_startup
+                             |           qcom_geni_serial_startup
+                             |             enable_irq
+                             |               __irq_startup
+                             |                 WARN_ON()
+                             |                 IRQ not activated
+  request_threaded_irq       |
+    irq_domain_activate_irq  |
 
-data exception: 0007 ilc:3 [#1] SMP
-Modules linked in:
-CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.3.0-rc7+ #11
-Hardware name: IBM 3931 A01 704 (KVM/Linux)
-Krnl PSW : 0704e00180000000 000000001857277a (chacha20_vx+0x32/0x818)
-           R:0 T:1 IO:1 EX:1 Key:0 M:1 W:0 P:0 AS:3 CC:2 PM:0 RI:0 EA:3
-Krnl GPRS: 0000037f0000000a ffffffffffffff60 000000008184b000 0000000019f5c8e6
-           0000000000000109 0000037fffb13c58 0000037fffb13c78 0000000019bb1780
-           0000037fffb13c58 0000000019f5c8e6 000000008184b000 0000000000000109
-           00000000802d8000 0000000000000109 0000000018571ebc 0000037fffb13718
-Krnl Code: 000000001857276a: c07000b1f80b        larl    %r7,0000000019bb1780
-           0000000018572770: a708000a            lhi     %r0,10
-          #0000000018572774: e78950000c36        vlm     %v24,%v25,0(%r5),0
-          >000000001857277a: e7a060000806        vl      %v26,0(%r6),0
-           0000000018572780: e7bf70004c36        vlm     %v27,%v31,0(%r7),4
-           0000000018572786: e70b00000456        vlr     %v0,%v27
-           000000001857278c: e71800000456        vlr     %v1,%v24
-           0000000018572792: e74b00000456        vlr     %v4,%v27
-Call Trace:
- [<000000001857277a>] chacha20_vx+0x32/0x818
-Last Breaking-Event-Address:
- [<0000000018571eb6>] chacha20_crypt_s390.constprop.0+0x6e/0xd8
----[ end trace 0000000000000000 ]---
-Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+The warning:
 
-Fix this by adding a missing MACHINE_HAS_VX check.
+  894000.serial: ttyHS1 at MMIO 0x894000 (irq = 144, base_baud = 0) is a MSM
+  serial serial0: tty port ttyHS1 registered
+  WARNING: CPU: 7 PID: 107 at kernel/irq/chip.c:241 __irq_startup+0x78/0xd8
+  ...
+  qcom_geni_serial 894000.serial: serial engine reports 0 RX bytes in!
 
-Fixes: 349d03ffd5f6 ("crypto: s390 - add crypto library interface for ChaCha20")
-Reported-by: Marc Hartmayer <mhartmay@linux.ibm.com>
-Cc: <stable@vger.kernel.org> # 5.19+
-Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
-[agordeev@linux.ibm.com: remove duplicates in commit message]
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Adding UART port triggers probe of child serial devices - serdev and
+eventually Qualcomm Bluetooth hci_qca driver.  This opens UART port
+which enables the interrupt before it got activated in
+request_threaded_irq().  The issue originates in commit f3974413cf02
+("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup") and discussion on
+mailing list [1].  However the above commit does not explain why the
+uart_add_one_port() is moved above requesting interrupt.
+
+[1] https://lore.kernel.org/all/5d9f3dfa.1c69fb81.84c4b.30bf@mx.google.com/
+
+Fixes: f3974413cf02 ("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup")
+Cc: <stable@vger.kernel.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20230505152301.2181270-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/crypto/chacha-glue.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/qcom_geni_serial.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/arch/s390/crypto/chacha-glue.c
-+++ b/arch/s390/crypto/chacha-glue.c
-@@ -82,7 +82,7 @@ void chacha_crypt_arch(u32 *state, u8 *d
- 	 * it cannot handle a block of data or less, but otherwise
- 	 * it can handle data of arbitrary size
- 	 */
--	if (bytes <= CHACHA_BLOCK_SIZE || nrounds != 20)
-+	if (bytes <= CHACHA_BLOCK_SIZE || nrounds != 20 || !MACHINE_HAS_VX)
- 		chacha_crypt_generic(state, dst, src, bytes, nrounds);
- 	else
- 		chacha20_crypt_s390(state, dst, src, bytes,
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1483,19 +1483,18 @@ static int qcom_geni_serial_probe(struct
+ 	platform_set_drvdata(pdev, port);
+ 	port->handle_rx = console ? handle_rx_console : handle_rx_uart;
+ 
+-	ret = uart_add_one_port(drv, uport);
+-	if (ret)
+-		return ret;
+-
+ 	irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
+ 	ret = devm_request_irq(uport->dev, uport->irq, qcom_geni_serial_isr,
+ 			IRQF_TRIGGER_HIGH, port->name, uport);
+ 	if (ret) {
+ 		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
+-		uart_remove_one_port(drv, uport);
+ 		return ret;
+ 	}
+ 
++	ret = uart_add_one_port(drv, uport);
++	if (ret)
++		return ret;
++
+ 	/*
+ 	 * Set pm_runtime status as ACTIVE so that wakeup_irq gets
+ 	 * enabled/disabled from dev_pm_arm_wake_irq during system
 
 
