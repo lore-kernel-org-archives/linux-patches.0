@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EFE171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:18:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE010C433EF;
-	Mon, 22 May 2023 19:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54E98171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:18:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6AEDC433D2;
+	Mon, 22 May 2023 19:18:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783083;
-	bh=AtayK4qjk1FQXuXKweT+CK/sOWtmkq+l/B5DzF85RJ0=;
+	s=korg; t=1684783086;
+	bh=EzyF6OLAiRZi1VdOa+f93VuGjdKRP5UzH9D3GxGBV6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ae+4Odh/nC5t7yuVgUaaj1Jp2bk50pjflPf0qzS+aRHm8km5FovpI4YrFng+Gvzzc
-	 UMqtpxXe45WLUWSXzck2z8ecKK9uvHXSIc05DzXCYuIza6mXoalhz+0Jf1dwPVyVV+
-	 jhsTB8HLv55uEeoGmO/LCe1BdJ/HtCRsx55gBpEc=
+	b=GOpcg1Cwq+eUYYt2sE8u4Gy/ro6kEN/6QSuiLJOQmANG9bv2Iu0U6E5brJzHE62/G
+	 M4qSOY3HD9SCMfVuk6O1iBfh2KOzoNhwwW7m0hsYln3luni6Wmcjxf+dxLT+zf9NN+
+	 JMGIGASJOkbscvBO5xdIomWzMgSEprDyU/7pZ0Vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 134/203] tracing: Introduce helpers to safely handle dynamic-sized sockaddrs
-Date: Mon, 22 May 2023 20:09:18 +0100
-Message-Id: <20230522190358.676920670@linuxfoundation.org>
+Subject: [PATCH 5.15 135/203] SUNRPC: Clean up svc_deferred_class trace events
+Date: Mon, 22 May 2023 20:09:19 +0100
+Message-Id: <20230522190358.704326546@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,218 +36,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit d07c9ad622474616e94572e59e725c2c4a494fb4 ]
+[ Upstream commit 45cb7955c180a2a34d291e68938250c4f9bd294f ]
 
-Enable a struct sockaddr to be stored in a trace record as a
-dynamically-sized field. The common cases are AF_INET and AF_INET6
-which are different sizes, and are vastly smaller than a struct
-sockaddr_storage.
+Replace the temporary fix from commit 4d5004451ab2 ("SUNRPC: Fix the
+svc_deferred_event trace class") with the use of __sockaddr and
+friends, which is the preferred solution (but only available in 5.18
+and newer).
 
-These are safer because, when used properly, the size of the
-sockaddr destination field in each trace record is now guaranteed
-to be the same as the source address that is being copied into it.
-
-Link: https://lore.kernel.org/all/164182978641.8391.8277203495236105391.stgit@bazille.1015granger.net/
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Stable-dep-of: 948f072ada23 ("SUNRPC: always free ctxt when freeing deferred request")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/bpf_probe.h    |  6 ++++
- include/trace/perf.h         |  6 ++++
- include/trace/trace_events.h | 55 ++++++++++++++++++++++++++++++++++--
- 3 files changed, 65 insertions(+), 2 deletions(-)
+ include/trace/events/sunrpc.h | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/include/trace/bpf_probe.h b/include/trace/bpf_probe.h
-index 04939b2d2f192..26ec024c3d58a 100644
---- a/include/trace/bpf_probe.h
-+++ b/include/trace/bpf_probe.h
-@@ -21,6 +21,9 @@
- #undef __get_bitmask
- #define __get_bitmask(field) (char *)__get_dynamic_array(field)
+diff --git a/include/trace/events/sunrpc.h b/include/trace/events/sunrpc.h
+index 2a598fb45bf4f..d49426c0444c9 100644
+--- a/include/trace/events/sunrpc.h
++++ b/include/trace/events/sunrpc.h
+@@ -1923,19 +1923,18 @@ DECLARE_EVENT_CLASS(svc_deferred_event,
+ 	TP_STRUCT__entry(
+ 		__field(const void *, dr)
+ 		__field(u32, xid)
+-		__array(__u8, addr, INET6_ADDRSTRLEN + 10)
++		__sockaddr(addr, dr->addrlen)
+ 	),
  
-+#undef __get_sockaddr
-+#define __get_sockaddr(field) ((struct sockaddr *)__get_dynamic_array(field))
-+
- #undef __get_rel_dynamic_array
- #define __get_rel_dynamic_array(field)	\
- 		((void *)(&__entry->__rel_loc_##field) +	\
-@@ -37,6 +40,9 @@
- #undef __get_rel_bitmask
- #define __get_rel_bitmask(field) (char *)__get_rel_dynamic_array(field)
+ 	TP_fast_assign(
+ 		__entry->dr = dr;
+ 		__entry->xid = be32_to_cpu(*(__be32 *)(dr->args +
+ 						       (dr->xprt_hlen>>2)));
+-		snprintf(__entry->addr, sizeof(__entry->addr) - 1,
+-			 "%pISpc", (struct sockaddr *)&dr->addr);
++		__assign_sockaddr(addr, &dr->addr, dr->addrlen);
+ 	),
  
-+#undef __get_rel_sockaddr
-+#define __get_rel_sockaddr(field) ((struct sockaddr *)__get_rel_dynamic_array(field))
-+
- #undef __perf_count
- #define __perf_count(c)	(c)
+-	TP_printk("addr=%s dr=%p xid=0x%08x", __entry->addr, __entry->dr,
+-		__entry->xid)
++	TP_printk("addr=%pISpc dr=%p xid=0x%08x", __get_sockaddr(addr),
++		__entry->dr, __entry->xid)
+ );
  
-diff --git a/include/trace/perf.h b/include/trace/perf.h
-index 5d48c46a30083..5800d13146c3d 100644
---- a/include/trace/perf.h
-+++ b/include/trace/perf.h
-@@ -21,6 +21,9 @@
- #undef __get_bitmask
- #define __get_bitmask(field) (char *)__get_dynamic_array(field)
- 
-+#undef __get_sockaddr
-+#define __get_sockaddr(field) ((struct sockaddr *)__get_dynamic_array(field))
-+
- #undef __get_rel_dynamic_array
- #define __get_rel_dynamic_array(field)	\
- 		((void *)__entry +					\
-@@ -38,6 +41,9 @@
- #undef __get_rel_bitmask
- #define __get_rel_bitmask(field) (char *)__get_rel_dynamic_array(field)
- 
-+#undef __get_rel_sockaddr
-+#define __get_rel_sockaddr(field) ((struct sockaddr *)__get_rel_dynamic_array(field))
-+
- #undef __perf_count
- #define __perf_count(c)	(__count = (c))
- 
-diff --git a/include/trace/trace_events.h b/include/trace/trace_events.h
-index 7f0b91dfb532d..e6b19ab357815 100644
---- a/include/trace/trace_events.h
-+++ b/include/trace/trace_events.h
-@@ -108,6 +108,9 @@ TRACE_MAKE_SYSTEM_STR();
- #undef __bitmask
- #define __bitmask(item, nr_bits) __dynamic_array(char, item, -1)
- 
-+#undef __sockaddr
-+#define __sockaddr(field, len) __dynamic_array(u8, field, len)
-+
- #undef __rel_dynamic_array
- #define __rel_dynamic_array(type, item, len) u32 __rel_loc_##item;
- 
-@@ -120,6 +123,9 @@ TRACE_MAKE_SYSTEM_STR();
- #undef __rel_bitmask
- #define __rel_bitmask(item, nr_bits) __rel_dynamic_array(char, item, -1)
- 
-+#undef __rel_sockaddr
-+#define __rel_sockaddr(field, len) __rel_dynamic_array(u8, field, len)
-+
- #undef TP_STRUCT__entry
- #define TP_STRUCT__entry(args...) args
- 
-@@ -212,11 +218,14 @@ TRACE_MAKE_SYSTEM_STR();
- #undef __string
- #define __string(item, src) __dynamic_array(char, item, -1)
- 
-+#undef __string_len
-+#define __string_len(item, src, len) __dynamic_array(char, item, -1)
-+
- #undef __bitmask
- #define __bitmask(item, nr_bits) __dynamic_array(unsigned long, item, -1)
- 
--#undef __string_len
--#define __string_len(item, src, len) __dynamic_array(char, item, -1)
-+#undef __sockaddr
-+#define __sockaddr(field, len) __dynamic_array(u8, field, len)
- 
- #undef __rel_dynamic_array
- #define __rel_dynamic_array(type, item, len)	u32 item;
-@@ -230,6 +239,9 @@ TRACE_MAKE_SYSTEM_STR();
- #undef __rel_bitmask
- #define __rel_bitmask(item, nr_bits) __rel_dynamic_array(unsigned long, item, -1)
- 
-+#undef __rel_sockaddr
-+#define __rel_sockaddr(field, len) __rel_dynamic_array(u8, field, len)
-+
- #undef DECLARE_EVENT_CLASS
- #define DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print)	\
- 	struct trace_event_data_offsets_##call {			\
-@@ -349,6 +361,12 @@ TRACE_MAKE_SYSTEM_STR();
- 		trace_print_bitmask_seq(p, __bitmask, __bitmask_size);	\
- 	})
- 
-+#undef __get_sockaddr
-+#define __get_sockaddr(field)	((struct sockaddr *)__get_dynamic_array(field))
-+
-+#undef __get_rel_sockaddr
-+#define __get_rel_sockaddr(field)	((struct sockaddr *)__get_rel_dynamic_array(field))
-+
- #undef __print_flags
- #define __print_flags(flag, delim, flag_array...)			\
- 	({								\
-@@ -520,6 +538,9 @@ static struct trace_event_functions trace_event_type_funcs_##call = {	\
- #undef __bitmask
- #define __bitmask(item, nr_bits) __dynamic_array(unsigned long, item, -1)
- 
-+#undef __sockaddr
-+#define __sockaddr(field, len) __dynamic_array(u8, field, len)
-+
- #undef __rel_dynamic_array
- #define __rel_dynamic_array(_type, _item, _len) {			\
- 	.type = "__rel_loc " #_type "[]", .name = #_item,		\
-@@ -535,6 +556,9 @@ static struct trace_event_functions trace_event_type_funcs_##call = {	\
- #undef __rel_bitmask
- #define __rel_bitmask(item, nr_bits) __rel_dynamic_array(unsigned long, item, -1)
- 
-+#undef __rel_sockaddr
-+#define __rel_sockaddr(field, len) __rel_dynamic_array(u8, field, len)
-+
- #undef DECLARE_EVENT_CLASS
- #define DECLARE_EVENT_CLASS(call, proto, args, tstruct, func, print)	\
- static struct trace_event_fields trace_event_fields_##call[] = {	\
-@@ -626,6 +650,12 @@ static struct trace_event_fields trace_event_fields_##call[] = {	\
- #define __rel_bitmask(item, nr_bits) __rel_dynamic_array(unsigned long, item,	\
- 					 __bitmask_size_in_longs(nr_bits))
- 
-+#undef __sockaddr
-+#define __sockaddr(field, len) __dynamic_array(u8, field, len)
-+
-+#undef __rel_sockaddr
-+#define __rel_sockaddr(field, len) __rel_dynamic_array(u8, field, len)
-+
- #undef DECLARE_EVENT_CLASS
- #define DECLARE_EVENT_CLASS(call, proto, args, tstruct, assign, print)	\
- static inline notrace int trace_event_get_offsets_##call(		\
-@@ -790,6 +820,15 @@ static inline notrace int trace_event_get_offsets_##call(		\
- #define __assign_bitmask(dst, src, nr_bits)					\
- 	memcpy(__get_bitmask(dst), (src), __bitmask_size_in_bytes(nr_bits))
- 
-+#undef __sockaddr
-+#define __sockaddr(field, len) __dynamic_array(u8, field, len)
-+
-+#undef __get_sockaddr
-+#define __get_sockaddr(field)	((struct sockaddr *)__get_dynamic_array(field))
-+
-+#define __assign_sockaddr(dest, src, len)					\
-+	memcpy(__get_dynamic_array(dest), src, len)
-+
- #undef __rel_dynamic_array
- #define __rel_dynamic_array(type, item, len)				\
- 	__entry->__rel_loc_##item = __data_offsets.item;
-@@ -821,6 +860,16 @@ static inline notrace int trace_event_get_offsets_##call(		\
- #define __assign_rel_bitmask(dst, src, nr_bits)					\
- 	memcpy(__get_rel_bitmask(dst), (src), __bitmask_size_in_bytes(nr_bits))
- 
-+#undef __rel_sockaddr
-+#define __rel_sockaddr(field, len) __rel_dynamic_array(u8, field, len)
-+
-+#undef __get_rel_sockaddr
-+#define __get_rel_sockaddr(field)	((struct sockaddr *)__get_rel_dynamic_array(field))
-+
-+#define __assign_rel_sockaddr(dest, src, len)					\
-+	memcpy(__get_rel_dynamic_array(dest), src, len)
-+
-+
- #undef TP_fast_assign
- #define TP_fast_assign(args...) args
- 
-@@ -885,10 +934,12 @@ static inline void ftrace_test_probe_##call(void)			\
- #undef __get_dynamic_array_len
- #undef __get_str
- #undef __get_bitmask
-+#undef __get_sockaddr
- #undef __get_rel_dynamic_array
- #undef __get_rel_dynamic_array_len
- #undef __get_rel_str
- #undef __get_rel_bitmask
-+#undef __get_rel_sockaddr
- #undef __print_array
- #undef __print_hex_dump
- 
+ #define DEFINE_SVC_DEFERRED_EVENT(name) \
 -- 
 2.39.2
 
