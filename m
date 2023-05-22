@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6251F168DC
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2012C433EF;
-	Mon, 22 May 2023 19:34:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FACE168DC
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B34A8C433D2;
+	Mon, 22 May 2023 19:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784052;
-	bh=8vu415bm7cRMTv6jb4cllI2JnLcimu50U+uPxJ2hhJY=;
+	s=korg; t=1684784055;
+	bh=cit44o7LbUGVeKHTBKRo4BbvPYPzCdezWKtGqSWuUDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hKc8Kdw1P+2cK1Hmzfk7eRdodrn2vfPlZdGPkEO5/Yg1hFAiTFcT2xK9rWslLHhGI
-	 Awr9uWlV1ibyYfQGhddJpsxibWSJpoG7OwEfNAG570svc+Srhz4NjNCK/KKZrau6uX
-	 fehi0l/FVLGA6zdCKlzJ5o78L4aueT7yWBaxr60k=
+	b=DDBYNs0TjDBRfWySKurjJmMpwsNID2lo3wmNyMTZ/ksyRirBuksays1SHhaSauo8p
+	 M8V39fVpxbnOd/hoNlAO2lxmjd+QJE5btREaui27TvT8Ckn0sjrK6GgD0NvHeIVDx6
+	 J5CYOtc1Md1ouWDoK6U3eT/uIkDTqO2xavyS3+2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jimmy Assarsson <extja@kvaser.com>,
 	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 248/292] can: kvaser_pciefd: Call request_irq() before enabling interrupts
-Date: Mon, 22 May 2023 20:10:05 +0100
-Message-Id: <20230522190412.147894432@linuxfoundation.org>
+Subject: [PATCH 6.1 249/292] can: kvaser_pciefd: Empty SRB buffer in probe
+Date: Mon, 22 May 2023 20:10:06 +0100
+Message-Id: <20230522190412.172559166@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,45 +36,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Jimmy Assarsson <extja@kvaser.com>
 
-commit 84762d8da89d29ba842317eb842973e628c27391 upstream.
+commit c589557dd1426f5adf90c7a919d4fde5a3e4ef64 upstream.
 
-Make sure the interrupt handler is registered before enabling interrupts.
+Empty the "Shared receive buffer" (SRB) in probe, to assure we start in a
+known state, and don't process any irrelevant packets.
 
 Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/r/20230516134318.104279-4-extja@kvaser.com
+Link: https://lore.kernel.org/r/20230516134318.104279-5-extja@kvaser.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/kvaser_pciefd.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/net/can/kvaser_pciefd.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 --- a/drivers/net/can/kvaser_pciefd.c
 +++ b/drivers/net/can/kvaser_pciefd.c
-@@ -1825,6 +1825,11 @@ static int kvaser_pciefd_probe(struct pc
- 	if (err)
- 		goto err_teardown_can_ctrls;
+@@ -71,10 +71,12 @@ MODULE_DESCRIPTION("CAN driver for Kvase
+ #define KVASER_PCIEFD_SYSID_BUILD_REG (KVASER_PCIEFD_SYSID_BASE + 0x14)
+ /* Shared receive buffer registers */
+ #define KVASER_PCIEFD_SRB_BASE 0x1f200
++#define KVASER_PCIEFD_SRB_FIFO_LAST_REG (KVASER_PCIEFD_SRB_BASE + 0x1f4)
+ #define KVASER_PCIEFD_SRB_CMD_REG (KVASER_PCIEFD_SRB_BASE + 0x200)
+ #define KVASER_PCIEFD_SRB_IEN_REG (KVASER_PCIEFD_SRB_BASE + 0x204)
+ #define KVASER_PCIEFD_SRB_IRQ_REG (KVASER_PCIEFD_SRB_BASE + 0x20c)
+ #define KVASER_PCIEFD_SRB_STAT_REG (KVASER_PCIEFD_SRB_BASE + 0x210)
++#define KVASER_PCIEFD_SRB_RX_NR_PACKETS_REG (KVASER_PCIEFD_SRB_BASE + 0x214)
+ #define KVASER_PCIEFD_SRB_CTRL_REG (KVASER_PCIEFD_SRB_BASE + 0x218)
+ /* EPCS flash controller registers */
+ #define KVASER_PCIEFD_SPI_BASE 0x1fc00
+@@ -111,6 +113,9 @@ MODULE_DESCRIPTION("CAN driver for Kvase
+ /* DMA support */
+ #define KVASER_PCIEFD_SRB_STAT_DMA BIT(24)
  
-+	err = request_irq(pcie->pci->irq, kvaser_pciefd_irq_handler,
-+			  IRQF_SHARED, KVASER_PCIEFD_DRV_NAME, pcie);
-+	if (err)
-+		goto err_teardown_can_ctrls;
++/* SRB current packet level */
++#define KVASER_PCIEFD_SRB_RX_NR_PACKETS_MASK 0xff
 +
- 	iowrite32(KVASER_PCIEFD_SRB_IRQ_DPD0 | KVASER_PCIEFD_SRB_IRQ_DPD1,
- 		  pcie->reg_base + KVASER_PCIEFD_SRB_IRQ_REG);
+ /* DMA Enable */
+ #define KVASER_PCIEFD_SRB_CTRL_DMA_ENABLE BIT(0)
  
-@@ -1845,11 +1850,6 @@ static int kvaser_pciefd_probe(struct pc
- 	iowrite32(KVASER_PCIEFD_SRB_CMD_RDB1,
+@@ -1059,6 +1064,7 @@ static int kvaser_pciefd_setup_dma(struc
+ {
+ 	int i;
+ 	u32 srb_status;
++	u32 srb_packet_count;
+ 	dma_addr_t dma_addr[KVASER_PCIEFD_DMA_COUNT];
+ 
+ 	/* Disable the DMA */
+@@ -1086,6 +1092,15 @@ static int kvaser_pciefd_setup_dma(struc
+ 		  KVASER_PCIEFD_SRB_CMD_RDB1,
  		  pcie->reg_base + KVASER_PCIEFD_SRB_CMD_REG);
  
--	err = request_irq(pcie->pci->irq, kvaser_pciefd_irq_handler,
--			  IRQF_SHARED, KVASER_PCIEFD_DRV_NAME, pcie);
--	if (err)
--		goto err_teardown_can_ctrls;
--
- 	err = kvaser_pciefd_reg_candev(pcie);
- 	if (err)
- 		goto err_free_irq;
++	/* Empty Rx FIFO */
++	srb_packet_count = ioread32(pcie->reg_base + KVASER_PCIEFD_SRB_RX_NR_PACKETS_REG) &
++			   KVASER_PCIEFD_SRB_RX_NR_PACKETS_MASK;
++	while (srb_packet_count) {
++		/* Drop current packet in FIFO */
++		ioread32(pcie->reg_base + KVASER_PCIEFD_SRB_FIFO_LAST_REG);
++		srb_packet_count--;
++	}
++
+ 	srb_status = ioread32(pcie->reg_base + KVASER_PCIEFD_SRB_STAT_REG);
+ 	if (!(srb_status & KVASER_PCIEFD_SRB_STAT_DI)) {
+ 		dev_err(&pcie->pci->dev, "DMA not idle before enabling\n");
 
 
