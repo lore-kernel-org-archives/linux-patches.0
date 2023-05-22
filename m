@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B091171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:20:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07A7FC433EF;
-	Mon, 22 May 2023 19:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3F2E171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:20:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33ECFC433D2;
+	Mon, 22 May 2023 19:20:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783206;
-	bh=U3P9dNwB8DV/Rop6FMzC5XzKUBQRzhwDijTCPCD82u0=;
+	s=korg; t=1684783209;
+	bh=yRgJpGevStmRT87ufU/JPvwH32xAzPu98ugr9mK0EJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+k2dTvxIKOHKZynMInSQIOMeXkOY9zEtDv6CFdDLqi+c6Rd07v+JM2jK4fD4PFTQ
-	 CGXQPquqnEIcmyyux9idQjLNe/sDBCXNjAITluB64PcR3P7PZcG0hDdZY8PNe6c5yf
-	 SS588GnMf6w2RcvKP9plxAT5c0ib/rq97BUisoVY=
+	b=hFALioNkjz0HZdAkVpjhSxhF18qrTYFSUBuZMRjY7jBkXX2UrSrfAzTZRVsUIxjfM
+	 qKjOso0FvkfXLmHpaAXrKM0swgFFF9UfoI85s1g08qAzAfPlX9+6qRqx/3h+2KrLBD
+	 rhMJiIRKOfhZPkqj3uYH+yNzlx6jPJzp9Ppfk6ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ai Chao <aichao@kylinos.cn>,
+	"Luke D. Jones" <luke@ljones.dev>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 173/203] ALSA: hda/realtek: Add a quirk for HP EliteDesk 805
-Date: Mon, 22 May 2023 20:09:57 +0100
-Message-Id: <20230522190359.783679359@linuxfoundation.org>
+Subject: [PATCH 5.15 174/203] ALSA: hda/realtek: Add quirk for 2nd ASUS GU603
+Date: Mon, 22 May 2023 20:09:58 +0100
+Message-Id: <20230522190359.811835872@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -34,15 +34,15 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ai Chao <aichao@kylinos.cn>
+From: Luke D. Jones <luke@ljones.dev>
 
-commit 90670ef774a8b6700c38ce1222e6aa263be54d5f upstream.
+commit a4671b7fba59775845ee60cfbdfc4ba64300211b upstream.
 
-Add a quirk for HP EliteDesk 805 to fixup ALC3867 headset MIC no sound.
+Add quirk for GU603 with 0x1c62 variant of codec.
 
-Signed-off-by: Ai Chao <aichao@kylinos.cn>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230506022653.2074343-1-aichao@kylinos.cn
+Link: https://lore.kernel.org/r/20230505235824.49607-2-luke@ljones.dev
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -51,13 +51,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -11246,6 +11246,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x103c, 0x1632, "HP RP5800", ALC662_FIXUP_HP_RP5800),
- 	SND_PCI_QUIRK(0x103c, 0x870c, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x8719, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
-+	SND_PCI_QUIRK(0x103c, 0x872b, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
- 	SND_PCI_QUIRK(0x103c, 0x873e, "HP", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x103c, 0x877e, "HP 288 Pro G6", ALC671_FIXUP_HP_HEADSET_MIC2),
- 	SND_PCI_QUIRK(0x103c, 0x885f, "HP 288 Pro G8", ALC671_FIXUP_HP_HEADSET_MIC2),
+@@ -9121,6 +9121,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1043, 0x1b13, "Asus U41SV", ALC269_FIXUP_INV_DMIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1bbd, "ASUS Z550MA", ALC255_FIXUP_ASUS_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1043, 0x1c23, "Asus X55U", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
++	SND_PCI_QUIRK(0x1043, 0x1c62, "ASUS GU603", ALC289_FIXUP_ASUS_GA401),
+ 	SND_PCI_QUIRK(0x1043, 0x1c92, "ASUS ROG Strix G15", ALC285_FIXUP_ASUS_G533Z_PINS),
+ 	SND_PCI_QUIRK(0x1043, 0x1ccd, "ASUS X555UB", ALC256_FIXUP_ASUS_MIC),
+ 	SND_PCI_QUIRK(0x1043, 0x1d42, "ASUS Zephyrus G14 2022", ALC289_FIXUP_ASUS_GA401),
 
 
