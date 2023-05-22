@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7B7171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D04C433EF;
-	Mon, 22 May 2023 19:41:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80151171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A6AC433D2;
+	Mon, 22 May 2023 19:41:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784506;
-	bh=7WQMsDnkLJaAHW6RZwpPou3kFutnRgwSnTU7HM1QZHY=;
+	s=korg; t=1684784509;
+	bh=m8VNee3bA+lgpiWAyRUMwnimPC/EadPMf/JdyNqFKu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GLHQI98761FAHg0NMkTIiUs4KhB2nFExAQpZorHiNOfZxJesf1H2VRXNhGR5ERdzo
-	 DWVXPsp8//2jv0j/qOdxxlUvsM1UjoHp94zMHA2NaiHe4nsgV9JwKXTaJeNGAZw5vE
-	 nlKkZoE3gszLmm6UT0iwxVOTR7p4DN7H2BjRRv3Q=
+	b=CPVVkTblP178B0tztuXwSnU8GI9ClkgtyGtOu5YHRXR9tpv3tqtnxHvnvKkdjdW3t
+	 n/KXs4qCrSXtPlqgcv6W72dX2plXMxTQzMi5yOeDxn9q7M6pjPAQRwzXy2Gv/aREoh
+	 KffMaOyxVYeJJ+yRfQc0mi6xtypVvpkcBcsRnzrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Forza <forza@tnonline.net>,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Eli Cohen <elic@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 104/364] scsi: target: iscsit: Free cmds before session free
-Date: Mon, 22 May 2023 20:06:49 +0100
-Message-Id: <20230522190415.360845252@linuxfoundation.org>
+Subject: [PATCH 6.3 105/364] lib: cpu_rmap: Avoid use after free on rmap->obj array entries
+Date: Mon, 22 May 2023 20:06:50 +0100
+Message-Id: <20230522190415.386190738@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -38,62 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Bogdanov <d.bogdanov@yadro.com>
+From: Eli Cohen <elic@nvidia.com>
 
-[ Upstream commit d8990b5a4d065f38f35d69bcd627ec5a7f8330ca ]
+[ Upstream commit 4e0473f1060aa49621d40a113afde24818101d37 ]
 
-Commands from recovery entries are freed after session has been closed.
-That leads to use-after-free at command free or NPE with such call trace:
+When calling irq_set_affinity_notifier() with NULL at the notify
+argument, it will cause freeing of the glue pointer in the
+corresponding array entry but will leave the pointer in the array. A
+subsequent call to free_irq_cpu_rmap() will try to free this entry again
+leading to possible use after free.
 
-Time2Retain timer expired for SID: 1, cleaning up iSCSI session.
-BUG: kernel NULL pointer dereference, address: 0000000000000140
-RIP: 0010:sbitmap_queue_clear+0x3a/0xa0
-Call Trace:
- target_release_cmd_kref+0xd1/0x1f0 [target_core_mod]
- transport_generic_free_cmd+0xd1/0x180 [target_core_mod]
- iscsit_free_cmd+0x53/0xd0 [iscsi_target_mod]
- iscsit_free_connection_recovery_entries+0x29d/0x320 [iscsi_target_mod]
- iscsit_close_session+0x13a/0x140 [iscsi_target_mod]
- iscsit_check_post_dataout+0x440/0x440 [iscsi_target_mod]
- call_timer_fn+0x24/0x140
+Fix that by setting NULL to the array entry and checking that we have
+non-zero at the array entry when iterating over the array in
+free_irq_cpu_rmap().
 
-Move cleanup of recovery enrties to before session freeing.
+The current code does not suffer from this since there are no cases
+where irq_set_affinity_notifier(irq, NULL) (note the NULL passed for the
+notify arg) is called, followed by a call to free_irq_cpu_rmap() so we
+don't hit and issue. Subsequent patches in this series excersize this
+flow, hence the required fix.
 
-Reported-by: Forza <forza@tnonline.net>
-Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20230319015620.96006-7-michael.christie@oracle.com
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Eli Cohen <elic@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ lib/cpu_rmap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index 3f7a9f7f5f4e3..07e196b44b91d 100644
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -4531,6 +4531,9 @@ int iscsit_close_session(struct iscsit_session *sess, bool can_sleep)
- 	iscsit_stop_time2retain_timer(sess);
- 	spin_unlock_bh(&se_tpg->session_lock);
+diff --git a/lib/cpu_rmap.c b/lib/cpu_rmap.c
+index f08d9c56f712e..e77f12bb3c774 100644
+--- a/lib/cpu_rmap.c
++++ b/lib/cpu_rmap.c
+@@ -232,7 +232,8 @@ void free_irq_cpu_rmap(struct cpu_rmap *rmap)
  
-+	if (sess->sess_ops->ErrorRecoveryLevel == 2)
-+		iscsit_free_connection_recovery_entries(sess);
-+
- 	/*
- 	 * transport_deregister_session_configfs() will clear the
- 	 * struct se_node_acl->nacl_sess pointer now as a iscsi_np process context
-@@ -4554,9 +4557,6 @@ int iscsit_close_session(struct iscsit_session *sess, bool can_sleep)
+ 	for (index = 0; index < rmap->used; index++) {
+ 		glue = rmap->obj[index];
+-		irq_set_affinity_notifier(glue->notify.irq, NULL);
++		if (glue)
++			irq_set_affinity_notifier(glue->notify.irq, NULL);
+ 	}
  
- 	transport_deregister_session(sess->se_sess);
+ 	cpu_rmap_put(rmap);
+@@ -268,6 +269,7 @@ static void irq_cpu_rmap_release(struct kref *ref)
+ 		container_of(ref, struct irq_glue, notify.kref);
  
--	if (sess->sess_ops->ErrorRecoveryLevel == 2)
--		iscsit_free_connection_recovery_entries(sess);
--
- 	iscsit_free_all_ooo_cmdsns(sess);
+ 	cpu_rmap_put(glue->rmap);
++	glue->rmap->obj[glue->index] = NULL;
+ 	kfree(glue);
+ }
  
- 	spin_lock_bh(&se_tpg->session_lock);
+@@ -297,6 +299,7 @@ int irq_cpu_rmap_add(struct cpu_rmap *rmap, int irq)
+ 	rc = irq_set_affinity_notifier(irq, &glue->notify);
+ 	if (rc) {
+ 		cpu_rmap_put(glue->rmap);
++		rmap->obj[glue->index] = NULL;
+ 		kfree(glue);
+ 	}
+ 	return rc;
 -- 
 2.39.2
 
