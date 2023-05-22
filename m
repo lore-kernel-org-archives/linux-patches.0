@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C26171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AAFC4339B;
-	Mon, 22 May 2023 19:45:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32823171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A45B4C433D2;
+	Mon, 22 May 2023 19:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784752;
-	bh=P5ivba9gumA2UcxGHtlpk95oKdDDDBgLq15B3cr2szc=;
+	s=korg; t=1684784756;
+	bh=GFvV4H6UtQV+xleEcEJFwS2n6yVdI+F/C7OarMmr8yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dtNGlspCfOVW3kVNabGhPX2EwaX6opj/foaY++Kilknjq1yQLTvS8i+NvfUFCSA7O
-	 69BmZSymt48mfDnh+/maxoKE3q11qeh+0ryxcTqYb66j31/1me4HzMUPVrOCiTvKAW
-	 7HjlkJM6gTuLCZV+B2X5dRypEuVL4E7Jn0rZngfk=
+	b=ZnzKop53PG2SvbHmvnXfuZqfFALqozDPn5YlYKVaBNodxiLrxTVo2dHj4Da8w5A/0
+	 5QqNkH3wSH8yT0DVtyO+fph646MTUNI24iPu18R+fpBYLA7sErvKDkF7oichL8Buyz
+	 51aNZyrVL6k31RdG6wewzPeACcvZypVA9929tksc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	weiliang1503 <weiliang1503@gmail.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 162/364] HID: Ignore battery for ELAN touchscreen on ROG Flow X13 GV301RA
-Date: Mon, 22 May 2023 20:07:47 +0100
-Message-Id: <20230522190416.787524852@linuxfoundation.org>
+Subject: [PATCH 6.3 163/364] HID: wacom: generic: Set battery quirk only when we see battery data
+Date: Mon, 22 May 2023 20:07:48 +0100
+Message-Id: <20230522190416.811307311@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,48 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: weiliang1503 <weiliang1503@gmail.com>
+From: Jason Gerecke <killertofu@gmail.com>
 
-[ Upstream commit 35903009dbde804a1565dc89e431c0f15179f054 ]
+[ Upstream commit bea407a427baa019758f29f4d31b26f008bb8cc6 ]
 
-Ignore the reported battery level of the built-in touchscreen to suppress
-battery warnings when a stylus is used. The device ID was added and the
-battery ignore quirk was enabled.
+Some devices will include battery status usages in the HID descriptor
+but we won't see that battery data for one reason or another. For example,
+AES sensors won't send battery data unless an AES pen is in proximity.
+If a user does not have an AES pen but instead only interacts with the
+AES touchscreen with their fingers then there is no need for us to create
+a battery object. Similarly, if a family of peripherals shares the same
+HID descriptor between wired-only and wireless-capable SKUs, users of the
+former may never see a battery event and will not want a power_supply
+object created.
 
-Signed-off-by: weiliang1503 <weiliang1503@gmail.com>
-Link: https://lore.kernel.org/r/20230330115638.16146-1-weiliang1503@gmail.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217062
+Link: https://gitlab.gnome.org/GNOME/gnome-control-center/-/issues/2354
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Tested-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h   | 1 +
- drivers/hid/hid-input.c | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/hid/wacom_wac.c | 33 +++++++++++----------------------
+ 1 file changed, 11 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index c2e9b6d1fd7d3..8f3e0a5d5f834 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -415,6 +415,7 @@
- #define I2C_DEVICE_ID_HP_SPECTRE_X360_15	0x2817
- #define I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG  0x29DF
- #define I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN 0x2BC8
-+#define I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN 0x2C82
- #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
- #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
- #define I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN	0x261A
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 5c65a584b3fa0..5a88866505eab 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -372,6 +372,8 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN),
- 	  HID_BATTERY_QUIRK_IGNORE },
-+	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN),
-+	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN),
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN),
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index 0c6a82c665c1d..d2f500242ed40 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1963,18 +1963,7 @@ static void wacom_map_usage(struct input_dev *input, struct hid_usage *usage,
+ static void wacom_wac_battery_usage_mapping(struct hid_device *hdev,
+ 		struct hid_field *field, struct hid_usage *usage)
+ {
+-	struct wacom *wacom = hid_get_drvdata(hdev);
+-	struct wacom_wac *wacom_wac = &wacom->wacom_wac;
+-	struct wacom_features *features = &wacom_wac->features;
+-	unsigned equivalent_usage = wacom_equivalent_usage(usage->hid);
+-
+-	switch (equivalent_usage) {
+-	case HID_DG_BATTERYSTRENGTH:
+-	case WACOM_HID_WD_BATTERY_LEVEL:
+-	case WACOM_HID_WD_BATTERY_CHARGING:
+-		features->quirks |= WACOM_QUIRK_BATTERY;
+-		break;
+-	}
++	return;
+ }
+ 
+ static void wacom_wac_battery_event(struct hid_device *hdev, struct hid_field *field,
+@@ -1995,18 +1984,21 @@ static void wacom_wac_battery_event(struct hid_device *hdev, struct hid_field *f
+ 			wacom_wac->hid_data.bat_connected = 1;
+ 			wacom_wac->hid_data.bat_status = WACOM_POWER_SUPPLY_STATUS_AUTO;
+ 		}
++		wacom_wac->features.quirks |= WACOM_QUIRK_BATTERY;
+ 		break;
+ 	case WACOM_HID_WD_BATTERY_LEVEL:
+ 		value = value * 100 / (field->logical_maximum - field->logical_minimum);
+ 		wacom_wac->hid_data.battery_capacity = value;
+ 		wacom_wac->hid_data.bat_connected = 1;
+ 		wacom_wac->hid_data.bat_status = WACOM_POWER_SUPPLY_STATUS_AUTO;
++		wacom_wac->features.quirks |= WACOM_QUIRK_BATTERY;
+ 		break;
+ 	case WACOM_HID_WD_BATTERY_CHARGING:
+ 		wacom_wac->hid_data.bat_charging = value;
+ 		wacom_wac->hid_data.ps_connected = value;
+ 		wacom_wac->hid_data.bat_connected = 1;
+ 		wacom_wac->hid_data.bat_status = WACOM_POWER_SUPPLY_STATUS_AUTO;
++		wacom_wac->features.quirks |= WACOM_QUIRK_BATTERY;
+ 		break;
+ 	}
+ }
+@@ -2022,18 +2014,15 @@ static void wacom_wac_battery_report(struct hid_device *hdev,
+ {
+ 	struct wacom *wacom = hid_get_drvdata(hdev);
+ 	struct wacom_wac *wacom_wac = &wacom->wacom_wac;
+-	struct wacom_features *features = &wacom_wac->features;
+ 
+-	if (features->quirks & WACOM_QUIRK_BATTERY) {
+-		int status = wacom_wac->hid_data.bat_status;
+-		int capacity = wacom_wac->hid_data.battery_capacity;
+-		bool charging = wacom_wac->hid_data.bat_charging;
+-		bool connected = wacom_wac->hid_data.bat_connected;
+-		bool powered = wacom_wac->hid_data.ps_connected;
++	int status = wacom_wac->hid_data.bat_status;
++	int capacity = wacom_wac->hid_data.battery_capacity;
++	bool charging = wacom_wac->hid_data.bat_charging;
++	bool connected = wacom_wac->hid_data.bat_connected;
++	bool powered = wacom_wac->hid_data.ps_connected;
+ 
+-		wacom_notify_battery(wacom_wac, status, capacity, charging,
+-				     connected, powered);
+-	}
++	wacom_notify_battery(wacom_wac, status, capacity, charging,
++			     connected, powered);
+ }
+ 
+ static void wacom_wac_pad_usage_mapping(struct hid_device *hdev,
 -- 
 2.39.2
 
