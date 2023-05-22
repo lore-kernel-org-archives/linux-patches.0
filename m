@@ -1,95 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FBB168AF
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 18:58:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17778C433EF;
-	Mon, 22 May 2023 18:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12916168B6
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:12:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660E2C4339B;
+	Mon, 22 May 2023 19:12:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684781926;
-	bh=A9BiorKEzoVHUnT2JtkigBVL2qLAn4Nit7bapPjzZ5U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mF9crdwvpFoTJMaShPm/o/AUtJeq+vNlOPALaAjKxYEiNsLbVp2BHLVTN+3hhFu2B
-	 97jLspIlMzb9m6jWNtblpIgBX4c89CqB6TE6GzZl6+rZYc+TJqhUHDgKAGaY9+k6rq
-	 SN13lW67hGKTVJ1UmCDss7IBp9c+wtYJN1r2GIk0=
-Date: Mon, 22 May 2023 19:58:44 +0100
+	s=korg; t=1684782757;
+	bh=fQH2TIwSsVeb4f8Ix4xJYBGztYhkHabBITxRGXHEXZE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Mg4Lue2Mu6d+WuXqaPG+23uL2x9BRfIorrH5UmHKYtR8yvu9OUYm+XMwUcJYlK6h8
+	 kFxW9DQO51cfxnswKFQQJaKYlBs6Ile53ogwvIZgDlDb2kEpc50mlbxl5F6qMdFpVd
+	 rIdQJFPnN1zp0P7huQYXe/UhbgElOvYk7wlSxoUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 000/381] 5.10.180-rc1 review
-Message-ID: <2023052235-doing-launch-c511@gregkh>
-References: <20230515161736.775969473@linuxfoundation.org>
- <ZGNJfAPd8eeVoCJ3@debian>
- <2023051711-thespian-sponsor-8878@gregkh>
- <CA+G9fYvw6HJopruUn4QKPCcqbdgw++AFf1wnwMP9hP1rJsmq3g@mail.gmail.com>
- <2023051704-catnip-vitality-d6cb@gregkh>
- <ZGUwiOkAc25BPi7M@debian>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Martin Kepplinger <martin.kepplinger@puri.sm>,
+	Saravana Kannan <saravanak@google.com>,
+	Maxime Ripard <maxime@cerno.tech>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/203] drm/mipi-dsi: Set the fwnode for mipi_dsi_device
+Date: Mon, 22 May 2023 20:07:05 +0100
+Message-Id: <20230522190354.976420832@linuxfoundation.org>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
+References: <20230522190354.935300867@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZGUwiOkAc25BPi7M@debian>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, May 17, 2023 at 08:52:40PM +0100, Sudip Mukherjee (Codethink) wrote:
-> On Wed, May 17, 2023 at 11:51:21AM +0200, Greg Kroah-Hartman wrote:
-> > On Wed, May 17, 2023 at 03:11:48PM +0530, Naresh Kamboju wrote:
-> > > On Wed, 17 May 2023 at 14:21, Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > > >
-> > > > On Tue, May 16, 2023 at 10:14:36AM +0100, Sudip Mukherjee (Codethink) wrote:
-> > > > > Hi Greg,
-> > > > >
-> > > > > On Mon, May 15, 2023 at 06:24:11PM +0200, Greg Kroah-Hartman wrote:
-> > > > > > This is the start of the stable review cycle for the 5.10.180 release.
-> > > > > > There are 381 patches in this series, all will be posted as a response
-> > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > let me know.
-> > > > >
-> > > > > Build test (gcc version 11.3.1 20230511):
-> > > > > mips: 63 configs -> no failure
-> > > > > arm: 104 configs -> no failure
-> > > > > arm64: 3 configs -> 1 failure
-> > > > > x86_64: 4 configs -> no failure
-> > > > > alpha allmodconfig -> no failure
-> > > > > powerpc allmodconfig -> no failure
-> > > > > riscv allmodconfig -> no failure
-> > > > > s390 allmodconfig -> no failure
-> > > > > xtensa allmodconfig -> no failure
-> > > > >
-> > > > > arm64 allmodconfig build fails with the error:
-> > > > >
-> > > > > /gcc/bin/aarch64-linux-ld: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.o: in function `__kvm_nvhe___kvm_tlb_flush_vmid_ipa':
-> > > > > (.hyp.text+0x1a4c): undefined reference to `__kvm_nvhe_memset'
-> > > > > /gcc/bin/aarch64-linux-ld: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.o: in function `__kvm_nvhe___kvm_tlb_flush_vmid':
-> > > > > (.hyp.text+0x1b20): undefined reference to `__kvm_nvhe_memset'
-> > > > > /gcc/bin/aarch64-linux-ld: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.o: in function `__kvm_nvhe___kvm_flush_cpu_context':
-> > > > > (.hyp.text+0x1b80): undefined reference to `__kvm_nvhe_memset'
-> > > >
-> > > > That's odd, I don't see that symbol anywhere in the tree at all.
-> > > >
-> > > > And the only arm-related kvm changes don't have those symbols either
-> > > > (the other kvm changes are x86-only)
-> > > >
-> > > > Also, no one else has seen this issue.  Can you bisect?
-> > > 
-> > > This is an old issue,
-> > > Many other reported long back [1]
-> > > 
-> > > [1] https://lore.kernel.org/stable/CADYN=9KSKQx816id-zWepV-E3ozph3k2_i9Rhs6QseFv0hkPfg@mail.gmail.com/
-> > 
-> > Then maybe someone should submit it properly for inclusion?
-> 
-> Attached the backported patch. Also verified that my build failure is fixed with it.
+From: Saravana Kannan <saravanak@google.com>
 
-Thanks, now queued up.
+[ Upstream commit a26cc2934331b57b5a7164bff344f0a2ec245fc0 ]
 
-greg k-h
+After commit 3fb16866b51d ("driver core: fw_devlink: Make cycle
+detection more robust"), fw_devlink prints an error when consumer
+devices don't have their fwnode set. This used to be ignored silently.
+
+Set the fwnode mipi_dsi_device so fw_devlink can find them and properly
+track their dependencies.
+
+This fixes errors like this:
+[    0.334054] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with regulator-lcd-1v8
+[    0.346964] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with backlight-dsi
+
+Reported-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+Link: https://lore.kernel.org/lkml/2a8e407f4f18c9350f8629a2b5fa18673355b2ae.camel@puri.sm/
+Fixes: 068a00233969 ("drm: Add MIPI DSI bus support")
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+Link: https://lore.kernel.org/r/20230310063910.2474472-1-saravanak@google.com
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/drm_mipi_dsi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+index 19fb1d93a4f07..0c806e99e8690 100644
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -221,7 +221,7 @@ mipi_dsi_device_register_full(struct mipi_dsi_host *host,
+ 		return dsi;
+ 	}
+ 
+-	dsi->dev.of_node = info->node;
++	device_set_node(&dsi->dev, of_fwnode_handle(info->node));
+ 	dsi->channel = info->channel;
+ 	strlcpy(dsi->name, info->type, sizeof(dsi->name));
+ 
+-- 
+2.39.2
+
+
+
