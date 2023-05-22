@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4688171A9;
-	Mon, 22 May 2023 19:40:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77FAC433D2;
-	Mon, 22 May 2023 19:40:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF748171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:40:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B33EC4339B;
+	Mon, 22 May 2023 19:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784454;
-	bh=Wn4gTbf57LwpDRCHeR+QJZofpS9uoSncq21OSvW/Kd4=;
+	s=korg; t=1684784457;
+	bh=tU2yWWf+fXit+lYbclQs/l+cPlES+3C5m/4vEUaCOCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHEH9taE3lJmhj9U0bSKgsT5arEEFbtaSyZ1W8xhjlo1iMHWbEyTUVvctp6sd1afY
-	 YnR8Dpnvt/3qviHjDVRLsAUk41tPUPJB6jdM98PuWHn9DbmgaAMUEw0MlryWQWqgdB
-	 MPsBRbpJwhq9q/wCtXdrS6hj1LPbE344MeceZdcY=
+	b=RG/qM3oa6XJIhzOp0QhW/dKKN9WppFPau97Sbge6Qtnlu57rlvYs5c3HcoJHVl886
+	 11a+YJG6eIhbMM/FsjZuGFHGosOeUZdfoTEllhgryH7fpARRzIPzxg4K+yDNGKB08U
+	 31t/79FLVvItW4sj0ctxAN8ND679Nt9hUu5Y+7NQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalle Valo <kvalo@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	linux-wireless@vger.kernel.org,
-	netdev@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
+	Ramya Gnanasekar <quic_rgnanase@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 088/364] wifi: ath: Silence memcpy run-time false positive warning
-Date: Mon, 22 May 2023 20:06:33 +0100
-Message-Id: <20230522190414.956248682@linuxfoundation.org>
+Subject: [PATCH 6.3 089/364] wifi: ath12k: Handle lock during peer_id find
+Date: Mon, 22 May 2023 20:06:34 +0100
+Message-Id: <20230522190414.979689730@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -42,71 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Ramya Gnanasekar <quic_rgnanase@quicinc.com>
 
-[ Upstream commit bfcc8ba45eb87bfaaff900bbad2b87b204899d41 ]
+[ Upstream commit 95a389e2ff3212d866cc51c77d682d2934074eb8 ]
 
-The memcpy() in ath_key_config() was attempting to write across
-neighboring struct members in struct ath_keyval. Introduce a wrapping
-struct_group, kv_values, to be the addressable target of the memcpy
-without overflowing an individual member. Silences the false positive
-run-time warning:
+ath12k_peer_find_by_id() requires that the caller hold the
+ab->base_lock. Currently the WBM error path does not hold
+the lock and calling that function, leads to the
+following lockdep_assert()in QCN9274:
 
-  memcpy: detected field-spanning write (size 32) of single field "hk.kv_val" at drivers/net/wireless/ath/key.c:506 (size 16)
+[105162.160893] ------------[ cut here ]------------
+[105162.160916] WARNING: CPU: 3 PID: 0 at drivers/net/wireless/ath/ath12k/peer.c:71 ath12k_peer_find_by_id+0x52/0x60 [ath12k]
+[105162.160933] Modules linked in: ath12k(O) qrtr_mhi qrtr mac80211 cfg80211 mhi qmi_helpers libarc4 nvme nvme_core [last unloaded: ath12k(O)]
+[105162.160967] CPU: 3 PID: 0 Comm: swapper/3 Tainted: G        W  O       6.1.0-rc2+ #3
+[105162.160972] Hardware name: Intel(R) Client Systems NUC8i7HVK/NUC8i7HVB, BIOS HNKBLi70.86A.0056.2019.0506.1527 05/06/2019
+[105162.160977] RIP: 0010:ath12k_peer_find_by_id+0x52/0x60 [ath12k]
+[105162.160990] Code: 07 eb 0f 39 68 24 74 0a 48 8b 00 48 39 f8 75 f3 31 c0 5b 5d c3 48 8d bf b0 f2 00 00 be ff ff ff ff e8 22 20 c4 e2 85 c0 75 bf <0f> 0b eb bb 66 2e 0f 1f 84 00 00 00 00 00 41 54 4c 8d a7 98 f2 00
+[105162.160996] RSP: 0018:ffffa223001acc60 EFLAGS: 00010246
+[105162.161003] RAX: 0000000000000000 RBX: ffff9f0573940000 RCX: 0000000000000000
+[105162.161008] RDX: 0000000000000001 RSI: ffffffffa3951c8e RDI: ffffffffa39a96d7
+[105162.161013] RBP: 000000000000000a R08: 0000000000000000 R09: 0000000000000000
+[105162.161017] R10: ffffa223001acb40 R11: ffffffffa3d57c60 R12: ffff9f057394f2e0
+[105162.161022] R13: ffff9f0573940000 R14: ffff9f04ecd659c0 R15: ffff9f04d5a9b040
+[105162.161026] FS:  0000000000000000(0000) GS:ffff9f0575600000(0000) knlGS:0000000000000000
+[105162.161031] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[105162.161036] CR2: 00001d5c8277a008 CR3: 00000001e6224006 CR4: 00000000003706e0
+[105162.161041] Call Trace:
+[105162.161046]  <IRQ>
+[105162.161051]  ath12k_dp_rx_process_wbm_err+0x6da/0xaf0 [ath12k]
+[105162.161072]  ? ath12k_dp_rx_process_err+0x80e/0x15a0 [ath12k]
+[105162.161084]  ? __lock_acquire+0x4ca/0x1a60
+[105162.161104]  ath12k_dp_service_srng+0x263/0x310 [ath12k]
+[105162.161120]  ath12k_pci_ext_grp_napi_poll+0x1c/0x70 [ath12k]
+[105162.161133]  __napi_poll+0x22/0x260
+[105162.161141]  net_rx_action+0x2f8/0x380
+[105162.161153]  __do_softirq+0xd0/0x4c9
+[105162.161162]  irq_exit_rcu+0x88/0xe0
+[105162.161169]  common_interrupt+0xa5/0xc0
+[105162.161174]  </IRQ>
+[105162.161179]  <TASK>
+[105162.161184]  asm_common_interrupt+0x22/0x40
 
-Link: https://bbs.archlinux.org/viewtopic.php?id=282254
-Cc: Kalle Valo <kvalo@kernel.org>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: linux-wireless@vger.kernel.org
-Cc: netdev@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Handle spin lock/unlock in WBM error path to hold the necessary lock
+expected by ath12k_peer_find_by_id().
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0-03171-QCAHKSWPL_SILICONZ-1
+
+Signed-off-by: Ramya Gnanasekar <quic_rgnanase@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230210054310.never.554-kees@kernel.org
+Link: https://lore.kernel.org/r/20230122014936.3594-1-quic_rgnanase@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath.h | 12 +++++++-----
- drivers/net/wireless/ath/key.c |  2 +-
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath.h b/drivers/net/wireless/ath/ath.h
-index f083fb9038c36..f02a308a9ffc5 100644
---- a/drivers/net/wireless/ath/ath.h
-+++ b/drivers/net/wireless/ath/ath.h
-@@ -96,11 +96,13 @@ struct ath_keyval {
- 	u8 kv_type;
- 	u8 kv_pad;
- 	u16 kv_len;
--	u8 kv_val[16]; /* TK */
--	u8 kv_mic[8]; /* Michael MIC key */
--	u8 kv_txmic[8]; /* Michael MIC TX key (used only if the hardware
--			 * supports both MIC keys in the same key cache entry;
--			 * in that case, kv_mic is the RX key) */
-+	struct_group(kv_values,
-+		u8 kv_val[16]; /* TK */
-+		u8 kv_mic[8]; /* Michael MIC key */
-+		u8 kv_txmic[8]; /* Michael MIC TX key (used only if the hardware
-+				 * supports both MIC keys in the same key cache entry;
-+				 * in that case, kv_mic is the RX key) */
-+	);
- };
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 83a43ad48c512..de9a4ca66c664 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -3494,11 +3494,14 @@ static int ath12k_dp_rx_h_null_q_desc(struct ath12k *ar, struct sk_buff *msdu,
+ 	msdu_len = ath12k_dp_rx_h_msdu_len(ab, desc);
+ 	peer_id = ath12k_dp_rx_h_peer_id(ab, desc);
  
- enum ath_cipher {
-diff --git a/drivers/net/wireless/ath/key.c b/drivers/net/wireless/ath/key.c
-index 61b59a804e308..b7b61d4f02bae 100644
---- a/drivers/net/wireless/ath/key.c
-+++ b/drivers/net/wireless/ath/key.c
-@@ -503,7 +503,7 @@ int ath_key_config(struct ath_common *common,
++	spin_lock(&ab->base_lock);
+ 	if (!ath12k_peer_find_by_id(ab, peer_id)) {
++		spin_unlock(&ab->base_lock);
+ 		ath12k_dbg(ab, ATH12K_DBG_DATA, "invalid peer id received in wbm err pkt%d\n",
+ 			   peer_id);
+ 		return -EINVAL;
+ 	}
++	spin_unlock(&ab->base_lock);
  
- 	hk.kv_len = key->keylen;
- 	if (key->keylen)
--		memcpy(hk.kv_val, key->key, key->keylen);
-+		memcpy(&hk.kv_values, key->key, key->keylen);
- 
- 	if (!(key->flags & IEEE80211_KEY_FLAG_PAIRWISE)) {
- 		switch (vif->type) {
+ 	if (!rxcb->is_frag && ((msdu_len + hal_rx_desc_sz) > DP_RX_BUFFER_SIZE)) {
+ 		/* First buffer will be freed by the caller, so deduct it's length */
 -- 
 2.39.2
 
