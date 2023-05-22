@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD809171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:37:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 492BFC433D2;
-	Mon, 22 May 2023 19:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F1E7171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:37:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C79C433D2;
+	Mon, 22 May 2023 19:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784249;
-	bh=NUXAdrRRJjntRHz1LipXAnNBW5mZ5HlULv67EdzbuTc=;
+	s=korg; t=1684784252;
+	bh=bpNz9U5KwDqt6mylltlHsYFDuW8G6eZ94IPs7OcLcbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KVec6wIOgn/o/QRRz5q0CaoX+KvY+4M43fsZ+OsLnidyMLxCRWyCG5+eSbjH8m+bJ
-	 02SAW3G4SNNR1BXB+IQklD08qjqu2LlRrXHiCn74h8GOiCe5Kh+D+vms99k6uVNi+z
-	 tQQ/Ca4hK9pgSsk3psv4vNJhwPN55amIu3QBYUeU=
+	b=FYJ7qJfbKk6+8x/UmfHOgqfVAYBXF3wdLwOfzAgq5ktP69kX2K7zj+41X++KaYgRh
+	 H7DMhBTHxnDt8cBw0DshDiOBZhkeVeRzRqrSdalsjnF5+7oMFp3SBfZeDU2wojaztn
+	 jP3zqDAPtetqnE1RJdLMXgtoQiePaiLCYDrXIK0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre Asselin <pa@panix.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 002/364] firmware/sysfb: Fix VESA format selection
-Date: Mon, 22 May 2023 20:05:07 +0100
-Message-Id: <20230522190412.867341075@linuxfoundation.org>
+Subject: [PATCH 6.3 020/364] net: annotate sk->sk_err write from do_recvmmsg()
+Date: Mon, 22 May 2023 20:05:25 +0100
+Message-Id: <20230522190413.334627371@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,59 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre Asselin <pa@panix.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1b617bc93178912fa36f87a957c15d1f1708c299 ]
+[ Upstream commit e05a5f510f26607616fecdd4ac136310c8bea56b ]
 
-Some legacy BIOSes report no reserved bits in their 32-bit rgb mode,
-breaking the calculation of bits_per_pixel in  commit f35cd3fa7729
-("firmware/sysfb: Fix EFI/VESA format selection").  However they report
-lfb_depth correctly for those modes.  Keep the computation but
-set bits_per_pixel to lfb_depth if the latter is larger.
+do_recvmmsg() can write to sk->sk_err from multiple threads.
 
-v2 fixes the warnings from a max3() macro with arguments of different
-types;  split the bits_per_pixel assignment to avoid uglyfing the code
-with too many typecasts.
+As said before, many other points reading or writing sk_err
+need annotations.
 
-v3 fixes space and formatting blips pointed out by Javier, and change
-the bit_per_pixel assignment back to a single statement using two casts.
-
-v4 go back to v2 and use max_t()
-
-Signed-off-by: Pierre Asselin <pa@panix.com>
-Fixes: f35cd3fa7729 ("firmware/sysfb: Fix EFI/VESA format selection")
-Link: https://lore.kernel.org/r/4Psm6B6Lqkz1QXM@panix3.panix.com
-Link: https://lore.kernel.org/r/20230412150225.3757223-1-javierm@redhat.com
-Tested-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230419044834.10816-1-pa@panix.com
+Fixes: 34b88a68f26a ("net: Fix use after free in the recvmmsg exit path")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/sysfb_simplefb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/socket.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/sysfb_simplefb.c b/drivers/firmware/sysfb_simplefb.c
-index 82c64cb9f5316..74363ed7501f6 100644
---- a/drivers/firmware/sysfb_simplefb.c
-+++ b/drivers/firmware/sysfb_simplefb.c
-@@ -51,7 +51,8 @@ __init bool sysfb_parse_mode(const struct screen_info *si,
- 	 *
- 	 * It's not easily possible to fix this in struct screen_info,
- 	 * as this could break UAPI. The best solution is to compute
--	 * bits_per_pixel here and ignore lfb_depth. In the loop below,
-+	 * bits_per_pixel from the color bits, reserved bits and
-+	 * reported lfb_depth, whichever is highest.  In the loop below,
- 	 * ignore simplefb formats with alpha bits, as EFI and VESA
- 	 * don't specify alpha channels.
- 	 */
-@@ -60,6 +61,7 @@ __init bool sysfb_parse_mode(const struct screen_info *si,
- 					  si->green_size + si->green_pos,
- 					  si->blue_size + si->blue_pos),
- 				     si->rsvd_size + si->rsvd_pos);
-+		bits_per_pixel = max_t(u32, bits_per_pixel, si->lfb_depth);
- 	} else {
- 		bits_per_pixel = si->lfb_depth;
+diff --git a/net/socket.c b/net/socket.c
+index 9c92c0e6c4da8..263fab8e49010 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -2909,7 +2909,7 @@ static int do_recvmmsg(int fd, struct mmsghdr __user *mmsg,
+ 		 * error to return on the next call or if the
+ 		 * app asks about it using getsockopt(SO_ERROR).
+ 		 */
+-		sock->sk->sk_err = -err;
++		WRITE_ONCE(sock->sk->sk_err, -err);
  	}
+ out_put:
+ 	fput_light(sock->file, fput_needed);
 -- 
 2.39.2
 
