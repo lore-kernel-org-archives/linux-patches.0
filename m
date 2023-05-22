@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1A6171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:48:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39C2DC433EF;
-	Mon, 22 May 2023 19:48:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710D1171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:48:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4BFC4339B;
+	Mon, 22 May 2023 19:48:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784921;
-	bh=wvYOVRFexBBDRA9VHdTVEVhGxWLIx++LZGxP1FpRQrs=;
+	s=korg; t=1684784924;
+	bh=Rj41/VQ+ui3LKRW+aOgx1qgoHAIEjwGLYVmkZLOSOUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQy8dA7DMY5An+Fdv8n/qYP2xPn7qxOXUkpWi4OcPAV8u1rqI3cA1iMTQ9K6clWm7
-	 WWe23CjELs5IvvZNLwRW/KXb3L714UxlOYxXLkoGo3tQR4kCXvgHwcSdzVygUIq5qU
-	 7pBle1A3KsEUuTv0geTLrghNpr27WiWfZ8xiLgg0=
+	b=sZi4BYDsRHJtwl7Bw86f5+DOgxEt+/4cJRIJep+lniJRsb0fsKqHqgUt5yAgrOx4e
+	 hHRV/F8kHuq8wiKPCKP9X/5oeWUDbZAP+DZx1/g2yuhNrhwB42WbHfP4nOmQRbt9gR
+	 DKAh5fT7I5xFDez7ZuH+E0IBYidHK1t0KVo3v9aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	pinkperfect2021@gmail.com,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 246/364] SUNRPC: double free xprt_ctxt while still in use
-Date: Mon, 22 May 2023 20:09:11 +0100
-Message-Id: <20230522190418.847007571@linuxfoundation.org>
+Subject: [PATCH 6.3 220/364] drm/msm: Fix submit error-path leaks
+Date: Mon, 22 May 2023 20:08:45 +0100
+Message-Id: <20230522190418.207898693@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,56 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: NeilBrown <neilb@suse.de>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit eb8d3a2c809abd73ab0a060fe971d6b9019aa3c1 ]
+[ Upstream commit 68dc6c2d5eec45515855cce99256162f45651a0b ]
 
-When an RPC request is deferred, the rq_xprt_ctxt pointer is moved out
-of the svc_rqst into the svc_deferred_req.
-When the deferred request is revisited, the pointer is copied into
-the new svc_rqst - and also remains in the svc_deferred_req.
+For errors after msm_submitqueue_get(), we need to drop the submitqueue
+reference.  Additionally after get_unused_fd() we need to drop the fd.
+The ordering for dropping the queue lock and put_unused_fd() is not
+important, so just move this all into out_post_unlock.
 
-In the (rare?) case that the request is deferred a second time, the old
-svc_deferred_req is reused - it still has all the correct content.
-However in that case the rq_xprt_ctxt pointer is NOT cleared so that
-when xpo_release_xprt is called, the ctxt is freed (UDP) or possible
-added to a free list (RDMA).
-When the deferred request is revisited for a second time, it will
-reference this ctxt which may be invalid, and the free the object a
-second time which is likely to oops.
+v2: Only drop queue ref if submit doesn't take it
+v3: Fix unitialized submit ref in error path
+v4: IS_ERR_OR_NULL()
 
-So change svc_defer() to *always* clear rq_xprt_ctxt, and assert that
-the value is now stored in the svc_deferred_req.
-
-Fixes: 773f91b2cf3f ("SUNRPC: Fix NFSD's request deferral on RDMA transports")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Reported-by: pinkperfect2021@gmail.com
+Fixes: f0de40a131d9 drm/msm: ("Reorder lock vs submit alloc")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/536073/
+Link: https://lore.kernel.org/r/20230509203041.440619-1-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svc_xprt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/net/sunrpc/svc_xprt.c b/net/sunrpc/svc_xprt.c
-index ba629297da4e2..feab34db870fe 100644
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -1224,13 +1224,14 @@ static struct cache_deferred_req *svc_defer(struct cache_req *req)
- 		dr->daddr = rqstp->rq_daddr;
- 		dr->argslen = rqstp->rq_arg.len >> 2;
- 		dr->xprt_ctxt = rqstp->rq_xprt_ctxt;
--		rqstp->rq_xprt_ctxt = NULL;
- 
- 		/* back up head to the start of the buffer and copy */
- 		skip = rqstp->rq_arg.len - rqstp->rq_arg.head[0].iov_len;
- 		memcpy(dr->args, rqstp->rq_arg.head[0].iov_base - skip,
- 		       dr->argslen << 2);
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index ac8ed731f76d9..842dbf96af291 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -719,7 +719,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct drm_msm_gem_submit *args = data;
+ 	struct msm_file_private *ctx = file->driver_priv;
+-	struct msm_gem_submit *submit;
++	struct msm_gem_submit *submit = NULL;
+ 	struct msm_gpu *gpu = priv->gpu;
+ 	struct msm_gpu_submitqueue *queue;
+ 	struct msm_ringbuffer *ring;
+@@ -766,13 +766,15 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 		out_fence_fd = get_unused_fd_flags(O_CLOEXEC);
+ 		if (out_fence_fd < 0) {
+ 			ret = out_fence_fd;
+-			return ret;
++			goto out_post_unlock;
+ 		}
  	}
-+	WARN_ON_ONCE(rqstp->rq_xprt_ctxt != dr->xprt_ctxt);
-+	rqstp->rq_xprt_ctxt = NULL;
- 	trace_svc_defer(rqstp);
- 	svc_xprt_get(rqstp->rq_xprt);
- 	dr->xprt = rqstp->rq_xprt;
+ 
+ 	submit = submit_create(dev, gpu, queue, args->nr_bos, args->nr_cmds);
+-	if (IS_ERR(submit))
+-		return PTR_ERR(submit);
++	if (IS_ERR(submit)) {
++		ret = PTR_ERR(submit);
++		goto out_post_unlock;
++	}
+ 
+ 	trace_msm_gpu_submit(pid_nr(submit->pid), ring->id, submit->ident,
+ 		args->nr_bos, args->nr_cmds);
+@@ -955,11 +957,20 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	if (has_ww_ticket)
+ 		ww_acquire_fini(&submit->ticket);
+ out_unlock:
+-	if (ret && (out_fence_fd >= 0))
+-		put_unused_fd(out_fence_fd);
+ 	mutex_unlock(&queue->lock);
+ out_post_unlock:
+-	msm_gem_submit_put(submit);
++	if (ret && (out_fence_fd >= 0))
++		put_unused_fd(out_fence_fd);
++
++	if (!IS_ERR_OR_NULL(submit)) {
++		msm_gem_submit_put(submit);
++	} else {
++		/*
++		 * If the submit hasn't yet taken ownership of the queue
++		 * then we need to drop the reference ourself:
++		 */
++		msm_submitqueue_put(queue);
++	}
+ 	if (!IS_ERR_OR_NULL(post_deps)) {
+ 		for (i = 0; i < args->nr_out_syncobjs; ++i) {
+ 			kfree(post_deps[i].chain);
 -- 
 2.39.2
 
