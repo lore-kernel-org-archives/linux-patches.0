@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808FB171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:14:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF0AC433EF;
-	Mon, 22 May 2023 19:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB63171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:14:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDBFC433D2;
+	Mon, 22 May 2023 19:14:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782894;
-	bh=FVGeJdPlv4hjJDz3BId893dBH5exQXoy0bO+inVEjGU=;
+	s=korg; t=1684782896;
+	bh=xJXBcgUnd5vrRPz+Y0Go/fGdPMdNfqjXnp5FMDtMFx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9RPKMccxtx0zWDfWSpvG17iuIxYFgR9aeOBAaZd4em/H2Hu2Gb4MSpLKzsEpECJ1
-	 6g+PfbGZ+aolCIXfShyZkI0lBXvgBA/8yLogu2DIUGifo5B5on52bNQDfCD2h5C8Z8
-	 0nIfxLF0tgPg6xg6ccElB6CNJYk4oQQD9YkLpMqQ=
+	b=CDxryScGrqUvnICHfolt21dHlfgpNKm/+G3AR3JT4upOje0rmJdr7w+rONO03JcmS
+	 lJLpFG0zkcZV6J0AuSSUmkInYXg+QUouksZbnChKtvZV/mExIKLRWONLOr0K68PPan
+	 3x1QeNwvDUVfVjH/AHEdYwaW0v6FtGCTgBkbA/5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>,
+	Forza <forza@tnonline.net>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/203] ext4: dont clear SB_RDONLY when remounting r/w until quota is re-enabled
-Date: Mon, 22 May 2023 20:07:30 +0100
-Message-Id: <20230522190355.686982119@linuxfoundation.org>
+Subject: [PATCH 5.15 057/203] scsi: target: iscsit: Free cmds before session free
+Date: Mon, 22 May 2023 20:08:01 +0100
+Message-Id: <20230522190356.573945223@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,74 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Dmitry Bogdanov <d.bogdanov@yadro.com>
 
-[ Upstream commit a44be64bbecb15a452496f60db6eacfee2b59c79 ]
+[ Upstream commit d8990b5a4d065f38f35d69bcd627ec5a7f8330ca ]
 
-When a file system currently mounted read/only is remounted
-read/write, if we clear the SB_RDONLY flag too early, before the quota
-is initialized, and there is another process/thread constantly
-attempting to create a directory, it's possible to trigger the
+Commands from recovery entries are freed after session has been closed.
+That leads to use-after-free at command free or NPE with such call trace:
 
-	WARN_ON_ONCE(dquot_initialize_needed(inode));
+Time2Retain timer expired for SID: 1, cleaning up iSCSI session.
+BUG: kernel NULL pointer dereference, address: 0000000000000140
+RIP: 0010:sbitmap_queue_clear+0x3a/0xa0
+Call Trace:
+ target_release_cmd_kref+0xd1/0x1f0 [target_core_mod]
+ transport_generic_free_cmd+0xd1/0x180 [target_core_mod]
+ iscsit_free_cmd+0x53/0xd0 [iscsi_target_mod]
+ iscsit_free_connection_recovery_entries+0x29d/0x320 [iscsi_target_mod]
+ iscsit_close_session+0x13a/0x140 [iscsi_target_mod]
+ iscsit_check_post_dataout+0x440/0x440 [iscsi_target_mod]
+ call_timer_fn+0x24/0x140
 
-in ext4_xattr_block_set(), with the following stack trace:
+Move cleanup of recovery enrties to before session freeing.
 
-   WARNING: CPU: 0 PID: 5338 at fs/ext4/xattr.c:2141 ext4_xattr_block_set+0x2ef2/0x3680
-   RIP: 0010:ext4_xattr_block_set+0x2ef2/0x3680 fs/ext4/xattr.c:2141
-   Call Trace:
-    ext4_xattr_set_handle+0xcd4/0x15c0 fs/ext4/xattr.c:2458
-    ext4_initxattrs+0xa3/0x110 fs/ext4/xattr_security.c:44
-    security_inode_init_security+0x2df/0x3f0 security/security.c:1147
-    __ext4_new_inode+0x347e/0x43d0 fs/ext4/ialloc.c:1324
-    ext4_mkdir+0x425/0xce0 fs/ext4/namei.c:2992
-    vfs_mkdir+0x29d/0x450 fs/namei.c:4038
-    do_mkdirat+0x264/0x520 fs/namei.c:4061
-    __do_sys_mkdirat fs/namei.c:4076 [inline]
-    __se_sys_mkdirat fs/namei.c:4074 [inline]
-    __x64_sys_mkdirat+0x89/0xa0 fs/namei.c:4074
-
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230506142419.984260-1-tytso@mit.edu
-Reported-by: syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=6513f6cb5cd6b5fc9f37e3bb70d273b94be9c34c
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: Forza <forza@tnonline.net>
+Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-7-michael.christie@oracle.com
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index d062bad1384be..c527ec2b041fb 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5746,6 +5746,7 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 	struct ext4_mount_options old_opts;
- 	ext4_group_t g;
- 	int err = 0;
-+	int enable_rw = 0;
- #ifdef CONFIG_QUOTA
- 	int enable_quota = 0;
- 	int i, j;
-@@ -5946,7 +5947,7 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 			if (err)
- 				goto restore_opts;
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 9c6b98438f98f..686a9e5918e21 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4387,6 +4387,9 @@ int iscsit_close_session(struct iscsi_session *sess, bool can_sleep)
+ 	iscsit_stop_time2retain_timer(sess);
+ 	spin_unlock_bh(&se_tpg->session_lock);
  
--			sb->s_flags &= ~SB_RDONLY;
-+			enable_rw = 1;
- 			if (ext4_has_feature_mmp(sb)) {
- 				err = ext4_multi_mount_protect(sb,
- 						le64_to_cpu(es->s_mmp_block));
-@@ -6005,6 +6006,9 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 	if (!test_opt(sb, BLOCK_VALIDITY) && sbi->s_system_blks)
- 		ext4_release_system_zone(sb);
- 
-+	if (enable_rw)
-+		sb->s_flags &= ~SB_RDONLY;
++	if (sess->sess_ops->ErrorRecoveryLevel == 2)
++		iscsit_free_connection_recovery_entries(sess);
 +
- 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
- 		ext4_stop_mmpd(sbi);
+ 	/*
+ 	 * transport_deregister_session_configfs() will clear the
+ 	 * struct se_node_acl->nacl_sess pointer now as a iscsi_np process context
+@@ -4410,9 +4413,6 @@ int iscsit_close_session(struct iscsi_session *sess, bool can_sleep)
  
+ 	transport_deregister_session(sess->se_sess);
+ 
+-	if (sess->sess_ops->ErrorRecoveryLevel == 2)
+-		iscsit_free_connection_recovery_entries(sess);
+-
+ 	iscsit_free_all_ooo_cmdsns(sess);
+ 
+ 	spin_lock_bh(&se_tpg->session_lock);
 -- 
 2.39.2
 
