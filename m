@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A481F171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:43:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209A2C433EF;
-	Mon, 22 May 2023 19:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABD2171BA
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:43:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A504C433D2;
+	Mon, 22 May 2023 19:43:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784626;
-	bh=I2JutGAzKuWJAJo7y+0gfP6gmsAJsCg9iW5zsOlfjuQ=;
+	s=korg; t=1684784629;
+	bh=iqHnxB0a5D8XNdGhishRtWcJrx4X4FcFwoiryho7Jvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bR64g4oOedMLjvihBye6rX08SIMnlXNqhlMdq5pHahLuZcj9kAkUGaBFuwSEiqO8A
-	 A8NVY8GuIRoTTvsHNmzxID/NGdtXumV6rLGyfHnpGKoWgZGHULWXhhV91iXbU85lF6
-	 r2+Om5Piz2Wfwwbt+Q1fjdixorcAlKMNb093Pa90=
+	b=kPe4hSZVBhX+cUemjCarG1I+ZbfuGERpr5AOjXik/bAjqfFRF/GMcxmMfm2dggF+z
+	 pN4ySMrcjhhE11bXV1alIsPrQdiLJToxgh6Yyf7agAA4xreWRwbZg7KM3s7T8yBtYY
+	 AOfgVTJO5EYRIfoL02+aAOa8yg5opuBvYF/LeLls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Chou <max.chou@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Philipp Hortmann <philipp.g.hortmann@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 144/364] Bluetooth: btrtl: Add the support for RTL8851B
-Date: Mon, 22 May 2023 20:07:29 +0100
-Message-Id: <20230522190416.367142557@linuxfoundation.org>
+Subject: [PATCH 6.3 145/364] staging: rtl8192e: Replace macro RTL_PCI_DEVICE with PCI_DEVICE
+Date: Mon, 22 May 2023 20:07:30 +0100
+Message-Id: <20230522190416.389735437@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,141 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Chou <max.chou@realtek.com>
+From: Philipp Hortmann <philipp.g.hortmann@gmail.com>
 
-[ Upstream commit 7948fe1c92d92313eea5453f83deb7f0141355e8 ]
+[ Upstream commit fda2093860df4812d69052a8cf4997e53853a340 ]
 
-Add the support for RTL8851B BT controller on USB interface.
-The necessary firmware will be submitted to linux-firmware project.
+Replace macro RTL_PCI_DEVICE with PCI_DEVICE to get rid of rtl819xp_ops
+which is empty.
 
-Note that the Bluetooth devices WITH the VID=0x0bda would be set the
-feature quirk in btrtl_setup_realtek(). It's able to ignore the
-feature flag set for the specific VID and PID in blacklist_table[] of
-btusb.c. (check [1])
-
-If Realtek Bluetooth chips WITHOUT the VID=0x0bda, it shall be added
-the feature flag for the specific VID and PID in blacklist_table[] of
-btusb.c. (check [2])
-
-[1] '9ab9235fe5cf ("Bluetooth: btrtl: Enable WBS for the specific
-    Realtek devices")'
-[2] '73280f13c9bb ("Bluetooth: btusb: Add the more support IDs for
-    Realtek RTL8822CE")'
-
-The device info from /sys/kernel/debug/usb/devices as below.
-
-T:  Bus=03 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 33 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0bda ProdID=b851 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=802.11ax WLAN Adapter
-S:  SerialNumber=00E04C885A01
-C:* #Ifs= 3 Cfg#= 1 Atr=80 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=e0(wlcon) Sub=01 Prot=01
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-I:* If#= 2 Alt= 0 #EPs= 8 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=09(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0a(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0b(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=0c(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Max Chou <max.chou@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Philipp Hortmann <philipp.g.hortmann@gmail.com>
+Link: https://lore.kernel.org/r/8b45ee783fa91196b7c9d6fc840a189496afd2f4.1677133271.git.philipp.g.hortmann@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btrtl.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/staging/rtl8192e/rtl8192e/rtl_core.c | 6 +++---
+ drivers/staging/rtl8192e/rtl8192e/rtl_core.h | 5 -----
+ 2 files changed, 3 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/bluetooth/btrtl.c b/drivers/bluetooth/btrtl.c
-index 7061621faeb0c..4fbb282cac4b5 100644
---- a/drivers/bluetooth/btrtl.c
-+++ b/drivers/bluetooth/btrtl.c
-@@ -28,6 +28,7 @@
- #define RTL_ROM_LMP_8761A	0x8761
- #define RTL_ROM_LMP_8822B	0x8822
- #define RTL_ROM_LMP_8852A	0x8852
-+#define RTL_ROM_LMP_8851B	0x8851
- #define RTL_CONFIG_MAGIC	0x8723ab55
- 
- #define IC_MATCH_FL_LMPSUBV	(1 << 0)
-@@ -56,6 +57,7 @@ enum btrtl_chip_id {
- 	CHIP_ID_8852A = 18,
- 	CHIP_ID_8852B = 20,
- 	CHIP_ID_8852C = 25,
-+	CHIP_ID_8851B = 36,
+diff --git a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
+index 72d76dc7df781..92552ce30cd58 100644
+--- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
++++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
+@@ -48,9 +48,9 @@ static const struct rtl819x_ops rtl819xp_ops = {
  };
  
- struct id_table {
-@@ -244,6 +246,14 @@ static const struct id_table ic_id_table[] = {
- 	  .has_msft_ext = true,
- 	  .fw_name  = "rtl_bt/rtl8852cu_fw.bin",
- 	  .cfg_name = "rtl_bt/rtl8852cu_config" },
-+
-+	/* 8851B */
-+	{ IC_INFO(RTL_ROM_LMP_8851B, 0xb, 0xc, HCI_USB),
-+	  .config_needed = false,
-+	  .has_rom_version = true,
-+	  .has_msft_ext = false,
-+	  .fw_name  = "rtl_bt/rtl8851bu_fw.bin",
-+	  .cfg_name = "rtl_bt/rtl8851bu_config" },
- 	};
+ static struct pci_device_id rtl8192_pci_id_tbl[] = {
+-	{RTL_PCI_DEVICE(0x10ec, 0x8192, rtl819xp_ops)},
+-	{RTL_PCI_DEVICE(0x07aa, 0x0044, rtl819xp_ops)},
+-	{RTL_PCI_DEVICE(0x07aa, 0x0047, rtl819xp_ops)},
++	{PCI_DEVICE(0x10ec, 0x8192)},
++	{PCI_DEVICE(0x07aa, 0x0044)},
++	{PCI_DEVICE(0x07aa, 0x0047)},
+ 	{}
+ };
  
- static const struct id_table *btrtl_match_ic(u16 lmp_subver, u16 hci_rev,
-@@ -359,6 +369,7 @@ static int rtlbt_parse_firmware(struct hci_dev *hdev,
- 		{ RTL_ROM_LMP_8852A, 18 },	/* 8852A */
- 		{ RTL_ROM_LMP_8852A, 20 },	/* 8852B */
- 		{ RTL_ROM_LMP_8852A, 25 },	/* 8852C */
-+		{ RTL_ROM_LMP_8851B, 36 },	/* 8851B */
- 	};
+diff --git a/drivers/staging/rtl8192e/rtl8192e/rtl_core.h b/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
+index fd96eef90c7fa..bbc1c4bac3588 100644
+--- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
++++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
+@@ -55,11 +55,6 @@
+ #define IS_HARDWARE_TYPE_8192SE(_priv)		\
+ 	(((struct r8192_priv *)rtllib_priv(dev))->card_8192 == NIC_8192SE)
  
- 	min_size = sizeof(struct rtl_epatch_header) + sizeof(extension_sig) + 3;
-@@ -848,6 +859,7 @@ int btrtl_download_firmware(struct hci_dev *hdev,
- 	case RTL_ROM_LMP_8822B:
- 	case RTL_ROM_LMP_8852A:
- 	case RTL_ROM_LMP_8703B:
-+	case RTL_ROM_LMP_8851B:
- 		return btrtl_setup_rtl8723b(hdev, btrtl_dev);
- 	default:
- 		rtl_dev_info(hdev, "assuming no firmware upload needed");
-@@ -872,6 +884,7 @@ void btrtl_set_quirks(struct hci_dev *hdev, struct btrtl_device_info *btrtl_dev)
- 	case CHIP_ID_8852A:
- 	case CHIP_ID_8852B:
- 	case CHIP_ID_8852C:
-+	case CHIP_ID_8851B:
- 		set_bit(HCI_QUIRK_VALID_LE_STATES, &hdev->quirks);
- 		set_bit(HCI_QUIRK_WIDEBAND_SPEECH_SUPPORTED, &hdev->quirks);
+-#define RTL_PCI_DEVICE(vend, dev, cfg) \
+-	.vendor = (vend), .device = (dev), \
+-	.subvendor = PCI_ANY_ID, .subdevice = PCI_ANY_ID, \
+-	.driver_data = (kernel_ulong_t)&(cfg)
+-
+ #define TOTAL_CAM_ENTRY		32
+ #define CAM_CONTENT_COUNT	8
  
-@@ -1082,3 +1095,5 @@ MODULE_FIRMWARE("rtl_bt/rtl8852bu_fw.bin");
- MODULE_FIRMWARE("rtl_bt/rtl8852bu_config.bin");
- MODULE_FIRMWARE("rtl_bt/rtl8852cu_fw.bin");
- MODULE_FIRMWARE("rtl_bt/rtl8852cu_config.bin");
-+MODULE_FIRMWARE("rtl_bt/rtl8851bu_fw.bin");
-+MODULE_FIRMWARE("rtl_bt/rtl8851bu_config.bin");
 -- 
 2.39.2
 
