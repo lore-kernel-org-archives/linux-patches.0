@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F81171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5885C433EF;
-	Mon, 22 May 2023 19:34:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6D8171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E43DC433D2;
+	Mon, 22 May 2023 19:34:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784091;
-	bh=d9Xtdw+4Uyp6mLs/RmFjPPjNZC1SiFXlK+zL/JXtjLA=;
+	s=korg; t=1684784094;
+	bh=lDq33r+Xd6bsnUfmK0/am/43ciafYDk9OkG43+eN9qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rXYY4fRsVkou6w+LTev5WYrwkPpcJoE5NHhKli7vLIZnHIzAUbyxF0JK+uLOgjx4u
-	 s6PXCUeb0+lkzB9aMN7GjRkFnS76Se+gogTUDdY9DTUrQzBwRKQRJFOtzteNMIYgHP
-	 3lgQTAQcMtZbJ770AMdDIqm6YcyRTW2duCCW7fh4=
+	b=kqMj0sm1HfyB2fQ09NJEl6NZmPbmH758WDyYwRH3Ky9gViY9T5IXDBHBFBQtiYC36
+	 V13P07NCYu2/y0MvQeEgDcfkQIQHwfzL5/87CwJevp1vpgssdO2HUpDf2deIGsLEL0
+	 XaRe557DkizoBMZDner1DSs7TTI66isLZ86EqtMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 260/292] KVM: Fix vcpu_array[0] races
-Date: Mon, 22 May 2023 20:10:17 +0100
-Message-Id: <20230522190412.441491083@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.1 261/292] statfs: enforce statfs[64] structure initialization
+Date: Mon, 22 May 2023 20:10:18 +0100
+Message-Id: <20230522190412.466263183@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -34,105 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit afb2acb2e3a32e4d56f7fbd819769b98ed1b7520 upstream.
+commit ed40866ec7d328b3dfb70db7e2011640a16202c3 upstream.
 
-In kvm_vm_ioctl_create_vcpu(), add vcpu to vcpu_array iff it's safe to
-access vcpu via kvm_get_vcpu() and kvm_for_each_vcpu(), i.e. when there's
-no failure path requiring vcpu removal and destruction. Such order is
-important because vcpu_array accessors may end up referencing vcpu at
-vcpu_array[0] even before online_vcpus is set to 1.
+s390's struct statfs and struct statfs64 contain padding, which
+field-by-field copying does not set. Initialize the respective structs
+with zeros before filling them and copying them to userspace, like it's
+already done for the compat versions of these structs.
 
-When online_vcpus=0, any call to kvm_get_vcpu() goes through
-array_index_nospec() and ends with an attempt to xa_load(vcpu_array, 0):
+Found by KMSAN.
 
-	int num_vcpus = atomic_read(&kvm->online_vcpus);
-	i = array_index_nospec(i, num_vcpus);
-	return xa_load(&kvm->vcpu_array, i);
-
-Similarly, when online_vcpus=0, a kvm_for_each_vcpu() does not iterate over
-an "empty" range, but actually [0, ULONG_MAX]:
-
-	xa_for_each_range(&kvm->vcpu_array, idx, vcpup, 0, \
-			  (atomic_read(&kvm->online_vcpus) - 1))
-
-In both cases, such online_vcpus=0 edge case, even if leading to
-unnecessary calls to XArray API, should not be an issue; requesting
-unpopulated indexes/ranges is handled by xa_load() and xa_for_each_range().
-
-However, this means that when the first vCPU is created and inserted in
-vcpu_array *and* before online_vcpus is incremented, code calling
-kvm_get_vcpu()/kvm_for_each_vcpu() already has access to that first vCPU.
-
-This should not pose a problem assuming that once a vcpu is stored in
-vcpu_array, it will remain there, but that's not the case:
-kvm_vm_ioctl_create_vcpu() first inserts to vcpu_array, then requests a
-file descriptor. If create_vcpu_fd() fails, newly inserted vcpu is removed
-from the vcpu_array, then destroyed:
-
-	vcpu->vcpu_idx = atomic_read(&kvm->online_vcpus);
-	r = xa_insert(&kvm->vcpu_array, vcpu->vcpu_idx, vcpu, GFP_KERNEL_ACCOUNT);
-	kvm_get_kvm(kvm);
-	r = create_vcpu_fd(vcpu);
-	if (r < 0) {
-		xa_erase(&kvm->vcpu_array, vcpu->vcpu_idx);
-		kvm_put_kvm_no_destroy(kvm);
-		goto unlock_vcpu_destroy;
-	}
-	atomic_inc(&kvm->online_vcpus);
-
-This results in a possible race condition when a reference to a vcpu is
-acquired (via kvm_get_vcpu() or kvm_for_each_vcpu()) moments before said
-vcpu is destroyed.
-
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Message-Id: <20230510140410.1093987-2-mhal@rbox.co>
-Cc: stable@vger.kernel.org
-Fixes: c5b077549136 ("KVM: Convert the kvm->vcpus array to a xarray", 2021-12-08)
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[agordeev@linux.ibm.com: fixed typo in patch description]
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: stable@vger.kernel.org # v4.14+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230504144021.808932-2-iii@linux.ibm.com
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- virt/kvm/kvm_main.c |   16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ fs/statfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/virt/kvm/kvm_main.c
-+++ b/virt/kvm/kvm_main.c
-@@ -3947,18 +3947,19 @@ static int kvm_vm_ioctl_create_vcpu(stru
+--- a/fs/statfs.c
++++ b/fs/statfs.c
+@@ -130,6 +130,7 @@ static int do_statfs_native(struct kstat
+ 	if (sizeof(buf) == sizeof(*st))
+ 		memcpy(&buf, st, sizeof(*st));
+ 	else {
++		memset(&buf, 0, sizeof(buf));
+ 		if (sizeof buf.f_blocks == 4) {
+ 			if ((st->f_blocks | st->f_bfree | st->f_bavail |
+ 			     st->f_bsize | st->f_frsize) &
+@@ -158,7 +159,6 @@ static int do_statfs_native(struct kstat
+ 		buf.f_namelen = st->f_namelen;
+ 		buf.f_frsize = st->f_frsize;
+ 		buf.f_flags = st->f_flags;
+-		memset(buf.f_spare, 0, sizeof(buf.f_spare));
  	}
- 
- 	vcpu->vcpu_idx = atomic_read(&kvm->online_vcpus);
--	r = xa_insert(&kvm->vcpu_array, vcpu->vcpu_idx, vcpu, GFP_KERNEL_ACCOUNT);
--	BUG_ON(r == -EBUSY);
-+	r = xa_reserve(&kvm->vcpu_array, vcpu->vcpu_idx, GFP_KERNEL_ACCOUNT);
- 	if (r)
- 		goto unlock_vcpu_destroy;
- 
- 	/* Now it's all set up, let userspace reach it */
- 	kvm_get_kvm(kvm);
- 	r = create_vcpu_fd(vcpu);
--	if (r < 0) {
--		xa_erase(&kvm->vcpu_array, vcpu->vcpu_idx);
--		kvm_put_kvm_no_destroy(kvm);
--		goto unlock_vcpu_destroy;
-+	if (r < 0)
-+		goto kvm_put_xa_release;
-+
-+	if (KVM_BUG_ON(!!xa_store(&kvm->vcpu_array, vcpu->vcpu_idx, vcpu, 0), kvm)) {
-+		r = -EINVAL;
-+		goto kvm_put_xa_release;
+ 	if (copy_to_user(p, &buf, sizeof(buf)))
+ 		return -EFAULT;
+@@ -171,6 +171,7 @@ static int do_statfs64(struct kstatfs *s
+ 	if (sizeof(buf) == sizeof(*st))
+ 		memcpy(&buf, st, sizeof(*st));
+ 	else {
++		memset(&buf, 0, sizeof(buf));
+ 		buf.f_type = st->f_type;
+ 		buf.f_bsize = st->f_bsize;
+ 		buf.f_blocks = st->f_blocks;
+@@ -182,7 +183,6 @@ static int do_statfs64(struct kstatfs *s
+ 		buf.f_namelen = st->f_namelen;
+ 		buf.f_frsize = st->f_frsize;
+ 		buf.f_flags = st->f_flags;
+-		memset(buf.f_spare, 0, sizeof(buf.f_spare));
  	}
- 
- 	/*
-@@ -3973,6 +3974,9 @@ static int kvm_vm_ioctl_create_vcpu(stru
- 	kvm_create_vcpu_debugfs(vcpu);
- 	return r;
- 
-+kvm_put_xa_release:
-+	kvm_put_kvm_no_destroy(kvm);
-+	xa_release(&kvm->vcpu_array, vcpu->vcpu_idx);
- unlock_vcpu_destroy:
- 	mutex_unlock(&kvm->lock);
- 	kvm_dirty_ring_free(&vcpu->dirty_ring);
+ 	if (copy_to_user(p, &buf, sizeof(buf)))
+ 		return -EFAULT;
 
 
