@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CE1171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:22:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F010C433D2;
-	Mon, 22 May 2023 19:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2076D171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:22:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED57C433EF;
+	Mon, 22 May 2023 19:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783329;
-	bh=gAUBsWyO0p7jLkHmMBecTnVlqWSf7pDnb+5mlPoaquc=;
+	s=korg; t=1684783333;
+	bh=8AjTZa78PBqcCmBPcMReAytf1Kk5ESN+SBF14i7/yC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVCP9g+Z3iXrGB1e44Iy80PUcGpu8nBvk8Z6xLm+WTQEnASQUb44xjyoi1uzVE68X
-	 cX6dangdccsyl1C3NjfnexD7k92+lF/4sl3CMMIOfgE9T0UesI4H3EIO3mOgh+Jqyq
-	 CgLGDL9VMmZFhPCnGApOjCJFOSWpeldBGa1nyl5o=
+	b=ItMfAVPJR1COpbE/LDeRVK0sF1JyWbIYcbqgXgU/66sjHMrJauG2HQX3FWyTPFVSU
+	 h/04ipUemqExpqG1faP7UsYi88dopwlFqajrIx8STR+waKmOq0BETUSL457fL9JyLc
+	 em1/deqHi3fnB7jlD0+LO/aywyxwxNHnFajyF5Ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sui Jingfeng <suijingfeng@loongson.cn>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	syzbot <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/292] drm/fbdev-generic: prohibit potential out-of-bounds access
-Date: Mon, 22 May 2023 20:05:58 +0100
-Message-Id: <20230522190405.920296946@linuxfoundation.org>
+Subject: [PATCH 6.1 010/292] net: Fix load-tearing on sk->sk_stamp in sock_recv_cmsgs().
+Date: Mon, 22 May 2023 20:06:07 +0100
+Message-Id: <20230522190406.148867874@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,133 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sui Jingfeng <suijingfeng@loongson.cn>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit c8687694bb1f5c48134f152f8c5c2e53483eb99d ]
+[ Upstream commit dfd9248c071a3710c24365897459538551cb7167 ]
 
-The fbdev test of IGT may write after EOF, which lead to out-of-bound
-access for drm drivers with fbdev-generic. For example, run fbdev test
-on a x86+ast2400 platform, with 1680x1050 resolution, will cause the
-linux kernel hang with the following call trace:
+KCSAN found a data race in sock_recv_cmsgs() where the read access
+to sk->sk_stamp needs READ_ONCE().
 
-  Oops: 0000 [#1] PREEMPT SMP PTI
-  [IGT] fbdev: starting subtest eof
-  Workqueue: events drm_fb_helper_damage_work [drm_kms_helper]
-  [IGT] fbdev: starting subtest nullptr
+BUG: KCSAN: data-race in packet_recvmsg / packet_recvmsg
 
-  RIP: 0010:memcpy_erms+0xa/0x20
-  RSP: 0018:ffffa17d40167d98 EFLAGS: 00010246
-  RAX: ffffa17d4eb7fa80 RBX: ffffa17d40e0aa80 RCX: 00000000000014c0
-  RDX: 0000000000001a40 RSI: ffffa17d40e0b000 RDI: ffffa17d4eb80000
-  RBP: ffffa17d40167e20 R08: 0000000000000000 R09: ffff89522ecff8c0
-  R10: ffffa17d4e4c5000 R11: 0000000000000000 R12: ffffa17d4eb7fa80
-  R13: 0000000000001a40 R14: 000000000000041a R15: ffffa17d40167e30
-  FS:  0000000000000000(0000) GS:ffff895257380000(0000) knlGS:0000000000000000
-  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  CR2: ffffa17d40e0b000 CR3: 00000001eaeca006 CR4: 00000000001706e0
-  Call Trace:
-   <TASK>
-   ? drm_fbdev_generic_helper_fb_dirty+0x207/0x330 [drm_kms_helper]
-   drm_fb_helper_damage_work+0x8f/0x170 [drm_kms_helper]
-   process_one_work+0x21f/0x430
-   worker_thread+0x4e/0x3c0
-   ? __pfx_worker_thread+0x10/0x10
-   kthread+0xf4/0x120
-   ? __pfx_kthread+0x10/0x10
-   ret_from_fork+0x2c/0x50
-   </TASK>
-  CR2: ffffa17d40e0b000
-  ---[ end trace 0000000000000000 ]---
+write (marked) to 0xffff88803c81f258 of 8 bytes by task 19171 on cpu 0:
+ sock_write_timestamp include/net/sock.h:2670 [inline]
+ sock_recv_cmsgs include/net/sock.h:2722 [inline]
+ packet_recvmsg+0xb97/0xd00 net/packet/af_packet.c:3489
+ sock_recvmsg_nosec net/socket.c:1019 [inline]
+ sock_recvmsg+0x11a/0x130 net/socket.c:1040
+ sock_read_iter+0x176/0x220 net/socket.c:1118
+ call_read_iter include/linux/fs.h:1845 [inline]
+ new_sync_read fs/read_write.c:389 [inline]
+ vfs_read+0x5e0/0x630 fs/read_write.c:470
+ ksys_read+0x163/0x1a0 fs/read_write.c:613
+ __do_sys_read fs/read_write.c:623 [inline]
+ __se_sys_read fs/read_write.c:621 [inline]
+ __x64_sys_read+0x41/0x50 fs/read_write.c:621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-The is because damage rectangles computed by
-drm_fb_helper_memory_range_to_clip() function is not guaranteed to be
-bound in the screen's active display area. Possible reasons are:
+read to 0xffff88803c81f258 of 8 bytes by task 19183 on cpu 1:
+ sock_recv_cmsgs include/net/sock.h:2721 [inline]
+ packet_recvmsg+0xb64/0xd00 net/packet/af_packet.c:3489
+ sock_recvmsg_nosec net/socket.c:1019 [inline]
+ sock_recvmsg+0x11a/0x130 net/socket.c:1040
+ sock_read_iter+0x176/0x220 net/socket.c:1118
+ call_read_iter include/linux/fs.h:1845 [inline]
+ new_sync_read fs/read_write.c:389 [inline]
+ vfs_read+0x5e0/0x630 fs/read_write.c:470
+ ksys_read+0x163/0x1a0 fs/read_write.c:613
+ __do_sys_read fs/read_write.c:623 [inline]
+ __se_sys_read fs/read_write.c:621 [inline]
+ __x64_sys_read+0x41/0x50 fs/read_write.c:621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-1) Buffers are allocated in the granularity of page size, for mmap system
-   call support. The shadow screen buffer consumed by fbdev emulation may
-   also choosed be page size aligned.
+value changed: 0xffffffffc4653600 -> 0x0000000000000000
 
-2) The DIV_ROUND_UP() used in drm_fb_helper_memory_range_to_clip()
-   will introduce off-by-one error.
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 19183 Comm: syz-executor.5 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
 
-For example, on a 16KB page size system, in order to store a 1920x1080
-XRGB framebuffer, we need allocate 507 pages. Unfortunately, the size
-1920*1080*4 can not be divided exactly by 16KB.
-
- 1920 * 1080 * 4 = 8294400 bytes
- 506 * 16 * 1024 = 8290304 bytes
- 507 * 16 * 1024 = 8306688 bytes
-
- line_length = 1920*4 = 7680 bytes
-
- 507 * 16 * 1024 / 7680 = 1081.6
-
- off / line_length = 507 * 16 * 1024 / 7680 = 1081
- DIV_ROUND_UP(507 * 16 * 1024, 7680) will yeild 1082
-
-memcpy_toio() typically issue the copy line by line, when copy the last
-line, out-of-bound access will be happen. Because:
-
- 1082 * line_length = 1082 * 7680 = 8309760, and 8309760 > 8306688
-
-Note that userspace may still write to the invisiable area if a larger
-buffer than width x stride is exposed. But it is not a big issue as
-long as there still have memory resolve the access if not drafting so
-far.
-
- - Also limit the y1 (Daniel)
- - keep fix patch it to minimal (Daniel)
- - screen_size is page size aligned because of it need mmap (Thomas)
- - Adding fixes tag (Thomas)
-
-Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
-Fixes: aa15c677cc34 ("drm/fb-helper: Fix vertical damage clipping")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/dri-devel/ad44df29-3241-0d9e-e708-b0338bf3c623@189.cn/
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230420030500.1578756-1-suijingfeng@loongson.cn
+Fixes: 6c7c98bad488 ("sock: avoid dirtying sk_stamp, if possible")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230508175543.55756-1-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_fb_helper.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ include/net/sock.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
-index 06cd2f8c27734..76e46713b2f0c 100644
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -708,19 +708,27 @@ static void drm_fb_helper_damage(struct fb_info *info, u32 x, u32 y,
- static void drm_fb_helper_memory_range_to_clip(struct fb_info *info, off_t off, size_t len,
- 					       struct drm_rect *clip)
- {
-+	u32 line_length = info->fix.line_length;
-+	u32 fb_height = info->var.yres;
- 	off_t end = off + len;
- 	u32 x1 = 0;
--	u32 y1 = off / info->fix.line_length;
-+	u32 y1 = off / line_length;
- 	u32 x2 = info->var.xres;
--	u32 y2 = DIV_ROUND_UP(end, info->fix.line_length);
-+	u32 y2 = DIV_ROUND_UP(end, line_length);
-+
-+	/* Don't allow any of them beyond the bottom bound of display area */
-+	if (y1 > fb_height)
-+		y1 = fb_height;
-+	if (y2 > fb_height)
-+		y2 = fb_height;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 832a4a51de4d9..beb1b747fb09d 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2744,7 +2744,7 @@ static inline void sock_recv_cmsgs(struct msghdr *msg, struct sock *sk,
+ 		__sock_recv_cmsgs(msg, sk, skb);
+ 	else if (unlikely(sock_flag(sk, SOCK_TIMESTAMP)))
+ 		sock_write_timestamp(sk, skb->tstamp);
+-	else if (unlikely(sk->sk_stamp == SK_DEFAULT_STAMP))
++	else if (unlikely(sock_read_timestamp(sk) == SK_DEFAULT_STAMP))
+ 		sock_write_timestamp(sk, 0);
+ }
  
- 	if ((y2 - y1) == 1) {
- 		/*
- 		 * We've only written to a single scanline. Try to reduce
- 		 * the number of horizontal pixels that need an update.
- 		 */
--		off_t bit_off = (off % info->fix.line_length) * 8;
--		off_t bit_end = (end % info->fix.line_length) * 8;
-+		off_t bit_off = (off % line_length) * 8;
-+		off_t bit_end = (end % line_length) * 8;
- 
- 		x1 = bit_off / info->var.bits_per_pixel;
- 		x2 = DIV_ROUND_UP(bit_end, info->var.bits_per_pixel);
 -- 
 2.39.2
 
