@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504A6171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:26:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7B8FC433D2;
-	Mon, 22 May 2023 19:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F8F171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:26:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF4AC433D2;
+	Mon, 22 May 2023 19:26:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783573;
-	bh=0FgOAeLWITfHqxmvydovCvhdnSidBbTih1SuweCVZcc=;
+	s=korg; t=1684783576;
+	bh=rBaENMPcYH9khGCnR9G8YZifplk6iDBMO+D/7Fp0kkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1LYdWSe463VenNHcySHHshlnXm9N1h76nYlqvFo4K6lB6bFd25JNSfpeC195sE+7d
-	 Rgnui9f866jtLIOFthi3wnlca7ayl594p4wqbEfDnkvtbQQO5Ebu3CWIxE5J9/zJaK
-	 0YE4NVeiglckzhsa8Dz3q40mVMGAih5s5E8OnHvk=
+	b=1C/fhKE/9SfXS/KAr6XRiMf5d3Mdx2ryu8DGHM0bA4MuRDy6mgMw1jdQVa9ZS6zpY
+	 LhM0hs1XTp4ym5yMXcJNC1UxaW6rk+NRquIXKdV4/4snKPctjJSJIzdIMg/JrIDQAB
+	 lAfoCOqRyRgNWdohHTm7muwFFaaSbn0Qm9zjVD7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/292] media: pvrusb2: VIDEO_PVRUSB2 depends on DVB_CORE to use dvb_* symbols
-Date: Mon, 22 May 2023 20:06:49 +0100
-Message-Id: <20230522190407.236190821@linuxfoundation.org>
+Subject: [PATCH 6.1 083/292] netdev: Enforce index cap in netdev_get_tx_queue
+Date: Mon, 22 May 2023 20:07:20 +0100
+Message-Id: <20230522190408.048639987@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,42 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Rix <trix@redhat.com>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit 1107283b3351bef138cd12dbda1f999891cab7db ]
+[ Upstream commit 1cc6571f562774f1d928dc8b3cff50829b86e970 ]
 
-A rand config causes this link error
-vmlinux.o: In function `pvr2_dvb_create':
-(.text+0x8af1d2): undefined reference to `dvb_register_adapter'
+When requesting a TX queue at a given index, warn on out-of-bounds
+referencing if the index is greater than the allocated number of
+queues.
 
-The rand config has
-CONFIG_VIDEO_PVRUSB2=y
-CONFIG_VIDEO_DEV=y
-CONFIG_DVB_CORE=m
+Specifically, since this function is used heavily in the networking
+stack use DEBUG_NET_WARN_ON_ONCE to avoid executing a new branch on
+every packet.
 
-VIDEO_PVRUSB2 should also depend on DVB_CORE.
-
-Signed-off-by: Tom Rix <trix@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230321150725.127229-2-nnac123@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/pvrusb2/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/netdevice.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/usb/pvrusb2/Kconfig b/drivers/media/usb/pvrusb2/Kconfig
-index f2b64e49c5a20..9501b10b31aa5 100644
---- a/drivers/media/usb/pvrusb2/Kconfig
-+++ b/drivers/media/usb/pvrusb2/Kconfig
-@@ -1,7 +1,7 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config VIDEO_PVRUSB2
- 	tristate "Hauppauge WinTV-PVR USB2 support"
--	depends on VIDEO_DEV && I2C
-+	depends on VIDEO_DEV && I2C && DVB_CORE
- 	select VIDEO_TUNER
- 	select VIDEO_TVEEPROM
- 	select VIDEO_CX2341X
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index b072449b0f1ac..eac51e22a52a8 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -2428,6 +2428,7 @@ static inline
+ struct netdev_queue *netdev_get_tx_queue(const struct net_device *dev,
+ 					 unsigned int index)
+ {
++	DEBUG_NET_WARN_ON_ONCE(index >= dev->num_tx_queues);
+ 	return &dev->_tx[index];
+ }
+ 
 -- 
 2.39.2
 
