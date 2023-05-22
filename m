@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3755171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D39C4339B;
-	Mon, 22 May 2023 19:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C21171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8360BC4339C;
+	Mon, 22 May 2023 19:50:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785032;
-	bh=wG/6SjmOgmneUV0v+iRnt5yxlg4v0WTu8Yq69YIg+gA=;
+	s=korg; t=1684785035;
+	bh=zCkeMoQYaZSK3g+MQsHJxfqpCL+dh4JwrfE7xTCi+Hk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z1fiLOd+E2VLqP4Wmo2OlLhfar/n+Kbh0eiX3Hicgolw/czrvSAlcL54YX8+1+dt6
-	 VHtq1pLueo97wT1jhO800bPmdHFl6gDH5HSLz946IUskmhXGU/+cQixmhYu6xw3hvM
-	 1En6B+wbjqNUiwKvctZWHmH6cIbSiImAEDo8hjLQ=
+	b=UiCcTqEdTxhP2w9t4Puo1yiwExSCblDxnOxSP3LGS8E2hp/X/ZjBpXvepwMf9oTsw
+	 ahNDc1g9r4uGus56b0lsq2vfzMnBToDrSlqS2vsuTQg+emqA1ux4owFOp8xicAHpNP
+	 PXHBPDb0wSGrQq67FZk/65ZmImdUSWm2fMFu/R1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuang Li <shuali@redhat.com>,
 	Xin Long <lucien.xin@gmail.com>,
 	Jon Maloy <jmaloy@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 257/364] tipc: do not update mtu if msg_max is too small in mtu negotiation
-Date: Mon, 22 May 2023 20:09:22 +0100
-Message-Id: <20230522190419.127561107@linuxfoundation.org>
+Subject: [PATCH 6.3 258/364] tipc: check the bearer min mtu properly when setting it by netlink
+Date: Mon, 22 May 2023 20:09:23 +0100
+Message-Id: <20230522190419.153465564@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -39,88 +38,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 56077b56cd3fb78e1c8619e29581ba25a5c55e86 ]
+[ Upstream commit 35a089b5d793d2bfd2cc7cfa6104545184de2ce7 ]
 
-When doing link mtu negotiation, a malicious peer may send Activate msg
-with a very small mtu, e.g. 4 in Shuang's testing, without checking for
-the minimum mtu, l->mtu will be set to 4 in tipc_link_proto_rcv(), then
-n->links[bearer_id].mtu is set to 4294967228, which is a overflow of
-'4 - INT_H_SIZE - EMSG_OVERHEAD' in tipc_link_mss().
+Checking the bearer min mtu with tipc_udp_mtu_bad() only works for
+IPv4 UDP bearer, and IPv6 UDP bearer has a different value for the
+min mtu. This patch checks with encap_hlen + TIPC_MIN_BEARER_MTU
+for min mtu, which works for both IPv4 and IPv6 UDP bearer.
 
-With tipc_link.mtu = 4, tipc_link_xmit() kept printing the warning:
+Note that tipc_udp_mtu_bad() is still used to check media min mtu
+in __tipc_nl_media_set(), as m->mtu currently is only used by the
+IPv4 UDP bearer as its default mtu value.
 
- tipc: Too large msg, purging xmit list 1 5 0 40 4!
- tipc: Too large msg, purging xmit list 1 15 0 60 4!
-
-And with tipc_link_entry.mtu 4294967228, a huge skb was allocated in
-named_distribute(), and when purging it in tipc_link_xmit(), a crash
-was even caused:
-
-  general protection fault, probably for non-canonical address 0x2100001011000dd: 0000 [#1] PREEMPT SMP PTI
-  CPU: 0 PID: 0 Comm: swapper/0 Kdump: loaded Not tainted 6.3.0.neta #19
-  RIP: 0010:kfree_skb_list_reason+0x7e/0x1f0
-  Call Trace:
-   <IRQ>
-   skb_release_data+0xf9/0x1d0
-   kfree_skb_reason+0x40/0x100
-   tipc_link_xmit+0x57a/0x740 [tipc]
-   tipc_node_xmit+0x16c/0x5c0 [tipc]
-   tipc_named_node_up+0x27f/0x2c0 [tipc]
-   tipc_node_write_unlock+0x149/0x170 [tipc]
-   tipc_rcv+0x608/0x740 [tipc]
-   tipc_udp_recv+0xdc/0x1f0 [tipc]
-   udp_queue_rcv_one_skb+0x33e/0x620
-   udp_unicast_rcv_skb.isra.72+0x75/0x90
-   __udp4_lib_rcv+0x56d/0xc20
-   ip_protocol_deliver_rcu+0x100/0x2d0
-
-This patch fixes it by checking the new mtu against tipc_bearer_min_mtu(),
-and not updating mtu if it is too small.
-
-Fixes: ed193ece2649 ("tipc: simplify link mtu negotiation")
-Reported-by: Shuang Li <shuali@redhat.com>
+Fixes: 682cd3cf946b ("tipc: confgiure and apply UDP bearer MTU on running links")
 Signed-off-by: Xin Long <lucien.xin@gmail.com>
 Acked-by: Jon Maloy <jmaloy@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/link.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/tipc/bearer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/link.c b/net/tipc/link.c
-index b3ce24823f503..2eff1c7949cbc 100644
---- a/net/tipc/link.c
-+++ b/net/tipc/link.c
-@@ -2200,7 +2200,7 @@ static int tipc_link_proto_rcv(struct tipc_link *l, struct sk_buff *skb,
- 	struct tipc_msg *hdr = buf_msg(skb);
- 	struct tipc_gap_ack_blks *ga = NULL;
- 	bool reply = msg_probe(hdr), retransmitted = false;
--	u32 dlen = msg_data_sz(hdr), glen = 0;
-+	u32 dlen = msg_data_sz(hdr), glen = 0, msg_max;
- 	u16 peers_snd_nxt =  msg_next_sent(hdr);
- 	u16 peers_tol = msg_link_tolerance(hdr);
- 	u16 peers_prio = msg_linkprio(hdr);
-@@ -2239,6 +2239,9 @@ static int tipc_link_proto_rcv(struct tipc_link *l, struct sk_buff *skb,
- 	switch (mtyp) {
- 	case RESET_MSG:
- 	case ACTIVATE_MSG:
-+		msg_max = msg_max_pkt(hdr);
-+		if (msg_max < tipc_bearer_min_mtu(l->net, l->bearer_id))
-+			break;
- 		/* Complete own link name with peer's interface name */
- 		if_name =  strrchr(l->name, ':') + 1;
- 		if (sizeof(l->name) - (if_name - l->name) <= TIPC_MAX_IF_NAME)
-@@ -2283,8 +2286,8 @@ static int tipc_link_proto_rcv(struct tipc_link *l, struct sk_buff *skb,
- 		l->peer_session = msg_session(hdr);
- 		l->in_session = true;
- 		l->peer_bearer_id = msg_bearer_id(hdr);
--		if (l->mtu > msg_max_pkt(hdr))
--			l->mtu = msg_max_pkt(hdr);
-+		if (l->mtu > msg_max)
-+			l->mtu = msg_max;
- 		break;
- 
- 	case STATE_MSG:
+diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
+index 0e9a29e1536b7..53881406e2006 100644
+--- a/net/tipc/bearer.c
++++ b/net/tipc/bearer.c
+@@ -1151,8 +1151,8 @@ int __tipc_nl_bearer_set(struct sk_buff *skb, struct genl_info *info)
+ 				return -EINVAL;
+ 			}
+ #ifdef CONFIG_TIPC_MEDIA_UDP
+-			if (tipc_udp_mtu_bad(nla_get_u32
+-					     (props[TIPC_NLA_PROP_MTU]))) {
++			if (nla_get_u32(props[TIPC_NLA_PROP_MTU]) <
++			    b->encap_hlen + TIPC_MIN_BEARER_MTU) {
+ 				NL_SET_ERR_MSG(info->extack,
+ 					       "MTU value is out-of-range");
+ 				return -EINVAL;
 -- 
 2.39.2
 
