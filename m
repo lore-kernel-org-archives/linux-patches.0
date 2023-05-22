@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6DB171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:21:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD9DC433EF;
-	Mon, 22 May 2023 19:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A1A171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:21:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE26C433EF;
+	Mon, 22 May 2023 19:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783279;
-	bh=g63N/8IHgm2wznptnbX0o8k72ZjzpAYpVXhLBN+UQ40=;
+	s=korg; t=1684783282;
+	bh=QrCSDrnby/P7VpBpaW/a1mmjlKr+8oDMqe+xJkOiMu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JmTAvUv7Bp+TjkpCxk45VB6zK3qtpJpnnv7DEO9oaDcuc4T6VAQACAv8MOnffEdja
-	 g6GIS6gt93neH0/vnOuOXctzdFF/mlGan7OBr0S/D2+T0Cy43IfteGlceQe8IFsJGu
-	 2DnOsA89dcEih0oVQcpsu25BlbQ60/M71FcJWLiE=
+	b=r0jPum8trTxYPWGKi7O+/tZCo70giL/DynliGFMpjAwoIyB1arA5vP6eAH2fTTiih
+	 RUsp6eNLqZ+zlS987Jo2kjm37reZ4YmmZ65H5OHbXq4I2PK0lGKUoSsAz0/Ga1SxRS
+	 GsJmOoD8X1nP/9lqic8//NPAYqLcSW+ooQLDE6js=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 179/203] can: kvaser_pciefd: Empty SRB buffer in probe
-Date: Mon, 22 May 2023 20:10:03 +0100
-Message-Id: <20230522190359.956718723@linuxfoundation.org>
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 5.15 197/203] tpm/tpm_tis: Disable interrupts for more Lenovo devices
+Date: Mon, 22 May 2023 20:10:21 +0100
+Message-Id: <20230522190400.489406744@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -34,71 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-commit c589557dd1426f5adf90c7a919d4fde5a3e4ef64 upstream.
+commit e7d3e5c4b1dd50a70b31524c3228c62bb41bbab2 upstream.
 
-Empty the "Shared receive buffer" (SRB) in probe, to assure we start in a
-known state, and don't process any irrelevant packets.
+The P360 Tiny suffers from an irq storm issue like the T490s, so add
+an entry for it to tpm_tis_dmi_table, and force polling. There also
+previously was a report from the previous attempt to enable interrupts
+that involved a ThinkPad L490. So an entry is added for it as well.
 
-Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/r/20230516134318.104279-5-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Reported-by: Peter Zijlstra <peterz@infradead.org> # P360 Tiny
+Closes: https://lore.kernel.org/linux-integrity/20230505130731.GO83892@hirez.programming.kicks-ass.net/
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/kvaser_pciefd.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/char/tpm/tpm_tis.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/drivers/net/can/kvaser_pciefd.c
-+++ b/drivers/net/can/kvaser_pciefd.c
-@@ -70,10 +70,12 @@ MODULE_DESCRIPTION("CAN driver for Kvase
- #define KVASER_PCIEFD_SYSID_BUILD_REG (KVASER_PCIEFD_SYSID_BASE + 0x14)
- /* Shared receive buffer registers */
- #define KVASER_PCIEFD_SRB_BASE 0x1f200
-+#define KVASER_PCIEFD_SRB_FIFO_LAST_REG (KVASER_PCIEFD_SRB_BASE + 0x1f4)
- #define KVASER_PCIEFD_SRB_CMD_REG (KVASER_PCIEFD_SRB_BASE + 0x200)
- #define KVASER_PCIEFD_SRB_IEN_REG (KVASER_PCIEFD_SRB_BASE + 0x204)
- #define KVASER_PCIEFD_SRB_IRQ_REG (KVASER_PCIEFD_SRB_BASE + 0x20c)
- #define KVASER_PCIEFD_SRB_STAT_REG (KVASER_PCIEFD_SRB_BASE + 0x210)
-+#define KVASER_PCIEFD_SRB_RX_NR_PACKETS_REG (KVASER_PCIEFD_SRB_BASE + 0x214)
- #define KVASER_PCIEFD_SRB_CTRL_REG (KVASER_PCIEFD_SRB_BASE + 0x218)
- /* EPCS flash controller registers */
- #define KVASER_PCIEFD_SPI_BASE 0x1fc00
-@@ -110,6 +112,9 @@ MODULE_DESCRIPTION("CAN driver for Kvase
- /* DMA support */
- #define KVASER_PCIEFD_SRB_STAT_DMA BIT(24)
+--- a/drivers/char/tpm/tpm_tis.c
++++ b/drivers/char/tpm/tpm_tis.c
+@@ -83,6 +83,22 @@ static const struct dmi_system_id tpm_ti
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad T490s"),
+ 		},
+ 	},
++	{
++		.callback = tpm_tis_disable_irq,
++		.ident = "ThinkStation P360 Tiny",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkStation P360 Tiny"),
++		},
++	},
++	{
++		.callback = tpm_tis_disable_irq,
++		.ident = "ThinkPad L490",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad L490"),
++		},
++	},
+ 	{}
+ };
  
-+/* SRB current packet level */
-+#define KVASER_PCIEFD_SRB_RX_NR_PACKETS_MASK 0xff
-+
- /* DMA Enable */
- #define KVASER_PCIEFD_SRB_CTRL_DMA_ENABLE BIT(0)
- 
-@@ -1055,6 +1060,7 @@ static int kvaser_pciefd_setup_dma(struc
- {
- 	int i;
- 	u32 srb_status;
-+	u32 srb_packet_count;
- 	dma_addr_t dma_addr[KVASER_PCIEFD_DMA_COUNT];
- 
- 	/* Disable the DMA */
-@@ -1082,6 +1088,15 @@ static int kvaser_pciefd_setup_dma(struc
- 		  KVASER_PCIEFD_SRB_CMD_RDB1,
- 		  pcie->reg_base + KVASER_PCIEFD_SRB_CMD_REG);
- 
-+	/* Empty Rx FIFO */
-+	srb_packet_count = ioread32(pcie->reg_base + KVASER_PCIEFD_SRB_RX_NR_PACKETS_REG) &
-+			   KVASER_PCIEFD_SRB_RX_NR_PACKETS_MASK;
-+	while (srb_packet_count) {
-+		/* Drop current packet in FIFO */
-+		ioread32(pcie->reg_base + KVASER_PCIEFD_SRB_FIFO_LAST_REG);
-+		srb_packet_count--;
-+	}
-+
- 	srb_status = ioread32(pcie->reg_base + KVASER_PCIEFD_SRB_STAT_REG);
- 	if (!(srb_status & KVASER_PCIEFD_SRB_STAT_DI)) {
- 		dev_err(&pcie->pci->dev, "DMA not idle before enabling\n");
 
 
