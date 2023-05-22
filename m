@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D10B171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16942C433EF;
-	Mon, 22 May 2023 19:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B766171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC07C433EF;
+	Mon, 22 May 2023 19:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784701;
-	bh=YiOsMtl98E05Kazdf4l0D33RTjcr/FcSs8FHjbYQngk=;
+	s=korg; t=1684784704;
+	bh=x94HLNRbcLTPOqzvs73lGBziHJYvCWq2DfQX91kQl4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GwDTKbJ3OOyqdHr592E77/vIFdoVYhU3Yy/XqAV3A23YltEyKh0R/ieKrQTpEHLmW
-	 6DAMFbm0PdQV+vSVxCUgxklrrutQXo85nmB+UgBTj0EHTaKprBPm6Nu0VEFbXT+gKz
-	 eK8bwFf6Zle60CJhYrCI7c0qqyPd6y8a1Ct+cGoU=
+	b=Ln9xztDf9Ygf7RI9DGFMHwqpUVDUkCgu5peERtfhHhqwymlbe6n4hzwUZC5XE19Jp
+	 WXUrueu55TWAtcPfl1M2IqQ14UqQF4dhyDf5Oi87nIQ02q9llgTRllnZdh7uO+ylNX
+	 7NKY4I7TxiN9kqV+9Wmsgh9dxJKyvyUjfzkbKQyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivan Orlov <ivan.orlov0322@gmail.com>,
-	Sean Christopherson <seanjc@google.com>,
+	=?UTF-8?q?Samuel=20=C4=8Cavoj?= <samuel@cavoj.net>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 173/364] KVM: selftests: Add malloc failure check in vcpu_save_state
-Date: Mon, 22 May 2023 20:07:58 +0100
-Message-Id: <20230522190417.048471060@linuxfoundation.org>
+Subject: [PATCH 6.3 156/364] usb: typec: ucsi: acpi: add quirk for ASUS Zenbook UM325
+Date: Mon, 22 May 2023 20:07:41 +0100
+Message-Id: <20230522190416.643406204@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,35 +35,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan Orlov <ivan.orlov0322@gmail.com>
+From: Samuel Čavoj <samuel@cavoj.net>
 
-[ Upstream commit 735b0e0f2d001b7ed9486db84453fb860e764a4d ]
+[ Upstream commit 326e1c208f3f24d14b93f910b8ae32c94923d22c ]
 
-There is a 'malloc' call in vcpu_save_state function, which can
-be unsuccessful. This patch will add the malloc failure checking
-to avoid possible null dereference and give more information
-about test fail reasons.
+On some ACPI platforms (namely the ASUS Zenbook UM325) the _DSM method must
+not be called after a notification is received but instead the mailbox
+should be read immediately from RAM. This is because the ACPI interrupt
+handler destroys the CCI in ERAM after copying to system memory, and when
+_DSM is later called to perform a second copy, it retrieves a garbage
+value.
 
-Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
-Link: https://lore.kernel.org/r/20230322144528.704077-1-ivan.orlov0322@gmail.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Instead, the _DSM(read) method should only be called when necessary, i.e.
+for polling the state after reset and for retrieving the version. Other
+reads should not call _DSM and only peek into the RAM region.
+
+This adds a separate read operation for the Zenbook that syncs the
+ACPI mailbox only with polled commands.
+
+Link: https://lore.kernel.org/linux-usb/20210823180626.tb6m7h5tp6adhvt2@fastboi.localdomain/
+Signed-off-by: Samuel Čavoj <samuel@cavoj.net>
+[ heikki : handling everything in ucsi_acpi.c with DMI quirk ]
+Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20230405134456.49607-1-heikki.krogerus@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kvm/lib/x86_64/processor.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/typec/ucsi/ucsi_acpi.c | 44 ++++++++++++++++++++++++++++--
+ 1 file changed, 42 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/kvm/lib/x86_64/processor.c b/tools/testing/selftests/kvm/lib/x86_64/processor.c
-index c39a4353ba194..827647ff3d41b 100644
---- a/tools/testing/selftests/kvm/lib/x86_64/processor.c
-+++ b/tools/testing/selftests/kvm/lib/x86_64/processor.c
-@@ -954,6 +954,7 @@ struct kvm_x86_state *vcpu_save_state(struct kvm_vcpu *vcpu)
- 	vcpu_run_complete_io(vcpu);
+diff --git a/drivers/usb/typec/ucsi/ucsi_acpi.c b/drivers/usb/typec/ucsi/ucsi_acpi.c
+index 62206a6b8ea75..217355f1f9b94 100644
+--- a/drivers/usb/typec/ucsi/ucsi_acpi.c
++++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
+@@ -9,6 +9,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/module.h>
+ #include <linux/acpi.h>
++#include <linux/dmi.h>
  
- 	state = malloc(sizeof(*state) + msr_list->nmsrs * sizeof(state->msrs.entries[0]));
-+	TEST_ASSERT(state, "-ENOMEM when allocating kvm state");
+ #include "ucsi.h"
  
- 	vcpu_events_get(vcpu, &state->events);
- 	vcpu_mp_state_get(vcpu, &state->mp_state);
+@@ -23,6 +24,7 @@ struct ucsi_acpi {
+ 	struct completion complete;
+ 	unsigned long flags;
+ 	guid_t guid;
++	u64 cmd;
+ };
+ 
+ static int ucsi_acpi_dsm(struct ucsi_acpi *ua, int func)
+@@ -62,6 +64,7 @@ static int ucsi_acpi_async_write(struct ucsi *ucsi, unsigned int offset,
+ 	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
+ 
+ 	memcpy(ua->base + offset, val, val_len);
++	ua->cmd = *(u64 *)val;
+ 
+ 	return ucsi_acpi_dsm(ua, UCSI_DSM_FUNC_WRITE);
+ }
+@@ -93,13 +96,46 @@ static const struct ucsi_operations ucsi_acpi_ops = {
+ 	.async_write = ucsi_acpi_async_write
+ };
+ 
++static int
++ucsi_zenbook_read(struct ucsi *ucsi, unsigned int offset, void *val, size_t val_len)
++{
++	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
++	int ret;
++
++	if (offset == UCSI_VERSION || UCSI_COMMAND(ua->cmd) == UCSI_PPM_RESET) {
++		ret = ucsi_acpi_dsm(ua, UCSI_DSM_FUNC_READ);
++		if (ret)
++			return ret;
++	}
++
++	memcpy(val, ua->base + offset, val_len);
++
++	return 0;
++}
++
++static const struct ucsi_operations ucsi_zenbook_ops = {
++	.read = ucsi_zenbook_read,
++	.sync_write = ucsi_acpi_sync_write,
++	.async_write = ucsi_acpi_async_write
++};
++
++static const struct dmi_system_id zenbook_dmi_id[] = {
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX325UA_UM325UA"),
++		},
++	},
++	{ }
++};
++
+ static void ucsi_acpi_notify(acpi_handle handle, u32 event, void *data)
+ {
+ 	struct ucsi_acpi *ua = data;
+ 	u32 cci;
+ 	int ret;
+ 
+-	ret = ucsi_acpi_read(ua->ucsi, UCSI_CCI, &cci, sizeof(cci));
++	ret = ua->ucsi->ops->read(ua->ucsi, UCSI_CCI, &cci, sizeof(cci));
+ 	if (ret)
+ 		return;
+ 
+@@ -114,6 +150,7 @@ static void ucsi_acpi_notify(acpi_handle handle, u32 event, void *data)
+ static int ucsi_acpi_probe(struct platform_device *pdev)
+ {
+ 	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
++	const struct ucsi_operations *ops = &ucsi_acpi_ops;
+ 	struct ucsi_acpi *ua;
+ 	struct resource *res;
+ 	acpi_status status;
+@@ -143,7 +180,10 @@ static int ucsi_acpi_probe(struct platform_device *pdev)
+ 	init_completion(&ua->complete);
+ 	ua->dev = &pdev->dev;
+ 
+-	ua->ucsi = ucsi_create(&pdev->dev, &ucsi_acpi_ops);
++	if (dmi_check_system(zenbook_dmi_id))
++		ops = &ucsi_zenbook_ops;
++
++	ua->ucsi = ucsi_create(&pdev->dev, ops);
+ 	if (IS_ERR(ua->ucsi))
+ 		return PTR_ERR(ua->ucsi);
+ 
 -- 
 2.39.2
 
