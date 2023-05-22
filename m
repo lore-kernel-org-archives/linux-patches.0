@@ -1,37 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B8D171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:38:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E99C433EF;
-	Mon, 22 May 2023 19:38:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D98171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:38:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4284C433D2;
+	Mon, 22 May 2023 19:38:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784285;
-	bh=a35NCOtWRwsG5/d5uKbMEp/GwcysG2Js6piTYORGXVE=;
+	s=korg; t=1684784288;
+	bh=bKxfhCynXgrSYzy1URhSroKnX5vhAD3GQzPTf6eiNBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2+YQxfc92nUSrQV5154ka+0HhQfgpwLpU6SY4DjGC80TaPG25c8MYHRHezorEctA
-	 WsIaSMZ5nK75AN8HbpMoeulPzINOfsmdJ5AlGOBgVLoODJemSv9jl8jcMZRHCm4yL8
-	 fQugTnhaOUZeEm32s+F2gQvJsYqC3eKJ5LJehgcA=
+	b=2Us8apWYcodSGx6w1jx8vhjRrkxBSVXN35Jux7kOa+iri020xZBJi7y2BMqaYKdiM
+	 Np+/VxyZ2x6VMM+lGjACEX+05oAjkU14To2z/DD4I8eZIUDH0Y12NZIKDZUUMPmwN5
+	 Kl0bIi1TyUkesBu2FReqlGGZw3/DxlaFxDd7k4Ng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@redhat.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Karol Herbst <kherbst@redhat.com>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Dave Airlie <airlied@redhat.com>,
-	"Gustavo A. R. Silva" <gustavo@embeddedor.com>,
-	dri-devel@lists.freedesktop.org,
-	nouveau@lists.freedesktop.org,
-	Kees Cook <keescook@chromium.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Karol Herbst <git@karolherbst.de>,
+	Martin Kepplinger <martin.kepplinger@puri.sm>,
+	Saravana Kannan <saravanak@google.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 004/364] drm/nouveau/disp: More DP_RECEIVER_CAP_SIZE array fixes
-Date: Mon, 22 May 2023 20:05:09 +0100
-Message-Id: <20230522190412.918898275@linuxfoundation.org>
+Subject: [PATCH 6.3 005/364] drm/mipi-dsi: Set the fwnode for mipi_dsi_device
+Date: Mon, 22 May 2023 20:05:10 +0100
+Message-Id: <20230522190412.944457654@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -45,104 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Saravana Kannan <saravanak@google.com>
 
-[ Upstream commit 25feda6fbd0cfefcb69308fb20d4d4815a107c5e ]
+[ Upstream commit a26cc2934331b57b5a7164bff344f0a2ec245fc0 ]
 
-More arrays (and arguments) for dcpd were set to 16, when it looks like
-DP_RECEIVER_CAP_SIZE (15) should be used. Fix the remaining cases, seen
-with GCC 13:
+After commit 3fb16866b51d ("driver core: fw_devlink: Make cycle
+detection more robust"), fw_devlink prints an error when consumer
+devices don't have their fwnode set. This used to be ignored silently.
 
-../drivers/gpu/drm/nouveau/nvif/outp.c: In function 'nvif_outp_acquire_dp':
-../include/linux/fortify-string.h:57:33: warning: array subscript 'unsigned char[16][0]' is partly outside array bounds of 'u8[15]' {aka 'unsigned char[15]'} [-Warray-bounds=]
-   57 | #define __underlying_memcpy     __builtin_memcpy
-      |                                 ^
-...
-../drivers/gpu/drm/nouveau/nvif/outp.c:140:9: note: in expansion of macro 'memcpy'
-  140 |         memcpy(args.dp.dpcd, dpcd, sizeof(args.dp.dpcd));
-      |         ^~~~~~
-../drivers/gpu/drm/nouveau/nvif/outp.c:130:49: note: object 'dpcd' of size [0, 15]
-  130 | nvif_outp_acquire_dp(struct nvif_outp *outp, u8 dpcd[DP_RECEIVER_CAP_SIZE],
-      |                                              ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+Set the fwnode mipi_dsi_device so fw_devlink can find them and properly
+track their dependencies.
 
-Fixes: 813443721331 ("drm/nouveau/disp: move DP link config into acquire")
-Cc: Ben Skeggs <bskeggs@redhat.com>
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Karol Herbst <kherbst@redhat.com>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Dave Airlie <airlied@redhat.com>
-Cc: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: nouveau@lists.freedesktop.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Karol Herbst <kherbst@redhat.com>
-Signed-off-by: Karol Herbst <git@karolherbst.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230204184307.never.825-kees@kernel.org
+This fixes errors like this:
+[    0.334054] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with regulator-lcd-1v8
+[    0.346964] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with backlight-dsi
+
+Reported-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+Link: https://lore.kernel.org/lkml/2a8e407f4f18c9350f8629a2b5fa18673355b2ae.camel@puri.sm/
+Fixes: 068a00233969 ("drm: Add MIPI DSI bus support")
+Signed-off-by: Saravana Kannan <saravanak@google.com>
+Tested-by: Martin Kepplinger <martin.kepplinger@puri.sm>
+Link: https://lore.kernel.org/r/20230310063910.2474472-1-saravanak@google.com
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/include/nvif/if0012.h    | 4 +++-
- drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h  | 3 ++-
- drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c | 2 +-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_mipi_dsi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/nouveau/include/nvif/if0012.h b/drivers/gpu/drm/nouveau/include/nvif/if0012.h
-index eb99d84eb8443..16d4ad5023a3e 100644
---- a/drivers/gpu/drm/nouveau/include/nvif/if0012.h
-+++ b/drivers/gpu/drm/nouveau/include/nvif/if0012.h
-@@ -2,6 +2,8 @@
- #ifndef __NVIF_IF0012_H__
- #define __NVIF_IF0012_H__
+diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
+index b41aaf2bb9f16..7923cc21b78e8 100644
+--- a/drivers/gpu/drm/drm_mipi_dsi.c
++++ b/drivers/gpu/drm/drm_mipi_dsi.c
+@@ -221,7 +221,7 @@ mipi_dsi_device_register_full(struct mipi_dsi_host *host,
+ 		return dsi;
+ 	}
  
-+#include <drm/display/drm_dp.h>
-+
- union nvif_outp_args {
- 	struct nvif_outp_v0 {
- 		__u8 version;
-@@ -63,7 +65,7 @@ union nvif_outp_acquire_args {
- 				__u8 hda;
- 				__u8 mst;
- 				__u8 pad04[4];
--				__u8 dpcd[16];
-+				__u8 dpcd[DP_RECEIVER_CAP_SIZE];
- 			} dp;
- 		};
- 	} v0;
-diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h b/drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h
-index b7631c1ab2420..4e7f873f66e27 100644
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h
-@@ -3,6 +3,7 @@
- #define __NVKM_DISP_OUTP_H__
- #include "priv.h"
+-	dsi->dev.of_node = info->node;
++	device_set_node(&dsi->dev, of_fwnode_handle(info->node));
+ 	dsi->channel = info->channel;
+ 	strlcpy(dsi->name, info->type, sizeof(dsi->name));
  
-+#include <drm/display/drm_dp.h>
- #include <subdev/bios.h>
- #include <subdev/bios/dcb.h>
- #include <subdev/bios/dp.h>
-@@ -42,7 +43,7 @@ struct nvkm_outp {
- 			bool aux_pwr_pu;
- 			u8 lttpr[6];
- 			u8 lttprs;
--			u8 dpcd[16];
-+			u8 dpcd[DP_RECEIVER_CAP_SIZE];
- 
- 			struct {
- 				int dpcd; /* -1, or index into SUPPORTED_LINK_RATES table */
-diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
-index 4f0ca709c85a4..fc283a4a1522a 100644
---- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
-+++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
-@@ -146,7 +146,7 @@ nvkm_uoutp_mthd_release(struct nvkm_outp *outp, void *argv, u32 argc)
- }
- 
- static int
--nvkm_uoutp_mthd_acquire_dp(struct nvkm_outp *outp, u8 dpcd[16],
-+nvkm_uoutp_mthd_acquire_dp(struct nvkm_outp *outp, u8 dpcd[DP_RECEIVER_CAP_SIZE],
- 			   u8 link_nr, u8 link_bw, bool hda, bool mst)
- {
- 	int ret;
 -- 
 2.39.2
 
