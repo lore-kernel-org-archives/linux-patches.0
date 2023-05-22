@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369B0171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DFFC433D2;
-	Mon, 22 May 2023 19:30:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07585171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AFFAC433D2;
+	Mon, 22 May 2023 19:30:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783823;
-	bh=/cVgxAil8PWw7aNezkRshuCnH82jfUgncVom3ws6J2U=;
+	s=korg; t=1684783825;
+	bh=QtkgcGf1W3mOwB8xJrkWew1rMav0BABgRoE34v8Ync8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=irmwbj6l27uPXDOnCMQNUffGyrh1I5jXZDJtbrZLJ/J6z9KSQ64p79SBqT6EGPOfJ
-	 bBxxB7UVXX6DCk27349FRjxb8Lp7PnF4zAEgu+Wuq+Y0EMkbepcClsVOoQg5THQYYf
-	 ZeA+YY7GK/u0VCnsDltBFZg1tmmR03DvP0om4S9Q=
+	b=0T+vJmS76BoCY5G99l6K6tTYk6eqsmIxpvkGvvpxXrzPCfoI+QkfEIZNLk+t99K7d
+	 gjlRaKLHQX0REEfn7EfrdvjJIykePzXBLAbIogfeyYTESaO/7bmLwbYeIgRpr6eThk
+	 gpPn9HF83CoNvUK0Vw/14MCTnjzYf6nVmz874oMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Lee Jones <lee@kernel.org>,
+	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+	Jeroen Roovers <jer@xs4all.nl>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 146/292] mfd: intel-lpss: Add Intel Meteor Lake PCH-S LPSS PCI IDs
-Date: Mon, 22 May 2023 20:08:23 +0100
-Message-Id: <20230522190409.613069601@linuxfoundation.org>
+Subject: [PATCH 6.1 147/292] parisc: Replace regular spinlock with spin_trylock on panic path
+Date: Mon, 22 May 2023 20:08:24 +0100
+Message-Id: <20230522190409.638792431@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,47 +37,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-[ Upstream commit 72d4a1683741ee578da0e265886e6a7f3d42266c ]
+[ Upstream commit 829632dae8321787525ee37dc4828bbe6edafdae ]
 
-Add Intel Meteor Lake PCH-S also called as Meteor Point-S LPSS PCI IDs.
+The panic notifiers' callbacks execute in an atomic context, with
+interrupts/preemption disabled, and all CPUs not running the panic
+function are off, so it's very dangerous to wait on a regular
+spinlock, there's a risk of deadlock.
 
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230330132618.4108665-1-jarkko.nikula@linux.intel.com
+Refactor the panic notifier of parisc/power driver to make use
+of spin_trylock - for that, we've added a second version of the
+soft-power function. Also, some comments were reorganized and
+trailing white spaces, useless header inclusion and blank lines
+were removed.
+
+Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
+Cc: Jeroen Roovers <jer@xs4all.nl>
+Acked-by: Helge Deller <deller@gmx.de> # parisc
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel-lpss-pci.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/parisc/include/asm/pdc.h |  1 +
+ arch/parisc/kernel/firmware.c | 27 +++++++++++++++++++++++----
+ drivers/parisc/power.c        | 16 ++++++++++------
+ 3 files changed, 34 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mfd/intel-lpss-pci.c b/drivers/mfd/intel-lpss-pci.c
-index dde31c50a6320..699f44ffff0e4 100644
---- a/drivers/mfd/intel-lpss-pci.c
-+++ b/drivers/mfd/intel-lpss-pci.c
-@@ -447,6 +447,21 @@ static const struct pci_device_id intel_lpss_pci_ids[] = {
- 	{ PCI_VDEVICE(INTEL, 0x7e79), (kernel_ulong_t)&bxt_i2c_info },
- 	{ PCI_VDEVICE(INTEL, 0x7e7a), (kernel_ulong_t)&bxt_i2c_info },
- 	{ PCI_VDEVICE(INTEL, 0x7e7b), (kernel_ulong_t)&bxt_i2c_info },
-+	/* MTP-S */
-+	{ PCI_VDEVICE(INTEL, 0x7f28), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f29), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f2a), (kernel_ulong_t)&tgl_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f2b), (kernel_ulong_t)&tgl_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f4c), (kernel_ulong_t)&bxt_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f4d), (kernel_ulong_t)&bxt_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f4e), (kernel_ulong_t)&bxt_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f4f), (kernel_ulong_t)&bxt_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f5c), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f5d), (kernel_ulong_t)&bxt_uart_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f5e), (kernel_ulong_t)&tgl_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f5f), (kernel_ulong_t)&tgl_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f7a), (kernel_ulong_t)&bxt_i2c_info },
-+	{ PCI_VDEVICE(INTEL, 0x7f7b), (kernel_ulong_t)&bxt_i2c_info },
- 	/* LKF */
- 	{ PCI_VDEVICE(INTEL, 0x98a8), (kernel_ulong_t)&bxt_uart_info },
- 	{ PCI_VDEVICE(INTEL, 0x98a9), (kernel_ulong_t)&bxt_uart_info },
+diff --git a/arch/parisc/include/asm/pdc.h b/arch/parisc/include/asm/pdc.h
+index fcbcf9a96c111..77622558bf651 100644
+--- a/arch/parisc/include/asm/pdc.h
++++ b/arch/parisc/include/asm/pdc.h
+@@ -80,6 +80,7 @@ int pdc_do_firm_test_reset(unsigned long ftc_bitmap);
+ int pdc_do_reset(void);
+ int pdc_soft_power_info(unsigned long *power_reg);
+ int pdc_soft_power_button(int sw_control);
++int pdc_soft_power_button_panic(int sw_control);
+ void pdc_io_reset(void);
+ void pdc_io_reset_devices(void);
+ int pdc_iodc_getc(void);
+diff --git a/arch/parisc/kernel/firmware.c b/arch/parisc/kernel/firmware.c
+index bd325f2b5349e..3e051a973e9b2 100644
+--- a/arch/parisc/kernel/firmware.c
++++ b/arch/parisc/kernel/firmware.c
+@@ -1232,15 +1232,18 @@ int __init pdc_soft_power_info(unsigned long *power_reg)
+ }
+ 
+ /*
+- * pdc_soft_power_button - Control the soft power button behaviour
+- * @sw_control: 0 for hardware control, 1 for software control 
++ * pdc_soft_power_button{_panic} - Control the soft power button behaviour
++ * @sw_control: 0 for hardware control, 1 for software control
+  *
+  *
+  * This PDC function places the soft power button under software or
+  * hardware control.
+- * Under software control the OS may control to when to allow to shut 
+- * down the system. Under hardware control pressing the power button 
++ * Under software control the OS may control to when to allow to shut
++ * down the system. Under hardware control pressing the power button
+  * powers off the system immediately.
++ *
++ * The _panic version relies on spin_trylock to prevent deadlock
++ * on panic path.
+  */
+ int pdc_soft_power_button(int sw_control)
+ {
+@@ -1254,6 +1257,22 @@ int pdc_soft_power_button(int sw_control)
+ 	return retval;
+ }
+ 
++int pdc_soft_power_button_panic(int sw_control)
++{
++	int retval;
++	unsigned long flags;
++
++	if (!spin_trylock_irqsave(&pdc_lock, flags)) {
++		pr_emerg("Couldn't enable soft power button\n");
++		return -EBUSY; /* ignored by the panic notifier */
++	}
++
++	retval = mem_pdc_call(PDC_SOFT_POWER, PDC_SOFT_POWER_ENABLE, __pa(pdc_result), sw_control);
++	spin_unlock_irqrestore(&pdc_lock, flags);
++
++	return retval;
++}
++
+ /*
+  * pdc_io_reset - Hack to avoid overlapping range registers of Bridges devices.
+  * Primarily a problem on T600 (which parisc-linux doesn't support) but
+diff --git a/drivers/parisc/power.c b/drivers/parisc/power.c
+index 456776bd8ee66..6f5e5f0230d39 100644
+--- a/drivers/parisc/power.c
++++ b/drivers/parisc/power.c
+@@ -37,7 +37,6 @@
+ #include <linux/module.h>
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+-#include <linux/notifier.h>
+ #include <linux/panic_notifier.h>
+ #include <linux/reboot.h>
+ #include <linux/sched/signal.h>
+@@ -175,16 +174,21 @@ static void powerfail_interrupt(int code, void *x)
+ 
+ 
+ 
+-/* parisc_panic_event() is called by the panic handler.
+- * As soon as a panic occurs, our tasklets above will not be
+- * executed any longer. This function then re-enables the 
+- * soft-power switch and allows the user to switch off the system
++/*
++ * parisc_panic_event() is called by the panic handler.
++ *
++ * As soon as a panic occurs, our tasklets above will not
++ * be executed any longer. This function then re-enables
++ * the soft-power switch and allows the user to switch off
++ * the system. We rely in pdc_soft_power_button_panic()
++ * since this version spin_trylocks (instead of regular
++ * spinlock), preventing deadlocks on panic path.
+  */
+ static int parisc_panic_event(struct notifier_block *this,
+ 		unsigned long event, void *ptr)
+ {
+ 	/* re-enable the soft-power switch */
+-	pdc_soft_power_button(0);
++	pdc_soft_power_button_panic(0);
+ 	return NOTIFY_DONE;
+ }
+ 
 -- 
 2.39.2
 
