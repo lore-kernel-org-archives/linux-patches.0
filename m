@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5FB171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A155C4339E;
-	Mon, 22 May 2023 19:42:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3469171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF62C433D2;
+	Mon, 22 May 2023 19:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784524;
-	bh=dYGHK4rRHrE48vb7qYn90C38nDdspUMEYUcrsJE0/3k=;
+	s=korg; t=1684784527;
+	bh=byWCWSLw3MQQeHKSMnTSsapdwq8cJxSTwv7+8NmzPX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQH46A5C7F2nolYJ2o4Innpkx65C9KYFOo95sZzWEvCc2ZRFu0aBO3kXBo0Rh4niN
-	 cZWo4pNfv37Uyvq0SKym9O0q0mmwX8KPA9ElfGbkapXTFVK6mtSTJkeMwl35U5MYDV
-	 NvKLGRmtroK+kZjq7Gm8hszVefyBO4r6vZDbyx8w=
+	b=s0WP6ta60Ckl+bJp9x/H8fC20GkefS9lt5LFAGNlKsssOoziYhuK3Zmam+tMoHYVt
+	 Kju0M4/WwNwvgi6HryPkXaj6YVaQxLCc6+lfZLKYovfBHAoYnCk+CEwCtesec8Tb/F
+	 cgHZwDoIdILIFONxzZDS4kBp45lrsA1J8BE03TbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Karol Wachowski <karol.wachowski@linux.intel.com>,
+	Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>,
+	Jeffrey Hugo <quic_jhugo@quicinc.com>,
+	Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 069/364] remoteproc: stm32_rproc: Add mutex protection for workqueue
-Date: Mon, 22 May 2023 20:06:14 +0100
-Message-Id: <20230522190414.506497024@linuxfoundation.org>
+Subject: [PATCH 6.3 070/364] accel/ivpu: Remove D3hot delay for Meteorlake
+Date: Mon, 22 May 2023 20:06:15 +0100
+Message-Id: <20230522190414.529838575@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,56 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+From: Karol Wachowski <karol.wachowski@linux.intel.com>
 
-[ Upstream commit 35bdafda40cc343ad2ba2cce105eba03a70241cc ]
+[ Upstream commit cb949ce504e829193234e26cb3042bb448465d52 ]
 
-The workqueue may execute late even after remoteproc is stopped or
-stopping, some resources (rpmsg device and endpoint) have been
-released in rproc_stop_subdevices(), then rproc_vq_interrupt()
-accessing these resources will cause kernel dump.
+VPU on MTL has hardware optimizations and does not require 10ms
+D0 - D3hot transition delay imposed by PCI specification (PCIe
+r6.0, sec 5.9.) .
 
-Call trace:
-virtqueue_add_inbuf
-virtqueue_add_inbuf
-rpmsg_recv_single
-rpmsg_recv_done
-vring_interrupt
-stm32_rproc_mb_vq_work
-process_one_work
-worker_thread
-kthread
+The delay removal is traditionally done by adding PCI ID to
+quirk_remove_d3hot_delay() in drivers/pci/quirks.c . But since
+we do not need that optimization before driver probe and we
+can better specify in the ivpu driver on what (future) hardware
+use the optimization, we do not use quirk_remove_d3hot_delay()
+for that.
 
-Suggested-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Link: https://lore.kernel.org/r/20230331160634.3113031-1-arnaud.pouliquen@foss.st.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Karol Wachowski <karol.wachowski@linux.intel.com>
+Signed-off-by: Stanislaw Gruszka <stanislaw.gruszka@linux.intel.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Jacek Lawrynowicz <jacek.lawrynowicz@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230403121545.2995279-1-stanislaw.gruszka@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/stm32_rproc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/accel/ivpu/ivpu_drv.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/remoteproc/stm32_rproc.c b/drivers/remoteproc/stm32_rproc.c
-index 23c1690b8d73f..8746cbb1f168d 100644
---- a/drivers/remoteproc/stm32_rproc.c
-+++ b/drivers/remoteproc/stm32_rproc.c
-@@ -291,8 +291,16 @@ static void stm32_rproc_mb_vq_work(struct work_struct *work)
- 	struct stm32_mbox *mb = container_of(work, struct stm32_mbox, vq_work);
- 	struct rproc *rproc = dev_get_drvdata(mb->client.dev);
+diff --git a/drivers/accel/ivpu/ivpu_drv.c b/drivers/accel/ivpu/ivpu_drv.c
+index 6a320a73e3ccf..8396db2b52030 100644
+--- a/drivers/accel/ivpu/ivpu_drv.c
++++ b/drivers/accel/ivpu/ivpu_drv.c
+@@ -437,6 +437,10 @@ static int ivpu_pci_init(struct ivpu_device *vdev)
+ 	/* Clear any pending errors */
+ 	pcie_capability_clear_word(pdev, PCI_EXP_DEVSTA, 0x3f);
  
-+	mutex_lock(&rproc->lock);
++	/* VPU MTL does not require PCI spec 10m D3hot delay */
++	if (ivpu_is_mtl(vdev))
++		pdev->d3hot_delay = 0;
 +
-+	if (rproc->state != RPROC_RUNNING)
-+		goto unlock_mutex;
-+
- 	if (rproc_vq_interrupt(rproc, mb->vq_id) == IRQ_NONE)
- 		dev_dbg(&rproc->dev, "no message found in vq%d\n", mb->vq_id);
-+
-+unlock_mutex:
-+	mutex_unlock(&rproc->lock);
- }
- 
- static void stm32_rproc_mb_callback(struct mbox_client *cl, void *data)
+ 	ret = pcim_enable_device(pdev);
+ 	if (ret) {
+ 		ivpu_err(vdev, "Failed to enable PCI device: %d\n", ret);
 -- 
 2.39.2
 
