@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95DF171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:48:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C35C433EF;
-	Mon, 22 May 2023 19:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9607171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:48:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29ADAC4339B;
+	Mon, 22 May 2023 19:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784893;
-	bh=c6+cJj2hVBT5nxDYz1XcF4qjFeYOBY8jbPOX3F+6DQw=;
+	s=korg; t=1684784896;
+	bh=dyW9TWjA7QYobcsTuhtZlscVfnaI8GO8weXHBZ11q8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2WgGvTnm9re6CGe5yvxuKryIbpruedTXVXIdTXpbB4xcr3qvFqUegwnGBi7Ivi2Ez
-	 STxfbaabc8HIcVumeb/SfnHoItnR4IhWiTLrCGQVlriM49O2bUigOmg+3QbUOSaDX4
-	 aUwgF07ohSn6Yu6zAaAccCMsCPPT4e/7+mjc4sFU=
+	b=o4bDq40uuQ6vuvvX6eq5Mn4aFbjs7B3lPPZhHVWbdRIRyAxxHd0jKT6xOp0SI9pBe
+	 LVtjjNC7RlvJ+QKki2a/iGODHu7d2fFG2wqI7WjKsCKoytNmHFbWovhJaSGk9NQbgo
+	 81CkdKF2iSHU7fETaDRVop+2lnjb3xF+8/XtqyqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Brunner <tobias@strongswan.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Kevin Traynor <ktraynor@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	William Tu <u9012063@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 219/364] af_key: Reject optional tunnel/BEET mode templates in outbound policies
-Date: Mon, 22 May 2023 20:08:44 +0100
-Message-Id: <20230522190418.184256888@linuxfoundation.org>
+Subject: [PATCH 6.3 237/364] erspan: get the proto with the md version for collect_md
+Date: Mon, 22 May 2023 20:09:02 +0100
+Message-Id: <20230522190418.628312221@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,68 +38,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Brunner <tobias@strongswan.org>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit cf3128a7aca55b2eefb68281d44749c683bdc96f ]
+[ Upstream commit d80fc101d2eb9b3188c228d61223890aeea480a4 ]
 
-xfrm_state_find() uses `encap_family` of the current template with
-the passed local and remote addresses to find a matching state.
-If an optional tunnel or BEET mode template is skipped in a mixed-family
-scenario, there could be a mismatch causing an out-of-bounds read as
-the addresses were not replaced to match the family of the next template.
+In commit 20704bd1633d ("erspan: build the header with the right proto
+according to erspan_ver"), it gets the proto with t->parms.erspan_ver,
+but t->parms.erspan_ver is not used by collect_md branch, and instead
+it should get the proto with md->version for collect_md.
 
-While there are theoretical use cases for optional templates in outbound
-policies, the only practical one is to skip IPComp states in inbound
-policies if uncompressed packets are received that are handled by an
-implicitly created IPIP state instead.
+Thanks to Kevin for pointing this out.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Tobias Brunner <tobias@strongswan.org>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 20704bd1633d ("erspan: build the header with the right proto according to erspan_ver")
+Fixes: 94d7d8f29287 ("ip6_gre: add erspan v2 support")
+Reported-by: Kevin Traynor <ktraynor@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: William Tu <u9012063@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/key/af_key.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/ipv6/ip6_gre.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index a815f5ab4c49a..31ab12fd720ae 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -1940,7 +1940,8 @@ static u32 gen_reqid(struct net *net)
- }
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index a4ecfc9d25930..da80974ad23ae 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1015,12 +1015,14 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 					    ntohl(tun_id),
+ 					    ntohl(md->u.index), truncate,
+ 					    false);
++			proto = htons(ETH_P_ERSPAN);
+ 		} else if (md->version == 2) {
+ 			erspan_build_header_v2(skb,
+ 					       ntohl(tun_id),
+ 					       md->u.md2.dir,
+ 					       get_hwid(&md->u.md2),
+ 					       truncate, false);
++			proto = htons(ETH_P_ERSPAN2);
+ 		} else {
+ 			goto tx_err;
+ 		}
+@@ -1043,24 +1045,25 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 			break;
+ 		}
  
- static int
--parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
-+parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_policy *pol,
-+		   struct sadb_x_ipsecrequest *rq)
- {
- 	struct net *net = xp_net(xp);
- 	struct xfrm_tmpl *t = xp->xfrm_vec + xp->xfrm_nr;
-@@ -1958,9 +1959,12 @@ parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
- 	if ((mode = pfkey_mode_to_xfrm(rq->sadb_x_ipsecrequest_mode)) < 0)
- 		return -EINVAL;
- 	t->mode = mode;
--	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE)
-+	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE) {
-+		if ((mode == XFRM_MODE_TUNNEL || mode == XFRM_MODE_BEET) &&
-+		    pol->sadb_x_policy_dir == IPSEC_DIR_OUTBOUND)
-+			return -EINVAL;
- 		t->optional = 1;
--	else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
-+	} else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
- 		t->reqid = rq->sadb_x_ipsecrequest_reqid;
- 		if (t->reqid > IPSEC_MANUAL_REQID_MAX)
- 			t->reqid = 0;
-@@ -2002,7 +2006,7 @@ parse_ipsecrequests(struct xfrm_policy *xp, struct sadb_x_policy *pol)
- 		    rq->sadb_x_ipsecrequest_len < sizeof(*rq))
- 			return -EINVAL;
+-		if (t->parms.erspan_ver == 1)
++		if (t->parms.erspan_ver == 1) {
+ 			erspan_build_header(skb, ntohl(t->parms.o_key),
+ 					    t->parms.index,
+ 					    truncate, false);
+-		else if (t->parms.erspan_ver == 2)
++			proto = htons(ETH_P_ERSPAN);
++		} else if (t->parms.erspan_ver == 2) {
+ 			erspan_build_header_v2(skb, ntohl(t->parms.o_key),
+ 					       t->parms.dir,
+ 					       t->parms.hwid,
+ 					       truncate, false);
+-		else
++			proto = htons(ETH_P_ERSPAN2);
++		} else {
+ 			goto tx_err;
++		}
  
--		if ((err = parse_ipsecrequest(xp, rq)) < 0)
-+		if ((err = parse_ipsecrequest(xp, pol, rq)) < 0)
- 			return err;
- 		len -= rq->sadb_x_ipsecrequest_len;
- 		rq = (void*)((u8*)rq + rq->sadb_x_ipsecrequest_len);
+ 		fl6.daddr = t->parms.raddr;
+ 	}
+ 
+ 	/* Push GRE header. */
+-	proto = (t->parms.erspan_ver == 1) ? htons(ETH_P_ERSPAN)
+-					   : htons(ETH_P_ERSPAN2);
+ 	gre_build_header(skb, 8, TUNNEL_SEQ, proto, 0, htonl(atomic_fetch_inc(&t->o_seqno)));
+ 
+ 	/* TooBig packet may have updated dst->dev's mtu */
 -- 
 2.39.2
 
