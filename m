@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D51171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BE5C433D2;
-	Mon, 22 May 2023 19:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6E2171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2E1C4339C;
+	Mon, 22 May 2023 19:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782982;
-	bh=2D64oLm2SWw4kW5p6P/UQQvw/Y6FYEg/jfD5h3DAZhA=;
+	s=korg; t=1684782985;
+	bh=lKMSjona6Ilnr7/ZVsEeiMP1/b0DxKQlvR9PXpUO0LI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2pcEGz/yWi1LMmn79fO/JsQSK8QLtXZdztvFgU4BD7E0KtJ642xw+tWXlrY+WNzWe
-	 jU3lo0QMk+Y58tx18VqrNRf761mue5ya8U6Lnd4bq3HGsmN/BYQ1tFYlWebhkMhS2s
-	 /1HMSWCOJaWFv9GwY00KhvGBSYSLyJruXbP/TyMY=
+	b=ttbX1XPP3X7ytL8A/9wdR2lwdQddFkwbJ1iQDVx4G76l23hAoAxvu9/16Aevm1feQ
+	 qmREWVKY6l8VPi0FoV5ITfvHhIF84FNLKmiBeHNq5j0Nu3Jf9OSnlTTL3dJaUOFt7P
+	 Ham7KNknMzecM+kcQlUMx/qt4Q7Fgr2CvnVU4eio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <avolmat@me.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 100/203] phy: st: miphy28lp: use _poll_timeout functions for waits
-Date: Mon, 22 May 2023 20:08:44 +0100
-Message-Id: <20230522190357.754304865@linuxfoundation.org>
+Subject: [PATCH 5.15 101/203] soundwire: qcom: gracefully handle too many ports in DT
+Date: Mon, 22 May 2023 20:08:45 +0100
+Message-Id: <20230522190357.780962955@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,111 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alain Volmat <avolmat@me.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit e3be4dd2c8d8aabfd2c3127d0e2e5754d3ae82d6 ]
+[ Upstream commit 2367e0ecb498764e95cfda691ff0828f7d25f9a4 ]
 
-This commit introduces _poll_timeout functions usage instead of
-wait loops waiting for a status bit.
+There are two issues related to the number of ports coming from
+Devicetree when exceeding in total QCOM_SDW_MAX_PORTS.  Both lead to
+incorrect memory accesses:
+1. With DTS having too big value of input or output ports, the driver,
+   when copying port parameters from local/stack arrays into 'pconfig'
+   array in 'struct qcom_swrm_ctrl', will iterate over their sizes.
 
-Signed-off-by: Alain Volmat <avolmat@me.com>
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Link: https://lore.kernel.org/r/20230210224309.98452-1-avolmat@me.com
+2. If DTS also has too many parameters for these ports (e.g.
+   qcom,ports-sinterval-low), the driver will overflow buffers on the
+   stack when reading these properties from DTS.
+
+Add a sanity check so incorrect DTS will not cause kernel memory
+corruption.
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20230222144412.237832-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/st/phy-miphy28lp.c | 42 ++++++++--------------------------
- 1 file changed, 10 insertions(+), 32 deletions(-)
+ drivers/soundwire/qcom.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/phy/st/phy-miphy28lp.c b/drivers/phy/st/phy-miphy28lp.c
-index 068160a34f5cc..e30305b77f0d1 100644
---- a/drivers/phy/st/phy-miphy28lp.c
-+++ b/drivers/phy/st/phy-miphy28lp.c
-@@ -9,6 +9,7 @@
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 52d0e4164c6b5..2ba0911f5d0cc 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -1142,6 +1142,9 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
+ 	ctrl->num_dout_ports = val;
  
- #include <linux/platform_device.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
- #include <linux/of.h>
-@@ -484,19 +485,11 @@ static inline void miphy28lp_pcie_config_gen(struct miphy28lp_phy *miphy_phy)
- 
- static inline int miphy28lp_wait_compensation(struct miphy28lp_phy *miphy_phy)
- {
--	unsigned long finish = jiffies + 5 * HZ;
- 	u8 val;
- 
- 	/* Waiting for Compensation to complete */
--	do {
--		val = readb_relaxed(miphy_phy->base + MIPHY_COMP_FSM_6);
--
--		if (time_after_eq(jiffies, finish))
--			return -EBUSY;
--		cpu_relax();
--	} while (!(val & COMP_DONE));
--
--	return 0;
-+	return readb_relaxed_poll_timeout(miphy_phy->base + MIPHY_COMP_FSM_6,
-+					  val, val & COMP_DONE, 1, 5 * USEC_PER_SEC);
- }
- 
- 
-@@ -805,7 +798,6 @@ static inline void miphy28lp_configure_usb3(struct miphy28lp_phy *miphy_phy)
- 
- static inline int miphy_is_ready(struct miphy28lp_phy *miphy_phy)
- {
--	unsigned long finish = jiffies + 5 * HZ;
- 	u8 mask = HFC_PLL | HFC_RDY;
- 	u8 val;
- 
-@@ -816,21 +808,14 @@ static inline int miphy_is_ready(struct miphy28lp_phy *miphy_phy)
- 	if (miphy_phy->type == PHY_TYPE_SATA)
- 		mask |= PHY_RDY;
- 
--	do {
--		val = readb_relaxed(miphy_phy->base + MIPHY_STATUS_1);
--		if ((val & mask) != mask)
--			cpu_relax();
--		else
--			return 0;
--	} while (!time_after_eq(jiffies, finish));
--
--	return -EBUSY;
-+	return readb_relaxed_poll_timeout(miphy_phy->base + MIPHY_STATUS_1,
-+					  val, (val & mask) == mask, 1,
-+					  5 * USEC_PER_SEC);
- }
- 
- static int miphy_osc_is_ready(struct miphy28lp_phy *miphy_phy)
- {
- 	struct miphy28lp_dev *miphy_dev = miphy_phy->phydev;
--	unsigned long finish = jiffies + 5 * HZ;
- 	u32 val;
- 
- 	if (!miphy_phy->osc_rdy)
-@@ -839,17 +824,10 @@ static int miphy_osc_is_ready(struct miphy28lp_phy *miphy_phy)
- 	if (!miphy_phy->syscfg_reg[SYSCFG_STATUS])
- 		return -EINVAL;
- 
--	do {
--		regmap_read(miphy_dev->regmap,
--				miphy_phy->syscfg_reg[SYSCFG_STATUS], &val);
--
--		if ((val & MIPHY_OSC_RDY) != MIPHY_OSC_RDY)
--			cpu_relax();
--		else
--			return 0;
--	} while (!time_after_eq(jiffies, finish));
--
--	return -EBUSY;
-+	return regmap_read_poll_timeout(miphy_dev->regmap,
-+					miphy_phy->syscfg_reg[SYSCFG_STATUS],
-+					val, val & MIPHY_OSC_RDY, 1,
-+					5 * USEC_PER_SEC);
- }
- 
- static int miphy28lp_get_resource_byname(struct device_node *child,
+ 	nports = ctrl->num_dout_ports + ctrl->num_din_ports;
++	if (nports > QCOM_SDW_MAX_PORTS)
++		return -EINVAL;
++
+ 	/* Valid port numbers are from 1-14, so mask out port 0 explicitly */
+ 	set_bit(0, &ctrl->dout_port_mask);
+ 	set_bit(0, &ctrl->din_port_mask);
 -- 
 2.39.2
 
