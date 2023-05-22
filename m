@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE654171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:27:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C942C433D2;
-	Mon, 22 May 2023 19:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACDA171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:27:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B68AC433D2;
+	Mon, 22 May 2023 19:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783637;
-	bh=ply/ASMcfvhNiPQyAkDXZfwagZWKkhkqMGewzH5yhxw=;
+	s=korg; t=1684783640;
+	bh=m8VNee3bA+lgpiWAyRUMwnimPC/EadPMf/JdyNqFKu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vd7SxEmMqElKi3PCBXP6dXp6HCRGiEboVf9Weo7emRJE53BOnW65vPmnacL9O0wxz
-	 tyNQANBurt6LcqthMMmme+mP/RW/uzHoYysB9ezgSAfq92EPbEBu7nWS/LAz8TJIxK
-	 dU3BBs6ZQjB9lTqOoRUVpbMsLCj3pl9KPd3xGTjk=
+	b=xJ+uVK1V763ljfGKP9Ps4e/TMKE6Yo92iKOU9Q+jB6B0KbxQ0dgkl9wSCkr/J5PIe
+	 qhlTKQz/P8Ky/9Yg+Eq7nRbXB53A02fgL4CaHppjep1ha+c9f5oAUL5gDg/LsZnn5B
+	 o/cZ3asgYEcSskqZdFtDM4NtEs1W4gsrHnQCHQGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
-	Bastian Germann <bage@debian.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Eli Cohen <elic@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/292] Bluetooth: Add new quirk for broken local ext features page 2
-Date: Mon, 22 May 2023 20:07:48 +0100
-Message-Id: <20230522190408.742582160@linuxfoundation.org>
+Subject: [PATCH 6.1 085/292] lib: cpu_rmap: Avoid use after free on rmap->obj array entries
+Date: Mon, 22 May 2023 20:07:22 +0100
+Message-Id: <20230522190408.099206426@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,63 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Khoruzhick <anarsoul@gmail.com>
+From: Eli Cohen <elic@nvidia.com>
 
-[ Upstream commit 8194f1ef5a815aea815a91daf2c721eab2674f1f ]
+[ Upstream commit 4e0473f1060aa49621d40a113afde24818101d37 ]
 
-Some adapters (e.g. RTL8723CS) advertise that they have more than
-2 pages for local ext features, but they don't support any features
-declared in these pages. RTL8723CS reports max_page = 2 and declares
-support for sync train and secure connection, but it responds with
-either garbage or with error in status on corresponding commands.
+When calling irq_set_affinity_notifier() with NULL at the notify
+argument, it will cause freeing of the glue pointer in the
+corresponding array entry but will leave the pointer in the array. A
+subsequent call to free_irq_cpu_rmap() will try to free this entry again
+leading to possible use after free.
 
-Signed-off-by: Vasily Khoruzhick <anarsoul@gmail.com>
-Signed-off-by: Bastian Germann <bage@debian.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix that by setting NULL to the array entry and checking that we have
+non-zero at the array entry when iterating over the array in
+free_irq_cpu_rmap().
+
+The current code does not suffer from this since there are no cases
+where irq_set_affinity_notifier(irq, NULL) (note the NULL passed for the
+notify arg) is called, followed by a call to free_irq_cpu_rmap() so we
+don't hit and issue. Subsequent patches in this series excersize this
+flow, hence the required fix.
+
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Eli Cohen <elic@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/bluetooth/hci.h | 7 +++++++
- net/bluetooth/hci_event.c   | 9 +++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ lib/cpu_rmap.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 7a381fcef939d..f80ae7d237342 100644
---- a/include/net/bluetooth/hci.h
-+++ b/include/net/bluetooth/hci.h
-@@ -294,6 +294,13 @@ enum {
- 	 * during the hdev->setup vendor callback.
- 	 */
- 	HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG,
-+
-+	/* When this quirk is set, max_page for local extended features
-+	 * is set to 1, even if controller reports higher number. Some
-+	 * controllers (e.g. RTL8723CS) report more pages, but they
-+	 * don't actually support features declared there.
-+	 */
-+	HCI_QUIRK_BROKEN_LOCAL_EXT_FEATURES_PAGE_2,
- };
+diff --git a/lib/cpu_rmap.c b/lib/cpu_rmap.c
+index f08d9c56f712e..e77f12bb3c774 100644
+--- a/lib/cpu_rmap.c
++++ b/lib/cpu_rmap.c
+@@ -232,7 +232,8 @@ void free_irq_cpu_rmap(struct cpu_rmap *rmap)
  
- /* HCI device flags */
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 42a3a19b111e3..21416ccc30ab2 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -881,8 +881,13 @@ static u8 hci_cc_read_local_ext_features(struct hci_dev *hdev, void *data,
- 	if (rp->status)
- 		return rp->status;
+ 	for (index = 0; index < rmap->used; index++) {
+ 		glue = rmap->obj[index];
+-		irq_set_affinity_notifier(glue->notify.irq, NULL);
++		if (glue)
++			irq_set_affinity_notifier(glue->notify.irq, NULL);
+ 	}
  
--	if (hdev->max_page < rp->max_page)
--		hdev->max_page = rp->max_page;
-+	if (hdev->max_page < rp->max_page) {
-+		if (test_bit(HCI_QUIRK_BROKEN_LOCAL_EXT_FEATURES_PAGE_2,
-+			     &hdev->quirks))
-+			bt_dev_warn(hdev, "broken local ext features page 2");
-+		else
-+			hdev->max_page = rp->max_page;
-+	}
+ 	cpu_rmap_put(rmap);
+@@ -268,6 +269,7 @@ static void irq_cpu_rmap_release(struct kref *ref)
+ 		container_of(ref, struct irq_glue, notify.kref);
  
- 	if (rp->page < HCI_MAX_PAGES)
- 		memcpy(hdev->features[rp->page], rp->features, 8);
+ 	cpu_rmap_put(glue->rmap);
++	glue->rmap->obj[glue->index] = NULL;
+ 	kfree(glue);
+ }
+ 
+@@ -297,6 +299,7 @@ int irq_cpu_rmap_add(struct cpu_rmap *rmap, int irq)
+ 	rc = irq_set_affinity_notifier(irq, &glue->notify);
+ 	if (rc) {
+ 		cpu_rmap_put(glue->rmap);
++		rmap->obj[glue->index] = NULL;
+ 		kfree(glue);
+ 	}
+ 	return rc;
 -- 
 2.39.2
 
