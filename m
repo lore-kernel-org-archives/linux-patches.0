@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2B52171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:32:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500AAC4339C;
-	Mon, 22 May 2023 19:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115F7171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:32:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9076FC4339C;
+	Mon, 22 May 2023 19:32:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783926;
-	bh=rVVfaMKLdYaaPy1Q0Rh8ia9IfV2MoIz0Gf6cGgcL31w=;
+	s=korg; t=1684783929;
+	bh=kBIMZF4dfVJoq85E9/5DVhfsutNvOQw3JwFfqGU7ZMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5mX1HrNBXwESGdy2RK90QwLzSxZynIACjCt/r0KsgKtJoDwzKtxL5TLZ6Wexsv8I
-	 KY0J3yJiwFIljdZAgwcTLLTkQtVlFUprh9pLH2oFASP+4t5Xpk3E+3l8+AaVMSZkpz
-	 ghSkjwy8FkQ8JH8qaIGXeHUKo+4WgYXbPDvn+3f0=
+	b=0kpkASpJrdHm9rzAksDVahk5lTRB9eNc+HF16Z0Bu5rsul1Z2qgnvmF6mXZOqOHmv
+	 qGxx4eGGtoy6a/x+95VFAyaT4utHHc0LLCYOwjJch8YGUw11dI61gbgcBNlDbX528M
+	 5V8NuiYR9uYn1nhviUhOOLL4108kwbSUoZSdE/PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
-	=?UTF-8?q?Alexis=20Lothor=C3=A9?= <alexis.lothore@bootlin.com>,
-	Piotr Raczynski <piotr.raczynski@intel.com>,
+	Jie Wang <wangjie125@huawei.com>,
+	Hao Lan <lanhao@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 180/292] net: dsa: rzn1-a5psw: disable learning for standalone ports
-Date: Mon, 22 May 2023 20:08:57 +0100
-Message-Id: <20230522190410.464003170@linuxfoundation.org>
+Subject: [PATCH 6.1 181/292] net: hns3: fix output information incomplete for dumping tx queue info with debugfs
+Date: Mon, 22 May 2023 20:08:58 +0100
+Message-Id: <20230522190410.488366651@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -37,84 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Clément Léger <clement.leger@bootlin.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit ec52b69c046a6219011af780aca155a96719637b ]
+[ Upstream commit 89f6bfb071182f05d7188c255b0e7251c3806f16 ]
 
-When ports are in standalone mode, they should have learning disabled to
-avoid adding new entries in the MAC lookup table which might be used by
-other bridge ports to forward packets. While adding that, also make sure
-learning is enabled for CPU port.
+In function hns3_dump_tx_queue_info, The print buffer is not enough when
+the tx BD number is configured to 32760. As a result several BD
+information wouldn't be displayed.
 
-Fixes: 888cdb892b61 ("net: dsa: rzn1-a5psw: add Renesas RZ/N1 advanced 5 port switch driver")
-Signed-off-by: Clément Léger <clement.leger@bootlin.com>
-Signed-off-by: Alexis Lothoré <alexis.lothore@bootlin.com>
-Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
+So fix it by increasing the tx queue print buffer length.
+
+Fixes: 630a6738da82 ("net: hns3: adjust string spaces of some parameters of tx bd info in debugfs")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/rzn1_a5psw.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c | 2 +-
+ drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/rzn1_a5psw.c b/drivers/net/dsa/rzn1_a5psw.c
-index 2b0463263767c..790e177e2aef6 100644
---- a/drivers/net/dsa/rzn1_a5psw.c
-+++ b/drivers/net/dsa/rzn1_a5psw.c
-@@ -340,6 +340,14 @@ static void a5psw_flooding_set_resolution(struct a5psw *a5psw, int port,
- 		a5psw_reg_writel(a5psw, offsets[i], a5psw->bridged_ports);
- }
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+index 66feb23f7b7b6..bcccd82a2620f 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.c
+@@ -130,7 +130,7 @@ static struct hns3_dbg_cmd_info hns3_dbg_cmd[] = {
+ 		.name = "tx_bd_queue",
+ 		.cmd = HNAE3_DBG_CMD_TX_BD,
+ 		.dentry = HNS3_DBG_DENTRY_TX_BD,
+-		.buf_len = HNS3_DBG_READ_LEN_4MB,
++		.buf_len = HNS3_DBG_READ_LEN_5MB,
+ 		.init = hns3_dbg_bd_file_init,
+ 	},
+ 	{
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h
+index 97578eabb7d8b..4a5ef8a90a104 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_debugfs.h
+@@ -10,6 +10,7 @@
+ #define HNS3_DBG_READ_LEN_128KB	0x20000
+ #define HNS3_DBG_READ_LEN_1MB	0x100000
+ #define HNS3_DBG_READ_LEN_4MB	0x400000
++#define HNS3_DBG_READ_LEN_5MB	0x500000
+ #define HNS3_DBG_WRITE_LEN	1024
  
-+static void a5psw_port_set_standalone(struct a5psw *a5psw, int port,
-+				      bool standalone)
-+{
-+	a5psw_port_learning_set(a5psw, port, !standalone);
-+	a5psw_flooding_set_resolution(a5psw, port, !standalone);
-+	a5psw_port_mgmtfwd_set(a5psw, port, standalone);
-+}
-+
- static int a5psw_port_bridge_join(struct dsa_switch *ds, int port,
- 				  struct dsa_bridge bridge,
- 				  bool *tx_fwd_offload,
-@@ -355,8 +363,7 @@ static int a5psw_port_bridge_join(struct dsa_switch *ds, int port,
- 	}
- 
- 	a5psw->br_dev = bridge.dev;
--	a5psw_flooding_set_resolution(a5psw, port, true);
--	a5psw_port_mgmtfwd_set(a5psw, port, false);
-+	a5psw_port_set_standalone(a5psw, port, false);
- 
- 	return 0;
- }
-@@ -366,8 +373,7 @@ static void a5psw_port_bridge_leave(struct dsa_switch *ds, int port,
- {
- 	struct a5psw *a5psw = ds->priv;
- 
--	a5psw_flooding_set_resolution(a5psw, port, false);
--	a5psw_port_mgmtfwd_set(a5psw, port, true);
-+	a5psw_port_set_standalone(a5psw, port, true);
- 
- 	/* No more ports bridged */
- 	if (a5psw->bridged_ports == BIT(A5PSW_CPU_PORT))
-@@ -761,13 +767,15 @@ static int a5psw_setup(struct dsa_switch *ds)
- 		if (dsa_port_is_unused(dp))
- 			continue;
- 
--		/* Enable egress flooding for CPU port */
--		if (dsa_port_is_cpu(dp))
-+		/* Enable egress flooding and learning for CPU port */
-+		if (dsa_port_is_cpu(dp)) {
- 			a5psw_flooding_set_resolution(a5psw, port, true);
-+			a5psw_port_learning_set(a5psw, port, true);
-+		}
- 
--		/* Enable management forward only for user ports */
-+		/* Enable standalone mode for user ports */
- 		if (dsa_port_is_user(dp))
--			a5psw_port_mgmtfwd_set(a5psw, port, true);
-+			a5psw_port_set_standalone(a5psw, port, true);
- 	}
- 
- 	return 0;
+ #define HNS3_DBG_DATA_STR_LEN	32
 -- 
 2.39.2
 
