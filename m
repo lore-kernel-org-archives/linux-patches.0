@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88081171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029DBC433D2;
-	Mon, 22 May 2023 19:29:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8883F14AB3
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BE0C43442;
+	Mon, 22 May 2023 19:29:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783785;
-	bh=BHQh01yXH/sEZyTZkdbBqgBKswF9gB9kcJkbIBvd1F4=;
+	s=korg; t=1684783788;
+	bh=wGT97he5IZkvaL+oOQ1oBZkiZbllOiIc5RXfzruWW5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DcmUBxsQbtxJa9g67znNtJec+4xsGHAEKh0soe4Zr6u6hLU1K9ZViLfsTIZqu96hj
-	 7H+C8NwHSOxPRdRnuQZ+TZhWuZQCXemButpitoYWe9BbVSe/tXjB5eTtpwknPJo2ob
-	 +lt+f41YOuuOevurC+pw2F018NcZNaozsUdXWufI=
+	b=Nuvj+wS26iCRSHXNAFHZ00tXW+OiS/RkRb8A+2rjiN9DRMzqUQ2KF74oGVSJjg9Ti
+	 +I0gEqph7prSpJ4eE0QU9EE+bzZtseLQRyB+s4NWNPYIrOq8kABnxLzV99nl1sMqtY
+	 fHeFuQTyxUqk6kOBmK4fomg+ZoCR4ftEkDJdwbYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Tobias Brunner <tobias@strongswan.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/292] mfd: intel_soc_pmic_chtwc: Add Lenovo Yoga Book X90F to intel_cht_wc_models
-Date: Mon, 22 May 2023 20:08:21 +0100
-Message-Id: <20230522190409.562632270@linuxfoundation.org>
+Subject: [PATCH 6.1 162/292] af_key: Reject optional tunnel/BEET mode templates in outbound policies
+Date: Mon, 22 May 2023 20:08:39 +0100
+Message-Id: <20230522190410.015353349@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,57 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Tobias Brunner <tobias@strongswan.org>
 
-[ Upstream commit ded99b89d25fd73a1d7bd910378e0339fd9d4c4a ]
+[ Upstream commit cf3128a7aca55b2eefb68281d44749c683bdc96f ]
 
-The Android Lenovo Yoga Book X90F / X90L uses the same charger / fuelgauge
-setup as the already supported Windows Lenovo Yoga Book X91F/L, add
-a DMI match for this to intel_cht_wc_models with driver_data
-set to INTEL_CHT_WC_LENOVO_YOGABOOK1.
+xfrm_state_find() uses `encap_family` of the current template with
+the passed local and remote addresses to find a matching state.
+If an optional tunnel or BEET mode template is skipped in a mixed-family
+scenario, there could be a mismatch causing an out-of-bounds read as
+the addresses were not replaced to match the family of the next template.
 
-When the quirk for the X91F/L was initially added it was written to
-also apply to the X90F/L but this does not work because the Android
-version of the Yoga Book uses completely different DMI strings.
-Also adjust the X91F/L quirk to reflect that it only applies to
-the X91F/L models.
+While there are theoretical use cases for optional templates in outbound
+policies, the only practical one is to skip IPComp states in inbound
+policies if uncompressed packets are received that are handled by an
+implicitly created IPIP state instead.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230301095402.28582-1-hdegoede@redhat.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Tobias Brunner <tobias@strongswan.org>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel_soc_pmic_chtwc.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ net/key/af_key.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/intel_soc_pmic_chtwc.c b/drivers/mfd/intel_soc_pmic_chtwc.c
-index 9216f0d34206c..a82b7cb661b7b 100644
---- a/drivers/mfd/intel_soc_pmic_chtwc.c
-+++ b/drivers/mfd/intel_soc_pmic_chtwc.c
-@@ -159,11 +159,19 @@ static const struct dmi_system_id cht_wc_model_dmi_ids[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Mipad2"),
- 		},
- 	}, {
--		/* Lenovo Yoga Book X90F / X91F / X91L */
-+		/* Lenovo Yoga Book X90F / X90L */
- 		.driver_data = (void *)(long)INTEL_CHT_WC_LENOVO_YOGABOOK1,
- 		.matches = {
--			/* Non exact match to match all versions */
--			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X9"),
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
-+		},
-+	}, {
-+		/* Lenovo Yoga Book X91F / X91L */
-+		.driver_data = (void *)(long)INTEL_CHT_WC_LENOVO_YOGABOOK1,
-+		.matches = {
-+			/* Non exact match to match F + L versions */
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
- 		},
- 	},
- 	{ }
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index 95edcbedf6ef2..8c21de50eadf8 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -1940,7 +1940,8 @@ static u32 gen_reqid(struct net *net)
+ }
+ 
+ static int
+-parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
++parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_policy *pol,
++		   struct sadb_x_ipsecrequest *rq)
+ {
+ 	struct net *net = xp_net(xp);
+ 	struct xfrm_tmpl *t = xp->xfrm_vec + xp->xfrm_nr;
+@@ -1958,9 +1959,12 @@ parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
+ 	if ((mode = pfkey_mode_to_xfrm(rq->sadb_x_ipsecrequest_mode)) < 0)
+ 		return -EINVAL;
+ 	t->mode = mode;
+-	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE)
++	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE) {
++		if ((mode == XFRM_MODE_TUNNEL || mode == XFRM_MODE_BEET) &&
++		    pol->sadb_x_policy_dir == IPSEC_DIR_OUTBOUND)
++			return -EINVAL;
+ 		t->optional = 1;
+-	else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
++	} else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
+ 		t->reqid = rq->sadb_x_ipsecrequest_reqid;
+ 		if (t->reqid > IPSEC_MANUAL_REQID_MAX)
+ 			t->reqid = 0;
+@@ -2002,7 +2006,7 @@ parse_ipsecrequests(struct xfrm_policy *xp, struct sadb_x_policy *pol)
+ 		    rq->sadb_x_ipsecrequest_len < sizeof(*rq))
+ 			return -EINVAL;
+ 
+-		if ((err = parse_ipsecrequest(xp, rq)) < 0)
++		if ((err = parse_ipsecrequest(xp, pol, rq)) < 0)
+ 			return err;
+ 		len -= rq->sadb_x_ipsecrequest_len;
+ 		rq = (void*)((u8*)rq + rq->sadb_x_ipsecrequest_len);
 -- 
 2.39.2
 
