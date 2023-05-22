@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C6E2171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2E1C4339C;
-	Mon, 22 May 2023 19:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE34171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725FFC433EF;
+	Mon, 22 May 2023 19:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782985;
-	bh=lKMSjona6Ilnr7/ZVsEeiMP1/b0DxKQlvR9PXpUO0LI=;
+	s=korg; t=1684782987;
+	bh=UlKBe9JdPpRlQ6pW4qAlSVvezPtjcalcGgOT7fGe+Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttbX1XPP3X7ytL8A/9wdR2lwdQddFkwbJ1iQDVx4G76l23hAoAxvu9/16Aevm1feQ
-	 qmREWVKY6l8VPi0FoV5ITfvHhIF84FNLKmiBeHNq5j0Nu3Jf9OSnlTTL3dJaUOFt7P
-	 Ham7KNknMzecM+kcQlUMx/qt4Q7Fgr2CvnVU4eio=
+	b=s2mhBS9mIzSYj5GHVvkbkSjo6biJG/xYbSCLlmtCOqyVvUrglHPtyVDBm/kRERn4i
+	 QFWakv2EWqwgRpa41c/lRpxSdLPTxA8iQYD3qQiP7SnG67WgnHCczYoXeA+PWfa3el
+	 3b/CEBT1BdhCwWEf7byYGOkp1jBHN+FeOQYSaCLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Qiang Ning <qning0106@126.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 101/203] soundwire: qcom: gracefully handle too many ports in DT
-Date: Mon, 22 May 2023 20:08:45 +0100
-Message-Id: <20230522190357.780962955@linuxfoundation.org>
+Subject: [PATCH 5.15 102/203] mfd: dln2: Fix memory leak in dln2_probe()
+Date: Mon, 22 May 2023 20:08:46 +0100
+Message-Id: <20230522190357.808205606@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -37,48 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Qiang Ning <qning0106@126.com>
 
-[ Upstream commit 2367e0ecb498764e95cfda691ff0828f7d25f9a4 ]
+[ Upstream commit 96da8f148396329ba769246cb8ceaa35f1ddfc48 ]
 
-There are two issues related to the number of ports coming from
-Devicetree when exceeding in total QCOM_SDW_MAX_PORTS.  Both lead to
-incorrect memory accesses:
-1. With DTS having too big value of input or output ports, the driver,
-   when copying port parameters from local/stack arrays into 'pconfig'
-   array in 'struct qcom_swrm_ctrl', will iterate over their sizes.
+When dln2_setup_rx_urbs() in dln2_probe() fails, error out_free forgets
+to call usb_put_dev() to decrease the refcount of dln2->usb_dev.
 
-2. If DTS also has too many parameters for these ports (e.g.
-   qcom,ports-sinterval-low), the driver will overflow buffers on the
-   stack when reading these properties from DTS.
+Fix this by adding usb_put_dev() in the error handling code of
+dln2_probe().
 
-Add a sanity check so incorrect DTS will not cause kernel memory
-corruption.
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230222144412.237832-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Qiang Ning <qning0106@126.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230330024353.4503-1-qning0106@126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/qcom.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mfd/dln2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 52d0e4164c6b5..2ba0911f5d0cc 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1142,6 +1142,9 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
- 	ctrl->num_dout_ports = val;
+diff --git a/drivers/mfd/dln2.c b/drivers/mfd/dln2.c
+index 852129ea07666..fc65f9e25fda8 100644
+--- a/drivers/mfd/dln2.c
++++ b/drivers/mfd/dln2.c
+@@ -836,6 +836,7 @@ static int dln2_probe(struct usb_interface *interface,
+ 	dln2_stop_rx_urbs(dln2);
  
- 	nports = ctrl->num_dout_ports + ctrl->num_din_ports;
-+	if (nports > QCOM_SDW_MAX_PORTS)
-+		return -EINVAL;
-+
- 	/* Valid port numbers are from 1-14, so mask out port 0 explicitly */
- 	set_bit(0, &ctrl->dout_port_mask);
- 	set_bit(0, &ctrl->din_port_mask);
+ out_free:
++	usb_put_dev(dln2->usb_dev);
+ 	dln2_free(dln2);
+ 
+ 	return ret;
 -- 
 2.39.2
 
