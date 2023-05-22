@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957B7171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:47:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209EFC433D2;
-	Mon, 22 May 2023 19:47:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644F6171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:47:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7178C433D2;
+	Mon, 22 May 2023 19:47:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784851;
-	bh=g9prx3esPToioC3dxuzEq/G3HcPLo5XUJrxKALgekOY=;
+	s=korg; t=1684784854;
+	bh=BKofLqGdi6II8Kub78pbjSyhPM9gTB218B6bMVdh/D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4DyHaG2AdwfZiLhq3BSyhq+6NSfTbJJpGKE8xtiKBZpVq6rQy/EqQis8k6nJZOAl
-	 /WO7cOc3ZZq4tIaMlRU0nzrEkG0ZcTgm5cjUZ1qblx8vFT6elexpH+fiMqiakVHp7v
-	 8heC9tPsCfNqvGAoOW+4Mft7MxM5qPeyBi434fzM=
+	b=zOo1bjYMexdJ5R8kNZY8QjDowrqTM/u/LnVU+Fjf8BRFGbz5PPduQ5lKPLYAxCGCF
+	 gQKDN/relfjP4yTx5LaUN/94mvkQJktI2UY80pBpphQmGJgkrKEh2Xe7o8/UqtLE51
+	 okE8g2WW7JG7u2HZgmC74Jp1hu31NHKa6wUJl9nw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vicki Pfau <vi@endrift.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Tobias Brunner <tobias@strongswan.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 185/364] Input: xpad - add constants for GIP interface numbers
-Date: Mon, 22 May 2023 20:08:10 +0100
-Message-Id: <20230522190417.356691652@linuxfoundation.org>
+Subject: [PATCH 6.3 218/364] xfrm: Reject optional tunnel/BEET mode templates in outbound policies
+Date: Mon, 22 May 2023 20:08:43 +0100
+Message-Id: <20230522190418.161172683@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,45 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vicki Pfau <vi@endrift.com>
+From: Tobias Brunner <tobias@strongswan.org>
 
-[ Upstream commit f9b2e603c6216824e34dc9a67205d98ccc9a41ca ]
+[ Upstream commit 3d776e31c841ba2f69895d2255a49320bec7cea6 ]
 
-Wired GIP devices present multiple interfaces with the same USB identification
-other than the interface number. This adds constants for differentiating two of
-them and uses them where appropriate
+xfrm_state_find() uses `encap_family` of the current template with
+the passed local and remote addresses to find a matching state.
+If an optional tunnel or BEET mode template is skipped in a mixed-family
+scenario, there could be a mismatch causing an out-of-bounds read as
+the addresses were not replaced to match the family of the next template.
 
-Signed-off-by: Vicki Pfau <vi@endrift.com>
-Link: https://lore.kernel.org/r/20230411031650.960322-2-vi@endrift.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+While there are theoretical use cases for optional templates in outbound
+policies, the only practical one is to skip IPComp states in inbound
+policies if uncompressed packets are received that are handled by an
+implicitly created IPIP state instead.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Tobias Brunner <tobias@strongswan.org>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/joystick/xpad.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/xfrm/xfrm_user.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
-index 29131f1a2f067..f617b2c60819c 100644
---- a/drivers/input/joystick/xpad.c
-+++ b/drivers/input/joystick/xpad.c
-@@ -559,6 +559,9 @@ struct xboxone_init_packet {
- #define GIP_MOTOR_LT BIT(3)
- #define GIP_MOTOR_ALL (GIP_MOTOR_R | GIP_MOTOR_L | GIP_MOTOR_RT | GIP_MOTOR_LT)
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index af8fbcbfbe691..6794b9dea27aa 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -1768,7 +1768,7 @@ static void copy_templates(struct xfrm_policy *xp, struct xfrm_user_tmpl *ut,
+ }
  
-+#define GIP_WIRED_INTF_DATA 0
-+#define GIP_WIRED_INTF_AUDIO 1
-+
- /*
-  * This packet is required for all Xbox One pads with 2015
-  * or later firmware installed (or present from the factory).
-@@ -2003,7 +2006,7 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
- 	}
+ static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
+-			 struct netlink_ext_ack *extack)
++			 int dir, struct netlink_ext_ack *extack)
+ {
+ 	u16 prev_family;
+ 	int i;
+@@ -1794,6 +1794,10 @@ static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
+ 		switch (ut[i].mode) {
+ 		case XFRM_MODE_TUNNEL:
+ 		case XFRM_MODE_BEET:
++			if (ut[i].optional && dir == XFRM_POLICY_OUT) {
++				NL_SET_ERR_MSG(extack, "Mode in optional template not allowed in outbound policy");
++				return -EINVAL;
++			}
+ 			break;
+ 		default:
+ 			if (ut[i].family != prev_family) {
+@@ -1831,7 +1835,7 @@ static int validate_tmpl(int nr, struct xfrm_user_tmpl *ut, u16 family,
+ }
  
- 	if (xpad->xtype == XTYPE_XBOXONE &&
--	    intf->cur_altsetting->desc.bInterfaceNumber != 0) {
-+	    intf->cur_altsetting->desc.bInterfaceNumber != GIP_WIRED_INTF_DATA) {
- 		/*
- 		 * The Xbox One controller lists three interfaces all with the
- 		 * same interface class, subclass and protocol. Differentiate by
+ static int copy_from_user_tmpl(struct xfrm_policy *pol, struct nlattr **attrs,
+-			       struct netlink_ext_ack *extack)
++			       int dir, struct netlink_ext_ack *extack)
+ {
+ 	struct nlattr *rt = attrs[XFRMA_TMPL];
+ 
+@@ -1842,7 +1846,7 @@ static int copy_from_user_tmpl(struct xfrm_policy *pol, struct nlattr **attrs,
+ 		int nr = nla_len(rt) / sizeof(*utmpl);
+ 		int err;
+ 
+-		err = validate_tmpl(nr, utmpl, pol->family, extack);
++		err = validate_tmpl(nr, utmpl, pol->family, dir, extack);
+ 		if (err)
+ 			return err;
+ 
+@@ -1919,7 +1923,7 @@ static struct xfrm_policy *xfrm_policy_construct(struct net *net,
+ 	if (err)
+ 		goto error;
+ 
+-	if (!(err = copy_from_user_tmpl(xp, attrs, extack)))
++	if (!(err = copy_from_user_tmpl(xp, attrs, p->dir, extack)))
+ 		err = copy_from_user_sec_ctx(xp, attrs);
+ 	if (err)
+ 		goto error;
+@@ -3498,7 +3502,7 @@ static struct xfrm_policy *xfrm_compile_policy(struct sock *sk, int opt,
+ 		return NULL;
+ 
+ 	nr = ((len - sizeof(*p)) / sizeof(*ut));
+-	if (validate_tmpl(nr, ut, p->sel.family, NULL))
++	if (validate_tmpl(nr, ut, p->sel.family, p->dir, NULL))
+ 		return NULL;
+ 
+ 	if (p->dir > XFRM_POLICY_OUT)
 -- 
 2.39.2
 
