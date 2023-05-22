@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9757171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215D3C433D2;
-	Mon, 22 May 2023 19:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537EA171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD81FC433D2;
+	Mon, 22 May 2023 19:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783705;
-	bh=IVzfOwZ7QIXc91Rakl7Vd2n7qhxihifkzDH5KNvh3kc=;
+	s=korg; t=1684783708;
+	bh=7AVo2wkZIdyPxYpaYZ6pjetQmEMZVYzzUknTyNTa4yU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7rleaHZP99EQRE9LeRJeeEbG5gUYFAYvI8kNO/p+JMv20VeCUpCM92G5HEsRKXXR
-	 RABQSFyswjsAlgjhcoXhZ8jJjtwpzCEz7oPMG/Gxg6NK0xCI3dBy7UompqveXQqipE
-	 TK09qLAEUZI3ag4ZaDNEWcFGwMCuQFwwLVO5KOCA=
+	b=w6erlrXpRjz25ZIv7Vls2DFcbH53XLFHvNwM8zVLV81I5Wgu7u0H10bbdtayIyUmM
+	 Z/b9nk2m3IVm6C0xPJhzKHyFrIuTgQui5Dwc9x/LXS5iUZR89srqszXurl+bng7lQD
+	 x+qu78bMgTblbYFImfumAZbandkA6RWUcrmRED94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Frank Wang <frank.wang@rock-chips.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/292] usb: typec: tcpm: fix multiple times discover svids error
-Date: Mon, 22 May 2023 20:08:11 +0100
-Message-Id: <20230522190409.316930534@linuxfoundation.org>
+Subject: [PATCH 6.1 135/292] serial: 8250: Reinit port->pm on port specific driver unbind
+Date: Mon, 22 May 2023 20:08:12 +0100
+Message-Id: <20230522190409.341457588@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,57 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Wang <frank.wang@rock-chips.com>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit dac3b192107b978198e89ec0f77375738352e0c8 ]
+[ Upstream commit 04e82793f068d2f0ffe62fcea03d007a8cdc16a7 ]
 
-PD3.0 Spec 6.4.4.3.2 say that only Responder supports 12 or more SVIDs,
-the Discover SVIDs Command Shall be executed multiple times until a
-Discover SVIDs VDO is returned ending either with a SVID value of
-0x0000 in the last part of the last VDO or with a VDO containing two
-SVIDs with values of 0x0000.
+When we unbind a serial port hardware specific 8250 driver, the generic
+serial8250 driver takes over the port. After that we see an oops about 10
+seconds later. This can produce the following at least on some TI SoCs:
 
-In the current implementation, if the last VDO does not find that the
-Discover SVIDs Command would be executed multiple times even if the
-Responder SVIDs are less than 12, and we found some odd dockers just
-meet this case. So fix it.
+Unhandled fault: imprecise external abort (0x1406)
+Internal error: : 1406 [#1] SMP ARM
 
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Frank Wang <frank.wang@rock-chips.com>
-Link: https://lore.kernel.org/r/20230316081149.24519-1-frank.wang@rock-chips.com
+Turns out that we may still have the serial port hardware specific driver
+port->pm in use, and serial8250_pm() tries to call it after the port
+specific driver is gone:
+
+serial8250_pm [8250_base] from uart_change_pm+0x54/0x8c [serial_base]
+uart_change_pm [serial_base] from uart_hangup+0x154/0x198 [serial_base]
+uart_hangup [serial_base] from __tty_hangup.part.0+0x328/0x37c
+__tty_hangup.part.0 from disassociate_ctty+0x154/0x20c
+disassociate_ctty from do_exit+0x744/0xaac
+do_exit from do_group_exit+0x40/0x8c
+do_group_exit from __wake_up_parent+0x0/0x1c
+
+Let's fix the issue by calling serial8250_set_defaults() in
+serial8250_unregister_port(). This will set the port back to using
+the serial8250 default functions, and sets the port->pm to point to
+serial8250_pm.
+
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20230418101407.12403-1-tony@atomide.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tcpm/tcpm.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
-index 032d21a967799..524099634a1d4 100644
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -1514,7 +1514,21 @@ static bool svdm_consume_svids(struct tcpm_port *port, const u32 *p, int cnt)
- 		pmdata->svids[pmdata->nsvids++] = svid;
- 		tcpm_log(port, "SVID %d: 0x%x", pmdata->nsvids, svid);
- 	}
--	return true;
-+
-+	/*
-+	 * PD3.0 Spec 6.4.4.3.2: The SVIDs are returned 2 per VDO (see Table
-+	 * 6-43), and can be returned maximum 6 VDOs per response (see Figure
-+	 * 6-19). If the Respondersupports 12 or more SVID then the Discover
-+	 * SVIDs Command Shall be executed multiple times until a Discover
-+	 * SVIDs VDO is returned ending either with a SVID value of 0x0000 in
-+	 * the last part of the last VDO or with a VDO containing two SVIDs
-+	 * with values of 0x0000.
-+	 *
-+	 * However, some odd dockers support SVIDs less than 12 but without
-+	 * 0x0000 in the last VDO, so we need to break the Discover SVIDs
-+	 * request and return false here.
-+	 */
-+	return cnt == 7;
- abort:
- 	tcpm_log(port, "SVID_DISCOVERY_MAX(%d) too low!", SVID_DISCOVERY_MAX);
- 	return false;
+diff --git a/drivers/tty/serial/8250/8250_core.c b/drivers/tty/serial/8250/8250_core.c
+index 94fbf0add2ce2..81a5dab1a8286 100644
+--- a/drivers/tty/serial/8250/8250_core.c
++++ b/drivers/tty/serial/8250/8250_core.c
+@@ -1157,6 +1157,7 @@ void serial8250_unregister_port(int line)
+ 		uart->port.type = PORT_UNKNOWN;
+ 		uart->port.dev = &serial8250_isa_devs->dev;
+ 		uart->capabilities = 0;
++		serial8250_init_port(uart);
+ 		serial8250_apply_quirks(uart);
+ 		uart_add_one_port(&serial8250_reg, &uart->port);
+ 	} else {
 -- 
 2.39.2
 
