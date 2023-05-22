@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79120168DC
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:36:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D427FC433D2;
-	Mon, 22 May 2023 19:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E8BA168DC
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:36:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1705C433D2;
+	Mon, 22 May 2023 19:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784171;
-	bh=JsB+WBSJEJbYNFzNOj0BBwk0l1WG/zhTTQ+jWG3x6j8=;
+	s=korg; t=1684784174;
+	bh=JFB4wNMYrRhPcP3j9agwZ9FSBmoFLwrEKiv6gd4YiYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+xTAzgLpV9MyZ61U1qFtsCIkadU0gxW+BGv4sL7bJJbninGvfyyzX3g/3+kabkhH
-	 ll1hVzD1AoYdslhawx2a1c3pZX8wBTN0eov+igzwLi8IGyHdA6JDc32rTjBnQQewoz
-	 ey21lSnCoQOGR00tLCfgJO5AjTXYyJbsD2oI9Mhc=
+	b=nDES8DC+5Fql5dbgqz4bfw9n7/ve/K1Now/NZnTskddwevVA+h7gC56Jmr/oAtguM
+	 f3HeHatEmyn68eTQmtjQZxqbGr1TjFgGVkXwyq+37sdfa96ZRpobJthhCDAmlSAtw5
+	 ht6LOYI4mqc0Ipylbn92GBFuoNZM6zURYA2y99/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Ze Gao <zegao@tencent.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.1 286/292] rethook: use preempt_{disable, enable}_notrace in rethook_trampoline_handler
-Date: Mon, 22 May 2023 20:10:43 +0100
-Message-Id: <20230522190413.094264674@linuxfoundation.org>
+Subject: [PATCH 6.1 287/292] rethook, fprobe: do not trace rethook related functions
+Date: Mon, 22 May 2023 20:10:44 +0100
+Message-Id: <20230522190413.120987197@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,44 +37,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Ze Gao <zegao2021@gmail.com>
 
-commit be243bacfb25f5219f2396d787408e8cf1301dd1 upstream.
+commit 571a2a50a8fc546145ffd3bf673547e9fe128ed2 upstream.
 
-This patch replaces preempt_{disable, enable} with its corresponding
-notrace version in rethook_trampoline_handler so no worries about stack
-recursion or overflow introduced by preempt_count_{add, sub} under
-fprobe + rethook context.
+These functions are already marked as NOKPROBE to prevent recursion and
+we have the same reason to blacklist them if rethook is used with fprobe,
+since they are beyond the recursion-free region ftrace can guard.
 
-Link: https://lore.kernel.org/all/20230517034510.15639-2-zegao@tencent.com/
+Link: https://lore.kernel.org/all/20230517034510.15639-5-zegao@tencent.com/
 
-Fixes: 54ecbe6f1ed5 ("rethook: Add a generic return hook")
+Fixes: f3a112c0c40d ("x86,rethook,kprobes: Replace kretprobe with rethook on x86")
 Signed-off-by: Ze Gao <zegao@tencent.com>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/rethook.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/riscv/kernel/probes/Makefile |    2 ++
+ arch/s390/kernel/Makefile         |    1 +
+ arch/x86/kernel/Makefile          |    1 +
+ 3 files changed, 4 insertions(+)
 
---- a/kernel/trace/rethook.c
-+++ b/kernel/trace/rethook.c
-@@ -288,7 +288,7 @@ unsigned long rethook_trampoline_handler
- 	 * These loops must be protected from rethook_free_rcu() because those
- 	 * are accessing 'rhn->rethook'.
- 	 */
--	preempt_disable();
-+	preempt_disable_notrace();
+--- a/arch/riscv/kernel/probes/Makefile
++++ b/arch/riscv/kernel/probes/Makefile
+@@ -4,3 +4,5 @@ obj-$(CONFIG_KPROBES)		+= kprobes_trampo
+ obj-$(CONFIG_KPROBES_ON_FTRACE)	+= ftrace.o
+ obj-$(CONFIG_UPROBES)		+= uprobes.o decode-insn.o simulate-insn.o
+ CFLAGS_REMOVE_simulate-insn.o = $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_rethook.o = $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_rethook_trampoline.o = $(CC_FLAGS_FTRACE)
+--- a/arch/s390/kernel/Makefile
++++ b/arch/s390/kernel/Makefile
+@@ -10,6 +10,7 @@ CFLAGS_REMOVE_ftrace.o		= $(CC_FLAGS_FTR
  
- 	/*
- 	 * Run the handler on the shadow stack. Do not unlink the list here because
-@@ -321,7 +321,7 @@ unsigned long rethook_trampoline_handler
- 		first = first->next;
- 		rethook_recycle(rhn);
- 	}
--	preempt_enable();
-+	preempt_enable_notrace();
+ # Do not trace early setup code
+ CFLAGS_REMOVE_early.o		= $(CC_FLAGS_FTRACE)
++CFLAGS_REMOVE_rethook.o		= $(CC_FLAGS_FTRACE)
  
- 	return correct_ret_addr;
- }
+ endif
+ 
+--- a/arch/x86/kernel/Makefile
++++ b/arch/x86/kernel/Makefile
+@@ -17,6 +17,7 @@ CFLAGS_REMOVE_ftrace.o = -pg
+ CFLAGS_REMOVE_early_printk.o = -pg
+ CFLAGS_REMOVE_head64.o = -pg
+ CFLAGS_REMOVE_sev.o = -pg
++CFLAGS_REMOVE_rethook.o = -pg
+ endif
+ 
+ KASAN_SANITIZE_head$(BITS).o				:= n
 
 
