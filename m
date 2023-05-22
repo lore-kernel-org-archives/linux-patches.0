@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABD2171BA
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:43:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A504C433D2;
-	Mon, 22 May 2023 19:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC03A171BA
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:43:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B797C433EF;
+	Mon, 22 May 2023 19:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784629;
-	bh=iqHnxB0a5D8XNdGhishRtWcJrx4X4FcFwoiryho7Jvc=;
+	s=korg; t=1684784632;
+	bh=ajKsYQpmO9FKRliDeMZd5Diq2mOChh08+oyFoZcu1AQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kPe4hSZVBhX+cUemjCarG1I+ZbfuGERpr5AOjXik/bAjqfFRF/GMcxmMfm2dggF+z
-	 pN4ySMrcjhhE11bXV1alIsPrQdiLJToxgh6Yyf7agAA4xreWRwbZg7KM3s7T8yBtYY
-	 AOfgVTJO5EYRIfoL02+aAOa8yg5opuBvYF/LeLls=
+	b=g9BPxQDBaoeTVkDGhkHJKs11M2gJFLhOEjX/0MbzOp4b+hVzFmgqU6/HQZlqeL6tL
+	 p8t1DkLGo/hvqSdtgLkQREw6ydTNkzMQ7URiIRP8NaTUJqZ1CucaGOuY8PTC+/ihqv
+	 twcVwAyQf7sZPqKn8Lo0o3rjEeimbietEtKav8ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philipp Hortmann <philipp.g.hortmann@gmail.com>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 145/364] staging: rtl8192e: Replace macro RTL_PCI_DEVICE with PCI_DEVICE
-Date: Mon, 22 May 2023 20:07:30 +0100
-Message-Id: <20230522190416.389735437@linuxfoundation.org>
+Subject: [PATCH 6.3 146/364] HID: apple: Set the tilde quirk flag on the Geyser 4 and later
+Date: Mon, 22 May 2023 20:07:31 +0100
+Message-Id: <20230522190416.411871293@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -34,55 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Philipp Hortmann <philipp.g.hortmann@gmail.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
 
-[ Upstream commit fda2093860df4812d69052a8cf4997e53853a340 ]
+[ Upstream commit c3388ddc74a863466c7c3fa24d3a9cea9c9bca53 ]
 
-Replace macro RTL_PCI_DEVICE with PCI_DEVICE to get rid of rtl819xp_ops
-which is empty.
+I recently tested several old MacBooks and as far as I can tell, all
+MacBooks that have an ISO keyboard have the tilde key quirk:
 
-Signed-off-by: Philipp Hortmann <philipp.g.hortmann@gmail.com>
-Link: https://lore.kernel.org/r/8b45ee783fa91196b7c9d6fc840a189496afd2f4.1677133271.git.philipp.g.hortmann@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Product    Model  Year  System      CPU    Shape  Labels     Country  Quirky
+============================================================================
+05ac:021b  A1181  2006  MacBook2,1  T5600  ISO    British    13       Yes
+05ac:021b  A1181  2007  MacBook2,1  T7200  ISO    Québécois  13       Yes
+05ac:0229  A1181  2007  MacBook4,1  T8300  ANSI   Usonian    33       No
+05ac:022a  A1181  2007  MacBook4,1  T8100  ISO    English    13       Yes
+05ac:022a  A1181  2007  MacBook5,2  P7350  ISO    Québécois  13       Yes
+05ac:0237  A1278  2008  MacBook5,1  P7350  ISO    Dutch      13       Yes
+05ac:0237  A1278  2009  MacBook5,5  P7550  ISO    British    13       Yes
+
+The model number and year are from the laptop case. Since Apple printed
+the same model and year on many different laptops, the system name (as
+reported in the SMBIOS tables) and CPU form a more precise identifier.
+
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.c | 6 +++---
- drivers/staging/rtl8192e/rtl8192e/rtl_core.h | 5 -----
- 2 files changed, 3 insertions(+), 8 deletions(-)
+ drivers/hid/hid-apple.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-index 72d76dc7df781..92552ce30cd58 100644
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.c
-@@ -48,9 +48,9 @@ static const struct rtl819x_ops rtl819xp_ops = {
- };
- 
- static struct pci_device_id rtl8192_pci_id_tbl[] = {
--	{RTL_PCI_DEVICE(0x10ec, 0x8192, rtl819xp_ops)},
--	{RTL_PCI_DEVICE(0x07aa, 0x0044, rtl819xp_ops)},
--	{RTL_PCI_DEVICE(0x07aa, 0x0047, rtl819xp_ops)},
-+	{PCI_DEVICE(0x10ec, 0x8192)},
-+	{PCI_DEVICE(0x07aa, 0x0044)},
-+	{PCI_DEVICE(0x07aa, 0x0047)},
- 	{}
- };
- 
-diff --git a/drivers/staging/rtl8192e/rtl8192e/rtl_core.h b/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-index fd96eef90c7fa..bbc1c4bac3588 100644
---- a/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-+++ b/drivers/staging/rtl8192e/rtl8192e/rtl_core.h
-@@ -55,11 +55,6 @@
- #define IS_HARDWARE_TYPE_8192SE(_priv)		\
- 	(((struct r8192_priv *)rtllib_priv(dev))->card_8192 == NIC_8192SE)
- 
--#define RTL_PCI_DEVICE(vend, dev, cfg) \
--	.vendor = (vend), .device = (dev), \
--	.subvendor = PCI_ANY_ID, .subdevice = PCI_ANY_ID, \
--	.driver_data = (kernel_ulong_t)&(cfg)
--
- #define TOTAL_CAM_ENTRY		32
- #define CAM_CONTENT_COUNT	8
- 
+diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
+index 1ccab8aa326cd..5c145775482bc 100644
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -882,7 +882,8 @@ static const struct hid_device_id apple_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER4_ANSI),
+ 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER4_ISO),
+-		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
++		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
++			APPLE_ISO_TILDE_QUIRK },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER4_JIS),
+ 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
+ 			APPLE_RDESC_JIS },
+@@ -901,7 +902,8 @@ static const struct hid_device_id apple_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER4_HF_ANSI),
+ 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER4_HF_ISO),
+-		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
++		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
++			APPLE_ISO_TILDE_QUIRK },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER4_HF_JIS),
+ 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
+ 			APPLE_RDESC_JIS },
+@@ -942,31 +944,31 @@ static const struct hid_device_id apple_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING_ANSI),
+ 		.driver_data = APPLE_HAS_FN },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING_ISO),
+-		.driver_data = APPLE_HAS_FN },
++		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING_JIS),
+ 		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING2_ANSI),
+ 		.driver_data = APPLE_HAS_FN },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING2_ISO),
+-		.driver_data = APPLE_HAS_FN },
++		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING2_JIS),
+ 		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING3_ANSI),
+ 		.driver_data = APPLE_HAS_FN },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING3_ISO),
+-		.driver_data = APPLE_HAS_FN },
++		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING3_JIS),
+ 		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING4_ANSI),
+ 		.driver_data = APPLE_HAS_FN },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING4_ISO),
+-		.driver_data = APPLE_HAS_FN },
++		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING4_JIS),
+ 		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING4A_ANSI),
+ 		.driver_data = APPLE_HAS_FN },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING4A_ISO),
+-		.driver_data = APPLE_HAS_FN },
++		.driver_data = APPLE_HAS_FN | APPLE_ISO_TILDE_QUIRK },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING4A_JIS),
+ 		.driver_data = APPLE_HAS_FN | APPLE_RDESC_JIS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_WELLSPRING5_ANSI),
 -- 
 2.39.2
 
