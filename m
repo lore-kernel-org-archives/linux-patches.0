@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748AD171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C58C433D2;
-	Mon, 22 May 2023 19:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8E0171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D40C433EF;
+	Mon, 22 May 2023 19:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785126;
-	bh=S5z9YoP3erBRn/s2mkeNQXHNciDxkwcUMlmJrhO+51U=;
+	s=korg; t=1684785129;
+	bh=iR/Jjdsm+0D/8OROaQdiilzZGmiKm0Hq/lEbO28422c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fpOVo4Lf0tI8T+wwKZXjoT+HtBt6nP0auiYMuOkO7ebzhV33xaJPmYjSr6hIEWfVV
-	 s7VYXE/9aPHu4oWrbYF/zDz3gDpAWoejO3RMbNqFkfZDh/FYfsrkIW2faPL23k3pVQ
-	 fopLUXg22mMj5i9soFUwIWVhcu4mKHAUWb9BU85M=
+	b=1yeyF5tzhCn5PjVfEh/AKC5F4Khlusj/Zjjj/1JDhlZ8vHG0ZQHIQBfPifIB3RFwB
+	 E9eCuEVlxj82p99XnG5NFINTi4+rjYwfUOiIaHQxgThVU9AXDfzyKR+C5XdhXOWbG1
+	 gPCLQt4JFywNWV0pdr0NuA8pxQVcilcwtQzfEBb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+ce77725b89b7bd52425c@syzkaller.appspotmail.com
-Subject: [PATCH 6.3 290/364] USB: usbtmc: Fix direction for 0-length ioctl control messages
-Date: Mon, 22 May 2023 20:09:55 +0100
-Message-Id: <20230522190420.018080424@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.3 281/364] igb: fix bit_shift to be in [1..8] range
+Date: Mon, 22 May 2023 20:09:46 +0100
+Message-Id: <20230522190419.751852446@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -34,64 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-commit 94d25e9128988c6a1fc9070f6e98215a95795bd8 upstream.
+[ Upstream commit 60d758659f1fb49e0d5b6ac2691ede8c0958795b ]
 
-The syzbot fuzzer found a problem in the usbtmc driver: When a user
-submits an ioctl for a 0-length control transfer, the driver does not
-check that the direction is set to OUT:
+In igb_hash_mc_addr() the expression:
+        "mc_addr[4] >> 8 - bit_shift", right shifting "mc_addr[4]"
+shift by more than 7 bits always yields zero, so hash becomes not so different.
+Add initialization with bit_shift = 1 and add a loop condition to ensure
+bit_shift will be always in [1..8] range.
 
-------------[ cut here ]------------
-usb 3-1: BOGUS control dir, pipe 80000b80 doesn't match bRequestType fd
-WARNING: CPU: 0 PID: 5100 at drivers/usb/core/urb.c:411 usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
-Modules linked in:
-CPU: 0 PID: 5100 Comm: syz-executor428 Not tainted 6.3.0-syzkaller-12049-g58390c8ce1bd #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/14/2023
-RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
-Code: 7c 24 40 e8 1b 13 5c fb 48 8b 7c 24 40 e8 21 1d f0 fe 45 89 e8 44 89 f1 4c 89 e2 48 89 c6 48 c7 c7 e0 b5 fc 8a e8 19 c8 23 fb <0f> 0b e9 9f ee ff ff e8 ed 12 5c fb 0f b6 1d 12 8a 3c 08 31 ff 41
-RSP: 0018:ffffc90003d2fb00 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: ffff8880789e9058 RCX: 0000000000000000
-RDX: ffff888029593b80 RSI: ffffffff814c1447 RDI: 0000000000000001
-RBP: ffff88801ea742f8 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000001 R12: ffff88802915e528
-R13: 00000000000000fd R14: 0000000080000b80 R15: ffff8880222b3100
-FS:  0000555556ca63c0(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f9ef4d18150 CR3: 0000000073e5b000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
- usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
- usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
- usbtmc_ioctl_request drivers/usb/class/usbtmc.c:1954 [inline]
- usbtmc_ioctl+0x1b3d/0x2840 drivers/usb/class/usbtmc.c:2097
-
-To fix this, we must override the direction in the bRequestType field
-of the control request structure when the length is 0.
-
-Reported-and-tested-by: syzbot+ce77725b89b7bd52425c@syzkaller.appspotmail.com
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/linux-usb/000000000000716a3705f9adb8ee@google.com/
-CC: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/ede1ee02-b718-49e7-a44c-51339fec706b@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/class/usbtmc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/igb/e1000_mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/class/usbtmc.c
-+++ b/drivers/usb/class/usbtmc.c
-@@ -1928,6 +1928,8 @@ static int usbtmc_ioctl_request(struct u
+diff --git a/drivers/net/ethernet/intel/igb/e1000_mac.c b/drivers/net/ethernet/intel/igb/e1000_mac.c
+index 205d577bdbbaa..caf91c6f52b4d 100644
+--- a/drivers/net/ethernet/intel/igb/e1000_mac.c
++++ b/drivers/net/ethernet/intel/igb/e1000_mac.c
+@@ -426,7 +426,7 @@ void igb_mta_set(struct e1000_hw *hw, u32 hash_value)
+ static u32 igb_hash_mc_addr(struct e1000_hw *hw, u8 *mc_addr)
+ {
+ 	u32 hash_value, hash_mask;
+-	u8 bit_shift = 0;
++	u8 bit_shift = 1;
  
- 	if (request.req.wLength > USBTMC_BUFSIZE)
- 		return -EMSGSIZE;
-+	if (request.req.wLength == 0)	/* Length-0 requests are never IN */
-+		request.req.bRequestType &= ~USB_DIR_IN;
+ 	/* Register count multiplied by bits per register */
+ 	hash_mask = (hw->mac.mta_reg_count * 32) - 1;
+@@ -434,7 +434,7 @@ static u32 igb_hash_mc_addr(struct e1000_hw *hw, u8 *mc_addr)
+ 	/* For a mc_filter_type of 0, bit_shift is the number of left-shifts
+ 	 * where 0xFF would still fall within the hash mask.
+ 	 */
+-	while (hash_mask >> bit_shift != 0xFF)
++	while (hash_mask >> bit_shift != 0xFF && bit_shift < 4)
+ 		bit_shift++;
  
- 	is_in = request.req.bRequestType & USB_DIR_IN;
- 
+ 	/* The portion of the address that is used for the hash table
+-- 
+2.39.2
+
 
 
