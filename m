@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EACB171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F333EC433D2;
-	Mon, 22 May 2023 19:52:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC2A171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC46C433EF;
+	Mon, 22 May 2023 19:52:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785170;
-	bh=uuO2L/NIq/nMVZPZi7LFumN8mAwh2IvzP50feO5GFoI=;
+	s=korg; t=1684785173;
+	bh=K2wgt1pG60Qr7mIgVaviwaIIgCgQR1ZCUpXPldOiMbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJqu56nzhOfNGAQrSzVZwLLPH4ytTYw3nETPWCRy2dA163VLuBeL5bOMDLOUFBLoe
-	 6pEyvrwzqJztCxdGZFGm60GP9rbDT0W1TcKNdGULiJPbrXGy3qYtDxuj/Xpmv1Exoc
-	 bSxS4sox5g1/qsBpyucceXTmOjQEHwLIS6BlROPs=
+	b=EuFkK37g/iYeIFYA0SM7AllHZC7lRg/sWgaqINVFa5OWUoHm9Z9wfNazJpJK0mgxa
+	 u5XI8j9RgVwpbKR3gH6nJQ1JWydKC1bt+GZWglzYYkGEmydL7NTj9o9Ie4jpRNAdT6
+	 4wf7o7Et30hJA+kxMJGFv0iJH7paDNKuxARBBvow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.3 332/364] serial: 8250_exar: Add support for USR298x PCI Modems
-Date: Mon, 22 May 2023 20:10:37 +0100
-Message-Id: <20230522190421.078443971@linuxfoundation.org>
+	Stephen Boyd <swboyd@chromium.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 6.3 333/364] serial: qcom-geni: fix enabling deactivated interrupt
+Date: Mon, 22 May 2023 20:10:38 +0100
+Message-Id: <20230522190421.101400885@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,73 +34,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Davis <afd@ti.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 95d698869b404772cc8b72560df71548491c10bc upstream.
+commit 5f949f140f73696f64acb89a1f16ff9153d017e0 upstream.
 
-Possibly the last PCI controller-based (i.e. not a soft/winmodem)
-dial-up modem one can still buy.
+The driver have a race, experienced only with PREEMPT_RT patchset:
 
-Looks to have a stock XR17C154 PCI UART chip for communication, but for
-some reason when provisioning the PCI IDs they swapped the vendor and
-subvendor IDs. Otherwise this card would have worked out of the box.
+CPU0                         | CPU1
+==================================================================
+qcom_geni_serial_probe       |
+  uart_add_one_port          |
+                             | serdev_drv_probe
+                             |   qca_serdev_probe
+                             |     serdev_device_open
+                             |       uart_open
+                             |         uart_startup
+                             |           qcom_geni_serial_startup
+                             |             enable_irq
+                             |               __irq_startup
+                             |                 WARN_ON()
+                             |                 IRQ not activated
+  request_threaded_irq       |
+    irq_domain_activate_irq  |
 
-Searching online, some folks seem to not have this issue and others do,
-so it is possible only some batches of cards have this error.
+The warning:
 
-Create a new macro to handle the switched IDs and add support here.
+  894000.serial: ttyHS1 at MMIO 0x894000 (irq = 144, base_baud = 0) is a MSM
+  serial serial0: tty port ttyHS1 registered
+  WARNING: CPU: 7 PID: 107 at kernel/irq/chip.c:241 __irq_startup+0x78/0xd8
+  ...
+  qcom_geni_serial 894000.serial: serial engine reports 0 RX bytes in!
 
-Signed-off-by: Andrew Davis <afd@ti.com>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230420160209.28221-1-afd@ti.com
+Adding UART port triggers probe of child serial devices - serdev and
+eventually Qualcomm Bluetooth hci_qca driver.  This opens UART port
+which enables the interrupt before it got activated in
+request_threaded_irq().  The issue originates in commit f3974413cf02
+("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup") and discussion on
+mailing list [1].  However the above commit does not explain why the
+uart_add_one_port() is moved above requesting interrupt.
+
+[1] https://lore.kernel.org/all/5d9f3dfa.1c69fb81.84c4b.30bf@mx.google.com/
+
+Fixes: f3974413cf02 ("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup")
+Cc: <stable@vger.kernel.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20230505152301.2181270-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_exar.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/tty/serial/qcom_geni_serial.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -40,9 +40,13 @@
- #define PCI_DEVICE_ID_COMMTECH_4224PCIE		0x0020
- #define PCI_DEVICE_ID_COMMTECH_4228PCIE		0x0021
- #define PCI_DEVICE_ID_COMMTECH_4222PCIE		0x0022
-+
- #define PCI_DEVICE_ID_EXAR_XR17V4358		0x4358
- #define PCI_DEVICE_ID_EXAR_XR17V8358		0x8358
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -1665,19 +1665,18 @@ static int qcom_geni_serial_probe(struct
+ 	uport->private_data = &port->private_data;
+ 	platform_set_drvdata(pdev, port);
  
-+#define PCI_SUBDEVICE_ID_USR_2980		0x0128
-+#define PCI_SUBDEVICE_ID_USR_2981		0x0129
-+
- #define PCI_DEVICE_ID_SEALEVEL_710xC		0x1001
- #define PCI_DEVICE_ID_SEALEVEL_720xC		0x1002
- #define PCI_DEVICE_ID_SEALEVEL_740xC		0x1004
-@@ -829,6 +833,15 @@ static const struct exar8250_board pbn_e
- 		(kernel_ulong_t)&bd			\
+-	ret = uart_add_one_port(drv, uport);
+-	if (ret)
+-		return ret;
+-
+ 	irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
+ 	ret = devm_request_irq(uport->dev, uport->irq, qcom_geni_serial_isr,
+ 			IRQF_TRIGGER_HIGH, port->name, uport);
+ 	if (ret) {
+ 		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
+-		uart_remove_one_port(drv, uport);
+ 		return ret;
  	}
  
-+#define USR_DEVICE(devid, sdevid, bd) {			\
-+	PCI_DEVICE_SUB(					\
-+		PCI_VENDOR_ID_USR,			\
-+		PCI_DEVICE_ID_EXAR_##devid,		\
-+		PCI_VENDOR_ID_EXAR,			\
-+		PCI_SUBDEVICE_ID_USR_##sdevid), 0, 0,	\
-+		(kernel_ulong_t)&bd			\
-+	}
++	ret = uart_add_one_port(drv, uport);
++	if (ret)
++		return ret;
 +
- static const struct pci_device_id exar_pci_tbl[] = {
- 	EXAR_DEVICE(ACCESSIO, COM_2S, pbn_exar_XR17C15x),
- 	EXAR_DEVICE(ACCESSIO, COM_4S, pbn_exar_XR17C15x),
-@@ -853,6 +866,10 @@ static const struct pci_device_id exar_p
- 
- 	IBM_DEVICE(XR17C152, SATURN_SERIAL_ONE_PORT, pbn_exar_ibm_saturn),
- 
-+	/* USRobotics USR298x-OEM PCI Modems */
-+	USR_DEVICE(XR17C152, 2980, pbn_exar_XR17C15x),
-+	USR_DEVICE(XR17C152, 2981, pbn_exar_XR17C15x),
-+
- 	/* Exar Corp. XR17C15[248] Dual/Quad/Octal UART */
- 	EXAR_DEVICE(EXAR, XR17C152, pbn_exar_XR17C15x),
- 	EXAR_DEVICE(EXAR, XR17C154, pbn_exar_XR17C15x),
+ 	/*
+ 	 * Set pm_runtime status as ACTIVE so that wakeup_irq gets
+ 	 * enabled/disabled from dev_pm_arm_wake_irq during system
 
 
