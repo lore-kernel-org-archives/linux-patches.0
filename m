@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D04168B6
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D87F1C433EF;
-	Mon, 22 May 2023 19:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE124168B6
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:13:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD3AC4339B;
+	Mon, 22 May 2023 19:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782798;
-	bh=16YV59Y5TWHm0xMUgJjSMPqUjND4p5xiiAKBu0eMgTg=;
+	s=korg; t=1684782800;
+	bh=hFutcJNoIKd0CZKb9Va8dphdY1kwg9iYQScHP0fRWgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzZ3mxHJqwEgD974E6fhYYMUst6SNIoq6LttNX+/pyaAO/sdccLZ42iqf9zL2Hmyf
-	 de0mXjs4GtPqee4P30k0Z9/bYdrnp3eIKCS4KWCCoXFCKb/6qoMhRBMoKFFDgzbIMs
-	 j+zBtSgieMPS9kyoadBBgpNvoz5qN61e33skhPjs=
+	b=IiNOjnhRYs5AErSEx7wDpu9HF73gsfj2q3rnMPAEzWrngRq6RQkdcD7E4sFoqQGzQ
+	 W9PNdZZHgmaA/kHwIPPcznstCnf9A0ThzpYNmORCWbT1v1TfVhm0aTbOvZ/v5hb0Im
+	 tB0sUtgcMttWYvt7T8YYLgHj5MDNLlRbCD+esdHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Austin Kim <austindh.kim@gmail.com>,
-	Jan Kara <jack@suse.cz>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/203] ext4: remove an unused variable warning with CONFIG_QUOTA=n
-Date: Mon, 22 May 2023 20:07:28 +0100
-Message-Id: <20230522190355.631183227@linuxfoundation.org>
+Subject: [PATCH 5.15 025/203] ext4: reflect error codes from ext4_multi_mount_protect() to its callers
+Date: Mon, 22 May 2023 20:07:29 +0100
+Message-Id: <20230522190355.658603706@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,58 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Austin Kim <austindh.kim@gmail.com>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit 3bbef91bdd2180c67407285ba160b023eb4d5306 ]
+[ Upstream commit 3b50d5018ed06a647bb26c44bb5ae74e59c903c7 ]
 
-The 'enable_quota' variable is only used in an CONFIG_QUOTA.
-With CONFIG_QUOTA=n, compiler causes a harmless warning:
+This will allow more fine-grained errno codes to be returned by the
+mount system call.
 
-fs/ext4/super.c: In function ‘ext4_remount’:
-fs/ext4/super.c:5840:6: warning: variable ‘enable_quota’ set but not used
-  [-Wunused-but-set-variable]
-  int enable_quota = 0;
-              ^~~~~
-
-Move 'enable_quota' into the same #ifdef CONFIG_QUOTA block
-to remove an unused variable warning.
-
-Signed-off-by: Austin Kim <austindh.kim@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20210824034929.GA13415@raspberrypi
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting r/w until quota is re-enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ext4/mmp.c   |  9 ++++++++-
+ fs/ext4/super.c | 16 +++++++++-------
+ 2 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index e6cd2bf9508e4..ca0997fcd1215 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5742,10 +5742,10 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	unsigned long old_sb_flags, vfs_flags;
- 	struct ext4_mount_options old_opts;
--	int enable_quota = 0;
- 	ext4_group_t g;
- 	int err = 0;
- #ifdef CONFIG_QUOTA
-+	int enable_quota = 0;
- 	int i, j;
- 	char *to_free[EXT4_MAXQUOTAS];
- #endif
-@@ -5951,7 +5951,9 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 					err = -EROFS;
- 					goto restore_opts;
- 				}
-+#ifdef CONFIG_QUOTA
- 			enable_quota = 1;
-+#endif
- 		}
+diff --git a/fs/ext4/mmp.c b/fs/ext4/mmp.c
+index cebea4270817e..28129a8db713c 100644
+--- a/fs/ext4/mmp.c
++++ b/fs/ext4/mmp.c
+@@ -290,6 +290,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 	if (mmp_block < le32_to_cpu(es->s_first_data_block) ||
+ 	    mmp_block >= ext4_blocks_count(es)) {
+ 		ext4_warning(sb, "Invalid MMP block in superblock");
++		retval = -EINVAL;
+ 		goto failed;
  	}
  
+@@ -315,6 +316,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 
+ 	if (seq == EXT4_MMP_SEQ_FSCK) {
+ 		dump_mmp_msg(sb, mmp, "fsck is running on the filesystem");
++		retval = -EBUSY;
+ 		goto failed;
+ 	}
+ 
+@@ -328,6 +330,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 
+ 	if (schedule_timeout_interruptible(HZ * wait_time) != 0) {
+ 		ext4_warning(sb, "MMP startup interrupted, failing mount\n");
++		retval = -ETIMEDOUT;
+ 		goto failed;
+ 	}
+ 
+@@ -338,6 +341,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 	if (seq != le32_to_cpu(mmp->mmp_seq)) {
+ 		dump_mmp_msg(sb, mmp,
+ 			     "Device is already active on another node.");
++		retval = -EBUSY;
+ 		goto failed;
+ 	}
+ 
+@@ -357,6 +361,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 	 */
+ 	if (schedule_timeout_interruptible(HZ * wait_time) != 0) {
+ 		ext4_warning(sb, "MMP startup interrupted, failing mount");
++		retval = -ETIMEDOUT;
+ 		goto failed;
+ 	}
+ 
+@@ -367,6 +372,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 	if (seq != le32_to_cpu(mmp->mmp_seq)) {
+ 		dump_mmp_msg(sb, mmp,
+ 			     "Device is already active on another node.");
++		retval = -EBUSY;
+ 		goto failed;
+ 	}
+ 
+@@ -383,6 +389,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 		EXT4_SB(sb)->s_mmp_tsk = NULL;
+ 		ext4_warning(sb, "Unable to create kmmpd thread for %s.",
+ 			     sb->s_id);
++		retval = -ENOMEM;
+ 		goto failed;
+ 	}
+ 
+@@ -390,5 +397,5 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 
+ failed:
+ 	brelse(bh);
+-	return 1;
++	return retval;
+ }
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index ca0997fcd1215..d062bad1384be 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -4646,9 +4646,11 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
+ 			  ext4_has_feature_orphan_present(sb) ||
+ 			  ext4_has_feature_journal_needs_recovery(sb));
+ 
+-	if (ext4_has_feature_mmp(sb) && !sb_rdonly(sb))
+-		if (ext4_multi_mount_protect(sb, le64_to_cpu(es->s_mmp_block)))
++	if (ext4_has_feature_mmp(sb) && !sb_rdonly(sb)) {
++		err = ext4_multi_mount_protect(sb, le64_to_cpu(es->s_mmp_block));
++		if (err)
+ 			goto failed_mount3a;
++	}
+ 
+ 	/*
+ 	 * The first inode we look at is the journal inode.  Don't try
+@@ -5945,12 +5947,12 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
+ 				goto restore_opts;
+ 
+ 			sb->s_flags &= ~SB_RDONLY;
+-			if (ext4_has_feature_mmp(sb))
+-				if (ext4_multi_mount_protect(sb,
+-						le64_to_cpu(es->s_mmp_block))) {
+-					err = -EROFS;
++			if (ext4_has_feature_mmp(sb)) {
++				err = ext4_multi_mount_protect(sb,
++						le64_to_cpu(es->s_mmp_block));
++				if (err)
+ 					goto restore_opts;
+-				}
++			}
+ #ifdef CONFIG_QUOTA
+ 			enable_quota = 1;
+ #endif
 -- 
 2.39.2
 
