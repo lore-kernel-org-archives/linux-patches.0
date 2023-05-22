@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9855171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:46:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435E9C4339B;
-	Mon, 22 May 2023 19:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFED6171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:46:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC44C4339B;
+	Mon, 22 May 2023 19:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784764;
-	bh=u0ete4/L9qEG1j1eaFaM6cfkD+hUhRBYlzGermRhDww=;
+	s=korg; t=1684784767;
+	bh=/cVgxAil8PWw7aNezkRshuCnH82jfUgncVom3ws6J2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fHlDAqEmrb9aL699fD9uqMRvRIFp1qZtFtIjVd+7lTrJrWyYSQVqMBRJ3ih/4Hnpo
-	 U6unP0C40quWRGydN9LePMAnOlwQiEpG2vfQ2JC10ffw9gbWgPVmc5s7DgaHTANYzL
-	 L9+5xappmiO5RSWrLEhkY2Xs/DEXQZU/LzpUIT1Y=
+	b=t+YmNvj1wcx+08j0xg+nrJRfIZZ3WHudfGpyQu/h74xe/0H5RcuLlj57D42+vnRZN
+	 WYwJuAgUap4gHo9UZfw0Stuw9mONzMe7AJ8FSjnTNPDBZwxuPGPKAle2eXota8letl
+	 2WJXUTdgNIMMYT0MwnKOGuHaqlHlCI8eCHmNomrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ning <qning0106@126.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 195/364] mfd: dln2: Fix memory leak in dln2_probe()
-Date: Mon, 22 May 2023 20:08:20 +0100
-Message-Id: <20230522190417.610503945@linuxfoundation.org>
+Subject: [PATCH 6.3 196/364] mfd: intel-lpss: Add Intel Meteor Lake PCH-S LPSS PCI IDs
+Date: Mon, 22 May 2023 20:08:21 +0100
+Message-Id: <20230522190417.634087532@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,36 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiang Ning <qning0106@126.com>
+From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
 
-[ Upstream commit 96da8f148396329ba769246cb8ceaa35f1ddfc48 ]
+[ Upstream commit 72d4a1683741ee578da0e265886e6a7f3d42266c ]
 
-When dln2_setup_rx_urbs() in dln2_probe() fails, error out_free forgets
-to call usb_put_dev() to decrease the refcount of dln2->usb_dev.
+Add Intel Meteor Lake PCH-S also called as Meteor Point-S LPSS PCI IDs.
 
-Fix this by adding usb_put_dev() in the error handling code of
-dln2_probe().
-
-Signed-off-by: Qiang Ning <qning0106@126.com>
+Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Acked-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230330024353.4503-1-qning0106@126.com
+Link: https://lore.kernel.org/r/20230330132618.4108665-1-jarkko.nikula@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/dln2.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mfd/intel-lpss-pci.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/mfd/dln2.c b/drivers/mfd/dln2.c
-index 6cd0b0c752d6e..c3149729cec2e 100644
---- a/drivers/mfd/dln2.c
-+++ b/drivers/mfd/dln2.c
-@@ -827,6 +827,7 @@ static int dln2_probe(struct usb_interface *interface,
- 	dln2_stop_rx_urbs(dln2);
- 
- out_free:
-+	usb_put_dev(dln2->usb_dev);
- 	dln2_free(dln2);
- 
- 	return ret;
+diff --git a/drivers/mfd/intel-lpss-pci.c b/drivers/mfd/intel-lpss-pci.c
+index dde31c50a6320..699f44ffff0e4 100644
+--- a/drivers/mfd/intel-lpss-pci.c
++++ b/drivers/mfd/intel-lpss-pci.c
+@@ -447,6 +447,21 @@ static const struct pci_device_id intel_lpss_pci_ids[] = {
+ 	{ PCI_VDEVICE(INTEL, 0x7e79), (kernel_ulong_t)&bxt_i2c_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7e7a), (kernel_ulong_t)&bxt_i2c_info },
+ 	{ PCI_VDEVICE(INTEL, 0x7e7b), (kernel_ulong_t)&bxt_i2c_info },
++	/* MTP-S */
++	{ PCI_VDEVICE(INTEL, 0x7f28), (kernel_ulong_t)&bxt_uart_info },
++	{ PCI_VDEVICE(INTEL, 0x7f29), (kernel_ulong_t)&bxt_uart_info },
++	{ PCI_VDEVICE(INTEL, 0x7f2a), (kernel_ulong_t)&tgl_info },
++	{ PCI_VDEVICE(INTEL, 0x7f2b), (kernel_ulong_t)&tgl_info },
++	{ PCI_VDEVICE(INTEL, 0x7f4c), (kernel_ulong_t)&bxt_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x7f4d), (kernel_ulong_t)&bxt_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x7f4e), (kernel_ulong_t)&bxt_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x7f4f), (kernel_ulong_t)&bxt_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x7f5c), (kernel_ulong_t)&bxt_uart_info },
++	{ PCI_VDEVICE(INTEL, 0x7f5d), (kernel_ulong_t)&bxt_uart_info },
++	{ PCI_VDEVICE(INTEL, 0x7f5e), (kernel_ulong_t)&tgl_info },
++	{ PCI_VDEVICE(INTEL, 0x7f5f), (kernel_ulong_t)&tgl_info },
++	{ PCI_VDEVICE(INTEL, 0x7f7a), (kernel_ulong_t)&bxt_i2c_info },
++	{ PCI_VDEVICE(INTEL, 0x7f7b), (kernel_ulong_t)&bxt_i2c_info },
+ 	/* LKF */
+ 	{ PCI_VDEVICE(INTEL, 0x98a8), (kernel_ulong_t)&bxt_uart_info },
+ 	{ PCI_VDEVICE(INTEL, 0x98a9), (kernel_ulong_t)&bxt_uart_info },
 -- 
 2.39.2
 
