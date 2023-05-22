@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDFB14AB3
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE06C433D2;
-	Mon, 22 May 2023 19:29:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF1814AB3
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E00CC433EF;
+	Mon, 22 May 2023 19:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783796;
-	bh=JIVqOOwSWuOCNO6WNW665Eu9nFgLFzCEUZ1bd9gn0gQ=;
+	s=korg; t=1684783799;
+	bh=67O/x2cYuEQiSyiEljyi+73Oiae9XnwmoOvdLXg7McA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMe9+DySyS1aZ14b99J2CFpMsyOETeP4YnAAvCYf8y6dhc+R5nFgeU/B9a6gbmys8
-	 hXvEyrEIMlxloMHNcCvUHSc5dHIOaELP6Ko6mh7KeXOa32JMggTbXVkuTV3cSAjtg2
-	 gmP4CQOWAZGwtG9BZ/szab7JbaLc+bDBNv2yBU40=
+	b=1E17YuSWv3xWKMfg17gxYyQfiCctidqCEy6B17xJuyZdW2NW6eZt/o5hhcghdUtKG
+	 GNfwRGa4AY8p0rg1A2Ybsi2ksmzlzYgTFfMXglxOhvfFiREewOQI67ujEJlMdVkprK
+	 ME1TwhtT/UDn1oxJZ8d4pD4Ia9gPeEdwdObH5FjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	David Ahern <dsahern@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/292] selftets: seg6: disable rp_filter by default in srv6_end_dt4_l3vpn_test
-Date: Mon, 22 May 2023 20:08:42 +0100
-Message-Id: <20230522190410.090447783@linuxfoundation.org>
+Subject: [PATCH 6.1 166/292] net: fec: Better handle pm_runtime_get() failing in .remove()
+Date: Mon, 22 May 2023 20:08:43 +0100
+Message-Id: <20230522190410.115421853@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -37,59 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit f97b8401e0deb46ad1e4245c21f651f64f55aaa6 ]
+[ Upstream commit f816b9829b19394d318e01953aa3b2721bca040d ]
 
-On some distributions, the rp_filter is automatically set (=1) by
-default on a netdev basis (also on VRFs).
-In an SRv6 End.DT4 behavior, decapsulated IPv4 packets are routed using
-the table associated with the VRF bound to that tunnel. During lookup
-operations, the rp_filter can lead to packet loss when activated on the
-VRF.
-Therefore, we chose to make this selftest more robust by explicitly
-disabling the rp_filter during tests (as it is automatically set by some
-Linux distributions).
+In the (unlikely) event that pm_runtime_get() (disguised as
+pm_runtime_resume_and_get()) fails, the remove callback returned an
+error early. The problem with this is that the driver core ignores the
+error value and continues removing the device. This results in a
+resource leak. Worse the devm allocated resources are freed and so if a
+callback of the driver is called later the register mapping is already
+gone which probably results in a crash.
 
-Fixes: 2195444e09b4 ("selftests: add selftest for the SRv6 End.DT4 behavior")
-Reported-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Tested-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
+Fixes: a31eda65ba21 ("net: fec: fix clock count mis-match")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230510200020.1534610-1-u.kleine-koenig@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/srv6_end_dt4_l3vpn_test.sh  | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh b/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh
-index 37f08d582d2fe..f962823628119 100755
---- a/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh
-+++ b/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh
-@@ -258,6 +258,12 @@ setup_hs()
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index 6f914180f4797..33226a22d8a4a 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -4168,9 +4168,11 @@ fec_drv_remove(struct platform_device *pdev)
+ 	struct device_node *np = pdev->dev.of_node;
+ 	int ret;
  
- 	# set the networking for the host
- 	ip netns add ${hsname}
-+
-+	# disable the rp_filter otherwise the kernel gets confused about how
-+	# to route decap ipv4 packets.
-+	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
-+	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.default.rp_filter=0
-+
- 	ip -netns ${hsname} link add veth0 type veth peer name ${rtveth}
- 	ip -netns ${hsname} link set ${rtveth} netns ${rtname}
- 	ip -netns ${hsname} addr add ${IPv4_HS_NETWORK}.${hs}/24 dev veth0
-@@ -276,11 +282,6 @@ setup_hs()
+-	ret = pm_runtime_resume_and_get(&pdev->dev);
++	ret = pm_runtime_get_sync(&pdev->dev);
+ 	if (ret < 0)
+-		return ret;
++		dev_err(&pdev->dev,
++			"Failed to resume device in remove callback (%pe)\n",
++			ERR_PTR(ret));
  
- 	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.proxy_arp=1
+ 	cancel_work_sync(&fep->tx_timeout_work);
+ 	fec_ptp_stop(pdev);
+@@ -4183,8 +4185,13 @@ fec_drv_remove(struct platform_device *pdev)
+ 		of_phy_deregister_fixed_link(np);
+ 	of_node_put(fep->phy_node);
  
--	# disable the rp_filter otherwise the kernel gets confused about how
--	# to route decap ipv4 packets.
--	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
--	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.rp_filter=0
--
- 	ip netns exec ${rtname} sh -c "echo 1 > /proc/sys/net/vrf/strict_mode"
- }
+-	clk_disable_unprepare(fep->clk_ahb);
+-	clk_disable_unprepare(fep->clk_ipg);
++	/* After pm_runtime_get_sync() failed, the clks are still off, so skip
++	 * disabling them again.
++	 */
++	if (ret >= 0) {
++		clk_disable_unprepare(fep->clk_ahb);
++		clk_disable_unprepare(fep->clk_ipg);
++	}
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
  
 -- 
 2.39.2
