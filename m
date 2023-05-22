@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BEFC171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:26:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D60B8C433D2;
-	Mon, 22 May 2023 19:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7508E171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:26:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73D9C433EF;
+	Mon, 22 May 2023 19:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783596;
-	bh=3GSBUhY4XFVwAmzrq8kLTerlqC+UbOa971PCDsctxdA=;
+	s=korg; t=1684783599;
+	bh=3gJy0X1L7Rst/KdaITmbaPD+ZSpjN8Sdcwl7dUFU+Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XOZ5VdiKCF8eZTpeCibdwPa++sHrCTred4gE7tiUy8eoakDpejS0ax2OuiNIPlLy2
-	 9MEtTe6x7yZ+mLTZS3WvI7Xy4CVfbzPw5yqImkYL3NZSZ9VhhUQdoythOCZ4dnmpZC
-	 UdSfIrLlCfQ4jmnWozh+CxtML2IAqNJYRYG7uMII=
+	b=hrpKFOtej0/wSCTnbJYpzDsqnHDfeC2/qY3DP6ZxJS1DEz6DWvcmxyicC26Dl0fZ0
+	 kKAIyKN4LWvjjxrnFUH933bSg7PbN4Tt0vDBd0BayjZMZnWN8bpHbGC0hHpBY9JGFi
+	 KNit3F2RwHl0uQcqO/o4zXDK5Ho9lkhU3LGIyiUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
+	Mukesh Sisodiya <mukesh.sisodiya@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/292] wifi: iwlwifi: pcie: fix possible NULL pointer dereference
-Date: Mon, 22 May 2023 20:07:35 +0100
-Message-Id: <20230522190408.421141746@linuxfoundation.org>
+Subject: [PATCH 6.1 099/292] wifi: iwlwifi: add a new PCI device ID for BZ device
+Date: Mon, 22 May 2023 20:07:36 +0100
+Message-Id: <20230522190408.445510785@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,54 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
 
-[ Upstream commit b655b9a9f8467684cfa8906713d33b71ea8c8f54 ]
+[ Upstream commit c30a2a64788b3d617a9c5d96adb76c68b0862e5f ]
 
-It is possible that iwl_pci_probe() will fail and free the trans,
-then afterwards iwl_pci_remove() will be called and crash by trying
-to access trans which is already freed, fix it.
+Add support for a new PCI device ID 0x272b once registering with PCIe.
 
-iwlwifi 0000:01:00.0: Detected crf-id 0xa5a5a5a2, cnv-id 0xa5a5a5a2
-		      wfpm id 0xa5a5a5a2
-iwlwifi 0000:01:00.0: Can't find a correct rfid for crf id 0x5a2
-...
-BUG: kernel NULL pointer dereference, address: 0000000000000028
-...
-RIP: 0010:iwl_pci_remove+0x12/0x30 [iwlwifi]
-pci_device_remove+0x3e/0xb0
-device_release_driver_internal+0x103/0x1f0
-driver_detach+0x4c/0x90
-bus_remove_driver+0x5c/0xd0
-driver_unregister+0x31/0x50
-pci_unregister_driver+0x40/0x90
-iwl_pci_unregister_driver+0x15/0x20 [iwlwifi]
-__exit_compat+0x9/0x98 [iwlwifi]
-__x64_sys_delete_module+0x147/0x260
-
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
+Signed-off-by: Mukesh Sisodiya <mukesh.sisodiya@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413213309.082f6e21341b.I0db21d7fa9a828d571ca886713bd0b5d0b6e1e5c@changeid
+Link: https://lore.kernel.org/r/20230414130637.56342664110d.I5aa6f2858fdcf69fdea4f1a873115a48bd43764e@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-index 85fadd1ef1ff3..afe6cc15c845f 100644
+index afe6cc15c845f..03e8234d03520 100644
 --- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
 +++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -1685,6 +1685,9 @@ static void iwl_pci_remove(struct pci_dev *pdev)
- {
- 	struct iwl_trans *trans = pci_get_drvdata(pdev);
+@@ -504,6 +504,7 @@ static const struct pci_device_id iwl_hw_card_ids[] = {
  
-+	if (!trans)
-+		return;
-+
- 	iwl_drv_stop(trans->drv);
- 
- 	iwl_trans_pcie_free(trans);
+ /* Bz devices */
+ 	{IWL_PCI_DEVICE(0x2727, PCI_ANY_ID, iwl_bz_trans_cfg)},
++	{IWL_PCI_DEVICE(0x272b, PCI_ANY_ID, iwl_bz_trans_cfg)},
+ 	{IWL_PCI_DEVICE(0xA840, PCI_ANY_ID, iwl_bz_trans_cfg)},
+ 	{IWL_PCI_DEVICE(0x7740, PCI_ANY_ID, iwl_bz_trans_cfg)},
+ #endif /* CONFIG_IWLMVM */
 -- 
 2.39.2
 
