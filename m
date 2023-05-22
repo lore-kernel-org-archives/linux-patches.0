@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80299171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:20:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED492C433EF;
-	Mon, 22 May 2023 19:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E21C0171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:20:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E902C433EF;
+	Mon, 22 May 2023 19:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783230;
-	bh=LWKYDZPw56ysd+OlgRNoVjRw+jbHYGUeWBgLsS8860g=;
+	s=korg; t=1684783233;
+	bh=diWu4AIC1ach/+U1Bf+5HLQYejSHjAGjK7EjL70df4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MWoXXVu5/pICLdbreR/JHBH5k+45PBMkbQzq38x8c7LM2jODRd/4prlls/DmBT1qG
-	 bE4mbRU23yH5Yt/56sQuQpLPboN7rDBuzeKvwrXz0pdEaHd0EmIIepaEpb0ItPeOz4
-	 LjOq22ChC+7AhuB03LQbM8C+Lmiocx/vY/ClqFp0=
+	b=XG5anC+3idVAuZoF71ktM1/7asuhSJSS0oRA8Gt11Up+sH8EZ1DfoMBedygkQV/iG
+	 F3DB2QlVo0rwXvjp8si+7PF7y976UskVGwKNrQ11W0OY2UhBNNzcZ7Xm9DaSU1HTML
+	 J2B9D1UOlE3vv20V/dxkDPT17caXKMpESNhxW9xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Marco Migliore <m.migliore@tiesse.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/203] cassini: Fix a memory leak in the error handling path of cas_init_one()
-Date: Mon, 22 May 2023 20:09:38 +0100
-Message-Id: <20230522190359.240149248@linuxfoundation.org>
+Subject: [PATCH 5.15 155/203] net: dsa: mv88e6xxx: Fix mv88e6393x EPC write command offset
+Date: Mon, 22 May 2023 20:09:39 +0100
+Message-Id: <20230522190359.267227549@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -37,39 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Marco Migliore <m.migliore@tiesse.com>
 
-[ Upstream commit 412cd77a2c24b191c65ea53025222418db09817c ]
+[ Upstream commit 1323e0c6e1d7e103d59384c3ac50f72b17a6936c ]
 
-cas_saturn_firmware_init() allocates some memory using vmalloc(). This
-memory is freed in the .remove() function but not it the error handling
-path of the probe.
+According to datasheet, the command opcode must be specified
+into bits [14:12] of the Extended Port Control register (EPC).
 
-Add the missing vfree() to avoid a memory leak, should an error occur.
-
-Fixes: fcaa40669cd7 ("cassini: use request_firmware")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Fixes: de776d0d316f ("net: dsa: mv88e6xxx: add support for mv88e6393x family")
+Signed-off-by: Marco Migliore <m.migliore@tiesse.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/cassini.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/dsa/mv88e6xxx/port.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/sun/cassini.c b/drivers/net/ethernet/sun/cassini.c
-index 6472425539e15..21e4df8466c91 100644
---- a/drivers/net/ethernet/sun/cassini.c
-+++ b/drivers/net/ethernet/sun/cassini.c
-@@ -5123,6 +5123,8 @@ static int cas_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		cas_shutdown(cp);
- 	mutex_unlock(&cp->pm_mutex);
+diff --git a/drivers/net/dsa/mv88e6xxx/port.h b/drivers/net/dsa/mv88e6xxx/port.h
+index 03382b66f8003..3e68d534eaca5 100644
+--- a/drivers/net/dsa/mv88e6xxx/port.h
++++ b/drivers/net/dsa/mv88e6xxx/port.h
+@@ -267,7 +267,7 @@
+ /* Offset 0x10: Extended Port Control Command */
+ #define MV88E6393X_PORT_EPC_CMD		0x10
+ #define MV88E6393X_PORT_EPC_CMD_BUSY	0x8000
+-#define MV88E6393X_PORT_EPC_CMD_WRITE	0x0300
++#define MV88E6393X_PORT_EPC_CMD_WRITE	0x3000
+ #define MV88E6393X_PORT_EPC_INDEX_PORT_ETYPE	0x02
  
-+	vfree(cp->fw_data);
-+
- 	pci_iounmap(pdev, cp->regs);
- 
- 
+ /* Offset 0x11: Extended Port Control Data */
 -- 
 2.39.2
 
