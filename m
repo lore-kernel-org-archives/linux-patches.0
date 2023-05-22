@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF744171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:18:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59827C433D2;
-	Mon, 22 May 2023 19:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D535D171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:18:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5244BC433D2;
+	Mon, 22 May 2023 19:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783126;
-	bh=+xqjS9Oaex2RNrBNAawCEn3v2DKe5+blgcwkkwigDeQ=;
+	s=korg; t=1684783129;
+	bh=hGhvx92ZCizsoPlMmof+psio7svpD2tHYeJujRDcazM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+5CFVsv4pKid8w4YZpvX0Dil700vRB14b1PFhObzZmhp4DftCUzQBWu3XFgX8NUk
-	 rUFAsggbJFbZ0CnoXky6w9tdZ/nOpr1qPDPZHaqVAmLcDYQquQIUI0DvRw9vUa4ACz
-	 D1DHlOX6nYUTMHhUVlnD1mcH6mK56uMyGpeUieXU=
+	b=xVDaTWfmcqLw+ixivLY75AZNZ3oAxr0MdsxthjMDjyt0/PknnmnrD6zDjFlXadfE7
+	 pNT7ssI3POEyhj1buJ1Ab8HU3ZAR6T1RxA17CATNJMrtoBMknutemyFWud+prSZPA+
+	 NOHHGeuH+7DXrvlWYghqS69ILNx3Odw8/q8+pyKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grygorii Strashko <grygorii.strashko@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/203] net: phy: dp83867: add w/a for packet errors seen with short cables
-Date: Mon, 22 May 2023 20:09:04 +0100
-Message-Id: <20230522190358.296265248@linuxfoundation.org>
+Subject: [PATCH 5.15 121/203] ALSA: firewire-digi00x: prevent potential use after free
+Date: Mon, 22 May 2023 20:09:05 +0100
+Message-Id: <20230522190358.324386650@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -37,75 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Grygorii Strashko <grygorii.strashko@ti.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 0b01db274028f5acd207332686ffc92ac77491ac ]
+[ Upstream commit c0e72058d5e21982e61a29de6b098f7c1f0db498 ]
 
-Introduce the W/A for packet errors seen with short cables (<1m) between
-two DP83867 PHYs.
+This code was supposed to return an error code if init_stream()
+failed, but it instead freed dg00x->rx_stream and returned success.
+This potentially leads to a use after free.
 
-The W/A recommended by DM requires FFE Equalizer Configuration tuning by
-writing value 0x0E81 to DSP_FFE_CFG register (0x012C), surrounded by hard
-and soft resets as follows:
-
-write_reg(0x001F, 0x8000); //hard reset
-write_reg(DSP_FFE_CFG, 0x0E81);
-write_reg(0x001F, 0x4000); //soft reset
-
-Since  DP83867 PHY DM says "Changing this register to 0x0E81, will not
-affect Long Cable performance.", enable the W/A by default.
-
-Fixes: 2a10154abcb7 ("net: phy: dp83867: Add TI dp83867 phy")
-Signed-off-by: Grygorii Strashko <grygorii.strashko@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9a08067ec318 ("ALSA: firewire-digi00x: support AMDTP domain")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/c224cbd5-d9e2-4cd4-9bcf-2138eb1d35c6@kili.mountain
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/dp83867.c | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ sound/firewire/digi00x/digi00x-stream.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
-index 783e30451e30d..6230dd5e29902 100644
---- a/drivers/net/phy/dp83867.c
-+++ b/drivers/net/phy/dp83867.c
-@@ -41,6 +41,7 @@
- #define DP83867_STRAP_STS1	0x006E
- #define DP83867_STRAP_STS2	0x006f
- #define DP83867_RGMIIDCTL	0x0086
-+#define DP83867_DSP_FFE_CFG	0x012c
- #define DP83867_RXFCFG		0x0134
- #define DP83867_RXFPMD1	0x0136
- #define DP83867_RXFPMD2	0x0137
-@@ -841,8 +842,27 @@ static int dp83867_phy_reset(struct phy_device *phydev)
+diff --git a/sound/firewire/digi00x/digi00x-stream.c b/sound/firewire/digi00x/digi00x-stream.c
+index a15f55b0dce37..295163bb8abb6 100644
+--- a/sound/firewire/digi00x/digi00x-stream.c
++++ b/sound/firewire/digi00x/digi00x-stream.c
+@@ -259,8 +259,10 @@ int snd_dg00x_stream_init_duplex(struct snd_dg00x *dg00x)
+ 		return err;
  
- 	usleep_range(10, 20);
+ 	err = init_stream(dg00x, &dg00x->tx_stream);
+-	if (err < 0)
++	if (err < 0) {
+ 		destroy_stream(dg00x, &dg00x->rx_stream);
++		return err;
++	}
  
--	return phy_modify(phydev, MII_DP83867_PHYCTRL,
-+	err = phy_modify(phydev, MII_DP83867_PHYCTRL,
- 			 DP83867_PHYCR_FORCE_LINK_GOOD, 0);
-+	if (err < 0)
-+		return err;
-+
-+	/* Configure the DSP Feedforward Equalizer Configuration register to
-+	 * improve short cable (< 1 meter) performance. This will not affect
-+	 * long cable performance.
-+	 */
-+	err = phy_write_mmd(phydev, DP83867_DEVADDR, DP83867_DSP_FFE_CFG,
-+			    0x0e81);
-+	if (err < 0)
-+		return err;
-+
-+	err = phy_write(phydev, DP83867_CTRL, DP83867_SW_RESTART);
-+	if (err < 0)
-+		return err;
-+
-+	usleep_range(10, 20);
-+
-+	return 0;
- }
- 
- static void dp83867_link_change_notify(struct phy_device *phydev)
+ 	err = amdtp_domain_init(&dg00x->domain);
+ 	if (err < 0) {
 -- 
 2.39.2
 
