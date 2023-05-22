@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BA7168DC
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:36:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108BFC433D2;
-	Mon, 22 May 2023 19:36:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3A8171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:36:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0886C433D2;
+	Mon, 22 May 2023 19:36:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784162;
-	bh=1H1O7hRRDTGEhMSxk7tJL5AgpIz6DvSVlwSEEQtssZM=;
+	s=korg; t=1684784165;
+	bh=37Jz2q5LnE30Jaq36bR14GBbqujFZ79ISbhheOxvte8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkL+PLFEE6ObHh65rFrQonGXHRY2uuri4apGHw6RJdzczHlJZGRxEw3sozE3HeiPP
-	 qbGgxWKpQoERCq4rCROF1Mws5+AnZ6NVBAzqaCZjroVGDPSD3Rou/q2LgPvgqIdzgf
-	 rmZXXW7meNX1XMe7NZQZbaV1y6e0gUy4upAm6+Vw=
+	b=PVGXCy8cZoTZhQIfd31/VRNyNPAC73DwKrdLRNsnje2IORMVsEQAoGtc+W/qGgqS1
+	 JrwQ9iFAEy11O5bo3peaKtaMZaYgIre5Nz5Q7F0TumUSN99fD1zPNdgMUkEpgYEsar
+	 aaL2No/dj8YCH3LSC81b6VJ22U5iWNc1LpP5qszI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <swboyd@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 6.1 266/292] serial: qcom-geni: fix enabling deactivated interrupt
-Date: Mon, 22 May 2023 20:10:23 +0100
-Message-Id: <20230522190412.590080757@linuxfoundation.org>
+	Benjamin Block <bblock@linux.ibm.com>,
+	Steffen Maier <maier@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 6.1 284/292] s390/qdio: fix do_sqbs() inline assembly constraint
+Date: Mon, 22 May 2023 20:10:41 +0100
+Message-Id: <20230522190413.044308915@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -34,84 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 5f949f140f73696f64acb89a1f16ff9153d017e0 upstream.
+commit 2862a2fdfae875888e3c1c3634e3422e01d98147 upstream.
 
-The driver have a race, experienced only with PREEMPT_RT patchset:
+Use "a" constraint instead of "d" constraint to pass the state parameter to
+the do_sqbs() inline assembly. This prevents that general purpose register
+zero is used for the state parameter.
 
-CPU0                         | CPU1
-==================================================================
-qcom_geni_serial_probe       |
-  uart_add_one_port          |
-                             | serdev_drv_probe
-                             |   qca_serdev_probe
-                             |     serdev_device_open
-                             |       uart_open
-                             |         uart_startup
-                             |           qcom_geni_serial_startup
-                             |             enable_irq
-                             |               __irq_startup
-                             |                 WARN_ON()
-                             |                 IRQ not activated
-  request_threaded_irq       |
-    irq_domain_activate_irq  |
+If the compiler would select general purpose register zero this would be
+problematic for the used instruction in rsy format: the register used for
+the state parameter is a base register. If the base register is general
+purpose register zero the contents of the register are unexpectedly ignored
+when the instruction is executed.
 
-The warning:
+This only applies to z/VM guests using QIOASSIST with dedicated (pass through)
+QDIO-based devices such as FCP [zfcp driver] as well as real OSA or
+HiperSockets [qeth driver].
 
-  894000.serial: ttyHS1 at MMIO 0x894000 (irq = 144, base_baud = 0) is a MSM
-  serial serial0: tty port ttyHS1 registered
-  WARNING: CPU: 7 PID: 107 at kernel/irq/chip.c:241 __irq_startup+0x78/0xd8
-  ...
-  qcom_geni_serial 894000.serial: serial engine reports 0 RX bytes in!
+A possible symptom for this case using zfcp is the following repeating kernel
+message pattern:
 
-Adding UART port triggers probe of child serial devices - serdev and
-eventually Qualcomm Bluetooth hci_qca driver.  This opens UART port
-which enables the interrupt before it got activated in
-request_threaded_irq().  The issue originates in commit f3974413cf02
-("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup") and discussion on
-mailing list [1].  However the above commit does not explain why the
-uart_add_one_port() is moved above requesting interrupt.
+zfcp <devbusid>: A QDIO problem occurred
+zfcp <devbusid>: A QDIO problem occurred
+zfcp <devbusid>: qdio: ZFCP on SC <sc> using AI:1 QEBSM:1 PRI:1 TDD:1 SIGA: W
+zfcp <devbusid>: A QDIO problem occurred
+zfcp <devbusid>: A QDIO problem occurred
 
-[1] https://lore.kernel.org/all/5d9f3dfa.1c69fb81.84c4b.30bf@mx.google.com/
+Each of the qdio problem message can be accompanied by the following entries
+for the affected subchannel <sc> in
+/sys/kernel/debug/s390dbf/qdio_error/hex_ascii for zfcp or qeth:
 
-Fixes: f3974413cf02 ("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup")
+<sc> ccq: 69....
+<sc> SQBS ERROR.
+
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Cc: Steffen Maier <maier@linux.ibm.com>
+Fixes: 8129ee164267 ("[PATCH] s390: qdio V=V pass-through")
 Cc: <stable@vger.kernel.org>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20230505152301.2181270-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/s390/cio/qdio.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1483,19 +1483,18 @@ static int qcom_geni_serial_probe(struct
- 	platform_set_drvdata(pdev, port);
- 	port->handle_rx = console ? handle_rx_console : handle_rx_uart;
- 
--	ret = uart_add_one_port(drv, uport);
--	if (ret)
--		return ret;
--
- 	irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
- 	ret = devm_request_irq(uport->dev, uport->irq, qcom_geni_serial_isr,
- 			IRQF_TRIGGER_HIGH, port->name, uport);
- 	if (ret) {
- 		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
--		uart_remove_one_port(drv, uport);
- 		return ret;
- 	}
- 
-+	ret = uart_add_one_port(drv, uport);
-+	if (ret)
-+		return ret;
-+
- 	/*
- 	 * Set pm_runtime status as ACTIVE so that wakeup_irq gets
- 	 * enabled/disabled from dev_pm_arm_wake_irq during system
+--- a/drivers/s390/cio/qdio.h
++++ b/drivers/s390/cio/qdio.h
+@@ -95,7 +95,7 @@ static inline int do_sqbs(u64 token, uns
+ 		"	lgr	1,%[token]\n"
+ 		"	.insn	rsy,0xeb000000008a,%[qs],%[ccq],0(%[state])"
+ 		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart)
+-		: [state] "d" ((unsigned long)state), [token] "d" (token)
++		: [state] "a" ((unsigned long)state), [token] "d" (token)
+ 		: "memory", "cc", "1");
+ 	*count = _ccq & 0xff;
+ 	*start = _queuestart & 0xff;
 
 
