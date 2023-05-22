@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96965171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1344BC433D2;
-	Mon, 22 May 2023 19:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E3F171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E82AC433EF;
+	Mon, 22 May 2023 19:33:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784018;
-	bh=ydEK3aU/RWb8e27zwHNLQSr+DRKSEVXK85FwTJnafns=;
+	s=korg; t=1684784021;
+	bh=VT4YC7zRdb39ixdVuXW2p4bVbm8q6NglsHoVXOgRoTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GETQ5V+pFAvvD3estimL5D+8XsaBGhi0GVW3t7zyfo72FypL7YpJfS2DXEC495ibB
-	 LUkT8cj4qUTt4R63br1Gbp1mpDaaX+nW+EZ7GfyxMD2juojJOz/FmLqcqe+iLQh0P2
-	 g7cGfXGu3nztOt1E5j+UVFme0VlTnt8w4IiISBac=
+	b=F97wmtuKq450aiR075m5s3cACOGfXP9c6tz4L4tcEzJRq0ynkbFqJt6laNb8hSRHO
+	 D5GEd/tuW9JWDwvL5pIqNe7CnyOaRVgspHuol5YPC3U1WJUdEIhVVhHmMhy0LZkHEl
+	 De6bBFD3My7WmQo26wFaA0OUSOiTKD59yuXnKeCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Alon Giladi <alon.giladi@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 209/292] wifi: iwlwifi: fw: fix DBGI dump
-Date: Mon, 22 May 2023 20:09:26 +0100
-Message-Id: <20230522190411.183098504@linuxfoundation.org>
+Subject: [PATCH 6.1 210/292] wifi: iwlwifi: fix OEMs name in the ppag approved list
+Date: Mon, 22 May 2023 20:09:27 +0100
+Message-Id: <20230522190411.208073259@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,88 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Alon Giladi <alon.giladi@intel.com>
 
-[ Upstream commit d3ae69180bbd74bcbc03a2b6d10ed7eccbe98c23 ]
+[ Upstream commit eca7296d9a671e9961834d2ace9cc0ce21fc15b3 ]
 
-The DBGI dump is (unsurprisingly) of type DBGI, not SRAM.
-This leads to bad register accesses because the union is
-built differently, there's no allocation ID, and thus the
-allocation ID ends up being 0x8000.
+Fix a spelling mistake.
 
-Note that this was already wrong for DRAM vs. SMEM since
-they use different parts of the union, but the allocation
-ID is at the same place, so it worked.
-
-Fix all of this but set the allocation ID in a way that
-the offset calculation ends up without any offset.
-
-Fixes: 34bc27783a31 ("iwlwifi: yoyo: fix DBGI_SRAM ini dump header.")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: e8e10a37c51c ("iwlwifi: acpi: move ppag code from mvm to fw/acpi")
+Signed-off-by: Alon Giladi <alon.giladi@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230514120631.19a302ae4c65.I12272599f7c1930666157b9d5e7f81fe9ec4c421@changeid
+Link: https://lore.kernel.org/r/20230514120631.fdd07f36a8bf.I223e5fb16ab5c95d504c3fdaffd0bd70affad1c2@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-index 027360e63b926..3ef0b776b7727 100644
---- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-+++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
-@@ -1664,14 +1664,10 @@ static __le32 iwl_get_mon_reg(struct iwl_fw_runtime *fwrt, u32 alloc_id,
- }
- 
- static void *
--iwl_dump_ini_mon_fill_header(struct iwl_fw_runtime *fwrt,
--			     struct iwl_dump_ini_region_data *reg_data,
-+iwl_dump_ini_mon_fill_header(struct iwl_fw_runtime *fwrt, u32 alloc_id,
- 			     struct iwl_fw_ini_monitor_dump *data,
- 			     const struct iwl_fw_mon_regs *addrs)
- {
--	struct iwl_fw_ini_region_tlv *reg = (void *)reg_data->reg_tlv->data;
--	u32 alloc_id = le32_to_cpu(reg->dram_alloc_id);
--
- 	if (!iwl_trans_grab_nic_access(fwrt->trans)) {
- 		IWL_ERR(fwrt, "Failed to get monitor header\n");
- 		return NULL;
-@@ -1702,8 +1698,10 @@ iwl_dump_ini_mon_dram_fill_header(struct iwl_fw_runtime *fwrt,
- 				  void *data, u32 data_len)
- {
- 	struct iwl_fw_ini_monitor_dump *mon_dump = (void *)data;
-+	struct iwl_fw_ini_region_tlv *reg = (void *)reg_data->reg_tlv->data;
-+	u32 alloc_id = le32_to_cpu(reg->dram_alloc_id);
- 
--	return iwl_dump_ini_mon_fill_header(fwrt, reg_data, mon_dump,
-+	return iwl_dump_ini_mon_fill_header(fwrt, alloc_id, mon_dump,
- 					    &fwrt->trans->cfg->mon_dram_regs);
- }
- 
-@@ -1713,8 +1711,10 @@ iwl_dump_ini_mon_smem_fill_header(struct iwl_fw_runtime *fwrt,
- 				  void *data, u32 data_len)
- {
- 	struct iwl_fw_ini_monitor_dump *mon_dump = (void *)data;
-+	struct iwl_fw_ini_region_tlv *reg = (void *)reg_data->reg_tlv->data;
-+	u32 alloc_id = le32_to_cpu(reg->internal_buffer.alloc_id);
- 
--	return iwl_dump_ini_mon_fill_header(fwrt, reg_data, mon_dump,
-+	return iwl_dump_ini_mon_fill_header(fwrt, alloc_id, mon_dump,
- 					    &fwrt->trans->cfg->mon_smem_regs);
- }
- 
-@@ -1725,7 +1725,10 @@ iwl_dump_ini_mon_dbgi_fill_header(struct iwl_fw_runtime *fwrt,
- {
- 	struct iwl_fw_ini_monitor_dump *mon_dump = (void *)data;
- 
--	return iwl_dump_ini_mon_fill_header(fwrt, reg_data, mon_dump,
-+	return iwl_dump_ini_mon_fill_header(fwrt,
-+					    /* no offset calculation later */
-+					    IWL_FW_INI_ALLOCATION_ID_DBGC1,
-+					    mon_dump,
- 					    &fwrt->trans->cfg->mon_dbgi_regs);
- }
- 
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+index a02e5a67b7066..585e8cd2d332d 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+@@ -38,7 +38,7 @@ static const struct dmi_system_id dmi_ppag_approved_list[] = {
+ 	},
+ 	{ .ident = "ASUS",
+ 	  .matches = {
+-			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTek COMPUTER INC."),
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
+ 		},
+ 	},
+ 	{}
 -- 
 2.39.2
 
