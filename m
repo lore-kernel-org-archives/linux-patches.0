@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FBE171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F8FC433D2;
-	Mon, 22 May 2023 19:42:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4E3171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB2CC433EF;
+	Mon, 22 May 2023 19:42:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784565;
-	bh=F5grBt5yyAVbdzZgMTIbqVhy0XTYwJT8GjYCAdJiQ+k=;
+	s=korg; t=1684784568;
+	bh=86BmQZFA4ZpG/2Fx01+TMVZ9hWVCvMPZ5xe0UP1/eiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hapyeSKPgMw0+NESBwtk/+YgFdjWtQ1Lc9MU7dfiMneJikyPVNW8WXpj2CxgBBk7b
-	 wiUxq1JyiPKsqbnQnPBVGSxNx05VDpEjMIIc8M2pqPmoO53uM+i2IFHkwRXx8XlxoK
-	 1BBO1ZDmWg0b7sO3j0oH/O2e6w4+w2MPGtPo3sKQ=
+	b=lK2u3VUIFWWMvG3ojVRgIHZDUGIyoP5QTqQBroCFF1l9ORcJ5Zuz7/V1IcA1zsU3f
+	 EuZNLuFptcDsFL3yi6EsTw5Z4Y1g2O7lf5twQPtoQhvWFtiTYR5G+50a03V3FY1Hbr
+	 JhuR6VkjZkrPXR2zReAGDoISxGPsAHwdC6A4YgvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reese Russell <git@qrsnap.io>,
-	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 126/364] wifi: mt76: mt7921: add Netgear AXE3000 (A8000) support
-Date: Mon, 22 May 2023 20:07:11 +0100
-Message-Id: <20230522190415.950824770@linuxfoundation.org>
+Subject: [PATCH 6.3 127/364] wifi: iwlwifi: fix iwl_mvm_max_amsdu_size() for MLO
+Date: Mon, 22 May 2023 20:07:12 +0100
+Message-Id: <20230522190415.973781010@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,42 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reese Russell <git@qrsnap.io>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 03eb52dd78cab08f13925aeec8315fbdbcba3253 ]
+[ Upstream commit b2bc600cced23762d4e97db8989b18772145604f ]
 
-Issue: Though the Netgear AXE3000 (A8000) is based on the mt7921
-chipset because of the unique USB VID:PID combination this device
-does not initialize/register. Thus making it not plug and play.
+For MLO, we cannot use vif->bss_conf.chandef.chan->band, since
+that will lead to a NULL-ptr dereference as bss_conf isn't used.
+However, in case of real MLO, we also need to take both LMACs
+into account if they exist, since the station might be active
+on both LMACs at the same time.
 
-Fix: Adds support for the Netgear AXE3000 (A8000) based on the Mediatek
-mt7921au chipset. The method of action is adding the USD VID/PID
-pair to the mt7921u_device_table[] array.
-
-Notes: A retail sample of the Netgear AXE3000 (A8000) yeilds the following
-from lsusb D 0846:9060 NetGear, Inc. Wireless_Device. This pair
-0846:9060 VID:PID has been reported by other users on Github.
-
-Signed-off-by: Reese Russell <git@qrsnap.io>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20230417113648.3588afc85d79.I11592893bbc191b9548518b8bd782de568a9f848@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7921/usb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 37 +++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-index 70c9bbdbf60e9..09ab9b83c2011 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7921/usb.c
-@@ -18,6 +18,9 @@ static const struct usb_device_id mt7921u_device_table[] = {
- 	/* Comfast CF-952AX */
- 	{ USB_DEVICE_AND_INTERFACE_INFO(0x3574, 0x6211, 0xff, 0xff, 0xff),
- 		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
-+	/* Netgear, Inc. [A8000,AXE3000] */
-+	{ USB_DEVICE_AND_INTERFACE_INFO(0x0846, 0x9060, 0xff, 0xff, 0xff),
-+		.driver_info = (kernel_ulong_t)MT7921_FIRMWARE_WM },
- 	{ },
- };
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+index 9813d7fa18007..1c454392de0be 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+@@ -791,10 +791,11 @@ unsigned int iwl_mvm_max_amsdu_size(struct iwl_mvm *mvm,
+ 				    struct ieee80211_sta *sta, unsigned int tid)
+ {
+ 	struct iwl_mvm_sta *mvmsta = iwl_mvm_sta_from_mac80211(sta);
+-	enum nl80211_band band = mvmsta->vif->bss_conf.chandef.chan->band;
+ 	u8 ac = tid_to_mac80211_ac[tid];
++	enum nl80211_band band;
+ 	unsigned int txf;
+-	int lmac = iwl_mvm_get_lmac_id(mvm->fw, band);
++	unsigned int val;
++	int lmac;
+ 
+ 	/* For HE redirect to trigger based fifos */
+ 	if (sta->deflink.he_cap.has_he && !WARN_ON(!iwl_mvm_has_new_tx_api(mvm)))
+@@ -808,7 +809,37 @@ unsigned int iwl_mvm_max_amsdu_size(struct iwl_mvm *mvm,
+ 	 * We also want to have the start of the next packet inside the
+ 	 * fifo to be able to send bursts.
+ 	 */
+-	return min_t(unsigned int, mvmsta->max_amsdu_len,
++	val = mvmsta->max_amsdu_len;
++
++	if (hweight16(sta->valid_links) <= 1) {
++		if (sta->valid_links) {
++			struct ieee80211_bss_conf *link_conf;
++			unsigned int link = ffs(sta->valid_links) - 1;
++
++			rcu_read_lock();
++			link_conf = rcu_dereference(mvmsta->vif->link_conf[link]);
++			if (WARN_ON(!link_conf))
++				band = NL80211_BAND_2GHZ;
++			else
++				band = link_conf->chandef.chan->band;
++			rcu_read_unlock();
++		} else {
++			band = mvmsta->vif->bss_conf.chandef.chan->band;
++		}
++
++		lmac = iwl_mvm_get_lmac_id(mvm->fw, band);
++	} else if (fw_has_capa(&mvm->fw->ucode_capa,
++			       IWL_UCODE_TLV_CAPA_CDB_SUPPORT)) {
++		/* for real MLO restrict to both LMACs if they exist */
++		lmac = IWL_LMAC_5G_INDEX;
++		val = min_t(unsigned int, val,
++			    mvm->fwrt.smem_cfg.lmac[lmac].txfifo_size[txf] - 256);
++		lmac = IWL_LMAC_24G_INDEX;
++	} else {
++		lmac = IWL_LMAC_24G_INDEX;
++	}
++
++	return min_t(unsigned int, val,
+ 		     mvm->fwrt.smem_cfg.lmac[lmac].txfifo_size[txf] - 256);
+ }
  
 -- 
 2.39.2
