@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B89171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:54:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8897FC433EF;
-	Mon, 22 May 2023 19:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB477171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:54:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E5CC433D2;
+	Mon, 22 May 2023 19:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785253;
-	bh=/od0+ycQAvyz2b3XIiAqfglAprJVzfDoaLz1VT4cpyA=;
+	s=korg; t=1684785256;
+	bh=j+o9PJ7QEnX9bYBbmVNQmkxlyPS35gxytrtl2LC+IWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqeCEmQh3JFoqhXVbnT9Jo3hRpBSaSRR+W3X3cprYXTSP2jBJiJG5v4pOAYunLM7B
-	 dY47i8qqx37Q70ufi8xkhohdnmhYq1kqfdNo8Hv4URR4uIAp2Jw9zyBWrfxKGD4d1k
-	 xk6ZNJWPJh5mZ0fwp63LfFRFrniP1sgm1ZSKl4JQ=
+	b=FjWwZ/jDXUUmK8ObgGyHLos7W6uQOXaouOsT8tRDE5oIBDHz3oRiWT+AqH3OdfDII
+	 XPUgfQkT7cRHm79Sb/kNWKgl9u7XQdZVJ4TZ+XYdjoX7+fpY9azLIettNK51z4UC96
+	 cIoP9zddYP0Ko9Mdk21eyI5/ysT5p4RDGTwkjSUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Xiao <Jack.Xiao@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 362/364] drm/amd/amdgpu: introduce gc_*_mes_2.bin v2
-Date: Mon, 22 May 2023 20:11:07 +0100
-Message-Id: <20230522190421.822133571@linuxfoundation.org>
+	Gaurav Batra <gbatra@linux.vnet.ibm.com>,
+	Greg Joyce <gjoyce@linux.vnet.ibm.com>,
+	Brian King <brking@linux.vnet.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.3 345/364] powerpc/iommu: DMA address offset is incorrectly calculated with 2MB TCEs
+Date: Mon, 22 May 2023 20:10:50 +0100
+Message-Id: <20230522190421.415635435@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -34,85 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jack Xiao <Jack.Xiao@amd.com>
+From: Gaurav Batra <gbatra@linux.vnet.ibm.com>
 
-commit 97998b893c3000b27a780a4982e16cfc8f4ea555 upstream.
+commit 096339ab84f36beae0b1db25e0ce63fb3873e8b2 upstream.
 
-To avoid new mes fw running with old driver, rename
-mes schq fw to gc_*_mes_2.bin.
+When DMA window is backed by 2MB TCEs, the DMA address for the mapped
+page should be the offset of the page relative to the 2MB TCE. The code
+was incorrectly setting the DMA address to the beginning of the TCE
+range.
 
-v2: add MODULE_FIRMWARE declaration
-v3: squash in fixup patch
+Mellanox driver is reporting timeout trying to ENABLE_HCA for an SR-IOV
+ethernet port, when DMA window is backed by 2MB TCEs.
 
-Signed-off-by: Jack Xiao <Jack.Xiao@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 387273118714 ("powerps/pseries/dma: Add support for 2M IOMMU page size")
+Cc: stable@vger.kernel.org # v5.16+
+Signed-off-by: Gaurav Batra <gbatra@linux.vnet.ibm.com>
+Reviewed-by: Greg Joyce <gjoyce@linux.vnet.ibm.com>
+Reviewed-by: Brian King <brking@linux.vnet.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20230504175913.83844-1-gbatra@linux.vnet.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c |   26 ++++++++++++++++++++++----
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c  |   10 +++++-----
- 2 files changed, 27 insertions(+), 9 deletions(-)
+ arch/powerpc/kernel/iommu.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mes.c
-@@ -1432,13 +1432,31 @@ int amdgpu_mes_init_microcode(struct amd
- 	struct amdgpu_firmware_info *info;
- 	char ucode_prefix[30];
- 	char fw_name[40];
-+	bool need_retry = false;
- 	int r;
+--- a/arch/powerpc/kernel/iommu.c
++++ b/arch/powerpc/kernel/iommu.c
+@@ -517,7 +517,7 @@ int ppc_iommu_map_sg(struct device *dev,
+ 		/* Convert entry to a dma_addr_t */
+ 		entry += tbl->it_offset;
+ 		dma_addr = entry << tbl->it_page_shift;
+-		dma_addr |= (s->offset & ~IOMMU_PAGE_MASK(tbl));
++		dma_addr |= (vaddr & ~IOMMU_PAGE_MASK(tbl));
  
--	amdgpu_ucode_ip_version_decode(adev, GC_HWIP, ucode_prefix, sizeof(ucode_prefix));
--	snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_mes%s.bin",
--		ucode_prefix,
--		pipe == AMDGPU_MES_SCHED_PIPE ? "" : "1");
-+	amdgpu_ucode_ip_version_decode(adev, GC_HWIP, ucode_prefix,
-+				       sizeof(ucode_prefix));
-+	if (adev->ip_versions[GC_HWIP][0] >= IP_VERSION(11, 0, 0)) {
-+		snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_mes%s.bin",
-+			 ucode_prefix,
-+			 pipe == AMDGPU_MES_SCHED_PIPE ? "_2" : "1");
-+		need_retry = true;
-+	} else {
-+		snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_mes%s.bin",
-+			 ucode_prefix,
-+			 pipe == AMDGPU_MES_SCHED_PIPE ? "" : "1");
-+	}
+ 		DBG("  - %lu pages, entry: %lx, dma_addr: %lx\n",
+ 			    npages, entry, dma_addr);
+@@ -904,6 +904,7 @@ void *iommu_alloc_coherent(struct device
+ 	unsigned int order;
+ 	unsigned int nio_pages, io_order;
+ 	struct page *page;
++	int tcesize = (1 << tbl->it_page_shift);
+ 
+ 	size = PAGE_ALIGN(size);
+ 	order = get_order(size);
+@@ -930,7 +931,8 @@ void *iommu_alloc_coherent(struct device
+ 	memset(ret, 0, size);
+ 
+ 	/* Set up tces to cover the allocated range */
+-	nio_pages = size >> tbl->it_page_shift;
++	nio_pages = IOMMU_PAGE_ALIGN(size, tbl) >> tbl->it_page_shift;
 +
- 	r = amdgpu_ucode_request(adev, &adev->mes.fw[pipe], fw_name);
-+	if (r && need_retry && pipe == AMDGPU_MES_SCHED_PIPE) {
-+		snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_mes.bin",
-+			 ucode_prefix);
-+		DRM_INFO("try to fall back to %s\n", fw_name);
-+		r = amdgpu_ucode_request(adev, &adev->mes.fw[pipe],
-+					 fw_name);
-+	}
+ 	io_order = get_iommu_order(size, tbl);
+ 	mapping = iommu_alloc(dev, tbl, ret, nio_pages, DMA_BIDIRECTIONAL,
+ 			      mask >> tbl->it_page_shift, io_order, 0);
+@@ -938,7 +940,8 @@ void *iommu_alloc_coherent(struct device
+ 		free_pages((unsigned long)ret, order);
+ 		return NULL;
+ 	}
+-	*dma_handle = mapping;
 +
- 	if (r)
- 		goto out;
++	*dma_handle = mapping | ((u64)ret & (tcesize - 1));
+ 	return ret;
+ }
  
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -32,15 +32,15 @@
- #include "v11_structs.h"
- #include "mes_v11_api_def.h"
+@@ -949,7 +952,7 @@ void iommu_free_coherent(struct iommu_ta
+ 		unsigned int nio_pages;
  
--MODULE_FIRMWARE("amdgpu/gc_11_0_0_mes.bin");
-+MODULE_FIRMWARE("amdgpu/gc_11_0_0_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_0_mes1.bin");
--MODULE_FIRMWARE("amdgpu/gc_11_0_1_mes.bin");
-+MODULE_FIRMWARE("amdgpu/gc_11_0_1_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_1_mes1.bin");
--MODULE_FIRMWARE("amdgpu/gc_11_0_2_mes.bin");
-+MODULE_FIRMWARE("amdgpu/gc_11_0_2_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_2_mes1.bin");
--MODULE_FIRMWARE("amdgpu/gc_11_0_3_mes.bin");
-+MODULE_FIRMWARE("amdgpu/gc_11_0_3_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_3_mes1.bin");
--MODULE_FIRMWARE("amdgpu/gc_11_0_4_mes.bin");
-+MODULE_FIRMWARE("amdgpu/gc_11_0_4_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_4_mes1.bin");
- 
- static int mes_v11_0_hw_fini(void *handle);
+ 		size = PAGE_ALIGN(size);
+-		nio_pages = size >> tbl->it_page_shift;
++		nio_pages = IOMMU_PAGE_ALIGN(size, tbl) >> tbl->it_page_shift;
+ 		iommu_free(tbl, dma_handle, nio_pages);
+ 		size = PAGE_ALIGN(size);
+ 		free_pages((unsigned long)vaddr, get_order(size));
 
 
