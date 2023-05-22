@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE124168B6
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:13:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DD3AC4339B;
-	Mon, 22 May 2023 19:13:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B589168D1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:13:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CBF8C433D2;
+	Mon, 22 May 2023 19:13:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782800;
-	bh=hFutcJNoIKd0CZKb9Va8dphdY1kwg9iYQScHP0fRWgk=;
+	s=korg; t=1684782805;
+	bh=9cHJoxwPwMaoa5mCxHNXA7YdZzP9gyYISNAZzlZpBzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiNOjnhRYs5AErSEx7wDpu9HF73gsfj2q3rnMPAEzWrngRq6RQkdcD7E4sFoqQGzQ
-	 W9PNdZZHgmaA/kHwIPPcznstCnf9A0ThzpYNmORCWbT1v1TfVhm0aTbOvZ/v5hb0Im
-	 tB0sUtgcMttWYvt7T8YYLgHj5MDNLlRbCD+esdHk=
+	b=gNAvzEbOrLSuD7RX7xWIROVP9LyrKDrVdRcENQ7hJjUHGvaj9L9G/L2EGWxhTITyL
+	 t5ouQRyAulFM1ynlWZ4xNtQf8mZzdXtgVU3NpF9qcAugtmHp1quVfTY0PUZUW0RQRw
+	 tC5O07w3qfjYHK6Zm5TnSTVIh8gLl0qQKgkHds24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Dilger <adilger.kernel@dilger.ca>,
-	Theodore Tso <tytso@mit.edu>,
+	Keoseong Park <keosung.park@samsung.com>,
+	Avri Altman <avri.altman@wdc.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 025/203] ext4: reflect error codes from ext4_multi_mount_protect() to its callers
-Date: Mon, 22 May 2023 20:07:29 +0100
-Message-Id: <20230522190355.658603706@linuxfoundation.org>
+Subject: [PATCH 5.15 004/203] scsi: ufs: core: Fix I/O hang that occurs when BKOPS fails in W-LUN suspend
+Date: Mon, 22 May 2023 20:07:08 +0100
+Message-Id: <20230522190355.058446013@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,125 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Keoseong Park <keosung.park@samsung.com>
 
-[ Upstream commit 3b50d5018ed06a647bb26c44bb5ae74e59c903c7 ]
+[ Upstream commit 1a7edd041f2d252f251523ba3f2eaead076a8f8d ]
 
-This will allow more fine-grained errno codes to be returned by the
-mount system call.
+Even when urgent BKOPS fails, the consumer will get stuck in runtime
+suspend status. Like commit 1a5665fc8d7a ("scsi: ufs: core: WLUN suspend
+SSU/enter hibern8 fail recovery"), trigger the error handler and return
+-EBUSY to break the suspend.
 
-Cc: Andreas Dilger <adilger.kernel@dilger.ca>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting r/w until quota is re-enabled")
+Fixes: b294ff3e3449 ("scsi: ufs: core: Enable power management for wlun")
+Signed-off-by: Keoseong Park <keosung.park@samsung.com>
+Link: https://lore.kernel.org/r/20230425031721epcms2p5d4de65616478c967d466626e20c42a3a@epcms2p5
+Reviewed-by: Avri Altman <avri.altman@wdc.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mmp.c   |  9 ++++++++-
- fs/ext4/super.c | 16 +++++++++-------
- 2 files changed, 17 insertions(+), 8 deletions(-)
+ drivers/scsi/ufs/ufshcd.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/mmp.c b/fs/ext4/mmp.c
-index cebea4270817e..28129a8db713c 100644
---- a/fs/ext4/mmp.c
-+++ b/fs/ext4/mmp.c
-@@ -290,6 +290,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 	if (mmp_block < le32_to_cpu(es->s_first_data_block) ||
- 	    mmp_block >= ext4_blocks_count(es)) {
- 		ext4_warning(sb, "Invalid MMP block in superblock");
-+		retval = -EINVAL;
- 		goto failed;
- 	}
- 
-@@ -315,6 +316,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 
- 	if (seq == EXT4_MMP_SEQ_FSCK) {
- 		dump_mmp_msg(sb, mmp, "fsck is running on the filesystem");
-+		retval = -EBUSY;
- 		goto failed;
- 	}
- 
-@@ -328,6 +330,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 
- 	if (schedule_timeout_interruptible(HZ * wait_time) != 0) {
- 		ext4_warning(sb, "MMP startup interrupted, failing mount\n");
-+		retval = -ETIMEDOUT;
- 		goto failed;
- 	}
- 
-@@ -338,6 +341,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 	if (seq != le32_to_cpu(mmp->mmp_seq)) {
- 		dump_mmp_msg(sb, mmp,
- 			     "Device is already active on another node.");
-+		retval = -EBUSY;
- 		goto failed;
- 	}
- 
-@@ -357,6 +361,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 	 */
- 	if (schedule_timeout_interruptible(HZ * wait_time) != 0) {
- 		ext4_warning(sb, "MMP startup interrupted, failing mount");
-+		retval = -ETIMEDOUT;
- 		goto failed;
- 	}
- 
-@@ -367,6 +372,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 	if (seq != le32_to_cpu(mmp->mmp_seq)) {
- 		dump_mmp_msg(sb, mmp,
- 			     "Device is already active on another node.");
-+		retval = -EBUSY;
- 		goto failed;
- 	}
- 
-@@ -383,6 +389,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 		EXT4_SB(sb)->s_mmp_tsk = NULL;
- 		ext4_warning(sb, "Unable to create kmmpd thread for %s.",
- 			     sb->s_id);
-+		retval = -ENOMEM;
- 		goto failed;
- 	}
- 
-@@ -390,5 +397,5 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 
- failed:
- 	brelse(bh);
--	return 1;
-+	return retval;
- }
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index ca0997fcd1215..d062bad1384be 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -4646,9 +4646,11 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
- 			  ext4_has_feature_orphan_present(sb) ||
- 			  ext4_has_feature_journal_needs_recovery(sb));
- 
--	if (ext4_has_feature_mmp(sb) && !sb_rdonly(sb))
--		if (ext4_multi_mount_protect(sb, le64_to_cpu(es->s_mmp_block)))
-+	if (ext4_has_feature_mmp(sb) && !sb_rdonly(sb)) {
-+		err = ext4_multi_mount_protect(sb, le64_to_cpu(es->s_mmp_block));
-+		if (err)
- 			goto failed_mount3a;
-+	}
- 
- 	/*
- 	 * The first inode we look at is the journal inode.  Don't try
-@@ -5945,12 +5947,12 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 				goto restore_opts;
- 
- 			sb->s_flags &= ~SB_RDONLY;
--			if (ext4_has_feature_mmp(sb))
--				if (ext4_multi_mount_protect(sb,
--						le64_to_cpu(es->s_mmp_block))) {
--					err = -EROFS;
-+			if (ext4_has_feature_mmp(sb)) {
-+				err = ext4_multi_mount_protect(sb,
-+						le64_to_cpu(es->s_mmp_block));
-+				if (err)
- 					goto restore_opts;
--				}
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index bc2b16701a116..d00d263705e15 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -8756,8 +8756,16 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 			 * that performance might be impacted.
+ 			 */
+ 			ret = ufshcd_urgent_bkops(hba);
+-			if (ret)
++			if (ret) {
++				/*
++				 * If return err in suspend flow, IO will hang.
++				 * Trigger error handler and break suspend for
++				 * error recovery.
++				 */
++				ufshcd_force_error_recovery(hba);
++				ret = -EBUSY;
+ 				goto enable_scaling;
 +			}
- #ifdef CONFIG_QUOTA
- 			enable_quota = 1;
- #endif
+ 		} else {
+ 			/* make sure that auto bkops is disabled */
+ 			ufshcd_disable_auto_bkops(hba);
 -- 
 2.39.2
 
