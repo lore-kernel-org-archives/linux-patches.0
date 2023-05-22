@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCA4171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35E4C433EF;
-	Mon, 22 May 2023 19:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAA2171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B36C4339B;
+	Mon, 22 May 2023 19:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783462;
-	bh=AkCL0GDpF5BZBA9rGVUubwGJlEWfKShS8Uec68JhYbg=;
+	s=korg; t=1684783465;
+	bh=sOFCupPmco37yPY4TQcRSbwtpvyDHpYMv3Rmg9UkMo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vKhzYFdvhOpqCjrKnCpzkVPHg/A7C920wOOA+ehNS7RNIo9STS5qe7DgHB1rVlYrA
-	 53vIdgvA4XLf8+0YXLpKNY4j6dO86xZByY70cMyneZTP9+FHUFND6zqb8ej7krZvdz
-	 1HeOJpfdh4WMvYHGQhEoEfl7gAqwDrgnrxoBUcAY=
+	b=T1gjst4cJFFYmPgn/dW8JvgckCz+ZefChb9AEDcRQStohIhEenxUtaQfRbJEOq9Q8
+	 mrVZnNMa4am/VBah4ImF53yTk/WOf8gLF4DNmpwsH/aA16Af0JBIEY0HcPkmwpKcts
+	 byxT8m/cXQsXIod+uu64KGV0kc/sewD9GgwUQhFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	harperchen <harperchen1110@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/292] af_unix: Fix a data race of sk->sk_receive_queue->qlen.
-Date: Mon, 22 May 2023 20:06:21 +0100
-Message-Id: <20230522190406.498624258@linuxfoundation.org>
+Subject: [PATCH 6.1 051/292] media: pci: tw68: Fix null-ptr-deref bug in buf prepare and finish
+Date: Mon, 22 May 2023 20:06:48 +0100
+Message-Id: <20230522190407.210880601@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -38,82 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: harperchen <harperchen1110@gmail.com>
 
-[ Upstream commit 679ed006d416ea0cecfe24a99d365d1dea69c683 ]
+[ Upstream commit 1634b7adcc5bef645b3666fdd564e5952a9e24e0 ]
 
-KCSAN found a data race of sk->sk_receive_queue->qlen where recvmsg()
-updates qlen under the queue lock and sendmsg() checks qlen under
-unix_state_sock(), not the queue lock, so the reader side needs
-READ_ONCE().
+When the driver calls tw68_risc_buffer() to prepare the buffer, the
+function call dma_alloc_coherent may fail, resulting in a empty buffer
+buf->cpu. Later when we free the buffer or access the buffer, null ptr
+deref is triggered.
 
-BUG: KCSAN: data-race in __skb_try_recv_from_queue / unix_wait_for_peer
+This bug is similar to the following one:
+https://git.linuxtv.org/media_stage.git/commit/?id=2b064d91440b33fba5b452f2d1b31f13ae911d71.
 
-write (marked) to 0xffff888019fe7c68 of 4 bytes by task 49792 on cpu 0:
- __skb_unlink include/linux/skbuff.h:2347 [inline]
- __skb_try_recv_from_queue+0x3de/0x470 net/core/datagram.c:197
- __skb_try_recv_datagram+0xf7/0x390 net/core/datagram.c:263
- __unix_dgram_recvmsg+0x109/0x8a0 net/unix/af_unix.c:2452
- unix_dgram_recvmsg+0x94/0xa0 net/unix/af_unix.c:2549
- sock_recvmsg_nosec net/socket.c:1019 [inline]
- ____sys_recvmsg+0x3a3/0x3b0 net/socket.c:2720
- ___sys_recvmsg+0xc8/0x150 net/socket.c:2764
- do_recvmmsg+0x182/0x560 net/socket.c:2858
- __sys_recvmmsg net/socket.c:2937 [inline]
- __do_sys_recvmmsg net/socket.c:2960 [inline]
- __se_sys_recvmmsg net/socket.c:2953 [inline]
- __x64_sys_recvmmsg+0x153/0x170 net/socket.c:2953
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
+We believe the bug can be also dynamically triggered from user side.
+Similarly, we fix this by checking the return value of tw68_risc_buffer()
+and the value of buf->cpu before buffer free.
 
-read to 0xffff888019fe7c68 of 4 bytes by task 49793 on cpu 1:
- skb_queue_len include/linux/skbuff.h:2127 [inline]
- unix_recvq_full net/unix/af_unix.c:229 [inline]
- unix_wait_for_peer+0x154/0x1a0 net/unix/af_unix.c:1445
- unix_dgram_sendmsg+0x13bc/0x14b0 net/unix/af_unix.c:2048
- sock_sendmsg_nosec net/socket.c:724 [inline]
- sock_sendmsg+0x148/0x160 net/socket.c:747
- ____sys_sendmsg+0x20e/0x620 net/socket.c:2503
- ___sys_sendmsg+0xc6/0x140 net/socket.c:2557
- __sys_sendmmsg+0x11d/0x370 net/socket.c:2643
- __do_sys_sendmmsg net/socket.c:2672 [inline]
- __se_sys_sendmmsg net/socket.c:2669 [inline]
- __x64_sys_sendmmsg+0x58/0x70 net/socket.c:2669
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0x0000000b -> 0x00000001
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 49793 Comm: syz-executor.0 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: harperchen <harperchen1110@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/tw68/tw68-video.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 7d17601ceee79..3b292a7a1fa58 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1441,7 +1441,7 @@ static long unix_wait_for_peer(struct sock *other, long timeo)
+diff --git a/drivers/media/pci/tw68/tw68-video.c b/drivers/media/pci/tw68/tw68-video.c
+index 0cbc5b038073b..773a18702d369 100644
+--- a/drivers/media/pci/tw68/tw68-video.c
++++ b/drivers/media/pci/tw68/tw68-video.c
+@@ -437,6 +437,7 @@ static void tw68_buf_queue(struct vb2_buffer *vb)
+  */
+ static int tw68_buf_prepare(struct vb2_buffer *vb)
+ {
++	int ret;
+ 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+ 	struct vb2_queue *vq = vb->vb2_queue;
+ 	struct tw68_dev *dev = vb2_get_drv_priv(vq);
+@@ -452,30 +453,30 @@ static int tw68_buf_prepare(struct vb2_buffer *vb)
+ 	bpl = (dev->width * dev->fmt->depth) >> 3;
+ 	switch (dev->field) {
+ 	case V4L2_FIELD_TOP:
+-		tw68_risc_buffer(dev->pci, buf, dma->sgl,
++		ret = tw68_risc_buffer(dev->pci, buf, dma->sgl,
+ 				 0, UNSET, bpl, 0, dev->height);
+ 		break;
+ 	case V4L2_FIELD_BOTTOM:
+-		tw68_risc_buffer(dev->pci, buf, dma->sgl,
++		ret = tw68_risc_buffer(dev->pci, buf, dma->sgl,
+ 				 UNSET, 0, bpl, 0, dev->height);
+ 		break;
+ 	case V4L2_FIELD_SEQ_TB:
+-		tw68_risc_buffer(dev->pci, buf, dma->sgl,
++		ret = tw68_risc_buffer(dev->pci, buf, dma->sgl,
+ 				 0, bpl * (dev->height >> 1),
+ 				 bpl, 0, dev->height >> 1);
+ 		break;
+ 	case V4L2_FIELD_SEQ_BT:
+-		tw68_risc_buffer(dev->pci, buf, dma->sgl,
++		ret = tw68_risc_buffer(dev->pci, buf, dma->sgl,
+ 				 bpl * (dev->height >> 1), 0,
+ 				 bpl, 0, dev->height >> 1);
+ 		break;
+ 	case V4L2_FIELD_INTERLACED:
+ 	default:
+-		tw68_risc_buffer(dev->pci, buf, dma->sgl,
++		ret = tw68_risc_buffer(dev->pci, buf, dma->sgl,
+ 				 0, bpl, bpl, bpl, dev->height >> 1);
+ 		break;
+ 	}
+-	return 0;
++	return ret;
+ }
  
- 	sched = !sock_flag(other, SOCK_DEAD) &&
- 		!(other->sk_shutdown & RCV_SHUTDOWN) &&
--		unix_recvq_full(other);
-+		unix_recvq_full_lockless(other);
+ static void tw68_buf_finish(struct vb2_buffer *vb)
+@@ -485,7 +486,8 @@ static void tw68_buf_finish(struct vb2_buffer *vb)
+ 	struct tw68_dev *dev = vb2_get_drv_priv(vq);
+ 	struct tw68_buf *buf = container_of(vbuf, struct tw68_buf, vb);
  
- 	unix_state_unlock(other);
+-	dma_free_coherent(&dev->pci->dev, buf->size, buf->cpu, buf->dma);
++	if (buf->cpu)
++		dma_free_coherent(&dev->pci->dev, buf->size, buf->cpu, buf->dma);
+ }
  
+ static int tw68_start_streaming(struct vb2_queue *q, unsigned int count)
 -- 
 2.39.2
 
