@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7B6171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD598C433D2;
-	Mon, 22 May 2023 19:16:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB126171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 381C2C433EF;
+	Mon, 22 May 2023 19:16:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782978;
-	bh=9P7amgHesvZfXjhJMrNCC3wqHsnw+fBTnWXN96xdpOM=;
+	s=korg; t=1684782980;
+	bh=kjDmwvX1LRkKsG7MuAuwxv7XIPmKH3HNiJd8gJfyPWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O2/8gkkObqZbMw+sZkEY2FnhpZ+w3D3HSNFSQwfgGdEtPb1MoC7NUWtZD9YIKYPpr
-	 dUx1KCkEaCuRYXknuFNTP/MF0aemCNoxFqh0AxPqq+eH4mseQUd9yJlkxvyAkkS+FZ
-	 BugfINxYe+huTh+D5DhDFJFDGQw8PtsO4+TmFMMY=
+	b=0RB+xPdtwtWKqEszNvUL2QCulrhzYmndxguK7iJpLEYOTZ8cjAsJWJJi/LSxHoXb3
+	 lD6SQB+nGWSeGXGEm+nm9czTzpyvj6X0G+2ERenSrTuhLOTYnbnpJzVjbX8R86DJRq
+	 BseQ7oRmlHsPT5KV5Rcgwg1S9IyYBYM6IaAv/Hbk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunyan Zhang <chunyan.zhang@unisoc.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Vicki Pfau <vi@endrift.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 098/203] iommu/sprd: Release dma buffer to avoid memory leak
-Date: Mon, 22 May 2023 20:08:42 +0100
-Message-Id: <20230522190357.700559514@linuxfoundation.org>
+Subject: [PATCH 5.15 099/203] Input: xpad - add constants for GIP interface numbers
+Date: Mon, 22 May 2023 20:08:43 +0100
+Message-Id: <20230522190357.728341778@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,69 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunyan Zhang <chunyan.zhang@unisoc.com>
+From: Vicki Pfau <vi@endrift.com>
 
-[ Upstream commit 9afea57384d4ae7b2034593eac7fa76c7122762a ]
+[ Upstream commit f9b2e603c6216824e34dc9a67205d98ccc9a41ca ]
 
-When attaching to a domain, the driver would alloc a DMA buffer which
-is used to store address mapping table, and it need to be released
-when the IOMMU domain is freed.
+Wired GIP devices present multiple interfaces with the same USB identification
+other than the interface number. This adds constants for differentiating two of
+them and uses them where appropriate
 
-Signed-off-by: Chunyan Zhang <chunyan.zhang@unisoc.com>
-Link: https://lore.kernel.org/r/20230331033124.864691-2-zhang.lyra@gmail.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+Link: https://lore.kernel.org/r/20230411031650.960322-2-vi@endrift.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sprd-iommu.c | 29 ++++++++++++++++++++++-------
- 1 file changed, 22 insertions(+), 7 deletions(-)
+ drivers/input/joystick/xpad.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/sprd-iommu.c b/drivers/iommu/sprd-iommu.c
-index 27ac818b03544..723940e841612 100644
---- a/drivers/iommu/sprd-iommu.c
-+++ b/drivers/iommu/sprd-iommu.c
-@@ -151,13 +151,6 @@ static struct iommu_domain *sprd_iommu_domain_alloc(unsigned int domain_type)
- 	return &dom->domain;
- }
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index dbfabd229a7c6..a7af9b56e338f 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -493,6 +493,9 @@ struct xboxone_init_packet {
+ 	}
  
--static void sprd_iommu_domain_free(struct iommu_domain *domain)
--{
--	struct sprd_iommu_domain *dom = to_sprd_domain(domain);
--
--	kfree(dom);
--}
--
- static void sprd_iommu_first_vpn(struct sprd_iommu_domain *dom)
- {
- 	struct sprd_iommu_device *sdev = dom->sdev;
-@@ -230,6 +223,28 @@ static void sprd_iommu_hw_en(struct sprd_iommu_device *sdev, bool en)
- 	sprd_iommu_update_bits(sdev, reg_cfg, mask, 0, val);
- }
  
-+static void sprd_iommu_cleanup(struct sprd_iommu_domain *dom)
-+{
-+	size_t pgt_size;
++#define GIP_WIRED_INTF_DATA 0
++#define GIP_WIRED_INTF_AUDIO 1
 +
-+	/* Nothing need to do if the domain hasn't been attached */
-+	if (!dom->sdev)
-+		return;
-+
-+	pgt_size = sprd_iommu_pgt_size(&dom->domain);
-+	dma_free_coherent(dom->sdev->dev, pgt_size, dom->pgt_va, dom->pgt_pa);
-+	dom->sdev = NULL;
-+	sprd_iommu_hw_en(dom->sdev, false);
-+}
-+
-+static void sprd_iommu_domain_free(struct iommu_domain *domain)
-+{
-+	struct sprd_iommu_domain *dom = to_sprd_domain(domain);
-+
-+	sprd_iommu_cleanup(dom);
-+	kfree(dom);
-+}
-+
- static int sprd_iommu_attach_device(struct iommu_domain *domain,
- 				    struct device *dev)
- {
+ /*
+  * This packet is required for all Xbox One pads with 2015
+  * or later firmware installed (or present from the factory).
+@@ -1821,7 +1824,7 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
+ 	}
+ 
+ 	if (xpad->xtype == XTYPE_XBOXONE &&
+-	    intf->cur_altsetting->desc.bInterfaceNumber != 0) {
++	    intf->cur_altsetting->desc.bInterfaceNumber != GIP_WIRED_INTF_DATA) {
+ 		/*
+ 		 * The Xbox One controller lists three interfaces all with the
+ 		 * same interface class, subclass and protocol. Differentiate by
 -- 
 2.39.2
 
