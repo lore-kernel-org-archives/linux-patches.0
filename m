@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A628D171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC23C433EF;
-	Mon, 22 May 2023 19:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D22171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35686C433EF;
+	Mon, 22 May 2023 19:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783846;
-	bh=7Y43Vag3lNVVZIwn/Ci/4owRyoVl5RAgiQOFCMhrOHw=;
+	s=korg; t=1684783849;
+	bh=0zSPkExD5i64hWqhJ1mDo0A7b/q3SlPWRGGmGx+MXdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwr/jS0kIBTy2mbqnLHXrXIkZPzK/tdI7ge/TjDwDnUjvQUfrULlLsKnYFWmOY4KC
-	 0lwOr3q08WuggILmmPhL9elbfKypKtnKJ1iClN07OXVCH/idFqKMFhCmCfVSFX2Wjl
-	 EmjZvPELOxIaS4lIbqGfyJuXCFwiEb+ocWtkjQBM=
+	b=HyaWpgLuyHV1Gnrj+96b2Es0BGSRKQAdDkPc69IGjEujyqeDVakgZA3t+CPOy/i6t
+	 IzmityuzP1FaO81GY8EIP2L1Oh0MtFS+wbHNeFCJl++NMWtl3TW1D+wLj4ij2FIgwU
+	 IAFJPkIRWluNdY6mb2UOqvndtrzl2unPqnCIUky4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Ke Zhang <m202171830@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 142/292] soundwire: qcom: gracefully handle too many ports in DT
-Date: Mon, 22 May 2023 20:08:19 +0100
-Message-Id: <20230522190409.513350854@linuxfoundation.org>
+Subject: [PATCH 6.1 174/292] serial: arc_uart: fix of_iomap leak in `arc_serial_probe`
+Date: Mon, 22 May 2023 20:08:51 +0100
+Message-Id: <20230522190410.312062267@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -37,48 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Ke Zhang <m202171830@hust.edu.cn>
 
-[ Upstream commit 2367e0ecb498764e95cfda691ff0828f7d25f9a4 ]
+[ Upstream commit 8ab5fc55d7f65d58a3c3aeadf11bdf60267cd2bd ]
 
-There are two issues related to the number of ports coming from
-Devicetree when exceeding in total QCOM_SDW_MAX_PORTS.  Both lead to
-incorrect memory accesses:
-1. With DTS having too big value of input or output ports, the driver,
-   when copying port parameters from local/stack arrays into 'pconfig'
-   array in 'struct qcom_swrm_ctrl', will iterate over their sizes.
+Smatch reports:
 
-2. If DTS also has too many parameters for these ports (e.g.
-   qcom,ports-sinterval-low), the driver will overflow buffers on the
-   stack when reading these properties from DTS.
+drivers/tty/serial/arc_uart.c:631 arc_serial_probe() warn:
+'port->membase' from of_iomap() not released on lines: 631.
 
-Add a sanity check so incorrect DTS will not cause kernel memory
-corruption.
+In arc_serial_probe(), if uart_add_one_port() fails,
+port->membase is not released, which would cause a resource leak.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230222144412.237832-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+To fix this, I replace of_iomap with devm_platform_ioremap_resource.
+
+Fixes: 8dbe1d5e09a7 ("serial/arc: inline the probe helper")
+Signed-off-by: Ke Zhang <m202171830@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Link: https://lore.kernel.org/r/20230428031636.44642-1-m202171830@hust.edu.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/qcom.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/arc_uart.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 866026185c669..21c50972047f5 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1209,6 +1209,9 @@ static int qcom_swrm_get_port_config(struct qcom_swrm_ctrl *ctrl)
- 	ctrl->num_dout_ports = val;
+diff --git a/drivers/tty/serial/arc_uart.c b/drivers/tty/serial/arc_uart.c
+index 2a65ea2660e10..f3ccc59d8c1f3 100644
+--- a/drivers/tty/serial/arc_uart.c
++++ b/drivers/tty/serial/arc_uart.c
+@@ -607,10 +607,11 @@ static int arc_serial_probe(struct platform_device *pdev)
+ 	}
+ 	uart->baud = val;
  
- 	nports = ctrl->num_dout_ports + ctrl->num_din_ports;
-+	if (nports > QCOM_SDW_MAX_PORTS)
-+		return -EINVAL;
-+
- 	/* Valid port numbers are from 1-14, so mask out port 0 explicitly */
- 	set_bit(0, &ctrl->dout_port_mask);
- 	set_bit(0, &ctrl->din_port_mask);
+-	port->membase = of_iomap(np, 0);
+-	if (!port->membase)
++	port->membase = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(port->membase)) {
+ 		/* No point of dev_err since UART itself is hosed here */
+-		return -ENXIO;
++		return PTR_ERR(port->membase);
++	}
+ 
+ 	port->irq = irq_of_parse_and_map(np, 0);
+ 
 -- 
 2.39.2
 
