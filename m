@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84BA5171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D48C433EF;
-	Mon, 22 May 2023 19:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF889171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5EBC433EF;
+	Mon, 22 May 2023 19:23:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783405;
-	bh=gap071EMed19P+6YOtoDGyRSVmIA54rjXTKvuFLNEKw=;
+	s=korg; t=1684783408;
+	bh=ZAq4ngyKF7ZE5OinlAIEUCcxvx5qogdRmomPOQqtm5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5KqIC6jdKyyI6ILsjMnrJn/ZHQkIvtND6ZdG99ixeF6s56zOtA15y89mRu9m8MT4
-	 eszfIfVbuG92HgH0nVl3ZqfN3IXGt+EkjSKTOCq7j4Zq3olPFLwP1wO2VC42kvVec5
-	 Hy+HCd9doGbFI8YUP+OaCvgUFd1gxkVynOSOVUTU=
+	b=RHeHpRNdM6CRgODqPNAkTfG/FULg6czDHAoegqKLapfupp0ezrFmyJigAeqQvSXkT
+	 eApd+8ee1ukYFhRnPTH2nd/vTuM2r6tY49gTZj1e5mcGHY7SDpL6sO1tkpRYD1+39Y
+	 WUOGPx9bn00AGT2N/oBr/xq2/5Z7PSv7QgtiF5+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/292] ext4: dont clear SB_RDONLY when remounting r/w until quota is re-enabled
-Date: Mon, 22 May 2023 20:06:30 +0100
-Message-Id: <20230522190406.719343119@linuxfoundation.org>
+Subject: [PATCH 6.1 034/292] ext4: allow to find by goal if EXT4_MB_HINT_GOAL_ONLY is set
+Date: Mon, 22 May 2023 20:06:31 +0100
+Message-Id: <20230522190406.744278260@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,74 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit a44be64bbecb15a452496f60db6eacfee2b59c79 ]
+[ Upstream commit 01e4ca29451760b9ac10b4cdc231c52150842643 ]
 
-When a file system currently mounted read/only is remounted
-read/write, if we clear the SB_RDONLY flag too early, before the quota
-is initialized, and there is another process/thread constantly
-attempting to create a directory, it's possible to trigger the
+If EXT4_MB_HINT_GOAL_ONLY is set, ext4_mb_regular_allocator will only
+allocate blocks from ext4_mb_find_by_goal. Allow to find by goal in
+ext4_mb_find_by_goal if EXT4_MB_HINT_GOAL_ONLY is set or allocation
+with EXT4_MB_HINT_GOAL_ONLY set will always fail.
 
-	WARN_ON_ONCE(dquot_initialize_needed(inode));
+EXT4_MB_HINT_GOAL_ONLY is not used at all, so the problem is not
+found for now.
 
-in ext4_xattr_block_set(), with the following stack trace:
-
-   WARNING: CPU: 0 PID: 5338 at fs/ext4/xattr.c:2141 ext4_xattr_block_set+0x2ef2/0x3680
-   RIP: 0010:ext4_xattr_block_set+0x2ef2/0x3680 fs/ext4/xattr.c:2141
-   Call Trace:
-    ext4_xattr_set_handle+0xcd4/0x15c0 fs/ext4/xattr.c:2458
-    ext4_initxattrs+0xa3/0x110 fs/ext4/xattr_security.c:44
-    security_inode_init_security+0x2df/0x3f0 security/security.c:1147
-    __ext4_new_inode+0x347e/0x43d0 fs/ext4/ialloc.c:1324
-    ext4_mkdir+0x425/0xce0 fs/ext4/namei.c:2992
-    vfs_mkdir+0x29d/0x450 fs/namei.c:4038
-    do_mkdirat+0x264/0x520 fs/namei.c:4061
-    __do_sys_mkdirat fs/namei.c:4076 [inline]
-    __se_sys_mkdirat fs/namei.c:4074 [inline]
-    __x64_sys_mkdirat+0x89/0xa0 fs/namei.c:4074
-
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230506142419.984260-1-tytso@mit.edu
-Reported-by: syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=6513f6cb5cd6b5fc9f37e3bb70d273b94be9c34c
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230303172120.3800725-3-shikemeng@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index b919f34bb35d6..c56192a84bf41 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -6339,6 +6339,7 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
- 	struct ext4_mount_options old_opts;
- 	ext4_group_t g;
- 	int err = 0;
-+	int enable_rw = 0;
- #ifdef CONFIG_QUOTA
- 	int enable_quota = 0;
- 	int i, j;
-@@ -6525,7 +6526,7 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
- 			if (err)
- 				goto restore_opts;
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 912c4a1093fe5..b1b63fc84ddba 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -2162,7 +2162,7 @@ int ext4_mb_find_by_goal(struct ext4_allocation_context *ac,
+ 	struct ext4_group_info *grp = ext4_get_group_info(ac->ac_sb, group);
+ 	struct ext4_free_extent ex;
  
--			sb->s_flags &= ~SB_RDONLY;
-+			enable_rw = 1;
- 			if (ext4_has_feature_mmp(sb)) {
- 				err = ext4_multi_mount_protect(sb,
- 						le64_to_cpu(es->s_mmp_block));
-@@ -6584,6 +6585,9 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
- 	if (!test_opt(sb, BLOCK_VALIDITY) && sbi->s_system_blks)
- 		ext4_release_system_zone(sb);
- 
-+	if (enable_rw)
-+		sb->s_flags &= ~SB_RDONLY;
-+
- 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
- 		ext4_stop_mmpd(sbi);
- 
+-	if (!(ac->ac_flags & EXT4_MB_HINT_TRY_GOAL))
++	if (!(ac->ac_flags & (EXT4_MB_HINT_TRY_GOAL | EXT4_MB_HINT_GOAL_ONLY)))
+ 		return 0;
+ 	if (grp->bb_free == 0)
+ 		return 0;
 -- 
 2.39.2
 
