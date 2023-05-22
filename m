@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916BD171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC47C433D2;
-	Mon, 22 May 2023 19:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91424171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:28:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0961BC433D2;
+	Mon, 22 May 2023 19:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783719;
-	bh=V+SRqTeOIQkCJr1YG3oqjich7N1hefNlgQc35gKG3p0=;
+	s=korg; t=1684783722;
+	bh=+CClwmlhhoXRV/flrOSGPQcZOJ5y9G17Co5fZemzFmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RqlXdZ8xtzllhzcTeIRbWMm7mT+NxHxu8H9Pcp6jTPpGvKdA/4S5/pdN5utk09Xy4
-	 Z7EcBQruoG82VH0HJ+49NT5I/zyoCIaLNX8L0MOLk7k+kbIqtPeKrsyJcBC3NCVGxL
-	 Z1hT8fCEJRXG1REp7xNNHg9ij3OuPOJtZHt1WdK0=
+	b=C3LeBkV62wmvoiqyYFLPaXEKw3RBZKIkuqSs6AjxTJ7ra2SlhfynW1ud5Mkmak32R
+	 K0/0RMBTeBvgU+Ry7N++GU2B0yyGCOaoigzMa+Hwws/Ot7LQ8GL5dj+9REeDojs4yq
+	 SXlkBqojnsVoyckPOJRQzgNZ2B7pSae2ZJn9VsxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Zeng <zenghao@kylinos.cn>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Eugene Huang <eugene.huang99@gmail.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 139/292] recordmcount: Fix memory leaks in the uwrite function
-Date: Mon, 22 May 2023 20:08:16 +0100
-Message-Id: <20230522190409.439296305@linuxfoundation.org>
+Subject: [PATCH 6.1 140/292] soundwire: dmi-quirks: add remapping for Intel Rooks County NUC M15
+Date: Mon, 22 May 2023 20:08:17 +0100
+Message-Id: <20230522190409.464537481@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,46 +38,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Zeng <zenghao@kylinos.cn>
+From: Eugene Huang <eugene.huang99@gmail.com>
 
-[ Upstream commit fa359d068574d29e7d2f0fdd0ebe4c6a12b5cfb9 ]
+[ Upstream commit 01b33e284ca28cc977bdcfb23be2c719f2139175 ]
 
-Common realloc mistake: 'file_append' nulled but not freed upon failure
+Same DSDT problem as the HP Omen 16-k0005TX, except rt1316 amp is on
+link2.
 
-Link: https://lkml.kernel.org/r/20230426010527.703093-1-zenghao@kylinos.cn
-
-Signed-off-by: Hao Zeng <zenghao@kylinos.cn>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://github.com/thesofproject/linux/issues/4088
+Signed-off-by: Eugene Huang <eugene.huang99@gmail.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20230314090618.498716-1-yung-chuan.liao@linux.intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/recordmcount.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/soundwire/dmi-quirks.c | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/scripts/recordmcount.c b/scripts/recordmcount.c
-index cce12e1971d85..ec692af8ce9eb 100644
---- a/scripts/recordmcount.c
-+++ b/scripts/recordmcount.c
-@@ -102,6 +102,7 @@ static ssize_t uwrite(void const *const buf, size_t const count)
- {
- 	size_t cnt = count;
- 	off_t idx = 0;
-+	void *p = NULL;
+diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
+index 7969881f126dc..58ea013fa918a 100644
+--- a/drivers/soundwire/dmi-quirks.c
++++ b/drivers/soundwire/dmi-quirks.c
+@@ -73,6 +73,23 @@ static const struct adr_remap hp_omen_16[] = {
+ 	{}
+ };
  
- 	file_updated = 1;
- 
-@@ -109,7 +110,10 @@ static ssize_t uwrite(void const *const buf, size_t const count)
- 		off_t aoffset = (file_ptr + count) - file_end;
- 
- 		if (aoffset > file_append_size) {
--			file_append = realloc(file_append, aoffset);
-+			p = realloc(file_append, aoffset);
-+			if (!p)
-+				free(file_append);
-+			file_append = p;
- 			file_append_size = aoffset;
- 		}
- 		if (!file_append) {
++/*
++ * Intel NUC M15 LAPRC510 and LAPRC710
++ */
++static const struct adr_remap intel_rooks_county[] = {
++	/* rt711-sdca on link0 */
++	{
++		0x000020025d071100ull,
++		0x000030025d071101ull
++	},
++	/* rt1316-sdca on link2 */
++	{
++		0x000120025d071100ull,
++		0x000230025d131601ull
++	},
++	{}
++};
++
+ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 	/* TGL devices */
+ 	{
+@@ -98,6 +115,14 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
+ 		},
+ 		.driver_data = (void *)intel_tgl_bios,
+ 	},
++	{
++		/* quirk used for NUC15 'Rooks County' LAPRC510 and LAPRC710 skews */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Intel(R) Client Systems"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "LAPRC"),
++		},
++		.driver_data = (void *)intel_rooks_county,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
 -- 
 2.39.2
 
