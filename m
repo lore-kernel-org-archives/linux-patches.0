@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FFA171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:37:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D4CC433EF;
-	Mon, 22 May 2023 19:37:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34863171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:37:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BA5C433EF;
+	Mon, 22 May 2023 19:37:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784229;
-	bh=xEG9VDstyVHAmm2BjboZPv1h847TxQkuNGGGg/uko/E=;
+	s=korg; t=1684784232;
+	bh=lN3vUmCTV1/YQQ7NweRJacJZAORULakaCMgH1d6Ad9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sm6qrGimeBPnJP8n3OLzMpjanxcdGPrJZCkXorBlFe/KeaFLhJsjGx1FSQTrijn+1
-	 PxzV3hfMU1EahUlWtGG0XsZjcbhjiDyJg5Zq1OF9o0NvsOqlAIDzFIl2uW4rHgWiR2
-	 Bml6mTwnbLazPtH+4Uj3szLbPzxXYBz3vg8MDr+o=
+	b=VYBxrrhFST+k+ETiWe9AxAdIfqtA3PD5o7SZTMGAj5NHyBN7p8u2nsQ1tgd1QcwwS
+	 2TsG8UK1jyYpW7jNqVm5fTr/fKwfb9SQB4Tth0HuXz/pdxFj+99F8VZZmY3Q2FNcF8
+	 19mySERg7YNuT061Sit2lTo+gBFJUVFGE4nXjyCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Harald Seiler <hws@denx.de>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 013/364] net: stmmac: Initialize MAC_ONEUS_TIC_COUNTER register
-Date: Mon, 22 May 2023 20:05:18 +0100
-Message-Id: <20230522190413.158569246@linuxfoundation.org>
+Subject: [PATCH 6.3 014/364] net: Fix load-tearing on sk->sk_stamp in sock_recv_cmsgs().
+Date: Mon, 22 May 2023 20:05:19 +0100
+Message-Id: <20230522190413.183529805@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -38,93 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 8efbdbfa99381a017dd2c0f6375a7d80a8118b74 ]
+[ Upstream commit dfd9248c071a3710c24365897459538551cb7167 ]
 
-Initialize MAC_ONEUS_TIC_COUNTER register with correct value derived
-from CSR clock, otherwise EEE is unstable on at least NXP i.MX8M Plus
-and Micrel KSZ9131RNX PHY, to the point where not even ARP request can
-be sent out.
+KCSAN found a data race in sock_recv_cmsgs() where the read access
+to sk->sk_stamp needs READ_ONCE().
 
-i.MX 8M Plus Applications Processor Reference Manual, Rev. 1, 06/2021
-11.7.6.1.34 One-microsecond Reference Timer (MAC_ONEUS_TIC_COUNTER)
-defines this register as:
-"
-This register controls the generation of the Reference time (1 microsecond
-tic) for all the LPI timers. This timer has to be programmed by the software
-initially.
-...
-The application must program this counter so that the number of clock cycles
-of CSR clock is 1us. (Subtract 1 from the value before programming).
-For example if the CSR clock is 100MHz then this field needs to be programmed
-to value 100 - 1 = 99 (which is 0x63).
-This is required to generate the 1US events that are used to update some of
-the EEE related counters.
-"
+BUG: KCSAN: data-race in packet_recvmsg / packet_recvmsg
 
-The reset value is 0x63 on i.MX8M Plus, which means expected CSR clock are
-100 MHz. However, the i.MX8M Plus "enet_qos_root_clk" are 266 MHz instead,
-which means the LPI timers reach their count much sooner on this platform.
+write (marked) to 0xffff88803c81f258 of 8 bytes by task 19171 on cpu 0:
+ sock_write_timestamp include/net/sock.h:2670 [inline]
+ sock_recv_cmsgs include/net/sock.h:2722 [inline]
+ packet_recvmsg+0xb97/0xd00 net/packet/af_packet.c:3489
+ sock_recvmsg_nosec net/socket.c:1019 [inline]
+ sock_recvmsg+0x11a/0x130 net/socket.c:1040
+ sock_read_iter+0x176/0x220 net/socket.c:1118
+ call_read_iter include/linux/fs.h:1845 [inline]
+ new_sync_read fs/read_write.c:389 [inline]
+ vfs_read+0x5e0/0x630 fs/read_write.c:470
+ ksys_read+0x163/0x1a0 fs/read_write.c:613
+ __do_sys_read fs/read_write.c:623 [inline]
+ __se_sys_read fs/read_write.c:621 [inline]
+ __x64_sys_read+0x41/0x50 fs/read_write.c:621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-This is visible using a scope by monitoring e.g. exit from LPI mode on TX_CTL
-line from MAC to PHY. This should take 30us per STMMAC_DEFAULT_TWT_LS setting,
-during which the TX_CTL line transitions from tristate to low, and 30 us later
-from low to high. On i.MX8M Plus, this transition takes 11 us, which matches
-the 30us * 100/266 formula for misconfigured MAC_ONEUS_TIC_COUNTER register.
+read to 0xffff88803c81f258 of 8 bytes by task 19183 on cpu 1:
+ sock_recv_cmsgs include/net/sock.h:2721 [inline]
+ packet_recvmsg+0xb64/0xd00 net/packet/af_packet.c:3489
+ sock_recvmsg_nosec net/socket.c:1019 [inline]
+ sock_recvmsg+0x11a/0x130 net/socket.c:1040
+ sock_read_iter+0x176/0x220 net/socket.c:1118
+ call_read_iter include/linux/fs.h:1845 [inline]
+ new_sync_read fs/read_write.c:389 [inline]
+ vfs_read+0x5e0/0x630 fs/read_write.c:470
+ ksys_read+0x163/0x1a0 fs/read_write.c:613
+ __do_sys_read fs/read_write.c:623 [inline]
+ __se_sys_read fs/read_write.c:621 [inline]
+ __x64_sys_read+0x41/0x50 fs/read_write.c:621
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Configure MAC_ONEUS_TIC_COUNTER based on CSR clock, so that the LPI timers
-have correct 1us reference. This then fixes EEE on i.MX8M Plus with Micrel
-KSZ9131RNX PHY.
+value changed: 0xffffffffc4653600 -> 0x0000000000000000
 
-Fixes: 477286b53f55 ("stmmac: add GMAC4 core support")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Tested-by: Harald Seiler <hws@denx.de>
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com> # Toradex Verdin iMX8MP
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Link: https://lore.kernel.org/r/20230506235845.246105-1-marex@denx.de
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 19183 Comm: syz-executor.5 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 6c7c98bad488 ("sock: avoid dirtying sk_stamp, if possible")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230508175543.55756-1-kuniyu@amazon.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4.h      | 1 +
- drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c | 5 +++++
- 2 files changed, 6 insertions(+)
+ include/net/sock.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-index ccd49346d3b30..a70b0d8a622d6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-@@ -181,6 +181,7 @@ enum power_event {
- #define GMAC4_LPI_CTRL_STATUS	0xd0
- #define GMAC4_LPI_TIMER_CTRL	0xd4
- #define GMAC4_LPI_ENTRY_TIMER	0xd8
-+#define GMAC4_MAC_ONEUS_TIC_COUNTER	0xdc
- 
- /* LPI control and status defines */
- #define GMAC4_LPI_CTRL_STATUS_LPITCSE	BIT(21)	/* LPI Tx Clock Stop Enable */
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index 36251ec2589c9..24d6ec06732d9 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -25,6 +25,7 @@ static void dwmac4_core_init(struct mac_device_info *hw,
- 	struct stmmac_priv *priv = netdev_priv(dev);
- 	void __iomem *ioaddr = hw->pcsr;
- 	u32 value = readl(ioaddr + GMAC_CONFIG);
-+	u32 clk_rate;
- 
- 	value |= GMAC_CORE_INIT;
- 
-@@ -47,6 +48,10 @@ static void dwmac4_core_init(struct mac_device_info *hw,
- 
- 	writel(value, ioaddr + GMAC_CONFIG);
- 
-+	/* Configure LPI 1us counter to number of CSR clock ticks in 1us - 1 */
-+	clk_rate = clk_get_rate(priv->plat->stmmac_clk);
-+	writel((clk_rate / 1000000) - 1, ioaddr + GMAC4_MAC_ONEUS_TIC_COUNTER);
-+
- 	/* Enable GMAC interrupts */
- 	value = GMAC_INT_DEFAULT_ENABLE;
+diff --git a/include/net/sock.h b/include/net/sock.h
+index 573f2bf7e0de7..9cd0354221507 100644
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2718,7 +2718,7 @@ static inline void sock_recv_cmsgs(struct msghdr *msg, struct sock *sk,
+ 		__sock_recv_cmsgs(msg, sk, skb);
+ 	else if (unlikely(sock_flag(sk, SOCK_TIMESTAMP)))
+ 		sock_write_timestamp(sk, skb->tstamp);
+-	else if (unlikely(sk->sk_stamp == SK_DEFAULT_STAMP))
++	else if (unlikely(sock_read_timestamp(sk) == SK_DEFAULT_STAMP))
+ 		sock_write_timestamp(sk, 0);
+ }
  
 -- 
 2.39.2
