@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9320B171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:37:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7EFC433D2;
-	Mon, 22 May 2023 19:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5BC171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:37:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25094C433EF;
+	Mon, 22 May 2023 19:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784261;
-	bh=SUqr3I3wC2IQZUlHJs+iJDGyq9Wc0cuk5eLbZUzjjwM=;
+	s=korg; t=1684784264;
+	bh=Z9x/wWEZNtigc2Qom5On6DJgPSkocB8dBn6tEA1coXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UYRLje7rvfFfgTfybAUmmoBVPNVeQ+gI0Y5wpph5ks5M4nwAHeBMWfiwsWUVu9Qr
-	 JzpNlJoCio1uWyFaokV2Z9+0BTYBn/FYx2FvQDG2wPMFP4UqQeMA1B6IJCkRAamOcj
-	 kDYItdbkOhtesAYcE32dqFWWm+HrUE5UgE/ZT9c0=
+	b=nTL9KNbCxJDop2e7QatbMTBmCQTkzq2GoBEMdCov3HQZ8N2gWwooyZR2HP+H7b/Lj
+	 IVlTlTSjXLWqB6iN7fcewqD26blfRus+WU7jsVG9k6SGcJ248iIp6+eE/poAtoRaF/
+	 XQ9XAwzFkv9g3N73o2iWALqSvsoXjwnO4hYotzNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Ziwei Xiao <ziweixiao@google.com>,
+	Bailey Forrest <bcf@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 023/364] tcp: add annotations around sk->sk_shutdown accesses
-Date: Mon, 22 May 2023 20:05:28 +0100
-Message-Id: <20230522190413.410585096@linuxfoundation.org>
+Subject: [PATCH 6.3 024/364] gve: Remove the code of clearing PBA bit
+Date: Mon, 22 May 2023 20:05:29 +0100
+Message-Id: <20230522190413.434719630@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,155 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ziwei Xiao <ziweixiao@google.com>
 
-[ Upstream commit e14cadfd80d76f01bfaa1a8d745b1db19b57d6be ]
+[ Upstream commit f4c2e67c1773d2a2632381ee30e9139c1e744c16 ]
 
-Now sk->sk_shutdown is no longer a bitfield, we can add
-standard READ_ONCE()/WRITE_ONCE() annotations to silence
-KCSAN reports like the following:
+Clearing the PBA bit from the driver is race prone and it may lead to
+dropped interrupt events. This could potentially lead to the traffic
+being completely halted.
 
-BUG: KCSAN: data-race in tcp_disconnect / tcp_poll
-
-write to 0xffff88814588582c of 1 bytes by task 3404 on cpu 1:
-tcp_disconnect+0x4d6/0xdb0 net/ipv4/tcp.c:3121
-__inet_stream_connect+0x5dd/0x6e0 net/ipv4/af_inet.c:715
-inet_stream_connect+0x48/0x70 net/ipv4/af_inet.c:727
-__sys_connect_file net/socket.c:2001 [inline]
-__sys_connect+0x19b/0x1b0 net/socket.c:2018
-__do_sys_connect net/socket.c:2028 [inline]
-__se_sys_connect net/socket.c:2025 [inline]
-__x64_sys_connect+0x41/0x50 net/socket.c:2025
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-read to 0xffff88814588582c of 1 bytes by task 3374 on cpu 0:
-tcp_poll+0x2e6/0x7d0 net/ipv4/tcp.c:562
-sock_poll+0x253/0x270 net/socket.c:1383
-vfs_poll include/linux/poll.h:88 [inline]
-io_poll_check_events io_uring/poll.c:281 [inline]
-io_poll_task_func+0x15a/0x820 io_uring/poll.c:333
-handle_tw_list io_uring/io_uring.c:1184 [inline]
-tctx_task_work+0x1fe/0x4d0 io_uring/io_uring.c:1246
-task_work_run+0x123/0x160 kernel/task_work.c:179
-get_signal+0xe64/0xff0 kernel/signal.c:2635
-arch_do_signal_or_restart+0x89/0x2a0 arch/x86/kernel/signal.c:306
-exit_to_user_mode_loop+0x6f/0xe0 kernel/entry/common.c:168
-exit_to_user_mode_prepare+0x6c/0xb0 kernel/entry/common.c:204
-__syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
-syscall_exit_to_user_mode+0x26/0x140 kernel/entry/common.c:297
-do_syscall_64+0x4d/0xc0 arch/x86/entry/common.c:86
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x03 -> 0x00
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Fixes: 5e8c5adf95f8 ("gve: DQO: Add core netdev features")
+Signed-off-by: Ziwei Xiao <ziweixiao@google.com>
+Signed-off-by: Bailey Forrest <bcf@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/af_inet.c   |  2 +-
- net/ipv4/tcp.c       | 14 ++++++++------
- net/ipv4/tcp_input.c |  4 ++--
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/google/gve/gve_main.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 8db6747f892f8..70fd769f1174b 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -894,7 +894,7 @@ int inet_shutdown(struct socket *sock, int how)
- 		   EPOLLHUP, even on eg. unconnected UDP sockets -- RR */
- 		fallthrough;
- 	default:
--		sk->sk_shutdown |= how;
-+		WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | how);
- 		if (sk->sk_prot->shutdown)
- 			sk->sk_prot->shutdown(sk, how);
- 		break;
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 288693981b006..6c7c666554ced 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -498,6 +498,7 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
- 	__poll_t mask;
- 	struct sock *sk = sock->sk;
- 	const struct tcp_sock *tp = tcp_sk(sk);
-+	u8 shutdown;
- 	int state;
+diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
+index 07111c241e0eb..60bf0e3fb2176 100644
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -284,19 +284,6 @@ static int gve_napi_poll_dqo(struct napi_struct *napi, int budget)
+ 	bool reschedule = false;
+ 	int work_done = 0;
  
- 	sock_poll_wait(file, sock, wait);
-@@ -540,9 +541,10 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
- 	 * NOTE. Check for TCP_CLOSE is added. The goal is to prevent
- 	 * blocking on fresh not-connected or disconnected socket. --ANK
- 	 */
--	if (sk->sk_shutdown == SHUTDOWN_MASK || state == TCP_CLOSE)
-+	shutdown = READ_ONCE(sk->sk_shutdown);
-+	if (shutdown == SHUTDOWN_MASK || state == TCP_CLOSE)
- 		mask |= EPOLLHUP;
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLIN | EPOLLRDNORM | EPOLLRDHUP;
- 
- 	/* Connected or passive Fast Open socket? */
-@@ -559,7 +561,7 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
- 		if (tcp_stream_is_readable(sk, target))
- 			mask |= EPOLLIN | EPOLLRDNORM;
- 
--		if (!(sk->sk_shutdown & SEND_SHUTDOWN)) {
-+		if (!(shutdown & SEND_SHUTDOWN)) {
- 			if (__sk_stream_is_writeable(sk, 1)) {
- 				mask |= EPOLLOUT | EPOLLWRNORM;
- 			} else {  /* send SIGIO later */
-@@ -2866,7 +2868,7 @@ void __tcp_close(struct sock *sk, long timeout)
- 	int data_was_unread = 0;
- 	int state;
- 
--	sk->sk_shutdown = SHUTDOWN_MASK;
-+	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
- 
- 	if (sk->sk_state == TCP_LISTEN) {
- 		tcp_set_state(sk, TCP_CLOSE);
-@@ -3118,7 +3120,7 @@ int tcp_disconnect(struct sock *sk, int flags)
- 
- 	inet_bhash2_reset_saddr(sk);
- 
--	sk->sk_shutdown = 0;
-+	WRITE_ONCE(sk->sk_shutdown, 0);
- 	sock_reset_flag(sk, SOCK_DONE);
- 	tp->srtt_us = 0;
- 	tp->mdev_us = jiffies_to_usecs(TCP_TIMEOUT_INIT);
-@@ -4648,7 +4650,7 @@ void tcp_done(struct sock *sk)
- 	if (req)
- 		reqsk_fastopen_remove(sk, req, false);
- 
--	sk->sk_shutdown = SHUTDOWN_MASK;
-+	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
- 
- 	if (!sock_flag(sk, SOCK_DEAD))
- 		sk->sk_state_change(sk);
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index cc072d2cfcd82..10776c54ff784 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4362,7 +4362,7 @@ void tcp_fin(struct sock *sk)
- 
- 	inet_csk_schedule_ack(sk);
- 
--	sk->sk_shutdown |= RCV_SHUTDOWN;
-+	WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | RCV_SHUTDOWN);
- 	sock_set_flag(sk, SOCK_DONE);
- 
- 	switch (sk->sk_state) {
-@@ -6597,7 +6597,7 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
- 			break;
- 
- 		tcp_set_state(sk, TCP_FIN_WAIT2);
--		sk->sk_shutdown |= SEND_SHUTDOWN;
-+		WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | SEND_SHUTDOWN);
- 
- 		sk_dst_confirm(sk);
+-	/* Clear PCI MSI-X Pending Bit Array (PBA)
+-	 *
+-	 * This bit is set if an interrupt event occurs while the vector is
+-	 * masked. If this bit is set and we reenable the interrupt, it will
+-	 * fire again. Since we're just about to poll the queue state, we don't
+-	 * need it to fire again.
+-	 *
+-	 * Under high softirq load, it's possible that the interrupt condition
+-	 * is triggered twice before we got the chance to process it.
+-	 */
+-	gve_write_irq_doorbell_dqo(priv, block,
+-				   GVE_ITR_NO_UPDATE_DQO | GVE_ITR_CLEAR_PBA_BIT_DQO);
+-
+ 	if (block->tx)
+ 		reschedule |= gve_tx_poll_dqo(block, /*do_clean=*/true);
  
 -- 
 2.39.2
