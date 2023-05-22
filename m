@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F046A171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:19:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55CC8C433EF;
-	Mon, 22 May 2023 19:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC5DB171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:19:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67372C4339B;
+	Mon, 22 May 2023 19:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783151;
-	bh=7cp/UyRcXEVtKZ7hBztTmStjpxwfPTY6RctpJwepqbs=;
+	s=korg; t=1684783154;
+	bh=G6RNchY9rQS70IcHCm4EBvURaJ2vSp7iHz6zvVVlbek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9XYICizuhbw04PE9HFX9fxr7jYxm919ud1V72OzE0MBsOZWKxDcxaG7wpuzzj49p
-	 d+K8hE9W40M9Vmx3fQ/57u5AqA1OALv05NSuXwsXCswJI9cXzzKI9gIuccURnRbLAL
-	 ta8tr7aDdS270yKo+pKcWCYPnSWUi9wumuNT3MYU=
+	b=DOYZRxAgta6L5+PuuKqtXXeJLCfeg0Jivxg04Mu3VVKzbmR1q3jtydI8KR825wRGL
+	 eU1lgnWYAAqpkiW5kSQ9tQd+a6RYrQs5MiezMMXeVjo+/8h/J0hb9j2aR/zEFwkUQ3
+	 iRDQYilVTkUY2FJXHmJrTHKr7HvCPXnZ81M3tZDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 148/203] net: bcmgenet: Remove phy_stop() from bcmgenet_netif_stop()
-Date: Mon, 22 May 2023 20:09:32 +0100
-Message-Id: <20230522190359.066441634@linuxfoundation.org>
+Subject: [PATCH 5.15 157/203] vlan: fix a potential uninit-value in vlan_dev_hard_start_xmit()
+Date: Mon, 22 May 2023 20:09:41 +0100
+Message-Id: <20230522190359.321095056@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,35 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 93e0401e0fc0c54b0ac05b687cd135c2ac38187c ]
+[ Upstream commit dacab578c7c6cd06c50c89dfa36b0e0f10decd4e ]
 
-The call to phy_stop() races with the later call to phy_disconnect(),
-resulting in concurrent phy_suspend() calls being run from different
-CPUs. The final call to phy_disconnect() ensures that the PHY is
-stopped and suspended, too.
+syzbot triggered the following splat [1], sending an empty message
+through pppoe_sendmsg().
 
-Fixes: c96e731c93ff ("net: bcmgenet: connect and disconnect from the PHY state machine")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+When VLAN_FLAG_REORDER_HDR flag is set, vlan_dev_hard_header()
+does not push extra bytes for the VLAN header, because vlan is offloaded.
+
+Unfortunately vlan_dev_hard_start_xmit() first reads veth->h_vlan_proto
+before testing (vlan->flags & VLAN_FLAG_REORDER_HDR).
+
+We need to swap the two conditions.
+
+[1]
+BUG: KMSAN: uninit-value in vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
+vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
+__netdev_start_xmit include/linux/netdevice.h:4883 [inline]
+netdev_start_xmit include/linux/netdevice.h:4897 [inline]
+xmit_one net/core/dev.c:3580 [inline]
+dev_hard_start_xmit+0x253/0xa20 net/core/dev.c:3596
+__dev_queue_xmit+0x3c7f/0x5ac0 net/core/dev.c:4246
+dev_queue_xmit include/linux/netdevice.h:3053 [inline]
+pppoe_sendmsg+0xa93/0xb80 drivers/net/ppp/pppoe.c:900
+sock_sendmsg_nosec net/socket.c:724 [inline]
+sock_sendmsg net/socket.c:747 [inline]
+____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
+___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
+__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
+__do_sys_sendmmsg net/socket.c:2670 [inline]
+__se_sys_sendmmsg net/socket.c:2667 [inline]
+__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Uninit was created at:
+slab_post_alloc_hook+0x12d/0xb60 mm/slab.h:774
+slab_alloc_node mm/slub.c:3452 [inline]
+kmem_cache_alloc_node+0x543/0xab0 mm/slub.c:3497
+kmalloc_reserve+0x148/0x470 net/core/skbuff.c:520
+__alloc_skb+0x3a7/0x850 net/core/skbuff.c:606
+alloc_skb include/linux/skbuff.h:1277 [inline]
+sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2583
+pppoe_sendmsg+0x3af/0xb80 drivers/net/ppp/pppoe.c:867
+sock_sendmsg_nosec net/socket.c:724 [inline]
+sock_sendmsg net/socket.c:747 [inline]
+____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
+___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
+__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
+__do_sys_sendmmsg net/socket.c:2670 [inline]
+__se_sys_sendmmsg net/socket.c:2667 [inline]
+__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+CPU: 0 PID: 29770 Comm: syz-executor.0 Not tainted 6.3.0-rc6-syzkaller-gc478e5b17829 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/8021q/vlan_dev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 92cd2916e8015..35bf840716d57 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3416,7 +3416,6 @@ static void bcmgenet_netif_stop(struct net_device *dev)
- 	/* Disable MAC transmit. TX DMA disabled must be done before this */
- 	umac_enable_set(priv, CMD_TX_EN, false);
- 
--	phy_stop(dev->phydev);
- 	bcmgenet_disable_rx_napi(priv);
- 	bcmgenet_intr_disable(priv);
- 
+diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
+index b6d456c7952ed..3d0f0d0a323b5 100644
+--- a/net/8021q/vlan_dev.c
++++ b/net/8021q/vlan_dev.c
+@@ -108,8 +108,8 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
+ 	 * NOTE: THIS ASSUMES DIX ETHERNET, SPECIFICALLY NOT SUPPORTING
+ 	 * OTHER THINGS LIKE FDDI/TokenRing/802.3 SNAPs...
+ 	 */
+-	if (veth->h_vlan_proto != vlan->vlan_proto ||
+-	    vlan->flags & VLAN_FLAG_REORDER_HDR) {
++	if (vlan->flags & VLAN_FLAG_REORDER_HDR ||
++	    veth->h_vlan_proto != vlan->vlan_proto) {
+ 		u16 vlan_tci;
+ 		vlan_tci = vlan->vlan_id;
+ 		vlan_tci |= vlan_dev_get_egress_qos_mask(dev, skb->priority);
 -- 
 2.39.2
 
