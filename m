@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88222168DC
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:36:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8718C433D2;
-	Mon, 22 May 2023 19:36:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05D8168DC
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:36:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9AEC433EF;
+	Mon, 22 May 2023 19:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784189;
-	bh=K13WyvsTQCDWMfOVfJ2WIZu1auSPFasF4FzVq/oUDaw=;
+	s=korg; t=1684784192;
+	bh=zWycd4NOleDucaTDIy3mDGBMZOAdcEm+iiY194zdWkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6Tw2eRwy9xqp5BrAzS0EQVC/puQu3mMbUTggA3Fg3eoVFxZByoPB0Rt6I63BNO1b
-	 WRTuQ5NEWJR0F1TW5RU1rYrxXh7E8ZW7GnbJhg+xw1ma+ocIxorjbRYCBYzvteFRpk
-	 tUtg/JNL8KFrBSbiKv7d2YAcbksJM1d0e4IMjsmo=
+	b=1tZoLqifEkExHi1X9LBvDTKNx1PX8Q+JwGYeEDVxoqh57kyjIOkDp2m51noXni0Q9
+	 FB+MJRMY7waDetpCa3gT7T0+zRCEeSjYMkeBsshRel5vgmFop+3jfhpj0FqjHMNnUp
+	 AUhMZ3r51Hadn6Cy68/4j7s+YUF4y7uIHWrx8VTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ma <li.ma@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 292/292] drm/amdgpu: reserve the old gc_11_0_*_mes.bin
-Date: Mon, 22 May 2023 20:10:49 +0100
-Message-Id: <20230522190413.248839954@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 267/292] thunderbolt: Clear registers properly when auto clear isnt in use
+Date: Mon, 22 May 2023 20:10:24 +0100
+Message-Id: <20230522190412.614051327@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,44 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Ma <li.ma@amd.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 8855818ce7554fb7420200187fac9c3b69500da0 upstream.
+commit c4af8e3fecd03b0aedcd38145955605cfebe7e3a upstream.
 
-Reserve the MOUDLE_FIRMWARE declaration of gc_11_0_*_mes.bin
-to fix falling back to old mes bin on failure via autoload.
+When `QUIRK_AUTO_CLEAR_INT` isn't set, interrupt masking should be
+cleared by writing to Interrupt Mask Clear (IMR) and interrupt
+status should be cleared properly at shutdown/init.
 
-Fixes: 97998b893c30 ("drm/amd/amdgpu: introduce gc_*_mes_2.bin v2")
-Signed-off-by: Li Ma <li.ma@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+This fixes an error where interrupts are left enabled during resume
+from hibernation with `CONFIG_USB4=y`.
+
+Fixes: 468c49f44759 ("thunderbolt: Disable interrupt auto clear for rings")
+Cc: stable@vger.kernel.org # v6.3
+Reported-by: Takashi Iwai <tiwai@suse.de>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217343
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/thunderbolt/nhi.c      |   29 ++++++++++++++++++++++++-----
+ drivers/thunderbolt/nhi_regs.h |    2 ++
+ 2 files changed, 26 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -32,14 +32,19 @@
- #include "v11_structs.h"
- #include "mes_v11_api_def.h"
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -54,6 +54,21 @@ static int ring_interrupt_index(const st
+ 	return bit;
+ }
  
-+MODULE_FIRMWARE("amdgpu/gc_11_0_0_mes.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_0_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_0_mes1.bin");
-+MODULE_FIRMWARE("amdgpu/gc_11_0_1_mes.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_1_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_1_mes1.bin");
-+MODULE_FIRMWARE("amdgpu/gc_11_0_2_mes.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_2_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_2_mes1.bin");
-+MODULE_FIRMWARE("amdgpu/gc_11_0_3_mes.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_3_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_3_mes1.bin");
-+MODULE_FIRMWARE("amdgpu/gc_11_0_4_mes.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_4_mes_2.bin");
- MODULE_FIRMWARE("amdgpu/gc_11_0_4_mes1.bin");
++static void nhi_mask_interrupt(struct tb_nhi *nhi, int mask, int ring)
++{
++	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT)
++		return;
++	iowrite32(mask, nhi->iobase + REG_RING_INTERRUPT_MASK_CLEAR_BASE + ring);
++}
++
++static void nhi_clear_interrupt(struct tb_nhi *nhi, int ring)
++{
++	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT)
++		ioread32(nhi->iobase + REG_RING_NOTIFY_BASE + ring);
++	else
++		iowrite32(~0, nhi->iobase + REG_RING_INT_CLEAR + ring);
++}
++
+ /*
+  * ring_interrupt_active() - activate/deactivate interrupts for a single ring
+  *
+@@ -61,8 +76,8 @@ static int ring_interrupt_index(const st
+  */
+ static void ring_interrupt_active(struct tb_ring *ring, bool active)
+ {
+-	int reg = REG_RING_INTERRUPT_BASE +
+-		  ring_interrupt_index(ring) / 32 * 4;
++	int index = ring_interrupt_index(ring) / 32 * 4;
++	int reg = REG_RING_INTERRUPT_BASE + index;
+ 	int interrupt_bit = ring_interrupt_index(ring) & 31;
+ 	int mask = 1 << interrupt_bit;
+ 	u32 old, new;
+@@ -123,7 +138,11 @@ static void ring_interrupt_active(struct
+ 					 "interrupt for %s %d is already %s\n",
+ 					 RING_TYPE(ring), ring->hop,
+ 					 active ? "enabled" : "disabled");
+-	iowrite32(new, ring->nhi->iobase + reg);
++
++	if (active)
++		iowrite32(new, ring->nhi->iobase + reg);
++	else
++		nhi_mask_interrupt(ring->nhi, mask, index);
+ }
  
+ /*
+@@ -136,11 +155,11 @@ static void nhi_disable_interrupts(struc
+ 	int i = 0;
+ 	/* disable interrupts */
+ 	for (i = 0; i < RING_INTERRUPT_REG_COUNT(nhi); i++)
+-		iowrite32(0, nhi->iobase + REG_RING_INTERRUPT_BASE + 4 * i);
++		nhi_mask_interrupt(nhi, ~0, 4 * i);
+ 
+ 	/* clear interrupt status bits */
+ 	for (i = 0; i < RING_NOTIFY_REG_COUNT(nhi); i++)
+-		ioread32(nhi->iobase + REG_RING_NOTIFY_BASE + 4 * i);
++		nhi_clear_interrupt(nhi, 4 * i);
+ }
+ 
+ /* ring helper methods */
+--- a/drivers/thunderbolt/nhi_regs.h
++++ b/drivers/thunderbolt/nhi_regs.h
+@@ -93,6 +93,8 @@ struct ring_desc {
+ #define REG_RING_INTERRUPT_BASE	0x38200
+ #define RING_INTERRUPT_REG_COUNT(nhi) ((31 + 2 * nhi->hop_count) / 32)
+ 
++#define REG_RING_INTERRUPT_MASK_CLEAR_BASE	0x38208
++
+ #define REG_INT_THROTTLING_RATE	0x38c00
+ 
+ /* Interrupt Vector Allocation */
 
 
