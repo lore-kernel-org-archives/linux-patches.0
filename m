@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C449171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F699C433EF;
-	Mon, 22 May 2023 19:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D6D171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E23AC433D2;
+	Mon, 22 May 2023 19:41:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784512;
-	bh=jKJQM7Amchlo/TIBhIhoRm4akaWOf6RtKsRisaHbqM8=;
+	s=korg; t=1684784515;
+	bh=hH/l81anuCs6BR9skkB2qfBrEHiihE5JzFvsKGzSM9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XK0SE681/+vXAYl3QufYSVtza8l93c7Znm6cjajPh0kGHCepy3JtHQMmQx8jSa2OP
-	 119nheHJakvrBEYZ3ShyMrlcDUbQY+3n27beW0UiarLWXarqT2pbU/+muHxrx2ETcE
-	 AK2yHHbq4UCNVD5yk9fVKHt0fU0ezHtfmwB569fI=
+	b=KrrCLXSn9+zJuqWJKBJonbuNqomFOaU2mIHzAh2SuymxSSyaW/F8A/RJfMRxg2rDW
+	 cJ1hyitgzHirD3PV0ulFGwcw8ZogTdsouRbzYFcsZdVBbMMht0QbtdRy/XN5VribpM
+	 MBEKwDFUZU6A805Nt/Gqej38j1UTvzFPIuadcoIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+45d4691b1ed3c48eba05@syzkaller.appspotmail.com,
+	Andreas Gruenbacher <agruenba@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 106/364] scsi: message: mptlan: Fix use after free bug in mptlan_remove() due to race condition
-Date: Mon, 22 May 2023 20:06:51 +0100
-Message-Id: <20230522190415.414343857@linuxfoundation.org>
+Subject: [PATCH 6.3 107/364] gfs2: Fix inode height consistency check
+Date: Mon, 22 May 2023 20:06:52 +0100
+Message-Id: <20230522190415.443191015@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,52 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-[ Upstream commit f486893288f3e9b171b836f43853a6426515d800 ]
+[ Upstream commit cfcdb5bad34f600aed7613c3c1a5e618111f77b7 ]
 
-mptlan_probe() calls mpt_register_lan_device() which initializes the
-&priv->post_buckets_task workqueue. A call to
-mpt_lan_wake_post_buckets_task() will subsequently start the work.
+The maximum allowed height of an inode's metadata tree depends on the
+filesystem block size; it is lower for bigger-block filesystems.  When
+reading in an inode, make sure that the height doesn't exceed the
+maximum allowed height.
 
-During driver unload in mptlan_remove() the following race may occur:
+Arrays like sd_heightsize are sized to be big enough for any filesystem
+block size; they will often be slightly bigger than what's needed for a
+specific filesystem.
 
-CPU0                  CPU1
-
-                    |mpt_lan_post_receive_buckets_work()
-mptlan_remove()     |
-  free_netdev()     |
-    kfree(dev);     |
-                    |
-                    | dev->mtu
-                    |   //use
-
-Fix this by finishing the work prior to cleaning up in mptlan_remove().
-
-[mkp: we really should remove mptlan instead of attempting to fix it]
-
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Link: https://lore.kernel.org/r/20230318081635.796479-1-zyytlz.wz@163.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: syzbot+45d4691b1ed3c48eba05@syzkaller.appspotmail.com
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/message/fusion/mptlan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/gfs2/glops.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/message/fusion/mptlan.c b/drivers/message/fusion/mptlan.c
-index 142eb5d5d9df6..de2e7bcf47847 100644
---- a/drivers/message/fusion/mptlan.c
-+++ b/drivers/message/fusion/mptlan.c
-@@ -1433,7 +1433,9 @@ mptlan_remove(struct pci_dev *pdev)
- {
- 	MPT_ADAPTER 		*ioc = pci_get_drvdata(pdev);
- 	struct net_device	*dev = ioc->netdev;
-+	struct mpt_lan_priv *priv = netdev_priv(dev);
+diff --git a/fs/gfs2/glops.c b/fs/gfs2/glops.c
+index 4d99cc77a29b7..b65950e76be5a 100644
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -396,6 +396,7 @@ static int inode_go_demote_ok(const struct gfs2_glock *gl)
  
-+	cancel_delayed_work_sync(&priv->post_buckets_task);
- 	if(dev != NULL) {
- 		unregister_netdev(dev);
- 		free_netdev(dev);
+ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ {
++	struct gfs2_sbd *sdp = GFS2_SB(&ip->i_inode);
+ 	const struct gfs2_dinode *str = buf;
+ 	struct timespec64 atime;
+ 	u16 height, depth;
+@@ -442,7 +443,7 @@ static int gfs2_dinode_in(struct gfs2_inode *ip, const void *buf)
+ 	/* i_diskflags and i_eattr must be set before gfs2_set_inode_flags() */
+ 	gfs2_set_inode_flags(inode);
+ 	height = be16_to_cpu(str->di_height);
+-	if (unlikely(height > GFS2_MAX_META_HEIGHT))
++	if (unlikely(height > sdp->sd_max_height))
+ 		goto corrupt;
+ 	ip->i_height = (u8)height;
+ 
 -- 
 2.39.2
 
