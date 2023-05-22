@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAC35171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36C8CC433D2;
-	Mon, 22 May 2023 19:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AB0171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC528C433EF;
+	Mon, 22 May 2023 19:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784007;
-	bh=2sedkkPYOqQgnTcVsbOcEIUzHmwzn8iV5MlNgih7i1w=;
+	s=korg; t=1684784011;
+	bh=BOKvx4PfsewxTkFxmIG8Ji/pjMIi0eC/tBSnhigWNME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n1Qrtmj/DlsthuenDFZ3rVHcjGFooL6U0PhIKM3vpbEd4TYgu+/zTfdcVlTGp4R74
-	 7QkCEAm+2JAooE48FI5KttI0o60YsQs6MOs+NgpzcTPx4HISWZY6F+lpyXbqFeM8my
-	 It298nxxny0q409VoXIg+5fF9AWLDuIrbiGH4Cj4=
+	b=Ji3FkhQVX7gbBKa3arl3gsB82AwvXQ5Els/Nx30p1NQTxbVBdVgDnHFIAtXwyk9x/
+	 j/5GgAyxs/BjU44tmrhjV4xYGk6SPeoJ3/+5XyvXn4s7GPE756PSbl6qj1r8ejysLM
+	 LuDy74EfvCOxOF59ntpXOKaEEA+zACASKZZtsaqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Michael Lee <michael-cy.lee@mediatek.com>,
 	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/292] wifi: mac80211: fix min center freq offset tracing
-Date: Mon, 22 May 2023 20:09:23 +0100
-Message-Id: <20230522190411.104976531@linuxfoundation.org>
+Subject: [PATCH 6.1 207/292] wifi: mac80211: Abort running color change when stopping the AP
+Date: Mon, 22 May 2023 20:09:24 +0100
+Message-Id: <20230522190411.133745818@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,37 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Michael Lee <michael-cy.lee@mediatek.com>
 
-[ Upstream commit 248e4776514bf70236e6b1a54c65aa5324c8b1eb ]
+[ Upstream commit a23d7f5b2fbda114de60c4b53311e052281d7533 ]
 
-We need to set the correct trace variable, otherwise we're
-overwriting something else instead and the right one that
-we print later is not initialized.
+When stopping the AP, there might be a color change in progress. It
+should be deactivated here, or the driver might later finalize a color
+change on a stopped AP.
 
-Fixes: b6011960f392 ("mac80211: handle channel frequency offset")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230504134511.828474-2-gregory.greenman@intel.com
+Fixes: 5f9404abdf2a (mac80211: add support for BSS color change)
+Signed-off-by: Michael Lee <michael-cy.lee@mediatek.com>
+Link: https://lore.kernel.org/r/20230504080441.22958-1-michael-cy.lee@mediatek.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/trace.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/cfg.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/trace.h b/net/mac80211/trace.h
-index 9f4377566c425..c85367a4757a9 100644
---- a/net/mac80211/trace.h
-+++ b/net/mac80211/trace.h
-@@ -67,7 +67,7 @@
- 			__entry->min_freq_offset = (c)->chan ? (c)->chan->freq_offset : 0;	\
- 			__entry->min_chan_width = (c)->width;				\
- 			__entry->min_center_freq1 = (c)->center_freq1;			\
--			__entry->freq1_offset = (c)->freq1_offset;			\
-+			__entry->min_freq1_offset = (c)->freq1_offset;			\
- 			__entry->min_center_freq2 = (c)->center_freq2;
- #define MIN_CHANDEF_PR_FMT	" min_control:%d.%03d MHz min_width:%d min_center: %d.%03d/%d MHz"
- #define MIN_CHANDEF_PR_ARG	__entry->min_control_freq, __entry->min_freq_offset,	\
+diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
+index e8beec0a0ae1c..06b9df2fbcd77 100644
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1477,9 +1477,10 @@ static int ieee80211_stop_ap(struct wiphy *wiphy, struct net_device *dev,
+ 		sdata_dereference(link->u.ap.unsol_bcast_probe_resp,
+ 				  sdata);
+ 
+-	/* abort any running channel switch */
++	/* abort any running channel switch or color change */
+ 	mutex_lock(&local->mtx);
+ 	link_conf->csa_active = false;
++	link_conf->color_change_active = false;
+ 	if (link->csa_block_tx) {
+ 		ieee80211_wake_vif_queues(local, sdata,
+ 					  IEEE80211_QUEUE_STOP_REASON_CSA);
 -- 
 2.39.2
 
