@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BDFF171B8
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73A8C4339B;
-	Mon, 22 May 2023 19:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B475171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B09DC433D2;
+	Mon, 22 May 2023 19:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785192;
-	bh=ot84JLftX/MyUOeon+g4lcPXlfsk36amFyeoRnplP0E=;
+	s=korg; t=1684785194;
+	bh=XTVQ5CguE42v+gE+zJUx+6+L0aQduO7VuBszfmICOh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=isdegWEArCrh0044eM4VlAdMplYquxOnJcoWBHa2M7h+k3jxf/MsTvFVQ0uB7qp+Z
-	 +sLxbCRPZObPH1MDcmv+FUrzw85iaNrIXtaxAEZ4BRGdYlu7+k2zABRQWK1tjqm4bS
-	 lHpmz9oAoxEJFgFVPK45NMFCv0eVrHMj4BE8M1jQ=
+	b=DZjOeZpJSwkiyGvbD7lwmLB9ApLsajHYRcnDzAEfeMQk5NzSvw5KWjpvlMk6a+qAW
+	 szBNsnWeeVsMQbvs4TdeIfFK5us0KTD/bk4lvEiWLR8KoXe+dAVoQA+I82GZvGkX4e
+	 ze0Y5nEnS99WcLCnYPA9tXrlDle2qO3Ws8wtJ9Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 340/364] drm/amdgpu/gfx11: Adjust gfxoff before powergating on gfx11 as well
-Date: Mon, 22 May 2023 20:10:45 +0100
-Message-Id: <20230522190421.270621172@linuxfoundation.org>
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.3 314/364] can: kvaser_pciefd: Do not send EFLUSH command on TFD interrupt
+Date: Mon, 22 May 2023 20:10:19 +0100
+Message-Id: <20230522190420.624912754@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,39 +34,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-commit 11fbdda2ab6bf049e2869139c07016022b4e045b upstream.
+commit 262d7a52ba27525e3c1203230c9f0524e48bbb34 upstream.
 
-(Bas: speculative change to mirror gfx10/gfx9)
+Under certain circumstances we send two EFLUSH commands, resulting in two
+EFLUSH ack packets, while only expecting a single EFLUSH ack.
+This can cause the driver Tx flush completion to get out of sync.
 
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Bas Nieuwenhuizen <bas@basnieuwenhuizen.nl>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+To avoid this problem, don't enable the "Transmit buffer flush done" (TFD)
+interrupt and remove the code handling it.
+Now we only send EFLUSH command after receiving status packet with
+"Init detected" (IDET) bit set.
+
+Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/r/20230516134318.104279-6-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/can/kvaser_pciefd.c |   21 ++++-----------------
+ 1 file changed, 4 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -5135,8 +5135,14 @@ static int gfx_v11_0_set_powergating_sta
- 		break;
- 	case IP_VERSION(11, 0, 1):
- 	case IP_VERSION(11, 0, 4):
-+		if (!enable)
-+			amdgpu_gfx_off_ctrl(adev, false);
-+
- 		gfx_v11_cntl_pg(adev, enable);
--		amdgpu_gfx_off_ctrl(adev, enable);
-+
-+		if (enable)
-+			amdgpu_gfx_off_ctrl(adev, true);
-+
- 		break;
- 	default:
- 		break;
+--- a/drivers/net/can/kvaser_pciefd.c
++++ b/drivers/net/can/kvaser_pciefd.c
+@@ -531,7 +531,7 @@ static int kvaser_pciefd_set_tx_irq(stru
+ 	      KVASER_PCIEFD_KCAN_IRQ_TOF | KVASER_PCIEFD_KCAN_IRQ_ABD |
+ 	      KVASER_PCIEFD_KCAN_IRQ_TAE | KVASER_PCIEFD_KCAN_IRQ_TAL |
+ 	      KVASER_PCIEFD_KCAN_IRQ_FDIC | KVASER_PCIEFD_KCAN_IRQ_BPP |
+-	      KVASER_PCIEFD_KCAN_IRQ_TAR | KVASER_PCIEFD_KCAN_IRQ_TFD;
++	      KVASER_PCIEFD_KCAN_IRQ_TAR;
+ 
+ 	iowrite32(msk, can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
+ 
+@@ -579,7 +579,7 @@ static void kvaser_pciefd_start_controll
+ 
+ 	spin_lock_irqsave(&can->lock, irq);
+ 	iowrite32(-1, can->reg_base + KVASER_PCIEFD_KCAN_IRQ_REG);
+-	iowrite32(KVASER_PCIEFD_KCAN_IRQ_ABD | KVASER_PCIEFD_KCAN_IRQ_TFD,
++	iowrite32(KVASER_PCIEFD_KCAN_IRQ_ABD,
+ 		  can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
+ 
+ 	status = ioread32(can->reg_base + KVASER_PCIEFD_KCAN_STAT_REG);
+@@ -622,7 +622,7 @@ static int kvaser_pciefd_bus_on(struct k
+ 	iowrite32(0, can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
+ 	iowrite32(-1, can->reg_base + KVASER_PCIEFD_KCAN_IRQ_REG);
+ 
+-	iowrite32(KVASER_PCIEFD_KCAN_IRQ_ABD | KVASER_PCIEFD_KCAN_IRQ_TFD,
++	iowrite32(KVASER_PCIEFD_KCAN_IRQ_ABD,
+ 		  can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
+ 
+ 	mode = ioread32(can->reg_base + KVASER_PCIEFD_KCAN_MODE_REG);
+@@ -1015,8 +1015,7 @@ static int kvaser_pciefd_setup_can_ctrls
+ 		SET_NETDEV_DEV(netdev, &pcie->pci->dev);
+ 
+ 		iowrite32(-1, can->reg_base + KVASER_PCIEFD_KCAN_IRQ_REG);
+-		iowrite32(KVASER_PCIEFD_KCAN_IRQ_ABD |
+-			  KVASER_PCIEFD_KCAN_IRQ_TFD,
++		iowrite32(KVASER_PCIEFD_KCAN_IRQ_ABD,
+ 			  can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
+ 
+ 		pcie->can[i] = can;
+@@ -1443,9 +1442,6 @@ static int kvaser_pciefd_handle_status_p
+ 		cmd = KVASER_PCIEFD_KCAN_CMD_AT;
+ 		cmd |= ++can->cmd_seq << KVASER_PCIEFD_KCAN_CMD_SEQ_SHIFT;
+ 		iowrite32(cmd, can->reg_base + KVASER_PCIEFD_KCAN_CMD_REG);
+-
+-		iowrite32(KVASER_PCIEFD_KCAN_IRQ_TFD,
+-			  can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
+ 	} else if (p->header[0] & KVASER_PCIEFD_SPACK_IDET &&
+ 		   p->header[0] & KVASER_PCIEFD_SPACK_IRM &&
+ 		   cmdseq == (p->header[1] & KVASER_PCIEFD_PACKET_SEQ_MSK) &&
+@@ -1732,15 +1728,6 @@ static int kvaser_pciefd_transmit_irq(st
+ 	if (irq & KVASER_PCIEFD_KCAN_IRQ_TOF)
+ 		netdev_err(can->can.dev, "Tx FIFO overflow\n");
+ 
+-	if (irq & KVASER_PCIEFD_KCAN_IRQ_TFD) {
+-		u8 count = ioread32(can->reg_base +
+-				    KVASER_PCIEFD_KCAN_TX_NPACKETS_REG) & 0xff;
+-
+-		if (count == 0)
+-			iowrite32(KVASER_PCIEFD_KCAN_CTRL_EFLUSH,
+-				  can->reg_base + KVASER_PCIEFD_KCAN_CTRL_REG);
+-	}
+-
+ 	if (irq & KVASER_PCIEFD_KCAN_IRQ_BPP)
+ 		netdev_err(can->can.dev,
+ 			   "Fail to change bittiming, when not in reset mode\n");
 
 
