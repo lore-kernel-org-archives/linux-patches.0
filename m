@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81705171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:26:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE42BC433D2;
-	Mon, 22 May 2023 19:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE3F171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:26:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F733C433D2;
+	Mon, 22 May 2023 19:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783605;
-	bh=ULgldKHcQe/oiOaENBpSwoJGPj/4CsTxUBA9RRpJm0E=;
+	s=korg; t=1684783608;
+	bh=7WQMsDnkLJaAHW6RZwpPou3kFutnRgwSnTU7HM1QZHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sIgj5gmhlc7G1F4hDVITQwRw8nxMZG6IMB+pim7XzHgah69gOvNyfZlvUBz6tnDoX
-	 ukR9/SBKuWO0gCfUT9JiF40Pqdu5ziZjtWN+TGTtyC0Ert9f/H8TZGqdIz0KymfzR8
-	 OO/RJu/n4TgLrNCDjVvLWJSF7wFlxzmm7y01Wfug=
+	b=HPbg8buGZsbtFPiT8/77yI3rVaMZwV0kpE+g6RGIlljzJ/0dSJ+NHdco795+kpXk9
+	 ybG1ZRMbI7sypixQY0WdVe/uiZ63jHLqRtBLS9D+hx6Lo5E4vd8rFOS3H1rd2iHOZY
+	 UhLDTHmyUkyf/dD3kJcoVktm1s6RFXD9dBWAynOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Forza <forza@tnonline.net>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/292] wifi: iwlwifi: mvm: fix ptk_pn memory leak
-Date: Mon, 22 May 2023 20:07:38 +0100
-Message-Id: <20230522190408.495957190@linuxfoundation.org>
+Subject: [PATCH 6.1 084/292] scsi: target: iscsit: Free cmds before session free
+Date: Mon, 22 May 2023 20:07:21 +0100
+Message-Id: <20230522190408.073775591@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,46 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Dmitry Bogdanov <d.bogdanov@yadro.com>
 
-[ Upstream commit d066a530af8e1833c7ea2cef7784004700c85f79 ]
+[ Upstream commit d8990b5a4d065f38f35d69bcd627ec5a7f8330ca ]
 
-If adding a key to firmware fails we leak the allocated ptk_pn.
-This shouldn't happen in practice, but we should still fix it.
+Commands from recovery entries are freed after session has been closed.
+That leads to use-after-free at command free or NPE with such call trace:
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230414130637.99446ffd02bc.I82a2ad6ec1395f188e0a1677cc619e3fcb1feac9@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Time2Retain timer expired for SID: 1, cleaning up iSCSI session.
+BUG: kernel NULL pointer dereference, address: 0000000000000140
+RIP: 0010:sbitmap_queue_clear+0x3a/0xa0
+Call Trace:
+ target_release_cmd_kref+0xd1/0x1f0 [target_core_mod]
+ transport_generic_free_cmd+0xd1/0x180 [target_core_mod]
+ iscsit_free_cmd+0x53/0xd0 [iscsi_target_mod]
+ iscsit_free_connection_recovery_entries+0x29d/0x320 [iscsi_target_mod]
+ iscsit_close_session+0x13a/0x140 [iscsi_target_mod]
+ iscsit_check_post_dataout+0x440/0x440 [iscsi_target_mod]
+ call_timer_fn+0x24/0x140
+
+Move cleanup of recovery enrties to before session freeing.
+
+Reported-by: Forza <forza@tnonline.net>
+Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-7-michael.christie@oracle.com
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/target/iscsi/iscsi_target.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index a841268e0709f..801098c5183b6 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -3445,7 +3445,7 @@ static int __iwl_mvm_mac_set_key(struct ieee80211_hw *hw,
- 	struct iwl_mvm_vif *mvmvif = iwl_mvm_vif_from_mac80211(vif);
- 	struct iwl_mvm *mvm = IWL_MAC80211_GET_MVM(hw);
- 	struct iwl_mvm_sta *mvmsta = NULL;
--	struct iwl_mvm_key_pn *ptk_pn;
-+	struct iwl_mvm_key_pn *ptk_pn = NULL;
- 	int keyidx = key->keyidx;
- 	int ret, i;
- 	u8 key_offset;
-@@ -3590,6 +3590,10 @@ static int __iwl_mvm_mac_set_key(struct ieee80211_hw *hw,
- 		if (ret) {
- 			IWL_WARN(mvm, "set key failed\n");
- 			key->hw_key_idx = STA_KEY_IDX_INVALID;
-+			if (ptk_pn) {
-+				RCU_INIT_POINTER(mvmsta->ptk_pn[keyidx], NULL);
-+				kfree(ptk_pn);
-+			}
- 			/*
- 			 * can't add key for RX, but we don't need it
- 			 * in the device for TX so still return 0,
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 3f7a9f7f5f4e3..07e196b44b91d 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4531,6 +4531,9 @@ int iscsit_close_session(struct iscsit_session *sess, bool can_sleep)
+ 	iscsit_stop_time2retain_timer(sess);
+ 	spin_unlock_bh(&se_tpg->session_lock);
+ 
++	if (sess->sess_ops->ErrorRecoveryLevel == 2)
++		iscsit_free_connection_recovery_entries(sess);
++
+ 	/*
+ 	 * transport_deregister_session_configfs() will clear the
+ 	 * struct se_node_acl->nacl_sess pointer now as a iscsi_np process context
+@@ -4554,9 +4557,6 @@ int iscsit_close_session(struct iscsit_session *sess, bool can_sleep)
+ 
+ 	transport_deregister_session(sess->se_sess);
+ 
+-	if (sess->sess_ops->ErrorRecoveryLevel == 2)
+-		iscsit_free_connection_recovery_entries(sess);
+-
+ 	iscsit_free_all_ooo_cmdsns(sess);
+ 
+ 	spin_lock_bh(&se_tpg->session_lock);
 -- 
 2.39.2
 
