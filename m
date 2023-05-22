@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FCC3171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:49:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3CDFC433D2;
-	Mon, 22 May 2023 19:49:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C013171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:49:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA95C433D2;
+	Mon, 22 May 2023 19:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784990;
-	bh=AjGunEb8jLvW0Wi7PFoQzm/F9Uuz5nIwtBhuuH+hWdQ=;
+	s=korg; t=1684784992;
+	bh=ydEK3aU/RWb8e27zwHNLQSr+DRKSEVXK85FwTJnafns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CK0X9M9m82DxqQcRG/ae2yUS6DWHCqJ8zYyfEaR/2f/DqPhqv14HnpB9wOk9nR2PE
-	 Nm3qAeDf2xgV/cvM0Ig8qkswKZ4QkGOSNSLl3n4IxAEK4mUVIrsF3b8jS34yUKTkRa
-	 X+Zo/wq2shk0AUCgX89r+5mQnYV4r3lqHQd7vDvw=
+	b=Y3S/CCwWenggcOkqJou1ERWPAD5bphSJLN6aTQ6sK60QfsSYvSbFkWSl8cKGfqNTs
+	 q0EBr6/oHsXAlF3xakws3dSUid1O0G1qrxLHCVwWoZ93mvLxOVpIf+K3zNFDkSuYI5
+	 /97QR4AOgdlLY3HANsjjDUvJzll3Ujth1uj2fhxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 271/364] wifi: iwlwifi: mvm: fix cancel_delayed_work_sync() deadlock
-Date: Mon, 22 May 2023 20:09:36 +0100
-Message-Id: <20230522190419.489875622@linuxfoundation.org>
+Subject: [PATCH 6.3 272/364] wifi: iwlwifi: fw: fix DBGI dump
+Date: Mon, 22 May 2023 20:09:37 +0100
+Message-Id: <20230522190419.514873889@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -37,39 +37,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit c2d8b7f257b2398f2d866205365895e038beca12 ]
+[ Upstream commit d3ae69180bbd74bcbc03a2b6d10ed7eccbe98c23 ]
 
-Lockdep points out that we can deadlock here by calling
-cancel_delayed_work_sync() because that might be already
-running and gotten interrupted by the NAPI soft-IRQ.
-Even just calling something that can sleep is wrong in
-this context though.
+The DBGI dump is (unsurprisingly) of type DBGI, not SRAM.
+This leads to bad register accesses because the union is
+built differently, there's no allocation ID, and thus the
+allocation ID ends up being 0x8000.
 
-Luckily, it doesn't even really matter since the things
-we need to do are idempotent, so just drop the _sync().
+Note that this was already wrong for DRAM vs. SMEM since
+they use different parts of the union, but the allocation
+ID is at the same place, so it worked.
 
-Fixes: e5d153ec54f0 ("iwlwifi: mvm: fix CSA AP side")
+Fix all of this but set the allocation ID in a way that
+the offset calculation ends up without any offset.
+
+Fixes: 34bc27783a31 ("iwlwifi: yoyo: fix DBGI_SRAM ini dump header.")
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230514120631.b1813c823b4d.I9d20cc06d24fa40b6774d3dd95ea5e2bf8dd015b@changeid
+Link: https://lore.kernel.org/r/20230514120631.19a302ae4c65.I12272599f7c1930666157b9d5e7f81fe9ec4c421@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/fw/dbg.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-index e685113172c52..ad410b6efce73 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/rxmq.c
-@@ -1967,7 +1967,7 @@ void iwl_mvm_rx_mpdu_mq(struct iwl_mvm *mvm, struct napi_struct *napi,
- 				RCU_INIT_POINTER(mvm->csa_tx_blocked_vif, NULL);
- 				/* Unblock BCAST / MCAST station */
- 				iwl_mvm_modify_all_sta_disable_tx(mvm, mvmvif, false);
--				cancel_delayed_work_sync(&mvm->cs_tx_unblock_dwork);
-+				cancel_delayed_work(&mvm->cs_tx_unblock_dwork);
- 			}
- 		}
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+index 027360e63b926..3ef0b776b7727 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/dbg.c
+@@ -1664,14 +1664,10 @@ static __le32 iwl_get_mon_reg(struct iwl_fw_runtime *fwrt, u32 alloc_id,
+ }
+ 
+ static void *
+-iwl_dump_ini_mon_fill_header(struct iwl_fw_runtime *fwrt,
+-			     struct iwl_dump_ini_region_data *reg_data,
++iwl_dump_ini_mon_fill_header(struct iwl_fw_runtime *fwrt, u32 alloc_id,
+ 			     struct iwl_fw_ini_monitor_dump *data,
+ 			     const struct iwl_fw_mon_regs *addrs)
+ {
+-	struct iwl_fw_ini_region_tlv *reg = (void *)reg_data->reg_tlv->data;
+-	u32 alloc_id = le32_to_cpu(reg->dram_alloc_id);
+-
+ 	if (!iwl_trans_grab_nic_access(fwrt->trans)) {
+ 		IWL_ERR(fwrt, "Failed to get monitor header\n");
+ 		return NULL;
+@@ -1702,8 +1698,10 @@ iwl_dump_ini_mon_dram_fill_header(struct iwl_fw_runtime *fwrt,
+ 				  void *data, u32 data_len)
+ {
+ 	struct iwl_fw_ini_monitor_dump *mon_dump = (void *)data;
++	struct iwl_fw_ini_region_tlv *reg = (void *)reg_data->reg_tlv->data;
++	u32 alloc_id = le32_to_cpu(reg->dram_alloc_id);
+ 
+-	return iwl_dump_ini_mon_fill_header(fwrt, reg_data, mon_dump,
++	return iwl_dump_ini_mon_fill_header(fwrt, alloc_id, mon_dump,
+ 					    &fwrt->trans->cfg->mon_dram_regs);
+ }
+ 
+@@ -1713,8 +1711,10 @@ iwl_dump_ini_mon_smem_fill_header(struct iwl_fw_runtime *fwrt,
+ 				  void *data, u32 data_len)
+ {
+ 	struct iwl_fw_ini_monitor_dump *mon_dump = (void *)data;
++	struct iwl_fw_ini_region_tlv *reg = (void *)reg_data->reg_tlv->data;
++	u32 alloc_id = le32_to_cpu(reg->internal_buffer.alloc_id);
+ 
+-	return iwl_dump_ini_mon_fill_header(fwrt, reg_data, mon_dump,
++	return iwl_dump_ini_mon_fill_header(fwrt, alloc_id, mon_dump,
+ 					    &fwrt->trans->cfg->mon_smem_regs);
+ }
+ 
+@@ -1725,7 +1725,10 @@ iwl_dump_ini_mon_dbgi_fill_header(struct iwl_fw_runtime *fwrt,
+ {
+ 	struct iwl_fw_ini_monitor_dump *mon_dump = (void *)data;
+ 
+-	return iwl_dump_ini_mon_fill_header(fwrt, reg_data, mon_dump,
++	return iwl_dump_ini_mon_fill_header(fwrt,
++					    /* no offset calculation later */
++					    IWL_FW_INI_ALLOCATION_ID_DBGC1,
++					    mon_dump,
+ 					    &fwrt->trans->cfg->mon_dbgi_regs);
+ }
  
 -- 
 2.39.2
