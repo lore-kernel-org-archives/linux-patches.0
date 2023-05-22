@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA94C171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39202C433EF;
-	Mon, 22 May 2023 19:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B258B171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31223C433D2;
+	Mon, 22 May 2023 19:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784340;
-	bh=bI9PVkqsyDNXWEFWllimRMTRd+7ODBNtRfIsxPh/FW8=;
+	s=korg; t=1684784343;
+	bh=GLac42NvYIXYGk1bVaCVSB2yrRyzoBmVxzh2bi+CkXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FCZj3v8IQF3bzEYX9Dpb2i6wFUmny3Tg+zMd42hdoDVq5WMu1eS8+vPHaBKpfAJJF
-	 Uj/BECSJhUs7m/w0UTn7kXete6pSA9QaB5QN8tZDoJCpZcbRm28sT40IIRUnBn+Oza
-	 C8OMAVz+1P8xbO9MJIMVbJQyPxR0b7oyhv/5gk9k=
+	b=xmYjkdP2U75TR5db8yelzxmaIpEYml/Ugb5YWFhRCLtP3/G4An/H0+bjBm4QS//ML
+	 l4ijeh3TC1soUqJojNWc7MyrV6x3eJ6PvSyDKNUsXhRGLMbm7NZ0WgyakmCNGqCxVM
+	 8VCmk2drVPos0hu3zU8UhzZH7bY9Og2USGB9/Vgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Gabe Teeger <gabe.teeger@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 032/364] drm/i915: Fix NULL ptr deref by checking new_crtc_state
-Date: Mon, 22 May 2023 20:05:37 +0100
-Message-Id: <20230522190413.635547035@linuxfoundation.org>
+Subject: [PATCH 6.3 050/364] drm/amd/display: Enable HostVM based on rIOMMU active
+Date: Mon, 22 May 2023 20:05:55 +0100
+Message-Id: <20230522190414.064130600@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,50 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+From: Gabe Teeger <gabe.teeger@amd.com>
 
-[ Upstream commit a41d985902c153c31c616fe183cf2ee331e95ecb ]
+[ Upstream commit 97fa4dfa66fdd52ad3d0c9fadeaaa1e87605bac7 ]
 
-intel_atomic_get_new_crtc_state can return NULL, unless crtc state wasn't
-obtained previously with intel_atomic_get_crtc_state, so we must check it
-for NULLness here, just as in many other places, where we can't guarantee
-that intel_atomic_get_crtc_state was called.
-We are currently getting NULL ptr deref because of that, so this fix was
-confirmed to help.
+[Why]
+There is underflow and flickering occuring. The
+underflow stops when hostvm is forced to active.
+According to policy, hostvm should be enabled if riommu
+is active, but this is not taken into account when
+deciding whether to enable hostvm.
 
-Fixes: 74a75dc90869 ("drm/i915/display: move plane prepare/cleanup to intel_atomic_plane.c")
-Signed-off-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230505082212.27089-1-stanislav.lisovskiy@intel.com
-(cherry picked from commit 1d5b09f8daf859247a1ea65b0d732a24d88980d8)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+[What]
+For DCN314, set hostvm to true if riommu is active.
+
+Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Gabe Teeger <gabe.teeger@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_atomic_plane.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_atomic_plane.c b/drivers/gpu/drm/i915/display/intel_atomic_plane.c
-index 1409bcfb6fd3d..9afba39613f37 100644
---- a/drivers/gpu/drm/i915/display/intel_atomic_plane.c
-+++ b/drivers/gpu/drm/i915/display/intel_atomic_plane.c
-@@ -1026,7 +1026,7 @@ intel_prepare_plane_fb(struct drm_plane *_plane,
- 	int ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
+index 3bbc46a673355..28163f7acd5b2 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn314/dcn314_fpu.c
+@@ -308,6 +308,10 @@ int dcn314_populate_dml_pipes_from_context_fpu(struct dc *dc, struct dc_state *c
+ 				pipe->plane_state->src_rect.width < pipe->plane_state->dst_rect.width))
+ 			upscaled = true;
  
- 	if (old_obj) {
--		const struct intel_crtc_state *crtc_state =
-+		const struct intel_crtc_state *new_crtc_state =
- 			intel_atomic_get_new_crtc_state(state,
- 							to_intel_crtc(old_plane_state->hw.crtc));
- 
-@@ -1041,7 +1041,7 @@ intel_prepare_plane_fb(struct drm_plane *_plane,
- 		 * This should only fail upon a hung GPU, in which case we
- 		 * can safely continue.
- 		 */
--		if (intel_crtc_needs_modeset(crtc_state)) {
-+		if (new_crtc_state && intel_crtc_needs_modeset(new_crtc_state)) {
- 			ret = i915_sw_fence_await_reservation(&state->commit_ready,
- 							      old_obj->base.resv,
- 							      false, 0,
++		/* Apply HostVM policy - either based on hypervisor globally enabled, or rIOMMU active */
++		if (dc->debug.dml_hostvm_override == DML_HOSTVM_NO_OVERRIDE)
++			pipes[i].pipe.src.hostvm = dc->vm_pa_config.is_hvm_enabled || dc->res_pool->hubbub->riommu_active;
++
+ 		/*
+ 		 * Immediate flip can be set dynamically after enabling the plane.
+ 		 * We need to require support for immediate flip or underflow can be
 -- 
 2.39.2
 
