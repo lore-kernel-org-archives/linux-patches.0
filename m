@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1071171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:40:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29129C433EF;
-	Mon, 22 May 2023 19:40:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926B9171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:40:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC0EC433D2;
+	Mon, 22 May 2023 19:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784445;
-	bh=4WEG8nfAvdunFGh0TR6vBtdz1z/RCOD4phfAcvrKy8E=;
+	s=korg; t=1684784448;
+	bh=cH0hz9aY+btRJsDOHyfCUgK9Fx/cvAgA30i54sUjn0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yzb76I8BaftATtcCa0WXfqrrYrrKPGSB47SVWtvXbo655bOwtMTN+TVKBwUMXINos
-	 9eIn8noH6XITSdxtqEmEwiEy8+uBmfmx8m1DJXvC3EHoIJLlRRJi7dP3kH75N8g7+E
-	 eGqjjuAdOpa3refU3YOy+f2bhJ+f1XtTJTfFGzDE=
+	b=CrTLDAcQb56/34oNVaU8YMOx969lFvTh+ncQpGiKyBCsQo9MSeFLhmfIEwgeeKpcU
+	 yeTC0lyRUSO2pwUQ05+uJADZdInBM9OPk80uFZNDXHr38xs9K39eRh7wrW/snPWfGm
+	 7vOebki5pZYQYY/nxtjnQ86h93bsfhlErJyTdLQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Feng Jiang <jiangfeng@kylinos.cn>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 085/364] media: mediatek: vcodec: Fix potential array out-of-bounds in decoder queue_setup
-Date: Mon, 22 May 2023 20:06:30 +0100
-Message-Id: <20230522190414.887280098@linuxfoundation.org>
+Subject: [PATCH 6.3 086/364] platform/x86/amd: pmc: Fix memory leak in amd_pmc_stb_debugfs_open_v2()
+Date: Mon, 22 May 2023 20:06:31 +0100
+Message-Id: <20230522190414.909862496@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,43 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Chen <harperchen1110@gmail.com>
+From: Feng Jiang <jiangfeng@kylinos.cn>
 
-[ Upstream commit 8fbcf730cb89c3647f3365226fe7014118fa93c7 ]
+[ Upstream commit f6e7ac4c35a28aef0be93b32c533ae678ad0b9e7 ]
 
-variable *nplanes is provided by user via system call argument. The
-possible value of q_data->fmt->num_planes is 1-3, while the value
-of *nplanes can be 1-8. The array access by index i can cause array
-out-of-bounds.
+Function amd_pmc_stb_debugfs_open_v2() may be called when the STB
+debug mechanism enabled.
 
-Fix this bug by checking *nplanes against the array size.
+When amd_pmc_send_cmd() fails, the 'buf' needs to be released.
 
-Signed-off-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Feng Jiang <jiangfeng@kylinos.cn>
+Link: https://lore.kernel.org/r/20230412093734.1126410-1-jiangfeng@kylinos.cn
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/platform/x86/amd/pmc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c
-index c99705681a03e..93fcea821001f 100644
---- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c
-+++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c
-@@ -735,6 +735,13 @@ int vb2ops_vdec_queue_setup(struct vb2_queue *vq, unsigned int *nbuffers,
+diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
+index 69f305496643f..73dedc9950144 100644
+--- a/drivers/platform/x86/amd/pmc.c
++++ b/drivers/platform/x86/amd/pmc.c
+@@ -265,6 +265,7 @@ static int amd_pmc_stb_debugfs_open_v2(struct inode *inode, struct file *filp)
+ 	dev->msg_port = 0;
+ 	if (ret) {
+ 		dev_err(dev->dev, "error: S2D_NUM_SAMPLES not supported : %d\n", ret);
++		kfree(buf);
+ 		return ret;
  	}
  
- 	if (*nplanes) {
-+		if (vq->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
-+			if (*nplanes != q_data->fmt->num_planes)
-+				return -EINVAL;
-+		} else {
-+			if (*nplanes != 1)
-+				return -EINVAL;
-+		}
- 		for (i = 0; i < *nplanes; i++) {
- 			if (sizes[i] < q_data->sizeimage[i])
- 				return -EINVAL;
 -- 
 2.39.2
 
