@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24ED3171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98AE7C433D2;
-	Mon, 22 May 2023 19:34:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A84D171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:35:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EAAC433D2;
+	Mon, 22 May 2023 19:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784097;
-	bh=bYhjwO+g23ImpGmzgrgOAFxVRh/PQ15HjKLZoffWdg8=;
+	s=korg; t=1684784100;
+	bh=YSZNbLxunL5MGscUbbyoAHbU4DCkAAXJj/St3e1hUwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zWoDCtmKcAiEBm0wCwDg9w2x6JBvLSAP1BJbjeLxK9tr5D4g/6+1hYbroP6IrIkMG
-	 kOB4n6Bf0ELb9KRXn+vsNUK7FJlYK3ZXS18NrNDck7cfL5C1k6YxdnXFwFt7/yiJXP
-	 A5DFLf0fRRzfRR2vDl+uK67U5mWVf3Yjj5RLBSMQ=
+	b=Dd12IT6wcS0jjM5TIOnb8FmrDGa0eTnJX8gYapDAgwSoUmsqt3tsAFdZTkYyBsri5
+	 SWvk2knncJtbAE6IqLryfz4CvR+aYPraH8Dn6UcmwUp0NgC71olh+bMEhNu4BYlfg8
+	 57xvGyeOQfQ6mjmPbB5t3cN/It/dlmcZ49GtoN1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-	Tad <support@spotco.us>,
-	Michael Keyes <mgkeyes@vigovproductions.net>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 262/292] maple_tree: make maple state reusable after mas_empty_area()
-Date: Mon, 22 May 2023 20:10:19 +0100
-Message-Id: <20230522190412.491616916@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Donghun Yoon <donghun.yoon@lge.com>
+Subject: [PATCH 6.1 236/292] xhci-pci: Only run d3cold avoidance quirk for s2idle
+Date: Mon, 22 May 2023 20:09:53 +0100
+Message-Id: <20230522190411.851747783@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -38,55 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Zhang <zhangpeng.00@bytedance.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 0257d9908d38c0b1669af4bb1bc4dbca1f273fe6 upstream.
+commit 2a821fc3136d5d99dcb9de152be8a052ca27d870 upstream.
 
-Make mas->min and mas->max point to a node range instead of a leaf entry
-range.  This allows mas to still be usable after mas_empty_area() returns.
-Users would get unexpected results from other operations on the maple
-state after calling the affected function.
+Donghun reports that a notebook that has an AMD Ryzen 5700U but supports
+S3 has problems with USB after resuming from suspend. The issue was
+bisected down to commit d1658268e439 ("usb: pci-quirks: disable D3cold on
+xhci suspend for s2idle on AMD Renoir").
 
-For example, x86 MAP_32BIT mmap() acts as if there is no suitable gap when
-there should be one.
+As this issue only happens on S3, narrow the broken D3cold quirk to only
+run in s2idle.
 
-Link: https://lkml.kernel.org/r/20230505145829.74574-1-zhangpeng.00@bytedance.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Peng Zhang <zhangpeng.00@bytedance.com>
-Reported-by: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Reported-by: Tad <support@spotco.us>
-Reported-by: Michael Keyes <mgkeyes@vigovproductions.net>
-  Link: https://lore.kernel.org/linux-mm/32f156ba80010fd97dbaf0a0cdfc84366608624d.camel@intel.com/
-  Link: https://lore.kernel.org/linux-mm/e6108286ac025c268964a7ead3aab9899f9bc6e9.camel@spotco.us/
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Tested-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d1658268e439 ("usb: pci-quirks: disable D3cold on xhci suspend for s2idle on AMD Renoir")
+Reported-and-tested-by: Donghun Yoon <donghun.yoon@lge.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230515134059.161110-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ drivers/usb/host/xhci-pci.c |   12 ++++++++++--
+ drivers/usb/host/xhci.h     |    2 +-
+ 2 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -5338,15 +5338,9 @@ int mas_empty_area(struct ma_state *mas,
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -13,6 +13,7 @@
+ #include <linux/module.h>
+ #include <linux/acpi.h>
+ #include <linux/reset.h>
++#include <linux/suspend.h>
  
- 	mt = mte_node_type(mas->node);
- 	pivots = ma_pivots(mas_mn(mas), mt);
--	if (offset)
--		mas->min = pivots[offset - 1] + 1;
--
--	if (offset < mt_pivots[mt])
--		mas->max = pivots[offset];
--
--	if (mas->index < mas->min)
--		mas->index = mas->min;
--
-+	min = mas_safe_min(mas, pivots, offset);
-+	if (mas->index < min)
-+		mas->index = min;
- 	mas->last = mas->index + size - 1;
- 	return 0;
- }
+ #include "xhci.h"
+ #include "xhci-trace.h"
+@@ -194,7 +195,7 @@ static void xhci_pci_quirks(struct devic
+ 
+ 	if (pdev->vendor == PCI_VENDOR_ID_AMD &&
+ 		pdev->device == PCI_DEVICE_ID_AMD_RENOIR_XHCI)
+-		xhci->quirks |= XHCI_BROKEN_D3COLD;
++		xhci->quirks |= XHCI_BROKEN_D3COLD_S2I;
+ 
+ 	if (pdev->vendor == PCI_VENDOR_ID_INTEL) {
+ 		xhci->quirks |= XHCI_LPM_SUPPORT;
+@@ -609,9 +610,16 @@ static int xhci_pci_suspend(struct usb_h
+ 	 * Systems with the TI redriver that loses port status change events
+ 	 * need to have the registers polled during D3, so avoid D3cold.
+ 	 */
+-	if (xhci->quirks & (XHCI_COMP_MODE_QUIRK | XHCI_BROKEN_D3COLD))
++	if (xhci->quirks & XHCI_COMP_MODE_QUIRK)
+ 		pci_d3cold_disable(pdev);
+ 
++#ifdef CONFIG_SUSPEND
++	/* d3cold is broken, but only when s2idle is used */
++	if (pm_suspend_target_state == PM_SUSPEND_TO_IDLE &&
++	    xhci->quirks & (XHCI_BROKEN_D3COLD_S2I))
++		pci_d3cold_disable(pdev);
++#endif
++
+ 	if (xhci->quirks & XHCI_PME_STUCK_QUIRK)
+ 		xhci_pme_quirk(hcd);
+ 
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1895,7 +1895,7 @@ struct xhci_hcd {
+ #define XHCI_DISABLE_SPARSE	BIT_ULL(38)
+ #define XHCI_SG_TRB_CACHE_SIZE_QUIRK	BIT_ULL(39)
+ #define XHCI_NO_SOFT_RETRY	BIT_ULL(40)
+-#define XHCI_BROKEN_D3COLD	BIT_ULL(41)
++#define XHCI_BROKEN_D3COLD_S2I	BIT_ULL(41)
+ #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(42)
+ #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
+ #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
 
 
