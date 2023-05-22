@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB44C168B6
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:12:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 390F7C4339C;
-	Mon, 22 May 2023 19:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CE0B168B6
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:12:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF7BC433D2;
+	Mon, 22 May 2023 19:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782770;
-	bh=ZP6f5f8JaaYWGJulTbyrxwN9enfl2xveVsXKpv0W700=;
+	s=korg; t=1684782773;
+	bh=K8SDgBQhXJ2Ja+dTbbHTSuHzB7GKN7VC2SL1RTwpoYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pdGCMYABn24it5AR5vC7bvfEj+wP7o0n6xvFUJEp1App5LaIGHyDaOWBwxQfKM25x
-	 ZOfeCpidzbN7PyGf+m7ulve2SZ/0eGLndNn1xy7coDe9Z4ZMXRoOH7mSqWvIfz/7zE
-	 Y7rhue35oVVSB07UCSzwXwn2YQUI84bIak8foCSo=
+	b=rlVv/wmH7B6+yluM+bUIfzoiZTSoDvhiOp4qYfdXUYlJWSBKnmnmjMB9bS8g71Ybo
+	 YYVDptrMSOy04bIcolvEKRLOPf/Or45DNwC2Dif1mRwlmd3AyJu3uaDf3cCLDD2acn
+	 UUZMB8wuYPV2Idow/lupN4ImSGhHjdr5RLaAp12s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	syzbot <syzkaller@googlegroups.com>,
 	Eric Dumazet <edumazet@google.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 014/203] net: deal with most data-races in sk_wait_event()
-Date: Mon, 22 May 2023 20:07:18 +0100
-Message-Id: <20230522190355.344698493@linuxfoundation.org>
+Subject: [PATCH 5.15 015/203] net: add vlan_get_protocol_and_depth() helper
+Date: Mon, 22 May 2023 20:07:19 +0100
+Message-Id: <20230522190355.372453305@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -38,220 +41,167 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit d0ac89f6f9879fae316c155de77b5173b3e2c9c9 ]
+[ Upstream commit 4063384ef762cc5946fc7a3f89879e76c6ec51e2 ]
 
-__condition is evaluated twice in sk_wait_event() macro.
+Before blamed commit, pskb_may_pull() was used instead
+of skb_header_pointer() in __vlan_get_protocol() and friends.
 
-First invocation is lockless, and reads can race with writes,
-as spotted by syzbot.
+Few callers depended on skb->head being populated with MAC header,
+syzbot caught one of them (skb_mac_gso_segment())
 
-BUG: KCSAN: data-race in sk_stream_wait_connect / tcp_disconnect
+Add vlan_get_protocol_and_depth() to make the intent clearer
+and use it where sensible.
 
-write to 0xffff88812d83d6a0 of 4 bytes by task 9065 on cpu 1:
-tcp_disconnect+0x2cd/0xdb0
-inet_shutdown+0x19e/0x1f0 net/ipv4/af_inet.c:911
-__sys_shutdown_sock net/socket.c:2343 [inline]
-__sys_shutdown net/socket.c:2355 [inline]
-__do_sys_shutdown net/socket.c:2363 [inline]
-__se_sys_shutdown+0xf8/0x140 net/socket.c:2361
-__x64_sys_shutdown+0x31/0x40 net/socket.c:2361
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+This is a more generic fix than commit e9d3f80935b6
+("net/af_packet: make sure to pull mac header") which was
+dealing with a similar issue.
 
-read to 0xffff88812d83d6a0 of 4 bytes by task 9040 on cpu 0:
-sk_stream_wait_connect+0x1de/0x3a0 net/core/stream.c:75
-tcp_sendmsg_locked+0x2e4/0x2120 net/ipv4/tcp.c:1266
-tcp_sendmsg+0x30/0x50 net/ipv4/tcp.c:1484
-inet6_sendmsg+0x63/0x80 net/ipv6/af_inet6.c:651
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-__sys_sendto+0x246/0x300 net/socket.c:2142
-__do_sys_sendto net/socket.c:2154 [inline]
-__se_sys_sendto net/socket.c:2150 [inline]
-__x64_sys_sendto+0x78/0x90 net/socket.c:2150
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+kernel BUG at include/linux/skbuff.h:2655 !
+invalid opcode: 0000 [#1] SMP KASAN
+CPU: 0 PID: 1441 Comm: syz-executor199 Not tainted 6.1.24-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/14/2023
+RIP: 0010:__skb_pull include/linux/skbuff.h:2655 [inline]
+RIP: 0010:skb_mac_gso_segment+0x68f/0x6a0 net/core/gro.c:136
+Code: fd 48 8b 5c 24 10 44 89 6b 70 48 c7 c7 c0 ae 0d 86 44 89 e6 e8 a1 91 d0 00 48 c7 c7 00 af 0d 86 48 89 de 31 d2 e8 d1 4a e9 ff <0f> 0b 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 55 48 89 e5 41
+RSP: 0018:ffffc90001bd7520 EFLAGS: 00010286
+RAX: ffffffff8469736a RBX: ffff88810f31dac0 RCX: ffff888115a18b00
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: ffffc90001bd75e8 R08: ffffffff84697183 R09: fffff5200037adf9
+R10: 0000000000000000 R11: dffffc0000000001 R12: 0000000000000012
+R13: 000000000000fee5 R14: 0000000000005865 R15: 000000000000fed7
+FS: 000055555633f300(0000) GS:ffff8881f6a00000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000020000000 CR3: 0000000116fea000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+[<ffffffff847018dd>] __skb_gso_segment+0x32d/0x4c0 net/core/dev.c:3419
+[<ffffffff8470398a>] skb_gso_segment include/linux/netdevice.h:4819 [inline]
+[<ffffffff8470398a>] validate_xmit_skb+0x3aa/0xee0 net/core/dev.c:3725
+[<ffffffff84707042>] __dev_queue_xmit+0x1332/0x3300 net/core/dev.c:4313
+[<ffffffff851a9ec7>] dev_queue_xmit+0x17/0x20 include/linux/netdevice.h:3029
+[<ffffffff851b4a82>] packet_snd net/packet/af_packet.c:3111 [inline]
+[<ffffffff851b4a82>] packet_sendmsg+0x49d2/0x6470 net/packet/af_packet.c:3142
+[<ffffffff84669a12>] sock_sendmsg_nosec net/socket.c:716 [inline]
+[<ffffffff84669a12>] sock_sendmsg net/socket.c:736 [inline]
+[<ffffffff84669a12>] __sys_sendto+0x472/0x5f0 net/socket.c:2139
+[<ffffffff84669c75>] __do_sys_sendto net/socket.c:2151 [inline]
+[<ffffffff84669c75>] __se_sys_sendto net/socket.c:2147 [inline]
+[<ffffffff84669c75>] __x64_sys_sendto+0xe5/0x100 net/socket.c:2147
+[<ffffffff8551d40f>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+[<ffffffff8551d40f>] do_syscall_64+0x2f/0x50 arch/x86/entry/common.c:80
+[<ffffffff85600087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-value changed: 0x00000000 -> 0x00000068
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: 469aceddfa3e ("vlan: consolidate VLAN parsing code and limit max parsing depth")
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Toke Høiland-Jørgensen <toke@redhat.com>
+Cc: Willem de Bruijn <willemb@google.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/stream.c   | 12 ++++++------
- net/ipv4/tcp_bpf.c  |  2 +-
- net/llc/af_llc.c    |  8 +++++---
- net/smc/smc_close.c |  4 ++--
- net/smc/smc_rx.c    |  4 ++--
- net/smc/smc_tx.c    |  4 ++--
- net/tipc/socket.c   |  4 ++--
- net/tls/tls_main.c  |  3 ++-
- 8 files changed, 22 insertions(+), 19 deletions(-)
+ drivers/net/tap.c       |  4 ++--
+ include/linux/if_vlan.h | 17 +++++++++++++++++
+ net/bridge/br_forward.c |  2 +-
+ net/core/dev.c          |  2 +-
+ net/packet/af_packet.c  |  6 ++----
+ 5 files changed, 23 insertions(+), 8 deletions(-)
 
-diff --git a/net/core/stream.c b/net/core/stream.c
-index cd60746877b1e..422ee97e4f2be 100644
---- a/net/core/stream.c
-+++ b/net/core/stream.c
-@@ -73,8 +73,8 @@ int sk_stream_wait_connect(struct sock *sk, long *timeo_p)
- 		add_wait_queue(sk_sleep(sk), &wait);
- 		sk->sk_write_pending++;
- 		done = sk_wait_event(sk, timeo_p,
--				     !sk->sk_err &&
--				     !((1 << sk->sk_state) &
-+				     !READ_ONCE(sk->sk_err) &&
-+				     !((1 << READ_ONCE(sk->sk_state)) &
- 				       ~(TCPF_ESTABLISHED | TCPF_CLOSE_WAIT)), &wait);
- 		remove_wait_queue(sk_sleep(sk), &wait);
- 		sk->sk_write_pending--;
-@@ -87,9 +87,9 @@ EXPORT_SYMBOL(sk_stream_wait_connect);
-  * sk_stream_closing - Return 1 if we still have things to send in our buffers.
-  * @sk: socket to verify
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index 854ed2f21d32c..663ce0e09c2de 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -714,7 +714,7 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
+ 
+ 	/* Move network header to the right position for VLAN tagged packets */
+ 	if (eth_type_vlan(skb->protocol) &&
+-	    __vlan_get_protocol(skb, skb->protocol, &depth) != 0)
++	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
+ 
+ 	rcu_read_lock();
+@@ -1163,7 +1163,7 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
+ 
+ 	/* Move network header to the right position for VLAN tagged packets */
+ 	if (eth_type_vlan(skb->protocol) &&
+-	    __vlan_get_protocol(skb, skb->protocol, &depth) != 0)
++	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
+ 		skb_set_network_header(skb, depth);
+ 
+ 	rcu_read_lock();
+diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
+index 41a518336673b..4e7e72f3da5bd 100644
+--- a/include/linux/if_vlan.h
++++ b/include/linux/if_vlan.h
+@@ -626,6 +626,23 @@ static inline __be16 vlan_get_protocol(const struct sk_buff *skb)
+ 	return __vlan_get_protocol(skb, skb->protocol, NULL);
+ }
+ 
++/* This version of __vlan_get_protocol() also pulls mac header in skb->head */
++static inline __be16 vlan_get_protocol_and_depth(struct sk_buff *skb,
++						 __be16 type, int *depth)
++{
++	int maclen;
++
++	type = __vlan_get_protocol(skb, type, &maclen);
++
++	if (type) {
++		if (!pskb_may_pull(skb, maclen))
++			type = 0;
++		else if (depth)
++			*depth = maclen;
++	}
++	return type;
++}
++
+ /* A getter for the SKB protocol field which will handle VLAN tags consistently
+  * whether VLAN acceleration is enabled or not.
   */
--static inline int sk_stream_closing(struct sock *sk)
-+static int sk_stream_closing(const struct sock *sk)
- {
--	return (1 << sk->sk_state) &
-+	return (1 << READ_ONCE(sk->sk_state)) &
- 	       (TCPF_FIN_WAIT1 | TCPF_CLOSING | TCPF_LAST_ACK);
- }
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index ec646656dbf14..3d69ad5463a9f 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -42,7 +42,7 @@ int br_dev_queue_push_xmit(struct net *net, struct sock *sk, struct sk_buff *skb
+ 	    eth_type_vlan(skb->protocol)) {
+ 		int depth;
  
-@@ -142,8 +142,8 @@ int sk_stream_wait_memory(struct sock *sk, long *timeo_p)
+-		if (!__vlan_get_protocol(skb, skb->protocol, &depth))
++		if (!vlan_get_protocol_and_depth(skb, skb->protocol, &depth))
+ 			goto drop;
  
- 		set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
- 		sk->sk_write_pending++;
--		sk_wait_event(sk, &current_timeo, sk->sk_err ||
--						  (sk->sk_shutdown & SEND_SHUTDOWN) ||
-+		sk_wait_event(sk, &current_timeo, READ_ONCE(sk->sk_err) ||
-+						  (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN) ||
- 						  (sk_stream_memory_free(sk) &&
- 						  !vm_wait), &wait);
- 		sk->sk_write_pending--;
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 20ad554af3693..e3a9477293ce4 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -168,7 +168,7 @@ static int tcp_msg_wait_data(struct sock *sk, struct sk_psock *psock,
- 	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
- 	ret = sk_wait_event(sk, &timeo,
- 			    !list_empty(&psock->ingress_msg) ||
--			    !skb_queue_empty(&sk->sk_receive_queue), &wait);
-+			    !skb_queue_empty_lockless(&sk->sk_receive_queue), &wait);
- 	sk_clear_bit(SOCKWQ_ASYNC_WAITDATA, sk);
- 	remove_wait_queue(sk_sleep(sk), &wait);
- 	return ret;
-diff --git a/net/llc/af_llc.c b/net/llc/af_llc.c
-index 99305aadaa087..8b9a10d10036f 100644
---- a/net/llc/af_llc.c
-+++ b/net/llc/af_llc.c
-@@ -581,7 +581,8 @@ static int llc_ui_wait_for_disc(struct sock *sk, long timeout)
- 
- 	add_wait_queue(sk_sleep(sk), &wait);
- 	while (1) {
--		if (sk_wait_event(sk, &timeout, sk->sk_state == TCP_CLOSE, &wait))
-+		if (sk_wait_event(sk, &timeout,
-+				  READ_ONCE(sk->sk_state) == TCP_CLOSE, &wait))
- 			break;
- 		rc = -ERESTARTSYS;
- 		if (signal_pending(current))
-@@ -601,7 +602,8 @@ static bool llc_ui_wait_for_conn(struct sock *sk, long timeout)
- 
- 	add_wait_queue(sk_sleep(sk), &wait);
- 	while (1) {
--		if (sk_wait_event(sk, &timeout, sk->sk_state != TCP_SYN_SENT, &wait))
-+		if (sk_wait_event(sk, &timeout,
-+				  READ_ONCE(sk->sk_state) != TCP_SYN_SENT, &wait))
- 			break;
- 		if (signal_pending(current) || !timeout)
- 			break;
-@@ -620,7 +622,7 @@ static int llc_ui_wait_for_busy_core(struct sock *sk, long timeout)
- 	while (1) {
- 		rc = 0;
- 		if (sk_wait_event(sk, &timeout,
--				  (sk->sk_shutdown & RCV_SHUTDOWN) ||
-+				  (READ_ONCE(sk->sk_shutdown) & RCV_SHUTDOWN) ||
- 				  (!llc_data_accept_state(llc->state) &&
- 				   !llc->remote_busy_flag &&
- 				   !llc->p_flag), &wait))
-diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
-index 84102db5bb314..149a59ecd299f 100644
---- a/net/smc/smc_close.c
-+++ b/net/smc/smc_close.c
-@@ -64,8 +64,8 @@ static void smc_close_stream_wait(struct smc_sock *smc, long timeout)
- 
- 		rc = sk_wait_event(sk, &timeout,
- 				   !smc_tx_prepared_sends(&smc->conn) ||
--				   sk->sk_err == ECONNABORTED ||
--				   sk->sk_err == ECONNRESET ||
-+				   READ_ONCE(sk->sk_err) == ECONNABORTED ||
-+				   READ_ONCE(sk->sk_err) == ECONNRESET ||
- 				   smc->conn.killed,
- 				   &wait);
- 		if (rc)
-diff --git a/net/smc/smc_rx.c b/net/smc/smc_rx.c
-index 45b0575520da4..5b63c250ba604 100644
---- a/net/smc/smc_rx.c
-+++ b/net/smc/smc_rx.c
-@@ -204,9 +204,9 @@ int smc_rx_wait(struct smc_sock *smc, long *timeo,
- 	sk_set_bit(SOCKWQ_ASYNC_WAITDATA, sk);
- 	add_wait_queue(sk_sleep(sk), &wait);
- 	rc = sk_wait_event(sk, timeo,
--			   sk->sk_err ||
-+			   READ_ONCE(sk->sk_err) ||
- 			   cflags->peer_conn_abort ||
--			   sk->sk_shutdown & RCV_SHUTDOWN ||
-+			   READ_ONCE(sk->sk_shutdown) & RCV_SHUTDOWN ||
- 			   conn->killed ||
- 			   fcrit(conn),
- 			   &wait);
-diff --git a/net/smc/smc_tx.c b/net/smc/smc_tx.c
-index 31ee76131a79e..a878ea084dbd6 100644
---- a/net/smc/smc_tx.c
-+++ b/net/smc/smc_tx.c
-@@ -113,8 +113,8 @@ static int smc_tx_wait(struct smc_sock *smc, int flags)
- 			break; /* at least 1 byte of free & no urgent data */
- 		set_bit(SOCK_NOSPACE, &sk->sk_socket->flags);
- 		sk_wait_event(sk, &timeo,
--			      sk->sk_err ||
--			      (sk->sk_shutdown & SEND_SHUTDOWN) ||
-+			      READ_ONCE(sk->sk_err) ||
-+			      (READ_ONCE(sk->sk_shutdown) & SEND_SHUTDOWN) ||
- 			      smc_cdc_rxed_any_close(conn) ||
- 			      (atomic_read(&conn->sndbuf_space) &&
- 			       !conn->urg_tx_pend),
-diff --git a/net/tipc/socket.c b/net/tipc/socket.c
-index f1c3b8eb4b3d3..b34857217fde4 100644
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -313,9 +313,9 @@ static void tsk_rej_rx_queue(struct sock *sk, int error)
- 		tipc_sk_respond(sk, skb, error);
- }
- 
--static bool tipc_sk_connected(struct sock *sk)
-+static bool tipc_sk_connected(const struct sock *sk)
- {
--	return sk->sk_state == TIPC_ESTABLISHED;
-+	return READ_ONCE(sk->sk_state) == TIPC_ESTABLISHED;
- }
- 
- /* tipc_sk_type_connectionless - check if the socket is datagram socket
-diff --git a/net/tls/tls_main.c b/net/tls/tls_main.c
-index abd0c4557cb93..20b8ba4d1dfc4 100644
---- a/net/tls/tls_main.c
-+++ b/net/tls/tls_main.c
-@@ -92,7 +92,8 @@ int wait_on_pending_writer(struct sock *sk, long *timeo)
- 			break;
- 		}
- 
--		if (sk_wait_event(sk, timeo, !sk->sk_write_pending, &wait))
-+		if (sk_wait_event(sk, timeo,
-+				  !READ_ONCE(sk->sk_write_pending), &wait))
- 			break;
+ 		skb_set_network_header(skb, depth);
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 7fc8ae7f3cd5b..30289cd1c29f4 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -3314,7 +3314,7 @@ __be16 skb_network_protocol(struct sk_buff *skb, int *depth)
+ 		type = eth->h_proto;
  	}
- 	remove_wait_queue(sk_sleep(sk), &wait);
+ 
+-	return __vlan_get_protocol(skb, type, depth);
++	return vlan_get_protocol_and_depth(skb, type, depth);
+ }
+ 
+ /**
+diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
+index f5d430bd372ce..ce484305be881 100644
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -1900,10 +1900,8 @@ static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
+ 	/* Move network header to the right position for VLAN tagged packets */
+ 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
+ 	    eth_type_vlan(skb->protocol) &&
+-	    __vlan_get_protocol(skb, skb->protocol, &depth) != 0) {
+-		if (pskb_may_pull(skb, depth))
+-			skb_set_network_header(skb, depth);
+-	}
++	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
++		skb_set_network_header(skb, depth);
+ 
+ 	skb_probe_transport_header(skb);
+ }
 -- 
 2.39.2
 
