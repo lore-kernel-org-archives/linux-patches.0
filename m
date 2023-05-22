@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563B1171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:51:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6567C433D2;
-	Mon, 22 May 2023 19:51:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCED171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:51:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE36DC433EF;
+	Mon, 22 May 2023 19:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785073;
-	bh=hQHYt1QCokPx2JOn/WKznHZ8p0J2EBcn4TU4LIs/xlk=;
+	s=korg; t=1684785076;
+	bh=wuHmmLkS8W2cfFBEZ3HsDYaIpXG2kp+BhOwGoGdxJq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5dF3WvdMMfMNjqnD3dOIwl7m+EV0JFhJllOdJlFBB7+SKFxBpsmY45ihBHCvYnjy
-	 GgffCgJf7ur7Csc2nBwuJntaWNXJzYLLWj5JkfqKHZFIlejiKrEAT1Swo2Y1U7/BfS
-	 DNn1QZQ+Q/jD/0FnyrDtFxKrmkIEXU9Y6wrGdTX0=
+	b=A3EOg7brY/5S32gmSGNEd7flJG2Td9EAIbE5MCBOPb4gWe8BySSlympKWCZfOyXP5
+	 jsouGkqBE0X8a750SlugckRqXxFT5iEKS0u8c+6/2HSW1jbY6EfMojd5BGX9JsvS9J
+	 KxgAodikcNMl9kjL8V2CwtpQr31eLA1hhJcsxmrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
-	Donghun Yoon <donghun.yoon@lge.com>
-Subject: [PATCH 6.3 299/364] xhci-pci: Only run d3cold avoidance quirk for s2idle
-Date: Mon, 22 May 2023 20:10:04 +0100
-Message-Id: <20230522190420.247825661@linuxfoundation.org>
+	Miller Hunter <MillerH@hearthnhome.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.3 300/364] xhci: Fix incorrect tracking of free space on transfer rings
+Date: Mon, 22 May 2023 20:10:05 +0100
+Message-Id: <20230522190420.272742714@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,77 +34,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 2a821fc3136d5d99dcb9de152be8a052ca27d870 upstream.
+commit fe82f16aafdaf8002281d3b9524291d4a4a28460 upstream.
 
-Donghun reports that a notebook that has an AMD Ryzen 5700U but supports
-S3 has problems with USB after resuming from suspend. The issue was
-bisected down to commit d1658268e439 ("usb: pci-quirks: disable D3cold on
-xhci suspend for s2idle on AMD Renoir").
+This incorrect tracking caused unnecessary ring expansion in some
+usecases which over days of use consume a lot of memory.
 
-As this issue only happens on S3, narrow the broken D3cold quirk to only
-run in s2idle.
+xhci driver tries to keep track of free transfer blocks (TRBs) on the
+ring buffer, but failed to add back some cancelled transfers that were
+turned into no-op operations instead of just moving past them.
 
-Fixes: d1658268e439 ("usb: pci-quirks: disable D3cold on xhci suspend for s2idle on AMD Renoir")
-Reported-and-tested-by: Donghun Yoon <donghun.yoon@lge.com>
+This can happen if there are several queued pending transfers which
+then are cancelled in reverse order.
+
+Solve this by counting the numer of steps we move the dequeue pointer
+once we complete a transfer, and add it to the number of free trbs
+instead of just adding the trb number of the current transfer.
+This way we ensure we count the no-op trbs on the way as well.
+
+Fixes: 55f6153d8cc8 ("xhci: remove extra loop in interrupt context")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reported-by: Miller Hunter <MillerH@hearthnhome.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217242
+Tested-by: Miller Hunter <MillerH@hearthnhome.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230515134059.161110-2-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20230515134059.161110-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |   12 ++++++++++--
- drivers/usb/host/xhci.h     |    2 +-
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-ring.c |   29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -13,6 +13,7 @@
- #include <linux/module.h>
- #include <linux/acpi.h>
- #include <linux/reset.h>
-+#include <linux/suspend.h>
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -276,6 +276,26 @@ static void inc_enq(struct xhci_hcd *xhc
+ 	trace_xhci_inc_enq(ring);
+ }
  
- #include "xhci.h"
- #include "xhci-trace.h"
-@@ -209,7 +210,7 @@ static void xhci_pci_quirks(struct devic
- 
- 	if (pdev->vendor == PCI_VENDOR_ID_AMD &&
- 		pdev->device == PCI_DEVICE_ID_AMD_RENOIR_XHCI)
--		xhci->quirks |= XHCI_BROKEN_D3COLD;
-+		xhci->quirks |= XHCI_BROKEN_D3COLD_S2I;
- 
- 	if (pdev->vendor == PCI_VENDOR_ID_INTEL) {
- 		xhci->quirks |= XHCI_LPM_SUPPORT;
-@@ -624,9 +625,16 @@ static int xhci_pci_suspend(struct usb_h
- 	 * Systems with the TI redriver that loses port status change events
- 	 * need to have the registers polled during D3, so avoid D3cold.
- 	 */
--	if (xhci->quirks & (XHCI_COMP_MODE_QUIRK | XHCI_BROKEN_D3COLD))
-+	if (xhci->quirks & XHCI_COMP_MODE_QUIRK)
- 		pci_d3cold_disable(pdev);
- 
-+#ifdef CONFIG_SUSPEND
-+	/* d3cold is broken, but only when s2idle is used */
-+	if (pm_suspend_target_state == PM_SUSPEND_TO_IDLE &&
-+	    xhci->quirks & (XHCI_BROKEN_D3COLD_S2I))
-+		pci_d3cold_disable(pdev);
-+#endif
++static int xhci_num_trbs_to(struct xhci_segment *start_seg, union xhci_trb *start,
++			    struct xhci_segment *end_seg, union xhci_trb *end,
++			    unsigned int num_segs)
++{
++	union xhci_trb *last_on_seg;
++	int num = 0;
++	int i = 0;
 +
- 	if (xhci->quirks & XHCI_PME_STUCK_QUIRK)
- 		xhci_pme_quirk(hcd);
++	do {
++		if (start_seg == end_seg && end >= start)
++			return num + (end - start);
++		last_on_seg = &start_seg->trbs[TRBS_PER_SEGMENT - 1];
++		num += last_on_seg - start;
++		start_seg = start_seg->next;
++		start = start_seg->trbs;
++	} while (i++ <= num_segs);
++
++	return -EINVAL;
++}
++
+ /*
+  * Check to see if there's room to enqueue num_trbs on the ring and make sure
+  * enqueue pointer will not advance into dequeue segment. See rules above.
+@@ -2140,6 +2160,7 @@ static int finish_td(struct xhci_hcd *xh
+ 		     u32 trb_comp_code)
+ {
+ 	struct xhci_ep_ctx *ep_ctx;
++	int trbs_freed;
  
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1901,7 +1901,7 @@ struct xhci_hcd {
- #define XHCI_DISABLE_SPARSE	BIT_ULL(38)
- #define XHCI_SG_TRB_CACHE_SIZE_QUIRK	BIT_ULL(39)
- #define XHCI_NO_SOFT_RETRY	BIT_ULL(40)
--#define XHCI_BROKEN_D3COLD	BIT_ULL(41)
-+#define XHCI_BROKEN_D3COLD_S2I	BIT_ULL(41)
- #define XHCI_EP_CTX_BROKEN_DCS	BIT_ULL(42)
- #define XHCI_SUSPEND_RESUME_CLKS	BIT_ULL(43)
- #define XHCI_RESET_TO_DEFAULT	BIT_ULL(44)
+ 	ep_ctx = xhci_get_ep_ctx(xhci, ep->vdev->out_ctx, ep->ep_index);
+ 
+@@ -2209,9 +2230,15 @@ static int finish_td(struct xhci_hcd *xh
+ 	}
+ 
+ 	/* Update ring dequeue pointer */
++	trbs_freed = xhci_num_trbs_to(ep_ring->deq_seg, ep_ring->dequeue,
++				      td->last_trb_seg, td->last_trb,
++				      ep_ring->num_segs);
++	if (trbs_freed < 0)
++		xhci_dbg(xhci, "Failed to count freed trbs at TD finish\n");
++	else
++		ep_ring->num_trbs_free += trbs_freed;
+ 	ep_ring->dequeue = td->last_trb;
+ 	ep_ring->deq_seg = td->last_trb_seg;
+-	ep_ring->num_trbs_free += td->num_trbs - 1;
+ 	inc_deq(xhci, ep_ring);
+ 
+ 	return xhci_td_cleanup(xhci, td, ep_ring, td->status);
 
 
