@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97315171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:44:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27CF4C433EF;
-	Mon, 22 May 2023 19:44:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A99171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:44:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9379DC433EF;
+	Mon, 22 May 2023 19:44:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784656;
-	bh=BtPkO18/e+3C4IFXUIq3q0flnNM/h1ir5gCnW4D5pNg=;
+	s=korg; t=1684784658;
+	bh=uxQs/ZbF0Ne7HsUph3+NneBS5ASI+TbK0LZd6MXzlRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cHyd2IBwZvQpuPnpUO79krdp3yv9ziRp2pNhUVZXH+T4jXuYB7oX+zYMiYRshZeIo
-	 j/Gjqd/WdQGBpqnh7PZ/Ijm6HmV234aBg7e9SW/N0MBLKnPbUaxcC5rdLSfJG/cl8l
-	 H3tArjLRswnLzgV0kFOU5sy60a3ZZy/4NpLgGi74=
+	b=afIytAWgZ6RgqYzeHvsJvchYJzqHuSm0esnIpEu9jbORm9xztKAQjWovkLOKZsKgS
+	 vl3v2W4Yb1AAvEz1Da4uSqcr0Oghqno9r0mSuQj03Ec9EYR2p03ikPk/CJlE+LCDgo
+	 ysOwg6qMkbVchqck3cRUMlx9UPtjsf8UDYidMJZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bastien Nocera <hadess@hadess.net>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 153/364] HID: logitech-hidpp: Dont use the USB serial for USB devices
-Date: Mon, 22 May 2023 20:07:38 +0100
-Message-Id: <20230522190416.575812631@linuxfoundation.org>
+Subject: [PATCH 6.3 115/364] f2fs: fix to check readonly condition correctly
+Date: Mon, 22 May 2023 20:07:00 +0100
+Message-Id: <20230522190415.657948778@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,99 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bastien Nocera <hadess@hadess.net>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 7ad1fe0da0fa91bf920b79ab05ae97bfabecc4f4 ]
+[ Upstream commit d78dfefcde9d311284434560d69c0478c55a657e ]
 
-For devices that support the 0x0003 feature (Device Information) version 4,
-set the serial based on the output of that feature, rather than relying
-on the usbhid code setting the USB serial.
+With below case, it can mount multi-device image w/ rw option, however
+one of secondary device is set as ro, later update will cause panic, so
+let's introduce f2fs_dev_is_readonly(), and check multi-devices rw status
+in f2fs_remount() w/ it in order to avoid such inconsistent mount status.
 
-This should allow the serial when connected through USB to (nearly)
-match the one when connected through a unifying receiver.
+mkfs.f2fs -c /dev/zram1 /dev/zram0 -f
+blockdev --setro /dev/zram1
+mount -t f2fs dev/zram0 /mnt/f2fs
+mount: /mnt/f2fs: WARNING: source write-protected, mounted read-only.
+mount -t f2fs -o remount,rw mnt/f2fs
+dd if=/dev/zero  of=/mnt/f2fs/file bs=1M count=8192
 
-For example, on the serials on a G903 wired/wireless mouse:
-- Unifying: 4067-e8-ce-cd-45
-- USB before patch: 017C385C3837
-- USB after patch: c086-e8-ce-cd-45
+kernel BUG at fs/f2fs/inline.c:258!
+RIP: 0010:f2fs_write_inline_data+0x23e/0x2d0 [f2fs]
+Call Trace:
+  f2fs_write_single_data_page+0x26b/0x9f0 [f2fs]
+  f2fs_write_cache_pages+0x389/0xa60 [f2fs]
+  __f2fs_write_data_pages+0x26b/0x2d0 [f2fs]
+  f2fs_write_data_pages+0x2e/0x40 [f2fs]
+  do_writepages+0xd3/0x1b0
+  __writeback_single_inode+0x5b/0x420
+  writeback_sb_inodes+0x236/0x5a0
+  __writeback_inodes_wb+0x56/0xf0
+  wb_writeback+0x2a3/0x490
+  wb_do_writeback+0x2b2/0x330
+  wb_workfn+0x6a/0x260
+  process_one_work+0x270/0x5e0
+  worker_thread+0x52/0x3e0
+  kthread+0xf4/0x120
+  ret_from_fork+0x29/0x50
 
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Link: https://lore.kernel.org/r/20230302130117.3975-1-hadess@hadess.net
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c | 51 ++++++++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+ fs/f2fs/f2fs.h  | 5 +++++
+ fs/f2fs/super.c | 2 +-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index 5fc88a0632978..66380876937f6 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -947,6 +947,55 @@ static int hidpp_root_get_protocol_version(struct hidpp_device *hidpp)
- 	return 0;
+diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
+index d6f9d6e0f13b9..47eff365f536c 100644
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -4427,6 +4427,11 @@ static inline bool f2fs_hw_is_readonly(struct f2fs_sb_info *sbi)
+ 	return false;
  }
  
-+/* -------------------------------------------------------------------------- */
-+/* 0x0003: Device Information                                                 */
-+/* -------------------------------------------------------------------------- */
-+
-+#define HIDPP_PAGE_DEVICE_INFORMATION			0x0003
-+
-+#define CMD_GET_DEVICE_INFO				0x00
-+
-+static int hidpp_get_serial(struct hidpp_device *hidpp, u32 *serial)
++static inline bool f2fs_dev_is_readonly(struct f2fs_sb_info *sbi)
 +{
-+	struct hidpp_report response;
-+	u8 feature_type;
-+	u8 feature_index;
-+	int ret;
-+
-+	ret = hidpp_root_get_feature(hidpp, HIDPP_PAGE_DEVICE_INFORMATION,
-+				     &feature_index,
-+				     &feature_type);
-+	if (ret)
-+		return ret;
-+
-+	ret = hidpp_send_fap_command_sync(hidpp, feature_index,
-+					  CMD_GET_DEVICE_INFO,
-+					  NULL, 0, &response);
-+	if (ret)
-+		return ret;
-+
-+	/* See hidpp_unifying_get_serial() */
-+	*serial = *((u32 *)&response.rap.params[1]);
-+	return 0;
++	return f2fs_sb_has_readonly(sbi) || f2fs_hw_is_readonly(sbi);
 +}
 +
-+static int hidpp_serial_init(struct hidpp_device *hidpp)
-+{
-+	struct hid_device *hdev = hidpp->hid_dev;
-+	u32 serial;
-+	int ret;
-+
-+	ret = hidpp_get_serial(hidpp, &serial);
-+	if (ret)
-+		return ret;
-+
-+	snprintf(hdev->uniq, sizeof(hdev->uniq), "%04x-%4phD",
-+		 hdev->product, &serial);
-+	dbg_hid("HID++ DeviceInformation: Got serial: %s\n", hdev->uniq);
-+
-+	return 0;
-+}
-+
- /* -------------------------------------------------------------------------- */
- /* 0x0005: GetDeviceNameType                                                  */
- /* -------------------------------------------------------------------------- */
-@@ -4210,6 +4259,8 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
+ static inline bool f2fs_lfs_mode(struct f2fs_sb_info *sbi)
+ {
+ 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_LFS;
+diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
+index 5c1c3a84501fe..333ea095c8c50 100644
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -2274,7 +2274,7 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
+ 	if (f2fs_readonly(sb) && (*flags & SB_RDONLY))
+ 		goto skip;
  
- 	if (hidpp->quirks & HIDPP_QUIRK_UNIFYING)
- 		hidpp_unifying_init(hidpp);
-+	else if (hid_is_usb(hidpp->hid_dev))
-+		hidpp_serial_init(hidpp);
- 
- 	connected = hidpp_root_get_protocol_version(hidpp) == 0;
- 	atomic_set(&hidpp->connected, connected);
+-	if (f2fs_sb_has_readonly(sbi) && !(*flags & SB_RDONLY)) {
++	if (f2fs_dev_is_readonly(sbi) && !(*flags & SB_RDONLY)) {
+ 		err = -EROFS;
+ 		goto restore_opts;
+ 	}
 -- 
 2.39.2
 
