@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B5B171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F03F2C433D2;
-	Mon, 22 May 2023 19:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76034171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1EA5C433EF;
+	Mon, 22 May 2023 19:24:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783450;
-	bh=HLRyMgawJujuYVpZlrvvskARUUQdZ/XGpjg2b3W8cVk=;
+	s=korg; t=1684783453;
+	bh=mIB3l9BdA6uhO4z5EAAkj6sa6ef/c0CC3vMn4OhXiD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=olvU8Dx8f+Lr4akzajrNrUtde9xCS6JiaLfxS0sNqpcXpTc8olzoEiV9lluTTb6qz
-	 C4BwYlkUw2mfz+T6/3LDlTZkN+B3/Vy8OLmz+TT9ka6/MEwnClULoC/jp5CmPTFTKV
-	 RA910NgyBf7pfaoLmZVDL3LS8mXythX4vM1nsOJU=
+	b=B9fhkXGUM89/aHj9kqAP1jWK2jXUiTHP2qoKg5Cbcv4mXG/3oy4vYgJYAlrP0CD1O
+	 kMSZAmLOGaNVvDwHjpmme0hfZbeeiJMA671Sa3hEUe8jOy1v/K0RDEMfjhgHrK1DUe
+	 T/79oBetDNtv1zh89RQT7GtQeA5iAxq5UwzKfJBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Mark Brown <broonie@kernel.org>,
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/292] regmap: cache: Return error in cache sync operations for REGCACHE_NONE
-Date: Mon, 22 May 2023 20:06:44 +0100
-Message-Id: <20230522190407.087509139@linuxfoundation.org>
+Subject: [PATCH 6.1 048/292] remoteproc: imx_dsp_rproc: Add custom memory copy implementation for i.MX DSP Cores
+Date: Mon, 22 May 2023 20:06:45 +0100
+Message-Id: <20230522190407.114098464@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,46 +35,230 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Iuliana Prodan <iuliana.prodan@nxp.com>
 
-[ Upstream commit fd883d79e4dcd2417c2b80756f22a2ff03b0f6e0 ]
+[ Upstream commit 408ec1ff0caa340c57eecf4cbd14ef0132036a50 ]
 
-There is no sense in doing a cache sync on REGCACHE_NONE regmaps.
-Instead of panicking the kernel due to missing cache_ops, return an error
-to client driver.
+The IRAM is part of the HiFi DSP.
+According to hardware specification only 32-bits write are allowed
+otherwise we get a Kernel panic.
 
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20230313071812.13577-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Therefore add a custom memory copy and memset functions to deal with
+the above restriction.
+
+Signed-off-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Link: https://lore.kernel.org/r/20230221170356.27923-1-iuliana.prodan@oss.nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regcache.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/remoteproc/imx_dsp_rproc.c | 187 ++++++++++++++++++++++++++++-
+ 1 file changed, 186 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regcache.c b/drivers/base/regmap/regcache.c
-index 362e043e26d86..8031007b4887d 100644
---- a/drivers/base/regmap/regcache.c
-+++ b/drivers/base/regmap/regcache.c
-@@ -349,6 +349,9 @@ int regcache_sync(struct regmap *map)
- 	const char *name;
- 	bool bypass;
+diff --git a/drivers/remoteproc/imx_dsp_rproc.c b/drivers/remoteproc/imx_dsp_rproc.c
+index 506ec9565716b..e8e23f6b85563 100644
+--- a/drivers/remoteproc/imx_dsp_rproc.c
++++ b/drivers/remoteproc/imx_dsp_rproc.c
+@@ -721,6 +721,191 @@ static void imx_dsp_rproc_kick(struct rproc *rproc, int vqid)
+ 		dev_err(dev, "%s: failed (%d, err:%d)\n", __func__, vqid, err);
+ }
  
-+	if (WARN_ON(map->cache_type == REGCACHE_NONE))
++/*
++ * Custom memory copy implementation for i.MX DSP Cores
++ *
++ * The IRAM is part of the HiFi DSP.
++ * According to hw specs only 32-bits writes are allowed.
++ */
++static int imx_dsp_rproc_memcpy(void *dest, const void *src, size_t size)
++{
++	const u8 *src_byte = src;
++	const u32 *source = src;
++	u32 affected_mask;
++	u32 *dst = dest;
++	int i, q, r;
++	u32 tmp;
++
++	/* destination must be 32bit aligned */
++	if (!IS_ALIGNED((uintptr_t)dest, 4))
 +		return -EINVAL;
 +
- 	BUG_ON(!map->cache_ops);
- 
- 	map->lock(map->lock_arg);
-@@ -418,6 +421,9 @@ int regcache_sync_region(struct regmap *map, unsigned int min,
- 	const char *name;
- 	bool bypass;
- 
-+	if (WARN_ON(map->cache_type == REGCACHE_NONE))
++	q = size / 4;
++	r = size % 4;
++
++	/* copy data in units of 32 bits at a time */
++	for (i = 0; i < q; i++)
++		writel(source[i], &dst[i]);
++
++	if (r) {
++		affected_mask = GENMASK(8 * r, 0);
++
++		/*
++		 * first read the 32bit data of dest, then change affected
++		 * bytes, and write back to dest.
++		 * For unaffected bytes, it should not be changed
++		 */
++		tmp = readl(dest + q * 4);
++		tmp &= ~affected_mask;
++
++		/* avoid reading after end of source */
++		for (i = 0; i < r; i++)
++			tmp |= (src_byte[q * 4 + i] << (8 * i));
++
++		writel(tmp, dest + q * 4);
++	}
++
++	return 0;
++}
++
++/*
++ * Custom memset implementation for i.MX DSP Cores
++ *
++ * The IRAM is part of the HiFi DSP.
++ * According to hw specs only 32-bits writes are allowed.
++ */
++static int imx_dsp_rproc_memset(void *addr, u8 value, size_t size)
++{
++	u32 tmp_val = value;
++	u32 *tmp_dst = addr;
++	u32 affected_mask;
++	int q, r;
++	u32 tmp;
++
++	/* destination must be 32bit aligned */
++	if (!IS_ALIGNED((uintptr_t)addr, 4))
 +		return -EINVAL;
 +
- 	BUG_ON(!map->cache_ops);
- 
- 	map->lock(map->lock_arg);
++	tmp_val |= tmp_val << 8;
++	tmp_val |= tmp_val << 16;
++
++	q = size / 4;
++	r = size % 4;
++
++	while (q--)
++		writel(tmp_val, tmp_dst++);
++
++	if (r) {
++		affected_mask = GENMASK(8 * r, 0);
++
++		/*
++		 * first read the 32bit data of addr, then change affected
++		 * bytes, and write back to addr.
++		 * For unaffected bytes, it should not be changed
++		 */
++		tmp = readl(tmp_dst);
++		tmp &= ~affected_mask;
++
++		tmp |= (tmp_val & affected_mask);
++		writel(tmp, tmp_dst);
++	}
++
++	return 0;
++}
++
++/*
++ * imx_dsp_rproc_elf_load_segments() - load firmware segments to memory
++ * @rproc: remote processor which will be booted using these fw segments
++ * @fw: the ELF firmware image
++ *
++ * This function loads the firmware segments to memory, where the remote
++ * processor expects them.
++ *
++ * Return: 0 on success and an appropriate error code otherwise
++ */
++static int imx_dsp_rproc_elf_load_segments(struct rproc *rproc, const struct firmware *fw)
++{
++	struct device *dev = &rproc->dev;
++	const void *ehdr, *phdr;
++	int i, ret = 0;
++	u16 phnum;
++	const u8 *elf_data = fw->data;
++	u8 class = fw_elf_get_class(fw);
++	u32 elf_phdr_get_size = elf_size_of_phdr(class);
++
++	ehdr = elf_data;
++	phnum = elf_hdr_get_e_phnum(class, ehdr);
++	phdr = elf_data + elf_hdr_get_e_phoff(class, ehdr);
++
++	/* go through the available ELF segments */
++	for (i = 0; i < phnum; i++, phdr += elf_phdr_get_size) {
++		u64 da = elf_phdr_get_p_paddr(class, phdr);
++		u64 memsz = elf_phdr_get_p_memsz(class, phdr);
++		u64 filesz = elf_phdr_get_p_filesz(class, phdr);
++		u64 offset = elf_phdr_get_p_offset(class, phdr);
++		u32 type = elf_phdr_get_p_type(class, phdr);
++		void *ptr;
++
++		if (type != PT_LOAD || !memsz)
++			continue;
++
++		dev_dbg(dev, "phdr: type %d da 0x%llx memsz 0x%llx filesz 0x%llx\n",
++			type, da, memsz, filesz);
++
++		if (filesz > memsz) {
++			dev_err(dev, "bad phdr filesz 0x%llx memsz 0x%llx\n",
++				filesz, memsz);
++			ret = -EINVAL;
++			break;
++		}
++
++		if (offset + filesz > fw->size) {
++			dev_err(dev, "truncated fw: need 0x%llx avail 0x%zx\n",
++				offset + filesz, fw->size);
++			ret = -EINVAL;
++			break;
++		}
++
++		if (!rproc_u64_fit_in_size_t(memsz)) {
++			dev_err(dev, "size (%llx) does not fit in size_t type\n",
++				memsz);
++			ret = -EOVERFLOW;
++			break;
++		}
++
++		/* grab the kernel address for this device address */
++		ptr = rproc_da_to_va(rproc, da, memsz, NULL);
++		if (!ptr) {
++			dev_err(dev, "bad phdr da 0x%llx mem 0x%llx\n", da,
++				memsz);
++			ret = -EINVAL;
++			break;
++		}
++
++		/* put the segment where the remote processor expects it */
++		if (filesz) {
++			ret = imx_dsp_rproc_memcpy(ptr, elf_data + offset, filesz);
++			if (ret) {
++				dev_err(dev, "memory copy failed for da 0x%llx memsz 0x%llx\n",
++					da, memsz);
++				break;
++			}
++		}
++
++		/* zero out remaining memory for this segment */
++		if (memsz > filesz) {
++			ret = imx_dsp_rproc_memset(ptr + filesz, 0, memsz - filesz);
++			if (ret) {
++				dev_err(dev, "memset failed for da 0x%llx memsz 0x%llx\n",
++					da, memsz);
++				break;
++			}
++		}
++	}
++
++	return ret;
++}
++
+ static int imx_dsp_rproc_parse_fw(struct rproc *rproc, const struct firmware *fw)
+ {
+ 	if (rproc_elf_load_rsc_table(rproc, fw))
+@@ -735,7 +920,7 @@ static const struct rproc_ops imx_dsp_rproc_ops = {
+ 	.start		= imx_dsp_rproc_start,
+ 	.stop		= imx_dsp_rproc_stop,
+ 	.kick		= imx_dsp_rproc_kick,
+-	.load		= rproc_elf_load_segments,
++	.load		= imx_dsp_rproc_elf_load_segments,
+ 	.parse_fw	= imx_dsp_rproc_parse_fw,
+ 	.sanity_check	= rproc_elf_sanity_check,
+ 	.get_boot_addr	= rproc_elf_get_boot_addr,
 -- 
 2.39.2
 
