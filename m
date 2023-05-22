@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AA6171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:22:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4454EC433D2;
-	Mon, 22 May 2023 19:22:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CE1171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:22:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F010C433D2;
+	Mon, 22 May 2023 19:22:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783326;
-	bh=SziM+m8/qxWT77h6bP7BQ9YWaCksXg1puRGW77keGcg=;
+	s=korg; t=1684783329;
+	bh=gAUBsWyO0p7jLkHmMBecTnVlqWSf7pDnb+5mlPoaquc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qD7XuB4dsh7EuQKErnA0i2C6SvK9xKFhiX5qgJwp1FBcEJWDbTek238jCZa4G5YjP
-	 Xurpg1nss5Dal1XB8P/nvZFMy7BTkspX/yasC0U07E5rFQwHFH2OfzUrwCe69gtl+U
-	 N8qhJorghPdmW2U6v5f/jX6zgGuPQ1j2xdB6TUEc=
+	b=yVCP9g+Z3iXrGB1e44Iy80PUcGpu8nBvk8Z6xLm+WTQEnASQUb44xjyoi1uzVE68X
+	 cX6dangdccsyl1C3NjfnexD7k92+lF/4sl3CMMIOfgE9T0UesI4H3EIO3mOgh+Jqyq
+	 CgLGDL9VMmZFhPCnGApOjCJFOSWpeldBGa1nyl5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 5.15 177/203] can: kvaser_pciefd: Set CAN_STATE_STOPPED in kvaser_pciefd_stop()
-Date: Mon, 22 May 2023 20:10:01 +0100
-Message-Id: <20230522190359.900387367@linuxfoundation.org>
+	Sui Jingfeng <suijingfeng@loongson.cn>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/292] drm/fbdev-generic: prohibit potential out-of-bounds access
+Date: Mon, 22 May 2023 20:05:58 +0100
+Message-Id: <20230522190405.920296946@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
-References: <20230522190354.935300867@linuxfoundation.org>
+In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
+References: <20230522190405.880733338@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,33 +38,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Sui Jingfeng <suijingfeng@loongson.cn>
 
-commit aed0e6ca7dbb8fbea9bc69c9ac663d5533c8c5d8 upstream.
+[ Upstream commit c8687694bb1f5c48134f152f8c5c2e53483eb99d ]
 
-Set can.state to CAN_STATE_STOPPED in kvaser_pciefd_stop().
-Without this fix, wrong CAN state was repported after the interface was
-brought down.
+The fbdev test of IGT may write after EOF, which lead to out-of-bound
+access for drm drivers with fbdev-generic. For example, run fbdev test
+on a x86+ast2400 platform, with 1680x1050 resolution, will cause the
+linux kernel hang with the following call trace:
 
-Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/r/20230516134318.104279-2-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  Oops: 0000 [#1] PREEMPT SMP PTI
+  [IGT] fbdev: starting subtest eof
+  Workqueue: events drm_fb_helper_damage_work [drm_kms_helper]
+  [IGT] fbdev: starting subtest nullptr
+
+  RIP: 0010:memcpy_erms+0xa/0x20
+  RSP: 0018:ffffa17d40167d98 EFLAGS: 00010246
+  RAX: ffffa17d4eb7fa80 RBX: ffffa17d40e0aa80 RCX: 00000000000014c0
+  RDX: 0000000000001a40 RSI: ffffa17d40e0b000 RDI: ffffa17d4eb80000
+  RBP: ffffa17d40167e20 R08: 0000000000000000 R09: ffff89522ecff8c0
+  R10: ffffa17d4e4c5000 R11: 0000000000000000 R12: ffffa17d4eb7fa80
+  R13: 0000000000001a40 R14: 000000000000041a R15: ffffa17d40167e30
+  FS:  0000000000000000(0000) GS:ffff895257380000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: ffffa17d40e0b000 CR3: 00000001eaeca006 CR4: 00000000001706e0
+  Call Trace:
+   <TASK>
+   ? drm_fbdev_generic_helper_fb_dirty+0x207/0x330 [drm_kms_helper]
+   drm_fb_helper_damage_work+0x8f/0x170 [drm_kms_helper]
+   process_one_work+0x21f/0x430
+   worker_thread+0x4e/0x3c0
+   ? __pfx_worker_thread+0x10/0x10
+   kthread+0xf4/0x120
+   ? __pfx_kthread+0x10/0x10
+   ret_from_fork+0x2c/0x50
+   </TASK>
+  CR2: ffffa17d40e0b000
+  ---[ end trace 0000000000000000 ]---
+
+The is because damage rectangles computed by
+drm_fb_helper_memory_range_to_clip() function is not guaranteed to be
+bound in the screen's active display area. Possible reasons are:
+
+1) Buffers are allocated in the granularity of page size, for mmap system
+   call support. The shadow screen buffer consumed by fbdev emulation may
+   also choosed be page size aligned.
+
+2) The DIV_ROUND_UP() used in drm_fb_helper_memory_range_to_clip()
+   will introduce off-by-one error.
+
+For example, on a 16KB page size system, in order to store a 1920x1080
+XRGB framebuffer, we need allocate 507 pages. Unfortunately, the size
+1920*1080*4 can not be divided exactly by 16KB.
+
+ 1920 * 1080 * 4 = 8294400 bytes
+ 506 * 16 * 1024 = 8290304 bytes
+ 507 * 16 * 1024 = 8306688 bytes
+
+ line_length = 1920*4 = 7680 bytes
+
+ 507 * 16 * 1024 / 7680 = 1081.6
+
+ off / line_length = 507 * 16 * 1024 / 7680 = 1081
+ DIV_ROUND_UP(507 * 16 * 1024, 7680) will yeild 1082
+
+memcpy_toio() typically issue the copy line by line, when copy the last
+line, out-of-bound access will be happen. Because:
+
+ 1082 * line_length = 1082 * 7680 = 8309760, and 8309760 > 8306688
+
+Note that userspace may still write to the invisiable area if a larger
+buffer than width x stride is exposed. But it is not a big issue as
+long as there still have memory resolve the access if not drafting so
+far.
+
+ - Also limit the y1 (Daniel)
+ - keep fix patch it to minimal (Daniel)
+ - screen_size is page size aligned because of it need mmap (Thomas)
+ - Adding fixes tag (Thomas)
+
+Signed-off-by: Sui Jingfeng <suijingfeng@loongson.cn>
+Fixes: aa15c677cc34 ("drm/fb-helper: Fix vertical damage clipping")
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/dri-devel/ad44df29-3241-0d9e-e708-b0338bf3c623@189.cn/
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230420030500.1578756-1-suijingfeng@loongson.cn
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/kvaser_pciefd.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/drm_fb_helper.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/drivers/net/can/kvaser_pciefd.c
-+++ b/drivers/net/can/kvaser_pciefd.c
-@@ -721,6 +721,7 @@ static int kvaser_pciefd_stop(struct net
- 		iowrite32(0, can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
- 		del_timer(&can->bec_poll_timer);
- 	}
-+	can->can.state = CAN_STATE_STOPPED;
- 	close_candev(netdev);
+diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+index 06cd2f8c27734..76e46713b2f0c 100644
+--- a/drivers/gpu/drm/drm_fb_helper.c
++++ b/drivers/gpu/drm/drm_fb_helper.c
+@@ -708,19 +708,27 @@ static void drm_fb_helper_damage(struct fb_info *info, u32 x, u32 y,
+ static void drm_fb_helper_memory_range_to_clip(struct fb_info *info, off_t off, size_t len,
+ 					       struct drm_rect *clip)
+ {
++	u32 line_length = info->fix.line_length;
++	u32 fb_height = info->var.yres;
+ 	off_t end = off + len;
+ 	u32 x1 = 0;
+-	u32 y1 = off / info->fix.line_length;
++	u32 y1 = off / line_length;
+ 	u32 x2 = info->var.xres;
+-	u32 y2 = DIV_ROUND_UP(end, info->fix.line_length);
++	u32 y2 = DIV_ROUND_UP(end, line_length);
++
++	/* Don't allow any of them beyond the bottom bound of display area */
++	if (y1 > fb_height)
++		y1 = fb_height;
++	if (y2 > fb_height)
++		y2 = fb_height;
  
- 	return ret;
+ 	if ((y2 - y1) == 1) {
+ 		/*
+ 		 * We've only written to a single scanline. Try to reduce
+ 		 * the number of horizontal pixels that need an update.
+ 		 */
+-		off_t bit_off = (off % info->fix.line_length) * 8;
+-		off_t bit_end = (end % info->fix.line_length) * 8;
++		off_t bit_off = (off % line_length) * 8;
++		off_t bit_end = (end % line_length) * 8;
+ 
+ 		x1 = bit_off / info->var.bits_per_pixel;
+ 		x2 = DIV_ROUND_UP(bit_end, info->var.bits_per_pixel);
+-- 
+2.39.2
+
 
 
