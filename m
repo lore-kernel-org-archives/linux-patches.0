@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926B9171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:40:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC0EC433D2;
-	Mon, 22 May 2023 19:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D987C171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:40:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F214C433EF;
+	Mon, 22 May 2023 19:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784448;
-	bh=cH0hz9aY+btRJsDOHyfCUgK9Fx/cvAgA30i54sUjn0U=;
+	s=korg; t=1684784451;
+	bh=IjRiUvLYQP+9kc1hC+PvjP2DMMMkl/v+LroeMGs/n30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CrTLDAcQb56/34oNVaU8YMOx969lFvTh+ncQpGiKyBCsQo9MSeFLhmfIEwgeeKpcU
-	 yeTC0lyRUSO2pwUQ05+uJADZdInBM9OPk80uFZNDXHr38xs9K39eRh7wrW/snPWfGm
-	 7vOebki5pZYQYY/nxtjnQ86h93bsfhlErJyTdLQs=
+	b=WwtNfqTUu4Vi6R1kxrqAtWELYLQNWDq8WOkaISMqfSABjntW94IK/CG+29DX8GMgY
+	 T+DG1ojqrG5HeIoFUq/RFedb6GDKtOu+XKTJLYLtGJu9YIqR0VQGuXzFefJGS4+NCK
+	 BPtMU3WuUHlO2v2eqNdVbh2dygMkNkWQ2Jm+y3QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Feng Jiang <jiangfeng@kylinos.cn>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Aleksandr Mezin <mezin.alexander@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 086/364] platform/x86/amd: pmc: Fix memory leak in amd_pmc_stb_debugfs_open_v2()
-Date: Mon, 22 May 2023 20:06:31 +0100
-Message-Id: <20230522190414.909862496@linuxfoundation.org>
+Subject: [PATCH 6.3 087/364] hwmon: (nzxt-smart2) add another USB ID
+Date: Mon, 22 May 2023 20:06:32 +0100
+Message-Id: <20230522190414.932960962@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,35 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Feng Jiang <jiangfeng@kylinos.cn>
+From: Aleksandr Mezin <mezin.alexander@gmail.com>
 
-[ Upstream commit f6e7ac4c35a28aef0be93b32c533ae678ad0b9e7 ]
+[ Upstream commit 4a148e9b1ee04e608263fa9536a96214d5561220 ]
 
-Function amd_pmc_stb_debugfs_open_v2() may be called when the STB
-debug mechanism enabled.
+This seems to be a new revision of the device. RGB controls have changed,
+but this driver doesn't touch them anyway.
 
-When amd_pmc_send_cmd() fails, the 'buf' needs to be released.
+Fan speed control reported to be working with existing userspace (hidraw)
+software, so I assume it's compatible. Fan channel count is the same.
 
-Signed-off-by: Feng Jiang <jiangfeng@kylinos.cn>
-Link: https://lore.kernel.org/r/20230412093734.1126410-1-jiangfeng@kylinos.cn
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Recently added (0x1e71, 0x2019) seems to be the same device.
+
+Discovered in liquidctl project:
+
+https://github.com/liquidctl/liquidctl/issues/541
+
+Signed-off-by: Aleksandr Mezin <mezin.alexander@gmail.com>
+Link: https://lore.kernel.org/r/20230219105924.333007-1-mezin.alexander@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/amd/pmc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/hwmon/nzxt-smart2.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
-index 69f305496643f..73dedc9950144 100644
---- a/drivers/platform/x86/amd/pmc.c
-+++ b/drivers/platform/x86/amd/pmc.c
-@@ -265,6 +265,7 @@ static int amd_pmc_stb_debugfs_open_v2(struct inode *inode, struct file *filp)
- 	dev->msg_port = 0;
- 	if (ret) {
- 		dev_err(dev->dev, "error: S2D_NUM_SAMPLES not supported : %d\n", ret);
-+		kfree(buf);
- 		return ret;
- 	}
+diff --git a/drivers/hwmon/nzxt-smart2.c b/drivers/hwmon/nzxt-smart2.c
+index 2b93ba89610ae..a8e72d8fd0605 100644
+--- a/drivers/hwmon/nzxt-smart2.c
++++ b/drivers/hwmon/nzxt-smart2.c
+@@ -791,7 +791,8 @@ static const struct hid_device_id nzxt_smart2_hid_id_table[] = {
+ 	{ HID_USB_DEVICE(0x1e71, 0x2009) }, /* NZXT RGB & Fan Controller */
+ 	{ HID_USB_DEVICE(0x1e71, 0x200e) }, /* NZXT RGB & Fan Controller */
+ 	{ HID_USB_DEVICE(0x1e71, 0x2010) }, /* NZXT RGB & Fan Controller */
+-	{ HID_USB_DEVICE(0x1e71, 0x2019) }, /* NZXT RGB & Fan Controller */
++	{ HID_USB_DEVICE(0x1e71, 0x2011) }, /* NZXT RGB & Fan Controller (6 RGB) */
++	{ HID_USB_DEVICE(0x1e71, 0x2019) }, /* NZXT RGB & Fan Controller (6 RGB) */
+ 	{},
+ };
  
 -- 
 2.39.2
