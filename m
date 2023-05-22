@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF748171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:40:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B33EC4339B;
-	Mon, 22 May 2023 19:40:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95B1D171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25093C433EF;
+	Mon, 22 May 2023 19:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784457;
-	bh=tU2yWWf+fXit+lYbclQs/l+cPlES+3C5m/4vEUaCOCA=;
+	s=korg; t=1684784460;
+	bh=2tRrkC9JHVtFCcO4a225R9L9gwQ5SJUE2MMF9SOaU48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RG/qM3oa6XJIhzOp0QhW/dKKN9WppFPau97Sbge6Qtnlu57rlvYs5c3HcoJHVl886
-	 11a+YJG6eIhbMM/FsjZuGFHGosOeUZdfoTEllhgryH7fpARRzIPzxg4K+yDNGKB08U
-	 31t/79FLVvItW4sj0ctxAN8ND679Nt9hUu5Y+7NQ=
+	b=HR0zvqOZBM8bL1KbNrPLtbyYwWOaLmxanc4RqUFeRozv8tav6XAdp+TLM/phaB0UR
+	 Ds8G9yUgH4kvgKMPXwxx33+UeHZzVEHImKrKIaplCVRq6qhz5hvDjHCGDDV9qwQVgM
+	 0IRiR548Tbi05JWrzti05mt9malDuKpCadeQsGAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ramya Gnanasekar <quic_rgnanase@quicinc.com>,
 	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 089/364] wifi: ath12k: Handle lock during peer_id find
-Date: Mon, 22 May 2023 20:06:34 +0100
-Message-Id: <20230522190414.979689730@linuxfoundation.org>
+Subject: [PATCH 6.3 090/364] wifi: ath12k: PCI ops for wakeup/release MHI
+Date: Mon, 22 May 2023 20:06:35 +0100
+Message-Id: <20230522190415.003163055@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -37,77 +37,194 @@ Content-Transfer-Encoding: 8bit
 
 From: Ramya Gnanasekar <quic_rgnanase@quicinc.com>
 
-[ Upstream commit 95a389e2ff3212d866cc51c77d682d2934074eb8 ]
+[ Upstream commit 80e396586d0a94c42015dd9472176d89a3b0e4ca ]
 
-ath12k_peer_find_by_id() requires that the caller hold the
-ab->base_lock. Currently the WBM error path does not hold
-the lock and calling that function, leads to the
-following lockdep_assert()in QCN9274:
+Wakeup/release MHI is not needed before pci_read/write for QCN9274.
+Since wakeup & release MHI is enabled for all QCN9274 and
+WCN7850, below MHI assert is seen in QCN9274
 
-[105162.160893] ------------[ cut here ]------------
-[105162.160916] WARNING: CPU: 3 PID: 0 at drivers/net/wireless/ath/ath12k/peer.c:71 ath12k_peer_find_by_id+0x52/0x60 [ath12k]
-[105162.160933] Modules linked in: ath12k(O) qrtr_mhi qrtr mac80211 cfg80211 mhi qmi_helpers libarc4 nvme nvme_core [last unloaded: ath12k(O)]
-[105162.160967] CPU: 3 PID: 0 Comm: swapper/3 Tainted: G        W  O       6.1.0-rc2+ #3
-[105162.160972] Hardware name: Intel(R) Client Systems NUC8i7HVK/NUC8i7HVB, BIOS HNKBLi70.86A.0056.2019.0506.1527 05/06/2019
-[105162.160977] RIP: 0010:ath12k_peer_find_by_id+0x52/0x60 [ath12k]
-[105162.160990] Code: 07 eb 0f 39 68 24 74 0a 48 8b 00 48 39 f8 75 f3 31 c0 5b 5d c3 48 8d bf b0 f2 00 00 be ff ff ff ff e8 22 20 c4 e2 85 c0 75 bf <0f> 0b eb bb 66 2e 0f 1f 84 00 00 00 00 00 41 54 4c 8d a7 98 f2 00
-[105162.160996] RSP: 0018:ffffa223001acc60 EFLAGS: 00010246
-[105162.161003] RAX: 0000000000000000 RBX: ffff9f0573940000 RCX: 0000000000000000
-[105162.161008] RDX: 0000000000000001 RSI: ffffffffa3951c8e RDI: ffffffffa39a96d7
-[105162.161013] RBP: 000000000000000a R08: 0000000000000000 R09: 0000000000000000
-[105162.161017] R10: ffffa223001acb40 R11: ffffffffa3d57c60 R12: ffff9f057394f2e0
-[105162.161022] R13: ffff9f0573940000 R14: ffff9f04ecd659c0 R15: ffff9f04d5a9b040
-[105162.161026] FS:  0000000000000000(0000) GS:ffff9f0575600000(0000) knlGS:0000000000000000
-[105162.161031] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[105162.161036] CR2: 00001d5c8277a008 CR3: 00000001e6224006 CR4: 00000000003706e0
-[105162.161041] Call Trace:
-[105162.161046]  <IRQ>
-[105162.161051]  ath12k_dp_rx_process_wbm_err+0x6da/0xaf0 [ath12k]
-[105162.161072]  ? ath12k_dp_rx_process_err+0x80e/0x15a0 [ath12k]
-[105162.161084]  ? __lock_acquire+0x4ca/0x1a60
-[105162.161104]  ath12k_dp_service_srng+0x263/0x310 [ath12k]
-[105162.161120]  ath12k_pci_ext_grp_napi_poll+0x1c/0x70 [ath12k]
-[105162.161133]  __napi_poll+0x22/0x260
-[105162.161141]  net_rx_action+0x2f8/0x380
-[105162.161153]  __do_softirq+0xd0/0x4c9
-[105162.161162]  irq_exit_rcu+0x88/0xe0
-[105162.161169]  common_interrupt+0xa5/0xc0
-[105162.161174]  </IRQ>
-[105162.161179]  <TASK>
-[105162.161184]  asm_common_interrupt+0x22/0x40
+[  784.906613] BUG: sleeping function called from invalid context at drivers/bus/mhi/host/pm.c:989
+[  784.906633] in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 0, name: swapper/3
+[  784.906637] preempt_count: 503, expected: 0
+[  784.906641] RCU nest depth: 0, expected: 0
+[  784.906644] 2 locks held by swapper/3/0:
+[  784.906646]  #0: ffff8ed348e429e0 (&ab->ce.ce_lock){+.-.}-{2:2}, at: ath12k_ce_recv_process_cb+0xb3/0x2f0 [ath12k]
+[  784.906664]  #1: ffff8ed348e491f0 (&srng->lock_key#3){+.-.}-{2:2}, at: ath12k_ce_recv_process_cb+0xfb/0x2f0 [ath12k]
+[  784.906678] Preemption disabled at:
+[  784.906680] [<0000000000000000>] 0x0
+[  784.906686] CPU: 3 PID: 0 Comm: swapper/3 Tainted: G        W  O       6.1.0-rc2+ #3
+[  784.906688] Hardware name: Intel(R) Client Systems NUC8i7HVK/NUC8i7HVB, BIOS HNKBLi70.86A.0056.2019.0506.1527 05/06/2019
+[  784.906690] Call Trace:
+[  784.906691]  <IRQ>
+[  784.906693]  dump_stack_lvl+0x56/0x7b
+[  784.906698]  __might_resched+0x21c/0x270
+[  784.906704]  __mhi_device_get_sync+0x7d/0x1c0 [mhi]
+[  784.906714]  mhi_device_get_sync+0xd/0x20 [mhi]
+[  784.906719]  ath12k_pci_write32+0x75/0x170 [ath12k]
+[  784.906729]  ath12k_hal_srng_access_end+0x55/0xc0 [ath12k]
+[  784.906737]  ath12k_ce_recv_process_cb+0x1f3/0x2f0 [ath12k]
+[  784.906776]  ? ath12k_pci_ce_tasklet+0x11/0x30 [ath12k]
+[  784.906788]  ath12k_pci_ce_tasklet+0x11/0x30 [ath12k]
+[  784.906813]  tasklet_action_common.isra.18+0xb7/0xe0
+[  784.906820]  __do_softirq+0xd0/0x4c9
+[  784.906826]  irq_exit_rcu+0x88/0xe0
+[  784.906828]  common_interrupt+0xa5/0xc0
+[  784.906831]  </IRQ>
+[  784.906832]  <TASK>
 
-Handle spin lock/unlock in WBM error path to hold the necessary lock
-expected by ath12k_peer_find_by_id().
+Adding function callbacks for MHI wakeup and release operations.
+QCN9274 does not need wakeup/release, function callbacks are initialized
+to NULL. In case of WCN7850, shadow registers are used to access rings.
+Since, shadow register's offset is less than ACCESS_ALWAYS_OFF,
+mhi_device_get_sync() or mhi_device_put() to wakeup
+and release mhi will not be called during service ring accesses.
 
 Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0-03171-QCAHKSWPL_SILICONZ-1
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0-03427-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.15378.4
 
 Signed-off-by: Ramya Gnanasekar <quic_rgnanase@quicinc.com>
 Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20230122014936.3594-1-quic_rgnanase@quicinc.com
+Link: https://lore.kernel.org/r/20230123095141.5310-1-quic_rgnanase@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/dp_rx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ath/ath12k/pci.c | 47 ++++++++++++++++++++++-----
+ drivers/net/wireless/ath/ath12k/pci.h |  6 ++++
+ 2 files changed, 44 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
-index 83a43ad48c512..de9a4ca66c664 100644
---- a/drivers/net/wireless/ath/ath12k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
-@@ -3494,11 +3494,14 @@ static int ath12k_dp_rx_h_null_q_desc(struct ath12k *ar, struct sk_buff *msdu,
- 	msdu_len = ath12k_dp_rx_h_msdu_len(ab, desc);
- 	peer_id = ath12k_dp_rx_h_peer_id(ab, desc);
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index f523aa15885f6..00b0080dbac38 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -119,6 +119,30 @@ static const char *irq_name[ATH12K_IRQ_NUM_MAX] = {
+ 	"tcl2host-status-ring",
+ };
  
-+	spin_lock(&ab->base_lock);
- 	if (!ath12k_peer_find_by_id(ab, peer_id)) {
-+		spin_unlock(&ab->base_lock);
- 		ath12k_dbg(ab, ATH12K_DBG_DATA, "invalid peer id received in wbm err pkt%d\n",
- 			   peer_id);
- 		return -EINVAL;
++static int ath12k_pci_bus_wake_up(struct ath12k_base *ab)
++{
++	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
++
++	return mhi_device_get_sync(ab_pci->mhi_ctrl->mhi_dev);
++}
++
++static void ath12k_pci_bus_release(struct ath12k_base *ab)
++{
++	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
++
++	mhi_device_put(ab_pci->mhi_ctrl->mhi_dev);
++}
++
++static const struct ath12k_pci_ops ath12k_pci_ops_qcn9274 = {
++	.wakeup = NULL,
++	.release = NULL,
++};
++
++static const struct ath12k_pci_ops ath12k_pci_ops_wcn7850 = {
++	.wakeup = ath12k_pci_bus_wake_up,
++	.release = ath12k_pci_bus_release,
++};
++
+ static void ath12k_pci_select_window(struct ath12k_pci *ab_pci, u32 offset)
+ {
+ 	struct ath12k_base *ab = ab_pci->ab;
+@@ -989,13 +1013,14 @@ u32 ath12k_pci_read32(struct ath12k_base *ab, u32 offset)
+ {
+ 	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
+ 	u32 val, window_start;
++	int ret = 0;
+ 
+ 	/* for offset beyond BAR + 4K - 32, may
+ 	 * need to wakeup MHI to access.
+ 	 */
+ 	if (test_bit(ATH12K_PCI_FLAG_INIT_DONE, &ab_pci->flags) &&
+-	    offset >= ACCESS_ALWAYS_OFF)
+-		mhi_device_get_sync(ab_pci->mhi_ctrl->mhi_dev);
++	    offset >= ACCESS_ALWAYS_OFF && ab_pci->pci_ops->wakeup)
++		ret = ab_pci->pci_ops->wakeup(ab);
+ 
+ 	if (offset < WINDOW_START) {
+ 		val = ioread32(ab->mem + offset);
+@@ -1023,9 +1048,9 @@ u32 ath12k_pci_read32(struct ath12k_base *ab, u32 offset)
  	}
-+	spin_unlock(&ab->base_lock);
  
- 	if (!rxcb->is_frag && ((msdu_len + hal_rx_desc_sz) > DP_RX_BUFFER_SIZE)) {
- 		/* First buffer will be freed by the caller, so deduct it's length */
+ 	if (test_bit(ATH12K_PCI_FLAG_INIT_DONE, &ab_pci->flags) &&
+-	    offset >= ACCESS_ALWAYS_OFF)
+-		mhi_device_put(ab_pci->mhi_ctrl->mhi_dev);
+-
++	    offset >= ACCESS_ALWAYS_OFF && ab_pci->pci_ops->release &&
++	    !ret)
++		ab_pci->pci_ops->release(ab);
+ 	return val;
+ }
+ 
+@@ -1033,13 +1058,14 @@ void ath12k_pci_write32(struct ath12k_base *ab, u32 offset, u32 value)
+ {
+ 	struct ath12k_pci *ab_pci = ath12k_pci_priv(ab);
+ 	u32 window_start;
++	int ret = 0;
+ 
+ 	/* for offset beyond BAR + 4K - 32, may
+ 	 * need to wakeup MHI to access.
+ 	 */
+ 	if (test_bit(ATH12K_PCI_FLAG_INIT_DONE, &ab_pci->flags) &&
+-	    offset >= ACCESS_ALWAYS_OFF)
+-		mhi_device_get_sync(ab_pci->mhi_ctrl->mhi_dev);
++	    offset >= ACCESS_ALWAYS_OFF && ab_pci->pci_ops->wakeup)
++		ret = ab_pci->pci_ops->wakeup(ab);
+ 
+ 	if (offset < WINDOW_START) {
+ 		iowrite32(value, ab->mem + offset);
+@@ -1067,8 +1093,9 @@ void ath12k_pci_write32(struct ath12k_base *ab, u32 offset, u32 value)
+ 	}
+ 
+ 	if (test_bit(ATH12K_PCI_FLAG_INIT_DONE, &ab_pci->flags) &&
+-	    offset >= ACCESS_ALWAYS_OFF)
+-		mhi_device_put(ab_pci->mhi_ctrl->mhi_dev);
++	    offset >= ACCESS_ALWAYS_OFF && ab_pci->pci_ops->release &&
++	    !ret)
++		ab_pci->pci_ops->release(ab);
+ }
+ 
+ int ath12k_pci_power_up(struct ath12k_base *ab)
+@@ -1182,6 +1209,7 @@ static int ath12k_pci_probe(struct pci_dev *pdev,
+ 	case QCN9274_DEVICE_ID:
+ 		ab_pci->msi_config = &ath12k_msi_config[0];
+ 		ab->static_window_map = true;
++		ab_pci->pci_ops = &ath12k_pci_ops_qcn9274;
+ 		ath12k_pci_read_hw_version(ab, &soc_hw_version_major,
+ 					   &soc_hw_version_minor);
+ 		switch (soc_hw_version_major) {
+@@ -1203,6 +1231,7 @@ static int ath12k_pci_probe(struct pci_dev *pdev,
+ 		ab_pci->msi_config = &ath12k_msi_config[0];
+ 		ab->static_window_map = false;
+ 		ab->hw_rev = ATH12K_HW_WCN7850_HW20;
++		ab_pci->pci_ops = &ath12k_pci_ops_wcn7850;
+ 		break;
+ 
+ 	default:
+diff --git a/drivers/net/wireless/ath/ath12k/pci.h b/drivers/net/wireless/ath/ath12k/pci.h
+index 0d9e40ab31f26..0f24fd9395cd9 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.h
++++ b/drivers/net/wireless/ath/ath12k/pci.h
+@@ -86,6 +86,11 @@ enum ath12k_pci_flags {
+ 	ATH12K_PCI_ASPM_RESTORE,
+ };
+ 
++struct ath12k_pci_ops {
++	int (*wakeup)(struct ath12k_base *ab);
++	void (*release)(struct ath12k_base *ab);
++};
++
+ struct ath12k_pci {
+ 	struct pci_dev *pdev;
+ 	struct ath12k_base *ab;
+@@ -103,6 +108,7 @@ struct ath12k_pci {
+ 	/* enum ath12k_pci_flags */
+ 	unsigned long flags;
+ 	u16 link_ctl;
++	const struct ath12k_pci_ops *pci_ops;
+ };
+ 
+ static inline struct ath12k_pci *ath12k_pci_priv(struct ath12k_base *ab)
 -- 
 2.39.2
 
