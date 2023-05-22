@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12916168B6
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:12:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660E2C4339B;
-	Mon, 22 May 2023 19:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610ED168B6
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:12:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1C17C433EF;
+	Mon, 22 May 2023 19:12:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782757;
-	bh=fQH2TIwSsVeb4f8Ix4xJYBGztYhkHabBITxRGXHEXZE=;
+	s=korg; t=1684782760;
+	bh=OQ7XY+QmbQ/wqKS44nz6JlaIQOvpadW0HzxgGX4tBu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mg4Lue2Mu6d+WuXqaPG+23uL2x9BRfIorrH5UmHKYtR8yvu9OUYm+XMwUcJYlK6h8
-	 kFxW9DQO51cfxnswKFQQJaKYlBs6Ile53ogwvIZgDlDb2kEpc50mlbxl5F6qMdFpVd
-	 rIdQJFPnN1zp0P7huQYXe/UhbgElOvYk7wlSxoUs=
+	b=uLQuatBuEXrsgEoPaVmhj5r2I8xmN2+YP1m+R97277iFlpZ5BW0cciJMdxXMSaj+a
+	 6jaBdojyvp7Q9hlNFWj2aV3I8M1X6E7fs+BH0KVJinevTJhudCzP7Xa4wE6mRY6R+Q
+	 CPaJXSn5JSWIO7I9GnZt25McbxFpFE5gvDlCMLY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kepplinger <martin.kepplinger@puri.sm>,
-	Saravana Kannan <saravanak@google.com>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/203] drm/mipi-dsi: Set the fwnode for mipi_dsi_device
-Date: Mon, 22 May 2023 20:07:05 +0100
-Message-Id: <20230522190354.976420832@linuxfoundation.org>
+Subject: [PATCH 5.15 010/203] netfilter: nf_tables: always release netdev hooks from notifier
+Date: Mon, 22 May 2023 20:07:14 +0100
+Message-Id: <20230522190355.235409695@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,46 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saravana Kannan <saravanak@google.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit a26cc2934331b57b5a7164bff344f0a2ec245fc0 ]
+[ Upstream commit dc1c9fd4a8bbe1e06add9053010b652449bfe411 ]
 
-After commit 3fb16866b51d ("driver core: fw_devlink: Make cycle
-detection more robust"), fw_devlink prints an error when consumer
-devices don't have their fwnode set. This used to be ignored silently.
+This reverts "netfilter: nf_tables: skip netdev events generated on netns removal".
 
-Set the fwnode mipi_dsi_device so fw_devlink can find them and properly
-track their dependencies.
+The problem is that when a veth device is released, the veth release
+callback will also queue the peer netns device for removal.
 
-This fixes errors like this:
-[    0.334054] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with regulator-lcd-1v8
-[    0.346964] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with backlight-dsi
+Its possible that the peer netns is also slated for removal.  In this
+case, the device memory is already released before the pre_exit hook of
+the peer netns runs:
 
-Reported-by: Martin Kepplinger <martin.kepplinger@puri.sm>
-Link: https://lore.kernel.org/lkml/2a8e407f4f18c9350f8629a2b5fa18673355b2ae.camel@puri.sm/
-Fixes: 068a00233969 ("drm: Add MIPI DSI bus support")
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Martin Kepplinger <martin.kepplinger@puri.sm>
-Link: https://lore.kernel.org/r/20230310063910.2474472-1-saravanak@google.com
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+BUG: KASAN: slab-use-after-free in nf_hook_entry_head+0x1b8/0x1d0
+Read of size 8 at addr ffff88812c0124f0 by task kworker/u8:1/45
+Workqueue: netns cleanup_net
+Call Trace:
+ nf_hook_entry_head+0x1b8/0x1d0
+ __nf_unregister_net_hook+0x76/0x510
+ nft_netdev_unregister_hooks+0xa0/0x220
+ __nft_release_hook+0x184/0x490
+ nf_tables_pre_exit_net+0x12f/0x1b0
+ ..
+
+Order is:
+1. First netns is released, veth_dellink() queues peer netns device
+   for removal
+2. peer netns is queued for removal
+3. peer netns device is released, unreg event is triggered
+4. unreg event is ignored because netns is going down
+5. pre_exit hook calls nft_netdev_unregister_hooks but device memory
+   might be free'd already.
+
+Fixes: 68a3765c659f ("netfilter: nf_tables: skip netdev events generated on netns removal")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_mipi_dsi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nft_chain_filter.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-index 19fb1d93a4f07..0c806e99e8690 100644
---- a/drivers/gpu/drm/drm_mipi_dsi.c
-+++ b/drivers/gpu/drm/drm_mipi_dsi.c
-@@ -221,7 +221,7 @@ mipi_dsi_device_register_full(struct mipi_dsi_host *host,
- 		return dsi;
+diff --git a/net/netfilter/nft_chain_filter.c b/net/netfilter/nft_chain_filter.c
+index 3ced0eb6b7c3b..5b02408a920bf 100644
+--- a/net/netfilter/nft_chain_filter.c
++++ b/net/netfilter/nft_chain_filter.c
+@@ -342,6 +342,12 @@ static void nft_netdev_event(unsigned long event, struct net_device *dev,
+ 		return;
  	}
  
--	dsi->dev.of_node = info->node;
-+	device_set_node(&dsi->dev, of_fwnode_handle(info->node));
- 	dsi->channel = info->channel;
- 	strlcpy(dsi->name, info->type, sizeof(dsi->name));
++	/* UNREGISTER events are also happening on netns exit.
++	 *
++	 * Although nf_tables core releases all tables/chains, only this event
++	 * handler provides guarantee that hook->ops.dev is still accessible,
++	 * so we cannot skip exiting net namespaces.
++	 */
+ 	__nft_release_basechain(ctx);
+ }
  
+@@ -360,9 +366,6 @@ static int nf_tables_netdev_event(struct notifier_block *this,
+ 	    event != NETDEV_CHANGENAME)
+ 		return NOTIFY_DONE;
+ 
+-	if (!check_net(ctx.net))
+-		return NOTIFY_DONE;
+-
+ 	nft_net = nft_pernet(ctx.net);
+ 	mutex_lock(&nft_net->commit_mutex);
+ 	list_for_each_entry(table, &nft_net->tables, list) {
 -- 
 2.39.2
 
