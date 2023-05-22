@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0FE168D1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:25:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A8DC433D2;
-	Mon, 22 May 2023 19:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F4F168D1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:25:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEB7C433D2;
+	Mon, 22 May 2023 19:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783549;
-	bh=AOFh1WhfR4xsMJ/bfPiml5mDJj6P2fKPo6om/hQdRh0=;
+	s=korg; t=1684783552;
+	bh=DWstlYSb6HQkL3J/mt/Oo2KXh8UsNNnwfW+H9bnZiTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I8fSngBhFgXiUYdX6BZr7lzMm0vhndBCbe1FysKQvLpbBEB1eu8gTEfs1EuRxaQHX
-	 o9b3mxwcjBczqfKaTMCp8FNSTsxKPAGv5vw3DdQu8hV0wKSylnyDjYjnzafjgHjjcM
-	 8wjWftbuluL0GK9iJ25UR62tMZGZeAP+jnNfy/cs=
+	b=hElr55QAgiyxhJQ06q48WWYel8Y6VZP/OE+str2KN7pZPdSMU/5nE2H0QeVMLQOky
+	 qWBzX3xskgM7H/NKNNTQV8N7Kgn1vlkYOP6rz50ejqjUl7krkA2W5wCX3bESGWyiCj
+	 fUPbCJfNUEHY72dGlAStHW4YF9f7I3FLoUepiHWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 081/292] net: pasemi: Fix return type of pasemi_mac_start_tx()
-Date: Mon, 22 May 2023 20:07:18 +0100
-Message-Id: <20230522190407.998440976@linuxfoundation.org>
+Subject: [PATCH 6.1 055/292] memstick: r592: Fix UAF bug in r592_remove due to race condition
+Date: Mon, 22 May 2023 20:06:52 +0100
+Message-Id: <20230522190407.313919956@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,52 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit c8384d4a51e7cb0e6587f3143f29099f202c5de1 ]
+[ Upstream commit 63264422785021704c39b38f65a78ab9e4a186d7 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-warning in clang aims to catch these at compile time, which reveals:
+In r592_probe, dev->detect_timer was bound with r592_detect_timer.
+In r592_irq function, the timer function will be invoked by mod_timer.
 
-  drivers/net/ethernet/pasemi/pasemi_mac.c:1665:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = pasemi_mac_start_tx,
-                                    ^~~~~~~~~~~~~~~~~~~
-  1 error generated.
+If we remove the module which will call hantro_release to make cleanup,
+there may be a unfinished work. The possible sequence is as follows,
+which will cause a typical UAF bug.
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of
-pasemi_mac_start_tx() to match the prototype's to resolve the warning.
-While PowerPC does not currently implement support for kCFI, it could in
-the future, which means this warning becomes a fatal CFI failure at run
-time.
+Fix it by canceling the work before cleanup in r592_remove.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://lore.kernel.org/r/20230319-pasemi-incompatible-pointer-types-strict-v1-1-1b9459d8aef0@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+CPU0                  CPU1
+
+                    |r592_detect_timer
+r592_remove         |
+  memstick_free_host|
+  put_device;       |
+  kfree(host);      |
+                    |
+                    | queue_work
+                    |   &host->media_checker //use
+
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Link: https://lore.kernel.org/r/20230307164338.1246287-1-zyytlz.wz@163.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pasemi/pasemi_mac.c | 2 +-
+ drivers/memstick/host/r592.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/pasemi/pasemi_mac.c b/drivers/net/ethernet/pasemi/pasemi_mac.c
-index aaab590ef548d..ed7dd0a042355 100644
---- a/drivers/net/ethernet/pasemi/pasemi_mac.c
-+++ b/drivers/net/ethernet/pasemi/pasemi_mac.c
-@@ -1423,7 +1423,7 @@ static void pasemi_mac_queue_csdesc(const struct sk_buff *skb,
- 	write_dma_reg(PAS_DMA_TXCHAN_INCR(txring->chan.chno), 2);
- }
+diff --git a/drivers/memstick/host/r592.c b/drivers/memstick/host/r592.c
+index 1d35d147552d4..42bfc46842b82 100644
+--- a/drivers/memstick/host/r592.c
++++ b/drivers/memstick/host/r592.c
+@@ -829,7 +829,7 @@ static void r592_remove(struct pci_dev *pdev)
+ 	/* Stop the processing thread.
+ 	That ensures that we won't take any more requests */
+ 	kthread_stop(dev->io_thread);
+-
++	del_timer_sync(&dev->detect_timer);
+ 	r592_enable_device(dev, false);
  
--static int pasemi_mac_start_tx(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t pasemi_mac_start_tx(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct pasemi_mac * const mac = netdev_priv(dev);
- 	struct pasemi_mac_txring * const txring = tx_ring(mac);
+ 	while (!error && dev->req) {
 -- 
 2.39.2
 
