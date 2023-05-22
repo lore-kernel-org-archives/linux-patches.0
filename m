@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6173A171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:27:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A3AC433D2;
-	Mon, 22 May 2023 19:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B00171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:27:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B40A7C433EF;
+	Mon, 22 May 2023 19:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783664;
-	bh=IehnyUpib8Q5XWZlAiw93YmFAasfVCSZCdIm39tlKfI=;
+	s=korg; t=1684783667;
+	bh=FSScn70I0FrCmoPEWpXBnjE7oYUiMOfDx7KbUz8by2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMOQRzx2hz3CqV9bp19hmy20EeI+RUQ9UihYlEPjayhSz23eYDvJEdv6thzBL2aKB
-	 3qvXAmNemvZpIHRrXuklGv7ylVo47ILIlj0HWIKOx2/rSve6yJw1QmMTEZdE8e5N6s
-	 A4i4xe+re2LFd3mXerx6hZvnS5wRmwk6BwSgeDSI=
+	b=IKl4+KIzngzCbjSVI5kO8FeefmO+p7bhO9Yb01CVJoT47vuzut16vfvUVVvuCzasz
+	 0NeLDQWUFDTafMA0i2TYNPIY86uISuw+1hfUouzEe6OtwqrahcvE1BL77KYIcRtlLy
+	 sh5zCCEooT52OyUJUyx6LnMbItdPSSZqfKB613Ow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raul Cheleguini <rcheleguini@google.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
+	Khadija Kamran <kamrankhadijadj@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/292] Bluetooth: Improve support for Actions Semi ATS2851 based devices
-Date: Mon, 22 May 2023 20:07:50 +0100
-Message-Id: <20230522190408.791358873@linuxfoundation.org>
+Subject: [PATCH 6.1 122/292] staging: axis-fifo: initialize timeouts in init only
+Date: Mon, 22 May 2023 20:07:59 +0100
+Message-Id: <20230522190409.016414103@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,51 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raul Cheleguini <rcheleguini@google.com>
+From: Khadija Kamran <kamrankhadijadj@gmail.com>
 
-[ Upstream commit 7c2b2d2d0cb658aa543e11e90ae95621d3cb5fe6 ]
+[ Upstream commit 752cbd8f191678e86aa754f795546b7f06b7f171 ]
 
-Add two more quirks to resume the device initialization and basic
-operation as the device seems not to support "Read Transmit Power"
-and "Set Extended Scan Parameters".
+Initialize the module parameters, read_timeout and write_timeout once in
+init().
 
-< HCI Command: LE Read Transmit Power (0x08|0x004b) plen 0
-> HCI Event: Command Status (0x0f) plen 4
-      LE Read Transmit Power (0x08|0x004b) ncmd 1
-        Status: Unknown HCI Command (0x01)
+Module parameters can only be set once and cannot be modified later, so we
+don't need to evaluate them again when passing the parameters to
+wait_event_interruptible_timeout().
 
-< HCI Command: LE Set Extended Scan Parameters (0x08|0x0041) plen 8
-        Own address type: Random (0x01)
-        Filter policy: Accept all advertisement (0x00)
-        PHYs: 0x01
-        Entry 0: LE 1M
-          Type: Active (0x01)
-          Interval: 11.250 msec (0x0012)
-          Window: 11.250 msec (0x0012)
-> HCI Event: Command Status (0x0f) plen 4
-      LE Set Extended Scan Parameters (0x08|0x0041) ncmd 1
-        Status: Unknown HCI Command (0x01)
+Convert datatype of {read,write}_timeout from 'int' to 'long int' because
+implicit conversion of 'long int' to 'int' in statement
+'{read,write}_timeout = MAX_SCHEDULE_TIMEOUT' results in an overflow.
 
-Signed-off-by: Raul Cheleguini <rcheleguini@google.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Change format specifier for {read,write}_timeout from %i to %li.
+
+Reviewed-by: Fabio M. De Francesco <fmdefrancesco@gmail.com>
+Suggested-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Khadija Kamran <kamrankhadijadj@gmail.com>
+Link: https://lore.kernel.org/r/ZBN3XAsItCiTk7CV@khadija-virtual-machine
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/staging/axis-fifo/axis-fifo.c | 28 ++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 8ee147ad76b79..3991dcd2ebf79 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4019,6 +4019,8 @@ static int btusb_probe(struct usb_interface *intf,
- 	if (id->driver_info & BTUSB_ACTIONS_SEMI) {
- 		/* Support is advertised, but not implemented */
- 		set_bit(HCI_QUIRK_BROKEN_ERR_DATA_REPORTING, &hdev->quirks);
-+		set_bit(HCI_QUIRK_BROKEN_READ_TRANSMIT_POWER, &hdev->quirks);
-+		set_bit(HCI_QUIRK_BROKEN_EXT_SCAN, &hdev->quirks);
- 	}
+diff --git a/drivers/staging/axis-fifo/axis-fifo.c b/drivers/staging/axis-fifo/axis-fifo.c
+index dfd2b357f484b..0a85ea667a1b5 100644
+--- a/drivers/staging/axis-fifo/axis-fifo.c
++++ b/drivers/staging/axis-fifo/axis-fifo.c
+@@ -103,17 +103,17 @@
+  *           globals
+  * ----------------------------
+  */
+-static int read_timeout = 1000; /* ms to wait before read() times out */
+-static int write_timeout = 1000; /* ms to wait before write() times out */
++static long read_timeout = 1000; /* ms to wait before read() times out */
++static long write_timeout = 1000; /* ms to wait before write() times out */
  
- 	if (!reset)
+ /* ----------------------------
+  * module command-line arguments
+  * ----------------------------
+  */
+ 
+-module_param(read_timeout, int, 0444);
++module_param(read_timeout, long, 0444);
+ MODULE_PARM_DESC(read_timeout, "ms to wait before blocking read() timing out; set to -1 for no timeout");
+-module_param(write_timeout, int, 0444);
++module_param(write_timeout, long, 0444);
+ MODULE_PARM_DESC(write_timeout, "ms to wait before blocking write() timing out; set to -1 for no timeout");
+ 
+ /* ----------------------------
+@@ -384,9 +384,7 @@ static ssize_t axis_fifo_read(struct file *f, char __user *buf,
+ 		mutex_lock(&fifo->read_lock);
+ 		ret = wait_event_interruptible_timeout(fifo->read_queue,
+ 			ioread32(fifo->base_addr + XLLF_RDFO_OFFSET),
+-				 (read_timeout >= 0) ?
+-				  msecs_to_jiffies(read_timeout) :
+-				  MAX_SCHEDULE_TIMEOUT);
++			read_timeout);
+ 
+ 		if (ret <= 0) {
+ 			if (ret == 0) {
+@@ -528,9 +526,7 @@ static ssize_t axis_fifo_write(struct file *f, const char __user *buf,
+ 		ret = wait_event_interruptible_timeout(fifo->write_queue,
+ 			ioread32(fifo->base_addr + XLLF_TDFV_OFFSET)
+ 				 >= words_to_write,
+-				 (write_timeout >= 0) ?
+-				  msecs_to_jiffies(write_timeout) :
+-				  MAX_SCHEDULE_TIMEOUT);
++			write_timeout);
+ 
+ 		if (ret <= 0) {
+ 			if (ret == 0) {
+@@ -948,7 +944,17 @@ static struct platform_driver axis_fifo_driver = {
+ 
+ static int __init axis_fifo_init(void)
+ {
+-	pr_info("axis-fifo driver loaded with parameters read_timeout = %i, write_timeout = %i\n",
++	if (read_timeout >= 0)
++		read_timeout = msecs_to_jiffies(read_timeout);
++	else
++		read_timeout = MAX_SCHEDULE_TIMEOUT;
++
++	if (write_timeout >= 0)
++		write_timeout = msecs_to_jiffies(write_timeout);
++	else
++		write_timeout = MAX_SCHEDULE_TIMEOUT;
++
++	pr_info("axis-fifo driver loaded with parameters read_timeout = %li, write_timeout = %li\n",
+ 		read_timeout, write_timeout);
+ 	return platform_driver_register(&axis_fifo_driver);
+ }
 -- 
 2.39.2
 
