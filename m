@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770EE171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0287EC433EF;
-	Mon, 22 May 2023 19:23:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659F6171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F3AC433EF;
+	Mon, 22 May 2023 19:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783414;
-	bh=5yg6SZwGlhWY+uuSU8BxXg38GuZTA4fq8Vy0TqzBFTM=;
+	s=korg; t=1684783417;
+	bh=qbSmFjkxX3HUcFYifbkogWWlpPQjlc1XuGkAs7z+xus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dY01mQ1+TsPs4FLPCdtRpufTJbZOAxYCBdDvDr8lrEl4W7t9SGlCqMAJz9nPJhI+T
-	 Dhugl2qkfJj1pIyxSE6FtLNOSX8EdaUAxXKW2VpIIDwWZT2hWjHfiuB9hCnSLm4cTE
-	 Ybsfx4W6An34pOHart9d4fAoBwRMZ4ekORnW2Fmg=
+	b=sqC4rnT9zRalY3/igeG4Fog+Nz8jY2k4dJB5LUKOpZlq5RMBAMYZ6xN12JPeRCQPO
+	 p4BOi0gZkTAlwsHz2dyfqmqWHE0xV4jyF+nTeChOHBWzpYtLA5VjxwGtWBTStvP/2y
+	 xtJdEJqU4HESseienJjwDl0/zFJpOztZSVhy8XCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
+	Ivan Orlov <ivan.orlov0322@gmail.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Shakeel Butt <shakeelb@google.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/292] refscale: Move shutdown from wait_event() to wait_event_idle()
-Date: Mon, 22 May 2023 20:06:33 +0100
-Message-Id: <20230522190406.797090322@linuxfoundation.org>
+Subject: [PATCH 6.1 037/292] selftests: cgroup: Add malloc failures checks in test_memcontrol
+Date: Mon, 22 May 2023 20:06:34 +0100
+Message-Id: <20230522190406.824024013@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,40 +38,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Ivan Orlov <ivan.orlov0322@gmail.com>
 
-[ Upstream commit 6bc6e6b27524304aadb9c04611ddb1c84dd7617a ]
+[ Upstream commit c83f320e55a49abd90629f42a72897afd579e0de ]
 
-The ref_scale_shutdown() kthread/function uses wait_event() to wait for
-the refscale test to complete.  However, although the read-side tests
-are normally extremely fast, there is no law against specifying a very
-large value for the refscale.loops module parameter or against having
-a slow read-side primitive.  Either way, this might well trigger the
-hung-task timeout.
+There are several 'malloc' calls in test_memcontrol, which can be
+unsuccessful. This patch will add 'malloc' failures checking to
+give more details about test's fail reasons and avoid possible
+undefined behavior during the future null dereference (like the
+one in alloc_anon_50M_check_swap function).
 
-This commit therefore replaces those wait_event() calls with calls to
-wait_event_idle(), which do not trigger the hung-task timeout.
-
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Signed-off-by: Ivan Orlov <ivan.orlov0322@gmail.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Acked-by: Roman Gushchin <roman.gushchin@linux.dev>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/refscale.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/cgroup/test_memcontrol.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/kernel/rcu/refscale.c b/kernel/rcu/refscale.c
-index 435c884c02b5c..d49a9d66e0000 100644
---- a/kernel/rcu/refscale.c
-+++ b/kernel/rcu/refscale.c
-@@ -795,7 +795,7 @@ ref_scale_cleanup(void)
- static int
- ref_scale_shutdown(void *arg)
- {
--	wait_event(shutdown_wq, shutdown_start);
-+	wait_event_idle(shutdown_wq, shutdown_start);
+diff --git a/tools/testing/selftests/cgroup/test_memcontrol.c b/tools/testing/selftests/cgroup/test_memcontrol.c
+index 8833359556f38..fe4f9f4302822 100644
+--- a/tools/testing/selftests/cgroup/test_memcontrol.c
++++ b/tools/testing/selftests/cgroup/test_memcontrol.c
+@@ -98,6 +98,11 @@ static int alloc_anon_50M_check(const char *cgroup, void *arg)
+ 	int ret = -1;
  
- 	smp_mb(); // Wake before output.
- 	ref_scale_cleanup();
+ 	buf = malloc(size);
++	if (buf == NULL) {
++		fprintf(stderr, "malloc() failed\n");
++		return -1;
++	}
++
+ 	for (ptr = buf; ptr < buf + size; ptr += PAGE_SIZE)
+ 		*ptr = 0;
+ 
+@@ -211,6 +216,11 @@ static int alloc_anon_noexit(const char *cgroup, void *arg)
+ 	char *buf, *ptr;
+ 
+ 	buf = malloc(size);
++	if (buf == NULL) {
++		fprintf(stderr, "malloc() failed\n");
++		return -1;
++	}
++
+ 	for (ptr = buf; ptr < buf + size; ptr += PAGE_SIZE)
+ 		*ptr = 0;
+ 
+@@ -759,6 +769,11 @@ static int alloc_anon_50M_check_swap(const char *cgroup, void *arg)
+ 	int ret = -1;
+ 
+ 	buf = malloc(size);
++	if (buf == NULL) {
++		fprintf(stderr, "malloc() failed\n");
++		return -1;
++	}
++
+ 	for (ptr = buf; ptr < buf + size; ptr += PAGE_SIZE)
+ 		*ptr = 0;
+ 
 -- 
 2.39.2
 
