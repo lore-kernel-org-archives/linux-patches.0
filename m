@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E094171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E8EC433EF;
-	Mon, 22 May 2023 19:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A1B9168DC
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9D0BC433EF;
+	Mon, 22 May 2023 19:34:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784046;
-	bh=C9XyiVuMwES1AeMuYBGLESHc8BK6Vl3KrXcf+NBXFyA=;
+	s=korg; t=1684784049;
+	bh=h7dh3KkyJjGKYQdkWqhkbHfMUiiUp9Fd9wZiShJylW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYhQe/JboHoOBn5zpF30IP3LXjezEi2OVvxHOabxwV3jVLTvI7Lg9AiuuTW44m+pG
-	 /ZSFhlg2GY44WWRS+gdkQiM3Knukk5yTgxpCEh5myO3fd0/WJqR14JOxsjiTBcR/DI
-	 5ubmL7sTybdNh0xxlnT7BqQAdbzTBXjYVsrqL4TY=
+	b=txPSY4VSqUHFU1NgnFRUlGzox7Y/awZQfdEOWWSy/xpOpmgTNrjt4jDefSNEwz7Ut
+	 ooDK57pSAxS6O2VzvD1jiLXOy9uYUZqVejboH2P0RD6naJyz4J/VIo2CBNDrEXbxFJ
+	 Ll1UHmxRT6Kb+cG+PhsUwQsDAO+qYttNxWYvWBgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Oliver Hartkopp <socketcan@hartkopp.net>
-Subject: [PATCH 6.1 246/292] can: isotp: recvmsg(): allow MSG_CMSG_COMPAT flag
-Date: Mon, 22 May 2023 20:10:03 +0100
-Message-Id: <20230522190412.098946631@linuxfoundation.org>
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.1 247/292] can: kvaser_pciefd: Set CAN_STATE_STOPPED in kvaser_pciefd_stop()
+Date: Mon, 22 May 2023 20:10:04 +0100
+Message-Id: <20230522190412.123797830@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,37 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-commit db2773d65b02aed319a93efdfb958087771d4e19 upstream.
+commit aed0e6ca7dbb8fbea9bc69c9ac663d5533c8c5d8 upstream.
 
-The control message provided by isotp support MSG_CMSG_COMPAT but
-blocked recvmsg() syscalls that have set this flag, i.e. on 32bit user
-space on 64 bit kernels.
+Set can.state to CAN_STATE_STOPPED in kvaser_pciefd_stop().
+Without this fix, wrong CAN state was repported after the interface was
+brought down.
 
-Link: https://github.com/hartkopp/can-isotp/issues/59
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>
-Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Fixes: 42bf50a1795a ("can: isotp: support MSG_TRUNC flag when reading from socket")
-Link: https://lore.kernel.org/20230505110308.81087-2-mkl@pengutronix.de
+Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
 Cc: stable@vger.kernel.org
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/r/20230516134318.104279-2-extja@kvaser.com
 Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/can/isotp.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/kvaser_pciefd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1106,7 +1106,7 @@ static int isotp_recvmsg(struct socket *
- 	struct isotp_sock *so = isotp_sk(sk);
- 	int ret = 0;
+--- a/drivers/net/can/kvaser_pciefd.c
++++ b/drivers/net/can/kvaser_pciefd.c
+@@ -719,6 +719,7 @@ static int kvaser_pciefd_stop(struct net
+ 		iowrite32(0, can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
+ 		del_timer(&can->bec_poll_timer);
+ 	}
++	can->can.state = CAN_STATE_STOPPED;
+ 	close_candev(netdev);
  
--	if (flags & ~(MSG_DONTWAIT | MSG_TRUNC | MSG_PEEK))
-+	if (flags & ~(MSG_DONTWAIT | MSG_TRUNC | MSG_PEEK | MSG_CMSG_COMPAT))
- 		return -EINVAL;
- 
- 	if (!so->bound)
+ 	return ret;
 
 
