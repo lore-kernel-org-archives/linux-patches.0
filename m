@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B6A171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:48:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0B7C433EF;
-	Mon, 22 May 2023 19:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52294171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:48:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7EC0C433D2;
+	Mon, 22 May 2023 19:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784916;
-	bh=OpM/K83vbyk3flTN4EZuq0lkbTySTdaWAbjN8VMccNc=;
+	s=korg; t=1684784919;
+	bh=fZFK39qpgb1p4RDjuyhrhJCjwjiENebnbjsOgOZr3wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0S3B3hT4KDNBYgvqmuZBA9QdU/H4zfq4bJl99GDCWt/skh+lYuTXshSZ9VQf6qyym
-	 2Qu8+dGpi5TNUY7pok+0OWhXjhb95579/eUWN409RALQJVi5aKLXNE1rKVk7M+sxhC
-	 3g7neV6OYELy8i6CAd9OwpFOfh9v+PzdyVpmGyU4=
+	b=kUGidBadAaOmkZdAhvivaNgtche/Z1mmtxOSlWFbsETl7qoWh6sbV23GNV5l1mNiO
+	 NPFq9xoehyO15UPdSMDW0Mp0gG8A3RNj6vTj6yL3IhS4M+CxzPu5VC9XjR3yamc7gN
+	 s9VMQd/3FQwX+oTBi2HIbaz3LPO8qMag9RG36yrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jijie Shao <shaojijie@huawei.com>,
-	Hao Lan <lanhao@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 244/364] net: hns3: fix reset timeout when enable full VF
-Date: Mon, 22 May 2023 20:09:09 +0100
-Message-Id: <20230522190418.797685859@linuxfoundation.org>
+Subject: [PATCH 6.3 245/364] media: netup_unidvb: fix use-after-free at del_timer()
+Date: Mon, 22 May 2023 20:09:10 +0100
+Message-Id: <20230522190418.822057320@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,109 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jijie Shao <shaojijie@huawei.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 6b45d5ff8c2c61baddd67d7510075ae121c5e704 ]
+[ Upstream commit 0f5bb36bf9b39a2a96e730bf4455095b50713f63 ]
 
-The timeout of the cmdq reset command has been increased to
-resolve the reset timeout issue in the full VF scenario.
-The timeout of other cmdq commands remains unchanged.
+When Universal DVB card is detaching, netup_unidvb_dma_fini()
+uses del_timer() to stop dma->timeout timer. But when timer
+handler netup_unidvb_dma_timeout() is running, del_timer()
+could not stop it. As a result, the use-after-free bug could
+happen. The process is shown below:
 
-Fixes: 8d307f8e8cf1 ("net: hns3: create new set of unified hclge_comm_cmd_send APIs")
-Signed-off-by: Jijie Shao <shaojijie@huawei.com>
-Signed-off-by: Hao Lan <lanhao@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    (cleanup routine)          |        (timer routine)
+                               | mod_timer(&dev->tx_sim_timer, ..)
+netup_unidvb_finidev()         | (wait a time)
+  netup_unidvb_dma_fini()      | netup_unidvb_dma_timeout()
+    del_timer(&dma->timeout);  |
+                               |   ndev->pci_dev->dev //USE
+
+Fix by changing del_timer() to del_timer_sync().
+
+Link: https://lore.kernel.org/linux-media/20230308125514.4208-1-duoming@zju.edu.cn
+Fixes: 52b1eaf4c59a ("[media] netup_unidvb: NetUP Universal DVB-S/S2/T/T2/C PCI-E card driver")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hns3/hns3_common/hclge_comm_cmd.c         | 25 ++++++++++++++++---
- .../hns3/hns3_common/hclge_comm_cmd.h         |  8 +++++-
- 2 files changed, 28 insertions(+), 5 deletions(-)
+ drivers/media/pci/netup_unidvb/netup_unidvb_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c
-index f671a63cecde4..c797d54f98caa 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c
-@@ -330,9 +330,25 @@ static int hclge_comm_cmd_csq_done(struct hclge_comm_hw *hw)
- 	return head == hw->cmq.csq.next_to_use;
+diff --git a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+index 8287851b5ffdc..aaa1d2dedebdd 100644
+--- a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
++++ b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+@@ -697,7 +697,7 @@ static void netup_unidvb_dma_fini(struct netup_unidvb_dev *ndev, int num)
+ 	netup_unidvb_dma_enable(dma, 0);
+ 	msleep(50);
+ 	cancel_work_sync(&dma->work);
+-	del_timer(&dma->timeout);
++	del_timer_sync(&dma->timeout);
  }
  
--static void hclge_comm_wait_for_resp(struct hclge_comm_hw *hw,
-+static u32 hclge_get_cmdq_tx_timeout(u16 opcode, u32 tx_timeout)
-+{
-+	static const struct hclge_cmdq_tx_timeout_map cmdq_tx_timeout_map[] = {
-+		{HCLGE_OPC_CFG_RST_TRIGGER, HCLGE_COMM_CMDQ_TX_TIMEOUT_500MS},
-+	};
-+	u32 i;
-+
-+	for (i = 0; i < ARRAY_SIZE(cmdq_tx_timeout_map); i++)
-+		if (cmdq_tx_timeout_map[i].opcode == opcode)
-+			return cmdq_tx_timeout_map[i].tx_timeout;
-+
-+	return tx_timeout;
-+}
-+
-+static void hclge_comm_wait_for_resp(struct hclge_comm_hw *hw, u16 opcode,
- 				     bool *is_completed)
- {
-+	u32 cmdq_tx_timeout = hclge_get_cmdq_tx_timeout(opcode,
-+							hw->cmq.tx_timeout);
- 	u32 timeout = 0;
- 
- 	do {
-@@ -342,7 +358,7 @@ static void hclge_comm_wait_for_resp(struct hclge_comm_hw *hw,
- 		}
- 		udelay(1);
- 		timeout++;
--	} while (timeout < hw->cmq.tx_timeout);
-+	} while (timeout < cmdq_tx_timeout);
- }
- 
- static int hclge_comm_cmd_convert_err_code(u16 desc_ret)
-@@ -406,7 +422,8 @@ static int hclge_comm_cmd_check_result(struct hclge_comm_hw *hw,
- 	 * if multi descriptors to be sent, use the first one to check
- 	 */
- 	if (HCLGE_COMM_SEND_SYNC(le16_to_cpu(desc->flag)))
--		hclge_comm_wait_for_resp(hw, &is_completed);
-+		hclge_comm_wait_for_resp(hw, le16_to_cpu(desc->opcode),
-+					 &is_completed);
- 
- 	if (!is_completed)
- 		ret = -EBADE;
-@@ -528,7 +545,7 @@ int hclge_comm_cmd_queue_init(struct pci_dev *pdev, struct hclge_comm_hw *hw)
- 	cmdq->crq.desc_num = HCLGE_COMM_NIC_CMQ_DESC_NUM;
- 
- 	/* Setup Tx write back timeout */
--	cmdq->tx_timeout = HCLGE_COMM_CMDQ_TX_TIMEOUT;
-+	cmdq->tx_timeout = HCLGE_COMM_CMDQ_TX_TIMEOUT_DEFAULT;
- 
- 	/* Setup queue rings */
- 	ret = hclge_comm_alloc_cmd_queue(hw, HCLGE_COMM_TYPE_CSQ);
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.h b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.h
-index b1f9383b418f4..2b2928c6dccfc 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.h
-@@ -54,7 +54,8 @@
- #define HCLGE_COMM_NIC_SW_RST_RDY		BIT(HCLGE_COMM_NIC_SW_RST_RDY_B)
- #define HCLGE_COMM_NIC_CMQ_DESC_NUM_S		3
- #define HCLGE_COMM_NIC_CMQ_DESC_NUM		1024
--#define HCLGE_COMM_CMDQ_TX_TIMEOUT		30000
-+#define HCLGE_COMM_CMDQ_TX_TIMEOUT_DEFAULT	30000
-+#define HCLGE_COMM_CMDQ_TX_TIMEOUT_500MS	500000
- 
- enum hclge_opcode_type {
- 	/* Generic commands */
-@@ -357,6 +358,11 @@ struct hclge_comm_caps_bit_map {
- 	u16 local_bit;
- };
- 
-+struct hclge_cmdq_tx_timeout_map {
-+	u32 opcode;
-+	u32 tx_timeout;
-+};
-+
- struct hclge_comm_firmware_compat_cmd {
- 	__le32 compat;
- 	u8 rsv[20];
+ static int netup_unidvb_dma_setup(struct netup_unidvb_dev *ndev)
 -- 
 2.39.2
 
