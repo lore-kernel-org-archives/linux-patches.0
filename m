@@ -1,30 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A335171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:49:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7D2C433EF;
-	Mon, 22 May 2023 19:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E42FA171B8
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:49:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA76C433D2;
+	Mon, 22 May 2023 19:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784947;
-	bh=cbub/WuzpW8apRWPgbsfqYmzWdPLROE4q4Mnsb75sSY=;
+	s=korg; t=1684784950;
+	bh=sN+ljAG2CWIjdk/sq0aOHVfWXZYjrll48ueT5LQil+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dM6GIXQXuYcxrD0Z5QS/rNLV76x/glb5dVPfSjcDei+sO8rOalBNFxpbf/Wfu8QUA
-	 k9zQEdcplf+PCobVRf2AUvPHet73zO5nD1AQHPHIq2HP4eIHv2GGObV7sWQB8VMlkd
-	 rtX6PR2MXYfIYTMx8amkAobuSIc77mOm2atyMeMY=
+	b=e/zUhyBpIwLbQqFG5IkVKiynvcMGzLL1OlMI2HiWZmhAyXdO5fw8Ub1Djam2WGhJZ
+	 o4yB5jPFUusIdFNl0mTSNci87R6+2tcuUNIiCM0hoknWUvPRTk/S1pYUi6LxzllJif
+	 8zTUZhlDrFAkmbbM3sCdJhwPOet56qdbfaS+HYLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Renninger <trenn@suse.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	Wyes Karny <wyes.karny@amd.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 217/364] cpupower: Make TSC read per CPU for Mperf monitor
-Date: Mon, 22 May 2023 20:08:42 +0100
-Message-Id: <20230522190418.137555676@linuxfoundation.org>
+Subject: [PATCH 6.3 250/364] ASoC: mediatek: mt8186: Fix use-after-free in driver remove path
+Date: Mon, 22 May 2023 20:09:15 +0100
+Message-Id: <20230522190418.947897881@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -38,157 +33,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wyes Karny <wyes.karny@amd.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit c2adb1877b76fc81ae041e1db1a6ed2078c6746b ]
+[ Upstream commit a93d2afd3f77a7331271a0f25c6a11003db69b3c ]
 
-System-wide TSC read could cause a drift in C0 percentage calculation.
-Because if first TSC is read and then one by one mperf is read for all
-cpus, this introduces drift between mperf reading of later CPUs and TSC
-reading.  To lower this drift read TSC per CPU and also just after mperf
-read.  This technique improves C0 percentage calculation in Mperf monitor.
+When devm runs function in the "remove" path for a device it runs them
+in the reverse order. That means that if you have parts of your driver
+that aren't using devm or are using "roll your own" devm w/
+devm_add_action_or_reset() you need to keep that in mind.
 
-Before fix: (System 100% busy)
+The mt8186 audio driver didn't quite get this right. Specifically, in
+mt8186_init_clock() it called mt8186_audsys_clk_register() and then
+went on to call a bunch of other devm function. The caller of
+mt8186_init_clock() used devm_add_action_or_reset() to call
+mt8186_deinit_clock() but, because of the intervening devm functions,
+the order was wrong.
 
-              | Mperf              || RAPL        || Idle_Stats
- PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
-   0|   0|   0| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   0| 256| 84.62| 15.38|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   1|   1| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   1| 257| 84.08| 15.92|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   2|   2| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   2| 258| 83.26| 16.74|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   3|   3| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   3| 259| 83.60| 16.40|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   4|   4| 86.33| 13.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   4| 260| 83.33| 16.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   5|   5| 86.06| 13.94|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   5| 261| 83.05| 16.95|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   6|   6| 85.51| 14.49|  2695||168659003|3970468||  0.00|  0.00| 0.00
+Specifically at probe time, the order was:
+1. mt8186_audsys_clk_register()
+2. afe_priv->clk = devm_kcalloc(...)
+3. afe_priv->clk[i] = devm_clk_get(...)
 
-After fix: (System 100% busy)
+At remove time, the order (which should have been 3, 2, 1) was:
+1. mt8186_audsys_clk_unregister()
+3. Free all of afe_priv->clk[i]
+2. Free afe_priv->clk
 
-             | Mperf              || RAPL        || Idle_Stats
- PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
-   0|   0|   0| 98.03|  1.97|  2415||163295480|3811189||  0.00|  0.00| 0.00
-   0|   0| 256| 98.50|  1.50|  2394||163295480|3811189||  0.00|  0.00| 0.00
-   0|   1|   1| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   1| 257| 99.99|  0.01|  2375||163295480|3811189||  0.00|  0.00| 0.00
-   0|   2|   2| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   2| 258|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   3|   3|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   3| 259| 99.99|  0.01|  2435||163295480|3811189||  0.00|  0.00| 0.00
-   0|   4|   4|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   4| 260|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
-   0|   5|   5| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   5| 261|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
-   0|   6|   6|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   6| 262|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
+The above seemed to be causing a use-after-free. Luckily, it's easy to
+fix this by simply using devm more correctly. Let's move the
+devm_add_action_or_reset() to the right place. In addition to fixing
+the use-after-free, code inspection shows that this fixes a leak
+(missing call to mt8186_audsys_clk_unregister()) that would have
+happened if any of the syscon_regmap_lookup_by_phandle() calls in
+mt8186_init_clock() had failed.
 
-Cc: Thomas Renninger <trenn@suse.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Dominik Brodowski <linux@dominikbrodowski.net>
-
-Fixes: 7fe2f6399a84 ("cpupowerutils - cpufrequtils extended with quite some features")
-Signed-off-by: Wyes Karny <wyes.karny@amd.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 55b423d5623c ("ASoC: mediatek: mt8186: support audio clock control in platform driver")
+Signed-off-by: Douglas Anderson <dianders@chromium.org
+Link: https://lore.kernel.org/r/20230511092437.1.I31cceffc8c45bb1af16eb613e197b3df92cdc19e@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../utils/idle_monitor/mperf_monitor.c        | 31 +++++++++----------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ sound/soc/mediatek/mt8186/mt8186-afe-clk.c    |  6 ---
+ sound/soc/mediatek/mt8186/mt8186-afe-clk.h    |  1 -
+ sound/soc/mediatek/mt8186/mt8186-afe-pcm.c    |  4 --
+ sound/soc/mediatek/mt8186/mt8186-audsys-clk.c | 46 ++++++++++---------
+ sound/soc/mediatek/mt8186/mt8186-audsys-clk.h |  1 -
+ 5 files changed, 24 insertions(+), 34 deletions(-)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index e7d48cb563c0e..ae6af354a81db 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -70,8 +70,8 @@ static int max_freq_mode;
-  */
- static unsigned long max_frequency;
+diff --git a/sound/soc/mediatek/mt8186/mt8186-afe-clk.c b/sound/soc/mediatek/mt8186/mt8186-afe-clk.c
+index a6b4f29049bbc..539e3a023bc4e 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-afe-clk.c
++++ b/sound/soc/mediatek/mt8186/mt8186-afe-clk.c
+@@ -644,9 +644,3 @@ int mt8186_init_clock(struct mtk_base_afe *afe)
  
--static unsigned long long tsc_at_measure_start;
--static unsigned long long tsc_at_measure_end;
-+static unsigned long long *tsc_at_measure_start;
-+static unsigned long long *tsc_at_measure_end;
- static unsigned long long *mperf_previous_count;
- static unsigned long long *aperf_previous_count;
- static unsigned long long *mperf_current_count;
-@@ -169,7 +169,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
- 	aperf_diff = aperf_current_count[cpu] - aperf_previous_count[cpu];
- 
- 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
--		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
-+		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
- 		*percent = 100.0 * mperf_diff / tsc_diff;
- 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
- 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
-@@ -206,7 +206,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- 
- 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
- 		/* Calculate max_freq from TSC count */
--		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
-+		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
- 		time_diff = timespec_diff_us(time_start, time_end);
- 		max_frequency = tsc_diff / time_diff;
+ 	return 0;
+ }
+-
+-void mt8186_deinit_clock(void *priv)
+-{
+-	struct mtk_base_afe *afe = priv;
+-	mt8186_audsys_clk_unregister(afe);
+-}
+diff --git a/sound/soc/mediatek/mt8186/mt8186-afe-clk.h b/sound/soc/mediatek/mt8186/mt8186-afe-clk.h
+index d5988717d8f2d..a9d59e506d9af 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-afe-clk.h
++++ b/sound/soc/mediatek/mt8186/mt8186-afe-clk.h
+@@ -81,7 +81,6 @@ enum {
+ struct mtk_base_afe;
+ int mt8186_set_audio_int_bus_parent(struct mtk_base_afe *afe, int clk_id);
+ int mt8186_init_clock(struct mtk_base_afe *afe);
+-void mt8186_deinit_clock(void *priv);
+ int mt8186_afe_enable_cgs(struct mtk_base_afe *afe);
+ void mt8186_afe_disable_cgs(struct mtk_base_afe *afe);
+ int mt8186_afe_enable_clock(struct mtk_base_afe *afe);
+diff --git a/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c b/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c
+index 41172a82103ee..a868a04ed4e7a 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c
++++ b/sound/soc/mediatek/mt8186/mt8186-afe-pcm.c
+@@ -2848,10 +2848,6 @@ static int mt8186_afe_pcm_dev_probe(struct platform_device *pdev)
+ 		return ret;
  	}
-@@ -225,33 +225,27 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- static int mperf_start(void)
- {
- 	int cpu;
--	unsigned long long dbg;
  
- 	clock_gettime(CLOCK_REALTIME, &time_start);
--	mperf_get_tsc(&tsc_at_measure_start);
+-	ret = devm_add_action_or_reset(dev, mt8186_deinit_clock, (void *)afe);
+-	if (ret)
+-		return ret;
+-
+ 	/* init memif */
+ 	afe->memif_32bit_supported = 0;
+ 	afe->memif_size = MT8186_MEMIF_NUM;
+diff --git a/sound/soc/mediatek/mt8186/mt8186-audsys-clk.c b/sound/soc/mediatek/mt8186/mt8186-audsys-clk.c
+index 578969ca91c8e..5666be6b1bd2e 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-audsys-clk.c
++++ b/sound/soc/mediatek/mt8186/mt8186-audsys-clk.c
+@@ -84,6 +84,29 @@ static const struct afe_gate aud_clks[CLK_AUD_NR_CLK] = {
+ 	GATE_AUD2(CLK_AUD_ETDM_OUT1_BCLK, "aud_etdm_out1_bclk", "top_audio", 24),
+ };
  
--	for (cpu = 0; cpu < cpu_count; cpu++)
-+	for (cpu = 0; cpu < cpu_count; cpu++) {
-+		mperf_get_tsc(&tsc_at_measure_start[cpu]);
- 		mperf_init_stats(cpu);
++static void mt8186_audsys_clk_unregister(void *data)
++{
++	struct mtk_base_afe *afe = data;
++	struct mt8186_afe_private *afe_priv = afe->platform_priv;
++	struct clk *clk;
++	struct clk_lookup *cl;
++	int i;
++
++	if (!afe_priv)
++		return;
++
++	for (i = 0; i < CLK_AUD_NR_CLK; i++) {
++		cl = afe_priv->lookup[i];
++		if (!cl)
++			continue;
++
++		clk = cl->clk;
++		clk_unregister_gate(clk);
++
++		clkdev_drop(cl);
 +	}
- 
--	mperf_get_tsc(&dbg);
--	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_start);
- 	return 0;
- }
- 
- static int mperf_stop(void)
++}
++
+ int mt8186_audsys_clk_register(struct mtk_base_afe *afe)
  {
--	unsigned long long dbg;
- 	int cpu;
+ 	struct mt8186_afe_private *afe_priv = afe->platform_priv;
+@@ -124,27 +147,6 @@ int mt8186_audsys_clk_register(struct mtk_base_afe *afe)
+ 		afe_priv->lookup[i] = cl;
+ 	}
  
--	for (cpu = 0; cpu < cpu_count; cpu++)
-+	for (cpu = 0; cpu < cpu_count; cpu++) {
- 		mperf_measure_stats(cpu);
-+		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+	}
- 
--	mperf_get_tsc(&tsc_at_measure_end);
- 	clock_gettime(CLOCK_REALTIME, &time_end);
--
--	mperf_get_tsc(&dbg);
--	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_end);
--
- 	return 0;
+-	return 0;
++	return devm_add_action_or_reset(afe->dev, mt8186_audsys_clk_unregister, afe);
  }
  
-@@ -353,7 +347,8 @@ struct cpuidle_monitor *mperf_register(void)
- 	aperf_previous_count = calloc(cpu_count, sizeof(unsigned long long));
- 	mperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
- 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
+-void mt8186_audsys_clk_unregister(struct mtk_base_afe *afe)
+-{
+-	struct mt8186_afe_private *afe_priv = afe->platform_priv;
+-	struct clk *clk;
+-	struct clk_lookup *cl;
+-	int i;
 -
-+	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
-+	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
- 	mperf_monitor.name_len = strlen(mperf_monitor.name);
- 	return &mperf_monitor;
- }
-@@ -364,6 +359,8 @@ void mperf_unregister(void)
- 	free(aperf_previous_count);
- 	free(mperf_current_count);
- 	free(aperf_current_count);
-+	free(tsc_at_measure_start);
-+	free(tsc_at_measure_end);
- 	free(is_valid);
- }
+-	if (!afe_priv)
+-		return;
+-
+-	for (i = 0; i < CLK_AUD_NR_CLK; i++) {
+-		cl = afe_priv->lookup[i];
+-		if (!cl)
+-			continue;
+-
+-		clk = cl->clk;
+-		clk_unregister_gate(clk);
+-
+-		clkdev_drop(cl);
+-	}
+-}
+diff --git a/sound/soc/mediatek/mt8186/mt8186-audsys-clk.h b/sound/soc/mediatek/mt8186/mt8186-audsys-clk.h
+index b8d6a06e11e8d..897a2914dc191 100644
+--- a/sound/soc/mediatek/mt8186/mt8186-audsys-clk.h
++++ b/sound/soc/mediatek/mt8186/mt8186-audsys-clk.h
+@@ -10,6 +10,5 @@
+ #define _MT8186_AUDSYS_CLK_H_
  
+ int mt8186_audsys_clk_register(struct mtk_base_afe *afe);
+-void mt8186_audsys_clk_unregister(struct mtk_base_afe *afe);
+ 
+ #endif
 -- 
 2.39.2
 
