@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710D1171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:48:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4BFC4339B;
-	Mon, 22 May 2023 19:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EEF7171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:48:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9951C433EF;
+	Mon, 22 May 2023 19:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784924;
-	bh=Rj41/VQ+ui3LKRW+aOgx1qgoHAIEjwGLYVmkZLOSOUM=;
+	s=korg; t=1684784927;
+	bh=tU//H+mwOFHKrRXFJCG7ikaFb63ELcGyuos/IMH/KXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZi4BYDsRHJtwl7Bw86f5+DOgxEt+/4cJRIJep+lniJRsb0fsKqHqgUt5yAgrOx4e
-	 hHRV/F8kHuq8wiKPCKP9X/5oeWUDbZAP+DZx1/g2yuhNrhwB42WbHfP4nOmQRbt9gR
-	 DKAh5fT7I5xFDez7ZuH+E0IBYidHK1t0KVo3v9aw=
+	b=JERK/MmEvoS7TQXvsxVgheeR9O1A7tEHhUn1HQF4+dcvnBnr07ihTdCSch55jVQym
+	 7Bh/Ui1/MbCIch1BWhl8OXVYxh+4/Y3rZPLlsyxVQQeG140dI1zzbIMcpNiyHZEipM
+	 Usx0fo/zc68hDFtYSGAi96p9+M+LxptVQfJXMfIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	pinkperfect2021@gmail.com,
-	Rob Clark <robdclark@chromium.org>,
+	NeilBrown <neilb@suse.de>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 220/364] drm/msm: Fix submit error-path leaks
-Date: Mon, 22 May 2023 20:08:45 +0100
-Message-Id: <20230522190418.207898693@linuxfoundation.org>
+Subject: [PATCH 6.3 247/364] SUNRPC: always free ctxt when freeing deferred request
+Date: Mon, 22 May 2023 20:09:12 +0100
+Message-Id: <20230522190418.871586563@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,85 +36,265 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: NeilBrown <neilb@suse.de>
 
-[ Upstream commit 68dc6c2d5eec45515855cce99256162f45651a0b ]
+[ Upstream commit 948f072ada23e0a504c5e4d7d71d4c83bd0785ec ]
 
-For errors after msm_submitqueue_get(), we need to drop the submitqueue
-reference.  Additionally after get_unused_fd() we need to drop the fd.
-The ordering for dropping the queue lock and put_unused_fd() is not
-important, so just move this all into out_post_unlock.
+Since the ->xprt_ctxt pointer was added to svc_deferred_req, it has not
+been sufficient to use kfree() to free a deferred request.  We may need
+to free the ctxt as well.
 
-v2: Only drop queue ref if submit doesn't take it
-v3: Fix unitialized submit ref in error path
-v4: IS_ERR_OR_NULL()
+As freeing the ctxt is all that ->xpo_release_rqst() does, we repurpose
+it to explicit do that even when the ctxt is not stored in an rqst.
+So we now have ->xpo_release_ctxt() which is given an xprt and a ctxt,
+which may have been taken either from an rqst or from a dreq.  The
+caller is now responsible for clearing that pointer after the call to
+->xpo_release_ctxt.
 
-Reported-by: pinkperfect2021@gmail.com
-Fixes: f0de40a131d9 drm/msm: ("Reorder lock vs submit alloc")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Patchwork: https://patchwork.freedesktop.org/patch/536073/
-Link: https://lore.kernel.org/r/20230509203041.440619-1-robdclark@gmail.com
+We also clear dr->xprt_ctxt when the ctxt is moved into a new rqst when
+revisiting a deferred request.  This ensures there is only one pointer
+to the ctxt, so the risk of double freeing in future is reduced.  The
+new code in svc_xprt_release which releases both the ctxt and any
+rq_deferred depends on this.
+
+Fixes: 773f91b2cf3f ("SUNRPC: Fix NFSD's request deferral on RDMA transports")
+Signed-off-by: NeilBrown <neilb@suse.de>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ include/linux/sunrpc/svc_rdma.h          |  2 +-
+ include/linux/sunrpc/svc_xprt.h          |  2 +-
+ net/sunrpc/svc_xprt.c                    | 23 +++++++++++++-----
+ net/sunrpc/svcsock.c                     | 30 +++++++++++++-----------
+ net/sunrpc/xprtrdma/svc_rdma_recvfrom.c  | 11 ++++-----
+ net/sunrpc/xprtrdma/svc_rdma_transport.c |  2 +-
+ 6 files changed, 41 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index ac8ed731f76d9..842dbf96af291 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -719,7 +719,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	struct msm_drm_private *priv = dev->dev_private;
- 	struct drm_msm_gem_submit *args = data;
- 	struct msm_file_private *ctx = file->driver_priv;
--	struct msm_gem_submit *submit;
-+	struct msm_gem_submit *submit = NULL;
- 	struct msm_gpu *gpu = priv->gpu;
- 	struct msm_gpu_submitqueue *queue;
- 	struct msm_ringbuffer *ring;
-@@ -766,13 +766,15 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 		out_fence_fd = get_unused_fd_flags(O_CLOEXEC);
- 		if (out_fence_fd < 0) {
- 			ret = out_fence_fd;
--			return ret;
-+			goto out_post_unlock;
- 		}
- 	}
+diff --git a/include/linux/sunrpc/svc_rdma.h b/include/linux/sunrpc/svc_rdma.h
+index 24aa159d29a7f..fbc4bd423b355 100644
+--- a/include/linux/sunrpc/svc_rdma.h
++++ b/include/linux/sunrpc/svc_rdma.h
+@@ -176,7 +176,7 @@ extern struct svc_rdma_recv_ctxt *
+ extern void svc_rdma_recv_ctxt_put(struct svcxprt_rdma *rdma,
+ 				   struct svc_rdma_recv_ctxt *ctxt);
+ extern void svc_rdma_flush_recv_queues(struct svcxprt_rdma *rdma);
+-extern void svc_rdma_release_rqst(struct svc_rqst *rqstp);
++extern void svc_rdma_release_ctxt(struct svc_xprt *xprt, void *ctxt);
+ extern int svc_rdma_recvfrom(struct svc_rqst *);
  
- 	submit = submit_create(dev, gpu, queue, args->nr_bos, args->nr_cmds);
--	if (IS_ERR(submit))
--		return PTR_ERR(submit);
-+	if (IS_ERR(submit)) {
-+		ret = PTR_ERR(submit);
-+		goto out_post_unlock;
-+	}
+ /* svc_rdma_rw.c */
+diff --git a/include/linux/sunrpc/svc_xprt.h b/include/linux/sunrpc/svc_xprt.h
+index 775368802762e..f725a3ac3406a 100644
+--- a/include/linux/sunrpc/svc_xprt.h
++++ b/include/linux/sunrpc/svc_xprt.h
+@@ -23,7 +23,7 @@ struct svc_xprt_ops {
+ 	int		(*xpo_sendto)(struct svc_rqst *);
+ 	int		(*xpo_result_payload)(struct svc_rqst *, unsigned int,
+ 					      unsigned int);
+-	void		(*xpo_release_rqst)(struct svc_rqst *);
++	void		(*xpo_release_ctxt)(struct svc_xprt *xprt, void *ctxt);
+ 	void		(*xpo_detach)(struct svc_xprt *);
+ 	void		(*xpo_free)(struct svc_xprt *);
+ 	void		(*xpo_kill_temp_xprt)(struct svc_xprt *);
+diff --git a/net/sunrpc/svc_xprt.c b/net/sunrpc/svc_xprt.c
+index feab34db870fe..767628776dc01 100644
+--- a/net/sunrpc/svc_xprt.c
++++ b/net/sunrpc/svc_xprt.c
+@@ -532,13 +532,23 @@ void svc_reserve(struct svc_rqst *rqstp, int space)
+ }
+ EXPORT_SYMBOL_GPL(svc_reserve);
  
- 	trace_msm_gpu_submit(pid_nr(submit->pid), ring->id, submit->ident,
- 		args->nr_bos, args->nr_cmds);
-@@ -955,11 +957,20 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	if (has_ww_ticket)
- 		ww_acquire_fini(&submit->ticket);
- out_unlock:
--	if (ret && (out_fence_fd >= 0))
--		put_unused_fd(out_fence_fd);
- 	mutex_unlock(&queue->lock);
- out_post_unlock:
--	msm_gem_submit_put(submit);
-+	if (ret && (out_fence_fd >= 0))
-+		put_unused_fd(out_fence_fd);
++static void free_deferred(struct svc_xprt *xprt, struct svc_deferred_req *dr)
++{
++	if (!dr)
++		return;
 +
-+	if (!IS_ERR_OR_NULL(submit)) {
-+		msm_gem_submit_put(submit);
-+	} else {
-+		/*
-+		 * If the submit hasn't yet taken ownership of the queue
-+		 * then we need to drop the reference ourself:
-+		 */
-+		msm_submitqueue_put(queue);
-+	}
- 	if (!IS_ERR_OR_NULL(post_deps)) {
- 		for (i = 0; i < args->nr_out_syncobjs; ++i) {
- 			kfree(post_deps[i].chain);
++	xprt->xpt_ops->xpo_release_ctxt(xprt, dr->xprt_ctxt);
++	kfree(dr);
++}
++
+ static void svc_xprt_release(struct svc_rqst *rqstp)
+ {
+ 	struct svc_xprt	*xprt = rqstp->rq_xprt;
+ 
+-	xprt->xpt_ops->xpo_release_rqst(rqstp);
++	xprt->xpt_ops->xpo_release_ctxt(xprt, rqstp->rq_xprt_ctxt);
++	rqstp->rq_xprt_ctxt = NULL;
+ 
+-	kfree(rqstp->rq_deferred);
++	free_deferred(xprt, rqstp->rq_deferred);
+ 	rqstp->rq_deferred = NULL;
+ 
+ 	pagevec_release(&rqstp->rq_pvec);
+@@ -1055,7 +1065,7 @@ static void svc_delete_xprt(struct svc_xprt *xprt)
+ 	spin_unlock_bh(&serv->sv_lock);
+ 
+ 	while ((dr = svc_deferred_dequeue(xprt)) != NULL)
+-		kfree(dr);
++		free_deferred(xprt, dr);
+ 
+ 	call_xpt_users(xprt);
+ 	svc_xprt_put(xprt);
+@@ -1177,8 +1187,8 @@ static void svc_revisit(struct cache_deferred_req *dreq, int too_many)
+ 	if (too_many || test_bit(XPT_DEAD, &xprt->xpt_flags)) {
+ 		spin_unlock(&xprt->xpt_lock);
+ 		trace_svc_defer_drop(dr);
++		free_deferred(xprt, dr);
+ 		svc_xprt_put(xprt);
+-		kfree(dr);
+ 		return;
+ 	}
+ 	dr->xprt = NULL;
+@@ -1223,14 +1233,13 @@ static struct cache_deferred_req *svc_defer(struct cache_req *req)
+ 		dr->addrlen = rqstp->rq_addrlen;
+ 		dr->daddr = rqstp->rq_daddr;
+ 		dr->argslen = rqstp->rq_arg.len >> 2;
+-		dr->xprt_ctxt = rqstp->rq_xprt_ctxt;
+ 
+ 		/* back up head to the start of the buffer and copy */
+ 		skip = rqstp->rq_arg.len - rqstp->rq_arg.head[0].iov_len;
+ 		memcpy(dr->args, rqstp->rq_arg.head[0].iov_base - skip,
+ 		       dr->argslen << 2);
+ 	}
+-	WARN_ON_ONCE(rqstp->rq_xprt_ctxt != dr->xprt_ctxt);
++	dr->xprt_ctxt = rqstp->rq_xprt_ctxt;
+ 	rqstp->rq_xprt_ctxt = NULL;
+ 	trace_svc_defer(rqstp);
+ 	svc_xprt_get(rqstp->rq_xprt);
+@@ -1264,6 +1273,8 @@ static noinline int svc_deferred_recv(struct svc_rqst *rqstp)
+ 	rqstp->rq_daddr       = dr->daddr;
+ 	rqstp->rq_respages    = rqstp->rq_pages;
+ 	rqstp->rq_xprt_ctxt   = dr->xprt_ctxt;
++
++	dr->xprt_ctxt = NULL;
+ 	svc_xprt_received(rqstp->rq_xprt);
+ 	return dr->argslen << 2;
+ }
+diff --git a/net/sunrpc/svcsock.c b/net/sunrpc/svcsock.c
+index 03a4f56150865..bf2d2cdca1185 100644
+--- a/net/sunrpc/svcsock.c
++++ b/net/sunrpc/svcsock.c
+@@ -112,27 +112,27 @@ static void svc_reclassify_socket(struct socket *sock)
+ #endif
+ 
+ /**
+- * svc_tcp_release_rqst - Release transport-related resources
+- * @rqstp: request structure with resources to be released
++ * svc_tcp_release_ctxt - Release transport-related resources
++ * @xprt: the transport which owned the context
++ * @ctxt: the context from rqstp->rq_xprt_ctxt or dr->xprt_ctxt
+  *
+  */
+-static void svc_tcp_release_rqst(struct svc_rqst *rqstp)
++static void svc_tcp_release_ctxt(struct svc_xprt *xprt, void *ctxt)
+ {
+ }
+ 
+ /**
+- * svc_udp_release_rqst - Release transport-related resources
+- * @rqstp: request structure with resources to be released
++ * svc_udp_release_ctxt - Release transport-related resources
++ * @xprt: the transport which owned the context
++ * @ctxt: the context from rqstp->rq_xprt_ctxt or dr->xprt_ctxt
+  *
+  */
+-static void svc_udp_release_rqst(struct svc_rqst *rqstp)
++static void svc_udp_release_ctxt(struct svc_xprt *xprt, void *ctxt)
+ {
+-	struct sk_buff *skb = rqstp->rq_xprt_ctxt;
++	struct sk_buff *skb = ctxt;
+ 
+-	if (skb) {
+-		rqstp->rq_xprt_ctxt = NULL;
++	if (skb)
+ 		consume_skb(skb);
+-	}
+ }
+ 
+ union svc_pktinfo_u {
+@@ -560,7 +560,8 @@ static int svc_udp_sendto(struct svc_rqst *rqstp)
+ 	unsigned int sent;
+ 	int err;
+ 
+-	svc_udp_release_rqst(rqstp);
++	svc_udp_release_ctxt(xprt, rqstp->rq_xprt_ctxt);
++	rqstp->rq_xprt_ctxt = NULL;
+ 
+ 	svc_set_cmsg_data(rqstp, cmh);
+ 
+@@ -632,7 +633,7 @@ static const struct svc_xprt_ops svc_udp_ops = {
+ 	.xpo_recvfrom = svc_udp_recvfrom,
+ 	.xpo_sendto = svc_udp_sendto,
+ 	.xpo_result_payload = svc_sock_result_payload,
+-	.xpo_release_rqst = svc_udp_release_rqst,
++	.xpo_release_ctxt = svc_udp_release_ctxt,
+ 	.xpo_detach = svc_sock_detach,
+ 	.xpo_free = svc_sock_free,
+ 	.xpo_has_wspace = svc_udp_has_wspace,
+@@ -1162,7 +1163,8 @@ static int svc_tcp_sendto(struct svc_rqst *rqstp)
+ 	unsigned int sent;
+ 	int err;
+ 
+-	svc_tcp_release_rqst(rqstp);
++	svc_tcp_release_ctxt(xprt, rqstp->rq_xprt_ctxt);
++	rqstp->rq_xprt_ctxt = NULL;
+ 
+ 	atomic_inc(&svsk->sk_sendqlen);
+ 	mutex_lock(&xprt->xpt_mutex);
+@@ -1207,7 +1209,7 @@ static const struct svc_xprt_ops svc_tcp_ops = {
+ 	.xpo_recvfrom = svc_tcp_recvfrom,
+ 	.xpo_sendto = svc_tcp_sendto,
+ 	.xpo_result_payload = svc_sock_result_payload,
+-	.xpo_release_rqst = svc_tcp_release_rqst,
++	.xpo_release_ctxt = svc_tcp_release_ctxt,
+ 	.xpo_detach = svc_tcp_sock_detach,
+ 	.xpo_free = svc_sock_free,
+ 	.xpo_has_wspace = svc_tcp_has_wspace,
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+index 1c658fa430633..a22fe7587fa6f 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_recvfrom.c
+@@ -239,21 +239,20 @@ void svc_rdma_recv_ctxt_put(struct svcxprt_rdma *rdma,
+ }
+ 
+ /**
+- * svc_rdma_release_rqst - Release transport-specific per-rqst resources
+- * @rqstp: svc_rqst being released
++ * svc_rdma_release_ctxt - Release transport-specific per-rqst resources
++ * @xprt: the transport which owned the context
++ * @vctxt: the context from rqstp->rq_xprt_ctxt or dr->xprt_ctxt
+  *
+  * Ensure that the recv_ctxt is released whether or not a Reply
+  * was sent. For example, the client could close the connection,
+  * or svc_process could drop an RPC, before the Reply is sent.
+  */
+-void svc_rdma_release_rqst(struct svc_rqst *rqstp)
++void svc_rdma_release_ctxt(struct svc_xprt *xprt, void *vctxt)
+ {
+-	struct svc_rdma_recv_ctxt *ctxt = rqstp->rq_xprt_ctxt;
+-	struct svc_xprt *xprt = rqstp->rq_xprt;
++	struct svc_rdma_recv_ctxt *ctxt = vctxt;
+ 	struct svcxprt_rdma *rdma =
+ 		container_of(xprt, struct svcxprt_rdma, sc_xprt);
+ 
+-	rqstp->rq_xprt_ctxt = NULL;
+ 	if (ctxt)
+ 		svc_rdma_recv_ctxt_put(rdma, ctxt);
+ }
+diff --git a/net/sunrpc/xprtrdma/svc_rdma_transport.c b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+index 416b298f74ddb..ca04f7a6a085c 100644
+--- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
++++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
+@@ -80,7 +80,7 @@ static const struct svc_xprt_ops svc_rdma_ops = {
+ 	.xpo_recvfrom = svc_rdma_recvfrom,
+ 	.xpo_sendto = svc_rdma_sendto,
+ 	.xpo_result_payload = svc_rdma_result_payload,
+-	.xpo_release_rqst = svc_rdma_release_rqst,
++	.xpo_release_ctxt = svc_rdma_release_ctxt,
+ 	.xpo_detach = svc_rdma_detach,
+ 	.xpo_free = svc_rdma_free,
+ 	.xpo_has_wspace = svc_rdma_has_wspace,
 -- 
 2.39.2
 
