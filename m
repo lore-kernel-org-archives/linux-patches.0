@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B90171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:19:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B71C433EF;
-	Mon, 22 May 2023 19:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE4E171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:19:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA701C433EF;
+	Mon, 22 May 2023 19:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783193;
-	bh=E1BHQ8ALlyK3g2KPj3aT2XpdIgESoQEX7Z1BZvbZmGw=;
+	s=korg; t=1684783197;
+	bh=BtcZZjwoFE+Kpx3IvX0oQB/oHDEWqpJ3AWTZySHw8Jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GGqmqoDCWm9+VqrrfiHflQ1/JOWkp/bbzWfHtopaxulhrOkIZg17LhUjhmO99Hfcj
-	 xZDo8FVBTPVsyJLqt4A23EBEUAhRGCYhiIligWEsvHrvit24ZnV3numFiPGXyxGfug
-	 GoxVydrTgdNL82I/9TIQHeN2Xmym+WJZaEfmKWyA=
+	b=ZN8SK05UTuH5qmG9GGO38w4PtDFkJXAM8Jg0CDahsZE660oRsnQIvQCjC4c2In1JT
+	 jPd9XVUC51wHLETbQSv39Iu1fUU6SliGU9W9I8VsjGHly8pF/4ACtw5YULi8ZAbwEz
+	 hMaVOE4sse8VbOV5+Bs4HgxhDI6uVx99PquWukQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miller Hunter <MillerH@hearthnhome.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 169/203] xhci: Fix incorrect tracking of free space on transfer rings
-Date: Mon, 22 May 2023 20:09:53 +0100
-Message-Id: <20230522190359.659493793@linuxfoundation.org>
+	Olliver Schinagl <oliver@schinagl.nl>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 170/203] ALSA: hda: Fix Oops by 9.1 surround channel names
+Date: Mon, 22 May 2023 20:09:54 +0100
+Message-Id: <20230522190359.687222743@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -34,90 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit fe82f16aafdaf8002281d3b9524291d4a4a28460 upstream.
+commit 3b44ec8c5c44790a82f07e90db45643c762878c6 upstream.
 
-This incorrect tracking caused unnecessary ring expansion in some
-usecases which over days of use consume a lot of memory.
+get_line_out_pfx() may trigger an Oops by overflowing the static array
+with more than 8 channels.  This was reported for MacBookPro 12,1 with
+Cirrus codec.
 
-xhci driver tries to keep track of free transfer blocks (TRBs) on the
-ring buffer, but failed to add back some cancelled transfers that were
-turned into no-op operations instead of just moving past them.
+As a workaround, extend for the 9.1 channels and also fix the
+potential Oops by unifying the code paths accessing the same array
+with the proper size check.
 
-This can happen if there are several queued pending transfers which
-then are cancelled in reverse order.
-
-Solve this by counting the numer of steps we move the dequeue pointer
-once we complete a transfer, and add it to the number of free trbs
-instead of just adding the trb number of the current transfer.
-This way we ensure we count the no-op trbs on the way as well.
-
-Fixes: 55f6153d8cc8 ("xhci: remove extra loop in interrupt context")
-Cc: stable@vger.kernel.org
-Reported-by: Miller Hunter <MillerH@hearthnhome.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217242
-Tested-by: Miller Hunter <MillerH@hearthnhome.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230515134059.161110-3-mathias.nyman@linux.intel.com
+Reported-by: Olliver Schinagl <oliver@schinagl.nl>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/64d95eb0-dbdb-cff8-a8b1-988dc22b24cd@schinagl.nl
+Link: https://lore.kernel.org/r/20230516184412.24078-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |   29 ++++++++++++++++++++++++++++-
- 1 file changed, 28 insertions(+), 1 deletion(-)
+ sound/pci/hda/hda_generic.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -276,6 +276,26 @@ static void inc_enq(struct xhci_hcd *xhc
- 	trace_xhci_inc_enq(ring);
+--- a/sound/pci/hda/hda_generic.c
++++ b/sound/pci/hda/hda_generic.c
+@@ -1155,8 +1155,8 @@ static bool path_has_mixer(struct hda_co
+ 	return path && path->ctls[ctl_type];
  }
  
-+static int xhci_num_trbs_to(struct xhci_segment *start_seg, union xhci_trb *start,
-+			    struct xhci_segment *end_seg, union xhci_trb *end,
-+			    unsigned int num_segs)
-+{
-+	union xhci_trb *last_on_seg;
-+	int num = 0;
-+	int i = 0;
-+
-+	do {
-+		if (start_seg == end_seg && end >= start)
-+			return num + (end - start);
-+		last_on_seg = &start_seg->trbs[TRBS_PER_SEGMENT - 1];
-+		num += last_on_seg - start;
-+		start_seg = start_seg->next;
-+		start = start_seg->trbs;
-+	} while (i++ <= num_segs);
-+
-+	return -EINVAL;
-+}
-+
- /*
-  * Check to see if there's room to enqueue num_trbs on the ring and make sure
-  * enqueue pointer will not advance into dequeue segment. See rules above.
-@@ -2207,6 +2227,7 @@ static int finish_td(struct xhci_hcd *xh
- 		     u32 trb_comp_code)
- {
- 	struct xhci_ep_ctx *ep_ctx;
-+	int trbs_freed;
+-static const char * const channel_name[4] = {
+-	"Front", "Surround", "CLFE", "Side"
++static const char * const channel_name[] = {
++	"Front", "Surround", "CLFE", "Side", "Back",
+ };
  
- 	ep_ctx = xhci_get_ep_ctx(xhci, ep->vdev->out_ctx, ep->ep_index);
+ /* give some appropriate ctl name prefix for the given line out channel */
+@@ -1182,7 +1182,7 @@ static const char *get_line_out_pfx(stru
  
-@@ -2278,9 +2299,15 @@ static int finish_td(struct xhci_hcd *xh
- 	}
+ 	/* multi-io channels */
+ 	if (ch >= cfg->line_outs)
+-		return channel_name[ch];
++		goto fixed_name;
  
- 	/* Update ring dequeue pointer */
-+	trbs_freed = xhci_num_trbs_to(ep_ring->deq_seg, ep_ring->dequeue,
-+				      td->last_trb_seg, td->last_trb,
-+				      ep_ring->num_segs);
-+	if (trbs_freed < 0)
-+		xhci_dbg(xhci, "Failed to count freed trbs at TD finish\n");
-+	else
-+		ep_ring->num_trbs_free += trbs_freed;
- 	ep_ring->dequeue = td->last_trb;
- 	ep_ring->deq_seg = td->last_trb_seg;
--	ep_ring->num_trbs_free += td->num_trbs - 1;
- 	inc_deq(xhci, ep_ring);
+ 	switch (cfg->line_out_type) {
+ 	case AUTO_PIN_SPEAKER_OUT:
+@@ -1234,6 +1234,7 @@ static const char *get_line_out_pfx(stru
+ 	if (cfg->line_outs == 1 && !spec->multi_ios)
+ 		return "Line Out";
  
- 	return xhci_td_cleanup(xhci, td, ep_ring, td->status);
++ fixed_name:
+ 	if (ch >= ARRAY_SIZE(channel_name)) {
+ 		snd_BUG();
+ 		return "PCM";
 
 
