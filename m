@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA15171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:32:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF038C433D2;
-	Mon, 22 May 2023 19:32:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51269171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:32:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA05C433D2;
+	Mon, 22 May 2023 19:32:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783960;
-	bh=RuIqrOWhVNq6wfeY7IQXdC0xsC9qnRZ9XLqRXpKLcEA=;
+	s=korg; t=1684783963;
+	bh=3IN/3BNRp4AN4gC0w/+NH+j/FFM3Rbe+QvxnUwuZK7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFcMWSGtVg150BRenj9zoAxZSPRJj0M5dirJ/zYgwuuJyfG5+fQKKcbco9d+8waY3
-	 mw1dGNbnDGCr5V4b9Ay6iKMfGL1EVMiTEpDtgpnGdt7Jq0synT04ukxreI8vgKF7aq
-	 9NL7vIphaQutFgI2oE/L3HBZHt08b0NjMJmIu84E=
+	b=u0Y9e9P7e9u2BeN3hrGkFAIrSzSce/JBHh18zHRe+JvxmvVNypMt2F/jXVltBq2bD
+	 uH0LBSU2QStsqVLM9tP6V4jX8MuRdDlf/Yvkl7v6nYTQ6a2Y85L6pNCC1pnGKTcGco
+	 3Xaeiegrxaf8vufO7Ig765n/kkf8Z+EVoxjota2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Samuel Wein PhD <sam@samwein.com>,
+	M Chetan Kumar <m.chetan.kumar@linux.intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 219/292] vlan: fix a potential uninit-value in vlan_dev_hard_start_xmit()
-Date: Mon, 22 May 2023 20:09:36 +0100
-Message-Id: <20230522190411.432194438@linuxfoundation.org>
+Subject: [PATCH 6.1 220/292] net: wwan: iosm: fix NULL pointer dereference when removing device
+Date: Mon, 22 May 2023 20:09:37 +0100
+Message-Id: <20230522190411.455996122@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,91 +37,152 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
 
-[ Upstream commit dacab578c7c6cd06c50c89dfa36b0e0f10decd4e ]
+[ Upstream commit 60829145f1e2650b31ebe6a0ec70a9725b38fa2c ]
 
-syzbot triggered the following splat [1], sending an empty message
-through pppoe_sendmsg().
+In suspend and resume cycle, the removal and rescan of device ends
+up in NULL pointer dereference.
 
-When VLAN_FLAG_REORDER_HDR flag is set, vlan_dev_hard_header()
-does not push extra bytes for the VLAN header, because vlan is offloaded.
+During driver initialization, if the ipc_imem_wwan_channel_init()
+fails to get the valid device capabilities it returns an error and
+further no resource (wwan struct) will be allocated. Now in this
+situation if driver removal procedure is initiated it would result
+in NULL pointer exception since unallocated wwan struct is dereferenced
+inside ipc_wwan_deinit().
 
-Unfortunately vlan_dev_hard_start_xmit() first reads veth->h_vlan_proto
-before testing (vlan->flags & VLAN_FLAG_REORDER_HDR).
+ipc_imem_run_state_worker() to handle the called functions return value
+and to release the resource in failure case. It also reports the link
+down event in failure cases. The user space application can handle this
+event to do a device reset for restoring the device communication.
 
-We need to swap the two conditions.
-
-[1]
-BUG: KMSAN: uninit-value in vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
-vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
-__netdev_start_xmit include/linux/netdevice.h:4883 [inline]
-netdev_start_xmit include/linux/netdevice.h:4897 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x253/0xa20 net/core/dev.c:3596
-__dev_queue_xmit+0x3c7f/0x5ac0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3053 [inline]
-pppoe_sendmsg+0xa93/0xb80 drivers/net/ppp/pppoe.c:900
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
-___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
-__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
-__do_sys_sendmmsg net/socket.c:2670 [inline]
-__se_sys_sendmmsg net/socket.c:2667 [inline]
-__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Uninit was created at:
-slab_post_alloc_hook+0x12d/0xb60 mm/slab.h:774
-slab_alloc_node mm/slub.c:3452 [inline]
-kmem_cache_alloc_node+0x543/0xab0 mm/slub.c:3497
-kmalloc_reserve+0x148/0x470 net/core/skbuff.c:520
-__alloc_skb+0x3a7/0x850 net/core/skbuff.c:606
-alloc_skb include/linux/skbuff.h:1277 [inline]
-sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2583
-pppoe_sendmsg+0x3af/0xb80 drivers/net/ppp/pppoe.c:867
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
-___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
-__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
-__do_sys_sendmmsg net/socket.c:2670 [inline]
-__se_sys_sendmmsg net/socket.c:2667 [inline]
-__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-CPU: 0 PID: 29770 Comm: syz-executor.0 Not tainted 6.3.0-rc6-syzkaller-gc478e5b17829 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Fixes: 3670970dd8c6 ("net: iosm: shared memory IPC interface")
+Reported-by: Samuel Wein PhD <sam@samwein.com>
+Closes: https://lore.kernel.org/netdev/20230427140819.1310f4bd@kernel.org/T/
+Signed-off-by: M Chetan Kumar <m.chetan.kumar@linux.intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/8021q/vlan_dev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wwan/iosm/iosm_ipc_imem.c     | 27 ++++++++++++++++++-----
+ drivers/net/wwan/iosm/iosm_ipc_imem_ops.c | 12 ++++++----
+ drivers/net/wwan/iosm/iosm_ipc_imem_ops.h |  6 +++--
+ 3 files changed, 33 insertions(+), 12 deletions(-)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index 07e86d03d4bae..d3e511e1eba8a 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -108,8 +108,8 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
- 	 * NOTE: THIS ASSUMES DIX ETHERNET, SPECIFICALLY NOT SUPPORTING
- 	 * OTHER THINGS LIKE FDDI/TokenRing/802.3 SNAPs...
- 	 */
--	if (veth->h_vlan_proto != vlan->vlan_proto ||
--	    vlan->flags & VLAN_FLAG_REORDER_HDR) {
-+	if (vlan->flags & VLAN_FLAG_REORDER_HDR ||
-+	    veth->h_vlan_proto != vlan->vlan_proto) {
- 		u16 vlan_tci;
- 		vlan_tci = vlan->vlan_id;
- 		vlan_tci |= vlan_dev_get_egress_qos_mask(dev, skb->priority);
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_imem.c b/drivers/net/wwan/iosm/iosm_ipc_imem.c
+index 1e6a479766429..8ccd4d26b9060 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_imem.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_imem.c
+@@ -565,24 +565,32 @@ static void ipc_imem_run_state_worker(struct work_struct *instance)
+ 	struct ipc_mux_config mux_cfg;
+ 	struct iosm_imem *ipc_imem;
+ 	u8 ctrl_chl_idx = 0;
++	int ret;
+ 
+ 	ipc_imem = container_of(instance, struct iosm_imem, run_state_worker);
+ 
+ 	if (ipc_imem->phase != IPC_P_RUN) {
+ 		dev_err(ipc_imem->dev,
+ 			"Modem link down. Exit run state worker.");
+-		return;
++		goto err_out;
+ 	}
+ 
+ 	if (test_and_clear_bit(IOSM_DEVLINK_INIT, &ipc_imem->flag))
+ 		ipc_devlink_deinit(ipc_imem->ipc_devlink);
+ 
+-	if (!ipc_imem_setup_cp_mux_cap_init(ipc_imem, &mux_cfg))
+-		ipc_imem->mux = ipc_mux_init(&mux_cfg, ipc_imem);
++	ret = ipc_imem_setup_cp_mux_cap_init(ipc_imem, &mux_cfg);
++	if (ret < 0)
++		goto err_out;
++
++	ipc_imem->mux = ipc_mux_init(&mux_cfg, ipc_imem);
++	if (!ipc_imem->mux)
++		goto err_out;
++
++	ret = ipc_imem_wwan_channel_init(ipc_imem, mux_cfg.protocol);
++	if (ret < 0)
++		goto err_ipc_mux_deinit;
+ 
+-	ipc_imem_wwan_channel_init(ipc_imem, mux_cfg.protocol);
+-	if (ipc_imem->mux)
+-		ipc_imem->mux->wwan = ipc_imem->wwan;
++	ipc_imem->mux->wwan = ipc_imem->wwan;
+ 
+ 	while (ctrl_chl_idx < IPC_MEM_MAX_CHANNELS) {
+ 		if (!ipc_chnl_cfg_get(&chnl_cfg_port, ctrl_chl_idx)) {
+@@ -615,6 +623,13 @@ static void ipc_imem_run_state_worker(struct work_struct *instance)
+ 
+ 	/* Complete all memory stores after setting bit */
+ 	smp_mb__after_atomic();
++
++	return;
++
++err_ipc_mux_deinit:
++	ipc_mux_deinit(ipc_imem->mux);
++err_out:
++	ipc_uevent_send(ipc_imem->dev, UEVENT_CD_READY_LINK_DOWN);
+ }
+ 
+ static void ipc_imem_handle_irq(struct iosm_imem *ipc_imem, int irq)
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_imem_ops.c b/drivers/net/wwan/iosm/iosm_ipc_imem_ops.c
+index 66b90cc4c3460..109cf89304888 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_imem_ops.c
++++ b/drivers/net/wwan/iosm/iosm_ipc_imem_ops.c
+@@ -77,8 +77,8 @@ int ipc_imem_sys_wwan_transmit(struct iosm_imem *ipc_imem,
+ }
+ 
+ /* Initialize wwan channel */
+-void ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
+-				enum ipc_mux_protocol mux_type)
++int ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
++			       enum ipc_mux_protocol mux_type)
+ {
+ 	struct ipc_chnl_cfg chnl_cfg = { 0 };
+ 
+@@ -87,7 +87,7 @@ void ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
+ 	/* If modem version is invalid (0xffffffff), do not initialize WWAN. */
+ 	if (ipc_imem->cp_version == -1) {
+ 		dev_err(ipc_imem->dev, "invalid CP version");
+-		return;
++		return -EIO;
+ 	}
+ 
+ 	ipc_chnl_cfg_get(&chnl_cfg, ipc_imem->nr_of_channels);
+@@ -104,9 +104,13 @@ void ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
+ 
+ 	/* WWAN registration. */
+ 	ipc_imem->wwan = ipc_wwan_init(ipc_imem, ipc_imem->dev);
+-	if (!ipc_imem->wwan)
++	if (!ipc_imem->wwan) {
+ 		dev_err(ipc_imem->dev,
+ 			"failed to register the ipc_wwan interfaces");
++		return -ENOMEM;
++	}
++
++	return 0;
+ }
+ 
+ /* Map SKB to DMA for transfer */
+diff --git a/drivers/net/wwan/iosm/iosm_ipc_imem_ops.h b/drivers/net/wwan/iosm/iosm_ipc_imem_ops.h
+index f8afb217d9e2f..026c5bd0f9992 100644
+--- a/drivers/net/wwan/iosm/iosm_ipc_imem_ops.h
++++ b/drivers/net/wwan/iosm/iosm_ipc_imem_ops.h
+@@ -91,9 +91,11 @@ int ipc_imem_sys_wwan_transmit(struct iosm_imem *ipc_imem, int if_id,
+  *				MUX.
+  * @ipc_imem:		Pointer to iosm_imem struct.
+  * @mux_type:		Type of mux protocol.
++ *
++ * Return: 0 on success and failure value on error
+  */
+-void ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
+-				enum ipc_mux_protocol mux_type);
++int ipc_imem_wwan_channel_init(struct iosm_imem *ipc_imem,
++			       enum ipc_mux_protocol mux_type);
+ 
+ /**
+  * ipc_imem_sys_devlink_open - Open a Flash/CD Channel link to CP
 -- 
 2.39.2
 
