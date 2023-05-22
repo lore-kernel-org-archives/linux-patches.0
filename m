@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E31D171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F68C433D2;
-	Mon, 22 May 2023 19:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E3A171B8
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5985AC433EF;
+	Mon, 22 May 2023 19:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785024;
-	bh=0WnkKj5M+LxC1wqQrmFpIQm+dlwfx9PBn2RL/tPeOE4=;
+	s=korg; t=1684785026;
+	bh=FadPT6YDaGuzJr5r/Vhs5mlz99FyK9JNltwt7oxBIA8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j3TpHXkKvPgc90rC4h6pxQr5DvY4he+77QKnFDFFhgM85U/iCTpZ1g3t1Gmtrk01S
-	 zsiu0Aoy0ueTQsmku1EAiwo57RAHRnpm2gB5IcaES8fFcMsx7gt62YDzJBiTwJVO67
-	 RUrp3799aJ6hrNPH63S+07iHLDAlcYVdul6Poeyo=
+	b=lwK5uIMclRTVlJsd+VKDG5KcbCIKIOYumjlGhgxyTNWld0LdZs33znUf5u8jK5Ix8
+	 IWEw19Ya8dg8M1TSIYu8c1QNz2Rk5fJ+sjX7LZR73u4nkBGY1MXu+y5XS86H2jb0RW
+	 mu6Lg/qrNlq/cftSemEUqO87z/2tXAaOSbjQOkks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Feng Liu <feliu@nvidia.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	William Tu <witu@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 254/364] net: fec: remove the xdp_return_frame when lack of tx BDs
-Date: Mon, 22 May 2023 20:09:19 +0100
-Message-Id: <20230522190419.054295526@linuxfoundation.org>
+Subject: [PATCH 6.3 255/364] virtio_net: Fix error unwinding of XDP initialization
+Date: Mon, 22 May 2023 20:09:20 +0100
+Message-Id: <20230522190419.078495509@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,35 +40,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Feng Liu <feliu@nvidia.com>
 
-[ Upstream commit 6ead9c98cafcbc6992cf35f0ca393df2c03e3316 ]
+[ Upstream commit 5306623a9826aa7d63b32c6a3803c798a765474d ]
 
-In the implementation, the sent_frame count does not increment when
-transmit errors occur. Therefore, bq_xmit_all() will take care of
-returning the XDP frames.
+When initializing XDP in virtnet_open(), some rq xdp initialization
+may hit an error causing net device open failed. However, previous
+rqs have already initialized XDP and enabled NAPI, which is not the
+expected behavior. Need to roll back the previous rq initialization
+to avoid leaks in error unwinding of init code.
 
-Fixes: 26312c685ae0 ("net: fec: correct the counting of XDP sent frames")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Also extract helper functions of disable and enable queue pairs.
+Use newly introduced disable helper function in error unwinding and
+virtnet_close. Use enable helper function in virtnet_open.
+
+Fixes: 754b8a21a96d ("virtio_net: setup xdp_rxq_info")
+Signed-off-by: Feng Liu <feliu@nvidia.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: William Tu <witu@nvidia.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/virtio_net.c | 61 +++++++++++++++++++++++++++++-----------
+ 1 file changed, 44 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 241df41d500f1..577d94821b3e7 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3798,7 +3798,6 @@ static int fec_enet_txq_xmit_frame(struct fec_enet_private *fep,
- 	entries_free = fec_enet_get_free_txdesc_num(txq);
- 	if (entries_free < MAX_SKB_FRAGS + 1) {
- 		netdev_err(fep->netdev, "NOT enough BD for SG!\n");
--		xdp_return_frame(frame);
- 		return NETDEV_TX_BUSY;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 744bdc8a1abd2..13ac7f1c7ae8c 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -1867,6 +1867,38 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
+ 	return received;
+ }
+ 
++static void virtnet_disable_queue_pair(struct virtnet_info *vi, int qp_index)
++{
++	virtnet_napi_tx_disable(&vi->sq[qp_index].napi);
++	napi_disable(&vi->rq[qp_index].napi);
++	xdp_rxq_info_unreg(&vi->rq[qp_index].xdp_rxq);
++}
++
++static int virtnet_enable_queue_pair(struct virtnet_info *vi, int qp_index)
++{
++	struct net_device *dev = vi->dev;
++	int err;
++
++	err = xdp_rxq_info_reg(&vi->rq[qp_index].xdp_rxq, dev, qp_index,
++			       vi->rq[qp_index].napi.napi_id);
++	if (err < 0)
++		return err;
++
++	err = xdp_rxq_info_reg_mem_model(&vi->rq[qp_index].xdp_rxq,
++					 MEM_TYPE_PAGE_SHARED, NULL);
++	if (err < 0)
++		goto err_xdp_reg_mem_model;
++
++	virtnet_napi_enable(vi->rq[qp_index].vq, &vi->rq[qp_index].napi);
++	virtnet_napi_tx_enable(vi, vi->sq[qp_index].vq, &vi->sq[qp_index].napi);
++
++	return 0;
++
++err_xdp_reg_mem_model:
++	xdp_rxq_info_unreg(&vi->rq[qp_index].xdp_rxq);
++	return err;
++}
++
+ static int virtnet_open(struct net_device *dev)
+ {
+ 	struct virtnet_info *vi = netdev_priv(dev);
+@@ -1880,22 +1912,20 @@ static int virtnet_open(struct net_device *dev)
+ 			if (!try_fill_recv(vi, &vi->rq[i], GFP_KERNEL))
+ 				schedule_delayed_work(&vi->refill, 0);
+ 
+-		err = xdp_rxq_info_reg(&vi->rq[i].xdp_rxq, dev, i, vi->rq[i].napi.napi_id);
++		err = virtnet_enable_queue_pair(vi, i);
+ 		if (err < 0)
+-			return err;
+-
+-		err = xdp_rxq_info_reg_mem_model(&vi->rq[i].xdp_rxq,
+-						 MEM_TYPE_PAGE_SHARED, NULL);
+-		if (err < 0) {
+-			xdp_rxq_info_unreg(&vi->rq[i].xdp_rxq);
+-			return err;
+-		}
+-
+-		virtnet_napi_enable(vi->rq[i].vq, &vi->rq[i].napi);
+-		virtnet_napi_tx_enable(vi, vi->sq[i].vq, &vi->sq[i].napi);
++			goto err_enable_qp;
  	}
  
+ 	return 0;
++
++err_enable_qp:
++	disable_delayed_refill(vi);
++	cancel_delayed_work_sync(&vi->refill);
++
++	for (i--; i >= 0; i--)
++		virtnet_disable_queue_pair(vi, i);
++	return err;
+ }
+ 
+ static int virtnet_poll_tx(struct napi_struct *napi, int budget)
+@@ -2304,11 +2334,8 @@ static int virtnet_close(struct net_device *dev)
+ 	/* Make sure refill_work doesn't re-enable napi! */
+ 	cancel_delayed_work_sync(&vi->refill);
+ 
+-	for (i = 0; i < vi->max_queue_pairs; i++) {
+-		virtnet_napi_tx_disable(&vi->sq[i].napi);
+-		napi_disable(&vi->rq[i].napi);
+-		xdp_rxq_info_unreg(&vi->rq[i].xdp_rxq);
+-	}
++	for (i = 0; i < vi->max_queue_pairs; i++)
++		virtnet_disable_queue_pair(vi, i);
+ 
+ 	return 0;
+ }
 -- 
 2.39.2
 
