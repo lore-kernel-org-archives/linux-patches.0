@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4E2171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C895C433EF;
-	Mon, 22 May 2023 19:16:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809EE171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFFFC433EF;
+	Mon, 22 May 2023 19:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782970;
-	bh=V+SRqTeOIQkCJr1YG3oqjich7N1hefNlgQc35gKG3p0=;
+	s=korg; t=1684782973;
+	bh=FPZW9RYcum9eLwAVB5+4M2/FwCzOdmOvrgItKVfLNws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p90fB+ZoLcxjvO5Hr7jSiocH8nS//hdj1di6LjC5/S03h9D4z2ag7NLeNWHIwGCfZ
-	 4aSGzqbnOEvuQkZ9Ddg7F2ZBGtRGBDmq/33bEOCVj3zv9csq0SBvdtmUBtWaYk0Vg+
-	 dv5zKXa59mnq/SCvyHLF+tkW1fONrCqi4LeW2w7w=
+	b=Sst9yyL29nuQ8J3wdEPW+iNcj39QUNcSjLKLAbGCmDC2mtvWNqtbEKnc1QExK4Msq
+	 NFeq16XBo/Zoabu3MP38o0mTQ9eLzMF5EjaqVJ+a0Z5czpf3sduieM+IWnUnI3XsGv
+	 gcAUkLBiokm6Xn3JqCGz+CVL1TksjnN4wBuwXUmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Zeng <zenghao@kylinos.cn>,
-	Steven Rostedt <rostedt@goodmis.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 087/203] recordmcount: Fix memory leaks in the uwrite function
-Date: Mon, 22 May 2023 20:08:31 +0100
-Message-Id: <20230522190357.397329178@linuxfoundation.org>
+Subject: [PATCH 5.15 096/203] clk: tegra20: fix gcc-7 constant overflow warning
+Date: Mon, 22 May 2023 20:08:40 +0100
+Message-Id: <20230522190357.645290143@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,46 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Zeng <zenghao@kylinos.cn>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit fa359d068574d29e7d2f0fdd0ebe4c6a12b5cfb9 ]
+[ Upstream commit b4a2adbf3586efa12fe78b9dec047423e01f3010 ]
 
-Common realloc mistake: 'file_append' nulled but not freed upon failure
+Older gcc versions get confused by comparing a u32 value to a negative
+constant in a switch()/case block:
 
-Link: https://lkml.kernel.org/r/20230426010527.703093-1-zenghao@kylinos.cn
+drivers/clk/tegra/clk-tegra20.c: In function 'tegra20_clk_measure_input_freq':
+drivers/clk/tegra/clk-tegra20.c:581:2: error: case label does not reduce to an integer constant
+  case OSC_CTRL_OSC_FREQ_12MHZ:
+  ^~~~
+drivers/clk/tegra/clk-tegra20.c:593:2: error: case label does not reduce to an integer constant
+  case OSC_CTRL_OSC_FREQ_26MHZ:
 
-Signed-off-by: Hao Zeng <zenghao@kylinos.cn>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Make the constants unsigned instead.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230227085914.2560984-1-arnd@kernel.org
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/recordmcount.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/clk/tegra/clk-tegra20.c | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/scripts/recordmcount.c b/scripts/recordmcount.c
-index cce12e1971d85..ec692af8ce9eb 100644
---- a/scripts/recordmcount.c
-+++ b/scripts/recordmcount.c
-@@ -102,6 +102,7 @@ static ssize_t uwrite(void const *const buf, size_t const count)
- {
- 	size_t cnt = count;
- 	off_t idx = 0;
-+	void *p = NULL;
+diff --git a/drivers/clk/tegra/clk-tegra20.c b/drivers/clk/tegra/clk-tegra20.c
+index d246a39a6b4f0..cc57ababc882d 100644
+--- a/drivers/clk/tegra/clk-tegra20.c
++++ b/drivers/clk/tegra/clk-tegra20.c
+@@ -18,24 +18,24 @@
+ #define MISC_CLK_ENB 0x48
  
- 	file_updated = 1;
+ #define OSC_CTRL 0x50
+-#define OSC_CTRL_OSC_FREQ_MASK (3<<30)
+-#define OSC_CTRL_OSC_FREQ_13MHZ (0<<30)
+-#define OSC_CTRL_OSC_FREQ_19_2MHZ (1<<30)
+-#define OSC_CTRL_OSC_FREQ_12MHZ (2<<30)
+-#define OSC_CTRL_OSC_FREQ_26MHZ (3<<30)
+-#define OSC_CTRL_MASK (0x3f2 | OSC_CTRL_OSC_FREQ_MASK)
+-
+-#define OSC_CTRL_PLL_REF_DIV_MASK (3<<28)
+-#define OSC_CTRL_PLL_REF_DIV_1		(0<<28)
+-#define OSC_CTRL_PLL_REF_DIV_2		(1<<28)
+-#define OSC_CTRL_PLL_REF_DIV_4		(2<<28)
++#define OSC_CTRL_OSC_FREQ_MASK (3u<<30)
++#define OSC_CTRL_OSC_FREQ_13MHZ (0u<<30)
++#define OSC_CTRL_OSC_FREQ_19_2MHZ (1u<<30)
++#define OSC_CTRL_OSC_FREQ_12MHZ (2u<<30)
++#define OSC_CTRL_OSC_FREQ_26MHZ (3u<<30)
++#define OSC_CTRL_MASK (0x3f2u | OSC_CTRL_OSC_FREQ_MASK)
++
++#define OSC_CTRL_PLL_REF_DIV_MASK	(3u<<28)
++#define OSC_CTRL_PLL_REF_DIV_1		(0u<<28)
++#define OSC_CTRL_PLL_REF_DIV_2		(1u<<28)
++#define OSC_CTRL_PLL_REF_DIV_4		(2u<<28)
  
-@@ -109,7 +110,10 @@ static ssize_t uwrite(void const *const buf, size_t const count)
- 		off_t aoffset = (file_ptr + count) - file_end;
+ #define OSC_FREQ_DET 0x58
+-#define OSC_FREQ_DET_TRIG (1<<31)
++#define OSC_FREQ_DET_TRIG (1u<<31)
  
- 		if (aoffset > file_append_size) {
--			file_append = realloc(file_append, aoffset);
-+			p = realloc(file_append, aoffset);
-+			if (!p)
-+				free(file_append);
-+			file_append = p;
- 			file_append_size = aoffset;
- 		}
- 		if (!file_append) {
+ #define OSC_FREQ_DET_STATUS 0x5c
+-#define OSC_FREQ_DET_BUSY (1<<31)
+-#define OSC_FREQ_DET_CNT_MASK 0xFFFF
++#define OSC_FREQ_DET_BUSYu (1<<31)
++#define OSC_FREQ_DET_CNT_MASK 0xFFFFu
+ 
+ #define TEGRA20_CLK_PERIPH_BANKS	3
+ 
 -- 
 2.39.2
 
