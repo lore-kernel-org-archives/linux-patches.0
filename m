@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B766171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC07C433EF;
-	Mon, 22 May 2023 19:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67141171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DB5C433EF;
+	Mon, 22 May 2023 19:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784704;
-	bh=x94HLNRbcLTPOqzvs73lGBziHJYvCWq2DfQX91kQl4k=;
+	s=korg; t=1684784707;
+	bh=RkcAtB480GYQA9hn42rA8rzoGc08MhttzYGEylxcyW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ln9xztDf9Ygf7RI9DGFMHwqpUVDUkCgu5peERtfhHhqwymlbe6n4hzwUZC5XE19Jp
-	 WXUrueu55TWAtcPfl1M2IqQ14UqQF4dhyDf5Oi87nIQ02q9llgTRllnZdh7uO+ylNX
-	 7NKY4I7TxiN9kqV+9Wmsgh9dxJKyvyUjfzkbKQyU=
+	b=sjOLIkYepeRC4vXBHrGy4cfBRYxiiyONXL8RpUxNAkaxlrmkXsTA8XFd2vviH0AZa
+	 udixBNIZFMh8ceBjROEcqUpVC9mMaR+eJXcloPQTWyVYne/JQZ7/LyZq3qecomceEV
+	 N1tYPnjUpLtqpnDHoG09flZd9sutdNpYUnNfXG1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Samuel=20=C4=8Cavoj?= <samuel@cavoj.net>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 156/364] usb: typec: ucsi: acpi: add quirk for ASUS Zenbook UM325
-Date: Mon, 22 May 2023 20:07:41 +0100
-Message-Id: <20230522190416.643406204@linuxfoundation.org>
+Subject: [PATCH 6.3 174/364] iommu/arm-smmu-qcom: Limit the SMR groups to 128
+Date: Mon, 22 May 2023 20:07:59 +0100
+Message-Id: <20230522190417.071028943@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,131 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Čavoj <samuel@cavoj.net>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 326e1c208f3f24d14b93f910b8ae32c94923d22c ]
+[ Upstream commit 12261134732689b7e30c59db9978f81230965181 ]
 
-On some ACPI platforms (namely the ASUS Zenbook UM325) the _DSM method must
-not be called after a notification is received but instead the mailbox
-should be read immediately from RAM. This is because the ACPI interrupt
-handler destroys the CCI in ERAM after copying to system memory, and when
-_DSM is later called to perform a second copy, it retrieves a garbage
-value.
+Some platforms support more than 128 stream matching groups than what is
+defined by the ARM SMMU architecture specification. But due to some unknown
+reasons, those additional groups don't exhibit the same behavior as the
+architecture supported ones.
 
-Instead, the _DSM(read) method should only be called when necessary, i.e.
-for polling the state after reset and for retrieving the version. Other
-reads should not call _DSM and only peek into the RAM region.
+For instance, the additional groups will not detect the quirky behavior of
+some firmware versions intercepting writes to S2CR register, thus skipping
+the quirk implemented in the driver and causing boot crash.
 
-This adds a separate read operation for the Zenbook that syncs the
-ACPI mailbox only with polled commands.
+So let's limit the groups to 128 for now until the issue with those groups
+are fixed and issue a notice to users in that case.
 
-Link: https://lore.kernel.org/linux-usb/20210823180626.tb6m7h5tp6adhvt2@fastboi.localdomain/
-Signed-off-by: Samuel Čavoj <samuel@cavoj.net>
-[ heikki : handling everything in ucsi_acpi.c with DMI quirk ]
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230405134456.49607-1-heikki.krogerus@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20230327080029.11584-1-manivannan.sadhasivam@linaro.org
+[will: Reworded the comment slightly]
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/ucsi/ucsi_acpi.c | 44 ++++++++++++++++++++++++++++--
- 1 file changed, 42 insertions(+), 2 deletions(-)
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_acpi.c b/drivers/usb/typec/ucsi/ucsi_acpi.c
-index 62206a6b8ea75..217355f1f9b94 100644
---- a/drivers/usb/typec/ucsi/ucsi_acpi.c
-+++ b/drivers/usb/typec/ucsi/ucsi_acpi.c
-@@ -9,6 +9,7 @@
- #include <linux/platform_device.h>
- #include <linux/module.h>
- #include <linux/acpi.h>
-+#include <linux/dmi.h>
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index d1b296b95c860..ae09c627bc844 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -268,12 +268,26 @@ static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
  
- #include "ucsi.h"
+ static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
+ {
+-	unsigned int last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
+ 	struct qcom_smmu *qsmmu = to_qcom_smmu(smmu);
++	unsigned int last_s2cr;
+ 	u32 reg;
+ 	u32 smr;
+ 	int i;
  
-@@ -23,6 +24,7 @@ struct ucsi_acpi {
- 	struct completion complete;
- 	unsigned long flags;
- 	guid_t guid;
-+	u64 cmd;
- };
- 
- static int ucsi_acpi_dsm(struct ucsi_acpi *ua, int func)
-@@ -62,6 +64,7 @@ static int ucsi_acpi_async_write(struct ucsi *ucsi, unsigned int offset,
- 	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
- 
- 	memcpy(ua->base + offset, val, val_len);
-+	ua->cmd = *(u64 *)val;
- 
- 	return ucsi_acpi_dsm(ua, UCSI_DSM_FUNC_WRITE);
- }
-@@ -93,13 +96,46 @@ static const struct ucsi_operations ucsi_acpi_ops = {
- 	.async_write = ucsi_acpi_async_write
- };
- 
-+static int
-+ucsi_zenbook_read(struct ucsi *ucsi, unsigned int offset, void *val, size_t val_len)
-+{
-+	struct ucsi_acpi *ua = ucsi_get_drvdata(ucsi);
-+	int ret;
-+
-+	if (offset == UCSI_VERSION || UCSI_COMMAND(ua->cmd) == UCSI_PPM_RESET) {
-+		ret = ucsi_acpi_dsm(ua, UCSI_DSM_FUNC_READ);
-+		if (ret)
-+			return ret;
++	/*
++	 * Some platforms support more than the Arm SMMU architected maximum of
++	 * 128 stream matching groups. For unknown reasons, the additional
++	 * groups don't exhibit the same behavior as the architected registers,
++	 * so limit the groups to 128 until the behavior is fixed for the other
++	 * groups.
++	 */
++	if (smmu->num_mapping_groups > 128) {
++		dev_notice(smmu->dev, "\tLimiting the stream matching groups to 128\n");
++		smmu->num_mapping_groups = 128;
 +	}
 +
-+	memcpy(val, ua->base + offset, val_len);
++	last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
 +
-+	return 0;
-+}
-+
-+static const struct ucsi_operations ucsi_zenbook_ops = {
-+	.read = ucsi_zenbook_read,
-+	.sync_write = ucsi_acpi_sync_write,
-+	.async_write = ucsi_acpi_async_write
-+};
-+
-+static const struct dmi_system_id zenbook_dmi_id[] = {
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "ZenBook UX325UA_UM325UA"),
-+		},
-+	},
-+	{ }
-+};
-+
- static void ucsi_acpi_notify(acpi_handle handle, u32 event, void *data)
- {
- 	struct ucsi_acpi *ua = data;
- 	u32 cci;
- 	int ret;
- 
--	ret = ucsi_acpi_read(ua->ucsi, UCSI_CCI, &cci, sizeof(cci));
-+	ret = ua->ucsi->ops->read(ua->ucsi, UCSI_CCI, &cci, sizeof(cci));
- 	if (ret)
- 		return;
- 
-@@ -114,6 +150,7 @@ static void ucsi_acpi_notify(acpi_handle handle, u32 event, void *data)
- static int ucsi_acpi_probe(struct platform_device *pdev)
- {
- 	struct acpi_device *adev = ACPI_COMPANION(&pdev->dev);
-+	const struct ucsi_operations *ops = &ucsi_acpi_ops;
- 	struct ucsi_acpi *ua;
- 	struct resource *res;
- 	acpi_status status;
-@@ -143,7 +180,10 @@ static int ucsi_acpi_probe(struct platform_device *pdev)
- 	init_completion(&ua->complete);
- 	ua->dev = &pdev->dev;
- 
--	ua->ucsi = ucsi_create(&pdev->dev, &ucsi_acpi_ops);
-+	if (dmi_check_system(zenbook_dmi_id))
-+		ops = &ucsi_zenbook_ops;
-+
-+	ua->ucsi = ucsi_create(&pdev->dev, ops);
- 	if (IS_ERR(ua->ucsi))
- 		return PTR_ERR(ua->ucsi);
- 
+ 	/*
+ 	 * With some firmware versions writes to S2CR of type FAULT are
+ 	 * ignored, and writing BYPASS will end up written as FAULT in the
 -- 
 2.39.2
 
