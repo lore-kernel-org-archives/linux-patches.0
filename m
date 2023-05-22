@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8883F14AB3
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BE0C43442;
-	Mon, 22 May 2023 19:29:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2C014AB3
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4CCC433EF;
+	Mon, 22 May 2023 19:29:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783788;
-	bh=wGT97he5IZkvaL+oOQ1oBZkiZbllOiIc5RXfzruWW5w=;
+	s=korg; t=1684783791;
+	bh=9fRzOBzKY291XYpQRoelvNJbIx6XAFqYv/8NKID3o24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nuvj+wS26iCRSHXNAFHZ00tXW+OiS/RkRb8A+2rjiN9DRMzqUQ2KF74oGVSJjg9Ti
-	 +I0gEqph7prSpJ4eE0QU9EE+bzZtseLQRyB+s4NWNPYIrOq8kABnxLzV99nl1sMqtY
-	 fHeFuQTyxUqk6kOBmK4fomg+ZoCR4ftEkDJdwbYA=
+	b=octwoQhO3lyLvcAyDE57aiH7YR7aXVUBCnJVNCe7MDAwzqc6Kw6lb7LekK+XZQtdc
+	 cqdYv8SH22C0fkwhaDGlK3fZ3rqd0kgO6AKbvUxU1ftDIebHtZPbVWPD0QMGb/+GYy
+	 ST8WegUFf0ZXNJ/ezKfPv10FN24dv1lqa6vpk2yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Brunner <tobias@strongswan.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	pinkperfect2021@gmail.com,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/292] af_key: Reject optional tunnel/BEET mode templates in outbound policies
-Date: Mon, 22 May 2023 20:08:39 +0100
-Message-Id: <20230522190410.015353349@linuxfoundation.org>
+Subject: [PATCH 6.1 163/292] drm/msm: Fix submit error-path leaks
+Date: Mon, 22 May 2023 20:08:40 +0100
+Message-Id: <20230522190410.040283447@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,68 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Brunner <tobias@strongswan.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit cf3128a7aca55b2eefb68281d44749c683bdc96f ]
+[ Upstream commit 68dc6c2d5eec45515855cce99256162f45651a0b ]
 
-xfrm_state_find() uses `encap_family` of the current template with
-the passed local and remote addresses to find a matching state.
-If an optional tunnel or BEET mode template is skipped in a mixed-family
-scenario, there could be a mismatch causing an out-of-bounds read as
-the addresses were not replaced to match the family of the next template.
+For errors after msm_submitqueue_get(), we need to drop the submitqueue
+reference.  Additionally after get_unused_fd() we need to drop the fd.
+The ordering for dropping the queue lock and put_unused_fd() is not
+important, so just move this all into out_post_unlock.
 
-While there are theoretical use cases for optional templates in outbound
-policies, the only practical one is to skip IPComp states in inbound
-policies if uncompressed packets are received that are handled by an
-implicitly created IPIP state instead.
+v2: Only drop queue ref if submit doesn't take it
+v3: Fix unitialized submit ref in error path
+v4: IS_ERR_OR_NULL()
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Tobias Brunner <tobias@strongswan.org>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Reported-by: pinkperfect2021@gmail.com
+Fixes: f0de40a131d9 drm/msm: ("Reorder lock vs submit alloc")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Patchwork: https://patchwork.freedesktop.org/patch/536073/
+Link: https://lore.kernel.org/r/20230509203041.440619-1-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/key/af_key.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/msm_gem_submit.c | 25 ++++++++++++++++++-------
+ 1 file changed, 18 insertions(+), 7 deletions(-)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index 95edcbedf6ef2..8c21de50eadf8 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -1940,7 +1940,8 @@ static u32 gen_reqid(struct net *net)
- }
+diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+index d8c9d184190bb..d6162561141c5 100644
+--- a/drivers/gpu/drm/msm/msm_gem_submit.c
++++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+@@ -709,7 +709,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct drm_msm_gem_submit *args = data;
+ 	struct msm_file_private *ctx = file->driver_priv;
+-	struct msm_gem_submit *submit;
++	struct msm_gem_submit *submit = NULL;
+ 	struct msm_gpu *gpu = priv->gpu;
+ 	struct msm_gpu_submitqueue *queue;
+ 	struct msm_ringbuffer *ring;
+@@ -756,13 +756,15 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 		out_fence_fd = get_unused_fd_flags(O_CLOEXEC);
+ 		if (out_fence_fd < 0) {
+ 			ret = out_fence_fd;
+-			return ret;
++			goto out_post_unlock;
+ 		}
+ 	}
  
- static int
--parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
-+parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_policy *pol,
-+		   struct sadb_x_ipsecrequest *rq)
- {
- 	struct net *net = xp_net(xp);
- 	struct xfrm_tmpl *t = xp->xfrm_vec + xp->xfrm_nr;
-@@ -1958,9 +1959,12 @@ parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
- 	if ((mode = pfkey_mode_to_xfrm(rq->sadb_x_ipsecrequest_mode)) < 0)
- 		return -EINVAL;
- 	t->mode = mode;
--	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE)
-+	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE) {
-+		if ((mode == XFRM_MODE_TUNNEL || mode == XFRM_MODE_BEET) &&
-+		    pol->sadb_x_policy_dir == IPSEC_DIR_OUTBOUND)
-+			return -EINVAL;
- 		t->optional = 1;
--	else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
-+	} else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
- 		t->reqid = rq->sadb_x_ipsecrequest_reqid;
- 		if (t->reqid > IPSEC_MANUAL_REQID_MAX)
- 			t->reqid = 0;
-@@ -2002,7 +2006,7 @@ parse_ipsecrequests(struct xfrm_policy *xp, struct sadb_x_policy *pol)
- 		    rq->sadb_x_ipsecrequest_len < sizeof(*rq))
- 			return -EINVAL;
+ 	submit = submit_create(dev, gpu, queue, args->nr_bos, args->nr_cmds);
+-	if (IS_ERR(submit))
+-		return PTR_ERR(submit);
++	if (IS_ERR(submit)) {
++		ret = PTR_ERR(submit);
++		goto out_post_unlock;
++	}
  
--		if ((err = parse_ipsecrequest(xp, rq)) < 0)
-+		if ((err = parse_ipsecrequest(xp, pol, rq)) < 0)
- 			return err;
- 		len -= rq->sadb_x_ipsecrequest_len;
- 		rq = (void*)((u8*)rq + rq->sadb_x_ipsecrequest_len);
+ 	trace_msm_gpu_submit(pid_nr(submit->pid), ring->id, submit->ident,
+ 		args->nr_bos, args->nr_cmds);
+@@ -945,11 +947,20 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+ 	if (has_ww_ticket)
+ 		ww_acquire_fini(&submit->ticket);
+ out_unlock:
+-	if (ret && (out_fence_fd >= 0))
+-		put_unused_fd(out_fence_fd);
+ 	mutex_unlock(&queue->lock);
+ out_post_unlock:
+-	msm_gem_submit_put(submit);
++	if (ret && (out_fence_fd >= 0))
++		put_unused_fd(out_fence_fd);
++
++	if (!IS_ERR_OR_NULL(submit)) {
++		msm_gem_submit_put(submit);
++	} else {
++		/*
++		 * If the submit hasn't yet taken ownership of the queue
++		 * then we need to drop the reference ourself:
++		 */
++		msm_submitqueue_put(queue);
++	}
+ 	if (!IS_ERR_OR_NULL(post_deps)) {
+ 		for (i = 0; i < args->nr_out_syncobjs; ++i) {
+ 			kfree(post_deps[i].chain);
 -- 
 2.39.2
 
