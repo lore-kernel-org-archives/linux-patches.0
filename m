@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFBF171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:31:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147B9C433EF;
-	Mon, 22 May 2023 19:31:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE06171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:31:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D05BEC433D2;
+	Mon, 22 May 2023 19:31:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783882;
-	bh=VLEATu1x539o1+vwaElZ7izbKFwZ+xJDmw3HMOEdpdc=;
+	s=korg; t=1684783885;
+	bh=IFEBrqkFNligTSRN5SBcEC4iTPYK4F2E1QmG7PX9BQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y1Qjljfgbqry0e1JwguuntSU1oLLJRRh1qvZeBnJutVYF+H4FBEKysJGaXgfLw0Se
-	 pkBaeaU5bsPGtmNIFIAnJhZjBJH4oZ3wI+OXBychlhqpQkdLkzSCrodqgHKsz6WNO6
-	 oowQce1wMuK785/XhI2/DSETSu6WF8hjpONaIP8w=
+	b=tX2xY8DPIekQDziiyZSBwvwn9cbgtp8Jr1Gj0V4THxgS8p+9LRMLVXtIzpDXBBt/o
+	 FtdtlvUPG83+fdX80x7nhOcVHkc02lUVrK+szFV/oAxV73RA2rnX+4tyz0uDBZmkNr
+	 mRbsdinHt8NHaBKwzoHNvnM+adwYNqMFQfC1WyW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	XuDong Liu <m202071377@hust.edu.cn>,
-	Doug Berger <opendmb@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Parav Pandit <parav@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 175/292] serial: 8250_bcm7271: balance clk_enable calls
-Date: Mon, 22 May 2023 20:08:52 +0100
-Message-Id: <20230522190410.336623610@linuxfoundation.org>
+Subject: [PATCH 6.1 193/292] virtio-net: Maintain reverse cleanup order
+Date: Mon, 22 May 2023 20:09:10 +0100
+Message-Id: <20230522190410.783432356@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,55 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Doug Berger <opendmb@gmail.com>
+From: Parav Pandit <parav@nvidia.com>
 
-[ Upstream commit 8a3b5477256a54ae4a470dcebbcf8cdc18e4696d ]
+[ Upstream commit 27369c9c2b722617063d6b80c758ab153f1d95d4 ]
 
-The sw_baud clock must be disabled when the device driver is not
-connected to the device. This now occurs when probe fails and
-upon remove.
+To easily audit the code, better to keep the device stop()
+sequence to be mirror of the device open() sequence.
 
-Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
-Reported-by: XuDong Liu <m202071377@hust.edu.cn>
-Link: https://lore.kernel.org/lkml/20230424125100.4783-1-m202071377@hust.edu.cn/
-Signed-off-by: Doug Berger <opendmb@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230427181916.2983697-2-opendmb@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Parav Pandit <parav@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 5306623a9826 ("virtio_net: Fix error unwinding of XDP initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_bcm7271.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/virtio_net.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_bcm7271.c b/drivers/tty/serial/8250/8250_bcm7271.c
-index 36e31b96ef4a5..1f0095cf57a7e 100644
---- a/drivers/tty/serial/8250/8250_bcm7271.c
-+++ b/drivers/tty/serial/8250/8250_bcm7271.c
-@@ -1034,7 +1034,7 @@ static int brcmuart_probe(struct platform_device *pdev)
- 	if (clk_rate == 0) {
- 		dev_err(dev, "clock-frequency or clk not defined\n");
- 		ret = -EINVAL;
--		goto release_dma;
-+		goto err_clk_disable;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 9a612b13b4e46..08a23ba3d68a2 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -2158,9 +2158,9 @@ static int virtnet_close(struct net_device *dev)
+ 	cancel_delayed_work_sync(&vi->refill);
+ 
+ 	for (i = 0; i < vi->max_queue_pairs; i++) {
++		virtnet_napi_tx_disable(&vi->sq[i].napi);
+ 		napi_disable(&vi->rq[i].napi);
+ 		xdp_rxq_info_unreg(&vi->rq[i].xdp_rxq);
+-		virtnet_napi_tx_disable(&vi->sq[i].napi);
  	}
  
- 	dev_dbg(dev, "DMA is %senabled\n", priv->dma_enabled ? "" : "not ");
-@@ -1121,6 +1121,8 @@ static int brcmuart_probe(struct platform_device *pdev)
- 	serial8250_unregister_port(priv->line);
- err:
- 	brcmuart_free_bufs(dev, priv);
-+err_clk_disable:
-+	clk_disable_unprepare(baud_mux_clk);
- release_dma:
- 	if (priv->dma_enabled)
- 		brcmuart_arbitration(priv, 0);
-@@ -1135,6 +1137,7 @@ static int brcmuart_remove(struct platform_device *pdev)
- 	hrtimer_cancel(&priv->hrt);
- 	serial8250_unregister_port(priv->line);
- 	brcmuart_free_bufs(&pdev->dev, priv);
-+	clk_disable_unprepare(priv->baud_mux_clk);
- 	if (priv->dma_enabled)
- 		brcmuart_arbitration(priv, 0);
  	return 0;
 -- 
 2.39.2
