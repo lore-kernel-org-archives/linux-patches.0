@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5A2171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B61C433D2;
-	Mon, 22 May 2023 19:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3599171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:29:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47BE9C4339B;
+	Mon, 22 May 2023 19:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783754;
-	bh=au32dqcFzCqNi0URbhZwVyzN7vWdlv2Zb8QDKKcbZDw=;
+	s=korg; t=1684783757;
+	bh=+d9ov8kn63aIf7oJWVgGf38B8eK2c1CEFpM6nPi6jCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BLm3iWcPDifPbDPniBHC5/7YvXY1DK6p88MFcSxKFMOVqUhaWVYiuUWmelqUn+TKY
-	 lYnAP3qLiS0uaaUg5oMew9Pm3qwWhk9DkDAxFSFM8+fikmtZszTDPduUIz4GMIyh/y
-	 feq98ajJieFFHYM+xFX8iN5A2DntQB3z1eMGG/kY=
+	b=UB3JWV69/q3M5e1csHnx/X9++EKgwwkMjj1l6s6vVNusvh6VtSUyFP8vYxK686aWf
+	 aooH7vmq6DEvrjlpFE48Wq1AWapb6rwXFhWDDBW4226/Vss1Yc/PbXkAx3miue5cMP
+	 cMeg0iYX51RGrGquz+WD6YrvNSqG6/reeCaAqgQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Willi <martin@strongswan.org>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 152/292] Revert "Fix XFRM-I support for nested ESP tunnels"
-Date: Mon, 22 May 2023 20:08:29 +0100
-Message-Id: <20230522190409.761374573@linuxfoundation.org>
+Subject: [PATCH 6.1 153/292] drm/msm/dp: unregister audio driver during unbind
+Date: Mon, 22 May 2023 20:08:30 +0100
+Message-Id: <20230522190409.786103847@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,123 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Willi <martin@strongswan.org>
+From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-[ Upstream commit 5fc46f94219d1d103ffb5f0832be9da674d85a73 ]
+[ Upstream commit 85c636284cb63b7740b4ae98881ace92158068d3 ]
 
-This reverts commit b0355dbbf13c0052931dd14c38c789efed64d3de.
+while binding the code always registers a audio driver, however there
+is no corresponding unregistration done in unbind. This leads to multiple
+redundant audio platform devices if dp_display_bind and dp_display_unbind
+happens multiple times during startup. On X13s platform this resulted in
+6 to 9 audio codec device instead of just 3 codec devices for 3 dp ports.
 
-The reverted commit clears the secpath on packets received via xfrm interfaces
-to support nested IPsec tunnels. This breaks Netfilter policy matching using
-xt_policy in the FORWARD chain, as the secpath is missing during forwarding.
-Additionally, Benedict Wong reports that it breaks Transport-in-Tunnel mode.
+Fix this by unregistering codecs on unbind.
 
-Fix this regression by reverting the commit until we have a better approach
-for nested IPsec tunnels.
-
-Fixes: b0355dbbf13c ("Fix XFRM-I support for nested ESP tunnels")
-Link: https://lore.kernel.org/netdev/20230412085615.124791-1-martin@strongswan.org/
-Signed-off-by: Martin Willi <martin@strongswan.org>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Fixes: d13e36d7d222 ("drm/msm/dp: add audio support for Display Port on MSM")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/533324/
+Link: https://lore.kernel.org/r/20230421145657.12186-1-srinivas.kandagatla@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_interface.c | 54 +++------------------------------------
- net/xfrm/xfrm_policy.c    |  3 ---
- 2 files changed, 4 insertions(+), 53 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_audio.c   | 12 ++++++++++++
+ drivers/gpu/drm/msm/dp/dp_audio.h   |  2 ++
+ drivers/gpu/drm/msm/dp/dp_display.c |  1 +
+ 3 files changed, 15 insertions(+)
 
-diff --git a/net/xfrm/xfrm_interface.c b/net/xfrm/xfrm_interface.c
-index 94a3609548b11..5a67b120c4dbd 100644
---- a/net/xfrm/xfrm_interface.c
-+++ b/net/xfrm/xfrm_interface.c
-@@ -310,52 +310,6 @@ static void xfrmi_scrub_packet(struct sk_buff *skb, bool xnet)
- 	skb->mark = 0;
- }
- 
--static int xfrmi_input(struct sk_buff *skb, int nexthdr, __be32 spi,
--		       int encap_type, unsigned short family)
--{
--	struct sec_path *sp;
--
--	sp = skb_sec_path(skb);
--	if (sp && (sp->len || sp->olen) &&
--	    !xfrm_policy_check(NULL, XFRM_POLICY_IN, skb, family))
--		goto discard;
--
--	XFRM_SPI_SKB_CB(skb)->family = family;
--	if (family == AF_INET) {
--		XFRM_SPI_SKB_CB(skb)->daddroff = offsetof(struct iphdr, daddr);
--		XFRM_TUNNEL_SKB_CB(skb)->tunnel.ip4 = NULL;
--	} else {
--		XFRM_SPI_SKB_CB(skb)->daddroff = offsetof(struct ipv6hdr, daddr);
--		XFRM_TUNNEL_SKB_CB(skb)->tunnel.ip6 = NULL;
--	}
--
--	return xfrm_input(skb, nexthdr, spi, encap_type);
--discard:
--	kfree_skb(skb);
--	return 0;
--}
--
--static int xfrmi4_rcv(struct sk_buff *skb)
--{
--	return xfrmi_input(skb, ip_hdr(skb)->protocol, 0, 0, AF_INET);
--}
--
--static int xfrmi6_rcv(struct sk_buff *skb)
--{
--	return xfrmi_input(skb, skb_network_header(skb)[IP6CB(skb)->nhoff],
--			   0, 0, AF_INET6);
--}
--
--static int xfrmi4_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
--{
--	return xfrmi_input(skb, nexthdr, spi, encap_type, AF_INET);
--}
--
--static int xfrmi6_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
--{
--	return xfrmi_input(skb, nexthdr, spi, encap_type, AF_INET6);
--}
--
- static int xfrmi_rcv_cb(struct sk_buff *skb, int err)
- {
- 	const struct xfrm_mode *inner_mode;
-@@ -983,8 +937,8 @@ static struct pernet_operations xfrmi_net_ops = {
+diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
+index 6666783e1468e..1245c7aa49df8 100644
+--- a/drivers/gpu/drm/msm/dp/dp_audio.c
++++ b/drivers/gpu/drm/msm/dp/dp_audio.c
+@@ -593,6 +593,18 @@ static struct hdmi_codec_pdata codec_data = {
+ 	.i2s = 1,
  };
  
- static struct xfrm6_protocol xfrmi_esp6_protocol __read_mostly = {
--	.handler	=	xfrmi6_rcv,
--	.input_handler	=	xfrmi6_input,
-+	.handler	=	xfrm6_rcv,
-+	.input_handler	=	xfrm_input,
- 	.cb_handler	=	xfrmi_rcv_cb,
- 	.err_handler	=	xfrmi6_err,
- 	.priority	=	10,
-@@ -1034,8 +988,8 @@ static struct xfrm6_tunnel xfrmi_ip6ip_handler __read_mostly = {
- #endif
++void dp_unregister_audio_driver(struct device *dev, struct dp_audio *dp_audio)
++{
++	struct dp_audio_private *audio_priv;
++
++	audio_priv = container_of(dp_audio, struct dp_audio_private, dp_audio);
++
++	if (audio_priv->audio_pdev) {
++		platform_device_unregister(audio_priv->audio_pdev);
++		audio_priv->audio_pdev = NULL;
++	}
++}
++
+ int dp_register_audio_driver(struct device *dev,
+ 		struct dp_audio *dp_audio)
+ {
+diff --git a/drivers/gpu/drm/msm/dp/dp_audio.h b/drivers/gpu/drm/msm/dp/dp_audio.h
+index 84e5f4a5d26ba..4ab78880af829 100644
+--- a/drivers/gpu/drm/msm/dp/dp_audio.h
++++ b/drivers/gpu/drm/msm/dp/dp_audio.h
+@@ -53,6 +53,8 @@ struct dp_audio *dp_audio_get(struct platform_device *pdev,
+ int dp_register_audio_driver(struct device *dev,
+ 		struct dp_audio *dp_audio);
  
- static struct xfrm4_protocol xfrmi_esp4_protocol __read_mostly = {
--	.handler	=	xfrmi4_rcv,
--	.input_handler	=	xfrmi4_input,
-+	.handler	=	xfrm4_rcv,
-+	.input_handler	=	xfrm_input,
- 	.cb_handler	=	xfrmi_rcv_cb,
- 	.err_handler	=	xfrmi4_err,
- 	.priority	=	10,
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index bea48a73a7313..bc04cb83215f9 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -3664,9 +3664,6 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
- 			goto reject;
- 		}
++void dp_unregister_audio_driver(struct device *dev, struct dp_audio *dp_audio);
++
+ /**
+  * dp_audio_put()
+  *
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index c9d9b384ddd03..57b82e5d0ab12 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -323,6 +323,7 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+ 	kthread_stop(dp->ev_tsk);
  
--		if (if_id)
--			secpath_reset(skb);
--
- 		xfrm_pols_put(pols, npols);
- 		return 1;
- 	}
+ 	dp_power_client_deinit(dp->power);
++	dp_unregister_audio_driver(dev, dp->audio);
+ 	dp_aux_unregister(dp->aux);
+ 	dp->drm_dev = NULL;
+ 	dp->aux->drm_dev = NULL;
 -- 
 2.39.2
 
