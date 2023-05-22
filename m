@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B83171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D7AC433EF;
-	Mon, 22 May 2023 19:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B9F171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:30:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E27C433EF;
+	Mon, 22 May 2023 19:30:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783814;
-	bh=epnC/vfPO5E4R9rDEW28XCxqCp2NACQYaT8nEvZ1UKc=;
+	s=korg; t=1684783816;
+	bh=u0ete4/L9qEG1j1eaFaM6cfkD+hUhRBYlzGermRhDww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvhqOm3Rc+/bWpCmrRE55o+ukOXQB8EwuWeTu7YjOAE2RWKy1/GVFRDmhrWUEDaQq
-	 k1IFeRYQ/iZhGyMBSjmTAj+I+aS+TNcFoalaMldCZB1vOw+oyup+DaUdoKRwEVfVbL
-	 T+GI16TUTxn7ipmYwAdWXpH5p+6hGXU9Rlk1Eicw=
+	b=yOS6j9It7ldy80Zs12fH3RrXb+y23qIsUeegJPVD+c05CkSeyFr/HDpUl+q3b96lt
+	 SUd0i8puQNuf0jxT+6TcjX3MpXNv7leituWLd3q3C8StPJQ/DdmKN8L8IamMsUNCFa
+	 BkGwPOXkJ2TPcw+QrbZKRsLwZG0Gai9JDI5AcD7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>,
-	Edward Cree <ecree.xilinx@gmail.com>,
-	Martin Habets <habetsm.xilinx@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Qiang Ning <qning0106@126.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 171/292] sfc: disable RXFCS and RXALL features by default
-Date: Mon, 22 May 2023 20:08:48 +0100
-Message-Id: <20230522190410.238172161@linuxfoundation.org>
+Subject: [PATCH 6.1 145/292] mfd: dln2: Fix memory leak in dln2_probe()
+Date: Mon, 22 May 2023 20:08:22 +0100
+Message-Id: <20230522190409.587614661@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -38,41 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
+From: Qiang Ning <qning0106@126.com>
 
-[ Upstream commit 134120b066044399ef59564ff3ba66ab344cfc5b ]
+[ Upstream commit 96da8f148396329ba769246cb8ceaa35f1ddfc48 ]
 
-By default we would not want RXFCS and RXALL features enabled as they are
-mainly intended for debugging purposes. This does not stop users from
-enabling them later on as needed.
+When dln2_setup_rx_urbs() in dln2_probe() fails, error out_free forgets
+to call usb_put_dev() to decrease the refcount of dln2->usb_dev.
 
-Fixes: 8e57daf70671 ("sfc_ef100: RX path for EF100")
-Signed-off-by: Pieter Jansen van Vuuren <pieter.jansen-van-vuuren@amd.com>
-Co-developed-by: Edward Cree <ecree.xilinx@gmail.com>
-Signed-off-by: Edward Cree <ecree.xilinx@gmail.com>
-Reviewed-by: Martin Habets <habetsm.xilinx@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix this by adding usb_put_dev() in the error handling code of
+dln2_probe().
+
+Signed-off-by: Qiang Ning <qning0106@126.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20230330024353.4503-1-qning0106@126.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/ef100_netdev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/mfd/dln2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/sfc/ef100_netdev.c b/drivers/net/ethernet/sfc/ef100_netdev.c
-index ddcc325ed5701..c6b9ba6803c8d 100644
---- a/drivers/net/ethernet/sfc/ef100_netdev.c
-+++ b/drivers/net/ethernet/sfc/ef100_netdev.c
-@@ -372,7 +372,9 @@ int ef100_probe_netdev(struct efx_probe_data *probe_data)
- 	efx->net_dev = net_dev;
- 	SET_NETDEV_DEV(net_dev, &efx->pci_dev->dev);
+diff --git a/drivers/mfd/dln2.c b/drivers/mfd/dln2.c
+index 6cd0b0c752d6e..c3149729cec2e 100644
+--- a/drivers/mfd/dln2.c
++++ b/drivers/mfd/dln2.c
+@@ -827,6 +827,7 @@ static int dln2_probe(struct usb_interface *interface,
+ 	dln2_stop_rx_urbs(dln2);
  
--	net_dev->features |= efx->type->offload_features;
-+	/* enable all supported features except rx-fcs and rx-all */
-+	net_dev->features |= efx->type->offload_features &
-+			     ~(NETIF_F_RXFCS | NETIF_F_RXALL);
- 	net_dev->hw_features |= efx->type->offload_features;
- 	net_dev->hw_enc_features |= efx->type->offload_features;
- 	net_dev->vlan_features |= NETIF_F_HW_CSUM | NETIF_F_SG |
+ out_free:
++	usb_put_dev(dln2->usb_dev);
+ 	dln2_free(dln2);
+ 
+ 	return ret;
 -- 
 2.39.2
 
