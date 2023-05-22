@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE0E171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0607C4339C;
-	Mon, 22 May 2023 19:23:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7114A171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE127C433D2;
+	Mon, 22 May 2023 19:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783399;
-	bh=R26zJtzdtddNubaKQC8tq6jK3Q8VjDVlXSJ6hBQOJuc=;
+	s=korg; t=1684783402;
+	bh=+829/fCtlQQSmjp0EgcDJ0bnUz6OZLJ7w1Fc6kuvTng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GDMbqeeFsJLKPPrH+PFCTcC07Fn2k4YCjw9Aq+PvebPALMPNIfnHwl7qQO3oZPMK2
-	 Bx3dxlmdPTs3QNyc9uaY0PouHpltcGUz40cmIcjFbAQdibvN/rsn1X/bKIwU03D7k2
-	 Hch6wNXMaJG8tl9pg5N5yygZHTe2AQJFd2lZSPeU=
+	b=TiwsohfcYqAWL+i1LJL+VPfsYb/cIHGBAKeV1xQatHlFw8IFKRKs28b+FBUlq+p3d
+	 OQUAdDcytd+q9wwPuCFT9W1xYh+pqvcLOayasKzTkA/LSVRlPVjWAyNTxA4KQskIEw
+	 eJTEdh0I14lz7B3yuWOpA5j+HYLOc5hDy+kSXQqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zongjie Li <u202112089@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Helge Deller <deller@gmx.de>,
+	Andreas Dilger <adilger.kernel@dilger.ca>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/292] fbdev: arcfb: Fix error handling in arcfb_probe()
-Date: Mon, 22 May 2023 20:06:28 +0100
-Message-Id: <20230522190406.670917528@linuxfoundation.org>
+Subject: [PATCH 6.1 032/292] ext4: reflect error codes from ext4_multi_mount_protect() to its callers
+Date: Mon, 22 May 2023 20:06:29 +0100
+Message-Id: <20230522190406.694649909@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,79 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zongjie Li <u202112089@hust.edu.cn>
+From: Theodore Ts'o <tytso@mit.edu>
 
-[ Upstream commit 5a6bef734247c7a8c19511664ff77634ab86f45b ]
+[ Upstream commit 3b50d5018ed06a647bb26c44bb5ae74e59c903c7 ]
 
-Smatch complains that:
-arcfb_probe() warn: 'irq' from request_irq() not released on lines: 587.
+This will allow more fine-grained errno codes to be returned by the
+mount system call.
 
-Fix error handling in the arcfb_probe() function. If IO addresses are
-not provided or framebuffer registration fails, the code will jump to
-the err_addr or err_register_fb label to release resources.
-If IRQ request fails, previously allocated resources will be freed.
-
-Fixes: 1154ea7dcd8e ("[PATCH] Framebuffer driver for Arc LCD board")
-Signed-off-by: Zongjie Li <u202112089@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: Andreas Dilger <adilger.kernel@dilger.ca>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting r/w until quota is re-enabled")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/arcfb.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ fs/ext4/mmp.c   |  9 ++++++++-
+ fs/ext4/super.c | 16 +++++++++-------
+ 2 files changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/video/fbdev/arcfb.c b/drivers/video/fbdev/arcfb.c
-index 45e64016db328..024d0ee4f04f9 100644
---- a/drivers/video/fbdev/arcfb.c
-+++ b/drivers/video/fbdev/arcfb.c
-@@ -523,7 +523,7 @@ static int arcfb_probe(struct platform_device *dev)
- 
- 	info = framebuffer_alloc(sizeof(struct arcfb_par), &dev->dev);
- 	if (!info)
--		goto err;
-+		goto err_fb_alloc;
- 
- 	info->screen_base = (char __iomem *)videomemory;
- 	info->fbops = &arcfb_ops;
-@@ -535,7 +535,7 @@ static int arcfb_probe(struct platform_device *dev)
- 
- 	if (!dio_addr || !cio_addr || !c2io_addr) {
- 		printk(KERN_WARNING "no IO addresses supplied\n");
--		goto err1;
-+		goto err_addr;
- 	}
- 	par->dio_addr = dio_addr;
- 	par->cio_addr = cio_addr;
-@@ -551,12 +551,12 @@ static int arcfb_probe(struct platform_device *dev)
- 			printk(KERN_INFO
- 				"arcfb: Failed req IRQ %d\n", par->irq);
- 			retval = -EBUSY;
--			goto err1;
-+			goto err_addr;
- 		}
- 	}
- 	retval = register_framebuffer(info);
- 	if (retval < 0)
--		goto err1;
-+		goto err_register_fb;
- 	platform_set_drvdata(dev, info);
- 	fb_info(info, "Arc frame buffer device, using %dK of video memory\n",
- 		videomemorysize >> 10);
-@@ -580,9 +580,12 @@ static int arcfb_probe(struct platform_device *dev)
+diff --git a/fs/ext4/mmp.c b/fs/ext4/mmp.c
+index 23930ed3cbda6..24b3beddaf4ba 100644
+--- a/fs/ext4/mmp.c
++++ b/fs/ext4/mmp.c
+@@ -296,6 +296,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 	if (mmp_block < le32_to_cpu(es->s_first_data_block) ||
+ 	    mmp_block >= ext4_blocks_count(es)) {
+ 		ext4_warning(sb, "Invalid MMP block in superblock");
++		retval = -EINVAL;
+ 		goto failed;
  	}
  
- 	return 0;
--err1:
-+
-+err_register_fb:
-+	free_irq(par->irq, info);
-+err_addr:
- 	framebuffer_release(info);
--err:
-+err_fb_alloc:
- 	vfree(videomemory);
- 	return retval;
+@@ -321,6 +322,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 
+ 	if (seq == EXT4_MMP_SEQ_FSCK) {
+ 		dump_mmp_msg(sb, mmp, "fsck is running on the filesystem");
++		retval = -EBUSY;
+ 		goto failed;
+ 	}
+ 
+@@ -334,6 +336,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 
+ 	if (schedule_timeout_interruptible(HZ * wait_time) != 0) {
+ 		ext4_warning(sb, "MMP startup interrupted, failing mount\n");
++		retval = -ETIMEDOUT;
+ 		goto failed;
+ 	}
+ 
+@@ -344,6 +347,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 	if (seq != le32_to_cpu(mmp->mmp_seq)) {
+ 		dump_mmp_msg(sb, mmp,
+ 			     "Device is already active on another node.");
++		retval = -EBUSY;
+ 		goto failed;
+ 	}
+ 
+@@ -367,6 +371,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 	 */
+ 	if (schedule_timeout_interruptible(HZ * wait_time) != 0) {
+ 		ext4_warning(sb, "MMP startup interrupted, failing mount");
++		retval = -ETIMEDOUT;
+ 		goto failed;
+ 	}
+ 
+@@ -377,6 +382,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 	if (seq != le32_to_cpu(mmp->mmp_seq)) {
+ 		dump_mmp_msg(sb, mmp,
+ 			     "Device is already active on another node.");
++		retval = -EBUSY;
+ 		goto failed;
+ 	}
+ 
+@@ -396,6 +402,7 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 		EXT4_SB(sb)->s_mmp_tsk = NULL;
+ 		ext4_warning(sb, "Unable to create kmmpd thread for %s.",
+ 			     sb->s_id);
++		retval = -ENOMEM;
+ 		goto failed;
+ 	}
+ 
+@@ -403,5 +410,5 @@ int ext4_multi_mount_protect(struct super_block *sb,
+ 
+ failed:
+ 	brelse(bh);
+-	return 1;
++	return retval;
  }
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index d542f068ca99f..b919f34bb35d6 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5281,9 +5281,11 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
+ 			  ext4_has_feature_orphan_present(sb) ||
+ 			  ext4_has_feature_journal_needs_recovery(sb));
+ 
+-	if (ext4_has_feature_mmp(sb) && !sb_rdonly(sb))
+-		if (ext4_multi_mount_protect(sb, le64_to_cpu(es->s_mmp_block)))
++	if (ext4_has_feature_mmp(sb) && !sb_rdonly(sb)) {
++		err = ext4_multi_mount_protect(sb, le64_to_cpu(es->s_mmp_block));
++		if (err)
+ 			goto failed_mount3a;
++	}
+ 
+ 	/*
+ 	 * The first inode we look at is the journal inode.  Don't try
+@@ -6524,12 +6526,12 @@ static int __ext4_remount(struct fs_context *fc, struct super_block *sb)
+ 				goto restore_opts;
+ 
+ 			sb->s_flags &= ~SB_RDONLY;
+-			if (ext4_has_feature_mmp(sb))
+-				if (ext4_multi_mount_protect(sb,
+-						le64_to_cpu(es->s_mmp_block))) {
+-					err = -EROFS;
++			if (ext4_has_feature_mmp(sb)) {
++				err = ext4_multi_mount_protect(sb,
++						le64_to_cpu(es->s_mmp_block));
++				if (err)
+ 					goto restore_opts;
+-				}
++			}
+ #ifdef CONFIG_QUOTA
+ 			enable_quota = 1;
+ #endif
 -- 
 2.39.2
 
