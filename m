@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602BD171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2A4CC433D2;
-	Mon, 22 May 2023 19:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BCA4171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:24:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35E4C433EF;
+	Mon, 22 May 2023 19:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783459;
-	bh=F3Wiov1pCS4WKo5KfIAZ+ApsN7GR7v4FG6BtkmgA1Zk=;
+	s=korg; t=1684783462;
+	bh=AkCL0GDpF5BZBA9rGVUubwGJlEWfKShS8Uec68JhYbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tS5ShdQc1bBTVOGYDReWntUCC0q4anoA0wkohGC4fW/Mnc2KEUHHboCpJ4CAx5QeZ
-	 azbMABcQnhf6XubCP2ZIZ7QTmdE5S9hGfH96cZcR+YAJQVzy8p0sztUl5dGHok7Rm2
-	 mI0jW/uYxEGZtH/Gum6REDBSP82TQpyBbxOkQCno=
+	b=vKhzYFdvhOpqCjrKnCpzkVPHg/A7C920wOOA+ehNS7RNIo9STS5qe7DgHB1rVlYrA
+	 53vIdgvA4XLf8+0YXLpKNY4j6dO86xZByY70cMyneZTP9+FHUFND6zqb8ej7krZvdz
+	 1HeOJpfdh4WMvYHGQhEoEfl7gAqwDrgnrxoBUcAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	harperchen <harperchen1110@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 050/292] media: cx23885: Fix a null-ptr-deref bug in buffer_prepare() and buffer_finish()
-Date: Mon, 22 May 2023 20:06:47 +0100
-Message-Id: <20230522190407.183716181@linuxfoundation.org>
+Subject: [PATCH 6.1 024/292] af_unix: Fix a data race of sk->sk_receive_queue->qlen.
+Date: Mon, 22 May 2023 20:06:21 +0100
+Message-Id: <20230522190406.498624258@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,107 +38,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: harperchen <harperchen1110@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 47e8b73bc35d7c54642f78e498697692f6358996 ]
+[ Upstream commit 679ed006d416ea0cecfe24a99d365d1dea69c683 ]
 
-When the driver calls cx23885_risc_buffer() to prepare the buffer, the
-function call dma_alloc_coherent may fail, resulting in a empty buffer
-risc->cpu. Later when we free the buffer or access the buffer, null ptr
-deref is triggered.
+KCSAN found a data race of sk->sk_receive_queue->qlen where recvmsg()
+updates qlen under the queue lock and sendmsg() checks qlen under
+unix_state_sock(), not the queue lock, so the reader side needs
+READ_ONCE().
 
-This bug is similar to the following one:
-https://git.linuxtv.org/media_stage.git/commit/?id=2b064d91440b33fba5b452f2d1b31f13ae911d71.
+BUG: KCSAN: data-race in __skb_try_recv_from_queue / unix_wait_for_peer
 
-We believe the bug can be also dynamically triggered from user side.
-Similarly, we fix this by checking the return value of cx23885_risc_buffer()
-and the value of risc->cpu before buffer free.
+write (marked) to 0xffff888019fe7c68 of 4 bytes by task 49792 on cpu 0:
+ __skb_unlink include/linux/skbuff.h:2347 [inline]
+ __skb_try_recv_from_queue+0x3de/0x470 net/core/datagram.c:197
+ __skb_try_recv_datagram+0xf7/0x390 net/core/datagram.c:263
+ __unix_dgram_recvmsg+0x109/0x8a0 net/unix/af_unix.c:2452
+ unix_dgram_recvmsg+0x94/0xa0 net/unix/af_unix.c:2549
+ sock_recvmsg_nosec net/socket.c:1019 [inline]
+ ____sys_recvmsg+0x3a3/0x3b0 net/socket.c:2720
+ ___sys_recvmsg+0xc8/0x150 net/socket.c:2764
+ do_recvmmsg+0x182/0x560 net/socket.c:2858
+ __sys_recvmmsg net/socket.c:2937 [inline]
+ __do_sys_recvmmsg net/socket.c:2960 [inline]
+ __se_sys_recvmmsg net/socket.c:2953 [inline]
+ __x64_sys_recvmmsg+0x153/0x170 net/socket.c:2953
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-Signed-off-by: harperchen <harperchen1110@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+read to 0xffff888019fe7c68 of 4 bytes by task 49793 on cpu 1:
+ skb_queue_len include/linux/skbuff.h:2127 [inline]
+ unix_recvq_full net/unix/af_unix.c:229 [inline]
+ unix_wait_for_peer+0x154/0x1a0 net/unix/af_unix.c:1445
+ unix_dgram_sendmsg+0x13bc/0x14b0 net/unix/af_unix.c:2048
+ sock_sendmsg_nosec net/socket.c:724 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:747
+ ____sys_sendmsg+0x20e/0x620 net/socket.c:2503
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2557
+ __sys_sendmmsg+0x11d/0x370 net/socket.c:2643
+ __do_sys_sendmmsg net/socket.c:2672 [inline]
+ __se_sys_sendmmsg net/socket.c:2669 [inline]
+ __x64_sys_sendmmsg+0x58/0x70 net/socket.c:2669
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+value changed: 0x0000000b -> 0x00000001
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 1 PID: 49793 Comm: syz-executor.0 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/cx23885/cx23885-core.c  |  4 +++-
- drivers/media/pci/cx23885/cx23885-video.c | 13 +++++++------
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ net/unix/af_unix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/cx23885/cx23885-core.c b/drivers/media/pci/cx23885/cx23885-core.c
-index 9232a966bcabb..2ce2914576cf2 100644
---- a/drivers/media/pci/cx23885/cx23885-core.c
-+++ b/drivers/media/pci/cx23885/cx23885-core.c
-@@ -1325,7 +1325,9 @@ void cx23885_free_buffer(struct cx23885_dev *dev, struct cx23885_buffer *buf)
- {
- 	struct cx23885_riscmem *risc = &buf->risc;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 7d17601ceee79..3b292a7a1fa58 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1441,7 +1441,7 @@ static long unix_wait_for_peer(struct sock *other, long timeo)
  
--	dma_free_coherent(&dev->pci->dev, risc->size, risc->cpu, risc->dma);
-+	if (risc->cpu)
-+		dma_free_coherent(&dev->pci->dev, risc->size, risc->cpu, risc->dma);
-+	memset(risc, 0, sizeof(*risc));
- }
+ 	sched = !sock_flag(other, SOCK_DEAD) &&
+ 		!(other->sk_shutdown & RCV_SHUTDOWN) &&
+-		unix_recvq_full(other);
++		unix_recvq_full_lockless(other);
  
- static void cx23885_tsport_reg_dump(struct cx23885_tsport *port)
-diff --git a/drivers/media/pci/cx23885/cx23885-video.c b/drivers/media/pci/cx23885/cx23885-video.c
-index 3d03f5e95786a..671fc0588e431 100644
---- a/drivers/media/pci/cx23885/cx23885-video.c
-+++ b/drivers/media/pci/cx23885/cx23885-video.c
-@@ -342,6 +342,7 @@ static int queue_setup(struct vb2_queue *q,
+ 	unix_state_unlock(other);
  
- static int buffer_prepare(struct vb2_buffer *vb)
- {
-+	int ret;
- 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
- 	struct cx23885_dev *dev = vb->vb2_queue->drv_priv;
- 	struct cx23885_buffer *buf =
-@@ -358,12 +359,12 @@ static int buffer_prepare(struct vb2_buffer *vb)
- 
- 	switch (dev->field) {
- 	case V4L2_FIELD_TOP:
--		cx23885_risc_buffer(dev->pci, &buf->risc,
-+		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
- 				sgt->sgl, 0, UNSET,
- 				buf->bpl, 0, dev->height);
- 		break;
- 	case V4L2_FIELD_BOTTOM:
--		cx23885_risc_buffer(dev->pci, &buf->risc,
-+		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
- 				sgt->sgl, UNSET, 0,
- 				buf->bpl, 0, dev->height);
- 		break;
-@@ -391,21 +392,21 @@ static int buffer_prepare(struct vb2_buffer *vb)
- 			line0_offset = 0;
- 			line1_offset = buf->bpl;
- 		}
--		cx23885_risc_buffer(dev->pci, &buf->risc,
-+		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
- 				sgt->sgl, line0_offset,
- 				line1_offset,
- 				buf->bpl, buf->bpl,
- 				dev->height >> 1);
- 		break;
- 	case V4L2_FIELD_SEQ_TB:
--		cx23885_risc_buffer(dev->pci, &buf->risc,
-+		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
- 				sgt->sgl,
- 				0, buf->bpl * (dev->height >> 1),
- 				buf->bpl, 0,
- 				dev->height >> 1);
- 		break;
- 	case V4L2_FIELD_SEQ_BT:
--		cx23885_risc_buffer(dev->pci, &buf->risc,
-+		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
- 				sgt->sgl,
- 				buf->bpl * (dev->height >> 1), 0,
- 				buf->bpl, 0,
-@@ -418,7 +419,7 @@ static int buffer_prepare(struct vb2_buffer *vb)
- 		buf, buf->vb.vb2_buf.index,
- 		dev->width, dev->height, dev->fmt->depth, dev->fmt->fourcc,
- 		(unsigned long)buf->risc.dma);
--	return 0;
-+	return ret;
- }
- 
- static void buffer_finish(struct vb2_buffer *vb)
 -- 
 2.39.2
 
