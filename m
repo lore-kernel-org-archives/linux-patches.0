@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B770171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:14:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB70BC433EF;
-	Mon, 22 May 2023 19:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04D6171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:14:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C49C433EF;
+	Mon, 22 May 2023 19:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782847;
-	bh=T3IVwh1exPrs5tinsS08t/lhNpTlgRhSJcUsU+dfATg=;
+	s=korg; t=1684782849;
+	bh=efN6Hw7VJoZ/WQ/XBtfUpRMqnFA7puMMmxVS+Zt4b2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rAGt76z9Mli9nxbYbiYVmrdSr6U7MeEOwl7RM1XQngWQSAUfZgMcBLCHEqBLzaCSQ
-	 a6WI5u+F2eV/gD2BA9tnKB3ZuDFnGf3MFWja+BHL7bb66a+rvBRRGBxaZEQPDfNAEv
-	 ZXeBcgScOaH8f5M4SYIsB4V0Eg/EeGUInM2GsTxM=
+	b=rFiaMHrMOGsz7ulQtnU6fZuzuB1+RITH4ssZiCjlca448IEby5TQE36P4mcF48aBv
+	 MyVpanqEGHdZK7uMDaAVZiRRgJ5mKNCSVd3/XQfMyTIfkNvKOwTkAO+az8n/+nH52v
+	 qcfjvJVxWGEF5kbhaZmEr0tlyBRFs4ZzEsRm4Hdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Moore <robert.moore@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/203] ACPICA: Avoid undefined behavior: applying zero offset to null pointer
-Date: Mon, 22 May 2023 20:07:49 +0100
-Message-Id: <20230522190356.237383489@linuxfoundation.org>
+Subject: [PATCH 5.15 028/203] ext4: allow to find by goal if EXT4_MB_HINT_GOAL_ONLY is set
+Date: Mon, 22 May 2023 20:07:32 +0100
+Message-Id: <20230522190355.743724519@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,65 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tamir Duberstein <tamird@google.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 05bb0167c80b8f93c6a4e0451b7da9b96db990c2 ]
+[ Upstream commit 01e4ca29451760b9ac10b4cdc231c52150842643 ]
 
-ACPICA commit 770653e3ba67c30a629ca7d12e352d83c2541b1e
+If EXT4_MB_HINT_GOAL_ONLY is set, ext4_mb_regular_allocator will only
+allocate blocks from ext4_mb_find_by_goal. Allow to find by goal in
+ext4_mb_find_by_goal if EXT4_MB_HINT_GOAL_ONLY is set or allocation
+with EXT4_MB_HINT_GOAL_ONLY set will always fail.
 
-Before this change we see the following UBSAN stack trace in Fuchsia:
+EXT4_MB_HINT_GOAL_ONLY is not used at all, so the problem is not
+found for now.
 
-  #0    0x000021e4213b3302 in acpi_ds_init_aml_walk(struct acpi_walk_state*, union acpi_parse_object*, struct acpi_namespace_node*, u8*, u32, struct acpi_evaluate_info*, u8) ../../third_party/acpica/source/components/dispatcher/dswstate.c:682 <platform-bus-x86.so>+0x233302
-  #1.2  0x000020d0f660777f in ubsan_get_stack_trace() compiler-rt/lib/ubsan/ubsan_diag.cpp:41 <libclang_rt.asan.so>+0x3d77f
-  #1.1  0x000020d0f660777f in maybe_print_stack_trace() compiler-rt/lib/ubsan/ubsan_diag.cpp:51 <libclang_rt.asan.so>+0x3d77f
-  #1    0x000020d0f660777f in ~scoped_report() compiler-rt/lib/ubsan/ubsan_diag.cpp:387 <libclang_rt.asan.so>+0x3d77f
-  #2    0x000020d0f660b96d in handlepointer_overflow_impl() compiler-rt/lib/ubsan/ubsan_handlers.cpp:809 <libclang_rt.asan.so>+0x4196d
-  #3    0x000020d0f660b50d in compiler-rt/lib/ubsan/ubsan_handlers.cpp:815 <libclang_rt.asan.so>+0x4150d
-  #4    0x000021e4213b3302 in acpi_ds_init_aml_walk(struct acpi_walk_state*, union acpi_parse_object*, struct acpi_namespace_node*, u8*, u32, struct acpi_evaluate_info*, u8) ../../third_party/acpica/source/components/dispatcher/dswstate.c:682 <platform-bus-x86.so>+0x233302
-  #5    0x000021e4213e2369 in acpi_ds_call_control_method(struct acpi_thread_state*, struct acpi_walk_state*, union acpi_parse_object*) ../../third_party/acpica/source/components/dispatcher/dsmethod.c:605 <platform-bus-x86.so>+0x262369
-  #6    0x000021e421437fac in acpi_ps_parse_aml(struct acpi_walk_state*) ../../third_party/acpica/source/components/parser/psparse.c:550 <platform-bus-x86.so>+0x2b7fac
-  #7    0x000021e4214464d2 in acpi_ps_execute_method(struct acpi_evaluate_info*) ../../third_party/acpica/source/components/parser/psxface.c:244 <platform-bus-x86.so>+0x2c64d2
-  #8    0x000021e4213aa052 in acpi_ns_evaluate(struct acpi_evaluate_info*) ../../third_party/acpica/source/components/namespace/nseval.c:250 <platform-bus-x86.so>+0x22a052
-  #9    0x000021e421413dd8 in acpi_ns_init_one_device(acpi_handle, u32, void*, void**) ../../third_party/acpica/source/components/namespace/nsinit.c:735 <platform-bus-x86.so>+0x293dd8
-  #10   0x000021e421429e98 in acpi_ns_walk_namespace(acpi_object_type, acpi_handle, u32, u32, acpi_walk_callback, acpi_walk_callback, void*, void**) ../../third_party/acpica/source/components/namespace/nswalk.c:298 <platform-bus-x86.so>+0x2a9e98
-  #11   0x000021e4214131ac in acpi_ns_initialize_devices(u32) ../../third_party/acpica/source/components/namespace/nsinit.c:268 <platform-bus-x86.so>+0x2931ac
-  #12   0x000021e42147c40d in acpi_initialize_objects(u32) ../../third_party/acpica/source/components/utilities/utxfinit.c:304 <platform-bus-x86.so>+0x2fc40d
-  #13   0x000021e42126d603 in acpi::acpi_impl::initialize_acpi(acpi::acpi_impl*) ../../src/devices/board/lib/acpi/acpi-impl.cc:224 <platform-bus-x86.so>+0xed603
-
-Add a simple check that avoids incrementing a pointer by zero, but
-otherwise behaves as before. Note that our findings are against ACPICA
-20221020, but the same code exists on master.
-
-Link: https://github.com/acpica/acpica/commit/770653e3
-Signed-off-by: Bob Moore <robert.moore@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230303172120.3800725-3-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dswstate.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/ext4/mballoc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/dswstate.c b/drivers/acpi/acpica/dswstate.c
-index fbe2ba05c82a6..1c862940cc5b2 100644
---- a/drivers/acpi/acpica/dswstate.c
-+++ b/drivers/acpi/acpica/dswstate.c
-@@ -576,9 +576,14 @@ acpi_ds_init_aml_walk(struct acpi_walk_state *walk_state,
- 	ACPI_FUNCTION_TRACE(ds_init_aml_walk);
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 0e0226b30db6a..820804a7afe6e 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -2206,7 +2206,7 @@ int ext4_mb_find_by_goal(struct ext4_allocation_context *ac,
+ 	struct ext4_group_info *grp = ext4_get_group_info(ac->ac_sb, group);
+ 	struct ext4_free_extent ex;
  
- 	walk_state->parser_state.aml =
--	    walk_state->parser_state.aml_start = aml_start;
--	walk_state->parser_state.aml_end =
--	    walk_state->parser_state.pkg_end = aml_start + aml_length;
-+	    walk_state->parser_state.aml_start =
-+	    walk_state->parser_state.aml_end =
-+	    walk_state->parser_state.pkg_end = aml_start;
-+	/* Avoid undefined behavior: applying zero offset to null pointer */
-+	if (aml_length != 0) {
-+		walk_state->parser_state.aml_end += aml_length;
-+		walk_state->parser_state.pkg_end += aml_length;
-+	}
- 
- 	/* The next_op of the next_walk will be the beginning of the method */
- 
+-	if (!(ac->ac_flags & EXT4_MB_HINT_TRY_GOAL))
++	if (!(ac->ac_flags & (EXT4_MB_HINT_TRY_GOAL | EXT4_MB_HINT_GOAL_ONLY)))
+ 		return 0;
+ 	if (grp->bb_free == 0)
+ 		return 0;
 -- 
 2.39.2
 
