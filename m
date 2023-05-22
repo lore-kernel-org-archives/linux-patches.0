@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75BD171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B19C433D2;
-	Mon, 22 May 2023 19:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246A9171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B62EC433D2;
+	Mon, 22 May 2023 19:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782990;
-	bh=Wpah7egdx6vP/5IchFJnEfELXuHRoZuJAQBbEZtZdfg=;
+	s=korg; t=1684782996;
+	bh=uNm+TvgJ2UfAp8v0u8JQiwJSYDKzFQxF6iylMMZfwcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMn0mhhdXOMhTIUinJm7d1rD76zKkkbxKLrlHagXQ4CVpQG86IP6qTSgBRmFF3E0i
-	 KxrpPio00gKGTdblxAyLPllZkO3J7jFEL0n47JpUoJm4L9pFZeG4cMpXdE053kQzby
-	 hWFuZG49aNc4wZ0ojnhoyOhdfx5+IG7N8ecO1REI=
+	b=ywsRQes/CWNIRJ1+AZizabApshGGKxPvkdoqwQyVZEvRmeSwAMeuM1y4G3YISwJjI
+	 TTObQIZL7y9Cwe406mWZpojOpRxqc8Wm/o3BHXjcQTO/1E2qfRnFQhvfTpL0Ym0Wbu
+	 gNZ4d7TVcmj5yrIktCrzI1dYonQqn/G5bUw218o4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
-	Jeroen Roovers <jer@xs4all.nl>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Helge Deller <deller@gmx.de>,
+	Jorge Lopez <jorge.lopez2@hp.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/203] parisc: Replace regular spinlock with spin_trylock on panic path
-Date: Mon, 22 May 2023 20:08:47 +0100
-Message-Id: <20230522190357.834632835@linuxfoundation.org>
+Subject: [PATCH 5.15 105/203] platform/x86: Move existing HP drivers to a new hp subdir
+Date: Mon, 22 May 2023 20:08:49 +0100
+Message-Id: <20230522190357.888404200@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -37,134 +35,247 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Jorge Lopez <jorge.lopez2@hp.com>
 
-[ Upstream commit 829632dae8321787525ee37dc4828bbe6edafdae ]
+[ Upstream commit 6e9b8992b122cb12688bd259fc99e67d1be234eb ]
 
-The panic notifiers' callbacks execute in an atomic context, with
-interrupts/preemption disabled, and all CPUs not running the panic
-function are off, so it's very dangerous to wait on a regular
-spinlock, there's a risk of deadlock.
+The purpose of this patch is to provide a central location where all
+HP related drivers are found. HP drivers will recide under
+drivers/platform/x86/hp directory.
 
-Refactor the panic notifier of parisc/power driver to make use
-of spin_trylock - for that, we've added a second version of the
-soft-power function. Also, some comments were reorganized and
-trailing white spaces, useless header inclusion and blank lines
-were removed.
+Introduce changes to Kconfig file to list all HP driver under "HP X86
+Platform Specific Device Drivers" menu option. Additional changes
+include update MAINTAINERS file to indicate hp related drivers new
+path.
 
-Cc: "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>
-Cc: Jeroen Roovers <jer@xs4all.nl>
-Acked-by: Helge Deller <deller@gmx.de> # parisc
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Jorge Lopez <jorge.lopez2@hp.com>
+Link: https://lore.kernel.org/r/20221020201033.12790-2-jorge.lopez2@hp.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Stable-dep-of: decab2825c3e ("platform/x86: hp-wmi: add micmute to hp_wmi_keymap struct")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/include/asm/pdc.h |  1 +
- arch/parisc/kernel/firmware.c | 27 +++++++++++++++++++++++----
- drivers/parisc/power.c        | 16 ++++++++++------
- 3 files changed, 34 insertions(+), 10 deletions(-)
+ MAINTAINERS                                |  4 +-
+ drivers/platform/x86/Kconfig               | 42 +--------------
+ drivers/platform/x86/Makefile              |  4 +-
+ drivers/platform/x86/hp/Kconfig            | 63 ++++++++++++++++++++++
+ drivers/platform/x86/hp/Makefile           | 10 ++++
+ drivers/platform/x86/{ => hp}/hp-wmi.c     |  0
+ drivers/platform/x86/{ => hp}/hp_accel.c   |  2 +-
+ drivers/platform/x86/{ => hp}/tc1100-wmi.c |  0
+ 8 files changed, 78 insertions(+), 47 deletions(-)
+ create mode 100644 drivers/platform/x86/hp/Kconfig
+ create mode 100644 drivers/platform/x86/hp/Makefile
+ rename drivers/platform/x86/{ => hp}/hp-wmi.c (100%)
+ rename drivers/platform/x86/{ => hp}/hp_accel.c (99%)
+ rename drivers/platform/x86/{ => hp}/tc1100-wmi.c (100%)
 
-diff --git a/arch/parisc/include/asm/pdc.h b/arch/parisc/include/asm/pdc.h
-index b388d81765883..2f48e0a80d9c6 100644
---- a/arch/parisc/include/asm/pdc.h
-+++ b/arch/parisc/include/asm/pdc.h
-@@ -81,6 +81,7 @@ int pdc_do_firm_test_reset(unsigned long ftc_bitmap);
- int pdc_do_reset(void);
- int pdc_soft_power_info(unsigned long *power_reg);
- int pdc_soft_power_button(int sw_control);
-+int pdc_soft_power_button_panic(int sw_control);
- void pdc_io_reset(void);
- void pdc_io_reset_devices(void);
- int pdc_iodc_getc(void);
-diff --git a/arch/parisc/kernel/firmware.c b/arch/parisc/kernel/firmware.c
-index 8e5a906df9175..5385e0fe98426 100644
---- a/arch/parisc/kernel/firmware.c
-+++ b/arch/parisc/kernel/firmware.c
-@@ -1158,15 +1158,18 @@ int __init pdc_soft_power_info(unsigned long *power_reg)
- }
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 2d3d2155c744d..95374d582574f 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -8568,7 +8568,7 @@ F:	drivers/net/wireless/intersil/hostap/
+ HP COMPAQ TC1100 TABLET WMI EXTRAS DRIVER
+ L:	platform-driver-x86@vger.kernel.org
+ S:	Orphan
+-F:	drivers/platform/x86/tc1100-wmi.c
++F:	drivers/platform/x86/hp/tc1100-wmi.c
  
- /*
-- * pdc_soft_power_button - Control the soft power button behaviour
-- * @sw_control: 0 for hardware control, 1 for software control 
-+ * pdc_soft_power_button{_panic} - Control the soft power button behaviour
-+ * @sw_control: 0 for hardware control, 1 for software control
-  *
-  *
-  * This PDC function places the soft power button under software or
-  * hardware control.
-- * Under software control the OS may control to when to allow to shut 
-- * down the system. Under hardware control pressing the power button 
-+ * Under software control the OS may control to when to allow to shut
-+ * down the system. Under hardware control pressing the power button
-  * powers off the system immediately.
-+ *
-+ * The _panic version relies on spin_trylock to prevent deadlock
-+ * on panic path.
-  */
- int pdc_soft_power_button(int sw_control)
- {
-@@ -1180,6 +1183,22 @@ int pdc_soft_power_button(int sw_control)
- 	return retval;
- }
+ HPET:	High Precision Event Timers driver
+ M:	Clemens Ladisch <clemens@ladisch.de>
+@@ -10838,7 +10838,7 @@ M:	Eric Piel <eric.piel@tremplin-utc.net>
+ S:	Maintained
+ F:	Documentation/misc-devices/lis3lv02d.rst
+ F:	drivers/misc/lis3lv02d/
+-F:	drivers/platform/x86/hp_accel.c
++F:	drivers/platform/x86/hp/hp_accel.c
  
-+int pdc_soft_power_button_panic(int sw_control)
-+{
-+	int retval;
-+	unsigned long flags;
+ LIST KUNIT TEST
+ M:	David Gow <davidgow@google.com>
+diff --git a/drivers/platform/x86/Kconfig b/drivers/platform/x86/Kconfig
+index 61186829d1f6b..50abcf0c483c3 100644
+--- a/drivers/platform/x86/Kconfig
++++ b/drivers/platform/x86/Kconfig
+@@ -389,24 +389,7 @@ config GPD_POCKET_FAN
+ 	  of the CPU temperature. Say Y or M if the kernel may be used on a
+ 	  GPD pocket.
+ 
+-config HP_ACCEL
+-	tristate "HP laptop accelerometer"
+-	depends on INPUT && ACPI
+-	depends on SERIO_I8042
+-	select SENSORS_LIS3LV02D
+-	select NEW_LEDS
+-	select LEDS_CLASS
+-	help
+-	  This driver provides support for the "Mobile Data Protection System 3D"
+-	  or "3D DriveGuard" feature of HP laptops. On such systems the driver
+-	  should load automatically (via ACPI alias).
+-
+-	  Support for a led indicating disk protection will be provided as
+-	  hp::hddprotect. For more information on the feature, refer to
+-	  Documentation/misc-devices/lis3lv02d.rst.
+-
+-	  To compile this driver as a module, choose M here: the module will
+-	  be called hp_accel.
++source "drivers/platform/x86/hp/Kconfig"
+ 
+ config WIRELESS_HOTKEY
+ 	tristate "Wireless hotkey button"
+@@ -420,29 +403,6 @@ config WIRELESS_HOTKEY
+ 	 To compile this driver as a module, choose M here: the module will
+ 	 be called wireless-hotkey.
+ 
+-config HP_WMI
+-	tristate "HP WMI extras"
+-	depends on ACPI_WMI
+-	depends on INPUT
+-	depends on RFKILL || RFKILL = n
+-	select INPUT_SPARSEKMAP
+-	select ACPI_PLATFORM_PROFILE
+-	help
+-	 Say Y here if you want to support WMI-based hotkeys on HP laptops and
+-	 to read data from WMI such as docking or ambient light sensor state.
+-
+-	 To compile this driver as a module, choose M here: the module will
+-	 be called hp-wmi.
+-
+-config TC1100_WMI
+-	tristate "HP Compaq TC1100 Tablet WMI Extras"
+-	depends on !X86_64
+-	depends on ACPI
+-	depends on ACPI_WMI
+-	help
+-	  This is a driver for the WMI extensions (wireless and bluetooth power
+-	  control) of the HP Compaq TC1100 tablet.
+-
+ config IBM_RTL
+ 	tristate "Device driver to enable PRTL support"
+ 	depends on PCI
+diff --git a/drivers/platform/x86/Makefile b/drivers/platform/x86/Makefile
+index 2734a771d1f00..5dba9fe23fb15 100644
+--- a/drivers/platform/x86/Makefile
++++ b/drivers/platform/x86/Makefile
+@@ -52,9 +52,7 @@ obj-$(CONFIG_FUJITSU_TABLET)	+= fujitsu-tablet.o
+ obj-$(CONFIG_GPD_POCKET_FAN)	+= gpd-pocket-fan.o
+ 
+ # Hewlett Packard
+-obj-$(CONFIG_HP_ACCEL)		+= hp_accel.o
+-obj-$(CONFIG_HP_WMI)		+= hp-wmi.o
+-obj-$(CONFIG_TC1100_WMI)	+= tc1100-wmi.o
++obj-$(CONFIG_X86_PLATFORM_DRIVERS_HP)	+= hp/
+ 
+ # Hewlett Packard Enterprise
+ obj-$(CONFIG_UV_SYSFS)       += uv_sysfs.o
+diff --git a/drivers/platform/x86/hp/Kconfig b/drivers/platform/x86/hp/Kconfig
+new file mode 100644
+index 0000000000000..ae165955311ce
+--- /dev/null
++++ b/drivers/platform/x86/hp/Kconfig
+@@ -0,0 +1,63 @@
++# SPDX-License-Identifier: GPL-2.0-only
++#
++# X86 Platform Specific Drivers
++#
++menuconfig X86_PLATFORM_DRIVERS_HP
++	bool "HP X86 Platform Specific Device Drivers"
++	depends on X86_PLATFORM_DEVICES
++	help
++	  Say Y here to get to see options for device drivers for various
++	  HP x86 platforms, including vendor-specific laptop extension drivers.
++	  This option alone does not add any kernel code.
 +
-+	if (!spin_trylock_irqsave(&pdc_lock, flags)) {
-+		pr_emerg("Couldn't enable soft power button\n");
-+		return -EBUSY; /* ignored by the panic notifier */
-+	}
++	  If you say N, all options in this submenu will be skipped and disabled.
 +
-+	retval = mem_pdc_call(PDC_SOFT_POWER, PDC_SOFT_POWER_ENABLE, __pa(pdc_result), sw_control);
-+	spin_unlock_irqrestore(&pdc_lock, flags);
++if X86_PLATFORM_DRIVERS_HP
 +
-+	return retval;
-+}
++config HP_ACCEL
++	tristate "HP laptop accelerometer"
++	default m
++	depends on INPUT && ACPI
++	depends on SERIO_I8042
++	select SENSORS_LIS3LV02D
++	select NEW_LEDS
++	select LEDS_CLASS
++	help
++	  This driver provides support for the "Mobile Data Protection System 3D"
++	  or "3D DriveGuard" feature of HP laptops. On such systems the driver
++	  should load automatically (via ACPI alias).
 +
- /*
-  * pdc_io_reset - Hack to avoid overlapping range registers of Bridges devices.
-  * Primarily a problem on T600 (which parisc-linux doesn't support) but
-diff --git a/drivers/parisc/power.c b/drivers/parisc/power.c
-index 456776bd8ee66..6f5e5f0230d39 100644
---- a/drivers/parisc/power.c
-+++ b/drivers/parisc/power.c
-@@ -37,7 +37,6 @@
- #include <linux/module.h>
- #include <linux/init.h>
- #include <linux/kernel.h>
--#include <linux/notifier.h>
- #include <linux/panic_notifier.h>
- #include <linux/reboot.h>
- #include <linux/sched/signal.h>
-@@ -175,16 +174,21 @@ static void powerfail_interrupt(int code, void *x)
++	  Support for a led indicating disk protection will be provided as
++	  hp::hddprotect. For more information on the feature, refer to
++	  Documentation/misc-devices/lis3lv02d.rst.
++
++	  To compile this driver as a module, choose M here: the module will
++	  be called hp_accel.
++
++config HP_WMI
++	tristate "HP WMI extras"
++	default m
++	depends on ACPI_WMI
++	depends on INPUT
++	depends on RFKILL || RFKILL = n
++	select INPUT_SPARSEKMAP
++	select ACPI_PLATFORM_PROFILE
++	select HWMON
++	help
++	  Say Y here if you want to support WMI-based hotkeys on HP laptops and
++	  to read data from WMI such as docking or ambient light sensor state.
++
++	  To compile this driver as a module, choose M here: the module will
++	  be called hp-wmi.
++
++config TC1100_WMI
++	tristate "HP Compaq TC1100 Tablet WMI Extras"
++	default m
++	depends on !X86_64
++	depends on ACPI
++	depends on ACPI_WMI
++	help
++	  This is a driver for the WMI extensions (wireless and bluetooth power
++	  control) of the HP Compaq TC1100 tablet.
++
++endif # X86_PLATFORM_DRIVERS_HP
+diff --git a/drivers/platform/x86/hp/Makefile b/drivers/platform/x86/hp/Makefile
+new file mode 100644
+index 0000000000000..db1eed4cd7c7d
+--- /dev/null
++++ b/drivers/platform/x86/hp/Makefile
+@@ -0,0 +1,10 @@
++# SPDX-License-Identifier: GPL-2.0
++#
++# Makefile for linux/drivers/platform/x86/hp
++# HP x86 Platform-Specific Drivers
++#
++
++# Hewlett Packard
++obj-$(CONFIG_HP_ACCEL)		+= hp_accel.o
++obj-$(CONFIG_HP_WMI)		+= hp-wmi.o
++obj-$(CONFIG_TC1100_WMI)	+= tc1100-wmi.o
+diff --git a/drivers/platform/x86/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+similarity index 100%
+rename from drivers/platform/x86/hp-wmi.c
+rename to drivers/platform/x86/hp/hp-wmi.c
+diff --git a/drivers/platform/x86/hp_accel.c b/drivers/platform/x86/hp/hp_accel.c
+similarity index 99%
+rename from drivers/platform/x86/hp_accel.c
+rename to drivers/platform/x86/hp/hp_accel.c
+index ef24f53753c6e..62a1d93464750 100644
+--- a/drivers/platform/x86/hp_accel.c
++++ b/drivers/platform/x86/hp/hp_accel.c
+@@ -26,7 +26,7 @@
+ #include <linux/acpi.h>
+ #include <linux/i8042.h>
+ #include <linux/serio.h>
+-#include "../../misc/lis3lv02d/lis3lv02d.h"
++#include "../../../misc/lis3lv02d/lis3lv02d.h"
  
+ /* Delayed LEDs infrastructure ------------------------------------ */
  
- 
--/* parisc_panic_event() is called by the panic handler.
-- * As soon as a panic occurs, our tasklets above will not be
-- * executed any longer. This function then re-enables the 
-- * soft-power switch and allows the user to switch off the system
-+/*
-+ * parisc_panic_event() is called by the panic handler.
-+ *
-+ * As soon as a panic occurs, our tasklets above will not
-+ * be executed any longer. This function then re-enables
-+ * the soft-power switch and allows the user to switch off
-+ * the system. We rely in pdc_soft_power_button_panic()
-+ * since this version spin_trylocks (instead of regular
-+ * spinlock), preventing deadlocks on panic path.
-  */
- static int parisc_panic_event(struct notifier_block *this,
- 		unsigned long event, void *ptr)
- {
- 	/* re-enable the soft-power switch */
--	pdc_soft_power_button(0);
-+	pdc_soft_power_button_panic(0);
- 	return NOTIFY_DONE;
- }
- 
+diff --git a/drivers/platform/x86/tc1100-wmi.c b/drivers/platform/x86/hp/tc1100-wmi.c
+similarity index 100%
+rename from drivers/platform/x86/tc1100-wmi.c
+rename to drivers/platform/x86/hp/tc1100-wmi.c
 -- 
 2.39.2
 
