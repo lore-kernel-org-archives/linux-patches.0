@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2458171B7
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C588CC433D2;
-	Mon, 22 May 2023 19:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B22171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC00C433D2;
+	Mon, 22 May 2023 19:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784364;
-	bh=3RQ3NpkUvKvMX1Q9TThOfZqbeNUdpgUUkq+Yf3PtgjM=;
+	s=korg; t=1684784367;
+	bh=F3Wiov1pCS4WKo5KfIAZ+ApsN7GR7v4FG6BtkmgA1Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEKofzya2y0//CGS7y1tSd0rpcnyLpzADU8AUsg4zii3xxAP01FnmM2Z26FnyGPMI
-	 sHqsuvVe6ccZ3MNrXgh/nvhgy91ZTYxg7wiOD3I54bhTZw/OL+FJRwYjyzPS20IpA2
-	 6hsOc1Yysi5kwHQVbM71o+UqUdg/npksBMca9Ez4=
+	b=rMGFEu3OuEh48edguVyX4tZ6xPQgZsNQH9fjKBAsb+7Dt7fNEC6FbasOyASqfefXF
+	 LkKSFREVBwRbEg0fyiLZ2ltXfGpgUrfmHbFwSJ0PwEMjiMX1KK2k6pRtLnZFglY8j1
+	 6CljvJVL/4IAE9XyLEw1+MU+FFMUR9gK4fzRqTQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirela Rabulea <mirela.rabulea@nxp.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Kees Cook <keescook@chromium.org>,
+	harperchen <harperchen1110@gmail.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 057/364] media: imx-jpeg: Bounds check sizeimage access
-Date: Mon, 22 May 2023 20:06:02 +0100
-Message-Id: <20230522190414.222626164@linuxfoundation.org>
+Subject: [PATCH 6.3 058/364] media: cx23885: Fix a null-ptr-deref bug in buffer_prepare() and buffer_finish()
+Date: Mon, 22 May 2023 20:06:03 +0100
+Message-Id: <20230522190414.245263122@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -43,74 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: harperchen <harperchen1110@gmail.com>
 
-[ Upstream commit 474acc639fc8671fa4c1919d9e03253c82b6d321 ]
+[ Upstream commit 47e8b73bc35d7c54642f78e498697692f6358996 ]
 
-The call of mxc_jpeg_get_plane_size() from mxc_jpeg_dec_irq() sets
-plane_no argument to 1. The compiler sees that it's possible to end up
-with an access beyond the bounds of sizeimage, if mem_planes was too
-large:
+When the driver calls cx23885_risc_buffer() to prepare the buffer, the
+function call dma_alloc_coherent may fail, resulting in a empty buffer
+risc->cpu. Later when we free the buffer or access the buffer, null ptr
+deref is triggered.
 
-        if (plane_no >= fmt->mem_planes)        // mem_planes = 2+
-                return 0;
+This bug is similar to the following one:
+https://git.linuxtv.org/media_stage.git/commit/?id=2b064d91440b33fba5b452f2d1b31f13ae911d71.
 
-        if (fmt->mem_planes == fmt->comp_planes) // comp_planes != mem_planes
-                return q_data->sizeimage[plane_no];
+We believe the bug can be also dynamically triggered from user side.
+Similarly, we fix this by checking the return value of cx23885_risc_buffer()
+and the value of risc->cpu before buffer free.
 
-        if (plane_no < fmt->mem_planes - 1)     // mem_planes = 2
-                return q_data->sizeimage[plane_no];
-
-comp_planes == 0 or 1 is safe. comp_planes > 2 would be out of bounds.
-
-(This isn't currently possible given the contents of mxc_formats, though.)
-
-Silence the warning by bounds checking comp_planes for future
-robustness. Seen with GCC 13:
-
-In function 'mxc_jpeg_get_plane_size',
-    inlined from 'mxc_jpeg_dec_irq' at ../drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c:729:14:
-../drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c:641:42: warning: array subscript 2 is above array bounds of 'u32[2]' {aka 'unsigned int[2]'} [-Warray-bounds=]
-  641 |                 size += q_data->sizeimage[i];
-      |                         ~~~~~~~~~~~~~~~~~^~~
-In file included from ../drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.h:112,
-                 from ../drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c:63:
-../drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.h: In function 'mxc_jpeg_dec_irq':
-../drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.h:84:41: note: while referencing 'sizeimage'
-   84 |         u32                             sizeimage[MXC_JPEG_MAX_PLANES];
-      |                                         ^~~~~~~~~
-
-Cc: Mirela Rabulea <mirela.rabulea@nxp.com>
-Cc: NXP Linux Team <linux-imx@nxp.com>
-Cc: Shawn Guo <shawnguo@kernel.org>
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
-Cc: Pengutronix Kernel Team <kernel@pengutronix.de>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: harperchen <harperchen1110@gmail.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/media/pci/cx23885/cx23885-core.c  |  4 +++-
+ drivers/media/pci/cx23885/cx23885-video.c | 13 +++++++------
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-index f085f14d676ad..c898116b763a2 100644
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -637,6 +637,11 @@ static u32 mxc_jpeg_get_plane_size(struct mxc_jpeg_q_data *q_data, u32 plane_no)
- 		return q_data->sizeimage[plane_no];
+diff --git a/drivers/media/pci/cx23885/cx23885-core.c b/drivers/media/pci/cx23885/cx23885-core.c
+index 9232a966bcabb..2ce2914576cf2 100644
+--- a/drivers/media/pci/cx23885/cx23885-core.c
++++ b/drivers/media/pci/cx23885/cx23885-core.c
+@@ -1325,7 +1325,9 @@ void cx23885_free_buffer(struct cx23885_dev *dev, struct cx23885_buffer *buf)
+ {
+ 	struct cx23885_riscmem *risc = &buf->risc;
  
- 	size = q_data->sizeimage[fmt->mem_planes - 1];
-+
-+	/* Should be impossible given mxc_formats. */
-+	if (WARN_ON_ONCE(fmt->comp_planes > ARRAY_SIZE(q_data->sizeimage)))
-+		return size;
-+
- 	for (i = fmt->mem_planes; i < fmt->comp_planes; i++)
- 		size += q_data->sizeimage[i];
+-	dma_free_coherent(&dev->pci->dev, risc->size, risc->cpu, risc->dma);
++	if (risc->cpu)
++		dma_free_coherent(&dev->pci->dev, risc->size, risc->cpu, risc->dma);
++	memset(risc, 0, sizeof(*risc));
+ }
  
+ static void cx23885_tsport_reg_dump(struct cx23885_tsport *port)
+diff --git a/drivers/media/pci/cx23885/cx23885-video.c b/drivers/media/pci/cx23885/cx23885-video.c
+index 3d03f5e95786a..671fc0588e431 100644
+--- a/drivers/media/pci/cx23885/cx23885-video.c
++++ b/drivers/media/pci/cx23885/cx23885-video.c
+@@ -342,6 +342,7 @@ static int queue_setup(struct vb2_queue *q,
+ 
+ static int buffer_prepare(struct vb2_buffer *vb)
+ {
++	int ret;
+ 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+ 	struct cx23885_dev *dev = vb->vb2_queue->drv_priv;
+ 	struct cx23885_buffer *buf =
+@@ -358,12 +359,12 @@ static int buffer_prepare(struct vb2_buffer *vb)
+ 
+ 	switch (dev->field) {
+ 	case V4L2_FIELD_TOP:
+-		cx23885_risc_buffer(dev->pci, &buf->risc,
++		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
+ 				sgt->sgl, 0, UNSET,
+ 				buf->bpl, 0, dev->height);
+ 		break;
+ 	case V4L2_FIELD_BOTTOM:
+-		cx23885_risc_buffer(dev->pci, &buf->risc,
++		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
+ 				sgt->sgl, UNSET, 0,
+ 				buf->bpl, 0, dev->height);
+ 		break;
+@@ -391,21 +392,21 @@ static int buffer_prepare(struct vb2_buffer *vb)
+ 			line0_offset = 0;
+ 			line1_offset = buf->bpl;
+ 		}
+-		cx23885_risc_buffer(dev->pci, &buf->risc,
++		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
+ 				sgt->sgl, line0_offset,
+ 				line1_offset,
+ 				buf->bpl, buf->bpl,
+ 				dev->height >> 1);
+ 		break;
+ 	case V4L2_FIELD_SEQ_TB:
+-		cx23885_risc_buffer(dev->pci, &buf->risc,
++		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
+ 				sgt->sgl,
+ 				0, buf->bpl * (dev->height >> 1),
+ 				buf->bpl, 0,
+ 				dev->height >> 1);
+ 		break;
+ 	case V4L2_FIELD_SEQ_BT:
+-		cx23885_risc_buffer(dev->pci, &buf->risc,
++		ret = cx23885_risc_buffer(dev->pci, &buf->risc,
+ 				sgt->sgl,
+ 				buf->bpl * (dev->height >> 1), 0,
+ 				buf->bpl, 0,
+@@ -418,7 +419,7 @@ static int buffer_prepare(struct vb2_buffer *vb)
+ 		buf, buf->vb.vb2_buf.index,
+ 		dev->width, dev->height, dev->fmt->depth, dev->fmt->fourcc,
+ 		(unsigned long)buf->risc.dma);
+-	return 0;
++	return ret;
+ }
+ 
+ static void buffer_finish(struct vb2_buffer *vb)
 -- 
 2.39.2
 
