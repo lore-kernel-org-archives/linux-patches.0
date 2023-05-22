@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472B9171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A9DC433D2;
-	Mon, 22 May 2023 19:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5929C171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:34:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB344C433EF;
+	Mon, 22 May 2023 19:34:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784073;
-	bh=ekDKN2bTmYHv3j6isOwHAPkjjoGc6UUuYWF8zEHPMU8=;
+	s=korg; t=1684784076;
+	bh=T5IdAxvQEq4k4NzYuMiUp9380/a190bhWwaN19AruUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2aZveWObWKyW4K1TD8cDdxdMhNCmwS3ibS+oXt37fPONgRFlLmW5txbd86IVKN/H
-	 /ecvakdQXUcmLliK/lcjOBszRbGWT86iZ1ZnCpnhxEhZ8Qd91mfd+W9VLQwkG30cEA
-	 o/u8UjeGWHKo7R8vC03X1x8f7aZ6rY3Ktx561fLc=
+	b=xPF5aKKkcQVbRwaaQJAZG2ToBXVpWIMadKllMmOfJe9ME40ejhTf2utr9La1YMglF
+	 b2osdCzZFpVKC5m2HOVD7g17au7vJdOsdCACbVvjkyX5vj8slQQHPG14Kgeu7Wayb/
+	 cTTMV5D56eN4e2G6G989PobpG/l0RIcodiOc9IIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
 	Bharath SM <bharathsm@microsoft.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 254/292] SMB3: Close all deferred handles of inode in case of handle lease break
-Date: Mon, 22 May 2023 20:10:11 +0100
-Message-Id: <20230522190412.296012607@linuxfoundation.org>
+Subject: [PATCH 6.1 255/292] SMB3: drop reference to cfile before sending oplock break
+Date: Mon, 22 May 2023 20:10:12 +0100
+Message-Id: <20230522190412.320537101@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -37,61 +38,126 @@ Content-Transfer-Encoding: 8bit
 
 From: Bharath SM <bharathsm@microsoft.com>
 
-commit 47592fa8eb03742048b096b4696ec133384c45eb upstream.
+commit 59a556aebc43dded08535fe97d94ca3f657915e4 upstream.
 
-Oplock break may occur for different file handle than the deferred
-handle. Check for inode deferred closes list, if it's not empty then
-close all the deferred handles of inode because we should not cache
-handles if we dont have handle lease.
-
-Eg: If openfilelist has one deferred file handle and another open file
-handle from app for a same file, then on a lease break we choose the
-first handle in openfile list. The first handle in list can be deferred
-handle or actual open file handle from app. In case if it is actual open
-handle then today, we don't close deferred handles if we lose handle lease
-on a file. Problem with this is, later if app decides to close the existing
-open handle then we still be caching deferred handles until deferred close
-timeout. Leaving open handle may result in sharing violation when windows
-client tries to open a file with limited file share access.
-
-So we should check for deferred list of inode and walk through the list of
-deferred files in inode and close all deferred files.
+In cifs_oplock_break function we drop reference to a cfile at
+the end of function, due to which close command goes on wire
+after lease break acknowledgment even if file is already closed
+by application but we had deferred the handle close.
+If other client with limited file shareaccess waiting on lease
+break ack proceeds operation on that file as soon as first client
+sends ack, then we may encounter status sharing violation error
+because of open handle.
+Solution is to put reference to cfile(send close on wire if last ref)
+and then send oplock acknowledgment to server.
 
 Fixes: 9e31678fb403 ("SMB3: fix lease break timeout when multiple deferred close handles for the same file.")
 Cc: stable@kernel.org
 Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/file.c |    9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ fs/cifs/cifsglob.h |    4 ++--
+ fs/cifs/file.c     |   17 ++++++++++++-----
+ fs/cifs/smb1ops.c  |    9 ++++-----
+ fs/cifs/smb2ops.c  |    7 +++----
+ 4 files changed, 21 insertions(+), 16 deletions(-)
 
+--- a/fs/cifs/cifsglob.h
++++ b/fs/cifs/cifsglob.h
+@@ -428,8 +428,8 @@ struct smb_version_operations {
+ 	/* check for STATUS_NETWORK_SESSION_EXPIRED */
+ 	bool (*is_session_expired)(char *);
+ 	/* send oplock break response */
+-	int (*oplock_response)(struct cifs_tcon *, struct cifs_fid *,
+-			       struct cifsInodeInfo *);
++	int (*oplock_response)(struct cifs_tcon *tcon, __u64 persistent_fid, __u64 volatile_fid,
++			__u16 net_fid, struct cifsInodeInfo *cifs_inode);
+ 	/* query remote filesystem */
+ 	int (*queryfs)(const unsigned int, struct cifs_tcon *,
+ 		       struct cifs_sb_info *, struct kstatfs *);
 --- a/fs/cifs/file.c
 +++ b/fs/cifs/file.c
-@@ -5087,8 +5087,6 @@ void cifs_oplock_break(struct work_struc
+@@ -5086,7 +5086,9 @@ void cifs_oplock_break(struct work_struc
+ 	struct cifs_tcon *tcon = tlink_tcon(cfile->tlink);
  	struct TCP_Server_Info *server = tcon->ses->server;
  	int rc = 0;
- 	bool purge_cache = false;
--	struct cifs_deferred_close *dclose;
--	bool is_deferred = false;
+-	bool purge_cache = false;
++	bool purge_cache = false, oplock_break_cancelled;
++	__u64 persistent_fid, volatile_fid;
++	__u16 net_fid;
  
  	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
  			TASK_UNINTERRUPTIBLE);
-@@ -5129,14 +5127,9 @@ oplock_break_ack:
- 	 * file handles but cached, then schedule deferred close immediately.
- 	 * So, new open will not use cached handle.
- 	 */
--	spin_lock(&CIFS_I(inode)->deferred_lock);
--	is_deferred = cifs_is_deferred_close(cfile, &dclose);
--	spin_unlock(&CIFS_I(inode)->deferred_lock);
- 
--	if (!CIFS_CACHE_HANDLE(cinode) && is_deferred &&
--			cfile->deferred_close_scheduled && delayed_work_pending(&cfile->deferred)) {
-+	if (!CIFS_CACHE_HANDLE(cinode) && !list_empty(&cinode->deferred_closes))
+@@ -5131,19 +5133,24 @@ oplock_break_ack:
+ 	if (!CIFS_CACHE_HANDLE(cinode) && !list_empty(&cinode->deferred_closes))
  		cifs_close_deferred_file(cinode);
--	}
  
++	persistent_fid = cfile->fid.persistent_fid;
++	volatile_fid = cfile->fid.volatile_fid;
++	net_fid = cfile->fid.netfid;
++	oplock_break_cancelled = cfile->oplock_break_cancelled;
++
++	_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
  	/*
  	 * releasing stale oplock after recent reconnect of smb session using
+ 	 * a now incorrect file handle is not a data integrity issue but do
+ 	 * not bother sending an oplock release if session to server still is
+ 	 * disconnected since oplock already released by the server
+ 	 */
+-	if (!cfile->oplock_break_cancelled) {
+-		rc = tcon->ses->server->ops->oplock_response(tcon, &cfile->fid,
+-							     cinode);
++	if (!oplock_break_cancelled) {
++		rc = tcon->ses->server->ops->oplock_response(tcon, persistent_fid,
++				volatile_fid, net_fid, cinode);
+ 		cifs_dbg(FYI, "Oplock release rc = %d\n", rc);
+ 	}
+ 
+-	_cifsFileInfo_put(cfile, false /* do not wait for ourself */, false);
+ 	cifs_done_oplock_break(cinode);
+ }
+ 
+--- a/fs/cifs/smb1ops.c
++++ b/fs/cifs/smb1ops.c
+@@ -897,12 +897,11 @@ cifs_close_dir(const unsigned int xid, s
+ }
+ 
+ static int
+-cifs_oplock_response(struct cifs_tcon *tcon, struct cifs_fid *fid,
+-		     struct cifsInodeInfo *cinode)
++cifs_oplock_response(struct cifs_tcon *tcon, __u64 persistent_fid,
++		__u64 volatile_fid, __u16 net_fid, struct cifsInodeInfo *cinode)
+ {
+-	return CIFSSMBLock(0, tcon, fid->netfid, current->tgid, 0, 0, 0, 0,
+-			   LOCKING_ANDX_OPLOCK_RELEASE, false,
+-			   CIFS_CACHE_READ(cinode) ? 1 : 0);
++	return CIFSSMBLock(0, tcon, net_fid, current->tgid, 0, 0, 0, 0,
++			   LOCKING_ANDX_OPLOCK_RELEASE, false, CIFS_CACHE_READ(cinode) ? 1 : 0);
+ }
+ 
+ static int
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -2383,15 +2383,14 @@ smb2_is_network_name_deleted(char *buf,
+ }
+ 
+ static int
+-smb2_oplock_response(struct cifs_tcon *tcon, struct cifs_fid *fid,
+-		     struct cifsInodeInfo *cinode)
++smb2_oplock_response(struct cifs_tcon *tcon, __u64 persistent_fid,
++		__u64 volatile_fid, __u16 net_fid, struct cifsInodeInfo *cinode)
+ {
+ 	if (tcon->ses->server->capabilities & SMB2_GLOBAL_CAP_LEASING)
+ 		return SMB2_lease_break(0, tcon, cinode->lease_key,
+ 					smb2_get_lease_state(cinode));
+ 
+-	return SMB2_oplock_break(0, tcon, fid->persistent_fid,
+-				 fid->volatile_fid,
++	return SMB2_oplock_break(0, tcon, persistent_fid, volatile_fid,
+ 				 CIFS_CACHE_READ(cinode) ? 1 : 0);
+ }
+ 
 
 
