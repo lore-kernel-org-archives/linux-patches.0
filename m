@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13AB0171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F508C433EF;
-	Mon, 22 May 2023 19:50:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6627171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:50:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5D7C433D2;
+	Mon, 22 May 2023 19:50:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785006;
-	bh=+xY9tYciHcJYoC84cna2hrybmQOq6ZlbigeiAIDbtpo=;
+	s=korg; t=1684785009;
+	bh=WrDUFjwe3xNsc5wJJN+mBS2d5JlUXLvZaGvn4KtmkF8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PGEGMxqbFyj7vFYAAI4378gSMcNv6Ewzj67dr+6svfNHrYIUvY4X9iqKf7P6hZg+a
-	 SyDlOxTJ2KGGF/hVF6/ABJfXV2Y4WkF8C6FkIdwhsr8oPX/UYecJtz27NuTJ5qMJ50
-	 15kh3RLKrFHzqoZokoScjMeZbNaMwfiKm1+kSKjI=
+	b=OSBVsxAfI4rjaxQ3udr++Zk8m+9VjT1R6JjkMrnJgRiN5wxBdw6gIPYa6SQrBg+hM
+	 C7k/UVUCIQGMQuwFdqu4E20H2lWN5cUMllh4FWjYTT/1ER1mDW8kKEQD7dKbTiQrfv
+	 igT1KU5YS/VmdCrFhwmWqMxL/lrp6ZRbSxheLOe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 277/364] devlink: Fix crash with CONFIG_NET_NS=n
-Date: Mon, 22 May 2023 20:09:42 +0100
-Message-Id: <20230522190419.648065993@linuxfoundation.org>
+Subject: [PATCH 6.3 278/364] tun: Fix memory leak for detached NAPI queue.
+Date: Mon, 22 May 2023 20:09:43 +0100
+Message-Id: <20230522190419.674115102@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -38,66 +36,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit d6352dae0903fe8beae4c007dc320e9e9f1fed45 ]
+[ Upstream commit 82b2bc279467c875ec36f8ef820f00997c2a4e8e ]
 
-'__net_initdata' becomes a no-op with CONFIG_NET_NS=y, but when this
-option is disabled it becomes '__initdata', which means the data can be
-freed after the initialization phase. This annotation is obviously
-incorrect for the devlink net device notifier block which is still
-registered after the initialization phase [1].
+syzkaller reported [0] memory leaks of sk and skb related to the TUN
+device with no repro, but we can reproduce it easily with:
 
-Fix this crash by removing the '__net_initdata' annotation.
+  struct ifreq ifr = {}
+  int fd_tun, fd_tmp;
+  char buf[4] = {};
 
-[1]
-general protection fault, probably for non-canonical address 0xcccccccccccccccc: 0000 [#1] PREEMPT SMP
-CPU: 3 PID: 117 Comm: (udev-worker) Not tainted 6.4.0-rc1-custom-gdf0acdc59b09 #64
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.2-1.fc37 04/01/2014
-RIP: 0010:notifier_call_chain+0x58/0xc0
-[...]
-Call Trace:
- <TASK>
- dev_set_mac_address+0x85/0x120
- dev_set_mac_address_user+0x30/0x50
- do_setlink+0x219/0x1270
- rtnl_setlink+0xf7/0x1a0
- rtnetlink_rcv_msg+0x142/0x390
- netlink_rcv_skb+0x58/0x100
- netlink_unicast+0x188/0x270
- netlink_sendmsg+0x214/0x470
- __sys_sendto+0x12f/0x1a0
- __x64_sys_sendto+0x24/0x30
- do_syscall_64+0x38/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  fd_tun = openat(AT_FDCWD, "/dev/net/tun", O_WRONLY, 0);
+  ifr.ifr_flags = IFF_TUN | IFF_NAPI | IFF_MULTI_QUEUE;
+  ioctl(fd_tun, TUNSETIFF, &ifr);
 
-Fixes: e93c9378e33f ("devlink: change per-devlink netdev notifier to static one")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Closes: https://lore.kernel.org/netdev/600ddf9e-589a-2aa0-7b69-a438f833ca10@samsung.com/
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230515162925.1144416-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  ifr.ifr_flags = IFF_DETACH_QUEUE;
+  ioctl(fd_tun, TUNSETQUEUE, &ifr);
+
+  fd_tmp = socket(AF_PACKET, SOCK_PACKET, 0);
+  ifr.ifr_flags = IFF_UP;
+  ioctl(fd_tmp, SIOCSIFFLAGS, &ifr);
+
+  write(fd_tun, buf, sizeof(buf));
+  close(fd_tun);
+
+If we enable NAPI and multi-queue on a TUN device, we can put skb into
+tfile->sk.sk_write_queue after the queue is detached.  We should prevent
+it by checking tfile->detached before queuing skb.
+
+Note this must be done under tfile->sk.sk_write_queue.lock because write()
+and ioctl(IFF_DETACH_QUEUE) can run concurrently.  Otherwise, there would
+be a small race window:
+
+  write()                             ioctl(IFF_DETACH_QUEUE)
+  `- tun_get_user                     `- __tun_detach
+     |- if (tfile->detached)             |- tun_disable_queue
+     |  `-> false                        |  `- tfile->detached = tun
+     |                                   `- tun_queue_purge
+     |- spin_lock_bh(&queue->lock)
+     `- __skb_queue_tail(queue, skb)
+
+Another solution is to call tun_queue_purge() when closing and
+reattaching the detached queue, but it could paper over another
+problems.  Also, we do the same kind of test for IFF_NAPI_FRAGS.
+
+[0]:
+unreferenced object 0xffff88801edbc800 (size 2048):
+  comm "syz-executor.1", pid 33269, jiffies 4295743834 (age 18.756s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 07 40 00 00 00 00 00 00 00 00 00 00 00 00  ...@............
+  backtrace:
+    [<000000008c16ea3d>] __do_kmalloc_node mm/slab_common.c:965 [inline]
+    [<000000008c16ea3d>] __kmalloc+0x4a/0x130 mm/slab_common.c:979
+    [<000000003addde56>] kmalloc include/linux/slab.h:563 [inline]
+    [<000000003addde56>] sk_prot_alloc+0xef/0x1b0 net/core/sock.c:2035
+    [<000000003e20621f>] sk_alloc+0x36/0x2f0 net/core/sock.c:2088
+    [<0000000028e43843>] tun_chr_open+0x3d/0x190 drivers/net/tun.c:3438
+    [<000000001b0f1f28>] misc_open+0x1a6/0x1f0 drivers/char/misc.c:165
+    [<000000004376f706>] chrdev_open+0x111/0x300 fs/char_dev.c:414
+    [<00000000614d379f>] do_dentry_open+0x2f9/0x750 fs/open.c:920
+    [<000000008eb24774>] do_open fs/namei.c:3636 [inline]
+    [<000000008eb24774>] path_openat+0x143f/0x1a30 fs/namei.c:3791
+    [<00000000955077b5>] do_filp_open+0xce/0x1c0 fs/namei.c:3818
+    [<00000000b78973b0>] do_sys_openat2+0xf0/0x260 fs/open.c:1356
+    [<00000000057be699>] do_sys_open fs/open.c:1372 [inline]
+    [<00000000057be699>] __do_sys_openat fs/open.c:1388 [inline]
+    [<00000000057be699>] __se_sys_openat fs/open.c:1383 [inline]
+    [<00000000057be699>] __x64_sys_openat+0x83/0xf0 fs/open.c:1383
+    [<00000000a7d2182d>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<00000000a7d2182d>] do_syscall_64+0x3c/0x90 arch/x86/entry/common.c:80
+    [<000000004cc4e8c4>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+unreferenced object 0xffff88802f671700 (size 240):
+  comm "syz-executor.1", pid 33269, jiffies 4295743854 (age 18.736s)
+  hex dump (first 32 bytes):
+    68 c9 db 1e 80 88 ff ff 68 c9 db 1e 80 88 ff ff  h.......h.......
+    00 c0 7b 2f 80 88 ff ff 00 c8 db 1e 80 88 ff ff  ..{/............
+  backtrace:
+    [<00000000e9d9fdb6>] __alloc_skb+0x223/0x250 net/core/skbuff.c:644
+    [<000000002c3e4e0b>] alloc_skb include/linux/skbuff.h:1288 [inline]
+    [<000000002c3e4e0b>] alloc_skb_with_frags+0x6f/0x350 net/core/skbuff.c:6378
+    [<00000000825f98d7>] sock_alloc_send_pskb+0x3ac/0x3e0 net/core/sock.c:2729
+    [<00000000e9eb3df3>] tun_alloc_skb drivers/net/tun.c:1529 [inline]
+    [<00000000e9eb3df3>] tun_get_user+0x5e1/0x1f90 drivers/net/tun.c:1841
+    [<0000000053096912>] tun_chr_write_iter+0xac/0x120 drivers/net/tun.c:2035
+    [<00000000b9282ae0>] call_write_iter include/linux/fs.h:1868 [inline]
+    [<00000000b9282ae0>] new_sync_write fs/read_write.c:491 [inline]
+    [<00000000b9282ae0>] vfs_write+0x40f/0x530 fs/read_write.c:584
+    [<00000000524566e4>] ksys_write+0xa1/0x170 fs/read_write.c:637
+    [<00000000a7d2182d>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<00000000a7d2182d>] do_syscall_64+0x3c/0x90 arch/x86/entry/common.c:80
+    [<000000004cc4e8c4>] entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+Fixes: cde8b15f1aab ("tuntap: add ioctl to attach or detach a file form tuntap device")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/devlink/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/tun.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/devlink/core.c b/net/devlink/core.c
-index 0e58eee44bdb2..c23ebabadc526 100644
---- a/net/devlink/core.c
-+++ b/net/devlink/core.c
-@@ -294,7 +294,7 @@ static struct pernet_operations devlink_pernet_ops __net_initdata = {
- 	.pre_exit = devlink_pernet_pre_exit,
- };
+diff --git a/drivers/net/tun.c b/drivers/net/tun.c
+index ad653b32b2f00..44087db2a0595 100644
+--- a/drivers/net/tun.c
++++ b/drivers/net/tun.c
+@@ -1976,6 +1976,14 @@ static ssize_t tun_get_user(struct tun_struct *tun, struct tun_file *tfile,
+ 		int queue_len;
  
--static struct notifier_block devlink_port_netdevice_nb __net_initdata = {
-+static struct notifier_block devlink_port_netdevice_nb = {
- 	.notifier_call = devlink_port_netdevice_event,
- };
- 
+ 		spin_lock_bh(&queue->lock);
++
++		if (unlikely(tfile->detached)) {
++			spin_unlock_bh(&queue->lock);
++			rcu_read_unlock();
++			err = -EBUSY;
++			goto free_skb;
++		}
++
+ 		__skb_queue_tail(queue, skb);
+ 		queue_len = skb_queue_len(queue);
+ 		spin_unlock(&queue->lock);
+@@ -2511,6 +2519,13 @@ static int tun_xdp_one(struct tun_struct *tun,
+ 	if (tfile->napi_enabled) {
+ 		queue = &tfile->sk.sk_write_queue;
+ 		spin_lock(&queue->lock);
++
++		if (unlikely(tfile->detached)) {
++			spin_unlock(&queue->lock);
++			kfree_skb(skb);
++			return -EBUSY;
++		}
++
+ 		__skb_queue_tail(queue, skb);
+ 		spin_unlock(&queue->lock);
+ 		ret = 1;
 -- 
 2.39.2
 
