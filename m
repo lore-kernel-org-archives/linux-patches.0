@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B13171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:18:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F160C433EF;
-	Mon, 22 May 2023 19:18:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF744171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:18:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59827C433D2;
+	Mon, 22 May 2023 19:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783123;
-	bh=WcRliFZvaWXFf90+Il4NuHqICBuLlXolzarpaBSu5XE=;
+	s=korg; t=1684783126;
+	bh=+xqjS9Oaex2RNrBNAawCEn3v2DKe5+blgcwkkwigDeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b82iCRCBdWMrMLc4N4xRHZzACvnxkpKeWg7R8MaeN34aZetYwQh8OCarE8gskToAv
-	 NlC0lxGNfkQko+KnS9+S+ZCO7LQ7I1pSMjo96dOtpcTN+Vs/hyYZfr7VQWHN9b24G5
-	 MbMXFTD9uHs7zzaP8pWK2hSfhsam0f+9GUxaOvzE=
+	b=F+5CFVsv4pKid8w4YZpvX0Dil700vRB14b1PFhObzZmhp4DftCUzQBWu3XFgX8NUk
+	 rUFAsggbJFbZ0CnoXky6w9tdZ/nOpr1qPDPZHaqVAmLcDYQquQIUI0DvRw9vUa4ACz
+	 D1DHlOX6nYUTMHhUVlnD1mcH6mK56uMyGpeUieXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Jon Maloy <jmaloy@redhat.com>,
+	Grygorii Strashko <grygorii.strashko@ti.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 146/203] tipc: check the bearer min mtu properly when setting it by netlink
-Date: Mon, 22 May 2023 20:09:30 +0100
-Message-Id: <20230522190359.009451621@linuxfoundation.org>
+Subject: [PATCH 5.15 120/203] net: phy: dp83867: add w/a for packet errors seen with short cables
+Date: Mon, 22 May 2023 20:09:04 +0100
+Message-Id: <20230522190358.296265248@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,43 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Grygorii Strashko <grygorii.strashko@ti.com>
 
-[ Upstream commit 35a089b5d793d2bfd2cc7cfa6104545184de2ce7 ]
+[ Upstream commit 0b01db274028f5acd207332686ffc92ac77491ac ]
 
-Checking the bearer min mtu with tipc_udp_mtu_bad() only works for
-IPv4 UDP bearer, and IPv6 UDP bearer has a different value for the
-min mtu. This patch checks with encap_hlen + TIPC_MIN_BEARER_MTU
-for min mtu, which works for both IPv4 and IPv6 UDP bearer.
+Introduce the W/A for packet errors seen with short cables (<1m) between
+two DP83867 PHYs.
 
-Note that tipc_udp_mtu_bad() is still used to check media min mtu
-in __tipc_nl_media_set(), as m->mtu currently is only used by the
-IPv4 UDP bearer as its default mtu value.
+The W/A recommended by DM requires FFE Equalizer Configuration tuning by
+writing value 0x0E81 to DSP_FFE_CFG register (0x012C), surrounded by hard
+and soft resets as follows:
 
-Fixes: 682cd3cf946b ("tipc: confgiure and apply UDP bearer MTU on running links")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Jon Maloy <jmaloy@redhat.com>
+write_reg(0x001F, 0x8000); //hard reset
+write_reg(DSP_FFE_CFG, 0x0E81);
+write_reg(0x001F, 0x4000); //soft reset
+
+Since  DP83867 PHY DM says "Changing this register to 0x0E81, will not
+affect Long Cable performance.", enable the W/A by default.
+
+Fixes: 2a10154abcb7 ("net: phy: dp83867: Add TI dp83867 phy")
+Signed-off-by: Grygorii Strashko <grygorii.strashko@ti.com>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/bearer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/dp83867.c | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
-index 897fc8fc08a0b..1048607a1528a 100644
---- a/net/tipc/bearer.c
-+++ b/net/tipc/bearer.c
-@@ -1151,8 +1151,8 @@ int __tipc_nl_bearer_set(struct sk_buff *skb, struct genl_info *info)
- 				return -EINVAL;
- 			}
- #ifdef CONFIG_TIPC_MEDIA_UDP
--			if (tipc_udp_mtu_bad(nla_get_u32
--					     (props[TIPC_NLA_PROP_MTU]))) {
-+			if (nla_get_u32(props[TIPC_NLA_PROP_MTU]) <
-+			    b->encap_hlen + TIPC_MIN_BEARER_MTU) {
- 				NL_SET_ERR_MSG(info->extack,
- 					       "MTU value is out-of-range");
- 				return -EINVAL;
+diff --git a/drivers/net/phy/dp83867.c b/drivers/net/phy/dp83867.c
+index 783e30451e30d..6230dd5e29902 100644
+--- a/drivers/net/phy/dp83867.c
++++ b/drivers/net/phy/dp83867.c
+@@ -41,6 +41,7 @@
+ #define DP83867_STRAP_STS1	0x006E
+ #define DP83867_STRAP_STS2	0x006f
+ #define DP83867_RGMIIDCTL	0x0086
++#define DP83867_DSP_FFE_CFG	0x012c
+ #define DP83867_RXFCFG		0x0134
+ #define DP83867_RXFPMD1	0x0136
+ #define DP83867_RXFPMD2	0x0137
+@@ -841,8 +842,27 @@ static int dp83867_phy_reset(struct phy_device *phydev)
+ 
+ 	usleep_range(10, 20);
+ 
+-	return phy_modify(phydev, MII_DP83867_PHYCTRL,
++	err = phy_modify(phydev, MII_DP83867_PHYCTRL,
+ 			 DP83867_PHYCR_FORCE_LINK_GOOD, 0);
++	if (err < 0)
++		return err;
++
++	/* Configure the DSP Feedforward Equalizer Configuration register to
++	 * improve short cable (< 1 meter) performance. This will not affect
++	 * long cable performance.
++	 */
++	err = phy_write_mmd(phydev, DP83867_DEVADDR, DP83867_DSP_FFE_CFG,
++			    0x0e81);
++	if (err < 0)
++		return err;
++
++	err = phy_write(phydev, DP83867_CTRL, DP83867_SW_RESTART);
++	if (err < 0)
++		return err;
++
++	usleep_range(10, 20);
++
++	return 0;
+ }
+ 
+ static void dp83867_link_change_notify(struct phy_device *phydev)
 -- 
 2.39.2
 
