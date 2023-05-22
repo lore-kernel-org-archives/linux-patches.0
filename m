@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF89171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F137C433D2;
-	Mon, 22 May 2023 19:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BAA171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F13C433D2;
+	Mon, 22 May 2023 19:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784486;
-	bh=LPKFGFwNpYR6Q6d+j4k4p64ZsgAzGdvac2iYO0pcWJU=;
+	s=korg; t=1684784489;
+	bh=ZDpaaRyf/2z6KTrKXSfxuTRt3NtW4e5+JRI1L/NAYzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jdl7kWyQogADraxrP+pG005NqmMyeRtz+PJKwLPfqgFPIck5esKPe3tiN3Mqh2uZP
-	 zwyXqE29oTaZix2yRNVQ/3/3podZ+9BIM1utBbH5jpcC06Nca43FCqrYSUpsZEywO6
-	 eI9ODTXmg/kHInSEIkG1AEi79ADh27aj12TZsiFw=
+	b=lWeNn7BBL2sis5BZNkdimYdfV+PZp+BU1fpkiiGKEay4BWH9iACJLziJ3DakeNz0y
+	 0d+KruMS7xJm3FFCO8ognoL4gUgd7LeRfRWytIu1yrJXvfjl/yVv00DDiNibQtgTzW
+	 8I6JDQdhvZRoiA5PR/zAMoHnM7+OCPvkQwEy5FFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongliang Mu <dzm91@hust.edu.cn>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 098/364] wifi: rtw88: fix memory leak in rtw_usb_probe()
-Date: Mon, 22 May 2023 20:06:43 +0100
-Message-Id: <20230522190415.200071648@linuxfoundation.org>
+Subject: [PATCH 6.3 099/364] bnxt: avoid overflow in bnxt_get_nvram_directory()
+Date: Mon, 22 May 2023 20:06:44 +0100
+Message-Id: <20230522190415.226811938@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,37 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dongliang Mu <dzm91@hust.edu.cn>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-[ Upstream commit 48181d285623198c33bb9698992502687b258efa ]
+[ Upstream commit 7c6dddc239abe660598c49ec95ea0ed6399a4b2a ]
 
-drivers/net/wireless/realtek/rtw88/usb.c:876 rtw_usb_probe()
-warn: 'hw' from ieee80211_alloc_hw() not released on lines: 811
+The value of an arithmetic expression is subject
+of possible overflow due to a failure to cast operands to a larger data
+type before performing arithmetic. Used macro for multiplication instead
+operator for avoiding overflow.
 
-Fix this by modifying return to a goto statement.
+Found by Security Code and Linux Verification
+Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230309021636.528601-1-dzm91@hust.edu.cn
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20230309174347.3515-1-korotkov.maxim.s@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw88/usb.c | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw88/usb.c b/drivers/net/wireless/realtek/rtw88/usb.c
-index a10d6fef4ffaf..8e2c99f9c3662 100644
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -832,7 +832,7 @@ int rtw_usb_probe(struct usb_interface *intf, const struct usb_device_id *id)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 6bd18eb5137f4..2dd8ee4a6f75b 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -2864,7 +2864,7 @@ static int bnxt_get_nvram_directory(struct net_device *dev, u32 len, u8 *data)
+ 	if (rc)
+ 		return rc;
  
- 	ret = rtw_usb_alloc_rx_bufs(rtwusb);
- 	if (ret)
--		return ret;
-+		goto err_release_hw;
- 
- 	ret = rtw_core_init(rtwdev);
- 	if (ret)
+-	buflen = dir_entries * entry_length;
++	buflen = mul_u32_u32(dir_entries, entry_length);
+ 	buf = hwrm_req_dma_slice(bp, req, buflen, &dma_handle);
+ 	if (!buf) {
+ 		hwrm_req_drop(bp, req);
 -- 
 2.39.2
 
