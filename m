@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 089DA171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:25:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CDC5C4339B;
-	Mon, 22 May 2023 19:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32ECD171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:25:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42DAAC433EF;
+	Mon, 22 May 2023 19:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783520;
-	bh=Vu0+qWqefyWhMzSESBgfYJzPeVchKVsuZgJb+f4X4Z8=;
+	s=korg; t=1684783524;
+	bh=4WEG8nfAvdunFGh0TR6vBtdz1z/RCOD4phfAcvrKy8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fiN7BR7R2oNxFw3Bp5ckKQsf1EhW5T7d5nLyinvgqjU/xOM3W6EUOTFzLcUZXDc7t
-	 8eXFxAEkUKyfBrJyORvkFiWc67qs8jFaAarO7xmYOLtdXuGE+PiVkUB/TownAJmHkQ
-	 2x4EqKf5vjBWGhFXFUQEFhVH2372E7jqq77qoQWg=
+	b=ZDrYGfDFelpkoSIsejFklmKvIRM6bMYd8Kv0l0lK/mWhYtOqhdOu/lh6UROau0/4u
+	 JsGkb6hHfhfyNr4gWOX+VZyE3Tn7m4L2XesxkaZ8ozsRKpQ5KxZCFilo2HxoshcVla
+	 NplqwX7QHwoZ4BVh29l+/d9G59TmC9uzOrFZ++Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Toby Chen <tobyc@nvidia.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 054/292] drm/rockchip: dw_hdmi: cleanup drm encoder during unbind
-Date: Mon, 22 May 2023 20:06:51 +0100
-Message-Id: <20230522190407.288619778@linuxfoundation.org>
+Subject: [PATCH 6.1 072/292] media: mediatek: vcodec: Fix potential array out-of-bounds in decoder queue_setup
+Date: Mon, 22 May 2023 20:07:09 +0100
+Message-Id: <20230522190407.762290769@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,38 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Toby Chen <tobyc@nvidia.com>
+From: Wei Chen <harperchen1110@gmail.com>
 
-[ Upstream commit b5af48eedcb53491c02ded55d5991e03d6da6dbf ]
+[ Upstream commit 8fbcf730cb89c3647f3365226fe7014118fa93c7 ]
 
-This fixes a use-after-free crash during rmmod.
+variable *nplanes is provided by user via system call argument. The
+possible value of q_data->fmt->num_planes is 1-3, while the value
+of *nplanes can be 1-8. The array access by index i can cause array
+out-of-bounds.
 
-The DRM encoder is embedded inside the larger rockchip_hdmi,
-which is allocated with the component. The component memory
-gets freed before the main drm device is destroyed. Fix it
-by running encoder cleanup before tearing down its container.
+Fix this bug by checking *nplanes against the array size.
 
-Signed-off-by: Toby Chen <tobyc@nvidia.com>
-[moved encoder cleanup above clk_disable, similar to bind-error-path]
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230317005126.496-1-tobyc@nvidia.com
+Signed-off-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-index 2f4b8f64cbad3..ae857bf8bd624 100644
---- a/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-+++ b/drivers/gpu/drm/rockchip/dw_hdmi-rockchip.c
-@@ -640,6 +640,7 @@ static void dw_hdmi_rockchip_unbind(struct device *dev, struct device *master,
- 	struct rockchip_hdmi *hdmi = dev_get_drvdata(dev);
+diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c
+index c99705681a03e..93fcea821001f 100644
+--- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c
++++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec.c
+@@ -735,6 +735,13 @@ int vb2ops_vdec_queue_setup(struct vb2_queue *vq, unsigned int *nbuffers,
+ 	}
  
- 	dw_hdmi_unbind(hdmi->hdmi);
-+	drm_encoder_cleanup(&hdmi->encoder.encoder);
- 	clk_disable_unprepare(hdmi->ref_clk);
- 
- 	regulator_disable(hdmi->avdd_1v8);
+ 	if (*nplanes) {
++		if (vq->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
++			if (*nplanes != q_data->fmt->num_planes)
++				return -EINVAL;
++		} else {
++			if (*nplanes != 1)
++				return -EINVAL;
++		}
+ 		for (i = 0; i < *nplanes; i++) {
+ 			if (sizes[i] < q_data->sizeimage[i])
+ 				return -EINVAL;
 -- 
 2.39.2
 
