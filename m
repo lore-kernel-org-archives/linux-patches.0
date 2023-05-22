@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE40171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF00C433EF;
-	Mon, 22 May 2023 19:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0E23171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C99DC433EF;
+	Mon, 22 May 2023 19:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782965;
-	bh=KBh1hJDB91jaqBKlSIub5UrXX2/noARLl7E69NjVO2o=;
+	s=korg; t=1684782968;
+	bh=YJGfny+mzaNobrNpu7lqlVlLHaeBVBktmqkrh8f0JBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qak/GCMYpuiMoYsYBOPTOJQ9TUvkR7s3v/Qb+Z3AUqDtBQn253iQh/nSGUuUUvLAO
-	 rYf+/s7jkJxMEB2rtyAbHmobSuH7oHZgdRCtU/YuytcGiuCK2GZK5uIo+xOp4PNOsN
-	 yy+YFcx4I0mzDBrRGYThmROS+y5qYQdnApqw8XPo=
+	b=hswmQyj4Lts9lbd0T5J8/0y3cQyAtiGaxbScMEfaYonOQf6ourfKvGIoePApbGMBD
+	 iqEZD/Oi1EmzEoFLEg6qBWe/AggvLQnVKUUevtnis2ne9IMkZuyhI+R6SfFS+tXlxA
+	 8B+8H0T9/KiqCsh2MGbOS1xIzHTf9MP4Vtp8ceM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Nick Child <nnac123@linux.ibm.com>,
+	Piotr Raczynski <piotr.raczynski@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/203] f2fs: fix to check readonly condition correctly
-Date: Mon, 22 May 2023 20:08:09 +0100
-Message-Id: <20230522190356.791241732@linuxfoundation.org>
+Subject: [PATCH 5.15 056/203] net: Catch invalid index in XPS mapping
+Date: Mon, 22 May 2023 20:08:00 +0100
+Message-Id: <20230522190356.546364034@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,78 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Nick Child <nnac123@linux.ibm.com>
 
-[ Upstream commit d78dfefcde9d311284434560d69c0478c55a657e ]
+[ Upstream commit 5dd0dfd55baec0742ba8f5625a0dd064aca7db16 ]
 
-With below case, it can mount multi-device image w/ rw option, however
-one of secondary device is set as ro, later update will cause panic, so
-let's introduce f2fs_dev_is_readonly(), and check multi-devices rw status
-in f2fs_remount() w/ it in order to avoid such inconsistent mount status.
+When setting the XPS value of a TX queue, warn the user once if the
+index of the queue is greater than the number of allocated TX queues.
 
-mkfs.f2fs -c /dev/zram1 /dev/zram0 -f
-blockdev --setro /dev/zram1
-mount -t f2fs dev/zram0 /mnt/f2fs
-mount: /mnt/f2fs: WARNING: source write-protected, mounted read-only.
-mount -t f2fs -o remount,rw mnt/f2fs
-dd if=/dev/zero  of=/mnt/f2fs/file bs=1M count=8192
+Previously, this scenario went uncaught. In the best case, it resulted
+in unnecessary allocations. In the worst case, it resulted in
+out-of-bounds memory references through calls to `netdev_get_tx_queue(
+dev, index)`. Therefore, it is important to inform the user but not
+worth returning an error and risk downing the netdevice.
 
-kernel BUG at fs/f2fs/inline.c:258!
-RIP: 0010:f2fs_write_inline_data+0x23e/0x2d0 [f2fs]
-Call Trace:
-  f2fs_write_single_data_page+0x26b/0x9f0 [f2fs]
-  f2fs_write_cache_pages+0x389/0xa60 [f2fs]
-  __f2fs_write_data_pages+0x26b/0x2d0 [f2fs]
-  f2fs_write_data_pages+0x2e/0x40 [f2fs]
-  do_writepages+0xd3/0x1b0
-  __writeback_single_inode+0x5b/0x420
-  writeback_sb_inodes+0x236/0x5a0
-  __writeback_inodes_wb+0x56/0xf0
-  wb_writeback+0x2a3/0x490
-  wb_do_writeback+0x2b2/0x330
-  wb_workfn+0x6a/0x260
-  process_one_work+0x270/0x5e0
-  worker_thread+0x52/0x3e0
-  kthread+0xf4/0x120
-  ret_from_fork+0x29/0x50
-
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Nick Child <nnac123@linux.ibm.com>
+Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
+Link: https://lore.kernel.org/r/20230321150725.127229-1-nnac123@linux.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/f2fs.h  | 5 +++++
- fs/f2fs/super.c | 2 +-
- 2 files changed, 6 insertions(+), 1 deletion(-)
+ net/core/dev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/f2fs.h b/fs/f2fs/f2fs.h
-index 7424470c68cbe..5c0920e11e4ba 100644
---- a/fs/f2fs/f2fs.h
-+++ b/fs/f2fs/f2fs.h
-@@ -4284,6 +4284,11 @@ static inline bool f2fs_hw_is_readonly(struct f2fs_sb_info *sbi)
- 	return false;
- }
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 30289cd1c29f4..56a3bff7249d4 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -2574,6 +2574,8 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
+ 	struct xps_map *map, *new_map;
+ 	unsigned int nr_ids;
  
-+static inline bool f2fs_dev_is_readonly(struct f2fs_sb_info *sbi)
-+{
-+	return f2fs_sb_has_readonly(sbi) || f2fs_hw_is_readonly(sbi);
-+}
++	WARN_ON_ONCE(index >= dev->num_tx_queues);
 +
- static inline bool f2fs_lfs_mode(struct f2fs_sb_info *sbi)
- {
- 	return F2FS_OPTION(sbi).fs_mode == FS_MODE_LFS;
-diff --git a/fs/f2fs/super.c b/fs/f2fs/super.c
-index 4cc9b948139ad..5c0b2b300aa1b 100644
---- a/fs/f2fs/super.c
-+++ b/fs/f2fs/super.c
-@@ -2225,7 +2225,7 @@ static int f2fs_remount(struct super_block *sb, int *flags, char *data)
- 	if (f2fs_readonly(sb) && (*flags & SB_RDONLY))
- 		goto skip;
- 
--	if (f2fs_sb_has_readonly(sbi) && !(*flags & SB_RDONLY)) {
-+	if (f2fs_dev_is_readonly(sbi) && !(*flags & SB_RDONLY)) {
- 		err = -EROFS;
- 		goto restore_opts;
- 	}
+ 	if (dev->num_tc) {
+ 		/* Do not allow XPS on subordinate device directly */
+ 		num_tc = dev->num_tc;
 -- 
 2.39.2
 
