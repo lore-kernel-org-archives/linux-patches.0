@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B522171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:51:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08726C433EF;
-	Mon, 22 May 2023 19:51:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2FB171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:51:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33659C433EF;
+	Mon, 22 May 2023 19:51:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785061;
-	bh=4MsZa2lGNPONwW+8JbO5BksSHquiMX4cWychEnOJgqI=;
+	s=korg; t=1684785064;
+	bh=hNbOx4X4K2s8invIKlxCQUA6jPkrYTmFoA2fUfFN4Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dhxml+C4SqMSkUqmFpM3OFtxf+2VPvF72e40Qmwi/D4s/9Y9F+km0vy26Ys7LyPTR
-	 6sNfwPqxe4g0BaVwLSkK0rqOrhQoAE43vJikYqio39E0GLBYHVe7TiRtSl0vPGmOJJ
-	 gJX+3v2HHO/WjvzJygRzdYEkyxCmy13WW8tRukys=
+	b=ZDXGbJX6sSrwmgmt7P7zd3t9rqGgFk4oEyiFsa2w8IdXKtQpzDi6F8vCLc6dWjnik
+	 EIpZTF1VP0NTdsL4t/djzclQ2II0hcdEkLyH+VNJMP22cgAYzc/T1Vp1LqRPWpWIDZ
+	 980MuYdO5oiQXyt+8a558QOS7/2lv9I+OzL9iBeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Konrad=20Gr=C3=A4fe?= <k.graefe@gateware.de>
-Subject: [PATCH 6.3 295/364] usb: gadget: u_ether: Fix host MAC address case
-Date: Mon, 22 May 2023 20:10:00 +0100
-Message-Id: <20230522190420.147839610@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.3 296/364] usb: typec: altmodes/displayport: fix pin_assignment_show
+Date: Mon, 22 May 2023 20:10:01 +0100
+Message-Id: <20230522190420.171852397@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -33,55 +34,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Gräfe <k.graefe@gateware.de>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit 3c0f4f09c063e143822393d99cb2b19a85451c07 upstream.
+commit d8f28269dd4bf9b55c3fb376ae31512730a96fce upstream.
 
-The CDC-ECM specification [1] requires to send the host MAC address as
-an uppercase hexadecimal string in chapter "5.4 Ethernet Networking
-Functional Descriptor":
-    The Unicode character is chosen from the set of values 30h through
-    39h and 41h through 46h (0-9 and A-F).
+This patch fixes negative indexing of buf array in pin_assignment_show
+when get_current_pin_assignments returns 0 i.e. no compatible pin
+assignments are found.
 
-However, snprintf(.., "%pm", ..) generates a lowercase MAC address
-string. While most host drivers are tolerant to this, UsbNcm.sys on
-Windows 10 is not. Instead it uses a different MAC address with all
-bytes set to zero including and after the first byte containing a
-lowercase letter. On Windows 11 Microsoft fixed it, but apparently they
-did not backport the fix.
+BUG: KASAN: use-after-free in pin_assignment_show+0x26c/0x33c
+...
+Call trace:
+dump_backtrace+0x110/0x204
+dump_stack_lvl+0x84/0xbc
+print_report+0x358/0x974
+kasan_report+0x9c/0xfc
+__do_kernel_fault+0xd4/0x2d4
+do_bad_area+0x48/0x168
+do_tag_check_fault+0x24/0x38
+do_mem_abort+0x6c/0x14c
+el1_abort+0x44/0x68
+el1h_64_sync_handler+0x64/0xa4
+el1h_64_sync+0x78/0x7c
+pin_assignment_show+0x26c/0x33c
+dev_attr_show+0x50/0xc0
 
-This change fixes the issue by upper-casing the MAC to comply with the
-specification.
-
-[1]: https://www.usb.org/document-library/class-definitions-communication-devices-12, file ECM120.pdf
-
-Fixes: bcd4a1c40bee ("usb: gadget: u_ether: construct with default values and add setters/getters")
+Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: Konrad Gräfe <k.graefe@gateware.de>
-Link: https://lore.kernel.org/r/20230505143640.443014-1-k.graefe@gateware.de
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20230508214443.893436-1-badhri@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_ether.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/typec/altmodes/displayport.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/function/u_ether.c
-+++ b/drivers/usb/gadget/function/u_ether.c
-@@ -17,6 +17,7 @@
- #include <linux/etherdevice.h>
- #include <linux/ethtool.h>
- #include <linux/if_vlan.h>
-+#include <linux/string_helpers.h>
- #include <linux/usb/composite.h>
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -516,6 +516,10 @@ static ssize_t pin_assignment_show(struc
  
- #include "u_ether.h"
-@@ -942,6 +943,8 @@ int gether_get_host_addr_cdc(struct net_
- 	dev = netdev_priv(net);
- 	snprintf(host_addr, len, "%pm", dev->host_mac);
+ 	mutex_unlock(&dp->lock);
  
-+	string_upper(host_addr, host_addr);
++	/* get_current_pin_assignments can return 0 when no matching pin assignments are found */
++	if (len == 0)
++		len++;
 +
- 	return strlen(host_addr);
+ 	buf[len - 1] = '\n';
+ 	return len;
  }
- EXPORT_SYMBOL_GPL(gether_get_host_addr_cdc);
 
 
