@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63CBD171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5DF7C433EF;
-	Mon, 22 May 2023 19:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7508B171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8839C433D2;
+	Mon, 22 May 2023 19:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784031;
-	bh=t57ZLfvKZuwunwkVf+J/BTaHltgieYMHQMGd9Lc+QOA=;
+	s=korg; t=1684784034;
+	bh=0s7OeVPXxbWU+cnOOgxV/yP6r4GLDt0CrqSWoWTdM/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOrsI15gvC0ZM1Yw4TIX75NmSWiFJlyuV7UlJpfVHcObB8W6fkVrQ903mQfSnXPVo
-	 9U/+FwLEe2DvOYJOEJPuk1xyFda57GxtsMnpNZFsKy7U7wL+q1uEdP63XxRdSyqTtF
-	 vOZogFa/IaOrvvIrIVwvhytFcVESTryQnTK9bheM=
+	b=YdYwbtHGo3wabKNC2suMI/0PN7ipf5dlV+rsG9S0315jw7IfiZzL70dNxbHSS49By
+	 Fl7xnkCyHMj3EOdojxLlGKdrYk/1u4BNpU9Jh5DyI/o2BWiouGrs9PcY1lFXfZIQ7a
+	 VoD9YJAZFZ1GWjH8KCpFSW/4nN6Ld8bsSs0VNEOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dawid Wesierski <dawidx.wesierski@intel.com>,
-	Kamil Maziarz <kamil.maziarz@intel.com>,
-	Jacob Keller <Jacob.e.keller@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 203/292] ice: Fix ice VF reset during iavf initialization
-Date: Mon, 22 May 2023 20:09:20 +0100
-Message-Id: <20230522190411.032295534@linuxfoundation.org>
+	Stephan Gerhold <stephan@gerhold.net>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>
+Subject: [PATCH 6.1 234/292] Revert "usb: gadget: udc: core: Prevent redundant calls to pullup"
+Date: Mon, 22 May 2023 20:09:51 +0100
+Message-Id: <20230522190411.802028576@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -38,168 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dawid Wesierski <dawidx.wesierski@intel.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-[ Upstream commit 7255355a0636b4eff08d5e8139c77d98f151c4fc ]
+commit 5e1617210aede9f1b91bb9819c93097b6da481f9 upstream.
 
-Fix the current implementation that causes ice_trigger_vf_reset()
-to start resetting the VF even when the VF-NIC is still initializing.
+This reverts commit a3afbf5cc887fc3401f012fe629810998ed61859.
 
-When we reset NIC with ice driver it can interfere with
-iavf-vf initialization e.g. during consecutive resets induced by ice
+This depends on commit 0db213ea8eed ("usb: gadget: udc: core: Invoke
+usb_gadget_connect only when started") that introduces a regression,
+revert it till the issue is fixed.
 
-iavf                ice
-  |                  |
-  |<-----------------|
-  |            ice resets vf
- iavf                |
- reset               |
- start               |
-  |<-----------------|
-  |             ice resets vf
-  |             causing iavf
-  |             initialization
-  |             error
-  |                  |
- iavf
- reset
- end
-
-This leads to a series of -53 errors
-(failed to init adminq) from the IAVF.
-
-Change the state of the vf_state field to be not active when the IAVF
-is still initializing. Make sure to wait until receiving the message on
-the message box to ensure that the vf is ready and initializded.
-
-In simple terms we use the ACTIVE flag to make sure that the ice
-driver knows if the iavf is ready for another reset
-
-  iavf                  ice
-    |                    |
-    |                    |
-    |<------------- ice resets vf
-  iavf           vf_state != ACTIVE
-  reset                  |
-  start                  |
-    |                    |
-    |                    |
-  iavf                   |
-  reset-------> vf_state == ACTIVE
-  end              ice resets vf
-    |                    |
-    |                    |
-
-Fixes: c54d209c78b8 ("ice: Wait for VF to be reset/ready before configuration")
-Signed-off-by: Dawid Wesierski <dawidx.wesierski@intel.com>
-Signed-off-by: Kamil Maziarz <kamil.maziarz@intel.com>
-Acked-by: Jacob Keller <Jacob.e.keller@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: Stephan Gerhold <stephan@gerhold.net>
+Reported-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/all/ZF4BvgsOyoKxdPFF@francesco-nb.int.toradex.com/
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/r/20230512131435.205464-2-francesco@dolcini.it
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_sriov.c    |  8 ++++----
- drivers/net/ethernet/intel/ice/ice_vf_lib.c   | 19 +++++++++++++++++++
- drivers/net/ethernet/intel/ice/ice_vf_lib.h   |  1 +
- drivers/net/ethernet/intel/ice/ice_virtchnl.c |  1 +
- 4 files changed, 25 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/udc/core.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_sriov.c b/drivers/net/ethernet/intel/ice/ice_sriov.c
-index b719e9a771e36..b8c31bf721ad1 100644
---- a/drivers/net/ethernet/intel/ice/ice_sriov.c
-+++ b/drivers/net/ethernet/intel/ice/ice_sriov.c
-@@ -1240,7 +1240,7 @@ int ice_set_vf_spoofchk(struct net_device *netdev, int vf_id, bool ena)
- 	if (!vf)
- 		return -EINVAL;
- 
--	ret = ice_check_vf_ready_for_cfg(vf);
-+	ret = ice_check_vf_ready_for_reset(vf);
- 	if (ret)
- 		goto out_put_vf;
- 
-@@ -1355,7 +1355,7 @@ int ice_set_vf_mac(struct net_device *netdev, int vf_id, u8 *mac)
- 		goto out_put_vf;
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -676,9 +676,6 @@ static int usb_gadget_connect_locked(str
+ 		goto out;
  	}
  
--	ret = ice_check_vf_ready_for_cfg(vf);
-+	ret = ice_check_vf_ready_for_reset(vf);
- 	if (ret)
- 		goto out_put_vf;
- 
-@@ -1409,7 +1409,7 @@ int ice_set_vf_trust(struct net_device *netdev, int vf_id, bool trusted)
- 		return -EOPNOTSUPP;
- 	}
- 
--	ret = ice_check_vf_ready_for_cfg(vf);
-+	ret = ice_check_vf_ready_for_reset(vf);
- 	if (ret)
- 		goto out_put_vf;
- 
-@@ -1722,7 +1722,7 @@ ice_set_vf_port_vlan(struct net_device *netdev, int vf_id, u16 vlan_id, u8 qos,
- 	if (!vf)
- 		return -EINVAL;
- 
--	ret = ice_check_vf_ready_for_cfg(vf);
-+	ret = ice_check_vf_ready_for_reset(vf);
- 	if (ret)
- 		goto out_put_vf;
- 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.c b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-index 86abbcb480d9d..71047fc341392 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.c
-@@ -185,6 +185,25 @@ int ice_check_vf_ready_for_cfg(struct ice_vf *vf)
- 	return 0;
- }
- 
-+/**
-+ * ice_check_vf_ready_for_reset - check if VF is ready to be reset
-+ * @vf: VF to check if it's ready to be reset
-+ *
-+ * The purpose of this function is to ensure that the VF is not in reset,
-+ * disabled, and is both initialized and active, thus enabling us to safely
-+ * initialize another reset.
-+ */
-+int ice_check_vf_ready_for_reset(struct ice_vf *vf)
-+{
-+	int ret;
-+
-+	ret = ice_check_vf_ready_for_cfg(vf);
-+	if (!ret && !test_bit(ICE_VF_STATE_ACTIVE, vf->vf_states))
-+		ret = -EAGAIN;
-+
-+	return ret;
-+}
-+
- /**
-  * ice_trigger_vf_reset - Reset a VF on HW
-  * @vf: pointer to the VF structure
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_lib.h b/drivers/net/ethernet/intel/ice/ice_vf_lib.h
-index 9f7fcd8e5714b..e5bed85724622 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_lib.h
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_lib.h
-@@ -214,6 +214,7 @@ u16 ice_get_num_vfs(struct ice_pf *pf);
- struct ice_vsi *ice_get_vf_vsi(struct ice_vf *vf);
- bool ice_is_vf_disabled(struct ice_vf *vf);
- int ice_check_vf_ready_for_cfg(struct ice_vf *vf);
-+int ice_check_vf_ready_for_reset(struct ice_vf *vf);
- void ice_set_vf_state_dis(struct ice_vf *vf);
- bool ice_is_any_vf_in_unicast_promisc(struct ice_pf *pf);
- void
-diff --git a/drivers/net/ethernet/intel/ice/ice_virtchnl.c b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-index 2b4c791b6cbad..ef3c709d6a750 100644
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl.c
-@@ -3722,6 +3722,7 @@ void ice_vc_process_vf_msg(struct ice_pf *pf, struct ice_rq_event_info *event)
- 		ice_vc_notify_vf_link_state(vf);
- 		break;
- 	case VIRTCHNL_OP_RESET_VF:
-+		clear_bit(ICE_VF_STATE_ACTIVE, vf->vf_states);
- 		ops->reset_vf(vf);
- 		break;
- 	case VIRTCHNL_OP_ADD_ETH_ADDR:
--- 
-2.39.2
-
+-	if (gadget->connected)
+-		goto out;
+-
+ 	if (gadget->deactivated || !gadget->udc->started) {
+ 		/*
+ 		 * If gadget is deactivated we only save new state.
 
 
