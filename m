@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A35C171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:47:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8964BC433D2;
-	Mon, 22 May 2023 19:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F514171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:47:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08B9CC433D2;
+	Mon, 22 May 2023 19:47:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784874;
-	bh=NQom13Ck2etWX/vjuAupXxrA9/g72i50vHbBPNJkqS8=;
+	s=korg; t=1684784878;
+	bh=MUZ+vTtqbwHDiI659bCJs3cVxAFoCDZgavRLSnqdh2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/N0em8jVIVi/LhQdnaOb6VfEjQ8xO9pK7ah3d+RSL6UYlZgb/tEENnIlUVt9rVo8
-	 sXWwj05r2wy5BxvACb8lHDgEBD+UC6KMUvsXwoQoqJvKfw2bChLRT+xX8Aq7ZQuR88
-	 xoCG+WxBMOlRWYOcONYkSjoVxCiBDyUj0oPdlw0o=
+	b=IFWX0R4ShCMktQWS3smWo9hvBS5LVF30MThYEwq6HEKh3dJqB2mfzyXEPjmv3rAel
+	 6q0IhxPMc+2Pws7Qu/9XqeXI2/jvi7sjZc1UyLp27D+SvBx43SuxNLLTIcj0cO8jkR
+	 tJl7uLeTtaxnCzssipo1VYaUNqo1FuC3ZbUo2UbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhuang Shengen <zhuangshengen@huawei.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Antoine Tenart <atenart@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 231/364] vsock: avoid to close connected socket after the timeout
-Date: Mon, 22 May 2023 20:08:56 +0100
-Message-Id: <20230522190418.474134183@linuxfoundation.org>
+Subject: [PATCH 6.3 232/364] tcp: fix possible sk_priority leak in tcp_v4_send_reset()
+Date: Mon, 22 May 2023 20:08:57 +0100
+Message-Id: <20230522190418.500921976@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,49 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhuang Shengen <zhuangshengen@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6d4486efe9c69626cab423456169e250a5cd3af5 ]
+[ Upstream commit 1e306ec49a1f206fd2cc89a42fac6e6f592a8cc1 ]
 
-When client and server establish a connection through vsock,
-the client send a request to the server to initiate the connection,
-then start a timer to wait for the server's response. When the server's
-RESPONSE message arrives, the timer also times out and exits. The
-server's RESPONSE message is processed first, and the connection is
-established. However, the client's timer also times out, the original
-processing logic of the client is to directly set the state of this vsock
-to CLOSE and return ETIMEDOUT. It will not notify the server when the port
-is released, causing the server port remain.
-when client's vsock_connect timeout，it should check sk state is
-ESTABLISHED or not. if sk state is ESTABLISHED, it means the connection
-is established, the client should not set the sk state to CLOSE
+When tcp_v4_send_reset() is called with @sk == NULL,
+we do not change ctl_sk->sk_priority, which could have been
+set from a prior invocation.
 
-Note: I encountered this issue on kernel-4.18, which can be fixed by
-this patch. Then I checked the latest code in the community
-and found similar issue.
+Change tcp_v4_send_reset() to set sk_priority and sk_mark
+fields before calling ip_send_unicast_reply().
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Signed-off-by: Zhuang Shengen <zhuangshengen@huawei.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+This means tcp_v4_send_reset() and tcp_v4_send_ack()
+no longer have to clear ctl_sk->sk_mark after
+their call to ip_send_unicast_reply().
+
+Fixes: f6c0f5d209fa ("tcp: honor SO_PRIORITY in TIME_WAIT state")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Antoine Tenart <atenart@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_ipv4.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 19aea7cba26ef..5d48017482bca 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1426,7 +1426,7 @@ static int vsock_connect(struct socket *sock, struct sockaddr *addr,
- 			vsock_transport_cancel_pkt(vsk);
- 			vsock_remove_connected(vsk);
- 			goto out_wait;
--		} else if (timeout == 0) {
-+		} else if ((sk->sk_state != TCP_ESTABLISHED) && (timeout == 0)) {
- 			err = -ETIMEDOUT;
- 			sk->sk_state = TCP_CLOSE;
- 			sock->state = SS_UNCONNECTED;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index b9d55277cb858..c87958f979f0a 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -829,6 +829,9 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
+ 				   inet_twsk(sk)->tw_priority : sk->sk_priority;
+ 		transmit_time = tcp_transmit_time(sk);
+ 		xfrm_sk_clone_policy(ctl_sk, sk);
++	} else {
++		ctl_sk->sk_mark = 0;
++		ctl_sk->sk_priority = 0;
+ 	}
+ 	ip_send_unicast_reply(ctl_sk,
+ 			      skb, &TCP_SKB_CB(skb)->header.h4.opt,
+@@ -836,7 +839,6 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
+ 			      &arg, arg.iov[0].iov_len,
+ 			      transmit_time);
+ 
+-	ctl_sk->sk_mark = 0;
+ 	xfrm_sk_free_policy(ctl_sk);
+ 	sock_net_set(ctl_sk, &init_net);
+ 	__TCP_INC_STATS(net, TCP_MIB_OUTSEGS);
+@@ -935,7 +937,6 @@ static void tcp_v4_send_ack(const struct sock *sk,
+ 			      &arg, arg.iov[0].iov_len,
+ 			      transmit_time);
+ 
+-	ctl_sk->sk_mark = 0;
+ 	sock_net_set(ctl_sk, &init_net);
+ 	__TCP_INC_STATS(net, TCP_MIB_OUTSEGS);
+ 	local_bh_enable();
 -- 
 2.39.2
 
