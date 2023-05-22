@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5B2171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:46:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DF7C433EF;
-	Mon, 22 May 2023 19:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A3D171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:46:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9546EC433D2;
+	Mon, 22 May 2023 19:46:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784776;
-	bh=St5QlSY1Lhp1rWCSmBbrz/VUEdthoS+jnsfhFhr72hk=;
+	s=korg; t=1684784779;
+	bh=ZJGyKJX+SJn7/ogkf8kjQ039MZHB/DIAntQZJF7LQlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JZ3BwAQoSZPwgxZ0fq3hZAalffLoiZ6RZW3sehmw3ISbOxF0soInKMFSjcakIfacx
-	 chkEqpQJaCKpkGYaS10WNOFzhSXlNAMzjBIjZrlbc+NiauDGQWE59aPhTsoRnNA9cM
-	 zcmxwlEpbb4wu1O1RiuDHUe72YaJgHQ9IUjwqN3w=
+	b=fpsfs7Bm7VWG0SBpXBGfhIK72yJkTtY9hcGKAOpWOSYGbroxm6ZpqqsaIFcP1THP7
+	 HOobmErBAIx2ifn/ffXhGqxQcY3HOgmQP0AK7coNbdAkMLe3pZmvpZq50PcRqa7Cko
+	 XVwTZiWUI+tuGoHiWtOt6J+BzvDGZ4n0TKDddlOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 199/364] xfrm: release all offloaded policy memory
-Date: Mon, 22 May 2023 20:08:24 +0100
-Message-Id: <20230522190417.705464429@linuxfoundation.org>
+Subject: [PATCH 6.3 200/364] xfrm: Fix leak of dev tracker
+Date: Mon, 22 May 2023 20:08:25 +0100
+Message-Id: <20230522190417.730362672@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -39,33 +39,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 94b95dfaa814f565d92f5a65f0ff12a483095522 ]
+[ Upstream commit ec8f32ad9a65a8cbb465b69e154aaec9d2fe45c4 ]
 
-Failure to add offloaded policy will cause to the following
-error once user will try to reload driver.
-
-Unregister_netdevice: waiting for eth3 to become free. Usage count = 2
-
-This was caused by xfrm_dev_policy_add() which increments reference
-to net_device. That reference was supposed to be decremented
-in xfrm_dev_policy_free(). However the latter wasn't called.
-
- unregister_netdevice: waiting for eth3 to become free. Usage count = 2
- leaked reference.
-  xfrm_dev_policy_add+0xff/0x3d0
-  xfrm_policy_construct+0x352/0x420
-  xfrm_add_policy+0x179/0x320
-  xfrm_user_rcv_msg+0x1d2/0x3d0
-  netlink_rcv_skb+0xe0/0x210
-  xfrm_netlink_rcv+0x45/0x50
-  netlink_unicast+0x346/0x490
-  netlink_sendmsg+0x3b0/0x6c0
-  sock_sendmsg+0x73/0xc0
-  sock_write_iter+0x13b/0x1f0
-  vfs_write+0x528/0x5d0
-  ksys_write+0x120/0x150
-  do_syscall_64+0x3d/0x90
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+At the stage of direction checks, the netdev reference tracker is
+already initialized, but released with wrong *_put() call.
 
 Fixes: 919e43fad516 ("xfrm: add an interface to offload policy")
 Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
@@ -74,21 +51,22 @@ Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_user.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/xfrm/xfrm_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index 103af2b3e986f..af8fbcbfbe691 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -1978,6 +1978,7 @@ static int xfrm_add_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
- 
- 	if (err) {
- 		xfrm_dev_policy_delete(xp);
-+		xfrm_dev_policy_free(xp);
- 		security_xfrm_policy_free(xp->security);
- 		kfree(xp);
- 		return err;
+diff --git a/net/xfrm/xfrm_device.c b/net/xfrm/xfrm_device.c
+index 95f1436bf6a2e..e2ca50bfca24f 100644
+--- a/net/xfrm/xfrm_device.c
++++ b/net/xfrm/xfrm_device.c
+@@ -378,7 +378,7 @@ int xfrm_dev_policy_add(struct net *net, struct xfrm_policy *xp,
+ 		break;
+ 	default:
+ 		xdo->dev = NULL;
+-		dev_put(dev);
++		netdev_put(dev, &xdo->dev_tracker);
+ 		NL_SET_ERR_MSG(extack, "Unrecognized offload direction");
+ 		return -EINVAL;
+ 	}
 -- 
 2.39.2
 
