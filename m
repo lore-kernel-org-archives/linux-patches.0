@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557E6171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:49:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C36C433EF;
-	Mon, 22 May 2023 19:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80347171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:49:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A899C433EF;
+	Mon, 22 May 2023 19:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784956;
-	bh=n14EcyC4I8qfb3PL6ajH9kdy6ns5c+GYmEo3sFs+ebY=;
+	s=korg; t=1684784959;
+	bh=kCOes3dmRG3Cg5Hi901IVYqm4Y+1g1Nb0jKjiobzzSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yOC9CEdyJtOFY+aUDkwzysy7CSNo0IYNhjZEOw0ufFwBF9QXott2xd/Vi3JLY388B
-	 BvSgYYqry7hAbzMJun4A1z2pBTKOm/Hzs9dCHCPwiFHf+aZlVFjOH2Gv4x738Z0ATg
-	 uJ6YfBx6XrK5uWaAzjf16EGz+KuCLEwuL1rpPT4g=
+	b=H5roY0n0VMExYePlzwNDRcOvanyH6109POs9epRrwFQX+7n0Aabi4yVC+I8UYodUQ
+	 e2lVhzvI0Ka25jtcduRq3EVvL77YN1KVRFeYVSBHoZDgElaFEVZuzFfVv0xtSnbqLx
+	 PC58j3QQhAIpQ5EKPSLCTR13TivAMCEm/QaRsWNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 260/364] can: dev: fix missing CAN XL support in can_put_echo_skb()
-Date: Mon, 22 May 2023 20:09:25 +0100
-Message-Id: <20230522190419.203349777@linuxfoundation.org>
+Subject: [PATCH 6.3 261/364] net: bcmgenet: Remove phy_stop() from bcmgenet_netif_stop()
+Date: Mon, 22 May 2023 20:09:26 +0100
+Message-Id: <20230522190419.230569479@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,37 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Florian Fainelli <f.fainelli@gmail.com>
 
-[ Upstream commit 6bffdc38f9935bae49f980448f3f6be2dada0564 ]
+[ Upstream commit 93e0401e0fc0c54b0ac05b687cd135c2ac38187c ]
 
-can_put_echo_skb() checks for the enabled IFF_ECHO flag and the
-correct ETH_P type of the given skbuff. When implementing the CAN XL
-support the new check for ETH_P_CANXL has been forgotten.
+The call to phy_stop() races with the later call to phy_disconnect(),
+resulting in concurrent phy_suspend() calls being run from different
+CPUs. The final call to phy_disconnect() ensures that the PHY is
+stopped and suspended, too.
 
-Fixes: fb08cba12b52 ("can: canxl: update CAN infrastructure for CAN XL frames")
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230506184515.39241-1-socketcan@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: c96e731c93ff ("net: bcmgenet: connect and disconnect from the PHY state machine")
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 225c657945c4 ("net: bcmgenet: Restore phy_stop() depending upon suspend/close")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/dev/skb.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/can/dev/skb.c b/drivers/net/can/dev/skb.c
-index 241ec636e91fd..f6d05b3ef59ab 100644
---- a/drivers/net/can/dev/skb.c
-+++ b/drivers/net/can/dev/skb.c
-@@ -54,7 +54,8 @@ int can_put_echo_skb(struct sk_buff *skb, struct net_device *dev,
- 	/* check flag whether this packet has to be looped back */
- 	if (!(dev->flags & IFF_ECHO) ||
- 	    (skb->protocol != htons(ETH_P_CAN) &&
--	     skb->protocol != htons(ETH_P_CANFD))) {
-+	     skb->protocol != htons(ETH_P_CANFD) &&
-+	     skb->protocol != htons(ETH_P_CANXL))) {
- 		kfree_skb(skb);
- 		return 0;
- 	}
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+index d937daa8ee883..f28ffc31df220 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
+@@ -3465,7 +3465,6 @@ static void bcmgenet_netif_stop(struct net_device *dev)
+ 	/* Disable MAC transmit. TX DMA disabled must be done before this */
+ 	umac_enable_set(priv, CMD_TX_EN, false);
+ 
+-	phy_stop(dev->phydev);
+ 	bcmgenet_disable_rx_napi(priv);
+ 	bcmgenet_intr_disable(priv);
+ 
 -- 
 2.39.2
 
