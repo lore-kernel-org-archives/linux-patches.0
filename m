@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C3A8171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:36:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0886C433D2;
-	Mon, 22 May 2023 19:36:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990E8171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:36:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E11C433D2;
+	Mon, 22 May 2023 19:36:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784165;
-	bh=37Jz2q5LnE30Jaq36bR14GBbqujFZ79ISbhheOxvte8=;
+	s=korg; t=1684784168;
+	bh=p2GvdELpo5zpk3FhuKwcRZZDNbx594w8qGk9VuZlfbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PVGXCy8cZoTZhQIfd31/VRNyNPAC73DwKrdLRNsnje2IORMVsEQAoGtc+W/qGgqS1
-	 JrwQ9iFAEy11O5bo3peaKtaMZaYgIre5Nz5Q7F0TumUSN99fD1zPNdgMUkEpgYEsar
-	 aaL2No/dj8YCH3LSC81b6VJ22U5iWNc1LpP5qszI=
+	b=do/OwA1Dy7iZd3WvFiZKiyxBmg3SKaNYiki7B4f9Yj8ANRos7BIcEHpiKB/ImBDgc
+	 d06xkSC75ar6Sl4sCJEgFG6lEoYcsKYkitj4LK7NJtf6YQYi++TkFqHzTqIu2D7+FI
+	 ykKbXXcftk6hbMo1ZADF/FhAbRa2VGiE4mu2sJTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Steffen Maier <maier@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 6.1 284/292] s390/qdio: fix do_sqbs() inline assembly constraint
-Date: Mon, 22 May 2023 20:10:41 +0100
-Message-Id: <20230522190413.044308915@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Alexandru Elisei <alexandru.elisei@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.1 285/292] arm64: mte: Do not set PG_mte_tagged if tags were not initialized
+Date: Mon, 22 May 2023 20:10:42 +0100
+Message-Id: <20230522190413.068676734@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,61 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Peter Collingbourne <pcc@google.com>
 
-commit 2862a2fdfae875888e3c1c3634e3422e01d98147 upstream.
+commit c4c597f1b367433c52c531dccd6859a39b4580fb upstream.
 
-Use "a" constraint instead of "d" constraint to pass the state parameter to
-the do_sqbs() inline assembly. This prevents that general purpose register
-zero is used for the state parameter.
+The mte_sync_page_tags() function sets PG_mte_tagged if it initializes
+page tags. Then we return to mte_sync_tags(), which sets PG_mte_tagged
+again. At best, this is redundant. However, it is possible for
+mte_sync_page_tags() to return without having initialized tags for the
+page, i.e. in the case where check_swap is true (non-compound page),
+is_swap_pte(old_pte) is false and pte_is_tagged is false. So at worst,
+we set PG_mte_tagged on a page with uninitialized tags. This can happen
+if, for example, page migration causes a PTE for an untagged page to
+be replaced. If the userspace program subsequently uses mprotect() to
+enable PROT_MTE for that page, the uninitialized tags will be exposed
+to userspace.
 
-If the compiler would select general purpose register zero this would be
-problematic for the used instruction in rsy format: the register used for
-the state parameter is a base register. If the base register is general
-purpose register zero the contents of the register are unexpectedly ignored
-when the instruction is executed.
+Fix it by removing the redundant call to set_page_mte_tagged().
 
-This only applies to z/VM guests using QIOASSIST with dedicated (pass through)
-QDIO-based devices such as FCP [zfcp driver] as well as real OSA or
-HiperSockets [qeth driver].
-
-A possible symptom for this case using zfcp is the following repeating kernel
-message pattern:
-
-zfcp <devbusid>: A QDIO problem occurred
-zfcp <devbusid>: A QDIO problem occurred
-zfcp <devbusid>: qdio: ZFCP on SC <sc> using AI:1 QEBSM:1 PRI:1 TDD:1 SIGA: W
-zfcp <devbusid>: A QDIO problem occurred
-zfcp <devbusid>: A QDIO problem occurred
-
-Each of the qdio problem message can be accompanied by the following entries
-for the affected subchannel <sc> in
-/sys/kernel/debug/s390dbf/qdio_error/hex_ascii for zfcp or qeth:
-
-<sc> ccq: 69....
-<sc> SQBS ERROR.
-
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Cc: Steffen Maier <maier@linux.ibm.com>
-Fixes: 8129ee164267 ("[PATCH] s390: qdio V=V pass-through")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Fixes: e059853d14ca ("arm64: mte: Fix/clarify the PG_mte_tagged semantics")
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Cc: <stable@vger.kernel.org> # 6.1
+Link: https://linux-review.googlesource.com/id/Ib02d004d435b2ed87603b858ef7480f7b1463052
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Alexandru Elisei <alexandru.elisei@arm.com>
+Link: https://lore.kernel.org/r/20230420214327.2357985-1-pcc@google.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/qdio.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/kernel/mte.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/s390/cio/qdio.h
-+++ b/drivers/s390/cio/qdio.h
-@@ -95,7 +95,7 @@ static inline int do_sqbs(u64 token, uns
- 		"	lgr	1,%[token]\n"
- 		"	.insn	rsy,0xeb000000008a,%[qs],%[ccq],0(%[state])"
- 		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart)
--		: [state] "d" ((unsigned long)state), [token] "d" (token)
-+		: [state] "a" ((unsigned long)state), [token] "d" (token)
- 		: "memory", "cc", "1");
- 	*count = _ccq & 0xff;
- 	*start = _queuestart & 0xff;
+--- a/arch/arm64/kernel/mte.c
++++ b/arch/arm64/kernel/mte.c
+@@ -72,13 +72,10 @@ void mte_sync_tags(pte_t old_pte, pte_t
+ 		return;
+ 
+ 	/* if PG_mte_tagged is set, tags have already been initialised */
+-	for (i = 0; i < nr_pages; i++, page++) {
+-		if (!page_mte_tagged(page)) {
++	for (i = 0; i < nr_pages; i++, page++)
++		if (!page_mte_tagged(page))
+ 			mte_sync_page_tags(page, old_pte, check_swap,
+ 					   pte_is_tagged);
+-			set_page_mte_tagged(page);
+-		}
+-	}
+ 
+ 	/* ensure the tags are visible before the PTE is set */
+ 	smp_wmb();
 
 
