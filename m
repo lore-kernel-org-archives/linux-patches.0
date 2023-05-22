@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1AFC171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F932C4339B;
-	Mon, 22 May 2023 19:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3AC171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF14C433D2;
+	Mon, 22 May 2023 19:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785154;
-	bh=d5RU3Okkp66UolqrrrFVQ1vav9ap1F8aLgyevXP8y/I=;
+	s=korg; t=1684785157;
+	bh=FwaJqMjyHKOmAPpdM5XeBLjmcmG5J5gwIrLef0pDgRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10k8inHEKnEtzDZQrGQUMfaj0WJVqHtoKiFwaIYSCqrAzkl2wJyC3rtmOynRqawzZ
-	 IrdKzBffTL8WHEAGl20MNBkimxT0TPFJ6667NKjIhC5P0XkeIzYsaTTwd4ayd7B94k
-	 c/cdz63L9kDm7IizOk/37ao5sba2euF3cpgN2SaU=
+	b=A3NOgkUEJGNoRHdpuAspKagye1Yl5eA8L+Dph/0hJwrgB4mjtJu3+Y/b0jcnr0X8I
+	 C6w4tjSL1ZzUitJY6GL4CfT4KwWVeNt9mr1q7VZc3Cnn5Re2jf+c8s389/qmC71rDV
+	 FyNfVpEDVwVhCDRtiTFzYIZyzWMF+sbWoHwjIX/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	"Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
-	Tad <support@spotco.us>,
-	Michael Keyes <mgkeyes@vigovproductions.net>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Chris Li (Google)" <chrisl@kernel.org>,
+	Dan Streetman <ddstreet@ieee.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Nitin Gupta <ngupta@vflare.org>,
+	Seth Jennings <sjenning@redhat.com>,
+	Vitaly Wool <vitaly.wool@konsulko.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 328/364] maple_tree: make maple state reusable after mas_empty_area()
-Date: Mon, 22 May 2023 20:10:33 +0100
-Message-Id: <20230522190420.974593586@linuxfoundation.org>
+Subject: [PATCH 6.3 329/364] mm: fix zswap writeback race condition
+Date: Mon, 22 May 2023 20:10:34 +0100
+Message-Id: <20230522190420.999199161@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -38,55 +41,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Zhang <zhangpeng.00@bytedance.com>
+From: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
 
-commit 0257d9908d38c0b1669af4bb1bc4dbca1f273fe6 upstream.
+commit 04fc7816089c5a32c29a04ec94b998e219dfb946 upstream.
 
-Make mas->min and mas->max point to a node range instead of a leaf entry
-range.  This allows mas to still be usable after mas_empty_area() returns.
-Users would get unexpected results from other operations on the maple
-state after calling the affected function.
+The zswap writeback mechanism can cause a race condition resulting in
+memory corruption, where a swapped out page gets swapped in with data that
+was written to a different page.
 
-For example, x86 MAP_32BIT mmap() acts as if there is no suitable gap when
-there should be one.
+The race unfolds like this:
+1. a page with data A and swap offset X is stored in zswap
+2. page A is removed off the LRU by zpool driver for writeback in
+   zswap-shrink work, data for A is mapped by zpool driver
+3. user space program faults and invalidates page entry A, offset X is
+   considered free
+4. kswapd stores page B at offset X in zswap (zswap could also be
+   full, if so, page B would then be IOed to X, then skip step 5.)
+5. entry A is replaced by B in tree->rbroot, this doesn't affect the
+   local reference held by zswap-shrink work
+6. zswap-shrink work writes back A at X, and frees zswap entry A
+7. swapin of slot X brings A in memory instead of B
 
-Link: https://lkml.kernel.org/r/20230505145829.74574-1-zhangpeng.00@bytedance.com
-Fixes: 54a611b60590 ("Maple Tree: add new data structure")
-Signed-off-by: Peng Zhang <zhangpeng.00@bytedance.com>
-Reported-by: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-Reported-by: Tad <support@spotco.us>
-Reported-by: Michael Keyes <mgkeyes@vigovproductions.net>
-  Link: https://lore.kernel.org/linux-mm/32f156ba80010fd97dbaf0a0cdfc84366608624d.camel@intel.com/
-  Link: https://lore.kernel.org/linux-mm/e6108286ac025c268964a7ead3aab9899f9bc6e9.camel@spotco.us/
-Reviewed-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Tested-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+The fix:
+Once the swap page cache has been allocated (case ZSWAP_SWAPCACHE_NEW),
+zswap-shrink work just checks that the local zswap_entry reference is
+still the same as the one in the tree.  If it's not the same it means that
+it's either been invalidated or replaced, in both cases the writeback is
+aborted because the local entry contains stale data.
+
+Reproducer:
+I originally found this by running `stress` overnight to validate my work
+on the zswap writeback mechanism, it manifested after hours on my test
+machine.  The key to make it happen is having zswap writebacks, so
+whatever setup pumps /sys/kernel/debug/zswap/written_back_pages should do
+the trick.
+
+In order to reproduce this faster on a vm, I setup a system with ~100M of
+available memory and a 500M swap file, then running `stress --vm 1
+--vm-bytes 300000000 --vm-stride 4000` makes it happen in matter of tens
+of minutes.  One can speed things up even more by swinging
+/sys/module/zswap/parameters/max_pool_percent up and down between, say, 20
+and 1; this makes it reproduce in tens of seconds.  It's crucial to set
+`--vm-stride` to something other than 4096 otherwise `stress` won't
+realize that memory has been corrupted because all pages would have the
+same data.
+
+Link: https://lkml.kernel.org/r/20230503151200.19707-1-cerasuolodomenico@gmail.com
+Signed-off-by: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Chris Li (Google) <chrisl@kernel.org>
+Cc: Dan Streetman <ddstreet@ieee.org>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Nitin Gupta <ngupta@vflare.org>
+Cc: Seth Jennings <sjenning@redhat.com>
+Cc: Vitaly Wool <vitaly.wool@konsulko.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/maple_tree.c |   12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ mm/zswap.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/lib/maple_tree.c
-+++ b/lib/maple_tree.c
-@@ -5340,15 +5340,9 @@ int mas_empty_area(struct ma_state *mas,
+--- a/mm/zswap.c
++++ b/mm/zswap.c
+@@ -995,6 +995,22 @@ static int zswap_writeback_entry(struct
+ 		goto fail;
  
- 	mt = mte_node_type(mas->node);
- 	pivots = ma_pivots(mas_mn(mas), mt);
--	if (offset)
--		mas->min = pivots[offset - 1] + 1;
--
--	if (offset < mt_pivots[mt])
--		mas->max = pivots[offset];
--
--	if (mas->index < mas->min)
--		mas->index = mas->min;
--
-+	min = mas_safe_min(mas, pivots, offset);
-+	if (mas->index < min)
-+		mas->index = min;
- 	mas->last = mas->index + size - 1;
- 	return 0;
- }
+ 	case ZSWAP_SWAPCACHE_NEW: /* page is locked */
++		/*
++		 * Having a local reference to the zswap entry doesn't exclude
++		 * swapping from invalidating and recycling the swap slot. Once
++		 * the swapcache is secured against concurrent swapping to and
++		 * from the slot, recheck that the entry is still current before
++		 * writing.
++		 */
++		spin_lock(&tree->lock);
++		if (zswap_rb_search(&tree->rbroot, entry->offset) != entry) {
++			spin_unlock(&tree->lock);
++			delete_from_swap_cache(page_folio(page));
++			ret = -ENOMEM;
++			goto fail;
++		}
++		spin_unlock(&tree->lock);
++
+ 		/* decompress */
+ 		acomp_ctx = raw_cpu_ptr(entry->pool->acomp_ctx);
+ 		dlen = PAGE_SIZE;
 
 
