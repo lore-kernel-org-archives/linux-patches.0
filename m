@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BBC171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB4FC433EF;
-	Mon, 22 May 2023 19:33:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E2B171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:33:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C44E0C433D2;
+	Mon, 22 May 2023 19:33:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784025;
-	bh=//8ZvtCT7DwG2gNyr9kq0c42r7DoazqlFyL1eXRSxjs=;
+	s=korg; t=1684784028;
+	bh=Qiq8JinTG1xVOvAAUVF/QILIKE1b2itUzLVSAyVn2eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7lNoPkci0NIrL9C8C2Yz4d9sHwtpf66QyMaAQ0+7yTpxP2j2VDjiasGmNjJzCAAB
-	 sfQUUWTkCKaHHaEJYr6m1aGB1Ui8rb6uDzmx0c1ojj5soeZJTn77dvg2ZLDz0enXUh
-	 Ai9y76eMkkEqLlu1yBECfh31SX9tkYtiQUtA0OEo=
+	b=fjtOOfUvb+dxoscJBQbubAlGFhCdK0K++QnBivTLXAjovv02AD8X+jlx05dNf+I1t
+	 wLStIPs4Z9G7nPT3B1cg0KYb31KvvAQBAGl0jYcnVEvXv8mcT5v44MrIr7DJkiyDXz
+	 A42E4yrUVrO2DsbtoSMb8oVcDBrnuG1wo5/0H05Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alon Giladi <alon.giladi@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 211/292] wifi: iwlwifi: mvm: fix OEMs name in the tas approved list
-Date: Mon, 22 May 2023 20:09:28 +0100
-Message-Id: <20230522190411.232632922@linuxfoundation.org>
+Subject: [PATCH 6.1 212/292] wifi: iwlwifi: mvm: dont trust firmware n_channels
+Date: Mon, 22 May 2023 20:09:29 +0100
+Message-Id: <20230522190411.257393468@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,35 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alon Giladi <alon.giladi@intel.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit d0246a0e49efee0f8649d0e4f2350614cdfe6565 ]
+[ Upstream commit 682b6dc29d98e857e6ca4bbc077c7dc2899b7473 ]
 
-Fix a spelling mistake.
+If the firmware sends us a corrupted MCC response with
+n_channels much larger than the command response can be,
+we might copy far too much (uninitialized) memory and
+even crash if the n_channels is large enough to make it
+run out of the one page allocated for the FW response.
 
-Fixes: 2856f623ce48 ("iwlwifi: mvm: Add list of OEMs allowed to use TAS")
-Signed-off-by: Alon Giladi <alon.giladi@intel.com>
+Fix that by checking the lengths. Doing a < comparison
+would be sufficient, but the firmware should be doing
+it correctly, so check more strictly.
+
+Fixes: dcaf9f5ecb6f ("iwlwifi: mvm: add MCC update FW API")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230514120631.4090de6d1878.If9391ef6da78f1b2cc5eb6cb8f6965816bb7a7f5@changeid
+Link: https://lore.kernel.org/r/20230514120631.d7b233139eb4.I51fd319df8e9d41881fc8450e83d78049518a79a@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/fw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/nvm.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-index 5de34edc51fe9..887d0789c96c3 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/fw.c
-@@ -1055,7 +1055,7 @@ static const struct dmi_system_id dmi_tas_approved_list[] = {
- 	},
- 		{ .ident = "LENOVO",
- 	  .matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "Lenovo"),
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
- 		},
- 	},
- 	{ .ident = "DELL",
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c b/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c
+index 6d18a1fd649b9..fdf60afb0f3f2 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/nvm.c
+@@ -445,6 +445,11 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
+ 		struct iwl_mcc_update_resp *mcc_resp = (void *)pkt->data;
+ 
+ 		n_channels =  __le32_to_cpu(mcc_resp->n_channels);
++		if (iwl_rx_packet_payload_len(pkt) !=
++		    struct_size(mcc_resp, channels, n_channels)) {
++			resp_cp = ERR_PTR(-EINVAL);
++			goto exit;
++		}
+ 		resp_len = sizeof(struct iwl_mcc_update_resp) +
+ 			   n_channels * sizeof(__le32);
+ 		resp_cp = kmemdup(mcc_resp, resp_len, GFP_KERNEL);
+@@ -456,6 +461,11 @@ iwl_mvm_update_mcc(struct iwl_mvm *mvm, const char *alpha2,
+ 		struct iwl_mcc_update_resp_v3 *mcc_resp_v3 = (void *)pkt->data;
+ 
+ 		n_channels =  __le32_to_cpu(mcc_resp_v3->n_channels);
++		if (iwl_rx_packet_payload_len(pkt) !=
++		    struct_size(mcc_resp_v3, channels, n_channels)) {
++			resp_cp = ERR_PTR(-EINVAL);
++			goto exit;
++		}
+ 		resp_len = sizeof(struct iwl_mcc_update_resp) +
+ 			   n_channels * sizeof(__le32);
+ 		resp_cp = kzalloc(resp_len, GFP_KERNEL);
 -- 
 2.39.2
 
