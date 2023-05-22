@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4943C171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:18:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B24C433EF;
-	Mon, 22 May 2023 19:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59878171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:18:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3B3C433EF;
+	Mon, 22 May 2023 19:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783105;
-	bh=KTq+I1tuZnWMeNLGjXwYZtuOuz+tONiQr7XI1hTGv30=;
+	s=korg; t=1684783108;
+	bh=LJOQ8Ufeho3fWvulnkSqpY0O/5nhclBqnBoeXTiMXI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=176l8auVx1kjzujv/KE+BVjlLPClLo6qTcMAdAOlZC5Yv3wt6LoKZGI26JhDwtYzR
-	 XP5K7rkKqvenW6Qxq6K7K3IRjIIlDIl5PJOpITCPq6ifa9y6wA3hHExFcj/MmoKqQV
-	 4HqHxwRCu5W9aR0GI34CrZ5DrbVTNKcatKvYxELA=
+	b=gfI/272qiBvxgBw6bA7Z8LS6+5XjN0Vs7OVr20q5aM32HMsS84p11hDdB9lznQ2Xw
+	 PCzZIO27lx20vhDw/osBRXinUEH5h42YkbaHNJ1hV9nczsGW6WV6uEUGulf7jATZfE
+	 WVfN4YTBn9WUTQXay7qr4YzG5k783O5qogy5RlTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Inki Dae <inki.dae@samsung.com>,
+	syzbot+632b5d9964208bfef8c0@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Dong Chenchen <dongchenchen2@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 140/203] drm/exynos: fix g2d_open/close helper function definitions
-Date: Mon, 22 May 2023 20:09:24 +0100
-Message-Id: <20230522190358.843236455@linuxfoundation.org>
+Subject: [PATCH 5.15 141/203] net: nsh: Use correct mac_offset to unwind gso skb in nsh_gso_segment()
+Date: Mon, 22 May 2023 20:09:25 +0100
+Message-Id: <20230522190358.870797307@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,46 +37,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dong Chenchen <dongchenchen2@huawei.com>
 
-[ Upstream commit 2ef0785b30bd6549ddbc124979f1b6596e065ae2 ]
+[ Upstream commit c83b49383b595be50647f0c764a48c78b5f3c4f8 ]
 
-The empty stub functions are defined as global functions, which
-causes a warning because of missing prototypes:
+As the call trace shows, skb_panic was caused by wrong skb->mac_header
+in nsh_gso_segment():
 
-drivers/gpu/drm/exynos/exynos_drm_g2d.h:37:5: error: no previous prototype for 'g2d_open'
-drivers/gpu/drm/exynos/exynos_drm_g2d.h:42:5: error: no previous prototype for 'g2d_close'
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 3 PID: 2737 Comm: syz Not tainted 6.3.0-next-20230505 #1
+RIP: 0010:skb_panic+0xda/0xe0
+call Trace:
+ skb_push+0x91/0xa0
+ nsh_gso_segment+0x4f3/0x570
+ skb_mac_gso_segment+0x19e/0x270
+ __skb_gso_segment+0x1e8/0x3c0
+ validate_xmit_skb+0x452/0x890
+ validate_xmit_skb_list+0x99/0xd0
+ sch_direct_xmit+0x294/0x7c0
+ __dev_queue_xmit+0x16f0/0x1d70
+ packet_xmit+0x185/0x210
+ packet_snd+0xc15/0x1170
+ packet_sendmsg+0x7b/0xa0
+ sock_sendmsg+0x14f/0x160
 
-Mark them as 'static inline' to avoid the warning and to make
-them behave as intended.
+The root cause is:
+nsh_gso_segment() use skb->network_header - nhoff to reset mac_header
+in skb_gso_error_unwind() if inner-layer protocol gso fails.
+However, skb->network_header may be reset by inner-layer protocol
+gso function e.g. mpls_gso_segment. skb->mac_header reset by the
+inaccurate network_header will be larger than skb headroom.
 
-Fixes: eb4d9796fa34 ("drm/exynos: g2d: Convert to driver component API")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+nsh_gso_segment
+    nhoff = skb->network_header - skb->mac_header;
+    __skb_pull(skb,nsh_len)
+    skb_mac_gso_segment
+        mpls_gso_segment
+            skb_reset_network_header(skb);//skb->network_header+=nsh_len
+            return -EINVAL;
+    skb_gso_error_unwind
+        skb_push(skb, nsh_len);
+        skb->mac_header = skb->network_header - nhoff;
+        // skb->mac_header > skb->headroom, cause skb_push panic
+
+Use correct mac_offset to restore mac_header and get rid of nhoff.
+
+Fixes: c411ed854584 ("nsh: add GSO support")
+Reported-by: syzbot+632b5d9964208bfef8c0@syzkaller.appspotmail.com
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Dong Chenchen <dongchenchen2@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_g2d.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/nsh/nsh.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.h b/drivers/gpu/drm/exynos/exynos_drm_g2d.h
-index 74ea3c26deadc..1a5ae781b56c6 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_g2d.h
-+++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.h
-@@ -34,11 +34,11 @@ static inline int exynos_g2d_exec_ioctl(struct drm_device *dev, void *data,
- 	return -ENODEV;
- }
- 
--int g2d_open(struct drm_device *drm_dev, struct drm_file *file)
-+static inline int g2d_open(struct drm_device *drm_dev, struct drm_file *file)
+diff --git a/net/nsh/nsh.c b/net/nsh/nsh.c
+index e9ca007718b7e..0f23e5e8e03eb 100644
+--- a/net/nsh/nsh.c
++++ b/net/nsh/nsh.c
+@@ -77,13 +77,12 @@ static struct sk_buff *nsh_gso_segment(struct sk_buff *skb,
+ 				       netdev_features_t features)
  {
- 	return 0;
- }
+ 	struct sk_buff *segs = ERR_PTR(-EINVAL);
++	u16 mac_offset = skb->mac_header;
+ 	unsigned int nsh_len, mac_len;
+ 	__be16 proto;
+-	int nhoff;
  
--void g2d_close(struct drm_device *drm_dev, struct drm_file *file)
-+static inline void g2d_close(struct drm_device *drm_dev, struct drm_file *file)
- { }
- #endif
+ 	skb_reset_network_header(skb);
+ 
+-	nhoff = skb->network_header - skb->mac_header;
+ 	mac_len = skb->mac_len;
+ 
+ 	if (unlikely(!pskb_may_pull(skb, NSH_BASE_HDR_LEN)))
+@@ -108,15 +107,14 @@ static struct sk_buff *nsh_gso_segment(struct sk_buff *skb,
+ 	segs = skb_mac_gso_segment(skb, features);
+ 	if (IS_ERR_OR_NULL(segs)) {
+ 		skb_gso_error_unwind(skb, htons(ETH_P_NSH), nsh_len,
+-				     skb->network_header - nhoff,
+-				     mac_len);
++				     mac_offset, mac_len);
+ 		goto out;
+ 	}
+ 
+ 	for (skb = segs; skb; skb = skb->next) {
+ 		skb->protocol = htons(ETH_P_NSH);
+ 		__skb_push(skb, nsh_len);
+-		skb_set_mac_header(skb, -nhoff);
++		skb->mac_header = mac_offset;
+ 		skb->network_header = skb->mac_header + mac_len;
+ 		skb->mac_len = mac_len;
+ 	}
 -- 
 2.39.2
 
