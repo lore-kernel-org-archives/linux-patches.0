@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88AE168AF
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286F8C433EF;
-	Mon, 22 May 2023 19:17:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7F2168AF
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533ADC433EF;
+	Mon, 22 May 2023 19:17:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783058;
-	bh=JIVqOOwSWuOCNO6WNW665Eu9nFgLFzCEUZ1bd9gn0gQ=;
+	s=korg; t=1684783061;
+	bh=dy0OJOPxBAGEZk2fQ6igYtpPRnHw6pYw8TFErW4TrqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDmPk+ebL/kuAabEoEvMS9YJ71OS8EGJNRTtutG/LqgO4UY0Mv9kIQhE5sa3cYEKw
-	 4kWJ8x2wgL2crOBht9rK61k6TsUuydW51VJXdfBFvN2xB88dkhAxKSdm/lqoH2dup0
-	 UJyY+ukxfy0hN/TK8R1BDfMGkrDrs5zcLrroXk9I=
+	b=Clyo6ldK0emgSEeZmXyw6YdyiFfb0r+PokptKahi1p7h9YF7jBCO9JGeeYCg6cTko
+	 pvoCrpjRK3cJBZk7nyww6q+8RByVbmE36dfQPtodGJTbDp6uK7uElIQLGc3LImqhfw
+	 zYJ1d+Qjd+y5326jyF7T0M3HnT6E3vqTHVK3VQhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Andrea Mayer <andrea.mayer@uniroma2.it>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	XuDong Liu <m202071377@hust.edu.cn>,
+	Doug Berger <opendmb@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 118/203] selftets: seg6: disable rp_filter by default in srv6_end_dt4_l3vpn_test
-Date: Mon, 22 May 2023 20:09:02 +0100
-Message-Id: <20230522190358.243741187@linuxfoundation.org>
+Subject: [PATCH 5.15 127/203] serial: 8250_bcm7271: fix leak in `brcmuart_probe`
+Date: Mon, 22 May 2023 20:09:11 +0100
+Message-Id: <20230522190358.487882734@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -37,60 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrea Mayer <andrea.mayer@uniroma2.it>
+From: Doug Berger <opendmb@gmail.com>
 
-[ Upstream commit f97b8401e0deb46ad1e4245c21f651f64f55aaa6 ]
+[ Upstream commit f264f2f6f4788dc031cef60a0cf2881902736709 ]
 
-On some distributions, the rp_filter is automatically set (=1) by
-default on a netdev basis (also on VRFs).
-In an SRv6 End.DT4 behavior, decapsulated IPv4 packets are routed using
-the table associated with the VRF bound to that tunnel. During lookup
-operations, the rp_filter can lead to packet loss when activated on the
-VRF.
-Therefore, we chose to make this selftest more robust by explicitly
-disabling the rp_filter during tests (as it is automatically set by some
-Linux distributions).
+Smatch reports:
+drivers/tty/serial/8250/8250_bcm7271.c:1120 brcmuart_probe() warn:
+'baud_mux_clk' from clk_prepare_enable() not released on lines: 1032.
 
-Fixes: 2195444e09b4 ("selftests: add selftest for the SRv6 End.DT4 behavior")
-Reported-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
-Tested-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The issue is fixed by using a managed clock.
+
+Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
+Reported-by: XuDong Liu <m202071377@hust.edu.cn>
+Link: https://lore.kernel.org/lkml/20230424125100.4783-1-m202071377@hust.edu.cn/
+Signed-off-by: Doug Berger <opendmb@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230427181916.2983697-3-opendmb@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../testing/selftests/net/srv6_end_dt4_l3vpn_test.sh  | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/tty/serial/8250/8250_bcm7271.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh b/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh
-index 37f08d582d2fe..f962823628119 100755
---- a/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh
-+++ b/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh
-@@ -258,6 +258,12 @@ setup_hs()
+diff --git a/drivers/tty/serial/8250/8250_bcm7271.c b/drivers/tty/serial/8250/8250_bcm7271.c
+index 513ed24cba5ce..f95047160b4d2 100644
+--- a/drivers/tty/serial/8250/8250_bcm7271.c
++++ b/drivers/tty/serial/8250/8250_bcm7271.c
+@@ -1016,7 +1016,7 @@ static int brcmuart_probe(struct platform_device *pdev)
+ 	of_property_read_u32(np, "clock-frequency", &clk_rate);
  
- 	# set the networking for the host
- 	ip netns add ${hsname}
-+
-+	# disable the rp_filter otherwise the kernel gets confused about how
-+	# to route decap ipv4 packets.
-+	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
-+	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.default.rp_filter=0
-+
- 	ip -netns ${hsname} link add veth0 type veth peer name ${rtveth}
- 	ip -netns ${hsname} link set ${rtveth} netns ${rtname}
- 	ip -netns ${hsname} addr add ${IPv4_HS_NETWORK}.${hs}/24 dev veth0
-@@ -276,11 +282,6 @@ setup_hs()
- 
- 	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.proxy_arp=1
- 
--	# disable the rp_filter otherwise the kernel gets confused about how
--	# to route decap ipv4 packets.
--	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
--	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.rp_filter=0
--
- 	ip netns exec ${rtname} sh -c "echo 1 > /proc/sys/net/vrf/strict_mode"
- }
- 
+ 	/* See if a Baud clock has been specified */
+-	baud_mux_clk = of_clk_get_by_name(np, "sw_baud");
++	baud_mux_clk = devm_clk_get(dev, "sw_baud");
+ 	if (IS_ERR(baud_mux_clk)) {
+ 		if (PTR_ERR(baud_mux_clk) == -EPROBE_DEFER) {
+ 			ret = -EPROBE_DEFER;
 -- 
 2.39.2
 
