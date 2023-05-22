@@ -1,29 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82AA7171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:38:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A225C433EF;
-	Mon, 22 May 2023 19:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B8D171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:38:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E99C433EF;
+	Mon, 22 May 2023 19:38:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784282;
-	bh=r7Cjps+L3uL44zxj5kytwHfHh8I9+X06le3pmyt7P3o=;
+	s=korg; t=1684784285;
+	bh=a35NCOtWRwsG5/d5uKbMEp/GwcysG2Js6piTYORGXVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nULVBRon0xUMMqHQ4utvzdr5k0Ao3IZHeORhTMZYPPpSAx5ZVpG3Wst4j+4/og+ix
-	 CVr7WwPXm84ihjPIK3lYcDltFl86fx1ljxfhw7QmgQbSlldMUvUY/XvIZ1W+/JmdyC
-	 xy7vfLCOdFLPQ447+kCoLEl+4nkW78fEZSXloT+Q=
+	b=w2+YQxfc92nUSrQV5154ka+0HhQfgpwLpU6SY4DjGC80TaPG25c8MYHRHezorEctA
+	 WsIaSMZ5nK75AN8HbpMoeulPzINOfsmdJ5AlGOBgVLoODJemSv9jl8jcMZRHCm4yL8
+	 fQugTnhaOUZeEm32s+F2gQvJsYqC3eKJ5LJehgcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinod Govindapillai <vinod.govindapillai@intel.com>,
-	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Ben Skeggs <bskeggs@redhat.com>,
+	Lyude Paul <lyude@redhat.com>,
+	Karol Herbst <kherbst@redhat.com>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Dave Airlie <airlied@redhat.com>,
+	"Gustavo A. R. Silva" <gustavo@embeddedor.com>,
+	dri-devel@lists.freedesktop.org,
+	nouveau@lists.freedesktop.org,
+	Kees Cook <keescook@chromium.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Karol Herbst <git@karolherbst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 003/364] drm/dsc: fix DP_DSC_MAX_BPP_DELTA_* macro values
-Date: Mon, 22 May 2023 20:05:08 +0100
-Message-Id: <20230522190412.892775375@linuxfoundation.org>
+Subject: [PATCH 6.3 004/364] drm/nouveau/disp: More DP_RECEIVER_CAP_SIZE array fixes
+Date: Mon, 22 May 2023 20:05:09 +0100
+Message-Id: <20230522190412.918898275@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -37,38 +45,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 0d68683838f2850dd8ff31f1121e05bfb7a2def0 ]
+[ Upstream commit 25feda6fbd0cfefcb69308fb20d4d4815a107c5e ]
 
-The macro values just don't match the specs. Fix them.
+More arrays (and arguments) for dcpd were set to 16, when it looks like
+DP_RECEIVER_CAP_SIZE (15) should be used. Fix the remaining cases, seen
+with GCC 13:
 
-Fixes: 1482ec00be4a ("drm: Add missing DP DSC extended capability definitions.")
-Cc: Vinod Govindapillai <vinod.govindapillai@intel.com>
-Cc: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230406134615.1422509-2-jani.nikula@intel.com
+../drivers/gpu/drm/nouveau/nvif/outp.c: In function 'nvif_outp_acquire_dp':
+../include/linux/fortify-string.h:57:33: warning: array subscript 'unsigned char[16][0]' is partly outside array bounds of 'u8[15]' {aka 'unsigned char[15]'} [-Warray-bounds=]
+   57 | #define __underlying_memcpy     __builtin_memcpy
+      |                                 ^
+...
+../drivers/gpu/drm/nouveau/nvif/outp.c:140:9: note: in expansion of macro 'memcpy'
+  140 |         memcpy(args.dp.dpcd, dpcd, sizeof(args.dp.dpcd));
+      |         ^~~~~~
+../drivers/gpu/drm/nouveau/nvif/outp.c:130:49: note: object 'dpcd' of size [0, 15]
+  130 | nvif_outp_acquire_dp(struct nvif_outp *outp, u8 dpcd[DP_RECEIVER_CAP_SIZE],
+      |                                              ~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fixes: 813443721331 ("drm/nouveau/disp: move DP link config into acquire")
+Cc: Ben Skeggs <bskeggs@redhat.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Karol Herbst <kherbst@redhat.com>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: "Gustavo A. R. Silva" <gustavo@embeddedor.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: nouveau@lists.freedesktop.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Karol Herbst <kherbst@redhat.com>
+Signed-off-by: Karol Herbst <git@karolherbst.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230204184307.never.825-kees@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/drm/display/drm_dp.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/nouveau/include/nvif/if0012.h    | 4 +++-
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h  | 3 ++-
+ drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c | 2 +-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/drm/display/drm_dp.h b/include/drm/display/drm_dp.h
-index 4545ed6109584..b8b7f990d67f6 100644
---- a/include/drm/display/drm_dp.h
-+++ b/include/drm/display/drm_dp.h
-@@ -286,8 +286,8 @@
+diff --git a/drivers/gpu/drm/nouveau/include/nvif/if0012.h b/drivers/gpu/drm/nouveau/include/nvif/if0012.h
+index eb99d84eb8443..16d4ad5023a3e 100644
+--- a/drivers/gpu/drm/nouveau/include/nvif/if0012.h
++++ b/drivers/gpu/drm/nouveau/include/nvif/if0012.h
+@@ -2,6 +2,8 @@
+ #ifndef __NVIF_IF0012_H__
+ #define __NVIF_IF0012_H__
  
- #define DP_DSC_MAX_BITS_PER_PIXEL_HI        0x068   /* eDP 1.4 */
- # define DP_DSC_MAX_BITS_PER_PIXEL_HI_MASK  (0x3 << 0)
--# define DP_DSC_MAX_BPP_DELTA_VERSION_MASK  0x06
--# define DP_DSC_MAX_BPP_DELTA_AVAILABILITY  0x08
-+# define DP_DSC_MAX_BPP_DELTA_VERSION_MASK  (0x3 << 5)	/* eDP 1.5 & DP 2.0 */
-+# define DP_DSC_MAX_BPP_DELTA_AVAILABILITY  (1 << 7)	/* eDP 1.5 & DP 2.0 */
++#include <drm/display/drm_dp.h>
++
+ union nvif_outp_args {
+ 	struct nvif_outp_v0 {
+ 		__u8 version;
+@@ -63,7 +65,7 @@ union nvif_outp_acquire_args {
+ 				__u8 hda;
+ 				__u8 mst;
+ 				__u8 pad04[4];
+-				__u8 dpcd[16];
++				__u8 dpcd[DP_RECEIVER_CAP_SIZE];
+ 			} dp;
+ 		};
+ 	} v0;
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h b/drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h
+index b7631c1ab2420..4e7f873f66e27 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/outp.h
+@@ -3,6 +3,7 @@
+ #define __NVKM_DISP_OUTP_H__
+ #include "priv.h"
  
- #define DP_DSC_DEC_COLOR_FORMAT_CAP         0x069
- # define DP_DSC_RGB                         (1 << 0)
++#include <drm/display/drm_dp.h>
+ #include <subdev/bios.h>
+ #include <subdev/bios/dcb.h>
+ #include <subdev/bios/dp.h>
+@@ -42,7 +43,7 @@ struct nvkm_outp {
+ 			bool aux_pwr_pu;
+ 			u8 lttpr[6];
+ 			u8 lttprs;
+-			u8 dpcd[16];
++			u8 dpcd[DP_RECEIVER_CAP_SIZE];
+ 
+ 			struct {
+ 				int dpcd; /* -1, or index into SUPPORTED_LINK_RATES table */
+diff --git a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
+index 4f0ca709c85a4..fc283a4a1522a 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
++++ b/drivers/gpu/drm/nouveau/nvkm/engine/disp/uoutp.c
+@@ -146,7 +146,7 @@ nvkm_uoutp_mthd_release(struct nvkm_outp *outp, void *argv, u32 argc)
+ }
+ 
+ static int
+-nvkm_uoutp_mthd_acquire_dp(struct nvkm_outp *outp, u8 dpcd[16],
++nvkm_uoutp_mthd_acquire_dp(struct nvkm_outp *outp, u8 dpcd[DP_RECEIVER_CAP_SIZE],
+ 			   u8 link_nr, u8 link_bw, bool hda, bool mst)
+ {
+ 	int ret;
 -- 
 2.39.2
 
