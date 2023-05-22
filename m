@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DC5171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:43:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10214C4339B;
-	Mon, 22 May 2023 19:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3641171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:43:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF33C433D2;
+	Mon, 22 May 2023 19:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784589;
-	bh=8PAcPdtGigjTmyNmB4KjebzR1n76DZ7lYtf9FipWSvY=;
+	s=korg; t=1684784592;
+	bh=zNeqN+hMy+J1p0zzphizoeIvRmJhxaCtWdQH88DtmSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RxY6GDxRZXVQWBEmcHVg29XVkCr0JFketleSuVM0yyyPDBk0PSE52c6mSang/nacR
-	 ZGthFdoJrCTDCoF25Bl8RXDBX4WPlIKB7f9NZYXheQPZc1QKZVao0qVnZQ1Q9uhEO0
-	 n/3dcDLDlcGYvsn1CO8CVCFiBEMup/RjjkpDzWd4=
+	b=UF7J4aHmQ8EI4uHj5MbEls7GghKlI8y5vfE7xi9jS98sT/CUZXHJBVADDi1k7g+Wl
+	 Dmb8ugdL33kMITmf/yClvxrIzA+GMqgKsPva8DpKBy7iyUC9dayT1u9DYFLt3MRCxR
+	 zEMEUt9yMe5KD6FkpCvP3YwIVQ2Ro7H9OWr28Olc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhong Jinghua <zhongjinghua@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Simon Horman <horms@kernel.org>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 133/364] nbd: fix incomplete validation of ioctl arg
-Date: Mon, 22 May 2023 20:07:18 +0100
-Message-Id: <20230522190416.114279906@linuxfoundation.org>
+Subject: [PATCH 6.3 134/364] ipvs: Update width of source for ip_vs_sync_conn_options
+Date: Mon, 22 May 2023 20:07:19 +0100
+Message-Id: <20230522190416.138046803@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -37,80 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhong Jinghua <zhongjinghua@huawei.com>
+From: Simon Horman <horms@kernel.org>
 
-[ Upstream commit 55793ea54d77719a071b1ccc05a05056e3b5e009 ]
+[ Upstream commit e3478c68f6704638d08f437cbc552ca5970c151a ]
 
-We tested and found an alarm caused by nbd_ioctl arg without verification.
-The UBSAN warning calltrace like below:
+In ip_vs_sync_conn_v0() copy is made to struct ip_vs_sync_conn_options.
+That structure looks like this:
 
-UBSAN: Undefined behaviour in fs/buffer.c:1709:35
-signed integer overflow:
--9223372036854775808 - 1 cannot be represented in type 'long long int'
-CPU: 3 PID: 2523 Comm: syz-executor.0 Not tainted 4.19.90 #1
-Hardware name: linux,dummy-virt (DT)
-Call trace:
- dump_backtrace+0x0/0x3f0 arch/arm64/kernel/time.c:78
- show_stack+0x28/0x38 arch/arm64/kernel/traps.c:158
- __dump_stack lib/dump_stack.c:77 [inline]
- dump_stack+0x170/0x1dc lib/dump_stack.c:118
- ubsan_epilogue+0x18/0xb4 lib/ubsan.c:161
- handle_overflow+0x188/0x1dc lib/ubsan.c:192
- __ubsan_handle_sub_overflow+0x34/0x44 lib/ubsan.c:206
- __block_write_full_page+0x94c/0xa20 fs/buffer.c:1709
- block_write_full_page+0x1f0/0x280 fs/buffer.c:2934
- blkdev_writepage+0x34/0x40 fs/block_dev.c:607
- __writepage+0x68/0xe8 mm/page-writeback.c:2305
- write_cache_pages+0x44c/0xc70 mm/page-writeback.c:2240
- generic_writepages+0xdc/0x148 mm/page-writeback.c:2329
- blkdev_writepages+0x2c/0x38 fs/block_dev.c:2114
- do_writepages+0xd4/0x250 mm/page-writeback.c:2344
+struct ip_vs_sync_conn_options {
+        struct ip_vs_seq        in_seq;
+        struct ip_vs_seq        out_seq;
+};
 
-The reason for triggering this warning is __block_write_full_page()
--> i_size_read(inode) - 1 overflow.
-inode->i_size is assigned in __nbd_ioctl() -> nbd_set_size() -> bytesize.
-We think it is necessary to limit the size of arg to prevent errors.
+The source of the copy is the in_seq field of struct ip_vs_conn.  Whose
+type is struct ip_vs_seq. Thus we can see that the source - is not as
+wide as the amount of data copied, which is the width of struct
+ip_vs_sync_conn_option.
 
-Moreover, __nbd_ioctl() -> nbd_add_socket(), arg will be cast to int.
-Assuming the value of arg is 0x80000000000000001) (on a 64-bit machine),
-it will become 1 after the coercion, which will return unexpected results.
+The copy is safe because the next field in is another struct ip_vs_seq.
+Make use of struct_group() to annotate this.
 
-Fix it by adding checks to prevent passing in too large numbers.
+Flagged by gcc-13 as:
 
-Signed-off-by: Zhong Jinghua <zhongjinghua@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://lore.kernel.org/r/20230206145805.2645671-1-zhongjinghua@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+ In file included from ./include/linux/string.h:254,
+                  from ./include/linux/bitmap.h:11,
+                  from ./include/linux/cpumask.h:12,
+                  from ./arch/x86/include/asm/paravirt.h:17,
+                  from ./arch/x86/include/asm/cpuid.h:62,
+                  from ./arch/x86/include/asm/processor.h:19,
+                  from ./arch/x86/include/asm/timex.h:5,
+                  from ./include/linux/timex.h:67,
+                  from ./include/linux/time32.h:13,
+                  from ./include/linux/time.h:60,
+                  from ./include/linux/stat.h:19,
+                  from ./include/linux/module.h:13,
+                  from net/netfilter/ipvs/ip_vs_sync.c:38:
+ In function 'fortify_memcpy_chk',
+     inlined from 'ip_vs_sync_conn_v0' at net/netfilter/ipvs/ip_vs_sync.c:606:3:
+ ./include/linux/fortify-string.h:529:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
+   529 |                         __read_overflow2_field(q_size_field, size);
+       |
+
+Compile tested only.
+
+Signed-off-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/nbd.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ include/net/ip_vs.h             | 6 ++++--
+ net/netfilter/ipvs/ip_vs_sync.c | 2 +-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/block/nbd.c b/drivers/block/nbd.c
-index 592cfa8b765a5..e1c954094b6c0 100644
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -325,6 +325,9 @@ static int nbd_set_size(struct nbd_device *nbd, loff_t bytesize,
- 	if (blk_validate_block_size(blksize))
- 		return -EINVAL;
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index 6d71a5ff52dfd..e20f1f92066d1 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -630,8 +630,10 @@ struct ip_vs_conn {
+ 	 */
+ 	struct ip_vs_app        *app;           /* bound ip_vs_app object */
+ 	void                    *app_data;      /* Application private data */
+-	struct ip_vs_seq        in_seq;         /* incoming seq. struct */
+-	struct ip_vs_seq        out_seq;        /* outgoing seq. struct */
++	struct_group(sync_conn_opt,
++		struct ip_vs_seq  in_seq;       /* incoming seq. struct */
++		struct ip_vs_seq  out_seq;      /* outgoing seq. struct */
++	);
  
-+	if (bytesize < 0)
-+		return -EINVAL;
-+
- 	nbd->config->bytesize = bytesize;
- 	nbd->config->blksize_bits = __ffs(blksize);
+ 	const struct ip_vs_pe	*pe;
+ 	char			*pe_data;
+diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
+index 4963fec815da3..d4fe7bb4f853a 100644
+--- a/net/netfilter/ipvs/ip_vs_sync.c
++++ b/net/netfilter/ipvs/ip_vs_sync.c
+@@ -603,7 +603,7 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
+ 	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
+ 		struct ip_vs_sync_conn_options *opt =
+ 			(struct ip_vs_sync_conn_options *)&s[1];
+-		memcpy(opt, &cp->in_seq, sizeof(*opt));
++		memcpy(opt, &cp->sync_conn_opt, sizeof(*opt));
+ 	}
  
-@@ -1111,6 +1114,9 @@ static int nbd_add_socket(struct nbd_device *nbd, unsigned long arg,
- 	struct nbd_sock *nsock;
- 	int err;
- 
-+	/* Arg will be cast to int, check it to avoid overflow */
-+	if (arg > INT_MAX)
-+		return -EINVAL;
- 	sock = nbd_get_socket(nbd, arg, &err);
- 	if (!sock)
- 		return err;
+ 	m->nr_conns++;
 -- 
 2.39.2
 
