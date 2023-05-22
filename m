@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9D6171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC7DC433EF;
-	Mon, 22 May 2023 19:52:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84598171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04FD8C433EF;
+	Mon, 22 May 2023 19:52:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785164;
-	bh=QLWCniFPzTo65y/n7dqj3Cb4Sj5kGNmT0mbAznCMCQs=;
+	s=korg; t=1684785167;
+	bh=rSVG7OEOEVL+TqB/sN5lHoL5bfxfHmmL5fF9PsuCZBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wITZH8hDqXLgDsgkOD3d7eiyamWDEjsdEuobqRel0SmusIGO08MQvSU2DYrBsC6ux
-	 i3WCsRchaBp3cKWlJnoCT6zFgEmKRaCsqr6U6vN1roP8jEzZaElq5WMN0JQEhqguw1
-	 k2VuX4qKmE6Mrrq20TeSeHLRe7Si0omtsnvUalBE=
+	b=QFsVB+IXddYutHwtj9hV6rCYnureTq23LBXlTfD9UTAzOmPw01g90+ZpyMLklqUhN
+	 R6zv26MNHtEbH6nL7HeeQrkaWOBzIonDyjKYnhBhbiVvjgNHGRMyqRV7Qp0cqFSx4k
+	 AvQwEYjtMNvHtVUtT6X2AcvmMnpw1RhhvsPAq7fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.3 313/364] can: kvaser_pciefd: Clear listen-only bit if not explicitly requested
-Date: Mon, 22 May 2023 20:10:18 +0100
-Message-Id: <20230522190420.599212758@linuxfoundation.org>
+	Vitaliy Tomin <tomin@iszf.irk.ru>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.3 331/364] serial: Add support for Advantech PCI-1611U card
+Date: Mon, 22 May 2023 20:10:36 +0100
+Message-Id: <20230522190421.053536584@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -34,33 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Vitaliy Tomin <tomin@iszf.irk.ru>
 
-commit bf7ac55e991ca177f1ac16be51152f1ef291a4df upstream.
+commit d2b00516de0e1d696724247098f6733a6ea53908 upstream.
 
-The listen-only bit was never cleared, causing the controller to
-always use listen-only mode, if previously set.
+Add support for Advantech PCI-1611U card
 
-Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/r/20230516134318.104279-3-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Advantech provides opensource drivers for this and many others card
+based on legacy copy of 8250_pci driver called adv950
+
+https://www.advantech.com/emt/support/details/driver?id=1-TDOIMJ
+
+It is hard to maintain to run as out of tree module on newer kernels.
+Just adding PCI ID to kernel 8250_pci works perfect.
+
+Signed-off-by: Vitaliy Tomin <tomin@iszf.irk.ru>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230423034512.2671157-1-tomin@iszf.irk.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/kvaser_pciefd.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/8250/8250_pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/net/can/kvaser_pciefd.c
-+++ b/drivers/net/can/kvaser_pciefd.c
-@@ -559,6 +559,8 @@ static void kvaser_pciefd_setup_controll
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -1920,6 +1920,8 @@ pci_moxa_setup(struct serial_private *pr
+ #define PCI_SUBDEVICE_ID_SIIG_DUAL_30	0x2530
+ #define PCI_VENDOR_ID_ADVANTECH		0x13fe
+ #define PCI_DEVICE_ID_INTEL_CE4100_UART 0x2e66
++#define PCI_DEVICE_ID_ADVANTECH_PCI1600	0x1600
++#define PCI_DEVICE_ID_ADVANTECH_PCI1600_1611	0x1611
+ #define PCI_DEVICE_ID_ADVANTECH_PCI3620	0x3620
+ #define PCI_DEVICE_ID_ADVANTECH_PCI3618	0x3618
+ #define PCI_DEVICE_ID_ADVANTECH_PCIf618	0xf618
+@@ -4085,6 +4087,9 @@ static SIMPLE_DEV_PM_OPS(pciserial_pm_op
+ 			 pciserial_resume_one);
  
- 	if (can->can.ctrlmode & CAN_CTRLMODE_LISTENONLY)
- 		mode |= KVASER_PCIEFD_KCAN_MODE_LOM;
-+	else
-+		mode &= ~KVASER_PCIEFD_KCAN_MODE_LOM;
- 
- 	mode |= KVASER_PCIEFD_KCAN_MODE_EEN;
- 	mode |= KVASER_PCIEFD_KCAN_MODE_EPEN;
+ static const struct pci_device_id serial_pci_tbl[] = {
++	{	PCI_VENDOR_ID_ADVANTECH, PCI_DEVICE_ID_ADVANTECH_PCI1600,
++		PCI_DEVICE_ID_ADVANTECH_PCI1600_1611, PCI_ANY_ID, 0, 0,
++		pbn_b0_4_921600 },
+ 	/* Advantech use PCI_DEVICE_ID_ADVANTECH_PCI3620 (0x3620) as 'PCI_SUBVENDOR_ID' */
+ 	{	PCI_VENDOR_ID_ADVANTECH, PCI_DEVICE_ID_ADVANTECH_PCI3620,
+ 		PCI_DEVICE_ID_ADVANTECH_PCI3620, 0x0001, 0, 0,
 
 
