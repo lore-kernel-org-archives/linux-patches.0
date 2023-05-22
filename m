@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D367171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C5BC433D2;
-	Mon, 22 May 2023 19:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE0E171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0607C4339C;
+	Mon, 22 May 2023 19:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783396;
-	bh=jaTcnNgO2W/iwfT9gBPiV7sM7E+TJUEztJb6Gac4Zx8=;
+	s=korg; t=1684783399;
+	bh=R26zJtzdtddNubaKQC8tq6jK3Q8VjDVlXSJ6hBQOJuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twpxfVnr1eSMoSb5N3KTfO9zexV67tDZUWkRfhsoU304LhqWH2oOsobRF6Z8joMYw
-	 O7NSlYLEL0CO1c7U+V37faxwoophZBwzw70B06LQdgWVoPtReriFwkPE4QzHX/cdxU
-	 R7wlfPvJOtC/dELWqUOaeWfUSD7UG4N7erJotdso=
+	b=GDMbqeeFsJLKPPrH+PFCTcC07Fn2k4YCjw9Aq+PvebPALMPNIfnHwl7qQO3oZPMK2
+	 Bx3dxlmdPTs3QNyc9uaY0PouHpltcGUz40cmIcjFbAQdibvN/rsn1X/bKIwU03D7k2
+	 Hch6wNXMaJG8tl9pg5N5yygZHTe2AQJFd2lZSPeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Colin Foster <colin.foster@in-advantage.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zongjie Li <u202112089@hust.edu.cn>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/292] net: mscc: ocelot: fix stat counter register values
-Date: Mon, 22 May 2023 20:06:19 +0100
-Message-Id: <20230522190406.448648346@linuxfoundation.org>
+Subject: [PATCH 6.1 031/292] fbdev: arcfb: Fix error handling in arcfb_probe()
+Date: Mon, 22 May 2023 20:06:28 +0100
+Message-Id: <20230522190406.670917528@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,60 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Colin Foster <colin.foster@in-advantage.com>
+From: Zongjie Li <u202112089@hust.edu.cn>
 
-[ Upstream commit cdc2e28e214fe9315cdd7e069c1c8e2428f93427 ]
+[ Upstream commit 5a6bef734247c7a8c19511664ff77634ab86f45b ]
 
-Commit d4c367650704 ("net: mscc: ocelot: keep ocelot_stat_layout by reg
-address, not offset") organized the stats counters for Ocelot chips, namely
-the VSC7512 and VSC7514. A few of the counter offsets were incorrect, and
-were caught by this warning:
+Smatch complains that:
+arcfb_probe() warn: 'irq' from request_irq() not released on lines: 587.
 
-WARNING: CPU: 0 PID: 24 at drivers/net/ethernet/mscc/ocelot_stats.c:909
-ocelot_stats_init+0x1fc/0x2d8
-reg 0x5000078 had address 0x220 but reg 0x5000079 has address 0x214,
-bulking broken!
+Fix error handling in the arcfb_probe() function. If IO addresses are
+not provided or framebuffer registration fails, the code will jump to
+the err_addr or err_register_fb label to release resources.
+If IRQ request fails, previously allocated resources will be freed.
 
-Fix these register offsets.
-
-Fixes: d4c367650704 ("net: mscc: ocelot: keep ocelot_stat_layout by reg address, not offset")
-Signed-off-by: Colin Foster <colin.foster@in-advantage.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1154ea7dcd8e ("[PATCH] Framebuffer driver for Arc LCD board")
+Signed-off-by: Zongjie Li <u202112089@hust.edu.cn>
+Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mscc/vsc7514_regs.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/video/fbdev/arcfb.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/mscc/vsc7514_regs.c b/drivers/net/ethernet/mscc/vsc7514_regs.c
-index 9d2d3e13cacfa..66c4284196143 100644
---- a/drivers/net/ethernet/mscc/vsc7514_regs.c
-+++ b/drivers/net/ethernet/mscc/vsc7514_regs.c
-@@ -252,15 +252,15 @@ const u32 vsc7514_sys_regmap[] = {
- 	REG(SYS_COUNT_DROP_YELLOW_PRIO_4,		0x000218),
- 	REG(SYS_COUNT_DROP_YELLOW_PRIO_5,		0x00021c),
- 	REG(SYS_COUNT_DROP_YELLOW_PRIO_6,		0x000220),
--	REG(SYS_COUNT_DROP_YELLOW_PRIO_7,		0x000214),
--	REG(SYS_COUNT_DROP_GREEN_PRIO_0,		0x000218),
--	REG(SYS_COUNT_DROP_GREEN_PRIO_1,		0x00021c),
--	REG(SYS_COUNT_DROP_GREEN_PRIO_2,		0x000220),
--	REG(SYS_COUNT_DROP_GREEN_PRIO_3,		0x000224),
--	REG(SYS_COUNT_DROP_GREEN_PRIO_4,		0x000228),
--	REG(SYS_COUNT_DROP_GREEN_PRIO_5,		0x00022c),
--	REG(SYS_COUNT_DROP_GREEN_PRIO_6,		0x000230),
--	REG(SYS_COUNT_DROP_GREEN_PRIO_7,		0x000234),
-+	REG(SYS_COUNT_DROP_YELLOW_PRIO_7,		0x000224),
-+	REG(SYS_COUNT_DROP_GREEN_PRIO_0,		0x000228),
-+	REG(SYS_COUNT_DROP_GREEN_PRIO_1,		0x00022c),
-+	REG(SYS_COUNT_DROP_GREEN_PRIO_2,		0x000230),
-+	REG(SYS_COUNT_DROP_GREEN_PRIO_3,		0x000234),
-+	REG(SYS_COUNT_DROP_GREEN_PRIO_4,		0x000238),
-+	REG(SYS_COUNT_DROP_GREEN_PRIO_5,		0x00023c),
-+	REG(SYS_COUNT_DROP_GREEN_PRIO_6,		0x000240),
-+	REG(SYS_COUNT_DROP_GREEN_PRIO_7,		0x000244),
- 	REG(SYS_RESET_CFG,				0x000508),
- 	REG(SYS_CMID,					0x00050c),
- 	REG(SYS_VLAN_ETYPE_CFG,				0x000510),
+diff --git a/drivers/video/fbdev/arcfb.c b/drivers/video/fbdev/arcfb.c
+index 45e64016db328..024d0ee4f04f9 100644
+--- a/drivers/video/fbdev/arcfb.c
++++ b/drivers/video/fbdev/arcfb.c
+@@ -523,7 +523,7 @@ static int arcfb_probe(struct platform_device *dev)
+ 
+ 	info = framebuffer_alloc(sizeof(struct arcfb_par), &dev->dev);
+ 	if (!info)
+-		goto err;
++		goto err_fb_alloc;
+ 
+ 	info->screen_base = (char __iomem *)videomemory;
+ 	info->fbops = &arcfb_ops;
+@@ -535,7 +535,7 @@ static int arcfb_probe(struct platform_device *dev)
+ 
+ 	if (!dio_addr || !cio_addr || !c2io_addr) {
+ 		printk(KERN_WARNING "no IO addresses supplied\n");
+-		goto err1;
++		goto err_addr;
+ 	}
+ 	par->dio_addr = dio_addr;
+ 	par->cio_addr = cio_addr;
+@@ -551,12 +551,12 @@ static int arcfb_probe(struct platform_device *dev)
+ 			printk(KERN_INFO
+ 				"arcfb: Failed req IRQ %d\n", par->irq);
+ 			retval = -EBUSY;
+-			goto err1;
++			goto err_addr;
+ 		}
+ 	}
+ 	retval = register_framebuffer(info);
+ 	if (retval < 0)
+-		goto err1;
++		goto err_register_fb;
+ 	platform_set_drvdata(dev, info);
+ 	fb_info(info, "Arc frame buffer device, using %dK of video memory\n",
+ 		videomemorysize >> 10);
+@@ -580,9 +580,12 @@ static int arcfb_probe(struct platform_device *dev)
+ 	}
+ 
+ 	return 0;
+-err1:
++
++err_register_fb:
++	free_irq(par->irq, info);
++err_addr:
+ 	framebuffer_release(info);
+-err:
++err_fb_alloc:
+ 	vfree(videomemory);
+ 	return retval;
+ }
 -- 
 2.39.2
 
