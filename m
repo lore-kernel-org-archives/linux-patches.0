@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26330171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:35:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7318EC433EF;
-	Mon, 22 May 2023 19:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426A2171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:35:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B43A2C433EF;
+	Mon, 22 May 2023 19:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784103;
-	bh=xR16aaqEQvjPH/yD6MhXizGrQnz7xsBotp2Ey4qO0uM=;
+	s=korg; t=1684784106;
+	bh=bMuoGcUgqzmXMYSnYy5T25UHFYe+ljAxSyet128/34c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FxL3Cv6ruX+x4V2COPiNVUMdjU5AcGfQuujfuRMXNiQ8YgK0EdVDElMSgfi615dBT
-	 +eykYivGUX+RIj9uN2ajkh9ko3dHZ9XWhQYgK0Hzm3JdqmKALK4Cr0YlryqC26Rpdh
-	 K82xoFOyfv3HrHvmDdZB8aX34YV2HjVZ3LfhXQMw=
+	b=v6LBZiI1ezG5o1M6Kun+PM0nMC8RzSMqkhgD0sK3aJPzswJ5WhgMBkg0hXha2xSA5
+	 RPdkOJHCtV2A661jyy5bF16RncW3XzefxrGh/wUUuYBoUlI6ioWdxNotyW4eQUMPtc
+	 eOPaLNDWGexbv+3hSKtoBaYTGz9U62jhmt63m0Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Chris Li (Google)" <chrisl@kernel.org>,
-	Dan Streetman <ddstreet@ieee.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Nitin Gupta <ngupta@vflare.org>,
-	Seth Jennings <sjenning@redhat.com>,
-	Vitaly Wool <vitaly.wool@konsulko.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 263/292] mm: fix zswap writeback race condition
-Date: Mon, 22 May 2023 20:10:20 +0100
-Message-Id: <20230522190412.515968008@linuxfoundation.org>
+	Miller Hunter <MillerH@hearthnhome.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.1 237/292] xhci: Fix incorrect tracking of free space on transfer rings
+Date: Mon, 22 May 2023 20:09:54 +0100
+Message-Id: <20230522190411.876002215@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -41,92 +34,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit 04fc7816089c5a32c29a04ec94b998e219dfb946 upstream.
+commit fe82f16aafdaf8002281d3b9524291d4a4a28460 upstream.
 
-The zswap writeback mechanism can cause a race condition resulting in
-memory corruption, where a swapped out page gets swapped in with data that
-was written to a different page.
+This incorrect tracking caused unnecessary ring expansion in some
+usecases which over days of use consume a lot of memory.
 
-The race unfolds like this:
-1. a page with data A and swap offset X is stored in zswap
-2. page A is removed off the LRU by zpool driver for writeback in
-   zswap-shrink work, data for A is mapped by zpool driver
-3. user space program faults and invalidates page entry A, offset X is
-   considered free
-4. kswapd stores page B at offset X in zswap (zswap could also be
-   full, if so, page B would then be IOed to X, then skip step 5.)
-5. entry A is replaced by B in tree->rbroot, this doesn't affect the
-   local reference held by zswap-shrink work
-6. zswap-shrink work writes back A at X, and frees zswap entry A
-7. swapin of slot X brings A in memory instead of B
+xhci driver tries to keep track of free transfer blocks (TRBs) on the
+ring buffer, but failed to add back some cancelled transfers that were
+turned into no-op operations instead of just moving past them.
 
-The fix:
-Once the swap page cache has been allocated (case ZSWAP_SWAPCACHE_NEW),
-zswap-shrink work just checks that the local zswap_entry reference is
-still the same as the one in the tree.  If it's not the same it means that
-it's either been invalidated or replaced, in both cases the writeback is
-aborted because the local entry contains stale data.
+This can happen if there are several queued pending transfers which
+then are cancelled in reverse order.
 
-Reproducer:
-I originally found this by running `stress` overnight to validate my work
-on the zswap writeback mechanism, it manifested after hours on my test
-machine.  The key to make it happen is having zswap writebacks, so
-whatever setup pumps /sys/kernel/debug/zswap/written_back_pages should do
-the trick.
+Solve this by counting the numer of steps we move the dequeue pointer
+once we complete a transfer, and add it to the number of free trbs
+instead of just adding the trb number of the current transfer.
+This way we ensure we count the no-op trbs on the way as well.
 
-In order to reproduce this faster on a vm, I setup a system with ~100M of
-available memory and a 500M swap file, then running `stress --vm 1
---vm-bytes 300000000 --vm-stride 4000` makes it happen in matter of tens
-of minutes.  One can speed things up even more by swinging
-/sys/module/zswap/parameters/max_pool_percent up and down between, say, 20
-and 1; this makes it reproduce in tens of seconds.  It's crucial to set
-`--vm-stride` to something other than 4096 otherwise `stress` won't
-realize that memory has been corrupted because all pages would have the
-same data.
-
-Link: https://lkml.kernel.org/r/20230503151200.19707-1-cerasuolodomenico@gmail.com
-Signed-off-by: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Chris Li (Google) <chrisl@kernel.org>
-Cc: Dan Streetman <ddstreet@ieee.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Nitin Gupta <ngupta@vflare.org>
-Cc: Seth Jennings <sjenning@redhat.com>
-Cc: Vitaly Wool <vitaly.wool@konsulko.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 55f6153d8cc8 ("xhci: remove extra loop in interrupt context")
+Cc: stable@vger.kernel.org
+Reported-by: Miller Hunter <MillerH@hearthnhome.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=217242
+Tested-by: Miller Hunter <MillerH@hearthnhome.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230515134059.161110-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/zswap.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/usb/host/xhci-ring.c |   29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/mm/zswap.c
-+++ b/mm/zswap.c
-@@ -1002,6 +1002,22 @@ static int zswap_writeback_entry(struct
- 		goto fail;
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -276,6 +276,26 @@ static void inc_enq(struct xhci_hcd *xhc
+ 	trace_xhci_inc_enq(ring);
+ }
  
- 	case ZSWAP_SWAPCACHE_NEW: /* page is locked */
-+		/*
-+		 * Having a local reference to the zswap entry doesn't exclude
-+		 * swapping from invalidating and recycling the swap slot. Once
-+		 * the swapcache is secured against concurrent swapping to and
-+		 * from the slot, recheck that the entry is still current before
-+		 * writing.
-+		 */
-+		spin_lock(&tree->lock);
-+		if (zswap_rb_search(&tree->rbroot, entry->offset) != entry) {
-+			spin_unlock(&tree->lock);
-+			delete_from_swap_cache(page_folio(page));
-+			ret = -ENOMEM;
-+			goto fail;
-+		}
-+		spin_unlock(&tree->lock);
++static int xhci_num_trbs_to(struct xhci_segment *start_seg, union xhci_trb *start,
++			    struct xhci_segment *end_seg, union xhci_trb *end,
++			    unsigned int num_segs)
++{
++	union xhci_trb *last_on_seg;
++	int num = 0;
++	int i = 0;
 +
- 		/* decompress */
- 		acomp_ctx = raw_cpu_ptr(entry->pool->acomp_ctx);
- 		dlen = PAGE_SIZE;
++	do {
++		if (start_seg == end_seg && end >= start)
++			return num + (end - start);
++		last_on_seg = &start_seg->trbs[TRBS_PER_SEGMENT - 1];
++		num += last_on_seg - start;
++		start_seg = start_seg->next;
++		start = start_seg->trbs;
++	} while (i++ <= num_segs);
++
++	return -EINVAL;
++}
++
+ /*
+  * Check to see if there's room to enqueue num_trbs on the ring and make sure
+  * enqueue pointer will not advance into dequeue segment. See rules above.
+@@ -2141,6 +2161,7 @@ static int finish_td(struct xhci_hcd *xh
+ 		     u32 trb_comp_code)
+ {
+ 	struct xhci_ep_ctx *ep_ctx;
++	int trbs_freed;
+ 
+ 	ep_ctx = xhci_get_ep_ctx(xhci, ep->vdev->out_ctx, ep->ep_index);
+ 
+@@ -2212,9 +2233,15 @@ static int finish_td(struct xhci_hcd *xh
+ 	}
+ 
+ 	/* Update ring dequeue pointer */
++	trbs_freed = xhci_num_trbs_to(ep_ring->deq_seg, ep_ring->dequeue,
++				      td->last_trb_seg, td->last_trb,
++				      ep_ring->num_segs);
++	if (trbs_freed < 0)
++		xhci_dbg(xhci, "Failed to count freed trbs at TD finish\n");
++	else
++		ep_ring->num_trbs_free += trbs_freed;
+ 	ep_ring->dequeue = td->last_trb;
+ 	ep_ring->deq_seg = td->last_trb_seg;
+-	ep_ring->num_trbs_free += td->num_trbs - 1;
+ 	inc_deq(xhci, ep_ring);
+ 
+ 	return xhci_td_cleanup(xhci, td, ep_ring, td->status);
 
 
