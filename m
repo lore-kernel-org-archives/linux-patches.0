@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECCD171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:40:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C6AC433D2;
-	Mon, 22 May 2023 19:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538A6171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:40:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA3BFC433EF;
+	Mon, 22 May 2023 19:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784409;
-	bh=r3qgzKBBJXsfHd+PgPUAFfTn5Am2vCr9hYZOmokQz38=;
+	s=korg; t=1684784412;
+	bh=hRj1ydpVYptJsvNmiO59+UYPMUE4NUJHzAScAHy8VdI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sYCAsGgDhvVeXRnE+O3uMW1a2ubzUQiXLZQYKiuFVoNQSe0OxBbTboiyfXUT70IAK
-	 UhkqSgFiyTplnbDQVAvxVu52jNFjCx812u1dTnFSJ/7HwPKWBC+IOU6Tl7cORCvbqY
-	 a0EpdmEgX/anPkgmwblSsLHi6UdpaiBVA650Fpqg=
+	b=hmPhcB8+bDvPExDcaFFEuBkKWinrul6nDWMPLUSP8IdB0Q2zUPAwDj9ArWPTzYxkw
+	 Y/sz1Kzv3+Sze+LeVFrVutzs44dNbaeZVtQ0eC3u4kD/5eXikvOw1GuM/nYmfzbEHr
+	 7W30LF9aQE3bkT5TBUDgXrLXS4uqoDpBLfWJqSYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>,
-	Martin Kepplinger <martin.kepplinger@puri.sm>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Bob Moore <robert.moore@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 065/364] arm64: dts: imx8mq-librem5: Remove dis_u3_susphy_quirk from usb_dwc3_0
-Date: Mon, 22 May 2023 20:06:10 +0100
-Message-Id: <20230522190414.412484882@linuxfoundation.org>
+Subject: [PATCH 6.3 074/364] ACPICA: ACPICA: check null return of ACPI_ALLOCATE_ZEROED in acpi_db_display_objects
+Date: Mon, 22 May 2023 20:06:19 +0100
+Message-Id: <20230522190414.621568611@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,32 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+From: void0red <30990023+void0red@users.noreply.github.com>
 
-[ Upstream commit cfe9de291bd2bbce18c5cd79e1dd582cbbacdb4f ]
+[ Upstream commit ae5a0eccc85fc960834dd66e3befc2728284b86c ]
 
-This reduces power consumption in system suspend by about 10%.
+ACPICA commit 0d5f467d6a0ba852ea3aad68663cbcbd43300fd4
 
-Signed-off-by: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
-Signed-off-by: Martin Kepplinger <martin.kepplinger@puri.sm>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+ACPI_ALLOCATE_ZEROED may fails, object_info might be null and will cause
+null pointer dereference later.
+
+Link: https://github.com/acpica/acpica/commit/0d5f467d
+Signed-off-by: Bob Moore <robert.moore@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/acpi/acpica/dbnames.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
-index 6895bcc121651..de0dde01fd5c4 100644
---- a/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mq-librem5.dtsi
-@@ -1299,7 +1299,6 @@
- 	#address-cells = <1>;
- 	#size-cells = <0>;
- 	dr_mode = "otg";
--	snps,dis_u3_susphy_quirk;
- 	usb-role-switch;
- 	status = "okay";
+diff --git a/drivers/acpi/acpica/dbnames.c b/drivers/acpi/acpica/dbnames.c
+index 3615e1a6efd8a..b91155ea9c343 100644
+--- a/drivers/acpi/acpica/dbnames.c
++++ b/drivers/acpi/acpica/dbnames.c
+@@ -652,6 +652,9 @@ acpi_status acpi_db_display_objects(char *obj_type_arg, char *display_count_arg)
+ 		object_info =
+ 		    ACPI_ALLOCATE_ZEROED(sizeof(struct acpi_object_info));
  
++		if (!object_info)
++			return (AE_NO_MEMORY);
++
+ 		/* Walk the namespace from the root */
+ 
+ 		(void)acpi_walk_namespace(ACPI_TYPE_ANY, ACPI_ROOT_OBJECT,
 -- 
 2.39.2
 
