@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8E8171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C125AC433EF;
-	Mon, 22 May 2023 19:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECD2171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:16:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFEAC433EF;
+	Mon, 22 May 2023 19:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783012;
-	bh=WuyQuvGdmS7DAned2y+XvOCvND2eK3dW3GDGqGRnMu4=;
+	s=korg; t=1684783014;
+	bh=cG1e9UeD2Q4ltztcuXH8FikwcIc8Xw73lNNy7QXw0eY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K+BzIkDm4snsSdEHkZBjbo07AIzonijFcOUHpFyU/l4S2+XjpTgm/oCLTmqKBFop0
-	 BV1XiOR3I5IEZI8niRXzzRsBSbp1bOwL4SUPxt8G6VvL9wxiXd6NX0OUMFScNngWlF
-	 vPNc3gTcwNty+09vU33BoNHYQMAdv0rDPdqVoGjI=
+	b=dh46DsvOhJ0d+cd4XY8fYCi6Nhy+8Xc94cZqwQ/PwmCboJWrU8t89sZ16DVjf5xZ+
+	 X8E7/6X6ijMtSO6ZKO80MKQE6Xv7s+ZFp4XiA+1eG2tgKXdXNYaNaq3MSkga6jzV4R
+	 KwWe9mWTzen/kRqEQjRk/SR4MM2fd2nX5Zjx/3Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/203] drm/msm/dp: unregister audio driver during unbind
-Date: Mon, 22 May 2023 20:08:53 +0100
-Message-Id: <20230522190358.001133660@linuxfoundation.org>
+Subject: [PATCH 5.15 110/203] drm/msm/dpu: Add INTF_5 interrupts
+Date: Mon, 22 May 2023 20:08:54 +0100
+Message-Id: <20230522190358.027843618@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,79 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-[ Upstream commit 85c636284cb63b7740b4ae98881ace92158068d3 ]
+[ Upstream commit 148e852f290fe8be9fa69953bee2f958befd65d4 ]
 
-while binding the code always registers a audio driver, however there
-is no corresponding unregistration done in unbind. This leads to multiple
-redundant audio platform devices if dp_display_bind and dp_display_unbind
-happens multiple times during startup. On X13s platform this resulted in
-6 to 9 audio codec device instead of just 3 codec devices for 3 dp ports.
+SC8180x has the eDP controller wired up to INTF_5, so add the interrupt
+register block for this interface to the list.
 
-Fix this by unregistering codecs on unbind.
-
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Fixes: d13e36d7d222 ("drm/msm/dp: add audio support for Display Port on MSM")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/533324/
-Link: https://lore.kernel.org/r/20230421145657.12186-1-srinivas.kandagatla@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20220215043353.1256754-1-bjorn.andersson@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Stable-dep-of: e9d9ce5462fe ("drm/msm/dpu: Move non-MDP_TOP INTF_INTR offsets out of hwio header")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_audio.c   | 12 ++++++++++++
- drivers/gpu/drm/msm/dp/dp_audio.h   |  2 ++
- drivers/gpu/drm/msm/dp/dp_display.c |  1 +
- 3 files changed, 15 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 6 ++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_audio.c b/drivers/gpu/drm/msm/dp/dp_audio.c
-index d7e4a39a904e2..0eaaaa94563a3 100644
---- a/drivers/gpu/drm/msm/dp/dp_audio.c
-+++ b/drivers/gpu/drm/msm/dp/dp_audio.c
-@@ -577,6 +577,18 @@ static struct hdmi_codec_pdata codec_data = {
- 	.i2s = 1,
- };
- 
-+void dp_unregister_audio_driver(struct device *dev, struct dp_audio *dp_audio)
-+{
-+	struct dp_audio_private *audio_priv;
-+
-+	audio_priv = container_of(dp_audio, struct dp_audio_private, dp_audio);
-+
-+	if (audio_priv->audio_pdev) {
-+		platform_device_unregister(audio_priv->audio_pdev);
-+		audio_priv->audio_pdev = NULL;
-+	}
-+}
-+
- int dp_register_audio_driver(struct device *dev,
- 		struct dp_audio *dp_audio)
- {
-diff --git a/drivers/gpu/drm/msm/dp/dp_audio.h b/drivers/gpu/drm/msm/dp/dp_audio.h
-index 84e5f4a5d26ba..4ab78880af829 100644
---- a/drivers/gpu/drm/msm/dp/dp_audio.h
-+++ b/drivers/gpu/drm/msm/dp/dp_audio.h
-@@ -53,6 +53,8 @@ struct dp_audio *dp_audio_get(struct platform_device *pdev,
- int dp_register_audio_driver(struct device *dev,
- 		struct dp_audio *dp_audio);
- 
-+void dp_unregister_audio_driver(struct device *dev, struct dp_audio *dp_audio);
-+
- /**
-  * dp_audio_put()
-  *
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 15e38ad7aefb4..38d37345c216b 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -267,6 +267,7 @@ static void dp_display_unbind(struct device *dev, struct device *master,
- 	kthread_stop(dp->ev_tsk);
- 
- 	dp_power_client_deinit(dp->power);
-+	dp_unregister_audio_driver(dev, dp->audio);
- 	dp_aux_unregister(dp->aux);
- 	priv->dp = NULL;
- }
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+index 2e816f232e859..996011e356f7b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+@@ -20,6 +20,7 @@
+ #define MDP_INTF_2_OFF			0x6B000
+ #define MDP_INTF_3_OFF			0x6B800
+ #define MDP_INTF_4_OFF			0x6C000
++#define MDP_INTF_5_OFF			0x6C800
+ #define MDP_AD4_0_OFF			0x7C000
+ #define MDP_AD4_1_OFF			0x7D000
+ #define MDP_AD4_INTR_EN_OFF		0x41c
+@@ -87,6 +88,11 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
+ 		MDP_INTF_4_OFF+INTF_INTR_EN,
+ 		MDP_INTF_4_OFF+INTF_INTR_STATUS
+ 	},
++	{
++		MDP_INTF_5_OFF+INTF_INTR_CLEAR,
++		MDP_INTF_5_OFF+INTF_INTR_EN,
++		MDP_INTF_5_OFF+INTF_INTR_STATUS
++	},
+ 	{
+ 		MDP_AD4_0_OFF + MDP_AD4_INTR_CLEAR_OFF,
+ 		MDP_AD4_0_OFF + MDP_AD4_INTR_EN_OFF,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+index ac83c1159815f..d90dac77c26fe 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+@@ -22,6 +22,7 @@ enum dpu_hw_intr_reg {
+ 	MDP_INTF2_INTR,
+ 	MDP_INTF3_INTR,
+ 	MDP_INTF4_INTR,
++	MDP_INTF5_INTR,
+ 	MDP_AD4_0_INTR,
+ 	MDP_AD4_1_INTR,
+ 	MDP_INTF0_7xxx_INTR,
 -- 
 2.39.2
 
