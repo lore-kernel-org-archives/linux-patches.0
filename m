@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08EF171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBCBC4339C;
-	Mon, 22 May 2023 19:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85632171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:13:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FEAC433D2;
+	Mon, 22 May 2023 19:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782822;
-	bh=Ad2UXggBPUQFgGQJFs6Nq5lTd63NR0y5wkbb0JgwmGU=;
+	s=korg; t=1684782825;
+	bh=Tv7NzYcIR3DrYURSQs35tGyDpnqsTNjGtFQEouK7jHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=joN/QKGrjRYDkZbIHHR6dyqQrKvtjKrmVZDb7kt+0aQ266mcHuz7rgV0o3nXsQMHa
-	 veYEMK6XKsd754XLysEafosrXsPs90b7fuoaVgVqHJsKkL3v766J+mNMW7EbnNHEXG
-	 DkOORTtvL8gxadgp5ca8tao9MzYHhpHxdOUuVuRE=
+	b=0IWGcgoLlOZnOzUv7+jmkih6VNXNx4jc8TXQYysxzbhM5HMb6+kpVBJHiV0xRHOWv
+	 us3VDuPtrmFT8HLsdtYCgQkj8Omm/RIBZ/9nwGMfWHdV6PhV3kGK2Dskv9iKHSDiuq
+	 N+x4Kdh3eYzOvVq8YvZazVPV/OimJ0vCxXIPM86g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+6b7df7d5506b32467149@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
-	Theodore Tso <tytso@mit.edu>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/203] ext4: fix lockdep warning when enabling MMP
-Date: Mon, 22 May 2023 20:07:31 +0100
-Message-Id: <20230522190355.714531949@linuxfoundation.org>
+Subject: [PATCH 5.15 036/203] arm64: dts: qcom: msm8996: Add missing DWC3 quirks
+Date: Mon, 22 May 2023 20:07:40 +0100
+Message-Id: <20230522190355.971376858@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -38,91 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 949f95ff39bf188e594e7ecd8e29b82eb108f5bf ]
+[ Upstream commit d0af0537e28f6eace02deed63b585396de939213 ]
 
-When we enable MMP in ext4_multi_mount_protect() during mount or
-remount, we end up calling sb_start_write() from write_mmp_block(). This
-triggers lockdep warning because freeze protection ranks above s_umount
-semaphore we are holding during mount / remount. The problem is harmless
-because we are guaranteed the filesystem is not frozen during mount /
-remount but still let's fix the warning by not grabbing freeze
-protection from ext4_multi_mount_protect().
+Add missing dwc3 quirks from msm-3.18. Unfortunately, none of them
+make `dwc3-qcom 6af8800.usb: HS-PHY not in L2` go away.
 
-Cc: stable@kernel.org
-Reported-by: syzbot+6b7df7d5506b32467149@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=ab7e5b6f400b7778d46f01841422e5718fb81843
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Link: https://lore.kernel.org/r/20230411121019.21940-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230302011849.1873056-1-konrad.dybcio@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mmp.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ext4/mmp.c b/fs/ext4/mmp.c
-index 28129a8db713c..3e8bce19ad16d 100644
---- a/fs/ext4/mmp.c
-+++ b/fs/ext4/mmp.c
-@@ -39,28 +39,36 @@ static void ext4_mmp_csum_set(struct super_block *sb, struct mmp_struct *mmp)
-  * Write the MMP block using REQ_SYNC to try to get the block on-disk
-  * faster.
-  */
--static int write_mmp_block(struct super_block *sb, struct buffer_head *bh)
-+static int write_mmp_block_thawed(struct super_block *sb,
-+				  struct buffer_head *bh)
- {
- 	struct mmp_struct *mmp = (struct mmp_struct *)(bh->b_data);
- 
--	/*
--	 * We protect against freezing so that we don't create dirty buffers
--	 * on frozen filesystem.
--	 */
--	sb_start_write(sb);
- 	ext4_mmp_csum_set(sb, mmp);
- 	lock_buffer(bh);
- 	bh->b_end_io = end_buffer_write_sync;
- 	get_bh(bh);
- 	submit_bh(REQ_OP_WRITE, REQ_SYNC | REQ_META | REQ_PRIO, bh);
- 	wait_on_buffer(bh);
--	sb_end_write(sb);
- 	if (unlikely(!buffer_uptodate(bh)))
- 		return -EIO;
--
- 	return 0;
- }
- 
-+static int write_mmp_block(struct super_block *sb, struct buffer_head *bh)
-+{
-+	int err;
-+
-+	/*
-+	 * We protect against freezing so that we don't create dirty buffers
-+	 * on frozen filesystem.
-+	 */
-+	sb_start_write(sb);
-+	err = write_mmp_block_thawed(sb, bh);
-+	sb_end_write(sb);
-+	return err;
-+}
-+
- /*
-  * Read the MMP block. It _must_ be read from disk and hence we clear the
-  * uptodate flag on the buffer.
-@@ -352,7 +360,11 @@ int ext4_multi_mount_protect(struct super_block *sb,
- 	seq = mmp_new_seq();
- 	mmp->mmp_seq = cpu_to_le32(seq);
- 
--	retval = write_mmp_block(sb, bh);
-+	/*
-+	 * On mount / remount we are protected against fs freezing (by s_umount
-+	 * semaphore) and grabbing freeze protection upsets lockdep
-+	 */
-+	retval = write_mmp_block_thawed(sb, bh);
- 	if (retval)
- 		goto failed;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index b22d3c8db3b39..cd66bb16c7392 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -2595,8 +2595,11 @@
+ 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
+ 				phys = <&hsusb_phy1>, <&ssusb_phy_0>;
+ 				phy-names = "usb2-phy", "usb3-phy";
++				snps,hird-threshold = /bits/ 8 <0>;
+ 				snps,dis_u2_susphy_quirk;
+ 				snps,dis_enblslpm_quirk;
++				snps,is-utmi-l1-suspend;
++				tx-fifo-resize;
+ 			};
+ 		};
  
 -- 
 2.39.2
