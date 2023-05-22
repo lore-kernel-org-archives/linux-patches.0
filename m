@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC69171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:51:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B3ACC4339B;
-	Mon, 22 May 2023 19:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D000D171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:51:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325C4C433EF;
+	Mon, 22 May 2023 19:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785112;
-	bh=jjV+KCVi+vVsQ9e6G29qaHadYSqH5V2oSSXsT42SAt8=;
+	s=korg; t=1684785115;
+	bh=Ywx6IFMbBrrFl9cOOrJYcsCm20fDCw8vmKZ2GGHJ51k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BMsDAtH+LJLxtTvHwcOgfU5ijJ8fRr1XfJUl9zinOv6gAwGpPSPb7RyWiL5we0pDs
-	 R7V832WN6DJE5tCAhyuwmFfe+pDAqaWG40HjI9AkSJwT/G1axqHgLUBraAlkmVJXJt
-	 weFC1Az52GtGCCBDqbixjhB5h+572SKbAxiQG99Q=
+	b=vxqBWQjDI+r6DLJ/PWi1LOKpRbE9RS+y12+DXxBYNcyxteTNxhsw8OdfAZNus0Pzd
+	 18loNo3hT3UoOE6SPMz2wv+6FKfoLue0vN2xuqV/3iW9W8fGMWZ49hS/43X8RLALVz
+	 uIP38sRVO40VXjcOD9Mh6sWxwWpU4ezdkpRVFPN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Benjamin Poirier <bpoirier@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 285/364] net: selftests: Fix optstring
-Date: Mon, 22 May 2023 20:09:50 +0100
-Message-Id: <20230522190419.868537293@linuxfoundation.org>
+Subject: [PATCH 6.3 286/364] netfilter: nf_tables: fix nft_trans type confusion
+Date: Mon, 22 May 2023 20:09:51 +0100
+Message-Id: <20230522190419.897956918@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,39 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Benjamin Poirier <bpoirier@nvidia.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 9ba9485b87ac97fd159abdb4cbd53099bc9f01c6 ]
+[ Upstream commit e3c361b8acd636f5fe80c02849ca175201edf10c ]
 
-The cited commit added a stray colon to the 'v' option. That makes the
-option work incorrectly.
+nft_trans_FOO objects all share a common nft_trans base structure, but
+trailing fields depend on the real object size. Access is only safe after
+trans->msg_type check.
 
-ex:
-tools/testing/selftests/net# ./fib_nexthops.sh -v
-(should enable verbose mode, instead it shows help text due to missing arg)
+Check for rule type first.  Found by code inspection.
 
-Fixes: 5feba4727395 ("selftests: fib_nexthops: Make ping timeout configurable")
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Benjamin Poirier <bpoirier@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1a94e38d254b ("netfilter: nf_tables: add NFTA_RULE_ID attribute")
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/fib_nexthops.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/fib_nexthops.sh b/tools/testing/selftests/net/fib_nexthops.sh
-index a47b26ab48f23..0f5e88c8f4ffe 100755
---- a/tools/testing/selftests/net/fib_nexthops.sh
-+++ b/tools/testing/selftests/net/fib_nexthops.sh
-@@ -2283,7 +2283,7 @@ EOF
- ################################################################################
- # main
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 45f701fd86f06..ef80504c3ccd2 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3802,12 +3802,10 @@ static struct nft_rule *nft_rule_lookup_byid(const struct net *net,
+ 	struct nft_trans *trans;
  
--while getopts :t:pP46hv:w: o
-+while getopts :t:pP46hvw: o
- do
- 	case $o in
- 		t) TESTS=$OPTARG;;
+ 	list_for_each_entry(trans, &nft_net->commit_list, list) {
+-		struct nft_rule *rule = nft_trans_rule(trans);
+-
+ 		if (trans->msg_type == NFT_MSG_NEWRULE &&
+ 		    trans->ctx.chain == chain &&
+ 		    id == nft_trans_rule_id(trans))
+-			return rule;
++			return nft_trans_rule(trans);
+ 	}
+ 	return ERR_PTR(-ENOENT);
+ }
 -- 
 2.39.2
 
