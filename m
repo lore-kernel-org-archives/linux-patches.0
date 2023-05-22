@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6B6171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3921AC433D2;
-	Mon, 22 May 2023 19:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7922C171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:41:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15FEC433EF;
+	Mon, 22 May 2023 19:41:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784492;
-	bh=AOFh1WhfR4xsMJ/bfPiml5mDJj6P2fKPo6om/hQdRh0=;
+	s=korg; t=1684784495;
+	bh=bkD6hVU+8F90R1FdgY0SO//u+++2L4MdapcaIwB2BL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Lcb7Tt/03gLaIZqZvCMzEQllM8DgQ5Goqui1t8E1DBCoO5TPmIbwkaneK3GdQr00
-	 gvnnIjhH85bxTZuRHN9G8z4XU1iiuutniBW5PrrWykMp/T5cBhHURWpZA0cSFJ7/xU
-	 DIYSweQxtbZSUuW/Ob++FLrktHd8CVqkbsxMWHYY=
+	b=bBkcqYOjQbVJ5xP++tfxxQwfCrxR13SKr+0x4UKH6cdGR9ld6Arpu1As1Z3HZ41ko
+	 ZXBi6hodYcx2f6EtMQcIyedBQkTVHUGWV+E2HtgBn3KtXhPo4mYwlXZ0tfwYcZIEwU
+	 g7SBFX6JbQvTiA/TAb9vu6FrIjcMesUnNponZ8Jg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Rajat Soni <quic_rajson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 100/364] net: pasemi: Fix return type of pasemi_mac_start_tx()
-Date: Mon, 22 May 2023 20:06:45 +0100
-Message-Id: <20230522190415.253045581@linuxfoundation.org>
+Subject: [PATCH 6.3 101/364] wifi: ath12k: fix memory leak in ath12k_qmi_driver_event_work()
+Date: Mon, 22 May 2023 20:06:46 +0100
+Message-Id: <20230522190415.278511134@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,52 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Rajat Soni <quic_rajson@quicinc.com>
 
-[ Upstream commit c8384d4a51e7cb0e6587f3143f29099f202c5de1 ]
+[ Upstream commit 960412bee0ea75f6b3c2dca4a3535795ee84c47a ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-warning in clang aims to catch these at compile time, which reveals:
+Currently the buffer pointed by event is not freed in case
+ATH12K_FLAG_UNREGISTERING bit is set, this causes memory leak.
 
-  drivers/net/ethernet/pasemi/pasemi_mac.c:1665:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = pasemi_mac_start_tx,
-                                    ^~~~~~~~~~~~~~~~~~~
-  1 error generated.
+Add a goto skip instead of return, to ensure event and all the
+list entries are freed properly.
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of
-pasemi_mac_start_tx() to match the prototype's to resolve the warning.
-While PowerPC does not currently implement support for kCFI, it could in
-the future, which means this warning becomes a fatal CFI failure at run
-time.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Link: https://lore.kernel.org/r/20230319-pasemi-incompatible-pointer-types-strict-v1-1-1b9459d8aef0@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Rajat Soni <quic_rajson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20230315090632.15065-1-quic_rajson@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/pasemi/pasemi_mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath12k/qmi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/pasemi/pasemi_mac.c b/drivers/net/ethernet/pasemi/pasemi_mac.c
-index aaab590ef548d..ed7dd0a042355 100644
---- a/drivers/net/ethernet/pasemi/pasemi_mac.c
-+++ b/drivers/net/ethernet/pasemi/pasemi_mac.c
-@@ -1423,7 +1423,7 @@ static void pasemi_mac_queue_csdesc(const struct sk_buff *skb,
- 	write_dma_reg(PAS_DMA_TXCHAN_INCR(txring->chan.chno), 2);
- }
+diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
+index 979a63f2e2ab8..03ba245fbee92 100644
+--- a/drivers/net/wireless/ath/ath12k/qmi.c
++++ b/drivers/net/wireless/ath/ath12k/qmi.c
+@@ -2991,7 +2991,7 @@ static void ath12k_qmi_driver_event_work(struct work_struct *work)
+ 		spin_unlock(&qmi->event_lock);
  
--static int pasemi_mac_start_tx(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t pasemi_mac_start_tx(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct pasemi_mac * const mac = netdev_priv(dev);
- 	struct pasemi_mac_txring * const txring = tx_ring(mac);
+ 		if (test_bit(ATH12K_FLAG_UNREGISTERING, &ab->dev_flags))
+-			return;
++			goto skip;
+ 
+ 		switch (event->type) {
+ 		case ATH12K_QMI_EVENT_SERVER_ARRIVE:
+@@ -3032,6 +3032,8 @@ static void ath12k_qmi_driver_event_work(struct work_struct *work)
+ 			ath12k_warn(ab, "invalid event type: %d", event->type);
+ 			break;
+ 		}
++
++skip:
+ 		kfree(event);
+ 		spin_lock(&qmi->event_lock);
+ 	}
 -- 
 2.39.2
 
