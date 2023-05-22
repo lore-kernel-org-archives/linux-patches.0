@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB734171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:47:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545A0C4339B;
-	Mon, 22 May 2023 19:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957B7171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:47:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209EFC433D2;
+	Mon, 22 May 2023 19:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784848;
-	bh=k65eIBNbWGgq8kPNcDAf+4jUBJl/3bdgi6/uQvDQIZU=;
+	s=korg; t=1684784851;
+	bh=g9prx3esPToioC3dxuzEq/G3HcPLo5XUJrxKALgekOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KmeXVr6mnZ+IP8QN/wXSZdzZY2iCp5Df+q3X48Axg5Jk+jmIVTzTsLkRg46rkz1A+
-	 RDtk4zHzOvm0HvcFkUkQ3WxMwlUMtqze+oLwMfXaix4vSP7yCoQZ7iGN+BcbQRPGZ7
-	 TkZrtXMUW30HHaBJNTQsdiJfYBu+IyiDtQ9AStxM=
+	b=y4DyHaG2AdwfZiLhq3BSyhq+6NSfTbJJpGKE8xtiKBZpVq6rQy/EqQis8k6nJZOAl
+	 /WO7cOc3ZZq4tIaMlRU0nzrEkG0ZcTgm5cjUZ1qblx8vFT6elexpH+fiMqiakVHp7v
+	 8heC9tPsCfNqvGAoOW+4Mft7MxM5qPeyBi434fzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Vicki Pfau <vi@endrift.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 194/364] mfd: intel_soc_pmic_chtwc: Add Lenovo Yoga Book X90F to intel_cht_wc_models
-Date: Mon, 22 May 2023 20:08:19 +0100
-Message-Id: <20230522190417.585395853@linuxfoundation.org>
+Subject: [PATCH 6.3 185/364] Input: xpad - add constants for GIP interface numbers
+Date: Mon, 22 May 2023 20:08:10 +0100
+Message-Id: <20230522190417.356691652@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,57 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Vicki Pfau <vi@endrift.com>
 
-[ Upstream commit ded99b89d25fd73a1d7bd910378e0339fd9d4c4a ]
+[ Upstream commit f9b2e603c6216824e34dc9a67205d98ccc9a41ca ]
 
-The Android Lenovo Yoga Book X90F / X90L uses the same charger / fuelgauge
-setup as the already supported Windows Lenovo Yoga Book X91F/L, add
-a DMI match for this to intel_cht_wc_models with driver_data
-set to INTEL_CHT_WC_LENOVO_YOGABOOK1.
+Wired GIP devices present multiple interfaces with the same USB identification
+other than the interface number. This adds constants for differentiating two of
+them and uses them where appropriate
 
-When the quirk for the X91F/L was initially added it was written to
-also apply to the X90F/L but this does not work because the Android
-version of the Yoga Book uses completely different DMI strings.
-Also adjust the X91F/L quirk to reflect that it only applies to
-the X91F/L models.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230301095402.28582-1-hdegoede@redhat.com
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+Link: https://lore.kernel.org/r/20230411031650.960322-2-vi@endrift.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/intel_soc_pmic_chtwc.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/input/joystick/xpad.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/intel_soc_pmic_chtwc.c b/drivers/mfd/intel_soc_pmic_chtwc.c
-index d53dae2554906..871776d511e31 100644
---- a/drivers/mfd/intel_soc_pmic_chtwc.c
-+++ b/drivers/mfd/intel_soc_pmic_chtwc.c
-@@ -159,11 +159,19 @@ static const struct dmi_system_id cht_wc_model_dmi_ids[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Mipad2"),
- 		},
- 	}, {
--		/* Lenovo Yoga Book X90F / X91F / X91L */
-+		/* Lenovo Yoga Book X90F / X90L */
- 		.driver_data = (void *)(long)INTEL_CHT_WC_LENOVO_YOGABOOK1,
- 		.matches = {
--			/* Non exact match to match all versions */
--			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X9"),
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "CHERRYVIEW D1 PLATFORM"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_VERSION, "YETI-11"),
-+		},
-+	}, {
-+		/* Lenovo Yoga Book X91F / X91L */
-+		.driver_data = (void *)(long)INTEL_CHT_WC_LENOVO_YOGABOOK1,
-+		.matches = {
-+			/* Non exact match to match F + L versions */
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Lenovo YB1-X91"),
- 		},
- 	}, {
- 		/* Lenovo Yoga Tab 3 Pro YT3-X90F */
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index 29131f1a2f067..f617b2c60819c 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -559,6 +559,9 @@ struct xboxone_init_packet {
+ #define GIP_MOTOR_LT BIT(3)
+ #define GIP_MOTOR_ALL (GIP_MOTOR_R | GIP_MOTOR_L | GIP_MOTOR_RT | GIP_MOTOR_LT)
+ 
++#define GIP_WIRED_INTF_DATA 0
++#define GIP_WIRED_INTF_AUDIO 1
++
+ /*
+  * This packet is required for all Xbox One pads with 2015
+  * or later firmware installed (or present from the factory).
+@@ -2003,7 +2006,7 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
+ 	}
+ 
+ 	if (xpad->xtype == XTYPE_XBOXONE &&
+-	    intf->cur_altsetting->desc.bInterfaceNumber != 0) {
++	    intf->cur_altsetting->desc.bInterfaceNumber != GIP_WIRED_INTF_DATA) {
+ 		/*
+ 		 * The Xbox One controller lists three interfaces all with the
+ 		 * same interface class, subclass and protocol. Differentiate by
 -- 
 2.39.2
 
