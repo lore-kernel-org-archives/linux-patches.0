@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1380171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CFD0C433EF;
-	Mon, 22 May 2023 19:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B88171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F9CC433EF;
+	Mon, 22 May 2023 19:42:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784571;
-	bh=DwuFvfjVYFsk6S1O3eNeAv8RCNewdLbuWmqN9oc+uS4=;
+	s=korg; t=1684784574;
+	bh=rODhLvb/3BHH0R7bwoUoNz3H/GtIGxQi5NfMdYLCNc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8wSgQjRCrjlwzJ8QRpkEaIP0dJ177leKIZT9xV4XVIjVwhgBz5nI7k7CJlUSWN/V
-	 AQ2+4GYs4VtXHMTv2OvW9oTwBlWnAyzqQNm3abWj/Bo4UyLHN0Qr/1cg86fwnBD/Fs
-	 w7Qj+/3HxtrOzheH93rcg3uxSjZzIEdGioH6kcw8=
+	b=kGW1eM9Q/VEyMDaBoGhBfqjFO6Y4PVRXx8GT/nf8EkwLYoN7VVm3+xOKUBzXGlEld
+	 qPFKOhNUGwSzmGuVPH5NAVK3VP9MB2UkmIVZjQ50amoru7J2mOubVIPO6t97HPQkM6
+	 pXHWv6JSIjGKdGNUlH4mgIVfNugGp5Md9jefDTUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Ming Lei <ming.lei@redhat.com>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 128/364] f2fs: relax sanity check if checkpoint is corrupted
-Date: Mon, 22 May 2023 20:07:13 +0100
-Message-Id: <20230522190415.997495450@linuxfoundation.org>
+Subject: [PATCH 6.3 129/364] null_blk: Always check queue mode setting from configfs
+Date: Mon, 22 May 2023 20:07:14 +0100
+Message-Id: <20230522190416.021479173@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,105 +38,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-[ Upstream commit bd90c5cd339a9d7cdc609d2d6310b80dc697070d ]
+[ Upstream commit 63f8793ee60513a09f110ea460a6ff2c33811cdb ]
 
-1. extent_cache
- - let's drop the largest extent_cache
-2. invalidate_block
- - don't show the warnings
+Make sure to check device queue mode in the null_validate_conf() and
+return error for NULL_Q_RQ as we don't allow legacy I/O path, without
+this patch we get OOPs when queue mode is set to 1 from configfs,
+following are repro steps :-
 
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+modprobe null_blk nr_devices=0
+mkdir config/nullb/nullb0
+echo 1 > config/nullb/nullb0/memory_backed
+echo 4096 > config/nullb/nullb0/blocksize
+echo 20480 > config/nullb/nullb0/size
+echo 1 > config/nullb/nullb0/queue_mode
+echo 1 > config/nullb/nullb0/power
+
+Entering kdb (current=0xffff88810acdd080, pid 2372) on processor 42 Oops: (null)
+due to oops @ 0xffffffffc041c329
+CPU: 42 PID: 2372 Comm: sh Tainted: G           O     N 6.3.0-rc5lblk+ #5
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+RIP: 0010:null_add_dev.part.0+0xd9/0x720 [null_blk]
+Code: 01 00 00 85 d2 0f 85 a1 03 00 00 48 83 bb 08 01 00 00 00 0f 85 f7 03 00 00 80 bb 62 01 00 00 00 48 8b 75 20 0f 85 6d 02 00 00 <48> 89 6e 60 48 8b 75 20 bf 06 00 00 00 e8 f5 37 2c c1 48 8b 75 20
+RSP: 0018:ffffc900052cbde0 EFLAGS: 00010246
+RAX: 0000000000000001 RBX: ffff88811084d800 RCX: 0000000000000001
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffff888100042e00
+RBP: ffff8881053d8200 R08: ffffc900052cbd68 R09: ffff888105db2000
+R10: 0000000000000001 R11: 0000000000000000 R12: 0000000000000002
+R13: ffff888104765200 R14: ffff88810eec1748 R15: ffff88810eec1740
+FS:  00007fd445fd1740(0000) GS:ffff8897dfc80000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000000000000060 CR3: 0000000166a00000 CR4: 0000000000350ee0
+DR0: ffffffff8437a488 DR1: ffffffff8437a489 DR2: ffffffff8437a48a
+DR3: ffffffff8437a48b DR6: 00000000ffff0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ nullb_device_power_store+0xd1/0x120 [null_blk]
+ configfs_write_iter+0xb4/0x120
+ vfs_write+0x2ba/0x3c0
+ ksys_write+0x5f/0xe0
+ do_syscall_64+0x3b/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+RIP: 0033:0x7fd4460c57a7
+Code: 0d 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 f3 0f 1e fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74 24
+RSP: 002b:00007ffd3792a4a8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 0000000000000002 RCX: 00007fd4460c57a7
+RDX: 0000000000000002 RSI: 000055b43c02e4c0 RDI: 0000000000000001
+RBP: 000055b43c02e4c0 R08: 000000000000000a R09: 00007fd44615b4e0
+R10: 00007fd44615b3e0 R11: 0000000000000246 R12: 0000000000000002
+R13: 00007fd446198520 R14: 0000000000000002 R15: 00007fd446198700
+ </TASK>
+
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Link: https://lore.kernel.org/r/20230416220339.43845-1-kch@nvidia.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/checkpoint.c   | 10 ++++++++++
- fs/f2fs/data.c         |  4 ++++
- fs/f2fs/extent_cache.c | 22 +++++++++++++++-------
- 3 files changed, 29 insertions(+), 7 deletions(-)
+ drivers/block/null_blk/main.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
-index 96af24c394c39..d4c862ccd1f72 100644
---- a/fs/f2fs/checkpoint.c
-+++ b/fs/f2fs/checkpoint.c
-@@ -152,6 +152,11 @@ static bool __is_bitmap_valid(struct f2fs_sb_info *sbi, block_t blkaddr,
- 	se = get_seg_entry(sbi, segno);
+diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
+index 9e6b032c8ecc2..14491952047f5 100644
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -1964,6 +1964,11 @@ static int null_init_tag_set(struct nullb *nullb, struct blk_mq_tag_set *set)
  
- 	exist = f2fs_test_bit(offset, se->cur_valid_map);
-+
-+	/* skip data, if we already have an error in checkpoint. */
-+	if (unlikely(f2fs_cp_error(sbi)))
-+		return exist;
-+
- 	if (exist && type == DATA_GENERIC_ENHANCE_UPDATE) {
- 		f2fs_err(sbi, "Inconsistent error blkaddr:%u, sit bitmap:%d",
- 			 blkaddr, exist);
-@@ -202,6 +207,11 @@ bool f2fs_is_valid_blkaddr(struct f2fs_sb_info *sbi,
- 	case DATA_GENERIC_ENHANCE_UPDATE:
- 		if (unlikely(blkaddr >= MAX_BLKADDR(sbi) ||
- 				blkaddr < MAIN_BLKADDR(sbi))) {
-+
-+			/* Skip to emit an error message. */
-+			if (unlikely(f2fs_cp_error(sbi)))
-+				return false;
-+
- 			f2fs_warn(sbi, "access invalid blkaddr:%u",
- 				  blkaddr);
- 			set_sbi_flag(sbi, SBI_NEED_FSCK);
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index 68feb015cfa3a..92bcdbd8e4f21 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -2237,6 +2237,10 @@ int f2fs_read_multi_pages(struct compress_ctx *cc, struct bio **bio_ret,
- 	if (ret)
- 		goto out;
- 
-+	if (unlikely(f2fs_cp_error(sbi))) {
-+		ret = -EIO;
-+		goto out_put_dnode;
-+	}
- 	f2fs_bug_on(sbi, dn.data_blkaddr != COMPRESS_ADDR);
- 
- skip_reading_dnode:
-diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
-index 9a8153895d203..bea6ab9d846ae 100644
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -23,18 +23,26 @@ bool sanity_check_extent_cache(struct inode *inode)
+ static int null_validate_conf(struct nullb_device *dev)
  {
- 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	struct f2fs_inode_info *fi = F2FS_I(inode);
-+	struct extent_tree *et = fi->extent_tree[EX_READ];
- 	struct extent_info *ei;
- 
--	if (!fi->extent_tree[EX_READ])
-+	if (!et)
-+		return true;
-+
-+	ei = &et->largest;
-+	if (!ei->len)
- 		return true;
- 
--	ei = &fi->extent_tree[EX_READ]->largest;
-+	/* Let's drop, if checkpoint got corrupted. */
-+	if (is_set_ckpt_flags(sbi, CP_ERROR_FLAG)) {
-+		ei->len = 0;
-+		et->largest_updated = true;
-+		return true;
++	if (dev->queue_mode == NULL_Q_RQ) {
++		pr_err("legacy IO path is no longer available\n");
++		return -EINVAL;
 +	}
++
+ 	dev->blocksize = round_down(dev->blocksize, 512);
+ 	dev->blocksize = clamp_t(unsigned int, dev->blocksize, 512, 4096);
  
--	if (ei->len &&
--		(!f2fs_is_valid_blkaddr(sbi, ei->blk,
--					DATA_GENERIC_ENHANCE) ||
--		!f2fs_is_valid_blkaddr(sbi, ei->blk + ei->len - 1,
--					DATA_GENERIC_ENHANCE))) {
-+	if (!f2fs_is_valid_blkaddr(sbi, ei->blk, DATA_GENERIC_ENHANCE) ||
-+	    !f2fs_is_valid_blkaddr(sbi, ei->blk + ei->len - 1,
-+					DATA_GENERIC_ENHANCE)) {
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		f2fs_warn(sbi, "%s: inode (ino=%lx) extent info [%u, %u, %u] is incorrect, run fsck to fix",
- 			  __func__, inode->i_ino,
 -- 
 2.39.2
 
