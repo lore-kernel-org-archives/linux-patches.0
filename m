@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41514171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:38:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32FAC433EF;
-	Mon, 22 May 2023 19:38:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CFBE171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:38:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBE7C4339B;
+	Mon, 22 May 2023 19:38:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784315;
-	bh=HUBJV5lPHIy7af22dGrFmD9r6RfTTEyiamzo5QSE9y0=;
+	s=korg; t=1684784318;
+	bh=HPPIX46kTH1qte8oXIFu3sx9oxkTxCvsPp1KM+T3Av0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FI7a/opJfWc2DHthYuG5NRvCH1CxrQ6ztGPQljyupgqh2I2hi315sCCFndI/pqHJU
-	 Bi+eWvSRkEPBdHvfh7FRjZQdfq6IA9qfdcHxbXEpaPWRBEAQxpmncXaR2m35l5+5Nm
-	 YTTVrlf8KEFefM4AUrFqpnLhkh2POni3OBQ2+rso=
+	b=Kb4fQOQSDUoyn7UWYQxL3rTzZnlXq15gH+z0EjsPcKMj67RDcyFUdgWDkqTtvVv6G
+	 LTms61UmoR8+ZzyxW/WnS/7rdgdtp8hycggUGFn0PfdlnQVGR0RDgdILWHKQYItmQe
+	 iVmLjBMycjCHRbe8gqsT4ziT3pxeoikItXcctov4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
-	Zqiang <qiang1.zhang@intel.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Pedro Falcato <pedro.falcato@gmail.com>,
+	Aleksa Sarai <cyphar@cyphar.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 042/364] rcu: Protect rcu_print_task_exp_stall() ->exp_tasks access
-Date: Mon, 22 May 2023 20:05:47 +0100
-Message-Id: <20230522190413.881541091@linuxfoundation.org>
+Subject: [PATCH 6.3 043/364] open: return EINVAL for O_DIRECTORY | O_CREAT
+Date: Mon, 22 May 2023 20:05:48 +0100
+Message-Id: <20230522190413.904596800@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,66 +37,194 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zqiang <qiang1.zhang@intel.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 3c1566bca3f8349f12b75d0a2d5e4a20ad6262ec ]
+[ Upstream commit 43b450632676fb60e9faeddff285d9fac94a4f58 ]
 
-For kernels built with CONFIG_PREEMPT_RCU=y, the following scenario can
-result in a NULL-pointer dereference:
+After a couple of years and multiple LTS releases we received a report
+that the behavior of O_DIRECTORY | O_CREAT changed starting with v5.7.
 
-           CPU1                                           CPU2
-rcu_preempt_deferred_qs_irqrestore                rcu_print_task_exp_stall
-  if (special.b.blocked)                            READ_ONCE(rnp->exp_tasks) != NULL
-    raw_spin_lock_rcu_node
-    np = rcu_next_node_entry(t, rnp)
-    if (&t->rcu_node_entry == rnp->exp_tasks)
-      WRITE_ONCE(rnp->exp_tasks, np)
-      ....
-      raw_spin_unlock_irqrestore_rcu_node
-                                                    raw_spin_lock_irqsave_rcu_node
-                                                    t = list_entry(rnp->exp_tasks->prev,
-                                                        struct task_struct, rcu_node_entry)
-                                                    (if rnp->exp_tasks is NULL, this
-                                                       will dereference a NULL pointer)
+On kernels prior to v5.7 combinations of O_DIRECTORY, O_CREAT, O_EXCL
+had the following semantics:
 
-The problem is that CPU2 accesses the rcu_node structure's->exp_tasks
-field without holding the rcu_node structure's ->lock and CPU2 did
-not observe CPU1's change to rcu_node structure's ->exp_tasks in time.
-Therefore, if CPU1 sets rcu_node structure's->exp_tasks pointer to NULL,
-then CPU2 might dereference that NULL pointer.
+(1) open("/tmp/d", O_DIRECTORY | O_CREAT)
+    * d doesn't exist:                create regular file
+    * d exists and is a regular file: ENOTDIR
+    * d exists and is a directory:    EISDIR
 
-This commit therefore holds the rcu_node structure's ->lock while
-accessing that structure's->exp_tasks field.
+(2) open("/tmp/d", O_DIRECTORY | O_CREAT | O_EXCL)
+    * d doesn't exist:                create regular file
+    * d exists and is a regular file: EEXIST
+    * d exists and is a directory:    EEXIST
 
-[ paulmck: Apply Frederic Weisbecker feedback. ]
+(3) open("/tmp/d", O_DIRECTORY | O_EXCL)
+    * d doesn't exist:                ENOENT
+    * d exists and is a regular file: ENOTDIR
+    * d exists and is a directory:    open directory
 
-Acked-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Signed-off-by: Zqiang <qiang1.zhang@intel.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+On kernels since to v5.7 combinations of O_DIRECTORY, O_CREAT, O_EXCL
+have the following semantics:
+
+(1) open("/tmp/d", O_DIRECTORY | O_CREAT)
+    * d doesn't exist:                ENOTDIR (create regular file)
+    * d exists and is a regular file: ENOTDIR
+    * d exists and is a directory:    EISDIR
+
+(2) open("/tmp/d", O_DIRECTORY | O_CREAT | O_EXCL)
+    * d doesn't exist:                ENOTDIR (create regular file)
+    * d exists and is a regular file: EEXIST
+    * d exists and is a directory:    EEXIST
+
+(3) open("/tmp/d", O_DIRECTORY | O_EXCL)
+    * d doesn't exist:                ENOENT
+    * d exists and is a regular file: ENOTDIR
+    * d exists and is a directory:    open directory
+
+This is a fairly substantial semantic change that userspace didn't
+notice until Pedro took the time to deliberately figure out corner
+cases. Since no one noticed this breakage we can somewhat safely assume
+that O_DIRECTORY | O_CREAT combinations are likely unused.
+
+The v5.7 breakage is especially weird because while ENOTDIR is returned
+indicating failure a regular file is actually created. This doesn't make
+a lot of sense.
+
+Time was spent finding potential users of this combination. Searching on
+codesearch.debian.net showed that codebases often express semantical
+expectations about O_DIRECTORY | O_CREAT which are completely contrary
+to what our code has done and currently does.
+
+The expectation often is that this particular combination would create
+and open a directory. This suggests users who tried to use that
+combination would stumble upon the counterintuitive behavior no matter
+if pre-v5.7 or post v5.7 and quickly realize neither semantics give them
+what they want. For some examples see the code examples in [1] to [3]
+and the discussion in [4].
+
+There are various ways to address this issue. The lazy/simple option
+would be to restore the pre-v5.7 behavior and to just live with that bug
+forever. But since there's a real chance that the O_DIRECTORY | O_CREAT
+quirk isn't relied upon we should try to get away with murder(ing bad
+semantics) first. If we need to Frankenstein pre-v5.7 behavior later so
+be it.
+
+So let's simply return EINVAL categorically for O_DIRECTORY | O_CREAT
+combinations. In addition to cleaning up the old bug this also opens up
+the possiblity to make that flag combination do something more intuitive
+in the future.
+
+Starting with this commit the following semantics apply:
+
+(1) open("/tmp/d", O_DIRECTORY | O_CREAT)
+    * d doesn't exist:                EINVAL
+    * d exists and is a regular file: EINVAL
+    * d exists and is a directory:    EINVAL
+
+(2) open("/tmp/d", O_DIRECTORY | O_CREAT | O_EXCL)
+    * d doesn't exist:                EINVAL
+    * d exists and is a regular file: EINVAL
+    * d exists and is a directory:    EINVAL
+
+(3) open("/tmp/d", O_DIRECTORY | O_EXCL)
+    * d doesn't exist:                ENOENT
+    * d exists and is a regular file: ENOTDIR
+    * d exists and is a directory:    open directory
+
+One additional note, O_TMPFILE is implemented as:
+
+    #define __O_TMPFILE    020000000
+    #define O_TMPFILE      (__O_TMPFILE | O_DIRECTORY)
+    #define O_TMPFILE_MASK (__O_TMPFILE | O_DIRECTORY | O_CREAT)
+
+For older kernels it was important to return an explicit error when
+O_TMPFILE wasn't supported. So O_TMPFILE requires that O_DIRECTORY is
+raised alongside __O_TMPFILE. It also enforced that O_CREAT wasn't
+specified. Since O_DIRECTORY | O_CREAT could be used to create a regular
+allowing that combination together with __O_TMPFILE would've meant that
+false positives were possible, i.e., that a regular file was created
+instead of a O_TMPFILE. This could've been used to trick userspace into
+thinking it operated on a O_TMPFILE when it wasn't.
+
+Now that we block O_DIRECTORY | O_CREAT completely the check for O_CREAT
+in the __O_TMPFILE branch via if ((flags & O_TMPFILE_MASK) != O_TMPFILE)
+can be dropped. Instead we can simply check verify that O_DIRECTORY is
+raised via if (!(flags & O_DIRECTORY)) and explain this in two comments.
+
+As Aleksa pointed out O_PATH is unaffected by this change since it
+always returned EINVAL if O_CREAT was specified - with or without
+O_DIRECTORY.
+
+Link: https://lore.kernel.org/lkml/20230320071442.172228-1-pedro.falcato@gmail.com
+Link: https://sources.debian.org/src/flatpak/1.14.4-1/subprojects/libglnx/glnx-dirfd.c/?hl=324#L324 [1]
+Link: https://sources.debian.org/src/flatpak-builder/1.2.3-1/subprojects/libglnx/glnx-shutil.c/?hl=251#L251 [2]
+Link: https://sources.debian.org/src/ostree/2022.7-2/libglnx/glnx-dirfd.c/?hl=324#L324 [3]
+Link: https://www.openwall.com/lists/oss-security/2014/11/26/14 [4]
+Reported-by: Pedro Falcato <pedro.falcato@gmail.com>
+Cc: Aleksa Sarai <cyphar@cyphar.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree_exp.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/open.c                              | 18 +++++++++++++-----
+ include/uapi/asm-generic/fcntl.h       |  1 -
+ tools/include/uapi/asm-generic/fcntl.h |  1 -
+ 3 files changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/rcu/tree_exp.h b/kernel/rcu/tree_exp.h
-index 249c2967d9e6c..54e8fb258c98d 100644
---- a/kernel/rcu/tree_exp.h
-+++ b/kernel/rcu/tree_exp.h
-@@ -802,9 +802,11 @@ static int rcu_print_task_exp_stall(struct rcu_node *rnp)
- 	int ndetected = 0;
- 	struct task_struct *t;
+diff --git a/fs/open.c b/fs/open.c
+index 4401a73d4032d..4478adcc4f3a0 100644
+--- a/fs/open.c
++++ b/fs/open.c
+@@ -1196,13 +1196,21 @@ inline int build_open_flags(const struct open_how *how, struct open_flags *op)
+ 	}
  
--	if (!READ_ONCE(rnp->exp_tasks))
--		return 0;
- 	raw_spin_lock_irqsave_rcu_node(rnp, flags);
-+	if (!rnp->exp_tasks) {
-+		raw_spin_unlock_irqrestore_rcu_node(rnp, flags);
-+		return 0;
-+	}
- 	t = list_entry(rnp->exp_tasks->prev,
- 		       struct task_struct, rcu_node_entry);
- 	list_for_each_entry_continue(t, &rnp->blkd_tasks, rcu_node_entry) {
+ 	/*
+-	 * In order to ensure programs get explicit errors when trying to use
+-	 * O_TMPFILE on old kernels, O_TMPFILE is implemented such that it
+-	 * looks like (O_DIRECTORY|O_RDWR & ~O_CREAT) to old kernels. But we
+-	 * have to require userspace to explicitly set it.
++	 * Block bugs where O_DIRECTORY | O_CREAT created regular files.
++	 * Note, that blocking O_DIRECTORY | O_CREAT here also protects
++	 * O_TMPFILE below which requires O_DIRECTORY being raised.
+ 	 */
++	if ((flags & (O_DIRECTORY | O_CREAT)) == (O_DIRECTORY | O_CREAT))
++		return -EINVAL;
++
++	/* Now handle the creative implementation of O_TMPFILE. */
+ 	if (flags & __O_TMPFILE) {
+-		if ((flags & O_TMPFILE_MASK) != O_TMPFILE)
++		/*
++		 * In order to ensure programs get explicit errors when trying
++		 * to use O_TMPFILE on old kernels we enforce that O_DIRECTORY
++		 * is raised alongside __O_TMPFILE.
++		 */
++		if (!(flags & O_DIRECTORY))
+ 			return -EINVAL;
+ 		if (!(acc_mode & MAY_WRITE))
+ 			return -EINVAL;
+diff --git a/include/uapi/asm-generic/fcntl.h b/include/uapi/asm-generic/fcntl.h
+index 1ecdb911add8d..80f37a0d40d7d 100644
+--- a/include/uapi/asm-generic/fcntl.h
++++ b/include/uapi/asm-generic/fcntl.h
+@@ -91,7 +91,6 @@
+ 
+ /* a horrid kludge trying to make sure that this will fail on old kernels */
+ #define O_TMPFILE (__O_TMPFILE | O_DIRECTORY)
+-#define O_TMPFILE_MASK (__O_TMPFILE | O_DIRECTORY | O_CREAT)      
+ 
+ #ifndef O_NDELAY
+ #define O_NDELAY	O_NONBLOCK
+diff --git a/tools/include/uapi/asm-generic/fcntl.h b/tools/include/uapi/asm-generic/fcntl.h
+index b02c8e0f40575..1c7a0f6632c09 100644
+--- a/tools/include/uapi/asm-generic/fcntl.h
++++ b/tools/include/uapi/asm-generic/fcntl.h
+@@ -91,7 +91,6 @@
+ 
+ /* a horrid kludge trying to make sure that this will fail on old kernels */
+ #define O_TMPFILE (__O_TMPFILE | O_DIRECTORY)
+-#define O_TMPFILE_MASK (__O_TMPFILE | O_DIRECTORY | O_CREAT)      
+ 
+ #ifndef O_NDELAY
+ #define O_NDELAY	O_NONBLOCK
 -- 
 2.39.2
 
