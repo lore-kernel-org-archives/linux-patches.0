@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27653171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B364C433EF;
-	Mon, 22 May 2023 19:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF505171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FAD0C433D2;
+	Mon, 22 May 2023 19:45:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784716;
-	bh=r3nSzcHu6zOam8kJq7keQ3dxmzWsnf7sOlNGe/Bja7Y=;
+	s=korg; t=1684784718;
+	bh=0d2oJSpgi3b6qRNoa3kjP0Wh0Jj4G8hy3gSPF5xtAmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lh2fg7JrxSxhr+AFEFt7PMYuxC8urGmweKmYTCi2mYMX3g3gy5jQmbM4lQkT4gIIz
-	 8rvY8LQVN5E/3fB+ZXz+RbVe3N7acrfBMyKS/G5CPfM/pHANo/foxOdJ8fFqn1o6xM
-	 wV0LIwTOsvVOm/FbKmdQirWE3M8cKr+mTUMjpZZA=
+	b=opBbDUqO9quJP0pUUZwlOI935sbgrlCNEuttq9sjO+0Ij6zWFaTEfMvWC4jSOMEuO
+	 ssSXi16eg6pLPtKiG4GqFply/rWfReakyQtIIICPCRLFd9uIw194tm8MEyfWTt3Kb8
+	 53ew9XI1Jx6KlklrFq/oaPMTeFM/qaCcxQPsudkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
+	Edward Lo <edward.lo@ambergroup.io>,
 	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+f45957555ed4a808cc7a@syzkaller.appspotmail.com
-Subject: [PATCH 6.3 177/364] fs/ntfs3: Fix NULL dereference in ni_write_inode
-Date: Mon, 22 May 2023 20:08:02 +0100
-Message-Id: <20230522190417.146648410@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 178/364] fs/ntfs3: Validate MFT flags before replaying logs
+Date: Mon, 22 May 2023 20:08:03 +0100
+Message-Id: <20230522190417.174740462@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,41 +35,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Edward Lo <edward.lo@ambergroup.io>
 
-[ Upstream commit 8dae4f6341e335a09575be60b4fdf697c732a470 ]
+[ Upstream commit 98bea253aa28ad8be2ce565a9ca21beb4a9419e5 ]
 
-Syzbot reports a NULL dereference in ni_write_inode.
-When creating a new inode, if allocation fails in mi_init function
-(called in mi_format_new function), mi->mrec is set to NULL.
-In the error path of this inode creation, mi->mrec is later
-dereferenced in ni_write_inode.
+Log load and replay is part of the metadata handle flow during mount
+operation. The $MFT record will be loaded and used while replaying logs.
+However, a malformed $MFT record, say, has RECORD_FLAG_DIR flag set and
+contains an ATTR_ROOT attribute will misguide kernel to treat it as a
+directory, and try to free the allocated resources when the
+corresponding inode is freed, which will cause an invalid kfree because
+the memory hasn't actually been allocated.
 
-Add a NULL check to prevent NULL dereference.
+[  101.368647] BUG: KASAN: invalid-free in kvfree+0x2c/0x40
+[  101.369457]
+[  101.369986] CPU: 0 PID: 198 Comm: mount Not tainted 6.0.0-rc7+ #5
+[  101.370529] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+[  101.371362] Call Trace:
+[  101.371795]  <TASK>
+[  101.372157]  dump_stack_lvl+0x49/0x63
+[  101.372658]  print_report.cold+0xf5/0x689
+[  101.373022]  ? ni_write_inode+0x754/0xd90
+[  101.373378]  ? kvfree+0x2c/0x40
+[  101.373698]  kasan_report_invalid_free+0x77/0xf0
+[  101.374058]  ? kvfree+0x2c/0x40
+[  101.374352]  ? kvfree+0x2c/0x40
+[  101.374668]  __kasan_slab_free+0x189/0x1b0
+[  101.374992]  ? kvfree+0x2c/0x40
+[  101.375271]  kfree+0x168/0x3b0
+[  101.375717]  kvfree+0x2c/0x40
+[  101.376002]  indx_clear+0x26/0x60
+[  101.376316]  ni_clear+0xc5/0x290
+[  101.376661]  ntfs_evict_inode+0x45/0x70
+[  101.377001]  evict+0x199/0x280
+[  101.377432]  iput.part.0+0x286/0x320
+[  101.377819]  iput+0x32/0x50
+[  101.378166]  ntfs_loadlog_and_replay+0x143/0x320
+[  101.378656]  ? ntfs_bio_fill_1+0x510/0x510
+[  101.378968]  ? iput.part.0+0x286/0x320
+[  101.379367]  ntfs_fill_super+0xecb/0x1ba0
+[  101.379729]  ? put_ntfs+0x1d0/0x1d0
+[  101.380046]  ? vsprintf+0x20/0x20
+[  101.380542]  ? mutex_unlock+0x81/0xd0
+[  101.380914]  ? set_blocksize+0x95/0x150
+[  101.381597]  get_tree_bdev+0x232/0x370
+[  101.382254]  ? put_ntfs+0x1d0/0x1d0
+[  101.382699]  ntfs_fs_get_tree+0x15/0x20
+[  101.383094]  vfs_get_tree+0x4c/0x130
+[  101.383675]  path_mount+0x654/0xfe0
+[  101.384203]  ? putname+0x80/0xa0
+[  101.384540]  ? finish_automount+0x2e0/0x2e0
+[  101.384943]  ? putname+0x80/0xa0
+[  101.385362]  ? kmem_cache_free+0x1c4/0x440
+[  101.385968]  ? putname+0x80/0xa0
+[  101.386666]  do_mount+0xd6/0xf0
+[  101.387228]  ? path_mount+0xfe0/0xfe0
+[  101.387585]  ? __kasan_check_write+0x14/0x20
+[  101.387979]  __x64_sys_mount+0xca/0x110
+[  101.388436]  do_syscall_64+0x3b/0x90
+[  101.388757]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[  101.389289] RIP: 0033:0x7fa0f70e948a
+[  101.390048] Code: 48 8b 0d 11 fa 2a 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00 008
+[  101.391297] RSP: 002b:00007ffc24fdecc8 EFLAGS: 00000202 ORIG_RAX: 00000000000000a5
+[  101.391988] RAX: ffffffffffffffda RBX: 000055932c183060 RCX: 00007fa0f70e948a
+[  101.392494] RDX: 000055932c183260 RSI: 000055932c1832e0 RDI: 000055932c18bce0
+[  101.393053] RBP: 0000000000000000 R08: 000055932c183280 R09: 0000000000000020
+[  101.393577] R10: 00000000c0ed0000 R11: 0000000000000202 R12: 000055932c18bce0
+[  101.394044] R13: 000055932c183260 R14: 0000000000000000 R15: 00000000ffffffff
+[  101.394747]  </TASK>
+[  101.395402]
+[  101.396047] Allocated by task 198:
+[  101.396724]  kasan_save_stack+0x26/0x50
+[  101.397400]  __kasan_slab_alloc+0x6d/0x90
+[  101.397974]  kmem_cache_alloc_lru+0x192/0x5a0
+[  101.398524]  ntfs_alloc_inode+0x23/0x70
+[  101.399137]  alloc_inode+0x3b/0xf0
+[  101.399534]  iget5_locked+0x54/0xa0
+[  101.400026]  ntfs_iget5+0xaf/0x1780
+[  101.400414]  ntfs_loadlog_and_replay+0xe5/0x320
+[  101.400883]  ntfs_fill_super+0xecb/0x1ba0
+[  101.401313]  get_tree_bdev+0x232/0x370
+[  101.401774]  ntfs_fs_get_tree+0x15/0x20
+[  101.402224]  vfs_get_tree+0x4c/0x130
+[  101.402673]  path_mount+0x654/0xfe0
+[  101.403160]  do_mount+0xd6/0xf0
+[  101.403537]  __x64_sys_mount+0xca/0x110
+[  101.404058]  do_syscall_64+0x3b/0x90
+[  101.404333]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[  101.404816]
+[  101.405067] The buggy address belongs to the object at ffff888008cc9ea0
+[  101.405067]  which belongs to the cache ntfs_inode_cache of size 992
+[  101.406171] The buggy address is located 232 bytes inside of
+[  101.406171]  992-byte region [ffff888008cc9ea0, ffff888008cca280)
+[  101.406995]
+[  101.408559] The buggy address belongs to the physical page:
+[  101.409320] page:00000000dccf19dd refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x8cc8
+[  101.410654] head:00000000dccf19dd order:2 compound_mapcount:0 compound_pincount:0
+[  101.411533] flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
+[  101.412665] raw: 000fffffc0010200 0000000000000000 dead000000000122 ffff888003695140
+[  101.413209] raw: 0000000000000000 00000000800e000e 00000001ffffffff 0000000000000000
+[  101.413799] page dumped because: kasan: bad access detected
+[  101.414213]
+[  101.414427] Memory state around the buggy address:
+[  101.414991]  ffff888008cc9e80: fc fc fc fc 00 00 00 00 00 00 00 00 00 00 00 00
+[  101.415785]  ffff888008cc9f00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[  101.416933] >ffff888008cc9f80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[  101.417857]                       ^
+[  101.418566]  ffff888008cca000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[  101.419704]  ffff888008cca080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
 
-Link: https://syzkaller.appspot.com/bug?extid=f45957555ed4a808cc7a
-Reported-and-tested-by: syzbot+f45957555ed4a808cc7a@syzkaller.appspotmail.com
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
+Signed-off-by: Edward Lo <edward.lo@ambergroup.io>
 Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/inode.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 7d0473da12c33..1103d4d9a4974 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -3258,6 +3258,9 @@ int ni_write_inode(struct inode *inode, int sync, const char *hint)
- 		return 0;
- 	}
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index ce6bb3bd86b6e..059f288784580 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -100,6 +100,12 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+ 	/* Record should contain $I30 root. */
+ 	is_dir = rec->flags & RECORD_FLAG_DIR;
  
-+	if (!ni->mi.mrec)
++	/* MFT_REC_MFT is not a dir */
++	if (is_dir && ino == MFT_REC_MFT) {
++		err = -EINVAL;
 +		goto out;
++	}
 +
- 	if (is_rec_inuse(ni->mi.mrec) &&
- 	    !(sbi->flags & NTFS_FLAGS_LOG_REPLAYING) && inode->i_nlink) {
- 		bool modified = false;
+ 	inode->i_generation = le16_to_cpu(rec->seq);
+ 
+ 	/* Enumerate all struct Attributes MFT. */
 -- 
 2.39.2
 
