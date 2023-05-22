@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350D3171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9572C433EF;
-	Mon, 22 May 2023 19:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED06171B8
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:45:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688DBC4339B;
+	Mon, 22 May 2023 19:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784744;
-	bh=Q2l8J41OyU469PilNyQEOpqfFO7xRFpbCy4X7cgypcQ=;
+	s=korg; t=1684784749;
+	bh=rHX3+4HNWpaIyjXC4vG2Ai1ck+Uw7+0j3VesE1SKAFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KiaORd3uYnvuU0niKOTGv2CpUc5FgDZZSFYZQNUelUl8e/B1o/Nim3T1C8QcxxUTa
-	 jV/4USzMnDTV01pum6PZUdBhqCQrARo746Fk/cNu/V5GMri4bPoUitl+sareUxL+fG
-	 0cf5TAd0/i7CVW5jxwe1k22SsDxkHJCU+vNW1fgM=
+	b=hVZU0m/yTaiZdI5cR2TIbSbl5XqgvXZrqUMlyG2IUCfFiE/bfItuY/yUsjtjBywQZ
+	 XU1MFXUu64mmIXXN6V6qrLQZQutxBJNRY1cKqE8dl935zGh8g4DxN2iOlBgBOlzShg
+	 lmOHIezBMss6JQ04kGBM59sjUyCQ+H2tFrsb/58w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baishan Jiang <bjiang400@outlook.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Henrie <alexhenrie24@gmail.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 159/364] ASoC: amd: yc: Add ThinkBook 14 G5+ ARP to quirks list for acp6x
-Date: Mon, 22 May 2023 20:07:44 +0100
-Message-Id: <20230522190416.716493156@linuxfoundation.org>
+Subject: [PATCH 6.3 161/364] HID: apple: Set the tilde quirk flag on the Geyser 3
+Date: Mon, 22 May 2023 20:07:46 +0100
+Message-Id: <20230522190416.764238317@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,42 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baishan Jiang <bjiang400@outlook.com>
+From: Alex Henrie <alexhenrie24@gmail.com>
 
-[ Upstream commit a8f5da0bf4d85a6ad03810d902aba61c572102a6 ]
+[ Upstream commit 29e1ecc197d410ee59c8877098d54cf417075f7d ]
 
-ThinkBook 14 G5+ ARP uses Ryzen 7735H processor, and has the same
-microphone problem as ThinkBook 14 G4+ ARA.
+I was finally able to obtain a MacBook1,1 to test and I've now confirmed
+that it has the tilde key quirk as well:
 
-Adding 21HY to acp6x quirks table enables microphone for ThinkBook
-14 G5+ ARP.
+Product    Model  Year  System      CPU    Shape  Labels     Country  Quirky
+============================================================================
+05ac:0218  A1181  2006  MacBook1,1  T2500  ISO    British    13       Yes
 
-Signed-off-by: Baishan Jiang <bjiang400@outlook.com>
-Link: https://lore.kernel.org/r/OS3P286MB1711DD6556284B69C79C0C4FE19B9@OS3P286MB1711.JPNP286.PROD.OUTLOOK.COM
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Alex Henrie <alexhenrie24@gmail.com>
+Link: https://lore.kernel.org/r/20230404024829.13982-1-alexhenrie24@gmail.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/hid-apple.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index 1d59163a882ca..b9958e5553674 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -185,6 +185,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "21EN"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "21HY"),
-+		}
-+	},
- 	{
- 		.driver_data = &acp6x_card,
- 		.matches = {
+diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
+index 5c145775482bc..e2c73a78b5972 100644
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -875,7 +875,8 @@ static const struct hid_device_id apple_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER3_ANSI),
+ 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER3_ISO),
+-		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN },
++		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
++			APPLE_ISO_TILDE_QUIRK },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_GEYSER3_JIS),
+ 		.driver_data = APPLE_NUMLOCK_EMULATION | APPLE_HAS_FN |
+ 			APPLE_RDESC_JIS },
 -- 
 2.39.2
 
