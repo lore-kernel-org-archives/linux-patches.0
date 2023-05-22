@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D8A171BB
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:27:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A027CC433D2;
-	Mon, 22 May 2023 19:27:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C07E171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:27:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B98A1C4339C;
+	Mon, 22 May 2023 19:27:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783655;
-	bh=E07pA8KKJnqqxrmgH5WZJuyo/K+xJNWQXY1afkOewto=;
+	s=korg; t=1684783658;
+	bh=TvdQX2XdC6Rd+gjChtYgSXmDF+mK9u/JwUqgSIU98/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r2E3QvXnmaUc97iZ37F8W62SBoUlhb0Zp6lD0oPNwQx0zz5PuYhESpVMoFmPCEDiO
-	 ZxMYRlAMzDe9VUOD+7gEj6pWl/CIsqd7qYMDCbWoHf3OEAd/f88Wz27Ew4YklpT+ZU
-	 IWMiMiuIQNPUH/arVXCXF/gq/jji/q42nB3wGq2w=
+	b=I+yh2JOxObycN7mHBAbiN74CcxYyve++3RQnNC/W5J+BXtTL8jBplJ4l0+6tc3tZJ
+	 G35Swwl2nfapsu5ml4WqfbdQk4zwztJ7zo9nQiu3sFEWOLnD7cVOCGe1R3orD0foRh
+	 WzV7eBjVVB2DuL4CUMMB/m0S55FXxPZzQIa/FSRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Vladis Dronov <vdronov@redhat.com>,
+	Stephan Mueller <smueller@chronox.de>,
+	Marcelo Henrique Cerri <marcelo.cerri@canonical.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/292] ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()
-Date: Mon, 22 May 2023 20:07:27 +0100
-Message-Id: <20230522190408.224181819@linuxfoundation.org>
+Subject: [PATCH 6.1 091/292] crypto: jitter - permanent and intermittent health errors
+Date: Mon, 22 May 2023 20:07:28 +0100
+Message-Id: <20230522190408.249444866@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -37,126 +37,394 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: Stephan Müller <smueller@chronox.de>
 
-[ Upstream commit 93cdf49f6eca5e23f6546b8f28457b2e6a6961d9 ]
+[ Upstream commit 3fde2fe99aa6dacd4151c87382b07ce7f30f0a52 ]
 
-When the length of best extent found is less than the length of goal extent
-we need to make sure that the best extent atleast covers the start of the
-original request. This is done by adjusting the ac_b_ex.fe_logical (logical
-start) of the extent.
+According to SP800-90B, two health failures are allowed: the intermittend
+and the permanent failure. So far, only the intermittent failure was
+implemented. The permanent failure was achieved by resetting the entire
+entropy source including its health test state and waiting for two or
+more back-to-back health errors.
 
-While doing so, the current logic sometimes results in the best extent's
-logical range overflowing the goal extent. Since this best extent is later
-added to the inode preallocation list, we have a possibility of introducing
-overlapping preallocations. This is discussed in detail here [1].
+This approach is appropriate for RCT, but not for APT as APT has a
+non-linear cutoff value. Thus, this patch implements 2 cutoff values
+for both RCT/APT. This implies that the health state is left untouched
+when an intermittent failure occurs. The noise source is reset
+and a new APT powerup-self test is performed. Yet, whith the unchanged
+health test state, the counting of failures continues until a permanent
+failure is reached.
 
-As per Jan's suggestion, to fix this, replace the existing logic with the
-below logic for adjusting best extent as it keeps fragmentation in check
-while ensuring logical range of best extent doesn't overflow out of goal
-extent:
+Any non-failing raw entropy value causes the health tests to reset.
 
-1. Check if best extent can be kept at end of goal range and still cover
-   original start.
-2. Else, check if best extent can be kept at start of goal range and still
-   cover original start.
-3. Else, keep the best extent at start of original request.
+The intermittent error has an unchanged significance level of 2^-30.
+The permanent error has a significance level of 2^-60. Considering that
+this level also indicates a false-positive rate (see SP800-90B section 4.2)
+a false-positive must only be incurred with a low probability when
+considering a fleet of Linux kernels as a whole. Hitting the permanent
+error may cause a panic(), the following calculation applies: Assuming
+that a fleet of 10^9 Linux kernels run concurrently with this patch in
+FIPS mode and on each kernel 2 health tests are performed every minute
+for one year, the chances of a false positive is about 1:1000
+based on the binomial distribution.
 
-Also, add a few extra BUG_ONs that might help catch errors faster.
+In addition, any power-up health test errors triggered with
+jent_entropy_init are treated as permanent errors.
 
-[1] https://lore.kernel.org/r/Y+OGkVvzPN0RMv0O@li-bb2b2a4c-3307-11b2-a85c-8fa5c3a69313.ibm.com
+A permanent failure causes the entire entropy source to permanently
+return an error. This implies that a caller can only remedy the situation
+by re-allocating a new instance of the Jitter RNG. In a subsequent
+patch, a transparent re-allocation will be provided which also changes
+the implied heuristic entropy assessment.
 
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/f96aca6d415b36d1f90db86c1a8cd7e2e9d7ab0e.1679731817.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+In addition, when the kernel is booted with fips=1, the Jitter RNG
+is defined to be part of a FIPS module. The permanent error of the
+Jitter RNG is translated as a FIPS module error. In this case, the entire
+FIPS module must cease operation. This is implemented in the kernel by
+invoking panic().
+
+The patch also fixes an off-by-one in the RCT cutoff value which is now
+set to 30 instead of 31. This is because the counting of the values
+starts with 0.
+
+Reviewed-by: Vladis Dronov <vdronov@redhat.com>
+Signed-off-by: Stephan Mueller <smueller@chronox.de>
+Reviewed-by: Marcelo Henrique Cerri <marcelo.cerri@canonical.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 49 ++++++++++++++++++++++++++++++-----------------
- 1 file changed, 31 insertions(+), 18 deletions(-)
+ crypto/jitterentropy-kcapi.c |  51 ++++++-------
+ crypto/jitterentropy.c       | 144 +++++++++++++----------------------
+ crypto/jitterentropy.h       |   1 -
+ 3 files changed, 76 insertions(+), 120 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 21f09bcffbbaa..32d88757a780e 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -4321,6 +4321,7 @@ static void ext4_mb_use_inode_pa(struct ext4_allocation_context *ac,
- 	BUG_ON(start < pa->pa_pstart);
- 	BUG_ON(end > pa->pa_pstart + EXT4_C2B(sbi, pa->pa_len));
- 	BUG_ON(pa->pa_free < len);
-+	BUG_ON(ac->ac_b_ex.fe_len <= 0);
- 	pa->pa_free -= len;
+diff --git a/crypto/jitterentropy-kcapi.c b/crypto/jitterentropy-kcapi.c
+index 2d115bec15aeb..b9edfaa51b273 100644
+--- a/crypto/jitterentropy-kcapi.c
++++ b/crypto/jitterentropy-kcapi.c
+@@ -37,6 +37,7 @@
+  * DAMAGE.
+  */
  
- 	mb_debug(ac->ac_sb, "use %llu/%d from inode pa %p\n", start, len, pa);
-@@ -4650,10 +4651,8 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 	pa = ac->ac_pa;
++#include <linux/fips.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
+@@ -59,11 +60,6 @@ void jent_zfree(void *ptr)
+ 	kfree_sensitive(ptr);
+ }
  
- 	if (ac->ac_b_ex.fe_len < ac->ac_g_ex.fe_len) {
--		int winl;
--		int wins;
--		int win;
--		int offs;
-+		int new_bex_start;
-+		int new_bex_end;
+-void jent_panic(char *s)
+-{
+-	panic("%s", s);
+-}
+-
+ void jent_memcpy(void *dest, const void *src, unsigned int n)
+ {
+ 	memcpy(dest, src, n);
+@@ -102,7 +98,6 @@ void jent_get_nstime(__u64 *out)
+ struct jitterentropy {
+ 	spinlock_t jent_lock;
+ 	struct rand_data *entropy_collector;
+-	unsigned int reset_cnt;
+ };
  
- 		/* we can't allocate as much as normalizer wants.
- 		 * so, found space must get proper lstart
-@@ -4661,26 +4660,40 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 		BUG_ON(ac->ac_g_ex.fe_logical > ac->ac_o_ex.fe_logical);
- 		BUG_ON(ac->ac_g_ex.fe_len < ac->ac_o_ex.fe_len);
+ static int jent_kcapi_init(struct crypto_tfm *tfm)
+@@ -138,32 +133,30 @@ static int jent_kcapi_random(struct crypto_rng *tfm,
  
--		/* we're limited by original request in that
--		 * logical block must be covered any way
--		 * winl is window we can move our chunk within */
--		winl = ac->ac_o_ex.fe_logical - ac->ac_g_ex.fe_logical;
+ 	spin_lock(&rng->jent_lock);
+ 
+-	/* Return a permanent error in case we had too many resets in a row. */
+-	if (rng->reset_cnt > (1<<10)) {
+-		ret = -EFAULT;
+-		goto out;
+-	}
+-
+ 	ret = jent_read_entropy(rng->entropy_collector, rdata, dlen);
+ 
+-	/* Reset RNG in case of health failures */
+-	if (ret < -1) {
+-		pr_warn_ratelimited("Reset Jitter RNG due to health test failure: %s failure\n",
+-				    (ret == -2) ? "Repetition Count Test" :
+-						  "Adaptive Proportion Test");
+-
+-		rng->reset_cnt++;
+-
++	if (ret == -3) {
++		/* Handle permanent health test error */
 +		/*
-+		 * Use the below logic for adjusting best extent as it keeps
-+		 * fragmentation in check while ensuring logical range of best
-+		 * extent doesn't overflow out of goal extent:
-+		 *
-+		 * 1. Check if best ex can be kept at end of goal and still
-+		 *    cover original start
-+		 * 2. Else, check if best ex can be kept at start of goal and
-+		 *    still cover original start
-+		 * 3. Else, keep the best ex at start of original request.
++		 * If the kernel was booted with fips=1, it implies that
++		 * the entire kernel acts as a FIPS 140 module. In this case
++		 * an SP800-90B permanent health test error is treated as
++		 * a FIPS module error.
 +		 */
-+		new_bex_end = ac->ac_g_ex.fe_logical +
-+			EXT4_C2B(sbi, ac->ac_g_ex.fe_len);
-+		new_bex_start = new_bex_end - EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
-+		if (ac->ac_o_ex.fe_logical >= new_bex_start)
-+			goto adjust_bex;
- 
--		/* also, we should cover whole original request */
--		wins = EXT4_C2B(sbi, ac->ac_b_ex.fe_len - ac->ac_o_ex.fe_len);
-+		new_bex_start = ac->ac_g_ex.fe_logical;
-+		new_bex_end =
-+			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
-+		if (ac->ac_o_ex.fe_logical < new_bex_end)
-+			goto adjust_bex;
- 
--		/* the smallest one defines real window */
--		win = min(winl, wins);
-+		new_bex_start = ac->ac_o_ex.fe_logical;
-+		new_bex_end =
-+			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
- 
--		offs = ac->ac_o_ex.fe_logical %
--			EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
--		if (offs && offs < win)
--			win = offs;
-+adjust_bex:
-+		ac->ac_b_ex.fe_logical = new_bex_start;
- 
--		ac->ac_b_ex.fe_logical = ac->ac_o_ex.fe_logical -
--			EXT4_NUM_B2C(sbi, win);
- 		BUG_ON(ac->ac_o_ex.fe_logical < ac->ac_b_ex.fe_logical);
- 		BUG_ON(ac->ac_o_ex.fe_len > ac->ac_b_ex.fe_len);
-+		BUG_ON(new_bex_end > (ac->ac_g_ex.fe_logical +
-+				      EXT4_C2B(sbi, ac->ac_g_ex.fe_len)));
++		if (fips_enabled)
++			panic("Jitter RNG permanent health test failure\n");
++
++		pr_err("Jitter RNG permanent health test failure\n");
++		ret = -EFAULT;
++	} else if (ret == -2) {
++		/* Handle intermittent health test error */
++		pr_warn_ratelimited("Reset Jitter RNG due to intermittent health test failure\n");
+ 		ret = -EAGAIN;
+-	} else {
+-		rng->reset_cnt = 0;
+-
+-		/* Convert the Jitter RNG error into a usable error code */
+-		if (ret == -1)
+-			ret = -EINVAL;
++	} else if (ret == -1) {
++		/* Handle other errors */
++		ret = -EINVAL;
  	}
  
- 	/* preallocation can change ac_b_ex, thus we store actually
+-out:
+ 	spin_unlock(&rng->jent_lock);
+ 
+ 	return ret;
+@@ -197,6 +190,10 @@ static int __init jent_mod_init(void)
+ 
+ 	ret = jent_entropy_init();
+ 	if (ret) {
++		/* Handle permanent health test error */
++		if (fips_enabled)
++			panic("jitterentropy: Initialization failed with host not compliant with requirements: %d\n", ret);
++
+ 		pr_info("jitterentropy: Initialization failed with host not compliant with requirements: %d\n", ret);
+ 		return -EFAULT;
+ 	}
+diff --git a/crypto/jitterentropy.c b/crypto/jitterentropy.c
+index 93bff32138238..22f48bf4c6f57 100644
+--- a/crypto/jitterentropy.c
++++ b/crypto/jitterentropy.c
+@@ -85,10 +85,14 @@ struct rand_data {
+ 				      * bit generation */
+ 
+ 	/* Repetition Count Test */
+-	int rct_count;			/* Number of stuck values */
++	unsigned int rct_count;			/* Number of stuck values */
+ 
+-	/* Adaptive Proportion Test for a significance level of 2^-30 */
++	/* Intermittent health test failure threshold of 2^-30 */
++#define JENT_RCT_CUTOFF		30	/* Taken from SP800-90B sec 4.4.1 */
+ #define JENT_APT_CUTOFF		325	/* Taken from SP800-90B sec 4.4.2 */
++	/* Permanent health test failure threshold of 2^-60 */
++#define JENT_RCT_CUTOFF_PERMANENT	60
++#define JENT_APT_CUTOFF_PERMANENT	355
+ #define JENT_APT_WINDOW_SIZE	512	/* Data window size */
+ 	/* LSB of time stamp to process */
+ #define JENT_APT_LSB		16
+@@ -97,8 +101,6 @@ struct rand_data {
+ 	unsigned int apt_count;		/* APT counter */
+ 	unsigned int apt_base;		/* APT base reference */
+ 	unsigned int apt_base_set:1;	/* APT base reference set? */
+-
+-	unsigned int health_failure:1;	/* Permanent health failure */
+ };
+ 
+ /* Flags that can be used to initialize the RNG */
+@@ -169,19 +171,26 @@ static void jent_apt_insert(struct rand_data *ec, unsigned int delta_masked)
+ 		return;
+ 	}
+ 
+-	if (delta_masked == ec->apt_base) {
++	if (delta_masked == ec->apt_base)
+ 		ec->apt_count++;
+ 
+-		if (ec->apt_count >= JENT_APT_CUTOFF)
+-			ec->health_failure = 1;
+-	}
+-
+ 	ec->apt_observations++;
+ 
+ 	if (ec->apt_observations >= JENT_APT_WINDOW_SIZE)
+ 		jent_apt_reset(ec, delta_masked);
+ }
+ 
++/* APT health test failure detection */
++static int jent_apt_permanent_failure(struct rand_data *ec)
++{
++	return (ec->apt_count >= JENT_APT_CUTOFF_PERMANENT) ? 1 : 0;
++}
++
++static int jent_apt_failure(struct rand_data *ec)
++{
++	return (ec->apt_count >= JENT_APT_CUTOFF) ? 1 : 0;
++}
++
+ /***************************************************************************
+  * Stuck Test and its use as Repetition Count Test
+  *
+@@ -206,55 +215,14 @@ static void jent_apt_insert(struct rand_data *ec, unsigned int delta_masked)
+  */
+ static void jent_rct_insert(struct rand_data *ec, int stuck)
+ {
+-	/*
+-	 * If we have a count less than zero, a previous RCT round identified
+-	 * a failure. We will not overwrite it.
+-	 */
+-	if (ec->rct_count < 0)
+-		return;
+-
+ 	if (stuck) {
+ 		ec->rct_count++;
+-
+-		/*
+-		 * The cutoff value is based on the following consideration:
+-		 * alpha = 2^-30 as recommended in FIPS 140-2 IG 9.8.
+-		 * In addition, we require an entropy value H of 1/OSR as this
+-		 * is the minimum entropy required to provide full entropy.
+-		 * Note, we collect 64 * OSR deltas for inserting them into
+-		 * the entropy pool which should then have (close to) 64 bits
+-		 * of entropy.
+-		 *
+-		 * Note, ec->rct_count (which equals to value B in the pseudo
+-		 * code of SP800-90B section 4.4.1) starts with zero. Hence
+-		 * we need to subtract one from the cutoff value as calculated
+-		 * following SP800-90B.
+-		 */
+-		if ((unsigned int)ec->rct_count >= (31 * ec->osr)) {
+-			ec->rct_count = -1;
+-			ec->health_failure = 1;
+-		}
+ 	} else {
++		/* Reset RCT */
+ 		ec->rct_count = 0;
+ 	}
+ }
+ 
+-/*
+- * Is there an RCT health test failure?
+- *
+- * @ec [in] Reference to entropy collector
+- *
+- * @return
+- * 	0 No health test failure
+- * 	1 Permanent health test failure
+- */
+-static int jent_rct_failure(struct rand_data *ec)
+-{
+-	if (ec->rct_count < 0)
+-		return 1;
+-	return 0;
+-}
+-
+ static inline __u64 jent_delta(__u64 prev, __u64 next)
+ {
+ #define JENT_UINT64_MAX		(__u64)(~((__u64) 0))
+@@ -303,18 +271,26 @@ static int jent_stuck(struct rand_data *ec, __u64 current_delta)
+ 	return 0;
+ }
+ 
+-/*
+- * Report any health test failures
+- *
+- * @ec [in] Reference to entropy collector
+- *
+- * @return
+- * 	0 No health test failure
+- * 	1 Permanent health test failure
+- */
++/* RCT health test failure detection */
++static int jent_rct_permanent_failure(struct rand_data *ec)
++{
++	return (ec->rct_count >= JENT_RCT_CUTOFF_PERMANENT) ? 1 : 0;
++}
++
++static int jent_rct_failure(struct rand_data *ec)
++{
++	return (ec->rct_count >= JENT_RCT_CUTOFF) ? 1 : 0;
++}
++
++/* Report of health test failures */
+ static int jent_health_failure(struct rand_data *ec)
+ {
+-	return ec->health_failure;
++	return jent_rct_failure(ec) | jent_apt_failure(ec);
++}
++
++static int jent_permanent_health_failure(struct rand_data *ec)
++{
++	return jent_rct_permanent_failure(ec) | jent_apt_permanent_failure(ec);
+ }
+ 
+ /***************************************************************************
+@@ -600,8 +576,8 @@ static void jent_gen_entropy(struct rand_data *ec)
+  *
+  * The following error codes can occur:
+  *	-1	entropy_collector is NULL
+- *	-2	RCT failed
+- *	-3	APT test failed
++ *	-2	Intermittent health failure
++ *	-3	Permanent health failure
+  */
+ int jent_read_entropy(struct rand_data *ec, unsigned char *data,
+ 		      unsigned int len)
+@@ -616,39 +592,23 @@ int jent_read_entropy(struct rand_data *ec, unsigned char *data,
+ 
+ 		jent_gen_entropy(ec);
+ 
+-		if (jent_health_failure(ec)) {
+-			int ret;
+-
+-			if (jent_rct_failure(ec))
+-				ret = -2;
+-			else
+-				ret = -3;
+-
++		if (jent_permanent_health_failure(ec)) {
+ 			/*
+-			 * Re-initialize the noise source
+-			 *
+-			 * If the health test fails, the Jitter RNG remains
+-			 * in failure state and will return a health failure
+-			 * during next invocation.
++			 * At this point, the Jitter RNG instance is considered
++			 * as a failed instance. There is no rerun of the
++			 * startup test any more, because the caller
++			 * is assumed to not further use this instance.
+ 			 */
+-			if (jent_entropy_init())
+-				return ret;
+-
+-			/* Set APT to initial state */
+-			jent_apt_reset(ec, 0);
+-			ec->apt_base_set = 0;
+-
+-			/* Set RCT to initial state */
+-			ec->rct_count = 0;
+-
+-			/* Re-enable Jitter RNG */
+-			ec->health_failure = 0;
+-
++			return -3;
++		} else if (jent_health_failure(ec)) {
+ 			/*
+-			 * Return the health test failure status to the
+-			 * caller as the generated value is not appropriate.
++			 * Perform startup health tests and return permanent
++			 * error if it fails.
+ 			 */
+-			return ret;
++			if (jent_entropy_init())
++				return -3;
++
++			return -2;
+ 		}
+ 
+ 		if ((DATA_SIZE_BITS / 8) < len)
+diff --git a/crypto/jitterentropy.h b/crypto/jitterentropy.h
+index b7397b617ef05..5cc583f6bc6b8 100644
+--- a/crypto/jitterentropy.h
++++ b/crypto/jitterentropy.h
+@@ -2,7 +2,6 @@
+ 
+ extern void *jent_zalloc(unsigned int len);
+ extern void jent_zfree(void *ptr);
+-extern void jent_panic(char *s);
+ extern void jent_memcpy(void *dest, const void *src, unsigned int n);
+ extern void jent_get_nstime(__u64 *out);
+ 
 -- 
 2.39.2
 
