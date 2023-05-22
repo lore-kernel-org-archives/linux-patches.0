@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD96168AF
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4934CC4339B;
-	Mon, 22 May 2023 19:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A88AE168AF
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 286F8C433EF;
+	Mon, 22 May 2023 19:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783055;
-	bh=toR2bLyq3hM+oXjKQG0SLyCCD/d68pj9onuC5lV3trw=;
+	s=korg; t=1684783058;
+	bh=JIVqOOwSWuOCNO6WNW665Eu9nFgLFzCEUZ1bd9gn0gQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bGCVEroOJYSJnVyCopuvlKRsyVKIgljCirWzDxvYATGMn2bO9+98KG0E/w27J/GEF
-	 pY2dVjRj4Ol1JGd+ua2zr2Fw+eTgWfMUndXgWQZQu0N6l1Db/VLCNO3nfbVPoIlmaN
-	 p18sky2DNWEbhP6lpxgtezQsZi/l+TQibB8Gqy8A=
+	b=BDmPk+ebL/kuAabEoEvMS9YJ71OS8EGJNRTtutG/LqgO4UY0Mv9kIQhE5sa3cYEKw
+	 4kWJ8x2wgL2crOBht9rK61k6TsUuydW51VJXdfBFvN2xB88dkhAxKSdm/lqoH2dup0
+	 UJyY+ukxfy0hN/TK8R1BDfMGkrDrs5zcLrroXk9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Andrea Mayer <andrea.mayer@uniroma2.it>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/203] sched: Fix KCSAN noinstr violation
-Date: Mon, 22 May 2023 20:08:30 +0100
-Message-Id: <20230522190357.369472462@linuxfoundation.org>
+Subject: [PATCH 5.15 118/203] selftets: seg6: disable rp_filter by default in srv6_end_dt4_l3vpn_test
+Date: Mon, 22 May 2023 20:09:02 +0100
+Message-Id: <20230522190358.243741187@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,38 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Andrea Mayer <andrea.mayer@uniroma2.it>
 
-[ Upstream commit e0b081d17a9f4e5c0cbb0e5fbeb1abe3de0f7e4e ]
+[ Upstream commit f97b8401e0deb46ad1e4245c21f651f64f55aaa6 ]
 
-With KCSAN enabled, end_of_stack() can get out-of-lined.  Force it
-inline.
+On some distributions, the rp_filter is automatically set (=1) by
+default on a netdev basis (also on VRFs).
+In an SRv6 End.DT4 behavior, decapsulated IPv4 packets are routed using
+the table associated with the VRF bound to that tunnel. During lookup
+operations, the rp_filter can lead to packet loss when activated on the
+VRF.
+Therefore, we chose to make this selftest more robust by explicitly
+disabling the rp_filter during tests (as it is automatically set by some
+Linux distributions).
 
-Fixes the following warnings:
-
-  vmlinux.o: warning: objtool: check_stackleak_irqoff+0x2b: call to end_of_stack() leaves .noinstr.text section
-
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/cc1b4d73d3a428a00d206242a68fdf99a934ca7b.1681320026.git.jpoimboe@kernel.org
+Fixes: 2195444e09b4 ("selftests: add selftest for the SRv6 End.DT4 behavior")
+Reported-by: Hangbin Liu <liuhangbin@gmail.com>
+Signed-off-by: Andrea Mayer <andrea.mayer@uniroma2.it>
+Tested-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched/task_stack.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../testing/selftests/net/srv6_end_dt4_l3vpn_test.sh  | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/sched/task_stack.h b/include/linux/sched/task_stack.h
-index 1009b6b5ce403..879a5c8f930b6 100644
---- a/include/linux/sched/task_stack.h
-+++ b/include/linux/sched/task_stack.h
-@@ -23,7 +23,7 @@ static __always_inline void *task_stack_page(const struct task_struct *task)
+diff --git a/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh b/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh
+index 37f08d582d2fe..f962823628119 100755
+--- a/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh
++++ b/tools/testing/selftests/net/srv6_end_dt4_l3vpn_test.sh
+@@ -258,6 +258,12 @@ setup_hs()
  
- #define setup_thread_stack(new,old)	do { } while(0)
+ 	# set the networking for the host
+ 	ip netns add ${hsname}
++
++	# disable the rp_filter otherwise the kernel gets confused about how
++	# to route decap ipv4 packets.
++	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
++	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.default.rp_filter=0
++
+ 	ip -netns ${hsname} link add veth0 type veth peer name ${rtveth}
+ 	ip -netns ${hsname} link set ${rtveth} netns ${rtname}
+ 	ip -netns ${hsname} addr add ${IPv4_HS_NETWORK}.${hs}/24 dev veth0
+@@ -276,11 +282,6 @@ setup_hs()
  
--static inline unsigned long *end_of_stack(const struct task_struct *task)
-+static __always_inline unsigned long *end_of_stack(const struct task_struct *task)
- {
- #ifdef CONFIG_STACK_GROWSUP
- 	return (unsigned long *)((unsigned long)task->stack + THREAD_SIZE) - 1;
+ 	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.proxy_arp=1
+ 
+-	# disable the rp_filter otherwise the kernel gets confused about how
+-	# to route decap ipv4 packets.
+-	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.all.rp_filter=0
+-	ip netns exec ${rtname} sysctl -wq net.ipv4.conf.${rtveth}.rp_filter=0
+-
+ 	ip netns exec ${rtname} sh -c "echo 1 > /proc/sys/net/vrf/strict_mode"
+ }
+ 
 -- 
 2.39.2
 
