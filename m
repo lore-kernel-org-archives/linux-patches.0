@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3029168AF
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 510D5C433D2;
-	Mon, 22 May 2023 19:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD96168AF
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:17:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4934CC4339B;
+	Mon, 22 May 2023 19:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783052;
-	bh=fvggIfwE4DYJULyIHUQCishCUS8+oRGIdCElfL9i1Oc=;
+	s=korg; t=1684783055;
+	bh=toR2bLyq3hM+oXjKQG0SLyCCD/d68pj9onuC5lV3trw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDyWvuZy8afvmaa3luTC7RYurTlQWfZ7t6kUbh8iwoNtRsVsZXbWRNRZUZ7c34Etr
-	 6KGmvuTnYfKY7dOlSEDe0/xOE10hPQr/FTB3+5VXq0DIKkuE3WhzCEy5NxgR8QCGWa
-	 FJh+3QKyQQ7rtClhX5AoO0+1l0D+FGb3Zf+v0SRI=
+	b=bGCVEroOJYSJnVyCopuvlKRsyVKIgljCirWzDxvYATGMn2bO9+98KG0E/w27J/GEF
+	 pY2dVjRj4Ol1JGd+ua2zr2Fw+eTgWfMUndXgWQZQu0N6l1Db/VLCNO3nfbVPoIlmaN
+	 p18sky2DNWEbhP6lpxgtezQsZi/l+TQibB8Gqy8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jia-Ju Bai <baijiaju1990@gmail.com>,
-	TOTE Robot <oslab@tsinghua.edu.cn>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 095/203] fs/ntfs3: Fix a possible null-pointer dereference in ni_clear()
-Date: Mon, 22 May 2023 20:08:39 +0100
-Message-Id: <20230522190357.618295734@linuxfoundation.org>
+Subject: [PATCH 5.15 086/203] sched: Fix KCSAN noinstr violation
+Date: Mon, 22 May 2023 20:08:30 +0100
+Message-Id: <20230522190357.369472462@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,47 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jia-Ju Bai <baijiaju1990@gmail.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit ec275bf9693d19cc0fdce8436f4c425ced86f6e7 ]
+[ Upstream commit e0b081d17a9f4e5c0cbb0e5fbeb1abe3de0f7e4e ]
 
-In a previous commit c1006bd13146, ni->mi.mrec in ni_write_inode()
-could be NULL, and thus a NULL check is added for this variable.
+With KCSAN enabled, end_of_stack() can get out-of-lined.  Force it
+inline.
 
-However, in the same call stack, ni->mi.mrec can be also dereferenced
-in ni_clear():
+Fixes the following warnings:
 
-ntfs_evict_inode(inode)
-  ni_write_inode(inode, ...)
-    ni = ntfs_i(inode);
-    is_rec_inuse(ni->mi.mrec) -> Add a NULL check by previous commit
-  ni_clear(ntfs_i(inode))
-    is_rec_inuse(ni->mi.mrec) -> No check
+  vmlinux.o: warning: objtool: check_stackleak_irqoff+0x2b: call to end_of_stack() leaves .noinstr.text section
 
-Thus, a possible null-pointer dereference may exist in ni_clear().
-To fix it, a NULL check is added in this function.
-
-Signed-off-by: Jia-Ju Bai <baijiaju1990@gmail.com>
-Reported-by: TOTE Robot <oslab@tsinghua.edu.cn>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/cc1b4d73d3a428a00d206242a68fdf99a934ca7b.1681320026.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/frecord.c | 2 +-
+ include/linux/sched/task_stack.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
-index 95556515ded3d..d24e12d348d49 100644
---- a/fs/ntfs3/frecord.c
-+++ b/fs/ntfs3/frecord.c
-@@ -101,7 +101,7 @@ void ni_clear(struct ntfs_inode *ni)
+diff --git a/include/linux/sched/task_stack.h b/include/linux/sched/task_stack.h
+index 1009b6b5ce403..879a5c8f930b6 100644
+--- a/include/linux/sched/task_stack.h
++++ b/include/linux/sched/task_stack.h
+@@ -23,7 +23,7 @@ static __always_inline void *task_stack_page(const struct task_struct *task)
+ 
+ #define setup_thread_stack(new,old)	do { } while(0)
+ 
+-static inline unsigned long *end_of_stack(const struct task_struct *task)
++static __always_inline unsigned long *end_of_stack(const struct task_struct *task)
  {
- 	struct rb_node *node;
- 
--	if (!ni->vfs_inode.i_nlink && is_rec_inuse(ni->mi.mrec))
-+	if (!ni->vfs_inode.i_nlink && ni->mi.mrec && is_rec_inuse(ni->mi.mrec))
- 		ni_delete_all(ni);
- 
- 	al_destroy(ni);
+ #ifdef CONFIG_STACK_GROWSUP
+ 	return (unsigned long *)((unsigned long)task->stack + THREAD_SIZE) - 1;
 -- 
 2.39.2
 
