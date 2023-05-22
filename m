@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58394171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1E8C433EF;
-	Mon, 22 May 2023 19:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B99171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96717C433D2;
+	Mon, 22 May 2023 19:53:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785206;
-	bh=QrT6yHN1YKQQilyQkgDo4uxXBuryL+F+8q2gUGqTnqk=;
+	s=korg; t=1684785208;
+	bh=rldREFnpap8+FBvQ8p/K6R3tL1ecmZRWMQZakIscXic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A70cGGoRZcvyu8x8rVQTclg4fiwdAbwJmzsn7HoUBDqKB98AidGvbuD2nrUK5IQfD
-	 Ip6K/RtxfGtr3ZeQWjsxjn6j9dOOp0t9KsOYjNV2dieDhxTu4rkww/LkGD2brJWzOF
-	 JRc9z/myqLHWQMDFX9Vnw0yArwUHB0LK0aLMXQTU=
+	b=MTxgS8OjyZPeZrgwL8Q+Csw9nh93NXHIZ09Yn5aLvoskSV5W8/gUDp6IyiX3xflNn
+	 JSdiEyXGY+x7Em/SebGl5vB6nrj8ZsK+xV4U6OuHpC+NmlP4ZGg5bECj8ApEIaGpD1
+	 ui9aGzd8heE4e01Hl1OYuXlIhBqJdm7jXKGXP/xE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix <nimrod4garoa@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Larry Finger <Larry.Finger@lwfinger.net>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.3 316/364] wifi: brcmfmac: Check for probe() id argument being NULL
-Date: Mon, 22 May 2023 20:10:21 +0100
-Message-Id: <20230522190420.675315841@linuxfoundation.org>
+Subject: [PATCH 6.3 317/364] wifi: rtw88: use work to update rate to avoid RCU warning
+Date: Mon, 22 May 2023 20:10:22 +0100
+Message-Id: <20230522190420.700201075@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,128 +35,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-commit 60fc756fc8e6954a5618eecac73b255d651602e4 upstream.
+commit bcafcb959a57a6890e900199690c5fc47da1a304 upstream.
 
-The probe() id argument may be NULL in 2 scenarios:
+The ieee80211_ops::sta_rc_update must be atomic, because
+ieee80211_chan_bw_change() holds rcu_read lock while calling
+drv_sta_rc_update(), so create a work to do original things.
 
-1. brcmf_pcie_pm_leave_D3() calling brcmf_pcie_probe() to reprobe
-   the device.
+ Voluntary context switch within RCU read-side critical section!
+ WARNING: CPU: 0 PID: 4621 at kernel/rcu/tree_plugin.h:318
+ rcu_note_context_switch+0x571/0x5d0
+ CPU: 0 PID: 4621 Comm: kworker/u16:2 Tainted: G        W  OE
+ Workqueue: phy3 ieee80211_chswitch_work [mac80211]
+ RIP: 0010:rcu_note_context_switch+0x571/0x5d0
+ Call Trace:
+  <TASK>
+  __schedule+0xb0/0x1460
+  ? __mod_timer+0x116/0x360
+  schedule+0x5a/0xc0
+  schedule_timeout+0x87/0x150
+  ? trace_raw_output_tick_stop+0x60/0x60
+  wait_for_completion_timeout+0x7b/0x140
+  usb_start_wait_urb+0x82/0x160 [usbcore
+  usb_control_msg+0xe3/0x140 [usbcore
+  rtw_usb_read+0x88/0xe0 [rtw_usb
+  rtw_usb_read8+0xf/0x10 [rtw_usb
+  rtw_fw_send_h2c_command+0xa0/0x170 [rtw_core
+  rtw_fw_send_ra_info+0xc9/0xf0 [rtw_core
+  drv_sta_rc_update+0x7c/0x160 [mac80211
+  ieee80211_chan_bw_change+0xfb/0x110 [mac80211
+  ieee80211_change_chanctx+0x38/0x130 [mac80211
+  ieee80211_vif_use_reserved_switch+0x34e/0x900 [mac80211
+  ieee80211_link_use_reserved_context+0x88/0xe0 [mac80211
+  ieee80211_chswitch_work+0x95/0x170 [mac80211
+  process_one_work+0x201/0x410
+  worker_thread+0x4a/0x3b0
+  ? process_one_work+0x410/0x410
+  kthread+0xe1/0x110
+  ? kthread_complete_and_exit+0x20/0x20
+  ret_from_fork+0x1f/0x30
+  </TASK>
 
-2. If a user tries to manually bind the driver from sysfs then the sdio /
-   pcie / usb probe() function gets called with NULL as id argument.
-
-1. Is being hit by users causing the following oops on resume and causing
-wifi to stop working:
-
-BUG: kernel NULL pointer dereference, address: 0000000000000018
-<snip>
-Hardware name: Dell Inc. XPS 13 9350/0PWNCR, BIDS 1.13.0 02/10/2020
-Workgueue: events_unbound async_run_entry_fn
-RIP: 0010:brcmf_pcie_probe+Ox16b/0x7a0 [brcmfmac]
-<snip>
-Call Trace:
- <TASK>
- brcmf_pcie_pm_leave_D3+0xc5/8x1a0 [brcmfmac be3b4cefca451e190fa35be8f00db1bbec293887]
- ? pci_pm_resume+0x5b/0xf0
- ? pci_legacy_resume+0x80/0x80
- dpm_run_callback+0x47/0x150
- device_resume+0xa2/0x1f0
- async_resume+0x1d/0x30
-<snip>
-
-Fix this by checking for id being NULL.
-
-In the PCI and USB cases try a manual lookup of the id so that manually
-binding the driver through sysfs and more importantly brcmf_pcie_probe()
-on resume will work.
-
-For the SDIO case there is no helper to do a manual sdio_device_id lookup,
-so just directly error out on a NULL id there.
-
-Fixes: da6d9c8ecd00 ("wifi: brcmfmac: add firmware vendor info in driver info")
-Reported-by: Felix <nimrod4garoa@gmail.com>
-Link: https://lore.kernel.org/regressions/4ef3f252ff530cbfa336f5a0d80710020fc5cb1e.camel@gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Fixes: c1edc86472fc ("rtw88: add ieee80211:sta_rc_update ops")
+Reported-by: Larry Finger <Larry.Finger@lwfinger.net>
+Link: https://lore.kernel.org/linux-wireless/f1e31e8e-f84e-3791-50fb-663a83c5c6e9@lwfinger.net/T/#t
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Tested-by: Larry Finger <Larry.Finger@lwfinger.net>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230510141856.46532-1-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20230508085429.46653-1-pkshih@realtek.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c |    5 +++++
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c   |   11 +++++++++++
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c    |   11 +++++++++++
- 3 files changed, 27 insertions(+)
+ drivers/net/wireless/realtek/rtw88/mac80211.c |    2 +-
+ drivers/net/wireless/realtek/rtw88/main.c     |   15 +++++++++++++++
+ drivers/net/wireless/realtek/rtw88/main.h     |    3 +++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
-@@ -1039,6 +1039,11 @@ static int brcmf_ops_sdio_probe(struct s
- 	struct brcmf_sdio_dev *sdiodev;
- 	struct brcmf_bus *bus_if;
+--- a/drivers/net/wireless/realtek/rtw88/mac80211.c
++++ b/drivers/net/wireless/realtek/rtw88/mac80211.c
+@@ -893,7 +893,7 @@ static void rtw_ops_sta_rc_update(struct
+ 	struct rtw_sta_info *si = (struct rtw_sta_info *)sta->drv_priv;
  
-+	if (!id) {
-+		dev_err(&func->dev, "Error no sdio_device_id passed for %x:%x\n", func->vendor, func->device);
-+		return -ENODEV;
-+	}
-+
- 	brcmf_dbg(SDIO, "Enter\n");
- 	brcmf_dbg(SDIO, "Class=%x\n", func->class);
- 	brcmf_dbg(SDIO, "sdio vendor ID: 0x%04x\n", func->vendor);
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -2378,6 +2378,9 @@ static void brcmf_pcie_debugfs_create(st
- }
- #endif
- 
-+/* Forward declaration for pci_match_id() call */
-+static const struct pci_device_id brcmf_pcie_devid_table[];
-+
- static int
- brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- {
-@@ -2388,6 +2391,14 @@ brcmf_pcie_probe(struct pci_dev *pdev, c
- 	struct brcmf_core *core;
- 	struct brcmf_bus *bus;
- 
-+	if (!id) {
-+		id = pci_match_id(brcmf_pcie_devid_table, pdev);
-+		if (!id) {
-+			pci_err(pdev, "Error could not find pci_device_id for %x:%x\n", pdev->vendor, pdev->device);
-+			return -ENODEV;
-+		}
-+	}
-+
- 	brcmf_dbg(PCIE, "Enter %x:%x\n", pdev->vendor, pdev->device);
- 
- 	ret = -ENOMEM;
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
-@@ -1331,6 +1331,9 @@ brcmf_usb_disconnect_cb(struct brcmf_usb
- 	brcmf_usb_detach(devinfo);
+ 	if (changed & IEEE80211_RC_BW_CHANGED)
+-		rtw_update_sta_info(rtwdev, si, true);
++		ieee80211_queue_work(rtwdev->hw, &si->rc_work);
  }
  
-+/* Forward declaration for usb_match_id() call */
-+static const struct usb_device_id brcmf_usb_devid_table[];
+ const struct ieee80211_ops rtw_ops = {
+--- a/drivers/net/wireless/realtek/rtw88/main.c
++++ b/drivers/net/wireless/realtek/rtw88/main.c
+@@ -298,6 +298,17 @@ static u8 rtw_acquire_macid(struct rtw_d
+ 	return mac_id;
+ }
+ 
++static void rtw_sta_rc_work(struct work_struct *work)
++{
++	struct rtw_sta_info *si = container_of(work, struct rtw_sta_info,
++					       rc_work);
++	struct rtw_dev *rtwdev = si->rtwdev;
 +
- static int
- brcmf_usb_probe(struct usb_interface *intf, const struct usb_device_id *id)
++	mutex_lock(&rtwdev->mutex);
++	rtw_update_sta_info(rtwdev, si, true);
++	mutex_unlock(&rtwdev->mutex);
++}
++
+ int rtw_sta_add(struct rtw_dev *rtwdev, struct ieee80211_sta *sta,
+ 		struct ieee80211_vif *vif)
  {
-@@ -1342,6 +1345,14 @@ brcmf_usb_probe(struct usb_interface *in
- 	u32 num_of_eps;
- 	u8 endpoint_num, ep;
+@@ -308,12 +319,14 @@ int rtw_sta_add(struct rtw_dev *rtwdev,
+ 	if (si->mac_id >= RTW_MAX_MAC_ID_NUM)
+ 		return -ENOSPC;
  
-+	if (!id) {
-+		id = usb_match_id(intf, brcmf_usb_devid_table);
-+		if (!id) {
-+			dev_err(&intf->dev, "Error could not find matching usb_device_id\n");
-+			return -ENODEV;
-+		}
-+	}
++	si->rtwdev = rtwdev;
+ 	si->sta = sta;
+ 	si->vif = vif;
+ 	si->init_ra_lv = 1;
+ 	ewma_rssi_init(&si->avg_rssi);
+ 	for (i = 0; i < ARRAY_SIZE(sta->txq); i++)
+ 		rtw_txq_init(rtwdev, sta->txq[i]);
++	INIT_WORK(&si->rc_work, rtw_sta_rc_work);
+ 
+ 	rtw_update_sta_info(rtwdev, si, true);
+ 	rtw_fw_media_status_report(rtwdev, si->mac_id, true);
+@@ -332,6 +345,8 @@ void rtw_sta_remove(struct rtw_dev *rtwd
+ 	struct rtw_sta_info *si = (struct rtw_sta_info *)sta->drv_priv;
+ 	int i;
+ 
++	cancel_work_sync(&si->rc_work);
 +
- 	brcmf_dbg(USB, "Enter 0x%04x:0x%04x\n", id->idVendor, id->idProduct);
+ 	rtw_release_macid(rtwdev, si->mac_id);
+ 	if (fw_exist)
+ 		rtw_fw_media_status_report(rtwdev, si->mac_id, false);
+--- a/drivers/net/wireless/realtek/rtw88/main.h
++++ b/drivers/net/wireless/realtek/rtw88/main.h
+@@ -734,6 +734,7 @@ struct rtw_txq {
+ DECLARE_EWMA(rssi, 10, 16);
  
- 	devinfo = kzalloc(sizeof(*devinfo), GFP_ATOMIC);
+ struct rtw_sta_info {
++	struct rtw_dev *rtwdev;
+ 	struct ieee80211_sta *sta;
+ 	struct ieee80211_vif *vif;
+ 
+@@ -758,6 +759,8 @@ struct rtw_sta_info {
+ 
+ 	bool use_cfg_mask;
+ 	struct cfg80211_bitrate_mask *mask;
++
++	struct work_struct rc_work;
+ };
+ 
+ enum rtw_bfee_role {
 
 
