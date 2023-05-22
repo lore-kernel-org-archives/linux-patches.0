@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51D98171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:38:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4284C433D2;
-	Mon, 22 May 2023 19:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B6A171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:38:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCB50C433EF;
+	Mon, 22 May 2023 19:38:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784288;
-	bh=bKxfhCynXgrSYzy1URhSroKnX5vhAD3GQzPTf6eiNBo=;
+	s=korg; t=1684784291;
+	bh=Vy5+BQO3VbhljkkvwLP/PGF/MlHEjNVSyO2vB46eA/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Us8apWYcodSGx6w1jx8vhjRrkxBSVXN35Jux7kOa+iri020xZBJi7y2BMqaYKdiM
-	 Np+/VxyZ2x6VMM+lGjACEX+05oAjkU14To2z/DD4I8eZIUDH0Y12NZIKDZUUMPmwN5
-	 Kl0bIi1TyUkesBu2FReqlGGZw3/DxlaFxDd7k4Ng=
+	b=z6Fra/jlBUufryCn0FxgEG6galoHI9bB5o/hLl0cNh8tTrogFSfdHnU++aFNYuKow
+	 XZ8cCJSsGsx9esID4LA29S5vimcUky3P5iX7bMXVF2v955BqqUeblqw0LAYpyZn7gN
+	 5Pzr0jJz2ziyOhGvNE6KRMSifvsnnE589H3LFuC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kepplinger <martin.kepplinger@puri.sm>,
-	Saravana Kannan <saravanak@google.com>,
-	Maxime Ripard <maxime@cerno.tech>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kristoffer Ericson <Kristoffer.ericson@gmail.com>,
+	patches@armlinux.org.uk,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 005/364] drm/mipi-dsi: Set the fwnode for mipi_dsi_device
-Date: Mon, 22 May 2023 20:05:10 +0100
-Message-Id: <20230522190412.944457654@linuxfoundation.org>
+Subject: [PATCH 6.3 006/364] ARM: 9296/1: HP Jornada 7XX: fix kernel-doc warnings
+Date: Mon, 22 May 2023 20:05:11 +0100
+Message-Id: <20230522190412.969416869@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -36,46 +39,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Saravana Kannan <saravanak@google.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit a26cc2934331b57b5a7164bff344f0a2ec245fc0 ]
+[ Upstream commit 46dd6078dbc7e363a8bb01209da67015a1538929 ]
 
-After commit 3fb16866b51d ("driver core: fw_devlink: Make cycle
-detection more robust"), fw_devlink prints an error when consumer
-devices don't have their fwnode set. This used to be ignored silently.
+Fix kernel-doc warnings from the kernel test robot:
 
-Set the fwnode mipi_dsi_device so fw_devlink can find them and properly
-track their dependencies.
+jornada720_ssp.c:24: warning: Function parameter or member 'jornada_ssp_lock' not described in 'DEFINE_SPINLOCK'
+jornada720_ssp.c:24: warning: expecting prototype for arch/arm/mac(). Prototype was for DEFINE_SPINLOCK() instead
+jornada720_ssp.c:34: warning: Function parameter or member 'byte' not described in 'jornada_ssp_reverse'
+jornada720_ssp.c:57: warning: Function parameter or member 'byte' not described in 'jornada_ssp_byte'
+jornada720_ssp.c:85: warning: Function parameter or member 'byte' not described in 'jornada_ssp_inout'
 
-This fixes errors like this:
-[    0.334054] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with regulator-lcd-1v8
-[    0.346964] nwl-dsi 30a00000.mipi-dsi: Failed to create device link with backlight-dsi
+Link: lore.kernel.org/r/202304210535.tWby3jWF-lkp@intel.com
 
-Reported-by: Martin Kepplinger <martin.kepplinger@puri.sm>
-Link: https://lore.kernel.org/lkml/2a8e407f4f18c9350f8629a2b5fa18673355b2ae.camel@puri.sm/
-Fixes: 068a00233969 ("drm: Add MIPI DSI bus support")
-Signed-off-by: Saravana Kannan <saravanak@google.com>
-Tested-by: Martin Kepplinger <martin.kepplinger@puri.sm>
-Link: https://lore.kernel.org/r/20230310063910.2474472-1-saravanak@google.com
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+Fixes: 69ebb22277a5 ("[ARM] 4506/1: HP Jornada 7XX: Addition of SSP Platform Driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Kristoffer Ericson <Kristoffer.ericson@gmail.com>
+Cc: patches@armlinux.org.uk
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_mipi_dsi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/mach-sa1100/jornada720_ssp.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/drm_mipi_dsi.c b/drivers/gpu/drm/drm_mipi_dsi.c
-index b41aaf2bb9f16..7923cc21b78e8 100644
---- a/drivers/gpu/drm/drm_mipi_dsi.c
-+++ b/drivers/gpu/drm/drm_mipi_dsi.c
-@@ -221,7 +221,7 @@ mipi_dsi_device_register_full(struct mipi_dsi_host *host,
- 		return dsi;
- 	}
+diff --git a/arch/arm/mach-sa1100/jornada720_ssp.c b/arch/arm/mach-sa1100/jornada720_ssp.c
+index 1dbe98948ce30..9627c4cf3e41d 100644
+--- a/arch/arm/mach-sa1100/jornada720_ssp.c
++++ b/arch/arm/mach-sa1100/jornada720_ssp.c
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-/**
++/*
+  *  arch/arm/mac-sa1100/jornada720_ssp.c
+  *
+  *  Copyright (C) 2006/2007 Kristoffer Ericson <Kristoffer.Ericson@gmail.com>
+@@ -26,6 +26,7 @@ static unsigned long jornada_ssp_flags;
  
--	dsi->dev.of_node = info->node;
-+	device_set_node(&dsi->dev, of_fwnode_handle(info->node));
- 	dsi->channel = info->channel;
- 	strlcpy(dsi->name, info->type, sizeof(dsi->name));
+ /**
+  * jornada_ssp_reverse - reverses input byte
++ * @byte: input byte to reverse
+  *
+  * we need to reverse all data we receive from the mcu due to its physical location
+  * returns : 01110111 -> 11101110
+@@ -46,6 +47,7 @@ EXPORT_SYMBOL(jornada_ssp_reverse);
  
+ /**
+  * jornada_ssp_byte - waits for ready ssp bus and sends byte
++ * @byte: input byte to transmit
+  *
+  * waits for fifo buffer to clear and then transmits, if it doesn't then we will
+  * timeout after <timeout> rounds. Needs mcu running before its called.
+@@ -77,6 +79,7 @@ EXPORT_SYMBOL(jornada_ssp_byte);
+ 
+ /**
+  * jornada_ssp_inout - decide if input is command or trading byte
++ * @byte: input byte to send (may be %TXDUMMY)
+  *
+  * returns : (jornada_ssp_byte(byte)) on success
+  *         : %-ETIMEDOUT on timeout failure
 -- 
 2.39.2
 
