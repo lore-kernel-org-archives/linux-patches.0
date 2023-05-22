@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7724171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3634CC433D2;
-	Mon, 22 May 2023 19:53:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58394171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:53:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1E8C433EF;
+	Mon, 22 May 2023 19:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785203;
-	bh=s72tG+owOxd2jQa0PcjeIq9KRK2nC41g3mGC1A/T7x0=;
+	s=korg; t=1684785206;
+	bh=QrT6yHN1YKQQilyQkgDo4uxXBuryL+F+8q2gUGqTnqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+fqwJSUX52Fjp3dUFWoY2U4tXSj8wDN4+AW4Ovo4BETOV7V+1i1P+goLwxZD33G1
-	 vo7exf15HYDEKai83sL2XOpLtmaE2JfdI20OkQFab0s7cOSeXMzhUGSp9K7BcdIlof
-	 1VqaxPkW9cw2uPUzDC2xy4COAvof08UFMEXinI4k=
+	b=A70cGGoRZcvyu8x8rVQTclg4fiwdAbwJmzsn7HoUBDqKB98AidGvbuD2nrUK5IQfD
+	 Ip6K/RtxfGtr3ZeQWjsxjn6j9dOOp0t9KsOYjNV2dieDhxTu4rkww/LkGD2brJWzOF
+	 JRc9z/myqLHWQMDFX9Vnw0yArwUHB0LK0aLMXQTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.3 315/364] can: kvaser_pciefd: Disable interrupts in probe error path
-Date: Mon, 22 May 2023 20:10:20 +0100
-Message-Id: <20230522190420.649251956@linuxfoundation.org>
+	Felix <nimrod4garoa@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.3 316/364] wifi: brcmfmac: Check for probe() id argument being NULL
+Date: Mon, 22 May 2023 20:10:21 +0100
+Message-Id: <20230522190420.675315841@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -34,32 +36,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 11164bc39459335ab93c6e99d53b7e4292fba38b upstream.
+commit 60fc756fc8e6954a5618eecac73b255d651602e4 upstream.
 
-Disable interrupts in error path of probe function.
+The probe() id argument may be NULL in 2 scenarios:
 
-Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
+1. brcmf_pcie_pm_leave_D3() calling brcmf_pcie_probe() to reprobe
+   the device.
+
+2. If a user tries to manually bind the driver from sysfs then the sdio /
+   pcie / usb probe() function gets called with NULL as id argument.
+
+1. Is being hit by users causing the following oops on resume and causing
+wifi to stop working:
+
+BUG: kernel NULL pointer dereference, address: 0000000000000018
+<snip>
+Hardware name: Dell Inc. XPS 13 9350/0PWNCR, BIDS 1.13.0 02/10/2020
+Workgueue: events_unbound async_run_entry_fn
+RIP: 0010:brcmf_pcie_probe+Ox16b/0x7a0 [brcmfmac]
+<snip>
+Call Trace:
+ <TASK>
+ brcmf_pcie_pm_leave_D3+0xc5/8x1a0 [brcmfmac be3b4cefca451e190fa35be8f00db1bbec293887]
+ ? pci_pm_resume+0x5b/0xf0
+ ? pci_legacy_resume+0x80/0x80
+ dpm_run_callback+0x47/0x150
+ device_resume+0xa2/0x1f0
+ async_resume+0x1d/0x30
+<snip>
+
+Fix this by checking for id being NULL.
+
+In the PCI and USB cases try a manual lookup of the id so that manually
+binding the driver through sysfs and more importantly brcmf_pcie_probe()
+on resume will work.
+
+For the SDIO case there is no helper to do a manual sdio_device_id lookup,
+so just directly error out on a NULL id there.
+
+Fixes: da6d9c8ecd00 ("wifi: brcmfmac: add firmware vendor info in driver info")
+Reported-by: Felix <nimrod4garoa@gmail.com>
+Link: https://lore.kernel.org/regressions/4ef3f252ff530cbfa336f5a0d80710020fc5cb1e.camel@gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/r/20230516134318.104279-7-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230510141856.46532-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/kvaser_pciefd.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c |    5 +++++
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c   |   11 +++++++++++
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c    |   11 +++++++++++
+ 3 files changed, 27 insertions(+)
 
---- a/drivers/net/can/kvaser_pciefd.c
-+++ b/drivers/net/can/kvaser_pciefd.c
-@@ -1861,6 +1861,8 @@ static int kvaser_pciefd_probe(struct pc
- 	return 0;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/bcmsdh.c
+@@ -1039,6 +1039,11 @@ static int brcmf_ops_sdio_probe(struct s
+ 	struct brcmf_sdio_dev *sdiodev;
+ 	struct brcmf_bus *bus_if;
  
- err_free_irq:
-+	/* Disable PCI interrupts */
-+	iowrite32(0, pcie->reg_base + KVASER_PCIEFD_IEN_REG);
- 	free_irq(pcie->pci->irq, pcie);
++	if (!id) {
++		dev_err(&func->dev, "Error no sdio_device_id passed for %x:%x\n", func->vendor, func->device);
++		return -ENODEV;
++	}
++
+ 	brcmf_dbg(SDIO, "Enter\n");
+ 	brcmf_dbg(SDIO, "Class=%x\n", func->class);
+ 	brcmf_dbg(SDIO, "sdio vendor ID: 0x%04x\n", func->vendor);
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -2378,6 +2378,9 @@ static void brcmf_pcie_debugfs_create(st
+ }
+ #endif
  
- err_teardown_can_ctrls:
++/* Forward declaration for pci_match_id() call */
++static const struct pci_device_id brcmf_pcie_devid_table[];
++
+ static int
+ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
+@@ -2388,6 +2391,14 @@ brcmf_pcie_probe(struct pci_dev *pdev, c
+ 	struct brcmf_core *core;
+ 	struct brcmf_bus *bus;
+ 
++	if (!id) {
++		id = pci_match_id(brcmf_pcie_devid_table, pdev);
++		if (!id) {
++			pci_err(pdev, "Error could not find pci_device_id for %x:%x\n", pdev->vendor, pdev->device);
++			return -ENODEV;
++		}
++	}
++
+ 	brcmf_dbg(PCIE, "Enter %x:%x\n", pdev->vendor, pdev->device);
+ 
+ 	ret = -ENOMEM;
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/usb.c
+@@ -1331,6 +1331,9 @@ brcmf_usb_disconnect_cb(struct brcmf_usb
+ 	brcmf_usb_detach(devinfo);
+ }
+ 
++/* Forward declaration for usb_match_id() call */
++static const struct usb_device_id brcmf_usb_devid_table[];
++
+ static int
+ brcmf_usb_probe(struct usb_interface *intf, const struct usb_device_id *id)
+ {
+@@ -1342,6 +1345,14 @@ brcmf_usb_probe(struct usb_interface *in
+ 	u32 num_of_eps;
+ 	u8 endpoint_num, ep;
+ 
++	if (!id) {
++		id = usb_match_id(intf, brcmf_usb_devid_table);
++		if (!id) {
++			dev_err(&intf->dev, "Error could not find matching usb_device_id\n");
++			return -ENODEV;
++		}
++	}
++
+ 	brcmf_dbg(USB, "Enter 0x%04x:0x%04x\n", id->idVendor, id->idProduct);
+ 
+ 	devinfo = kzalloc(sizeof(*devinfo), GFP_ATOMIC);
 
 
