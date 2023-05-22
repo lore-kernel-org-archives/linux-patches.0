@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CA5171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:21:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7214C433EF;
-	Mon, 22 May 2023 19:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57846171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:21:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC92CC433EF;
+	Mon, 22 May 2023 19:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783288;
-	bh=S+BtWaFf8CqqZuuJLbLdVPaXC/TY9ZZpeGrDz0O8vNQ=;
+	s=korg; t=1684783291;
+	bh=Z2i5aSkmJsMunBpgbl3Pdi0FR/dx/JbOtYWynnp15cQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JF5+KUXAUs28Jgl50fk6RVxDwfWkwS+frRr9IG9d6RQMjxNkyDOYKbYHPocjVHcto
-	 2B+t1mSOZ2I3d7SGqKqsh5IWZsKQF3byXVZsRDjXDOyi81+nT02s1Le7ee8IAAvg/s
-	 hFJy3DELi64/Yiw+0/5mfM/4b7Tw0oTeSw93lkK0=
+	b=mnjQ74JUcCmdzgi8wyCuk4O9r3NnLnjPqwyhW0KdG+ffHiLnifFbhYIdGNpogsTBB
+	 SVhx5vxcBxep0VqUqfqQ1Q1nOLiV9B+vY8pwFRQQbomjxOtEd9f6881WjW1L7tZAat
+	 GC1IQwc3YlKjF/gubhxhndl0kBtG1dJqUjEkNCLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 199/203] nilfs2: fix use-after-free bug of nilfs_root in nilfs_evict_inode()
-Date: Mon, 22 May 2023 20:10:23 +0100
-Message-Id: <20230522190400.547611810@linuxfoundation.org>
+	Benjamin Block <bblock@linux.ibm.com>,
+	Steffen Maier <maier@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 5.15 200/203] s390/qdio: fix do_sqbs() inline assembly constraint
+Date: Mon, 22 May 2023 20:10:24 +0100
+Message-Id: <20230522190400.581111691@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,65 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 9b5a04ac3ad9898c4745cba46ea26de74ba56a8e upstream.
+commit 2862a2fdfae875888e3c1c3634e3422e01d98147 upstream.
 
-During unmount process of nilfs2, nothing holds nilfs_root structure after
-nilfs2 detaches its writer in nilfs_detach_log_writer().  However, since
-nilfs_evict_inode() uses nilfs_root for some cleanup operations, it may
-cause use-after-free read if inodes are left in "garbage_list" and
-released by nilfs_dispose_list() at the end of nilfs_detach_log_writer().
+Use "a" constraint instead of "d" constraint to pass the state parameter to
+the do_sqbs() inline assembly. This prevents that general purpose register
+zero is used for the state parameter.
 
-Fix this issue by modifying nilfs_evict_inode() to only clear inode
-without additional metadata changes that use nilfs_root if the file system
-is degraded to read-only or the writer is detached.
+If the compiler would select general purpose register zero this would be
+problematic for the used instruction in rsy format: the register used for
+the state parameter is a base register. If the base register is general
+purpose register zero the contents of the register are unexpectedly ignored
+when the instruction is executed.
 
-Link: https://lkml.kernel.org/r/20230509152956.8313-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/00000000000099e5ac05fb1c3b85@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+This only applies to z/VM guests using QIOASSIST with dedicated (pass through)
+QDIO-based devices such as FCP [zfcp driver] as well as real OSA or
+HiperSockets [qeth driver].
+
+A possible symptom for this case using zfcp is the following repeating kernel
+message pattern:
+
+zfcp <devbusid>: A QDIO problem occurred
+zfcp <devbusid>: A QDIO problem occurred
+zfcp <devbusid>: qdio: ZFCP on SC <sc> using AI:1 QEBSM:1 PRI:1 TDD:1 SIGA: W
+zfcp <devbusid>: A QDIO problem occurred
+zfcp <devbusid>: A QDIO problem occurred
+
+Each of the qdio problem message can be accompanied by the following entries
+for the affected subchannel <sc> in
+/sys/kernel/debug/s390dbf/qdio_error/hex_ascii for zfcp or qeth:
+
+<sc> ccq: 69....
+<sc> SQBS ERROR.
+
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Cc: Steffen Maier <maier@linux.ibm.com>
+Fixes: 8129ee164267 ("[PATCH] s390: qdio V=V pass-through")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/s390/cio/qdio.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -921,6 +921,7 @@ void nilfs_evict_inode(struct inode *ino
- 	struct nilfs_transaction_info ti;
- 	struct super_block *sb = inode->i_sb;
- 	struct nilfs_inode_info *ii = NILFS_I(inode);
-+	struct the_nilfs *nilfs;
- 	int ret;
- 
- 	if (inode->i_nlink || !ii->i_root || unlikely(is_bad_inode(inode))) {
-@@ -933,6 +934,23 @@ void nilfs_evict_inode(struct inode *ino
- 
- 	truncate_inode_pages_final(&inode->i_data);
- 
-+	nilfs = sb->s_fs_info;
-+	if (unlikely(sb_rdonly(sb) || !nilfs->ns_writer)) {
-+		/*
-+		 * If this inode is about to be disposed after the file system
-+		 * has been degraded to read-only due to file system corruption
-+		 * or after the writer has been detached, do not make any
-+		 * changes that cause writes, just clear it.
-+		 * Do this check after read-locking ns_segctor_sem by
-+		 * nilfs_transaction_begin() in order to avoid a race with
-+		 * the writer detach operation.
-+		 */
-+		clear_inode(inode);
-+		nilfs_clear_inode(inode);
-+		nilfs_transaction_abort(sb);
-+		return;
-+	}
-+
- 	/* TODO: some of the following operations may fail.  */
- 	nilfs_truncate_bmap(ii, 0);
- 	nilfs_mark_inode_dirty(inode);
+diff --git a/drivers/s390/cio/qdio.h b/drivers/s390/cio/qdio.h
+index 5ea6249d8180..641f0dbb65a9 100644
+--- a/drivers/s390/cio/qdio.h
++++ b/drivers/s390/cio/qdio.h
+@@ -95,7 +95,7 @@ static inline int do_sqbs(u64 token, unsigned char state, int queue,
+ 		"	lgr	1,%[token]\n"
+ 		"	.insn	rsy,0xeb000000008a,%[qs],%[ccq],0(%[state])"
+ 		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart)
+-		: [state] "d" ((unsigned long)state), [token] "d" (token)
++		: [state] "a" ((unsigned long)state), [token] "d" (token)
+ 		: "memory", "cc", "1");
+ 	*count = _ccq & 0xff;
+ 	*start = _queuestart & 0xff;
+-- 
+2.40.1
+
 
 
