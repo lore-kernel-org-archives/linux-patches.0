@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBA2171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D16BC433EF;
-	Mon, 22 May 2023 19:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E72171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:42:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B30B7C433EF;
+	Mon, 22 May 2023 19:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784537;
-	bh=Y/O9162IMq3Ry2QSMjHXQr8tMPfZrXeNgajqVcH+mb4=;
+	s=korg; t=1684784541;
+	bh=DWstlYSb6HQkL3J/mt/Oo2KXh8UsNNnwfW+H9bnZiTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UWY9WG8cWaWDMu8Br9KYkBvcL9BKowOwxbojwaRCWMtgT8ZP+8jlWYG0OWq7G41IM
-	 pc/93uyieMdkhoVtf1i7L1i5WN7B7U0ytqKua973zepz+R5t7NZplZIdSLWK4pKcPN
-	 YWViGcfOCpnNb8rLc3puZxG5RrNOtWjnp0Wn+qfg=
+	b=NSn4vsISqaSZoZWRiThc8L8HfMXzRfOA+YXrFA/GC78+NDWKFXsB55KA+rr9LXc9w
+	 FfDjQYwsrPbsUUzYYsc9C46VvD4qQ+JA4PHMxukgMsLlctbPUDZlWVcoIQMKA3Iz3x
+	 wn/fLrO4ivaj1Wqox5bbt8tRivkoNB3XRBSk3V3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Moore <robert.moore@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 073/364] ACPICA: Avoid undefined behavior: applying zero offset to null pointer
-Date: Mon, 22 May 2023 20:06:18 +0100
-Message-Id: <20230522190414.597627706@linuxfoundation.org>
+Subject: [PATCH 6.3 064/364] memstick: r592: Fix UAF bug in r592_remove due to race condition
+Date: Mon, 22 May 2023 20:06:09 +0100
+Message-Id: <20230522190414.388731794@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,65 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tamir Duberstein <tamird@google.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 05bb0167c80b8f93c6a4e0451b7da9b96db990c2 ]
+[ Upstream commit 63264422785021704c39b38f65a78ab9e4a186d7 ]
 
-ACPICA commit 770653e3ba67c30a629ca7d12e352d83c2541b1e
+In r592_probe, dev->detect_timer was bound with r592_detect_timer.
+In r592_irq function, the timer function will be invoked by mod_timer.
 
-Before this change we see the following UBSAN stack trace in Fuchsia:
+If we remove the module which will call hantro_release to make cleanup,
+there may be a unfinished work. The possible sequence is as follows,
+which will cause a typical UAF bug.
 
-  #0    0x000021e4213b3302 in acpi_ds_init_aml_walk(struct acpi_walk_state*, union acpi_parse_object*, struct acpi_namespace_node*, u8*, u32, struct acpi_evaluate_info*, u8) ../../third_party/acpica/source/components/dispatcher/dswstate.c:682 <platform-bus-x86.so>+0x233302
-  #1.2  0x000020d0f660777f in ubsan_get_stack_trace() compiler-rt/lib/ubsan/ubsan_diag.cpp:41 <libclang_rt.asan.so>+0x3d77f
-  #1.1  0x000020d0f660777f in maybe_print_stack_trace() compiler-rt/lib/ubsan/ubsan_diag.cpp:51 <libclang_rt.asan.so>+0x3d77f
-  #1    0x000020d0f660777f in ~scoped_report() compiler-rt/lib/ubsan/ubsan_diag.cpp:387 <libclang_rt.asan.so>+0x3d77f
-  #2    0x000020d0f660b96d in handlepointer_overflow_impl() compiler-rt/lib/ubsan/ubsan_handlers.cpp:809 <libclang_rt.asan.so>+0x4196d
-  #3    0x000020d0f660b50d in compiler-rt/lib/ubsan/ubsan_handlers.cpp:815 <libclang_rt.asan.so>+0x4150d
-  #4    0x000021e4213b3302 in acpi_ds_init_aml_walk(struct acpi_walk_state*, union acpi_parse_object*, struct acpi_namespace_node*, u8*, u32, struct acpi_evaluate_info*, u8) ../../third_party/acpica/source/components/dispatcher/dswstate.c:682 <platform-bus-x86.so>+0x233302
-  #5    0x000021e4213e2369 in acpi_ds_call_control_method(struct acpi_thread_state*, struct acpi_walk_state*, union acpi_parse_object*) ../../third_party/acpica/source/components/dispatcher/dsmethod.c:605 <platform-bus-x86.so>+0x262369
-  #6    0x000021e421437fac in acpi_ps_parse_aml(struct acpi_walk_state*) ../../third_party/acpica/source/components/parser/psparse.c:550 <platform-bus-x86.so>+0x2b7fac
-  #7    0x000021e4214464d2 in acpi_ps_execute_method(struct acpi_evaluate_info*) ../../third_party/acpica/source/components/parser/psxface.c:244 <platform-bus-x86.so>+0x2c64d2
-  #8    0x000021e4213aa052 in acpi_ns_evaluate(struct acpi_evaluate_info*) ../../third_party/acpica/source/components/namespace/nseval.c:250 <platform-bus-x86.so>+0x22a052
-  #9    0x000021e421413dd8 in acpi_ns_init_one_device(acpi_handle, u32, void*, void**) ../../third_party/acpica/source/components/namespace/nsinit.c:735 <platform-bus-x86.so>+0x293dd8
-  #10   0x000021e421429e98 in acpi_ns_walk_namespace(acpi_object_type, acpi_handle, u32, u32, acpi_walk_callback, acpi_walk_callback, void*, void**) ../../third_party/acpica/source/components/namespace/nswalk.c:298 <platform-bus-x86.so>+0x2a9e98
-  #11   0x000021e4214131ac in acpi_ns_initialize_devices(u32) ../../third_party/acpica/source/components/namespace/nsinit.c:268 <platform-bus-x86.so>+0x2931ac
-  #12   0x000021e42147c40d in acpi_initialize_objects(u32) ../../third_party/acpica/source/components/utilities/utxfinit.c:304 <platform-bus-x86.so>+0x2fc40d
-  #13   0x000021e42126d603 in acpi::acpi_impl::initialize_acpi(acpi::acpi_impl*) ../../src/devices/board/lib/acpi/acpi-impl.cc:224 <platform-bus-x86.so>+0xed603
+Fix it by canceling the work before cleanup in r592_remove.
 
-Add a simple check that avoids incrementing a pointer by zero, but
-otherwise behaves as before. Note that our findings are against ACPICA
-20221020, but the same code exists on master.
+CPU0                  CPU1
 
-Link: https://github.com/acpica/acpica/commit/770653e3
-Signed-off-by: Bob Moore <robert.moore@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+                    |r592_detect_timer
+r592_remove         |
+  memstick_free_host|
+  put_device;       |
+  kfree(host);      |
+                    |
+                    | queue_work
+                    |   &host->media_checker //use
+
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Link: https://lore.kernel.org/r/20230307164338.1246287-1-zyytlz.wz@163.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dswstate.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/memstick/host/r592.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/dswstate.c b/drivers/acpi/acpica/dswstate.c
-index 0aa735d3b93cc..77076da2029d9 100644
---- a/drivers/acpi/acpica/dswstate.c
-+++ b/drivers/acpi/acpica/dswstate.c
-@@ -576,9 +576,14 @@ acpi_ds_init_aml_walk(struct acpi_walk_state *walk_state,
- 	ACPI_FUNCTION_TRACE(ds_init_aml_walk);
+diff --git a/drivers/memstick/host/r592.c b/drivers/memstick/host/r592.c
+index 1d35d147552d4..42bfc46842b82 100644
+--- a/drivers/memstick/host/r592.c
++++ b/drivers/memstick/host/r592.c
+@@ -829,7 +829,7 @@ static void r592_remove(struct pci_dev *pdev)
+ 	/* Stop the processing thread.
+ 	That ensures that we won't take any more requests */
+ 	kthread_stop(dev->io_thread);
+-
++	del_timer_sync(&dev->detect_timer);
+ 	r592_enable_device(dev, false);
  
- 	walk_state->parser_state.aml =
--	    walk_state->parser_state.aml_start = aml_start;
--	walk_state->parser_state.aml_end =
--	    walk_state->parser_state.pkg_end = aml_start + aml_length;
-+	    walk_state->parser_state.aml_start =
-+	    walk_state->parser_state.aml_end =
-+	    walk_state->parser_state.pkg_end = aml_start;
-+	/* Avoid undefined behavior: applying zero offset to null pointer */
-+	if (aml_length != 0) {
-+		walk_state->parser_state.aml_end += aml_length;
-+		walk_state->parser_state.pkg_end += aml_length;
-+	}
- 
- 	/* The next_op of the next_walk will be the beginning of the method */
- 
+ 	while (!error && dev->req) {
 -- 
 2.39.2
 
