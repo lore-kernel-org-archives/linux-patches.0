@@ -1,33 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3AC171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF14C433D2;
-	Mon, 22 May 2023 19:52:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE1AF171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:52:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22FA6C433EF;
+	Mon, 22 May 2023 19:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684785157;
-	bh=FwaJqMjyHKOmAPpdM5XeBLjmcmG5J5gwIrLef0pDgRc=;
+	s=korg; t=1684785160;
+	bh=oKuHxRaeq4Ak/X04jZOcDEODKRW2mGnj1ik8sWUYYHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3NOgkUEJGNoRHdpuAspKagye1Yl5eA8L+Dph/0hJwrgB4mjtJu3+Y/b0jcnr0X8I
-	 C6w4tjSL1ZzUitJY6GL4CfT4KwWVeNt9mr1q7VZc3Cnn5Re2jf+c8s389/qmC71rDV
-	 FyNfVpEDVwVhCDRtiTFzYIZyzWMF+sbWoHwjIX/8=
+	b=DXzq6gGx7QYWUPRPrpPo4Tc9cM5I1A/t4IxSVMZXT6Z7wrlbeF+1KY3bDwYffWe+6
+	 39q3tU7ZL6jqJYcPHL5djSeGxOCfBjIIMotE/fAZIQztxYu281aELITVc+QJHNGzOi
+	 Hlildedo0vM8cT5JYnUJTtmM5fp0P3dpo1OUrm/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Domenico Cerasuolo <cerasuolodomenico@gmail.com>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Chris Li (Google)" <chrisl@kernel.org>,
-	Dan Streetman <ddstreet@ieee.org>,
-	Minchan Kim <minchan@kernel.org>,
-	Nitin Gupta <ngupta@vflare.org>,
-	Seth Jennings <sjenning@redhat.com>,
-	Vitaly Wool <vitaly.wool@konsulko.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.3 329/364] mm: fix zswap writeback race condition
-Date: Mon, 22 May 2023 20:10:34 +0100
-Message-Id: <20230522190420.999199161@linuxfoundation.org>
+	Sandipan Das <sandipan.das@amd.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ananth Narayan <ananth.narayan@amd.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Nick Terrell <terrelln@fb.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 6.3 330/364] perf script: Skip aggregation for stat events
+Date: Mon, 22 May 2023 20:10:35 +0100
+Message-Id: <20230522190421.026996479@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -41,92 +45,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
+From: Sandipan Das <sandipan.das@amd.com>
 
-commit 04fc7816089c5a32c29a04ec94b998e219dfb946 upstream.
+commit 2fe6575924612f1014a0539ab3053b106aded926 upstream.
 
-The zswap writeback mechanism can cause a race condition resulting in
-memory corruption, where a swapped out page gets swapped in with data that
-was written to a different page.
+The script command does not support aggregation modes by itself although
+that can be achieved using post-processing scripts. Because of this, it
+does not allocate memory for aggregated event values.
 
-The race unfolds like this:
-1. a page with data A and swap offset X is stored in zswap
-2. page A is removed off the LRU by zpool driver for writeback in
-   zswap-shrink work, data for A is mapped by zpool driver
-3. user space program faults and invalidates page entry A, offset X is
-   considered free
-4. kswapd stores page B at offset X in zswap (zswap could also be
-   full, if so, page B would then be IOed to X, then skip step 5.)
-5. entry A is replaced by B in tree->rbroot, this doesn't affect the
-   local reference held by zswap-shrink work
-6. zswap-shrink work writes back A at X, and frees zswap entry A
-7. swapin of slot X brings A in memory instead of B
+Upon running perf stat record, the aggregation mode is set in the perf
+data file. If the mode is AGGR_GLOBAL, the aggregated event values are
+accessed and this leads to a segmentation fault since these were never
+allocated to begin with. Set the mode to AGGR_NONE explicitly to avoid
+this.
 
-The fix:
-Once the swap page cache has been allocated (case ZSWAP_SWAPCACHE_NEW),
-zswap-shrink work just checks that the local zswap_entry reference is
-still the same as the one in the tree.  If it's not the same it means that
-it's either been invalidated or replaced, in both cases the writeback is
-aborted because the local entry contains stale data.
+E.g.
 
-Reproducer:
-I originally found this by running `stress` overnight to validate my work
-on the zswap writeback mechanism, it manifested after hours on my test
-machine.  The key to make it happen is having zswap writebacks, so
-whatever setup pumps /sys/kernel/debug/zswap/written_back_pages should do
-the trick.
+  $ perf stat record -e cycles true
+  $ perf script
 
-In order to reproduce this faster on a vm, I setup a system with ~100M of
-available memory and a 500M swap file, then running `stress --vm 1
---vm-bytes 300000000 --vm-stride 4000` makes it happen in matter of tens
-of minutes.  One can speed things up even more by swinging
-/sys/module/zswap/parameters/max_pool_percent up and down between, say, 20
-and 1; this makes it reproduce in tens of seconds.  It's crucial to set
-`--vm-stride` to something other than 4096 otherwise `stress` won't
-realize that memory has been corrupted because all pages would have the
-same data.
+Before:
+  Segmentation fault (core dumped)
 
-Link: https://lkml.kernel.org/r/20230503151200.19707-1-cerasuolodomenico@gmail.com
-Signed-off-by: Domenico Cerasuolo <cerasuolodomenico@gmail.com>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Chris Li (Google) <chrisl@kernel.org>
-Cc: Dan Streetman <ddstreet@ieee.org>
-Cc: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Nitin Gupta <ngupta@vflare.org>
-Cc: Seth Jennings <sjenning@redhat.com>
-Cc: Vitaly Wool <vitaly.wool@konsulko.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+After:
+  CPU   THREAD             VAL             ENA             RUN            TIME EVENT
+   -1   231919          162831          362069          362069          935289 cycles:u
+
+Fixes: 8b76a3188b85724f ("perf stat: Remove unused perf_counts.aggr field")
+Signed-off-by: Sandipan Das <sandipan.das@amd.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ananth Narayan <ananth.narayan@amd.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Nick Terrell <terrelln@fb.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: stable@vger.kernel.org # v6.2+
+Link: https://lore.kernel.org/r/83d6c6c05c54bf00c5a9df32ac160718efca0c7a.1683280603.git.sandipan.das@amd.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/zswap.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ tools/perf/builtin-script.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/mm/zswap.c
-+++ b/mm/zswap.c
-@@ -995,6 +995,22 @@ static int zswap_writeback_entry(struct
- 		goto fail;
- 
- 	case ZSWAP_SWAPCACHE_NEW: /* page is locked */
-+		/*
-+		 * Having a local reference to the zswap entry doesn't exclude
-+		 * swapping from invalidating and recycling the swap slot. Once
-+		 * the swapcache is secured against concurrent swapping to and
-+		 * from the slot, recheck that the entry is still current before
-+		 * writing.
-+		 */
-+		spin_lock(&tree->lock);
-+		if (zswap_rb_search(&tree->rbroot, entry->offset) != entry) {
-+			spin_unlock(&tree->lock);
-+			delete_from_swap_cache(page_folio(page));
-+			ret = -ENOMEM;
-+			goto fail;
-+		}
-+		spin_unlock(&tree->lock);
+--- a/tools/perf/builtin-script.c
++++ b/tools/perf/builtin-script.c
+@@ -3652,6 +3652,13 @@ static int process_stat_config_event(str
+ 				     union perf_event *event)
+ {
+ 	perf_event__read_stat_config(&stat_config, &event->stat_config);
 +
- 		/* decompress */
- 		acomp_ctx = raw_cpu_ptr(entry->pool->acomp_ctx);
- 		dlen = PAGE_SIZE;
++	/*
++	 * Aggregation modes are not used since post-processing scripts are
++	 * supposed to take care of such requirements
++	 */
++	stat_config.aggr_mode = AGGR_NONE;
++
+ 	return 0;
+ }
+ 
 
 
