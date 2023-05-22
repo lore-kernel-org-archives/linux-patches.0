@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7043C171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:14:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00B53C433D2;
-	Mon, 22 May 2023 19:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CF2171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:15:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBBBC4339B;
+	Mon, 22 May 2023 19:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782899;
-	bh=gWcA2/j5JZGlFbqhbj+OujreXgVjsxiQubZ1yW1+vQY=;
+	s=korg; t=1684782901;
+	bh=t/W+WRdk2aQKuOJ8oxSAI+iueZ4j32cuUZcN+8r0TDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JC6FNc9Yw1mkvyGxOWEP5gBBs9Ww7qu8H+HcCivYUJxtlqhc+e3lUhuuxUMtDbc3j
-	 7cWNlgaebMapDi1r0TNBGVFSSGJNoTlHNxZqBvijBWWz/Qaza+tY1LYAmnGLF6KI0z
-	 w/lCuHSOXsSP5EFg6sU76MoevPuHgnWPnPsGyNc4=
+	b=rT0FMyyjyTOHxsBeVuEC8WM/8JByNJEZ/X7H7knuyX7MqX5yVjp4MZTpwjh3l48y2
+	 LQ4xgsypzPKJ2loHUMiqwrskSDiFKrU57/VmFepur3IkWe0C+bvW2b9WvRYBO7rAtI
+	 6tRPBwY2puKp3qxUOkXP3FLFV2b5NxBkIbto8CC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Zeng <zenghao@kylinos.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Yafang <laoar.shao@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Jiri Olsa <olsajiri@gmail.com>,
+	Hao Luo <haoluo@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 066/203] samples/bpf: Fix fout leak in hbms run_bpf_prog
-Date: Mon, 22 May 2023 20:08:10 +0100
-Message-Id: <20230522190356.818952959@linuxfoundation.org>
+Subject: [PATCH 5.15 067/203] bpf: Add preempt_count_{sub,add} into btf id deny list
+Date: Mon, 22 May 2023 20:08:11 +0100
+Message-Id: <20230522190356.845414356@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,33 +39,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Zeng <zenghao@kylinos.cn>
+From: Yafang <laoar.shao@gmail.com>
 
-[ Upstream commit 23acb14af1914010dd0aae1bbb7fab28bf518b8e ]
+[ Upstream commit c11bd046485d7bf1ca200db0e7d0bdc4bafdd395 ]
 
-Fix fout being fopen'ed but then not subsequently fclose'd. In the affected
-branch, fout is otherwise going out of scope.
+The recursion check in __bpf_prog_enter* and __bpf_prog_exit*
+leave preempt_count_{sub,add} unprotected. When attaching trampoline to
+them we get panic as follows,
 
-Signed-off-by: Hao Zeng <zenghao@kylinos.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20230411084349.1999628-1-zenghao@kylinos.cn
+[  867.843050] BUG: TASK stack guard page was hit at 0000000009d325cf (stack is 0000000046a46a15..00000000537e7b28)
+[  867.843064] stack guard page: 0000 [#1] PREEMPT SMP NOPTI
+[  867.843067] CPU: 8 PID: 11009 Comm: trace Kdump: loaded Not tainted 6.2.0+ #4
+[  867.843100] Call Trace:
+[  867.843101]  <TASK>
+[  867.843104]  asm_exc_int3+0x3a/0x40
+[  867.843108] RIP: 0010:preempt_count_sub+0x1/0xa0
+[  867.843135]  __bpf_prog_enter_recur+0x17/0x90
+[  867.843148]  bpf_trampoline_6442468108_0+0x2e/0x1000
+[  867.843154]  ? preempt_count_sub+0x1/0xa0
+[  867.843157]  preempt_count_sub+0x5/0xa0
+[  867.843159]  ? migrate_enable+0xac/0xf0
+[  867.843164]  __bpf_prog_exit_recur+0x2d/0x40
+[  867.843168]  bpf_trampoline_6442468108_0+0x55/0x1000
+...
+[  867.843788]  preempt_count_sub+0x5/0xa0
+[  867.843793]  ? migrate_enable+0xac/0xf0
+[  867.843829]  __bpf_prog_exit_recur+0x2d/0x40
+[  867.843837] BUG: IRQ stack guard page was hit at 0000000099bd8228 (stack is 00000000b23e2bc4..000000006d95af35)
+[  867.843841] BUG: IRQ stack guard page was hit at 000000005ae07924 (stack is 00000000ffd69623..0000000014eb594c)
+[  867.843843] BUG: IRQ stack guard page was hit at 00000000028320f0 (stack is 00000000034b6438..0000000078d1bcec)
+[  867.843842]  bpf_trampoline_6442468108_0+0x55/0x1000
+...
+
+That is because in __bpf_prog_exit_recur, the preempt_count_{sub,add} are
+called after prog->active is decreased.
+
+Fixing this by adding these two functions into btf ids deny list.
+
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Yafang <laoar.shao@gmail.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Jiri Olsa <olsajiri@gmail.com>
+Acked-by: Hao Luo <haoluo@google.com>
+Link: https://lore.kernel.org/r/20230413025248.79764-1-laoar.shao@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/hbm.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/verifier.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/samples/bpf/hbm.c b/samples/bpf/hbm.c
-index b0c18efe7928e..a271099603feb 100644
---- a/samples/bpf/hbm.c
-+++ b/samples/bpf/hbm.c
-@@ -308,6 +308,7 @@ static int run_bpf_prog(char *prog, int cg_id)
- 		fout = fopen(fname, "w");
- 		fprintf(fout, "id:%d\n", cg_id);
- 		fprintf(fout, "ERROR: Could not lookup queue_stats\n");
-+		fclose(fout);
- 	} else if (stats_flag && qstats.lastPacketTime >
- 		   qstats.firstPacketTime) {
- 		long long delta_us = (qstats.lastPacketTime -
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 261c2ed3adb17..d0db1c7e2645d 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -13645,6 +13645,10 @@ BTF_ID(func, migrate_enable)
+ #if !defined CONFIG_PREEMPT_RCU && !defined CONFIG_TINY_RCU
+ BTF_ID(func, rcu_read_unlock_strict)
+ #endif
++#if defined(CONFIG_DEBUG_PREEMPT) || defined(CONFIG_TRACE_PREEMPT_TOGGLE)
++BTF_ID(func, preempt_count_add)
++BTF_ID(func, preempt_count_sub)
++#endif
+ BTF_SET_END(btf_id_deny)
+ 
+ static int check_attach_btf_id(struct bpf_verifier_env *env)
 -- 
 2.39.2
 
