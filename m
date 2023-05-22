@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6BD171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:22:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 456C1C433EF;
-	Mon, 22 May 2023 19:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AA6171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:22:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4454EC433D2;
+	Mon, 22 May 2023 19:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783323;
-	bh=GxD2ID5KVjq+cl2uQ1Hw2o5l7NRbIEZADlSPJtVSHac=;
+	s=korg; t=1684783326;
+	bh=SziM+m8/qxWT77h6bP7BQ9YWaCksXg1puRGW77keGcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nyKv110frojzncjTkEaCplsOwuURQnaVvwTrLknllcwfJQzC9SaH3oHZv7vizNbp7
-	 R2qKWevKZdMnIZwYjw+p3URluauROghE6wzdObaogWA9yZx2RkAcL8bqyGomFvK7I5
-	 iPePUfGY6BZvXuJb/lupFzog4+mgQbKj0PMrb0lQ=
+	b=qD7XuB4dsh7EuQKErnA0i2C6SvK9xKFhiX5qgJwp1FBcEJWDbTek238jCZa4G5YjP
+	 Xurpg1nss5Dal1XB8P/nvZFMy7BTkspX/yasC0U07E5rFQwHFH2OfzUrwCe69gtl+U
+	 N8qhJorghPdmW2U6v5f/jX6zgGuPQ1j2xdB6TUEc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Yen Chang <cc85nod@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 186/203] ksmbd: allocate one more byte for implied bcc[0]
-Date: Mon, 22 May 2023 20:10:10 +0100
-Message-Id: <20230522190400.163664397@linuxfoundation.org>
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 177/203] can: kvaser_pciefd: Set CAN_STATE_STOPPED in kvaser_pciefd_stop()
+Date: Mon, 22 May 2023 20:10:01 +0100
+Message-Id: <20230522190359.900387367@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,34 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chih-Yen Chang <cc85nod@gmail.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-commit 443d61d1fa9faa60ef925513d83742902390100f upstream.
+commit aed0e6ca7dbb8fbea9bc69c9ac663d5533c8c5d8 upstream.
 
-ksmbd_smb2_check_message allows client to return one byte more, so we
-need to allocate additional memory in ksmbd_conn_handler_loop to avoid
-out-of-bound access.
+Set can.state to CAN_STATE_STOPPED in kvaser_pciefd_stop().
+Without this fix, wrong CAN state was repported after the interface was
+brought down.
 
+Fixes: 26ad340e582d ("can: kvaser_pciefd: Add driver for Kvaser PCIEcan devices")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chih-Yen Chang <cc85nod@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/r/20230516134318.104279-2-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/can/kvaser_pciefd.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -320,7 +320,8 @@ int ksmbd_conn_handler_loop(void *p)
- 			break;
+--- a/drivers/net/can/kvaser_pciefd.c
++++ b/drivers/net/can/kvaser_pciefd.c
+@@ -721,6 +721,7 @@ static int kvaser_pciefd_stop(struct net
+ 		iowrite32(0, can->reg_base + KVASER_PCIEFD_KCAN_IEN_REG);
+ 		del_timer(&can->bec_poll_timer);
+ 	}
++	can->can.state = CAN_STATE_STOPPED;
+ 	close_candev(netdev);
  
- 		/* 4 for rfc1002 length field */
--		size = pdu_size + 4;
-+		/* 1 for implied bcc[0] */
-+		size = pdu_size + 4 + 1;
- 		conn->request_buf = kvmalloc(size, GFP_KERNEL);
- 		if (!conn->request_buf)
- 			break;
+ 	return ret;
 
 
