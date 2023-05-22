@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14164168B6
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:13:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926BBC433EF;
-	Mon, 22 May 2023 19:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786FF168B6
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:13:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0910BC433D2;
+	Mon, 22 May 2023 19:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782812;
-	bh=gWZhqljVWe3mTlRaib7RFl77yUTaSGkJLlRkfcrpiCY=;
+	s=korg; t=1684782815;
+	bh=WE3S4k8vAoSvg4gH8fUmKuHgmJOmmDkulK7laQR9/Lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zht6LrR32Nr+50JoAaifZIpIiHe+Ay0v8J0rJDEWlRj5en40qTxaU2AL+TZUS11J9
-	 QxHnnCefyvhFEcq31sdHsjsHhN4+9eytYB/n9H9/TdLuRciPE4u6qJR8XnfU9gdssW
-	 B4vHffIqySiKeDxWEwJKYs95lfyJeq4leqjl/oMM=
+	b=SwzBl0IYytfjAde042Ahdt6ue1RCtuucqH5+dAAamOMNSPGhsPToJ0GzSmEBINhjZ
+	 ybZ5T856mCbReFoXQZ4YN1nN38P8iTLp/sSiZ6uJQ75pjzJQCm6G7os/tkZexav4Pb
+	 Xg1FkeJ0WPzYcoA9n2rWaK53C3E8sP+zwLgTJIoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Wong Vee Khee <vee.khee.wong@linux.intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marek Vasut <marex@denx.de>,
+	Harald Seiler <hws@denx.de>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 007/203] net: stmmac: switch to use interrupt for hw crosstimestamping
-Date: Mon, 22 May 2023 20:07:11 +0100
-Message-Id: <20230522190355.151217083@linuxfoundation.org>
+Subject: [PATCH 5.15 008/203] net: stmmac: Initialize MAC_ONEUS_TIC_COUNTER register
+Date: Mon, 22 May 2023 20:07:12 +0100
+Message-Id: <20230522190355.181372324@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -36,222 +38,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wong Vee Khee <vee.khee.wong@linux.intel.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 76c16d3e19446deea98b7883f261758b96b8781a ]
+[ Upstream commit 8efbdbfa99381a017dd2c0f6375a7d80a8118b74 ]
 
-Using current implementation of polling mode, there is high chances we
-will hit into timeout error when running phc2sys. Hence, update the
-implementation of hardware crosstimestamping to use the MAC interrupt
-service routine instead of polling for TSIS bit in the MAC Timestamp
-Interrupt Status register to be set.
+Initialize MAC_ONEUS_TIC_COUNTER register with correct value derived
+from CSR clock, otherwise EEE is unstable on at least NXP i.MX8M Plus
+and Micrel KSZ9131RNX PHY, to the point where not even ARP request can
+be sent out.
 
-Cc: Richard Cochran <richardcochran@gmail.com>
-Signed-off-by: Wong Vee Khee <vee.khee.wong@linux.intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 8efbdbfa9938 ("net: stmmac: Initialize MAC_ONEUS_TIC_COUNTER register")
+i.MX 8M Plus Applications Processor Reference Manual, Rev. 1, 06/2021
+11.7.6.1.34 One-microsecond Reference Timer (MAC_ONEUS_TIC_COUNTER)
+defines this register as:
+"
+This register controls the generation of the Reference time (1 microsecond
+tic) for all the LPI timers. This timer has to be programmed by the software
+initially.
+...
+The application must program this counter so that the number of clock cycles
+of CSR clock is 1us. (Subtract 1 from the value before programming).
+For example if the CSR clock is 100MHz then this field needs to be programmed
+to value 100 - 1 = 99 (which is 0x63).
+This is required to generate the 1US events that are used to update some of
+the EEE related counters.
+"
+
+The reset value is 0x63 on i.MX8M Plus, which means expected CSR clock are
+100 MHz. However, the i.MX8M Plus "enet_qos_root_clk" are 266 MHz instead,
+which means the LPI timers reach their count much sooner on this platform.
+
+This is visible using a scope by monitoring e.g. exit from LPI mode on TX_CTL
+line from MAC to PHY. This should take 30us per STMMAC_DEFAULT_TWT_LS setting,
+during which the TX_CTL line transitions from tristate to low, and 30 us later
+from low to high. On i.MX8M Plus, this transition takes 11 us, which matches
+the 30us * 100/266 formula for misconfigured MAC_ONEUS_TIC_COUNTER register.
+
+Configure MAC_ONEUS_TIC_COUNTER based on CSR clock, so that the LPI timers
+have correct 1us reference. This then fixes EEE on i.MX8M Plus with Micrel
+KSZ9131RNX PHY.
+
+Fixes: 477286b53f55 ("stmmac: add GMAC4 core support")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Tested-by: Harald Seiler <hws@denx.de>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com> # Toradex Verdin iMX8MP
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Link: https://lore.kernel.org/r/20230506235845.246105-1-marex@denx.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/stmicro/stmmac/dwmac-intel.c | 25 ++++++++++++-------
- drivers/net/ethernet/stmicro/stmmac/dwmac4.h  |  3 ++-
- .../net/ethernet/stmicro/stmmac/dwmac4_core.c |  4 +++
- drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  1 +
- .../ethernet/stmicro/stmmac/stmmac_hwtstamp.c |  5 ++++
- .../net/ethernet/stmicro/stmmac/stmmac_ptp.c  | 12 +--------
- include/linux/stmmac.h                        |  1 +
- 7 files changed, 30 insertions(+), 21 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4.h      | 1 +
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-index fb9ff4ce94530..c9e88df9e8665 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-@@ -298,6 +298,11 @@ static void get_arttime(struct mii_bus *mii, int intel_adhoc_addr,
- 	*art_time = ns;
- }
- 
-+static int stmmac_cross_ts_isr(struct stmmac_priv *priv)
-+{
-+	return (readl(priv->ioaddr + GMAC_INT_STATUS) & GMAC_INT_TSIE);
-+}
-+
- static int intel_crosststamp(ktime_t *device,
- 			     struct system_counterval_t *system,
- 			     void *ctx)
-@@ -313,8 +318,6 @@ static int intel_crosststamp(ktime_t *device,
- 	u32 num_snapshot;
- 	u32 gpio_value;
- 	u32 acr_value;
--	int ret;
--	u32 v;
- 	int i;
- 
- 	if (!boot_cpu_has(X86_FEATURE_ART))
-@@ -328,6 +331,8 @@ static int intel_crosststamp(ktime_t *device,
- 	if (priv->plat->ext_snapshot_en)
- 		return -EBUSY;
- 
-+	priv->plat->int_snapshot_en = 1;
-+
- 	mutex_lock(&priv->aux_ts_lock);
- 	/* Enable Internal snapshot trigger */
- 	acr_value = readl(ptpaddr + PTP_ACR);
-@@ -347,6 +352,7 @@ static int intel_crosststamp(ktime_t *device,
- 		break;
- 	default:
- 		mutex_unlock(&priv->aux_ts_lock);
-+		priv->plat->int_snapshot_en = 0;
- 		return -EINVAL;
- 	}
- 	writel(acr_value, ptpaddr + PTP_ACR);
-@@ -368,13 +374,12 @@ static int intel_crosststamp(ktime_t *device,
- 	gpio_value |= GMAC_GPO1;
- 	writel(gpio_value, ioaddr + GMAC_GPIO_STATUS);
- 
--	/* Poll for time sync operation done */
--	ret = readl_poll_timeout(priv->ioaddr + GMAC_INT_STATUS, v,
--				 (v & GMAC_INT_TSIE), 100, 10000);
--
--	if (ret == -ETIMEDOUT) {
--		pr_err("%s: Wait for time sync operation timeout\n", __func__);
--		return ret;
-+	/* Time sync done Indication - Interrupt method */
-+	if (!wait_event_interruptible_timeout(priv->tstamp_busy_wait,
-+					      stmmac_cross_ts_isr(priv),
-+					      HZ / 100)) {
-+		priv->plat->int_snapshot_en = 0;
-+		return -ETIMEDOUT;
- 	}
- 
- 	num_snapshot = (readl(ioaddr + GMAC_TIMESTAMP_STATUS) &
-@@ -392,6 +397,7 @@ static int intel_crosststamp(ktime_t *device,
- 	}
- 
- 	system->cycles *= intel_priv->crossts_adj;
-+	priv->plat->int_snapshot_en = 0;
- 
- 	return 0;
- }
-@@ -576,6 +582,7 @@ static int intel_mgbe_common_data(struct pci_dev *pdev,
- 
- 	plat->has_crossts = true;
- 	plat->crosststamp = intel_crosststamp;
-+	plat->int_snapshot_en = 0;
- 
- 	/* Setup MSI vector offset specific to Intel mGbE controller */
- 	plat->msi_mac_vec = 29;
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-index 462ca7ed095a2..71dad409f78b0 100644
+index 71dad409f78b0..12c0e60809f47 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
-@@ -150,7 +150,8 @@
- #define	GMAC_PCS_IRQ_DEFAULT	(GMAC_INT_RGSMIIS | GMAC_INT_PCS_LINK |	\
- 				 GMAC_INT_PCS_ANE)
+@@ -181,6 +181,7 @@ enum power_event {
+ #define GMAC4_LPI_CTRL_STATUS	0xd0
+ #define GMAC4_LPI_TIMER_CTRL	0xd4
+ #define GMAC4_LPI_ENTRY_TIMER	0xd8
++#define GMAC4_MAC_ONEUS_TIC_COUNTER	0xdc
  
--#define	GMAC_INT_DEFAULT_ENABLE	(GMAC_INT_PMT_EN | GMAC_INT_LPI_EN)
-+#define	GMAC_INT_DEFAULT_ENABLE	(GMAC_INT_PMT_EN | GMAC_INT_LPI_EN | \
-+				 GMAC_INT_TSIE)
- 
- enum dwmac4_irq_status {
- 	time_stamp_irq = 0x00001000,
+ /* LPI control and status defines */
+ #define GMAC4_LPI_CTRL_STATUS_LPITCSE	BIT(21)	/* LPI Tx Clock Stop Enable */
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index cd85a2d076c99..0cb4d2d35786a 100644
+index 0cb4d2d35786a..29480314a4867 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -23,6 +23,7 @@
- static void dwmac4_core_init(struct mac_device_info *hw,
- 			     struct net_device *dev)
- {
-+	struct stmmac_priv *priv = netdev_priv(dev);
+@@ -26,6 +26,7 @@ static void dwmac4_core_init(struct mac_device_info *hw,
+ 	struct stmmac_priv *priv = netdev_priv(dev);
  	void __iomem *ioaddr = hw->pcsr;
  	u32 value = readl(ioaddr + GMAC_CONFIG);
++	u32 clk_rate;
  
-@@ -58,6 +59,9 @@ static void dwmac4_core_init(struct mac_device_info *hw,
- 		value |= GMAC_INT_FPE_EN;
+ 	value |= GMAC_CORE_INIT;
  
- 	writel(value, ioaddr + GMAC_INT_EN);
+@@ -48,6 +49,10 @@ static void dwmac4_core_init(struct mac_device_info *hw,
+ 
+ 	writel(value, ioaddr + GMAC_CONFIG);
+ 
++	/* Configure LPI 1us counter to number of CSR clock ticks in 1us - 1 */
++	clk_rate = clk_get_rate(priv->plat->stmmac_clk);
++	writel((clk_rate / 1000000) - 1, ioaddr + GMAC4_MAC_ONEUS_TIC_COUNTER);
 +
-+	if (GMAC_INT_DEFAULT_ENABLE & GMAC_INT_TSIE)
-+		init_waitqueue_head(&priv->tstamp_busy_wait);
- }
+ 	/* Enable GMAC interrupts */
+ 	value = GMAC_INT_DEFAULT_ENABLE;
  
- static void dwmac4_rx_queue_enable(struct mac_device_info *hw,
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 05b5371ca036b..f03779205ade4 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -265,6 +265,7 @@ struct stmmac_priv {
- 	spinlock_t ptp_lock;
- 	/* Protects auxiliary snapshot registers from concurrent access. */
- 	struct mutex aux_ts_lock;
-+	wait_queue_head_t tstamp_busy_wait;
- 
- 	void __iomem *mmcaddr;
- 	void __iomem *ptpaddr;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-index 4538e4fd81898..2c6245b2281ca 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-@@ -180,6 +180,11 @@ static void timestamp_interrupt(struct stmmac_priv *priv)
- 	u64 ptp_time;
- 	int i;
- 
-+	if (priv->plat->int_snapshot_en) {
-+		wake_up(&priv->tstamp_busy_wait);
-+		return;
-+	}
-+
- 	tsync_int = readl(priv->ioaddr + GMAC_INT_STATUS) & GMAC_INT_TSIE;
- 
- 	if (!tsync_int)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-index 487418ef9b4f8..e6221c33572d4 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-@@ -175,11 +175,10 @@ static int stmmac_enable(struct ptp_clock_info *ptp,
- 	struct stmmac_priv *priv =
- 	    container_of(ptp, struct stmmac_priv, ptp_clock_ops);
- 	void __iomem *ptpaddr = priv->ptpaddr;
--	void __iomem *ioaddr = priv->hw->pcsr;
- 	struct stmmac_pps_cfg *cfg;
--	u32 intr_value, acr_value;
- 	int ret = -EOPNOTSUPP;
- 	unsigned long flags;
-+	u32 acr_value;
- 
- 	switch (rq->type) {
- 	case PTP_CLK_REQ_PEROUT:
-@@ -213,19 +212,10 @@ static int stmmac_enable(struct ptp_clock_info *ptp,
- 			netdev_dbg(priv->dev, "Auxiliary Snapshot %d enabled.\n",
- 				   priv->plat->ext_snapshot_num >>
- 				   PTP_ACR_ATSEN_SHIFT);
--			/* Enable Timestamp Interrupt */
--			intr_value = readl(ioaddr + GMAC_INT_EN);
--			intr_value |= GMAC_INT_TSIE;
--			writel(intr_value, ioaddr + GMAC_INT_EN);
--
- 		} else {
- 			netdev_dbg(priv->dev, "Auxiliary Snapshot %d disabled.\n",
- 				   priv->plat->ext_snapshot_num >>
- 				   PTP_ACR_ATSEN_SHIFT);
--			/* Disable Timestamp Interrupt */
--			intr_value = readl(ioaddr + GMAC_INT_EN);
--			intr_value &= ~GMAC_INT_TSIE;
--			writel(intr_value, ioaddr + GMAC_INT_EN);
- 		}
- 		writel(acr_value, ptpaddr + PTP_ACR);
- 		mutex_unlock(&priv->aux_ts_lock);
-diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index cc338c6c74954..24bc3f7967c3b 100644
---- a/include/linux/stmmac.h
-+++ b/include/linux/stmmac.h
-@@ -260,6 +260,7 @@ struct plat_stmmacenet_data {
- 	bool has_crossts;
- 	int int_snapshot_num;
- 	int ext_snapshot_num;
-+	bool int_snapshot_en;
- 	bool ext_snapshot_en;
- 	bool multi_msi_en;
- 	int msi_mac_vec;
 -- 
 2.39.2
 
