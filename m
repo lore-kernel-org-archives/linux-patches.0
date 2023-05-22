@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D051171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86685C433EF;
-	Mon, 22 May 2023 19:23:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AAB171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:23:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F18BC433EF;
+	Mon, 22 May 2023 19:23:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783385;
-	bh=eJB/vwjmpEIdPErry1aWKImFYOTwiZ1la20EPBW/KXM=;
+	s=korg; t=1684783389;
+	bh=FhRna09exVpz1SVXQJeTYJLae6hQY3jxSZ86srXhLGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8DuUptf08o/34qoswMGs9AjociCQyBWMwPh0WFTS+hy6KVs5jaqw3+qyDVkk64Oq
-	 EYgOAzOFZJ/PvUIvKtAamFi1Raxb/fmi7cbn+yY5oqStmFPxwn1k6JEGm56TNncAlj
-	 UKjOQUEbtYelOlYisN65YJ3LNT/S4GD8S0Y5cJ/U=
+	b=TXkbT4gBNIu8igCl9hacnYsp9AIt8ScwzyxXzhWEgbhccYwKZn+QgfPpJTQsAUEUk
+	 rrQdmy+L/ICe5hgnppTyzxG+Pn9O9vC4uOQMAYg4LSfvkn4cXeqqP9AsLT39VMlMB3
+	 PF6KPdcJRtvUKyd1bB9bNcqkoT/nWEfWPSJvfffE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roy Novich <royno@nvidia.com>,
-	Aya Levin <ayal@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Marek Vasut <marex@denx.de>,
+	Harald Seiler <hws@denx.de>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/292] linux/dim: Do nothing if no time delta between samples
-Date: Mon, 22 May 2023 20:06:05 +0100
-Message-Id: <20230522190406.097789836@linuxfoundation.org>
+Subject: [PATCH 6.1 009/292] net: stmmac: Initialize MAC_ONEUS_TIC_COUNTER register
+Date: Mon, 22 May 2023 20:06:06 +0100
+Message-Id: <20230522190406.123380822@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -40,106 +38,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roy Novich <royno@nvidia.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 162bd18eb55adf464a0fa2b4144b8d61c75ff7c2 ]
+[ Upstream commit 8efbdbfa99381a017dd2c0f6375a7d80a8118b74 ]
 
-Add return value for dim_calc_stats. This is an indication for the
-caller if curr_stats was assigned by the function. Avoid using
-curr_stats uninitialized over {rdma/net}_dim, when no time delta between
-samples. Coverity reported this potential use of an uninitialized
-variable.
+Initialize MAC_ONEUS_TIC_COUNTER register with correct value derived
+from CSR clock, otherwise EEE is unstable on at least NXP i.MX8M Plus
+and Micrel KSZ9131RNX PHY, to the point where not even ARP request can
+be sent out.
 
-Fixes: 4c4dbb4a7363 ("net/mlx5e: Move dynamic interrupt coalescing code to include/linux")
-Fixes: cb3c7fd4f839 ("net/mlx5e: Support adaptive RX coalescing")
-Signed-off-by: Roy Novich <royno@nvidia.com>
-Reviewed-by: Aya Levin <ayal@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://lore.kernel.org/r/20230507135743.138993-1-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+i.MX 8M Plus Applications Processor Reference Manual, Rev. 1, 06/2021
+11.7.6.1.34 One-microsecond Reference Timer (MAC_ONEUS_TIC_COUNTER)
+defines this register as:
+"
+This register controls the generation of the Reference time (1 microsecond
+tic) for all the LPI timers. This timer has to be programmed by the software
+initially.
+...
+The application must program this counter so that the number of clock cycles
+of CSR clock is 1us. (Subtract 1 from the value before programming).
+For example if the CSR clock is 100MHz then this field needs to be programmed
+to value 100 - 1 = 99 (which is 0x63).
+This is required to generate the 1US events that are used to update some of
+the EEE related counters.
+"
+
+The reset value is 0x63 on i.MX8M Plus, which means expected CSR clock are
+100 MHz. However, the i.MX8M Plus "enet_qos_root_clk" are 266 MHz instead,
+which means the LPI timers reach their count much sooner on this platform.
+
+This is visible using a scope by monitoring e.g. exit from LPI mode on TX_CTL
+line from MAC to PHY. This should take 30us per STMMAC_DEFAULT_TWT_LS setting,
+during which the TX_CTL line transitions from tristate to low, and 30 us later
+from low to high. On i.MX8M Plus, this transition takes 11 us, which matches
+the 30us * 100/266 formula for misconfigured MAC_ONEUS_TIC_COUNTER register.
+
+Configure MAC_ONEUS_TIC_COUNTER based on CSR clock, so that the LPI timers
+have correct 1us reference. This then fixes EEE on i.MX8M Plus with Micrel
+KSZ9131RNX PHY.
+
+Fixes: 477286b53f55 ("stmmac: add GMAC4 core support")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Tested-by: Harald Seiler <hws@denx.de>
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Tested-by: Francesco Dolcini <francesco.dolcini@toradex.com> # Toradex Verdin iMX8MP
+Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Link: https://lore.kernel.org/r/20230506235845.246105-1-marex@denx.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dim.h | 3 ++-
- lib/dim/dim.c       | 5 +++--
- lib/dim/net_dim.c   | 3 ++-
- lib/dim/rdma_dim.c  | 3 ++-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4.h      | 1 +
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/include/linux/dim.h b/include/linux/dim.h
-index 6c5733981563e..f343bc9aa2ec9 100644
---- a/include/linux/dim.h
-+++ b/include/linux/dim.h
-@@ -236,8 +236,9 @@ void dim_park_tired(struct dim *dim);
-  *
-  * Calculate the delta between two samples (in data rates).
-  * Takes into consideration counter wrap-around.
-+ * Returned boolean indicates whether curr_stats are reliable.
-  */
--void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
-+bool dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 		    struct dim_stats *curr_stats);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
+index 71dad409f78b0..12c0e60809f47 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4.h
+@@ -181,6 +181,7 @@ enum power_event {
+ #define GMAC4_LPI_CTRL_STATUS	0xd0
+ #define GMAC4_LPI_TIMER_CTRL	0xd4
+ #define GMAC4_LPI_ENTRY_TIMER	0xd8
++#define GMAC4_MAC_ONEUS_TIC_COUNTER	0xdc
  
- /**
-diff --git a/lib/dim/dim.c b/lib/dim/dim.c
-index 38045d6d05381..e89aaf07bde50 100644
---- a/lib/dim/dim.c
-+++ b/lib/dim/dim.c
-@@ -54,7 +54,7 @@ void dim_park_tired(struct dim *dim)
- }
- EXPORT_SYMBOL(dim_park_tired);
+ /* LPI control and status defines */
+ #define GMAC4_LPI_CTRL_STATUS_LPITCSE	BIT(21)	/* LPI Tx Clock Stop Enable */
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+index 188a00065f66c..84276eb681d70 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -25,6 +25,7 @@ static void dwmac4_core_init(struct mac_device_info *hw,
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	void __iomem *ioaddr = hw->pcsr;
+ 	u32 value = readl(ioaddr + GMAC_CONFIG);
++	u32 clk_rate;
  
--void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
-+bool dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 		    struct dim_stats *curr_stats)
- {
- 	/* u32 holds up to 71 minutes, should be enough */
-@@ -66,7 +66,7 @@ void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 			     start->comp_ctr);
+ 	value |= GMAC_CORE_INIT;
  
- 	if (!delta_us)
--		return;
-+		return false;
+@@ -47,6 +48,10 @@ static void dwmac4_core_init(struct mac_device_info *hw,
  
- 	curr_stats->ppms = DIV_ROUND_UP(npkts * USEC_PER_MSEC, delta_us);
- 	curr_stats->bpms = DIV_ROUND_UP(nbytes * USEC_PER_MSEC, delta_us);
-@@ -79,5 +79,6 @@ void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 	else
- 		curr_stats->cpe_ratio = 0;
+ 	writel(value, ioaddr + GMAC_CONFIG);
  
-+	return true;
- }
- EXPORT_SYMBOL(dim_calc_stats);
-diff --git a/lib/dim/net_dim.c b/lib/dim/net_dim.c
-index 53f6b9c6e9366..4e32f7aaac86c 100644
---- a/lib/dim/net_dim.c
-+++ b/lib/dim/net_dim.c
-@@ -227,7 +227,8 @@ void net_dim(struct dim *dim, struct dim_sample end_sample)
- 				  dim->start_sample.event_ctr);
- 		if (nevents < DIM_NEVENTS)
- 			break;
--		dim_calc_stats(&dim->start_sample, &end_sample, &curr_stats);
-+		if (!dim_calc_stats(&dim->start_sample, &end_sample, &curr_stats))
-+			break;
- 		if (net_dim_decision(&curr_stats, dim)) {
- 			dim->state = DIM_APPLY_NEW_PROFILE;
- 			schedule_work(&dim->work);
-diff --git a/lib/dim/rdma_dim.c b/lib/dim/rdma_dim.c
-index 15462d54758d3..88f7794867078 100644
---- a/lib/dim/rdma_dim.c
-+++ b/lib/dim/rdma_dim.c
-@@ -88,7 +88,8 @@ void rdma_dim(struct dim *dim, u64 completions)
- 		nevents = curr_sample->event_ctr - dim->start_sample.event_ctr;
- 		if (nevents < DIM_NEVENTS)
- 			break;
--		dim_calc_stats(&dim->start_sample, curr_sample, &curr_stats);
-+		if (!dim_calc_stats(&dim->start_sample, curr_sample, &curr_stats))
-+			break;
- 		if (rdma_dim_decision(&curr_stats, dim)) {
- 			dim->state = DIM_APPLY_NEW_PROFILE;
- 			schedule_work(&dim->work);
++	/* Configure LPI 1us counter to number of CSR clock ticks in 1us - 1 */
++	clk_rate = clk_get_rate(priv->plat->stmmac_clk);
++	writel((clk_rate / 1000000) - 1, ioaddr + GMAC4_MAC_ONEUS_TIC_COUNTER);
++
+ 	/* Enable GMAC interrupts */
+ 	value = GMAC_INT_DEFAULT_ENABLE;
+ 
 -- 
 2.39.2
 
