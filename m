@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B51171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:27:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B9FC433D2;
-	Mon, 22 May 2023 19:27:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51321171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:27:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C93C433D2;
+	Mon, 22 May 2023 19:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783649;
-	bh=JIQfiJRR8Qc+Y36j36yjNp/OGMv0j8pwpjokVNFvSkA=;
+	s=korg; t=1684783652;
+	bh=KUyy0skmmfGj1I/uMR/3FPlqUsK/ODaqOCMjz3G+bxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q6y2XsVuh2lUGJOXxTgqXw2U2kdjlurhwfBJuDiqS0agke4oTQfCvE6oEqI3/A2Vf
-	 /yXaTGAUeIipCyVEj9KwYcteUxpBGIn7DnZ4IFFJwMbf15i6z07xkcFFWbrq19qrlK
-	 tYrUIJt3I/hMHywMaXjtX61pojT56GXYZei3Ot5Q=
+	b=XazrZs6OWoORd4iKrkaBLO0CWZp0ueN76qXod6+CyKlhPT+rSaT9fW0/OWNywU01I
+	 i/6boPLDiQ1Zz7gjLPd9iAffw/8YKlKqSr8lfnLrpKnqmshosNcIA1BadPTpBPY3zx
+	 ZuN0nLyM0VHhny/SpvsuGyaxUTuEh2rqK1t5KkBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 088/292] scsi: ufs: ufs-pci: Add support for Intel Lunar Lake
-Date: Mon, 22 May 2023 20:07:25 +0100
-Message-Id: <20230522190408.174220251@linuxfoundation.org>
+Subject: [PATCH 6.1 089/292] ext4: set goal start correctly in ext4_mb_normalize_request
+Date: Mon, 22 May 2023 20:07:26 +0100
+Message-Id: <20230522190408.199103681@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -35,31 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 0a07d3c7a1d205b47d9f3608ff4e9d1065d63b6d ]
+[ Upstream commit b07ffe6927c75d99af534d685282ea188d9f71a6 ]
 
-Add PCI ID to support Intel Lunar Lake, same as MTL.
+We need to set ac_g_ex to notify the goal start used in
+ext4_mb_find_by_goal. Set ac_g_ex instead of ac_f_ex in
+ext4_mb_normalize_request.
+Besides we should assure goal start is in range [first_data_block,
+blocks_count) as ext4_mb_initialize_context does.
 
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20230328105832.3495-1-adrian.hunter@intel.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[ Added a check to make sure size is less than ar->pright; otherwise
+  we could end up passing an underflowed value of ar->pright - size to
+  ext4_get_group_no_and_offset(), which will trigger a BUG_ON later on.
+  - TYT ]
+
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20230303172120.3800725-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/host/ufshcd-pci.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/mballoc.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/ufs/host/ufshcd-pci.c b/drivers/ufs/host/ufshcd-pci.c
-index 1c91f43e15c8e..9c911787f84c6 100644
---- a/drivers/ufs/host/ufshcd-pci.c
-+++ b/drivers/ufs/host/ufshcd-pci.c
-@@ -607,6 +607,7 @@ static const struct pci_device_id ufshcd_pci_tbl[] = {
- 	{ PCI_VDEVICE(INTEL, 0x51FF), (kernel_ulong_t)&ufs_intel_adl_hba_vops },
- 	{ PCI_VDEVICE(INTEL, 0x54FF), (kernel_ulong_t)&ufs_intel_adl_hba_vops },
- 	{ PCI_VDEVICE(INTEL, 0x7E47), (kernel_ulong_t)&ufs_intel_mtl_hba_vops },
-+	{ PCI_VDEVICE(INTEL, 0xA847), (kernel_ulong_t)&ufs_intel_mtl_hba_vops },
- 	{ }	/* terminate list */
- };
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 09bb1dae40cf0..21f09bcffbbaa 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -4018,6 +4018,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 				struct ext4_allocation_request *ar)
+ {
+ 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
++	struct ext4_super_block *es = sbi->s_es;
+ 	int bsbits, max;
+ 	ext4_lblk_t end;
+ 	loff_t size, start_off;
+@@ -4213,18 +4214,21 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
+ 	ac->ac_g_ex.fe_len = EXT4_NUM_B2C(sbi, size);
+ 
+ 	/* define goal start in order to merge */
+-	if (ar->pright && (ar->lright == (start + size))) {
++	if (ar->pright && (ar->lright == (start + size)) &&
++	    ar->pright >= size &&
++	    ar->pright - size >= le32_to_cpu(es->s_first_data_block)) {
+ 		/* merge to the right */
+ 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pright - size,
+-						&ac->ac_f_ex.fe_group,
+-						&ac->ac_f_ex.fe_start);
++						&ac->ac_g_ex.fe_group,
++						&ac->ac_g_ex.fe_start);
+ 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
+ 	}
+-	if (ar->pleft && (ar->lleft + 1 == start)) {
++	if (ar->pleft && (ar->lleft + 1 == start) &&
++	    ar->pleft + 1 < ext4_blocks_count(es)) {
+ 		/* merge to the left */
+ 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pleft + 1,
+-						&ac->ac_f_ex.fe_group,
+-						&ac->ac_f_ex.fe_start);
++						&ac->ac_g_ex.fe_group,
++						&ac->ac_g_ex.fe_start);
+ 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
+ 	}
  
 -- 
 2.39.2
