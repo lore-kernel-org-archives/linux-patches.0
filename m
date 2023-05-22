@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B029C16406
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:14:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F434C433D2;
-	Mon, 22 May 2023 19:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC2316406
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:14:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D716C4339B;
+	Mon, 22 May 2023 19:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684782869;
-	bh=MV/x/iw4HDAbTilfMmdL2F2zieP8iLxO0BvZvAixEWc=;
+	s=korg; t=1684782871;
+	bh=D3HFRz81ELLnL2rMyKxPa4d1b3X56uDXG5yFWKmllng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x9SS9XhTPBcEa4oaNVQ2jJvcmsDf5bYPGPd2so8+MJQPRTFEUdOIBCMzbT6FggMmZ
-	 vkW//nvTOkSV4C/J1aIg50kOBOJVlVZl7pkxphCkkSg1FmBetsjRSxKVptgB3Hm3GY
-	 l7M91AczkqfhvDts4SRUvRJHvD8AUeEbiXnLiIUk=
+	b=ATXljbJ5t/4Lp+ObtFm3No35XzEEQbFiM2Ez1B0S0AmKxLF5ob2ABeoxJ3LDTfJ87
+	 6UpCykAUS9yk/scJYI72Q/NdkBAYijCy0DUjE9dGo1r58dwqrVpzi0xODYOTRxGzWn
+	 1cjT9K6Vh0IS4TOrL7q1b7TI1t544LfMpIGVb+ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 053/203] scsi: lpfc: Prevent lpfc_debugfs_lockstat_write() buffer overflow
-Date: Mon, 22 May 2023 20:07:57 +0100
-Message-Id: <20230522190356.464566604@linuxfoundation.org>
+Subject: [PATCH 5.15 054/203] bnxt: avoid overflow in bnxt_get_nvram_directory()
+Date: Mon, 22 May 2023 20:07:58 +0100
+Message-Id: <20230522190356.492016440@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -35,54 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-[ Upstream commit c6087b82a9146826564a55c5ca0164cac40348f5 ]
+[ Upstream commit 7c6dddc239abe660598c49ec95ea0ed6399a4b2a ]
 
-A static code analysis tool flagged the possibility of buffer overflow when
-using copy_from_user() for a debugfs entry.
+The value of an arithmetic expression is subject
+of possible overflow due to a failure to cast operands to a larger data
+type before performing arithmetic. Used macro for multiplication instead
+operator for avoiding overflow.
 
-Currently, it is possible that copy_from_user() copies more bytes than what
-would fit in the mybuf char array.  Add a min() restriction check between
-sizeof(mybuf) - 1 and nbytes passed from the userspace buffer to protect
-against buffer overflow.
+Found by Security Code and Linux Verification
+Center (linuxtesting.org) with SVACE.
 
-Link: https://lore.kernel.org/r/20230301231626.9621-2-justintee8345@gmail.com
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20230309174347.3515-1-korotkov.maxim.s@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_debugfs.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_debugfs.c b/drivers/scsi/lpfc/lpfc_debugfs.c
-index 8e8bbe734e875..560b2504e674d 100644
---- a/drivers/scsi/lpfc/lpfc_debugfs.c
-+++ b/drivers/scsi/lpfc/lpfc_debugfs.c
-@@ -2157,10 +2157,13 @@ lpfc_debugfs_lockstat_write(struct file *file, const char __user *buf,
- 	char mybuf[64];
- 	char *pbuf;
- 	int i;
-+	size_t bsize;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index bc9812a0a91c3..3c9ba116d5aff 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -2709,7 +2709,7 @@ static int bnxt_get_nvram_directory(struct net_device *dev, u32 len, u8 *data)
+ 	if (rc)
+ 		return rc;
  
- 	memset(mybuf, 0, sizeof(mybuf));
- 
--	if (copy_from_user(mybuf, buf, nbytes))
-+	bsize = min(nbytes, (sizeof(mybuf) - 1));
-+
-+	if (copy_from_user(mybuf, buf, bsize))
- 		return -EFAULT;
- 	pbuf = &mybuf[0];
- 
-@@ -2181,7 +2184,7 @@ lpfc_debugfs_lockstat_write(struct file *file, const char __user *buf,
- 			qp->lock_conflict.wq_access = 0;
- 		}
- 	}
--	return nbytes;
-+	return bsize;
- }
- #endif
- 
+-	buflen = dir_entries * entry_length;
++	buflen = mul_u32_u32(dir_entries, entry_length);
+ 	buf = hwrm_req_dma_slice(bp, req, buflen, &dma_handle);
+ 	if (!buf) {
+ 		hwrm_req_drop(bp, req);
 -- 
 2.39.2
 
