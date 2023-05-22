@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6821D171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:32:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6684C4339B;
-	Mon, 22 May 2023 19:32:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0F9171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:32:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD887C433B0;
+	Mon, 22 May 2023 19:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783954;
-	bh=10Mr85HkH3deh8J3bwd3WajESRNlzHJt9b+GJAw1GSY=;
+	s=korg; t=1684783957;
+	bh=iR/Jjdsm+0D/8OROaQdiilzZGmiKm0Hq/lEbO28422c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BV/6kmlTCMiHw3buwN0/dWD7Z4HUnb18V1jHSiAeLaNWLo8EK7ldWpgFBDzgGCOCk
-	 HnuN0XmbSXV5LUV1SfQaRXg2zRhddSFIWerrPqf5V1Qh72ROCrIya9xoGUlYM7X9eL
-	 0yR6QoXl00TZ3TkCJ27/vLLdSN6Eau6o9q7js22w=
+	b=ugxc92zohJ9CX799TR/D5IYhSHewsrJkNgftYlziVETC2P0aRVI6hB/5t2r4Y73IL
+	 1ZO3CO8PN9dQ8KFbMoyb5CN2IEmHnmjgKGxc25w1/0PfARnoHVA9adwvqZxgeEZtb3
+	 WtFK/W8QI7t7C2kNsrW+0QuypLveDjapNNoEKPfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Migliore <m.migliore@tiesse.com>,
-	Andrew Lunn <andrew@lunn.ch>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 217/292] net: dsa: mv88e6xxx: Fix mv88e6393x EPC write command offset
-Date: Mon, 22 May 2023 20:09:34 +0100
-Message-Id: <20230522190411.381897843@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.1 218/292] igb: fix bit_shift to be in [1..8] range
+Date: Mon, 22 May 2023 20:09:35 +0100
+Message-Id: <20230522190411.406368488@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
 References: <20230522190405.880733338@linuxfoundation.org>
@@ -36,35 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Migliore <m.migliore@tiesse.com>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit 1323e0c6e1d7e103d59384c3ac50f72b17a6936c ]
+[ Upstream commit 60d758659f1fb49e0d5b6ac2691ede8c0958795b ]
 
-According to datasheet, the command opcode must be specified
-into bits [14:12] of the Extended Port Control register (EPC).
+In igb_hash_mc_addr() the expression:
+        "mc_addr[4] >> 8 - bit_shift", right shifting "mc_addr[4]"
+shift by more than 7 bits always yields zero, so hash becomes not so different.
+Add initialization with bit_shift = 1 and add a loop condition to ensure
+bit_shift will be always in [1..8] range.
 
-Fixes: de776d0d316f ("net: dsa: mv88e6xxx: add support for mv88e6393x family")
-Signed-off-by: Marco Migliore <m.migliore@tiesse.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/port.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igb/e1000_mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/port.h b/drivers/net/dsa/mv88e6xxx/port.h
-index cb04243f37c1e..a91e22d9a6cb3 100644
---- a/drivers/net/dsa/mv88e6xxx/port.h
-+++ b/drivers/net/dsa/mv88e6xxx/port.h
-@@ -276,7 +276,7 @@
- /* Offset 0x10: Extended Port Control Command */
- #define MV88E6393X_PORT_EPC_CMD		0x10
- #define MV88E6393X_PORT_EPC_CMD_BUSY	0x8000
--#define MV88E6393X_PORT_EPC_CMD_WRITE	0x0300
-+#define MV88E6393X_PORT_EPC_CMD_WRITE	0x3000
- #define MV88E6393X_PORT_EPC_INDEX_PORT_ETYPE	0x02
+diff --git a/drivers/net/ethernet/intel/igb/e1000_mac.c b/drivers/net/ethernet/intel/igb/e1000_mac.c
+index 205d577bdbbaa..caf91c6f52b4d 100644
+--- a/drivers/net/ethernet/intel/igb/e1000_mac.c
++++ b/drivers/net/ethernet/intel/igb/e1000_mac.c
+@@ -426,7 +426,7 @@ void igb_mta_set(struct e1000_hw *hw, u32 hash_value)
+ static u32 igb_hash_mc_addr(struct e1000_hw *hw, u8 *mc_addr)
+ {
+ 	u32 hash_value, hash_mask;
+-	u8 bit_shift = 0;
++	u8 bit_shift = 1;
  
- /* Offset 0x11: Extended Port Control Data */
+ 	/* Register count multiplied by bits per register */
+ 	hash_mask = (hw->mac.mta_reg_count * 32) - 1;
+@@ -434,7 +434,7 @@ static u32 igb_hash_mc_addr(struct e1000_hw *hw, u8 *mc_addr)
+ 	/* For a mc_filter_type of 0, bit_shift is the number of left-shifts
+ 	 * where 0xFF would still fall within the hash mask.
+ 	 */
+-	while (hash_mask >> bit_shift != 0xFF)
++	while (hash_mask >> bit_shift != 0xFF && bit_shift < 4)
+ 		bit_shift++;
+ 
+ 	/* The portion of the address that is used for the hash table
 -- 
 2.39.2
 
