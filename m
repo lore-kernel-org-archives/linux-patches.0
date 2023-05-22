@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC6C171A9
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA3EC433EF;
-	Mon, 22 May 2023 19:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F142171A9
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:39:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA2FC433EF;
+	Mon, 22 May 2023 19:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684784358;
-	bh=CG6iidfJYvBtjEQvRVQLTsIrpzO11PNYCTvVzvScUro=;
+	s=korg; t=1684784361;
+	bh=4pPVHYEAZWbJahev3Eq2w8HYt0C6JYYI7TKXF+3xQwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P+2NYzZ/7D2pEc4NY3GQdiCWV3wOzbLaZdV22TAVFletH9Fh275DSpj9sFGYZqwFC
-	 JDZkx5kUAPYfmyn8HKngW+7RTvHMw3lxusLu9xOHIWkiVfD63DInY87xhR5xtQrmF3
-	 Yrwx/JcdBFAf8NMqlUXE0kor0iKV5sfRslRd36fA=
+	b=WIcLx4o0eHGmw9uZwl8B01kfJ2rq0/flu++mw7qe4aBL6in+zNg7ztAEhILD/Qs8n
+	 qy9zeuo6Dm7Noy8wz5bJ2pxfnUaAH8fcgFPf2nS6Fd33aHdvUzogQRbrdpyD8fhg5i
+	 tMBbUrR4C86uL94gsk+q1z7jO7Xw3K3vIJeniSpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tomer Tayar <ttayar@habana.ai>,
-	Oded Gabbay <ogabbay@kernel.org>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Qingqing Zhuo <qingqing.zhuo@amd.com>,
+	Samson Tam <Samson.Tam@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 055/364] accel/habanalabs: postpone mem_mgr IDR destruction to hpriv_release()
-Date: Mon, 22 May 2023 20:06:00 +0100
-Message-Id: <20230522190414.178037186@linuxfoundation.org>
+Subject: [PATCH 6.3 056/364] drm/amd/display: reallocate DET for dual displays with high pixel rate ratio
+Date: Mon, 22 May 2023 20:06:01 +0100
+Message-Id: <20230522190414.199772512@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
 References: <20230522190412.801391872@linuxfoundation.org>
@@ -35,121 +38,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tomer Tayar <ttayar@habana.ai>
+From: Samson Tam <Samson.Tam@amd.com>
 
-[ Upstream commit 2e8e9a895c4589f124a37fc84d123b5114406e94 ]
+[ Upstream commit 5f3401eeb064fab5ce50728cce46532cce7a85c5 ]
 
-The memory manager IDR is currently destroyed when user releases the
-file descriptor.
-However, at this point the user context might be still held, and memory
-buffers might be still in use.
-Later on, calls to release those buffers will fail due to not finding
-their handles in the IDR, leading to a memory leak.
-To avoid this leak, split the IDR destruction from the memory manager
-fini, and postpone it to hpriv_release() when there is no user context
-and no buffers are used.
+[Why]
+For dual displays where pixel rate is much higher on one display,
+we may get underflow when DET is evenly allocated.
 
-Signed-off-by: Tomer Tayar <ttayar@habana.ai>
-Reviewed-by: Oded Gabbay <ogabbay@kernel.org>
-Signed-off-by: Oded Gabbay <ogabbay@kernel.org>
+[How]
+Allocate less DET segments for the lower pixel rate display and
+more DET segments for the higher pixel rate display
+
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
+Signed-off-by: Samson Tam <Samson.Tam@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/habanalabs/common/device.c         |  9 +++++++++
- drivers/accel/habanalabs/common/habanalabs.h     |  1 +
- drivers/accel/habanalabs/common/habanalabs_drv.c |  1 +
- drivers/accel/habanalabs/common/memory_mgr.c     | 13 ++++++++++++-
- 4 files changed, 23 insertions(+), 1 deletion(-)
+ .../display/dc/dcn32/dcn32_resource_helpers.c | 43 ++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/habanalabs/common/device.c b/drivers/accel/habanalabs/common/device.c
-index 9933e5858a363..c91436609f080 100644
---- a/drivers/accel/habanalabs/common/device.c
-+++ b/drivers/accel/habanalabs/common/device.c
-@@ -423,6 +423,9 @@ static void hpriv_release(struct kref *ref)
- 	mutex_destroy(&hpriv->ctx_lock);
- 	mutex_destroy(&hpriv->restore_phase_mutex);
- 
-+	/* There should be no memory buffers at this point and handles IDR can be destroyed */
-+	hl_mem_mgr_idr_destroy(&hpriv->mem_mgr);
-+
- 	/* Device should be reset if reset-upon-device-release is enabled, or if there is a pending
- 	 * reset that waits for device release.
- 	 */
-@@ -514,6 +517,10 @@ static int hl_device_release(struct inode *inode, struct file *filp)
- 	}
- 
- 	hl_ctx_mgr_fini(hdev, &hpriv->ctx_mgr);
-+
-+	/* Memory buffers might be still in use at this point and thus the handles IDR destruction
-+	 * is postponed to hpriv_release().
-+	 */
- 	hl_mem_mgr_fini(&hpriv->mem_mgr);
- 
- 	hdev->compute_ctx_in_release = 1;
-@@ -887,6 +894,7 @@ static int device_early_init(struct hl_device *hdev)
- 
- free_cb_mgr:
- 	hl_mem_mgr_fini(&hdev->kernel_mem_mgr);
-+	hl_mem_mgr_idr_destroy(&hdev->kernel_mem_mgr);
- free_chip_info:
- 	kfree(hdev->hl_chip_info);
- free_prefetch_wq:
-@@ -930,6 +938,7 @@ static void device_early_fini(struct hl_device *hdev)
- 	mutex_destroy(&hdev->clk_throttling.lock);
- 
- 	hl_mem_mgr_fini(&hdev->kernel_mem_mgr);
-+	hl_mem_mgr_idr_destroy(&hdev->kernel_mem_mgr);
- 
- 	kfree(hdev->hl_chip_info);
- 
-diff --git a/drivers/accel/habanalabs/common/habanalabs.h b/drivers/accel/habanalabs/common/habanalabs.h
-index fa05e76d3d21a..829b30ab1961a 100644
---- a/drivers/accel/habanalabs/common/habanalabs.h
-+++ b/drivers/accel/habanalabs/common/habanalabs.h
-@@ -3861,6 +3861,7 @@ const char *hl_sync_engine_to_string(enum hl_sync_engine_type engine_type);
- 
- void hl_mem_mgr_init(struct device *dev, struct hl_mem_mgr *mmg);
- void hl_mem_mgr_fini(struct hl_mem_mgr *mmg);
-+void hl_mem_mgr_idr_destroy(struct hl_mem_mgr *mmg);
- int hl_mem_mgr_mmap(struct hl_mem_mgr *mmg, struct vm_area_struct *vma,
- 		    void *args);
- struct hl_mmap_mem_buf *hl_mmap_mem_buf_get(struct hl_mem_mgr *mmg,
-diff --git a/drivers/accel/habanalabs/common/habanalabs_drv.c b/drivers/accel/habanalabs/common/habanalabs_drv.c
-index 03dae57dc8386..e3781cfe8a7fe 100644
---- a/drivers/accel/habanalabs/common/habanalabs_drv.c
-+++ b/drivers/accel/habanalabs/common/habanalabs_drv.c
-@@ -237,6 +237,7 @@ int hl_device_open(struct inode *inode, struct file *filp)
- out_err:
- 	mutex_unlock(&hdev->fpriv_list_lock);
- 	hl_mem_mgr_fini(&hpriv->mem_mgr);
-+	hl_mem_mgr_idr_destroy(&hpriv->mem_mgr);
- 	hl_ctx_mgr_fini(hpriv->hdev, &hpriv->ctx_mgr);
- 	filp->private_data = NULL;
- 	mutex_destroy(&hpriv->ctx_lock);
-diff --git a/drivers/accel/habanalabs/common/memory_mgr.c b/drivers/accel/habanalabs/common/memory_mgr.c
-index 0f2759e265477..f8e8261cc83d8 100644
---- a/drivers/accel/habanalabs/common/memory_mgr.c
-+++ b/drivers/accel/habanalabs/common/memory_mgr.c
-@@ -341,8 +341,19 @@ void hl_mem_mgr_fini(struct hl_mem_mgr *mmg)
- 				"%s: Buff handle %u for CTX is still alive\n",
- 				topic, id);
- 	}
-+}
- 
--	/* TODO: can it happen that some buffer is still in use at this point? */
-+/**
-+ * hl_mem_mgr_idr_destroy() - destroy memory manager IDR.
-+ * @mmg: parent unified memory manager
-+ *
-+ * Destroy the memory manager IDR.
-+ * Shall be called when IDR is empty and no memory buffers are in use.
-+ */
-+void hl_mem_mgr_idr_destroy(struct hl_mem_mgr *mmg)
-+{
-+	if (!idr_is_empty(&mmg->handles))
-+		dev_crit(mmg->dev, "memory manager IDR is destroyed while it is not empty!\n");
- 
- 	idr_destroy(&mmg->handles);
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource_helpers.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource_helpers.c
+index 3a2d7bcc4b6d6..8310bcf651728 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource_helpers.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource_helpers.c
+@@ -261,6 +261,8 @@ bool dcn32_is_psr_capable(struct pipe_ctx *pipe)
+ 	return psr_capable;
  }
+ 
++#define DCN3_2_NEW_DET_OVERRIDE_MIN_MULTIPLIER 7
++
+ /**
+  * *******************************************************************************************
+  * dcn32_determine_det_override: Determine DET allocation for each pipe
+@@ -272,7 +274,6 @@ bool dcn32_is_psr_capable(struct pipe_ctx *pipe)
+  * If there is a plane that's driven by more than 1 pipe (i.e. pipe split), then the
+  * number of DET for that given plane will be split among the pipes driving that plane.
+  *
+- *
+  * High level algorithm:
+  * 1. Split total DET among number of streams
+  * 2. For each stream, split DET among the planes
+@@ -280,6 +281,18 @@ bool dcn32_is_psr_capable(struct pipe_ctx *pipe)
+  *    among those pipes.
+  * 4. Assign the DET override to the DML pipes.
+  *
++ * Special cases:
++ *
++ * For two displays that have a large difference in pixel rate, we may experience
++ *  underflow on the larger display when we divide the DET equally. For this, we
++ *  will implement a modified algorithm to assign more DET to larger display.
++ *
++ * 1. Calculate difference in pixel rates ( multiplier ) between two displays
++ * 2. If the multiplier exceeds DCN3_2_NEW_DET_OVERRIDE_MIN_MULTIPLIER, then
++ *    implement the modified DET override algorithm.
++ * 3. Assign smaller DET size for lower pixel display and higher DET size for
++ *    higher pixel display
++ *
+  * @param [in]: dc: Current DC state
+  * @param [in]: context: New DC state to be programmed
+  * @param [in]: pipes: Array of DML pipes
+@@ -299,18 +312,46 @@ void dcn32_determine_det_override(struct dc *dc,
+ 	struct dc_plane_state *current_plane = NULL;
+ 	uint8_t stream_count = 0;
+ 
++	int phy_pix_clk_mult, lower_mode_stream_index;
++	int phy_pix_clk[MAX_PIPES] = {0};
++	bool use_new_det_override_algorithm = false;
++
+ 	for (i = 0; i < context->stream_count; i++) {
+ 		/* Don't count SubVP streams for DET allocation */
+ 		if (context->streams[i]->mall_stream_config.type != SUBVP_PHANTOM) {
++			phy_pix_clk[i] = context->streams[i]->phy_pix_clk;
+ 			stream_count++;
+ 		}
+ 	}
+ 
++	/* Check for special case with two displays, one with much higher pixel rate */
++	if (stream_count == 2) {
++		ASSERT(!phy_pix_clk[0] || !phy_pix_clk[1]);
++		if (phy_pix_clk[0] < phy_pix_clk[1]) {
++			lower_mode_stream_index = 0;
++			phy_pix_clk_mult = phy_pix_clk[1] / phy_pix_clk[0];
++		} else {
++			lower_mode_stream_index = 1;
++			phy_pix_clk_mult = phy_pix_clk[0] / phy_pix_clk[1];
++		}
++
++		if (phy_pix_clk_mult >= DCN3_2_NEW_DET_OVERRIDE_MIN_MULTIPLIER)
++			use_new_det_override_algorithm = true;
++	}
++
+ 	if (stream_count > 0) {
+ 		stream_segments = 18 / stream_count;
+ 		for (i = 0; i < context->stream_count; i++) {
+ 			if (context->streams[i]->mall_stream_config.type == SUBVP_PHANTOM)
+ 				continue;
++
++			if (use_new_det_override_algorithm) {
++				if (i == lower_mode_stream_index)
++					stream_segments = 4;
++				else
++					stream_segments = 14;
++			}
++
+ 			if (context->stream_status[i].plane_count > 0)
+ 				plane_segments = stream_segments / context->stream_status[i].plane_count;
+ 			else
 -- 
 2.39.2
 
