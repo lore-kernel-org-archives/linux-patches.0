@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F86171A1
-	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:21:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97BFC433D2;
-	Mon, 22 May 2023 19:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802D6171A1
+	for <patches@lists.linux.dev>; Mon, 22 May 2023 19:21:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8AA1C433EF;
+	Mon, 22 May 2023 19:21:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1684783264;
-	bh=XTwa66rXeun3FJNVUNs/JjnqChH4soW15p20BVIFlA4=;
+	s=korg; t=1684783267;
+	bh=nLf8ibnvWqESvji5xsiqT7Npg7mxt0Z5XMPRUT3p5l4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zsCwpK5p4lGg26POJRga5CplwSOhJa58KcZtkq/VOJGDEfkfxzU8DFRGCi/HrAy6F
-	 s1Vo1dFe8aeEqSYmZqxFkg4w9qYyH82ZyUhsd3cn0SRKX8mHdbCjnPvIBZ/S+mzPa/
-	 LF8Mb+/1tDhvViwqrQxyVcujp03oER8oWQe5TOqI=
+	b=f7jWgcpluBiYt+Ot2l0F0SBLhr/dWcNpWgNK25X/Epza9WJxT0fI3L0OJqald4yd/
+	 b4BFiuWWsapeFmjfA6MeZepfU11ATUY4dMIasC/vsg7xlpkng/BOF+3l6Ohh6x1G+f
+	 Min6OtrWvqdwJnNlIlSdFkmEoxBtKTxyVp/du/CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <swboyd@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 5.15 192/203] serial: qcom-geni: fix enabling deactivated interrupt
-Date: Mon, 22 May 2023 20:10:16 +0100
-Message-Id: <20230522190400.340710275@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.15 193/203] thunderbolt: Clear registers properly when auto clear isnt in use
+Date: Mon, 22 May 2023 20:10:17 +0100
+Message-Id: <20230522190400.372386541@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 References: <20230522190354.935300867@linuxfoundation.org>
@@ -34,84 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit 5f949f140f73696f64acb89a1f16ff9153d017e0 upstream.
+commit c4af8e3fecd03b0aedcd38145955605cfebe7e3a upstream.
 
-The driver have a race, experienced only with PREEMPT_RT patchset:
+When `QUIRK_AUTO_CLEAR_INT` isn't set, interrupt masking should be
+cleared by writing to Interrupt Mask Clear (IMR) and interrupt
+status should be cleared properly at shutdown/init.
 
-CPU0                         | CPU1
-==================================================================
-qcom_geni_serial_probe       |
-  uart_add_one_port          |
-                             | serdev_drv_probe
-                             |   qca_serdev_probe
-                             |     serdev_device_open
-                             |       uart_open
-                             |         uart_startup
-                             |           qcom_geni_serial_startup
-                             |             enable_irq
-                             |               __irq_startup
-                             |                 WARN_ON()
-                             |                 IRQ not activated
-  request_threaded_irq       |
-    irq_domain_activate_irq  |
+This fixes an error where interrupts are left enabled during resume
+from hibernation with `CONFIG_USB4=y`.
 
-The warning:
-
-  894000.serial: ttyHS1 at MMIO 0x894000 (irq = 144, base_baud = 0) is a MSM
-  serial serial0: tty port ttyHS1 registered
-  WARNING: CPU: 7 PID: 107 at kernel/irq/chip.c:241 __irq_startup+0x78/0xd8
-  ...
-  qcom_geni_serial 894000.serial: serial engine reports 0 RX bytes in!
-
-Adding UART port triggers probe of child serial devices - serdev and
-eventually Qualcomm Bluetooth hci_qca driver.  This opens UART port
-which enables the interrupt before it got activated in
-request_threaded_irq().  The issue originates in commit f3974413cf02
-("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup") and discussion on
-mailing list [1].  However the above commit does not explain why the
-uart_add_one_port() is moved above requesting interrupt.
-
-[1] https://lore.kernel.org/all/5d9f3dfa.1c69fb81.84c4b.30bf@mx.google.com/
-
-Fixes: f3974413cf02 ("tty: serial: qcom_geni_serial: Wakeup IRQ cleanup")
-Cc: <stable@vger.kernel.org>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20230505152301.2181270-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 468c49f44759 ("thunderbolt: Disable interrupt auto clear for rings")
+Cc: stable@vger.kernel.org # v6.3
+Reported-by: Takashi Iwai <tiwai@suse.de>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217343
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/thunderbolt/nhi.c      |   29 ++++++++++++++++++++++++-----
+ drivers/thunderbolt/nhi_regs.h |    2 ++
+ 2 files changed, 26 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1443,19 +1443,18 @@ static int qcom_geni_serial_probe(struct
- 	platform_set_drvdata(pdev, port);
- 	port->handle_rx = console ? handle_rx_console : handle_rx_uart;
+--- a/drivers/thunderbolt/nhi.c
++++ b/drivers/thunderbolt/nhi.c
+@@ -51,6 +51,21 @@ static int ring_interrupt_index(const st
+ 	return bit;
+ }
  
--	ret = uart_add_one_port(drv, uport);
--	if (ret)
--		return ret;
--
- 	irq_set_status_flags(uport->irq, IRQ_NOAUTOEN);
- 	ret = devm_request_irq(uport->dev, uport->irq, qcom_geni_serial_isr,
- 			IRQF_TRIGGER_HIGH, port->name, uport);
- 	if (ret) {
- 		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
--		uart_remove_one_port(drv, uport);
- 		return ret;
- 	}
- 
-+	ret = uart_add_one_port(drv, uport);
-+	if (ret)
-+		return ret;
++static void nhi_mask_interrupt(struct tb_nhi *nhi, int mask, int ring)
++{
++	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT)
++		return;
++	iowrite32(mask, nhi->iobase + REG_RING_INTERRUPT_MASK_CLEAR_BASE + ring);
++}
 +
- 	/*
- 	 * Set pm_runtime status as ACTIVE so that wakeup_irq gets
- 	 * enabled/disabled from dev_pm_arm_wake_irq during system
++static void nhi_clear_interrupt(struct tb_nhi *nhi, int ring)
++{
++	if (nhi->quirks & QUIRK_AUTO_CLEAR_INT)
++		ioread32(nhi->iobase + REG_RING_NOTIFY_BASE + ring);
++	else
++		iowrite32(~0, nhi->iobase + REG_RING_INT_CLEAR + ring);
++}
++
+ /*
+  * ring_interrupt_active() - activate/deactivate interrupts for a single ring
+  *
+@@ -58,8 +73,8 @@ static int ring_interrupt_index(const st
+  */
+ static void ring_interrupt_active(struct tb_ring *ring, bool active)
+ {
+-	int reg = REG_RING_INTERRUPT_BASE +
+-		  ring_interrupt_index(ring) / 32 * 4;
++	int index = ring_interrupt_index(ring) / 32 * 4;
++	int reg = REG_RING_INTERRUPT_BASE + index;
+ 	int interrupt_bit = ring_interrupt_index(ring) & 31;
+ 	int mask = 1 << interrupt_bit;
+ 	u32 old, new;
+@@ -120,7 +135,11 @@ static void ring_interrupt_active(struct
+ 					 "interrupt for %s %d is already %s\n",
+ 					 RING_TYPE(ring), ring->hop,
+ 					 active ? "enabled" : "disabled");
+-	iowrite32(new, ring->nhi->iobase + reg);
++
++	if (active)
++		iowrite32(new, ring->nhi->iobase + reg);
++	else
++		nhi_mask_interrupt(ring->nhi, mask, index);
+ }
+ 
+ /*
+@@ -133,11 +152,11 @@ static void nhi_disable_interrupts(struc
+ 	int i = 0;
+ 	/* disable interrupts */
+ 	for (i = 0; i < RING_INTERRUPT_REG_COUNT(nhi); i++)
+-		iowrite32(0, nhi->iobase + REG_RING_INTERRUPT_BASE + 4 * i);
++		nhi_mask_interrupt(nhi, ~0, 4 * i);
+ 
+ 	/* clear interrupt status bits */
+ 	for (i = 0; i < RING_NOTIFY_REG_COUNT(nhi); i++)
+-		ioread32(nhi->iobase + REG_RING_NOTIFY_BASE + 4 * i);
++		nhi_clear_interrupt(nhi, 4 * i);
+ }
+ 
+ /* ring helper methods */
+--- a/drivers/thunderbolt/nhi_regs.h
++++ b/drivers/thunderbolt/nhi_regs.h
+@@ -93,6 +93,8 @@ struct ring_desc {
+ #define REG_RING_INTERRUPT_BASE	0x38200
+ #define RING_INTERRUPT_REG_COUNT(nhi) ((31 + 2 * nhi->hop_count) / 32)
+ 
++#define REG_RING_INTERRUPT_MASK_CLEAR_BASE	0x38208
++
+ #define REG_INT_THROTTLING_RATE	0x38c00
+ 
+ /* Interrupt Vector Allocation */
 
 
