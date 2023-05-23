@@ -1,154 +1,99 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98EB4C91
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 17:02:19 +0000 (UTC)
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-1ae557aaf1dso65956875ad.2
-        for <patches@lists.linux.dev>; Tue, 23 May 2023 10:02:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684861339; x=1687453339;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LD/AHmnjp0NpxhS4p9Yvs385A6w+BDeBdMrso5+Dd0Q=;
-        b=lzYLf2QhhI3UYhDz/x7zeHwaOXZjxjX8RJUlSR/iSQkPre1BbQqZhNaRDgEu4WxPpP
-         WNcoECD735LmNk3jkktPP1QBpuInwgX0QeDE+Je8kuS96RaNEoN22PMzB0jQKtPJ45VK
-         TC6KZnWUWzT8p80Ad1hgSWEZcepO1zypQ1sME=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684861339; x=1687453339;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LD/AHmnjp0NpxhS4p9Yvs385A6w+BDeBdMrso5+Dd0Q=;
-        b=J8cAu+bKTYLF69W9S9zNJ4sg/NJyeyQ5LTWG6T56L1mG16iGe9oOCXi1Ar9ReXCG/N
-         1Rjdo08b+frqpWCCpyeyqkPIpyJZjTRWMfdP/Av7kTBG43s7mxNn4Gdirp61D33RjrYn
-         ZN+1GC3PbzwNPIoBTraiQ/MRJoDZB69x4Fd+naMtGvmByWqeI7zSE2eVUHfAOvyBkQHw
-         exFOXAOCiIo2/cYXjov7vVbKTU5T0FZ0eZEU4Y/fFDL/EwU9aCdCzakxEHtvLAHyn7lW
-         tGUXfVif6Xb5v9j1BtD9TTovBLW9qrRVuS5WYZ8tLD/AMLyReSqnZ4CZWJEiYKrD9woR
-         W90Q==
-X-Gm-Message-State: AC+VfDzwGjvsp+2OJ5cMhLjtQi8X9XIez1Guw9afu1YRtV+a4WmTVLAD
-	eAAHlnkfyinesDPksv014ADs2A==
-X-Google-Smtp-Source: ACHHUZ6rSNlwleoHAlvIMBQhyIFB+/d1nvXlfbHZz0sPioooGAVPueHOXiNnTfSN1iiCo/VNjK8bMQ==
-X-Received: by 2002:a17:902:f815:b0:1ac:aaf6:ee3a with SMTP id ix21-20020a170902f81500b001acaaf6ee3amr13420526plb.32.1684861339266;
-        Tue, 23 May 2023 10:02:19 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id r6-20020a170902be0600b001aafde15ff3sm6960489pls.293.2023.05.23.10.02.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 10:02:18 -0700 (PDT)
-Date: Tue, 23 May 2023 10:02:17 -0700
-From: Kees Cook <keescook@chromium.org>
-To: David Hildenbrand <david@redhat.com>
-Cc: Lorenzo Stoakes <lstoakes@gmail.com>, Vlastimil Babka <vbabka@suse.cz>,
-	Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>,
-	David Rientjes <rientjes@google.com>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>, linux-mm@kvack.org,
-	linux-hardening@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/slab: remove HAVE_HARDENED_USERCOPY_ALLOCATOR
-Message-ID: <202305231001.08BC6058@keescook>
-References: <20230523073136.4900-1-vbabka@suse.cz>
- <310077ed-6f3f-41fe-afcf-36500a9408ec@lucifer.local>
- <623a87c6-c0d2-799a-c39e-0d14dcdfa6df@suse.cz>
- <ae3ff438-5e5a-4a75-b4e9-575324a584f7@lucifer.local>
- <ca7860db-220f-ae77-93e6-2a38f6c1130a@redhat.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2508F206BD
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 17:08:19 +0000 (UTC)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 209F85C0040;
+	Tue, 23 May 2023 13:08:19 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Tue, 23 May 2023 13:08:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ryhl.io; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm1; t=
+	1684861699; x=1684948099; bh=xtAMM6mnNcy2IBjIoSVCNnLL8ij8AZ6nMF5
+	VcBqw3e8=; b=uvsiHWq7vuESpqxiY6QGQReZNHAux5qoRlBTdc0sIQuKEt/dfM+
+	qFIffGmdbfdbVc/DguHpoT11wkfYzKdKeBpcXB4lFeCLPleS6OSrpCG/HaaJJWP3
+	xPDGiVPEcXt+j8en8jgs9QP8DHDuKcAvIl6S2sugFR8eiwIoUNnnNDuFLCesjzcb
+	CxzhdZ4RME74Ydr0LyS5ZgJV61IUABOViTs0QHX++4qmVzxh5/hfizvcxhOGd0Rt
+	T187x8csHllvQ0yuLiCsfrAZOKjd528POosoSZw6Gqt2KH6Z62jfN9TEZwh0ElYB
+	B0RCP9Br1+aaEgISoo5mSdqOdpiNXa9uwbQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1684861699; x=1684948099; bh=xtAMM6mnNcy2IBjIoSVCNnLL8ij8AZ6nMF5
+	VcBqw3e8=; b=zKtHNt9PheMKA5jrjQLobzU6GeQJGxUJCnQMplNpnOx631mjUGx
+	H0bwM8X+/iV7nuQYsNOpyKIJ5FmyZOnvODFzPyVAS/RJI/tcM9sH/f3YGuQvHSyx
+	QN9Yc1s2l5UvjWwhRivbNSb90fymwLo3HDDKpheujpoadWYp7vwTOlrfuECgUzbp
+	bTN1QxR+pouFgkW/noMce95izbX071EpKP0WEAZ0Ako+AVoEsGwA0MxbeiOV19Yt
+	HzO59ehtwUIAwE1eQNltemKpzBSXlAvB5nEUXXrbk3SVn4DsN8oTZfQr0tfcxv2W
+	83huFfLDqQ9ZjUzZ+B0xbpy6/RDjI+tXegQ==
+X-ME-Sender: <xms:AvNsZEZkoe0DJSXfhZcssEcJiT0WyZE9lU--VqREwfnqQ6gud4MV9A>
+    <xme:AvNsZPaxTJqbpUom3ZCCz3Rakx4jlMd7CYoMQPMDXb22RKZSMQqKXGzKG_PSBvzDJ
+    rkYaQrD_S00ak9I3g>
+X-ME-Received: <xmr:AvNsZO8hs_RW2TRt8rgXLAMlK7lNfDKBoSOquEVYnohNJUMGNFzbkHYj29XUPX4Wsz0Gm7E2ghjpm4_SlQOlDpwxrW8UZQVBl-3KtQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeejfedguddtiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefkffggfgfuvfevfhfhjggtgfesthejredttdefjeenucfhrhhomheptehl
+    ihgtvgcutfihhhhluceorghlihgtvgesrhihhhhlrdhioheqnecuggftrfgrthhtvghrnh
+    epheduuddvteekvdektdduledugfffhfdugeejgeeuvdevtdetveejheehiefffeegnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghlihgtvg
+    esrhihhhhlrdhioh
+X-ME-Proxy: <xmx:AvNsZOqY-e_JG8ndqeXZZ7ARBksmWM5GZMHNmOXuk-Fxxj0GN5zYEg>
+    <xmx:AvNsZPobpIxYSvC6n0wci63QdvySHGsq7dpSMAyLttjW9W6aMIq69g>
+    <xmx:AvNsZMQhYWqs1kARRF59Llz_smTL53tvrCWEIVSjEqr-sfx66hPBGQ>
+    <xmx:A_NsZKCI6DNtTy-8mvPb8Ce86mINJhjVP1QiZFsOz5vNC4qobsW1xQ>
+Feedback-ID: i56684263:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 23 May 2023 13:08:15 -0400 (EDT)
+Message-ID: <166384c2-7788-a295-fbe3-31fb350aac39@ryhl.io>
+Date: Tue, 23 May 2023 19:08:50 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ca7860db-220f-ae77-93e6-2a38f6c1130a@redhat.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 2/4] rust: sync: reword the `Arc` safety comment for
+ `Sync`
+Content-Language: en-US
+To: Gary Guo <gary@garyguo.net>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
+ <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>,
+ Boqun Feng <boqun.feng@gmail.com>, =?UTF-8?Q?Bj=c3=b6rn_Roy_Baron?=
+ <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>,
+ Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>,
+ Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
+ rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev, Andreas Hindborg <a.hindborg@samsung.com>,
+ Alice Ryhl <aliceryhl@google.com>
+References: <20230523144418.1250547-1-aliceryhl@google.com>
+ <20230523144418.1250547-3-aliceryhl@google.com>
+ <20230523165027.71600b4b.gary@garyguo.net>
+From: Alice Ryhl <alice@ryhl.io>
+In-Reply-To: <20230523165027.71600b4b.gary@garyguo.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 23, 2023 at 10:14:24AM +0200, David Hildenbrand wrote:
-> On 23.05.23 09:56, Lorenzo Stoakes wrote:
-> > On Tue, May 23, 2023 at 09:46:46AM +0200, Vlastimil Babka wrote:
-> > > On 5/23/23 09:42, Lorenzo Stoakes wrote:
-> > > > On Tue, May 23, 2023 at 09:31:36AM +0200, Vlastimil Babka wrote:
-> > > > > With SLOB removed, both remaining allocators support hardened usercopy,
-> > > > > so remove the config and associated #ifdef.
-> > > > > 
-> > > > > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> > > > > ---
-> > > > >   mm/Kconfig       | 2 --
-> > > > >   mm/slab.h        | 9 ---------
-> > > > >   security/Kconfig | 8 --------
-> > > > >   3 files changed, 19 deletions(-)
-> > > > > 
-> > > > > diff --git a/mm/Kconfig b/mm/Kconfig
-> > > > > index 7672a22647b4..041f0da42f2b 100644
-> > > > > --- a/mm/Kconfig
-> > > > > +++ b/mm/Kconfig
-> > > > > @@ -221,7 +221,6 @@ choice
-> > > > >   config SLAB
-> > > > >   	bool "SLAB"
-> > > > >   	depends on !PREEMPT_RT
-> > > > > -	select HAVE_HARDENED_USERCOPY_ALLOCATOR
-> > > > >   	help
-> > > > >   	  The regular slab allocator that is established and known to work
-> > > > >   	  well in all environments. It organizes cache hot objects in
-> > > > > @@ -229,7 +228,6 @@ config SLAB
-> > > > > 
-> > > > >   config SLUB
-> > > > >   	bool "SLUB (Unqueued Allocator)"
-> > > > > -	select HAVE_HARDENED_USERCOPY_ALLOCATOR
-> > > > >   	help
-> > > > >   	   SLUB is a slab allocator that minimizes cache line usage
-> > > > >   	   instead of managing queues of cached objects (SLAB approach).
-> > > > > diff --git a/mm/slab.h b/mm/slab.h
-> > > > > index f01ac256a8f5..695ef96b4b5b 100644
-> > > > > --- a/mm/slab.h
-> > > > > +++ b/mm/slab.h
-> > > > > @@ -832,17 +832,8 @@ struct kmem_obj_info {
-> > > > >   void __kmem_obj_info(struct kmem_obj_info *kpp, void *object, struct slab *slab);
-> > > > >   #endif
-> > > > > 
-> > > > > -#ifdef CONFIG_HAVE_HARDENED_USERCOPY_ALLOCATOR
-> > > > >   void __check_heap_object(const void *ptr, unsigned long n,
-> > > > >   			 const struct slab *slab, bool to_user);
-> > > > > -#else
-> > > > > -static inline
-> > > > > -void __check_heap_object(const void *ptr, unsigned long n,
-> > > > > -			 const struct slab *slab, bool to_user)
-> > > > > -{
-> > > > > -}
-> > > > > -#endif
-> > > > 
-> > > > Hm, this is still defined in slab.c/slub.c and invoked in usercopy.c, do we
-> > > > not want the prototype?
-> > > 
-> > > Well I didn't delete the prototype, just the ifdef/else around, so now it's
-> > > there unconditionally.
-> > > 
-> > > > Perhaps replacing with #ifdef
-> > > > CONFIG_HARDENED_USERCOPY instead? I may be missing something here :)
-> > > 
-> > > Putting it under that #ifdef would work and match that the implementations
-> > > of that function are under that same ifdef, but maybe it's unnecessary noise
-> > > in the header?
-> > > 
-> > 
-> > Yeah my brain inserted extra '-'s there, sorry!
-> > 
-> > Given we only define __check_heap_object() in sl[au]b.c if
-> > CONFIG_HARDENED_USERCOPY wouldn't we need to keep the empty version around
-> > if !CONFIG_HARDENED_USERCOPY since check_heap_object() appears to be called
-> > unconditionally?
-> > 
+On 5/23/23 17:50, Gary Guo wrote:
+>> -// SAFETY: It is safe to send `&Arc<T>` to another thread when the underlying `T` is `Sync` for the
+>> -// same reason as above. `T` needs to be `Send` as well because a thread can clone an `&Arc<T>`
+>> -// into an `Arc<T>`, which may lead to `T` being accessed by the same reasoning as above.
+>> +// SAFETY: It is safe to send `&Arc<T>` to another thread when the underlying `T` is `Sync`
+>> +// because it effectively means sharing `&T` (which is safe because `T` is `Sync`); additionally,
+>> +// it needs `T` to be `Send` because any thread that has a `&Arc<T>` may clone it and get an
+>> +// `Arc<T>` on that thread, so the thread may ultimately access `T` using a mutable reference, for
+>> +// example, when the reference count reaches zero and `T` is dropped.
 > 
-> The file is only compiled with CONFIG_HARDENED_USERCOPY:
-> 
-> mm/Makefile:obj-$(CONFIG_HARDENED_USERCOPY) += usercopy.o
+> "for example" here implies that there are other case to get a mutable
+> reference? I don't think that's true for our `Arc` since we don't
+> provide a `get_mut` method.
 
-Right.
-
-> Reviewed-by: David Hildenbrand <david@redhat.com>
-
-Thanks!
-
-Reviewed-by: Kees Cook <keescook@chromium.org>
-
--- 
-Kees Cook
+Ah, yes, that's true. Good point.
