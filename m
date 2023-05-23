@@ -1,88 +1,99 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756C61E501
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 10:03:34 +0000 (UTC)
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-ba8337ade1cso16592509276.2
-        for <patches@lists.linux.dev>; Tue, 23 May 2023 03:03:34 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08441E501
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 10:11:16 +0000 (UTC)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-50be17a1eceso1245507a12.2
+        for <patches@lists.linux.dev>; Tue, 23 May 2023 03:11:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684836213; x=1687428213;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lhbu9xWkX3wLR4lq6dHzqQfPPOyNOfH06YqwJA9yG9w=;
-        b=4dGLh+H8/haGhmxxd255Mz98LoY9lbqlzhvIM0z5TVaS8s7iiloqpEQFQ2qP1Jt9PE
-         zKpqTTulmUI/MWJQvFQXhUCnpdIaOpFNGdGvsPNhSJwihz3YaSDyHUCqKHELkhMuL8Hu
-         +nSXeD+NZLAvNBHsHokuZd+gTNoQggLV7wIWR3U68CYwaFDMTli0094VK1HT++cFNryg
-         zaBKyFBiBb7yJR1v0cAXkCSSTWoKOYUs8N6tfJ7RbJ2vk6ypbgOgDiANKcjZkoN2coRA
-         p+JGDbr97LlwKRbllnPDz4+36UKAESyhAXUJpaFwHvg62hN6Ea4uP0p2RkC8LvTnIsVw
-         m/1Q==
+        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1684836675; x=1687428675;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4ijudp9Skl+/hs6LWpF+HBcWDTyNQo9dZLQJN0P0dpY=;
+        b=OlsHHZ+ZFshfg4doBhBO7bFHKerast6jJS2F+kf4fzdm/OxntZK8BUHlVngzx+9d01
+         KI0n9KUp3OIlh2pjeaBmVMh3vGJL2LiyrvXoMKjTllim2ffpFY3QGrI8nOTc1/Ohp5an
+         xGFpMimtSEq4EsqYieO//USw9Mh6iKCmGwGHMU5P8H7vqWkH/FSi4JQ6dCdj+xaLF/D7
+         c2lISgb47P5h5nzeK3ft0q2nui6VexpHRcmHWqtT+aNSRQHKlXbQEMTrnLqVrLxQ/0d4
+         ExiKTGhi7jmlFkEaHBVNksHpm8MSno/DghUwesTE5SPyx61vVSMO6trb4hnD41W+k0HQ
+         5pdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684836213; x=1687428213;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lhbu9xWkX3wLR4lq6dHzqQfPPOyNOfH06YqwJA9yG9w=;
-        b=EqVmtbD9gP1CSz8gs3zjSV+HvZQkd6n3CHE6UgmiDT6lp3yvh86HrhEvqXVXxDjY6Y
-         K3VfMGUxMaEQVxhv9/cqChi8kym6RI0oxR8OsEdmfhGp009uBxeT4fLyMEMzPs9/hBCw
-         ye+HlO/qclQHp1LzF5l7F+iPVZKVq3+G5KdKQqhSdCyni9liZ2FbZ37aHNk0RNMg7fEl
-         +Y9Hv5jJZvzP1WsSs0qTPm29QUTO8RF6zXGncQWrXlZ+3tXIdPye2IBlJvcwhf8Hev/A
-         aMmZj0P1KZfSpPPTlVDcHYqv7G651QblshqkzWRhB939YaNNwhREM9se7BPlb/DRjgfs
-         ATtA==
-X-Gm-Message-State: AC+VfDwq7EZ0S9d3Q7qSl+rez78b7XxlR8dFxsGorZ7JP62Mli4mfE9+
-	pjheSV1/sYM8EwXafF7aDsi0oPRUcBY7FGA=
-X-Google-Smtp-Source: ACHHUZ4NyfEHvy9cwuuqUdgnYfvSx3Y0xS9fHqMoUQEZs42xAAW/AgpB44Yzdmz7fLNz6YiTYLzDdVorZ13CiOU=
-X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a25:d6c1:0:b0:ba8:17de:552f with SMTP id
- n184-20020a25d6c1000000b00ba817de552fmr5502594ybg.3.1684836213484; Tue, 23
- May 2023 03:03:33 -0700 (PDT)
-Date: Tue, 23 May 2023 10:03:30 +0000
-In-Reply-To: <beb2932e-7f16-e368-9cb5-edbe115fcb67@gmail.com>
+        d=1e100.net; s=20221208; t=1684836675; x=1687428675;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4ijudp9Skl+/hs6LWpF+HBcWDTyNQo9dZLQJN0P0dpY=;
+        b=P0VJe+qYlsuComFXMvyjK23ERjzRUofBcmGJVQxsG3q/R+o4d7m1jSGx7hRgwHPyKd
+         UG/Ar/gJkdzfAi6sMmphavRkF5tRcJ5AvV9yV5uksQ5Mj/Jm60fjuCDDGFu+B2K5OlkY
+         VHdaboDXaBZoP496M8jCzdkFlkEAc1c6l6dsniwX0EIEzHKu9fPKQu2O2MGzb73bVO3d
+         w7tkSJors85FpDWwU1IH8xRXVa5+rC6oYXl+kAn7o7kb6nYI2CQS/RPmdVC5yUrvR8wg
+         YNCpXxq7BoYFCIwsXf/ei2GvFYiXgk4EDqbsArYb3Ra4cBlkcXN3Qjxo1ADPpFPxdJqE
+         qp7Q==
+X-Gm-Message-State: AC+VfDwDP9PbFHmRH570UuRl61MLyNxhjbeJPgYo5Q9T8dmcSMN1Y2Yr
+	wqQRDrmAOcjj19qDr/EgkQKYX9di0eVeolD+B26qyg==
+X-Google-Smtp-Source: ACHHUZ5iZ5hWmJx6UvpfTPUcGeGBx0h4ALR+xxYj49G7EeE3YFmWnbwM7CBo5BW8uNNQmbAUWXXkvAW85AbrBN0a1t4=
+X-Received: by 2002:a17:907:7b9e:b0:96f:b58e:7e21 with SMTP id
+ ne30-20020a1709077b9e00b0096fb58e7e21mr10380440ejc.52.1684836674758; Tue, 23
+ May 2023 03:11:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
-References: <beb2932e-7f16-e368-9cb5-edbe115fcb67@gmail.com>
-X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
-Message-ID: <20230523100331.4070035-1-aliceryhl@google.com>
-Subject: Re: [PATCH v1 1/7] rust: workqueue: add low-level workqueue bindings
-From: Alice Ryhl <aliceryhl@google.com>
-To: yakoyoku@gmail.com
-Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
-	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net, 
-	jiangshanlai@gmail.com, linux-kernel@vger.kernel.org, ojeda@kernel.org, 
-	patches@lists.linux.dev, rust-for-linux@vger.kernel.org, tj@kernel.org, 
-	wedsonaf@gmail.com
+MIME-Version: 1.0
+References: <20230522190405.880733338@linuxfoundation.org>
+In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
+From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 23 May 2023 19:11:03 +0900
+Message-ID: <CAKL4bV69TwgqL0GBe6NwxhpOzJhTMthQQbbx=Yc8TwOp=2J6dQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/292] 6.1.30-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 5/19/23 09:04, Martin Rodriguez Reboredo wrote:
-> On 5/19/23 06:40, Alice Ryhl wrote:
->> On 5/18/23 16:51, Martin Rodriguez Reboredo wrote:
->>> On 5/17/23 17:31, Alice Ryhl wrote:
->>>> +    /// Enqueues a work item.
->>>> +    ///
->>>> +    /// This may fail if the work item is already enqueued in a workqueue.
->>>
->>> Wouldn't be worth to mention that, if not implied, the item it's going
->>> to be worked on an unbound CPU?
->> 
->> I'm not really sure what you mean. Can you elaborate?
-> 
-> I've meant that if it's good to mention that `queue_work_on` is going
-> to be called with `WORK_CPU_UNBOUND` so that API users know about it.
+Hi Greg
 
-Ah, I misunderstood at first. I thought you were commenting on the "This
-may fail if ..." sentence. I'll go ahead and add that to the
-documentation. I will include it in the next patch set once I have
-looked at your other reviews.
+On Tue, May 23, 2023 at 4:23=E2=80=AFAM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.30 release.
+> There are 292 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 24 May 2023 19:03:25 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.30-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-This part of the next version will look like this:
+6.1.30-rc1 tested.
 
-+    /// Enqueues a work item.
-+    ///
-+    /// This may fail if the work item is already enqueued in a workqueue.
-+    ///
-+    /// The work item will be submitted using `WORK_CPU_UNBOUND`.
-+    pub fn enqueue<T: WorkItem + Send + 'static>(&self, w: T) -> T::EnqueueOutput {
+x86_64
 
-Alice
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P, arch linux)
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
