@@ -1,96 +1,88 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C351D2A7
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 08:47:37 +0000 (UTC)
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-513fd8cc029so1067117a12.3
-        for <patches@lists.linux.dev>; Tue, 23 May 2023 01:47:37 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 756C61E501
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 10:03:34 +0000 (UTC)
+Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-ba8337ade1cso16592509276.2
+        for <patches@lists.linux.dev>; Tue, 23 May 2023 03:03:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684831656; x=1687423656;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ahriv3hQPzNSBqcQ2rj+8i22uvJ5XInYHJKUuq+mYbY=;
-        b=JnF400TtbkaYPHYhbIrzx2dVLpG47PGKsWxw0bkfG2TgKD7uDKjPhVXuHmjsrfMgOW
-         MsS3nMweZyuW0Q5biW8UdmIKi1nYRU5Ic5qwO4d+XShLk4uuuBqtkfPdyNMULkspsqZk
-         4OxCP3J9tSq1IRpxdECQMsTjYXBJ/mXh+sIE20IPk52Bp/omnpnJaza290eZ6GmUUCM7
-         B+XmGm0AojhfWsjvfqXXBCaSm99xL0+JEg24JymtHMHKCR2/1HjBXydfrON+rdvPsJTT
-         id/tNt4pZ5hWppWJbzp1VbBdZkfUX5njvs4mbAR/lrtcb9NaQwAX3uQkOurSi+wFF7kf
-         K0+g==
+        d=google.com; s=20221208; t=1684836213; x=1687428213;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Lhbu9xWkX3wLR4lq6dHzqQfPPOyNOfH06YqwJA9yG9w=;
+        b=4dGLh+H8/haGhmxxd255Mz98LoY9lbqlzhvIM0z5TVaS8s7iiloqpEQFQ2qP1Jt9PE
+         zKpqTTulmUI/MWJQvFQXhUCnpdIaOpFNGdGvsPNhSJwihz3YaSDyHUCqKHELkhMuL8Hu
+         +nSXeD+NZLAvNBHsHokuZd+gTNoQggLV7wIWR3U68CYwaFDMTli0094VK1HT++cFNryg
+         zaBKyFBiBb7yJR1v0cAXkCSSTWoKOYUs8N6tfJ7RbJ2vk6ypbgOgDiANKcjZkoN2coRA
+         p+JGDbr97LlwKRbllnPDz4+36UKAESyhAXUJpaFwHvg62hN6Ea4uP0p2RkC8LvTnIsVw
+         m/1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684831656; x=1687423656;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ahriv3hQPzNSBqcQ2rj+8i22uvJ5XInYHJKUuq+mYbY=;
-        b=RCV6ylgYDLXedjuGvK2eAirma+a71u1smnhz2FY88Lv6JnCfmE8/E+GgzNiXrDCYHv
-         dlF6J9bgE6BjPNU6t1a+RV9GBPqkPnturKDDa6yvgzO5YSxU4+6n6DtroiN+mmee/Nc0
-         YejQ3sTf6xGmFFEq+d70Br64bNSO93HYQTL1pR0fNZMs9VAt83tcs1pe8tBsSfeiyHg1
-         iAcQfkuWQQXzL6Yp9qfxcAUJwxhJ7k3dsrVlIiU1RkL0czMTAy//21pR0kEtOiE5/8wV
-         I7dXH/xM3WVt610MzSo2ppN2Nafo1UXhtwTsroszpiS0wt96uHe5NbvN5JPaOGLtMsMD
-         03zA==
-X-Gm-Message-State: AC+VfDxTSYLyUi5RGDCKtgPkxHpUZl4pXkeDvPw1FPScw6jhKd6+RDTL
-	e2feAsLqvXYOILv9Tm5OTwDpYRDUP67PqrymRDE=
-X-Google-Smtp-Source: ACHHUZ50NeMWkjSlcZx1u8oDl6ktW+PpUTtcmM2C8u5cx7WkQUT59/lfkbl9YMZq38S3+Ci+P+vfiyTNBrftMORq0aM=
-X-Received: by 2002:a17:906:d550:b0:966:4bb3:df63 with SMTP id
- cr16-20020a170906d55000b009664bb3df63mr14605361ejc.63.1684831655291; Tue, 23
- May 2023 01:47:35 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684836213; x=1687428213;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Lhbu9xWkX3wLR4lq6dHzqQfPPOyNOfH06YqwJA9yG9w=;
+        b=EqVmtbD9gP1CSz8gs3zjSV+HvZQkd6n3CHE6UgmiDT6lp3yvh86HrhEvqXVXxDjY6Y
+         K3VfMGUxMaEQVxhv9/cqChi8kym6RI0oxR8OsEdmfhGp009uBxeT4fLyMEMzPs9/hBCw
+         ye+HlO/qclQHp1LzF5l7F+iPVZKVq3+G5KdKQqhSdCyni9liZ2FbZ37aHNk0RNMg7fEl
+         +Y9Hv5jJZvzP1WsSs0qTPm29QUTO8RF6zXGncQWrXlZ+3tXIdPye2IBlJvcwhf8Hev/A
+         aMmZj0P1KZfSpPPTlVDcHYqv7G651QblshqkzWRhB939YaNNwhREM9se7BPlb/DRjgfs
+         ATtA==
+X-Gm-Message-State: AC+VfDwq7EZ0S9d3Q7qSl+rez78b7XxlR8dFxsGorZ7JP62Mli4mfE9+
+	pjheSV1/sYM8EwXafF7aDsi0oPRUcBY7FGA=
+X-Google-Smtp-Source: ACHHUZ4NyfEHvy9cwuuqUdgnYfvSx3Y0xS9fHqMoUQEZs42xAAW/AgpB44Yzdmz7fLNz6YiTYLzDdVorZ13CiOU=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a25:d6c1:0:b0:ba8:17de:552f with SMTP id
+ n184-20020a25d6c1000000b00ba817de552fmr5502594ybg.3.1684836213484; Tue, 23
+ May 2023 03:03:33 -0700 (PDT)
+Date: Tue, 23 May 2023 10:03:30 +0000
+In-Reply-To: <beb2932e-7f16-e368-9cb5-edbe115fcb67@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20230522190412.801391872@linuxfoundation.org> <OSBPR01MB3783F0D4C6006FFF6DF9AA28B7439@OSBPR01MB3783.jpnprd01.prod.outlook.com>
-In-Reply-To: <OSBPR01MB3783F0D4C6006FFF6DF9AA28B7439@OSBPR01MB3783.jpnprd01.prod.outlook.com>
-From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Date: Tue, 23 May 2023 09:46:59 +0100
-Message-ID: <CADVatmOB3ENUQXojP61fahwfMfRTAJ5WwDEN1fWQq+GzuHyduw@mail.gmail.com>
-Subject: Re: [PATCH 6.3 000/364] 6.3.4-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>, 
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>, 
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net" <linux@roeck-us.net>, 
-	"shuah@kernel.org" <shuah@kernel.org>, "patches@kernelci.org" <patches@kernelci.org>, 
-	"lkft-triage@lists.linaro.org" <lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>, 
-	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com" <f.fainelli@gmail.com>, 
-	"srw@sladewatkins.net" <srw@sladewatkins.net>, "rwarsow@gmx.de" <rwarsow@gmx.de>, 
-	Chris Paterson <chris.paterson2@renesas.com>
+Mime-Version: 1.0
+References: <beb2932e-7f16-e368-9cb5-edbe115fcb67@gmail.com>
+X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
+Message-ID: <20230523100331.4070035-1-aliceryhl@google.com>
+Subject: Re: [PATCH v1 1/7] rust: workqueue: add low-level workqueue bindings
+From: Alice Ryhl <aliceryhl@google.com>
+To: yakoyoku@gmail.com
+Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
+	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net, 
+	jiangshanlai@gmail.com, linux-kernel@vger.kernel.org, ojeda@kernel.org, 
+	patches@lists.linux.dev, rust-for-linux@vger.kernel.org, tj@kernel.org, 
+	wedsonaf@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 
-Hi Greg,
+On 5/19/23 09:04, Martin Rodriguez Reboredo wrote:
+> On 5/19/23 06:40, Alice Ryhl wrote:
+>> On 5/18/23 16:51, Martin Rodriguez Reboredo wrote:
+>>> On 5/17/23 17:31, Alice Ryhl wrote:
+>>>> +    /// Enqueues a work item.
+>>>> +    ///
+>>>> +    /// This may fail if the work item is already enqueued in a workqueue.
+>>>
+>>> Wouldn't be worth to mention that, if not implied, the item it's going
+>>> to be worked on an unbound CPU?
+>> 
+>> I'm not really sure what you mean. Can you elaborate?
+> 
+> I've meant that if it's good to mention that `queue_work_on` is going
+> to be called with `WORK_CPU_UNBOUND` so that API users know about it.
 
-On Mon, 22 May 2023 at 21:29, Chris Paterson
-<Chris.Paterson2@renesas.com> wrote:
->
-> Hello Greg,
->
-> > From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > Sent: Monday, May 22, 2023 8:05 PM
-> >
-> > This is the start of the stable review cycle for the 6.3.4 release.
-> > There are 364 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 24 May 2023 19:03:25 +0000.
-> > Anything received after that time might be too late.
->
-> I'm seeing a few build failures with Linux 6.3.4-rc1 (20efcce0526d) due to the drivers/usb/host/xhci.c driver:
->
-> drivers/usb/host/xhci.c:497:19: error: static declaration of 'xhci_try_enable_msi' follows non-static declaration
->   497 | static inline int xhci_try_enable_msi(struct usb_hcd *hcd)
->       |                   ^~~~~~~~~~~~~~~~~~~
-> In file included from drivers/usb/host/xhci.c:22:
-> drivers/usb/host/xhci.h:2146:5: note: previous declaration of 'xhci_try_enable_msi' was here
->  2146 | int xhci_try_enable_msi(struct usb_hcd *hcd);
->       |     ^~~~~~~~~~~~~~~~~~~
+Ah, I misunderstood at first. I thought you were commenting on the "This
+may fail if ..." sentence. I'll go ahead and add that to the
+documentation. I will include it in the next patch set once I have
+looked at your other reviews.
 
-I am also seeing this same failure on arm (exynos_defconfig and
-hisi_defconfig) and mips (cavium_octeon_defconfig)
+This part of the next version will look like this:
 
++    /// Enqueues a work item.
++    ///
++    /// This may fail if the work item is already enqueued in a workqueue.
++    ///
++    /// The work item will be submitted using `WORK_CPU_UNBOUND`.
++    pub fn enqueue<T: WorkItem + Send + 'static>(&self, w: T) -> T::EnqueueOutput {
 
--- 
-Regards
-Sudip
+Alice
