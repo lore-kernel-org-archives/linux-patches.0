@@ -1,45 +1,45 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59F91F933
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 16:42:05 +0000 (UTC)
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6af93a6166fso394017a34.3
-        for <patches@lists.linux.dev>; Tue, 23 May 2023 09:42:05 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397081F933
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 16:42:12 +0000 (UTC)
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-19a0f5db948so5533984fac.2
+        for <patches@lists.linux.dev>; Tue, 23 May 2023 09:42:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684860125; x=1687452125;
+        d=gmail.com; s=20221208; t=1684860131; x=1687452131;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RLkW4IB8Lte2u6vuIxUUWaT7tLfO+b0+5hxrFkp7bhc=;
-        b=kUCgughpIJFzbxEq3AE8VPjotAe+3xTZO3xkUj0MrzsLSYwWZZPW9zcZrWxccfneBL
-         dftkAjIooDR8R+BPmyfjy/ASOUghqozY2399/dpOglToYplavPxrkWg1RXRL+LBkfv4A
-         URvpdv5cOxzh9MWWrbW0BIeGsIPKwXub2O73h8oMdM9BNWJNupCq2BPljuLmf+UAskhT
-         0Z0Z1Oho8EA4zX2eKGym2lPeIm9NXdkqRQ6VqvI5aOwGeuqaEk1EeZmnVEMd6HA82KA3
-         thoGkiVOC9+y2G8/Qfg6JynTBEYSbFqwsMKQyOCNK/ew5EM9d00V19Lm7X3OQHBZcENN
-         qPCg==
+        bh=7IhlLUomDZt1o19VFYJsKL4i2eF/CFk4flQyr7NsxSo=;
+        b=MMf0iQkrx/+n6tsEc26eBYnhu3NARXoUERX1UnQwbIQ/brBtPGyRi14+Ww7ncmk56v
+         D+4FY7rGBb7ICVjyt83Qw8g+HrBxu3/U19CA/sXBbwd1naCtU3ksx5DNOVt8jGCDNFOp
+         vOhQy3NH+1TLUNTiQsrsfq99uNFOkqlzTAEnbcGLsaqAe3Ww/GvRZMZVRfoDL2qjGngD
+         8T0p9vzjiP9VRUcB4LCk77GU8FJo/KfrXHGid3fzNHxXbRfbIHjzzaTe3SnLigrau3Qz
+         wP3S2hMDNPkJOKaox2IA8hBv7pw096sMawMVP3wXCYSM65tD3qgiqM67dTqitpM4yoh9
+         YE8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684860125; x=1687452125;
+        d=1e100.net; s=20221208; t=1684860131; x=1687452131;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RLkW4IB8Lte2u6vuIxUUWaT7tLfO+b0+5hxrFkp7bhc=;
-        b=QYwbqFuNPr2TGXfZgam98CmdDwxd0fdXulVgLf8cM2os/C+4shGn18/k7mF2STHtuQ
-         vN+5vnzW4STcUSc7GfxrlnOg6w/naXs3TkQ3bKdXcSTBzNOjjJKfqiGOu0DVQticKDn7
-         vexLkbIIKplOiw1Ocg3/TqEx68IslKTheHCBIxQoIuIE5iEgDeROVNjPzKrLDNvJHwYW
-         yUwRQAVmYVwFnRO49xH4wWBSbxOTdipVxFv4ImVG1nRNd7RLx9PhNW9dLEtwU5ezpRvG
-         o+TBA/0xPvXi2ndwx4FpOMTx8GXv0EmOmTc4Ifrez7cpbk3NL+qtmHxmOzEXoxYu7ovG
-         Y/2Q==
-X-Gm-Message-State: AC+VfDxb51d6OiuUrRM1ShL/OBCl6IDLfRI3aW3s7MHcIT6lC40lnhX/
-	b4ieayfoTe/S0qmddeVj9Qg=
-X-Google-Smtp-Source: ACHHUZ6w8XkkZxBlj/4xxBGGIKniA/JPAVm0WZh2gsHnL+x26jh1QiAcslF8qeug9KexGdRKJc+Ydw==
-X-Received: by 2002:a9d:6b8c:0:b0:6a4:19b2:d813 with SMTP id b12-20020a9d6b8c000000b006a419b2d813mr7614811otq.30.1684860124925;
-        Tue, 23 May 2023 09:42:04 -0700 (PDT)
+        bh=7IhlLUomDZt1o19VFYJsKL4i2eF/CFk4flQyr7NsxSo=;
+        b=VCaAnEZO6vrnMkSzOVrKllmUfcds7hnZiPc45OraAiK9BEV2dNeZu4PGHErBQHFnjD
+         YhctLYZ1Rh9DpmcIld8DXCWugFXf5JtchQZRZgXkb7qQBRRYAm3N7zuGO5cJyeu+4Muh
+         ry/UhoOXEX/8bGbjYeTD/HlJdrvMXMIhnUYKjrtVtvaqbszITFtbj4OE5WL11VZrDIx+
+         z6ZAmIicfql4UQJ/zaoa34u+XVJucUmaHNHyZyE8hPUcqj9oC8WGF3wZwjkw1qCyLuU8
+         U2xksu2ysw690cFRmcrjO26Mxvl6CHbzJefyI3Ep/ZixmDHff1fsaBtM6eje2g1c/gfy
+         jhJg==
+X-Gm-Message-State: AC+VfDy8zz8LXcBH66e1l2XWBDhirzxiN5z8GttgJyZpGTOROjnscvbR
+	5P+joV1RwCgA6/dfms62zDI=
+X-Google-Smtp-Source: ACHHUZ54MIOmyW2xqymcK594+bszkCG9ijALhXQ1lqcxnkM1JXf9gC7QoEgV307dnZnEl+ggpJw/wg==
+X-Received: by 2002:a05:6871:585:b0:192:b3f7:9325 with SMTP id u5-20020a056871058500b00192b3f79325mr7074664oan.47.1684860131171;
+        Tue, 23 May 2023 09:42:11 -0700 (PDT)
 Received: from [192.168.54.90] (static.220.238.itcsa.net. [190.15.220.238])
-        by smtp.gmail.com with ESMTPSA id j9-20020a9d7389000000b006a3bd777dfdsm3576008otk.12.2023.05.23.09.42.01
+        by smtp.gmail.com with ESMTPSA id y4-20020a056870a34400b0018b22156e84sm446680oak.38.2023.05.23.09.42.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 May 2023 09:42:04 -0700 (PDT)
-Message-ID: <c7c3c740-b534-6be1-aead-dc8dbba80882@gmail.com>
-Date: Tue, 23 May 2023 13:29:07 -0300
+        Tue, 23 May 2023 09:42:10 -0700 (PDT)
+Message-ID: <0b52529c-5570-bfe8-eb53-f51ae00c2e05@gmail.com>
+Date: Tue, 23 May 2023 13:31:12 -0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,8 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2 2/4] rust: sync: reword the `Arc` safety comment for
- `Sync`
+Subject: Re: [PATCH v2 3/4] rust: specify when `ARef` is thread safe
 Content-Language: en-US
 To: Alice Ryhl <aliceryhl@google.com>, Miguel Ojeda <ojeda@kernel.org>,
  Wedson Almeida Filho <wedsonaf@gmail.com>,
@@ -62,34 +61,40 @@ Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev,
  Andreas Hindborg <a.hindborg@samsung.com>
 References: <20230523144418.1250547-1-aliceryhl@google.com>
- <20230523144418.1250547-3-aliceryhl@google.com>
+ <20230523144418.1250547-4-aliceryhl@google.com>
 From: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
-In-Reply-To: <20230523144418.1250547-3-aliceryhl@google.com>
+In-Reply-To: <20230523144418.1250547-4-aliceryhl@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 5/23/23 11:44, Alice Ryhl wrote:
-> The safety comment on `impl Sync for Arc` references the Send safety
-> comment. This commit avoids that in case the two comments drift apart in
-> the future.
+> An `ARef` behaves just like the `Arc` when it comes to thread safety, so
+> we can reuse the thread safety comments from `Arc` here.
 > 
-> Suggested-by: Andreas Hindborg <a.hindborg@samsung.com>
+> This is necessary because without this change, the Rust compiler will
+> assume that things are not thread safe even though they are.
+> 
 > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 > Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
 > Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
 > ---
 > [...]
 >   
-> -// SAFETY: It is safe to send `&Arc<T>` to another thread when the underlying `T` is `Sync` for the
-> -// same reason as above. `T` needs to be `Send` as well because a thread can clone an `&Arc<T>`
-> -// into an `Arc<T>`, which may lead to `T` being accessed by the same reasoning as above.
-> +// SAFETY: It is safe to send `&Arc<T>` to another thread when the underlying `T` is `Sync`
+> +// SAFETY: It is safe to send `ARef<T>` to another thread when the underlying `T` is `Sync` because
+> +// it effectively means sharing `&T` (which is safe because `T` is `Sync`); additionally, it needs
+> +// `T` to be `Send` because any thread that has an `ARef<T>` may ultimately access `T` using a
+> +// mutable reference, for example, when the reference count reaches zero and `T` is dropped.
+> +unsafe impl<T: AlwaysRefCounted + Sync + Send> Send for ARef<T> {}
+> +
+> +// SAFETY: It is safe to send `&ARef<T>` to another thread when the underlying `T` is `Sync`
 > +// because it effectively means sharing `&T` (which is safe because `T` is `Sync`); additionally,
-> +// it needs `T` to be `Send` because any thread that has a `&Arc<T>` may clone it and get an
-> +// `Arc<T>` on that thread, so the thread may ultimately access `T` using a mutable reference, for
+> +// it needs `T` to be `Send` because any thread that has a `&ARef<T>` may clone it and get an
+> +// `ARef<T>` on that thread, so the thread may ultimately access `T` using a mutable reference, for
 > +// example, when the reference count reaches zero and `T` is dropped.
->   unsafe impl<T: ?Sized + Sync + Send> Sync for Arc<T> {}
->   
->   impl<T> Arc<T> {
+> +unsafe impl<T: AlwaysRefCounted + Sync + Send> Sync for ARef<T> {}
+> +
+>   impl<T: AlwaysRefCounted> ARef<T> {
+>       /// Creates a new instance of [`ARef`].
+>       ///
 
 Reviewed-by: Martin Rodriguez Reboredo <yakoyoku@gmail.com>
