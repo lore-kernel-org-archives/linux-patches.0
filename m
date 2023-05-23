@@ -1,35 +1,35 @@
-Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2105.outbound.protection.outlook.com [40.107.11.105])
+Received: from GBR01-CWL-obe.outbound.protection.outlook.com (mail-cwlgbr01on2092.outbound.protection.outlook.com [40.107.11.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425DF200BE
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 16:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC6E1F95D
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 16:04:10 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QsQfgiPgBzsIIDDQevEdxXZPkCwcjzAaef4OeTTTiIg9G3hCep2JxqrJQDgfCDjA1gdwF0lRQr3D18L7vZkeyYi7XxYgT8UOHTbGC7t3QmtnH4Lr7KaO5Wasc0V0pCbalMJa7sShMPd28Oe9HNl+yjSgsbQBBACu+XFVfTXhf+Avsd+niOQEd3s3INt+ohvz/oTc6JYJJ/B9blsvhDciLacJarOuaAtQaqIj10JbaXNL3udCG/PKKtvIFXeXcciTMt8hd/soXPdQp3pSCUmylz3Bl1JtMP4OJe1AowZwh99R27QDMKYAcew8cGDQv8aINghwsetKiZ4m0+3Pecl4Og==
+ b=LytUgFTMS47YVh+E/QB9V7sXDpHnDX7CleL1cHIuEkjRgWONPeeJvfQlfUIiJxo8EAm2rFFex1AO20Oku7whRYvM5KSjxZ7EoFNs+nE7ftbelBRdHTVYWqsqav+sq0pjW+9h54B1LLhHA9kOW+4AZwMinRKwYBPo2Sf8UGZB8eviejNZss2ZxL2uL3sUjgfeMVCRet4aY4sNeF7R1+58fCkkjCD7Gly7duDfFA/nGpv5t+f1YDRD9mlwqnEfvatseDUYu33nMn3jrqgRZbubEecOpdc57uHEvb956a66nAQPSWaAcV7AKmY9yTUEttQaFYyFD/tfQ/lYJBTg062eAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=4L4ApzCPZSC2sarFb5ZQRjcYQkGxUGYRqyzSqMofbdI=;
- b=GrdoqZ7fvgvW187PWMnv+MesmMNlY/kcD2NTcY/2fXzMn7k3q3zN8psjDwUDdFnos/gXLOwgICOgG/wdz+aPauMLF10SZXET/5yS18hGmP+cZJH/CE/km6wVybCtpfYJDSc8Bxs2Ey797/YoL6J+zE7n/3vN+hJd0gxA2xtPf8lLbnzwrpPV9djYGisTM+ww4VggfOJr1+arSFRVnz6UQslFE2xkZZca3EFC7Sb1lszf+kw0sPY4RlqvZrvjg8HF3i8X08UA7IjK5g/oOmb3XelQ9oI0fTXeE9rr19kJcNz6dVjspnatYfcmE8sD3iYDGeLFUiR52eQFFxGgt6DbuA==
+ bh=us9RPz3y5jAh6TrAUiMrMoeIqqAtFavbPtn/WKR8eAc=;
+ b=coCzZjGTrWXsI3l9sg2RUpCWvKeNybOxvtuHPVq8hXq5Xs31XuDWvSwPDanCBAKLlo9R8voA4pmBy5Bj1K+B/e9zk0qxm2xP+m6JXxJrN7elRNA4T1BsTnfNlzXgf8QLwgv8iGzBlz5LZENYp0C29dPqSf8WmKwTHmEpuNiV+wsJBRkghUNNT8ypajWeUA/PaFlvIZi2G6bQBo0o/knNl/R1PXv+knw/dkHmiABzFqRkbFwhSl2OoqCoy+FA2bn6SIGDYOK8h4cLV9vsdEcTQofxZMhFMUtuTnwbb6bYObvns9pb87Jwhs3sbO543bE88i1Kurf7AeYm3yM76cHkgg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
  dkim=pass header.d=garyguo.net; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=4L4ApzCPZSC2sarFb5ZQRjcYQkGxUGYRqyzSqMofbdI=;
- b=KyY9piqhZ2Y24akpB0PyLPas68+p+pLkXagauNnnIy6OeRz8h9K2DZFNOmViDbOIZru7tANFXyEEjMRZH+fAnuTjxf/yS0TFCtaJAfSpoT7+uqaM+9cSEyCMfHB4p1kqjhEjH7utTJ3jxggHi9DnQr2YAhtXKp/Q6be8qHkF34o=
+ bh=us9RPz3y5jAh6TrAUiMrMoeIqqAtFavbPtn/WKR8eAc=;
+ b=oF+uNp0bsLF2HshQiCR96+TfjBvZwsi7WMehPMM9x9r6BVTSK5hRuR0uV+meEcozIGiloHJnD0/ov9DDdupMumpo3OoXM5FXkKM7PY43OEdArlMdjpx7DvTXLoWgNROuVxXXIRV4YDTZWM3jM6stPdf9spbOA1hd67n5n46XSok=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=garyguo.net;
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
- by LO4P265MB7077.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:34d::13) with
+ by CWXP265MB5083.GBRP265.PROD.OUTLOOK.COM (2603:10a6:400:194::14) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.14; Tue, 23 May
- 2023 16:02:24 +0000
+ 2023 16:04:07 +0000
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::1d51:d482:270c:7daf]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::1d51:d482:270c:7daf%4]) with mapi id 15.20.6433.013; Tue, 23 May 2023
- 16:02:24 +0000
-Date: Tue, 23 May 2023 17:02:21 +0100
+ 16:04:07 +0000
+Date: Tue, 23 May 2023 17:04:05 +0100
 From: Gary Guo <gary@garyguo.net>
 To: Benno Lossin <benno.lossin@proton.me>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
@@ -37,15 +37,17 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>,
  <boqun.feng@gmail.com>, =?UTF-8?B?QmrDtnJu?= Roy Baron
  <bjorn3_gh@protonmail.com>, rust-for-linux@vger.kernel.org,
  linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH 1/4] rust: macros: fix usage of `#[allow]` in `quote!`
-Message-ID: <20230523170221.77935844.gary@garyguo.net>
-In-Reply-To: <20230424081112.99890-1-benno.lossin@proton.me>
+Subject: Re: [PATCH 2/4] rust: macros: refactor generics parsing of
+ `#[pin_data]` into its own function
+Message-ID: <20230523170405.3c229965.gary@garyguo.net>
+In-Reply-To: <20230424081112.99890-2-benno.lossin@proton.me>
 References: <20230424081112.99890-1-benno.lossin@proton.me>
+	<20230424081112.99890-2-benno.lossin@proton.me>
 X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO4P123CA0073.GBRP123.PROD.OUTLOOK.COM
- (2603:10a6:600:190::6) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-ClientProxiedBy: LO4P123CA0024.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:151::11) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -54,99 +56,258 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO4P265MB7077:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4321a183-c117-4bcc-ca42-08db5ba7193f
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|CWXP265MB5083:EE_
+X-MS-Office365-Filtering-Correlation-Id: b3e11980-7c6d-44ef-1d98-08db5ba75693
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	9MZqPTUDdQ76RVys29YVausLlFQYnZ2HyYoXlUcvfWtkcLxuQmELsJMUI4pPOF2x1YNhnzD4d1b9NVhYq2WgDX8pMifwiDPqhL/NKkippZYDB8p5PPiuBXMNf/FULSmi68Dsa8CRWL3EB+EN4th0BUNycrwiFEgoJjyyxTTeJAVLREoDZA5E3SnmK5lyztWQgd6BVeG0kdEnxlHqOSZhCu9pjjGDzlaDcItk1NI36wL0C4DHsmNK8jjgl6TqvIxIc1YovMRq7bQvSlpVQZJegFy9WNqJg35Ge4cZzGCc1+MknUUhGS0wFzH7mRfyWU3rVdO72IeAiPmXaTMrjmChgbYDT7bt9Gp5TAopYVyurShIF0FqG7yeDDReIyCVyEqWqNjsO+XzrkHdkmGi83lX05ffkWi/AMXfnX/UJD0QBGs38tSXVGifc0IDCCMBfCwd0UwmBwvMFkS5rVs8MfEei/rHsPbf+bNymnKLQYyHHpWs1i8TMT1PePn9ROyJFa/AfwbNHNROr010UHF45xyn6LJvJB7RIT7epUp1Uw+XVMIHOVDhcOtP4jh0mkwFrvXr7dYKmlws4sDytLBRv1Y3x3mabsZFA85huap2fqknCKQ=
+	kEay4Up916YoCCdwInl7B45lg2QQPN3GIFqQZdRWaISDMSgLDMndHzp4pHpPLwTjAPVr3K2kYh++9XpgiS84YsrfoD/M61zp0ow4fsfRcAIWsN/jUDcIpeUsJx08crfJvcP37+91jNlDxCQFgyv6LF+YIqMqQboTGGCH8GhHGZyGTEuwdbzVhWru5mD4EQX12NtQkfa2FxDzSil0hF2n84TjeVfubD/gjFs3xTtse/vjv1iA75xG2AaIHklB9j4mOG9nevgAiooaxorMrxpGzXys3hGtWsJdQjhyL5OO++fzlufgMFf7v1o9Dwh+TJTErPiaPwwBO/TSeAA++tA2BanBWlRI2OdgJWQIUXPPAmAiPQ8LGNEcmIj48/qG4nulpCsx0/4HDjUtYy/PlsR8+F6wa0IpPXPyCPxIbXcBNFcsX2XPtKI9FMFuPWUZiF9dNPLSfkTJ51J7zCGpqh4ic+g9s+eoFpIQSMpaZkU90AaLmMgwpU4KgTaamIQjlN0ywr9c4Fld6qr80u7Y2M3nuu7CXEu/Epaxag71QJpm1nSo29z5Bd6Ppxt4MX32tF+u
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(396003)(376002)(346002)(136003)(39830400003)(366004)(451199021)(1076003)(6512007)(6506007)(26005)(186003)(2616005)(83380400001)(36756003)(6486002)(2906002)(6666004)(5660300002)(316002)(54906003)(478600001)(66946007)(66476007)(66556008)(86362001)(4326008)(38100700002)(6916009)(8936002)(41300700001)(8676002)(81973001);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(39840400004)(136003)(366004)(346002)(376002)(396003)(451199021)(86362001)(54906003)(316002)(41300700001)(66946007)(4326008)(66556008)(66476007)(6916009)(478600001)(6486002)(38100700002)(8676002)(8936002)(5660300002)(83380400001)(2616005)(36756003)(26005)(6512007)(2906002)(186003)(1076003)(6506007);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?yWYjncZyeJOTKI2xLfYl3FyH1qunRMC5ViznAba95mGL7CjSmqro9wKla+HR?=
- =?us-ascii?Q?BeJme1IVk8mu9wOs+uiqe0y7ELrEMTicYGl4cCTvEMqGDwuyi4R/V8opokJq?=
- =?us-ascii?Q?zGxDl7SjLJaTOvPHaM6ykhJ1xTOjC81fHwyzij1bXvHFHP6iZ2iC75K+ENra?=
- =?us-ascii?Q?Z53FSHpdWrhJBlafjj7tPuPohLWVwbia5F1ArA9eiPggzdPRcfmAfYvZFR/5?=
- =?us-ascii?Q?043N5MB8hcIIiApFWM9+OIUjFXcjt+aksJVv2/+dq7rYDh2Y+G1nu+JMUMhz?=
- =?us-ascii?Q?5mfAbMyItoOvXOzg+aBYanxZR7RvthZKXnoe8ZMqqb2wl1cTUgquUqgo4W/m?=
- =?us-ascii?Q?843TLrb97WnNGqYagn1PRNK85WIDheFAlid84rCu92dyeZrGYFX5DLIUhHWn?=
- =?us-ascii?Q?vdnA9/2EuFgTenh8a7WvHqjDZoLRoZG88uHDRp8B/XRdS3dO5flcgG5Bkf5a?=
- =?us-ascii?Q?i/OAfykmQRtLqhaQBG/CUpN6WlXMNCYMVY2kQqFCkuR48okjU1NlUk2OSA/k?=
- =?us-ascii?Q?lb2i8y8KU7ndHpq+/vrXvAR4aw8GQG5srckUvb14rYSN2/Avc+yCiVgl7GYn?=
- =?us-ascii?Q?c4yQzFPEPQ9MqKq1bpokglyN6qtPsB7BrfMB8kfUd8uI9YN/xFPpHS2HLPuZ?=
- =?us-ascii?Q?rN9Z7rZH0339No0EH9ZQfM91nOANFuFqfjGh5W/o0HQ1F0u2NTZKBYnv5e3O?=
- =?us-ascii?Q?tKV27O3olUMeQ25yBRH69FaTd+UL5wsT8AC622tiI9ihrGH2fazHLXTtN4nn?=
- =?us-ascii?Q?HgAoqFYJTj0dNiTKBzoVujm91zOK00lnBibvNeBrPRjZu5oUPwnABzdan798?=
- =?us-ascii?Q?wQbWwXHN/rDKImLZbL/pSzmYJ0Fx4SQy3lwuiHGEyp9007VjyNKozr8W1uAL?=
- =?us-ascii?Q?W66VnFQ9lv6oxCeZ1WZolIfhh660/NBMp4GGIfNqFp+smHsb4IWuXKBA1mwB?=
- =?us-ascii?Q?zY4Qf1bvYxK597YZRDke+fAhSJ9R9CHjE+ar+57gg5zOB2pCz4ORIK8iEALq?=
- =?us-ascii?Q?FKgoKsmh3OmSEuccEncYOMion/RP6jAM4+zKljOYLrAtgv3zbN7rcl+aRAWq?=
- =?us-ascii?Q?5OLZWzxw4iMhZCjpkL0RqlBu9FA9xP5k9Qk3+1Zirw0DytH62mJyWIrhDOgn?=
- =?us-ascii?Q?EuiOs+J4CtKyeb5hMGySeMYWNMlx08P6KKhkrp6wICVo92z6IEga/uGqDys2?=
- =?us-ascii?Q?bWITWwaFFsYgbAFd8RcZgxJMbS9SkVSmR7MMfCXyNq6IiD8VMxxg9z45OJqL?=
- =?us-ascii?Q?19Iatq0bkXmfz2ZnjmeSsN5HgkwQTDDGdN+E4zVcTuyMo9j+m3BmdP9AoRqb?=
- =?us-ascii?Q?J+yHxILFvhXA2GKak6WtZRsqL/2N/tF9w+FVUyYPc9+qxl58fm4aT9S3883r?=
- =?us-ascii?Q?TawR1zSFKtOzLrAPqBKqTOElsl4oSUum5uS5gvPqG3mxlCR0rzVAct4Txz0T?=
- =?us-ascii?Q?ZnI8Azek0ZX9Ey4ohOjkeM2ARtDpfGntA5NPxlHT+0x+mi4CSMmxX7RhT3vJ?=
- =?us-ascii?Q?eBWTs+PXAxIcKxk9Q6QQucZd6gqkIwtyQfx9592NMCYB5sh4dJt7b2yNJvNs?=
- =?us-ascii?Q?aoehbuJLaVIySvb7SVF1IMmOaq5ZEhKEtlFlc5tY?=
+	=?us-ascii?Q?9SNL3vyFNMYkeIE/17OsNtN+vz75kAKcldE4BMMGkHzENKV8dZvdql5LsJVr?=
+ =?us-ascii?Q?WoJKvyZK/FE+Asu3Eiu70+jezSsgzUgN1XR1F5Zjr0YPYf9VjTj6zbvVXq8Q?=
+ =?us-ascii?Q?Ea1HKSCENjTDynbvJvlStNXhbUuzVG3GqLlTq5SPm9MROofW6iPbvxD/aTZ/?=
+ =?us-ascii?Q?Ddn9R/SwEoejdKkBXKDawPGgTfozNHX0BRSFg/uL7QgMJndRh+WCj5IRUiLa?=
+ =?us-ascii?Q?79TaNlUNc5NB/UhNx1CeeSK5cEAwLy13elRneWBDZz/dYDhadx3f3SiZCHpH?=
+ =?us-ascii?Q?hoMcjcvs2G/BubwvZqCdesyFuGNNIuHyFCCHIhlVIAYLUlMAO0AeLMiT4G/l?=
+ =?us-ascii?Q?r7+hsgzX6De+xBmhsmU5mrkk5EJn1u1R21MUU0SoLNHt/Q+nO54Pz6vgPGda?=
+ =?us-ascii?Q?4M/7OWG0GYuoyoDasIXViSV/e77EzxUvbIg3bkZr2oIsMHUtR8Jks8UVHlH8?=
+ =?us-ascii?Q?anbCIK+0x9/FboCsRBdCN3FaURxdkZNSZT36cbdgeqyAZ+tHFzUwTN/+7I/U?=
+ =?us-ascii?Q?tMSFUvniIz37o7+jid+Lpvgfh16K7sQ1ZfeQqsbpDGPwBuQyYHq7DNCjnUgH?=
+ =?us-ascii?Q?y7670ty12PZw1qUNGFgpxXr/qEH04qetRypYYMramnTxtYqkcSzcQBwdehCp?=
+ =?us-ascii?Q?lvGcZNahqTxQywJeQMXgU+sllNDcuqDvGo6tEsrelUcyuew4v76vnLulDMlg?=
+ =?us-ascii?Q?U3io/D9y8ovDCzeHE8YcZJIfdiwmMhBvNNf3sdKriDiZpqrgtjEj46i2kO1V?=
+ =?us-ascii?Q?lXbXgx9GDDSd2j5CV7na0IT8HWHPP6CpCjfOdhZdLiQvpYTKwN3TJhqEbWkZ?=
+ =?us-ascii?Q?VQSp8fvCKIORBVIK9sZNdsPovvhd47c7mHi0qY7xmD600q1VFQWif08SPzjj?=
+ =?us-ascii?Q?FzXNyBHscDBqdtLmPQRVhVjz2CmX0cqnSrA/eP/mV5AHMPCZmw3WnqemXsGQ?=
+ =?us-ascii?Q?bQFoyPqjBXYYBOB7AxRlY57O+tbNhJhuAkrbAKASQZKwxZujWZL4bBN1vClC?=
+ =?us-ascii?Q?UnVV65o/SfOztTmJH/0FMeqegLnS9YRaFa0V5qekZqJFwoDYdUWEB+Oj26Zu?=
+ =?us-ascii?Q?KJ0rOsaRuqrQ4WAOIGf1GTJ1zzNXQn2vnA8Itm7J4cOErQUWqXhl/AcmhT90?=
+ =?us-ascii?Q?OO+d2ExUvtgAhSN77jWhvRsPrVH00VPX6gXYNQtoipEjgT/Or1nIOneGowAR?=
+ =?us-ascii?Q?Tf3/UBzTdi7g4j71EpQXjrpbBoaTCgNrHeRldmsfkR3+LVERzHk4ZW6qjd48?=
+ =?us-ascii?Q?2m6/N1M5QPQwWm2WRHKXbYhS11Z7SP6CTDu+L7IVzLb+5rDdApKe09jGmN+Z?=
+ =?us-ascii?Q?ZzL47qGaCEoA+Kj2DwqU6TFIlrNQMdQ3o1xLCT17RZT78vL+neq9NcR+nvj3?=
+ =?us-ascii?Q?f2fV0TBhVh9zh6Cg+tz/YeovXZKSN6IeZqbmlz5auX4lDe1SnmI4o8jHHwTI?=
+ =?us-ascii?Q?PyxewjTSyxUwmNUwcLXl39N87O4ygX5BNqrKBFGg79AzxeBuVSM1n32NImN5?=
+ =?us-ascii?Q?cWWlMUBg1O41OF5HXX/D+fJpIU97IbBtkzTmmPH7Sg+Z4DVwTgt1uKFv6CvW?=
+ =?us-ascii?Q?eTEgd1QYIuauqpHLFMafqbanuSJ/sNmt0rFR1yum?=
 X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4321a183-c117-4bcc-ca42-08db5ba7193f
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3e11980-7c6d-44ef-1d98-08db5ba75693
 X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 May 2023 16:02:24.5578
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 May 2023 16:04:07.4825
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Z6IQsMFTzuUJc1M+7NHEjCcY7m84Ln5oWaoSyyAJV2isZT2jv0De9G7yx973dSWDq4lnWsYpJFdimUK5ShWcBQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO4P265MB7077
+X-MS-Exchange-CrossTenant-UserPrincipalName: 6FKcolfJzS7HVenLy8L1pf1oPLZHOzxAUcRgOfMr2NXGDoO9+awaE7mmib4haoMsOSq0VHqQMqUyDrNsLbukWQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CWXP265MB5083
 
-On Mon, 24 Apr 2023 08:11:33 +0000
+On Mon, 24 Apr 2023 08:11:38 +0000
 Benno Lossin <benno.lossin@proton.me> wrote:
 
-> When using `quote!` as part of an expression that was not the last one
-> in a function, the `#[allow(clippy::vec_init_then_push)]` attribute
-> would be present on an expression, which is not allowed.
-> This patch refactors that part of the macro to use a statement instead.
+> Other macros might also want to parse generics. Additionally this makes
+> the code easier to read, as the next commit will introduce more code in
+> `#[pin_data]`. Also add more comments to explain how parsing generics
+> work.
 > 
 > Signed-off-by: Benno Lossin <benno.lossin@proton.me>
 
 Reviewed-by: Gary Guo <gary@garyguo.net>
 
 > ---
->  rust/macros/quote.rs | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
+>  rust/macros/helpers.rs  | 86 ++++++++++++++++++++++++++++++++++++++++-
+>  rust/macros/pin_data.rs | 70 +++++----------------------------
+>  2 files changed, 94 insertions(+), 62 deletions(-)
 > 
-> diff --git a/rust/macros/quote.rs b/rust/macros/quote.rs
-> index c8e08b3c1e4c..dddbb4e6f4cb 100644
-> --- a/rust/macros/quote.rs
-> +++ b/rust/macros/quote.rs
-> @@ -39,12 +39,14 @@ impl ToTokens for TokenStream {
->  /// [`quote_spanned!`](https://docs.rs/quote/latest/quote/macro.quote_spanned.html) macro from the
->  /// `quote` crate but provides only just enough functionality needed by the current `macros` crate.
->  macro_rules! quote_spanned {
-> -    ($span:expr => $($tt:tt)*) => {
-> -    #[allow(clippy::vec_init_then_push)]
-> -    {
-> -        let mut tokens = ::std::vec::Vec::new();
-> -        let span = $span;
-> -        quote_spanned!(@proc tokens span $($tt)*);
-> +    ($span:expr => $($tt:tt)*) => {{
-> +        let mut tokens;
-> +        #[allow(clippy::vec_init_then_push)]
-> +        {
-> +            tokens = ::std::vec::Vec::new();
-> +            let span = $span;
-> +            quote_spanned!(@proc tokens span $($tt)*);
+> diff --git a/rust/macros/helpers.rs b/rust/macros/helpers.rs
+> index b2bdd4d8c958..afb0f2e3a36a 100644
+> --- a/rust/macros/helpers.rs
+> +++ b/rust/macros/helpers.rs
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0
+> 
+> -use proc_macro::{token_stream, Group, TokenTree};
+> +use proc_macro::{token_stream, Group, Punct, Spacing, TokenStream, TokenTree};
+> 
+>  pub(crate) fn try_ident(it: &mut token_stream::IntoIter) -> Option<String> {
+>      if let Some(TokenTree::Ident(ident)) = it.next() {
+> @@ -69,3 +69,87 @@ pub(crate) fn expect_end(it: &mut token_stream::IntoIter) {
+>          panic!("Expected end");
+>      }
+>  }
+> +
+> +pub(crate) struct Generics {
+> +    pub(crate) impl_generics: Vec<TokenTree>,
+> +    pub(crate) ty_generics: Vec<TokenTree>,
+> +}
+> +
+> +/// Parses the given `TokenStream` into `Generics` and the rest.
+> +///
+> +/// The generics are not present in the rest, but a where clause might remain.
+> +pub(crate) fn parse_generics(input: TokenStream) -> (Generics, Vec<TokenTree>) {
+> +    // `impl_generics`, the declared generics with their bounds.
+> +    let mut impl_generics = vec![];
+> +    // Only the names of the generics, without any bounds.
+> +    let mut ty_generics = vec![];
+> +    // Tokens not related to the generics e.g. the `where` token and definition.
+> +    let mut rest = vec![];
+> +    // The current level of `<`.
+> +    let mut nesting = 0;
+> +    let mut toks = input.into_iter();
+> +    // If we are at the beginning of a generic parameter.
+> +    let mut at_start = true;
+> +    for tt in &mut toks {
+> +        match tt.clone() {
+> +            TokenTree::Punct(p) if p.as_char() == '<' => {
+> +                if nesting >= 1 {
+> +                    // This is inside of the generics and part of some bound.
+> +                    impl_generics.push(tt);
+> +                }
+> +                nesting += 1;
+> +            }
+> +            TokenTree::Punct(p) if p.as_char() == '>' => {
+> +                // This is a parsing error, so we just end it here.
+> +                if nesting == 0 {
+> +                    break;
+> +                } else {
+> +                    nesting -= 1;
+> +                    if nesting >= 1 {
+> +                        // We are still inside of the generics and part of some bound.
+> +                        impl_generics.push(tt);
+> +                    }
+> +                    if nesting == 0 {
+> +                        break;
+> +                    }
+> +                }
+> +            }
+> +            tt => {
+> +                if nesting == 1 {
+> +                    // Here depending on the token, it might be a generic variable name.
+> +                    match &tt {
+> +                        // Ignore const.
+> +                        TokenTree::Ident(i) if i.to_string() == "const" => {}
+> +                        TokenTree::Ident(_) if at_start => {
+> +                            ty_generics.push(tt.clone());
+> +                            // We also already push the `,` token, this makes it easier to append
+> +                            // generics.
+> +                            ty_generics.push(TokenTree::Punct(Punct::new(',', Spacing::Alone)));
+> +                            at_start = false;
+> +                        }
+> +                        TokenTree::Punct(p) if p.as_char() == ',' => at_start = true,
+> +                        // Lifetimes begin with `'`.
+> +                        TokenTree::Punct(p) if p.as_char() == '\'' && at_start => {
+> +                            ty_generics.push(tt.clone());
+> +                        }
+> +                        _ => {}
+> +                    }
+> +                }
+> +                if nesting >= 1 {
+> +                    impl_generics.push(tt);
+> +                } else if nesting == 0 {
+> +                    // If we haven't entered the generics yet, we still want to keep these tokens.
+> +                    rest.push(tt);
+> +                }
+> +            }
 > +        }
->          ::proc_macro::TokenStream::from_iter(tokens)
->      }};
->      (@proc $v:ident $span:ident) => {};
+> +    }
+> +    rest.extend(toks);
+> +    (
+> +        Generics {
+> +            impl_generics,
+> +            ty_generics,
+> +        },
+> +        rest,
+> +    )
+> +}
+> diff --git a/rust/macros/pin_data.rs b/rust/macros/pin_data.rs
+> index 954149d77181..c593b05d9e8c 100644
+> --- a/rust/macros/pin_data.rs
+> +++ b/rust/macros/pin_data.rs
+> @@ -1,71 +1,19 @@
+>  // SPDX-License-Identifier: Apache-2.0 OR MIT
 > 
-> base-commit: ea76e08f4d901a450619831a255e9e0a4c0ed162
+> -use proc_macro::{Punct, Spacing, TokenStream, TokenTree};
+> +use crate::helpers::{parse_generics, Generics};
+> +use proc_macro::TokenStream;
+> 
+>  pub(crate) fn pin_data(args: TokenStream, input: TokenStream) -> TokenStream {
+>      // This proc-macro only does some pre-parsing and then delegates the actual parsing to
+>      // `kernel::__pin_data!`.
+> -    //
+> -    // In here we only collect the generics, since parsing them in declarative macros is very
+> -    // elaborate. We also do not need to analyse their structure, we only need to collect them.
+> 
+> -    // `impl_generics`, the declared generics with their bounds.
+> -    let mut impl_generics = vec![];
+> -    // Only the names of the generics, without any bounds.
+> -    let mut ty_generics = vec![];
+> -    // Tokens not related to the generics e.g. the `impl` token.
+> -    let mut rest = vec![];
+> -    // The current level of `<`.
+> -    let mut nesting = 0;
+> -    let mut toks = input.into_iter();
+> -    // If we are at the beginning of a generic parameter.
+> -    let mut at_start = true;
+> -    for tt in &mut toks {
+> -        match tt.clone() {
+> -            TokenTree::Punct(p) if p.as_char() == '<' => {
+> -                if nesting >= 1 {
+> -                    impl_generics.push(tt);
+> -                }
+> -                nesting += 1;
+> -            }
+> -            TokenTree::Punct(p) if p.as_char() == '>' => {
+> -                if nesting == 0 {
+> -                    break;
+> -                } else {
+> -                    nesting -= 1;
+> -                    if nesting >= 1 {
+> -                        impl_generics.push(tt);
+> -                    }
+> -                    if nesting == 0 {
+> -                        break;
+> -                    }
+> -                }
+> -            }
+> -            tt => {
+> -                if nesting == 1 {
+> -                    match &tt {
+> -                        TokenTree::Ident(i) if i.to_string() == "const" => {}
+> -                        TokenTree::Ident(_) if at_start => {
+> -                            ty_generics.push(tt.clone());
+> -                            ty_generics.push(TokenTree::Punct(Punct::new(',', Spacing::Alone)));
+> -                            at_start = false;
+> -                        }
+> -                        TokenTree::Punct(p) if p.as_char() == ',' => at_start = true,
+> -                        TokenTree::Punct(p) if p.as_char() == '\'' && at_start => {
+> -                            ty_generics.push(tt.clone());
+> -                        }
+> -                        _ => {}
+> -                    }
+> -                }
+> -                if nesting >= 1 {
+> -                    impl_generics.push(tt);
+> -                } else if nesting == 0 {
+> -                    rest.push(tt);
+> -                }
+> -            }
+> -        }
+> -    }
+> -    rest.extend(toks);
+> +    let (
+> +        Generics {
+> +            impl_generics,
+> +            ty_generics,
+> +        },
+> +        mut rest,
+> +    ) = parse_generics(input);
+>      // This should be the body of the struct `{...}`.
+>      let last = rest.pop();
+>      quote!(::kernel::__pin_data! {
 > --
 > 2.40.0
 > 
