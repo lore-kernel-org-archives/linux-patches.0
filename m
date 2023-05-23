@@ -1,40 +1,40 @@
-Received: from mail-yb1-f201.google.com (mail-yb1-f201.google.com [209.85.219.201])
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7734C7B
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 14:45:48 +0000 (UTC)
-Received: by mail-yb1-f201.google.com with SMTP id 3f1490d57ef6-ba69d93a6b5so15071848276.1
-        for <patches@lists.linux.dev>; Tue, 23 May 2023 07:45:48 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FCF4C7B
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 14:46:02 +0000 (UTC)
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-ba83fed50e1so10480261276.1
+        for <patches@lists.linux.dev>; Tue, 23 May 2023 07:46:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684853147; x=1687445147;
+        d=google.com; s=20221208; t=1684853162; x=1687445162;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cirt2ON6amstA/3YNx8Dl/DrSfD+lKUlEarHqMF6nxw=;
-        b=DqYCWPhParszen3Hd8C6NALzsNq4RE0GYoUKErPQQT/Rk8O/vXKcFFl4bB4qWAWbtP
-         kkux8OKOZOKVkJsvkJ2Ny+BMhW6JZ8Lp8rG5soKSuqkKXV72FR+NUz5qjTBaOP88KeGN
-         H0AC4WDcLBg1UrXmePmLeZyRcirBCEwzjJ7wSBiRt+97j9WoXoaqf2oKm7wLH7DlYFfe
-         1Pv8kbdl6HkciPp6/Wmquuc5gUJx5SC+dKxW9tuwanpD0iX6llPgQm/VSavm+1y3b3PR
-         h/Y217d0niQUL9S2/ueC8YV1UCjcINwLp02CAsb6llA5VM/mPUIIgFMI864kmpC1XiE7
-         d/Fw==
+        bh=r16leosVab/uLX7D74lYCjCyQd2teI7cw9N2TnAgQsA=;
+        b=Hd/uUrDISL30aYgFZm7tT9bNmVfu5Hj5bE8z8pqztEcp7fh7IokeZvyVl4+oOgQpv2
+         1msJ8stWSASsldMCECBLTZSZbmB67D/T7j1oTM2DeUMplouDBShHymsHyviGEf60tBiM
+         d5vZPUEHKU0E12wSNBYOP4P1NYGjDUM5j4FC2jB/qherVgJcq2o2o9Lx9KuA3cUjjFbh
+         fGZSVMVBEzRtgYXzq81Yb06w9UEFGdV9cfI9x14itoTZcmT+hYvViRiWZtK/VEhv4HGE
+         vpDT/Rx7Cux0WO7uyvBET3G0qLUukSAXX6k4OFRmxbn4iL0lJKuXNJeqS7trW8tXqQhC
+         akzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684853147; x=1687445147;
+        d=1e100.net; s=20221208; t=1684853162; x=1687445162;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cirt2ON6amstA/3YNx8Dl/DrSfD+lKUlEarHqMF6nxw=;
-        b=Pv3+gadW7gh8sHjvpAC2DR9iQR5I1uRBZ4NlEh6UvRWEpaOCJw5O+F1+RelAS6CQxa
-         LONvJ2LPIR+EUySk0bD8YKPHZFC8c8af7l9NJ9phjCB+4G+6osIXNdr1L/9r++NxbDZn
-         /4KQjSqr0B2gIbmXQpDmzK8cggWDBRAc/q6vFExfOEyi5fsUwMrbWreWrLfNjdmfJ5bV
-         SV3VDL+G+QMNWSjRJgLleQrejrjI35Thux8evO/ornvZq0KFRSKejZTZjFFoDITDBi62
-         UDcOWv95mY4V05XrkEidpwLn8Qzt/XKPQnHZk3IDAhhSEL4jM8BvYUu7Fs8smAOAm5rV
-         /qmg==
-X-Gm-Message-State: AC+VfDwbqeKV7fsJsRZOW9k3sZnMit/rCF+dqlYWzhdyjqm+DRdB8sd6
-	Vw7Q6NcxpFklLc5i9SrE/Y2CKhBe7v3zRV0=
-X-Google-Smtp-Source: ACHHUZ5HGv5J4DLwutjlh5WRFIrH9ud/Hd5FtZAOkFZuacDfLlkK3smnxJzIXubwF4Z90tgv7QY8eKQgKy5wLVk=
+        bh=r16leosVab/uLX7D74lYCjCyQd2teI7cw9N2TnAgQsA=;
+        b=GaykksZDsrlGFHhFtueRNvGtmHGsokBaklALAcwB1Y81v+cqKQ8lg/9u3suR7wi8gi
+         bEHCbypGaifLm5UCOGCDc4XXXNmsPSsAwGvj6CYWVv/sf0EFcv+WwfpszAr6Fn9tbjuu
+         qWrqYtOG0dCNOqqto/qH0NBJvopucGkgtyvtu0WuiqXWinX8XkwXaSCNxXneBzu9gFV5
+         0DpFM5j7NBcSFDZ5R+fltTVC6/Ji1P44Qig/fCVR+Mya9mkWajonrK4SXL6I5Kc8nmjG
+         RGd9yhuOX0kf9vqnkOgR8KX+lW02VQchx35xdITWAlYTRL82Js4k4xvPVpM67s8IzdWj
+         F5SQ==
+X-Gm-Message-State: AC+VfDxY2wiBGq30suFPlkebEB/5FJMMBrnnWYj2eGYJfZOwB/hp42X/
+	TloXgwdb6fltSjslriCDPaCJce73FcxudJc=
+X-Google-Smtp-Source: ACHHUZ5GGO9M9zi95iQU/We2rgCa/AZ2NpDuHENeetlWQiYs4A5/3srhvSG4IjsY4UStilvM/k6fLMYqCtGwmFY=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a25:949:0:b0:ba8:6422:bbec with SMTP id
- u9-20020a250949000000b00ba86422bbecmr8780701ybm.4.1684853147290; Tue, 23 May
- 2023 07:45:47 -0700 (PDT)
-Date: Tue, 23 May 2023 14:44:17 +0000
+ (user=aliceryhl job=sendgmr) by 2002:a25:9989:0:b0:ba2:2d0e:a752 with SMTP id
+ p9-20020a259989000000b00ba22d0ea752mr8278874ybo.6.1684853162123; Tue, 23 May
+ 2023 07:46:02 -0700 (PDT)
+Date: Tue, 23 May 2023 14:44:18 +0000
 In-Reply-To: <20230523144418.1250547-1-aliceryhl@google.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,8 +44,8 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
 References: <20230523144418.1250547-1-aliceryhl@google.com>
 X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
-Message-ID: <20230523144418.1250547-4-aliceryhl@google.com>
-Subject: [PATCH v2 3/4] rust: specify when `ARef` is thread safe
+Message-ID: <20230523144418.1250547-5-aliceryhl@google.com>
+Subject: [PATCH v2 4/4] rust: task: add `Send` marker to `Task`
 From: Alice Ryhl <aliceryhl@google.com>
 To: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Alex Gaynor <alex.gaynor@gmail.com>
@@ -58,43 +58,37 @@ Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
 	Andreas Hindborg <a.hindborg@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
 
-An `ARef` behaves just like the `Arc` when it comes to thread safety, so
-we can reuse the thread safety comments from `Arc` here.
-
-This is necessary because without this change, the Rust compiler will
-assume that things are not thread safe even though they are.
+When a type also implements `Sync`, the meaning of `Send` is just "this
+type may be accessed mutably from threads other than the one it is
+created on". That's ok for this type.
 
 Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
-Reviewed-by: Boqun Feng <boqun.feng@gmail.com>
 ---
- rust/kernel/types.rs | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ rust/kernel/task.rs | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/rust/kernel/types.rs b/rust/kernel/types.rs
-index 29db59d6119a..1e5380b16ed5 100644
---- a/rust/kernel/types.rs
-+++ b/rust/kernel/types.rs
-@@ -321,6 +321,19 @@ pub struct ARef<T: AlwaysRefCounted> {
-     _p: PhantomData<T>,
- }
+diff --git a/rust/kernel/task.rs b/rust/kernel/task.rs
+index 526d29a0ae27..7eda15e5f1b3 100644
+--- a/rust/kernel/task.rs
++++ b/rust/kernel/task.rs
+@@ -64,8 +64,14 @@ macro_rules! current {
+ #[repr(transparent)]
+ pub struct Task(pub(crate) Opaque<bindings::task_struct>);
  
-+// SAFETY: It is safe to send `ARef<T>` to another thread when the underlying `T` is `Sync` because
-+// it effectively means sharing `&T` (which is safe because `T` is `Sync`); additionally, it needs
-+// `T` to be `Send` because any thread that has an `ARef<T>` may ultimately access `T` using a
-+// mutable reference, for example, when the reference count reaches zero and `T` is dropped.
-+unsafe impl<T: AlwaysRefCounted + Sync + Send> Send for ARef<T> {}
+-// SAFETY: It's OK to access `Task` through references from other threads because we're either
+-// accessing properties that don't change (e.g., `pid`, `group_leader`) or that are properly
++// SAFETY: By design, the only way to access a `Task` is via the `current` function or via an
++// `ARef<Task>` obtained through the `AlwaysRefCounted` impl. This means that the only situation in
++// which a `Task` can be accessed mutably is when the refcount drops to zero and the destructor
++// runs. It is safe for that to happen on any thread, so it is ok for this type to be `Send`.
++unsafe impl Send for Task {}
 +
-+// SAFETY: It is safe to send `&ARef<T>` to another thread when the underlying `T` is `Sync`
-+// because it effectively means sharing `&T` (which is safe because `T` is `Sync`); additionally,
-+// it needs `T` to be `Send` because any thread that has a `&ARef<T>` may clone it and get an
-+// `ARef<T>` on that thread, so the thread may ultimately access `T` using a mutable reference, for
-+// example, when the reference count reaches zero and `T` is dropped.
-+unsafe impl<T: AlwaysRefCounted + Sync + Send> Sync for ARef<T> {}
-+
- impl<T: AlwaysRefCounted> ARef<T> {
-     /// Creates a new instance of [`ARef`].
-     ///
++// SAFETY: It's OK to access `Task` through shared references from other threads because we're
++// either accessing properties that don't change (e.g., `pid`, `group_leader`) or that are properly
+ // synchronised by C code (e.g., `signal_pending`).
+ unsafe impl Sync for Task {}
+ 
 -- 
 2.40.1.698.g37aff9b760-goog
 
