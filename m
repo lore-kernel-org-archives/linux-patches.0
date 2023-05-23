@@ -1,36 +1,55 @@
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFC141841
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 01:03:04 +0000 (UTC)
-Received: from cwcc.thunk.org (pool-173-48-120-46.bstnma.fios.verizon.net [173.48.120.46])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 34N12o8x006305
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 22 May 2023 21:02:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-	t=1684803773; bh=Ah3rCU/IRQBeh9qf9Arxw5ClPLOS9Y0efGYc+L0edGc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=mhqfgMiWpjaTpIrY3ClRYjUwWUJBSRW5wJu9dnj51gZfg2Dllmp9SxIyNDmMZ10i4
-	 HZzBsENdLvolT+jBzJAIGUSC0r/CmDT0jzAU9wafIk6gXtjv/sQKXTnXpsap+GOAns
-	 Nmizt+GFkK+I+AIL5byXG1TIBq92iIuTY25w8C0QM36Cd8XyKm3bRjK5My+0VnG2Q8
-	 e5ByZ1O057Zk/d9xWNezyf50xQl+gMbyTso4NtfDrVIFhtT89Kj+rvaPz0t7J6WP2+
-	 ltkPAZBTdMtCSBCVS533xZqiJ7PaklecvkSdrBpfWUGZlD//KTAU8yRdDsEIvlHR6j
-	 nZEVdqy/cL62g==
-Received: by cwcc.thunk.org (Postfix, from userid 15806)
-	id A0F0415C052B; Mon, 22 May 2023 21:02:50 -0400 (EDT)
-Date: Mon, 22 May 2023 21:02:50 -0400
-From: "Theodore Ts'o" <tytso@mit.edu>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-        linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-        akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-        patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-        jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-        srw@sladewatkins.net, rwarsow@gmx.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38C34C97
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 03:13:16 +0000 (UTC)
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-64d4e45971bso1936030b3a.2
+        for <patches@lists.linux.dev>; Mon, 22 May 2023 20:13:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684811596; x=1687403596;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=SSMjb6e9YuYDEpRsFJ5qPxDQBlW7HCE/u3pEvidV/n8=;
+        b=LOHS+IKHgCH7I6zpoTgXUFvdAvGmdtEi7FJDkBgEsyPu4bDMO/jzsjUZk+AOs8Juwc
+         24tMy/zx9R+ZA8+KduyU91VftzIeaQCoTUohCnufZggWSx/SSy6CWZrY+wR9F9y2cfit
+         urp5Ohx0hR8XxWlL9tSGYq8rsSUoEx6RxWxFWiepxle9IXzaNiwps+hyaSSq+AW8/ny9
+         pZTOyLXYeBGrU4JEKeweFbYhb9e5U0bMPwa7rcOdg3iYNjxrLZFASudp9O6CVlNwl7k9
+         3Offhmqdy77PWuWi6zEx0Oqppi+iXdqkpwm3g3fLaZ8xImEdRaMKmYlXk0BGcHO7BZEM
+         gOCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684811596; x=1687403596;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SSMjb6e9YuYDEpRsFJ5qPxDQBlW7HCE/u3pEvidV/n8=;
+        b=cHSPamNmKu8yXwIA0XDSJYqXKLLdWssfRy2Z2AToDIj90Tmx3PoqnZHSL5Z0R4Vr+S
+         7MjpFq1oge1CaPQwm1oIR/7QZzYLQkf0FFtiADrpbZPkJMbPeon6mfP/2Hdh/R9BxGH1
+         UazXc8QoRSHqRemDgM/VZF7+qQ8O2lquqSxrePCn9sYjWrcjwl8vV08DkDP1CCpyOnFF
+         iwjiFWd2AbhvsgBfgX/MbAzLd9NNtJE5vIlJN9Ajd5scnq+vpSEbKMARD4qUWRwhGiM9
+         3LKkXofqcLA5FT0qg+aSdq3ZMyalRTq1oeLyW40Ycu9Da/Oxvdd8j5ByCyVApsxo/zdD
+         Jf9g==
+X-Gm-Message-State: AC+VfDwXB3DNQ0tQRb1DAkzzmSX1164RqdAEiOb06RJldfonJ0FOgrWd
+	a0uhw5eKsrS6BUVSrrAqjaU=
+X-Google-Smtp-Source: ACHHUZ4TILvhwPx1Qq3dBgT+ohnqKeV9vn+3VhaecOzj+SaorKy1P9Uccrse8qK1DcRfNtu9/etW/Q==
+X-Received: by 2002:a05:6a00:1a15:b0:643:b4d5:e3db with SMTP id g21-20020a056a001a1500b00643b4d5e3dbmr16970929pfv.4.1684811595987;
+        Mon, 22 May 2023 20:13:15 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-65.three.co.id. [180.214.232.65])
+        by smtp.gmail.com with ESMTPSA id x5-20020aa79185000000b0064ccc164c9fsm4705232pfa.194.2023.05.22.20.13.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 May 2023 20:13:15 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id 820D2106954; Tue, 23 May 2023 10:13:12 +0700 (WIB)
+Date: Tue, 23 May 2023 10:13:12 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
 Subject: Re: [PATCH 5.15 000/203] 5.15.113-rc1 review
-Message-ID: <20230523010250.GF230989@mit.edu>
+Message-ID: <ZGwvSFRNm/zrIP6J@debian.me>
 References: <20230522190354.935300867@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,66 +57,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SDoHcXug8PvAf8Bu"
 Content-Disposition: inline
 In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
+
+
+--SDoHcXug8PvAf8Bu
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
 On Mon, May 22, 2023 at 08:07:04PM +0100, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 5.15.113 release.
 > There are 203 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>=20
 
-Tested-by: Theodore Ts'o <tytso@mit.edu>
+Successfully compiled and installed bindeb-pkgs on my computer (Acer
+Aspire E15, Intel Core i3 Haswell). No noticeable regressions.
 
-No regressions found for ext4.
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-					- Ted
+--=20
+An old man doll... just what I always wanted! - Clara
 
-TESTRUNID: ltm-20230522174100
-KERNEL:    kernel 5.15.113-rc1-xfstests-00204-g30213a86a6fe #25 SMP Mon May 22 17:36:06 EDT 2023 x86_64
-CMDLINE:   full --kernel gs://gce-xfstests/kernel.deb
-CPUS:      2
-MEM:       7680
+--SDoHcXug8PvAf8Bu
+Content-Type: application/pgp-signature; name="signature.asc"
 
-ext4/4k: 530 tests, 2 failures, 34 skipped, 5650 seconds
-  Flaky: generic/051: 20% (1/5)   generic/475: 60% (3/5)
-ext4/1k: 526 tests, 1 failures, 47 skipped, 5750 seconds
-  Flaky: generic/476: 60% (3/5)
-ext4/ext3: 522 tests, 2 failures, 123 skipped, 4479 seconds
-  Failures: generic/347
-  Flaky: generic/645: 20% (1/5)
-ext4/encrypt: 508 tests, 3 failures, 141 skipped, 2958 seconds
-  Failures: generic/681 generic/682 generic/691
-ext4/nojournal: 525 tests, 3 failures, 102 skipped, 4256 seconds
-  Failures: ext4/301 ext4/304 generic/455
-ext4/ext3conv: 527 tests, 1 failures, 35 skipped, 5196 seconds
-  Failures: generic/347
-ext4/adv: 527 tests, 5 failures, 42 skipped, 5192 seconds
-  Failures: generic/475 generic/477 generic/526 generic/527
-  Flaky: generic/051: 20% (1/5)
-ext4/dioread_nolock: 528 tests, 2 failures, 34 skipped, 4128 seconds
-  Flaky: generic/475: 60% (3/5)   generic/581: 60% (3/5)
-ext4/data_journal: 526 tests, 3 failures, 102 skipped, 4278 seconds
-  Failures: generic/231 generic/347 generic/455
-ext4/bigalloc_4k: 502 tests, 39 skipped, 4372 seconds
-ext4/bigalloc_1k: 502 tests, 1 failures, 57 skipped, 4458 seconds
-  Failures: shared/298
-ext4/dax: 517 tests, 137 skipped, 2396 seconds
-Totals: 6332 tests, 893 skipped, 95 failures, 0 errors, 52817s
+-----BEGIN PGP SIGNATURE-----
 
-FSTESTIMG: gce-xfstests/xfstests-amd64-202303031351
-FSTESTPRJ: gce-xfstests
-FSTESTVER: blktests 676d42c (Thu, 2 Mar 2023 15:25:44 +0900)
-FSTESTVER: fio  fio-3.31 (Tue, 9 Aug 2022 14:41:25 -0600)
-FSTESTVER: fsverity v1.5-6-g5d6f7c4 (Mon, 30 Jan 2023 23:22:45 -0800)
-FSTESTVER: ima-evm-utils v1.3.2 (Wed, 28 Oct 2020 13:18:08 -0400)
-FSTESTVER: nvme-cli v1.16 (Thu, 11 Nov 2021 13:09:06 -0800)
-FSTESTVER: quota  v4.05-53-gd90b7d5 (Tue, 6 Dec 2022 12:59:03 +0100)
-FSTESTVER: util-linux v2.38.1 (Thu, 4 Aug 2022 11:06:21 +0200)
-FSTESTVER: xfsprogs v6.1.1 (Fri, 13 Jan 2023 19:06:37 +0100)
-FSTESTVER: xfstests-bld 2e60cef3 (Thu, 23 Feb 2023 15:02:58 -0500)
-FSTESTVER: xfstests v2023.02.26-8-g821ef4889 (Thu, 2 Mar 2023 10:23:51 -0500)
-FSTESTVER: zz_build-distro bullseye
-FSTESTSET: -g auto
-FSTESTOPT: aex
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZGwvPwAKCRD2uYlJVVFO
+o8M/AP4z5zLsu3LabwIkpBiOnf458k977I04xlrWyux8Cek1TAD+IjkK3wOFFm7i
+xEeVVd9Qagdw+cL47zJkkUt+aglGSgg=
+=AxGy
+-----END PGP SIGNATURE-----
+
+--SDoHcXug8PvAf8Bu--
