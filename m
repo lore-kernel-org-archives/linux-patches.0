@@ -1,55 +1,54 @@
-Received: from GBR01-LO2-obe.outbound.protection.outlook.com (mail-lo2gbr01on2133.outbound.protection.outlook.com [40.107.10.133])
+Received: from GBR01-LO2-obe.outbound.protection.outlook.com (mail-lo2gbr01on2090.outbound.protection.outlook.com [40.107.10.90])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154831F92A
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 15:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAA4200BE
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 16:01:00 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=B4NmIVmeUvWhzH7FjDVEJBTU593XS8x8r7H+Sj9cuFDf3BdBhokPmoRKbQLoBBsAryj8mnKcGp3AksFeup+PkWHO2kdPCsof2AAyiXrWTNmcoUWxsuF3QaVxGsbexUbpZiPJsCAjPpUOseW9j5aqJfKPu986z8mpsFhvTsciYmebhcoGMuZtEWyiShaqYcyGNJfSkYpp9umCykytD5dPNTKObDP/N3Df5xcSJhif4EPtHDmmDQzG/lGd7M7sO8iOOCzcPVbCM+Eg5w0w4DPjkD4tIlIJru/IlZ2N3YWB29qtejniKgd4Hwoznd8Uzjc0qVAr3whHIGfYB0zsCTXO9g==
+ b=dREu3HGkkSd7WoH5FlQRyReDv2zVTgB4N0pPLPDW4xZFix86hyTiFoMwb4QuqUyYLoZSRj+yEi1aTItLNttnz+qyBaP8nIV5E6dwDstwKNZQGWDaFD24MJzbXLS0fJvZzSvAAhwwXV+gVKmcX+Enb8jDBt9yacZEJ9gxG4p9VZeNvTzpZSAAsjK+3GeUNSNVpKTr2hbwrTEuh9YplEzcTwI3oj8JAch8eBs0bpDBadSgfSu3175Hk9J0KF3cxY4KTWDPA97QCQDcbcaZi2Zv6/bgbkqFXoO+6yfCZR0LBYed6dviz0+w1ASPLPlgljLa7DQgd3TrouA/89jnP5XqlQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=tTy2E6iayPsGuZQw4h2Ilv81k8Fnsx/36G4adnjITy8=;
- b=f8JNcmTFwjbSy77N5JCCYqEnZh6W1yXAU6ialSq+xNyjXDpsxKg2Qz6FVpRpFFuBIifJnUXzsztAk9s0yoQvW8+agiqA0c8Ca+2Ipnztdbe1z247hoajbX0bNXZeXZacQbEMucqi/U3mJ1IWSC7hWy3Pq1CutZ4aCIwbVtrPYkZpJHBtwedv+Tcsw4Ag/E+EiFBlsa2pTkur4t1Bsv/D0W/8ZesenmutdaTbjezo+oMUwzcLc7pMgKbl1uC4qA3A6R82ueYtlQHCmFZW/SU6rCb3G4qo470qN1pa9ROvrPCPpoHrAcd5WcaFIo9PtORNfBFL6XcSVtOlvHvyHL4y1w==
+ bh=CLsNmBFfgnWSrFs7rn9vs8QEMGMAFowRJTJ8l43bCS4=;
+ b=MHfPYqgqTkkwzNFAvTbXQk2EnAkcgAn7MRJlrgeKw/RQ2UpRTdBrA6kE7KH7UlKAwsiMiCW/3drTtvwUA7CzBdDC43HjXsVoJ4iEUOVWeEr121id4D+KjjAWBI1/3QBPewP0Dzu8GuvUiryPXQaNRXXLxsEN1jh7UE6j5TvXBTTW7FRbILHvogqyj4ZtGmvs72UT1H4aSvqSM9UChlwXWGzkHic/+TqnwXuF/xwZbQSdGEIX0UNnYBeIFUDNaOgsyOXfm7u1HYlmU0r0r+EUJ9VLufONiCI1Ztg3ac/x0bsSlerBYS1eIvEmksG4RFE5so14jpZ6sHSRMzf4ZCSI8A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
  dkim=pass header.d=garyguo.net; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=tTy2E6iayPsGuZQw4h2Ilv81k8Fnsx/36G4adnjITy8=;
- b=F/8UwaPpc5DPBOTHaCtEeYwPD5bIW6NbF4LReNFKyjuCXxVemx6++5+lijPMw/O5L77AkDZDUNGKHlry0SPmF1KgxmkpZiG+c288TUDJ66bhqQMBdiKS2C9bKeNisV0JbHPPuUeFjrR4H3IMQ4oeshEip7xhINP0rjPRFYWIPNI=
+ bh=CLsNmBFfgnWSrFs7rn9vs8QEMGMAFowRJTJ8l43bCS4=;
+ b=FTB/cFVHqfM+L+LGksh/9JH1TInZufCRXkilOT4dh2GzPmP+WZeGhLjfqoIuilRENpbxOcQW2wVEG0IZFcPiVMa3/wkBAgJLEmBbMXTqFyq3MLWqR1IQyZNnxMWkr67xKvBilBvxNs6hIeKjgOTvYWlUluh2/mYGNeHG0y1SQSU=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=garyguo.net;
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
- by LOYP265MB2096.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:117::8) with
+ by LO2P265MB7219.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:329::10) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.14; Tue, 23 May
- 2023 15:56:31 +0000
+ 2023 16:00:57 +0000
 Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::1d51:d482:270c:7daf]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  ([fe80::1d51:d482:270c:7daf%4]) with mapi id 15.20.6433.013; Tue, 23 May 2023
- 15:56:31 +0000
-Date: Tue, 23 May 2023 16:56:29 +0100
+ 16:00:57 +0000
+Date: Tue, 23 May 2023 17:00:55 +0100
 From: Gary Guo <gary@garyguo.net>
 To: Alice Ryhl <aliceryhl@google.com>
 Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho
  <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng
  <boqun.feng@gmail.com>, "=?UTF-8?B?QmrDtnJu?= Roy Baron"
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Ingo
- Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, Will
- Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: Re: [PATCH v2 4/4] rust: task: add `Send` marker to `Task`
-Message-ID: <20230523165629.0b092b08.gary@garyguo.net>
-In-Reply-To: <20230523144418.1250547-5-aliceryhl@google.com>
-References: <20230523144418.1250547-1-aliceryhl@google.com>
-	<20230523144418.1250547-5-aliceryhl@google.com>
+ <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Will
+ Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Mark
+ Rutland <mark.rutland@arm.com>, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev, Wedson Almeida Filho
+ <walmeida@microsoft.com>
+Subject: Re: [PATCH v1 1/2] rust: sync: add `Arc::ptr_eq`
+Message-ID: <20230523170055.4e2ef9a9.gary@garyguo.net>
+In-Reply-To: <20230517200814.3157916-1-aliceryhl@google.com>
+References: <20230517200814.3157916-1-aliceryhl@google.com>
 X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO2P265CA0202.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:9e::22) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
+X-ClientProxiedBy: LO4P265CA0196.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:318::6) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
  (2603:10a6:600:253::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -58,91 +57,100 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LOYP265MB2096:EE_
-X-MS-Office365-Filtering-Correlation-Id: 069747aa-427e-4ed2-e437-08db5ba646d8
+X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO2P265MB7219:EE_
+X-MS-Office365-Filtering-Correlation-Id: c55cd37d-1d35-4d59-f149-08db5ba6e52d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
 X-Microsoft-Antispam-Message-Info:
-	tMD+onxjflx9WLf5HUVbK61MAf6ZzSfN0mv5iKTLxMS8KVH/SXEvGjUWYSUSVVbKOtnhRkXCEltXg3OyFLA/jsvN+qGG5MZJbWUdtBxP84X2JHyz/SULbm9L+fbSx+TVZxjtDWlEuKLeTCUslIU/rxwisFuNV0OkNPxerYm59bt7Goz8iM89Pg932muPbDmnz8dtFvC8FlxoGZobF0aEV5Z0FKDxtK2Qg0P9d6W0tyW8ks4xnEiFcxdIbb0bK3oWrw81Z8tujEAvsQJOaidNCI9lQxCohBZ6CC0+gEUjh6WZWNUUdj1fO/VFtS/FeqDKpdcvmFlgpniqCkEvE7FMb+hslKGbUAdQZDIpsjBsDv4oLcuyvW5HX+QeqMuxb+7letWULBTEU1Huz135flfZC3BkWFNae2qYXl3JnjA1PxxCM5/3YvYhfMxH+9GgBHFYljFgcqpUPxkynjWSLRi/fLwAIU0tDwMYBfBD58fPnQDAjS9cKao1GyTtaxuKMoKAnK2WvYmgxNgtpgO3vqsT4/7RTpf4XxSa/CWb7FqPPDeEp4DuhzhxEimnefwfVVAQNnlGEqdXAbEBnrLI7RjnGKgna1PGZ0pBEnZ5ynOjf6g=
+	JigKJf4505bFnB/d1EUPALtK0lhnFswxj2aatJcbul1ZdFvLK+HTov9hVK2G34AYG6DukyeKB41iUVFkXvRqIttGeLYq8wPT3om7CdTvP4QQHD+oi5aGO18QQWcgo3XfE+lCRD8aJbGlcF2AKxBiRmb7EpekYvgcqn9lxRyYfTPDs+4h7EuklOjxWHozeRO5trCABbkpCt5qJVsw0sBOc3LqXl/+Hf2yVDrfGqIJl7F1sdGhb32Hd87mR4DNtrqGBgf1B+L4PhbWvv9O2jYnhaUgvHWcTwFe1z2zlkyOpBBCRP70av6/myY8pe4AbcI/5jOIxRRBcFpypTUxhzGRmVwDMJORR/isqcMHd9ez4Jk4PLyER4qgaZXKG3aXSmSuIbstk4FHBGysC44RV3yPhFtJqbxdKlyFM5KkghviDrSeyZAVHXorXAv0HNTKOGNmML8yfso6Pxvf+auX55aR1CYcbTj/rJq/n52R42JJZvwqmAy6pIPo+lgpFJXor6ssjsnyQKAESlgkL3gDy+Nz6EezNTMRomgDd9dvzCBkA20/uGMenK6Z2YqE5ua522zSV3ZIKXXnYD0gJQjVZimd3URAJcG6vVpoXn6855a2VBo=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(39830400003)(346002)(136003)(396003)(366004)(376002)(451199021)(4326008)(66476007)(6916009)(66556008)(83380400001)(66946007)(86362001)(38100700002)(36756003)(54906003)(7416002)(478600001)(2906002)(6486002)(8936002)(8676002)(186003)(6512007)(41300700001)(6506007)(26005)(1076003)(2616005)(316002)(5660300002)(81973001);DIR:OUT;SFP:1102;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(396003)(376002)(346002)(136003)(39830400003)(366004)(451199021)(1076003)(6512007)(6506007)(26005)(186003)(2616005)(36756003)(6486002)(2906002)(5660300002)(316002)(54906003)(478600001)(45080400002)(66946007)(66476007)(66556008)(86362001)(4326008)(38100700002)(6916009)(8936002)(41300700001)(8676002)(7416002)(81973001);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?IskT1XD8FyiWaHe95zQiRDJZ+O6jCf2ST/93zzh2N7zWuzshZpUZZmGF+RRt?=
- =?us-ascii?Q?9BdBfEhBAhLzZuEpDtlhGAxVFTNrermHKCy0lETxTjfIPOeFSASF108XxH6S?=
- =?us-ascii?Q?zPGBLb4ObEJCd9OMFoqGf3oTLJPlQY/qx0gGz/joNDBOZd+t9Hsjn0K76tiT?=
- =?us-ascii?Q?fg6F0s2U20y9uvGseIeMwRBRe+RjP9cAtZ74TFNYzMqW05PhaJSW8e2A/YkN?=
- =?us-ascii?Q?vAcYxTj99pqbnUcETtpifeRZO+HKcY4Gs5fQ+IIpfRq3ttD+byN7O/+hknNt?=
- =?us-ascii?Q?wNVPLoXa1659bDFUmueZehhcXiFb2B5etOSRvi9q/qC+VXSqXlracpWDGyIU?=
- =?us-ascii?Q?yQNsLNsPYPenfMgkOwAHKxyws+P3OvLFz/yl2A66RJzY0Qv49EUQBglOAVrl?=
- =?us-ascii?Q?FVSFgyzJV1ygIj8hkqQkqgbK6wHXBp8SmBeqQGezj+uly+9ISOepHbcmHgN4?=
- =?us-ascii?Q?MF+aEdJ0QoTByMIWZkwKVnQ+O7r539oRamL16gsJpHRRwd7SKybLlsjay3NH?=
- =?us-ascii?Q?ewZNzDM3jeKMFCrz1zKE5jmlVM8HXqo046IyZkRbojFS0TNjR6O1sx5EDmGb?=
- =?us-ascii?Q?5R8Fgb817nsnkJqPI/bGSXPNNzk1mQ99InEGmu51WE+DZoPE1Iyoiy98aQdS?=
- =?us-ascii?Q?Pm+ogeZhn8vqnR5h32Iudh69ydxto5vgRvMoQepVcwOfCg7DmM8A26a3H/fd?=
- =?us-ascii?Q?nXdnsv4UrMuvGLHv7sIq4MDTbb6v7cMZvAdsTL5hom0fKgquY396pmtqqy3f?=
- =?us-ascii?Q?2J8n1E6unBqo/FvbDPcT+PODelaorMTVqRHlhtSWC/Ri2Xt3jm8C8dbiX9ZO?=
- =?us-ascii?Q?+8Rw3gGJ+8ki8lLYQPxklBI9i1hBItybmUS9YUy1N+iSOrX6sEUwp2V1+htF?=
- =?us-ascii?Q?v0jv5ywW2HLMIBJBB+ImGXq+eYb7v8DmbTPIsX0mN15SGyj/WBM3ktDg4UNl?=
- =?us-ascii?Q?+hT/5EjkM3aSuykc4atqGub4ZdjSqoWTdOFnApL4y1yE/X/UfULuG3Et2XY4?=
- =?us-ascii?Q?7JJu0Uo1WYu3qrRua0H5cdNAOizFFFmqDKdjaNgL63v2/OPCDVe8CeNj0Jec?=
- =?us-ascii?Q?UWqJxebF9LfjqgWdOa+7z+BRRAL2Fb6bDVaoFpqRXWcTFcgJRkRmMy4Bm6EX?=
- =?us-ascii?Q?S6kQpYqRlhzRkQqgR8kprgW3vJzhW1CZGIJuhsm4jUImN5gSm7XuBXJ9T35U?=
- =?us-ascii?Q?g/H6Cn4G9UlJE40f1eV1TNKf4KJQoN9ZQLzFmkcrLD0pq+52bBqqPnVAzbVd?=
- =?us-ascii?Q?xYcwnADzq+d14gwy/QM0Mp9pisn3tMmBxMkkqDeNXrjK9g0yEc48FB2UZVCa?=
- =?us-ascii?Q?h6QL9ZpM2/mrrVbcYm2RbYNPih4dC7dd1PN32kfHd3apQMuENpGhFLX6DgxY?=
- =?us-ascii?Q?4z2JxhdGmPxQK7KTJxnuXub7r0UFNKT2V/tEAjou6jQphLbUCU+aWQmiPwQE?=
- =?us-ascii?Q?abRg9UOKmi0tzFCZanFIt36FkmjY0aOmzgd1DPmU1YCuFHYNjnTzzWgAKopZ?=
- =?us-ascii?Q?BVEqY+s0buqFQ7xJE0KmpIbiNTyQ8Pt/xKm/0+guCgR9pPbV1AVq8iRsoJb/?=
- =?us-ascii?Q?y6mRRIyKuPttiXzA0/AIwnW3ggMcey9WgXv+juck?=
+	=?us-ascii?Q?yrkG1XzBG1A536DCeLDJEjePkpd8cP+xTPABHIHnOS5udbRK35enzBzBIl7r?=
+ =?us-ascii?Q?9wa+6tK878v8abh50KcagRTKdqTn9TP/CcS2iOEg99NqTaUYT/Dup8jI29U8?=
+ =?us-ascii?Q?rZWTuGpiwc76Jy9cI2FUJ+rCB7L2MKfTgy0VmFGOZfhjteLX329aCh3NCfdE?=
+ =?us-ascii?Q?6fgUEDGnrDCqG/V2pROEFBgVtb45iD4kw7GYX26FWNxWf3mfYc26cpoawerK?=
+ =?us-ascii?Q?7qjVnPDPGr0WMPTQf51GGKTH7dPwKKXrHsbx4s7jViP/7e+oE6R2kgBCjXZ7?=
+ =?us-ascii?Q?v4G9sDrJKcr86VSZqeG70LCjDWwJykYqrdjnAU8/ns30DJMWqCj/L0gXFpNz?=
+ =?us-ascii?Q?PxYqoV6JC8XORmBvpFDwWBnPsVKPjLwmz8o9wsAt/Ze5MBin73vOcbPCzJuH?=
+ =?us-ascii?Q?iu9HO5+G+eV5hz185ynksGvF2qW103YTxNF3wq8wR6nWgiDxqrCvfUbbtxL9?=
+ =?us-ascii?Q?Hctnd8b6LqPZUpOamNecVxUXAGFCyXPm06Qny94OdFthw4qf10HHd5RJa8cH?=
+ =?us-ascii?Q?2+122dAx1m7nCe3tW267S8cFugRgKSgDh25JBuYTFCde3jPh/Dv6fp9eXodz?=
+ =?us-ascii?Q?pqZ1ESPESo9/yP+PgirCJaBoytirnSk8iQ2OXvuEvvCmAyP89dpXPEJ/DuVP?=
+ =?us-ascii?Q?DJuUB2Y0XFmBE0EaiSzkGmuMHj8VDp5LQtSzK4w77boRYbigQnSFxF1Iqldz?=
+ =?us-ascii?Q?hvtXwimgtwB3D07f+u+v/SX6AW8q7mvItbiPMsewCzLzgePaGyCxlMVvK0KH?=
+ =?us-ascii?Q?XN5kuLDHezXCRuLObMswO71bjkwoEfmKQc6Hx7MEMfEDhVwtBYRdY04snEQc?=
+ =?us-ascii?Q?0LGTm8hFFWvWUIh6A1T/dLREOjzKahQ6ONPgnbB/fHtYVywwvv788mESnw3J?=
+ =?us-ascii?Q?Wb+HXOnfPI1gtduXW7PlvQ+QNxUZjgcGOKdc6xsxsxHVn9ntBRuA5RLnppzS?=
+ =?us-ascii?Q?iTlN6cl97E7bkNUIa5ZZovsNFGy2eVyuclKVC34No9cIKg/G/2KP04nl0XnW?=
+ =?us-ascii?Q?uRgQ0Cly908mFeuyTVgPlHwp2g2sN2F3KPZ1kLb3qiwW8xd2fponkhaVBRJQ?=
+ =?us-ascii?Q?Svr5o8Sb1im2qY+mSMcZbPtVwysndF7uCTqdzq1mUISqCh51fB71hOZ8ADyY?=
+ =?us-ascii?Q?kOL5drKeXHSZHEKHO9+mzfQwxvy8gnQHWFlAXsvMqoRyLXqpAweKH8iWbY4l?=
+ =?us-ascii?Q?OwmvUXij1Sqb48D6lxp5U11fMHhpju73iZRloFQPB7zEMvVCOaWZVY7WZdms?=
+ =?us-ascii?Q?ktHq8N9FD+o9MkQCH0AkfkrBz/WS1alR/9dB2ShsjfzuLFujNboPg4QFkDqo?=
+ =?us-ascii?Q?rpuFrQz6Jj0YsAh1ddxP3HAp7UOhk99xLNlYa20uplb+JVvQFH2f15P8YBzS?=
+ =?us-ascii?Q?fJ/C1Y3XIxQ9uqQiLx19nc7XvEedrBfHcO9K1sBMABOpC+WxF4gKa9upFkFY?=
+ =?us-ascii?Q?k5GdexdH9I11M0Siqx9Nhfj5ZN0c6Puv/HjRqxdQSeV7ijpUNDAg0kUQYzXj?=
+ =?us-ascii?Q?JFEKg376H+CIRpEJmf2Syv5cSifq/8Rh1ytiY/0RfsgAM9WN9ZZjLBg3mJSI?=
+ =?us-ascii?Q?rXlbHWGlgi2IUlwu1+BXE33XgY+/dmLPRZxlhb4L?=
 X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: 069747aa-427e-4ed2-e437-08db5ba646d8
+X-MS-Exchange-CrossTenant-Network-Message-Id: c55cd37d-1d35-4d59-f149-08db5ba6e52d
 X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 May 2023 15:56:31.5753
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 May 2023 16:00:57.2328
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4OO8NmRQ0zVRUWxv2Ii/AZjWZJ1v490xvUjrcggj3Ines8db9MXNyOnssfP59nmkXZslRShh5wGmxXwMjoAcUQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LOYP265MB2096
+X-MS-Exchange-CrossTenant-UserPrincipalName: ElD5vN0Orx5mt3tImUgS0TVE0XOj6YhTKDNGivW/acIxvSxfuVyeY1bJOp9eWtTJapaYI8B9lVXIjmfIJMIbzQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO2P265MB7219
 
-On Tue, 23 May 2023 14:44:18 +0000
+On Wed, 17 May 2023 20:08:13 +0000
 Alice Ryhl <aliceryhl@google.com> wrote:
 
-> When a type also implements `Sync`, the meaning of `Send` is just "this
-> type may be accessed mutably from threads other than the one it is
-> created on". That's ok for this type.
+> Add a method for comparing whether two `Arc` pointers reference the same
+> underlying object.
 > 
+> This comparison can already be done by getting a reference to the inner
+> values and comparing whether the references have the same address.
+> However, writing `Arc::ptr_eq(a, b)` is generally less error-prone than
+> doing the same check on the references, since you might otherwise
+> accidentally compare the two `&Arc<T>` references instead, which wont
+> work because those are pointers to pointers to the inner value, when you
+> just want to compare the pointers to the inner value.
+> 
+> Also, this method might optimize better because getting a reference to
+> the inner value involves offsetting the pointer, which this method does
+> not need to do.
+> 
+> Co-developed-by: Wedson Almeida Filho <walmeida@microsoft.com>
+> Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
 > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
 
 Reviewed-by: Gary Guo <gary@garyguo.net>
 
 > ---
->  rust/kernel/task.rs | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
+>  rust/kernel/sync/arc.rs | 5 +++++
+>  1 file changed, 5 insertions(+)
 > 
-> diff --git a/rust/kernel/task.rs b/rust/kernel/task.rs
-> index 526d29a0ae27..7eda15e5f1b3 100644
-> --- a/rust/kernel/task.rs
-> +++ b/rust/kernel/task.rs
-> @@ -64,8 +64,14 @@ macro_rules! current {
->  #[repr(transparent)]
->  pub struct Task(pub(crate) Opaque<bindings::task_struct>);
->  
-> -// SAFETY: It's OK to access `Task` through references from other threads because we're either
-> -// accessing properties that don't change (e.g., `pid`, `group_leader`) or that are properly
-> +// SAFETY: By design, the only way to access a `Task` is via the `current` function or via an
-> +// `ARef<Task>` obtained through the `AlwaysRefCounted` impl. This means that the only situation in
-> +// which a `Task` can be accessed mutably is when the refcount drops to zero and the destructor
-> +// runs. It is safe for that to happen on any thread, so it is ok for this type to be `Send`.
-> +unsafe impl Send for Task {}
+> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+> index e6d206242465..274febe3bb06 100644
+> --- a/rust/kernel/sync/arc.rs
+> +++ b/rust/kernel/sync/arc.rs
+> @@ -221,6 +221,11 @@ impl<T: ?Sized> Arc<T> {
+>          // reference can be created.
+>          unsafe { ArcBorrow::new(self.ptr) }
+>      }
 > +
-> +// SAFETY: It's OK to access `Task` through shared references from other threads because we're
-> +// either accessing properties that don't change (e.g., `pid`, `group_leader`) or that are properly
->  // synchronised by C code (e.g., `signal_pending`).
->  unsafe impl Sync for Task {}
+> +    /// Compare whether two [`Arc`] pointers reference the same underlying object.
+> +    pub fn ptr_eq(this: &Self, other: &Self) -> bool {
+> +        core::ptr::eq(this.ptr.as_ptr(), other.ptr.as_ptr())
+> +    }
+>  }
 >  
+>  impl<T: 'static> ForeignOwnable for Arc<T> {
+> 
+> base-commit: ac9a78681b921877518763ba0e89202254349d1b
 
