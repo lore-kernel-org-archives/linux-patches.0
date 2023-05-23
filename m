@@ -1,69 +1,88 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08441E501
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 10:11:16 +0000 (UTC)
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-50be17a1eceso1245507a12.2
-        for <patches@lists.linux.dev>; Tue, 23 May 2023 03:11:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl-com.20221208.gappssmtp.com; s=20221208; t=1684836675; x=1687428675;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4ijudp9Skl+/hs6LWpF+HBcWDTyNQo9dZLQJN0P0dpY=;
-        b=OlsHHZ+ZFshfg4doBhBO7bFHKerast6jJS2F+kf4fzdm/OxntZK8BUHlVngzx+9d01
-         KI0n9KUp3OIlh2pjeaBmVMh3vGJL2LiyrvXoMKjTllim2ffpFY3QGrI8nOTc1/Ohp5an
-         xGFpMimtSEq4EsqYieO//USw9Mh6iKCmGwGHMU5P8H7vqWkH/FSi4JQ6dCdj+xaLF/D7
-         c2lISgb47P5h5nzeK3ft0q2nui6VexpHRcmHWqtT+aNSRQHKlXbQEMTrnLqVrLxQ/0d4
-         ExiKTGhi7jmlFkEaHBVNksHpm8MSno/DghUwesTE5SPyx61vVSMO6trb4hnD41W+k0HQ
-         5pdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684836675; x=1687428675;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4ijudp9Skl+/hs6LWpF+HBcWDTyNQo9dZLQJN0P0dpY=;
-        b=P0VJe+qYlsuComFXMvyjK23ERjzRUofBcmGJVQxsG3q/R+o4d7m1jSGx7hRgwHPyKd
-         UG/Ar/gJkdzfAi6sMmphavRkF5tRcJ5AvV9yV5uksQ5Mj/Jm60fjuCDDGFu+B2K5OlkY
-         VHdaboDXaBZoP496M8jCzdkFlkEAc1c6l6dsniwX0EIEzHKu9fPKQu2O2MGzb73bVO3d
-         w7tkSJors85FpDWwU1IH8xRXVa5+rC6oYXl+kAn7o7kb6nYI2CQS/RPmdVC5yUrvR8wg
-         YNCpXxq7BoYFCIwsXf/ei2GvFYiXgk4EDqbsArYb3Ra4cBlkcXN3Qjxo1ADPpFPxdJqE
-         qp7Q==
-X-Gm-Message-State: AC+VfDwDP9PbFHmRH570UuRl61MLyNxhjbeJPgYo5Q9T8dmcSMN1Y2Yr
-	wqQRDrmAOcjj19qDr/EgkQKYX9di0eVeolD+B26qyg==
-X-Google-Smtp-Source: ACHHUZ5iZ5hWmJx6UvpfTPUcGeGBx0h4ALR+xxYj49G7EeE3YFmWnbwM7CBo5BW8uNNQmbAUWXXkvAW85AbrBN0a1t4=
-X-Received: by 2002:a17:907:7b9e:b0:96f:b58e:7e21 with SMTP id
- ne30-20020a1709077b9e00b0096fb58e7e21mr10380440ejc.52.1684836674758; Tue, 23
- May 2023 03:11:14 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EE21EA60
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 10:21:13 +0000 (UTC)
+Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
+	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id ECF99803424E
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 10:00:05 +0000 (UTC)
+Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
+	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id 6236810046862
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 09:59:34 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id 1Onmq9hBxooAW1Onmq6NY8; Tue, 23 May 2023 09:59:34 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=IorbzJzg c=1 sm=1 tr=0 ts=646c8e86
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=P0xRbXHiH_UA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=_TT2BMk-RzcNz2eV-joA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=p6l073W1H14VRvH/3qDVIKzIoUiWlZ6V1q4jFM65G4w=; b=pTugLCBkYeRjXr09yfK5brUA2Y
+	jGpu9b4LcG5wXRL1aDH4nIPWS18Fbi8GOQfpJ+reHobWLBqdHlW2sJ4LhGc//6vI6EEt/1J+sL+9J
+	q4Y3lMnmcI6AMo+aVeneXMWdwWogSrrat7kb9UDBEII77Z85g4oKEH2BSX1FEwwg7r+5ggS4hPCmd
+	KB979ogXI9SXxG2RBLmOZmtF/QeeGaFxXuelzJXDXgTs8b6M8CCzi8R6XAQMCMJaNaxeUtzGOMnUM
+	P/nfY9d6/AIJRyun/8T9tzwGGJxFtbLYWftn8ZQM7FEzvDYdId+DxeJk9cFvnNGMWuoGmKY0FYZvZ
+	A2MmCoyA==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:40970 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1q1Onl-003vXU-B3;
+	Tue, 23 May 2023 03:59:33 -0600
+Subject: Re: [PATCH 6.3 000/364] 6.3.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230522190412.801391872@linuxfoundation.org>
+In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <44f75b57-d26f-c284-825c-19bcc7e2ac7e@w6rz.net>
+Date: Tue, 23 May 2023 02:59:31 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230522190405.880733338@linuxfoundation.org>
-In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
-From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 23 May 2023 19:11:03 +0900
-Message-ID: <CAKL4bV69TwgqL0GBe6NwxhpOzJhTMthQQbbx=Yc8TwOp=2J6dQ@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/292] 6.1.30-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1q1Onl-003vXU-B3
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:40970
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-Hi Greg
-
-On Tue, May 23, 2023 at 4:23=E2=80=AFAM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.30 release.
-> There are 292 patches in this series, all will be posted as a response
+On 5/22/23 12:05 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.3.4 release.
+> There are 364 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -71,29 +90,16 @@ On Tue, May 23, 2023 at 4:23=E2=80=AFAM Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.30-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.4-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-6.1.30-rc1 tested.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-x86_64
+Tested-by: Ron Economos <re@w6rz.net>
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
-
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P, arch linux)
-
-Thanks
-
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
