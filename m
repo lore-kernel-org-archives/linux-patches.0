@@ -1,105 +1,114 @@
-Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f202.google.com (mail-yb1-f202.google.com [209.85.219.202])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EE21EA60
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 10:21:13 +0000 (UTC)
-Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
-	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id ECF99803424E
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 10:00:05 +0000 (UTC)
-Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
-	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id 6236810046862
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 09:59:34 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id 1Onmq9hBxooAW1Onmq6NY8; Tue, 23 May 2023 09:59:34 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=IorbzJzg c=1 sm=1 tr=0 ts=646c8e86
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=P0xRbXHiH_UA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=_TT2BMk-RzcNz2eV-joA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=p6l073W1H14VRvH/3qDVIKzIoUiWlZ6V1q4jFM65G4w=; b=pTugLCBkYeRjXr09yfK5brUA2Y
-	jGpu9b4LcG5wXRL1aDH4nIPWS18Fbi8GOQfpJ+reHobWLBqdHlW2sJ4LhGc//6vI6EEt/1J+sL+9J
-	q4Y3lMnmcI6AMo+aVeneXMWdwWogSrrat7kb9UDBEII77Z85g4oKEH2BSX1FEwwg7r+5ggS4hPCmd
-	KB979ogXI9SXxG2RBLmOZmtF/QeeGaFxXuelzJXDXgTs8b6M8CCzi8R6XAQMCMJaNaxeUtzGOMnUM
-	P/nfY9d6/AIJRyun/8T9tzwGGJxFtbLYWftn8ZQM7FEzvDYdId+DxeJk9cFvnNGMWuoGmKY0FYZvZ
-	A2MmCoyA==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:40970 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1q1Onl-003vXU-B3;
-	Tue, 23 May 2023 03:59:33 -0600
-Subject: Re: [PATCH 6.3 000/364] 6.3.4-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230522190412.801391872@linuxfoundation.org>
-In-Reply-To: <20230522190412.801391872@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <44f75b57-d26f-c284-825c-19bcc7e2ac7e@w6rz.net>
-Date: Tue, 23 May 2023 02:59:31 -0700
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42DAC4A840
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 11:07:12 +0000 (UTC)
+Received: by mail-yb1-f202.google.com with SMTP id 3f1490d57ef6-babb51cb4d4so6170148276.1
+        for <patches@lists.linux.dev>; Tue, 23 May 2023 04:07:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1684840031; x=1687432031;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=2XgBvS7Dq5efKHkw7EY0MhJdVq0k/8wvd67gGiWjjGY=;
+        b=I2NuidGBI/ZeU95AgQL5cjDLDKnFCRQhwK80Fgf6TjZTKTEC8DC+X9iSKW1+OGmbCQ
+         tbEmvSculz37Vxh4nZ+cGSlHBgBO+BNMCsFePd5i1XJRDStdsKgK2UhycHnP+uIjq3W+
+         BGyXzdow/jD99f7ks6jbRs3YPyEn9XKtXB5BCAq7dsIV69FSVOllw9B/Z6WxozOHMNKv
+         t1K98BdYWNjYgpKjmlUphUPoSDarlKaAZqPfv1Cr5pG2PTQYcqrpkj/yspAUFjppThcr
+         dyxC630dpbZ2K0/yAlqfREb9rNAl58QGE6cRxvMiBJbtqW6UqM/Prd0ERjsPmpm5adrD
+         Queg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684840031; x=1687432031;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2XgBvS7Dq5efKHkw7EY0MhJdVq0k/8wvd67gGiWjjGY=;
+        b=IJyIKVZWtQesr97edPl8v4zFpWhjX/xc/EVowh0JO4Wn6yh+zn43CVXeRUKzO8JNGh
+         pk8YcpK0J3zkmN0KpRIb3cWHs7gg1VsOcKscz4XX4Ekuyw9cn+yT+i8tRSBKF7xhw0lC
+         7QXvvak0j2jZ/mF6eCEvCNfejoV/VH6zpBgS2XYrW1bQlj3BBnM8E4+3HTC0L+DZHAsQ
+         gvfH9JqfQ8gs58DSjAypu8ITCSGpNU4btBSf4d07yYKZ5wX4n8QAHPaNFC0qkJkOU6Qd
+         AWAG4+sXmbfB8omuOE62SL3AHzieUaQ0Oy3CNd9XYbicTTOLdSZNmuqW71E35ZR2IjPJ
+         8YJw==
+X-Gm-Message-State: AC+VfDwKG2vZVXWaJZFbB5FC5bUzoZ9ooLFRh1TEnyW8yLt7cw+HQgAF
+	FS55vLZDH20rLECzrAUFVAjqgA0n89xf59E=
+X-Google-Smtp-Source: ACHHUZ5fQNzXetN18AMOrqlYgjbM0rPXw1HVQJvrLv1Yjb1M1/QRmptg+hoYr/BXIrxgTx0GNavoIajsv9nwQ0I=
+X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
+ (user=aliceryhl job=sendgmr) by 2002:a25:d48e:0:b0:ba8:9653:c948 with SMTP id
+ m136-20020a25d48e000000b00ba89653c948mr5747400ybf.3.1684840031253; Tue, 23
+ May 2023 04:07:11 -0700 (PDT)
+Date: Tue, 23 May 2023 11:07:09 +0000
+In-Reply-To: <b54801cd-1afb-2190-3b8a-4a095d04fdff@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1q1Onl-003vXU-B3
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:40970
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Mime-Version: 1.0
+References: <b54801cd-1afb-2190-3b8a-4a095d04fdff@gmail.com>
+X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
+Message-ID: <20230523110709.4077557-1-aliceryhl@google.com>
+Subject: Re: [PATCH v1 6/7] rust: workqueue: add safe API to workqueue
+From: Alice Ryhl <aliceryhl@google.com>
+To: yakoyoku@gmail.com
+Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
+	bjorn3_gh@protonmail.com, boqun.feng@gmail.com, gary@garyguo.net, 
+	jiangshanlai@gmail.com, linux-kernel@vger.kernel.org, ojeda@kernel.org, 
+	patches@lists.linux.dev, rust-for-linux@vger.kernel.org, tj@kernel.org, 
+	wedsonaf@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 5/22/23 12:05 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.4 release.
-> There are 364 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 24 May 2023 19:03:25 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.3.4-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.3.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On 5/18/23 21:17, Martin Rodriguez Reboredo wrote:
+> On 5/17/23 17:31, Alice Ryhl wrote:
+>> +unsafe impl<T> WorkItem for Arc<T>
+>> +where
+>> +    T: ArcWorkItem + HasWork<Self> + ?Sized,
+>> +{
+>> +    type EnqueueOutput = Result<(), Self>;
+>> +
+>> +    unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutput
+>> +    where
+>> +        F: FnOnce(*mut bindings::work_struct) -> bool,
+>> +    {
+>> +        let ptr = Arc::into_raw(self);
+>> +
+>> +        // Using `get_work_offset` here for object-safety.
+>> +        //
+>> +        // SAFETY: The pointer is valid since we just got it from `into_raw`.
+>> +        let off = unsafe { (&*ptr).get_work_offset() };
+>> +
+>> +        // SAFETY: The `HasWork` impl promises that this offset gives us a field of type
+>> +        // `Work<Self>` in the same allocation.
+>> +        let work_ptr = unsafe { (ptr as *const u8).add(off) as *const Work<Self> };
+>> +        // SAFETY: The pointer is not dangling.
+>> +        let work_ptr = unsafe { Work::raw_get(work_ptr) };
+>> +
+>> +        match (queue_work_on)(work_ptr) {
+> 
+> Match for boolean is not a good pattern in my eyes, if-else should be
+> used instead.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+I think this is a question of style. For a comparison:
 
-Tested-by: Ron Economos <re@w6rz.net>
+match (queue_work_on)(work_ptr) {
+    true => Ok(()),
+    // SAFETY: The work queue has not taken ownership of the pointer.
+    false => Err(unsafe { Arc::from_raw(ptr) }),
+}
 
+vs
+
+if (queue_work_on)(work_ptr) {
+    Ok(())
+} else {
+    // SAFETY: The work queue has not taken ownership of the pointer.
+    Err(unsafe { Arc::from_raw(ptr) }),
+}
+
+I'm happy to change it if others disagree, but when the branches
+evaluate to a short expression like they do here, I quite like the first
+version.
+
+> Also aren't the parens around the closure unnecessary?
+
+Hmm, parenthesises are often required around closures, but it's possible
+that it is only required for stuff like `self.closure(args)` to
+disambiguate between a `closure` field (of pointer type) and a `closure`
+method. I can check and remove them if they are not necessary.
