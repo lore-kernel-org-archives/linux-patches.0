@@ -1,143 +1,105 @@
-Received: from JPN01-TYC-obe.outbound.protection.outlook.com (mail-tycjpn01on2139.outbound.protection.outlook.com [40.107.114.139])
+Received: from qproxy5-pub.mail.unifiedlayer.com (qproxy5-pub.mail.unifiedlayer.com [69.89.21.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACF42098A
-	for <patches@lists.linux.dev>; Tue, 23 May 2023 18:29:10 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SJ4Wan/cmlDq4DaIVY+lLno/lxktAVhnKxQSlDpKwp0PguWpVtbMPDVsqeznZ+iRTAgJltFipV6zOrN+6UoH20C/xPDYe1uiVvVlcj3VfW79O2hbwEKUJMKhQf2mYWd4J9KvIWh8Axl2AAVV78qcQ2JrYRX2EnspfhXGekFaYX89LpThlewA7hV6ycyE8rn8IkZuuiOlOsuEhAT7ysT9nOdhszFRFBIN5WcubneeJQKxL9HkYKZQT5GQmv4n5SJiWUzL8pjPrM7Fl6YEiQxU+OQaWkHpA2Zc7lZrdJGvF8Mvth+B0c3gHXVDD6QpS/gNjEdAFXIg2AvLAsv0dn8gCw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jbz8VVBQtYR5yCwomN7K4KHFRh/3pzRn/f4TmmY2ksk=;
- b=MPr8dic/U+3GmE3LIDxlyZ6jCfJXt7P3REga2hQwKMHM3Aud6qyINlyi9vvfe0HWiU8KdsiYPBgBRBEWl68fn9zQ5RIuJ7sig6qopxojftujopUy+Sh8zDnLod+5kiLnCGglQjroFQUNX+PH96NB5xuDIvvxybNFHsm2r6h0AVNBYwVAcoBkRU+IEKRApB5IqK2Plrn6p0vMQ6z4Ns3My1L1+xNKII3pg7iQ692gDcM1EorCt6df33WDZHlqZnRZWG+Eb0/ik0tW5+9Car9VGusqHMx/ZHWATYAqx9Jtm7ZwTGGqmeeCnfVwNy/yDi30o0nnKGYD7wHk4pCVbEzYXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=renesas.com; dmarc=pass action=none header.from=renesas.com;
- dkim=pass header.d=renesas.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=renesas.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jbz8VVBQtYR5yCwomN7K4KHFRh/3pzRn/f4TmmY2ksk=;
- b=QMAxAPPfYdfN8ulBrW+9aMBeecFnL1Q3GVJZ4rzvSs9IGdvpT9cVtWMVg/7euV+2e4/DggwnI4pQxotHvc/KAwgVmE91C0sJbpZ2c9TFR+OSmiDkXnbza+dTlsUkyvB8ZG0PKUx5ZV6ZOMrxF6OpAsyKpDbXGbMwQ9jYDrvV07E=
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com (2603:1096:404:dd::14)
- by TYWPR01MB8725.jpnprd01.prod.outlook.com (2603:1096:400:167::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6411.30; Tue, 23 May
- 2023 18:29:07 +0000
-Received: from TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a7d8:4c3a:9cfd:2e79]) by TY2PR01MB3788.jpnprd01.prod.outlook.com
- ([fe80::a7d8:4c3a:9cfd:2e79%4]) with mapi id 15.20.6411.030; Tue, 23 May 2023
- 18:29:07 +0000
-From: Chris Paterson <Chris.Paterson2@renesas.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "stable@vger.kernel.org"
-	<stable@vger.kernel.org>
-CC: "patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>, "linux@roeck-us.net"
-	<linux@roeck-us.net>, "shuah@kernel.org" <shuah@kernel.org>,
-	"patches@kernelci.org" <patches@kernelci.org>, "lkft-triage@lists.linaro.org"
-	<lkft-triage@lists.linaro.org>, "pavel@denx.de" <pavel@denx.de>,
-	"jonathanh@nvidia.com" <jonathanh@nvidia.com>, "f.fainelli@gmail.com"
-	<f.fainelli@gmail.com>, "sudipm.mukherjee@gmail.com"
-	<sudipm.mukherjee@gmail.com>, "srw@sladewatkins.net" <srw@sladewatkins.net>,
-	"rwarsow@gmx.de" <rwarsow@gmx.de>
-Subject: RE: [PATCH 6.3 000/363] 6.3.4-rc2 review
-Thread-Topic: [PATCH 6.3 000/363] 6.3.4-rc2 review
-Thread-Index: AQHZjZhCK7yCKXtut0yiUs/pgCiLYK9oLOnQ
-Date: Tue, 23 May 2023 18:29:07 +0000
-Message-ID:
- <TY2PR01MB378842462A7B9C62AAC058F0B7409@TY2PR01MB3788.jpnprd01.prod.outlook.com>
-References: <20230523164950.435226211@linuxfoundation.org>
-In-Reply-To: <20230523164950.435226211@linuxfoundation.org>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=renesas.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TY2PR01MB3788:EE_|TYWPR01MB8725:EE_
-x-ms-office365-filtering-correlation-id: a564fe05-589f-4f7f-7fb7-08db5bbb9835
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- qAPVFeWLefikgay1uPvN9G59iWBHVB52q8R5FxGPLrMdpQo+D8vX8RvQWs2F3x5aBJOdYoZ4OLG+5FYdRldKWZ7Blrxoy9KW/rSGntcj6fHHDlffwVhlC7U02i60ugmi8AyrcIODElL1yslrhux40o+T5i+tZgrpLSWJUvfg44v8Ydg1UkPeZFwaGUsk55zcPRGLo+Dtcctn8nneeDxvF1WxTU/z4/IP4CWl7xQrTLgquo1ZD33BiLmZE9HLLY8IdRQ+GXCrM/aDHzXC4lS3esnW4UPUF9nzM0h1Z8i/fUTTdDL9dUfKhCFiYrWkJOvdCYcoyI82UNVa34YOSBbMzEaY0ZdC+YxkA0w8x1RX4RUzzXp3Hd8msM01+MxSjZVYZQjI3PMJmPHqjClu8J2dpKJAIrXOh4VgD+SkBRzJXleJE8y26MkLjSbLzpbYzw+kjV6rXEygPTPaMSja1lo+3vvP2StzqAwaFhR3LrnTnkoUzWga4KPjFeiQv1tRHXwgsD3V4zRFS/D+hAO1EMD9aYZtPDIAw42XntCBiKy/mpIS6zH3HCFIeZswTnoTXK1iU7ozLd4PSxDHPG7SObm6P3LFAKrepsvtI3BZIs0qFq82PNneQn04GZs/smb3o8/oYtYCC8JKYJ0Tcn1QVDMMLA==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TY2PR01MB3788.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(136003)(376002)(366004)(396003)(346002)(451199021)(4744005)(2906002)(316002)(4326008)(41300700001)(66946007)(76116006)(66556008)(66476007)(64756008)(66446008)(8936002)(52536014)(7416002)(8676002)(33656002)(38070700005)(5660300002)(86362001)(55016003)(71200400001)(9686003)(122000001)(26005)(186003)(6506007)(38100700002)(966005)(7696005)(54906003)(110136005)(478600001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?Windows-1252?Q?x924EPQFWgrmvWX9b0r48ecoQWcC3dF9XNc+Pid1mTVUG0FwBCdYz92j?=
- =?Windows-1252?Q?nnca7tuPW3CyYax8UfaWP1ZIo4UkIHMfWSSXBBLjv8jfXCnRCXlDEcxB?=
- =?Windows-1252?Q?esUZq850VotyLpaIU8WjRIv7eQfD9jsQWyxViqwIUR39zC6HVlxDm7fr?=
- =?Windows-1252?Q?NNLlyCIa3crSc5sA6OAbiGJBSHKbWxmpo8/S3i0cdASL5iafXDOvuA5z?=
- =?Windows-1252?Q?0ilk7S8YaVQhiVGIdP6QCM3rvn09wVqUL9D978Xfp8RXyO/EZ7HY44m5?=
- =?Windows-1252?Q?6xaYfYzFzsZXUY4+oiCBBxsFPlPaYWhsITey766PxhMhf0y6kEtR/Qj0?=
- =?Windows-1252?Q?qq50e25he1QP0/G+YHk3vVx8lBZZMJhY4KwPHUaoobqB20kZ4yDqbUjX?=
- =?Windows-1252?Q?iZW00hTOPIjBhlxOydS0yLB7PtEA5gwljPnqplNDw/fbIYZVXlCOpuGA?=
- =?Windows-1252?Q?mXhDv0x76LoCIetA+xQ16BoqEz4273hMwIbdtcYwBfLu9KTZwzGd+pIF?=
- =?Windows-1252?Q?e8OXSQlRaApQLexg/IwQKSLUxxDelyZ3sm0VrXYYy5A9vewMxpUDXmMf?=
- =?Windows-1252?Q?g9uO9R0YinrIEe0Vf6bNKnkP7akNQw3SPANL+V/eQcAfQrFUjX6SZJTr?=
- =?Windows-1252?Q?ePTeyf/rCvJGY9RNV5gIr83saEaMF1iUbkRrjKapbumXputCs0iMcUaJ?=
- =?Windows-1252?Q?y3X0obM46SUVOCQfp1hEBdIfpVIaRjo2OLuMWdwg6UfnumTKowgKT0Sc?=
- =?Windows-1252?Q?FWtY9M4HrMHvIL7/wHrRDV+LShv7DJbZ212QuNXAbAVuU1WJI0EXrYX8?=
- =?Windows-1252?Q?rpv/xyHESDhKXRgp6w+c1ILRiHmMTazVYjGJVrMhtMJjfTBH3BJQKtSN?=
- =?Windows-1252?Q?PZL141jmGCVVwfbRd1ikB6SncrwoEX3WX4xGhj9DytndAJU4RNtYdJ1x?=
- =?Windows-1252?Q?0fuNJv0ztCB5FVq2zqa8P4/OZ6UvTydeBOFnS/b4ll1Y0HU2A0eq9sCa?=
- =?Windows-1252?Q?Wv6ZALXZWvdJ6Vzp9Yz4snj3oEZKEUtSWQZQOzXKcxG0C7I0Isbz6VgH?=
- =?Windows-1252?Q?iK2kjaaUurd3VS/te23K/HdumIxjgpzioYvoiitzLQpWNWwZbxOkZrHF?=
- =?Windows-1252?Q?2eQkRuNgSD3lBu2zoQzOeNqAgqF1L/YjW9q1LqDgvZdNMwDL4GyO3UNL?=
- =?Windows-1252?Q?gvmS4AlCjEwUoci6BFvH6K/25e/nkR4FNw/lceh+a49nQqLZ2vpDuKuC?=
- =?Windows-1252?Q?AVWgMbmL7SQ0q/nDyV6n3qAE+3+QUePY3oJkBbgNVGAQQhicpkExx34z?=
- =?Windows-1252?Q?z8N7/EjcB34IjptFPxdTCIBNcep6GW1+O7Bo/1mPv/+WVsYyBpT95xRS?=
- =?Windows-1252?Q?tXPLDQESvgnohuKP6AzR2p3WPrE2CaATkLY7H+BW2ZKLIwFDA5X9xTeR?=
- =?Windows-1252?Q?kp2p9YEB2DkbxNeOrLn/XBumJl8hYuM4wgNy18ztUC1FDqZZVZCm5cNx?=
- =?Windows-1252?Q?qTQLFwF+W1JqvSC3HL/uj/MfVJYD3U9uYdSh5mMvefPEU4+PXApaqj2s?=
- =?Windows-1252?Q?5otvMKdLBXj+t9JnzGFd7RcORO2KbSLzLSu6GP4iMq4u0MwtOZ0SH5Iv?=
- =?Windows-1252?Q?gekB3EAPfAj74SFgN2hZdX+7wK/b141Nlo4qYLi/EITpZSUncs6jp10e?=
- =?Windows-1252?Q?X8mkvySJHyzYcj6e7Zl48B2T9emiZ6X/WCFt5R10sC4t/GQw/CyfWg?=
- =?Windows-1252?Q?=3D=3D?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C255CA55
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 20:51:07 +0000 (UTC)
+Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
+	by qproxy5.mail.unifiedlayer.com (Postfix) with ESMTP id 786278034CE0
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 20:29:57 +0000 (UTC)
+Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
+	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id 112081004829B
+	for <patches@lists.linux.dev>; Tue, 23 May 2023 20:29:50 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id 1YdhqaxR4xtIe1YdhqdRBo; Tue, 23 May 2023 20:29:50 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=e+bD9Yl/ c=1 sm=1 tr=0 ts=646d223e
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=P0xRbXHiH_UA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=_TT2BMk-RzcNz2eV-joA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=BX2bgvnL1nr1usC7EyU5DjfHYFs+TnCFnW2d055ArI8=; b=WOZLddEY+EsgXjhO9hihs7GLHI
+	KOnHEEmHoQ/B/5vwQSsCICCXkhZPs3Ed2n38eI2ZvPAJpBcgAAwLDr5n2Gr7Ul3dC/pS77a9ICSbZ
+	Y+Iqg7jcpGXqimR/xh5IVoZ4Kkw6FpVSF2i7M174p4/XjnzcS8w51m3zsN1+koMwqySFdCKU8xT5V
+	3OdMbUjHvwRgsH6RzrK9z3KgY8V6gWhClk02WtoyjkUwFD0XG7r8EslztpdtyCuGfnEDZpW14J2nD
+	KIl4Vlje77ahiSFopyui0UM2s6oTZI00yLyD/eUwlOAsZrC5vy7OnciTqU4EWfSCcmhW2h3J7kOsy
+	FRKv+gLA==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:41072 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1q1Ydg-003gjh-Jg;
+	Tue, 23 May 2023 14:29:48 -0600
+Subject: Re: [PATCH 6.1 000/292] 6.1.30-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230522190405.880733338@linuxfoundation.org>
+In-Reply-To: <20230522190405.880733338@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <1c263436-67a2-696c-5720-edf27596cce2@w6rz.net>
+Date: Tue, 23 May 2023 13:29:46 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: renesas.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TY2PR01MB3788.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a564fe05-589f-4f7f-7fb7-08db5bbb9835
-X-MS-Exchange-CrossTenant-originalarrivaltime: 23 May 2023 18:29:07.3092
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 53d82571-da19-47e4-9cb4-625a166a4a2a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3dX0lxfVo3DtljO31n2O75DpG1/znRp3XfeJYAn1wFNOyxSHIqeXzpp/HA+pZc4ojnirbYDZW6bOfdLqR4XPVuIKiVt1cBOmMyX8BnP57NA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYWPR01MB8725
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1q1Ydg-003gjh-Jg
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:41072
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-Hello Greg,
-
-> From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Sent: Tuesday, May 23, 2023 6:01 PM
->=20
-> This is the start of the stable review cycle for the 6.3.4 release.
-> There are 363 patches in this series, all will be posted as a response
+On 5/22/23 12:05 PM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.30 release.
+> There are 292 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
-> Responses should be made by Thu, 25 May 2023 16:48:37 +0000.
+>
+> Responses should be made by Wed, 24 May 2023 19:03:25 +0000.
 > Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.30-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-CIP configurations built and booted with Linux 6.3.4-rc2 (a37c304c022d):
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/pipelines/8=
-76475389/
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/commits/lin=
-ux-6.3.y
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-The previous xhci_try_enable_msi() issues have now gone.
+Tested-by: Ron Economos <re@w6rz.net>
 
-Tested-by: Chris Paterson (CIP) <chris.paterson2@renesas.com>
-
-Kind regards, Chris
