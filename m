@@ -1,116 +1,100 @@
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2F560875
-	for <patches@lists.linux.dev>; Wed, 24 May 2023 14:53:10 +0000 (UTC)
-Date: Wed, 24 May 2023 14:52:50 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1684939988; x=1685199188;
-	bh=eSrghzPVl/vMIb4NdzZs1ocOvP6Tdr8M0tKbZLF7eVs=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=Rnu8bNMaBm93xHDRKTGpLoOO13wio9NMVOcEnC9UiYVEp4iwjoqaObiHpUVn/OW4e
-	 N58XCN7EgfSRJuPTpBKSZGQSCAaT5WSC20n4WYuWCF2bwyRNfORWDHo/hwX2NNsReP
-	 rvlgjkXYdXunSgTG7+C7IXo+cge1m5PGGe61fpF/sFG1+seG4RrQ8ctzJR6QMve2aJ
-	 ySzlsJTrMx5W9gWnsDTxkFB6Wl+hNdp7bx8wINQ4Z9P24YHzXGHZ+hEnBZJfwjYMa3
-	 eA9l2QHnt1j4Y4qg0sZqrxTG1Rcenjmf4G7khiC7EBKPuFBWBREv6v60ecawqPvgXC
-	 s1C8Tg67nHkCg==
-To: Alice Ryhl <aliceryhl@google.com>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v1 7/7] rust: workqueue: add `try_spawn` helper method
-Message-ID: <xAv635eVJdklAFBXcwxhVWRvgkMs37YDjANEArFkcOdoyH27NSHwbBGgJ6b9Q1EvX8gACiNqkaDYNvwdMWy6YHbeGM4qz1xW54-02UjzzZA=@proton.me>
-In-Reply-To: <20230517203119.3160435-8-aliceryhl@google.com>
-References: <20230517203119.3160435-1-aliceryhl@google.com> <20230517203119.3160435-8-aliceryhl@google.com>
-Feedback-ID: 71780778:user:proton
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA97E19BA4;
+	Wed, 24 May 2023 15:38:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E836CC433EF;
+	Wed, 24 May 2023 15:38:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1684942721;
+	bh=jEpldFaIL8OnA89BNINi6Q1IrGoWIGj+ECcNkECyKvs=;
+	h=From:Date:Subject:To:Cc:From;
+	b=Uk+0Okw2PjNvaphg/aulpUrbFKny49/4wUDB7dULE3wPHold2LaXO52/AsBGt66nF
+	 sGIIqiTIB23pzsqodJB9xXi7n23uVBIGBKLJUUljeD7zw5iM8nOygtz2dfxQxlydjD
+	 DrYyRDNrRewy9lRM0VAL22kElLr4CDMKX/TUj8y94tEkqtUQRKE4k119tFnXOfRYF5
+	 7xPC3XLW3KbrEmqJUPQAUO0y7Ame2EZ2XP/DvO4V9yJuqMRSX5FLxevayR+9Ga2XhR
+	 2OHMZBU97uM/mVQoWUgbX1KAfObX35LYJsJN6aP5FRbc19qH4T+iyK1l5oHtLKzlhS
+	 9eBmvkmi+/Zng==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 24 May 2023 08:38:27 -0700
+Subject: [PATCH] drm/i915: Fix clang -Wimplicit-fallthrough in
+ intel_async_flip_check_hw()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230524-intel_async_flip_check_hw-implicit-fallthrough-v1-1-83de89e376a1@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAHIvbmQC/x2OWwrDIBAArxL87oI1FkqvUorodo1LjRG1L0LuX
+ tPPYWCYVVQqTFVchlUUenHlJXU4HgaBwaaJgO+dhZJqlCelgVOjaGz9JjQ+cjYYCB8mvIHnHBm
+ 5gbcxtlCW5xQANWrp5HiWyosedbYSuGIThj0729qo7CIX8vz5n1xv2/YDozQ2gpkAAAA=
+To: jani.nikula@linux.intel.com, joonas.lahtinen@linux.intel.com, 
+ rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com
+Cc: ndesaulniers@google.com, trix@redhat.com, 
+ intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ kernel test robot <lkp@intel.com>, 
+ Naresh Kamboju <naresh.kamboju@linaro.org>, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2030; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=jEpldFaIL8OnA89BNINi6Q1IrGoWIGj+ECcNkECyKvs=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCl5+g2vXoY0cN5XEAw3mbRAx2jrMdOGiV7+szoiTB4tl
+ YxQmD2lo5SFQYyDQVZMkaX6sepxQ8M5ZxlvnJoEM4eVCWQIAxenAEyEXZqRYVtTZPTcu2dmd000
+ /pxzM/3lqckOxcpuNbIL585tnRIc/IaRYe+sSZWt3/z8D+0wqXRdHKkS5eezyZNh2QuP5x5tyhf
+ WsQMA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Wednesday, May 17th, 2023 at 22:31, Alice Ryhl <aliceryhl@google.com> wr=
-ote:
-> This adds a convenience method that lets you spawn a closure for
-> execution on a workqueue. This will be the most convenient way to use
-> workqueues, but it is fallible because it needs to allocate memory.
->=20
-> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> ---
->  rust/kernel/workqueue.rs | 40 ++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 40 insertions(+)
->=20
-> diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-> index 007005ddcaf0..303b72efd95f 100644
-> --- a/rust/kernel/workqueue.rs
-> +++ b/rust/kernel/workqueue.rs
-> @@ -57,6 +57,42 @@ impl Queue {
->              })
->          }
->      }
-> +
-> +    /// Tries to spawn the given function or closure as a work item.
-> +    ///
-> +    /// This method can fail because it allocates memory to store the wo=
-rk item.
-> +    pub fn try_spawn<T: 'static + Send + Fn()>(&self, func: T) -> Result=
- {
+Clang warns:
 
-Why is this `Fn()` instead of `FnOnce()`?
+  drivers/gpu/drm/i915/display/intel_display.c:6012:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
+                  case I915_FORMAT_MOD_X_TILED:
+                  ^
+  drivers/gpu/drm/i915/display/intel_display.c:6012:3: note: insert 'break;' to avoid fall-through
+                  case I915_FORMAT_MOD_X_TILED:
+                  ^
+                  break;
+  1 error generated.
 
-> +        let init =3D pin_init!(ClosureWork {
-> +            work <- Work::new(),
-> +            func: Some(func),
-> +        });
-> +
-> +        self.enqueue(Box::pin_init(init)?);
-> +        Ok(())
-> +    }
-> +}
-> +
-> +/// A helper type used in `try_spawn`.
-> +#[pin_data]
-> +struct ClosureWork<T> {
-> +    #[pin]
-> +    work: Work<Pin<Box<ClosureWork<T>>>>,
-> +    func: Option<T>,
-> +}
-> +
-> +impl<T> ClosureWork<T> {
-> +    fn project(self: Pin<&mut Self>) -> &mut Option<T> {
-> +        // SAFETY: The `func` field is not structurally pinned.
-> +        unsafe { &mut self.get_unchecked_mut().func }
-> +    }
-> +}
-> +
-> +impl<T: FnOnce()> BoxWorkItem for ClosureWork<T> {
-> +    fn run(mut self: Pin<Box<Self>>) {
-> +        if let Some(func) =3D self.as_mut().project().take() {
-> +            (func)()
-> +        }
-> +    }
->  }
->=20
->  /// A work item.
-> @@ -280,6 +316,10 @@ macro_rules! impl_has_work {
->      )*};
->  }
->=20
-> +impl_has_work! {
-> +    impl<T> HasWork<Pin<Box<Self>>> for ClosureWork<T> { self.work }
-> +}
-> +
->  /// Declares that [`Arc<Self>`] should implement [`WorkItem`].
->  ///
->  /// # Examples
-> --
-> 2.40.1.606.ga4b1b128d6-goog
->=20
+Clang is a little more pedantic than GCC, which does not warn when
+falling through to a case that is just break or return. Clang's version
+is more in line with the kernel's own stance in deprecated.rst, which
+states that all switch/case blocks must end in either break,
+fallthrough, continue, goto, or return. Add the missing break to silence
+the warning.
 
---
-Cheers,
-Benno
+Fixes: 937859485aef ("drm/i915: Support Async Flip on Linear buffers")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/202305241902.UvHtMoxa-lkp@intel.com/
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Closes: https://lore.kernel.org/CA+G9fYv68V3ewK0Qj-syQj7qX-hQr0H1MFL=QFNuDoE_J2Zu-g@mail.gmail.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/i915/display/intel_display.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
+index 0490c6412ab5..6d49e0ab3e85 100644
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -6008,6 +6008,7 @@ static int intel_async_flip_check_hw(struct intel_atomic_state *state, struct in
+ 					    plane->base.base.id, plane->base.name);
+ 				return -EINVAL;
+ 			}
++			break;
+ 
+ 		case I915_FORMAT_MOD_X_TILED:
+ 		case I915_FORMAT_MOD_Y_TILED:
+
+---
+base-commit: 9a2cb1b31c040e2f1b313e2f7921f0f5e6b66d82
+change-id: 20230524-intel_async_flip_check_hw-implicit-fallthrough-c4c40b03802f
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
