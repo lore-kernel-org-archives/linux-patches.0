@@ -1,173 +1,229 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E776A1C06
-	for <patches@lists.linux.dev>; Wed, 24 May 2023 06:15:14 +0000 (UTC)
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1ae851f2a7dso39950395ad.0
-        for <patches@lists.linux.dev>; Tue, 23 May 2023 23:15:14 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140A715B9
+	for <patches@lists.linux.dev>; Wed, 24 May 2023 06:53:21 +0000 (UTC)
+Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-4572a528cefso441581e0c.0
+        for <patches@lists.linux.dev>; Tue, 23 May 2023 23:53:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684908914; x=1687500914;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lt0lGIpQnbErHODNwQ3cDengEUbpWKePGFq6txNOIKs=;
-        b=RAGhMbG8uOFFFCCrljvC4Hlt6lZKpOrXnJZBJuc+6CDr0+FBnbtd+sxDA+1SJpjzUC
-         aLfsNKz+j1G5RmQ6J2/dkjVTt/VYdCaJhfZNVPmX1rYCvZXSY+/1KWBCMywqmy3add74
-         L/V3gve/zC8GcldFhoOV29465IMljK6JFwkpGe2RUD0Rf/9KTy0gVmqcLMyRaSyhG015
-         AKjnzVZ/rK3LBOate3PwROFVWdl4lgD91wCC45CiIO34JyJPNmrG8+oZH+jm+fUYAEpR
-         oHGdWN/Y2mJpXswO8T/woskVa+kzsdptMlzC/R8POQdPMVBA1il1RXfkXQv/09c7PPRe
-         3QGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684908914; x=1687500914;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1684911201; x=1687503201;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lt0lGIpQnbErHODNwQ3cDengEUbpWKePGFq6txNOIKs=;
-        b=LYccPCPDMafmmXczPS/JEGdlmFuAetz6ul5n8N8mft7tLCSTqYYI9f45VvhBjRkXQE
-         nL6pBZfVZM6rwF0P/TzPN48/XyGmwDF6zoNRK+C+7FXIDpUBZ6SXM5P3xD9NVgBVPZjs
-         QCHz7AcfHnEsMdSWbGkb33/GYcdnDe2dMFSw6Mk4pQBxIB88Chru/wKuMo65tzb3rxva
-         1DSYhtgJmL/sOxtyeejRWNRQ3hagbfqNRkGPbVHnfW5skhm5tX6Hdp5Z4r/acsao5BjJ
-         R1JLuAgdNzn1h9HkSf9MVUSKb3g+Qwz4mfJxzn0rTNoqiiOwkzW5KxTp9mcq9K/VuDLG
-         L7QA==
-X-Gm-Message-State: AC+VfDw/9LcAJXlYotbuN8quQJoJtcxY+kzUOsaNn29lg+08/CdgTGO1
-	jDSs4/64heGclCPneOPnywc=
-X-Google-Smtp-Source: ACHHUZ5xpGBbFd9LGPJJ1namXeHHXVm+E0C/DmK6xw6rAGu3//TbvfHJdMcm+i5Ilzbz16HusfjvCA==
-X-Received: by 2002:a17:902:ecd0:b0:1af:d6fb:199c with SMTP id a16-20020a170902ecd000b001afd6fb199cmr2593761plh.16.1684908914137;
-        Tue, 23 May 2023 23:15:14 -0700 (PDT)
-Received: from debian-BULLSEYE-live-builder-AMD64 ([211.216.218.61])
-        by smtp.gmail.com with ESMTPSA id w9-20020a170902d3c900b001a6d08eb054sm7836077plb.78.2023.05.23.23.15.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 23:15:13 -0700 (PDT)
-Date: Wed, 24 May 2023 15:15:26 +0900
-From: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-To: David Rientjes <rientjes@google.com>
-Cc: Kees Cook <keescook@chromium.org>, David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lstoakes@gmail.com>,
-	Vlastimil Babka <vbabka@suse.cz>, Christoph Lameter <cl@linux.com>,
-	Pekka Enberg <penberg@kernel.org>,
-	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>, linux-mm@kvack.org,
-	linux-hardening@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] mm/slab: remove HAVE_HARDENED_USERCOPY_ALLOCATOR
-Message-ID: <ZG2rX4PN03Db8l4C@debian-BULLSEYE-live-builder-AMD64>
-References: <20230523073136.4900-1-vbabka@suse.cz>
- <310077ed-6f3f-41fe-afcf-36500a9408ec@lucifer.local>
- <623a87c6-c0d2-799a-c39e-0d14dcdfa6df@suse.cz>
- <ae3ff438-5e5a-4a75-b4e9-575324a584f7@lucifer.local>
- <ca7860db-220f-ae77-93e6-2a38f6c1130a@redhat.com>
- <202305231001.08BC6058@keescook>
- <7a16b351-c7f6-b6a3-869b-5163c0d0793f@google.com>
+        bh=JO87M/SJhovAggTv+SZMv/UEkxC893mdoY4ZmtFqCiM=;
+        b=rfQ7bSP2vE7mJKsJC4cAWkHJ/cLEDIQJVeErbHBkoaK3JPALG9MrILncV9y83nqlEk
+         yuITnM5++sV2wowMHpRnbzrsoR45eaNVVxGuKuHeuSGjCxTzXCBQasOeX4aFDIUGe21C
+         FYyq22JGvDaxRdI/Rr7BZrpOtwsdRqBr+VAxT6eRYCGvSTyLX9Ebb6wE1DEEArTTUEPi
+         yXywhhzjoCUlNtuMT/vz+Qp73x2wc+cZNpVKWNQNU+QwZi402iNNmp+fsZ8KjYroHUzC
+         ZEp1f6xOjghQ9UjEkcnO61uQ/ms5/1e59RVQlKSwqhsqarbsbdHq++1iWYvOq+Mp2sBG
+         TI2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684911201; x=1687503201;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JO87M/SJhovAggTv+SZMv/UEkxC893mdoY4ZmtFqCiM=;
+        b=ZTcxrhKXI//JYKSthbIU3bTfpMDVTgS27zdxa4SGpoENy8/03Jgc8BU5SHsFscBU1f
+         3sVKOD6+EjWuQkocStOvaKiJHUZTDvaLvIxxYb5UVqdjW1NEcS4BqgPEENKpwK1a0pwP
+         N/xmVNmsl3ziE2JuGuuIGm3N1r8ZsZ8AtoD/tQQcwlgGiZjTO8PtjxLxRpgDFP+mgFEH
+         u47lB67AxBjkw9XzYs0MB1hYSSlsX9DF4JHt460Nbv5awAwwFkKrNVecgrwEXJEAMG8D
+         pZN+6fxhqTiCHA9TtHDZim4egi4cR1PhcQ41ZwLeMnrHBZnJrkawBo99iszCl8jx06fp
+         4yqw==
+X-Gm-Message-State: AC+VfDwpwZSMZqwWsWrIx3oAkkERbFzHKmrzGPAzKe8X+40dgQ2Zp2Pq
+	z0fBdrwq4dzFJwIceFUbXf4kwjVHyiPWaiQw3rTqzQ==
+X-Google-Smtp-Source: ACHHUZ50MQjnVQqFvLZLa4pXsE5ODRH7KIMjO/rsm9DDDSnGx3AZ8r/oCWy2VtFRm7AgjClyg4HJ9OCW8zhPFdHDGmM=
+X-Received: by 2002:a1f:3d81:0:b0:44f:e192:d407 with SMTP id
+ k123-20020a1f3d81000000b0044fe192d407mr6119073vka.9.1684911200780; Tue, 23
+ May 2023 23:53:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7a16b351-c7f6-b6a3-869b-5163c0d0793f@google.com>
+References: <20230523164950.435226211@linuxfoundation.org>
+In-Reply-To: <20230523164950.435226211@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 24 May 2023 12:23:09 +0530
+Message-ID: <CA+G9fYtu2VeQfsjbLngwEnV9rEP3oBiuyaJjMSOe7z+ys5hdig@mail.gmail.com>
+Subject: Re: [PATCH 6.3 000/363] 6.3.4-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 23, 2023 at 05:31:47PM -0700, David Rientjes wrote:
-> On Tue, 23 May 2023, Kees Cook wrote:
-> 
-> > On Tue, May 23, 2023 at 10:14:24AM +0200, David Hildenbrand wrote:
-> > > On 23.05.23 09:56, Lorenzo Stoakes wrote:
-> > > > On Tue, May 23, 2023 at 09:46:46AM +0200, Vlastimil Babka wrote:
-> > > > > On 5/23/23 09:42, Lorenzo Stoakes wrote:
-> > > > > > On Tue, May 23, 2023 at 09:31:36AM +0200, Vlastimil Babka wrote:
-> > > > > > > With SLOB removed, both remaining allocators support hardened usercopy,
-> > > > > > > so remove the config and associated #ifdef.
-> > > > > > > 
-> > > > > > > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> > > > > > > ---
-> > > > > > >   mm/Kconfig       | 2 --
-> > > > > > >   mm/slab.h        | 9 ---------
-> > > > > > >   security/Kconfig | 8 --------
-> > > > > > >   3 files changed, 19 deletions(-)
-> > > > > > > 
-> > > > > > > diff --git a/mm/Kconfig b/mm/Kconfig
-> > > > > > > index 7672a22647b4..041f0da42f2b 100644
-> > > > > > > --- a/mm/Kconfig
-> > > > > > > +++ b/mm/Kconfig
-> > > > > > > @@ -221,7 +221,6 @@ choice
-> > > > > > >   config SLAB
-> > > > > > >   	bool "SLAB"
-> > > > > > >   	depends on !PREEMPT_RT
-> > > > > > > -	select HAVE_HARDENED_USERCOPY_ALLOCATOR
-> > > > > > >   	help
-> > > > > > >   	  The regular slab allocator that is established and known to work
-> > > > > > >   	  well in all environments. It organizes cache hot objects in
-> > > > > > > @@ -229,7 +228,6 @@ config SLAB
-> > > > > > > 
-> > > > > > >   config SLUB
-> > > > > > >   	bool "SLUB (Unqueued Allocator)"
-> > > > > > > -	select HAVE_HARDENED_USERCOPY_ALLOCATOR
-> > > > > > >   	help
-> > > > > > >   	   SLUB is a slab allocator that minimizes cache line usage
-> > > > > > >   	   instead of managing queues of cached objects (SLAB approach).
-> > > > > > > diff --git a/mm/slab.h b/mm/slab.h
-> > > > > > > index f01ac256a8f5..695ef96b4b5b 100644
-> > > > > > > --- a/mm/slab.h
-> > > > > > > +++ b/mm/slab.h
-> > > > > > > @@ -832,17 +832,8 @@ struct kmem_obj_info {
-> > > > > > >   void __kmem_obj_info(struct kmem_obj_info *kpp, void *object, struct slab *slab);
-> > > > > > >   #endif
-> > > > > > > 
-> > > > > > > -#ifdef CONFIG_HAVE_HARDENED_USERCOPY_ALLOCATOR
-> > > > > > >   void __check_heap_object(const void *ptr, unsigned long n,
-> > > > > > >   			 const struct slab *slab, bool to_user);
-> > > > > > > -#else
-> > > > > > > -static inline
-> > > > > > > -void __check_heap_object(const void *ptr, unsigned long n,
-> > > > > > > -			 const struct slab *slab, bool to_user)
-> > > > > > > -{
-> > > > > > > -}
-> > > > > > > -#endif
-> > > > > > 
-> > > > > > Hm, this is still defined in slab.c/slub.c and invoked in usercopy.c, do we
-> > > > > > not want the prototype?
-> > > > > 
-> > > > > Well I didn't delete the prototype, just the ifdef/else around, so now it's
-> > > > > there unconditionally.
-> > > > > 
-> > > > > > Perhaps replacing with #ifdef
-> > > > > > CONFIG_HARDENED_USERCOPY instead? I may be missing something here :)
-> > > > > 
-> > > > > Putting it under that #ifdef would work and match that the implementations
-> > > > > of that function are under that same ifdef, but maybe it's unnecessary noise
-> > > > > in the header?
-> > > > > 
-> > > > 
-> > > > Yeah my brain inserted extra '-'s there, sorry!
-> > > > 
-> > > > Given we only define __check_heap_object() in sl[au]b.c if
-> > > > CONFIG_HARDENED_USERCOPY wouldn't we need to keep the empty version around
-> > > > if !CONFIG_HARDENED_USERCOPY since check_heap_object() appears to be called
-> > > > unconditionally?
-> > > > 
-> > > 
-> > > The file is only compiled with CONFIG_HARDENED_USERCOPY:
-> > > 
-> > > mm/Makefile:obj-$(CONFIG_HARDENED_USERCOPY) += usercopy.o
-> > 
-> > Right.
-> > 
-> > > Reviewed-by: David Hildenbrand <david@redhat.com>
-> > 
-> > Thanks!
-> > 
-> > Reviewed-by: Kees Cook <keescook@chromium.org>
-> > 
-> 
-> Acked-by: David Rientjes <rientjes@google.com>
+On Tue, 23 May 2023 at 22:31, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.3.4 release.
+> There are 363 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 25 May 2023 16:48:37 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.3.4-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.3.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-looks fine to me,
 
-Acked-by: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
--- 
-Hyeonggon Yoo
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Doing kernel stuff as a hobby
-Undergraduate | Chungnam National University
-Dept. Computer Science & Engineering
+## Build
+* kernel: 6.3.4-rc2
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.3.y
+* git commit: a37c304c022dd76ffb05897280b5a45da06cb119
+* git describe: v6.3.3-364-ga37c304c022d
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.3.y/build/v6.3.3=
+-364-ga37c304c022d
+
+## Test Regressions (compared to v6.3.3)
+
+## Metric Regressions (compared to v6.3.3)
+
+## Test Fixes (compared to v6.3.3)
+
+## Metric Fixes (compared to v6.3.3)
+
+## Test result summary
+total: 182851, pass: 158943, fail: 3522, skip: 20124, xfail: 262
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 145 total, 144 passed, 1 failed
+* arm64: 54 total, 53 passed, 1 failed
+* i386: 41 total, 40 passed, 1 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 38 total, 36 passed, 2 failed
+* riscv: 26 total, 25 passed, 1 failed
+* s390: 16 total, 14 passed, 2 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 46 total, 46 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-exec
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-ftrace
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-mincore
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-user_events
+* kselftest-vDSO
+* kselftest-watchdog
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
