@@ -1,229 +1,93 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 140A715B9
-	for <patches@lists.linux.dev>; Wed, 24 May 2023 06:53:21 +0000 (UTC)
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-4572a528cefso441581e0c.0
-        for <patches@lists.linux.dev>; Tue, 23 May 2023 23:53:21 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 465521FA2
+	for <patches@lists.linux.dev>; Wed, 24 May 2023 07:15:27 +0000 (UTC)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3090d3e9c92so386265f8f.2
+        for <patches@lists.linux.dev>; Wed, 24 May 2023 00:15:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684911201; x=1687503201;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JO87M/SJhovAggTv+SZMv/UEkxC893mdoY4ZmtFqCiM=;
-        b=rfQ7bSP2vE7mJKsJC4cAWkHJ/cLEDIQJVeErbHBkoaK3JPALG9MrILncV9y83nqlEk
-         yuITnM5++sV2wowMHpRnbzrsoR45eaNVVxGuKuHeuSGjCxTzXCBQasOeX4aFDIUGe21C
-         FYyq22JGvDaxRdI/Rr7BZrpOtwsdRqBr+VAxT6eRYCGvSTyLX9Ebb6wE1DEEArTTUEPi
-         yXywhhzjoCUlNtuMT/vz+Qp73x2wc+cZNpVKWNQNU+QwZi402iNNmp+fsZ8KjYroHUzC
-         ZEp1f6xOjghQ9UjEkcnO61uQ/ms5/1e59RVQlKSwqhsqarbsbdHq++1iWYvOq+Mp2sBG
-         TI2g==
+        d=gmail.com; s=20221208; t=1684912525; x=1687504525;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QTwUX3qEpiLdoo2WOruxY9BVcBrptDaoYsD2JHxAesc=;
+        b=j8e8aqmI8nrYA59qDNX4vMDiOXCYqlzQxVL4aYAfwG42G4CYrBVAzwMIaQ1Erv4hSX
+         kGnV/G7awoKyLM0rQLSvaUFEp3Hpw4ah+4cG8HaHB56syFLX7L0MYR65eGXbihrEsIoD
+         SKFnAIVtSLLkt1jAT0tsSLblry/Honk98G/08iXl1PQRBddaPXBvuSyHUw1Kmn+ylCCT
+         sV7KZtxCVJuQCifkRIaVp8pQX52QrXsytC2TEwVxo/cqI6OlZidu3v4eKWO7B/5iLSJY
+         xGr6RyW9Eu6cY4erU9ajh/uOeMhMdmwf7XUieuntprkeSa6X871PlVGHWwJZJh9y1mF0
+         A1Lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684911201; x=1687503201;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JO87M/SJhovAggTv+SZMv/UEkxC893mdoY4ZmtFqCiM=;
-        b=ZTcxrhKXI//JYKSthbIU3bTfpMDVTgS27zdxa4SGpoENy8/03Jgc8BU5SHsFscBU1f
-         3sVKOD6+EjWuQkocStOvaKiJHUZTDvaLvIxxYb5UVqdjW1NEcS4BqgPEENKpwK1a0pwP
-         N/xmVNmsl3ziE2JuGuuIGm3N1r8ZsZ8AtoD/tQQcwlgGiZjTO8PtjxLxRpgDFP+mgFEH
-         u47lB67AxBjkw9XzYs0MB1hYSSlsX9DF4JHt460Nbv5awAwwFkKrNVecgrwEXJEAMG8D
-         pZN+6fxhqTiCHA9TtHDZim4egi4cR1PhcQ41ZwLeMnrHBZnJrkawBo99iszCl8jx06fp
-         4yqw==
-X-Gm-Message-State: AC+VfDwpwZSMZqwWsWrIx3oAkkERbFzHKmrzGPAzKe8X+40dgQ2Zp2Pq
-	z0fBdrwq4dzFJwIceFUbXf4kwjVHyiPWaiQw3rTqzQ==
-X-Google-Smtp-Source: ACHHUZ50MQjnVQqFvLZLa4pXsE5ODRH7KIMjO/rsm9DDDSnGx3AZ8r/oCWy2VtFRm7AgjClyg4HJ9OCW8zhPFdHDGmM=
-X-Received: by 2002:a1f:3d81:0:b0:44f:e192:d407 with SMTP id
- k123-20020a1f3d81000000b0044fe192d407mr6119073vka.9.1684911200780; Tue, 23
- May 2023 23:53:20 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684912525; x=1687504525;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QTwUX3qEpiLdoo2WOruxY9BVcBrptDaoYsD2JHxAesc=;
+        b=EJtnmjYK6EINuSZlm0ejkKv+uIUhQ5ZCoCQledWS4PqgyH0xl8Pqi4Xr4Z905ZAXCe
+         Qs2eHDsBcpw3wgaATmxpM6Mqskdzonm0kk5VFc6vOaxZGV2JtuTF0DlBP0V3RbDHYUY3
+         /0xB+qAADJ52eXiC78LRtedszctjvwRbTFhiIFSWLcWou9pv3GjtID08HS12LJ76QQbS
+         He6cr7NzBSpdbW+e9F7Ejhqyd8KJNtHS+WPWoDNX7VTo83Zk/toKqsdTBYC+kyj25cVz
+         kqDSJGJTmV8tVigrOBSN00vp/FumKiXE+VIig5Tv3O+XWMw5rdx8IjanKASdfM5h9aXn
+         VKbw==
+X-Gm-Message-State: AC+VfDwrJy+3UjZuI+qDxiD0K9zSOPLZVp2SZcfCMAHfaSa5W5MT0MNL
+	QpHJxJ+vLvOapoulgFVHtWs=
+X-Google-Smtp-Source: ACHHUZ7XW0cvABpggLT4CBW+cXjOYhS4kBeHV38swA1xGYzOVfRUCNPM9inU5JsOBBUisX0wNc+F7A==
+X-Received: by 2002:adf:e912:0:b0:307:7e64:4b52 with SMTP id f18-20020adfe912000000b003077e644b52mr14169357wrm.36.1684912525160;
+        Wed, 24 May 2023 00:15:25 -0700 (PDT)
+Received: from localhost (host81-154-179-160.range81-154.btcentralplus.com. [81.154.179.160])
+        by smtp.gmail.com with ESMTPSA id a2-20020a5d53c2000000b002ffbf2213d4sm13537164wrw.75.2023.05.24.00.15.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 May 2023 00:15:23 -0700 (PDT)
+Date: Wed, 24 May 2023 08:15:23 +0100
+From: Lorenzo Stoakes <lstoakes@gmail.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>, Christoph Lameter <cl@linux.com>,
+	Pekka Enberg <penberg@kernel.org>,
+	David Rientjes <rientjes@google.com>,
+	Joonsoo Kim <iamjoonsoo.kim@lge.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Kees Cook <keescook@chromium.org>, linux-mm@kvack.org,
+	linux-hardening@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mm/slab: remove HAVE_HARDENED_USERCOPY_ALLOCATOR
+Message-ID: <f2ca936a-1441-4cbd-b16c-ff2d54630a75@lucifer.local>
+References: <20230523073136.4900-1-vbabka@suse.cz>
+ <310077ed-6f3f-41fe-afcf-36500a9408ec@lucifer.local>
+ <623a87c6-c0d2-799a-c39e-0d14dcdfa6df@suse.cz>
+ <ae3ff438-5e5a-4a75-b4e9-575324a584f7@lucifer.local>
+ <ca7860db-220f-ae77-93e6-2a38f6c1130a@redhat.com>
+ <4674f97f-5f97-45b7-a4b9-a19ca46b7ce1@lucifer.local>
+ <9191d9b0-3318-4e70-a81b-69acff184fc6@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230523164950.435226211@linuxfoundation.org>
-In-Reply-To: <20230523164950.435226211@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 24 May 2023 12:23:09 +0530
-Message-ID: <CA+G9fYtu2VeQfsjbLngwEnV9rEP3oBiuyaJjMSOe7z+ys5hdig@mail.gmail.com>
-Subject: Re: [PATCH 6.3 000/363] 6.3.4-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9191d9b0-3318-4e70-a81b-69acff184fc6@redhat.com>
 
-On Tue, 23 May 2023 at 22:31, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Tue, May 23, 2023 at 10:28:32AM +0200, David Hildenbrand wrote:
+[snip]
+> > > The file is only compiled with CONFIG_HARDENED_USERCOPY:
+> > >
+> > > mm/Makefile:obj-$(CONFIG_HARDENED_USERCOPY) += usercopy.o
+> > >
+> >
+> > Yeah ugh at this sort of implicit thing. Anyway it'd be preferable to stick
+> > #ifdef CONFIG_HARDENED_USERCOPY around the prototype just so it's
+> > abundantly clear this function doesn't exist unless that is set.
 >
-> This is the start of the stable review cycle for the 6.3.4 release.
-> There are 363 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> I recall that it is very common to not use ifdefs unless really required.
+> Because less ifefs are obviously preferable ;)
 >
-> Responses should be made by Thu, 25 May 2023 16:48:37 +0000.
-> Anything received after that time might be too late.
+> Compilation+linking will fail in any case.
 >
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.3.4-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.3.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
+I don't want to insist so hard on something that doesn't really matter, the
+bike shed can be blue, green or red it's fine :P
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+So,
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 6.3.4-rc2
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.3.y
-* git commit: a37c304c022dd76ffb05897280b5a45da06cb119
-* git describe: v6.3.3-364-ga37c304c022d
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.3.y/build/v6.3.3=
--364-ga37c304c022d
-
-## Test Regressions (compared to v6.3.3)
-
-## Metric Regressions (compared to v6.3.3)
-
-## Test Fixes (compared to v6.3.3)
-
-## Metric Fixes (compared to v6.3.3)
-
-## Test result summary
-total: 182851, pass: 158943, fail: 3522, skip: 20124, xfail: 262
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 145 total, 144 passed, 1 failed
-* arm64: 54 total, 53 passed, 1 failed
-* i386: 41 total, 40 passed, 1 failed
-* mips: 30 total, 28 passed, 2 failed
-* parisc: 8 total, 8 passed, 0 failed
-* powerpc: 38 total, 36 passed, 2 failed
-* riscv: 26 total, 25 passed, 1 failed
-* s390: 16 total, 14 passed, 2 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 46 total, 46 passed, 0 failed
-
-## Test suites summary
-* boot
-* fwts
-* igt-gpu-tools
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Reviewed-by: Lorenzo Stoakes <lstoakes@gmail.com>
