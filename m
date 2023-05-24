@@ -1,110 +1,106 @@
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38321951F;
-	Wed, 24 May 2023 15:57:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1684943877; x=1716479877;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=V0ppXZqwuxAU/Bg5FfSiFhkz0C7dZFMzhNEHqaFV3kc=;
-  b=kD6bAILyVW/TqijsdwqRr941SHB9YeX5aLtESd3A5j2gOpTjSmjPfn/v
-   JVtCK8ytljKW23z5/HwJYmu/6a3StCyrTvmDoB8veTSmwBb2+i5EYMECI
-   zYsmx6yzuzBmZxX8G5B6CLtIJJnIiXrtiy/4cUMxcT4C8JwG75Xu3plET
-   yjBpuzQqClV6YYuAkusx22EttZU2JjfME8paHnix636m7ojsS2aJBLtr+
-   iRJZkCkeuyWBC/1ec9wOxdbId4ePi9LSFJuvl7ZAJpFeQ1riR6jduBq6f
-   ezdC7jP4ZyTUWOsLvaNhPQgjb0d3RX8lTmOy4nk04gpfMszXKFbCj2ke0
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10720"; a="343073508"
-X-IronPort-AV: E=Sophos;i="6.00,189,1681196400"; 
-   d="scan'208";a="343073508"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2023 08:57:56 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10720"; a="737375787"
-X-IronPort-AV: E=Sophos;i="6.00,189,1681196400"; 
-   d="scan'208";a="737375787"
-Received: from davidbel-mobl.ger.corp.intel.com (HELO localhost) ([10.252.44.5])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2023 08:57:52 -0700
-From: Jani Nikula <jani.nikula@linux.intel.com>
-To: Nathan Chancellor <nathan@kernel.org>, joonas.lahtinen@linux.intel.com,
- rodrigo.vivi@intel.com, tvrtko.ursulin@linux.intel.com
-Cc: ndesaulniers@google.com, trix@redhat.com,
- intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- llvm@lists.linux.dev, patches@lists.linux.dev, kernel test robot
- <lkp@intel.com>, Naresh Kamboju <naresh.kamboju@linaro.org>, Nathan
- Chancellor <nathan@kernel.org>, Tom Rix <trix@redhat.com>
-Subject: Re: [PATCH] drm/i915: Fix clang -Wimplicit-fallthrough in
- intel_async_flip_check_hw()
-In-Reply-To: <20230524-intel_async_flip_check_hw-implicit-fallthrough-v1-1-83de89e376a1@kernel.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20230524-intel_async_flip_check_hw-implicit-fallthrough-v1-1-83de89e376a1@kernel.org>
-Date: Wed, 24 May 2023 18:57:49 +0300
-Message-ID: <87mt1tk9he.fsf@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E38D33CA;
+	Wed, 24 May 2023 16:44:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2205C433D2;
+	Wed, 24 May 2023 16:44:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1684946655;
+	bh=eAH+SzDKLDb9MJ17r21lT92I2icSy5j2//LJV3igUS8=;
+	h=From:Date:Subject:To:Cc:From;
+	b=HLaeCR9kYippXTpwMhmoIBXFcib3XxmEbPPGCDY8oRtTFQzg8fjwigeFbHleQCdV3
+	 1KzeCN9qiJWZpk6pjO6hBdGE9WOtZ4r9gbM1Xs8kk//4mgNlz4CjDPOa+ptF+ncw1B
+	 aZdump2fjeM82X6pIj2kcBMVTaUe7oejw/Alzu5HCsZyCPXqVTtBtJK6HUh+iIN6F9
+	 Ok58qP3JFqFR5oy0fkxlvZKF/mfE/EWQiaVlx3hrntnp04pOKWV65ziUqdUvdNJJwu
+	 fXvpevVO6oUvYB1gLjqQpDRA6gTNAH6M4u5VE2b+odu1WLtaCdMTWf6Z0YvY0F+y1y
+	 yi1Be8BREU1eA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 24 May 2023 09:44:02 -0700
+Subject: [PATCH] drm/amdgpu: Fix return types of certain NBIOv7.9 callbacks
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230524-nbio_v7_9-wincompatible-function-pointer-types-strict-v1-1-da17e01907cf@kernel.org>
+X-B4-Tracking: v=1; b=H4sIANE+bmQC/x2O2wrCMBAFf6Xk2YXerNZfESnJurULdhOysSql/
+ 27q43CY4axGKTKpuRSribSwspcM1aEwOFl5EPA9s6nLuimPdQvi2A/LaejhzYJ+DjaxexKML8G
+ UZQieJVGE9A2koCkyJsBz33ZNh1S1ncltZ5XARSs47fXZalb2IUQa+fM/dL1t2w86X0cLoAAAA
+ A==
+To: alexander.deucher@amd.com, christian.koenig@amd.com, Xinhui.Pan@amd.com
+Cc: ndesaulniers@google.com, trix@redhat.com, amd-gfx@lists.freedesktop.org, 
+ dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3148; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=eAH+SzDKLDb9MJ17r21lT92I2icSy5j2//LJV3igUS8=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCl5dvde6L0L3bXh7DHZwkUr0zOim0tZ76cv2bXi+P6SF
+ ++XLDsj11HKwiDGwSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmEivOyLC44KOjmkhDusTf
+ BwXK+xg+t1haKKpyhB7vmZdwJ+yRuDzDf7+kN0sXVNz+w6ie7yt9SK3HpEZBblVao6LfMccj558
+ U8gEA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Wed, 24 May 2023, Nathan Chancellor <nathan@kernel.org> wrote:
-> Clang warns:
->
->   drivers/gpu/drm/i915/display/intel_display.c:6012:3: error: unannotated fall-through between switch labels [-Werror,-Wimplicit-fallthrough]
->                   case I915_FORMAT_MOD_X_TILED:
->                   ^
->   drivers/gpu/drm/i915/display/intel_display.c:6012:3: note: insert 'break;' to avoid fall-through
->                   case I915_FORMAT_MOD_X_TILED:
->                   ^
->                   break;
->   1 error generated.
->
-> Clang is a little more pedantic than GCC, which does not warn when
-> falling through to a case that is just break or return. Clang's version
-> is more in line with the kernel's own stance in deprecated.rst, which
-> states that all switch/case blocks must end in either break,
-> fallthrough, continue, goto, or return. Add the missing break to silence
-> the warning.
->
-> Fixes: 937859485aef ("drm/i915: Support Async Flip on Linear buffers")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Closes: https://lore.kernel.org/202305241902.UvHtMoxa-lkp@intel.com/
-> Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-> Closes: https://lore.kernel.org/CA+G9fYv68V3ewK0Qj-syQj7qX-hQr0H1MFL=QFNuDoE_J2Zu-g@mail.gmail.com/
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+When building with clang's -Wincompatible-function-pointer-types-strict,
+which ensures that function pointer signatures match exactly to avoid
+tripping clang's Control Flow Integrity (kCFI) checks at run time and
+will eventually be turned on for the kernel, the following instances
+appear in the NBIOv7.9 code:
 
-Yeah, I think this is the right quick fix. See also [1].
+  drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c:465:32: error: incompatible function pointer types initializing 'int (*)(struct amdgpu_device *)' with an expression of type 'enum amdgpu_gfx_partition (struct amdgpu_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .get_compute_partition_mode = nbio_v7_9_get_compute_partition_mode,
+                                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c:467:31: error: incompatible function pointer types initializing 'u32 (*)(struct amdgpu_device *, u32 *)' (aka 'unsigned int (*)(struct amdgpu_device *, unsigned int *)') with an expression of type 'enum amdgpu_memory_partition (struct amdgpu_device *, u32 *)' (aka 'enum amdgpu_memory_partition (struct amdgpu_device *, unsigned int *)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .get_memory_partition_mode = nbio_v7_9_get_memory_partition_mode,
+                                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  2 errors generated.
 
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Change the return types of these callbacks to match the prototypes to
+clear up the warning and avoid tripping kCFI at run time. Both functions
+return a value from ffs(), which is an integer that can fit into either
+int or unsigned int.
 
-[1] https://lore.kernel.org/r/874jo3kwl6.fsf@intel.com
+Fixes: 11f64eb1472f ("drm/amdgpu: add sysfs node for compute partition mode")
+Fixes: 41a717ea8afc ("drm/amdgpu: detect current GPU memory partition mode")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c b/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
+index e082f6343d20..d19325476752 100644
+--- a/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
++++ b/drivers/gpu/drm/amd/amdgpu/nbio_v7_9.c
+@@ -382,7 +382,7 @@ static void nbio_v7_9_enable_doorbell_interrupt(struct amdgpu_device *adev,
+ 			      DOORBELL_INTERRUPT_DISABLE, enable ? 0 : 1);
+ }
+ 
+-static enum amdgpu_gfx_partition nbio_v7_9_get_compute_partition_mode(struct amdgpu_device *adev)
++static int nbio_v7_9_get_compute_partition_mode(struct amdgpu_device *adev)
+ {
+ 	u32 tmp, px;
+ 
+@@ -408,8 +408,8 @@ static void nbio_v7_9_set_compute_partition_mode(struct amdgpu_device *adev,
+ 	WREG32_SOC15(NBIO, 0, regBIF_BX_PF0_PARTITION_COMPUTE_STATUS, tmp);
+ }
+ 
+-static enum amdgpu_memory_partition
+-nbio_v7_9_get_memory_partition_mode(struct amdgpu_device *adev, u32 *supp_modes)
++static u32 nbio_v7_9_get_memory_partition_mode(struct amdgpu_device *adev,
++					       u32 *supp_modes)
+ {
+ 	u32 tmp;
+ 
 
-> ---
->  drivers/gpu/drm/i915/display/intel_display.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-> index 0490c6412ab5..6d49e0ab3e85 100644
-> --- a/drivers/gpu/drm/i915/display/intel_display.c
-> +++ b/drivers/gpu/drm/i915/display/intel_display.c
-> @@ -6008,6 +6008,7 @@ static int intel_async_flip_check_hw(struct intel_atomic_state *state, struct in
->  					    plane->base.base.id, plane->base.name);
->  				return -EINVAL;
->  			}
-> +			break;
->  
->  		case I915_FORMAT_MOD_X_TILED:
->  		case I915_FORMAT_MOD_Y_TILED:
->
-> ---
-> base-commit: 9a2cb1b31c040e2f1b313e2f7921f0f5e6b66d82
-> change-id: 20230524-intel_async_flip_check_hw-implicit-fallthrough-c4c40b03802f
->
-> Best regards,
+---
+base-commit: fd8f7bb391fa9c1979232cb5ab5bedb08abc855d
+change-id: 20230524-nbio_v7_9-wincompatible-function-pointer-types-strict-c894636ce146
 
+Best regards,
 -- 
-Jani Nikula, Intel Open Source Graphics Center
+Nathan Chancellor <nathan@kernel.org>
+
