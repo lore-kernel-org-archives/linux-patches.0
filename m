@@ -1,51 +1,51 @@
-Received: from mail-ej1-f73.google.com (mail-ej1-f73.google.com [209.85.218.73])
+Received: from mail-ed1-f74.google.com (mail-ed1-f74.google.com [209.85.208.74])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702A31FB1
-	for <patches@lists.linux.dev>; Wed, 24 May 2023 11:19:17 +0000 (UTC)
-Received: by mail-ej1-f73.google.com with SMTP id a640c23a62f3a-96f9aa23593so75079766b.1
-        for <patches@lists.linux.dev>; Wed, 24 May 2023 04:19:17 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4430C182A2
+	for <patches@lists.linux.dev>; Wed, 24 May 2023 12:26:43 +0000 (UTC)
+Received: by mail-ed1-f74.google.com with SMTP id 4fb4d7f45d1cf-513f8141094so941817a12.1
+        for <patches@lists.linux.dev>; Wed, 24 May 2023 05:26:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1684927155; x=1687519155;
+        d=google.com; s=20221208; t=1684931201; x=1687523201;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=aSqeOEBaEovgqBOkQYpmiRbcLkCrvNP3WDOQXeuFBws=;
-        b=YoTFNVu3BuXhD7O32uXMB2r5DmhBVaFcVMJtr/toOkSxoubHnULS6xAfeW2LnVMAlA
-         AYEz2fGtxM3pIYSUnBK97NJj/BDHWhtjg5xXo1E0oD7tUbhsEX3CXPVlILQkcaRPv0ZD
-         yjgEMiuiRLnKN6CsU3p9hbhjzB/iYU4uM2KkitkPUbglYVCC8SJ0awVM+Jd6nWLQuc/G
-         ndgHixe0rgEmKz+2d++PnHjmKN8G+3JZbxp5NfqtrsOioY71sLNZHgs1D1AtBEUVenMn
-         e3E2RvzhRBeZ9qYmqs3ZsfOY5VINcozwl6tDQaiEl1bE2crSn7TsrUNBfRLuLVdhuSpT
-         1BoA==
+        bh=tIkJCVY+tMqNuU9Hdw7jNNdVzKzit4T0GD2WdhoZSXQ=;
+        b=Rf0miXKtnbI4iEIXnusCA82/4rOsQIVvu9oayiSk1I7Dqc9En3wSLFxnjUErf0qLVa
+         5KAMme6jheRdEI8gnBPwkCmhQVED/QGDHTgZLbzMB5ZR4iUnlN/djzTMiy0JZO/TF2s1
+         nJzbPCf3eo3CYZdvYUnOuLyl/r03i2DjvnXQ3lunbiMziTZ6KXC93Jrz6kEUbg3r+eY3
+         6Qb0Mzv2vDX1y4Ut2U5vyMmQcwLtKMbzG874bgg1SOn6cwo7hhWFWsaWl+Cc97/FrTN6
+         ZYndWmGkM+enrawaHU4L38v9HejkFTTP3gjfqq9l7YY9WhVBau7Kt4lMFE49Rt6tgjGu
+         v2NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684927155; x=1687519155;
+        d=1e100.net; s=20221208; t=1684931201; x=1687523201;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aSqeOEBaEovgqBOkQYpmiRbcLkCrvNP3WDOQXeuFBws=;
-        b=VysZNbLGZfKRtwBDlk5SwAmUd93hMvUrlrd8z4oOx2LTXIk3Kmw2mcekWj3Lk+7RKi
-         i6BM+pWNSSWOIgCul40eGtNssDjS6IDYLm5Tbx4mJIUoR1RuaVzL/4OxRu/MZih4ysCN
-         mZxgK7WD9y8jvzAMH+339Nv6F8I+5nXd83xLgt5bTU4F6Zxe+z8PmFKRLUNGVjuDb5jr
-         fIm5MrDQwabg13JgF4yjJku/u6Vs34SFtEJxfbJbtsgknSEUasulVnr/90ZEkwLzezQo
-         v+NjssLQAPZpDXdNouA/LpBM3UfRjLkCg2msTZrVc6ZWhdhX/k3ji0nG2wJ9z/TiPMkC
-         tneg==
-X-Gm-Message-State: AC+VfDygs+F5kOETLh/dx+2FBGf8RfZmQsD0V5J5HuDvCkrfTdsUxfXh
-	PWndFKTMPvg/8hr/RFX6cWVZrfA1QpDyheQ=
-X-Google-Smtp-Source: ACHHUZ6hBDSsE8W54k3/04J7zLascPTlRf9I3nXEziDRNwk18BCOFdKa7mvtqXoJNKmy27weSOFwZUV7ytfiAEg=
+        bh=tIkJCVY+tMqNuU9Hdw7jNNdVzKzit4T0GD2WdhoZSXQ=;
+        b=CxRluF2XyuH483nfyJI3ct+UzmVVzFh+F1je6E6NRu3vh4FekwfPWGv5/O6j5fHOQ6
+         by6ARf43g/u/d/d2YFJvH4xcU+iHE5B0LcE3BXMZ7cHPcpwwSxM/G/y2hrWltHCKj3cT
+         zvogwKilfEMNn+UOGgh6bry5cSl00WdkX7wAXc8ZfPs8KwgUImOahb91vzYAG4lyGnyu
+         D6osSkd8BiDKFzuQxWrfK/3ULfhVQCCWb6hkBmpj0g/MQR4m4z7U1iYlbTDod7Thh6kv
+         tsRitmuJsAtVt+HVqQqwLwZP5Yd/3LCvFjThuqcOo8YY0kj9iYbG/EBr7sA0vNCuKCMN
+         ZueQ==
+X-Gm-Message-State: AC+VfDyWo/kgXszIaO57aADsLjQHl+8MY0Jiu+XuQ/zckuhE0QyMSndH
+	MI5QETn53g0dszm0B3N5BrOkAOVRgE7aH6Q=
+X-Google-Smtp-Source: ACHHUZ6lrbZQBWSWqXTum+8RwDWhnUR59VF9KPwRaF43x13cn/85dwpHjlzTnW6IWF9TZhfFxQQ3n0FHhXp7TVc=
 X-Received: from aliceryhl.c.googlers.com ([fda3:e722:ac3:cc00:31:98fb:c0a8:6c8])
- (user=aliceryhl job=sendgmr) by 2002:a17:906:5a67:b0:96f:5864:eb6c with SMTP
- id my39-20020a1709065a6700b0096f5864eb6cmr6435514ejc.6.1684927155703; Wed, 24
- May 2023 04:19:15 -0700 (PDT)
-Date: Wed, 24 May 2023 11:19:13 +0000
-In-Reply-To: <20230523164333.2c4b0d85.gary@garyguo.net>
+ (user=aliceryhl job=sendgmr) by 2002:a50:bb64:0:b0:50c:d8e:5f4b with SMTP id
+ y91-20020a50bb64000000b0050c0d8e5f4bmr820708ede.8.1684931201472; Wed, 24 May
+ 2023 05:26:41 -0700 (PDT)
+Date: Wed, 24 May 2023 12:26:39 +0000
+In-Reply-To: <20230523164818.0a44fec8.gary@garyguo.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 Mime-Version: 1.0
-References: <20230523164333.2c4b0d85.gary@garyguo.net>
+References: <20230523164818.0a44fec8.gary@garyguo.net>
 X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
-Message-ID: <20230524111913.2492665-1-aliceryhl@google.com>
-Subject: Re: [PATCH v1 3/7] rust: sync: add `Arc::{from_raw, into_raw}`
+Message-ID: <20230524122639.2500848-1-aliceryhl@google.com>
+Subject: Re: [PATCH v1 2/7] rust: add offset_of! macro
 From: Alice Ryhl <aliceryhl@google.com>
 To: gary@garyguo.net
 Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me, 
@@ -55,47 +55,54 @@ Cc: alex.gaynor@gmail.com, aliceryhl@google.com, benno.lossin@proton.me,
 Content-Type: text/plain; charset="UTF-8"
 
 Gary Guo <gary@garyguo.net> writes:
-> On Wed, 17 May 2023 20:31:15 +0000
+> On Wed, 17 May 2023 20:31:14 +0000
 > Alice Ryhl <aliceryhl@google.com> wrote:
->> +    /// Recreates an [`Arc`] instance previously deconstructed via [`Arc::into_raw`].
->> +    ///
->> +    /// This code relies on the `repr(C)` layout of structs as described in
->> +    /// <https://doc.rust-lang.org/reference/type-layout.html#reprc-structs>.
->> +    ///
->> +    /// # Safety
->> +    ///
->> +    /// `ptr` must have been returned by a previous call to [`Arc::into_raw`]. Additionally, it
->> +    /// can only be called once for each previous call to [`Arc::into_raw`].
->> +    pub unsafe fn from_raw(ptr: *const T) -> Self {
->> +        // SAFETY: The safety requirement ensures that the pointer is valid.
->> +        let val_align = core::mem::align_of_val(unsafe { &*ptr });
->> +        let refcount_size = core::mem::size_of::<Opaque<bindings::refcount_t>>();
->> +
->> +        // Use the `repr(C)` algorithm to compute the offset of `data` in `ArcInner`.
->> +        //
->> +        // Pseudo-code for the `#[repr(C)]` algorithm can be found here:
->> +        // <https://doc.rust-lang.org/reference/type-layout.html#reprc-structs>
->> +        let mut val_offset = refcount_size;
->> +        let val_misalign = val_offset % val_align;
->> +        if val_misalign > 0 {
->> +            val_offset += val_align - val_misalign;
+>> +#[macro_export]
+>> +macro_rules! offset_of {
+>> +    ($type:ty, $field:ident) => {{
+>> +        let tmp = ::core::mem::MaybeUninit::<$type>::uninit();
+>> +        let outer = tmp.as_ptr();
+>> +        // To avoid warnings when nesting `unsafe` blocks.
+>> +        #[allow(unused_unsafe)]
+>> +        // SAFETY: The pointer is valid and aligned, just not initialised; `addr_of` ensures that
+>> +        // we don't actually read from `outer` (which would be UB) nor create an intermediate
+>> +        // reference.
+>> +        let inner = unsafe { ::core::ptr::addr_of!((*outer).$field) } as *const u8;
+>> +        // To avoid warnings when nesting `unsafe` blocks.
+>> +        #[allow(unused_unsafe)]
+>> +        // SAFETY: The two pointers are within the same allocation block.
+>> +        unsafe {
+>> +            inner.offset_from(outer as *const u8) as usize
 >> +        }
 > 
-> Given the layout of the whole ArcInner can be calculated as
+> This has no protection against using `Deref`. The memoffset crate has a 
 > 
-> 	Layout::new::<bindings::refcount_t>().extend(Layout::for_value(&*ptr)).unwrap_unchecked().0.pad_to_align()
+> let $type { $field: _, .. };
 > 
-> The offset of `data` could be more intuitively calculated by
-> 
-> 	Layout::new::<bindings::refcount_t>().extend(Layout::for_value(&*ptr)).unwrap_unchecked().1
-> 
-> or
-> 
-> 	Layout::new::<bindings::refcount_t>().align_to(val_align).unwrap_unchecked().pad_to_align().size()
+> line to ensure that the field is a direct member of type and deref is
+> not happening.
 
-I'm not a big fan of the `pad_to_align` version (which is also what
-the rust branch uses), but I like the version you posted with
-`extend`, and I agree that it is clear and intuitive. I will use that
-in the next version of the patchset. Thanks for the suggestion.
+Added. I had to change `$type:ty` to `$type:path` to get that to
+compile, since otherwise you can't use the token in a pattern. However,
+I think it's fine - this is temporary anyway until the standard library
+gets the macro.
+ 
+>> +    }};
+>> +}
+>> diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+>> index 9f94fc83f086..ec583d13dde2 100644
+>> --- a/scripts/Makefile.build
+>> +++ b/scripts/Makefile.build
+>> @@ -277,7 +277,7 @@ $(obj)/%.lst: $(src)/%.c FORCE
+>>  # Compile Rust sources (.rs)
+>>  # ---------------------------------------------------------------------------
+>>  
+>> -rust_allowed_features := core_ffi_c,explicit_generic_args_with_impl_trait,new_uninit,pin_macro
+>> +rust_allowed_features := const_ptr_offset_from,const_refs_to_cell,core_ffi_c,explicit_generic_args_with_impl_trait,new_uninit,pin_macro
+> 
+> Side note: once we bump our compiler to 1.71, we should switch to the
+> built-in `offset_of!` macro and get rid of these unstable features.
+
+Agreed. I mentioned that in the commit message.
 
 Alice
