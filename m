@@ -1,28 +1,28 @@
 Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA6718AF6
-	for <patches@lists.linux.dev>; Wed, 24 May 2023 14:50:28 +0000 (UTC)
-Date: Wed, 24 May 2023 14:50:09 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08F2D60875
+	for <patches@lists.linux.dev>; Wed, 24 May 2023 14:52:10 +0000 (UTC)
+Date: Wed, 24 May 2023 14:51:48 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1684939812; x=1685199012;
-	bh=Uvc2bcYwiMlahenIY7l4o0VGT4i24GCjMIrVGHDELeY=;
+	s=qkvvwriddbeojgix67vuuke7hy.protonmail; t=1684939919; x=1685199119;
+	bh=CL9s3PHQprbA9Ukgl2ZS7fO2vcssugR3QiwDaOjylcQ=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=Bk5EjfvOu0pT3HtUjfr1Ug63XLOZwdQKBlT0Yn6DltxYf86NZv9+jAJAYyeI+vr2i
-	 UOmChowcpv8JxFms1zj97zbKYTZZXcRYeJVY50yvw5qVTfPXoM3BcYd+Q4Xj+xhSVS
-	 FHPnSlyNM4JDnhcod5+OWxT2Re6VouYC86+4uBvbW0l5lNZPhA57QNuylCp9HDCXv/
-	 Qc8GVpoCuKRw7BWbD11s6sN0hJAIsIdjS3LwJTX2aTNwWVVC8GYc4q1LueMJYsS/af
-	 0tKSZz/s2wPebL1xRI7N+NASFE6SSleRPCJDeUe2ddx7lY/fED3Qf0DTXWYE5XsQ0H
-	 eaaBTCVSAzT+Q==
+	b=dffR/9pFMHkotKTsQh3Nq252whjndeWU2fztjO9IZkIIVrjHR+IkxTEsN22sJd8Lz
+	 9X8LfzEqVhpZiaIvzS1xu5+YlFHuBMcugBWoSr9wXmGxbAjANYwoNp20vHCBPsMOY0
+	 uWwuxXGM2w5MeNpTc4UCvrM54Ic8s0TC4tA3vNPXROZYW3kwE7lr2m34AJvtbX0uiQ
+	 1/qV5QsQP1jNjUYJPYePfu6LFY4juCJQ10bkXygKNDOR/vBfB7wwlF2ymQ+RQSKj09
+	 wjkiw1fuIBdEfBB4ugXZkmynBIPlHTp755xaAESCDYdGBRnB+fqafYq4p6r39F1pMv
+	 pV560yVRUWlRw==
 To: Alice Ryhl <aliceryhl@google.com>
 From: Benno Lossin <benno.lossin@proton.me>
 Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v1 5/7] rust: workqueue: add helper for defining work_struct fields
-Message-ID: <XCPRRkwd2lV43Whaash8aIbntiiHuWHtbQgqd11Z6RClSnZnSCHu3-76r1a7bNoM4MWjofINiyH2SSf6v06e1O3GMyeIF43X33OXLX5ltec=@proton.me>
-In-Reply-To: <20230517203119.3160435-6-aliceryhl@google.com>
-References: <20230517203119.3160435-1-aliceryhl@google.com> <20230517203119.3160435-6-aliceryhl@google.com>
+Subject: Re: [PATCH v1 6/7] rust: workqueue: add safe API to workqueue
+Message-ID: <ZWC2OS5uiRNgHMBBzQqt4FZXnOBeHw5IK5D7CAqfNC-z6nfYVLS9jXgvP2cMFvIMtVG22OGlmRGR9RkUJ53lip-SPiEkTHEiBoxMoL-K_38=@proton.me>
+In-Reply-To: <20230517203119.3160435-7-aliceryhl@google.com>
+References: <20230517203119.3160435-1-aliceryhl@google.com> <20230517203119.3160435-7-aliceryhl@google.com>
 Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,311 +35,52 @@ Content-Transfer-Encoding: quoted-printable
 
 On Wednesday, May 17th, 2023 at 22:31, Alice Ryhl <aliceryhl@google.com> wr=
 ote:
-> The main challenge with defining `work_struct` fields is making sure
-> that the function pointer stored in the `work_struct` is appropriate for
-> the work item type it is embedded in. It needs to know the offset of the
-> `work_struct` field being used (even if there are several!) so that it
-> can do a `container_of`, and it needs to know the type of the work item
-> so that it can call into the right user-provided code. All of this needs
-> to happen in a way that provides a safe API to the user, so that users
-> of the workqueue cannot mix up the function pointers.
+> This commit introduces `ArcWorkItem`, `BoxWorkItem`, and
+> `define_work_adapter_newtype!` that make it possible to use the
+> workqueue without any unsafe code whatsoever.
 >=20
-> There are three important pieces that are relevant when doing this. This
-> commit will use traits so that they know about each other according to
-> the following cycle:
+> The `ArcWorkItem` and `BoxWorkItem` traits are used when a struct has a
+> single `work_struct` field.
 >=20
->  * The pointer type. It knows the type of the work item struct.
->  * The work item struct. It knows the offset of its `work_struct` field.
->  * The `work_struct` field. It knows the pointer type.
->=20
-> There's nothing special about making the pointer type know the type of
-> the struct it points at. Pointers generally always know that
-> information.
->=20
-> However, making the `work_struct` field know about the pointer type is
-> less commonly seen. This is done by using a generic parameter: the
-> `work_struct` field will have the type `Work<T>`, where T will be the
-> pointer type in use. The pointer type is required to implement the
-> `WorkItemAdapter` trait, which defines the function pointer to store in
-> the `work_struct` field. The `Work<T>` type guarantees that the
-> `work_struct` inside it uses `<T as WorkItemAdapter>::run` as its
-> function pointer.
->=20
-> Finally, to make the work item struct know the offset of its
-> `work_struct` field, we use a trait called `HasWork<T>`. If a type
-> implements this trait, then the type declares that, at the given offset,
-> there is a field of type `Work<T>`. The trait is marked unsafe because
-> the OFFSET constant must be correct, but we provide an `impl_has_work!`
-> macro that can safely implement `HasWork<T>` on a type. The macro
-> expands to something that only compiles if the specified field really
-> has the type `Work<T>`. It is used like this:
->=20
-> ```
-> struct MyWorkItem {
->     work_field: Work<Arc<MyWorkItem>>,
-> }
->=20
-> impl_has_work! {
->     impl HasWork<Arc<MyWorkItem>> for MyWorkItem { self.work_field }
-> }
-> ```
->=20
-> So to summarize, given a pointer to an allocation containing a work
-> item, you can use the `HasWork<T>` trait to offset the pointer to the
-> `work_struct` field. The function pointer in the `work_struct` field is
-> guaranteed to be a function that knows what the original pointer type
-> was, and using that information, it can undo the offset operation by
-> looking up what the offset was via the `HasWork<T>` trait.
->=20
-> This design supports work items with multiple `work_struct` fields by
-> using different pointer types. For example, you might define structs
-> like these:
->=20
-> ```
-> struct MyPointer1(Arc<MyWorkItem>);
-> struct MyPointer2(Arc<MyWorkItem>);
->=20
-> struct MyWorkItem {
->     work1: Work<MyPointer1>,
->     work2: Work<MyPointer2>,
-> }
-> ```
->=20
-> Then, the wrapper structs `MyPointer1` and `MyPointer2` will take the
-> role as the pointer type. By using one or the other, you tell the
-> workqueue which `work_struct` field to use. This pattern is called the
-> "newtype" pattern.
+> The `define_work_adapter_newtype!` macro is used when a struct has
+> multiple `work_struct` fields. For each `work_struct` field, a newtype
+> struct is defined that wraps `Arc<TheStruct>`, and pushing an instance
+> of the newtype to a workqueue will enqueue it using the associated
+> `work_struct` field. The newtypes are matched with `work_struct` fields
+> by having the T in `Work<T>` be the newtype.
 >=20
 > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
 > ---
->  rust/helpers.c           |   8 ++
->  rust/kernel/workqueue.rs | 183 ++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 190 insertions(+), 1 deletion(-)
+>  rust/kernel/workqueue.rs | 332 ++++++++++++++++++++++++++++++++++++++-
+>  1 file changed, 331 insertions(+), 1 deletion(-)
 >=20
-> diff --git a/rust/helpers.c b/rust/helpers.c
-> index 81e80261d597..7f0c2fe2fbeb 100644
-> --- a/rust/helpers.c
-> +++ b/rust/helpers.c
-> @@ -26,6 +26,7 @@
->  #include <linux/spinlock.h>
->  #include <linux/sched/signal.h>
->  #include <linux/wait.h>
-> +#include <linux/workqueue.h>
->=20
->  __noreturn void rust_helper_BUG(void)
->  {
-> @@ -128,6 +129,13 @@ void rust_helper_put_task_struct(struct task_struct =
-*t)
->  }
->  EXPORT_SYMBOL_GPL(rust_helper_put_task_struct);
->=20
-> +void rust_helper___INIT_WORK(struct work_struct *work, work_func_t func,
-> +=09=09=09     bool on_stack)
-> +{
-> +=09__INIT_WORK(work, func, on_stack);
-> +}
-> +EXPORT_SYMBOL_GPL(rust_helper___INIT_WORK);
-> +
->  /*
->   * We use `bindgen`'s `--size_t-is-usize` option to bind the C `size_t` =
-type
->   * as the Rust `usize` type, so we can use it in contexts where Rust
 > diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
-> index 22205d3bda72..7509618af252 100644
+> index 7509618af252..007005ddcaf0 100644
 > --- a/rust/kernel/workqueue.rs
 > +++ b/rust/kernel/workqueue.rs
-> @@ -4,7 +4,8 @@
+> @@ -4,8 +4,9 @@
 >  //!
 >  //! C header: [`include/linux/workqueue.h`](../../../../include/linux/wo=
 rkqueue.h)
 >=20
-> -use crate::{bindings, types::Opaque};
-> +use crate::{bindings, prelude::*, types::Opaque};
-> +use core::marker::{PhantomData, PhantomPinned};
+> -use crate::{bindings, prelude::*, types::Opaque};
+> +use crate::{bindings, prelude::*, sync::Arc, types::Opaque};
+>  use core::marker::{PhantomData, PhantomPinned};
+> +use core::result::Result;
 >=20
 >  /// A kernel work queue.
 >  ///
-> @@ -98,6 +99,186 @@ pub unsafe trait WorkItem {
->          F: FnOnce(*mut bindings::work_struct) -> bool;
+> @@ -279,6 +280,335 @@ macro_rules! impl_has_work {
+>      )*};
 >  }
 >=20
-> +/// Defines the method that should be called when a work item is execute=
-d.
-> +///
-> +/// This trait is used when the `work_struct` field is defined using the=
- [`Work`] helper.
-> +///
-> +/// # Safety
-> +///
-> +/// Implementers must ensure that [`__enqueue`] uses a `work_struct` ini=
-tialized with the [`run`]
-> +/// method of this trait as the function pointer.
-> +///
-> +/// [`__enqueue`]: WorkItem::__enqueue
-> +/// [`run`]: WorkItemAdapter::run
-> +pub unsafe trait WorkItemAdapter: WorkItem {
-> +    /// Run this work item.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// Must only be called via the function pointer that [`__enqueue`] =
-provides to the
-> +    /// `queue_work_on` closure, and only as described in the documentat=
-ion of `queue_work_on`.
-> +    ///
-> +    /// [`__enqueue`]: WorkItem::__enqueue
-> +    unsafe extern "C" fn run(ptr: *mut bindings::work_struct);
-> +}
-> +
-> +/// Links for a work item.
-> +///
-> +/// This struct contains a function pointer to the `T::run` function fro=
-m the [`WorkItemAdapter`]
-> +/// trait, and defines the linked list pointers necessary to enqueue a w=
-ork item in a workqueue.
-> +///
-> +/// Wraps the kernel's C `struct work_struct`.
-> +///
-> +/// This is a helper type used to associate a `work_struct` with the [`W=
-orkItemAdapter`] that uses
-> +/// it.
-> +#[repr(transparent)]
-> +pub struct Work<T: ?Sized> {
-> +    work: Opaque<bindings::work_struct>,
-> +    _pin: PhantomPinned,
-> +    _adapter: PhantomData<T>,
-> +}
-> +
-> +// SAFETY: Kernel work items are usable from any thread.
-> +//
-> +// We do not need to constrain `T` since the work item does not actually=
- contain a `T`.
-> +unsafe impl<T: ?Sized> Send for Work<T> {}
-> +// SAFETY: Kernel work items are usable from any thread.
-> +//
-> +// We do not need to constrain `T` since the work item does not actually=
- contain a `T`.
-> +unsafe impl<T: ?Sized> Sync for Work<T> {}
-> +
-> +impl<T: ?Sized> Work<T> {
-> +    /// Creates a new instance of [`Work`].
-> +    #[inline]
-> +    #[allow(clippy::new_ret_no_self)]
-> +    pub fn new() -> impl PinInit<Self>
-> +    where
-> +        T: WorkItemAdapter,
-> +    {
-> +        // SAFETY: The `WorkItemAdapter` implementation promises that `T=
-::run` can be used as the
-> +        // work item function.
-> +        unsafe {
-> +            kernel::init::pin_init_from_closure(move |slot| {
-> +                bindings::__INIT_WORK(Self::raw_get(slot), Some(T::run),=
- false);
-> +                Ok(())
-> +            })
-> +        }
-> +    }
-> +
-> +    /// Get a pointer to the inner `work_struct`.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The provided pointer must not be dangling. (But it need not be i=
-nitialized.)
-> +    #[inline]
-> +    pub unsafe fn raw_get(ptr: *const Self) -> *mut bindings::work_struc=
-t {
-> +        // SAFETY: The caller promises that the pointer is valid.
-> +        //
-> +        // A pointer cast would also be ok due to `#[repr(transparent)]`=
-. We use `addr_of!` so that
-> +        // the compiler does not complain that `work` is unused.
-> +        unsafe { Opaque::raw_get(core::ptr::addr_of!((*ptr).work)) }
-> +    }
-> +}
-> +
-> +/// Declares that a type has a [`Work<T>`] field.
-> +///
-> +/// # Safety
-> +///
-> +/// The [`OFFSET`] constant must be the offset of a field in Self of typ=
-e [`Work<T>`]. The methods on
-> +/// this trait must have exactly the behavior that the definitions given=
- below have.
-> +///
-
-I don't like this safety section, since the discharging safety comment
-will just be "I implemented everything correctly" which for me is the same
-as just writing no safety comment at all.
-
-I am working on improving safety comments in general, so we can defer
-improving this until I have come up with a good plan. (If you still want
-to improve it, feel free to do so)
-
-> +/// [`Work<T>`]: Work
-> +/// [`OFFSET`]: HasWork::OFFSET
-> +pub unsafe trait HasWork<T> {
-> +    /// The offset of the [`Work<T>`] field.
-> +    ///
-> +    /// [`Work<T>`]: Work
-> +    const OFFSET: usize;
-> +
-> +    /// Returns the offset of the [`Work<T>`] field.
-> +    ///
-> +    /// This method exists because the [`OFFSET`] constant cannot be acc=
-essed if the type is not Sized.
-> +    ///
-> +    /// [`Work<T>`]: Work
-> +    /// [`OFFSET`]: HasWork::OFFSET
-> +    #[inline]
-> +    fn get_work_offset(&self) -> usize {
-> +        Self::OFFSET
-> +    }
-> +
-> +    /// Returns a pointer to the [`Work<T>`] field.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The pointer must not be dangling. (But the memory need not be in=
-itialized.)
-> +    ///
-> +    /// [`Work<T>`]: Work
-> +    #[inline]
-> +    unsafe fn raw_get_work(ptr: *mut Self) -> *mut Work<T>
-> +    where
-> +        Self: Sized,
-> +    {
-> +        // SAFETY: The caller promises that the pointer is not dangling.
-> +        unsafe { (ptr as *mut u8).add(Self::OFFSET) as *mut Work<T> }
-> +    }
-> +
-> +    /// Returns a pointer to the struct containing the [`Work<T>`] field=
-.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// The pointer must not be dangling. (But the memory need not be in=
-itialized.)
-
-The pointer also must point to a `Work<T>` that is embedded at `OFFSET`
-inside of `Self`.
-
-> +    ///
-> +    /// [`Work<T>`]: Work
-> +    #[inline]
-> +    unsafe fn work_container_of(ptr: *mut Work<T>) -> *mut Self
-> +    where
-> +        Self: Sized,
-> +    {
-> +        // SAFETY: The caller promises that the pointer is not dangling.
-> +        unsafe { (ptr as *mut u8).sub(Self::OFFSET) as *mut Self }
-> +    }
-> +}
-> +
-> +/// Used to safely implement the [`HasWork<T>`] trait.
+> +/// Declares that [`Arc<Self>`] should implement [`WorkItem`].
 > +///
 > +/// # Examples
+> +///
+> +/// The example below will make [`Arc<MyStruct>`] implement the [`WorkIt=
+em`] trait so that you can
+> +/// enqueue it in a workqueue.
 > +///
 > +/// ```
 > +/// use kernel::sync::Arc;
@@ -348,44 +89,389 @@ inside of `Self`.
 > +///     work_field: Work<Arc<MyStruct>>,
 > +/// }
 > +///
-> +/// impl_has_work! {
+> +/// kernel::impl_has_work! {
 > +///     impl HasWork<Arc<MyStruct>> for MyStruct { self.work_field }
+> +/// }
+> +///
+> +/// impl ArcWorkItem for MyStruct {
+> +///     fn run(self: Arc<Self>) {
+> +///         pr_info!("Executing MyStruct on a workqueue.");
+> +///     }
 > +/// }
 > +/// ```
 > +///
-> +/// [`HasWork<T>`]: HasWork
-> +#[macro_export]
-> +macro_rules! impl_has_work {
-> +    ($(impl$(<$($implarg:ident),*>)?
-> +       HasWork<$work_type:ty>
-> +       for $self:ident $(<$($selfarg:ident),*>)?
-> +       { self.$field:ident }
-> +    )*) =3D> {$(
-> +        // SAFETY: The implementation of `raw_get_work` only compiles if=
- the field has the right
-> +        // type.
-> +        unsafe impl$(<$($implarg),*>)? $crate::workqueue::HasWork<$work_=
-type> for $self $(<$($selfarg),*>)? {
-> +            const OFFSET: usize =3D $crate::offset_of!(Self, $field) as =
-usize;
+> +/// [`Arc<Self>`]: crate::sync::Arc
+> +/// [`Arc<MyStruct>`]: crate::sync::Arc
+> +pub trait ArcWorkItem {
+> +    /// Called when this work item is executed.
+> +    fn run(self: Arc<Self>);
+> +}
 > +
-> +            #[inline]
-> +            unsafe fn raw_get_work(ptr: *mut Self) -> *mut $crate::workq=
-ueue::Work<$work_type> {
-> +                // SAFETY: The caller promises that the pointer is not d=
-angling.
-> +                unsafe {
-> +                    ::core::ptr::addr_of_mut!((*ptr).$field)
+> +unsafe impl<T> WorkItem for Arc<T>
+> +where
+> +    T: ArcWorkItem + HasWork<Self> + ?Sized,
+> +{
+> +    type EnqueueOutput =3D Result<(), Self>;
+> +
+> +    unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::EnqueueOutpu=
+t
+> +    where
+> +        F: FnOnce(*mut bindings::work_struct) -> bool,
+> +    {
+> +        let ptr =3D Arc::into_raw(self);
+> +
+> +        // Using `get_work_offset` here for object-safety.
+> +        //
+> +        // SAFETY: The pointer is valid since we just got it from `into_=
+raw`.
+> +        let off =3D unsafe { (&*ptr).get_work_offset() };
+> +
+> +        // SAFETY: The `HasWork` impl promises that this offset gives us=
+ a field of type
+> +        // `Work<Self>` in the same allocation.
+> +        let work_ptr =3D unsafe { (ptr as *const u8).add(off) as *const =
+Work<Self> };
+> +        // SAFETY: The pointer is not dangling.
+> +        let work_ptr =3D unsafe { Work::raw_get(work_ptr) };
+> +
+> +        match (queue_work_on)(work_ptr) {
+> +            true =3D> Ok(()),
+> +            // SAFETY: The work queue has not taken ownership of the poi=
+nter.
+> +            false =3D> Err(unsafe { Arc::from_raw(ptr) }),
+> +        }
+> +    }
+> +}
+> +
+> +// Let `Work<Arc<T>>` be usable with types that are `ArcWorkItem`.
+> +//
+> +// We do not allow unsized types here. The `Work<Arc<T>>` field should a=
+lways specify the actual
+> +// concrete type stored in the `Arc`.
+> +//
+> +// SAFETY: The `Work<Arc<T>>` field must be initialized with this `run` =
+method because the `Work`
+> +// struct prevents you from initializing it in any other way. The `__enq=
+ueue` trait uses the
+> +// same `Work<Arc<T>>` field because `HasWork` promises to always return=
+ the same field.
+> +unsafe impl<T> WorkItemAdapter for Arc<T>
+> +where
+> +    T: ArcWorkItem + HasWork<Self> + Sized,
+> +{
+> +    unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
+> +        // SAFETY: The `__enqueue` method always uses a `work_struct` st=
+ored in a `Work<Self>`.
+> +        let ptr =3D ptr as *mut Work<Self>;
+> +        // SAFETY: This computes the pointer that `__enqueue` got from `=
+Arc::into_raw`.
+> +        let ptr =3D unsafe { T::work_container_of(ptr) };
+> +        // SAFETY: This pointer comes from `Arc::into_raw` and we've bee=
+n given back ownership.
+> +        let arc =3D unsafe { Arc::from_raw(ptr) };
+> +
+> +        arc.run();
+> +    }
+> +}
+> +
+> +/// Declares that [`Pin`]`<`[`Box`]`<Self>>` should implement [`WorkItem=
+`].
+> +///
+> +/// # Examples
+> +///
+> +/// The example below will make [`Pin`]`<`[`Box`]`<MyStruct>>` implement=
+ the [`WorkItem`] trait so
+> +/// that you can enqueue it in a workqueue.
+> +///
+> +/// ```
+> +/// struct MyStruct {
+> +///     work_field: Work<Pin<Box<MyStruct>>>,
+> +/// }
+> +///
+> +/// kernel::impl_has_work! {
+> +///     impl HasWork<Pin<Box<MyStruct>>> for MyStruct { self.work_field =
+}
+> +/// }
+> +///
+> +/// impl BoxWorkItem for MyStruct {
+> +///     fn run(self: Pin<Box<MyStruct>>) {
+> +///         pr_info!("Executing MyStruct on a workqueue.");
+> +///     }
+> +/// }
+> +/// ```
+> +///
+> +/// [`Box`]: alloc::boxed::Box
+> +/// [`Pin`]: core::pin::Pin
+> +pub trait BoxWorkItem {
+> +    /// Called when this work item is executed.
+> +    fn run(self: Pin<Box<Self>>);
+> +}
+> +
+> +unsafe impl<T> WorkItem for Pin<Box<T>>
+> +where
+> +    T: BoxWorkItem + HasWork<Self> + ?Sized,
+> +{
+> +    // When a box is in a workqueue, the workqueue has exclusive ownersh=
+ip of the box. Therefore,
+> +    // it's not possible to enqueue a box while it is in a workqueue.
+> +    type EnqueueOutput =3D ();
+> +
+> +    unsafe fn __enqueue<F>(self, queue_work_on: F)
+> +    where
+> +        F: FnOnce(*mut bindings::work_struct) -> bool,
+> +    {
+> +        // SAFETY: We will not used the contents in an unpinned manner.
+> +        let ptr =3D unsafe { Box::into_raw(Pin::into_inner_unchecked(sel=
+f)) };
+> +
+> +        // Using `get_work_offset` here for object-safety.
+> +        //
+> +        // SAFETY: The pointer is valid since we just got it from `into_=
+raw`.
+> +        let off =3D unsafe { (&*ptr).get_work_offset() };
+> +
+> +        // SAFETY: The `HasWork` impl promises that this offset gives us=
+ a field of type
+> +        // `Work<Self>` in the same allocation.
+> +        let work_ptr =3D unsafe { (ptr as *mut u8).add(off) as *mut Work=
+<Self> };
+> +        // SAFETY: The pointer is not dangling.
+> +        let work_ptr =3D unsafe { Work::raw_get(work_ptr) };
+> +
+> +        match (queue_work_on)(work_ptr) {
+> +            true =3D> {}
+> +            // SAFETY: This method requires exclusive ownership of the b=
+ox, so it cannot be in a
+> +            // workqueue.
+> +            false =3D> unsafe { core::hint::unreachable_unchecked() },
+> +        }
+> +    }
+> +}
+> +
+> +// Let `Work<Pin<Box<T>>>` be usable with types that are `BoxWorkItem`.
+> +//
+> +// We do not allow unsized types here. The `Work<Pin<Box<T>>>` field sho=
+uld always specify the actual
+> +// concrete type stored in the `Box`.
+> +//
+> +// SAFETY: The `Work<Pin<Box<T>>>` field must be initialized with this r=
+un method because the `Work`
+> +// struct prevents you from initializing it in any other way. The `__enq=
+ueue` trait uses the
+> +// same `Work<Pin<Box<T>>>` field because `HasWork` promises to always r=
+eturn the same field.
+> +unsafe impl<T> WorkItemAdapter for Pin<Box<T>>
+> +where
+> +    T: BoxWorkItem + HasWork<Self> + Sized,
+> +{
+> +    unsafe extern "C" fn run(ptr: *mut bindings::work_struct) {
+> +        // SAFETY: The `__enqueue` method always uses a `work_struct` st=
+ored in a `Work<Self>`.
+> +        let ptr =3D ptr as *mut Work<Self>;
+> +        // SAFETY: This computes the pointer that `__enqueue` got from `=
+Arc::into_raw`.
+> +        let ptr =3D unsafe { T::work_container_of(ptr) };
+> +        // SAFETY: This pointer comes from `Box::into_raw` and we've bee=
+n given back ownership.
+> +        // The box was originally pinned, so pinning it again is ok.
+> +        let boxed =3D unsafe { Pin::new_unchecked(Box::from_raw(ptr)) };
+> +
+> +        boxed.run();
+> +    }
+> +}
+> +
+> +/// Helper macro for structs with several `Work` fields that can be in s=
+everal queues at once.
+> +///
+> +/// For each `Work` field in your type `T`, a newtype struct that wraps =
+an `Arc<T>` or
+> +/// `Pin<Box<T>>` should be defined.
+> +///
+> +/// # Examples
+> +///
+> +/// ```
+> +/// struct MyStruct {
+> +///     work1: Work<MyStructWork1>,
+> +///     work2: Work<MyStructWork2>,
+> +/// }
+> +///
+> +/// impl_has_work! {
+> +///     impl HasWork<MyStructWork1> for MyStruct { self.work1 }
+> +///     impl HasWork<MyStructWork2> for MyStruct { self.work2 }
+> +/// }
+> +///
+> +/// define_work_adapter_newtype! {
+> +///     struct MyStructWork1(Arc<MyStruct>);
+> +///     struct MyStructWork2(Arc<MyStruct>);
+> +/// }
+> +///
+> +/// impl MyStructWork1 {
+> +///     fn run(self) {
+> +///         // ...
+> +///     }
+> +/// }
+> +///
+> +/// impl MyStructWork2 {
+> +///     fn run(self) {
+> +///         // ...
+> +///     }
+> +/// }
+> +/// ```
+> +///
+> +/// This will let you push a `MyStructWork1(arc)` or `MyStructWork2(arc)=
+` to a work queue. The [`Arc`]
+> +/// can be in two work queues at the same time, and the `run` method on =
+the wrapper type is called
+> +/// when the work item is called.
+> +///
+> +/// [`Arc`]: crate::sync::Arc
+> +#[macro_export]
+> +macro_rules! define_work_adapter_newtype {
+> +    (
+> +        $(#[$outer:meta])*
+> +        $pub:vis struct $name:ident(
+> +            $(#[$innermeta:meta])*
+> +            $fpub:vis Arc<$inner:ty> $(,)?
+> +        );
+> +        $($rest:tt)*
+> +    ) =3D> {
+> +        $(#[$outer])*
+> +        $pub struct $name($(#[$innermeta])* $fpub $crate::sync::Arc<$inn=
+er>);
+
+I am a bit confused as to why these types *contain* a pointer. Shouldn't
+these be exactly the same `Work<$inner>`, except they allow multiple `run`
+functions? So IMO they should embed a `Work<$inner>` and the
+manually defined `run` function would take a `$inner`.
+
+> +
+> +        unsafe impl $crate::workqueue::WorkItem for $name {
+> +            type EnqueueOutput =3D ::core::result::Result<(), $name>;
+> +
+> +            unsafe fn __enqueue<F>(self, queue_work_on: F) -> Self::Enqu=
+eueOutput
+> +            where
+> +                F: ::core::ops::FnOnce(*mut $crate::bindings::work_struc=
+t) -> bool,
+> +            {
+> +                let ptr =3D $crate::sync::Arc::into_raw(self.0);
+> +
+> +                // SAFETY: The pointer is not dangling since we just got=
+ it from Arc::into_raw.
+> +                let work_ptr =3D unsafe { <$inner as $crate::workqueue::=
+HasWork::<$name>>::raw_get_work(ptr.cast_mut()) };
+> +
+> +                // SAFETY: The pointer is not dangling.
+> +                let work_ptr =3D unsafe { $crate::workqueue::Work::raw_g=
+et(work_ptr) };
+> +
+> +                match (queue_work_on)(work_ptr) {
+> +                    true =3D> Ok(()),
+> +                    // SAFETY: The work queue has not taken ownership of=
+ the pointer.
+> +                    false =3D> Err($name(unsafe { $crate::sync::Arc::fro=
+m_raw(ptr) })),
 > +                }
 > +            }
 > +        }
-> +    )*};
+> +
+> +        unsafe impl $crate::workqueue::WorkItemAdapter for $name {
+> +            unsafe extern "C" fn run(ptr: *mut $crate::bindings::work_st=
+ruct) {
+> +                // SAFETY: The `__enqueue` method always uses a `work_st=
+ruct` stored in a `Work<Self>`.
+> +                let ptr =3D ptr as *mut $crate::workqueue::Work<Self>;
+> +                // SAFETY: This computes the pointer that `__enqueue` go=
+t from `Arc::into_raw`.
+> +                let ptr =3D unsafe { <$inner as $crate::workqueue::HasWo=
+rk::<$name>>::work_container_of(ptr) };
+> +                // SAFETY: This pointer comes from `Arc::into_raw` and w=
+e've been given back ownership.
+> +                let arc =3D unsafe { $crate::sync::Arc::from_raw(ptr) };
+> +
+> +                $name::run($name(arc));
+> +            }
+> +        }
+> +
+> +        define_work_adapter_newtype! { $($rest)* }
+> +    };
+> +
+> +    (
+> +        $(#[$outer:meta])*
+> +        $pub:vis struct $name:ident(
+> +            $(#[$innermeta:meta])*
+> +            $fpub:vis Pin<Box<$inner:ty>> $(,)?
+> +        );
+> +        $($rest:tt)*
+> +    ) =3D> {
+> +        $(#[$outer])*
+> +        $pub struct $name($(#[$innermeta])* $fpub ::core::pin::Pin<::all=
+oc::boxed::Box<$inner>>);
+> +
+> +        unsafe impl $crate::workqueue::WorkItem for $name {
+> +            type EnqueueOutput =3D ();
+> +
+> +            unsafe fn __enqueue<F>(self, queue_work_on: F)
+> +            where
+> +                F: ::core::ops::FnOnce(*mut $crate::bindings::work_struc=
+t) -> bool,
+> +            {
+> +                // SAFETY: We will not used the contents in an unpinned =
+manner.
+> +                let boxed =3D unsafe { ::core::pin::Pin::into_inner_unch=
+ecked(self.0) };
+> +                let ptr =3D ::alloc::boxed::Box::into_raw(boxed);
+> +
+> +                // SAFETY: The pointer is not dangling since we just got=
+ it from Box::into_raw.
+> +                let work_ptr =3D unsafe { <$inner as $crate::workqueue::=
+HasWork::<$name>>::raw_get_work(ptr) };
+> +
+> +                // SAFETY: The pointer is not dangling.
+> +                let work_ptr =3D unsafe { $crate::workqueue::Work::raw_g=
+et(work_ptr) };
+> +
+> +                match (queue_work_on)(work_ptr) {
+> +                    true =3D> {},
+> +                    // SAFETY: This method requires exclusive ownership =
+of the box, so it cannot be in a
+> +                    // workqueue.
+> +                    false =3D> unsafe { ::core::hint::unreachable_unchec=
+ked() },
+> +                }
+> +            }
+> +        }
+> +
+> +        unsafe impl $crate::workqueue::WorkItemAdapter for $name {
+> +            unsafe extern "C" fn run(ptr: *mut $crate::bindings::work_st=
+ruct) {
+> +                // SAFETY: The `__enqueue` method always uses a `work_st=
+ruct` stored in a `Work<Self>`.
+> +                let ptr =3D ptr as *mut $crate::workqueue::Work<Self>;
+> +                // SAFETY: This computes the pointer that `__enqueue` go=
+t from `Arc::into_raw`.
+> +                let ptr =3D unsafe { <$inner as $crate::workqueue::HasWo=
+rk::<$name>>::work_container_of(ptr) };
+> +                // SAFETY: This pointer comes from `Box::into_raw` and w=
+e've been given back ownership.
+> +                let boxed =3D unsafe { ::alloc::boxed::Box::from_raw(ptr=
+) };
+> +                // SAFETY: The box was originally pinned, so pinning it =
+again is ok.
+> +                let boxed =3D unsafe { ::core::pin::Pin::new_unchecked(b=
+oxed) };
+> +
+> +                $name::run($name(boxed));
+> +            }
+> +        }
+> +
+> +        define_work_adapter_newtype! { $($rest)* }
+> +    };
+> +
+> +    // After processing the last definition, we call ourselves with no i=
+nput.
+> +    () =3D> {};
 > +}
-
-I don't really like the verbosity that this creates, but for the moment it
-should be fine. When/if we get field projections, we can build a much
-better proc-macro, so I think we can defer improving this until then.
-
 > +
 >  /// Returns the system work queue (`system_wq`).
 >  ///
@@ -393,7 +479,7 @@ better proc-macro, so I think we can defer improving this until then.
 lti-threaded. There are
 > --
 > 2.40.1.606.ga4b1b128d6-goog
->
+>=20
 
 --
 Cheers,
