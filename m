@@ -1,81 +1,117 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E142ED8
-	for <patches@lists.linux.dev>; Wed, 24 May 2023 00:36:41 +0000 (UTC)
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-64d604cc0aaso130373b3a.2
-        for <patches@lists.linux.dev>; Tue, 23 May 2023 17:36:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684888601; x=1687480601;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lM8mwZf1wzxcL+2sWIBCczl6sqGrKSXPMj4ZkVBKhOo=;
-        b=qNAbacy/jdZ5QIIrU4HSoJTCBeTPSZD4068sdrvfUVmOZFMp+6SeCedv/AeJ+E15mF
-         0+UkwUFzlzAf/6hFDe21z+91zH7wZvOa3OpkEFLnZJiQZgUlmvcAdQ55e9LsJwWtlGmV
-         TIa10HGUcfM4rjMU5E3wOh3zPLYayMMfD1t+afK4/uZGtIKjRVt9k1tQzW+C8TFzCq6l
-         21V7EI+LBo9g05MBp7+h4bIskjcn62mJZ89R5wAjAPUDvaSqXUpv1lHekUUY5RNhS7po
-         IKNJRMH9enNn/gDyxM2nKUC1kalvwOETiZPCMG0GnTpdEsY2gULXv8oftvO50yZVuQ5d
-         mc7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684888601; x=1687480601;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lM8mwZf1wzxcL+2sWIBCczl6sqGrKSXPMj4ZkVBKhOo=;
-        b=fMXucabYiFKkJ1nsA52EEs/bNSmK3sOP6hfsMNR89c34FHb24agUhDAWoI/H0XleZC
-         nhcnMFnJYKCID1F+2wSOfTrxtN62iwTvRordbcN2wNkuRTwqH4NjE4qM/12GOxVCcQ+3
-         09NiKw/lLhzelIJ+f1kkQm/wb+6eyEAosXYYGPRaI78BfIy51LSPqy8/Ek2q7QPwW/i8
-         ynmuQLkKmu1t9hTbmpPmmz11KP9Yg5z++8ldpk/3IEK9d1CfNgEKxV4TcYLS2OloI75K
-         6vHyrnYz75haLmgismcxoUkPrvndjWAHkhgkqDrpfuVCEbC6wRr7ju0Cu1KUmvRVeZSs
-         DpXQ==
-X-Gm-Message-State: AC+VfDzpgYPz95oQNSxKEUsu69HkKVLb8V7MDpslgd1OZMskKkHNpJaj
-	/WSwCAZJtXXhblULLBoMz8M=
-X-Google-Smtp-Source: ACHHUZ5HSIVPXwLR65r7ykB4jTSX75Gv5mKrFciBfJIMqHnqDHnFeyAEFkNGiBYPcgVvzWXe92/Wng==
-X-Received: by 2002:a05:6a00:2488:b0:64d:3227:b806 with SMTP id c8-20020a056a00248800b0064d3227b806mr1078723pfv.33.1684888600567;
-        Tue, 23 May 2023 17:36:40 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id i14-20020aa787ce000000b00640dbbd7830sm6552369pfo.18.2023.05.23.17.36.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 17:36:40 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Tue, 23 May 2023 17:36:38 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 000/203] 5.15.113-rc1 review
-Message-ID: <c9e32599-339c-459d-ad9f-f9e29eae2112@roeck-us.net>
-References: <20230522190354.935300867@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E2EED5
+	for <patches@lists.linux.dev>; Wed, 24 May 2023 01:07:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11301C433D2;
+	Wed, 24 May 2023 01:07:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1684890464;
+	bh=ATkbGqj0UTcMa0WdL6+FZDTu+CmQwEatOeK6hkcHlMw=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=UbD9edXq8IrzofEmJY2wYy1998mV+pU1HRunlfX+zYYqS/fE5IyOKbBw6Dc0bTOOM
+	 /LnxbcjOEmL9DVKycLyOGtjJWs28KmiVpviet+/SVSAwxua6WyC3o0x9EVeL0AqLOo
+	 kjHvM+Zx2r8HfeI0ZW3ZtVMRU/nyPtVQoCazDBOFr1GdHxp6Sjbw5E9iIsX0+kEucN
+	 HOSQYt5sKChrt9DmdSFNOj1fq3vRAuIMAa971tzD3WkYAVVxWpboVptDf6Tk7fT0Zr
+	 SRNSj523KdLsTRoqw7MXhd6qSHRIeSi6ta83hsEE9Z/vf84iNxJ/J6SIdnoioU1L7s
+	 BuD6W/Ph8/flg==
+Message-ID: <382309d7c0ae593d507eb816982f6a66c2cda00a.camel@kernel.org>
+Subject: Re: [PATCH 5.15 070/371] tpm, tpm_tis: Claim locality before
+ writing interrupt registers
+From: Jarkko Sakkinen <jarkko@kernel.org>
+To: Felix Riemann <felix.riemann@sma.de>, gregkh@linuxfoundation.org
+Cc: l.sanfilippo@kunbus.com, patches@lists.linux.dev, sashal@kernel.org, 
+	stable@vger.kernel.org
+Date: Wed, 24 May 2023 04:07:41 +0300
+In-Reply-To: <20230515153759.2072-1-svc.sw.rte.linux@sma.de>
+References: <20230508094814.897191675@linuxfoundation.org>
+	 <20230515153759.2072-1-svc.sw.rte.linux@sma.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.1-0ubuntu1 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230522190354.935300867@linuxfoundation.org>
 
-On Mon, May 22, 2023 at 08:07:04PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.113 release.
-> There are 203 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 24 May 2023 19:03:25 +0000.
-> Anything received after that time might be too late.
-> 
+On Mon, 2023-05-15 at 17:37 +0200, Felix Riemann wrote:
+> Hi!
+>=20
+> > [ Upstream commit 15d7aa4e46eba87242a320f39773aa16faddadee ]
+> >=20
+> > In tpm_tis_probe_single_irq() interrupt registers TPM_INT_VECTOR,
+> > TPM_INT_STATUS and TPM_INT_ENABLE are modified to setup the interrupts.
+> > Currently these modifications are done without holding a locality thus =
+they
+> > have no effect. Fix this by claiming the (default) locality before the
+> > registers are written.
+> >=20
+> > Since now tpm_tis_gen_interrupt() is called with the locality already
+> > claimed remove locality request and release from this function.
+>=20
+> On systems with SPI-connected TPM and the interrupt still configured
+> (despite it not working before) this may introduce a kernel crash.
+> The issue is that it will now trigger an SPI transfer (which will wait)=
+=20
+> from the IRQ handler:
+>=20
+> BUG: scheduling while atomic: systemd-journal/272/0x00010001
+> Modules linked in: spi_fsl_lpspi
+> CPU: 0 PID: 272 Comm: systemd-journal Not tainted 5.15.111-06679-g56b9923=
+f2840 #50
+> Call trace:
+>  dump_backtrace+0x0/0x1e0
+>  show_stack+0x18/0x40
+>  dump_stack_lvl+0x68/0x84
+>  dump_stack+0x18/0x34
+>  __schedule_bug+0x54/0x70
+>  __schedule+0x664/0x760
+>  schedule+0x88/0x100
+>  schedule_timeout+0x80/0xf0
+>  wait_for_completion_timeout+0x80/0x10c
+>  fsl_lpspi_transfer_one+0x25c/0x4ac [spi_fsl_lpspi]
+>  spi_transfer_one_message+0x22c/0x440
+>  __spi_pump_messages+0x330/0x5b4
+>  __spi_sync+0x230/0x264
+>  spi_sync_locked+0x10/0x20
+>  tpm_tis_spi_transfer+0x1ec/0x250
+>  tpm_tis_spi_read_bytes+0x14/0x20
+>  tpm_tis_spi_read32+0x38/0x70
+>  tis_int_handler+0x48/0x15c
+>  *snip*
+>=20
+> The immediate error is fixable by also picking 0c7e66e5fd ("tpm, tpm_tis:=
+=20
+> Request threaded interrupt handler") from the same patchset[1]. However, =
+as
+> the driver's IRQ test logic is still faulty it will fail the check and fa=
+ll
+> back to the polling behaviour without actually disabling the IRQ in hard-
+> and software again. For this at least e644b2f498 ("tpm, tpm_tis: Enable=
+=20
+> interrupt test") and 0e069265bc ("tpm, tpm_tis: Claim locality in interru=
+pt
+> handler") are necessary.
+>=20
+> At this point 9 of the set's 14 patches are applied and I am not sure
+> whether it's better to pick the remaining five patches as well or just
+> revert the initial six patches. Especially considering there were initial=
+ly
+> no plans to submit these patches to stable[2] and the IRQ feature was (at
+> least on SPI) not working before.
 
-Build results:
-	total: 160 pass: 160 fail: 0
-Qemu test results:
-	total: 499 pass: 499 fail: 0
+I think the right thing to do would be to revert 6 initial patches.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+>=20
+> Regards,
+>=20
+> Felix
+>=20
+> [1] https://lore.kernel.org/lkml/20221124135538.31020-1-LinoSanfilippo@gm=
+x.de/
+> [2] https://lore.kernel.org/lkml/CS48ZBNWI6T9.1CU08I6KDVM65@suppilovahver=
+o/
 
-Guenter
+BR, Jarkko
