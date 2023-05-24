@@ -1,81 +1,400 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-0201.mail-europe.com (mail-0201.mail-europe.com [51.77.79.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D110860868
-	for <patches@lists.linux.dev>; Wed, 24 May 2023 13:30:21 +0000 (UTC)
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-534696e4e0aso237046a12.0
-        for <patches@lists.linux.dev>; Wed, 24 May 2023 06:30:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684935021; x=1687527021;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GxdSCsmwEYvEk63TFK+FV5f8HceCpvSs4IoYiBfYQio=;
-        b=l6YcUGKhmdo66vUmRH5M6UodbMyTVGt+YTKbm6A+BJZw5rfQ0U/73/SR2QQgZmpiCk
-         X5vxkyHKsDP0qj4lzVg6jvq4C6B4dUzs0waZYjb5IqtvfJHjNDW+6oVgzxB1tn1n5lKZ
-         tkIqK4mWb1fjSkSVCmTF38xEo0ME76bOD1dGYG3+vHlBfgapSb3ntnoLXiHhC4vrh0TO
-         e4TQk8uTadNpaq0pZKjIHT7LGN+tklG/U2BUyUPpG5qsAHMPr0vuexAC2+KseGsMNfZC
-         73HnQKhXLf+3UrJv1k+LATC795xrR08ZTkZPbZ3EcvwCkvoWS45JARmnuK5/jjcjyrjS
-         IVfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684935021; x=1687527021;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GxdSCsmwEYvEk63TFK+FV5f8HceCpvSs4IoYiBfYQio=;
-        b=icYFYzkvwWBMCXC/FzDuLQuZuK8jM8qpxnpAHL2kItWQ5cjRnHxRehqUX7PxK9uFf3
-         ZHACKm3HEP8ZzDVjklQobVGIg9NibKgBPCJYwCdOtlP1p8c5ZJefBh1F3YJGfgw1mdM0
-         b/VFtkRTpiGLww7sGUGjzjELSYwCLx8roTHjyh+qGX+v7t9yPUw0aWq7qvqCRTv3Bc80
-         ODcU1OO5EYzTEFLCGEsHzqmVunN6W4uWoxHpEDQUcCX/CQNQFu4Vzzy1vq0dh81+K/kc
-         8PLS1LSdtKKymEQvsJPxYUNgEIuzjhAgsRpk8oCUQwKotbsDDsXvothrGWBV6orSMxJj
-         cKLA==
-X-Gm-Message-State: AC+VfDwGVtPsLXi1DiQQouyjHXlwYPw+/38V/KywqlAHEskCrVZIzCT/
-	EmZ957ULNUcOqLSMIswKRf8=
-X-Google-Smtp-Source: ACHHUZ4qt+542VeOln/VB23JLFlOHOdjQEeOb42tzBAMXi+JMeapJekYTWSm5hljINawnVfl7liZow==
-X-Received: by 2002:a17:902:d312:b0:1ad:8c8f:afb1 with SMTP id b18-20020a170902d31200b001ad8c8fafb1mr16531018plc.39.1684935020841;
-        Wed, 24 May 2023 06:30:20 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id u12-20020a170902bf4c00b001ac7ab3e7ecsm8676734pls.210.2023.05.24.06.30.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 May 2023 06:30:20 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Wed, 24 May 2023 06:30:19 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.3 000/363] 6.3.4-rc2 review
-Message-ID: <f664e283-a724-487a-83ea-16a1f72d2de0@roeck-us.net>
-References: <20230523164950.435226211@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA6718AF6
+	for <patches@lists.linux.dev>; Wed, 24 May 2023 14:50:28 +0000 (UTC)
+Date: Wed, 24 May 2023 14:50:09 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1684939812; x=1685199012;
+	bh=Uvc2bcYwiMlahenIY7l4o0VGT4i24GCjMIrVGHDELeY=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=Bk5EjfvOu0pT3HtUjfr1Ug63XLOZwdQKBlT0Yn6DltxYf86NZv9+jAJAYyeI+vr2i
+	 UOmChowcpv8JxFms1zj97zbKYTZZXcRYeJVY50yvw5qVTfPXoM3BcYd+Q4Xj+xhSVS
+	 FHPnSlyNM4JDnhcod5+OWxT2Re6VouYC86+4uBvbW0l5lNZPhA57QNuylCp9HDCXv/
+	 Qc8GVpoCuKRw7BWbD11s6sN0hJAIsIdjS3LwJTX2aTNwWVVC8GYc4q1LueMJYsS/af
+	 0tKSZz/s2wPebL1xRI7N+NASFE6SSleRPCJDeUe2ddx7lY/fED3Qf0DTXWYE5XsQ0H
+	 eaaBTCVSAzT+Q==
+To: Alice Ryhl <aliceryhl@google.com>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: rust-for-linux@vger.kernel.org, Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Tejun Heo <tj@kernel.org>, Lai Jiangshan <jiangshanlai@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v1 5/7] rust: workqueue: add helper for defining work_struct fields
+Message-ID: <XCPRRkwd2lV43Whaash8aIbntiiHuWHtbQgqd11Z6RClSnZnSCHu3-76r1a7bNoM4MWjofINiyH2SSf6v06e1O3GMyeIF43X33OXLX5ltec=@proton.me>
+In-Reply-To: <20230517203119.3160435-6-aliceryhl@google.com>
+References: <20230517203119.3160435-1-aliceryhl@google.com> <20230517203119.3160435-6-aliceryhl@google.com>
+Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230523164950.435226211@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 23, 2023 at 06:01:23PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.3.4 release.
-> There are 363 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 25 May 2023 16:48:37 +0000.
-> Anything received after that time might be too late.
-> 
+On Wednesday, May 17th, 2023 at 22:31, Alice Ryhl <aliceryhl@google.com> wr=
+ote:
+> The main challenge with defining `work_struct` fields is making sure
+> that the function pointer stored in the `work_struct` is appropriate for
+> the work item type it is embedded in. It needs to know the offset of the
+> `work_struct` field being used (even if there are several!) so that it
+> can do a `container_of`, and it needs to know the type of the work item
+> so that it can call into the right user-provided code. All of this needs
+> to happen in a way that provides a safe API to the user, so that users
+> of the workqueue cannot mix up the function pointers.
+>=20
+> There are three important pieces that are relevant when doing this. This
+> commit will use traits so that they know about each other according to
+> the following cycle:
+>=20
+>  * The pointer type. It knows the type of the work item struct.
+>  * The work item struct. It knows the offset of its `work_struct` field.
+>  * The `work_struct` field. It knows the pointer type.
+>=20
+> There's nothing special about making the pointer type know the type of
+> the struct it points at. Pointers generally always know that
+> information.
+>=20
+> However, making the `work_struct` field know about the pointer type is
+> less commonly seen. This is done by using a generic parameter: the
+> `work_struct` field will have the type `Work<T>`, where T will be the
+> pointer type in use. The pointer type is required to implement the
+> `WorkItemAdapter` trait, which defines the function pointer to store in
+> the `work_struct` field. The `Work<T>` type guarantees that the
+> `work_struct` inside it uses `<T as WorkItemAdapter>::run` as its
+> function pointer.
+>=20
+> Finally, to make the work item struct know the offset of its
+> `work_struct` field, we use a trait called `HasWork<T>`. If a type
+> implements this trait, then the type declares that, at the given offset,
+> there is a field of type `Work<T>`. The trait is marked unsafe because
+> the OFFSET constant must be correct, but we provide an `impl_has_work!`
+> macro that can safely implement `HasWork<T>` on a type. The macro
+> expands to something that only compiles if the specified field really
+> has the type `Work<T>`. It is used like this:
+>=20
+> ```
+> struct MyWorkItem {
+>     work_field: Work<Arc<MyWorkItem>>,
+> }
+>=20
+> impl_has_work! {
+>     impl HasWork<Arc<MyWorkItem>> for MyWorkItem { self.work_field }
+> }
+> ```
+>=20
+> So to summarize, given a pointer to an allocation containing a work
+> item, you can use the `HasWork<T>` trait to offset the pointer to the
+> `work_struct` field. The function pointer in the `work_struct` field is
+> guaranteed to be a function that knows what the original pointer type
+> was, and using that information, it can undo the offset operation by
+> looking up what the offset was via the `HasWork<T>` trait.
+>=20
+> This design supports work items with multiple `work_struct` fields by
+> using different pointer types. For example, you might define structs
+> like these:
+>=20
+> ```
+> struct MyPointer1(Arc<MyWorkItem>);
+> struct MyPointer2(Arc<MyWorkItem>);
+>=20
+> struct MyWorkItem {
+>     work1: Work<MyPointer1>,
+>     work2: Work<MyPointer2>,
+> }
+> ```
+>=20
+> Then, the wrapper structs `MyPointer1` and `MyPointer2` will take the
+> role as the pointer type. By using one or the other, you tell the
+> workqueue which `work_struct` field to use. This pattern is called the
+> "newtype" pattern.
+>=20
+> Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+> ---
+>  rust/helpers.c           |   8 ++
+>  rust/kernel/workqueue.rs | 183 ++++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 190 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/rust/helpers.c b/rust/helpers.c
+> index 81e80261d597..7f0c2fe2fbeb 100644
+> --- a/rust/helpers.c
+> +++ b/rust/helpers.c
+> @@ -26,6 +26,7 @@
+>  #include <linux/spinlock.h>
+>  #include <linux/sched/signal.h>
+>  #include <linux/wait.h>
+> +#include <linux/workqueue.h>
+>=20
+>  __noreturn void rust_helper_BUG(void)
+>  {
+> @@ -128,6 +129,13 @@ void rust_helper_put_task_struct(struct task_struct =
+*t)
+>  }
+>  EXPORT_SYMBOL_GPL(rust_helper_put_task_struct);
+>=20
+> +void rust_helper___INIT_WORK(struct work_struct *work, work_func_t func,
+> +=09=09=09     bool on_stack)
+> +{
+> +=09__INIT_WORK(work, func, on_stack);
+> +}
+> +EXPORT_SYMBOL_GPL(rust_helper___INIT_WORK);
+> +
+>  /*
+>   * We use `bindgen`'s `--size_t-is-usize` option to bind the C `size_t` =
+type
+>   * as the Rust `usize` type, so we can use it in contexts where Rust
+> diff --git a/rust/kernel/workqueue.rs b/rust/kernel/workqueue.rs
+> index 22205d3bda72..7509618af252 100644
+> --- a/rust/kernel/workqueue.rs
+> +++ b/rust/kernel/workqueue.rs
+> @@ -4,7 +4,8 @@
+>  //!
+>  //! C header: [`include/linux/workqueue.h`](../../../../include/linux/wo=
+rkqueue.h)
+>=20
+> -use crate::{bindings, types::Opaque};
+> +use crate::{bindings, prelude::*, types::Opaque};
+> +use core::marker::{PhantomData, PhantomPinned};
+>=20
+>  /// A kernel work queue.
+>  ///
+> @@ -98,6 +99,186 @@ pub unsafe trait WorkItem {
+>          F: FnOnce(*mut bindings::work_struct) -> bool;
+>  }
+>=20
+> +/// Defines the method that should be called when a work item is execute=
+d.
+> +///
+> +/// This trait is used when the `work_struct` field is defined using the=
+ [`Work`] helper.
+> +///
+> +/// # Safety
+> +///
+> +/// Implementers must ensure that [`__enqueue`] uses a `work_struct` ini=
+tialized with the [`run`]
+> +/// method of this trait as the function pointer.
+> +///
+> +/// [`__enqueue`]: WorkItem::__enqueue
+> +/// [`run`]: WorkItemAdapter::run
+> +pub unsafe trait WorkItemAdapter: WorkItem {
+> +    /// Run this work item.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// Must only be called via the function pointer that [`__enqueue`] =
+provides to the
+> +    /// `queue_work_on` closure, and only as described in the documentat=
+ion of `queue_work_on`.
+> +    ///
+> +    /// [`__enqueue`]: WorkItem::__enqueue
+> +    unsafe extern "C" fn run(ptr: *mut bindings::work_struct);
+> +}
+> +
+> +/// Links for a work item.
+> +///
+> +/// This struct contains a function pointer to the `T::run` function fro=
+m the [`WorkItemAdapter`]
+> +/// trait, and defines the linked list pointers necessary to enqueue a w=
+ork item in a workqueue.
+> +///
+> +/// Wraps the kernel's C `struct work_struct`.
+> +///
+> +/// This is a helper type used to associate a `work_struct` with the [`W=
+orkItemAdapter`] that uses
+> +/// it.
+> +#[repr(transparent)]
+> +pub struct Work<T: ?Sized> {
+> +    work: Opaque<bindings::work_struct>,
+> +    _pin: PhantomPinned,
+> +    _adapter: PhantomData<T>,
+> +}
+> +
+> +// SAFETY: Kernel work items are usable from any thread.
+> +//
+> +// We do not need to constrain `T` since the work item does not actually=
+ contain a `T`.
+> +unsafe impl<T: ?Sized> Send for Work<T> {}
+> +// SAFETY: Kernel work items are usable from any thread.
+> +//
+> +// We do not need to constrain `T` since the work item does not actually=
+ contain a `T`.
+> +unsafe impl<T: ?Sized> Sync for Work<T> {}
+> +
+> +impl<T: ?Sized> Work<T> {
+> +    /// Creates a new instance of [`Work`].
+> +    #[inline]
+> +    #[allow(clippy::new_ret_no_self)]
+> +    pub fn new() -> impl PinInit<Self>
+> +    where
+> +        T: WorkItemAdapter,
+> +    {
+> +        // SAFETY: The `WorkItemAdapter` implementation promises that `T=
+::run` can be used as the
+> +        // work item function.
+> +        unsafe {
+> +            kernel::init::pin_init_from_closure(move |slot| {
+> +                bindings::__INIT_WORK(Self::raw_get(slot), Some(T::run),=
+ false);
+> +                Ok(())
+> +            })
+> +        }
+> +    }
+> +
+> +    /// Get a pointer to the inner `work_struct`.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The provided pointer must not be dangling. (But it need not be i=
+nitialized.)
+> +    #[inline]
+> +    pub unsafe fn raw_get(ptr: *const Self) -> *mut bindings::work_struc=
+t {
+> +        // SAFETY: The caller promises that the pointer is valid.
+> +        //
+> +        // A pointer cast would also be ok due to `#[repr(transparent)]`=
+. We use `addr_of!` so that
+> +        // the compiler does not complain that `work` is unused.
+> +        unsafe { Opaque::raw_get(core::ptr::addr_of!((*ptr).work)) }
+> +    }
+> +}
+> +
+> +/// Declares that a type has a [`Work<T>`] field.
+> +///
+> +/// # Safety
+> +///
+> +/// The [`OFFSET`] constant must be the offset of a field in Self of typ=
+e [`Work<T>`]. The methods on
+> +/// this trait must have exactly the behavior that the definitions given=
+ below have.
+> +///
 
-Build results:
-	total: 153 pass: 153 fail: 0
-Qemu test results:
-	total: 520 pass: 520 fail: 0
+I don't like this safety section, since the discharging safety comment
+will just be "I implemented everything correctly" which for me is the same
+as just writing no safety comment at all.
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+I am working on improving safety comments in general, so we can defer
+improving this until I have come up with a good plan. (If you still want
+to improve it, feel free to do so)
 
-Guenter
+> +/// [`Work<T>`]: Work
+> +/// [`OFFSET`]: HasWork::OFFSET
+> +pub unsafe trait HasWork<T> {
+> +    /// The offset of the [`Work<T>`] field.
+> +    ///
+> +    /// [`Work<T>`]: Work
+> +    const OFFSET: usize;
+> +
+> +    /// Returns the offset of the [`Work<T>`] field.
+> +    ///
+> +    /// This method exists because the [`OFFSET`] constant cannot be acc=
+essed if the type is not Sized.
+> +    ///
+> +    /// [`Work<T>`]: Work
+> +    /// [`OFFSET`]: HasWork::OFFSET
+> +    #[inline]
+> +    fn get_work_offset(&self) -> usize {
+> +        Self::OFFSET
+> +    }
+> +
+> +    /// Returns a pointer to the [`Work<T>`] field.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The pointer must not be dangling. (But the memory need not be in=
+itialized.)
+> +    ///
+> +    /// [`Work<T>`]: Work
+> +    #[inline]
+> +    unsafe fn raw_get_work(ptr: *mut Self) -> *mut Work<T>
+> +    where
+> +        Self: Sized,
+> +    {
+> +        // SAFETY: The caller promises that the pointer is not dangling.
+> +        unsafe { (ptr as *mut u8).add(Self::OFFSET) as *mut Work<T> }
+> +    }
+> +
+> +    /// Returns a pointer to the struct containing the [`Work<T>`] field=
+.
+> +    ///
+> +    /// # Safety
+> +    ///
+> +    /// The pointer must not be dangling. (But the memory need not be in=
+itialized.)
+
+The pointer also must point to a `Work<T>` that is embedded at `OFFSET`
+inside of `Self`.
+
+> +    ///
+> +    /// [`Work<T>`]: Work
+> +    #[inline]
+> +    unsafe fn work_container_of(ptr: *mut Work<T>) -> *mut Self
+> +    where
+> +        Self: Sized,
+> +    {
+> +        // SAFETY: The caller promises that the pointer is not dangling.
+> +        unsafe { (ptr as *mut u8).sub(Self::OFFSET) as *mut Self }
+> +    }
+> +}
+> +
+> +/// Used to safely implement the [`HasWork<T>`] trait.
+> +///
+> +/// # Examples
+> +///
+> +/// ```
+> +/// use kernel::sync::Arc;
+> +///
+> +/// struct MyStruct {
+> +///     work_field: Work<Arc<MyStruct>>,
+> +/// }
+> +///
+> +/// impl_has_work! {
+> +///     impl HasWork<Arc<MyStruct>> for MyStruct { self.work_field }
+> +/// }
+> +/// ```
+> +///
+> +/// [`HasWork<T>`]: HasWork
+> +#[macro_export]
+> +macro_rules! impl_has_work {
+> +    ($(impl$(<$($implarg:ident),*>)?
+> +       HasWork<$work_type:ty>
+> +       for $self:ident $(<$($selfarg:ident),*>)?
+> +       { self.$field:ident }
+> +    )*) =3D> {$(
+> +        // SAFETY: The implementation of `raw_get_work` only compiles if=
+ the field has the right
+> +        // type.
+> +        unsafe impl$(<$($implarg),*>)? $crate::workqueue::HasWork<$work_=
+type> for $self $(<$($selfarg),*>)? {
+> +            const OFFSET: usize =3D $crate::offset_of!(Self, $field) as =
+usize;
+> +
+> +            #[inline]
+> +            unsafe fn raw_get_work(ptr: *mut Self) -> *mut $crate::workq=
+ueue::Work<$work_type> {
+> +                // SAFETY: The caller promises that the pointer is not d=
+angling.
+> +                unsafe {
+> +                    ::core::ptr::addr_of_mut!((*ptr).$field)
+> +                }
+> +            }
+> +        }
+> +    )*};
+> +}
+
+I don't really like the verbosity that this creates, but for the moment it
+should be fine. When/if we get field projections, we can build a much
+better proc-macro, so I think we can defer improving this until then.
+
+> +
+>  /// Returns the system work queue (`system_wq`).
+>  ///
+>  /// It is the one used by `schedule[_delayed]_work[_on]()`. Multi-CPU mu=
+lti-threaded. There are
+> --
+> 2.40.1.606.ga4b1b128d6-goog
+>
+
+--
+Cheers,
+Benno
