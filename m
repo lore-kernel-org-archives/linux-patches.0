@@ -1,28 +1,28 @@
-Received: from mail-4322.protonmail.ch (mail-4322.protonmail.ch [185.70.43.22])
+Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8F11079D
-	for <patches@lists.linux.dev>; Thu, 25 May 2023 13:46:53 +0000 (UTC)
-Date: Thu, 25 May 2023 13:46:40 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA62D101E4
+	for <patches@lists.linux.dev>; Thu, 25 May 2023 13:50:41 +0000 (UTC)
+Date: Thu, 25 May 2023 13:50:16 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1685022411; x=1685281611;
-	bh=61hvWsMU7lXC84Xrt2kc9OPqYj0r7Uqdnc1xD7J8Q8g=;
+	s=protonmail; t=1685022631; x=1685281831;
+	bh=zrKoenzJ8TmNRT2hbEcxAT6emLjyT9JVKNO/jWBLi6o=;
 	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
 	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
 	 Message-ID:BIMI-Selector;
-	b=d37z04qn6hsgDWNDNykUzBqjii9W8Zw2MIvtrqUoQe1zFzE2d9tdu32FaY7OyKZVd
-	 oIdvaS9f3/dVi25EOXV06rokcjRN8qDcxGC3pMEzzLDwu8NKQt5bfV+ZfE0s+987Yi
-	 9Kpvd5ZHV/cl5LQUWgp/QcEjuolXQ1j+hENOKLqcfnbprZTb5rjn+/7kRWVvSjI2ct
-	 l1d4o5o0UOn9BHkKbjcHrfZ61LIyIrl3UHKWqC3aQiSV1E6tR3beeZzXr1SSS9ipfC
-	 p/yuRWlg10eYq65UkUmOdbp67oQIHt6Ij12JzPgdDsNWdcCBQYpX/ioMC8ULYe5xRr
-	 Fioe5PANVaUug==
+	b=mqeKCYXMvIT3+oSAyZN/f5r8+cqY6dEblI8myjSOk+FrCmwaYy8qN2zxqCkLygIUm
+	 3aFiNS8tng85MYyg6HAREuIAYhVAN9KdbGpgzZUEUo2Jt3z5PHDz1kjYxxkxawlgr4
+	 m9zDqrgckSm3JHUtI1YGCAuJ0htGrZmx6jILccmnW6rMbIr67pX/6bt7XH/dmDdSHk
+	 bjuxA9uf5hsze3/Y4MVTd6A4OHhp8KPOF3hWe+Byy9w9Fi1hMPUei76lXvNcBTuMY/
+	 mxJr3Wi1YUHRIhBc/lqhl5zeTVtWdNozI/MoUh64jJbeLd0ZaHjkdpdbKn/NmGsB7n
+	 QjsjuReNfpbXQ==
 To: Alice Ryhl <aliceryhl@google.com>
 From: Benno Lossin <benno.lossin@proton.me>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Ingo Molnar <mingo@redhat.com>, Peter Zijlstra <peterz@infradead.org>, Will Deacon <will@kernel.org>, Mark Rutland <mark.rutland@arm.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Andreas Hindborg <a.hindborg@samsung.com>
-Subject: Re: [PATCH v2 4/4] rust: task: add `Send` marker to `Task`
-Message-ID: <dnJLgoTsedSzBtTbF5y4YNlm5JHim7JkprBI5XMM87lP_5wHOmjv_rw6MwuverqDnA7KGWJsGVf2D5KEywOgMH9-BVQP3edDLJWJPI7diSc=@proton.me>
-In-Reply-To: <20230523144418.1250547-5-aliceryhl@google.com>
-References: <20230523144418.1250547-1-aliceryhl@google.com> <20230523144418.1250547-5-aliceryhl@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Will Deacon <will@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Mark Rutland <mark.rutland@arm.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Wedson Almeida Filho <walmeida@microsoft.com>
+Subject: Re: [PATCH v1 1/2] rust: sync: add `Arc::ptr_eq`
+Message-ID: <8OGX9YR7yYJm2Wv91cDK7yCWzMfkP5k3fYARJsX9yFoXoIIsY7wDmT-6A7yl5KFphSKMZV3jExRfKNaBOJN2Uwv07-XzNSl78rUabPljec8=@proton.me>
+In-Reply-To: <20230517200814.3157916-1-aliceryhl@google.com>
+References: <20230517200814.3157916-1-aliceryhl@google.com>
 Feedback-ID: 71780778:user:proton
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,51 +33,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On 5/23/23 16:44, Alice Ryhl wrote:
-> When a type also implements `Sync`, the meaning of `Send` is just "this
-> type may be accessed mutably from threads other than the one it is
-> created on". That's ok for this type.
+On 5/17/23 22:08, Alice Ryhl wrote:
+> Add a method for comparing whether two `Arc` pointers reference the same
+> underlying object.
 >=20
+> This comparison can already be done by getting a reference to the inner
+> values and comparing whether the references have the same address.
+> However, writing `Arc::ptr_eq(a, b)` is generally less error-prone than
+> doing the same check on the references, since you might otherwise
+> accidentally compare the two `&Arc<T>` references instead, which wont
+> work because those are pointers to pointers to the inner value, when you
+> just want to compare the pointers to the inner value.
+>=20
+> Also, this method might optimize better because getting a reference to
+> the inner value involves offsetting the pointer, which this method does
+> not need to do.
+>=20
+> Co-developed-by: Wedson Almeida Filho <walmeida@microsoft.com>
+> Signed-off-by: Wedson Almeida Filho <walmeida@microsoft.com>
 > Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-> Reviewed-by: Andreas Hindborg <a.hindborg@samsung.com>
 
 Reviewed-by: Benno Lossin <benno.lossin@proton.me>
 
 > ---
->   rust/kernel/task.rs | 10 ++++++++--
->   1 file changed, 8 insertions(+), 2 deletions(-)
+>   rust/kernel/sync/arc.rs | 5 +++++
+>   1 file changed, 5 insertions(+)
 >=20
-> diff --git a/rust/kernel/task.rs b/rust/kernel/task.rs
-> index 526d29a0ae27..7eda15e5f1b3 100644
-> --- a/rust/kernel/task.rs
-> +++ b/rust/kernel/task.rs
-> @@ -64,8 +64,14 @@ macro_rules! current {
->   #[repr(transparent)]
->   pub struct Task(pub(crate) Opaque<bindings::task_struct>);
->=20
-> -// SAFETY: It's OK to access `Task` through references from other thread=
-s because we're either
-> -// accessing properties that don't change (e.g., `pid`, `group_leader`) =
-or that are properly
-> +// SAFETY: By design, the only way to access a `Task` is via the `curren=
-t` function or via an
-> +// `ARef<Task>` obtained through the `AlwaysRefCounted` impl. This means=
- that the only situation in
-> +// which a `Task` can be accessed mutably is when the refcount drops to =
-zero and the destructor
-> +// runs. It is safe for that to happen on any thread, so it is ok for th=
-is type to be `Send`.
-> +unsafe impl Send for Task {}
+> diff --git a/rust/kernel/sync/arc.rs b/rust/kernel/sync/arc.rs
+> index e6d206242465..274febe3bb06 100644
+> --- a/rust/kernel/sync/arc.rs
+> +++ b/rust/kernel/sync/arc.rs
+> @@ -221,6 +221,11 @@ impl<T: ?Sized> Arc<T> {
+>           // reference can be created.
+>           unsafe { ArcBorrow::new(self.ptr) }
+>       }
 > +
-> +// SAFETY: It's OK to access `Task` through shared references from other=
- threads because we're
-> +// either accessing properties that don't change (e.g., `pid`, `group_le=
-ader`) or that are properly
->   // synchronised by C code (e.g., `signal_pending`).
->   unsafe impl Sync for Task {}
+> +    /// Compare whether two [`Arc`] pointers reference the same underlyi=
+ng object.
+> +    pub fn ptr_eq(this: &Self, other: &Self) -> bool {
+> +        core::ptr::eq(this.ptr.as_ptr(), other.ptr.as_ptr())
+> +    }
+>   }
 >=20
+>   impl<T: 'static> ForeignOwnable for Arc<T> {
+>=20
+> base-commit: ac9a78681b921877518763ba0e89202254349d1b
 > --
-> 2.40.1.698.g37aff9b760-goog
+> 2.40.1.606.ga4b1b128d6-goog
 >=20
 
 --=20
