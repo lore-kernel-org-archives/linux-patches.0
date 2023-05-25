@@ -1,199 +1,94 @@
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5A23D7C
-	for <patches@lists.linux.dev>; Thu, 25 May 2023 16:54:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1685033687; x=1716569687;
-  h=date:from:to:cc:subject:message-id:references:
-   in-reply-to:mime-version;
-  bh=dMjcxi5MqGvW2P64zIOPx/bQQgz++jfLnRDugO1/Bag=;
-  b=ZmeiEONZeiAwApzciHcoxmvYOlmOoSRzDPrCVazobqnm9Ci70+NYdAbm
-   IHIvmOKvQbeqUCaSwZdVtK/le22lIKt67gZ1DQ/6Sbd9QddRD2xkRJXY6
-   i7lqfKcMt+Vvba0F+ZSwMkUdIY5WbCXjla4DsLRvCtduw5mfJ/4kTTY0P
-   aM5dRXyW5oNxao1vYch2l8Qe7XdEizV5xhlCY+z8D92X7MDee43mSfmhz
-   Qo696SIZ6yCXGrcvCdAoRwbdUABvtTYRar41o7LnYur0A7gkIh7Rxmg/s
-   BU1pxJiN23J/a90Sm/tWcONJ2QpbjqEblICZWJKAt7ofguycE8foXvQz7
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10721"; a="357197677"
-X-IronPort-AV: E=Sophos;i="6.00,191,1681196400"; 
-   d="scan'208";a="357197677"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 May 2023 09:54:41 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10721"; a="735604693"
-X-IronPort-AV: E=Sophos;i="6.00,191,1681196400"; 
-   d="scan'208";a="735604693"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.229.16])
-  by orsmga008.jf.intel.com with ESMTP; 25 May 2023 09:54:41 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX603.amr.corp.intel.com (10.22.229.16) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23; Thu, 25 May 2023 09:54:41 -0700
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23 via Frontend Transport; Thu, 25 May 2023 09:54:40 -0700
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (104.47.51.43) by
- edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.23; Thu, 25 May 2023 09:54:40 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UvpHEvp8legVk9KazTdI0TK1rNAWcn9wOM7ZWx4piBnRlFeh4zVOPlCFuZdVouYzcFgzpW222L3Nx9+PRNPn1RodKjIEchuFjfwlF9rbSJ/oviRwvPgZQC99qvXc3euFbt6fAZUKVh0f7XsOMZWRsdqka6073H2y7yiu2UrUU7kI+R6yKMjM33+ZgtKYkimx2tcNxlOODCmhiuhWdINBFdswir9UCpga9krSx+ryelIdrX/34ZASiXlA+XUCFtdyOcqGnpk5x77uvt2V4k+3H5ef2GgEtc0M7sKIr294Z6MeaGsGQDPXgJF/rSE4pMvHzU3y4Ok9+HBTlyk1ygKlhQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pJDPKpPIr+irEZEFOEmIYkFNbkewQC5drSF1P9Nq4Gc=;
- b=OE3pSvp2/YYEpvTRaBAt1oXjLTBBXxNo36TgRwVL0yYMnn/scBHil8JZ+yRf8m2dFk3VAcBtVj0uxOaghOSeNXlwEyr/nlKbEtStBe7jio09UIr9BGFkDVHKcW1d1ri6uUV6mHLk8G79T8vyiVjE+JUMtr5PteqBi2AEimEIbYsbcDZl2KGvKyz+o/xoRx4Wp8PizRKCvn5rT3AVFZaLPJyJTAXK0HCo672SH18ZYfMlGw/sxmJQkESFkl0xaRNfUzBKaUu00F5i5Txg74KLntARAOfEkWPepE3QgqXKIjzBFOquBiiLQQiBHGxhNrVCMN+J6rMpR8s+xfYs2GzlaQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CY5PR11MB6139.namprd11.prod.outlook.com (2603:10b6:930:29::17)
- by PH0PR11MB5627.namprd11.prod.outlook.com (2603:10b6:510:e4::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6411.28; Thu, 25 May
- 2023 16:54:38 +0000
-Received: from CY5PR11MB6139.namprd11.prod.outlook.com
- ([fe80::44e7:c479:62f4:3eb4]) by CY5PR11MB6139.namprd11.prod.outlook.com
- ([fe80::44e7:c479:62f4:3eb4%3]) with mapi id 15.20.6433.017; Thu, 25 May 2023
- 16:54:37 +0000
-Date: Thu, 25 May 2023 09:54:33 -0700
-From: Lucas De Marchi <lucas.demarchi@intel.com>
-To: Petr Pavlu <petr.pavlu@suse.com>
-CC: Luis Chamberlain <mcgrof@kernel.org>, <gregkh@linuxfoundation.org>,
-	<rafael@kernel.org>, <song@kernel.org>, <lucas.de.marchi@gmail.com>,
-	<christophe.leroy@csgroup.eu>, <peterz@infradead.org>, <rppt@kernel.org>,
-	<dave@stgolabs.net>, <willy@infradead.org>, <vbabka@suse.cz>,
-	<mhocko@suse.com>, <dave.hansen@linux.intel.com>, <colin.i.king@gmail.com>,
-	<jim.cromie@gmail.com>, <catalin.marinas@arm.com>, <jbaron@akamai.com>,
-	<rick.p.edgecombe@intel.com>, <yujie.liu@intel.com>, <david@redhat.com>,
-	<tglx@linutronix.de>, <hch@lst.de>, <patches@lists.linux.dev>,
-	<linux-modules@vger.kernel.org>, <linux-mm@kvack.org>,
-	<linux-kernel@vger.kernel.org>, <pmladek@suse.com>, <prarit@redhat.com>,
-	<torvalds@linux-foundation.org>, <lennart@poettering.net>
-Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
-Message-ID: <fd2jkkgi5j2wakpaip3jbmj2b66s2euv2wwosade5h73nqi77r@4t4pdpyeemwv>
-References: <20230524213620.3509138-1-mcgrof@kernel.org>
- <20230524213620.3509138-3-mcgrof@kernel.org>
- <8fc5b26b-d2f6-0c8f-34a1-af085dbef155@suse.com>
-Content-Type: text/plain; charset="us-ascii"; format=flowed
-Content-Disposition: inline
-In-Reply-To: <8fc5b26b-d2f6-0c8f-34a1-af085dbef155@suse.com>
-X-ClientProxiedBy: MW4PR03CA0115.namprd03.prod.outlook.com
- (2603:10b6:303:b7::30) To CY5PR11MB6139.namprd11.prod.outlook.com
- (2603:10b6:930:29::17)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAC4101DA
+	for <patches@lists.linux.dev>; Thu, 25 May 2023 17:53:18 +0000 (UTC)
+Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-513fd8cc029so4948980a12.3
+        for <patches@lists.linux.dev>; Thu, 25 May 2023 10:53:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1685037196; x=1687629196;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Cki7nTSfn8V9Pz9bjx+wUZ3Q24K9M6RV4kOzAoI4Ezk=;
+        b=D6d6iUjkz46uF5lcM4xKnjVBYMFgwmzQC2Gv7q7jtoXAmTPH31SoeNZ0EYsFNq1HCL
+         FHpt6Dqayp7iUP4uroXvnZ9Te7yirPRkuvgSsmVXAi+VukHYxVB1yXCM7U/snsD/n8G+
+         YDlUCHjvQ7SUxSCmocrK/cFYALfbBFxqZRtjQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685037196; x=1687629196;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Cki7nTSfn8V9Pz9bjx+wUZ3Q24K9M6RV4kOzAoI4Ezk=;
+        b=I8rwDgAwMnNeeoeaQDRL+mcYj5yaaeJIYjNB4lTEvvcMkRMIOCzp+2B3ZRi4MItOf4
+         QnzZxFefyW6jN0+3lapc07MFjVWv5CEh3mCdWjp4V1gEGxUB2GTt7T2eXT1cfARmGX7g
+         f/caUmDObO1+Dw1T8IU82/aeFCVilUQHXGugse9oIWxAOJv6SGTtBTFy/euk0T5KyhIK
+         Rrv21EpAMy3U9ds+5dIGttJ8WnNEKPU5m/x0f1MbWHiX9hlcE1BySGj11k/VC6YFJTuQ
+         VdvzUfM5EyBv8SUUsK1VmldpHuDw4J4s5Dlc35AwLaAb68Y9nJ2rpsiQys0elh3X3CYy
+         B+zA==
+X-Gm-Message-State: AC+VfDy+CsAieftgNaGNB/Qcg8JzBXO51aakR6s5yfX82SGlE3ME79EC
+	A0QqX9msiFNVZ9ECPpw7X/3vVa5IciS07QzbdP+7AuN8
+X-Google-Smtp-Source: ACHHUZ51Yj16G6RLQV2xVPeDWLsTF3FNPZcQYnR6yEtl5DTS2z5E/Mt4PBbPYUkzepVocjfAQGQ0vg==
+X-Received: by 2002:a17:907:9493:b0:965:fa80:bf1 with SMTP id dm19-20020a170907949300b00965fa800bf1mr2195907ejc.32.1685037196354;
+        Thu, 25 May 2023 10:53:16 -0700 (PDT)
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com. [209.85.208.42])
+        by smtp.gmail.com with ESMTPSA id mj22-20020a170906af9600b00971433ed5fesm1110913ejb.184.2023.05.25.10.53.15
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 May 2023 10:53:16 -0700 (PDT)
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-51426347bd2so3906323a12.2
+        for <patches@lists.linux.dev>; Thu, 25 May 2023 10:53:15 -0700 (PDT)
+X-Received: by 2002:a17:907:9493:b0:965:fa80:bf1 with SMTP id
+ dm19-20020a170907949300b00965fa800bf1mr2195225ejc.32.1685037174582; Thu, 25
+ May 2023 10:52:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY5PR11MB6139:EE_|PH0PR11MB5627:EE_
-X-MS-Office365-Filtering-Correlation-Id: 574af3bf-0145-4609-90c1-08db5d40b93b
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: jWWsoE+UD7BzC7cMA2dsDGiy/15gMM5GptpXPWXItIT018eP0QaMtJE0CORx6WF4aA7STymYuU6lShOmDp2OcB1FKMRqp+xmGE/nMamheIQLpSRRNltvbcgfBE10c8BFrf5Bvd8PdosvUNBvet1RMz6T7kYWwGePBKWj4aAjw/aa3maTcB/B8S0Mk6/HXtWJ2ScvjlXIi7nYjhpN6ILhIsTrI3G2n79Ia8FX604jI7NpyRinEI4opW+o9uujnJA3cS0XTtRTEsi91P943z7W6B/I7ZwqC6jVs9v91XU3cRi2vn8g58IG10Ur9x6xOmoDrqc45uO//pyjKpuiVdJQts0yKb2vIDvCbx6Ab16IHWeJUCSKRpHkUFWGcGn9urCrWKqPwtlc98EZ4OILt3uJF5dmzJw6vG06CqNGkHS0Lc0LyXZl2loRxFAwibPDy0719dEZedlhYgRCjBhN2jA8jL4npbH/DtWqdE8FQ+YHeJ5ImSFwNsOO+KUTiYCu1BtbF0Gp1tWlXnp3S6E4Q7JQdHKKws2xFcUPsEDpClwG6ZaFFtCl6ACxFWzXvC0md04t
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CY5PR11MB6139.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(7916004)(396003)(136003)(366004)(39860400002)(346002)(376002)(451199021)(316002)(33716001)(478600001)(66556008)(66476007)(66946007)(6916009)(4326008)(6666004)(82960400001)(38100700002)(6486002)(41300700001)(8676002)(86362001)(5660300002)(8936002)(7416002)(186003)(6512007)(9686003)(6506007)(26005)(2906002)(83380400001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?QgjI4l7dOQ+ZMeaodi966RX0xH+dV7H9t1Ph8EMi2C3gNE1SRqlINx17Epxh?=
- =?us-ascii?Q?RTpn8Gf0sr7RZi429eCqGuaxsIFWIwdQx8CZcdXmReponnHjnaRAnsrbYNPH?=
- =?us-ascii?Q?vKs3k5aJjGeH5g3AZYGfdEFeFIK1un1wUuG9EMcXs7OV761r07xUnxnV3uAz?=
- =?us-ascii?Q?7h4A5qV/2pAXTZ2df+Qitoe3HL99HrAkpLMbW7AWV2D5JJWJDUq2pWpBPA3t?=
- =?us-ascii?Q?AFlR9vLZgUWmj3KARD0wx0TEgpNJub61NNhGNNEgAe/YUGOsT7Vynz3eEXOo?=
- =?us-ascii?Q?+BErCI8xomT78FnFaPe5GrAJCta2MVBALvZwl6wOBjwp+gGfwgLMjDuxMKb/?=
- =?us-ascii?Q?aWckSgObcBc82kkf/UiDdIw8UCorG55wcYaa2nM1pPQPMjNZgJOnKC8kGR0D?=
- =?us-ascii?Q?/kMFUGtN2NQF7HsIf3xGTGepYkpFTiTSRdFXFODXzNm1gMI+hvpnawpquwb+?=
- =?us-ascii?Q?8dsZe+OLf5NueAhYXcDgnVqnLLfbNX92GDPm9uihm3302XQGfjnmWnn1WySK?=
- =?us-ascii?Q?0XVPzSJlFxEeQETxdUb/7JSgVjN6nK7xVSDsjsxoV6qKW+XcjbfwAKdayvgU?=
- =?us-ascii?Q?JFuTlGLxYN1BHkO1MOIGWlvzPVMe7MTBkGRMyEINexXjvRb+1SItmCGeRXxV?=
- =?us-ascii?Q?1Jqs+6QhN6anFJ3+huQ7Z+9l438omMWkXZOYr0QlF3LpH4kv555kyrcMGVqf?=
- =?us-ascii?Q?bA5CFl6WCqp4xazEh1AmHN17LGK4G/ia9/SQVmAcO6p2neu1IT6WYHwH4tvY?=
- =?us-ascii?Q?sAt+Y2snFi0bLM1yH+8w8XQPz/wS1Fc9Ipf/3ODWGEW9QqVerS6YsW0J3oAJ?=
- =?us-ascii?Q?IfvyTXVo435iDBH8Uo1DbQfgt/FS2d1GILDLyptY82Fs+81foCIbMdjd6p9A?=
- =?us-ascii?Q?zNXzrq3tQvbDgfkZkaBUVZTUgYrAQLHDEUs8gNrs3lfq2uW/I1t1+Ih+2cda?=
- =?us-ascii?Q?dFkx+xgiScveSoLfhX8WEDSkw35YqLxoDl5CkiCqN1ZqmLcG0iTKzEZwFYCt?=
- =?us-ascii?Q?fWSU57FPizjoVLfttv2RJP0f/0jrL0XhIbx/HANpfQG0S0Z2w0LvOfr1CVER?=
- =?us-ascii?Q?81bXhqzoJgF1UfU6FAGtrpkWAiBF9CyBdeVhnRdzsYzmqz9LLecyKRC58qgA?=
- =?us-ascii?Q?CI6tGuqy7CiuXRFbrXS/DCgOeotsfj3K7CUJAgtTau6fi/O5grp8ED+r4pxn?=
- =?us-ascii?Q?TvOtqPBNL68kYSmdQalEzxqXCnqgkVy+ZCNQvWlvdiE/x23FIJ1rZtBOVXZR?=
- =?us-ascii?Q?/pSXCMYiZXTZt/qHWXcJ5YMXD+CxFsxIV6C6HJTWeDFVdVMEOkkM7je7Uml1?=
- =?us-ascii?Q?BQWNwGuZqDiIim4bbEH6sVauFeevNtMK57Q1HmlbxgIqSq9H3MsP/cOESK9X?=
- =?us-ascii?Q?Vzd8NUgtL0m9rFFff6Eyao2pr+pejTC4H4KUAWY2oVEnoT94bVIVbO3a0xfA?=
- =?us-ascii?Q?Xh5fRG47yqKVuUbb51w1sKfzsOXJpTFdKX3cosxz1aCk4s9zGmA1ycMe3mZc?=
- =?us-ascii?Q?15fGdKqPzuvCG6B4WoqZPkefO+KKnJD1zyA/2JLkIEooSITZnp4my3ydYyDr?=
- =?us-ascii?Q?P2hyBmU11lDLfb+Xq4SysEp/9kPGIhPnD+HwJ4p6F6eKkKNNdBjxAlJUUl9p?=
- =?us-ascii?Q?hQ=3D=3D?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 574af3bf-0145-4609-90c1-08db5d40b93b
-X-MS-Exchange-CrossTenant-AuthSource: CY5PR11MB6139.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 May 2023 16:54:37.3332
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KabrB1jtHIoArAUJPNO+bwn+9ZSssbfjaa9IvfgDXjjbey9ioHBJEqeias57qWSscS5+rQx8yIjusE9wC8iiI2ksLWHOKsgEl7NQjqPX5A0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5627
-X-OriginatorOrg: intel.com
+References: <20230524213620.3509138-1-mcgrof@kernel.org> <20230524213620.3509138-3-mcgrof@kernel.org>
+ <8fc5b26b-d2f6-0c8f-34a1-af085dbef155@suse.com> <CAHk-=wiPjcPL_50WRWOi-Fmi9TYO6yp_oj63a_N84FzG-rxGKQ@mail.gmail.com>
+In-Reply-To: <CAHk-=wiPjcPL_50WRWOi-Fmi9TYO6yp_oj63a_N84FzG-rxGKQ@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Thu, 25 May 2023 10:52:37 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wjWeV-ct7pFvBF6m1gzbqdp_K7nQe=++Ov029g6Fc3dsg@mail.gmail.com>
+Message-ID: <CAHk-=wjWeV-ct7pFvBF6m1gzbqdp_K7nQe=++Ov029g6Fc3dsg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] module: add support to avoid duplicates early on load
+To: Petr Pavlu <petr.pavlu@suse.com>
+Cc: Luis Chamberlain <mcgrof@kernel.org>, gregkh@linuxfoundation.org, rafael@kernel.org, 
+	song@kernel.org, lucas.de.marchi@gmail.com, lucas.demarchi@intel.com, 
+	christophe.leroy@csgroup.eu, peterz@infradead.org, rppt@kernel.org, 
+	dave@stgolabs.net, willy@infradead.org, vbabka@suse.cz, mhocko@suse.com, 
+	dave.hansen@linux.intel.com, colin.i.king@gmail.com, jim.cromie@gmail.com, 
+	catalin.marinas@arm.com, jbaron@akamai.com, rick.p.edgecombe@intel.com, 
+	yujie.liu@intel.com, david@redhat.com, tglx@linutronix.de, hch@lst.de, 
+	patches@lists.linux.dev, linux-modules@vger.kernel.org, linux-mm@kvack.org, 
+	linux-kernel@vger.kernel.org, pmladek@suse.com, prarit@redhat.com, 
+	lennart@poettering.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 25, 2023 at 01:40:32PM +0200, Petr Pavlu wrote:
->On 5/24/23 23:36, Luis Chamberlain wrote:
->> Add support to use the new kread_uniq_fd() to avoid duplicate kernel
->> reads on modules. At the cost of about ~945 bytes to your kernel size,
->> enabling this on a 255 CPU x86_64 qemu guest this saves about ~1.8 GiB
->> of memory during boot which would otherwise be free'd, and reduces boot
->> time by about ~11 seconds.
->>
->> Userspace loads modules through finit_module(), this in turn will
->> use vmalloc space up to 3 times:
->>
->>   a) The kernel_read_file() call
->>   b) Optional module decompression
->>   c) Our final copy of the module
->>
->> Commit 064f4536d139 ("module: avoid allocation if module is already
->> present and ready") shows a graph of the amount of vmalloc space
->> observed allocated but freed for duplicate module request which end
->> up in the trash bin. Since there is a linear relationship with the
->> number of CPUs eventually this will bite us and you end up not being
->> able to boot. That commit put a stop gap for c) but to avoid the
->> vmalloc() space wasted on a) and b) we need to detect duplicates
->> earlier.
->>
->> We could just have userspace fix this, but as reviewed at LSFMM 2023
->> this year in Vancouver, fixing this in userspace can be complex and we
->> also can't know when userpace is fixed. Fixing this in kernel turned
->> out to be easy with the inode and with a simple kconfig option we can
->> let users / distros decide if this full stop gap is worthy to enable.
+On Thu, May 25, 2023 at 9:07=E2=80=AFAM Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
->kmod normally uses finit_module() only if a module is not compressed,
->otherwise it decompresses it first and then invokes init_module().
-
-that is for historical reasons, because the kernel didn't support to
-uncompress the module by itself.
-
+> That said, I posted an alternate patch that I think _is_ valid as that
+> quick hack. I don't love it, but it sure is simpler (and avoids the
+> i_ino bug):
 >
->Looking at Fedora and openSUSE Tumbleweed, they compress kernel modules
->with xz and zstd, respectively. They also have their kernels built
->without any CONFIG_MODULE_COMPRESS_{GZIP,XZ,ZSTD} options.
+>     https://lore.kernel.org/lkml/CAHk-=3DwgKu=3DtJf1bm_dtme4Hde4zTB=3D_7E=
+dgR8avsDRK4_jD+uA@mail.gmail.com/
 >
->It means that these and similarly organized distributions end up using
->init_module(), and adding complexity to optimize finit_module() wouldn't
->actually help in their case.
+> that patch hasn't seen any testing, and for all I know it won't even
+> boot because of some thinko, but I think it would be acceptable as a
+> workaround if it does work.
 
-true, but the change in kmod should be trivial now that the kernel has
-the proper support in place and the algorithms support match the ones
-kmod has.  I will take a look at switching the logic around to just pass
-the fd to the kernel so it can also deduplicate the requests.
+Well, it boots here, so it must be perfect.
 
-thanks for the reminder,
+That said, I didn't add any debugging code, and I didn't test it on
+any odd setups, and I've never had any problems before. So I don't
+actually know if the patch *does* anything.
 
-Lucas De Marchi
+But it did boot..
 
->
->-- Petr
+               Linus
