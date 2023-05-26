@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935A7AD22
-	for <patches@lists.linux.dev>; Fri, 26 May 2023 07:56:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C0DAD23
+	for <patches@lists.linux.dev>; Fri, 26 May 2023 07:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=BlnfxGH65lfjvCr0EihUnLvC6Y04PW1nCflzWem/FI0=; b=VIpL8dc4hJnM3liOcBxChkT+dG
-	qF/usCC/Wup5mmMJmU1p1ovRc9zKDrFe15DpGpCv7f4i3Mhkrt83uK85qdUAizZUBhBrM5tQg3muw
-	w9qV6fP5s+45uiKWkhPQ/0p5NiELflVvmRKmEbG0pYPjuLPUHkYpxlLQuXAICLo5rrMdD6xkn+c+E
-	rf9/tWnG/HUnZedSs/UfiehEuj5H7zzw7q2FxO93KyrsNh4jk7WDlLYwOr+uIr2u7nhmEjEfjoA1u
-	SDKTfqMfG82ro8eQ/SBy9XVW9hsS7XM0naNEQIHkN+T3/w4EOl/8CsAlecOfKgU/m7H4ZeTp2v+wL
-	YZeBlrZw==;
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=5sDzoLLiNk6KHdYH8uCoV/dBsj9Jyf+/G1i59BLdhsE=; b=aNld4o2VvRGiQ7vUI5arJSgX/L
+	6HnGHoys0fJ0NyQtFF23FYlkQQzjBbOG2VhMIvldNEf22GLVMNLTPM709hyKOlQD0gLZxwuctNBgy
+	5xB+UXzv2lZoitwyBzx9gtzjlhfkbRrUBPE63O6bJwBIPoLlAiT5sqXh83wJrFBVWWsyd0+6vzmLw
+	Zg+CCpzYhsYjajho25CSz1p1EJHOT1tTxSqrc5eVEUGlE72Ih/0P9mhN8JBy4HyPPn6fJ2fJsrvnB
+	8F5DFRPYRHJ48DzQkK2rZN5deuJkdDWpeanaIbyclKM98/ZFBFaHcLpjk6EO/3caforvAU1V5EiBJ
+	7SdjKf2Q==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q2SIj-001WZm-2k;
+	id 1q2SIj-001WZa-2E;
 	Fri, 26 May 2023 07:55:53 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hughd@google.com,
@@ -38,12 +38,10 @@ Cc: p.raghav@samsung.com,
 	linux-fsdevel@vger.kernel.org,
 	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [RFC v2 3/8] shmem: account for high order folios
-Date: Fri, 26 May 2023 00:55:47 -0700
-Message-Id: <20230526075552.363524-4-mcgrof@kernel.org>
+Subject: [RFC v2 0/8] add support for blocksize > PAGE_SIZE
+Date: Fri, 26 May 2023 00:55:44 -0700
+Message-Id: <20230526075552.363524-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230526075552.363524-1-mcgrof@kernel.org>
-References: <20230526075552.363524-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -53,132 +51,68 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-shmem uses the shem_info_inode alloced, swapped to account
-for allocated pages and swapped pages. In preparation for high
-order folios adjust the accounting to use folio_nr_pages().
+This is an initial attempt to add support for block size > PAGE_SIZE for tmpfs.
+Why would you want this? It helps us experiment with higher order folio uses
+with fs APIS and helps us test out corner cases which would likely need
+to be accounted for sooner or later if and when filesystems enable support
+for this. Better review early and burn early than continue on in the wrong
+direction so looking for early feedback.
 
-This should produce no functional changes yet as higher order
-folios are not yet used or supported in shmem.
+I have other patches to convert shmem_file_read_iter() to folios too but that
+is not yet working. In the swap world the next thing to look at would be to
+convert swap_cluster_readahead() to folios.
 
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- mm/shmem.c | 34 ++++++++++++++++++++--------------
- 1 file changed, 20 insertions(+), 14 deletions(-)
+As mentioned at LSFMM, if folks want to experiment with anything related to
+Large Block Sizes (LBS) I've been trying to stash related patches in
+a tree which tries to carry as many nuggets we have and can collect into
+a dedicated lage-block tree. Many of this is obviously work in progress
+so don't try it unless you want to your systems to blow up. But in case you
+do, you can use my large-block-20230525 branch [0]. Similarly you can also
+use kdevops with CONFIG_QEMU_ENABLE_EXTRA_DRIVE_LARGEIO support to get
+everything with just as that branch is used for that:
+                                                                                                                                                                                              
+  make
+  make bringup
+  make linux
 
-diff --git a/mm/shmem.c b/mm/shmem.c
-index a947f2678a39..7bea4c5cb83a 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -803,15 +803,15 @@ unsigned long shmem_partial_swap_usage(struct address_space *mapping,
- 						pgoff_t start, pgoff_t end)
- {
- 	XA_STATE(xas, &mapping->i_pages, start);
--	struct page *page;
-+	struct folio *folio;
- 	unsigned long swapped = 0;
- 
- 	rcu_read_lock();
--	xas_for_each(&xas, page, end - 1) {
--		if (xas_retry(&xas, page))
-+	xas_for_each(&xas, folio, end - 1) {
-+		if (xas_retry(&xas, folio))
- 			continue;
--		if (xa_is_value(page))
--			swapped++;
-+		if (xa_is_value(folio))
-+			swapped += (folio_nr_pages(folio));
- 
- 		if (need_resched()) {
- 			xas_pause(&xas);
-@@ -938,10 +938,12 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 			folio = fbatch.folios[i];
- 
- 			if (xa_is_value(folio)) {
-+				long swaps_freed;
- 				if (unfalloc)
- 					continue;
--				nr_swaps_freed += !shmem_free_swap(mapping,
--							indices[i], folio);
-+				swaps_freed = folio_nr_pages(folio);
-+				if (!shmem_free_swap(mapping, indices[i], folio))
-+					nr_swaps_freed += swaps_freed;
- 				continue;
- 			}
- 
-@@ -1007,14 +1009,16 @@ static void shmem_undo_range(struct inode *inode, loff_t lstart, loff_t lend,
- 			folio = fbatch.folios[i];
- 
- 			if (xa_is_value(folio)) {
-+				long swaps_freed;
- 				if (unfalloc)
- 					continue;
-+				swaps_freed = folio_nr_pages(folio);
- 				if (shmem_free_swap(mapping, indices[i], folio)) {
- 					/* Swap was replaced by page: retry */
- 					index = indices[i];
- 					break;
- 				}
--				nr_swaps_freed++;
-+				nr_swaps_freed += swaps_freed;
- 				continue;
- 			}
- 
-@@ -1445,7 +1449,7 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
- 			NULL) == 0) {
- 		spin_lock_irq(&info->lock);
- 		shmem_recalc_inode(inode);
--		info->swapped++;
-+		info->swapped += folio_nr_pages(folio);
- 		spin_unlock_irq(&info->lock);
- 
- 		swap_shmem_alloc(swap);
-@@ -1720,6 +1724,7 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
- 	struct shmem_inode_info *info = SHMEM_I(inode);
- 	swp_entry_t swapin_error;
- 	void *old;
-+	long num_swap_pages;
- 
- 	swapin_error = make_swapin_error_entry();
- 	old = xa_cmpxchg_irq(&mapping->i_pages, index,
-@@ -1729,6 +1734,7 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
- 		return;
- 
- 	folio_wait_writeback(folio);
-+	num_swap_pages = folio_nr_pages(folio);
- 	delete_from_swap_cache(folio);
- 	spin_lock_irq(&info->lock);
- 	/*
-@@ -1736,8 +1742,8 @@ static void shmem_set_folio_swapin_error(struct inode *inode, pgoff_t index,
- 	 * be 0 when inode is released and thus trigger WARN_ON(inode->i_blocks) in
- 	 * shmem_evict_inode.
- 	 */
--	info->alloced--;
--	info->swapped--;
-+	info->alloced -= num_swap_pages;
-+	info->swapped -= num_swap_pages;
- 	shmem_recalc_inode(inode);
- 	spin_unlock_irq(&info->lock);
- 	swap_free(swap);
-@@ -1827,7 +1833,7 @@ static int shmem_swapin_folio(struct inode *inode, pgoff_t index,
- 		goto failed;
- 
- 	spin_lock_irq(&info->lock);
--	info->swapped--;
-+	info->swapped -= folio_nr_pages(folio);
- 	shmem_recalc_inode(inode);
- 	spin_unlock_irq(&info->lock);
- 
-@@ -2542,8 +2548,8 @@ int shmem_mfill_atomic_pte(pmd_t *dst_pmd,
- 		goto out_delete_from_cache;
- 
- 	spin_lock_irq(&info->lock);
--	info->alloced++;
--	inode->i_blocks += PAGE_SECTORS;
-+	info->alloced += folio_nr_pages(folio);
-+	inode->i_blocks += PAGE_SECTORS << folio_order(folio);
- 	shmem_recalc_inode(inode);
- 	spin_unlock_irq(&info->lock);
- 
+Changes on this v2:
+
+  o the block size has been modified to block order after Matthew Wilcox's
+    suggestion. This truly makes a huge difference in making this code
+    much more easier to read and maintain.
+  o At Pankaj Raghav's suggestion I've put together a helper for
+    poison flags and so this now introduces that as is_folio_hwpoison().
+  o cleaned up the nits / debug code as pointed out by Matthew Wilcox
+  o clarified the max block size we support is computed by the MAX_ORDER,
+    and for x86_64 this is 8 MiB.
+  o Tested up to 4 MiB block size with a basic test nothing blew up
+
+Future work:
+
+  o shmem_file_read_iter()
+  o extend struct address_space with order and use that instead
+    of our own block order. We may still need to have our own block order,
+    we'll need to see.
+  o swap_cluster_readahead() and friends coverted over to folios
+  o test this well
+
+[0] https://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux-next.git/log/?h=large-block-20230525
+[1] https://github.com/linux-kdevops/kdevops
+
+Luis Chamberlain (8):
+  page_flags: add is_folio_hwpoison()
+  shmem: convert to use is_folio_hwpoison()
+  shmem: account for high order folios
+  shmem: add helpers to get block size
+  shmem: account for larger blocks sizes for shmem_default_max_blocks()
+  shmem: consider block size in shmem_default_max_inodes()
+  shmem: add high order page support
+  shmem: add support to customize block size order
+
+ include/linux/page-flags.h |   7 ++
+ include/linux/shmem_fs.h   |   3 +
+ mm/shmem.c                 | 139 +++++++++++++++++++++++++++++--------
+ 3 files changed, 119 insertions(+), 30 deletions(-)
+
 -- 
 2.39.2
-
