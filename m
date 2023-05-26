@@ -1,30 +1,37 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4377115BD
-	for <patches@lists.linux.dev>; Fri, 26 May 2023 18:18:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61905C433D2;
-	Fri, 26 May 2023 18:18:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685125098;
-	bh=3X5rRSF8sIavtJV2mOMQEUoORlfFr9LV9dslcms/7xo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=es1ECrgoIkqIRJiP4jPMWa0r3koUHKo6w5fdEiu28OU0bd16kOhqjlXy4WUgO+/+G
-	 F9DhgSBhoXRKdPnY+fXt5e1hausG4COmyHZ2Ia+STqzND18ozkBXLluKRI2Aomi49i
-	 KR0dGoH/olAOGuLJiU49UoMc0q4u05SvKRK61bSc=
-Date: Fri, 26 May 2023 19:18:14 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Greg Thelen <gthelen@google.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 000/381] 5.10.180-rc1 review
-Message-ID: <2023052605-untoasted-sheet-d44d@gregkh>
-References: <20230515161736.775969473@linuxfoundation.org>
- <xr93jzx2el8h.fsf@gthelen2.svl.corp.google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9B218B0D
+	for <patches@lists.linux.dev>; Fri, 26 May 2023 18:41:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=mSsoE+0p2sc9kGpcn+WU5AUctLzpkgWUGD8f1AoBzvo=; b=ltD/wwR9voMJdzOfZ705IzKtCB
+	eZA7RNSbiHcpZdR1w/wBRURZPc/ijS/ori312B41S0Xufrmw922txQtPZmPY5+qP7FUIDuM4hr1ug
+	8d8UfgpK2eQOcxlveydCE6bMK2cbIXaKTL2pTOCI+ZAwJz2C2e8g7WFv21oqk8rYJaMQzBL2vqCsT
+	/FPZsbcufMQFKMJoeBRxZMGJQv8E5b41Ajp9qlQLTNUnWkA07uvkkW0OZ1+PePVtaAvQqQSBO8N0T
+	0raE2IBPXMiOsqaWqfVKuHy/9DDEOR8NyExErim0sjxvhnMKn/DdO77faDX89uXK5n7vdl26kjTRW
+	hATqoiAA==;
+Received: from willy by casper.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1q2cNe-0032Q1-F3; Fri, 26 May 2023 18:41:38 +0000
+Date: Fri, 26 May 2023 19:41:38 +0100
+From: Matthew Wilcox <willy@infradead.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: hughd@google.com, akpm@linux-foundation.org, brauner@kernel.org,
+	djwong@kernel.org, p.raghav@samsung.com, da.gomez@samsung.com,
+	rohan.puri@samsung.com, rpuri.linux@gmail.com,
+	a.manzanares@samsung.com, dave@stgolabs.net, yosryahmed@google.com,
+	keescook@chromium.org, hare@suse.de, kbusch@kernel.org,
+	patches@lists.linux.dev, linux-block@vger.kernel.org,
+	linux-fsdevel@vger.kernel.org, linux-mm@kvack.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [RFC v2 2/8] shmem: convert to use is_folio_hwpoison()
+Message-ID: <ZHD9Yi04AvbawW8d@casper.infradead.org>
+References: <20230526075552.363524-1-mcgrof@kernel.org>
+ <20230526075552.363524-3-mcgrof@kernel.org>
+ <ZHDDFoXs51Be8FcZ@casper.infradead.org>
+ <ZHDvLD3vwt11EYFg@bombadil.infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,67 +40,29 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xr93jzx2el8h.fsf@gthelen2.svl.corp.google.com>
+In-Reply-To: <ZHDvLD3vwt11EYFg@bombadil.infradead.org>
 
-On Sat, May 20, 2023 at 02:39:10PM -0700, Greg Thelen wrote:
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Fri, May 26, 2023 at 10:41:00AM -0700, Luis Chamberlain wrote:
+> On Fri, May 26, 2023 at 03:32:54PM +0100, Matthew Wilcox wrote:
+> > On Fri, May 26, 2023 at 12:55:46AM -0700, Luis Chamberlain wrote:
+> > > The PageHWPoison() call can be converted over to the respective folio
+> > > call is_folio_hwpoison(). This introduces no functional changes.
+> > 
+> > Yes, it very much does!
+> > 
+> > > @@ -4548,7 +4548,7 @@ struct page *shmem_read_mapping_page_gfp(struct address_space *mapping,
+> > >  		return &folio->page;
+> > >  
+> > >  	page = folio_file_page(folio, index);
+> > > -	if (PageHWPoison(page)) {
+> > > +	if (is_folio_hwpoison(folio)) {
+> > >  		folio_put(folio);
+> > 
+> > Imagine you have an order-9 folio and one of the pages in it gets
+> > HWPoison.  Before, you can read the other 511 pages in the folio.
 > 
-> > This is the start of the stable review cycle for the 5.10.180 release.
-> > There are 381 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 17 May 2023 16:16:37 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.180-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> >
-> > -------------
-> > Pseudo-Shortlog of commits:
-> 
-> [...]
-> 
-> > Baokun Li <libaokun1@huawei.com>
-> >     writeback, cgroup: fix null-ptr-deref write in bdi_split_work_to_wbs
-> 
-> Sorry for not noticing this sooner, but I think there's a benign issue
-> in this backport.
-> 
-> v5.10.180 commit 2b00b2a0e642 ("writeback, cgroup: fix null-ptr-deref
-> write in bdi_split_work_to_wbs") contains:
-> 
-> +static void cgwb_free_rcu(struct rcu_head *rcu_head)
-> +{
-> +       struct bdi_writeback *wb = container_of(rcu_head,
-> +                       struct bdi_writeback, rcu);
-> +
-> +       percpu_ref_exit(&wb->refcnt);
-> +       kfree(wb);
-> +}
-> 
-> [...]
-> 
-> @@ -397,7 +406,7 @@ static void cgwb_release_workfn(struct work_struct *work)
->         fprop_local_destroy_percpu(&wb->memcg_completions);
->         percpu_ref_exit(&wb->refcnt);
->         wb_exit(wb);
-> -       kfree_rcu(wb, rcu);
-> +       call_rcu(&wb->rcu, cgwb_free_rcu);
->  }
-> 
-> Notice there are now 2 percpu_ref_exit() calls. The upstream, and 5.15.y
-> patches remove the cgwb_release_workfn() calls to percpu_ref_exit(). The
-> 5.10.y fixup is below. It's not essential but might be worth applying to
-> track upstream.
+> But before we didn't use high order folios for reads on tmpfs?
 
-Thanks, I've queued this up now.
+Sure we did!  If SHMEM_HUGE_ALWAYS is set, we can see reads of THPs
+(order-9 folios) in this path.
 
-greg k-h
