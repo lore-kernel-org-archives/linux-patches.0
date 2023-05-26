@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181438492
-	for <patches@lists.linux.dev>; Fri, 26 May 2023 07:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C0958478
+	for <patches@lists.linux.dev>; Fri, 26 May 2023 07:33:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=l8SXSO/lmiFeJihMCTRRFm0o8Ak15fMAUhw4BXdB6WA=; b=A0xPKQUoDsDrFgURMQlgZXIoK4
-	lF0smhhvDr9DIwh3hI5+Foy4jSB44qqYKTW9k2PV/7PuWcBUSeOo6jWJLU2DNhMOCi1CTP1Vr1qXN
-	cB1zrc2ldkTJb0i1ydOhaeGCJSHRsdi8p9dUGm95225TqZGlE84F6Y3mfrRFtVU8AAk/LeILUvTzj
-	DCxobQiHgxGi8mvk1uiSyIKFvEMqMniMXjlXlxhbRRhvWQ3LnJ21MPhaTWeTq5Fi6r/fGfhBlXjzW
-	o+5/0Ft/FRALeNM171FNjOPX7gizDDJyiLwYYmSgprAWBoMr6t5XCcMourkOlUq8zpJCEwA9TAgAY
-	J55czzyw==;
+	bh=mp0R5kJjV9ATA7f3wCKoUGxZA6HQSlfyegxBHwX5Bjk=; b=JFyweRH3uI2LUIKa6CevDLZKGx
+	TKIgB0Y1EjmjhgQtYqrSPkMNG5keYraDpb6BQnGzIKLhMTVo0oblR4jwgMIB6HIdUXSpGXq28Xvyh
+	mtYzmXcLkLNuZP2TpCA4lzDp1RA2SxN0/ENDC+tnH0vBOiJFjpSdfkBUaUztNotfiYNvg1cz1G7/1
+	zF7NHp330UXzfhSxJuQ3/eJkFTHFymVoG8RVBzcYY3SMWY45Ut2V3AZToDDkiy4FZEh+w6+Ma+nuF
+	OtmnMOJt2rZqs5q6W/LuP6PHm5KmPG18Oz3Qh8+WAau3MwsT+44Wt7PDwRVd38S7pB26tTKLzCQ3m
+	oxCy1d7A==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q2RxB-001Rda-0i;
+	id 1q2RxA-001RdR-3D;
 	Fri, 26 May 2023 07:33:37 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: axboe@kernel.dk,
@@ -43,9 +43,9 @@ Cc: patches@lists.linux.dev,
 	rpuri.linux@gmail.com,
 	kbusch@kernel.org,
 	mcgrof@kernel.org
-Subject: [PATCH v2 5/5] zram: use generic PAGE_SECTORS and PAGE_SECTORS_SHIFT
-Date: Fri, 26 May 2023 00:33:36 -0700
-Message-Id: <20230526073336.344543-6-mcgrof@kernel.org>
+Subject: [PATCH v2 1/5] block: annotate bdev_disk_changed() deprecation with a symbol namespace
+Date: Fri, 26 May 2023 00:33:32 -0700
+Message-Id: <20230526073336.344543-2-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230526073336.344543-1-mcgrof@kernel.org>
 References: <20230526073336.344543-1-mcgrof@kernel.org>
@@ -58,72 +58,60 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Instead of re-defining the already existing constants use the provided ones:
+This ensures no other users pop up by mistake easily and provides
+us a with an easy vehicle to do the same with other routines should
+we need it later.
 
-So replace:
-
- o SECTORS_PER_PAGE_SHIFT with PAGE_SECTORS_SHIFT
- o SECTORS_PER_PAGE       with PAGE_SECTORS
-
-This produces no functional changes.
-
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- drivers/block/zram/zram_drv.c | 12 ++++++------
- drivers/block/zram/zram_drv.h |  2 --
- 2 files changed, 6 insertions(+), 8 deletions(-)
+ block/partitions/core.c         | 6 +-----
+ drivers/block/loop.c            | 2 ++
+ drivers/s390/block/dasd_genhd.c | 2 ++
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/block/zram/zram_drv.c b/drivers/block/zram/zram_drv.c
-index f6d90f1ba5cf..5fdeb78ace9a 100644
---- a/drivers/block/zram/zram_drv.c
-+++ b/drivers/block/zram/zram_drv.c
-@@ -1834,8 +1834,8 @@ static ssize_t recompress_store(struct device *dev,
- static void zram_bio_discard(struct zram *zram, struct bio *bio)
+diff --git a/block/partitions/core.c b/block/partitions/core.c
+index 49e0496ff23c..6f18444be4fe 100644
+--- a/block/partitions/core.c
++++ b/block/partitions/core.c
+@@ -690,11 +690,7 @@ int bdev_disk_changed(struct gendisk *disk, bool invalidate)
+ 
+ 	return ret;
+ }
+-/*
+- * Only exported for loop and dasd for historic reasons.  Don't use in new
+- * code!
+- */
+-EXPORT_SYMBOL_GPL(bdev_disk_changed);
++EXPORT_SYMBOL_NS_GPL(bdev_disk_changed, BLOCK_DEPRECATED);
+ 
+ void *read_part_sector(struct parsed_partitions *state, sector_t n, Sector *p)
  {
- 	size_t n = bio->bi_iter.bi_size;
--	u32 index = bio->bi_iter.bi_sector >> SECTORS_PER_PAGE_SHIFT;
--	u32 offset = (bio->bi_iter.bi_sector & (SECTORS_PER_PAGE - 1)) <<
-+	u32 index = bio->bi_iter.bi_sector >> PAGE_SECTORS_SHIFT;
-+	u32 offset = (bio->bi_iter.bi_sector & (PAGE_SECTORS - 1)) <<
- 			SECTOR_SHIFT;
+diff --git a/drivers/block/loop.c b/drivers/block/loop.c
+index bc31bb7072a2..50aa5b4c0c56 100644
+--- a/drivers/block/loop.c
++++ b/drivers/block/loop.c
+@@ -37,6 +37,8 @@
+ #include <linux/spinlock.h>
+ #include <uapi/linux/loop.h>
  
- 	/*
-@@ -1876,8 +1876,8 @@ static void zram_bio_read(struct zram *zram, struct bio *bio)
++MODULE_IMPORT_NS(BLOCK_DEPRECATED);
++
+ /* Possible states of device */
+ enum {
+ 	Lo_unbound,
+diff --git a/drivers/s390/block/dasd_genhd.c b/drivers/s390/block/dasd_genhd.c
+index 998a961e1704..5ea244aec534 100644
+--- a/drivers/s390/block/dasd_genhd.c
++++ b/drivers/s390/block/dasd_genhd.c
+@@ -25,6 +25,8 @@
  
- 	start_time = bio_start_io_acct(bio);
- 	bio_for_each_segment(bv, bio, iter) {
--		u32 index = iter.bi_sector >> SECTORS_PER_PAGE_SHIFT;
--		u32 offset = (iter.bi_sector & (SECTORS_PER_PAGE - 1)) <<
-+		u32 index = iter.bi_sector >> PAGE_SECTORS_SHIFT;
-+		u32 offset = (iter.bi_sector & (PAGE_SECTORS - 1)) <<
- 				SECTOR_SHIFT;
+ #include "dasd_int.h"
  
- 		if (zram_bvec_read(zram, &bv, index, offset, bio) < 0) {
-@@ -1903,8 +1903,8 @@ static void zram_bio_write(struct zram *zram, struct bio *bio)
++MODULE_IMPORT_NS(BLOCK_DEPRECATED);
++
+ static unsigned int queue_depth = 32;
+ static unsigned int nr_hw_queues = 4;
  
- 	start_time = bio_start_io_acct(bio);
- 	bio_for_each_segment(bv, bio, iter) {
--		u32 index = iter.bi_sector >> SECTORS_PER_PAGE_SHIFT;
--		u32 offset = (iter.bi_sector & (SECTORS_PER_PAGE - 1)) <<
-+		u32 index = iter.bi_sector >> PAGE_SECTORS_SHIFT;
-+		u32 offset = (iter.bi_sector & (PAGE_SECTORS - 1)) <<
- 				SECTOR_SHIFT;
- 
- 		if (zram_bvec_write(zram, &bv, index, offset, bio) < 0) {
-diff --git a/drivers/block/zram/zram_drv.h b/drivers/block/zram/zram_drv.h
-index ca7a15bd4845..9f2543af5c76 100644
---- a/drivers/block/zram/zram_drv.h
-+++ b/drivers/block/zram/zram_drv.h
-@@ -21,8 +21,6 @@
- 
- #include "zcomp.h"
- 
--#define SECTORS_PER_PAGE_SHIFT	(PAGE_SHIFT - SECTOR_SHIFT)
--#define SECTORS_PER_PAGE	(1 << SECTORS_PER_PAGE_SHIFT)
- #define ZRAM_LOGICAL_BLOCK_SHIFT 12
- #define ZRAM_LOGICAL_BLOCK_SIZE	(1 << ZRAM_LOGICAL_BLOCK_SHIFT)
- #define ZRAM_SECTOR_PER_LOGICAL_BLOCK	\
 -- 
 2.39.2
 
