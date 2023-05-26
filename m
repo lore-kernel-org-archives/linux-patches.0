@@ -1,24 +1,24 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB14AD27
-	for <patches@lists.linux.dev>; Fri, 26 May 2023 08:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799B7A93B
+	for <patches@lists.linux.dev>; Fri, 26 May 2023 08:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=In-Reply-To:Content-Type:MIME-Version
-	:References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	d=infradead.org; s=bombadil.20210309; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
 	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=/LDnVeeKch0nDkcJiHzeVDWqC1m/deVrVItZ5d48J7o=; b=dAbz9GGYrExV5edRPunAjolEZQ
-	WFKsZKWAZJnuLleTCz/VVj+eXCWAn8UxjUjoZM/uAJnWTkKaLYj0udaFwvKzQ8zaCuAkZr3AjAbAq
-	W31Grs1G99VSdxdCeYMCpfMXju0ATeHlGmheau2YJMbkEiC+AsOWFt+whU13yilOPwQtnGgVNMANc
-	0W1EPe+6LJLc659gPmJ0Tjb51SF8xSxiMdKnvVKN//GdqK+ZA5DAt3Nm+qkt7Djn7OnCOzUHFXXbo
-	j74Mbl5MTGc3hdGMXXDolWqxh1kGOK8vTtJceJFTxtd3DsAm0QXgMIU497B2hgLaTZ9mFJsGDcFh/
-	5YpoXT+g==;
-Received: from hch by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
-	id 1q2Sb9-001ZLi-1W;
-	Fri, 26 May 2023 08:14:55 +0000
-Date: Fri, 26 May 2023 01:14:55 -0700
-From: Christoph Hellwig <hch@infradead.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
+	bh=duGFbAowC1KQY1XQWxM1uOSTtieb578ebsbd050lnjE=; b=YpL8THZ7nxBj5uTx98hHNP6+70
+	53TZnyxhUD2rqC2WkJvLZSaKJkoo1yR57I+0vBHWc6nP1YUSKEV5aEDi1mgkqwDDOJH0GZrX1HIGu
+	ZlGHqDMkJwmE9Y2GvO0EMobdC6Uz/BwG9OrIABIq2gI4PSvCWqG9fghHW2C/7r/xQzmuHpobt5o2R
+	Hlq0nusfc4qP2phCYboNJltgkEtaUSM1YRK0n1H21JjIR3KIEkBvU8T7w4ISsK1mLDa1tIbaF6HYN
+	g/cbsthoLnMpaXTP+IjjaHW7eKiMR78YNlMeP2ulETt/PI2Ab5a1zQ8RXuZWVfYyH5OKMuO3WxCKy
+	t5p0bjDQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.96 #2 (Red Hat Linux))
+	id 1q2SeR-001ZwW-2d;
+	Fri, 26 May 2023 08:18:19 +0000
+Date: Fri, 26 May 2023 01:18:19 -0700
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: Christoph Hellwig <hch@infradead.org>
 Cc: hughd@google.com, akpm@linux-foundation.org, willy@infradead.org,
 	brauner@kernel.org, djwong@kernel.org, p.raghav@samsung.com,
 	da.gomez@samsung.com, rohan.puri@samsung.com, rpuri.linux@gmail.com,
@@ -28,8 +28,9 @@ Cc: hughd@google.com, akpm@linux-foundation.org, willy@infradead.org,
 	linux-fsdevel@vger.kernel.org, linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
 Subject: Re: [RFC v2 0/8] add support for blocksize > PAGE_SIZE
-Message-ID: <ZHBqfyPUR4B2GNsF@infradead.org>
+Message-ID: <ZHBrS4hTZZn3w4tF@bombadil.infradead.org>
 References: <20230526075552.363524-1-mcgrof@kernel.org>
+ <ZHBqfyPUR4B2GNsF@infradead.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,12 +39,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230526075552.363524-1-mcgrof@kernel.org>
-X-SRS-Rewrite: SMTP reverse-path rewritten from <hch@infradead.org> by bombadil.infradead.org. See http://www.infradead.org/rpr.html
+In-Reply-To: <ZHBqfyPUR4B2GNsF@infradead.org>
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Fri, May 26, 2023 at 12:55:44AM -0700, Luis Chamberlain wrote:
-> This is an initial attempt to add support for block size > PAGE_SIZE for tmpfs.
+On Fri, May 26, 2023 at 01:14:55AM -0700, Christoph Hellwig wrote:
+> On Fri, May 26, 2023 at 12:55:44AM -0700, Luis Chamberlain wrote:
+> > This is an initial attempt to add support for block size > PAGE_SIZE for tmpfs.
+> 
+> The concept of a block size doesn't make any sense for tmpfs.   What
+> are you actually trying to do here?
 
-The concept of a block size doesn't make any sense for tmpfs.   What
-are you actually trying to do here?
+More of helping to test high order folios for tmpfs. Swap for instance
+would be one thing we could use to test.
 
+  Luis
