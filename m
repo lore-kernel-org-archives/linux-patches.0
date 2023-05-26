@@ -1,54 +1,124 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 723BC742EE
-	for <patches@lists.linux.dev>; Fri, 26 May 2023 15:40:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDDFC4339E;
-	Fri, 26 May 2023 15:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B880742EE;
+	Fri, 26 May 2023 15:47:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B199C433D2;
+	Fri, 26 May 2023 15:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1685115641;
-	bh=S624nhijQGtzKeaSOXuQkD5+GZH07PgA64D+RGxJD9E=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=k9xl9MVccduxlpE1tkKGE6enbEiSQ5iBOl+BE1eZMTWltCoNzDZM3sXXfi+29yUv1
-	 R7r6oH89U7DivMiZZLr06Rn6A66e4qEEoTPRB3xxgwFvziIbck72vuw4GrERE1Fvt5
-	 uzzhNiYLs83E69EWkIn+bRUEbV+Zc6KxDWRgYp2RFg0/9f7PAJNkWzloBKl2tZ9Sov
-	 hTKcICXi0f1W5cGrALum66A9aj5SXZrgJmx2huBo9u1wD+BADvwie1ZuIH1BkmdQKR
-	 zHjXvjFZfw+GL/PBV8ZkJsW1lelwYwt2jSWQhutUn2+L3bb1uvngb7HanslyBZOFvq
-	 SqAqprlkugXRQ==
-Date: Fri, 26 May 2023 09:40:37 -0600
-From: Keith Busch <kbusch@kernel.org>
-To: Matthew Wilcox <willy@infradead.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>, hughd@google.com,
-	akpm@linux-foundation.org, brauner@kernel.org, djwong@kernel.org,
-	p.raghav@samsung.com, da.gomez@samsung.com, rohan.puri@samsung.com,
-	rpuri.linux@gmail.com, a.manzanares@samsung.com, dave@stgolabs.net,
-	yosryahmed@google.com, keescook@chromium.org, hare@suse.de,
-	patches@lists.linux.dev, linux-block@vger.kernel.org,
-	linux-fsdevel@vger.kernel.org, linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [RFC v2 1/8] page_flags: add is_folio_hwpoison()
-Message-ID: <ZHDS9XpOElkRK4ry@kbusch-mbp.dhcp.thefacebook.com>
-References: <20230526075552.363524-1-mcgrof@kernel.org>
- <20230526075552.363524-2-mcgrof@kernel.org>
- <ZHC5Zm3t9JIITu3h@casper.infradead.org>
+	s=k20201202; t=1685116077;
+	bh=MzumtO5ofDE932rsgGbPhIZT2RbvwCYn5PG0h8c8sWI=;
+	h=From:Date:Subject:To:Cc:From;
+	b=JA6sE9lVDE2iQmL4ocolcp+DhJXbetc2kBODiS0TNo3lAv3E9BNcLTjJ7EdIFgFaA
+	 988ElpnDu/84utwpjRAd1PI0nKp2fl0qVU9H7a0KhiO/otN0gHCjNNQzobAVg/fllX
+	 Ff/kHC3RK6iq+iSbsM3Y0uK7N+3u/hHbRivy9xPWojE0oUoQhEl/xuLOtPQyiXxEjK
+	 nnE1kvjvj9Q9D5gyBlf4R2Kbd7+pOVjs9C6ZpZ2bTcQH7ObFpHCrIiTk5MevE3AUsk
+	 VDE5ojvnIAhtzREaxJlZ0Nri8Wurr1HJS/lw3vj/R+NUW03xXaE/TXYlpCPCTiJiyp
+	 to1DIHlT7q+xA==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 26 May 2023 08:47:40 -0700
+Subject: [PATCH] x86/csum: Fix clang -Wuninitialized in csum_partial()
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZHC5Zm3t9JIITu3h@casper.infradead.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230526-csum_partial-wuninitialized-v1-1-ebc0108dcec1@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAJvUcGQC/x2N3QrCMAxGX2Xk2kDt/H+VIZK1mQu4OpJNxbF3t
+ /XuO3xwzgLGKmxwqRZQfonJM2XYbioIPaU7o8TM4J2v3d4fMNg83EbSSeiB7zlJkjLlyxHdiai
+ Ou7Pv3BGyoSVjbJVS6ItjIJtYyzEqd/L5Z5vruv4AU4v5fYYAAAA=
+To: dave.hansen@linux.intel.com, x86@kernel.org
+Cc: goldstein.w.n@gmail.com, ndesaulniers@google.com, trix@redhat.com, 
+ linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.13-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2797; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=MzumtO5ofDE932rsgGbPhIZT2RbvwCYn5PG0h8c8sWI=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDCkFV9Z0fpN6Inn6x/6t0m4eWVJ7+j/q1r66K2jFGvTxb
+ wyn9yzOjlIWBjEOBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRUHuGf0asDxVC2J4rPO86
+ b13w5UnGTZ5XrUw9lbtrPsXbP92/8wnDX/nglb1XTpkckH6yQrh+ZvoPm1W/So4FP1gg3NTGG1w
+ UzAMA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Fri, May 26, 2023 at 02:51:34PM +0100, Matthew Wilcox wrote:
-> On Fri, May 26, 2023 at 12:55:45AM -0700, Luis Chamberlain wrote:
-> > Provide a helper similar to is_page_hwpoison() for folios
-> > which tests the first head and if the folio is large any page in
-> > the folio is tested for the poison flag.
-> 
-> But it's not "is poison".  it's "contains poison".  So how about
-> folio_contains_hwpoison() as a name?
+Clang warns:
 
-Would a smaller change in tense to "is poisoned" also work? I think
-that's mostly synonymous to "contains poison".
+  arch/x86/lib/csum-partial_64.c:74:20: error: variable 'result' is uninitialized when used here [-Werror,-Wuninitialized]
+                  return csum_tail(result, temp64, odd);
+                                   ^~~~~~
+  arch/x86/lib/csum-partial_64.c:48:22: note: initialize the variable 'result' to silence this warning
+          unsigned odd, result;
+                              ^
+                               = 0
+  1 error generated.
+
+The only initialization and uses of result in csum_partial() were moved
+into csum_tail() but result is still being passed by value to
+csum_tail() (clang's -Wuninitialized does not do interprocedural
+analysis to realize that result is always assigned in csum_tail()
+however). Sink the declaration of result into csum_tail() to clear up
+the warning.
+
+Fixes: 688eb8191b47 ("x86/csum: Improve performance of `csum_partial`")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/202305262039.3HUYjWJk-lkp@intel.com/
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ arch/x86/lib/csum-partial_64.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/arch/x86/lib/csum-partial_64.c b/arch/x86/lib/csum-partial_64.c
+index fe5861951b15..cea25ca8b8cf 100644
+--- a/arch/x86/lib/csum-partial_64.c
++++ b/arch/x86/lib/csum-partial_64.c
+@@ -21,8 +21,10 @@ static inline unsigned short from32to16(unsigned a)
+ 	return b;
+ }
+ 
+-static inline __wsum csum_tail(unsigned int result, u64 temp64, int odd)
++static inline __wsum csum_tail(u64 temp64, int odd)
+ {
++	unsigned int result;
++
+ 	result = add32_with_carry(temp64 >> 32, temp64 & 0xffffffff);
+ 	if (unlikely(odd)) {
+ 		result = from32to16(result);
+@@ -45,7 +47,7 @@ static inline __wsum csum_tail(unsigned int result, u64 temp64, int odd)
+ __wsum csum_partial(const void *buff, int len, __wsum sum)
+ {
+ 	u64 temp64 = (__force u64)sum;
+-	unsigned odd, result;
++	unsigned odd;
+ 
+ 	odd = 1 & (unsigned long) buff;
+ 	if (unlikely(odd)) {
+@@ -71,7 +73,7 @@ __wsum csum_partial(const void *buff, int len, __wsum sum)
+ 		    "adcq $0,%[res]"
+ 		    : [res] "+r"(temp64)
+ 		    : [src] "r"(buff), "m"(*(const char(*)[40])buff));
+-		return csum_tail(result, temp64, odd);
++		return csum_tail(temp64, odd);
+ 	}
+ 	if (unlikely(len >= 64)) {
+ 		/*
+@@ -141,7 +143,7 @@ __wsum csum_partial(const void *buff, int len, __wsum sum)
+ 		    : [res] "+r"(temp64)
+ 		    : [trail] "r"(trail));
+ 	}
+-	return csum_tail(result, temp64, odd);
++	return csum_tail(temp64, odd);
+ }
+ EXPORT_SYMBOL(csum_partial);
+ 
+
+---
+base-commit: 688eb8191b475db5acfd48634600b04fd3dda9ad
+change-id: 20230526-csum_partial-wuninitialized-08aa3d492f07
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
