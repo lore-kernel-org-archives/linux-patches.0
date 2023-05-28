@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1A48611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6A5C433D2;
-	Sun, 28 May 2023 19:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3D9611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC71C433D2;
+	Sun, 28 May 2023 19:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301374;
-	bh=hngfq+fdPAiYTnexaTx2uVrU34/yJw5xztTcMdkRArc=;
+	s=korg; t=1685301377;
+	bh=vFIHBP2yNALhdeoScsxhdESV2tVOJeQs+64RnXr0B5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P4XRdCfFht2E9HVisGr+zFjSq2Ko5EBFVIgHmRLl1TPnrn2q8afS47vduJifC8u+y
-	 1kBwHo1Nov67xUCKJBqP49VYfaneQ4uzheiD7nyamnv4B+7ImuD7+mpDduwhDim5Fc
-	 dV7pomlCAL9UsX1gcQlRi0h/ct0WFBDJ/156Pplc=
+	b=Oos4mSYIIBOOewtAYFO25/eUPzt4hYxbFYkdQ9N+LgK+bBxPa0KlmJoO/yrkcDIWh
+	 HllowWFP2tlzNMjkTp4LqlUAyA1G6dFQpLHsdeqOH+X3b0czc8F8D3AfPbcKV5ngbX
+	 Ob/AnC7DP5Pta/lajnzzpucE6svCApbsJacmrl10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vernon Lovejoy <vlovejoy@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 4.14 84/86] x86/show_trace_log_lvl: Ensure stack pointer is aligned, again
-Date: Sun, 28 May 2023 20:10:58 +0100
-Message-Id: <20230528190831.741891965@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Zhu Yanjun <zyjzyj2000@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.14 85/86] forcedeth: Fix an error handling path in nv_probe()
+Date: Sun, 28 May 2023 20:10:59 +0100
+Message-Id: <20230528190831.780028401@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,69 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vernon Lovejoy <vlovejoy@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 2e4be0d011f21593c6b316806779ba1eba2cd7e0 upstream.
+commit 5b17a4971d3b2a073f4078dd65331efbe35baa2d upstream.
 
-The commit e335bb51cc15 ("x86/unwind: Ensure stack pointer is aligned")
-tried to align the stack pointer in show_trace_log_lvl(), otherwise the
-"stack < stack_info.end" check can't guarantee that the last read does
-not go past the end of the stack.
+If an error occures after calling nv_mgmt_acquire_sema(), it should be
+undone with a corresponding nv_mgmt_release_sema() call.
 
-However, we have the same problem with the initial value of the stack
-pointer, it can also be unaligned. So without this patch this trivial
-kernel module
+Add it in the error handling path of the probe as already done in the
+remove function.
 
-	#include <linux/module.h>
-
-	static int init(void)
-	{
-		asm volatile("sub    $0x4,%rsp");
-		dump_stack();
-		asm volatile("add    $0x4,%rsp");
-
-		return -EAGAIN;
-	}
-
-	module_init(init);
-	MODULE_LICENSE("GPL");
-
-crashes the kernel.
-
-Fixes: e335bb51cc15 ("x86/unwind: Ensure stack pointer is aligned")
-Signed-off-by: Vernon Lovejoy <vlovejoy@redhat.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/20230512104232.GA10227@redhat.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fixes: cac1c52c3621 ("forcedeth: mgmt unit interface")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Zhu Yanjun <zyjzyj2000@gmail.com>
+Link: https://lore.kernel.org/r/355e9a7d351b32ad897251b6f81b5886fcdc6766.1684571393.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/dumpstack.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/nvidia/forcedeth.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kernel/dumpstack.c
-+++ b/arch/x86/kernel/dumpstack.c
-@@ -115,7 +115,6 @@ void show_trace_log_lvl(struct task_stru
- 	printk("%sCall Trace:\n", log_lvl);
+--- a/drivers/net/ethernet/nvidia/forcedeth.c
++++ b/drivers/net/ethernet/nvidia/forcedeth.c
+@@ -6020,6 +6020,7 @@ static int nv_probe(struct pci_dev *pci_
+ 	return 0;
  
- 	unwind_start(&state, task, regs, stack);
--	stack = stack ? : get_stack_pointer(task, regs);
- 	regs = unwind_get_entry_regs(&state, &partial);
- 
- 	/*
-@@ -134,9 +133,13 @@ void show_trace_log_lvl(struct task_stru
- 	 * - hardirq stack
- 	 * - entry stack
- 	 */
--	for ( ; stack; stack = PTR_ALIGN(stack_info.next_sp, sizeof(long))) {
-+	for (stack = stack ?: get_stack_pointer(task, regs);
-+	     stack;
-+	     stack = stack_info.next_sp) {
- 		const char *stack_name;
- 
-+		stack = PTR_ALIGN(stack, sizeof(long));
-+
- 		if (get_stack_info(stack, task, &stack_info, &visit_mask)) {
- 			/*
- 			 * We weren't on a valid stack.  It's possible that
+ out_error:
++	nv_mgmt_release_sema(dev);
+ 	if (phystate_orig)
+ 		writel(phystate|NVREG_ADAPTCTL_RUNNING, base + NvRegAdapterControl);
+ out_freering:
 
 
