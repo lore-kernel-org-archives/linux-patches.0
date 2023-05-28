@@ -1,26 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDA9611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:38:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78427C433D2;
-	Sun, 28 May 2023 19:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB37611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:38:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9004C433D2;
+	Sun, 28 May 2023 19:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302711;
-	bh=Tx8Zjj1xri+BheSWBFsC9KkWcQotYl54gMIQFdZt8cw=;
+	s=korg; t=1685302714;
+	bh=0cFuVe62TUdFTUcmqFWj2tVetyVOeWgFydTmT08ljmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rzYL4LW4nBIz5zqpYDGehlCK5H98h2OHABcBpdi1wfd4W5EKrNCJ2NyXjwTRpLfxY
-	 spnCLMoN1kKA0ozJD7ncZAdgqkkTrdbTUbepyulACXX4wh0iDPl5vTGlp1uDTbWdYo
-	 +5947GvYPBk1O9zy12vFFkIy4Gy4sMPFDOmyKHDQ=
+	b=YKwkUL0K3LOft/VFi9B36PnWvk2/IZWCDcS8lh6KImsc9vUNlPR7SsA/NraD1NpdL
+	 Oa1R7cai7PoTRvpYu2g/hXDcMEiVOIZxwHlAUCBdrK5fgWdTyaJD5l4A0c/E1MjhuJ
+	 3yGjwUb7lJiUPUY533itKfudbRu6B0wHH272cb5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Marc Bonnici <marc.bonnici@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.1 115/119] firmware: arm_ffa: Set reserved/MBZ fields to zero in the memory descriptors
-Date: Sun, 28 May 2023 20:11:55 +0100
-Message-Id: <20230528190839.294765549@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH 6.1 116/119] regulator: mt6359: add read check for PMIC MT6359
+Date: Sun, 28 May 2023 20:11:56 +0100
+Message-Id: <20230528190839.322749890@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -34,59 +32,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Sen Chu <sen.chu@mediatek.com>
 
-commit 111a833dc5cbef3d05b2a796a7e23cb7f6ff2192 upstream.
+commit a511637502b1caa135046d0f8fdabd55a31af8ef upstream.
 
-The transmit buffers allocated by the driver can be used to transmit data
-by any messages/commands needing the buffer. However, it is not guaranteed
-to have been zero-ed before every new transmission and hence it will just
-contain residual value from the previous transmission. There are several
-reserved fields in the memory descriptors that must be zero(MBZ). The
-receiver can reject the transmission if any such MBZ fields are non-zero.
+Add hardware version read check for PMIC MT6359
 
-While we can set the whole page to zero, it is not optimal as most of the
-fields get initialised to the value required for the current transmission.
-
-So, just set the reserved/MBZ fields to zero in the memory descriptors
-explicitly to honour the requirement and keep the receiver happy.
-
-Fixes: cc2195fe536c ("firmware: arm_ffa: Add support for MEM_* interfaces")
-Reported-by: Marc Bonnici <marc.bonnici@arm.com>
-Link: https://lore.kernel.org/r/20230503131252.12585-1-sudeep.holla@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sen Chu <sen.chu@mediatek.com
+Fixes: 4cfc96547512 ("regulator: mt6359: Add support for MT6359P regulator")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com
+Link: https://lore.kernel.org/r/20230518040646.8730-1-sen.chu@mediatek.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_ffa/driver.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/regulator/mt6359-regulator.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -501,12 +501,17 @@ ffa_setup_and_transmit(u32 func_id, void
- 		ep_mem_access->receiver = args->attrs[idx].receiver;
- 		ep_mem_access->attrs = args->attrs[idx].attrs;
- 		ep_mem_access->composite_off = COMPOSITE_OFFSET(args->nattrs);
-+		ep_mem_access->flag = 0;
-+		ep_mem_access->reserved = 0;
- 	}
-+	mem_region->reserved_0 = 0;
-+	mem_region->reserved_1 = 0;
- 	mem_region->ep_count = args->nattrs;
+--- a/drivers/regulator/mt6359-regulator.c
++++ b/drivers/regulator/mt6359-regulator.c
+@@ -951,9 +951,12 @@ static int mt6359_regulator_probe(struct
+ 	struct regulator_config config = {};
+ 	struct regulator_dev *rdev;
+ 	struct mt6359_regulator_info *mt6359_info;
+-	int i, hw_ver;
++	int i, hw_ver, ret;
++
++	ret = regmap_read(mt6397->regmap, MT6359P_HWCID, &hw_ver);
++	if (ret)
++		return ret;
  
- 	composite = buffer + COMPOSITE_OFFSET(args->nattrs);
- 	composite->total_pg_cnt = ffa_get_num_pages_sg(args->sg);
- 	composite->addr_range_cnt = num_entries;
-+	composite->reserved = 0;
- 
- 	length = COMPOSITE_CONSTITUENTS_OFFSET(args->nattrs, num_entries);
- 	frag_len = COMPOSITE_CONSTITUENTS_OFFSET(args->nattrs, 0);
-@@ -541,6 +546,7 @@ ffa_setup_and_transmit(u32 func_id, void
- 
- 		constituents->address = sg_phys(args->sg);
- 		constituents->pg_cnt = args->sg->length / FFA_PAGE_SIZE;
-+		constituents->reserved = 0;
- 		constituents++;
- 		frag_len += sizeof(struct ffa_mem_region_addr_range);
- 	} while ((args->sg = sg_next(args->sg)));
+-	regmap_read(mt6397->regmap, MT6359P_HWCID, &hw_ver);
+ 	if (hw_ver >= MT6359P_CHIP_VER)
+ 		mt6359_info = mt6359p_regulators;
+ 	else
 
 
