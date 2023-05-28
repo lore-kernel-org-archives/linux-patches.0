@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD915611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1E2C4339B;
-	Sun, 28 May 2023 19:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21EEE611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42E8C433EF;
+	Sun, 28 May 2023 19:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301756;
-	bh=KNq5JtC9wo1nRstONVa73mKF2Mfy53I6/vwzRgCCcQs=;
+	s=korg; t=1685301759;
+	bh=bgjSgno66be+U1fT2ATDL2Lz+rDaYcH9DFXmAeAsCRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o46WJ4HAEBT6mt234CcgiYnIEMA7Hb0EpTqzZPiI4F7U7Ui0TBWQ4NEKYK5KRaa0A
-	 DzXiX/BAgU91TjqbezvHsBShb0Yd91RCgbzV1crx646QdY+CZwTJr/r2mmhhccg60C
-	 wlC/xMGdGwVa/GSIk6Bsp7QkEH+M3MSgMcBHWnPk=
+	b=1wJyV/fScs0nnV2DK7b8RR6RZrzZNUAp9h5a+dFiiB0pGX1o6MrM3Qyfb8N94i9uL
+	 bY1Aoac0Uj1tKBer+dkluSa6+Eey7GCXmXFr3cYsJcwz5SOC2J9gHxvABEL6IH+1gD
+	 tEHMcaIpnW7tEqLtvWRT6TX2db6sWX/mT4A7CUNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Hector Martin <marcan@marcan.st>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 006/161] netfilter: conntrack: fix possible bug_on with enable_hooks=1
-Date: Sun, 28 May 2023 20:08:50 +0100
-Message-Id: <20230528190837.288895261@linuxfoundation.org>
+Subject: [PATCH 5.4 024/161] wifi: brcmfmac: cfg80211: Pass the PMK in binary instead of hex
+Date: Sun, 28 May 2023 20:09:08 +0100
+Message-Id: <20230528190837.937696673@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,75 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit e72eeab542dbf4f544e389e64fa13b82a1b6d003 ]
+[ Upstream commit 89b89e52153fda2733562776c7c9d9d3ebf8dd6d ]
 
-I received a bug report (no reproducer so far) where we trip over
+Apparently the hex passphrase mechanism does not work on newer
+chips/firmware (e.g. BCM4387). It seems there was a simple way of
+passing it in binary all along, so use that and avoid the hexification.
 
-712         rcu_read_lock();
-713         ct_hook = rcu_dereference(nf_ct_hook);
-714         BUG_ON(ct_hook == NULL);  // here
+OpenBSD has been doing it like this from the beginning, so this should
+work on all chips.
 
-In nf_conntrack_destroy().
+Also clear the structure before setting the PMK. This was leaking
+uninitialized stack contents to the device.
 
-First turn this BUG_ON into a WARN.  I think it was triggered
-via enable_hooks=1 flag.
-
-When this flag is turned on, the conntrack hooks are registered
-before nf_ct_hook pointer gets assigned.
-This opens a short window where packets enter the conntrack machinery,
-can have skb->_nfct set up and a subsequent kfree_skb might occur
-before nf_ct_hook is set.
-
-Call nf_conntrack_init_end() to set nf_ct_hook before we register the
-pernet ops.
-
-Fixes: ba3fbe663635 ("netfilter: nf_conntrack: provide modparam to always register conntrack hooks")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230214092423.15175-6-marcan@marcan.st
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/core.c                    | 6 ++++--
- net/netfilter/nf_conntrack_standalone.c | 3 ++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ .../wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/net/netfilter/core.c b/net/netfilter/core.c
-index 451b2df998ea7..c35f45afd394d 100644
---- a/net/netfilter/core.c
-+++ b/net/netfilter/core.c
-@@ -577,9 +577,11 @@ void nf_conntrack_destroy(struct nf_conntrack *nfct)
- 
- 	rcu_read_lock();
- 	ct_hook = rcu_dereference(nf_ct_hook);
--	BUG_ON(ct_hook == NULL);
--	ct_hook->destroy(nfct);
-+	if (ct_hook)
-+		ct_hook->destroy(nfct);
- 	rcu_read_unlock();
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index 5bfff309f5474..b7ceea0b3204d 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -1269,13 +1269,14 @@ static int brcmf_set_pmk(struct brcmf_if *ifp, const u8 *pmk_data, u16 pmk_len)
+ {
+ 	struct brcmf_pub *drvr = ifp->drvr;
+ 	struct brcmf_wsec_pmk_le pmk;
+-	int i, err;
++	int err;
 +
-+	WARN_ON(!ct_hook);
- }
- EXPORT_SYMBOL(nf_conntrack_destroy);
++	memset(&pmk, 0, sizeof(pmk));
  
-diff --git a/net/netfilter/nf_conntrack_standalone.c b/net/netfilter/nf_conntrack_standalone.c
-index 43c3c3be6defc..1e3dbed9d7840 100644
---- a/net/netfilter/nf_conntrack_standalone.c
-+++ b/net/netfilter/nf_conntrack_standalone.c
-@@ -1180,11 +1180,12 @@ static int __init nf_conntrack_standalone_init(void)
- 	nf_conntrack_htable_size_user = nf_conntrack_htable_size;
- #endif
+-	/* convert to firmware key format */
+-	pmk.key_len = cpu_to_le16(pmk_len << 1);
+-	pmk.flags = cpu_to_le16(BRCMF_WSEC_PASSPHRASE);
+-	for (i = 0; i < pmk_len; i++)
+-		snprintf(&pmk.key[2 * i], 3, "%02x", pmk_data[i]);
++	/* pass pmk directly */
++	pmk.key_len = cpu_to_le16(pmk_len);
++	pmk.flags = cpu_to_le16(0);
++	memcpy(pmk.key, pmk_data, pmk_len);
  
-+	nf_conntrack_init_end();
-+
- 	ret = register_pernet_subsys(&nf_conntrack_net_ops);
- 	if (ret < 0)
- 		goto out_pernet;
- 
--	nf_conntrack_init_end();
- 	return 0;
- 
- out_pernet:
+ 	/* store psk in firmware */
+ 	err = brcmf_fil_cmd_data_set(ifp, BRCMF_C_SET_WSEC_PMK,
 -- 
 2.39.2
 
