@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E613611E
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09751C433EF;
-	Sun, 28 May 2023 19:39:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1F07611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:40:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBD9C433EF;
+	Sun, 28 May 2023 19:40:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302799;
-	bh=HYGronkBmM6Q51iGZWxw7XA7yrSq9r2duyuWRAfsOMQ=;
+	s=korg; t=1685302801;
+	bh=QHYHMSlyH413MkHY9jb+3AHdZiGvYl+Ef33PkzHdO5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PYicNzrxKrO3p0sHZiXhv18h6/yjWQB4w/EeBkDFEjVm/0FoMa8nZzAwTHkfL5q0F
-	 CaS75gVQWCj1Vh23ZZwQa3HbPc7mts1s0jcsQzEjCbv3j/A2+u+ratt9G73jKhTuWm
-	 JjYxrdQ6e8+gt6WhYczvcDcj0bAi6fK+JHP63jJQ=
+	b=2sFDae2o8ckFInv2HZfDVc9m2wpOkZPOHNFkGxyu2nQKKk8uLdce+iS+7J1elTI0j
+	 Y9QRcFWj5Un5PVXyzjZDYPsY9mqschj/+pvMP81D3tLLyeNR6s2M7hESeHKQdYilWL
+	 wOSewN5W/g+iCA555GJE4JfZT4Otr6lDUIKQe4lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com,
-	Theodore Tso <tytso@mit.edu>,
+	syzbot <syzbot+e2787430e752a92b8750@syzkaller.appspotmail.com>,
+	syzbot <syzbot+4913dca2ea6e4d43f3f1@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 023/211] ext4: dont clear SB_RDONLY when remounting r/w until quota is re-enabled
-Date: Sun, 28 May 2023 20:09:04 +0100
-Message-Id: <20230528190844.097550661@linuxfoundation.org>
+Subject: [PATCH 5.10 032/211] fs: hfsplus: remove WARN_ON() from hfsplus_cat_{read,write}_inode()
+Date: Sun, 28 May 2023 20:09:13 +0100
+Message-Id: <20230528190844.321802529@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,74 +38,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit a44be64bbecb15a452496f60db6eacfee2b59c79 ]
+[ Upstream commit 81b21c0f0138ff5a499eafc3eb0578ad2a99622c ]
 
-When a file system currently mounted read/only is remounted
-read/write, if we clear the SB_RDONLY flag too early, before the quota
-is initialized, and there is another process/thread constantly
-attempting to create a directory, it's possible to trigger the
+syzbot is hitting WARN_ON() in hfsplus_cat_{read,write}_inode(), for
+crafted filesystem image can contain bogus length. There conditions are
+not kernel bugs that can justify kernel to panic.
 
-	WARN_ON_ONCE(dquot_initialize_needed(inode));
-
-in ext4_xattr_block_set(), with the following stack trace:
-
-   WARNING: CPU: 0 PID: 5338 at fs/ext4/xattr.c:2141 ext4_xattr_block_set+0x2ef2/0x3680
-   RIP: 0010:ext4_xattr_block_set+0x2ef2/0x3680 fs/ext4/xattr.c:2141
-   Call Trace:
-    ext4_xattr_set_handle+0xcd4/0x15c0 fs/ext4/xattr.c:2458
-    ext4_initxattrs+0xa3/0x110 fs/ext4/xattr_security.c:44
-    security_inode_init_security+0x2df/0x3f0 security/security.c:1147
-    __ext4_new_inode+0x347e/0x43d0 fs/ext4/ialloc.c:1324
-    ext4_mkdir+0x425/0xce0 fs/ext4/namei.c:2992
-    vfs_mkdir+0x29d/0x450 fs/namei.c:4038
-    do_mkdirat+0x264/0x520 fs/namei.c:4061
-    __do_sys_mkdirat fs/namei.c:4076 [inline]
-    __se_sys_mkdirat fs/namei.c:4074 [inline]
-    __x64_sys_mkdirat+0x89/0xa0 fs/namei.c:4074
-
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20230506142419.984260-1-tytso@mit.edu
-Reported-by: syzbot+6385d7d3065524c5ca6d@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=6513f6cb5cd6b5fc9f37e3bb70d273b94be9c34c
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: syzbot <syzbot+e2787430e752a92b8750@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=e2787430e752a92b8750
+Reported-by: syzbot <syzbot+4913dca2ea6e4d43f3f1@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=4913dca2ea6e4d43f3f1
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Message-Id: <15308173-5252-d6a3-ae3b-e96d46cb6f41@I-love.SAKURA.ne.jp>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/hfsplus/inode.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index edd1409663932..681efff3af50f 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5797,6 +5797,7 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 	ext4_group_t g;
- 	unsigned int journal_ioprio = DEFAULT_JOURNAL_IOPRIO;
- 	int err = 0;
-+	int enable_rw = 0;
- #ifdef CONFIG_QUOTA
- 	int enable_quota = 0;
- 	int i, j;
-@@ -5989,7 +5990,7 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 			if (err)
- 				goto restore_opts;
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index c60d5ceb0d31c..7e1d889dcc07a 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -497,7 +497,11 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 	if (type == HFSPLUS_FOLDER) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
  
--			sb->s_flags &= ~SB_RDONLY;
-+			enable_rw = 1;
- 			if (ext4_has_feature_mmp(sb)) {
- 				err = ext4_multi_mount_protect(sb,
- 						le64_to_cpu(es->s_mmp_block));
-@@ -6048,6 +6049,9 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 	if (!test_opt(sb, BLOCK_VALIDITY) && sbi->s_system_blks)
- 		ext4_release_system_zone(sb);
+-		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_folder));
++		if (fd->entrylength < sizeof(struct hfsplus_cat_folder)) {
++			pr_err("bad catalog folder entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		hfsplus_get_perms(inode, &folder->permissions, 1);
+@@ -517,7 +521,11 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 	} else if (type == HFSPLUS_FILE) {
+ 		struct hfsplus_cat_file *file = &entry.file;
  
-+	if (enable_rw)
-+		sb->s_flags &= ~SB_RDONLY;
-+
- 	if (!ext4_has_feature_mmp(sb) || sb_rdonly(sb))
- 		ext4_stop_mmpd(sbi);
+-		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_file));
++		if (fd->entrylength < sizeof(struct hfsplus_cat_file)) {
++			pr_err("bad catalog file entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
  
+@@ -548,6 +556,7 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 		pr_err("bad catalog entry used to create inode\n");
+ 		res = -EIO;
+ 	}
++out:
+ 	return res;
+ }
+ 
+@@ -556,6 +565,7 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	struct inode *main_inode = inode;
+ 	struct hfs_find_data fd;
+ 	hfsplus_cat_entry entry;
++	int res = 0;
+ 
+ 	if (HFSPLUS_IS_RSRC(inode))
+ 		main_inode = HFSPLUS_I(inode)->rsrc_inode;
+@@ -574,7 +584,11 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	if (S_ISDIR(main_inode->i_mode)) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
+ 
+-		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_folder));
++		if (fd.entrylength < sizeof(struct hfsplus_cat_folder)) {
++			pr_err("bad catalog folder entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		/* simple node checks? */
+@@ -599,7 +613,11 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	} else {
+ 		struct hfsplus_cat_file *file = &entry.file;
+ 
+-		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_file));
++		if (fd.entrylength < sizeof(struct hfsplus_cat_file)) {
++			pr_err("bad catalog file entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
+ 		hfsplus_inode_write_fork(inode, &file->data_fork);
+@@ -620,5 +638,5 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	set_bit(HFSPLUS_I_CAT_DIRTY, &HFSPLUS_I(inode)->flags);
+ out:
+ 	hfs_find_exit(&fd);
+-	return 0;
++	return res;
+ }
 -- 
 2.39.2
 
