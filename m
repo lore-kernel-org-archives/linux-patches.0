@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C6D611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A508EC433D2;
-	Sun, 28 May 2023 19:42:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E61E611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CB60C433EF;
+	Sun, 28 May 2023 19:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302926;
-	bh=Mo1Aa1+zDDJgJkZ2Knlvd3/LDSs+B4U7mfwQM/B+y84=;
+	s=korg; t=1685302928;
+	bh=2D64oLm2SWw4kW5p6P/UQQvw/Y6FYEg/jfD5h3DAZhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9IRxMcaiia5YLJzPlyOuSH+Py13XRTRLjbFCOeu2w7p+96nTPquSKT+p3PL9+BIn
-	 fjpanVK/Cb3HlCih/sHx8DWCvXUWBEdNtzf/gMVaHqxSNfPgjKKFv0IpQch2rnpcxR
-	 BWOTo8gAPBvlY95HcqgmjPz/VaziQNVy6/jfZyDU=
+	b=yso2mLV+5v2R9pQ+BLEVq2ZMLrMtYSd/jpZbJZbo3RA1/MSEI/e8/QStOybbKUeXj
+	 faWUkLTDh4QJ8fwoynteX3YcaEE7tgv0aA89QTLw6e1YXM13mZzKU39IIp6RHatX40
+	 3kuNSb06P/7taakQwUpqKUjoiWDLIjZKwjQ7sLQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Alain Volmat <avolmat@me.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 055/211] ext4: set goal start correctly in ext4_mb_normalize_request
-Date: Sun, 28 May 2023 20:09:36 +0100
-Message-Id: <20230528190844.960840572@linuxfoundation.org>
+Subject: [PATCH 5.10 082/211] phy: st: miphy28lp: use _poll_timeout functions for waits
+Date: Sun, 28 May 2023 20:10:03 +0100
+Message-Id: <20230528190845.660049090@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,70 +36,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Alain Volmat <avolmat@me.com>
 
-[ Upstream commit b07ffe6927c75d99af534d685282ea188d9f71a6 ]
+[ Upstream commit e3be4dd2c8d8aabfd2c3127d0e2e5754d3ae82d6 ]
 
-We need to set ac_g_ex to notify the goal start used in
-ext4_mb_find_by_goal. Set ac_g_ex instead of ac_f_ex in
-ext4_mb_normalize_request.
-Besides we should assure goal start is in range [first_data_block,
-blocks_count) as ext4_mb_initialize_context does.
+This commit introduces _poll_timeout functions usage instead of
+wait loops waiting for a status bit.
 
-[ Added a check to make sure size is less than ar->pright; otherwise
-  we could end up passing an underflowed value of ar->pright - size to
-  ext4_get_group_no_and_offset(), which will trigger a BUG_ON later on.
-  - TYT ]
-
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20230303172120.3800725-2-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Alain Volmat <avolmat@me.com>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Link: https://lore.kernel.org/r/20230210224309.98452-1-avolmat@me.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/phy/st/phy-miphy28lp.c | 42 ++++++++--------------------------
+ 1 file changed, 10 insertions(+), 32 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index f18aa35b82b04..63c01e068bcb3 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3512,6 +3512,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
- 				struct ext4_allocation_request *ar)
+diff --git a/drivers/phy/st/phy-miphy28lp.c b/drivers/phy/st/phy-miphy28lp.c
+index 068160a34f5cc..e30305b77f0d1 100644
+--- a/drivers/phy/st/phy-miphy28lp.c
++++ b/drivers/phy/st/phy-miphy28lp.c
+@@ -9,6 +9,7 @@
+ 
+ #include <linux/platform_device.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
+@@ -484,19 +485,11 @@ static inline void miphy28lp_pcie_config_gen(struct miphy28lp_phy *miphy_phy)
+ 
+ static inline int miphy28lp_wait_compensation(struct miphy28lp_phy *miphy_phy)
  {
- 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
-+	struct ext4_super_block *es = sbi->s_es;
- 	int bsbits, max;
- 	ext4_lblk_t end;
- 	loff_t size, start_off;
-@@ -3692,18 +3693,21 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
- 	ac->ac_g_ex.fe_len = EXT4_NUM_B2C(sbi, size);
+-	unsigned long finish = jiffies + 5 * HZ;
+ 	u8 val;
  
- 	/* define goal start in order to merge */
--	if (ar->pright && (ar->lright == (start + size))) {
-+	if (ar->pright && (ar->lright == (start + size)) &&
-+	    ar->pright >= size &&
-+	    ar->pright - size >= le32_to_cpu(es->s_first_data_block)) {
- 		/* merge to the right */
- 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pright - size,
--						&ac->ac_f_ex.fe_group,
--						&ac->ac_f_ex.fe_start);
-+						&ac->ac_g_ex.fe_group,
-+						&ac->ac_g_ex.fe_start);
- 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
- 	}
--	if (ar->pleft && (ar->lleft + 1 == start)) {
-+	if (ar->pleft && (ar->lleft + 1 == start) &&
-+	    ar->pleft + 1 < ext4_blocks_count(es)) {
- 		/* merge to the left */
- 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pleft + 1,
--						&ac->ac_f_ex.fe_group,
--						&ac->ac_f_ex.fe_start);
-+						&ac->ac_g_ex.fe_group,
-+						&ac->ac_g_ex.fe_start);
- 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
- 	}
+ 	/* Waiting for Compensation to complete */
+-	do {
+-		val = readb_relaxed(miphy_phy->base + MIPHY_COMP_FSM_6);
+-
+-		if (time_after_eq(jiffies, finish))
+-			return -EBUSY;
+-		cpu_relax();
+-	} while (!(val & COMP_DONE));
+-
+-	return 0;
++	return readb_relaxed_poll_timeout(miphy_phy->base + MIPHY_COMP_FSM_6,
++					  val, val & COMP_DONE, 1, 5 * USEC_PER_SEC);
+ }
  
+ 
+@@ -805,7 +798,6 @@ static inline void miphy28lp_configure_usb3(struct miphy28lp_phy *miphy_phy)
+ 
+ static inline int miphy_is_ready(struct miphy28lp_phy *miphy_phy)
+ {
+-	unsigned long finish = jiffies + 5 * HZ;
+ 	u8 mask = HFC_PLL | HFC_RDY;
+ 	u8 val;
+ 
+@@ -816,21 +808,14 @@ static inline int miphy_is_ready(struct miphy28lp_phy *miphy_phy)
+ 	if (miphy_phy->type == PHY_TYPE_SATA)
+ 		mask |= PHY_RDY;
+ 
+-	do {
+-		val = readb_relaxed(miphy_phy->base + MIPHY_STATUS_1);
+-		if ((val & mask) != mask)
+-			cpu_relax();
+-		else
+-			return 0;
+-	} while (!time_after_eq(jiffies, finish));
+-
+-	return -EBUSY;
++	return readb_relaxed_poll_timeout(miphy_phy->base + MIPHY_STATUS_1,
++					  val, (val & mask) == mask, 1,
++					  5 * USEC_PER_SEC);
+ }
+ 
+ static int miphy_osc_is_ready(struct miphy28lp_phy *miphy_phy)
+ {
+ 	struct miphy28lp_dev *miphy_dev = miphy_phy->phydev;
+-	unsigned long finish = jiffies + 5 * HZ;
+ 	u32 val;
+ 
+ 	if (!miphy_phy->osc_rdy)
+@@ -839,17 +824,10 @@ static int miphy_osc_is_ready(struct miphy28lp_phy *miphy_phy)
+ 	if (!miphy_phy->syscfg_reg[SYSCFG_STATUS])
+ 		return -EINVAL;
+ 
+-	do {
+-		regmap_read(miphy_dev->regmap,
+-				miphy_phy->syscfg_reg[SYSCFG_STATUS], &val);
+-
+-		if ((val & MIPHY_OSC_RDY) != MIPHY_OSC_RDY)
+-			cpu_relax();
+-		else
+-			return 0;
+-	} while (!time_after_eq(jiffies, finish));
+-
+-	return -EBUSY;
++	return regmap_read_poll_timeout(miphy_dev->regmap,
++					miphy_phy->syscfg_reg[SYSCFG_STATUS],
++					val, val & MIPHY_OSC_RDY, 1,
++					5 * USEC_PER_SEC);
+ }
+ 
+ static int miphy28lp_get_resource_byname(struct device_node *child,
 -- 
 2.39.2
 
