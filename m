@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F14611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FEEC433D2;
-	Sun, 28 May 2023 19:46:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD0B611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDD7C433EF;
+	Sun, 28 May 2023 19:46:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303165;
-	bh=lDq33r+Xd6bsnUfmK0/am/43ciafYDk9OkG43+eN9qk=;
+	s=korg; t=1685303167;
+	bh=uSt7my5bwExGXqgKSxE8LTprG2bTuj+AP8/U6RLX3iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdlMZHUzExSjVnonoPYgor9N/RZrX0na7ggR6Ly2ANZp9EC35YTxsX4omkXOZf06q
-	 D0dVEl5gx3HKbJB1Kskn1af386RrWZN/Pvm3ZmEPvC80iMTxJ6MxX8+xEdx6DUkGdV
-	 1cZ3AwaTll+01bqUsIQIHIdpSFA+Ql1cAQzXPX9U=
+	b=SUSxQokBbOdPIEulwslHYfIiE7bKCsF5MT8Ezb4voTNpSo3of+YO+uwNUv9L0MXZ4
+	 jhTiAkQ0Zu9hCG6oKeKZXKHHSfw5sCMFhzRJAHSTM1+Z6piLvjDO4PN8lGJfET244X
+	 SHi33Ed9plD+2eZV7nICDrm50ivFM4XRUFTaljwo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 5.10 143/211] statfs: enforce statfs[64] structure initialization
-Date: Sun, 28 May 2023 20:11:04 +0100
-Message-Id: <20230528190847.067007767@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 174/211] parisc: Allow to reboot machine after system halt
+Date: Sun, 28 May 2023 20:11:35 +0100
+Message-Id: <20230528190847.815222892@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,62 +33,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Helge Deller <deller@gmx.de>
 
-commit ed40866ec7d328b3dfb70db7e2011640a16202c3 upstream.
+commit 2028315cf59bb899a5ac7e87dc48ecb8fac7ac24 upstream.
 
-s390's struct statfs and struct statfs64 contain padding, which
-field-by-field copying does not set. Initialize the respective structs
-with zeros before filling them and copying them to userspace, like it's
-already done for the compat versions of these structs.
+In case a machine can't power-off itself on system shutdown,
+allow the user to reboot it by pressing the RETURN key.
 
-Found by KMSAN.
-
-[agordeev@linux.ibm.com: fixed typo in patch description]
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Cc: stable@vger.kernel.org # v4.14+
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/r/20230504144021.808932-2-iii@linux.ibm.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Cc: <stable@vger.kernel.org> # v4.14+
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/statfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/parisc/kernel/process.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/fs/statfs.c
-+++ b/fs/statfs.c
-@@ -130,6 +130,7 @@ static int do_statfs_native(struct kstat
- 	if (sizeof(buf) == sizeof(*st))
- 		memcpy(&buf, st, sizeof(*st));
- 	else {
-+		memset(&buf, 0, sizeof(buf));
- 		if (sizeof buf.f_blocks == 4) {
- 			if ((st->f_blocks | st->f_bfree | st->f_bavail |
- 			     st->f_bsize | st->f_frsize) &
-@@ -158,7 +159,6 @@ static int do_statfs_native(struct kstat
- 		buf.f_namelen = st->f_namelen;
- 		buf.f_frsize = st->f_frsize;
- 		buf.f_flags = st->f_flags;
--		memset(buf.f_spare, 0, sizeof(buf.f_spare));
- 	}
- 	if (copy_to_user(p, &buf, sizeof(buf)))
- 		return -EFAULT;
-@@ -171,6 +171,7 @@ static int do_statfs64(struct kstatfs *s
- 	if (sizeof(buf) == sizeof(*st))
- 		memcpy(&buf, st, sizeof(*st));
- 	else {
-+		memset(&buf, 0, sizeof(buf));
- 		buf.f_type = st->f_type;
- 		buf.f_bsize = st->f_bsize;
- 		buf.f_blocks = st->f_blocks;
-@@ -182,7 +183,6 @@ static int do_statfs64(struct kstatfs *s
- 		buf.f_namelen = st->f_namelen;
- 		buf.f_frsize = st->f_frsize;
- 		buf.f_flags = st->f_flags;
--		memset(buf.f_spare, 0, sizeof(buf.f_spare));
- 	}
- 	if (copy_to_user(p, &buf, sizeof(buf)))
- 		return -EFAULT;
+--- a/arch/parisc/kernel/process.c
++++ b/arch/parisc/kernel/process.c
+@@ -123,13 +123,18 @@ void machine_power_off(void)
+ 	/* It seems we have no way to power the system off via
+ 	 * software. The user has to press the button himself. */
+ 
+-	printk(KERN_EMERG "System shut down completed.\n"
+-	       "Please power this system off now.");
++	printk("Power off or press RETURN to reboot.\n");
+ 
+ 	/* prevent soft lockup/stalled CPU messages for endless loop. */
+ 	rcu_sysrq_start();
+ 	lockup_detector_soft_poweroff();
+-	for (;;);
++	while (1) {
++		/* reboot if user presses RETURN key */
++		if (pdc_iodc_getc() == 13) {
++			printk("Rebooting...\n");
++			machine_restart(NULL);
++		}
++	}
+ }
+ 
+ void (*pm_power_off)(void);
 
 
