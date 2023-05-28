@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E383569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C25CC433EF;
-	Sun, 28 May 2023 19:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B254569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2DAC433EF;
+	Sun, 28 May 2023 19:32:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302328;
-	bh=+JYt3p0XP3EDMuzLeobbsdevTRb4nvQByz4E98TxOmQ=;
+	s=korg; t=1685302330;
+	bh=QBv6S3rCgMWdj7VzV6wjTxObjtuij+K5CTJHfNCThDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NthsyIntRxYFzgsuPoab2QRWy2lr1fpZzF3YQVWbFkjmioaxmFA8bvg4k16/2oRof
-	 WqACMwBbmj4AxX6ysRgJSooOUD05jJJVja+ez7dI+R8AG1SBFQo3y0yyYwdIcrQe1O
-	 kA1e6V0aTWR0UVu/L56kRd3BZzIrOEl/7LoDfHxo=
+	b=HQxdUtFOAfneW8HUhAT5705KEh3qD2xN4D2iTedMoReOYB1LiZIVuDstzntUiENaK
+	 YWKJSGLKJskKDfE9TAAaaJxXp09PR/Bu9QvYzRpfj0tG19UwfCOTtx0ZsKm/tGGrM4
+	 R/VybAkfhQUe1SNtg0PTooWourv5h3ibBda2/Wpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.3 090/127] firmware: arm_ffa: Check if ffa_driver remove is present before executing
-Date: Sun, 28 May 2023 20:11:06 +0100
-Message-Id: <20230528190839.254922581@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+23be03b56c5259385d79@syzkaller.appspotmail.com
+Subject: [PATCH 6.3 065/127] USB: sisusbvga: Add endpoint checks
+Date: Sun, 28 May 2023 20:10:41 +0100
+Message-Id: <20230528190838.517076916@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -33,66 +34,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit b71b55248a580e9c9befc4ae060539f1f8e477da upstream.
+commit df05a9b05e466a46725564528b277d0c570d0104 upstream.
 
-Currently ffa_drv->remove() is called unconditionally from
-ffa_device_remove(). Since the driver registration doesn't check for it
-and allows it to be registered without .remove callback, we need to check
-for the presence of it before executing it from ffa_device_remove() to
-above a NULL pointer dereference like the one below:
+The syzbot fuzzer was able to provoke a WARNING from the sisusbvga driver:
 
-  | Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-  | Mem abort info:
-  |   ESR = 0x0000000086000004
-  |   EC = 0x21: IABT (current EL), IL = 32 bits
-  |   SET = 0, FnV = 0
-  |   EA = 0, S1PTW = 0
-  |   FSC = 0x04: level 0 translation fault
-  | user pgtable: 4k pages, 48-bit VAs, pgdp=0000000881cc8000
-  | [0000000000000000] pgd=0000000000000000, p4d=0000000000000000
-  | Internal error: Oops: 0000000086000004 [#1] PREEMPT SMP
-  | CPU: 3 PID: 130 Comm: rmmod Not tainted 6.3.0-rc7 #6
-  | Hardware name: FVP Base RevC (DT)
-  | pstate: 63402809 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=-c)
-  | pc : 0x0
-  | lr : ffa_device_remove+0x20/0x2c
-  | Call trace:
-  |  0x0
-  |  device_release_driver_internal+0x16c/0x260
-  |  driver_detach+0x90/0xd0
-  |  bus_remove_driver+0xdc/0x11c
-  |  driver_unregister+0x30/0x54
-  |  ffa_driver_unregister+0x14/0x20
-  |  cleanup_module+0x18/0xeec
-  |  __arm64_sys_delete_module+0x234/0x378
-  |  invoke_syscall+0x40/0x108
-  |  el0_svc_common+0xb4/0xf0
-  |  do_el0_svc+0x30/0xa4
-  |  el0_svc+0x2c/0x7c
-  |  el0t_64_sync_handler+0x84/0xf0
-  |  el0t_64_sync+0x190/0x194
+------------[ cut here ]------------
+usb 1-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 1 PID: 26 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
+Modules linked in:
+CPU: 1 PID: 26 Comm: kworker/1:1 Not tainted 6.2.0-rc5-syzkaller-00199-g5af6ce704936 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
+Code: 7c 24 18 e8 6c 50 80 fb 48 8b 7c 24 18 e8 62 1a 01 ff 41 89 d8 44 89 e1 4c 89 ea 48 89 c6 48 c7 c7 60 b1 fa 8a e8 84 b0 be 03 <0f> 0b e9 58 f8 ff ff e8 3e 50 80 fb 48 81 c5 c0 05 00 00 e9 84 f7
+RSP: 0018:ffffc90000a1ed18 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
+RDX: ffff888012783a80 RSI: ffffffff816680ec RDI: fffff52000143d95
+RBP: ffff888079020000 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000080000000 R11: 0000000000000000 R12: 0000000000000003
+R13: ffff888017d33370 R14: 0000000000000003 R15: ffff888021213600
+FS:  0000000000000000(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005592753a60b0 CR3: 0000000022899000 CR4: 00000000003506e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ sisusb_bulkout_msg drivers/usb/misc/sisusbvga/sisusbvga.c:224 [inline]
+ sisusb_send_bulk_msg.constprop.0+0x904/0x1230 drivers/usb/misc/sisusbvga/sisusbvga.c:379
+ sisusb_send_bridge_packet drivers/usb/misc/sisusbvga/sisusbvga.c:567 [inline]
+ sisusb_do_init_gfxdevice drivers/usb/misc/sisusbvga/sisusbvga.c:2077 [inline]
+ sisusb_init_gfxdevice+0x87b/0x4000 drivers/usb/misc/sisusbvga/sisusbvga.c:2177
+ sisusb_probe+0x9cd/0xbe2 drivers/usb/misc/sisusbvga/sisusbvga.c:2869
+...
 
-Fixes: 244f5d597e1e ("firmware: arm_ffa: Add missing remove callback to ffa_bus_type")
-Link: https://lore.kernel.org/r/20230419-ffa_fixes_6-4-v2-1-d9108e43a176@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+The problem was caused by the fact that the driver does not check
+whether the endpoints it uses are actually present and have the
+appropriate types.  This can be fixed by adding a simple check of
+the endpoints.
+
+Link: https://syzkaller.appspot.com/bug?extid=23be03b56c5259385d79
+Reported-and-tested-by: syzbot+23be03b56c5259385d79@syzkaller.appspotmail.com
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/48ef98f7-51ae-4f63-b8d3-0ef2004bb60a@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_ffa/bus.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/misc/sisusbvga/sisusbvga.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/firmware/arm_ffa/bus.c
-+++ b/drivers/firmware/arm_ffa/bus.c
-@@ -53,7 +53,8 @@ static void ffa_device_remove(struct dev
- {
- 	struct ffa_driver *ffa_drv = to_ffa_driver(dev->driver);
+--- a/drivers/usb/misc/sisusbvga/sisusbvga.c
++++ b/drivers/usb/misc/sisusbvga/sisusbvga.c
+@@ -2778,6 +2778,20 @@ static int sisusb_probe(struct usb_inter
+ 	struct usb_device *dev = interface_to_usbdev(intf);
+ 	struct sisusb_usb_data *sisusb;
+ 	int retval = 0, i;
++	static const u8 ep_addresses[] = {
++		SISUSB_EP_GFX_IN | USB_DIR_IN,
++		SISUSB_EP_GFX_OUT | USB_DIR_OUT,
++		SISUSB_EP_GFX_BULK_OUT | USB_DIR_OUT,
++		SISUSB_EP_GFX_LBULK_OUT | USB_DIR_OUT,
++		SISUSB_EP_BRIDGE_IN | USB_DIR_IN,
++		SISUSB_EP_BRIDGE_OUT | USB_DIR_OUT,
++		0};
++
++	/* Are the expected endpoints present? */
++	if (!usb_check_bulk_endpoints(intf, ep_addresses)) {
++		dev_err(&intf->dev, "Invalid USB2VGA device\n");
++		return -EINVAL;
++	}
  
--	ffa_drv->remove(to_ffa_dev(dev));
-+	if (ffa_drv->remove)
-+		ffa_drv->remove(to_ffa_dev(dev));
- }
- 
- static int ffa_device_uevent(const struct device *dev, struct kobj_uevent_env *env)
+ 	dev_info(&dev->dev, "USB2VGA dongle found at address %d\n",
+ 			dev->devnum);
 
 
