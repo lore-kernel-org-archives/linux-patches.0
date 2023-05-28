@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0CB611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC80C433D2;
-	Sun, 28 May 2023 19:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3683611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C625C433D2;
+	Sun, 28 May 2023 19:18:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301512;
-	bh=cletOSE+Qe/sxNblzjJCZ+XL+pkgHdZGP5lu/smUmjA=;
+	s=korg; t=1685301514;
+	bh=hNxJghQclWpJGguYcw1psdrvg4ehmdQsErjavI09Qzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zH3BhQP9KRSxfdK76U71Ft+Fnrt0jG2z+a381mkeq0/Et2ZlH751EasFsri5L/vcA
-	 OZjZQhcHqq0Aqja6WjZ3Y4mRCISmeBz59PJopLw9hLSiQDo7hwkGX+8qEJ+Y37XH6h
-	 Jb7wl3SO3ri0SuqB5QDmJRgy8eyLQ8JHtkRafzGU=
+	b=Ve4a0m1AN5VT1CpIm+T49J7KF2U/TK8UHxnUxMgocGdiTNtF1c3d1tn8cGHWRGPCK
+	 UOn2q0uvs4XAM9gnsoiNplwy2DW7uqJrEwg1sjbqeCFbFYwZObEdIr431b6dGMDz6A
+	 gwFO7YNOidvOjKuyZfQhN9IWYzhpBLHACjh12/vM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Bob Moore <robert.moore@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 029/132] ext4: Fix best extent lstart adjustment logic in ext4_mb_new_inode_pa()
-Date: Sun, 28 May 2023 20:09:28 +0100
-Message-Id: <20230528190834.472302606@linuxfoundation.org>
+Subject: [PATCH 4.19 020/132] ACPICA: ACPICA: check null return of ACPI_ALLOCATE_ZEROED in acpi_db_display_objects
+Date: Sun, 28 May 2023 20:09:19 +0100
+Message-Id: <20230528190834.192345940@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -37,126 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+From: void0red <30990023+void0red@users.noreply.github.com>
 
-[ Upstream commit 93cdf49f6eca5e23f6546b8f28457b2e6a6961d9 ]
+[ Upstream commit ae5a0eccc85fc960834dd66e3befc2728284b86c ]
 
-When the length of best extent found is less than the length of goal extent
-we need to make sure that the best extent atleast covers the start of the
-original request. This is done by adjusting the ac_b_ex.fe_logical (logical
-start) of the extent.
+ACPICA commit 0d5f467d6a0ba852ea3aad68663cbcbd43300fd4
 
-While doing so, the current logic sometimes results in the best extent's
-logical range overflowing the goal extent. Since this best extent is later
-added to the inode preallocation list, we have a possibility of introducing
-overlapping preallocations. This is discussed in detail here [1].
+ACPI_ALLOCATE_ZEROED may fails, object_info might be null and will cause
+null pointer dereference later.
 
-As per Jan's suggestion, to fix this, replace the existing logic with the
-below logic for adjusting best extent as it keeps fragmentation in check
-while ensuring logical range of best extent doesn't overflow out of goal
-extent:
-
-1. Check if best extent can be kept at end of goal range and still cover
-   original start.
-2. Else, check if best extent can be kept at start of goal range and still
-   cover original start.
-3. Else, keep the best extent at start of original request.
-
-Also, add a few extra BUG_ONs that might help catch errors faster.
-
-[1] https://lore.kernel.org/r/Y+OGkVvzPN0RMv0O@li-bb2b2a4c-3307-11b2-a85c-8fa5c3a69313.ibm.com
-
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/f96aca6d415b36d1f90db86c1a8cd7e2e9d7ab0e.1679731817.git.ojaswin@linux.ibm.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Link: https://github.com/acpica/acpica/commit/0d5f467d
+Signed-off-by: Bob Moore <robert.moore@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 49 ++++++++++++++++++++++++++++++-----------------
- 1 file changed, 31 insertions(+), 18 deletions(-)
+ drivers/acpi/acpica/dbnames.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index e81702800ebc7..23e56c1ffc1bf 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3376,6 +3376,7 @@ static void ext4_mb_use_inode_pa(struct ext4_allocation_context *ac,
- 	BUG_ON(start < pa->pa_pstart);
- 	BUG_ON(end > pa->pa_pstart + EXT4_C2B(sbi, pa->pa_len));
- 	BUG_ON(pa->pa_free < len);
-+	BUG_ON(ac->ac_b_ex.fe_len <= 0);
- 	pa->pa_free -= len;
+diff --git a/drivers/acpi/acpica/dbnames.c b/drivers/acpi/acpica/dbnames.c
+index 992bd7b92540d..49afba8c916a7 100644
+--- a/drivers/acpi/acpica/dbnames.c
++++ b/drivers/acpi/acpica/dbnames.c
+@@ -571,6 +571,9 @@ acpi_status acpi_db_display_objects(char *obj_type_arg, char *display_count_arg)
+ 		object_info =
+ 		    ACPI_ALLOCATE_ZEROED(sizeof(struct acpi_object_info));
  
- 	mb_debug(1, "use %llu/%u from inode pa %p\n", start, len, pa);
-@@ -3680,10 +3681,8 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 		return -ENOMEM;
++		if (!object_info)
++			return (AE_NO_MEMORY);
++
+ 		/* Walk the namespace from the root */
  
- 	if (ac->ac_b_ex.fe_len < ac->ac_g_ex.fe_len) {
--		int winl;
--		int wins;
--		int win;
--		int offs;
-+		int new_bex_start;
-+		int new_bex_end;
- 
- 		/* we can't allocate as much as normalizer wants.
- 		 * so, found space must get proper lstart
-@@ -3691,26 +3690,40 @@ ext4_mb_new_inode_pa(struct ext4_allocation_context *ac)
- 		BUG_ON(ac->ac_g_ex.fe_logical > ac->ac_o_ex.fe_logical);
- 		BUG_ON(ac->ac_g_ex.fe_len < ac->ac_o_ex.fe_len);
- 
--		/* we're limited by original request in that
--		 * logical block must be covered any way
--		 * winl is window we can move our chunk within */
--		winl = ac->ac_o_ex.fe_logical - ac->ac_g_ex.fe_logical;
-+		/*
-+		 * Use the below logic for adjusting best extent as it keeps
-+		 * fragmentation in check while ensuring logical range of best
-+		 * extent doesn't overflow out of goal extent:
-+		 *
-+		 * 1. Check if best ex can be kept at end of goal and still
-+		 *    cover original start
-+		 * 2. Else, check if best ex can be kept at start of goal and
-+		 *    still cover original start
-+		 * 3. Else, keep the best ex at start of original request.
-+		 */
-+		new_bex_end = ac->ac_g_ex.fe_logical +
-+			EXT4_C2B(sbi, ac->ac_g_ex.fe_len);
-+		new_bex_start = new_bex_end - EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
-+		if (ac->ac_o_ex.fe_logical >= new_bex_start)
-+			goto adjust_bex;
- 
--		/* also, we should cover whole original request */
--		wins = EXT4_C2B(sbi, ac->ac_b_ex.fe_len - ac->ac_o_ex.fe_len);
-+		new_bex_start = ac->ac_g_ex.fe_logical;
-+		new_bex_end =
-+			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
-+		if (ac->ac_o_ex.fe_logical < new_bex_end)
-+			goto adjust_bex;
- 
--		/* the smallest one defines real window */
--		win = min(winl, wins);
-+		new_bex_start = ac->ac_o_ex.fe_logical;
-+		new_bex_end =
-+			new_bex_start + EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
- 
--		offs = ac->ac_o_ex.fe_logical %
--			EXT4_C2B(sbi, ac->ac_b_ex.fe_len);
--		if (offs && offs < win)
--			win = offs;
-+adjust_bex:
-+		ac->ac_b_ex.fe_logical = new_bex_start;
- 
--		ac->ac_b_ex.fe_logical = ac->ac_o_ex.fe_logical -
--			EXT4_NUM_B2C(sbi, win);
- 		BUG_ON(ac->ac_o_ex.fe_logical < ac->ac_b_ex.fe_logical);
- 		BUG_ON(ac->ac_o_ex.fe_len > ac->ac_b_ex.fe_len);
-+		BUG_ON(new_bex_end > (ac->ac_g_ex.fe_logical +
-+				      EXT4_C2B(sbi, ac->ac_g_ex.fe_len)));
- 	}
- 
- 	/* preallocation can change ac_b_ex, thus we store actually
+ 		(void)acpi_walk_namespace(ACPI_TYPE_ANY, ACPI_ROOT_OBJECT,
 -- 
 2.39.2
 
