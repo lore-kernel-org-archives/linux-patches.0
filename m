@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D080611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C111EC4339B;
-	Sun, 28 May 2023 19:35:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA0E611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CCE0C433EF;
+	Sun, 28 May 2023 19:35:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302546;
-	bh=3/K6Vj0R8rVMutOrG20aBMNiH8Nh4oXkRkicMsQDUsU=;
+	s=korg; t=1685302548;
+	bh=3qGr7NclIe9TWHlCtdmjZcENcT+Xbqypfue4DImknwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oKByk4VeFK22ffiq/Nie+X5itPZqLG83nfYXeAKGoQQMxTZbxSvhvYLnDFghnKcQ
-	 zKjEYv2MiNG07OFfck6mW5GGMYIggfdOvETMVii+PKW8RMjCm3V6vFHrgsx0VskpxS
-	 cUGVg2XwOyMQ55cf9Zw+oT2Dw/Ge+MtqBIwb946U=
+	b=tQBsm2GaVEdMNNK+bBJ5RtuWIoGtwvC0NgvjsmXJGG52dQ7MTC1ou9KS8mnQE1mCc
+	 zPzl06ibPgKLg8D7SvDCmh0BLneAERxmVoFtXn45N8fpE6CcW1lGaGReOHQavYPfKl
+	 bwkMAeIx9V00pIHvwbPgtBqLAxWfK2zahGhF7jfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Oakes <gregory.oakes@amd.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.1 008/119] watchdog: sp5100_tco: Immediately trigger upon starting.
-Date: Sun, 28 May 2023 20:10:08 +0100
-Message-Id: <20230528190835.639063988@linuxfoundation.org>
+	Frank Li <Frank.Li@nxp.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.1 040/119] dt-binding: cdns,usb3: Fix cdns,on-chip-buff-size type
+Date: Sun, 28 May 2023 20:10:40 +0100
+Message-Id: <20230528190836.716704043@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -36,41 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gregory Oakes <gregory.oakes@amd.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 4eda19cc8a29cde3580ed73bf11dc73b4e757697 upstream.
+commit 50a1726b148ff30778cb8a6cf3736130b07c93fd upstream.
 
-The watchdog countdown is supposed to begin when the device file is
-opened. Instead, it would begin countdown upon the first write to or
-close of the device file. Now, the ping operation is called within the
-start operation which ensures the countdown begins. From experimenation,
-it does not appear possible to do this with a single write including
-both the start bit and the trigger bit. So, it is done as two distinct
-writes.
+In cdns3-gadget.c, 'cdns,on-chip-buff-size' was read using
+device_property_read_u16(). It resulted in 0 if a 32bit value was used
+in dts. This commit fixes the dt binding doc to declare it as u16.
 
-Signed-off-by: Gregory Oakes <gregory.oakes@amd.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230316201312.17538-1-gregory.oakes@amd.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: stable@vger.kernel.org
+Fixes: 68989fe1c39d ("dt-bindings: usb: Convert cdns-usb3.txt to YAML schema")
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/sp5100_tco.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/devicetree/bindings/usb/cdns,usb3.yaml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/watchdog/sp5100_tco.c
-+++ b/drivers/watchdog/sp5100_tco.c
-@@ -115,6 +115,10 @@ static int tco_timer_start(struct watchd
- 	val |= SP5100_WDT_START_STOP_BIT;
- 	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
+--- a/Documentation/devicetree/bindings/usb/cdns,usb3.yaml
++++ b/Documentation/devicetree/bindings/usb/cdns,usb3.yaml
+@@ -64,7 +64,7 @@ properties:
+     description:
+       size of memory intended as internal memory for endpoints
+       buffers expressed in KB
+-    $ref: /schemas/types.yaml#/definitions/uint32
++    $ref: /schemas/types.yaml#/definitions/uint16
  
-+	/* This must be a distinct write. */
-+	val |= SP5100_WDT_TRIGGER_BIT;
-+	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
-+
- 	return 0;
- }
- 
+   cdns,phyrst-a-enable:
+     description: Enable resetting of PHY if Rx fail is detected
 
 
