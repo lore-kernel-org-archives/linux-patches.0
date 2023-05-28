@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743A4611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:37:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F47C433EF;
-	Sun, 28 May 2023 19:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17A2611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:37:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFF6C433EF;
+	Sun, 28 May 2023 19:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302643;
-	bh=ZWIp3QrFjv1is3LMfCIReXRVd+KKSSYenzvMUzrYN8A=;
+	s=korg; t=1685302645;
+	bh=pW5df8G6vXyxyHCsbMscUSE7S/vLQ14G0Co6nZ1UI54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tT1kNSDfKZldH9EROyuS16a9RtieLcwXl67C1DB6ruspufefVugWYlrJgoNNckE3r
-	 CkAuZZ4j57rEtmJ9XIDApojObPhw0jKu9Ro+Opo2HG4kNHj9zKFYl8kK/GmY0w6TW+
-	 7EGSUTHulCRTYdU5/IVEbUDnv3Ut5p1aKHj+AiYM=
+	b=idqQ1pNV9Q5QfI0x+VABH1vjUrejPB5AaluCyz8lhDRI1rzH8erVMgh1VTYYjB4ju
+	 ZvzZU9lrSATrWiGhsK52ZO7g3EmNE/O+u4ZNh1uMw40DWN6Io/Ow10Mkc7R1fiaIg5
+	 A6oiLZ3RR1PrhIQxkvSbe7kSmw77fg9BwXPlhYs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucian Paul-Trifu <lucian.paul-trifu@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.1 087/119] firmware: arm_ffa: Fix FFA device names for logical partitions
-Date: Sun, 28 May 2023 20:11:27 +0100
-Message-Id: <20230528190838.437512321@linuxfoundation.org>
+	Hao Ge <gehao@kylinos.cn>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 088/119] fs: fix undefined behavior in bit shift for SB_NOUSER
+Date: Sun, 28 May 2023 20:11:28 +0100
+Message-Id: <20230528190838.477018428@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -34,131 +34,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Hao Ge <gehao@kylinos.cn>
 
-commit 19b8766459c41c6f318f8a548cc1c66dffd18363 upstream.
+commit f15afbd34d8fadbd375f1212e97837e32bc170cc upstream.
 
-Each physical partition can provide multiple services each with UUID.
-Each such service can be presented as logical partition with a unique
-combination of VM ID and UUID. The number of distinct UUID in a system
-will be less than or equal to the number of logical partitions.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. It was spotted by UBSAN.
 
-However, currently it fails to register more than one logical partition
-or service within a physical partition as the device name contains only
-VM ID while both VM ID and UUID are maintained in the partition information.
-The kernel complains with the below message:
+So let's just fix this by using the BIT() helper for all SB_* flags.
 
-  | sysfs: cannot create duplicate filename '/devices/arm-ffa-8001'
-  | CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.3.0-rc7 #8
-  | Hardware name: FVP Base RevC (DT)
-  | Call trace:
-  |  dump_backtrace+0xf8/0x118
-  |  show_stack+0x18/0x24
-  |  dump_stack_lvl+0x50/0x68
-  |  dump_stack+0x18/0x24
-  |  sysfs_create_dir_ns+0xe0/0x13c
-  |  kobject_add_internal+0x220/0x3d4
-  |  kobject_add+0x94/0x100
-  |  device_add+0x144/0x5d8
-  |  device_register+0x20/0x30
-  |  ffa_device_register+0x88/0xd8
-  |  ffa_setup_partitions+0x108/0x1b8
-  |  ffa_init+0x2ec/0x3a4
-  |  do_one_initcall+0xcc/0x240
-  |  do_initcall_level+0x8c/0xac
-  |  do_initcalls+0x54/0x94
-  |  do_basic_setup+0x1c/0x28
-  |  kernel_init_freeable+0x100/0x16c
-  |  kernel_init+0x20/0x1a0
-  |  ret_from_fork+0x10/0x20
-  | kobject_add_internal failed for arm-ffa-8001 with -EEXIST, don't try to
-  | register things with the same name in the same directory.
-  | arm_ffa arm-ffa: unable to register device arm-ffa-8001 err=-17
-  | ARM FF-A: ffa_setup_partitions: failed to register partition ID 0x8001
-
-By virtue of being random enough to avoid collisions when generated in a
-distributed system, there is no way to compress UUID keys to the number
-of bits required to identify each. We can eliminate '-' in the name but
-it is not worth eliminating 4 bytes and add unnecessary logic for doing
-that. Also v1.0 doesn't provide the UUID of the partitions which makes
-it hard to use the same for the device name.
-
-So to keep it simple, let us alloc an ID using ida_alloc() and append the
-same to "arm-ffa" to make up a unique device name. Also stash the id value
-in ffa_dev to help freeing the ID later when the device is destroyed.
-
-Fixes: e781858488b9 ("firmware: arm_ffa: Add initial FFA bus support for device enumeration")
-Reported-by: Lucian Paul-Trifu <lucian.paul-trifu@arm.com>
-Link: https://lore.kernel.org/r/20230419-ffa_fixes_6-4-v2-3-d9108e43a176@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: e462ec50cb5f ("VFS: Differentiate mount flags (MS_*) from internal superblock flags")
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Message-Id: <20230424051835.374204-1-gehao@kylinos.cn>
+[brauner@kernel.org: use BIT() for all SB_* flags]
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_ffa/bus.c |   16 +++++++++++++---
- include/linux/arm_ffa.h        |    1 +
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ include/linux/fs.h |   42 +++++++++++++++++++++---------------------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
---- a/drivers/firmware/arm_ffa/bus.c
-+++ b/drivers/firmware/arm_ffa/bus.c
-@@ -15,6 +15,8 @@
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1380,29 +1380,29 @@ extern int send_sigurg(struct fown_struc
+  * sb->s_flags.  Note that these mirror the equivalent MS_* flags where
+  * represented in both.
+  */
+-#define SB_RDONLY	 1	/* Mount read-only */
+-#define SB_NOSUID	 2	/* Ignore suid and sgid bits */
+-#define SB_NODEV	 4	/* Disallow access to device special files */
+-#define SB_NOEXEC	 8	/* Disallow program execution */
+-#define SB_SYNCHRONOUS	16	/* Writes are synced at once */
+-#define SB_MANDLOCK	64	/* Allow mandatory locks on an FS */
+-#define SB_DIRSYNC	128	/* Directory modifications are synchronous */
+-#define SB_NOATIME	1024	/* Do not update access times. */
+-#define SB_NODIRATIME	2048	/* Do not update directory access times */
+-#define SB_SILENT	32768
+-#define SB_POSIXACL	(1<<16)	/* VFS does not apply the umask */
+-#define SB_INLINECRYPT	(1<<17)	/* Use blk-crypto for encrypted files */
+-#define SB_KERNMOUNT	(1<<22) /* this is a kern_mount call */
+-#define SB_I_VERSION	(1<<23) /* Update inode I_version field */
+-#define SB_LAZYTIME	(1<<25) /* Update the on-disk [acm]times lazily */
++#define SB_RDONLY       BIT(0)	/* Mount read-only */
++#define SB_NOSUID       BIT(1)	/* Ignore suid and sgid bits */
++#define SB_NODEV        BIT(2)	/* Disallow access to device special files */
++#define SB_NOEXEC       BIT(3)	/* Disallow program execution */
++#define SB_SYNCHRONOUS  BIT(4)	/* Writes are synced at once */
++#define SB_MANDLOCK     BIT(6)	/* Allow mandatory locks on an FS */
++#define SB_DIRSYNC      BIT(7)	/* Directory modifications are synchronous */
++#define SB_NOATIME      BIT(10)	/* Do not update access times. */
++#define SB_NODIRATIME   BIT(11)	/* Do not update directory access times */
++#define SB_SILENT       BIT(15)
++#define SB_POSIXACL     BIT(16)	/* VFS does not apply the umask */
++#define SB_INLINECRYPT  BIT(17)	/* Use blk-crypto for encrypted files */
++#define SB_KERNMOUNT    BIT(22)	/* this is a kern_mount call */
++#define SB_I_VERSION    BIT(23)	/* Update inode I_version field */
++#define SB_LAZYTIME     BIT(25)	/* Update the on-disk [acm]times lazily */
  
- #include "common.h"
+ /* These sb flags are internal to the kernel */
+-#define SB_SUBMOUNT     (1<<26)
+-#define SB_FORCE    	(1<<27)
+-#define SB_NOSEC	(1<<28)
+-#define SB_BORN		(1<<29)
+-#define SB_ACTIVE	(1<<30)
+-#define SB_NOUSER	(1<<31)
++#define SB_SUBMOUNT     BIT(26)
++#define SB_FORCE        BIT(27)
++#define SB_NOSEC        BIT(28)
++#define SB_BORN         BIT(29)
++#define SB_ACTIVE       BIT(30)
++#define SB_NOUSER       BIT(31)
  
-+static DEFINE_IDA(ffa_bus_id);
-+
- static int ffa_device_match(struct device *dev, struct device_driver *drv)
- {
- 	const struct ffa_device_id *id_table;
-@@ -131,6 +133,7 @@ static void ffa_release_device(struct de
- {
- 	struct ffa_device *ffa_dev = to_ffa_dev(dev);
- 
-+	ida_free(&ffa_bus_id, ffa_dev->id);
- 	kfree(ffa_dev);
- }
- 
-@@ -171,18 +174,24 @@ bool ffa_device_is_valid(struct ffa_devi
- struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id,
- 				       const struct ffa_ops *ops)
- {
--	int ret;
-+	int id, ret;
- 	struct device *dev;
- 	struct ffa_device *ffa_dev;
- 
-+	id = ida_alloc_min(&ffa_bus_id, 1, GFP_KERNEL);
-+	if (id < 0)
-+		return NULL;
-+
- 	ffa_dev = kzalloc(sizeof(*ffa_dev), GFP_KERNEL);
--	if (!ffa_dev)
-+	if (!ffa_dev) {
-+		ida_free(&ffa_bus_id, id);
- 		return NULL;
-+	}
- 
- 	dev = &ffa_dev->dev;
- 	dev->bus = &ffa_bus_type;
- 	dev->release = ffa_release_device;
--	dev_set_name(&ffa_dev->dev, "arm-ffa-%04x", vm_id);
-+	dev_set_name(&ffa_dev->dev, "arm-ffa-%d", id);
- 
- 	ffa_dev->vm_id = vm_id;
- 	ffa_dev->ops = ops;
-@@ -218,4 +227,5 @@ void arm_ffa_bus_exit(void)
- {
- 	ffa_devices_unregister();
- 	bus_unregister(&ffa_bus_type);
-+	ida_destroy(&ffa_bus_id);
- }
---- a/include/linux/arm_ffa.h
-+++ b/include/linux/arm_ffa.h
-@@ -13,6 +13,7 @@
- 
- /* FFA Bus/Device/Driver related */
- struct ffa_device {
-+	u32 id;
- 	int vm_id;
- 	bool mode_32bit;
- 	uuid_t uuid;
+ /* These flags relate to encoding and casefolding */
+ #define SB_ENC_STRICT_MODE_FL	(1 << 0)
 
 
