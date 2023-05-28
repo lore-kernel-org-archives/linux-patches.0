@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAF1569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:27:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C629EC433EF;
-	Sun, 28 May 2023 19:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD35569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:27:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A3CC433D2;
+	Sun, 28 May 2023 19:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302035;
-	bh=2MoMWExnZSUBjyiAeqQHwxYdgC6498XHvZRNTygb2Yo=;
+	s=korg; t=1685302037;
+	bh=zat9A3bkxgnPlqSAEL/uUU/TRoUcHrfCv3PHsXPcp9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DFg4wMz9dvCtxsf8K/+fqqS93eCJkUEKUUEDC9IQ5SQyE4OwhmQzHgXDs+e+Aizs1
-	 z56NQaP3o/bAowSOkqzXeDIHubdB7IkQTuZ7XvoMeaCFZAJE6f6RToPdddb8LivScn
-	 gqdj3mYQx2J4LUTe7ve7MVnD2JiSygBCPiHokiGo=
+	b=Vb5KpvZxjow6q5KagjY9Y5utXaQpj4AM0CGC3fD6DzR9o+xYzoCTF0b5uujIhgGhz
+	 Rn6il2vWRqMBNBkdlYxnzTYAjQg8kIyUuym7Ai6JI8R8Gpk7GM4FsjaUTm7J7hBlsz
+	 bFBfqWy8JjBTNQ9RummFA+UdvVLdPsEdekyld7fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hardik Garg <hargar@linux.microsoft.com>,
-	"Tyler Hicks (Microsoft)" <code@tyhicks.com>
-Subject: [PATCH 5.4 135/161] selftests/memfd: Fix unknown type name build failure
-Date: Sun, 28 May 2023 20:10:59 +0100
-Message-Id: <20230528190841.262948905@linuxfoundation.org>
+	linux-parisc@vger.kernel.org,
+	Helge Deller <deller@gmx.de>,
+	stable@kernel.org
+Subject: [PATCH 5.4 136/161] parisc: Fix flush_dcache_page() for usage from irq context
+Date: Sun, 28 May 2023 20:11:00 +0100
+Message-Id: <20230528190841.290607543@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -34,35 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hardik Garg <hargar@linux.microsoft.com>
+From: Helge Deller <deller@gmx.de>
 
-Partially backport v6.3 commit 11f75a01448f ("selftests/memfd: add tests
-for MFD_NOEXEC_SEAL MFD_EXEC") to fix an unknown type name build error.
-In some systems, the __u64 typedef is not present due to differences in
-system headers, causing compilation errors like this one:
+commit 61e150fb310729c98227a5edf6e4a3619edc3702 upstream.
 
-fuse_test.c:64:8: error: unknown type name '__u64'
-   64 | static __u64 mfd_assert_get_seals(int fd)
+Since at least kernel 6.1, flush_dcache_page() is called with IRQs
+disabled, e.g. from aio_complete().
 
-This header includes the  __u64 typedef which increases the likelihood
-of successful compilation on a wider variety of systems.
+But the current implementation for flush_dcache_page() on parisc
+unintentionally re-enables IRQs, which may lead to deadlocks.
 
-Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
-Reviewed-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
+Fix it by using xa_lock_irqsave() and xa_unlock_irqrestore()
+for the flush_dcache_mmap_*lock() macros instead.
+
+Cc: linux-parisc@vger.kernel.org
+Cc: stable@kernel.org # 5.18+
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/memfd/fuse_test.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/parisc/include/asm/cacheflush.h |    5 +++++
+ arch/parisc/kernel/cache.c           |    5 +++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/memfd/fuse_test.c
-+++ b/tools/testing/selftests/memfd/fuse_test.c
-@@ -22,6 +22,7 @@
- #include <linux/falloc.h>
- #include <linux/fcntl.h>
- #include <linux/memfd.h>
-+#include <linux/types.h>
- #include <sched.h>
- #include <stdio.h>
- #include <stdlib.h>
+--- a/arch/parisc/include/asm/cacheflush.h
++++ b/arch/parisc/include/asm/cacheflush.h
+@@ -57,6 +57,11 @@ extern void flush_dcache_page(struct pag
+ 
+ #define flush_dcache_mmap_lock(mapping)		xa_lock_irq(&mapping->i_pages)
+ #define flush_dcache_mmap_unlock(mapping)	xa_unlock_irq(&mapping->i_pages)
++#define flush_dcache_mmap_lock_irqsave(mapping, flags)		\
++		xa_lock_irqsave(&mapping->i_pages, flags)
++#define flush_dcache_mmap_unlock_irqrestore(mapping, flags)	\
++		xa_unlock_irqrestore(&mapping->i_pages, flags)
++
+ 
+ #define flush_icache_page(vma,page)	do { 		\
+ 	flush_kernel_dcache_page(page);			\
+--- a/arch/parisc/kernel/cache.c
++++ b/arch/parisc/kernel/cache.c
+@@ -328,6 +328,7 @@ void flush_dcache_page(struct page *page
+ 	struct vm_area_struct *mpnt;
+ 	unsigned long offset;
+ 	unsigned long addr, old_addr = 0;
++	unsigned long flags;
+ 	pgoff_t pgoff;
+ 
+ 	if (mapping && !mapping_mapped(mapping)) {
+@@ -347,7 +348,7 @@ void flush_dcache_page(struct page *page
+ 	 * declared as MAP_PRIVATE or MAP_SHARED), so we only need
+ 	 * to flush one address here for them all to become coherent */
+ 
+-	flush_dcache_mmap_lock(mapping);
++	flush_dcache_mmap_lock_irqsave(mapping, flags);
+ 	vma_interval_tree_foreach(mpnt, &mapping->i_mmap, pgoff, pgoff) {
+ 		offset = (pgoff - mpnt->vm_pgoff) << PAGE_SHIFT;
+ 		addr = mpnt->vm_start + offset;
+@@ -370,7 +371,7 @@ void flush_dcache_page(struct page *page
+ 			old_addr = addr;
+ 		}
+ 	}
+-	flush_dcache_mmap_unlock(mapping);
++	flush_dcache_mmap_unlock_irqrestore(mapping, flags);
+ }
+ EXPORT_SYMBOL(flush_dcache_page);
+ 
 
 
