@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBA2611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:40:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D61C4339B;
-	Sun, 28 May 2023 19:40:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7925C611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:40:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF81FC433D2;
+	Sun, 28 May 2023 19:40:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302813;
-	bh=pEAwytCHpXV8+5xoAdFDjnInboir0Chw8KlpkgREbrs=;
+	s=korg; t=1685302816;
+	bh=d2iGA6U1G93m7fcgvIrolP/V/MrOkik0/FSmaX4JwkI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/Mr+RzdBGlhxDoljiXjKHiDtqc5tctv9O8LWG9BME7nqVw9w9t+H+p5n2x92+cCD
-	 P60YQllPKRuegDMGsuVzaTXaRzLSZo648e0GMoVr7ZuZHwkqg81mC9+N2Xw48S9Kr9
-	 dA7RFUrE/VH0a85cfwOjLJN3mmTm63MqruV77+ZY=
+	b=rIES2t52Ib329q7xWc58FfKRxqWltL9Aqw0HDNeEtL+NtQZTsAmWi8lJjCh06k9N4
+	 KkOrg/Y0I/d/C5bX/QVYDjBVBdKwPNjv61oNmREihV8pRTEXHrghfrCnPCAJUSWSPX
+	 jPmaorH0snjlhpUPm4KoY9Jl1JeD6gGQycYbLodw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/211] firmware: arm_sdei: Fix sleep from invalid context BUG
-Date: Sun, 28 May 2023 20:09:18 +0100
-Message-Id: <20230528190844.459697158@linuxfoundation.org>
+Subject: [PATCH 5.10 038/211] ACPI: EC: Fix oops when removing custom query handlers
+Date: Sun, 28 May 2023 20:09:19 +0100
+Message-Id: <20230528190844.490565683@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,234 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit d2c48b2387eb89e0bf2a2e06e30987cf410acad4 ]
+[ Upstream commit e5b492c6bb900fcf9722e05f4a10924410e170c1 ]
 
-Running a preempt-rt (v6.2-rc3-rt1) based kernel on an Ampere Altra
-triggers:
+When removing custom query handlers, the handler might still
+be used inside the EC query workqueue, causing a kernel oops
+if the module holding the callback function was already unloaded.
 
-  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
-  in_atomic(): 0, irqs_disabled(): 128, non_block: 0, pid: 24, name: cpuhp/0
-  preempt_count: 0, expected: 0
-  RCU nest depth: 0, expected: 0
-  3 locks held by cpuhp/0/24:
-    #0: ffffda30217c70d0 (cpu_hotplug_lock){++++}-{0:0}, at: cpuhp_thread_fun+0x5c/0x248
-    #1: ffffda30217c7120 (cpuhp_state-up){+.+.}-{0:0}, at: cpuhp_thread_fun+0x5c/0x248
-    #2: ffffda3021c711f0 (sdei_list_lock){....}-{3:3}, at: sdei_cpuhp_up+0x3c/0x130
-  irq event stamp: 36
-  hardirqs last  enabled at (35): [<ffffda301e85b7bc>] finish_task_switch+0xb4/0x2b0
-  hardirqs last disabled at (36): [<ffffda301e812fec>] cpuhp_thread_fun+0x21c/0x248
-  softirqs last  enabled at (0): [<ffffda301e80b184>] copy_process+0x63c/0x1ac0
-  softirqs last disabled at (0): [<0000000000000000>] 0x0
-  CPU: 0 PID: 24 Comm: cpuhp/0 Not tainted 5.19.0-rc3-rt5-[...]
-  Hardware name: WIWYNN Mt.Jade Server [...]
-  Call trace:
-    dump_backtrace+0x114/0x120
-    show_stack+0x20/0x70
-    dump_stack_lvl+0x9c/0xd8
-    dump_stack+0x18/0x34
-    __might_resched+0x188/0x228
-    rt_spin_lock+0x70/0x120
-    sdei_cpuhp_up+0x3c/0x130
-    cpuhp_invoke_callback+0x250/0xf08
-    cpuhp_thread_fun+0x120/0x248
-    smpboot_thread_fn+0x280/0x320
-    kthread+0x130/0x140
-    ret_from_fork+0x10/0x20
+Fix this by flushing the EC query workqueue when removing
+custom query handlers.
 
-sdei_cpuhp_up() is called in the STARTING hotplug section,
-which runs with interrupts disabled. Use a CPUHP_AP_ONLINE_DYN entry
-instead to execute the cpuhp cb later, with preemption enabled.
+Tested on a Acer Travelmate 4002WLMi
 
-SDEI originally got its own cpuhp slot to allow interacting
-with perf. It got superseded by pNMI and this early slot is not
-relevant anymore. [1]
-
-Some SDEI calls (e.g. SDEI_1_0_FN_SDEI_PE_MASK) take actions on the
-calling CPU. It is checked that preemption is disabled for them.
-_ONLINE cpuhp cb are executed in the 'per CPU hotplug thread'.
-Preemption is enabled in those threads, but their cpumask is limited
-to 1 CPU.
-Move 'WARN_ON_ONCE(preemptible())' statements so that SDEI cpuhp cb
-don't trigger them.
-
-Also add a check for the SDEI_1_0_FN_SDEI_PRIVATE_RESET SDEI call
-which acts on the calling CPU.
-
-[1]:
-https://lore.kernel.org/all/5813b8c5-ae3e-87fd-fccc-94c9cd08816d@arm.com/
-
-Suggested-by: James Morse <james.morse@arm.com>
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Reviewed-by: James Morse <james.morse@arm.com>
-Link: https://lore.kernel.org/r/20230216084920.144064-1-pierre.gondois@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_sdei.c | 37 ++++++++++++++++++++-----------------
- include/linux/cpuhotplug.h  |  1 -
- 2 files changed, 20 insertions(+), 18 deletions(-)
+ drivers/acpi/ec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/firmware/arm_sdei.c b/drivers/firmware/arm_sdei.c
-index 840754dcc6ca4..5a877d76078f7 100644
---- a/drivers/firmware/arm_sdei.c
-+++ b/drivers/firmware/arm_sdei.c
-@@ -44,6 +44,8 @@ static asmlinkage void (*sdei_firmware_call)(unsigned long function_id,
- /* entry point from firmware to arch asm code */
- static unsigned long sdei_entry_point;
- 
-+static int sdei_hp_state;
-+
- struct sdei_event {
- 	/* These three are protected by the sdei_list_lock */
- 	struct list_head	list;
-@@ -302,8 +304,6 @@ int sdei_mask_local_cpu(void)
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index 4707d1808ca54..487884420fb0d 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1114,6 +1114,7 @@ static void acpi_ec_remove_query_handlers(struct acpi_ec *ec,
+ void acpi_ec_remove_query_handler(struct acpi_ec *ec, u8 query_bit)
  {
- 	int err;
- 
--	WARN_ON_ONCE(preemptible());
--
- 	err = invoke_sdei_fn(SDEI_1_0_FN_SDEI_PE_MASK, 0, 0, 0, 0, 0, NULL);
- 	if (err && err != -EIO) {
- 		pr_warn_once("failed to mask CPU[%u]: %d\n",
-@@ -316,6 +316,7 @@ int sdei_mask_local_cpu(void)
- 
- static void _ipi_mask_cpu(void *ignored)
- {
-+	WARN_ON_ONCE(preemptible());
- 	sdei_mask_local_cpu();
+ 	acpi_ec_remove_query_handlers(ec, false, query_bit);
++	flush_workqueue(ec_query_wq);
  }
+ EXPORT_SYMBOL_GPL(acpi_ec_remove_query_handler);
  
-@@ -323,8 +324,6 @@ int sdei_unmask_local_cpu(void)
- {
- 	int err;
- 
--	WARN_ON_ONCE(preemptible());
--
- 	err = invoke_sdei_fn(SDEI_1_0_FN_SDEI_PE_UNMASK, 0, 0, 0, 0, 0, NULL);
- 	if (err && err != -EIO) {
- 		pr_warn_once("failed to unmask CPU[%u]: %d\n",
-@@ -337,6 +336,7 @@ int sdei_unmask_local_cpu(void)
- 
- static void _ipi_unmask_cpu(void *ignored)
- {
-+	WARN_ON_ONCE(preemptible());
- 	sdei_unmask_local_cpu();
- }
- 
-@@ -344,6 +344,8 @@ static void _ipi_private_reset(void *ignored)
- {
- 	int err;
- 
-+	WARN_ON_ONCE(preemptible());
-+
- 	err = invoke_sdei_fn(SDEI_1_0_FN_SDEI_PRIVATE_RESET, 0, 0, 0, 0, 0,
- 			     NULL);
- 	if (err && err != -EIO)
-@@ -390,8 +392,6 @@ static void _local_event_enable(void *data)
- 	int err;
- 	struct sdei_crosscall_args *arg = data;
- 
--	WARN_ON_ONCE(preemptible());
--
- 	err = sdei_api_event_enable(arg->event->event_num);
- 
- 	sdei_cross_call_return(arg, err);
-@@ -480,8 +480,6 @@ static void _local_event_unregister(void *data)
- 	int err;
- 	struct sdei_crosscall_args *arg = data;
- 
--	WARN_ON_ONCE(preemptible());
--
- 	err = sdei_api_event_unregister(arg->event->event_num);
- 
- 	sdei_cross_call_return(arg, err);
-@@ -562,8 +560,6 @@ static void _local_event_register(void *data)
- 	struct sdei_registered_event *reg;
- 	struct sdei_crosscall_args *arg = data;
- 
--	WARN_ON(preemptible());
--
- 	reg = per_cpu_ptr(arg->event->private_registered, smp_processor_id());
- 	err = sdei_api_event_register(arg->event->event_num, sdei_entry_point,
- 				      reg, 0, 0);
-@@ -718,6 +714,8 @@ static int sdei_pm_notifier(struct notifier_block *nb, unsigned long action,
- {
- 	int rv;
- 
-+	WARN_ON_ONCE(preemptible());
-+
- 	switch (action) {
- 	case CPU_PM_ENTER:
- 		rv = sdei_mask_local_cpu();
-@@ -766,7 +764,7 @@ static int sdei_device_freeze(struct device *dev)
- 	int err;
- 
- 	/* unregister private events */
--	cpuhp_remove_state(CPUHP_AP_ARM_SDEI_STARTING);
-+	cpuhp_remove_state(sdei_entry_point);
- 
- 	err = sdei_unregister_shared();
- 	if (err)
-@@ -787,12 +785,15 @@ static int sdei_device_thaw(struct device *dev)
- 		return err;
- 	}
- 
--	err = cpuhp_setup_state(CPUHP_AP_ARM_SDEI_STARTING, "SDEI",
-+	err = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "SDEI",
- 				&sdei_cpuhp_up, &sdei_cpuhp_down);
--	if (err)
-+	if (err < 0) {
- 		pr_warn("Failed to re-register CPU hotplug notifier...\n");
-+		return err;
-+	}
- 
--	return err;
-+	sdei_hp_state = err;
-+	return 0;
- }
- 
- static int sdei_device_restore(struct device *dev)
-@@ -824,7 +825,7 @@ static int sdei_reboot_notifier(struct notifier_block *nb, unsigned long action,
- 	 * We are going to reset the interface, after this there is no point
- 	 * doing work when we take CPUs offline.
- 	 */
--	cpuhp_remove_state(CPUHP_AP_ARM_SDEI_STARTING);
-+	cpuhp_remove_state(sdei_hp_state);
- 
- 	sdei_platform_reset();
- 
-@@ -1004,13 +1005,15 @@ static int sdei_probe(struct platform_device *pdev)
- 		goto remove_cpupm;
- 	}
- 
--	err = cpuhp_setup_state(CPUHP_AP_ARM_SDEI_STARTING, "SDEI",
-+	err = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "SDEI",
- 				&sdei_cpuhp_up, &sdei_cpuhp_down);
--	if (err) {
-+	if (err < 0) {
- 		pr_warn("Failed to register CPU hotplug notifier...\n");
- 		goto remove_reboot;
- 	}
- 
-+	sdei_hp_state = err;
-+
- 	return 0;
- 
- remove_reboot:
-diff --git a/include/linux/cpuhotplug.h b/include/linux/cpuhotplug.h
-index fc945f9df2c1d..cb87247da5ba1 100644
---- a/include/linux/cpuhotplug.h
-+++ b/include/linux/cpuhotplug.h
-@@ -115,7 +115,6 @@ enum cpuhp_state {
- 	CPUHP_AP_PERF_X86_CSTATE_STARTING,
- 	CPUHP_AP_PERF_XTENSA_STARTING,
- 	CPUHP_AP_MIPS_OP_LOONGSON3_STARTING,
--	CPUHP_AP_ARM_SDEI_STARTING,
- 	CPUHP_AP_ARM_VFP_STARTING,
- 	CPUHP_AP_ARM64_DEBUG_MONITORS_STARTING,
- 	CPUHP_AP_PERF_ARM_HW_BREAKPOINT_STARTING,
 -- 
 2.39.2
 
