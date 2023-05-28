@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8E3611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEDBC433D2;
-	Sun, 28 May 2023 19:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A54D611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85053C433D2;
+	Sun, 28 May 2023 19:42:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302962;
-	bh=uFUgcJ10Fe6kYRudC89cKeNGUIM8LFRXh2Va97Y1yyQ=;
+	s=korg; t=1685302965;
+	bh=NscXEtqL0b9w3JRbzrY+YSYrDngtbHeWfgOMOH41iPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJU5YmSFaZ65KCUqQMxQaeLEdypEhneDqA+K5vccroKhZ6yAANoSRxDDUqmVuellz
-	 H4YAdfBF/Gs/cjNO5qGlUJ1TFcIEneTXx/gis34V87K4/HWgWJlqzUsWQY/pQUK5QG
-	 7mT9o1UlH81QAi0l6v8fcVfbRRq+tqOuSfLX6ilA=
+	b=Ol9L8PcNRmm6ruouMnGJ9gLkN6679nzppIpEZMqNV/nTFEYvWr9QZhyjfLk23aIxt
+	 A0hMM3sMBHI+SQN3Z40GbC5G/TvgXlLamamI/XCQuhfBsANprbT42nmLcqa49WHzLp
+	 mTfeBSGm8b/6Rg8dzPzYB8G7g2blzTp5f9G8q9HE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sehee Lee <seheele@google.com>,
+	Sewook Seo <sewookseo@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 098/211] ipv4/tcp: do not use per netns ctl sockets
-Date: Sun, 28 May 2023 20:10:19 +0100
-Message-Id: <20230528190846.030515064@linuxfoundation.org>
+Subject: [PATCH 5.10 099/211] net: Find dst with sks xfrm policy not ctl_sk
+Date: Sun, 28 May 2023 20:10:20 +0100
+Message-Id: <20230528190846.052685871@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,176 +39,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: sewookseo <sewookseo@google.com>
 
-[ Upstream commit 37ba017dcc3b1123206808979834655ddcf93251 ]
+[ Upstream commit e22aa14866684f77b4f6b6cae98539e520ddb731 ]
 
-TCP ipv4 uses per-cpu/per-netns ctl sockets in order to send
-RST and some ACK packets (on behalf of TIMEWAIT sockets).
+If we set XFRM security policy by calling setsockopt with option
+IPV6_XFRM_POLICY, the policy will be stored in 'sock_policy' in 'sock'
+struct. However tcp_v6_send_response doesn't look up dst_entry with the
+actual socket but looks up with tcp control socket. This may cause a
+problem that a RST packet is sent without ESP encryption & peer's TCP
+socket can't receive it.
+This patch will make the function look up dest_entry with actual socket,
+if the socket has XFRM policy(sock_policy), so that the TCP response
+packet via this function can be encrypted, & aligned on the encrypted
+TCP socket.
 
-This adds memory and cpu costs, which do not seem needed.
-Now typical servers have 256 or more cores, this adds considerable
-tax to netns users.
+Tested: We encountered this problem when a TCP socket which is encrypted
+in ESP transport mode encryption, receives challenge ACK at SYN_SENT
+state. After receiving challenge ACK, TCP needs to send RST to
+establish the socket at next SYN try. But the RST was not encrypted &
+peer TCP socket still remains on ESTABLISHED state.
+So we verified this with test step as below.
+[Test step]
+1. Making a TCP state mismatch between client(IDLE) & server(ESTABLISHED).
+2. Client tries a new connection on the same TCP ports(src & dst).
+3. Server will return challenge ACK instead of SYN,ACK.
+4. Client will send RST to server to clear the SOCKET.
+5. Client will retransmit SYN to server on the same TCP ports.
+[Expected result]
+The TCP connection should be established.
 
-tcp sockets are used from BH context, are not receiving packets,
-and do not store any persistent state but the 'struct net' pointer
-in order to be able to use IPv4 output functions.
-
-Note that I attempted a related change in the past, that had
-to be hot-fixed in commit bdbbb8527b6f ("ipv4: tcp: get rid of ugly unicast_sock")
-
-This patch could very well surface old bugs, on layers not
-taking care of sk->sk_kern_sock properly.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Maciej Żenczykowski <maze@google.com>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Cc: Sehee Lee <seheele@google.com>
+Signed-off-by: Sewook Seo <sewookseo@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 1e306ec49a1f ("tcp: fix possible sk_priority leak in tcp_v4_send_reset()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netns/ipv4.h |  1 -
- net/ipv4/tcp_ipv4.c      | 61 ++++++++++++++++++----------------------
- 2 files changed, 27 insertions(+), 35 deletions(-)
+ include/net/xfrm.h   | 2 ++
+ net/ipv4/ip_output.c | 2 +-
+ net/ipv4/tcp_ipv4.c  | 2 ++
+ net/ipv6/tcp_ipv6.c  | 5 ++++-
+ 4 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/include/net/netns/ipv4.h b/include/net/netns/ipv4.h
-index d8b320cf54ba0..4a4a5270ff6f2 100644
---- a/include/net/netns/ipv4.h
-+++ b/include/net/netns/ipv4.h
-@@ -71,7 +71,6 @@ struct netns_ipv4 {
- 	struct sock		*mc_autojoin_sk;
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index 8a9943d935f14..726a2dbb407f1 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -1198,6 +1198,8 @@ int __xfrm_sk_clone_policy(struct sock *sk, const struct sock *osk);
  
- 	struct inet_peer_base	*peers;
--	struct sock  * __percpu	*tcp_sk;
- 	struct fqdir		*fqdir;
- #ifdef CONFIG_NETFILTER
- 	struct xt_table		*iptable_filter;
+ static inline int xfrm_sk_clone_policy(struct sock *sk, const struct sock *osk)
+ {
++	if (!sk_fullsock(osk))
++		return 0;
+ 	sk->sk_policy[0] = NULL;
+ 	sk->sk_policy[1] = NULL;
+ 	if (unlikely(osk->sk_policy[0] || osk->sk_policy[1]))
+diff --git a/net/ipv4/ip_output.c b/net/ipv4/ip_output.c
+index 1e07df2821773..6fd04f2f8b40c 100644
+--- a/net/ipv4/ip_output.c
++++ b/net/ipv4/ip_output.c
+@@ -1723,7 +1723,7 @@ void ip_send_unicast_reply(struct sock *sk, struct sk_buff *skb,
+ 			   tcp_hdr(skb)->source, tcp_hdr(skb)->dest,
+ 			   arg->uid);
+ 	security_skb_classify_flow(skb, flowi4_to_flowi_common(&fl4));
+-	rt = ip_route_output_key(net, &fl4);
++	rt = ip_route_output_flow(net, &fl4, sk);
+ 	if (IS_ERR(rt))
+ 		return;
+ 
 diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
-index 8bd7b1ec3b6a3..275ae42be99e0 100644
+index 275ae42be99e0..1995d46afb214 100644
 --- a/net/ipv4/tcp_ipv4.c
 +++ b/net/ipv4/tcp_ipv4.c
-@@ -91,6 +91,8 @@ static int tcp_v4_md5_hash_hdr(char *md5_hash, const struct tcp_md5sig_key *key,
- struct inet_hashinfo tcp_hashinfo;
- EXPORT_SYMBOL(tcp_hashinfo);
- 
-+static DEFINE_PER_CPU(struct sock *, ipv4_tcp_sk);
-+
- static u32 tcp_v4_init_seq(const struct sk_buff *skb)
- {
- 	return secure_tcp_seq(ip_hdr(skb)->daddr,
-@@ -794,7 +796,8 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
- 	arg.tos = ip_hdr(skb)->tos;
- 	arg.uid = sock_net_uid(net, sk && sk_fullsock(sk) ? sk : NULL);
- 	local_bh_disable();
--	ctl_sk = this_cpu_read(*net->ipv4.tcp_sk);
-+	ctl_sk = this_cpu_read(ipv4_tcp_sk);
-+	sock_net_set(ctl_sk, net);
- 	if (sk) {
- 		ctl_sk->sk_mark = (sk->sk_state == TCP_TIME_WAIT) ?
- 				   inet_twsk(sk)->tw_mark : sk->sk_mark;
-@@ -809,6 +812,7 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
+@@ -804,6 +804,7 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
+ 		ctl_sk->sk_priority = (sk->sk_state == TCP_TIME_WAIT) ?
+ 				   inet_twsk(sk)->tw_priority : sk->sk_priority;
+ 		transmit_time = tcp_transmit_time(sk);
++		xfrm_sk_clone_policy(ctl_sk, sk);
+ 	}
+ 	ip_send_unicast_reply(ctl_sk,
+ 			      skb, &TCP_SKB_CB(skb)->header.h4.opt,
+@@ -812,6 +813,7 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
  			      transmit_time);
  
  	ctl_sk->sk_mark = 0;
-+	sock_net_set(ctl_sk, &init_net);
++	xfrm_sk_free_policy(ctl_sk);
+ 	sock_net_set(ctl_sk, &init_net);
  	__TCP_INC_STATS(net, TCP_MIB_OUTSEGS);
  	__TCP_INC_STATS(net, TCP_MIB_OUTRSTS);
- 	local_bh_enable();
-@@ -892,7 +896,8 @@ static void tcp_v4_send_ack(const struct sock *sk,
- 	arg.tos = tos;
- 	arg.uid = sock_net_uid(net, sk_fullsock(sk) ? sk : NULL);
- 	local_bh_disable();
--	ctl_sk = this_cpu_read(*net->ipv4.tcp_sk);
-+	ctl_sk = this_cpu_read(ipv4_tcp_sk);
-+	sock_net_set(ctl_sk, net);
- 	ctl_sk->sk_mark = (sk->sk_state == TCP_TIME_WAIT) ?
- 			   inet_twsk(sk)->tw_mark : sk->sk_mark;
- 	ctl_sk->sk_priority = (sk->sk_state == TCP_TIME_WAIT) ?
-@@ -905,6 +910,7 @@ static void tcp_v4_send_ack(const struct sock *sk,
- 			      transmit_time);
- 
- 	ctl_sk->sk_mark = 0;
-+	sock_net_set(ctl_sk, &init_net);
- 	__TCP_INC_STATS(net, TCP_MIB_OUTSEGS);
- 	local_bh_enable();
- }
-@@ -2828,41 +2834,14 @@ EXPORT_SYMBOL(tcp_prot);
- 
- static void __net_exit tcp_sk_exit(struct net *net)
- {
--	int cpu;
--
- 	if (net->ipv4.tcp_congestion_control)
- 		bpf_module_put(net->ipv4.tcp_congestion_control,
- 			       net->ipv4.tcp_congestion_control->owner);
--
--	for_each_possible_cpu(cpu)
--		inet_ctl_sock_destroy(*per_cpu_ptr(net->ipv4.tcp_sk, cpu));
--	free_percpu(net->ipv4.tcp_sk);
- }
- 
- static int __net_init tcp_sk_init(struct net *net)
- {
--	int res, cpu, cnt;
--
--	net->ipv4.tcp_sk = alloc_percpu(struct sock *);
--	if (!net->ipv4.tcp_sk)
--		return -ENOMEM;
--
--	for_each_possible_cpu(cpu) {
--		struct sock *sk;
--
--		res = inet_ctl_sock_create(&sk, PF_INET, SOCK_RAW,
--					   IPPROTO_TCP, net);
--		if (res)
--			goto fail;
--		sock_set_flag(sk, SOCK_USE_WRITE_QUEUE);
--
--		/* Please enforce IP_DF and IPID==0 for RST and
--		 * ACK sent in SYN-RECV and TIME-WAIT state.
--		 */
--		inet_sk(sk)->pmtudisc = IP_PMTUDISC_DO;
--
--		*per_cpu_ptr(net->ipv4.tcp_sk, cpu) = sk;
--	}
-+	int cnt;
- 
- 	net->ipv4.sysctl_tcp_ecn = 2;
- 	net->ipv4.sysctl_tcp_ecn_fallback = 1;
-@@ -2947,10 +2926,6 @@ static int __net_init tcp_sk_init(struct net *net)
- 		net->ipv4.tcp_congestion_control = &tcp_reno;
- 
- 	return 0;
--fail:
--	tcp_sk_exit(net);
--
--	return res;
- }
- 
- static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
-@@ -3027,6 +3002,24 @@ static void __init bpf_iter_register(void)
- 
- void __init tcp_v4_init(void)
- {
-+	int cpu, res;
-+
-+	for_each_possible_cpu(cpu) {
-+		struct sock *sk;
-+
-+		res = inet_ctl_sock_create(&sk, PF_INET, SOCK_RAW,
-+					   IPPROTO_TCP, &init_net);
-+		if (res)
-+			panic("Failed to create the TCP control socket.\n");
-+		sock_set_flag(sk, SOCK_USE_WRITE_QUEUE);
-+
-+		/* Please enforce IP_DF and IPID==0 for RST and
-+		 * ACK sent in SYN-RECV and TIME-WAIT state.
-+		 */
-+		inet_sk(sk)->pmtudisc = IP_PMTUDISC_DO;
-+
-+		per_cpu(ipv4_tcp_sk, cpu) = sk;
-+	}
- 	if (register_pernet_subsys(&tcp_sk_ops))
- 		panic("Failed to create the TCP control socket.\n");
- 
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 2347740d3cc7c..fe29bc66aeac7 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -984,7 +984,10 @@ static void tcp_v6_send_response(const struct sock *sk, struct sk_buff *skb, u32
+ 	 * Underlying function will use this to retrieve the network
+ 	 * namespace
+ 	 */
+-	dst = ip6_dst_lookup_flow(sock_net(ctl_sk), ctl_sk, &fl6, NULL);
++	if (sk && sk->sk_state != TCP_TIME_WAIT)
++		dst = ip6_dst_lookup_flow(net, sk, &fl6, NULL); /*sk's xfrm_policy can be referred*/
++	else
++		dst = ip6_dst_lookup_flow(net, ctl_sk, &fl6, NULL);
+ 	if (!IS_ERR(dst)) {
+ 		skb_dst_set(buff, dst);
+ 		ip6_xmit(ctl_sk, buff, &fl6, fl6.flowi6_mark, NULL,
 -- 
 2.39.2
 
