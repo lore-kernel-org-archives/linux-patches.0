@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608C1569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0EDC433EF;
-	Sun, 28 May 2023 19:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2D3569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 563B4C433D2;
+	Sun, 28 May 2023 19:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301802;
-	bh=LGa5rmrsNWZw33RZf0cWsonH+rv2VN+FUrGrm2H+D4U=;
+	s=korg; t=1685301804;
+	bh=9+hvF/FtcPwZfUY6iJ7Sk8sjeDDT51QmvS8WyXUpgbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rFZZTdCY6L2pKwm4/SLXwib3mAnM+yVtveaet7u4YCi2Yk56ZPf5m99q4QBj/zBqD
-	 o3Dir2lwjCnW1OZ7tyt7gmLsEHo184+EkB/GB1yZzAVLfMb1npo6gPkqaTDItNyKNE
-	 9GifQGoV9LjZGB/hUKStjUvm9R0/qMwHKXEYJSCc=
+	b=HFBS+2EAyvWt2McyAFNKRdVx5jPRSImLIq/9M7DPL5bBbDRuaUqmM68qFIPJHiVVY
+	 M3NiXFVtjMl+T4UtZFhgX3YfA28IT0VGCpZZshL0SWadh4QHCa6us8QYksp230smJ3
+	 Y+SMSFIVwREEGQvE1eSF+k4m8S1A3ZsbtWDS2W6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roy Novich <royno@nvidia.com>,
-	Aya Levin <ayal@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 004/161] linux/dim: Do nothing if no time delta between samples
-Date: Sun, 28 May 2023 20:08:48 +0100
-Message-Id: <20230528190837.226129476@linuxfoundation.org>
+Subject: [PATCH 5.4 035/161] f2fs: fix to drop all dirty pages during umount() if cp_error is set
+Date: Sun, 28 May 2023 20:09:19 +0100
+Message-Id: <20230528190838.314971398@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -40,106 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roy Novich <royno@nvidia.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 162bd18eb55adf464a0fa2b4144b8d61c75ff7c2 ]
+[ Upstream commit c9b3649a934d131151111354bcbb638076f03a30 ]
 
-Add return value for dim_calc_stats. This is an indication for the
-caller if curr_stats was assigned by the function. Avoid using
-curr_stats uninitialized over {rdma/net}_dim, when no time delta between
-samples. Coverity reported this potential use of an uninitialized
-variable.
+xfstest generic/361 reports a bug as below:
 
-Fixes: 4c4dbb4a7363 ("net/mlx5e: Move dynamic interrupt coalescing code to include/linux")
-Fixes: cb3c7fd4f839 ("net/mlx5e: Support adaptive RX coalescing")
-Signed-off-by: Roy Novich <royno@nvidia.com>
-Reviewed-by: Aya Levin <ayal@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Link: https://lore.kernel.org/r/20230507135743.138993-1-tariqt@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+f2fs_bug_on(sbi, sbi->fsync_node_num);
+
+kernel BUG at fs/f2fs/super.c:1627!
+RIP: 0010:f2fs_put_super+0x3a8/0x3b0
+Call Trace:
+ generic_shutdown_super+0x8c/0x1b0
+ kill_block_super+0x2b/0x60
+ kill_f2fs_super+0x87/0x110
+ deactivate_locked_super+0x39/0x80
+ deactivate_super+0x46/0x50
+ cleanup_mnt+0x109/0x170
+ __cleanup_mnt+0x16/0x20
+ task_work_run+0x65/0xa0
+ exit_to_user_mode_prepare+0x175/0x190
+ syscall_exit_to_user_mode+0x25/0x50
+ do_syscall_64+0x4c/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+During umount(), if cp_error is set, f2fs_wait_on_all_pages() should
+not stop waiting all F2FS_WB_CP_DATA pages to be writebacked, otherwise,
+fsync_node_num can be non-zero after f2fs_wait_on_all_pages() causing
+this bug.
+
+In this case, to avoid deadloop in f2fs_wait_on_all_pages(), it needs
+to drop all dirty pages rather than redirtying them.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/dim.h | 3 ++-
- lib/dim/dim.c       | 5 +++--
- lib/dim/net_dim.c   | 3 ++-
- lib/dim/rdma_dim.c  | 3 ++-
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ fs/f2fs/checkpoint.c | 12 ++++++++++--
+ fs/f2fs/data.c       |  3 ++-
+ 2 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/dim.h b/include/linux/dim.h
-index 2571da63877c5..ad5f219ce2ff2 100644
---- a/include/linux/dim.h
-+++ b/include/linux/dim.h
-@@ -233,8 +233,9 @@ void dim_park_tired(struct dim *dim);
-  *
-  * Calculate the delta between two samples (in data rates).
-  * Takes into consideration counter wrap-around.
-+ * Returned boolean indicates whether curr_stats are reliable.
-  */
--void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
-+bool dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 		    struct dim_stats *curr_stats);
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index 57318010f8e6a..84e98dacd4524 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -306,8 +306,15 @@ static int __f2fs_write_meta_page(struct page *page,
  
- /**
-diff --git a/lib/dim/dim.c b/lib/dim/dim.c
-index 38045d6d05381..e89aaf07bde50 100644
---- a/lib/dim/dim.c
-+++ b/lib/dim/dim.c
-@@ -54,7 +54,7 @@ void dim_park_tired(struct dim *dim)
- }
- EXPORT_SYMBOL(dim_park_tired);
+ 	trace_f2fs_writepage(page, META);
  
--void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
-+bool dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 		    struct dim_stats *curr_stats)
- {
- 	/* u32 holds up to 71 minutes, should be enough */
-@@ -66,7 +66,7 @@ void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 			     start->comp_ctr);
- 
- 	if (!delta_us)
--		return;
-+		return false;
- 
- 	curr_stats->ppms = DIV_ROUND_UP(npkts * USEC_PER_MSEC, delta_us);
- 	curr_stats->bpms = DIV_ROUND_UP(nbytes * USEC_PER_MSEC, delta_us);
-@@ -79,5 +79,6 @@ void dim_calc_stats(struct dim_sample *start, struct dim_sample *end,
- 	else
- 		curr_stats->cpe_ratio = 0;
- 
-+	return true;
- }
- EXPORT_SYMBOL(dim_calc_stats);
-diff --git a/lib/dim/net_dim.c b/lib/dim/net_dim.c
-index dae3b51ac3d9b..0e4f3a686f1de 100644
---- a/lib/dim/net_dim.c
-+++ b/lib/dim/net_dim.c
-@@ -227,7 +227,8 @@ void net_dim(struct dim *dim, struct dim_sample end_sample)
- 				  dim->start_sample.event_ctr);
- 		if (nevents < DIM_NEVENTS)
+-	if (unlikely(f2fs_cp_error(sbi)))
++	if (unlikely(f2fs_cp_error(sbi))) {
++		if (is_sbi_flag_set(sbi, SBI_IS_CLOSE)) {
++			ClearPageUptodate(page);
++			dec_page_count(sbi, F2FS_DIRTY_META);
++			unlock_page(page);
++			return 0;
++		}
+ 		goto redirty_out;
++	}
+ 	if (unlikely(is_sbi_flag_set(sbi, SBI_POR_DOING)))
+ 		goto redirty_out;
+ 	if (wbc->for_reclaim && page->index < GET_SUM_BLOCK(sbi, 0))
+@@ -1277,7 +1284,8 @@ void f2fs_wait_on_all_pages(struct f2fs_sb_info *sbi, int type)
+ 		if (!get_pages(sbi, type))
  			break;
--		dim_calc_stats(&dim->start_sample, &end_sample, &curr_stats);
-+		if (!dim_calc_stats(&dim->start_sample, &end_sample, &curr_stats))
-+			break;
- 		if (net_dim_decision(&curr_stats, dim)) {
- 			dim->state = DIM_APPLY_NEW_PROFILE;
- 			schedule_work(&dim->work);
-diff --git a/lib/dim/rdma_dim.c b/lib/dim/rdma_dim.c
-index f7e26c7b4749f..d32c8b105adc9 100644
---- a/lib/dim/rdma_dim.c
-+++ b/lib/dim/rdma_dim.c
-@@ -88,7 +88,8 @@ void rdma_dim(struct dim *dim, u64 completions)
- 		nevents = curr_sample->event_ctr - dim->start_sample.event_ctr;
- 		if (nevents < DIM_NEVENTS)
+ 
+-		if (unlikely(f2fs_cp_error(sbi)))
++		if (unlikely(f2fs_cp_error(sbi) &&
++			!is_sbi_flag_set(sbi, SBI_IS_CLOSE)))
  			break;
--		dim_calc_stats(&dim->start_sample, curr_sample, &curr_stats);
-+		if (!dim_calc_stats(&dim->start_sample, curr_sample, &curr_stats))
-+			break;
- 		if (rdma_dim_decision(&curr_stats, dim)) {
- 			dim->state = DIM_APPLY_NEW_PROFILE;
- 			schedule_work(&dim->work);
+ 
+ 		io_schedule_timeout(HZ/50);
+diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
+index 03dffb126d5cc..8f78050c935d7 100644
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2130,7 +2130,8 @@ static int __write_data_page(struct page *page, bool *submitted,
+ 		 * don't drop any dirty dentry pages for keeping lastest
+ 		 * directory structure.
+ 		 */
+-		if (S_ISDIR(inode->i_mode))
++		if (S_ISDIR(inode->i_mode) &&
++				!is_sbi_flag_set(sbi, SBI_IS_CLOSE))
+ 			goto redirty_out;
+ 		goto out;
+ 	}
 -- 
 2.39.2
 
