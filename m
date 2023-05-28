@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B59611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B303C433EF;
-	Sun, 28 May 2023 19:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7E57611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75D98C433D2;
+	Sun, 28 May 2023 19:16:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301410;
-	bh=e9MxBuHqT5CxfH9jEHUy+C7M36M/2iCw+4gc5JeEifc=;
+	s=korg; t=1685301412;
+	bh=8c207KXDS/i3rgxXJHpt8xxurEJiN3mwn2QK/SB1PZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aw7iJ/79/UtfvM1pT+qeGexJRJW7ATw0uQGj6qJ/9AmYfIdVusSEm6Zj/qJZ1Qkgu
-	 7cnNgbO8CYeey1vZovM/LlkMuthy9igNJtGVls+I7QwgDcLtV3m0OmLdpfpZ89H9jR
-	 Hc4fK8WqYhwqvcV0LpP3lOkgHGiUZORms4mJ5P3w=
+	b=DnRfWDc8TNZHJYKNecfZJXiZ3Looy38lklkPQfoVT3VwPrJ2zZksA6DRxO43iJPbL
+	 LZFgGV47hhxt3U1f3etUcEkOKsQU5G9r5ov1MJ+QGyKwofVlErkzcOTB/+y8OsFBUU
+	 4hpYfd63cusNmmx1EuJRDFXxtqfJsu9h62V6qoog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Moore <robert.moore@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 019/132] ACPICA: Avoid undefined behavior: applying zero offset to null pointer
-Date: Sun, 28 May 2023 20:09:18 +0100
-Message-Id: <20230528190834.161516402@linuxfoundation.org>
+Subject: [PATCH 4.19 002/132] netlink: annotate accesses to nlk->cb_running
+Date: Sun, 28 May 2023 20:09:01 +0100
+Message-Id: <20230528190833.641612653@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -35,65 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tamir Duberstein <tamird@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 05bb0167c80b8f93c6a4e0451b7da9b96db990c2 ]
+[ Upstream commit a939d14919b799e6fff8a9c80296ca229ba2f8a4 ]
 
-ACPICA commit 770653e3ba67c30a629ca7d12e352d83c2541b1e
+Both netlink_recvmsg() and netlink_native_seq_show() read
+nlk->cb_running locklessly. Use READ_ONCE() there.
 
-Before this change we see the following UBSAN stack trace in Fuchsia:
+Add corresponding WRITE_ONCE() to netlink_dump() and
+__netlink_dump_start()
 
-  #0    0x000021e4213b3302 in acpi_ds_init_aml_walk(struct acpi_walk_state*, union acpi_parse_object*, struct acpi_namespace_node*, u8*, u32, struct acpi_evaluate_info*, u8) ../../third_party/acpica/source/components/dispatcher/dswstate.c:682 <platform-bus-x86.so>+0x233302
-  #1.2  0x000020d0f660777f in ubsan_get_stack_trace() compiler-rt/lib/ubsan/ubsan_diag.cpp:41 <libclang_rt.asan.so>+0x3d77f
-  #1.1  0x000020d0f660777f in maybe_print_stack_trace() compiler-rt/lib/ubsan/ubsan_diag.cpp:51 <libclang_rt.asan.so>+0x3d77f
-  #1    0x000020d0f660777f in ~scoped_report() compiler-rt/lib/ubsan/ubsan_diag.cpp:387 <libclang_rt.asan.so>+0x3d77f
-  #2    0x000020d0f660b96d in handlepointer_overflow_impl() compiler-rt/lib/ubsan/ubsan_handlers.cpp:809 <libclang_rt.asan.so>+0x4196d
-  #3    0x000020d0f660b50d in compiler-rt/lib/ubsan/ubsan_handlers.cpp:815 <libclang_rt.asan.so>+0x4150d
-  #4    0x000021e4213b3302 in acpi_ds_init_aml_walk(struct acpi_walk_state*, union acpi_parse_object*, struct acpi_namespace_node*, u8*, u32, struct acpi_evaluate_info*, u8) ../../third_party/acpica/source/components/dispatcher/dswstate.c:682 <platform-bus-x86.so>+0x233302
-  #5    0x000021e4213e2369 in acpi_ds_call_control_method(struct acpi_thread_state*, struct acpi_walk_state*, union acpi_parse_object*) ../../third_party/acpica/source/components/dispatcher/dsmethod.c:605 <platform-bus-x86.so>+0x262369
-  #6    0x000021e421437fac in acpi_ps_parse_aml(struct acpi_walk_state*) ../../third_party/acpica/source/components/parser/psparse.c:550 <platform-bus-x86.so>+0x2b7fac
-  #7    0x000021e4214464d2 in acpi_ps_execute_method(struct acpi_evaluate_info*) ../../third_party/acpica/source/components/parser/psxface.c:244 <platform-bus-x86.so>+0x2c64d2
-  #8    0x000021e4213aa052 in acpi_ns_evaluate(struct acpi_evaluate_info*) ../../third_party/acpica/source/components/namespace/nseval.c:250 <platform-bus-x86.so>+0x22a052
-  #9    0x000021e421413dd8 in acpi_ns_init_one_device(acpi_handle, u32, void*, void**) ../../third_party/acpica/source/components/namespace/nsinit.c:735 <platform-bus-x86.so>+0x293dd8
-  #10   0x000021e421429e98 in acpi_ns_walk_namespace(acpi_object_type, acpi_handle, u32, u32, acpi_walk_callback, acpi_walk_callback, void*, void**) ../../third_party/acpica/source/components/namespace/nswalk.c:298 <platform-bus-x86.so>+0x2a9e98
-  #11   0x000021e4214131ac in acpi_ns_initialize_devices(u32) ../../third_party/acpica/source/components/namespace/nsinit.c:268 <platform-bus-x86.so>+0x2931ac
-  #12   0x000021e42147c40d in acpi_initialize_objects(u32) ../../third_party/acpica/source/components/utilities/utxfinit.c:304 <platform-bus-x86.so>+0x2fc40d
-  #13   0x000021e42126d603 in acpi::acpi_impl::initialize_acpi(acpi::acpi_impl*) ../../src/devices/board/lib/acpi/acpi-impl.cc:224 <platform-bus-x86.so>+0xed603
+syzbot reported:
+BUG: KCSAN: data-race in __netlink_dump_start / netlink_recvmsg
 
-Add a simple check that avoids incrementing a pointer by zero, but
-otherwise behaves as before. Note that our findings are against ACPICA
-20221020, but the same code exists on master.
+write to 0xffff88813ea4db59 of 1 bytes by task 28219 on cpu 0:
+__netlink_dump_start+0x3af/0x4d0 net/netlink/af_netlink.c:2399
+netlink_dump_start include/linux/netlink.h:308 [inline]
+rtnetlink_rcv_msg+0x70f/0x8c0 net/core/rtnetlink.c:6130
+netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2577
+rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6192
+netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+netlink_unicast+0x56f/0x640 net/netlink/af_netlink.c:1365
+netlink_sendmsg+0x665/0x770 net/netlink/af_netlink.c:1942
+sock_sendmsg_nosec net/socket.c:724 [inline]
+sock_sendmsg net/socket.c:747 [inline]
+sock_write_iter+0x1aa/0x230 net/socket.c:1138
+call_write_iter include/linux/fs.h:1851 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x463/0x760 fs/read_write.c:584
+ksys_write+0xeb/0x1a0 fs/read_write.c:637
+__do_sys_write fs/read_write.c:649 [inline]
+__se_sys_write fs/read_write.c:646 [inline]
+__x64_sys_write+0x42/0x50 fs/read_write.c:646
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Link: https://github.com/acpica/acpica/commit/770653e3
-Signed-off-by: Bob Moore <robert.moore@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+read to 0xffff88813ea4db59 of 1 bytes by task 28222 on cpu 1:
+netlink_recvmsg+0x3b4/0x730 net/netlink/af_netlink.c:2022
+sock_recvmsg_nosec+0x4c/0x80 net/socket.c:1017
+____sys_recvmsg+0x2db/0x310 net/socket.c:2718
+___sys_recvmsg net/socket.c:2762 [inline]
+do_recvmmsg+0x2e5/0x710 net/socket.c:2856
+__sys_recvmmsg net/socket.c:2935 [inline]
+__do_sys_recvmmsg net/socket.c:2958 [inline]
+__se_sys_recvmmsg net/socket.c:2951 [inline]
+__x64_sys_recvmmsg+0xe2/0x160 net/socket.c:2951
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00 -> 0x01
+
+Fixes: 16b304f3404f ("netlink: Eliminate kmalloc in netlink dump operation.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dswstate.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/netlink/af_netlink.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/acpica/dswstate.c b/drivers/acpi/acpica/dswstate.c
-index c879380e5ce17..ddafbf44158c8 100644
---- a/drivers/acpi/acpica/dswstate.c
-+++ b/drivers/acpi/acpica/dswstate.c
-@@ -576,9 +576,14 @@ acpi_ds_init_aml_walk(struct acpi_walk_state *walk_state,
- 	ACPI_FUNCTION_TRACE(ds_init_aml_walk);
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 6867158656b86..c73784b7b67dc 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1983,7 +1983,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
  
- 	walk_state->parser_state.aml =
--	    walk_state->parser_state.aml_start = aml_start;
--	walk_state->parser_state.aml_end =
--	    walk_state->parser_state.pkg_end = aml_start + aml_length;
-+	    walk_state->parser_state.aml_start =
-+	    walk_state->parser_state.aml_end =
-+	    walk_state->parser_state.pkg_end = aml_start;
-+	/* Avoid undefined behavior: applying zero offset to null pointer */
-+	if (aml_length != 0) {
-+		walk_state->parser_state.aml_end += aml_length;
-+		walk_state->parser_state.pkg_end += aml_length;
-+	}
+ 	skb_free_datagram(sk, skb);
  
- 	/* The next_op of the next_walk will be the beginning of the method */
+-	if (nlk->cb_running &&
++	if (READ_ONCE(nlk->cb_running) &&
+ 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf / 2) {
+ 		ret = netlink_dump(sk);
+ 		if (ret) {
+@@ -2265,7 +2265,7 @@ static int netlink_dump(struct sock *sk)
+ 	if (cb->done)
+ 		cb->done(cb);
  
+-	nlk->cb_running = false;
++	WRITE_ONCE(nlk->cb_running, false);
+ 	module = cb->module;
+ 	skb = cb->skb;
+ 	mutex_unlock(nlk->cb_mutex);
+@@ -2325,7 +2325,7 @@ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
+ 			goto error_put;
+ 	}
+ 
+-	nlk->cb_running = true;
++	WRITE_ONCE(nlk->cb_running, true);
+ 	nlk->dump_done_errno = INT_MAX;
+ 
+ 	mutex_unlock(nlk->cb_mutex);
+@@ -2631,7 +2631,7 @@ static int netlink_seq_show(struct seq_file *seq, void *v)
+ 			   nlk->groups ? (u32)nlk->groups[0] : 0,
+ 			   sk_rmem_alloc_get(s),
+ 			   sk_wmem_alloc_get(s),
+-			   nlk->cb_running,
++			   READ_ONCE(nlk->cb_running),
+ 			   refcount_read(&s->sk_refcnt),
+ 			   atomic_read(&s->sk_drops),
+ 			   sock_i_ino(s)
 -- 
 2.39.2
 
