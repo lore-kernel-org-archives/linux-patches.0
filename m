@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E29611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:36:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06EA6C433D2;
-	Sun, 28 May 2023 19:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51D3611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:36:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CEAFC4339B;
+	Sun, 28 May 2023 19:36:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302599;
-	bh=EQMTPs1bEz9qRplNUdJEjJLS1dynHEIgeYT/VvurwGU=;
+	s=korg; t=1685302601;
+	bh=lmhsUYHYcurU8VICbyaQ8xb9bQ9uleMxwfjXVYCnCpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CM0NHEGbvg7llv/poT/SShhBPABVYwEpCqXyAx0g7Y/gD8WMSnYxm7391QoVQq0SK
-	 E67lKaJ+yax3DTUEO0GlSmYAOo9zpIJOAsDcrbFmW2ipERjc8FcYRSgf0/B8uLOEbv
-	 SMQGIATvwpIJWxog3pF+Sfs6Jxrsqpos8fSMBQv8=
+	b=ZzplkH/9qE6oUuZKPBk31GhMZoOOsGxWjcCgWK33hmuWjQFpnA/+T2JSfbr7gS1qt
+	 NEs16zWKDGlKp4LHGCdcJBA5yhjjJThqP86oB0TXhP25xaIowva0FLDZwt9U4I4+Yl
+	 qVmgQpfOF8lie+IqjBbconk4IY2POGzP9z5i1/dM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Krzesimir Nowak <krzesimir@kinvolk.io>,
-	Andrey Ignatov <rdna@fb.com>,
-	Yonghong Song <yhs@fb.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 068/119] bpf: Fix mask generation for 32-bit narrow loads of 64-bit fields
-Date: Sun, 28 May 2023 20:11:08 +0100
-Message-Id: <20230528190837.757343790@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 042/119] drm/radeon: reintroduce radeon_dp_work_func content
+Date: Sun, 28 May 2023 20:10:42 +0100
+Message-Id: <20230528190836.787090458@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -39,58 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Will Deacon <will@kernel.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 0613d8ca9ab382caabe9ed2dceb429e9781e443f upstream.
+commit a34fc1bcd2c4d8b09dcfc0b95ac65bca1e579bd7 upstream.
 
-A narrow load from a 64-bit context field results in a 64-bit load
-followed potentially by a 64-bit right-shift and then a bitwise AND
-operation to extract the relevant data.
+Put back the radeon_dp_work_func logic.  It seems that
+handling DP RX interrupts is necessary to make some
+panels work.  This was removed with the MST support,
+but it regresses some systems so add it back.  While
+we are here, add the proper mutex locking.
 
-In the case of a 32-bit access, an immediate mask of 0xffffffff is used
-to construct a 64-bit BPP_AND operation which then sign-extends the mask
-value and effectively acts as a glorified no-op. For example:
-
-0:	61 10 00 00 00 00 00 00	r0 = *(u32 *)(r1 + 0)
-
-results in the following code generation for a 64-bit field:
-
-	ldr	x7, [x7]	// 64-bit load
-	mov	x10, #0xffffffffffffffff
-	and	x7, x7, x10
-
-Fix the mask generation so that narrow loads always perform a 32-bit AND
-operation:
-
-	ldr	x7, [x7]	// 64-bit load
-	mov	w10, #0xffffffff
-	and	w7, w7, w10
-
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Krzesimir Nowak <krzesimir@kinvolk.io>
-Cc: Andrey Ignatov <rdna@fb.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Fixes: 31fd85816dbe ("bpf: permits narrower load from bpf program context fields")
-Signed-off-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20230518102528.1341-1-will@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2567
+Fixes: 01ad1d9c2888 ("drm/radeon: Drop legacy MST support")
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/radeon_irq_kms.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -13638,7 +13638,7 @@ static int convert_ctx_accesses(struct b
- 					insn_buf[cnt++] = BPF_ALU64_IMM(BPF_RSH,
- 									insn->dst_reg,
- 									shift);
--				insn_buf[cnt++] = BPF_ALU64_IMM(BPF_AND, insn->dst_reg,
-+				insn_buf[cnt++] = BPF_ALU32_IMM(BPF_AND, insn->dst_reg,
- 								(1ULL << size * 8) - 1);
- 			}
- 		}
+--- a/drivers/gpu/drm/radeon/radeon_irq_kms.c
++++ b/drivers/gpu/drm/radeon/radeon_irq_kms.c
+@@ -100,6 +100,16 @@ static void radeon_hotplug_work_func(str
+ 
+ static void radeon_dp_work_func(struct work_struct *work)
+ {
++	struct radeon_device *rdev = container_of(work, struct radeon_device,
++						  dp_work);
++	struct drm_device *dev = rdev->ddev;
++	struct drm_mode_config *mode_config = &dev->mode_config;
++	struct drm_connector *connector;
++
++	mutex_lock(&mode_config->mutex);
++	list_for_each_entry(connector, &mode_config->connector_list, head)
++		radeon_connector_hotplug(connector);
++	mutex_unlock(&mode_config->mutex);
+ }
+ 
+ /**
 
 
