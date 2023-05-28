@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67C2F611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C6EC433EF;
-	Sun, 28 May 2023 19:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B0A611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530E9C433EF;
+	Sun, 28 May 2023 19:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302957;
-	bh=3JLio6VA4QytsxY3q3DUlzcNhxuzV6Kpo1cHeeZwHl0=;
+	s=korg; t=1685302959;
+	bh=BBsYiIs9oYYeCcn2bVC7E5A+wE4nfZSCIppc6ogyjP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmsZ/RazVewutKumDXubdCyHwYIi1KRGueJr2oDw6auHlxk008h5PNeo/E2ReOssS
-	 iXEFqVMYwyIo5+Wt9V7SDbphYmz6G89zGkwbzGf+oL5fBQ6ovFOXP8171vMZKpwE6x
-	 JxmPOzK5m5hq1dFseojYbFPVqPNbDWaBZ3e40Cu0=
+	b=W3CABiov1+NDs97jbouRdB2DXOhS2IXrZi0iBNx8gf7AB1jpUYCs0DuqGemdhfENq
+	 XLQrnbLOpaOjJqcvc/ee7LcJmygEbe3fi1M/xCdLLYumioAygCrZUcTV87gotFyilQ
+	 aE0crHDKZfIxNgUuIOEJ58qN5jw9Y6rNEbB4dwRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryan Underwood <nemesis@icequake.net>,
-	Takashi Iwai <tiwai@suse.de>,
+	Zhuang Shengen <zhuangshengen@huawei.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 096/211] ALSA: hda/realtek: Apply HP B&O top speaker profile to Pavilion 15
-Date: Sun, 28 May 2023 20:10:17 +0100
-Message-Id: <20230528190845.984641851@linuxfoundation.org>
+Subject: [PATCH 5.10 097/211] vsock: avoid to close connected socket after the timeout
+Date: Sun, 28 May 2023 20:10:18 +0100
+Message-Id: <20230528190846.007463361@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,37 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryan C. Underwood <nemesis@icequake.net>
+From: Zhuang Shengen <zhuangshengen@huawei.com>
 
-[ Upstream commit 92553ee03166ef8fa978e7683f9f4af30c9c4e6b ]
+[ Upstream commit 6d4486efe9c69626cab423456169e250a5cd3af5 ]
 
-The Pavilion 15 line has B&O top speakers similar to the x360 and
-applying the same profile produces good sound.  Without this, the
-sound would be tinny and underpowered without either applying
-model=alc295-hp-x360 or booting another OS first.
+When client and server establish a connection through vsock,
+the client send a request to the server to initiate the connection,
+then start a timer to wait for the server's response. When the server's
+RESPONSE message arrives, the timer also times out and exits. The
+server's RESPONSE message is processed first, and the connection is
+established. However, the client's timer also times out, the original
+processing logic of the client is to directly set the state of this vsock
+to CLOSE and return ETIMEDOUT. It will not notify the server when the port
+is released, causing the server port remain.
+when client's vsock_connect timeout，it should check sk state is
+ESTABLISHED or not. if sk state is ESTABLISHED, it means the connection
+is established, the client should not set the sk state to CLOSE
 
-Signed-off-by: Ryan Underwood <nemesis@icequake.net>
-Fixes: 563785edfcef ("ALSA: hda/realtek - Add quirk entry for HP Pavilion 15")
-Link: https://lore.kernel.org/r/ZF0mpcMz3ezP9KQw@icequake.net
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Note: I encountered this issue on kernel-4.18, which can be fixed by
+this patch. Then I checked the latest code in the community
+and found similar issue.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Signed-off-by: Zhuang Shengen <zhuangshengen@huawei.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 2 +-
+ net/vmw_vsock/af_vsock.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 18309fa17fb87..c7e25d19c9d92 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -8944,7 +8944,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x802f, "HP Z240", ALC221_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x8077, "HP", ALC256_FIXUP_HP_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x103c, 0x8158, "HP", ALC256_FIXUP_HP_HEADSET_MIC),
--	SND_PCI_QUIRK(0x103c, 0x820d, "HP Pavilion 15", ALC269_FIXUP_HP_MUTE_LED_MIC3),
-+	SND_PCI_QUIRK(0x103c, 0x820d, "HP Pavilion 15", ALC295_FIXUP_HP_X360),
- 	SND_PCI_QUIRK(0x103c, 0x8256, "HP", ALC221_FIXUP_HP_FRONT_MIC),
- 	SND_PCI_QUIRK(0x103c, 0x827e, "HP x360", ALC295_FIXUP_HP_X360),
- 	SND_PCI_QUIRK(0x103c, 0x827f, "HP x360", ALC269_FIXUP_HP_MUTE_LED_MIC3),
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 7829a5018ef9f..ce14374bbacad 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1372,7 +1372,7 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
+ 			vsock_transport_cancel_pkt(vsk);
+ 			vsock_remove_connected(vsk);
+ 			goto out_wait;
+-		} else if (timeout == 0) {
++		} else if ((sk->sk_state != TCP_ESTABLISHED) && (timeout == 0)) {
+ 			err = -ETIMEDOUT;
+ 			sk->sk_state = TCP_CLOSE;
+ 			sock->state = SS_UNCONNECTED;
 -- 
 2.39.2
 
