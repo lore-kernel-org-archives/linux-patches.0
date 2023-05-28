@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335CF611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:17:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA135C433EF;
-	Sun, 28 May 2023 19:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97197611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:17:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FDBC433D2;
+	Sun, 28 May 2023 19:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301467;
-	bh=cLsOZ0kZ/Sxk8eNjjv9JtMIe27k6OPhtegSJzLgJRMg=;
+	s=korg; t=1685301469;
+	bh=aFLz+7G0jLW1WAes9iKwfH6HvfuhdFOyVs6Cc1Uhf/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zRf62wxBC5YLstZWqYkpdKtSuFut26dxrOtI+OheX0UTuFdyr11LNTDplR82bB2QO
-	 QYEBnu5AFQ+LKnFkzBdRqlyDiklSshPi9iBssU2q17aUUiSCKGxIrKc/GpDr2mTjBA
-	 YU08mknHj3UD1pzN+tUHGzwNegrcAjMuswD6OkGE=
+	b=w1HFXT0s4VxUyll2+AlMgHeQvzcSHNBnefnBckqOq1TPqwnkDBEW4eeyQ00x1neYP
+	 okGfbeijMJZZ+yJWiIQpmwXdxXGtkuv0YOikFCPmCS5jDj2WEyc3z7/fM5ZvSxl/oz
+	 9tRi1FGka6AtGTdHi47l38fDxlEXk3yR+QVryFTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
-	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
-	Johannes Thumshirn <jth@kernel.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 040/132] mcb-pci: Reallocate memory region to avoid memory overlapping
-Date: Sun, 28 May 2023 20:09:39 +0100
-Message-Id: <20230528190834.815609524@linuxfoundation.org>
+Subject: [PATCH 4.19 041/132] sched: Fix KCSAN noinstr violation
+Date: Sun, 28 May 2023 20:09:40 +0100
+Message-Id: <20230528190834.842738049@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -36,73 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-[ Upstream commit 9be24faadd085c284890c3afcec7a0184642315a ]
+[ Upstream commit e0b081d17a9f4e5c0cbb0e5fbeb1abe3de0f7e4e ]
 
-mcb-pci requests a fixed-size memory region to parse the chameleon
-table, however, if the chameleon table is smaller that the allocated
-region, it could overlap with the IP Cores' memory regions.
+With KCSAN enabled, end_of_stack() can get out-of-lined.  Force it
+inline.
 
-After parsing the chameleon table, drop/reallocate the memory region
-with the actual chameleon table size.
+Fixes the following warnings:
 
-Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
-Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/20230411083329.4506-3-jth@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  vmlinux.o: warning: objtool: check_stackleak_irqoff+0x2b: call to end_of_stack() leaves .noinstr.text section
+
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/cc1b4d73d3a428a00d206242a68fdf99a934ca7b.1681320026.git.jpoimboe@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-pci.c | 27 +++++++++++++++++++++++++--
- 1 file changed, 25 insertions(+), 2 deletions(-)
+ include/linux/sched/task_stack.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mcb/mcb-pci.c b/drivers/mcb/mcb-pci.c
-index c2d69e33bf2bf..63879d89c8c49 100644
---- a/drivers/mcb/mcb-pci.c
-+++ b/drivers/mcb/mcb-pci.c
-@@ -34,7 +34,7 @@ static int mcb_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+diff --git a/include/linux/sched/task_stack.h b/include/linux/sched/task_stack.h
+index 4f099d3fed3a9..f1063380e6d8a 100644
+--- a/include/linux/sched/task_stack.h
++++ b/include/linux/sched/task_stack.h
+@@ -23,7 +23,7 @@ static inline void *task_stack_page(const struct task_struct *task)
+ 
+ #define setup_thread_stack(new,old)	do { } while(0)
+ 
+-static inline unsigned long *end_of_stack(const struct task_struct *task)
++static __always_inline unsigned long *end_of_stack(const struct task_struct *task)
  {
- 	struct resource *res;
- 	struct priv *priv;
--	int ret;
-+	int ret, table_size;
- 	unsigned long flags;
- 
- 	priv = devm_kzalloc(&pdev->dev, sizeof(struct priv), GFP_KERNEL);
-@@ -93,7 +93,30 @@ static int mcb_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	if (ret < 0)
- 		goto out_mcb_bus;
- 
--	dev_dbg(&pdev->dev, "Found %d cells\n", ret);
-+	table_size = ret;
-+
-+	if (table_size < CHAM_HEADER_SIZE) {
-+		/* Release the previous resources */
-+		devm_iounmap(&pdev->dev, priv->base);
-+		devm_release_mem_region(&pdev->dev, priv->mapbase, CHAM_HEADER_SIZE);
-+
-+		/* Then, allocate it again with the actual chameleon table size */
-+		res = devm_request_mem_region(&pdev->dev, priv->mapbase,
-+						table_size,
-+						KBUILD_MODNAME);
-+		if (!res) {
-+			dev_err(&pdev->dev, "Failed to request PCI memory\n");
-+			ret = -EBUSY;
-+			goto out_mcb_bus;
-+		}
-+
-+		priv->base = devm_ioremap(&pdev->dev, priv->mapbase, table_size);
-+		if (!priv->base) {
-+			dev_err(&pdev->dev, "Cannot ioremap\n");
-+			ret = -ENOMEM;
-+			goto out_mcb_bus;
-+		}
-+	}
- 
- 	mcb_bus_add_devices(priv->bus);
- 
+ #ifdef CONFIG_STACK_GROWSUP
+ 	return (unsigned long *)((unsigned long)task->stack + THREAD_SIZE) - 1;
 -- 
 2.39.2
 
