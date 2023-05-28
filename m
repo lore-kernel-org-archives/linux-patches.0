@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FDD611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54385C433D2;
-	Sun, 28 May 2023 19:45:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E36611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3BEC4339B;
+	Sun, 28 May 2023 19:45:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303126;
-	bh=0Eog4KYIqq+BeyHVTlYCbmhXFH8YiY4elw9UahQU/f4=;
+	s=korg; t=1685303129;
+	bh=dvRbrFDIMtMzICWAYyxWxGgAdwwQwzfYWXnUnAc7OXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sig8DTdiGjhV+NCcfLBZ/5IejtW0NKgQA9+apzF4jdBuspvPgRG5wiyslK3LuL4vV
-	 dPmnheeDapgbUm/xAtZTkcZhVXqTlMiI3iTLeSzmJbrrxrrdNkKq+W9/avqu6n0jMW
-	 sFelH9PuB34KBq3xxrMufXBkT6t3Zz0wKQ1ze8oE=
+	b=YLkAZ+FFJIt1QaFLTSvq47LMNIOxt7y+mPNrLdzV63AUk6Jr9V5tYZlv3yC4Bdz63
+	 D9GwxYH7lN9SaakL87zzlu/xnlVx+iMZX7znK6xvonbpfvdfrRN6L3F/D9vzjLgvYg
+	 zq8rCpjD0ntrs4g/K3WA77RyaTU40UimTgS504fA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Zhao <wizhao@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Davide Caratti <dcaratti@redhat.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Dragos-Marian Panait <dragos.panait@windriver.com>
-Subject: [PATCH 5.10 164/211] act_mirred: use the backlog for nested calls to mirred ingress
-Date: Sun, 28 May 2023 20:11:25 +0100
-Message-Id: <20230528190847.575832967@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 165/211] spi: fsl-spi: Re-organise transfer bits_per_word adaptation
+Date: Sun, 28 May 2023 20:11:26 +0100
+Message-Id: <20230528190847.599826488@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -39,133 +34,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit ca22da2fbd693b54dc8e3b7b54ccc9f7e9ba3640 ]
+(backported from upstream 8a5299a1278eadf1e08a598a5345c376206f171e)
 
-William reports kernel soft-lockups on some OVS topologies when TC mirred
-egress->ingress action is hit by local TCP traffic [1].
-The same can also be reproduced with SCTP (thanks Xin for verifying), when
-client and server reach themselves through mirred egress to ingress, and
-one of the two peers sends a "heartbeat" packet (from within a timer).
+For different reasons, fsl-spi driver performs bits_per_word
+modifications for different reasons:
+- On CPU mode, to minimise amount of interrupts
+- On CPM/QE mode to work around controller byte order
 
-Enqueueing to backlog proved to fix this soft lockup; however, as Cong
-noticed [2], we should preserve - when possible - the current mirred
-behavior that counts as "overlimits" any eventual packet drop subsequent to
-the mirred forwarding action [3]. A compromise solution might use the
-backlog only when tcf_mirred_act() has a nest level greater than one:
-change tcf_mirred_forward() accordingly.
+For CPU mode that's done in fsl_spi_prepare_message() while
+for CPM mode that's done in fsl_spi_setup_transfer().
 
-Also, add a kselftest that can reproduce the lockup and verifies TC mirred
-ability to account for further packet drops after TC mirred egress->ingress
-(when the nest level is 1).
+Reunify all of it in fsl_spi_prepare_message(), and catch
+impossible cases early through master's bits_per_word_mask
+instead of returning EINVAL later.
 
- [1] https://lore.kernel.org/netdev/33dc43f587ec1388ba456b4915c75f02a8aae226.1663945716.git.dcaratti@redhat.com/
- [2] https://lore.kernel.org/netdev/Y0w%2FWWY60gqrtGLp@pop-os.localdomain/
- [3] such behavior is not guaranteed: for example, if RPS or skb RX
-     timestamping is enabled on the mirred target device, the kernel
-     can defer receiving the skb and return NET_RX_SUCCESS inside
-     tcf_mirred_forward().
-
-Reported-by: William Zhao <wizhao@redhat.com>
-CC: Xin Long <lucien.xin@gmail.com>
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[DP: adjusted context for linux-5.10.y]
-Signed-off-by: Dragos-Marian Panait <dragos.panait@windriver.com>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/0ce96fe96e8b07cba0613e4097cfd94d09b8919a.1680371809.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_mirred.c                               |    7 ++
- tools/testing/selftests/net/forwarding/tc_actions.sh |   48 ++++++++++++++++++-
- 2 files changed, 54 insertions(+), 1 deletion(-)
+ drivers/spi/spi-fsl-spi.c |   50 +++++++++++++++++++++-------------------------
+ 1 file changed, 23 insertions(+), 27 deletions(-)
 
---- a/net/sched/act_mirred.c
-+++ b/net/sched/act_mirred.c
-@@ -206,12 +206,19 @@ release_idr:
- 	return err;
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -203,26 +203,6 @@ static int mspi_apply_cpu_mode_quirks(st
+ 	return bits_per_word;
  }
  
-+static bool is_mirred_nested(void)
-+{
-+	return unlikely(__this_cpu_read(mirred_nest_level) > 1);
-+}
-+
- static int tcf_mirred_forward(bool want_ingress, struct sk_buff *skb)
+-static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+-				struct spi_device *spi,
+-				int bits_per_word)
+-{
+-	/* CPM/QE uses Little Endian for words > 8
+-	 * so transform 16 and 32 bits words into 8 bits
+-	 * Unfortnatly that doesn't work for LSB so
+-	 * reject these for now */
+-	/* Note: 32 bits word, LSB works iff
+-	 * tfcr/rfcr is set to CPMFCR_GBL */
+-	if (spi->mode & SPI_LSB_FIRST &&
+-	    bits_per_word > 8)
+-		return -EINVAL;
+-	if (bits_per_word <= 8)
+-		return bits_per_word;
+-	if (bits_per_word == 16 || bits_per_word == 32)
+-		return 8; /* pretend its 8 bits */
+-	return -EINVAL;
+-}
+-
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 					struct spi_transfer *t)
  {
- 	int err;
+@@ -250,9 +230,6 @@ static int fsl_spi_setup_transfer(struct
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else
+-		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+-							  bits_per_word);
  
- 	if (!want_ingress)
- 		err = dev_queue_xmit(skb);
-+	else if (is_mirred_nested())
-+		err = netif_rx(skb);
- 	else
- 		err = netif_receive_skb(skb);
+ 	if (bits_per_word < 0)
+ 		return bits_per_word;
+@@ -370,14 +347,27 @@ static int fsl_spi_do_one_msg(struct spi
+ 	 * In CPU mode, optimize large byte transfers to use larger
+ 	 * bits_per_word values to reduce number of interrupts taken.
+ 	 */
+-	if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
+-		list_for_each_entry(t, &m->transfers, transfer_list) {
++	list_for_each_entry(t, &m->transfers, transfer_list) {
++		if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
+ 			if (t->len < 256 || t->bits_per_word != 8)
+ 				continue;
+ 			if ((t->len & 3) == 0)
+ 				t->bits_per_word = 32;
+ 			else if ((t->len & 1) == 0)
+ 				t->bits_per_word = 16;
++		} else {
++			/*
++			 * CPM/QE uses Little Endian for words > 8
++			 * so transform 16 and 32 bits words into 8 bits
++			 * Unfortnatly that doesn't work for LSB so
++			 * reject these for now
++			 * Note: 32 bits word, LSB works iff
++			 * tfcr/rfcr is set to CPMFCR_GBL
++			 */
++			if (m->spi->mode & SPI_LSB_FIRST && t->bits_per_word > 8)
++				return -EINVAL;
++			if (t->bits_per_word == 16 || t->bits_per_word == 32)
++				t->bits_per_word = 8; /* pretend its 8 bits */
+ 		}
+ 	}
  
---- a/tools/testing/selftests/net/forwarding/tc_actions.sh
-+++ b/tools/testing/selftests/net/forwarding/tc_actions.sh
-@@ -3,7 +3,7 @@
+@@ -635,8 +625,14 @@ static struct spi_master *fsl_spi_probe(
+ 	if (mpc8xxx_spi->type == TYPE_GRLIB)
+ 		fsl_spi_grlib_probe(dev);
  
- ALL_TESTS="gact_drop_and_ok_test mirred_egress_redirect_test \
- 	mirred_egress_mirror_test matchall_mirred_egress_mirror_test \
--	gact_trap_test"
-+	gact_trap_test mirred_egress_to_ingress_tcp_test"
- NUM_NETIFS=4
- source tc_common.sh
- source lib.sh
-@@ -153,6 +153,52 @@ gact_trap_test()
- 	log_test "trap ($tcflags)"
- }
+-	master->bits_per_word_mask =
+-		(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32)) &
++	if (mpc8xxx_spi->flags & SPI_CPM_MODE)
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 8) | SPI_BPW_MASK(16) | SPI_BPW_MASK(32));
++	else
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32));
++
++	master->bits_per_word_mask &=
+ 		SPI_BPW_RANGE_MASK(1, mpc8xxx_spi->max_bits_per_word);
  
-+mirred_egress_to_ingress_tcp_test()
-+{
-+	local tmpfile=$(mktemp) tmpfile1=$(mktemp)
-+
-+	RET=0
-+	dd conv=sparse status=none if=/dev/zero bs=1M count=2 of=$tmpfile
-+	tc filter add dev $h1 protocol ip pref 100 handle 100 egress flower \
-+		$tcflags ip_proto tcp src_ip 192.0.2.1 dst_ip 192.0.2.2 \
-+			action ct commit nat src addr 192.0.2.2 pipe \
-+			action ct clear pipe \
-+			action ct commit nat dst addr 192.0.2.1 pipe \
-+			action ct clear pipe \
-+			action skbedit ptype host pipe \
-+			action mirred ingress redirect dev $h1
-+	tc filter add dev $h1 protocol ip pref 101 handle 101 egress flower \
-+		$tcflags ip_proto icmp \
-+			action mirred ingress redirect dev $h1
-+	tc filter add dev $h1 protocol ip pref 102 handle 102 ingress flower \
-+		ip_proto icmp \
-+			action drop
-+
-+	ip vrf exec v$h1 nc --recv-only -w10 -l -p 12345 -o $tmpfile1  &
-+	local rpid=$!
-+	ip vrf exec v$h1 nc -w1 --send-only 192.0.2.2 12345 <$tmpfile
-+	wait -n $rpid
-+	cmp -s $tmpfile $tmpfile1
-+	check_err $? "server output check failed"
-+
-+	$MZ $h1 -c 10 -p 64 -a $h1mac -b $h1mac -A 192.0.2.1 -B 192.0.2.1 \
-+		-t icmp "ping,id=42,seq=5" -q
-+	tc_check_packets "dev $h1 egress" 101 10
-+	check_err $? "didn't mirred redirect ICMP"
-+	tc_check_packets "dev $h1 ingress" 102 10
-+	check_err $? "didn't drop mirred ICMP"
-+	local overlimits=$(tc_rule_stats_get ${h1} 101 egress .overlimits)
-+	test ${overlimits} = 10
-+	check_err $? "wrong overlimits, expected 10 got ${overlimits}"
-+
-+	tc filter del dev $h1 egress protocol ip pref 100 handle 100 flower
-+	tc filter del dev $h1 egress protocol ip pref 101 handle 101 flower
-+	tc filter del dev $h1 ingress protocol ip pref 102 handle 102 flower
-+
-+	rm -f $tmpfile $tmpfile1
-+	log_test "mirred_egress_to_ingress_tcp ($tcflags)"
-+}
-+
- setup_prepare()
- {
- 	h1=${NETIFS[p1]}
+ 	if (mpc8xxx_spi->flags & SPI_QE_CPU_MODE)
 
 
