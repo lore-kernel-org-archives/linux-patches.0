@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15DD0611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FA7C433D2;
-	Sun, 28 May 2023 19:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1CC6611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093C4C433D2;
+	Sun, 28 May 2023 19:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303189;
-	bh=dIeBcgy0h135Hy5mTH/0jUsKJ7yYbg12WPl3Pp8iebg=;
+	s=korg; t=1685303192;
+	bh=d/x17/jd7iQLxKtO5qTgvwAuERRzsguRisOTzBKf9x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H9+EtH/ImZnXs3CX2LCSEHysGqfQ39/pv/Koq+mmtzdyWrlESKZReYEHBxVv11Xt4
-	 alf9urlcomieWiNM7mg25GS4+mG7yN0xBCG0nidPfqT9CjqUKo6Gv1BO2B6Kd2ue/z
-	 SaSQl2KvvHN4uGb1T44NMpoNEGDjNqoHyogUv0tY=
+	b=oRrTVzksUhzO2SQN8sYrz7WJFt01Jic4ZP8efm8/fYgJMExi4+4ImkZl7FMfdjgYI
+	 SmPBiM1o+wutpv4Rh7LF3W1XkPc/Kf7fYS/T7uiyohbQ1aQqe2wcrpsxejYWgL44p4
+	 /etnAAqVBwn8iLs6ulENp07Esu4ZFLuh87rX0AMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 191/211] octeontx2-pf: Fix TSOv6 offload
-Date: Sun, 28 May 2023 20:11:52 +0100
-Message-Id: <20230528190848.245237378@linuxfoundation.org>
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Krzesimir Nowak <krzesimir@kinvolk.io>,
+	Andrey Ignatov <rdna@fb.com>,
+	Yonghong Song <yhs@fb.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 5.10 192/211] bpf: Fix mask generation for 32-bit narrow loads of 64-bit fields
+Date: Sun, 28 May 2023 20:11:53 +0100
+Message-Id: <20230528190848.270380591@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,36 +39,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sunil Goutham <sgoutham@marvell.com>
+From: Will Deacon <will@kernel.org>
 
-commit de678ca38861f2eb58814048076dcf95ed1b5bf9 upstream.
+commit 0613d8ca9ab382caabe9ed2dceb429e9781e443f upstream.
 
-HW adds segment size to the payload length
-in the IPv6 header. Fix payload length to
-just TCP header length instead of 'TCP header
-size + IPv6 header size'.
+A narrow load from a 64-bit context field results in a 64-bit load
+followed potentially by a 64-bit right-shift and then a bitwise AND
+operation to extract the relevant data.
 
-Fixes: 86d7476078b8 ("octeontx2-pf: TCP segmentation offload support")
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+In the case of a 32-bit access, an immediate mask of 0xffffffff is used
+to construct a 64-bit BPP_AND operation which then sign-extends the mask
+value and effectively acts as a glorified no-op. For example:
+
+0:	61 10 00 00 00 00 00 00	r0 = *(u32 *)(r1 + 0)
+
+results in the following code generation for a 64-bit field:
+
+	ldr	x7, [x7]	// 64-bit load
+	mov	x10, #0xffffffffffffffff
+	and	x7, x7, x10
+
+Fix the mask generation so that narrow loads always perform a 32-bit AND
+operation:
+
+	ldr	x7, [x7]	// 64-bit load
+	mov	w10, #0xffffffff
+	and	w7, w7, w10
+
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: Krzesimir Nowak <krzesimir@kinvolk.io>
+Cc: Andrey Ignatov <rdna@fb.com>
+Acked-by: Yonghong Song <yhs@fb.com>
+Fixes: 31fd85816dbe ("bpf: permits narrower load from bpf program context fields")
+Signed-off-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20230518102528.1341-1-will@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ kernel/bpf/verifier.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_txrx.c
-@@ -526,9 +526,7 @@ static void otx2_sqe_add_ext(struct otx2
- 				htons(ext->lso_sb - skb_network_offset(skb));
- 		} else if (skb_shinfo(skb)->gso_type & SKB_GSO_TCPV6) {
- 			ext->lso_format = pfvf->hw.lso_tsov6_idx;
--
--			ipv6_hdr(skb)->payload_len =
--				htons(ext->lso_sb - skb_network_offset(skb));
-+			ipv6_hdr(skb)->payload_len = htons(tcp_hdrlen(skb));
- 		} else if (skb_shinfo(skb)->gso_type & SKB_GSO_UDP_L4) {
- 			__be16 l3_proto = vlan_get_protocol(skb);
- 			struct udphdr *udph = udp_hdr(skb);
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -11146,7 +11146,7 @@ static int convert_ctx_accesses(struct b
+ 					insn_buf[cnt++] = BPF_ALU64_IMM(BPF_RSH,
+ 									insn->dst_reg,
+ 									shift);
+-				insn_buf[cnt++] = BPF_ALU64_IMM(BPF_AND, insn->dst_reg,
++				insn_buf[cnt++] = BPF_ALU32_IMM(BPF_AND, insn->dst_reg,
+ 								(1ULL << size * 8) - 1);
+ 			}
+ 		}
 
 
