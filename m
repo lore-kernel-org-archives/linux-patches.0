@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0D3611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F19C433D2;
-	Sun, 28 May 2023 19:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D4F611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E597C433EF;
+	Sun, 28 May 2023 19:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301493;
-	bh=Cv5QmoSHQQIGSGG4HPcYxsHooUHXPQ2yHmjhhARiCmo=;
+	s=korg; t=1685301496;
+	bh=Gy8MHrHmpgbMO6/k+RE9A/TOcOKiRCUTrU4SDoJgjt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eabbf2kjoREW1lTZZn1ok5SgGxucjRx/dmuaB57kS/KaMMZEknrSMRi+bJZko4Hll
-	 OqjFR5qmdlw0znFyO34S4OtMVLryAfBB3lMKzh9f1jUq2d6U4+STJ2FrKYBBTWLj+/
-	 LUEFB3bza/jayDTHKt9f7eISfpf6bqLMwW8qsNj8=
+	b=1QETcGMaGuD199f6+B4O02tMCM233EwJnCj5FRk5cr3SSI8Mak3JBObo8dIloqtOY
+	 3zJN47TB6HIdaigIJCq9ygTSQ7TsFB1Y3a9tldwsqQ9UIRtp7lSM8WbqpJVY7rIwL6
+	 K5ufgud2CskGF8Rgy3h6B4viDXet9Jfey/4r00ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Brunner <tobias@strongswan.org>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 050/132] af_key: Reject optional tunnel/BEET mode templates in outbound policies
-Date: Sun, 28 May 2023 20:09:49 +0100
-Message-Id: <20230528190835.105875936@linuxfoundation.org>
+Subject: [PATCH 4.19 051/132] net: fec: Better handle pm_runtime_get() failing in .remove()
+Date: Sun, 28 May 2023 20:09:50 +0100
+Message-Id: <20230528190835.132730304@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -36,68 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Brunner <tobias@strongswan.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit cf3128a7aca55b2eefb68281d44749c683bdc96f ]
+[ Upstream commit f816b9829b19394d318e01953aa3b2721bca040d ]
 
-xfrm_state_find() uses `encap_family` of the current template with
-the passed local and remote addresses to find a matching state.
-If an optional tunnel or BEET mode template is skipped in a mixed-family
-scenario, there could be a mismatch causing an out-of-bounds read as
-the addresses were not replaced to match the family of the next template.
+In the (unlikely) event that pm_runtime_get() (disguised as
+pm_runtime_resume_and_get()) fails, the remove callback returned an
+error early. The problem with this is that the driver core ignores the
+error value and continues removing the device. This results in a
+resource leak. Worse the devm allocated resources are freed and so if a
+callback of the driver is called later the register mapping is already
+gone which probably results in a crash.
 
-While there are theoretical use cases for optional templates in outbound
-policies, the only practical one is to skip IPComp states in inbound
-policies if uncompressed packets are received that are handled by an
-implicitly created IPIP state instead.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Tobias Brunner <tobias@strongswan.org>
-Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: a31eda65ba21 ("net: fec: fix clock count mis-match")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20230510200020.1534610-1-u.kleine-koenig@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/key/af_key.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/net/key/af_key.c b/net/key/af_key.c
-index 976b67089ac15..b8456e2f11673 100644
---- a/net/key/af_key.c
-+++ b/net/key/af_key.c
-@@ -1950,7 +1950,8 @@ static u32 gen_reqid(struct net *net)
- }
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index e97ab9545a792..e4162c2271e3f 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -3721,7 +3721,9 @@ fec_drv_remove(struct platform_device *pdev)
  
- static int
--parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
-+parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_policy *pol,
-+		   struct sadb_x_ipsecrequest *rq)
- {
- 	struct net *net = xp_net(xp);
- 	struct xfrm_tmpl *t = xp->xfrm_vec + xp->xfrm_nr;
-@@ -1968,9 +1969,12 @@ parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
- 	if ((mode = pfkey_mode_to_xfrm(rq->sadb_x_ipsecrequest_mode)) < 0)
- 		return -EINVAL;
- 	t->mode = mode;
--	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE)
-+	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE) {
-+		if ((mode == XFRM_MODE_TUNNEL || mode == XFRM_MODE_BEET) &&
-+		    pol->sadb_x_policy_dir == IPSEC_DIR_OUTBOUND)
-+			return -EINVAL;
- 		t->optional = 1;
--	else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
-+	} else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
- 		t->reqid = rq->sadb_x_ipsecrequest_reqid;
- 		if (t->reqid > IPSEC_MANUAL_REQID_MAX)
- 			t->reqid = 0;
-@@ -2012,7 +2016,7 @@ parse_ipsecrequests(struct xfrm_policy *xp, struct sadb_x_policy *pol)
- 		    rq->sadb_x_ipsecrequest_len < sizeof(*rq))
- 			return -EINVAL;
+ 	ret = pm_runtime_get_sync(&pdev->dev);
+ 	if (ret < 0)
+-		return ret;
++		dev_err(&pdev->dev,
++			"Failed to resume device in remove callback (%pe)\n",
++			ERR_PTR(ret));
  
--		if ((err = parse_ipsecrequest(xp, rq)) < 0)
-+		if ((err = parse_ipsecrequest(xp, pol, rq)) < 0)
- 			return err;
- 		len -= rq->sadb_x_ipsecrequest_len;
- 		rq = (void*)((u8*)rq + rq->sadb_x_ipsecrequest_len);
+ 	cancel_work_sync(&fep->tx_timeout_work);
+ 	fec_ptp_stop(pdev);
+@@ -3734,8 +3736,13 @@ fec_drv_remove(struct platform_device *pdev)
+ 		of_phy_deregister_fixed_link(np);
+ 	of_node_put(fep->phy_node);
+ 
+-	clk_disable_unprepare(fep->clk_ahb);
+-	clk_disable_unprepare(fep->clk_ipg);
++	/* After pm_runtime_get_sync() failed, the clks are still off, so skip
++	 * disabling them again.
++	 */
++	if (ret >= 0) {
++		clk_disable_unprepare(fep->clk_ahb);
++		clk_disable_unprepare(fep->clk_ipg);
++	}
+ 	pm_runtime_put_noidle(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 
 -- 
 2.39.2
 
