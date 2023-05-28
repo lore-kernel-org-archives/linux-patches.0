@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D1F611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9244AC4339B;
-	Sun, 28 May 2023 19:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1AD611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0681FC433EF;
+	Sun, 28 May 2023 19:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302779;
-	bh=Vy5+BQO3VbhljkkvwLP/PGF/MlHEjNVSyO2vB46eA/s=;
+	s=korg; t=1685302782;
+	bh=AwGyhurLPuHvkuuSE7yVuKJr6FREJY7VBBnMEb17XHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hnmT1FYmPLHUW/2jjC5GM6frKhARFzpujyEVLaxRW9IIo6lx0ZYnZRBf5LgyVdsGv
-	 vfI0K+bkAoZqJyY8z8/6VIPl8PwURYtHW8XCHKCLmrmRH/Qb1m5SL/yfNbq/8eajCM
-	 gug7qQmFJRMkHGftR1XaMA8w4uhCvqYo4G9chBQA=
+	b=LnBn7IoNpF/X+rlIb03a3GUVYJIUS4eYcDkKemBAJZ5DxJUpXBWT1i46Qo6uJybeU
+	 Wz7nbdSGojbWixNo0KBRbjZX9eFAZt+YsH43dM77utGFz6BtUxuwt/WcPBD4rXWMmU
+	 qGR0vUJc9W+42u7BTbC4rhL6T97ANxwt8k4ZTjCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	kernel test robot <lkp@intel.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Kristoffer Ericson <Kristoffer.ericson@gmail.com>,
-	patches@armlinux.org.uk,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Simon Horman <simon.horman@corigine.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 003/211] ARM: 9296/1: HP Jornada 7XX: fix kernel-doc warnings
-Date: Sun, 28 May 2023 20:08:44 +0100
-Message-Id: <20230528190843.602374788@linuxfoundation.org>
+Subject: [PATCH 5.10 004/211] net: mdio: mvusb: Fix an error handling path in mvusb_mdio_probe()
+Date: Sun, 28 May 2023 20:08:45 +0100
+Message-Id: <20230528190843.626510541@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -39,67 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 46dd6078dbc7e363a8bb01209da67015a1538929 ]
+[ Upstream commit 27c1eaa07283b0c94becf8241f95368267cf558b ]
 
-Fix kernel-doc warnings from the kernel test robot:
+Should of_mdiobus_register() fail, a previous usb_get_dev() call should be
+undone as in the .disconnect function.
 
-jornada720_ssp.c:24: warning: Function parameter or member 'jornada_ssp_lock' not described in 'DEFINE_SPINLOCK'
-jornada720_ssp.c:24: warning: expecting prototype for arch/arm/mac(). Prototype was for DEFINE_SPINLOCK() instead
-jornada720_ssp.c:34: warning: Function parameter or member 'byte' not described in 'jornada_ssp_reverse'
-jornada720_ssp.c:57: warning: Function parameter or member 'byte' not described in 'jornada_ssp_byte'
-jornada720_ssp.c:85: warning: Function parameter or member 'byte' not described in 'jornada_ssp_inout'
-
-Link: lore.kernel.org/r/202304210535.tWby3jWF-lkp@intel.com
-
-Fixes: 69ebb22277a5 ("[ARM] 4506/1: HP Jornada 7XX: Addition of SSP Platform Driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Reported-by: kernel test robot <lkp@intel.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Kristoffer Ericson <Kristoffer.ericson@gmail.com>
-Cc: patches@armlinux.org.uk
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Fixes: 04e37d92fbed ("net: phy: add marvell usb to mdio controller")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-sa1100/jornada720_ssp.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/mdio/mdio-mvusb.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-sa1100/jornada720_ssp.c b/arch/arm/mach-sa1100/jornada720_ssp.c
-index 1dbe98948ce30..9627c4cf3e41d 100644
---- a/arch/arm/mach-sa1100/jornada720_ssp.c
-+++ b/arch/arm/mach-sa1100/jornada720_ssp.c
-@@ -1,5 +1,5 @@
- // SPDX-License-Identifier: GPL-2.0-only
--/**
-+/*
-  *  arch/arm/mac-sa1100/jornada720_ssp.c
-  *
-  *  Copyright (C) 2006/2007 Kristoffer Ericson <Kristoffer.Ericson@gmail.com>
-@@ -26,6 +26,7 @@ static unsigned long jornada_ssp_flags;
+diff --git a/drivers/net/mdio/mdio-mvusb.c b/drivers/net/mdio/mdio-mvusb.c
+index d5eabddfdf51b..11e048136ac23 100644
+--- a/drivers/net/mdio/mdio-mvusb.c
++++ b/drivers/net/mdio/mdio-mvusb.c
+@@ -73,6 +73,7 @@ static int mvusb_mdio_probe(struct usb_interface *interface,
+ 	struct device *dev = &interface->dev;
+ 	struct mvusb_mdio *mvusb;
+ 	struct mii_bus *mdio;
++	int ret;
  
- /**
-  * jornada_ssp_reverse - reverses input byte
-+ * @byte: input byte to reverse
-  *
-  * we need to reverse all data we receive from the mcu due to its physical location
-  * returns : 01110111 -> 11101110
-@@ -46,6 +47,7 @@ EXPORT_SYMBOL(jornada_ssp_reverse);
+ 	mdio = devm_mdiobus_alloc_size(dev, sizeof(*mvusb));
+ 	if (!mdio)
+@@ -93,7 +94,15 @@ static int mvusb_mdio_probe(struct usb_interface *interface,
+ 	mdio->write = mvusb_mdio_write;
  
- /**
-  * jornada_ssp_byte - waits for ready ssp bus and sends byte
-+ * @byte: input byte to transmit
-  *
-  * waits for fifo buffer to clear and then transmits, if it doesn't then we will
-  * timeout after <timeout> rounds. Needs mcu running before its called.
-@@ -77,6 +79,7 @@ EXPORT_SYMBOL(jornada_ssp_byte);
+ 	usb_set_intfdata(interface, mvusb);
+-	return of_mdiobus_register(mdio, dev->of_node);
++	ret = of_mdiobus_register(mdio, dev->of_node);
++	if (ret)
++		goto put_dev;
++
++	return 0;
++
++put_dev:
++	usb_put_dev(mvusb->udev);
++	return ret;
+ }
  
- /**
-  * jornada_ssp_inout - decide if input is command or trading byte
-+ * @byte: input byte to send (may be %TXDUMMY)
-  *
-  * returns : (jornada_ssp_byte(byte)) on success
-  *         : %-ETIMEDOUT on timeout failure
+ static void mvusb_mdio_disconnect(struct usb_interface *interface)
 -- 
 2.39.2
 
