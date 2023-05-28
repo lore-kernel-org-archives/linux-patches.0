@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4448611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7009EC433D2;
-	Sun, 28 May 2023 19:14:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B10611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBEB0C433EF;
+	Sun, 28 May 2023 19:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301248;
-	bh=2jt1SRCXVZJzcGV80pA+R6dAheXDurY2i67w+fVCSKU=;
+	s=korg; t=1685301251;
+	bh=Wofvu0uYSW1dsOaFF3klLrihLIDNEaJRFZsG87h1pLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoIhp8BXe9C+4d/tMEk/2Oa9vxoonHEZ3wbJlosktnio3e7wrR7UGAgFgAKtmE2S4
-	 Cs+NWB2kGEC9jllBVtRo4+RwUBGuen80coB/j7fgIsncaHZBWhF4doeyqzYoHr5j8Z
-	 9qiaSJmdHYYJvFJtttiLU7DhLHyFyP2AppKOzMYE=
+	b=rR44UOIWfs5eHU+YL2WY0DDWLnirtsAZk3H2c10yjXKrUr63qxH5hNFryCgnRbed9
+	 1pxLzlDlim1FfUJu9ej+VHVshzcr/okGKCmN05HrQ8bYbREqC5+zBNMRQaLm0oNUki
+	 NY0SgRNBBifSPEM6UXThbosK2LbU3tFqzQoisJUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zhuang Shengen <zhuangshengen@huawei.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 40/86] net: fec: Better handle pm_runtime_get() failing in .remove()
-Date: Sun, 28 May 2023 20:10:14 +0100
-Message-Id: <20230528190830.087864957@linuxfoundation.org>
+Subject: [PATCH 4.14 41/86] vsock: avoid to close connected socket after the timeout
+Date: Sun, 28 May 2023 20:10:15 +0100
+Message-Id: <20230528190830.119083940@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -36,59 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Zhuang Shengen <zhuangshengen@huawei.com>
 
-[ Upstream commit f816b9829b19394d318e01953aa3b2721bca040d ]
+[ Upstream commit 6d4486efe9c69626cab423456169e250a5cd3af5 ]
 
-In the (unlikely) event that pm_runtime_get() (disguised as
-pm_runtime_resume_and_get()) fails, the remove callback returned an
-error early. The problem with this is that the driver core ignores the
-error value and continues removing the device. This results in a
-resource leak. Worse the devm allocated resources are freed and so if a
-callback of the driver is called later the register mapping is already
-gone which probably results in a crash.
+When client and server establish a connection through vsock,
+the client send a request to the server to initiate the connection,
+then start a timer to wait for the server's response. When the server's
+RESPONSE message arrives, the timer also times out and exits. The
+server's RESPONSE message is processed first, and the connection is
+established. However, the client's timer also times out, the original
+processing logic of the client is to directly set the state of this vsock
+to CLOSE and return ETIMEDOUT. It will not notify the server when the port
+is released, causing the server port remain.
+when client's vsock_connect timeout，it should check sk state is
+ESTABLISHED or not. if sk state is ESTABLISHED, it means the connection
+is established, the client should not set the sk state to CLOSE
 
-Fixes: a31eda65ba21 ("net: fec: fix clock count mis-match")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20230510200020.1534610-1-u.kleine-koenig@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Note: I encountered this issue on kernel-4.18, which can be fixed by
+this patch. Then I checked the latest code in the community
+and found similar issue.
+
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Signed-off-by: Zhuang Shengen <zhuangshengen@huawei.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ net/vmw_vsock/af_vsock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index c6fc77a211ea6..1085f1d721b02 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3569,7 +3569,9 @@ fec_drv_remove(struct platform_device *pdev)
- 
- 	ret = pm_runtime_get_sync(&pdev->dev);
- 	if (ret < 0)
--		return ret;
-+		dev_err(&pdev->dev,
-+			"Failed to resume device in remove callback (%pe)\n",
-+			ERR_PTR(ret));
- 
- 	cancel_work_sync(&fep->tx_timeout_work);
- 	fec_ptp_stop(pdev);
-@@ -3582,8 +3584,13 @@ fec_drv_remove(struct platform_device *pdev)
- 		of_phy_deregister_fixed_link(np);
- 	of_node_put(fep->phy_node);
- 
--	clk_disable_unprepare(fep->clk_ahb);
--	clk_disable_unprepare(fep->clk_ipg);
-+	/* After pm_runtime_get_sync() failed, the clks are still off, so skip
-+	 * disabling them again.
-+	 */
-+	if (ret >= 0) {
-+		clk_disable_unprepare(fep->clk_ahb);
-+		clk_disable_unprepare(fep->clk_ipg);
-+	}
- 	pm_runtime_put_noidle(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 2ec4359d7321d..356f5525a0028 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1247,7 +1247,7 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
+ 			vsock_transport_cancel_pkt(vsk);
+ 			vsock_remove_connected(vsk);
+ 			goto out_wait;
+-		} else if (timeout == 0) {
++		} else if ((sk->sk_state != TCP_ESTABLISHED) && (timeout == 0)) {
+ 			err = -ETIMEDOUT;
+ 			sk->sk_state = TCP_CLOSE;
+ 			sock->state = SS_UNCONNECTED;
 -- 
 2.39.2
 
