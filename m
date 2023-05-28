@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826E86121
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11982C433EF;
-	Sun, 28 May 2023 19:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF050611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C47C433EF;
+	Sun, 28 May 2023 19:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303131;
-	bh=MPUKUD3Ude5txd15bwOm4zTWDhjg7NyNOPaZ35ze0Qg=;
+	s=korg; t=1685303133;
+	bh=entThtJkOqqkxmvgaITmi7GCYcGfOS1bZt8QfN9Sjs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19PK+5ruZ6f9oOtMF1L5vBh1ksseLW8NlZtthV9PFw0LA2kv6T115NGX/6tv7UaOf
-	 QlknRQ1VI3mFF+VWDevaF5DSIFUxXYNQqYB1+y5J/b87RE5eI6bUY9v7VvIfIw+gVb
-	 8FB8sU1NiFrHNDAuhLluasm+HnbHq75AwjG+e/iw=
+	b=Zp3/uQ6qT1DJwTo1q5o3lHSB9wGUOfk/IC7GWwcT4BczeYOZfzzsn0au5tVQo3LgS
+	 pQMf06xVoWx9tYWU2mXt0LwwaDnr0FRKZc6kKqwjw8DGNxJyhwQudO9WXVTXtKD/Y6
+	 rj0Hyoz0Jb6eMkUEJZtWQGfQUIAEgQmEQrPrrK2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 166/211] spi: fsl-cpm: Use 16 bit mode for large transfers with even size
-Date: Sun, 28 May 2023 20:11:27 +0100
-Message-Id: <20230528190847.624808660@linuxfoundation.org>
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.10 167/211] ocfs2: Switch to security_inode_init_security()
+Date: Sun, 28 May 2023 20:11:28 +0100
+Message-Id: <20230528190847.649465732@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -34,94 +37,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-(cherry picked from upstream fc96ec826bced75cc6b9c07a4ac44bbf651337ab)
+commit de3004c874e740304cc4f4a83d6200acb511bbda upstream.
 
-On CPM, the RISC core is a lot more efficiant when doing transfers
-in 16-bits chunks than in 8-bits chunks, but unfortunately the
-words need to be byte swapped as seen in a previous commit.
+In preparation for removing security_old_inode_init_security(), switch to
+security_inode_init_security().
 
-So, for large tranfers with an even size, allocate a temporary tx
-buffer and byte-swap data before and after transfer.
+Extend the existing ocfs2_initxattrs() to take the
+ocfs2_security_xattr_info structure from fs_info, and populate the
+name/value/len triple with the first xattr provided by LSMs.
 
-This change allows setting higher speed for transfer. For instance
-on an MPC 8xx (CPM1 comms RISC processor), the documentation tells
-that transfer in byte mode at 1 kbit/s uses 0.200% of CPM load
-at 25 MHz while a word transfer at the same speed uses 0.032%
-of CPM load. This means the speed can be 6 times higher in
-word mode for the same CPM load.
+As fs_info was not used before, ocfs2_initxattrs() can now handle the case
+of replicating the behavior of security_old_inode_init_security(), i.e.
+just obtaining the xattr, in addition to setting all xattrs provided by
+LSMs.
 
-For the time being, only do it on CPM1 as there must be a
-trade-off between the CPM load reduction and the CPU load required
-to byte swap the data.
+Supporting multiple xattrs is not currently supported where
+security_old_inode_init_security() was called (mknod, symlink), as it
+requires non-trivial changes that can be done at a later time. Like for
+reiserfs, even if EVM is invoked, it will not provide an xattr (if it is
+not the first to set it, its xattr will be discarded; if it is the first,
+it does not have xattrs to calculate the HMAC on).
 
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/f2e981f20f92dd28983c3949702a09248c23845c.1680371809.git.christophe.leroy@csgroup.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Finally, since security_inode_init_security(), unlike
+security_old_inode_init_security(), returns zero instead of -EOPNOTSUPP if
+no xattrs were provided by LSMs or if inodes are private, additionally
+check in ocfs2_init_security_get() if the xattr name is set.
+
+If not, act as if security_old_inode_init_security() returned -EOPNOTSUPP,
+and set si->enable to zero to notify to the functions following
+ocfs2_init_security_get() that no xattrs are available.
+
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Casey Schaufler <casey@schaufler-ca.com>
+Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-cpm.c |   23 +++++++++++++++++++++++
- drivers/spi/spi-fsl-spi.c |    3 +++
- 2 files changed, 26 insertions(+)
+ fs/ocfs2/namei.c |    2 ++
+ fs/ocfs2/xattr.c |   30 ++++++++++++++++++++++++++----
+ 2 files changed, 28 insertions(+), 4 deletions(-)
 
---- a/drivers/spi/spi-fsl-cpm.c
-+++ b/drivers/spi/spi-fsl-cpm.c
-@@ -21,6 +21,7 @@
- #include <linux/spi/spi.h>
- #include <linux/types.h>
- #include <linux/platform_device.h>
-+#include <linux/byteorder/generic.h>
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -242,6 +242,7 @@ static int ocfs2_mknod(struct inode *dir
+ 	int want_meta = 0;
+ 	int xattr_credits = 0;
+ 	struct ocfs2_security_xattr_info si = {
++		.name = NULL,
+ 		.enable = 1,
+ 	};
+ 	int did_quota_inode = 0;
+@@ -1801,6 +1802,7 @@ static int ocfs2_symlink(struct inode *d
+ 	int want_clusters = 0;
+ 	int xattr_credits = 0;
+ 	struct ocfs2_security_xattr_info si = {
++		.name = NULL,
+ 		.enable = 1,
+ 	};
+ 	int did_quota = 0, did_quota_inode = 0;
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -7260,9 +7260,21 @@ static int ocfs2_xattr_security_set(cons
+ static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array,
+ 		     void *fs_info)
+ {
++	struct ocfs2_security_xattr_info *si = fs_info;
+ 	const struct xattr *xattr;
+ 	int err = 0;
  
- #include "spi-fsl-cpm.h"
- #include "spi-fsl-lib.h"
-@@ -120,6 +121,21 @@ int fsl_spi_cpm_bufs(struct mpc8xxx_spi
- 		mspi->rx_dma = mspi->dma_dummy_rx;
- 		mspi->map_rx_dma = 0;
- 	}
-+	if (t->bits_per_word == 16 && t->tx_buf) {
-+		const u16 *src = t->tx_buf;
-+		u16 *dst;
-+		int i;
-+
-+		dst = kmalloc(t->len, GFP_KERNEL);
-+		if (!dst)
++	if (si) {
++		si->value = kmemdup(xattr_array->value, xattr_array->value_len,
++				    GFP_KERNEL);
++		if (!si->value)
 +			return -ENOMEM;
 +
-+		for (i = 0; i < t->len >> 1; i++)
-+			dst[i] = cpu_to_le16p(src + i);
++		si->name = xattr_array->name;
++		si->value_len = xattr_array->value_len;
++		return 0;
++	}
 +
-+		mspi->tx = dst;
-+		mspi->map_tx_dma = 1;
+ 	for (xattr = xattr_array; xattr->name != NULL; xattr++) {
+ 		err = ocfs2_xattr_set(inode, OCFS2_XATTR_INDEX_SECURITY,
+ 				      xattr->name, xattr->value,
+@@ -7278,13 +7290,23 @@ int ocfs2_init_security_get(struct inode
+ 			    const struct qstr *qstr,
+ 			    struct ocfs2_security_xattr_info *si)
+ {
++	int ret;
++
+ 	/* check whether ocfs2 support feature xattr */
+ 	if (!ocfs2_supports_xattr(OCFS2_SB(dir->i_sb)))
+ 		return -EOPNOTSUPP;
+-	if (si)
+-		return security_old_inode_init_security(inode, dir, qstr,
+-							&si->name, &si->value,
+-							&si->value_len);
++	if (si) {
++		ret = security_inode_init_security(inode, dir, qstr,
++						   &ocfs2_initxattrs, si);
++		/*
++		 * security_inode_init_security() does not return -EOPNOTSUPP,
++		 * we have to check the xattr ourselves.
++		 */
++		if (!ret && !si->name)
++			si->enable = 0;
++
++		return ret;
 +	}
  
- 	if (mspi->map_tx_dma) {
- 		void *nonconst_tx = (void *)mspi->tx; /* shut up gcc */
-@@ -173,6 +189,13 @@ void fsl_spi_cpm_bufs_complete(struct mp
- 	if (mspi->map_rx_dma)
- 		dma_unmap_single(dev, mspi->rx_dma, t->len, DMA_FROM_DEVICE);
- 	mspi->xfer_in_progress = NULL;
-+
-+	if (t->bits_per_word == 16 && t->rx_buf) {
-+		int i;
-+
-+		for (i = 0; i < t->len; i += 2)
-+			le16_to_cpus(t->rx_buf + i);
-+	}
- }
- EXPORT_SYMBOL_GPL(fsl_spi_cpm_bufs_complete);
- 
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -368,6 +368,9 @@ static int fsl_spi_do_one_msg(struct spi
- 				return -EINVAL;
- 			if (t->bits_per_word == 16 || t->bits_per_word == 32)
- 				t->bits_per_word = 8; /* pretend its 8 bits */
-+			if (t->bits_per_word == 8 && t->len >= 256 &&
-+			    (mpc8xxx_spi->flags & SPI_CPM1))
-+				t->bits_per_word = 16;
- 		}
- 	}
- 
+ 	return security_inode_init_security(inode, dir, qstr,
+ 					    &ocfs2_initxattrs, NULL);
 
 
