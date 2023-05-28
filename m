@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF61B569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:24:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE7EC433EF;
-	Sun, 28 May 2023 19:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA55569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:24:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C2BCC433D2;
+	Sun, 28 May 2023 19:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301858;
-	bh=gyPQeB27qRBOEmUX6wQZplbuE1HpAQh69Z00+4a2jHo=;
+	s=korg; t=1685301862;
+	bh=0dgqrvT8RCZqWL51rahR045Hjc2XDtKKbgGz2xckccM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qTqdIj7u8TENEstFmalcSVc0uv+M3hcQgZUKCfShwvayNNOgLaWv77VL6bH1zeCWM
-	 xdpY0UIKMbiz9R36fwEwNKPc7jd5zt4Ic++8jY+xsu1JtATgD4o0ZAkyZkJdcXrK4+
-	 fhvSd1b8NITTZuskLYzdJDN+9S8tNK6VOhUx13Mc=
+	b=x/wAzH3l7DgZsJ6NdldvWo5fKr39oHM6QxAzozEsV16pSgF8ohx8cGvuKqJMv+nj/
+	 IDqDCV0tmmbIQtew/VDySsxnMv7n5qLxhFaIK2a/Cwulom+LliwxMJjyM1PC1JlvBD
+	 saPhJwc3BjUVVbVEpUwJzU0J90VkaYpq267zhzNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Zhuang Shengen <zhuangshengen@huawei.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 037/161] wifi: iwlwifi: pcie: fix possible NULL pointer dereference
-Date: Sun, 28 May 2023 20:09:21 +0100
-Message-Id: <20230528190838.385348978@linuxfoundation.org>
+Subject: [PATCH 5.4 064/161] vsock: avoid to close connected socket after the timeout
+Date: Sun, 28 May 2023 20:09:48 +0100
+Message-Id: <20230528190839.206384241@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -36,54 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Zhuang Shengen <zhuangshengen@huawei.com>
 
-[ Upstream commit b655b9a9f8467684cfa8906713d33b71ea8c8f54 ]
+[ Upstream commit 6d4486efe9c69626cab423456169e250a5cd3af5 ]
 
-It is possible that iwl_pci_probe() will fail and free the trans,
-then afterwards iwl_pci_remove() will be called and crash by trying
-to access trans which is already freed, fix it.
+When client and server establish a connection through vsock,
+the client send a request to the server to initiate the connection,
+then start a timer to wait for the server's response. When the server's
+RESPONSE message arrives, the timer also times out and exits. The
+server's RESPONSE message is processed first, and the connection is
+established. However, the client's timer also times out, the original
+processing logic of the client is to directly set the state of this vsock
+to CLOSE and return ETIMEDOUT. It will not notify the server when the port
+is released, causing the server port remain.
+when client's vsock_connect timeout，it should check sk state is
+ESTABLISHED or not. if sk state is ESTABLISHED, it means the connection
+is established, the client should not set the sk state to CLOSE
 
-iwlwifi 0000:01:00.0: Detected crf-id 0xa5a5a5a2, cnv-id 0xa5a5a5a2
-		      wfpm id 0xa5a5a5a2
-iwlwifi 0000:01:00.0: Can't find a correct rfid for crf id 0x5a2
-...
-BUG: kernel NULL pointer dereference, address: 0000000000000028
-...
-RIP: 0010:iwl_pci_remove+0x12/0x30 [iwlwifi]
-pci_device_remove+0x3e/0xb0
-device_release_driver_internal+0x103/0x1f0
-driver_detach+0x4c/0x90
-bus_remove_driver+0x5c/0xd0
-driver_unregister+0x31/0x50
-pci_unregister_driver+0x40/0x90
-iwl_pci_unregister_driver+0x15/0x20 [iwlwifi]
-__exit_compat+0x9/0x98 [iwlwifi]
-__x64_sys_delete_module+0x147/0x260
+Note: I encountered this issue on kernel-4.18, which can be fixed by
+this patch. Then I checked the latest code in the community
+and found similar issue.
 
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20230413213309.082f6e21341b.I0db21d7fa9a828d571ca886713bd0b5d0b6e1e5c@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
+Signed-off-by: Zhuang Shengen <zhuangshengen@huawei.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/pcie/drv.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/vmw_vsock/af_vsock.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-index f34297fd453c0..5153314e85554 100644
---- a/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-+++ b/drivers/net/wireless/intel/iwlwifi/pcie/drv.c
-@@ -1173,6 +1173,9 @@ static void iwl_pci_remove(struct pci_dev *pdev)
- {
- 	struct iwl_trans *trans = pci_get_drvdata(pdev);
- 
-+	if (!trans)
-+		return;
-+
- 	iwl_drv_stop(trans->drv);
- 
- 	iwl_trans_pcie_free(trans);
+diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
+index 28f6188458c42..4cd65a1a07f97 100644
+--- a/net/vmw_vsock/af_vsock.c
++++ b/net/vmw_vsock/af_vsock.c
+@@ -1232,7 +1232,7 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
+ 			vsock_transport_cancel_pkt(vsk);
+ 			vsock_remove_connected(vsk);
+ 			goto out_wait;
+-		} else if (timeout == 0) {
++		} else if ((sk->sk_state != TCP_ESTABLISHED) && (timeout == 0)) {
+ 			err = -ETIMEDOUT;
+ 			sk->sk_state = TCP_CLOSE;
+ 			sock->state = SS_UNCONNECTED;
 -- 
 2.39.2
 
