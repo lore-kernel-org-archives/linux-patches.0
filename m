@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242CA611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:38:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7B9FC433EF;
-	Sun, 28 May 2023 19:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8740C611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:38:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14858C433EF;
+	Sun, 28 May 2023 19:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302707;
-	bh=Ahit4sJLUQDt1oCMke5aDHSrhlY8boMO7BpScjVoYYI=;
+	s=korg; t=1685302709;
+	bh=1VLUA8HWeq6VhVyIy4GFFWdztGzpB+qVMQNLruE0kb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pfse78dNEEJF9iu+48jkaj2OeGLs1nDDZypNeSxMPTxEk3OpoGOOJzar/HCQYi/0t
-	 7Jj5P+ozNOWdM6iyMZMMLTBSgB5kOse7gzYiFoExlklMFB5QEqg9DNppLXPYn33mC0
-	 A1SHclhR8OOLI9tGRAMtXvX2VLj+41XkM1j48Ipg=
+	b=kdxaflCGOkSRL3c5E2oX4tbiT6DKDsakguY2LJ3fXdVhvlWd0peJGGuq/qKJOU9oZ
+	 sA2UOXt1czsfzOkyvDab0rxuWFm9oZ/Ls60/4aolf7lC93LdPZF6VC1Kj8j/LUS1Te
+	 8zcc1h5JeKGzdr7SBxctchR0prbWKsCPz3UjgAnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Mark Bloch <mbloch@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>
-Subject: [PATCH 6.1 113/119] net/mlx5: Devcom, serialize devcom registration
-Date: Sun, 28 May 2023 20:11:53 +0100
-Message-Id: <20230528190839.231242741@linuxfoundation.org>
+	Hugo Villeneuve <hvilleneuve@dimonoff.com>,
+	Shawn Guo <shawnguo@kernel.org>
+Subject: [PATCH 6.1 114/119] arm64: dts: imx8mn-var-som: fix PHY detection bug by adding deassert delay
+Date: Sun, 28 May 2023 20:11:54 +0100
+Message-Id: <20230528190839.261985073@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -35,95 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Hugo Villeneuve <hvilleneuve@dimonoff.com>
 
-commit 1f893f57a3bf9fe1f4bcb25b55aea7f7f9712fe7 upstream.
+commit f161cea5a20f3aeeb637a88ad1705fc2720b4d58 upstream.
 
->From one hand, mlx5 driver is allowing to probe PFs in parallel.
->From the other hand, devcom, which is a share resource between PFs, is
-registered without any lock. This might resulted in memory problems.
+While testing the ethernet interface on a Variscite symphony carrier
+board using an imx8mn SOM with an onboard ADIN1300 PHY (EC hardware
+configuration), the ethernet PHY is not detected.
 
-Hence, use the global mlx5_dev_list_lock in order to serialize devcom
-registration.
+The ADIN1300 datasheet indicate that the "Management interface
+active (t4)" state is reached at most 5ms after the reset signal is
+deasserted.
 
-Fixes: fadd59fc50d0 ("net/mlx5: Introduce inter-device communication mechanism")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+The device tree in Variscite custom git repository uses the following
+property:
+
+    phy-reset-post-delay = <20>;
+
+Add a new MDIO property 'reset-deassert-us' of 20ms to have the same
+delay inside the ethphy node. Adding this property fixes the problem
+with the PHY detection.
+
+Note that this SOM can also have an Atheros AR8033 PHY. In this case,
+a 1ms deassert delay is sufficient. Add a comment to that effect.
+
+Fixes: ade0176dd8a0 ("arm64: dts: imx8mn-var-som: Add Variscite VAR-SOM-MX8MN System on Module")
+Signed-off-by: Hugo Villeneuve <hvilleneuve@dimonoff.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c |   19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
-@@ -3,6 +3,7 @@
+--- a/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn-var-som.dtsi
+@@ -98,11 +98,17 @@
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
  
- #include <linux/mlx5/vport.h>
- #include "lib/devcom.h"
-+#include "mlx5_core.h"
- 
- static LIST_HEAD(devcom_list);
- 
-@@ -77,6 +78,7 @@ struct mlx5_devcom *mlx5_devcom_register
- 	if (MLX5_CAP_GEN(dev, num_lag_ports) != MLX5_DEVCOM_PORTS_SUPPORTED)
- 		return NULL;
- 
-+	mlx5_dev_list_lock();
- 	sguid0 = mlx5_query_nic_system_image_guid(dev);
- 	list_for_each_entry(iter, &devcom_list, list) {
- 		struct mlx5_core_dev *tmp_dev = NULL;
-@@ -102,8 +104,10 @@ struct mlx5_devcom *mlx5_devcom_register
- 
- 	if (!priv) {
- 		priv = mlx5_devcom_list_alloc();
--		if (!priv)
--			return ERR_PTR(-ENOMEM);
-+		if (!priv) {
-+			devcom = ERR_PTR(-ENOMEM);
-+			goto out;
-+		}
- 
- 		idx = 0;
- 		new_priv = true;
-@@ -114,12 +118,14 @@ struct mlx5_devcom *mlx5_devcom_register
- 	if (!devcom) {
- 		if (new_priv)
- 			kfree(priv);
--		return ERR_PTR(-ENOMEM);
-+		devcom = ERR_PTR(-ENOMEM);
-+		goto out;
- 	}
- 
- 	if (new_priv)
- 		list_add(&priv->list, &devcom_list);
--
-+out:
-+	mlx5_dev_list_unlock();
- 	return devcom;
- }
- 
-@@ -132,6 +138,7 @@ void mlx5_devcom_unregister_device(struc
- 	if (IS_ERR_OR_NULL(devcom))
- 		return;
- 
-+	mlx5_dev_list_lock();
- 	priv = devcom->priv;
- 	priv->devs[devcom->idx] = NULL;
- 
-@@ -142,10 +149,12 @@ void mlx5_devcom_unregister_device(struc
- 			break;
- 
- 	if (i != MLX5_DEVCOM_PORTS_SUPPORTED)
--		return;
-+		goto out;
- 
- 	list_del(&priv->list);
- 	kfree(priv);
-+out:
-+	mlx5_dev_list_unlock();
- }
- 
- void mlx5_devcom_register_component(struct mlx5_devcom *devcom,
+-		ethphy: ethernet-phy@4 {
++		ethphy: ethernet-phy@4 { /* AR8033 or ADIN1300 */
+ 			compatible = "ethernet-phy-ieee802.3-c22";
+ 			reg = <4>;
+ 			reset-gpios = <&gpio1 9 GPIO_ACTIVE_LOW>;
+ 			reset-assert-us = <10000>;
++			/*
++			 * Deassert delay:
++			 * ADIN1300 requires 5ms.
++			 * AR8033   requires 1ms.
++			 */
++			reset-deassert-us = <20000>;
+ 		};
+ 	};
+ };
 
 
