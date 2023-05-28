@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD540611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:20:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48900C433D2;
-	Sun, 28 May 2023 19:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 297A7611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:20:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB26FC433EF;
+	Sun, 28 May 2023 19:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301610;
-	bh=+LCOnBj3keaLcR+E+3OYLG9rfTfm8+9kpyV63StUHrc=;
+	s=korg; t=1685301613;
+	bh=RdySPeVJRC1Kiq69KN3zyT/FG7T8LN/hOOLfj/zqKQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pxE21etgeFXl2sN6C9b/opDbFB2t06Mq0O1cl+0btHBv7AagG8+YxYnO3loyMADad
-	 ra+71WD096gxqhr7nLDiYEI1BvILsm/pxIHZbNUfkRwYx10y8L8J6qM4cii4iAG9sE
-	 I3MCUlBeDD1R5sgchQHN33qw8atwzH8BAU3H/BHc=
+	b=LW8F2ipr5ao8d/1/z5lKiQerFkQQ2IqYukIQqAVCQaduHc7v9D27Dp3cyRJ62lEmz
+	 Zk0fcRCed96SVa2URAQcgNv4bHvDf3AWsbWjzEQQ+6Fa6UIRK3bWAnWLY4TAHF6rH8
+	 U45IJHQtwFpDB1ZPqrg7CYyWA4fq3dLtxq3xqnCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Konrad=20Gr=C3=A4fe?= <k.graefe@gateware.de>,
+	Jiri Slaby <jslaby@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 098/132] usb: gadget: u_ether: Fix host MAC address case
-Date: Sun, 28 May 2023 20:10:37 +0100
-Message-Id: <20230528190836.651384328@linuxfoundation.org>
+Subject: [PATCH 4.19 099/132] vc_screen: rewrite vcs_size to accept vc, not inode
+Date: Sun, 28 May 2023 20:10:38 +0100
+Message-Id: <20230528190836.689282105@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -34,59 +34,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Gräfe <k.graefe@gateware.de>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit 3c0f4f09c063e143822393d99cb2b19a85451c07 ]
+[ Upstream commit 71d4abfab322e827a75304431fe0fad3c805cb80 ]
 
-The CDC-ECM specification [1] requires to send the host MAC address as
-an uppercase hexadecimal string in chapter "5.4 Ethernet Networking
-Functional Descriptor":
-    The Unicode character is chosen from the set of values 30h through
-    39h and 41h through 46h (0-9 and A-F).
+It is weird to fetch the information from the inode over and over. Read
+and write already have the needed information, so rewrite vcs_size to
+accept a vc, attr and unicode and adapt vcs_lseek to that.
 
-However, snprintf(.., "%pm", ..) generates a lowercase MAC address
-string. While most host drivers are tolerant to this, UsbNcm.sys on
-Windows 10 is not. Instead it uses a different MAC address with all
-bytes set to zero including and after the first byte containing a
-lowercase letter. On Windows 11 Microsoft fixed it, but apparently they
-did not backport the fix.
+Also make sure all sites check the return value of vcs_size for errors.
 
-This change fixes the issue by upper-casing the MAC to comply with the
-specification.
+And document it using kernel-doc.
 
-[1]: https://www.usb.org/document-library/class-definitions-communication-devices-12, file ECM120.pdf
-
-Fixes: bcd4a1c40bee ("usb: gadget: u_ether: construct with default values and add setters/getters")
-Cc: stable@vger.kernel.org
-Signed-off-by: Konrad Gräfe <k.graefe@gateware.de>
-Link: https://lore.kernel.org/r/20230505143640.443014-1-k.graefe@gateware.de
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20200818085706.12163-5-jslaby@suse.cz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 8fb9ea65c9d1 ("vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/u_ether.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/vt/vc_screen.c | 46 ++++++++++++++++++++++++--------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/u_ether.c b/drivers/usb/gadget/function/u_ether.c
-index 561a090ced6de..7d9a551c47f98 100644
---- a/drivers/usb/gadget/function/u_ether.c
-+++ b/drivers/usb/gadget/function/u_ether.c
-@@ -17,6 +17,7 @@
- #include <linux/etherdevice.h>
- #include <linux/ethtool.h>
- #include <linux/if_vlan.h>
-+#include <linux/string_helpers.h>
- #include <linux/usb/composite.h>
- 
- #include "u_ether.h"
-@@ -940,6 +941,8 @@ int gether_get_host_addr_cdc(struct net_device *net, char *host_addr, int len)
- 	dev = netdev_priv(net);
- 	snprintf(host_addr, len, "%pm", dev->host_mac);
- 
-+	string_upper(host_addr, host_addr);
-+
- 	return strlen(host_addr);
+diff --git a/drivers/tty/vt/vc_screen.c b/drivers/tty/vt/vc_screen.c
+index 28bc9c70de3ec..5decdbad2d65c 100644
+--- a/drivers/tty/vt/vc_screen.c
++++ b/drivers/tty/vt/vc_screen.c
+@@ -182,39 +182,47 @@ vcs_vc(struct inode *inode, int *viewed)
+ 	return vc_cons[currcons].d;
  }
- EXPORT_SYMBOL_GPL(gether_get_host_addr_cdc);
+ 
+-/*
+- * Returns size for VC carried by inode.
++/**
++ * vcs_size -- return size for a VC in @vc
++ * @vc: which VC
++ * @attr: does it use attributes?
++ * @unicode: is it unicode?
++ *
+  * Must be called with console_lock.
+  */
+-static int
+-vcs_size(struct inode *inode)
++static int vcs_size(const struct vc_data *vc, bool attr, bool unicode)
+ {
+ 	int size;
+-	struct vc_data *vc;
+ 
+ 	WARN_CONSOLE_UNLOCKED();
+ 
+-	vc = vcs_vc(inode, NULL);
+-	if (!vc)
+-		return -ENXIO;
+-
+ 	size = vc->vc_rows * vc->vc_cols;
+ 
+-	if (use_attributes(inode)) {
+-		if (use_unicode(inode))
++	if (attr) {
++		if (unicode)
+ 			return -EOPNOTSUPP;
+-		size = 2*size + HEADER_SIZE;
+-	} else if (use_unicode(inode))
++
++		size = 2 * size + HEADER_SIZE;
++	} else if (unicode)
+ 		size *= 4;
++
+ 	return size;
+ }
+ 
+ static loff_t vcs_lseek(struct file *file, loff_t offset, int orig)
+ {
++	struct inode *inode = file_inode(file);
++	struct vc_data *vc;
+ 	int size;
+ 
+ 	console_lock();
+-	size = vcs_size(file_inode(file));
++	vc = vcs_vc(inode, NULL);
++	if (!vc) {
++		console_unlock();
++		return -ENXIO;
++	}
++
++	size = vcs_size(vc, use_attributes(inode), use_unicode(inode));
+ 	console_unlock();
+ 	if (size < 0)
+ 		return size;
+@@ -276,7 +284,7 @@ vcs_read(struct file *file, char __user *buf, size_t count, loff_t *ppos)
+ 		 * as copy_to_user at the end of this loop
+ 		 * could sleep.
+ 		 */
+-		size = vcs_size(inode);
++		size = vcs_size(vc, attr, uni_mode);
+ 		if (size < 0) {
+ 			ret = size;
+ 			break;
+@@ -457,7 +465,11 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
+ 	if (!vc)
+ 		goto unlock_out;
+ 
+-	size = vcs_size(inode);
++	size = vcs_size(vc, attr, false);
++	if (size < 0) {
++		ret = size;
++		goto unlock_out;
++	}
+ 	ret = -EINVAL;
+ 	if (pos < 0 || pos > size)
+ 		goto unlock_out;
+@@ -496,7 +508,7 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
+ 		 * the user buffer, so recheck.
+ 		 * Return data written up to now on failure.
+ 		 */
+-		size = vcs_size(inode);
++		size = vcs_size(vc, attr, false);
+ 		if (size < 0) {
+ 			if (written)
+ 				break;
 -- 
 2.39.2
 
