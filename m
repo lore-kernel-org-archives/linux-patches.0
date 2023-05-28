@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD395569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:26:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AB86C433EF;
-	Sun, 28 May 2023 19:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23857569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:26:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4171C433D2;
+	Sun, 28 May 2023 19:26:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301969;
-	bh=YBbh6C+y982tueFHqNEFL9IBghynyZ0pHHDw9K7NAno=;
+	s=korg; t=1685301972;
+	bh=PFOlSRFaisdiM99JiILJLGWokKN4IMRSYC9iOn2zyFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t8BZKBgZD4UNT59MRFP8loBm2qpNEPQYGDB6MLqo+OdueBwzl20U6cVWU96B1M6XX
-	 weZ+c5rRl6+67id3x+/STSuf6nqln+2DZT6ttWj0PlyQv6RL5D+QFbGPm1PBn6LFhG
-	 fQl5gjaYZFibMl3iTUpDUppOn+PV8SdREoxgBOyI=
+	b=o4tfSm/4aFtvmQMdnKZ3EdJd82XyieOFZVo2jQJjUHCJVFyHruU17cI4c2nV3nRiZ
+	 7FxhhCGGYwKixw39e5TEUAPxfT/UGlr7UIC1FVg6A9TcG+qpdIrAZrb/Xc4kHw/dqs
+	 C1i+QBkLYfRkl2+hQrPsMEW3aOYNDIPEtMbd/vPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hugues ANGUELKOV <hanguelkov@randorisec.fr>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 109/161] netfilter: nf_tables: allow up to 64 bytes in the set element data area
-Date: Sun, 28 May 2023 20:10:33 +0100
-Message-Id: <20230528190840.551771317@linuxfoundation.org>
+Subject: [PATCH 5.4 110/161] netfilter: nf_tables: stricter validation of element data
+Date: Sun, 28 May 2023 20:10:34 +0100
+Message-Id: <20230528190840.579537409@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -36,127 +37,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ fdb9c405e35bdc6e305b9b4e20ebc141ed14fc81 ]
+[ 7e6bc1f6cabcd30aba0b11219d8e01b952eacbb6 ]
 
-So far, the set elements could store up to 128-bits in the data area.
+Make sure element data type and length do not mismatch the one specified
+by the set declaration.
 
+Fixes: 7d7402642eaf ("netfilter: nf_tables: variable sized set element keys / data")
+Reported-by: Hugues ANGUELKOV <hanguelkov@randorisec.fr>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  4 +++
- net/netfilter/nf_tables_api.c     | 41 +++++++++++++++++++++----------
- 2 files changed, 32 insertions(+), 13 deletions(-)
+ net/netfilter/nf_tables_api.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index ba5f97f5c490e..a8cc2750990f9 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -239,6 +239,10 @@ struct nft_set_elem {
- 		u32		buf[NFT_DATA_VALUE_MAXLEN / sizeof(u32)];
- 		struct nft_data	val;
- 	} key;
-+	union {
-+		u32		buf[NFT_DATA_VALUE_MAXLEN / sizeof(u32)];
-+		struct nft_data val;
-+	} data;
- 	void			*priv;
- };
- 
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 13a8a78b8ee8b..8648b3ced6221 100644
+index 8648b3ced6221..c82c4635c0a96 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -4310,6 +4310,25 @@ static int nft_setelem_parse_key(struct nft_ctx *ctx, struct nft_set *set,
- 	return 0;
- }
- 
-+static int nft_setelem_parse_data(struct nft_ctx *ctx, struct nft_set *set,
-+				  struct nft_data_desc *desc,
-+				  struct nft_data *data,
-+				  struct nlattr *attr)
-+{
-+	int err;
-+
-+	err = nft_data_init(ctx, data, NFT_DATA_VALUE_MAXLEN, desc, attr);
-+	if (err < 0)
-+		return err;
-+
-+	if (desc->type != NFT_DATA_VERDICT && desc->len != set->dlen) {
-+		nft_data_release(data, desc->type);
-+		return -EINVAL;
-+	}
-+
-+	return 0;
-+}
-+
- static int nft_get_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 			    const struct nlattr *attr)
+@@ -4315,13 +4315,20 @@ static int nft_setelem_parse_data(struct nft_ctx *ctx, struct nft_set *set,
+ 				  struct nft_data *data,
+ 				  struct nlattr *attr)
  {
-@@ -4536,7 +4555,6 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	struct nft_object *obj = NULL;
- 	struct nft_userdata *udata;
- 	struct nft_data_desc desc;
--	struct nft_data data;
- 	enum nft_registers dreg;
- 	struct nft_trans *trans;
- 	u32 flags = 0;
-@@ -4629,15 +4647,11 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
++	u32 dtype;
+ 	int err;
+ 
+ 	err = nft_data_init(ctx, data, NFT_DATA_VALUE_MAXLEN, desc, attr);
+ 	if (err < 0)
+ 		return err;
+ 
+-	if (desc->type != NFT_DATA_VERDICT && desc->len != set->dlen) {
++	if (set->dtype == NFT_DATA_VERDICT)
++		dtype = NFT_DATA_VERDICT;
++	else
++		dtype = NFT_DATA_VALUE;
++
++	if (dtype != desc->type ||
++	    set->dlen != desc->len) {
+ 		nft_data_release(data, desc->type);
+ 		return -EINVAL;
  	}
- 
- 	if (nla[NFTA_SET_ELEM_DATA] != NULL) {
--		err = nft_data_init(ctx, &data, sizeof(data), &desc,
--				    nla[NFTA_SET_ELEM_DATA]);
-+		err = nft_setelem_parse_data(ctx, set, &desc, &elem.data.val,
-+					     nla[NFTA_SET_ELEM_DATA]);
- 		if (err < 0)
- 			goto err2;
- 
--		err = -EINVAL;
--		if (set->dtype != NFT_DATA_VERDICT && desc.len != set->dlen)
--			goto err3;
--
- 		dreg = nft_type_to_reg(set->dtype);
- 		list_for_each_entry(binding, &set->bindings, list) {
- 			struct nft_ctx bind_ctx = {
-@@ -4651,14 +4665,14 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 				continue;
- 
- 			err = nft_validate_register_store(&bind_ctx, dreg,
--							  &data,
-+							  &elem.data.val,
- 							  desc.type, desc.len);
- 			if (err < 0)
- 				goto err3;
- 
- 			if (desc.type == NFT_DATA_VERDICT &&
--			    (data.verdict.code == NFT_GOTO ||
--			     data.verdict.code == NFT_JUMP))
-+			    (elem.data.val.verdict.code == NFT_GOTO ||
-+			     elem.data.val.verdict.code == NFT_JUMP))
- 				nft_validate_state_update(ctx->net,
- 							  NFT_VALIDATE_NEED);
- 		}
-@@ -4679,8 +4693,9 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	}
- 
- 	err = -ENOMEM;
--	elem.priv = nft_set_elem_init(set, &tmpl, elem.key.val.data, data.data,
--				      timeout, expiration, GFP_KERNEL);
-+	elem.priv = nft_set_elem_init(set, &tmpl, elem.key.val.data,
-+				      elem.data.val.data, timeout, expiration,
-+				      GFP_KERNEL);
- 	if (elem.priv == NULL)
- 		goto err3;
- 
-@@ -4746,7 +4761,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	kfree(elem.priv);
- err3:
- 	if (nla[NFTA_SET_ELEM_DATA] != NULL)
--		nft_data_release(&data, desc.type);
-+		nft_data_release(&elem.data.val, desc.type);
- err2:
- 	nft_data_release(&elem.key.val, NFT_DATA_VALUE);
- err1:
 -- 
 2.39.2
 
