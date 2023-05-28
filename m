@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C41611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D639AC433EF;
-	Sun, 28 May 2023 19:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4C4A611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42C2AC433D2;
+	Sun, 28 May 2023 19:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303256;
-	bh=y3/oTmxZMZyUd9mxFMw5smXixd37XJ8Q1HejfZBBX4Y=;
+	s=korg; t=1685303258;
+	bh=nE6DH8lkHp4RIvjPDYmatGCniNAbLsD03mwU3aTOKhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCozr8z24C7btVlM8WCkjuUw3gyVT50+7HhNZlPgsgJYmoJaQbnZBp8X4XU1jHDbP
-	 eR1YWlmHapF7QNA9afgPjtJp8c+WzcQOFTOQiUkmaEEHSSHKiObubVP8wcaxFOR4Vl
-	 JR/S/EEzRif61VmoQVK2lB6TMjWkHngopp5ohSaY=
+	b=bnMgONuU3letYG5TMRtdYTlptmONeMdcGkDMOsTIjYPSEe/2J0ykLw+GLm7b+NyYS
+	 1jyjDqWCOh5TsIgY7ocmuhyxrlLzO75n8T+m3P+9q7zSlOpmsvY7SgWEYeDwJQGL5T
+	 BnHrAbxYhzT54HjvFVFhrRkDhmtaLRRm3PINGm5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
+	David Epping <david.epping@missinglinkelectronics.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 210/211] 3c589_cs: Fix an error handling path in tc589_probe()
-Date: Sun, 28 May 2023 20:12:11 +0100
-Message-Id: <20230528190848.706993580@linuxfoundation.org>
+Subject: [PATCH 5.10 211/211] net: phy: mscc: add VSC8502 to MODULE_DEVICE_TABLE
+Date: Sun, 28 May 2023 20:12:12 +0100
+Message-Id: <20230528190848.730574258@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,49 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: David Epping <david.epping@missinglinkelectronics.com>
 
-commit 640bf95b2c7c2981fb471acdafbd3e0458f8390d upstream.
+commit 57fb54ab9f6945e204740b696bd4cee61ee04e5e upstream.
 
-Should tc589_config() fail, some resources need to be released as already
-done in the remove function.
+The mscc driver implements support for VSC8502, so its ID should be in
+the MODULE_DEVICE_TABLE for automatic loading.
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/d8593ae867b24c79063646e36f9b18b0790107cb.1684575975.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: David Epping <david.epping@missinglinkelectronics.com>
+Fixes: d3169863310d ("net: phy: mscc: add support for VSC8502")
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/3com/3c589_cs.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/phy/mscc/mscc_main.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/ethernet/3com/3c589_cs.c
-+++ b/drivers/net/ethernet/3com/3c589_cs.c
-@@ -195,6 +195,7 @@ static int tc589_probe(struct pcmcia_dev
- {
- 	struct el3_private *lp;
- 	struct net_device *dev;
-+	int ret;
+--- a/drivers/net/phy/mscc/mscc_main.c
++++ b/drivers/net/phy/mscc/mscc_main.c
+@@ -2563,6 +2563,7 @@ static struct phy_driver vsc85xx_driver[
+ module_phy_driver(vsc85xx_driver);
  
- 	dev_dbg(&link->dev, "3c589_attach()\n");
- 
-@@ -218,7 +219,15 @@ static int tc589_probe(struct pcmcia_dev
- 
- 	dev->ethtool_ops = &netdev_ethtool_ops;
- 
--	return tc589_config(link);
-+	ret = tc589_config(link);
-+	if (ret)
-+		goto err_free_netdev;
-+
-+	return 0;
-+
-+err_free_netdev:
-+	free_netdev(dev);
-+	return ret;
- }
- 
- static void tc589_detach(struct pcmcia_device *link)
+ static struct mdio_device_id __maybe_unused vsc85xx_tbl[] = {
++	{ PHY_ID_VSC8502, 0xfffffff0, },
+ 	{ PHY_ID_VSC8504, 0xfffffff0, },
+ 	{ PHY_ID_VSC8514, 0xfffffff0, },
+ 	{ PHY_ID_VSC8530, 0xfffffff0, },
 
 
