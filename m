@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93CAF611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DC1C433D2;
-	Sun, 28 May 2023 19:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FF8611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916E9C433D2;
+	Sun, 28 May 2023 19:16:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301405;
-	bh=h8zhWTe2I29JDuWAspqdVpVRsV+rthBQkSspwK141f0=;
+	s=korg; t=1685301407;
+	bh=BR4psieaLe5m1WiFLrB14WfFWXXRVLIaoIjw3D6ekk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VfI9IP1etSAyUi+sFSid9jUXp3FBhOiVC7ZNO5QzVMqLYcVErCjQCuewdmF6NToHW
-	 441sUdNo8h0pCjs0Lk6cl2TxETD7o0kJQxB5Wr+zPTlLC5JsKyRXaEFHHdSxnRUC+Q
-	 W0EBA4ZZVJQ80grAiaI9dBgKQ49y6eXcsigW+aF0=
+	b=CbDJSY2dCo8xJqJtRvrdxbfw18Z6segT01UQ9IqIXadYjzJHBdCMcfFjBXKKIbugY
+	 NjgDYOQzzvJc3Oy8Bkha2fbh0CvK9Gusxta58bRTdW04VKjGNhcaKEykA1xwkw+cmP
+	 97aKbvv3GquZ0mQmWayi+PBuxWLeRHa5zdsOMDxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Armin Wolf <W_Armin@gmx.de>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Nur Hussein <hussein@unixcat.org>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 017/132] ACPI: EC: Fix oops when removing custom query handlers
-Date: Sun, 28 May 2023 20:09:16 +0100
-Message-Id: <20230528190834.094382398@linuxfoundation.org>
+Subject: [PATCH 4.19 018/132] drm/tegra: Avoid potential 32-bit integer overflow
+Date: Sun, 28 May 2023 20:09:17 +0100
+Message-Id: <20230528190834.128009692@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -35,38 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Armin Wolf <W_Armin@gmx.de>
+From: Nur Hussein <hussein@unixcat.org>
 
-[ Upstream commit e5b492c6bb900fcf9722e05f4a10924410e170c1 ]
+[ Upstream commit 2429b3c529da29d4277d519bd66d034842dcd70c ]
 
-When removing custom query handlers, the handler might still
-be used inside the EC query workqueue, causing a kernel oops
-if the module holding the callback function was already unloaded.
+In tegra_sor_compute_config(), the 32-bit value mode->clock is
+multiplied by 1000, and assigned to the u64 variable pclk. We can avoid
+a potential 32-bit integer overflow by casting mode->clock to u64 before
+we do the arithmetic and assignment.
 
-Fix this by flushing the EC query workqueue when removing
-custom query handlers.
-
-Tested on a Acer Travelmate 4002WLMi
-
-Signed-off-by: Armin Wolf <W_Armin@gmx.de>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Nur Hussein <hussein@unixcat.org>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/ec.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/tegra/sor.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
-index 3394ec64fe95d..d2fde87e4d0d4 100644
---- a/drivers/acpi/ec.c
-+++ b/drivers/acpi/ec.c
-@@ -1153,6 +1153,7 @@ static void acpi_ec_remove_query_handlers(struct acpi_ec *ec,
- void acpi_ec_remove_query_handler(struct acpi_ec *ec, u8 query_bit)
+diff --git a/drivers/gpu/drm/tegra/sor.c b/drivers/gpu/drm/tegra/sor.c
+index 83108e2430501..adc191ec26a99 100644
+--- a/drivers/gpu/drm/tegra/sor.c
++++ b/drivers/gpu/drm/tegra/sor.c
+@@ -829,7 +829,7 @@ static int tegra_sor_compute_config(struct tegra_sor *sor,
+ 				    struct drm_dp_link *link)
  {
- 	acpi_ec_remove_query_handlers(ec, false, query_bit);
-+	flush_workqueue(ec_query_wq);
- }
- EXPORT_SYMBOL_GPL(acpi_ec_remove_query_handler);
- 
+ 	const u64 f = 100000, link_rate = link->rate * 1000;
+-	const u64 pclk = mode->clock * 1000;
++	const u64 pclk = (u64)mode->clock * 1000;
+ 	u64 input, output, watermark, num;
+ 	struct tegra_sor_params params;
+ 	u32 num_syms_per_line;
 -- 
 2.39.2
 
