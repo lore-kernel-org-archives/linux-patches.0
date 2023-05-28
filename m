@@ -1,28 +1,24 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F6C611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:37:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC426C433EF;
-	Sun, 28 May 2023 19:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97551611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:37:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267F8C433D2;
+	Sun, 28 May 2023 19:37:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302648;
-	bh=zq1Os+D/7yy/NJzFj2J8bClDSlPMi/oDDTlDd37Pa0U=;
+	s=korg; t=1685302650;
+	bh=bF7lEOqT3yekHkyP14fUjvax/9aHSuMW7UK22MW/Nqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T711HN/3vk8tizsDc8gKwXQ79BM080Wf62ur/hoVP0Eu3NCDysZgnR3iINLnu9qRr
-	 NvYmRwjbq//V2xBjxZd0Q2mqcIu0d7Bzx7f0RPjvYcBxd7z2ed+0ZHSHkfj+svo3vA
-	 nRxrg80AjwS4ciV4i+S/3YaTXbrXgLNnlr3Bl+8M=
+	b=Q4b/t6CeTU6vph2xkFzGFHiDYqm/UNkfaUXLJY9dAnrPfGvxX/XJIauWGRt7CfoCZ
+	 ECSzpdkkTzPhnYGW6u7DqhtKMUllSs8Wm1oj+JJYe10qfE5be2wlx5nBBrw34vS1hj
+	 XxAPICT2Zkn3rTtCFfc+hHX+uJePLQAVTE12H3pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
-	Jiri Pirko <jiri@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 071/119] ipv6: Fix out-of-bounds access in ipv6_find_tlv()
-Date: Sun, 28 May 2023 20:11:11 +0100
-Message-Id: <20230528190837.876014596@linuxfoundation.org>
+	patches@lists.linux.dev
+Subject: [PATCH 6.1 089/119] regulator: pca9450: Fix BUCK2 enable_mask
+Date: Sun, 28 May 2023 20:11:29 +0100
+Message-Id: <20230528190838.506714676@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -36,36 +32,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit 878ecb0897f4737a4c9401f3523fd49589025671 upstream.
+commit d67dada3e2524514b09496b9ee1df22d4507a280 upstream.
 
-optlen is fetched without checking whether there is more than one byte to parse.
-It can lead to out-of-bounds access.
+This fixes a copy & paste error.
+No functional change intended, BUCK1_ENMODE_MASK equals BUCK2_ENMODE_MASK.
 
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with SVACE.
-
-Fixes: c61a40432509 ("[IPV6]: Find option offset by type.")
-Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 0935ff5f1f0a ("regulator: pca9450: add pca9450 pmic driver")
+Originally-from: Robin Gong <yibin.gong@nxp.com
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de
+Link: https://lore.kernel.org/r/20230512081935.2396180-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/exthdrs_core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/regulator/pca9450-regulator.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/exthdrs_core.c
-+++ b/net/ipv6/exthdrs_core.c
-@@ -143,6 +143,8 @@ int ipv6_find_tlv(const struct sk_buff *
- 			optlen = 1;
- 			break;
- 		default:
-+			if (len < 2)
-+				goto bad;
- 			optlen = nh[offset + 1] + 2;
- 			if (optlen > len)
- 				goto bad;
+--- a/drivers/regulator/pca9450-regulator.c
++++ b/drivers/regulator/pca9450-regulator.c
+@@ -264,7 +264,7 @@ static const struct pca9450_regulator_de
+ 			.vsel_reg = PCA9450_REG_BUCK2OUT_DVS0,
+ 			.vsel_mask = BUCK2OUT_DVS0_MASK,
+ 			.enable_reg = PCA9450_REG_BUCK2CTRL,
+-			.enable_mask = BUCK1_ENMODE_MASK,
++			.enable_mask = BUCK2_ENMODE_MASK,
+ 			.ramp_reg = PCA9450_REG_BUCK2CTRL,
+ 			.ramp_mask = BUCK2_RAMP_MASK,
+ 			.ramp_delay_table = pca9450_dvs_buck_ramp_table,
+@@ -502,7 +502,7 @@ static const struct pca9450_regulator_de
+ 			.vsel_reg = PCA9450_REG_BUCK2OUT_DVS0,
+ 			.vsel_mask = BUCK2OUT_DVS0_MASK,
+ 			.enable_reg = PCA9450_REG_BUCK2CTRL,
+-			.enable_mask = BUCK1_ENMODE_MASK,
++			.enable_mask = BUCK2_ENMODE_MASK,
+ 			.ramp_reg = PCA9450_REG_BUCK2CTRL,
+ 			.ramp_mask = BUCK2_RAMP_MASK,
+ 			.ramp_delay_table = pca9450_dvs_buck_ramp_table,
 
 
