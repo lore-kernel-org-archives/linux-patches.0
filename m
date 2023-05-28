@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04E5611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B728C433D2;
-	Sun, 28 May 2023 19:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63453611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36D8C433EF;
+	Sun, 28 May 2023 19:45:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303121;
-	bh=x/eAUTV38sOl29aLIHCjb4av/L24c7bF32z0zey5xn4=;
+	s=korg; t=1685303124;
+	bh=W1wk4Ew5cEj8hZ0gA1oqChuF8tUcSWMo9U9eEELS84c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EcEqItjOIc3GW5da2KTKxRfKEXmYQOCD1sFLnJNCribQkYJKCrcVD3OxIMu+NKMxE
-	 6KW1chZE2FCzaivi7R4dffEVEfvGZ3HU1cbtLQxXGNpafw08ekV0BOoQl5CGlBrVun
-	 d+b6UdmvycjXTvlp5+lbSYc2K82AOQ4gcYuoHi+4=
+	b=W/whAc942a97+YcG5s/RCzLlwUFfaCwh731mJ/gwLCZZFb8x5Qu/MKYAcRQ2ON9af
+	 2c7Zj45MEQNcXCHBViC/8IlyUTZqlsqZI04HsRJP0i0WcXF/eaMAoN7trXyfTXj/pI
+	 XF5I9Os8sfYSMuNGRupbgHep4HgqrJe1vPg3mkvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	syzkaller <syzkaller@googlegroups.com>,
-	George Kennedy <george.kennedy@oracle.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>
-Subject: [PATCH 5.10 145/211] vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF
-Date: Sun, 28 May 2023 20:11:06 +0100
-Message-Id: <20230528190847.114911290@linuxfoundation.org>
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Davide Caratti <dcaratti@redhat.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Dragos-Marian Panait <dragos.panait@windriver.com>
+Subject: [PATCH 5.10 163/211] net/sched: act_mirred: better wording on protection against excessive stack growth
+Date: Sun, 28 May 2023 20:11:24 +0100
+Message-Id: <20230528190847.550884967@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,110 +37,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: George Kennedy <george.kennedy@oracle.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-commit 8fb9ea65c9d1338b0d2bb0a9122dc942cdd32357 upstream.
+[ Upstream commit 78dcdffe0418ac8f3f057f26fe71ccf4d8ed851f ]
 
-After a call to console_unlock() in vcs_write() the vc_data struct can be
-freed by vc_port_destruct(). Because of that, the struct vc_data pointer
-must be reloaded in the while loop in vcs_write() after console_lock() to
-avoid a UAF when vcs_size() is called.
+with commit e2ca070f89ec ("net: sched: protect against stack overflow in
+TC act_mirred"), act_mirred protected itself against excessive stack growth
+using per_cpu counter of nested calls to tcf_mirred_act(), and capping it
+to MIRRED_RECURSION_LIMIT. However, such protection does not detect
+recursion/loops in case the packet is enqueued to the backlog (for example,
+when the mirred target device has RPS or skb timestamping enabled). Change
+the wording from "recursion" to "nesting" to make it more clear to readers.
 
-Syzkaller reported a UAF in vcs_size().
-
-BUG: KASAN: slab-use-after-free in vcs_size (drivers/tty/vt/vc_screen.c:215)
-Read of size 4 at addr ffff8880beab89a8 by task repro_vcs_size/4119
-
-Call Trace:
- <TASK>
-__asan_report_load4_noabort (mm/kasan/report_generic.c:380)
-vcs_size (drivers/tty/vt/vc_screen.c:215)
-vcs_write (drivers/tty/vt/vc_screen.c:664)
-vfs_write (fs/read_write.c:582 fs/read_write.c:564)
-...
- <TASK>
-
-Allocated by task 1213:
-kmalloc_trace (mm/slab_common.c:1064)
-vc_allocate (./include/linux/slab.h:559 ./include/linux/slab.h:680
-    drivers/tty/vt/vt.c:1078 drivers/tty/vt/vt.c:1058)
-con_install (drivers/tty/vt/vt.c:3334)
-tty_init_dev (drivers/tty/tty_io.c:1303 drivers/tty/tty_io.c:1415
-    drivers/tty/tty_io.c:1392)
-tty_open (drivers/tty/tty_io.c:2082 drivers/tty/tty_io.c:2128)
-chrdev_open (fs/char_dev.c:415)
-do_dentry_open (fs/open.c:921)
-vfs_open (fs/open.c:1052)
-...
-
-Freed by task 4116:
-kfree (mm/slab_common.c:1016)
-vc_port_destruct (drivers/tty/vt/vt.c:1044)
-tty_port_destructor (drivers/tty/tty_port.c:296)
-tty_port_put (drivers/tty/tty_port.c:312)
-vt_disallocate_all (drivers/tty/vt/vt_ioctl.c:662 (discriminator 2))
-vt_ioctl (drivers/tty/vt/vt_ioctl.c:903)
-tty_ioctl (drivers/tty/tty_io.c:2778)
-...
-
-The buggy address belongs to the object at ffff8880beab8800
- which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 424 bytes inside of
- freed 1024-byte region [ffff8880beab8800, ffff8880beab8c00)
-
-The buggy address belongs to the physical page:
-page:00000000afc77580 refcount:1 mapcount:0 mapping:0000000000000000
-    index:0x0 pfn:0xbeab8
-head:00000000afc77580 order:3 entire_mapcount:0 nr_pages_mapped:0
-    pincount:0
-flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
-page_type: 0xffffffff()
-raw: 000fffffc0010200 ffff888100042dc0 ffffea000426de00 dead000000000002
-raw: 0000000000000000 0000000000100010 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff8880beab8880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8880beab8900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff8880beab8980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                  ^
- ffff8880beab8a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8880beab8a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-Disabling lock debugging due to kernel taint
-
-Fixes: ac751efa6a0d ("console: rename acquire/release_console_sem() to console_lock/unlock()")
-Cc: stable <stable@kernel.org>
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: George Kennedy <george.kennedy@oracle.com>
-Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/1683889728-10411-1-git-send-email-george.kennedy@oracle.com
+CC: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: ca22da2fbd69 ("act_mirred: use the backlog for nested calls to mirred ingress")
+Signed-off-by: Dragos-Marian Panait <dragos.panait@windriver.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/vc_screen.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/sched/act_mirred.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -656,10 +656,17 @@ vcs_write(struct file *file, const char
- 			}
- 		}
+--- a/net/sched/act_mirred.c
++++ b/net/sched/act_mirred.c
+@@ -28,8 +28,8 @@
+ static LIST_HEAD(mirred_list);
+ static DEFINE_SPINLOCK(mirred_list_lock);
  
--		/* The vcs_size might have changed while we slept to grab
--		 * the user buffer, so recheck.
-+		/* The vc might have been freed or vcs_size might have changed
-+		 * while we slept to grab the user buffer, so recheck.
- 		 * Return data written up to now on failure.
- 		 */
-+		vc = vcs_vc(inode, &viewed);
-+		if (!vc) {
-+			if (written)
-+				break;
-+			ret = -ENXIO;
-+			goto unlock_out;
-+		}
- 		size = vcs_size(vc, attr, false);
- 		if (size < 0) {
- 			if (written)
+-#define MIRRED_RECURSION_LIMIT    4
+-static DEFINE_PER_CPU(unsigned int, mirred_rec_level);
++#define MIRRED_NEST_LIMIT    4
++static DEFINE_PER_CPU(unsigned int, mirred_nest_level);
+ 
+ static bool tcf_mirred_is_act_redirect(int action)
+ {
+@@ -225,7 +225,7 @@ static int tcf_mirred_act(struct sk_buff
+ 	struct sk_buff *skb2 = skb;
+ 	bool m_mac_header_xmit;
+ 	struct net_device *dev;
+-	unsigned int rec_level;
++	unsigned int nest_level;
+ 	int retval, err = 0;
+ 	bool use_reinsert;
+ 	bool want_ingress;
+@@ -236,11 +236,11 @@ static int tcf_mirred_act(struct sk_buff
+ 	int mac_len;
+ 	bool at_nh;
+ 
+-	rec_level = __this_cpu_inc_return(mirred_rec_level);
+-	if (unlikely(rec_level > MIRRED_RECURSION_LIMIT)) {
++	nest_level = __this_cpu_inc_return(mirred_nest_level);
++	if (unlikely(nest_level > MIRRED_NEST_LIMIT)) {
+ 		net_warn_ratelimited("Packet exceeded mirred recursion limit on dev %s\n",
+ 				     netdev_name(skb->dev));
+-		__this_cpu_dec(mirred_rec_level);
++		__this_cpu_dec(mirred_nest_level);
+ 		return TC_ACT_SHOT;
+ 	}
+ 
+@@ -310,7 +310,7 @@ static int tcf_mirred_act(struct sk_buff
+ 			err = tcf_mirred_forward(res->ingress, skb);
+ 			if (err)
+ 				tcf_action_inc_overlimit_qstats(&m->common);
+-			__this_cpu_dec(mirred_rec_level);
++			__this_cpu_dec(mirred_nest_level);
+ 			return TC_ACT_CONSUMED;
+ 		}
+ 	}
+@@ -322,7 +322,7 @@ out:
+ 		if (tcf_mirred_is_act_redirect(m_eaction))
+ 			retval = TC_ACT_SHOT;
+ 	}
+-	__this_cpu_dec(mirred_rec_level);
++	__this_cpu_dec(mirred_nest_level);
+ 
+ 	return retval;
+ }
 
 
