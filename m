@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4233C611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:44:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49D7C433EF;
-	Sun, 28 May 2023 19:44:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80A6611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:44:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E35C433D2;
+	Sun, 28 May 2023 19:44:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303089;
-	bh=sF6+TQ1GwFfaDmSfQjDe9uINE+FnvGGIpJsnfY9PnxU=;
+	s=korg; t=1685303091;
+	bh=V4+uVPq24SNd3Ty0/xxUQNaFaoUqdJtVSW7XDl7GwzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BHy2RsNNjCqQ4L/+7/P/ZB8RjFj+R9+qQwfgTpIldi4w6y8/aTm5u8pcE19FEzZog
-	 zfqrFI5d21qR1btUYb9XNhbsAw4gCdX1o8OTIRhOn4+2T1C5Y8j/3O0G8EzqaiaNuZ
-	 UBkosCy6uQUZYAXiLxRKAXevf5vKAbdIs8cJLVzk=
+	b=A0B4uTjySmQz0/RFe98EsBn44D181eDoUwmu9eg0bOIU3voX4esb5SAcwdG87Tk8T
+	 lGBDnezjkStB5rSxuSXOGRraTo7itsvYDvIc8+8rWpJGKAsBa6v6vzFU3tN2ui7PdV
+	 oxiFlWy0kkR4DPCnB3bWZBXA7AgH7o1t8PTy7uLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jon Maloy <jmaloy@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 121/211] netfilter: nft_set_rbtree: fix null deref on element insertion
-Date: Sun, 28 May 2023 20:10:42 +0100
-Message-Id: <20230528190846.563009332@linuxfoundation.org>
+Subject: [PATCH 5.10 112/211] tipc: check the bearer min mtu properly when setting it by netlink
+Date: Sun, 28 May 2023 20:10:33 +0100
+Message-Id: <20230528190846.352944244@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -34,86 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 61ae320a29b0540c16931816299eb86bf2b66c08 ]
+[ Upstream commit 35a089b5d793d2bfd2cc7cfa6104545184de2ce7 ]
 
-There is no guarantee that rb_prev() will not return NULL in nft_rbtree_gc_elem():
+Checking the bearer min mtu with tipc_udp_mtu_bad() only works for
+IPv4 UDP bearer, and IPv6 UDP bearer has a different value for the
+min mtu. This patch checks with encap_hlen + TIPC_MIN_BEARER_MTU
+for min mtu, which works for both IPv4 and IPv6 UDP bearer.
 
-general protection fault, probably for non-canonical address 0xdffffc0000000003: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000018-0x000000000000001f]
- nft_add_set_elem+0x14b0/0x2990
-  nf_tables_newsetelem+0x528/0xb30
+Note that tipc_udp_mtu_bad() is still used to check media min mtu
+in __tipc_nl_media_set(), as m->mtu currently is only used by the
+IPv4 UDP bearer as its default mtu value.
 
-Furthermore, there is a possible use-after-free while iterating,
-'node' can be free'd so we need to cache the next value to use.
-
-Fixes: c9e6978e2725 ("netfilter: nft_set_rbtree: Switch to node list walk for overlap detection")
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 682cd3cf946b ("tipc: confgiure and apply UDP bearer MTU on running links")
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Acked-by: Jon Maloy <jmaloy@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_rbtree.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ net/tipc/bearer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 4b9a499fe8f4d..1ffb24f4c74ca 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -220,7 +220,7 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
- {
- 	struct nft_set *set = (struct nft_set *)__set;
- 	struct rb_node *prev = rb_prev(&rbe->node);
--	struct nft_rbtree_elem *rbe_prev;
-+	struct nft_rbtree_elem *rbe_prev = NULL;
- 	struct nft_set_gc_batch *gcb;
- 
- 	gcb = nft_set_gc_batch_check(set, NULL, GFP_ATOMIC);
-@@ -228,17 +228,21 @@ static int nft_rbtree_gc_elem(const struct nft_set *__set,
- 		return -ENOMEM;
- 
- 	/* search for expired end interval coming before this element. */
--	do {
-+	while (prev) {
- 		rbe_prev = rb_entry(prev, struct nft_rbtree_elem, node);
- 		if (nft_rbtree_interval_end(rbe_prev))
- 			break;
- 
- 		prev = rb_prev(prev);
--	} while (prev != NULL);
-+	}
-+
-+	if (rbe_prev) {
-+		rb_erase(&rbe_prev->node, &priv->root);
-+		atomic_dec(&set->nelems);
-+	}
- 
--	rb_erase(&rbe_prev->node, &priv->root);
- 	rb_erase(&rbe->node, &priv->root);
--	atomic_sub(2, &set->nelems);
-+	atomic_dec(&set->nelems);
- 
- 	nft_set_gc_batch_add(gcb, rbe);
- 	nft_set_gc_batch_complete(gcb);
-@@ -267,7 +271,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 			       struct nft_set_ext **ext)
- {
- 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL;
--	struct rb_node *node, *parent, **p, *first = NULL;
-+	struct rb_node *node, *next, *parent, **p, *first = NULL;
- 	struct nft_rbtree *priv = nft_set_priv(set);
- 	u8 genmask = nft_genmask_next(net);
- 	int d, err;
-@@ -306,7 +310,9 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
- 	 * Values stored in the tree are in reversed order, starting from
- 	 * highest to lowest value.
- 	 */
--	for (node = first; node != NULL; node = rb_next(node)) {
-+	for (node = first; node != NULL; node = next) {
-+		next = rb_next(node);
-+
- 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
- 
- 		if (!nft_set_elem_active(&rbe->ext, genmask))
+diff --git a/net/tipc/bearer.c b/net/tipc/bearer.c
+index c6a9b3446ff89..91e678fa3feb5 100644
+--- a/net/tipc/bearer.c
++++ b/net/tipc/bearer.c
+@@ -1135,8 +1135,8 @@ int __tipc_nl_bearer_set(struct sk_buff *skb, struct genl_info *info)
+ 				return -EINVAL;
+ 			}
+ #ifdef CONFIG_TIPC_MEDIA_UDP
+-			if (tipc_udp_mtu_bad(nla_get_u32
+-					     (props[TIPC_NLA_PROP_MTU]))) {
++			if (nla_get_u32(props[TIPC_NLA_PROP_MTU]) <
++			    b->encap_hlen + TIPC_MIN_BEARER_MTU) {
+ 				NL_SET_ERR_MSG(info->extack,
+ 					       "MTU value is out-of-range");
+ 				return -EINVAL;
 -- 
 2.39.2
 
