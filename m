@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7A4611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A65C433EF;
-	Sun, 28 May 2023 19:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3AD611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC88C433EF;
+	Sun, 28 May 2023 19:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301369;
-	bh=J2LPz9DRRovs+mSnt/Zr/PIg1UYidc4u/Q0GZgj6oAo=;
+	s=korg; t=1685301372;
+	bh=IK3xFDM/vJDMW5hkcakojbUcbiGRgMjnwW2Em/OxSHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L86yjnT1aEBGpZUGIiRX9r5SpIT+tqDX1IuCrTvhNb0CfPyJdOjEjBk3SMbK0Zfpa
-	 m/WYPz7cLbHeumDnr5U98rzF4IIUn41W9HX9wkqAiX8ohhCK0Y1+ALtHdGnyTJLoxW
-	 keKAMLT3xHIUFpVVYAgpcCR/d5Q9gwDdmZuHDf4g=
+	b=otvWu+pbKtRpjiexixGvohEpRksY8RxYLdv039Tp+lk3fI84KVWiVyEzEXk0I4hkR
+	 XbB0RI7ROYmfe1B2Upt2oPcQxS/IAOsbnDpUazW2/AF6Crio3rqI0BrtdFAu+ohEG7
+	 TG7y9i1ktvyOV0ETSrzl2nisOINnJls42mIBaeBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daisuke Nojiri <dnojiri@chromium.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 4.14 82/86] power: supply: sbs-charger: Fix INHIBITED bit for Status reg
-Date: Sun, 28 May 2023 20:10:56 +0100
-Message-Id: <20230528190831.677999473@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 4.14 83/86] xen/pvcalls-back: fix double frees with pvcalls_new_active_socket()
+Date: Sun, 28 May 2023 20:10:57 +0100
+Message-Id: <20230528190831.706484607@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -34,31 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daisuke Nojiri <dnojiri@chromium.org>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit b2f2a3c9800208b0db2c2e34b05323757117faa2 upstream.
+commit 8fafac202d18230bb9926bda48e563fd2cce2a4f upstream.
 
-CHARGE_INHIBITED bit position of the ChargerStatus register is actually
-0 not 1. This patch corrects it.
+In the pvcalls_new_active_socket() function, most error paths call
+pvcalls_back_release_active(fedata->dev, fedata, map) which calls
+sock_release() on "sock".  The bug is that the caller also frees sock.
 
-Fixes: feb583e37f8a8 ("power: supply: add sbs-charger driver")
-Signed-off-by: Daisuke Nojiri <dnojiri@chromium.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fix this by making every error path in pvcalls_new_active_socket()
+release the sock, and don't free it in the caller.
+
+Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/e5f98dc2-0305-491f-a860-71bbd1398a2f@kili.mountain
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/sbs-charger.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/xen/pvcalls-back.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/power/supply/sbs-charger.c
-+++ b/drivers/power/supply/sbs-charger.c
-@@ -29,7 +29,7 @@
- #define SBS_CHARGER_REG_STATUS			0x13
- #define SBS_CHARGER_REG_ALARM_WARNING		0x16
+--- a/drivers/xen/pvcalls-back.c
++++ b/drivers/xen/pvcalls-back.c
+@@ -338,8 +338,10 @@ static struct sock_mapping *pvcalls_new_
+ 	void *page;
  
--#define SBS_CHARGER_STATUS_CHARGE_INHIBITED	BIT(1)
-+#define SBS_CHARGER_STATUS_CHARGE_INHIBITED	BIT(0)
- #define SBS_CHARGER_STATUS_RES_COLD		BIT(9)
- #define SBS_CHARGER_STATUS_RES_HOT		BIT(10)
- #define SBS_CHARGER_STATUS_BATTERY_PRESENT	BIT(14)
+ 	map = kzalloc(sizeof(*map), GFP_KERNEL);
+-	if (map == NULL)
++	if (map == NULL) {
++		sock_release(sock);
+ 		return NULL;
++	}
+ 
+ 	map->fedata = fedata;
+ 	map->sock = sock;
+@@ -431,10 +433,8 @@ static int pvcalls_back_connect(struct x
+ 					req->u.connect.ref,
+ 					req->u.connect.evtchn,
+ 					sock);
+-	if (!map) {
++	if (!map)
+ 		ret = -EFAULT;
+-		sock_release(sock);
+-	}
+ 
+ out:
+ 	rsp = RING_GET_RESPONSE(&fedata->ring, fedata->ring.rsp_prod_pvt++);
+@@ -575,7 +575,6 @@ static void __pvcalls_back_accept(struct
+ 					sock);
+ 	if (!map) {
+ 		ret = -EFAULT;
+-		sock_release(sock);
+ 		goto out_error;
+ 	}
+ 
 
 
