@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DA2611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:20:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E62EC433D2;
-	Sun, 28 May 2023 19:20:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091B1611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:20:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893E8C433EF;
+	Sun, 28 May 2023 19:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301615;
-	bh=Jk04oLCR4uxu0mnexxQZDSDcwfLJI52lvp18/Wrop24=;
+	s=korg; t=1685301617;
+	bh=UyJZ+b5FTVFJkSbJvZNYrfR6CjHKLnfQTAeMZve1RgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+84g2jtBJXSXPfYP+hdXh2EInP9zGYIDnn11vDr+oFeTIypDPCjYPdaf2rAndDbR
-	 V9eWcbQhXYQooEcwfsJ94mTxKEzUkg4nWDi6xjIcKVb7sq44tu54Nm9+n9DLuSYpnD
-	 Ox+drmwMMBirPhRba34iBUiE2RZp3m08pkVKqiAs=
+	b=nhvWY/0UfLXG+xFdVipIjIAfaEiSObGHpht7xoVeOAtg+VC8uzP67c8/NZUeINKi3
+	 F/2/A9I2c1dncMUW4cgQQbzXbuvPy80ONKDJlOYkykhKw1Enxbv2jMwOJQRstTIe6I
+	 9klO9zme/G5JixqbDOGcmyLTdloCx7RbBdCymslw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	syzkaller <syzkaller@googlegroups.com>,
-	George Kennedy <george.kennedy@oracle.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 100/132] vc_screen: reload load of struct vc_data pointer in vcs_write() to avoid UAF
-Date: Sun, 28 May 2023 20:10:39 +0100
-Message-Id: <20230528190836.727468203@linuxfoundation.org>
+Subject: [PATCH 4.19 101/132] s390/qdio: get rid of register asm
+Date: Sun, 28 May 2023 20:10:40 +0100
+Message-Id: <20230528190836.765596033@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -37,114 +36,170 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: George Kennedy <george.kennedy@oracle.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 8fb9ea65c9d1338b0d2bb0a9122dc942cdd32357 ]
+[ Upstream commit d3e2ff5436d6ee38b572ba5c01dc7994769bec54 ]
 
-After a call to console_unlock() in vcs_write() the vc_data struct can be
-freed by vc_port_destruct(). Because of that, the struct vc_data pointer
-must be reloaded in the while loop in vcs_write() after console_lock() to
-avoid a UAF when vcs_size() is called.
-
-Syzkaller reported a UAF in vcs_size().
-
-BUG: KASAN: slab-use-after-free in vcs_size (drivers/tty/vt/vc_screen.c:215)
-Read of size 4 at addr ffff8880beab89a8 by task repro_vcs_size/4119
-
-Call Trace:
- <TASK>
-__asan_report_load4_noabort (mm/kasan/report_generic.c:380)
-vcs_size (drivers/tty/vt/vc_screen.c:215)
-vcs_write (drivers/tty/vt/vc_screen.c:664)
-vfs_write (fs/read_write.c:582 fs/read_write.c:564)
-...
- <TASK>
-
-Allocated by task 1213:
-kmalloc_trace (mm/slab_common.c:1064)
-vc_allocate (./include/linux/slab.h:559 ./include/linux/slab.h:680
-    drivers/tty/vt/vt.c:1078 drivers/tty/vt/vt.c:1058)
-con_install (drivers/tty/vt/vt.c:3334)
-tty_init_dev (drivers/tty/tty_io.c:1303 drivers/tty/tty_io.c:1415
-    drivers/tty/tty_io.c:1392)
-tty_open (drivers/tty/tty_io.c:2082 drivers/tty/tty_io.c:2128)
-chrdev_open (fs/char_dev.c:415)
-do_dentry_open (fs/open.c:921)
-vfs_open (fs/open.c:1052)
-...
-
-Freed by task 4116:
-kfree (mm/slab_common.c:1016)
-vc_port_destruct (drivers/tty/vt/vt.c:1044)
-tty_port_destructor (drivers/tty/tty_port.c:296)
-tty_port_put (drivers/tty/tty_port.c:312)
-vt_disallocate_all (drivers/tty/vt/vt_ioctl.c:662 (discriminator 2))
-vt_ioctl (drivers/tty/vt/vt_ioctl.c:903)
-tty_ioctl (drivers/tty/tty_io.c:2778)
-...
-
-The buggy address belongs to the object at ffff8880beab8800
- which belongs to the cache kmalloc-1k of size 1024
-The buggy address is located 424 bytes inside of
- freed 1024-byte region [ffff8880beab8800, ffff8880beab8c00)
-
-The buggy address belongs to the physical page:
-page:00000000afc77580 refcount:1 mapcount:0 mapping:0000000000000000
-    index:0x0 pfn:0xbeab8
-head:00000000afc77580 order:3 entire_mapcount:0 nr_pages_mapped:0
-    pincount:0
-flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
-page_type: 0xffffffff()
-raw: 000fffffc0010200 ffff888100042dc0 ffffea000426de00 dead000000000002
-raw: 0000000000000000 0000000000100010 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff8880beab8880: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8880beab8900: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
->ffff8880beab8980: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                                  ^
- ffff8880beab8a00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff8880beab8a80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-Disabling lock debugging due to kernel taint
-
-Fixes: ac751efa6a0d ("console: rename acquire/release_console_sem() to console_lock/unlock()")
-Cc: stable <stable@kernel.org>
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Signed-off-by: George Kennedy <george.kennedy@oracle.com>
-Reviewed-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/1683889728-10411-1-git-send-email-george.kennedy@oracle.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Stable-dep-of: 2862a2fdfae8 ("s390/qdio: fix do_sqbs() inline assembly constraint")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/vt/vc_screen.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/s390/cio/qdio.h      | 25 ++++++++-------
+ drivers/s390/cio/qdio_main.c | 62 +++++++++++++++++++-----------------
+ 2 files changed, 46 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/tty/vt/vc_screen.c b/drivers/tty/vt/vc_screen.c
-index 5decdbad2d65c..78ea9b9c64501 100644
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -504,10 +504,17 @@ vcs_write(struct file *file, const char __user *buf, size_t count, loff_t *ppos)
- 			}
- 		}
+diff --git a/drivers/s390/cio/qdio.h b/drivers/s390/cio/qdio.h
+index ed60b8d4efe68..289ee9db577a2 100644
+--- a/drivers/s390/cio/qdio.h
++++ b/drivers/s390/cio/qdio.h
+@@ -88,15 +88,15 @@ enum qdio_irq_states {
+ static inline int do_sqbs(u64 token, unsigned char state, int queue,
+ 			  int *start, int *count)
+ {
+-	register unsigned long _ccq asm ("0") = *count;
+-	register unsigned long _token asm ("1") = token;
+ 	unsigned long _queuestart = ((unsigned long)queue << 32) | *start;
++	unsigned long _ccq = *count;
  
--		/* The vcs_size might have changed while we slept to grab
--		 * the user buffer, so recheck.
-+		/* The vc might have been freed or vcs_size might have changed
-+		 * while we slept to grab the user buffer, so recheck.
- 		 * Return data written up to now on failure.
- 		 */
-+		vc = vcs_vc(inode, &viewed);
-+		if (!vc) {
-+			if (written)
-+				break;
-+			ret = -ENXIO;
-+			goto unlock_out;
-+		}
- 		size = vcs_size(vc, attr, false);
- 		if (size < 0) {
- 			if (written)
+ 	asm volatile(
+-		"	.insn	rsy,0xeb000000008A,%1,0,0(%2)"
+-		: "+d" (_ccq), "+d" (_queuestart)
+-		: "d" ((unsigned long)state), "d" (_token)
+-		: "memory", "cc");
++		"	lgr	1,%[token]\n"
++		"	.insn	rsy,0xeb000000008a,%[qs],%[ccq],0(%[state])"
++		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart)
++		: [state] "d" ((unsigned long)state), [token] "d" (token)
++		: "memory", "cc", "1");
+ 	*count = _ccq & 0xff;
+ 	*start = _queuestart & 0xff;
+ 
+@@ -106,16 +106,17 @@ static inline int do_sqbs(u64 token, unsigned char state, int queue,
+ static inline int do_eqbs(u64 token, unsigned char *state, int queue,
+ 			  int *start, int *count, int ack)
+ {
+-	register unsigned long _ccq asm ("0") = *count;
+-	register unsigned long _token asm ("1") = token;
+ 	unsigned long _queuestart = ((unsigned long)queue << 32) | *start;
+ 	unsigned long _state = (unsigned long)ack << 63;
++	unsigned long _ccq = *count;
+ 
+ 	asm volatile(
+-		"	.insn	rrf,0xB99c0000,%1,%2,0,0"
+-		: "+d" (_ccq), "+d" (_queuestart), "+d" (_state)
+-		: "d" (_token)
+-		: "memory", "cc");
++		"	lgr	1,%[token]\n"
++		"	.insn	rrf,0xb99c0000,%[qs],%[state],%[ccq],0"
++		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart),
++		  [state] "+&d" (_state)
++		: [token] "d" (token)
++		: "memory", "cc", "1");
+ 	*count = _ccq & 0xff;
+ 	*start = _queuestart & 0xff;
+ 	*state = _state & 0xff;
+diff --git a/drivers/s390/cio/qdio_main.c b/drivers/s390/cio/qdio_main.c
+index 4b7cc8d425b1c..6100cf4df54b6 100644
+--- a/drivers/s390/cio/qdio_main.c
++++ b/drivers/s390/cio/qdio_main.c
+@@ -31,38 +31,41 @@ MODULE_DESCRIPTION("QDIO base support");
+ MODULE_LICENSE("GPL");
+ 
+ static inline int do_siga_sync(unsigned long schid,
+-			       unsigned int out_mask, unsigned int in_mask,
++			       unsigned long out_mask, unsigned long in_mask,
+ 			       unsigned int fc)
+ {
+-	register unsigned long __fc asm ("0") = fc;
+-	register unsigned long __schid asm ("1") = schid;
+-	register unsigned long out asm ("2") = out_mask;
+-	register unsigned long in asm ("3") = in_mask;
+ 	int cc;
+ 
+ 	asm volatile(
++		"	lgr	0,%[fc]\n"
++		"	lgr	1,%[schid]\n"
++		"	lgr	2,%[out]\n"
++		"	lgr	3,%[in]\n"
+ 		"	siga	0\n"
+-		"	ipm	%0\n"
+-		"	srl	%0,28\n"
+-		: "=d" (cc)
+-		: "d" (__fc), "d" (__schid), "d" (out), "d" (in) : "cc");
++		"	ipm	%[cc]\n"
++		"	srl	%[cc],28\n"
++		: [cc] "=&d" (cc)
++		: [fc] "d" (fc), [schid] "d" (schid),
++		  [out] "d" (out_mask), [in] "d" (in_mask)
++		: "cc", "0", "1", "2", "3");
+ 	return cc;
+ }
+ 
+-static inline int do_siga_input(unsigned long schid, unsigned int mask,
+-				unsigned int fc)
++static inline int do_siga_input(unsigned long schid, unsigned long mask,
++				unsigned long fc)
+ {
+-	register unsigned long __fc asm ("0") = fc;
+-	register unsigned long __schid asm ("1") = schid;
+-	register unsigned long __mask asm ("2") = mask;
+ 	int cc;
+ 
+ 	asm volatile(
++		"	lgr	0,%[fc]\n"
++		"	lgr	1,%[schid]\n"
++		"	lgr	2,%[mask]\n"
+ 		"	siga	0\n"
+-		"	ipm	%0\n"
+-		"	srl	%0,28\n"
+-		: "=d" (cc)
+-		: "d" (__fc), "d" (__schid), "d" (__mask) : "cc");
++		"	ipm	%[cc]\n"
++		"	srl	%[cc],28\n"
++		: [cc] "=&d" (cc)
++		: [fc] "d" (fc), [schid] "d" (schid), [mask] "d" (mask)
++		: "cc", "0", "1", "2");
+ 	return cc;
+ }
+ 
+@@ -78,23 +81,24 @@ static inline int do_siga_input(unsigned long schid, unsigned int mask,
+  * Note: For IQDC unicast queues only the highest priority queue is processed.
+  */
+ static inline int do_siga_output(unsigned long schid, unsigned long mask,
+-				 unsigned int *bb, unsigned int fc,
++				 unsigned int *bb, unsigned long fc,
+ 				 unsigned long aob)
+ {
+-	register unsigned long __fc asm("0") = fc;
+-	register unsigned long __schid asm("1") = schid;
+-	register unsigned long __mask asm("2") = mask;
+-	register unsigned long __aob asm("3") = aob;
+ 	int cc;
+ 
+ 	asm volatile(
++		"	lgr	0,%[fc]\n"
++		"	lgr	1,%[schid]\n"
++		"	lgr	2,%[mask]\n"
++		"	lgr	3,%[aob]\n"
+ 		"	siga	0\n"
+-		"	ipm	%0\n"
+-		"	srl	%0,28\n"
+-		: "=d" (cc), "+d" (__fc), "+d" (__aob)
+-		: "d" (__schid), "d" (__mask)
+-		: "cc");
+-	*bb = __fc >> 31;
++		"	lgr	%[fc],0\n"
++		"	ipm	%[cc]\n"
++		"	srl	%[cc],28\n"
++		: [cc] "=&d" (cc), [fc] "+&d" (fc)
++		: [schid] "d" (schid), [mask] "d" (mask), [aob] "d" (aob)
++		: "cc", "0", "1", "2", "3");
++	*bb = fc >> 31;
+ 	return cc;
+ }
+ 
 -- 
 2.39.2
 
