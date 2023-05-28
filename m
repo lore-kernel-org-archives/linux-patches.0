@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9D7611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 497FEC433EF;
-	Sun, 28 May 2023 19:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301E6611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:14:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE8BC433D2;
+	Sun, 28 May 2023 19:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301285;
-	bh=UYuDM7YaJ424cLpbqxn7E/muRLJuVvmEpF3Vez274v4=;
+	s=korg; t=1685301288;
+	bh=CzGxuQbX8Ecz9PJKVkJSdxiuFWlqI8LMQw5sn7EbAGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VraJydyKYYOkCt+pUfLMMMf78hdMIh1fpCaFqKNMiJSR62W3Rkqz0QcuFbAgfDVuW
-	 nr0iBFr6X7QS1At83beR710ODf2q6vju159sv+rrPuTKYKlNfsp5TBxJo6tjTEjBFt
-	 pTLeQQwhRlzEy49ifLwyHugDfwujIo43qFCn+6r4=
+	b=j6/sQ6RcRcefa2KA7qBWYX83lYlBV8Y8MuwR70/JByp7dqXp+3OU4j6Wd8iNA7EZr
+	 Fuxoj0jubm/m5L3g99vvVEyQYtQvMS10qrU94Fa2VpB5AGjuFSJGsxwNP8IixcrpJu
+	 Br8rkd1qyq25xQN6F+21wuZuXsH4rReOCrFuhMjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olliver Schinagl <oliver@schinagl.nl>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.14 48/86] ALSA: hda: Fix Oops by 9.1 surround channel names
-Date: Sun, 28 May 2023 20:10:22 +0100
-Message-Id: <20230528190830.379461623@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.14 57/86] spi: fsl-cpm: Use 16 bit mode for large transfers with even size
+Date: Sun, 28 May 2023 20:10:31 +0100
+Message-Id: <20230528190830.718485853@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -34,57 +34,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 3b44ec8c5c44790a82f07e90db45643c762878c6 upstream.
+(cherry picked from upstream fc96ec826bced75cc6b9c07a4ac44bbf651337ab)
 
-get_line_out_pfx() may trigger an Oops by overflowing the static array
-with more than 8 channels.  This was reported for MacBookPro 12,1 with
-Cirrus codec.
+On CPM, the RISC core is a lot more efficiant when doing transfers
+in 16-bits chunks than in 8-bits chunks, but unfortunately the
+words need to be byte swapped as seen in a previous commit.
 
-As a workaround, extend for the 9.1 channels and also fix the
-potential Oops by unifying the code paths accessing the same array
-with the proper size check.
+So, for large tranfers with an even size, allocate a temporary tx
+buffer and byte-swap data before and after transfer.
 
-Reported-by: Olliver Schinagl <oliver@schinagl.nl>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/64d95eb0-dbdb-cff8-a8b1-988dc22b24cd@schinagl.nl
-Link: https://lore.kernel.org/r/20230516184412.24078-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This change allows setting higher speed for transfer. For instance
+on an MPC 8xx (CPM1 comms RISC processor), the documentation tells
+that transfer in byte mode at 1 kbit/s uses 0.200% of CPM load
+at 25 MHz while a word transfer at the same speed uses 0.032%
+of CPM load. This means the speed can be 6 times higher in
+word mode for the same CPM load.
+
+For the time being, only do it on CPM1 as there must be a
+trade-off between the CPM load reduction and the CPU load required
+to byte swap the data.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/f2e981f20f92dd28983c3949702a09248c23845c.1680371809.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_generic.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/spi/spi-fsl-cpm.c |   23 +++++++++++++++++++++++
+ drivers/spi/spi-fsl-spi.c |    3 +++
+ 2 files changed, 26 insertions(+)
 
---- a/sound/pci/hda/hda_generic.c
-+++ b/sound/pci/hda/hda_generic.c
-@@ -1157,8 +1157,8 @@ static bool path_has_mixer(struct hda_co
- 	return path && path->ctls[ctl_type];
+--- a/drivers/spi/spi-fsl-cpm.c
++++ b/drivers/spi/spi-fsl-cpm.c
+@@ -25,6 +25,7 @@
+ #include <linux/spi/spi.h>
+ #include <linux/types.h>
+ #include <linux/platform_device.h>
++#include <linux/byteorder/generic.h>
+ 
+ #include "spi-fsl-cpm.h"
+ #include "spi-fsl-lib.h"
+@@ -124,6 +125,21 @@ int fsl_spi_cpm_bufs(struct mpc8xxx_spi
+ 		mspi->rx_dma = mspi->dma_dummy_rx;
+ 		mspi->map_rx_dma = 0;
+ 	}
++	if (t->bits_per_word == 16 && t->tx_buf) {
++		const u16 *src = t->tx_buf;
++		u16 *dst;
++		int i;
++
++		dst = kmalloc(t->len, GFP_KERNEL);
++		if (!dst)
++			return -ENOMEM;
++
++		for (i = 0; i < t->len >> 1; i++)
++			dst[i] = cpu_to_le16p(src + i);
++
++		mspi->tx = dst;
++		mspi->map_tx_dma = 1;
++	}
+ 
+ 	if (mspi->map_tx_dma) {
+ 		void *nonconst_tx = (void *)mspi->tx; /* shut up gcc */
+@@ -177,6 +193,13 @@ void fsl_spi_cpm_bufs_complete(struct mp
+ 	if (mspi->map_rx_dma)
+ 		dma_unmap_single(dev, mspi->rx_dma, t->len, DMA_FROM_DEVICE);
+ 	mspi->xfer_in_progress = NULL;
++
++	if (t->bits_per_word == 16 && t->rx_buf) {
++		int i;
++
++		for (i = 0; i < t->len; i += 2)
++			le16_to_cpus(t->rx_buf + i);
++	}
  }
+ EXPORT_SYMBOL_GPL(fsl_spi_cpm_bufs_complete);
  
--static const char * const channel_name[4] = {
--	"Front", "Surround", "CLFE", "Side"
-+static const char * const channel_name[] = {
-+	"Front", "Surround", "CLFE", "Side", "Back",
- };
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -366,6 +366,9 @@ static int fsl_spi_do_one_msg(struct spi
+ 				return -EINVAL;
+ 			if (t->bits_per_word == 16 || t->bits_per_word == 32)
+ 				t->bits_per_word = 8; /* pretend its 8 bits */
++			if (t->bits_per_word == 8 && t->len >= 256 &&
++			    (mpc8xxx_spi->flags & SPI_CPM1))
++				t->bits_per_word = 16;
+ 		}
+ 	}
  
- /* give some appropriate ctl name prefix for the given line out channel */
-@@ -1184,7 +1184,7 @@ static const char *get_line_out_pfx(stru
- 
- 	/* multi-io channels */
- 	if (ch >= cfg->line_outs)
--		return channel_name[ch];
-+		goto fixed_name;
- 
- 	switch (cfg->line_out_type) {
- 	case AUTO_PIN_SPEAKER_OUT:
-@@ -1236,6 +1236,7 @@ static const char *get_line_out_pfx(stru
- 	if (cfg->line_outs == 1 && !spec->multi_ios)
- 		return "Line Out";
- 
-+ fixed_name:
- 	if (ch >= ARRAY_SIZE(channel_name)) {
- 		snd_BUG();
- 		return "PCM";
 
 
