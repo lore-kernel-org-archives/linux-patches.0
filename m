@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC5F611F
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC3BC433A0;
-	Sun, 28 May 2023 19:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D93611E
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2CDC4339C;
+	Sun, 28 May 2023 19:15:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301352;
-	bh=lrOShuD1J7fhyB15rBLpvhFDnnnVo4vovmawdpsJHKs=;
+	s=korg; t=1685301349;
+	bh=PKRZpl7fzCqWuiYsLexm06CPBRvp83F2I25Pzjtu+Rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZqTlCxnpEv9zotqV60Sb6lr/sNbt3Nsqz99CViyuBcBWZVZVynPxFbDytJEZHuT7d
-	 iZuJ9dr3DxMbmDnPofLdT18Q4hmEEzXKrT9wJ+dgi1bFSxF4hvDw3nJGXTIERzOiWr
-	 ySy+H79HXlVNwL++85HdXemcoZrRJdDbcGsynYH4=
+	b=rILlWoD5XleQMrJcN6x00PnC7OTQxJcLf5v3crmHu4DoHSqSFWwFrM6M5MW3qWltE
+	 OnZXkglmc7OBIkTE6dLScU8TURaesKVZGmV+oiML9OBSHC3+kNjZjvtjhQ9GPPKFoq
+	 M65M42SofqxFxCXxr28byMZRAo/OvNgVnuqw7OA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
-	Mark Brown <broonie@kernel.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 4.14 55/86] spi: spi-fsl-spi: automatically adapt bits-per-word in cpu mode
-Date: Sun, 28 May 2023 20:10:29 +0100
-Message-Id: <20230528190830.639785964@linuxfoundation.org>
+	Laura Garcia <nevola@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 4.14 54/86] netfilter: nf_tables: bogus EBUSY in helper removal from transaction
+Date: Sun, 28 May 2023 20:10:28 +0100
+Message-Id: <20230528190830.600171765@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,54 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-(cherry picked from upstream af0e6242909c3c4297392ca3e94eff1b4db71a97)
+commit 8ffcd32f64633926163cdd07a7d295c500a947d1 upstream.
 
-Taking one interrupt for every byte is rather slow. Since the
-controller is perfectly capable of transmitting 32 bits at a time,
-change t->bits_per-word to 32 when the length is divisible by 4 and
-large enough that the reduced number of interrupts easily compensates
-for the one or two extra fsl_spi_setup_transfer() calls this causes.
+Proper use counter updates when activating and deactivating the object,
+otherwise, this hits bogus EBUSY error.
 
-Signed-off-by: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Fixes: cd5125d8f518 ("netfilter: nf_tables: split set destruction in deactivate and destroy phase")
+Reported-by: Laura Garcia <nevola@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-spi.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ net/netfilter/nft_objref.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -357,12 +357,28 @@ static int fsl_spi_bufs(struct spi_devic
- static int fsl_spi_do_one_msg(struct spi_master *master,
- 			      struct spi_message *m)
- {
-+	struct mpc8xxx_spi *mpc8xxx_spi = spi_master_get_devdata(master);
- 	struct spi_device *spi = m->spi;
- 	struct spi_transfer *t, *first;
- 	unsigned int cs_change;
- 	const int nsecs = 50;
- 	int status;
+--- a/net/netfilter/nft_objref.c
++++ b/net/netfilter/nft_objref.c
+@@ -64,21 +64,34 @@ nla_put_failure:
+ 	return -1;
+ }
  
-+	/*
-+	 * In CPU mode, optimize large byte transfers to use larger
-+	 * bits_per_word values to reduce number of interrupts taken.
-+	 */
-+	if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
-+		list_for_each_entry(t, &m->transfers, transfer_list) {
-+			if (t->len < 256 || t->bits_per_word != 8)
-+				continue;
-+			if ((t->len & 3) == 0)
-+				t->bits_per_word = 32;
-+			else if ((t->len & 1) == 0)
-+				t->bits_per_word = 16;
-+		}
-+	}
+-static void nft_objref_destroy(const struct nft_ctx *ctx,
+-			       const struct nft_expr *expr)
++static void nft_objref_deactivate(const struct nft_ctx *ctx,
++				  const struct nft_expr *expr,
++				  enum nft_trans_phase phase)
+ {
+ 	struct nft_object *obj = nft_objref_priv(expr);
+ 
++	if (phase == NFT_TRANS_COMMIT)
++		return;
 +
- 	/* Don't allow changes if CS is active */
- 	first = list_first_entry(&m->transfers, struct spi_transfer,
- 			transfer_list);
+ 	obj->use--;
+ }
+ 
++static void nft_objref_activate(const struct nft_ctx *ctx,
++				const struct nft_expr *expr)
++{
++	struct nft_object *obj = nft_objref_priv(expr);
++
++	obj->use++;
++}
++
+ static struct nft_expr_type nft_objref_type;
+ static const struct nft_expr_ops nft_objref_ops = {
+ 	.type		= &nft_objref_type,
+ 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_object *)),
+ 	.eval		= nft_objref_eval,
+ 	.init		= nft_objref_init,
+-	.destroy	= nft_objref_destroy,
++	.activate	= nft_objref_activate,
++	.deactivate	= nft_objref_deactivate,
+ 	.dump		= nft_objref_dump,
+ };
+ 
 
 
