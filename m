@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3EA6121
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:40:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21390C433D2;
-	Sun, 28 May 2023 19:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1796D611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:40:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9755AC433EF;
+	Sun, 28 May 2023 19:40:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302850;
-	bh=1x11KkfiU6kqnsqZo8++iks3M+YXh0kn924v3xhVO5M=;
+	s=korg; t=1685302852;
+	bh=+FJ8yemOT7JWdrZ6udMvaPqghNpIDUBbIN3TbfOTubo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=La67GnaYPsOBtta7/ygBDGnRKuYnl/Rn+Ml40VsNqPS3yw3zqm6nSPnPPqxUMBwjP
-	 Lap94K+lSkCevpqijGiRxpOonIx20B38Khwe4OqfSbm5IweN8litInsnIx+aFVkYke
-	 mIOX+MaZyWmlfrJUj+Eo+FN9kfBHROMq71uFzViE=
+	b=JdMrN08mZC9DDA8JMFuwMdKVHq5hs8ZtVG0exX2Y6SG+IGyH9nDgD8BJcAY1j10CI
+	 OBBejVFWcf8RdWWDkrTWeAKyKpFAAQANocm/UjKvFLsIz1djIWoEqUmAQL65/qZ5Yd
+	 RsW9mtPTXoeD1E/GANsSzzEyj4ik6nDOaK2Q9kZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Forza <forza@tnonline.net>,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chunguang Xu <brookxu@tencent.com>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 051/211] scsi: target: iscsit: Free cmds before session free
-Date: Sun, 28 May 2023 20:09:32 +0100
-Message-Id: <20230528190844.859608168@linuxfoundation.org>
+Subject: [PATCH 5.10 025/211] ext4: remove redundant mb_regenerate_buddy()
+Date: Sun, 28 May 2023 20:09:06 +0100
+Message-Id: <20230528190844.144081608@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -38,62 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Bogdanov <d.bogdanov@yadro.com>
+From: Chunguang Xu <brookxu@tencent.com>
 
-[ Upstream commit d8990b5a4d065f38f35d69bcd627ec5a7f8330ca ]
+[ Upstream commit 6bd97bf273bdb4944904e57480f6545bca48ad77 ]
 
-Commands from recovery entries are freed after session has been closed.
-That leads to use-after-free at command free or NPE with such call trace:
+After this patch (163a203), if an abnormal bitmap is detected, we
+will mark the group as corrupt, and we will not use this group in
+the future. Therefore, it should be meaningless to regenerate the
+buddy bitmap of this group, It might be better to delete it.
 
-Time2Retain timer expired for SID: 1, cleaning up iSCSI session.
-BUG: kernel NULL pointer dereference, address: 0000000000000140
-RIP: 0010:sbitmap_queue_clear+0x3a/0xa0
-Call Trace:
- target_release_cmd_kref+0xd1/0x1f0 [target_core_mod]
- transport_generic_free_cmd+0xd1/0x180 [target_core_mod]
- iscsit_free_cmd+0x53/0xd0 [iscsi_target_mod]
- iscsit_free_connection_recovery_entries+0x29d/0x320 [iscsi_target_mod]
- iscsit_close_session+0x13a/0x140 [iscsi_target_mod]
- iscsit_check_post_dataout+0x440/0x440 [iscsi_target_mod]
- call_timer_fn+0x24/0x140
-
-Move cleanup of recovery enrties to before session freeing.
-
-Reported-by: Forza <forza@tnonline.net>
-Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-Signed-off-by: Mike Christie <michael.christie@oracle.com>
-Link: https://lore.kernel.org/r/20230319015620.96006-7-michael.christie@oracle.com
-Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Chunguang Xu <brookxu@tencent.com>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Link: https://lore.kernel.org/r/1604764698-4269-2-git-send-email-brookxu@tencent.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 5354b2af3406 ("ext4: allow ext4_get_group_info() to fail")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ext4/mballoc.c | 19 -------------------
+ 1 file changed, 19 deletions(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
-index 6bb8403580729..075e2a6fb474f 100644
---- a/drivers/target/iscsi/iscsi_target.c
-+++ b/drivers/target/iscsi/iscsi_target.c
-@@ -4385,6 +4385,9 @@ int iscsit_close_session(struct iscsi_session *sess)
- 	iscsit_stop_time2retain_timer(sess);
- 	spin_unlock_bh(&se_tpg->session_lock);
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index a7c42e4bfc5ec..708a5fa3c69f6 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -822,24 +822,6 @@ void ext4_mb_generate_buddy(struct super_block *sb,
+ 	spin_unlock(&sbi->s_bal_lock);
+ }
  
-+	if (sess->sess_ops->ErrorRecoveryLevel == 2)
-+		iscsit_free_connection_recovery_entries(sess);
-+
- 	/*
- 	 * transport_deregister_session_configfs() will clear the
- 	 * struct se_node_acl->nacl_sess pointer now as a iscsi_np process context
-@@ -4412,9 +4415,6 @@ int iscsit_close_session(struct iscsi_session *sess)
- 
- 	transport_deregister_session(sess->se_sess);
- 
--	if (sess->sess_ops->ErrorRecoveryLevel == 2)
--		iscsit_free_connection_recovery_entries(sess);
+-static void mb_regenerate_buddy(struct ext4_buddy *e4b)
+-{
+-	int count;
+-	int order = 1;
+-	void *buddy;
 -
- 	iscsit_free_all_ooo_cmdsns(sess);
+-	while ((buddy = mb_find_buddy(e4b, order++, &count))) {
+-		ext4_set_bits(buddy, 0, count);
+-	}
+-	e4b->bd_info->bb_fragments = 0;
+-	memset(e4b->bd_info->bb_counters, 0,
+-		sizeof(*e4b->bd_info->bb_counters) *
+-		(e4b->bd_sb->s_blocksize_bits + 2));
+-
+-	ext4_mb_generate_buddy(e4b->bd_sb, e4b->bd_buddy,
+-		e4b->bd_bitmap, e4b->bd_group);
+-}
+-
+ /* The buddy information is attached the buddy cache inode
+  * for convenience. The information regarding each group
+  * is loaded via ext4_mb_load_buddy. The information involve
+@@ -1512,7 +1494,6 @@ static void mb_free_blocks(struct inode *inode, struct ext4_buddy *e4b,
+ 				sb, e4b->bd_group,
+ 				EXT4_GROUP_INFO_BBITMAP_CORRUPT);
+ 		}
+-		mb_regenerate_buddy(e4b);
+ 		goto done;
+ 	}
  
- 	spin_lock_bh(&se_tpg->session_lock);
 -- 
 2.39.2
 
