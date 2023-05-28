@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E727611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF72EC433D2;
-	Sun, 28 May 2023 19:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B55611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E9A6C433EF;
+	Sun, 28 May 2023 19:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302758;
-	bh=YTMabrVIr0q+z0cVkpwJ35twOdEaWYntl3cCPnUiMqc=;
+	s=korg; t=1685302760;
+	bh=MqHNlfS6QeItB4f+zW/1QRsmirA/x/dSB2kR6YRDFQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i22L46Kyc/j/V+JrwMXVORM8D2pmyNaet3QOghUWE311fBl+AGS1mJ0fwuo1y6Sbh
-	 HCfiEwwHDd0E9tBolE7i9WZC/CmEdIQ1howeaycs693B2En202lvkSXDm0VtiHamoU
-	 yIIv0eLNFxumH+n3NY62pM5GQHtu7sPoM2cfS+WA=
+	b=ikDP3PAALkutZaGTHmqf5Vucg/eYChDJQ7HIesTX35MY41XpVdNP2Iv1K5uqYJTuz
+	 RATlWiFfrboRCk/+Ph0SDW0XnOZx4xXbSeJ9O4KxIUKPOADmXvw1tk7utSD8VJPs0p
+	 gZxC0zlSKzaaX23T8A4NsgfIA93C/XBrvDbSxkgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
+	"t.feng" <fengtao40@huawei.com>,
+	Florian Westphal <fw@strlen.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/211] tcp: add annotations around sk->sk_shutdown accesses
-Date: Sun, 28 May 2023 20:08:55 +0100
-Message-Id: <20230528190843.878657647@linuxfoundation.org>
+Subject: [PATCH 5.10 015/211] ipvlan:Fix out-of-bounds caused by unclear skb->cb
+Date: Sun, 28 May 2023 20:08:56 +0100
+Message-Id: <20230528190843.904433632@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,156 +37,170 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: t.feng <fengtao40@huawei.com>
 
-[ Upstream commit e14cadfd80d76f01bfaa1a8d745b1db19b57d6be ]
+[ Upstream commit 90cbed5247439a966b645b34eb0a2e037836ea8e ]
 
-Now sk->sk_shutdown is no longer a bitfield, we can add
-standard READ_ONCE()/WRITE_ONCE() annotations to silence
-KCSAN reports like the following:
+If skb enqueue the qdisc, fq_skb_cb(skb)->time_to_send is changed which
+is actually skb->cb, and IPCB(skb_in)->opt will be used in
+__ip_options_echo. It is possible that memcpy is out of bounds and lead
+to stack overflow.
+We should clear skb->cb before ip_local_out or ip6_local_out.
 
-BUG: KCSAN: data-race in tcp_disconnect / tcp_poll
+v2:
+1. clean the stack info
+2. use IPCB/IP6CB instead of skb->cb
 
-write to 0xffff88814588582c of 1 bytes by task 3404 on cpu 1:
-tcp_disconnect+0x4d6/0xdb0 net/ipv4/tcp.c:3121
-__inet_stream_connect+0x5dd/0x6e0 net/ipv4/af_inet.c:715
-inet_stream_connect+0x48/0x70 net/ipv4/af_inet.c:727
-__sys_connect_file net/socket.c:2001 [inline]
-__sys_connect+0x19b/0x1b0 net/socket.c:2018
-__do_sys_connect net/socket.c:2028 [inline]
-__se_sys_connect net/socket.c:2025 [inline]
-__x64_sys_connect+0x41/0x50 net/socket.c:2025
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+crash on stable-5.10(reproduce in kasan kernel).
+Stack info:
+[ 2203.651571] BUG: KASAN: stack-out-of-bounds in
+__ip_options_echo+0x589/0x800
+[ 2203.653327] Write of size 4 at addr ffff88811a388f27 by task
+swapper/3/0
+[ 2203.655460] CPU: 3 PID: 0 Comm: swapper/3 Kdump: loaded Not tainted
+5.10.0-60.18.0.50.h856.kasan.eulerosv2r11.x86_64 #1
+[ 2203.655466] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS rel-1.10.2-0-g5f4c7b1-20181220_000000-szxrtosci10000 04/01/2014
+[ 2203.655475] Call Trace:
+[ 2203.655481]  <IRQ>
+[ 2203.655501]  dump_stack+0x9c/0xd3
+[ 2203.655514]  print_address_description.constprop.0+0x19/0x170
+[ 2203.655530]  __kasan_report.cold+0x6c/0x84
+[ 2203.655586]  kasan_report+0x3a/0x50
+[ 2203.655594]  check_memory_region+0xfd/0x1f0
+[ 2203.655601]  memcpy+0x39/0x60
+[ 2203.655608]  __ip_options_echo+0x589/0x800
+[ 2203.655654]  __icmp_send+0x59a/0x960
+[ 2203.655755]  nf_send_unreach+0x129/0x3d0 [nf_reject_ipv4]
+[ 2203.655763]  reject_tg+0x77/0x1bf [ipt_REJECT]
+[ 2203.655772]  ipt_do_table+0x691/0xa40 [ip_tables]
+[ 2203.655821]  nf_hook_slow+0x69/0x100
+[ 2203.655828]  __ip_local_out+0x21e/0x2b0
+[ 2203.655857]  ip_local_out+0x28/0x90
+[ 2203.655868]  ipvlan_process_v4_outbound+0x21e/0x260 [ipvlan]
+[ 2203.655931]  ipvlan_xmit_mode_l3+0x3bd/0x400 [ipvlan]
+[ 2203.655967]  ipvlan_queue_xmit+0xb3/0x190 [ipvlan]
+[ 2203.655977]  ipvlan_start_xmit+0x2e/0xb0 [ipvlan]
+[ 2203.655984]  xmit_one.constprop.0+0xe1/0x280
+[ 2203.655992]  dev_hard_start_xmit+0x62/0x100
+[ 2203.656000]  sch_direct_xmit+0x215/0x640
+[ 2203.656028]  __qdisc_run+0x153/0x1f0
+[ 2203.656069]  __dev_queue_xmit+0x77f/0x1030
+[ 2203.656173]  ip_finish_output2+0x59b/0xc20
+[ 2203.656244]  __ip_finish_output.part.0+0x318/0x3d0
+[ 2203.656312]  ip_finish_output+0x168/0x190
+[ 2203.656320]  ip_output+0x12d/0x220
+[ 2203.656357]  __ip_queue_xmit+0x392/0x880
+[ 2203.656380]  __tcp_transmit_skb+0x1088/0x11c0
+[ 2203.656436]  __tcp_retransmit_skb+0x475/0xa30
+[ 2203.656505]  tcp_retransmit_skb+0x2d/0x190
+[ 2203.656512]  tcp_retransmit_timer+0x3af/0x9a0
+[ 2203.656519]  tcp_write_timer_handler+0x3ba/0x510
+[ 2203.656529]  tcp_write_timer+0x55/0x180
+[ 2203.656542]  call_timer_fn+0x3f/0x1d0
+[ 2203.656555]  expire_timers+0x160/0x200
+[ 2203.656562]  run_timer_softirq+0x1f4/0x480
+[ 2203.656606]  __do_softirq+0xfd/0x402
+[ 2203.656613]  asm_call_irq_on_stack+0x12/0x20
+[ 2203.656617]  </IRQ>
+[ 2203.656623]  do_softirq_own_stack+0x37/0x50
+[ 2203.656631]  irq_exit_rcu+0x134/0x1a0
+[ 2203.656639]  sysvec_apic_timer_interrupt+0x36/0x80
+[ 2203.656646]  asm_sysvec_apic_timer_interrupt+0x12/0x20
+[ 2203.656654] RIP: 0010:default_idle+0x13/0x20
+[ 2203.656663] Code: 89 f0 5d 41 5c 41 5d 41 5e c3 cc cc cc cc cc cc cc
+cc cc cc cc cc cc 0f 1f 44 00 00 0f 1f 44 00 00 0f 00 2d 9f 32 57 00 fb
+f4 <c3> cc cc cc cc 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 41 54 be 08
+[ 2203.656668] RSP: 0018:ffff88810036fe78 EFLAGS: 00000256
+[ 2203.656676] RAX: ffffffffaf2a87f0 RBX: ffff888100360000 RCX:
+ffffffffaf290191
+[ 2203.656681] RDX: 0000000000098b5e RSI: 0000000000000004 RDI:
+ffff88811a3c4f60
+[ 2203.656686] RBP: 0000000000000000 R08: 0000000000000001 R09:
+ffff88811a3c4f63
+[ 2203.656690] R10: ffffed10234789ec R11: 0000000000000001 R12:
+0000000000000003
+[ 2203.656695] R13: ffff888100360000 R14: 0000000000000000 R15:
+0000000000000000
+[ 2203.656729]  default_idle_call+0x5a/0x150
+[ 2203.656735]  cpuidle_idle_call+0x1c6/0x220
+[ 2203.656780]  do_idle+0xab/0x100
+[ 2203.656786]  cpu_startup_entry+0x19/0x20
+[ 2203.656793]  secondary_startup_64_no_verify+0xc2/0xcb
 
-read to 0xffff88814588582c of 1 bytes by task 3374 on cpu 0:
-tcp_poll+0x2e6/0x7d0 net/ipv4/tcp.c:562
-sock_poll+0x253/0x270 net/socket.c:1383
-vfs_poll include/linux/poll.h:88 [inline]
-io_poll_check_events io_uring/poll.c:281 [inline]
-io_poll_task_func+0x15a/0x820 io_uring/poll.c:333
-handle_tw_list io_uring/io_uring.c:1184 [inline]
-tctx_task_work+0x1fe/0x4d0 io_uring/io_uring.c:1246
-task_work_run+0x123/0x160 kernel/task_work.c:179
-get_signal+0xe64/0xff0 kernel/signal.c:2635
-arch_do_signal_or_restart+0x89/0x2a0 arch/x86/kernel/signal.c:306
-exit_to_user_mode_loop+0x6f/0xe0 kernel/entry/common.c:168
-exit_to_user_mode_prepare+0x6c/0xb0 kernel/entry/common.c:204
-__syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
-syscall_exit_to_user_mode+0x26/0x140 kernel/entry/common.c:297
-do_syscall_64+0x4d/0xc0 arch/x86/entry/common.c:86
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[ 2203.657409] The buggy address belongs to the page:
+[ 2203.658648] page:0000000027a9842f refcount:1 mapcount:0
+mapping:0000000000000000 index:0x0 pfn:0x11a388
+[ 2203.658665] flags:
+0x17ffffc0001000(reserved|node=0|zone=2|lastcpupid=0x1fffff)
+[ 2203.658675] raw: 0017ffffc0001000 ffffea000468e208 ffffea000468e208
+0000000000000000
+[ 2203.658682] raw: 0000000000000000 0000000000000000 00000001ffffffff
+0000000000000000
+[ 2203.658686] page dumped because: kasan: bad access detected
 
-value changed: 0x03 -> 0x00
+To reproduce(ipvlan with IPVLAN_MODE_L3):
+Env setting:
+=======================================================
+modprobe ipvlan ipvlan_default_mode=1
+sysctl net.ipv4.conf.eth0.forwarding=1
+iptables -t nat -A POSTROUTING -s 20.0.0.0/255.255.255.0 -o eth0 -j
+MASQUERADE
+ip link add gw link eth0 type ipvlan
+ip -4 addr add 20.0.0.254/24 dev gw
+ip netns add net1
+ip link add ipv1 link eth0 type ipvlan
+ip link set ipv1 netns net1
+ip netns exec net1 ip link set ipv1 up
+ip netns exec net1 ip -4 addr add 20.0.0.4/24 dev ipv1
+ip netns exec net1 route add default gw 20.0.0.254
+ip netns exec net1 tc qdisc add dev ipv1 root netem loss 10%
+ifconfig gw up
+iptables -t filter -A OUTPUT -p tcp --dport 8888 -j REJECT --reject-with
+icmp-port-unreachable
+=======================================================
+And then excute the shell(curl any address of eth0 can reach):
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+for((i=1;i<=100000;i++))
+do
+        ip netns exec net1 curl x.x.x.x:8888
+done
+=======================================================
+
+Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
+Signed-off-by: "t.feng" <fengtao40@huawei.com>
+Suggested-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/af_inet.c   |  2 +-
- net/ipv4/tcp.c       | 14 ++++++++------
- net/ipv4/tcp_input.c |  4 ++--
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/net/ipvlan/ipvlan_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
-index 8dab0d311aba3..800c2c7607e1a 100644
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -884,7 +884,7 @@ int inet_shutdown(struct socket *sock, int how)
- 		   EPOLLHUP, even on eg. unconnected UDP sockets -- RR */
- 		fallthrough;
- 	default:
--		sk->sk_shutdown |= how;
-+		WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | how);
- 		if (sk->sk_prot->shutdown)
- 			sk->sk_prot->shutdown(sk, how);
- 		break;
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 3666fa307d0f0..eecce63ba25e3 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -506,6 +506,7 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
- 	__poll_t mask;
- 	struct sock *sk = sock->sk;
- 	const struct tcp_sock *tp = tcp_sk(sk);
-+	u8 shutdown;
- 	int state;
- 
- 	sock_poll_wait(file, sock, wait);
-@@ -548,9 +549,10 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
- 	 * NOTE. Check for TCP_CLOSE is added. The goal is to prevent
- 	 * blocking on fresh not-connected or disconnected socket. --ANK
- 	 */
--	if (sk->sk_shutdown == SHUTDOWN_MASK || state == TCP_CLOSE)
-+	shutdown = READ_ONCE(sk->sk_shutdown);
-+	if (shutdown == SHUTDOWN_MASK || state == TCP_CLOSE)
- 		mask |= EPOLLHUP;
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLIN | EPOLLRDNORM | EPOLLRDHUP;
- 
- 	/* Connected or passive Fast Open socket? */
-@@ -566,7 +568,7 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
- 		if (tcp_stream_is_readable(tp, target, sk))
- 			mask |= EPOLLIN | EPOLLRDNORM;
- 
--		if (!(sk->sk_shutdown & SEND_SHUTDOWN)) {
-+		if (!(shutdown & SEND_SHUTDOWN)) {
- 			if (__sk_stream_is_writeable(sk, 1)) {
- 				mask |= EPOLLOUT | EPOLLWRNORM;
- 			} else {  /* send SIGIO later */
-@@ -2516,7 +2518,7 @@ void __tcp_close(struct sock *sk, long timeout)
- 	int data_was_unread = 0;
- 	int state;
- 
--	sk->sk_shutdown = SHUTDOWN_MASK;
-+	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
- 
- 	if (sk->sk_state == TCP_LISTEN) {
- 		tcp_set_state(sk, TCP_CLOSE);
-@@ -2782,7 +2784,7 @@ int tcp_disconnect(struct sock *sk, int flags)
- 	if (!(sk->sk_userlocks & SOCK_BINDADDR_LOCK))
- 		inet_reset_saddr(sk);
- 
--	sk->sk_shutdown = 0;
-+	WRITE_ONCE(sk->sk_shutdown, 0);
- 	sock_reset_flag(sk, SOCK_DONE);
- 	tp->srtt_us = 0;
- 	tp->mdev_us = jiffies_to_usecs(TCP_TIMEOUT_INIT);
-@@ -4169,7 +4171,7 @@ void tcp_done(struct sock *sk)
- 	if (req)
- 		reqsk_fastopen_remove(sk, req, false);
- 
--	sk->sk_shutdown = SHUTDOWN_MASK;
-+	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
- 
- 	if (!sock_flag(sk, SOCK_DEAD))
- 		sk->sk_state_change(sk);
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 541758cd0b81f..b98b7920c4029 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4323,7 +4323,7 @@ void tcp_fin(struct sock *sk)
- 
- 	inet_csk_schedule_ack(sk);
- 
--	sk->sk_shutdown |= RCV_SHUTDOWN;
-+	WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | RCV_SHUTDOWN);
- 	sock_set_flag(sk, SOCK_DONE);
- 
- 	switch (sk->sk_state) {
-@@ -6504,7 +6504,7 @@ int tcp_rcv_state_process(struct sock *sk, struct sk_buff *skb)
- 			break;
- 
- 		tcp_set_state(sk, TCP_FIN_WAIT2);
--		sk->sk_shutdown |= SEND_SHUTDOWN;
-+		WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | SEND_SHUTDOWN);
- 
- 		sk_dst_confirm(sk);
- 
+diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
+index a33149ee0ddcf..0a5b5ff597c6f 100644
+--- a/drivers/net/ipvlan/ipvlan_core.c
++++ b/drivers/net/ipvlan/ipvlan_core.c
+@@ -437,6 +437,9 @@ static int ipvlan_process_v4_outbound(struct sk_buff *skb)
+ 		goto err;
+ 	}
+ 	skb_dst_set(skb, &rt->dst);
++
++	memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
++
+ 	err = ip_local_out(net, skb->sk, skb);
+ 	if (unlikely(net_xmit_eval(err)))
+ 		dev->stats.tx_errors++;
+@@ -475,6 +478,9 @@ static int ipvlan_process_v6_outbound(struct sk_buff *skb)
+ 		goto err;
+ 	}
+ 	skb_dst_set(skb, dst);
++
++	memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
++
+ 	err = ip6_local_out(net, skb->sk, skb);
+ 	if (unlikely(net_xmit_eval(err)))
+ 		dev->stats.tx_errors++;
 -- 
 2.39.2
 
