@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41767611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:48:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8BCC433D2;
-	Sun, 28 May 2023 19:48:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF50611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:48:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A3D3C433D2;
+	Sun, 28 May 2023 19:48:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303327;
-	bh=/Ha65achCsfAVtvXbbVawppotu0f/46eBuV4vAd7t3k=;
+	s=korg; t=1685303329;
+	bh=dvRbrFDIMtMzICWAYyxWxGgAdwwQwzfYWXnUnAc7OXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZPZBERFL+vQtzwAcZnMHXNg5i5QYfPXJwQpp5ioeFwbL5HOIllRQyfSZvcFEQIgoZ
-	 +aNuMQcQD9QzNHT1lDKj02fB/xL3e5SO0I0LymOVpuzctwdatUnLk9uo//BLITFljl
-	 OYzGALrChZ5ZofEgCY5AbsovlRXEWA+I+1qXhMBo=
+	b=syEWSrrjgiMbNjsGYSqx8Fl3sU66GLx7dShtbYTYh1O7EgV5PQHOFJ+SwZbxU3qqm
+	 pKZR6B9tMbM/OmaSKvmVOn8VDH2taHbhwt7xY1uf5lZy4VneX0CBLuZIpKYlIaWcah
+	 2RWZFL7rIlaJjg33OQKPZLnSrQnO0BEtHo/Gl5Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+23be03b56c5259385d79@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 33/69] USB: sisusbvga: Add endpoint checks
-Date: Sun, 28 May 2023 20:11:53 +0100
-Message-Id: <20230528190829.605946701@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 07/69] spi: fsl-spi: Re-organise transfer bits_per_word adaptation
+Date: Sun, 28 May 2023 20:11:27 +0100
+Message-Id: <20230528190828.616778972@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -34,79 +34,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit df05a9b05e466a46725564528b277d0c570d0104 upstream.
+(backported from upstream 8a5299a1278eadf1e08a598a5345c376206f171e)
 
-The syzbot fuzzer was able to provoke a WARNING from the sisusbvga driver:
+For different reasons, fsl-spi driver performs bits_per_word
+modifications for different reasons:
+- On CPU mode, to minimise amount of interrupts
+- On CPM/QE mode to work around controller byte order
 
-------------[ cut here ]------------
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 1 PID: 26 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-Modules linked in:
-CPU: 1 PID: 26 Comm: kworker/1:1 Not tainted 6.2.0-rc5-syzkaller-00199-g5af6ce704936 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
-Workqueue: usb_hub_wq hub_event
-RIP: 0010:usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
-Code: 7c 24 18 e8 6c 50 80 fb 48 8b 7c 24 18 e8 62 1a 01 ff 41 89 d8 44 89 e1 4c 89 ea 48 89 c6 48 c7 c7 60 b1 fa 8a e8 84 b0 be 03 <0f> 0b e9 58 f8 ff ff e8 3e 50 80 fb 48 81 c5 c0 05 00 00 e9 84 f7
-RSP: 0018:ffffc90000a1ed18 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
-RDX: ffff888012783a80 RSI: ffffffff816680ec RDI: fffff52000143d95
-RBP: ffff888079020000 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000080000000 R11: 0000000000000000 R12: 0000000000000003
-R13: ffff888017d33370 R14: 0000000000000003 R15: ffff888021213600
-FS:  0000000000000000(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00005592753a60b0 CR3: 0000000022899000 CR4: 00000000003506e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- sisusb_bulkout_msg drivers/usb/misc/sisusbvga/sisusbvga.c:224 [inline]
- sisusb_send_bulk_msg.constprop.0+0x904/0x1230 drivers/usb/misc/sisusbvga/sisusbvga.c:379
- sisusb_send_bridge_packet drivers/usb/misc/sisusbvga/sisusbvga.c:567 [inline]
- sisusb_do_init_gfxdevice drivers/usb/misc/sisusbvga/sisusbvga.c:2077 [inline]
- sisusb_init_gfxdevice+0x87b/0x4000 drivers/usb/misc/sisusbvga/sisusbvga.c:2177
- sisusb_probe+0x9cd/0xbe2 drivers/usb/misc/sisusbvga/sisusbvga.c:2869
-...
+For CPU mode that's done in fsl_spi_prepare_message() while
+for CPM mode that's done in fsl_spi_setup_transfer().
 
-The problem was caused by the fact that the driver does not check
-whether the endpoints it uses are actually present and have the
-appropriate types.  This can be fixed by adding a simple check of
-the endpoints.
+Reunify all of it in fsl_spi_prepare_message(), and catch
+impossible cases early through master's bits_per_word_mask
+instead of returning EINVAL later.
 
-Link: https://syzkaller.appspot.com/bug?extid=23be03b56c5259385d79
-Reported-and-tested-by: syzbot+23be03b56c5259385d79@syzkaller.appspotmail.com
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/48ef98f7-51ae-4f63-b8d3-0ef2004bb60a@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/0ce96fe96e8b07cba0613e4097cfd94d09b8919a.1680371809.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/sisusbvga/sisusb.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/spi/spi-fsl-spi.c |   50 +++++++++++++++++++++-------------------------
+ 1 file changed, 23 insertions(+), 27 deletions(-)
 
---- a/drivers/usb/misc/sisusbvga/sisusb.c
-+++ b/drivers/usb/misc/sisusbvga/sisusb.c
-@@ -3014,6 +3014,20 @@ static int sisusb_probe(struct usb_inter
- 	struct usb_device *dev = interface_to_usbdev(intf);
- 	struct sisusb_usb_data *sisusb;
- 	int retval = 0, i;
-+	static const u8 ep_addresses[] = {
-+		SISUSB_EP_GFX_IN | USB_DIR_IN,
-+		SISUSB_EP_GFX_OUT | USB_DIR_OUT,
-+		SISUSB_EP_GFX_BULK_OUT | USB_DIR_OUT,
-+		SISUSB_EP_GFX_LBULK_OUT | USB_DIR_OUT,
-+		SISUSB_EP_BRIDGE_IN | USB_DIR_IN,
-+		SISUSB_EP_BRIDGE_OUT | USB_DIR_OUT,
-+		0};
-+
-+	/* Are the expected endpoints present? */
-+	if (!usb_check_bulk_endpoints(intf, ep_addresses)) {
-+		dev_err(&intf->dev, "Invalid USB2VGA device\n");
-+		return -EINVAL;
-+	}
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -203,26 +203,6 @@ static int mspi_apply_cpu_mode_quirks(st
+ 	return bits_per_word;
+ }
  
- 	dev_info(&dev->dev, "USB2VGA dongle found at address %d\n",
- 			dev->devnum);
+-static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+-				struct spi_device *spi,
+-				int bits_per_word)
+-{
+-	/* CPM/QE uses Little Endian for words > 8
+-	 * so transform 16 and 32 bits words into 8 bits
+-	 * Unfortnatly that doesn't work for LSB so
+-	 * reject these for now */
+-	/* Note: 32 bits word, LSB works iff
+-	 * tfcr/rfcr is set to CPMFCR_GBL */
+-	if (spi->mode & SPI_LSB_FIRST &&
+-	    bits_per_word > 8)
+-		return -EINVAL;
+-	if (bits_per_word <= 8)
+-		return bits_per_word;
+-	if (bits_per_word == 16 || bits_per_word == 32)
+-		return 8; /* pretend its 8 bits */
+-	return -EINVAL;
+-}
+-
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 					struct spi_transfer *t)
+ {
+@@ -250,9 +230,6 @@ static int fsl_spi_setup_transfer(struct
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else
+-		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+-							  bits_per_word);
+ 
+ 	if (bits_per_word < 0)
+ 		return bits_per_word;
+@@ -370,14 +347,27 @@ static int fsl_spi_do_one_msg(struct spi
+ 	 * In CPU mode, optimize large byte transfers to use larger
+ 	 * bits_per_word values to reduce number of interrupts taken.
+ 	 */
+-	if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
+-		list_for_each_entry(t, &m->transfers, transfer_list) {
++	list_for_each_entry(t, &m->transfers, transfer_list) {
++		if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
+ 			if (t->len < 256 || t->bits_per_word != 8)
+ 				continue;
+ 			if ((t->len & 3) == 0)
+ 				t->bits_per_word = 32;
+ 			else if ((t->len & 1) == 0)
+ 				t->bits_per_word = 16;
++		} else {
++			/*
++			 * CPM/QE uses Little Endian for words > 8
++			 * so transform 16 and 32 bits words into 8 bits
++			 * Unfortnatly that doesn't work for LSB so
++			 * reject these for now
++			 * Note: 32 bits word, LSB works iff
++			 * tfcr/rfcr is set to CPMFCR_GBL
++			 */
++			if (m->spi->mode & SPI_LSB_FIRST && t->bits_per_word > 8)
++				return -EINVAL;
++			if (t->bits_per_word == 16 || t->bits_per_word == 32)
++				t->bits_per_word = 8; /* pretend its 8 bits */
+ 		}
+ 	}
+ 
+@@ -635,8 +625,14 @@ static struct spi_master *fsl_spi_probe(
+ 	if (mpc8xxx_spi->type == TYPE_GRLIB)
+ 		fsl_spi_grlib_probe(dev);
+ 
+-	master->bits_per_word_mask =
+-		(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32)) &
++	if (mpc8xxx_spi->flags & SPI_CPM_MODE)
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 8) | SPI_BPW_MASK(16) | SPI_BPW_MASK(32));
++	else
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32));
++
++	master->bits_per_word_mask &=
+ 		SPI_BPW_RANGE_MASK(1, mpc8xxx_spi->max_bits_per_word);
+ 
+ 	if (mpc8xxx_spi->flags & SPI_QE_CPU_MODE)
 
 
