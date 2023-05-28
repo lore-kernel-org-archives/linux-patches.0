@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33F2611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB9BC433D2;
-	Sun, 28 May 2023 19:45:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE93611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB1F0C433D2;
+	Sun, 28 May 2023 19:45:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303108;
-	bh=TARnjelmXaSoSCLL4z+RzcPI1uU0sK6mZSvtA3IkMGw=;
+	s=korg; t=1685303111;
+	bh=eyqas7sO+vJFszcK8jXe2BwXwaCkO6kpqqhCtjjYa0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i+2HP9IuKJYsWemYZP+c202qa6GGKr+zRB/A2K6unTVldg4d5gQcQ58btd5mCCA7D
-	 e/jBQEhm9eal3g3dMjP9iEMXcxQ1khJLq+MmEapcFv7ocdpB4zxEPaz/rMl1he3jQ3
-	 Pj6O62gDP7SKF9n6ssfJ8weIUv0uoep9hBgO9X5A=
+	b=ClqV0HheLRaPvM4hb7zCNsV+xoYcpzXiNT0Xyge8168wl5S+/lf+DTG94BV2T8Jk7
+	 4G/t6wesvDB5qUFnH7HAYfkrK1udmmOHmuJa5BTrqmzUvFlYKNTqIOKOA2JjAwKR7D
+	 R+NlOfjDLRgTr1hBCvG8DobQ2OO4ssLBzJvTFwZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Block <bblock@linux.ibm.com>,
-	Steffen Maier <maier@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 158/211] s390/qdio: fix do_sqbs() inline assembly constraint
-Date: Sun, 28 May 2023 20:11:19 +0100
-Message-Id: <20230528190847.431611028@linuxfoundation.org>
+	Gregory Oakes <gregory.oakes@amd.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 5.10 159/211] watchdog: sp5100_tco: Immediately trigger upon starting.
+Date: Sun, 28 May 2023 20:11:20 +0100
+Message-Id: <20230528190847.455682689@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -37,66 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Gregory Oakes <gregory.oakes@amd.com>
 
-[ Upstream commit 2862a2fdfae875888e3c1c3634e3422e01d98147 ]
+commit 4eda19cc8a29cde3580ed73bf11dc73b4e757697 upstream.
 
-Use "a" constraint instead of "d" constraint to pass the state parameter to
-the do_sqbs() inline assembly. This prevents that general purpose register
-zero is used for the state parameter.
+The watchdog countdown is supposed to begin when the device file is
+opened. Instead, it would begin countdown upon the first write to or
+close of the device file. Now, the ping operation is called within the
+start operation which ensures the countdown begins. From experimenation,
+it does not appear possible to do this with a single write including
+both the start bit and the trigger bit. So, it is done as two distinct
+writes.
 
-If the compiler would select general purpose register zero this would be
-problematic for the used instruction in rsy format: the register used for
-the state parameter is a base register. If the base register is general
-purpose register zero the contents of the register are unexpectedly ignored
-when the instruction is executed.
-
-This only applies to z/VM guests using QIOASSIST with dedicated (pass through)
-QDIO-based devices such as FCP [zfcp driver] as well as real OSA or
-HiperSockets [qeth driver].
-
-A possible symptom for this case using zfcp is the following repeating kernel
-message pattern:
-
-zfcp <devbusid>: A QDIO problem occurred
-zfcp <devbusid>: A QDIO problem occurred
-zfcp <devbusid>: qdio: ZFCP on SC <sc> using AI:1 QEBSM:1 PRI:1 TDD:1 SIGA: W
-zfcp <devbusid>: A QDIO problem occurred
-zfcp <devbusid>: A QDIO problem occurred
-
-Each of the qdio problem message can be accompanied by the following entries
-for the affected subchannel <sc> in
-/sys/kernel/debug/s390dbf/qdio_error/hex_ascii for zfcp or qeth:
-
-<sc> ccq: 69....
-<sc> SQBS ERROR.
-
-Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
-Cc: Steffen Maier <maier@linux.ibm.com>
-Fixes: 8129ee164267 ("[PATCH] s390: qdio V=V pass-through")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Gregory Oakes <gregory.oakes@amd.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230316201312.17538-1-gregory.oakes@amd.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/cio/qdio.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/watchdog/sp5100_tco.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/s390/cio/qdio.h b/drivers/s390/cio/qdio.h
-index 854a21e1d3b7b..919d106141664 100644
---- a/drivers/s390/cio/qdio.h
-+++ b/drivers/s390/cio/qdio.h
-@@ -95,7 +95,7 @@ static inline int do_sqbs(u64 token, unsigned char state, int queue,
- 		"	lgr	1,%[token]\n"
- 		"	.insn	rsy,0xeb000000008a,%[qs],%[ccq],0(%[state])"
- 		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart)
--		: [state] "d" ((unsigned long)state), [token] "d" (token)
-+		: [state] "a" ((unsigned long)state), [token] "d" (token)
- 		: "memory", "cc", "1");
- 	*count = _ccq & 0xff;
- 	*start = _queuestart & 0xff;
--- 
-2.39.2
-
+--- a/drivers/watchdog/sp5100_tco.c
++++ b/drivers/watchdog/sp5100_tco.c
+@@ -104,6 +104,10 @@ static int tco_timer_start(struct watchd
+ 	val |= SP5100_WDT_START_STOP_BIT;
+ 	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
+ 
++	/* This must be a distinct write. */
++	val |= SP5100_WDT_TRIGGER_BIT;
++	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
++
+ 	return 0;
+ }
+ 
 
 
