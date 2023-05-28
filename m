@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9F7611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:43:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEEDC433EF;
-	Sun, 28 May 2023 19:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462C6611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:43:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C019BC433EF;
+	Sun, 28 May 2023 19:43:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303018;
-	bh=ue84VWn1JiGKIYJfQd6jviRx6bF2sXBYN8dq0fzynZE=;
+	s=korg; t=1685303021;
+	bh=/RNoX43CE/4NZ+HHaGvkP+mp+RJ+/t6j0byJ5fVpq3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GkzhhXlbubsU100Fl4sp48kBTKl6tzMgzjUpR/5l3epBjPV2efIxdTqaPKc03BIw/
-	 txlWoMC2iWytqwua4HNorDSfLIX8rHjSLbOC1pqZqXp9CXP10F4QKzRjpUZLz95G1O
-	 gTDCoFLQBgg88ctxQ/0SU/sg6PlWC/8kHKCD5DBI=
+	b=pnJg7tjyiTWZJzGEg4mJyVDlK0gOtG0yiufEzmVAwO/P8xdL64qNlyrkaDTXthNUm
+	 GqSqdO8v1W+kXGg0xAHiT/BFRJsmibuW33zpuf//P+ZtqhwKS5jxp/ckyjLQiHguCu
+	 S+5WlnYI493ryRKDBt6H+1rcCYIittEVrZRbi9EQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/211] net: bcmgenet: Remove phy_stop() from bcmgenet_netif_stop()
-Date: Sun, 28 May 2023 20:10:34 +0100
-Message-Id: <20230528190846.375854528@linuxfoundation.org>
+Subject: [PATCH 5.10 122/211] bridge: always declare tunnel functions
+Date: Sun, 28 May 2023 20:10:43 +0100
+Message-Id: <20230528190846.585989054@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,35 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 93e0401e0fc0c54b0ac05b687cd135c2ac38187c ]
+[ Upstream commit 89dcd87ce534a3a7f267cfd58505803006f51301 ]
 
-The call to phy_stop() races with the later call to phy_disconnect(),
-resulting in concurrent phy_suspend() calls being run from different
-CPUs. The final call to phy_disconnect() ensures that the PHY is
-stopped and suspended, too.
+When CONFIG_BRIDGE_VLAN_FILTERING is disabled, two functions are still
+defined but have no prototype or caller. This causes a W=1 warning for
+the missing prototypes:
 
-Fixes: c96e731c93ff ("net: bcmgenet: connect and disconnect from the PHY state machine")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+net/bridge/br_netlink_tunnel.c:29:6: error: no previous prototype for 'vlan_tunid_inrange' [-Werror=missing-prototypes]
+net/bridge/br_netlink_tunnel.c:199:5: error: no previous prototype for 'br_vlan_tunnel_info' [-Werror=missing-prototypes]
+
+The functions are already contitional on CONFIG_BRIDGE_VLAN_FILTERING,
+and I coulnd't easily figure out the right set of #ifdefs, so just
+move the declarations out of the #ifdef to avoid the warning,
+at a small cost in code size over a more elaborate fix.
+
+Fixes: 188c67dd1906 ("net: bridge: vlan options: add support for tunnel id dumping")
+Fixes: 569da0822808 ("net: bridge: vlan options: add support for tunnel mapping set/del")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://lore.kernel.org/r/20230516194625.549249-3-arnd@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 1 -
- 1 file changed, 1 deletion(-)
+ net/bridge/br_private_tunnel.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index 7667cbb5adfd6..20b161620fee9 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -3412,7 +3412,6 @@ static void bcmgenet_netif_stop(struct net_device *dev)
- 	/* Disable MAC transmit. TX DMA disabled must be done before this */
- 	umac_enable_set(priv, CMD_TX_EN, false);
+diff --git a/net/bridge/br_private_tunnel.h b/net/bridge/br_private_tunnel.h
+index c54cc26211d7c..f6c65dc088d60 100644
+--- a/net/bridge/br_private_tunnel.h
++++ b/net/bridge/br_private_tunnel.h
+@@ -27,6 +27,10 @@ int br_process_vlan_tunnel_info(const struct net_bridge *br,
+ int br_get_vlan_tunnel_info_size(struct net_bridge_vlan_group *vg);
+ int br_fill_vlan_tunnel_info(struct sk_buff *skb,
+ 			     struct net_bridge_vlan_group *vg);
++bool vlan_tunid_inrange(const struct net_bridge_vlan *v_curr,
++			const struct net_bridge_vlan *v_last);
++int br_vlan_tunnel_info(const struct net_bridge_port *p, int cmd,
++			u16 vid, u32 tun_id, bool *changed);
  
--	phy_stop(dev->phydev);
- 	bcmgenet_disable_rx_napi(priv);
- 	bcmgenet_intr_disable(priv);
- 
+ #ifdef CONFIG_BRIDGE_VLAN_FILTERING
+ /* br_vlan_tunnel.c */
+@@ -43,10 +47,6 @@ int br_handle_ingress_vlan_tunnel(struct sk_buff *skb,
+ 				  struct net_bridge_vlan_group *vg);
+ int br_handle_egress_vlan_tunnel(struct sk_buff *skb,
+ 				 struct net_bridge_vlan *vlan);
+-bool vlan_tunid_inrange(const struct net_bridge_vlan *v_curr,
+-			const struct net_bridge_vlan *v_last);
+-int br_vlan_tunnel_info(const struct net_bridge_port *p, int cmd,
+-			u16 vid, u32 tun_id, bool *changed);
+ #else
+ static inline int vlan_tunnel_init(struct net_bridge_vlan_group *vg)
+ {
 -- 
 2.39.2
 
