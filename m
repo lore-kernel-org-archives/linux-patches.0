@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD315611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:34:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6847BC4339B;
-	Sun, 28 May 2023 19:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B938611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:34:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA1AC433EF;
+	Sun, 28 May 2023 19:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302494;
-	bh=MwTGrKYNPdamWbkxpMIn3/Lp1x50/ZzFv/NxFcV55yU=;
+	s=korg; t=1685302497;
+	bh=UTMbQWnwIh+90flqTACxIV3S7AI3Y47zMmsHtcYnQ+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvwS+Du69iKvyAt/w85iDT47ceQhUgUyagk+CpYsEIi0AZplY+p8krxQSugiEkJWw
-	 hA8WtK3iEACqPcd2J9v2mHVHMZy7Ll2oVhy9PHzQ4xeAYRMnlBpKgDlpsB8v2BrxCN
-	 QIgwfWwzu3fk6GGZI9t2mXnMx2vwrDZNPTCZjwos=
+	b=b9InSLdLFanea5ZcqGVD1eC7SVd/LihoKNboH50YL5kpZnJ2yzYEJ+GcPGbPc3k7P
+	 11o5/MF4wna43jDMZQ/MkK0qf7dOUiX+gao5XZz/Rhny5hEiyKPb2CQdzfdXjV0x6H
+	 T1kX6uGuwTNWa8GILQERE1bmXUCWDkSL4Gtvum24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.1 026/119] power: supply: bq25890: Fix external_power_changed race
-Date: Sun, 28 May 2023 20:10:26 +0100
-Message-Id: <20230528190836.211187629@linuxfoundation.org>
+	stable@kernel.org
+Subject: [PATCH 6.1 027/119] ASoC: rt5682: Disable jack detection interrupt during suspend
+Date: Sun, 28 May 2023 20:10:27 +0100
+Message-Id: <20230528190836.243847985@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -35,64 +33,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Matthias Kaehlcke <mka@chromium.org>
 
-commit 029a443b9b6424170f00f6dd5b7682e682cce92e upstream.
+commit 8b271370e963370703819bd9795a54d658071bed upstream.
 
-bq25890_charger_external_power_changed() dereferences bq->charger,
-which gets sets in bq25890_power_supply_init() like this:
+The rt5682 driver switches its regmap to cache-only when the
+device suspends and back to regular mode on resume. When the
+jack detect interrupt fires rt5682_irq() schedules the jack
+detect work. This can result in invalid reads from the regmap
+in cache-only mode if the work runs before the device has
+resumed:
 
-  bq->charger = devm_power_supply_register(bq->dev, &bq->desc, &psy_cfg);
+[   56.245502] rt5682 9-001a: ASoC: error at soc_component_read_no_lock on rt5682.9-001a for register: [0x000000f0] -16
 
-As soon as devm_power_supply_register() has called device_add()
-the external_power_changed callback can get called. So there is a window
-where bq25890_charger_external_power_changed() may get called while
-bq->charger has not been set yet leading to a NULL pointer dereference.
+Disable the jack detection interrupt during suspend and
+re-enable it on resume. The driver already schedules the
+jack detection work on resume, so any state change during
+suspend is still handled.
 
-This race hits during boot sometimes on a Lenovo Yoga Book 1 yb1-x90f
-when the cht_wcove_pwrsrc (extcon) power_supply is done with detecting
-the connected charger-type which happens to exactly hit the small window:
+This is essentially the same as commit f7d00a9be147 ("SoC:
+rt5682s: Disable jack detection interrupt during suspend")
+for the rt5682s.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000018
-  <snip>
-  RIP: 0010:__power_supply_is_supplied_by+0xb/0xb0
-  <snip>
-  Call Trace:
-   <TASK>
-   __power_supply_get_supplier_property+0x19/0x50
-   class_for_each_device+0xb1/0xe0
-   power_supply_get_property_from_supplier+0x2e/0x50
-   bq25890_charger_external_power_changed+0x38/0x1b0 [bq25890_charger]
-   __power_supply_changed_work+0x30/0x40
-   class_for_each_device+0xb1/0xe0
-   power_supply_changed_work+0x5f/0xe0
-  <snip>
-
-Fixing this is easy. The external_power_changed callback gets passed
-the power_supply which will eventually get stored in bq->charger,
-so bq25890_charger_external_power_changed() can simply directly use
-the passed in psy argument which is always valid.
-
-Fixes: eab25b4f93aa ("power: supply: bq25890: On the bq25892 set the IINLIM based on external charger detection")
-Cc: stable@vger.kernel.org
-Cc: Marek Vasut <marex@denx.de>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: stable@kernel.org
+Signed-off-by: Matthias Kaehlcke <mka@chromium.org
+Reviewed-by: Douglas Anderson <dianders@chromium.org
+Reviewed-by: Stephen Boyd <swboyd@chromium.org
+Link: https://lore.kernel.org/r/20230516164629.1.Ibf79e94b3442eecc0054d2b478779cc512d967fc@changeid
+Signed-off-by: Mark Brown <broonie@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq25890_charger.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/rt5682-i2c.c |    4 +++-
+ sound/soc/codecs/rt5682.c     |    6 ++++++
+ sound/soc/codecs/rt5682.h     |    1 +
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/bq25890_charger.c
-+++ b/drivers/power/supply/bq25890_charger.c
-@@ -650,7 +650,7 @@ static void bq25890_charger_external_pow
- 	if (bq->chip_version != BQ25892)
- 		return;
+--- a/sound/soc/codecs/rt5682-i2c.c
++++ b/sound/soc/codecs/rt5682-i2c.c
+@@ -267,7 +267,9 @@ static int rt5682_i2c_probe(struct i2c_c
+ 		ret = devm_request_threaded_irq(&i2c->dev, i2c->irq, NULL,
+ 			rt5682_irq, IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING
+ 			| IRQF_ONESHOT, "rt5682", rt5682);
+-		if (ret)
++		if (!ret)
++			rt5682->irq = i2c->irq;
++		else
+ 			dev_err(&i2c->dev, "Failed to reguest IRQ: %d\n", ret);
+ 	}
  
--	ret = power_supply_get_property_from_supplier(bq->charger,
-+	ret = power_supply_get_property_from_supplier(psy,
- 						      POWER_SUPPLY_PROP_USB_TYPE,
- 						      &val);
- 	if (ret)
+--- a/sound/soc/codecs/rt5682.c
++++ b/sound/soc/codecs/rt5682.c
+@@ -2957,6 +2957,9 @@ static int rt5682_suspend(struct snd_soc
+ 	if (rt5682->is_sdw)
+ 		return 0;
+ 
++	if (rt5682->irq)
++		disable_irq(rt5682->irq);
++
+ 	cancel_delayed_work_sync(&rt5682->jack_detect_work);
+ 	cancel_delayed_work_sync(&rt5682->jd_check_work);
+ 	if (rt5682->hs_jack && (rt5682->jack_type & SND_JACK_HEADSET) == SND_JACK_HEADSET) {
+@@ -3025,6 +3028,9 @@ static int rt5682_resume(struct snd_soc_
+ 	mod_delayed_work(system_power_efficient_wq,
+ 		&rt5682->jack_detect_work, msecs_to_jiffies(0));
+ 
++	if (rt5682->irq)
++		enable_irq(rt5682->irq);
++
+ 	return 0;
+ }
+ #else
+--- a/sound/soc/codecs/rt5682.h
++++ b/sound/soc/codecs/rt5682.h
+@@ -1462,6 +1462,7 @@ struct rt5682_priv {
+ 	int pll_out[RT5682_PLLS];
+ 
+ 	int jack_type;
++	int irq;
+ 	int irq_work_delay_time;
+ };
+ 
 
 
