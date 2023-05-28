@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F269C569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:26:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C8EC433EF;
-	Sun, 28 May 2023 19:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C3C569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:26:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03166C433D2;
+	Sun, 28 May 2023 19:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302009;
-	bh=/0pygCrS8V7+iIBdNKXz6qy/OflDOjf8W9xTLfaXszE=;
+	s=korg; t=1685302012;
+	bh=DaX/Qa0qZgwCTbDV1LbY73oGU0GtA/gpfwSAP3ajF08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjCJRWpSNB1j1Z6tRIjrgdUEithSborIlbu9z5I2KLidOJMdFYK2+uvN9RkmYGRIi
-	 vgtj4vYmSsrH5anyf4N3i/tPVeOpRCiXP9qRt0jtBOdetT5pfhoggKsBSPtJeuE2YJ
-	 u4JSHBk9hUNhBKiOe60tjbG8+/zk2xHgNyEoJpjI=
+	b=jYXLSLNbOGzzP3KwliiZOdHQpf234LoKGclBEpwhCXWgy/10DKBYLR/IGfb85Dbuz
+	 a+0m9OSgutGRVNoU8+FKIksdiijIoDsSZlVnORpDXufsAIhdfmEz4SsuxCNXxtFUXy
+	 axdUl4VzjxYJ5cINyEjaIJIaV5k1EMtqg/Sv4afs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.4 124/161] spi: fsl-spi: Re-organise transfer bits_per_word adaptation
-Date: Sun, 28 May 2023 20:10:48 +0100
-Message-Id: <20230528190840.957144180@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 5.4 098/161] statfs: enforce statfs[64] structure initialization
+Date: Sun, 28 May 2023 20:10:22 +0100
+Message-Id: <20230528190840.234530040@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -34,115 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-(backported from upstream 8a5299a1278eadf1e08a598a5345c376206f171e)
+commit ed40866ec7d328b3dfb70db7e2011640a16202c3 upstream.
 
-For different reasons, fsl-spi driver performs bits_per_word
-modifications for different reasons:
-- On CPU mode, to minimise amount of interrupts
-- On CPM/QE mode to work around controller byte order
+s390's struct statfs and struct statfs64 contain padding, which
+field-by-field copying does not set. Initialize the respective structs
+with zeros before filling them and copying them to userspace, like it's
+already done for the compat versions of these structs.
 
-For CPU mode that's done in fsl_spi_prepare_message() while
-for CPM mode that's done in fsl_spi_setup_transfer().
+Found by KMSAN.
 
-Reunify all of it in fsl_spi_prepare_message(), and catch
-impossible cases early through master's bits_per_word_mask
-instead of returning EINVAL later.
-
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/0ce96fe96e8b07cba0613e4097cfd94d09b8919a.1680371809.git.christophe.leroy@csgroup.eu
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[agordeev@linux.ibm.com: fixed typo in patch description]
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: stable@vger.kernel.org # v4.14+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230504144021.808932-2-iii@linux.ibm.com
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-spi.c |   50 +++++++++++++++++++++-------------------------
- 1 file changed, 23 insertions(+), 27 deletions(-)
+ fs/statfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/spi/spi-fsl-spi.c
-+++ b/drivers/spi/spi-fsl-spi.c
-@@ -204,26 +204,6 @@ static int mspi_apply_cpu_mode_quirks(st
- 	return bits_per_word;
- }
- 
--static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
--				struct spi_device *spi,
--				int bits_per_word)
--{
--	/* CPM/QE uses Little Endian for words > 8
--	 * so transform 16 and 32 bits words into 8 bits
--	 * Unfortnatly that doesn't work for LSB so
--	 * reject these for now */
--	/* Note: 32 bits word, LSB works iff
--	 * tfcr/rfcr is set to CPMFCR_GBL */
--	if (spi->mode & SPI_LSB_FIRST &&
--	    bits_per_word > 8)
--		return -EINVAL;
--	if (bits_per_word <= 8)
--		return bits_per_word;
--	if (bits_per_word == 16 || bits_per_word == 32)
--		return 8; /* pretend its 8 bits */
--	return -EINVAL;
--}
--
- static int fsl_spi_setup_transfer(struct spi_device *spi,
- 					struct spi_transfer *t)
- {
-@@ -251,9 +231,6 @@ static int fsl_spi_setup_transfer(struct
- 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
- 							   mpc8xxx_spi,
- 							   bits_per_word);
--	else
--		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
--							  bits_per_word);
- 
- 	if (bits_per_word < 0)
- 		return bits_per_word;
-@@ -371,14 +348,27 @@ static int fsl_spi_do_one_msg(struct spi
- 	 * In CPU mode, optimize large byte transfers to use larger
- 	 * bits_per_word values to reduce number of interrupts taken.
- 	 */
--	if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
--		list_for_each_entry(t, &m->transfers, transfer_list) {
-+	list_for_each_entry(t, &m->transfers, transfer_list) {
-+		if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
- 			if (t->len < 256 || t->bits_per_word != 8)
- 				continue;
- 			if ((t->len & 3) == 0)
- 				t->bits_per_word = 32;
- 			else if ((t->len & 1) == 0)
- 				t->bits_per_word = 16;
-+		} else {
-+			/*
-+			 * CPM/QE uses Little Endian for words > 8
-+			 * so transform 16 and 32 bits words into 8 bits
-+			 * Unfortnatly that doesn't work for LSB so
-+			 * reject these for now
-+			 * Note: 32 bits word, LSB works iff
-+			 * tfcr/rfcr is set to CPMFCR_GBL
-+			 */
-+			if (m->spi->mode & SPI_LSB_FIRST && t->bits_per_word > 8)
-+				return -EINVAL;
-+			if (t->bits_per_word == 16 || t->bits_per_word == 32)
-+				t->bits_per_word = 8; /* pretend its 8 bits */
- 		}
+--- a/fs/statfs.c
++++ b/fs/statfs.c
+@@ -128,6 +128,7 @@ static int do_statfs_native(struct kstat
+ 	if (sizeof(buf) == sizeof(*st))
+ 		memcpy(&buf, st, sizeof(*st));
+ 	else {
++		memset(&buf, 0, sizeof(buf));
+ 		if (sizeof buf.f_blocks == 4) {
+ 			if ((st->f_blocks | st->f_bfree | st->f_bavail |
+ 			     st->f_bsize | st->f_frsize) &
+@@ -156,7 +157,6 @@ static int do_statfs_native(struct kstat
+ 		buf.f_namelen = st->f_namelen;
+ 		buf.f_frsize = st->f_frsize;
+ 		buf.f_flags = st->f_flags;
+-		memset(buf.f_spare, 0, sizeof(buf.f_spare));
  	}
- 
-@@ -637,8 +627,14 @@ static struct spi_master * fsl_spi_probe
- 	if (mpc8xxx_spi->type == TYPE_GRLIB)
- 		fsl_spi_grlib_probe(dev);
- 
--	master->bits_per_word_mask =
--		(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32)) &
-+	if (mpc8xxx_spi->flags & SPI_CPM_MODE)
-+		master->bits_per_word_mask =
-+			(SPI_BPW_RANGE_MASK(4, 8) | SPI_BPW_MASK(16) | SPI_BPW_MASK(32));
-+	else
-+		master->bits_per_word_mask =
-+			(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32));
-+
-+	master->bits_per_word_mask &=
- 		SPI_BPW_RANGE_MASK(1, mpc8xxx_spi->max_bits_per_word);
- 
- 	if (mpc8xxx_spi->flags & SPI_QE_CPU_MODE)
+ 	if (copy_to_user(p, &buf, sizeof(buf)))
+ 		return -EFAULT;
+@@ -169,6 +169,7 @@ static int do_statfs64(struct kstatfs *s
+ 	if (sizeof(buf) == sizeof(*st))
+ 		memcpy(&buf, st, sizeof(*st));
+ 	else {
++		memset(&buf, 0, sizeof(buf));
+ 		buf.f_type = st->f_type;
+ 		buf.f_bsize = st->f_bsize;
+ 		buf.f_blocks = st->f_blocks;
+@@ -180,7 +181,6 @@ static int do_statfs64(struct kstatfs *s
+ 		buf.f_namelen = st->f_namelen;
+ 		buf.f_frsize = st->f_frsize;
+ 		buf.f_flags = st->f_flags;
+-		memset(buf.f_spare, 0, sizeof(buf.f_spare));
+ 	}
+ 	if (copy_to_user(p, &buf, sizeof(buf)))
+ 		return -EFAULT;
 
 
