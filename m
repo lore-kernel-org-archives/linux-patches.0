@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11696611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91B0AC433EF;
-	Sun, 28 May 2023 19:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7985A611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07045C433EF;
+	Sun, 28 May 2023 19:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301521;
-	bh=E5oLDf8rNxobMTRBIt7foP2AF64b3mCFitQx2wXdXtA=;
+	s=korg; t=1685301524;
+	bh=+GSOrU6Zn3X8C0LD2CdETt8WCWWDVx2QhrZkBxIuq2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XBbeaCpaA1szOUP6ssZaRsVxRVltJJZjSebwT7WLhVC0b0fHaPgslgTAnsfMdfcd3
-	 FOKWnGW1Vm8kkLzzZTQGVkxjTxBZ8cV8Aj62ca7kFVpgpLXJGZV2bF7jhKpzil/myg
-	 LPpHpJTZMZRjDumEH1fg6pbVh2PdJ1juktOC93Q4=
+	b=QXyBx83gk+tFISKatjgiMkcsJX/hHZd77p6dZy0FP33H99pHKq1p5ArMkrrC/1BfC
+	 JLHLPudePp7ArUzi9sQyoViWz2W23pxhUtX3DxXNHOF74e+HI5Fw89BpWBgDMgPEo+
+	 9skJQfashDYMaPpUAtO4Mv1fvfQtOzn8seqiYNc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 063/132] net: bcmgenet: Restore phy_stop() depending upon suspend/close
-Date: Sun, 28 May 2023 20:10:02 +0100
-Message-Id: <20230528190835.477787976@linuxfoundation.org>
+Subject: [PATCH 4.19 064/132] cassini: Fix a memory leak in the error handling path of cas_init_one()
+Date: Sun, 28 May 2023 20:10:03 +0100
+Message-Id: <20230528190835.507784665@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -36,69 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 225c657945c4a6307741cb3cc89467eadcc26e9b ]
+[ Upstream commit 412cd77a2c24b191c65ea53025222418db09817c ]
 
-Removing the phy_stop() from bcmgenet_netif_stop() ended up causing
-warnings from the PHY library that phy_start() is called from the
-RUNNING state since we are no longer stopping the PHY state machine
-during bcmgenet_suspend().
+cas_saturn_firmware_init() allocates some memory using vmalloc(). This
+memory is freed in the .remove() function but not it the error handling
+path of the probe.
 
-Restore the call to phy_stop() but make it conditional on being called
-from the close or suspend path.
+Add the missing vfree() to avoid a memory leak, should an error occur.
 
-Fixes: c96e731c93ff ("net: bcmgenet: connect and disconnect from the PHY state machine")
-Fixes: 93e0401e0fc0 ("net: bcmgenet: Remove phy_stop() from bcmgenet_netif_stop()")
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Fixes: fcaa40669cd7 ("cassini: use request_firmware")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20230515025608.2587012-1-f.fainelli@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/sun/cassini.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet.c b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-index b3dedd56a9882..d518577313145 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet.c
-@@ -2980,7 +2980,7 @@ static int bcmgenet_open(struct net_device *dev)
- 	return ret;
- }
+diff --git a/drivers/net/ethernet/sun/cassini.c b/drivers/net/ethernet/sun/cassini.c
+index d323dd9daccb0..a3a5edb8bc666 100644
+--- a/drivers/net/ethernet/sun/cassini.c
++++ b/drivers/net/ethernet/sun/cassini.c
+@@ -5138,6 +5138,8 @@ static int cas_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 		cas_shutdown(cp);
+ 	mutex_unlock(&cp->pm_mutex);
  
--static void bcmgenet_netif_stop(struct net_device *dev)
-+static void bcmgenet_netif_stop(struct net_device *dev, bool stop_phy)
- {
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
++	vfree(cp->fw_data);
++
+ 	pci_iounmap(pdev, cp->regs);
  
-@@ -2995,6 +2995,8 @@ static void bcmgenet_netif_stop(struct net_device *dev)
- 	/* Disable MAC transmit. TX DMA disabled must be done before this */
- 	umac_enable_set(priv, CMD_TX_EN, false);
  
-+	if (stop_phy)
-+		phy_stop(dev->phydev);
- 	bcmgenet_disable_rx_napi(priv);
- 	bcmgenet_intr_disable(priv);
- 
-@@ -3020,7 +3022,7 @@ static int bcmgenet_close(struct net_device *dev)
- 
- 	netif_dbg(priv, ifdown, dev, "bcmgenet_close\n");
- 
--	bcmgenet_netif_stop(dev);
-+	bcmgenet_netif_stop(dev, false);
- 
- 	/* Really kill the PHY state machine and disconnect from it */
- 	phy_disconnect(dev->phydev);
-@@ -3720,7 +3722,7 @@ static int bcmgenet_suspend(struct device *d)
- 
- 	netif_device_detach(dev);
- 
--	bcmgenet_netif_stop(dev);
-+	bcmgenet_netif_stop(dev, true);
- 
- 	if (!device_may_wakeup(d))
- 		phy_suspend(dev->phydev);
 -- 
 2.39.2
 
