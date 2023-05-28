@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AC0569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68819C433D2;
-	Sun, 28 May 2023 19:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96933569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFCAC433EF;
+	Sun, 28 May 2023 19:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301826;
-	bh=3nSx2KCemwv4hbknYteFY1HJuji8xiFBfgoofsSnr+4=;
+	s=korg; t=1685301829;
+	bh=6QvBvkH///NvBvLTrTuGtXcNfrdX1zFcZbHf+0xjjgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5O5FyOxTJp1yMbg+kpv76HuP4So0tHpaA9YPwX8fUnfCPRH0Mmc2Jam1QCVHba3E
-	 I32vUuv5Oig/qfLL4y5GGXAog9rdUlXrIJFYvG/o0AhybopeLDTxaHdFNHyNgsofNb
-	 jUded5DMhcMJTqplF3qPFZKFXzSjP0G8VXjMFLwQ=
+	b=gBmPIyKgb0+/i6bcAAWYz8kN07Di7pok0dsslsvWkt8a09OeHuCWyfo+ajTwrUQgM
+	 qdPE9+ODkZMZ3M6SCHSMpynn92hPPBPIP0Yp+TVnTTfabU/9+bLzq6kgpwh4ulJzMD
+	 hyWDgnlLEfpwZlXxV72PvofNhA8gYTfCQMh4Baz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Tomas Krcka <krckatom@amazon.de>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 052/161] clk: tegra20: fix gcc-7 constant overflow warning
-Date: Sun, 28 May 2023 20:09:36 +0100
-Message-Id: <20230528190838.856025861@linuxfoundation.org>
+Subject: [PATCH 5.4 053/161] iommu/arm-smmu-v3: Acknowledge pri/event queue overflow if any
+Date: Sun, 28 May 2023 20:09:37 +0100
+Message-Id: <20230528190838.883784640@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,72 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Tomas Krcka <krckatom@amazon.de>
 
-[ Upstream commit b4a2adbf3586efa12fe78b9dec047423e01f3010 ]
+[ Upstream commit 67ea0b7ce41844eae7c10bb04dfe66a23318c224 ]
 
-Older gcc versions get confused by comparing a u32 value to a negative
-constant in a switch()/case block:
+When an overflow occurs in the PRI queue, the SMMU toggles the overflow
+flag in the PROD register. To exit the overflow condition, the PRI thread
+is supposed to acknowledge it by toggling this flag in the CONS register.
+Unacknowledged overflow causes the queue to stop adding anything new.
 
-drivers/clk/tegra/clk-tegra20.c: In function 'tegra20_clk_measure_input_freq':
-drivers/clk/tegra/clk-tegra20.c:581:2: error: case label does not reduce to an integer constant
-  case OSC_CTRL_OSC_FREQ_12MHZ:
-  ^~~~
-drivers/clk/tegra/clk-tegra20.c:593:2: error: case label does not reduce to an integer constant
-  case OSC_CTRL_OSC_FREQ_26MHZ:
+Currently, the priq thread always writes the CONS register back to the
+SMMU after clearing the queue.
 
-Make the constants unsigned instead.
+The writeback is not necessary if the OVFLG in the PROD register has not
+been changed, no overflow has occured.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230227085914.2560984-1-arnd@kernel.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+This commit checks the difference of the overflow flag between CONS and
+PROD register. If it's different, toggles the OVACKFLG flag in the CONS
+register and write it to the SMMU.
+
+The situation is similar for the event queue.
+The acknowledge register is also toggled after clearing the event
+queue but never propagated to the hardware. This would only be done the
+next time when executing evtq thread.
+
+Unacknowledged event queue overflow doesn't affect the event
+queue, because the SMMU still adds elements to that queue when the
+overflow condition is active.
+But it feel nicer to keep SMMU in sync when possible, so use the same
+way here as well.
+
+Signed-off-by: Tomas Krcka <krckatom@amazon.de>
+Link: https://lore.kernel.org/r/20230329123420.34641-1-tomas.krcka@gmail.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/tegra/clk-tegra20.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/iommu/arm-smmu-v3.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/tegra/clk-tegra20.c b/drivers/clk/tegra/clk-tegra20.c
-index 3e0f04f0e16e5..3f74497d73e58 100644
---- a/drivers/clk/tegra/clk-tegra20.c
-+++ b/drivers/clk/tegra/clk-tegra20.c
-@@ -18,24 +18,24 @@
- #define MISC_CLK_ENB 0x48
+diff --git a/drivers/iommu/arm-smmu-v3.c b/drivers/iommu/arm-smmu-v3.c
+index 4f64c3a9ee88d..b3c5d7b4547a4 100644
+--- a/drivers/iommu/arm-smmu-v3.c
++++ b/drivers/iommu/arm-smmu-v3.c
+@@ -760,6 +760,18 @@ static void queue_inc_cons(struct arm_smmu_ll_queue *q)
+ 	q->cons = Q_OVF(q->cons) | Q_WRP(q, cons) | Q_IDX(q, cons);
+ }
  
- #define OSC_CTRL 0x50
--#define OSC_CTRL_OSC_FREQ_MASK (3<<30)
--#define OSC_CTRL_OSC_FREQ_13MHZ (0<<30)
--#define OSC_CTRL_OSC_FREQ_19_2MHZ (1<<30)
--#define OSC_CTRL_OSC_FREQ_12MHZ (2<<30)
--#define OSC_CTRL_OSC_FREQ_26MHZ (3<<30)
--#define OSC_CTRL_MASK (0x3f2 | OSC_CTRL_OSC_FREQ_MASK)
--
--#define OSC_CTRL_PLL_REF_DIV_MASK (3<<28)
--#define OSC_CTRL_PLL_REF_DIV_1		(0<<28)
--#define OSC_CTRL_PLL_REF_DIV_2		(1<<28)
--#define OSC_CTRL_PLL_REF_DIV_4		(2<<28)
-+#define OSC_CTRL_OSC_FREQ_MASK (3u<<30)
-+#define OSC_CTRL_OSC_FREQ_13MHZ (0u<<30)
-+#define OSC_CTRL_OSC_FREQ_19_2MHZ (1u<<30)
-+#define OSC_CTRL_OSC_FREQ_12MHZ (2u<<30)
-+#define OSC_CTRL_OSC_FREQ_26MHZ (3u<<30)
-+#define OSC_CTRL_MASK (0x3f2u | OSC_CTRL_OSC_FREQ_MASK)
++static void queue_sync_cons_ovf(struct arm_smmu_queue *q)
++{
++	struct arm_smmu_ll_queue *llq = &q->llq;
 +
-+#define OSC_CTRL_PLL_REF_DIV_MASK	(3u<<28)
-+#define OSC_CTRL_PLL_REF_DIV_1		(0u<<28)
-+#define OSC_CTRL_PLL_REF_DIV_2		(1u<<28)
-+#define OSC_CTRL_PLL_REF_DIV_4		(2u<<28)
++	if (likely(Q_OVF(llq->prod) == Q_OVF(llq->cons)))
++		return;
++
++	llq->cons = Q_OVF(llq->prod) | Q_WRP(llq, llq->cons) |
++		      Q_IDX(llq, llq->cons);
++	queue_sync_cons_out(q);
++}
++
+ static int queue_sync_prod_in(struct arm_smmu_queue *q)
+ {
+ 	int ret = 0;
+@@ -1720,8 +1732,7 @@ static irqreturn_t arm_smmu_evtq_thread(int irq, void *dev)
+ 	} while (!queue_empty(llq));
  
- #define OSC_FREQ_DET 0x58
--#define OSC_FREQ_DET_TRIG (1<<31)
-+#define OSC_FREQ_DET_TRIG (1u<<31)
+ 	/* Sync our overflow flag, as we believe we're up to speed */
+-	llq->cons = Q_OVF(llq->prod) | Q_WRP(llq, llq->cons) |
+-		    Q_IDX(llq, llq->cons);
++	queue_sync_cons_ovf(q);
+ 	return IRQ_HANDLED;
+ }
  
- #define OSC_FREQ_DET_STATUS 0x5c
--#define OSC_FREQ_DET_BUSY (1<<31)
--#define OSC_FREQ_DET_CNT_MASK 0xFFFF
-+#define OSC_FREQ_DET_BUSYu (1<<31)
-+#define OSC_FREQ_DET_CNT_MASK 0xFFFFu
+@@ -1779,9 +1790,7 @@ static irqreturn_t arm_smmu_priq_thread(int irq, void *dev)
+ 	} while (!queue_empty(llq));
  
- #define TEGRA20_CLK_PERIPH_BANKS	3
+ 	/* Sync our overflow flag, as we believe we're up to speed */
+-	llq->cons = Q_OVF(llq->prod) | Q_WRP(llq, llq->cons) |
+-		      Q_IDX(llq, llq->cons);
+-	queue_sync_cons_out(q);
++	queue_sync_cons_ovf(q);
+ 	return IRQ_HANDLED;
+ }
  
 -- 
 2.39.2
