@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C006D611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D016C433D2;
-	Sun, 28 May 2023 19:47:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2062F611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A217AC433D2;
+	Sun, 28 May 2023 19:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303238;
-	bh=f1E0OZKK6d9gSe++Y1lhd+dV8AWB+uRdmXfa7ZE9KBE=;
+	s=korg; t=1685303241;
+	bh=jZwCVYRwomB0GO/E7pd4QMROKXE4wDu48IuisVSdih4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVP0kZzx10zsnG+znA+XoeLyawZd1HMdeKEP4tC6Oe7kkLX0NpcO1DJi/TcjwR3Z4
-	 dswMwiToHACi/VdJOc574SHNgmmix6TCC79c+Y1EtrZcc2BkdQtViCTW9ffBh16Yoy
-	 h//rZDHjAcn/mvX/JnwPO1auOPQbbXckBN80agHU=
+	b=IGlGjCbWmTvj2rgcigNUa1d1vlU2NcOUv5+9mq5CEdv6NCVk5X/JdX3kH9pG8yLKD
+	 k/w99YT8lHpjAHdOgJVrELZKgK4SjuF9MpB2GCHo5eKAlnTfUF1Xoyk+K7AlISdL7f
+	 31tc91hjk67f8ikCrEgJor+ZvtksG2dB9oAKUCAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 173/211] parisc: Handle kgdb breakpoints only in kernel context
-Date: Sun, 28 May 2023 20:11:34 +0100
-Message-Id: <20230528190847.791049854@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Zhu Yanjun <zyjzyj2000@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 204/211] forcedeth: Fix an error handling path in nv_probe()
+Date: Sun, 28 May 2023 20:12:05 +0100
+Message-Id: <20230528190848.563216037@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -33,32 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 6888ff04e37d01295620a73f3f7efbc79f6ef152 upstream.
+commit 5b17a4971d3b2a073f4078dd65331efbe35baa2d upstream.
 
-The kernel kgdb break instructions should only be handled when running
-in kernel context.
+If an error occures after calling nv_mgmt_acquire_sema(), it should be
+undone with a corresponding nv_mgmt_release_sema() call.
 
-Cc: <stable@vger.kernel.org> # v5.4+
-Signed-off-by: Helge Deller <deller@gmx.de>
+Add it in the error handling path of the probe as already done in the
+remove function.
+
+Fixes: cac1c52c3621 ("forcedeth: mgmt unit interface")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Acked-by: Zhu Yanjun <zyjzyj2000@gmail.com>
+Link: https://lore.kernel.org/r/355e9a7d351b32ad897251b6f81b5886fcdc6766.1684571393.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/traps.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/nvidia/forcedeth.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/parisc/kernel/traps.c
-+++ b/arch/parisc/kernel/traps.c
-@@ -305,8 +305,8 @@ static void handle_break(struct pt_regs
- #endif
+--- a/drivers/net/ethernet/nvidia/forcedeth.c
++++ b/drivers/net/ethernet/nvidia/forcedeth.c
+@@ -6138,6 +6138,7 @@ static int nv_probe(struct pci_dev *pci_
+ 	return 0;
  
- #ifdef CONFIG_KGDB
--	if (unlikely(iir == PARISC_KGDB_COMPILED_BREAK_INSN ||
--		iir == PARISC_KGDB_BREAK_INSN)) {
-+	if (unlikely((iir == PARISC_KGDB_COMPILED_BREAK_INSN ||
-+		iir == PARISC_KGDB_BREAK_INSN)) && !user_mode(regs)) {
- 		kgdb_handle_exception(9, SIGTRAP, 0, regs);
- 		return;
- 	}
+ out_error:
++	nv_mgmt_release_sema(dev);
+ 	if (phystate_orig)
+ 		writel(phystate|NVREG_ADAPTCTL_RUNNING, base + NvRegAdapterControl);
+ out_freering:
 
 
