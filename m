@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44825611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C26C433D2;
-	Sun, 28 May 2023 19:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD915611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1E2C4339B;
+	Sun, 28 May 2023 19:22:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301754;
-	bh=UwcGdfQjNMwir3O9UvciyN8LJVzVBjG81GjziT3yCPM=;
+	s=korg; t=1685301756;
+	bh=KNq5JtC9wo1nRstONVa73mKF2Mfy53I6/vwzRgCCcQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFA7+Hd+RyqFtt8c9P0fC8iLf/cg/JFllvbrLPGdk/KDhdz7OX0U3JUbBQHSua0AI
-	 wCYBzzJIfcic3FQTZAQuyiMdJQ3FIgzGvRF3PjXpNQ+G7NCs8l0aeAhLG1i3mMURBt
-	 Sao34GpTfUYiyggP4nvoYyKTS5qyWVGj6EUgmdO0=
+	b=o46WJ4HAEBT6mt234CcgiYnIEMA7Hb0EpTqzZPiI4F7U7Ui0TBWQ4NEKYK5KRaa0A
+	 DzXiX/BAgU91TjqbezvHsBShb0Yd91RCgbzV1crx646QdY+CZwTJr/r2mmhhccg60C
+	 wlC/xMGdGwVa/GSIk6Bsp7QkEH+M3MSgMcBHWnPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Moore <robert.moore@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 023/161] ACPICA: ACPICA: check null return of ACPI_ALLOCATE_ZEROED in acpi_db_display_objects
-Date: Sun, 28 May 2023 20:09:07 +0100
-Message-Id: <20230528190837.907145509@linuxfoundation.org>
+Subject: [PATCH 5.4 006/161] netfilter: conntrack: fix possible bug_on with enable_hooks=1
+Date: Sun, 28 May 2023 20:08:50 +0100
+Message-Id: <20230528190837.288895261@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,37 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: void0red <30990023+void0red@users.noreply.github.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit ae5a0eccc85fc960834dd66e3befc2728284b86c ]
+[ Upstream commit e72eeab542dbf4f544e389e64fa13b82a1b6d003 ]
 
-ACPICA commit 0d5f467d6a0ba852ea3aad68663cbcbd43300fd4
+I received a bug report (no reproducer so far) where we trip over
 
-ACPI_ALLOCATE_ZEROED may fails, object_info might be null and will cause
-null pointer dereference later.
+712         rcu_read_lock();
+713         ct_hook = rcu_dereference(nf_ct_hook);
+714         BUG_ON(ct_hook == NULL);  // here
 
-Link: https://github.com/acpica/acpica/commit/0d5f467d
-Signed-off-by: Bob Moore <robert.moore@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+In nf_conntrack_destroy().
+
+First turn this BUG_ON into a WARN.  I think it was triggered
+via enable_hooks=1 flag.
+
+When this flag is turned on, the conntrack hooks are registered
+before nf_ct_hook pointer gets assigned.
+This opens a short window where packets enter the conntrack machinery,
+can have skb->_nfct set up and a subsequent kfree_skb might occur
+before nf_ct_hook is set.
+
+Call nf_conntrack_init_end() to set nf_ct_hook before we register the
+pernet ops.
+
+Fixes: ba3fbe663635 ("netfilter: nf_conntrack: provide modparam to always register conntrack hooks")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dbnames.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/netfilter/core.c                    | 6 ++++--
+ net/netfilter/nf_conntrack_standalone.c | 3 ++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/acpica/dbnames.c b/drivers/acpi/acpica/dbnames.c
-index 63fe30e868075..7f14403165dd1 100644
---- a/drivers/acpi/acpica/dbnames.c
-+++ b/drivers/acpi/acpica/dbnames.c
-@@ -571,6 +571,9 @@ acpi_status acpi_db_display_objects(char *obj_type_arg, char *display_count_arg)
- 		object_info =
- 		    ACPI_ALLOCATE_ZEROED(sizeof(struct acpi_object_info));
+diff --git a/net/netfilter/core.c b/net/netfilter/core.c
+index 451b2df998ea7..c35f45afd394d 100644
+--- a/net/netfilter/core.c
++++ b/net/netfilter/core.c
+@@ -577,9 +577,11 @@ void nf_conntrack_destroy(struct nf_conntrack *nfct)
  
-+		if (!object_info)
-+			return (AE_NO_MEMORY);
+ 	rcu_read_lock();
+ 	ct_hook = rcu_dereference(nf_ct_hook);
+-	BUG_ON(ct_hook == NULL);
+-	ct_hook->destroy(nfct);
++	if (ct_hook)
++		ct_hook->destroy(nfct);
+ 	rcu_read_unlock();
 +
- 		/* Walk the namespace from the root */
++	WARN_ON(!ct_hook);
+ }
+ EXPORT_SYMBOL(nf_conntrack_destroy);
  
- 		(void)acpi_walk_namespace(ACPI_TYPE_ANY, ACPI_ROOT_OBJECT,
+diff --git a/net/netfilter/nf_conntrack_standalone.c b/net/netfilter/nf_conntrack_standalone.c
+index 43c3c3be6defc..1e3dbed9d7840 100644
+--- a/net/netfilter/nf_conntrack_standalone.c
++++ b/net/netfilter/nf_conntrack_standalone.c
+@@ -1180,11 +1180,12 @@ static int __init nf_conntrack_standalone_init(void)
+ 	nf_conntrack_htable_size_user = nf_conntrack_htable_size;
+ #endif
+ 
++	nf_conntrack_init_end();
++
+ 	ret = register_pernet_subsys(&nf_conntrack_net_ops);
+ 	if (ret < 0)
+ 		goto out_pernet;
+ 
+-	nf_conntrack_init_end();
+ 	return 0;
+ 
+ out_pernet:
 -- 
 2.39.2
 
