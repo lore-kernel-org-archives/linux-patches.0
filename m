@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E0F611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C609C433D2;
-	Sun, 28 May 2023 19:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F098C611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDAEC433D2;
+	Sun, 28 May 2023 19:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301384;
-	bh=yL8b+luqXGHMuYfDinMfCTmpeiH6NuLkndKeSpDvt+I=;
+	s=korg; t=1685301386;
+	bh=wQBdvG/dxab4wy3bTUoEtZ0vNWJvov/Yx+jymZr7pD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S92ayKqJvzD0FYXhsPkHrAm2JsLinV/oTzcaWXGLJkBuYHLu468I3v0qMMnOsW8yu
-	 QiihYfCfMZpbQJnNxONAbrwioIc9eSKpzw5e8Qa95MynzAK8/2pDWKFVZRgl9ulauw
-	 5Q+43CEagU2lobgCvR+gx3Gs/LtvqnB11IHivnH4=
+	b=b7jAAGO/H7Q6dddlcubVb6HHL9CqMIVCdAtqT8akGkTx/EwmmuxUVesNfl4B1omg9
+	 AMdcXMpK89o2ArvYxqGdaewVfVPT1V/Qb72mwa0WhUrT7RCdqfGHk6WlA6gVCMd/Yv
+	 g9CH7H2dppoC0n6/cwA7TiPbfossO/wp0BZDxlNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,17 +19,16 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	syzbot <syzkaller@googlegroups.com>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 001/132] net: Fix load-tearing on sk->sk_stamp in sock_recv_cmsgs().
-Date: Sun, 28 May 2023 20:09:00 +0100
-Message-Id: <20230528190833.610916292@linuxfoundation.org>
+Subject: [PATCH 4.19 010/132] af_unix: Fix a data race of sk->sk_receive_queue->qlen.
+Date: Sun, 28 May 2023 20:09:09 +0100
+Message-Id: <20230528190833.886411034@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,77 +40,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit dfd9248c071a3710c24365897459538551cb7167 ]
+[ Upstream commit 679ed006d416ea0cecfe24a99d365d1dea69c683 ]
 
-KCSAN found a data race in sock_recv_cmsgs() where the read access
-to sk->sk_stamp needs READ_ONCE().
+KCSAN found a data race of sk->sk_receive_queue->qlen where recvmsg()
+updates qlen under the queue lock and sendmsg() checks qlen under
+unix_state_sock(), not the queue lock, so the reader side needs
+READ_ONCE().
 
-BUG: KCSAN: data-race in packet_recvmsg / packet_recvmsg
+BUG: KCSAN: data-race in __skb_try_recv_from_queue / unix_wait_for_peer
 
-write (marked) to 0xffff88803c81f258 of 8 bytes by task 19171 on cpu 0:
- sock_write_timestamp include/net/sock.h:2670 [inline]
- sock_recv_cmsgs include/net/sock.h:2722 [inline]
- packet_recvmsg+0xb97/0xd00 net/packet/af_packet.c:3489
+write (marked) to 0xffff888019fe7c68 of 4 bytes by task 49792 on cpu 0:
+ __skb_unlink include/linux/skbuff.h:2347 [inline]
+ __skb_try_recv_from_queue+0x3de/0x470 net/core/datagram.c:197
+ __skb_try_recv_datagram+0xf7/0x390 net/core/datagram.c:263
+ __unix_dgram_recvmsg+0x109/0x8a0 net/unix/af_unix.c:2452
+ unix_dgram_recvmsg+0x94/0xa0 net/unix/af_unix.c:2549
  sock_recvmsg_nosec net/socket.c:1019 [inline]
- sock_recvmsg+0x11a/0x130 net/socket.c:1040
- sock_read_iter+0x176/0x220 net/socket.c:1118
- call_read_iter include/linux/fs.h:1845 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x5e0/0x630 fs/read_write.c:470
- ksys_read+0x163/0x1a0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x41/0x50 fs/read_write.c:621
+ ____sys_recvmsg+0x3a3/0x3b0 net/socket.c:2720
+ ___sys_recvmsg+0xc8/0x150 net/socket.c:2764
+ do_recvmmsg+0x182/0x560 net/socket.c:2858
+ __sys_recvmmsg net/socket.c:2937 [inline]
+ __do_sys_recvmmsg net/socket.c:2960 [inline]
+ __se_sys_recvmmsg net/socket.c:2953 [inline]
+ __x64_sys_recvmmsg+0x153/0x170 net/socket.c:2953
  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
  do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
  entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-read to 0xffff88803c81f258 of 8 bytes by task 19183 on cpu 1:
- sock_recv_cmsgs include/net/sock.h:2721 [inline]
- packet_recvmsg+0xb64/0xd00 net/packet/af_packet.c:3489
- sock_recvmsg_nosec net/socket.c:1019 [inline]
- sock_recvmsg+0x11a/0x130 net/socket.c:1040
- sock_read_iter+0x176/0x220 net/socket.c:1118
- call_read_iter include/linux/fs.h:1845 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x5e0/0x630 fs/read_write.c:470
- ksys_read+0x163/0x1a0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x41/0x50 fs/read_write.c:621
+read to 0xffff888019fe7c68 of 4 bytes by task 49793 on cpu 1:
+ skb_queue_len include/linux/skbuff.h:2127 [inline]
+ unix_recvq_full net/unix/af_unix.c:229 [inline]
+ unix_wait_for_peer+0x154/0x1a0 net/unix/af_unix.c:1445
+ unix_dgram_sendmsg+0x13bc/0x14b0 net/unix/af_unix.c:2048
+ sock_sendmsg_nosec net/socket.c:724 [inline]
+ sock_sendmsg+0x148/0x160 net/socket.c:747
+ ____sys_sendmsg+0x20e/0x620 net/socket.c:2503
+ ___sys_sendmsg+0xc6/0x140 net/socket.c:2557
+ __sys_sendmmsg+0x11d/0x370 net/socket.c:2643
+ __do_sys_sendmmsg net/socket.c:2672 [inline]
+ __se_sys_sendmmsg net/socket.c:2669 [inline]
+ __x64_sys_sendmmsg+0x58/0x70 net/socket.c:2669
  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
  do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
  entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-value changed: 0xffffffffc4653600 -> 0x0000000000000000
+value changed: 0x0000000b -> 0x00000001
 
 Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 19183 Comm: syz-executor.5 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
+CPU: 1 PID: 49793 Comm: syz-executor.0 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
 Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
 
-Fixes: 6c7c98bad488 ("sock: avoid dirtying sk_stamp, if possible")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230508175543.55756-1-kuniyu@amazon.com
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 2 +-
+ net/unix/af_unix.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 9eb656683281f..629cc89b7f0e4 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2406,7 +2406,7 @@ static inline void sock_recv_ts_and_drops(struct msghdr *msg, struct sock *sk,
- 		__sock_recv_ts_and_drops(msg, sk, skb);
- 	else if (unlikely(sock_flag(sk, SOCK_TIMESTAMP)))
- 		sock_write_timestamp(sk, skb->tstamp);
--	else if (unlikely(sk->sk_stamp == SK_DEFAULT_STAMP))
-+	else if (unlikely(sock_read_timestamp(sk) == SK_DEFAULT_STAMP))
- 		sock_write_timestamp(sk, 0);
- }
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index e79c329427964..0b2d466fb8585 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1232,7 +1232,7 @@ static long unix_wait_for_peer(struct sock *other, long timeo)
+ 
+ 	sched = !sock_flag(other, SOCK_DEAD) &&
+ 		!(other->sk_shutdown & RCV_SHUTDOWN) &&
+-		unix_recvq_full(other);
++		unix_recvq_full_lockless(other);
+ 
+ 	unix_state_unlock(other);
  
 -- 
 2.39.2
