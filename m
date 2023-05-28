@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7318E569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:31:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1E1C433EF;
-	Sun, 28 May 2023 19:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E75569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:31:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523EBC4339B;
+	Sun, 28 May 2023 19:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302280;
-	bh=gYGVpT+gnT3UsOneXD0Pc6fNtU/GFlUgDahH1qrW5Gk=;
+	s=korg; t=1685302282;
+	bh=pUAKwf3zhXLaBNzZ0xxf0OgSjVgRAHlphqO07gg83tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=waC/FMFPGP1qlafAtAjN46/eonT0ymroxG5FzEcQu6dC9yqv2hEgU8Rk7hJnttv9H
-	 2s+7n2xjPivTQSY+0kdCY4j8e7eFXoKGZA8tXX7D5VCyzSdptQF49QD5kawLGWvaH+
-	 QPi8TXS+oq4hvRWXUIKBJE7cMdgujHhQ8GsaMStg=
+	b=1Z79ViwM466ErAJmtipnEjrNUY4zrJvgB86XetCk/MJPCi3OER7nyhk9deJnoO6z5
+	 9036DZi7Fgs61hyB5BVSA1Y0EHWJ/pounxB1gsjNgrjTQLhFb4aL9iXL8UFWt+76zD
+	 PhqBHveQZQPZIZfvCBRlJ8SMuWRECeur+yoQj724=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Krzesimir Nowak <krzesimir@kinvolk.io>,
-	Andrey Ignatov <rdna@fb.com>,
-	Yonghong Song <yhs@fb.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.3 072/127] bpf: Fix mask generation for 32-bit narrow loads of 64-bit fields
-Date: Sun, 28 May 2023 20:10:48 +0100
-Message-Id: <20230528190838.734382023@linuxfoundation.org>
+	Anton Protopopov <aspsk@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>
+Subject: [PATCH 6.3 073/127] bpf: fix a memory leak in the LRU and LRU_PERCPU hash maps
+Date: Sun, 28 May 2023 20:10:49 +0100
+Message-Id: <20230528190838.762707857@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -39,58 +34,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Will Deacon <will@kernel.org>
+From: Anton Protopopov <aspsk@isovalent.com>
 
-commit 0613d8ca9ab382caabe9ed2dceb429e9781e443f upstream.
+commit b34ffb0c6d23583830f9327864b9c1f486003305 upstream.
 
-A narrow load from a 64-bit context field results in a 64-bit load
-followed potentially by a 64-bit right-shift and then a bitwise AND
-operation to extract the relevant data.
+The LRU and LRU_PERCPU maps allocate a new element on update before locking the
+target hash table bucket. Right after that the maps try to lock the bucket.
+If this fails, then maps return -EBUSY to the caller without releasing the
+allocated element. This makes the element untracked: it doesn't belong to
+either of free lists, and it doesn't belong to the hash table, so can't be
+re-used; this eventually leads to the permanent -ENOMEM on LRU map updates,
+which is unexpected. Fix this by returning the element to the local free list
+if bucket locking fails.
 
-In the case of a 32-bit access, an immediate mask of 0xffffffff is used
-to construct a 64-bit BPP_AND operation which then sign-extends the mask
-value and effectively acts as a glorified no-op. For example:
-
-0:	61 10 00 00 00 00 00 00	r0 = *(u32 *)(r1 + 0)
-
-results in the following code generation for a 64-bit field:
-
-	ldr	x7, [x7]	// 64-bit load
-	mov	x10, #0xffffffffffffffff
-	and	x7, x7, x10
-
-Fix the mask generation so that narrow loads always perform a 32-bit AND
-operation:
-
-	ldr	x7, [x7]	// 64-bit load
-	mov	w10, #0xffffffff
-	and	w7, w7, w10
-
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Krzesimir Nowak <krzesimir@kinvolk.io>
-Cc: Andrey Ignatov <rdna@fb.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Fixes: 31fd85816dbe ("bpf: permits narrower load from bpf program context fields")
-Signed-off-by: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20230518102528.1341-1-will@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 20b6cc34ea74 ("bpf: Avoid hashtab deadlock with map_locked")
+Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
+Link: https://lore.kernel.org/r/20230522154558.2166815-1-aspsk@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/hashtab.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -16017,7 +16017,7 @@ static int convert_ctx_accesses(struct b
- 					insn_buf[cnt++] = BPF_ALU64_IMM(BPF_RSH,
- 									insn->dst_reg,
- 									shift);
--				insn_buf[cnt++] = BPF_ALU64_IMM(BPF_AND, insn->dst_reg,
-+				insn_buf[cnt++] = BPF_ALU32_IMM(BPF_AND, insn->dst_reg,
- 								(1ULL << size * 8) - 1);
- 			}
- 		}
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -1197,7 +1197,7 @@ static long htab_lru_map_update_elem(str
+ 
+ 	ret = htab_lock_bucket(htab, b, hash, &flags);
+ 	if (ret)
+-		return ret;
++		goto err_lock_bucket;
+ 
+ 	l_old = lookup_elem_raw(head, hash, key, key_size);
+ 
+@@ -1218,6 +1218,7 @@ static long htab_lru_map_update_elem(str
+ err:
+ 	htab_unlock_bucket(htab, b, hash, flags);
+ 
++err_lock_bucket:
+ 	if (ret)
+ 		htab_lru_push_free(htab, l_new);
+ 	else if (l_old)
+@@ -1320,7 +1321,7 @@ static long __htab_lru_percpu_map_update
+ 
+ 	ret = htab_lock_bucket(htab, b, hash, &flags);
+ 	if (ret)
+-		return ret;
++		goto err_lock_bucket;
+ 
+ 	l_old = lookup_elem_raw(head, hash, key, key_size);
+ 
+@@ -1343,6 +1344,7 @@ static long __htab_lru_percpu_map_update
+ 	ret = 0;
+ err:
+ 	htab_unlock_bucket(htab, b, hash, flags);
++err_lock_bucket:
+ 	if (l_new)
+ 		bpf_lru_push_free(&htab->lru, &l_new->lru_node);
+ 	return ret;
 
 
