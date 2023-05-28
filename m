@@ -1,24 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F41611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:49:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DFCC433EF;
-	Sun, 28 May 2023 19:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A756611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:49:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD1EC433EF;
+	Sun, 28 May 2023 19:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303349;
-	bh=tuI1BTzvtNi4Tr348IlhSxos2ZbhOHnx92hLGdDK7us=;
+	s=korg; t=1685303357;
+	bh=Xtv38U0szJX0GiUfVjA2TI1hF6b1xoHHD4lQf47fY7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pRqsOkgvpi/vOJ4gglFL6e6lqaAjk2yoLNmKLF23e32TYf/5QP96ppEuWttjMFd1j
-	 ZmUHrG+YDN+2rmyVWDfagocJDN1/zDJh/No7BcP5Lvi2WyYlPjTwY/qevfQzukLmvN
-	 DVXPVShyFE5a4+C1coNou2OaaNYZ9bhStFPo5pHw=
+	b=zW8wCdWEt8V4avnLS8zGRhQUwtqJXDvECGtlUC5dAWWT565Drzqt3NzzuNe44QjJW
+	 d7T5O5JkKssk3LJwD0/3KzuD1QkylUQOT+/Y8th5/qLZd8nL5P0L0ZPqKrkHCgq7rJ
+	 gk0k/4b8eILwFqQB39rkVpKET7EHAfw9jW++H7lk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev
-Subject: [PATCH 5.15 35/69] ASoC: lpass: Fix for KASAN use_after_free out of bounds
-Date: Sun, 28 May 2023 20:11:55 +0100
-Message-Id: <20230528190829.673479086@linuxfoundation.org>
+	patches@lists.linux.dev,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 5.15 44/69] power: supply: bq27xxx: Fix bq27xxx_battery_update() race condition
+Date: Sun, 28 May 2023 20:12:04 +0100
+Message-Id: <20230528190830.018072142@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -32,67 +34,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ravulapati Vishnu Vardhan Rao <quic_visr@quicinc.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 75e5fab7db0cecb6e16b22c34608f0b40a4c7cd1 upstream.
+commit 5c34c0aef185dcd10881847b9ebf20046aa77cb4 upstream.
 
-When we run syzkaller we get below Out of Bounds error.
+bq27xxx_battery_update() assumes / requires that it is only run once,
+not multiple times at the same time. But there are 3 possible callers:
 
-"KASAN: slab-out-of-bounds Read in regcache_flat_read"
+1. bq27xxx_battery_poll() delayed_work item handler
+2. bq27xxx_battery_irq_handler_thread() I2C IRQ handler
+3. bq27xxx_battery_setup()
 
-Below is the backtrace of the issue:
+And there is no protection against these racing with each other,
+fix this race condition by making all callers take di->lock:
 
-BUG: KASAN: slab-out-of-bounds in regcache_flat_read+0x10c/0x110
-Read of size 4 at addr ffffff8088fbf714 by task syz-executor.4/14144
-CPU: 6 PID: 14144 Comm: syz-executor.4 Tainted: G        W
-Hardware name: Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+) (DT)
-Call trace:
-dump_backtrace+0x0/0x4ec
-show_stack+0x34/0x50
-dump_stack_lvl+0xdc/0x11c
-print_address_description+0x30/0x2d8
-kasan_report+0x178/0x1e4
-__asan_report_load4_noabort+0x44/0x50
-regcache_flat_read+0x10c/0x110
-regcache_read+0xf8/0x5a0
-_regmap_read+0x45c/0x86c
-_regmap_update_bits+0x128/0x290
-regmap_update_bits_base+0xc0/0x15c
-snd_soc_component_update_bits+0xa8/0x22c
-snd_soc_component_write_field+0x68/0xd4
-tx_macro_put_dec_enum+0x1d0/0x268
-snd_ctl_elem_write+0x288/0x474
+- Rename bq27xxx_battery_update() to bq27xxx_battery_update_unlocked()
 
-By Error checking and checking valid values issue gets rectifies.
+- Add new bq27xxx_battery_update() which takes di->lock and then calls
+  bq27xxx_battery_update_unlocked()
 
-Signed-off-by: Ravulapati Vishnu Vardhan Rao <quic_visr@quicinc.com
-Link: https://lore.kernel.org/r/20230511112532.16106-1-quic_visr@quicinc.com
-Signed-off-by: Mark Brown <broonie@kernel.org
+- Make stale cache check code in bq27xxx_battery_get_property(), which
+  already takes di->lock directly to check the jiffies, call
+  bq27xxx_battery_update_unlocked() instead of messing with
+  the delayed_work item
+
+- Make bq27xxx_battery_update_unlocked() mod the delayed-work item
+  so that the next poll is delayed to poll_interval milliseconds after
+  the last update independent of the source of the update
+
+Fixes: 740b755a3b34 ("bq27x00: Poll battery state")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/lpass-tx-macro.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/power/supply/bq27xxx_battery.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/sound/soc/codecs/lpass-tx-macro.c
-+++ b/sound/soc/codecs/lpass-tx-macro.c
-@@ -743,6 +743,8 @@ static int tx_macro_put_dec_enum(struct
- 	struct tx_macro *tx = snd_soc_component_get_drvdata(component);
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1755,7 +1755,7 @@ static int bq27xxx_battery_read_health(s
+ 	return POWER_SUPPLY_HEALTH_GOOD;
+ }
  
- 	val = ucontrol->value.enumerated.item[0];
-+	if (val >= e->items)
-+		return -EINVAL;
+-void bq27xxx_battery_update(struct bq27xxx_device_info *di)
++static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
+ {
+ 	struct bq27xxx_reg_cache cache = {0, };
+ 	bool has_ci_flag = di->opts & BQ27XXX_O_HAS_CI;
+@@ -1806,6 +1806,16 @@ void bq27xxx_battery_update(struct bq27x
+ 		di->cache = cache;
  
- 	switch (e->reg) {
- 	case CDC_TX_INP_MUX_ADC_MUX0_CFG0:
-@@ -769,6 +771,9 @@ static int tx_macro_put_dec_enum(struct
- 	case CDC_TX_INP_MUX_ADC_MUX7_CFG0:
- 		mic_sel_reg = CDC_TX7_TX_PATH_CFG0;
- 		break;
-+	default:
-+		dev_err(component->dev, "Error in configuration!!\n");
-+		return -EINVAL;
- 	}
+ 	di->last_update = jiffies;
++
++	if (poll_interval > 0)
++		mod_delayed_work(system_wq, &di->work, poll_interval * HZ);
++}
++
++void bq27xxx_battery_update(struct bq27xxx_device_info *di)
++{
++	mutex_lock(&di->lock);
++	bq27xxx_battery_update_unlocked(di);
++	mutex_unlock(&di->lock);
+ }
+ EXPORT_SYMBOL_GPL(bq27xxx_battery_update);
  
- 	if (val != 0) {
+@@ -1816,9 +1826,6 @@ static void bq27xxx_battery_poll(struct
+ 				     work.work);
+ 
+ 	bq27xxx_battery_update(di);
+-
+-	if (poll_interval > 0)
+-		schedule_delayed_work(&di->work, poll_interval * HZ);
+ }
+ 
+ static bool bq27xxx_battery_is_full(struct bq27xxx_device_info *di, int flags)
+@@ -1991,10 +1998,8 @@ static int bq27xxx_battery_get_property(
+ 	struct bq27xxx_device_info *di = power_supply_get_drvdata(psy);
+ 
+ 	mutex_lock(&di->lock);
+-	if (time_is_before_jiffies(di->last_update + 5 * HZ)) {
+-		cancel_delayed_work_sync(&di->work);
+-		bq27xxx_battery_poll(&di->work.work);
+-	}
++	if (time_is_before_jiffies(di->last_update + 5 * HZ))
++		bq27xxx_battery_update_unlocked(di);
+ 	mutex_unlock(&di->lock);
+ 
+ 	if (psp != POWER_SUPPLY_PROP_PRESENT && di->cache.flags < 0)
 
 
