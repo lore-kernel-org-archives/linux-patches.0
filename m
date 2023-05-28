@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07E4F569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88385C433EF;
-	Sun, 28 May 2023 19:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFFA569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8BF2C4339B;
+	Sun, 28 May 2023 19:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301939;
-	bh=+y3TdAcud8EAkvR5IUZ/aKtENAD+1IP2Xs2n9WQM94w=;
+	s=korg; t=1685301942;
+	bh=4//Y7+dpT+GRQBIZh6cnRXFAwNVw15gmbuB7XmdHAjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdZbKRLflFZ2s34yyw06XZQ+ve9J17hg2qAsKusR+knMesjlpXvvaO5Ad8MEISgcx
-	 39N/OgHMgwVhFWLDKl1l2YMn547klaFW6iGCy/qMMV/6VvIDYMryQye575IYSWqnOV
-	 1238LowVHVBjHdwScm+r/TI7ui3lgd5Lx7OiLVHg=
+	b=u0hCbzr5xNoa3Os4MzOg4JxbVUAgTvWmw2HPEekTizhiWjAH3itq3BFMOwP5jeX8L
+	 OR3KR61cxfb+VSAWbyzt5gZh/Owiv5/IzvTwD9V3QeZzAvFGpDlMessiusOQ6v2s4K
+	 bNMaPfT5EZmCH+LnpYT8f8ViMt/0+M4+xxm0vEGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Traynor <ktraynor@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	William Tu <u9012063@gmail.com>,
+	Jijie Shao <shaojijie@huawei.com>,
+	Hao Lan <lanhao@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 069/161] erspan: get the proto with the md version for collect_md
-Date: Sun, 28 May 2023 20:09:53 +0100
-Message-Id: <20230528190839.358032564@linuxfoundation.org>
+Subject: [PATCH 5.4 070/161] net: hns3: fix sending pfc frames after reset issue
+Date: Sun, 28 May 2023 20:09:54 +0100
+Message-Id: <20230528190839.385501179@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -38,79 +36,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Jijie Shao <shaojijie@huawei.com>
 
-[ Upstream commit d80fc101d2eb9b3188c228d61223890aeea480a4 ]
+[ Upstream commit f14db07064727dd3bc0906c77a6d2759c1bbb395 ]
 
-In commit 20704bd1633d ("erspan: build the header with the right proto
-according to erspan_ver"), it gets the proto with t->parms.erspan_ver,
-but t->parms.erspan_ver is not used by collect_md branch, and instead
-it should get the proto with md->version for collect_md.
+To prevent the system from abnormally sending PFC frames after an
+abnormal reset. The hns3 driver notifies the firmware to disable pfc
+before reset.
 
-Thanks to Kevin for pointing this out.
-
-Fixes: 20704bd1633d ("erspan: build the header with the right proto according to erspan_ver")
-Fixes: 94d7d8f29287 ("ip6_gre: add erspan v2 support")
-Reported-by: Kevin Traynor <ktraynor@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: William Tu <u9012063@gmail.com>
+Fixes: 35d93a30040c ("net: hns3: adjust the process of PF reset")
+Signed-off-by: Jijie Shao <shaojijie@huawei.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ip6_gre.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ .../ethernet/hisilicon/hns3/hns3pf/hclge_main.c   | 15 +++++++++------
+ .../net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c |  4 ++--
+ .../net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.h |  5 +++++
+ 3 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
-index 63b5fd3742f2c..0977137b00dc4 100644
---- a/net/ipv6/ip6_gre.c
-+++ b/net/ipv6/ip6_gre.c
-@@ -1003,12 +1003,14 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 					    ntohl(tun_id),
- 					    ntohl(md->u.index), truncate,
- 					    false);
-+			proto = htons(ETH_P_ERSPAN);
- 		} else if (md->version == 2) {
- 			erspan_build_header_v2(skb,
- 					       ntohl(tun_id),
- 					       md->u.md2.dir,
- 					       get_hwid(&md->u.md2),
- 					       truncate, false);
-+			proto = htons(ETH_P_ERSPAN2);
- 		} else {
- 			goto tx_err;
- 		}
-@@ -1031,24 +1033,25 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
- 			break;
- 		}
- 
--		if (t->parms.erspan_ver == 1)
-+		if (t->parms.erspan_ver == 1) {
- 			erspan_build_header(skb, ntohl(t->parms.o_key),
- 					    t->parms.index,
- 					    truncate, false);
--		else if (t->parms.erspan_ver == 2)
-+			proto = htons(ETH_P_ERSPAN);
-+		} else if (t->parms.erspan_ver == 2) {
- 			erspan_build_header_v2(skb, ntohl(t->parms.o_key),
- 					       t->parms.dir,
- 					       t->parms.hwid,
- 					       truncate, false);
--		else
-+			proto = htons(ETH_P_ERSPAN2);
-+		} else {
- 			goto tx_err;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index d58abdfdb9b7b..08277c3cf2806 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -6688,12 +6688,15 @@ static void hclge_ae_stop(struct hnae3_handle *handle)
+ 	/* If it is not PF reset or FLR, the firmware will disable the MAC,
+ 	 * so it only need to stop phy here.
+ 	 */
+-	if (test_bit(HCLGE_STATE_RST_HANDLING, &hdev->state) &&
+-	    hdev->reset_type != HNAE3_FUNC_RESET &&
+-	    hdev->reset_type != HNAE3_FLR_RESET) {
+-		hclge_mac_stop_phy(hdev);
+-		hclge_update_link_status(hdev);
+-		return;
++	if (test_bit(HCLGE_STATE_RST_HANDLING, &hdev->state)) {
++		hclge_pfc_pause_en_cfg(hdev, HCLGE_PFC_TX_RX_DISABLE,
++				       HCLGE_PFC_DISABLE);
++		if (hdev->reset_type != HNAE3_FUNC_RESET &&
++		    hdev->reset_type != HNAE3_FLR_RESET) {
++			hclge_mac_stop_phy(hdev);
++			hclge_update_link_status(hdev);
++			return;
 +		}
- 
- 		fl6.daddr = t->parms.raddr;
  	}
  
- 	/* Push GRE header. */
--	proto = (t->parms.erspan_ver == 1) ? htons(ETH_P_ERSPAN)
--					   : htons(ETH_P_ERSPAN2);
- 	gre_build_header(skb, 8, TUNNEL_SEQ, proto, 0, htonl(atomic_fetch_inc(&t->o_seqno)));
+ 	for (i = 0; i < handle->kinfo.num_tqps; i++)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c
+index 8448607742a6b..2183e700f9d96 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.c
+@@ -170,8 +170,8 @@ int hclge_mac_pause_en_cfg(struct hclge_dev *hdev, bool tx, bool rx)
+ 	return hclge_cmd_send(&hdev->hw, &desc, 1);
+ }
  
- 	/* TooBig packet may have updated dst->dev's mtu */
+-static int hclge_pfc_pause_en_cfg(struct hclge_dev *hdev, u8 tx_rx_bitmap,
+-				  u8 pfc_bitmap)
++int hclge_pfc_pause_en_cfg(struct hclge_dev *hdev, u8 tx_rx_bitmap,
++			   u8 pfc_bitmap)
+ {
+ 	struct hclge_desc desc;
+ 	struct hclge_pfc_en_cmd *pfc = (struct hclge_pfc_en_cmd *)desc.data;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.h
+index 260f22d19d81a..406084bb23072 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_tm.h
+@@ -109,6 +109,9 @@ struct hclge_bp_to_qs_map_cmd {
+ 	u32 rsvd1;
+ };
+ 
++#define HCLGE_PFC_DISABLE	0
++#define HCLGE_PFC_TX_RX_DISABLE	0
++
+ struct hclge_pfc_en_cmd {
+ 	u8 tx_rx_en_bitmap;
+ 	u8 pri_en_bitmap;
+@@ -150,6 +153,8 @@ void hclge_tm_schd_info_update(struct hclge_dev *hdev, u8 num_tc);
+ void hclge_tm_pfc_info_update(struct hclge_dev *hdev);
+ int hclge_tm_dwrr_cfg(struct hclge_dev *hdev);
+ int hclge_tm_init_hw(struct hclge_dev *hdev, bool init);
++int hclge_pfc_pause_en_cfg(struct hclge_dev *hdev, u8 tx_rx_bitmap,
++			   u8 pfc_bitmap);
+ int hclge_mac_pause_en_cfg(struct hclge_dev *hdev, bool tx, bool rx);
+ int hclge_pause_addr_cfg(struct hclge_dev *hdev, const u8 *mac_addr);
+ int hclge_pfc_rx_stats_get(struct hclge_dev *hdev, u64 *stats);
 -- 
 2.39.2
 
