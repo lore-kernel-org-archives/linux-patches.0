@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5869569F
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB8DC433D2;
-	Sun, 28 May 2023 19:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D7F611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA83C433EF;
+	Sun, 28 May 2023 19:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301209;
-	bh=3ZM+S5ZLa6liQWKlVaUeIUBP8rK1Yupb0pYlfSdbCSA=;
+	s=korg; t=1685301212;
+	bh=6KuvJmkPD9TYCnKKgHInVB9V9KggkAJOgw2McvK8LN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TfXVUmHnHNeboc6kHC9cPI8W/THu7aoHOIWt85p5WIeyvND5XWTceqISBpwq/Si8U
-	 svoE5YeHMRTJuU7BGvi2zubBadEYzp4VHNkAqMG+fNt1tmec4ZXRL3MlGWc7T+VpOY
-	 f6WJNAOfPdm/NyPLbuGqipkRDcK236TLO9+EMg1s=
+	b=XmYUhXCDqvPgzLy2mj5YfJopCPq36ocUbo8BH+GcopS25TKj67DgnFxUwUqGsDjCe
+	 MYz8thWhiSQTW27GL3FgPGFkhg3bk7LlSja7FINlwsGBtIo6fYsL7QhsjaNEqQOcz8
+	 fFiwtzWz3q7zzUU860zIp9Wbc+cg3Ot1v0wwur3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Bastien Nocera <hadess@hadess.net>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 18/86] scsi: message: mptlan: Fix use after free bug in mptlan_remove() due to race condition
-Date: Sun, 28 May 2023 20:09:52 +0100
-Message-Id: <20230528190829.222414992@linuxfoundation.org>
+Subject: [PATCH 4.14 27/86] HID: logitech-hidpp: Reconcile USB and Unifying serials
+Date: Sun, 28 May 2023 20:10:01 +0100
+Message-Id: <20230528190829.577944559@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,52 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Bastien Nocera <hadess@hadess.net>
 
-[ Upstream commit f486893288f3e9b171b836f43853a6426515d800 ]
+[ Upstream commit 5b3691d15e04b6d5a32c915577b8dbc5cfb56382 ]
 
-mptlan_probe() calls mpt_register_lan_device() which initializes the
-&priv->post_buckets_task workqueue. A call to
-mpt_lan_wake_post_buckets_task() will subsequently start the work.
+Now that USB HID++ devices can gather a serial number that matches the
+one that would be gathered when connected through a Unifying receiver,
+remove the last difference by dropping the product ID as devices
+usually have different product IDs when connected through USB or
+Unifying.
 
-During driver unload in mptlan_remove() the following race may occur:
+For example, on the serials on a G903 wired/wireless mouse:
+- Unifying before patch: 4067-e8-ce-cd-45
+- USB before patch: c086-e8-ce-cd-45
+- Unifying and USB after patch: e8-ce-cd-45
 
-CPU0                  CPU1
-
-                    |mpt_lan_post_receive_buckets_work()
-mptlan_remove()     |
-  free_netdev()     |
-    kfree(dev);     |
-                    |
-                    | dev->mtu
-                    |   //use
-
-Fix this by finishing the work prior to cleaning up in mptlan_remove().
-
-[mkp: we really should remove mptlan instead of attempting to fix it]
-
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Link: https://lore.kernel.org/r/20230318081635.796479-1-zyytlz.wz@163.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Bastien Nocera <hadess@hadess.net>
+Link: https://lore.kernel.org/r/20230302130117.3975-2-hadess@hadess.net
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/message/fusion/mptlan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/hid-logitech-hidpp.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/message/fusion/mptlan.c b/drivers/message/fusion/mptlan.c
-index 55dd71bbdc2aa..74d0ae00b0827 100644
---- a/drivers/message/fusion/mptlan.c
-+++ b/drivers/message/fusion/mptlan.c
-@@ -1429,7 +1429,9 @@ mptlan_remove(struct pci_dev *pdev)
- {
- 	MPT_ADAPTER 		*ioc = pci_get_drvdata(pdev);
- 	struct net_device	*dev = ioc->netdev;
-+	struct mpt_lan_priv *priv = netdev_priv(dev);
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index e2db4731eb825..1588508b3e7b7 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -675,8 +675,7 @@ static int hidpp_unifying_init(struct hidpp_device *hidpp)
+ 	if (ret)
+ 		return ret;
  
-+	cancel_delayed_work_sync(&priv->post_buckets_task);
- 	if(dev != NULL) {
- 		unregister_netdev(dev);
- 		free_netdev(dev);
+-	snprintf(hdev->uniq, sizeof(hdev->uniq), "%04x-%4phD",
+-		 hdev->product, &serial);
++	snprintf(hdev->uniq, sizeof(hdev->uniq), "%4phD", &serial);
+ 	dbg_hid("HID++ Unifying: Got serial: %s\n", hdev->uniq);
+ 
+ 	name = hidpp_unifying_get_name(hidpp);
+@@ -819,8 +818,7 @@ static int hidpp_serial_init(struct hidpp_device *hidpp)
+ 	if (ret)
+ 		return ret;
+ 
+-	snprintf(hdev->uniq, sizeof(hdev->uniq), "%04x-%4phD",
+-		 hdev->product, &serial);
++	snprintf(hdev->uniq, sizeof(hdev->uniq), "%4phD", &serial);
+ 	dbg_hid("HID++ DeviceInformation: Got serial: %s\n", hdev->uniq);
+ 
+ 	return 0;
 -- 
 2.39.2
 
