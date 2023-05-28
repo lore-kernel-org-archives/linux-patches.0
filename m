@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DB4F611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C6B2C433D2;
-	Sun, 28 May 2023 19:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D1F611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9244AC4339B;
+	Sun, 28 May 2023 19:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302777;
-	bh=+xuEf/1ExUTyBa98kx2TRpnYGYVcduMSKDC5qkBlMlI=;
+	s=korg; t=1685302779;
+	bh=Vy5+BQO3VbhljkkvwLP/PGF/MlHEjNVSyO2vB46eA/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdP/O796XywayR0IZ2f7GSjdSQDHBotwr6f4iTIyPBtscznJRavrJmvBOOup2wQa7
-	 a1aP0LHgx5tqWHcIPpGFuadn2NeVDHO1s06TXh0z6VmAzt4UFg7blSYnU7BQ/ifw4D
-	 b/Ag9EaxRc5Td49J+8wm0Xdi6PQOIC21Iaps3u4M=
+	b=hnmT1FYmPLHUW/2jjC5GM6frKhARFzpujyEVLaxRW9IIo6lx0ZYnZRBf5LgyVdsGv
+	 vfI0K+bkAoZqJyY8z8/6VIPl8PwURYtHW8XCHKCLmrmRH/Qb1m5SL/yfNbq/8eajCM
+	 gug7qQmFJRMkHGftR1XaMA8w4uhCvqYo4G9chBQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Austin Kim <austindh.kim@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Kristoffer Ericson <Kristoffer.ericson@gmail.com>,
+	patches@armlinux.org.uk,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/211] ext4: remove an unused variable warning with CONFIG_QUOTA=n
-Date: Sun, 28 May 2023 20:09:02 +0100
-Message-Id: <20230528190844.051359664@linuxfoundation.org>
+Subject: [PATCH 5.10 003/211] ARM: 9296/1: HP Jornada 7XX: fix kernel-doc warnings
+Date: Sun, 28 May 2023 20:08:44 +0100
+Message-Id: <20230528190843.602374788@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,59 +39,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Austin Kim <austindh.kim@gmail.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 3bbef91bdd2180c67407285ba160b023eb4d5306 ]
+[ Upstream commit 46dd6078dbc7e363a8bb01209da67015a1538929 ]
 
-The 'enable_quota' variable is only used in an CONFIG_QUOTA.
-With CONFIG_QUOTA=n, compiler causes a harmless warning:
+Fix kernel-doc warnings from the kernel test robot:
 
-fs/ext4/super.c: In function ‘ext4_remount’:
-fs/ext4/super.c:5840:6: warning: variable ‘enable_quota’ set but not used
-  [-Wunused-but-set-variable]
-  int enable_quota = 0;
-              ^~~~~
+jornada720_ssp.c:24: warning: Function parameter or member 'jornada_ssp_lock' not described in 'DEFINE_SPINLOCK'
+jornada720_ssp.c:24: warning: expecting prototype for arch/arm/mac(). Prototype was for DEFINE_SPINLOCK() instead
+jornada720_ssp.c:34: warning: Function parameter or member 'byte' not described in 'jornada_ssp_reverse'
+jornada720_ssp.c:57: warning: Function parameter or member 'byte' not described in 'jornada_ssp_byte'
+jornada720_ssp.c:85: warning: Function parameter or member 'byte' not described in 'jornada_ssp_inout'
 
-Move 'enable_quota' into the same #ifdef CONFIG_QUOTA block
-to remove an unused variable warning.
+Link: lore.kernel.org/r/202304210535.tWby3jWF-lkp@intel.com
 
-Signed-off-by: Austin Kim <austindh.kim@gmail.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20210824034929.GA13415@raspberrypi
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: a44be64bbecb ("ext4: don't clear SB_RDONLY when remounting r/w until quota is re-enabled")
+Fixes: 69ebb22277a5 ("[ARM] 4506/1: HP Jornada 7XX: Addition of SSP Platform Driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Kristoffer Ericson <Kristoffer.ericson@gmail.com>
+Cc: patches@armlinux.org.uk
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm/mach-sa1100/jornada720_ssp.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 8694be5132415..d75aa45a846d1 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5792,11 +5792,11 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	unsigned long old_sb_flags, vfs_flags;
- 	struct ext4_mount_options old_opts;
--	int enable_quota = 0;
- 	ext4_group_t g;
- 	unsigned int journal_ioprio = DEFAULT_JOURNAL_IOPRIO;
- 	int err = 0;
- #ifdef CONFIG_QUOTA
-+	int enable_quota = 0;
- 	int i, j;
- 	char *to_free[EXT4_MAXQUOTAS];
- #endif
-@@ -5994,7 +5994,9 @@ static int ext4_remount(struct super_block *sb, int *flags, char *data)
- 					err = -EROFS;
- 					goto restore_opts;
- 				}
-+#ifdef CONFIG_QUOTA
- 			enable_quota = 1;
-+#endif
- 		}
- 	}
+diff --git a/arch/arm/mach-sa1100/jornada720_ssp.c b/arch/arm/mach-sa1100/jornada720_ssp.c
+index 1dbe98948ce30..9627c4cf3e41d 100644
+--- a/arch/arm/mach-sa1100/jornada720_ssp.c
++++ b/arch/arm/mach-sa1100/jornada720_ssp.c
+@@ -1,5 +1,5 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-/**
++/*
+  *  arch/arm/mac-sa1100/jornada720_ssp.c
+  *
+  *  Copyright (C) 2006/2007 Kristoffer Ericson <Kristoffer.Ericson@gmail.com>
+@@ -26,6 +26,7 @@ static unsigned long jornada_ssp_flags;
  
+ /**
+  * jornada_ssp_reverse - reverses input byte
++ * @byte: input byte to reverse
+  *
+  * we need to reverse all data we receive from the mcu due to its physical location
+  * returns : 01110111 -> 11101110
+@@ -46,6 +47,7 @@ EXPORT_SYMBOL(jornada_ssp_reverse);
+ 
+ /**
+  * jornada_ssp_byte - waits for ready ssp bus and sends byte
++ * @byte: input byte to transmit
+  *
+  * waits for fifo buffer to clear and then transmits, if it doesn't then we will
+  * timeout after <timeout> rounds. Needs mcu running before its called.
+@@ -77,6 +79,7 @@ EXPORT_SYMBOL(jornada_ssp_byte);
+ 
+ /**
+  * jornada_ssp_inout - decide if input is command or trading byte
++ * @byte: input byte to send (may be %TXDUMMY)
+  *
+  * returns : (jornada_ssp_byte(byte)) on success
+  *         : %-ETIMEDOUT on timeout failure
 -- 
 2.39.2
 
