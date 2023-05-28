@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE08F611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA8DC433D2;
-	Sun, 28 May 2023 19:35:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DBB611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACEEAC433EF;
+	Sun, 28 May 2023 19:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302521;
-	bh=f7t2ldgANhpQoF1Q/P/4/m8ikNgrW8/ejigJltQAi3M=;
+	s=korg; t=1685302524;
+	bh=i+XvamVEAtp7ePMofU3wB+K7KjStmURjyq5IdAbTIPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ou64YGBqrWSgP+1tu8wtd75N+JW6In14Ca0290QBD36I7pd9+ybxma9p36mlFdV+z
-	 GTRrTgGN3SXUdIre7qM5Q0HBlZzbZZMPZHYn3T79d/6+B9WiG+iFzk+LhdlE6Z+iHi
-	 3tR9YGSgY3Mj0QCJtJuTuDViW8Y7wC7Z01aowJl4=
+	b=aLX25nDKwP9aFRw2xAJ+fcR5BeasUcaB01R15/blXMce8Vp0CQnA3auzW9fyy9/wT
+	 a9zRwIfnNp7qYHfX2hbRi7ehm7DQmhyNMcBgceTB0uFFyRdXS9r1nxq6bSjOMxyJEf
+	 YL0X6Y69vU3iKZx1PZR1kzRtKHQsWbnF+CTYpsk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 036/119] parisc: Enable LOCKDEP support
-Date: Sun, 28 May 2023 20:10:36 +0100
-Message-Id: <20230528190836.578361685@linuxfoundation.org>
+Subject: [PATCH 6.1 037/119] parisc: Handle kprobes breakpoints only in kernel context
+Date: Sun, 28 May 2023 20:10:37 +0100
+Message-Id: <20230528190836.608323043@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -35,27 +35,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Helge Deller <deller@gmx.de>
 
-commit adf8e96a7ea670d45b5de7594acc67e8f4787ae6 upstream.
+commit df419492e428b6a2bce98d0f613c58a13da6666c upstream.
 
-Cc: <stable@vger.kernel.org> # v6.0+
+The kernel kprobes break instructions should only be handled when running
+in kernel context.
+
+Cc: <stable@vger.kernel.org> # v5.18+
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/Kconfig |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/parisc/kernel/traps.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/Kconfig
-+++ b/arch/parisc/Kconfig
-@@ -129,6 +129,10 @@ config PM
- config STACKTRACE_SUPPORT
- 	def_bool y
+--- a/arch/parisc/kernel/traps.c
++++ b/arch/parisc/kernel/traps.c
+@@ -291,11 +291,11 @@ static void handle_break(struct pt_regs
+ 	}
  
-+config LOCKDEP_SUPPORT
-+	bool
-+	default y
-+
- config ISA_DMA_API
- 	bool
- 
+ #ifdef CONFIG_KPROBES
+-	if (unlikely(iir == PARISC_KPROBES_BREAK_INSN)) {
++	if (unlikely(iir == PARISC_KPROBES_BREAK_INSN && !user_mode(regs))) {
+ 		parisc_kprobe_break_handler(regs);
+ 		return;
+ 	}
+-	if (unlikely(iir == PARISC_KPROBES_BREAK_INSN2)) {
++	if (unlikely(iir == PARISC_KPROBES_BREAK_INSN2 && !user_mode(regs))) {
+ 		parisc_kprobe_ss_handler(regs);
+ 		return;
+ 	}
 
 
