@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E861611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE826C4339B;
-	Sun, 28 May 2023 19:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13B5611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C00DC433EF;
+	Sun, 28 May 2023 19:16:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301389;
-	bh=iOCXSVpPo1H8kjRyU4F/rq1Wrf27mf5IoOBSEFrY0B4=;
+	s=korg; t=1685301391;
+	bh=fdUSmWXHaNzdbd3OlIrshPSwQvWoG8v3CjFVT7OtFI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wofQ+TDLUM0j19h8oZbMAM73PQZqr/i0vo/Rq4xsdQCrfXZ8xy1GDvVKRDrs0Egaw
-	 rGuB648OgFqxsSIPTaohx4k8c0g/5BNdLMvqC7EXaxsS70ix5rh/CbAfSFcHPh/2e0
-	 IBqkOhkuDiEe413/WXsKhEJoOOI9Lo921E6VXtZw=
+	b=tPnGpW+mA0b81Ah06oAgbCALa4Cosa/qp0nHBW+N66J4AFHezDuN23iBuFJ7u8PcU
+	 bYznwWvHWmvfPyjCc1meoa7RwEFxiVCcuOGP8DGuAfxGP4bzFsJx0yYIc5+1JKvC1N
+	 4w0jaKDmqL5eRKLUpiiFs+Szfq+5RE2RAlRgucdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzbot+e2787430e752a92b8750@syzkaller.appspotmail.com>,
+	syzbot <syzbot+4913dca2ea6e4d43f3f1@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 011/132] af_unix: Fix data races around sk->sk_shutdown.
-Date: Sun, 28 May 2023 20:09:10 +0100
-Message-Id: <20230528190833.914777996@linuxfoundation.org>
+Subject: [PATCH 4.19 012/132] fs: hfsplus: remove WARN_ON() from hfsplus_cat_{read,write}_inode()
+Date: Sun, 28 May 2023 20:09:11 +0100
+Message-Id: <20230528190833.945770597@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -38,151 +38,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit e1d09c2c2f5793474556b60f83900e088d0d366d ]
+[ Upstream commit 81b21c0f0138ff5a499eafc3eb0578ad2a99622c ]
 
-KCSAN found a data race around sk->sk_shutdown where unix_release_sock()
-and unix_shutdown() update it under unix_state_lock(), OTOH unix_poll()
-and unix_dgram_poll() read it locklessly.
+syzbot is hitting WARN_ON() in hfsplus_cat_{read,write}_inode(), for
+crafted filesystem image can contain bogus length. There conditions are
+not kernel bugs that can justify kernel to panic.
 
-We need to annotate the writes and reads with WRITE_ONCE() and READ_ONCE().
-
-BUG: KCSAN: data-race in unix_poll / unix_release_sock
-
-write to 0xffff88800d0f8aec of 1 bytes by task 264 on cpu 0:
- unix_release_sock+0x75c/0x910 net/unix/af_unix.c:631
- unix_release+0x59/0x80 net/unix/af_unix.c:1042
- __sock_release+0x7d/0x170 net/socket.c:653
- sock_close+0x19/0x30 net/socket.c:1397
- __fput+0x179/0x5e0 fs/file_table.c:321
- ____fput+0x15/0x20 fs/file_table.c:349
- task_work_run+0x116/0x1a0 kernel/task_work.c:179
- resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
- exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
- exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
- __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
- syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
- do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-read to 0xffff88800d0f8aec of 1 bytes by task 222 on cpu 1:
- unix_poll+0xa3/0x2a0 net/unix/af_unix.c:3170
- sock_poll+0xcf/0x2b0 net/socket.c:1385
- vfs_poll include/linux/poll.h:88 [inline]
- ep_item_poll.isra.0+0x78/0xc0 fs/eventpoll.c:855
- ep_send_events fs/eventpoll.c:1694 [inline]
- ep_poll fs/eventpoll.c:1823 [inline]
- do_epoll_wait+0x6c4/0xea0 fs/eventpoll.c:2258
- __do_sys_epoll_wait fs/eventpoll.c:2270 [inline]
- __se_sys_epoll_wait fs/eventpoll.c:2265 [inline]
- __x64_sys_epoll_wait+0xcc/0x190 fs/eventpoll.c:2265
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0x00 -> 0x03
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 222 Comm: dbus-broker Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 3c73419c09a5 ("af_unix: fix 'poll for write'/ connected DGRAM sockets")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot <syzbot+e2787430e752a92b8750@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=e2787430e752a92b8750
+Reported-by: syzbot <syzbot+4913dca2ea6e4d43f3f1@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=4913dca2ea6e4d43f3f1
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Message-Id: <15308173-5252-d6a3-ae3b-e96d46cb6f41@I-love.SAKURA.ne.jp>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ fs/hfsplus/inode.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 0b2d466fb8585..b0dcbb08e60db 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -536,7 +536,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
- 	/* Clear state */
- 	unix_state_lock(sk);
- 	sock_orphan(sk);
--	sk->sk_shutdown = SHUTDOWN_MASK;
-+	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
- 	path	     = u->path;
- 	u->path.dentry = NULL;
- 	u->path.mnt = NULL;
-@@ -554,7 +554,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
- 		if (sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET) {
- 			unix_state_lock(skpair);
- 			/* No more writes */
--			skpair->sk_shutdown = SHUTDOWN_MASK;
-+			WRITE_ONCE(skpair->sk_shutdown, SHUTDOWN_MASK);
- 			if (!skb_queue_empty(&sk->sk_receive_queue) || embrion)
- 				skpair->sk_err = ECONNRESET;
- 			unix_state_unlock(skpair);
-@@ -2551,7 +2551,7 @@ static int unix_shutdown(struct socket *sock, int mode)
- 	++mode;
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index c7073a1517d68..a1d4ad584b105 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -476,7 +476,11 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 	if (type == HFSPLUS_FOLDER) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
  
- 	unix_state_lock(sk);
--	sk->sk_shutdown |= mode;
-+	WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | mode);
- 	other = unix_peer(sk);
- 	if (other)
- 		sock_hold(other);
-@@ -2568,7 +2568,7 @@ static int unix_shutdown(struct socket *sock, int mode)
- 		if (mode&SEND_SHUTDOWN)
- 			peer_mode |= RCV_SHUTDOWN;
- 		unix_state_lock(other);
--		other->sk_shutdown |= peer_mode;
-+		WRITE_ONCE(other->sk_shutdown, other->sk_shutdown | peer_mode);
- 		unix_state_unlock(other);
- 		other->sk_state_change(other);
- 		if (peer_mode == SHUTDOWN_MASK)
-@@ -2687,16 +2687,18 @@ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wa
- {
- 	struct sock *sk = sock->sk;
- 	__poll_t mask;
-+	u8 shutdown;
+-		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_folder));
++		if (fd->entrylength < sizeof(struct hfsplus_cat_folder)) {
++			pr_err("bad catalog folder entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		hfsplus_get_perms(inode, &folder->permissions, 1);
+@@ -496,7 +500,11 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 	} else if (type == HFSPLUS_FILE) {
+ 		struct hfsplus_cat_file *file = &entry.file;
  
- 	sock_poll_wait(file, sock, wait);
- 	mask = 0;
-+	shutdown = READ_ONCE(sk->sk_shutdown);
+-		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_file));
++		if (fd->entrylength < sizeof(struct hfsplus_cat_file)) {
++			pr_err("bad catalog file entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
  
- 	/* exceptional events? */
- 	if (sk->sk_err)
- 		mask |= EPOLLERR;
--	if (sk->sk_shutdown == SHUTDOWN_MASK)
-+	if (shutdown == SHUTDOWN_MASK)
- 		mask |= EPOLLHUP;
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
+@@ -527,6 +535,7 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 		pr_err("bad catalog entry used to create inode\n");
+ 		res = -EIO;
+ 	}
++out:
+ 	return res;
+ }
  
- 	/* readable? */
-@@ -2724,18 +2726,20 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
- 	struct sock *sk = sock->sk, *other;
- 	unsigned int writable;
- 	__poll_t mask;
-+	u8 shutdown;
+@@ -535,6 +544,7 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	struct inode *main_inode = inode;
+ 	struct hfs_find_data fd;
+ 	hfsplus_cat_entry entry;
++	int res = 0;
  
- 	sock_poll_wait(file, sock, wait);
- 	mask = 0;
-+	shutdown = READ_ONCE(sk->sk_shutdown);
+ 	if (HFSPLUS_IS_RSRC(inode))
+ 		main_inode = HFSPLUS_I(inode)->rsrc_inode;
+@@ -553,7 +563,11 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	if (S_ISDIR(main_inode->i_mode)) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
  
- 	/* exceptional events? */
- 	if (sk->sk_err || !skb_queue_empty_lockless(&sk->sk_error_queue))
- 		mask |= EPOLLERR |
- 			(sock_flag(sk, SOCK_SELECT_ERR_QUEUE) ? EPOLLPRI : 0);
+-		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_folder));
++		if (fd.entrylength < sizeof(struct hfsplus_cat_folder)) {
++			pr_err("bad catalog folder entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		/* simple node checks? */
+@@ -578,7 +592,11 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	} else {
+ 		struct hfsplus_cat_file *file = &entry.file;
  
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
--	if (sk->sk_shutdown == SHUTDOWN_MASK)
-+	if (shutdown == SHUTDOWN_MASK)
- 		mask |= EPOLLHUP;
- 
- 	/* readable? */
+-		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_file));
++		if (fd.entrylength < sizeof(struct hfsplus_cat_file)) {
++			pr_err("bad catalog file entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
+ 		hfsplus_inode_write_fork(inode, &file->data_fork);
+@@ -599,5 +617,5 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	set_bit(HFSPLUS_I_CAT_DIRTY, &HFSPLUS_I(inode)->flags);
+ out:
+ 	hfs_find_exit(&fd);
+-	return 0;
++	return res;
+ }
 -- 
 2.39.2
 
