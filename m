@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11404569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:27:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9292AC433D2;
-	Sun, 28 May 2023 19:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711B3569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:27:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F408CC433EF;
+	Sun, 28 May 2023 19:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302069;
-	bh=zq1Os+D/7yy/NJzFj2J8bClDSlPMi/oDDTlDd37Pa0U=;
+	s=korg; t=1685302072;
+	bh=NzSuCDquSRyGSL/9He700VpgzWy155VEdg4950KBWAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pk8t3UdGd1ULnPdzCih87LL4SiJD91E/xyh3CycKdVQkDa3D3o1WaIesd+o/4j+xy
-	 LHImw08pMxsEPMLeY7BTvovxqkxtVSBHiCaIJTfMRkPMe60Yr+Qesjl5bkCGYURZBQ
-	 T6qhpJdVkjQVXVnx/0bN+bAL0DTZWZ+1ggp3Moso=
+	b=FOSA1keLfZ8Nn8iE12/AJih3emwRjojq23k9ttvJKRj1N4/C/IEQdkwbIpZ86qFtj
+	 0uInGhDA+4Sw8W6poePVHpiRTJlv1pJ5Y3gctzzBattlbN5Ba7u9nZUsyawAqeaA6B
+	 /c4/MlEKZDNI00idrtzB6ZVCvkkumRXW2dTINqY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>,
-	Jiri Pirko <jiri@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.4 148/161] ipv6: Fix out-of-bounds access in ipv6_find_tlv()
-Date: Sun, 28 May 2023 20:11:12 +0100
-Message-Id: <20230528190841.599664847@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 5.4 149/161] power: supply: leds: Fix blink to LED on transition
+Date: Sun, 28 May 2023 20:11:13 +0100
+Message-Id: <20230528190841.624386068@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -36,36 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 878ecb0897f4737a4c9401f3523fd49589025671 upstream.
+commit e4484643991e0f6b89060092563f0dbab9450cbb upstream.
 
-optlen is fetched without checking whether there is more than one byte to parse.
-It can lead to out-of-bounds access.
+When a battery's status changes from charging to full then
+the charging-blink-full-solid trigger tries to change
+the LED from blinking to solid/on.
 
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with SVACE.
+As is documented in include/linux/leds.h to deactivate blinking /
+to make the LED solid a LED_OFF must be send:
 
-Fixes: c61a40432509 ("[IPV6]: Find option offset by type.")
-Signed-off-by: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+"""
+         * Deactivate blinking again when the brightness is set to LED_OFF
+         * via the brightness_set() callback.
+"""
+
+led_set_brighness() calls with a brightness value other then 0 / LED_OFF
+merely change the brightness of the LED in its on state while it is
+blinking.
+
+So power_supply_update_bat_leds() must first send a LED_OFF event
+before the LED_FULL to disable blinking.
+
+Fixes: 6501f728c56f ("power_supply: Add new LED trigger charging-blink-solid-full")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/exthdrs_core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/power/supply/power_supply_leds.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/exthdrs_core.c
-+++ b/net/ipv6/exthdrs_core.c
-@@ -143,6 +143,8 @@ int ipv6_find_tlv(const struct sk_buff *
- 			optlen = 1;
- 			break;
- 		default:
-+			if (len < 2)
-+				goto bad;
- 			optlen = nh[offset + 1] + 2;
- 			if (optlen > len)
- 				goto bad;
+--- a/drivers/power/supply/power_supply_leds.c
++++ b/drivers/power/supply/power_supply_leds.c
+@@ -34,8 +34,9 @@ static void power_supply_update_bat_leds
+ 		led_trigger_event(psy->charging_full_trig, LED_FULL);
+ 		led_trigger_event(psy->charging_trig, LED_OFF);
+ 		led_trigger_event(psy->full_trig, LED_FULL);
+-		led_trigger_event(psy->charging_blink_full_solid_trig,
+-			LED_FULL);
++		/* Going from blink to LED on requires a LED_OFF event to stop blink */
++		led_trigger_event(psy->charging_blink_full_solid_trig, LED_OFF);
++		led_trigger_event(psy->charging_blink_full_solid_trig, LED_FULL);
+ 		break;
+ 	case POWER_SUPPLY_STATUS_CHARGING:
+ 		led_trigger_event(psy->charging_full_trig, LED_FULL);
 
 
