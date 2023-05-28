@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A68611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DFEC4339B;
-	Sun, 28 May 2023 19:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6505D611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:22:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEEE0C433EF;
+	Sun, 28 May 2023 19:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301729;
-	bh=HuayMjO89gWx18c1IMs1LluOCUqY9ForkCLk5xr3zHY=;
+	s=korg; t=1685301732;
+	bh=SjtYtGlz6w8B0VdXBh1Hobi2CUFDpJ0StLVhrLbdiHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YquWXNfrKUc5pzCVh6HEJF5l99aCQ1yifqaAZZoDufbgNpaFiX4aKqms4p7Myr6BC
-	 MxXTtnTqXkMoKs0I6QtqqOqlF2rCJdz0fMUYk6VWPgDlATX/Z2YfHGoPQeh0TRJcwl
-	 wqJwFYC+EfRiFxxpygnaRknfT0/TFAdJ8xOlsQ48=
+	b=uUMcf5VTkYyDxmd5ru36eOr95I+Yd2D687EB+JfKIBQu4tSiSVySCT2eZxn2ZT39e
+	 gRwTEbyM/lVJR0OllM9ewm6pcT6mrpJ5f6IpI7Eo2LBl73WqVtVkzTuGTlsgCGcaHE
+	 p/WvBFn34gw07h6biodZQ+PJbn6pyT6njD0IZ6mM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,11 +19,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	syzbot <syzkaller@googlegroups.com>,
 	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 005/161] net: Fix load-tearing on sk->sk_stamp in sock_recv_cmsgs().
-Date: Sun, 28 May 2023 20:08:49 +0100
-Message-Id: <20230528190837.255793677@linuxfoundation.org>
+Subject: [PATCH 5.4 014/161] af_unix: Fix data races around sk->sk_shutdown.
+Date: Sun, 28 May 2023 20:08:58 +0100
+Message-Id: <20230528190837.567579900@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -39,78 +40,149 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit dfd9248c071a3710c24365897459538551cb7167 ]
+[ Upstream commit e1d09c2c2f5793474556b60f83900e088d0d366d ]
 
-KCSAN found a data race in sock_recv_cmsgs() where the read access
-to sk->sk_stamp needs READ_ONCE().
+KCSAN found a data race around sk->sk_shutdown where unix_release_sock()
+and unix_shutdown() update it under unix_state_lock(), OTOH unix_poll()
+and unix_dgram_poll() read it locklessly.
 
-BUG: KCSAN: data-race in packet_recvmsg / packet_recvmsg
+We need to annotate the writes and reads with WRITE_ONCE() and READ_ONCE().
 
-write (marked) to 0xffff88803c81f258 of 8 bytes by task 19171 on cpu 0:
- sock_write_timestamp include/net/sock.h:2670 [inline]
- sock_recv_cmsgs include/net/sock.h:2722 [inline]
- packet_recvmsg+0xb97/0xd00 net/packet/af_packet.c:3489
- sock_recvmsg_nosec net/socket.c:1019 [inline]
- sock_recvmsg+0x11a/0x130 net/socket.c:1040
- sock_read_iter+0x176/0x220 net/socket.c:1118
- call_read_iter include/linux/fs.h:1845 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x5e0/0x630 fs/read_write.c:470
- ksys_read+0x163/0x1a0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x41/0x50 fs/read_write.c:621
+BUG: KCSAN: data-race in unix_poll / unix_release_sock
+
+write to 0xffff88800d0f8aec of 1 bytes by task 264 on cpu 0:
+ unix_release_sock+0x75c/0x910 net/unix/af_unix.c:631
+ unix_release+0x59/0x80 net/unix/af_unix.c:1042
+ __sock_release+0x7d/0x170 net/socket.c:653
+ sock_close+0x19/0x30 net/socket.c:1397
+ __fput+0x179/0x5e0 fs/file_table.c:321
+ ____fput+0x15/0x20 fs/file_table.c:349
+ task_work_run+0x116/0x1a0 kernel/task_work.c:179
+ resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
+ exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
+ exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
+ syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
+ do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+read to 0xffff88800d0f8aec of 1 bytes by task 222 on cpu 1:
+ unix_poll+0xa3/0x2a0 net/unix/af_unix.c:3170
+ sock_poll+0xcf/0x2b0 net/socket.c:1385
+ vfs_poll include/linux/poll.h:88 [inline]
+ ep_item_poll.isra.0+0x78/0xc0 fs/eventpoll.c:855
+ ep_send_events fs/eventpoll.c:1694 [inline]
+ ep_poll fs/eventpoll.c:1823 [inline]
+ do_epoll_wait+0x6c4/0xea0 fs/eventpoll.c:2258
+ __do_sys_epoll_wait fs/eventpoll.c:2270 [inline]
+ __se_sys_epoll_wait fs/eventpoll.c:2265 [inline]
+ __x64_sys_epoll_wait+0xcc/0x190 fs/eventpoll.c:2265
  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
  do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
  entry_SYSCALL_64_after_hwframe+0x72/0xdc
 
-read to 0xffff88803c81f258 of 8 bytes by task 19183 on cpu 1:
- sock_recv_cmsgs include/net/sock.h:2721 [inline]
- packet_recvmsg+0xb64/0xd00 net/packet/af_packet.c:3489
- sock_recvmsg_nosec net/socket.c:1019 [inline]
- sock_recvmsg+0x11a/0x130 net/socket.c:1040
- sock_read_iter+0x176/0x220 net/socket.c:1118
- call_read_iter include/linux/fs.h:1845 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x5e0/0x630 fs/read_write.c:470
- ksys_read+0x163/0x1a0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x41/0x50 fs/read_write.c:621
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0xffffffffc4653600 -> 0x0000000000000000
+value changed: 0x00 -> 0x03
 
 Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 19183 Comm: syz-executor.5 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
+CPU: 1 PID: 222 Comm: dbus-broker Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
 Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
 
-Fixes: 6c7c98bad488 ("sock: avoid dirtying sk_stamp, if possible")
+Fixes: 3c73419c09a5 ("af_unix: fix 'poll for write'/ connected DGRAM sockets")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
 Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230508175543.55756-1-kuniyu@amazon.com
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/unix/af_unix.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 26dd07e47a7c7..fa19c6ba24441 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2448,7 +2448,7 @@ static inline void sock_recv_ts_and_drops(struct msghdr *msg, struct sock *sk,
- 		__sock_recv_ts_and_drops(msg, sk, skb);
- 	else if (unlikely(sock_flag(sk, SOCK_TIMESTAMP)))
- 		sock_write_timestamp(sk, skb->tstamp);
--	else if (unlikely(sk->sk_stamp == SK_DEFAULT_STAMP))
-+	else if (unlikely(sock_read_timestamp(sk) == SK_DEFAULT_STAMP))
- 		sock_write_timestamp(sk, 0);
- }
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 35a941684f16e..01fd049da104a 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -531,7 +531,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
+ 	/* Clear state */
+ 	unix_state_lock(sk);
+ 	sock_orphan(sk);
+-	sk->sk_shutdown = SHUTDOWN_MASK;
++	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
+ 	path	     = u->path;
+ 	u->path.dentry = NULL;
+ 	u->path.mnt = NULL;
+@@ -549,7 +549,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
+ 		if (sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET) {
+ 			unix_state_lock(skpair);
+ 			/* No more writes */
+-			skpair->sk_shutdown = SHUTDOWN_MASK;
++			WRITE_ONCE(skpair->sk_shutdown, SHUTDOWN_MASK);
+ 			if (!skb_queue_empty(&sk->sk_receive_queue) || embrion)
+ 				skpair->sk_err = ECONNRESET;
+ 			unix_state_unlock(skpair);
+@@ -2546,7 +2546,7 @@ static int unix_shutdown(struct socket *sock, int mode)
+ 	++mode;
  
+ 	unix_state_lock(sk);
+-	sk->sk_shutdown |= mode;
++	WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | mode);
+ 	other = unix_peer(sk);
+ 	if (other)
+ 		sock_hold(other);
+@@ -2563,7 +2563,7 @@ static int unix_shutdown(struct socket *sock, int mode)
+ 		if (mode&SEND_SHUTDOWN)
+ 			peer_mode |= RCV_SHUTDOWN;
+ 		unix_state_lock(other);
+-		other->sk_shutdown |= peer_mode;
++		WRITE_ONCE(other->sk_shutdown, other->sk_shutdown | peer_mode);
+ 		unix_state_unlock(other);
+ 		other->sk_state_change(other);
+ 		if (peer_mode == SHUTDOWN_MASK)
+@@ -2682,16 +2682,18 @@ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wa
+ {
+ 	struct sock *sk = sock->sk;
+ 	__poll_t mask;
++	u8 shutdown;
+ 
+ 	sock_poll_wait(file, sock, wait);
+ 	mask = 0;
++	shutdown = READ_ONCE(sk->sk_shutdown);
+ 
+ 	/* exceptional events? */
+ 	if (sk->sk_err)
+ 		mask |= EPOLLERR;
+-	if (sk->sk_shutdown == SHUTDOWN_MASK)
++	if (shutdown == SHUTDOWN_MASK)
+ 		mask |= EPOLLHUP;
+-	if (sk->sk_shutdown & RCV_SHUTDOWN)
++	if (shutdown & RCV_SHUTDOWN)
+ 		mask |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
+ 
+ 	/* readable? */
+@@ -2719,18 +2721,20 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
+ 	struct sock *sk = sock->sk, *other;
+ 	unsigned int writable;
+ 	__poll_t mask;
++	u8 shutdown;
+ 
+ 	sock_poll_wait(file, sock, wait);
+ 	mask = 0;
++	shutdown = READ_ONCE(sk->sk_shutdown);
+ 
+ 	/* exceptional events? */
+ 	if (sk->sk_err || !skb_queue_empty_lockless(&sk->sk_error_queue))
+ 		mask |= EPOLLERR |
+ 			(sock_flag(sk, SOCK_SELECT_ERR_QUEUE) ? EPOLLPRI : 0);
+ 
+-	if (sk->sk_shutdown & RCV_SHUTDOWN)
++	if (shutdown & RCV_SHUTDOWN)
+ 		mask |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
+-	if (sk->sk_shutdown == SHUTDOWN_MASK)
++	if (shutdown == SHUTDOWN_MASK)
+ 		mask |= EPOLLHUP;
+ 
+ 	/* readable? */
 -- 
 2.39.2
 
