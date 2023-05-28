@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8B2611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A16AFC433EF;
-	Sun, 28 May 2023 19:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F2D611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149B0C433D2;
+	Sun, 28 May 2023 19:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303104;
-	bh=ou45k1A72HGx4AMfDdF1aL8WlYs+Z6fY849+kKtdDz4=;
+	s=korg; t=1685303106;
+	bh=oGaB5Wyq4WoUQYfQvkD33Pe08pN29vUIzygTCh8EMEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VsX1O31HjeDS9k1YoojHKV3NPeHRr8msSqx2Rb26ctsXkojN97YFNuCtvRMNGmfN8
-	 CbjoHaw5zqWcpEqWP3r4T7Z5grdIjUbjqzPxMJhVmZgPalOcPfmACD4wEhHhlpIQOa
-	 akEtJXCBmUFkqCAm7EMJrScjeYVNgR15fjUEb29Q=
+	b=Uhp+22jGGe1LrMUvZB9ry5WRCdKQSXdI3qNZAmvmGpK3hy6InyKLeIJ36Oucqe5OF
+	 tzQ/096UIiaJ27yc+RB647aZrdi/dJxAk5+RghrY77tTzR69KaDW++KIbIqBxi8aY+
+	 nTv3aAbW6Lju2eAH6xcKV5mEdM0htPuoe+LBSNj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Davis <afd@ti.com>,
-	stable <stable@kernel.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Benjamin Block <bblock@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 156/211] serial: 8250_exar: Add support for USR298x PCI Modems
-Date: Sun, 28 May 2023 20:11:17 +0100
-Message-Id: <20230528190847.384087654@linuxfoundation.org>
+Subject: [PATCH 5.10 157/211] s390/qdio: get rid of register asm
+Date: Sun, 28 May 2023 20:11:18 +0100
+Message-Id: <20230528190847.408104857@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,77 +36,170 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Davis <afd@ti.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 95d698869b404772cc8b72560df71548491c10bc ]
+[ Upstream commit d3e2ff5436d6ee38b572ba5c01dc7994769bec54 ]
 
-Possibly the last PCI controller-based (i.e. not a soft/winmodem)
-dial-up modem one can still buy.
-
-Looks to have a stock XR17C154 PCI UART chip for communication, but for
-some reason when provisioning the PCI IDs they swapped the vendor and
-subvendor IDs. Otherwise this card would have worked out of the box.
-
-Searching online, some folks seem to not have this issue and others do,
-so it is possible only some batches of cards have this error.
-
-Create a new macro to handle the switched IDs and add support here.
-
-Signed-off-by: Andrew Davis <afd@ti.com>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230420160209.28221-1-afd@ti.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Benjamin Block <bblock@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Stable-dep-of: 2862a2fdfae8 ("s390/qdio: fix do_sqbs() inline assembly constraint")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_exar.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/s390/cio/qdio.h      | 25 ++++++++-------
+ drivers/s390/cio/qdio_main.c | 62 +++++++++++++++++++-----------------
+ 2 files changed, 46 insertions(+), 41 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_exar.c b/drivers/tty/serial/8250/8250_exar.c
-index 2c9f721091125..5c2adf14049b7 100644
---- a/drivers/tty/serial/8250/8250_exar.c
-+++ b/drivers/tty/serial/8250/8250_exar.c
-@@ -40,9 +40,13 @@
- #define PCI_DEVICE_ID_COMMTECH_4224PCIE		0x0020
- #define PCI_DEVICE_ID_COMMTECH_4228PCIE		0x0021
- #define PCI_DEVICE_ID_COMMTECH_4222PCIE		0x0022
-+
- #define PCI_DEVICE_ID_EXAR_XR17V4358		0x4358
- #define PCI_DEVICE_ID_EXAR_XR17V8358		0x8358
+diff --git a/drivers/s390/cio/qdio.h b/drivers/s390/cio/qdio.h
+index cd2df4ff8e0ef..854a21e1d3b7b 100644
+--- a/drivers/s390/cio/qdio.h
++++ b/drivers/s390/cio/qdio.h
+@@ -88,15 +88,15 @@ enum qdio_irq_states {
+ static inline int do_sqbs(u64 token, unsigned char state, int queue,
+ 			  int *start, int *count)
+ {
+-	register unsigned long _ccq asm ("0") = *count;
+-	register unsigned long _token asm ("1") = token;
+ 	unsigned long _queuestart = ((unsigned long)queue << 32) | *start;
++	unsigned long _ccq = *count;
  
-+#define PCI_SUBDEVICE_ID_USR_2980		0x0128
-+#define PCI_SUBDEVICE_ID_USR_2981		0x0129
-+
- #define PCI_DEVICE_ID_SEALEVEL_710xC		0x1001
- #define PCI_DEVICE_ID_SEALEVEL_720xC		0x1002
- #define PCI_DEVICE_ID_SEALEVEL_740xC		0x1004
-@@ -791,6 +795,15 @@ static const struct exar8250_board pbn_exar_XR17V8358 = {
- 		(kernel_ulong_t)&bd			\
- 	}
+ 	asm volatile(
+-		"	.insn	rsy,0xeb000000008A,%1,0,0(%2)"
+-		: "+d" (_ccq), "+d" (_queuestart)
+-		: "d" ((unsigned long)state), "d" (_token)
+-		: "memory", "cc");
++		"	lgr	1,%[token]\n"
++		"	.insn	rsy,0xeb000000008a,%[qs],%[ccq],0(%[state])"
++		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart)
++		: [state] "d" ((unsigned long)state), [token] "d" (token)
++		: "memory", "cc", "1");
+ 	*count = _ccq & 0xff;
+ 	*start = _queuestart & 0xff;
  
-+#define USR_DEVICE(devid, sdevid, bd) {			\
-+	PCI_DEVICE_SUB(					\
-+		PCI_VENDOR_ID_USR,			\
-+		PCI_DEVICE_ID_EXAR_##devid,		\
-+		PCI_VENDOR_ID_EXAR,			\
-+		PCI_SUBDEVICE_ID_USR_##sdevid), 0, 0,	\
-+		(kernel_ulong_t)&bd			\
-+	}
-+
- static const struct pci_device_id exar_pci_tbl[] = {
- 	EXAR_DEVICE(ACCESSIO, COM_2S, pbn_exar_XR17C15x),
- 	EXAR_DEVICE(ACCESSIO, COM_4S, pbn_exar_XR17C15x),
-@@ -815,6 +828,10 @@ static const struct pci_device_id exar_pci_tbl[] = {
+@@ -106,16 +106,17 @@ static inline int do_sqbs(u64 token, unsigned char state, int queue,
+ static inline int do_eqbs(u64 token, unsigned char *state, int queue,
+ 			  int *start, int *count, int ack)
+ {
+-	register unsigned long _ccq asm ("0") = *count;
+-	register unsigned long _token asm ("1") = token;
+ 	unsigned long _queuestart = ((unsigned long)queue << 32) | *start;
+ 	unsigned long _state = (unsigned long)ack << 63;
++	unsigned long _ccq = *count;
  
- 	IBM_DEVICE(XR17C152, SATURN_SERIAL_ONE_PORT, pbn_exar_ibm_saturn),
+ 	asm volatile(
+-		"	.insn	rrf,0xB99c0000,%1,%2,0,0"
+-		: "+d" (_ccq), "+d" (_queuestart), "+d" (_state)
+-		: "d" (_token)
+-		: "memory", "cc");
++		"	lgr	1,%[token]\n"
++		"	.insn	rrf,0xb99c0000,%[qs],%[state],%[ccq],0"
++		: [ccq] "+&d" (_ccq), [qs] "+&d" (_queuestart),
++		  [state] "+&d" (_state)
++		: [token] "d" (token)
++		: "memory", "cc", "1");
+ 	*count = _ccq & 0xff;
+ 	*start = _queuestart & 0xff;
+ 	*state = _state & 0xff;
+diff --git a/drivers/s390/cio/qdio_main.c b/drivers/s390/cio/qdio_main.c
+index 3e29c26f01856..e3c55fc2363ac 100644
+--- a/drivers/s390/cio/qdio_main.c
++++ b/drivers/s390/cio/qdio_main.c
+@@ -31,38 +31,41 @@ MODULE_DESCRIPTION("QDIO base support");
+ MODULE_LICENSE("GPL");
  
-+	/* USRobotics USR298x-OEM PCI Modems */
-+	USR_DEVICE(XR17C152, 2980, pbn_exar_XR17C15x),
-+	USR_DEVICE(XR17C152, 2981, pbn_exar_XR17C15x),
-+
- 	/* Exar Corp. XR17C15[248] Dual/Quad/Octal UART */
- 	EXAR_DEVICE(EXAR, XR17C152, pbn_exar_XR17C15x),
- 	EXAR_DEVICE(EXAR, XR17C154, pbn_exar_XR17C15x),
+ static inline int do_siga_sync(unsigned long schid,
+-			       unsigned int out_mask, unsigned int in_mask,
++			       unsigned long out_mask, unsigned long in_mask,
+ 			       unsigned int fc)
+ {
+-	register unsigned long __fc asm ("0") = fc;
+-	register unsigned long __schid asm ("1") = schid;
+-	register unsigned long out asm ("2") = out_mask;
+-	register unsigned long in asm ("3") = in_mask;
+ 	int cc;
+ 
+ 	asm volatile(
++		"	lgr	0,%[fc]\n"
++		"	lgr	1,%[schid]\n"
++		"	lgr	2,%[out]\n"
++		"	lgr	3,%[in]\n"
+ 		"	siga	0\n"
+-		"	ipm	%0\n"
+-		"	srl	%0,28\n"
+-		: "=d" (cc)
+-		: "d" (__fc), "d" (__schid), "d" (out), "d" (in) : "cc");
++		"	ipm	%[cc]\n"
++		"	srl	%[cc],28\n"
++		: [cc] "=&d" (cc)
++		: [fc] "d" (fc), [schid] "d" (schid),
++		  [out] "d" (out_mask), [in] "d" (in_mask)
++		: "cc", "0", "1", "2", "3");
+ 	return cc;
+ }
+ 
+-static inline int do_siga_input(unsigned long schid, unsigned int mask,
+-				unsigned int fc)
++static inline int do_siga_input(unsigned long schid, unsigned long mask,
++				unsigned long fc)
+ {
+-	register unsigned long __fc asm ("0") = fc;
+-	register unsigned long __schid asm ("1") = schid;
+-	register unsigned long __mask asm ("2") = mask;
+ 	int cc;
+ 
+ 	asm volatile(
++		"	lgr	0,%[fc]\n"
++		"	lgr	1,%[schid]\n"
++		"	lgr	2,%[mask]\n"
+ 		"	siga	0\n"
+-		"	ipm	%0\n"
+-		"	srl	%0,28\n"
+-		: "=d" (cc)
+-		: "d" (__fc), "d" (__schid), "d" (__mask) : "cc");
++		"	ipm	%[cc]\n"
++		"	srl	%[cc],28\n"
++		: [cc] "=&d" (cc)
++		: [fc] "d" (fc), [schid] "d" (schid), [mask] "d" (mask)
++		: "cc", "0", "1", "2");
+ 	return cc;
+ }
+ 
+@@ -78,23 +81,24 @@ static inline int do_siga_input(unsigned long schid, unsigned int mask,
+  * Note: For IQDC unicast queues only the highest priority queue is processed.
+  */
+ static inline int do_siga_output(unsigned long schid, unsigned long mask,
+-				 unsigned int *bb, unsigned int fc,
++				 unsigned int *bb, unsigned long fc,
+ 				 unsigned long aob)
+ {
+-	register unsigned long __fc asm("0") = fc;
+-	register unsigned long __schid asm("1") = schid;
+-	register unsigned long __mask asm("2") = mask;
+-	register unsigned long __aob asm("3") = aob;
+ 	int cc;
+ 
+ 	asm volatile(
++		"	lgr	0,%[fc]\n"
++		"	lgr	1,%[schid]\n"
++		"	lgr	2,%[mask]\n"
++		"	lgr	3,%[aob]\n"
+ 		"	siga	0\n"
+-		"	ipm	%0\n"
+-		"	srl	%0,28\n"
+-		: "=d" (cc), "+d" (__fc), "+d" (__aob)
+-		: "d" (__schid), "d" (__mask)
+-		: "cc");
+-	*bb = __fc >> 31;
++		"	lgr	%[fc],0\n"
++		"	ipm	%[cc]\n"
++		"	srl	%[cc],28\n"
++		: [cc] "=&d" (cc), [fc] "+&d" (fc)
++		: [schid] "d" (schid), [mask] "d" (mask), [aob] "d" (aob)
++		: "cc", "0", "1", "2", "3");
++	*bb = fc >> 31;
+ 	return cc;
+ }
+ 
 -- 
 2.39.2
 
