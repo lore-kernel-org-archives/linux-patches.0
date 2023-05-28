@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD80611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5E9C433EF;
-	Sun, 28 May 2023 19:45:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20520611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A19FCC4339B;
+	Sun, 28 May 2023 19:45:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303153;
-	bh=hsYVjHiTXwRpFWIA6bLkI5JzoEY7wNSJJnBl+GGZyGE=;
+	s=korg; t=1685303156;
+	bh=S+BtWaFf8CqqZuuJLbLdVPaXC/TY9ZZpeGrDz0O8vNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KAePiiXCd1K3RNH/iJJ7tUjkYzoLc8r5InbKrN+mBHfOz6L6FzyzZXEMcpfYlwKEk
-	 CJx/Uum2A61napdQD9n/xtFY5hCXrzDlcZ8hWEOMGOTxlx1bAfxN733qFHLhIXMkK/
-	 7R+rzYQvL1rfZfyR5p2CCPOEG/WH08RGp5i0symI=
+	b=HaWSd8LWfgsFdtuWSrzlLhWN8UnFSlFEghYwo1gfeiMAt7+tR377pEk69IuSsGEeN
+	 cuG0sb1Ro2U02nPMVveWeX9zXX+IaqYurdjArvFKuJlXCSdrCp/99fX//g4cQs2rdj
+	 AdiDX4t6CedQw/QgF8uQhkTBimdGcmIDGAgyyjtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Dan=20Hor=C3=A1k?= <dan@danny.cz>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.10 148/211] powerpc/64s/radix: Fix soft dirty tracking
-Date: Sun, 28 May 2023 20:11:09 +0100
-Message-Id: <20230528190847.190386040@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 149/211] nilfs2: fix use-after-free bug of nilfs_root in nilfs_evict_inode()
+Date: Sun, 28 May 2023 20:11:10 +0100
+Message-Id: <20230528190847.215639527@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -34,53 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 66b2ca086210732954a7790d63d35542936fc664 upstream.
+commit 9b5a04ac3ad9898c4745cba46ea26de74ba56a8e upstream.
 
-It was reported that soft dirty tracking doesn't work when using the
-Radix MMU.
+During unmount process of nilfs2, nothing holds nilfs_root structure after
+nilfs2 detaches its writer in nilfs_detach_log_writer().  However, since
+nilfs_evict_inode() uses nilfs_root for some cleanup operations, it may
+cause use-after-free read if inodes are left in "garbage_list" and
+released by nilfs_dispose_list() at the end of nilfs_detach_log_writer().
 
-The tracking is supposed to work by clearing the soft dirty bit for a
-mapping and then write protecting the PTE. If/when the page is written
-to, a page fault occurs and the soft dirty bit is added back via
-pte_mkdirty(). For example in wp_page_reuse():
+Fix this issue by modifying nilfs_evict_inode() to only clear inode
+without additional metadata changes that use nilfs_root if the file system
+is degraded to read-only or the writer is detached.
 
-	entry = maybe_mkwrite(pte_mkdirty(entry), vma);
-	if (ptep_set_access_flags(vma, vmf->address, vmf->pte, entry, 1))
-		update_mmu_cache(vma, vmf->address, vmf->pte);
-
-Unfortunately on radix _PAGE_SOFTDIRTY is being dropped by
-radix__ptep_set_access_flags(), called from ptep_set_access_flags(),
-meaning the soft dirty bit is not set even though the page has been
-written to.
-
-Fix it by adding _PAGE_SOFTDIRTY to the set of bits that are able to be
-changed in radix__ptep_set_access_flags().
-
-Fixes: b0b5e9b13047 ("powerpc/mm/radix: Add radix pte #defines")
-Cc: stable@vger.kernel.org # v4.7+
-Reported-by: Dan Horák <dan@danny.cz>
-Link: https://lore.kernel.org/r/20230511095558.56663a50f86bdc4cd97700b7@danny.cz
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20230511114224.977423-1-mpe@ellerman.id.au
+Link: https://lkml.kernel.org/r/20230509152956.8313-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/00000000000099e5ac05fb1c3b85@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/mm/book3s64/radix_pgtable.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nilfs2/inode.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/arch/powerpc/mm/book3s64/radix_pgtable.c
-+++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
-@@ -1064,8 +1064,8 @@ void radix__ptep_set_access_flags(struct
- 				  pte_t entry, unsigned long address, int psize)
- {
- 	struct mm_struct *mm = vma->vm_mm;
--	unsigned long set = pte_val(entry) & (_PAGE_DIRTY | _PAGE_ACCESSED |
--					      _PAGE_RW | _PAGE_EXEC);
-+	unsigned long set = pte_val(entry) & (_PAGE_DIRTY | _PAGE_SOFT_DIRTY |
-+					      _PAGE_ACCESSED | _PAGE_RW | _PAGE_EXEC);
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -921,6 +921,7 @@ void nilfs_evict_inode(struct inode *ino
+ 	struct nilfs_transaction_info ti;
+ 	struct super_block *sb = inode->i_sb;
+ 	struct nilfs_inode_info *ii = NILFS_I(inode);
++	struct the_nilfs *nilfs;
+ 	int ret;
  
- 	unsigned long change = pte_val(entry) ^ pte_val(*ptep);
- 	/*
+ 	if (inode->i_nlink || !ii->i_root || unlikely(is_bad_inode(inode))) {
+@@ -933,6 +934,23 @@ void nilfs_evict_inode(struct inode *ino
+ 
+ 	truncate_inode_pages_final(&inode->i_data);
+ 
++	nilfs = sb->s_fs_info;
++	if (unlikely(sb_rdonly(sb) || !nilfs->ns_writer)) {
++		/*
++		 * If this inode is about to be disposed after the file system
++		 * has been degraded to read-only due to file system corruption
++		 * or after the writer has been detached, do not make any
++		 * changes that cause writes, just clear it.
++		 * Do this check after read-locking ns_segctor_sem by
++		 * nilfs_transaction_begin() in order to avoid a race with
++		 * the writer detach operation.
++		 */
++		clear_inode(inode);
++		nilfs_clear_inode(inode);
++		nilfs_transaction_abort(sb);
++		return;
++	}
++
+ 	/* TODO: some of the following operations may fail.  */
+ 	nilfs_truncate_bmap(ii, 0);
+ 	nilfs_mark_inode_dirty(inode);
 
 
