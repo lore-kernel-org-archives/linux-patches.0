@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B0A611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530E9C433EF;
-	Sun, 28 May 2023 19:42:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B8E3611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEEDBC433D2;
+	Sun, 28 May 2023 19:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302959;
-	bh=BBsYiIs9oYYeCcn2bVC7E5A+wE4nfZSCIppc6ogyjP8=;
+	s=korg; t=1685302962;
+	bh=uFUgcJ10Fe6kYRudC89cKeNGUIM8LFRXh2Va97Y1yyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3CABiov1+NDs97jbouRdB2DXOhS2IXrZi0iBNx8gf7AB1jpUYCs0DuqGemdhfENq
-	 XLQrnbLOpaOjJqcvc/ee7LcJmygEbe3fi1M/xCdLLYumioAygCrZUcTV87gotFyilQ
-	 aE0crHDKZfIxNgUuIOEJ58qN5jw9Y6rNEbB4dwRg=
+	b=ZJU5YmSFaZ65KCUqQMxQaeLEdypEhneDqA+K5vccroKhZ6yAANoSRxDDUqmVuellz
+	 H4YAdfBF/Gs/cjNO5qGlUJ1TFcIEneTXx/gis34V87K4/HWgWJlqzUsWQY/pQUK5QG
+	 7mT9o1UlH81QAi0l6v8fcVfbRRq+tqOuSfLX6ilA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhuang Shengen <zhuangshengen@huawei.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/211] vsock: avoid to close connected socket after the timeout
-Date: Sun, 28 May 2023 20:10:18 +0100
-Message-Id: <20230528190846.007463361@linuxfoundation.org>
+Subject: [PATCH 5.10 098/211] ipv4/tcp: do not use per netns ctl sockets
+Date: Sun, 28 May 2023 20:10:19 +0100
+Message-Id: <20230528190846.030515064@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,49 +35,176 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhuang Shengen <zhuangshengen@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6d4486efe9c69626cab423456169e250a5cd3af5 ]
+[ Upstream commit 37ba017dcc3b1123206808979834655ddcf93251 ]
 
-When client and server establish a connection through vsock,
-the client send a request to the server to initiate the connection,
-then start a timer to wait for the server's response. When the server's
-RESPONSE message arrives, the timer also times out and exits. The
-server's RESPONSE message is processed first, and the connection is
-established. However, the client's timer also times out, the original
-processing logic of the client is to directly set the state of this vsock
-to CLOSE and return ETIMEDOUT. It will not notify the server when the port
-is released, causing the server port remain.
-when client's vsock_connect timeout，it should check sk state is
-ESTABLISHED or not. if sk state is ESTABLISHED, it means the connection
-is established, the client should not set the sk state to CLOSE
+TCP ipv4 uses per-cpu/per-netns ctl sockets in order to send
+RST and some ACK packets (on behalf of TIMEWAIT sockets).
 
-Note: I encountered this issue on kernel-4.18, which can be fixed by
-this patch. Then I checked the latest code in the community
-and found similar issue.
+This adds memory and cpu costs, which do not seem needed.
+Now typical servers have 256 or more cores, this adds considerable
+tax to netns users.
 
-Fixes: d021c344051a ("VSOCK: Introduce VM Sockets")
-Signed-off-by: Zhuang Shengen <zhuangshengen@huawei.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+tcp sockets are used from BH context, are not receiving packets,
+and do not store any persistent state but the 'struct net' pointer
+in order to be able to use IPv4 output functions.
+
+Note that I attempted a related change in the past, that had
+to be hot-fixed in commit bdbbb8527b6f ("ipv4: tcp: get rid of ugly unicast_sock")
+
+This patch could very well surface old bugs, on layers not
+taking care of sk->sk_kern_sock properly.
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 1e306ec49a1f ("tcp: fix possible sk_priority leak in tcp_v4_send_reset()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/af_vsock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/net/netns/ipv4.h |  1 -
+ net/ipv4/tcp_ipv4.c      | 61 ++++++++++++++++++----------------------
+ 2 files changed, 27 insertions(+), 35 deletions(-)
 
-diff --git a/net/vmw_vsock/af_vsock.c b/net/vmw_vsock/af_vsock.c
-index 7829a5018ef9f..ce14374bbacad 100644
---- a/net/vmw_vsock/af_vsock.c
-+++ b/net/vmw_vsock/af_vsock.c
-@@ -1372,7 +1372,7 @@ static int vsock_stream_connect(struct socket *sock, struct sockaddr *addr,
- 			vsock_transport_cancel_pkt(vsk);
- 			vsock_remove_connected(vsk);
- 			goto out_wait;
--		} else if (timeout == 0) {
-+		} else if ((sk->sk_state != TCP_ESTABLISHED) && (timeout == 0)) {
- 			err = -ETIMEDOUT;
- 			sk->sk_state = TCP_CLOSE;
- 			sock->state = SS_UNCONNECTED;
+diff --git a/include/net/netns/ipv4.h b/include/net/netns/ipv4.h
+index d8b320cf54ba0..4a4a5270ff6f2 100644
+--- a/include/net/netns/ipv4.h
++++ b/include/net/netns/ipv4.h
+@@ -71,7 +71,6 @@ struct netns_ipv4 {
+ 	struct sock		*mc_autojoin_sk;
+ 
+ 	struct inet_peer_base	*peers;
+-	struct sock  * __percpu	*tcp_sk;
+ 	struct fqdir		*fqdir;
+ #ifdef CONFIG_NETFILTER
+ 	struct xt_table		*iptable_filter;
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 8bd7b1ec3b6a3..275ae42be99e0 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -91,6 +91,8 @@ static int tcp_v4_md5_hash_hdr(char *md5_hash, const struct tcp_md5sig_key *key,
+ struct inet_hashinfo tcp_hashinfo;
+ EXPORT_SYMBOL(tcp_hashinfo);
+ 
++static DEFINE_PER_CPU(struct sock *, ipv4_tcp_sk);
++
+ static u32 tcp_v4_init_seq(const struct sk_buff *skb)
+ {
+ 	return secure_tcp_seq(ip_hdr(skb)->daddr,
+@@ -794,7 +796,8 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
+ 	arg.tos = ip_hdr(skb)->tos;
+ 	arg.uid = sock_net_uid(net, sk && sk_fullsock(sk) ? sk : NULL);
+ 	local_bh_disable();
+-	ctl_sk = this_cpu_read(*net->ipv4.tcp_sk);
++	ctl_sk = this_cpu_read(ipv4_tcp_sk);
++	sock_net_set(ctl_sk, net);
+ 	if (sk) {
+ 		ctl_sk->sk_mark = (sk->sk_state == TCP_TIME_WAIT) ?
+ 				   inet_twsk(sk)->tw_mark : sk->sk_mark;
+@@ -809,6 +812,7 @@ static void tcp_v4_send_reset(const struct sock *sk, struct sk_buff *skb)
+ 			      transmit_time);
+ 
+ 	ctl_sk->sk_mark = 0;
++	sock_net_set(ctl_sk, &init_net);
+ 	__TCP_INC_STATS(net, TCP_MIB_OUTSEGS);
+ 	__TCP_INC_STATS(net, TCP_MIB_OUTRSTS);
+ 	local_bh_enable();
+@@ -892,7 +896,8 @@ static void tcp_v4_send_ack(const struct sock *sk,
+ 	arg.tos = tos;
+ 	arg.uid = sock_net_uid(net, sk_fullsock(sk) ? sk : NULL);
+ 	local_bh_disable();
+-	ctl_sk = this_cpu_read(*net->ipv4.tcp_sk);
++	ctl_sk = this_cpu_read(ipv4_tcp_sk);
++	sock_net_set(ctl_sk, net);
+ 	ctl_sk->sk_mark = (sk->sk_state == TCP_TIME_WAIT) ?
+ 			   inet_twsk(sk)->tw_mark : sk->sk_mark;
+ 	ctl_sk->sk_priority = (sk->sk_state == TCP_TIME_WAIT) ?
+@@ -905,6 +910,7 @@ static void tcp_v4_send_ack(const struct sock *sk,
+ 			      transmit_time);
+ 
+ 	ctl_sk->sk_mark = 0;
++	sock_net_set(ctl_sk, &init_net);
+ 	__TCP_INC_STATS(net, TCP_MIB_OUTSEGS);
+ 	local_bh_enable();
+ }
+@@ -2828,41 +2834,14 @@ EXPORT_SYMBOL(tcp_prot);
+ 
+ static void __net_exit tcp_sk_exit(struct net *net)
+ {
+-	int cpu;
+-
+ 	if (net->ipv4.tcp_congestion_control)
+ 		bpf_module_put(net->ipv4.tcp_congestion_control,
+ 			       net->ipv4.tcp_congestion_control->owner);
+-
+-	for_each_possible_cpu(cpu)
+-		inet_ctl_sock_destroy(*per_cpu_ptr(net->ipv4.tcp_sk, cpu));
+-	free_percpu(net->ipv4.tcp_sk);
+ }
+ 
+ static int __net_init tcp_sk_init(struct net *net)
+ {
+-	int res, cpu, cnt;
+-
+-	net->ipv4.tcp_sk = alloc_percpu(struct sock *);
+-	if (!net->ipv4.tcp_sk)
+-		return -ENOMEM;
+-
+-	for_each_possible_cpu(cpu) {
+-		struct sock *sk;
+-
+-		res = inet_ctl_sock_create(&sk, PF_INET, SOCK_RAW,
+-					   IPPROTO_TCP, net);
+-		if (res)
+-			goto fail;
+-		sock_set_flag(sk, SOCK_USE_WRITE_QUEUE);
+-
+-		/* Please enforce IP_DF and IPID==0 for RST and
+-		 * ACK sent in SYN-RECV and TIME-WAIT state.
+-		 */
+-		inet_sk(sk)->pmtudisc = IP_PMTUDISC_DO;
+-
+-		*per_cpu_ptr(net->ipv4.tcp_sk, cpu) = sk;
+-	}
++	int cnt;
+ 
+ 	net->ipv4.sysctl_tcp_ecn = 2;
+ 	net->ipv4.sysctl_tcp_ecn_fallback = 1;
+@@ -2947,10 +2926,6 @@ static int __net_init tcp_sk_init(struct net *net)
+ 		net->ipv4.tcp_congestion_control = &tcp_reno;
+ 
+ 	return 0;
+-fail:
+-	tcp_sk_exit(net);
+-
+-	return res;
+ }
+ 
+ static void __net_exit tcp_sk_exit_batch(struct list_head *net_exit_list)
+@@ -3027,6 +3002,24 @@ static void __init bpf_iter_register(void)
+ 
+ void __init tcp_v4_init(void)
+ {
++	int cpu, res;
++
++	for_each_possible_cpu(cpu) {
++		struct sock *sk;
++
++		res = inet_ctl_sock_create(&sk, PF_INET, SOCK_RAW,
++					   IPPROTO_TCP, &init_net);
++		if (res)
++			panic("Failed to create the TCP control socket.\n");
++		sock_set_flag(sk, SOCK_USE_WRITE_QUEUE);
++
++		/* Please enforce IP_DF and IPID==0 for RST and
++		 * ACK sent in SYN-RECV and TIME-WAIT state.
++		 */
++		inet_sk(sk)->pmtudisc = IP_PMTUDISC_DO;
++
++		per_cpu(ipv4_tcp_sk, cpu) = sk;
++	}
+ 	if (register_pernet_subsys(&tcp_sk_ops))
+ 		panic("Failed to create the TCP control socket.\n");
+ 
 -- 
 2.39.2
 
