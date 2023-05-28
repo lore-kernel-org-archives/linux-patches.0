@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B33611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EB21C433EF;
-	Sun, 28 May 2023 19:35:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D080611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C111EC4339B;
+	Sun, 28 May 2023 19:35:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302543;
-	bh=Lk1VFpN1xRWamVmS76OW6veLC48QUYX42hDioYr1L0M=;
+	s=korg; t=1685302546;
+	bh=3/K6Vj0R8rVMutOrG20aBMNiH8Nh4oXkRkicMsQDUsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iycCC+JxDyQ9JDBA4ZlY+JDBjSS3oOpPNCFaY4cOO94nW/IFvihm3FhUyaSmfQMtZ
-	 YqkbSyWANScslraUv8LsD/kryYZFL8faBN3CwbGlLmAEV/Vih21o6qXIrkwKZEyqd3
-	 8piFbtghzj9ZnKRegsplh5Yp9+7VhlZ++00MMr00=
+	b=1oKByk4VeFK22ffiq/Nie+X5itPZqLG83nfYXeAKGoQQMxTZbxSvhvYLnDFghnKcQ
+	 zKjEYv2MiNG07OFfck6mW5GGMYIggfdOvETMVii+PKW8RMjCm3V6vFHrgsx0VskpxS
+	 cUGVg2XwOyMQ55cf9Zw+oT2Dw/Ge+MtqBIwb946U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 017/119] x86/mm: Avoid incomplete Global INVLPG flushes
-Date: Sun, 28 May 2023 20:10:17 +0100
-Message-Id: <20230528190835.902657708@linuxfoundation.org>
+	Gregory Oakes <gregory.oakes@amd.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 008/119] watchdog: sp5100_tco: Immediately trigger upon starting.
+Date: Sun, 28 May 2023 20:10:08 +0100
+Message-Id: <20230528190835.639063988@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -34,85 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Gregory Oakes <gregory.oakes@amd.com>
 
-commit ce0b15d11ad837fbacc5356941712218e38a0a83 upstream.
+commit 4eda19cc8a29cde3580ed73bf11dc73b4e757697 upstream.
 
-The INVLPG instruction is used to invalidate TLB entries for a
-specified virtual address.  When PCIDs are enabled, INVLPG is supposed
-to invalidate TLB entries for the specified address for both the
-current PCID *and* Global entries.  (Note: Only kernel mappings set
-Global=1.)
+The watchdog countdown is supposed to begin when the device file is
+opened. Instead, it would begin countdown upon the first write to or
+close of the device file. Now, the ping operation is called within the
+start operation which ensures the countdown begins. From experimenation,
+it does not appear possible to do this with a single write including
+both the start bit and the trigger bit. So, it is done as two distinct
+writes.
 
-Unfortunately, some INVLPG implementations can leave Global
-translations unflushed when PCIDs are enabled.
-
-As a workaround, never enable PCIDs on affected processors.
-
-I expect there to eventually be microcode mitigations to replace this
-software workaround.  However, the exact version numbers where that
-will happen are not known today.  Once the version numbers are set in
-stone, the processor list can be tweaked to only disable PCIDs on
-affected processors with affected microcode.
-
-Note: if anyone wants a quick fix that doesn't require patching, just
-stick 'nopcid' on your kernel command-line.
-
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
+Signed-off-by: Gregory Oakes <gregory.oakes@amd.com>
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://lore.kernel.org/r/20230316201312.17538-1-gregory.oakes@amd.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/init.c |   25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/watchdog/sp5100_tco.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/mm/init.c
-+++ b/arch/x86/mm/init.c
-@@ -9,6 +9,7 @@
- #include <linux/sched/task.h>
+--- a/drivers/watchdog/sp5100_tco.c
++++ b/drivers/watchdog/sp5100_tco.c
+@@ -115,6 +115,10 @@ static int tco_timer_start(struct watchd
+ 	val |= SP5100_WDT_START_STOP_BIT;
+ 	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
  
- #include <asm/set_memory.h>
-+#include <asm/cpu_device_id.h>
- #include <asm/e820/api.h>
- #include <asm/init.h>
- #include <asm/page.h>
-@@ -260,6 +261,24 @@ static void __init probe_page_size_mask(
- 	}
++	/* This must be a distinct write. */
++	val |= SP5100_WDT_TRIGGER_BIT;
++	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
++
+ 	return 0;
  }
  
-+#define INTEL_MATCH(_model) { .vendor  = X86_VENDOR_INTEL,	\
-+			      .family  = 6,			\
-+			      .model = _model,			\
-+			    }
-+/*
-+ * INVLPG may not properly flush Global entries
-+ * on these CPUs when PCIDs are enabled.
-+ */
-+static const struct x86_cpu_id invlpg_miss_ids[] = {
-+	INTEL_MATCH(INTEL_FAM6_ALDERLAKE   ),
-+	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_L ),
-+	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_N ),
-+	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE  ),
-+	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_P),
-+	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_S),
-+	{}
-+};
-+
- static void setup_pcid(void)
- {
- 	if (!IS_ENABLED(CONFIG_X86_64))
-@@ -268,6 +287,12 @@ static void setup_pcid(void)
- 	if (!boot_cpu_has(X86_FEATURE_PCID))
- 		return;
- 
-+	if (x86_match_cpu(invlpg_miss_ids)) {
-+		pr_info("Incomplete global flushes, disabling PCID");
-+		setup_clear_cpu_cap(X86_FEATURE_PCID);
-+		return;
-+	}
-+
- 	if (boot_cpu_has(X86_FEATURE_PGE)) {
- 		/*
- 		 * This can't be cr4_set_bits_and_update_boot() -- the
 
 
