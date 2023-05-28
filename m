@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C64611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13705C433EF;
-	Sun, 28 May 2023 19:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9800611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 755A8C4339B;
+	Sun, 28 May 2023 19:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303216;
-	bh=XwbO+uP9z+euriGaEYmaJKRYaDunT7FebxX5uWb1vxM=;
+	s=korg; t=1685303218;
+	bh=KpiWTTX/oxkCyfiQwoYkwXb3Ut3FckUwB2v9IjJVVpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xDSljLb+rUh3tBaxppFtyI0D5f6rtRFIqg7aAEMK/jSh27fTBW2BThNPeA9Ro/PI9
-	 5Hpl5M5PhU8sB0uG87wH6eWKWP1ER9Eqtz8YoEqc/UHZ4mmzhVpxkh7rZCgg3GvqAy
-	 yepCG7Fjd3LqzZ0mkBsxOiNKYGMDsFkKxoGhalTc=
+	b=VyKFg/kpr0x4L4C53hYCkCeC7sWSFGmZnS/S6gPq2fYlE0KVyihhkrN7/lBz+HNhH
+	 O7wotOj+eHn5TyRUQKi2MkSN0unCRpwEVCIRXDEFPXpqNp61vAqA0LbzNW6RJuRMTs
+	 udJ54C9PFpfj9vXYmtcH9OMH4rCFAq8a/4uo1Zio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Juergen Gross <jgross@suse.com>
-Subject: [PATCH 5.10 201/211] xen/pvcalls-back: fix double frees with pvcalls_new_active_socket()
-Date: Sun, 28 May 2023 20:12:02 +0100
-Message-Id: <20230528190848.491895336@linuxfoundation.org>
+	Vernon Lovejoy <vlovejoy@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>
+Subject: [PATCH 5.10 202/211] x86/show_trace_log_lvl: Ensure stack pointer is aligned, again
+Date: Sun, 28 May 2023 20:12:03 +0100
+Message-Id: <20230528190848.515546040@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -34,60 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Vernon Lovejoy <vlovejoy@redhat.com>
 
-commit 8fafac202d18230bb9926bda48e563fd2cce2a4f upstream.
+commit 2e4be0d011f21593c6b316806779ba1eba2cd7e0 upstream.
 
-In the pvcalls_new_active_socket() function, most error paths call
-pvcalls_back_release_active(fedata->dev, fedata, map) which calls
-sock_release() on "sock".  The bug is that the caller also frees sock.
+The commit e335bb51cc15 ("x86/unwind: Ensure stack pointer is aligned")
+tried to align the stack pointer in show_trace_log_lvl(), otherwise the
+"stack < stack_info.end" check can't guarantee that the last read does
+not go past the end of the stack.
 
-Fix this by making every error path in pvcalls_new_active_socket()
-release the sock, and don't free it in the caller.
+However, we have the same problem with the initial value of the stack
+pointer, it can also be unaligned. So without this patch this trivial
+kernel module
 
-Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/e5f98dc2-0305-491f-a860-71bbd1398a2f@kili.mountain
-Signed-off-by: Juergen Gross <jgross@suse.com>
+	#include <linux/module.h>
+
+	static int init(void)
+	{
+		asm volatile("sub    $0x4,%rsp");
+		dump_stack();
+		asm volatile("add    $0x4,%rsp");
+
+		return -EAGAIN;
+	}
+
+	module_init(init);
+	MODULE_LICENSE("GPL");
+
+crashes the kernel.
+
+Fixes: e335bb51cc15 ("x86/unwind: Ensure stack pointer is aligned")
+Signed-off-by: Vernon Lovejoy <vlovejoy@redhat.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/20230512104232.GA10227@redhat.com
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/xen/pvcalls-back.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ arch/x86/kernel/dumpstack.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/xen/pvcalls-back.c
-+++ b/drivers/xen/pvcalls-back.c
-@@ -321,8 +321,10 @@ static struct sock_mapping *pvcalls_new_
- 	void *page;
+--- a/arch/x86/kernel/dumpstack.c
++++ b/arch/x86/kernel/dumpstack.c
+@@ -195,7 +195,6 @@ void show_trace_log_lvl(struct task_stru
+ 	printk("%sCall Trace:\n", log_lvl);
  
- 	map = kzalloc(sizeof(*map), GFP_KERNEL);
--	if (map == NULL)
-+	if (map == NULL) {
-+		sock_release(sock);
- 		return NULL;
-+	}
+ 	unwind_start(&state, task, regs, stack);
+-	stack = stack ? : get_stack_pointer(task, regs);
+ 	regs = unwind_get_entry_regs(&state, &partial);
  
- 	map->fedata = fedata;
- 	map->sock = sock;
-@@ -414,10 +416,8 @@ static int pvcalls_back_connect(struct x
- 					req->u.connect.ref,
- 					req->u.connect.evtchn,
- 					sock);
--	if (!map) {
-+	if (!map)
- 		ret = -EFAULT;
--		sock_release(sock);
--	}
+ 	/*
+@@ -214,9 +213,13 @@ void show_trace_log_lvl(struct task_stru
+ 	 * - hardirq stack
+ 	 * - entry stack
+ 	 */
+-	for ( ; stack; stack = PTR_ALIGN(stack_info.next_sp, sizeof(long))) {
++	for (stack = stack ?: get_stack_pointer(task, regs);
++	     stack;
++	     stack = stack_info.next_sp) {
+ 		const char *stack_name;
  
- out:
- 	rsp = RING_GET_RESPONSE(&fedata->ring, fedata->ring.rsp_prod_pvt++);
-@@ -558,7 +558,6 @@ static void __pvcalls_back_accept(struct
- 					sock);
- 	if (!map) {
- 		ret = -EFAULT;
--		sock_release(sock);
- 		goto out_error;
- 	}
- 
++		stack = PTR_ALIGN(stack, sizeof(long));
++
+ 		if (get_stack_info(stack, task, &stack_info, &visit_mask)) {
+ 			/*
+ 			 * We weren't on a valid stack.  It's possible that
 
 
