@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECEF611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:50:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9066EC433D2;
-	Sun, 28 May 2023 19:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DD7611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:50:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112C4C433EF;
+	Sun, 28 May 2023 19:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303427;
-	bh=NzSuCDquSRyGSL/9He700VpgzWy155VEdg4950KBWAo=;
+	s=korg; t=1685303430;
+	bh=CN6hZSzgv0WiBfJt8u2VvNa8CIIw1TygZd8sgF36PMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0pFR5uPqzQG473KTqWIs8xKO+U2HnY+eb+A/e/YkiLudaDJojjLODIw6RfmR/gCkS
-	 TVT01Lm9TkycHvmPnILiy5PtPwL+QEi417NnZswbLKmbNYbmnrTuhSutpRJ8f9fw++
-	 JsVMaZq0Vt0ttSnMnYUh/bJOQfpYGqrecPHTg608=
+	b=uf2bHBQ2R3axoLShGpl9bamxc810z62U5XJkWh8i2OrJuxNPXDXUUj/um0iYUX/rA
+	 vH7Eu/fH5rTSV9HxWAnj1GAr6q8g8ouPl9HviTb0mzFW5asaUmA6KmsJy3ItI16cAX
+	 o4SYmfmp7fXcV9uK6Re1LwZL0RhmQyqPpKQNJhiQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Vasily Khoruzhick <anarsoul@gmail.com>,
+	Kang Chen <void0red@gmail.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.15 42/69] power: supply: leds: Fix blink to LED on transition
-Date: Sun, 28 May 2023 20:12:02 +0100
-Message-Id: <20230528190829.943757799@linuxfoundation.org>
+Subject: [PATCH 5.15 43/69] power: supply: mt6360: add a check of devm_work_autocancel in mt6360_charger_probe
+Date: Sun, 28 May 2023 20:12:03 +0100
+Message-Id: <20230528190829.980881749@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -35,51 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Kang Chen <void0red@gmail.com>
 
-commit e4484643991e0f6b89060092563f0dbab9450cbb upstream.
+commit 4cbb0d358883a27e432714b5256f0362946f5e25 upstream.
 
-When a battery's status changes from charging to full then
-the charging-blink-full-solid trigger tries to change
-the LED from blinking to solid/on.
+devm_work_autocancel may fail, add a check and return early.
 
-As is documented in include/linux/leds.h to deactivate blinking /
-to make the LED solid a LED_OFF must be send:
-
-"""
-         * Deactivate blinking again when the brightness is set to LED_OFF
-         * via the brightness_set() callback.
-"""
-
-led_set_brighness() calls with a brightness value other then 0 / LED_OFF
-merely change the brightness of the LED in its on state while it is
-blinking.
-
-So power_supply_update_bat_leds() must first send a LED_OFF event
-before the LED_FULL to disable blinking.
-
-Fixes: 6501f728c56f ("power_supply: Add new LED trigger charging-blink-solid-full")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Fixes: 0402e8ebb8b86 ("power: supply: mt6360_charger: add MT6360 charger support")
+Signed-off-by: Kang Chen <void0red@gmail.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/power_supply_leds.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/power/supply/mt6360_charger.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/power_supply_leds.c
-+++ b/drivers/power/supply/power_supply_leds.c
-@@ -34,8 +34,9 @@ static void power_supply_update_bat_leds
- 		led_trigger_event(psy->charging_full_trig, LED_FULL);
- 		led_trigger_event(psy->charging_trig, LED_OFF);
- 		led_trigger_event(psy->full_trig, LED_FULL);
--		led_trigger_event(psy->charging_blink_full_solid_trig,
--			LED_FULL);
-+		/* Going from blink to LED on requires a LED_OFF event to stop blink */
-+		led_trigger_event(psy->charging_blink_full_solid_trig, LED_OFF);
-+		led_trigger_event(psy->charging_blink_full_solid_trig, LED_FULL);
- 		break;
- 	case POWER_SUPPLY_STATUS_CHARGING:
- 		led_trigger_event(psy->charging_full_trig, LED_FULL);
+--- a/drivers/power/supply/mt6360_charger.c
++++ b/drivers/power/supply/mt6360_charger.c
+@@ -799,7 +799,9 @@ static int mt6360_charger_probe(struct p
+ 	mci->vinovp = 6500000;
+ 	mutex_init(&mci->chgdet_lock);
+ 	platform_set_drvdata(pdev, mci);
+-	devm_work_autocancel(&pdev->dev, &mci->chrdet_work, mt6360_chrdet_work);
++	ret = devm_work_autocancel(&pdev->dev, &mci->chrdet_work, mt6360_chrdet_work);
++	if (ret)
++		return dev_err_probe(&pdev->dev, ret, "Failed to set delayed work\n");
+ 
+ 	ret = device_property_read_u32(&pdev->dev, "richtek,vinovp-microvolt", &mci->vinovp);
+ 	if (ret)
 
 
