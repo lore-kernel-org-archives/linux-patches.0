@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A316121
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8F0BC4339B;
-	Sun, 28 May 2023 19:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5171611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356C0C433EF;
+	Sun, 28 May 2023 19:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303274;
-	bh=v9rryK8PwrdhQ9V3i29ygKUbE2jrM25+/Zq1ij0NASo=;
+	s=korg; t=1685303276;
+	bh=8V2cGRuD+yiti0ypinnjGaaNTILyTkg4bIMlR70VvDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgE67wSEbIlkBaQkirbnl3ydozEIXGQdA2Ea69OVmAJuVgBsFjHA9AGGuahhBtkcG
-	 9aXbdWtLaRLHEiRr2H3r0fW/aqcOT8YO6MsaBAbzoc4bMrIy+fvHt2Hmcw1NcGeFhV
-	 HN14ItEukBg4PIB6gzUD5bcpKZCZD9V1fYkOsBwc=
+	b=rUFfTPOIno0SuhkIhT70UVwO6/3w9Wxn3vOYGjzYJeAGtSmSafBFsoxBUJUPvHEZ2
+	 8olyJaJk7f1sAgmSaGkHE1zT5QO6wo0rDhybPtV3Hk7TvNTwsNVgHbOZC9L9gJDcMj
+	 KnXW6wqvtRu4bImDgIILXDs+mL6Qsi5SvjErM1u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gregory Oakes <gregory.oakes@amd.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 5.15 05/69] watchdog: sp5100_tco: Immediately trigger upon starting.
-Date: Sun, 28 May 2023 20:11:25 +0100
-Message-Id: <20230528190828.540373134@linuxfoundation.org>
+	Haibo Chen <haibo.chen@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 14/69] mmc: sdhci-esdhc-imx: make "no-mmc-hs400" works
+Date: Sun, 28 May 2023 20:11:34 +0100
+Message-Id: <20230528190828.881920572@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -36,41 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gregory Oakes <gregory.oakes@amd.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 4eda19cc8a29cde3580ed73bf11dc73b4e757697 upstream.
+commit 81dce1490e28439c3cd8a8650b862a712f3061ba upstream.
 
-The watchdog countdown is supposed to begin when the device file is
-opened. Instead, it would begin countdown upon the first write to or
-close of the device file. Now, the ping operation is called within the
-start operation which ensures the countdown begins. From experimenation,
-it does not appear possible to do this with a single write including
-both the start bit and the trigger bit. So, it is done as two distinct
-writes.
+After commit 1ed5c3b22fc7 ("mmc: sdhci-esdhc-imx: Propagate
+ESDHC_FLAG_HS400* only on 8bit bus"), the property "no-mmc-hs400"
+from device tree file do not work any more.
+This patch reorder the code, which can avoid the warning message
+"drop HS400 support since no 8-bit bus" and also make the property
+"no-mmc-hs400" from dts file works.
 
-Signed-off-by: Gregory Oakes <gregory.oakes@amd.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230316201312.17538-1-gregory.oakes@amd.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
+Fixes: 1ed5c3b22fc7 ("mmc: sdhci-esdhc-imx: Propagate ESDHC_FLAG_HS400* only on 8bit bus")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230504112222.3599602-1-haibo.chen@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/sp5100_tco.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/mmc/host/sdhci-esdhc-imx.c |   18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
---- a/drivers/watchdog/sp5100_tco.c
-+++ b/drivers/watchdog/sp5100_tco.c
-@@ -108,6 +108,10 @@ static int tco_timer_start(struct watchd
- 	val |= SP5100_WDT_START_STOP_BIT;
- 	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -1568,6 +1568,10 @@ sdhci_esdhc_imx_probe_dt(struct platform
+ 	if (ret)
+ 		return ret;
  
-+	/* This must be a distinct write. */
-+	val |= SP5100_WDT_TRIGGER_BIT;
-+	writel(val, SP5100_WDT_CONTROL(tco->tcobase));
++	/* HS400/HS400ES require 8 bit bus */
++	if (!(host->mmc->caps & MMC_CAP_8_BIT_DATA))
++		host->mmc->caps2 &= ~(MMC_CAP2_HS400 | MMC_CAP2_HS400_ES);
 +
- 	return 0;
- }
+ 	if (mmc_gpio_get_cd(host->mmc) >= 0)
+ 		host->quirks &= ~SDHCI_QUIRK_BROKEN_CARD_DETECTION;
  
+@@ -1652,10 +1656,6 @@ static int sdhci_esdhc_imx_probe(struct
+ 		host->mmc_host_ops.execute_tuning = usdhc_execute_tuning;
+ 	}
+ 
+-	err = sdhci_esdhc_imx_probe_dt(pdev, host, imx_data);
+-	if (err)
+-		goto disable_ahb_clk;
+-
+ 	if (imx_data->socdata->flags & ESDHC_FLAG_MAN_TUNING)
+ 		sdhci_esdhc_ops.platform_execute_tuning =
+ 					esdhc_executing_tuning;
+@@ -1663,15 +1663,13 @@ static int sdhci_esdhc_imx_probe(struct
+ 	if (imx_data->socdata->flags & ESDHC_FLAG_ERR004536)
+ 		host->quirks |= SDHCI_QUIRK_BROKEN_ADMA;
+ 
+-	if (host->mmc->caps & MMC_CAP_8_BIT_DATA &&
+-	    imx_data->socdata->flags & ESDHC_FLAG_HS400)
++	if (imx_data->socdata->flags & ESDHC_FLAG_HS400)
+ 		host->mmc->caps2 |= MMC_CAP2_HS400;
+ 
+ 	if (imx_data->socdata->flags & ESDHC_FLAG_BROKEN_AUTO_CMD23)
+ 		host->quirks2 |= SDHCI_QUIRK2_ACMD23_BROKEN;
+ 
+-	if (host->mmc->caps & MMC_CAP_8_BIT_DATA &&
+-	    imx_data->socdata->flags & ESDHC_FLAG_HS400_ES) {
++	if (imx_data->socdata->flags & ESDHC_FLAG_HS400_ES) {
+ 		host->mmc->caps2 |= MMC_CAP2_HS400_ES;
+ 		host->mmc_host_ops.hs400_enhanced_strobe =
+ 					esdhc_hs400_enhanced_strobe;
+@@ -1693,6 +1691,10 @@ static int sdhci_esdhc_imx_probe(struct
+ 			goto disable_ahb_clk;
+ 	}
+ 
++	err = sdhci_esdhc_imx_probe_dt(pdev, host, imx_data);
++	if (err)
++		goto disable_ahb_clk;
++
+ 	sdhci_esdhc_imx_hwinit(host);
+ 
+ 	err = sdhci_add_host(host);
 
 
