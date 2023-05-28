@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20D93611E
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E2CDC4339C;
-	Sun, 28 May 2023 19:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECF4611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6E6C433EF;
+	Sun, 28 May 2023 19:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301349;
-	bh=PKRZpl7fzCqWuiYsLexm06CPBRvp83F2I25Pzjtu+Rg=;
+	s=korg; t=1685301354;
+	bh=Ds1oPxA4pcKs7mfPVvilOIrHkUwSh15RqQ9O/PrK3Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rILlWoD5XleQMrJcN6x00PnC7OTQxJcLf5v3crmHu4DoHSqSFWwFrM6M5MW3qWltE
-	 OnZXkglmc7OBIkTE6dLScU8TURaesKVZGmV+oiML9OBSHC3+kNjZjvtjhQ9GPPKFoq
-	 M65M42SofqxFxCXxr28byMZRAo/OvNgVnuqw7OA8=
+	b=dsL5SuB0K/FIUj7Mci7EPQzo3bYXCF8eQ5j0hcTxJWpVzAiTQAwgnJi9xiG/Z70sJ
+	 e1SkF0ue2pASIt+spGNcjBJssEYRk2dnnvoJr0UWuDNRRLFVSrmx70Ogbn5XTUFqHr
+	 8vbxPNjuWmUIc9ULpFraDcs1imL4TbbrL3OIVqAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laura Garcia <nevola@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.14 54/86] netfilter: nf_tables: bogus EBUSY in helper removal from transaction
-Date: Sun, 28 May 2023 20:10:28 +0100
-Message-Id: <20230528190830.600171765@linuxfoundation.org>
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.14 56/86] spi: fsl-spi: Re-organise transfer bits_per_word adaptation
+Date: Sun, 28 May 2023 20:10:30 +0100
+Message-Id: <20230528190830.678184308@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -34,60 +34,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit 8ffcd32f64633926163cdd07a7d295c500a947d1 upstream.
+(backported from upstream 8a5299a1278eadf1e08a598a5345c376206f171e)
 
-Proper use counter updates when activating and deactivating the object,
-otherwise, this hits bogus EBUSY error.
+For different reasons, fsl-spi driver performs bits_per_word
+modifications for different reasons:
+- On CPU mode, to minimise amount of interrupts
+- On CPM/QE mode to work around controller byte order
 
-Fixes: cd5125d8f518 ("netfilter: nf_tables: split set destruction in deactivate and destroy phase")
-Reported-by: Laura Garcia <nevola@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+For CPU mode that's done in fsl_spi_prepare_message() while
+for CPM mode that's done in fsl_spi_setup_transfer().
+
+Reunify all of it in fsl_spi_prepare_message(), and catch
+impossible cases early through master's bits_per_word_mask
+instead of returning EINVAL later.
+
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Link: https://lore.kernel.org/r/0ce96fe96e8b07cba0613e4097cfd94d09b8919a.1680371809.git.christophe.leroy@csgroup.eu
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_objref.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/spi/spi-fsl-spi.c |   50 +++++++++++++++++++++-------------------------
+ 1 file changed, 23 insertions(+), 27 deletions(-)
 
---- a/net/netfilter/nft_objref.c
-+++ b/net/netfilter/nft_objref.c
-@@ -64,21 +64,34 @@ nla_put_failure:
- 	return -1;
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -201,26 +201,6 @@ static int mspi_apply_cpu_mode_quirks(st
+ 	return bits_per_word;
  }
  
--static void nft_objref_destroy(const struct nft_ctx *ctx,
--			       const struct nft_expr *expr)
-+static void nft_objref_deactivate(const struct nft_ctx *ctx,
-+				  const struct nft_expr *expr,
-+				  enum nft_trans_phase phase)
+-static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
+-				struct spi_device *spi,
+-				int bits_per_word)
+-{
+-	/* CPM/QE uses Little Endian for words > 8
+-	 * so transform 16 and 32 bits words into 8 bits
+-	 * Unfortnatly that doesn't work for LSB so
+-	 * reject these for now */
+-	/* Note: 32 bits word, LSB works iff
+-	 * tfcr/rfcr is set to CPMFCR_GBL */
+-	if (spi->mode & SPI_LSB_FIRST &&
+-	    bits_per_word > 8)
+-		return -EINVAL;
+-	if (bits_per_word <= 8)
+-		return bits_per_word;
+-	if (bits_per_word == 16 || bits_per_word == 32)
+-		return 8; /* pretend its 8 bits */
+-	return -EINVAL;
+-}
+-
+ static int fsl_spi_setup_transfer(struct spi_device *spi,
+ 					struct spi_transfer *t)
  {
- 	struct nft_object *obj = nft_objref_priv(expr);
+@@ -248,9 +228,6 @@ static int fsl_spi_setup_transfer(struct
+ 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
+ 							   mpc8xxx_spi,
+ 							   bits_per_word);
+-	else
+-		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
+-							  bits_per_word);
  
-+	if (phase == NFT_TRANS_COMMIT)
-+		return;
-+
- 	obj->use--;
- }
+ 	if (bits_per_word < 0)
+ 		return bits_per_word;
+@@ -368,14 +345,27 @@ static int fsl_spi_do_one_msg(struct spi
+ 	 * In CPU mode, optimize large byte transfers to use larger
+ 	 * bits_per_word values to reduce number of interrupts taken.
+ 	 */
+-	if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
+-		list_for_each_entry(t, &m->transfers, transfer_list) {
++	list_for_each_entry(t, &m->transfers, transfer_list) {
++		if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
+ 			if (t->len < 256 || t->bits_per_word != 8)
+ 				continue;
+ 			if ((t->len & 3) == 0)
+ 				t->bits_per_word = 32;
+ 			else if ((t->len & 1) == 0)
+ 				t->bits_per_word = 16;
++		} else {
++			/*
++			 * CPM/QE uses Little Endian for words > 8
++			 * so transform 16 and 32 bits words into 8 bits
++			 * Unfortnatly that doesn't work for LSB so
++			 * reject these for now
++			 * Note: 32 bits word, LSB works iff
++			 * tfcr/rfcr is set to CPMFCR_GBL
++			 */
++			if (m->spi->mode & SPI_LSB_FIRST && t->bits_per_word > 8)
++				return -EINVAL;
++			if (t->bits_per_word == 16 || t->bits_per_word == 32)
++				t->bits_per_word = 8; /* pretend its 8 bits */
+ 		}
+ 	}
  
-+static void nft_objref_activate(const struct nft_ctx *ctx,
-+				const struct nft_expr *expr)
-+{
-+	struct nft_object *obj = nft_objref_priv(expr);
-+
-+	obj->use++;
-+}
-+
- static struct nft_expr_type nft_objref_type;
- static const struct nft_expr_ops nft_objref_ops = {
- 	.type		= &nft_objref_type,
- 	.size		= NFT_EXPR_SIZE(sizeof(struct nft_object *)),
- 	.eval		= nft_objref_eval,
- 	.init		= nft_objref_init,
--	.destroy	= nft_objref_destroy,
-+	.activate	= nft_objref_activate,
-+	.deactivate	= nft_objref_deactivate,
- 	.dump		= nft_objref_dump,
- };
+@@ -658,8 +648,14 @@ static struct spi_master * fsl_spi_probe
+ 	if (mpc8xxx_spi->type == TYPE_GRLIB)
+ 		fsl_spi_grlib_probe(dev);
  
+-	master->bits_per_word_mask =
+-		(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32)) &
++	if (mpc8xxx_spi->flags & SPI_CPM_MODE)
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 8) | SPI_BPW_MASK(16) | SPI_BPW_MASK(32));
++	else
++		master->bits_per_word_mask =
++			(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32));
++
++	master->bits_per_word_mask &=
+ 		SPI_BPW_RANGE_MASK(1, mpc8xxx_spi->max_bits_per_word);
+ 
+ 	if (mpc8xxx_spi->flags & SPI_QE_CPU_MODE)
 
 
