@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0D1569F
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:34:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353C4C4339C;
-	Sun, 28 May 2023 19:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6DF569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:34:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0A8C433D2;
+	Sun, 28 May 2023 19:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302449;
-	bh=y3/oTmxZMZyUd9mxFMw5smXixd37XJ8Q1HejfZBBX4Y=;
+	s=korg; t=1685302447;
+	bh=Mb7vC4HaS36Qt/3xSV8OVLEzv5520vqh75pTPeWKkpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TXU2B7QLyPdlEW5MbSsG5LDQT8ltAwVdmpK1K3sZuaBVm4NsmzbL9GIxS6zNbH6Zc
-	 SyPKGDiXnjCa/lSxpjgWDFybQqaoruSQWjNUqEcG2FRYr4jXHSCxnX7AFiF5KTMDOR
-	 f9ux6GjUq7G9D43mb9Nf8h0KkLascOSg0obSfvM4=
+	b=r/oWu7ZZXpv/FUDiRQkzEFAlq7a/pbpGC64Am7CfHwZr4yS0Ca04nrqgnv6YxrDIT
+	 yTGSkf+kZ2Gf5+i7W4LDGhGEsshKleneJDkAV0WqBpCg52guHT0ceFAiqEMpUbbiNO
+	 Sklwkh5Z89XsAWwETUQkYNvlQl0wM6qwTsCxtR3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 123/127] 3c589_cs: Fix an error handling path in tc589_probe()
-Date: Sun, 28 May 2023 20:11:39 +0100
-Message-Id: <20230528190840.241963108@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Liu Ying <victor.liu@nxp.com>,
+	Marek Vasut <marex@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 127/127] Revert "arm64: dts: imx8mp: Drop simple-bus from fsl,imx8mp-media-blk-ctrl"
+Date: Sun, 28 May 2023 20:11:43 +0100
+Message-Id: <20230528190840.351644456@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -35,49 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 640bf95b2c7c2981fb471acdafbd3e0458f8390d upstream.
+This reverts commit bd2573ee0f91c0e6d2bee8599110453e2909060e which is
+commit 5a51e1f2b083423f75145c512ee284862ab33854 upstream.
 
-Should tc589_config() fail, some resources need to be released as already
-done in the remove function.
+Marc writes:
+	can you please revert this patch, without the corresponding driver patch
+	[1] it breaks probing of the device, as no one populates the sub-nodes.
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/d8593ae867b24c79063646e36f9b18b0790107cb.1684575975.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+	[1] 9cb6d1b39a8f ("soc: imx: imx8m-blk-ctrl: Scan subnodes and bind
+	drivers to them")
+
+Reported-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Link: https://lore.kernel.org/r/20230523-justly-situated-317e792f4c1b-mkl@pengutronix.de
+Cc: Alexander Stein <alexander.stein@ew.tq-group.com>
+Cc: Liu Ying <victor.liu@nxp.com>
+Cc: Alexander Stein <alexander.stein@ew.tq-group.com>
+Cc: Marek Vasut <marex@denx.de>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/3com/3c589_cs.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mp.dtsi |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/3com/3c589_cs.c
-+++ b/drivers/net/ethernet/3com/3c589_cs.c
-@@ -195,6 +195,7 @@ static int tc589_probe(struct pcmcia_dev
- {
- 	struct el3_private *lp;
- 	struct net_device *dev;
-+	int ret;
+--- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
+@@ -1151,7 +1151,7 @@
  
- 	dev_dbg(&link->dev, "3c589_attach()\n");
- 
-@@ -218,7 +219,15 @@ static int tc589_probe(struct pcmcia_dev
- 
- 	dev->ethtool_ops = &netdev_ethtool_ops;
- 
--	return tc589_config(link);
-+	ret = tc589_config(link);
-+	if (ret)
-+		goto err_free_netdev;
-+
-+	return 0;
-+
-+err_free_netdev:
-+	free_netdev(dev);
-+	return ret;
- }
- 
- static void tc589_detach(struct pcmcia_device *link)
+ 			media_blk_ctrl: blk-ctrl@32ec0000 {
+ 				compatible = "fsl,imx8mp-media-blk-ctrl",
+-					     "syscon";
++					     "simple-bus", "syscon";
+ 				reg = <0x32ec0000 0x10000>;
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
 
 
