@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE1C569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:33:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE23C433EF;
-	Sun, 28 May 2023 19:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A4D569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:33:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569BFC4339B;
+	Sun, 28 May 2023 19:33:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302437;
-	bh=INBusUWTx32+xBROsGY5lVCUP2X6qF8m6N+d2w924hU=;
+	s=korg; t=1685302439;
+	bh=8k+fTw8xakNgoxNYLQHVzl6u0c2BuK0tzlk9eHIawps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oXTP/5sYxwzKLNyovmo/Nc73Ua2hcYWGJD9hg5KJr7+Xqe9BWmxMsusIO+o9XPd41
-	 2jtnGI/JJO+myQ6cQXPrmfLrD2UEUY6GVcjYCoS8woV/KY1HiDRQI6VA8ug9zS+3e7
-	 b1jd/xDr/ng7a09p3ChnZPKHmfeDOex3IQagySUE=
+	b=BI68YTc4fZ+nXzEONViFXXV2HlRFtkInu3dvWFXWEcb7M2IJ43MsDt54/hYqIN14u
+	 cVit7L6aKB0U7i5PwaCKyQ0+b3hgxIBIHuow4nFHowIDzhd39VLfYEO7JpyJnI10kE
+	 OqloE8hQ9JzzpPEJRuffPW06zFprdv8B9nBOMGE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucian Paul-Trifu <lucian.paul-trifu@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>
-Subject: [PATCH 6.3 091/127] firmware: arm_ffa: Fix FFA device names for logical partitions
-Date: Sun, 28 May 2023 20:11:07 +0100
-Message-Id: <20230528190839.283504177@linuxfoundation.org>
+	Yunsheng Lin <linyunsheng@huawei.com>,
+	Jesper Dangaard Brouer <brouer@redhat.com>,
+	Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.3 124/127] page_pool: fix inconsistency for page_pool_ring_[un]lock()
+Date: Sun, 28 May 2023 20:11:40 +0100
+Message-Id: <20230528190840.272853078@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -34,131 +36,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sudeep Holla <sudeep.holla@arm.com>
+From: Yunsheng Lin <linyunsheng@huawei.com>
 
-commit 19b8766459c41c6f318f8a548cc1c66dffd18363 upstream.
+commit 368d3cb406cdd074d1df2ad9ec06d1bfcb664882 upstream.
 
-Each physical partition can provide multiple services each with UUID.
-Each such service can be presented as logical partition with a unique
-combination of VM ID and UUID. The number of distinct UUID in a system
-will be less than or equal to the number of logical partitions.
+page_pool_ring_[un]lock() use in_softirq() to decide which
+spin lock variant to use, and when they are called in the
+context with in_softirq() being false, spin_lock_bh() is
+called in page_pool_ring_lock() while spin_unlock() is
+called in page_pool_ring_unlock(), because spin_lock_bh()
+has disabled the softirq in page_pool_ring_lock(), which
+causes inconsistency for spin lock pair calling.
 
-However, currently it fails to register more than one logical partition
-or service within a physical partition as the device name contains only
-VM ID while both VM ID and UUID are maintained in the partition information.
-The kernel complains with the below message:
+This patch fixes it by returning in_softirq state from
+page_pool_producer_lock(), and use it to decide which
+spin lock variant to use in page_pool_producer_unlock().
 
-  | sysfs: cannot create duplicate filename '/devices/arm-ffa-8001'
-  | CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.3.0-rc7 #8
-  | Hardware name: FVP Base RevC (DT)
-  | Call trace:
-  |  dump_backtrace+0xf8/0x118
-  |  show_stack+0x18/0x24
-  |  dump_stack_lvl+0x50/0x68
-  |  dump_stack+0x18/0x24
-  |  sysfs_create_dir_ns+0xe0/0x13c
-  |  kobject_add_internal+0x220/0x3d4
-  |  kobject_add+0x94/0x100
-  |  device_add+0x144/0x5d8
-  |  device_register+0x20/0x30
-  |  ffa_device_register+0x88/0xd8
-  |  ffa_setup_partitions+0x108/0x1b8
-  |  ffa_init+0x2ec/0x3a4
-  |  do_one_initcall+0xcc/0x240
-  |  do_initcall_level+0x8c/0xac
-  |  do_initcalls+0x54/0x94
-  |  do_basic_setup+0x1c/0x28
-  |  kernel_init_freeable+0x100/0x16c
-  |  kernel_init+0x20/0x1a0
-  |  ret_from_fork+0x10/0x20
-  | kobject_add_internal failed for arm-ffa-8001 with -EEXIST, don't try to
-  | register things with the same name in the same directory.
-  | arm_ffa arm-ffa: unable to register device arm-ffa-8001 err=-17
-  | ARM FF-A: ffa_setup_partitions: failed to register partition ID 0x8001
+As pool->ring has both producer and consumer lock, so
+rename it to page_pool_producer_[un]lock() to reflect
+the actual usage. Also move them to page_pool.c as they
+are only used there, and remove the 'inline' as the
+compiler may have better idea to do inlining or not.
 
-By virtue of being random enough to avoid collisions when generated in a
-distributed system, there is no way to compress UUID keys to the number
-of bits required to identify each. We can eliminate '-' in the name but
-it is not worth eliminating 4 bytes and add unnecessary logic for doing
-that. Also v1.0 doesn't provide the UUID of the partitions which makes
-it hard to use the same for the device name.
-
-So to keep it simple, let us alloc an ID using ida_alloc() and append the
-same to "arm-ffa" to make up a unique device name. Also stash the id value
-in ffa_dev to help freeing the ID later when the device is destroyed.
-
-Fixes: e781858488b9 ("firmware: arm_ffa: Add initial FFA bus support for device enumeration")
-Reported-by: Lucian Paul-Trifu <lucian.paul-trifu@arm.com>
-Link: https://lore.kernel.org/r/20230419-ffa_fixes_6-4-v2-3-d9108e43a176@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 7886244736a4 ("net: page_pool: Add bulk support for ptr_ring")
+Signed-off-by: Yunsheng Lin <linyunsheng@huawei.com>
+Acked-by: Jesper Dangaard Brouer <brouer@redhat.com>
+Acked-by: Ilias Apalodimas <ilias.apalodimas@linaro.org>
+Link: https://lore.kernel.org/r/20230522031714.5089-1-linyunsheng@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_ffa/bus.c |   16 +++++++++++++---
- include/linux/arm_ffa.h        |    1 +
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ include/net/page_pool.h |   18 ------------------
+ net/core/page_pool.c    |   28 ++++++++++++++++++++++++++--
+ 2 files changed, 26 insertions(+), 20 deletions(-)
 
---- a/drivers/firmware/arm_ffa/bus.c
-+++ b/drivers/firmware/arm_ffa/bus.c
-@@ -15,6 +15,8 @@
- 
- #include "common.h"
- 
-+static DEFINE_IDA(ffa_bus_id);
-+
- static int ffa_device_match(struct device *dev, struct device_driver *drv)
- {
- 	const struct ffa_device_id *id_table;
-@@ -131,6 +133,7 @@ static void ffa_release_device(struct de
- {
- 	struct ffa_device *ffa_dev = to_ffa_dev(dev);
- 
-+	ida_free(&ffa_bus_id, ffa_dev->id);
- 	kfree(ffa_dev);
+--- a/include/net/page_pool.h
++++ b/include/net/page_pool.h
+@@ -393,22 +393,4 @@ static inline void page_pool_nid_changed
+ 		page_pool_update_nid(pool, new_nid);
  }
  
-@@ -171,18 +174,24 @@ bool ffa_device_is_valid(struct ffa_devi
- struct ffa_device *ffa_device_register(const uuid_t *uuid, int vm_id,
- 				       const struct ffa_ops *ops)
- {
--	int ret;
-+	int id, ret;
- 	struct device *dev;
- 	struct ffa_device *ffa_dev;
+-static inline void page_pool_ring_lock(struct page_pool *pool)
+-	__acquires(&pool->ring.producer_lock)
+-{
+-	if (in_softirq())
+-		spin_lock(&pool->ring.producer_lock);
+-	else
+-		spin_lock_bh(&pool->ring.producer_lock);
+-}
+-
+-static inline void page_pool_ring_unlock(struct page_pool *pool)
+-	__releases(&pool->ring.producer_lock)
+-{
+-	if (in_softirq())
+-		spin_unlock(&pool->ring.producer_lock);
+-	else
+-		spin_unlock_bh(&pool->ring.producer_lock);
+-}
+-
+ #endif /* _NET_PAGE_POOL_H */
+--- a/net/core/page_pool.c
++++ b/net/core/page_pool.c
+@@ -133,6 +133,29 @@ EXPORT_SYMBOL(page_pool_ethtool_stats_ge
+ #define recycle_stat_add(pool, __stat, val)
+ #endif
  
-+	id = ida_alloc_min(&ffa_bus_id, 1, GFP_KERNEL);
-+	if (id < 0)
-+		return NULL;
++static bool page_pool_producer_lock(struct page_pool *pool)
++	__acquires(&pool->ring.producer_lock)
++{
++	bool in_softirq = in_softirq();
 +
- 	ffa_dev = kzalloc(sizeof(*ffa_dev), GFP_KERNEL);
--	if (!ffa_dev)
-+	if (!ffa_dev) {
-+		ida_free(&ffa_bus_id, id);
- 		return NULL;
-+	}
- 
- 	dev = &ffa_dev->dev;
- 	dev->bus = &ffa_bus_type;
- 	dev->release = ffa_release_device;
--	dev_set_name(&ffa_dev->dev, "arm-ffa-%04x", vm_id);
-+	dev_set_name(&ffa_dev->dev, "arm-ffa-%d", id);
- 
- 	ffa_dev->vm_id = vm_id;
- 	ffa_dev->ops = ops;
-@@ -218,4 +227,5 @@ void arm_ffa_bus_exit(void)
++	if (in_softirq)
++		spin_lock(&pool->ring.producer_lock);
++	else
++		spin_lock_bh(&pool->ring.producer_lock);
++
++	return in_softirq;
++}
++
++static void page_pool_producer_unlock(struct page_pool *pool,
++				      bool in_softirq)
++	__releases(&pool->ring.producer_lock)
++{
++	if (in_softirq)
++		spin_unlock(&pool->ring.producer_lock);
++	else
++		spin_unlock_bh(&pool->ring.producer_lock);
++}
++
+ static int page_pool_init(struct page_pool *pool,
+ 			  const struct page_pool_params *params)
  {
- 	ffa_devices_unregister();
- 	bus_unregister(&ffa_bus_type);
-+	ida_destroy(&ffa_bus_id);
- }
---- a/include/linux/arm_ffa.h
-+++ b/include/linux/arm_ffa.h
-@@ -96,6 +96,7 @@
+@@ -615,6 +638,7 @@ void page_pool_put_page_bulk(struct page
+ 			     int count)
+ {
+ 	int i, bulk_len = 0;
++	bool in_softirq;
  
- /* FFA Bus/Device/Driver related */
- struct ffa_device {
-+	u32 id;
- 	int vm_id;
- 	bool mode_32bit;
- 	uuid_t uuid;
+ 	for (i = 0; i < count; i++) {
+ 		struct page *page = virt_to_head_page(data[i]);
+@@ -633,7 +657,7 @@ void page_pool_put_page_bulk(struct page
+ 		return;
+ 
+ 	/* Bulk producer into ptr_ring page_pool cache */
+-	page_pool_ring_lock(pool);
++	in_softirq = page_pool_producer_lock(pool);
+ 	for (i = 0; i < bulk_len; i++) {
+ 		if (__ptr_ring_produce(&pool->ring, data[i])) {
+ 			/* ring full */
+@@ -642,7 +666,7 @@ void page_pool_put_page_bulk(struct page
+ 		}
+ 	}
+ 	recycle_stat_add(pool, ring, i);
+-	page_pool_ring_unlock(pool);
++	page_pool_producer_unlock(pool, in_softirq);
+ 
+ 	/* Hopefully all pages was return into ptr_ring */
+ 	if (likely(i == bulk_len))
 
 
