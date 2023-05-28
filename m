@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB83E611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595F8C4339C;
-	Sun, 28 May 2023 19:15:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9A5611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93B2C433D2;
+	Sun, 28 May 2023 19:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301337;
-	bh=3DMZE2kgJRKEms66kEwLHTGcWQzi2bwr5csug/Txqmk=;
+	s=korg; t=1685301340;
+	bh=O06XdJb4Lkxt/exnRROT78FXQC5FDmWV4UCKyp8BwNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xvu11AcPxVme37X7my8CqnI0v1r7ECAuvrwpgpt7KGgIHoC3dH1ozhtSH+/HxogKC
-	 bqIK59hUdhhSV4nP+zT0K43+nbH8k9ySYPgjBMIA96BK2nize/BIkzZMzV6Pk+1vyO
-	 akBx5PUP+2rlSDNNekj9BX7l7SyRuGr/6xCofJvA=
+	b=uOIhahosxFoldiWVt/uQnvzRhnmTy/BEv+cduSLS8HDbESZHC5rjN+KzOhs2g49qM
+	 zJjUSgV8BbLGvFf040x9YLY0lzzxD7M4pkHoyAg9AI2wbSDq/kBQvcMnF94QDYq/P5
+	 pu8mIykDRoom75uMsr1LYW9bMvG+cWa19NeKUjPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <ptyadav@amazon.de>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 76/86] net: fix skb leak in __skb_tstamp_tx()
-Date: Sun, 28 May 2023 20:10:50 +0100
-Message-Id: <20230528190831.465489713@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 4.14 50/86] statfs: enforce statfs[64] structure initialization
+Date: Sun, 28 May 2023 20:10:24 +0100
+Message-Id: <20230528190830.456475590@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -36,43 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pratyush Yadav <ptyadav@amazon.de>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit 8a02fb71d7192ff1a9a47c9d937624966c6e09af upstream.
+commit ed40866ec7d328b3dfb70db7e2011640a16202c3 upstream.
 
-Commit 50749f2dd685 ("tcp/udp: Fix memleaks of sk and zerocopy skbs with
-TX timestamp.") added a call to skb_orphan_frags_rx() to fix leaks with
-zerocopy skbs. But it ended up adding a leak of its own. When
-skb_orphan_frags_rx() fails, the function just returns, leaking the skb
-it just cloned. Free it before returning.
+s390's struct statfs and struct statfs64 contain padding, which
+field-by-field copying does not set. Initialize the respective structs
+with zeros before filling them and copying them to userspace, like it's
+already done for the compat versions of these structs.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
+Found by KMSAN.
 
-Fixes: 50749f2dd685 ("tcp/udp: Fix memleaks of sk and zerocopy skbs with TX timestamp.")
-Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20230522153020.32422-1-ptyadav@amazon.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[agordeev@linux.ibm.com: fixed typo in patch description]
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: stable@vger.kernel.org # v4.14+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230504144021.808932-2-iii@linux.ibm.com
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/statfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4421,8 +4421,10 @@ void __skb_tstamp_tx(struct sk_buff *ori
- 	} else {
- 		skb = skb_clone(orig_skb, GFP_ATOMIC);
- 
--		if (skb_orphan_frags_rx(skb, GFP_ATOMIC))
-+		if (skb_orphan_frags_rx(skb, GFP_ATOMIC)) {
-+			kfree_skb(skb);
- 			return;
-+		}
+--- a/fs/statfs.c
++++ b/fs/statfs.c
+@@ -114,6 +114,7 @@ static int do_statfs_native(struct kstat
+ 	if (sizeof(buf) == sizeof(*st))
+ 		memcpy(&buf, st, sizeof(*st));
+ 	else {
++		memset(&buf, 0, sizeof(buf));
+ 		if (sizeof buf.f_blocks == 4) {
+ 			if ((st->f_blocks | st->f_bfree | st->f_bavail |
+ 			     st->f_bsize | st->f_frsize) &
+@@ -142,7 +143,6 @@ static int do_statfs_native(struct kstat
+ 		buf.f_namelen = st->f_namelen;
+ 		buf.f_frsize = st->f_frsize;
+ 		buf.f_flags = st->f_flags;
+-		memset(buf.f_spare, 0, sizeof(buf.f_spare));
  	}
- 	if (!skb)
- 		return;
+ 	if (copy_to_user(p, &buf, sizeof(buf)))
+ 		return -EFAULT;
+@@ -155,6 +155,7 @@ static int do_statfs64(struct kstatfs *s
+ 	if (sizeof(buf) == sizeof(*st))
+ 		memcpy(&buf, st, sizeof(*st));
+ 	else {
++		memset(&buf, 0, sizeof(buf));
+ 		buf.f_type = st->f_type;
+ 		buf.f_bsize = st->f_bsize;
+ 		buf.f_blocks = st->f_blocks;
+@@ -166,7 +167,6 @@ static int do_statfs64(struct kstatfs *s
+ 		buf.f_namelen = st->f_namelen;
+ 		buf.f_frsize = st->f_frsize;
+ 		buf.f_flags = st->f_flags;
+-		memset(buf.f_spare, 0, sizeof(buf.f_spare));
+ 	}
+ 	if (copy_to_user(p, &buf, sizeof(buf)))
+ 		return -EFAULT;
 
 
