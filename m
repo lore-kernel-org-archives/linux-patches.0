@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FB64611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA11AC433EF;
-	Sun, 28 May 2023 19:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29938611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A655AC4339B;
+	Sun, 28 May 2023 19:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301529;
-	bh=ix7Zlo2wEhgrYrjU0RCJYqpXIXSck7jDSRzxu3rRb/g=;
+	s=korg; t=1685301532;
+	bh=ogM/LVfKGXYAnrt1FlY2B64qXfXE3OZYuAdr6R9fvlk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OCgiWXcOFsiDXmFH8xdJyd7FLYOCtWwRvJc659n4fzyEdBrHCN8mQQbilfPhU53FF
-	 foRfYerNGpQVOjvyGubOzDIkxzY7GJxlkHiys5/gW/8anHvtetdCSM87HgDEdSORWu
-	 MVaY28DBJs30tZTNrKpKcpLafvg5Y5BUvBwyDDMM=
+	b=bABQT2HWI9IEA0Awcx37xETEHJHM/djCQQaXPxtYfcGFBLzggPJ0SmYyphCp6VR3V
+	 CmC/q/JmMJKjK2PJans46S9CDm9h1KPn5Ei2hZAOz0G8HsWI9K87uNbi2iE+ylcBJe
+	 +zfdDOGpJgMRK1MJk+aOiLv9Oa9EPsI23Q50JuGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 066/132] vlan: fix a potential uninit-value in vlan_dev_hard_start_xmit()
-Date: Sun, 28 May 2023 20:10:05 +0100
-Message-Id: <20230528190835.571066014@linuxfoundation.org>
+	Maxime Bizon <mbizon@freebox.fr>,
+	linux-usb@vger.kernel.org,
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 4.19 067/132] usb-storage: fix deadlock when a scsi command timeouts more than once
+Date: Sun, 28 May 2023 20:10:06 +0100
+Message-Id: <20230528190835.599725066@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -36,93 +36,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Maxime Bizon <mbizon@freebox.fr>
 
-[ Upstream commit dacab578c7c6cd06c50c89dfa36b0e0f10decd4e ]
+commit a398d5eac6984316e71474e25b975688f282379b upstream.
 
-syzbot triggered the following splat [1], sending an empty message
-through pppoe_sendmsg().
+With faulty usb-storage devices, read/write can timeout, in that case
+the SCSI layer will abort and re-issue the command. USB storage has no
+internal timeout, it relies on SCSI layer aborting commands via
+.eh_abort_handler() for non those responsive devices.
 
-When VLAN_FLAG_REORDER_HDR flag is set, vlan_dev_hard_header()
-does not push extra bytes for the VLAN header, because vlan is offloaded.
+After two consecutive timeouts of the same command, SCSI layer calls
+.eh_device_reset_handler(), without calling .eh_abort_handler() first.
 
-Unfortunately vlan_dev_hard_start_xmit() first reads veth->h_vlan_proto
-before testing (vlan->flags & VLAN_FLAG_REORDER_HDR).
+With usb-storage, this causes a deadlock:
 
-We need to swap the two conditions.
+  -> .eh_device_reset_handler
+    -> device_reset
+      -> mutex_lock(&(us->dev_mutex));
 
-[1]
-BUG: KMSAN: uninit-value in vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
-vlan_dev_hard_start_xmit+0x171/0x7f0 net/8021q/vlan_dev.c:111
-__netdev_start_xmit include/linux/netdevice.h:4883 [inline]
-netdev_start_xmit include/linux/netdevice.h:4897 [inline]
-xmit_one net/core/dev.c:3580 [inline]
-dev_hard_start_xmit+0x253/0xa20 net/core/dev.c:3596
-__dev_queue_xmit+0x3c7f/0x5ac0 net/core/dev.c:4246
-dev_queue_xmit include/linux/netdevice.h:3053 [inline]
-pppoe_sendmsg+0xa93/0xb80 drivers/net/ppp/pppoe.c:900
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
-___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
-__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
-__do_sys_sendmmsg net/socket.c:2670 [inline]
-__se_sys_sendmmsg net/socket.c:2667 [inline]
-__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+mutex already by usb_stor_control_thread(), which is waiting for
+command completion:
 
-Uninit was created at:
-slab_post_alloc_hook+0x12d/0xb60 mm/slab.h:774
-slab_alloc_node mm/slub.c:3452 [inline]
-kmem_cache_alloc_node+0x543/0xab0 mm/slub.c:3497
-kmalloc_reserve+0x148/0x470 net/core/skbuff.c:520
-__alloc_skb+0x3a7/0x850 net/core/skbuff.c:606
-alloc_skb include/linux/skbuff.h:1277 [inline]
-sock_wmalloc+0xfe/0x1a0 net/core/sock.c:2583
-pppoe_sendmsg+0x3af/0xb80 drivers/net/ppp/pppoe.c:867
-sock_sendmsg_nosec net/socket.c:724 [inline]
-sock_sendmsg net/socket.c:747 [inline]
-____sys_sendmsg+0xa24/0xe40 net/socket.c:2501
-___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2555
-__sys_sendmmsg+0x411/0xa50 net/socket.c:2641
-__do_sys_sendmmsg net/socket.c:2670 [inline]
-__se_sys_sendmmsg net/socket.c:2667 [inline]
-__x64_sys_sendmmsg+0xbc/0x120 net/socket.c:2667
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  -> usb_stor_control_thread (mutex taken here)
+    -> usb_stor_invoke_transport
+      -> usb_stor_Bulk_transport
+        -> usb_stor_bulk_srb
+	  -> usb_stor_bulk_transfer_sglist
+	    -> usb_sg_wait
 
-CPU: 0 PID: 29770 Comm: syz-executor.0 Not tainted 6.3.0-rc6-syzkaller-gc478e5b17829 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/30/2023
+Make sure we cancel any pending command in .eh_device_reset_handler()
+to avoid this.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Maxime Bizon <mbizon@freebox.fr>
+Cc: linux-usb@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/all/ZEllnjMKT8ulZbJh@sakura/
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20230505114759.1189741-1-mbizon@freebox.fr
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/8021q/vlan_dev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/storage/scsiglue.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/net/8021q/vlan_dev.c b/net/8021q/vlan_dev.c
-index c80add6edf598..ba9b8980f100d 100644
---- a/net/8021q/vlan_dev.c
-+++ b/net/8021q/vlan_dev.c
-@@ -115,8 +115,8 @@ static netdev_tx_t vlan_dev_hard_start_xmit(struct sk_buff *skb,
- 	 * NOTE: THIS ASSUMES DIX ETHERNET, SPECIFICALLY NOT SUPPORTING
- 	 * OTHER THINGS LIKE FDDI/TokenRing/802.3 SNAPs...
+--- a/drivers/usb/storage/scsiglue.c
++++ b/drivers/usb/storage/scsiglue.c
+@@ -392,22 +392,25 @@ static DEF_SCSI_QCMD(queuecommand)
+  ***********************************************************************/
+ 
+ /* Command timeout and abort */
+-static int command_abort(struct scsi_cmnd *srb)
++static int command_abort_matching(struct us_data *us, struct scsi_cmnd *srb_match)
+ {
+-	struct us_data *us = host_to_us(srb->device->host);
+-
+-	usb_stor_dbg(us, "%s called\n", __func__);
+-
+ 	/*
+ 	 * us->srb together with the TIMED_OUT, RESETTING, and ABORTING
+ 	 * bits are protected by the host lock.
  	 */
--	if (veth->h_vlan_proto != vlan->vlan_proto ||
--	    vlan->flags & VLAN_FLAG_REORDER_HDR) {
-+	if (vlan->flags & VLAN_FLAG_REORDER_HDR ||
-+	    veth->h_vlan_proto != vlan->vlan_proto) {
- 		u16 vlan_tci;
- 		vlan_tci = vlan->vlan_id;
- 		vlan_tci |= vlan_dev_get_egress_qos_mask(dev, skb->priority);
--- 
-2.39.2
-
+ 	scsi_lock(us_to_host(us));
+ 
+-	/* Is this command still active? */
+-	if (us->srb != srb) {
++	/* is there any active pending command to abort ? */
++	if (!us->srb) {
+ 		scsi_unlock(us_to_host(us));
+ 		usb_stor_dbg(us, "-- nothing to abort\n");
++		return SUCCESS;
++	}
++
++	/* Does the command match the passed srb if any ? */
++	if (srb_match && us->srb != srb_match) {
++		scsi_unlock(us_to_host(us));
++		usb_stor_dbg(us, "-- pending command mismatch\n");
+ 		return FAILED;
+ 	}
+ 
+@@ -430,6 +433,14 @@ static int command_abort(struct scsi_cmn
+ 	return SUCCESS;
+ }
+ 
++static int command_abort(struct scsi_cmnd *srb)
++{
++	struct us_data *us = host_to_us(srb->device->host);
++
++	usb_stor_dbg(us, "%s called\n", __func__);
++	return command_abort_matching(us, srb);
++}
++
+ /*
+  * This invokes the transport reset mechanism to reset the state of the
+  * device
+@@ -441,6 +452,9 @@ static int device_reset(struct scsi_cmnd
+ 
+ 	usb_stor_dbg(us, "%s called\n", __func__);
+ 
++	/* abort any pending command before reset */
++	command_abort_matching(us, NULL);
++
+ 	/* lock the device pointers and do the reset */
+ 	mutex_lock(&(us->dev_mutex));
+ 	result = us->transport_reset(us);
 
 
