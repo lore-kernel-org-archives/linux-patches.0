@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4272611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304AFC433EF;
-	Sun, 28 May 2023 19:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4676B611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3296C433EF;
+	Sun, 28 May 2023 19:35:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302509;
-	bh=oYJfFKttYLizDzll8gvpai86bvGG257IY/PdTCPAdfc=;
+	s=korg; t=1685302512;
+	bh=wg6B/1wVYdbu8Od0NvhLTUglX5BwCDMk7nz10O046WA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ic/rSmchpxoS1XF8k77SoEFGwgWf+WsBXQI4KBEE3FuZPspP5Lm7kcIEC2yz2wFpU
-	 FnXTkdkA7H93DV4tyvcJOLfTuSub3sJ5qRav89Nk4CB3yM6pl3ju2JOou4vJ9G5NpT
-	 exKJFuiUqmCMBNFfbk8Ya6J7w5Lg2Fag/ZPeNutI=
+	b=WH5V74cWwaGBCRWE1vsmh3KKyn11A0M37IPU9baTOXlHa96lyGDacXHeoUh9EX3g8
+	 PiErfL4OTshDmQb2xFmkwDkBK+D2EoGAUEWreNgY5IXEJYzdbte/eKKrF8s3Dp8f8u
+	 ESlm9S62zsE1pliPBIXOE+3P7SVgU1yVeeG6RoQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 6.1 031/119] xtensa: add __bswap{si,di}2 helpers
-Date: Sun, 28 May 2023 20:10:31 +0100
-Message-Id: <20230528190836.392132131@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 032/119] parisc: Use num_present_cpus() in alternative patching code
+Date: Sun, 28 May 2023 20:10:32 +0100
+Message-Id: <20230528190836.427453128@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -33,100 +33,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 034f4a7877c32a8efd6beee4d71ed14e424499a9 upstream.
+commit b6405f0829d7b1dd926ba3ca5f691cab835abfaa upstream.
 
-gcc-13 may generate calls for __bswap{si,di}2. This breaks the kernel
-build when optimization for size is selected. Add __bswap{si,di}2
-helpers to fix that.
+When patching the kernel code some alternatives depend on SMP vs. !SMP.
+Use the value of num_present_cpus() instead of num_online_cpus() to
+decide, otherwise we may run into issues if and additional CPU is
+enabled after having loaded a module while only one CPU was enabled.
 
-Cc: stable@vger.kernel.org
-Fixes: 19c5699f9aff ("xtensa: don't link with libgcc")
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org> # v6.1+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/xtensa/kernel/xtensa_ksyms.c |    4 ++++
- arch/xtensa/lib/Makefile          |    2 +-
- arch/xtensa/lib/bswapdi2.S        |   21 +++++++++++++++++++++
- arch/xtensa/lib/bswapsi2.S        |   16 ++++++++++++++++
- 4 files changed, 42 insertions(+), 1 deletion(-)
- create mode 100644 arch/xtensa/lib/bswapdi2.S
- create mode 100644 arch/xtensa/lib/bswapsi2.S
+ arch/parisc/kernel/alternative.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/xtensa/kernel/xtensa_ksyms.c
-+++ b/arch/xtensa/kernel/xtensa_ksyms.c
-@@ -56,6 +56,8 @@ EXPORT_SYMBOL(empty_zero_page);
-  */
- extern long long __ashrdi3(long long, int);
- extern long long __ashldi3(long long, int);
-+extern long long __bswapdi2(long long);
-+extern int __bswapsi2(int);
- extern long long __lshrdi3(long long, int);
- extern int __divsi3(int, int);
- extern int __modsi3(int, int);
-@@ -66,6 +68,8 @@ extern unsigned long long __umulsidi3(un
+diff --git a/arch/parisc/kernel/alternative.c b/arch/parisc/kernel/alternative.c
+index 66f5672c70bd..25c4d6c3375d 100644
+--- a/arch/parisc/kernel/alternative.c
++++ b/arch/parisc/kernel/alternative.c
+@@ -25,7 +25,7 @@ void __init_or_module apply_alternatives(struct alt_instr *start,
+ {
+ 	struct alt_instr *entry;
+ 	int index = 0, applied = 0;
+-	int num_cpus = num_online_cpus();
++	int num_cpus = num_present_cpus();
+ 	u16 cond_check;
  
- EXPORT_SYMBOL(__ashldi3);
- EXPORT_SYMBOL(__ashrdi3);
-+EXPORT_SYMBOL(__bswapdi2);
-+EXPORT_SYMBOL(__bswapsi2);
- EXPORT_SYMBOL(__lshrdi3);
- EXPORT_SYMBOL(__divsi3);
- EXPORT_SYMBOL(__modsi3);
---- a/arch/xtensa/lib/Makefile
-+++ b/arch/xtensa/lib/Makefile
-@@ -4,7 +4,7 @@
- #
- 
- lib-y	+= memcopy.o memset.o checksum.o \
--	   ashldi3.o ashrdi3.o lshrdi3.o \
-+	   ashldi3.o ashrdi3.o bswapdi2.o bswapsi2.o lshrdi3.o \
- 	   divsi3.o udivsi3.o modsi3.o umodsi3.o mulsi3.o umulsidi3.o \
- 	   usercopy.o strncpy_user.o strnlen_user.o
- lib-$(CONFIG_PCI) += pci-auto.o
---- /dev/null
-+++ b/arch/xtensa/lib/bswapdi2.S
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later WITH GCC-exception-2.0 */
-+#include <linux/linkage.h>
-+#include <asm/asmmacro.h>
-+#include <asm/core.h>
-+
-+ENTRY(__bswapdi2)
-+
-+	abi_entry_default
-+	ssai	8
-+	srli	a4, a2, 16
-+	src	a4, a4, a2
-+	src	a4, a4, a4
-+	src	a4, a2, a4
-+	srli	a2, a3, 16
-+	src	a2, a2, a3
-+	src	a2, a2, a2
-+	src	a2, a3, a2
-+	mov	a3, a4
-+	abi_ret_default
-+
-+ENDPROC(__bswapdi2)
---- /dev/null
-+++ b/arch/xtensa/lib/bswapsi2.S
-@@ -0,0 +1,16 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later WITH GCC-exception-2.0 */
-+#include <linux/linkage.h>
-+#include <asm/asmmacro.h>
-+#include <asm/core.h>
-+
-+ENTRY(__bswapsi2)
-+
-+	abi_entry_default
-+	ssai	8
-+	srli	a3, a2, 16
-+	src	a3, a3, a2
-+	src	a3, a3, a3
-+	src	a2, a2, a3
-+	abi_ret_default
-+
-+ENDPROC(__bswapsi2)
+ 	cond_check = ALT_COND_ALWAYS |
+-- 
+2.40.1
+
 
 
