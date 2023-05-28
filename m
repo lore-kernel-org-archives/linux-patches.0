@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F08611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:38:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D035BC4339B;
-	Sun, 28 May 2023 19:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D3F611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:38:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D531C433EF;
+	Sun, 28 May 2023 19:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302690;
-	bh=ACnsGrDB10fBpebDRNKrCyNxB08zK3w7CiMEPv7FCJQ=;
+	s=korg; t=1685302692;
+	bh=YMAGm+Zl7FrEdpRChvMmH56GMMCkGdXuYlN0aXEiHvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCR4wCvUVEt6IsvcOiNEyiNlV82eYfHR8RMrR+zEDvnmchGFCXNcRTt44ZRtYZXGh
-	 hXmnSdh6ImJYzidvv2qho3/agJqT0xqmu/4P7PabFqPrXCIVbXZsuJtezPoC1fpBTO
-	 TVq8ovKlu8RxJJAOv13BVwyCpEbt71D+2Zlx3V3s=
+	b=LhMtRHE3BHo/PRXehPaMfIwOcbUmop8lIzmmOO45KRWI2c5rMjEDMxpyNxJyboa0O
+	 5wCy5C8VE4P0/lKTn6fqbdVUptSTldtpO5Xn++j+7tvYMynLI3by7lRa/t9TmUF8Cp
+	 /tM4p7x/cicNZO5ltamnfr69a3/9Sx6IpdFp3NJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.1 078/119] power: supply: bq27xxx: Add cache parameter to bq27xxx_battery_current_and_status()
-Date: Sun, 28 May 2023 20:11:18 +0100
-Message-Id: <20230528190838.113093162@linuxfoundation.org>
+	Anton Protopopov <aspsk@isovalent.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>
+Subject: [PATCH 6.1 069/119] bpf: fix a memory leak in the LRU and LRU_PERCPU hash maps
+Date: Sun, 28 May 2023 20:11:09 +0100
+Message-Id: <20230528190837.802890017@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -34,72 +34,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Anton Protopopov <aspsk@isovalent.com>
 
-commit 35092c5819f8c5acc7bafe3fdbb13d6307c4f5e1 upstream.
+commit b34ffb0c6d23583830f9327864b9c1f486003305 upstream.
 
-Add a cache parameter to bq27xxx_battery_current_and_status() so that
-it can optionally use cached flags instead of re-reading them itself.
+The LRU and LRU_PERCPU maps allocate a new element on update before locking the
+target hash table bucket. Right after that the maps try to lock the bucket.
+If this fails, then maps return -EBUSY to the caller without releasing the
+allocated element. This makes the element untracked: it doesn't belong to
+either of free lists, and it doesn't belong to the hash table, so can't be
+re-used; this eventually leads to the permanent -ENOMEM on LRU map updates,
+which is unexpected. Fix this by returning the element to the local free list
+if bucket locking fails.
 
-This is a preparation patch for making bq27xxx_battery_update() check
-the status and have it call power_supply_changed() on status changes.
-
-Fixes: 297a533b3e62 ("bq27x00: Cache battery registers")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 20b6cc34ea74 ("bpf: Avoid hashtab deadlock with map_locked")
+Signed-off-by: Anton Protopopov <aspsk@isovalent.com>
+Link: https://lore.kernel.org/r/20230522154558.2166815-1-aspsk@isovalent.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq27xxx_battery.c |   19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ kernel/bpf/hashtab.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1840,7 +1840,8 @@ static bool bq27xxx_battery_is_full(stru
- static int bq27xxx_battery_current_and_status(
- 	struct bq27xxx_device_info *di,
- 	union power_supply_propval *val_curr,
--	union power_supply_propval *val_status)
-+	union power_supply_propval *val_status,
-+	struct bq27xxx_reg_cache *cache)
- {
- 	bool single_flags = (di->opts & BQ27XXX_O_ZERO);
- 	int curr;
-@@ -1852,10 +1853,14 @@ static int bq27xxx_battery_current_and_s
- 		return curr;
- 	}
+--- a/kernel/bpf/hashtab.c
++++ b/kernel/bpf/hashtab.c
+@@ -1203,7 +1203,7 @@ static int htab_lru_map_update_elem(stru
  
--	flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, single_flags);
--	if (flags < 0) {
--		dev_err(di->dev, "error reading flags\n");
--		return flags;
-+	if (cache) {
-+		flags = cache->flags;
-+	} else {
-+		flags = bq27xxx_read(di, BQ27XXX_REG_FLAGS, single_flags);
-+		if (flags < 0) {
-+			dev_err(di->dev, "error reading flags\n");
-+			return flags;
-+		}
- 	}
+ 	ret = htab_lock_bucket(htab, b, hash, &flags);
+ 	if (ret)
+-		return ret;
++		goto err_lock_bucket;
  
- 	if (di->opts & BQ27XXX_O_ZERO) {
-@@ -2001,7 +2006,7 @@ static int bq27xxx_battery_get_property(
+ 	l_old = lookup_elem_raw(head, hash, key, key_size);
  
- 	switch (psp) {
- 	case POWER_SUPPLY_PROP_STATUS:
--		ret = bq27xxx_battery_current_and_status(di, NULL, val);
-+		ret = bq27xxx_battery_current_and_status(di, NULL, val, NULL);
- 		break;
- 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
- 		ret = bq27xxx_battery_voltage(di, val);
-@@ -2010,7 +2015,7 @@ static int bq27xxx_battery_get_property(
- 		val->intval = di->cache.flags < 0 ? 0 : 1;
- 		break;
- 	case POWER_SUPPLY_PROP_CURRENT_NOW:
--		ret = bq27xxx_battery_current_and_status(di, val, NULL);
-+		ret = bq27xxx_battery_current_and_status(di, val, NULL, NULL);
- 		break;
- 	case POWER_SUPPLY_PROP_CAPACITY:
- 		ret = bq27xxx_simple_value(di->cache.capacity, val);
+@@ -1224,6 +1224,7 @@ static int htab_lru_map_update_elem(stru
+ err:
+ 	htab_unlock_bucket(htab, b, hash, flags);
+ 
++err_lock_bucket:
+ 	if (ret)
+ 		htab_lru_push_free(htab, l_new);
+ 	else if (l_old)
+@@ -1326,7 +1327,7 @@ static int __htab_lru_percpu_map_update_
+ 
+ 	ret = htab_lock_bucket(htab, b, hash, &flags);
+ 	if (ret)
+-		return ret;
++		goto err_lock_bucket;
+ 
+ 	l_old = lookup_elem_raw(head, hash, key, key_size);
+ 
+@@ -1349,6 +1350,7 @@ static int __htab_lru_percpu_map_update_
+ 	ret = 0;
+ err:
+ 	htab_unlock_bucket(htab, b, hash, flags);
++err_lock_bucket:
+ 	if (l_new)
+ 		bpf_lru_push_free(&htab->lru, &l_new->lru_node);
+ 	return ret;
 
 
