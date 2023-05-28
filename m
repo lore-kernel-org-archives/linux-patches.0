@@ -1,33 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932D5611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:34:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEFC4C433EF;
-	Sun, 28 May 2023 19:34:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAC2611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:34:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B2CC433D2;
+	Sun, 28 May 2023 19:34:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302475;
-	bh=4ZPCwhkH1brojeZZcV9gpHcRj54LzG/1n3oPSBY+ijA=;
+	s=korg; t=1685302477;
+	bh=3Uf595Jknc3eLB79ThMn9PGVeA3zUR2SdQBQF6VlH5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q619cOsGVMiv+tDDUcml+Rv3blPxKPPdC03aE5ZokHCcw2puCIWVQA5j3RN5+xlRU
-	 5wv5sxvKmBnq5AJTVZvSm1NskksO991XdRzY8ogjlUwnnoHCDdgdZpy/BvZDfBn4r3
-	 tGrfOQBX+Yazjpoz/6NXFHkMjcSuNYdfbbNCEBwM=
+	b=iLb7wMzqI3Bp/g+5NaAkOJucMr5EeVKO03TpD8+2nDNOd8xB1UxDsXqq+qCBnIB03
+	 I2r8wW2kk7eXWBUOWfj6xPoHDjcVEGUxuWpGEawrDqERf8nkl6JeME8CQ1do41+MGD
+	 roFbLCFyNsi/gS8rT1depoOJSqqCr4PaewaL7cio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Arcari <darcari@redhat.com>,
-	Jithu Joseph <jithu.joseph@intel.com>,
-	Ashok Raj <ashok.raj@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Gross <markgross@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Dan Williams <dan.j.williams@intel.com>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 6.1 018/119] platform/x86/intel/ifs: Annotate work queue on stack so object debug does not complain
-Date: Sun, 28 May 2023 20:10:18 +0100
-Message-Id: <20230528190835.937793702@linuxfoundation.org>
+	Adam Stylinski <kungfujesus06@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 019/119] ALSA: hda/ca0132: add quirk for EVGA X299 DARK
+Date: Sun, 28 May 2023 20:10:19 +0100
+Message-Id: <20230528190835.970778488@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -41,63 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Arcari <darcari@redhat.com>
+From: Adam Stylinski <kungfujesus06@gmail.com>
 
-commit 3279decb2c3c8d58cb0b70ed5235c480735a36ee upstream.
+commit 7843380d07bbeffd3ce6504e73cf61f840ae76ca upstream.
 
-Object Debug results in the following warning while attempting to load
-ifs firmware:
+This quirk is necessary for surround and other DSP effects to work
+with the onboard ca0132 based audio chipset for the EVGA X299 dark
+mainboard.
 
-[  220.007422] ODEBUG: object 000000003bf952db is on stack 00000000e843994b, but NOT annotated.
-[  220.007459] ------------[ cut here ]------------
-[  220.007461] WARNING: CPU: 0 PID: 11774 at lib/debugobjects.c:548 __debug_object_init.cold+0x22e/0x2d5
-[  220.137476] RIP: 0010:__debug_object_init.cold+0x22e/0x2d5
-[  220.254774] Call Trace:
-[  220.257641]  <TASK>
-[  220.265606]  scan_chunks_sanity_check+0x368/0x5f0 [intel_ifs]
-[  220.288292]  ifs_load_firmware+0x2a3/0x400 [intel_ifs]
-[  220.332793]  current_batch_store+0xea/0x160 [intel_ifs]
-[  220.357947]  kernfs_fop_write_iter+0x355/0x530
-[  220.363048]  new_sync_write+0x28e/0x4a0
-[  220.381226]  vfs_write+0x62a/0x920
-[  220.385160]  ksys_write+0xf9/0x1d0
-[  220.399421]  do_syscall_64+0x59/0x90
-[  220.440635]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[  220.566845] ---[ end trace 3a01b299db142b41 ]---
-
-Correct this by calling INIT_WORK_ONSTACK instead of INIT_WORK.
-
-Fixes: 684ec215706d ("platform/x86/intel/ifs: Authenticate and copy to secured memory")
-
-Signed-off-by: David Arcari <darcari@redhat.com>
-Cc: Jithu Joseph <jithu.joseph@intel.com>
-Cc: Ashok Raj <ashok.raj@intel.com>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: Hans de Goede <hdegoede@redhat.com>
-Cc: Mark Gross <markgross@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: linux-kernel@vger.kernel.org
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230523105400.674152-1-darcari@redhat.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Adam Stylinski <kungfujesus06@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=67071
+Link: https://lore.kernel.org/r/ZGopOe19T1QOwizS@eggsbenedict.adamsnet
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/ifs/load.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_ca0132.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/platform/x86/intel/ifs/load.c
-+++ b/drivers/platform/x86/intel/ifs/load.c
-@@ -154,7 +154,7 @@ static int scan_chunks_sanity_check(stru
- 			continue;
- 		reinit_completion(&ifs_done);
- 		local_work.dev = dev;
--		INIT_WORK(&local_work.w, copy_hashes_authenticate_chunks);
-+		INIT_WORK_ONSTACK(&local_work.w, copy_hashes_authenticate_chunks);
- 		schedule_work_on(cpu, &local_work.w);
- 		wait_for_completion(&ifs_done);
- 		if (ifsd->loading_error)
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -1306,6 +1306,7 @@ static const struct snd_pci_quirk ca0132
+ 	SND_PCI_QUIRK(0x1458, 0xA026, "Gigabyte G1.Sniper Z97", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x1458, 0xA036, "Gigabyte GA-Z170X-Gaming 7", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x3842, 0x1038, "EVGA X99 Classified", QUIRK_R3DI),
++	SND_PCI_QUIRK(0x3842, 0x104b, "EVGA X299 Dark", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x3842, 0x1055, "EVGA Z390 DARK", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x1102, 0x0013, "Recon3D", QUIRK_R3D),
+ 	SND_PCI_QUIRK(0x1102, 0x0018, "Recon3D", QUIRK_R3D),
 
 
