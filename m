@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FF30611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:48:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51FAC433D2;
-	Sun, 28 May 2023 19:48:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165DB6121
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:48:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98428C433D2;
+	Sun, 28 May 2023 19:48:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303302;
-	bh=onVee4eMTMpknMLasanBWH/l4id018oP2tS9f3G4SyI=;
+	s=korg; t=1685303304;
+	bh=FvMcVqJm3TuS8J/SUNdMeZ5i6Amt13YiWYQiJru5xIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p66YFLceG64/3681Na4lCFStxFpng6i4boBsSAFXrFd4wv/nASDU6uz3vIufVLZYu
-	 XiCpfW75lqVberjleSN55d7ZRVJt5nbk4VJIjojtqdyE1ExoVjjmd/e8eRAMSEY/sg
-	 cMCkfni0uA3mJjbvWVtdsNWOGEmaTCG6fGxWclgE=
+	b=LEKiPPgNa+2qhxK2FLtkzTqc1T+vKLpUZNmbYaFVoMF6bJrivd+2ndO1/r/GIGJpb
+	 UryhGNfvRDun8bqN+e2ZedjzYRKriM+t9RTX3oRi5+7dwarKftJOdcBjFu1YubDHIe
+	 +Vl815etiG4hzCY3JWpvKjBCmY4DH9teLqVjXpfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Marek Vasut <marex@denx.de>
-Subject: [PATCH 5.15 06/69] ARM: dts: stm32: fix AV96 board SAI2 pin muxing on stm32mp15
-Date: Sun, 28 May 2023 20:11:26 +0100
-Message-Id: <20230528190828.573175980@linuxfoundation.org>
+	Hardik Garg <hargar@linux.microsoft.com>,
+	"Tyler Hicks (Microsoft)" <code@tyhicks.com>
+Subject: [PATCH 5.15 24/69] selftests/memfd: Fix unknown type name build failure
+Date: Sun, 28 May 2023 20:11:44 +0100
+Message-Id: <20230528190829.275148675@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -35,33 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Moysan <olivier.moysan@foss.st.com>
+From: Hardik Garg <hargar@linux.microsoft.com>
 
-commit ee2aacb6f3a901a95b1dd68964b69c92cdbbf213 upstream.
+Partially backport v6.3 commit 11f75a01448f ("selftests/memfd: add tests
+for MFD_NOEXEC_SEAL MFD_EXEC") to fix an unknown type name build error.
+In some systems, the __u64 typedef is not present due to differences in
+system headers, causing compilation errors like this one:
 
-Replace sai2a-2 node name by sai2a-sleep-2, to avoid name
-duplication.
+fuse_test.c:64:8: error: unknown type name '__u64'
+   64 | static __u64 mfd_assert_get_seals(int fd)
 
-Fixes: 1a9a9d226f0f ("ARM: dts: stm32: fix AV96 board SAI2 pin muxing on stm32mp15")
+This header includes the  __u64 typedef which increases the likelihood
+of successful compilation on a wider variety of systems.
 
-Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
-Cc: Marek Vasut <marex@denx.de>
+Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
+Reviewed-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/stm32mp15-pinctrl.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/memfd/fuse_test.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15-pinctrl.dtsi
-@@ -1190,7 +1190,7 @@
- 		};
- 	};
- 
--	sai2a_sleep_pins_c: sai2a-2 {
-+	sai2a_sleep_pins_c: sai2a-sleep-2 {
- 		pins {
- 			pinmux = <STM32_PINMUX('D', 13, ANALOG)>, /* SAI2_SCK_A */
- 				 <STM32_PINMUX('D', 11, ANALOG)>, /* SAI2_SD_A */
+--- a/tools/testing/selftests/memfd/fuse_test.c
++++ b/tools/testing/selftests/memfd/fuse_test.c
+@@ -22,6 +22,7 @@
+ #include <linux/falloc.h>
+ #include <fcntl.h>
+ #include <linux/memfd.h>
++#include <linux/types.h>
+ #include <sched.h>
+ #include <stdio.h>
+ #include <stdlib.h>
 
 
