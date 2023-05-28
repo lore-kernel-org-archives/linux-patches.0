@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9A5611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B93B2C433D2;
-	Sun, 28 May 2023 19:15:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71C0611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30943C433D2;
+	Sun, 28 May 2023 19:15:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301340;
-	bh=O06XdJb4Lkxt/exnRROT78FXQC5FDmWV4UCKyp8BwNs=;
+	s=korg; t=1685301342;
+	bh=raaNxaKuHJ08Pgb0zC6OosSbOjmqhnvtFf1KAelBPcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOIhahosxFoldiWVt/uQnvzRhnmTy/BEv+cduSLS8HDbESZHC5rjN+KzOhs2g49qM
-	 zJjUSgV8BbLGvFf040x9YLY0lzzxD7M4pkHoyAg9AI2wbSDq/kBQvcMnF94QDYq/P5
-	 pu8mIykDRoom75uMsr1LYW9bMvG+cWa19NeKUjPg=
+	b=E+8vYWPp7iQh2WGl3qvnMMVjwcP/p/GzrawKWb16fXnhqjg45Ya6QCpX/VeftZNnI
+	 RX05q4xAyafkYA+JxtRvsFruKHcdijs7ZMjb/9Kt5AqQXvTF1OQ6bb6gv5F8USKJ2s
+	 P7qeWcKjuChIquxmq0uF9avyuGIyqINkRugksDuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Ilya Leoshkevich <iii@linux.ibm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>
-Subject: [PATCH 4.14 50/86] statfs: enforce statfs[64] structure initialization
-Date: Sun, 28 May 2023 20:10:24 +0100
-Message-Id: <20230528190830.456475590@linuxfoundation.org>
+	Vitaliy Tomin <tomin@iszf.irk.ru>,
+	stable <stable@kernel.org>
+Subject: [PATCH 4.14 51/86] serial: Add support for Advantech PCI-1611U card
+Date: Sun, 28 May 2023 20:10:25 +0100
+Message-Id: <20230528190830.496838403@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -36,62 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilya Leoshkevich <iii@linux.ibm.com>
+From: Vitaliy Tomin <tomin@iszf.irk.ru>
 
-commit ed40866ec7d328b3dfb70db7e2011640a16202c3 upstream.
+commit d2b00516de0e1d696724247098f6733a6ea53908 upstream.
 
-s390's struct statfs and struct statfs64 contain padding, which
-field-by-field copying does not set. Initialize the respective structs
-with zeros before filling them and copying them to userspace, like it's
-already done for the compat versions of these structs.
+Add support for Advantech PCI-1611U card
 
-Found by KMSAN.
+Advantech provides opensource drivers for this and many others card
+based on legacy copy of 8250_pci driver called adv950
 
-[agordeev@linux.ibm.com: fixed typo in patch description]
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Cc: stable@vger.kernel.org # v4.14+
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
-Link: https://lore.kernel.org/r/20230504144021.808932-2-iii@linux.ibm.com
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+https://www.advantech.com/emt/support/details/driver?id=1-TDOIMJ
+
+It is hard to maintain to run as out of tree module on newer kernels.
+Just adding PCI ID to kernel 8250_pci works perfect.
+
+Signed-off-by: Vitaliy Tomin <tomin@iszf.irk.ru>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230423034512.2671157-1-tomin@iszf.irk.ru
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/statfs.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/tty/serial/8250/8250_pci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/statfs.c
-+++ b/fs/statfs.c
-@@ -114,6 +114,7 @@ static int do_statfs_native(struct kstat
- 	if (sizeof(buf) == sizeof(*st))
- 		memcpy(&buf, st, sizeof(*st));
- 	else {
-+		memset(&buf, 0, sizeof(buf));
- 		if (sizeof buf.f_blocks == 4) {
- 			if ((st->f_blocks | st->f_bfree | st->f_bavail |
- 			     st->f_bsize | st->f_frsize) &
-@@ -142,7 +143,6 @@ static int do_statfs_native(struct kstat
- 		buf.f_namelen = st->f_namelen;
- 		buf.f_frsize = st->f_frsize;
- 		buf.f_flags = st->f_flags;
--		memset(buf.f_spare, 0, sizeof(buf.f_spare));
- 	}
- 	if (copy_to_user(p, &buf, sizeof(buf)))
- 		return -EFAULT;
-@@ -155,6 +155,7 @@ static int do_statfs64(struct kstatfs *s
- 	if (sizeof(buf) == sizeof(*st))
- 		memcpy(&buf, st, sizeof(*st));
- 	else {
-+		memset(&buf, 0, sizeof(buf));
- 		buf.f_type = st->f_type;
- 		buf.f_bsize = st->f_bsize;
- 		buf.f_blocks = st->f_blocks;
-@@ -166,7 +167,6 @@ static int do_statfs64(struct kstatfs *s
- 		buf.f_namelen = st->f_namelen;
- 		buf.f_frsize = st->f_frsize;
- 		buf.f_flags = st->f_flags;
--		memset(buf.f_spare, 0, sizeof(buf.f_spare));
- 	}
- 	if (copy_to_user(p, &buf, sizeof(buf)))
- 		return -EFAULT;
+--- a/drivers/tty/serial/8250/8250_pci.c
++++ b/drivers/tty/serial/8250/8250_pci.c
+@@ -1651,6 +1651,8 @@ pci_wch_ch38x_setup(struct serial_privat
+ #define PCI_SUBDEVICE_ID_SIIG_DUAL_30	0x2530
+ #define PCI_VENDOR_ID_ADVANTECH		0x13fe
+ #define PCI_DEVICE_ID_INTEL_CE4100_UART 0x2e66
++#define PCI_DEVICE_ID_ADVANTECH_PCI1600	0x1600
++#define PCI_DEVICE_ID_ADVANTECH_PCI1600_1611	0x1611
+ #define PCI_DEVICE_ID_ADVANTECH_PCI3620	0x3620
+ #define PCI_DEVICE_ID_ADVANTECH_PCI3618	0x3618
+ #define PCI_DEVICE_ID_ADVANTECH_PCIf618	0xf618
+@@ -3851,6 +3853,9 @@ static SIMPLE_DEV_PM_OPS(pciserial_pm_op
+ 			 pciserial_resume_one);
+ 
+ static const struct pci_device_id serial_pci_tbl[] = {
++	{	PCI_VENDOR_ID_ADVANTECH, PCI_DEVICE_ID_ADVANTECH_PCI1600,
++		PCI_DEVICE_ID_ADVANTECH_PCI1600_1611, PCI_ANY_ID, 0, 0,
++		pbn_b0_4_921600 },
+ 	/* Advantech use PCI_DEVICE_ID_ADVANTECH_PCI3620 (0x3620) as 'PCI_SUBVENDOR_ID' */
+ 	{	PCI_VENDOR_ID_ADVANTECH, PCI_DEVICE_ID_ADVANTECH_PCI3620,
+ 		PCI_DEVICE_ID_ADVANTECH_PCI3620, 0x0001, 0, 0,
 
 
