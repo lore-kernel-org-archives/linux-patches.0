@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C6E611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9F3EC433EF;
-	Sun, 28 May 2023 19:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF981611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C407C433EF;
+	Sun, 28 May 2023 19:42:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302970;
-	bh=/8z3MiwoOdYuQFrOq2H2udGKJOPohiLlE+2VyN2i7cM=;
+	s=korg; t=1685302972;
+	bh=h67YwGsBDeTa94CobgOOyHgk/AS9UF/cKa9jzmBNIFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5X4o3TH/TMLyrT9Pmb6ccezWfJr+LeiHrP7qvvmwAWrD4lshhIEMwnbxyuayQy05
-	 /o6eOlltM9XJ0c6I57EYgdIu/SWgiuuqDzpXuBtE0U3+FbmE+aK2sXLtV/bk93P2EL
-	 IOR4HVIDYtM1TUhBA9a4+yZ99QhUhxdtWSh0ikaU=
+	b=f8yz1s7MWDbiTv8u4JuiWM+QQAxcd8jWi/V3E8HMAeYdBvcbg8utLiovrTDPgBisk
+	 qwQ9/sue3ym3qfGXTb6n3iTI6rgOr7r6zSxSvlLCxxT5bj7BXO8lw+lSCTfdqGboTE
+	 v3EqSG2b4qrAeKd9kAFcKnt5a+H50w+MHZ0HK+4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ke Zhang <m202171830@hust.edu.cn>,
-	Dongliang Mu <dzm91@hust.edu.cn>,
+	Kevin Traynor <ktraynor@redhat.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	William Tu <u9012063@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/211] serial: arc_uart: fix of_iomap leak in `arc_serial_probe`
-Date: Sun, 28 May 2023 20:10:22 +0100
-Message-Id: <20230528190846.099854548@linuxfoundation.org>
+Subject: [PATCH 5.10 102/211] erspan: get the proto with the md version for collect_md
+Date: Sun, 28 May 2023 20:10:23 +0100
+Message-Id: <20230528190846.122258352@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,49 +38,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ke Zhang <m202171830@hust.edu.cn>
+From: Xin Long <lucien.xin@gmail.com>
 
-[ Upstream commit 8ab5fc55d7f65d58a3c3aeadf11bdf60267cd2bd ]
+[ Upstream commit d80fc101d2eb9b3188c228d61223890aeea480a4 ]
 
-Smatch reports:
+In commit 20704bd1633d ("erspan: build the header with the right proto
+according to erspan_ver"), it gets the proto with t->parms.erspan_ver,
+but t->parms.erspan_ver is not used by collect_md branch, and instead
+it should get the proto with md->version for collect_md.
 
-drivers/tty/serial/arc_uart.c:631 arc_serial_probe() warn:
-'port->membase' from of_iomap() not released on lines: 631.
+Thanks to Kevin for pointing this out.
 
-In arc_serial_probe(), if uart_add_one_port() fails,
-port->membase is not released, which would cause a resource leak.
-
-To fix this, I replace of_iomap with devm_platform_ioremap_resource.
-
-Fixes: 8dbe1d5e09a7 ("serial/arc: inline the probe helper")
-Signed-off-by: Ke Zhang <m202171830@hust.edu.cn>
-Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-Link: https://lore.kernel.org/r/20230428031636.44642-1-m202171830@hust.edu.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 20704bd1633d ("erspan: build the header with the right proto according to erspan_ver")
+Fixes: 94d7d8f29287 ("ip6_gre: add erspan v2 support")
+Reported-by: Kevin Traynor <ktraynor@redhat.com>
+Signed-off-by: Xin Long <lucien.xin@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: William Tu <u9012063@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/arc_uart.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/ipv6/ip6_gre.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/tty/serial/arc_uart.c b/drivers/tty/serial/arc_uart.c
-index 17c3fc398fc65..6f7a7d2dcf3aa 100644
---- a/drivers/tty/serial/arc_uart.c
-+++ b/drivers/tty/serial/arc_uart.c
-@@ -609,10 +609,11 @@ static int arc_serial_probe(struct platform_device *pdev)
+diff --git a/net/ipv6/ip6_gre.c b/net/ipv6/ip6_gre.c
+index 2332b5b81c551..7b50e1811678e 100644
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1015,12 +1015,14 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 					    ntohl(tun_id),
+ 					    ntohl(md->u.index), truncate,
+ 					    false);
++			proto = htons(ETH_P_ERSPAN);
+ 		} else if (md->version == 2) {
+ 			erspan_build_header_v2(skb,
+ 					       ntohl(tun_id),
+ 					       md->u.md2.dir,
+ 					       get_hwid(&md->u.md2),
+ 					       truncate, false);
++			proto = htons(ETH_P_ERSPAN2);
+ 		} else {
+ 			goto tx_err;
+ 		}
+@@ -1043,24 +1045,25 @@ static netdev_tx_t ip6erspan_tunnel_xmit(struct sk_buff *skb,
+ 			break;
+ 		}
+ 
+-		if (t->parms.erspan_ver == 1)
++		if (t->parms.erspan_ver == 1) {
+ 			erspan_build_header(skb, ntohl(t->parms.o_key),
+ 					    t->parms.index,
+ 					    truncate, false);
+-		else if (t->parms.erspan_ver == 2)
++			proto = htons(ETH_P_ERSPAN);
++		} else if (t->parms.erspan_ver == 2) {
+ 			erspan_build_header_v2(skb, ntohl(t->parms.o_key),
+ 					       t->parms.dir,
+ 					       t->parms.hwid,
+ 					       truncate, false);
+-		else
++			proto = htons(ETH_P_ERSPAN2);
++		} else {
+ 			goto tx_err;
++		}
+ 
+ 		fl6.daddr = t->parms.raddr;
  	}
- 	uart->baud = val;
  
--	port->membase = of_iomap(np, 0);
--	if (!port->membase)
-+	port->membase = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(port->membase)) {
- 		/* No point of dev_err since UART itself is hosed here */
--		return -ENXIO;
-+		return PTR_ERR(port->membase);
-+	}
+ 	/* Push GRE header. */
+-	proto = (t->parms.erspan_ver == 1) ? htons(ETH_P_ERSPAN)
+-					   : htons(ETH_P_ERSPAN2);
+ 	gre_build_header(skb, 8, TUNNEL_SEQ, proto, 0, htonl(atomic_fetch_inc(&t->o_seqno)));
  
- 	port->irq = irq_of_parse_and_map(np, 0);
- 
+ 	/* TooBig packet may have updated dst->dev's mtu */
 -- 
 2.39.2
 
