@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0162611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:50:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CCA3C433D2;
-	Sun, 28 May 2023 19:50:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ECEF611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:50:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9066EC433D2;
+	Sun, 28 May 2023 19:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303425;
-	bh=uyvgc5IBlqbpLkRDLg12ZWWMsmOVAwK+JnJsQncTa1U=;
+	s=korg; t=1685303427;
+	bh=NzSuCDquSRyGSL/9He700VpgzWy155VEdg4950KBWAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wD1wkIp9D39fqdG7WyjK7vn15LTDki+3blpCKj4YNokzkOHdrKc/ogHQYGTnVoJTO
-	 2MNfCbxG+TKMKYKbIUo3OuvmSTyZsOc9SjSxBR/pnMOEDizJ1xIb5MlqxsjKXDxup2
-	 kK3xz1hc4PGip3zIHcDSvaq9/uxlBBKpEgmlHZfE=
+	b=0pFR5uPqzQG473KTqWIs8xKO+U2HnY+eb+A/e/YkiLudaDJojjLODIw6RfmR/gCkS
+	 TVT01Lm9TkycHvmPnILiy5PtPwL+QEi417NnZswbLKmbNYbmnrTuhSutpRJ8f9fw++
+	 JsVMaZq0Vt0ttSnMnYUh/bJOQfpYGqrecPHTg608=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tyler Spivey <tspivey8@gmail.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 41/69] cifs: mapchars mount option ignored
-Date: Sun, 28 May 2023 20:12:01 +0100
-Message-Id: <20230528190829.901355456@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Vasily Khoruzhick <anarsoul@gmail.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 5.15 42/69] power: supply: leds: Fix blink to LED on transition
+Date: Sun, 28 May 2023 20:12:02 +0100
+Message-Id: <20230528190829.943757799@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -34,46 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit cb8b02fd6343228966324528adf920bfb8b8e681 upstream.
+commit e4484643991e0f6b89060092563f0dbab9450cbb upstream.
 
-There are two ways that special characters (not allowed in some
-other operating systems like Windows, but allowed in POSIX) have
-been mapped in the past ("SFU" and "SFM" mappings) to allow them
-to be stored in a range reserved for special chars. The default
-for Linux has been to use "mapposix" (ie the SFM mapping) but
-the conversion to the new mount API in the 5.11 kernel broke
-the ability to override the default mapping of the reserved
-characters (like '?' and '*' and '\') via "mapchars" mount option.
+When a battery's status changes from charging to full then
+the charging-blink-full-solid trigger tries to change
+the LED from blinking to solid/on.
 
-This patch fixes that - so can now mount with "mapchars"
-mount option to override the default ("mapposix" ie SFM) mapping.
+As is documented in include/linux/leds.h to deactivate blinking /
+to make the LED solid a LED_OFF must be send:
 
-Reported-by: Tyler Spivey <tspivey8@gmail.com>
-Fixes: 24e0a1eff9e2 ("cifs: switch to new mount api")
-Signed-off-by: Steve French <stfrench@microsoft.com>
+"""
+         * Deactivate blinking again when the brightness is set to LED_OFF
+         * via the brightness_set() callback.
+"""
+
+led_set_brighness() calls with a brightness value other then 0 / LED_OFF
+merely change the brightness of the LED in its on state while it is
+blinking.
+
+So power_supply_update_bat_leds() must first send a LED_OFF event
+before the LED_FULL to disable blinking.
+
+Fixes: 6501f728c56f ("power_supply: Add new LED trigger charging-blink-solid-full")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Vasily Khoruzhick <anarsoul@gmail.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/fs_context.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/power/supply/power_supply_leds.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/cifs/fs_context.c
-+++ b/fs/cifs/fs_context.c
-@@ -884,6 +884,14 @@ static int smb3_fs_context_parse_param(s
- 			ctx->sfu_remap = false; /* disable SFU mapping */
- 		}
+--- a/drivers/power/supply/power_supply_leds.c
++++ b/drivers/power/supply/power_supply_leds.c
+@@ -34,8 +34,9 @@ static void power_supply_update_bat_leds
+ 		led_trigger_event(psy->charging_full_trig, LED_FULL);
+ 		led_trigger_event(psy->charging_trig, LED_OFF);
+ 		led_trigger_event(psy->full_trig, LED_FULL);
+-		led_trigger_event(psy->charging_blink_full_solid_trig,
+-			LED_FULL);
++		/* Going from blink to LED on requires a LED_OFF event to stop blink */
++		led_trigger_event(psy->charging_blink_full_solid_trig, LED_OFF);
++		led_trigger_event(psy->charging_blink_full_solid_trig, LED_FULL);
  		break;
-+	case Opt_mapchars:
-+		if (result.negated)
-+			ctx->sfu_remap = false;
-+		else {
-+			ctx->sfu_remap = true;
-+			ctx->remap = false; /* disable SFM (mapposix) mapping */
-+		}
-+		break;
- 	case Opt_user_xattr:
- 		if (result.negated)
- 			ctx->no_xattr = 1;
+ 	case POWER_SUPPLY_STATUS_CHARGING:
+ 		led_trigger_event(psy->charging_full_trig, LED_FULL);
 
 
