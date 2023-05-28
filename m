@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94749611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206B9C433D2;
-	Sun, 28 May 2023 19:46:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BC6611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81078C433D2;
+	Sun, 28 May 2023 19:46:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303204;
-	bh=VW10XWVaa0yJcoLoakyxh5DMiRIRQBJNc4tDnIfattQ=;
+	s=korg; t=1685303206;
+	bh=+tGk2iaxhtkOFDugsJqkibyfMfZ57vn5twDf783OVf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LxEf8wL7+KXUVjnORTG5pJ3Aj49N82wfpI5wc+pBjAn8R+8Qv6qmwn07r/OvoRI2i
-	 W14YGlUMth8uFJqmDOVEp/rXvT7Hu1Uwc12Wqakc9BZZ93cCqC71Bl+N8L3lYOBAvr
-	 DXNnVn3kgefRrTPwUIGnT3kA+h4APU1aLm2zN/6A=
+	b=VSg8obc50G79lt1YBpC8px8iGbkpvwBCTCB1CCvcgzUrifrQQTDUxvc/1D08fy6Z6
+	 sQnlquCN2D33TlM7/G+gUYCPfiZCfQgRV8P6M7G56EB4x2tOXjVk0/aAV3bsjIJ5Cu
+	 J0yFRfV0ig0RvnQQW8t+KqmBmakkuGNQLBy0rCQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.10 196/211] power: supply: bq27xxx: Fix I2C IRQ race on remove
-Date: Sun, 28 May 2023 20:11:57 +0100
-Message-Id: <20230528190848.368835388@linuxfoundation.org>
+Subject: [PATCH 5.10 197/211] power: supply: bq27xxx: Fix poll_interval handling and races on remove
+Date: Sun, 28 May 2023 20:11:58 +0100
+Message-Id: <20230528190848.392995998@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,42 +36,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit 444ff00734f3878cd54ddd1ed5e2e6dbea9326d5 upstream.
+commit c00bc80462afc7963f449d7f21d896d2f629cacc upstream.
 
-devm_request_threaded_irq() requested IRQs are only free-ed after
-the driver's remove function has ran. So the IRQ could trigger and
-call bq27xxx_battery_update() after bq27xxx_battery_teardown() has
-already run.
+Before this patch bq27xxx_battery_teardown() was setting poll_interval = 0
+to avoid bq27xxx_battery_update() requeuing the delayed_work item.
 
-Switch to explicitly free-ing the IRQ in bq27xxx_battery_i2c_remove()
-to fix this.
+There are 2 problems with this:
 
-Fixes: 8807feb91b76 ("power: bq27xxx_battery: Add interrupt handling support")
+1. If the driver is unbound through sysfs, rather then the module being
+   rmmod-ed, this changes poll_interval unexpectedly
+
+2. This is racy, after it being set poll_interval could be changed
+   before bq27xxx_battery_update() checks it through
+   /sys/module/bq27xxx_battery/parameters/poll_interval
+
+Fix this by added a removed attribute to struct bq27xxx_device_info and
+using that instead of setting poll_interval to 0.
+
+There also is another poll_interval related race on remove(), writing
+/sys/module/bq27xxx_battery/parameters/poll_interval will requeue
+the delayed_work item for all devices on the bq27xxx_battery_devices
+list and the device being removed was only removed from that list
+after cancelling the delayed_work item.
+
+Fix this by moving the removal from the bq27xxx_battery_devices list
+to before cancelling the delayed_work item.
+
+Fixes: 8cfaaa811894 ("bq27x00_battery: Fix OOPS caused by unregistring bq27x00 driver")
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq27xxx_battery_i2c.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/power/supply/bq27xxx_battery.c |   22 +++++++++-------------
+ include/linux/power/bq27xxx_battery.h  |    1 +
+ 2 files changed, 10 insertions(+), 13 deletions(-)
 
---- a/drivers/power/supply/bq27xxx_battery_i2c.c
-+++ b/drivers/power/supply/bq27xxx_battery_i2c.c
-@@ -179,7 +179,7 @@ static int bq27xxx_battery_i2c_probe(str
- 	i2c_set_clientdata(client, di);
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1733,7 +1733,7 @@ static void bq27xxx_battery_update_unloc
  
- 	if (client->irq) {
--		ret = devm_request_threaded_irq(&client->dev, client->irq,
-+		ret = request_threaded_irq(client->irq,
- 				NULL, bq27xxx_battery_irq_handler_thread,
- 				IRQF_ONESHOT,
- 				di->name, di);
-@@ -209,6 +209,7 @@ static int bq27xxx_battery_i2c_remove(st
+ 	di->last_update = jiffies;
+ 
+-	if (poll_interval > 0)
++	if (!di->removed && poll_interval > 0)
+ 		mod_delayed_work(system_wq, &di->work, poll_interval * HZ);
+ }
+ 
+@@ -2063,22 +2063,18 @@ EXPORT_SYMBOL_GPL(bq27xxx_battery_setup)
+ 
+ void bq27xxx_battery_teardown(struct bq27xxx_device_info *di)
  {
- 	struct bq27xxx_device_info *di = i2c_get_clientdata(client);
+-	/*
+-	 * power_supply_unregister call bq27xxx_battery_get_property which
+-	 * call bq27xxx_battery_poll.
+-	 * Make sure that bq27xxx_battery_poll will not call
+-	 * schedule_delayed_work again after unregister (which cause OOPS).
+-	 */
+-	poll_interval = 0;
+-
+-	cancel_delayed_work_sync(&di->work);
+-
+-	power_supply_unregister(di->bat);
+-
+ 	mutex_lock(&bq27xxx_list_lock);
+ 	list_del(&di->list);
+ 	mutex_unlock(&bq27xxx_list_lock);
  
-+	free_irq(client->irq, di);
- 	bq27xxx_battery_teardown(di);
- 
- 	mutex_lock(&battery_mutex);
++	/* Set removed to avoid bq27xxx_battery_update() re-queuing the work */
++	mutex_lock(&di->lock);
++	di->removed = true;
++	mutex_unlock(&di->lock);
++
++	cancel_delayed_work_sync(&di->work);
++
++	power_supply_unregister(di->bat);
+ 	mutex_destroy(&di->lock);
+ }
+ EXPORT_SYMBOL_GPL(bq27xxx_battery_teardown);
+--- a/include/linux/power/bq27xxx_battery.h
++++ b/include/linux/power/bq27xxx_battery.h
+@@ -67,6 +67,7 @@ struct bq27xxx_device_info {
+ 	struct bq27xxx_access_methods bus;
+ 	struct bq27xxx_reg_cache cache;
+ 	int charge_design_full;
++	bool removed;
+ 	unsigned long last_update;
+ 	struct delayed_work work;
+ 	struct power_supply *bat;
 
 
