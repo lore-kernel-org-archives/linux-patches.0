@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D4DB611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF1D9C433EF;
-	Sun, 28 May 2023 19:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3D88611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303CDC433D2;
+	Sun, 28 May 2023 19:15:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301313;
-	bh=raJ7UOvbzEiF6jhLLESVpnSwVJsn0yefrSaGrIGIFZg=;
+	s=korg; t=1685301315;
+	bh=KdbP9Gju9nKc/REI7lJ1C9p5zHGg4yjYdtLkDpLXh3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzcBt7zkwaKZkRK1urIBExBa446755Z2QWQJfW1X+hC8RQBUPfK7dcoIXINoF2eTJ
-	 KReGE8i8q1s+TNengo0OAsdfiXMRM9c5iuv9+DXetNB4j4VFXvsmDMU7Ce915zoLor
-	 0O56U8iar8wwVn3Y8tLaVDcBihT8XhVCtedGhv+w=
+	b=AhOWavd6AsvLTe/vaY5Wq5+UxRh/qfJIEKZ/s8iy5UaGEtK/YDgJncv7+mZi90HFQ
+	 pphuHLDUSPG14T6YV8NZxD7nokY6rT/u1PXfI3+uGtcUlm5Jk8qGgVCFX8zuQJULTa
+	 EibfjDfnUzd8H+4Bf5DhiMdN0vfu2LiiU88hrsy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikhil Mahale <nmahale@nvidia.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.14 49/86] ALSA: hda: Add NVIDIA codec IDs a3 through a7 to patch table
-Date: Sun, 28 May 2023 20:10:23 +0100
-Message-Id: <20230528190830.419297498@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 4.14 67/86] netfilter: nft_dynset: do not reject set updates with NFT_SET_EVAL
+Date: Sun, 28 May 2023 20:10:41 +0100
+Message-Id: <20230528190831.122346503@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -34,38 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikhil Mahale <nmahale@nvidia.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit dc4f2ccaedddb489a83e7b12ebbdc347272aacc9 upstream.
+[ 215a31f19dedd4e92a67cf5a9717ee898d012b3a ]
 
-These IDs are for AD102, AD103, AD104, AD106, and AD107 gpus with
-audio functions that are largely similar to the existing ones.
+NFT_SET_EVAL is signalling the kernel that this sets can be updated from
+the evaluation path, even if there are no expressions attached to the
+element. Otherwise, set updates with no expressions fail. Update
+description to describe the right semantics.
 
-Tested audio using gnome-settings, over HDMI, DP-SST and DP-MST
-connections on AD106 gpu.
-
-Signed-off-by: Nikhil Mahale <nmahale@nvidia.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230517090736.15088-1-nmahale@nvidia.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 22fe54d5fefc ("netfilter: nf_tables: add support for dynamic set updates")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ include/uapi/linux/netfilter/nf_tables.h |    2 +-
+ net/netfilter/nft_dynset.c               |    4 +---
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -3889,6 +3889,11 @@ HDA_CODEC_ENTRY(0x10de009d, "GPU 9d HDMI
- HDA_CODEC_ENTRY(0x10de009e, "GPU 9e HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de009f, "GPU 9f HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de00a0, "GPU a0 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a3, "GPU a3 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a4, "GPU a4 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a5, "GPU a5 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a6, "GPU a6 HDMI/DP",	patch_nvhdmi),
-+HDA_CODEC_ENTRY(0x10de00a7, "GPU a7 HDMI/DP",	patch_nvhdmi),
- HDA_CODEC_ENTRY(0x10de8001, "MCP73 HDMI",	patch_nvhdmi_2ch),
- HDA_CODEC_ENTRY(0x10de8067, "MCP67/68 HDMI",	patch_nvhdmi_2ch),
- HDA_CODEC_ENTRY(0x11069f80, "VX900 HDMI/DP",	patch_via_hdmi),
+--- a/include/uapi/linux/netfilter/nf_tables.h
++++ b/include/uapi/linux/netfilter/nf_tables.h
+@@ -258,7 +258,7 @@ enum nft_rule_compat_attributes {
+  * @NFT_SET_INTERVAL: set contains intervals
+  * @NFT_SET_MAP: set is used as a dictionary
+  * @NFT_SET_TIMEOUT: set uses timeouts
+- * @NFT_SET_EVAL: set contains expressions for evaluation
++ * @NFT_SET_EVAL: set can be updated from the evaluation path
+  * @NFT_SET_OBJECT: set contains stateful objects
+  */
+ enum nft_set_flags {
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -190,9 +190,7 @@ static int nft_dynset_init(const struct
+ 		priv->expr = nft_expr_init(ctx, tb[NFTA_DYNSET_EXPR]);
+ 		if (IS_ERR(priv->expr))
+ 			return PTR_ERR(priv->expr);
+-
+-	} else if (set->flags & NFT_SET_EVAL)
+-		return -EINVAL;
++	}
+ 
+ 	nft_set_ext_prepare(&priv->tmpl);
+ 	nft_set_ext_add_length(&priv->tmpl, NFT_SET_EXT_KEY, set->klen);
 
 
