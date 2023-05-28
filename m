@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82AF611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:21:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBC0C433EF;
-	Sun, 28 May 2023 19:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC63611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:21:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9176C4339B;
+	Sun, 28 May 2023 19:21:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301687;
-	bh=j5vvx8VTbcx7YDeHezKVoK1v+mS/DTAgrOeEYFBUoY8=;
+	s=korg; t=1685301690;
+	bh=w58CYBzzXglVps5VQzExJJ9Wtj9kmUqdvc09e3myCVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=StUTCl1iT3a4i8kkLaIy5MRHAPgERKp1IGEhxEiJVes2LXFKRQZn6WD8R24FVy4+W
-	 2Qq1IToYXYVVgTYyRb5dXrBqDt9MAd4gWTfsbL758bc2mOY5M9JUUxt8cTVY+FMylV
-	 sxilTFE6Ykq882aGAVKNXlqaY/qjlkQLiTDlUKM0=
+	b=EE/o5isVxd/AZxvSdvgrZX56URzbdEHEgnFdM2rnhfPf1+tzep0NqV9umz67JSUMM
+	 uVTs/Iz2SaVRVo1S67L9k741hahPN0iwlR7uTcmnRK3oKmlrHlWBKYYUKdvE7V32gJ
+	 TjHktT2D3RGeO3OlT5QSF3lI+jvWEbm+ZcZaws+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vernon Lovejoy <vlovejoy@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>
-Subject: [PATCH 4.19 129/132] x86/show_trace_log_lvl: Ensure stack pointer is aligned, again
-Date: Sun, 28 May 2023 20:11:08 +0100
-Message-Id: <20230528190837.832657095@linuxfoundation.org>
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.19 130/132] ASoC: Intel: Skylake: Fix declaration of enum skl_ch_cfg
+Date: Sun, 28 May 2023 20:11:09 +0100
+Message-Id: <20230528190837.865787957@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -35,69 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vernon Lovejoy <vlovejoy@redhat.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-commit 2e4be0d011f21593c6b316806779ba1eba2cd7e0 upstream.
+commit 95109657471311601b98e71f03d0244f48dc61bb upstream.
 
-The commit e335bb51cc15 ("x86/unwind: Ensure stack pointer is aligned")
-tried to align the stack pointer in show_trace_log_lvl(), otherwise the
-"stack < stack_info.end" check can't guarantee that the last read does
-not go past the end of the stack.
+Constant 'C4_CHANNEL' does not exist on the firmware side. Value 0xC is
+reserved for 'C7_1' instead.
 
-However, we have the same problem with the initial value of the stack
-pointer, it can also be unaligned. So without this patch this trivial
-kernel module
-
-	#include <linux/module.h>
-
-	static int init(void)
-	{
-		asm volatile("sub    $0x4,%rsp");
-		dump_stack();
-		asm volatile("add    $0x4,%rsp");
-
-		return -EAGAIN;
-	}
-
-	module_init(init);
-	MODULE_LICENSE("GPL");
-
-crashes the kernel.
-
-Fixes: e335bb51cc15 ("x86/unwind: Ensure stack pointer is aligned")
-Signed-off-by: Vernon Lovejoy <vlovejoy@redhat.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/20230512104232.GA10227@redhat.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fixes: 04afbbbb1cba ("ASoC: Intel: Skylake: Update the topology interface structure")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20230519201711.4073845-4-amadeuszx.slawinski@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/dumpstack.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/uapi/sound/skl-tplg-interface.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/dumpstack.c
-+++ b/arch/x86/kernel/dumpstack.c
-@@ -171,7 +171,6 @@ void show_trace_log_lvl(struct task_stru
- 	printk("%sCall Trace:\n", log_lvl);
+--- a/include/uapi/sound/skl-tplg-interface.h
++++ b/include/uapi/sound/skl-tplg-interface.h
+@@ -64,7 +64,8 @@ enum skl_ch_cfg {
+ 	SKL_CH_CFG_DUAL_MONO = 9,
+ 	SKL_CH_CFG_I2S_DUAL_STEREO_0 = 10,
+ 	SKL_CH_CFG_I2S_DUAL_STEREO_1 = 11,
+-	SKL_CH_CFG_4_CHANNEL = 12,
++	SKL_CH_CFG_7_1 = 12,
++	SKL_CH_CFG_4_CHANNEL = SKL_CH_CFG_7_1,
+ 	SKL_CH_CFG_INVALID
+ };
  
- 	unwind_start(&state, task, regs, stack);
--	stack = stack ? : get_stack_pointer(task, regs);
- 	regs = unwind_get_entry_regs(&state, &partial);
- 
- 	/*
-@@ -190,9 +189,13 @@ void show_trace_log_lvl(struct task_stru
- 	 * - hardirq stack
- 	 * - entry stack
- 	 */
--	for ( ; stack; stack = PTR_ALIGN(stack_info.next_sp, sizeof(long))) {
-+	for (stack = stack ?: get_stack_pointer(task, regs);
-+	     stack;
-+	     stack = stack_info.next_sp) {
- 		const char *stack_name;
- 
-+		stack = PTR_ALIGN(stack, sizeof(long));
-+
- 		if (get_stack_info(stack, task, &stack_info, &visit_mask)) {
- 			/*
- 			 * We weren't on a valid stack.  It's possible that
 
 
