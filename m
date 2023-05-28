@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5926C569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:26:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA273C433D2;
-	Sun, 28 May 2023 19:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E201F569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:26:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D581C433EF;
+	Sun, 28 May 2023 19:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302017;
-	bh=s6tw1OkRS3ZT3ZenMDn477F8HxvmiMwxvuZ87/nIYL8=;
+	s=korg; t=1685302019;
+	bh=QrCSDrnby/P7VpBpaW/a1mmjlKr+8oDMqe+xJkOiMu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gwEWPxDtHbZ3tmFaeK5Kp6lEfR4c9J5XmOuEGXwB28VtPyC+YFgUbbWL2kqY9wwgw
-	 xnpufwXki77bCVoaAqzBZ/gVK0czYAV2jbCnPrOg3Lp0yd5JSZQEi6mv1mneRCyn+H
-	 A7vZ0ZZ61BfWO+7UrHYlhoCxsphzWfH1HxTX1dmQ=
+	b=Exe9z7/wTr3qhoM71+RjIi0DGeockNh9zDwiN3iLcE5aafYrpHtNEAujVML1y42Xu
+	 XRk24SAIg+JwJ8XSh1yELcz70SshJSJdyfFRcv8MuesZtIZEBZsG0GxuTWJqvKGVpD
+	 A+HUesRqPLL3ITecsk98UszHSRSJNEBCTlTzLbhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Schilder <frans@dtu.dk>,
-	Xiubo Li <xiubli@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 5.4 100/161] ceph: force updating the msg pointer in non-split case
-Date: Sun, 28 May 2023 20:10:24 +0100
-Message-Id: <20230528190840.289649777@linuxfoundation.org>
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 5.4 101/161] tpm/tpm_tis: Disable interrupts for more Lenovo devices
+Date: Sun, 28 May 2023 20:10:25 +0100
+Message-Id: <20230528190840.321066899@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,46 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Jerry Snitselaar <jsnitsel@redhat.com>
 
-commit 4cafd0400bcb6187c0d4ab4d4b0229a89ac4f8c2 upstream.
+commit e7d3e5c4b1dd50a70b31524c3228c62bb41bbab2 upstream.
 
-When the MClientSnap reqeust's op is not CEPH_SNAP_OP_SPLIT the
-request may still contain a list of 'split_realms', and we need
-to skip it anyway. Or it will be parsed as a corrupt snaptrace.
+The P360 Tiny suffers from an irq storm issue like the T490s, so add
+an entry for it to tpm_tis_dmi_table, and force polling. There also
+previously was a report from the previous attempt to enable interrupts
+that involved a ThinkPad L490. So an entry is added for it as well.
 
 Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/61200
-Reported-by: Frank Schilder <frans@dtu.dk>
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reported-by: Peter Zijlstra <peterz@infradead.org> # P360 Tiny
+Closes: https://lore.kernel.org/linux-integrity/20230505130731.GO83892@hirez.programming.kicks-ass.net/
+Signed-off-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/snap.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/char/tpm/tpm_tis.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/fs/ceph/snap.c
-+++ b/fs/ceph/snap.c
-@@ -1005,6 +1005,19 @@ skip_inode:
- 				continue;
- 			adjust_snap_realm_parent(mdsc, child, realm->ino);
- 		}
-+	} else {
-+		/*
-+		 * In the non-split case both 'num_split_inos' and
-+		 * 'num_split_realms' should be 0, making this a no-op.
-+		 * However the MDS happens to populate 'split_realms' list
-+		 * in one of the UPDATE op cases by mistake.
-+		 *
-+		 * Skip both lists just in case to ensure that 'p' is
-+		 * positioned at the start of realm info, as expected by
-+		 * ceph_update_snap_trace().
-+		 */
-+		p += sizeof(u64) * num_split_inos;
-+		p += sizeof(u64) * num_split_realms;
- 	}
+--- a/drivers/char/tpm/tpm_tis.c
++++ b/drivers/char/tpm/tpm_tis.c
+@@ -83,6 +83,22 @@ static const struct dmi_system_id tpm_ti
+ 			DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad T490s"),
+ 		},
+ 	},
++	{
++		.callback = tpm_tis_disable_irq,
++		.ident = "ThinkStation P360 Tiny",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkStation P360 Tiny"),
++		},
++	},
++	{
++		.callback = tpm_tis_disable_irq,
++		.ident = "ThinkPad L490",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_VERSION, "ThinkPad L490"),
++		},
++	},
+ 	{}
+ };
  
- 	/*
 
 
