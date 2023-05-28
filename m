@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E36611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3BEC4339B;
-	Sun, 28 May 2023 19:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826E86121
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11982C433EF;
+	Sun, 28 May 2023 19:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303129;
-	bh=dvRbrFDIMtMzICWAYyxWxGgAdwwQwzfYWXnUnAc7OXE=;
+	s=korg; t=1685303131;
+	bh=MPUKUD3Ude5txd15bwOm4zTWDhjg7NyNOPaZ35ze0Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YLkAZ+FFJIt1QaFLTSvq47LMNIOxt7y+mPNrLdzV63AUk6Jr9V5tYZlv3yC4Bdz63
-	 D9GwxYH7lN9SaakL87zzlu/xnlVx+iMZX7znK6xvonbpfvdfrRN6L3F/D9vzjLgvYg
-	 zq8rCpjD0ntrs4g/K3WA77RyaTU40UimTgS504fA=
+	b=19PK+5ruZ6f9oOtMF1L5vBh1ksseLW8NlZtthV9PFw0LA2kv6T115NGX/6tv7UaOf
+	 QlknRQ1VI3mFF+VWDevaF5DSIFUxXYNQqYB1+y5J/b87RE5eI6bUY9v7VvIfIw+gVb
+	 8FB8sU1NiFrHNDAuhLluasm+HnbHq75AwjG+e/iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 165/211] spi: fsl-spi: Re-organise transfer bits_per_word adaptation
-Date: Sun, 28 May 2023 20:11:26 +0100
-Message-Id: <20230528190847.599826488@linuxfoundation.org>
+Subject: [PATCH 5.10 166/211] spi: fsl-cpm: Use 16 bit mode for large transfers with even size
+Date: Sun, 28 May 2023 20:11:27 +0100
+Message-Id: <20230528190847.624808660@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,113 +36,92 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-(backported from upstream 8a5299a1278eadf1e08a598a5345c376206f171e)
+(cherry picked from upstream fc96ec826bced75cc6b9c07a4ac44bbf651337ab)
 
-For different reasons, fsl-spi driver performs bits_per_word
-modifications for different reasons:
-- On CPU mode, to minimise amount of interrupts
-- On CPM/QE mode to work around controller byte order
+On CPM, the RISC core is a lot more efficiant when doing transfers
+in 16-bits chunks than in 8-bits chunks, but unfortunately the
+words need to be byte swapped as seen in a previous commit.
 
-For CPU mode that's done in fsl_spi_prepare_message() while
-for CPM mode that's done in fsl_spi_setup_transfer().
+So, for large tranfers with an even size, allocate a temporary tx
+buffer and byte-swap data before and after transfer.
 
-Reunify all of it in fsl_spi_prepare_message(), and catch
-impossible cases early through master's bits_per_word_mask
-instead of returning EINVAL later.
+This change allows setting higher speed for transfer. For instance
+on an MPC 8xx (CPM1 comms RISC processor), the documentation tells
+that transfer in byte mode at 1 kbit/s uses 0.200% of CPM load
+at 25 MHz while a word transfer at the same speed uses 0.032%
+of CPM load. This means the speed can be 6 times higher in
+word mode for the same CPM load.
+
+For the time being, only do it on CPM1 as there must be a
+trade-off between the CPM load reduction and the CPU load required
+to byte swap the data.
 
 Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Link: https://lore.kernel.org/r/0ce96fe96e8b07cba0613e4097cfd94d09b8919a.1680371809.git.christophe.leroy@csgroup.eu
+Link: https://lore.kernel.org/r/f2e981f20f92dd28983c3949702a09248c23845c.1680371809.git.christophe.leroy@csgroup.eu
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-fsl-spi.c |   50 +++++++++++++++++++++-------------------------
- 1 file changed, 23 insertions(+), 27 deletions(-)
+ drivers/spi/spi-fsl-cpm.c |   23 +++++++++++++++++++++++
+ drivers/spi/spi-fsl-spi.c |    3 +++
+ 2 files changed, 26 insertions(+)
 
+--- a/drivers/spi/spi-fsl-cpm.c
++++ b/drivers/spi/spi-fsl-cpm.c
+@@ -21,6 +21,7 @@
+ #include <linux/spi/spi.h>
+ #include <linux/types.h>
+ #include <linux/platform_device.h>
++#include <linux/byteorder/generic.h>
+ 
+ #include "spi-fsl-cpm.h"
+ #include "spi-fsl-lib.h"
+@@ -120,6 +121,21 @@ int fsl_spi_cpm_bufs(struct mpc8xxx_spi
+ 		mspi->rx_dma = mspi->dma_dummy_rx;
+ 		mspi->map_rx_dma = 0;
+ 	}
++	if (t->bits_per_word == 16 && t->tx_buf) {
++		const u16 *src = t->tx_buf;
++		u16 *dst;
++		int i;
++
++		dst = kmalloc(t->len, GFP_KERNEL);
++		if (!dst)
++			return -ENOMEM;
++
++		for (i = 0; i < t->len >> 1; i++)
++			dst[i] = cpu_to_le16p(src + i);
++
++		mspi->tx = dst;
++		mspi->map_tx_dma = 1;
++	}
+ 
+ 	if (mspi->map_tx_dma) {
+ 		void *nonconst_tx = (void *)mspi->tx; /* shut up gcc */
+@@ -173,6 +189,13 @@ void fsl_spi_cpm_bufs_complete(struct mp
+ 	if (mspi->map_rx_dma)
+ 		dma_unmap_single(dev, mspi->rx_dma, t->len, DMA_FROM_DEVICE);
+ 	mspi->xfer_in_progress = NULL;
++
++	if (t->bits_per_word == 16 && t->rx_buf) {
++		int i;
++
++		for (i = 0; i < t->len; i += 2)
++			le16_to_cpus(t->rx_buf + i);
++	}
+ }
+ EXPORT_SYMBOL_GPL(fsl_spi_cpm_bufs_complete);
+ 
 --- a/drivers/spi/spi-fsl-spi.c
 +++ b/drivers/spi/spi-fsl-spi.c
-@@ -203,26 +203,6 @@ static int mspi_apply_cpu_mode_quirks(st
- 	return bits_per_word;
- }
- 
--static int mspi_apply_qe_mode_quirks(struct spi_mpc8xxx_cs *cs,
--				struct spi_device *spi,
--				int bits_per_word)
--{
--	/* CPM/QE uses Little Endian for words > 8
--	 * so transform 16 and 32 bits words into 8 bits
--	 * Unfortnatly that doesn't work for LSB so
--	 * reject these for now */
--	/* Note: 32 bits word, LSB works iff
--	 * tfcr/rfcr is set to CPMFCR_GBL */
--	if (spi->mode & SPI_LSB_FIRST &&
--	    bits_per_word > 8)
--		return -EINVAL;
--	if (bits_per_word <= 8)
--		return bits_per_word;
--	if (bits_per_word == 16 || bits_per_word == 32)
--		return 8; /* pretend its 8 bits */
--	return -EINVAL;
--}
--
- static int fsl_spi_setup_transfer(struct spi_device *spi,
- 					struct spi_transfer *t)
- {
-@@ -250,9 +230,6 @@ static int fsl_spi_setup_transfer(struct
- 		bits_per_word = mspi_apply_cpu_mode_quirks(cs, spi,
- 							   mpc8xxx_spi,
- 							   bits_per_word);
--	else
--		bits_per_word = mspi_apply_qe_mode_quirks(cs, spi,
--							  bits_per_word);
- 
- 	if (bits_per_word < 0)
- 		return bits_per_word;
-@@ -370,14 +347,27 @@ static int fsl_spi_do_one_msg(struct spi
- 	 * In CPU mode, optimize large byte transfers to use larger
- 	 * bits_per_word values to reduce number of interrupts taken.
- 	 */
--	if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
--		list_for_each_entry(t, &m->transfers, transfer_list) {
-+	list_for_each_entry(t, &m->transfers, transfer_list) {
-+		if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
- 			if (t->len < 256 || t->bits_per_word != 8)
- 				continue;
- 			if ((t->len & 3) == 0)
- 				t->bits_per_word = 32;
- 			else if ((t->len & 1) == 0)
- 				t->bits_per_word = 16;
-+		} else {
-+			/*
-+			 * CPM/QE uses Little Endian for words > 8
-+			 * so transform 16 and 32 bits words into 8 bits
-+			 * Unfortnatly that doesn't work for LSB so
-+			 * reject these for now
-+			 * Note: 32 bits word, LSB works iff
-+			 * tfcr/rfcr is set to CPMFCR_GBL
-+			 */
-+			if (m->spi->mode & SPI_LSB_FIRST && t->bits_per_word > 8)
-+				return -EINVAL;
-+			if (t->bits_per_word == 16 || t->bits_per_word == 32)
-+				t->bits_per_word = 8; /* pretend its 8 bits */
+@@ -368,6 +368,9 @@ static int fsl_spi_do_one_msg(struct spi
+ 				return -EINVAL;
+ 			if (t->bits_per_word == 16 || t->bits_per_word == 32)
+ 				t->bits_per_word = 8; /* pretend its 8 bits */
++			if (t->bits_per_word == 8 && t->len >= 256 &&
++			    (mpc8xxx_spi->flags & SPI_CPM1))
++				t->bits_per_word = 16;
  		}
  	}
  
-@@ -635,8 +625,14 @@ static struct spi_master *fsl_spi_probe(
- 	if (mpc8xxx_spi->type == TYPE_GRLIB)
- 		fsl_spi_grlib_probe(dev);
- 
--	master->bits_per_word_mask =
--		(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32)) &
-+	if (mpc8xxx_spi->flags & SPI_CPM_MODE)
-+		master->bits_per_word_mask =
-+			(SPI_BPW_RANGE_MASK(4, 8) | SPI_BPW_MASK(16) | SPI_BPW_MASK(32));
-+	else
-+		master->bits_per_word_mask =
-+			(SPI_BPW_RANGE_MASK(4, 16) | SPI_BPW_MASK(32));
-+
-+	master->bits_per_word_mask &=
- 		SPI_BPW_RANGE_MASK(1, mpc8xxx_spi->max_bits_per_word);
- 
- 	if (mpc8xxx_spi->flags & SPI_QE_CPU_MODE)
 
 
