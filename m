@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9838569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBA9C433D2;
-	Sun, 28 May 2023 19:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61375569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE912C433EF;
+	Sun, 28 May 2023 19:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302094;
-	bh=nsVqpVT/SEf+IlJ+Pc6q1taH6JXkRGfQMztoA9jNI20=;
+	s=korg; t=1685302097;
+	bh=9L5Ir1Wn7U3eOzQ0K8V/W044w0ZJ1OI3WyI6PgNi+LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=By40ZbgZZbR7TTEVvH9GR8LxDf2dxDmAY+X8kuQYV9lcEy9GrhdnpkkCnXbEkeOhH
-	 16l7KfjjVxwPuO3eBgmOUXQArVHtB46g/ob+rSH5OYS5dfP4Flwv9B6sS8e6fvIaXI
-	 qYjJ58LSNEzRpN2rmMpK7NEll/+G2afjl/JuDjbU=
+	b=ypIM3a4rrjJIQYY68PedNaTLx4DVTftRVM/xca9TQbvCmKAYFAAz1+npXb/i0faKZ
+	 DmBb3uh+lgslP+WZh3j4EHzh5UNWaVErVTqbmZxW/1nsOPvfW2IGqaO4HD385Qoa97
+	 pz8GKIHhX2YqA6/26AGMDA4gU3Ef4x6uj9fUtVHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.4 131/161] parisc: Allow to reboot machine after system halt
-Date: Sun, 28 May 2023 20:10:55 +0100
-Message-Id: <20230528190841.152463170@linuxfoundation.org>
+	Zev Weiss <zev@bewilderbeest.net>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	stable@kernel.org
+Subject: [PATCH 5.4 132/161] gpio: mockup: Fix mode of debugfs files
+Date: Sun, 28 May 2023 20:10:56 +0100
+Message-Id: <20230528190841.179954275@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -33,43 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Zev Weiss <zev@bewilderbeest.net>
 
-commit 2028315cf59bb899a5ac7e87dc48ecb8fac7ac24 upstream.
+commit 0a1bb16e0fe6650c3841e611de374bfd5578ad70 upstream.
 
-In case a machine can't power-off itself on system shutdown,
-allow the user to reboot it by pressing the RETURN key.
+This driver's debugfs files have had a read operation since commit
+2a9e27408e12 ("gpio: mockup: rework debugfs interface"), but were
+still being created with write-only mode bits.  Update them to
+indicate that the files can also be read.
 
-Cc: <stable@vger.kernel.org> # v4.14+
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Fixes: 2a9e27408e12 ("gpio: mockup: rework debugfs interface")
+Cc: stable@kernel.org # v5.1+
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/process.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpio/gpio-mockup.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/parisc/kernel/process.c
-+++ b/arch/parisc/kernel/process.c
-@@ -124,13 +124,18 @@ void machine_power_off(void)
- 	/* It seems we have no way to power the system off via
- 	 * software. The user has to press the button himself. */
+--- a/drivers/gpio/gpio-mockup.c
++++ b/drivers/gpio/gpio-mockup.c
+@@ -339,7 +339,7 @@ static void gpio_mockup_debugfs_setup(st
+ 		priv->offset = i;
+ 		priv->desc = &gc->gpiodev->descs[i];
  
--	printk(KERN_EMERG "System shut down completed.\n"
--	       "Please power this system off now.");
-+	printk("Power off or press RETURN to reboot.\n");
+-		debugfs_create_file(name, 0200, chip->dbg_dir, priv,
++		debugfs_create_file(name, 0600, chip->dbg_dir, priv,
+ 				    &gpio_mockup_debugfs_ops);
+ 	}
  
- 	/* prevent soft lockup/stalled CPU messages for endless loop. */
- 	rcu_sysrq_start();
- 	lockup_detector_soft_poweroff();
--	for (;;);
-+	while (1) {
-+		/* reboot if user presses RETURN key */
-+		if (pdc_iodc_getc() == 13) {
-+			printk("Rebooting...\n");
-+			machine_restart(NULL);
-+		}
-+	}
- }
- 
- void (*pm_power_off)(void);
 
 
