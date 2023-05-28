@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3D9611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBC71C433D2;
-	Sun, 28 May 2023 19:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B448C611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:16:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F116C4339B;
+	Sun, 28 May 2023 19:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301377;
-	bh=vFIHBP2yNALhdeoScsxhdESV2tVOJeQs+64RnXr0B5k=;
+	s=korg; t=1685301379;
+	bh=I2WkgRbjDBEh9lthIZ2qZW4kaYRRT0PVuCOHSVQXA7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oos4mSYIIBOOewtAYFO25/eUPzt4hYxbFYkdQ9N+LgK+bBxPa0KlmJoO/yrkcDIWh
-	 HllowWFP2tlzNMjkTp4LqlUAyA1G6dFQpLHsdeqOH+X3b0czc8F8D3AfPbcKV5ngbX
-	 Ob/AnC7DP5Pta/lajnzzpucE6svCApbsJacmrl10=
+	b=hNC/Lf6JNzfD/KfHHDVASul24YChrRnn7d9jhJ4Ns5qw/nX9UhGMZOcRQXJ/CilRL
+	 Mj+dpLwF0tU/lzLqASSfhPDmud1JcXMNWiHMGTtn6iN7EpeXakZUppf2QmAZn94cQ5
+	 qcK0SIiUZkzXcfu6yisEyOCUUlHpkrrGxtUdU6w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Zhu Yanjun <zyjzyj2000@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 85/86] forcedeth: Fix an error handling path in nv_probe()
-Date: Sun, 28 May 2023 20:10:59 +0100
-Message-Id: <20230528190831.780028401@linuxfoundation.org>
+Subject: [PATCH 4.14 86/86] 3c589_cs: Fix an error handling path in tc589_probe()
+Date: Sun, 28 May 2023 20:11:00 +0100
+Message-Id: <20230528190831.809812411@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -37,33 +37,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit 5b17a4971d3b2a073f4078dd65331efbe35baa2d upstream.
+commit 640bf95b2c7c2981fb471acdafbd3e0458f8390d upstream.
 
-If an error occures after calling nv_mgmt_acquire_sema(), it should be
-undone with a corresponding nv_mgmt_release_sema() call.
+Should tc589_config() fail, some resources need to be released as already
+done in the remove function.
 
-Add it in the error handling path of the probe as already done in the
-remove function.
-
-Fixes: cac1c52c3621 ("forcedeth: mgmt unit interface")
+Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Zhu Yanjun <zyjzyj2000@gmail.com>
-Link: https://lore.kernel.org/r/355e9a7d351b32ad897251b6f81b5886fcdc6766.1684571393.git.christophe.jaillet@wanadoo.fr
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/d8593ae867b24c79063646e36f9b18b0790107cb.1684575975.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/nvidia/forcedeth.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/3com/3c589_cs.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/nvidia/forcedeth.c
-+++ b/drivers/net/ethernet/nvidia/forcedeth.c
-@@ -6020,6 +6020,7 @@ static int nv_probe(struct pci_dev *pci_
- 	return 0;
+--- a/drivers/net/ethernet/3com/3c589_cs.c
++++ b/drivers/net/ethernet/3com/3c589_cs.c
+@@ -196,6 +196,7 @@ static int tc589_probe(struct pcmcia_dev
+ {
+ 	struct el3_private *lp;
+ 	struct net_device *dev;
++	int ret;
  
- out_error:
-+	nv_mgmt_release_sema(dev);
- 	if (phystate_orig)
- 		writel(phystate|NVREG_ADAPTCTL_RUNNING, base + NvRegAdapterControl);
- out_freering:
+ 	dev_dbg(&link->dev, "3c589_attach()\n");
+ 
+@@ -219,7 +220,15 @@ static int tc589_probe(struct pcmcia_dev
+ 
+ 	dev->ethtool_ops = &netdev_ethtool_ops;
+ 
+-	return tc589_config(link);
++	ret = tc589_config(link);
++	if (ret)
++		goto err_free_netdev;
++
++	return 0;
++
++err_free_netdev:
++	free_netdev(dev);
++	return ret;
+ }
+ 
+ static void tc589_detach(struct pcmcia_device *link)
 
 
