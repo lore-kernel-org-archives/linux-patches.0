@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34B3D611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6D7BC433EF;
-	Sun, 28 May 2023 19:46:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94749611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 206B9C433D2;
+	Sun, 28 May 2023 19:46:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303202;
-	bh=qHJrnlh1d4xdyv6YExrX2ZBj6QAkfEOPyrfVbt3cHoA=;
+	s=korg; t=1685303204;
+	bh=VW10XWVaa0yJcoLoakyxh5DMiRIRQBJNc4tDnIfattQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKe8BnP/tw1NyVsqhI/1ZS6t24qq0pkpjD01hAqV0oA6goSVw9dlPjAA6TnMCFyYe
-	 pgzYHwuYEWnawsi6N5lLvIaMDQ0qrxuWygPN0e2bX8BH6TI1NWaUTu1uGG39ybKPWt
-	 JggDyMGwEFpb8pwF1TkEsf2gNrJFiIq/dOn+4k8g=
+	b=LxEf8wL7+KXUVjnORTG5pJ3Aj49N82wfpI5wc+pBjAn8R+8Qv6qmwn07r/OvoRI2i
+	 W14YGlUMth8uFJqmDOVEp/rXvT7Hu1Uwc12Wqakc9BZZ93cCqC71Bl+N8L3lYOBAvr
+	 DXNnVn3kgefRrTPwUIGnT3kA+h4APU1aLm2zN/6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 5.10 195/211] power: supply: bq27xxx: Fix bq27xxx_battery_update() race condition
-Date: Sun, 28 May 2023 20:11:56 +0100
-Message-Id: <20230528190848.344250507@linuxfoundation.org>
+Subject: [PATCH 5.10 196/211] power: supply: bq27xxx: Fix I2C IRQ race on remove
+Date: Sun, 28 May 2023 20:11:57 +0100
+Message-Id: <20230528190848.368835388@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,90 +36,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-commit 5c34c0aef185dcd10881847b9ebf20046aa77cb4 upstream.
+commit 444ff00734f3878cd54ddd1ed5e2e6dbea9326d5 upstream.
 
-bq27xxx_battery_update() assumes / requires that it is only run once,
-not multiple times at the same time. But there are 3 possible callers:
+devm_request_threaded_irq() requested IRQs are only free-ed after
+the driver's remove function has ran. So the IRQ could trigger and
+call bq27xxx_battery_update() after bq27xxx_battery_teardown() has
+already run.
 
-1. bq27xxx_battery_poll() delayed_work item handler
-2. bq27xxx_battery_irq_handler_thread() I2C IRQ handler
-3. bq27xxx_battery_setup()
+Switch to explicitly free-ing the IRQ in bq27xxx_battery_i2c_remove()
+to fix this.
 
-And there is no protection against these racing with each other,
-fix this race condition by making all callers take di->lock:
-
-- Rename bq27xxx_battery_update() to bq27xxx_battery_update_unlocked()
-
-- Add new bq27xxx_battery_update() which takes di->lock and then calls
-  bq27xxx_battery_update_unlocked()
-
-- Make stale cache check code in bq27xxx_battery_get_property(), which
-  already takes di->lock directly to check the jiffies, call
-  bq27xxx_battery_update_unlocked() instead of messing with
-  the delayed_work item
-
-- Make bq27xxx_battery_update_unlocked() mod the delayed-work item
-  so that the next poll is delayed to poll_interval milliseconds after
-  the last update independent of the source of the update
-
-Fixes: 740b755a3b34 ("bq27x00: Poll battery state")
+Fixes: 8807feb91b76 ("power: bq27xxx_battery: Add interrupt handling support")
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq27xxx_battery.c |   21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/power/supply/bq27xxx_battery_i2c.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/power/supply/bq27xxx_battery.c
-+++ b/drivers/power/supply/bq27xxx_battery.c
-@@ -1681,7 +1681,7 @@ static int bq27xxx_battery_read_health(s
- 	return POWER_SUPPLY_HEALTH_GOOD;
- }
+--- a/drivers/power/supply/bq27xxx_battery_i2c.c
++++ b/drivers/power/supply/bq27xxx_battery_i2c.c
+@@ -179,7 +179,7 @@ static int bq27xxx_battery_i2c_probe(str
+ 	i2c_set_clientdata(client, di);
  
--void bq27xxx_battery_update(struct bq27xxx_device_info *di)
-+static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
+ 	if (client->irq) {
+-		ret = devm_request_threaded_irq(&client->dev, client->irq,
++		ret = request_threaded_irq(client->irq,
+ 				NULL, bq27xxx_battery_irq_handler_thread,
+ 				IRQF_ONESHOT,
+ 				di->name, di);
+@@ -209,6 +209,7 @@ static int bq27xxx_battery_i2c_remove(st
  {
- 	struct bq27xxx_reg_cache cache = {0, };
- 	bool has_ci_flag = di->opts & BQ27XXX_O_HAS_CI;
-@@ -1732,6 +1732,16 @@ void bq27xxx_battery_update(struct bq27x
- 		di->cache = cache;
+ 	struct bq27xxx_device_info *di = i2c_get_clientdata(client);
  
- 	di->last_update = jiffies;
-+
-+	if (poll_interval > 0)
-+		mod_delayed_work(system_wq, &di->work, poll_interval * HZ);
-+}
-+
-+void bq27xxx_battery_update(struct bq27xxx_device_info *di)
-+{
-+	mutex_lock(&di->lock);
-+	bq27xxx_battery_update_unlocked(di);
-+	mutex_unlock(&di->lock);
- }
- EXPORT_SYMBOL_GPL(bq27xxx_battery_update);
++	free_irq(client->irq, di);
+ 	bq27xxx_battery_teardown(di);
  
-@@ -1742,9 +1752,6 @@ static void bq27xxx_battery_poll(struct
- 				     work.work);
- 
- 	bq27xxx_battery_update(di);
--
--	if (poll_interval > 0)
--		schedule_delayed_work(&di->work, poll_interval * HZ);
- }
- 
- /*
-@@ -1919,10 +1926,8 @@ static int bq27xxx_battery_get_property(
- 	struct bq27xxx_device_info *di = power_supply_get_drvdata(psy);
- 
- 	mutex_lock(&di->lock);
--	if (time_is_before_jiffies(di->last_update + 5 * HZ)) {
--		cancel_delayed_work_sync(&di->work);
--		bq27xxx_battery_poll(&di->work.work);
--	}
-+	if (time_is_before_jiffies(di->last_update + 5 * HZ))
-+		bq27xxx_battery_update_unlocked(di);
- 	mutex_unlock(&di->lock);
- 
- 	if (psp != POWER_SUPPLY_PROP_PRESENT && di->cache.flags < 0)
+ 	mutex_lock(&battery_mutex);
 
 
