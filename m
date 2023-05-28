@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FAA569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F96C4339B;
-	Sun, 28 May 2023 19:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D049569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C5CC433D2;
+	Sun, 28 May 2023 19:29:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302190;
-	bh=5m6EjNqXwzkcM4pOKEF2a6edBvuv9714xfiXJKGJ780=;
+	s=korg; t=1685302193;
+	bh=ic1yI0gG2132Y5euY1asRjAztg6LVos+sWE6RQAV6+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e7b3+N2prO2YYwfUaRXzMmx3O7FBZGe8tN02RIUGD+sz0BVZzvQqW8HyrzYl677uG
-	 Z3T0TnV6t9TVvu7YqbOY1nf68cFo6QwaCHuRO6kzH2Vvdys+OGYwoRlg3RTBzTsptg
-	 8fQd8frH6CuGgEndmJaeyMW52rg4V9Fd3GWcGvg0=
+	b=eMlKOoWfkN6RLpE6JHR6SgUc0jRWF0nFh+aZXOhCFgL0RDTXqqFKvYcK80+J7wKqO
+	 FmJ5gPRpXZnIXYN0OiBtqOP/QSI3fhMWBy/TpKOzVFTYX6uPaK3aZtStOnD6A85siJ
+	 9C2EfYMnDDnOMnjOgT3gtDjSfM0LumtEc4C/MOXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Nhat Pham <nphamcs@gmail.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Minchan Kim <minchan@kernel.org>,
+	Dan Streetman <ddstreet@ieee.org>,
+	Nitin Gupta <ngupta@vflare.org>,
+	Seth Jennings <sjenning@redhat.com>,
+	Vitaly Wool <vitaly.wool@konsulko.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 008/127] tpm: Prevent hwrng from activating during resume
-Date: Sun, 28 May 2023 20:09:44 +0100
-Message-Id: <20230528190836.475610979@linuxfoundation.org>
+Subject: [PATCH 6.3 009/127] zsmalloc: move LRU update from zs_map_object() to zs_malloc()
+Date: Sun, 28 May 2023 20:09:45 +0100
+Message-Id: <20230528190836.504675836@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -35,80 +42,180 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Nhat Pham <nphamcs@gmail.com>
 
-[ Upstream commit 99d46450625590d410f86fe4660a5eff7d3b8343 ]
+[ Upstream commit d461aac924b937bcb4fd0ca1242b3ef6868ecddd ]
 
-Set TPM_CHIP_FLAG_SUSPENDED in tpm_pm_suspend() and reset in
-tpm_pm_resume(). While the flag is set, tpm_hwrng() gives back zero
-bytes. This prevents hwrng from racing during resume.
+Under memory pressure, we sometimes observe the following crash:
 
-Cc: stable@vger.kernel.org
-Fixes: 6e592a065d51 ("tpm: Move Linux RNG connection to hwrng")
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+[ 5694.832838] ------------[ cut here ]------------
+[ 5694.842093] list_del corruption, ffff888014b6a448->next is LIST_POISON1 (dead000000000100)
+[ 5694.858677] WARNING: CPU: 33 PID: 418824 at lib/list_debug.c:47 __list_del_entry_valid+0x42/0x80
+[ 5694.961820] CPU: 33 PID: 418824 Comm: fuse_counters.s Kdump: loaded Tainted: G S                5.19.0-0_fbk3_rc3_hoangnhatpzsdynshrv41_10870_g85a9558a25de #1
+[ 5694.990194] Hardware name: Wiwynn Twin Lakes MP/Twin Lakes Passive MP, BIOS YMM16 05/24/2021
+[ 5695.007072] RIP: 0010:__list_del_entry_valid+0x42/0x80
+[ 5695.017351] Code: 08 48 83 c2 22 48 39 d0 74 24 48 8b 10 48 39 f2 75 2c 48 8b 51 08 b0 01 48 39 f2 75 34 c3 48 c7 c7 55 d7 78 82 e8 4e 45 3b 00 <0f> 0b eb 31 48 c7 c7 27 a8 70 82 e8 3e 45 3b 00 0f 0b eb 21 48 c7
+[ 5695.054919] RSP: 0018:ffffc90027aef4f0 EFLAGS: 00010246
+[ 5695.065366] RAX: 41fe484987275300 RBX: ffff888008988180 RCX: 0000000000000000
+[ 5695.079636] RDX: ffff88886006c280 RSI: ffff888860060480 RDI: ffff888860060480
+[ 5695.093904] RBP: 0000000000000002 R08: 0000000000000000 R09: ffffc90027aef370
+[ 5695.108175] R10: 0000000000000000 R11: ffffffff82fdf1c0 R12: 0000000010000002
+[ 5695.122447] R13: ffff888014b6a448 R14: ffff888014b6a420 R15: 00000000138dc240
+[ 5695.136717] FS:  00007f23a7d3f740(0000) GS:ffff888860040000(0000) knlGS:0000000000000000
+[ 5695.152899] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 5695.164388] CR2: 0000560ceaab6ac0 CR3: 000000001c06c001 CR4: 00000000007706e0
+[ 5695.178659] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[ 5695.192927] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[ 5695.207197] PKRU: 55555554
+[ 5695.212602] Call Trace:
+[ 5695.217486]  <TASK>
+[ 5695.221674]  zs_map_object+0x91/0x270
+[ 5695.229000]  zswap_frontswap_store+0x33d/0x870
+[ 5695.237885]  ? do_raw_spin_lock+0x5d/0xa0
+[ 5695.245899]  __frontswap_store+0x51/0xb0
+[ 5695.253742]  swap_writepage+0x3c/0x60
+[ 5695.261063]  shrink_page_list+0x738/0x1230
+[ 5695.269255]  shrink_lruvec+0x5ec/0xcd0
+[ 5695.276749]  ? shrink_slab+0x187/0x5f0
+[ 5695.284240]  ? mem_cgroup_iter+0x6e/0x120
+[ 5695.292255]  shrink_node+0x293/0x7b0
+[ 5695.299402]  do_try_to_free_pages+0xea/0x550
+[ 5695.307940]  try_to_free_pages+0x19a/0x490
+[ 5695.316126]  __folio_alloc+0x19ff/0x3e40
+[ 5695.323971]  ? __filemap_get_folio+0x8a/0x4e0
+[ 5695.332681]  ? walk_component+0x2a8/0xb50
+[ 5695.340697]  ? generic_permission+0xda/0x2a0
+[ 5695.349231]  ? __filemap_get_folio+0x8a/0x4e0
+[ 5695.357940]  ? walk_component+0x2a8/0xb50
+[ 5695.365955]  vma_alloc_folio+0x10e/0x570
+[ 5695.373796]  ? walk_component+0x52/0xb50
+[ 5695.381634]  wp_page_copy+0x38c/0xc10
+[ 5695.388953]  ? filename_lookup+0x378/0xbc0
+[ 5695.397140]  handle_mm_fault+0x87f/0x1800
+[ 5695.405157]  do_user_addr_fault+0x1bd/0x570
+[ 5695.413520]  exc_page_fault+0x5d/0x110
+[ 5695.421017]  asm_exc_page_fault+0x22/0x30
+
+After some investigation, I have found the following issue: unlike other
+zswap backends, zsmalloc performs the LRU list update at the object
+mapping time, rather than when the slot for the object is allocated.
+This deviation was discussed and agreed upon during the review process
+of the zsmalloc writeback patch series:
+
+https://lore.kernel.org/lkml/Y3flcAXNxxrvy3ZH@cmpxchg.org/
+
+Unfortunately, this introduces a subtle bug that occurs when there is a
+concurrent store and reclaim, which interleave as follows:
+
+zswap_frontswap_store()            shrink_worker()
+  zs_malloc()                        zs_zpool_shrink()
+    spin_lock(&pool->lock)             zs_reclaim_page()
+    zspage = find_get_zspage()
+    spin_unlock(&pool->lock)
+                                         spin_lock(&pool->lock)
+                                         zspage = list_first_entry(&pool->lru)
+                                         list_del(&zspage->lru)
+                                           zspage->lru.next = LIST_POISON1
+                                           zspage->lru.prev = LIST_POISON2
+                                         spin_unlock(&pool->lock)
+  zs_map_object()
+    spin_lock(&pool->lock)
+    if (!list_empty(&zspage->lru))
+      list_del(&zspage->lru)
+        CHECK_DATA_CORRUPTION(next == LIST_POISON1) /* BOOM */
+
+With the current upstream code, this issue rarely happens. zswap only
+triggers writeback when the pool is already full, at which point all
+further store attempts are short-circuited. This creates an implicit
+pseudo-serialization between reclaim and store. I am working on a new
+zswap shrinking mechanism, which makes interleaving reclaim and store
+more likely, exposing this bug.
+
+zbud and z3fold do not have this problem, because they perform the LRU
+list update in the alloc function, while still holding the pool's lock.
+This patch fixes the aforementioned bug by moving the LRU update back to
+zs_malloc(), analogous to zbud and z3fold.
+
+Link: https://lkml.kernel.org/r/20230505185054.2417128-1-nphamcs@gmail.com
+Fixes: 64f768c6b32e ("zsmalloc: add a LRU to zs_pool to keep track of zspages in LRU order")
+Signed-off-by: Nhat Pham <nphamcs@gmail.com>
+Suggested-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Acked-by: Minchan Kim <minchan@kernel.org>
+Cc: Dan Streetman <ddstreet@ieee.org>
+Cc: Nitin Gupta <ngupta@vflare.org>
+Cc: Seth Jennings <sjenning@redhat.com>
+Cc: Vitaly Wool <vitaly.wool@konsulko.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm-chip.c      |  4 ++++
- drivers/char/tpm/tpm-interface.c | 10 ++++++++++
- include/linux/tpm.h              |  1 +
- 3 files changed, 15 insertions(+)
+ mm/zsmalloc.c | 36 +++++++++---------------------------
+ 1 file changed, 9 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm-chip.c b/drivers/char/tpm/tpm-chip.c
-index 9c0a6aad81140..5be91591cb3b2 100644
---- a/drivers/char/tpm/tpm-chip.c
-+++ b/drivers/char/tpm/tpm-chip.c
-@@ -572,6 +572,10 @@ static int tpm_hwrng_read(struct hwrng *rng, void *data, size_t max, bool wait)
- {
- 	struct tpm_chip *chip = container_of(rng, struct tpm_chip, hwrng);
+diff --git a/mm/zsmalloc.c b/mm/zsmalloc.c
+index 3aed46ab7e6cb..0d451b61573cb 100644
+--- a/mm/zsmalloc.c
++++ b/mm/zsmalloc.c
+@@ -1350,31 +1350,6 @@ void *zs_map_object(struct zs_pool *pool, unsigned long handle,
+ 	obj_to_location(obj, &page, &obj_idx);
+ 	zspage = get_zspage(page);
  
-+	/* Give back zero bytes, as TPM chip has not yet fully resumed: */
-+	if (chip->flags & TPM_CHIP_FLAG_SUSPENDED)
-+		return 0;
-+
- 	return tpm_get_random(chip, data, max);
- }
+-#ifdef CONFIG_ZPOOL
+-	/*
+-	 * Move the zspage to front of pool's LRU.
+-	 *
+-	 * Note that this is swap-specific, so by definition there are no ongoing
+-	 * accesses to the memory while the page is swapped out that would make
+-	 * it "hot". A new entry is hot, then ages to the tail until it gets either
+-	 * written back or swaps back in.
+-	 *
+-	 * Furthermore, map is also called during writeback. We must not put an
+-	 * isolated page on the LRU mid-reclaim.
+-	 *
+-	 * As a result, only update the LRU when the page is mapped for write
+-	 * when it's first instantiated.
+-	 *
+-	 * This is a deviation from the other backends, which perform this update
+-	 * in the allocation function (zbud_alloc, z3fold_alloc).
+-	 */
+-	if (mm == ZS_MM_WO) {
+-		if (!list_empty(&zspage->lru))
+-			list_del(&zspage->lru);
+-		list_add(&zspage->lru, &pool->lru);
+-	}
+-#endif
+-
+ 	/*
+ 	 * migration cannot move any zpages in this zspage. Here, pool->lock
+ 	 * is too heavy since callers would take some time until they calls
+@@ -1544,9 +1519,8 @@ unsigned long zs_malloc(struct zs_pool *pool, size_t size, gfp_t gfp)
+ 		fix_fullness_group(class, zspage);
+ 		record_obj(handle, obj);
+ 		class_stat_inc(class, OBJ_USED, 1);
+-		spin_unlock(&pool->lock);
  
-diff --git a/drivers/char/tpm/tpm-interface.c b/drivers/char/tpm/tpm-interface.c
-index 7e513b7718320..0f941cb32eb17 100644
---- a/drivers/char/tpm/tpm-interface.c
-+++ b/drivers/char/tpm/tpm-interface.c
-@@ -412,6 +412,8 @@ int tpm_pm_suspend(struct device *dev)
+-		return handle;
++		goto out;
  	}
  
- suspended:
-+	chip->flags |= TPM_CHIP_FLAG_SUSPENDED;
-+
- 	if (rc)
- 		dev_err(dev, "Ignoring error %d while suspending\n", rc);
- 	return 0;
-@@ -429,6 +431,14 @@ int tpm_pm_resume(struct device *dev)
- 	if (chip == NULL)
- 		return -ENODEV;
+ 	spin_unlock(&pool->lock);
+@@ -1570,6 +1544,14 @@ unsigned long zs_malloc(struct zs_pool *pool, size_t size, gfp_t gfp)
  
-+	chip->flags &= ~TPM_CHIP_FLAG_SUSPENDED;
+ 	/* We completely set up zspage so mark them as movable */
+ 	SetZsPageMovable(pool, zspage);
++out:
++#ifdef CONFIG_ZPOOL
++	/* Add/move zspage to beginning of LRU */
++	if (!list_empty(&zspage->lru))
++		list_del(&zspage->lru);
++	list_add(&zspage->lru, &pool->lru);
++#endif
 +
-+	/*
-+	 * Guarantee that SUSPENDED is written last, so that hwrng does not
-+	 * activate before the chip has been fully resumed.
-+	 */
-+	wmb();
-+
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(tpm_pm_resume);
-diff --git a/include/linux/tpm.h b/include/linux/tpm.h
-index 77693389c3f9a..6a1e8f1572551 100644
---- a/include/linux/tpm.h
-+++ b/include/linux/tpm.h
-@@ -282,6 +282,7 @@ enum tpm_chip_flags {
- 	TPM_CHIP_FLAG_ALWAYS_POWERED		= BIT(5),
- 	TPM_CHIP_FLAG_FIRMWARE_POWER_MANAGED	= BIT(6),
- 	TPM_CHIP_FLAG_FIRMWARE_UPGRADE		= BIT(7),
-+	TPM_CHIP_FLAG_SUSPENDED			= BIT(8),
- };
+ 	spin_unlock(&pool->lock);
  
- #define to_tpm_chip(d) container_of(d, struct tpm_chip, dev)
+ 	return handle;
 -- 
 2.39.2
 
