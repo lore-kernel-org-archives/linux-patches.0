@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365A6568F
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:40:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A2BC433EF;
-	Sun, 28 May 2023 19:40:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3EA6121
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:40:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21390C433D2;
+	Sun, 28 May 2023 19:40:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302848;
-	bh=U7DpjXJqLrMBjTEkmblErRKInvpmeg6KHd3oPtjX0RU=;
+	s=korg; t=1685302850;
+	bh=1x11KkfiU6kqnsqZo8++iks3M+YXh0kn924v3xhVO5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RT9ASt8XRcyT83ahOGUu//BagTsMNe93i8uvvVXrSC1iDXLhsAZL3KCVWqBUIxu9L
-	 2x25YEBs8T05iekEvd6wPc/yzAEtPpZItyCG3HrymhJQty+/+FyrR1pJX443XUmoUR
-	 JyCtolJ8dc7ylKwcQe68SWj7U4tn9mvwxg2BYn04=
+	b=La67GnaYPsOBtta7/ygBDGnRKuYnl/Rn+Ml40VsNqPS3yw3zqm6nSPnPPqxUMBwjP
+	 Lap94K+lSkCevpqijGiRxpOonIx20B38Khwe4OqfSbm5IweN8litInsnIx+aFVkYke
+	 mIOX+MaZyWmlfrJUj+Eo+FN9kfBHROMq71uFzViE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Child <nnac123@linux.ibm.com>,
-	Piotr Raczynski <piotr.raczynski@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Forza <forza@tnonline.net>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Maurizio Lombardi <mlombard@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 050/211] net: Catch invalid index in XPS mapping
-Date: Sun, 28 May 2023 20:09:31 +0100
-Message-Id: <20230528190844.833871681@linuxfoundation.org>
+Subject: [PATCH 5.10 051/211] scsi: target: iscsit: Free cmds before session free
+Date: Sun, 28 May 2023 20:09:32 +0100
+Message-Id: <20230528190844.859608168@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,41 +38,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Child <nnac123@linux.ibm.com>
+From: Dmitry Bogdanov <d.bogdanov@yadro.com>
 
-[ Upstream commit 5dd0dfd55baec0742ba8f5625a0dd064aca7db16 ]
+[ Upstream commit d8990b5a4d065f38f35d69bcd627ec5a7f8330ca ]
 
-When setting the XPS value of a TX queue, warn the user once if the
-index of the queue is greater than the number of allocated TX queues.
+Commands from recovery entries are freed after session has been closed.
+That leads to use-after-free at command free or NPE with such call trace:
 
-Previously, this scenario went uncaught. In the best case, it resulted
-in unnecessary allocations. In the worst case, it resulted in
-out-of-bounds memory references through calls to `netdev_get_tx_queue(
-dev, index)`. Therefore, it is important to inform the user but not
-worth returning an error and risk downing the netdevice.
+Time2Retain timer expired for SID: 1, cleaning up iSCSI session.
+BUG: kernel NULL pointer dereference, address: 0000000000000140
+RIP: 0010:sbitmap_queue_clear+0x3a/0xa0
+Call Trace:
+ target_release_cmd_kref+0xd1/0x1f0 [target_core_mod]
+ transport_generic_free_cmd+0xd1/0x180 [target_core_mod]
+ iscsit_free_cmd+0x53/0xd0 [iscsi_target_mod]
+ iscsit_free_connection_recovery_entries+0x29d/0x320 [iscsi_target_mod]
+ iscsit_close_session+0x13a/0x140 [iscsi_target_mod]
+ iscsit_check_post_dataout+0x440/0x440 [iscsi_target_mod]
+ call_timer_fn+0x24/0x140
 
-Signed-off-by: Nick Child <nnac123@linux.ibm.com>
-Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
-Link: https://lore.kernel.org/r/20230321150725.127229-1-nnac123@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Move cleanup of recovery enrties to before session freeing.
+
+Reported-by: Forza <forza@tnonline.net>
+Signed-off-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Link: https://lore.kernel.org/r/20230319015620.96006-7-michael.christie@oracle.com
+Reviewed-by: Maurizio Lombardi <mlombard@redhat.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/target/iscsi/iscsi_target.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 1eaf224a90ce5..29e6e11c481c6 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2628,6 +2628,8 @@ int __netif_set_xps_queue(struct net_device *dev, const unsigned long *mask,
- 	bool active = false;
- 	unsigned int nr_ids;
+diff --git a/drivers/target/iscsi/iscsi_target.c b/drivers/target/iscsi/iscsi_target.c
+index 6bb8403580729..075e2a6fb474f 100644
+--- a/drivers/target/iscsi/iscsi_target.c
++++ b/drivers/target/iscsi/iscsi_target.c
+@@ -4385,6 +4385,9 @@ int iscsit_close_session(struct iscsi_session *sess)
+ 	iscsit_stop_time2retain_timer(sess);
+ 	spin_unlock_bh(&se_tpg->session_lock);
  
-+	WARN_ON_ONCE(index >= dev->num_tx_queues);
++	if (sess->sess_ops->ErrorRecoveryLevel == 2)
++		iscsit_free_connection_recovery_entries(sess);
 +
- 	if (dev->num_tc) {
- 		/* Do not allow XPS on subordinate device directly */
- 		num_tc = dev->num_tc;
+ 	/*
+ 	 * transport_deregister_session_configfs() will clear the
+ 	 * struct se_node_acl->nacl_sess pointer now as a iscsi_np process context
+@@ -4412,9 +4415,6 @@ int iscsit_close_session(struct iscsi_session *sess)
+ 
+ 	transport_deregister_session(sess->se_sess);
+ 
+-	if (sess->sess_ops->ErrorRecoveryLevel == 2)
+-		iscsit_free_connection_recovery_entries(sess);
+-
+ 	iscsit_free_all_ooo_cmdsns(sess);
+ 
+ 	spin_lock_bh(&se_tpg->session_lock);
 -- 
 2.39.2
 
