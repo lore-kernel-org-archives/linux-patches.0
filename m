@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0960569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFCFC433EF;
-	Sun, 28 May 2023 19:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45882569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5BE5C433EF;
+	Sun, 28 May 2023 19:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301944;
-	bh=/L9xyTnPn+BKdKWocArP4ngXjwmC11n4naVmulvANkE=;
+	s=korg; t=1685301947;
+	bh=q0dUb3OE3dFusqRhEDjEO+yncUQH3uMV7xsjjRnjBxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=brP12FOO7HsoSintxSM5PwFTmXyPQlBGtQOGSGsXOhVFYJHAmRiwAN+XYzRfPjvgS
-	 t8V7Xfl/tg+8/Aey3ls3+fwnRyYHTctZAHZMi8LHun+UsqbXSjNRAY+CYTllbzZAr1
-	 oq26aIe129VnhvfEleK8XqqVXFX+/2RBLpoM5G4Y=
+	b=SfKePt5vVGf7K4ktRuXIW13ND9u3tN1Bno5BMMOLLmc6CnnNt1WNaFFVysKw+ztK2
+	 65MIhcOLB2jYxTFMZBFJFnyisv8It59IJ3wF3XpBWRMO4daTdVHD2jS0RJ6IRbr6EY
+	 Bhoc6Q9ik+WjBs7HtOgYCwmLKga/367rHiD7xfII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Hao Lan <lanhao@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Duoming Zhou <duoming@zju.edu.cn>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 071/161] net: hns3: fix reset delay time to avoid configuration timeout
-Date: Sun, 28 May 2023 20:09:55 +0100
-Message-Id: <20230528190839.413859932@linuxfoundation.org>
+Subject: [PATCH 5.4 072/161] media: netup_unidvb: fix use-after-free at del_timer()
+Date: Sun, 28 May 2023 20:09:56 +0100
+Message-Id: <20230528190839.444684854@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -36,42 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Duoming Zhou <duoming@zju.edu.cn>
 
-[ Upstream commit 814d0c786068e858d889ada3153bff82f64223ad ]
+[ Upstream commit 0f5bb36bf9b39a2a96e730bf4455095b50713f63 ]
 
-Currently the hns3 vf function reset delays 5000ms before vf rebuild
-process. In product applications, this delay is too long for application
-configurations and causes configuration timeout.
+When Universal DVB card is detaching, netup_unidvb_dma_fini()
+uses del_timer() to stop dma->timeout timer. But when timer
+handler netup_unidvb_dma_timeout() is running, del_timer()
+could not stop it. As a result, the use-after-free bug could
+happen. The process is shown below:
 
-According to the tests, 500ms delay is enough for reset process except PF
-FLR. So this patch modifies delay to 500ms in these scenarios.
+    (cleanup routine)          |        (timer routine)
+                               | mod_timer(&dev->tx_sim_timer, ..)
+netup_unidvb_finidev()         | (wait a time)
+  netup_unidvb_dma_fini()      | netup_unidvb_dma_timeout()
+    del_timer(&dma->timeout);  |
+                               |   ndev->pci_dev->dev //USE
 
-Fixes: 6988eb2a9b77 ("net: hns3: Add support to reset the enet/ring mgmt layer")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Hao Lan <lanhao@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix by changing del_timer() to del_timer_sync().
+
+Link: https://lore.kernel.org/linux-media/20230308125514.4208-1-duoming@zju.edu.cn
+Fixes: 52b1eaf4c59a ("[media] netup_unidvb: NetUP Universal DVB-S/S2/T/T2/C PCI-E card driver")
+Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/pci/netup_unidvb/netup_unidvb_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 48956c30d2eee..ec3d98595198e 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -1432,7 +1432,10 @@ static int hclgevf_reset_wait(struct hclgevf_dev *hdev)
- 	 * might happen in case reset assertion was made by PF. Yes, this also
- 	 * means we might end up waiting bit more even for VF reset.
- 	 */
--	msleep(5000);
-+	if (hdev->reset_type == HNAE3_VF_FULL_RESET)
-+		msleep(5000);
-+	else
-+		msleep(500);
- 
- 	return 0;
+diff --git a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+index eb5621c9ebf85..129acf595410d 100644
+--- a/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
++++ b/drivers/media/pci/netup_unidvb/netup_unidvb_core.c
+@@ -697,7 +697,7 @@ static void netup_unidvb_dma_fini(struct netup_unidvb_dev *ndev, int num)
+ 	netup_unidvb_dma_enable(dma, 0);
+ 	msleep(50);
+ 	cancel_work_sync(&dma->work);
+-	del_timer(&dma->timeout);
++	del_timer_sync(&dma->timeout);
  }
+ 
+ static int netup_unidvb_dma_setup(struct netup_unidvb_dev *ndev)
 -- 
 2.39.2
 
