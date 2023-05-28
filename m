@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62300569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2894C433EF;
-	Sun, 28 May 2023 19:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF3C7569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:25:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C19DC433EF;
+	Sun, 28 May 2023 19:25:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301912;
-	bh=+x8kWL0OrRN0PHoFRxlfXYZ+NObFLk1E+u2mn6dubfw=;
+	s=korg; t=1685301914;
+	bh=ax9oA3DOSbJNvcFVMq/trjq9PO9Zpf6t/GQzCPL4gfM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mfORpGe18LPV4pNft7FCihhbBi7DVWAKDfiFdBiWvljMFTc9eGqzqMZLzhYJfAjGk
-	 gkOIH3Kgr2kckmFR93N8cauvsWU3sjsdmjOVTXodbpd39eLMKhnSjPTlnvABiwh0OL
-	 ABsguZKExDJk+khUwiHA8XnLhTLytrz6bynqFw4I=
+	b=d9opjrpu1lJbm24njzYn6sq5H90K0LkoPPUs9NAyFXkRQIsRGh+DKZgiRk4kXDFA2
+	 M8sng4gMRIcikcoJH/1/TDPvqY4ZjRSYySY0W1/13TPbC6WMj4OpQvtT435OvygjfY
+	 HEyXY5N10w3/ECmn8K9Z+zLLINTu6f1ecwlqW10I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Badhri Jagan Sridharan <badhri@google.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.4 085/161] usb: typec: altmodes/displayport: fix pin_assignment_show
-Date: Sun, 28 May 2023 20:10:09 +0100
-Message-Id: <20230528190839.840111025@linuxfoundation.org>
+	Olliver Schinagl <oliver@schinagl.nl>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 086/161] ALSA: hda: Fix Oops by 9.1 surround channel names
+Date: Sun, 28 May 2023 20:10:10 +0100
+Message-Id: <20230528190839.869082096@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -34,53 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Badhri Jagan Sridharan <badhri@google.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit d8f28269dd4bf9b55c3fb376ae31512730a96fce upstream.
+commit 3b44ec8c5c44790a82f07e90db45643c762878c6 upstream.
 
-This patch fixes negative indexing of buf array in pin_assignment_show
-when get_current_pin_assignments returns 0 i.e. no compatible pin
-assignments are found.
+get_line_out_pfx() may trigger an Oops by overflowing the static array
+with more than 8 channels.  This was reported for MacBookPro 12,1 with
+Cirrus codec.
 
-BUG: KASAN: use-after-free in pin_assignment_show+0x26c/0x33c
-...
-Call trace:
-dump_backtrace+0x110/0x204
-dump_stack_lvl+0x84/0xbc
-print_report+0x358/0x974
-kasan_report+0x9c/0xfc
-__do_kernel_fault+0xd4/0x2d4
-do_bad_area+0x48/0x168
-do_tag_check_fault+0x24/0x38
-do_mem_abort+0x6c/0x14c
-el1_abort+0x44/0x68
-el1h_64_sync_handler+0x64/0xa4
-el1h_64_sync+0x78/0x7c
-pin_assignment_show+0x26c/0x33c
-dev_attr_show+0x50/0xc0
+As a workaround, extend for the 9.1 channels and also fix the
+potential Oops by unifying the code paths accessing the same array
+with the proper size check.
 
-Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230508214443.893436-1-badhri@google.com
+Reported-by: Olliver Schinagl <oliver@schinagl.nl>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/64d95eb0-dbdb-cff8-a8b1-988dc22b24cd@schinagl.nl
+Link: https://lore.kernel.org/r/20230516184412.24078-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/displayport.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/hda/hda_generic.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -501,6 +501,10 @@ static ssize_t pin_assignment_show(struc
- 
- 	mutex_unlock(&dp->lock);
- 
-+	/* get_current_pin_assignments can return 0 when no matching pin assignments are found */
-+	if (len == 0)
-+		len++;
-+
- 	buf[len - 1] = '\n';
- 	return len;
+--- a/sound/pci/hda/hda_generic.c
++++ b/sound/pci/hda/hda_generic.c
+@@ -1147,8 +1147,8 @@ static bool path_has_mixer(struct hda_co
+ 	return path && path->ctls[ctl_type];
  }
+ 
+-static const char * const channel_name[4] = {
+-	"Front", "Surround", "CLFE", "Side"
++static const char * const channel_name[] = {
++	"Front", "Surround", "CLFE", "Side", "Back",
+ };
+ 
+ /* give some appropriate ctl name prefix for the given line out channel */
+@@ -1174,7 +1174,7 @@ static const char *get_line_out_pfx(stru
+ 
+ 	/* multi-io channels */
+ 	if (ch >= cfg->line_outs)
+-		return channel_name[ch];
++		goto fixed_name;
+ 
+ 	switch (cfg->line_out_type) {
+ 	case AUTO_PIN_SPEAKER_OUT:
+@@ -1226,6 +1226,7 @@ static const char *get_line_out_pfx(stru
+ 	if (cfg->line_outs == 1 && !spec->multi_ios)
+ 		return "Line Out";
+ 
++ fixed_name:
+ 	if (ch >= ARRAY_SIZE(channel_name)) {
+ 		snd_BUG();
+ 		return "PCM";
 
 
