@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72000611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BC6C433EF;
-	Sun, 28 May 2023 19:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08F1611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:45:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB3DC433D2;
+	Sun, 28 May 2023 19:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303136;
-	bh=8ByAZKy5DMsr2uph0Wc/kn34/UfjKDDIZVS7PUpcEcs=;
+	s=korg; t=1685303138;
+	bh=nr+LTTGYO3fcmUoCemDoPqF3Cv2xXD5hcW23N04V83o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gHjVY3GgZuajpNTU6AVMngSwg/dCrlMl3LNOs9vJTWZsEQv3ymjfWtgaC6apEwAPE
-	 iun3q3q68WCM+5Ci+q8vXO+vW2EXFvW0zhNODPOrM8+TPk9TntwqZrkLFkFnN2bLI9
-	 9xSRxk6rpZ/rZns/iXpV/Y19Ipxreufn0mL3iPyQ=
+	b=a7gbS4ioPBDIoqCFqRiVacZEenQH64a30tQ8XJFcmZMLmIUtVU59w64GcDL47DJTf
+	 Qy2opc9rKV921DMEWhc6AmcuYJxGbjOLhzrNqZ7pgO+47mzqNhjkk4K1NRGjv1BC79
+	 pw9hHWXfSY0tBz7l72N6uAQS4NIHlVWB5fRjSb5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Stylinski <kungfujesus06@gmail.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 168/211] ALSA: hda/ca0132: add quirk for EVGA X299 DARK
-Date: Sun, 28 May 2023 20:11:29 +0100
-Message-Id: <20230528190847.672748228@linuxfoundation.org>
+Subject: [PATCH 5.10 169/211] ALSA: hda: Fix unhandled register update during auto-suspend period
+Date: Sun, 28 May 2023 20:11:30 +0100
+Message-Id: <20230528190847.696599996@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -34,33 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adam Stylinski <kungfujesus06@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 7843380d07bbeffd3ce6504e73cf61f840ae76ca upstream.
+commit 81302b1c7c997e8a56c1c2fc63a296ebeb0cd2d0 upstream.
 
-This quirk is necessary for surround and other DSP effects to work
-with the onboard ca0132 based audio chipset for the EVGA X299 dark
-mainboard.
+It's reported that the recording started right after the driver probe
+doesn't work properly, and it turned out that this is related with the
+codec auto-suspend.  Namely, after the probe phase, the usage count
+goes zero, and the auto-suspend is programmed, but the codec is kept
+still active until the auto-suspend expiration.  When an application
+(e.g. alsactl) updates the mixer values at this moment, the values are
+cached but not actually written.  Then, starting arecord thereafter
+also results in the silence because of the missing unmute.
 
-Signed-off-by: Adam Stylinski <kungfujesus06@gmail.com>
+The root cause is the handling of "lazy update" mode; when a mixer
+value is updated *after* the suspend, it should update only the cache
+and exits.  At the resume, the cached value is written to the device,
+in turn.  The problem is that the current code misinterprets the state
+of auto-suspend as if it were already suspended.
+
+Although we can add the check of the actual device state after
+pm_runtime_get_if_in_use() for catching the missing state, this won't
+suffice; the second call of regmap_update_bits_check() will skip
+writing the register because the cache has been already updated by the
+first call.  So we'd need fixes in two different places.
+
+OTOH, a simpler fix is to replace pm_runtime_get_if_in_use() with
+pm_runtime_get_if_active() (with ign_usage_count=true).  This change
+implies that the driver takes the pm refcount if the device is still
+in ACTIVE state and continues the processing.  A small caveat is that
+this will leave the auto-suspend timer.  But, since the timer callback
+itself checks the device state and aborts gracefully when it's active,
+this won't be any substantial problem.
+
+Long story short: we address the missing register-write problem just
+by replacing the pm_runtime_*() call in snd_hda_keep_power_up().
+
+Fixes: fc4f000bf8c0 ("ALSA: hda - Fix unexpected resume through regmap code path")
+Reported-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Closes: https://lore.kernel.org/r/a7478636-af11-92ab-731c-9b13c582a70d@linux.intel.com
+Suggested-by: Cezary Rojewski <cezary.rojewski@intel.com>
 Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=67071
-Link: https://lore.kernel.org/r/ZGopOe19T1QOwizS@eggsbenedict.adamsnet
+Link: https://lore.kernel.org/r/20230518113520.15213-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_ca0132.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/hda/hdac_device.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_ca0132.c
-+++ b/sound/pci/hda/patch_ca0132.c
-@@ -1272,6 +1272,7 @@ static const struct snd_pci_quirk ca0132
- 	SND_PCI_QUIRK(0x1458, 0xA026, "Gigabyte G1.Sniper Z97", QUIRK_R3DI),
- 	SND_PCI_QUIRK(0x1458, 0xA036, "Gigabyte GA-Z170X-Gaming 7", QUIRK_R3DI),
- 	SND_PCI_QUIRK(0x3842, 0x1038, "EVGA X99 Classified", QUIRK_R3DI),
-+	SND_PCI_QUIRK(0x3842, 0x104b, "EVGA X299 Dark", QUIRK_R3DI),
- 	SND_PCI_QUIRK(0x3842, 0x1055, "EVGA Z390 DARK", QUIRK_R3DI),
- 	SND_PCI_QUIRK(0x1102, 0x0013, "Recon3D", QUIRK_R3D),
- 	SND_PCI_QUIRK(0x1102, 0x0018, "Recon3D", QUIRK_R3D),
+--- a/sound/hda/hdac_device.c
++++ b/sound/hda/hdac_device.c
+@@ -611,7 +611,7 @@ EXPORT_SYMBOL_GPL(snd_hdac_power_up_pm);
+ int snd_hdac_keep_power_up(struct hdac_device *codec)
+ {
+ 	if (!atomic_inc_not_zero(&codec->in_pm)) {
+-		int ret = pm_runtime_get_if_in_use(&codec->dev);
++		int ret = pm_runtime_get_if_active(&codec->dev, true);
+ 		if (!ret)
+ 			return -1;
+ 		if (ret < 0)
 
 
