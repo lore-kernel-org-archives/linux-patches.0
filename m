@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACF2569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:30:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A985C433D2;
-	Sun, 28 May 2023 19:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC81569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:30:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1476C433EF;
+	Sun, 28 May 2023 19:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302235;
-	bh=zCdpNVPfeDAQcv3jdeBf44o13GYLk5d6BHn11DuTU1Y=;
+	s=korg; t=1685302238;
+	bh=RRqZ1TgbI249GOFaj8WbfBJR8wLUs2OPLIPtG60PmYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZYo/plt9rKrJlelM258H1+jALEWTmOnB8zrnsPKSyUTYEhphxKLb5I7IiEnKTK+O
-	 XV6hsrBVAWLqTDz+v/4u4Rg8amxPTLYksxlGFQJ5kD0PjS/XTAEyEv+5WFu02vR8xk
-	 Z2CkLDumZ6IljZc822Igwc4CoEuBUNjp4ZmvcBMo=
+	b=SA+0nGUrROqJG9T0klY7j51cOhogiEnEFm7rxnZg9PyqAahjVetLeWvwFewXyIXmz
+	 iqn1iBvXAcjvidxyt1Ip4/LzRm1loz0EgRXFRzbndsHnHHTtZo6cLS95/7PFeZ8ldQ
+	 +N6gPsP7LX7Sgu1C3cvIA1gIN0zgONAmWHhQu4xI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Fan Tan <zifantan@google.com>,
+	Jann Horn <jannh@google.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Yang Shi <yang.shi@linux.alibaba.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
 	Carlos Llamas <cmllamas@google.com>,
 	Todd Kjos <tkjos@google.com>
-Subject: [PATCH 6.3 053/127] binder: fix UAF caused by faulty buffer cleanup
-Date: Sun, 28 May 2023 20:10:29 +0100
-Message-Id: <20230528190838.089378691@linuxfoundation.org>
+Subject: [PATCH 6.3 054/127] binder: fix UAF of alloc->vma in race with munmap()
+Date: Sun, 28 May 2023 20:10:30 +0100
+Message-Id: <20230528190838.125558868@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -37,156 +40,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Carlos Llamas <cmllamas@google.com>
 
-commit bdc1c5fac982845a58d28690cdb56db8c88a530d upstream.
+commit d1d8875c8c13517f6fd1ff8d4d3e1ac366a17e07 upstream.
 
-In binder_transaction_buffer_release() the 'failed_at' offset indicates
-the number of objects to clean up. However, this function was changed by
-commit 44d8047f1d87 ("binder: use standard functions to allocate fds"),
-to release all the objects in the buffer when 'failed_at' is zero.
+[ cmllamas: clean forward port from commit 015ac18be7de ("binder: fix
+  UAF of alloc->vma in race with munmap()") in 5.10 stable. It is needed
+  in mainline after the revert of commit a43cfc87caaf ("android: binder:
+  stop saving a pointer to the VMA") as pointed out by Liam. The commit
+  log and tags have been tweaked to reflect this. ]
 
-This introduced an issue when a transaction buffer is released without
-any objects having been processed so far. In this case, 'failed_at' is
-indeed zero yet it is misinterpreted as releasing the entire buffer.
+In commit 720c24192404 ("ANDROID: binder: change down_write to
+down_read") binder assumed the mmap read lock is sufficient to protect
+alloc->vma inside binder_update_page_range(). This used to be accurate
+until commit dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in
+munmap"), which now downgrades the mmap_lock after detaching the vma
+from the rbtree in munmap(). Then it proceeds to teardown and free the
+vma with only the read lock held.
 
-This leads to use-after-free errors where nodes are incorrectly freed
-and subsequently accessed. Such is the case in the following KASAN
-report:
+This means that accesses to alloc->vma in binder_update_page_range() now
+will race with vm_area_free() in munmap() and can cause a UAF as shown
+in the following KASAN trace:
 
   ==================================================================
-  BUG: KASAN: slab-use-after-free in binder_thread_read+0xc40/0x1f30
-  Read of size 8 at addr ffff4faf037cfc58 by task poc/474
+  BUG: KASAN: use-after-free in vm_insert_page+0x7c/0x1f0
+  Read of size 8 at addr ffff16204ad00600 by task server/558
 
-  CPU: 6 PID: 474 Comm: poc Not tainted 6.3.0-12570-g7df047b3f0aa #5
+  CPU: 3 PID: 558 Comm: server Not tainted 5.10.150-00001-gdc8dcf942daa #1
   Hardware name: linux,dummy-virt (DT)
   Call trace:
-   dump_backtrace+0x94/0xec
-   show_stack+0x18/0x24
-   dump_stack_lvl+0x48/0x60
-   print_report+0xf8/0x5b8
-   kasan_report+0xb8/0xfc
-   __asan_load8+0x9c/0xb8
-   binder_thread_read+0xc40/0x1f30
-   binder_ioctl+0xd9c/0x1768
-   __arm64_sys_ioctl+0xd4/0x118
-   invoke_syscall+0x60/0x188
-  [...]
+   dump_backtrace+0x0/0x2a0
+   show_stack+0x18/0x2c
+   dump_stack+0xf8/0x164
+   print_address_description.constprop.0+0x9c/0x538
+   kasan_report+0x120/0x200
+   __asan_load8+0xa0/0xc4
+   vm_insert_page+0x7c/0x1f0
+   binder_update_page_range+0x278/0x50c
+   binder_alloc_new_buf+0x3f0/0xba0
+   binder_transaction+0x64c/0x3040
+   binder_thread_write+0x924/0x2020
+   binder_ioctl+0x1610/0x2e5c
+   __arm64_sys_ioctl+0xd4/0x120
+   el0_svc_common.constprop.0+0xac/0x270
+   do_el0_svc+0x38/0xa0
+   el0_svc+0x1c/0x2c
+   el0_sync_handler+0xe8/0x114
+   el0_sync+0x180/0x1c0
 
-  Allocated by task 474:
-   kasan_save_stack+0x3c/0x64
-   kasan_set_track+0x2c/0x40
-   kasan_save_alloc_info+0x24/0x34
-   __kasan_kmalloc+0xb8/0xbc
-   kmalloc_trace+0x48/0x5c
-   binder_new_node+0x3c/0x3a4
-   binder_transaction+0x2b58/0x36f0
-   binder_thread_write+0x8e0/0x1b78
-   binder_ioctl+0x14a0/0x1768
-   __arm64_sys_ioctl+0xd4/0x118
-   invoke_syscall+0x60/0x188
-  [...]
+  Allocated by task 559:
+   kasan_save_stack+0x38/0x6c
+   __kasan_kmalloc.constprop.0+0xe4/0xf0
+   kasan_slab_alloc+0x18/0x2c
+   kmem_cache_alloc+0x1b0/0x2d0
+   vm_area_alloc+0x28/0x94
+   mmap_region+0x378/0x920
+   do_mmap+0x3f0/0x600
+   vm_mmap_pgoff+0x150/0x17c
+   ksys_mmap_pgoff+0x284/0x2dc
+   __arm64_sys_mmap+0x84/0xa4
+   el0_svc_common.constprop.0+0xac/0x270
+   do_el0_svc+0x38/0xa0
+   el0_svc+0x1c/0x2c
+   el0_sync_handler+0xe8/0x114
+   el0_sync+0x180/0x1c0
 
-  Freed by task 475:
-   kasan_save_stack+0x3c/0x64
-   kasan_set_track+0x2c/0x40
-   kasan_save_free_info+0x38/0x5c
-   __kasan_slab_free+0xe8/0x154
-   __kmem_cache_free+0x128/0x2bc
-   kfree+0x58/0x70
-   binder_dec_node_tmpref+0x178/0x1fc
-   binder_transaction_buffer_release+0x430/0x628
-   binder_transaction+0x1954/0x36f0
-   binder_thread_write+0x8e0/0x1b78
-   binder_ioctl+0x14a0/0x1768
-   __arm64_sys_ioctl+0xd4/0x118
-   invoke_syscall+0x60/0x188
+  Freed by task 560:
+   kasan_save_stack+0x38/0x6c
+   kasan_set_track+0x28/0x40
+   kasan_set_free_info+0x24/0x4c
+   __kasan_slab_free+0x100/0x164
+   kasan_slab_free+0x14/0x20
+   kmem_cache_free+0xc4/0x34c
+   vm_area_free+0x1c/0x2c
+   remove_vma+0x7c/0x94
+   __do_munmap+0x358/0x710
+   __vm_munmap+0xbc/0x130
+   __arm64_sys_munmap+0x4c/0x64
+   el0_svc_common.constprop.0+0xac/0x270
+   do_el0_svc+0x38/0xa0
+   el0_svc+0x1c/0x2c
+   el0_sync_handler+0xe8/0x114
+   el0_sync+0x180/0x1c0
+
   [...]
   ==================================================================
 
-In order to avoid these issues, let's always calculate the intended
-'failed_at' offset beforehand. This is renamed and wrapped in a helper
-function to make it clear and convenient.
+To prevent the race above, revert back to taking the mmap write lock
+inside binder_update_page_range(). One might expect an increase of mmap
+lock contention. However, binder already serializes these calls via top
+level alloc->mutex. Also, there was no performance impact shown when
+running the binder benchmark tests.
 
-Fixes: 32e9f56a96d8 ("binder: don't detect sender/target during buffer cleanup")
-Reported-by: Zi Fan Tan <zifantan@google.com>
-Cc: stable@vger.kernel.org
+Fixes: c0fd2101781e ("Revert "android: binder: stop saving a pointer to the VMA"")
+Fixes: dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in munmap")
+Reported-by: Jann Horn <jannh@google.com>
+Closes: https://lore.kernel.org/all/20230518144052.xkj6vmddccq4v66b@revolver
+Cc: <stable@vger.kernel.org>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Yang Shi <yang.shi@linux.alibaba.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
 Signed-off-by: Carlos Llamas <cmllamas@google.com>
 Acked-by: Todd Kjos <tkjos@google.com>
-Link: https://lore.kernel.org/r/20230505203020.4101154-1-cmllamas@google.com
+Link: https://lore.kernel.org/r/20230519195950.1775656-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |   28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/android/binder_alloc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -1934,24 +1934,23 @@ static void binder_deferred_fd_close(int
- static void binder_transaction_buffer_release(struct binder_proc *proc,
- 					      struct binder_thread *thread,
- 					      struct binder_buffer *buffer,
--					      binder_size_t failed_at,
-+					      binder_size_t off_end_offset,
- 					      bool is_failure)
- {
- 	int debug_id = buffer->debug_id;
--	binder_size_t off_start_offset, buffer_offset, off_end_offset;
-+	binder_size_t off_start_offset, buffer_offset;
+--- a/drivers/android/binder_alloc.c
++++ b/drivers/android/binder_alloc.c
+@@ -212,7 +212,7 @@ static int binder_update_page_range(stru
+ 		mm = alloc->mm;
  
- 	binder_debug(BINDER_DEBUG_TRANSACTION,
- 		     "%d buffer release %d, size %zd-%zd, failed at %llx\n",
- 		     proc->pid, buffer->debug_id,
- 		     buffer->data_size, buffer->offsets_size,
--		     (unsigned long long)failed_at);
-+		     (unsigned long long)off_end_offset);
- 
- 	if (buffer->target_node)
- 		binder_dec_node(buffer->target_node, 1, 0);
- 
- 	off_start_offset = ALIGN(buffer->data_size, sizeof(void *));
--	off_end_offset = is_failure && failed_at ? failed_at :
--				off_start_offset + buffer->offsets_size;
-+
- 	for (buffer_offset = off_start_offset; buffer_offset < off_end_offset;
- 	     buffer_offset += sizeof(binder_size_t)) {
- 		struct binder_object_header *hdr;
-@@ -2111,6 +2110,21 @@ static void binder_transaction_buffer_re
+ 	if (mm) {
+-		mmap_read_lock(mm);
++		mmap_write_lock(mm);
+ 		vma = alloc->vma;
  	}
- }
  
-+/* Clean up all the objects in the buffer */
-+static inline void binder_release_entire_buffer(struct binder_proc *proc,
-+						struct binder_thread *thread,
-+						struct binder_buffer *buffer,
-+						bool is_failure)
-+{
-+	binder_size_t off_end_offset;
-+
-+	off_end_offset = ALIGN(buffer->data_size, sizeof(void *));
-+	off_end_offset += buffer->offsets_size;
-+
-+	binder_transaction_buffer_release(proc, thread, buffer,
-+					  off_end_offset, is_failure);
-+}
-+
- static int binder_translate_binder(struct flat_binder_object *fp,
- 				   struct binder_transaction *t,
- 				   struct binder_thread *thread)
-@@ -2806,7 +2820,7 @@ static int binder_proc_transaction(struc
- 		t_outdated->buffer = NULL;
- 		buffer->transaction = NULL;
- 		trace_binder_transaction_update_buffer_release(buffer);
--		binder_transaction_buffer_release(proc, NULL, buffer, 0, 0);
-+		binder_release_entire_buffer(proc, NULL, buffer, false);
- 		binder_alloc_free_buf(&proc->alloc, buffer);
- 		kfree(t_outdated);
- 		binder_stats_deleted(BINDER_STAT_TRANSACTION);
-@@ -3775,7 +3789,7 @@ binder_free_buf(struct binder_proc *proc
- 		binder_node_inner_unlock(buf_node);
+@@ -270,7 +270,7 @@ static int binder_update_page_range(stru
+ 		trace_binder_alloc_page_end(alloc, index);
  	}
- 	trace_binder_transaction_buffer_release(buffer);
--	binder_transaction_buffer_release(proc, thread, buffer, 0, is_failure);
-+	binder_release_entire_buffer(proc, thread, buffer, is_failure);
- 	binder_alloc_free_buf(&proc->alloc, buffer);
- }
- 
+ 	if (mm) {
+-		mmap_read_unlock(mm);
++		mmap_write_unlock(mm);
+ 		mmput(mm);
+ 	}
+ 	return 0;
+@@ -303,7 +303,7 @@ err_page_ptr_cleared:
+ 	}
+ err_no_vma:
+ 	if (mm) {
+-		mmap_read_unlock(mm);
++		mmap_write_unlock(mm);
+ 		mmput(mm);
+ 	}
+ 	return vma ? -ENOMEM : -ESRCH;
 
 
