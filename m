@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88427611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:20:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9F0CC433EF;
-	Sun, 28 May 2023 19:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD29C611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:20:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EE6C433D2;
+	Sun, 28 May 2023 19:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301645;
-	bh=2MoMWExnZSUBjyiAeqQHwxYdgC6498XHvZRNTygb2Yo=;
+	s=korg; t=1685301647;
+	bh=e/97fkmAif8R0ArmNISED9pQRoAO98x/oEfPqtOnQpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7zmxDP3zIhVob9hGlRMWyHw8zmxK5XThZ0IHNFs/SVtmZ7gKqUX0dm1fTxZVLOnt
-	 bAj4ZpLm3yRtzDo46tPfbW1/acxt27vW4+jWI9klb4FGiSdp/4eraWmVAwnCBCM31o
-	 PxASMq6+JUOEXAWVjnLZLa1hCdz5dBDC8QEwt8as=
+	b=I25QONOULP+bz1SLaxca1QvJ7nSjAbYw1ZvidlUd8+Le6t29X9f5DHcbkBcV4aYQ5
+	 e8fD+nbV3Uc5dAuRk3rC1lN7JIKUn5kcTF7tkVsCXKZ2A32q8dKSIG5un5rPmgpXFo
+	 8u3r+WZBcVDJfg/k4I0ksyYLGyRG+6Y6WM8OE5PA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hardik Garg <hargar@linux.microsoft.com>,
-	"Tyler Hicks (Microsoft)" <code@tyhicks.com>
-Subject: [PATCH 4.19 111/132] selftests/memfd: Fix unknown type name build failure
-Date: Sun, 28 May 2023 20:10:50 +0100
-Message-Id: <20230528190837.157878076@linuxfoundation.org>
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.cz>,
+	Ping Cheng <pinglinux@gmail.com>
+Subject: [PATCH 4.19 085/132] HID: wacom: Force pen out of prox if no events have been received in a while
+Date: Sun, 28 May 2023 20:10:24 +0100
+Message-Id: <20230528190836.157311176@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -34,35 +35,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hardik Garg <hargar@linux.microsoft.com>
+From: Jason Gerecke <killertofu@gmail.com>
 
-Partially backport v6.3 commit 11f75a01448f ("selftests/memfd: add tests
-for MFD_NOEXEC_SEAL MFD_EXEC") to fix an unknown type name build error.
-In some systems, the __u64 typedef is not present due to differences in
-system headers, causing compilation errors like this one:
+commit 94b179052f95c294d83e9c9c34f7833cf3cd4305 upstream.
 
-fuse_test.c:64:8: error: unknown type name '__u64'
-   64 | static __u64 mfd_assert_get_seals(int fd)
+Prox-out events may not be reliably sent by some AES firmware. This can
+cause problems for users, particularly due to arbitration logic disabling
+touch input while the pen is in prox.
 
-This header includes the  __u64 typedef which increases the likelihood
-of successful compilation on a wider variety of systems.
+This commit adds a timer which is reset every time a new prox event is
+received. When the timer expires we check to see if the pen is still in
+prox and force it out if necessary. This is patterend off of the same
+solution used by 'hid-letsketch' driver which has a similar problem.
 
-Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
-Reviewed-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
+Link: https://github.com/linuxwacom/input-wacom/issues/310
+Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Cc: Ping Cheng <pinglinux@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/memfd/fuse_test.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/hid/wacom.h     |    3 +++
+ drivers/hid/wacom_sys.c |    2 ++
+ drivers/hid/wacom_wac.c |   39 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 44 insertions(+)
 
---- a/tools/testing/selftests/memfd/fuse_test.c
-+++ b/tools/testing/selftests/memfd/fuse_test.c
-@@ -22,6 +22,7 @@
- #include <linux/falloc.h>
- #include <linux/fcntl.h>
- #include <linux/memfd.h>
-+#include <linux/types.h>
- #include <sched.h>
- #include <stdio.h>
- #include <stdlib.h>
+--- a/drivers/hid/wacom.h
++++ b/drivers/hid/wacom.h
+@@ -94,6 +94,7 @@
+ #include <linux/leds.h>
+ #include <linux/usb/input.h>
+ #include <linux/power_supply.h>
++#include <linux/timer.h>
+ #include <asm/unaligned.h>
+ 
+ /*
+@@ -170,6 +171,7 @@ struct wacom {
+ 	struct delayed_work init_work;
+ 	struct wacom_remote *remote;
+ 	struct work_struct mode_change_work;
++	struct timer_list idleprox_timer;
+ 	bool generic_has_leds;
+ 	struct wacom_leds {
+ 		struct wacom_group_leds *groups;
+@@ -242,4 +244,5 @@ struct wacom_led *wacom_led_find(struct
+ struct wacom_led *wacom_led_next(struct wacom *wacom, struct wacom_led *cur);
+ int wacom_equivalent_usage(int usage);
+ int wacom_initialize_leds(struct wacom *wacom);
++void wacom_idleprox_timeout(struct timer_list *list);
+ #endif
+--- a/drivers/hid/wacom_sys.c
++++ b/drivers/hid/wacom_sys.c
+@@ -2754,6 +2754,7 @@ static int wacom_probe(struct hid_device
+ 	INIT_WORK(&wacom->battery_work, wacom_battery_work);
+ 	INIT_WORK(&wacom->remote_work, wacom_remote_work);
+ 	INIT_WORK(&wacom->mode_change_work, wacom_mode_change_work);
++	timer_setup(&wacom->idleprox_timer, &wacom_idleprox_timeout, TIMER_DEFERRABLE);
+ 
+ 	/* ask for the report descriptor to be loaded by HID */
+ 	error = hid_parse(hdev);
+@@ -2802,6 +2803,7 @@ static void wacom_remove(struct hid_devi
+ 	cancel_work_sync(&wacom->battery_work);
+ 	cancel_work_sync(&wacom->remote_work);
+ 	cancel_work_sync(&wacom->mode_change_work);
++	del_timer_sync(&wacom->idleprox_timer);
+ 	if (hdev->bus == BUS_BLUETOOTH)
+ 		device_remove_file(&hdev->dev, &dev_attr_speed);
+ 
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -15,6 +15,7 @@
+ #include "wacom_wac.h"
+ #include "wacom.h"
+ #include <linux/input/mt.h>
++#include <linux/jiffies.h>
+ 
+ /* resolution for penabled devices */
+ #define WACOM_PL_RES		20
+@@ -45,6 +46,43 @@ static int wacom_numbered_button_to_key(
+ 
+ static void wacom_update_led(struct wacom *wacom, int button_count, int mask,
+ 			     int group);
++
++static void wacom_force_proxout(struct wacom_wac *wacom_wac)
++{
++	struct input_dev *input = wacom_wac->pen_input;
++
++	wacom_wac->shared->stylus_in_proximity = 0;
++
++	input_report_key(input, BTN_TOUCH, 0);
++	input_report_key(input, BTN_STYLUS, 0);
++	input_report_key(input, BTN_STYLUS2, 0);
++	input_report_key(input, BTN_STYLUS3, 0);
++	input_report_key(input, wacom_wac->tool[0], 0);
++	if (wacom_wac->serial[0]) {
++		input_report_abs(input, ABS_MISC, 0);
++	}
++	input_report_abs(input, ABS_PRESSURE, 0);
++
++	wacom_wac->tool[0] = 0;
++	wacom_wac->id[0] = 0;
++	wacom_wac->serial[0] = 0;
++
++	input_sync(input);
++}
++
++void wacom_idleprox_timeout(struct timer_list *list)
++{
++	struct wacom *wacom = from_timer(wacom, list, idleprox_timer);
++	struct wacom_wac *wacom_wac = &wacom->wacom_wac;
++
++	if (!wacom_wac->hid_data.sense_state) {
++		return;
++	}
++
++	hid_warn(wacom->hdev, "%s: tool appears to be hung in-prox. forcing it out.\n", __func__);
++	wacom_force_proxout(wacom_wac);
++}
++
+ /*
+  * Percent of battery capacity for Graphire.
+  * 8th value means AC online and show 100% capacity.
+@@ -2255,6 +2293,7 @@ static void wacom_wac_pen_event(struct h
+ 		value = field->logical_maximum - value;
+ 		break;
+ 	case HID_DG_INRANGE:
++		mod_timer(&wacom->idleprox_timer, jiffies + msecs_to_jiffies(100));
+ 		wacom_wac->hid_data.inrange_state = value;
+ 		if (!(features->quirks & WACOM_QUIRK_SENSE))
+ 			wacom_wac->hid_data.sense_state = value;
 
 
