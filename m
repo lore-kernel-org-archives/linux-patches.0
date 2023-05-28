@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E7D611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E97C433D2;
-	Sun, 28 May 2023 19:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5CDB611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2510C433D2;
+	Sun, 28 May 2023 19:13:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301230;
-	bh=zQi2eM/DoY4SalsehEeFzNcXkQCabmHiuWhEdz1j8wk=;
+	s=korg; t=1685301233;
+	bh=3n+SNcNMcP7hfTQJNvXdLvIKxdODuYOCP6fDOZ6oYRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jwVxnbIDHMRpeza7+74VSBZiwvUWdgT+pbjtQj73YO605VzXGq4qJGmyERm2Vq8eg
-	 evq0M63emG07RiMSHSBCqLrZu4Zn4uIpAgVeOUV/i81dCeDz7gwtea536RnMhcWf0D
-	 T/jCRSE9jlJADozj5Xs2uqzBtrljRBLOssAfFJFE=
+	b=uYPCccfyYfUtxnBsBUcpC1uU8ZT80LVlx7Yfnwp8bvgUqM8GoabUOH96s9kUJKqO9
+	 ngon5FKMVE7dWtJsibYTILjtja6NI2B5+Tu1N9YX4hgDz7oduWHZNMpqTyjxMGOj4a
+	 xHqDpjOW7Qc65+icHR0HDYrc4ijny5nLd7p4ZGaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Vicki Pfau <vi@endrift.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 34/86] clk: tegra20: fix gcc-7 constant overflow warning
-Date: Sun, 28 May 2023 20:10:08 +0100
-Message-Id: <20230528190829.849207795@linuxfoundation.org>
+Subject: [PATCH 4.14 35/86] Input: xpad - add constants for GIP interface numbers
+Date: Sun, 28 May 2023 20:10:09 +0100
+Message-Id: <20230528190829.885786347@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,73 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Vicki Pfau <vi@endrift.com>
 
-[ Upstream commit b4a2adbf3586efa12fe78b9dec047423e01f3010 ]
+[ Upstream commit f9b2e603c6216824e34dc9a67205d98ccc9a41ca ]
 
-Older gcc versions get confused by comparing a u32 value to a negative
-constant in a switch()/case block:
+Wired GIP devices present multiple interfaces with the same USB identification
+other than the interface number. This adds constants for differentiating two of
+them and uses them where appropriate
 
-drivers/clk/tegra/clk-tegra20.c: In function 'tegra20_clk_measure_input_freq':
-drivers/clk/tegra/clk-tegra20.c:581:2: error: case label does not reduce to an integer constant
-  case OSC_CTRL_OSC_FREQ_12MHZ:
-  ^~~~
-drivers/clk/tegra/clk-tegra20.c:593:2: error: case label does not reduce to an integer constant
-  case OSC_CTRL_OSC_FREQ_26MHZ:
-
-Make the constants unsigned instead.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230227085914.2560984-1-arnd@kernel.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Vicki Pfau <vi@endrift.com>
+Link: https://lore.kernel.org/r/20230411031650.960322-2-vi@endrift.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/tegra/clk-tegra20.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ drivers/input/joystick/xpad.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/tegra/clk-tegra20.c b/drivers/clk/tegra/clk-tegra20.c
-index 4c9038e738886..a660adaa4920f 100644
---- a/drivers/clk/tegra/clk-tegra20.c
-+++ b/drivers/clk/tegra/clk-tegra20.c
-@@ -27,24 +27,24 @@
- #include "clk-id.h"
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index 1a12f95227301..f1c2bc108fd76 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -506,6 +506,9 @@ struct xboxone_init_packet {
+ 	}
  
- #define OSC_CTRL 0x50
--#define OSC_CTRL_OSC_FREQ_MASK (3<<30)
--#define OSC_CTRL_OSC_FREQ_13MHZ (0<<30)
--#define OSC_CTRL_OSC_FREQ_19_2MHZ (1<<30)
--#define OSC_CTRL_OSC_FREQ_12MHZ (2<<30)
--#define OSC_CTRL_OSC_FREQ_26MHZ (3<<30)
--#define OSC_CTRL_MASK (0x3f2 | OSC_CTRL_OSC_FREQ_MASK)
--
--#define OSC_CTRL_PLL_REF_DIV_MASK (3<<28)
--#define OSC_CTRL_PLL_REF_DIV_1		(0<<28)
--#define OSC_CTRL_PLL_REF_DIV_2		(1<<28)
--#define OSC_CTRL_PLL_REF_DIV_4		(2<<28)
-+#define OSC_CTRL_OSC_FREQ_MASK (3u<<30)
-+#define OSC_CTRL_OSC_FREQ_13MHZ (0u<<30)
-+#define OSC_CTRL_OSC_FREQ_19_2MHZ (1u<<30)
-+#define OSC_CTRL_OSC_FREQ_12MHZ (2u<<30)
-+#define OSC_CTRL_OSC_FREQ_26MHZ (3u<<30)
-+#define OSC_CTRL_MASK (0x3f2u | OSC_CTRL_OSC_FREQ_MASK)
+ 
++#define GIP_WIRED_INTF_DATA 0
++#define GIP_WIRED_INTF_AUDIO 1
 +
-+#define OSC_CTRL_PLL_REF_DIV_MASK	(3u<<28)
-+#define OSC_CTRL_PLL_REF_DIV_1		(0u<<28)
-+#define OSC_CTRL_PLL_REF_DIV_2		(1u<<28)
-+#define OSC_CTRL_PLL_REF_DIV_4		(2u<<28)
+ /*
+  * This packet is required for all Xbox One pads with 2015
+  * or later firmware installed (or present from the factory).
+@@ -1830,7 +1833,7 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
+ 	}
  
- #define OSC_FREQ_DET 0x58
--#define OSC_FREQ_DET_TRIG (1<<31)
-+#define OSC_FREQ_DET_TRIG (1u<<31)
- 
- #define OSC_FREQ_DET_STATUS 0x5c
--#define OSC_FREQ_DET_BUSY (1<<31)
--#define OSC_FREQ_DET_CNT_MASK 0xFFFF
-+#define OSC_FREQ_DET_BUSYu (1<<31)
-+#define OSC_FREQ_DET_CNT_MASK 0xFFFFu
- 
- #define TEGRA20_CLK_PERIPH_BANKS	3
- 
+ 	if (xpad->xtype == XTYPE_XBOXONE &&
+-	    intf->cur_altsetting->desc.bInterfaceNumber != 0) {
++	    intf->cur_altsetting->desc.bInterfaceNumber != GIP_WIRED_INTF_DATA) {
+ 		/*
+ 		 * The Xbox One controller lists three interfaces all with the
+ 		 * same interface class, subclass and protocol. Differentiate by
 -- 
 2.39.2
 
