@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D242B611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:44:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC32C433EF;
-	Sun, 28 May 2023 19:44:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653BE611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:44:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BF9C433D2;
+	Sun, 28 May 2023 19:44:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303081;
-	bh=SWQb1EoQzjP6GCWmYP5J+/uJAIKTXjNVdAvPYYYcIJY=;
+	s=korg; t=1685303084;
+	bh=Aig8BKVtcdHXTBiWE//PFnhEEIen2/fP2ryL/8fOTwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E0XtMsRbJNtSdBGPiZL9ZOCy53Cu96OSv+MTVGbSbBHLvU0BCJ1nIMyRRG14oZz2T
-	 rMFGKRC2KlHtM8hBulmkMpVqrR4oLgKxLrPKW5JxEY8wheze+io177pq0o1y5E1DgI
-	 v8IRPdphvX9BZTKOFF2+Q5S3VLUOXS9pHFtJxwCo=
+	b=pPQ2UV4L7+qh3lXeQZqFkpOwPdJNqlVZ7iu096pNo+WOxx9SiCMSLwrOl0GugkdDG
+	 KBmxCvIVHNfbiEw2/ZFmk34TyPplmIPLg2pWoV7QRHbzv+V1vULbxPAblk9hNBc5Tv
+	 O948DcPn1yhj4K0EhGO+GXJo73yrWcoi68HXXrBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/211] cassini: Fix a memory leak in the error handling path of cas_init_one()
-Date: Sun, 28 May 2023 20:10:39 +0100
-Message-Id: <20230528190846.491802761@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 5.10 119/211] igb: fix bit_shift to be in [1..8] range
+Date: Sun, 28 May 2023 20:10:40 +0100
+Message-Id: <20230528190846.515609422@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -37,39 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 
-[ Upstream commit 412cd77a2c24b191c65ea53025222418db09817c ]
+[ Upstream commit 60d758659f1fb49e0d5b6ac2691ede8c0958795b ]
 
-cas_saturn_firmware_init() allocates some memory using vmalloc(). This
-memory is freed in the .remove() function but not it the error handling
-path of the probe.
+In igb_hash_mc_addr() the expression:
+        "mc_addr[4] >> 8 - bit_shift", right shifting "mc_addr[4]"
+shift by more than 7 bits always yields zero, so hash becomes not so different.
+Add initialization with bit_shift = 1 and add a loop condition to ensure
+bit_shift will be always in [1..8] range.
 
-Add the missing vfree() to avoid a memory leak, should an error occur.
-
-Fixes: fcaa40669cd7 ("cassini: use request_firmware")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Fixes: 9d5c824399de ("igb: PCI-Express 82575 Gigabit Ethernet driver")
+Signed-off-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sun/cassini.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/intel/igb/e1000_mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/sun/cassini.c b/drivers/net/ethernet/sun/cassini.c
-index 9ff894ba8d3ea..d245f6e21e8ca 100644
---- a/drivers/net/ethernet/sun/cassini.c
-+++ b/drivers/net/ethernet/sun/cassini.c
-@@ -5122,6 +5122,8 @@ static int cas_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 		cas_shutdown(cp);
- 	mutex_unlock(&cp->pm_mutex);
+diff --git a/drivers/net/ethernet/intel/igb/e1000_mac.c b/drivers/net/ethernet/intel/igb/e1000_mac.c
+index fd8eb2f9ab9dc..57e813405b311 100644
+--- a/drivers/net/ethernet/intel/igb/e1000_mac.c
++++ b/drivers/net/ethernet/intel/igb/e1000_mac.c
+@@ -426,7 +426,7 @@ void igb_mta_set(struct e1000_hw *hw, u32 hash_value)
+ static u32 igb_hash_mc_addr(struct e1000_hw *hw, u8 *mc_addr)
+ {
+ 	u32 hash_value, hash_mask;
+-	u8 bit_shift = 0;
++	u8 bit_shift = 1;
  
-+	vfree(cp->fw_data);
-+
- 	pci_iounmap(pdev, cp->regs);
+ 	/* Register count multiplied by bits per register */
+ 	hash_mask = (hw->mac.mta_reg_count * 32) - 1;
+@@ -434,7 +434,7 @@ static u32 igb_hash_mc_addr(struct e1000_hw *hw, u8 *mc_addr)
+ 	/* For a mc_filter_type of 0, bit_shift is the number of left-shifts
+ 	 * where 0xFF would still fall within the hash mask.
+ 	 */
+-	while (hash_mask >> bit_shift != 0xFF)
++	while (hash_mask >> bit_shift != 0xFF && bit_shift < 4)
+ 		bit_shift++;
  
- 
+ 	/* The portion of the address that is used for the hash table
 -- 
 2.39.2
 
