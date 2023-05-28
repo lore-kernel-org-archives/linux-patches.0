@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2589F611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8617C4339B;
-	Sun, 28 May 2023 19:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B860611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A23BC433D2;
+	Sun, 28 May 2023 19:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301345;
-	bh=MHDUbS5x6EcYZiEhsxc6VPKHSh1MydXIHlKDyadq8KA=;
+	s=korg; t=1685301347;
+	bh=Kel0zdEClkPSrcuHOz5lVPdpbOQVuvi+mWOF6Zw93eA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UA49S5HOtEigUulbb1UFyKkyCG/eYs6ghvS2DLvzM9NNYfOrLnGR6kUdjws9zpwK1
-	 VmIh2HUq6weR9VDZGq1OvD/cbupOSPqDFlT4tPoB7J9EIjyYapwuQaIzztS8q+tU7D
-	 yRLaWF6f9HWbVUFl8GoHDdDiM56aj/YRUbqrz+qg=
+	b=Nq97UHj+p1pYl9yIgmlJMh7KQUgfKT8uXgEW35nCJzmSkjkaN7gt3y7AQuUm9b9UV
+	 8k/TuOeSj9rFLub68JhGEdDSbbUQRXmXH/loudNsBVj2EK46rhi3uyQVcuS4XxXs8m
+	 UDEMtBtYEXHjNMRNme2nFQZSbxPog8K2osH1C4sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Schilder <frans@dtu.dk>,
-	Xiubo Li <xiubli@redhat.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 4.14 52/86] ceph: force updating the msg pointer in non-split case
-Date: Sun, 28 May 2023 20:10:26 +0100
-Message-Id: <20230528190830.531143060@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 53/86] nilfs2: fix use-after-free bug of nilfs_root in nilfs_evict_inode()
+Date: Sun, 28 May 2023 20:10:27 +0100
+Message-Id: <20230528190830.566681284@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,46 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiubo Li <xiubli@redhat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 4cafd0400bcb6187c0d4ab4d4b0229a89ac4f8c2 upstream.
+commit 9b5a04ac3ad9898c4745cba46ea26de74ba56a8e upstream.
 
-When the MClientSnap reqeust's op is not CEPH_SNAP_OP_SPLIT the
-request may still contain a list of 'split_realms', and we need
-to skip it anyway. Or it will be parsed as a corrupt snaptrace.
+During unmount process of nilfs2, nothing holds nilfs_root structure after
+nilfs2 detaches its writer in nilfs_detach_log_writer().  However, since
+nilfs_evict_inode() uses nilfs_root for some cleanup operations, it may
+cause use-after-free read if inodes are left in "garbage_list" and
+released by nilfs_dispose_list() at the end of nilfs_detach_log_writer().
 
-Cc: stable@vger.kernel.org
-Link: https://tracker.ceph.com/issues/61200
-Reported-by: Frank Schilder <frans@dtu.dk>
-Signed-off-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fix this issue by modifying nilfs_evict_inode() to only clear inode
+without additional metadata changes that use nilfs_root if the file system
+is degraded to read-only or the writer is detached.
+
+Link: https://lkml.kernel.org/r/20230509152956.8313-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com
+Closes: https://lkml.kernel.org/r/00000000000099e5ac05fb1c3b85@google.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/snap.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/nilfs2/inode.c |   18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
---- a/fs/ceph/snap.c
-+++ b/fs/ceph/snap.c
-@@ -959,6 +959,19 @@ skip_inode:
- 				continue;
- 			adjust_snap_realm_parent(mdsc, child, realm->ino);
- 		}
-+	} else {
-+		/*
-+		 * In the non-split case both 'num_split_inos' and
-+		 * 'num_split_realms' should be 0, making this a no-op.
-+		 * However the MDS happens to populate 'split_realms' list
-+		 * in one of the UPDATE op cases by mistake.
-+		 *
-+		 * Skip both lists just in case to ensure that 'p' is
-+		 * positioned at the start of realm info, as expected by
-+		 * ceph_update_snap_trace().
-+		 */
-+		p += sizeof(u64) * num_split_inos;
-+		p += sizeof(u64) * num_split_realms;
- 	}
+--- a/fs/nilfs2/inode.c
++++ b/fs/nilfs2/inode.c
+@@ -939,6 +939,7 @@ void nilfs_evict_inode(struct inode *ino
+ 	struct nilfs_transaction_info ti;
+ 	struct super_block *sb = inode->i_sb;
+ 	struct nilfs_inode_info *ii = NILFS_I(inode);
++	struct the_nilfs *nilfs;
+ 	int ret;
  
- 	/*
+ 	if (inode->i_nlink || !ii->i_root || unlikely(is_bad_inode(inode))) {
+@@ -951,6 +952,23 @@ void nilfs_evict_inode(struct inode *ino
+ 
+ 	truncate_inode_pages_final(&inode->i_data);
+ 
++	nilfs = sb->s_fs_info;
++	if (unlikely(sb_rdonly(sb) || !nilfs->ns_writer)) {
++		/*
++		 * If this inode is about to be disposed after the file system
++		 * has been degraded to read-only due to file system corruption
++		 * or after the writer has been detached, do not make any
++		 * changes that cause writes, just clear it.
++		 * Do this check after read-locking ns_segctor_sem by
++		 * nilfs_transaction_begin() in order to avoid a race with
++		 * the writer detach operation.
++		 */
++		clear_inode(inode);
++		nilfs_clear_inode(inode);
++		nilfs_transaction_abort(sb);
++		return;
++	}
++
+ 	/* TODO: some of the following operations may fail.  */
+ 	nilfs_truncate_bmap(ii, 0);
+ 	nilfs_mark_inode_dirty(inode);
 
 
