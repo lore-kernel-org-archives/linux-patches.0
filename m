@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA11F611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CFDC433D2;
-	Sun, 28 May 2023 19:46:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60285611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2887C433EF;
+	Sun, 28 May 2023 19:46:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303172;
-	bh=K+Jf4sLfcZxlB9CwU/Xvo1hf2znIFFY9059nuJvwrtg=;
+	s=korg; t=1685303175;
+	bh=AntG3jEAUNwWfkWOZvP9omGDp32XaHBMnmnlYFEI6Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNE4Zi3MfyCfF+cggrAZT8eho7daHs7ODV3PqCS7Sh7luD4lGF662sqJBB+4XLKMe
-	 uPPWAEb/DDeSTEv/UO/+tlq5TLJu+ifEpwTk9cPGX0r6CS5gID27F3rVn0bNvdmyKo
-	 9rpSGXYe1AkRb+/c2x4M0U5I5H/Da69c5g7fuI6w=
+	b=bzJ7sdnpf+LE0quzZFIEC+ITyoPjsqE75NPVhNYXCCNTIyjheYPTi6JisD5WluGbP
+	 s0t8Jc2xzw+UMVK/wc/OBRLdoC7VVHnWSitdBzpxA5+cu8ZDYsG6G8JUSz7k/xptgR
+	 Kp/VRi65Zaci+S+K0f1lv7cXsmQw5/X0GpEdPqn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+60748c96cf5c6df8e581@syzkaller.appspotmail.com,
-	Taehee Yoo <ap420073@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 184/211] net: fix stack overflow when LRO is disabled for virtual interfaces
-Date: Sun, 28 May 2023 20:11:45 +0100
-Message-Id: <20230528190848.068823631@linuxfoundation.org>
+	syzbot+444ca0907e96f7c5e48b@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.10 185/211] udplite: Fix NULL pointer dereference in __sk_mem_raise_allocated().
+Date: Sun, 28 May 2023 20:11:46 +0100
+Message-Id: <20230528190848.095283933@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -37,138 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit ae9b15fbe63447bc1d3bba3769f409d17ca6fdf6 upstream.
+commit ad42a35bdfc6d3c0fc4cb4027d7b2757ce665665 upstream.
 
-When the virtual interface's feature is updated, it synchronizes the
-updated feature for its own lower interface.
-This propagation logic should be worked as the iteration, not recursively.
-But it works recursively due to the netdev notification unexpectedly.
-This problem occurs when it disables LRO only for the team and bonding
-interface type.
+syzbot reported [0] a null-ptr-deref in sk_get_rmem0() while using
+IPPROTO_UDPLITE (0x88):
 
-       team0
-         |
-  +------+------+-----+-----+
-  |      |      |     |     |
-team1  team2  team3  ...  team200
+  14:25:52 executing program 1:
+  r0 = socket$inet6(0xa, 0x80002, 0x88)
 
-If team0's LRO feature is updated, it generates the NETDEV_FEAT_CHANGE
-event to its own lower interfaces(team1 ~ team200).
-It is worked by netdev_sync_lower_features().
-So, the NETDEV_FEAT_CHANGE notification logic of each lower interface
-work iteratively.
-But generated NETDEV_FEAT_CHANGE event is also sent to the upper
-interface too.
-upper interface(team0) generates the NETDEV_FEAT_CHANGE event for its own
-lower interfaces again.
-lower and upper interfaces receive this event and generate this
-event again and again.
-So, the stack overflow occurs.
+We had a similar report [1] for probably sk_memory_allocated_add()
+in __sk_mem_raise_allocated(), and commit c915fe13cbaa ("udplite: fix
+NULL pointer dereference") fixed it by setting .memory_allocated for
+udplite_prot and udplitev6_prot.
 
-But it is not the infinite loop issue.
-Because the netdev_sync_lower_features() updates features before
-generating the NETDEV_FEAT_CHANGE event.
-Already synchronized lower interfaces skip notification logic.
-So, it is just the problem that iteration logic is changed to the
-recursive unexpectedly due to the notification mechanism.
+To fix the variant, we need to set either .sysctl_wmem_offset or
+.sysctl_rmem.
 
-Reproducer:
+Now UDP and UDPLITE share the same value for .memory_allocated, so we
+use the same .sysctl_wmem_offset for UDP and UDPLITE.
 
-ip link add team0 type team
-ethtool -K team0 lro on
-for i in {1..200}
-do
-        ip link add team$i master team0 type team
-        ethtool -K team$i lro on
-done
+[0]:
+general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] PREEMPT SMP KASAN
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 0 PID: 6829 Comm: syz-executor.1 Not tainted 6.4.0-rc2-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/28/2023
+RIP: 0010:sk_get_rmem0 include/net/sock.h:2907 [inline]
+RIP: 0010:__sk_mem_raise_allocated+0x806/0x17a0 net/core/sock.c:3006
+Code: c1 ea 03 80 3c 02 00 0f 85 23 0f 00 00 48 8b 44 24 08 48 8b 98 38 01 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 da 48 c1 ea 03 <0f> b6 14 02 48 89 d8 83 e0 07 83 c0 03 38 d0 0f 8d 6f 0a 00 00 8b
+RSP: 0018:ffffc90005d7f450 EFLAGS: 00010246
+RAX: dffffc0000000000 RBX: 0000000000000000 RCX: ffffc90004d92000
+RDX: 0000000000000000 RSI: ffffffff88066482 RDI: ffffffff8e2ccbb8
+RBP: ffff8880173f7000 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 0000000000030000
+R13: 0000000000000001 R14: 0000000000000340 R15: 0000000000000001
+FS:  0000000000000000(0000) GS:ffff8880b9800000(0063) knlGS:00000000f7f1cb40
+CS:  0010 DS: 002b ES: 002b CR0: 0000000080050033
+CR2: 000000002e82f000 CR3: 0000000034ff0000 CR4: 00000000003506f0
+Call Trace:
+ <TASK>
+ __sk_mem_schedule+0x6c/0xe0 net/core/sock.c:3077
+ udp_rmem_schedule net/ipv4/udp.c:1539 [inline]
+ __udp_enqueue_schedule_skb+0x776/0xb30 net/ipv4/udp.c:1581
+ __udpv6_queue_rcv_skb net/ipv6/udp.c:666 [inline]
+ udpv6_queue_rcv_one_skb+0xc39/0x16c0 net/ipv6/udp.c:775
+ udpv6_queue_rcv_skb+0x194/0xa10 net/ipv6/udp.c:793
+ __udp6_lib_mcast_deliver net/ipv6/udp.c:906 [inline]
+ __udp6_lib_rcv+0x1bda/0x2bd0 net/ipv6/udp.c:1013
+ ip6_protocol_deliver_rcu+0x2e7/0x1250 net/ipv6/ip6_input.c:437
+ ip6_input_finish+0x150/0x2f0 net/ipv6/ip6_input.c:482
+ NF_HOOK include/linux/netfilter.h:303 [inline]
+ NF_HOOK include/linux/netfilter.h:297 [inline]
+ ip6_input+0xa0/0xd0 net/ipv6/ip6_input.c:491
+ ip6_mc_input+0x40b/0xf50 net/ipv6/ip6_input.c:585
+ dst_input include/net/dst.h:468 [inline]
+ ip6_rcv_finish net/ipv6/ip6_input.c:79 [inline]
+ NF_HOOK include/linux/netfilter.h:303 [inline]
+ NF_HOOK include/linux/netfilter.h:297 [inline]
+ ipv6_rcv+0x250/0x380 net/ipv6/ip6_input.c:309
+ __netif_receive_skb_one_core+0x114/0x180 net/core/dev.c:5491
+ __netif_receive_skb+0x1f/0x1c0 net/core/dev.c:5605
+ netif_receive_skb_internal net/core/dev.c:5691 [inline]
+ netif_receive_skb+0x133/0x7a0 net/core/dev.c:5750
+ tun_rx_batched+0x4b3/0x7a0 drivers/net/tun.c:1553
+ tun_get_user+0x2452/0x39c0 drivers/net/tun.c:1989
+ tun_chr_write_iter+0xdf/0x200 drivers/net/tun.c:2035
+ call_write_iter include/linux/fs.h:1868 [inline]
+ new_sync_write fs/read_write.c:491 [inline]
+ vfs_write+0x945/0xd50 fs/read_write.c:584
+ ksys_write+0x12b/0x250 fs/read_write.c:637
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0x65/0xf0 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+RIP: 0023:0xf7f21579
+Code: b8 01 10 06 03 74 b4 01 10 07 03 74 b0 01 10 08 03 74 d8 01 00 00 00 00 00 00 00 00 00 00 00 00 00 51 52 55 89 e5 0f 34 cd 80 <5d> 5a 59 c3 90 90 90 90 8d b4 26 00 00 00 00 8d b4 26 00 00 00 00
+RSP: 002b:00000000f7f1c590 EFLAGS: 00000282 ORIG_RAX: 0000000000000004
+RAX: ffffffffffffffda RBX: 00000000000000c8 RCX: 0000000020000040
+RDX: 0000000000000083 RSI: 00000000f734e000 RDI: 0000000000000000
+RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000296 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+ </TASK>
+Modules linked in:
 
-ethtool -K team0 lro off
-
-In order to fix it, the notifier_ctx member of bonding/team is introduced.
-
-Reported-by: syzbot+60748c96cf5c6df8e581@syzkaller.appspotmail.com
-Fixes: fd867d51f889 ("net/core: generic support for disabling netdev features down stack")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://lore.kernel.org/r/20230517143010.3596250-1-ap420073@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lore.kernel.org/netdev/CANaxB-yCk8hhP68L4Q2nFOJht8sqgXGGQO2AftpHs0u1xyGG5A@mail.gmail.com/ [1]
+Fixes: 850cbaddb52d ("udp: use it's own memory accounting schema")
+Reported-by: syzbot+444ca0907e96f7c5e48b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=444ca0907e96f7c5e48b
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230523163305.66466-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/bonding/bond_main.c |    8 +++++++-
- drivers/net/team/team.c         |    7 ++++++-
- include/linux/if_team.h         |    1 +
- include/net/bonding.h           |    1 +
- 4 files changed, 15 insertions(+), 2 deletions(-)
+ net/ipv4/udplite.c |    2 ++
+ net/ipv6/udplite.c |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -3537,7 +3537,11 @@ static int bond_slave_netdev_event(unsig
- 		unblock_netpoll_tx();
- 		break;
- 	case NETDEV_FEAT_CHANGE:
--		bond_compute_features(bond);
-+		if (!bond->notifier_ctx) {
-+			bond->notifier_ctx = true;
-+			bond_compute_features(bond);
-+			bond->notifier_ctx = false;
-+		}
- 		break;
- 	case NETDEV_RESEND_IGMP:
- 		/* Propagate to master device */
-@@ -5360,6 +5364,8 @@ static int bond_init(struct net_device *
- 	if (!bond->wq)
- 		return -ENOMEM;
- 
-+	bond->notifier_ctx = false;
-+
- 	spin_lock_init(&bond->stats_lock);
- 	netdev_lockdep_set_classes(bond_dev);
- 
---- a/drivers/net/team/team.c
-+++ b/drivers/net/team/team.c
-@@ -1624,6 +1624,7 @@ static int team_init(struct net_device *
- 
- 	team->dev = dev;
- 	team_set_no_mode(team);
-+	team->notifier_ctx = false;
- 
- 	team->pcpu_stats = netdev_alloc_pcpu_stats(struct team_pcpu_stats);
- 	if (!team->pcpu_stats)
-@@ -3016,7 +3017,11 @@ static int team_device_event(struct noti
- 		team_del_slave(port->team->dev, dev);
- 		break;
- 	case NETDEV_FEAT_CHANGE:
--		team_compute_features(port->team);
-+		if (!port->team->notifier_ctx) {
-+			port->team->notifier_ctx = true;
-+			team_compute_features(port->team);
-+			port->team->notifier_ctx = false;
-+		}
- 		break;
- 	case NETDEV_PRECHANGEMTU:
- 		/* Forbid to change mtu of underlaying device */
---- a/include/linux/if_team.h
-+++ b/include/linux/if_team.h
-@@ -208,6 +208,7 @@ struct team {
- 	bool queue_override_enabled;
- 	struct list_head *qom_lists; /* array of queue override mapping lists */
- 	bool port_mtu_change_allowed;
-+	bool notifier_ctx;
- 	struct {
- 		unsigned int count;
- 		unsigned int interval; /* in ms */
---- a/include/net/bonding.h
-+++ b/include/net/bonding.h
-@@ -216,6 +216,7 @@ struct bonding {
- 	struct   bond_up_slave __rcu *usable_slaves;
- 	struct   bond_up_slave __rcu *all_slaves;
- 	bool     force_primary;
-+	bool     notifier_ctx;
- 	s32      slave_cnt; /* never change this value outside the attach/detach wrappers */
- 	int     (*recv_probe)(const struct sk_buff *, struct bonding *,
- 			      struct slave *);
+--- a/net/ipv4/udplite.c
++++ b/net/ipv4/udplite.c
+@@ -62,6 +62,8 @@ struct proto 	udplite_prot = {
+ 	.get_port	   = udp_v4_get_port,
+ 	.memory_allocated  = &udp_memory_allocated,
+ 	.sysctl_mem	   = sysctl_udp_mem,
++	.sysctl_wmem_offset = offsetof(struct net, ipv4.sysctl_udp_wmem_min),
++	.sysctl_rmem_offset = offsetof(struct net, ipv4.sysctl_udp_rmem_min),
+ 	.obj_size	   = sizeof(struct udp_sock),
+ 	.h.udp_table	   = &udplite_table,
+ };
+--- a/net/ipv6/udplite.c
++++ b/net/ipv6/udplite.c
+@@ -57,6 +57,8 @@ struct proto udplitev6_prot = {
+ 	.get_port	   = udp_v6_get_port,
+ 	.memory_allocated  = &udp_memory_allocated,
+ 	.sysctl_mem	   = sysctl_udp_mem,
++	.sysctl_wmem_offset = offsetof(struct net, ipv4.sysctl_udp_wmem_min),
++	.sysctl_rmem_offset = offsetof(struct net, ipv4.sysctl_udp_rmem_min),
+ 	.obj_size	   = sizeof(struct udp6_sock),
+ 	.h.udp_table	   = &udplite_table,
+ };
 
 
