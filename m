@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73F7569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:33:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F0AC433D2;
-	Sun, 28 May 2023 19:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D51B569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:33:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58F0C433D2;
+	Sun, 28 May 2023 19:33:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302395;
-	bh=TqawMfljZbjxfhjyoOXjeSbd+sobPpAjNMdAvPAt+nk=;
+	s=korg; t=1685302398;
+	bh=O/nfokxhGiRfmbxJvWMR67JXBTJAIl2jqAV6KaJEGXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sCbjhNwPrQYinfQnJInu55mBmBNPZ6VntFBmsN4lK9yr4U03d7yP1R3Gz/d8MbZvL
-	 gzDGH4tsNz563IV4jZdm2ucU2iEyRink0POuvjthVtdG/VgnwczPXOvY7Vu6aLyfS6
-	 36EezQBHZ1mqM8YmJl6YrQYpglqX7mlcVeXZ3WuY=
+	b=t2CZwd+2TLYqT+35lz8rjf9HSAS0oqiYCpr7MiK8+5aijFGpx4nZhAQTtolg0qfje
+	 KHgFnq/KyIVWOgeO3X6rDTTVVxRjAPMY6tdAjziOLafFQyd+QLVgznuCG3Wj1RsoYs
+	 h5uZa/pyiqijh/wwNyL/hqho8Ikb5TZpwCeTKQfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
+	Itamar Gozlan <igozlan@nvidia.com>,
+	Yevgeny Kliteynik <kliteyn@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>
-Subject: [PATCH 6.3 113/127] net/mlx5: Handle pairing of E-switch via uplink un/load APIs
-Date: Sun, 28 May 2023 20:11:29 +0100
-Message-Id: <20230528190839.932691600@linuxfoundation.org>
+Subject: [PATCH 6.3 114/127] net/mlx5: DR, Check force-loopback RC QP capability independently from RoCE
+Date: Sun, 28 May 2023 20:11:30 +0100
+Message-Id: <20230528190839.963226138@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -35,154 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Yevgeny Kliteynik <kliteyn@nvidia.com>
 
-commit 2be5bd42a5bba1a05daedc86cf0e248210009669 upstream.
+commit c7dd225bc224726c22db08e680bf787f60ebdee3 upstream.
 
-In case user switch a device from switchdev mode to legacy mode, mlx5
-first unpair the E-switch and afterwards unload the uplink vport.
->From the other hand, in case user remove or reload a device, mlx5
-first unload the uplink vport and afterwards unpair the E-switch.
+SW Steering uses RC QP for writing STEs to ICM. This writingis done in LB
+(loopback), and FL (force-loopback) QP is preferred for performance. FL is
+available when RoCE is enabled or disabled based on RoCE caps.
+This patch adds reading of FL capability from HCA caps in addition to the
+existing reading from RoCE caps, thus fixing the case where we didn't
+have loopback enabled when RoCE was disabled.
 
-The latter is causing a bug[1], hence, handle pairing of E-switch as
-part of uplink un/load APIs.
-
-[1]
-In case VF_LAG is used, every tc fdb flow is duplicated to the peer
-esw. However, the original esw keeps a pointer to this duplicated
-flow, not the peer esw.
-e.g.: if user create tc fdb flow over esw0, the flow is duplicated
-over esw1, in FW/HW, but in SW, esw0 keeps a pointer to the duplicated
-flow.
-During module unload while a peer tc fdb flow is still offloaded, in
-case the first device to be removed is the peer device (esw1 in the
-example above), the peer net-dev is destroyed, and so the mlx5e_priv
-is memset to 0.
-Afterwards, the peer device is trying to unpair himself from the
-original device (esw0 in the example above). Unpair API invoke the
-original device to clear peer flow from its eswitch (esw0), but the
-peer flow, which is stored over the original eswitch (esw0), is
-trying to use the peer mlx5e_priv, which is memset to 0 and result in
-bellow kernel-oops.
-
-[  157.964081 ] BUG: unable to handle page fault for address: 000000000002ce60
-[  157.964662 ] #PF: supervisor read access in kernel mode
-[  157.965123 ] #PF: error_code(0x0000) - not-present page
-[  157.965582 ] PGD 0 P4D 0
-[  157.965866 ] Oops: 0000 [#1] SMP
-[  157.967670 ] RIP: 0010:mlx5e_tc_del_fdb_flow+0x48/0x460 [mlx5_core]
-[  157.976164 ] Call Trace:
-[  157.976437 ]  <TASK>
-[  157.976690 ]  __mlx5e_tc_del_fdb_peer_flow+0xe6/0x100 [mlx5_core]
-[  157.977230 ]  mlx5e_tc_clean_fdb_peer_flows+0x67/0x90 [mlx5_core]
-[  157.977767 ]  mlx5_esw_offloads_unpair+0x2d/0x1e0 [mlx5_core]
-[  157.984653 ]  mlx5_esw_offloads_devcom_event+0xbf/0x130 [mlx5_core]
-[  157.985212 ]  mlx5_devcom_send_event+0xa3/0xb0 [mlx5_core]
-[  157.985714 ]  esw_offloads_disable+0x5a/0x110 [mlx5_core]
-[  157.986209 ]  mlx5_eswitch_disable_locked+0x152/0x170 [mlx5_core]
-[  157.986757 ]  mlx5_eswitch_disable+0x51/0x80 [mlx5_core]
-[  157.987248 ]  mlx5_unload+0x2a/0xb0 [mlx5_core]
-[  157.987678 ]  mlx5_uninit_one+0x5f/0xd0 [mlx5_core]
-[  157.988127 ]  remove_one+0x64/0xe0 [mlx5_core]
-[  157.988549 ]  pci_device_remove+0x31/0xa0
-[  157.988933 ]  device_release_driver_internal+0x18f/0x1f0
-[  157.989402 ]  driver_detach+0x3f/0x80
-[  157.989754 ]  bus_remove_driver+0x70/0xf0
-[  157.990129 ]  pci_unregister_driver+0x34/0x90
-[  157.990537 ]  mlx5_cleanup+0xc/0x1c [mlx5_core]
-[  157.990972 ]  __x64_sys_delete_module+0x15a/0x250
-[  157.991398 ]  ? exit_to_user_mode_prepare+0xea/0x110
-[  157.991840 ]  do_syscall_64+0x3d/0x90
-[  157.992198 ]  entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Fixes: 04de7dda7394 ("net/mlx5e: Infrastructure for duplicated offloading of TC flows")
-Fixes: 1418ddd96afd ("net/mlx5e: Duplicate offloaded TC eswitch rules under uplink LAG")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
+Fixes: 7304d603a57a ("net/mlx5: DR, Add support for force-loopback QP")
+Signed-off-by: Itamar Gozlan <igozlan@nvidia.com>
+Signed-off-by: Yevgeny Kliteynik <kliteyn@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_tc.c            |    4 +++-
- drivers/net/ethernet/mellanox/mlx5/core/eswitch.h          |    4 ++++
- drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c |    7 ++-----
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/steering/dr_cmd.c |    4 +++-
+ include/linux/mlx5/mlx5_ifc.h                             |    4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
-@@ -5449,6 +5449,8 @@ int mlx5e_tc_esw_init(struct mlx5_rep_up
- 		goto err_action_counter;
- 	}
+--- a/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_cmd.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/steering/dr_cmd.c
+@@ -117,6 +117,8 @@ int mlx5dr_cmd_query_device(struct mlx5_
+ 	caps->gvmi		= MLX5_CAP_GEN(mdev, vhca_id);
+ 	caps->flex_protocols	= MLX5_CAP_GEN(mdev, flex_parser_protocols);
+ 	caps->sw_format_ver	= MLX5_CAP_GEN(mdev, steering_format_version);
++	caps->roce_caps.fl_rc_qp_when_roce_disabled =
++		MLX5_CAP_GEN(mdev, fl_rc_qp_when_roce_disabled);
  
-+	mlx5_esw_offloads_devcom_init(esw);
-+
- 	return 0;
+ 	if (MLX5_CAP_GEN(mdev, roce)) {
+ 		err = dr_cmd_query_nic_vport_roce_en(mdev, 0, &roce_en);
+@@ -124,7 +126,7 @@ int mlx5dr_cmd_query_device(struct mlx5_
+ 			return err;
  
- err_action_counter:
-@@ -5477,7 +5479,7 @@ void mlx5e_tc_esw_cleanup(struct mlx5_re
- 	priv = netdev_priv(rpriv->netdev);
- 	esw = priv->mdev->priv.eswitch;
+ 		caps->roce_caps.roce_en = roce_en;
+-		caps->roce_caps.fl_rc_qp_when_roce_disabled =
++		caps->roce_caps.fl_rc_qp_when_roce_disabled |=
+ 			MLX5_CAP_ROCE(mdev, fl_rc_qp_when_roce_disabled);
+ 		caps->roce_caps.fl_rc_qp_when_roce_enabled =
+ 			MLX5_CAP_ROCE(mdev, fl_rc_qp_when_roce_enabled);
+--- a/include/linux/mlx5/mlx5_ifc.h
++++ b/include/linux/mlx5/mlx5_ifc.h
+@@ -1679,7 +1679,9 @@ struct mlx5_ifc_cmd_hca_cap_bits {
+ 	u8         rc[0x1];
  
--	mlx5e_tc_clean_fdb_peer_flows(esw);
-+	mlx5_esw_offloads_devcom_cleanup(esw);
- 
- 	mlx5e_tc_tun_cleanup(uplink_priv->encap);
- 
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -371,6 +371,8 @@ int mlx5_eswitch_enable(struct mlx5_eswi
- void mlx5_eswitch_disable_sriov(struct mlx5_eswitch *esw, bool clear_vf);
- void mlx5_eswitch_disable_locked(struct mlx5_eswitch *esw);
- void mlx5_eswitch_disable(struct mlx5_eswitch *esw);
-+void mlx5_esw_offloads_devcom_init(struct mlx5_eswitch *esw);
-+void mlx5_esw_offloads_devcom_cleanup(struct mlx5_eswitch *esw);
- int mlx5_eswitch_set_vport_mac(struct mlx5_eswitch *esw,
- 			       u16 vport, const u8 *mac);
- int mlx5_eswitch_set_vport_state(struct mlx5_eswitch *esw,
-@@ -768,6 +770,8 @@ static inline void mlx5_eswitch_cleanup(
- static inline int mlx5_eswitch_enable(struct mlx5_eswitch *esw, int num_vfs) { return 0; }
- static inline void mlx5_eswitch_disable_sriov(struct mlx5_eswitch *esw, bool clear_vf) {}
- static inline void mlx5_eswitch_disable(struct mlx5_eswitch *esw) {}
-+static inline void mlx5_esw_offloads_devcom_init(struct mlx5_eswitch *esw) {}
-+static inline void mlx5_esw_offloads_devcom_cleanup(struct mlx5_eswitch *esw) {}
- static inline bool mlx5_eswitch_is_funcs_handler(struct mlx5_core_dev *dev) { return false; }
- static inline
- int mlx5_eswitch_set_vport_state(struct mlx5_eswitch *esw, u16 vport, int link_state) { return 0; }
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -2781,7 +2781,7 @@ err_out:
- 	return err;
- }
- 
--static void esw_offloads_devcom_init(struct mlx5_eswitch *esw)
-+void mlx5_esw_offloads_devcom_init(struct mlx5_eswitch *esw)
- {
- 	struct mlx5_devcom *devcom = esw->dev->priv.devcom;
- 
-@@ -2804,7 +2804,7 @@ static void esw_offloads_devcom_init(str
- 			       ESW_OFFLOADS_DEVCOM_PAIR, esw);
- }
- 
--static void esw_offloads_devcom_cleanup(struct mlx5_eswitch *esw)
-+void mlx5_esw_offloads_devcom_cleanup(struct mlx5_eswitch *esw)
- {
- 	struct mlx5_devcom *devcom = esw->dev->priv.devcom;
- 
-@@ -3274,8 +3274,6 @@ int esw_offloads_enable(struct mlx5_eswi
- 	if (err)
- 		goto err_vports;
- 
--	esw_offloads_devcom_init(esw);
--
- 	return 0;
- 
- err_vports:
-@@ -3316,7 +3314,6 @@ static int esw_offloads_stop(struct mlx5
- 
- void esw_offloads_disable(struct mlx5_eswitch *esw)
- {
--	esw_offloads_devcom_cleanup(esw);
- 	mlx5_eswitch_disable_pf_vf_vports(esw);
- 	esw_offloads_unload_rep(esw, MLX5_VPORT_UPLINK);
- 	esw_set_passing_vport_metadata(esw, false);
+ 	u8         uar_4k[0x1];
+-	u8         reserved_at_241[0x9];
++	u8         reserved_at_241[0x7];
++	u8         fl_rc_qp_when_roce_disabled[0x1];
++	u8         regexp_params[0x1];
+ 	u8         uar_sz[0x6];
+ 	u8         port_selection_cap[0x1];
+ 	u8         reserved_at_248[0x1];
 
 
