@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC069569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC5EC433EF;
-	Sun, 28 May 2023 19:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0505A569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8801DC433D2;
+	Sun, 28 May 2023 19:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302114;
-	bh=glwm0XPTDE45ot7si0Nl9OnZg9KN1zzQXht50iLz8QQ=;
+	s=korg; t=1685302116;
+	bh=x/t6kxFrk9c+yKlNWGjQh4NjV3nAae/I54aV7FCNWIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aazISdy7z/5VYaEtfVmHk86hPuFpYRKSo3JNxgIT0SoYDbpv+TcBP6Z/nuKujVoAp
-	 b9bJppCGQNdiu3fszrvo7rdVIXH4khR3HRAolz3QuMXfkTWVwq6ulnOL99j8yB/Sc+
-	 gsBy1O/SdiOrbNZkt0Ls1NBW3wxU/but5HA7xn1E=
+	b=igOKqAydOrqvTY9l9h7lx346AHtMW8RpLAABYIWUf/aMYV+5RFOTc9MLMXb7xdfgU
+	 nuDxrJx20gTsW48zgdv7qIHMY/mJeRDtgNzJy3b2kUB7MV6vr4fK46TbNJKN0gcC3D
+	 AqLcyPrJwWYmx1ldKKqww7H82QZGhNdwgODptCAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roi Dayan <roid@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>
-Subject: [PATCH 5.4 159/161] net/mlx5: Fix error message when failing to allocate device memory
-Date: Sun, 28 May 2023 20:11:23 +0100
-Message-Id: <20230528190841.872362475@linuxfoundation.org>
+Subject: [PATCH 5.4 160/161] net/mlx5: Devcom, fix error flow in mlx5_devcom_register_device
+Date: Sun, 28 May 2023 20:11:24 +0100
+Message-Id: <20230528190841.896367531@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -34,30 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roi Dayan <roid@nvidia.com>
+From: Shay Drory <shayd@nvidia.com>
 
-commit a65735148e0328f80c0f72f9f8d2f609bfcf4aff upstream.
+commit af87194352cad882d787d06fb7efa714acd95427 upstream.
 
-Fix spacing for the error and also the correct error code pointer.
+In case devcom allocation is failed, mlx5 is always freeing the priv.
+However, this priv might have been allocated by a different thread,
+and freeing it might lead to use-after-free bugs.
+Fix it by freeing the priv only in case it was allocated by the
+running thread.
 
-Fixes: c9b9dcb430b3 ("net/mlx5: Move device memory management to mlx5_core")
-Signed-off-by: Roi Dayan <roid@nvidia.com>
+Fixes: fadd59fc50d0 ("net/mlx5: Introduce inter-device communication mechanism")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -887,7 +887,7 @@ static int mlx5_init_once(struct mlx5_co
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/devcom.c
+@@ -110,7 +110,8 @@ struct mlx5_devcom *mlx5_devcom_register
+ 	priv->devs[idx] = dev;
+ 	devcom = mlx5_devcom_alloc(priv, idx);
+ 	if (!devcom) {
+-		kfree(priv);
++		if (new_priv)
++			kfree(priv);
+ 		return ERR_PTR(-ENOMEM);
+ 	}
  
- 	dev->dm = mlx5_dm_create(dev);
- 	if (IS_ERR(dev->dm))
--		mlx5_core_warn(dev, "Failed to init device memory%d\n", err);
-+		mlx5_core_warn(dev, "Failed to init device memory %ld\n", PTR_ERR(dev->dm));
- 
- 	dev->tracer = mlx5_fw_tracer_create(dev);
- 	dev->hv_vhca = mlx5_hv_vhca_create(dev);
 
 
