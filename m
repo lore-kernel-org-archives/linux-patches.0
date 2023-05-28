@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7E3611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335CAC433D2;
-	Sun, 28 May 2023 19:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C08F611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB77C433EF;
+	Sun, 28 May 2023 19:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301486;
-	bh=GyKS/StQHbvVydPVGyto5KjCAvzWubzDkTCDzemEp3Q=;
+	s=korg; t=1685301489;
+	bh=nH/toalEzVo2/o1Taz0tVWXd3gRJySjVLbuWOffDaOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbhEY5dG7XIbeFTgyy/p6FCzpygWwQdjDLDWbX9/BNevZd36bB2bCuwPeKWh6/i3K
-	 w707fGOlva3Jugw/YyWRHd0VM7p4fINDGTBcG8OUAMA4OF8a+Gbi/qz9j5If90lrug
-	 snZ8MsSIIwzva8LNK8IXUtGERORrCBPXk5+Cdgo8=
+	b=wieCwguaR3pDEs9QV9MuioLkiVvnAKkQr//v/Wl5ths91MNT4C0nzc43KrvYdbAgX
+	 30XqCQ4EPOaO5NGDF9RB0ErGT2pbNeERYls6HQt2C6kp+lCOQ2V8k8sFnJadb2gn9Y
+	 90h1WDp/f4Yoh7CrpPfjmJyVwg4Wz4EznvTe16CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Thomas Renninger <trenn@suse.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
+	Wyes Karny <wyes.karny@amd.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 048/132] btrfs: fix space cache inconsistency after error loading it from disk
-Date: Sun, 28 May 2023 20:09:47 +0100
-Message-Id: <20230528190835.049562078@linuxfoundation.org>
+Subject: [PATCH 4.19 049/132] cpupower: Make TSC read per CPU for Mperf monitor
+Date: Sun, 28 May 2023 20:09:48 +0100
+Message-Id: <20230528190835.079140179@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -36,59 +38,156 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Wyes Karny <wyes.karny@amd.com>
 
-[ Upstream commit 0004ff15ea26015a0a3a6182dca3b9d1df32e2b7 ]
+[ Upstream commit c2adb1877b76fc81ae041e1db1a6ed2078c6746b ]
 
-When loading a free space cache from disk, at __load_free_space_cache(),
-if we fail to insert a bitmap entry, we still increment the number of
-total bitmaps in the btrfs_free_space_ctl structure, which is incorrect
-since we failed to add the bitmap entry. On error we then empty the
-cache by calling __btrfs_remove_free_space_cache(), which will result
-in getting the total bitmaps counter set to 1.
+System-wide TSC read could cause a drift in C0 percentage calculation.
+Because if first TSC is read and then one by one mperf is read for all
+cpus, this introduces drift between mperf reading of later CPUs and TSC
+reading.  To lower this drift read TSC per CPU and also just after mperf
+read.  This technique improves C0 percentage calculation in Mperf monitor.
 
-A failure to load a free space cache is not critical, so if a failure
-happens we just rebuild the cache by scanning the extent tree, which
-happens at block-group.c:caching_thread(). Yet the failure will result
-in having the total bitmaps of the btrfs_free_space_ctl always bigger
-by 1 then the number of bitmap entries we have. So fix this by having
-the total bitmaps counter be incremented only if we successfully added
-the bitmap entry.
+Before fix: (System 100% busy)
 
-Fixes: a67509c30079 ("Btrfs: add a io_ctl struct and helpers for dealing with the space cache")
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-CC: stable@vger.kernel.org # 4.4+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+              | Mperf              || RAPL        || Idle_Stats
+ PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
+   0|   0|   0| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   0| 256| 84.62| 15.38|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   1|   1| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   1| 257| 84.08| 15.92|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   2|   2| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   2| 258| 83.26| 16.74|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   3|   3| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   3| 259| 83.60| 16.40|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   4|   4| 86.33| 13.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   4| 260| 83.33| 16.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   5|   5| 86.06| 13.94|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   5| 261| 83.05| 16.95|  2695||168659003|3970468||  0.00|  0.00| 0.00
+   0|   6|   6| 85.51| 14.49|  2695||168659003|3970468||  0.00|  0.00| 0.00
+
+After fix: (System 100% busy)
+
+             | Mperf              || RAPL        || Idle_Stats
+ PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
+   0|   0|   0| 98.03|  1.97|  2415||163295480|3811189||  0.00|  0.00| 0.00
+   0|   0| 256| 98.50|  1.50|  2394||163295480|3811189||  0.00|  0.00| 0.00
+   0|   1|   1| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   1| 257| 99.99|  0.01|  2375||163295480|3811189||  0.00|  0.00| 0.00
+   0|   2|   2| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   2| 258|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   3|   3|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   3| 259| 99.99|  0.01|  2435||163295480|3811189||  0.00|  0.00| 0.00
+   0|   4|   4|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   4| 260|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
+   0|   5|   5| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   5| 261|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
+   0|   6|   6|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
+   0|   6| 262|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
+
+Cc: Thomas Renninger <trenn@suse.com>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Dominik Brodowski <linux@dominikbrodowski.net>
+
+Fixes: 7fe2f6399a84 ("cpupowerutils - cpufrequtils extended with quite some features")
+Signed-off-by: Wyes Karny <wyes.karny@amd.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/free-space-cache.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ .../utils/idle_monitor/mperf_monitor.c        | 31 +++++++++----------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
-index 6511cb71986c9..b623e9f3b4c49 100644
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -783,15 +783,16 @@ static int __load_free_space_cache(struct btrfs_root *root, struct inode *inode,
- 			}
- 			spin_lock(&ctl->tree_lock);
- 			ret = link_free_space(ctl, e);
--			ctl->total_bitmaps++;
--			ctl->op->recalc_thresholds(ctl);
--			spin_unlock(&ctl->tree_lock);
- 			if (ret) {
-+				spin_unlock(&ctl->tree_lock);
- 				btrfs_err(fs_info,
- 					"Duplicate entries in free space cache, dumping");
- 				kmem_cache_free(btrfs_free_space_cachep, e);
- 				goto free_cache;
- 			}
-+			ctl->total_bitmaps++;
-+			ctl->op->recalc_thresholds(ctl);
-+			spin_unlock(&ctl->tree_lock);
- 			list_add_tail(&e->list, &bitmaps);
- 		}
+diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+index d7c2a6d13dea1..2221e43c63ce0 100644
+--- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
++++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
+@@ -67,8 +67,8 @@ static int max_freq_mode;
+  */
+ static unsigned long max_frequency;
+ 
+-static unsigned long long tsc_at_measure_start;
+-static unsigned long long tsc_at_measure_end;
++static unsigned long long *tsc_at_measure_start;
++static unsigned long long *tsc_at_measure_end;
+ static unsigned long long *mperf_previous_count;
+ static unsigned long long *aperf_previous_count;
+ static unsigned long long *mperf_current_count;
+@@ -131,7 +131,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
+ 	aperf_diff = aperf_current_count[cpu] - aperf_previous_count[cpu];
+ 
+ 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
+-		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
++		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
+ 		*percent = 100.0 * mperf_diff / tsc_diff;
+ 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
+ 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
+@@ -168,7 +168,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
+ 
+ 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
+ 		/* Calculate max_freq from TSC count */
+-		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
++		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
+ 		time_diff = timespec_diff_us(time_start, time_end);
+ 		max_frequency = tsc_diff / time_diff;
+ 	}
+@@ -187,33 +187,27 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
+ static int mperf_start(void)
+ {
+ 	int cpu;
+-	unsigned long long dbg;
+ 
+ 	clock_gettime(CLOCK_REALTIME, &time_start);
+-	mperf_get_tsc(&tsc_at_measure_start);
+ 
+-	for (cpu = 0; cpu < cpu_count; cpu++)
++	for (cpu = 0; cpu < cpu_count; cpu++) {
++		mperf_get_tsc(&tsc_at_measure_start[cpu]);
+ 		mperf_init_stats(cpu);
++	}
+ 
+-	mperf_get_tsc(&dbg);
+-	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_start);
+ 	return 0;
+ }
+ 
+ static int mperf_stop(void)
+ {
+-	unsigned long long dbg;
+ 	int cpu;
+ 
+-	for (cpu = 0; cpu < cpu_count; cpu++)
++	for (cpu = 0; cpu < cpu_count; cpu++) {
+ 		mperf_measure_stats(cpu);
++		mperf_get_tsc(&tsc_at_measure_end[cpu]);
++	}
+ 
+-	mperf_get_tsc(&tsc_at_measure_end);
+ 	clock_gettime(CLOCK_REALTIME, &time_end);
+-
+-	mperf_get_tsc(&dbg);
+-	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_end);
+-
+ 	return 0;
+ }
+ 
+@@ -311,7 +305,8 @@ struct cpuidle_monitor *mperf_register(void)
+ 	aperf_previous_count = calloc(cpu_count, sizeof(unsigned long long));
+ 	mperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
+ 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
+-
++	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
++	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
+ 	mperf_monitor.name_len = strlen(mperf_monitor.name);
+ 	return &mperf_monitor;
+ }
+@@ -322,6 +317,8 @@ void mperf_unregister(void)
+ 	free(aperf_previous_count);
+ 	free(mperf_current_count);
+ 	free(aperf_current_count);
++	free(tsc_at_measure_start);
++	free(tsc_at_measure_end);
+ 	free(is_valid);
+ }
  
 -- 
 2.39.2
