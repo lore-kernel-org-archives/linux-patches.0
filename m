@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A85569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E5BC433EF;
-	Sun, 28 May 2023 19:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A99A569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC3A4C433EF;
+	Sun, 28 May 2023 19:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302178;
-	bh=oYJfFKttYLizDzll8gvpai86bvGG257IY/PdTCPAdfc=;
+	s=korg; t=1685302181;
+	bh=abbRKnp1zzMnJdGS4SO2xGzuHR5HXAct+6UKDH2yqbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SYPOkcLEF7O1QDd+SMG5MvOr4C3xnxad9Kkj+8fbo3W7JuugH5zpDfdqUiQ5+nb/D
-	 ELede23Jgbj/6lN/rzh09Ti9rLiEBzTvQ+1j+cipOd/0G6Ppd0u45O7lT9hrHGdVLq
-	 noMXVo2ORLuBDrbTzQlXkhz0zUxMGOvg6xgt7+3Q=
+	b=z4yYtpn+h20GnRM1O3BKAv5HlZ784RZaxQHSdT2rRJnGqV0zbq7SDZQd6GQ6GzMhK
+	 kl/vFm8X1lDjs8n4Z/xGrsGxF1RDRPtZ6d8w+ammm8yNseFRXSG5i2PpdcdTCR1awX
+	 3QODAhnDFvuAza8Uea2HA9ItN/5UxUds6t6AQbcw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 6.3 030/127] xtensa: add __bswap{si,di}2 helpers
-Date: Sun, 28 May 2023 20:10:06 +0100
-Message-Id: <20230528190837.269621721@linuxfoundation.org>
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
+	=?UTF-8?q?Michael=20Niew=C3=B6hner?= <linux@mniewoehner.de>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.3 004/127] tpm, tpm_tis: Only handle supported interrupts
+Date: Sun, 28 May 2023 20:09:40 +0100
+Message-Id: <20230528190836.328826439@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -33,100 +36,228 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-commit 034f4a7877c32a8efd6beee4d71ed14e424499a9 upstream.
+[ Upstream commit e87fcf0dc2b47fac5b4824f00f74dfbcd4acd363 ]
 
-gcc-13 may generate calls for __bswap{si,di}2. This breaks the kernel
-build when optimization for size is selected. Add __bswap{si,di}2
-helpers to fix that.
+According to the TPM Interface Specification (TIS) support for "stsValid"
+and "commandReady" interrupts is only optional.
+This has to be taken into account when handling the interrupts in functions
+like wait_for_tpm_stat(). To determine the supported interrupts use the
+capability query.
 
-Cc: stable@vger.kernel.org
-Fixes: 19c5699f9aff ("xtensa: don't link with libgcc")
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Also adjust wait_for_tpm_stat() to only wait for interrupt reported status
+changes. After that process all the remaining status changes by polling
+the status register.
+
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Michael Niewöhner <linux@mniewoehner.de>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Stable-dep-of: 1398aa803f19 ("tpm_tis: Use tpm_chip_{start,stop} decoration inside tpm_tis_resume")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/xtensa/kernel/xtensa_ksyms.c |    4 ++++
- arch/xtensa/lib/Makefile          |    2 +-
- arch/xtensa/lib/bswapdi2.S        |   21 +++++++++++++++++++++
- arch/xtensa/lib/bswapsi2.S        |   16 ++++++++++++++++
- 4 files changed, 42 insertions(+), 1 deletion(-)
- create mode 100644 arch/xtensa/lib/bswapdi2.S
- create mode 100644 arch/xtensa/lib/bswapsi2.S
+ drivers/char/tpm/tpm_tis_core.c | 120 +++++++++++++++++++-------------
+ drivers/char/tpm/tpm_tis_core.h |   1 +
+ 2 files changed, 73 insertions(+), 48 deletions(-)
 
---- a/arch/xtensa/kernel/xtensa_ksyms.c
-+++ b/arch/xtensa/kernel/xtensa_ksyms.c
-@@ -56,6 +56,8 @@ EXPORT_SYMBOL(empty_zero_page);
-  */
- extern long long __ashrdi3(long long, int);
- extern long long __ashldi3(long long, int);
-+extern long long __bswapdi2(long long);
-+extern int __bswapsi2(int);
- extern long long __lshrdi3(long long, int);
- extern int __divsi3(int, int);
- extern int __modsi3(int, int);
-@@ -66,6 +68,8 @@ extern unsigned long long __umulsidi3(un
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 6b05a84c3a206..a35c117ee7c80 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -53,41 +53,63 @@ static int wait_for_tpm_stat(struct tpm_chip *chip, u8 mask,
+ 	long rc;
+ 	u8 status;
+ 	bool canceled = false;
++	u8 sts_mask = 0;
++	int ret = 0;
  
- EXPORT_SYMBOL(__ashldi3);
- EXPORT_SYMBOL(__ashrdi3);
-+EXPORT_SYMBOL(__bswapdi2);
-+EXPORT_SYMBOL(__bswapsi2);
- EXPORT_SYMBOL(__lshrdi3);
- EXPORT_SYMBOL(__divsi3);
- EXPORT_SYMBOL(__modsi3);
---- a/arch/xtensa/lib/Makefile
-+++ b/arch/xtensa/lib/Makefile
-@@ -4,7 +4,7 @@
- #
+ 	/* check current status */
+ 	status = chip->ops->status(chip);
+ 	if ((status & mask) == mask)
+ 		return 0;
  
- lib-y	+= memcopy.o memset.o checksum.o \
--	   ashldi3.o ashrdi3.o lshrdi3.o \
-+	   ashldi3.o ashrdi3.o bswapdi2.o bswapsi2.o lshrdi3.o \
- 	   divsi3.o udivsi3.o modsi3.o umodsi3.o mulsi3.o umulsidi3.o \
- 	   usercopy.o strncpy_user.o strnlen_user.o
- lib-$(CONFIG_PCI) += pci-auto.o
---- /dev/null
-+++ b/arch/xtensa/lib/bswapdi2.S
-@@ -0,0 +1,21 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later WITH GCC-exception-2.0 */
-+#include <linux/linkage.h>
-+#include <asm/asmmacro.h>
-+#include <asm/core.h>
+-	stop = jiffies + timeout;
++	/* check what status changes can be handled by irqs */
++	if (priv->int_mask & TPM_INTF_STS_VALID_INT)
++		sts_mask |= TPM_STS_VALID;
+ 
+-	if (chip->flags & TPM_CHIP_FLAG_IRQ) {
++	if (priv->int_mask & TPM_INTF_DATA_AVAIL_INT)
++		sts_mask |= TPM_STS_DATA_AVAIL;
 +
-+ENTRY(__bswapdi2)
++	if (priv->int_mask & TPM_INTF_CMD_READY_INT)
++		sts_mask |= TPM_STS_COMMAND_READY;
 +
-+	abi_entry_default
-+	ssai	8
-+	srli	a4, a2, 16
-+	src	a4, a4, a2
-+	src	a4, a4, a4
-+	src	a4, a2, a4
-+	srli	a2, a3, 16
-+	src	a2, a2, a3
-+	src	a2, a2, a2
-+	src	a2, a3, a2
-+	mov	a3, a4
-+	abi_ret_default
++	sts_mask &= mask;
 +
-+ENDPROC(__bswapdi2)
---- /dev/null
-+++ b/arch/xtensa/lib/bswapsi2.S
-@@ -0,0 +1,16 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later WITH GCC-exception-2.0 */
-+#include <linux/linkage.h>
-+#include <asm/asmmacro.h>
-+#include <asm/core.h>
++	stop = jiffies + timeout;
++	/* process status changes with irq support */
++	if (sts_mask) {
++		ret = -ETIME;
+ again:
+ 		timeout = stop - jiffies;
+ 		if ((long)timeout <= 0)
+ 			return -ETIME;
+ 		rc = wait_event_interruptible_timeout(*queue,
+-			wait_for_tpm_stat_cond(chip, mask, check_cancel,
++			wait_for_tpm_stat_cond(chip, sts_mask, check_cancel,
+ 					       &canceled),
+ 			timeout);
+ 		if (rc > 0) {
+ 			if (canceled)
+ 				return -ECANCELED;
+-			return 0;
++			ret = 0;
+ 		}
+ 		if (rc == -ERESTARTSYS && freezing(current)) {
+ 			clear_thread_flag(TIF_SIGPENDING);
+ 			goto again;
+ 		}
+-	} else {
+-		do {
+-			usleep_range(priv->timeout_min,
+-				     priv->timeout_max);
+-			status = chip->ops->status(chip);
+-			if ((status & mask) == mask)
+-				return 0;
+-		} while (time_before(jiffies, stop));
+ 	}
 +
-+ENTRY(__bswapsi2)
++	if (ret)
++		return ret;
 +
-+	abi_entry_default
-+	ssai	8
-+	srli	a3, a2, 16
-+	src	a3, a3, a2
-+	src	a3, a3, a3
-+	src	a2, a2, a3
-+	abi_ret_default
++	mask &= ~sts_mask;
++	if (!mask) /* all done */
++		return 0;
++	/* process status changes without irq support */
++	do {
++		status = chip->ops->status(chip);
++		if ((status & mask) == mask)
++			return 0;
++		usleep_range(priv->timeout_min,
++			     priv->timeout_max);
++	} while (time_before(jiffies, stop));
+ 	return -ETIME;
+ }
+ 
+@@ -1032,8 +1054,40 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 	if (rc < 0)
+ 		goto out_err;
+ 
+-	intmask |= TPM_INTF_CMD_READY_INT | TPM_INTF_LOCALITY_CHANGE_INT |
+-		   TPM_INTF_DATA_AVAIL_INT | TPM_INTF_STS_VALID_INT;
++	/* Figure out the capabilities */
++	rc = tpm_tis_read32(priv, TPM_INTF_CAPS(priv->locality), &intfcaps);
++	if (rc < 0)
++		goto out_err;
 +
-+ENDPROC(__bswapsi2)
++	dev_dbg(dev, "TPM interface capabilities (0x%x):\n",
++		intfcaps);
++	if (intfcaps & TPM_INTF_BURST_COUNT_STATIC)
++		dev_dbg(dev, "\tBurst Count Static\n");
++	if (intfcaps & TPM_INTF_CMD_READY_INT) {
++		intmask |= TPM_INTF_CMD_READY_INT;
++		dev_dbg(dev, "\tCommand Ready Int Support\n");
++	}
++	if (intfcaps & TPM_INTF_INT_EDGE_FALLING)
++		dev_dbg(dev, "\tInterrupt Edge Falling\n");
++	if (intfcaps & TPM_INTF_INT_EDGE_RISING)
++		dev_dbg(dev, "\tInterrupt Edge Rising\n");
++	if (intfcaps & TPM_INTF_INT_LEVEL_LOW)
++		dev_dbg(dev, "\tInterrupt Level Low\n");
++	if (intfcaps & TPM_INTF_INT_LEVEL_HIGH)
++		dev_dbg(dev, "\tInterrupt Level High\n");
++	if (intfcaps & TPM_INTF_LOCALITY_CHANGE_INT) {
++		intmask |= TPM_INTF_LOCALITY_CHANGE_INT;
++		dev_dbg(dev, "\tLocality Change Int Support\n");
++	}
++	if (intfcaps & TPM_INTF_STS_VALID_INT) {
++		intmask |= TPM_INTF_STS_VALID_INT;
++		dev_dbg(dev, "\tSts Valid Int Support\n");
++	}
++	if (intfcaps & TPM_INTF_DATA_AVAIL_INT) {
++		intmask |= TPM_INTF_DATA_AVAIL_INT;
++		dev_dbg(dev, "\tData Avail Int Support\n");
++	}
++
+ 	intmask &= ~TPM_GLOBAL_INT_ENABLE;
+ 
+ 	rc = tpm_tis_request_locality(chip, 0);
+@@ -1067,32 +1121,6 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 		goto out_err;
+ 	}
+ 
+-	/* Figure out the capabilities */
+-	rc = tpm_tis_read32(priv, TPM_INTF_CAPS(priv->locality), &intfcaps);
+-	if (rc < 0)
+-		goto out_err;
+-
+-	dev_dbg(dev, "TPM interface capabilities (0x%x):\n",
+-		intfcaps);
+-	if (intfcaps & TPM_INTF_BURST_COUNT_STATIC)
+-		dev_dbg(dev, "\tBurst Count Static\n");
+-	if (intfcaps & TPM_INTF_CMD_READY_INT)
+-		dev_dbg(dev, "\tCommand Ready Int Support\n");
+-	if (intfcaps & TPM_INTF_INT_EDGE_FALLING)
+-		dev_dbg(dev, "\tInterrupt Edge Falling\n");
+-	if (intfcaps & TPM_INTF_INT_EDGE_RISING)
+-		dev_dbg(dev, "\tInterrupt Edge Rising\n");
+-	if (intfcaps & TPM_INTF_INT_LEVEL_LOW)
+-		dev_dbg(dev, "\tInterrupt Level Low\n");
+-	if (intfcaps & TPM_INTF_INT_LEVEL_HIGH)
+-		dev_dbg(dev, "\tInterrupt Level High\n");
+-	if (intfcaps & TPM_INTF_LOCALITY_CHANGE_INT)
+-		dev_dbg(dev, "\tLocality Change Int Support\n");
+-	if (intfcaps & TPM_INTF_STS_VALID_INT)
+-		dev_dbg(dev, "\tSts Valid Int Support\n");
+-	if (intfcaps & TPM_INTF_DATA_AVAIL_INT)
+-		dev_dbg(dev, "\tData Avail Int Support\n");
+-
+ 	/* INTERRUPT Setup */
+ 	init_waitqueue_head(&priv->read_queue);
+ 	init_waitqueue_head(&priv->int_queue);
+@@ -1123,7 +1151,9 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 		else
+ 			tpm_tis_probe_irq(chip, intmask);
+ 
+-		if (!(chip->flags & TPM_CHIP_FLAG_IRQ)) {
++		if (chip->flags & TPM_CHIP_FLAG_IRQ) {
++			priv->int_mask = intmask;
++		} else {
+ 			dev_err(&chip->dev, FW_BUG
+ 					"TPM interrupt not working, polling instead\n");
+ 
+@@ -1170,13 +1200,7 @@ static void tpm_tis_reenable_interrupts(struct tpm_chip *chip)
+ 	if (rc < 0)
+ 		goto out;
+ 
+-	rc = tpm_tis_read32(priv, TPM_INT_ENABLE(priv->locality), &intmask);
+-	if (rc < 0)
+-		goto out;
+-
+-	intmask |= TPM_INTF_CMD_READY_INT
+-	    | TPM_INTF_LOCALITY_CHANGE_INT | TPM_INTF_DATA_AVAIL_INT
+-	    | TPM_INTF_STS_VALID_INT | TPM_GLOBAL_INT_ENABLE;
++	intmask = priv->int_mask | TPM_GLOBAL_INT_ENABLE;
+ 
+ 	tpm_tis_write32(priv, TPM_INT_ENABLE(priv->locality), intmask);
+ 
+diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
+index 4a58b870b4188..e978f457fd4d4 100644
+--- a/drivers/char/tpm/tpm_tis_core.h
++++ b/drivers/char/tpm/tpm_tis_core.h
+@@ -96,6 +96,7 @@ struct tpm_tis_data {
+ 	unsigned int locality_count;
+ 	int locality;
+ 	int irq;
++	unsigned int int_mask;
+ 	unsigned long flags;
+ 	void __iomem *ilb_base_addr;
+ 	u16 clkrun_enabled;
+-- 
+2.39.2
+
 
 
