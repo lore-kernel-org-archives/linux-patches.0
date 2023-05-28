@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C9F569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:30:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67C5C433EF;
-	Sun, 28 May 2023 19:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3BF569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:30:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6FFC433D2;
+	Sun, 28 May 2023 19:30:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302218;
-	bh=2DBTToYIxCmJtsTvy4uY/RwMz0EtYANGVkbPiACxozw=;
+	s=korg; t=1685302220;
+	bh=OcH7cC4rteGAIIl+TqK4ntBBXJkFzK8mJxwKesWf4m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c4Zfca24wsjQLBDtrkvtFRIGRUMRxod5zUi3YbbRo8NYymeVlhosUF/aTov7XRtT1
-	 3DbOWfQx4AfPcs2eKA0vxZi5LxHZWikJNccvfaAY2OIPi2YjEc+45vYYV7KNa8dki9
-	 xEH+lKv2fQE7/oWvVbVsJxk5k1fbvw4YDgumjk7s=
+	b=bZDbWylPm0rW5pidyOoVWkxVuXud5SaBv1sBNgISjy4HJtDxYZ34F3obVt4+GUQv3
+	 jpj8dpO5BQpX7B1UglJ2lY1UAF5Niazr4FNNgn3U0zFuScfI220PRdXFrwQ+jjsnRf
+	 fr84xkC9QphRSXiSxDZDKPuPFjTh3dfa1F+PJFRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Liu <aaron.liu@amd.com>,
-	Jesse zhang <jesse.zhang@amd.com>,
+	Evan Quan <evan.quan@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.3 047/127] drm/amdgpu: dont enable secure display on incompatible platforms
-Date: Sun, 28 May 2023 20:10:23 +0100
-Message-Id: <20230528190837.879072720@linuxfoundation.org>
+Subject: [PATCH 6.3 048/127] drm/amd/pm: add missing NotifyPowerSource message mapping for SMU13.0.7
+Date: Sun, 28 May 2023 20:10:24 +0100
+Message-Id: <20230528190837.914477098@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -35,44 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jesse Zhang <jesse.zhang@amd.com>
+From: Evan Quan <evan.quan@amd.com>
 
-commit 7fc602dbfd548045862df096910b7d21e6d300bf upstream.
+commit 0d2dd02d74e6377268f56b90261de0fae8f0d2cb upstream.
 
-[why]
-[drm] psp gfx command LOAD_TA(0x1) failed and response status is (0x7)
-[drm] psp gfx command INVOKE_CMD(0x3) failed and response status is (0x4)
-amdgpu 0000:04:00.0: amdgpu: Secure display: Generic Failure.
+Otherwise, the power source switching will fail due to message
+unavailable.
 
-[how]
-don't enable secure display on incompatible platforms
-
-Suggested-by: Aaron Liu <aaron.liu@amd.com>
-Signed-off-by: Jesse zhang <jesse.zhang@amd.com>
-Reviewed-by: Aaron Liu <aaron.liu@amd.com>
+Fixes: bf4823267a81 ("drm/amd/pm: fix possible power mode mismatch between driver and PMFW")
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Reviewed-by: Guchun Chen <guchun.chen@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/psp_v10_0.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/psp_v10_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/psp_v10_0.c
-@@ -57,7 +57,13 @@ static int psp_v10_0_init_microcode(stru
- 	if (err)
- 		return err;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -125,6 +125,7 @@ static struct cmn2asic_msg_mapping smu_v
+ 	MSG_MAP(ArmD3,				PPSMC_MSG_ArmD3,                       0),
+ 	MSG_MAP(AllowGpo,			PPSMC_MSG_SetGpoAllow,           0),
+ 	MSG_MAP(GetPptLimit,			PPSMC_MSG_GetPptLimit,                 0),
++	MSG_MAP(NotifyPowerSource,		PPSMC_MSG_NotifyPowerSource,           0),
+ };
  
--	return psp_init_ta_microcode(psp, ucode_prefix);
-+	err = psp_init_ta_microcode(psp, ucode_prefix);
-+	if ((adev->ip_versions[GC_HWIP][0] == IP_VERSION(9, 1, 0)) &&
-+		(adev->pdev->revision == 0xa1) &&
-+		(psp->securedisplay_context.context.bin_desc.fw_version >= 0x27000008)) {
-+		adev->psp.securedisplay_context.context.bin_desc.size_bytes = 0;
-+	}
-+	return err;
- }
- 
- static int psp_v10_0_ring_create(struct psp_context *psp,
+ static struct cmn2asic_mapping smu_v13_0_7_clk_map[SMU_CLK_COUNT] = {
 
 
