@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B12D2611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C53C433D2;
-	Sun, 28 May 2023 19:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014E2611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 835AFC433D2;
+	Sun, 28 May 2023 19:23:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301781;
-	bh=p0q0mMosvivQT2FFQw0lZPZ/WTgoCKn7jHt41ML0rco=;
+	s=korg; t=1685301783;
+	bh=sdbS/NmNnO0l8r6ssxRNYMhFXPsxWxAXu9gD4f2nRBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vdXmeLbmfcDq0W5L5+x/ip8E6/oX/wB0mE2BbiJuTznqmYU2E+9zlvva4AGoEew1L
-	 f3g6bEYc7lFE2D3ttNdpI8kLFEXFRcTZcTxdMYtGvhCwVxC8KFNrcabn85vMHCCV1n
-	 8MZHpQAlpBbQR9dSwUsFckKd5HaMFqRabOGQSixk=
+	b=14iRpLRhE4LZ5VUo9SeDmuGZqyv8ZFRNMkuDsGqKiqApMr8GHmbrSDPg7mfJWlYs1
+	 aspjEjzxW9pCQQFlIonNtb79JrZM5l5LEl1/k+GbTyJ0FO5zOzc+8GWj1rfbFrp/mW
+	 a3KSreqSjm+Q0sqXn610fyGv7PUrRbhytSUwOWsU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 033/161] ext4: set goal start correctly in ext4_mb_normalize_request
-Date: Sun, 28 May 2023 20:09:17 +0100
-Message-Id: <20230528190838.243636442@linuxfoundation.org>
+Subject: [PATCH 5.4 007/161] netlink: annotate accesses to nlk->cb_running
+Date: Sun, 28 May 2023 20:08:51 +0100
+Message-Id: <20230528190837.325922772@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -36,70 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b07ffe6927c75d99af534d685282ea188d9f71a6 ]
+[ Upstream commit a939d14919b799e6fff8a9c80296ca229ba2f8a4 ]
 
-We need to set ac_g_ex to notify the goal start used in
-ext4_mb_find_by_goal. Set ac_g_ex instead of ac_f_ex in
-ext4_mb_normalize_request.
-Besides we should assure goal start is in range [first_data_block,
-blocks_count) as ext4_mb_initialize_context does.
+Both netlink_recvmsg() and netlink_native_seq_show() read
+nlk->cb_running locklessly. Use READ_ONCE() there.
 
-[ Added a check to make sure size is less than ar->pright; otherwise
-  we could end up passing an underflowed value of ar->pright - size to
-  ext4_get_group_no_and_offset(), which will trigger a BUG_ON later on.
-  - TYT ]
+Add corresponding WRITE_ONCE() to netlink_dump() and
+__netlink_dump_start()
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20230303172120.3800725-2-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+syzbot reported:
+BUG: KCSAN: data-race in __netlink_dump_start / netlink_recvmsg
+
+write to 0xffff88813ea4db59 of 1 bytes by task 28219 on cpu 0:
+__netlink_dump_start+0x3af/0x4d0 net/netlink/af_netlink.c:2399
+netlink_dump_start include/linux/netlink.h:308 [inline]
+rtnetlink_rcv_msg+0x70f/0x8c0 net/core/rtnetlink.c:6130
+netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2577
+rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6192
+netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+netlink_unicast+0x56f/0x640 net/netlink/af_netlink.c:1365
+netlink_sendmsg+0x665/0x770 net/netlink/af_netlink.c:1942
+sock_sendmsg_nosec net/socket.c:724 [inline]
+sock_sendmsg net/socket.c:747 [inline]
+sock_write_iter+0x1aa/0x230 net/socket.c:1138
+call_write_iter include/linux/fs.h:1851 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x463/0x760 fs/read_write.c:584
+ksys_write+0xeb/0x1a0 fs/read_write.c:637
+__do_sys_write fs/read_write.c:649 [inline]
+__se_sys_write fs/read_write.c:646 [inline]
+__x64_sys_write+0x42/0x50 fs/read_write.c:646
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffff88813ea4db59 of 1 bytes by task 28222 on cpu 1:
+netlink_recvmsg+0x3b4/0x730 net/netlink/af_netlink.c:2022
+sock_recvmsg_nosec+0x4c/0x80 net/socket.c:1017
+____sys_recvmsg+0x2db/0x310 net/socket.c:2718
+___sys_recvmsg net/socket.c:2762 [inline]
+do_recvmmsg+0x2e5/0x710 net/socket.c:2856
+__sys_recvmmsg net/socket.c:2935 [inline]
+__do_sys_recvmmsg net/socket.c:2958 [inline]
+__se_sys_recvmmsg net/socket.c:2951 [inline]
+__x64_sys_recvmmsg+0xe2/0x160 net/socket.c:2951
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00 -> 0x01
+
+Fixes: 16b304f3404f ("netlink: Eliminate kmalloc in netlink dump operation.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ net/netlink/af_netlink.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index caab9781bee7d..bdab18942e302 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3091,6 +3091,7 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
- 				struct ext4_allocation_request *ar)
- {
- 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
-+	struct ext4_super_block *es = sbi->s_es;
- 	int bsbits, max;
- 	ext4_lblk_t end;
- 	loff_t size, start_off;
-@@ -3271,18 +3272,21 @@ ext4_mb_normalize_request(struct ext4_allocation_context *ac,
- 	ac->ac_g_ex.fe_len = EXT4_NUM_B2C(sbi, size);
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 00f040fb46b9c..31a3a562854fc 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1991,7 +1991,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
  
- 	/* define goal start in order to merge */
--	if (ar->pright && (ar->lright == (start + size))) {
-+	if (ar->pright && (ar->lright == (start + size)) &&
-+	    ar->pright >= size &&
-+	    ar->pright - size >= le32_to_cpu(es->s_first_data_block)) {
- 		/* merge to the right */
- 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pright - size,
--						&ac->ac_f_ex.fe_group,
--						&ac->ac_f_ex.fe_start);
-+						&ac->ac_g_ex.fe_group,
-+						&ac->ac_g_ex.fe_start);
- 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
- 	}
--	if (ar->pleft && (ar->lleft + 1 == start)) {
-+	if (ar->pleft && (ar->lleft + 1 == start) &&
-+	    ar->pleft + 1 < ext4_blocks_count(es)) {
- 		/* merge to the left */
- 		ext4_get_group_no_and_offset(ac->ac_sb, ar->pleft + 1,
--						&ac->ac_f_ex.fe_group,
--						&ac->ac_f_ex.fe_start);
-+						&ac->ac_g_ex.fe_group,
-+						&ac->ac_g_ex.fe_start);
- 		ac->ac_flags |= EXT4_MB_HINT_TRY_GOAL;
+ 	skb_free_datagram(sk, skb);
+ 
+-	if (nlk->cb_running &&
++	if (READ_ONCE(nlk->cb_running) &&
+ 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf / 2) {
+ 		ret = netlink_dump(sk);
+ 		if (ret) {
+@@ -2284,7 +2284,7 @@ static int netlink_dump(struct sock *sk)
+ 	if (cb->done)
+ 		cb->done(cb);
+ 
+-	nlk->cb_running = false;
++	WRITE_ONCE(nlk->cb_running, false);
+ 	module = cb->module;
+ 	skb = cb->skb;
+ 	mutex_unlock(nlk->cb_mutex);
+@@ -2347,7 +2347,7 @@ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
+ 			goto error_put;
  	}
  
+-	nlk->cb_running = true;
++	WRITE_ONCE(nlk->cb_running, true);
+ 	nlk->dump_done_errno = INT_MAX;
+ 
+ 	mutex_unlock(nlk->cb_mutex);
+@@ -2636,7 +2636,7 @@ static int netlink_seq_show(struct seq_file *seq, void *v)
+ 			   nlk->groups ? (u32)nlk->groups[0] : 0,
+ 			   sk_rmem_alloc_get(s),
+ 			   sk_wmem_alloc_get(s),
+-			   nlk->cb_running,
++			   READ_ONCE(nlk->cb_running),
+ 			   refcount_read(&s->sk_refcnt),
+ 			   atomic_read(&s->sk_drops),
+ 			   sock_i_ino(s)
 -- 
 2.39.2
 
