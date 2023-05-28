@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D9A569E
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:12:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1F8C433D2;
-	Sun, 28 May 2023 19:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B873F569E
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:12:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C53FC433EF;
+	Sun, 28 May 2023 19:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301174;
-	bh=342p/LqQZxMeFHrcgAvtHLZungpIv0bcCYZMTUCByCA=;
+	s=korg; t=1685301176;
+	bh=RuYs2oxVaw26xXUG6UGRExQkAqtgvH0zeAidQM9doPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lexsn8abSsHXFQnIkQU34bknF4OBeBqBnw5iyvzWRPR3AOUyw60lspn6i9QQW/g9O
-	 ZgxjoXiIdwcakAZiNhPKsTHK++2yqbD7sFA5WHyP9Mw//wdJUxyc+cfBF27KlMMKWb
-	 9ASt+1JeGVCJFulLwxKxX1/0EX0h1ysT06VbmHxE=
+	b=qkPluSiqYwketPi+KlGBsmKsP4Qw89RSqVqgVS7mXAQAyjFJOojCRh1YX1qw0Pfu9
+	 28zBtuhHkR1k9SkHLBlABzoKSZh1j1N4Yp7laUYMt/NGL0Vp+LgeCOVD7i7d4hit0h
+	 OQj5s2DkbHeH/66BYj0jeE27LBB1coj4h2t8EvjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Moore <robert.moore@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Hector Martin <marcan@marcan.st>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 12/86] ACPICA: ACPICA: check null return of ACPI_ALLOCATE_ZEROED in acpi_db_display_objects
-Date: Sun, 28 May 2023 20:09:46 +0100
-Message-Id: <20230528190828.999035366@linuxfoundation.org>
+Subject: [PATCH 4.14 13/86] wifi: brcmfmac: cfg80211: Pass the PMK in binary instead of hex
+Date: Sun, 28 May 2023 20:09:47 +0100
+Message-Id: <20230528190829.039878931@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,37 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: void0red <30990023+void0red@users.noreply.github.com>
+From: Hector Martin <marcan@marcan.st>
 
-[ Upstream commit ae5a0eccc85fc960834dd66e3befc2728284b86c ]
+[ Upstream commit 89b89e52153fda2733562776c7c9d9d3ebf8dd6d ]
 
-ACPICA commit 0d5f467d6a0ba852ea3aad68663cbcbd43300fd4
+Apparently the hex passphrase mechanism does not work on newer
+chips/firmware (e.g. BCM4387). It seems there was a simple way of
+passing it in binary all along, so use that and avoid the hexification.
 
-ACPI_ALLOCATE_ZEROED may fails, object_info might be null and will cause
-null pointer dereference later.
+OpenBSD has been doing it like this from the beginning, so this should
+work on all chips.
 
-Link: https://github.com/acpica/acpica/commit/0d5f467d
-Signed-off-by: Bob Moore <robert.moore@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Also clear the structure before setting the PMK. This was leaking
+uninitialized stack contents to the device.
+
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Hector Martin <marcan@marcan.st>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230214092423.15175-6-marcan@marcan.st
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dbnames.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../wireless/broadcom/brcm80211/brcmfmac/cfg80211.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/acpi/acpica/dbnames.c b/drivers/acpi/acpica/dbnames.c
-index 8c207c7725179..658fd7cfbd6cd 100644
---- a/drivers/acpi/acpica/dbnames.c
-+++ b/drivers/acpi/acpica/dbnames.c
-@@ -600,6 +600,9 @@ acpi_status acpi_db_display_objects(char *obj_type_arg, char *display_count_arg)
- 		object_info =
- 		    ACPI_ALLOCATE_ZEROED(sizeof(struct acpi_object_info));
- 
-+		if (!object_info)
-+			return (AE_NO_MEMORY);
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+index df0e48e4cf5b3..4abb948f607fa 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -1349,13 +1349,14 @@ static u16 brcmf_map_fw_linkdown_reason(const struct brcmf_event_msg *e)
+ static int brcmf_set_pmk(struct brcmf_if *ifp, const u8 *pmk_data, u16 pmk_len)
+ {
+ 	struct brcmf_wsec_pmk_le pmk;
+-	int i, err;
++	int err;
 +
- 		/* Walk the namespace from the root */
++	memset(&pmk, 0, sizeof(pmk));
  
- 		(void)acpi_walk_namespace(ACPI_TYPE_ANY, ACPI_ROOT_OBJECT,
+-	/* convert to firmware key format */
+-	pmk.key_len = cpu_to_le16(pmk_len << 1);
+-	pmk.flags = cpu_to_le16(BRCMF_WSEC_PASSPHRASE);
+-	for (i = 0; i < pmk_len; i++)
+-		snprintf(&pmk.key[2 * i], 3, "%02x", pmk_data[i]);
++	/* pass pmk directly */
++	pmk.key_len = cpu_to_le16(pmk_len);
++	pmk.flags = cpu_to_le16(0);
++	memcpy(pmk.key, pmk_data, pmk_len);
+ 
+ 	/* store psk in firmware */
+ 	err = brcmf_fil_cmd_data_set(ifp, BRCMF_C_SET_WSEC_PMK,
 -- 
 2.39.2
 
