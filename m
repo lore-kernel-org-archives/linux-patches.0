@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D58A0611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:21:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419C7C433D2;
-	Sun, 28 May 2023 19:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2837A611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:21:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B60C433EF;
+	Sun, 28 May 2023 19:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301670;
-	bh=A5teO7gBE3DPeEqU7lxTT0ld878SMHL3TMrwNSx7JoU=;
+	s=korg; t=1685301673;
+	bh=dJHkptSPJoFQxhdiUSeHGcMUqgACpJaq/2kyvup0KNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z1TdkenqW5TkkXZlR7q5NYRzIGiwYkZA1y+F/Esw8B9d0efX/BvCMLzGkQZaZ8pik
-	 Ljef9LgydwOyeTU5qQ+gUFp3SwR/2bR3iodT+HvQYcHoVtmrdHfZRm5QFM9witHLqB
-	 BzBjcXSjJlq4uMUaXtUjf1orwSjK1cg+dhoqqyd0=
+	b=c/w+Vt0KYnD/5Ywi0wZU1fCT51TrkznW1gypDgpQZmGNeuxm0fC1SwYDKJxhdvc8t
+	 iWws6do7NGrCF1sNA5NM/jfmFG3u/mT+WqlQdwlUVhk47Qg0R5OGZNPd/o6fLdHWQq
+	 gaD1d2fNODYbxe+kG/cbCo2CcJnz9GWFGbEQSrwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sergey 'Jin' Bostandzhyan <jin@mediatomb.cc>
-Subject: [PATCH 4.19 114/132] ALSA: hda/realtek - Fix inverted bass GPIO pin on Acer 8951G
-Date: Sun, 28 May 2023 20:10:53 +0100
-Message-Id: <20230528190837.266462336@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 4.19 123/132] power: supply: bq27xxx: Fix bq27xxx_battery_update() race condition
+Date: Sun, 28 May 2023 20:11:02 +0100
+Message-Id: <20230528190837.611286606@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -34,78 +34,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 336820c4374bc065317f247dc2bb37c0e41b64a6 upstream.
+commit 5c34c0aef185dcd10881847b9ebf20046aa77cb4 upstream.
 
-We've added the bass speaker support on Acer 8951G by the commit
-00066e9733f6 ("Add Acer Aspire Ethos 8951G model quirk"), but it seems
-that the GPIO pin was wrongly set: while the commit turns off the bit
-to power up the amp, the actual hardware reacts other way round,
-i.e. GPIO bit on = amp on.
+bq27xxx_battery_update() assumes / requires that it is only run once,
+not multiple times at the same time. But there are 3 possible callers:
 
-So this patch fixes the bug, turning on the GPIO bit 0x02 as default.
-Since turning on the GPIO bit can be more easily managed with
-alc_setup_gpio() call, we simplify the quirk code by integrating the
-GPIO setup into the existing alc662_fixup_aspire_ethos_hp() and
-dropping the whole ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER quirk.
+1. bq27xxx_battery_poll() delayed_work item handler
+2. bq27xxx_battery_irq_handler_thread() I2C IRQ handler
+3. bq27xxx_battery_setup()
 
-Fixes: 00066e9733f6 ("Add Acer Aspire Ethos 8951G model quirk")
-Reported-and-tested-by: Sergey 'Jin' Bostandzhyan <jin@mediatomb.cc>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20191128202630.6626-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+And there is no protection against these racing with each other,
+fix this race condition by making all callers take di->lock:
+
+- Rename bq27xxx_battery_update() to bq27xxx_battery_update_unlocked()
+
+- Add new bq27xxx_battery_update() which takes di->lock and then calls
+  bq27xxx_battery_update_unlocked()
+
+- Make stale cache check code in bq27xxx_battery_get_property(), which
+  already takes di->lock directly to check the jiffies, call
+  bq27xxx_battery_update_unlocked() instead of messing with
+  the delayed_work item
+
+- Make bq27xxx_battery_update_unlocked() mod the delayed-work item
+  so that the next poll is delayed to poll_interval milliseconds after
+  the last update independent of the source of the update
+
+Fixes: 740b755a3b34 ("bq27x00: Poll battery state")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
+ drivers/power/supply/bq27xxx_battery.c |   21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -8540,6 +8540,8 @@ static void alc662_fixup_aspire_ethos_hp
- 	case HDA_FIXUP_ACT_PRE_PROBE:
- 		snd_hda_jack_detect_enable_callback(codec, 0x1b,
- 				alc662_aspire_ethos_mute_speakers);
-+		/* subwoofer needs an extra GPIO setting to become audible */
-+		alc_setup_gpio(codec, 0x02);
- 		break;
- 	case HDA_FIXUP_ACT_INIT:
- 		/* Make sure to start in a correct state, i.e. if
-@@ -8666,7 +8668,6 @@ enum {
- 	ALC662_FIXUP_USI_HEADSET_MODE,
- 	ALC662_FIXUP_LENOVO_MULTI_CODECS,
- 	ALC669_FIXUP_ACER_ASPIRE_ETHOS,
--	ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER,
- 	ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET,
- 	ALC671_FIXUP_HP_HEADSET_MIC2,
- 	ALC662_FIXUP_ACER_X2660G_HEADSET_MODE,
-@@ -9007,18 +9008,6 @@ static const struct hda_fixup alc662_fix
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc662_fixup_aspire_ethos_hp,
- 	},
--	[ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER] = {
--		.type = HDA_FIXUP_VERBS,
--		/* subwoofer needs an extra GPIO setting to become audible */
--		.v.verbs = (const struct hda_verb[]) {
--			{0x01, AC_VERB_SET_GPIO_MASK, 0x02},
--			{0x01, AC_VERB_SET_GPIO_DIRECTION, 0x02},
--			{0x01, AC_VERB_SET_GPIO_DATA, 0x00},
--			{ }
--		},
--		.chained = true,
--		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET
--	},
- 	[ALC669_FIXUP_ACER_ASPIRE_ETHOS] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -9028,7 +9017,7 @@ static const struct hda_fixup alc662_fix
- 			{ }
- 		},
- 		.chained = true,
--		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER
-+		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET
- 	},
- 	[ALC671_FIXUP_HP_HEADSET_MIC2] = {
- 		.type = HDA_FIXUP_FUNC,
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1551,7 +1551,7 @@ static int bq27xxx_battery_read_health(s
+ 	return POWER_SUPPLY_HEALTH_GOOD;
+ }
+ 
+-void bq27xxx_battery_update(struct bq27xxx_device_info *di)
++static void bq27xxx_battery_update_unlocked(struct bq27xxx_device_info *di)
+ {
+ 	struct bq27xxx_reg_cache cache = {0, };
+ 	bool has_ci_flag = di->opts & BQ27XXX_O_ZERO;
+@@ -1599,6 +1599,16 @@ void bq27xxx_battery_update(struct bq27x
+ 		di->cache = cache;
+ 
+ 	di->last_update = jiffies;
++
++	if (poll_interval > 0)
++		mod_delayed_work(system_wq, &di->work, poll_interval * HZ);
++}
++
++void bq27xxx_battery_update(struct bq27xxx_device_info *di)
++{
++	mutex_lock(&di->lock);
++	bq27xxx_battery_update_unlocked(di);
++	mutex_unlock(&di->lock);
+ }
+ EXPORT_SYMBOL_GPL(bq27xxx_battery_update);
+ 
+@@ -1609,9 +1619,6 @@ static void bq27xxx_battery_poll(struct
+ 				     work.work);
+ 
+ 	bq27xxx_battery_update(di);
+-
+-	if (poll_interval > 0)
+-		schedule_delayed_work(&di->work, poll_interval * HZ);
+ }
+ 
+ /*
+@@ -1772,10 +1779,8 @@ static int bq27xxx_battery_get_property(
+ 	struct bq27xxx_device_info *di = power_supply_get_drvdata(psy);
+ 
+ 	mutex_lock(&di->lock);
+-	if (time_is_before_jiffies(di->last_update + 5 * HZ)) {
+-		cancel_delayed_work_sync(&di->work);
+-		bq27xxx_battery_poll(&di->work.work);
+-	}
++	if (time_is_before_jiffies(di->last_update + 5 * HZ))
++		bq27xxx_battery_update_unlocked(di);
+ 	mutex_unlock(&di->lock);
+ 
+ 	if (psp != POWER_SUPPLY_PROP_PRESENT && di->cache.flags < 0)
 
 
