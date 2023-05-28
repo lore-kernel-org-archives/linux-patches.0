@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BCF611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:21:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBC88C433D2;
-	Sun, 28 May 2023 19:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20ED611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:21:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E148C433EF;
+	Sun, 28 May 2023 19:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301700;
-	bh=jMGjM7zeoL3ydsudJqWj3nhh7pXanbVX4p8lM2yN1c0=;
+	s=korg; t=1685301702;
+	bh=aHZBtxlbm4clNpmMJB0YigP/g0xKinfiBwMck+GaWFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoZeMwv2P68Z3vHZXdxpoqNE/vjGzTk9h2XoUJa5t3FFa4fZFzmPbZv1BOgZKo67P
-	 z85ySUuMTbfxFESact4cfzTEgt4oNU1RWhVLWJH5EJSn+IDiBSHY1U4rmfpNjP4/at
-	 fm+JKJg2zXC4FiLpUvBGC6m3VbCGiMn5GiTgBGaQ=
+	b=SyNKmpVNcIRbEbM1yeFKcVC4Rt68iOqfUGAjlqz+86zs13P7RXvF+NA9WDE/TMWep
+	 GUyOYGCsShCLzvf6nC0PbHK4N5ZIQc4iBuKhfCQFtNOXymNmCyevhvtk/K0G11UmOb
+	 IN8GvKxrzvgjQHLsSBQPwXuYUxbSAfKsf0NF0v5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 4.19 116/132] USB: core: Add routines for endpoint checks in old drivers
-Date: Sun, 28 May 2023 20:10:55 +0100
-Message-Id: <20230528190837.349050129@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+23be03b56c5259385d79@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 117/132] USB: sisusbvga: Add endpoint checks
+Date: Sun, 28 May 2023 20:10:56 +0100
+Message-Id: <20230528190837.379958962@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -35,148 +36,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 13890626501ffda22b18213ddaf7930473da5792 upstream.
+commit df05a9b05e466a46725564528b277d0c570d0104 upstream.
 
-Many of the older USB drivers in the Linux USB stack were written
-based simply on a vendor's device specification.  They use the
-endpoint information in the spec and assume these endpoints will
-always be present, with the properties listed, in any device matching
-the given vendor and product IDs.
+The syzbot fuzzer was able to provoke a WARNING from the sisusbvga driver:
 
-While that may have been true back then, with spoofing and fuzzing it
-is not true any more.  More and more we are finding that those old
-drivers need to perform at least a minimum of checking before they try
-to use any endpoint other than ep0.
+------------[ cut here ]------------
+usb 1-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 1 PID: 26 at drivers/usb/core/urb.c:504 usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
+Modules linked in:
+CPU: 1 PID: 26 Comm: kworker/1:1 Not tainted 6.2.0-rc5-syzkaller-00199-g5af6ce704936 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/12/2023
+Workqueue: usb_hub_wq hub_event
+RIP: 0010:usb_submit_urb+0xed6/0x1880 drivers/usb/core/urb.c:504
+Code: 7c 24 18 e8 6c 50 80 fb 48 8b 7c 24 18 e8 62 1a 01 ff 41 89 d8 44 89 e1 4c 89 ea 48 89 c6 48 c7 c7 60 b1 fa 8a e8 84 b0 be 03 <0f> 0b e9 58 f8 ff ff e8 3e 50 80 fb 48 81 c5 c0 05 00 00 e9 84 f7
+RSP: 0018:ffffc90000a1ed18 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: 0000000000000000
+RDX: ffff888012783a80 RSI: ffffffff816680ec RDI: fffff52000143d95
+RBP: ffff888079020000 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000080000000 R11: 0000000000000000 R12: 0000000000000003
+R13: ffff888017d33370 R14: 0000000000000003 R15: ffff888021213600
+FS:  0000000000000000(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00005592753a60b0 CR3: 0000000022899000 CR4: 00000000003506e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ sisusb_bulkout_msg drivers/usb/misc/sisusbvga/sisusbvga.c:224 [inline]
+ sisusb_send_bulk_msg.constprop.0+0x904/0x1230 drivers/usb/misc/sisusbvga/sisusbvga.c:379
+ sisusb_send_bridge_packet drivers/usb/misc/sisusbvga/sisusbvga.c:567 [inline]
+ sisusb_do_init_gfxdevice drivers/usb/misc/sisusbvga/sisusbvga.c:2077 [inline]
+ sisusb_init_gfxdevice+0x87b/0x4000 drivers/usb/misc/sisusbvga/sisusbvga.c:2177
+ sisusb_probe+0x9cd/0xbe2 drivers/usb/misc/sisusbvga/sisusbvga.c:2869
+...
 
-To make this checking as simple as possible, we now add a couple of
-utility routines to the USB core.  usb_check_bulk_endpoints() and
-usb_check_int_endpoints() take an interface pointer together with a
-list of endpoint addresses (numbers and directions).  They check that
-the interface's current alternate setting includes endpoints with
-those addresses and that each of these endpoints has the right type:
-bulk or interrupt, respectively.
+The problem was caused by the fact that the driver does not check
+whether the endpoints it uses are actually present and have the
+appropriate types.  This can be fixed by adding a simple check of
+the endpoints.
 
-Although we already have usb_find_common_endpoints() and related
-routines meant for a similar purpose, they are not well suited for
-this kind of checking.  Those routines find endpoints of various
-kinds, but only one (either the first or the last) of each kind, and
-they don't verify that the endpoints' addresses agree with what the
-caller expects.
-
-In theory the new routines could be more general: They could take a
-particular altsetting as their argument instead of always using the
-interface's current altsetting.  In practice I think this won't matter
-too much; multiple altsettings tend to be used for transferring media
-(audio or visual) over isochronous endpoints, not bulk or interrupt.
-Drivers for such devices will generally require more sophisticated
-checking than these simplistic routines provide.
-
+Link: https://syzkaller.appspot.com/bug?extid=23be03b56c5259385d79
+Reported-and-tested-by: syzbot+23be03b56c5259385d79@syzkaller.appspotmail.com
 Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/dd2c8e8c-2c87-44ea-ba17-c64b97e201c9@rowland.harvard.edu
+Link: https://lore.kernel.org/r/48ef98f7-51ae-4f63-b8d3-0ef2004bb60a@rowland.harvard.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/usb.c |   76 +++++++++++++++++++++++++++++++++++++++++++++++++
- include/linux/usb.h    |    5 +++
- 2 files changed, 81 insertions(+)
+ drivers/usb/misc/sisusbvga/sisusb.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/usb/core/usb.c
-+++ b/drivers/usb/core/usb.c
-@@ -210,6 +210,82 @@ int usb_find_common_endpoints_reverse(st
- EXPORT_SYMBOL_GPL(usb_find_common_endpoints_reverse);
+--- a/drivers/usb/misc/sisusbvga/sisusb.c
++++ b/drivers/usb/misc/sisusbvga/sisusb.c
+@@ -3016,6 +3016,20 @@ static int sisusb_probe(struct usb_inter
+ 	struct usb_device *dev = interface_to_usbdev(intf);
+ 	struct sisusb_usb_data *sisusb;
+ 	int retval = 0, i;
++	static const u8 ep_addresses[] = {
++		SISUSB_EP_GFX_IN | USB_DIR_IN,
++		SISUSB_EP_GFX_OUT | USB_DIR_OUT,
++		SISUSB_EP_GFX_BULK_OUT | USB_DIR_OUT,
++		SISUSB_EP_GFX_LBULK_OUT | USB_DIR_OUT,
++		SISUSB_EP_BRIDGE_IN | USB_DIR_IN,
++		SISUSB_EP_BRIDGE_OUT | USB_DIR_OUT,
++		0};
++
++	/* Are the expected endpoints present? */
++	if (!usb_check_bulk_endpoints(intf, ep_addresses)) {
++		dev_err(&intf->dev, "Invalid USB2VGA device\n");
++		return -EINVAL;
++	}
  
- /**
-+ * usb_find_endpoint() - Given an endpoint address, search for the endpoint's
-+ * usb_host_endpoint structure in an interface's current altsetting.
-+ * @intf: the interface whose current altsetting should be searched
-+ * @ep_addr: the endpoint address (number and direction) to find
-+ *
-+ * Search the altsetting's list of endpoints for one with the specified address.
-+ *
-+ * Return: Pointer to the usb_host_endpoint if found, %NULL otherwise.
-+ */
-+static const struct usb_host_endpoint *usb_find_endpoint(
-+		const struct usb_interface *intf, unsigned int ep_addr)
-+{
-+	int n;
-+	const struct usb_host_endpoint *ep;
-+
-+	n = intf->cur_altsetting->desc.bNumEndpoints;
-+	ep = intf->cur_altsetting->endpoint;
-+	for (; n > 0; (--n, ++ep)) {
-+		if (ep->desc.bEndpointAddress == ep_addr)
-+			return ep;
-+	}
-+	return NULL;
-+}
-+
-+/**
-+ * usb_check_bulk_endpoints - Check whether an interface's current altsetting
-+ * contains a set of bulk endpoints with the given addresses.
-+ * @intf: the interface whose current altsetting should be searched
-+ * @ep_addrs: 0-terminated array of the endpoint addresses (number and
-+ * direction) to look for
-+ *
-+ * Search for endpoints with the specified addresses and check their types.
-+ *
-+ * Return: %true if all the endpoints are found and are bulk, %false otherwise.
-+ */
-+bool usb_check_bulk_endpoints(
-+		const struct usb_interface *intf, const u8 *ep_addrs)
-+{
-+	const struct usb_host_endpoint *ep;
-+
-+	for (; *ep_addrs; ++ep_addrs) {
-+		ep = usb_find_endpoint(intf, *ep_addrs);
-+		if (!ep || !usb_endpoint_xfer_bulk(&ep->desc))
-+			return false;
-+	}
-+	return true;
-+}
-+EXPORT_SYMBOL_GPL(usb_check_bulk_endpoints);
-+
-+/**
-+ * usb_check_int_endpoints - Check whether an interface's current altsetting
-+ * contains a set of interrupt endpoints with the given addresses.
-+ * @intf: the interface whose current altsetting should be searched
-+ * @ep_addrs: 0-terminated array of the endpoint addresses (number and
-+ * direction) to look for
-+ *
-+ * Search for endpoints with the specified addresses and check their types.
-+ *
-+ * Return: %true if all the endpoints are found and are interrupt,
-+ * %false otherwise.
-+ */
-+bool usb_check_int_endpoints(
-+		const struct usb_interface *intf, const u8 *ep_addrs)
-+{
-+	const struct usb_host_endpoint *ep;
-+
-+	for (; *ep_addrs; ++ep_addrs) {
-+		ep = usb_find_endpoint(intf, *ep_addrs);
-+		if (!ep || !usb_endpoint_xfer_int(&ep->desc))
-+			return false;
-+	}
-+	return true;
-+}
-+EXPORT_SYMBOL_GPL(usb_check_int_endpoints);
-+
-+/**
-  * usb_find_alt_setting() - Given a configuration, find the alternate setting
-  * for the given interface.
-  * @config: the configuration to search (not necessarily the current config).
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -279,6 +279,11 @@ void usb_put_intf(struct usb_interface *
- #define USB_MAXINTERFACES	32
- #define USB_MAXIADS		(USB_MAXINTERFACES/2)
- 
-+bool usb_check_bulk_endpoints(
-+		const struct usb_interface *intf, const u8 *ep_addrs);
-+bool usb_check_int_endpoints(
-+		const struct usb_interface *intf, const u8 *ep_addrs);
-+
- /*
-  * USB Resume Timer: Every Host controller driver should drive the resume
-  * signalling on the bus for the amount of time defined by this macro.
+ 	dev_info(&dev->dev, "USB2VGA dongle found at address %d\n",
+ 			dev->devnum);
 
 
