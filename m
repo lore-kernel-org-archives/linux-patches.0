@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B860611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A23BC433D2;
-	Sun, 28 May 2023 19:15:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC5F611F
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC3BC433A0;
+	Sun, 28 May 2023 19:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301347;
-	bh=Kel0zdEClkPSrcuHOz5lVPdpbOQVuvi+mWOF6Zw93eA=;
+	s=korg; t=1685301352;
+	bh=lrOShuD1J7fhyB15rBLpvhFDnnnVo4vovmawdpsJHKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nq97UHj+p1pYl9yIgmlJMh7KQUgfKT8uXgEW35nCJzmSkjkaN7gt3y7AQuUm9b9UV
-	 8k/TuOeSj9rFLub68JhGEdDSbbUQRXmXH/loudNsBVj2EK46rhi3uyQVcuS4XxXs8m
-	 UDEMtBtYEXHjNMRNme2nFQZSbxPog8K2osH1C4sA=
+	b=ZqTlCxnpEv9zotqV60Sb6lr/sNbt3Nsqz99CViyuBcBWZVZVynPxFbDytJEZHuT7d
+	 iZuJ9dr3DxMbmDnPofLdT18Q4hmEEzXKrT9wJ+dgi1bFSxF4hvDw3nJGXTIERzOiWr
+	 ySy+H79HXlVNwL++85HdXemcoZrRJdDbcGsynYH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 53/86] nilfs2: fix use-after-free bug of nilfs_root in nilfs_evict_inode()
-Date: Sun, 28 May 2023 20:10:27 +0100
-Message-Id: <20230528190830.566681284@linuxfoundation.org>
+	Rasmus Villemoes <rasmus.villemoes@prevas.dk>,
+	Mark Brown <broonie@kernel.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>
+Subject: [PATCH 4.14 55/86] spi: spi-fsl-spi: automatically adapt bits-per-word in cpu mode
+Date: Sun, 28 May 2023 20:10:29 +0100
+Message-Id: <20230528190830.639785964@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -35,65 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
 
-commit 9b5a04ac3ad9898c4745cba46ea26de74ba56a8e upstream.
+(cherry picked from upstream af0e6242909c3c4297392ca3e94eff1b4db71a97)
 
-During unmount process of nilfs2, nothing holds nilfs_root structure after
-nilfs2 detaches its writer in nilfs_detach_log_writer().  However, since
-nilfs_evict_inode() uses nilfs_root for some cleanup operations, it may
-cause use-after-free read if inodes are left in "garbage_list" and
-released by nilfs_dispose_list() at the end of nilfs_detach_log_writer().
+Taking one interrupt for every byte is rather slow. Since the
+controller is perfectly capable of transmitting 32 bits at a time,
+change t->bits_per-word to 32 when the length is divisible by 4 and
+large enough that the reduced number of interrupts easily compensates
+for the one or two extra fsl_spi_setup_transfer() calls this causes.
 
-Fix this issue by modifying nilfs_evict_inode() to only clear inode
-without additional metadata changes that use nilfs_root if the file system
-is degraded to read-only or the writer is detached.
-
-Link: https://lkml.kernel.org/r/20230509152956.8313-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+78d4495558999f55d1da@syzkaller.appspotmail.com
-Closes: https://lkml.kernel.org/r/00000000000099e5ac05fb1c3b85@google.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Rasmus Villemoes <rasmus.villemoes@prevas.dk>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/inode.c |   18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/spi/spi-fsl-spi.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/fs/nilfs2/inode.c
-+++ b/fs/nilfs2/inode.c
-@@ -939,6 +939,7 @@ void nilfs_evict_inode(struct inode *ino
- 	struct nilfs_transaction_info ti;
- 	struct super_block *sb = inode->i_sb;
- 	struct nilfs_inode_info *ii = NILFS_I(inode);
-+	struct the_nilfs *nilfs;
- 	int ret;
+--- a/drivers/spi/spi-fsl-spi.c
++++ b/drivers/spi/spi-fsl-spi.c
+@@ -357,12 +357,28 @@ static int fsl_spi_bufs(struct spi_devic
+ static int fsl_spi_do_one_msg(struct spi_master *master,
+ 			      struct spi_message *m)
+ {
++	struct mpc8xxx_spi *mpc8xxx_spi = spi_master_get_devdata(master);
+ 	struct spi_device *spi = m->spi;
+ 	struct spi_transfer *t, *first;
+ 	unsigned int cs_change;
+ 	const int nsecs = 50;
+ 	int status;
  
- 	if (inode->i_nlink || !ii->i_root || unlikely(is_bad_inode(inode))) {
-@@ -951,6 +952,23 @@ void nilfs_evict_inode(struct inode *ino
- 
- 	truncate_inode_pages_final(&inode->i_data);
- 
-+	nilfs = sb->s_fs_info;
-+	if (unlikely(sb_rdonly(sb) || !nilfs->ns_writer)) {
-+		/*
-+		 * If this inode is about to be disposed after the file system
-+		 * has been degraded to read-only due to file system corruption
-+		 * or after the writer has been detached, do not make any
-+		 * changes that cause writes, just clear it.
-+		 * Do this check after read-locking ns_segctor_sem by
-+		 * nilfs_transaction_begin() in order to avoid a race with
-+		 * the writer detach operation.
-+		 */
-+		clear_inode(inode);
-+		nilfs_clear_inode(inode);
-+		nilfs_transaction_abort(sb);
-+		return;
++	/*
++	 * In CPU mode, optimize large byte transfers to use larger
++	 * bits_per_word values to reduce number of interrupts taken.
++	 */
++	if (!(mpc8xxx_spi->flags & SPI_CPM_MODE)) {
++		list_for_each_entry(t, &m->transfers, transfer_list) {
++			if (t->len < 256 || t->bits_per_word != 8)
++				continue;
++			if ((t->len & 3) == 0)
++				t->bits_per_word = 32;
++			else if ((t->len & 1) == 0)
++				t->bits_per_word = 16;
++		}
 +	}
 +
- 	/* TODO: some of the following operations may fail.  */
- 	nilfs_truncate_bmap(ii, 0);
- 	nilfs_mark_inode_dirty(inode);
+ 	/* Don't allow changes if CS is active */
+ 	first = list_first_entry(&m->transfers, struct spi_transfer,
+ 			transfer_list);
 
 
