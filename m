@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E831C611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760DFC4339B;
-	Sun, 28 May 2023 19:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A95611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:15:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8556C433D2;
+	Sun, 28 May 2023 19:15:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301322;
-	bh=qCM25N3wd9PFEAHJJI4BiACDhPBqY00Ba2+BKVg653E=;
+	s=korg; t=1685301325;
+	bh=lRkV843CA1A1KH0ASHr5YGNSs5rBhRLhXqVpG1vwUIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHlp07ZIHHuAjgpK1e8tcoq7izMvP8Kjw56nqrkndSTRHpBEmhwux72coHuDn0h+F
-	 YrsxFbKh50U6Ei2a3Z9fia4RnNY4vOOfMHTrmVx14NkHaV2IilGGzQgBsvewCzOLG/
-	 iln2GDusr4e1ZbwKNu1v6/CxIkR0GNQVenIXUXI0=
+	b=b5dJUcoqHRlsapPr0KIDyfgxz/D69WzasfdBdDRcfwcpkNcAsuTN9bmwy+GFZvG9v
+	 1flDqSN1FXs3jO+y6N5K8P6tylh0FBK73wmv3tnx6DcKp89xB8ev185l78ls5LgrQP
+	 6+qDuZ9uPE3Mux1FrBtx/bGfGD4IU5S9xBapekrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Andrew Paniakin <apanyaki@amazon.com>
-Subject: [PATCH 4.14 70/86] netfilter: nf_tables: fix register ordering
-Date: Sun, 28 May 2023 20:10:44 +0100
-Message-Id: <20230528190831.237501132@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Daniel Sneddon <daniel.sneddon@linux.intel.com>
+Subject: [PATCH 4.14 71/86] x86/mm: Avoid incomplete Global INVLPG flushes
+Date: Sun, 28 May 2023 20:10:45 +0100
+Message-Id: <20230528190831.276945813@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -36,60 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-[ d209df3e7f7002d9099fdb0f6df0f972b4386a63 ]
+commit ce0b15d11ad837fbacc5356941712218e38a0a83 upstream.
 
-[ We hit the trace described in commit message with the
-kselftest/nft_trans_stress.sh. This patch diverges from the upstream one
-since kernel 4.14 does not have following symbols:
-nft_chain_filter_init, nf_tables_flowtable_notifier ]
+The INVLPG instruction is used to invalidate TLB entries for a
+specified virtual address.  When PCIDs are enabled, INVLPG is supposed
+to invalidate TLB entries for the specified address for both the
+current PCID *and* Global entries.  (Note: Only kernel mappings set
+Global=1.)
 
-We must register nfnetlink ops last, as that exposes nf_tables to
-userspace.  Without this, we could theoretically get nfnetlink request
-before net->nft state has been initialized.
+Unfortunately, some INVLPG implementations can leave Global
+translations unflushed when PCIDs are enabled.
 
-Fixes: 99633ab29b213 ("netfilter: nf_tables: complete net namespace support")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[apanyaki: backport to v4.14-stable]
-Signed-off-by: Andrew Paniakin <apanyaki@amazon.com>
+As a workaround, never enable PCIDs on affected processors.
+
+I expect there to eventually be microcode mitigations to replace this
+software workaround.  However, the exact version numbers where that
+will happen are not known today.  Once the version numbers are set in
+stone, the processor list can be tweaked to only disable PCIDs on
+affected processors with affected microcode.
+
+Note: if anyone wants a quick fix that doesn't require patching, just
+stick 'nopcid' on your kernel command-line.
+
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Daniel Sneddon <daniel.sneddon@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ arch/x86/include/asm/intel-family.h |    5 +++++
+ arch/x86/mm/init.c                  |   25 +++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -6105,18 +6105,25 @@ static int __init nf_tables_module_init(
- 		goto err1;
- 	}
- 
--	err = nf_tables_core_module_init();
-+	err = register_pernet_subsys(&nf_tables_net_ops);
- 	if (err < 0)
- 		goto err2;
- 
--	err = nfnetlink_subsys_register(&nf_tables_subsys);
-+	err = nf_tables_core_module_init();
- 	if (err < 0)
- 		goto err3;
- 
-+	/* must be last */
-+	err = nfnetlink_subsys_register(&nf_tables_subsys);
-+	if (err < 0)
-+		goto err4;
+--- a/arch/x86/include/asm/intel-family.h
++++ b/arch/x86/include/asm/intel-family.h
+@@ -73,6 +73,11 @@
+ #define	INTEL_FAM6_LAKEFIELD		0x8A
+ #define INTEL_FAM6_ALDERLAKE		0x97
+ #define INTEL_FAM6_ALDERLAKE_L		0x9A
++#define INTEL_FAM6_ALDERLAKE_N		0xBE
 +
- 	pr_info("nf_tables: (c) 2007-2009 Patrick McHardy <kaber@trash.net>\n");
--	return register_pernet_subsys(&nf_tables_net_ops);
--err3:
-+	return err;
-+err4:
- 	nf_tables_core_module_exit();
-+err3:
-+	unregister_pernet_subsys(&nf_tables_net_ops);
- err2:
- 	kfree(info);
- err1:
++#define INTEL_FAM6_RAPTORLAKE		0xB7
++#define INTEL_FAM6_RAPTORLAKE_P		0xBA
++#define INTEL_FAM6_RAPTORLAKE_S		0xBF
+ 
+ #define INTEL_FAM6_TIGERLAKE_L		0x8C
+ #define INTEL_FAM6_TIGERLAKE		0x8D
+--- a/arch/x86/mm/init.c
++++ b/arch/x86/mm/init.c
+@@ -8,6 +8,7 @@
+ #include <linux/swapops.h>
+ 
+ #include <asm/set_memory.h>
++#include <asm/cpu_device_id.h>
+ #include <asm/e820/api.h>
+ #include <asm/init.h>
+ #include <asm/page.h>
+@@ -199,6 +200,24 @@ static void __init probe_page_size_mask(
+ 	}
+ }
+ 
++#define INTEL_MATCH(_model) { .vendor  = X86_VENDOR_INTEL,	\
++			      .family  = 6,			\
++			      .model = _model,			\
++			    }
++/*
++ * INVLPG may not properly flush Global entries
++ * on these CPUs when PCIDs are enabled.
++ */
++static const struct x86_cpu_id invlpg_miss_ids[] = {
++	INTEL_MATCH(INTEL_FAM6_ALDERLAKE   ),
++	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_L ),
++	INTEL_MATCH(INTEL_FAM6_ALDERLAKE_N ),
++	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE  ),
++	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_P),
++	INTEL_MATCH(INTEL_FAM6_RAPTORLAKE_S),
++	{}
++};
++
+ static void setup_pcid(void)
+ {
+ 	if (!IS_ENABLED(CONFIG_X86_64))
+@@ -207,6 +226,12 @@ static void setup_pcid(void)
+ 	if (!boot_cpu_has(X86_FEATURE_PCID))
+ 		return;
+ 
++	if (x86_match_cpu(invlpg_miss_ids)) {
++		pr_info("Incomplete global flushes, disabling PCID");
++		setup_clear_cpu_cap(X86_FEATURE_PCID);
++		return;
++	}
++
+ 	if (boot_cpu_has(X86_FEATURE_PGE)) {
+ 		/*
+ 		 * This can't be cr4_set_bits_and_update_boot() -- the
 
 
