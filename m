@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BB0611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D88F7C433EF;
-	Sun, 28 May 2023 19:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C006D611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D016C433D2;
+	Sun, 28 May 2023 19:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303236;
-	bh=wRHBaeDhawOPG5Ib5RCrD356vYPyA33SmBx6wdrBBSI=;
+	s=korg; t=1685303238;
+	bh=f1E0OZKK6d9gSe++Y1lhd+dV8AWB+uRdmXfa7ZE9KBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e5lw12LAWPn0PytbVvk0GWkH7OxlU5ObinxH7E/VVddiM27w8JP7O8AK8+MMeTPug
-	 Bwvrx8oJtFEkYYX6Wehz8rMk/q88+MqlnjEavVr3CByaYIC7fD9J/7l5KLpfs2oORr
-	 iH0J4vJ2UrGeF8H3xJaZx2Yi5LqVPeisO3GDDh8k=
+	b=aVP0kZzx10zsnG+znA+XoeLyawZd1HMdeKEP4tC6Oe7kkLX0NpcO1DJi/TcjwR3Z4
+	 dswMwiToHACi/VdJOc574SHNgmmix6TCC79c+Y1EtrZcc2BkdQtViCTW9ffBh16Yoy
+	 h//rZDHjAcn/mvX/JnwPO1auOPQbbXckBN80agHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+fe0c72f0ccbb93786380@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.10 182/211] debugobjects: Dont wake up kswapd from fill_pool()
-Date: Sun, 28 May 2023 20:11:43 +0100
-Message-Id: <20230528190848.017800831@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.10 173/211] parisc: Handle kgdb breakpoints only in kernel context
+Date: Sun, 28 May 2023 20:11:34 +0100
+Message-Id: <20230528190847.791049854@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -35,41 +33,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Helge Deller <deller@gmx.de>
 
-commit eb799279fb1f9c63c520fe8c1c41cb9154252db6 upstream.
+commit 6888ff04e37d01295620a73f3f7efbc79f6ef152 upstream.
 
-syzbot is reporting a lockdep warning in fill_pool() because the allocation
-from debugobjects is using GFP_ATOMIC, which is (__GFP_HIGH | __GFP_KSWAPD_RECLAIM)
-and therefore tries to wake up kswapd, which acquires kswapd_wait::lock.
+The kernel kgdb break instructions should only be handled when running
+in kernel context.
 
-Since fill_pool() might be called with arbitrary locks held, fill_pool()
-should not assume that acquiring kswapd_wait::lock is safe.
-
-Use __GFP_HIGH instead and remove __GFP_NORETRY as it is pointless for
-!__GFP_DIRECT_RECLAIM allocation.
-
-Fixes: 3ac7fe5a4aab ("infrastructure to debug (dynamic) objects")
-Reported-by: syzbot <syzbot+fe0c72f0ccbb93786380@syzkaller.appspotmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/6577e1fa-b6ee-f2be-2414-a2b51b1c5e30@I-love.SAKURA.ne.jp
-Closes: https://syzkaller.appspot.com/bug?extid=fe0c72f0ccbb93786380
+Cc: <stable@vger.kernel.org> # v5.4+
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/debugobjects.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/parisc/kernel/traps.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -129,7 +129,7 @@ static const char *obj_states[ODEBUG_STA
+--- a/arch/parisc/kernel/traps.c
++++ b/arch/parisc/kernel/traps.c
+@@ -305,8 +305,8 @@ static void handle_break(struct pt_regs
+ #endif
  
- static void fill_pool(void)
- {
--	gfp_t gfp = GFP_ATOMIC | __GFP_NORETRY | __GFP_NOWARN;
-+	gfp_t gfp = __GFP_HIGH | __GFP_NOWARN;
- 	struct debug_obj *obj;
- 	unsigned long flags;
- 
+ #ifdef CONFIG_KGDB
+-	if (unlikely(iir == PARISC_KGDB_COMPILED_BREAK_INSN ||
+-		iir == PARISC_KGDB_BREAK_INSN)) {
++	if (unlikely((iir == PARISC_KGDB_COMPILED_BREAK_INSN ||
++		iir == PARISC_KGDB_BREAK_INSN)) && !user_mode(regs)) {
+ 		kgdb_handle_exception(9, SIGTRAP, 0, regs);
+ 		return;
+ 	}
 
 
