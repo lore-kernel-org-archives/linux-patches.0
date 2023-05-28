@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BFF611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F4AC433EF;
-	Sun, 28 May 2023 19:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0558611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:42:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB96C433D2;
+	Sun, 28 May 2023 19:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302945;
-	bh=m8VNee3bA+lgpiWAyRUMwnimPC/EadPMf/JdyNqFKu0=;
+	s=korg; t=1685302947;
+	bh=DgYrxm3x9YTBdF4xZMNWWtnN6XYj8piU96W9ttS+FJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SWFgaUVVgf/5ab05IS8x5vsSmz35tLny+U86Hwi23lZRXlMBb5l5Xfwjzz/KNs47G
-	 dSnKhOxskM6DwD6Fc7a1MAcT0kdaleRD9SAcePFwwVx7NSt5T/xeT7i41azvbHqlL5
-	 7H7tDDH4q3WFXLfsrJnDdtKGIBPr6DZq3KnLkqaY=
+	b=E6gauR5NAJaBWveO2zyp++Gvlsk8zU3iK6gKAz+z041EEvbHHIp0V2Bp6LoQBfn0x
+	 lf39sPCn+rQldejevMb7W3FcHUl/hgJUhzVF7xnzfpS4APJnjXil3B1AI/TOQEoZJh
+	 HSQzB2NI53ag02kRyIrEWpuCWJguzaO3mhxZtgxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Eli Cohen <elic@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
+	Nikolay Borisov <nborisov@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 052/211] lib: cpu_rmap: Avoid use after free on rmap->obj array entries
-Date: Sun, 28 May 2023 20:09:33 +0100
-Message-Id: <20230528190844.884642995@linuxfoundation.org>
+Subject: [PATCH 5.10 084/211] btrfs: move btrfs_find_highest_objectid/btrfs_find_free_objectid to disk-io.c
+Date: Sun, 28 May 2023 20:10:05 +0100
+Message-Id: <20230528190845.709762698@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -37,65 +35,176 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eli Cohen <elic@nvidia.com>
+From: Nikolay Borisov <nborisov@suse.com>
 
-[ Upstream commit 4e0473f1060aa49621d40a113afde24818101d37 ]
+[ Upstream commit ec7d6dfd73b2de1c6bc36f832542061b0ca0e0ff ]
 
-When calling irq_set_affinity_notifier() with NULL at the notify
-argument, it will cause freeing of the glue pointer in the
-corresponding array entry but will leave the pointer in the array. A
-subsequent call to free_irq_cpu_rmap() will try to free this entry again
-leading to possible use after free.
+Those functions are going to be used even after inode cache is removed
+so moved them to a more appropriate place.
 
-Fix that by setting NULL to the array entry and checking that we have
-non-zero at the array entry when iterating over the array in
-free_irq_cpu_rmap().
-
-The current code does not suffer from this since there are no cases
-where irq_set_affinity_notifier(irq, NULL) (note the NULL passed for the
-notify arg) is called, followed by a call to free_irq_cpu_rmap() so we
-don't hit and issue. Subsequent patches in this series excersize this
-flow, hence the required fix.
-
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Eli Cohen <elic@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: Nikolay Borisov <nborisov@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 0004ff15ea26 ("btrfs: fix space cache inconsistency after error loading it from disk")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/cpu_rmap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/btrfs/disk-io.c   | 55 ++++++++++++++++++++++++++++++++++++++++++++
+ fs/btrfs/disk-io.h   |  2 ++
+ fs/btrfs/inode-map.c | 55 --------------------------------------------
+ fs/btrfs/inode-map.h |  3 ---
+ 4 files changed, 57 insertions(+), 58 deletions(-)
 
-diff --git a/lib/cpu_rmap.c b/lib/cpu_rmap.c
-index f08d9c56f712e..e77f12bb3c774 100644
---- a/lib/cpu_rmap.c
-+++ b/lib/cpu_rmap.c
-@@ -232,7 +232,8 @@ void free_irq_cpu_rmap(struct cpu_rmap *rmap)
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 2a7778a88f03b..095c9e4f92248 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -4780,3 +4780,58 @@ static int btrfs_cleanup_transaction(struct btrfs_fs_info *fs_info)
  
- 	for (index = 0; index < rmap->used; index++) {
- 		glue = rmap->obj[index];
--		irq_set_affinity_notifier(glue->notify.irq, NULL);
-+		if (glue)
-+			irq_set_affinity_notifier(glue->notify.irq, NULL);
- 	}
- 
- 	cpu_rmap_put(rmap);
-@@ -268,6 +269,7 @@ static void irq_cpu_rmap_release(struct kref *ref)
- 		container_of(ref, struct irq_glue, notify.kref);
- 
- 	cpu_rmap_put(glue->rmap);
-+	glue->rmap->obj[glue->index] = NULL;
- 	kfree(glue);
+ 	return 0;
  }
++
++int btrfs_find_highest_objectid(struct btrfs_root *root, u64 *objectid)
++{
++	struct btrfs_path *path;
++	int ret;
++	struct extent_buffer *l;
++	struct btrfs_key search_key;
++	struct btrfs_key found_key;
++	int slot;
++
++	path = btrfs_alloc_path();
++	if (!path)
++		return -ENOMEM;
++
++	search_key.objectid = BTRFS_LAST_FREE_OBJECTID;
++	search_key.type = -1;
++	search_key.offset = (u64)-1;
++	ret = btrfs_search_slot(NULL, root, &search_key, path, 0, 0);
++	if (ret < 0)
++		goto error;
++	BUG_ON(ret == 0); /* Corruption */
++	if (path->slots[0] > 0) {
++		slot = path->slots[0] - 1;
++		l = path->nodes[0];
++		btrfs_item_key_to_cpu(l, &found_key, slot);
++		*objectid = max_t(u64, found_key.objectid,
++				  BTRFS_FIRST_FREE_OBJECTID - 1);
++	} else {
++		*objectid = BTRFS_FIRST_FREE_OBJECTID - 1;
++	}
++	ret = 0;
++error:
++	btrfs_free_path(path);
++	return ret;
++}
++
++int btrfs_find_free_objectid(struct btrfs_root *root, u64 *objectid)
++{
++	int ret;
++	mutex_lock(&root->objectid_mutex);
++
++	if (unlikely(root->highest_objectid >= BTRFS_LAST_FREE_OBJECTID)) {
++		btrfs_warn(root->fs_info,
++			   "the objectid of root %llu reaches its highest value",
++			   root->root_key.objectid);
++		ret = -ENOSPC;
++		goto out;
++	}
++
++	*objectid = ++root->highest_objectid;
++	ret = 0;
++out:
++	mutex_unlock(&root->objectid_mutex);
++	return ret;
++}
+diff --git a/fs/btrfs/disk-io.h b/fs/btrfs/disk-io.h
+index 182540bdcea0f..e3b96944ce10c 100644
+--- a/fs/btrfs/disk-io.h
++++ b/fs/btrfs/disk-io.h
+@@ -131,6 +131,8 @@ struct btrfs_root *btrfs_create_tree(struct btrfs_trans_handle *trans,
+ int btree_lock_page_hook(struct page *page, void *data,
+ 				void (*flush_fn)(void *));
+ int btrfs_get_num_tolerated_disk_barrier_failures(u64 flags);
++int btrfs_find_free_objectid(struct btrfs_root *root, u64 *objectid);
++int btrfs_find_highest_objectid(struct btrfs_root *root, u64 *objectid);
+ int __init btrfs_end_io_wq_init(void);
+ void __cold btrfs_end_io_wq_exit(void);
  
-@@ -297,6 +299,7 @@ int irq_cpu_rmap_add(struct cpu_rmap *rmap, int irq)
- 	rc = irq_set_affinity_notifier(irq, &glue->notify);
- 	if (rc) {
- 		cpu_rmap_put(glue->rmap);
-+		rmap->obj[glue->index] = NULL;
- 		kfree(glue);
- 	}
- 	return rc;
+diff --git a/fs/btrfs/inode-map.c b/fs/btrfs/inode-map.c
+index 76d2e43817eae..c74340d22624e 100644
+--- a/fs/btrfs/inode-map.c
++++ b/fs/btrfs/inode-map.c
+@@ -525,58 +525,3 @@ int btrfs_save_ino_cache(struct btrfs_root *root,
+ 	extent_changeset_free(data_reserved);
+ 	return ret;
+ }
+-
+-int btrfs_find_highest_objectid(struct btrfs_root *root, u64 *objectid)
+-{
+-	struct btrfs_path *path;
+-	int ret;
+-	struct extent_buffer *l;
+-	struct btrfs_key search_key;
+-	struct btrfs_key found_key;
+-	int slot;
+-
+-	path = btrfs_alloc_path();
+-	if (!path)
+-		return -ENOMEM;
+-
+-	search_key.objectid = BTRFS_LAST_FREE_OBJECTID;
+-	search_key.type = -1;
+-	search_key.offset = (u64)-1;
+-	ret = btrfs_search_slot(NULL, root, &search_key, path, 0, 0);
+-	if (ret < 0)
+-		goto error;
+-	BUG_ON(ret == 0); /* Corruption */
+-	if (path->slots[0] > 0) {
+-		slot = path->slots[0] - 1;
+-		l = path->nodes[0];
+-		btrfs_item_key_to_cpu(l, &found_key, slot);
+-		*objectid = max_t(u64, found_key.objectid,
+-				  BTRFS_FIRST_FREE_OBJECTID - 1);
+-	} else {
+-		*objectid = BTRFS_FIRST_FREE_OBJECTID - 1;
+-	}
+-	ret = 0;
+-error:
+-	btrfs_free_path(path);
+-	return ret;
+-}
+-
+-int btrfs_find_free_objectid(struct btrfs_root *root, u64 *objectid)
+-{
+-	int ret;
+-	mutex_lock(&root->objectid_mutex);
+-
+-	if (unlikely(root->highest_objectid >= BTRFS_LAST_FREE_OBJECTID)) {
+-		btrfs_warn(root->fs_info,
+-			   "the objectid of root %llu reaches its highest value",
+-			   root->root_key.objectid);
+-		ret = -ENOSPC;
+-		goto out;
+-	}
+-
+-	*objectid = ++root->highest_objectid;
+-	ret = 0;
+-out:
+-	mutex_unlock(&root->objectid_mutex);
+-	return ret;
+-}
+diff --git a/fs/btrfs/inode-map.h b/fs/btrfs/inode-map.h
+index 7a962811dffe0..629baf9aefb15 100644
+--- a/fs/btrfs/inode-map.h
++++ b/fs/btrfs/inode-map.h
+@@ -10,7 +10,4 @@ int btrfs_find_free_ino(struct btrfs_root *root, u64 *objectid);
+ int btrfs_save_ino_cache(struct btrfs_root *root,
+ 			 struct btrfs_trans_handle *trans);
+ 
+-int btrfs_find_free_objectid(struct btrfs_root *root, u64 *objectid);
+-int btrfs_find_highest_objectid(struct btrfs_root *root, u64 *objectid);
+-
+ #endif
 -- 
 2.39.2
 
