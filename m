@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B560D611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:43:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438A0C433D2;
-	Sun, 28 May 2023 19:43:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E350611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:43:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B087EC433D2;
+	Sun, 28 May 2023 19:43:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303023;
-	bh=QolQt8rClIny/B+LhgUcu+kfmJqFmEeGPzugc0Mdn2E=;
+	s=korg; t=1685303026;
+	bh=g8y3q0XKQCofd11GyvGsu6v1WGKiu/p9oKJM9NreuTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSxtJzIxuRc5GG0YMlsHF8dOvaUiQqmHockhdbMkyp9QzxHD+vINw7bGdAeyPGd+0
-	 LePNZxKwf6M3DOC4KKyAS6C1ZbasThb5H7e2UoTPIp2xbO+l+fnLDapPHGEpPrLf1l
-	 h17kZYEtTSkybw4tJeRt/JkNAYBERcNQNIhD9Al4=
+	b=F3mP242j5SR8kvIwdnr3KWNbJ4TR+qWzVlsKN+lSOekCzLnOaQ9yzqE28lDzgsr7g
+	 QIjwetGbN6vg3Nvlbnze0Dk3LCc/oD308i3RBz35HQ/q3Z3qKah3422QbJZ/E5IEPG
+	 1KXPzHi4+n1V+7Vd59pHwr5B6ow78LAlJVHe2A8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Humlick <john@humlick.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 123/211] ALSA: usb-audio: Add a sample rate workaround for Line6 Pod Go
-Date: Sun, 28 May 2023 20:10:44 +0100
-Message-Id: <20230528190846.608966994@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+ce77725b89b7bd52425c@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 124/211] USB: usbtmc: Fix direction for 0-length ioctl control messages
+Date: Sun, 28 May 2023 20:10:45 +0100
+Message-Id: <20230528190846.631554474@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -34,32 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 359b4315471181f108723c61612d96e383e56179 upstream.
+commit 94d25e9128988c6a1fc9070f6e98215a95795bd8 upstream.
 
-Line6 Pod Go (0e41:424b) requires the similar workaround for the fixed
-48k sample rate like other Line6 models.  This patch adds the
-corresponding entry to line6_parse_audio_format_rate_quirk().
+The syzbot fuzzer found a problem in the usbtmc driver: When a user
+submits an ioctl for a 0-length control transfer, the driver does not
+check that the direction is set to OUT:
 
-Reported-by: John Humlick <john@humlick.org>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230512075858.22813-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+------------[ cut here ]------------
+usb 3-1: BOGUS control dir, pipe 80000b80 doesn't match bRequestType fd
+WARNING: CPU: 0 PID: 5100 at drivers/usb/core/urb.c:411 usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+Modules linked in:
+CPU: 0 PID: 5100 Comm: syz-executor428 Not tainted 6.3.0-syzkaller-12049-g58390c8ce1bd #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/14/2023
+RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+Code: 7c 24 40 e8 1b 13 5c fb 48 8b 7c 24 40 e8 21 1d f0 fe 45 89 e8 44 89 f1 4c 89 e2 48 89 c6 48 c7 c7 e0 b5 fc 8a e8 19 c8 23 fb <0f> 0b e9 9f ee ff ff e8 ed 12 5c fb 0f b6 1d 12 8a 3c 08 31 ff 41
+RSP: 0018:ffffc90003d2fb00 EFLAGS: 00010282
+RAX: 0000000000000000 RBX: ffff8880789e9058 RCX: 0000000000000000
+RDX: ffff888029593b80 RSI: ffffffff814c1447 RDI: 0000000000000001
+RBP: ffff88801ea742f8 R08: 0000000000000001 R09: 0000000000000000
+R10: 0000000000000001 R11: 0000000000000001 R12: ffff88802915e528
+R13: 00000000000000fd R14: 0000000080000b80 R15: ffff8880222b3100
+FS:  0000555556ca63c0(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f9ef4d18150 CR3: 0000000073e5b000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
+ usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
+ usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
+ usbtmc_ioctl_request drivers/usb/class/usbtmc.c:1954 [inline]
+ usbtmc_ioctl+0x1b3d/0x2840 drivers/usb/class/usbtmc.c:2097
+
+To fix this, we must override the direction in the bRequestType field
+of the control request structure when the length is 0.
+
+Reported-and-tested-by: syzbot+ce77725b89b7bd52425c@syzkaller.appspotmail.com
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/linux-usb/000000000000716a3705f9adb8ee@google.com/
+CC: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/ede1ee02-b718-49e7-a44c-51339fec706b@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/format.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/class/usbtmc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/sound/usb/format.c
-+++ b/sound/usb/format.c
-@@ -419,6 +419,7 @@ static int line6_parse_audio_format_rate
- 	case USB_ID(0x0e41, 0x4248): /* Line6 Helix >= fw 2.82 */
- 	case USB_ID(0x0e41, 0x4249): /* Line6 Helix Rack >= fw 2.82 */
- 	case USB_ID(0x0e41, 0x424a): /* Line6 Helix LT >= fw 2.82 */
-+	case USB_ID(0x0e41, 0x424b): /* Line6 Pod Go */
- 	case USB_ID(0x19f7, 0x0011): /* Rode Rodecaster Pro */
- 		return set_fixed_rate(fp, 48000, SNDRV_PCM_RATE_48000);
- 	}
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -1898,6 +1898,8 @@ static int usbtmc_ioctl_request(struct u
+ 
+ 	if (request.req.wLength > USBTMC_BUFSIZE)
+ 		return -EMSGSIZE;
++	if (request.req.wLength == 0)	/* Length-0 requests are never IN */
++		request.req.bRequestType &= ~USB_DIR_IN;
+ 
+ 	is_in = request.req.bRequestType & USB_DIR_IN;
+ 
 
 
