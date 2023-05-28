@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DA6569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DD00C433D2;
-	Sun, 28 May 2023 19:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9B5569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF40C433EF;
+	Sun, 28 May 2023 19:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302183;
-	bh=g3a+J6zJJz23/RyYviFr08+3UhC8iK3afvwi81twaPM=;
+	s=korg; t=1685302185;
+	bh=4WbFydIr6yPKEHVuAN7j4xkPSUeP+zsygvx0qR5oLB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Larz/IdD6Tesn272wUef+dA9tEReYW4j9rybrtq7y+aHIxA39s0hucch2MqmlPCUX
-	 lDXmuN0KHjhAqzi2NAwbPEa+DYZBnLHfiLC+qPg5lRfKLmZIxCYH/fRGPJufd3n9hZ
-	 xbn2AhYACUL9rQw6Utj3mGCYP59fPtW4EGoQ8q9o=
+	b=EObKa5CNUYX5SC8CwBh6PvzY8PMqNRq2Qnqmq07rJwvjufF/hAPxfjaJEQ1Z24+/X
+	 Fhu/wkzgQ6VmF4sscA5HBefjFcElVDyCLz8r1tq864ptkSrHXIRyM6nF3RpGsDXB+z
+	 Kma4FBhuFssXEV+yMdq5qNTBIDfDH3y0ySuSG8II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Lino Sanfilippo <l.sanfilippo@kunbus.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.3 005/127] tpm_tis: Use tpm_chip_{start,stop} decoration inside tpm_tis_resume
-Date: Sun, 28 May 2023 20:09:41 +0100
-Message-Id: <20230528190836.365528152@linuxfoundation.org>
+Subject: [PATCH 6.3 006/127] tpm, tpm_tis: startup chip before testing for interrupts
+Date: Sun, 28 May 2023 20:09:42 +0100
+Message-Id: <20230528190836.402747998@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -36,108 +35,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jarkko Sakkinen <jarkko@kernel.org>
+From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
 
-[ Upstream commit 1398aa803f198b7a386fdd8404666043e95f4c16 ]
+[ Upstream commit 548eb516ec0f7a484a23a902835899341164b8ea ]
 
-Before sending a TPM command, CLKRUN protocol must be disabled. This is not
-done in the case of tpm1_do_selftest() call site inside tpm_tis_resume().
+In tpm_tis_gen_interrupt() a request for a property value is sent to the
+TPM to test if interrupts are generated. However after a power cycle the
+TPM responds with TPM_RC_INITIALIZE which indicates that the TPM is not
+yet properly initialized.
+Fix this by first starting the TPM up before the request is sent. For this
+the startup implementation is removed from tpm_chip_register() and put
+into the new function tpm_chip_startup() which is called before the
+interrupts are tested.
 
-Address this by decorating the calls with tpm_chip_{start,stop}, which
-should be always used to arm and disarm the TPM chip for transmission.
-
-Finally, move the call to the main TPM driver callback as the last step
-because it should arm the chip by itself, if it needs that type of
-functionality.
-
-Cc: stable@vger.kernel.org
-Reported-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Closes: https://lore.kernel.org/linux-integrity/CS68AWILHXS4.3M36M1EKZLUMS@suppilovahvero/
-Fixes: a3fbfae82b4c ("tpm: take TPM chip power gating out of tpm_transmit()")
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+Tested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Stable-dep-of: 99d464506255 ("tpm: Prevent hwrng from activating during resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 43 +++++++++++++++------------------
- 1 file changed, 19 insertions(+), 24 deletions(-)
+ drivers/char/tpm/tpm-chip.c     | 38 +++++++++++++++++++++------------
+ drivers/char/tpm/tpm.h          |  1 +
+ drivers/char/tpm/tpm_tis_core.c |  5 +++++
+ 3 files changed, 30 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index a35c117ee7c80..a5c22fb4ad428 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -1190,25 +1190,20 @@ static void tpm_tis_reenable_interrupts(struct tpm_chip *chip)
- 	u32 intmask;
- 	int rc;
- 
--	if (chip->ops->clk_enable != NULL)
--		chip->ops->clk_enable(chip, true);
--
--	/* reenable interrupts that device may have lost or
--	 * BIOS/firmware may have disabled
-+	/*
-+	 * Re-enable interrupts that device may have lost or BIOS/firmware may
-+	 * have disabled.
- 	 */
- 	rc = tpm_tis_write8(priv, TPM_INT_VECTOR(priv->locality), priv->irq);
--	if (rc < 0)
--		goto out;
-+	if (rc < 0) {
-+		dev_err(&chip->dev, "Setting IRQ failed.\n");
-+		return;
-+	}
- 
- 	intmask = priv->int_mask | TPM_GLOBAL_INT_ENABLE;
--
--	tpm_tis_write32(priv, TPM_INT_ENABLE(priv->locality), intmask);
--
--out:
--	if (chip->ops->clk_enable != NULL)
--		chip->ops->clk_enable(chip, false);
--
--	return;
-+	rc = tpm_tis_write32(priv, TPM_INT_ENABLE(priv->locality), intmask);
-+	if (rc < 0)
-+		dev_err(&chip->dev, "Enabling interrupts failed.\n");
+diff --git a/drivers/char/tpm/tpm-chip.c b/drivers/char/tpm/tpm-chip.c
+index 2a05d8cc0e795..6fdfa65a00c37 100644
+--- a/drivers/char/tpm/tpm-chip.c
++++ b/drivers/char/tpm/tpm-chip.c
+@@ -605,6 +605,30 @@ static int tpm_get_pcr_allocation(struct tpm_chip *chip)
+ 	return rc;
  }
  
- int tpm_tis_resume(struct device *dev)
-@@ -1216,27 +1211,27 @@ int tpm_tis_resume(struct device *dev)
- 	struct tpm_chip *chip = dev_get_drvdata(dev);
- 	int ret;
- 
--	ret = tpm_tis_request_locality(chip, 0);
--	if (ret < 0)
-+	ret = tpm_chip_start(chip);
-+	if (ret)
- 		return ret;
- 
- 	if (chip->flags & TPM_CHIP_FLAG_IRQ)
- 		tpm_tis_reenable_interrupts(chip);
- 
--	ret = tpm_pm_resume(dev);
--	if (ret)
--		goto out;
--
- 	/*
- 	 * TPM 1.2 requires self-test on resume. This function actually returns
- 	 * an error code but for unknown reason it isn't handled.
- 	 */
- 	if (!(chip->flags & TPM_CHIP_FLAG_TPM2))
- 		tpm1_do_selftest(chip);
--out:
--	tpm_tis_relinquish_locality(chip, 0);
- 
--	return ret;
++/*
++ * tpm_chip_startup() - performs auto startup and allocates the PCRs
++ * @chip: TPM chip to use.
++ */
++int tpm_chip_startup(struct tpm_chip *chip)
++{
++	int rc;
++
++	rc = tpm_chip_start(chip);
++	if (rc)
++		return rc;
++
++	rc = tpm_auto_startup(chip);
++	if (rc)
++		goto stop;
++
++	rc = tpm_get_pcr_allocation(chip);
++stop:
 +	tpm_chip_stop(chip);
 +
-+	ret = tpm_pm_resume(dev);
-+	if (ret)
-+		return ret;
++	return rc;
++}
++EXPORT_SYMBOL_GPL(tpm_chip_startup);
 +
-+	return 0;
- }
- EXPORT_SYMBOL_GPL(tpm_tis_resume);
- #endif
+ /*
+  * tpm_chip_register() - create a character device for the TPM chip
+  * @chip: TPM chip to use.
+@@ -620,20 +644,6 @@ int tpm_chip_register(struct tpm_chip *chip)
+ {
+ 	int rc;
+ 
+-	rc = tpm_chip_start(chip);
+-	if (rc)
+-		return rc;
+-	rc = tpm_auto_startup(chip);
+-	if (rc) {
+-		tpm_chip_stop(chip);
+-		return rc;
+-	}
+-
+-	rc = tpm_get_pcr_allocation(chip);
+-	tpm_chip_stop(chip);
+-	if (rc)
+-		return rc;
+-
+ 	tpm_sysfs_add_device(chip);
+ 
+ 	tpm_bios_log_setup(chip);
+diff --git a/drivers/char/tpm/tpm.h b/drivers/char/tpm/tpm.h
+index 830014a266090..88d3bd76e0760 100644
+--- a/drivers/char/tpm/tpm.h
++++ b/drivers/char/tpm/tpm.h
+@@ -263,6 +263,7 @@ static inline void tpm_msleep(unsigned int delay_msec)
+ 		     delay_msec * 1000);
+ };
+ 
++int tpm_chip_startup(struct tpm_chip *chip);
+ int tpm_chip_start(struct tpm_chip *chip);
+ void tpm_chip_stop(struct tpm_chip *chip);
+ struct tpm_chip *tpm_find_get_ops(struct tpm_chip *chip);
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index a5c22fb4ad428..9f76c9a5aa422 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -1124,6 +1124,11 @@ int tpm_tis_core_init(struct device *dev, struct tpm_tis_data *priv, int irq,
+ 	/* INTERRUPT Setup */
+ 	init_waitqueue_head(&priv->read_queue);
+ 	init_waitqueue_head(&priv->int_queue);
++
++	rc = tpm_chip_startup(chip);
++	if (rc)
++		goto out_err;
++
+ 	if (irq != -1) {
+ 		/*
+ 		 * Before doing irq testing issue a command to the TPM in polling mode
 -- 
 2.39.2
 
