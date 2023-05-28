@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2132611E
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:38:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D7FAC433D2;
-	Sun, 28 May 2023 19:38:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B89611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:38:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F79C433D2;
+	Sun, 28 May 2023 19:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302733;
-	bh=2YnKG/u1enG7Whl4T4pOCXXfFaDk9JuCPV89dYTqLEg=;
+	s=korg; t=1685302736;
+	bh=p/1qBNSjHhVQDzfbR+YBDXcVD80c/BNa3Oh5NZ0Pr2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JRP6cEd67PTyhPs7KRgmxU7vihAXkrxvGnpykokbS8Qkd3voM8r7qO1Frmfur9sT0
-	 aoPZw0leZ3kEtHCEK++FSFzjWypN2egLJEh4zT5h4GfwPMQq/FstHslFwPd8lp8l1G
-	 w2z5teGTuW+hfbdtQY19RuLRX9NGEsPnq5Qc6P5E=
+	b=0hK1wObdPWL16/F8vzs0a1c1Y7DNPr+SL3x0IYxxZFIHlc+/7ro6CYd9BIVeLYZaI
+	 ZmJQIIu3mg+I6Rczr9Un+Ldb0k+m41Ad+oD7UDeoXtlxwMzgDDgCX34Gae/zBRblzC
+	 jADNxd9HB9pZoZBssdHep+8eQLsriAU1EhsYFSW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>
-Subject: [PATCH 6.1 105/119] net/mlx5e: Use correct encap attribute during invalidation
-Date: Sun, 28 May 2023 20:11:45 +0100
-Message-Id: <20230528190838.981343118@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 106/119] net/mlx5e: do as little as possible in napi poll when budget is 0
+Date: Sun, 28 May 2023 20:11:46 +0100
+Message-Id: <20230528190839.014642765@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -36,62 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit be071cdb167fc3e25fe81922166b3d499d23e8ac upstream.
+commit afbed3f74830163f9559579dee382cac3cff82da upstream.
 
-With introduction of post action infrastructure most of the users of encap
-attribute had been modified in order to obtain the correct attribute by
-calling mlx5e_tc_get_encap_attr() helper instead of assuming encap action
-is always on default attribute. However, the cited commit didn't modify
-mlx5e_invalidate_encap() which prevents it from destroying correct modify
-header action which leads to a warning [0]. Fix the issue by using correct
-attribute.
+NAPI gets called with budget of 0 from netpoll, which has interrupts
+disabled. We should try to free some space on Tx rings and nothing
+else.
 
-[0]:
+Specifically do not try to handle XDP TX or try to refill Rx buffers -
+we can't use the page pool from IRQ context. Don't check if IRQs moved,
+either, that makes no sense in netpoll. Netpoll calls _all_ the rings
+from whatever CPU it happens to be invoked on.
 
-Feb 21 09:47:35 c-237-177-40-045 kernel: WARNING: CPU: 17 PID: 654 at drivers/net/ethernet/mellanox/mlx5/core/en_tc.c:684 mlx5e_tc_attach_mod_hdr+0x1cc/0x230 [mlx5_core]
-Feb 21 09:47:35 c-237-177-40-045 kernel: RIP: 0010:mlx5e_tc_attach_mod_hdr+0x1cc/0x230 [mlx5_core]
-Feb 21 09:47:35 c-237-177-40-045 kernel: Call Trace:
-Feb 21 09:47:35 c-237-177-40-045 kernel:  <TASK>
-Feb 21 09:47:35 c-237-177-40-045 kernel:  mlx5e_tc_fib_event_work+0x8e3/0x1f60 [mlx5_core]
-Feb 21 09:47:35 c-237-177-40-045 kernel:  ? mlx5e_take_all_encap_flows+0xe0/0xe0 [mlx5_core]
-Feb 21 09:47:35 c-237-177-40-045 kernel:  ? lock_downgrade+0x6d0/0x6d0
-Feb 21 09:47:35 c-237-177-40-045 kernel:  ? lockdep_hardirqs_on_prepare+0x273/0x3f0
-Feb 21 09:47:35 c-237-177-40-045 kernel:  ? lockdep_hardirqs_on_prepare+0x273/0x3f0
-Feb 21 09:47:35 c-237-177-40-045 kernel:  process_one_work+0x7c2/0x1310
-Feb 21 09:47:35 c-237-177-40-045 kernel:  ? lockdep_hardirqs_on_prepare+0x3f0/0x3f0
-Feb 21 09:47:35 c-237-177-40-045 kernel:  ? pwq_dec_nr_in_flight+0x230/0x230
-Feb 21 09:47:35 c-237-177-40-045 kernel:  ? rwlock_bug.part.0+0x90/0x90
-Feb 21 09:47:35 c-237-177-40-045 kernel:  worker_thread+0x59d/0xec0
-Feb 21 09:47:35 c-237-177-40-045 kernel:  ? __kthread_parkme+0xd9/0x1d0
+In general do as little as possible, the work quickly adds up when
+there's tens of rings to poll.
 
-Fixes: 8300f225268b ("net/mlx5e: Create new flow attr for multi table actions")
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
+The immediate stack trace I was seeing is:
+
+    __do_softirq+0xd1/0x2c0
+    __local_bh_enable_ip+0xc7/0x120
+    </IRQ>
+    <TASK>
+    page_pool_put_defragged_page+0x267/0x320
+    mlx5e_free_xdpsq_desc+0x99/0xd0
+    mlx5e_poll_xdpsq_cq+0x138/0x3b0
+    mlx5e_napi_poll+0xc3/0x8b0
+    netpoll_poll_dev+0xce/0x150
+
+AFAIU page pool takes a BH lock, releases it and since BH is now
+enabled tries to run softirqs.
+
 Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 60bbf7eeef10 ("mlx5: use page_pool for xdp_return_frame call")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-@@ -1338,11 +1338,13 @@ static void mlx5e_invalidate_encap(struc
- 	struct mlx5e_tc_flow *flow;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c
+@@ -161,20 +161,22 @@ int mlx5e_napi_poll(struct napi_struct *
+ 		}
+ 	}
  
- 	list_for_each_entry(flow, encap_flows, tmp_list) {
--		struct mlx5_flow_attr *attr = flow->attr;
- 		struct mlx5_esw_flow_attr *esw_attr;
-+		struct mlx5_flow_attr *attr;
- 
- 		if (!mlx5e_is_offloaded_flow(flow))
- 			continue;
++	/* budget=0 means we may be in IRQ context, do as little as possible */
++	if (unlikely(!budget))
++		goto out;
 +
-+		attr = mlx5e_tc_get_encap_attr(flow);
- 		esw_attr = attr->esw_attr;
+ 	busy |= mlx5e_poll_xdpsq_cq(&c->xdpsq.cq);
  
- 		if (flow_flag_test(flow, SLOW))
+ 	if (c->xdp)
+ 		busy |= mlx5e_poll_xdpsq_cq(&c->rq_xdpsq.cq);
+ 
+-	if (likely(budget)) { /* budget=0 means: don't poll rx rings */
+-		if (xsk_open)
+-			work_done = mlx5e_poll_rx_cq(&xskrq->cq, budget);
++	if (xsk_open)
++		work_done = mlx5e_poll_rx_cq(&xskrq->cq, budget);
+ 
+-		if (likely(budget - work_done))
+-			work_done += mlx5e_poll_rx_cq(&rq->cq, budget - work_done);
++	if (likely(budget - work_done))
++		work_done += mlx5e_poll_rx_cq(&rq->cq, budget - work_done);
+ 
+-		busy |= work_done == budget;
+-	}
++	busy |= work_done == budget;
+ 
+ 	mlx5e_poll_ico_cq(&c->icosq.cq);
+ 	if (mlx5e_poll_ico_cq(&c->async_icosq.cq))
 
 
