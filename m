@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D2AA611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEE4C433D2;
-	Sun, 28 May 2023 19:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121A6611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:23:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DFDFC4339B;
+	Sun, 28 May 2023 19:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301792;
-	bh=zWHg42sHMWPi32bLhXmeIkx9dv0BlAP/gKlnK4+6Yng=;
+	s=korg; t=1685301794;
+	bh=MqHNlfS6QeItB4f+zW/1QRsmirA/x/dSB2kR6YRDFQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wEIt2SqxeBDRfSWdVO1ytlxcjjYcgmr0Xy3ew7rFo3CwDRt0ZWRKnue5x5b1NtDnR
-	 HiHWF/eISylvMtR7pgyDXgs5OmJO0uPKmwTxnKPPuxqOZQf2TlODAXp7M1S7/f2BF+
-	 yySRvXdPSwmqr3LuODWJWQ/ahHwqQ7DNRxUnai8k=
+	b=KdNvTjRTclU0NNKpTCT5aYTzTqqBXAqPHnj7iT011KUdQMI9pB24T2UeoNyyfI+Ta
+	 70Uz7C2GhzEf1eQr1cgd3FnbhsZXjHegOi09x6mpEXAfuL1FBD4fisJ5oPxtKKiQo6
+	 jAt0552bUILCyaq/iPM3FXsFN+YGzWVAlxKOsBUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Simon Horman <simon.horman@corigine.com>,
+	"t.feng" <fengtao40@huawei.com>,
+	Florian Westphal <fw@strlen.de>,
+	Paolo Abeni <pabeni@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 010/161] net: add vlan_get_protocol_and_depth() helper
-Date: Sun, 28 May 2023 20:08:54 +0100
-Message-Id: <20230528190837.425839552@linuxfoundation.org>
+Subject: [PATCH 5.4 011/161] ipvlan:Fix out-of-bounds caused by unclear skb->cb
+Date: Sun, 28 May 2023 20:08:55 +0100
+Message-Id: <20230528190837.460898724@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -39,169 +37,170 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: t.feng <fengtao40@huawei.com>
 
-[ Upstream commit 4063384ef762cc5946fc7a3f89879e76c6ec51e2 ]
+[ Upstream commit 90cbed5247439a966b645b34eb0a2e037836ea8e ]
 
-Before blamed commit, pskb_may_pull() was used instead
-of skb_header_pointer() in __vlan_get_protocol() and friends.
+If skb enqueue the qdisc, fq_skb_cb(skb)->time_to_send is changed which
+is actually skb->cb, and IPCB(skb_in)->opt will be used in
+__ip_options_echo. It is possible that memcpy is out of bounds and lead
+to stack overflow.
+We should clear skb->cb before ip_local_out or ip6_local_out.
 
-Few callers depended on skb->head being populated with MAC header,
-syzbot caught one of them (skb_mac_gso_segment())
+v2:
+1. clean the stack info
+2. use IPCB/IP6CB instead of skb->cb
 
-Add vlan_get_protocol_and_depth() to make the intent clearer
-and use it where sensible.
+crash on stable-5.10(reproduce in kasan kernel).
+Stack info:
+[ 2203.651571] BUG: KASAN: stack-out-of-bounds in
+__ip_options_echo+0x589/0x800
+[ 2203.653327] Write of size 4 at addr ffff88811a388f27 by task
+swapper/3/0
+[ 2203.655460] CPU: 3 PID: 0 Comm: swapper/3 Kdump: loaded Not tainted
+5.10.0-60.18.0.50.h856.kasan.eulerosv2r11.x86_64 #1
+[ 2203.655466] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+BIOS rel-1.10.2-0-g5f4c7b1-20181220_000000-szxrtosci10000 04/01/2014
+[ 2203.655475] Call Trace:
+[ 2203.655481]  <IRQ>
+[ 2203.655501]  dump_stack+0x9c/0xd3
+[ 2203.655514]  print_address_description.constprop.0+0x19/0x170
+[ 2203.655530]  __kasan_report.cold+0x6c/0x84
+[ 2203.655586]  kasan_report+0x3a/0x50
+[ 2203.655594]  check_memory_region+0xfd/0x1f0
+[ 2203.655601]  memcpy+0x39/0x60
+[ 2203.655608]  __ip_options_echo+0x589/0x800
+[ 2203.655654]  __icmp_send+0x59a/0x960
+[ 2203.655755]  nf_send_unreach+0x129/0x3d0 [nf_reject_ipv4]
+[ 2203.655763]  reject_tg+0x77/0x1bf [ipt_REJECT]
+[ 2203.655772]  ipt_do_table+0x691/0xa40 [ip_tables]
+[ 2203.655821]  nf_hook_slow+0x69/0x100
+[ 2203.655828]  __ip_local_out+0x21e/0x2b0
+[ 2203.655857]  ip_local_out+0x28/0x90
+[ 2203.655868]  ipvlan_process_v4_outbound+0x21e/0x260 [ipvlan]
+[ 2203.655931]  ipvlan_xmit_mode_l3+0x3bd/0x400 [ipvlan]
+[ 2203.655967]  ipvlan_queue_xmit+0xb3/0x190 [ipvlan]
+[ 2203.655977]  ipvlan_start_xmit+0x2e/0xb0 [ipvlan]
+[ 2203.655984]  xmit_one.constprop.0+0xe1/0x280
+[ 2203.655992]  dev_hard_start_xmit+0x62/0x100
+[ 2203.656000]  sch_direct_xmit+0x215/0x640
+[ 2203.656028]  __qdisc_run+0x153/0x1f0
+[ 2203.656069]  __dev_queue_xmit+0x77f/0x1030
+[ 2203.656173]  ip_finish_output2+0x59b/0xc20
+[ 2203.656244]  __ip_finish_output.part.0+0x318/0x3d0
+[ 2203.656312]  ip_finish_output+0x168/0x190
+[ 2203.656320]  ip_output+0x12d/0x220
+[ 2203.656357]  __ip_queue_xmit+0x392/0x880
+[ 2203.656380]  __tcp_transmit_skb+0x1088/0x11c0
+[ 2203.656436]  __tcp_retransmit_skb+0x475/0xa30
+[ 2203.656505]  tcp_retransmit_skb+0x2d/0x190
+[ 2203.656512]  tcp_retransmit_timer+0x3af/0x9a0
+[ 2203.656519]  tcp_write_timer_handler+0x3ba/0x510
+[ 2203.656529]  tcp_write_timer+0x55/0x180
+[ 2203.656542]  call_timer_fn+0x3f/0x1d0
+[ 2203.656555]  expire_timers+0x160/0x200
+[ 2203.656562]  run_timer_softirq+0x1f4/0x480
+[ 2203.656606]  __do_softirq+0xfd/0x402
+[ 2203.656613]  asm_call_irq_on_stack+0x12/0x20
+[ 2203.656617]  </IRQ>
+[ 2203.656623]  do_softirq_own_stack+0x37/0x50
+[ 2203.656631]  irq_exit_rcu+0x134/0x1a0
+[ 2203.656639]  sysvec_apic_timer_interrupt+0x36/0x80
+[ 2203.656646]  asm_sysvec_apic_timer_interrupt+0x12/0x20
+[ 2203.656654] RIP: 0010:default_idle+0x13/0x20
+[ 2203.656663] Code: 89 f0 5d 41 5c 41 5d 41 5e c3 cc cc cc cc cc cc cc
+cc cc cc cc cc cc 0f 1f 44 00 00 0f 1f 44 00 00 0f 00 2d 9f 32 57 00 fb
+f4 <c3> cc cc cc cc 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 41 54 be 08
+[ 2203.656668] RSP: 0018:ffff88810036fe78 EFLAGS: 00000256
+[ 2203.656676] RAX: ffffffffaf2a87f0 RBX: ffff888100360000 RCX:
+ffffffffaf290191
+[ 2203.656681] RDX: 0000000000098b5e RSI: 0000000000000004 RDI:
+ffff88811a3c4f60
+[ 2203.656686] RBP: 0000000000000000 R08: 0000000000000001 R09:
+ffff88811a3c4f63
+[ 2203.656690] R10: ffffed10234789ec R11: 0000000000000001 R12:
+0000000000000003
+[ 2203.656695] R13: ffff888100360000 R14: 0000000000000000 R15:
+0000000000000000
+[ 2203.656729]  default_idle_call+0x5a/0x150
+[ 2203.656735]  cpuidle_idle_call+0x1c6/0x220
+[ 2203.656780]  do_idle+0xab/0x100
+[ 2203.656786]  cpu_startup_entry+0x19/0x20
+[ 2203.656793]  secondary_startup_64_no_verify+0xc2/0xcb
 
-This is a more generic fix than commit e9d3f80935b6
-("net/af_packet: make sure to pull mac header") which was
-dealing with a similar issue.
+[ 2203.657409] The buggy address belongs to the page:
+[ 2203.658648] page:0000000027a9842f refcount:1 mapcount:0
+mapping:0000000000000000 index:0x0 pfn:0x11a388
+[ 2203.658665] flags:
+0x17ffffc0001000(reserved|node=0|zone=2|lastcpupid=0x1fffff)
+[ 2203.658675] raw: 0017ffffc0001000 ffffea000468e208 ffffea000468e208
+0000000000000000
+[ 2203.658682] raw: 0000000000000000 0000000000000000 00000001ffffffff
+0000000000000000
+[ 2203.658686] page dumped because: kasan: bad access detected
 
-kernel BUG at include/linux/skbuff.h:2655 !
-invalid opcode: 0000 [#1] SMP KASAN
-CPU: 0 PID: 1441 Comm: syz-executor199 Not tainted 6.1.24-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/14/2023
-RIP: 0010:__skb_pull include/linux/skbuff.h:2655 [inline]
-RIP: 0010:skb_mac_gso_segment+0x68f/0x6a0 net/core/gro.c:136
-Code: fd 48 8b 5c 24 10 44 89 6b 70 48 c7 c7 c0 ae 0d 86 44 89 e6 e8 a1 91 d0 00 48 c7 c7 00 af 0d 86 48 89 de 31 d2 e8 d1 4a e9 ff <0f> 0b 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 55 48 89 e5 41
-RSP: 0018:ffffc90001bd7520 EFLAGS: 00010286
-RAX: ffffffff8469736a RBX: ffff88810f31dac0 RCX: ffff888115a18b00
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: ffffc90001bd75e8 R08: ffffffff84697183 R09: fffff5200037adf9
-R10: 0000000000000000 R11: dffffc0000000001 R12: 0000000000000012
-R13: 000000000000fee5 R14: 0000000000005865 R15: 000000000000fed7
-FS: 000055555633f300(0000) GS:ffff8881f6a00000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000000020000000 CR3: 0000000116fea000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-[<ffffffff847018dd>] __skb_gso_segment+0x32d/0x4c0 net/core/dev.c:3419
-[<ffffffff8470398a>] skb_gso_segment include/linux/netdevice.h:4819 [inline]
-[<ffffffff8470398a>] validate_xmit_skb+0x3aa/0xee0 net/core/dev.c:3725
-[<ffffffff84707042>] __dev_queue_xmit+0x1332/0x3300 net/core/dev.c:4313
-[<ffffffff851a9ec7>] dev_queue_xmit+0x17/0x20 include/linux/netdevice.h:3029
-[<ffffffff851b4a82>] packet_snd net/packet/af_packet.c:3111 [inline]
-[<ffffffff851b4a82>] packet_sendmsg+0x49d2/0x6470 net/packet/af_packet.c:3142
-[<ffffffff84669a12>] sock_sendmsg_nosec net/socket.c:716 [inline]
-[<ffffffff84669a12>] sock_sendmsg net/socket.c:736 [inline]
-[<ffffffff84669a12>] __sys_sendto+0x472/0x5f0 net/socket.c:2139
-[<ffffffff84669c75>] __do_sys_sendto net/socket.c:2151 [inline]
-[<ffffffff84669c75>] __se_sys_sendto net/socket.c:2147 [inline]
-[<ffffffff84669c75>] __x64_sys_sendto+0xe5/0x100 net/socket.c:2147
-[<ffffffff8551d40f>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-[<ffffffff8551d40f>] do_syscall_64+0x2f/0x50 arch/x86/entry/common.c:80
-[<ffffffff85600087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+To reproduce(ipvlan with IPVLAN_MODE_L3):
+Env setting:
+=======================================================
+modprobe ipvlan ipvlan_default_mode=1
+sysctl net.ipv4.conf.eth0.forwarding=1
+iptables -t nat -A POSTROUTING -s 20.0.0.0/255.255.255.0 -o eth0 -j
+MASQUERADE
+ip link add gw link eth0 type ipvlan
+ip -4 addr add 20.0.0.254/24 dev gw
+ip netns add net1
+ip link add ipv1 link eth0 type ipvlan
+ip link set ipv1 netns net1
+ip netns exec net1 ip link set ipv1 up
+ip netns exec net1 ip -4 addr add 20.0.0.4/24 dev ipv1
+ip netns exec net1 route add default gw 20.0.0.254
+ip netns exec net1 tc qdisc add dev ipv1 root netem loss 10%
+ifconfig gw up
+iptables -t filter -A OUTPUT -p tcp --dport 8888 -j REJECT --reject-with
+icmp-port-unreachable
+=======================================================
+And then excute the shell(curl any address of eth0 can reach):
 
-Fixes: 469aceddfa3e ("vlan: consolidate VLAN parsing code and limit max parsing depth")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Toke Høiland-Jørgensen <toke@redhat.com>
-Cc: Willem de Bruijn <willemb@google.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+for((i=1;i<=100000;i++))
+do
+        ip netns exec net1 curl x.x.x.x:8888
+done
+=======================================================
+
+Fixes: 2ad7bf363841 ("ipvlan: Initial check-in of the IPVLAN driver.")
+Signed-off-by: "t.feng" <fengtao40@huawei.com>
+Suggested-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tap.c       |  4 ++--
- include/linux/if_vlan.h | 17 +++++++++++++++++
- net/bridge/br_forward.c |  2 +-
- net/core/dev.c          |  2 +-
- net/packet/af_packet.c  |  6 ++----
- 5 files changed, 23 insertions(+), 8 deletions(-)
+ drivers/net/ipvlan/ipvlan_core.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/tap.c b/drivers/net/tap.c
-index ffdf0e165930c..574c17aa4b09a 100644
---- a/drivers/net/tap.c
-+++ b/drivers/net/tap.c
-@@ -716,7 +716,7 @@ static ssize_t tap_get_user(struct tap_queue *q, void *msg_control,
- 
- 	/* Move network header to the right position for VLAN tagged packets */
- 	if (eth_type_vlan(skb->protocol) &&
--	    __vlan_get_protocol(skb, skb->protocol, &depth) != 0)
-+	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
- 		skb_set_network_header(skb, depth);
- 
- 	rcu_read_lock();
-@@ -1177,7 +1177,7 @@ static int tap_get_user_xdp(struct tap_queue *q, struct xdp_buff *xdp)
- 
- 	/* Move network header to the right position for VLAN tagged packets */
- 	if (eth_type_vlan(skb->protocol) &&
--	    __vlan_get_protocol(skb, skb->protocol, &depth) != 0)
-+	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
- 		skb_set_network_header(skb, depth);
- 
- 	rcu_read_lock();
-diff --git a/include/linux/if_vlan.h b/include/linux/if_vlan.h
-index 41a518336673b..4e7e72f3da5bd 100644
---- a/include/linux/if_vlan.h
-+++ b/include/linux/if_vlan.h
-@@ -626,6 +626,23 @@ static inline __be16 vlan_get_protocol(const struct sk_buff *skb)
- 	return __vlan_get_protocol(skb, skb->protocol, NULL);
- }
- 
-+/* This version of __vlan_get_protocol() also pulls mac header in skb->head */
-+static inline __be16 vlan_get_protocol_and_depth(struct sk_buff *skb,
-+						 __be16 type, int *depth)
-+{
-+	int maclen;
-+
-+	type = __vlan_get_protocol(skb, type, &maclen);
-+
-+	if (type) {
-+		if (!pskb_may_pull(skb, maclen))
-+			type = 0;
-+		else if (depth)
-+			*depth = maclen;
-+	}
-+	return type;
-+}
-+
- /* A getter for the SKB protocol field which will handle VLAN tags consistently
-  * whether VLAN acceleration is enabled or not.
-  */
-diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
-index 86637000f275d..a92d5359b5c0c 100644
---- a/net/bridge/br_forward.c
-+++ b/net/bridge/br_forward.c
-@@ -43,7 +43,7 @@ int br_dev_queue_push_xmit(struct net *net, struct sock *sk, struct sk_buff *skb
- 	     skb->protocol == htons(ETH_P_8021AD))) {
- 		int depth;
- 
--		if (!__vlan_get_protocol(skb, skb->protocol, &depth))
-+		if (!vlan_get_protocol_and_depth(skb, skb->protocol, &depth))
- 			goto drop;
- 
- 		skb_set_network_header(skb, depth);
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 1a4e20c4ba053..c5561c88a8364 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2936,7 +2936,7 @@ __be16 skb_network_protocol(struct sk_buff *skb, int *depth)
- 		type = eth->h_proto;
+diff --git a/drivers/net/ipvlan/ipvlan_core.c b/drivers/net/ipvlan/ipvlan_core.c
+index a33149ee0ddcf..0a5b5ff597c6f 100644
+--- a/drivers/net/ipvlan/ipvlan_core.c
++++ b/drivers/net/ipvlan/ipvlan_core.c
+@@ -437,6 +437,9 @@ static int ipvlan_process_v4_outbound(struct sk_buff *skb)
+ 		goto err;
  	}
- 
--	return __vlan_get_protocol(skb, type, depth);
-+	return vlan_get_protocol_and_depth(skb, type, depth);
- }
- 
- /**
-diff --git a/net/packet/af_packet.c b/net/packet/af_packet.c
-index 109a848aca151..7a940f2f30671 100644
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1876,10 +1876,8 @@ static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
- 	/* Move network header to the right position for VLAN tagged packets */
- 	if (likely(skb->dev->type == ARPHRD_ETHER) &&
- 	    eth_type_vlan(skb->protocol) &&
--	    __vlan_get_protocol(skb, skb->protocol, &depth) != 0) {
--		if (pskb_may_pull(skb, depth))
--			skb_set_network_header(skb, depth);
--	}
-+	    vlan_get_protocol_and_depth(skb, skb->protocol, &depth) != 0)
-+		skb_set_network_header(skb, depth);
- 
- 	skb_probe_transport_header(skb);
- }
+ 	skb_dst_set(skb, &rt->dst);
++
++	memset(IPCB(skb), 0, sizeof(*IPCB(skb)));
++
+ 	err = ip_local_out(net, skb->sk, skb);
+ 	if (unlikely(net_xmit_eval(err)))
+ 		dev->stats.tx_errors++;
+@@ -475,6 +478,9 @@ static int ipvlan_process_v6_outbound(struct sk_buff *skb)
+ 		goto err;
+ 	}
+ 	skb_dst_set(skb, dst);
++
++	memset(IP6CB(skb), 0, sizeof(*IP6CB(skb)));
++
+ 	err = ip6_local_out(net, skb->sk, skb);
+ 	if (unlikely(net_xmit_eval(err)))
+ 		dev->stats.tx_errors++;
 -- 
 2.39.2
 
