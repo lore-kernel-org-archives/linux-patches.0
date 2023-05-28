@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D220569E
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3F84C433D2;
-	Sun, 28 May 2023 19:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00DE569E
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F64C433EF;
+	Sun, 28 May 2023 19:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301184;
-	bh=EDJ8xgwfZmJvZP/oI0VldhPcP6EQrhu6jfQi+R/yZhU=;
+	s=korg; t=1685301186;
+	bh=7ejSfEP/MfWk7l4/Sz7wUJBazTUAaNb51zY7QDpeo7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1UPX0B20SJ+VAp59pOMfbTYn9+Wt5cN07OpxVgzkWO5VV6YCuHnTguaG8pQXpH6X+
-	 eKqFkSIXxFEwft0KSV43ODRVxKJ+f14/WfVQWFXWQV0IRw2wY4XbcyxzomFDfsegyn
-	 /zMyX7NnRxP+nHMf468l+eQb+T0B43lCnqHYtRgE=
+	b=ijUvrekCM4U82ijcsV2LD4De8Z0UQ/rfLWkfHCQV4LEnc4adScwJMhonsCmSJn2ui
+	 14ZoikcS1TsH+aWfovpDoAGRS7cq0m3RkGMbLUTCZyZ5XXePaMgDFTW7KlsZ2D3H+2
+	 BxxC7akCL+cjG4pubvL/vMT7m3Hnb9aG/MAE2DWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Child <nnac123@linux.ibm.com>,
-	Piotr Raczynski <piotr.raczynski@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 16/86] net: Catch invalid index in XPS mapping
-Date: Sun, 28 May 2023 20:09:50 +0100
-Message-Id: <20230528190829.156076232@linuxfoundation.org>
+Subject: [PATCH 4.14 02/86] netlink: annotate accesses to nlk->cb_running
+Date: Sun, 28 May 2023 20:09:36 +0100
+Message-Id: <20230528190828.647288023@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -36,41 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Child <nnac123@linux.ibm.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 5dd0dfd55baec0742ba8f5625a0dd064aca7db16 ]
+[ Upstream commit a939d14919b799e6fff8a9c80296ca229ba2f8a4 ]
 
-When setting the XPS value of a TX queue, warn the user once if the
-index of the queue is greater than the number of allocated TX queues.
+Both netlink_recvmsg() and netlink_native_seq_show() read
+nlk->cb_running locklessly. Use READ_ONCE() there.
 
-Previously, this scenario went uncaught. In the best case, it resulted
-in unnecessary allocations. In the worst case, it resulted in
-out-of-bounds memory references through calls to `netdev_get_tx_queue(
-dev, index)`. Therefore, it is important to inform the user but not
-worth returning an error and risk downing the netdevice.
+Add corresponding WRITE_ONCE() to netlink_dump() and
+__netlink_dump_start()
 
-Signed-off-by: Nick Child <nnac123@linux.ibm.com>
-Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
-Link: https://lore.kernel.org/r/20230321150725.127229-1-nnac123@linux.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+syzbot reported:
+BUG: KCSAN: data-race in __netlink_dump_start / netlink_recvmsg
+
+write to 0xffff88813ea4db59 of 1 bytes by task 28219 on cpu 0:
+__netlink_dump_start+0x3af/0x4d0 net/netlink/af_netlink.c:2399
+netlink_dump_start include/linux/netlink.h:308 [inline]
+rtnetlink_rcv_msg+0x70f/0x8c0 net/core/rtnetlink.c:6130
+netlink_rcv_skb+0x126/0x220 net/netlink/af_netlink.c:2577
+rtnetlink_rcv+0x1c/0x20 net/core/rtnetlink.c:6192
+netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
+netlink_unicast+0x56f/0x640 net/netlink/af_netlink.c:1365
+netlink_sendmsg+0x665/0x770 net/netlink/af_netlink.c:1942
+sock_sendmsg_nosec net/socket.c:724 [inline]
+sock_sendmsg net/socket.c:747 [inline]
+sock_write_iter+0x1aa/0x230 net/socket.c:1138
+call_write_iter include/linux/fs.h:1851 [inline]
+new_sync_write fs/read_write.c:491 [inline]
+vfs_write+0x463/0x760 fs/read_write.c:584
+ksys_write+0xeb/0x1a0 fs/read_write.c:637
+__do_sys_write fs/read_write.c:649 [inline]
+__se_sys_write fs/read_write.c:646 [inline]
+__x64_sys_write+0x42/0x50 fs/read_write.c:646
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffff88813ea4db59 of 1 bytes by task 28222 on cpu 1:
+netlink_recvmsg+0x3b4/0x730 net/netlink/af_netlink.c:2022
+sock_recvmsg_nosec+0x4c/0x80 net/socket.c:1017
+____sys_recvmsg+0x2db/0x310 net/socket.c:2718
+___sys_recvmsg net/socket.c:2762 [inline]
+do_recvmmsg+0x2e5/0x710 net/socket.c:2856
+__sys_recvmmsg net/socket.c:2935 [inline]
+__do_sys_recvmmsg net/socket.c:2958 [inline]
+__se_sys_recvmmsg net/socket.c:2951 [inline]
+__x64_sys_recvmmsg+0xe2/0x160 net/socket.c:2951
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x41/0xc0 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00 -> 0x01
+
+Fixes: 16b304f3404f ("netlink: Eliminate kmalloc in netlink dump operation.")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netlink/af_netlink.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 86f762a1cf7ac..a4d68da682322 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -2165,6 +2165,8 @@ int netif_set_xps_queue(struct net_device *dev, const struct cpumask *mask,
- 	struct xps_map *map, *new_map;
- 	bool active = false;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index d7b0a7aa29a83..4b40edb51b9e5 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1977,7 +1977,7 @@ static int netlink_recvmsg(struct socket *sock, struct msghdr *msg, size_t len,
  
-+	WARN_ON_ONCE(index >= dev->num_tx_queues);
-+
- 	if (dev->num_tc) {
- 		num_tc = dev->num_tc;
- 		tc = netdev_txq_to_tc(dev, index);
+ 	skb_free_datagram(sk, skb);
+ 
+-	if (nlk->cb_running &&
++	if (READ_ONCE(nlk->cb_running) &&
+ 	    atomic_read(&sk->sk_rmem_alloc) <= sk->sk_rcvbuf / 2) {
+ 		ret = netlink_dump(sk);
+ 		if (ret) {
+@@ -2259,7 +2259,7 @@ static int netlink_dump(struct sock *sk)
+ 	if (cb->done)
+ 		cb->done(cb);
+ 
+-	nlk->cb_running = false;
++	WRITE_ONCE(nlk->cb_running, false);
+ 	module = cb->module;
+ 	skb = cb->skb;
+ 	mutex_unlock(nlk->cb_mutex);
+@@ -2320,7 +2320,7 @@ int __netlink_dump_start(struct sock *ssk, struct sk_buff *skb,
+ 			goto error_put;
+ 	}
+ 
+-	nlk->cb_running = true;
++	WRITE_ONCE(nlk->cb_running, true);
+ 	nlk->dump_done_errno = INT_MAX;
+ 
+ 	mutex_unlock(nlk->cb_mutex);
+@@ -2633,7 +2633,7 @@ static int netlink_seq_show(struct seq_file *seq, void *v)
+ 			   nlk->groups ? (u32)nlk->groups[0] : 0,
+ 			   sk_rmem_alloc_get(s),
+ 			   sk_wmem_alloc_get(s),
+-			   nlk->cb_running,
++			   READ_ONCE(nlk->cb_running),
+ 			   refcount_read(&s->sk_refcnt),
+ 			   atomic_read(&s->sk_drops),
+ 			   sock_i_ino(s)
 -- 
 2.39.2
 
