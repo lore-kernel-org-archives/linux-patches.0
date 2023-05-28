@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F335569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE3FBC433D2;
-	Sun, 28 May 2023 19:28:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11E9569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41215C433EF;
+	Sun, 28 May 2023 19:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302119;
-	bh=I2WkgRbjDBEh9lthIZ2qZW4kaYRRT0PVuCOHSVQXA7g=;
+	s=korg; t=1685302121;
+	bh=XwbO+uP9z+euriGaEYmaJKRYaDunT7FebxX5uWb1vxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g2BIIMzScDZE7uculSb2dJ6s0xBAURKYxGeZb/bU2quyomSAbXXYoD4Q/iW5IdDvy
-	 4APS2vA1/SW1/lFjWc7CVY+kFc/FVJny3maSmFrqhsIz41hkiEXv6g7sYFPHbuZ5sX
-	 qnMulA6X2QSRhtWz9Gl6QevvyqLBXcUSSbk0pRVQ=
+	b=hWV0tWk4LeNEYUK5g3YFB8Q32YQwzGvF2K4z7Q4p9nY9t+BC4L2dgd/vA+lW/sVNV
+	 SKbMNhQZvqcL9L4YfQuHZbiubRbZPGCvXUjMBMZfKOg7wyDKjYJejmrz77h6m4XImd
+	 T2VwLOEYBfpPJhW0IAlW3CdbwBDhrTuRhdzX7LYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 161/161] 3c589_cs: Fix an error handling path in tc589_probe()
-Date: Sun, 28 May 2023 20:11:25 +0100
-Message-Id: <20230528190841.919997669@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Juergen Gross <jgross@suse.com>
+Subject: [PATCH 5.4 155/161] xen/pvcalls-back: fix double frees with pvcalls_new_active_socket()
+Date: Sun, 28 May 2023 20:11:19 +0100
+Message-Id: <20230528190841.771658851@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -35,49 +34,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 640bf95b2c7c2981fb471acdafbd3e0458f8390d upstream.
+commit 8fafac202d18230bb9926bda48e563fd2cce2a4f upstream.
 
-Should tc589_config() fail, some resources need to be released as already
-done in the remove function.
+In the pvcalls_new_active_socket() function, most error paths call
+pvcalls_back_release_active(fedata->dev, fedata, map) which calls
+sock_release() on "sock".  The bug is that the caller also frees sock.
 
-Fixes: 15b99ac17295 ("[PATCH] pcmcia: add return value to _config() functions")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/d8593ae867b24c79063646e36f9b18b0790107cb.1684575975.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fix this by making every error path in pvcalls_new_active_socket()
+release the sock, and don't free it in the caller.
+
+Fixes: 5db4d286a8ef ("xen/pvcalls: implement connect command")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/e5f98dc2-0305-491f-a860-71bbd1398a2f@kili.mountain
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/3com/3c589_cs.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/xen/pvcalls-back.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/3com/3c589_cs.c
-+++ b/drivers/net/ethernet/3com/3c589_cs.c
-@@ -196,6 +196,7 @@ static int tc589_probe(struct pcmcia_dev
- {
- 	struct el3_private *lp;
- 	struct net_device *dev;
-+	int ret;
+--- a/drivers/xen/pvcalls-back.c
++++ b/drivers/xen/pvcalls-back.c
+@@ -321,8 +321,10 @@ static struct sock_mapping *pvcalls_new_
+ 	void *page;
  
- 	dev_dbg(&link->dev, "3c589_attach()\n");
+ 	map = kzalloc(sizeof(*map), GFP_KERNEL);
+-	if (map == NULL)
++	if (map == NULL) {
++		sock_release(sock);
+ 		return NULL;
++	}
  
-@@ -219,7 +220,15 @@ static int tc589_probe(struct pcmcia_dev
+ 	map->fedata = fedata;
+ 	map->sock = sock;
+@@ -414,10 +416,8 @@ static int pvcalls_back_connect(struct x
+ 					req->u.connect.ref,
+ 					req->u.connect.evtchn,
+ 					sock);
+-	if (!map) {
++	if (!map)
+ 		ret = -EFAULT;
+-		sock_release(sock);
+-	}
  
- 	dev->ethtool_ops = &netdev_ethtool_ops;
+ out:
+ 	rsp = RING_GET_RESPONSE(&fedata->ring, fedata->ring.rsp_prod_pvt++);
+@@ -558,7 +558,6 @@ static void __pvcalls_back_accept(struct
+ 					sock);
+ 	if (!map) {
+ 		ret = -EFAULT;
+-		sock_release(sock);
+ 		goto out_error;
+ 	}
  
--	return tc589_config(link);
-+	ret = tc589_config(link);
-+	if (ret)
-+		goto err_free_netdev;
-+
-+	return 0;
-+
-+err_free_netdev:
-+	free_netdev(dev);
-+	return ret;
- }
- 
- static void tc589_detach(struct pcmcia_device *link)
 
 
