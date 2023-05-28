@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2C2569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:27:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9E9C433EF;
-	Sun, 28 May 2023 19:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18924569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:27:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4E1C433D2;
+	Sun, 28 May 2023 19:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302062;
-	bh=wbjwYQ1PjXTeI/UE7qkqz1UbUfHLMY8QtM84mMGQzOw=;
+	s=korg; t=1685302064;
+	bh=jES49ybjzaym9a+DhZf3qWrKpvcFrDdD0nUxASV/xhs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OpLbpWGvDho1oUF8aYUWcZOq4XfpB8UOUSBsuGiE9ahUjGsAOvUVRuxYsufhKKleY
-	 HDjt9a2V2+lVMmwzymur8lpgf6v5Se1LzBAmpX7js0Lj48sbSzGNn5E/lGaD8opxI3
-	 OC9LMgTzvO+oYf5tjLI7q4bhPkP8OBynqpn2vf0Q=
+	b=XI2Mpc2Do5ZOHAksFL+WesiumedPUYvliHgOElW/q20VEzIpQqt2dxhcfCnHc+uwM
+	 xmEgjr7zZYPaohBxnTz3NBKu+cn7nYlIWGJ+bbYIWgaR6/6oHmHll+Scb4XqELF2Ip
+	 ydZtffi1ZAb1/TG0MsBZi7PUri597YTrGt2E4zMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <ptyadav@amazon.de>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 145/161] net: fix skb leak in __skb_tstamp_tx()
-Date: Sun, 28 May 2023 20:11:09 +0100
-Message-Id: <20230528190841.524364778@linuxfoundation.org>
+	Po-Hsu Lin <po-hsu.lin@canonical.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 146/161] selftests: fib_tests: mute cleanup error message
+Date: Sun, 28 May 2023 20:11:10 +0100
+Message-Id: <20230528190841.549675445@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -36,43 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pratyush Yadav <ptyadav@amazon.de>
+From: Po-Hsu Lin <po-hsu.lin@canonical.com>
 
-commit 8a02fb71d7192ff1a9a47c9d937624966c6e09af upstream.
+commit d226b1df361988f885c298737d6019c863a25f26 upstream.
 
-Commit 50749f2dd685 ("tcp/udp: Fix memleaks of sk and zerocopy skbs with
-TX timestamp.") added a call to skb_orphan_frags_rx() to fix leaks with
-zerocopy skbs. But it ended up adding a leak of its own. When
-skb_orphan_frags_rx() fails, the function just returns, leaking the skb
-it just cloned. Free it before returning.
+In the end of the test, there will be an error message induced by the
+`ip netns del ns1` command in cleanup()
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
+  Tests passed: 201
+  Tests failed:   0
+  Cannot remove namespace file "/run/netns/ns1": No such file or directory
 
-Fixes: 50749f2dd685 ("tcp/udp: Fix memleaks of sk and zerocopy skbs with TX timestamp.")
-Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20230522153020.32422-1-ptyadav@amazon.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This can even be reproduced with just `./fib_tests.sh -h` as we're
+calling cleanup() on exit.
+
+Redirect the error message to /dev/null to mute it.
+
+V2: Update commit message and fixes tag.
+V3: resubmit due to missing netdev ML in V2
+
+Fixes: b60417a9f2b8 ("selftest: fib_tests: Always cleanup before exit")
+Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/skbuff.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/fib_tests.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -4633,8 +4633,10 @@ void __skb_tstamp_tx(struct sk_buff *ori
- 	} else {
- 		skb = skb_clone(orig_skb, GFP_ATOMIC);
+--- a/tools/testing/selftests/net/fib_tests.sh
++++ b/tools/testing/selftests/net/fib_tests.sh
+@@ -68,7 +68,7 @@ setup()
+ cleanup()
+ {
+ 	$IP link del dev dummy0 &> /dev/null
+-	ip netns del ns1
++	ip netns del ns1 &> /dev/null
+ 	ip netns del ns2 &> /dev/null
+ }
  
--		if (skb_orphan_frags_rx(skb, GFP_ATOMIC))
-+		if (skb_orphan_frags_rx(skb, GFP_ATOMIC)) {
-+			kfree_skb(skb);
- 			return;
-+		}
- 	}
- 	if (!skb)
- 		return;
 
 
