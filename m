@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACF2569E
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E6DAC433EF;
-	Sun, 28 May 2023 19:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414E8569E
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:13:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31A4C433EF;
+	Sun, 28 May 2023 19:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301194;
-	bh=nhV7KGgkMqY2g/XLwvQZElIC26CIz2CgGzK4ssMKeHg=;
+	s=korg; t=1685301197;
+	bh=6oshVciF23uQHCikDHNmKnGQsl2XchcwdwEeZTu0m3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1nrxqRc1tsH8KoqmNrJK4yyyDglZrp9GNv6tDkb6Vo/uBLkiB+w26aCb6YGFuI4r
-	 +q+6P3YpcFn4vJU4d1Fcw1ekQgCHnzTii+GvamMcDZwfGv95jUDolRWsXTw2hOHbP5
-	 h5aTvF08gxOVWvFsvh1uT2gWmz3DNUPJbbWmwVm8=
+	b=kAapAi3yAX6sndeqbSLMSvcXI6MFe7oTvsATwPXdEf6kqXGuk1SZY91vTnSBzgjRn
+	 VPs7fhvOQRCm6x8jHBz5aZe5r+vYQ4bsP+QTdIkc0ZrWyhCyTHNy5B9AqBOh/lnKtv
+	 vxrra3u+3yLZW+zdSjV2JI5nhkhqYAN1P27XIMYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzbot+e2787430e752a92b8750@syzkaller.appspotmail.com>,
+	syzbot <syzbot+4913dca2ea6e4d43f3f1@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 05/86] af_unix: Fix a data race of sk->sk_receive_queue->qlen.
-Date: Sun, 28 May 2023 20:09:39 +0100
-Message-Id: <20230528190828.755150621@linuxfoundation.org>
+Subject: [PATCH 4.14 06/86] fs: hfsplus: remove WARN_ON() from hfsplus_cat_{read,write}_inode()
+Date: Sun, 28 May 2023 20:09:40 +0100
+Message-Id: <20230528190828.790869511@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.564682883@linuxfoundation.org>
 References: <20230528190828.564682883@linuxfoundation.org>
@@ -38,82 +38,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit 679ed006d416ea0cecfe24a99d365d1dea69c683 ]
+[ Upstream commit 81b21c0f0138ff5a499eafc3eb0578ad2a99622c ]
 
-KCSAN found a data race of sk->sk_receive_queue->qlen where recvmsg()
-updates qlen under the queue lock and sendmsg() checks qlen under
-unix_state_sock(), not the queue lock, so the reader side needs
-READ_ONCE().
+syzbot is hitting WARN_ON() in hfsplus_cat_{read,write}_inode(), for
+crafted filesystem image can contain bogus length. There conditions are
+not kernel bugs that can justify kernel to panic.
 
-BUG: KCSAN: data-race in __skb_try_recv_from_queue / unix_wait_for_peer
-
-write (marked) to 0xffff888019fe7c68 of 4 bytes by task 49792 on cpu 0:
- __skb_unlink include/linux/skbuff.h:2347 [inline]
- __skb_try_recv_from_queue+0x3de/0x470 net/core/datagram.c:197
- __skb_try_recv_datagram+0xf7/0x390 net/core/datagram.c:263
- __unix_dgram_recvmsg+0x109/0x8a0 net/unix/af_unix.c:2452
- unix_dgram_recvmsg+0x94/0xa0 net/unix/af_unix.c:2549
- sock_recvmsg_nosec net/socket.c:1019 [inline]
- ____sys_recvmsg+0x3a3/0x3b0 net/socket.c:2720
- ___sys_recvmsg+0xc8/0x150 net/socket.c:2764
- do_recvmmsg+0x182/0x560 net/socket.c:2858
- __sys_recvmmsg net/socket.c:2937 [inline]
- __do_sys_recvmmsg net/socket.c:2960 [inline]
- __se_sys_recvmmsg net/socket.c:2953 [inline]
- __x64_sys_recvmmsg+0x153/0x170 net/socket.c:2953
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-read to 0xffff888019fe7c68 of 4 bytes by task 49793 on cpu 1:
- skb_queue_len include/linux/skbuff.h:2127 [inline]
- unix_recvq_full net/unix/af_unix.c:229 [inline]
- unix_wait_for_peer+0x154/0x1a0 net/unix/af_unix.c:1445
- unix_dgram_sendmsg+0x13bc/0x14b0 net/unix/af_unix.c:2048
- sock_sendmsg_nosec net/socket.c:724 [inline]
- sock_sendmsg+0x148/0x160 net/socket.c:747
- ____sys_sendmsg+0x20e/0x620 net/socket.c:2503
- ___sys_sendmsg+0xc6/0x140 net/socket.c:2557
- __sys_sendmmsg+0x11d/0x370 net/socket.c:2643
- __do_sys_sendmmsg net/socket.c:2672 [inline]
- __se_sys_sendmmsg net/socket.c:2669 [inline]
- __x64_sys_sendmmsg+0x58/0x70 net/socket.c:2669
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0x0000000b -> 0x00000001
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 49793 Comm: syz-executor.0 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot <syzbot+e2787430e752a92b8750@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=e2787430e752a92b8750
+Reported-by: syzbot <syzbot+4913dca2ea6e4d43f3f1@syzkaller.appspotmail.com>
+Link: https://syzkaller.appspot.com/bug?extid=4913dca2ea6e4d43f3f1
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Message-Id: <15308173-5252-d6a3-ae3b-e96d46cb6f41@I-love.SAKURA.ne.jp>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfsplus/inode.c | 28 +++++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 0e494902fadaa..375d4e20efd6b 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1236,7 +1236,7 @@ static long unix_wait_for_peer(struct sock *other, long timeo)
+diff --git a/fs/hfsplus/inode.c b/fs/hfsplus/inode.c
+index ccb2a94c2032a..4924a489c8ac0 100644
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -488,7 +488,11 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 	if (type == HFSPLUS_FOLDER) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
  
- 	sched = !sock_flag(other, SOCK_DEAD) &&
- 		!(other->sk_shutdown & RCV_SHUTDOWN) &&
--		unix_recvq_full(other);
-+		unix_recvq_full_lockless(other);
+-		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_folder));
++		if (fd->entrylength < sizeof(struct hfsplus_cat_folder)) {
++			pr_err("bad catalog folder entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		hfsplus_get_perms(inode, &folder->permissions, 1);
+@@ -508,7 +512,11 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 	} else if (type == HFSPLUS_FILE) {
+ 		struct hfsplus_cat_file *file = &entry.file;
  
- 	unix_state_unlock(other);
+-		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_file));
++		if (fd->entrylength < sizeof(struct hfsplus_cat_file)) {
++			pr_err("bad catalog file entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
  
+@@ -539,6 +547,7 @@ int hfsplus_cat_read_inode(struct inode *inode, struct hfs_find_data *fd)
+ 		pr_err("bad catalog entry used to create inode\n");
+ 		res = -EIO;
+ 	}
++out:
+ 	return res;
+ }
+ 
+@@ -547,6 +556,7 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	struct inode *main_inode = inode;
+ 	struct hfs_find_data fd;
+ 	hfsplus_cat_entry entry;
++	int res = 0;
+ 
+ 	if (HFSPLUS_IS_RSRC(inode))
+ 		main_inode = HFSPLUS_I(inode)->rsrc_inode;
+@@ -565,7 +575,11 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	if (S_ISDIR(main_inode->i_mode)) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
+ 
+-		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_folder));
++		if (fd.entrylength < sizeof(struct hfsplus_cat_folder)) {
++			pr_err("bad catalog folder entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		/* simple node checks? */
+@@ -590,7 +604,11 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	} else {
+ 		struct hfsplus_cat_file *file = &entry.file;
+ 
+-		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_file));
++		if (fd.entrylength < sizeof(struct hfsplus_cat_file)) {
++			pr_err("bad catalog file entry\n");
++			res = -EIO;
++			goto out;
++		}
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
+ 		hfsplus_inode_write_fork(inode, &file->data_fork);
+@@ -611,5 +629,5 @@ int hfsplus_cat_write_inode(struct inode *inode)
+ 	set_bit(HFSPLUS_I_CAT_DIRTY, &HFSPLUS_I(inode)->flags);
+ out:
+ 	hfs_find_exit(&fd);
+-	return 0;
++	return res;
+ }
 -- 
 2.39.2
 
