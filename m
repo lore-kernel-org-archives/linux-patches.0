@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E9A611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:47:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BFDC4339C;
-	Sun, 28 May 2023 19:47:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECE1611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:48:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252BDC433D2;
+	Sun, 28 May 2023 19:48:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303278;
-	bh=QLZ1eCGJ+58eBr63e1ucrArrqF/xvK8IEXlCm78ogMM=;
+	s=korg; t=1685303281;
+	bh=kEtby9vnpKUNBsShYn6qU6m2TrA66bqrhgn8AOmt0v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BlkHSO0zlbZojL9jjcUSJh6B0pa/22vev9VecODOBNYb3PMOeVV7Gp5yZfclJdLfr
-	 61aa6SvkHCbNwOnPIWT4Xq3LUZQZFzn3j4m9YKwff18I5LUFserJl2+nLuHhYTGUte
-	 xSAe6zQNr/SZk8nPTPT4ehn/fp9kVeE5lVhUrwwk=
+	b=MBfeOv6DiWdlLjz9xpz0IHHnEExIAgwQPVX01h37t0fJs9jFFANtLSRD8/9xzUn07
+	 QI8HNgjGrc4aP9kQLLTCyNIeSbG00EQI5blP2odxdeXUiCYFPmMhYhSEI3frr4ixN4
+	 YHuiNJFHXWOKxe7LeGW2xcXHei1zq6J+HQYqDt/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org
-Subject: [PATCH 5.15 15/69] ASoC: rt5682: Disable jack detection interrupt during suspend
-Date: Sun, 28 May 2023 20:11:35 +0100
-Message-Id: <20230528190828.918940416@linuxfoundation.org>
+	syzbot+9f575a1f15fc0c01ed69@syzkaller.appspotmail.com,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 16/69] net: cdc_ncm: Deal with too low values of dwNtbOutMaxSize
+Date: Sun, 28 May 2023 20:11:36 +0100
+Message-Id: <20230528190828.950720665@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -33,85 +36,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Kaehlcke <mka@chromium.org>
+From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-commit 8b271370e963370703819bd9795a54d658071bed upstream.
+commit 7e01c7f7046efc2c7c192c3619db43292b98e997 upstream.
 
-The rt5682 driver switches its regmap to cache-only when the
-device suspends and back to regular mode on resume. When the
-jack detect interrupt fires rt5682_irq() schedules the jack
-detect work. This can result in invalid reads from the regmap
-in cache-only mode if the work runs before the device has
-resumed:
+Currently in cdc_ncm_check_tx_max(), if dwNtbOutMaxSize is lower than
+the calculated "min" value, but greater than zero, the logic sets
+tx_max to dwNtbOutMaxSize. This is then used to allocate a new SKB in
+cdc_ncm_fill_tx_frame() where all the data is handled.
 
-[   56.245502] rt5682 9-001a: ASoC: error at soc_component_read_no_lock on rt5682.9-001a for register: [0x000000f0] -16
+For small values of dwNtbOutMaxSize the memory allocated during
+alloc_skb(dwNtbOutMaxSize, GFP_ATOMIC) will have the same size, due to
+how size is aligned at alloc time:
+	size = SKB_DATA_ALIGN(size);
+        size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
+Thus we hit the same bug that we tried to squash with
+commit 2be6d4d16a084 ("net: cdc_ncm: Allow for dwNtbOutMaxSize to be unset or zero")
 
-Disable the jack detection interrupt during suspend and
-re-enable it on resume. The driver already schedules the
-jack detection work on resume, so any state change during
-suspend is still handled.
+Low values of dwNtbOutMaxSize do not cause an issue presently because at
+alloc_skb() time more memory (512b) is allocated than required for the
+SKB headers alone (320b), leaving some space (512b - 320b = 192b)
+for CDC data (172b).
 
-This is essentially the same as commit f7d00a9be147 ("SoC:
-rt5682s: Disable jack detection interrupt during suspend")
-for the rt5682s.
+However, if more elements (for example 3 x u64 = [24b]) were added to
+one of the SKB header structs, say 'struct skb_shared_info',
+increasing its original size (320b [320b aligned]) to something larger
+(344b [384b aligned]), then suddenly the CDC data (172b) no longer
+fits in the spare SKB data area (512b - 384b = 128b).
 
-Cc: stable@kernel.org
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org
-Reviewed-by: Douglas Anderson <dianders@chromium.org
-Reviewed-by: Stephen Boyd <swboyd@chromium.org
-Link: https://lore.kernel.org/r/20230516164629.1.Ibf79e94b3442eecc0054d2b478779cc512d967fc@changeid
-Signed-off-by: Mark Brown <broonie@kernel.org
+Consequently the SKB bounds checking semantics fails and panics:
+
+skbuff: skb_over_panic: text:ffffffff831f755b len:184 put:172 head:ffff88811f1c6c00 data:ffff88811f1c6c00 tail:0xb8 end:0x80 dev:<NULL>
+------------[ cut here ]------------
+kernel BUG at net/core/skbuff.c:113!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+CPU: 0 PID: 57 Comm: kworker/0:2 Not tainted 5.15.106-syzkaller-00249-g19c0ed55a470 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/14/2023
+Workqueue: mld mld_ifc_work
+RIP: 0010:skb_panic net/core/skbuff.c:113 [inline]
+RIP: 0010:skb_over_panic+0x14c/0x150 net/core/skbuff.c:118
+[snip]
+Call Trace:
+ <TASK>
+ skb_put+0x151/0x210 net/core/skbuff.c:2047
+ skb_put_zero include/linux/skbuff.h:2422 [inline]
+ cdc_ncm_ndp16 drivers/net/usb/cdc_ncm.c:1131 [inline]
+ cdc_ncm_fill_tx_frame+0x11ab/0x3da0 drivers/net/usb/cdc_ncm.c:1308
+ cdc_ncm_tx_fixup+0xa3/0x100
+
+Deal with too low values of dwNtbOutMaxSize, clamp it in the range
+[USB_CDC_NCM_NTB_MIN_OUT_SIZE, CDC_NCM_NTB_MAX_SIZE_TX]. We ensure
+enough data space is allocated to handle CDC data by making sure
+dwNtbOutMaxSize is not smaller than USB_CDC_NCM_NTB_MIN_OUT_SIZE.
+
+Fixes: 289507d3364f ("net: cdc_ncm: use sysfs for rx/tx aggregation tuning")
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+9f575a1f15fc0c01ed69@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?extid=b982f1059506db48409d
+Link: https://lore.kernel.org/all/20211202143437.1411410-1-lee.jones@linaro.org/
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230517133808.1873695-2-tudor.ambarus@linaro.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/rt5682-i2c.c |    4 +++-
- sound/soc/codecs/rt5682.c     |    6 ++++++
- sound/soc/codecs/rt5682.h     |    1 +
- 3 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/usb/cdc_ncm.c |   24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
---- a/sound/soc/codecs/rt5682-i2c.c
-+++ b/sound/soc/codecs/rt5682-i2c.c
-@@ -268,7 +268,9 @@ static int rt5682_i2c_probe(struct i2c_c
- 		ret = devm_request_threaded_irq(&i2c->dev, i2c->irq, NULL,
- 			rt5682_irq, IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING
- 			| IRQF_ONESHOT, "rt5682", rt5682);
--		if (ret)
-+		if (!ret)
-+			rt5682->irq = i2c->irq;
-+		else
- 			dev_err(&i2c->dev, "Failed to reguest IRQ: %d\n", ret);
- 	}
+--- a/drivers/net/usb/cdc_ncm.c
++++ b/drivers/net/usb/cdc_ncm.c
+@@ -180,9 +180,12 @@ static u32 cdc_ncm_check_tx_max(struct u
+ 	else
+ 		min = ctx->max_datagram_size + ctx->max_ndp_size + sizeof(struct usb_cdc_ncm_nth32);
  
---- a/sound/soc/codecs/rt5682.c
-+++ b/sound/soc/codecs/rt5682.c
-@@ -2951,6 +2951,9 @@ static int rt5682_suspend(struct snd_soc
- 	if (rt5682->is_sdw)
- 		return 0;
+-	max = min_t(u32, CDC_NCM_NTB_MAX_SIZE_TX, le32_to_cpu(ctx->ncm_parm.dwNtbOutMaxSize));
+-	if (max == 0)
++	if (le32_to_cpu(ctx->ncm_parm.dwNtbOutMaxSize) == 0)
+ 		max = CDC_NCM_NTB_MAX_SIZE_TX; /* dwNtbOutMaxSize not set */
++	else
++		max = clamp_t(u32, le32_to_cpu(ctx->ncm_parm.dwNtbOutMaxSize),
++			      USB_CDC_NCM_NTB_MIN_OUT_SIZE,
++			      CDC_NCM_NTB_MAX_SIZE_TX);
  
-+	if (rt5682->irq)
-+		disable_irq(rt5682->irq);
-+
- 	cancel_delayed_work_sync(&rt5682->jack_detect_work);
- 	cancel_delayed_work_sync(&rt5682->jd_check_work);
- 	if (rt5682->hs_jack && (rt5682->jack_type & SND_JACK_HEADSET) == SND_JACK_HEADSET) {
-@@ -3019,6 +3022,9 @@ static int rt5682_resume(struct snd_soc_
- 	mod_delayed_work(system_power_efficient_wq,
- 		&rt5682->jack_detect_work, msecs_to_jiffies(0));
+ 	/* some devices set dwNtbOutMaxSize too low for the above default */
+ 	min = min(min, max);
+@@ -1243,6 +1246,9 @@ cdc_ncm_fill_tx_frame(struct usbnet *dev
+ 			 * further.
+ 			 */
+ 			if (skb_out == NULL) {
++				/* If even the smallest allocation fails, abort. */
++				if (ctx->tx_curr_size == USB_CDC_NCM_NTB_MIN_OUT_SIZE)
++					goto alloc_failed;
+ 				ctx->tx_low_mem_max_cnt = min(ctx->tx_low_mem_max_cnt + 1,
+ 							      (unsigned)CDC_NCM_LOW_MEM_MAX_CNT);
+ 				ctx->tx_low_mem_val = ctx->tx_low_mem_max_cnt;
+@@ -1261,13 +1267,8 @@ cdc_ncm_fill_tx_frame(struct usbnet *dev
+ 			skb_out = alloc_skb(ctx->tx_curr_size, GFP_ATOMIC);
  
-+	if (rt5682->irq)
-+		enable_irq(rt5682->irq);
-+
- 	return 0;
- }
- #else
---- a/sound/soc/codecs/rt5682.h
-+++ b/sound/soc/codecs/rt5682.h
-@@ -1462,6 +1462,7 @@ struct rt5682_priv {
- 	int pll_out[RT5682_PLLS];
+ 			/* No allocation possible so we will abort */
+-			if (skb_out == NULL) {
+-				if (skb != NULL) {
+-					dev_kfree_skb_any(skb);
+-					dev->net->stats.tx_dropped++;
+-				}
+-				goto exit_no_skb;
+-			}
++			if (!skb_out)
++				goto alloc_failed;
+ 			ctx->tx_low_mem_val--;
+ 		}
+ 		if (ctx->is_ndp16) {
+@@ -1460,6 +1461,11 @@ cdc_ncm_fill_tx_frame(struct usbnet *dev
  
- 	int jack_type;
-+	int irq;
- 	int irq_work_delay_time;
- };
+ 	return skb_out;
  
++alloc_failed:
++	if (skb) {
++		dev_kfree_skb_any(skb);
++		dev->net->stats.tx_dropped++;
++	}
+ exit_no_skb:
+ 	/* Start timer, if there is a remaining non-empty skb */
+ 	if (ctx->tx_curr_skb != NULL && n > 0)
 
 
