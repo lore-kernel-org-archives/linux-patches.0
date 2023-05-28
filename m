@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D807611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF33FC433EF;
-	Sun, 28 May 2023 19:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5FDA611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468B9C433EF;
+	Sun, 28 May 2023 19:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302787;
-	bh=CPnhfC65kJJOyV32CmtJ1fCJzO85FOCorZQHf6Hm9Hk=;
+	s=korg; t=1685302789;
+	bh=2S2EbkdphXGt9TNjlpiyfAuhlbzT+5NG/SB3ThDrQSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gar30DwvgRQ1ilI4yte5ozGlU2OmH8MyNQX2SvU9lDCpQh1K0avhjOnU4gyxQiVL5
-	 ROREPfXbveYw1oZ3YzrluAmy5uQ/xNy+KdxEACY0xnL+ImIPO8cA1uBCRIruHznZkC
-	 WrHTlEflVGLtLE80C65I261C7sMMyWsOV/ciZlS8=
+	b=ReGmDihNnjM6ZFQ3IyHd7spaupXIaWBvk/qQ1u1Xo0QGL4/B9Iz/yJ8RarOxV5SLm
+	 0M/T4fdoWUT6D0ATxYEymxNSFu3hJeiTOjMfW7DNcN1wXk65ixArhTZ3s1AvAsoplO
+	 UhipVdjhFPWSVTIWJZghM2yp8vSMu+bNDhqQlVKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 006/211] net: Fix load-tearing on sk->sk_stamp in sock_recv_cmsgs().
-Date: Sun, 28 May 2023 20:08:47 +0100
-Message-Id: <20230528190843.678109677@linuxfoundation.org>
+Subject: [PATCH 5.10 007/211] netfilter: conntrack: fix possible bug_on with enable_hooks=1
+Date: Sun, 28 May 2023 20:08:48 +0100
+Message-Id: <20230528190843.703632358@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -37,80 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit dfd9248c071a3710c24365897459538551cb7167 ]
+[ Upstream commit e72eeab542dbf4f544e389e64fa13b82a1b6d003 ]
 
-KCSAN found a data race in sock_recv_cmsgs() where the read access
-to sk->sk_stamp needs READ_ONCE().
+I received a bug report (no reproducer so far) where we trip over
 
-BUG: KCSAN: data-race in packet_recvmsg / packet_recvmsg
+712         rcu_read_lock();
+713         ct_hook = rcu_dereference(nf_ct_hook);
+714         BUG_ON(ct_hook == NULL);  // here
 
-write (marked) to 0xffff88803c81f258 of 8 bytes by task 19171 on cpu 0:
- sock_write_timestamp include/net/sock.h:2670 [inline]
- sock_recv_cmsgs include/net/sock.h:2722 [inline]
- packet_recvmsg+0xb97/0xd00 net/packet/af_packet.c:3489
- sock_recvmsg_nosec net/socket.c:1019 [inline]
- sock_recvmsg+0x11a/0x130 net/socket.c:1040
- sock_read_iter+0x176/0x220 net/socket.c:1118
- call_read_iter include/linux/fs.h:1845 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x5e0/0x630 fs/read_write.c:470
- ksys_read+0x163/0x1a0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x41/0x50 fs/read_write.c:621
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
+In nf_conntrack_destroy().
 
-read to 0xffff88803c81f258 of 8 bytes by task 19183 on cpu 1:
- sock_recv_cmsgs include/net/sock.h:2721 [inline]
- packet_recvmsg+0xb64/0xd00 net/packet/af_packet.c:3489
- sock_recvmsg_nosec net/socket.c:1019 [inline]
- sock_recvmsg+0x11a/0x130 net/socket.c:1040
- sock_read_iter+0x176/0x220 net/socket.c:1118
- call_read_iter include/linux/fs.h:1845 [inline]
- new_sync_read fs/read_write.c:389 [inline]
- vfs_read+0x5e0/0x630 fs/read_write.c:470
- ksys_read+0x163/0x1a0 fs/read_write.c:613
- __do_sys_read fs/read_write.c:623 [inline]
- __se_sys_read fs/read_write.c:621 [inline]
- __x64_sys_read+0x41/0x50 fs/read_write.c:621
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
+First turn this BUG_ON into a WARN.  I think it was triggered
+via enable_hooks=1 flag.
 
-value changed: 0xffffffffc4653600 -> 0x0000000000000000
+When this flag is turned on, the conntrack hooks are registered
+before nf_ct_hook pointer gets assigned.
+This opens a short window where packets enter the conntrack machinery,
+can have skb->_nfct set up and a subsequent kfree_skb might occur
+before nf_ct_hook is set.
 
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 19183 Comm: syz-executor.5 Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+Call nf_conntrack_init_end() to set nf_ct_hook before we register the
+pernet ops.
 
-Fixes: 6c7c98bad488 ("sock: avoid dirtying sk_stamp, if possible")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20230508175543.55756-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ba3fbe663635 ("netfilter: nf_conntrack: provide modparam to always register conntrack hooks")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/core.c                    | 6 ++++--
+ net/netfilter/nf_conntrack_standalone.c | 3 ++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/sock.h b/include/net/sock.h
-index 1d8529311d6f9..651dc0a7bbd58 100644
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2535,7 +2535,7 @@ static inline void sock_recv_ts_and_drops(struct msghdr *msg, struct sock *sk,
- 		__sock_recv_ts_and_drops(msg, sk, skb);
- 	else if (unlikely(sock_flag(sk, SOCK_TIMESTAMP)))
- 		sock_write_timestamp(sk, skb->tstamp);
--	else if (unlikely(sk->sk_stamp == SK_DEFAULT_STAMP))
-+	else if (unlikely(sock_read_timestamp(sk) == SK_DEFAULT_STAMP))
- 		sock_write_timestamp(sk, 0);
- }
+diff --git a/net/netfilter/core.c b/net/netfilter/core.c
+index 60332fdb6dd44..5b7578adbf0f1 100644
+--- a/net/netfilter/core.c
++++ b/net/netfilter/core.c
+@@ -674,9 +674,11 @@ void nf_conntrack_destroy(struct nf_conntrack *nfct)
  
+ 	rcu_read_lock();
+ 	ct_hook = rcu_dereference(nf_ct_hook);
+-	BUG_ON(ct_hook == NULL);
+-	ct_hook->destroy(nfct);
++	if (ct_hook)
++		ct_hook->destroy(nfct);
+ 	rcu_read_unlock();
++
++	WARN_ON(!ct_hook);
+ }
+ EXPORT_SYMBOL(nf_conntrack_destroy);
+ 
+diff --git a/net/netfilter/nf_conntrack_standalone.c b/net/netfilter/nf_conntrack_standalone.c
+index e12b52019a550..b613de96ad855 100644
+--- a/net/netfilter/nf_conntrack_standalone.c
++++ b/net/netfilter/nf_conntrack_standalone.c
+@@ -1170,11 +1170,12 @@ static int __init nf_conntrack_standalone_init(void)
+ 	nf_conntrack_htable_size_user = nf_conntrack_htable_size;
+ #endif
+ 
++	nf_conntrack_init_end();
++
+ 	ret = register_pernet_subsys(&nf_conntrack_net_ops);
+ 	if (ret < 0)
+ 		goto out_pernet;
+ 
+-	nf_conntrack_init_end();
+ 	return 0;
+ 
+ out_pernet:
 -- 
 2.39.2
 
