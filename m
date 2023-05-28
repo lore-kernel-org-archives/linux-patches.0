@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3635B611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90B26C433EF;
-	Sun, 28 May 2023 19:35:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C35611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6305C433D2;
+	Sun, 28 May 2023 19:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302538;
-	bh=POgPahcTg1VFE65JOxLCqUFxAHkIII2BQn2FO8T9HIM=;
+	s=korg; t=1685302541;
+	bh=0QGY+ixbiJ53s+lznGc6OpLn45DcgcDT3aIoof9SGfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FTbdAAc9jJPRrasUWSZdNc2p4OwVF7ZTNze9k7l7FTe37kECI8OiYRVlSzMHZb8YV
-	 NpLhLOl8Ra2RV/9P7H3DxilkhE6x0j4D+vQWHkIjOc3gFWtiGJe7dp3qNaSHgoC10S
-	 srQ8FbQzw0a/6G+P4GRJRA1WBeizHni3O7g8OFEo=
+	b=uawK4oW13YtqgeuMDcqPPlpE/MNwSK/5i4zk+Se0v62R9Z55oNCORv9fnxiqcgCjI
+	 aJnkNH9vzHG47Rc45hv0b8Hv0BC7rzVW4eCOwimrIGkNPuyd55G1YgVUhgEkyNVyRw
+	 OMEbCKLBdp/Bl05biAWQkwITLdlS75iJiORriH3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Casey Schaufler <casey@schaufler-ca.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 015/119] ocfs2: Switch to security_inode_init_security()
-Date: Sun, 28 May 2023 20:10:15 +0100
-Message-Id: <20230528190835.838766017@linuxfoundation.org>
+	Peter Collingbourne <pcc@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.1 016/119] arm64: Also reset KASAN tag if page is not PG_mte_tagged
+Date: Sun, 28 May 2023 20:10:16 +0100
+Message-Id: <20230528190835.869117178@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -37,118 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Peter Collingbourne <pcc@google.com>
 
-commit de3004c874e740304cc4f4a83d6200acb511bbda upstream.
+commit 2efbafb91e12ff5a16cbafb0085e4c10c3fca493 upstream.
 
-In preparation for removing security_old_inode_init_security(), switch to
-security_inode_init_security().
+Consider the following sequence of events:
 
-Extend the existing ocfs2_initxattrs() to take the
-ocfs2_security_xattr_info structure from fs_info, and populate the
-name/value/len triple with the first xattr provided by LSMs.
+1) A page in a PROT_READ|PROT_WRITE VMA is faulted.
+2) Page migration allocates a page with the KASAN allocator,
+   causing it to receive a non-match-all tag, and uses it
+   to replace the page faulted in 1.
+3) The program uses mprotect() to enable PROT_MTE on the page faulted in 1.
 
-As fs_info was not used before, ocfs2_initxattrs() can now handle the case
-of replicating the behavior of security_old_inode_init_security(), i.e.
-just obtaining the xattr, in addition to setting all xattrs provided by
-LSMs.
+As a result of step 3, we are left with a non-match-all tag for a page
+with tags accessible to userspace, which can lead to the same kind of
+tag check faults that commit e74a68468062 ("arm64: Reset KASAN tag in
+copy_highpage with HW tags only") intended to fix.
 
-Supporting multiple xattrs is not currently supported where
-security_old_inode_init_security() was called (mknod, symlink), as it
-requires non-trivial changes that can be done at a later time. Like for
-reiserfs, even if EVM is invoked, it will not provide an xattr (if it is
-not the first to set it, its xattr will be discarded; if it is the first,
-it does not have xattrs to calculate the HMAC on).
+The general invariant that we have for pages in a VMA with VM_MTE_ALLOWED
+is that they cannot have a non-match-all tag. As a result of step 2, the
+invariant is broken. This means that the fix in the referenced commit
+was incomplete and we also need to reset the tag for pages without
+PG_mte_tagged.
 
-Finally, since security_inode_init_security(), unlike
-security_old_inode_init_security(), returns zero instead of -EOPNOTSUPP if
-no xattrs were provided by LSMs or if inodes are private, additionally
-check in ocfs2_init_security_get() if the xattr name is set.
-
-If not, act as if security_old_inode_init_security() returned -EOPNOTSUPP,
-and set si->enable to zero to notify to the functions following
-ocfs2_init_security_get() that no xattrs are available.
-
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Casey Schaufler <casey@schaufler-ca.com>
-Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Fixes: e5b8d9218951 ("arm64: mte: reset the page tag in page->flags")
+Cc: <stable@vger.kernel.org> # 5.15
+Link: https://linux-review.googlesource.com/id/I7409cdd41acbcb215c2a7417c1e50d37b875beff
+Signed-off-by: Peter Collingbourne <pcc@google.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Link: https://lore.kernel.org/r/20230420210945.2313627-1-pcc@google.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/namei.c |    2 ++
- fs/ocfs2/xattr.c |   30 ++++++++++++++++++++++++++----
- 2 files changed, 28 insertions(+), 4 deletions(-)
+ arch/arm64/mm/copypage.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/ocfs2/namei.c
-+++ b/fs/ocfs2/namei.c
-@@ -242,6 +242,7 @@ static int ocfs2_mknod(struct user_names
- 	int want_meta = 0;
- 	int xattr_credits = 0;
- 	struct ocfs2_security_xattr_info si = {
-+		.name = NULL,
- 		.enable = 1,
- 	};
- 	int did_quota_inode = 0;
-@@ -1805,6 +1806,7 @@ static int ocfs2_symlink(struct user_nam
- 	int want_clusters = 0;
- 	int xattr_credits = 0;
- 	struct ocfs2_security_xattr_info si = {
-+		.name = NULL,
- 		.enable = 1,
- 	};
- 	int did_quota = 0, did_quota_inode = 0;
---- a/fs/ocfs2/xattr.c
-+++ b/fs/ocfs2/xattr.c
-@@ -7259,9 +7259,21 @@ static int ocfs2_xattr_security_set(cons
- static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array,
- 		     void *fs_info)
- {
-+	struct ocfs2_security_xattr_info *si = fs_info;
- 	const struct xattr *xattr;
- 	int err = 0;
+--- a/arch/arm64/mm/copypage.c
++++ b/arch/arm64/mm/copypage.c
+@@ -21,9 +21,10 @@ void copy_highpage(struct page *to, stru
  
-+	if (si) {
-+		si->value = kmemdup(xattr_array->value, xattr_array->value_len,
-+				    GFP_KERNEL);
-+		if (!si->value)
-+			return -ENOMEM;
-+
-+		si->name = xattr_array->name;
-+		si->value_len = xattr_array->value_len;
-+		return 0;
-+	}
-+
- 	for (xattr = xattr_array; xattr->name != NULL; xattr++) {
- 		err = ocfs2_xattr_set(inode, OCFS2_XATTR_INDEX_SECURITY,
- 				      xattr->name, xattr->value,
-@@ -7277,13 +7289,23 @@ int ocfs2_init_security_get(struct inode
- 			    const struct qstr *qstr,
- 			    struct ocfs2_security_xattr_info *si)
- {
-+	int ret;
-+
- 	/* check whether ocfs2 support feature xattr */
- 	if (!ocfs2_supports_xattr(OCFS2_SB(dir->i_sb)))
- 		return -EOPNOTSUPP;
--	if (si)
--		return security_old_inode_init_security(inode, dir, qstr,
--							&si->name, &si->value,
--							&si->value_len);
-+	if (si) {
-+		ret = security_inode_init_security(inode, dir, qstr,
-+						   &ocfs2_initxattrs, si);
-+		/*
-+		 * security_inode_init_security() does not return -EOPNOTSUPP,
-+		 * we have to check the xattr ourselves.
-+		 */
-+		if (!ret && !si->name)
-+			si->enable = 0;
-+
-+		return ret;
-+	}
+ 	copy_page(kto, kfrom);
  
- 	return security_inode_init_security(inode, dir, qstr,
- 					    &ocfs2_initxattrs, NULL);
++	if (kasan_hw_tags_enabled())
++		page_kasan_tag_reset(to);
++
+ 	if (system_supports_mte() && page_mte_tagged(from)) {
+-		if (kasan_hw_tags_enabled())
+-			page_kasan_tag_reset(to);
+ 		mte_copy_page_tags(kto, kfrom);
+ 		set_page_mte_tagged(to);
+ 	}
 
 
