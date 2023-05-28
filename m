@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29938611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A655AC4339B;
-	Sun, 28 May 2023 19:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA8E611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:18:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A567C433D2;
+	Sun, 28 May 2023 19:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301532;
-	bh=ogM/LVfKGXYAnrt1FlY2B64qXfXE3OZYuAdr6R9fvlk=;
+	s=korg; t=1685301534;
+	bh=+x8kWL0OrRN0PHoFRxlfXYZ+NObFLk1E+u2mn6dubfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bABQT2HWI9IEA0Awcx37xETEHJHM/djCQQaXPxtYfcGFBLzggPJ0SmYyphCp6VR3V
-	 CmC/q/JmMJKjK2PJans46S9CDm9h1KPn5Ei2hZAOz0G8HsWI9K87uNbi2iE+ylcBJe
-	 +zfdDOGpJgMRK1MJk+aOiLv9Oa9EPsI23Q50JuGI=
+	b=UXz4IBZ0UU0V3qe5JcBOl3S6koRTlOwYQN+z2RW2CBRHDNQxcEusSHCM3prE1nqEa
+	 k9Qu/aU8Ql2Ixw2FdiebbcTkbAtDEFosKB4Z4P2sTnUskexc7CJZ5KU41t3UBvhZaL
+	 YxTHEfBbPDgGQJkhiqvTGPxDZ2Fn9IObqC0wH2QI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Bizon <mbizon@freebox.fr>,
-	linux-usb@vger.kernel.org,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 4.19 067/132] usb-storage: fix deadlock when a scsi command timeouts more than once
-Date: Sun, 28 May 2023 20:10:06 +0100
-Message-Id: <20230528190835.599725066@linuxfoundation.org>
+	Badhri Jagan Sridharan <badhri@google.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 4.19 068/132] usb: typec: altmodes/displayport: fix pin_assignment_show
+Date: Sun, 28 May 2023 20:10:07 +0100
+Message-Id: <20230528190835.627079592@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -36,108 +34,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxime Bizon <mbizon@freebox.fr>
+From: Badhri Jagan Sridharan <badhri@google.com>
 
-commit a398d5eac6984316e71474e25b975688f282379b upstream.
+commit d8f28269dd4bf9b55c3fb376ae31512730a96fce upstream.
 
-With faulty usb-storage devices, read/write can timeout, in that case
-the SCSI layer will abort and re-issue the command. USB storage has no
-internal timeout, it relies on SCSI layer aborting commands via
-.eh_abort_handler() for non those responsive devices.
+This patch fixes negative indexing of buf array in pin_assignment_show
+when get_current_pin_assignments returns 0 i.e. no compatible pin
+assignments are found.
 
-After two consecutive timeouts of the same command, SCSI layer calls
-.eh_device_reset_handler(), without calling .eh_abort_handler() first.
+BUG: KASAN: use-after-free in pin_assignment_show+0x26c/0x33c
+...
+Call trace:
+dump_backtrace+0x110/0x204
+dump_stack_lvl+0x84/0xbc
+print_report+0x358/0x974
+kasan_report+0x9c/0xfc
+__do_kernel_fault+0xd4/0x2d4
+do_bad_area+0x48/0x168
+do_tag_check_fault+0x24/0x38
+do_mem_abort+0x6c/0x14c
+el1_abort+0x44/0x68
+el1h_64_sync_handler+0x64/0xa4
+el1h_64_sync+0x78/0x7c
+pin_assignment_show+0x26c/0x33c
+dev_attr_show+0x50/0xc0
 
-With usb-storage, this causes a deadlock:
-
-  -> .eh_device_reset_handler
-    -> device_reset
-      -> mutex_lock(&(us->dev_mutex));
-
-mutex already by usb_stor_control_thread(), which is waiting for
-command completion:
-
-  -> usb_stor_control_thread (mutex taken here)
-    -> usb_stor_invoke_transport
-      -> usb_stor_Bulk_transport
-        -> usb_stor_bulk_srb
-	  -> usb_stor_bulk_transfer_sglist
-	    -> usb_sg_wait
-
-Make sure we cancel any pending command in .eh_device_reset_handler()
-to avoid this.
-
-Signed-off-by: Maxime Bizon <mbizon@freebox.fr>
-Cc: linux-usb@vger.kernel.org
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/all/ZEllnjMKT8ulZbJh@sakura/
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20230505114759.1189741-1-mbizon@freebox.fr
+Fixes: 0e3bb7d6894d ("usb: typec: Add driver for DisplayPort alternate mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Badhri Jagan Sridharan <badhri@google.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20230508214443.893436-1-badhri@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/scsiglue.c |   28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/usb/typec/altmodes/displayport.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/storage/scsiglue.c
-+++ b/drivers/usb/storage/scsiglue.c
-@@ -392,22 +392,25 @@ static DEF_SCSI_QCMD(queuecommand)
-  ***********************************************************************/
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -501,6 +501,10 @@ static ssize_t pin_assignment_show(struc
  
- /* Command timeout and abort */
--static int command_abort(struct scsi_cmnd *srb)
-+static int command_abort_matching(struct us_data *us, struct scsi_cmnd *srb_match)
- {
--	struct us_data *us = host_to_us(srb->device->host);
--
--	usb_stor_dbg(us, "%s called\n", __func__);
--
- 	/*
- 	 * us->srb together with the TIMED_OUT, RESETTING, and ABORTING
- 	 * bits are protected by the host lock.
- 	 */
- 	scsi_lock(us_to_host(us));
+ 	mutex_unlock(&dp->lock);
  
--	/* Is this command still active? */
--	if (us->srb != srb) {
-+	/* is there any active pending command to abort ? */
-+	if (!us->srb) {
- 		scsi_unlock(us_to_host(us));
- 		usb_stor_dbg(us, "-- nothing to abort\n");
-+		return SUCCESS;
-+	}
++	/* get_current_pin_assignments can return 0 when no matching pin assignments are found */
++	if (len == 0)
++		len++;
 +
-+	/* Does the command match the passed srb if any ? */
-+	if (srb_match && us->srb != srb_match) {
-+		scsi_unlock(us_to_host(us));
-+		usb_stor_dbg(us, "-- pending command mismatch\n");
- 		return FAILED;
- 	}
- 
-@@ -430,6 +433,14 @@ static int command_abort(struct scsi_cmn
- 	return SUCCESS;
+ 	buf[len - 1] = '\n';
+ 	return len;
  }
- 
-+static int command_abort(struct scsi_cmnd *srb)
-+{
-+	struct us_data *us = host_to_us(srb->device->host);
-+
-+	usb_stor_dbg(us, "%s called\n", __func__);
-+	return command_abort_matching(us, srb);
-+}
-+
- /*
-  * This invokes the transport reset mechanism to reset the state of the
-  * device
-@@ -441,6 +452,9 @@ static int device_reset(struct scsi_cmnd
- 
- 	usb_stor_dbg(us, "%s called\n", __func__);
- 
-+	/* abort any pending command before reset */
-+	command_abort_matching(us, NULL);
-+
- 	/* lock the device pointers and do the reset */
- 	mutex_lock(&(us->dev_mutex));
- 	result = us->transport_reset(us);
 
 
