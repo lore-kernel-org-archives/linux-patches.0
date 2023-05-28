@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C43D611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:48:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0396C433D2;
-	Sun, 28 May 2023 19:48:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74F5611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:48:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EF64C4339B;
+	Sun, 28 May 2023 19:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303337;
-	bh=Uu+fF8Crn82Ytf5deX/AeunyvlnF0e3FQ4ZeX7rN6Mw=;
+	s=korg; t=1685303339;
+	bh=3Uf595Jknc3eLB79ThMn9PGVeA3zUR2SdQBQF6VlH5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOU2yiLAUU1lychiWNSuGOQDl5Ou8AhFQ+PlVLrQwCDqgUblSYvddtfheqM8D7M6d
-	 uV1d86W8Br0/7dt1I2F1+Gkt23wGdD1rwCGUuR8hVKL83vQKUB5yiOwXhrl1XZPenx
-	 WCrvd6FSZ3t0GclSWjVOf8pR+DAhmw5NuKZmfRNY=
+	b=SX3m13guKz8bsQL6F7GZOnNDC6FNUjtq9dtX35WVqEpPLCkDluaNsX5vHdqyMb+j8
+	 RS4CiWf3HTLrCtT/3LO6onDnOmGo6YcYIvpAuSFdoxmzEssxI6yxBuY5iib0w6KZXw
+	 hOETZYi3Dt79CUBzcyBA7RnqOSzT3rfDHJTQBT4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Collingbourne <pcc@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 5.15 10/69] arm64: Also reset KASAN tag if page is not PG_mte_tagged
-Date: Sun, 28 May 2023 20:11:30 +0100
-Message-Id: <20230528190828.729602333@linuxfoundation.org>
+	Adam Stylinski <kungfujesus06@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 11/69] ALSA: hda/ca0132: add quirk for EVGA X299 DARK
+Date: Sun, 28 May 2023 20:11:31 +0100
+Message-Id: <20230528190828.768791814@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -35,54 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Collingbourne <pcc@google.com>
+From: Adam Stylinski <kungfujesus06@gmail.com>
 
-commit 2efbafb91e12ff5a16cbafb0085e4c10c3fca493 upstream.
+commit 7843380d07bbeffd3ce6504e73cf61f840ae76ca upstream.
 
-Consider the following sequence of events:
+This quirk is necessary for surround and other DSP effects to work
+with the onboard ca0132 based audio chipset for the EVGA X299 dark
+mainboard.
 
-1) A page in a PROT_READ|PROT_WRITE VMA is faulted.
-2) Page migration allocates a page with the KASAN allocator,
-   causing it to receive a non-match-all tag, and uses it
-   to replace the page faulted in 1.
-3) The program uses mprotect() to enable PROT_MTE on the page faulted in 1.
-
-As a result of step 3, we are left with a non-match-all tag for a page
-with tags accessible to userspace, which can lead to the same kind of
-tag check faults that commit e74a68468062 ("arm64: Reset KASAN tag in
-copy_highpage with HW tags only") intended to fix.
-
-The general invariant that we have for pages in a VMA with VM_MTE_ALLOWED
-is that they cannot have a non-match-all tag. As a result of step 2, the
-invariant is broken. This means that the fix in the referenced commit
-was incomplete and we also need to reset the tag for pages without
-PG_mte_tagged.
-
-Fixes: e5b8d9218951 ("arm64: mte: reset the page tag in page->flags")
-Cc: <stable@vger.kernel.org> # 5.15
-Link: https://linux-review.googlesource.com/id/I7409cdd41acbcb215c2a7417c1e50d37b875beff
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Link: https://lore.kernel.org/r/20230420210945.2313627-1-pcc@google.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Adam Stylinski <kungfujesus06@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=67071
+Link: https://lore.kernel.org/r/ZGopOe19T1QOwizS@eggsbenedict.adamsnet
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/copypage.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_ca0132.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/mm/copypage.c
-+++ b/arch/arm64/mm/copypage.c
-@@ -21,9 +21,10 @@ void copy_highpage(struct page *to, stru
- 
- 	copy_page(kto, kfrom);
- 
-+	page_kasan_tag_reset(to);
-+
- 	if (system_supports_mte() && test_bit(PG_mte_tagged, &from->flags)) {
- 		set_bit(PG_mte_tagged, &to->flags);
--		page_kasan_tag_reset(to);
- 		/*
- 		 * We need smp_wmb() in between setting the flags and clearing the
- 		 * tags because if another thread reads page->flags and builds a
+--- a/sound/pci/hda/patch_ca0132.c
++++ b/sound/pci/hda/patch_ca0132.c
+@@ -1306,6 +1306,7 @@ static const struct snd_pci_quirk ca0132
+ 	SND_PCI_QUIRK(0x1458, 0xA026, "Gigabyte G1.Sniper Z97", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x1458, 0xA036, "Gigabyte GA-Z170X-Gaming 7", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x3842, 0x1038, "EVGA X99 Classified", QUIRK_R3DI),
++	SND_PCI_QUIRK(0x3842, 0x104b, "EVGA X299 Dark", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x3842, 0x1055, "EVGA Z390 DARK", QUIRK_R3DI),
+ 	SND_PCI_QUIRK(0x1102, 0x0013, "Recon3D", QUIRK_R3D),
+ 	SND_PCI_QUIRK(0x1102, 0x0018, "Recon3D", QUIRK_R3D),
 
 
