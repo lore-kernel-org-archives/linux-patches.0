@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ECDA611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9065C433D2;
-	Sun, 28 May 2023 19:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F14611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:46:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27FEEC433D2;
+	Sun, 28 May 2023 19:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303163;
-	bh=ZqyVq2uW/kSrPMC4BtPXLRw0hV6mV0rZZxbtcqzvR0c=;
+	s=korg; t=1685303165;
+	bh=lDq33r+Xd6bsnUfmK0/am/43ciafYDk9OkG43+eN9qk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d/OC6sJvJPc8PNgUSK1xv1Qp9P8cdQsp/mP+kYOxuQXYcfzLm5TTWtJ0PfRolEGqm
-	 llz2qGUS3lmVC0qYROiBvw3Qm5hOtAJLM63ThlmV3vT5iosK3H8npPEl8FBMauxGY3
-	 ynm8YucP1HtPii8QZKujAHJgyfO1KlMRbv+h22nk=
+	b=XdlMZHUzExSjVnonoPYgor9N/RZrX0na7ggR6Ly2ANZp9EC35YTxsX4omkXOZf06q
+	 D0dVEl5gx3HKbJB1Kskn1af386RrWZN/Pvm3ZmEPvC80iMTxJ6MxX8+xEdx6DUkGdV
+	 1cZ3AwaTll+01bqUsIQIHIdpSFA+Ql1cAQzXPX9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 5.10 152/211] HID: wacom: add three styli to wacom_intuos_get_tool_type
-Date: Sun, 28 May 2023 20:11:13 +0100
-Message-Id: <20230528190847.288721100@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>
+Subject: [PATCH 5.10 143/211] statfs: enforce statfs[64] structure initialization
+Date: Sun, 28 May 2023 20:11:04 +0100
+Message-Id: <20230528190847.067007767@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -34,36 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping Cheng <pinglinux@gmail.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-commit bfdc750c4cb2f3461b9b00a2755e2145ac195c9a upstream.
+commit ed40866ec7d328b3dfb70db7e2011640a16202c3 upstream.
 
-We forgot to add the 3D pen ID a year ago. There are two new pro pen
-IDs to be added.
+s390's struct statfs and struct statfs64 contain padding, which
+field-by-field copying does not set. Initialize the respective structs
+with zeros before filling them and copying them to userspace, like it's
+already done for the compat versions of these structs.
 
-Signed-off-by: Ping Cheng <ping.cheng@wacom.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Found by KMSAN.
+
+[agordeev@linux.ibm.com: fixed typo in patch description]
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: stable@vger.kernel.org # v4.14+
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20230504144021.808932-2-iii@linux.ibm.com
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/statfs.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -713,11 +713,14 @@ static int wacom_intuos_get_tool_type(in
- 	case 0x802: /* Intuos4/5 13HD/24HD General Pen */
- 	case 0x8e2: /* IntuosHT2 pen */
- 	case 0x022:
-+	case 0x200: /* Pro Pen 3 */
-+	case 0x04200: /* Pro Pen 3 */
- 	case 0x10842: /* MobileStudio Pro Pro Pen slim */
- 	case 0x14802: /* Intuos4/5 13HD/24HD Classic Pen */
- 	case 0x16802: /* Cintiq 13HD Pro Pen */
- 	case 0x18802: /* DTH2242 Pen */
- 	case 0x10802: /* Intuos4/5 13HD/24HD General Pen */
-+	case 0x80842: /* Intuos Pro and Cintiq Pro 3D Pen */
- 		tool_type = BTN_TOOL_PEN;
- 		break;
- 
+--- a/fs/statfs.c
++++ b/fs/statfs.c
+@@ -130,6 +130,7 @@ static int do_statfs_native(struct kstat
+ 	if (sizeof(buf) == sizeof(*st))
+ 		memcpy(&buf, st, sizeof(*st));
+ 	else {
++		memset(&buf, 0, sizeof(buf));
+ 		if (sizeof buf.f_blocks == 4) {
+ 			if ((st->f_blocks | st->f_bfree | st->f_bavail |
+ 			     st->f_bsize | st->f_frsize) &
+@@ -158,7 +159,6 @@ static int do_statfs_native(struct kstat
+ 		buf.f_namelen = st->f_namelen;
+ 		buf.f_frsize = st->f_frsize;
+ 		buf.f_flags = st->f_flags;
+-		memset(buf.f_spare, 0, sizeof(buf.f_spare));
+ 	}
+ 	if (copy_to_user(p, &buf, sizeof(buf)))
+ 		return -EFAULT;
+@@ -171,6 +171,7 @@ static int do_statfs64(struct kstatfs *s
+ 	if (sizeof(buf) == sizeof(*st))
+ 		memcpy(&buf, st, sizeof(*st));
+ 	else {
++		memset(&buf, 0, sizeof(buf));
+ 		buf.f_type = st->f_type;
+ 		buf.f_bsize = st->f_bsize;
+ 		buf.f_blocks = st->f_blocks;
+@@ -182,7 +183,6 @@ static int do_statfs64(struct kstatfs *s
+ 		buf.f_namelen = st->f_namelen;
+ 		buf.f_frsize = st->f_frsize;
+ 		buf.f_flags = st->f_flags;
+-		memset(buf.f_spare, 0, sizeof(buf.f_spare));
+ 	}
+ 	if (copy_to_user(p, &buf, sizeof(buf)))
+ 		return -EFAULT;
 
 
