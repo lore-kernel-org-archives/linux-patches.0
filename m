@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91AF569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733F5C433D2;
-	Sun, 28 May 2023 19:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62684569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:32:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4D87C433EF;
+	Sun, 28 May 2023 19:32:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302320;
-	bh=KD87JUW73vklsf894A/QoFpEQuJskImRRRWus0cwo8c=;
+	s=korg; t=1685302323;
+	bh=0qtbxcdGWP0QtyzSBLTJhlMnLc+/ENc2JkSDgjIQd6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dnBCDxy1TFqTRf4II7YFnUAl57O/TdepPCuMMpVnUWUz67RZxs/4GBQuVjapLoNCZ
-	 EBQESZGkYkN5wqcy3iJCw+28ao/VV2d9xkx4WLw/HAItXIo7SVfjpFQuF4Hf3qTSGW
-	 +P5Q7YCbk3gJWC2t2weSrDRf3oxYMmfwH+Ab3cQk=
+	b=SMtJs1XCAHAeXoWoc2gPyjN+6jZwyhLbTWuIH9dBnsmCmBVpXZUj1l+GzHSpNQs9F
+	 n9ghiIp38oE5kyyuTZJws/GAIn99BCAeezDFP15mb3s6ewMGwiqGqmo5wp7sXweV+l
+	 VQN383Qh7YljX1VMZvIjxchJSUNlHdMdVqaT7IDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	Daisuke Nojiri <dnojiri@chromium.org>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.3 087/127] power: supply: bq24190: Call power_supply_changed() after updating input current
-Date: Sun, 28 May 2023 20:11:03 +0100
-Message-Id: <20230528190839.168623419@linuxfoundation.org>
+Subject: [PATCH 6.3 088/127] power: supply: sbs-charger: Fix INHIBITED bit for Status reg
+Date: Sun, 28 May 2023 20:11:04 +0100
+Message-Id: <20230528190839.197737514@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -34,41 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Daisuke Nojiri <dnojiri@chromium.org>
 
-commit 77c2a3097d7029441e8a91aa0de1b4e5464593da upstream.
+commit b2f2a3c9800208b0db2c2e34b05323757117faa2 upstream.
 
-The bq24192 model relies on external charger-type detection and once
-that is done the bq24190_charger code will update the input current.
+CHARGE_INHIBITED bit position of the ChargerStatus register is actually
+0 not 1. This patch corrects it.
 
-In this case, when the initial power_supply_changed() call is made
-from the interrupt handler, the input settings are 5V/0.5A which
-on many devices is not enough power to charge (while the device is on).
-
-On many devices the fuel-gauge relies in its external_power_changed
-callback to timely signal userspace about charging <-> discharging
-status changes. Add a power_supply_changed() call after updating
-the input current. This allows the fuel-gauge driver to timely recheck
-if the battery is charging after the new input current has been applied
-and then it can immediately notify userspace about this.
-
-Fixes: 18f8e6f695ac ("power: supply: bq24190_charger: Get input_current_limit from our supplier")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: feb583e37f8a8 ("power: supply: add sbs-charger driver")
+Signed-off-by: Daisuke Nojiri <dnojiri@chromium.org>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/bq24190_charger.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/power/supply/sbs-charger.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/power/supply/bq24190_charger.c
-+++ b/drivers/power/supply/bq24190_charger.c
-@@ -1262,6 +1262,7 @@ static void bq24190_input_current_limit_
- 	bq24190_charger_set_property(bdi->charger,
- 				     POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT,
- 				     &val);
-+	power_supply_changed(bdi->charger);
- }
+--- a/drivers/power/supply/sbs-charger.c
++++ b/drivers/power/supply/sbs-charger.c
+@@ -24,7 +24,7 @@
+ #define SBS_CHARGER_REG_STATUS			0x13
+ #define SBS_CHARGER_REG_ALARM_WARNING		0x16
  
- /* Sync the input-current-limit with our parent supply (if we have one) */
+-#define SBS_CHARGER_STATUS_CHARGE_INHIBITED	BIT(1)
++#define SBS_CHARGER_STATUS_CHARGE_INHIBITED	BIT(0)
+ #define SBS_CHARGER_STATUS_RES_COLD		BIT(9)
+ #define SBS_CHARGER_STATUS_RES_HOT		BIT(10)
+ #define SBS_CHARGER_STATUS_BATTERY_PRESENT	BIT(14)
 
 
