@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14808611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72688C433D2;
-	Sun, 28 May 2023 19:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79E7F611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:39:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A06C433EF;
+	Sun, 28 May 2023 19:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302767;
-	bh=UH4H1gR76cLtDT+tTzPaEgvyAEimtv75FaR/u8ZAO9U=;
+	s=korg; t=1685302770;
+	bh=8xPGom0cN2xcrGVN2A3VWwTDf1O1z13B8CoLSoKcQNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AuKHrPa5d8M7wikX8KkvvGBEBe5HAElYJB74ZBY1qkAEebLm4IpzaBJ5YxDCXqWF7
-	 WrQ622IZaQfgVI8QAOPATJGhD1bKYrqfZQE2Ia8y6H8fmA/5dla5M4bg/p/6IP+8dn
-	 7l/OUknnzHKiKaw0JIQ88pwmgN2a8ewq4SL9ZkuI=
+	b=AB4A7Z+z5tYk2xorftQ+2866uXWiRrOe8fsJtN4uXXmQzEvAspEog/GEUuCAMywiB
+	 764TwNfeady1DPB5sewOpSY+SohYYrcb1BYlnsNROm5FWVNFYRaSrfzw4epgGHuinz
+	 4KxSzn9dHrBH+EaK6H2qMKJ4kMufEbTFA0xQudsg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/211] af_unix: Fix data races around sk->sk_shutdown.
-Date: Sun, 28 May 2023 20:08:59 +0100
-Message-Id: <20230528190843.981958881@linuxfoundation.org>
+Subject: [PATCH 5.10 019/211] drm/i915/dp: prevent potential div-by-zero
+Date: Sun, 28 May 2023 20:09:00 +0100
+Message-Id: <20230528190844.005799149@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -38,151 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-[ Upstream commit e1d09c2c2f5793474556b60f83900e088d0d366d ]
+[ Upstream commit 0ff80028e2702c7c3d78b69705dc47c1ccba8c39 ]
 
-KCSAN found a data race around sk->sk_shutdown where unix_release_sock()
-and unix_shutdown() update it under unix_state_lock(), OTOH unix_poll()
-and unix_dgram_poll() read it locklessly.
+drm_dp_dsc_sink_max_slice_count() may return 0 if something goes
+wrong on the part of the DSC sink and its DPCD register. This null
+value may be later used as a divisor in intel_dsc_compute_params(),
+which will lead to an error.
+In the unlikely event that this issue occurs, fix it by testing the
+return value of drm_dp_dsc_sink_max_slice_count() against zero.
 
-We need to annotate the writes and reads with WRITE_ONCE() and READ_ONCE().
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-BUG: KCSAN: data-race in unix_poll / unix_release_sock
-
-write to 0xffff88800d0f8aec of 1 bytes by task 264 on cpu 0:
- unix_release_sock+0x75c/0x910 net/unix/af_unix.c:631
- unix_release+0x59/0x80 net/unix/af_unix.c:1042
- __sock_release+0x7d/0x170 net/socket.c:653
- sock_close+0x19/0x30 net/socket.c:1397
- __fput+0x179/0x5e0 fs/file_table.c:321
- ____fput+0x15/0x20 fs/file_table.c:349
- task_work_run+0x116/0x1a0 kernel/task_work.c:179
- resume_user_mode_work include/linux/resume_user_mode.h:49 [inline]
- exit_to_user_mode_loop kernel/entry/common.c:171 [inline]
- exit_to_user_mode_prepare+0x174/0x180 kernel/entry/common.c:204
- __syscall_exit_to_user_mode_work kernel/entry/common.c:286 [inline]
- syscall_exit_to_user_mode+0x1a/0x30 kernel/entry/common.c:297
- do_syscall_64+0x4b/0x90 arch/x86/entry/common.c:86
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-read to 0xffff88800d0f8aec of 1 bytes by task 222 on cpu 1:
- unix_poll+0xa3/0x2a0 net/unix/af_unix.c:3170
- sock_poll+0xcf/0x2b0 net/socket.c:1385
- vfs_poll include/linux/poll.h:88 [inline]
- ep_item_poll.isra.0+0x78/0xc0 fs/eventpoll.c:855
- ep_send_events fs/eventpoll.c:1694 [inline]
- ep_poll fs/eventpoll.c:1823 [inline]
- do_epoll_wait+0x6c4/0xea0 fs/eventpoll.c:2258
- __do_sys_epoll_wait fs/eventpoll.c:2270 [inline]
- __se_sys_epoll_wait fs/eventpoll.c:2265 [inline]
- __x64_sys_epoll_wait+0xcc/0x190 fs/eventpoll.c:2265
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x3b/0x90 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-value changed: 0x00 -> 0x03
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 1 PID: 222 Comm: dbus-broker Not tainted 6.3.0-rc7-02330-gca6270c12e20 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
-
-Fixes: 3c73419c09a5 ("af_unix: fix 'poll for write'/ connected DGRAM sockets")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a4a157777c80 ("drm/i915/dp: Compute DSC pipe config in atomic check")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230418140430.69902-1-n.zhandarovich@fintech.ru
+(cherry picked from commit 51f7008239de011370c5067bbba07f0207f06b72)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index a210275368560..2fe0efcbfed16 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -529,7 +529,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
- 	/* Clear state */
- 	unix_state_lock(sk);
- 	sock_orphan(sk);
--	sk->sk_shutdown = SHUTDOWN_MASK;
-+	WRITE_ONCE(sk->sk_shutdown, SHUTDOWN_MASK);
- 	path	     = u->path;
- 	u->path.dentry = NULL;
- 	u->path.mnt = NULL;
-@@ -547,7 +547,7 @@ static void unix_release_sock(struct sock *sk, int embrion)
- 		if (sk->sk_type == SOCK_STREAM || sk->sk_type == SOCK_SEQPACKET) {
- 			unix_state_lock(skpair);
- 			/* No more writes */
--			skpair->sk_shutdown = SHUTDOWN_MASK;
-+			WRITE_ONCE(skpair->sk_shutdown, SHUTDOWN_MASK);
- 			if (!skb_queue_empty(&sk->sk_receive_queue) || embrion)
- 				skpair->sk_err = ECONNRESET;
- 			unix_state_unlock(skpair);
-@@ -2581,7 +2581,7 @@ static int unix_shutdown(struct socket *sock, int mode)
- 	++mode;
- 
- 	unix_state_lock(sk);
--	sk->sk_shutdown |= mode;
-+	WRITE_ONCE(sk->sk_shutdown, sk->sk_shutdown | mode);
- 	other = unix_peer(sk);
- 	if (other)
- 		sock_hold(other);
-@@ -2598,7 +2598,7 @@ static int unix_shutdown(struct socket *sock, int mode)
- 		if (mode&SEND_SHUTDOWN)
- 			peer_mode |= RCV_SHUTDOWN;
- 		unix_state_lock(other);
--		other->sk_shutdown |= peer_mode;
-+		WRITE_ONCE(other->sk_shutdown, other->sk_shutdown | peer_mode);
- 		unix_state_unlock(other);
- 		other->sk_state_change(other);
- 		if (peer_mode == SHUTDOWN_MASK)
-@@ -2717,16 +2717,18 @@ static __poll_t unix_poll(struct file *file, struct socket *sock, poll_table *wa
- {
- 	struct sock *sk = sock->sk;
- 	__poll_t mask;
-+	u8 shutdown;
- 
- 	sock_poll_wait(file, sock, wait);
- 	mask = 0;
-+	shutdown = READ_ONCE(sk->sk_shutdown);
- 
- 	/* exceptional events? */
- 	if (sk->sk_err)
- 		mask |= EPOLLERR;
--	if (sk->sk_shutdown == SHUTDOWN_MASK)
-+	if (shutdown == SHUTDOWN_MASK)
- 		mask |= EPOLLHUP;
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
- 
- 	/* readable? */
-@@ -2754,18 +2756,20 @@ static __poll_t unix_dgram_poll(struct file *file, struct socket *sock,
- 	struct sock *sk = sock->sk, *other;
- 	unsigned int writable;
- 	__poll_t mask;
-+	u8 shutdown;
- 
- 	sock_poll_wait(file, sock, wait);
- 	mask = 0;
-+	shutdown = READ_ONCE(sk->sk_shutdown);
- 
- 	/* exceptional events? */
- 	if (sk->sk_err || !skb_queue_empty_lockless(&sk->sk_error_queue))
- 		mask |= EPOLLERR |
- 			(sock_flag(sk, SOCK_SELECT_ERR_QUEUE) ? EPOLLPRI : 0);
- 
--	if (sk->sk_shutdown & RCV_SHUTDOWN)
-+	if (shutdown & RCV_SHUTDOWN)
- 		mask |= EPOLLRDHUP | EPOLLIN | EPOLLRDNORM;
--	if (sk->sk_shutdown == SHUTDOWN_MASK)
-+	if (shutdown == SHUTDOWN_MASK)
- 		mask |= EPOLLHUP;
- 
- 	/* readable? */
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 1c1931f5c958b..7f633f8b3239a 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -2281,6 +2281,11 @@ static int intel_dp_dsc_compute_config(struct intel_dp *intel_dp,
+ 		pipe_config->dsc.slice_count =
+ 			drm_dp_dsc_sink_max_slice_count(intel_dp->dsc_dpcd,
+ 							true);
++		if (!pipe_config->dsc.slice_count) {
++			drm_dbg_kms(&dev_priv->drm, "Unsupported Slice Count %d\n",
++				    pipe_config->dsc.slice_count);
++			return -EINVAL;
++		}
+ 	} else {
+ 		u16 dsc_max_output_bpp;
+ 		u8 dsc_dp_slice_count;
 -- 
 2.39.2
 
