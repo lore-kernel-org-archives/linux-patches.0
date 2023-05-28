@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72F8B569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:30:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1CB8C433EF;
-	Sun, 28 May 2023 19:30:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF4E6569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:30:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD5CC433D2;
+	Sun, 28 May 2023 19:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302203;
-	bh=e1ibWDqXencHGGF+R5BOTNT8333GZrGkmCoDaZkYzgA=;
+	s=korg; t=1685302205;
+	bh=5R2r5N0I214zWKqjZvNgRMyJSjvoqiBpTHc2vRNluGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SmwN55HT/gX7PshTaUYWPtY2ZaetgxT5gFNN4zH6c86DGM3u0J3QH7psoyiVa8JR8
-	 1gPel5/OBQ19IJ6O2lTtbIaf3MiAp8VFKDhuF4QH5L3Hx0kW9JG7t69Wcl7C3ddZ0i
-	 FYCG4nWCWryrkVwrXdsZjl5P2JJ5/3H1h3hQGDfA=
+	b=p0d87T/TEbeJQx/G9IbiwwEihOjxLuZj17M7kfBZ35DXs87pxS1NG5cgYWMsrtboV
+	 NssTk8+hUeTBqw7bIaZQO8jBiOuAfGx2qN7aBQuL4gO8q5MOVTYKC9/+wOdfP8LmHs
+	 FQd65wGfs5lkaZEr5DP1EkwnZAq4HILcy1jLuKGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.3 041/127] thermal: intel: int340x: Add new line for UUID display
-Date: Sun, 28 May 2023 20:10:17 +0100
-Message-Id: <20230528190837.677878816@linuxfoundation.org>
+	Anuj Gupta <anuj20.g@samsung.com>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.3 042/127] block: fix bio-cache for passthru IO
+Date: Sun, 28 May 2023 20:10:18 +0100
+Message-Id: <20230528190837.716648413@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -34,53 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Anuj Gupta <anuj20.g@samsung.com>
 
-commit 5f7fdb0f255756b594cc45c2c08b0140bc4a1761 upstream.
+commit 46930b7cc7727271c9c27aac1fdc97a8645e2d00 upstream.
 
-Prior to the commit "763bd29fd3d1 ("thermal: int340x_thermal: Use
-sysfs_emit_at() instead of scnprintf()", there was a new line after each
-UUID string.
+commit <8af870aa5b847> ("block: enable bio caching use for passthru IO")
+introduced bio-cache for passthru IO. In case when nr_vecs are greater
+than BIO_INLINE_VECS, bio and bvecs are allocated from mempool (instead
+of percpu cache) and REQ_ALLOC_CACHE is cleared. This causes the side
+effect of not freeing bio/bvecs into mempool on completion.
 
-With the newline removed, existing user space like "thermald" fails to
-compare each supported UUID as it is using getline() to read UUID and
-apply correct thermal table.
+This patch lets the passthru IO fallback to allocation using bio_kmalloc
+when nr_vecs are greater than BIO_INLINE_VECS. The corresponding bio
+is freed during call to blk_mq_map_bio_put during completion.
 
-To avoid breaking existing user space, add newline after each UUID string.
+Cc: stable@vger.kernel.org # 6.1
+fixes <8af870aa5b847> ("block: enable bio caching use for passthru IO")
 
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Fixes: 763bd29fd3d1 ("thermal: int340x_thermal: Use sysfs_emit_at() instead of scnprintf()")
-Cc: 6.3+ <stable@vger.kernel.org> # 6.3+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Anuj Gupta <anuj20.g@samsung.com>
+Signed-off-by: Kanchan Joshi <joshi.k@samsung.com>
+Link: https://lore.kernel.org/r/20230523111709.145676-1-anuj20.g@samsung.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/int340x_thermal/int3400_thermal.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/blk-map.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-index 810231b59dcd..5e1164226ada 100644
---- a/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-+++ b/drivers/thermal/intel/int340x_thermal/int3400_thermal.c
-@@ -131,7 +131,7 @@ static ssize_t available_uuids_show(struct device *dev,
+--- a/block/blk-map.c
++++ b/block/blk-map.c
+@@ -247,7 +247,7 @@ static struct bio *blk_rq_map_bio_alloc(
+ {
+ 	struct bio *bio;
  
- 	for (i = 0; i < INT3400_THERMAL_MAXIMUM_UUID; i++) {
- 		if (priv->uuid_bitmap & (1 << i))
--			length += sysfs_emit_at(buf, length, int3400_thermal_uuids[i]);
-+			length += sysfs_emit_at(buf, length, "%s\n", int3400_thermal_uuids[i]);
- 	}
- 
- 	return length;
-@@ -149,7 +149,7 @@ static ssize_t current_uuid_show(struct device *dev,
- 
- 	for (i = 0; i <= INT3400_THERMAL_CRITICAL; i++) {
- 		if (priv->os_uuid_mask & BIT(i))
--			length += sysfs_emit_at(buf, length, int3400_thermal_uuids[i]);
-+			length += sysfs_emit_at(buf, length, "%s\n", int3400_thermal_uuids[i]);
- 	}
- 
- 	if (length)
--- 
-2.40.1
-
+-	if (rq->cmd_flags & REQ_ALLOC_CACHE) {
++	if (rq->cmd_flags & REQ_ALLOC_CACHE && (nr_vecs <= BIO_INLINE_VECS)) {
+ 		bio = bio_alloc_bioset(NULL, nr_vecs, rq->cmd_flags, gfp_mask,
+ 					&fs_bio_set);
+ 		if (!bio)
 
 
