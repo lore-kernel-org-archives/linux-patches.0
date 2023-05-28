@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29F8C611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB697C433EF;
-	Sun, 28 May 2023 19:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93956611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:35:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EAACC433D2;
+	Sun, 28 May 2023 19:35:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302551;
-	bh=RRqZ1TgbI249GOFaj8WbfBJR8wLUs2OPLIPtG60PmYI=;
+	s=korg; t=1685302553;
+	bh=FvMcVqJm3TuS8J/SUNdMeZ5i6Amt13YiWYQiJru5xIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hCRc9kNGv54hPzWBhkmx0VJ0X6pxbcM/cJ5xX235sHArL6KhuxWLBwO4NvZUhcsqn
-	 tqGE2aRrnWToZAZRSX/D0+GZFmfCYOUs8MSfRboaW/mPj7QO2ROrOBimEuviObny/L
-	 qm8a0H8sxx6Kwq5cOthd4pDol52gui8uhq0afRLw=
+	b=CvqyGckCfkj+iNxzsMmHDu+xBzk4xHQ7wmM/N7bed2eBlxQDAOCFEBz/pPXVV7HRO
+	 mPpwannzmpqEwIe8/5jIuAm1xWW0Al21I+HjA6kuMMlc8dKsZwtREuqDvwfCaUrT2J
+	 s6prrwxNMLH690unCGMt226Y4fEYdqbhHfSXfNcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Yang Shi <yang.shi@linux.alibaba.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Todd Kjos <tkjos@google.com>
-Subject: [PATCH 6.1 049/119] binder: fix UAF of alloc->vma in race with munmap()
-Date: Sun, 28 May 2023 20:10:49 +0100
-Message-Id: <20230528190837.029528967@linuxfoundation.org>
+	Hardik Garg <hargar@linux.microsoft.com>,
+	"Tyler Hicks (Microsoft)" <code@tyhicks.com>
+Subject: [PATCH 6.1 050/119] selftests/memfd: Fix unknown type name build failure
+Date: Sun, 28 May 2023 20:10:50 +0100
+Message-Id: <20230528190837.059292751@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190835.386670951@linuxfoundation.org>
 References: <20230528190835.386670951@linuxfoundation.org>
@@ -38,142 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Hardik Garg <hargar@linux.microsoft.com>
 
-commit d1d8875c8c13517f6fd1ff8d4d3e1ac366a17e07 upstream.
+Partially backport v6.3 commit 11f75a01448f ("selftests/memfd: add tests
+for MFD_NOEXEC_SEAL MFD_EXEC") to fix an unknown type name build error.
+In some systems, the __u64 typedef is not present due to differences in
+system headers, causing compilation errors like this one:
 
-[ cmllamas: clean forward port from commit 015ac18be7de ("binder: fix
-  UAF of alloc->vma in race with munmap()") in 5.10 stable. It is needed
-  in mainline after the revert of commit a43cfc87caaf ("android: binder:
-  stop saving a pointer to the VMA") as pointed out by Liam. The commit
-  log and tags have been tweaked to reflect this. ]
+fuse_test.c:64:8: error: unknown type name '__u64'
+   64 | static __u64 mfd_assert_get_seals(int fd)
 
-In commit 720c24192404 ("ANDROID: binder: change down_write to
-down_read") binder assumed the mmap read lock is sufficient to protect
-alloc->vma inside binder_update_page_range(). This used to be accurate
-until commit dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in
-munmap"), which now downgrades the mmap_lock after detaching the vma
-from the rbtree in munmap(). Then it proceeds to teardown and free the
-vma with only the read lock held.
+This header includes the  __u64 typedef which increases the likelihood
+of successful compilation on a wider variety of systems.
 
-This means that accesses to alloc->vma in binder_update_page_range() now
-will race with vm_area_free() in munmap() and can cause a UAF as shown
-in the following KASAN trace:
-
-  ==================================================================
-  BUG: KASAN: use-after-free in vm_insert_page+0x7c/0x1f0
-  Read of size 8 at addr ffff16204ad00600 by task server/558
-
-  CPU: 3 PID: 558 Comm: server Not tainted 5.10.150-00001-gdc8dcf942daa #1
-  Hardware name: linux,dummy-virt (DT)
-  Call trace:
-   dump_backtrace+0x0/0x2a0
-   show_stack+0x18/0x2c
-   dump_stack+0xf8/0x164
-   print_address_description.constprop.0+0x9c/0x538
-   kasan_report+0x120/0x200
-   __asan_load8+0xa0/0xc4
-   vm_insert_page+0x7c/0x1f0
-   binder_update_page_range+0x278/0x50c
-   binder_alloc_new_buf+0x3f0/0xba0
-   binder_transaction+0x64c/0x3040
-   binder_thread_write+0x924/0x2020
-   binder_ioctl+0x1610/0x2e5c
-   __arm64_sys_ioctl+0xd4/0x120
-   el0_svc_common.constprop.0+0xac/0x270
-   do_el0_svc+0x38/0xa0
-   el0_svc+0x1c/0x2c
-   el0_sync_handler+0xe8/0x114
-   el0_sync+0x180/0x1c0
-
-  Allocated by task 559:
-   kasan_save_stack+0x38/0x6c
-   __kasan_kmalloc.constprop.0+0xe4/0xf0
-   kasan_slab_alloc+0x18/0x2c
-   kmem_cache_alloc+0x1b0/0x2d0
-   vm_area_alloc+0x28/0x94
-   mmap_region+0x378/0x920
-   do_mmap+0x3f0/0x600
-   vm_mmap_pgoff+0x150/0x17c
-   ksys_mmap_pgoff+0x284/0x2dc
-   __arm64_sys_mmap+0x84/0xa4
-   el0_svc_common.constprop.0+0xac/0x270
-   do_el0_svc+0x38/0xa0
-   el0_svc+0x1c/0x2c
-   el0_sync_handler+0xe8/0x114
-   el0_sync+0x180/0x1c0
-
-  Freed by task 560:
-   kasan_save_stack+0x38/0x6c
-   kasan_set_track+0x28/0x40
-   kasan_set_free_info+0x24/0x4c
-   __kasan_slab_free+0x100/0x164
-   kasan_slab_free+0x14/0x20
-   kmem_cache_free+0xc4/0x34c
-   vm_area_free+0x1c/0x2c
-   remove_vma+0x7c/0x94
-   __do_munmap+0x358/0x710
-   __vm_munmap+0xbc/0x130
-   __arm64_sys_munmap+0x4c/0x64
-   el0_svc_common.constprop.0+0xac/0x270
-   do_el0_svc+0x38/0xa0
-   el0_svc+0x1c/0x2c
-   el0_sync_handler+0xe8/0x114
-   el0_sync+0x180/0x1c0
-
-  [...]
-  ==================================================================
-
-To prevent the race above, revert back to taking the mmap write lock
-inside binder_update_page_range(). One might expect an increase of mmap
-lock contention. However, binder already serializes these calls via top
-level alloc->mutex. Also, there was no performance impact shown when
-running the binder benchmark tests.
-
-Fixes: c0fd2101781e ("Revert "android: binder: stop saving a pointer to the VMA"")
-Fixes: dd2283f2605e ("mm: mmap: zap pages with read mmap_sem in munmap")
-Reported-by: Jann Horn <jannh@google.com>
-Closes: https://lore.kernel.org/all/20230518144052.xkj6vmddccq4v66b@revolver
-Cc: <stable@vger.kernel.org>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Yang Shi <yang.shi@linux.alibaba.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Acked-by: Todd Kjos <tkjos@google.com>
-Link: https://lore.kernel.org/r/20230519195950.1775656-1-cmllamas@google.com
+Signed-off-by: Hardik Garg <hargar@linux.microsoft.com>
+Reviewed-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder_alloc.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/memfd/fuse_test.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/android/binder_alloc.c
-+++ b/drivers/android/binder_alloc.c
-@@ -212,7 +212,7 @@ static int binder_update_page_range(stru
- 		mm = alloc->mm;
- 
- 	if (mm) {
--		mmap_read_lock(mm);
-+		mmap_write_lock(mm);
- 		vma = alloc->vma;
- 	}
- 
-@@ -270,7 +270,7 @@ static int binder_update_page_range(stru
- 		trace_binder_alloc_page_end(alloc, index);
- 	}
- 	if (mm) {
--		mmap_read_unlock(mm);
-+		mmap_write_unlock(mm);
- 		mmput(mm);
- 	}
- 	return 0;
-@@ -303,7 +303,7 @@ err_page_ptr_cleared:
- 	}
- err_no_vma:
- 	if (mm) {
--		mmap_read_unlock(mm);
-+		mmap_write_unlock(mm);
- 		mmput(mm);
- 	}
- 	return vma ? -ENOMEM : -ESRCH;
+--- a/tools/testing/selftests/memfd/fuse_test.c
++++ b/tools/testing/selftests/memfd/fuse_test.c
+@@ -22,6 +22,7 @@
+ #include <linux/falloc.h>
+ #include <fcntl.h>
+ #include <linux/memfd.h>
++#include <linux/types.h>
+ #include <sched.h>
+ #include <stdio.h>
+ #include <stdlib.h>
 
 
