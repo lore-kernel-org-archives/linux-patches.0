@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF558611A
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:17:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45860C433D2;
-	Sun, 28 May 2023 19:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335CF611A
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:17:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA135C433EF;
+	Sun, 28 May 2023 19:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301463;
-	bh=kjDxpS1S+ouR3A6pmDzptiANECN9+w6b76/64cl+HkU=;
+	s=korg; t=1685301467;
+	bh=cLsOZ0kZ/Sxk8eNjjv9JtMIe27k6OPhtegSJzLgJRMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFzwVz2/Tbr83YO7oaTXEcrLsxPvJOphYYTKV5VJhSAY38tQEW/z7QNqtNS/QGfKs
-	 AztMv3OjIRK4DjReXHPXYkHGYnmAenphZa8WvwI3Af1IuvMMOPAt4+fYN67XwFkuxg
-	 47D6d8VpYZ6bzE3TH5YVXRuZX5PwcyySzHNuWabU=
+	b=zRf62wxBC5YLstZWqYkpdKtSuFut26dxrOtI+OheX0UTuFdyr11LNTDplR82bB2QO
+	 QYEBnu5AFQ+LKnFkzBdRqlyDiklSshPi9iBssU2q17aUUiSCKGxIrKc/GpDr2mTjBA
+	 YU08mknHj3UD1pzN+tUHGzwNegrcAjMuswD6OkGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4fec412f59eba8c01b77@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
+	Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>,
+	Javier Rodriguez <josejavier.rodriguez@duagon.com>,
+	Johannes Thumshirn <jth@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 022/132] ext2: Check block size validity during mount
-Date: Sun, 28 May 2023 20:09:21 +0100
-Message-Id: <20230528190834.253367163@linuxfoundation.org>
+Subject: [PATCH 4.19 040/132] mcb-pci: Reallocate memory region to avoid memory overlapping
+Date: Sun, 28 May 2023 20:09:39 +0100
+Message-Id: <20230528190834.815609524@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190833.565872088@linuxfoundation.org>
 References: <20230528190833.565872088@linuxfoundation.org>
@@ -35,52 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Rodríguez Barbarin, José Javier <JoseJavier.Rodriguez@duagon.com>
 
-[ Upstream commit 62aeb94433fcec80241754b70d0d1836d5926b0a ]
+[ Upstream commit 9be24faadd085c284890c3afcec7a0184642315a ]
 
-Check that log of block size stored in the superblock has sensible
-value. Otherwise the shift computing the block size can overflow leading
-to undefined behavior.
+mcb-pci requests a fixed-size memory region to parse the chameleon
+table, however, if the chameleon table is smaller that the allocated
+region, it could overlap with the IP Cores' memory regions.
 
-Reported-by: syzbot+4fec412f59eba8c01b77@syzkaller.appspotmail.com
-Signed-off-by: Jan Kara <jack@suse.cz>
+After parsing the chameleon table, drop/reallocate the memory region
+with the actual chameleon table size.
+
+Co-developed-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Jorge Sanjuan Garcia <jorge.sanjuangarcia@duagon.com>
+Signed-off-by: Javier Rodriguez <josejavier.rodriguez@duagon.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/20230411083329.4506-3-jth@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/ext2.h  | 1 +
- fs/ext2/super.c | 7 +++++++
- 2 files changed, 8 insertions(+)
+ drivers/mcb/mcb-pci.c | 27 +++++++++++++++++++++++++--
+ 1 file changed, 25 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext2/ext2.h b/fs/ext2/ext2.h
-index 00e759f051619..a203a5723e2c0 100644
---- a/fs/ext2/ext2.h
-+++ b/fs/ext2/ext2.h
-@@ -177,6 +177,7 @@ static inline struct ext2_sb_info *EXT2_SB(struct super_block *sb)
- #define EXT2_MIN_BLOCK_SIZE		1024
- #define	EXT2_MAX_BLOCK_SIZE		4096
- #define EXT2_MIN_BLOCK_LOG_SIZE		  10
-+#define EXT2_MAX_BLOCK_LOG_SIZE		  16
- #define EXT2_BLOCK_SIZE(s)		((s)->s_blocksize)
- #define	EXT2_ADDR_PER_BLOCK(s)		(EXT2_BLOCK_SIZE(s) / sizeof (__u32))
- #define EXT2_BLOCK_SIZE_BITS(s)		((s)->s_blocksize_bits)
-diff --git a/fs/ext2/super.c b/fs/ext2/super.c
-index 44a1f356aca29..3349ce85d27cb 100644
---- a/fs/ext2/super.c
-+++ b/fs/ext2/super.c
-@@ -978,6 +978,13 @@ static int ext2_fill_super(struct super_block *sb, void *data, int silent)
- 		goto failed_mount;
- 	}
+diff --git a/drivers/mcb/mcb-pci.c b/drivers/mcb/mcb-pci.c
+index c2d69e33bf2bf..63879d89c8c49 100644
+--- a/drivers/mcb/mcb-pci.c
++++ b/drivers/mcb/mcb-pci.c
+@@ -34,7 +34,7 @@ static int mcb_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ {
+ 	struct resource *res;
+ 	struct priv *priv;
+-	int ret;
++	int ret, table_size;
+ 	unsigned long flags;
  
-+	if (le32_to_cpu(es->s_log_block_size) >
-+	    (EXT2_MAX_BLOCK_LOG_SIZE - BLOCK_SIZE_BITS)) {
-+		ext2_msg(sb, KERN_ERR,
-+			 "Invalid log block size: %u",
-+			 le32_to_cpu(es->s_log_block_size));
-+		goto failed_mount;
+ 	priv = devm_kzalloc(&pdev->dev, sizeof(struct priv), GFP_KERNEL);
+@@ -93,7 +93,30 @@ static int mcb_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	if (ret < 0)
+ 		goto out_mcb_bus;
+ 
+-	dev_dbg(&pdev->dev, "Found %d cells\n", ret);
++	table_size = ret;
++
++	if (table_size < CHAM_HEADER_SIZE) {
++		/* Release the previous resources */
++		devm_iounmap(&pdev->dev, priv->base);
++		devm_release_mem_region(&pdev->dev, priv->mapbase, CHAM_HEADER_SIZE);
++
++		/* Then, allocate it again with the actual chameleon table size */
++		res = devm_request_mem_region(&pdev->dev, priv->mapbase,
++						table_size,
++						KBUILD_MODNAME);
++		if (!res) {
++			dev_err(&pdev->dev, "Failed to request PCI memory\n");
++			ret = -EBUSY;
++			goto out_mcb_bus;
++		}
++
++		priv->base = devm_ioremap(&pdev->dev, priv->mapbase, table_size);
++		if (!priv->base) {
++			dev_err(&pdev->dev, "Cannot ioremap\n");
++			ret = -ENOMEM;
++			goto out_mcb_bus;
++		}
 +	}
- 	blocksize = BLOCK_SIZE << le32_to_cpu(sbi->s_es->s_log_block_size);
  
- 	if (sbi->s_mount_opt & EXT2_MOUNT_DAX) {
+ 	mcb_bus_add_devices(priv->bus);
+ 
 -- 
 2.39.2
 
