@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA635569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7759EC4339B;
-	Sun, 28 May 2023 19:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DDD569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:29:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D79F7C433EF;
+	Sun, 28 May 2023 19:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302168;
-	bh=oizr0Bp+KqzLAIISid2I3DADBoUUJDuzMnNwBYzeD3E=;
+	s=korg; t=1685302171;
+	bh=xlj9Beh6OB0dw16yu4Loybvh6lRsj3LLLBEYSJNB8Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1pk9gUPkfd3xHu9qjlWPJ6IMlPBPmWBEBQRhTAERmYBmS8yMEQ9eEVsX0cm62Ux4
-	 PlieWN9Sm/doRralJgbY90pmRosn4ZgL9nF85GyFjJVDhAGJfb43ysfb1jIiwAJk5N
-	 RG6j5Yg8OpjjZyMZG5EWtp3whUNDzClsOlHSaVKM=
+	b=MFKMTbXiev0P84BItFgoL9Dq++sDhLaTFe0ubRwCQaBU+oKxhJ/oRPEKlwudmo/2V
+	 TbCB6Yhc7p30WbpZiKGOuCVOJdX7OWN8k8eEK+LY22dlbYUjwFch76e9AHfSHoQAcD
+	 mxK+YeNhsaY20h8C92qC77fQeZIBZMxzVewj9Iis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9f575a1f15fc0c01ed69@syzkaller.appspotmail.com,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.3 026/127] net: cdc_ncm: Deal with too low values of dwNtbOutMaxSize
-Date: Sun, 28 May 2023 20:10:02 +0100
-Message-Id: <20230528190837.117436756@linuxfoundation.org>
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Finn Thain <fthain@linux-m68k.org>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Stan Johnson <userm57@yahoo.com>
+Subject: [PATCH 6.3 027/127] m68k: Move signal frame following exception on 68020/030
+Date: Sun, 28 May 2023 20:10:03 +0100
+Message-Id: <20230528190837.153221154@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -36,127 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tudor Ambarus <tudor.ambarus@linaro.org>
+From: Finn Thain <fthain@linux-m68k.org>
 
-commit 7e01c7f7046efc2c7c192c3619db43292b98e997 upstream.
+commit b845b574f86dcb6a70dfa698aa87a237b0878d2a upstream.
 
-Currently in cdc_ncm_check_tx_max(), if dwNtbOutMaxSize is lower than
-the calculated "min" value, but greater than zero, the logic sets
-tx_max to dwNtbOutMaxSize. This is then used to allocate a new SKB in
-cdc_ncm_fill_tx_frame() where all the data is handled.
+On 68030/020, an instruction such as, moveml %a2-%a3/%a5,%sp@- may cause
+a stack page fault during instruction execution (i.e. not at an
+instruction boundary) and produce a format 0xB exception frame.
 
-For small values of dwNtbOutMaxSize the memory allocated during
-alloc_skb(dwNtbOutMaxSize, GFP_ATOMIC) will have the same size, due to
-how size is aligned at alloc time:
-	size = SKB_DATA_ALIGN(size);
-        size += SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
-Thus we hit the same bug that we tried to squash with
-commit 2be6d4d16a084 ("net: cdc_ncm: Allow for dwNtbOutMaxSize to be unset or zero")
+In this situation, the value of USP will be unreliable.  If a signal is
+to be delivered following the exception, this USP value is used to
+calculate the location for a signal frame.  This can result in a
+corrupted user stack.
 
-Low values of dwNtbOutMaxSize do not cause an issue presently because at
-alloc_skb() time more memory (512b) is allocated than required for the
-SKB headers alone (320b), leaving some space (512b - 320b = 192b)
-for CDC data (172b).
+The corruption was detected in dash (actually in glibc) where it showed
+up as an intermittent "stack smashing detected" message and crash
+following signal delivery for SIGCHLD.
 
-However, if more elements (for example 3 x u64 = [24b]) were added to
-one of the SKB header structs, say 'struct skb_shared_info',
-increasing its original size (320b [320b aligned]) to something larger
-(344b [384b aligned]), then suddenly the CDC data (172b) no longer
-fits in the spare SKB data area (512b - 384b = 128b).
+It was hard to reproduce that failure because delivery of the signal
+raced with the page fault and because the kernel places an unpredictable
+gap of up to 7 bytes between the USP and the signal frame.
 
-Consequently the SKB bounds checking semantics fails and panics:
+A format 0xB exception frame can be produced by a bus error or an
+address error.  The 68030 Users Manual says that address errors occur
+immediately upon detection during instruction prefetch.  The instruction
+pipeline allows prefetch to overlap with other instructions, which means
+an address error can arise during the execution of a different
+instruction.  So it seems likely that this patch may help in the address
+error case also.
 
-skbuff: skb_over_panic: text:ffffffff831f755b len:184 put:172 head:ffff88811f1c6c00 data:ffff88811f1c6c00 tail:0xb8 end:0x80 dev:<NULL>
-------------[ cut here ]------------
-kernel BUG at net/core/skbuff.c:113!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-CPU: 0 PID: 57 Comm: kworker/0:2 Not tainted 5.15.106-syzkaller-00249-g19c0ed55a470 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 04/14/2023
-Workqueue: mld mld_ifc_work
-RIP: 0010:skb_panic net/core/skbuff.c:113 [inline]
-RIP: 0010:skb_over_panic+0x14c/0x150 net/core/skbuff.c:118
-[snip]
-Call Trace:
- <TASK>
- skb_put+0x151/0x210 net/core/skbuff.c:2047
- skb_put_zero include/linux/skbuff.h:2422 [inline]
- cdc_ncm_ndp16 drivers/net/usb/cdc_ncm.c:1131 [inline]
- cdc_ncm_fill_tx_frame+0x11ab/0x3da0 drivers/net/usb/cdc_ncm.c:1308
- cdc_ncm_tx_fixup+0xa3/0x100
-
-Deal with too low values of dwNtbOutMaxSize, clamp it in the range
-[USB_CDC_NCM_NTB_MIN_OUT_SIZE, CDC_NCM_NTB_MAX_SIZE_TX]. We ensure
-enough data space is allocated to handle CDC data by making sure
-dwNtbOutMaxSize is not smaller than USB_CDC_NCM_NTB_MIN_OUT_SIZE.
-
-Fixes: 289507d3364f ("net: cdc_ncm: use sysfs for rx/tx aggregation tuning")
+Reported-and-tested-by: Stan Johnson <userm57@yahoo.com>
+Link: https://lore.kernel.org/all/CAMuHMdW3yD22_ApemzW_6me3adq6A458u1_F0v-1EYwK_62jPA@mail.gmail.com/
+Cc: Michael Schmitz <schmitzmic@gmail.com>
+Cc: Andreas Schwab <schwab@linux-m68k.org>
 Cc: stable@vger.kernel.org
-Reported-by: syzbot+9f575a1f15fc0c01ed69@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?extid=b982f1059506db48409d
-Link: https://lore.kernel.org/all/20211202143437.1411410-1-lee.jones@linaro.org/
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230517133808.1873695-2-tudor.ambarus@linaro.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Co-developed-by: Michael Schmitz <schmitzmic@gmail.com>
+Signed-off-by: Michael Schmitz <schmitzmic@gmail.com>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/9e66262a754fcba50208aa424188896cc52a1dd1.1683365892.git.fthain@linux-m68k.org
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/cdc_ncm.c |   24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ arch/m68k/kernel/signal.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/drivers/net/usb/cdc_ncm.c
-+++ b/drivers/net/usb/cdc_ncm.c
-@@ -181,9 +181,12 @@ static u32 cdc_ncm_check_tx_max(struct u
- 	else
- 		min = ctx->max_datagram_size + ctx->max_ndp_size + sizeof(struct usb_cdc_ncm_nth32);
+--- a/arch/m68k/kernel/signal.c
++++ b/arch/m68k/kernel/signal.c
+@@ -858,11 +858,17 @@ static inline int rt_setup_ucontext(stru
+ }
  
--	max = min_t(u32, CDC_NCM_NTB_MAX_SIZE_TX, le32_to_cpu(ctx->ncm_parm.dwNtbOutMaxSize));
--	if (max == 0)
-+	if (le32_to_cpu(ctx->ncm_parm.dwNtbOutMaxSize) == 0)
- 		max = CDC_NCM_NTB_MAX_SIZE_TX; /* dwNtbOutMaxSize not set */
-+	else
-+		max = clamp_t(u32, le32_to_cpu(ctx->ncm_parm.dwNtbOutMaxSize),
-+			      USB_CDC_NCM_NTB_MIN_OUT_SIZE,
-+			      CDC_NCM_NTB_MAX_SIZE_TX);
+ static inline void __user *
+-get_sigframe(struct ksignal *ksig, size_t frame_size)
++get_sigframe(struct ksignal *ksig, struct pt_regs *tregs, size_t frame_size)
+ {
+ 	unsigned long usp = sigsp(rdusp(), ksig);
++	unsigned long gap = 0;
  
- 	/* some devices set dwNtbOutMaxSize too low for the above default */
- 	min = min(min, max);
-@@ -1244,6 +1247,9 @@ cdc_ncm_fill_tx_frame(struct usbnet *dev
- 			 * further.
- 			 */
- 			if (skb_out == NULL) {
-+				/* If even the smallest allocation fails, abort. */
-+				if (ctx->tx_curr_size == USB_CDC_NCM_NTB_MIN_OUT_SIZE)
-+					goto alloc_failed;
- 				ctx->tx_low_mem_max_cnt = min(ctx->tx_low_mem_max_cnt + 1,
- 							      (unsigned)CDC_NCM_LOW_MEM_MAX_CNT);
- 				ctx->tx_low_mem_val = ctx->tx_low_mem_max_cnt;
-@@ -1262,13 +1268,8 @@ cdc_ncm_fill_tx_frame(struct usbnet *dev
- 			skb_out = alloc_skb(ctx->tx_curr_size, GFP_ATOMIC);
- 
- 			/* No allocation possible so we will abort */
--			if (skb_out == NULL) {
--				if (skb != NULL) {
--					dev_kfree_skb_any(skb);
--					dev->net->stats.tx_dropped++;
--				}
--				goto exit_no_skb;
--			}
-+			if (!skb_out)
-+				goto alloc_failed;
- 			ctx->tx_low_mem_val--;
- 		}
- 		if (ctx->is_ndp16) {
-@@ -1461,6 +1462,11 @@ cdc_ncm_fill_tx_frame(struct usbnet *dev
- 
- 	return skb_out;
- 
-+alloc_failed:
-+	if (skb) {
-+		dev_kfree_skb_any(skb);
-+		dev->net->stats.tx_dropped++;
+-	return (void __user *)((usp - frame_size) & -8UL);
++	if (CPU_IS_020_OR_030 && tregs->format == 0xb) {
++		/* USP is unreliable so use worst-case value */
++		gap = 256;
 +	}
- exit_no_skb:
- 	/* Start timer, if there is a remaining non-empty skb */
- 	if (ctx->tx_curr_skb != NULL && n > 0)
++
++	return (void __user *)((usp - gap - frame_size) & -8UL);
+ }
+ 
+ static int setup_frame(struct ksignal *ksig, sigset_t *set,
+@@ -880,7 +886,7 @@ static int setup_frame(struct ksignal *k
+ 		return -EFAULT;
+ 	}
+ 
+-	frame = get_sigframe(ksig, sizeof(*frame) + fsize);
++	frame = get_sigframe(ksig, tregs, sizeof(*frame) + fsize);
+ 
+ 	if (fsize)
+ 		err |= copy_to_user (frame + 1, regs + 1, fsize);
+@@ -952,7 +958,7 @@ static int setup_rt_frame(struct ksignal
+ 		return -EFAULT;
+ 	}
+ 
+-	frame = get_sigframe(ksig, sizeof(*frame));
++	frame = get_sigframe(ksig, tregs, sizeof(*frame));
+ 
+ 	if (fsize)
+ 		err |= copy_to_user (&frame->uc.uc_extra, regs + 1, fsize);
 
 
