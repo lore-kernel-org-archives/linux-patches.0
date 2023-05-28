@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4649611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:43:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75302C433EF;
-	Sun, 28 May 2023 19:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574A5611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:43:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA996C433EF;
+	Sun, 28 May 2023 19:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302984;
-	bh=nY7qWhuPn/wJBSA+NmdGwi4msTQ78MFC8bW3Fz95PuY=;
+	s=korg; t=1685302987;
+	bh=KTq+I1tuZnWMeNLGjXwYZtuOuz+tONiQr7XI1hTGv30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SaQxjyNYGk12HFjtxRM56kEaVUa1BhL+JjJCdD2d/3tMp46XC65SJgVTEiXnAEVXo
-	 SeQwYJB5OHom+VdiX3KehOgeDL0dby14+yHw3hUrSQklnfJX0qKfWuwZqkiAmwCkQx
-	 feVu7nAWXPqUVok4mXxscwn9eCEulbkMN7l7rT6M=
+	b=xT5IkAMCIDftWgcI5/HdQjKon3SjUtuln1wEzsUrzn6+1de72XjS8l8Wt/3d7He3A
+	 Z30i/loUHeeR+cr/394oP4fmtrv1wA+njlkce2rAM5Wbd3AhjTMHkddi0ZIAQOl0iV
+	 NBdCmZAcroXPccu2jBRkIY2o173scKwpsUqdlYMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 106/211] SUNRPC: Fix trace_svc_register() call site
-Date: Sun, 28 May 2023 20:10:27 +0100
-Message-Id: <20230528190846.214578159@linuxfoundation.org>
+Subject: [PATCH 5.10 107/211] drm/exynos: fix g2d_open/close helper function definitions
+Date: Sun, 28 May 2023 20:10:28 +0100
+Message-Id: <20230528190846.237271562@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -34,33 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 07a27305938559fb35f7a46fb90a5e37728bdee6 ]
+[ Upstream commit 2ef0785b30bd6549ddbc124979f1b6596e065ae2 ]
 
-The trace event recorded incorrect values for the registered family,
-protocol, and port because the arguments are in the wrong order.
+The empty stub functions are defined as global functions, which
+causes a warning because of missing prototypes:
 
-Fixes: b4af59328c25 ("SUNRPC: Trace server-side rpcbind registration events")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+drivers/gpu/drm/exynos/exynos_drm_g2d.h:37:5: error: no previous prototype for 'g2d_open'
+drivers/gpu/drm/exynos/exynos_drm_g2d.h:42:5: error: no previous prototype for 'g2d_close'
+
+Mark them as 'static inline' to avoid the warning and to make
+them behave as intended.
+
+Fixes: eb4d9796fa34 ("drm/exynos: g2d: Convert to driver component API")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/svc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/exynos/exynos_drm_g2d.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/svc.c b/net/sunrpc/svc.c
-index af657a482ad2d..495ebe7fad6dd 100644
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -995,7 +995,7 @@ static int __svc_register(struct net *net, const char *progname,
- #endif
- 	}
- 
--	trace_svc_register(progname, version, protocol, port, family, error);
-+	trace_svc_register(progname, version, family, protocol, port, error);
- 	return error;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_g2d.h b/drivers/gpu/drm/exynos/exynos_drm_g2d.h
+index 74ea3c26deadc..1a5ae781b56c6 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_g2d.h
++++ b/drivers/gpu/drm/exynos/exynos_drm_g2d.h
+@@ -34,11 +34,11 @@ static inline int exynos_g2d_exec_ioctl(struct drm_device *dev, void *data,
+ 	return -ENODEV;
  }
  
+-int g2d_open(struct drm_device *drm_dev, struct drm_file *file)
++static inline int g2d_open(struct drm_device *drm_dev, struct drm_file *file)
+ {
+ 	return 0;
+ }
+ 
+-void g2d_close(struct drm_device *drm_dev, struct drm_file *file)
++static inline void g2d_close(struct drm_device *drm_dev, struct drm_file *file)
+ { }
+ #endif
 -- 
 2.39.2
 
