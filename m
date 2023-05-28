@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301EE569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:24:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1DAC4339B;
-	Sun, 28 May 2023 19:24:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A52569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:24:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F014C433D2;
+	Sun, 28 May 2023 19:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685301849;
-	bh=cJc1z5k66ftx+eX60LdWL10QCf5LpfvcsO0iMAbHbj8=;
+	s=korg; t=1685301851;
+	bh=HpNp+kaoEwq5uTxFJrERqIfK0ijhovHbWtU6rLeec70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQminnUpB/PP/G/xUcDAosT9KjuwxIpzFZ6MyK0bf9qFoNGHBcKyTVTx0PZHAjWjs
-	 C4UCvAD7cgl7KdRzQW5fhnTtyNFyEK7jWuV/TAUfJ9btI5IwofEOClEPehMLbF6L7f
-	 UNtofKUutqHkdQEohunzgrocWbn2vRf/mb3EFMlQ=
+	b=yd99R/PC1idKsyHzzeSgkEUOmzkQeVHnLAacSx2j89Ei8VMRAtUyugRfnENheAPz+
+	 mI3elz8rkfe5E0OKEuWwfOtK5n/Nlck+yKjTZHbfwRGPGgBUUZJCeLIzkQeqEsqEFM
+	 qSp9TkeAWRKcvO7/Xhkb7KT+Sj+2+uVYzsLml6RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Renninger <trenn@suse.com>,
-	Shuah Khan <shuah@kernel.org>,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	Wyes Karny <wyes.karny@amd.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Tobias Brunner <tobias@strongswan.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 060/161] cpupower: Make TSC read per CPU for Mperf monitor
-Date: Sun, 28 May 2023 20:09:44 +0100
-Message-Id: <20230528190839.094598993@linuxfoundation.org>
+Subject: [PATCH 5.4 061/161] af_key: Reject optional tunnel/BEET mode templates in outbound policies
+Date: Sun, 28 May 2023 20:09:45 +0100
+Message-Id: <20230528190839.121577348@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190837.051205996@linuxfoundation.org>
 References: <20230528190837.051205996@linuxfoundation.org>
@@ -38,157 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wyes Karny <wyes.karny@amd.com>
+From: Tobias Brunner <tobias@strongswan.org>
 
-[ Upstream commit c2adb1877b76fc81ae041e1db1a6ed2078c6746b ]
+[ Upstream commit cf3128a7aca55b2eefb68281d44749c683bdc96f ]
 
-System-wide TSC read could cause a drift in C0 percentage calculation.
-Because if first TSC is read and then one by one mperf is read for all
-cpus, this introduces drift between mperf reading of later CPUs and TSC
-reading.  To lower this drift read TSC per CPU and also just after mperf
-read.  This technique improves C0 percentage calculation in Mperf monitor.
+xfrm_state_find() uses `encap_family` of the current template with
+the passed local and remote addresses to find a matching state.
+If an optional tunnel or BEET mode template is skipped in a mixed-family
+scenario, there could be a mismatch causing an out-of-bounds read as
+the addresses were not replaced to match the family of the next template.
 
-Before fix: (System 100% busy)
+While there are theoretical use cases for optional templates in outbound
+policies, the only practical one is to skip IPComp states in inbound
+policies if uncompressed packets are received that are handled by an
+implicitly created IPIP state instead.
 
-              | Mperf              || RAPL        || Idle_Stats
- PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
-   0|   0|   0| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   0| 256| 84.62| 15.38|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   1|   1| 87.15| 12.85|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   1| 257| 84.08| 15.92|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   2|   2| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   2| 258| 83.26| 16.74|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   3|   3| 86.61| 13.39|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   3| 259| 83.60| 16.40|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   4|   4| 86.33| 13.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   4| 260| 83.33| 16.67|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   5|   5| 86.06| 13.94|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   5| 261| 83.05| 16.95|  2695||168659003|3970468||  0.00|  0.00| 0.00
-   0|   6|   6| 85.51| 14.49|  2695||168659003|3970468||  0.00|  0.00| 0.00
-
-After fix: (System 100% busy)
-
-             | Mperf              || RAPL        || Idle_Stats
- PKG|CORE| CPU| C0   | Cx   | Freq  || pack | core  || POLL | C1   | C2
-   0|   0|   0| 98.03|  1.97|  2415||163295480|3811189||  0.00|  0.00| 0.00
-   0|   0| 256| 98.50|  1.50|  2394||163295480|3811189||  0.00|  0.00| 0.00
-   0|   1|   1| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   1| 257| 99.99|  0.01|  2375||163295480|3811189||  0.00|  0.00| 0.00
-   0|   2|   2| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   2| 258|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   3|   3|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   3| 259| 99.99|  0.01|  2435||163295480|3811189||  0.00|  0.00| 0.00
-   0|   4|   4|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   4| 260|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
-   0|   5|   5| 99.99|  0.01|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   5| 261|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
-   0|   6|   6|100.00|  0.00|  2401||163295480|3811189||  0.00|  0.00| 0.00
-   0|   6| 262|100.00|  0.00|  2435||163295480|3811189||  0.00|  0.00| 0.00
-
-Cc: Thomas Renninger <trenn@suse.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Dominik Brodowski <linux@dominikbrodowski.net>
-
-Fixes: 7fe2f6399a84 ("cpupowerutils - cpufrequtils extended with quite some features")
-Signed-off-by: Wyes Karny <wyes.karny@amd.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Tobias Brunner <tobias@strongswan.org>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../utils/idle_monitor/mperf_monitor.c        | 31 +++++++++----------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ net/key/af_key.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-index 44806a6dae11a..7a76d63003748 100644
---- a/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-+++ b/tools/power/cpupower/utils/idle_monitor/mperf_monitor.c
-@@ -66,8 +66,8 @@ static int max_freq_mode;
-  */
- static unsigned long max_frequency;
+diff --git a/net/key/af_key.c b/net/key/af_key.c
+index 92f71e8f321cd..1a33c46d9c894 100644
+--- a/net/key/af_key.c
++++ b/net/key/af_key.c
+@@ -1944,7 +1944,8 @@ static u32 gen_reqid(struct net *net)
+ }
  
--static unsigned long long tsc_at_measure_start;
--static unsigned long long tsc_at_measure_end;
-+static unsigned long long *tsc_at_measure_start;
-+static unsigned long long *tsc_at_measure_end;
- static unsigned long long *mperf_previous_count;
- static unsigned long long *aperf_previous_count;
- static unsigned long long *mperf_current_count;
-@@ -130,7 +130,7 @@ static int mperf_get_count_percent(unsigned int id, double *percent,
- 	aperf_diff = aperf_current_count[cpu] - aperf_previous_count[cpu];
- 
- 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
--		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
-+		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
- 		*percent = 100.0 * mperf_diff / tsc_diff;
- 		dprint("%s: TSC Ref - mperf_diff: %llu, tsc_diff: %llu\n",
- 		       mperf_cstates[id].name, mperf_diff, tsc_diff);
-@@ -167,7 +167,7 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- 
- 	if (max_freq_mode == MAX_FREQ_TSC_REF) {
- 		/* Calculate max_freq from TSC count */
--		tsc_diff = tsc_at_measure_end - tsc_at_measure_start;
-+		tsc_diff = tsc_at_measure_end[cpu] - tsc_at_measure_start[cpu];
- 		time_diff = timespec_diff_us(time_start, time_end);
- 		max_frequency = tsc_diff / time_diff;
- 	}
-@@ -186,33 +186,27 @@ static int mperf_get_count_freq(unsigned int id, unsigned long long *count,
- static int mperf_start(void)
+ static int
+-parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
++parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_policy *pol,
++		   struct sadb_x_ipsecrequest *rq)
  {
- 	int cpu;
--	unsigned long long dbg;
+ 	struct net *net = xp_net(xp);
+ 	struct xfrm_tmpl *t = xp->xfrm_vec + xp->xfrm_nr;
+@@ -1962,9 +1963,12 @@ parse_ipsecrequest(struct xfrm_policy *xp, struct sadb_x_ipsecrequest *rq)
+ 	if ((mode = pfkey_mode_to_xfrm(rq->sadb_x_ipsecrequest_mode)) < 0)
+ 		return -EINVAL;
+ 	t->mode = mode;
+-	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE)
++	if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_USE) {
++		if ((mode == XFRM_MODE_TUNNEL || mode == XFRM_MODE_BEET) &&
++		    pol->sadb_x_policy_dir == IPSEC_DIR_OUTBOUND)
++			return -EINVAL;
+ 		t->optional = 1;
+-	else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
++	} else if (rq->sadb_x_ipsecrequest_level == IPSEC_LEVEL_UNIQUE) {
+ 		t->reqid = rq->sadb_x_ipsecrequest_reqid;
+ 		if (t->reqid > IPSEC_MANUAL_REQID_MAX)
+ 			t->reqid = 0;
+@@ -2006,7 +2010,7 @@ parse_ipsecrequests(struct xfrm_policy *xp, struct sadb_x_policy *pol)
+ 		    rq->sadb_x_ipsecrequest_len < sizeof(*rq))
+ 			return -EINVAL;
  
- 	clock_gettime(CLOCK_REALTIME, &time_start);
--	mperf_get_tsc(&tsc_at_measure_start);
- 
--	for (cpu = 0; cpu < cpu_count; cpu++)
-+	for (cpu = 0; cpu < cpu_count; cpu++) {
-+		mperf_get_tsc(&tsc_at_measure_start[cpu]);
- 		mperf_init_stats(cpu);
-+	}
- 
--	mperf_get_tsc(&dbg);
--	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_start);
- 	return 0;
- }
- 
- static int mperf_stop(void)
- {
--	unsigned long long dbg;
- 	int cpu;
- 
--	for (cpu = 0; cpu < cpu_count; cpu++)
-+	for (cpu = 0; cpu < cpu_count; cpu++) {
- 		mperf_measure_stats(cpu);
-+		mperf_get_tsc(&tsc_at_measure_end[cpu]);
-+	}
- 
--	mperf_get_tsc(&tsc_at_measure_end);
- 	clock_gettime(CLOCK_REALTIME, &time_end);
--
--	mperf_get_tsc(&dbg);
--	dprint("TSC diff: %llu\n", dbg - tsc_at_measure_end);
--
- 	return 0;
- }
- 
-@@ -311,7 +305,8 @@ struct cpuidle_monitor *mperf_register(void)
- 	aperf_previous_count = calloc(cpu_count, sizeof(unsigned long long));
- 	mperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
- 	aperf_current_count = calloc(cpu_count, sizeof(unsigned long long));
--
-+	tsc_at_measure_start = calloc(cpu_count, sizeof(unsigned long long));
-+	tsc_at_measure_end = calloc(cpu_count, sizeof(unsigned long long));
- 	mperf_monitor.name_len = strlen(mperf_monitor.name);
- 	return &mperf_monitor;
- }
-@@ -322,6 +317,8 @@ void mperf_unregister(void)
- 	free(aperf_previous_count);
- 	free(mperf_current_count);
- 	free(aperf_current_count);
-+	free(tsc_at_measure_start);
-+	free(tsc_at_measure_end);
- 	free(is_valid);
- }
- 
+-		if ((err = parse_ipsecrequest(xp, rq)) < 0)
++		if ((err = parse_ipsecrequest(xp, pol, rq)) < 0)
+ 			return err;
+ 		len -= rq->sadb_x_ipsecrequest_len;
+ 		rq = (void*)((u8*)rq + rq->sadb_x_ipsecrequest_len);
 -- 
 2.39.2
 
