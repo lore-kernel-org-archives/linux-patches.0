@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4102611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:49:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A2EC433EF;
-	Sun, 28 May 2023 19:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BC6611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:49:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91CE3C433D2;
+	Sun, 28 May 2023 19:49:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685303396;
-	bh=9Y0rT6L80FJuDiXy66NCxzCArPI7PyYaNrSfytyHMyg=;
+	s=korg; t=1685303399;
+	bh=aqfi+oC+4f4ajXwzMuWWhIJZ3wlG1bHAqqfvZdzzsLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISHRjXbikTwAU5OjnsqNl9/C6eIW3dw/nwLEMh9FQ8M2rTtgu98AthWJJ0BgsaMVl
-	 UP7gnDgRwGLvn3nc5RxNu1IgwNszTEtcDpdtrybf0AKwLLzL/qhAUK1U2EebT78lWM
-	 tEOwZpK97zML+2p6x6hWy2hrJ0LlkyOkvnMN+JWc=
+	b=yLyehx3TxWqKGA4BgoyoZtydRa4EE6oY+4MJbZoocDCaxJfnPkfLyQHn39BCLcAgL
+	 Qkpf2gqerRbPMdypM2x9A6KAr2GFYXDL/EJUKiKdt9iKt1mu+PBMPFwh1VydBqBNrk
+	 0IGTkvZ0DmA7SUix16ReCAD+nYeU66fzvCeNEWHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.15 59/69] platform/mellanox: mlxbf-pmc: fix sscanf() error checking
-Date: Sun, 28 May 2023 20:12:19 +0100
-Message-Id: <20230528190830.580901288@linuxfoundation.org>
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 60/69] net/mlx5e: do as little as possible in napi poll when budget is 0
+Date: Sun, 28 May 2023 20:12:20 +0100
+Message-Id: <20230528190830.627006331@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190828.358612414@linuxfoundation.org>
 References: <20230528190828.358612414@linuxfoundation.org>
@@ -35,42 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 95e4b25192e9238fd2dbe85d96dd2f8fd1ce9d14 upstream.
+commit afbed3f74830163f9559579dee382cac3cff82da upstream.
 
-The sscanf() function never returns negatives.  It returns the number of
-items successfully read.
+NAPI gets called with budget of 0 from netpoll, which has interrupts
+disabled. We should try to free some space on Tx rings and nothing
+else.
 
-Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/4ccdfd28-099b-40bf-8d77-ad4ea2e76b93@kili.mountain
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Specifically do not try to handle XDP TX or try to refill Rx buffers -
+we can't use the page pool from IRQ context. Don't check if IRQs moved,
+either, that makes no sense in netpoll. Netpoll calls _all_ the rings
+from whatever CPU it happens to be invoked on.
+
+In general do as little as possible, the work quickly adds up when
+there's tens of rings to poll.
+
+The immediate stack trace I was seeing is:
+
+    __do_softirq+0xd1/0x2c0
+    __local_bh_enable_ip+0xc7/0x120
+    </IRQ>
+    <TASK>
+    page_pool_put_defragged_page+0x267/0x320
+    mlx5e_free_xdpsq_desc+0x99/0xd0
+    mlx5e_poll_xdpsq_cq+0x138/0x3b0
+    mlx5e_napi_poll+0xc3/0x8b0
+    netpoll_poll_dev+0xce/0x150
+
+AFAIU page pool takes a BH lock, releases it and since BH is now
+enabled tries to run softirqs.
+
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Fixes: 60bbf7eeef10 ("mlx5: use page_pool for xdp_return_frame call")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/mellanox/mlxbf-pmc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
-index c2c9b0d3244c..be967d797c28 100644
---- a/drivers/platform/mellanox/mlxbf-pmc.c
-+++ b/drivers/platform/mellanox/mlxbf-pmc.c
-@@ -1348,9 +1348,8 @@ static int mlxbf_pmc_map_counters(struct device *dev)
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_txrx.c
+@@ -150,20 +150,22 @@ int mlx5e_napi_poll(struct napi_struct *
+ 		}
+ 	}
  
- 	for (i = 0; i < pmc->total_blocks; ++i) {
- 		if (strstr(pmc->block_name[i], "tile")) {
--			ret = sscanf(pmc->block_name[i], "tile%d", &tile_num);
--			if (ret < 0)
--				return ret;
-+			if (sscanf(pmc->block_name[i], "tile%d", &tile_num) != 1)
-+				return -EINVAL;
++	/* budget=0 means we may be in IRQ context, do as little as possible */
++	if (unlikely(!budget))
++		goto out;
++
+ 	busy |= mlx5e_poll_xdpsq_cq(&c->xdpsq.cq);
  
- 			if (tile_num >= pmc->tile_count)
- 				continue;
--- 
-2.40.1
-
+ 	if (c->xdp)
+ 		busy |= mlx5e_poll_xdpsq_cq(&c->rq_xdpsq.cq);
+ 
+-	if (likely(budget)) { /* budget=0 means: don't poll rx rings */
+-		if (xsk_open)
+-			work_done = mlx5e_poll_rx_cq(&xskrq->cq, budget);
++	if (xsk_open)
++		work_done = mlx5e_poll_rx_cq(&xskrq->cq, budget);
+ 
+-		if (likely(budget - work_done))
+-			work_done += mlx5e_poll_rx_cq(&rq->cq, budget - work_done);
++	if (likely(budget - work_done))
++		work_done += mlx5e_poll_rx_cq(&rq->cq, budget - work_done);
+ 
+-		busy |= work_done == budget;
+-	}
++	busy |= work_done == budget;
+ 
+ 	mlx5e_poll_ico_cq(&c->icosq.cq);
+ 	if (mlx5e_poll_ico_cq(&c->async_icosq.cq))
 
 
