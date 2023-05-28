@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3A57569D
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B562C433EF;
-	Sun, 28 May 2023 19:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1A4569D
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:28:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 927CDC433D2;
+	Sun, 28 May 2023 19:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302129;
-	bh=2q7wgJ2rTXpnnQuOtI06xvZXFfgFbae/YxtHR0ceDVQ=;
+	s=korg; t=1685302131;
+	bh=4770lBRo9TXj0AKT9kb9lvq21IBngGKUXHO0O2oTCOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZkhkvEaQHI3xOvFzk3d5vPShFTdKF0Npc5sjRhH73USC/qaGU6geF4Db4L7M0RxHN
-	 kfMahKg7LvAlFtb/DJA9Qoegkgc9Q8h+vKdFSQvFc4h4pQk4oCORvJceamesyOtzsi
-	 gNZMXvhOHX92GrXoTNplc9wVsKRZG8qsHfTtLCeY=
+	b=wYgUQF/fSfO7+VgK4PY/SnL1jCmPQ0teX8W61lCV3oHY0xq0LNqOgGfla6ZMlRDEX
+	 Y+B7wboIPBJOcbJQ4tAgcdxolqSZFOqKG00kmtkJkO/80AKyaxDFWUEqOsM978XUBV
+	 etLrPqvAcnQEl3iPRRrFwDn+BoKj66aJme33uBxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
-	Tarun Sahu <tsahu@linux.ibm.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Piyush Sachdeva <piyushs@linux.ibm.com>
-Subject: [PATCH 6.3 011/127] mm/vmemmap/devdax: fix kernel crash when probing devdax devices
-Date: Sun, 28 May 2023 20:09:47 +0100
-Message-Id: <20230528190836.576332411@linuxfoundation.org>
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Casey Schaufler <casey@schaufler-ca.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.3 012/127] ocfs2: Switch to security_inode_init_security()
+Date: Sun, 28 May 2023 20:09:48 +0100
+Message-Id: <20230528190836.615408916@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190836.161231414@linuxfoundation.org>
 References: <20230528190836.161231414@linuxfoundation.org>
@@ -40,153 +37,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-commit 87a7ae75d7383afa998f57656d1d14e2a730cc47 upstream.
+commit de3004c874e740304cc4f4a83d6200acb511bbda upstream.
 
-commit 4917f55b4ef9 ("mm/sparse-vmemmap: improve memory savings for
-compound devmaps") added support for using optimized vmmemap for devdax
-devices.  But how vmemmap mappings are created are architecture specific.
-For example, powerpc with hash translation doesn't have vmemmap mappings
-in init_mm page table instead they are bolted table entries in the
-hardware page table
+In preparation for removing security_old_inode_init_security(), switch to
+security_inode_init_security().
 
-vmemmap_populate_compound_pages() used by vmemmap optimization code is not
-aware of these architecture-specific mapping.  Hence allow architecture to
-opt for this feature.  I selected architectures supporting
-HUGETLB_PAGE_OPTIMIZE_VMEMMAP option as also supporting this feature.
+Extend the existing ocfs2_initxattrs() to take the
+ocfs2_security_xattr_info structure from fs_info, and populate the
+name/value/len triple with the first xattr provided by LSMs.
 
-This patch fixes the below crash on ppc64.
+As fs_info was not used before, ocfs2_initxattrs() can now handle the case
+of replicating the behavior of security_old_inode_init_security(), i.e.
+just obtaining the xattr, in addition to setting all xattrs provided by
+LSMs.
 
-BUG: Unable to handle kernel data access on write at 0xc00c000100400038
-Faulting instruction address: 0xc000000001269d90
-Oops: Kernel access of bad area, sig: 11 [#1]
-LE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
-Modules linked in:
-CPU: 7 PID: 1 Comm: swapper/0 Not tainted 6.3.0-rc5-150500.34-default+ #2 5c90a668b6bbd142599890245c2fb5de19d7d28a
-Hardware name: IBM,9009-42G POWER9 (raw) 0x4e0202 0xf000005 of:IBM,FW950.40 (VL950_099) hv:phyp pSeries
-NIP:  c000000001269d90 LR: c0000000004c57d4 CTR: 0000000000000000
-REGS: c000000003632c30 TRAP: 0300   Not tainted  (6.3.0-rc5-150500.34-default+)
-MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE>  CR: 24842228  XER: 00000000
-CFAR: c0000000004c57d0 DAR: c00c000100400038 DSISR: 42000000 IRQMASK: 0
-....
-NIP [c000000001269d90] __init_single_page.isra.74+0x14/0x4c
-LR [c0000000004c57d4] __init_zone_device_page+0x44/0xd0
-Call Trace:
-[c000000003632ed0] [c000000003632f60] 0xc000000003632f60 (unreliable)
-[c000000003632f10] [c0000000004c5ca0] memmap_init_zone_device+0x170/0x250
-[c000000003632fe0] [c0000000005575f8] memremap_pages+0x2c8/0x7f0
-[c0000000036330c0] [c000000000557b5c] devm_memremap_pages+0x3c/0xa0
-[c000000003633100] [c000000000d458a8] dev_dax_probe+0x108/0x3e0
-[c0000000036331a0] [c000000000d41430] dax_bus_probe+0xb0/0x140
-[c0000000036331d0] [c000000000cef27c] really_probe+0x19c/0x520
-[c000000003633260] [c000000000cef6b4] __driver_probe_device+0xb4/0x230
-[c0000000036332e0] [c000000000cef888] driver_probe_device+0x58/0x120
-[c000000003633320] [c000000000cefa6c] __device_attach_driver+0x11c/0x1e0
-[c0000000036333a0] [c000000000cebc58] bus_for_each_drv+0xa8/0x130
-[c000000003633400] [c000000000ceefcc] __device_attach+0x15c/0x250
-[c0000000036334a0] [c000000000ced458] bus_probe_device+0x108/0x110
-[c0000000036334f0] [c000000000ce92dc] device_add+0x7fc/0xa10
-[c0000000036335b0] [c000000000d447c8] devm_create_dev_dax+0x1d8/0x530
-[c000000003633640] [c000000000d46b60] __dax_pmem_probe+0x200/0x270
-[c0000000036337b0] [c000000000d46bf0] dax_pmem_probe+0x20/0x70
-[c0000000036337d0] [c000000000d2279c] nvdimm_bus_probe+0xac/0x2b0
-[c000000003633860] [c000000000cef27c] really_probe+0x19c/0x520
-[c0000000036338f0] [c000000000cef6b4] __driver_probe_device+0xb4/0x230
-[c000000003633970] [c000000000cef888] driver_probe_device+0x58/0x120
-[c0000000036339b0] [c000000000cefd08] __driver_attach+0x1d8/0x240
-[c000000003633a30] [c000000000cebb04] bus_for_each_dev+0xb4/0x130
-[c000000003633a90] [c000000000cee564] driver_attach+0x34/0x50
-[c000000003633ab0] [c000000000ced878] bus_add_driver+0x218/0x300
-[c000000003633b40] [c000000000cf1144] driver_register+0xa4/0x1b0
-[c000000003633bb0] [c000000000d21a0c] __nd_driver_register+0x5c/0x100
-[c000000003633c10] [c00000000206a2e8] dax_pmem_init+0x34/0x48
-[c000000003633c30] [c0000000000132d0] do_one_initcall+0x60/0x320
-[c000000003633d00] [c0000000020051b0] kernel_init_freeable+0x360/0x400
-[c000000003633de0] [c000000000013764] kernel_init+0x34/0x1d0
-[c000000003633e50] [c00000000000de14] ret_from_kernel_thread+0x5c/0x64
+Supporting multiple xattrs is not currently supported where
+security_old_inode_init_security() was called (mknod, symlink), as it
+requires non-trivial changes that can be done at a later time. Like for
+reiserfs, even if EVM is invoked, it will not provide an xattr (if it is
+not the first to set it, its xattr will be discarded; if it is the first,
+it does not have xattrs to calculate the HMAC on).
 
-Link: https://lkml.kernel.org/r/20230411142214.64464-1-aneesh.kumar@linux.ibm.com
-Fixes: 4917f55b4ef9 ("mm/sparse-vmemmap: improve memory savings for compound devmaps")
-Signed-off-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
-Reported-by: Tarun Sahu <tsahu@linux.ibm.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Dan Williams <dan.j.williams@intel.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Piyush Sachdeva <piyushs@linux.ibm.com>
+Finally, since security_inode_init_security(), unlike
+security_old_inode_init_security(), returns zero instead of -EOPNOTSUPP if
+no xattrs were provided by LSMs or if inodes are private, additionally
+check in ocfs2_init_security_get() if the xattr name is set.
+
+If not, act as if security_old_inode_init_security() returned -EOPNOTSUPP,
+and set si->enable to zero to notify to the functions following
+ocfs2_init_security_get() that no xattrs are available.
+
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Casey Schaufler <casey@schaufler-ca.com>
+Acked-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm.h  |   16 ++++++++++++++++
- mm/page_alloc.c     |   10 ++++++----
- mm/sparse-vmemmap.c |    3 +--
- 3 files changed, 23 insertions(+), 6 deletions(-)
+ fs/ocfs2/namei.c |    2 ++
+ fs/ocfs2/xattr.c |   30 ++++++++++++++++++++++++++----
+ 2 files changed, 28 insertions(+), 4 deletions(-)
 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -3425,6 +3425,22 @@ void vmemmap_populate_print_last(void);
- void vmemmap_free(unsigned long start, unsigned long end,
- 		struct vmem_altmap *altmap);
- #endif
-+
-+#ifdef CONFIG_ARCH_WANT_HUGETLB_PAGE_OPTIMIZE_VMEMMAP
-+static inline bool vmemmap_can_optimize(struct vmem_altmap *altmap,
-+					   struct dev_pagemap *pgmap)
-+{
-+	return is_power_of_2(sizeof(struct page)) &&
-+		pgmap && (pgmap_vmemmap_nr(pgmap) > 1) && !altmap;
-+}
-+#else
-+static inline bool vmemmap_can_optimize(struct vmem_altmap *altmap,
-+					   struct dev_pagemap *pgmap)
-+{
-+	return false;
-+}
-+#endif
-+
- void register_page_bootmem_memmap(unsigned long section_nr, struct page *map,
- 				  unsigned long nr_pages);
- 
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -6905,10 +6905,12 @@ static void __ref __init_zone_device_pag
-  * of an altmap. See vmemmap_populate_compound_pages().
-  */
- static inline unsigned long compound_nr_pages(struct vmem_altmap *altmap,
--					      unsigned long nr_pages)
-+					      struct dev_pagemap *pgmap)
+--- a/fs/ocfs2/namei.c
++++ b/fs/ocfs2/namei.c
+@@ -242,6 +242,7 @@ static int ocfs2_mknod(struct mnt_idmap
+ 	int want_meta = 0;
+ 	int xattr_credits = 0;
+ 	struct ocfs2_security_xattr_info si = {
++		.name = NULL,
+ 		.enable = 1,
+ 	};
+ 	int did_quota_inode = 0;
+@@ -1805,6 +1806,7 @@ static int ocfs2_symlink(struct mnt_idma
+ 	int want_clusters = 0;
+ 	int xattr_credits = 0;
+ 	struct ocfs2_security_xattr_info si = {
++		.name = NULL,
+ 		.enable = 1,
+ 	};
+ 	int did_quota = 0, did_quota_inode = 0;
+--- a/fs/ocfs2/xattr.c
++++ b/fs/ocfs2/xattr.c
+@@ -7259,9 +7259,21 @@ static int ocfs2_xattr_security_set(cons
+ static int ocfs2_initxattrs(struct inode *inode, const struct xattr *xattr_array,
+ 		     void *fs_info)
  {
--	return is_power_of_2(sizeof(struct page)) &&
--		!altmap ? 2 * (PAGE_SIZE / sizeof(struct page)) : nr_pages;
-+	if (!vmemmap_can_optimize(altmap, pgmap))
-+		return pgmap_vmemmap_nr(pgmap);
++	struct ocfs2_security_xattr_info *si = fs_info;
+ 	const struct xattr *xattr;
+ 	int err = 0;
+ 
++	if (si) {
++		si->value = kmemdup(xattr_array->value, xattr_array->value_len,
++				    GFP_KERNEL);
++		if (!si->value)
++			return -ENOMEM;
 +
-+	return 2 * (PAGE_SIZE / sizeof(struct page));
- }
++		si->name = xattr_array->name;
++		si->value_len = xattr_array->value_len;
++		return 0;
++	}
++
+ 	for (xattr = xattr_array; xattr->name != NULL; xattr++) {
+ 		err = ocfs2_xattr_set(inode, OCFS2_XATTR_INDEX_SECURITY,
+ 				      xattr->name, xattr->value,
+@@ -7277,13 +7289,23 @@ int ocfs2_init_security_get(struct inode
+ 			    const struct qstr *qstr,
+ 			    struct ocfs2_security_xattr_info *si)
+ {
++	int ret;
++
+ 	/* check whether ocfs2 support feature xattr */
+ 	if (!ocfs2_supports_xattr(OCFS2_SB(dir->i_sb)))
+ 		return -EOPNOTSUPP;
+-	if (si)
+-		return security_old_inode_init_security(inode, dir, qstr,
+-							&si->name, &si->value,
+-							&si->value_len);
++	if (si) {
++		ret = security_inode_init_security(inode, dir, qstr,
++						   &ocfs2_initxattrs, si);
++		/*
++		 * security_inode_init_security() does not return -EOPNOTSUPP,
++		 * we have to check the xattr ourselves.
++		 */
++		if (!ret && !si->name)
++			si->enable = 0;
++
++		return ret;
++	}
  
- static void __ref memmap_init_compound(struct page *head,
-@@ -6973,7 +6975,7 @@ void __ref memmap_init_zone_device(struc
- 			continue;
- 
- 		memmap_init_compound(page, pfn, zone_idx, nid, pgmap,
--				     compound_nr_pages(altmap, pfns_per_compound));
-+				     compound_nr_pages(altmap, pgmap));
- 	}
- 
- 	pr_info("%s initialised %lu pages in %ums\n", __func__,
---- a/mm/sparse-vmemmap.c
-+++ b/mm/sparse-vmemmap.c
-@@ -458,8 +458,7 @@ struct page * __meminit __populate_secti
- 		!IS_ALIGNED(nr_pages, PAGES_PER_SUBSECTION)))
- 		return NULL;
- 
--	if (is_power_of_2(sizeof(struct page)) &&
--	    pgmap && pgmap_vmemmap_nr(pgmap) > 1 && !altmap)
-+	if (vmemmap_can_optimize(altmap, pgmap))
- 		r = vmemmap_populate_compound_pages(pfn, start, end, nid, pgmap);
- 	else
- 		r = vmemmap_populate(start, end, nid, altmap);
+ 	return security_inode_init_security(inode, dir, qstr,
+ 					    &ocfs2_initxattrs, NULL);
 
 
