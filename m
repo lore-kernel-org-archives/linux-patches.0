@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BEF611B
-	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:41:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295E2C433D2;
-	Sun, 28 May 2023 19:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F188611B
+	for <patches@lists.linux.dev>; Sun, 28 May 2023 19:41:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F6CEC433EF;
+	Sun, 28 May 2023 19:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1685302879;
-	bh=DyWMNvOJp0id+Tv6ElaHdFkRkTOFDlqeM3fbyRlkDRg=;
+	s=korg; t=1685302882;
+	bh=eZWI3dRHsIx1RpAB5HDrNocvVuzqBgfa0egrTSoO9CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PpvcC5TaqaALSCpWevIN91NWauoXi9z5aEmjpFauXqqzt4skJ6y9m/Di9erBEpwRF
-	 Hg0Vj0XZQ2dcqbQ8GQyrO4nnednQBs5s5vD97hajjwlDrACsK2n5YHwJsyJvp5jQm1
-	 8jODRUx09fTW/4l8/eSz9K3NCg7QoeW5FVHAr84A=
+	b=UGcJJATiNop1zqtxW7b1Ik7u83Vn8BpXwcJVRMbKMDrow2B0n6t+dIZBxbbGDe/H5
+	 oS9iCYbOg9wyobkhhpfUsxHe+SwmPT1yfNUwyklr9VXBbYRRTNplfcpHKweQPnDGI0
+	 zXiKw2BtMPxtE6d8+aoKo49DkYrI7Tkvx8et5Hdg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 064/211] ipvs: Update width of source for ip_vs_sync_conn_options
-Date: Sun, 28 May 2023 20:09:45 +0100
-Message-Id: <20230528190845.211895094@linuxfoundation.org>
+Subject: [PATCH 5.10 065/211] Bluetooth: hci_bcm: Fall back to getting bdaddr from EFI if not set
+Date: Sun, 28 May 2023 20:09:46 +0100
+Message-Id: <20230528190845.239056831@linuxfoundation.org>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230528190843.514829708@linuxfoundation.org>
 References: <20230528190843.514829708@linuxfoundation.org>
@@ -36,88 +35,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Horman <horms@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit e3478c68f6704638d08f437cbc552ca5970c151a ]
+[ Upstream commit 0d218c3642b9ccf71f44987cd03c19320f3bd918 ]
 
-In ip_vs_sync_conn_v0() copy is made to struct ip_vs_sync_conn_options.
-That structure looks like this:
+On some devices the BCM Bluetooth adapter does not have a valid bdaddr set.
 
-struct ip_vs_sync_conn_options {
-        struct ip_vs_seq        in_seq;
-        struct ip_vs_seq        out_seq;
-};
+btbcm.c currently sets HCI_QUIRK_INVALID_BDADDR to indicate when this is
+the case. But this requires users to manual setup a btaddr, by doing e.g.:
 
-The source of the copy is the in_seq field of struct ip_vs_conn.  Whose
-type is struct ip_vs_seq. Thus we can see that the source - is not as
-wide as the amount of data copied, which is the width of struct
-ip_vs_sync_conn_option.
+btmgmt -i hci0 public-addr 'B0:F1:EC:82:1D:B3'
 
-The copy is safe because the next field in is another struct ip_vs_seq.
-Make use of struct_group() to annotate this.
+Which means that Bluetooth will not work out of the box on such devices.
+To avoid this (where possible) hci_bcm sets: HCI_QUIRK_USE_BDADDR_PROPERTY
+which tries to get the bdaddr from devicetree.
 
-Flagged by gcc-13 as:
+But this only works on devicetree platforms. On UEFI based platforms
+there is a special Broadcom UEFI variable which when present contains
+the devices bdaddr, just like how there is another UEFI variable which
+contains wifi nvram contents including the wifi MAC address.
 
- In file included from ./include/linux/string.h:254,
-                  from ./include/linux/bitmap.h:11,
-                  from ./include/linux/cpumask.h:12,
-                  from ./arch/x86/include/asm/paravirt.h:17,
-                  from ./arch/x86/include/asm/cpuid.h:62,
-                  from ./arch/x86/include/asm/processor.h:19,
-                  from ./arch/x86/include/asm/timex.h:5,
-                  from ./include/linux/timex.h:67,
-                  from ./include/linux/time32.h:13,
-                  from ./include/linux/time.h:60,
-                  from ./include/linux/stat.h:19,
-                  from ./include/linux/module.h:13,
-                  from net/netfilter/ipvs/ip_vs_sync.c:38:
- In function 'fortify_memcpy_chk',
-     inlined from 'ip_vs_sync_conn_v0' at net/netfilter/ipvs/ip_vs_sync.c:606:3:
- ./include/linux/fortify-string.h:529:25: error: call to '__read_overflow2_field' declared with attribute warning: detected read beyond size of field (2nd parameter); maybe use struct_group()? [-Werror=attribute-warning]
-   529 |                         __read_overflow2_field(q_size_field, size);
-       |
+Add support for getting the bdaddr from this Broadcom UEFI variable,
+so that Bluetooth will work OOTB for users on devices where this
+UEFI variable is present.
 
-Compile tested only.
+This fixes Bluetooth not working on for example Asus T100HA 2-in-1s.
 
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h             | 6 ++++--
- net/netfilter/ipvs/ip_vs_sync.c | 2 +-
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btbcm.c | 47 ++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 44 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index d609e957a3ec0..c02c3bb0fe091 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -549,8 +549,10 @@ struct ip_vs_conn {
- 	 */
- 	struct ip_vs_app        *app;           /* bound ip_vs_app object */
- 	void                    *app_data;      /* Application private data */
--	struct ip_vs_seq        in_seq;         /* incoming seq. struct */
--	struct ip_vs_seq        out_seq;        /* outgoing seq. struct */
-+	struct_group(sync_conn_opt,
-+		struct ip_vs_seq  in_seq;       /* incoming seq. struct */
-+		struct ip_vs_seq  out_seq;      /* outgoing seq. struct */
-+	);
+diff --git a/drivers/bluetooth/btbcm.c b/drivers/bluetooth/btbcm.c
+index d263eac784daa..636db3b7e470b 100644
+--- a/drivers/bluetooth/btbcm.c
++++ b/drivers/bluetooth/btbcm.c
+@@ -6,6 +6,7 @@
+  *  Copyright (C) 2015  Intel Corporation
+  */
  
- 	const struct ip_vs_pe	*pe;
- 	char			*pe_data;
-diff --git a/net/netfilter/ipvs/ip_vs_sync.c b/net/netfilter/ipvs/ip_vs_sync.c
-index daab857c52a80..fc8db03d3efca 100644
---- a/net/netfilter/ipvs/ip_vs_sync.c
-+++ b/net/netfilter/ipvs/ip_vs_sync.c
-@@ -603,7 +603,7 @@ static void ip_vs_sync_conn_v0(struct netns_ipvs *ipvs, struct ip_vs_conn *cp,
- 	if (cp->flags & IP_VS_CONN_F_SEQ_MASK) {
- 		struct ip_vs_sync_conn_options *opt =
- 			(struct ip_vs_sync_conn_options *)&s[1];
--		memcpy(opt, &cp->in_seq, sizeof(*opt));
-+		memcpy(opt, &cp->sync_conn_opt, sizeof(*opt));
++#include <linux/efi.h>
+ #include <linux/module.h>
+ #include <linux/firmware.h>
+ #include <asm/unaligned.h>
+@@ -32,6 +33,43 @@
+ /* For kmalloc-ing the fw-name array instead of putting it on the stack */
+ typedef char bcm_fw_name[BCM_FW_NAME_LEN];
+ 
++#ifdef CONFIG_EFI
++static int btbcm_set_bdaddr_from_efi(struct hci_dev *hdev)
++{
++	efi_guid_t guid = EFI_GUID(0x74b00bd9, 0x805a, 0x4d61, 0xb5, 0x1f,
++				   0x43, 0x26, 0x81, 0x23, 0xd1, 0x13);
++	bdaddr_t efi_bdaddr, bdaddr;
++	efi_status_t status;
++	unsigned long len;
++	int ret;
++
++	if (!efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE))
++		return -EOPNOTSUPP;
++
++	len = sizeof(efi_bdaddr);
++	status = efi.get_variable(L"BDADDR", &guid, NULL, &len, &efi_bdaddr);
++	if (status != EFI_SUCCESS)
++		return -ENXIO;
++
++	if (len != sizeof(efi_bdaddr))
++		return -EIO;
++
++	baswap(&bdaddr, &efi_bdaddr);
++
++	ret = btbcm_set_bdaddr(hdev, &bdaddr);
++	if (ret)
++		return ret;
++
++	bt_dev_info(hdev, "BCM: Using EFI device address (%pMR)", &bdaddr);
++	return 0;
++}
++#else
++static int btbcm_set_bdaddr_from_efi(struct hci_dev *hdev)
++{
++	return -EOPNOTSUPP;
++}
++#endif
++
+ int btbcm_check_bdaddr(struct hci_dev *hdev)
+ {
+ 	struct hci_rp_read_bd_addr *bda;
+@@ -85,9 +123,12 @@ int btbcm_check_bdaddr(struct hci_dev *hdev)
+ 	    !bacmp(&bda->bdaddr, BDADDR_BCM4345C5) ||
+ 	    !bacmp(&bda->bdaddr, BDADDR_BCM43430A0) ||
+ 	    !bacmp(&bda->bdaddr, BDADDR_BCM43341B)) {
+-		bt_dev_info(hdev, "BCM: Using default device address (%pMR)",
+-			    &bda->bdaddr);
+-		set_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks);
++		/* Try falling back to BDADDR EFI variable */
++		if (btbcm_set_bdaddr_from_efi(hdev) != 0) {
++			bt_dev_info(hdev, "BCM: Using default device address (%pMR)",
++				    &bda->bdaddr);
++			set_bit(HCI_QUIRK_INVALID_BDADDR, &hdev->quirks);
++		}
  	}
  
- 	m->nr_conns++;
+ 	kfree_skb(skb);
 -- 
 2.39.2
 
